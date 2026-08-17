@@ -7,8 +7,9 @@ import { chromium } from 'playwright';
 
 const requested = new Set(process.argv.slice(2));
 const runDesktop = requested.size === 0 || requested.has('desktop');
+const runInput = requested.size === 0 || requested.has('input');
 const runMobile = requested.size === 0 || requested.has('mobile');
-if (!runDesktop && !runMobile) throw new Error('Pass desktop and/or mobile to browser-smoke.mjs.');
+if (!runDesktop && !runInput && !runMobile) throw new Error('Pass desktop, input and/or mobile to browser-smoke.mjs.');
 
 const repoRoot = resolve(fileURLToPath(new URL('../../../', import.meta.url)));
 const mime = new Map([
@@ -121,6 +122,33 @@ async function desktopSmoke(page) {
   console.log(`Desktop smoke passed · ${baseline.triangles} triangles · ${baseline.calls} calls`);
 }
 
+async function inputSmoke(page) {
+  const errors = watchPage(page, 'input');
+  await waitForPoc(page);
+
+  const canvas = page.locator('canvas').first();
+  await canvas.click({ position: { x: 320, y: 260 } });
+  await page.waitForFunction(() => document.pointerLockElement === window.__ROME_THREE_POC__.renderer.domElement, null, { timeout: 10_000 });
+
+  const locked = await page.evaluate(() => document.pointerLockElement === window.__ROME_THREE_POC__.renderer.domElement);
+  assert.equal(locked, true, 'trusted canvas click should acquire pointer lock');
+
+  await page.keyboard.down('w');
+  await page.waitForFunction(() => window.__ROME_THREE_POC__.controls.keys.has('KeyW'));
+  const heldBeforeBlur = await page.evaluate(() => window.__ROME_THREE_POC__.controls.keys.has('KeyW'));
+  assert.equal(heldBeforeBlur, true, 'desktop keyboard input should reach the shared key state');
+
+  await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+  const heldAfterBlur = await page.evaluate(() => window.__ROME_THREE_POC__.controls.keys.size);
+  assert.equal(heldAfterBlur, 0, 'focus loss should clear all movement keys');
+  await page.keyboard.up('w');
+
+  await page.evaluate(() => document.exitPointerLock?.());
+  await page.waitForFunction(() => document.pointerLockElement == null);
+  assert.deepEqual(errors, [], errors.join('\n'));
+  console.log('Desktop input smoke passed · pointer lock acquired · blur reset movement state.');
+}
+
 async function mobileSmoke(page) {
   const errors = watchPage(page, 'mobile');
   await waitForPoc(page);
@@ -176,6 +204,12 @@ try {
     await desktop.close();
   }
 
+  if (runInput) {
+    const input = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+    await inputSmoke(await input.newPage());
+    await input.close();
+  }
+
   if (runMobile) {
     const mobile = await browser.newContext({
       viewport: { width: 390, height: 844 },
@@ -187,7 +221,7 @@ try {
     await mobile.close();
   }
 
-  console.log(`Rome Three.js browser smoke passed: ${[runDesktop && 'desktop', runMobile && 'mobile'].filter(Boolean).join(' + ')}.`);
+  console.log(`Rome Three.js browser smoke passed: ${[runDesktop && 'desktop', runInput && 'input', runMobile && 'mobile'].filter(Boolean).join(' + ')}.`);
 } finally {
   await browser?.close();
   await new Promise((resolveClosed) => server.close(resolveClosed));
