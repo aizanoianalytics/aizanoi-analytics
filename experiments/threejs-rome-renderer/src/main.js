@@ -250,6 +250,18 @@ function addUrbanFabric(THREE, scene, simulation) {
   const roofs = new THREE.InstancedMesh(roofGeometry, roofMaterial, count);
   roofs.name = 'Plausible urban fabric roof silhouettes';
 
+  // A single instanced eave/cornice layer gives otherwise box-like inferred
+  // blocks a readable wall-to-roof transition without multiplying draw calls.
+  // It remains purely plausible urban massing, not evidence-bearing detail.
+  const eaveGeometry = new THREE.BoxGeometry(1, 1, 1);
+  const eaveMaterial = new THREE.MeshStandardMaterial({
+    color: ROME_VISUAL_PALETTE.urbanEaves,
+    roughness: 0.96,
+    metalness: 0,
+  });
+  const eaves = new THREE.InstancedMesh(eaveGeometry, eaveMaterial, count);
+  eaves.name = 'Plausible urban fabric eave bands';
+
   const matrix = new THREE.Matrix4();
   const position = new THREE.Vector3();
   const quaternion = new THREE.Quaternion();
@@ -269,6 +281,13 @@ function addUrbanFabric(THREE, scene, simulation) {
     walls.setMatrixAt(index, matrix);
     walls.setColorAt(index, new THREE.Color(wallColors[index % wallColors.length]));
 
+    position.set(record.x, ground + record.h + 0.14, record.z);
+    euler.set(0, rotation, 0);
+    quaternion.setFromEuler(euler);
+    scale.set(record.w * 1.035, 0.28, record.d * 1.035);
+    matrix.compose(position, quaternion, scale);
+    eaves.setMatrixAt(index, matrix);
+
     const roofHeight = Math.min(4.4, Math.max(1.9, Math.min(record.w, record.d) * 0.19));
     position.set(record.x, ground + record.h + roofHeight / 2 - 0.05, record.z);
     euler.set(0, rotation + Math.PI / 4, 0);
@@ -279,8 +298,9 @@ function addUrbanFabric(THREE, scene, simulation) {
   }
   walls.instanceMatrix.needsUpdate = true;
   walls.instanceColor.needsUpdate = true;
+  eaves.instanceMatrix.needsUpdate = true;
   roofs.instanceMatrix.needsUpdate = true;
-  scene.add(walls, roofs);
+  scene.add(walls, eaves, roofs);
 }
 
 function updateMovement(simulation, keys, dt) {
