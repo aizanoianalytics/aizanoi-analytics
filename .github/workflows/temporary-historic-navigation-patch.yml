@@ -1,0 +1,38 @@
+name: Temporary Historic Navigation Patch
+
+on:
+  push:
+    branches:
+      - feat/ancient-world-foundations
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/ancient-world-foundations
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Patch Historic World navigation
+        run: python scripts/patch_historic_navigation.py
+
+      - name: Commit exact patch
+        run: |
+          if git diff --quiet -- frontend/historic-world/index.html; then
+            echo "No patch needed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add frontend/historic-world/index.html
+          git commit -m "feat: add Back to Aizanoi OS in Historic World"
+          git push origin HEAD:feat/ancient-world-foundations
