@@ -15,8 +15,9 @@ const vendorScript = read('experiments/threejs-rome-renderer/scripts/vendor-thre
 test('Three.js PoC pins its renderer dependency and vendors it locally', () => {
   assert.equal(packageJson.dependencies.three, '0.185.1');
   assert.match(packageJson.scripts.prepare, /npm run vendor/);
-  assert.match(vendorScript, /node_modules\/three\/build\/three\.module\.js/);
-  assert.match(vendorScript, /vendor.*three\.module\.js/s);
+  assert.match(vendorScript, /three\.module\.js/);
+  assert.match(vendorScript, /three\.core\.js/);
+  assert.match(vendorScript, /node_modules\/three\/build/);
   assert.doesNotMatch(index, /https?:\/\//);
   assert.doesNotMatch(main, /https?:\/\//);
 });
