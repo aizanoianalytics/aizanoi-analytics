@@ -14,7 +14,7 @@ test('Rome experience provides a standalone WebGL entry page', () => {
   assert.ok(existsSync(resolve(city, 'index.html')));
   const html = read('index.html');
   assert.match(html, /<canvas[^>]+id="glCanvas"/);
-  assert.match(html, /type="module"[^>]+src="\.\/js\/app\.js"/);
+  assert.match(html, /import\(['"]\.\/js\/app\.js['"]\)/);
   assert.match(html, /Rome.*410.*476/i);
 });
 
@@ -23,6 +23,7 @@ test('Rome entry page gives a visible fallback when WebGL is unavailable', () =>
   assert.match(html, /WEBGL UNAVAILABLE/i);
   assert.match(html, /__AIZANOI_WEBGL_UNAVAILABLE__/);
   assert.match(html, /needs WebGL/i);
+  assert.match(html, /renderer could not start/i);
 });
 
 test('Rome city data includes late-antique monuments, regions, streets and sourced records', async () => {
