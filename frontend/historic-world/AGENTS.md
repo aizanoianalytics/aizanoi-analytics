@@ -13,6 +13,11 @@
 - **Camera** — `player.yaw`, `player.pitch`, eye height and WebGL view/projection setup.
 - **Buildings / world interaction** — builders, landmarks, inspect prompts, labels, atlas, sources and historical eras.
 - **Lighting / rendering** — WebGL shaders, sky, render loop, quality settings and mobile detail reduction.
+- **Shared Ancient World navigation** — `../ancient-world/engine/navigation.js` installs the persistent `← Aizanoi OS` escape path. Keep it working in pointer-lock/fullscreen states.
+
+## Architecture direction
+
+This file remains the traversal reference while shared behaviour is extracted into `frontend/ancient-world/engine/`. Extract mechanically and preserve behaviour. Do not rewrite Aizanoi and Rome onto Three.js/Babylon.js simultaneously.
 
 ## Regression rule
 
@@ -22,6 +27,7 @@ Any change to collision must retest movement, stairs, terrain support, jump/vert
 
 - Parse every inline script with Node before deployment.
 - Test desktop WASD, mouse look/pointer-lock fallback, touch controls, wall/diagonal collision, stairs up/down, terrain/elevation transitions, inspect, atlas, eras, time slider and every Jump To target.
+- Verify `← Aizanoi OS` exits pointer lock/fullscreen cleanly and returns to `/`.
 - Check console errors and WebGL initialization failure fallback.
 - Compare mobile and desktop performance; do not add large external assets without a budget review.
 - Keep archaeological certainty labels and source links intact. Separate excavated facts from inferred visual detail.
