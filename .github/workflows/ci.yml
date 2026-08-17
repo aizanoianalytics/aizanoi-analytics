@@ -16,13 +16,14 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 2
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: '22'
+          package-manager-cache: false
 
       - name: JavaScript syntax checks
         run: |
@@ -51,6 +52,7 @@ jobs:
           node --check experiments/threejs-rome-renderer/src/performance-budget.js
           node --check experiments/threejs-rome-renderer/scripts/vendor-three.mjs
           node --check experiments/threejs-rome-renderer/scripts/browser-smoke.mjs
+          node --check experiments/threejs-rome-renderer/scripts/capture-ab-baseline.mjs
 
       - name: Install Three.js experiment dependencies
         if: startsWith(github.ref, 'refs/heads/exp/')
