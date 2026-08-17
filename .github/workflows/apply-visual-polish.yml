@@ -1,0 +1,82 @@
+name: Apply visual polish patch
+
+on:
+  push:
+    branches:
+      - feat/visual-polish-games-2026-08-17
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/visual-polish-games-2026-08-17
+          fetch-depth: 2
+
+      - name: Apply guarded shell and Rome touch patches
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          index = Path('frontend/index.html')
+          text = index.read_text()
+          old = '<link rel="icon" type="image/png" href="/icons/MyComputer.png">\n<style>'
+          new = '<link rel="icon" type="image/svg+xml" href="/assets/branding/aizanoi-logo-mark.svg">\n<link rel="stylesheet" href="/css/aizanoi-polish.css">\n<style>'
+          if old in text:
+              text = text.replace(old, new, 1)
+          elif '/css/aizanoi-polish.css' not in text:
+              raise SystemExit('index polish anchor not found')
+          index.write_text(text)
+
+          app = Path('frontend/ancient-cities/rome-410-476/js/app.js')
+          text = app.read_text()
+          old = "canvas.addEventListener('click',()=>canvas.requestPointerLock());document.addEventListener('pointerlockchange',()=>locked=document.pointerLockElement===canvas);document.addEventListener('mousemove',e=>{if(locked){player.yaw-=e.movementX*.0024;player.pitch=Math.max(-.7,Math.min(.55,player.pitch-e.movementY*.002));}});addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyE')nearestInfo();});addEventListener('keyup',e=>keys[e.code]=false);addEventListener('blur',()=>keys={});"
+          new = """canvas.addEventListener('click',()=>{ if (matchMedia('(pointer:fine)').matches) canvas.requestPointerLock(); });
+document.addEventListener('pointerlockchange',()=>locked=document.pointerLockElement===canvas);
+document.addEventListener('mousemove',e=>{if(locked){player.yaw-=e.movementX*.0024;player.pitch=Math.max(-.7,Math.min(.55,player.pitch-e.movementY*.002));}});
+addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyE')nearestInfo();});
+addEventListener('keyup',e=>keys[e.code]=false);
+addEventListener('blur',()=>keys={});
+
+// Mobile controls use the same movement state as WASD and adjust the same camera yaw/pitch.
+document.querySelectorAll('[data-move]').forEach(btn=>{
+  const code=btn.dataset.move;
+  const down=e=>{e.preventDefault();keys[code]=true;};
+  const up=e=>{e.preventDefault();keys[code]=false;};
+  btn.addEventListener('pointerdown',down);
+  btn.addEventListener('pointerup',up);
+  btn.addEventListener('pointercancel',up);
+  btn.addEventListener('pointerleave',up);
+});
+const lookPad=$('#lookPad');
+if(lookPad){
+  let lookPointer=null,lastX=0,lastY=0;
+  lookPad.addEventListener('pointerdown',e=>{e.preventDefault();lookPointer=e.pointerId;lastX=e.clientX;lastY=e.clientY;lookPad.setPointerCapture?.(e.pointerId);});
+  lookPad.addEventListener('pointermove',e=>{if(e.pointerId!==lookPointer)return;e.preventDefault();const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;player.yaw-=dx*.006;player.pitch=Math.max(-.7,Math.min(.55,player.pitch-dy*.0045));});
+  const stopLook=e=>{if(e.pointerId===lookPointer)lookPointer=null;};
+  lookPad.addEventListener('pointerup',stopLook);lookPad.addEventListener('pointercancel',stopLook);
+}
+"""
+          if old in text:
+              text = text.replace(old, new, 1)
+          elif "document.querySelectorAll('[data-move]')" not in text:
+              raise SystemExit('Rome input anchor not found')
+          app.write_text(text)
+          PY
+
+          git diff --check
+          node --check frontend/ancient-cities/rome-410-476/js/app.js
+
+      - name: Commit generated patch
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add frontend/index.html frontend/ancient-cities/rome-410-476/js/app.js
+          git commit -m "feat: wire visual polish and Rome touch controls"
+          git push origin HEAD:feat/visual-polish-games-2026-08-17
