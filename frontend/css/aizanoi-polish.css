@@ -96,13 +96,56 @@ button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-
   box-shadow: 0 4px 10px rgba(24,65,126,.14);
 }
 
-/* Games window receives a slightly darker arcade desk while keeping XP chrome. */
-#games-list, [id^="game-"][id$="-container"] {
-  border-radius: 6px;
+/* Games window: retro PC shelf + cleaner arcade surface. */
+.g-tile {
+  position: relative;
+  overflow: hidden;
+  min-width: 104px !important;
+  padding: 10px 13px !important;
+  border-color: #8fa0b7 !important;
+  background: linear-gradient(145deg,#ffffff,#dfe8f3) !important;
+  box-shadow: inset 0 1px 0 #fff, 0 3px 8px rgba(25,59,105,.12);
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, filter .12s ease;
 }
-[id^="game-"][id$="-container"] {
-  color: #182134;
+.g-tile::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  left: 10px; right: 10px; bottom: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,var(--aizanoi-bronze),#efd69f,var(--aizanoi-bronze));
+  opacity: .5;
 }
+.g-tile:hover {
+  transform: translateY(-2px);
+  border-color: #4f7fbd !important;
+  box-shadow: inset 0 1px 0 #fff, 0 7px 16px rgba(24,61,114,.18);
+  filter: saturate(1.04);
+}
+.g-tile.active {
+  background: linear-gradient(145deg,#275fba,#123f8c) !important;
+  border-color: #0b347a !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 5px 14px rgba(13,50,107,.25);
+}
+.g-tile.active::after { background:#f2cf88;opacity:.9; }
+.g-tile > div:first-child {
+  border-radius: 8px;
+  background: radial-gradient(circle at 35% 30%,#fff,rgba(255,255,255,.16) 40%,rgba(24,73,137,.08) 75%);
+  text-shadow: 0 1px #fff;
+}
+.g-tile.active > div:first-child { background:rgba(255,255,255,.12);text-shadow:none; }
+#games-score {
+  padding: 7px 9px;
+  border: 1px solid #b7c1cf;
+  border-radius: 5px;
+  background: rgba(255,255,255,.55);
+}
+#game-area {
+  background:
+    linear-gradient(135deg,rgba(235,241,248,.95),rgba(255,255,255,.98)) !important;
+}
+#games-list, [id^="game-"][id$="-container"] { border-radius: 6px; }
+[id^="game-"][id$="-container"] { color: #182134; }
 [id^="game-"][id$="-container"] button {
   border: 1px solid #6e7b8d;
   border-radius: 4px;
@@ -123,6 +166,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-
   #desktop::after { box-shadow: inset 0 0 55px rgba(8,32,74,.1); }
   .desktop-icon:hover { transform: none; box-shadow: none; }
   .win { animation-duration: .11s; box-shadow: 0 6px 18px rgba(0,0,0,.22); }
+  .g-tile { min-width: 86px !important; padding: 8px 9px !important; }
   [id^="game-"][id$="-container"] canvas { max-width: 100%; height: auto; }
 }
 
