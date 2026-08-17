@@ -26,13 +26,16 @@ test('terrain palette keeps deterministic broad and fine vertex variation', () =
   assert.doesNotMatch(palette, /Math\.random/);
 });
 
-test('V7 terrain material adds deterministic terrain-only fragment grain', () => {
+test('V7 terrain material adds deterministic smooth terrain-only fragment grain', () => {
   assert.match(terrainMaterial, /cellScale: 0\.72/);
-  assert.match(terrainMaterial, /amplitude: 0\.075/);
+  assert.match(terrainMaterial, /amplitude: 0\.12/);
   assert.match(terrainMaterial, /material\.onBeforeCompile = \(shader\) =>/);
   assert.match(terrainMaterial, /vRomeTerrainXZ = position\.xz/);
   assert.match(terrainMaterial, /romeTerrainHash/);
-  assert.match(terrainMaterial, /floor\(vRomeTerrainXZ \* \$\{cellScale\.toFixed\(4\)\}\)/);
+  assert.match(terrainMaterial, /romeTerrainNoise/);
+  assert.match(terrainMaterial, /vec2 blend = local \* local \* \(3\.0 - 2\.0 \* local\)/);
+  assert.match(terrainMaterial, /return mix\(mix\(a, b, blend\.x\), mix\(c, d, blend\.x\), blend\.y\)/);
+  assert.match(terrainMaterial, /romeTerrainNoise\(vRomeTerrainXZ \* \$\{cellScale\.toFixed\(4\)\}\)/);
   assert.match(terrainMaterial, /\$\{amplitude\.toFixed\(4\)\}/);
   assert.match(terrainMaterial, /customProgramCacheKey/);
   assert.doesNotMatch(terrainMaterial, /Math\.random/);
