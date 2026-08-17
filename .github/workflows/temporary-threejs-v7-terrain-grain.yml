@@ -94,26 +94,16 @@ jobs:
           if text.count(old) != 1:
               raise SystemExit('package.json guard failed')
           package.write_text(text.replace(old, new, 1))
-
-          ci = Path('.github/workflows/ci.yml')
-          text = ci.read_text()
-          old = '          node --check experiments/threejs-rome-renderer/src/visual-palette.js\n'
-          new = old + '          node --check experiments/threejs-rome-renderer/src/terrain-material.js\n'
-          if text.count(old) != 1:
-              raise SystemExit('ci.yml guard failed')
-          ci.write_text(text.replace(old, new, 1))
           PY
 
           node --check experiments/threejs-rome-renderer/src/terrain-material.js
           node --check experiments/threejs-rome-renderer/src/main.js
-          node --check experiments/threejs-rome-renderer/src/visual-palette.js
-          node --check experiments/threejs-rome-renderer/scripts/browser-smoke.mjs
           git diff --check
       - name: Commit V7 patch and remove one-shot workflow
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add experiments/threejs-rome-renderer/src/terrain-material.js experiments/threejs-rome-renderer/src/main.js experiments/threejs-rome-renderer/package.json .github/workflows/ci.yml
+          git add experiments/threejs-rome-renderer/src/terrain-material.js experiments/threejs-rome-renderer/src/main.js experiments/threejs-rome-renderer/package.json
           git rm .github/workflows/temporary-threejs-v7-terrain-grain.yml
           git commit -m 'feat: add terrain-only per-fragment grain to Rome Three.js PoC'
           git push
