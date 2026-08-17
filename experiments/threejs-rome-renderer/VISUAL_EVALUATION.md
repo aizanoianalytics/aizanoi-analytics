@@ -32,6 +32,16 @@ At this point the **Three.js Colosseum hero is more architecturally legible than
 
 **Verdict:** Three.js is now a credible renderer candidate, but the overall scene has not yet demonstrated enough visual advantage to justify production migration.
 
+### V5 — terrain micro-variation and inferred-building eaves
+
+The terrain sampler now combines deterministic broad and finer spatial variation rather than relying on a single narrow grain term. Inferred urban blocks also receive one shared instanced eave/cornice layer between their walls and roof silhouettes. This adds a readable horizontal break to nearby massing without creating per-building draw objects or changing evidence confidence.
+
+The technical cost remained small in the real Chromium smoke: desktop moved from roughly 9,964 triangles / 160 calls to 11,344 triangles / 161 calls, while mobile moved from roughly 5,710 triangles / 73 calls to 6,574 triangles / 75 calls. Desktop, pointer-lock, mobile, regression and whitespace gates all passed.
+
+The matched image shows a **modest streetscape improvement**: nearby blocks no longer terminate as completely plain boxes and their roofline transition reads more clearly. However the foreground terrain still appears too broad and tonally flat at the matched camera. The stronger procedural terrain modulation exists mathematically but is not yet visually strong enough after lighting and tone mapping to reproduce the production renderer's ground depth.
+
+**Verdict:** keep the low-cost eave layer and deterministic terrain variation, but the whole-scene parity gate remains open. The next experiment should improve light-to-fill balance before adding expensive shadowing or more geometry.
+
 ## What the experiment has proven
 
 - Renderer migration does not require a second physics engine.
