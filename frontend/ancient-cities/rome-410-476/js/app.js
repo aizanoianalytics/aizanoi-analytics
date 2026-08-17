@@ -77,6 +77,15 @@ function nearestInfo(){let b=BUILDINGS.reduce((p,x)=>Math.hypot(x.x-player.x,x.z
 function teleport(id){const b=BUILDINGS.find(x=>x.id===id);if(b){player.x=b.x;player.z=b.z-b.d*.7;$('#jump').value='';}}
 
 $('#atlas').onclick=openAtlas;$('#sources').onclick=openSources;$('#audio').onclick=toggleAudio;$('#inspect').onclick=nearestInfo;$('#modern').onclick=()=>{modernOverlay=!modernOverlay;$('#modern').textContent=modernOverlay?'Modern overlay: on':'Modern overlay: off';$('#overlay').getContext('2d').clearRect(0,0,innerWidth,innerHeight);};$('#modalClose').onclick=()=>$('#modal').classList.add('hidden');$('#jump').innerHTML='<option value="">Jump to landmark…</option>'+TELEPORTS.map(([id,n])=>`<option value="${id}">${n}</option>`).join('');$('#jump').onchange=e=>teleport(e.target.value);
-canvas.addEventListener('click',()=>canvas.requestPointerLock());document.addEventListener('pointerlockchange',()=>locked=document.pointerLockElement===canvas);document.addEventListener('mousemove',e=>{if(locked){player.yaw-=e.movementX*.0024;player.pitch=Math.max(-.7,Math.min(.55,player.pitch-e.movementY*.002));}});addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyE')nearestInfo();});addEventListener('keyup',e=>keys[e.code]=false);addEventListener('blur',()=>keys={});
+canvas.addEventListener('click',()=>{ if (matchMedia('(pointer:fine)').matches) canvas.requestPointerLock(); });
+document.addEventListener('pointerlockchange',()=>locked=document.pointerLockElement===canvas);
+document.addEventListener('mousemove',e=>{if(locked){player.yaw-=e.movementX*.0024;player.pitch=Math.max(-.7,Math.min(.55,player.pitch-e.movementY*.002));}});
+addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyE')nearestInfo();});
+addEventListener('keyup',e=>keys[e.code]=false);
+addEventListener('blur',()=>keys={});
+document.querySelectorAll('[data-move]').forEach(btn=>{const code=btn.dataset.move;const down=e=>{e.preventDefault();keys[code]=true;};const up=e=>{e.preventDefault();keys[code]=false;};btn.addEventListener('pointerdown',down);btn.addEventListener('pointerup',up);btn.addEventListener('pointercancel',up);btn.addEventListener('pointerleave',up);});
+const lookPad=$('#lookPad');
+if(lookPad){let lookPointer=null,lastX=0,lastY=0;lookPad.addEventListener('pointerdown',e=>{e.preventDefault();lookPointer=e.pointerId;lastX=e.clientX;lastY=e.clientY;lookPad.setPointerCapture?.(e.pointerId);});lookPad.addEventListener('pointermove',e=>{if(e.pointerId!==lookPointer)return;e.preventDefault();const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;player.yaw-=dx*.006;player.pitch=Math.max(-.7,Math.min(.55,player.pitch-dy*.0045));});const stopLook=e=>{if(e.pointerId===lookPointer)lookPointer=null;};lookPad.addEventListener('pointerup',stopLook);lookPad.addEventListener('pointercancel',stopLook);}
+
 $('#enter').onclick=()=>{$('#intro').classList.add('hidden');canvas.focus();};
 $('#title').textContent=CITY.title; $('#period').textContent=CITY.period; $('#introTitle').textContent=CITY.title; $('#introText').textContent=CITY.description;requestAnimationFrame(tick);
