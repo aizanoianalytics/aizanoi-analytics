@@ -50,6 +50,7 @@ jobs:
           node --check experiments/threejs-rome-renderer/src/methodology.js
           node --check experiments/threejs-rome-renderer/src/hero-builders.js
           node --check experiments/threejs-rome-renderer/src/performance-budget.js
+          node --check experiments/threejs-rome-renderer/src/visual-palette.js
           node --check experiments/threejs-rome-renderer/scripts/vendor-three.mjs
           node --check experiments/threejs-rome-renderer/scripts/browser-smoke.mjs
           node --check experiments/threejs-rome-renderer/scripts/capture-ab-baseline.mjs
