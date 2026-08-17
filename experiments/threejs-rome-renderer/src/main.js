@@ -36,7 +36,7 @@ function materialForState(THREE, state, atmospheric = false) {
 }
 
 function terrainMaterial(THREE) {
-  return new THREE.MeshStandardMaterial({ color: 0x584a31, roughness: 1, metalness: 0 });
+  return new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, metalness: 0, vertexColors: true });
 }
 
 function buildTerrain(THREE, scene, simulation, mobile) {
@@ -45,13 +45,19 @@ function buildTerrain(THREE, scene, simulation, mobile) {
   const cols = Math.ceil((bounds.maxX - bounds.minX) / step) + 1;
   const rows = Math.ceil((bounds.maxZ - bounds.minZ) / step) + 1;
   const positions = [];
+  const colors = [];
   const indices = [];
 
   for (let row = 0; row < rows; row++) {
     const z = Math.min(bounds.maxZ, bounds.minZ + row * step);
     for (let col = 0; col < cols; col++) {
       const x = Math.min(bounds.maxX, bounds.minX + col * step);
-      positions.push(x, simulation.terrainHeightAt(x, z), z);
+      const y = simulation.terrainHeightAt(x, z);
+      positions.push(x, y, z);
+      const grain = (Math.sin(x * 0.021) + Math.sin(z * 0.017) + Math.sin((x + z) * 0.008)) * 0.018;
+      const heightTint = Math.max(-0.025, Math.min(0.05, y * 0.005));
+      const shade = 0.94 + grain + heightTint;
+      colors.push(0.34 * shade, 0.29 * shade, 0.19 * shade);
     }
   }
   for (let row = 0; row < rows - 1; row++) {
@@ -66,6 +72,7 @@ function buildTerrain(THREE, scene, simulation, mobile) {
 
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
   geometry.computeBoundingSphere();
@@ -231,7 +238,6 @@ function addUrbanFabric(THREE, scene, simulation) {
     color: 0xffffff,
     roughness: 0.97,
     metalness: 0,
-    vertexColors: true,
   });
   const walls = new THREE.InstancedMesh(wallGeometry, wallMaterial, count);
   walls.name = 'Plausible urban fabric walls';
