@@ -5,6 +5,11 @@ import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
+const requested = new Set(process.argv.slice(2));
+const runDesktop = requested.size === 0 || requested.has('desktop');
+const runMobile = requested.size === 0 || requested.has('mobile');
+if (!runDesktop && !runMobile) throw new Error('Pass desktop and/or mobile to browser-smoke.mjs.');
+
 const repoRoot = resolve(fileURLToPath(new URL('../../../', import.meta.url)));
 const mime = new Map([
   ['.html', 'text/html; charset=utf-8'],
@@ -113,6 +118,7 @@ async function desktopSmoke(page) {
   await page.evaluate(() => window.__ROME_THREE_POC__.destroy());
   await page.waitForFunction(() => document.querySelectorAll('canvas').length === 0);
   assert.deepEqual(errors, [], errors.join('\n'));
+  console.log(`Desktop smoke passed · ${baseline.triangles} triangles · ${baseline.calls} calls`);
 }
 
 async function mobileSmoke(page) {
@@ -149,6 +155,7 @@ async function mobileSmoke(page) {
   assert.notEqual(afterMove.yaw, beforeMove.yaw, 'mobile look pad should change yaw');
   assert.ok(['high', 'balanced', 'low'].includes(afterMove.tier), 'mobile adaptive quality tier should remain valid');
   assert.deepEqual(errors, [], errors.join('\n'));
+  console.log(`Mobile smoke passed · quality tier ${afterMove.tier}`);
 }
 
 try {
@@ -163,20 +170,24 @@ try {
     ],
   });
 
-  const desktop = await browser.newContext({ viewport: { width: 1280, height: 720 } });
-  await desktopSmoke(await desktop.newPage());
-  await desktop.close();
+  if (runDesktop) {
+    const desktop = await browser.newContext({ viewport: { width: 1280, height: 720 } });
+    await desktopSmoke(await desktop.newPage());
+    await desktop.close();
+  }
 
-  const mobile = await browser.newContext({
-    viewport: { width: 390, height: 844 },
-    isMobile: true,
-    hasTouch: true,
-    deviceScaleFactor: 2,
-  });
-  await mobileSmoke(await mobile.newPage());
-  await mobile.close();
+  if (runMobile) {
+    const mobile = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      isMobile: true,
+      hasTouch: true,
+      deviceScaleFactor: 2,
+    });
+    await mobileSmoke(await mobile.newPage());
+    await mobile.close();
+  }
 
-  console.log('Rome Three.js browser smoke passed: desktop render/teleport/teardown + mobile move/look.');
+  console.log(`Rome Three.js browser smoke passed: ${[runDesktop && 'desktop', runMobile && 'mobile'].filter(Boolean).join(' + ')}.`);
 } finally {
   await browser?.close();
   await new Promise((resolveClosed) => server.close(resolveClosed));
