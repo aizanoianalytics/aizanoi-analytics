@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - 'fix/**'
+      - 'feat/**'
   pull_request:
 
 permissions:
@@ -28,6 +29,10 @@ jobs:
           node --check frontend/games/mines.js
           node --check frontend/games/snake.js
           node --check frontend/games/brick.js
+          node --check frontend/ancient-world/engine/traversal.js
+          node --check frontend/ancient-world/engine/lifecycle.js
+          node --check frontend/ancient-world/engine/navigation.js
+          node --check frontend/ancient-world/assets/materials.js
           node --check frontend/ancient-cities/rome-410-476/js/app.js
 
       - name: Regression tests
