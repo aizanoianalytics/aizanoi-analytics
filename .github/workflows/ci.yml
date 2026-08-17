@@ -33,10 +33,14 @@ jobs:
           node --check frontend/ancient-world/engine/lifecycle.js
           node --check frontend/ancient-world/engine/navigation.js
           node --check frontend/ancient-world/engine/evidence.js
+          node --check frontend/ancient-world/engine/city-contract.js
           node --check frontend/ancient-world/assets/materials.js
           node --check frontend/ancient-cities/rome-410-476/data/terrain.js
           node --check frontend/ancient-cities/rome-410-476/data/urban-fabric.js
+          node --check frontend/ancient-cities/rome-410-476/data/manifest.js
+          node --check frontend/ancient-cities/rome-410-476/js/methodology.js
           node --check frontend/ancient-cities/rome-410-476/js/app.js
+          node --check frontend/ancient-cities/_template/data/city.example.js
 
       - name: Regression tests
         run: node --test tests/*.test.mjs
