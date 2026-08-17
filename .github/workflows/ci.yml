@@ -81,6 +81,11 @@ jobs:
         working-directory: experiments/threejs-rome-renderer
         run: npm run browser:smoke -- desktop
 
+      - name: Three.js pointer-lock and focus-loss browser smoke
+        if: startsWith(github.ref, 'refs/heads/exp/')
+        working-directory: experiments/threejs-rome-renderer
+        run: npm run browser:smoke -- input
+
       - name: Three.js mobile browser smoke
         if: startsWith(github.ref, 'refs/heads/exp/')
         working-directory: experiments/threejs-rome-renderer
