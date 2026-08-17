@@ -7,12 +7,17 @@ export const ROME_ROAD_RENDER_POLICY = Object.freeze({
   bedThickness: 0.04,
   edgeLift: 0.022,
   edgeThickness: 0.025,
-  edgeBandWidth: 0.22,
-  edgeInset: 0.17,
+  edgeBandWidth: 0.16,
+  edgeInset: 0.11,
 });
 
 function materialColor(THREE, rgb) {
-  return new THREE.Color().setRGB(rgb[0], rgb[1], rgb[2]);
+  return new THREE.Color().setRGB(
+    rgb[0],
+    rgb[1],
+    rgb[2],
+    THREE.SRGBColorSpace,
+  );
 }
 
 export function createRoadPiecePlan({ streets, terrainHeightAt, mobile = false }) {

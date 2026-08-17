@@ -82,7 +82,7 @@ const browser = await chromium.launch({ headless: true, args: chromiumArgs });
 
 async function hideChrome(page) {
   await page.addStyleTag({
-    content: '.hud,.miniWrap,.touchControls,.help,.reticle,#intro,#modal,#evidenceModal,.error{display:none!important}',
+    content: '.hud,.miniWrap,.touchControls,.help,.reticle,#intro,#modal,#evidenceModal,.error,#ancient-world-back-to-os{display:none!important}',
   });
 }
 

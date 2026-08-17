@@ -61,13 +61,22 @@ test('mobile road plan reduces subdivisions without changing the source roads', 
   );
 });
 
-test('V8 renders roads as two instanced layers instead of per-piece meshes', () => {
+test('V8.1 keeps two instanced road layers with narrow edge bands', () => {
+  assert.equal(ROME_ROAD_RENDER_POLICY.edgeBandWidth, 0.16);
+  assert.equal(ROME_ROAD_RENDER_POLICY.edgeInset, 0.11);
   assert.match(roadBuilderSource, /new THREE\.InstancedMesh\(geometry, bedMaterial, pieces\.length\)/);
   assert.match(roadBuilderSource, /new THREE\.InstancedMesh\(geometry, edgeMaterial, pieces\.length \* 2\)/);
   assert.match(roadBuilderSource, /scene\.add\(beds, edges\)/);
   assert.doesNotMatch(roadBuilderSource, /new THREE\.Mesh\(geometry, material\)/);
   assert.match(mainSource, /addInstancedRoads\(THREE, scene, simulation, \{ mobile \}\)/);
   assert.doesNotMatch(mainSource, /function roadSegment\(/);
+});
+
+test('V8.1 interprets shared road RGB tokens as sRGB inputs', () => {
+  assert.match(roadBuilderSource, /new THREE\.Color\(\)\.setRGB\(/);
+  assert.match(roadBuilderSource, /THREE\.SRGBColorSpace/);
+  assert.match(roadBuilderSource, /ANCIENT_MATERIALS\.road/);
+  assert.match(roadBuilderSource, /ANCIENT_MATERIALS\.roadEdge/);
 });
 
 test('browser smoke locks the two-layer road benchmark contract', () => {
@@ -83,4 +92,5 @@ test('matched visual capture includes both hero and Via Sacra streetscape scenar
   assert.match(captureSource, /current-renderer/);
   assert.match(captureSource, /threejs-poc/);
   assert.match(captureSource, /MATCHED_CAPTURE_SCENARIOS/);
+  assert.match(captureSource, /#ancient-world-back-to-os/);
 });
