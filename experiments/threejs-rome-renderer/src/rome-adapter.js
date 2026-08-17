@@ -1,6 +1,7 @@
 import { ROME_MANIFEST } from '../../../frontend/ancient-cities/rome-410-476/data/manifest.js';
-import { BUILDINGS, STREETS } from '../../../frontend/ancient-cities/rome-410-476/data/city.js';
+import { BUILDINGS, STREETS, REGIONS } from '../../../frontend/ancient-cities/rome-410-476/data/city.js';
 import { TIBER, terrainHeightAt } from '../../../frontend/ancient-cities/rome-410-476/data/terrain.js';
+import { generateUrbanFabric } from '../../../frontend/ancient-cities/rome-410-476/data/urban-fabric.js';
 import {
   createTraversalSystem,
   rectCollider,
@@ -76,7 +77,7 @@ function tiberHazards() {
   ];
 }
 
-export function createRomeSimulation() {
+export function createRomeSimulation({ mobile = false } = {}) {
   const colliders = [];
   const walkSurfaces = [];
 
@@ -92,6 +93,17 @@ export function createRomeSimulation() {
     if (!PASS_THROUGH.has(record.type)) {
       colliders.push(rectCollider(record.x, record.z, record.w, record.d, record.rot || 0, record.name));
     }
+  }
+
+  const urbanFabric = generateUrbanFabric({
+    regions: REGIONS,
+    buildings: BUILDINGS,
+    streets: STREETS,
+    mobile,
+    tiberX: TIBER.x,
+  });
+  for (const record of urbanFabric) {
+    colliders.push(rectCollider(record.x, record.z, record.w, record.d, record.rot || 0, record.name));
   }
 
   const player = {
@@ -121,6 +133,8 @@ export function createRomeSimulation() {
     manifest: ROME_MANIFEST,
     buildings: BUILDINGS,
     streets: STREETS,
+    regions: REGIONS,
+    urbanFabric,
     tiber: TIBER,
     terrainHeightAt,
     player,
