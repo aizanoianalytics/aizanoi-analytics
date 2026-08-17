@@ -18,6 +18,13 @@ test('Rome experience provides a standalone WebGL entry page', () => {
   assert.match(html, /Rome.*410.*476/i);
 });
 
+test('Rome entry page gives a visible fallback when WebGL is unavailable', () => {
+  const html = read('index.html');
+  assert.match(html, /WEBGL UNAVAILABLE/i);
+  assert.match(html, /__AIZANOI_WEBGL_UNAVAILABLE__/);
+  assert.match(html, /needs WebGL/i);
+});
+
 test('Rome city data includes late-antique monuments, regions, streets and sourced records', async () => {
   assert.ok(existsSync(resolve(city, 'data/city.js')));
   const { BUILDINGS, REGIONS, STREETS, SOURCES } = await import(resolve(city, 'data/city.js'));
