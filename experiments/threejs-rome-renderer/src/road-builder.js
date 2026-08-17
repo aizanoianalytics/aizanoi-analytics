@@ -1,12 +1,10 @@
 import { ANCIENT_MATERIALS } from '../../../frontend/ancient-world/assets/materials.js';
 
 export const ROME_ROAD_RENDER_POLICY = Object.freeze({
-  desktopPieceLength: 22,
-  mobilePieceLength: 30,
+  desktopPieceLength: 14,
+  mobilePieceLength: 20,
   bedLift: 0.045,
-  bedThickness: 0.04,
   edgeLift: 0.022,
-  edgeThickness: 0.025,
   edgeBandWidth: 0.16,
   edgeInset: 0.11,
 });
@@ -95,7 +93,11 @@ export function addInstancedRoads(THREE, scene, simulation, { mobile = false } =
   });
   if (!pieces.length) return { pieces: 0, drawLayers: 0, edgeInstances: 0 };
 
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  // Production roads are flat terrain-following quads. Keep the same visual
+  // model here: no box side faces, no curb-like thickness, and no per-piece
+  // draw objects. The shared plane is instanced for all beds and edge bands.
+  const geometry = new THREE.PlaneGeometry(1, 1);
+  geometry.rotateX(-Math.PI / 2);
   const bedMaterial = new THREE.MeshStandardMaterial({
     color: materialColor(THREE, ANCIENT_MATERIALS.road),
     roughness: 1,
@@ -119,7 +121,7 @@ export function addInstancedRoads(THREE, scene, simulation, { mobile = false } =
   pieces.forEach((piece, index) => {
     const { length, quaternion, midpoint, yAxis, zAxis } = pieceBasis(THREE, piece);
 
-    scale.set(length, ROME_ROAD_RENDER_POLICY.bedThickness, piece.width);
+    scale.set(length, 1, piece.width);
     matrix.compose(midpoint, quaternion, scale);
     beds.setMatrixAt(index, matrix);
 
@@ -131,7 +133,7 @@ export function addInstancedRoads(THREE, scene, simulation, { mobile = false } =
       position.copy(midpoint)
         .addScaledVector(zAxis, lateral * side)
         .addScaledVector(yAxis, ROME_ROAD_RENDER_POLICY.edgeLift);
-      scale.set(length, ROME_ROAD_RENDER_POLICY.edgeThickness, ROME_ROAD_RENDER_POLICY.edgeBandWidth);
+      scale.set(length, 1, ROME_ROAD_RENDER_POLICY.edgeBandWidth);
       matrix.compose(position, quaternion, scale);
       edges.setMatrixAt(index * 2 + sideIndex, matrix);
     }
@@ -141,9 +143,9 @@ export function addInstancedRoads(THREE, scene, simulation, { mobile = false } =
   edges.instanceMatrix.needsUpdate = true;
   beds.computeBoundingSphere();
   edges.computeBoundingSphere();
-  beds.userData.roadBuilder = 'instanced-road-v1';
+  beds.userData.roadBuilder = 'instanced-road-v2';
   beds.userData.benchmark = { pieces: pieces.length, drawLayers: 2, edgeInstances: pieces.length * 2 };
-  edges.userData.roadBuilder = 'instanced-road-v1';
+  edges.userData.roadBuilder = 'instanced-road-v2';
   scene.add(beds, edges);
 
   return beds.userData.benchmark;

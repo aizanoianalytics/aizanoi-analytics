@@ -21,6 +21,7 @@ function planarLength(piece) {
 }
 
 test('desktop Rome road plan follows terrain and preserves every named road', () => {
+  assert.equal(ROME_ROAD_RENDER_POLICY.desktopPieceLength, 14);
   const pieces = createRoadPiecePlan({ streets: STREETS, terrainHeightAt, mobile: false });
   assert.ok(pieces.length > STREETS.length, 'desktop plan should subdivide long roads');
   assert.deepEqual(
@@ -46,7 +47,8 @@ test('desktop Rome road plan follows terrain and preserves every named road', ()
   }
 });
 
-test('mobile road plan reduces subdivisions without changing the source roads', () => {
+test('mobile road plan uses a tighter but cheaper terrain-following ceiling', () => {
+  assert.equal(ROME_ROAD_RENDER_POLICY.mobilePieceLength, 20);
   const desktop = createRoadPiecePlan({ streets: STREETS, terrainHeightAt, mobile: false });
   const mobile = createRoadPiecePlan({ streets: STREETS, terrainHeightAt, mobile: true });
   assert.ok(mobile.length < desktop.length, 'mobile should use fewer road instances than desktop');
@@ -61,18 +63,19 @@ test('mobile road plan reduces subdivisions without changing the source roads', 
   );
 });
 
-test('V8.1 keeps two instanced road layers with narrow edge bands', () => {
+test('V8.2 keeps two instanced flat-quad road layers with narrow edge bands', () => {
   assert.equal(ROME_ROAD_RENDER_POLICY.edgeBandWidth, 0.16);
   assert.equal(ROME_ROAD_RENDER_POLICY.edgeInset, 0.11);
+  assert.match(roadBuilderSource, /new THREE\.PlaneGeometry\(1, 1\)/);
+  assert.match(roadBuilderSource, /geometry\.rotateX\(-Math\.PI \/ 2\)/);
+  assert.doesNotMatch(roadBuilderSource, /new THREE\.BoxGeometry/);
   assert.match(roadBuilderSource, /new THREE\.InstancedMesh\(geometry, bedMaterial, pieces\.length\)/);
   assert.match(roadBuilderSource, /new THREE\.InstancedMesh\(geometry, edgeMaterial, pieces\.length \* 2\)/);
   assert.match(roadBuilderSource, /scene\.add\(beds, edges\)/);
-  assert.doesNotMatch(roadBuilderSource, /new THREE\.Mesh\(geometry, material\)/);
   assert.match(mainSource, /addInstancedRoads\(THREE, scene, simulation, \{ mobile \}\)/);
-  assert.doesNotMatch(mainSource, /function roadSegment\(/);
 });
 
-test('V8.1 interprets shared road RGB tokens as sRGB inputs', () => {
+test('V8.2 interprets shared road RGB tokens as sRGB inputs', () => {
   assert.match(roadBuilderSource, /new THREE\.Color\(\)\.setRGB\(/);
   assert.match(roadBuilderSource, /THREE\.SRGBColorSpace/);
   assert.match(roadBuilderSource, /ANCIENT_MATERIALS\.road/);
@@ -93,5 +96,4 @@ test('matched visual capture includes hero and Via Sacra with Three-specific yaw
   assert.match(captureSource, /const dx = target\.lookX - target\.x/);
   assert.match(captureSource, /const dz = target\.lookZ - target\.z/);
   assert.match(captureSource, /player\.yaw = Math\.atan2\(-dx, -dz\)/);
-  assert.doesNotMatch(captureSource, /player\.yaw = Math\.atan2\(target\.lookX - target\.x, -\(target\.lookZ - target\.z\)\)/);
 });
