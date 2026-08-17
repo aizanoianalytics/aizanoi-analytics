@@ -47,6 +47,15 @@ jobs:
           node --check experiments/threejs-rome-renderer/src/rome-adapter.js
           node --check experiments/threejs-rome-renderer/scripts/vendor-three.mjs
 
+      - name: Three.js experiment dependency smoke test
+        if: startsWith(github.ref, 'refs/heads/exp/')
+        run: |
+          npm install --prefix experiments/threejs-rome-renderer --ignore-scripts --package-lock=false
+          npm run --prefix experiments/threejs-rome-renderer vendor
+          npm run --prefix experiments/threejs-rome-renderer check
+          test -s experiments/threejs-rome-renderer/vendor/three.module.js
+          node -e "import('./experiments/threejs-rome-renderer/vendor/three.module.js').then((THREE)=>{if(THREE.REVISION!=='185') throw new Error('Unexpected Three.js revision '+THREE.REVISION); console.log('Three.js r'+THREE.REVISION+' loaded locally');})"
+
       - name: Regression tests
         run: node --test tests/*.test.mjs
 
