@@ -73,13 +73,17 @@ test('V8.4 keeps two instanced flat-quad road layers', () => {
 });
 
 test('V8.4 keeps shared road tokens untouched and refines Three visual response', () => {
-  assert.deepEqual(ANCIENT_MATERIALS.road, [0.34, 0.32, 0.28]);
-  assert.deepEqual(ANCIENT_MATERIALS.roadEdge, [0.42, 0.39, 0.32]);
+  assert.deepEqual(ANCIENT_MATERIALS.road, [0.34, 0.31, 0.25]);
+  assert.deepEqual(ANCIENT_MATERIALS.roadEdge, [0.23, 0.21, 0.18]);
   assert.deepEqual(ROME_ROAD_VISUAL_RESPONSE, { red: 0.72, green: 0.93, blue: 1.44 });
   const bed = compensatedRoadRgb(ANCIENT_MATERIALS.road);
+  const edge = compensatedRoadRgb(ANCIENT_MATERIALS.roadEdge);
   assert.ok(Math.abs(bed[0] - 0.2448) < 1e-9);
-  assert.ok(Math.abs(bed[1] - 0.2976) < 1e-9);
-  assert.ok(Math.abs(bed[2] - 0.4032) < 1e-9);
+  assert.ok(Math.abs(bed[1] - 0.2883) < 1e-9);
+  assert.ok(Math.abs(bed[2] - 0.36) < 1e-9);
+  assert.ok(Math.abs(edge[0] - 0.1656) < 1e-9);
+  assert.ok(Math.abs(edge[1] - 0.1953) < 1e-9);
+  assert.ok(Math.abs(edge[2] - 0.2592) < 1e-9);
   assert.match(roadBuilderSource, /THREE\.SRGBColorSpace/);
 });
 
