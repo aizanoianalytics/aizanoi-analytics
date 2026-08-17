@@ -15,6 +15,8 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    env:
+      RENDERER_EXPERIMENT: ${{ startsWith(github.ref, 'refs/heads/exp/') || startsWith(github.head_ref, 'exp/') }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -56,12 +58,12 @@ jobs:
           node --check experiments/threejs-rome-renderer/scripts/capture-ab-baseline.mjs
 
       - name: Install Three.js experiment dependencies
-        if: startsWith(github.ref, 'refs/heads/exp/')
+        if: env.RENDERER_EXPERIMENT == 'true'
         working-directory: experiments/threejs-rome-renderer
         run: npm install --ignore-scripts --package-lock=false
 
       - name: Vendor Three.js experiment module
-        if: startsWith(github.ref, 'refs/heads/exp/')
+        if: env.RENDERER_EXPERIMENT == 'true'
         working-directory: experiments/threejs-rome-renderer
         run: |
           npm run vendor
@@ -69,31 +71,31 @@ jobs:
           test -s vendor/three.core.js
 
       - name: Check Three.js experiment sources
-        if: startsWith(github.ref, 'refs/heads/exp/')
+        if: env.RENDERER_EXPERIMENT == 'true'
         working-directory: experiments/threejs-rome-renderer
         run: npm run check
 
       - name: Verify local Three.js module
-        if: startsWith(github.ref, 'refs/heads/exp/')
+        if: env.RENDERER_EXPERIMENT == 'true'
         run: node -e "import('./experiments/threejs-rome-renderer/vendor/three.module.js').then((THREE)=>{if(typeof THREE.WebGLRenderer!=='function'||typeof THREE.Scene!=='function'||!THREE.REVISION) throw new Error('Vendored Three.js public API is incomplete'); console.log('Three.js '+THREE.REVISION+' loaded locally');})"
 
       - name: Install Chromium for Three.js browser smoke
-        if: startsWith(github.ref, 'refs/heads/exp/')
+        if: env.RENDERER_EXPERIMENT == 'true'
         working-directory: experiments/threejs-rome-renderer
         run: npx playwright install chromium --with-deps
 
       - name: Three.js desktop browser smoke
-        if: startsWith(github.ref, 'refs/heads/exp/')
+        if: env.RENDERER_EXPERIMENT == 'true'
         working-directory: experiments/threejs-rome-renderer
         run: npm run browser:smoke -- desktop
 
       - name: Three.js pointer-lock and focus-loss browser smoke
-        if: startsWith(github.ref, 'refs/heads/exp/')
+        if: env.RENDERER_EXPERIMENT == 'true'
         working-directory: experiments/threejs-rome-renderer
         run: npm run browser:smoke -- input
 
       - name: Three.js mobile browser smoke
-        if: startsWith(github.ref, 'refs/heads/exp/')
+        if: env.RENDERER_EXPERIMENT == 'true'
         working-directory: experiments/threejs-rome-renderer
         run: npm run browser:smoke -- mobile
 
