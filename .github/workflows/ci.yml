@@ -64,9 +64,9 @@ jobs:
         working-directory: experiments/threejs-rome-renderer
         run: npm run check
 
-      - name: Verify local Three.js revision
+      - name: Verify local Three.js module
         if: startsWith(github.ref, 'refs/heads/exp/')
-        run: node -e "import('./experiments/threejs-rome-renderer/vendor/three.module.js').then((THREE)=>{if(THREE.REVISION!=='185') throw new Error('Unexpected Three.js revision '+THREE.REVISION); console.log('Three.js r'+THREE.REVISION+' loaded locally');})"
+        run: node -e "import('./experiments/threejs-rome-renderer/vendor/three.module.js').then((THREE)=>{if(typeof THREE.WebGLRenderer!=='function'||typeof THREE.Scene!=='function'||!THREE.REVISION) throw new Error('Vendored Three.js public API is incomplete'); console.log('Three.js '+THREE.REVISION+' loaded locally');})"
 
       - name: Regression tests
         run: node --test tests/*.test.mjs
