@@ -1,0 +1,59 @@
+name: Temporary Three.js V5 Urban Eaves
+
+on:
+  push:
+    branches:
+      - exp/threejs-rome-renderer-poc
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: exp/threejs-rome-renderer-poc
+      - name: Apply guarded urban-eaves patch
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('experiments/threejs-rome-renderer/src/main.js')
+          text = path.read_text()
+
+          patches = [
+              (
+                  """  const roofs = new THREE.InstancedMesh(roofGeometry, roofMaterial, count);\n  roofs.name = 'Plausible urban fabric roof silhouettes';\n\n  const matrix = new THREE.Matrix4();""",
+                  """  const roofs = new THREE.InstancedMesh(roofGeometry, roofMaterial, count);\n  roofs.name = 'Plausible urban fabric roof silhouettes';\n\n  // A single instanced eave/cornice layer gives otherwise box-like inferred\n  // blocks a readable wall-to-roof transition without multiplying draw calls.\n  // It remains purely plausible urban massing, not evidence-bearing detail.\n  const eaveGeometry = new THREE.BoxGeometry(1, 1, 1);\n  const eaveMaterial = new THREE.MeshStandardMaterial({\n    color: ROME_VISUAL_PALETTE.urbanEaves,\n    roughness: 0.96,\n    metalness: 0,\n  });\n  const eaves = new THREE.InstancedMesh(eaveGeometry, eaveMaterial, count);\n  eaves.name = 'Plausible urban fabric eave bands';\n\n  const matrix = new THREE.Matrix4();""",
+              ),
+              (
+                  """    walls.setMatrixAt(index, matrix);\n    walls.setColorAt(index, new THREE.Color(wallColors[index % wallColors.length]));\n\n    const roofHeight = Math.min(4.4, Math.max(1.9, Math.min(record.w, record.d) * 0.19));""",
+                  """    walls.setMatrixAt(index, matrix);\n    walls.setColorAt(index, new THREE.Color(wallColors[index % wallColors.length]));\n\n    position.set(record.x, ground + record.h + 0.14, record.z);\n    euler.set(0, rotation, 0);\n    quaternion.setFromEuler(euler);\n    scale.set(record.w * 1.035, 0.28, record.d * 1.035);\n    matrix.compose(position, quaternion, scale);\n    eaves.setMatrixAt(index, matrix);\n\n    const roofHeight = Math.min(4.4, Math.max(1.9, Math.min(record.w, record.d) * 0.19));""",
+              ),
+              (
+                  """  walls.instanceMatrix.needsUpdate = true;\n  walls.instanceColor.needsUpdate = true;\n  roofs.instanceMatrix.needsUpdate = true;\n  scene.add(walls, roofs);""",
+                  """  walls.instanceMatrix.needsUpdate = true;\n  walls.instanceColor.needsUpdate = true;\n  eaves.instanceMatrix.needsUpdate = true;\n  roofs.instanceMatrix.needsUpdate = true;\n  scene.add(walls, eaves, roofs);""",
+              ),
+          ]
+
+          for old, new in patches:
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'guard failed: expected exactly one match, found {count}')
+              text = text.replace(old, new, 1)
+
+          path.write_text(text)
+          PY
+          node --check experiments/threejs-rome-renderer/src/main.js
+          git diff --check
+      - name: Commit patch and remove one-shot workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add experiments/threejs-rome-renderer/src/main.js
+          git rm .github/workflows/temporary-threejs-v5-urban-eaves.yml
+          git commit -m 'feat: add instanced eaves to Rome inferred urban fabric'
+          git push
