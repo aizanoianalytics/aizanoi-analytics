@@ -3,6 +3,7 @@ import { createLifecycle } from '../../../frontend/ancient-world/engine/lifecycl
 import { createRomeSimulation } from './rome-adapter.js';
 import { installRomePocControls } from './runtime-controls.js';
 import { buildColosseumHero } from './hero-builders.js';
+import { createTerrainColorSampler, ROME_VISUAL_PALETTE } from './visual-palette.js';
 
 const statusEl = document.querySelector('#status');
 const metricsEl = document.querySelector('#metrics');
@@ -44,6 +45,7 @@ function buildTerrain(THREE, scene, simulation, mobile) {
   const step = mobile ? 46 : 32;
   const cols = Math.ceil((bounds.maxX - bounds.minX) / step) + 1;
   const rows = Math.ceil((bounds.maxZ - bounds.minZ) / step) + 1;
+  const terrainColorAt = createTerrainColorSampler(THREE);
   const positions = [];
   const colors = [];
   const indices = [];
@@ -54,10 +56,7 @@ function buildTerrain(THREE, scene, simulation, mobile) {
       const x = Math.min(bounds.maxX, bounds.minX + col * step);
       const y = simulation.terrainHeightAt(x, z);
       positions.push(x, y, z);
-      const grain = (Math.sin(x * 0.021) + Math.sin(z * 0.017) + Math.sin((x + z) * 0.008)) * 0.018;
-      const heightTint = Math.max(-0.025, Math.min(0.05, y * 0.005));
-      const shade = 0.94 + grain + heightTint;
-      colors.push(0.34 * shade, 0.29 * shade, 0.19 * shade);
+      colors.push(...terrainColorAt(x, z, y));
     }
   }
   for (let row = 0; row < rows - 1; row++) {
@@ -244,7 +243,7 @@ function addUrbanFabric(THREE, scene, simulation) {
 
   const roofGeometry = new THREE.ConeGeometry(0.72, 1, 4, 1, false);
   const roofMaterial = new THREE.MeshStandardMaterial({
-    color: 0x5f2f21,
+    color: ROME_VISUAL_PALETTE.roofs,
     roughness: 0.98,
     metalness: 0,
   });
@@ -256,7 +255,7 @@ function addUrbanFabric(THREE, scene, simulation) {
   const quaternion = new THREE.Quaternion();
   const scale = new THREE.Vector3();
   const euler = new THREE.Euler();
-  const wallColors = [0x84533a, 0xa47655, 0xc0ad86, 0x76503b];
+  const wallColors = ROME_VISUAL_PALETTE.urbanWalls;
 
   for (const [index, record] of simulation.urbanFabric.entries()) {
     const ground = simulation.terrainHeightAt(record.x, record.z);
@@ -322,8 +321,8 @@ async function bootstrap() {
   document.body.prepend(renderer.domElement);
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x76766d);
-  scene.fog = new THREE.FogExp2(0x7d786c, mobile ? 0.00096 : 0.00072);
+  scene.background = new THREE.Color(ROME_VISUAL_PALETTE.sky);
+  scene.fog = new THREE.FogExp2(ROME_VISUAL_PALETTE.fog, mobile ? 0.00096 : 0.00072);
 
   const camera = new THREE.PerspectiveCamera(62, 1, 0.08, 2600);
   camera.rotation.order = 'YXZ';
