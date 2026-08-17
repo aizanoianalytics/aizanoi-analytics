@@ -1,0 +1,37 @@
+name: Temporary Three.js V8 A/B
+
+on:
+  push:
+    branches:
+      - exp/threejs-rome-renderer-poc
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Install experiment dependencies
+        working-directory: experiments/threejs-rome-renderer
+        run: npm install --ignore-scripts --package-lock=false
+      - name: Vendor Three.js
+        working-directory: experiments/threejs-rome-renderer
+        run: npm run vendor
+      - name: Install Chromium
+        working-directory: experiments/threejs-rome-renderer
+        run: npx playwright install chromium --with-deps
+      - name: Capture V8 matched baselines
+        working-directory: experiments/threejs-rome-renderer
+        run: npm run capture:ab
+      - name: Upload V8 A/B artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rome-renderer-v8-ab
+          path: experiments/threejs-rome-renderer/visual-baseline/*.png
+          retention-days: 2
