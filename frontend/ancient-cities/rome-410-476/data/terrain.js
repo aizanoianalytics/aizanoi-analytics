@@ -1,10 +1,7 @@
 // Rome AD 410–476 — schematic topographic field.
-//
-// This is deliberately NOT a surveyed DEM. It preserves the major hill/valley
-// relationships needed for human-scale walking and city silhouette while the
-// exact elevations remain a reconstruction layer. Keep this distinction visible
-// in evidence UI and research notes.
-
+// This is deliberately NOT a surveyed DEM. It preserves major hill/valley
+// relationships for walking and silhouette while local elevations remain
+// explicitly reconstructed.
 export const TERRAIN_EVIDENCE = Object.freeze({
   level: 'plausible',
   label: 'Schematic topography',
@@ -22,70 +19,43 @@ export const HILLS = Object.freeze([
   { id: 'janiculum', name: 'Janiculum / Transtiberim rise', x: -720, z: 130, height: 18.0, rx: 190, rz: 260, rot: -0.10 },
 ]);
 
-export const TIBER = Object.freeze({
-  x: -505,
-  halfWidth: 46,
-  waterY: -2.15,
-  bankFalloff: 92,
-});
-
+export const TIBER = Object.freeze({ x: -505, halfWidth: 46, waterY: -2.15, bankFalloff: 92 });
 const clamp01 = (value) => Math.max(0, Math.min(1, value));
-const smooth = (value) => {
-  const t = clamp01(value);
-  return t * t * (3 - 2 * t);
-};
+const smooth = (value) => { const t = clamp01(value); return t * t * (3 - 2 * t); };
 
 function hillContribution(hill, x, z) {
-  const dx = x - hill.x;
-  const dz = z - hill.z;
-  const ca = Math.cos(-(hill.rot || 0));
-  const sa = Math.sin(-(hill.rot || 0));
-  const lx = dx * ca - dz * sa;
-  const lz = dx * sa + dz * ca;
+  const dx = x - hill.x, dz = z - hill.z;
+  const ca = Math.cos(-(hill.rot || 0)), sa = Math.sin(-(hill.rot || 0));
+  const lx = dx * ca - dz * sa, lz = dx * sa + dz * ca;
   const distance = Math.sqrt((lx * lx) / (hill.rx * hill.rx) + (lz * lz) / (hill.rz * hill.rz));
   if (distance >= 1) return 0;
   return hill.height * smooth(1 - distance);
 }
 
 export function terrainHeightAt(x, z) {
-  // Use the strongest nearby hill rather than summing all hills; this preserves
-  // valleys between them and avoids turning the entire city into one mound.
   let height = 0;
   for (const hill of HILLS) height = Math.max(height, hillContribution(hill, x, z));
-
-  // The Tiber corridor sits below the surrounding city. The depression is wide
-  // enough to read from street level but intentionally modest to keep bridge
-  // approaches walkable in a lightweight procedural model.
   const riverDistance = Math.abs(x - TIBER.x);
   if (riverDistance < TIBER.bankFalloff) {
     const bank = smooth(1 - riverDistance / TIBER.bankFalloff);
-    height = Math.max(0, height - bank * 3.4);
+    height -= bank * 3.4;
   }
-
   return height;
 }
 
 export function terrainNormalAt(x, z, epsilon = 0.75) {
-  const left = terrainHeightAt(x - epsilon, z);
-  const right = terrainHeightAt(x + epsilon, z);
-  const back = terrainHeightAt(x, z - epsilon);
-  const front = terrainHeightAt(x, z + epsilon);
-  const nx = left - right;
-  const ny = epsilon * 2;
-  const nz = back - front;
+  const left = terrainHeightAt(x - epsilon, z), right = terrainHeightAt(x + epsilon, z);
+  const back = terrainHeightAt(x, z - epsilon), front = terrainHeightAt(x, z + epsilon);
+  const nx = left - right, ny = epsilon * 2, nz = back - front;
   const length = Math.hypot(nx, ny, nz) || 1;
   return [nx / length, ny / length, nz / length];
 }
 
 export function terrainDescriptorAt(x, z) {
-  let best = null;
-  let contribution = 0;
+  let best = null, contribution = 0;
   for (const hill of HILLS) {
     const value = hillContribution(hill, x, z);
-    if (value > contribution) {
-      contribution = value;
-      best = hill;
-    }
+    if (value > contribution) { contribution = value; best = hill; }
   }
   return {
     elevation: terrainHeightAt(x, z),
