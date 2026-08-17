@@ -47,14 +47,26 @@ jobs:
           node --check experiments/threejs-rome-renderer/src/rome-adapter.js
           node --check experiments/threejs-rome-renderer/scripts/vendor-three.mjs
 
-      - name: Three.js experiment dependency smoke test
+      - name: Install Three.js experiment dependency
         if: startsWith(github.ref, 'refs/heads/exp/')
+        working-directory: experiments/threejs-rome-renderer
+        run: npm install --ignore-scripts --package-lock=false
+
+      - name: Vendor Three.js experiment module
+        if: startsWith(github.ref, 'refs/heads/exp/')
+        working-directory: experiments/threejs-rome-renderer
         run: |
-          npm --prefix experiments/threejs-rome-renderer install --ignore-scripts --package-lock=false
-          npm --prefix experiments/threejs-rome-renderer run vendor
-          npm --prefix experiments/threejs-rome-renderer run check
-          test -s experiments/threejs-rome-renderer/vendor/three.module.js
-          node -e "import('./experiments/threejs-rome-renderer/vendor/three.module.js').then((THREE)=>{if(THREE.REVISION!=='185') throw new Error('Unexpected Three.js revision '+THREE.REVISION); console.log('Three.js r'+THREE.REVISION+' loaded locally');})"
+          npm run vendor
+          test -s vendor/three.module.js
+
+      - name: Check Three.js experiment sources
+        if: startsWith(github.ref, 'refs/heads/exp/')
+        working-directory: experiments/threejs-rome-renderer
+        run: npm run check
+
+      - name: Verify local Three.js revision
+        if: startsWith(github.ref, 'refs/heads/exp/')
+        run: node -e "import('./experiments/threejs-rome-renderer/vendor/three.module.js').then((THREE)=>{if(THREE.REVISION!=='185') throw new Error('Unexpected Three.js revision '+THREE.REVISION); console.log('Three.js r'+THREE.REVISION+' loaded locally');})"
 
       - name: Regression tests
         run: node --test tests/*.test.mjs
