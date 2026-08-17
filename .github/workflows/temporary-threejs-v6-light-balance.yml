@@ -1,0 +1,52 @@
+name: Temporary Three.js V6 Light Balance
+
+on:
+  push:
+    branches:
+      - exp/threejs-rome-renderer-poc
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: exp/threejs-rome-renderer-poc
+      - name: Apply guarded light-balance patch
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('experiments/threejs-rome-renderer/src/main.js')
+          text = path.read_text()
+          patches = [
+              (
+                  "const hemi = new THREE.HemisphereLight(0xd4cdb7, 0x3b3128, 2.45);",
+                  "const hemi = new THREE.HemisphereLight(0xd4cdb7, 0x3b3128, 1.75);",
+              ),
+              (
+                  "const sun = new THREE.DirectionalLight(0xffdda0, 3.85);",
+                  "const sun = new THREE.DirectionalLight(0xffdda0, 3.65);",
+              ),
+          ]
+          for old, new in patches:
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'guard failed for {old!r}: expected one match, found {count}')
+              text = text.replace(old, new, 1)
+          path.write_text(text)
+          PY
+          node --check experiments/threejs-rome-renderer/src/main.js
+          git diff --check
+      - name: Commit patch and remove one-shot workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add experiments/threejs-rome-renderer/src/main.js
+          git rm .github/workflows/temporary-threejs-v6-light-balance.yml
+          git commit -m 'feat: rebalance Rome hemisphere and sun lighting'
+          git push
