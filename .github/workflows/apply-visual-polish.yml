@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   patch:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -42,25 +41,9 @@ document.addEventListener('mousemove',e=>{if(locked){player.yaw-=e.movementX*.00
 addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyE')nearestInfo();});
 addEventListener('keyup',e=>keys[e.code]=false);
 addEventListener('blur',()=>keys={});
-
-// Mobile controls use the same movement state as WASD and adjust the same camera yaw/pitch.
-document.querySelectorAll('[data-move]').forEach(btn=>{
-  const code=btn.dataset.move;
-  const down=e=>{e.preventDefault();keys[code]=true;};
-  const up=e=>{e.preventDefault();keys[code]=false;};
-  btn.addEventListener('pointerdown',down);
-  btn.addEventListener('pointerup',up);
-  btn.addEventListener('pointercancel',up);
-  btn.addEventListener('pointerleave',up);
-});
+document.querySelectorAll('[data-move]').forEach(btn=>{const code=btn.dataset.move;const down=e=>{e.preventDefault();keys[code]=true;};const up=e=>{e.preventDefault();keys[code]=false;};btn.addEventListener('pointerdown',down);btn.addEventListener('pointerup',up);btn.addEventListener('pointercancel',up);btn.addEventListener('pointerleave',up);});
 const lookPad=$('#lookPad');
-if(lookPad){
-  let lookPointer=null,lastX=0,lastY=0;
-  lookPad.addEventListener('pointerdown',e=>{e.preventDefault();lookPointer=e.pointerId;lastX=e.clientX;lastY=e.clientY;lookPad.setPointerCapture?.(e.pointerId);});
-  lookPad.addEventListener('pointermove',e=>{if(e.pointerId!==lookPointer)return;e.preventDefault();const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;player.yaw-=dx*.006;player.pitch=Math.max(-.7,Math.min(.55,player.pitch-dy*.0045));});
-  const stopLook=e=>{if(e.pointerId===lookPointer)lookPointer=null;};
-  lookPad.addEventListener('pointerup',stopLook);lookPad.addEventListener('pointercancel',stopLook);
-}
+if(lookPad){let lookPointer=null,lastX=0,lastY=0;lookPad.addEventListener('pointerdown',e=>{e.preventDefault();lookPointer=e.pointerId;lastX=e.clientX;lastY=e.clientY;lookPad.setPointerCapture?.(e.pointerId);});lookPad.addEventListener('pointermove',e=>{if(e.pointerId!==lookPointer)return;e.preventDefault();const dx=e.clientX-lastX,dy=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;player.yaw-=dx*.006;player.pitch=Math.max(-.7,Math.min(.55,player.pitch-dy*.0045));});const stopLook=e=>{if(e.pointerId===lookPointer)lookPointer=null;};lookPad.addEventListener('pointerup',stopLook);lookPad.addEventListener('pointercancel',stopLook);}
 """
           if old in text:
               text = text.replace(old, new, 1)
