@@ -32,7 +32,10 @@ jobs:
           node --check frontend/ancient-world/engine/traversal.js
           node --check frontend/ancient-world/engine/lifecycle.js
           node --check frontend/ancient-world/engine/navigation.js
+          node --check frontend/ancient-world/engine/evidence.js
           node --check frontend/ancient-world/assets/materials.js
+          node --check frontend/ancient-cities/rome-410-476/data/terrain.js
+          node --check frontend/ancient-cities/rome-410-476/data/urban-fabric.js
           node --check frontend/ancient-cities/rome-410-476/js/app.js
 
       - name: Regression tests
