@@ -46,6 +46,7 @@ jobs:
           node --check experiments/threejs-rome-renderer/src/main.js
           node --check experiments/threejs-rome-renderer/src/rome-adapter.js
           node --check experiments/threejs-rome-renderer/src/runtime-controls.js
+          node --check experiments/threejs-rome-renderer/src/methodology.js
           node --check experiments/threejs-rome-renderer/scripts/vendor-three.mjs
           node --check experiments/threejs-rome-renderer/scripts/browser-smoke.mjs
 
