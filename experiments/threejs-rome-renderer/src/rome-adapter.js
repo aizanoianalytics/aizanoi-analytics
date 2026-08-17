@@ -1,6 +1,6 @@
 import { ROME_MANIFEST } from '../../../frontend/ancient-cities/rome-410-476/data/manifest.js';
 import { BUILDINGS, STREETS, REGIONS } from '../../../frontend/ancient-cities/rome-410-476/data/city.js';
-import { TIBER, terrainHeightAt } from '../../../frontend/ancient-cities/rome-410-476/data/terrain.js';
+import { TIBER, terrainHeightAt, terrainNormalAt } from '../../../frontend/ancient-cities/rome-410-476/data/terrain.js';
 import { generateUrbanFabric } from '../../../frontend/ancient-cities/rome-410-476/data/urban-fabric.js';
 import {
   createTraversalSystem,
@@ -137,6 +137,7 @@ export function createRomeSimulation({ mobile = false } = {}) {
     urbanFabric,
     tiber: TIBER,
     terrainHeightAt,
+    terrainNormalAt,
     player,
     traversal,
     colliders,
