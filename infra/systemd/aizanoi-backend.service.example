@@ -1,0 +1,15 @@
+[Unit]
+Description=Aizanoi AI Chat Backend
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/example-backend
+ExecStart=/usr/bin/node /opt/example-backend/server.js
+Restart=always
+RestartSec=5
+User=example
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

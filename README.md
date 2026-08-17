@@ -4,8 +4,10 @@ Open-source source code for [aizanoianalytics.com](https://aizanoianalytics.com)
 
 ## Repository layout
 
-- `frontend/` — static Windows XP-inspired website and browser games
+- `frontend/` — static Windows XP-inspired website, browser games and the standalone Historic World
+- `frontend/historic-world/` — self-contained WebGL reconstruction served at `/historic-world/`
 - `backend/` — Node.js/Express API
+- `infra/` — sanitized nginx/systemd deployment examples; production files and credentials stay on the server
 
 ## Local development
 

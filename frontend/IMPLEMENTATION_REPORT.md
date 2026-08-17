@@ -61,7 +61,8 @@ backend/
 |--------------------|------------------------------------------------|
 | `/`                | Desktop / mobile launcher                      |
 | `/hr-analytics/`   | Opens Aizanoi AI window                         |
-| `/ancient-world/`  | Opens Ancient World window                      |
+| `/ancient-world/`  | Opens the legacy Ancient World launcher and site information window |
+| `/historic-world/` | Opens the standalone Aizanoi 3D Historic World reconstruction |
 | `/games/`          | Opens Games launcher                            |
 | `/projects/`       | Opens Projects window (loads `pages/projects.json`) |
 | `/videos/`         | Opens Aizanoi TV window (Coming Soon placeholder) |
@@ -81,6 +82,10 @@ backend/
 - `http://aizanoianalytics.com/*` → `https://aizanoianalytics.com/*` (301)
 - `https://www.aizanoianalytics.com/*` → `https://aizanoianalytics.com/*` (301)
 - `https://aizanoianalytics.com/ai/` → `https://aizanoianalytics.com/hr-analytics/` (301)
+
+## Historic World V8
+
+The new self-contained WebGL reconstruction lives at `frontend/historic-world/index.html` and is served at `/historic-world/`. The legacy `/ancient-world/` XP window remains as the site's information and entry launcher. The 3D experience has no CDN dependency and keeps its research/source and uncertainty UI inside the standalone route.
 
 ## Aizanoi AI Backend
 

@@ -4,14 +4,17 @@ Bu turda kota sınırlı olduğu için **PRIORITY 1-10** tamamlandı. Büyük i�
 
 ## Yapılmayan / Ertelenen Büyük İşler
 
-### Ancient World — Gelişmiş Motor
-- [ ] Ancient World için gerçek 3D engine (Three.js / WebGL)
-- [ ] Şehir modeli: tapınak, tiyatro, stadyum, agora, köprü
-- [ ] POV navigasyonu (WASD + mouse look)
-- [ ] Hotspot sistemi (interaktif POI bilgilendirme)
-- [ ] Zaman slider (farklı dönemler: Hellenistik, Roma, Bizans)
-- [ ] Ancient Stars oyunu veya zaman tüneli animasyonu
-- [ ] Daha fazla şehir (Efes, Bergama, Side, Aspendos)
+### Historic World — V8 integrated
+- [x] Self-contained WebGL engine at `frontend/historic-world/index.html`
+- [x] Roman Aizanoi city reconstruction with Temple, Agora, Baths, Theatre, Stadium, bridges and river
+- [x] WASD/touch movement, mouse look, collision grid, terrain/elevation support and tread-by-tread stairs
+- [x] Archaeological atlas, Texier survey, sources and evidence/uncertainty labels
+- [x] Historical layers AD 225 / AD 301 / AD 425
+- [x] `/historic-world/` route linked from the legacy Ancient World launcher
+- [ ] Add a real jump mechanic only after an explicit design decision and vertical-state test plan
+- [ ] Split the monolithic renderer into modules only when a low-risk boundary is proven
+
+### Ancient World — Legacy launcher
 
 ### Games — Gelişmiş
 - [ ] Daha iyi grafikler ve animasyonlar

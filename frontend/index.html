@@ -1097,6 +1097,7 @@ const APPS = {
           <div style='background:#f4f3eb;border:1px solid #c0c5cd;padding:12px;margin-bottom:12px;border-radius:6px;'>
             <div style='font-weight:bold;margin-bottom:6px;color:#5a3e22;'>Choose your experience</div>
             <div style='display:flex;gap:8px;flex-wrap:wrap;'>
+              <a href='/historic-world/' class='aw-btn' style='display:inline-block;padding:6px 12px;background:linear-gradient(180deg,#7c5b3e,#5a3e22);color:#fff;border:1px solid #49301e;border-radius:3px;cursor:pointer;font-size:11px;text-decoration:none;font-weight:bold;'>Enter 3D Historic World</a>
               <button class='aw-btn' data-view='info' style='padding:6px 12px;background:linear-gradient(180deg,#fcfcfc,#e0dfd3);border:1px solid #919b9c;border-radius:3px;cursor:pointer;font-size:11px;'>Site information</button>
               <button class='aw-btn' data-view='map' style='padding:6px 12px;background:linear-gradient(180deg,#fcfcfc,#e0dfd3);border:1px solid #919b9c;border-radius:3px;cursor:pointer;font-size:11px;'>Map of key sites</button>
             </div>
@@ -1178,7 +1179,7 @@ const APPS = {
     body: `<div class='app-pad' style='padding:18px 20px;overflow:auto;height:100%;font-size:12px;line-height:1.6;color:#222;'>
       <h2 style='margin:0 0 12px;font-size:15px;color:#1a5fd6;'>Documentation</h2>
       <p>Backend endpoints: <code>POST /api/chat</code>, <code>GET /api/health</code>, <code>POST /api/terminal/exec</code></p>
-      <p>Routes: /, /hr-analytics/, /ancient-world/, /games/, /projects/, /videos/, /about/, /docs/, /changelog/, /privacy/, /terms/</p>
+      <p>Routes: /, /hr-analytics/, /ancient-world/, /historic-world/, /games/, /projects/, /videos/, /about/, /docs/, /changelog/, /privacy/, /terms/</p>
       <p style='margin-top:10px;'>More documentation will be added as the platform grows.</p>
     </div>`
   },
@@ -1313,7 +1314,7 @@ function openApp(appId) {
   }
   const app = APPS[appId];
   const folderData = FOLDER_CONTENTS[appId];
-  const isFolder = !!folderData;
+  const isFolder = !!folderData && !app;
   if (!app && !isFolder) return;
 
   const title = app ? app.title : folderData.title;
@@ -2684,7 +2685,8 @@ function doLogOff() {
 function doRun() { openApp('control'); }
 var SEARCH_INDEX = [
   { title: 'Aizanoi AI', url: '/hr-analytics/', desc: 'HR & People Analytics Assistant' },
-  { title: 'Ancient World', url: '/ancient-world/', desc: 'Interactive historical exploration' },
+  { title: 'Ancient World', url: '/ancient-world/', desc: 'Historic World launcher and site information' },
+  { title: '3D Historic World', url: '/historic-world/', desc: 'Walk through reconstructed Roman Aizanoi' },
   { title: 'Projects', url: '/projects/', desc: 'Analytics, development and experimental projects' },
   { title: 'Aizanoi TV', url: '/videos/', desc: 'YouTube channel (coming soon)' },
   { title: 'Games', url: '/games/', desc: 'Small retro-inspired games' },
