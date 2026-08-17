@@ -3,7 +3,7 @@
   if (!container) return;
 
   const W = 10, H = 10, MINES = 15, SIZE = 30;
-  let board, revealed, flagged, first, over, won, startedAt, timer, longPressTimer;
+  let board, revealed, flagged, first, over, won, startedAt, timer, longPressTimer, suppressNextClick = false;
 
   function bevel(el, down) {
     el.style.borderStyle = 'solid';
@@ -55,7 +55,7 @@
         cell.addEventListener('click', onLClick);
         cell.addEventListener('contextmenu', (e) => { e.preventDefault(); onRClick(x, y); });
         cell.addEventListener('pointerdown', (e) => {
-          if (e.pointerType === 'touch') longPressTimer = setTimeout(() => { longPressTimer = null; onRClick(x, y); }, 480);
+          if (e.pointerType === 'touch') longPressTimer = setTimeout(() => { longPressTimer = null; suppressNextClick = true; onRClick(x, y); }, 480);
         });
         cell.addEventListener('pointerup', () => { if (longPressTimer) clearTimeout(longPressTimer); longPressTimer = null; });
         cell.addEventListener('pointercancel', () => { if (longPressTimer) clearTimeout(longPressTimer); longPressTimer = null; });
@@ -87,7 +87,7 @@
 
   function onLClick(e) {
     if (over) return;
-    if (longPressTimer === null && e.detail === 0) return;
+    if (suppressNextClick) { suppressNextClick = false; return; }
     const x = +e.currentTarget.dataset.x;
     const y = +e.currentTarget.dataset.y;
     if (flagged[y][x]) return;
