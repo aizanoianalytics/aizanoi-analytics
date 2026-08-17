@@ -42,6 +42,14 @@
   }
 
   function tick() {
+    // The Games window/game loader removes this container when switching games
+    // or closing the window. Stop the timer immediately instead of leaving an
+    // orphaned interval running in the background.
+    if (!container.isConnected) {
+      if (interval) clearInterval(interval);
+      interval = null;
+      return;
+    }
     const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
     if (head.x < 0 || head.y < 0 || head.x >= W || head.y >= H) { end(); return; }
     if (snake.some(s => s.x === head.x && s.y === head.y)) { end(); return; }
@@ -80,6 +88,7 @@
   function end() {
     over = true;
     if (interval) clearInterval(interval);
+    interval = null;
     saveScore('snake', score);
     const status = document.getElementById('snake-status');
     if (status) status.textContent = 'Game over. Score: ' + score + ' · Press Space or New Game';
