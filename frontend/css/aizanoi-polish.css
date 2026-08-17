@@ -1,0 +1,175 @@
+/* Aizanoi OS visual polish layer — lightweight overrides, no external UI library. */
+:root {
+  --aizanoi-stone: #e6d2a4;
+  --aizanoi-bronze: #b78646;
+  --aizanoi-bronze-dark: #6f4a25;
+  --aizanoi-ink: #102a52;
+  --aizanoi-sky: #4f8fd0;
+  --aizanoi-glass: rgba(255,255,255,.16);
+  --aizanoi-shadow: 0 16px 45px rgba(8,27,65,.28), 0 3px 10px rgba(0,0,0,.22);
+}
+
+#desktop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(circle at 76% 18%, rgba(255,239,193,.18), transparent 24%),
+    linear-gradient(180deg, rgba(20,61,120,.04), transparent 45%, rgba(9,35,70,.12));
+  box-shadow: inset 0 0 90px rgba(8,32,74,.12);
+}
+
+#icon-layer { z-index: 3; }
+.desktop-icon {
+  transition: transform .14s ease, background-color .14s ease, border-color .14s ease, filter .14s ease;
+}
+.desktop-icon:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(42,96,170,.12));
+  border-color: rgba(255,255,255,.6);
+  box-shadow: 0 5px 14px rgba(16,52,101,.16);
+}
+.desktop-icon:active { transform: translateY(0) scale(.98); }
+.desktop-icon .icon-glyph {
+  filter: drop-shadow(0 3px 2px rgba(0,0,0,.38));
+  transform-origin: 50% 70%;
+  transition: transform .14s ease, filter .14s ease;
+}
+.desktop-icon:hover .icon-glyph { transform: scale(1.055); filter: drop-shadow(0 5px 4px rgba(0,0,0,.36)) brightness(1.05); }
+.icon-label {
+  font-weight: 600;
+  text-shadow: 0 1px 2px #17304f, 1px 1px 0 rgba(0,0,0,.65);
+}
+
+.win {
+  box-shadow: var(--aizanoi-shadow), 0 0 0 1px rgba(255,255,255,.38) inset;
+  animation: aizanoiWindowIn .16s ease-out;
+}
+.win.active { filter: saturate(1.02); }
+.win-titlebar {
+  border-bottom: 1px solid rgba(7,39,122,.55);
+}
+.win-titlebar::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230,210,164,.82), transparent);
+  pointer-events: none;
+}
+.win.inactive { box-shadow: 0 10px 26px rgba(0,0,0,.2); }
+.win-btn { transition: transform .08s ease, filter .08s ease; }
+.win-btn:hover { transform: translateY(-1px); }
+.win-btn:active { transform: translateY(0) scale(.94); }
+.win-body { background-image: linear-gradient(180deg, rgba(255,255,255,.045), transparent 80px); }
+
+#taskbar {
+  box-shadow: 0 -1px 0 rgba(255,255,255,.35), 0 -6px 20px rgba(10,41,96,.12);
+}
+#start-btn, .task-item, #tray {
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+.task-item { transition: filter .1s ease, transform .1s ease; }
+.task-item:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+#start-menu {
+  box-shadow: 0 18px 46px rgba(0,0,0,.42), 0 0 0 1px rgba(255,255,255,.28) inset;
+}
+#start-menu .sm-item { transition: background-color .1s ease, transform .1s ease; }
+#start-menu .sm-item:hover { transform: translateX(2px); }
+
+button, select, input, textarea, [role="button"] { outline-offset: 2px; }
+button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible,
+[role="button"]:focus-visible, .desktop-icon:focus-visible {
+  outline: 2px solid #ffd36b !important;
+  box-shadow: 0 0 0 2px rgba(19,66,142,.65);
+}
+
+.chat-starter {
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.chat-starter:hover {
+  transform: translateY(-1px);
+  border-color: #4d7fca !important;
+  box-shadow: 0 4px 10px rgba(24,65,126,.14);
+}
+
+/* Games window: retro PC shelf + cleaner arcade surface. */
+.g-tile {
+  position: relative;
+  overflow: hidden;
+  min-width: 104px !important;
+  padding: 10px 13px !important;
+  border-color: #8fa0b7 !important;
+  background: linear-gradient(145deg,#ffffff,#dfe8f3) !important;
+  box-shadow: inset 0 1px 0 #fff, 0 3px 8px rgba(25,59,105,.12);
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, filter .12s ease;
+}
+.g-tile::after {
+  content: "";
+  position: absolute;
+  height: 3px;
+  left: 10px; right: 10px; bottom: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,var(--aizanoi-bronze),#efd69f,var(--aizanoi-bronze));
+  opacity: .5;
+}
+.g-tile:hover {
+  transform: translateY(-2px);
+  border-color: #4f7fbd !important;
+  box-shadow: inset 0 1px 0 #fff, 0 7px 16px rgba(24,61,114,.18);
+  filter: saturate(1.04);
+}
+.g-tile.active {
+  background: linear-gradient(145deg,#275fba,#123f8c) !important;
+  border-color: #0b347a !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 5px 14px rgba(13,50,107,.25);
+}
+.g-tile.active::after { background:#f2cf88;opacity:.9; }
+.g-tile > div:first-child {
+  border-radius: 8px;
+  background: radial-gradient(circle at 35% 30%,#fff,rgba(255,255,255,.16) 40%,rgba(24,73,137,.08) 75%);
+  text-shadow: 0 1px #fff;
+}
+.g-tile.active > div:first-child { background:rgba(255,255,255,.12);text-shadow:none; }
+#games-score {
+  padding: 7px 9px;
+  border: 1px solid #b7c1cf;
+  border-radius: 5px;
+  background: rgba(255,255,255,.55);
+}
+#game-area {
+  background:
+    linear-gradient(135deg,rgba(235,241,248,.95),rgba(255,255,255,.98)) !important;
+}
+#games-list, [id^="game-"][id$="-container"] { border-radius: 6px; }
+[id^="game-"][id$="-container"] { color: #182134; }
+[id^="game-"][id$="-container"] button {
+  border: 1px solid #6e7b8d;
+  border-radius: 4px;
+  background: linear-gradient(#fff,#d9e2ef);
+  color: #183b70;
+  font-weight: 700;
+  box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(0,0,0,.12);
+  cursor: pointer;
+}
+[id^="game-"][id$="-container"] button:hover { filter: brightness(1.04); }
+
+@keyframes aizanoiWindowIn {
+  from { opacity: 0; transform: translateY(7px) scale(.992); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width:700px) {
+  #desktop::after { box-shadow: inset 0 0 55px rgba(8,32,74,.1); }
+  .desktop-icon:hover { transform: none; box-shadow: none; }
+  .win { animation-duration: .11s; box-shadow: 0 6px 18px rgba(0,0,0,.22); }
+  .g-tile { min-width: 86px !important; padding: 8px 9px !important; }
+  [id^="game-"][id$="-container"] canvas { max-width: 100%; height: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
