@@ -1,5 +1,17 @@
 const MOVE_CODES = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ShiftLeft', 'ShiftRight']);
 
+function safePointerCapture(target, pointerId) {
+  if (!target?.setPointerCapture || pointerId == null) return false;
+  try {
+    target.setPointerCapture(pointerId);
+    return true;
+  } catch {
+    // Synthetic pointer events and some mobile browsers can reject capture even
+    // though the underlying pointer interaction is otherwise valid.
+    return false;
+  }
+}
+
 function lookAtMonument(player, monument) {
   if (!monument) return;
   player.yaw = Math.atan2(monument.x - player.x, -(monument.z - player.z));
@@ -70,7 +82,7 @@ export function installRomePocControls({ lifecycle, renderer, simulation, mobile
     const code = button.dataset.move;
     const down = (event) => {
       event.preventDefault();
-      button.setPointerCapture?.(event.pointerId);
+      safePointerCapture(button, event.pointerId);
       keys.add(code);
     };
     const up = (event) => {
@@ -93,7 +105,7 @@ export function installRomePocControls({ lifecycle, renderer, simulation, mobile
       pointerId = event.pointerId;
       lastX = event.clientX;
       lastY = event.clientY;
-      lookPad.setPointerCapture?.(event.pointerId);
+      safePointerCapture(lookPad, event.pointerId);
     });
     lifecycle.listen(lookPad, 'pointermove', (event) => {
       if (event.pointerId !== pointerId) return;
