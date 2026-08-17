@@ -47,8 +47,9 @@ jobs:
           node --check experiments/threejs-rome-renderer/src/rome-adapter.js
           node --check experiments/threejs-rome-renderer/src/runtime-controls.js
           node --check experiments/threejs-rome-renderer/scripts/vendor-three.mjs
+          node --check experiments/threejs-rome-renderer/scripts/browser-smoke.mjs
 
-      - name: Install Three.js experiment dependency
+      - name: Install Three.js experiment dependencies
         if: startsWith(github.ref, 'refs/heads/exp/')
         working-directory: experiments/threejs-rome-renderer
         run: npm install --ignore-scripts --package-lock=false
@@ -69,6 +70,16 @@ jobs:
       - name: Verify local Three.js module
         if: startsWith(github.ref, 'refs/heads/exp/')
         run: node -e "import('./experiments/threejs-rome-renderer/vendor/three.module.js').then((THREE)=>{if(typeof THREE.WebGLRenderer!=='function'||typeof THREE.Scene!=='function'||!THREE.REVISION) throw new Error('Vendored Three.js public API is incomplete'); console.log('Three.js '+THREE.REVISION+' loaded locally');})"
+
+      - name: Install Chromium for Three.js browser smoke
+        if: startsWith(github.ref, 'refs/heads/exp/')
+        working-directory: experiments/threejs-rome-renderer
+        run: npx playwright install chromium --with-deps
+
+      - name: Three.js desktop and mobile browser smoke
+        if: startsWith(github.ref, 'refs/heads/exp/')
+        working-directory: experiments/threejs-rome-renderer
+        run: npm run browser:smoke
 
       - name: Regression tests
         run: node --test tests/*.test.mjs
