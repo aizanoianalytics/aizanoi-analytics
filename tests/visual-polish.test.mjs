@@ -22,11 +22,12 @@ test('games expose upgraded visual and touch affordances', () => {
   assert.match(brick, /pointermove/);
 });
 
-test('Rome includes a mobile move pad and swipe look path', () => {
+test('Rome includes mobile movement and swipe look through lifecycle-managed listeners', () => {
   const html = read('frontend/ancient-cities/rome-410-476/index.html');
   const app = read('frontend/ancient-cities/rome-410-476/js/app.js');
   assert.match(html, /data-move="KeyW"/);
   assert.match(html, /id="lookPad"/);
-  assert.match(app, /querySelectorAll\('\[data-move\]'\)/);
-  assert.match(app, /lookPad\.addEventListener\('pointermove'/);
+  assert.match(app, /\$\$\('\[data-move\]'\)/);
+  assert.match(app, /lifecycle\.listen\(lookPad, 'pointermove'/);
+  assert.match(app, /setPointerCapture/);
 });
