@@ -28,7 +28,7 @@ test('terrain palette keeps deterministic broad and fine vertex variation', () =
 
 test('V7 terrain material adds deterministic terrain-only fragment grain', () => {
   assert.match(terrainMaterial, /cellScale: 0\.72/);
-  assert.match(terrainMaterial, /amplitude: 0\.035/);
+  assert.match(terrainMaterial, /amplitude: 0\.075/);
   assert.match(terrainMaterial, /material\.onBeforeCompile = \(shader\) =>/);
   assert.match(terrainMaterial, /vRomeTerrainXZ = position\.xz/);
   assert.match(terrainMaterial, /romeTerrainHash/);

@@ -1,6 +1,6 @@
 export const ROME_TERRAIN_FRAGMENT_GRAIN = Object.freeze({
   cellScale: 0.72,
-  amplitude: 0.035,
+  amplitude: 0.075,
 });
 
 export function createTerrainMaterial(THREE) {
