@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Rome · Three.js renderer PoC — Aizanoi Analytics</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#171713;color:#f3e4c7}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{background:#171713}canvas{position:fixed;inset:0;width:100%;height:100%;display:block}.hud{position:fixed;z-index:5;left:14px;top:14px;max-width:min(540px,calc(100vw - 28px));padding:11px 13px;border:1px solid rgba(235,197,125,.34);border-radius:10px;background:rgba(18,16,12,.82);backdrop-filter:blur(10px);box-shadow:0 14px 42px rgba(0,0,0,.38);pointer-events:none}.hud b{display:block;font:600 14px Georgia,serif;letter-spacing:.08em}.hud span{display:block;margin-top:4px;color:#c7b58f;font-size:11px;line-height:1.45}.badge{display:inline-block!important;margin-top:8px!important;padding:3px 6px;border:1px solid rgba(235,197,125,.28);border-radius:4px;color:#edd39c!important;font-size:9px!important;letter-spacing:.08em}.reticle{position:fixed;z-index:4;left:50%;top:50%;width:7px;height:7px;margin:-3px 0 0 -3px;border:1px solid rgba(255,240,205,.8);border-radius:50%;pointer-events:none}.help{position:fixed;z-index:5;left:14px;bottom:14px;padding:8px 10px;border:1px solid rgba(235,197,125,.25);border-radius:7px;background:rgba(18,16,12,.72);color:#d8c7a4;font-size:10px;pointer-events:none}.error{position:fixed;z-index:10;inset:0;display:grid;place-items:center;padding:24px;background:#15130f}.error article{max-width:620px;padding:24px;border:1px solid #765f3c;border-radius:12px;background:#211b13}.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="hud"><b>ROME · AD 410–476 · THREE.JS POC</b><span id="status">Loading shared city contract…</span><span id="metrics" class="badge">renderer experiment · not production</span></div>
+<div class="reticle" aria-hidden="true"></div>
+<div class="help">Click to lock pointer · WASD move · Shift sprint · Esc unlock</div>
+<section id="error" class="error hidden"><article><h1>Renderer PoC unavailable</h1><p id="errorText"></p><p>This experiment is intentionally isolated from the production Rome renderer.</p></article></section>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
