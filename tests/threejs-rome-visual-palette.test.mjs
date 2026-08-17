@@ -45,8 +45,8 @@ test('inferred urban fabric uses one instanced eave layer between walls and roof
   assert.match(main, /scene\.add\(walls, eaves, roofs\)/);
 });
 
-test('V6 lighting reduces ambient fill while keeping a strong directional sun', () => {
-  assert.match(main, /new THREE\.HemisphereLight\(0xd4cdb7, 0x3b3128, 1\.75\)/);
-  assert.match(main, /new THREE\.DirectionalLight\(0xffdda0, 3\.65\)/);
-  assert.doesNotMatch(main, /HemisphereLight\(0xd4cdb7, 0x3b3128, 2\.45\)/);
+test('validated V5 lighting keeps readable fill after the rejected low-fill experiment', () => {
+  assert.match(main, /new THREE\.HemisphereLight\(0xd4cdb7, 0x3b3128, 2\.45\)/);
+  assert.match(main, /new THREE\.DirectionalLight\(0xffdda0, 3\.85\)/);
+  assert.doesNotMatch(main, /HemisphereLight\(0xd4cdb7, 0x3b3128, 1\.75\)/);
 });

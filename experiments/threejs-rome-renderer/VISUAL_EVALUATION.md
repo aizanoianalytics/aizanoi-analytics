@@ -36,11 +36,19 @@ At this point the **Three.js Colosseum hero is more architecturally legible than
 
 The terrain sampler now combines deterministic broad and finer spatial variation rather than relying on a single narrow grain term. Inferred urban blocks also receive one shared instanced eave/cornice layer between their walls and roof silhouettes. This adds a readable horizontal break to nearby massing without creating per-building draw objects or changing evidence confidence.
 
-The technical cost remained small in the real Chromium smoke: desktop moved from roughly 9,964 triangles / 160 calls to 11,344 triangles / 161 calls, while mobile moved from roughly 5,710 triangles / 73 calls to 6,574 triangles / 75 calls. Desktop, pointer-lock, mobile, regression and whitespace gates all passed.
+The technical cost remained small in the real Chromium smoke: desktop moved from roughly 9,964 triangles / 160 calls to 11,344 triangles / 161 calls, while mobile moved from roughly 5,710 triangles / 73 calls to about 6,574 triangles / 75 calls. Desktop, pointer-lock, mobile, regression and whitespace gates all passed.
 
 The matched image shows a **modest streetscape improvement**: nearby blocks no longer terminate as completely plain boxes and their roofline transition reads more clearly. However the foreground terrain still appears too broad and tonally flat at the matched camera. The stronger procedural terrain modulation exists mathematically but is not yet visually strong enough after lighting and tone mapping to reproduce the production renderer's ground depth.
 
-**Verdict:** keep the low-cost eave layer and deterministic terrain variation, but the whole-scene parity gate remains open. The next experiment should improve light-to-fill balance before adding expensive shadowing or more geometry.
+**Verdict:** keep the low-cost eave layer and deterministic terrain variation, but the whole-scene parity gate remains open.
+
+### V6 — reduced ambient fill experiment (rejected)
+
+V6 changed only two lighting coefficients so the visual effect could be isolated: hemisphere fill dropped from `2.45` to `1.75` and directional sun from `3.85` to `3.65`. Geometry, fog, tone mapping, traversal, quality policy and evidence data were unchanged. The exact V6 state passed the real desktop/input/mobile Chromium smoke and all regression checks before visual evaluation.
+
+The matched capture did **not** solve the remaining problem. Compared with V5, the city and Colosseum regions became roughly 12–13 RGB levels darker on average and the foreground roughly 7 levels darker, while the foreground terrain relief still did not become materially more legible. Nearby inferred-building faces became unnecessarily heavy and the brighter V5 image retained better street-level readability.
+
+**Verdict:** reject V6 and restore the validated V5 light balance (`HemisphereLight` 2.45, directional sun 3.85). Do not pursue lower ambient fill as the next route to ground cohesion.
 
 ## What the experiment has proven
 
@@ -50,6 +58,7 @@ The matched image shows a **modest streetscape improvement**: nearby blocks no l
 - A detailed hero facade can remain inside the automated scene-complexity ceiling.
 - Better graphics must not alter evidence confidence; the Colosseum hero remains tagged `plausible` at the renderer layer.
 - The renderer can be destroyed while the reconstruction methodology UI remains functional.
+- Matched A/B evaluation can reject technically valid changes when they do not produce a visual benefit.
 
 ## Remaining visual gate
 
