@@ -3,6 +3,31 @@ server {
     root /var/www/example.com;
     index index.html;
 
+    # Common non-secret security baseline. TLS/HSTS belongs in the production
+    # HTTPS server block and is intentionally not fabricated in this example.
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+
+    # Product decisions / legacy URLs.
+    location = /ai {
+        return 301 /hr-analytics/;
+    }
+
+    location = /ai/ {
+        return 301 /hr-analytics/;
+    }
+
+    location = /market {
+        return 410;
+    }
+
+    location ^~ /market/ {
+        return 410;
+    }
+
+    # Standalone Historic World (Roman Aizanoi).
     location = /historic-world {
         return 301 /historic-world/;
     }
@@ -10,16 +35,22 @@ server {
     location = /historic-world/ {
         try_files /historic-world/index.html =404;
         add_header Cache-Control "no-store, no-cache, must-revalidate" always;
-        add_header X-Content-Type-Options "nosniff" always;
-        add_header X-Frame-Options "SAMEORIGIN" always;
-        add_header Referrer-Policy "no-referrer" always;
-        add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
     }
 
-    location /historic-world/ {
+    location ^~ /historic-world/ {
         try_files $uri =404;
     }
 
+    # Standalone Late Antique Rome experience.
+    location = /ancient-cities/rome-410-476 {
+        return 301 /ancient-cities/rome-410-476/;
+    }
+
+    location ^~ /ancient-cities/rome-410-476/ {
+        try_files $uri $uri/ =404;
+    }
+
+    # Public API remains behind the loopback-only Node service.
     location /api/ {
         proxy_pass http://127.0.0.1:3001/api/;
         proxy_http_version 1.1;
@@ -30,7 +61,26 @@ server {
         proxy_read_timeout 30s;
     }
 
+    # Fingerprinted/explicitly versioned assets can be cached aggressively.
+    location ^~ /assets/ {
+        try_files $uri =404;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    location ^~ /icons/ {
+        try_files $uri =404;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    # Known virtual Aizanoi OS routes. They intentionally receive the SPA shell.
+    location ~ ^/(hr-analytics|ancient-world|games|projects|videos|about|docs|changelog|privacy|terms)/?$ {
+        try_files /index.html =404;
+        add_header Cache-Control "no-store";
+    }
+
+    # Real files/directories work normally. Unknown paths return a real 404
+    # instead of silently becoming the desktop shell (soft-404).
     location / {
-        try_files $uri /index.html;
+        try_files $uri $uri/ =404;
     }
 }

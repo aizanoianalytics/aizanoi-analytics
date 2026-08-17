@@ -1,0 +1,37 @@
+name: Aizanoi CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'fix/**'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: JavaScript syntax checks
+        run: |
+          node --check backend/server.js
+          node --check frontend/games/mines.js
+          node --check frontend/games/snake.js
+          node --check frontend/games/brick.js
+          node --check frontend/ancient-cities/rome-410-476/js/app.js
+
+      - name: Regression tests
+        run: node --test tests/*.test.mjs
+
+      - name: Reject whitespace errors
+        run: git diff --check HEAD^ HEAD

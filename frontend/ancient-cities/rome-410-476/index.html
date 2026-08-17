@@ -13,4 +13,47 @@
 <div class="hud bottom"><div class="place"><b id="place">Forum approach</b><span id="detail">Click the scene to look around · WASD to walk · E to inspect</span></div></div><div class="miniWrap"><canvas id="minimap" aria-label="Regional minimap"></canvas><div class="legend">AURELIAN CITY · SCHEMATIC</div></div>
 <section id="intro" class="intro"><article class="card"><div class="eyebrow">Aizanoi Analytics · Late Antique World</div><h1 id="introTitle">ROME · AD 410–476</h1><p id="introText"></p><p>This is a source-led city model: named monuments, roads and churches are placed from archaeological/topographical evidence; unresolved residential massing is deliberately schematic. It portrays a living but damaged Rome after the sacks of 410 and 455—not a pristine imperial postcard.</p><div class="facts"><span>14 Augustan regiones</span><span>Aurelian walls</span><span>Vatican pilgrimage district</span><span>Modern alignment layer</span><span>Opt-in procedural ambience</span></div><button id="enter" class="primary">ENTER LATE ANTIQUE ROME</button></article></section>
 <section id="modal" class="modal hidden" role="dialog" aria-modal="true"><article class="modalBox"><div class="modalHead"><h2 id="modalTitle">Research</h2><button id="modalClose">Close</button></div><div id="modalBody" class="modalBody"></div></article></section>
-<script type="module" src="./js/app.js"></script></body></html>
+<script>
+(function () {
+  var canvas = document.getElementById('glCanvas');
+  var gl = null;
+  try { gl = canvas && canvas.getContext('webgl', { antialias: true, alpha: false }); } catch (_) {}
+  if (gl) return;
+
+  // Keep the research/context page usable instead of leaving a blank canvas
+  // on browsers where WebGL is disabled or unavailable.
+  var introText = document.getElementById('introText');
+  var enter = document.getElementById('enter');
+  var detail = document.getElementById('detail');
+  if (introText) introText.textContent = 'This interactive reconstruction needs WebGL, but WebGL is unavailable or disabled in this browser.';
+  if (detail) detail.textContent = 'WebGL unavailable · try a current browser with hardware acceleration enabled';
+  if (enter) {
+    enter.disabled = true;
+    enter.textContent = 'WEBGL UNAVAILABLE';
+    enter.style.cursor = 'not-allowed';
+    enter.style.opacity = '.65';
+  }
+  window.__AIZANOI_WEBGL_UNAVAILABLE__ = true;
+})();
+</script>
+<script type="module">
+if (!window.__AIZANOI_WEBGL_UNAVAILABLE__) {
+  import('./js/app.js').catch((error) => {
+    console.error('Rome renderer failed to start:', error);
+    const intro = document.getElementById('intro');
+    const introText = document.getElementById('introText');
+    const enter = document.getElementById('enter');
+    const detail = document.getElementById('detail');
+    if (intro) intro.classList.remove('hidden');
+    if (introText) introText.textContent = 'The 3D renderer could not start in this browser. The source and research content remain available.';
+    if (detail) detail.textContent = 'Renderer initialization failed';
+    if (enter) {
+      enter.disabled = true;
+      enter.textContent = '3D RENDERER UNAVAILABLE';
+      enter.style.cursor = 'not-allowed';
+      enter.style.opacity = '.65';
+    }
+  });
+}
+</script>
+</body></html>
