@@ -4,6 +4,7 @@ export const ROME_VISUAL_PALETTE = Object.freeze({
   terrainHigh: 0x6a5d3a,
   urbanWalls: Object.freeze([0x84533a, 0xa47655, 0xc0ad86, 0x76503b]),
   roofs: 0x5f2f21,
+  urbanEaves: 0x6f422f,
   sky: 0x76766d,
   fog: 0x7d786c,
 });
@@ -31,12 +32,22 @@ export function createTerrainColorSampler(THREE) {
       color.copy(mid).lerp(high, (elevation - 0.58) / 0.42);
     }
 
+    // Two deterministic spatial scales keep the ground from reading as a
+    // single flat ochre plane without introducing textures, random state or
+    // high-frequency noise that aliases against the relatively coarse terrain
+    // mesh. Broad variation provides district-scale tonal patches; the finer
+    // term breaks up large uniform triangles while remaining intentionally
+    // atmospheric rather than evidence-bearing surface detail.
+    const broad = (
+      Math.sin(x * 0.0042 + z * 0.0021)
+      + Math.cos(z * 0.0051 - x * 0.0017)
+    ) * 0.038;
     const grain = (
-      Math.sin(x * 0.021)
-      + Math.sin(z * 0.017)
-      + Math.sin((x + z) * 0.008)
-    ) * 0.022;
-    const variation = Math.max(0.86, Math.min(1.08, 0.97 + grain));
+      Math.sin(x * 0.018)
+      + Math.sin(z * 0.015)
+      + Math.sin((x + z) * 0.0085)
+    ) * 0.024;
+    const variation = Math.max(0.82, Math.min(1.10, 0.95 + broad + grain));
 
     return [
       color.r * variation,
