@@ -45,6 +45,7 @@ jobs:
           node --check frontend/ancient-cities/_template/data/city.example.js
           node --check experiments/threejs-rome-renderer/src/main.js
           node --check experiments/threejs-rome-renderer/src/rome-adapter.js
+          node --check experiments/threejs-rome-renderer/src/runtime-controls.js
           node --check experiments/threejs-rome-renderer/scripts/vendor-three.mjs
 
       - name: Install Three.js experiment dependency
@@ -58,6 +59,7 @@ jobs:
         run: |
           npm run vendor
           test -s vendor/three.module.js
+          test -s vendor/three.core.js
 
       - name: Check Three.js experiment sources
         if: startsWith(github.ref, 'refs/heads/exp/')
