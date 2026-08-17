@@ -28,3 +28,23 @@ if old in text:
 elif "document.querySelectorAll('[data-move]')" not in text:
     raise SystemExit('Rome input anchor not found')
 app.write_text(text)
+
+mines = Path('frontend/games/mines.js')
+text = mines.read_text()
+old_decl = 'let board, revealed, flagged, first, over, won, startedAt, timer, longPressTimer;'
+new_decl = 'let board, revealed, flagged, first, over, won, startedAt, timer, longPressTimer, suppressNextClick = false;'
+if old_decl in text:
+    text = text.replace(old_decl, new_decl, 1)
+elif 'suppressNextClick' not in text:
+    raise SystemExit('Mines state anchor not found')
+old_press = "if (e.pointerType === 'touch') longPressTimer = setTimeout(() => { longPressTimer = null; onRClick(x, y); }, 480);"
+new_press = "if (e.pointerType === 'touch') longPressTimer = setTimeout(() => { longPressTimer = null; suppressNextClick = true; onRClick(x, y); }, 480);"
+if old_press in text:
+    text = text.replace(old_press, new_press, 1)
+old_click = "if (over) return;\n    if (longPressTimer === null && e.detail === 0) return;"
+new_click = "if (over) return;\n    if (suppressNextClick) { suppressNextClick = false; return; }"
+if old_click in text:
+    text = text.replace(old_click, new_click, 1)
+elif 'if (suppressNextClick)' not in text:
+    raise SystemExit('Mines click anchor not found')
+mines.write_text(text)
