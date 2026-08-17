@@ -1,0 +1,14 @@
+{
+  "name": "aizanoi-threejs-rome-renderer-poc",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "vendor": "node ./scripts/vendor-three.mjs",
+    "prepare": "npm run vendor",
+    "check": "node --check ./src/main.js && node --check ./src/rome-adapter.js && node --check ./scripts/vendor-three.mjs"
+  },
+  "dependencies": {
+    "three": "0.185.1"
+  }
+}
