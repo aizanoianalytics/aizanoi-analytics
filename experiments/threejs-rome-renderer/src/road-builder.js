@@ -9,11 +9,37 @@ export const ROME_ROAD_RENDER_POLICY = Object.freeze({
   edgeInset: 0.11,
 });
 
+// Shared Ancient World material tokens describe semantic surface families.
+// Three.js' warm directional lighting/tone mapping shifts the road token much
+// warmer than the production renderer at the matched Via Sacra camera. Keep
+// the shared token untouched and compensate only this renderer's visual
+// response. The factors are derived from the matched production/PoC road ROI,
+// then applied consistently to road bed and edge tokens before sRGB decoding.
+export const ROME_ROAD_VISUAL_RESPONSE = Object.freeze({
+  red: 0.73,
+  green: 0.93,
+  blue: 1.66,
+});
+
+function clamp01(value) {
+  return Math.max(0, Math.min(1, value));
+}
+
+export function compensatedRoadRgb(rgb) {
+  if (!Array.isArray(rgb) || rgb.length < 3) throw new TypeError('compensatedRoadRgb requires an RGB array.');
+  return [
+    clamp01(rgb[0] * ROME_ROAD_VISUAL_RESPONSE.red),
+    clamp01(rgb[1] * ROME_ROAD_VISUAL_RESPONSE.green),
+    clamp01(rgb[2] * ROME_ROAD_VISUAL_RESPONSE.blue),
+  ];
+}
+
 function materialColor(THREE, rgb) {
+  const tuned = compensatedRoadRgb(rgb);
   return new THREE.Color().setRGB(
-    rgb[0],
-    rgb[1],
-    rgb[2],
+    tuned[0],
+    tuned[1],
+    tuned[2],
     THREE.SRGBColorSpace,
   );
 }
@@ -143,9 +169,9 @@ export function addInstancedRoads(THREE, scene, simulation, { mobile = false } =
   edges.instanceMatrix.needsUpdate = true;
   beds.computeBoundingSphere();
   edges.computeBoundingSphere();
-  beds.userData.roadBuilder = 'instanced-road-v2';
+  beds.userData.roadBuilder = 'instanced-road-v3';
   beds.userData.benchmark = { pieces: pieces.length, drawLayers: 2, edgeInstances: pieces.length * 2 };
-  edges.userData.roadBuilder = 'instanced-road-v2';
+  edges.userData.roadBuilder = 'instanced-road-v3';
   scene.add(beds, edges);
 
   return beds.userData.benchmark;

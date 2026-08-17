@@ -4,9 +4,12 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { STREETS } from '../frontend/ancient-cities/rome-410-476/data/city.js';
 import { terrainHeightAt } from '../frontend/ancient-cities/rome-410-476/data/terrain.js';
+import { ANCIENT_MATERIALS } from '../frontend/ancient-world/assets/materials.js';
 import {
+  compensatedRoadRgb,
   createRoadPiecePlan,
   ROME_ROAD_RENDER_POLICY,
+  ROME_ROAD_VISUAL_RESPONSE,
 } from '../experiments/threejs-rome-renderer/src/road-builder.js';
 
 const root = resolve(import.meta.dirname, '..');
@@ -63,7 +66,7 @@ test('mobile road plan uses a tighter but cheaper terrain-following ceiling', ()
   );
 });
 
-test('V8.2 keeps two instanced flat-quad road layers with narrow edge bands', () => {
+test('V8.3 keeps two instanced flat-quad road layers with narrow edge bands', () => {
   assert.equal(ROME_ROAD_RENDER_POLICY.edgeBandWidth, 0.16);
   assert.equal(ROME_ROAD_RENDER_POLICY.edgeInset, 0.11);
   assert.match(roadBuilderSource, /new THREE\.PlaneGeometry\(1, 1\)/);
@@ -75,11 +78,18 @@ test('V8.2 keeps two instanced flat-quad road layers with narrow edge bands', ()
   assert.match(mainSource, /addInstancedRoads\(THREE, scene, simulation, \{ mobile \}\)/);
 });
 
-test('V8.2 interprets shared road RGB tokens as sRGB inputs', () => {
-  assert.match(roadBuilderSource, /new THREE\.Color\(\)\.setRGB\(/);
+test('V8.3 keeps shared road tokens untouched and compensates only Three visual response', () => {
+  assert.deepEqual(ANCIENT_MATERIALS.road, [0.34, 0.32, 0.28]);
+  assert.deepEqual(ANCIENT_MATERIALS.roadEdge, [0.42, 0.39, 0.32]);
+  assert.deepEqual(ROME_ROAD_VISUAL_RESPONSE, { red: 0.73, green: 0.93, blue: 1.66 });
+  const bed = compensatedRoadRgb(ANCIENT_MATERIALS.road);
+  const edge = compensatedRoadRgb(ANCIENT_MATERIALS.roadEdge);
+  assert.ok(Math.abs(bed[0] - 0.2482) < 1e-9);
+  assert.ok(Math.abs(bed[1] - 0.2976) < 1e-9);
+  assert.ok(Math.abs(bed[2] - 0.4648) < 1e-9);
+  assert.ok(edge.every((value) => value >= 0 && value <= 1));
   assert.match(roadBuilderSource, /THREE\.SRGBColorSpace/);
-  assert.match(roadBuilderSource, /ANCIENT_MATERIALS\.road/);
-  assert.match(roadBuilderSource, /ANCIENT_MATERIALS\.roadEdge/);
+  assert.match(roadBuilderSource, /compensatedRoadRgb\(rgb\)/);
 });
 
 test('browser smoke locks the two-layer road benchmark contract', () => {
