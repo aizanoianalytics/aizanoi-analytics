@@ -17,6 +17,27 @@ const mime = new Map([
   ['.png', 'image/png'],
 ]);
 
+export const MATCHED_CAPTURE_SCENARIOS = Object.freeze([
+  Object.freeze({
+    id: 'colosseum',
+    label: 'Colosseum hero baseline',
+    x: 52,
+    z: -215,
+    lookX: 52,
+    lookZ: -65,
+    pitch: -0.03,
+  }),
+  Object.freeze({
+    id: 'via-sacra',
+    label: 'Via Sacra streetscape baseline',
+    x: -270,
+    z: -52,
+    lookX: -95,
+    lookZ: -35,
+    pitch: -0.055,
+  }),
+]);
+
 function safePath(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0]);
   const candidate = resolve(repoRoot, `.${decoded}`);
@@ -65,6 +86,10 @@ async function hideChrome(page) {
   });
 }
 
+function screenshotPath(renderer, scenario) {
+  return resolve(outputDir, `${renderer}-${scenario.id}.png`);
+}
+
 async function captureProduction() {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   const errors = [];
@@ -73,17 +98,21 @@ async function captureProduction() {
   await page.goto(`${origin}/frontend/ancient-cities/rome-410-476/`, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => Boolean(window.__ANCIENT_WORLD_DEBUG__), null, { timeout: 30_000 });
   await hideChrome(page);
-  await page.evaluate(() => {
-    document.querySelector('#intro')?.classList.add('hidden');
-    window.__ANCIENT_WORLD_DEBUG__.teleportToPoint(52, -215, {
-      lookX: 52,
-      lookZ: -65,
-      label: 'Colosseum A/B baseline',
-    });
-  });
-  await page.waitForTimeout(500);
+  await page.evaluate(() => document.querySelector('#intro')?.classList.add('hidden'));
+
+  for (const scenario of MATCHED_CAPTURE_SCENARIOS) {
+    await page.evaluate((target) => {
+      window.__ANCIENT_WORLD_DEBUG__.teleportToPoint(target.x, target.z, {
+        lookX: target.lookX,
+        lookZ: target.lookZ,
+        label: target.label,
+      });
+    }, scenario);
+    await page.waitForTimeout(450);
+    await page.screenshot({ path: screenshotPath('current-renderer', scenario) });
+  }
+
   if (errors.length) throw new Error(`Production baseline console errors: ${errors.join(' | ')}`);
-  await page.screenshot({ path: resolve(outputDir, 'current-renderer-colosseum.png') });
   await page.close();
 }
 
@@ -96,27 +125,31 @@ async function captureThree() {
   await page.waitForFunction(() => Boolean(window.__ROME_THREE_POC__), null, { timeout: 30_000 });
   await page.waitForFunction(() => window.__ROME_THREE_POC__.renderer.info.render.triangles > 0, null, { timeout: 15_000 });
   await hideChrome(page);
-  await page.evaluate(() => {
-    const api = window.__ROME_THREE_POC__;
-    const support = api.simulation.traversal.absoluteSupportAt(52, -215);
-    api.simulation.player.x = 52;
-    api.simulation.player.z = -215;
-    api.simulation.player.floorY = support.y;
-    api.simulation.player.surfaceTag = support.tag;
-    api.simulation.player.y = support.y + 1.68;
-    api.simulation.player.yaw = Math.PI;
-    api.simulation.player.pitch = -0.03;
-  });
-  await page.waitForTimeout(500);
+
+  for (const scenario of MATCHED_CAPTURE_SCENARIOS) {
+    await page.evaluate((target) => {
+      const api = window.__ROME_THREE_POC__;
+      const support = api.simulation.traversal.absoluteSupportAt(target.x, target.z);
+      api.simulation.player.x = target.x;
+      api.simulation.player.z = target.z;
+      api.simulation.player.floorY = support.y;
+      api.simulation.player.surfaceTag = support.tag;
+      api.simulation.player.y = support.y + 1.68;
+      api.simulation.player.yaw = Math.atan2(target.lookX - target.x, -(target.lookZ - target.z));
+      api.simulation.player.pitch = target.pitch;
+    }, scenario);
+    await page.waitForTimeout(450);
+    await page.screenshot({ path: screenshotPath('threejs-poc', scenario) });
+  }
+
   if (errors.length) throw new Error(`Three.js baseline console errors: ${errors.join(' | ')}`);
-  await page.screenshot({ path: resolve(outputDir, 'threejs-poc-colosseum.png') });
   await page.close();
 }
 
 try {
   await captureProduction();
   await captureThree();
-  console.log(`A/B screenshots written to ${outputDir}`);
+  console.log(`Matched A/B screenshots written to ${outputDir}: ${MATCHED_CAPTURE_SCENARIOS.map((item) => item.id).join(', ')}`);
 } finally {
   await browser.close();
   await new Promise((resolveClosed) => server.close(resolveClosed));

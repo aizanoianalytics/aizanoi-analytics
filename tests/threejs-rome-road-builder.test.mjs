@@ -10,9 +10,11 @@ import {
 } from '../experiments/threejs-rome-renderer/src/road-builder.js';
 
 const root = resolve(import.meta.dirname, '..');
-const roadBuilderSource = readFileSync(resolve(root, 'experiments/threejs-rome-renderer/src/road-builder.js'), 'utf8');
-const mainSource = readFileSync(resolve(root, 'experiments/threejs-rome-renderer/src/main.js'), 'utf8');
-const smokeSource = readFileSync(resolve(root, 'experiments/threejs-rome-renderer/scripts/browser-smoke.mjs'), 'utf8');
+const read = (path) => readFileSync(resolve(root, path), 'utf8');
+const roadBuilderSource = read('experiments/threejs-rome-renderer/src/road-builder.js');
+const mainSource = read('experiments/threejs-rome-renderer/src/main.js');
+const smokeSource = read('experiments/threejs-rome-renderer/scripts/browser-smoke.mjs');
+const captureSource = read('experiments/threejs-rome-renderer/scripts/capture-ab-baseline.mjs');
 
 function planarLength(piece) {
   return Math.hypot(piece.x1 - piece.x0, piece.z1 - piece.z0);
@@ -72,4 +74,13 @@ test('browser smoke locks the two-layer road benchmark contract', () => {
   assert.match(smokeSource, /Terrain-following Roman road beds/);
   assert.match(smokeSource, /baseline\.roads\?\.drawLayers, 2/);
   assert.match(smokeSource, /baseline\.roads\?\.edgeInstances, baseline\.roads\?\.pieces \* 2/);
+});
+
+test('matched visual capture includes both hero and Via Sacra streetscape scenarios', () => {
+  assert.match(captureSource, /id: 'colosseum'/);
+  assert.match(captureSource, /id: 'via-sacra'/);
+  assert.match(captureSource, /label: 'Via Sacra streetscape baseline'/);
+  assert.match(captureSource, /current-renderer/);
+  assert.match(captureSource, /threejs-poc/);
+  assert.match(captureSource, /MATCHED_CAPTURE_SCENARIOS/);
 });
