@@ -4,7 +4,9 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /market/
+
+# /market/ is intentionally removed and returns HTTP 410 in production.
+# Do not block it here: crawlers need to see the 410 to retire legacy URLs.
 
 # Sitemap
 Sitemap: https://aizanoianalytics.com/sitemap.xml

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Aizanoi AI chat proxy backend - Groq/Google AI Studio fallback chain",
   "main": "server.js",
+  "license": "MIT",
   "scripts": {
     "start": "node server.js"
   },

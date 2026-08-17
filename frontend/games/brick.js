@@ -53,6 +53,13 @@
   }
 
   function tick() {
+    // Switching games or closing the Games window removes this container.
+    // Stop the high-frequency timer rather than letting an orphaned loop run.
+    if (!container.isConnected) {
+      if (interval) clearInterval(interval);
+      interval = null;
+      return;
+    }
     if (over) return;
     ballX += ballDX;
     ballY += ballDY;
@@ -114,6 +121,7 @@
   function end(won) {
     over = true;
     if (interval) clearInterval(interval);
+    interval = null;
     saveScore('brick', score);
   }
 

@@ -606,11 +606,6 @@
     z-index: 50000 !important; min-width: 180px; padding: 2px;
     font-size: 11px; color: #000; display: none;
   }
-    background: #fff; border: 2px solid #6f9bdc;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    z-index: 5000; min-width: 180px; padding: 2px;
-    font-size: 11px; color: #000; display: none;
-  }
   .win-menu-dropdown.open { display: block; }
   .win-menu-dropdown .m-item {
     padding: 4px 22px 4px 12px;
@@ -717,6 +712,26 @@
 </div>
 
 <div id="click-catcher"></div>
+<script>
+// Independent boot escape hatch: keep the desktop reachable even if a later
+// application script fails before its normal boot handler is registered.
+window.__aizanoiBootEscape = setTimeout(function () {
+  var boot = document.getElementById('boot');
+  var desktop = document.getElementById('desktop');
+  if (boot && getComputedStyle(boot).display !== 'none') {
+    boot.style.opacity = '0';
+    boot.style.pointerEvents = 'none';
+    setTimeout(function () {
+      if (boot) boot.style.display = 'none';
+      if (desktop) {
+        desktop.style.display = '';
+        desktop.style.visibility = 'visible';
+        desktop.style.opacity = '1';
+      }
+    }, 250);
+  }
+}, 4000);
+</script>
 
 <!-- === START MENU === -->
 <div id="start-menu">
@@ -727,22 +742,23 @@
   <div class="sm-body">
     <div class="sm-left">
       <div class="sm-header-row">Programs</div>
-      <div class="sm-item" data-app="chatbot"><span class="em"><img src="/icons/AizanoiAI.png" alt=""></span> Aizanoi AI</div>
-      <div class="sm-item" data-app="notes"><span class="em"><img src="/icons/Notepad.png" alt=""></span> Notepad</div>
-      <div class="sm-item" data-app="terminal"><span class="em"><img src="/icons/CommandPrompt.png" alt=""></span> Terminal</div>
-      <div class="sm-item" data-app="projects"><span class="em"><img src="/icons/FolderClosed.png" alt=""></span> Projects</div>
+      <div class="sm-item" data-app="chatbot"><span class="em"><img src="/assets/icons/aizanoi-ai.svg" alt=""></span> Aizanoi AI</div>
+      <div class="sm-item" data-app="notes"><span class="em"><img src="/assets/icons/notepad.svg" alt=""></span> Notepad</div>
+      <div class="sm-item" data-app="terminal"><span class="em"><img src="/assets/icons/terminal.svg" alt=""></span> Terminal</div>
+      <div class="sm-item" data-app="projects"><span class="em"><img src="/assets/icons/projects.svg" alt=""></span> Projects</div>
+      <div class="sm-item" data-app="videos"><span class="em"><img src="/assets/icons/aizanoi-tv.svg" alt=""></span> Aizanoi TV</div>
       <div class="sm-divider"></div>
       <div class="sm-header-row">Aizanoi</div>
-      <div class="sm-item" data-app="about"><span class="em"><img src="/icons/Information.png" alt=""></span> About Aizanoi</div>
+      <div class="sm-item" data-app="about"><span class="em"><img src="/assets/icons/about.svg" alt=""></span> About Aizanoi</div>
     </div>
     <div class="sm-right">
       <div class="sm-item" data-app="mycomputer"><span class="em"><img src="/icons/MyComputer.png" alt=""></span> My Computer</div>
       <div class="sm-item" data-app="docs"><span class="em"><img src="/icons/MyDocuments.png" alt=""></span> My Documents</div>
-      <div class="sm-item" data-app="games"><span class="em"><img src="/icons/GameController.png" alt=""></span> Games</div>
-      <div class="sm-item" data-app="ancient"><span class="em"><img src="/icons/FolderOpened.png" alt=""></span> Ancient World</div>
-      <div class="sm-item" data-app="recycle"><span class="em"><img src="/icons/RecycleBin(empty).png" alt=""></span> Recycle Bin</div>
+      <div class="sm-item" data-app="games"><span class="em"><img src="/assets/icons/games.svg" alt=""></span> Games</div>
+      <div class="sm-item" data-app="ancient"><span class="em"><img src="/assets/icons/ancient-world.svg" alt=""></span> Ancient World</div>
+      <div class="sm-item" data-app="recycle"><span class="em"><img src="/assets/icons/recycle-bin.svg" alt=""></span> Recycle Bin</div>
       <div class="sm-divider"></div>
-      <div class="sm-item" data-action="control"><span class="em"><img src="/icons/ControlPanel.png" alt=""></span> Control Panel</div>
+      <div class="sm-item" data-action="control"><span class="em"><img src="/assets/icons/control-panel.svg" alt=""></span> Control Panel</div>
       <div class="sm-item" data-action="run"><span class="em"><img src="/icons/Run.png" alt=""></span> Run…</div>
       <div class="sm-item" data-action="search"><span class="em"><img src="/icons/Search.png" alt=""></span> Search</div>
     </div>
@@ -816,7 +832,7 @@ const MENU_ITEMS = {
   ],
   help: [
     { type: 'item', label: 'Contents and Index', action: () => openApp('about') },
-    { type: 'item', label: 'About AizanoiOS', action: () => openApp('about') }
+    { type: 'item', label: 'About Aizanoi OS', action: () => openApp('about') }
   ]
 };
 
@@ -907,7 +923,7 @@ const TOOLBAR_ITEMS = {
             { type: 'item', label: 'Projects',     action: () => openApp('projects') },
             { type: 'item', label: 'Aizanoi AI',    action: () => openApp('chatbot') },
             { type: 'sep' },
-            { type: 'item', label: 'About AizanoiOS', action: () => openApp('about') }],
+            { type: 'item', label: 'About Aizanoi OS', action: () => openApp('about') }],
   new:     [{ type: 'item', label: 'New File', action: () => showBalloon({ title:'New', body:'Cannot create new file in this app.', icon:'info' }) }],
   save:    [{ type: 'item', label: 'Save', shortcut: 'Ctrl+S', action: () => showBalloon({ title:'Save', body:'Nothing new to save.', icon:'info' }) },
             { type: 'item', label: 'Save As…', shortcut: 'Ctrl+Shift+S', action: () => showBalloon({ title:'Save As', body:'Choose a destination.', icon:'info' }) }],
@@ -961,7 +977,7 @@ const ICON_PNG = {
   mycomputer:'/icons/MyComputer.png', recycle:'/assets/icons/recycle-bin.svg', recycle_full:'/icons/RecycleBin(full).png',
   docs:'/icons/MyDocuments.png', chatbot:'/assets/icons/aizanoi-ai.svg', about:'/assets/icons/about.svg',
   notes:'/assets/icons/notepad.svg', terminal:'/assets/icons/terminal.svg', projects:'/assets/icons/projects.svg',
-  games:'/assets/icons/games.svg', ancient:'/assets/icons/ancient-world.svg', market:'/icons/Run.png',
+  games:'/assets/icons/games.svg', ancient:'/assets/icons/ancient-world.svg', videos:'/assets/icons/aizanoi-tv.svg',
   folder:'/icons/FolderClosed.png', folder_open:'/icons/FolderOpened.png',
   file_txt:'/icons/Notepad.png', file_pdf:'/icons/Information.png', file_pic:'/icons/Paint.png', file_exe:'/icons/ApplicationWindow.png',
   search:'/icons/Search.png', help:'/icons/HelpandSupport.png', info:'/icons/Information.png', warning:'/icons/Question.png',
@@ -1093,7 +1109,7 @@ const APPS = {
       <div id='ancient-content' style='flex:1;overflow:auto;padding:14px;background:#fff;'>
         <div id='ancient-landing'>
           <h2 style='margin:0 0 8px;color:#5a3e22;font-size:16px;'>Roman Aizanoi &mdash; Anatolia, 2nd Century AD</h2>
-          <div style='font-size:12px;line-height:1.6;color:#222;margin-bottom:14px;'>Aizanoi was an ancient Greek city in western Anatolia (modern Turkey), later a major Roman settlement. Best known for its remarkably well-preserved Temple of Zeus, the Theatre of Aizanoi, and the Stadium, Aizanoi was inscribed on the UNESCO World Heritage List in 2025.</div>
+          <div style='font-size:12px;line-height:1.6;color:#222;margin-bottom:14px;'>Aizanoi was an ancient Greek city in western Anatolia (modern Turkey), later a major Roman settlement. Best known for its remarkably well-preserved Temple of Zeus, the Theatre of Aizanoi, and the Stadium, Aizanoi has been on Türkiye's UNESCO World Heritage Tentative List since 2012.</div>
           <div style='background:#f4f3eb;border:1px solid #c0c5cd;padding:12px;margin-bottom:12px;border-radius:6px;'>
             <div style='font-weight:bold;margin-bottom:6px;color:#5a3e22;'>Choose your experience</div>
             <div style='display:flex;gap:8px;flex-wrap:wrap;'>
@@ -1111,7 +1127,7 @@ const APPS = {
             <p><b>Location.</b> &Ccedil;avdarhisar, K&uuml;tahya Province, western Turkey.</p>
             <p><b>Period covered.</b> Hellenistic foundation (3rd century BC) through Roman Imperial period.</p>
             <p><b>Notable structures.</b> Temple of Zeus, Theatre of Aizanoi, Roman Stadium, Macellum, two agoras, Roman bridge over the Penkalas.</p>
-            <p><b>Heritage status.</b> Inscribed on the UNESCO World Heritage List in 2025.</p>
+            <p><b>Heritage status.</b> On Türkiye's UNESCO World Heritage Tentative List since 2012.</p>
           </div>
           <div style='margin-top:10px;'><button class='aw-btn' data-view='landing' style='padding:5px 10px;background:linear-gradient(180deg,#fcfcfc,#e0dfd3);border:1px solid #919b9c;border-radius:3px;cursor:pointer;font-size:11px;'>&laquo; Back</button></div>
         </div>
@@ -1159,7 +1175,7 @@ const APPS = {
       <p><b>What runs on this site.</b> Aizanoi Analytics is a small personal project. The site itself is a static frontend hosted on a single server, plus a small Node.js backend that proxies AI chat requests.</p>
       <p><b>No account, no upload.</b> The site does not require registration. There is no file upload, no profile, no analytics dashboard tied to your identity.</p>
       <p><b>Server logs.</b> Like most web servers, ours records basic request metadata (IP address, request path, response code) for operational and security purposes.</p>
-      <p><b>AI chat.</b> Messages you send to Aizanoi AI are forwarded to third-party AI providers (Groq and Google) to generate a reply. They are not used to train those providers' models.</p>
+      <p><b>AI chat.</b> Messages you send to Aizanoi AI are forwarded to third-party AI providers (currently Groq and Google) to generate a reply. Their handling is subject to the providers' applicable terms and privacy policies.</p>
       <p><b>Cookies / local storage.</b> The site uses a small amount of browser localStorage to remember UI preferences. No advertising cookies.</p>
     </div>`
   },
@@ -1200,14 +1216,14 @@ const APPS = {
       <div style="display:flex; align-items:center; gap:14px; margin-bottom:12px;">
         <div style="width:48px; height:48px; background:linear-gradient(180deg,#1a5fd6,#0d3fb0); border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:18px; box-shadow:1px 2px 4px rgba(0,0,0,0.25);">AOS</div>
         <div>
-          <h2 style="margin:0;">AizanoiOS</h2>
+          <h2 style="margin:0;">Aizanoi OS</h2>
           <div style="color:#1a5fd6; font-size:11px;">Version 1.0 — Luna Blue Edition</div>
         </div>
       </div>
-      <p>AizanoiOS is an interactive desktop environment inspired by Windows&nbsp;XP Luna&nbsp;Blue. It runs as a single-page web application with support for mobile and tablet input.</p>
+      <p>Aizanoi OS is an interactive desktop environment inspired by Windows&nbsp;XP Luna&nbsp;Blue. It runs as a single-page web application with support for mobile and tablet input.</p>
       <h3>System Information</h3>
       <table style="font-size:12px; line-height:1.7; border-collapse:collapse;">
-        <tr><td><b>OS:</b></td><td>AizanoiOS v1.0 (Luna Blue)</td></tr>
+        <tr><td><b>OS:</b></td><td>Aizanoi OS v1.0 (Luna Blue)</td></tr>
         <tr><td><b>Build:</b></td><td>2026.08</td></tr>
         <tr><td><b>User:</b></td><td>Aizanoi Analytics</td></tr>
         <tr><td><b>Browser:</b></td><td id="about-browser">Detecting…</td></tr>
@@ -1224,7 +1240,7 @@ const APPS = {
       <h3>Mobile / Tablet</h3>
       <p style="color:#444;">This desktop is responsive: the same UI runs on phones and tablets. Tap an icon to open; long-press for context.</p>
       <div style="margin-top:14px; padding-top:10px; border-top:1px solid #c8c5b1; color:#666; font-size:11px;">
-        © 2026 Aizanoi Analytics. AizanoiOS is an independent project; trademarks are property of their respective owners.
+        © 2026 Aizanoi Analytics. Aizanoi OS is an independent project; trademarks are property of their respective owners.
       </div>
     </div>`
   },
@@ -1256,6 +1272,7 @@ const DESKTOP_ICONS = [
   { id: 'notes',      label: 'Notepad', icon: 'notes' },
   { id: 'terminal',   label: 'Command Prompt', icon: 'terminal' },
   { id: 'projects',   label: 'Projects', icon: 'projects' },
+  { id: 'videos',     label: 'Aizanoi TV', icon: 'videos' },
   { id: 'about',      label: 'About Aizanoi', icon: 'about' }
 ];
 
@@ -1334,7 +1351,7 @@ function openApp(appId) {
   const iconKeyMap = {
     'mycomputer':'mycomputer','recycle':'recycle','docs':'docs','chatbot':'chatbot',
     'notes':'notes','terminal':'terminal','projects':'projects','about':'about',
-    'games':'games','ancient':'ancient','market':'market'
+    'games':'games','ancient':'ancient','videos':'videos'
   };
   const icoRealKey = iconKeyMap[appId] || 'folder';
   const titleIcon = icon(icoRealKey, 16);
@@ -1378,9 +1395,9 @@ function openApp(appId) {
       <span class="win-icon">${titleIcon}</span>
       <span class="win-title">${title}</span>
       <div class="win-controls">
-        <div class="win-btn min" data-act="min" title="Minimize">_</div>
-        <div class="win-btn max" data-act="max" title="Maximize">□</div>
-        <div class="win-btn close" data-act="close" title="Close">✕</div>
+        <div class="win-btn min" data-act="min" title="Minimize" role="button" tabindex="0" aria-label="Minimize window">_</div>
+        <div class="win-btn max" data-act="max" title="Maximize" role="button" tabindex="0" aria-label="Maximize or restore window">□</div>
+        <div class="win-btn close" data-act="close" title="Close" role="button" tabindex="0" aria-label="Close window">✕</div>
       </div>
     </div>
     ${menubarHtml}
@@ -1405,6 +1422,9 @@ function openApp(appId) {
   const taskItem = document.createElement('div');
   taskItem.className = 'task-item active';
   taskItem.id = 'task-' + appId;
+  taskItem.setAttribute('role', 'button');
+  taskItem.setAttribute('tabindex', '0');
+  taskItem.setAttribute('aria-label', title);
   taskItem.innerHTML = `<span style="display:flex;width:16px;height:16px;">${titleIcon}</span><span style="overflow:hidden;text-overflow:ellipsis;">${title}</span>`;
   taskItem.addEventListener('click', () => toggleMinimize(appId));
   // Task item context menu (XP stil)
@@ -1725,11 +1745,26 @@ document.addEventListener('keydown', (e) => {
 const startBtn = document.getElementById('start-btn');
 const startMenu = document.getElementById('start-menu');
 const catcher = document.getElementById('click-catcher');
+startBtn.setAttribute('role', 'button');
+startBtn.setAttribute('tabindex', '0');
+startBtn.setAttribute('aria-label', 'Open Start menu');
+document.querySelectorAll('#start-menu .sm-item, #start-menu .sm-foot-btn').forEach(function (item) {
+  item.setAttribute('role', 'button');
+  item.setAttribute('tabindex', '0');
+});
 function openStartMenu() { startMenu.classList.add('open'); startBtn.classList.add('open'); catcher.classList.add('on'); }
 function closeStartMenu() { startMenu.classList.remove('open'); startBtn.classList.remove('open'); catcher.classList.remove('on'); }
 function toggleStartMenu() { if (startMenu.classList.contains('open')) closeStartMenu(); else openStartMenu(); }
 startBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleStartMenu(); });
+startBtn.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleStartMenu(); }
+});
 catcher.addEventListener('click', () => { closeStartMenu(); closeAllCtxMenus(); });
+document.addEventListener('keydown', (e) => {
+  if ((e.key !== 'Enter' && e.key !== ' ') || !e.target.closest) return;
+  var target = e.target.closest('.win-btn, #start-menu .sm-item, #start-menu .sm-foot-btn, .task-item');
+  if (target) { e.preventDefault(); target.click(); }
+});
 
 document.querySelectorAll('#start-menu .sm-item[data-app]').forEach(item => {
   item.addEventListener('click', () => { openApp(item.dataset.app); closeStartMenu(); });
@@ -1744,7 +1779,7 @@ document.querySelectorAll('.sm-foot-btn, .sm-item[data-action]').forEach(item =>
       const v = prompt('Type the name of a program, folder, or document:');
       if (v && (APPS[v.trim()] || FOLDER_CONTENTS[v.trim()])) openApp(v.trim());
       else if (v) showBalloon({ title:'Windows cannot find \'' + v + '\'', body:'Make sure you typed the name correctly.', icon:'warning' });
-    } else if (a === 'control') openApp('mycomputer');
+    } else if (a === 'control') openApp('control');
     else if (a === 'search') showBalloon({ title:'Search Results', body:'No results yet.', icon:'search' });
     closeStartMenu();
   });
@@ -2109,7 +2144,7 @@ const BOOT_TIPS = [
   'Tip: Press <b>F5</b> in a folder to refresh; <b>Alt+F4</b> to close.',
   'Tip: Try <b>TAB</b> in Terminal for command and filename completion.',
   'Tip: Search <b>Recycle Bin</b> from the toolbar to find deleted items.',
-  'Tip: Open <b>About AizanoiOS</b> in the Start menu to see system details.',
+  'Tip: Open <b>About Aizanoi OS</b> in the Start menu to see system details.',
   'Tip: Click the clock to see the date and time in detail.'
 ];
 

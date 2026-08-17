@@ -21,3 +21,18 @@ Before changing code, read this file, then the nearest area-specific `AGENTS.md`
 3. A single-file SPA edit requires inline-script parsing and route/window regression checks.
 4. When a route or launcher changes, verify direct deep link, in-app navigation, back/forward, and return to `/`.
 5. Meaningful commits only (`feat:`, `fix:`, `refactor:`, `docs:`, `test:`). Keep production and `main` synchronized after verified deployment.
+
+## Required lightweight validation
+
+Before deploying meaningful frontend/backend changes, run:
+
+```bash
+node --check backend/server.js
+node --check frontend/games/mines.js
+node --check frontend/games/snake.js
+node --check frontend/games/brick.js
+node --check frontend/ancient-cities/rome-410-476/js/app.js
+node --test tests/*.test.mjs
+```
+
+GitHub Actions runs the same lightweight validation on `main`, `fix/**` branches and pull requests.
