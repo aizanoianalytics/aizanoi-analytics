@@ -1,5 +1,7 @@
 import { createAdaptiveQualityController } from '../../../frontend/ancient-world/engine/performance.js';
+import { createLifecycle } from '../../../frontend/ancient-world/engine/lifecycle.js';
 import { createRomeSimulation } from './rome-adapter.js';
+import { installRomePocControls } from './runtime-controls.js';
 
 const statusEl = document.querySelector('#status');
 const metricsEl = document.querySelector('#metrics');
@@ -283,6 +285,7 @@ async function bootstrap() {
     balancedPixelRatio: mobile ? simulation.manifest.performance.maxPixelRatioMobile : 1.30,
     lowPixelRatio: mobile ? 0.85 : 1.0,
   });
+  const lifecycle = createLifecycle();
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -309,38 +312,44 @@ async function bootstrap() {
   addMonuments(THREE, scene, simulation);
   addUrbanFabric(THREE, scene, simulation);
 
-  const keys = new Set();
+  const controls = installRomePocControls({ lifecycle, renderer, simulation, mobile });
+  const { keys } = controls;
   let last = performance.now();
   let lastMetrics = 0;
-  let currentCap = -1;
+  let currentWidth = 0;
+  let currentHeight = 0;
+  let currentDpr = -1;
 
-  const clearKeys = () => keys.clear();
-  window.addEventListener('keydown', (event) => {
-    if (['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ShiftLeft', 'ShiftRight'].includes(event.code)) {
-      keys.add(event.code);
-      event.preventDefault();
-    }
+  lifecycle.addCleanup(() => {
+    if (document.pointerLockElement === renderer.domElement) document.exitPointerLock?.();
+    const geometries = new Set();
+    const materials = new Set();
+    scene.traverse((object) => {
+      if (object.geometry) geometries.add(object.geometry);
+      const material = object.material;
+      if (Array.isArray(material)) material.forEach((item) => item && materials.add(item));
+      else if (material) materials.add(material);
+    });
+    geometries.forEach((geometry) => geometry.dispose?.());
+    materials.forEach((material) => material.dispose?.());
+    renderer.dispose();
+    renderer.forceContextLoss?.();
+    renderer.domElement.remove();
   });
-  window.addEventListener('keyup', (event) => keys.delete(event.code));
-  window.addEventListener('blur', clearKeys);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) clearKeys(); });
-  renderer.domElement.addEventListener('click', () => renderer.domElement.requestPointerLock?.());
-  document.addEventListener('mousemove', (event) => {
-    if (document.pointerLockElement !== renderer.domElement) return;
-    simulation.player.yaw -= event.movementX * 0.0024;
-    simulation.player.pitch = Math.max(-1.1, Math.min(0.8, simulation.player.pitch - event.movementY * 0.002));
-  });
+  lifecycle.listen(window, 'pagehide', () => lifecycle.destroy(), { once: true });
 
   function resize() {
     const cap = quality.pixelRatioCap();
-    if (cap !== currentCap) {
-      currentCap = cap;
-      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, cap));
-    }
-    const width = innerWidth;
-    const height = innerHeight;
+    const dpr = Math.min(devicePixelRatio || 1, cap);
+    const width = Math.max(1, innerWidth);
+    const height = Math.max(1, innerHeight);
+    if (width === currentWidth && height === currentHeight && dpr === currentDpr) return;
+    currentWidth = width;
+    currentHeight = height;
+    currentDpr = dpr;
+    renderer.setPixelRatio(dpr);
     renderer.setSize(width, height, false);
-    camera.aspect = width / Math.max(1, height);
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
   }
 
@@ -363,7 +372,7 @@ async function bootstrap() {
       statusEl.textContent = `${simulation.player.surfaceTag} · x ${simulation.player.x.toFixed(1)} · z ${simulation.player.z.toFixed(1)} · floor ${simulation.player.floorY.toFixed(1)} m`;
       metricsEl.textContent = `${q.tier} quality · DPR cap ${q.pixelRatioCap.toFixed(2)} · ${renderer.info.render.triangles.toLocaleString()} triangles · ${renderer.info.render.calls} calls`;
     }
-    requestAnimationFrame(frame);
+    lifecycle.frame(frame);
   }
 
   window.__ROME_THREE_POC__ = {
@@ -373,11 +382,15 @@ async function bootstrap() {
     camera,
     simulation,
     quality,
+    controls,
+    lifecycle,
     contract: simulation.manifest,
+    destroy: () => lifecycle.destroy(),
   };
 
   statusEl.textContent = `Shared contract v${simulation.manifest.contractVersion} loaded · ${simulation.buildings.length} named records · ${simulation.urbanFabric.length} inferred blocks`;
-  requestAnimationFrame(frame);
+  resize();
+  lifecycle.frame(frame);
 }
 
 bootstrap().catch(fail);
