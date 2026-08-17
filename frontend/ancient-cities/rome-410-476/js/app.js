@@ -8,6 +8,9 @@ import {
 import { createLifecycle } from '../../../ancient-world/engine/lifecycle.js';
 import { installBackToOS } from '../../../ancient-world/engine/navigation.js';
 import { ANCIENT_MATERIALS as M } from '../../../ancient-world/assets/materials.js';
+import { evidenceForRecord, evidenceBadgeHTML, installEvidenceStyles } from '../../../ancient-world/engine/evidence.js';
+import { HILLS, TIBER, terrainHeightAt, terrainDescriptorAt } from '../data/terrain.js';
+import { generateUrbanFabric, URBAN_FABRIC_METHOD } from '../data/urban-fabric.js';
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -145,19 +148,28 @@ function cylinder(x, y, z, radius, height, color, segments = 16) {
   }
 }
 
-function pitchedBuilding(x, y, z, width, height, depth, color) {
+function pitchedBuilding(x, y, z, width, height, depth, color, rot = 0) {
   const wallHeight = height * 0.72;
-  box(x, y, z, width, wallHeight, depth, color);
+  box(x, y, z, width, wallHeight, depth, color, rot);
   const y0 = y + wallHeight;
   const top = y + height;
-  const x0 = x - width / 2;
-  const x1 = x + width / 2;
-  const z0 = z - depth / 2;
-  const z1 = z + depth / 2;
-  tri([x0, y0, z0], [x1, y0, z0], [x, top, z0], C.roof);
-  tri([x1, y0, z1], [x0, y0, z1], [x, top, z1], C.roof);
-  quad([x0, y0, z0], [x, top, z0], [x, top, z1], [x0, y0, z1], C.roof);
-  quad([x, top, z0], [x1, y0, z0], [x1, y0, z1], [x, top, z1], C.roof);
+  const corners = [
+    [-width / 2, -depth / 2],
+    [ width / 2, -depth / 2],
+    [ width / 2,  depth / 2],
+    [-width / 2,  depth / 2],
+  ].map(([lx, lz]) => {
+    const [rx, rz] = rotateXZ(x + lx, z + lz, x, z, rot);
+    return [rx, y0, rz];
+  });
+  const ridgeA2 = rotateXZ(x, z - depth / 2, x, z, rot);
+  const ridgeB2 = rotateXZ(x, z + depth / 2, x, z, rot);
+  const ridgeA = [ridgeA2[0], top, ridgeA2[1]];
+  const ridgeB = [ridgeB2[0], top, ridgeB2[1]];
+  tri(corners[0], corners[1], ridgeA, C.roof);
+  tri(corners[2], corners[3], ridgeB, C.roof);
+  quad(corners[0], ridgeA, ridgeB, corners[3], C.roof);
+  quad(ridgeA, corners[1], corners[2], ridgeB, C.roof);
 }
 
 function arch(x, y, z, width, height, depth, color) {
@@ -169,25 +181,45 @@ function arch(x, y, z, width, height, depth, color) {
   box(x, y + spring, z, width, height - spring, depth, color);
 }
 
+function baseY(buildingOrX, z = null) {
+  if (typeof buildingOrX === 'object') return terrainHeightAt(buildingOrX.x, buildingOrX.z);
+  return terrainHeightAt(buildingOrX, z);
+}
+
 function temple(building, color) {
+  const ground = baseY(building);
   const base = Math.max(1.2, building.h * 0.16);
-  box(building.x, 0, building.z, building.w, base, building.d, color);
+  box(building.x, ground, building.z, building.w, base, building.d, color);
   const columns = Math.max(4, Math.round(building.w / 10));
   for (let i = 0; i < columns; i++) {
     const x = building.x - building.w * 0.4 + i * (building.w * 0.8 / Math.max(1, columns - 1));
-    cylinder(x, base, building.z - building.d * 0.34, 1.35, building.h * 0.55, C.marbleLight, 10);
-    cylinder(x, base, building.z + building.d * 0.34, 1.35, building.h * 0.55, C.marbleLight, 10);
+    cylinder(x, ground + base, building.z - building.d * 0.34, 1.35, building.h * 0.55, C.marbleLight, 10);
+    cylinder(x, ground + base, building.z + building.d * 0.34, 1.35, building.h * 0.55, C.marbleLight, 10);
   }
-  pitchedBuilding(building.x, base, building.z, building.w * 0.82, building.h - base, building.d * 0.62, color);
+  pitchedBuilding(building.x, ground + base, building.z, building.w * 0.82, building.h - base, building.d * 0.62, color);
+}
+
+function ellipticalCylinder(cx, y, cz, rx, rz, height, color, segments = 36) {
+  const count = TOUCH ? Math.min(segments, 28) : segments;
+  for (let i = 0; i < count; i++) {
+    const a = i / count * Math.PI * 2;
+    const b = (i + 1) / count * Math.PI * 2;
+    const p0 = [cx + Math.cos(a) * rx, y, cz + Math.sin(a) * rz];
+    const p1 = [cx + Math.cos(b) * rx, y, cz + Math.sin(b) * rz];
+    const p2 = [p1[0], y + height, p1[2]];
+    const p3 = [p0[0], y + height, p0[2]];
+    quad(p0, p1, p2, p3, color);
+  }
 }
 
 function roundBuilding(building, color) {
+  const ground = baseY(building);
   const radius = Math.min(building.w, building.d) / 2;
-  cylinder(building.x, 0, building.z, radius, building.h * 0.62, color, 24);
+  cylinder(building.x, ground, building.z, radius, building.h * 0.62, color, 24);
   for (let ring = 0; ring < 4; ring++) {
     cylinder(
       building.x,
-      building.h * (0.62 + ring * 0.085),
+      ground + building.h * (0.62 + ring * 0.085),
       building.z,
       radius * (0.78 - ring * 0.1),
       building.h * 0.09,
@@ -197,12 +229,37 @@ function roundBuilding(building, color) {
   }
 }
 
+function pantheon(building, color) {
+  const ground = baseY(building);
+  const radius = Math.min(building.w, building.d) * 0.38;
+  const wallH = building.h * 0.48;
+  cylinder(building.x, ground, building.z + building.d * 0.08, radius, wallH, C.brick, 36);
+  for (let ring = 0; ring < 8; ring++) {
+    const t = ring / 7;
+    const r = radius * Math.cos(t * Math.PI * 0.47);
+    const nextT = Math.min(1, (ring + 1) / 7);
+    const y = ground + wallH + Math.sin(t * Math.PI * 0.5) * building.h * 0.42;
+    const nextY = ground + wallH + Math.sin(nextT * Math.PI * 0.5) * building.h * 0.42;
+    ellipticalCylinder(building.x, y, building.z + building.d * 0.08, Math.max(2.2, r), Math.max(2.2, r), Math.max(0.6, nextY - y), ring % 2 ? C.limestone : color, 32);
+  }
+  const porticoZ = building.z - building.d * 0.36;
+  box(building.x, ground + 0.3, porticoZ, building.w * 0.82, 1.2, building.d * 0.24, C.marble);
+  for (let row = 0; row < 2; row++) {
+    for (let col = 0; col < 8; col++) {
+      const x = building.x - building.w * 0.34 + col * (building.w * 0.68 / 7);
+      cylinder(x, ground + 1.5, porticoZ + (row ? 5 : -5), 0.72, building.h * 0.28, C.marbleLight, 10);
+    }
+  }
+  pitchedBuilding(building.x, ground + building.h * 0.28, porticoZ, building.w * 0.88, building.h * 0.20, building.d * 0.28, C.marbleLight);
+}
+
 function theatre(building, color) {
+  const ground = baseY(building);
   const radius = Math.max(building.w, building.d) * 0.46;
   for (let ring = 0; ring < 5; ring++) {
     cylinder(
       building.x,
-      ring * building.h * 0.11,
+      ground + ring * building.h * 0.11,
       building.z,
       radius * (1 - ring * 0.08),
       building.h * 0.12,
@@ -212,11 +269,56 @@ function theatre(building, color) {
   }
 }
 
+function longStadium(building, color) {
+  const ground = baseY(building);
+  const long = Math.max(building.w, building.d);
+  const short = Math.min(building.w, building.d);
+  const alongX = building.w >= building.d;
+  const straight = long * 0.66;
+  const standH = Math.max(3, building.h * 0.68);
+  if (alongX) {
+    box(building.x, ground, building.z - short * 0.42, straight, standH, short * 0.12, color);
+    box(building.x, ground, building.z + short * 0.42, straight, standH, short * 0.12, color);
+    ellipticalCylinder(building.x - straight / 2, ground, building.z, short * 0.46, short * 0.46, standH * 0.72, C.limestone, 20);
+    ellipticalCylinder(building.x + straight / 2, ground, building.z, short * 0.46, short * 0.46, standH * 0.72, C.limestone, 20);
+    box(building.x, ground + 0.05, building.z, straight, 0.12, short * 0.56, C.road);
+  } else {
+    box(building.x - short * 0.42, ground, building.z, short * 0.12, standH, straight, color);
+    box(building.x + short * 0.42, ground, building.z, short * 0.12, standH, straight, color);
+    ellipticalCylinder(building.x, ground, building.z - straight / 2, short * 0.46, short * 0.46, standH * 0.72, C.limestone, 20);
+    ellipticalCylinder(building.x, ground, building.z + straight / 2, short * 0.46, short * 0.46, standH * 0.72, C.limestone, 20);
+    box(building.x, ground + 0.05, building.z, short * 0.56, 0.12, straight, C.road);
+  }
+}
+
+function colosseum(building, color) {
+  const ground = baseY(building);
+  const rx = building.w / 2;
+  const rz = building.d / 2;
+  const tiers = 4;
+  for (let tier = 0; tier < tiers; tier++) {
+    const y = ground + tier * building.h / tiers;
+    const shrink = tier * 1.8;
+    ellipticalCylinder(building.x, y, building.z, rx - shrink, rz - shrink, building.h / tiers - 0.6, tier % 2 ? C.limestone : color, 48);
+    // Arcade rhythm: dark recess markers around the ellipse make the monument
+    // read as architecture rather than nested cylinders, without texture assets.
+    const arcadeCount = TOUCH ? 28 : 44;
+    for (let i = 0; i < arcadeCount; i++) {
+      const a = i / arcadeCount * Math.PI * 2;
+      const x = building.x + Math.cos(a) * (rx - shrink + 0.16);
+      const z = building.z + Math.sin(a) * (rz - shrink + 0.16);
+      box(x, y + building.h / tiers * 0.22, z, 1.1, building.h / tiers * 0.48, 0.55, C.brickDark, -a);
+    }
+  }
+}
+
 function amphitheatre(building, color) {
+  if (building.id === 'colosseum') return colosseum(building, color);
+  const ground = baseY(building);
   for (let ring = 0; ring < 5; ring++) {
     cylinder(
       building.x,
-      building.h * ring / 5,
+      ground + building.h * ring / 5,
       building.z,
       Math.max(building.w, building.d) * (0.52 - ring * 0.04),
       building.h / 5,
@@ -227,12 +329,13 @@ function amphitheatre(building, color) {
 }
 
 function bath(building, color) {
-  box(building.x, 0, building.z, building.w, building.h * 0.38, building.d, color);
+  const ground = baseY(building);
+  box(building.x, ground, building.z, building.w, building.h * 0.38, building.d, color);
   for (let i = -2; i <= 2; i++) {
     for (let j = -1; j <= 1; j++) {
       cylinder(
         building.x + i * building.w * 0.13,
-        building.h * 0.38,
+        ground + building.h * 0.38,
         building.z + j * building.d * 0.2,
         3,
         building.h * 0.36,
@@ -244,46 +347,57 @@ function bath(building, color) {
 }
 
 function basilica(building, color, church = false) {
+  const ground = baseY(building);
   const naveWidth = building.w * 0.54;
-  pitchedBuilding(building.x, 0, building.z, naveWidth, building.h, building.d * 0.78, color);
-  box(building.x - building.w * 0.38, 0, building.z, building.w * 0.22, building.h * 0.55, building.d * 0.72, C.brick);
-  box(building.x + building.w * 0.38, 0, building.z, building.w * 0.22, building.h * 0.55, building.d * 0.72, C.brick);
-  cylinder(building.x, 0, building.z + building.d * 0.39, Math.min(building.w, building.d) * 0.18, building.h * 0.6, church ? C.plaster : color, 18);
+  pitchedBuilding(building.x, ground, building.z, naveWidth, building.h, building.d * 0.78, color);
+  box(building.x - building.w * 0.38, ground, building.z, building.w * 0.22, building.h * 0.55, building.d * 0.72, C.brick);
+  box(building.x + building.w * 0.38, ground, building.z, building.w * 0.22, building.h * 0.55, building.d * 0.72, C.brick);
+  cylinder(building.x, ground, building.z + building.d * 0.39, Math.min(building.w, building.d) * 0.18, building.h * 0.6, church ? C.plaster : color, 18);
   if (church) {
-    box(building.x, 0.06, building.z - building.d * 0.58, building.w * 0.82, 0.18, building.d * 0.25, C.road);
+    const atriumZ = building.z - building.d * 0.58;
+    box(building.x, ground + 0.06, atriumZ, building.w * 0.82, 0.18, building.d * 0.25, C.road);
+    for (let i = -3; i <= 3; i++) {
+      cylinder(building.x + i * building.w * 0.095, ground + 0.24, atriumZ - building.d * 0.08, 0.42, 4.2, C.marbleLight, 8);
+    }
   }
 }
 
 function forum(building, color) {
-  box(building.x, 0, building.z, building.w, 0.16, building.d, C.road);
-  walkSurfaces.push(walkRect(building.x, building.z, building.w - 1, building.d - 1, 0.16, 0, `${building.id} paving`, false));
+  const ground = baseY(building);
+  const paving = ground + 0.16;
+  box(building.x, ground, building.z, building.w, 0.16, building.d, C.road);
+  walkSurfaces.push(walkRect(building.x, building.z, building.w - 1, building.d - 1, paving, 0, `${building.id} paving`, false));
   const step = Math.max(14, Math.min(building.w, building.d) / 5);
   for (let x = building.x - building.w * 0.42; x <= building.x + building.w * 0.42; x += step) {
-    cylinder(x, 0.16, building.z - building.d * 0.43, 0.75, 6, C.marbleLight, 10);
-    cylinder(x, 0.16, building.z + building.d * 0.43, 0.75, 6, C.marbleLight, 10);
+    cylinder(x, paving, building.z - building.d * 0.43, 0.75, 6, C.marbleLight, 10);
+    cylinder(x, paving, building.z + building.d * 0.43, 0.75, 6, C.marbleLight, 10);
   }
-  box(building.x, 0.18, building.z, 2.6, 1.2, 2.6, color);
+  box(building.x, paving + 0.02, building.z, 2.6, 1.2, 2.6, color);
 }
 
 function market(building, color) {
-  box(building.x, 0, building.z, building.w, 0.14, building.d, C.road);
-  walkSurfaces.push(walkRect(building.x, building.z, building.w - 1, building.d - 1, 0.14, 0, `${building.id} court`, false));
+  const ground = baseY(building);
+  const court = ground + 0.14;
+  box(building.x, ground, building.z, building.w, 0.14, building.d, C.road);
+  walkSurfaces.push(walkRect(building.x, building.z, building.w - 1, building.d - 1, court, 0, `${building.id} court`, false));
   for (let i = -2; i <= 2; i++) {
-    box(building.x + i * building.w * 0.16, 0.14, building.z - building.d * 0.37, building.w * 0.11, 3.2, building.d * 0.16, color);
-    box(building.x + i * building.w * 0.16, 0.14, building.z + building.d * 0.37, building.w * 0.11, 3.2, building.d * 0.16, color);
+    box(building.x + i * building.w * 0.16, court, building.z - building.d * 0.37, building.w * 0.11, 3.2, building.d * 0.16, color);
+    box(building.x + i * building.w * 0.16, court, building.z + building.d * 0.37, building.w * 0.11, 3.2, building.d * 0.16, color);
   }
 }
 
 function palace(building, color) {
+  const ground = baseY(building);
   const wingW = building.w * 0.28;
   const wingD = building.d * 0.28;
-  box(building.x - building.w * 0.34, 0, building.z, wingW, building.h * 0.75, building.d, color);
-  box(building.x + building.w * 0.34, 0, building.z, wingW, building.h * 0.75, building.d, color);
-  box(building.x, 0, building.z - building.d * 0.34, building.w * 0.55, building.h * 0.65, wingD, C.brick);
-  box(building.x, 0, building.z + building.d * 0.34, building.w * 0.55, building.h * 0.65, wingD, C.brick);
+  box(building.x - building.w * 0.34, ground, building.z, wingW, building.h * 0.75, building.d, color);
+  box(building.x + building.w * 0.34, ground, building.z, wingW, building.h * 0.75, building.d, color);
+  box(building.x, ground, building.z - building.d * 0.34, building.w * 0.55, building.h * 0.65, wingD, C.brick);
+  box(building.x, ground, building.z + building.d * 0.34, building.w * 0.55, building.h * 0.65, wingD, C.brick);
 }
 
 function insula(building, color) {
+  const ground = baseY(building);
   const rows = 2;
   const cols = 3;
   const gap = 4;
@@ -294,16 +408,17 @@ function insula(building, color) {
       const x = building.x - building.w / 2 + cellW / 2 + col * (cellW + gap);
       const z = building.z - building.d / 2 + cellD / 2 + row * (cellD + gap);
       const height = building.h * (0.68 + ((row + col) % 3) * 0.11);
-      pitchedBuilding(x, 0, z, cellW, height, cellD, col % 2 ? C.brickDark : color);
+      pitchedBuilding(x, ground, z, cellW, height, cellD, col % 2 ? C.brickDark : color);
     }
   }
 }
 
 function warehouse(building, color) {
+  const ground = baseY(building);
   for (let i = -2; i <= 2; i++) {
     pitchedBuilding(
       building.x + i * building.w * 0.17,
-      0,
+      ground,
       building.z,
       building.w * 0.14,
       building.h * (0.72 + (i % 2 ? 0.08 : 0)),
@@ -314,25 +429,28 @@ function warehouse(building, color) {
 }
 
 function garden(building) {
-  box(building.x, 0, building.z, building.w, 0.08, building.d, C.grass);
+  const ground = baseY(building);
+  box(building.x, ground, building.z, building.w, 0.08, building.d, C.grass);
   for (let i = 0; i < 18; i++) {
     const angle = i * 2.399;
     const radius = (i % 7) / 7;
     const x = building.x + Math.cos(angle) * building.w * 0.42 * radius;
     const z = building.z + Math.sin(angle) * building.d * 0.42 * radius;
-    cylinder(x, 0.08, z, 0.35, 2.8 + (i % 4) * 0.6, C.timber, 7);
-    cylinder(x, 2.1, z, 1.4 + (i % 3) * 0.4, 1.8, C.vegetation, 8);
+    const y = terrainHeightAt(x, z) + 0.08;
+    cylinder(x, y, z, 0.35, 2.8 + (i % 4) * 0.6, C.timber, 7);
+    cylinder(x, y + 2.0, z, 1.4 + (i % 3) * 0.4, 1.8, C.vegetation, 8);
   }
 }
 
 function cemetery(building) {
-  box(building.x, 0, building.z, building.w, 0.06, building.d, C.earth);
+  const ground = baseY(building);
+  box(building.x, ground, building.z, building.w, 0.06, building.d, C.earth);
   for (let i = 0; i < 20; i++) {
     const col = i % 5;
     const row = Math.floor(i / 5);
     const x = building.x - building.w * 0.36 + col * building.w * 0.18;
     const z = building.z - building.d * 0.32 + row * building.d * 0.21;
-    box(x, 0.06, z, 2.2 + (i % 2), 1.1 + (i % 3) * 0.35, 3.2, C.rubble);
+    box(x, terrainHeightAt(x, z) + 0.06, z, 2.2 + (i % 2), 1.1 + (i % 3) * 0.35, 3.2, C.rubble);
   }
 }
 
@@ -353,22 +471,25 @@ function addRampGeometry(x1, z1, y1, x2, z2, y2, width, color) {
 }
 
 function bridge(building, color) {
-  const deckY = 5;
-  box(building.x, 0, building.z, building.w, deckY, building.d, color);
+  const ground = baseY(building);
+  const deckY = Math.max(ground + 5.2, 4.4);
+  box(building.x, ground - 0.3, building.z, building.w, deckY - ground + 0.3, building.d, color);
   for (let i = -building.w * 0.35; i <= building.w * 0.35; i += building.w * 0.35) {
-    arch(building.x + i, 0, building.z, building.w * 0.27, 6, building.d, C.limestone);
+    arch(building.x + i, TIBER.waterY - 0.3, building.z, building.w * 0.27, deckY - TIBER.waterY, building.d, C.limestone);
   }
 
-  const approach = 18;
+  const approach = 20;
   const leftStart = building.x - building.w / 2 - approach;
   const leftEnd = building.x - building.w / 2;
   const rightStart = building.x + building.w / 2 + approach;
   const rightEnd = building.x + building.w / 2;
-  addRampGeometry(leftStart, building.z, 0.04, leftEnd, building.z, deckY, building.d - 1, C.road);
-  addRampGeometry(rightStart, building.z, 0.04, rightEnd, building.z, deckY, building.d - 1, C.road);
+  const leftGround = terrainHeightAt(leftStart, building.z) + 0.06;
+  const rightGround = terrainHeightAt(rightStart, building.z) + 0.06;
+  addRampGeometry(leftStart, building.z, leftGround, leftEnd, building.z, deckY, building.d - 1, C.road);
+  addRampGeometry(rightStart, building.z, rightGround, rightEnd, building.z, deckY, building.d - 1, C.road);
   walkSurfaces.push(walkRect(building.x, building.z, building.w - 1, building.d - 1, deckY, 0, `${building.id} deck`, false));
-  walkSurfaces.push(walkRamp(leftStart, building.z, 0.04, leftEnd, building.z, deckY, building.d - 1, `${building.id} west approach`, true));
-  walkSurfaces.push(walkRamp(rightStart, building.z, 0.04, rightEnd, building.z, deckY, building.d - 1, `${building.id} east approach`, true));
+  walkSurfaces.push(walkRamp(leftStart, building.z, leftGround, leftEnd, building.z, deckY, building.d - 1, `${building.id} west approach`, true));
+  walkSurfaces.push(walkRamp(rightStart, building.z, rightGround, rightEnd, building.z, deckY, building.d - 1, `${building.id} east approach`, true));
 }
 
 function gateNearby(x, z, padding = 34) {
@@ -379,7 +500,8 @@ function wall(building) {
   const { w, d, h } = building;
   const addSegment = (x, z, width, depth) => {
     if (gateNearby(x, z)) return;
-    box(x, 0, z, width, h, depth, C.wall);
+    const ground = terrainHeightAt(x, z);
+    box(x, ground, z, width, h, depth, C.wall);
     colliders.push(rectCollider(x, z, width, depth, 0, 'Aurelian Wall'));
   };
 
@@ -393,7 +515,8 @@ function wall(building) {
   }
   for (let i = -w / 2; i <= w / 2; i += 68) {
     for (const z of [building.z - d / 2, building.z + d / 2]) {
-      if (!gateNearby(building.x + i, z, 26)) box(building.x + i, 0, z, 13, h + 6, 13, C.wall);
+      const x = building.x + i;
+      if (!gateNearby(x, z, 26)) box(x, terrainHeightAt(x, z), z, 13, h + 6, 13, C.wall);
     }
   }
 }
@@ -403,24 +526,36 @@ function road(points, width) {
     const [a, b] = [points[i - 1], points[i]];
     const dx = b[0] - a[0];
     const dz = b[1] - a[1];
-    const length = Math.hypot(dx, dz);
-    const angle = Math.atan2(dz, dx);
-    const x = (a[0] + b[0]) / 2;
-    const z = (a[1] + b[1]) / 2;
-    box(x, 0.02, z, length, 0.08, width, C.road, angle);
-    const nx = -dz / (length || 1);
-    const nz = dx / (length || 1);
-    for (const side of [-1, 1]) {
-      box(
-        x + nx * side * (width / 2 - 0.35),
-        0.105,
-        z + nz * side * (width / 2 - 0.35),
-        length,
-        0.035,
-        0.22,
-        C.roadEdge,
-        angle,
+    const length = Math.hypot(dx, dz) || 1;
+    const pieces = Math.max(1, Math.ceil(length / (TOUCH ? 30 : 22)));
+    const nx = -dz / length;
+    const nz = dx / length;
+    for (let piece = 0; piece < pieces; piece++) {
+      const t0 = piece / pieces;
+      const t1 = (piece + 1) / pieces;
+      const x0 = a[0] + dx * t0;
+      const z0 = a[1] + dz * t0;
+      const x1 = a[0] + dx * t1;
+      const z1 = a[1] + dz * t1;
+      const y0 = terrainHeightAt(x0, z0) + 0.055;
+      const y1 = terrainHeightAt(x1, z1) + 0.055;
+      const half = width / 2;
+      quad(
+        [x0 + nx * half, y0, z0 + nz * half],
+        [x1 + nx * half, y1, z1 + nz * half],
+        [x1 - nx * half, y1, z1 - nz * half],
+        [x0 - nx * half, y0, z0 - nz * half],
+        C.road,
       );
+      for (const side of [-1, 1]) {
+        const edge = half - 0.28;
+        const e0 = [x0 + nx * side * edge, y0 + 0.028, z0 + nz * side * edge];
+        const e1 = [x1 + nx * side * edge, y1 + 0.028, z1 + nz * side * edge];
+        const outer = edge + side * 0.18;
+        const o0 = [x0 + nx * side * outer, y0 + 0.028, z0 + nz * side * outer];
+        const o1 = [x1 + nx * side * outer, y1 + 0.028, z1 + nz * side * outer];
+        quad(e0, e1, o1, o0, C.roadEdge);
+      }
     }
   }
 }
@@ -430,10 +565,12 @@ function scatteredRubble(building) {
   for (let i = 0; i < count; i++) {
     const angle = i * 2.399;
     const radius = (i % 7) / 7 * Math.max(building.w, building.d) * 0.42;
+    const x = building.x + Math.cos(angle) * radius;
+    const z = building.z + Math.sin(angle) * radius;
     box(
-      building.x + Math.cos(angle) * radius,
-      0.02,
-      building.z + Math.sin(angle) * radius,
+      x,
+      terrainHeightAt(x, z) + 0.02,
+      z,
       1.5 + (i % 4),
       0.7 + (i % 3),
       1.5 + (i % 3),
@@ -446,22 +583,25 @@ function scatteredRubble(building) {
 function registerSolidFootprint(building) {
   const passThroughTypes = new Set(['wall', 'gate', 'arch', 'aqueduct', 'bridge', 'forum', 'market', 'garden', 'cemetery', 'island']);
   if (passThroughTypes.has(building.type)) return;
-  colliders.push(rectCollider(building.x, building.z, building.w, building.d, 0, building.name));
+  colliders.push(rectCollider(building.x, building.z, building.w, building.d, building.rot || 0, building.name));
 }
 
 function renderBuilding(building) {
   const color = stateColor[building.state] || stateColor.default;
   registerSolidFootprint(building);
+  const ground = baseY(building);
 
   if (building.type === 'wall') return wall(building);
-  if (building.type === 'gate') return arch(building.x, 0, building.z, building.w, building.h, building.d, color);
-  if (building.type === 'temple') temple(building, color);
+  if (building.type === 'gate') return arch(building.x, ground, building.z, building.w, building.h, building.d, color);
+  if (building.id === 'pantheon') pantheon(building, color);
+  else if (building.type === 'temple') temple(building, color);
   else if (['round', 'dome', 'round-church', 'mausoleum'].includes(building.type)) roundBuilding(building, color);
-  else if (['theatre', 'stadium', 'circus', 'arena'].includes(building.type)) theatre(building, color);
+  else if (['stadium', 'circus', 'arena'].includes(building.type)) longStadium(building, color);
+  else if (building.type === 'theatre') theatre(building, color);
   else if (building.type === 'amphitheatre') amphitheatre(building, color);
   else if (building.type === 'bath') bath(building, color);
-  else if (building.type === 'arch') arch(building.x, 0, building.z, building.w, building.h, building.d, color);
-  else if (building.type === 'column') cylinder(building.x, 0, building.z, Math.max(1.1, building.w * 0.18), building.h, C.marbleLight, 18);
+  else if (building.type === 'arch') arch(building.x, ground, building.z, building.w, building.h, building.d, color);
+  else if (building.type === 'column') cylinder(building.x, ground, building.z, Math.max(1.1, building.w * 0.18), building.h, C.marbleLight, 18);
   else if (building.type === 'basilica') basilica(building, color, false);
   else if (building.type === 'church') basilica(building, color, true);
   else if (building.type === 'forum') forum(building, color);
@@ -473,24 +613,92 @@ function renderBuilding(building) {
   else if (building.type === 'cemetery') cemetery(building);
   else if (building.type === 'fort') palace(building, C.wall);
   else if (building.type === 'aqueduct') {
-    for (let i = -building.w / 2; i <= building.w / 2; i += 16) arch(building.x + i, 0, building.z, 13, building.h, building.d, color);
+    for (let i = -building.w / 2; i <= building.w / 2; i += 16) {
+      const x = building.x + i;
+      arch(x, terrainHeightAt(x, building.z), building.z, 13, building.h, building.d, color);
+    }
   }
   else if (building.type === 'bridge') bridge(building, color);
   else if (building.type === 'island') {
-    box(building.x, -0.3, building.z, building.w, 2, building.d, C.grass);
-    walkSurfaces.push(walkRect(building.x, building.z, building.w - 2, building.d - 2, 1.7, 0, `${building.id} surface`, false));
+    const islandY = Math.max(TIBER.waterY + 0.75, ground);
+    box(building.x, TIBER.waterY - 0.2, building.z, building.w, islandY - TIBER.waterY + 0.2, building.d, C.grass);
+    walkSurfaces.push(walkRect(building.x, building.z, building.w - 2, building.d - 2, islandY, 0, `${building.id} surface`, false));
   }
-  else if (building.type === 'pyramid') pitchedBuilding(building.x, 0, building.z, building.w, building.h, building.d, color);
-  else pitchedBuilding(building.x, 0, building.z, building.w, building.h, building.d, color);
+  else if (building.type === 'pyramid') pitchedBuilding(building.x, ground, building.z, building.w, building.h, building.d, color);
+  else pitchedBuilding(building.x, ground, building.z, building.w, building.h, building.d, color);
 
   if (['ruined', 'damaged', 'spoliated'].includes(building.state)) scatteredRubble(building);
 }
 
-// Ground, Tiber, roads and source-backed landmarks.
-box(-90, -1, 0, 1800, 1, 1500, C.earth);
-box(-505, -0.6, 0, 92, 0.42, 1290, C.water);
+function terrainColor(x, z, y) {
+  const river = Math.abs(x - TIBER.x);
+  if (river < TIBER.halfWidth + 35) return C.earth;
+  const variation = ((Math.sin(x * 0.027) + Math.sin(z * 0.021)) * 0.5 + 1) * 0.5;
+  const base = y > 5 ? C.grass : C.earth;
+  return base.map((value, index) => Math.max(0, Math.min(1, value * (0.90 + variation * 0.13 + index * 0.004))));
+}
+
+function buildTerrainMesh() {
+  const step = TOUCH ? 42 : 30;
+  for (let z = WORLD_BOUNDS.minZ; z < WORLD_BOUNDS.maxZ; z += step) {
+    for (let x = WORLD_BOUNDS.minX; x < WORLD_BOUNDS.maxX; x += step) {
+      const x1 = Math.min(WORLD_BOUNDS.maxX, x + step);
+      const z1 = Math.min(WORLD_BOUNDS.maxZ, z + step);
+      const y00 = terrainHeightAt(x, z);
+      const y10 = terrainHeightAt(x1, z);
+      const y11 = terrainHeightAt(x1, z1);
+      const y01 = terrainHeightAt(x, z1);
+      const color = terrainColor((x + x1) / 2, (z + z1) / 2, (y00 + y10 + y11 + y01) / 4);
+      quad([x, y00, z], [x1, y10, z], [x1, y11, z1], [x, y01, z1], color);
+    }
+  }
+}
+
+function buildTiberWater() {
+  const x0 = TIBER.x - TIBER.halfWidth;
+  const x1 = TIBER.x + TIBER.halfWidth;
+  const z0 = WORLD_BOUNDS.minZ;
+  const z1 = WORLD_BOUNDS.maxZ;
+  quad([x0, TIBER.waterY, z0], [x1, TIBER.waterY, z0], [x1, TIBER.waterY, z1], [x0, TIBER.waterY, z1], C.water);
+}
+
+function buildTiberHazards() {
+  const halfWidth = TIBER.halfWidth - 3;
+  // Pons Aelius receives a generous navigable gap; bridge ramps/deck then own
+  // support height. The rest of the river remains a fall hazard in this phase.
+  const gapMin = 65;
+  const gapMax = 126;
+  return [
+    { type: 'rect', cx: TIBER.x, cz: (WORLD_BOUNDS.minZ + gapMin) / 2, hx: halfWidth, hz: (gapMin - WORLD_BOUNDS.minZ) / 2, rot: 0, tag: 'Tiber' },
+    { type: 'rect', cx: TIBER.x, cz: (gapMax + WORLD_BOUNDS.maxZ) / 2, hx: halfWidth, hz: (WORLD_BOUNDS.maxZ - gapMax) / 2, rot: 0, tag: 'Tiber' },
+  ];
+}
+
+function renderUrbanFabric(building) {
+  const ground = terrainHeightAt(building.x, building.z);
+  const material = C[building.material] || C.brick;
+  if (building.courtyard) {
+    const wingW = building.w * 0.38;
+    pitchedBuilding(building.x - building.w * 0.28, ground, building.z, wingW, building.h, building.d, material, building.rot);
+    pitchedBuilding(building.x + building.w * 0.28, ground, building.z, wingW, building.h * 0.92, building.d, material, building.rot);
+  } else {
+    pitchedBuilding(building.x, ground, building.z, building.w, building.h, building.d, material, building.rot);
+  }
+  if (building.shopfront) {
+    box(building.x, ground + 0.04, building.z - building.d * 0.52, building.w * 0.64, 2.4, 0.55, C.timber, building.rot);
+  }
+  colliders.push(rectCollider(building.x, building.z, building.w, building.d, building.rot || 0, building.name));
+}
+
+// Terrain is the physical and visual base. Roads, named monuments and inferred
+// fabric are then layered on top of exactly the same height function.
+buildTerrainMesh();
+buildTiberWater();
 for (const street of STREETS) road(street.points, street.width);
 for (const building of BUILDINGS) renderBuilding(building);
+const URBAN_FABRIC = generateUrbanFabric({ regions: REGIONS, buildings: BUILDINGS, streets: STREETS, mobile: TOUCH, tiberX: TIBER.x });
+for (const building of URBAN_FABRIC) renderUrbanFabric(building);
+const ROME_HAZARDS = buildTiberHazards();
 
 const player = {
   x: -205,
@@ -508,7 +716,9 @@ const traversal = createTraversalSystem({
   player,
   colliders,
   walkSurfaces,
+  hazards: ROME_HAZARDS,
   bounds: WORLD_BOUNDS,
+  baseHeightAt: terrainHeightAt,
   eyeHeight: EYE_HEIGHT,
 });
 
@@ -773,10 +983,12 @@ function updateNearest() {
   }
   if (best && distance < 70) {
     $('#place').textContent = best.name;
-    $('#detail').textContent = `${stateLabel[best.state] || best.state} · ${best.region === 'all' ? 'city circuit' : `Regio ${best.region}`} · surface ${player.floorY.toFixed(1)} m`;
+    const terrain = terrainDescriptorAt(player.x, player.z);
+    $('#detail').textContent = `${stateLabel[best.state] || best.state} · ${best.region === 'all' ? 'city circuit' : `Regio ${best.region}`} · ${terrain.feature} · ${player.floorY.toFixed(1)} m`;
   } else {
     $('#place').textContent = 'Street level';
-    $('#detail').textContent = `Walk the late-antique city · ${player.surfaceTag || 'ground'}`;
+    const terrain = terrainDescriptorAt(player.x, player.z);
+    $('#detail').textContent = `Walk the late-antique city · ${terrain.feature} · ${player.floorY.toFixed(1)} m`;
   }
 }
 
@@ -938,9 +1150,10 @@ function nearestInfo() {
     Math.hypot(item.x - player.x, item.z - player.z) < Math.hypot(best.x - player.x, best.z - player.z) ? item : best
   ), BUILDINGS[0]);
   const source = SOURCES.find((item) => item.id === building.source);
+  const evidence = evidenceForRecord(building);
   setModal(
     building.name,
-    `<p><b>${stateLabel[building.state] || building.state}</b> · ${building.region === 'all' ? 'city circuit' : `Regio ${building.region}`}</p><p>${building.detail}</p><p>Source: ${source ? `<a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.title}</a>` : 'Research ledger'}</p>`,
+    `<p>${evidenceBadgeHTML(evidence)}</p><p><b>${stateLabel[building.state] || building.state}</b> · ${building.region === 'all' ? 'city circuit' : `Regio ${building.region}`}</p><p>${building.detail}</p>${evidence.note ? `<p class="awEvidenceNote">${evidence.note}</p>` : ''}<p>Source: ${source ? `<a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.title}</a>` : 'Research ledger'}</p>`,
   );
 }
 
@@ -1066,6 +1279,7 @@ $('#period').textContent = CITY.period;
 $('#introTitle').textContent = CITY.title;
 $('#introText').textContent = CITY.description;
 
+installEvidenceStyles();
 installInput();
 installBackToOS({ onBeforeExit: () => lifecycle.destroy() });
 lifecycle.listen(window, 'pagehide', () => lifecycle.destroy(), { once: true });
@@ -1094,9 +1308,14 @@ window.__ANCIENT_WORLD_DEBUG__ = {
   resolveSpawn: traversal.resolveSpawn,
   moveWithSubsteps: traversal.moveWithSubsteps,
   traversal: () => ({ ...traversal.config, ...traversal.stats() }),
-  geometry: () => ({ vertices: geometry.length / 9, triangles: geometry.length / 27 }),
+  geometry: () => ({ vertices: geometry.length / 9, triangles: geometry.length / 27, urbanFabric: URBAN_FABRIC.length }),
+  terrainAt: terrainDescriptorAt,
+  hills: HILLS,
+  urbanFabric: URBAN_FABRIC,
+  urbanFabricMethod: URBAN_FABRIC_METHOD,
   colliders,
   walkSurfaces,
+  hazards: ROME_HAZARDS,
 };
 
 traversal.snapPlayerToSupport();

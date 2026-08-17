@@ -6,9 +6,10 @@ The near-term rule is **share behaviour before replacing the renderer**. Aizanoi
 
 ## Stable contracts
 
-- `traversal.js` — player radius, spatial-grid collision, walk surfaces, ramps, step-up/down limits, sub-stepped wall sliding, support height and safe spawn resolution.
+- `traversal.js` — player radius, spatial-grid collision, walk surfaces, ramps, step-up/down limits, sub-stepped wall sliding, support height, hazards and safe spawn resolution.
 - `lifecycle.js` — event-listener cleanup, requestAnimationFrame ownership and AudioContext cleanup.
 - `navigation.js` — consistent `← Aizanoi OS` escape path for every city.
+- `evidence.js` — shared evidence vocabulary and presentation helpers: `archaeological`, `documented`, `plausible`, `atmospheric`.
 - `../assets/materials.js` — renderer-neutral material vocabulary shared by procedural cities.
 
 ## City contract
@@ -31,13 +32,17 @@ A city should increasingly be data + builders, not a new movement engine. A futu
 }
 ```
 
-The engine must not know what a temple, basilica or theatre means. City/building code registers visual geometry plus generic colliders/walk surfaces.
+The engine must not know what a temple, basilica or theatre means. City/building code registers visual geometry plus generic colliders/walk surfaces. Visible terrain and physical support height should come from the same city terrain function.
+
+## Evidence contract
+
+Visual detail must never silently increase historical confidence. A procedurally generated street block can look convincing and still remain `plausible`. A decorative cart, tree or crowd prop can remain `atmospheric`. Named/source-led places may be `documented`, while a feature directly supported by physical archaeology can be marked `archaeological` when the city research data justifies it.
 
 ## Renderer contract
 
 Traversal, input, navigation and evidence must stay independent of rendering. The current custom WebGL renderer is allowed. A future Three.js proof-of-concept should replace only the renderer/builder layer and consume the same city/traversal contracts.
 
-Do **not** migrate both cities to Three.js/Babylon.js in one change. First prove parity in Rome, including collision, stairs/ramps, mobile controls, teleport, evidence labels, performance and teardown.
+Do **not** migrate both cities to Three.js/Babylon.js in one change. First prove parity in Rome, including collision, terrain, stairs/ramps, mobile controls, teleport, evidence labels, performance and teardown.
 
 ## Shared asset direction
 
