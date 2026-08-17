@@ -1,0 +1,40 @@
+name: Temporary Three.js A/B V3
+
+on:
+  push:
+    branches:
+      - exp/threejs-rome-renderer-poc
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: exp/threejs-rome-renderer-poc
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Install experiment dependencies
+        working-directory: experiments/threejs-rome-renderer
+        run: npm install --ignore-scripts --package-lock=false
+      - name: Vendor Three.js
+        working-directory: experiments/threejs-rome-renderer
+        run: npm run vendor
+      - name: Install Chromium
+        working-directory: experiments/threejs-rome-renderer
+        run: npx playwright install chromium --with-deps
+      - name: Capture matched Colosseum baselines
+        working-directory: experiments/threejs-rome-renderer
+        run: npm run capture:ab
+      - name: Upload A/B screenshot artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rome-renderer-ab-v3
+          path: experiments/threejs-rome-renderer/visual-baseline/*.png
+          retention-days: 2
