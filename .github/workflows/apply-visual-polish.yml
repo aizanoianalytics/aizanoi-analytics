@@ -19,12 +19,13 @@ jobs:
           node-version: "22"
       - run: python3 .github/scripts/apply_visual_polish.py
       - run: node --check frontend/ancient-cities/rome-410-476/js/app.js
+      - run: node --check frontend/games/mines.js
       - run: git diff --check
       - name: Commit patch when needed
         run: |
           if git diff --quiet; then exit 0; fi
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add frontend/index.html frontend/ancient-cities/rome-410-476/js/app.js
-          git commit -m "feat: wire visual polish and Rome touch controls"
+          git add frontend/index.html frontend/ancient-cities/rome-410-476/js/app.js frontend/games/mines.js
+          git commit -m "fix: harden visual polish interactions"
           git push origin HEAD:feat/visual-polish-games-2026-08-17
