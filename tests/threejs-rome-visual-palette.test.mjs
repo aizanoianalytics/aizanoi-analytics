@@ -18,13 +18,29 @@ test('terrain vertex colors enter Three.js through color-managed hex values', ()
   assert.doesNotMatch(main, /colors\.push\(0\.34 \* shade/);
 });
 
-test('renderer palette keeps inferred walls, roofs, sky and fog centralized', () => {
+test('terrain palette keeps deterministic broad and fine micro-variation', () => {
+  assert.match(palette, /const broad =/);
+  assert.match(palette, /const grain =/);
+  assert.match(palette, /Math\.max\(0\.82, Math\.min\(1\.10, 0\.95 \+ broad \+ grain\)\)/);
+  assert.doesNotMatch(palette, /Math\.random/);
+});
+
+test('renderer palette keeps inferred walls, eaves, roofs, sky and fog centralized', () => {
   assert.match(palette, /urbanWalls:/);
+  assert.match(palette, /urbanEaves:/);
   assert.match(palette, /roofs:/);
   assert.match(palette, /sky:/);
   assert.match(palette, /fog:/);
   assert.match(main, /ROME_VISUAL_PALETTE\.urbanWalls/);
+  assert.match(main, /ROME_VISUAL_PALETTE\.urbanEaves/);
   assert.match(main, /ROME_VISUAL_PALETTE\.roofs/);
   assert.match(main, /ROME_VISUAL_PALETTE\.sky/);
   assert.match(main, /ROME_VISUAL_PALETTE\.fog/);
+});
+
+test('inferred urban fabric uses one instanced eave layer between walls and roofs', () => {
+  assert.match(main, /new THREE\.InstancedMesh\(eaveGeometry, eaveMaterial, count\)/);
+  assert.match(main, /eaves\.name = 'Plausible urban fabric eave bands'/);
+  assert.match(main, /eaves\.instanceMatrix\.needsUpdate = true/);
+  assert.match(main, /scene\.add\(walls, eaves, roofs\)/);
 });
