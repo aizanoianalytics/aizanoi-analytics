@@ -154,7 +154,13 @@ async function mobileSmoke(page) {
 try {
   browser = await chromium.launch({
     headless: true,
-    args: ['--enable-webgl', '--ignore-gpu-blocklist', '--use-angle=swiftshader'],
+    args: [
+      '--enable-webgl',
+      '--ignore-gpu-blocklist',
+      '--use-gl=angle',
+      '--use-angle=swiftshader',
+      '--enable-unsafe-swiftshader',
+    ],
   });
 
   const desktop = await browser.newContext({ viewport: { width: 1280, height: 720 } });
