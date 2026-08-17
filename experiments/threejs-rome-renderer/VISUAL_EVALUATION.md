@@ -34,21 +34,35 @@ At this point the **Three.js Colosseum hero is more architecturally legible than
 
 ### V5 — terrain micro-variation and inferred-building eaves
 
-The terrain sampler now combines deterministic broad and finer spatial variation rather than relying on a single narrow grain term. Inferred urban blocks also receive one shared instanced eave/cornice layer between their walls and roof silhouettes. This adds a readable horizontal break to nearby massing without creating per-building draw objects or changing evidence confidence.
+The terrain sampler combines deterministic broad and finer spatial variation. Inferred urban blocks receive one shared instanced eave/cornice layer between their walls and roof silhouettes, adding a readable horizontal break without per-building draw objects or evidence claims.
 
-The technical cost remained small in the real Chromium smoke: desktop moved from roughly 9,964 triangles / 160 calls to 11,344 triangles / 161 calls, while mobile moved from roughly 5,710 triangles / 73 calls to about 6,574 triangles / 75 calls. Desktop, pointer-lock, mobile, regression and whitespace gates all passed.
+The technical cost remained small in real Chromium: desktop moved from roughly 9,964 triangles / 160 calls to 11,344 triangles / 161 calls, while mobile stayed around 6.5k triangles / mid-70s calls. Desktop, pointer-lock, mobile, regression and whitespace gates passed.
 
-The matched image shows a **modest streetscape improvement**: nearby blocks no longer terminate as completely plain boxes and their roofline transition reads more clearly. However the foreground terrain still appears too broad and tonally flat at the matched camera. The stronger procedural terrain modulation exists mathematically but is not yet visually strong enough after lighting and tone mapping to reproduce the production renderer's ground depth.
+The matched image shows a **modest streetscape improvement**, but the foreground terrain still appeared too broad and tonally flat.
 
-**Verdict:** keep the low-cost eave layer and deterministic terrain variation, but the whole-scene parity gate remains open.
+**Verdict:** keep the low-cost eave layer and deterministic terrain variation; whole-scene parity remains open.
 
 ### V6 — reduced ambient fill experiment (rejected)
 
-V6 changed only two lighting coefficients so the visual effect could be isolated: hemisphere fill dropped from `2.45` to `1.75` and directional sun from `3.85` to `3.65`. Geometry, fog, tone mapping, traversal, quality policy and evidence data were unchanged. The exact V6 state passed the real desktop/input/mobile Chromium smoke and all regression checks before visual evaluation.
+V6 changed only two lighting coefficients: hemisphere fill dropped from `2.45` to `1.75` and directional sun from `3.85` to `3.65`. Geometry, fog, tone mapping, traversal, quality policy and evidence data were unchanged. The exact V6 state passed desktop/input/mobile Chromium and regression checks before visual evaluation.
 
-The matched capture did **not** solve the remaining problem. Compared with V5, the city and Colosseum regions became roughly 12–13 RGB levels darker on average and the foreground roughly 7 levels darker, while the foreground terrain relief still did not become materially more legible. Nearby inferred-building faces became unnecessarily heavy and the brighter V5 image retained better street-level readability.
+The matched capture did **not** solve the remaining problem. Compared with V5, the city and Colosseum became roughly 12–13 RGB levels darker on average and the foreground roughly 7 levels darker, while terrain relief did not become materially more legible.
 
-**Verdict:** reject V6 and restore the validated V5 light balance (`HemisphereLight` 2.45, directional sun 3.85). Do not pursue lower ambient fill as the next route to ground cohesion.
+**Verdict:** reject V6 and restore the validated V5 light balance (`HemisphereLight` 2.45, directional sun 3.85).
+
+### V7 — terrain-only per-fragment grain
+
+Inspection of the production renderer identified an important structural difference: production applies deterministic world-space grain in the fragment shader, while the Three.js PoC had been relying mostly on vertex colors interpolated across a relatively coarse terrain mesh. V7 therefore moved the missing micro-variation into a **terrain-only fragment material** without changing terrain geometry, collision, lighting, fog, city data or evidence confidence.
+
+The first `0.035` hash-cell version compiled and passed real Chromium with the same scene complexity as V5 (`11,344` desktop triangles / `161` calls; `6,562` mobile triangles / `74` calls). It increased near-field variation but remained visually subtle. Raising the hard-cell amplitude to `0.075` made the effect easier to see but exposed square cell boundaries, so that tuning was rejected.
+
+The retained V7.2 implementation uses smooth deterministic value noise: four neighboring hash samples are blended with a smoothstep-style interpolation. `cellScale` remains `0.72`; amplitude is `0.12`. This removes the blocky cell boundaries while keeping visible near-field tonal variation. The renderer still adds no geometry or draw calls for the effect.
+
+As a screenshot diagnostic, mean adjacent-pixel luminance change in the matched foreground rose from about `0.0078` in V5 to about `0.0598` in retained V7.2 — roughly **7.6× more local variation** — while production remains around `0.2337`. The number is not an FPS or quality score; it is only a consistent matched-image indicator that the foreground is no longer almost perfectly flat.
+
+V7.2 passed both push and PR CI, including real desktop/input/mobile Chromium, shader compilation, evidence teardown, complexity limits and all regression tests.
+
+**Verdict:** keep V7.2. It is the first terrain experiment that improves the matched image without darkening the scene or introducing visible grid artifacts. It narrows the ground-cohesion gap, but does not by itself justify renderer migration.
 
 ## What the experiment has proven
 
@@ -59,6 +73,7 @@ The matched capture did **not** solve the remaining problem. Compared with V5, t
 - Better graphics must not alter evidence confidence; the Colosseum hero remains tagged `plausible` at the renderer layer.
 - The renderer can be destroyed while the reconstruction methodology UI remains functional.
 - Matched A/B evaluation can reject technically valid changes when they do not produce a visual benefit.
+- Terrain micro-detail can be improved at fragment level without increasing scene geometry or draw calls.
 
 ## Remaining visual gate
 
@@ -67,4 +82,6 @@ Do not promote this branch merely because Three.js is easier to extend. A migrat
 1. the **whole Rome streetscape** reaches or exceeds the production renderer's tonal/material cohesion without breaking mobile budgets; or
 2. a small number of owned/licensed hero assets or dedicated builders creates a clearly superior visitor experience while the shared engine remains unchanged.
 
-Until then, production stays on the current renderer and this branch remains an experiment.
+The next useful visual work should target broader streetscape/material cohesion rather than more Colosseum detail, lower ambient fill or expensive dynamic shadows.
+
+Until that gate is met, production stays on the current renderer and this branch remains an experiment.
