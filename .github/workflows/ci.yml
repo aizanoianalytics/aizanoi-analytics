@@ -6,6 +6,7 @@ on:
       - main
       - 'fix/**'
       - 'feat/**'
+      - 'exp/**'
   pull_request:
 
 permissions:
@@ -42,6 +43,9 @@ jobs:
           node --check frontend/ancient-cities/rome-410-476/js/methodology.js
           node --check frontend/ancient-cities/rome-410-476/js/app.js
           node --check frontend/ancient-cities/_template/data/city.example.js
+          node --check experiments/threejs-rome-renderer/src/main.js
+          node --check experiments/threejs-rome-renderer/src/rome-adapter.js
+          node --check experiments/threejs-rome-renderer/scripts/vendor-three.mjs
 
       - name: Regression tests
         run: node --test tests/*.test.mjs
