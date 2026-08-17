@@ -26,3 +26,6 @@ backups/
 *.bak
 *.bak_*
 *.broken_*
+
+# Large local web research snapshots (reports remain versioned)
+research/**/wikipedia_snapshots/
