@@ -2,6 +2,7 @@ import { createAdaptiveQualityController } from '../../../frontend/ancient-world
 import { createLifecycle } from '../../../frontend/ancient-world/engine/lifecycle.js';
 import { createRomeSimulation } from './rome-adapter.js';
 import { installRomePocControls } from './runtime-controls.js';
+import { buildColosseumHero } from './hero-builders.js';
 
 const statusEl = document.querySelector('#status');
 const metricsEl = document.querySelector('#metrics');
@@ -184,17 +185,7 @@ function addHeroProxy(THREE, scene, simulation, record, material) {
   group.name = record.name;
 
   if (record.id === 'colosseum') {
-    const shell = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 1, 64, 1, true), material);
-    shell.position.y = record.h / 2;
-    shell.scale.set(record.w, record.h, record.d);
-    group.add(shell);
-    const arena = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.5, 0.5, 0.6, 64),
-      new THREE.MeshStandardMaterial({ color: 0x8d7354, roughness: 1 }),
-    );
-    arena.position.y = 0.3;
-    arena.scale.set(record.w * 0.62, 1, record.d * 0.58);
-    group.add(arena);
+    group.add(buildColosseumHero(THREE, record, material));
   } else if (record.id === 'pantheon') {
     const drum = new THREE.Mesh(new THREE.CylinderGeometry(record.w * 0.42, record.w * 0.42, record.h * 0.52, 40), material);
     drum.position.y = record.h * 0.26;
