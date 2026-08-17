@@ -4,6 +4,7 @@ import { createRomeSimulation } from './rome-adapter.js';
 import { installRomePocControls } from './runtime-controls.js';
 import { buildColosseumHero } from './hero-builders.js';
 import { createTerrainColorSampler, ROME_VISUAL_PALETTE } from './visual-palette.js';
+import { createTerrainMaterial } from './terrain-material.js';
 
 const statusEl = document.querySelector('#status');
 const metricsEl = document.querySelector('#metrics');
@@ -34,10 +35,6 @@ function materialForState(THREE, state, atmospheric = false) {
     roughness: atmospheric ? 0.97 : 0.87,
     metalness: 0,
   });
-}
-
-function terrainMaterial(THREE) {
-  return new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, metalness: 0, vertexColors: true });
 }
 
 function buildTerrain(THREE, scene, simulation, mobile) {
@@ -75,7 +72,7 @@ function buildTerrain(THREE, scene, simulation, mobile) {
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
   geometry.computeBoundingSphere();
-  const mesh = new THREE.Mesh(geometry, terrainMaterial(THREE));
+  const mesh = new THREE.Mesh(geometry, createTerrainMaterial(THREE));
   mesh.name = 'Rome terrain · shared height field';
   scene.add(mesh);
   return mesh;
