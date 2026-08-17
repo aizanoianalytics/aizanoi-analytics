@@ -6,7 +6,7 @@
   "scripts": {
     "vendor": "node ./scripts/vendor-three.mjs",
     "prepare": "npm run vendor",
-    "check": "node --check ./src/main.js && node --check ./src/rome-adapter.js && node --check ./src/runtime-controls.js && node --check ./src/methodology.js && node --check ./src/hero-builders.js && node --check ./src/performance-budget.js && node --check ./src/visual-palette.js && node --check ./src/terrain-material.js && node --check ./scripts/vendor-three.mjs && node --check ./scripts/browser-smoke.mjs && node --check ./scripts/capture-ab-baseline.mjs",
+    "check": "node --check ./src/main.js && node --check ./src/rome-adapter.js && node --check ./src/runtime-controls.js && node --check ./src/methodology.js && node --check ./src/hero-builders.js && node --check ./src/performance-budget.js && node --check ./src/visual-palette.js && node --check ./src/terrain-material.js && node --check ./src/road-builder.js && node --check ./scripts/vendor-three.mjs && node --check ./scripts/browser-smoke.mjs && node --check ./scripts/capture-ab-baseline.mjs",
     "browser:smoke": "node ./scripts/browser-smoke.mjs",
     "capture:ab": "node ./scripts/capture-ab-baseline.mjs"
   },

@@ -5,6 +5,7 @@ import { installRomePocControls } from './runtime-controls.js';
 import { buildColosseumHero } from './hero-builders.js';
 import { createTerrainColorSampler, ROME_VISUAL_PALETTE } from './visual-palette.js';
 import { createTerrainMaterial } from './terrain-material.js';
+import { addInstancedRoads } from './road-builder.js';
 
 const statusEl = document.querySelector('#status');
 const metricsEl = document.querySelector('#metrics');
@@ -93,41 +94,6 @@ function addTiber(THREE, scene, simulation) {
   mesh.position.set(simulation.tiber.x, simulation.tiber.waterY - 0.08, (bounds.minZ + bounds.maxZ) / 2);
   mesh.name = 'Tiber';
   scene.add(mesh);
-}
-
-function roadSegment(THREE, scene, simulation, a, b, width, material) {
-  const dx = b[0] - a[0];
-  const dz = b[1] - a[1];
-  const planarLength = Math.hypot(dx, dz) || 1;
-  const pieces = Math.max(1, Math.ceil(planarLength / 28));
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-
-  for (let piece = 0; piece < pieces; piece++) {
-    const t0 = piece / pieces;
-    const t1 = (piece + 1) / pieces;
-    const x0 = a[0] + dx * t0;
-    const z0 = a[1] + dz * t0;
-    const x1 = a[0] + dx * t1;
-    const z1 = a[1] + dz * t1;
-    const y0 = simulation.terrainHeightAt(x0, z0) + 0.10;
-    const y1 = simulation.terrainHeightAt(x1, z1) + 0.10;
-    const direction = new THREE.Vector3(x1 - x0, y1 - y0, z1 - z0);
-    const length = direction.length() || 1;
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2);
-    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), direction.normalize());
-    mesh.scale.set(length, 0.10, width);
-    scene.add(mesh);
-  }
-}
-
-function addRoads(THREE, scene, simulation) {
-  const material = new THREE.MeshStandardMaterial({ color: 0x665f55, roughness: 1 });
-  for (const road of simulation.streets) {
-    for (let index = 1; index < road.points.length; index++) {
-      roadSegment(THREE, scene, simulation, road.points[index - 1], road.points[index], road.width, material);
-    }
-  }
 }
 
 function addRamp(THREE, scene, x0, y0, z0, x1, y1, z1, width, material) {
@@ -352,7 +318,7 @@ async function bootstrap() {
 
   buildTerrain(THREE, scene, simulation, mobile);
   addTiber(THREE, scene, simulation);
-  addRoads(THREE, scene, simulation);
+  addInstancedRoads(THREE, scene, simulation, { mobile });
   addMonuments(THREE, scene, simulation);
   addUrbanFabric(THREE, scene, simulation);
 

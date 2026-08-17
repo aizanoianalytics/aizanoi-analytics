@@ -105,6 +105,10 @@ async function desktopSmoke(page) {
       player: { x: api.simulation.player.x, y: api.simulation.player.y, z: api.simulation.player.z },
       target: api.contract.teleportTargets.find((item) => item.monumentId === 'colosseum') || api.contract.teleportTargets[0],
       hero,
+      roads: (() => {
+        const roadBeds = api.scene.getObjectByName('Terrain-following Roman road beds');
+        return roadBeds?.userData?.benchmark || null;
+      })(),
     };
   });
 
@@ -116,6 +120,9 @@ async function desktopSmoke(page) {
   assert.equal(baseline.hero?.builder, 'colosseum-procedural-v1', 'Colosseum hero builder should exist in the live scene');
   assert.equal(baseline.hero?.visualEvidence, 'plausible', 'visual detail must not overstate historical confidence');
   assert.equal(baseline.hero?.benchmark?.facadeInstances, 216, 'Colosseum hero should render 216 instanced facade piers');
+  assert.ok(baseline.roads?.pieces > 0, 'Rome PoC should expose instanced road pieces');
+  assert.equal(baseline.roads?.drawLayers, 2, 'road renderer should use two instanced draw layers');
+  assert.equal(baseline.roads?.edgeInstances, baseline.roads?.pieces * 2, 'road renderer should provide two edge bands per piece');
 
   const teleported = await page.evaluate((targetId) => {
     const api = window.__ROME_THREE_POC__;
