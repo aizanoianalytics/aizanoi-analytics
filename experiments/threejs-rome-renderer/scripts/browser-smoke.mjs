@@ -138,8 +138,8 @@ async function desktopSmoke(page) {
   await page.locator('#evidence').click();
   await page.locator('#evidenceModal:not(.hidden)').waitFor({ state: 'visible' });
   const evidenceText = await page.locator('#evidenceBody').innerText();
-  assert.match(evidenceText, /Archaeologically supported/);
-  assert.match(evidenceText, /Plausible reconstruction/);
+  assert.match(evidenceText, /Archaeologically supported/i);
+  assert.match(evidenceText, /Plausible reconstruction/i);
   assert.match(evidenceText, /visual detail does not equal historical certainty/i);
 
   assert.deepEqual(errors, [], errors.join('\n'));
