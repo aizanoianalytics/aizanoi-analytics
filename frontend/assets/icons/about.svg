@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="About">
+  <defs>
+    <radialGradient id="aza-bg" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0%" stop-color="#e6c886"/>
+      <stop offset="100%" stop-color="#8a6a3a"/>
+    </radialGradient>
+  </defs>
+  <rect x="1" y="1" width="46" height="46" rx="4" fill="url(#aza-bg)" stroke="#6a4a1a" stroke-width="1"/>
+  <!-- Coin circle -->
+  <circle cx="24" cy="24" r="16" fill="#d6a75a" stroke="#7a5a2a" stroke-width="1.5"/>
+  <circle cx="24" cy="24" r="13" fill="none" stroke="#a07a3a" stroke-width="0.8"/>
+  <!-- Column silhouette in center -->
+  <rect x="20" y="16" width="2" height="14" fill="#5a3a1a"/>
+  <rect x="26" y="16" width="2" height="14" fill="#5a3a1a"/>
+  <rect x="22" y="14" width="4" height="2" fill="#5a3a1a"/>
+  <rect x="28" y="14" width="2" height="2" fill="#5a3a1a"/>
+  <rect x="18" y="14" width="2" height="2" fill="#5a3a1a"/>
+  <rect x="18" y="30" width="12" height="2" fill="#5a3a1a"/>
+  <!-- Info dot above column -->
+  <text x="24" y="11" text-anchor="middle" font-family="Tahoma, sans-serif" font-size="6" fill="#5a3a1a" font-weight="bold">i</text>
+</svg>

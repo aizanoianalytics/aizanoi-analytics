@@ -1,0 +1,10 @@
+# Aizanoi Analytics — robots.txt
+# https://aizanoianalytics.com
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /market/
+
+# Sitemap
+Sitemap: https://aizanoianalytics.com/sitemap.xml

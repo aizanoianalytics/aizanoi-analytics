@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7fb6f0"/>
+      <stop offset="55%" stop-color="#a8c8e8"/>
+      <stop offset="80%" stop-color="#d6c89a"/>
+      <stop offset="100%" stop-color="#b8985a"/>
+    </linearGradient>
+    <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9a8a5a"/>
+      <stop offset="100%" stop-color="#6a5a3a"/>
+    </linearGradient>
+    <linearGradient id="temple" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f4e6c8"/>
+      <stop offset="100%" stop-color="#a8906a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1920" height="1200" fill="url(#sky)"/>
+
+  <!-- Sun (small, top-right, faded) -->
+  <circle cx="1620" cy="240" r="50" fill="#fff8d8" opacity="0.55"/>
+
+  <!-- Distant hills -->
+  <path d="M0 820 Q480 760 960 800 T1920 780 L1920 1200 L0 1200 Z" fill="url(#hill)" opacity="0.55"/>
+  <path d="M0 880 Q420 840 940 870 T1920 860 L1920 1200 L0 1200 Z" fill="url(#hill)" opacity="0.75"/>
+
+  <!-- Mid-ground temple silhouette (far, centered, faded) -->
+  <g transform="translate(820,720)" opacity="0.32">
+    <rect x="-200" y="60" width="400" height="40" fill="url(#temple)"/>
+    <polygon points="-200,60 0,-40 200,60" fill="url(#temple)"/>
+    <rect x="-180" y="60" width="6" height="100" fill="#a8906a"/>
+    <rect x="-130" y="60" width="6" height="100" fill="#a8906a"/>
+    <rect x="-80" y="60" width="6" height="100" fill="#a8906a"/>
+    <rect x="-30" y="60" width="6" height="100" fill="#a8906a"/>
+    <rect x="20" y="60" width="6" height="100" fill="#a8906a"/>
+    <rect x="70" y="60" width="6" height="100" fill="#a8906a"/>
+    <rect x="120" y="60" width="6" height="100" fill="#a8906a"/>
+    <rect x="170" y="60" width="6" height="100" fill="#a8906a"/>
+  </g>
+
+  <!-- Foreground hill (closer) -->
+  <path d="M0 980 Q420 920 940 960 T1920 940 L1920 1200 L0 1200 Z" fill="url(#hill)"/>
+
+  <!-- Foreground small temple (left) -->
+  <g transform="translate(180,880)" opacity="0.65">
+    <rect x="-70" y="0" width="140" height="14" fill="url(#temple)" stroke="#6a5a3a" stroke-width="0.8"/>
+    <polygon points="-70,0 0,-50 70,0" fill="url(#temple)" stroke="#6a5a3a" stroke-width="0.8"/>
+    <rect x="-58" y="0" width="4" height="36" fill="#a8906a"/>
+    <rect x="-40" y="0" width="4" height="36" fill="#a8906a"/>
+    <rect x="-22" y="0" width="4" height="36" fill="#a8906a"/>
+    <rect x="-4" y="0" width="4" height="36" fill="#a8906a"/>
+    <rect x="14" y="0" width="4" height="36" fill="#a8906a"/>
+    <rect x="32" y="0" width="4" height="36" fill="#a8906a"/>
+    <rect x="50" y="0" width="4" height="36" fill="#a8906a"/>
+  </g>
+
+  <!-- Foreground small temple (right) -->
+  <g transform="translate(1740,890)" opacity="0.6">
+    <rect x="-60" y="0" width="120" height="12" fill="url(#temple)" stroke="#6a5a3a" stroke-width="0.8"/>
+    <polygon points="-60,0 0,-44 60,0" fill="url(#temple)" stroke="#6a5a3a" stroke-width="0.8"/>
+    <rect x="-50" y="0" width="3" height="30" fill="#a8906a"/>
+    <rect x="-32" y="0" width="3" height="30" fill="#a8906a"/>
+    <rect x="-14" y="0" width="3" height="30" fill="#a8906a"/>
+    <rect x="4" y="0" width="3" height="30" fill="#a8906a"/>
+    <rect x="22" y="0" width="3" height="30" fill="#a8906a"/>
+    <rect x="40" y="0" width="3" height="30" fill="#a8906a"/>
+  </g>
+
+  <!-- Subtle pixel/data grain overlay -->
+  <g opacity="0.04" fill="#000">
+    <rect x="100" y="100" width="2" height="2"/>
+    <rect x="240" y="180" width="2" height="2"/>
+    <rect x="500" y="260" width="2" height="2"/>
+    <rect x="800" y="160" width="2" height="2"/>
+    <rect x="1100" y="220" width="2" height="2"/>
+    <rect x="1400" y="140" width="2" height="2"/>
+    <rect x="1700" y="320" width="2" height="2"/>
+  </g>
+
+  <!-- Subtle vignette (soft dark edges) -->
+  <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.75">
+    <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.18"/>
+  </radialGradient>
+  <rect width="1920" height="1200" fill="url(#vignette)"/>
+</svg>

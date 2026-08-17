@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Aizanoi AI">
+  <defs>
+    <linearGradient id="azai-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a5fd6"/>
+      <stop offset="100%" stop-color="#0d3fb0"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="46" height="46" rx="4" fill="url(#azai-bg)" stroke="#0a2a7a" stroke-width="1"/>
+  <!-- Speech bubble -->
+  <path d="M8 12 Q8 8 12 8 L36 8 Q40 8 40 12 L40 28 Q40 32 36 32 L20 32 L14 38 L14 32 L12 32 Q8 32 8 28 Z" fill="#d6a75a"/>
+  <!-- Data dots inside bubble -->
+  <circle cx="16" cy="20" r="2" fill="#fff"/>
+  <circle cx="24" cy="20" r="2" fill="#fff"/>
+  <circle cx="32" cy="20" r="2" fill="#fff"/>
+  <!-- Mini column base bottom-right -->
+  <rect x="32" y="36" width="3" height="6" fill="#d6a75a"/>
+  <rect x="38" y="36" width="3" height="6" fill="#d6a75a"/>
+  <rect x="30" y="42" width="14" height="3" fill="#d6a75a"/>
+</svg>

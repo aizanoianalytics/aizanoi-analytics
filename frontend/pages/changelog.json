@@ -1,0 +1,39 @@
+{
+  "entries": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-14",
+      "added": [
+        "Aizanoi AI — HR & People Analytics Assistant (real HR system prompt)",
+        "Real SPA routing — /, /hr-analytics/, /ancient-world/, /games/, /projects/, /videos/, /about/, /changelog/, /privacy/, /terms/, /docs/",
+        "SEO foundation — title, meta description, OpenGraph, Twitter cards, JSON-LD structured data",
+        "robots.txt and sitemap.xml with all public routes",
+        "Canonical domain (www → non-www) and HTTP → HTTPS redirects",
+        "Legacy /ai/ → /hr-analytics/ 301 redirect",
+        "Legacy /market/* → 410 Gone",
+        "Welcome window on first visit (with Don't show again)",
+        "Mobile app launcher for phones / tablets",
+        "Control Panel with localStorage-backed settings",
+        "Shut Down, Log Off, Lock, Run, Search system actions",
+        "Markdown safe rendering in chat replies (XSS protected)",
+        "Starter prompt cards in Aizanoi AI",
+        "XP-styled 3D Pipes screensaver with idle detection",
+        "Bootscreen, Bliss desktop, custom Aizanoi AI chat bubble icon"
+      ],
+      "improved": [
+        "Performance — Cache-Control: no-store for HTML",
+        "Accessibility — keyboard shortcuts (F5, Alt+F4, F11, Win+D, Esc)",
+        "Browser navigation — Back / Forward / Refresh all work via pushState",
+        "SEO metadata route-aware (each route has its own title + description)"
+      ],
+      "fixed": [
+        "Legacy URL handling — /ai/ canonical, /market/ retired",
+        "Brand naming consistency — 'Aizanoi' spelling standardized",
+        "XSS hardening in AI chat rendering"
+      ],
+      "removed": [
+        "Aizanoi Market placeholder UI (Market feature retired for now)"
+      ]
+    }
+  ]
+}

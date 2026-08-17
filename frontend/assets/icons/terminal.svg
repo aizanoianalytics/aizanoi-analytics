@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Terminal">
+  <defs>
+    <linearGradient id="azt-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2a1a"/>
+      <stop offset="100%" stop-color="#0a1a0a"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="46" height="46" rx="4" fill="url(#azt-bg)" stroke="#0a1a0a" stroke-width="1"/>
+  <!-- CRT body -->
+  <rect x="6" y="8" width="36" height="28" rx="3" fill="#3a4a3a" stroke="#1a2a1a" stroke-width="1"/>
+  <!-- Screen -->
+  <rect x="9" y="11" width="30" height="20" rx="2" fill="#0a1a0a"/>
+  <!-- Scanlines -->
+  <g stroke="#1a4a1a" stroke-width="0.4" opacity="0.5">
+    <line x1="9" y1="14" x2="39" y2="14"/>
+    <line x1="9" y1="17" x2="39" y2="17"/>
+    <line x1="9" y1="20" x2="39" y2="20"/>
+    <line x1="9" y1="23" x2="39" y2="23"/>
+    <line x1="9" y1="26" x2="39" y2="26"/>
+    <line x1="9" y1="29" x2="39" y2="29"/>
+  </g>
+  <!-- Prompt > _ -->
+  <text x="13" y="22" font-family="Consolas, monospace" font-size="9" fill="#30d030" font-weight="bold">&gt; _</text>
+  <!-- Cursor block -->
+  <rect x="22" y="16" width="6" height="2" fill="#30d030"/>
+  <!-- Base -->
+  <rect x="14" y="36" width="20" height="3" fill="#3a4a3a" stroke="#1a2a1a" stroke-width="0.6"/>
+  <rect x="18" y="39" width="12" height="3" fill="#2a3a2a"/>
+</svg>

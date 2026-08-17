@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Ancient World">
+  <defs>
+    <linearGradient id="azaw-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7fb6f0"/>
+      <stop offset="100%" stop-color="#d8a75a"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="46" height="46" rx="4" fill="url(#azaw-bg)" stroke="#7a5a2a" stroke-width="1"/>
+  <!-- Sun -->
+  <circle cx="36" cy="14" r="5" fill="#fff5d8"/>
+  <g stroke="#fff5d8" stroke-width="1" stroke-linecap="round">
+    <line x1="36" y1="4" x2="36" y2="6"/>
+    <line x1="36" y1="22" x2="36" y2="24"/>
+    <line x1="26" y1="14" x2="28" y2="14"/>
+    <line x1="44" y1="14" x2="46" y2="14"/>
+  </g>
+  <!-- Ground -->
+  <rect x="4" y="34" width="40" height="10" fill="#8a6a3a"/>
+  <!-- Temple pediment -->
+  <polygon points="8,28 24,12 40,28" fill="#f4e6c8" stroke="#6a4a1a" stroke-width="0.8"/>
+  <!-- Columns -->
+  <rect x="11" y="28" width="3" height="10" fill="#f4e6c8" stroke="#6a4a1a" stroke-width="0.6"/>
+  <rect x="18" y="28" width="3" height="10" fill="#f4e6c8" stroke="#6a4a1a" stroke-width="0.6"/>
+  <rect x="25" y="28" width="3" height="10" fill="#f4e6c8" stroke="#6a4a1a" stroke-width="0.6"/>
+  <rect x="32" y="28" width="3" height="10" fill="#f4e6c8" stroke="#6a4a1a" stroke-width="0.6"/>
+  <!-- Base -->
+  <rect x="8" y="36" width="32" height="4" fill="#f4e6c8" stroke="#6a4a1a" stroke-width="0.6"/>
+</svg>

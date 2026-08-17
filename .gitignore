@@ -1,0 +1,28 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+
+# Dependencies and runtime files
+node_modules/
+logs/
+*.log
+
+# Databases and backups
+*.db
+*.sqlite
+*.sqlite3
+backups/
+
+# Local/editor/system files
+.DS_Store
+.vscode/
+.idea/
+
+# Production/editor backups
+*.bak
+*.bak_*
+*.broken_*

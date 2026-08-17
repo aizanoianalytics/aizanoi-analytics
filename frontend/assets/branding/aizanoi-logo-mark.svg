@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Aizanoi">
+  <defs>
+    <linearGradient id="azm-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a5fd6"/>
+      <stop offset="100%" stop-color="#0d3fb0"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="48" height="48" rx="6" fill="url(#azm-bg)"/>
+  <rect x="8" y="34" width="32" height="8" fill="#d6a75a" opacity="0.9"/>
+  <rect x="11" y="20" width="3" height="14" fill="#d6a75a"/>
+  <rect x="18" y="20" width="3" height="14" fill="#d6a75a"/>
+  <rect x="25" y="20" width="3" height="14" fill="#d6a75a"/>
+  <rect x="32" y="20" width="3" height="14" fill="#d6a75a"/>
+  <polygon points="8,20 24,8 40,20" fill="#d6a75a"/>
+  <circle cx="14" cy="6" r="1.5" fill="#9bc4ff"/>
+  <circle cx="24" cy="3" r="1.5" fill="#9bc4ff"/>
+  <circle cx="34" cy="6" r="1.5" fill="#9bc4ff"/>
+</svg>
