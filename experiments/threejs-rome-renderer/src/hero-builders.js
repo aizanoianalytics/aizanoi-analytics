@@ -59,7 +59,7 @@ export function buildColosseumHero(THREE, record, material) {
   const bays = 72;
   const levels = [0.075, 0.275, 0.475];
   const count = bays * levels.length;
-  const pierHeight = record.h * 0.145;
+  const pierHeight = record.h * 0.13;
   const a = record.w * 0.495;
   const b = record.d * 0.495;
   const pierGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -67,10 +67,12 @@ export function buildColosseumHero(THREE, record, material) {
   piers.name = 'Colosseum instanced facade piers';
   piers.userData.instances = count;
 
-  const lintelGeometry = new THREE.BoxGeometry(1, 1, 1);
-  const lintels = new THREE.InstancedMesh(lintelGeometry, facadeMaterial, count);
-  lintels.name = 'Colosseum instanced arcade lintels';
-  lintels.userData.instances = count;
+  // A half torus is the lightweight arcade head. Instancing keeps all 216
+  // visible arches to one renderer draw item rather than hundreds of meshes.
+  const archGeometry = new THREE.TorusGeometry(2.15, 0.34, 4, 10, Math.PI);
+  const arches = new THREE.InstancedMesh(archGeometry, facadeMaterial, count);
+  arches.name = 'Colosseum instanced facade arch heads';
+  arches.userData.instances = count;
 
   const matrix = new THREE.Matrix4();
   const position = new THREE.Vector3();
@@ -89,20 +91,20 @@ export function buildColosseumHero(THREE, record, material) {
       quaternion.setFromEuler(euler);
 
       position.set(x, record.h * level + pierHeight / 2, z);
-      scale.set(1.55, pierHeight, 2.8);
+      scale.set(1.42, pierHeight, 2.55);
       matrix.compose(position, quaternion, scale);
       piers.setMatrixAt(index, matrix);
 
-      position.set(x, record.h * level + pierHeight + record.h * 0.012, z);
-      scale.set(3.15, record.h * 0.024, 2.9);
+      position.set(x, record.h * level + pierHeight - 0.2, z);
+      scale.set(1, 1, 0.85);
       matrix.compose(position, quaternion, scale);
-      lintels.setMatrixAt(index, matrix);
+      arches.setMatrixAt(index, matrix);
       index += 1;
     }
   }
   piers.instanceMatrix.needsUpdate = true;
-  lintels.instanceMatrix.needsUpdate = true;
-  group.add(piers, lintels);
+  arches.instanceMatrix.needsUpdate = true;
+  group.add(piers, arches);
 
   // The upper attic remains more solid, but recessed dark panels preserve a
   // readable vertical rhythm without claiming an exact fifth-century facade.
@@ -146,7 +148,7 @@ export function buildColosseumHero(THREE, record, material) {
 
   group.userData.benchmark = Object.freeze({
     facadeInstances: count,
-    lintelInstances: count,
+    archInstances: count,
     atticSlots,
     shellSegments: 72,
     tierBands: bandFractions.length,
