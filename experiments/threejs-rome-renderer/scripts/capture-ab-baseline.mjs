@@ -38,6 +38,15 @@ export const MATCHED_CAPTURE_SCENARIOS = Object.freeze([
   }),
 ]);
 
+function threeYawToTarget({ x, z, lookX, lookZ }) {
+  const dx = lookX - x;
+  const dz = lookZ - z;
+  // Three.js cameras look down local -Z. Positive Y rotation turns that
+  // direction toward -X, so the shared Rome target vector needs the opposite
+  // X sign from the production renderer's custom view-matrix yaw convention.
+  return Math.atan2(-dx, -dz);
+}
+
 function safePath(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0]);
   const candidate = resolve(repoRoot, `.${decoded}`);
@@ -135,7 +144,9 @@ async function captureThree() {
       api.simulation.player.floorY = support.y;
       api.simulation.player.surfaceTag = support.tag;
       api.simulation.player.y = support.y + 1.68;
-      api.simulation.player.yaw = Math.atan2(target.lookX - target.x, -(target.lookZ - target.z));
+      const dx = target.lookX - target.x;
+      const dz = target.lookZ - target.z;
+      api.simulation.player.yaw = Math.atan2(-dx, -dz);
       api.simulation.player.pitch = target.pitch;
     }, scenario);
     await page.waitForTimeout(450);
@@ -150,6 +161,7 @@ try {
   await captureProduction();
   await captureThree();
   console.log(`Matched A/B screenshots written to ${outputDir}: ${MATCHED_CAPTURE_SCENARIOS.map((item) => item.id).join(', ')}`);
+  console.log(`Three.js Via Sacra yaw: ${threeYawToTarget(MATCHED_CAPTURE_SCENARIOS[1]).toFixed(4)} rad`);
 } finally {
   await browser.close();
   await new Promise((resolveClosed) => server.close(resolveClosed));

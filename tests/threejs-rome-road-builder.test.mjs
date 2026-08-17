@@ -85,12 +85,13 @@ test('browser smoke locks the two-layer road benchmark contract', () => {
   assert.match(smokeSource, /baseline\.roads\?\.edgeInstances, baseline\.roads\?\.pieces \* 2/);
 });
 
-test('matched visual capture includes both hero and Via Sacra streetscape scenarios', () => {
+test('matched visual capture includes hero and Via Sacra with Three-specific yaw convention', () => {
   assert.match(captureSource, /id: 'colosseum'/);
   assert.match(captureSource, /id: 'via-sacra'/);
   assert.match(captureSource, /label: 'Via Sacra streetscape baseline'/);
-  assert.match(captureSource, /current-renderer/);
-  assert.match(captureSource, /threejs-poc/);
-  assert.match(captureSource, /MATCHED_CAPTURE_SCENARIOS/);
   assert.match(captureSource, /#ancient-world-back-to-os/);
+  assert.match(captureSource, /const dx = target\.lookX - target\.x/);
+  assert.match(captureSource, /const dz = target\.lookZ - target\.z/);
+  assert.match(captureSource, /player\.yaw = Math\.atan2\(-dx, -dz\)/);
+  assert.doesNotMatch(captureSource, /player\.yaw = Math\.atan2\(target\.lookX - target\.x, -\(target\.lookZ - target\.z\)\)/);
 });
