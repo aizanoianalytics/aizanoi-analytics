@@ -4,6 +4,7 @@ import { readFile, stat } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { ROME_POC_COMPLEXITY_BUDGET, assertComplexityBudget } from '../src/performance-budget.js';
 
 const requested = new Set(process.argv.slice(2));
 const runDesktop = requested.size === 0 || requested.has('desktop');
@@ -87,19 +88,34 @@ async function desktopSmoke(page) {
 
   const baseline = await page.evaluate(() => {
     const api = window.__ROME_THREE_POC__;
+    let hero = null;
+    api.scene.traverse((object) => {
+      if (object.userData?.heroBuilder === 'colosseum-procedural-v1') {
+        hero = {
+          builder: object.userData.heroBuilder,
+          visualEvidence: object.userData.visualEvidence,
+          benchmark: object.userData.benchmark,
+        };
+      }
+    });
     return {
       triangles: api.renderer.info.render.triangles,
       calls: api.renderer.info.render.calls,
       canvasCount: document.querySelectorAll('canvas').length,
       player: { x: api.simulation.player.x, y: api.simulation.player.y, z: api.simulation.player.z },
       target: api.contract.teleportTargets.find((item) => item.monumentId === 'colosseum') || api.contract.teleportTargets[0],
+      hero,
     };
   });
 
   assert.ok(baseline.triangles > 0, 'desktop renderer should draw triangles');
   assert.ok(baseline.calls > 0, 'desktop renderer should issue draw calls');
+  assertComplexityBudget(baseline, ROME_POC_COMPLEXITY_BUDGET.desktop, 'desktop Rome PoC');
   assert.equal(baseline.canvasCount, 1, 'desktop PoC should own one renderer canvas');
   assert.ok(baseline.target?.id, 'desktop PoC should expose at least one teleport target');
+  assert.equal(baseline.hero?.builder, 'colosseum-procedural-v1', 'Colosseum hero builder should exist in the live scene');
+  assert.equal(baseline.hero?.visualEvidence, 'plausible', 'visual detail must not overstate historical confidence');
+  assert.equal(baseline.hero?.benchmark?.facadeInstances, 216, 'Colosseum hero should render 216 instanced facade piers');
 
   const teleported = await page.evaluate((targetId) => {
     const api = window.__ROME_THREE_POC__;
@@ -119,7 +135,7 @@ async function desktopSmoke(page) {
   await page.evaluate(() => window.__ROME_THREE_POC__.destroy());
   await page.waitForFunction(() => document.querySelectorAll('canvas').length === 0);
   assert.deepEqual(errors, [], errors.join('\n'));
-  console.log(`Desktop smoke passed · ${baseline.triangles} triangles · ${baseline.calls} calls`);
+  console.log(`Desktop smoke passed · ${baseline.triangles} triangles · ${baseline.calls} calls · 216 instanced Colosseum piers`);
 }
 
 async function inputSmoke(page) {
@@ -177,13 +193,16 @@ async function mobileSmoke(page) {
     z: window.__ROME_THREE_POC__.simulation.player.z,
     yaw: window.__ROME_THREE_POC__.simulation.player.yaw,
     tier: window.__ROME_THREE_POC__.quality.snapshot().tier,
+    triangles: window.__ROME_THREE_POC__.renderer.info.render.triangles,
+    calls: window.__ROME_THREE_POC__.renderer.info.render.calls,
   }));
 
   assert.ok(Math.hypot(afterMove.x - beforeMove.x, afterMove.z - beforeMove.z) > 0.15, 'mobile D-pad should move the player');
   assert.notEqual(afterMove.yaw, beforeMove.yaw, 'mobile look pad should change yaw');
   assert.ok(['high', 'balanced', 'low'].includes(afterMove.tier), 'mobile adaptive quality tier should remain valid');
+  assertComplexityBudget(afterMove, ROME_POC_COMPLEXITY_BUDGET.mobile, 'mobile Rome PoC');
   assert.deepEqual(errors, [], errors.join('\n'));
-  console.log(`Mobile smoke passed · quality tier ${afterMove.tier}`);
+  console.log(`Mobile smoke passed · quality tier ${afterMove.tier} · ${afterMove.triangles} triangles · ${afterMove.calls} calls`);
 }
 
 try {
