@@ -76,10 +76,15 @@ jobs:
         working-directory: experiments/threejs-rome-renderer
         run: npx playwright install chromium --with-deps
 
-      - name: Three.js desktop and mobile browser smoke
+      - name: Three.js desktop browser smoke
         if: startsWith(github.ref, 'refs/heads/exp/')
         working-directory: experiments/threejs-rome-renderer
-        run: npm run browser:smoke
+        run: npm run browser:smoke -- desktop
+
+      - name: Three.js mobile browser smoke
+        if: startsWith(github.ref, 'refs/heads/exp/')
+        working-directory: experiments/threejs-rome-renderer
+        run: npm run browser:smoke -- mobile
 
       - name: Regression tests
         run: node --test tests/*.test.mjs
