@@ -347,9 +347,9 @@ async function bootstrap() {
   const camera = new THREE.PerspectiveCamera(62, 1, 0.08, 2600);
   camera.rotation.order = 'YXZ';
 
-  const hemi = new THREE.HemisphereLight(0xd4cdb7, 0x3b3128, 2.45);
+  const hemi = new THREE.HemisphereLight(0xd4cdb7, 0x3b3128, 1.75);
   scene.add(hemi);
-  const sun = new THREE.DirectionalLight(0xffdda0, 3.85);
+  const sun = new THREE.DirectionalLight(0xffdda0, 3.65);
   sun.position.set(310, 590, 240);
   scene.add(sun);
 
