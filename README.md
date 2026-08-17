@@ -29,3 +29,7 @@ Never commit `.env` or real API keys. See `.gitignore`.
 ## Production
 
 Production credentials, TLS keys, systemd units, and server-specific configuration stay outside this public repository.
+
+## License
+
+Released under the [MIT License](LICENSE).
