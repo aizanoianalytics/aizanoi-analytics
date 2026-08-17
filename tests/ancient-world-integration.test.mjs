@@ -25,10 +25,11 @@ test('Rome uses shared traversal and human-scale first-person movement', () => {
   assert.doesNotMatch(rome, /keys\.Shift\s*\?\s*120\s*:\s*55/);
 });
 
-test('Rome roads apply their segment angle instead of discarding it', () => {
+test('Rome roads follow source polylines and terrain instead of axis-aligned boxes', () => {
   const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
-  assert.match(rome, /const angle = Math\.atan2\(dz, dx\)/);
-  assert.match(rome, /C\.road, angle\)/);
+  assert.match(rome, /const pieces = Math\.max\(1, Math\.ceil\(length \/ \(TOUCH \? 30 : 22\)\)\)/);
+  assert.match(rome, /terrainHeightAt\(x0, z0\)/);
+  assert.match(rome, /quad\(\s*\[x0 \+ nx \* half/);
 });
 
 test('Rome renderer has normals, cached shader locations and lifecycle cleanup', () => {
