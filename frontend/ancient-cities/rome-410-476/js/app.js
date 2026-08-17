@@ -6,11 +6,13 @@ import {
   walkRamp,
 } from '../../../ancient-world/engine/traversal.js';
 import { createLifecycle } from '../../../ancient-world/engine/lifecycle.js';
+import { createAdaptiveQualityController } from '../../../ancient-world/engine/performance.js';
 import { installBackToOS } from '../../../ancient-world/engine/navigation.js';
 import { ANCIENT_MATERIALS as M } from '../../../ancient-world/assets/materials.js';
 import { evidenceForRecord, evidenceBadgeHTML, installEvidenceStyles } from '../../../ancient-world/engine/evidence.js';
 import { HILLS, TIBER, terrainHeightAt, terrainDescriptorAt } from '../data/terrain.js';
 import { generateUrbanFabric, URBAN_FABRIC_METHOD } from '../data/urban-fabric.js';
+import { ROME_MANIFEST } from '../data/manifest.js';
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -22,10 +24,16 @@ if (!gl) throw new Error('WebGL is unavailable.');
 const lifecycle = createLifecycle();
 const TOUCH = matchMedia('(pointer:coarse)').matches || navigator.maxTouchPoints > 0;
 const FINE_POINTER = matchMedia('(pointer:fine)').matches;
-const WORLD_BOUNDS = Object.freeze({ minX: -900, maxX: 700, minZ: -700, maxZ: 700 });
+const WORLD_BOUNDS = ROME_MANIFEST.bounds;
 const EYE_HEIGHT = 1.68;
 const WALK_SPEED = 3.8;
 const SPRINT_SPEED = 7.2;
+const quality = createAdaptiveQualityController({
+  mobile: TOUCH,
+  highPixelRatio: ROME_MANIFEST.performance.maxPixelRatioDesktop,
+  balancedPixelRatio: TOUCH ? ROME_MANIFEST.performance.maxPixelRatioMobile : 1.30,
+  lowPixelRatio: TOUCH ? 0.85 : 1.0,
+});
 
 const C = {
   ...M,
@@ -864,8 +872,7 @@ function clearMovementState() {
 }
 
 function resize() {
-  const cap = TOUCH ? 1.15 : 1.55;
-  const dpr = Math.min(devicePixelRatio || 1, cap);
+  const dpr = Math.min(devicePixelRatio || 1, quality.pixelRatioCap());
   const width = Math.max(1, Math.floor(innerWidth * dpr));
   const height = Math.max(1, Math.floor(innerHeight * dpr));
   if (canvas.width !== width || canvas.height !== height) {
@@ -1062,6 +1069,7 @@ function tick(now) {
   if (lifecycle.destroyed) return;
   const dt = Math.min(0.05, (now - last || 16) / 1000);
   last = now;
+  quality.sample(dt);
   updatePlayer(dt);
   draw();
   if ((mapFrame++ % 4) === 0) drawRegionalMap();
@@ -1287,6 +1295,8 @@ lifecycle.listen(window, 'pagehide', () => lifecycle.destroy(), { once: true });
 window.__ANCIENT_WORLD_DESTROY__ = () => lifecycle.destroy();
 window.__ANCIENT_WORLD_DEBUG__ = {
   city: CITY,
+  manifest: ROME_MANIFEST,
+  quality: () => quality.snapshot(),
   get player() {
     return {
       x: player.x,
