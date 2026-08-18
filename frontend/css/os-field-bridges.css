@@ -110,6 +110,7 @@ body.aizanoi-next .win[data-aizanoi-app="chatbot"] #chat-starters { background:r
 body.aizanoi-next .win[data-aizanoi-app="chatbot"] .chat-starter {
   border-color:rgba(79,91,78,.18) !important; background:rgba(255,255,255,.44) !important; color:#334742 !important; border-radius:9px !important;
 }
+body.aizanoi-next .win[data-aizanoi-app="chatbot"] .chat-starter strong { color:#49655f !important; }
 body.aizanoi-next .win[data-aizanoi-app="chatbot"] .chat-starter:hover { border-color:rgba(135,111,65,.36) !important; background:#f5efe0 !important; }
 body.aizanoi-next .win[data-aizanoi-app="chatbot"] #chat-input {
   border-color:rgba(65,80,72,.30) !important; border-radius:8px !important; background:#fbf8ef !important; color:#263633 !important;
@@ -157,6 +158,20 @@ body.aizanoi-next .win[data-aizanoi-app="terminal"] .win-body { background:#0911
 body.aizanoi-next .win[data-aizanoi-app="terminal"] #terminal-output,
 body.aizanoi-next .win[data-aizanoi-app="terminal"] #terminal-input { color:#b9d1bd !important; font-family:var(--az-font-mono) !important; }
 body.aizanoi-next .win[data-aizanoi-app="terminal"] #terminal-input { caret-color:var(--az-brass-hi) !important; }
+
+/* Visual-QA fixes: author CSS must not override semantic hidden state, and
+   stacked result/card typography must remain block-level at narrow widths. */
+body.aizanoi-next .desktop-icon[hidden] { display:none !important; }
+body.aizanoi-next .az-world-era,
+body.aizanoi-next .az-world-name,
+body.aizanoi-next .az-world-desc,
+body.aizanoi-next .az-result-title,
+body.aizanoi-next .az-result-sub { display:block !important; }
+body.aizanoi-next .az-world-name { font-size:18px !important; line-height:1.08 !important; }
+body.aizanoi-next .az-world-desc { margin-top:7px !important; line-height:1.38 !important; }
+body.aizanoi-next .az-result-title { line-height:1.2 !important; }
+body.aizanoi-next .az-result-sub { margin-top:3px !important; line-height:1.25 !important; }
+body.aizanoi-next .az-command-result[hidden] { display:none !important; }
 
 /* Avoid the one remaining variable typo in the core shell layer from affecting activity text. */
 .az-activity-row p { font-family:var(--az-font-ui) !important; }
