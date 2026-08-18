@@ -20,8 +20,6 @@
       terms.add(normalize(app.short));
       for (const keyword of app.keywords || []) {
         const term = normalize(keyword);
-        // Tiny abbreviations such as “ai” are safe as exact commands but must
-        // never be treated as arbitrary substrings inside natural sentences.
         if (term) terms.add(term);
       }
     }
@@ -55,9 +53,55 @@
     return Boolean(query && !isExplicitShellCommand(query));
   }
 
-  // Capture Enter before the palette's target-level handler. Explicit commands
-  // continue through the normal shell parser; conversational language is routed
-  // to AI regardless of incidental substrings such as “ai” inside “explain”.
+  function readWorldAIContext() {
+    try {
+      const raw = sessionStorage.getItem('aizanoi-world-ai-context');
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!parsed || Date.now() - Number(parsed.timestamp || 0) > 120000) return null;
+      return parsed;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function clearWorldAIContext() {
+    try { sessionStorage.removeItem('aizanoi-world-ai-context'); } catch (_) {}
+  }
+
+  function submitContextualAI(query, historicalContext = null) {
+    const shell = window.AIZANOI_OS;
+    if (!shell?.launchApp || !query) return false;
+    shell.launchApp('chatbot', { source:'historical-world' });
+    const hiddenContext = historicalContext
+      ? `Current Historical World context: ${historicalContext.worldLabel}${historicalContext.place ? ` · ${historicalContext.place}` : ''}. The visitor just returned from that interactive 3D view.`
+      : '';
+    let tries = 0;
+    const timer = setInterval(() => {
+      tries += 1;
+      if (window.__AIZANOI_CHAT__?.ask) {
+        clearInterval(timer);
+        window.__AIZANOI_CHAT__.ask(query, hiddenContext);
+      } else if (tries > 30) {
+        clearInterval(timer);
+      }
+    }, 60);
+    State.recordActivity('Asked Aizanoi AI from Historical World', historicalContext?.place || historicalContext?.worldLabel || query.slice(0, 100), 'ai');
+    return true;
+  }
+
+  function consumeAskDeepLink() {
+    if (location.pathname !== '/' && location.pathname !== '/index.html') return false;
+    const url = new URL(location.href);
+    const query = url.searchParams.get('ask')?.trim();
+    if (!query) return false;
+    const historicalContext = readWorldAIContext();
+    url.searchParams.delete('ask');
+    history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
+    clearWorldAIContext();
+    return submitContextualAI(query, historicalContext);
+  }
+
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Enter' || event.shiftKey || event.ctrlKey || event.metaKey || event.altKey || event.isComposing) return;
     const input = event.target?.closest?.('#az-command-input');
@@ -69,5 +113,12 @@
     window.AIZANOI_OS?.askAi?.(query);
   }, true);
 
-  window.AIZANOI_OS_INTENT = Object.freeze({ isExplicitShellCommand, shouldAskAI });
+  setTimeout(consumeAskDeepLink, 0);
+
+  window.AIZANOI_OS_INTENT = Object.freeze({
+    isExplicitShellCommand,
+    shouldAskAI,
+    consumeAskDeepLink,
+    submitContextualAI,
+  });
 })();
