@@ -1,11 +1,12 @@
 'use strict';
 
-const CACHE = 'aizanoi-field-shell-v2.1';
+const CACHE = 'aizanoi-field-shell-v2.1.1';
+/* Keep install cheap. Once the worker controls the next visit, same-origin static
+ * assets are populated into the runtime cache as they are actually requested. */
 const PRECACHE = [
   '/',
-  '/css/os-aizanoi-next.css','/css/os-field-bridges.css','/css/os-distribution.css','/css/os-distribution-panels.css','/css/os-workbench-archive.css','/css/os-workbench-interactions.css','/css/os-workbench-research.css','/css/os-distribution-polish.css',
-  '/js/os-state.js','/js/os-shell.js','/js/os-intent.js','/js/os-platform.js','/js/os-archive.js','/js/os-workbench.js','/js/os-workbench-archive.js','/js/os-workbench-readers.js','/js/os-workbench-data.js','/js/os-workbench-shell.js',
-  '/assets/branding/aizanoi-logo-mark.svg','/assets/wallpapers/aizanoi-synthesis.svg','/assets/icons/field-archive.svg','/assets/icons/data-lab.svg','/assets/icons/source-reader.svg','/assets/icons/artifact-viewer.svg','/assets/icons/workspace-monitor.svg'
+  '/manifest.webmanifest',
+  '/assets/branding/aizanoi-logo-mark.svg'
 ];
 
 self.addEventListener('install', (event) => {
