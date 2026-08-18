@@ -3,7 +3,7 @@
   if (!container) return;
 
   const W = 10, H = 10, MINES = 15, SIZE = 30;
-  let board, revealed, flagged, first, over, won, startedAt, timer, longPressTimer, suppressNextClick = false;
+  let board, revealed, flagged, first, over, won, startedAt, timer, longPressTimer, suppressNextClick = false, paused = false, pauseStarted = 0;
 
   function bevel(el, down) {
     el.style.borderStyle = 'solid';
@@ -12,7 +12,7 @@
   }
 
   function init() {
-    board = []; revealed = []; flagged = []; first = true; over = false; won = false; startedAt = 0;
+    board = []; revealed = []; flagged = []; first = true; over = false; won = false; startedAt = 0; paused = false; pauseStarted = 0;
     if (timer) clearInterval(timer);
     timer = null;
     for (let y = 0; y < H; y++) {
@@ -69,6 +69,13 @@
     status.style.cssText = 'width:min(' + (W * SIZE + 4) + 'px,100%);min-height:30px;padding:7px 9px;background:#ecebe4;border:1px solid #9b9a92;color:#252525;font:11px/1.35 Tahoma,sans-serif;';
     container.appendChild(status);
 
+    if (window.AizanoiGames) {
+      container.appendChild(window.AizanoiGames.toolbar({
+        game: 'mines', lowerBetter: true, onPause: togglePause, onRestart: init,
+        formatBest: (value) => value + 's'
+      }));
+    }
+
     const hint = document.createElement('div');
     hint.style.cssText = 'font:10px Tahoma,sans-serif;color:#5b5b56;text-align:center;';
     hint.textContent = 'Click to reveal · Right-click or long-press to flag';
@@ -81,12 +88,12 @@
     startedAt = Date.now();
     timer = setInterval(() => {
       if (!container.isConnected || over) { clearInterval(timer); timer = null; return; }
-      updateCounters();
+      if (!paused) updateCounters();
     }, 500);
   }
 
   function onLClick(e) {
-    if (over) return;
+    if (over || paused) return;
     if (suppressNextClick) { suppressNextClick = false; return; }
     const x = +e.currentTarget.dataset.x;
     const y = +e.currentTarget.dataset.y;
@@ -98,7 +105,7 @@
   }
 
   function onRClick(x, y) {
-    if (over || revealed[y][x]) return;
+    if (over || paused || revealed[y][x]) return;
     flagged[y][x] = !flagged[y][x];
     render();
     updateStatus();
@@ -149,7 +156,21 @@
     render(); updateStatus();
     const face = document.getElementById('mines-face');
     if (face) face.textContent = won ? '😎' : '😵';
-    if (won) saveScore('mines', Math.max(1, Math.round((Date.now() - startedAt) / 1000)));
+    if (won) {
+      const result = Math.max(1, Math.round((Date.now() - startedAt) / 1000));
+      saveScore('mines', result);
+      window.AizanoiGames?.refreshToolbar(container, 'mines', { lowerBetter: true, formatBest: (value) => value + 's' });
+    }
+  }
+
+  function togglePause() {
+    if (over) return;
+    paused = !paused;
+    if (paused) pauseStarted = Date.now();
+    else if (startedAt && pauseStarted) startedAt += Date.now() - pauseStarted;
+    const button = container.querySelector('[data-game-action="pause"]');
+    if (button) { button.textContent = paused ? 'Resume' : 'Pause'; button.setAttribute('aria-pressed', paused ? 'true' : 'false'); }
+    updateStatus();
   }
 
   function render() {
@@ -189,13 +210,15 @@
   function updateStatus() {
     const s = document.getElementById('mines-status');
     if (!s) return;
-    if (over) s.innerHTML = won ? '<b style="color:#166e27">FIELD CLEARED</b> · Nice work.' : '<b style="color:#a51d1d">BOOM</b> · Click the face to retry.';
+    if (paused) s.innerHTML = '<b>PAUSED</b> · Resume when ready.';
+    else if (over) s.innerHTML = won ? '<b style="color:#166e27">FIELD CLEARED</b> · Nice work.' : '<b style="color:#a51d1d">BOOM</b> · Click the face to retry.';
     else s.textContent = first ? 'Choose a cell. Your first click is always safe.' : 'Clear every safe cell without hitting a mine.';
     updateCounters();
   }
 
   function saveScore(game, score) {
     try {
+      if (window.AizanoiGames) { window.AizanoiGames.save(game, score); return; }
       const key = 'aizanoi-games', scores = JSON.parse(localStorage.getItem(key) || '{}');
       if (!scores[game]) scores[game] = [];
       scores[game].push({ score, at: new Date().toISOString() });
