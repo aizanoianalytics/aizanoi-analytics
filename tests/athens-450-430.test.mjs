@@ -33,12 +33,13 @@ test('Athens city data includes classical monuments, districts, roads and source
   assert.ok(TELEPORTS.length >= 8, 'Athens needs at least the major landmark teleports');
 });
 
-test('Athens c. 432–430 visual snapshot excludes later fifth-century buildings', async () => {
+test('Athens c. 432–430 visual snapshot excludes later fifth-century buildings and duplicate terrain proxies', async () => {
   const { BUILDINGS, TELEPORTS } = await import(resolve(city, 'data/city.js'));
   const byId = new Map(BUILDINGS.map((item) => [item.id, item]));
   for (const laterId of ['athena-nike', 'erechtheion', 'erechtheion-north', 'erechtheion-karyatid', 'asclepieion', 'pompeion']) {
     assert.equal(byId.has(laterId), false, `${laterId} is later than the rendered c. 432–430 BCE snapshot`);
   }
+  assert.equal(byId.has('agoraios-kolonos'), false, 'Agoraios Kolonos is terrain, not a duplicate generic architecture box');
   assert.ok(byId.has('athena-nike-early'));
   assert.ok(byId.has('old-athena-polias'));
   assert.equal(byId.get('hephaisteion')?.state, 'working');
@@ -64,6 +65,7 @@ test('Athens terrain preserves named hills and avoids a Tiber import', async () 
   assert.ok(HILLS.some((h) => h.id === 'acropolis'));
   assert.ok(HILLS.some((h) => h.id === 'pnyx'));
   assert.ok(HILLS.some((h) => h.id === 'areopagus'));
+  assert.ok(HILLS.some((h) => h.id === 'agoraios-kolonos'));
   assert.ok(HILLS.some((h) => h.id === 'lykabettos'));
   assert.equal(typeof ERIDANOS.x, 'number');
   assert.equal(typeof ILISSOS.x, 'number');
