@@ -179,6 +179,9 @@ jobs:
             fi
             sleep 2
           done
+          if [ -s /tmp/aizanoi-lighthouse.json ]; then
+            cp /tmp/aizanoi-lighthouse.json artifacts/diagnostics/lighthouse-report.json
+          fi
           if [ "$lighthouse_status" -eq 0 ] && [ -s /tmp/aizanoi-lighthouse.json ]; then
             node tests/lighthouse-budget.mjs /tmp/aizanoi-lighthouse.json >artifacts/diagnostics/lighthouse-budget.log 2>&1
             budget_status=$?
