@@ -44,21 +44,14 @@ jobs:
           node --check frontend/js/os-v2.js
           node --check frontend/games/mines.js
           node --check frontend/games/snake.js
+          node --check frontend/games/brick.js
           node --test tests/*.test.mjs
           git diff --check
-      - name: Remove one-shot patch machinery from resulting branch
+      - name: Keep workflow files unchanged for bot push
         run: |
+          git checkout HEAD -- .github/workflows/ci.yml .github/workflows/apply-os-product-polish-v2.yml
           rm -f scripts/patch-os-product-polish-v2.py
-          rm -f .github/workflows/apply-os-product-polish-v2.yml
-          python3 - <<'PY'
-          from pathlib import Path
-          path=Path('.github/workflows/ci.yml')
-          text=path.read_text()
-          start=text.index('  # TEMP_OS_PATCH_START\n')
-          end=text.index('  # TEMP_OS_PATCH_END\n')+len('  # TEMP_OS_PATCH_END\n')
-          path.write_text(text[:start]+text[end:])
-          PY
-      - name: Commit OS V2 result
+      - name: Commit product files only
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
