@@ -8,11 +8,15 @@ export const REGIONS = base.REGIONS;
 export const STREETS = base.STREETS;
 
 const FRAMING = Object.freeze({
-  // The south-east arrival keeps the Palatine roof behind the camera and the
-  // Ludus far enough to remain contextual rather than becoming a foreground wall.
-  colosseum: { distance: 152, preferredDirections: [[1,-1]] },
-  forum: { distance: 112, preferredDirections: [[0,-1],[-1,-1]] },
-  pantheon: { distance: 92, preferredDirections: [[0,-1],[1,-1]] },
+  // South remains the only fully traversable Colosseum approach in the current
+  // city fabric; camera-clearance scoring still keeps the player off the palace.
+  colosseum: { distance: 152, preferredDirections: [[0,-1],[-1,-1]] },
+  // Forum arrival is authored from the north-east civic corridor instead of the
+  // dense Palatine-side fabric that can fill the camera with a single wall.
+  forum: { distance: 96, preferredDirections: [[1,1],[0,1]] },
+  // The east side gives the Pantheon a readable rotunda/portico silhouette and
+  // keeps neighbouring spectacle massing out of the immediate foreground.
+  pantheon: { distance: 92, preferredDirections: [[1,0],[1,1]] },
   'trajan-forum': { distance: 110, preferredDirections: [[0,1],[1,1]] },
   'peter': { distance: 145, preferredDirections: [[0,1],[1,1]] },
   'caracalla': { distance: 150, preferredDirections: [[0,1],[-1,1]] },
