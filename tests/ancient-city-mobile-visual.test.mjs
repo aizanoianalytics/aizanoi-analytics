@@ -36,9 +36,12 @@ for (const [city, base] of cities) {
     assert.match(html, /id="mobileRun"/);
     assert.match(html, /id="mobileInspect"/);
     assert.match(html, /id="mobileMap"/);
+    assert.doesNotMatch(html, /data-move="KeyW"/);
+    assert.doesNotMatch(html, /id="lookPad"/);
     assert.match(app, /installMobileControls/);
     assert.match(app, /mobileControls\?\.snapshot/);
     assert.match(app, /mobile\.running/);
+    assert.doesNotMatch(app, /\$\$\('\[data-move\]'\)/);
     assert.match(app, /buildAtmosphericDetails/);
     assert.match(app, /const bob = Math\.sin\(walkClock \* 2\)/);
     assert.match(app, /installBackToOS/);
@@ -56,6 +59,16 @@ test('Athens visible experience has no Rome copy residue', () => {
   }
   assert.match(app, /present-day Athens/);
   assert.match(app, /District atlas · Classical Athens/);
+});
+
+test('Athens gives Acropolis hero monuments dedicated builders', () => {
+  const app = read('frontend/ancient-cities/athens-450-430/js/app.js');
+  assert.match(app, /function parthenonHero/);
+  assert.match(app, /frontCount = TOUCH \? 8 : 8/);
+  assert.match(app, /sideCount = TOUCH \? 13 : 17/);
+  assert.match(app, /function propylaeaHero/);
+  assert.match(app, /building\.id === 'parthenon'/);
+  assert.match(app, /building\.id === 'propylaea'/);
 });
 
 test('Athens research ledger no longer carries an Augustan filename', () => {
