@@ -8,9 +8,9 @@ export const REGIONS = base.REGIONS;
 export const STREETS = base.STREETS;
 
 const FRAMING = Object.freeze({
-  // East / north-east approaches keep the Palatine palace roof out of the
-  // Colosseum arrival frame while preserving the monument at historical coords.
-  colosseum: { distance: 152, preferredDirections: [[1,0],[1,1]] },
+  // The south-east arrival keeps the Palatine roof behind the camera and the
+  // Ludus far enough to remain contextual rather than becoming a foreground wall.
+  colosseum: { distance: 152, preferredDirections: [[1,-1]] },
   forum: { distance: 112, preferredDirections: [[0,-1],[-1,-1]] },
   pantheon: { distance: 92, preferredDirections: [[0,-1],[1,-1]] },
   'trajan-forum': { distance: 110, preferredDirections: [[0,1],[1,1]] },
