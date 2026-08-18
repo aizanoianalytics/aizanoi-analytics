@@ -9,6 +9,17 @@ server {
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+    # The application intentionally retains inline CSS/JS while the legacy OS
+    # shell is being modularized. This policy still constrains network/object/
+    # framing capabilities and can be tightened further as inline code shrinks.
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; frame-ancestors 'self'; worker-src 'self' blob:" always;
+
+    error_page 404 /404.html;
+    error_page 500 /500.html;
+    error_page 502 503 504 /503.html;
+    location = /404.html { internal; }
+    location = /500.html { internal; }
+    location = /503.html { internal; }
 
     # Product decisions / legacy URLs.
     location = /ai {
@@ -41,16 +52,24 @@ server {
         try_files $uri =404;
     }
 
-    # Standalone Late Antique Rome experience.
+    # Standalone modular Ancient World cities.
     location = /ancient-cities/rome-410-476 {
         return 301 /ancient-cities/rome-410-476/;
     }
-
     location ^~ /ancient-cities/rome-410-476/ {
         try_files $uri $uri/ =404;
     }
 
-    # Public API remains behind the loopback-only Node service.
+    location = /ancient-cities/athens-450-430 {
+        return 301 /ancient-cities/athens-450-430/;
+    }
+    location ^~ /ancient-cities/athens-450-430/ {
+        try_files $uri $uri/ =404;
+    }
+
+    # Public API remains behind the loopback-only Node service. The backend can
+    # sequentially try up to five 15s providers, so the reverse-proxy timeout
+    # must be longer than that fallback chain and the 80s browser guard.
     location /api/ {
         proxy_pass http://127.0.0.1:3001/api/;
         proxy_http_version 1.1;
@@ -58,10 +77,13 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_read_timeout 30s;
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 85s;
+        proxy_read_timeout 85s;
     }
 
-    # Fingerprinted/explicitly versioned assets can be cached aggressively.
+    # Static asset caching. File names under these directories are treated as
+    # deploy-versioned assets; update cache strategy if that convention changes.
     location ^~ /assets/ {
         try_files $uri =404;
         add_header Cache-Control "public, max-age=31536000, immutable";

@@ -16,6 +16,7 @@ import {
   waterRibbon,
 } from '../../../ancient-world/engine/environment-renderer.js';
 import { installBackToOS } from '../../../ancient-world/engine/navigation.js';
+import { landmarkCameraClearance, landmarkCandidateScore, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkSightClearance, landmarkViewDirections, traversalApproachClearance } from '../../../ancient-world/engine/landmark-framing.js';
 import { ANCIENT_MATERIALS as M } from '../../../ancient-world/assets/materials.js';
 import { evidenceForRecord, evidenceBadgeHTML, installEvidenceStyles } from '../../../ancient-world/engine/evidence.js';
 import { HILLS, TIBER, terrainHeightAt, terrainDescriptorAt } from '../data/terrain.js';
@@ -320,23 +321,56 @@ function longStadium(building, color) {
   }
 }
 
+function ellipseSurface(cx, y, cz, rx, rz, color, segments = 48) {
+  const count = TOUCH ? Math.min(segments, 30) : segments;
+  const center = [cx, y, cz];
+  for (let i = 0; i < count; i++) {
+    const a = i / count * Math.PI * 2;
+    const b = (i + 1) / count * Math.PI * 2;
+    tri(center, [cx + Math.cos(a) * rx, y, cz + Math.sin(a) * rz], [cx + Math.cos(b) * rx, y, cz + Math.sin(b) * rz], color);
+  }
+}
+
 function colosseum(building, color) {
   const ground = baseY(building);
   const rx = building.w / 2;
   const rz = building.d / 2;
-  const tiers = 4;
+  const arenaRx = rx * 0.48;
+  const arenaRz = rz * 0.47;
+  const tiers = TOUCH ? 3 : 4;
+  const tierH = building.h / 4;
+  // Arena floor + podium wall create a readable interior when approached from the Forum side.
+  ellipseSurface(building.x, ground + 0.18, building.z, arenaRx, arenaRz, C.earth, 44);
+  ellipticalCylinder(building.x, ground + 0.16, building.z, arenaRx + 1.2, arenaRz + 1.2, 3.0, C.limestone2, 44);
+  // Stepped cavea rings. These are intentionally schematic, but their rake makes
+  // the monument read as an amphitheatre rather than four stacked cylinders.
+  const seatingRings = TOUCH ? 4 : 7;
+  for (let ring = 0; ring < seatingRings; ring++) {
+    const t = ring / Math.max(1, seatingRings - 1);
+    ellipticalCylinder(building.x, ground + 2.7 + ring * 1.18, building.z,
+      arenaRx + 5 + t * (rx - arenaRx - 9), arenaRz + 4 + t * (rz - arenaRz - 8), 0.62,
+      ring % 2 ? C.limestone : C.marble, TOUCH ? 30 : 46);
+  }
   for (let tier = 0; tier < tiers; tier++) {
-    const y = ground + tier * building.h / tiers;
-    const shrink = tier * 1.8;
-    ellipticalCylinder(building.x, y, building.z, rx - shrink, rz - shrink, building.h / tiers - 0.6, tier % 2 ? C.limestone : color, 48);
-    // Arcade rhythm: dark recess markers around the ellipse make the monument
-    // read as architecture rather than nested cylinders, without texture assets.
-    const arcadeCount = TOUCH ? 28 : 44;
+    const y = ground + tier * tierH;
+    const shrink = tier * 1.65;
+    const tierColor = tier === tiers - 1 ? C.limestone : (tier % 2 ? C.limestone2 : color);
+    ellipticalCylinder(building.x, y, building.z, rx - shrink, rz - shrink, tierH - 0.48, tierColor, TOUCH ? 34 : 56);
+    const arcadeCount = TOUCH ? 30 : 56;
     for (let i = 0; i < arcadeCount; i++) {
+      // Sparse late-antique damage interrupts the perfect rhythm without turning
+      // the 5th-c. monument into a total ruin.
+      if (!TOUCH && tier > 1 && (i + tier * 7) % 19 === 0) continue;
       const a = i / arcadeCount * Math.PI * 2;
-      const x = building.x + Math.cos(a) * (rx - shrink + 0.16);
-      const z = building.z + Math.sin(a) * (rz - shrink + 0.16);
-      box(x, y + building.h / tiers * 0.22, z, 1.1, building.h / tiers * 0.48, 0.55, C.brickDark, -a);
+      const rrX = rx - shrink + 0.22;
+      const rrZ = rz - shrink + 0.22;
+      const x = building.x + Math.cos(a) * rrX;
+      const z = building.z + Math.sin(a) * rrZ;
+      const openingH = tierH * 0.48;
+      box(x, y + tierH * 0.20, z, tier === tiers - 1 ? 0.72 : 1.05, openingH, 0.48, C.brickDark, -a);
+      if (!TOUCH && tier < tiers - 1 && i % 4 === 0) {
+        cylinder(x, y + tierH * 0.70, z, 0.22, tierH * 0.18, C.marbleLight, 7);
+      }
     }
   }
 }
@@ -787,16 +821,32 @@ function decorativeCypress(x, z, scale = 1) {
 
 function buildAtmosphericDetails() {
   REGIONS.forEach((region, index) => {
-    const count = TOUCH ? 1 : 2;
+    const count = TOUCH ? 1 : 3;
     for (let i = 0; i < count; i++) {
       const angle = index * 2.17 + i * 2.8;
-      const x = region.x + Math.cos(angle) * Math.min(52, region.w * 0.30);
-      const z = region.z + Math.sin(angle) * Math.min(48, region.d * 0.30);
+      const x = region.x + Math.cos(angle) * Math.min(58, region.w * 0.31);
+      const z = region.z + Math.sin(angle) * Math.min(54, region.d * 0.31);
       if (Math.abs(x - TIBER.x) < TIBER.halfWidth + 18) continue;
       const occupied = BUILDINGS.some((building) => Math.abs(building.x - x) < building.w * 0.62 && Math.abs(building.z - z) < building.d * 0.62);
-      if (!occupied) decorativeCypress(x, z, 0.85 + (index % 3) * 0.12);
+      if (occupied) continue;
+      decorativeCypress(x, z, 0.82 + ((index + i) % 3) * 0.12);
+      if (!TOUCH && i === 1) {
+        const y = terrainHeightAt(x + 3.1, z - 2.4);
+        box(x + 3.1, y + 0.02, z - 2.4, 1.25, 0.72, 0.86, C.timber, angle * 0.2);
+        cylinder(x + 4.0, y + 0.02, z - 1.9, 0.24, 0.72, C.roof2, 8);
+        cylinder(x + 4.55, y + 0.02, z - 2.15, 0.19, 0.58, C.roof, 8);
+      }
     }
   });
+  // Forum / market corridors get a restrained layer of columns, crates and
+  // amphora-like vessels. They are atmospheric, not claimed as fixed finds.
+  if (!TOUCH) {
+    for (const building of BUILDINGS.filter((b) => ['forum','market','warehouse'].includes(b.type)).slice(0, 12)) {
+      const y = terrainHeightAt(building.x + building.w * .28, building.z + building.d * .40);
+      box(building.x + building.w * .28, y + .02, building.z + building.d * .40, 1.5, .75, 1.0, C.timber, building.rot || 0);
+      cylinder(building.x + building.w * .22, y + .02, building.z + building.d * .43, .22, .72, C.roof2, 8);
+    }
+  }
 }
 
 // Terrain is the physical and visual base. Roads, named monuments and inferred
@@ -960,6 +1010,8 @@ let mapFrame = 0;
 let moveBlend = 0;
 let walkClock = 0;
 let mobileControls = null;
+let arrivalLabel = null;
+let arrivalUntil = 0;
 
 function modalOpen() {
   return !$('#modal')?.classList.contains('hidden');
@@ -1096,6 +1148,8 @@ function drawOverlay() {
 }
 
 function updateNearest() {
+  if (arrivalLabel && performance.now() < arrivalUntil) return;
+  if (arrivalLabel) arrivalLabel = null;
   let best = null;
   let distance = Infinity;
   for (const building of BUILDINGS) {
@@ -1207,65 +1261,99 @@ function closeModal() {
   canvas.focus({ preventScroll: true });
 }
 
-function lookAtTarget(x, z) {
-  player.yaw = Math.atan2(x - player.x, -(z - player.z));
-  player.pitch = -0.03;
+function lookAtTarget(x, z, targetY = null) {
+  const dx = x - player.x;
+  const dz = z - player.z;
+  player.yaw = Math.atan2(dx, -dz);
+  if (targetY == null) {
+    player.pitch = -0.01;
+    return;
+  }
+  player.pitch = landmarkLookPitch({
+    eyeY: player.floorY + EYE_HEIGHT,
+    targetY,
+    horizontalDistance: Math.hypot(dx, dz),
+  });
 }
 
-function teleportToPoint(x, z, { lookX = null, lookZ = null, label = 'destination' } = {}) {
+function teleportToPoint(x, z, { lookX = null, lookZ = null, lookY = null, label = 'destination', resolved = false } = {}) {
   clearMovementState();
-  const spawn = traversal.resolveSpawn(x, z);
+  const spawn = resolved ? { x, z } : traversal.resolveSpawn(x, z);
   const support = traversal.absoluteSupportAt(spawn.x, spawn.z);
   player.x = spawn.x;
   player.z = spawn.z;
   player.floorY = support.y;
   player.surfaceTag = support.tag;
   player.y = support.y + EYE_HEIGHT;
-  if (lookX != null && lookZ != null) lookAtTarget(lookX, lookZ);
+  if (lookX != null && lookZ != null) lookAtTarget(lookX, lookZ, lookY);
+  arrivalLabel = label;
+  arrivalUntil = performance.now() + 2600;
   last = performance.now();
   drawRegionalMap();
   $('#place').textContent = label;
+  $('#detail').textContent = `Landmark arrival · ${support.tag || 'ground'} · ${support.y.toFixed(1)} m`;
   canvas.focus({ preventScroll: true });
   return spawn;
 }
 
 function teleportForwardClearance(candidate, building) {
-  const dx = building.x - candidate.x;
-  const dz = building.z - candidate.z;
-  const length = Math.hypot(dx, dz) || 1;
-  const ux = dx / length;
-  const uz = dz / length;
-  let clear = 0;
-  for (const distance of [1.25, 2.5, 4.0, 5.5]) {
-    const x = candidate.x + ux * distance;
-    const z = candidate.z + uz * distance;
-    if (!traversal.collide(x, z)) clear += 1;
-  }
-  return clear;
+  return traversalApproachClearance({
+    candidate,
+    target: building,
+    collide: traversal.collide,
+    absoluteSupportAt: traversal.absoluteSupportAt,
+    resolveSupport: traversal.resolveSupport,
+  });
 }
 
 function teleport(id) {
   const building = BUILDINGS.find((item) => item.id === id);
   if (!building) return false;
-  const offsets = [
-    [0, -building.d * 0.84 - 12],
-    [building.w * 0.84 + 12, 0],
-    [0, building.d * 0.84 + 12],
-    [-building.w * 0.84 - 12, 0],
-  ];
-  const candidates = offsets.map(([ox, oz]) => {
-    const candidate = traversal.resolveSpawn(building.x + ox, building.z + oz, 28);
+  const desiredDistance = landmarkFramingDistance(building);
+  const footprint = Math.max(building.w || 0, building.d || 0);
+  const searchRadius = Math.max(34, Math.min(58, desiredDistance * 0.26));
+  const lookY = landmarkLookHeight(building, terrainHeightAt(building.x, building.z));
+  const candidates = landmarkViewDirections().map(([dx, dz]) => {
+    const wantedX = building.x + dx * desiredDistance;
+    const wantedZ = building.z + dz * desiredDistance;
+    const candidate = traversal.resolveSpawn(wantedX, wantedZ, searchRadius);
+    const distance = Math.hypot(building.x - candidate.x, building.z - candidate.z);
+    const clearance = traversal.collide(candidate.x, candidate.z) ? -1 : teleportForwardClearance(candidate, building);
+    const support = traversal.absoluteSupportAt(candidate.x, candidate.z);
+    const visibility = clearance < 0 ? -1 : landmarkSightClearance({
+      candidate,
+      target: building,
+      eyeY: support.y + EYE_HEIGHT,
+      targetY: lookY,
+      collide: traversal.collide,
+      heightAt: terrainHeightAt,
+    });
+    const cameraClearance = landmarkCameraClearance({
+      candidate,
+      obstacles: [...BUILDINGS, ...URBAN_FABRIC],
+      ignoreId: building.id,
+      minHeight: 4,
+    });
+    const framed = distance >= Math.max(26, footprint * 0.92);
     return {
       ...candidate,
-      clearance: traversal.collide(candidate.x, candidate.z) ? -1 : teleportForwardClearance(candidate, building),
+      clearance,
+      visibility,
+      cameraClearance,
+      distance,
+      score: framed ? landmarkCandidateScore({ clearance, visibility, cameraClearance, distance, desiredDistance }) : -1000 - Math.abs(distance - desiredDistance),
     };
   });
-  candidates.sort((a, b) => b.clearance - a.clearance);
-  let chosen = candidates.find((candidate) => candidate.clearance >= 3) || candidates[0];
-  if (!chosen || chosen.clearance < 0) {
-    chosen = traversal.resolveSpawn(building.x, building.z - building.d * 0.84 - 12, 30);
+  candidates.sort((a, b) => b.score - a.score);
+  const viableCandidates = candidates.filter((candidate) => candidate.clearance >= 3 && candidate.visibility >= 4);
+  const spaciousCandidates = viableCandidates.filter((candidate) => candidate.cameraClearance >= 12);
+  const cameraPool = spaciousCandidates.length ? spaciousCandidates : viableCandidates;
+  cameraPool.sort((a, b) => b.cameraClearance - a.cameraClearance || b.visibility - a.visibility || b.score - a.score);
+  let chosen = cameraPool[0] || candidates[0];
+  if (!chosen || chosen.score < -900) {
+    chosen = traversal.resolveSpawn(building.x, building.z - desiredDistance, Math.max(38, searchRadius));
   }
-  teleportToPoint(chosen.x, chosen.z, { lookX: building.x, lookZ: building.z, label: building.name });
+  teleportToPoint(chosen.x, chosen.z, { lookX: building.x, lookZ: building.z, lookY, label: building.name, resolved: true });
   $('#jump').value = '';
   return true;
 }
