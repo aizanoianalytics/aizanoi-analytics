@@ -1,0 +1,41 @@
+name: Apply Landmark Framing Fix
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - scripts/fix-landmark-framing.py
+      - .github/workflows/apply-landmark-framing.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.head_ref == 'feat/final-polish-aaa-2026-08-18'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/final-polish-aaa-2026-08-18
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply guarded landmark framing
+        run: python3 scripts/fix-landmark-framing.py
+      - name: Validate framing patch
+        run: |
+          node --check frontend/ancient-cities/rome-410-476/js/app.js
+          node --check frontend/ancient-cities/athens-450-430/js/app.js
+          node --test tests/*.test.mjs
+          git diff --check
+      - name: Commit product changes
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add frontend tests
+          git diff --cached --check
+          git commit -m "fix: frame Ancient World landmarks cinematically"
+          git push origin HEAD:feat/final-polish-aaa-2026-08-18
