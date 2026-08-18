@@ -12,54 +12,6 @@ permissions:
   contents: read
 
 jobs:
-  # TEMP_OS_PATCH_START
-  patch-os-product-polish:
-    if: github.event_name == 'pull_request' && github.head_ref == 'feat/aizanoi-os-product-polish-v2'
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: feat/aizanoi-os-product-polish-v2
-          fetch-depth: 2
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Apply guarded OS V2 patch
-        run: python3 scripts/patch-os-product-polish-v2.py
-      - name: Normalize generated test literal
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          path=Path('tests/os-product-polish.test.mjs')
-          text=path.read_text()
-          broken="const added = [osJs,osCss,games].join('\n');"
-          text=text.replace(broken,"const added = [osJs,osCss,games].join('');")
-          path.write_text(text)
-          PY
-      - name: Validate before commit
-        run: |
-          node --check frontend/games/game-utils.js
-          node --check frontend/js/os-v2.js
-          node --check frontend/games/mines.js
-          node --check frontend/games/snake.js
-          node --test tests/*.test.mjs
-          git diff --check
-      - name: Keep workflow files unchanged for bot push
-        run: |
-          git checkout HEAD -- .github/workflows/ci.yml .github/workflows/apply-os-product-polish-v2.yml
-          rm -f scripts/patch-os-product-polish-v2.py
-      - name: Commit product files only
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add -A
-          git diff --cached --check
-          git commit -m "feat: finish Aizanoi OS single-publisher product polish"
-          git push origin HEAD:feat/aizanoi-os-product-polish-v2
-  # TEMP_OS_PATCH_END
-
   validate:
     runs-on: ubuntu-latest
     steps:
@@ -77,6 +29,8 @@ jobs:
           node --check frontend/games/mines.js
           node --check frontend/games/snake.js
           node --check frontend/games/brick.js
+          node --check frontend/games/game-utils.js
+          node --check frontend/js/os-v2.js
           node --check frontend/ancient-world/engine/traversal.js
           node --check frontend/ancient-world/engine/lifecycle.js
           node --check frontend/ancient-world/engine/navigation.js
@@ -106,7 +60,7 @@ jobs:
       - name: Reject whitespace errors
         run: git diff --check HEAD^ HEAD
 
-  ancient-city-browser-smoke:
+  browser-smoke:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -132,7 +86,9 @@ jobs:
           cat /tmp/aizanoi-http.log
           exit 1
 
-      - name: Rome and Athens desktop/mobile browser smoke
+      - name: Ancient World and Aizanoi OS desktop/mobile smoke
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
-        run: node tests/ancient-city-browser-smoke.mjs
+        run: |
+          node tests/ancient-city-browser-smoke.mjs
+          node tests/os-browser-smoke.mjs
