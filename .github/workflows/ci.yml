@@ -118,7 +118,9 @@ jobs:
         if: success()
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
-        run: node tests/final-visual-capture.mjs
+        run: |
+          mkdir -p artifacts/diagnostics
+          node tests/final-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/final-visual-capture.log
 
       - name: Upload visual regression review
         if: success()
@@ -163,14 +165,23 @@ jobs:
         run: |
           mkdir -p artifacts/diagnostics
           set +e
-          npx lighthouse http://127.0.0.1:4173/ \
-            --quiet \
-            --chrome-flags="--headless --no-sandbox" \
-            --output=json \
-            --output-path=/tmp/aizanoi-lighthouse.json \
-            >artifacts/diagnostics/lighthouse-cli.log 2>&1
-          lighthouse_status=$?
-          if [ "$lighthouse_status" -eq 0 ]; then
+          lighthouse_status=1
+          for attempt in 1 2 3; do
+            rm -f /tmp/aizanoi-lighthouse.json
+            echo "Lighthouse attempt $attempt" > "artifacts/diagnostics/lighthouse-cli-attempt-$attempt.log"
+            npx lighthouse http://127.0.0.1:4173/ \
+              --quiet \
+              --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+              --output=json \
+              --output-path=/tmp/aizanoi-lighthouse.json \
+              >>"artifacts/diagnostics/lighthouse-cli-attempt-$attempt.log" 2>&1
+            lighthouse_status=$?
+            if [ "$lighthouse_status" -eq 0 ] && [ -s /tmp/aizanoi-lighthouse.json ]; then
+              break
+            fi
+            sleep 2
+          done
+          if [ "$lighthouse_status" -eq 0 ] && [ -s /tmp/aizanoi-lighthouse.json ]; then
             node tests/lighthouse-budget.mjs /tmp/aizanoi-lighthouse.json \
               >artifacts/diagnostics/lighthouse-budget.log 2>&1
             budget_status=$?
