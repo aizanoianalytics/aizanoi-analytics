@@ -447,6 +447,8 @@
     }, 20);
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootstrapDistributionLayer, { once:true });
-  else bootstrapDistributionLayer();
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootstrapDistributionLayer, { once:true });
+    else bootstrapDistributionLayer();
+  }
 })();
