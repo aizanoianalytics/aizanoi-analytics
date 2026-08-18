@@ -3,10 +3,11 @@
 
   const PRIMARY_APPS = ['Aizanoi AI','Ancient World','Games','Projects','Aizanoi TV'];
   const SECONDARY_HINTS = ['Control Panel','Run','Search','Recycle Bin','Log Off','Shut Down','Lock'];
-  const CHAT_TIMEOUT_MS = 45000;
+  const CHAT_TIMEOUT_MS = 80000;
   let desktopSnapshot = [];
   let desktopShown = false;
   let mutationFrame = 0;
+  const pendingInteractiveNodes = new Set();
   let chatController = null;
   let lastChatPrompt = '';
 
@@ -65,7 +66,6 @@
     if (rect.height > maxHeight) win.style.height = `${maxHeight}px`;
     if (rect.width > maxWidth || rect.height > maxHeight) rect = win.getBoundingClientRect();
 
-    // Keep enough titlebar visible to recover the window without requiring resize.
     const minVisibleX = Math.min(96, rect.width);
     const minLeft = Math.min(0, minVisibleX - rect.width);
     const maxLeft = Math.max(minLeft, viewportWidth - minVisibleX);
@@ -90,9 +90,6 @@
         const nativeAdd = document.addEventListener;
         const hadOwnAdd = Object.prototype.hasOwnProperty.call(document, 'addEventListener');
 
-        // The legacy core registers four document-level drag listeners per window.
-        // Capture only those registrations while wireWindow executes so they can be
-        // released when that window closes.
         document.addEventListener = function(type, listener, options) {
           nativeAdd.call(document, type, listener, options);
           if (persistentTypes.has(type)) tracked.push({ type, listener, options });
@@ -208,10 +205,6 @@
       input.style.height = `${Math.min(120, Math.max(34, input.scrollHeight))}px`;
     };
     input.addEventListener('input', grow);
-
-    // The core chat handler sends on any Enter. Capture Shift+Enter before it
-    // reaches the core listener, while preventing a bare Enter from inserting
-    // a newline after the send.
     input.addEventListener('keydown', (event) => {
       if (event.key !== 'Enter') return;
       if (event.isComposing || event.shiftKey) {
@@ -261,8 +254,10 @@
       if (action === 'clear') {
         abortChatRequest();
         lastChatPrompt = '';
-        if (window.__AIZANOI_CHAT__?.clear) window.__AIZANOI_CHAT__.clear();
-        else log.replaceChildren();
+        if (window.__AIZANOI_CHAT__?.clear) {
+          window.__AIZANOI_CHAT__.clear();
+          setTimeout(() => window.__AIZANOI_CHAT__?.clear(), 0);
+        } else log.replaceChildren();
         announce('Chat cleared');
       }
 
@@ -325,18 +320,20 @@
   function decorateTaskbar(root = document) {
     const taskbar = document.getElementById('taskbar');
     if (taskbar) taskbar.setAttribute('role','toolbar');
-    root.querySelectorAll?.('.task-item').forEach((item) => {
+    const decorate = (item) => {
       item.setAttribute('role','button');
       item.tabIndex = item.tabIndex >= 0 ? item.tabIndex : 0;
       item.setAttribute('aria-pressed', item.classList.contains('active') ? 'true' : 'false');
-    });
+    };
+    if (root.matches?.('.task-item')) decorate(root);
+    root.querySelectorAll?.('.task-item').forEach(decorate);
   }
 
   function decorateStartMenu() {
     const start = document.getElementById('start-menu');
     if (!start) return;
     start.setAttribute('role','menu');
-    start.querySelectorAll('.sm-item').forEach((item) => {
+    start.querySelectorAll('.sm-item, .sm-foot-btn').forEach((item) => {
       const text = item.textContent.replace(/\s+/g,' ').trim();
       item.classList.toggle('os-v2-featured', PRIMARY_APPS.some((label) => text.includes(label)));
       item.classList.toggle('os-v2-secondary', SECONDARY_HINTS.some((label) => text.includes(label)));
@@ -362,17 +359,41 @@
   }
 
   function decorateContextMenus(root = document) {
-    root.querySelectorAll?.('.ctx-menu').forEach((menu) => {
+    const decorate = (menu) => {
       menu.setAttribute('role','menu');
-      menu.querySelectorAll('.ctx-item:not(.disabled)').forEach((item) => {
+      const items = [...menu.querySelectorAll('.ctx-item:not(.disabled)')];
+      items.forEach((item, index) => {
         item.setAttribute('role','menuitem');
-        if (!item.hasAttribute('tabindex')) item.tabIndex = -1;
+        item.tabIndex = index === 0 ? 0 : -1;
       });
-    });
+      if (menu.dataset.osV2Keyboard) return;
+      menu.dataset.osV2Keyboard = '1';
+      menu.addEventListener('keydown', (event) => {
+        const activeItems = [...menu.querySelectorAll('.ctx-item:not(.disabled)')];
+        const current = event.target.closest('.ctx-item');
+        const index = Math.max(0, activeItems.indexOf(current));
+        let next = null;
+        if (event.key === 'ArrowDown') next = activeItems[(index + 1) % activeItems.length];
+        if (event.key === 'ArrowUp') next = activeItems[(index - 1 + activeItems.length) % activeItems.length];
+        if (event.key === 'Home') next = activeItems[0];
+        if (event.key === 'End') next = activeItems[activeItems.length - 1];
+        if (next) {
+          event.preventDefault();
+          activeItems.forEach((item) => { item.tabIndex = item === next ? 0 : -1; });
+          next.focus();
+        }
+        if ((event.key === 'Enter' || event.key === ' ') && current) {
+          event.preventDefault();
+          current.click();
+        }
+      });
+    };
+    if (root.matches?.('.ctx-menu')) decorate(root);
+    root.querySelectorAll?.('.ctx-menu').forEach(decorate);
   }
 
   function decorateBalloons(root = document) {
-    root.querySelectorAll?.('.balloon').forEach((balloon) => {
+    const decorate = (balloon) => {
       balloon.setAttribute('role','status');
       balloon.setAttribute('aria-live','polite');
       const close = balloon.querySelector('.b-close');
@@ -380,8 +401,19 @@
         close.setAttribute('role','button');
         close.tabIndex = 0;
         close.setAttribute('aria-label','Close notification');
+        if (!close.dataset.osV2Keyboard) {
+          close.dataset.osV2Keyboard = '1';
+          close.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              close.click();
+            }
+          });
+        }
       }
-    });
+    };
+    if (root.matches?.('.balloon')) decorate(root);
+    root.querySelectorAll?.('.balloon').forEach(decorate);
   }
 
   function markInteractive(root = document) {
@@ -402,7 +434,7 @@
     if (scope.matches?.('.win')) decorateWindow(scope);
     scope.querySelectorAll?.('.win').forEach(decorateWindow);
     decorateTaskbar(scope);
-    decorateStartMenu();
+    if (scope === document || scope.matches?.('#start-menu') || scope.querySelector?.('#start-menu')) decorateStartMenu();
     decorateContextMenus(scope);
     decorateBalloons(scope);
     if (scope.matches?.('#chat-log, #chat-input, #chat-send') || scope.querySelector?.('#chat-log, #chat-input, #chat-send')) {
@@ -411,10 +443,15 @@
   }
 
   function scheduleInteractive(nodes) {
+    nodes.forEach((node) => {
+      if (node?.nodeType === Node.ELEMENT_NODE) pendingInteractiveNodes.add(node);
+    });
     if (mutationFrame) return;
     mutationFrame = requestAnimationFrame(() => {
       mutationFrame = 0;
-      nodes.filter((node) => node?.nodeType === Node.ELEMENT_NODE).forEach(markInteractive);
+      const batch = [...pendingInteractiveNodes];
+      pendingInteractiveNodes.clear();
+      batch.forEach(markInteractive);
     });
   }
 
@@ -433,8 +470,6 @@
             (node.id === 'chat-log' || node.querySelector?.('#chat-log'))) chatRemoved = true;
       });
     }
-    // Chat must be upgraded in the observer microtask, before the core setTimeout
-    // wires its closure to the input node. General decoration stays RAF-batched.
     if (chatAdded) installChatToolbar();
     if (chatRemoved) abortChatRequest();
     if (added.length) scheduleInteractive(added);
