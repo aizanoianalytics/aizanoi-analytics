@@ -41,6 +41,12 @@ jobs:
           node --check frontend/ancient-cities/rome-410-476/data/manifest.js
           node --check frontend/ancient-cities/rome-410-476/js/methodology.js
           node --check frontend/ancient-cities/rome-410-476/js/app.js
+          node --check frontend/ancient-cities/athens-450-430/data/city.js
+          node --check frontend/ancient-cities/athens-450-430/data/terrain.js
+          node --check frontend/ancient-cities/athens-450-430/data/urban-fabric.js
+          node --check frontend/ancient-cities/athens-450-430/data/manifest.js
+          node --check frontend/ancient-cities/athens-450-430/js/methodology.js
+          node --check frontend/ancient-cities/athens-450-430/js/app.js
           node --check frontend/ancient-cities/_template/data/city.example.js
 
       - name: Regression tests
