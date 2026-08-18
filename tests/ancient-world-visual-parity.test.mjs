@@ -10,12 +10,16 @@ const environment = read('frontend/ancient-world/engine/environment-renderer.js'
 const materials = read('frontend/ancient-world/assets/materials.js');
 
 // Teleport safety is a movement-quality contract: a spawn must have usable
-// forward space, not merely sit outside the destination collider.
-test('teleports prefer a spawn with forward walking clearance', () => {
+// forward space, not merely sit outside the destination collider. Cinematic
+// framing now evaluates eight shared view directions and keeps clearance in
+// the candidate score rather than relying on one hard-coded offset formula.
+test('teleports prefer a safely framed spawn with forward walking clearance', () => {
   for (const source of [rome, athens]) {
     assert.match(source, /teleportForwardClearance/);
-    assert.match(source, /candidate\.clearance >= 3/);
-    assert.match(source, /building\.d \* 0\.84/);
+    assert.match(source, /landmarkViewDirections/);
+    assert.match(source, /landmarkCandidateScore/);
+    assert.match(source, /traversal\.resolveSpawn\(wantedX, wantedZ, searchRadius\)/);
+    assert.match(source, /clearance = traversal\.collide/);
   }
 });
 

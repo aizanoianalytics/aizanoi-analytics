@@ -16,6 +16,7 @@ import {
   waterRibbon,
 } from '../../../ancient-world/engine/environment-renderer.js';
 import { installBackToOS } from '../../../ancient-world/engine/navigation.js';
+import { landmarkCameraClearance, landmarkCandidateScore, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkSightClearance, landmarkViewDirections, traversalApproachClearance } from '../../../ancient-world/engine/landmark-framing.js';
 import { ANCIENT_MATERIALS as M } from '../../../ancient-world/assets/materials.js';
 import { evidenceForRecord, evidenceBadgeHTML, installEvidenceStyles } from '../../../ancient-world/engine/evidence.js';
 import { HILLS, ERIDANOS, ILISSOS, KEPHISSOS, terrainHeightAt, terrainDescriptorAt } from '../data/terrain.js';
@@ -284,6 +285,51 @@ function propylaeaHero(building, color) {
     const x = building.x - building.w * 0.25 + i * (building.w * 0.50 / Math.max(1, columns - 1));
     cylinder(x, hallY, building.z - building.d * 0.42, 0.48, building.h * 0.52, C.marbleLight, 10);
   }
+}
+
+function hephaisteionHero(building, color) {
+  const ground = baseY(building);
+  const podium = Math.max(.9, building.h * .12);
+  for (let step = 0; step < 3; step++) box(building.x, ground + step * .23, building.z, building.w + 2.2 - step * .55, .26, building.d + 2.0 - step * .50, C.limestone);
+  const y = ground + podium;
+  const colH = building.h * .56;
+  const x0 = building.x - building.w * .43, x1 = building.x + building.w * .43;
+  const z0 = building.z - building.d * .43, z1 = building.z + building.d * .43;
+  for (let i = 0; i < 6; i++) {
+    const x = x0 + (x1 - x0) * i / 5;
+    cylinder(x, y, z0, .42, colH, C.marbleLight, TOUCH ? 8 : 11);
+    cylinder(x, y, z1, .42, colH, C.marbleLight, TOUCH ? 8 : 11);
+  }
+  for (let i = 1; i < 12; i++) {
+    const z = z0 + (z1 - z0) * i / 12;
+    cylinder(x0, y, z, .42, colH, C.marbleLight, TOUCH ? 8 : 11);
+    cylinder(x1, y, z, .42, colH, C.marbleLight, TOUCH ? 8 : 11);
+  }
+  box(building.x, y + .02, building.z, building.w * .54, colH * .88, building.d * .52, color);
+  box(building.x, y + colH, building.z, building.w * .94, .72, building.d * .92, C.marble);
+  pitchedBuilding(building.x, y + colH + .68, building.z, building.w * .88, Math.max(2.1, building.h * .22), building.d * .84, C.marbleLight);
+}
+
+function dionysusTheatreHero(building, color) {
+  theatre(building, color);
+  const ground = baseY(building);
+  // Packed-earth orchestra and a light timber skene better match the Classical
+  // period than a later monumental Roman-style stage building.
+  cylinder(building.x, ground + .08, building.z + building.d * .12, Math.min(building.w, building.d) * .18, .12, C.roadLight, TOUCH ? 20 : 32);
+  box(building.x, ground + .12, building.z - building.d * .26, building.w * .58, 3.1, 4.4, C.timber, building.rot || 0);
+}
+
+function stoaHero(building, color) {
+  const ground = baseY(building);
+  const rot = building.rot || 0;
+  box(building.x, ground, building.z, building.w, .52, building.d, C.limestone, rot);
+  const colCount = TOUCH ? Math.max(5, Math.round(building.w / 9)) : Math.max(7, Math.round(building.w / 6));
+  for (let i = 0; i < colCount; i++) {
+    const side = -building.w * .43 + i * (building.w * .86 / Math.max(1, colCount - 1));
+    const p = facadePoint({ ...building, rot }, side, building.d * .42);
+    cylinder(p[0], ground + .52, p[1], .34, building.h * .60, C.marbleLight, 8);
+  }
+  pitchedBuilding(building.x, ground + .52, building.z, building.w * .94, building.h - .52, building.d * .76, color, rot);
 }
 
 function ellipticalCylinder(cx, y, cz, rx, rz, height, color, segments = 36) {
@@ -693,7 +739,9 @@ function renderBuilding(building) {
   if (building.type === 'gate') return arch(building.x, ground, building.z, building.w, building.h, building.d, color);
   if (building.id === 'parthenon') parthenonHero(building, color);
   else if (building.id === 'propylaea' || building.id === 'propylaea-east') propylaeaHero(building, color);
-  else if (building.id === 'pantheon') pantheon(building, color);
+  else if (building.id === 'hephaisteion') hephaisteionHero(building, color);
+  else if (building.id === 'theatre-dionysus') dionysusTheatreHero(building, color);
+  else if (String(building.type).toLowerCase() === 'stoa') stoaHero(building, color);
   else if (building.type === 'temple') temple(building, color);
   else if (['round', 'dome', 'round-church', 'mausoleum'].includes(building.type)) roundBuilding(building, color);
   else if (['stadium', 'circus', 'arena'].includes(building.type)) longStadium(building, color);
@@ -845,13 +893,20 @@ function decorativeOlive(x, z, scale = 1) {
 
 function buildAtmosphericDetails() {
   REGIONS.forEach((region, index) => {
-    const count = TOUCH ? 1 : (region.id === 'acropolis' ? 2 : 3);
+    const count = TOUCH ? 1 : (['agora','lower-city','piraeus'].includes(region.id) ? 4 : 2);
     for (let i = 0; i < count; i++) {
-      const angle = index * 2.31 + i * 2.16;
-      const x = region.x + Math.cos(angle) * Math.min(58, region.w * 0.32);
-      const z = region.z + Math.sin(angle) * Math.min(54, region.d * 0.32);
-      const occupied = BUILDINGS.some((building) => Math.abs(building.x - x) < building.w * 0.65 && Math.abs(building.z - z) < building.d * 0.65);
-      if (!occupied) decorativeOlive(x, z, 0.78 + ((index + i) % 3) * 0.12);
+      const angle = index * 2.03 + i * 2.41;
+      const x = region.x + Math.cos(angle) * Math.min(52, region.w * .30);
+      const z = region.z + Math.sin(angle) * Math.min(48, region.d * .30);
+      const occupied = BUILDINGS.some((building) => Math.abs(building.x - x) < building.w * .62 && Math.abs(building.z - z) < building.d * .62);
+      if (occupied) continue;
+      decorativeOlive(x, z, .80 + ((index + i) % 3) * .13);
+      if (!TOUCH && (region.id === 'agora' || region.id === 'piraeus') && i % 2 === 1) {
+        const y = terrainHeightAt(x + 2.2, z + 1.6);
+        cylinder(x + 2.2, y + .02, z + 1.6, .20, .62, C.roof2, 8);
+        cylinder(x + 2.75, y + .02, z + 1.85, .16, .50, C.roof, 8);
+        box(x + 3.45, y + .02, z + 1.5, 1.15, .60, .82, C.timber, angle * .18);
+      }
     }
   });
 }
@@ -1027,6 +1082,8 @@ let mapFrame = 0;
 let moveBlend = 0;
 let walkClock = 0;
 let mobileControls = null;
+let arrivalLabel = null;
+let arrivalUntil = 0;
 
 function modalOpen() {
   return !$('#modal')?.classList.contains('hidden');
@@ -1163,6 +1220,8 @@ function drawOverlay() {
 }
 
 function updateNearest() {
+  if (arrivalLabel && performance.now() < arrivalUntil) return;
+  if (arrivalLabel) arrivalLabel = null;
   let best = null;
   let distance = Infinity;
   for (const building of BUILDINGS) {
@@ -1274,65 +1333,99 @@ function closeModal() {
   canvas.focus({ preventScroll: true });
 }
 
-function lookAtTarget(x, z) {
-  player.yaw = Math.atan2(x - player.x, -(z - player.z));
-  player.pitch = -0.03;
+function lookAtTarget(x, z, targetY = null) {
+  const dx = x - player.x;
+  const dz = z - player.z;
+  player.yaw = Math.atan2(dx, -dz);
+  if (targetY == null) {
+    player.pitch = -0.01;
+    return;
+  }
+  player.pitch = landmarkLookPitch({
+    eyeY: player.floorY + EYE_HEIGHT,
+    targetY,
+    horizontalDistance: Math.hypot(dx, dz),
+  });
 }
 
-function teleportToPoint(x, z, { lookX = null, lookZ = null, label = 'destination' } = {}) {
+function teleportToPoint(x, z, { lookX = null, lookZ = null, lookY = null, label = 'destination', resolved = false } = {}) {
   clearMovementState();
-  const spawn = traversal.resolveSpawn(x, z);
+  const spawn = resolved ? { x, z } : traversal.resolveSpawn(x, z);
   const support = traversal.absoluteSupportAt(spawn.x, spawn.z);
   player.x = spawn.x;
   player.z = spawn.z;
   player.floorY = support.y;
   player.surfaceTag = support.tag;
   player.y = support.y + EYE_HEIGHT;
-  if (lookX != null && lookZ != null) lookAtTarget(lookX, lookZ);
+  if (lookX != null && lookZ != null) lookAtTarget(lookX, lookZ, lookY);
+  arrivalLabel = label;
+  arrivalUntil = performance.now() + 2600;
   last = performance.now();
   drawRegionalMap();
   $('#place').textContent = label;
+  $('#detail').textContent = `Landmark arrival · ${support.tag || 'ground'} · ${support.y.toFixed(1)} m`;
   canvas.focus({ preventScroll: true });
   return spawn;
 }
 
 function teleportForwardClearance(candidate, building) {
-  const dx = building.x - candidate.x;
-  const dz = building.z - candidate.z;
-  const length = Math.hypot(dx, dz) || 1;
-  const ux = dx / length;
-  const uz = dz / length;
-  let clear = 0;
-  for (const distance of [1.25, 2.5, 4.0, 5.5]) {
-    const x = candidate.x + ux * distance;
-    const z = candidate.z + uz * distance;
-    if (!traversal.collide(x, z)) clear += 1;
-  }
-  return clear;
+  return traversalApproachClearance({
+    candidate,
+    target: building,
+    collide: traversal.collide,
+    absoluteSupportAt: traversal.absoluteSupportAt,
+    resolveSupport: traversal.resolveSupport,
+  });
 }
 
 function teleport(id) {
   const building = BUILDINGS.find((item) => item.id === id);
   if (!building) return false;
-  const offsets = [
-    [0, -building.d * 0.84 - 12],
-    [building.w * 0.84 + 12, 0],
-    [0, building.d * 0.84 + 12],
-    [-building.w * 0.84 - 12, 0],
-  ];
-  const candidates = offsets.map(([ox, oz]) => {
-    const candidate = traversal.resolveSpawn(building.x + ox, building.z + oz, 28);
+  const desiredDistance = landmarkFramingDistance(building);
+  const footprint = Math.max(building.w || 0, building.d || 0);
+  const searchRadius = Math.max(34, Math.min(58, desiredDistance * 0.26));
+  const lookY = landmarkLookHeight(building, terrainHeightAt(building.x, building.z));
+  const candidates = landmarkViewDirections().map(([dx, dz]) => {
+    const wantedX = building.x + dx * desiredDistance;
+    const wantedZ = building.z + dz * desiredDistance;
+    const candidate = traversal.resolveSpawn(wantedX, wantedZ, searchRadius);
+    const distance = Math.hypot(building.x - candidate.x, building.z - candidate.z);
+    const clearance = traversal.collide(candidate.x, candidate.z) ? -1 : teleportForwardClearance(candidate, building);
+    const support = traversal.absoluteSupportAt(candidate.x, candidate.z);
+    const visibility = clearance < 0 ? -1 : landmarkSightClearance({
+      candidate,
+      target: building,
+      eyeY: support.y + EYE_HEIGHT,
+      targetY: lookY,
+      collide: traversal.collide,
+      heightAt: terrainHeightAt,
+    });
+    const cameraClearance = landmarkCameraClearance({
+      candidate,
+      obstacles: [...BUILDINGS, ...URBAN_FABRIC],
+      ignoreId: building.id,
+      minHeight: 4,
+    });
+    const framed = distance >= Math.max(26, footprint * 0.92);
     return {
       ...candidate,
-      clearance: traversal.collide(candidate.x, candidate.z) ? -1 : teleportForwardClearance(candidate, building),
+      clearance,
+      visibility,
+      cameraClearance,
+      distance,
+      score: framed ? landmarkCandidateScore({ clearance, visibility, cameraClearance, distance, desiredDistance }) : -1000 - Math.abs(distance - desiredDistance),
     };
   });
-  candidates.sort((a, b) => b.clearance - a.clearance);
-  let chosen = candidates.find((candidate) => candidate.clearance >= 3) || candidates[0];
-  if (!chosen || chosen.clearance < 0) {
-    chosen = traversal.resolveSpawn(building.x, building.z - building.d * 0.84 - 12, 30);
+  candidates.sort((a, b) => b.score - a.score);
+  const viableCandidates = candidates.filter((candidate) => candidate.clearance >= 3 && candidate.visibility >= 4);
+  const spaciousCandidates = viableCandidates.filter((candidate) => candidate.cameraClearance >= 12);
+  const cameraPool = spaciousCandidates.length ? spaciousCandidates : viableCandidates;
+  cameraPool.sort((a, b) => b.cameraClearance - a.cameraClearance || b.visibility - a.visibility || b.score - a.score);
+  let chosen = cameraPool[0] || candidates[0];
+  if (!chosen || chosen.score < -900) {
+    chosen = traversal.resolveSpawn(building.x, building.z - desiredDistance, Math.max(38, searchRadius));
   }
-  teleportToPoint(chosen.x, chosen.z, { lookX: building.x, lookZ: building.z, label: building.name });
+  teleportToPoint(chosen.x, chosen.z, { lookX: building.x, lookZ: building.z, lookY, label: building.name, resolved: true });
   $('#jump').value = '';
   return true;
 }

@@ -33,3 +33,18 @@ body[data-city] .region{background:linear-gradient(180deg,rgba(255,255,255,.028)
  body[data-city] .miniWrap{border-radius:12px;backdrop-filter:blur(12px)}
 }
 @media(prefers-reduced-motion:reduce){body[data-city] .primary{transition:none!important}}
+
+
+/* Final cinematic pass: increase readability/depth while staying GPU-cheap. */
+body[data-city] #glCanvas{transform:translateZ(0)}
+body[data-city] .brand{backdrop-filter:blur(14px) saturate(1.08)}
+body[data-city] .place{max-width:min(540px,calc(100vw - 18px));border-left:2px solid rgba(231,188,108,.55)}
+body[data-city] .place b{letter-spacing:.025em}
+body[data-city] .miniWrap{backdrop-filter:blur(14px) saturate(1.08)}
+body[data-city] .controls button:focus-visible,body[data-city] .controls select:focus-visible{outline:2px solid #f0c879;outline-offset:2px}
+body[data-city] .region{transition:background .14s ease,border-color .14s ease,transform .14s ease}
+body[data-city] .region:hover{background:rgba(255,255,255,.055);border-color:rgba(231,188,108,.35);transform:translateY(-1px)}
+body[data-city="rome"]::before{background:radial-gradient(ellipse at 50% 55%,transparent 30%,rgba(51,25,14,.09) 70%,rgba(12,6,5,.52) 118%),linear-gradient(180deg,rgba(225,161,100,.08),transparent 34%,transparent 68%,rgba(30,14,8,.16))}
+body[data-city="athens"]::before{background:radial-gradient(ellipse at 50% 55%,transparent 34%,rgba(80,56,22,.055) 72%,rgba(16,12,7,.37) 118%),linear-gradient(180deg,rgba(255,229,174,.10),transparent 36%,transparent 72%,rgba(43,29,11,.10))}
+@media(pointer:coarse),(max-width:820px){body[data-city] .place{max-width:calc(100vw - 92px);font-size:11px}body[data-city] .miniWrap{max-width:42vw}}
+@media(prefers-reduced-motion:reduce){body[data-city] .region{transition:none!important;transform:none!important}}

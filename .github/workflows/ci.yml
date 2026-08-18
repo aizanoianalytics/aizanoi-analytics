@@ -11,9 +11,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: aizanoi-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,7 +35,11 @@ jobs:
           node --check frontend/games/snake.js
           node --check frontend/games/brick.js
           node --check frontend/games/game-utils.js
+          node --check frontend/js/chat.js
+          node --check frontend/js/terminal.js
+          node --check frontend/js/os-router.js
           node --check frontend/js/os-v2.js
+          node --check frontend/historic-world/app.js
           node --check frontend/ancient-world/engine/traversal.js
           node --check frontend/ancient-world/engine/lifecycle.js
           node --check frontend/ancient-world/engine/navigation.js
@@ -40,6 +49,7 @@ jobs:
           node --check frontend/ancient-world/engine/mobile-controls.js
           node --check frontend/ancient-world/engine/surface-shader.js
           node --check frontend/ancient-world/engine/environment-renderer.js
+          node --check frontend/ancient-world/engine/landmark-framing.js
           node --check frontend/ancient-world/assets/materials.js
           node --check frontend/ancient-cities/rome-410-476/data/terrain.js
           node --check frontend/ancient-cities/rome-410-476/data/urban-fabric.js
@@ -62,6 +72,7 @@ jobs:
 
   browser-smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -92,3 +103,47 @@ jobs:
         run: |
           node tests/ancient-city-browser-smoke.mjs
           node tests/os-browser-smoke.mjs
+
+      - name: Capture final product visuals
+        env:
+          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+        run: node tests/final-visual-capture.mjs
+
+      - name: Upload visual regression review
+        uses: actions/upload-artifact@v4
+        with:
+          name: aizanoi-final-visual-review
+          path: artifacts/final-visual-review/*.png
+          retention-days: 3
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Lighthouse
+        run: npm install --no-save lighthouse@13.4.1
+
+      - name: Start static frontend server
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-lighthouse-http.log 2>&1 &
+          for i in {1..20}; do
+            curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0
+            sleep 0.5
+          done
+          cat /tmp/aizanoi-lighthouse-http.log
+          exit 1
+
+      - name: Enforce Lighthouse budgets
+        run: |
+          npx lighthouse http://127.0.0.1:4173/ \
+            --quiet \
+            --chrome-flags="--headless --no-sandbox" \
+            --output=json \
+            --output-path=/tmp/aizanoi-lighthouse.json
+          node tests/lighthouse-budget.mjs /tmp/aizanoi-lighthouse.json
