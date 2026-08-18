@@ -41,3 +41,99 @@ export function installBackToOS({ href = '/', label = '← Aizanoi OS', onBefore
   document.body.appendChild(link);
   return link;
 }
+
+function readPendingWorldCommand(worldId) {
+  try {
+    const raw = sessionStorage.getItem('aizanoi-world-command');
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || parsed.worldId !== worldId || Date.now() - Number(parsed.timestamp || 0) > 120000) return null;
+    return parsed;
+  } catch (_) {
+    return null;
+  }
+}
+
+function clearPendingWorldCommand(worldId) {
+  try {
+    const pending = readPendingWorldCommand(worldId);
+    if (pending) sessionStorage.removeItem('aizanoi-world-command');
+  } catch (_) {}
+}
+
+function waitForElement(selector, { timeout = 7000, interval = 60 } = {}) {
+  return new Promise((resolve) => {
+    const immediate = document.querySelector(selector);
+    if (immediate) return resolve(immediate);
+    const started = performance.now();
+    const timer = setInterval(() => {
+      const element = document.querySelector(selector);
+      if (element || performance.now() - started >= timeout) {
+        clearInterval(timer);
+        resolve(element || null);
+      }
+    }, interval);
+  });
+}
+
+/**
+ * Consume an Aizanoi OS world command without coupling the shared engine to a
+ * city renderer. The modular Rome/Athens pages already expose #enter and #jump;
+ * using their public DOM controls preserves each city's own safe teleport logic.
+ */
+export async function consumeHistoricalWorldDeepLink({
+  worldId,
+  enterSelector = '#enter',
+  jumpSelector = '#jump',
+  introHiddenSelector = '#intro.hidden',
+  timeout = 9000,
+} = {}) {
+  if (!worldId) return { handled:false, reason:'missing-world-id' };
+  const url = new URL(location.href);
+  const urlJump = url.searchParams.get('jump');
+  const pending = readPendingWorldCommand(worldId);
+  const landmark = urlJump || pending?.landmark || null;
+  if (!landmark) return { handled:false, reason:'no-landmark' };
+
+  const enter = await waitForElement(enterSelector, { timeout });
+  const jump = await waitForElement(jumpSelector, { timeout });
+  if (!jump) return { handled:false, reason:'jump-control-unavailable', landmark };
+
+  const valid = [...jump.options].some((option) => option.value === landmark);
+  if (!valid) return { handled:false, reason:'unknown-landmark', landmark };
+
+  if (enter && !document.querySelector(introHiddenSelector)) {
+    enter.click();
+    await new Promise((resolve) => setTimeout(resolve, 90));
+  }
+
+  jump.value = landmark;
+  jump.dispatchEvent(new Event('change', { bubbles:true }));
+  clearPendingWorldCommand(worldId);
+
+  // Remove the one-shot query while keeping the resulting world in history.
+  if (urlJump) {
+    url.searchParams.delete('jump');
+    history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
+  }
+  return { handled:true, landmark };
+}
+
+function detectWorldId() {
+  const path = location.pathname;
+  if (path.includes('/rome-410-476/')) return 'rome';
+  if (path.includes('/athens-450-430/')) return 'athens';
+  return null;
+}
+
+// Rome and Athens import this module as part of normal startup. Auto-consume an
+// optional Field System deep link after their UI has mounted. A failed or absent
+// deep link is deliberately silent and cannot block manual entry.
+const AUTO_WORLD_ID = typeof location !== 'undefined' ? detectWorldId() : null;
+if (AUTO_WORLD_ID) {
+  const autoConsume = () => setTimeout(() => {
+    consumeHistoricalWorldDeepLink({ worldId:AUTO_WORLD_ID }).catch((error) => console.warn('Historical world deep link failed:', error));
+  }, 0);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', autoConsume, { once:true });
+  else autoConsume();
+}
