@@ -16,7 +16,7 @@ import {
   waterRibbon,
 } from '../../../ancient-world/engine/environment-renderer.js';
 import { installBackToOS } from '../../../ancient-world/engine/navigation.js';
-import { landmarkCandidateScore, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkSightClearance, landmarkViewDirections, traversalApproachClearance } from '../../../ancient-world/engine/landmark-framing.js';
+import { landmarkCameraClearance, landmarkCandidateScore, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkSightClearance, landmarkViewDirections, traversalApproachClearance } from '../../../ancient-world/engine/landmark-framing.js';
 import { ANCIENT_MATERIALS as M } from '../../../ancient-world/assets/materials.js';
 import { evidenceForRecord, evidenceBadgeHTML, installEvidenceStyles } from '../../../ancient-world/engine/evidence.js';
 import { HILLS, ERIDANOS, ILISSOS, KEPHISSOS, terrainHeightAt, terrainDescriptorAt } from '../data/terrain.js';
@@ -1400,17 +1400,28 @@ function teleport(id) {
       collide: traversal.collide,
       heightAt: terrainHeightAt,
     });
+    const cameraClearance = landmarkCameraClearance({
+      candidate,
+      obstacles: [...BUILDINGS, ...URBAN_FABRIC],
+      ignoreId: building.id,
+      minHeight: 4,
+    });
     const framed = distance >= Math.max(26, footprint * 0.92);
     return {
       ...candidate,
       clearance,
       visibility,
+      cameraClearance,
       distance,
-      score: framed ? landmarkCandidateScore({ clearance, visibility, distance, desiredDistance }) : -1000 - Math.abs(distance - desiredDistance),
+      score: framed ? landmarkCandidateScore({ clearance, visibility, cameraClearance, distance, desiredDistance }) : -1000 - Math.abs(distance - desiredDistance),
     };
   });
   candidates.sort((a, b) => b.score - a.score);
-  let chosen = candidates.find((candidate) => candidate.clearance >= 3 && candidate.visibility >= 4) || candidates[0];
+  const viableCandidates = candidates.filter((candidate) => candidate.clearance >= 3 && candidate.visibility >= 4);
+  const spaciousCandidates = viableCandidates.filter((candidate) => candidate.cameraClearance >= 12);
+  const cameraPool = spaciousCandidates.length ? spaciousCandidates : viableCandidates;
+  cameraPool.sort((a, b) => b.cameraClearance - a.cameraClearance || b.visibility - a.visibility || b.score - a.score);
+  let chosen = cameraPool[0] || candidates[0];
   if (!chosen || chosen.score < -900) {
     chosen = traversal.resolveSpawn(building.x, building.z - desiredDistance, Math.max(38, searchRadius));
   }

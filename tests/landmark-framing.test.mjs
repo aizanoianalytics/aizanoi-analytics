@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkSightClearance, landmarkViewDirections, traversalApproachClearance } from '../frontend/ancient-world/engine/landmark-framing.js';
+import { landmarkCameraClearance, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkSightClearance, landmarkViewDirections, traversalApproachClearance } from '../frontend/ancient-world/engine/landmark-framing.js';
 
 const root = resolve(import.meta.dirname, '..');
 
@@ -68,4 +68,11 @@ test('landmark sight clearance rejects terrain or solids crossing the view ray',
     collide:(_x,z)=>z < -25, heightAt:()=>0,
   });
   assert.ok(blocked < clear);
+});
+
+test('landmark camera clearance respects rotated high building footprints', () => {
+  const obstacles = [{ id:'palace', x:0, z:0, w:100, d:60, h:30, rot:0 }];
+  assert.equal(landmarkCameraClearance({ candidate:{x:55,z:0}, obstacles }), 5);
+  assert.ok(landmarkCameraClearance({ candidate:{x:90,z:0}, obstacles }) >= 40);
+  assert.equal(landmarkCameraClearance({ candidate:{x:0,z:0}, obstacles, ignoreId:'palace' }), 100);
 });

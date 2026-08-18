@@ -92,6 +92,28 @@ export function landmarkSightClearance({
   return clear;
 }
 
-export function landmarkCandidateScore({ clearance = 0, visibility = 0, distance = 0, desiredDistance = 0 }) {
-  return clearance * 20 + visibility * 48 - Math.abs(distance - desiredDistance) * 0.08;
+export function landmarkCameraClearance({ candidate, obstacles = [], ignoreId = null, minHeight = 4 } = {}) {
+  if (!candidate) return 0;
+  let nearest = Infinity;
+  for (const obstacle of obstacles) {
+    if (!obstacle || obstacle.id === ignoreId || (Number(obstacle.h) || 0) < minHeight) continue;
+    const width = Math.max(0, Number(obstacle.w) || 0);
+    const depth = Math.max(0, Number(obstacle.d) || 0);
+    if (!width || !depth) continue;
+    const angle = -(Number(obstacle.rot) || 0);
+    const dx = (Number(candidate.x) || 0) - (Number(obstacle.x) || 0);
+    const dz = (Number(candidate.z) || 0) - (Number(obstacle.z) || 0);
+    const ca = Math.cos(angle), sa = Math.sin(angle);
+    const lx = dx * ca - dz * sa;
+    const lz = dx * sa + dz * ca;
+    const qx = Math.abs(lx) - width / 2;
+    const qz = Math.abs(lz) - depth / 2;
+    const outside = Math.hypot(Math.max(0, qx), Math.max(0, qz));
+    nearest = Math.min(nearest, outside);
+  }
+  return Number.isFinite(nearest) ? nearest : 100;
+}
+
+export function landmarkCandidateScore({ clearance = 0, visibility = 0, cameraClearance = 0, distance = 0, desiredDistance = 0 }) {
+  return clearance * 20 + visibility * 48 + Math.min(30, Math.max(0, cameraClearance)) * 7 - Math.abs(distance - desiredDistance) * 0.08;
 }
