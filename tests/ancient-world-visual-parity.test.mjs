@@ -9,6 +9,8 @@ const shader = read('frontend/ancient-world/engine/surface-shader.js');
 const environment = read('frontend/ancient-world/engine/environment-renderer.js');
 const materials = read('frontend/ancient-world/assets/materials.js');
 
+// Teleport safety is a movement-quality contract: a spawn must have usable
+// forward space, not merely sit outside the destination collider.
 test('teleports prefer a spawn with forward walking clearance', () => {
   for (const source of [rome, athens]) {
     assert.match(source, /teleportForwardClearance/);
