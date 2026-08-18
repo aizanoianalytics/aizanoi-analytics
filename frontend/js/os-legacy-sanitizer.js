@@ -73,7 +73,7 @@
       <h3>What this is</h3>
       <p>Aizanoi is an original browser workspace built around interactive history, AI-assisted analysis and digital experiments. Its shell preserves the useful desktop metaphor without imitating a specific commercial operating system.</p>
       <h3>Field shortcuts</h3>
-      <ul><li><b>Ctrl/Cmd + K</b> — search apps, worlds, monuments or ask Aizanoi AI.</li><li><b>Alt + ← / →</b> — snap the active desktop window.</li><li><b>Ctrl + `</b> — switch between open workspace apps.</li><li><b>Historical Worlds</b> — launch Aizanoi, Rome or Athens directly to important landmarks.</li></ul>
+      <ul><li><b>Ctrl/Cmd + K</b> — search apps, worlds, monuments or ask Aizanoi AI.</li><li><b>Alt + ← / →</b> — snap the active desktop window.</li><li><b>Ctrl + &#96;</b> — switch between open workspace apps.</li><li><b>Historical Worlds</b> — launch Aizanoi, Rome or Athens directly to important landmarks.</li></ul>
       <h3>Mobile</h3>
       <p>Phones use an app-first home, fullscreen applications and a dedicated Home/Search/AI/Recent navigation model instead of shrinking the desktop.</p>
     </section>`;
