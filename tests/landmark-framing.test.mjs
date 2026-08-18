@@ -14,6 +14,11 @@ test('shared landmark framing keeps large monuments dramatic without unsafe clos
   assert.equal(landmarkViewDirections().length, 8);
 });
 
+test('city data can author a framing distance without bypassing shared safety', () => {
+  assert.equal(landmarkFramingDistance({ w:125, d:102, h:48, framing:{ distance:152 } }), 152);
+  assert.equal(landmarkFramingDistance({ w:70, d:31, h:15, framing:{ distance:70 } }), 70);
+});
+
 test('shared landmark look targets the upper mass without extreme pitch', () => {
   const targetY = landmarkLookHeight({ h:48 }, 3);
   const pitch = landmarkLookPitch({ eyeY:4.7, targetY, horizontalDistance:170 });
@@ -59,22 +64,30 @@ test('landmark approach clearance rejects traversal-breaking support changes', (
   assert.equal(broken, 1);
 });
 
-test('landmark sight clearance rejects terrain or solids crossing the view ray', () => {
+test('landmark sight clearance requires the sampled view corridor to remain fully readable', () => {
   const clear = landmarkSightClearance({
     candidate:{x:0,z:0}, target:{x:0,z:-100}, eyeY:3, targetY:14,
     collide:()=>false, heightAt:()=>0,
   });
-  assert.equal(clear, 8);
+  assert.ok(clear >= 8, 'fully clear view receives full visibility plus composition score');
   const blocked = landmarkSightClearance({
     candidate:{x:0,z:0}, target:{x:0,z:-100}, eyeY:3, targetY:14,
     collide:(_x,z)=>z < -25, heightAt:()=>0,
   });
-  assert.ok(blocked < clear);
+  assert.equal(blocked, -1, 'partially obscured landmark arrival is rejected');
+});
+
+test('authored approach directions influence composition without replacing collision checks', () => {
+  const target = { x:0, z:0, framing:{ preferredDirections:[[1,0]] } };
+  const east = landmarkSightClearance({ candidate:{x:80,z:0}, target, eyeY:3, targetY:12, collide:()=>false, heightAt:()=>0 });
+  const west = landmarkSightClearance({ candidate:{x:-80,z:0}, target, eyeY:3, targetY:12, collide:()=>false, heightAt:()=>0 });
+  assert.ok(east >= 8);
+  assert.equal(west, -1);
 });
 
 test('landmark camera clearance reserves visual silhouette space around tall massing', () => {
   const obstacles = [{ id:'palace', x:0, z:0, w:100, d:60, h:30, rot:0 }];
   assert.ok(landmarkCameraClearance({ candidate:{x:55,z:0}, obstacles }) < 3);
-  assert.ok(landmarkCameraClearance({ candidate:{x:90,z:0}, obstacles }) >= 35);
+  assert.ok(landmarkCameraClearance({ candidate:{x:90,z:0}, obstacles }) >= 20, 'clear point remains usable after the larger silhouette buffer');
   assert.equal(landmarkCameraClearance({ candidate:{x:0,z:0}, obstacles, ignoreId:'palace' }), 100);
 });
