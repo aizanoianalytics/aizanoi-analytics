@@ -50,6 +50,21 @@ for (const city of cities) {
   assert.ok(initial && Number.isFinite(initial.x) && Number.isFinite(initial.floorY), `${city.slug}: invalid initial player state`);
   assert.ok(Math.abs(initial.y - (initial.floorY + 1.68)) < 0.2, `${city.slug}: eye height is not human-scale`);
 
+  // Enter requests pointer lock on desktop. Explicitly release it so the fallback
+  // mouse-drag path can be exercised deterministically in headless Chromium.
+  await page.evaluate(() => document.exitPointerLock?.());
+  await page.waitForFunction(() => document.pointerLockElement === null);
+  const canvas = await page.locator('#glCanvas').boundingBox();
+  assert.ok(canvas, `${city.slug}: desktop canvas has no layout box`);
+  const mouseBefore = await player(page);
+  const mx = canvas.x + canvas.width * 0.62;
+  const my = canvas.y + canvas.height * 0.48;
+  await page.dispatchEvent('#glCanvas', 'pointerdown', { pointerId: 21, pointerType: 'mouse', button: 0, buttons: 1, isPrimary: true, clientX: mx, clientY: my });
+  await page.dispatchEvent('#glCanvas', 'pointermove', { pointerId: 21, pointerType: 'mouse', button: 0, buttons: 1, isPrimary: true, clientX: mx + 64, clientY: my });
+  await page.dispatchEvent('#glCanvas', 'pointerup', { pointerId: 21, pointerType: 'mouse', button: 0, buttons: 0, isPrimary: true, clientX: mx + 64, clientY: my });
+  const mouseAfter = await player(page);
+  assert.ok(mouseAfter.yaw > mouseBefore.yaw + 0.05, `${city.slug}: dragging mouse right did not turn view right (${mouseBefore.yaw} -> ${mouseAfter.yaw})`);
+
   const teleported = await page.evaluate((id) => window.__ANCIENT_WORLD_DEBUG__.teleport(id), city.teleport);
   assert.equal(teleported, true, `${city.slug}: teleport failed`);
   const afterTeleport = await player(page);
@@ -82,11 +97,11 @@ for (const city of cities) {
   const mobileWalked = await player(mobilePage);
   assert.ok(Math.hypot(mobileWalked.x - mobileBefore.x, mobileWalked.z - mobileBefore.z) > 0.2, `${city.slug}: analog joystick did not move`);
 
-  const canvas = await mobilePage.locator('#glCanvas').boundingBox();
-  assert.ok(canvas, `${city.slug}: canvas has no layout box`);
+  const mobileCanvas = await mobilePage.locator('#glCanvas').boundingBox();
+  assert.ok(mobileCanvas, `${city.slug}: canvas has no layout box`);
   const yawBefore = mobileWalked.yaw;
-  const lx = canvas.x + canvas.width * 0.72;
-  const ly = canvas.y + canvas.height * 0.52;
+  const lx = mobileCanvas.x + mobileCanvas.width * 0.72;
+  const ly = mobileCanvas.y + mobileCanvas.height * 0.52;
   await mobilePage.dispatchEvent('#glCanvas', 'pointerdown', { pointerId: 12, pointerType: 'touch', isPrimary: true, clientX: lx, clientY: ly });
   await mobilePage.dispatchEvent('#glCanvas', 'pointermove', { pointerId: 12, pointerType: 'touch', isPrimary: true, clientX: lx + 48, clientY: ly + 8 });
   await mobilePage.dispatchEvent('#glCanvas', 'pointerup', { pointerId: 12, pointerType: 'touch', isPrimary: true, clientX: lx + 48, clientY: ly + 8 });
