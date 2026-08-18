@@ -1405,7 +1405,7 @@ function setEra(y){
 }
 function bridgeTeleportView(id,side=1){const b=bridges.find(q=>q.id===id);if(!b)return {pos:[0,0],look:[0,0]};const ux=Math.cos(b.rot),uz=Math.sin(b.rot),rampLen=b.major?17:14,d=b.len/2+rampLen+4;return {pos:[b.x+ux*side*d,b.z+uz*side*d],look:[b.x,b.z]}}
 const teleportViews={
- temple:{pos:[-160,-70],look:[-160,20]},
+ temple:{pos:[-68,20],look:[-160,20]},
  agora:{pos:[28,-34],look:[-65,-35]},
  greatbath:{pos:[-315,188],look:[-315,280]},
  stadium:{pos:[-230,405],look:[-230,555]},
