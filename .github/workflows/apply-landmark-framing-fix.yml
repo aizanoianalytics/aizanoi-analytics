@@ -25,13 +25,18 @@ jobs:
           node-version: '22'
       - name: Apply guarded landmark framing fix
         run: python3 scripts/apply-landmark-framing-fix-2026-08-18.py
-      - name: Validate product code and regression tests
-        run: |
-          node --check frontend/ancient-world/engine/landmark-framing.js
-          node --check frontend/ancient-cities/rome-410-476/js/app.js
-          node --check frontend/ancient-cities/athens-450-430/js/app.js
-          node --test tests/*.test.mjs
-          git diff --check
+      - name: Syntax check shared landmark framing
+        run: node --check frontend/ancient-world/engine/landmark-framing.js
+      - name: Syntax check Rome renderer
+        run: node --check frontend/ancient-cities/rome-410-476/js/app.js
+      - name: Syntax check Athens renderer
+        run: node --check frontend/ancient-cities/athens-450-430/js/app.js
+      - name: Run landmark framing tests
+        run: node --test tests/landmark-framing.test.mjs
+      - name: Run full regression suite
+        run: node --test tests/*.test.mjs
+      - name: Check whitespace
+        run: git diff --check
       - name: Remove one-shot patch machinery
         run: |
           rm scripts/apply-landmark-framing-fix-2026-08-18.py
