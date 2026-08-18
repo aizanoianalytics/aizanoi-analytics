@@ -54,6 +54,12 @@ const LATER_BUILDINGS = new Set([
   'pompeion',
 ]);
 
+// The raw source ledger also carries Agoraios Kolonos as a map/topography record.
+// terrain.js already renders the same hill as terrain; leaving the record in the
+// architecture array makes the generic building fallback draw a giant box over
+// the Hephaisteion. Preserve it in city-source.js, but do not double-render it.
+const TERRAIN_ONLY_RECORDS = new Set(['agoraios-kolonos']);
+
 const FRAMING = Object.freeze({
   // The western arrival echoes the processional approach through the Propylaea;
   // the engine still validates terrain and collision before using it.
@@ -75,7 +81,7 @@ function withFraming(building) {
 }
 
 export const BUILDINGS = base.BUILDINGS.flatMap((building) => {
-  if (LATER_BUILDINGS.has(building.id)) return [];
+  if (LATER_BUILDINGS.has(building.id) || TERRAIN_ONLY_RECORDS.has(building.id)) return [];
 
   if (building.id === 'athena-nike') return [{
     ...building,
