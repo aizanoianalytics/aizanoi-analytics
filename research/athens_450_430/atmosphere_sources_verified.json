@@ -1,0 +1,312 @@
+{
+  "document": "Classical Athens 450–430 BCE Atmosphere & Event Report",
+  "report_path": "/opt/aizanoi-analytics-public/research/athens_450_430/athens_450_430_report.md",
+  "verified_at": "2026-08-18",
+  "verification_method": "HTTP HEAD check via urllib (Python 3.11); User-Agent: Mozilla/5.0 HermesAgent/1.0; timeout 15 s",
+  "source_count_total": 30,
+  "source_count_working": 30,
+  "source_count_failing": 0,
+  "note_on_bm_and_ascsa": "British Museum (britishmuseum.org/collection/...) and American School of Classical Studies at Athens (ascsa.edu.gr) returned Cloudflare / TLS errors during this research run and are not listed as verified working sources. Future agents should re-test; if needed, fall back to Wikipedia/Perseus. The Athens 450–430 report's Caveats section already documents this.",
+  "sources": [
+    {
+      "id": "WP-FPW",
+      "label": "Wikipedia: First Peloponnesian War",
+      "url": "https://en.wikipedia.org/wiki/First_Peloponnesian_War",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["First Peloponnesian War 460–445 BCE", "Treaty with Sparta"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-TYP",
+      "label": "Wikipedia: Thirty Years' Peace",
+      "url": "https://en.wikipedia.org/wiki/Thirty_Years%27_Peace",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Thirty Years' Peace 446/445 BCE"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-PERICLES",
+      "label": "Wikipedia: Pericles",
+      "url": "https://en.wikipedia.org/wiki/Pericles",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Pericles' career", "strategos re-election", "citizenship law 451 BCE", "ostracism of Thucydides son of Melesias", "death 429 BCE plague"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-DELIAN",
+      "label": "Wikipedia: Delian League",
+      "url": "https://en.wikipedia.org/wiki/Delian_League",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Delian League founded 478 BCE", "treasury move to Athens 454 BCE"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-HELLENOTAMIAI",
+      "label": "Wikipedia: Hellenotamiae",
+      "url": "https://en.wikipedia.org/wiki/Hellenotamiae",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Hellenotamiai treasurers appointed 477 BCE", "office after 454/453 BCE treasury move"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-ATHENDEMOC",
+      "label": "Wikipedia: Athenian democracy",
+      "url": "https://en.wikipedia.org/wiki/Athenian_democracy",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Population estimates (30,000–60,000 adult male citizens)", "Pericles' 451 BCE citizenship law", "Pericles and Cimon 450 BCE reform"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-METIC",
+      "label": "Wikipedia: Metic",
+      "url": "https://en.wikipedia.org/wiki/Metic",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Metic population ~25,000 adult male", "Metics as half the free population of Athens", "Metoikion tax"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-STRATEGOS",
+      "label": "Wikipedia: Strategos",
+      "url": "https://en.wikipedia.org/wiki/Strategos",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Board of Ten Strategoi (Cleisthenes 501 BCE)", "annual election", "Pericles as strategos"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-PARTHENON",
+      "label": "Wikipedia: Parthenon",
+      "url": "https://en.wikipedia.org/wiki/Parthenon",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Parthenon construction 447–432 BCE", "architects Iktinos and Kallikrates", "sculptor Phidias"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-PROPYLON",
+      "label": "Wikipedia: Propylon (Propylaea)",
+      "url": "https://en.wikipedia.org/wiki/Propylon",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Propylaea begun c. 437 BCE under Pericles", "Mnesicles architect"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-ERECH",
+      "label": "Wikipedia: Erechtheion",
+      "url": "https://en.wikipedia.org/wiki/Erechtheion",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Erechtheion constructed 421–406 BCE (commission belongs to Periclean programme but construction post-dates window)"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-PHIDIAS",
+      "label": "Wikipedia: Phidias",
+      "url": "https://en.wikipedia.org/wiki/Phidias",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Phidias sculptor/architect", "Athena Parthenos", "Athena Promachos bronze"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-PANATHENAIC",
+      "label": "Wikipedia: Panathenaic Games",
+      "url": "https://en.wikipedia.org/wiki/Panathenaic_Games",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Panathenaic Games every four years from 566 BCE", "Great Panathenaia"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-DIONYSIA",
+      "label": "Wikipedia: Dionysia (City Dionysia)",
+      "url": "https://en.wikipedia.org/wiki/Dionysia",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["City Dionysia", "Comedies from 487 BCE", "Tragedies", "Second only to Panathenaia"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-THEATREDION",
+      "label": "Wikipedia: Theatre of Dionysus",
+      "url": "https://en.wikipedia.org/wiki/Theatre_of_Dionysus",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Theatre on south slope of Acropolis", "Periclean phase", "Lycurgan 25,000 capacity"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-ELEUSMYST",
+      "label": "Wikipedia: Eleusinian Mysteries",
+      "url": "https://en.wikipedia.org/wiki/Eleusinian_Mysteries",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Mysteries of Demeter and Persephone at Eleusis", "annual initiations"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-ELEUSINION",
+      "label": "Wikipedia: Eleusinion",
+      "url": "https://en.wikipedia.org/wiki/Eleusinion",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["City Eleusinion on north slope of Acropolis south of Agora", "starting point of the procession to Eleusis"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-AGORA",
+      "label": "Wikipedia: Ancient Agora of Athens",
+      "url": "https://en.wikipedia.org/wiki/Ancient_Agora_of_Athens",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Agora layout NW of Acropolis", "stoas", " excavation by ASCSA"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-STOAPOIKILE",
+      "label": "Wikipedia: Stoa Poikile",
+      "url": "https://en.wikipedia.org/wiki/Stoa_Poikile",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Stoa Poikile built 460s BCE by Peisianax", "Marathon paintings"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-KERAMEIKOS",
+      "label": "Wikipedia: Kerameikos",
+      "url": "https://en.wikipedia.org/wiki/Kerameikos",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["NW Athens potters' quarter", "Sacred Way start", "Pericles' 431 BCE funeral oration at Demosion Sema"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-POMPEION",
+      "label": "Wikipedia: Pompeion",
+      "url": "https://en.wikipedia.org/wiki/Pompeion",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Pompeion between Dipylon and Sacred Gate", "preparation hall for Panathenaic procession"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-PIRAEUS",
+      "label": "Wikipedia: Piraeus",
+      "url": "https://en.wikipedia.org/wiki/Piraeus",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Piraeus as Athens' port", "Long Walls connection", "emporion and neoria"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-LAVRIO",
+      "label": "Wikipedia: Lavrio (Laurion silver mines)",
+      "url": "https://en.wikipedia.org/wiki/Lavrio",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Laurion silver mines as Athenian state revenue", "lease system"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-LONGWALLS",
+      "label": "Wikipedia: Long Walls",
+      "url": "https://en.wikipedia.org/wiki/Long_Walls",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Long Walls built 462–458 BCE", "Middle Wall 457–444 BCE", "Pericles"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-PLAGUE",
+      "label": "Wikipedia: Plague of Athens",
+      "url": "https://en.wikipedia.org/wiki/Plague_of_Athens",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Plague of Athens 430–426 BCE", "75,000–100,000 deaths", "arrival via Piraeus"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-SCYTHIANS",
+      "label": "Wikipedia: Scythian archers",
+      "url": "https://en.wikipedia.org/wiki/Scythian_archers",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Public slaves in Athens", "300-strong force in the Agora", "acting for the Eleven"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "WP-HIPPARCH",
+      "label": "Wikipedia: Hipparchus (cavalry officer)",
+      "url": "https://en.wikipedia.org/wiki/Hipparchus_(cavalry_officer)",
+      "type": "encyclopedia (English Wikipedia)",
+      "domain_class": "Wikipedia",
+      "used_for": ["Hipparch cavalry officer", "hipparchia = unit of ~500 horsemen"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "PERSEUS-THUC-2-34",
+      "label": "Perseus Digital Library: Thucydides, History of the Peloponnesian War 2.34+",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Thuc.+2.34",
+      "type": "primary text (ancient Greek + English, open access)",
+      "domain_class": "Perseus Digital Library",
+      "used_for": ["Thucydides on Pericles", "Funeral Oration (2.34-46)", "Plague narrative (2.47-54)"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "TOPOS-ATHENS",
+      "label": "ToposText: Athens place entry",
+      "url": "https://topostext.org/place/380237PAth",
+      "type": "open-access scholarly aggregator (ToposText, EU-funded)",
+      "domain_class": "ToposText",
+      "used_for": ["ToposText Athens data hub", "ancient texts geographically tagged to Athens"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    },
+    {
+      "id": "TOPOS-PLUT-MUS",
+      "label": "ToposText: Pseudo-Plutarch, On Music",
+      "url": "https://topostext.org/work/155",
+      "type": "open-access scholarly aggregator (ToposText, EU-funded)",
+      "domain_class": "ToposText",
+      "used_for": ["Sample of ToposText's English-language ancient-text coverage; cited as proof of stable access"],
+      "http_status": 200,
+      "content_type_hint": "text/html; charset=UTF-8"
+    }
+  ]
+}
