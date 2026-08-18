@@ -1,0 +1,45 @@
+name: Apply Ancient World Visual Parity V3
+
+on:
+  push:
+    branches:
+      - fix/ancient-world-visual-parity-v3
+    paths:
+      - scripts/patch-ancient-visual-parity-v3.py
+      - .github/workflows/apply-ancient-visual-parity-v3.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/ancient-world-visual-parity-v3
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply guarded patch
+        run: python3 scripts/patch-ancient-visual-parity-v3.py
+      - name: Validate patched JavaScript and regression suite
+        run: |
+          node --check frontend/ancient-world/engine/surface-shader.js
+          node --check frontend/ancient-world/engine/environment-renderer.js
+          node --check frontend/ancient-cities/rome-410-476/js/app.js
+          node --check frontend/ancient-cities/athens-450-430/js/app.js
+          node --test tests/*.test.mjs
+      - name: Remove one-shot patch machinery
+        run: |
+          rm scripts/patch-ancient-visual-parity-v3.py
+          rm .github/workflows/apply-ancient-visual-parity-v3.yml
+      - name: Commit patched files
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git diff --cached --check
+          git commit -m "feat: bring Rome and Athens renderer closer to Aizanoi"
+          git push origin HEAD:fix/ancient-world-visual-parity-v3
