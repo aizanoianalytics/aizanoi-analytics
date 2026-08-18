@@ -49,16 +49,25 @@
 
   function clampWindows() {
     if (matchMedia('(max-width:700px)').matches) return;
-    const maxX = Math.max(0, innerWidth - 120);
-    const maxY = Math.max(0, innerHeight - 80);
+    const taskbar = document.getElementById('taskbar');
+    const taskbarHeight = taskbar?.getBoundingClientRect().height || 38;
+    const rootStyle = getComputedStyle(document.documentElement);
+    const safeTop = parseFloat(rootStyle.getPropertyValue('--os-safe-top')) || 0;
+    const safeBottom = parseFloat(rootStyle.getPropertyValue('--os-safe-bottom')) || 0;
+    const minVisibleX = 96;
+    const maxY = Math.max(safeTop, innerHeight - taskbarHeight - safeBottom - 32);
     document.querySelectorAll('.win:not(.maximized)').forEach((win) => {
       const rect = win.getBoundingClientRect();
-      if (rect.right < 80 || rect.left > maxX) win.style.left = `${Math.min(maxX, Math.max(0, rect.left))}px`;
-      if (rect.bottom < 44 || rect.top > maxY) win.style.top = `${Math.min(maxY, Math.max(0, rect.top))}px`;
+      const minX = -rect.width + minVisibleX;
+      const maxX = innerWidth - minVisibleX;
+      let left = Math.min(maxX, Math.max(minX, rect.left));
+      let top = Math.min(maxY, Math.max(safeTop, rect.top));
+      if (Math.abs(left - rect.left) > .5) win.style.left = `${left}px`;
+      if (Math.abs(top - rect.top) > .5) win.style.top = `${top}px`;
       const width = Math.min(rect.width, innerWidth - 12);
-      const height = Math.min(rect.height, innerHeight - 42);
-      if (width !== rect.width) win.style.width = `${Math.max(280,width)}px`;
-      if (height !== rect.height) win.style.height = `${Math.max(160,height)}px`;
+      const height = Math.min(rect.height, Math.max(160, innerHeight - taskbarHeight - safeTop - safeBottom - 8));
+      if (width < rect.width - .5) win.style.width = `${Math.max(280,width)}px`;
+      if (height < rect.height - .5) win.style.height = `${height}px`;
     });
   }
 
@@ -159,7 +168,16 @@
     document.querySelectorAll('.win').forEach(decorateWindow);
   }
 
-  const observer = new MutationObserver(() => markInteractive());
+  let observerFrame = 0;
+  let observedMutations = 0;
+  const observer = new MutationObserver((mutations) => {
+    observedMutations += mutations.length;
+    const relevant = mutations.some((mutation) => [...mutation.addedNodes].some((node) =>
+      node?.nodeType === 1 && (node.matches?.('.win,.task-item,.ctx-menu,#chat-log') || node.querySelector?.('.win,.task-item,.ctx-menu,#chat-log'))
+    ));
+    if (!relevant || observerFrame) return;
+    observerFrame = requestAnimationFrame(() => { observerFrame = 0; markInteractive(); });
+  });
 
   function boot() {
     markInteractive();
@@ -175,6 +193,12 @@
     });
     setTimeout(clampWindows, 350);
   }
+
+  window.__AIZANOI_OS_V2__ = Object.freeze({
+    clampWindows,
+    announce,
+    debug: () => ({ observedMutations, decoratedWindows: document.querySelectorAll('.win[data-os-v2-decorated]').length }),
+  });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true });
   else boot();

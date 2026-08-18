@@ -8,16 +8,16 @@
 // renderer and the shared traversal engine.
 
 const DISTRICT_DENSITY = Object.freeze({
-  acropolis: 0.18,
-  'south-slope': 0.32,
-  agora: 0.40,
-  'lower-city': 0.66,
-  kerameikos: 0.58,
-  northgate: 0.42,
-  pnyx: 0.16,
-  olympieion: 0.18,
-  'long-walls': 0.22,
-  piraeus: 0.78,
+  acropolis: 0.18, 'south-slope': 0.34, agora: 0.46, 'lower-city': 0.70,
+  kerameikos: 0.60, northgate: 0.44, pnyx: 0.16, olympieion: 0.18,
+  'long-walls': 0.22, piraeus: 0.80,
+});
+const DISTRICT_STYLE = Object.freeze({
+  agora: { kind:'civic-market', height:[4,8], shop:0.62, courtyard:0.30, materials:['plaster','plaster3','limestone2'] },
+  'lower-city': { kind:'courtyard-houses', height:[5,10], shop:0.48, courtyard:0.46, materials:['plaster','plaster2','plaster3'] },
+  kerameikos: { kind:'workshops', height:[5,10], shop:0.58, courtyard:0.34, materials:['plaster2','plaster3','brick'] },
+  piraeus: { kind:'harbour-grid', height:[6,13], shop:0.64, courtyard:0.26, materials:['plaster','plaster2','limestone2'] },
+  'south-slope': { kind:'slope-houses', height:[4,8], shop:0.30, courtyard:0.38, materials:['plaster','limestone2','plaster3'] },
 });
 
 const hash = (input) => {
@@ -124,12 +124,10 @@ export function generateUrbanFabric({
         if (overlapsNamedBuilding(bx, bz, width, depth, buildings)) continue;
         if (overlapsFabric(bx, bz, width, depth, fabric)) continue;
 
-        const heightBase = region.id === 'agora' ? 4.0 + hash(`${seed}:h`) * 5.0 :
-                           region.id === 'piraeus' ? 7.0 + hash(`${seed}:h`) * 8.0 :
-                           region.id === 'south-slope' ? 4.0 + hash(`${seed}:h`) * 4.0 :
-                           5.5 + hash(`${seed}:h`) * 5.5;
+        const style = DISTRICT_STYLE[region.id] || { kind:'mixed-houses', height:[5,10], shop:0.42, courtyard:0.38, materials:['plaster','plaster2','limestone2'] };
+        const heightBase = style.height[0] + hash(`${seed}:h`) * (style.height[1] - style.height[0]);
         const condition = hash(`${seed}:use`) < 0.10 ? 'damaged' : 'working';
-        const material = hash(`${seed}:mat`) < 0.5 ? 'brick' : hash(`${seed}:mat2`) < 0.7 ? 'plaster' : 'brickDark';
+        const material = style.materials[Math.min(style.materials.length - 1, Math.floor(hash(`${seed}:mat`) * style.materials.length))];
         const angle = street && street.distance < 80 ? street.angle : (hash(`${seed}:rot`) - 0.5) * 0.18;
 
         fabric.push({
@@ -143,8 +141,9 @@ export function generateUrbanFabric({
           h: heightBase,
           rot: angle,
           floors: Math.max(1, Math.min(3, Math.round(heightBase / 3.0))),
-          courtyard: hash(`${seed}:court`) > 0.78,
-          shopfront: street && street.distance < 48 && hash(`${seed}:shop`) > 0.5,
+          courtyard: hash(`${seed}:court`) > (1 - style.courtyard),
+          shopfront: street && street.distance < 48 && hash(`${seed}:shop`) > (1 - style.shop),
+          districtStyle: style.kind,
           state: condition,
           material,
           region: region.id,

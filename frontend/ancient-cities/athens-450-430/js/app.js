@@ -286,6 +286,51 @@ function propylaeaHero(building, color) {
   }
 }
 
+function hephaisteionHero(building, color) {
+  const ground = baseY(building);
+  const podium = Math.max(.9, building.h * .12);
+  for (let step = 0; step < 3; step++) box(building.x, ground + step * .23, building.z, building.w + 2.2 - step * .55, .26, building.d + 2.0 - step * .50, C.limestone);
+  const y = ground + podium;
+  const colH = building.h * .56;
+  const x0 = building.x - building.w * .43, x1 = building.x + building.w * .43;
+  const z0 = building.z - building.d * .43, z1 = building.z + building.d * .43;
+  for (let i = 0; i < 6; i++) {
+    const x = x0 + (x1 - x0) * i / 5;
+    cylinder(x, y, z0, .42, colH, C.marbleLight, TOUCH ? 8 : 11);
+    cylinder(x, y, z1, .42, colH, C.marbleLight, TOUCH ? 8 : 11);
+  }
+  for (let i = 1; i < 12; i++) {
+    const z = z0 + (z1 - z0) * i / 12;
+    cylinder(x0, y, z, .42, colH, C.marbleLight, TOUCH ? 8 : 11);
+    cylinder(x1, y, z, .42, colH, C.marbleLight, TOUCH ? 8 : 11);
+  }
+  box(building.x, y + .02, building.z, building.w * .54, colH * .88, building.d * .52, color);
+  box(building.x, y + colH, building.z, building.w * .94, .72, building.d * .92, C.marble);
+  pitchedBuilding(building.x, y + colH + .68, building.z, building.w * .88, Math.max(2.1, building.h * .22), building.d * .84, C.marbleLight);
+}
+
+function dionysusTheatreHero(building, color) {
+  theatre(building, color);
+  const ground = baseY(building);
+  // Packed-earth orchestra and a light timber skene better match the Classical
+  // period than a later monumental Roman-style stage building.
+  cylinder(building.x, ground + .08, building.z + building.d * .12, Math.min(building.w, building.d) * .18, .12, C.roadLight, TOUCH ? 20 : 32);
+  box(building.x, ground + .12, building.z - building.d * .26, building.w * .58, 3.1, 4.4, C.timber, building.rot || 0);
+}
+
+function stoaHero(building, color) {
+  const ground = baseY(building);
+  const rot = building.rot || 0;
+  box(building.x, ground, building.z, building.w, .52, building.d, C.limestone, rot);
+  const colCount = TOUCH ? Math.max(5, Math.round(building.w / 9)) : Math.max(7, Math.round(building.w / 6));
+  for (let i = 0; i < colCount; i++) {
+    const side = -building.w * .43 + i * (building.w * .86 / Math.max(1, colCount - 1));
+    const p = facadePoint({ ...building, rot }, side, building.d * .42);
+    cylinder(p[0], ground + .52, p[1], .34, building.h * .60, C.marbleLight, 8);
+  }
+  pitchedBuilding(building.x, ground + .52, building.z, building.w * .94, building.h - .52, building.d * .76, color, rot);
+}
+
 function ellipticalCylinder(cx, y, cz, rx, rz, height, color, segments = 36) {
   const count = TOUCH ? Math.min(segments, 28) : segments;
   for (let i = 0; i < count; i++) {
@@ -693,7 +738,9 @@ function renderBuilding(building) {
   if (building.type === 'gate') return arch(building.x, ground, building.z, building.w, building.h, building.d, color);
   if (building.id === 'parthenon') parthenonHero(building, color);
   else if (building.id === 'propylaea' || building.id === 'propylaea-east') propylaeaHero(building, color);
-  else if (building.id === 'pantheon') pantheon(building, color);
+  else if (building.id === 'hephaisteion') hephaisteionHero(building, color);
+  else if (building.id === 'theatre-dionysus') dionysusTheatreHero(building, color);
+  else if (String(building.type).toLowerCase() === 'stoa') stoaHero(building, color);
   else if (building.type === 'temple') temple(building, color);
   else if (['round', 'dome', 'round-church', 'mausoleum'].includes(building.type)) roundBuilding(building, color);
   else if (['stadium', 'circus', 'arena'].includes(building.type)) longStadium(building, color);
@@ -845,13 +892,20 @@ function decorativeOlive(x, z, scale = 1) {
 
 function buildAtmosphericDetails() {
   REGIONS.forEach((region, index) => {
-    const count = TOUCH ? 1 : (region.id === 'acropolis' ? 2 : 3);
+    const count = TOUCH ? 1 : (['agora','lower-city','piraeus'].includes(region.id) ? 4 : 2);
     for (let i = 0; i < count; i++) {
-      const angle = index * 2.31 + i * 2.16;
-      const x = region.x + Math.cos(angle) * Math.min(58, region.w * 0.32);
-      const z = region.z + Math.sin(angle) * Math.min(54, region.d * 0.32);
-      const occupied = BUILDINGS.some((building) => Math.abs(building.x - x) < building.w * 0.65 && Math.abs(building.z - z) < building.d * 0.65);
-      if (!occupied) decorativeOlive(x, z, 0.78 + ((index + i) % 3) * 0.12);
+      const angle = index * 2.03 + i * 2.41;
+      const x = region.x + Math.cos(angle) * Math.min(52, region.w * .30);
+      const z = region.z + Math.sin(angle) * Math.min(48, region.d * .30);
+      const occupied = BUILDINGS.some((building) => Math.abs(building.x - x) < building.w * .62 && Math.abs(building.z - z) < building.d * .62);
+      if (occupied) continue;
+      decorativeOlive(x, z, .80 + ((index + i) % 3) * .13);
+      if (!TOUCH && (region.id === 'agora' || region.id === 'piraeus') && i % 2 === 1) {
+        const y = terrainHeightAt(x + 2.2, z + 1.6);
+        cylinder(x + 2.2, y + .02, z + 1.6, .20, .62, C.roof2, 8);
+        cylinder(x + 2.75, y + .02, z + 1.85, .16, .50, C.roof, 8);
+        box(x + 3.45, y + .02, z + 1.5, 1.15, .60, .82, C.timber, angle * .18);
+      }
     }
   });
 }

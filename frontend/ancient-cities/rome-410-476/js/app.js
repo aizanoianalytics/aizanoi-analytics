@@ -320,23 +320,63 @@ function longStadium(building, color) {
   }
 }
 
+function ellipseSurface(cx, y, cz, rx, rz, color, segments = 48) {
+  const count = TOUCH ? Math.min(segments, 30) : segments;
+  const center = [cx, y, cz];
+  for (let i = 0; i < count; i++) {
+    const a = i / count * Math.PI * 2;
+    const b = (i + 1) / count * Math.PI * 2;
+    tri(center, [cx + Math.cos(a) * rx, y, cz + Math.sin(a) * rz], [cx + Math.cos(b) * rx, y, cz + Math.sin(b) * rz], color);
+  }
+}
+
 function colosseum(building, color) {
   const ground = baseY(building);
   const rx = building.w / 2;
   const rz = building.d / 2;
-  const tiers = 4;
+  const arenaRx = rx * 0.48;
+  const arenaRz = rz * 0.47;
+  const tiers = TOUCH ? 3 : 4;
+  const tierH = building.h / 4;
+  // Arena floor + podium wall create a readable interior when approached from the Forum side.
+  ellipseSurface(building.x, ground + 0.18, building.z, arenaRx, arenaRz, C.earth, 44);
+  ellipticalCylinder(building.x, ground + 0.16, building.z, arenaRx + 1.2, arenaRz + 1.2, 3.0, C.limestone2, 44);
+  // Stepped cavea rings. These are intentionally schematic, but their rake makes
+  // the monument read as an amphitheatre rather than four stacked cylinders.
+  const seatingRings = TOUCH ? 4 : 7;
+  for (let ring = 0; ring < seatingRings; ring++) {
+    const t = ring / Math.max(1, seatingRings - 1);
+    ellipticalCylinder(building.x, ground + 2.7 + ring * 1.18, building.z,
+      arenaRx + 5 + t * (rx - arenaRx - 9), arenaRz + 4 + t * (rz - arenaRz - 8), 0.62,
+      ring % 2 ? C.limestone : C.marble, TOUCH ? 30 : 46);
+  }
   for (let tier = 0; tier < tiers; tier++) {
-    const y = ground + tier * building.h / tiers;
-    const shrink = tier * 1.8;
-    ellipticalCylinder(building.x, y, building.z, rx - shrink, rz - shrink, building.h / tiers - 0.6, tier % 2 ? C.limestone : color, 48);
-    // Arcade rhythm: dark recess markers around the ellipse make the monument
-    // read as architecture rather than nested cylinders, without texture assets.
-    const arcadeCount = TOUCH ? 28 : 44;
+    const y = ground + tier * tierH;
+    const shrink = tier * 1.65;
+    const tierColor = tier === tiers - 1 ? C.limestone : (tier % 2 ? C.limestone2 : color);
+    ellipticalCylinder(building.x, y, building.z, rx - shrink, rz - shrink, tierH - 0.48, tierColor, TOUCH ? 34 : 56);
+    const arcadeCount = TOUCH ? 30 : 56;
     for (let i = 0; i < arcadeCount; i++) {
+      // Sparse late-antique damage interrupts the perfect rhythm without turning
+      // the 5th-c. monument into a total ruin.
+      if (!TOUCH && tier > 1 && (i + tier * 7) % 19 === 0) continue;
       const a = i / arcadeCount * Math.PI * 2;
-      const x = building.x + Math.cos(a) * (rx - shrink + 0.16);
-      const z = building.z + Math.sin(a) * (rz - shrink + 0.16);
-      box(x, y + building.h / tiers * 0.22, z, 1.1, building.h / tiers * 0.48, 0.55, C.brickDark, -a);
+      const rrX = rx - shrink + 0.22;
+      const rrZ = rz - shrink + 0.22;
+      const x = building.x + Math.cos(a) * rrX;
+      const z = building.z + Math.sin(a) * rrZ;
+      const openingH = tierH * 0.48;
+      box(x, y + tierH * 0.20, z, tier === tiers - 1 ? 0.72 : 1.05, openingH, 0.48, C.brickDark, -a);
+      if (!TOUCH && tier < tiers - 1 && i % 4 === 0) {
+        cylinder(x, y + tierH * 0.70, z, 0.22, tierH * 0.18, C.marbleLight, 7);
+      }
+    }
+  }
+  if (!TOUCH) {
+    const mastCount = 24;
+    for (let i = 0; i < mastCount; i++) {
+      const a = i / mastCount * Math.PI * 2;
+      cylinder(building.x + Math.cos(a) * (rx - 2), ground + building.h - 1.5, building.z + Math.sin(a) * (rz - 2), 0.18, 3.4, C.timber, 6);
     }
   }
 }
@@ -787,16 +827,32 @@ function decorativeCypress(x, z, scale = 1) {
 
 function buildAtmosphericDetails() {
   REGIONS.forEach((region, index) => {
-    const count = TOUCH ? 1 : 2;
+    const count = TOUCH ? 1 : 3;
     for (let i = 0; i < count; i++) {
       const angle = index * 2.17 + i * 2.8;
-      const x = region.x + Math.cos(angle) * Math.min(52, region.w * 0.30);
-      const z = region.z + Math.sin(angle) * Math.min(48, region.d * 0.30);
+      const x = region.x + Math.cos(angle) * Math.min(58, region.w * 0.31);
+      const z = region.z + Math.sin(angle) * Math.min(54, region.d * 0.31);
       if (Math.abs(x - TIBER.x) < TIBER.halfWidth + 18) continue;
       const occupied = BUILDINGS.some((building) => Math.abs(building.x - x) < building.w * 0.62 && Math.abs(building.z - z) < building.d * 0.62);
-      if (!occupied) decorativeCypress(x, z, 0.85 + (index % 3) * 0.12);
+      if (occupied) continue;
+      decorativeCypress(x, z, 0.82 + ((index + i) % 3) * 0.12);
+      if (!TOUCH && i === 1) {
+        const y = terrainHeightAt(x + 3.1, z - 2.4);
+        box(x + 3.1, y + 0.02, z - 2.4, 1.25, 0.72, 0.86, C.timber, angle * 0.2);
+        cylinder(x + 4.0, y + 0.02, z - 1.9, 0.24, 0.72, C.roof2, 8);
+        cylinder(x + 4.55, y + 0.02, z - 2.15, 0.19, 0.58, C.roof, 8);
+      }
     }
   });
+  // Forum / market corridors get a restrained layer of columns, crates and
+  // amphora-like vessels. They are atmospheric, not claimed as fixed finds.
+  if (!TOUCH) {
+    for (const building of BUILDINGS.filter((b) => ['forum','market','warehouse'].includes(b.type)).slice(0, 12)) {
+      const y = terrainHeightAt(building.x + building.w * .28, building.z + building.d * .40);
+      box(building.x + building.w * .28, y + .02, building.z + building.d * .40, 1.5, .75, 1.0, C.timber, building.rot || 0);
+      cylinder(building.x + building.w * .22, y + .02, building.z + building.d * .43, .22, .72, C.roof2, 8);
+    }
+  }
 }
 
 // Terrain is the physical and visual base. Roads, named monuments and inferred

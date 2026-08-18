@@ -1046,7 +1046,7 @@ const APPS = {
         <button class="chat-starter" data-q="Write a rolling 12-month turnover DAX measure in Power BI." style="text-align:left; padding:8px 10px; background:#fff; border:1px solid #b8c5d8; border-radius:4px; cursor:pointer; font-size:11px; line-height:1.4;"><b style="display:block;color:#1a5fd6;margin-bottom:2px;">Power BI</b>Write a rolling 12-month turnover DAX measure in Power BI.</button>
       </div>
       <div style="display:flex; gap:6px; padding:8px; border-top:1px solid #d0d0d0; background:#ece9d8;">
-        <input id="chat-input" type="text" placeholder="Type a message..." style="flex:1; padding:5px 8px; border:1px solid #7f9ac2; font-size:12px; font-family:inherit;" />
+        <textarea id="chat-input" rows="1" aria-label="Message Aizanoi AI" placeholder="Type a message…  Enter to send · Shift+Enter for newline" style="flex:1; padding:6px 8px; border:1px solid #7f9ac2; font-size:12px; font-family:inherit; resize:none; min-height:32px; max-height:120px; line-height:1.4;"></textarea>
         <button id="chat-send" style="padding:0 14px; border:1px solid #1e5c08; background:linear-gradient(180deg,#6bd13a,#2d7a0e); color:#fff; font-weight:bold; cursor:pointer; font-size:11px;">Send</button>
       </div>
     </div>`
@@ -1506,6 +1506,8 @@ function closeApp(appId) {
   const app = APPS[appId];
   const folderData = FOLDER_CONTENTS[appId];
   const snapshot = { id: appId, title: app ? app.title : (folderData ? folderData.title : appId) };
+  if (typeof w.cleanup === 'function') { try { w.cleanup(); } catch (_) {} }
+  if (appId === 'chatbot') { chatRequestController?.abort(); chatRequestController = null; }
   w.el.remove();
   openWindows.delete(appId);
   if (appId === 'chatbot') {
@@ -1607,16 +1609,26 @@ function wireWindow(appId, winEl) {
     if (startDrag(t.clientX, t.clientY, t.target)) e.preventDefault();
   }, { passive: false });
 
-  document.addEventListener('mousemove', (e) => moveDrag(e.clientX, e.clientY));
-  document.addEventListener('touchmove', (e) => {
+  const onMouseMove = (e) => moveDrag(e.clientX, e.clientY);
+  const onTouchMove = (e) => {
     if (dragging) {
       const t = e.touches[0];
       moveDrag(t.clientX, t.clientY);
       e.preventDefault();
     }
-  }, { passive: false });
-  document.addEventListener('mouseup', endDrag);
-  document.addEventListener('touchend', endDrag);
+  };
+  const onMouseUp = () => { endDrag(); window.__AIZANOI_OS_V2__?.clampWindows?.(); };
+  const onTouchEnd = () => { endDrag(); window.__AIZANOI_OS_V2__?.clampWindows?.(); };
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('touchmove', onTouchMove, { passive: false });
+  document.addEventListener('mouseup', onMouseUp);
+  document.addEventListener('touchend', onTouchEnd);
+  w.cleanup = () => {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('touchmove', onTouchMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    document.removeEventListener('touchend', onTouchEnd);
+  };
 
   titlebar.addEventListener('dblclick', (e) => { if (e.target.closest('.win-btn')) return; toggleMaximize(appId); });
 
@@ -1736,6 +1748,21 @@ document.addEventListener('keydown', (e) => {
   if (focusedIcon && (e.key === 'Enter' || e.key === ' ')) {
     e.preventDefault();
     openApp(focusedIcon.dataset.app);
+    return;
+  }
+  if (focusedIcon && ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)) {
+    const icons = [...document.querySelectorAll('.desktop-icon')];
+    const current = icons.indexOf(focusedIcon);
+    if (current >= 0) {
+      const verticalSlots = Math.max(1, Math.floor(document.getElementById('icon-layer').clientHeight / 90));
+      const delta = e.key === 'ArrowUp' ? -1 : e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' ? -verticalSlots : verticalSlots;
+      const next = Math.max(0, Math.min(icons.length - 1, current + delta));
+      if (next !== current) {
+        e.preventDefault();
+        icons.forEach((icon) => icon.classList.remove('selected'));
+        icons[next].classList.add('selected'); icons[next].focus();
+      }
+    }
     return;
   }
   if (e.key === 'Enter') {
@@ -1918,6 +1945,8 @@ tick(); setInterval(tick, 10000);
 const CHAT_API_URL = '/api/chat';
 let chatHistory = [];
 let chatWired = false;
+let chatRequestController = null;
+let lastFailedMessage = null;
 function wireChatIfNeeded() {
   const input = document.getElementById('chat-input');
   const sendBtn = document.getElementById('chat-send');
@@ -1949,29 +1978,73 @@ function wireChatIfNeeded() {
     }
     row.appendChild(bubble); log.appendChild(row); log.scrollTop = log.scrollHeight;
   }
+  function resizeComposer() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(120, Math.max(32, input.scrollHeight)) + 'px';
+  }
+  function rollbackUnansweredUser(text) {
+    const last = chatHistory[chatHistory.length - 1];
+    if (last?.role === 'user' && last.content === text) chatHistory.pop();
+  }
+  function addRetry(text, reason) {
+    const row = document.createElement('div');
+    row.className = 'chat-msg bot chat-error';
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    const message = document.createElement('span');
+    message.textContent = reason || 'Aizanoi AI could not reply.';
+    const retry = document.createElement('button');
+    retry.type = 'button'; retry.className = 'chat-retry'; retry.textContent = 'Retry';
+    retry.addEventListener('click', () => {
+      row.remove();
+      input.value = text; resizeComposer();
+      sendMessage();
+    });
+    bubble.append(message, retry); row.appendChild(bubble); log.appendChild(row);
+    log.scrollTop = log.scrollHeight;
+  }
   async function sendMessage() {
-    const text = input.value.trim(); if (!text) return;
+    const text = input.value.trim(); if (!text || input.disabled) return;
     const starters = document.getElementById('chat-starters');
     if (starters) starters.style.display = 'none';
-    input.value = ''; input.disabled = true; sendBtn.disabled = true; log.setAttribute('aria-busy','true');
+    input.value = ''; resizeComposer(); input.disabled = true; sendBtn.disabled = true; log.setAttribute('aria-busy','true');
     addMessage('user', text); chatHistory.push({ role:'user', content:text });
     const typing = document.createElement('div');
     typing.className = 'chat-msg bot typing';
-    typing.innerHTML = '<div class="bubble">typing…</div>';
+    typing.innerHTML = '<div class="bubble"><span class="typing-dots" aria-label="Aizanoi AI is thinking"><i></i><i></i><i></i></span></div>';
     log.appendChild(typing); log.scrollTop = log.scrollHeight;
+    chatRequestController?.abort();
+    const controller = new AbortController();
+    chatRequestController = controller;
+    const timeout = setTimeout(() => controller.abort('timeout'), 22000);
     try {
-      const res = await fetch(CHAT_API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ history: chatHistory }) });
+      const res = await fetch(CHAT_API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, signal:controller.signal, body: JSON.stringify({ history: chatHistory }) });
       const data = await res.json(); typing.remove();
-      if (!res.ok || !data.reply) { addMessage('bot', data.error || 'Unable to reply right now.'); flashTaskItem('chatbot'); }
-      else { addMessage('bot', data.reply); chatHistory.push({ role:'assistant', content:data.reply }); }
-    } catch (err) { typing.remove(); addMessage('bot','Connection error.'); flashTaskItem('chatbot'); }
-    log.setAttribute('aria-busy','false');
-    input.disabled = false; sendBtn.disabled = false; input.focus();
+      if (!res.ok || !data.reply) {
+        rollbackUnansweredUser(text); lastFailedMessage = text;
+        addRetry(text, data.error || 'Unable to reply right now.'); flashTaskItem('chatbot');
+      } else {
+        addMessage('bot', data.reply); chatHistory.push({ role:'assistant', content:data.reply }); lastFailedMessage = null;
+      }
+    } catch (err) {
+      typing.remove(); rollbackUnansweredUser(text); lastFailedMessage = text;
+      const reason = err?.name === 'AbortError' || controller.signal.aborted ? 'The request took too long. You can retry.' : 'Connection error. You can retry.';
+      addRetry(text, reason); flashTaskItem('chatbot');
+    } finally {
+      clearTimeout(timeout);
+      if (chatRequestController === controller) chatRequestController = null;
+      log.setAttribute('aria-busy','false');
+      if (document.getElementById('chat-input') === input) { input.disabled = false; sendBtn.disabled = false; input.focus(); }
+    }
   }
   sendBtn.addEventListener('click', sendMessage);
-  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
+  input.addEventListener('input', resizeComposer);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
   window.__AIZANOI_CHAT__ = {
     clear() {
+      chatRequestController?.abort(); chatRequestController = null; lastFailedMessage = null;
       chatHistory = [];
       log.replaceChildren();
       const starters = document.getElementById('chat-starters');
