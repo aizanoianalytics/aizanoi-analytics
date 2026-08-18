@@ -36,6 +36,8 @@ jobs:
           node --check frontend/ancient-world/engine/city-contract.js
           node --check frontend/ancient-world/engine/performance.js
           node --check frontend/ancient-world/engine/mobile-controls.js
+          node --check frontend/ancient-world/engine/surface-shader.js
+          node --check frontend/ancient-world/engine/environment-renderer.js
           node --check frontend/ancient-world/assets/materials.js
           node --check frontend/ancient-cities/rome-410-476/data/terrain.js
           node --check frontend/ancient-cities/rome-410-476/data/urban-fabric.js
@@ -69,7 +71,7 @@ jobs:
         run: |
           npm init -y >/dev/null 2>&1
           npm install --no-save playwright@1.55.0
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
 
       - name: Start static frontend server
         run: |
