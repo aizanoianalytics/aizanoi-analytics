@@ -65,6 +65,33 @@ export function traversalApproachClearance({
   return clear;
 }
 
-export function landmarkCandidateScore({ clearance = 0, distance = 0, desiredDistance = 0 }) {
-  return clearance * 20 - Math.abs(distance - desiredDistance) * 0.08;
+export function landmarkSightClearance({
+  candidate,
+  target,
+  eyeY,
+  targetY,
+  collide,
+  heightAt,
+  fractions = [0.10, 0.18, 0.26, 0.34, 0.42, 0.50, 0.58],
+  terrainMargin = 0.45,
+} = {}) {
+  if (!candidate || !target || typeof collide !== 'function' || typeof heightAt !== 'function') return -1;
+  const dx = (Number(target.x) || 0) - (Number(candidate.x) || 0);
+  const dz = (Number(target.z) || 0) - (Number(candidate.z) || 0);
+  const fromY = Number(eyeY) || 0;
+  const toY = Number(targetY) || 0;
+  let clear = 0;
+  for (const fraction of fractions) {
+    const x = candidate.x + dx * fraction;
+    const z = candidate.z + dz * fraction;
+    const rayY = fromY + (toY - fromY) * fraction;
+    if (collide(x, z)) break;
+    if (heightAt(x, z) + terrainMargin > rayY) break;
+    clear += 1;
+  }
+  return clear;
+}
+
+export function landmarkCandidateScore({ clearance = 0, visibility = 0, distance = 0, desiredDistance = 0 }) {
+  return clearance * 20 + visibility * 48 - Math.abs(distance - desiredDistance) * 0.08;
 }
