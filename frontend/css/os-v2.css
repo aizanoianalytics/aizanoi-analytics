@@ -197,7 +197,6 @@
   .win.v2-attention { animation: none !important; }
 }
 
-
 /* Final product polish — stronger depth without abandoning the XP/Luna identity. */
 #desktop{height:100dvh;isolation:isolate}
 #icon-layer{max-width:calc(100vw - 28px);overflow:hidden}
@@ -217,3 +216,34 @@
 @media (min-width:700px) and (max-height:640px){#icon-layer{overflow-y:auto;scrollbar-width:thin}}
 @media (max-width:700px){#icon-layer{height:calc(100dvh - 92px - var(--os-safe-top) - var(--os-safe-bottom));overflow-y:auto;overscroll-behavior:contain}.win-btn{min-width:40px;min-height:32px}.os-v2-show-desktop{width:18px;min-width:18px}}
 @media (prefers-reduced-motion:reduce){#boot,.cloud,.win,.balloon,.typing-dots i,.desktop-icon,.desktop-icon::after{animation:none!important;transition:none!important}.typing-dots i{opacity:.75!important;transform:none!important}}
+
+/* Respect OS-level contrast preferences without changing the default retro skin. */
+@media (prefers-contrast: more) {
+  :root { --os-focus: #fff200; }
+  .icon-label {
+    background: rgba(0,0,0,.78);
+    border-radius: 3px;
+    padding: 1px 3px;
+    text-shadow: none;
+  }
+  .win { border-width: 3px !important; }
+  .win-titlebar, #taskbar, #start-menu .sm-header { filter: contrast(1.22) saturate(1.08); }
+  .sm-item, .ctx-item, .task-item, .os-v2-chat-toolbar button, .chat-copy, .game-v2-toolbar button {
+    border-color: #1b1b1b !important;
+  }
+  button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible,
+  [role="button"]:focus-visible, [role="menuitem"]:focus-visible {
+    outline: 3px solid var(--os-focus) !important;
+    outline-offset: 2px !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .win, #start-menu, #taskbar, .os-v2-chat-toolbar, .game-v2-toolbar,
+  .chat-msg .bubble, .sm-item, .ctx-item, .task-item, button, input, textarea, select {
+    forced-color-adjust: auto;
+  }
+  .desktop-icon::after, .task-item.active::after { display: none; }
+  .desktop-icon.selected, .task-item.active { outline: 2px solid Highlight !important; }
+  .icon-label { background: Canvas; color: CanvasText; text-shadow: none; }
+}
