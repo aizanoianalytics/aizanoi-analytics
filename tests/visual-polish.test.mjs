@@ -22,12 +22,15 @@ test('games expose upgraded visual and touch affordances', () => {
   assert.match(brick, /pointermove/);
 });
 
-test('Rome includes mobile movement and swipe look through lifecycle-managed listeners', () => {
+test('Rome uses the shared analog Ancient World mobile controller', () => {
   const html = read('frontend/ancient-cities/rome-410-476/index.html');
   const app = read('frontend/ancient-cities/rome-410-476/js/app.js');
-  assert.match(html, /data-move="KeyW"/);
-  assert.match(html, /id="lookPad"/);
-  assert.match(app, /\$\$\('\[data-move\]'\)/);
-  assert.match(app, /lifecycle\.listen\(lookPad, 'pointermove'/);
-  assert.match(app, /setPointerCapture/);
+  const shared = read('frontend/ancient-world/engine/mobile-controls.js');
+  assert.match(html, /id="movePad"/);
+  assert.match(html, /id="moveKnob"/);
+  assert.match(html, /id="mobileRun"/);
+  assert.match(app, /installMobileControls/);
+  assert.match(app, /mobileControls\?\.snapshot/);
+  assert.match(shared, /pointermove/);
+  assert.match(shared, /safeCapture/);
 });
