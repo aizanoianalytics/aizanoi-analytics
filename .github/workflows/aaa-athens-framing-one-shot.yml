@@ -1,0 +1,165 @@
+name: AAA Athens chronology and framing one-shot
+
+on:
+  push:
+    branches:
+      - feat/ancient-world-aaa-final-2026-08-18
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/ancient-world-aaa-final-2026-08-18
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Apply chronology and framing patch
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def read(name):
+              return Path(name).read_text(encoding='utf-8')
+
+          def write(name, text):
+              Path(name).write_text(text, encoding='utf-8')
+
+          def replace_one(text, old, new, label):
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{label}: expected exactly one match, got {count}')
+              return text.replace(old, new, 1)
+
+          def replace_between(text, start, end, replacement, label):
+              a = text.find(start)
+              if a < 0:
+                  raise SystemExit(f'{label}: start marker not found')
+              b = text.find(end, a)
+              if b < 0:
+                  raise SystemExit(f'{label}: end marker not found')
+              return text[:a] + replacement + text[b:]
+
+          # Shared landmark framing: closer premium views and visual-crowding margin.
+          write('frontend/ancient-world/engine/landmark-framing.js', '''const DEFAULT_DIRECTIONS = Object.freeze([\n  [0, -1],\n  [1, 0],\n  [0, 1],\n  [-1, 0],\n  [Math.SQRT1_2, -Math.SQRT1_2],\n  [Math.SQRT1_2, Math.SQRT1_2],\n  [-Math.SQRT1_2, Math.SQRT1_2],\n  [-Math.SQRT1_2, -Math.SQRT1_2],\n]);\n\nexport function landmarkFramingDistance(building, {\n  min = 32,\n  footprintScale = 1.10,\n  heightScale = 0.46,\n  padding = 8,\n} = {}) {\n  if (!building) return min;\n  const footprint = Math.max(Number(building.w) || 0, Number(building.d) || 0);\n  const height = Math.max(0, Number(building.h) || 0);\n  return Math.max(min, footprint * footprintScale + height * heightScale + padding);\n}\n\nexport function landmarkLookHeight(building, groundY = 0) {\n  const height = Math.max(0, Number(building?.h) || 0);\n  return groundY + Math.min(17, Math.max(2.2, height * 0.44));\n}\n\nexport function landmarkLookPitch({ eyeY, targetY, horizontalDistance, min = -0.18, max = 0.32 }) {\n  const distance = Math.max(0.001, Number(horizontalDistance) || 0.001);\n  const pitch = Math.atan2((Number(targetY) || 0) - (Number(eyeY) || 0), distance);\n  return Math.max(min, Math.min(max, pitch));\n}\n\nexport function landmarkViewDirections() {\n  return DEFAULT_DIRECTIONS.map(([x, z]) => [x, z]);\n}\n\nexport function traversalApproachClearance({\n  candidate,\n  target,\n  collide,\n  absoluteSupportAt,\n  resolveSupport,\n  sampleDistances = [0.65, 1.3, 2.0, 2.8, 3.7, 4.7, 5.8],\n} = {}) {\n  if (!candidate || !target || typeof collide !== 'function' || typeof absoluteSupportAt !== 'function' || typeof resolveSupport !== 'function') return -1;\n  const dx = (Number(target.x) || 0) - (Number(candidate.x) || 0);\n  const dz = (Number(target.z) || 0) - (Number(candidate.z) || 0);\n  const length = Math.hypot(dx, dz) || 1;\n  const ux = dx / length;\n  const uz = dz / length;\n  let floorY = absoluteSupportAt(candidate.x, candidate.z).y;\n  let clear = 0;\n\n  for (const distance of sampleDistances) {\n    const x = candidate.x + ux * distance;\n    const z = candidate.z + uz * distance;\n    if (collide(x, z)) break;\n    const support = resolveSupport(x, z, floorY);\n    if (support.blockedRise || support.blockedDrop) break;\n    floorY = support.y;\n    clear += 1;\n  }\n  return clear;\n}\n\nexport function landmarkSightClearance({\n  candidate,\n  target,\n  eyeY,\n  targetY,\n  collide,\n  heightAt,\n  fractions = [0.08, 0.14, 0.22, 0.30, 0.40, 0.50, 0.62, 0.74],\n  terrainMargin = 0.42,\n} = {}) {\n  if (!candidate || !target || typeof collide !== 'function' || typeof heightAt !== 'function') return -1;\n  const dx = (Number(target.x) || 0) - (Number(candidate.x) || 0);\n  const dz = (Number(target.z) || 0) - (Number(candidate.z) || 0);\n  const fromY = Number(eyeY) || 0;\n  const toY = Number(targetY) || 0;\n  let clear = 0;\n  for (const fraction of fractions) {\n    const x = candidate.x + dx * fraction;\n    const z = candidate.z + dz * fraction;\n    const rayY = fromY + (toY - fromY) * fraction;\n    if (collide(x, z)) break;\n    if (heightAt(x, z) + terrainMargin > rayY) break;\n    clear += 1;\n  }\n  return clear;\n}\n\nexport function landmarkCameraClearance({ candidate, obstacles = [], ignoreId = null, minHeight = 4 } = {}) {\n  if (!candidate) return 0;\n  let nearest = Infinity;\n  for (const obstacle of obstacles) {\n    if (!obstacle || obstacle.id === ignoreId || (Number(obstacle.h) || 0) < minHeight) continue;\n    const width = Math.max(0, Number(obstacle.w) || 0);\n    const depth = Math.max(0, Number(obstacle.d) || 0);\n    const height = Math.max(0, Number(obstacle.h) || 0);\n    if (!width || !depth) continue;\n    const angle = -(Number(obstacle.rot) || 0);\n    const dx = (Number(candidate.x) || 0) - (Number(obstacle.x) || 0);\n    const dz = (Number(candidate.z) || 0) - (Number(obstacle.z) || 0);\n    const ca = Math.cos(angle), sa = Math.sin(angle);\n    const lx = dx * ca - dz * sa;\n    const lz = dx * sa + dz * ca;\n    const silhouettePadding = Math.min(7.5, Math.max(1.5, height * 0.12));\n    const qx = Math.abs(lx) - width / 2 - silhouettePadding;\n    const qz = Math.abs(lz) - depth / 2 - silhouettePadding;\n    const outside = Math.hypot(Math.max(0, qx), Math.max(0, qz));\n    nearest = Math.min(nearest, outside);\n  }\n  return Number.isFinite(nearest) ? nearest : 100;\n}\n\nexport function landmarkCandidateScore({ clearance = 0, visibility = 0, cameraClearance = 0, distance = 0, desiredDistance = 0 }) {\n  const crowdPenalty = cameraClearance < 18 ? (18 - Math.max(0, cameraClearance)) * 8 : 0;\n  return clearance * 22 + visibility * 58 + Math.min(34, Math.max(0, cameraClearance)) * 5 - crowdPenalty - Math.abs(distance - desiredDistance) * 0.12;\n}\n''')
+
+          data = read('frontend/ancient-cities/athens-450-430/data/city.js')
+          data = replace_one(data,
+              "  ['erechtheion','Erechtheion (Wikipedia)','https://en.wikipedia.org/wiki/Erechtheion'],",
+              "  ['erechtheion','Hellenic Ministry of Culture — Acropolis / Erechtheion','https://odysseus.culture.gr/h/3/eh3530.jsp?obj_id=2384'],",
+              'Erechtheion source')
+          data = replace_one(data,
+              "  ['athena-nike','Temple of Athena Nike (Wikipedia)','https://en.wikipedia.org/wiki/Temple_of_Athena_Nike'],",
+              "  ['athena-nike','Acropolis Museum — Temple of Athena Nike','https://www.theacropolismuseum.gr/en/other-monuments-periklean-building-programme/temple-athena-nike'],",
+              'Athena Nike source')
+          data = replace_between(data,
+              "  M('athena-nike'",
+              "  M('old-hekatompedon'",
+              """  M('athena-nike-early','Athena Nike bastion & earlier shrine','sanctuary',-160,-310,8,5,2.6,'standing','acropolis','athena-nike',EVIDENCE_ARCH,\n    'The Classical Ionic temple belongs to 426–421 BCE and is not yet present at the c. 432–430 BCE visual snapshot. The bastion instead shows a low marker for the older Athena Nike cult buildings whose remains survive inside it.'),\n  M('old-athena-polias','Old Temple of Athena Polias','temple',-30,-300,22,11,5,'standing','acropolis','acropolis',EVIDENCE_ARCH,\n    'The sixth-century Old Temple of Athena Polias was damaged in 480 BCE, repaired after the Persian destruction and remained part of the sacred precinct before the later Erechtheion (421–406 BCE).'),\n""",
+              'post-430 Acropolis buildings')
+          data = replace_between(data,
+              "  M('asclepieion'",
+              "  // -------- AGORA civic core --------",
+              "  // The Athenian Asklepieion was founded in 420/19 BCE, after this visual snapshot.\n\n  // -------- AGORA civic core --------",
+              'Asklepieion')
+          data = replace_between(data,
+              "  M('pompeion'",
+              "  M('kerameikos-cemetery'",
+              "  // The Pompeion dates to the end of the fifth century BCE and is not rendered in c. 432–430 BCE.\n  ",
+              'Pompeion')
+          data = replace_one(data,
+              """  M('hephaisteion','Hephaisteion','temple',60,140,32,14,8,'standing','agora','hephaisteion',EVIDENCE_ARCH,\n    'Doric peripteral temple on Agoraios Kolonos hill; rededicated 449 BCE (often miscalled the Theseion).'),""",
+              """  M('hephaisteion','Hephaisteion','temple',60,140,32,14,8,'working','agora','hephaisteion',EVIDENCE_ARCH,\n    'Doric peripteral temple on Agoraios Kolonos hill. Construction spans roughly 460–420 BCE; the c. 432–430 snapshot treats the building as substantially present but not yet a completed cult installation.'),""",
+              'Hephaisteion state')
+          data = replace_one(data,
+              """  M('stoa-zeus','Stoa of Zeus Eleutherios','stoa',110,80,40,11,5,'standing','agora','stoa-zeus',EVIDENCE_DOC,\n    'Stoa on the west side of the Agora with a shrine of Zeus Eleutherios; built ca. 430s–420s BCE.'),""",
+              """  M('stoa-zeus','Stoa of Zeus Eleutherios','stoa',110,80,40,11,5,'working','agora','stoa-zeus',EVIDENCE_DOC,\n    'Stoa of Zeus Eleutherios on the west side of the Agora. Its later-fifth-century construction overlaps the endpoint of this model, so it is treated as an incomplete/working edge rather than a finished monument.'),""",
+              'Stoa Zeus state')
+          data = replace_one(data,
+              """  M('theatre-dionysus','Theatre of Dionysus','theatre',-110,-180,80,60,4,'working','south-slope','theatre-dionysus',EVIDENCE_ARCH,\n    'The Lykourgan phase (mid-4th c. BCE) is later than this period; in 450–430 BCE it is a stone-seated cavea with wooden proskenion, hosting the City Dionysia.'),""",
+              """  M('theatre-dionysus','Theatre of Dionysus','theatre',-110,-180,80,60,4,'working','south-slope','theatre-dionysus',EVIDENCE_ARCH,\n    'The monumental stone theatre belongs to the fourth century BCE. Around the c. 432–430 snapshot the Classical theatre still relied heavily on timber ikria/bleachers around the earthen orchestra, with a developing permanent stage structure.'),""",
+              'Theatre chronology')
+          data = replace_one(data, "  ['erechtheion','Erechtheion'],", "  ['old-athena-polias','Old Temple of Athena Polias'],", 'Erechtheion teleport')
+          data = replace_one(data, "  ['athena-nike','Temple of Athena Nike'],", "  ['athena-nike-early','Athena Nike bastion & earlier shrine'],", 'Nike teleport')
+          write('frontend/ancient-cities/athens-450-430/data/city.js', data)
+
+          manifest = read('frontend/ancient-cities/athens-450-430/data/manifest.js')
+          manifest = replace_one(manifest,
+              "    note: 'Named monuments and the research framework are source-led; the Erechtheion is shown under construction; the Olympieion is the small archaic sanctuary, not the later Roman giant.',",
+              "    note: 'Named monuments and the research framework are source-led. The visual snapshot is c. 432–430 BCE: later Athena Nike, Erechtheion, Asklepieion and Pompeion buildings are intentionally excluded; the Olympieion remains the small archaic sanctuary, not the later Roman giant.',",
+              'manifest chronology')
+          write('frontend/ancient-cities/athens-450-430/data/manifest.js', manifest)
+
+          agents = read('frontend/ancient-cities/athens-450-430/AGENTS.md')
+          agents = replace_one(agents,
+              "`new` covers monuments finished in this period (e.g. the Parthenon and Propylaea). `repaired` covers monuments that have just been rebuilt (e.g. the Hephaisteion). `under-construction` for the Erechtheion is not a separate state — it is `working` with the evidence note \"under construction in this period\".",
+              "`new` covers monuments completed by the c. 432–430 BCE visual snapshot (e.g. the Parthenon and Propylaea). `working` covers structures whose construction plausibly overlaps that endpoint. Buildings begun after 430 BCE are not rendered merely because the wider title spans 450–430 BCE.",
+              'AGENTS state vocabulary')
+          agents = replace_one(agents,
+              "5. The Erechtheion was under construction in this period — never show it as finished marble.\n6. The Olympieion here is the small archaic sanctuary / Deigma, not the later Roman giant.\n7. The Long Walls shown are the Themistoclean walls of 478 BCE plus the Kimonian wall (mid-5th c., then broken — show a single line with a gap, not the Konon re-build of 394 BCE which is out of period).\n8. Do not claim to depict the Plague of Athens — it begins at the boundary of this period. Note the lead-in only.",
+              "5. Treat the rendered world as a c. 432–430 BCE endpoint inside the 450–430 BCE historical frame. The Classical Temple of Athena Nike (426–421), Erechtheion (421–406), Athenian Asklepieion (founded 420/19) and Pompeion (end of the fifth century) are later and must not appear as completed buildings.\n6. The Olympieion here is the small archaic sanctuary / Deigma, not the later Roman giant.\n7. The Long Walls shown are the Themistoclean walls of 478 BCE plus the Kimonian wall (mid-5th c., then broken — show a single line with a gap, not the Konon re-build of 394 BCE which is out of period).\n8. The Theatre of Dionysus must not use the later monumental stone cavea as its default Classical-period form; timber ikria and an earthen orchestra are the safer visual language.\n9. Do not claim to depict the Plague of Athens — it begins at the boundary of this period. Note the lead-in only.",
+              'AGENTS archaeology rules')
+          write('frontend/ancient-cities/athens-450-430/AGENTS.md', agents)
+
+          research = read('frontend/ancient-cities/athens-450-430/research/index.html')
+          research = replace_one(research,
+              "450–430 BCE is the Periclean city in its mature shape: the Acropolis rebuilding complete (Parthenon finished 432 BCE; Propylaea finished 432 BCE), the Agora civic core established, the Piraeus harbour city connected by the Long Walls. The Erechtheion is under construction (421–406 BCE). The Plague of Athens begins in 430 BCE; we stop at the boundary.",
+              "450–430 BCE is the historical frame, while the rendered visual snapshot is anchored at its late endpoint, c. 432–430 BCE. The Parthenon and Propylaea are complete, the Agora civic core is established, and Piraeus is connected by the Long Walls. Structures begun after 430 BCE are not back-projected into the scene: the Temple of Athena Nike (426–421), Erechtheion (421–406), Athenian Asklepieion (founded 420/19) and later Pompeion are excluded as completed buildings. The Plague of Athens begins in 430 BCE; the model stops at that boundary.",
+              'research period framing')
+          research = replace_one(research,
+              "- **Akropolis**: Parthenon (447–432 BCE, finished); Propylaea (437–432 BCE, finished); Erechtheion (421–406 BCE, under construction); Temple of Athena Nike (ca. 427–424 BCE, finished); Old Parthenon predecessor (destroyed 480 BCE — not present); Chalkotheke; sanctuary of Artemis Brauronia.\n- **South slope of the Akropolis**: Theatre of Dionysus; Odeion of Pericles (ca. 443 BCE); Asclepieion.",
+              "- **Akropolis**: Parthenon (447–432 BCE, finished); Propylaea (437–432 BCE, finished); the repaired Old Temple of Athena Polias precinct; the Athena Nike bastion with its earlier cult remains (not the 426–421 BCE Ionic temple); Chalkotheke; sanctuary of Artemis Brauronia. The Erechtheion is later and is not rendered.\n- **South slope of the Akropolis**: Classical Theatre of Dionysus with timber seating / earthen orchestra; Odeion of Pericles (ca. 443 BCE). The Athenian Asklepieion is later (420/19 BCE) and is not rendered.",
+              'research major entries')
+          research = replace_one(research,
+              "- **Outside the walls**: Kerameikos cemetery (Sacred Gate, Dipylon Gate, Pompeion); Pnyx; Areopagus; Olympieion (the small archaic sanctuary, not the later Roman giant); Academy (olive grove and gymnasium).",
+              "- **Outside the walls**: Kerameikos cemetery (Sacred Gate and Dipylon Gate; the later Pompeion is omitted); Pnyx; Areopagus; Olympieion (the small archaic sanctuary, not the later Roman giant); Academy (olive grove and gymnasium).",
+              'research Pompeion')
+          write('frontend/ancient-cities/athens-450-430/research/index.html', research)
+
+          tests = read('tests/athens-450-430.test.mjs')
+          marker = "test('Athens manifest is renderer-neutral and references all named monuments', async () => {"
+          pos = tests.find(marker)
+          if pos < 0:
+              raise SystemExit('chronology test insertion marker missing')
+          chronology_test = '''test('Athens c. 432–430 visual snapshot excludes later fifth-century buildings', async () => {\n  const { BUILDINGS, TELEPORTS } = await import(resolve(city, 'data/city.js'));\n  const byId = new Map(BUILDINGS.map((item) => [item.id, item]));\n  for (const laterId of ['athena-nike', 'erechtheion', 'erechtheion-north', 'erechtheion-karyatid', 'asclepieion', 'pompeion']) {\n    assert.equal(byId.has(laterId), false, `${laterId} is later than the rendered c. 432–430 BCE snapshot`);\n  }\n  assert.ok(byId.has('athena-nike-early'));\n  assert.ok(byId.has('old-athena-polias'));\n  assert.equal(byId.get('hephaisteion')?.state, 'working');\n  assert.equal(byId.get('stoa-zeus')?.state, 'working');\n  assert.ok(TELEPORTS.some(([id]) => id === 'old-athena-polias'));\n  assert.ok(TELEPORTS.some(([id]) => id === 'athena-nike-early'));\n});\n\n'''
+          tests = tests[:pos] + chronology_test + tests[pos:]
+          write('tests/athens-450-430.test.mjs', tests)
+
+          framing = read('tests/landmark-framing.test.mjs')
+          framing = replace_one(framing,
+              "  assert.ok(landmarkFramingDistance({ w:125, d:102, h:48 }) > 180);",
+              "  assert.ok(landmarkFramingDistance({ w:125, d:102, h:48 }) > 155);\n  assert.ok(landmarkFramingDistance({ w:125, d:102, h:48 }) < 190);",
+              'framing distance expectations')
+          write('tests/landmark-framing.test.mjs', framing)
+
+          print('Athens chronology + shared framing patch applied')
+          PY
+
+      - name: Validate patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check frontend/ancient-world/engine/landmark-framing.js
+          node --check frontend/ancient-cities/athens-450-430/data/city.js
+          node --check frontend/ancient-cities/athens-450-430/data/manifest.js
+          node --test tests/*.test.mjs
+
+      - name: Commit and self-remove
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "aizanoi-aaa-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git rm .github/workflows/aaa-athens-framing-one-shot.yml
+          git add frontend tests
+          git commit -m "fix: align Athens chronology and landmark framing"
+          git push origin HEAD:feat/ancient-world-aaa-final-2026-08-18
