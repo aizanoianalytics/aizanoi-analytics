@@ -125,6 +125,7 @@
       marquee = document.createElement('div');
       marquee.className = 'os-v2-marquee';
       marquee.hidden = true;
+      marquee.style.cssText = 'position:fixed;z-index:4;pointer-events:none;border:1px solid rgba(96,157,255,.95);background:rgba(74,133,226,.20);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);';
       desktop.appendChild(marquee);
       try { desktop.setPointerCapture?.(pointerId); } catch (_) {}
     });
