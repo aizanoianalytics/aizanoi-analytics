@@ -9,21 +9,30 @@ const read = (path) => readFileSync(resolve(root, path), 'utf8');
 
 const stateSource = read('frontend/js/os-state.js');
 const shellSource = read('frontend/js/os-shell.js');
+const intentSource = read('frontend/js/os-intent.js');
 const shellCss = read('frontend/css/os-aizanoi-next.css');
+const bridgeCss = read('frontend/css/os-field-bridges.css');
 const chatSource = read('frontend/js/chat.js');
 const navigationSource = read('frontend/ancient-world/engine/navigation.js');
+const sanitizerSource = read('frontend/js/os-legacy-sanitizer.js');
 
 test('Aizanoi Field System ships as isolated shell modules over the mature SPA runtime', () => {
   for (const path of [
     'frontend/js/os-state.js',
     'frontend/js/os-shell.js',
+    'frontend/js/os-intent.js',
+    'frontend/js/os-legacy-sanitizer.js',
     'frontend/css/os-aizanoi-next.css',
+    'frontend/css/os-field-bridges.css',
     'frontend/assets/wallpapers/aizanoi-field.svg',
   ]) assert.ok(existsSync(resolve(root, path)), `${path} missing`);
 
   assert.match(chatSource, /os-aizanoi-next\.css/);
+  assert.match(chatSource, /os-field-bridges\.css/);
   assert.match(chatSource, /\/js\/os-state\.js/);
   assert.match(chatSource, /\/js\/os-shell\.js/);
+  assert.match(chatSource, /\/js\/os-intent\.js/);
+  assert.match(chatSource, /\/js\/os-legacy-sanitizer\.js/);
   assert.match(chatSource, /legacy shell remains available/i);
 });
 
@@ -52,6 +61,11 @@ test('Field System owns original shell identity instead of exposing XP shell as 
   assert.match(shellCss, /#az-mobile-home/);
   assert.match(shellCss, /aizanoi-snap-left/);
   assert.match(shellCss, /aizanoi-snap-right/);
+  assert.match(bridgeCss, /data-aizanoi-app="chatbot"/);
+  assert.match(bridgeCss, /data-aizanoi-app="ancient"/);
+  assert.match(bridgeCss, /data-aizanoi-app="games"/);
+  assert.match(sanitizerSource, /WINDOW_TITLES/);
+  assert.match(sanitizerSource, /dataset\.aizanoiApp/);
 });
 
 test('command surface provides Index, universal search, real settings, AI and mobile navigation', () => {
@@ -73,10 +87,16 @@ test('Aizanoi AI exposes a contextual programmatic ask surface without displayin
   assert.match(chatSource, /User request:\s*\$\{visibleText\}/);
   assert.match(chatSource, /addMessage\('user', visibleText\)/);
   assert.match(chatSource, /body:\s*JSON\.stringify\(\{ history:\s*chatHistory \}\)/);
+  assert.match(intentSource, /shouldAskAI/);
+  assert.match(intentSource, /Current Historical World context:/);
 });
 
-test('shared historical navigation accepts deep links for Aizanoi, Rome and Athens using each existing public UI', () => {
+test('shared historical navigation accepts deep links and provides a two-way AI context bridge for all worlds', () => {
   assert.match(navigationSource, /consumeHistoricalWorldDeepLink/);
+  assert.match(navigationSource, /installAskAizanoiAI/);
+  assert.match(navigationSource, /Ask AI about this/);
+  assert.match(navigationSource, /aizanoi-world-ai-context/);
+  assert.match(navigationSource, /\?ask=/);
   assert.match(navigationSource, /worldId:'aizanoi'/);
   assert.match(navigationSource, /enterSelector:'#enterBtn'/);
   assert.match(navigationSource, /jumpSelector:'#teleport'/);
@@ -84,6 +104,8 @@ test('shared historical navigation accepts deep links for Aizanoi, Rome and Athe
   assert.match(navigationSource, /worldId:'athens'/);
   assert.match(navigationSource, /url\.searchParams\.get\('jump'\)/);
   assert.match(navigationSource, /dispatchEvent\(new Event\('change'/);
+  assert.match(intentSource, /url\.searchParams\.get\('ask'\)/);
+  assert.match(intentSource, /submitContextualAI/);
 });
 
 test('workspace session/context updates are idempotent and cannot self-trigger an endless state render loop', () => {
