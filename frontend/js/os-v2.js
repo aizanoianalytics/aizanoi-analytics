@@ -60,8 +60,8 @@
       const rect = win.getBoundingClientRect();
       const minX = -rect.width + minVisibleX;
       const maxX = innerWidth - minVisibleX;
-      let left = Math.min(maxX, Math.max(minX, rect.left));
-      let top = Math.min(maxY, Math.max(safeTop, rect.top));
+      const left = Math.min(maxX, Math.max(minX, rect.left));
+      const top = Math.min(maxY, Math.max(safeTop, rect.top));
       if (Math.abs(left - rect.left) > .5) win.style.left = `${left}px`;
       if (Math.abs(top - rect.top) > .5) win.style.top = `${top}px`;
       const width = Math.min(rect.width, innerWidth - 12);
@@ -96,6 +96,58 @@
       }
     });
     taskbar.appendChild(button);
+  }
+
+  function installDesktopMarquee() {
+    const desktop = document.getElementById('desktop');
+    if (!desktop || desktop.dataset.osV2Marquee || matchMedia('(pointer:coarse)').matches) return;
+    desktop.dataset.osV2Marquee = '1';
+    let start = null;
+    let pointerId = null;
+    let marquee = null;
+
+    const blocked = (target) => Boolean(target.closest('.desktop-icon,.win,#taskbar,#start-menu,.ctx-menu,.balloon,button,input,textarea,select,a'));
+    const clearSelection = () => document.querySelectorAll('.desktop-icon.selected').forEach((icon) => icon.classList.remove('selected'));
+    const finish = (event) => {
+      if (pointerId === null || (event && event.pointerId !== pointerId)) return;
+      try { desktop.releasePointerCapture?.(pointerId); } catch (_) {}
+      marquee?.remove();
+      marquee = null;
+      start = null;
+      pointerId = null;
+    };
+
+    desktop.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0 || event.pointerType === 'touch' || blocked(event.target)) return;
+      clearSelection();
+      start = { x: event.clientX, y: event.clientY };
+      pointerId = event.pointerId;
+      marquee = document.createElement('div');
+      marquee.className = 'os-v2-marquee';
+      marquee.hidden = true;
+      desktop.appendChild(marquee);
+      try { desktop.setPointerCapture?.(pointerId); } catch (_) {}
+    });
+
+    desktop.addEventListener('pointermove', (event) => {
+      if (!start || event.pointerId !== pointerId || !marquee) return;
+      const left = Math.min(start.x, event.clientX);
+      const top = Math.min(start.y, event.clientY);
+      const width = Math.abs(event.clientX - start.x);
+      const height = Math.abs(event.clientY - start.y);
+      if (width + height < 8) return;
+      marquee.hidden = false;
+      Object.assign(marquee.style, { left:`${left}px`, top:`${top}px`, width:`${width}px`, height:`${height}px` });
+      const box = { left, top, right:left + width, bottom:top + height };
+      document.querySelectorAll('.desktop-icon').forEach((icon) => {
+        const rect = icon.getBoundingClientRect();
+        const intersects = rect.right >= box.left && rect.left <= box.right && rect.bottom >= box.top && rect.top <= box.bottom;
+        icon.classList.toggle('selected', intersects);
+      });
+    });
+
+    desktop.addEventListener('pointerup', finish);
+    desktop.addEventListener('pointercancel', finish);
   }
 
   function decorateTaskbar() {
@@ -182,6 +234,7 @@
   function boot() {
     markInteractive();
     installShowDesktop();
+    installDesktopMarquee();
     observer.observe(document.body, { childList: true, subtree: true });
     addEventListener('resize', () => requestAnimationFrame(clampWindows), { passive: true });
     document.addEventListener('keydown', (event) => {
@@ -197,7 +250,11 @@
   window.__AIZANOI_OS_V2__ = Object.freeze({
     clampWindows,
     announce,
-    debug: () => ({ observedMutations, decoratedWindows: document.querySelectorAll('.win[data-os-v2-decorated]').length }),
+    debug: () => ({
+      observedMutations,
+      decoratedWindows: document.querySelectorAll('.win[data-os-v2-decorated]').length,
+      marqueeEnabled: document.getElementById('desktop')?.dataset.osV2Marquee === '1',
+    }),
   });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true });
