@@ -59,9 +59,13 @@ const FRAMING = Object.freeze({
   // the engine still validates terrain and collision before using it.
   parthenon: { distance: 70, preferredDirections: [[-1,0],[-1,1]] },
   propylaea: { distance: 62, preferredDirections: [[-1,0],[-1,1]] },
-  hephaisteion: { distance: 74, preferredDirections: [[0,1],[-1,1]] },
+  // Hephaisteion is deliberately framed closer than the generic temple rule so
+  // the Agora arrival reads as architecture rather than a tiny horizon object.
+  hephaisteion: { distance: 48, preferredDirections: [[0,1],[-1,1]] },
   'theatre-dionysus': { distance: 82, preferredDirections: [[0,1],[1,1]] },
-  pnyx: { distance: 78, preferredDirections: [[0,1],[1,1]] },
+  // The actual teleport target is pnyx-bema. Keeping the key exact ensures the
+  // authored north approach is used instead of a generic close-up beside cavea massing.
+  'pnyx-bema': { distance: 70, preferredDirections: [[0,1],[-1,1]] },
   'dipylon-gate': { distance: 72, preferredDirections: [[0,1],[1,1]] },
 });
 
