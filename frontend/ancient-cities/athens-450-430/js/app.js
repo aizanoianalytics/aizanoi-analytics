@@ -7,6 +7,7 @@ import {
 } from '../../../ancient-world/engine/traversal.js';
 import { createLifecycle } from '../../../ancient-world/engine/lifecycle.js';
 import { createAdaptiveQualityController } from '../../../ancient-world/engine/performance.js';
+import { installMobileControls } from '../../../ancient-world/engine/mobile-controls.js';
 import { installBackToOS } from '../../../ancient-world/engine/navigation.js';
 import { ANCIENT_MATERIALS as M } from '../../../ancient-world/assets/materials.js';
 import { evidenceForRecord, evidenceBadgeHTML, installEvidenceStyles } from '../../../ancient-world/engine/evidence.js';
@@ -205,6 +206,75 @@ function temple(building, color) {
     cylinder(x, ground + base, building.z + building.d * 0.34, 1.35, building.h * 0.55, C.marbleLight, 10);
   }
   pitchedBuilding(building.x, ground + base, building.z, building.w * 0.82, building.h - base, building.d * 0.62, color);
+}
+
+function parthenonHero(building, color) {
+  const ground = baseY(building);
+  const podiumH = Math.max(1.25, building.h * 0.12);
+  // Three visible stylobate steps, exaggerated only enough to read at WebGL scale.
+  for (let step = 0; step < 3; step++) {
+    const inset = step * 0.55;
+    box(
+      building.x,
+      ground + step * (podiumH / 3),
+      building.z,
+      building.w + 3.2 - inset * 2,
+      podiumH / 3 + 0.04,
+      building.d + 3.2 - inset * 2,
+      step === 2 ? C.marbleLight : C.limestone,
+    );
+  }
+
+  const stylobate = ground + podiumH;
+  const columnH = building.h * 0.56;
+  const radius = Math.max(0.38, Math.min(0.62, building.w / 86));
+  const frontCount = TOUCH ? 8 : 8;
+  const sideCount = TOUCH ? 13 : 17;
+  const xMin = building.x - building.w * 0.44;
+  const xMax = building.x + building.w * 0.44;
+  const zMin = building.z - building.d * 0.44;
+  const zMax = building.z + building.d * 0.44;
+
+  for (let i = 0; i < frontCount; i++) {
+    const x = xMin + (xMax - xMin) * (i / (frontCount - 1));
+    cylinder(x, stylobate, zMin, radius, columnH, C.marbleLight, TOUCH ? 8 : 12);
+    cylinder(x, stylobate, zMax, radius, columnH, C.marbleLight, TOUCH ? 8 : 12);
+  }
+  for (let i = 1; i < sideCount - 1; i++) {
+    const z = zMin + (zMax - zMin) * (i / (sideCount - 1));
+    cylinder(xMin, stylobate, z, radius, columnH, C.marbleLight, TOUCH ? 8 : 12);
+    cylinder(xMax, stylobate, z, radius, columnH, C.marbleLight, TOUCH ? 8 : 12);
+  }
+
+  // Cella + pronaos massing. The peristyle remains visually separate.
+  box(building.x, stylobate + 0.05, building.z, building.w * 0.52, columnH * 0.88, building.d * 0.50, color);
+  const entablatureY = stylobate + columnH;
+  box(building.x, entablatureY, building.z, building.w * 0.94, 1.15, building.d * 0.94, C.marble);
+  pitchedBuilding(
+    building.x,
+    entablatureY + 1.10,
+    building.z,
+    building.w * 0.88,
+    Math.max(3.2, building.h * 0.22),
+    building.d * 0.84,
+    C.marbleLight,
+  );
+}
+
+function propylaeaHero(building, color) {
+  const ground = baseY(building);
+  const podium = 0.75;
+  box(building.x, ground, building.z, building.w + 2.2, podium, building.d + 2.0, C.limestone);
+  const hallY = ground + podium;
+  pitchedBuilding(building.x, hallY, building.z, building.w * 0.60, building.h - podium, building.d * 0.74, color);
+  const wingW = building.w * 0.19;
+  box(building.x - building.w * 0.39, hallY, building.z, wingW, building.h * 0.62, building.d * 0.88, C.marble);
+  box(building.x + building.w * 0.39, hallY, building.z, wingW, building.h * 0.62, building.d * 0.88, C.marble);
+  const columns = building.id === 'propylaea' ? 6 : 4;
+  for (let i = 0; i < columns; i++) {
+    const x = building.x - building.w * 0.25 + i * (building.w * 0.50 / Math.max(1, columns - 1));
+    cylinder(x, hallY, building.z - building.d * 0.42, 0.48, building.h * 0.52, C.marbleLight, 10);
+  }
 }
 
 function ellipticalCylinder(cx, y, cz, rx, rz, height, color, segments = 36) {
@@ -601,7 +671,9 @@ function renderBuilding(building) {
 
   if (building.type === 'wall') return wall(building);
   if (building.type === 'gate') return arch(building.x, ground, building.z, building.w, building.h, building.d, color);
-  if (building.id === 'pantheon') pantheon(building, color);
+  if (building.id === 'parthenon') parthenonHero(building, color);
+  else if (building.id === 'propylaea' || building.id === 'propylaea-east') propylaeaHero(building, color);
+  else if (building.id === 'pantheon') pantheon(building, color);
   else if (building.type === 'temple') temple(building, color);
   else if (['round', 'dome', 'round-church', 'mausoleum'].includes(building.type)) roundBuilding(building, color);
   else if (['stadium', 'circus', 'arena'].includes(building.type)) longStadium(building, color);
@@ -628,8 +700,8 @@ function renderBuilding(building) {
   }
   else if (building.type === 'bridge') bridge(building, color);
   else if (building.type === 'island') {
-    const islandY = Math.max(TIBER.waterY + 0.75, ground);
-    box(building.x, TIBER.waterY - 0.2, building.z, building.w, islandY - TIBER.waterY + 0.2, building.d, C.grass);
+    const islandY = ground + 0.35;
+    box(building.x, ground - 0.15, building.z, building.w, 0.5, building.d, C.grass);
     walkSurfaces.push(walkRect(building.x, building.z, building.w - 2, building.d - 2, islandY, 0, `${building.id} surface`, false));
   }
   else if (building.type === 'pyramid') pitchedBuilding(building.x, ground, building.z, building.w, building.h, building.d, color);
@@ -708,6 +780,26 @@ function renderUrbanFabric(building) {
   colliders.push(rectCollider(building.x, building.z, building.w, building.d, building.rot || 0, building.name));
 }
 
+function decorativeOlive(x, z, scale = 1) {
+  const ground = terrainHeightAt(x, z);
+  cylinder(x, ground, z, 0.24 * scale, 2.1 * scale, C.timber, 7);
+  cylinder(x - 0.38 * scale, ground + 1.65 * scale, z, 1.18 * scale, 1.9 * scale, C.grass, TOUCH ? 7 : 10);
+  cylinder(x + 0.52 * scale, ground + 1.8 * scale, z + 0.22 * scale, 1.05 * scale, 1.7 * scale, C.grass, TOUCH ? 7 : 10);
+}
+
+function buildAtmosphericDetails() {
+  REGIONS.forEach((region, index) => {
+    const count = TOUCH ? 1 : (region.id === 'acropolis' ? 2 : 3);
+    for (let i = 0; i < count; i++) {
+      const angle = index * 2.31 + i * 2.16;
+      const x = region.x + Math.cos(angle) * Math.min(58, region.w * 0.32);
+      const z = region.z + Math.sin(angle) * Math.min(54, region.d * 0.32);
+      const occupied = BUILDINGS.some((building) => Math.abs(building.x - x) < building.w * 0.65 && Math.abs(building.z - z) < building.d * 0.65);
+      if (!occupied) decorativeOlive(x, z, 0.78 + ((index + i) % 3) * 0.12);
+    }
+  });
+}
+
 // Terrain is the physical and visual base. Roads, named monuments and inferred
 // fabric are then layered on top of exactly the same height function.
 buildTerrainMesh();
@@ -717,6 +809,7 @@ for (const street of STREETS) road(street.points, street.width);
 for (const building of BUILDINGS) renderBuilding(building);
 const URBAN_FABRIC = generateUrbanFabric({ regions: REGIONS, buildings: BUILDINGS, streets: STREETS, mobile: TOUCH });
 for (const building of URBAN_FABRIC) renderUrbanFabric(building);
+buildAtmosphericDetails();
 const ATHENS_HAZARDS = buildStreamHazards();
 
 const player = {
@@ -859,7 +952,12 @@ function camera() {
     Math.sin(player.pitch),
     -Math.cos(player.yaw) * cp,
   ];
-  const eye = [player.x, player.y, player.z];
+  const stable = Math.max(0.2, Math.min(1, 1 - Math.abs((player.floorY + EYE_HEIGHT) - player.y) * 3.2));
+  const bob = Math.sin(walkClock * 2) * 0.017 * moveBlend * stable;
+  const sway = Math.sin(walkClock) * 0.008 * moveBlend * stable;
+  const cy = Math.cos(player.yaw);
+  const sy = Math.sin(player.yaw);
+  const eye = [player.x + cy * sway, player.y + bob, player.z + sy * sway];
   return lookAt(eye, [eye[0] + forward[0], eye[1] + forward[1], eye[2] + forward[2]], [0, 1, 0]);
 }
 
@@ -872,6 +970,7 @@ let gameStarted = false;
 let mapFrame = 0;
 let moveBlend = 0;
 let walkClock = 0;
+let mobileControls = null;
 
 function modalOpen() {
   return !$('#modal')?.classList.contains('hidden');
@@ -879,6 +978,7 @@ function modalOpen() {
 
 function clearMovementState() {
   keys.clear();
+  mobileControls?.reset();
   last = performance.now();
 }
 
@@ -900,6 +1000,11 @@ function updatePlayer(dt) {
   dt = Math.min(dt, 0.05);
   let forward = (keys.has('KeyW') ? 1 : 0) - (keys.has('KeyS') ? 1 : 0);
   let right = (keys.has('KeyD') ? 1 : 0) - (keys.has('KeyA') ? 1 : 0);
+  const mobile = mobileControls?.snapshot() || { moveX: 0, moveY: 0, running: false };
+  if (TOUCH) {
+    forward += -mobile.moveY;
+    right += mobile.moveX;
+  }
   const moving = Boolean(forward || right);
   moveBlend += ((moving ? 1 : 0) - moveBlend) * Math.min(1, dt * 9);
 
@@ -909,13 +1014,14 @@ function updatePlayer(dt) {
       forward /= length;
       right /= length;
     }
-    const speed = (keys.has('ShiftLeft') || keys.has('ShiftRight')) ? player.sprint : player.speed;
+    const sprinting = keys.has('ShiftLeft') || keys.has('ShiftRight') || mobile.running;
+    const speed = sprinting ? player.sprint : player.speed;
     const sy = Math.sin(player.yaw);
     const cy = Math.cos(player.yaw);
     const dx = (sy * forward + cy * right) * speed * dt;
     const dz = (-cy * forward + sy * right) * speed * dt;
     traversal.moveWithSubsteps(dx, dz);
-    walkClock += dt * (speed > player.speed ? 9.0 : 6.0);
+    walkClock += dt * (sprinting ? 9.5 : 6.2);
   }
 
   const targetEye = player.floorY + EYE_HEIGHT;
@@ -927,8 +1033,8 @@ function updatePlayer(dt) {
 
 function draw() {
   resize();
-  const fog = modernOverlay ? [0.48, 0.60, 0.64] : [0.57, 0.53, 0.45];
-  gl.clearColor(fog[0] * 0.82, fog[1] * 0.88, fog[2] * 0.92, 1);
+  const fog = modernOverlay ? [0.48, 0.60, 0.64] : [0.69, 0.67, 0.57];
+  gl.clearColor(fog[0] * 0.91, fog[1] * 0.94, fog[2] * 0.98, 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST);
   gl.useProgram(program);
@@ -942,12 +1048,12 @@ function draw() {
   gl.enableVertexAttribArray(locations.aC);
   gl.vertexAttribPointer(locations.aC, 3, gl.FLOAT, false, stride, 6 * 4);
 
-  gl.uniformMatrix4fv(locations.uP, false, perspective(62 * Math.PI / 180, canvas.width / canvas.height, 0.08, 2600));
+  gl.uniformMatrix4fv(locations.uP, false, perspective((TOUCH ? 72 : 69) * Math.PI / 180, canvas.width / canvas.height, 0.08, 2600));
   gl.uniformMatrix4fv(locations.uV, false, camera());
   gl.uniform3fv(locations.uFog, new Float32Array(fog));
-  gl.uniform3fv(locations.uSun, new Float32Array([0.42, 0.82, 0.28]));
-  gl.uniform1f(locations.uAmbient, 0.42);
-  gl.uniform1f(locations.uFogDensity, TOUCH ? 0.00078 : 0.00062);
+  gl.uniform3fv(locations.uSun, new Float32Array([0.36, 0.92, 0.24]));
+  gl.uniform1f(locations.uAmbient, 0.52);
+  gl.uniform1f(locations.uFogDensity, TOUCH ? 0.00066 : 0.00050);
   gl.drawArrays(gl.TRIANGLES, 0, geometry.length / 9);
 
   if (modernOverlay) drawOverlay();
@@ -986,7 +1092,7 @@ function drawOverlay() {
   }
   ctx.fillStyle = 'rgba(160,235,255,.82)';
   ctx.font = '12px system-ui';
-  ctx.fillText('MODERN ALIGNMENT OVERLAY · schematic relation to present Rome', 18, innerHeight - 24);
+  ctx.fillText('MODERN ALIGNMENT OVERLAY · schematic relation to present-day Athens', 18, innerHeight - 24);
 }
 
 function updateNearest() {
@@ -1002,11 +1108,11 @@ function updateNearest() {
   if (best && distance < 70) {
     $('#place').textContent = best.name;
     const terrain = terrainDescriptorAt(player.x, player.z);
-    $('#detail').textContent = `${stateLabel[best.state] || best.state} · ${best.region === 'all' ? 'city circuit' : `Regio ${best.region}`} · ${terrain.feature} · ${player.floorY.toFixed(1)} m`;
+    $('#detail').textContent = `${stateLabel[best.state] || best.state} · ${best.region === 'all' ? 'city circuit' : `District · ${best.region}`} · ${terrain.feature} · ${player.floorY.toFixed(1)} m`;
   } else {
     $('#place').textContent = 'Street level';
     const terrain = terrainDescriptorAt(player.x, player.z);
-    $('#detail').textContent = `Walk the late-antique city · ${terrain.feature} · ${player.floorY.toFixed(1)} m`;
+    $('#detail').textContent = `Walk Classical Athens · ${terrain.feature} · ${player.floorY.toFixed(1)} m`;
   }
 }
 
@@ -1148,20 +1254,20 @@ function teleport(id) {
 
 function openAtlas() {
   const rows = REGIONS.map((region) => `<button class="region" data-region="${region.id}"><b>${region.id} · ${region.name}</b><span>${region.note}</span></button>`).join('');
-  setModal('Regional atlas · 14 Augustan regiones', `<p>The regional minimap is schematic; it is intended for orientation, not cadastral certainty.</p><div class="regionGrid">${rows}</div>`);
+  setModal('District atlas · Classical Athens', `<p>The regional minimap is schematic; it is intended for orientation, not cadastral certainty.</p><div class="regionGrid">${rows}</div>`);
   $$('.region').forEach((element) => {
     element.onclick = () => {
       const region = REGIONS.find((item) => item.id === element.dataset.region);
       if (!region) return;
       closeModal();
-      teleportToPoint(region.x, region.z, { label: `Regio ${region.id} · ${region.name}` });
+      teleportToPoint(region.x, region.z, { label: region.name });
     };
   });
 }
 
 function openSources() {
   const rows = SOURCES.map((source) => `<li><a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.title}</a></li>`).join('');
-  setModal('Research sources', `<p>This reconstruction treats source links as an open research trail. Named monuments, major roads and the regional framework are source-led; unresolved domestic massing remains schematic where fifth-century elevation evidence is incomplete.</p><ul>${rows}</ul><p><a href="./research/">Open the local research notes →</a></p>`);
+  setModal('Research sources', `<p>This reconstruction treats source links as an open research trail. Named monuments, major roads and the regional framework are source-led; unresolved domestic massing remains schematic where Classical-period elevation evidence is incomplete.</p><ul>${rows}</ul><p><a href="./research/">Open the local research notes →</a></p>`);
 }
 
 function nearestInfo() {
@@ -1172,7 +1278,7 @@ function nearestInfo() {
   const evidence = evidenceForRecord(building);
   setModal(
     building.name,
-    `<p>${evidenceBadgeHTML(evidence)}</p><p><b>${stateLabel[building.state] || building.state}</b> · ${building.region === 'all' ? 'city circuit' : `Regio ${building.region}`}</p><p>${building.detail}</p>${evidence.note ? `<p class="awEvidenceNote">${evidence.note}</p>` : ''}<p>Source: ${source ? `<a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.title}</a>` : 'Research ledger'}</p>`,
+    `<p>${evidenceBadgeHTML(evidence)}</p><p><b>${stateLabel[building.state] || building.state}</b> · ${building.region === 'all' ? 'city circuit' : `District · ${building.region}`}</p><p>${building.detail}</p>${evidence.note ? `<p class="awEvidenceNote">${evidence.note}</p>` : ''}<p>Source: ${source ? `<a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.title}</a>` : 'Research ledger'}</p>`,
   );
 }
 
@@ -1225,51 +1331,6 @@ function installInput() {
   lifecycle.listen(window, 'blur', clearMovementState);
   lifecycle.listen(document, 'visibilitychange', () => { if (document.hidden) clearMovementState(); });
 
-  $$('[data-move]').forEach((button) => {
-    const code = button.dataset.move;
-    const down = (event) => {
-      event.preventDefault();
-      button.setPointerCapture?.(event.pointerId);
-      keys.add(code);
-    };
-    const up = (event) => {
-      event.preventDefault();
-      keys.delete(code);
-    };
-    lifecycle.listen(button, 'pointerdown', down);
-    lifecycle.listen(button, 'pointerup', up);
-    lifecycle.listen(button, 'pointercancel', up);
-    lifecycle.listen(button, 'lostpointercapture', up);
-  });
-
-  const lookPad = $('#lookPad');
-  if (lookPad) {
-    let pointer = null;
-    let lastX = 0;
-    let lastY = 0;
-    lifecycle.listen(lookPad, 'pointerdown', (event) => {
-      event.preventDefault();
-      pointer = event.pointerId;
-      lastX = event.clientX;
-      lastY = event.clientY;
-      lookPad.setPointerCapture?.(event.pointerId);
-    });
-    lifecycle.listen(lookPad, 'pointermove', (event) => {
-      if (event.pointerId !== pointer || modalOpen()) return;
-      event.preventDefault();
-      const dx = event.clientX - lastX;
-      const dy = event.clientY - lastY;
-      lastX = event.clientX;
-      lastY = event.clientY;
-      if (Math.hypot(dx, dy) < 1.5) return;
-      player.yaw -= dx * 0.0052;
-      player.pitch = Math.max(-1.1, Math.min(0.8, player.pitch - dy * 0.0042));
-    });
-    const stop = (event) => { if (event.pointerId === pointer) pointer = null; };
-    lifecycle.listen(lookPad, 'pointerup', stop);
-    lifecycle.listen(lookPad, 'pointercancel', stop);
-    lifecycle.listen(lookPad, 'lostpointercapture', stop);
-  }
 }
 
 $('#atlas').onclick = openAtlas;
@@ -1300,6 +1361,19 @@ $('#introText').textContent = CITY.description;
 
 installEvidenceStyles();
 installInput();
+mobileControls = installMobileControls({
+  canvas,
+  lifecycle,
+  enabled: TOUCH,
+  isActive: () => gameStarted,
+  isBlocked: modalOpen,
+  onLook: (dx, dy) => {
+    player.yaw += dx;
+    player.pitch = Math.max(-1.15, Math.min(0.85, player.pitch - dy));
+  },
+  onInspect: nearestInfo,
+  onMap: openAtlas,
+});
 installBackToOS({ onBeforeExit: () => lifecycle.destroy() });
 lifecycle.listen(window, 'pagehide', () => lifecycle.destroy(), { once: true });
 

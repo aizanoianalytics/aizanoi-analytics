@@ -1,0 +1,35 @@
+/* Shared visual polish for walkable Ancient World cities.
+   The renderer remains source-led; this layer improves atmosphere and UI without
+   pretending uncertain geometry is archaeologically measured. */
+:root{--aw-horizon:rgba(240,201,136,.16);--aw-vignette:rgba(9,7,5,.48);--aw-panel:rgba(18,16,12,.84)}
+body[data-city]{background:#171611}
+body[data-city] #glCanvas{filter:saturate(1.055) contrast(1.035) brightness(1.015)}
+body[data-city]::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 58%,transparent 35%,rgba(31,22,13,.07) 67%,var(--aw-vignette) 118%),linear-gradient(180deg,rgba(255,224,169,.07),transparent 30%,transparent 70%,rgba(21,14,9,.10));mix-blend-mode:soft-light}
+body[data-city]::after{content:"";position:fixed;left:0;right:0;top:42%;height:20%;z-index:1;pointer-events:none;background:linear-gradient(180deg,transparent,var(--aw-horizon),transparent);filter:blur(12px);opacity:.7}
+body[data-city="rome"]{--aw-horizon:rgba(214,154,94,.15);--aw-vignette:rgba(17,9,7,.52)}
+body[data-city="athens"]{--aw-horizon:rgba(246,211,146,.19);--aw-vignette:rgba(18,14,8,.37)}
+body[data-city="athens"] #glCanvas{filter:saturate(1.08) contrast(1.03) brightness(1.035)}
+body[data-city="rome"] #glCanvas{filter:saturate(1.035) contrast(1.055) brightness(.995)}
+body[data-city] .sceneTone{z-index:2;opacity:.72;mix-blend-mode:soft-light}
+body[data-city] .brand,body[data-city] .place,body[data-city] .miniWrap{box-shadow:0 20px 60px rgba(0,0,0,.36),inset 0 1px rgba(255,255,255,.035)}
+body[data-city] .brand{border-color:rgba(235,197,125,.38)}
+body[data-city] .brand b{text-shadow:0 1px 12px rgba(238,195,118,.11)}
+body[data-city] .miniWrap{border-color:rgba(235,197,125,.28)}
+body[data-city] .card{max-width:720px;background:linear-gradient(145deg,rgba(39,31,20,.96),rgba(16,15,12,.97));box-shadow:0 36px 110px rgba(0,0,0,.65)}
+body[data-city="athens"] .card{background:linear-gradient(145deg,rgba(47,38,24,.96),rgba(20,18,13,.97))}
+body[data-city="rome"] .card{background:linear-gradient(145deg,rgba(41,27,22,.97),rgba(17,14,12,.98))}
+body[data-city] .facts span{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));box-shadow:inset 0 1px rgba(255,255,255,.035)}
+body[data-city] .primary{transition:transform .14s ease,filter .14s ease;letter-spacing:.03em}
+body[data-city] .primary:hover{transform:translateY(-1px);filter:brightness(1.08)}
+body[data-city] .modalBox{background:linear-gradient(145deg,rgba(38,31,22,.98),rgba(19,17,13,.98));box-shadow:0 28px 100px rgba(0,0,0,.66)}
+body[data-city] .region{background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.009))}
+@media(pointer:coarse),(max-width:820px){
+ body[data-city]::after{top:39%;height:24%;opacity:.55}
+ body[data-city] .top{top:max(8px,env(safe-area-inset-top));left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right))}
+ body[data-city] .brand{max-width:156px;border-radius:12px}
+ body[data-city] .controls{gap:5px}
+ body[data-city] .controls button,body[data-city] .controls select{padding:7px 8px;border-radius:9px}
+ body[data-city] .place{border-radius:0 10px 10px 0;backdrop-filter:blur(12px)}
+ body[data-city] .miniWrap{border-radius:12px;backdrop-filter:blur(12px)}
+}
+@media(prefers-reduced-motion:reduce){body[data-city] .primary{transition:none!important}}
