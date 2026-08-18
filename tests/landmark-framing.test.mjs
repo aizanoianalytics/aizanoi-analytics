@@ -42,6 +42,14 @@ test('Aizanoi Temple jump keeps the open eastern sanctuary approach after runtim
   assert.match(source, /temple:\{pos:\[-68,20\],look:\[-160,20\]\}/);
 });
 
+test('Aizanoi Penkalas jump reuses a collision-safe central bridge riverfront view', () => {
+  const source = readFileSync(resolve(root, 'frontend/historic-world/index.html'), 'utf8');
+  assert.match(source, /historicDebug\.teleportViews\.penkalas/);
+  assert.match(source, /historicDebug\.teleportViews\.bridge3/);
+  assert.match(source, /audited in this V8 build/);
+  assert.doesNotMatch(source, /embedded locally in the HTML/);
+});
+
 test('landmark approach clearance rejects traversal-breaking support changes', () => {
   const flat = traversalApproachClearance({
     candidate: { x:0, z:0 }, target: { x:0, z:-20 },
