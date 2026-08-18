@@ -35,6 +35,7 @@ jobs:
           node --check frontend/ancient-world/engine/evidence.js
           node --check frontend/ancient-world/engine/city-contract.js
           node --check frontend/ancient-world/engine/performance.js
+          node --check frontend/ancient-world/engine/mobile-controls.js
           node --check frontend/ancient-world/assets/materials.js
           node --check frontend/ancient-cities/rome-410-476/data/terrain.js
           node --check frontend/ancient-cities/rome-410-476/data/urban-fabric.js
@@ -54,3 +55,34 @@ jobs:
 
       - name: Reject whitespace errors
         run: git diff --check HEAD^ HEAD
+
+  ancient-city-browser-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Chromium smoke dependency
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start static frontend server
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-http.log 2>&1 &
+          echo $! >/tmp/aizanoi-http.pid
+          for i in {1..20}; do
+            curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0
+            sleep 0.5
+          done
+          cat /tmp/aizanoi-http.log
+          exit 1
+
+      - name: Rome and Athens desktop/mobile browser smoke
+        env:
+          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+        run: node tests/ancient-city-browser-smoke.mjs
