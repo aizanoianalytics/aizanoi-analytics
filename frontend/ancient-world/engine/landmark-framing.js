@@ -36,6 +36,35 @@ export function landmarkViewDirections() {
   return DEFAULT_DIRECTIONS.map(([x, z]) => [x, z]);
 }
 
+export function traversalApproachClearance({
+  candidate,
+  target,
+  collide,
+  absoluteSupportAt,
+  resolveSupport,
+  sampleDistances = [0.65, 1.3, 2.0, 2.8, 3.7, 4.7, 5.8],
+} = {}) {
+  if (!candidate || !target || typeof collide !== 'function' || typeof absoluteSupportAt !== 'function' || typeof resolveSupport !== 'function') return -1;
+  const dx = (Number(target.x) || 0) - (Number(candidate.x) || 0);
+  const dz = (Number(target.z) || 0) - (Number(candidate.z) || 0);
+  const length = Math.hypot(dx, dz) || 1;
+  const ux = dx / length;
+  const uz = dz / length;
+  let floorY = absoluteSupportAt(candidate.x, candidate.z).y;
+  let clear = 0;
+
+  for (const distance of sampleDistances) {
+    const x = candidate.x + ux * distance;
+    const z = candidate.z + uz * distance;
+    if (collide(x, z)) break;
+    const support = resolveSupport(x, z, floorY);
+    if (support.blockedRise || support.blockedDrop) break;
+    floorY = support.y;
+    clear += 1;
+  }
+  return clear;
+}
+
 export function landmarkCandidateScore({ clearance = 0, distance = 0, desiredDistance = 0 }) {
   return clearance * 20 - Math.abs(distance - desiredDistance) * 0.08;
 }
