@@ -43,6 +43,12 @@
     window.addEventListener('resize', update, { passive:true });
   }
 
+  function relabelDesktopEntries(root = document) {
+    const scope = root.matches?.('#icon-layer,.desktop-icon') ? root : document;
+    const docs = scope.querySelector?.('.desktop-icon[data-app="docs"] .icon-label') || document.querySelector('.desktop-icon[data-app="docs"] .icon-label');
+    if (docs) docs.textContent = 'Archive Docs';
+  }
+
   function tagWindow(win) {
     if (!(win instanceof Element) || !win.matches('.win')) return null;
     const title = win.querySelector('.win-title')?.textContent?.trim() || '';
@@ -109,6 +115,7 @@
       for (const mutation of mutations) {
         for (const node of mutation.addedNodes) {
           if (!(node instanceof Element)) continue;
+          relabelDesktopEntries(node);
           tagWindows(node);
           modernizeAboutWindow(node);
           if (node.id === 'shutdown-overlay') {
@@ -125,6 +132,7 @@
     alignProductMetadata();
     repairScreensaverSurveyMark();
     relabelLegacyScreens();
+    relabelDesktopEntries();
     tagWindows();
     modernizeAboutWindow();
     watchDynamicLegacySurfaces();
@@ -137,6 +145,7 @@
     repairScreensaverSurveyMark,
     modernizeAboutWindow,
     alignProductMetadata,
+    relabelDesktopEntries,
     tagWindow,
     tagWindows,
   });
