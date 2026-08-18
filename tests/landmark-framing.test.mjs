@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkViewDirections } from '../frontend/ancient-world/engine/landmark-framing.js';
+import { landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkViewDirections, traversalApproachClearance } from '../frontend/ancient-world/engine/landmark-framing.js';
 
 const root = resolve(import.meta.dirname, '..');
 
@@ -31,4 +31,26 @@ for (const city of ['rome-410-476','athens-450-430']) {
 test('Aizanoi Temple jump uses the open eastern sanctuary approach', () => {
   const source = readFileSync(resolve(root, 'frontend/historic-world/index.html'), 'utf8');
   assert.match(source, /temple:\{pos:\[-68,20\],look:\[-160,20\]\}/);
+});
+
+test('landmark approach clearance rejects traversal-breaking support changes', () => {
+  const flat = traversalApproachClearance({
+    candidate: { x:0, z:0 }, target: { x:0, z:-20 },
+    collide: () => false,
+    absoluteSupportAt: () => ({ y:0 }),
+    resolveSupport: (_x, _z, currentY) => ({ y:currentY, blockedRise:false, blockedDrop:false }),
+  });
+  assert.equal(flat, 7);
+
+  let calls = 0;
+  const broken = traversalApproachClearance({
+    candidate: { x:0, z:0 }, target: { x:0, z:-20 },
+    collide: () => false,
+    absoluteSupportAt: () => ({ y:0 }),
+    resolveSupport: () => {
+      calls += 1;
+      return { y:0, blockedRise:false, blockedDrop:calls >= 2 };
+    },
+  });
+  assert.equal(broken, 1);
 });

@@ -16,7 +16,7 @@ import {
   waterRibbon,
 } from '../../../ancient-world/engine/environment-renderer.js';
 import { installBackToOS } from '../../../ancient-world/engine/navigation.js';
-import { landmarkCandidateScore, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkViewDirections } from '../../../ancient-world/engine/landmark-framing.js';
+import { landmarkCandidateScore, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkViewDirections, traversalApproachClearance } from '../../../ancient-world/engine/landmark-framing.js';
 import { ANCIENT_MATERIALS as M } from '../../../ancient-world/assets/materials.js';
 import { evidenceForRecord, evidenceBadgeHTML, installEvidenceStyles } from '../../../ancient-world/engine/evidence.js';
 import { HILLS, TIBER, terrainHeightAt, terrainDescriptorAt } from '../data/terrain.js';
@@ -1297,18 +1297,13 @@ function teleportToPoint(x, z, { lookX = null, lookZ = null, lookY = null, label
 }
 
 function teleportForwardClearance(candidate, building) {
-  const dx = building.x - candidate.x;
-  const dz = building.z - candidate.z;
-  const length = Math.hypot(dx, dz) || 1;
-  const ux = dx / length;
-  const uz = dz / length;
-  let clear = 0;
-  for (const distance of [1.25, 2.5, 4.0, 5.5]) {
-    const x = candidate.x + ux * distance;
-    const z = candidate.z + uz * distance;
-    if (!traversal.collide(x, z)) clear += 1;
-  }
-  return clear;
+  return traversalApproachClearance({
+    candidate,
+    target: building,
+    collide: traversal.collide,
+    absoluteSupportAt: traversal.absoluteSupportAt,
+    resolveSupport: traversal.resolveSupport,
+  });
 }
 
 function teleport(id) {
