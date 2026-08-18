@@ -7,9 +7,12 @@ on:
     paths:
       - scripts/apply-final-repo-polish.py
       - .github/workflows/apply-final-repo-polish.yml
+  pull_request:
+    branches:
+      - main
 
 concurrency:
-  group: final-repo-polish-${{ github.ref }}
+  group: final-repo-polish
   cancel-in-progress: true
 
 permissions:
@@ -17,6 +20,7 @@ permissions:
 
 jobs:
   migrate-and-validate:
+    if: github.head_ref == 'feat/final-polish-aaa-2026-08-18' || github.ref_name == 'feat/final-polish-aaa-2026-08-18'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -80,8 +84,10 @@ jobs:
         run: |
           rm -f scripts/apply-final-repo-polish.py
           rm -f scripts/apply-landmark-sightline-fix-2026-08-18.py
+          rm -f scripts/apply-landmark-double-resolve-fix-2026-08-18.py
           rm -f .github/workflows/apply-final-repo-polish.yml
           rm -f .github/workflows/apply-landmark-sightline-fix.yml
+          rm -f .github/workflows/apply-landmark-double-resolve-fix.yml
           rm -f .github/workflows/sync-main-final.yml
           rm -f .github/workflows/final-visual-review.yml
 
