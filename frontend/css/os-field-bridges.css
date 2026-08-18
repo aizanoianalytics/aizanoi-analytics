@@ -1,0 +1,72 @@
+/* Field System bridge for legacy overlays that are still produced by the mature SPA core. */
+body.aizanoi-next #lock-screen,
+body.aizanoi-next #shutdown-overlay {
+  background:
+    radial-gradient(circle at 72% 32%, rgba(198,165,104,.13), transparent 32%),
+    linear-gradient(145deg,#091015,#18242b 58%,#0a1014) !important;
+  color:#eee9dc !important;
+  font-family:var(--az-font-ui) !important;
+}
+body.aizanoi-next #lock-screen > div:first-child {
+  background:
+    linear-gradient(90deg,rgba(226,210,176,.035) 1px,transparent 1px),
+    linear-gradient(rgba(226,210,176,.035) 1px,transparent 1px) !important;
+  background-size:56px 56px !important;
+}
+body.aizanoi-next #lock-screen svg { opacity:.12 !important; filter:sepia(.45) saturate(.75); }
+body.aizanoi-next #lock-screen img,
+body.aizanoi-next #shutdown-overlay img { filter:drop-shadow(0 8px 28px rgba(0,0,0,.42)) drop-shadow(0 0 18px rgba(198,165,104,.20)) !important; }
+body.aizanoi-next #lock-screen #lock-clock { font-family:var(--az-font-mono) !important; font-size:48px !important; color:#f2ecdd !important; }
+body.aizanoi-next #lock-screen #lock-date { color:rgba(226,216,195,.62) !important; font-family:var(--az-font-mono) !important; }
+
+body.aizanoi-next #screensaver {
+  background:#080d12 !important;
+}
+body.aizanoi-next #screensaver #pipes-canvas {
+  background:radial-gradient(ellipse at center bottom,#17252c 0%,#070b10 72%) !important;
+}
+body.aizanoi-next #screensaver-clock { color:#eee7d7 !important; text-shadow:0 0 18px rgba(198,165,104,.30) !important; font-family:var(--az-font-mono) !important; }
+body.aizanoi-next #screensaver-date { color:rgba(218,207,181,.58) !important; font-family:var(--az-font-mono) !important; }
+
+body.aizanoi-next #undo-bar {
+  border:1px solid var(--az-border-strong) !important;
+  border-radius:10px !important;
+  background:rgba(15,23,27,.96) !important;
+  color:var(--az-text) !important;
+  box-shadow:0 16px 50px rgba(0,0,0,.38) !important;
+  font-family:var(--az-font-ui) !important;
+}
+body.aizanoi-next #undo-bar button {
+  border:1px solid rgba(198,165,104,.28) !important;
+  border-radius:7px !important;
+  background:rgba(198,165,104,.10) !important;
+  color:var(--az-brass-hi) !important;
+}
+
+body.aizanoi-next .balloon {
+  border:1px solid var(--az-border-strong) !important;
+  border-radius:12px !important;
+  background:rgba(18,27,31,.97) !important;
+  color:var(--az-text) !important;
+  box-shadow:0 18px 56px rgba(0,0,0,.44) !important;
+  font-family:var(--az-font-ui) !important;
+}
+body.aizanoi-next .balloon .b-title { color:var(--az-brass-hi) !important; }
+body.aizanoi-next .balloon .b-close { color:#d7d1c3 !important; }
+
+.az-about-field {
+  height:100%; overflow:auto; padding:20px 22px; color:#24302f;
+  background:linear-gradient(145deg,#f0ecdf,#e4ddca); font-family:var(--az-font-ui);
+}
+.az-about-field .az-about-head { display:flex; align-items:center; gap:14px; padding-bottom:15px; border-bottom:1px solid rgba(70,70,57,.16); }
+.az-about-field .az-about-head img { width:48px; height:48px; filter:drop-shadow(0 5px 10px rgba(0,0,0,.16)); }
+.az-about-field .az-about-head h2 { margin:0; color:#263230; font:780 18px/1 var(--az-font-display); }
+.az-about-field .az-about-head p { margin:5px 0 0; color:#7b6743; font:700 9px/1 var(--az-font-mono); letter-spacing:.08em; text-transform:uppercase; }
+.az-about-field .az-about-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin:15px 0; }
+.az-about-field .az-about-card { padding:11px; border:1px solid rgba(70,70,57,.13); border-radius:10px; background:rgba(255,255,255,.36); }
+.az-about-field .az-about-card b { display:block; color:#6e5a38; font:750 9px/1 var(--az-font-mono); letter-spacing:.08em; text-transform:uppercase; }
+.az-about-field .az-about-card span { display:block; margin-top:7px; font:650 11px/1.35 var(--az-font-ui); }
+.az-about-field h3 { margin:17px 0 7px; color:#384642; font:750 12px/1 var(--az-font-ui); }
+.az-about-field p,.az-about-field li { font:500 11px/1.55 var(--az-font-ui); }
+.az-about-field ul { padding-left:18px; margin:6px 0; }
+@media(max-width:700px){.az-about-field .az-about-grid{grid-template-columns:1fr}}
