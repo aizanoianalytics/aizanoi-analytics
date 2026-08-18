@@ -1,0 +1,43 @@
+/* Final Aizanoi cinematic/UI pass.
+   Keep archaeology/UI information available, but let the reconstructed world
+   dominate the viewport during ordinary walking. */
+#glCanvas{
+  filter:brightness(.87) contrast(1.105) saturate(.91);
+}
+#cinematicOverlay{
+  background:
+    radial-gradient(ellipse at 50% 48%,transparent 34%,rgba(72,49,18,.025) 66%,rgba(20,13,7,.20) 118%),
+    linear-gradient(180deg,rgba(255,214,142,.035),transparent 34%,transparent 76%,rgba(32,20,8,.075));
+  opacity:.92;
+}
+#crosshair{opacity:.72}
+#prompt{backdrop-filter:blur(12px);box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.topbar,.bottomBar,#mapBox,#headingHud,#elevationHud{transition:opacity .2s ease,transform .2s ease,filter .2s ease}
+.chip,.select,.hudBtn,#timeWrap{backdrop-filter:blur(13px) saturate(1.06)}
+#mapBox{box-shadow:0 22px 70px rgba(0,0,0,.36)}
+.bottomBar{backdrop-filter:blur(10px)}
+#prompt{opacity:.82}
+
+@media(pointer:fine) and (min-width:901px){
+  .topbar{opacity:.82}
+  #mapBox{opacity:.74;transform:scale(.86);transform-origin:top right}
+  .bottomBar{opacity:.64}
+  #headingHud,#elevationHud{opacity:.65}
+  .topbar:hover,.topbar:focus-within,
+  #mapBox:hover,#mapBox:focus-within,
+  .bottomBar:hover,.bottomBar:focus-within{opacity:1;transform:none}
+  #headingHud:hover,#elevationHud:hover{opacity:1}
+}
+
+/* Monument labels/inspection remain legible without reading as a permanent game HUD. */
+#prompt .kbd{background:rgba(26,21,14,.88)}
+.mapLegend,.mapLabel{letter-spacing:.035em}
+
+@media(pointer:coarse),(max-width:900px){
+  #glCanvas{filter:brightness(.90) contrast(1.08) saturate(.92)}
+  #cinematicOverlay{opacity:.72}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .topbar,.bottomBar,#mapBox,#headingHud,#elevationHud{transition:none!important}
+}
