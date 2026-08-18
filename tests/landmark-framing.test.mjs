@@ -25,6 +25,8 @@ for (const city of ['rome-410-476','athens-450-430']) {
     assert.match(source, /landmarkViewDirections/);
     assert.match(source, /lookY/);
     assert.match(source, /arrivalUntil/);
+    assert.match(source, /resolved = false/);
+    assert.match(source, /resolved: true/);
   });
 }
 

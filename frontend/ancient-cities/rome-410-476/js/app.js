@@ -1276,9 +1276,9 @@ function lookAtTarget(x, z, targetY = null) {
   });
 }
 
-function teleportToPoint(x, z, { lookX = null, lookZ = null, lookY = null, label = 'destination' } = {}) {
+function teleportToPoint(x, z, { lookX = null, lookZ = null, lookY = null, label = 'destination', resolved = false } = {}) {
   clearMovementState();
-  const spawn = traversal.resolveSpawn(x, z);
+  const spawn = resolved ? { x, z } : traversal.resolveSpawn(x, z);
   const support = traversal.absoluteSupportAt(spawn.x, spawn.z);
   player.x = spawn.x;
   player.z = spawn.z;
@@ -1342,7 +1342,7 @@ function teleport(id) {
   if (!chosen || chosen.score < -900) {
     chosen = traversal.resolveSpawn(building.x, building.z - desiredDistance, Math.max(38, searchRadius));
   }
-  teleportToPoint(chosen.x, chosen.z, { lookX: building.x, lookZ: building.z, lookY, label: building.name });
+  teleportToPoint(chosen.x, chosen.z, { lookX: building.x, lookZ: building.z, lookY, label: building.name, resolved: true });
   $('#jump').value = '';
   return true;
 }
