@@ -33,6 +33,7 @@ async function open(context){
   assert.equal(await input.evaluate(el=>el.tagName),'TEXTAREA','chat input was not upgraded before wiring');
   assert.equal(await page.locator('.os-v2-chat-toolbar').count(),1,'chat toolbar missing');
   assert.ok(await page.locator('[data-chat-action="retry"]').count(),'retry action missing');
+  assert.ok(await page.evaluate(()=>typeof openWindows.get('chatbot')?.detachDrag==='function'),'window drag cleanup hook missing');
 
   await input.fill('Line one');
   await input.press('Shift+Enter');
@@ -68,7 +69,28 @@ async function open(context){
   await page.locator('.os-v2-show-desktop').click();
   assert.ok(await page.locator('.win:visible').count(),'show desktop did not restore windows');
 
+  await page.locator('#taskbar').click({button:'right'});
+  await page.waitForSelector('.ctx-menu[role="menu"]');
+  assert.ok(await page.locator('.ctx-menu [role="menuitem"]').count(),'context menu items lost menu semantics');
+  await page.keyboard.press('Escape');
+
+  await page.evaluate(()=>showBalloon({title:'Smoke',body:'Accessible notification',duration:2000}));
+  await page.waitForSelector('.balloon[role="status"]');
+  assert.equal(await page.locator('.balloon .b-close').getAttribute('role'),'button','notification close control lacks button semantics');
+
   await page.locator('[data-chat-action="clear"]').click();
+  const removedDragListeners=await page.evaluate(()=>{
+    let removed=0;
+    const original=document.removeEventListener;
+    document.removeEventListener=function(type,listener,options){
+      if(['mousemove','touchmove','mouseup','touchend'].includes(type)) removed++;
+      return original.call(document,type,listener,options);
+    };
+    try { closeApp('chatbot'); }
+    finally { document.removeEventListener=original; }
+    return removed;
+  });
+  assert.ok(removedDragListeners>=4,`expected drag listeners to be released, got ${removedDragListeners}`);
   assert.deepEqual(errors,[],'desktop browser errors: '+errors.join(' | '));
   await context.close();
 }
