@@ -16,6 +16,15 @@ const REGION_STYLE = Object.freeze({
   XIV:{ kind:'river', height:[7,15], shop:0.62, courtyard:0.18, materials:['brick','brickDark','plaster2'] },
 });
 
+// These zones protect only camera breathing room around authored landmark arrivals.
+// They never move/remove named archaeology; only low-certainty procedural massing
+// is prevented from growing directly under a hero camera or across its first steps.
+const CINEMATIC_CLEAR_ZONES = Object.freeze([
+  { id:'colosseum-south', x:52, z:-217, radius:42 },
+  { id:'forum-south', x:-179, z:-161, radius:44 },
+  { id:'pantheon-south', x:-365, z:28, radius:40 },
+]);
+
 const hash = (input) => {
   let h = 2166136261;
   for (let i = 0; i < input.length; i++) {
@@ -73,6 +82,13 @@ function overlapsFabric(x, z, width, depth, fabric, padding = 1.6) {
   return false;
 }
 
+function overlapsCinematicClearZone(x, z, width, depth) {
+  const footprintRadius = Math.hypot(width, depth) * 0.32;
+  return CINEMATIC_CLEAR_ZONES.some((zone) => (
+    Math.hypot(x - zone.x, z - zone.z) < zone.radius + footprintRadius
+  ));
+}
+
 function targetForRegion(region, density, mobile) {
   const cell = mobile ? 38 : 29;
   const theoretical = Math.max(1, (region.w * region.d) / (cell * cell));
@@ -126,6 +142,7 @@ export function generateUrbanFabric({
         const width = 15 + hash(`${seed}:w`) * (mobile ? 8 : 14);
         const depth = 12.5 + hash(`${seed}:d`) * (mobile ? 7.5 : 12.5);
         if (Math.abs(bx - tiberX) < 60) continue;
+        if (overlapsCinematicClearZone(bx, bz, width, depth)) continue;
         if (overlapsNamedBuilding(bx, bz, width, depth, buildings)) continue;
         if (overlapsFabric(bx, bz, width, depth, fabric)) continue;
 
@@ -171,5 +188,6 @@ export const URBAN_FABRIC_METHOD = Object.freeze({
   evidence: 'plausible',
   deterministic: true,
   fairRegionalQuotas: true,
-  note: 'Generated fabric is intentionally subordinate to named monuments and major streets. Region quotas keep the whole city inhabited instead of allowing early regions to exhaust a global procedural cap.',
+  cinematicClearZones: true,
+  note: 'Generated fabric is intentionally subordinate to named monuments, major streets and validated arrival sightlines. Region quotas keep the whole city inhabited instead of allowing early regions to exhaust a global procedural cap.',
 });
