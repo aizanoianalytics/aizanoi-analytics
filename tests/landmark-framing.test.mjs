@@ -6,15 +6,17 @@ import { landmarkCameraClearance, landmarkFramingDistance, landmarkLookHeight, l
 
 const root = resolve(import.meta.dirname, '..');
 
-test('shared landmark framing scales back from large monuments', () => {
-  assert.ok(landmarkFramingDistance({ w:125, d:102, h:48 }) > 180);
-  assert.ok(landmarkFramingDistance({ w:46, d:22, h:16 }) > 70);
+test('shared landmark framing keeps large monuments dramatic without unsafe close-ups', () => {
+  const colosseumDistance = landmarkFramingDistance({ w:125, d:102, h:48 });
+  assert.ok(colosseumDistance > 155);
+  assert.ok(colosseumDistance < 190);
+  assert.ok(landmarkFramingDistance({ w:46, d:22, h:16 }) > 60);
   assert.equal(landmarkViewDirections().length, 8);
 });
 
 test('shared landmark look targets the upper mass without extreme pitch', () => {
   const targetY = landmarkLookHeight({ h:48 }, 3);
-  const pitch = landmarkLookPitch({ eyeY:4.7, targetY, horizontalDistance:190 });
+  const pitch = landmarkLookPitch({ eyeY:4.7, targetY, horizontalDistance:170 });
   assert.ok(pitch > 0 && pitch < 0.2);
 });
 
@@ -62,7 +64,7 @@ test('landmark sight clearance rejects terrain or solids crossing the view ray',
     candidate:{x:0,z:0}, target:{x:0,z:-100}, eyeY:3, targetY:14,
     collide:()=>false, heightAt:()=>0,
   });
-  assert.equal(clear, 7);
+  assert.equal(clear, 8);
   const blocked = landmarkSightClearance({
     candidate:{x:0,z:0}, target:{x:0,z:-100}, eyeY:3, targetY:14,
     collide:(_x,z)=>z < -25, heightAt:()=>0,
@@ -70,9 +72,9 @@ test('landmark sight clearance rejects terrain or solids crossing the view ray',
   assert.ok(blocked < clear);
 });
 
-test('landmark camera clearance respects rotated high building footprints', () => {
+test('landmark camera clearance reserves visual silhouette space around tall massing', () => {
   const obstacles = [{ id:'palace', x:0, z:0, w:100, d:60, h:30, rot:0 }];
-  assert.equal(landmarkCameraClearance({ candidate:{x:55,z:0}, obstacles }), 5);
-  assert.ok(landmarkCameraClearance({ candidate:{x:90,z:0}, obstacles }) >= 40);
+  assert.ok(landmarkCameraClearance({ candidate:{x:55,z:0}, obstacles }) < 3);
+  assert.ok(landmarkCameraClearance({ candidate:{x:90,z:0}, obstacles }) >= 35);
   assert.equal(landmarkCameraClearance({ candidate:{x:0,z:0}, obstacles, ignoreId:'palace' }), 100);
 });

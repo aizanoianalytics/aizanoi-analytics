@@ -1,23 +1,18 @@
 // Deterministic, explicitly inferred urban fabric for Athens 450–430 BCE.
-// Named monuments remain in city.js. This module fills otherwise empty districts
-// with plausible block massing without claiming to reconstruct individual
-// excavated houses.
-//
-// The districts here are civic / topographical, not the Augustan regional
-// divisions of Rome. The grid is the schematic navigable surface used by the
-// renderer and the shared traversal engine.
+// Named monuments remain in city.js. This module supplies plausible city scale
+// without claiming to reconstruct individual excavated houses.
 
 const DISTRICT_DENSITY = Object.freeze({
-  acropolis: 0.18, 'south-slope': 0.34, agora: 0.46, 'lower-city': 0.70,
-  kerameikos: 0.60, northgate: 0.44, pnyx: 0.16, olympieion: 0.18,
-  'long-walls': 0.22, piraeus: 0.80,
+  acropolis: 0.10, 'south-slope': 0.48, agora: 0.62, 'lower-city': 0.82,
+  kerameikos: 0.72, northgate: 0.54, pnyx: 0.22, olympieion: 0.24,
+  'long-walls': 0.18, piraeus: 0.84,
 });
 const DISTRICT_STYLE = Object.freeze({
-  agora: { kind:'civic-market', height:[4,8], shop:0.62, courtyard:0.30, materials:['plaster','plaster3','limestone2'] },
-  'lower-city': { kind:'courtyard-houses', height:[5,10], shop:0.48, courtyard:0.46, materials:['plaster','plaster2','plaster3'] },
-  kerameikos: { kind:'workshops', height:[5,10], shop:0.58, courtyard:0.34, materials:['plaster2','plaster3','brick'] },
-  piraeus: { kind:'harbour-grid', height:[6,13], shop:0.64, courtyard:0.26, materials:['plaster','plaster2','limestone2'] },
-  'south-slope': { kind:'slope-houses', height:[4,8], shop:0.30, courtyard:0.38, materials:['plaster','limestone2','plaster3'] },
+  agora: { kind:'civic-market', height:[4,8], shop:0.68, courtyard:0.28, materials:['plaster','plaster3','limestone2'] },
+  'lower-city': { kind:'courtyard-houses', height:[5,10], shop:0.52, courtyard:0.50, materials:['plaster','plaster2','plaster3'] },
+  kerameikos: { kind:'workshops', height:[5,10], shop:0.64, courtyard:0.32, materials:['plaster2','plaster3','brick'] },
+  piraeus: { kind:'harbour-grid', height:[6,13], shop:0.68, courtyard:0.25, materials:['plaster','plaster2','limestone2'] },
+  'south-slope': { kind:'slope-houses', height:[4,8], shop:0.34, courtyard:0.42, materials:['plaster','limestone2','plaster3'] },
 });
 
 const hash = (input) => {
@@ -56,9 +51,11 @@ function nearestStreet(x, z, streets) {
   return best ? { ...best, distance } : null;
 }
 
-function overlapsNamedBuilding(x, z, width, depth, buildings, padding = 10) {
+function overlapsNamedBuilding(x, z, width, depth, buildings) {
   for (const building of buildings) {
     if (building.type === 'wall' || building.type === 'aqueduct') continue;
+    const monumental = Math.max(building.w || 0, building.d || 0) > 80 || (building.h || 0) > 18;
+    const padding = monumental ? 7 : 4.5;
     const hx = (building.w || 0) / 2 + width / 2 + padding;
     const hz = (building.d || 0) / 2 + depth / 2 + padding;
     if (Math.abs(x - building.x) < hx && Math.abs(z - building.z) < hz) return true;
@@ -66,13 +63,20 @@ function overlapsNamedBuilding(x, z, width, depth, buildings, padding = 10) {
   return false;
 }
 
-function overlapsFabric(x, z, width, depth, fabric, padding = 4) {
+function overlapsFabric(x, z, width, depth, fabric, padding = 1.4) {
   for (const building of fabric) {
     const hx = building.w / 2 + width / 2 + padding;
     const hz = building.d / 2 + depth / 2 + padding;
     if (Math.abs(x - building.x) < hx && Math.abs(z - building.z) < hz) return true;
   }
   return false;
+}
+
+function targetForDistrict(region, density, mobile) {
+  const cell = mobile ? 34 : 26;
+  const theoretical = Math.max(1, (region.w * region.d) / (cell * cell));
+  const scaled = Math.round(theoretical * density * 0.66);
+  return Math.max(mobile ? 6 : 10, Math.min(mobile ? 18 : 40, scaled));
 }
 
 export function generateUrbanFabric({
@@ -85,50 +89,50 @@ export function generateUrbanFabric({
   if (!regions || !buildings || !streets) throw new TypeError('generateUrbanFabric requires regions, buildings and streets.');
 
   const fabric = [];
-  const globalCap = mobile ? 110 : 230;
+  const globalCap = mobile ? 155 : 360;
+  const cell = mobile ? 34 : 26;
 
+  // Density is intentionally concentrated in the lived lower city, Agora edge,
+  // Kerameikos and Piraeus. The Acropolis/Pnyx retain breathing room so sacred
+  // and topographical hierarchy is not erased by procedural filler.
   for (const region of regions) {
     if (fabric.length >= globalCap) break;
-    const density = DISTRICT_DENSITY[region.id] ?? 0.45;
-    const cell = mobile ? 38 : 30;
-    const minX = region.x - region.w / 2 + cell * 0.55;
-    const maxX = region.x + region.w / 2 - cell * 0.55;
-    const minZ = region.z - region.d / 2 + cell * 0.55;
-    const maxZ = region.z + region.d / 2 - cell * 0.55;
-
-    // Skip the Long Walls corridor; show only walls and gates there.
     if (region.id === 'long-walls') continue;
+    const density = DISTRICT_DENSITY[region.id] ?? 0.50;
+    const districtTarget = targetForDistrict(region, density, mobile);
+    let districtPlaced = 0;
+    const minX = region.x - region.w / 2 + cell * 0.50;
+    const maxX = region.x + region.w / 2 - cell * 0.50;
+    const minZ = region.z - region.d / 2 + cell * 0.50;
+    const maxZ = region.z + region.d / 2 - cell * 0.50;
 
-    for (let z = minZ; z <= maxZ && fabric.length < globalCap; z += cell) {
-      for (let x = minX; x <= maxX && fabric.length < globalCap; x += cell) {
+    for (let z = minZ; z <= maxZ && fabric.length < globalCap && districtPlaced < districtTarget; z += cell) {
+      for (let x = minX; x <= maxX && fabric.length < globalCap && districtPlaced < districtTarget; x += cell) {
         const seed = `${region.id}:${Math.round(x)}:${Math.round(z)}`;
         if (hash(`${seed}:presence`) > density) continue;
 
-        // Stay clear of the parallel Long Walls corridor.
         if (region.id === 'lower-city' || region.id === 'kerameikos') {
-          if (x > longWallCorridor.minX - 60 && x < longWallCorridor.maxX + 60) {
-            if (Math.abs(z - 30) < longWallCorridor.halfWidth) continue;
-          }
+          if (x > longWallCorridor.minX - 60 && x < longWallCorridor.maxX + 60 && Math.abs(z - 30) < longWallCorridor.halfWidth) continue;
         }
 
         const street = nearestStreet(x, z, streets);
-        const streetClearance = (street?.street.width || 14) / 2 + (mobile ? 7 : 8.5);
+        const streetClearance = (street?.street.width || 14) / 2 + (mobile ? 5.8 : 4.5);
         if (street && street.distance < streetClearance) continue;
 
-        const jitterX = (hash(`${seed}:jx`) - 0.5) * cell * 0.28;
-        const jitterZ = (hash(`${seed}:jz`) - 0.5) * cell * 0.28;
+        const jitterX = (hash(`${seed}:jx`) - 0.5) * cell * 0.34;
+        const jitterZ = (hash(`${seed}:jz`) - 0.5) * cell * 0.34;
         const bx = x + jitterX;
         const bz = z + jitterZ;
-        const width = 12 + hash(`${seed}:w`) * (mobile ? 6 : 10);
-        const depth = 10 + hash(`${seed}:d`) * (mobile ? 5 : 9);
+        const width = 12.5 + hash(`${seed}:w`) * (mobile ? 6.5 : 10.5);
+        const depth = 10.5 + hash(`${seed}:d`) * (mobile ? 5.5 : 9.5);
         if (overlapsNamedBuilding(bx, bz, width, depth, buildings)) continue;
         if (overlapsFabric(bx, bz, width, depth, fabric)) continue;
 
-        const style = DISTRICT_STYLE[region.id] || { kind:'mixed-houses', height:[5,10], shop:0.42, courtyard:0.38, materials:['plaster','plaster2','limestone2'] };
+        const style = DISTRICT_STYLE[region.id] || { kind:'mixed-houses', height:[5,10], shop:0.44, courtyard:0.40, materials:['plaster','plaster2','limestone2'] };
         const heightBase = style.height[0] + hash(`${seed}:h`) * (style.height[1] - style.height[0]);
-        const condition = hash(`${seed}:use`) < 0.10 ? 'damaged' : 'working';
+        const condition = hash(`${seed}:use`) < 0.08 ? 'damaged' : 'working';
         const material = style.materials[Math.min(style.materials.length - 1, Math.floor(hash(`${seed}:mat`) * style.materials.length))];
-        const angle = street && street.distance < 80 ? street.angle : (hash(`${seed}:rot`) - 0.5) * 0.18;
+        const angle = street && street.distance < 100 ? street.angle : (hash(`${seed}:rot`) - 0.5) * 0.24;
 
         fabric.push({
           id: `fabric-${region.id}-${fabric.length + 1}`,
@@ -142,7 +146,7 @@ export function generateUrbanFabric({
           rot: angle,
           floors: Math.max(1, Math.min(3, Math.round(heightBase / 3.0))),
           courtyard: hash(`${seed}:court`) > (1 - style.courtyard),
-          shopfront: street && street.distance < 48 && hash(`${seed}:shop`) > (1 - style.shop),
+          shopfront: street && street.distance < 58 && hash(`${seed}:shop`) > (1 - style.shop),
           districtStyle: style.kind,
           state: condition,
           material,
@@ -150,9 +154,10 @@ export function generateUrbanFabric({
           source: 'district-density',
           evidence: {
             level: 'plausible',
-            note: 'Procedural 5th-century massing based on district density and street relationships; not an individually excavated house restitution.',
+            note: 'Procedural fifth-century massing based on district density and street relationships; not an individually excavated house restitution.',
           },
         });
+        districtPlaced += 1;
       }
     }
   }
@@ -163,5 +168,6 @@ export function generateUrbanFabric({
 export const URBAN_FABRIC_METHOD = Object.freeze({
   evidence: 'plausible',
   deterministic: true,
-  note: 'Generated fabric is intentionally subordinate to named monuments and major streets. The Periclean city contained mixed residential, workshop and small-shrine blocks; this model gives scale without claiming exact individual plans.',
+  fairDistrictQuotas: true,
+  note: 'Generated fabric stays subordinate to named monuments and preserves low-density sacred/topographical zones while giving the lived lower city continuous street-scale massing.',
 });

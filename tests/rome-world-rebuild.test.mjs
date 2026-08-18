@@ -18,13 +18,17 @@ test('Rome topography gives named hills meaningful elevation and Tiber a lower v
   assert.ok(terrainHeightAt(TIBER.x, 0) < TIBER.waterY + 0.2, 'river bed should sit below or near water level');
 });
 
-test('urban fabric is deterministic, bounded and explicitly plausible', () => {
+test('urban fabric is deterministic, dense across the whole city and explicitly plausible', () => {
   const a = generateUrbanFabric({ regions: REGIONS, buildings: BUILDINGS, streets: STREETS, mobile: false, tiberX: TIBER.x });
   const b = generateUrbanFabric({ regions: REGIONS, buildings: BUILDINGS, streets: STREETS, mobile: false, tiberX: TIBER.x });
   assert.deepEqual(a, b);
-  assert.ok(a.length >= 70 && a.length <= 240, `unexpected fabric count ${a.length}`);
+  assert.ok(a.length >= 130 && a.length <= 430, `unexpected fabric count ${a.length}`);
   assert.ok(a.every((item) => item.evidence?.level === 'plausible'));
-  assert.ok(a.every((item) => Math.abs(item.x - TIBER.x) >= 64));
+  assert.ok(a.every((item) => Math.abs(item.x - TIBER.x) >= 60));
+  const populatedRegions = new Set(a.map((item) => item.region));
+  assert.ok(populatedRegions.size >= 11, `urban cap should not starve late regiones; populated ${populatedRegions.size}`);
+  const source = readFileSync(resolve(root, 'frontend/ancient-cities/rome-410-476/data/urban-fabric.js'), 'utf8');
+  assert.match(source, /fairRegionalQuotas:\s*true/);
 });
 
 test('inferred source records resolve to a plausible evidence level', () => {

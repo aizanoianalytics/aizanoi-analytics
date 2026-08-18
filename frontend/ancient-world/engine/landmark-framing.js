@@ -10,10 +10,10 @@ const DEFAULT_DIRECTIONS = Object.freeze([
 ]);
 
 export function landmarkFramingDistance(building, {
-  min = 36,
-  footprintScale = 1.35,
-  heightScale = 0.45,
-  padding = 10,
+  min = 32,
+  footprintScale = 1.10,
+  heightScale = 0.46,
+  padding = 8,
 } = {}) {
   if (!building) return min;
   const footprint = Math.max(Number(building.w) || 0, Number(building.d) || 0);
@@ -23,7 +23,7 @@ export function landmarkFramingDistance(building, {
 
 export function landmarkLookHeight(building, groundY = 0) {
   const height = Math.max(0, Number(building?.h) || 0);
-  return groundY + Math.min(16, Math.max(2.2, height * 0.42));
+  return groundY + Math.min(17, Math.max(2.2, height * 0.44));
 }
 
 export function landmarkLookPitch({ eyeY, targetY, horizontalDistance, min = -0.18, max = 0.32 }) {
@@ -72,8 +72,8 @@ export function landmarkSightClearance({
   targetY,
   collide,
   heightAt,
-  fractions = [0.10, 0.18, 0.26, 0.34, 0.42, 0.50, 0.58],
-  terrainMargin = 0.45,
+  fractions = [0.08, 0.14, 0.22, 0.30, 0.40, 0.50, 0.62, 0.74],
+  terrainMargin = 0.42,
 } = {}) {
   if (!candidate || !target || typeof collide !== 'function' || typeof heightAt !== 'function') return -1;
   const dx = (Number(target.x) || 0) - (Number(candidate.x) || 0);
@@ -99,6 +99,7 @@ export function landmarkCameraClearance({ candidate, obstacles = [], ignoreId = 
     if (!obstacle || obstacle.id === ignoreId || (Number(obstacle.h) || 0) < minHeight) continue;
     const width = Math.max(0, Number(obstacle.w) || 0);
     const depth = Math.max(0, Number(obstacle.d) || 0);
+    const height = Math.max(0, Number(obstacle.h) || 0);
     if (!width || !depth) continue;
     const angle = -(Number(obstacle.rot) || 0);
     const dx = (Number(candidate.x) || 0) - (Number(obstacle.x) || 0);
@@ -106,8 +107,11 @@ export function landmarkCameraClearance({ candidate, obstacles = [], ignoreId = 
     const ca = Math.cos(angle), sa = Math.sin(angle);
     const lx = dx * ca - dz * sa;
     const lz = dx * sa + dz * ca;
-    const qx = Math.abs(lx) - width / 2;
-    const qz = Math.abs(lz) - depth / 2;
+    // Visual crowding starts before a collider does: reserve an eave/silhouette
+    // margin around tall massing when choosing a landmark camera.
+    const silhouettePadding = Math.min(7.5, Math.max(1.5, height * 0.12));
+    const qx = Math.abs(lx) - width / 2 - silhouettePadding;
+    const qz = Math.abs(lz) - depth / 2 - silhouettePadding;
     const outside = Math.hypot(Math.max(0, qx), Math.max(0, qz));
     nearest = Math.min(nearest, outside);
   }
@@ -115,5 +119,6 @@ export function landmarkCameraClearance({ candidate, obstacles = [], ignoreId = 
 }
 
 export function landmarkCandidateScore({ clearance = 0, visibility = 0, cameraClearance = 0, distance = 0, desiredDistance = 0 }) {
-  return clearance * 20 + visibility * 48 + Math.min(30, Math.max(0, cameraClearance)) * 7 - Math.abs(distance - desiredDistance) * 0.08;
+  const crowdPenalty = cameraClearance < 18 ? (18 - Math.max(0, cameraClearance)) * 8 : 0;
+  return clearance * 22 + visibility * 58 + Math.min(34, Math.max(0, cameraClearance)) * 5 - crowdPenalty - Math.abs(distance - desiredDistance) * 0.12;
 }
