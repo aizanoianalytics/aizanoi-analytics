@@ -28,6 +28,16 @@ jobs:
           node-version: '22'
       - name: Apply guarded OS V2 patch
         run: python3 scripts/patch-os-product-polish-v2.py
+      - name: Normalize generated test literal
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path=Path('tests/os-product-polish.test.mjs')
+          text=path.read_text()
+          broken="const added = [osJs,osCss,games].join('\n');"
+          text=text.replace(broken,"const added = [osJs,osCss,games].join('');")
+          path.write_text(text)
+          PY
       - name: Validate before commit
         run: |
           node --check frontend/games/game-utils.js
