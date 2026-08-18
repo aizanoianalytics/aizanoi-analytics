@@ -23,7 +23,8 @@ test('Brick Breaker uses requestAnimationFrame instead of a 16ms interval',()=>{
   assert.match(brick,/requestAnimationFrame\(loop\)/); assert.match(brick,/accumulator/); assert.doesNotMatch(brick,/setInterval\(tick,16\)/);
 });
 test('Rome and Athens have city-specific final hero/detail vocabulary',()=>{
-  assert.match(rome,/ellipseSurface/); assert.match(rome,/seatingRings/); assert.match(rome,/mastCount/); assert.match(rome,/Forum \/ market corridors/);
+  assert.match(rome,/ellipseSurface/); assert.match(rome,/seatingRings/); assert.match(rome,/arcadeCount/); assert.match(rome,/Arena floor \+ podium wall/); assert.match(rome,/Forum \/ market corridors/);
+  assert.doesNotMatch(rome,/mastCount/);
   assert.match(athens,/hephaisteionHero/); assert.match(athens,/dionysusTheatreHero/); assert.match(athens,/stoaHero/); assert.doesNotMatch(athens,/building\.id === 'pantheon'/);
 });
 test('urban fabric uses district-specific style profiles without upgrading evidence',()=>{
