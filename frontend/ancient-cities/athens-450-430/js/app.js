@@ -208,6 +208,75 @@ function temple(building, color) {
   pitchedBuilding(building.x, ground + base, building.z, building.w * 0.82, building.h - base, building.d * 0.62, color);
 }
 
+function parthenonHero(building, color) {
+  const ground = baseY(building);
+  const podiumH = Math.max(1.25, building.h * 0.12);
+  // Three visible stylobate steps, exaggerated only enough to read at WebGL scale.
+  for (let step = 0; step < 3; step++) {
+    const inset = step * 0.55;
+    box(
+      building.x,
+      ground + step * (podiumH / 3),
+      building.z,
+      building.w + 3.2 - inset * 2,
+      podiumH / 3 + 0.04,
+      building.d + 3.2 - inset * 2,
+      step === 2 ? C.marbleLight : C.limestone,
+    );
+  }
+
+  const stylobate = ground + podiumH;
+  const columnH = building.h * 0.56;
+  const radius = Math.max(0.38, Math.min(0.62, building.w / 86));
+  const frontCount = TOUCH ? 8 : 8;
+  const sideCount = TOUCH ? 13 : 17;
+  const xMin = building.x - building.w * 0.44;
+  const xMax = building.x + building.w * 0.44;
+  const zMin = building.z - building.d * 0.44;
+  const zMax = building.z + building.d * 0.44;
+
+  for (let i = 0; i < frontCount; i++) {
+    const x = xMin + (xMax - xMin) * (i / (frontCount - 1));
+    cylinder(x, stylobate, zMin, radius, columnH, C.marbleLight, TOUCH ? 8 : 12);
+    cylinder(x, stylobate, zMax, radius, columnH, C.marbleLight, TOUCH ? 8 : 12);
+  }
+  for (let i = 1; i < sideCount - 1; i++) {
+    const z = zMin + (zMax - zMin) * (i / (sideCount - 1));
+    cylinder(xMin, stylobate, z, radius, columnH, C.marbleLight, TOUCH ? 8 : 12);
+    cylinder(xMax, stylobate, z, radius, columnH, C.marbleLight, TOUCH ? 8 : 12);
+  }
+
+  // Cella + pronaos massing. The peristyle remains visually separate.
+  box(building.x, stylobate + 0.05, building.z, building.w * 0.52, columnH * 0.88, building.d * 0.50, color);
+  const entablatureY = stylobate + columnH;
+  box(building.x, entablatureY, building.z, building.w * 0.94, 1.15, building.d * 0.94, C.marble);
+  pitchedBuilding(
+    building.x,
+    entablatureY + 1.10,
+    building.z,
+    building.w * 0.88,
+    Math.max(3.2, building.h * 0.22),
+    building.d * 0.84,
+    C.marbleLight,
+  );
+}
+
+function propylaeaHero(building, color) {
+  const ground = baseY(building);
+  const podium = 0.75;
+  box(building.x, ground, building.z, building.w + 2.2, podium, building.d + 2.0, C.limestone);
+  const hallY = ground + podium;
+  pitchedBuilding(building.x, hallY, building.z, building.w * 0.60, building.h - podium, building.d * 0.74, color);
+  const wingW = building.w * 0.19;
+  box(building.x - building.w * 0.39, hallY, building.z, wingW, building.h * 0.62, building.d * 0.88, C.marble);
+  box(building.x + building.w * 0.39, hallY, building.z, wingW, building.h * 0.62, building.d * 0.88, C.marble);
+  const columns = building.id === 'propylaea' ? 6 : 4;
+  for (let i = 0; i < columns; i++) {
+    const x = building.x - building.w * 0.25 + i * (building.w * 0.50 / Math.max(1, columns - 1));
+    cylinder(x, hallY, building.z - building.d * 0.42, 0.48, building.h * 0.52, C.marbleLight, 10);
+  }
+}
+
 function ellipticalCylinder(cx, y, cz, rx, rz, height, color, segments = 36) {
   const count = TOUCH ? Math.min(segments, 28) : segments;
   for (let i = 0; i < count; i++) {
@@ -602,7 +671,9 @@ function renderBuilding(building) {
 
   if (building.type === 'wall') return wall(building);
   if (building.type === 'gate') return arch(building.x, ground, building.z, building.w, building.h, building.d, color);
-  if (building.id === 'pantheon') pantheon(building, color);
+  if (building.id === 'parthenon') parthenonHero(building, color);
+  else if (building.id === 'propylaea' || building.id === 'propylaea-east') propylaeaHero(building, color);
+  else if (building.id === 'pantheon') pantheon(building, color);
   else if (building.type === 'temple') temple(building, color);
   else if (['round', 'dome', 'round-church', 'mausoleum'].includes(building.type)) roundBuilding(building, color);
   else if (['stadium', 'circus', 'arena'].includes(building.type)) longStadium(building, color);
@@ -1260,51 +1331,6 @@ function installInput() {
   lifecycle.listen(window, 'blur', clearMovementState);
   lifecycle.listen(document, 'visibilitychange', () => { if (document.hidden) clearMovementState(); });
 
-  $$('[data-move]').forEach((button) => {
-    const code = button.dataset.move;
-    const down = (event) => {
-      event.preventDefault();
-      button.setPointerCapture?.(event.pointerId);
-      keys.add(code);
-    };
-    const up = (event) => {
-      event.preventDefault();
-      keys.delete(code);
-    };
-    lifecycle.listen(button, 'pointerdown', down);
-    lifecycle.listen(button, 'pointerup', up);
-    lifecycle.listen(button, 'pointercancel', up);
-    lifecycle.listen(button, 'lostpointercapture', up);
-  });
-
-  const lookPad = $('#lookPad');
-  if (lookPad) {
-    let pointer = null;
-    let lastX = 0;
-    let lastY = 0;
-    lifecycle.listen(lookPad, 'pointerdown', (event) => {
-      event.preventDefault();
-      pointer = event.pointerId;
-      lastX = event.clientX;
-      lastY = event.clientY;
-      lookPad.setPointerCapture?.(event.pointerId);
-    });
-    lifecycle.listen(lookPad, 'pointermove', (event) => {
-      if (event.pointerId !== pointer || modalOpen()) return;
-      event.preventDefault();
-      const dx = event.clientX - lastX;
-      const dy = event.clientY - lastY;
-      lastX = event.clientX;
-      lastY = event.clientY;
-      if (Math.hypot(dx, dy) < 1.5) return;
-      player.yaw -= dx * 0.0052;
-      player.pitch = Math.max(-1.1, Math.min(0.8, player.pitch - dy * 0.0042));
-    });
-    const stop = (event) => { if (event.pointerId === pointer) pointer = null; };
-    lifecycle.listen(lookPad, 'pointerup', stop);
-    lifecycle.listen(lookPad, 'pointercancel', stop);
-    lifecycle.listen(lookPad, 'lostpointercapture', stop);
-  }
 }
 
 $('#atlas').onclick = openAtlas;

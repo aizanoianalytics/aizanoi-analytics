@@ -1250,51 +1250,6 @@ function installInput() {
   lifecycle.listen(window, 'blur', clearMovementState);
   lifecycle.listen(document, 'visibilitychange', () => { if (document.hidden) clearMovementState(); });
 
-  $$('[data-move]').forEach((button) => {
-    const code = button.dataset.move;
-    const down = (event) => {
-      event.preventDefault();
-      button.setPointerCapture?.(event.pointerId);
-      keys.add(code);
-    };
-    const up = (event) => {
-      event.preventDefault();
-      keys.delete(code);
-    };
-    lifecycle.listen(button, 'pointerdown', down);
-    lifecycle.listen(button, 'pointerup', up);
-    lifecycle.listen(button, 'pointercancel', up);
-    lifecycle.listen(button, 'lostpointercapture', up);
-  });
-
-  const lookPad = $('#lookPad');
-  if (lookPad) {
-    let pointer = null;
-    let lastX = 0;
-    let lastY = 0;
-    lifecycle.listen(lookPad, 'pointerdown', (event) => {
-      event.preventDefault();
-      pointer = event.pointerId;
-      lastX = event.clientX;
-      lastY = event.clientY;
-      lookPad.setPointerCapture?.(event.pointerId);
-    });
-    lifecycle.listen(lookPad, 'pointermove', (event) => {
-      if (event.pointerId !== pointer || modalOpen()) return;
-      event.preventDefault();
-      const dx = event.clientX - lastX;
-      const dy = event.clientY - lastY;
-      lastX = event.clientX;
-      lastY = event.clientY;
-      if (Math.hypot(dx, dy) < 1.5) return;
-      player.yaw -= dx * 0.0052;
-      player.pitch = Math.max(-1.1, Math.min(0.8, player.pitch - dy * 0.0042));
-    });
-    const stop = (event) => { if (event.pointerId === pointer) pointer = null; };
-    lifecycle.listen(lookPad, 'pointerup', stop);
-    lifecycle.listen(lookPad, 'pointercancel', stop);
-    lifecycle.listen(lookPad, 'lostpointercapture', stop);
-  }
 }
 
 $('#atlas').onclick = openAtlas;
