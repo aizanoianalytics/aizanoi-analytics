@@ -46,7 +46,7 @@
      <button id="openAtlasIntro" class="secondary">OPEN CITY ATLAS</button>
      <button id="openSourcesIntro" class="secondary">RESEARCH & SOURCES</button>
    </div>
-   <div class="bootNote"><span class="desktopOnlyCopy">Desktop: WASD walk · move the mouse to look after mouse-lock · if lock is blocked, hold and drag on the world · Shift run · E inspect · M atlas · L labels.</span><span class="mobileOnlyCopy">Mobile: left thumb moves · drag the right side to look · RUN / INSPECT / MAP buttons are always available. Portrait works; landscape gives a wider field of view.</span> Travel targets, collision geometry, mouse/touch focus and keyboard state are audited in this V7 build. No external 3D library or CDN is required.</div>
+   <div class="bootNote"><span class="desktopOnlyCopy">Desktop: WASD walk · move the mouse to look after mouse-lock · if lock is blocked, hold and drag on the world · Shift run · E inspect · M atlas · L labels.</span><span class="mobileOnlyCopy">Mobile: left thumb moves · drag the right side to look · RUN / INSPECT / MAP buttons are always available. Portrait works; landscape gives a wider field of view.</span> Travel targets, collision geometry, mouse/touch focus and keyboard state are audited in this V8 build. No external 3D library or CDN is required.</div>
  </section>
 </div>
 
@@ -216,7 +216,7 @@
    <article class="sourceCard"><b>Özer & Özcan 2022 — Penkalas</b><p>Archaeological and restoration work along the river, bridge improvement project, historic development and the relation of the Penkalas to settlement and agricultural landscape.</p><a target="_blank" rel="noopener" href="https://dergipark.org.tr/en/pub/iuarts/article/1021334">Open article</a></article>
    <article class="sourceCard"><b>Türkan 2025 — Theatre Topos Inscriptions</b><p>Thirty-three theatre inscriptions; phyle seating including Hadriane, Asklepias, Dionysias and Metroas, with Heraklea likely completing a five-phylai civic division; personal seat reservations in upper areas.</p><a target="_blank" rel="noopener" href="https://philiajournal.com/index.php/phl/en/article/view/281">Open article</a></article>
    <article class="sourceCard"><b>Türkan & Corsten 2024 — New Inscriptions</b><p>Funerary inscriptions, including tombstones reused in later quay walls, add detail to Aizanoi's social and funerary landscape.</p><a target="_blank" rel="noopener" href="https://dergipark.org.tr/en/pub/gephyra/article/1271108">Open article</a></article>
-   <article class="sourceCard"><b>Charles Texier survey plan, c. 1834–35</b><p>The historical map supplied with this project is embedded locally in the HTML and can be compared against the reconstructed plan. It records the temple, river, bridges, theatre/stadium and 19th-century rural settlement before modern excavations.</p><span style="font-size:9px;color:#8f826f">Embedded user-supplied public-domain historical survey image.</span></article>
+   <article class="sourceCard"><b>Charles Texier survey plan, c. 1834–35</b><p>The historical map supplied with this project is stored as a local project asset and can be compared against the reconstructed plan. It records the temple, river, bridges, theatre/stadium and 19th-century rural settlement before modern excavations.</p><span style="font-size:9px;color:#8f826f">Local user-supplied public-domain historical survey image.</span></article>
  </div>
 </section>
 
@@ -229,8 +229,18 @@ const destroyHistoricWorld = () => {
   try { window.__AIZANOI_DEBUG__?.resetMovementState?.(); } catch (_) {}
   try { document.exitPointerLock?.(); } catch (_) {}
 };
+const historicDebug = window.__AIZANOI_DEBUG__;
+// Reuse the already collision-safe central bridge approach for the generic
+// Penkalas riverfront jump. This exposes river, quay and bridge relationships
+// instead of spawning beside a dense inferred house wall.
+if (historicDebug?.teleportViews?.bridge3) {
+  historicDebug.teleportViews.penkalas = {
+    pos: [...historicDebug.teleportViews.bridge3.pos],
+    look: [...historicDebug.teleportViews.bridge3.look],
+  };
+}
 window.__ANCIENT_WORLD_DESTROY__ = destroyHistoricWorld;
-if (window.__AIZANOI_DEBUG__) window.__ANCIENT_WORLD_DEBUG__ = window.__AIZANOI_DEBUG__;
+if (historicDebug) window.__ANCIENT_WORLD_DEBUG__ = historicDebug;
 installBackToOS({ onBeforeExit: destroyHistoricWorld });
 </script>
 </body>
