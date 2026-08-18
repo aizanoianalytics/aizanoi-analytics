@@ -39,8 +39,6 @@
   function resetBall(){ballX=W/2;ballY=H-38;ballDX=Math.random()>.5?3:-3;ballDY=-3;paddleX=(W-PADDLE_W)/2;trail=[];}
 
   function tick(){
-    // Switching games or closing the Games window removes this container.
-    // Stop the high-frequency timer rather than letting an orphaned loop run.
     if(!container.isConnected){if(rafId)cancelAnimationFrame(rafId);rafId=0;return;}
     particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.08;p.life--;});particles=particles.filter(p=>p.life>0);
     if(over||paused)return;
@@ -51,7 +49,6 @@
     for(const b of bricks){if(!b.alive)continue;if(ballX+BALL_R>b.x&&ballX-BALL_R<b.x+b.w&&ballY+BALL_R>b.y&&ballY-BALL_R<b.y+b.h){b.alive=false;ballDY=-ballDY;score+=10;burst(ballX,ballY,b.colors[0]);break;}}
     if(bricks.every(b=>!b.alive)){end(true);return;}
     if(ballY>H+BALL_R){lives--;if(lives<=0){end(false);return;}resetBall();}
-    draw();
   }
 
   function loop(now){
