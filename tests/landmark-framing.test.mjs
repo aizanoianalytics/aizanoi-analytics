@@ -37,9 +37,20 @@ for (const city of ['rome-410-476','athens-450-430']) {
   });
 }
 
-test('Aizanoi Temple jump keeps the open eastern sanctuary approach after runtime extraction', () => {
+test('Aizanoi Temple jump keeps the open eastern sanctuary approach and its arrival identity', () => {
   const source = readFileSync(resolve(root, 'frontend/historic-world/app.js'), 'utf8');
   assert.match(source, /temple:\{pos:\[-68,20\],look:\[-160,20\]\}/);
+  assert.match(source, /arrivalLabel/);
+  assert.match(source, /arrivalUntil/);
+  assert.match(source, /arrivalLabel\s*=\s*target\.name/);
+});
+
+test('Aizanoi touch controls support hybrid touch devices and reset on capture loss', () => {
+  const source = readFileSync(resolve(root, 'frontend/historic-world/app.js'), 'utf8');
+  assert.match(source, /const TOUCH=COARSE_POINTER\|\|HAS_TOUCH\|\|innerWidth<820/);
+  assert.match(source, /pad\.addEventListener\("lostpointercapture",resetJoy\)/);
+  assert.match(source, /run\.addEventListener\("lostpointercapture",runOff\)/);
+  assert.match(source, /canvas\.addEventListener\("lostpointercapture",endLook\)/);
 });
 
 test('Aizanoi Penkalas jump reuses a collision-safe central bridge riverfront view', () => {

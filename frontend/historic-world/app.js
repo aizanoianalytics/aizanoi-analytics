@@ -5,7 +5,7 @@ const canvas=$("#glCanvas"), loading=$("#loading"), boot=$("#boot"), hud=$("#hud
 const HAS_TOUCH=("ontouchstart" in window)||(navigator.maxTouchPoints>0);
 const COARSE_POINTER=matchMedia("(pointer:coarse)").matches;
 const FINE_POINTER=matchMedia("(pointer:fine)").matches;
-const TOUCH=(COARSE_POINTER&&!FINE_POINTER)||(HAS_TOUCH&&innerWidth<820);
+const TOUCH=COARSE_POINTER||HAS_TOUCH||innerWidth<820;
 const MOBILE=(TOUCH||innerWidth<820);
 const DETAIL=MOBILE?.58:1;
 const TEST_MODE=!!window.__AIZANOI_TEST__;
@@ -798,7 +798,7 @@ const EYE_HEIGHT=1.68,MAX_STEP_UP=.46,MAX_STEP_DOWN=.62;
 const player={x:-5,y:EYE_HEIGHT,z:-85,yaw:-1.08,pitch:-.02,speed:3.8,sprint:7.2,floorY:0,surfaceTag:"ground"};
 const keys=new Set();let locked=false,currentEra=225,last=performance.now(),mapFrame=0,gameStarted=false,movementLockUntil=0;
 let mobileMoveX=0,mobileMoveY=0,mobileRun=false,lookPointer=null,lookLastX=0,lookLastY=0;
-let mouseSensitivity=1,userFov=MOBILE?70:62,headBobEnabled=true,moveBlend=0,walkClock=0,mouseDrag=null,mouseDragDistance=0;
+let mouseSensitivity=1,userFov=MOBILE?70:62,headBobEnabled=true,moveBlend=0,walkClock=0,mouseDrag=null,mouseDragDistance=0,arrivalLabel="",arrivalUntil=0;
 function onBridge(x,z){for(const b of bridges){const dx=x-b.x,dz=z-b.z,ca=Math.cos(-b.rot),sa=Math.sin(-b.rot),lx=dx*ca-dz*sa,lz=dx*sa+dz*ca;if(Math.abs(lx)<b.len/2-1&&Math.abs(lz)<b.w/2)return true}return false}
 function inRiver(x,z){return Math.abs(x-riverXAt(z))<15.8&&!onBridge(x,z)}
 const COLLIDER_CELL=42,colliderGrid=new Map();let colliderGridReady=false;
@@ -936,7 +936,8 @@ function openInfo(l){
 function updateProximity(){
  const n=nearest(),p=$("#prompt");if(n){p.style.opacity=1;$("#promptText").textContent=`inspect ${n.l.name}`}else p.style.opacity=0;
  let best=null,bd=1e9;for(const l of landmarks){if(!activeLandmark(l))continue;const d=dist2(player.x,player.z,l.x,l.z);if(d<bd){bd=d;best=l}}
- $("#locName").textContent=best&&bd<150?best.name:(player.z<-900?"Southern sacred landscape":Math.abs(player.x-riverXAt(player.z))<60?"Penkalas riverfront":"Aizanoi urban fabric");
+ const arrival=performance.now()<arrivalUntil?arrivalLabel:"";
+ $("#locName").textContent=arrival||(best&&bd<150?best.name:(player.z<-900?"Southern sacred landscape":Math.abs(player.x-riverXAt(player.z))<60?"Penkalas riverfront":"Aizanoi urban fabric"));
 }
 function openNearest(){const n=nearest();if(n)openInfo(n.l);else toast("No labelled monument is close enough. Open the atlas to choose a site.")}
 function updateHeading(){const deg=((180-player.yaw*180/Math.PI)%360+360)%360,dirs=["N","NE","E","SE","S","SW","W","NW"];$("#headingCardinal").textContent=dirs[Math.round(deg/45)%8];$("#headingDegrees").textContent=String(Math.round(deg)).padStart(3,"0")+"°";const ev=$("#elevationValue");if(ev)ev.textContent=(player.floorY>=0?"+":"")+player.floorY.toFixed(1)+" m";const sn=$("#surfaceName");if(sn)sn.textContent=player.surfaceTag||"ground"}
@@ -1049,8 +1050,9 @@ function teleportTo(id,opts={}){
  if(id==="street"&&currentEra<425)setEra(425);
  const view=teleportViews[id];if(!view){toast("Jump target not found.");return false}
  resetMovementState();movementLockUntil=performance.now()+320;last=performance.now();
- const s=resolveSpawn(view.pos[0],view.pos[1]),tx=view.look[0],tz=view.look[1];player.x=s.x;player.z=s.z;player.pitch=0;const sq=absoluteSupportAt(player.x,player.z);player.floorY=sq.y;player.surfaceTag=sq.tag;player.y=player.floorY+EYE_HEIGHT;player.yaw=Math.atan2(tx-player.x,-(tz-player.z));
- travelFlash((landmarks.find(l=>l.id===id)||bridges.find(b=>b.id===id)||{name:id}).name);
+ const s=resolveSpawn(view.pos[0],view.pos[1]),tx=view.look[0],tz=view.look[1],target=landmarks.find(l=>l.id===id)||bridges.find(b=>b.id===id)||{name:id};player.x=s.x;player.z=s.z;player.pitch=0;const sq=absoluteSupportAt(player.x,player.z);player.floorY=sq.y;player.surfaceTag=sq.tag;player.y=player.floorY+EYE_HEIGHT;player.yaw=Math.atan2(tx-player.x,-(tz-player.z));
+ arrivalLabel=target.name;arrivalUntil=performance.now()+2600;
+ travelFlash(target.name);
  const ae=document.activeElement;if(ae&&ae!==canvas&&typeof ae.blur==="function")ae.blur();canvas.focus({preventScroll:true});
  if(opts.lock!==false&&!TOUCH&&gameStarted&&!worldUIOpen())setTimeout(()=>tryLockMouse(false),260);
  drawMiniMap();return true;
@@ -1097,11 +1099,11 @@ function installTouchControls(){
  const resetJoy=()=>{joyId=null;mobileMoveX=mobileMoveY=0;knob.style.transform="translate(0px,0px)"};
  pad.addEventListener("pointerdown",e=>{joyId=e.pointerId;pad.setPointerCapture(e.pointerId);e.preventDefault()});
  pad.addEventListener("pointermove",e=>{if(e.pointerId!==joyId)return;const r=pad.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,dx=e.clientX-cx,dy=e.clientY-cy,m=Math.hypot(dx,dy)||1,max=43,k=Math.min(1,max/m),px=dx*k,py=dy*k;mobileMoveX=clamp(px/max,-1,1);mobileMoveY=clamp(py/max,-1,1);knob.style.transform=`translate(${px}px,${py}px)`;e.preventDefault()});
- pad.addEventListener("pointerup",resetJoy);pad.addEventListener("pointercancel",resetJoy);
- const runOn=e=>{mobileRun=true;run.classList.add("primaryTouch");run.setPointerCapture?.(e.pointerId);e.preventDefault()},runOff=()=>{mobileRun=false;run.classList.remove("primaryTouch")};run.addEventListener("pointerdown",runOn);run.addEventListener("pointerup",runOff);run.addEventListener("pointercancel",runOff);
+ pad.addEventListener("pointerup",resetJoy);pad.addEventListener("pointercancel",resetJoy);pad.addEventListener("lostpointercapture",resetJoy);
+ const runOn=e=>{mobileRun=true;run.classList.add("primaryTouch");run.setPointerCapture?.(e.pointerId);e.preventDefault()},runOff=()=>{mobileRun=false;run.classList.remove("primaryTouch")};run.addEventListener("pointerdown",runOn);run.addEventListener("pointerup",runOff);run.addEventListener("pointercancel",runOff);run.addEventListener("lostpointercapture",runOff);
  canvas.addEventListener("pointerdown",e=>{if(!gameStarted||e.clientX<innerWidth*.35)return;lookPointer=e.pointerId;lookLastX=e.clientX;lookLastY=e.clientY;canvas.setPointerCapture?.(e.pointerId);e.preventDefault()});
  canvas.addEventListener("pointermove",e=>{if(e.pointerId!==lookPointer)return;const dx=e.clientX-lookLastX,dy=e.clientY-lookLastY;lookLastX=e.clientX;lookLastY=e.clientY;player.yaw+=dx*.0060;player.pitch-=dy*.0054;player.pitch=clamp(player.pitch,-1.25,1.25);e.preventDefault()});
- const endLook=e=>{if(e.pointerId===lookPointer)lookPointer=null};canvas.addEventListener("pointerup",endLook);canvas.addEventListener("pointercancel",endLook);
+ const endLook=e=>{if(e.pointerId===lookPointer)lookPointer=null};canvas.addEventListener("pointerup",endLook);canvas.addEventListener("pointercancel",endLook);canvas.addEventListener("lostpointercapture",endLook);
  $("#mobileInspect").onclick=openNearest;$("#mobileMap").onclick=openAtlas;$("#mobileLabels").onclick=()=>{labelsEnabled.value=!labelsEnabled.value;toast(labelsEnabled.value?"Monument labels enabled":"Monument labels hidden")};
 }
 installTouchControls();
