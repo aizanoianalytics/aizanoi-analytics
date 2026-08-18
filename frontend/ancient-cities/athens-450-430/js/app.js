@@ -8,6 +8,13 @@ import {
 import { createLifecycle } from '../../../ancient-world/engine/lifecycle.js';
 import { createAdaptiveQualityController } from '../../../ancient-world/engine/performance.js';
 import { installMobileControls } from '../../../ancient-world/engine/mobile-controls.js';
+import { ANCIENT_CITY_FRAGMENT_SHADER } from '../../../ancient-world/engine/surface-shader.js';
+import {
+  createAncientSkyRenderer,
+  createAncientWaterRenderer,
+  waterRect,
+  waterRibbon,
+} from '../../../ancient-world/engine/environment-renderer.js';
 import { installBackToOS } from '../../../ancient-world/engine/navigation.js';
 import { ANCIENT_MATERIALS as M } from '../../../ancient-world/assets/materials.js';
 import { evidenceForRecord, evidenceBadgeHTML, installEvidenceStyles } from '../../../ancient-world/engine/evidence.js';
@@ -179,6 +186,8 @@ function pitchedBuilding(x, y, z, width, height, depth, color, rot = 0) {
   tri(corners[2], corners[3], ridgeB, C.roof);
   quad(corners[0], ridgeA, ridgeB, corners[3], C.roof);
   quad(ridgeA, corners[1], corners[2], ridgeB, C.roof);
+  // Aizanoi-style ridge cap makes roof silhouettes read at street level.
+  box(x, top - 0.08, z, 0.28, 0.16, depth + 0.55, C.roof2 || C.roof, rot);
 }
 
 function arch(x, y, z, width, height, depth, color) {
@@ -334,17 +343,28 @@ function pantheon(building, color) {
 function theatre(building, color) {
   const ground = baseY(building);
   const radius = Math.max(building.w, building.d) * 0.46;
-  for (let ring = 0; ring < 5; ring++) {
-    cylinder(
-      building.x,
-      ground + ring * building.h * 0.11,
-      building.z,
-      radius * (1 - ring * 0.08),
-      building.h * 0.12,
-      ring % 2 ? C.limestone : color,
-      28,
-    );
+  const rows = TOUCH ? 6 : 10;
+  const segments = TOUCH ? 15 : 24;
+  const orientation = building.rot || 0;
+  // Stepped semicircular cavea: substantially closer to a theatre silhouette
+  // than the old stack of full cylinders, while staying procedural.
+  for (let row = 0; row < rows; row++) {
+    const t = row / Math.max(1, rows - 1);
+    const r = radius * (0.34 + t * 0.62);
+    const rise = ground + row * Math.max(0.34, building.h * 0.052);
+    const seatDepth = Math.max(1.5, radius * 0.052);
+    const arcWidth = Math.max(2.1, Math.PI * r / segments * 0.92);
+    for (let i = 0; i < segments; i++) {
+      const a = (i / Math.max(1, segments - 1)) * Math.PI;
+      const lx = Math.cos(a) * r;
+      const lz = Math.sin(a) * r;
+      const [x, z] = rotateXZ(building.x + lx, building.z + lz, building.x, building.z, orientation);
+      box(x, rise, z, arcWidth, 0.42 + t * 0.22, seatDepth, row % 2 ? C.limestone : color, orientation + a + Math.PI / 2);
+    }
   }
+  const [stageX, stageZ] = rotateXZ(building.x, building.z - radius * 0.18, building.x, building.z, orientation);
+  box(stageX, ground, stageZ, building.w * 0.74, Math.max(2.8, building.h * 0.30), Math.max(5, building.d * 0.16), C.brick, orientation);
+  box(stageX, ground + Math.max(2.8, building.h * 0.30), stageZ, building.w * 0.78, 0.38, Math.max(5.4, building.d * 0.17), C.limestone, orientation);
 }
 
 function longStadium(building, color) {
@@ -764,9 +784,47 @@ function buildStreamHazards() {
   ];
 }
 
+function facadePoint(building, side, front) {
+  const rot = building.rot || 0;
+  return [
+    building.x + Math.cos(rot) * side - Math.sin(rot) * front,
+    building.z + Math.sin(rot) * side + Math.cos(rot) * front,
+  ];
+}
+
+function addAthenianStreetDetail(building, ground) {
+  const rot = building.rot || 0;
+  const front = building.d / 2 + 0.07;
+  // Low stone base + plaster, timber openings and terracotta roof cues mirror
+  // Aizanoi's street-level density without claiming excavated house elevations.
+  box(building.x, ground, building.z, building.w + 0.22, 0.48, building.d + 0.22, C.limestone2, rot);
+  let p = facadePoint(building, 0, front);
+  box(p[0], ground + 0.48, p[1], Math.min(1.35, building.w * 0.18), 2.05, 0.15, C.timber, rot);
+  const floors = Math.max(1, Math.min(2, building.floors || Math.round(building.h / 3.4)));
+  if (floors > 1 && building.h > 5.1) {
+    for (const side of [-0.25, 0.25]) {
+      p = facadePoint(building, building.w * side, front + 0.02);
+      box(p[0], ground + 3.10, p[1], Math.min(1.18, building.w * 0.16), 1.02, 0.13, C.darkStone, rot);
+      box(p[0], ground + 4.12, p[1], Math.min(1.38, building.w * 0.18), 0.12, 0.18, C.limestone, rot);
+    }
+  }
+  if (building.shopfront) {
+    const shopSide = -building.w * 0.17;
+    p = facadePoint(building, shopSide, front + 0.04);
+    box(p[0], ground + 0.32, p[1], Math.min(3.0, building.w * 0.34), 2.15, 0.16, C.darkStone, rot);
+    const awning = facadePoint(building, shopSide, front + 0.90);
+    box(awning[0], ground + 2.42, awning[1], Math.min(3.55, building.w * 0.42), 0.09, 1.72, C.red, rot);
+    if (!TOUCH) {
+      const prop = facadePoint(building, building.w * 0.15, front + 0.62);
+      cylinder(prop[0], ground + 0.02, prop[1], 0.20, 0.62, C.roof2, 8);
+      cylinder(prop[0] + 0.50, ground + 0.02, prop[1] + 0.12, 0.17, 0.52, C.roof, 8);
+    }
+  }
+}
+
 function renderUrbanFabric(building) {
   const ground = terrainHeightAt(building.x, building.z);
-  const material = C[building.material] || C.brick;
+  const material = building.material === 'brick' ? C.plaster2 : (C[building.material] || C.plaster3);
   if (building.courtyard) {
     const wingW = building.w * 0.38;
     pitchedBuilding(building.x - building.w * 0.28, ground, building.z, wingW, building.h, building.d, material, building.rot);
@@ -774,9 +832,7 @@ function renderUrbanFabric(building) {
   } else {
     pitchedBuilding(building.x, ground, building.z, building.w, building.h, building.d, material, building.rot);
   }
-  if (building.shopfront) {
-    box(building.x, ground + 0.04, building.z - building.d * 0.52, building.w * 0.64, 2.4, 0.55, C.timber, building.rot);
-  }
+  addAthenianStreetDetail(building, ground);
   colliders.push(rectCollider(building.x, building.z, building.w, building.d, building.rot || 0, building.name));
 }
 
@@ -853,29 +909,7 @@ void main(){
   vW = aP;
 }`;
 
-const fragmentShader = `
-precision mediump float;
-varying vec3 vN;
-varying vec3 vC;
-varying float vDepth;
-varying vec3 vW;
-uniform vec3 uFog;
-uniform vec3 uSun;
-uniform float uAmbient;
-uniform float uFogDensity;
-float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
-void main(){
-  vec3 n = normalize(vN);
-  vec3 sun = normalize(uSun);
-  float direct = max(dot(n, sun), 0.0);
-  float hemi = 0.5 + 0.5 * n.y;
-  float bounce = max(dot(n, -sun), 0.0);
-  float lighting = uAmbient + direct * 0.62 + hemi * 0.10 + bounce * 0.035;
-  float grain = (hash(floor(vW.xz * 0.72)) - 0.5) * 0.035;
-  vec3 color = vC * (0.72 + lighting * 0.48 + grain);
-  float fog = clamp(1.0 - exp(-uFogDensity * uFogDensity * vDepth * vDepth), 0.0, 0.88);
-  gl_FragColor = vec4(mix(color, uFog, fog), 1.0);
-}`;
+const fragmentShader = ANCIENT_CITY_FRAGMENT_SHADER;
 
 function makeProgram(vs, fs) {
   const compile = (type, source) => {
@@ -909,6 +943,28 @@ const locations = Object.freeze({
   uAmbient: gl.getUniformLocation(program, 'uAmbient'),
   uFogDensity: gl.getUniformLocation(program, 'uFogDensity'),
 });
+
+const skyRenderer = createAncientSkyRenderer(gl);
+const waterRenderer = createAncientWaterRenderer(gl, [
+  waterRect({
+    x0: ERIDANOS.x - ERIDANOS.halfWidth,
+    x1: ERIDANOS.x + ERIDANOS.halfWidth,
+    z0: WORLD_BOUNDS.minZ,
+    z1: WORLD_BOUNDS.maxZ,
+    y: ERIDANOS.waterY + 0.035,
+    color: C.water,
+  }),
+  waterRibbon({
+    x0: ILISSOS.x - 40,
+    z0: ILISSOS.zOffset - 16,
+    x1: ILISSOS.x + 360,
+    z1: ILISSOS.zOffset + 144,
+    halfWidth: ILISSOS.halfWidth,
+    y: ILISSOS.waterY + 0.035,
+    color: C.water,
+  }),
+]);
+lifecycle.addCleanup(() => { skyRenderer.destroy(); waterRenderer.destroy(); });
 
 function perspective(fov, aspect, near, far) {
   const t = 1 / Math.tan(fov / 2);
@@ -1034,8 +1090,18 @@ function updatePlayer(dt) {
 function draw() {
   resize();
   const fog = modernOverlay ? [0.48, 0.60, 0.64] : [0.69, 0.67, 0.57];
+  const fogDensity = TOUCH ? 0.00066 : 0.00050;
+  const projection = perspective((TOUCH ? 72 : 69) * Math.PI / 180, canvas.width / canvas.height, 0.08, 2600);
+  const view = camera();
   gl.clearColor(fog[0] * 0.91, fog[1] * 0.94, fog[2] * 0.98, 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  skyRenderer.draw({
+    top: modernOverlay ? [0.43, 0.57, 0.68] : [0.40, 0.58, 0.72],
+    horizon: modernOverlay ? [0.66, 0.70, 0.68] : [0.83, 0.76, 0.59],
+    yaw: player.yaw,
+    pitch: player.pitch,
+    sunYaw: 0.72,
+  });
   gl.enable(gl.DEPTH_TEST);
   gl.useProgram(program);
 
@@ -1048,13 +1114,14 @@ function draw() {
   gl.enableVertexAttribArray(locations.aC);
   gl.vertexAttribPointer(locations.aC, 3, gl.FLOAT, false, stride, 6 * 4);
 
-  gl.uniformMatrix4fv(locations.uP, false, perspective((TOUCH ? 72 : 69) * Math.PI / 180, canvas.width / canvas.height, 0.08, 2600));
-  gl.uniformMatrix4fv(locations.uV, false, camera());
+  gl.uniformMatrix4fv(locations.uP, false, projection);
+  gl.uniformMatrix4fv(locations.uV, false, view);
   gl.uniform3fv(locations.uFog, new Float32Array(fog));
   gl.uniform3fv(locations.uSun, new Float32Array([0.36, 0.92, 0.24]));
   gl.uniform1f(locations.uAmbient, 0.52);
-  gl.uniform1f(locations.uFogDensity, TOUCH ? 0.00066 : 0.00050);
+  gl.uniform1f(locations.uFogDensity, fogDensity);
   gl.drawArrays(gl.TRIANGLES, 0, geometry.length / 9);
+  waterRenderer.draw({ projection, view, fog, fogDensity });
 
   if (modernOverlay) drawOverlay();
   else clearOverlay();
@@ -1310,14 +1377,47 @@ function toggleAudio() {
 }
 
 function installInput() {
-  lifecycle.listen(canvas, 'click', () => {
-    if (gameStarted && FINE_POINTER && !modalOpen()) canvas.requestPointerLock?.();
+  let mouseDrag = null;
+  let mouseDragDistance = 0;
+
+  const applyMouseLook = (dx, dy, horizontal = 0.00315, vertical = 0.00285) => {
+    // Match the mature Aizanoi convention: positive horizontal mouse motion
+    // increases yaw, so moving/dragging right turns the view right.
+    player.yaw += dx * horizontal;
+    player.pitch = Math.max(-1.15, Math.min(0.85, player.pitch - dy * vertical));
+  };
+
+  lifecycle.listen(canvas, 'pointerdown', (event) => {
+    if (TOUCH || !gameStarted || locked || modalOpen()) return;
+    mouseDrag = { id: event.pointerId, x: event.clientX, y: event.clientY };
+    mouseDragDistance = 0;
+    canvas.setPointerCapture?.(event.pointerId);
+    event.preventDefault();
   });
+  lifecycle.listen(canvas, 'pointermove', (event) => {
+    if (TOUCH || !mouseDrag || event.pointerId !== mouseDrag.id || locked || modalOpen()) return;
+    const dx = event.clientX - mouseDrag.x;
+    const dy = event.clientY - mouseDrag.y;
+    mouseDrag.x = event.clientX;
+    mouseDrag.y = event.clientY;
+    mouseDragDistance += Math.abs(dx) + Math.abs(dy);
+    applyMouseLook(dx, dy);
+    event.preventDefault();
+  });
+  const finishMouseDrag = (event) => {
+    if (!mouseDrag || event.pointerId !== mouseDrag.id) return;
+    const shortClick = mouseDragDistance < 7;
+    mouseDrag = null;
+    if (shortClick && gameStarted && FINE_POINTER && !modalOpen()) canvas.requestPointerLock?.();
+  };
+  lifecycle.listen(canvas, 'pointerup', finishMouseDrag);
+  lifecycle.listen(canvas, 'pointercancel', (event) => { if (mouseDrag?.id === event.pointerId) mouseDrag = null; });
+
   lifecycle.listen(document, 'pointerlockchange', () => { locked = document.pointerLockElement === canvas; });
+  lifecycle.listen(document, 'pointerlockerror', () => { locked = false; });
   lifecycle.listen(document, 'mousemove', (event) => {
     if (!locked || modalOpen()) return;
-    player.yaw -= event.movementX * 0.0024;
-    player.pitch = Math.max(-1.1, Math.min(0.8, player.pitch - event.movementY * 0.002));
+    applyMouseLook(event.movementX, event.movementY, 0.00185, 0.00165);
   });
   lifecycle.listen(window, 'keydown', (event) => {
     if (modalOpen()) return;
@@ -1330,7 +1430,6 @@ function installInput() {
   lifecycle.listen(window, 'keyup', (event) => keys.delete(event.code));
   lifecycle.listen(window, 'blur', clearMovementState);
   lifecycle.listen(document, 'visibilitychange', () => { if (document.hidden) clearMovementState(); });
-
 }
 
 $('#atlas').onclick = openAtlas;
