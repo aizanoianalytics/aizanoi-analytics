@@ -40,6 +40,7 @@ jobs:
           node --check frontend/js/os-router.js
           node --check frontend/js/os-state.js
           node --check frontend/js/os-shell.js
+          node --check frontend/js/os-intent.js
           node --check frontend/js/os-v2.js
           node --check frontend/historic-world/app.js
           node --check frontend/ancient-world/engine/traversal.js
