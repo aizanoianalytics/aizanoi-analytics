@@ -7,6 +7,7 @@ import {
 } from '../../../ancient-world/engine/traversal.js';
 import { createLifecycle } from '../../../ancient-world/engine/lifecycle.js';
 import { createAdaptiveQualityController } from '../../../ancient-world/engine/performance.js';
+import { installMobileControls } from '../../../ancient-world/engine/mobile-controls.js';
 import { installBackToOS } from '../../../ancient-world/engine/navigation.js';
 import { ANCIENT_MATERIALS as M } from '../../../ancient-world/assets/materials.js';
 import { evidenceForRecord, evidenceBadgeHTML, installEvidenceStyles } from '../../../ancient-world/engine/evidence.js';
@@ -698,6 +699,27 @@ function renderUrbanFabric(building) {
   colliders.push(rectCollider(building.x, building.z, building.w, building.d, building.rot || 0, building.name));
 }
 
+function decorativeCypress(x, z, scale = 1) {
+  const ground = terrainHeightAt(x, z);
+  cylinder(x, ground, z, 0.20 * scale, 2.2 * scale, C.timber, 7);
+  cylinder(x, ground + 1.7 * scale, z, 0.82 * scale, 3.7 * scale, C.grass, TOUCH ? 7 : 10);
+  cylinder(x, ground + 4.1 * scale, z, 0.54 * scale, 2.2 * scale, C.grass, TOUCH ? 7 : 10);
+}
+
+function buildAtmosphericDetails() {
+  REGIONS.forEach((region, index) => {
+    const count = TOUCH ? 1 : 2;
+    for (let i = 0; i < count; i++) {
+      const angle = index * 2.17 + i * 2.8;
+      const x = region.x + Math.cos(angle) * Math.min(52, region.w * 0.30);
+      const z = region.z + Math.sin(angle) * Math.min(48, region.d * 0.30);
+      if (Math.abs(x - TIBER.x) < TIBER.halfWidth + 18) continue;
+      const occupied = BUILDINGS.some((building) => Math.abs(building.x - x) < building.w * 0.62 && Math.abs(building.z - z) < building.d * 0.62);
+      if (!occupied) decorativeCypress(x, z, 0.85 + (index % 3) * 0.12);
+    }
+  });
+}
+
 // Terrain is the physical and visual base. Roads, named monuments and inferred
 // fabric are then layered on top of exactly the same height function.
 buildTerrainMesh();
@@ -706,6 +728,7 @@ for (const street of STREETS) road(street.points, street.width);
 for (const building of BUILDINGS) renderBuilding(building);
 const URBAN_FABRIC = generateUrbanFabric({ regions: REGIONS, buildings: BUILDINGS, streets: STREETS, mobile: TOUCH, tiberX: TIBER.x });
 for (const building of URBAN_FABRIC) renderUrbanFabric(building);
+buildAtmosphericDetails();
 const ROME_HAZARDS = buildTiberHazards();
 
 const player = {
@@ -848,7 +871,12 @@ function camera() {
     Math.sin(player.pitch),
     -Math.cos(player.yaw) * cp,
   ];
-  const eye = [player.x, player.y, player.z];
+  const stable = Math.max(0.2, Math.min(1, 1 - Math.abs((player.floorY + EYE_HEIGHT) - player.y) * 3.2));
+  const bob = Math.sin(walkClock * 2) * 0.017 * moveBlend * stable;
+  const sway = Math.sin(walkClock) * 0.008 * moveBlend * stable;
+  const cy = Math.cos(player.yaw);
+  const sy = Math.sin(player.yaw);
+  const eye = [player.x + cy * sway, player.y + bob, player.z + sy * sway];
   return lookAt(eye, [eye[0] + forward[0], eye[1] + forward[1], eye[2] + forward[2]], [0, 1, 0]);
 }
 
@@ -861,6 +889,7 @@ let gameStarted = false;
 let mapFrame = 0;
 let moveBlend = 0;
 let walkClock = 0;
+let mobileControls = null;
 
 function modalOpen() {
   return !$('#modal')?.classList.contains('hidden');
@@ -868,6 +897,7 @@ function modalOpen() {
 
 function clearMovementState() {
   keys.clear();
+  mobileControls?.reset();
   last = performance.now();
 }
 
@@ -889,6 +919,11 @@ function updatePlayer(dt) {
   dt = Math.min(dt, 0.05);
   let forward = (keys.has('KeyW') ? 1 : 0) - (keys.has('KeyS') ? 1 : 0);
   let right = (keys.has('KeyD') ? 1 : 0) - (keys.has('KeyA') ? 1 : 0);
+  const mobile = mobileControls?.snapshot() || { moveX: 0, moveY: 0, running: false };
+  if (TOUCH) {
+    forward += -mobile.moveY;
+    right += mobile.moveX;
+  }
   const moving = Boolean(forward || right);
   moveBlend += ((moving ? 1 : 0) - moveBlend) * Math.min(1, dt * 9);
 
@@ -898,13 +933,14 @@ function updatePlayer(dt) {
       forward /= length;
       right /= length;
     }
-    const speed = (keys.has('ShiftLeft') || keys.has('ShiftRight')) ? player.sprint : player.speed;
+    const sprinting = keys.has('ShiftLeft') || keys.has('ShiftRight') || mobile.running;
+    const speed = sprinting ? player.sprint : player.speed;
     const sy = Math.sin(player.yaw);
     const cy = Math.cos(player.yaw);
     const dx = (sy * forward + cy * right) * speed * dt;
     const dz = (-cy * forward + sy * right) * speed * dt;
     traversal.moveWithSubsteps(dx, dz);
-    walkClock += dt * (speed > player.speed ? 9.0 : 6.0);
+    walkClock += dt * (sprinting ? 9.5 : 6.2);
   }
 
   const targetEye = player.floorY + EYE_HEIGHT;
@@ -916,8 +952,8 @@ function updatePlayer(dt) {
 
 function draw() {
   resize();
-  const fog = modernOverlay ? [0.48, 0.60, 0.64] : [0.57, 0.53, 0.45];
-  gl.clearColor(fog[0] * 0.82, fog[1] * 0.88, fog[2] * 0.92, 1);
+  const fog = modernOverlay ? [0.48, 0.60, 0.64] : [0.55, 0.49, 0.41];
+  gl.clearColor(fog[0] * 0.82, fog[1] * 0.86, fog[2] * 0.90, 1);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.enable(gl.DEPTH_TEST);
   gl.useProgram(program);
@@ -931,12 +967,12 @@ function draw() {
   gl.enableVertexAttribArray(locations.aC);
   gl.vertexAttribPointer(locations.aC, 3, gl.FLOAT, false, stride, 6 * 4);
 
-  gl.uniformMatrix4fv(locations.uP, false, perspective(62 * Math.PI / 180, canvas.width / canvas.height, 0.08, 2600));
+  gl.uniformMatrix4fv(locations.uP, false, perspective((TOUCH ? 70 : 67) * Math.PI / 180, canvas.width / canvas.height, 0.08, 2600));
   gl.uniformMatrix4fv(locations.uV, false, camera());
   gl.uniform3fv(locations.uFog, new Float32Array(fog));
-  gl.uniform3fv(locations.uSun, new Float32Array([0.42, 0.82, 0.28]));
-  gl.uniform1f(locations.uAmbient, 0.42);
-  gl.uniform1f(locations.uFogDensity, TOUCH ? 0.00078 : 0.00062);
+  gl.uniform3fv(locations.uSun, new Float32Array([0.50, 0.84, 0.27]));
+  gl.uniform1f(locations.uAmbient, 0.47);
+  gl.uniform1f(locations.uFogDensity, TOUCH ? 0.00072 : 0.00056);
   gl.drawArrays(gl.TRIANGLES, 0, geometry.length / 9);
 
   if (modernOverlay) drawOverlay();
@@ -1289,6 +1325,19 @@ $('#introText').textContent = CITY.description;
 
 installEvidenceStyles();
 installInput();
+mobileControls = installMobileControls({
+  canvas,
+  lifecycle,
+  enabled: TOUCH,
+  isActive: () => gameStarted,
+  isBlocked: modalOpen,
+  onLook: (dx, dy) => {
+    player.yaw += dx;
+    player.pitch = Math.max(-1.15, Math.min(0.85, player.pitch - dy));
+  },
+  onInspect: nearestInfo,
+  onMap: openAtlas,
+});
 installBackToOS({ onBeforeExit: () => lifecycle.destroy() });
 lifecycle.listen(window, 'pagehide', () => lifecycle.destroy(), { once: true });
 
