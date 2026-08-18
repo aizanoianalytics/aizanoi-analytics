@@ -34,6 +34,8 @@ async function newPage() {
   await page.waitForFunction(() => Boolean(window.__AIZANOI_DEBUG__), null, { timeout: 12000 });
   await page.locator('#enterBtn').click();
   await page.waitForTimeout(250);
+  await page.evaluate(() => document.exitPointerLock?.());
+  await page.waitForFunction(() => document.pointerLockElement === null);
   await page.evaluate(() => window.__AIZANOI_DEBUG__?.teleportTo?.('temple', { lock: false }));
   await page.waitForTimeout(550);
   await page.screenshot({ path: `${out}/02-aizanoi-temple.png` });
@@ -50,8 +52,12 @@ for (const city of [
   await page.waitForFunction(() => Boolean(window.__ANCIENT_WORLD_DEBUG__), null, { timeout: 12000 });
   await page.locator('#enter').click();
   await page.waitForTimeout(250);
+  await page.evaluate(() => document.exitPointerLock?.());
+  await page.waitForFunction(() => document.pointerLockElement === null);
   await page.evaluate((target) => window.__ANCIENT_WORLD_DEBUG__?.teleport?.(target), city.target);
   await page.waitForTimeout(650);
+  const state = await page.evaluate(() => window.__ANCIENT_WORLD_DEBUG__?.player);
+  console.log(`${city.slug} arrival`, JSON.stringify(state));
   await page.screenshot({ path: `${out}/${city.file}` });
   console.log(`captured ${city.slug}`);
   await context.close();
