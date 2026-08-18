@@ -9,7 +9,6 @@ def replace_once(text, old, new, label):
         raise SystemExit(f'{label}: expected one match, found {count}')
     return text.replace(old, new, 1)
 
-# Shared camera-volume clearance helper.
 path = ROOT / 'frontend/ancient-world/engine/landmark-framing.js'
 text = path.read_text()
 anchor = """export function landmarkCandidateScore({ clearance = 0, visibility = 0, distance = 0, desiredDistance = 0 }) {
@@ -91,7 +90,11 @@ new_candidate = """    const support = traversal.absoluteSupportAt(candidate.x, 
     };
 """
 old_choose = "let chosen = candidates.find((candidate) => candidate.clearance >= 3 && candidate.visibility >= 4) || candidates[0];"
-new_choose = "let chosen = candidates.find((candidate) => candidate.clearance >= 3 && candidate.visibility >= 4 && candidate.cameraClearance >= 12) || candidates[0];"
+new_choose = """const viableCandidates = candidates.filter((candidate) => candidate.clearance >= 3 && candidate.visibility >= 4);
+  const spaciousCandidates = viableCandidates.filter((candidate) => candidate.cameraClearance >= 12);
+  const cameraPool = spaciousCandidates.length ? spaciousCandidates : viableCandidates;
+  cameraPool.sort((a, b) => b.cameraClearance - a.cameraClearance || b.visibility - a.visibility || b.score - a.score);
+  let chosen = cameraPool[0] || candidates[0];"""
 
 for slug in ['rome-410-476', 'athens-450-430']:
     app = ROOT / f'frontend/ancient-cities/{slug}/js/app.js'
@@ -101,7 +104,6 @@ for slug in ['rome-410-476', 'athens-450-430']:
     source = replace_once(source, old_choose, new_choose, f'{slug} camera-clearance chooser')
     app.write_text(source)
 
-# Shared unit coverage.
 test_path = ROOT / 'tests/landmark-framing.test.mjs'
 test = test_path.read_text()
 test = replace_once(
