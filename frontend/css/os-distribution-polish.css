@@ -1,3 +1,16 @@
+/* --- Boot is world-building, not a blocking loading screen ------------------- */
+@keyframes azd-boot-handoff {
+  0%,58% { opacity:1;visibility:visible; }
+  100% { opacity:0;visibility:hidden;pointer-events:none; }
+}
+body.aizanoi-next #boot:not(.hide) {
+  animation:azd-boot-handoff 1.15s cubic-bezier(.35,0,.2,1) .08s forwards!important;
+}
+body.aizanoi-next #boot.hide {
+  transition:opacity .22s ease!important;
+}
+
+/* --- System Panel refinements ------------------------------------------------ */
 body.aizanoi-next .az-settings-body {
   background:
     radial-gradient(circle at 90% 0,rgba(117,210,214,.045),transparent 34%),
