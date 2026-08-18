@@ -17,6 +17,7 @@
 <meta name="twitter:description" content="HR analytics, interactive history and digital experiments — inside a retro desktop.">
 <link rel="icon" type="image/svg+xml" href="/assets/branding/aizanoi-logo-mark.svg">
 <link rel="stylesheet" href="/css/aizanoi-polish.css">
+<link rel="stylesheet" href="/css/os-v2.css">
 <style>
   /* ========================================================================
      AIZANOI ANALYTICS — Windows XP Luna Blue
@@ -1926,14 +1927,33 @@ function wireChatIfNeeded() {
   function addMessage(role, text) {
     const row = document.createElement('div');
     row.className = 'chat-msg ' + (role === 'user' ? 'user' : 'bot');
-    const bubble = document.createElement('div'); bubble.className = 'bubble'; bubble.textContent = text;
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    if (role === 'user') {
+      bubble.textContent = text;
+    } else {
+      bubble.innerHTML = renderMarkdownSafe(text);
+      const copy = document.createElement('button');
+      copy.type = 'button';
+      copy.className = 'chat-copy';
+      copy.textContent = 'Copy';
+      copy.setAttribute('aria-label', 'Copy assistant answer');
+      copy.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(text);
+          copy.textContent = 'Copied'; copy.classList.add('copied');
+          setTimeout(() => { copy.textContent = 'Copy'; copy.classList.remove('copied'); }, 1300);
+        } catch (_) { copy.textContent = 'Unavailable'; }
+      });
+      bubble.appendChild(copy);
+    }
     row.appendChild(bubble); log.appendChild(row); log.scrollTop = log.scrollHeight;
   }
   async function sendMessage() {
     const text = input.value.trim(); if (!text) return;
     const starters = document.getElementById('chat-starters');
     if (starters) starters.style.display = 'none';
-    input.value = ''; input.disabled = true; sendBtn.disabled = true;
+    input.value = ''; input.disabled = true; sendBtn.disabled = true; log.setAttribute('aria-busy','true');
     addMessage('user', text); chatHistory.push({ role:'user', content:text });
     const typing = document.createElement('div');
     typing.className = 'chat-msg bot typing';
@@ -1945,10 +1965,20 @@ function wireChatIfNeeded() {
       if (!res.ok || !data.reply) { addMessage('bot', data.error || 'Unable to reply right now.'); flashTaskItem('chatbot'); }
       else { addMessage('bot', data.reply); chatHistory.push({ role:'assistant', content:data.reply }); }
     } catch (err) { typing.remove(); addMessage('bot','Connection error.'); flashTaskItem('chatbot'); }
+    log.setAttribute('aria-busy','false');
     input.disabled = false; sendBtn.disabled = false; input.focus();
   }
   sendBtn.addEventListener('click', sendMessage);
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
+  window.__AIZANOI_CHAT__ = {
+    clear() {
+      chatHistory = [];
+      log.replaceChildren();
+      const starters = document.getElementById('chat-starters');
+      if (starters) starters.style.display = 'grid';
+      input.value = ''; input.disabled = false; sendBtn.disabled = false; input.focus();
+    }
+  };
   input.focus();
 }
 
@@ -2887,5 +2917,7 @@ function wireChatStartersIfNeeded() {
 }
 window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
 </script>
+<script src="/games/game-utils.js"></script>
+<script src="/js/os-v2.js"></script>
 </body>
 </html>
