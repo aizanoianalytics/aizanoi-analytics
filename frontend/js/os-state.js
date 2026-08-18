@@ -98,6 +98,7 @@
 
   function setPreference(key, value) {
     if (!['theme','sound','reduceMotion','boot','restoreSession','uiScale'].includes(key)) return false;
+    if (state[key] === value) return true;
     state = { ...state, [key]:value };
     persist();
     notify('preference', { key, value });
@@ -164,16 +165,21 @@
   }
 
   function clearActivity() {
+    if (!state.activity.length) return;
     state = { ...state, activity:[] };
     persist();
     notify('activity-clear');
   }
 
   function setSessionApps(appIds, active = null) {
-    const clean = [...new Set((appIds || []).filter((id) => findApp(id)))];
-    state = { ...state, sessionApps:clean.slice(0, 8), lastActive:findApp(active) ? active : null };
+    const clean = [...new Set((appIds || []).filter((id) => findApp(id)))].slice(0, 8);
+    const nextActive = findApp(active) ? active : null;
+    const unchanged = nextActive === state.lastActive && clean.length === state.sessionApps.length && clean.every((id, index) => id === state.sessionApps[index]);
+    if (unchanged) return false;
+    state = { ...state, sessionApps:clean, lastActive:nextActive };
     persist();
     notify('session', { apps:state.sessionApps, active:state.lastActive });
+    return true;
   }
 
   function saveWindowRect(appId, rect) {
@@ -182,6 +188,8 @@
       left:Number(rect.left), top:Number(rect.top), width:Number(rect.width), height:Number(rect.height),
     };
     if (!Object.values(clean).every(Number.isFinite)) return;
+    const previous = state.windowRects?.[appId];
+    if (previous && ['left','top','width','height'].every((key) => Math.abs(previous[key] - clean[key]) < 0.5)) return;
     const windowRects = { ...state.windowRects, [appId]:clean };
     state = { ...state, windowRects };
     persist();
@@ -194,6 +202,9 @@
 
   function setContext(context) {
     const next = { ...state.context, ...(context || {}) };
+    const previous = state.context || {};
+    const unchanged = ['type','label','appId','worldId','landmark'].every((key) => previous[key] === next[key]);
+    if (unchanged) return { ...previous };
     state = { ...state, context:next };
     try { sessionStorage.setItem('aizanoi-os-context', JSON.stringify(next)); } catch (_) {}
     persist();
