@@ -3,8 +3,8 @@ import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const cities = [
-  { slug: 'rome-410-476', teleport: 'colosseum' },
-  { slug: 'athens-450-430', teleport: 'parthenon' },
+  { slug: 'rome-410-476', teleport: 'colosseum', arrival: /Colosseum/i },
+  { slug: 'athens-450-430', teleport: 'parthenon', arrival: /Parthenon/i },
 ];
 
 const browser = await chromium.launch({
@@ -27,23 +27,39 @@ async function walkForward(page, milliseconds = 1000) {
   await page.keyboard.up('w');
 }
 
-async function openCity(context, city) {
+async function openCity(context, city, suffix = '') {
   const page = await context.newPage();
   const errors = [];
   page.on('pageerror', (error) => errors.push(String(error)));
   page.on('console', (message) => {
     if (message.type() === 'error') errors.push(message.text());
   });
-  await page.goto(`${base}/ancient-cities/${city.slug}/`, { waitUntil: 'networkidle' });
+  await page.goto(`${base}/ancient-cities/${city.slug}/${suffix}`, { waitUntil: 'networkidle' });
   await page.waitForFunction(() => Boolean(window.__ANCIENT_WORLD_DEBUG__));
-  await page.locator('#enter').click();
-  await page.waitForTimeout(150);
+  if (!suffix.includes('jump=')) {
+    await page.locator('#enter').click();
+    await page.waitForTimeout(150);
+  }
   assert.equal(await page.locator('#ancient-world-back-to-os').count(), 1, `${city.slug}: back-to-OS control missing`);
   assert.deepEqual(errors, [], `${city.slug}: browser errors: ${errors.join(' | ')}`);
   return { page, errors };
 }
 
 for (const city of cities) {
+  // Field System deep links must use the city's own enter + safe teleport path.
+  {
+    const deepContext = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    const opened = await openCity(deepContext, city, `?jump=${city.teleport}`);
+    const deepPage = opened.page;
+    await deepPage.waitForFunction(() => document.querySelector('#intro')?.classList.contains('hidden'));
+    await deepPage.waitForFunction((expected) => document.querySelector('#place')?.textContent?.toLowerCase().includes(expected), city.arrival.source.replace(/\\/g,'').toLowerCase().replace(/[^a-z-]/g,''));
+    assert.equal(new URL(deepPage.url()).searchParams.has('jump'), false, `${city.slug}: one-shot jump query was not consumed`);
+    const deepPlayer = await player(deepPage);
+    assert.ok(deepPlayer && Number.isFinite(deepPlayer.floorY), `${city.slug}: deep-link arrival produced invalid player state`);
+    assert.deepEqual(opened.errors, [], `${city.slug}: deep-link browser errors: ${opened.errors.join(' | ')}`);
+    await deepContext.close();
+  }
+
   const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   const { page, errors } = await openCity(context, city);
   const initial = await player(page);
@@ -106,5 +122,24 @@ for (const city of cities) {
   await mobile.close();
 }
 
+// Aizanoi uses different public controls (#enterBtn/#teleport) but the same shared
+// navigation bridge must still consume a one-shot OS landmark command.
+{
+  const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(String(error)));
+  page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
+  await page.goto(`${base}/historic-world/?jump=temple`, { waitUntil:'networkidle' });
+  await page.waitForFunction(() => Boolean(window.__AIZANOI_DEBUG__), null, { timeout:12000 });
+  await page.waitForFunction(() => document.querySelector('#hud') && !document.querySelector('#hud').classList.contains('hidden'), null, { timeout:12000 });
+  await page.waitForFunction(() => /Temple of Zeus/i.test(document.querySelector('#locName')?.textContent || ''), null, { timeout:12000 });
+  assert.equal(new URL(page.url()).searchParams.has('jump'), false, 'Aizanoi: one-shot jump query was not consumed');
+  const state = await page.evaluate(() => window.__AIZANOI_DEBUG__?.player);
+  assert.ok(state && Number.isFinite(state.floorY), 'Aizanoi: deep-link arrival produced invalid player state');
+  assert.deepEqual(errors, [], `Aizanoi deep-link browser errors: ${errors.join(' | ')}`);
+  await context.close();
+}
+
 await browser.close();
-console.log('Ancient city desktop/mobile browser smoke passed');
+console.log('Ancient city desktop/mobile/deep-link browser smoke passed');
