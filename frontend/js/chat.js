@@ -151,10 +151,17 @@ window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
 (function bootstrapAizanoiFieldSystem() {
   if (window.__AIZANOI_FIELD_BOOTSTRAP__) return;
   window.__AIZANOI_FIELD_BOOTSTRAP__ = true;
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = '/css/os-aizanoi-next.css';
-  document.head.appendChild(link);
+
+  function loadStyle(href) {
+    if (document.querySelector('link[data-aizanoi-shell-style="' + href + '"]')) return;
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    link.dataset.aizanoiShellStyle = href;
+    document.head.appendChild(link);
+  }
+  loadStyle('/css/os-aizanoi-next.css');
+  loadStyle('/css/os-field-bridges.css');
 
   function loadScript(src) {
     return new Promise(function(resolve, reject) {
@@ -174,6 +181,7 @@ window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
     loadScript('/js/os-state.js')
       .then(function() { return loadScript('/js/os-shell.js'); })
       .then(function() { return loadScript('/js/os-intent.js'); })
+      .then(function() { return loadScript('/js/os-legacy-sanitizer.js'); })
       .catch(function(error) {
         console.error('Aizanoi Field System shell could not load; legacy shell remains available.', error);
       });
