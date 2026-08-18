@@ -37,3 +37,6 @@ jobs:
           git diff HEAD^ --check
       - name: Push synchronized branch
         run: git push origin HEAD:feat/final-polish-aaa-2026-08-18
+
+# Triggered deliberately after PR #14 hardening so this long-lived polish branch
+# is reconciled with the current main before final review/merge.
