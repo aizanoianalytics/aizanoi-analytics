@@ -36,7 +36,7 @@ export const ATHENS_MANIFEST = defineAncientCity({
   teleportTargets,
   evidence: {
     level: 'documented',
-    note: 'Named monuments and the research framework are source-led; the Erechtheion is shown under construction; the Olympieion is the small archaic sanctuary, not the later Roman giant.',
+    note: 'The 450–430 BCE historical frame is rendered as a c. 432–430 BCE endpoint. Later Athena Nike, Erechtheion, Asklepieion and Pompeion buildings are not back-projected into the scene; the Olympieion remains the small archaic sanctuary, not the later Roman giant.',
   },
   terrain: {
     type: 'height-field',
@@ -51,13 +51,14 @@ export const ATHENS_MANIFEST = defineAncientCity({
   performance: {
     maxPixelRatioMobile: 1.15,
     maxPixelRatioDesktop: 1.55,
-    mobileGeometryBudget: 110,
-    desktopGeometryBudget: 230,
+    mobileGeometryBudget: 155,
+    desktopGeometryBudget: 360,
   },
   metadata: {
     boundary: CITY.boundary,
     scaleMetres: CITY.scaleMetres,
     route: '/ancient-cities/athens-450-430/',
+    visualSnapshot: 'c. 432–430 BCE',
   },
 });
 

@@ -36,7 +36,7 @@ export const ROME_MANIFEST = defineAncientCity({
   teleportTargets,
   evidence: {
     level: 'documented',
-    note: 'Named monuments and the research framework are source-led; exact fifth-century restitution varies by record.',
+    note: 'Named monuments and the research framework are source-led; exact fifth-century restitution varies by record. Denser domestic/working fabric remains explicitly plausible rather than individually excavated.',
   },
   terrain: {
     type: 'height-field',
@@ -51,8 +51,8 @@ export const ROME_MANIFEST = defineAncientCity({
   performance: {
     maxPixelRatioMobile: 1.15,
     maxPixelRatioDesktop: 1.55,
-    mobileGeometryBudget: 115,
-    desktopGeometryBudget: 240,
+    mobileGeometryBudget: 170,
+    desktopGeometryBudget: 430,
   },
   metadata: {
     boundary: CITY.boundary,
