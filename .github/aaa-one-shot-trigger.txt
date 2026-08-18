@@ -1,0 +1,1 @@
+Trigger one-shot Ancient World AAA patch after workflow registration.
