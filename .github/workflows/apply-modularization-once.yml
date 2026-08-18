@@ -4,6 +4,8 @@ on:
   push:
     branches: [feat/final-polish-aaa-2026-08-18]
     paths: [.github/workflows/apply-modularization-once.yml]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
@@ -14,6 +16,7 @@ concurrency:
 
 jobs:
   apply:
+    if: github.head_ref == 'feat/final-polish-aaa-2026-08-18' || github.ref_name == 'feat/final-polish-aaa-2026-08-18'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,8 +34,7 @@ jobs:
           from pathlib import Path
           import re
 
-          root=Path('.')
-          front=root/'frontend'
+          front=Path('frontend')
           index_path=front/'index.html'
           index=index_path.read_text()
 
@@ -42,7 +44,6 @@ jobs:
               path.parent.mkdir(parents=True,exist_ok=True)
               path.write_text(text.rstrip()+'\n')
 
-          # Social sharing metadata.
           if 'property="og:image"' not in index:
               anchor='<meta property="og:url" content="https://aizanoianalytics.com/">\n'
               need(anchor in index,'OS metadata anchor missing')
@@ -56,14 +57,12 @@ jobs:
                 '<meta name="twitter:card" content="summary_large_image">\n'
                 '<meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.svg">\n',1)
 
-          # Main OS CSS — select by semantic signature, not position/size.
           styles=list(re.finditer(r'<style>\n?(?P<body>[\s\S]*?)</style>',index))
           os_style=next((m for m in styles if 'Windows XP Luna Blue' in m.group('body') and '#desktop' in m.group('body') and '.win' in m.group('body')),None)
           need(os_style is not None,'OS core style block not found')
           write(front/'css/os-core.css',os_style.group('body'))
           index=index[:os_style.start()]+'<link rel="stylesheet" href="/css/os-core.css">'+index[os_style.end():]
 
-          # Chat runtime.
           a=index.find('/* === CHAT === */'); b=index.find('/* === TERMINAL (GERCEK KOMUT) === */',a)
           need(a>=0 and b>a,'chat/terminal markers missing')
           chat=index[a:b].strip()
@@ -73,24 +72,21 @@ jobs:
           write(front/'js/chat.js',chat)
           index=index[:a]+'/* Chat runtime: /js/chat.js */\n\n'+index[b:]
 
-          # Terminal runtime.
           a=index.find('/* === TERMINAL (GERCEK KOMUT) === */'); b=index.find('/* === BOOT === */',a)
           need(a>=0 and b>a,'terminal/boot markers missing')
           terminal=index[a:b].strip(); need('wireTerminalIfNeeded' in terminal and 'TERM_API_URL' in terminal,'terminal identity failed')
           write(front/'js/terminal.js',terminal)
           index=index[:a]+'/* Terminal runtime: /js/terminal.js */\n\n'+index[b:]
 
-          # Router block near document end.
           a=index.find('<script>\nconst ROUTE_MAP ='); need(a>=0,'router script missing')
           b=index.find('</script>',a); need(b>a,'router close missing')
           router=index[a+len('<script>\n'):b].strip(); need('initRouter' in router and 'APP_TO_ROUTE' in router,'router identity failed')
           write(front/'js/os-router.js',router)
           index=index[:a]+index[b+len('</script>'):]
 
-          # Chat-starter helper belongs with chat runtime.
           a=index.find('<script>\nfunction wireChatStartersIfNeeded()')
           need(a>=0,'chat starter block missing'); b=index.find('</script>',a); need(b>a,'chat starter close missing')
-          starter=index[a+len('<script>\n'):b].strip();
+          starter=index[a+len('<script>\n'):b].strip()
           with (front/'js/chat.js').open('a') as f: f.write('\n\n'+starter+'\n')
           index=index[:a]+index[b+len('</script>'):]
 
@@ -102,8 +98,6 @@ jobs:
             '<script src="/js/os-router.js"></script>\n'+anchor,1)
           index_path.write_text(index)
 
-          # Historic World: mechanically externalize its major CSS and the
-          # traversal/runtime script selected by behavioral signatures.
           hp=front/'historic-world/index.html'; historic=hp.read_text()
           if 'property="og:image"' not in historic:
               desc='<meta name="description" content="A self-contained archaeological first-person reconstruction of Roman Aizanoi, with touch controls, an annotated Texier survey, historical layers and research notes.">\n'
