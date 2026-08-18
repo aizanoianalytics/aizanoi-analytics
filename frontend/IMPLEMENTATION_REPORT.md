@@ -1,172 +1,192 @@
-# Aizanoi Analytics — Implementation Report
+# Aizanoi Analytics — Current Implementation Report
 
-Refactor of Aizanoi Analytics into a real platform with SEO, routing, accessibility, performance and security. Work tracked across 8 phases plus documentation.
+**Updated:** 2026-08-18
 
-## Architecture — Before
+This document describes the current repository architecture. For product constraints and change rules, read the root `AGENTS.md` first. For upcoming work, see `frontend/NEXT_PHASE_TODO.md`.
 
-- Single `index.html` (~108 KB) served directly by nginx.
-- A small Node/Express backend proxied under `/api/` providing `/api/health`, `/api/chat`, `/api/terminal/exec`.
-- No real routing, no SEO metadata, no sitemap, no robots.txt, no canonical domain redirect, no 404 page.
-- AI persona: a generic Turkish chatbot.
-- Front-end exposed nothing in plaintext, but CSP and security headers were minimal.
-- Single "Aizanoi Market" placeholder app on the desktop.
+## Product model
 
-## Architecture — After
+Aizanoi Analytics is a **single-publisher interactive website / portfolio**. Visitors can browse owner-published content, use Aizanoi AI, play local single-player games and explore historical worlds. The product intentionally does **not** include visitor accounts, multiplayer, comments/community, visitor-to-visitor messaging or shared/public leaderboards.
 
-- AizanoiOS-style SPA with **real URL routing** (`pushState` + `popstate`) for:
-  `/`, `/hr-analytics/`, `/ancient-world/`, `/games/`, `/projects/`, `/videos/`, `/about/`, `/docs/`, `/changelog/`, `/privacy/`, `/terms/`.
-- SEO foundation: per-route title, meta description, OpenGraph, Twitter Cards, JSON-LD (WebSite + Organization), canonical, sitemap.xml, robots.txt.
-- Canonical domain enforcement: HTTP→HTTPS, www→non-www.
-- Legacy `/ai/` → 301 → `/hr-analytics/`. Legacy `/market/*` → 410 Gone.
-- Aizanoi AI scoped to **HR & People Analytics** with a short, focused system prompt and Markdown-safe rendering with code blocks.
-- Welcome window on first visit (with `Don't show again` localStorage preference).
-- Mobile app launcher for `<768px` viewports.
-- System actions wired to the Start menu: Shut Down, Log Off, Lock, Run, Search, Control Panel, Recycle Bin.
-- Recycle Bin reframed as **Deprecated Experiments** (archive list).
-- Three games (Mines, Snake, Brick Breaker) loaded lazily per click into the Games window.
-- Ancient World foundation: landing + 360° stylized panorama + interactive hotspots + schematic map + site info. Data-driven engine; more cities can be added.
+## Main product areas
 
-## Files Created
+- **Aizanoi OS** — retro desktop shell and application launcher
+- **Aizanoi AI** — HR & People Analytics assistant
+- **Ancient World** — research-led first-person historical reconstructions
+- **Games** — Mines, Snake and Brick Breaker
+- **Projects / Docs / Changelog / Aizanoi TV** — owner-published portfolio/content surfaces
 
-```
-frontend/
-├── index.html                                # main SPA
-├── icons/                                    # Windows XP PNGs (cached for 24h)
-├── pages/
-│   ├── changelog.json                        # releases feed
-│   └── projects.json                          # portfolio feed
-├── games/
-│   ├── mines.js                              # Minesweeper-style
-│   ├── snake.js                              # Snake
-│   └── brick.js                              # Brick Breaker
-├── robots.txt                                 # allows /, blocks /api/ and /market/
-└── sitemap.xml                                # all public routes
+## Frontend architecture
 
-backend/
-├── server.js                                  # Express backend, Groq + Google fallback
-├── package.json                               # Runtime dependencies
-└── .env.example                               # Placeholder configuration; real .env is never committed
-```
+### Aizanoi OS shell
 
-## Files Modified
+Primary shell: `frontend/index.html`.
 
-- `index.html` — added SEO metadata, OpenGraph, Twitter Cards, JSON-LD, route map, SPA router, Markdown-safe render function, Welcome window, Mobile launcher, system actions, Control Panel, Games launcher, Ancient World engine, aria-label additions.
-- `server.js` — short HR & People Analytics system prompt, HSTS, Permissions-Policy, sanitized error logs.
-- nginx config — SPA fallback, /ai/ 301, /market/* 410, HSTS + Permissions-Policy + cache headers, www→non-www, HTTP→HTTPS.
-- 47 icons in `icons/` (from earlier work, unchanged).
+The shell still contains the legacy SPA/window-manager core, but new polish is being separated into low-risk modules instead of growing the monolith indefinitely:
 
-## Routes
+- `frontend/css/aizanoi-polish.css` — first visual refinement layer
+- `frontend/css/os-v2.css` — current product/mobile/accessibility polish layer
+- `frontend/js/os-v2.js` — current window/taskbar/Start-menu/accessibility enhancement layer
 
-| Route              | Behaviour                                      |
-|--------------------|------------------------------------------------|
-| `/`                | Desktop / mobile launcher                      |
-| `/hr-analytics/`   | Opens Aizanoi AI window                         |
-| `/ancient-world/`  | Opens the legacy Ancient World launcher and site information window |
-| `/historic-world/` | Opens the standalone Aizanoi 3D Historic World reconstruction |
-| `/games/`          | Opens Games launcher                            |
-| `/projects/`       | Opens Projects window (loads `pages/projects.json`) |
-| `/videos/`         | Opens Aizanoi TV window (Coming Soon placeholder) |
-| `/about/`          | Opens About window                              |
-| `/docs/`           | Opens Docs window                                |
-| `/changelog/`      | Opens System Updates window (loads `pages/changelog.json`) |
-| `/privacy/`        | Opens Privacy window                            |
-| `/terms/`          | Opens Terms window                              |
-| `/ai/`             | 301 redirect to `/hr-analytics/`                |
-| `/market/*`        | 410 Gone                                       |
-| `/pages/*.json`    | Static (changelog, projects)                    |
-| `/games/*.js`      | Static (lazy-loaded by Games window)            |
-| `/icons/*`         | Static                                         |
+Current OS features include:
 
-## Redirects
+- boot, lock, shutdown and screensaver flows;
+- draggable/resizable/maximizable/minimizable windows;
+- taskbar and Start menu;
+- custom Aizanoi branding, icons and wallpapers;
+- Show Desktop and viewport clamping;
+- mobile safe-area / dynamic-viewport sizing;
+- Control Panel themes/preferences;
+- keyboard/focus/ARIA improvements;
+- direct URL routing for public app routes.
 
-- `http://aizanoianalytics.com/*` → `https://aizanoianalytics.com/*` (301)
-- `https://www.aizanoianalytics.com/*` → `https://aizanoianalytics.com/*` (301)
-- `https://aizanoianalytics.com/ai/` → `https://aizanoianalytics.com/hr-analytics/` (301)
+### Aizanoi AI frontend
 
-## Historic World V8
+The chat window remains hosted by the OS shell. Assistant responses use the existing HTML-escaping Markdown renderer before being inserted into the UI. Current chat UX includes:
 
-The new self-contained WebGL reconstruction lives at `frontend/historic-world/index.html` and is served at `/historic-world/`. The legacy `/ancient-world/` XP window remains as the site's information and entry launcher. The 3D experience has no CDN dependency and keeps its research/source and uncertainty UI inside the standalone route.
+- starter prompts;
+- loading/error states;
+- formatted Markdown answers;
+- per-answer copy;
+- copy-last-answer;
+- clear local conversation state.
 
-## Aizanoi AI Backend
+Chat history is local in the current page session; there is no visitor account or community chat system.
 
-- Express on port 3001.
-- Routes: `POST /api/chat`, `GET /api/health`, `POST /api/terminal/exec`.
-- AI provider chain: Groq → Google fallback.
-- SYSTEM_PROMPT: short, HR & People Analytics-scoped, identity locked to `Aizanoi AI — HR & People Analytics Assistant`.
-- No file upload, no auth, no retention of chat on our side.
+### Games
 
-## HR System Prompt Location
+Game modules:
 
-`backend/server.js`, top of file, `const SYSTEM_PROMPT = ...`.
+- `frontend/games/mines.js`
+- `frontend/games/snake.js`
+- `frontend/games/brick.js`
+- shared helper: `frontend/games/game-utils.js`
 
-## Ancient World Architecture
+Games are local single-player experiences. Scores are stored in `localStorage['aizanoi-games']`; there is no server-side or public leaderboard. The shared helper provides local best-score display and common toolbar behavior. Games support pause/restart and clean up active timers when their containers are removed.
 
-- Engine: data-driven city config. Adding a new city = adding an entry in a future `pages/ancient/<city>.json` with metadata, scene assets, POIs and spawn point.
-- Current MVP: **Roman Aizanoi**. Stylized 360° panorama of the Temple of Zeus area, with one interactive hotspot explaining the temple.
-- Sources cited via the Site Information panel and obvious visual disclaimers. No fabricated historical detail.
+## Ancient World architecture
 
-## Games Architecture
+Ancient World is no longer a one-off city demo. The repository now has a shared engine layer plus city-specific data/rendering.
 
-- Independent `games/*.js` modules. Each game looks for a `#game-<name>-container` element inside the Games window and runs there.
-- Scores saved in `localStorage['aizanoi-games']`, last 20 per game.
-- No server-side scoring.
+### Shared engine
 
-## Mobile Architecture
+`frontend/ancient-world/engine/` contains reusable contracts for:
 
-- `<768px` viewport: desktop and taskbar hidden, mobile launcher shown.
-- Mobile launcher uses `<a href="/…/">` so each tile has a real URL — works with deep links, back button, refresh, bookmark.
+- traversal / sub-stepped first-person movement;
+- spatial collision;
+- support surfaces / height handling;
+- teleport safety;
+- lifecycle cleanup;
+- Back to Aizanoi OS navigation;
+- analog mobile movement and drag-look;
+- renderer-neutral city manifests;
+- evidence/certainty levels;
+- adaptive render quality;
+- shared procedural surface shading;
+- shared sky and animated water passes.
 
-## SEO Changes
+`frontend/ancient-world/assets/` contains shared renderer-neutral material tokens.
 
-- Per-route `<title>`, `<meta name="description">`, OpenGraph (`og:title`, `og:description`, `og:url`, `og:image`), Twitter Cards (`twitter:title`, `twitter:description`, `twitter:image`).
-- `<link rel="canonical">` per route.
-- JSON-LD: WebSite + Organization schemas.
-- `/robots.txt`: allows `/`, blocks `/api/` and `/market/`, references sitemap.
-- `/sitemap.xml`: 11 public routes.
-- `/market/*` retired (410 Gone) so legacy Google index can be cleaned.
-- Canonical domain enforced.
+### Aizanoi Historic World
 
-## Performance Changes
+Path: `frontend/historic-world/index.html`
+Route: `/historic-world/`
 
-- Cache-Control: HTML `no-store`; PNG `immutable 24h`; fonts/CSS/JS `1h`.
-- Pre-rendered chat body markup → fewer layout shifts on window open.
-- Per-route lazy init for Games and Ancient World (only runs when their window opens).
-- Single HTML still large (~160 KB) but compressed by nginx on the wire; the SPA loads once.
+This remains the most hand-authored historical environment and an important quality reference. It includes mature terrain/traversal, collision, walk surfaces, stairs, river/bridges, monuments, evidence UI and historical layers.
 
-## Security Changes
+### Late Antique Rome
 
-- Backend: HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy (geolocation/microphone/camera off).
-- Nginx: same headers for the HTML route + static assets.
-- `Strict-Transport-Security: max-age=31536000; includeSubDomains`.
-- AI markdown rendered via a small in-house `renderMarkdownSafe` (HTML-escape + Markdown rules) so AI output never reaches `innerHTML` un-escaped.
-- `.env` is chmod 600, root-only, never served.
-- `/api/` paths disallowed in `robots.txt`.
+Path: `frontend/ancient-cities/rome-410-476/`
+Route: `/ancient-cities/rome-410-476/`
 
-## Remaining TODOs
+Rome consumes the shared Ancient World contracts and has city-specific:
 
-- Real YouTube channel URL (`YOUTUBE_CHANNEL_URL`) integration once the channel is open.
-- Photo-realistic 3D environment for Ancient World (currently stylized silhouette + map).
-- Lighthouse run on production (not run from this environment).
-- Long-term: split `index.html` into separate `.css` / `.js` files if the SPA keeps growing.
-- SEO sitemap update frequency could move to a tiny generator script.
+- terrain/topography and Tiber valley;
+- roads and urban fabric;
+- named monuments and regions;
+- evidence metadata;
+- city-specific renderer/builders;
+- atmospheric palette, procedural surface detail, shared sky/water;
+- analog mobile controls and desktop mouse/WASD controls.
 
-## Search Console Manual Steps
+### Classical Athens
 
-See `SEARCH_CONSOLE_CHECKLIST.md`.
+Path: `frontend/ancient-cities/athens-450-430/`
+Route: `/ancient-cities/athens-450-430/`
 
-## How to Add a Game
+Athens also consumes the shared contracts and has city-specific:
 
-1. Create `games/<name>.js`. Inside an IIFE, look for `#game-<name>-container` and render into it.
-2. Add a tile in the Games window's body with `data-game="<name>"` (see existing tiles).
-3. Optional: extend the score-recording key in `games/*.js` to save to `localStorage['aizanoi-games'][<name>]`.
+- Attic schematic topography;
+- Acropolis/Agora/Piraeus-related city data;
+- Classical monuments and roads;
+- plausible deterministic urban infill;
+- evidence metadata;
+- dedicated hero builders including Parthenon and Propylaea;
+- city-specific atmosphere and shared sky/water/mobile input.
 
-## How to Add an Ancient World City
+### Historical evidence model
 
-1. Create `pages/ancient/<city>.json` with metadata, era, civilization, scene assets, POIs.
-2. In the Ancient World landing body, add a button with `data-view="<city>"` and a matching `<div id="ancient-<city>">…</div>` panel.
-3. Extend `wireAncientIfNeeded()` to load and switch to the new panel.
+Reconstructions distinguish evidence levels so visual infill is not silently presented as certain archaeology. The shared model supports categories such as archaeological, documented, plausible and atmospheric/illustrative evidence.
 
-## How to Add a Changelog Entry
+## Backend
 
-1. Append a new entry to `pages/changelog.json` `entries` with `version`, `date`, and `added`/`improved`/`fixed`/`removed` arrays.
-2. Do **not** invent past releases; only record work that has actually happened.
+Primary backend: `backend/server.js`.
+
+Current responsibilities include:
+
+- `GET /api/health`
+- `POST /api/chat`
+- `POST /api/terminal/exec`
+- Groq primary model provider
+- Google fallback provider
+- rate/sandbox/security boundaries
+
+Provider secrets remain production-side in `.env`; they are not committed to the repository. The backend is intended to remain behind the reverse proxy and bound to loopback in production.
+
+## Routing / retired surfaces
+
+Important public behaviors include:
+
+- `/` — Aizanoi OS
+- `/hr-analytics/` — Aizanoi AI route
+- `/ancient-world/` — XP-style Ancient World launcher/information window
+- `/historic-world/` — Aizanoi Historic World
+- `/ancient-cities/rome-410-476/` — Late Antique Rome
+- `/ancient-cities/athens-450-430/` — Classical Athens
+- `/games/` — Games
+- `/projects/`, `/videos/`, `/about/`, `/docs/`, `/changelog/`, `/privacy/`, `/terms/` — owner-published/application surfaces
+- `/ai/` — legacy redirect to `/hr-analytics/`
+- `/market/` — retired; must not be resurrected without an explicit product decision
+
+Production nginx behavior must be verified against the production-only configuration; repository infrastructure examples are reference material, not a blind replacement for live config.
+
+## CI / regression protection
+
+`.github/workflows/ci.yml` validates meaningful branches and pull requests.
+
+Current coverage includes:
+
+- JavaScript syntax checks for backend, games, Aizanoi OS V2 and Ancient World modules;
+- Node regression tests;
+- whitespace checks;
+- real headless Chromium smoke tests for Rome/Athens desktop + mobile controls;
+- real headless Chromium smoke tests for Aizanoi OS desktop/mobile window behavior;
+- lightweight frontend file-size budgets.
+
+The Chromium tests verify behavior rather than only searching source strings.
+
+## Security / privacy principles
+
+- secrets never enter Git;
+- AI/provider keys remain server-side;
+- visitor accounts are intentionally absent;
+- game scores/preferences are browser-local;
+- no community/social state is collected by product design;
+- historical uncertainty must remain visible rather than being hidden by visual polish;
+- production deployment is separate from code review/merge and should preserve `.env` and production-only configuration.
+
+## Current technical debt
+
+The largest remaining frontend debt is still `frontend/index.html`. It is functional and regression-tested, but it remains a large mixed HTML/CSS/JS shell. New work should prefer isolated modules when a safe boundary exists rather than performing a risky wholesale framework rewrite.
+
+Other meaningful future work is documented in `frontend/NEXT_PHASE_TODO.md`; the highest-value direction is deeper city/landmark content quality, measured performance/accessibility work and continued low-risk modularization—not accounts/community feature expansion.
