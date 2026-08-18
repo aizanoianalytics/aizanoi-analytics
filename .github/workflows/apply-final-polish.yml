@@ -1,9 +1,9 @@
 name: Apply Final Aizanoi Polish
 
 on:
-  push:
+  pull_request:
     branches:
-      - feat/final-polish-aaa-2026-08-18
+      - main
     paths:
       - scripts/apply-final-polish-2026-08-18.py
       - .github/workflows/apply-final-polish.yml
@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   patch:
+    if: github.head_ref == 'feat/final-polish-aaa-2026-08-18'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,10 +35,6 @@ jobs:
           node --check frontend/ancient-cities/athens-450-430/data/urban-fabric.js
           node --test tests/*.test.mjs
           git diff --check
-      - name: Remove one-shot patch machinery
-        run: |
-          rm scripts/apply-final-polish-2026-08-18.py
-          rm .github/workflows/apply-final-polish.yml
       - name: Commit product changes
         run: |
           git config user.name github-actions[bot]
