@@ -1,6 +1,21 @@
 (() => {
   'use strict';
 
+  const WINDOW_TITLES = new Map([
+    ['Aizanoi AI','chatbot'],
+    ['Games','games'],
+    ['Ancient World','ancient'],
+    ['Historical Worlds','ancient'],
+    ['Projects','projects'],
+    ['Documentation','docs'],
+    ['System Updates','changelog'],
+    ['Untitled - Notepad','notes'],
+    ['C:\\Aizanoi - Terminal','terminal'],
+    ['About Aizanoi','about'],
+    ['Aizanoi TV','videos'],
+    ['My Documents','docs'],
+  ]);
+
   function setMeta(selector, value, attribute = 'content') {
     const node = document.querySelector(selector);
     if (node) node.setAttribute(attribute, value);
@@ -28,6 +43,24 @@
     window.addEventListener('resize', update, { passive:true });
   }
 
+  function tagWindow(win) {
+    if (!(win instanceof Element) || !win.matches('.win')) return null;
+    const title = win.querySelector('.win-title')?.textContent?.trim() || '';
+    let appId = WINDOW_TITLES.get(title) || null;
+    if (!appId) {
+      if (/Notepad/i.test(title)) appId = 'notes';
+      else if (/Terminal/i.test(title)) appId = 'terminal';
+      else if (/Aizanoi TV/i.test(title)) appId = 'videos';
+    }
+    if (appId) win.dataset.aizanoiApp = appId;
+    return appId;
+  }
+
+  function tagWindows(root = document) {
+    const windows = root.matches?.('.win') ? [root] : [...root.querySelectorAll?.('.win') || []];
+    windows.forEach(tagWindow);
+  }
+
   function aboutMarkup() {
     return `<section class="az-about-field">
       <header class="az-about-head"><img src="/assets/branding/aizanoi-logo-mark.svg" alt=""><div><h2>Aizanoi Field System</h2><p>Digital Archaeology + Intelligence Workstation</p></div></header>
@@ -49,8 +82,8 @@
   function modernizeAboutWindow(root = document) {
     const windows = root.matches?.('.win') ? [root] : [...root.querySelectorAll?.('.win') || []];
     for (const win of windows) {
-      const title = win.querySelector('.win-title')?.textContent?.trim();
-      if (title !== 'About Aizanoi' || win.dataset.aizanoiAboutModernized) continue;
+      const appId = tagWindow(win);
+      if (appId !== 'about' || win.dataset.aizanoiAboutModernized) continue;
       const body = win.querySelector('.win-body');
       if (!body) continue;
       win.dataset.aizanoiAboutModernized = '1';
@@ -76,6 +109,7 @@
       for (const mutation of mutations) {
         for (const node of mutation.addedNodes) {
           if (!(node instanceof Element)) continue;
+          tagWindows(node);
           modernizeAboutWindow(node);
           if (node.id === 'shutdown-overlay') {
             const text = [...node.querySelectorAll('div')].find((item) => /Aizanoi OS/.test(item.textContent || ''));
@@ -91,6 +125,7 @@
     alignProductMetadata();
     repairScreensaverSurveyMark();
     relabelLegacyScreens();
+    tagWindows();
     modernizeAboutWindow();
     watchDynamicLegacySurfaces();
   }
@@ -102,5 +137,7 @@
     repairScreensaverSurveyMark,
     modernizeAboutWindow,
     alignProductMetadata,
+    tagWindow,
+    tagWindows,
   });
 })();
