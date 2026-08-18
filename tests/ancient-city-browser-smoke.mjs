@@ -21,6 +21,12 @@ async function player(page) {
   return page.evaluate(() => window.__ANCIENT_WORLD_DEBUG__?.player);
 }
 
+async function walkForward(page, milliseconds = 320) {
+  await page.keyboard.down('w');
+  await page.waitForTimeout(milliseconds);
+  await page.keyboard.up('w');
+}
+
 async function openCity(context, city) {
   const page = await context.newPage();
   const errors = [];
@@ -40,26 +46,18 @@ async function openCity(context, city) {
 for (const city of cities) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   const { page, errors } = await openCity(context, city);
-  const before = await player(page);
-  assert.ok(before && Number.isFinite(before.x) && Number.isFinite(before.floorY), `${city.slug}: invalid initial player state`);
-  assert.ok(Math.abs(before.y - (before.floorY + 1.68)) < 0.2, `${city.slug}: eye height is not human-scale`);
-
-  await page.keyboard.down('KeyW');
-  await page.waitForTimeout(320);
-  await page.keyboard.up('KeyW');
-  const walked = await player(page);
-  assert.ok(Math.hypot(walked.x - before.x, walked.z - before.z) > 0.25, `${city.slug}: desktop WASD did not move`);
+  const initial = await player(page);
+  assert.ok(initial && Number.isFinite(initial.x) && Number.isFinite(initial.floorY), `${city.slug}: invalid initial player state`);
+  assert.ok(Math.abs(initial.y - (initial.floorY + 1.68)) < 0.2, `${city.slug}: eye height is not human-scale`);
 
   const teleported = await page.evaluate((id) => window.__ANCIENT_WORLD_DEBUG__.teleport(id), city.teleport);
   assert.equal(teleported, true, `${city.slug}: teleport failed`);
   const afterTeleport = await player(page);
   assert.ok(Math.abs(afterTeleport.y - (afterTeleport.floorY + 1.68)) < 0.2, `${city.slug}: teleport broke support/eye height`);
-  await page.keyboard.down('KeyW');
-  await page.waitForTimeout(180);
-  await page.keyboard.up('KeyW');
+  await walkForward(page, 320);
   const afterTeleportWalk = await player(page);
   const teleportWalkDistance = Math.hypot(afterTeleportWalk.x - afterTeleport.x, afterTeleportWalk.z - afterTeleport.z);
-  assert.ok(teleportWalkDistance > 0.1 && teleportWalkDistance < 8, `${city.slug}: movement after teleport is unstable (${teleportWalkDistance})`);
+  assert.ok(teleportWalkDistance > 0.25 && teleportWalkDistance < 8, `${city.slug}: desktop WASD after teleport is unstable (${teleportWalkDistance})`);
   assert.deepEqual(errors, [], `${city.slug}: desktop browser errors: ${errors.join(' | ')}`);
   await context.close();
 
