@@ -1,0 +1,91 @@
+name: Apply Final Repository Polish
+
+on:
+  push:
+    branches:
+      - feat/final-polish-aaa-2026-08-18
+    paths:
+      - scripts/apply-final-repo-polish.py
+      - .github/workflows/apply-final-repo-polish.yml
+
+permissions:
+  contents: write
+
+jobs:
+  migrate-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/final-polish-aaa-2026-08-18
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Apply guarded mechanical modularization
+        run: python3 scripts/apply-final-repo-polish.py
+
+      - name: Validate extracted JavaScript and regressions
+        run: |
+          node --check backend/server.js
+          node --check frontend/js/chat.js
+          node --check frontend/js/terminal.js
+          node --check frontend/js/os-router.js
+          node --check frontend/js/os-v2.js
+          node --check frontend/games/brick.js
+          node --check frontend/historic-world/app.js
+          node --check frontend/ancient-world/engine/landmark-framing.js
+          node --check frontend/ancient-cities/rome-410-476/js/app.js
+          node --check frontend/ancient-cities/athens-450-430/js/app.js
+          node --test tests/*.test.mjs
+          git diff --check
+
+      - name: Install Chromium validation dependency
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0
+          npx playwright install chromium
+
+      - name: Start static frontend server
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-http.log 2>&1 &
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0
+            sleep 0.5
+          done
+          cat /tmp/aizanoi-http.log
+          exit 1
+
+      - name: Browser interaction and Ancient World smoke
+        env:
+          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+        run: |
+          node tests/os-browser-smoke.mjs
+          node tests/ancient-city-browser-smoke.mjs
+          node tests/final-visual-capture.mjs
+
+      - name: Upload final visual review
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-repository-visual-review
+          path: artifacts/final-visual-review/*.png
+          retention-days: 3
+
+      - name: Remove completed one-shot migration machinery
+        run: |
+          rm -f scripts/apply-final-repo-polish.py
+          rm -f scripts/apply-landmark-sightline-fix-2026-08-18.py
+          rm -f .github/workflows/apply-final-repo-polish.yml
+          rm -f .github/workflows/apply-landmark-sightline-fix.yml
+          rm -f .github/workflows/sync-main-final.yml
+          rm -f .github/workflows/final-visual-review.yml
+
+      - name: Commit validated final tree
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git diff --cached --check
+          git commit -m "refactor: modularize Aizanoi runtimes and finalize release surfaces"
+          git push origin HEAD:feat/final-polish-aaa-2026-08-18
