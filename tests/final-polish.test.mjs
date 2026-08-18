@@ -64,5 +64,6 @@ test('Historic World externalizes stable presentation/runtime boundaries without
 test('social metadata and operational error documents are published',()=>{
   assert.match(index,/property="og:image"/);
   assert.match(index,/twitter:card/);
+  assert.match(index,/aizanoi-og\.png/);
   for(const path of ['frontend/404.html','frontend/500.html','frontend/503.html','frontend/assets/branding/aizanoi-og.svg']) assert.ok(existsSync(path),`${path} missing`);
 });
