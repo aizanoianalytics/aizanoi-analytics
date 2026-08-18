@@ -3,11 +3,43 @@
   if (!container) return;
 
   const W=400,H=300,PADDLE_W=76,PADDLE_H=11,BALL_R=6;
-  let paddleX,ballX,ballY,ballDX,ballDY,bricks,score,lives,over,rafId=0,lastFrame=0,accumulator=0,particles=[],trail=[],paused=false;
+  const FRAME_MS=1000/60;
+  let paddleX,ballX,ballY,ballDX,ballDY,bricks,score,lives,over,particles=[],trail=[],paused=false;
+  let rafId=null,lastFrame=0,accumulator=0;
+
+  function stopLoop(){
+    if(rafId!==null)cancelAnimationFrame(rafId);
+    rafId=null;lastFrame=0;accumulator=0;
+  }
+
+  function startLoop(){
+    stopLoop();
+    rafId=requestAnimationFrame(frame);
+  }
+
+  function frame(now){
+    if(!container.isConnected){stopLoop();return;}
+    if(!lastFrame)lastFrame=now;
+    const elapsed=Math.min(80,Math.max(0,now-lastFrame));
+    lastFrame=now;
+    if(!paused&&!over){
+      accumulator+=elapsed;
+      let steps=0;
+      while(accumulator>=FRAME_MS&&steps<4&&!over){
+        tickStep();
+        accumulator-=FRAME_MS;
+        steps++;
+      }
+      if(steps===4)accumulator=0;
+    }
+    draw();
+    if(!over&&container.isConnected)rafId=requestAnimationFrame(frame);
+    else rafId=null;
+  }
 
   function init(){
     paddleX=(W-PADDLE_W)/2;ballX=W/2;ballY=H-38;ballDX=3;ballDY=-3;score=0;lives=3;over=false;paused=false;particles=[];trail=[];
-    if(rafId)cancelAnimationFrame(rafId);rafId=0;lastFrame=0;accumulator=0;
+    stopLoop();
     bricks=[];
     const rows=5,cols=8,bw=(W-24)/cols;
     const palette=[['#ff7f76','#bb2535'],['#ffc15f','#db6f2f'],['#79d77f','#2d8b57'],['#61b9f6','#2a62bc'],['#aa86e8','#5c42a4']];
@@ -29,7 +61,7 @@
     if(window.AizanoiGames)container.appendChild(window.AizanoiGames.toolbar({game:'brick',onPause:togglePause,onRestart:init}));
     const btn=document.createElement('button');btn.textContent='New Game';btn.style.cssText='font:11px Tahoma,sans-serif;padding:5px 14px;';btn.onclick=init;container.appendChild(btn);
     canvas.addEventListener('keydown',onKey);canvas.addEventListener('mousemove',onPointer);canvas.addEventListener('pointermove',onPointer);canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture?.(e.pointerId);onPointer(e);canvas.focus();});
-    canvas.focus();draw();rafId=requestAnimationFrame(loop);
+    canvas.focus();draw();startLoop();
   }
 
   function onKey(e){if(e.key==='ArrowLeft'){e.preventDefault();paddleX=Math.max(0,paddleX-22);}if(e.key==='ArrowRight'){e.preventDefault();paddleX=Math.min(W-PADDLE_W,paddleX+22);}if((e.key===' '||e.key==='Enter')&&over){e.preventDefault();init();}if(e.key.toLowerCase()==='p'&&!over){e.preventDefault();togglePause();}}
@@ -38,10 +70,8 @@
   function burst(x,y,color){for(let i=0;i<10;i++)particles.push({x,y,vx:(Math.random()-.5)*4.2,vy:(Math.random()-.8)*4,life:22+Math.random()*16,color});}
   function resetBall(){ballX=W/2;ballY=H-38;ballDX=Math.random()>.5?3:-3;ballDY=-3;paddleX=(W-PADDLE_W)/2;trail=[];}
 
-  function tick(){
-    if(!container.isConnected){if(rafId)cancelAnimationFrame(rafId);rafId=0;return;}
+  function tickStep(){
     particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.08;p.life--;});particles=particles.filter(p=>p.life>0);
-    if(over||paused)return;
     trail.push({x:ballX,y:ballY});if(trail.length>7)trail.shift();
     ballX+=ballDX;ballY+=ballDY;
     if(ballX<BALL_R){ballX=BALL_R;ballDX=Math.abs(ballDX);}if(ballX>W-BALL_R){ballX=W-BALL_R;ballDX=-Math.abs(ballDX);}if(ballY<BALL_R){ballY=BALL_R;ballDY=Math.abs(ballDY);}
@@ -49,15 +79,6 @@
     for(const b of bricks){if(!b.alive)continue;if(ballX+BALL_R>b.x&&ballX-BALL_R<b.x+b.w&&ballY+BALL_R>b.y&&ballY-BALL_R<b.y+b.h){b.alive=false;ballDY=-ballDY;score+=10;burst(ballX,ballY,b.colors[0]);break;}}
     if(bricks.every(b=>!b.alive)){end(true);return;}
     if(ballY>H+BALL_R){lives--;if(lives<=0){end(false);return;}resetBall();}
-  }
-
-  function loop(now){
-    if(!container.isConnected){rafId=0;return;}
-    if(!lastFrame)lastFrame=now;
-    const dt=Math.min(80,now-lastFrame);lastFrame=now;accumulator+=dt;
-    while(accumulator>=16.6667){tick();accumulator-=16.6667;if(over)break;}
-    draw();
-    if(!over)rafId=requestAnimationFrame(loop);else rafId=0;
   }
 
   function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect?ctx.roundRect(x,y,w,h,r):ctx.rect(x,y,w,h);ctx.fill();}
@@ -79,8 +100,8 @@
     const s=document.getElementById('brick-score'),l=document.getElementById('brick-lives'),st=document.getElementById('brick-status');if(s)s.textContent=String(score).padStart(4,'0');if(l)l.textContent=lives;if(st)st.textContent=paused?'Paused · Press P or Resume':(over?'Round complete · Score: '+score:'Mouse, touch or arrows move the paddle · Clear every signal block');
   }
 
-  function togglePause(){if(over)return;paused=!paused;const button=container.querySelector('[data-game-action="pause"]');if(button){button.textContent=paused?'Resume':'Pause';button.setAttribute('aria-pressed',paused?'true':'false');}draw();}
-  function end(won){over=true;if(rafId)cancelAnimationFrame(rafId);rafId=0;saveScore('brick',score);window.AizanoiGames?.refreshToolbar(container,'brick');if(won)burst(W/2,H/2,'#ffd36b');draw();}
+  function togglePause(){if(over)return;paused=!paused;const button=container.querySelector('[data-game-action="pause"]');if(button){button.textContent=paused?'Resume':'Pause';button.setAttribute('aria-pressed',paused?'true':'false');}if(!paused&&!rafId)startLoop();draw();}
+  function end(won){over=true;saveScore('brick',score);window.AizanoiGames?.refreshToolbar(container,'brick');if(won)burst(W/2,H/2,'#ffd36b');draw();stopLoop();}
   function saveScore(game,score){try{if(window.AizanoiGames){window.AizanoiGames.save(game,score);return;}const key='aizanoi-games',scores=JSON.parse(localStorage.getItem(key)||'{}');if(!scores[game])scores[game]=[];scores[game].push({score,at:new Date().toISOString()});if(scores[game].length>20)scores[game]=scores[game].slice(-20);localStorage.setItem(key,JSON.stringify(scores));}catch(_){}}
   init();
 })();
