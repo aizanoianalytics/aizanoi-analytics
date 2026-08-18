@@ -45,3 +45,5 @@ jobs:
           git diff --cached --check
           git commit -m "feat: finish Aizanoi OS single-publisher product polish"
           git push origin HEAD:feat/aizanoi-os-product-polish-v2
+
+# One-shot workflow: the successful patch removes this file from the branch.
