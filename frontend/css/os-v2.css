@@ -1,0 +1,198 @@
+/* Aizanoi OS V2 — product polish without changing the retro desktop identity. */
+:root {
+  --os-safe-top: env(safe-area-inset-top, 0px);
+  --os-safe-right: env(safe-area-inset-right, 0px);
+  --os-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --os-safe-left: env(safe-area-inset-left, 0px);
+  --os-focus: #ffd36b;
+  --os-card-border: rgba(85,110,145,.35);
+  --os-card-bg: rgba(255,255,255,.72);
+}
+
+/* Desktop readability / spacing */
+#icon-layer {
+  padding-bottom: 8px;
+  align-content: start;
+}
+.desktop-icon { isolation: isolate; }
+.desktop-icon::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 5px;
+  opacity: 0;
+  background: linear-gradient(180deg,rgba(255,255,255,.10),rgba(22,73,148,.12));
+  transition: opacity .12s ease;
+  z-index: -1;
+}
+.desktop-icon:hover::after,
+.desktop-icon:focus-visible::after { opacity: 1; }
+
+/* Window manager refinement */
+.win {
+  contain: layout style;
+  will-change: left, top;
+}
+.win.active .win-titlebar { filter: saturate(1.06) contrast(1.02); }
+.win.inactive { filter: saturate(.82) brightness(.985); }
+.win.inactive .win-body { filter: saturate(.94); }
+.win-titlebar { min-width: 0; }
+.win-title { min-width: 0; }
+.win[aria-hidden="true"] { pointer-events: none; }
+.win.v2-attention { animation: osTaskPulse .62s ease 2; }
+
+#taskbar { padding-right: calc(2px + var(--os-safe-right)); }
+#start-btn { margin-left: var(--os-safe-left); }
+#tray { padding-right: max(6px,var(--os-safe-right)); }
+.os-v2-show-desktop {
+  width: 12px;
+  min-width: 12px;
+  align-self: stretch;
+  margin-left: 2px;
+  border: 1px solid rgba(255,255,255,.34);
+  border-bottom: 0;
+  background: linear-gradient(180deg,rgba(255,255,255,.18),rgba(0,37,112,.2));
+  box-shadow: inset 1px 0 rgba(255,255,255,.18);
+  cursor: pointer;
+}
+.os-v2-show-desktop:hover,
+.os-v2-show-desktop:focus-visible { background: rgba(255,255,255,.28); }
+
+/* Start-menu hierarchy: real products lead, decorative OS commands recede. */
+#start-menu .os-v2-featured {
+  background: linear-gradient(90deg,rgba(36,94,180,.13),rgba(255,255,255,.02));
+  font-weight: 700;
+}
+#start-menu .os-v2-featured::after {
+  content: "•";
+  margin-left: auto;
+  color: #b78646;
+  font-size: 15px;
+  line-height: 1;
+}
+#start-menu .os-v2-secondary { opacity: .78; }
+
+/* Shared content surfaces */
+.win-body h1,.win-body h2,.win-body h3 { color: #153b72; }
+.win-body a:focus-visible,
+.ctx-item:focus-visible,
+.sm-item:focus-visible,
+.task-item:focus-visible { outline: 2px solid var(--os-focus) !important; outline-offset: -2px; }
+.os-v2-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* AI chat polish */
+.os-v2-chat-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-bottom: 1px solid #c2cad5;
+  background: linear-gradient(#f7f9fc,#e7edf5);
+  font: 11px Tahoma,sans-serif;
+}
+.os-v2-chat-toolbar .spacer { flex: 1; }
+.os-v2-chat-toolbar button,
+.chat-copy {
+  border: 1px solid #7c8fa8;
+  border-radius: 4px;
+  background: linear-gradient(#fff,#dce6f2);
+  color: #173c70;
+  font: 700 10px Tahoma,sans-serif;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.os-v2-chat-toolbar button:hover,.chat-copy:hover { filter: brightness(1.04); }
+.chat-msg .bubble { position: relative; line-height: 1.48; }
+.chat-msg.bot .bubble { padding-bottom: 24px; }
+.chat-msg.bot .bubble p { margin: 0 0 7px; }
+.chat-msg.bot .bubble p:last-child { margin-bottom: 0; }
+.chat-msg.bot .bubble ul,.chat-msg.bot .bubble ol { margin: 6px 0 6px 20px; padding: 0; }
+.chat-msg.bot .bubble pre { max-width: 100%; overflow: auto; }
+.chat-msg.bot .bubble code { overflow-wrap: anywhere; }
+.chat-copy { position: absolute; right: 6px; bottom: 5px; opacity: .82; }
+.chat-copy.copied { color: #176923; border-color: #6da577; }
+#chat-log[aria-busy="true"] { cursor: progress; }
+
+/* Games: one common arcade information strip. */
+.game-v2-toolbar {
+  width: min(100%,420px);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 8px;
+  border: 1px solid #91a0b4;
+  border-radius: 5px;
+  background: linear-gradient(180deg,#fbfdff,#e3eaf3);
+  box-shadow: inset 0 1px #fff;
+  font: 11px Tahoma,sans-serif;
+  color: #263b56;
+}
+.game-v2-toolbar .game-v2-best { margin-right: auto; }
+.game-v2-toolbar button {
+  min-width: 66px;
+  min-height: 27px;
+  padding: 4px 9px !important;
+}
+.game-v2-toolbar button[aria-pressed="true"] {
+  background: linear-gradient(#d0d9e7,#aebed1) !important;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,.18) !important;
+}
+.game-paused-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  color: #eef7ff;
+  background: rgba(4,12,24,.58);
+  font: 800 24px/1 Tahoma,sans-serif;
+  letter-spacing: .12em;
+  text-shadow: 0 2px 8px #000;
+}
+
+/* Mobile: app-first layout rather than a squeezed desktop. */
+@media (max-width:700px) {
+  html,body { min-height: 100dvh; }
+  #desktop { height: 100dvh; padding-top: var(--os-safe-top); }
+  .win {
+    top: var(--os-safe-top) !important;
+    left: max(3px,var(--os-safe-left)) !important;
+    width: calc(100vw - max(6px,var(--os-safe-left)) - max(6px,var(--os-safe-right))) !important;
+    height: calc(100dvh - 42px - var(--os-safe-top) - var(--os-safe-bottom)) !important;
+    border-radius: 6px 6px 0 0;
+  }
+  .win.maximized {
+    height: calc(100dvh - 38px - var(--os-safe-bottom)) !important;
+    top: var(--os-safe-top) !important;
+  }
+  .win-titlebar { min-height: 34px; padding-top: 2px; }
+  .win-btn { min-width: 36px; min-height: 29px; }
+  .win-body { overscroll-behavior: contain; }
+  #taskbar { height: calc(38px + var(--os-safe-bottom)); padding-bottom: var(--os-safe-bottom); }
+  #start-menu { max-height: calc(100dvh - 48px - var(--os-safe-top) - var(--os-safe-bottom)); overflow: auto; }
+  #chat-input { min-height: 34px; font-size: 16px !important; }
+  #chat-send { min-width: 64px; min-height: 34px; }
+  .os-v2-chat-toolbar { padding: 6px; }
+  .chat-copy { min-height: 25px; }
+  .game-v2-toolbar { flex-wrap: wrap; }
+  .game-v2-toolbar .game-v2-best { flex: 1 1 100%; }
+}
+
+@keyframes osTaskPulse {
+  0%,100% { filter: brightness(1); }
+  50% { filter: brightness(1.14); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .win.v2-attention { animation: none !important; }
+}

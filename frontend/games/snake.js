@@ -3,12 +3,12 @@
   if (!container) return;
 
   const W = 20, H = 15, CELL = 20;
-  let snake, dir, pendingDir, food, score, over, interval, pulse = 0;
+  let snake, dir, pendingDir, food, score, over, interval, pulse = 0, paused = false;
 
   function init() {
     snake = [{x:10,y:7},{x:9,y:7},{x:8,y:7}];
     dir = pendingDir = {x:1,y:0};
-    score = 0; over = false; pulse = 0;
+    score = 0; over = false; pulse = 0; paused = false;
     if (interval) clearInterval(interval);
     placeFood();
 
@@ -34,6 +34,7 @@
     status.id = 'snake-status';
     status.style.cssText = 'width:min(100%,420px);padding:7px 9px;background:#eef4fb;border:1px solid #9daabd;color:#27384f;font:11px/1.35 Tahoma,sans-serif;';
     container.appendChild(status);
+    if (window.AizanoiGames) container.appendChild(window.AizanoiGames.toolbar({ game:'snake', onPause:togglePause, onRestart:init }));
 
     const controls = document.createElement('div');
     controls.id = 'snake-dpad';
@@ -73,6 +74,7 @@
     const map = {ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'};
     if (map[e.key]) { e.preventDefault(); setDirection(map[e.key]); }
     else if ((e.key === ' ' || e.key === 'Enter') && over) { e.preventDefault(); init(); }
+    else if (e.key.toLowerCase() === 'p' && !over) { e.preventDefault(); togglePause(); }
   }
 
   function tick() {
@@ -84,7 +86,7 @@
       interval = null;
       return;
     }
-    if (over) return;
+    if (over || paused) return;
     dir = pendingDir;
     const head = {x:snake[0].x + dir.x, y:snake[0].y + dir.y};
     if (head.x < 0 || head.y < 0 || head.x >= W || head.y >= H || snake.some(s => s.x === head.x && s.y === head.y)) { end(); return; }
@@ -137,6 +139,10 @@
     });
     ctx.shadowBlur=0;
 
+    if (paused && !over) {
+      ctx.fillStyle='rgba(2,8,14,.58)';ctx.fillRect(0,0,c.width,c.height);
+      ctx.textAlign='center';ctx.fillStyle='#eef8ff';ctx.font='700 25px Segoe UI,Tahoma';ctx.fillText('PAUSED',c.width/2,c.height/2);
+    }
     if (over) {
       ctx.fillStyle='rgba(2,8,14,.68)';ctx.fillRect(0,0,c.width,c.height);
       ctx.textAlign='center';ctx.fillStyle='#eef8ff';ctx.font='700 28px Segoe UI,Tahoma';ctx.fillText('GAME OVER',c.width/2,c.height/2-8);
@@ -145,18 +151,29 @@
 
     const scoreEl=document.getElementById('snake-score'); if(scoreEl) scoreEl.textContent=String(score).padStart(4,'0');
     const status=document.getElementById('snake-status');
-    if(status) status.textContent=over ? 'Run ended · Score: '+score : 'Score: '+score+' · Arrow keys or D-pad · Eat the glowing signal';
+    if(status) status.textContent=paused ? 'Paused · Press P or Resume' : (over ? 'Run ended · Score: '+score : 'Score: '+score+' · Arrow keys or D-pad · Eat the glowing signal');
+  }
+
+  function togglePause() {
+    if (over) return;
+    paused = !paused;
+    const button = container.querySelector('[data-game-action="pause"]');
+    if (button) { button.textContent = paused ? 'Resume' : 'Pause'; button.setAttribute('aria-pressed', paused ? 'true' : 'false'); }
+    draw();
   }
 
   function end() {
     over = true;
     if (interval) clearInterval(interval);
     interval = null;
-    saveScore('snake', score); draw();
+    saveScore('snake', score);
+    window.AizanoiGames?.refreshToolbar(container, 'snake');
+    draw();
   }
 
   function saveScore(game, score) {
     try {
+      if(window.AizanoiGames){window.AizanoiGames.save(game,score);return;}
       const key='aizanoi-games',scores=JSON.parse(localStorage.getItem(key)||'{}');
       if(!scores[game])scores[game]=[];
       scores[game].push({score,at:new Date().toISOString()});
