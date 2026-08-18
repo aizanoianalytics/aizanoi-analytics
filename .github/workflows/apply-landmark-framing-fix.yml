@@ -34,7 +34,21 @@ jobs:
       - name: Run landmark framing tests
         run: node --test tests/landmark-framing.test.mjs
       - name: Run full regression suite
-        run: node --test tests/*.test.mjs
+        id: regression
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          node --test tests/*.test.mjs 2>&1 | tee regression-output.txt
+      - name: Upload regression diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: landmark-regression-output
+          path: regression-output.txt
+          retention-days: 1
+      - name: Fail if regression suite failed
+        if: steps.regression.outcome != 'success'
+        run: exit 1
       - name: Check whitespace
         run: git diff --check
       - name: Remove one-shot patch machinery
