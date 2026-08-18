@@ -23,6 +23,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Normalize guarded Brick patch ordering
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('scripts/apply-final-polish-2026-08-18.py')
+          s=p.read_text()
+          old="brick = brick.replace('if(interval)clearInterval(interval);', 'if(rafId)cancelAnimationFrame(rafId);rafId=0;lastFrame=0;accumulator=0;')"
+          new="brick = replace_once(brick, \"    if(interval)clearInterval(interval);\\n    bricks=[];\", \"    if(rafId)cancelAnimationFrame(rafId);rafId=0;lastFrame=0;accumulator=0;\\n    bricks=[];\", 'brick init cleanup')"
+          if old not in s: raise SystemExit('expected Brick global replacement not found')
+          p.write_text(s.replace(old,new,1))
+          PY
       - name: Apply guarded final polish
         run: python3 scripts/apply-final-polish-2026-08-18.py
       - name: Validate syntax and regressions
