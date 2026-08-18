@@ -27,8 +27,12 @@ test('urban fabric is deterministic, dense across the whole city and explicitly 
   assert.ok(a.every((item) => Math.abs(item.x - TIBER.x) >= 60));
   const populatedRegions = new Set(a.map((item) => item.region));
   assert.ok(populatedRegions.size >= 11, `urban cap should not starve late regiones; populated ${populatedRegions.size}`);
+  for (const [x,z,radius] of [[52,-217,32],[-179,-161,34],[-365,28,30]]) {
+    assert.ok(a.every((item) => Math.hypot(item.x - x, item.z - z) >= radius), `inferred fabric intrudes into cinematic clear zone at ${x},${z}`);
+  }
   const source = readFileSync(resolve(root, 'frontend/ancient-cities/rome-410-476/data/urban-fabric.js'), 'utf8');
   assert.match(source, /fairRegionalQuotas:\s*true/);
+  assert.match(source, /cinematicClearZones:\s*true/);
 });
 
 test('inferred source records resolve to a plausible evidence level', () => {
