@@ -57,6 +57,9 @@ test('Historic World externalizes stable presentation/runtime boundaries without
   assert.ok(existsSync('frontend/historic-world/app.js'));
   assert.match(historic,/\.\/style\.css/);
   assert.match(historic,/\.\/app\.js/);
+  assert.doesNotMatch(historic,/data:image\/jpeg;base64/);
+  assert.match(historic,/texier-survey\.jpg/);
+  assert.ok(existsSync('frontend/historic-world/assets/texier-survey.jpg'));
   assert.ok(statSync('frontend/historic-world/app.js').size > 80_000,'Historic World runtime extraction unexpectedly small');
   assert.ok(statSync('frontend/historic-world/style.css').size > 15_000,'Historic World style extraction unexpectedly small');
 });
