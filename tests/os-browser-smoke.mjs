@@ -3,12 +3,12 @@ import { chromium } from 'playwright';
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const browser = await chromium.launch({ headless:true });
 
-async function open(context){
+async function open(context,path='/'){
   const page = await context.newPage();
   const errors=[];
   page.on('pageerror',e=>errors.push(String(e)));
-  await page.goto(base+'/',{waitUntil:'networkidle'});
-  await page.waitForFunction(()=>!document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'),null,{timeout:5000});
+  await page.goto(base+path,{waitUntil:'networkidle'});
+  if(path==='/') await page.waitForFunction(()=>!document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'),null,{timeout:5000});
   return {page,errors};
 }
 
@@ -18,11 +18,7 @@ async function open(context){
   let chatRequests=0;
   await page.route('**/api/chat', async route => {
     chatRequests++;
-    await route.fulfill({
-      status:200,
-      contentType:'application/json',
-      body:JSON.stringify({reply:`Mock reply ${chatRequests}`}),
-    });
+    await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({reply:`Mock reply ${chatRequests}`})});
   });
 
   await page.evaluate(()=>openApp('chatbot'));
@@ -30,10 +26,11 @@ async function open(context){
   await page.waitForFunction(()=>document.getElementById('chat-input')?.tagName==='TEXTAREA');
 
   const input=page.locator('#chat-input');
-  assert.equal(await input.evaluate(el=>el.tagName),'TEXTAREA','chat input was not upgraded before wiring');
+  assert.equal(await input.evaluate(el=>el.tagName),'TEXTAREA','chat composer must be a native textarea');
   assert.equal(await page.locator('.os-v2-chat-toolbar').count(),1,'chat toolbar missing');
   assert.ok(await page.locator('[data-chat-action="retry"]').count(),'retry action missing');
-  assert.ok(await page.evaluate(()=>typeof openWindows.get('chatbot')?.detachDrag==='function'),'window drag cleanup hook missing');
+  assert.ok(await page.evaluate(()=>typeof openWindows.get('chatbot')?.cleanup==='function'),'core window cleanup hook missing');
+  assert.ok(await page.evaluate(()=>window.__AIZANOI_OS_V2__?.debug?.().marqueeEnabled===true),'desktop marquee enhancement missing');
 
   await input.fill('Line one');
   await input.press('Shift+Enter');
@@ -55,8 +52,7 @@ async function open(context){
   assert.ok(!await page.locator('.win.active').evaluate(el=>el.classList.contains('maximized')),'second titlebar double click should restore once');
 
   await page.locator('.win.active').evaluate(el=>{
-    el.style.left='5000px';
-    el.style.top='5000px';
+    el.style.left='5000px'; el.style.top='5000px';
     document.dispatchEvent(new MouseEvent('mouseup',{bubbles:true}));
   });
   await page.waitForTimeout(80);
@@ -90,7 +86,7 @@ async function open(context){
     finally { document.removeEventListener=original; }
     return removed;
   });
-  assert.ok(removedDragListeners>=4,`expected drag listeners to be released, got ${removedDragListeners}`);
+  assert.ok(removedDragListeners>=4,`expected core drag listeners to be released, got ${removedDragListeners}`);
   assert.deepEqual(errors,[],'desktop browser errors: '+errors.join(' | '));
   await context.close();
 }
@@ -107,5 +103,15 @@ async function open(context){
   assert.deepEqual(errors,[],'mobile browser errors: '+errors.join(' | '));
   await context.close();
 }
+
+for(const path of ['/404.html','/500.html','/503.html']){
+  const context=await browser.newContext({viewport:{width:900,height:700}});
+  const {page,errors}=await open(context,path);
+  assert.ok(await page.locator('main').count(),`${path} error document missing main content`);
+  assert.ok((await page.locator('body').innerText()).includes(path.slice(1,4)),`${path} missing status code copy`);
+  assert.deepEqual(errors,[],`${path} browser errors: `+errors.join(' | '));
+  await context.close();
+}
+
 await browser.close();
-console.log('Aizanoi OS desktop/mobile smoke passed');
+console.log('Aizanoi OS desktop/mobile/error-page smoke passed');
