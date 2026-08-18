@@ -11,9 +11,10 @@ export const TERRAIN_EVIDENCE = Object.freeze({
 });
 
 export const HILLS = Object.freeze([
-  // The Acropolis is treated as a steep rock with a readable upper plateau rather
-  // than a smooth Gaussian mound. Visible terrain and traversal share this field.
-  { id: 'acropolis', name: 'Akropolis rock', x: -25, z: -310, height: 32.0, rx: 104, rz: 88, rot: -0.05 },
+  // The Acropolis is an elongated rock/plateau, not a Gaussian dome. The wider
+  // upper shoulder also gives the processional west approach a physically valid
+  // landmark-arrival surface instead of forcing the camera to the plain below.
+  { id: 'acropolis', name: 'Akropolis rock', x: -25, z: -310, height: 32.0, rx: 150, rz: 108, rot: -0.05 },
   { id: 'areopagus', name: 'Areopagus', x: -220, z: -180, height: 8.5, rx: 75, rz: 60, rot: 0.10 },
   { id: 'pnyx', name: 'Pnyx', x: -290, z: -135, height: 11.0, rx: 90, rz: 70, rot: -0.18 },
   { id: 'nymphs', name: 'Hill of the Nymphs', x: -240, z: -120, height: 6.0, rx: 55, rz: 50, rot: 0.05 },
@@ -45,20 +46,20 @@ function acropolisContribution(hill, x, z) {
   const { distance, lx, lz } = ellipseDistance(hill, x, z);
   if (distance >= 1) return 0;
 
-  // Broad upper platform, then a deliberately compressed cliff shoulder. This
-  // removes the 'green dome' silhouette while preserving the same overall rock.
+  // Broad upper platform, then a deliberately compressed cliff shoulder. The
+  // player reads a sacred rock with a summit, not a smooth green mound.
   let profile;
-  if (distance <= 0.47) {
-    profile = 0.91 + 0.09 * smooth(1 - distance / 0.47);
+  if (distance <= 0.62) {
+    profile = 0.91 + 0.09 * smooth(1 - distance / 0.62);
   } else {
-    profile = 0.91 * smooth(1 - (distance - 0.47) / 0.53);
+    profile = 0.91 * smooth(1 - (distance - 0.62) / 0.38);
   }
 
   // Low-amplitude deterministic rock break-up only on the shoulder; the sacred
   // upper platform stays stable enough for monuments and traversal.
-  const shoulder = smooth((distance - 0.42) / 0.18) * smooth((0.98 - distance) / 0.22);
+  const shoulder = smooth((distance - 0.58) / 0.12) * smooth((0.99 - distance) / 0.20);
   const fracture = (Math.sin(lx * 0.105) * 0.46 + Math.sin(lz * 0.137 + 1.7) * 0.34 + Math.sin((lx + lz) * 0.061) * 0.20);
-  return Math.max(0, hill.height * profile + fracture * shoulder * 1.05);
+  return Math.max(0, hill.height * profile + fracture * shoulder * 1.15);
 }
 
 function hillContribution(hill, x, z) {

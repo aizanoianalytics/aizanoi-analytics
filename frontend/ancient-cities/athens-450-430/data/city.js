@@ -54,6 +54,22 @@ const LATER_BUILDINGS = new Set([
   'pompeion',
 ]);
 
+const FRAMING = Object.freeze({
+  // The western arrival echoes the processional approach through the Propylaea;
+  // the engine still validates terrain and collision before using it.
+  parthenon: { distance: 70, preferredDirections: [[-1,0],[-1,1]] },
+  propylaea: { distance: 62, preferredDirections: [[-1,0],[-1,1]] },
+  hephaisteion: { distance: 74, preferredDirections: [[0,1],[-1,1]] },
+  'theatre-dionysus': { distance: 82, preferredDirections: [[0,1],[1,1]] },
+  pnyx: { distance: 78, preferredDirections: [[0,1],[1,1]] },
+  'dipylon-gate': { distance: 72, preferredDirections: [[0,1],[1,1]] },
+});
+
+function withFraming(building) {
+  const framing = FRAMING[building.id];
+  return framing ? { ...building, framing } : building;
+}
+
 export const BUILDINGS = base.BUILDINGS.flatMap((building) => {
   if (LATER_BUILDINGS.has(building.id)) return [];
 
@@ -82,11 +98,11 @@ export const BUILDINGS = base.BUILDINGS.flatMap((building) => {
     detail: 'The sixth-century Old Temple of Athena Polias was damaged in 480 BCE, repaired after the Persian destruction and remained in the sacred precinct before the later Erechtheion was erected in 421–406 BCE.',
   }];
 
-  if (building.id === 'hephaisteion') return [{
+  if (building.id === 'hephaisteion') return [withFraming({
     ...building,
     state: 'working',
     detail: 'Construction of the Hephaisteion spans roughly 460–420 BCE. The c. 432–430 BCE snapshot treats it as substantially present but not yet a completed cult installation; the bronze cult statues belong to the 421–415 BCE completion phase.',
-  }];
+  })];
 
   if (building.id === 'stoa-zeus') return [{
     ...building,
@@ -94,12 +110,12 @@ export const BUILDINGS = base.BUILDINGS.flatMap((building) => {
     detail: 'The Stoa of Zeus Eleutherios belongs to the later fifth-century development of the west Agora. At the endpoint of this model it is treated conservatively as an incomplete/working edge rather than a fully finished monument.',
   }];
 
-  if (building.id === 'theatre-dionysus') return [{
+  if (building.id === 'theatre-dionysus') return [withFraming({
     ...building,
     detail: 'The monumental stone theatre belongs to the fourth century BCE. Around c. 432–430 BCE the Classical theatre still relied heavily on timber ikria/bleachers around an earthen orchestra, with the permanent stage complex still developing.',
-  }];
+  })];
 
-  return [building];
+  return [withFraming(building)];
 });
 
 export const TELEPORTS = base.TELEPORTS.flatMap(([id, name]) => {
