@@ -213,8 +213,8 @@
     // reaches the core listener, while preventing a bare Enter from inserting
     // a newline after the send.
     input.addEventListener('keydown', (event) => {
-      if (event.isComposing || event.key !== 'Enter') return;
-      if (event.shiftKey) {
+      if (event.key !== 'Enter') return;
+      if (event.isComposing || event.shiftKey) {
         event.stopImmediatePropagation();
         return;
       }
@@ -420,14 +420,22 @@
 
   const observer = new MutationObserver((mutations) => {
     const added = [];
+    let chatAdded = false;
     let chatRemoved = false;
     for (const mutation of mutations) {
-      mutation.addedNodes.forEach((node) => added.push(node));
+      mutation.addedNodes.forEach((node) => {
+        added.push(node);
+        if (node.nodeType === Node.ELEMENT_NODE &&
+            (node.id === 'chat-input' || node.querySelector?.('#chat-input'))) chatAdded = true;
+      });
       mutation.removedNodes.forEach((node) => {
         if (node.nodeType === Node.ELEMENT_NODE &&
             (node.id === 'chat-log' || node.querySelector?.('#chat-log'))) chatRemoved = true;
       });
     }
+    // Chat must be upgraded in the observer microtask, before the core setTimeout
+    // wires its closure to the input node. General decoration stays RAF-batched.
+    if (chatAdded) installChatToolbar();
     if (chatRemoved) abortChatRequest();
     if (added.length) scheduleInteractive(added);
   });
