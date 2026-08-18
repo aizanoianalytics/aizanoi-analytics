@@ -8,8 +8,8 @@ body[data-city]::before{content:"";position:fixed;inset:0;z-index:1;pointer-even
 body[data-city]::after{content:"";position:fixed;left:0;right:0;top:42%;height:20%;z-index:1;pointer-events:none;background:linear-gradient(180deg,transparent,var(--aw-horizon),transparent);filter:blur(12px);opacity:.7}
 body[data-city="rome"]{--aw-horizon:rgba(214,154,94,.15);--aw-vignette:rgba(17,9,7,.52)}
 body[data-city="athens"]{--aw-horizon:rgba(246,211,146,.19);--aw-vignette:rgba(18,14,8,.37)}
-body[data-city="athens"] #glCanvas{filter:saturate(1.08) contrast(1.03) brightness(1.035)}
-body[data-city="rome"] #glCanvas{filter:saturate(1.035) contrast(1.055) brightness(.995)}
+body[data-city="athens"] #glCanvas{filter:saturate(.96) contrast(1.055) brightness(1.02)}
+body[data-city="rome"] #glCanvas{filter:saturate(.94) contrast(1.065) brightness(1.01)}
 body[data-city] .sceneTone{z-index:2;opacity:.72;mix-blend-mode:soft-light}
 body[data-city] .brand,body[data-city] .place,body[data-city] .miniWrap{box-shadow:0 20px 60px rgba(0,0,0,.36),inset 0 1px rgba(255,255,255,.035)}
 body[data-city] .brand{border-color:rgba(235,197,125,.38)}
@@ -34,8 +34,7 @@ body[data-city] .region{background:linear-gradient(180deg,rgba(255,255,255,.028)
 }
 @media(prefers-reduced-motion:reduce){body[data-city] .primary{transition:none!important}}
 
-
-/* Final cinematic pass: increase readability/depth while staying GPU-cheap. */
+/* Final cinematic pass: improve readability while letting the world dominate. */
 body[data-city] #glCanvas{transform:translateZ(0)}
 body[data-city] .brand{backdrop-filter:blur(14px) saturate(1.08)}
 body[data-city] .place{max-width:min(540px,calc(100vw - 18px));border-left:2px solid rgba(231,188,108,.55)}
@@ -46,5 +45,16 @@ body[data-city] .region{transition:background .14s ease,border-color .14s ease,t
 body[data-city] .region:hover{background:rgba(255,255,255,.055);border-color:rgba(231,188,108,.35);transform:translateY(-1px)}
 body[data-city="rome"]::before{background:radial-gradient(ellipse at 50% 55%,transparent 30%,rgba(51,25,14,.09) 70%,rgba(12,6,5,.52) 118%),linear-gradient(180deg,rgba(225,161,100,.08),transparent 34%,transparent 68%,rgba(30,14,8,.16))}
 body[data-city="athens"]::before{background:radial-gradient(ellipse at 50% 55%,transparent 34%,rgba(80,56,22,.055) 72%,rgba(16,12,7,.37) 118%),linear-gradient(180deg,rgba(255,229,174,.10),transparent 36%,transparent 72%,rgba(43,29,11,.10))}
+
+/* Desktop HUD recedes when the visitor is simply walking. Hover/focus restores
+   full contrast immediately, preserving discoverability and keyboard access. */
+@media(pointer:fine) and (min-width:821px){
+ body[data-city] .brand{opacity:.84;transition:opacity .2s ease}
+ body[data-city] .controls{opacity:.72;transition:opacity .2s ease}
+ body[data-city] .miniWrap{opacity:.78;transition:opacity .2s ease}
+ body[data-city] .brand:hover,body[data-city] .brand:focus-within,
+ body[data-city] .controls:hover,body[data-city] .controls:focus-within,
+ body[data-city] .miniWrap:hover,body[data-city] .miniWrap:focus-within{opacity:1}
+}
 @media(pointer:coarse),(max-width:820px){body[data-city] .place{max-width:calc(100vw - 92px);font-size:11px}body[data-city] .miniWrap{max-width:42vw}}
-@media(prefers-reduced-motion:reduce){body[data-city] .region{transition:none!important;transform:none!important}}
+@media(prefers-reduced-motion:reduce){body[data-city] .region{transition:none!important;transform:none!important}body[data-city] .brand,body[data-city] .controls,body[data-city] .miniWrap{transition:none!important}}
