@@ -1,0 +1,177 @@
+name: Apply Guarded Runtime Modularization
+
+on:
+  push:
+    branches: [feat/final-polish-aaa-2026-08-18]
+    paths: [.github/workflows/apply-modularization-once.yml]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: final-runtime-modularization
+  cancel-in-progress: true
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/final-polish-aaa-2026-08-18
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Extract stable runtime boundaries mechanically
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          root=Path('.')
+          front=root/'frontend'
+          index_path=front/'index.html'
+          index=index_path.read_text()
+
+          def need(cond,msg):
+              if not cond: raise SystemExit(msg)
+          def write(path,text):
+              path.parent.mkdir(parents=True,exist_ok=True)
+              path.write_text(text.rstrip()+'\n')
+
+          # Social sharing metadata.
+          if 'property="og:image"' not in index:
+              anchor='<meta property="og:url" content="https://aizanoianalytics.com/">\n'
+              need(anchor in index,'OS metadata anchor missing')
+              index=index.replace(anchor,anchor+
+                '<meta property="og:type" content="website">\n'
+                '<meta property="og:site_name" content="Aizanoi Analytics">\n'
+                '<meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.svg">\n'
+                '<meta property="og:image:width" content="1200">\n'
+                '<meta property="og:image:height" content="630">\n'
+                '<meta property="og:image:alt" content="Aizanoi Analytics — HR analytics, AI and interactive ancient history">\n'
+                '<meta name="twitter:card" content="summary_large_image">\n'
+                '<meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.svg">\n',1)
+
+          # Main OS CSS — select by semantic signature, not position/size.
+          styles=list(re.finditer(r'<style>\n?(?P<body>[\s\S]*?)</style>',index))
+          os_style=next((m for m in styles if 'Windows XP Luna Blue' in m.group('body') and '#desktop' in m.group('body') and '.win' in m.group('body')),None)
+          need(os_style is not None,'OS core style block not found')
+          write(front/'css/os-core.css',os_style.group('body'))
+          index=index[:os_style.start()]+'<link rel="stylesheet" href="/css/os-core.css">'+index[os_style.end():]
+
+          # Chat runtime.
+          a=index.find('/* === CHAT === */'); b=index.find('/* === TERMINAL (GERCEK KOMUT) === */',a)
+          need(a>=0 and b>a,'chat/terminal markers missing')
+          chat=index[a:b].strip()
+          need('wireChatIfNeeded' in chat and 'chatRequestController' in chat,'chat identity failed')
+          chat=chat.replace("const timeout = setTimeout(() => controller.abort('timeout'), 22000);","const timeout = setTimeout(() => controller.abort('timeout'), 80000);")
+          chat=chat.replace("if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }","if (!e.isComposing && e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }")
+          write(front/'js/chat.js',chat)
+          index=index[:a]+'/* Chat runtime: /js/chat.js */\n\n'+index[b:]
+
+          # Terminal runtime.
+          a=index.find('/* === TERMINAL (GERCEK KOMUT) === */'); b=index.find('/* === BOOT === */',a)
+          need(a>=0 and b>a,'terminal/boot markers missing')
+          terminal=index[a:b].strip(); need('wireTerminalIfNeeded' in terminal and 'TERM_API_URL' in terminal,'terminal identity failed')
+          write(front/'js/terminal.js',terminal)
+          index=index[:a]+'/* Terminal runtime: /js/terminal.js */\n\n'+index[b:]
+
+          # Router block near document end.
+          a=index.find('<script>\nconst ROUTE_MAP ='); need(a>=0,'router script missing')
+          b=index.find('</script>',a); need(b>a,'router close missing')
+          router=index[a+len('<script>\n'):b].strip(); need('initRouter' in router and 'APP_TO_ROUTE' in router,'router identity failed')
+          write(front/'js/os-router.js',router)
+          index=index[:a]+index[b+len('</script>'):]
+
+          # Chat-starter helper belongs with chat runtime.
+          a=index.find('<script>\nfunction wireChatStartersIfNeeded()')
+          need(a>=0,'chat starter block missing'); b=index.find('</script>',a); need(b>a,'chat starter close missing')
+          starter=index[a+len('<script>\n'):b].strip();
+          with (front/'js/chat.js').open('a') as f: f.write('\n\n'+starter+'\n')
+          index=index[:a]+index[b+len('</script>'):]
+
+          anchor='<script src="/games/game-utils.js"></script>'
+          need(anchor in index,'bottom runtime anchor missing')
+          index=index.replace(anchor,
+            '<script src="/js/chat.js"></script>\n'
+            '<script src="/js/terminal.js"></script>\n'
+            '<script src="/js/os-router.js"></script>\n'+anchor,1)
+          index_path.write_text(index)
+
+          # Historic World: mechanically externalize its major CSS and the
+          # traversal/runtime script selected by behavioral signatures.
+          hp=front/'historic-world/index.html'; historic=hp.read_text()
+          if 'property="og:image"' not in historic:
+              desc='<meta name="description" content="A self-contained archaeological first-person reconstruction of Roman Aizanoi, with touch controls, an annotated Texier survey, historical layers and research notes.">\n'
+              need(desc in historic,'Historic metadata anchor missing')
+              historic=historic.replace(desc,desc+
+                '<link rel="canonical" href="https://aizanoianalytics.com/historic-world/">\n'
+                '<meta property="og:title" content="Aizanoi Historic World — Interactive Roman City Reconstruction">\n'
+                '<meta property="og:description" content="Explore Roman Aizanoi through an evidence-labelled first-person archaeological reconstruction.">\n'
+                '<meta property="og:url" content="https://aizanoianalytics.com/historic-world/">\n'
+                '<meta property="og:type" content="website">\n'
+                '<meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.svg">\n'
+                '<meta name="twitter:card" content="summary_large_image">\n',1)
+
+          styles=list(re.finditer(r'<style>\n?(?P<body>[\s\S]*?)</style>',historic))
+          hs=next((m for m in styles if '#glCanvas' in m.group('body') and '#hud' in m.group('body') and '.hero' in m.group('body')),None)
+          need(hs is not None,'Historic style block not found')
+          write(front/'historic-world/style.css',hs.group('body'))
+          historic=historic[:hs.start()]+'<link rel="stylesheet" href="./style.css">'+historic[hs.end():]
+
+          scripts=list(re.finditer(r'<script>(?P<body>[\s\S]*?)</script>',historic))
+          runtime=next((m for m in scripts if 'moveWithSubsteps' in m.group('body') and 'absoluteSupportAt' in m.group('body') and 'requestAnimationFrame' in m.group('body')),None)
+          need(runtime is not None,'Historic traversal runtime not found')
+          body=runtime.group('body').strip(); need('document.currentScript' not in body,'Historic runtime depends on currentScript')
+          write(front/'historic-world/app.js',body)
+          historic=historic[:runtime.start()]+'<script src="./app.js"></script>'+historic[runtime.end():]
+          hp.write_text(historic)
+          print('mechanical extraction completed')
+          PY
+
+      - name: Syntax validation
+        run: |
+          node --check frontend/js/chat.js
+          node --check frontend/js/terminal.js
+          node --check frontend/js/os-router.js
+          node --check frontend/js/os-v2.js
+          node --check frontend/historic-world/app.js
+          node --check frontend/ancient-cities/rome-410-476/js/app.js
+          node --check frontend/ancient-cities/athens-450-430/js/app.js
+          git diff --check
+
+      - name: Install Chromium
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0
+          npx playwright install chromium
+
+      - name: Start frontend
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-http.log 2>&1 &
+          for i in {1..30}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
+          cat /tmp/aizanoi-http.log
+          exit 1
+
+      - name: Browser behavior after extraction
+        env:
+          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+        run: |
+          node tests/ancient-city-browser-smoke.mjs
+          node tests/os-browser-smoke.mjs
+
+      - name: Commit extracted runtimes and remove one-shot workflow
+        run: |
+          rm -f .github/workflows/apply-modularization-once.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add frontend .github/workflows
+          git diff --cached --check
+          git commit -m "refactor: externalize stable Aizanoi runtime boundaries"
+          git fetch origin feat/final-polish-aaa-2026-08-18
+          git rebase origin/feat/final-polish-aaa-2026-08-18
+          git push origin HEAD:feat/final-polish-aaa-2026-08-18
