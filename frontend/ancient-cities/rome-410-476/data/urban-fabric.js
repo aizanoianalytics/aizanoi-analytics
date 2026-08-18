@@ -73,7 +73,7 @@ function overlapsNamedBuilding(x, z, width, depth, buildings) {
   return false;
 }
 
-function overlapsFabric(x, z, width, depth, fabric, padding = 1.6) {
+function overlapsFabric(x, z, width, depth, fabric, padding = 0.85) {
   for (const building of fabric) {
     const hx = building.w / 2 + width / 2 + padding;
     const hz = building.d / 2 + depth / 2 + padding;
@@ -90,10 +90,10 @@ function overlapsCinematicClearZone(x, z, width, depth) {
 }
 
 function targetForRegion(region, density, mobile) {
-  const cell = mobile ? 38 : 29;
+  const cell = mobile ? 30 : 22;
   const theoretical = Math.max(1, (region.w * region.d) / (cell * cell));
-  const scaled = Math.round(theoretical * density * 0.70);
-  return Math.max(mobile ? 7 : 12, Math.min(mobile ? 18 : 38, scaled));
+  const scaled = Math.round(theoretical * density * (mobile ? 0.80 : 1.02));
+  return Math.max(mobile ? 11 : 18, Math.min(mobile ? 34 : 66, scaled));
 }
 
 export function generateUrbanFabric({
@@ -109,8 +109,8 @@ export function generateUrbanFabric({
   if (!regions || !buildings || !streets) throw new TypeError('generateUrbanFabric requires regions, buildings and streets.');
 
   const fabric = [];
-  const globalCap = mobile ? 170 : 430;
-  const cell = mobile ? 38 : 29;
+  const globalCap = mobile ? 280 : 640;
+  const cell = mobile ? 30 : 22;
 
   // Each regio receives its own quota before the global cap is considered. The
   // previous single sequential cap could be exhausted by early regiones and make
@@ -132,15 +132,15 @@ export function generateUrbanFabric({
         if (Math.abs(x - tiberX) < tiberClearance) continue;
 
         const street = nearestStreet(x, z, streets);
-        const streetClearance = (street?.street.width || 14) / 2 + (mobile ? 6.5 : 5.5);
+        const streetClearance = (street?.street.width || 14) / 2 + (mobile ? 5.5 : 4.4);
         if (street && street.distance < streetClearance) continue;
 
         const jitterX = (hash(`${seed}:jx`) - 0.5) * cell * 0.32;
         const jitterZ = (hash(`${seed}:jz`) - 0.5) * cell * 0.32;
         const bx = x + jitterX;
         const bz = z + jitterZ;
-        const width = 15 + hash(`${seed}:w`) * (mobile ? 8 : 14);
-        const depth = 12.5 + hash(`${seed}:d`) * (mobile ? 7.5 : 12.5);
+        const width = 11.5 + hash(`${seed}:w`) * (mobile ? 6.5 : 10.0);
+        const depth = 10 + hash(`${seed}:d`) * (mobile ? 6.0 : 8.8);
         if (Math.abs(bx - tiberX) < 60) continue;
         if (overlapsCinematicClearZone(bx, bz, width, depth)) continue;
         if (overlapsNamedBuilding(bx, bz, width, depth, buildings)) continue;
