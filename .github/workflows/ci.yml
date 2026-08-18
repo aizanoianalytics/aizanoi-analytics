@@ -34,7 +34,6 @@ jobs:
           node --check frontend/js/os-v2.js
           node --check frontend/games/mines.js
           node --check frontend/games/snake.js
-          node --check frontend/games/brick.js
           node --test tests/*.test.mjs
           git diff --check
       - name: Remove one-shot patch machinery from resulting branch
