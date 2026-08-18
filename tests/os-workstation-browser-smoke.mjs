@@ -28,6 +28,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await page.evaluate(() => window.AIZANOI_OS.launchApp('archive'));
   const archive = page.locator('.az-workbench-window[data-workbench-app="archive"]');
   await archive.waitFor();
+  await archive.locator('.az-archive-shell').waitFor();
   assert.match(await archive.innerText(), /FIELD ARCHIVE/);
   assert.match(await archive.innerText(), /Welcome to Aizanoi Field Archive/);
 
@@ -53,6 +54,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await csv.dblclick();
   const lab = page.locator('.az-workbench-window[data-workbench-app="data-lab"]');
   await lab.waitFor();
+  await lab.locator('.az-data-table').waitFor();
   assert.match(await lab.innerText(), /DATA LAB/);
   assert.match(await lab.innerText(), /3\s*loaded locally/);
   assert.equal(await lab.locator('.az-data-table tbody tr').count(), 3, 'Data Lab row preview mismatch');
@@ -68,6 +70,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await archive.locator('[data-file-id]').filter({hasText:'excavation.md'}).dblclick();
   const reader = page.locator('.az-workbench-window[data-workbench-app="source-reader"]');
   await reader.waitFor();
+  await reader.locator('.az-source-document').waitFor();
   assert.match(await reader.innerText(), /SOURCE READER/);
   assert.match(await reader.innerText(), /Temple sector context/);
   await reader.locator('[data-source-search]').fill('Temple');
@@ -77,6 +80,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await archive.locator('[data-file-id]').filter({hasText:'artifact.svg'}).dblclick();
   const viewer = page.locator('.az-workbench-window[data-workbench-app="artifact-viewer"]');
   await viewer.waitFor();
+  await viewer.locator('[data-artifact-image]').waitFor();
   assert.ok(await viewer.locator('[data-artifact-image]').count(), 'Artifact Viewer image missing');
   await viewer.locator('[data-artifact-action="plus"]').click();
   assert.match(await viewer.locator('[data-artifact-zoom]').innerText(), /115%/);
@@ -84,6 +88,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await page.evaluate(() => window.AIZANOI_OS.launchApp('notes'));
   const notes = page.locator('.az-workbench-window[data-workbench-app="notes"]');
   await notes.waitFor();
+  await notes.locator('[data-note-area]').waitFor();
   await notes.locator('[data-notes-action="new"]').click();
   await notes.locator('[data-note-title]').fill('QA field note');
   await notes.locator('[data-note-area]').fill('Persistent workstation note from Chromium smoke.');
@@ -95,6 +100,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await page.evaluate(() => window.AIZANOI_OS.launchApp('monitor'));
   const monitor = page.locator('.az-workbench-window[data-workbench-app="monitor"]');
   await monitor.waitFor();
+  await monitor.locator('.az-monitor-shell').waitFor();
   assert.match(await monitor.innerText(), /Workspace Monitor/);
   assert.match(await monitor.innerText(), /AI API\s*Online/i);
 
@@ -115,6 +121,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await page.locator('#az-mobile-apps [data-app="archive"]').click();
   const archive = page.locator('.az-workbench-window[data-workbench-app="archive"]');
   await archive.waitFor();
+  await archive.locator('.az-archive-shell').waitFor();
   const box = await archive.boundingBox();
   assert.ok(box && box.width <= 390 && box.height <= 844, 'mobile Archive exceeds viewport');
   assert.ok(await archive.locator('[data-archive-action="import"]').isVisible(), 'mobile Archive import action missing');
