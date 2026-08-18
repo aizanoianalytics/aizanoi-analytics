@@ -30,8 +30,8 @@ for (const city of ['rome-410-476','athens-450-430']) {
   });
 }
 
-test('Aizanoi Temple jump uses the open eastern sanctuary approach', () => {
-  const source = readFileSync(resolve(root, 'frontend/historic-world/index.html'), 'utf8');
+test('Aizanoi Temple jump keeps the open eastern sanctuary approach after runtime extraction', () => {
+  const source = readFileSync(resolve(root, 'frontend/historic-world/app.js'), 'utf8');
   assert.match(source, /temple:\{pos:\[-68,20\],look:\[-160,20\]\}/);
 });
 
