@@ -16,7 +16,7 @@ import {
   waterRibbon,
 } from '../../../ancient-world/engine/environment-renderer.js';
 import { installBackToOS } from '../../../ancient-world/engine/navigation.js';
-import { landmarkCandidateScore, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkViewDirections, traversalApproachClearance } from '../../../ancient-world/engine/landmark-framing.js';
+import { landmarkCandidateScore, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkSightClearance, landmarkViewDirections, traversalApproachClearance } from '../../../ancient-world/engine/landmark-framing.js';
 import { ANCIENT_MATERIALS as M } from '../../../ancient-world/assets/materials.js';
 import { evidenceForRecord, evidenceBadgeHTML, installEvidenceStyles } from '../../../ancient-world/engine/evidence.js';
 import { HILLS, TIBER, terrainHeightAt, terrainDescriptorAt } from '../data/terrain.js';
@@ -1312,26 +1312,36 @@ function teleport(id) {
   const desiredDistance = landmarkFramingDistance(building);
   const footprint = Math.max(building.w || 0, building.d || 0);
   const searchRadius = Math.max(34, Math.min(58, desiredDistance * 0.26));
+  const lookY = landmarkLookHeight(building, terrainHeightAt(building.x, building.z));
   const candidates = landmarkViewDirections().map(([dx, dz]) => {
     const wantedX = building.x + dx * desiredDistance;
     const wantedZ = building.z + dz * desiredDistance;
     const candidate = traversal.resolveSpawn(wantedX, wantedZ, searchRadius);
     const distance = Math.hypot(building.x - candidate.x, building.z - candidate.z);
     const clearance = traversal.collide(candidate.x, candidate.z) ? -1 : teleportForwardClearance(candidate, building);
+    const support = traversal.absoluteSupportAt(candidate.x, candidate.z);
+    const visibility = clearance < 0 ? -1 : landmarkSightClearance({
+      candidate,
+      target: building,
+      eyeY: support.y + EYE_HEIGHT,
+      targetY: lookY,
+      collide: traversal.collide,
+      heightAt: terrainHeightAt,
+    });
     const framed = distance >= Math.max(26, footprint * 0.92);
     return {
       ...candidate,
       clearance,
+      visibility,
       distance,
-      score: framed ? landmarkCandidateScore({ clearance, distance, desiredDistance }) : -1000 - Math.abs(distance - desiredDistance),
+      score: framed ? landmarkCandidateScore({ clearance, visibility, distance, desiredDistance }) : -1000 - Math.abs(distance - desiredDistance),
     };
   });
   candidates.sort((a, b) => b.score - a.score);
-  let chosen = candidates[0];
+  let chosen = candidates.find((candidate) => candidate.clearance >= 3 && candidate.visibility >= 4) || candidates[0];
   if (!chosen || chosen.score < -900) {
     chosen = traversal.resolveSpawn(building.x, building.z - desiredDistance, Math.max(38, searchRadius));
   }
-  const lookY = landmarkLookHeight(building, terrainHeightAt(building.x, building.z));
   teleportToPoint(chosen.x, chosen.z, { lookX: building.x, lookZ: building.z, lookY, label: building.name });
   $('#jump').value = '';
   return true;

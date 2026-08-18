@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkViewDirections, traversalApproachClearance } from '../frontend/ancient-world/engine/landmark-framing.js';
+import { landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkSightClearance, landmarkViewDirections, traversalApproachClearance } from '../frontend/ancient-world/engine/landmark-framing.js';
 
 const root = resolve(import.meta.dirname, '..');
 
@@ -53,4 +53,17 @@ test('landmark approach clearance rejects traversal-breaking support changes', (
     },
   });
   assert.equal(broken, 1);
+});
+
+test('landmark sight clearance rejects terrain or solids crossing the view ray', () => {
+  const clear = landmarkSightClearance({
+    candidate:{x:0,z:0}, target:{x:0,z:-100}, eyeY:3, targetY:14,
+    collide:()=>false, heightAt:()=>0,
+  });
+  assert.equal(clear, 7);
+  const blocked = landmarkSightClearance({
+    candidate:{x:0,z:0}, target:{x:0,z:-100}, eyeY:3, targetY:14,
+    collide:(_x,z)=>z < -25, heightAt:()=>0,
+  });
+  assert.ok(blocked < clear);
 });
