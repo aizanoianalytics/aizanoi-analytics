@@ -1,0 +1,48 @@
+name: Apply Final Aizanoi Polish
+
+on:
+  push:
+    branches:
+      - feat/final-polish-aaa-2026-08-18
+    paths:
+      - scripts/apply-final-polish-2026-08-18.py
+      - .github/workflows/apply-final-polish.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/final-polish-aaa-2026-08-18
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply guarded final polish
+        run: python3 scripts/apply-final-polish-2026-08-18.py
+      - name: Validate syntax and regressions
+        run: |
+          node --check frontend/js/os-v2.js
+          node --check frontend/games/brick.js
+          node --check frontend/ancient-cities/rome-410-476/js/app.js
+          node --check frontend/ancient-cities/athens-450-430/js/app.js
+          node --check frontend/ancient-cities/rome-410-476/data/urban-fabric.js
+          node --check frontend/ancient-cities/athens-450-430/data/urban-fabric.js
+          node --test tests/*.test.mjs
+          git diff --check
+      - name: Remove one-shot patch machinery
+        run: |
+          rm scripts/apply-final-polish-2026-08-18.py
+          rm .github/workflows/apply-final-polish.yml
+      - name: Commit product changes
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add frontend tests
+          git diff --cached --check
+          git commit -m "feat: final polish Aizanoi OS and Ancient World"
+          git push origin HEAD:feat/final-polish-aaa-2026-08-18
