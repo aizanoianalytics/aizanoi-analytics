@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      # The source script is kept exact-match guarded; normalize only the Brick
+      # init replacement ordering before applying it so later cleanup guards remain meaningful.
       - name: Normalize guarded Brick patch ordering
         run: |
           python3 - <<'PY'
