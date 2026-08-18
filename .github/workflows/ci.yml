@@ -9,7 +9,7 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate:
@@ -109,3 +109,105 @@ jobs:
           name: aizanoi-final-visual-review
           path: artifacts/final-visual-review/*.png
           retention-days: 3
+
+  extract-historic-survey:
+    if: github.event_name == 'pull_request' && github.head_ref == 'feat/final-polish-aaa-2026-08-18'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/final-polish-aaa-2026-08-18
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Detect embedded survey image
+        id: gate
+        run: |
+          if grep -q 'data:image/jpeg;base64,' frontend/historic-world/index.html; then
+            echo "needed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "needed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Extract exact JPEG bytes and update regression contract
+        if: steps.gate.outputs.needed == 'true'
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, re
+
+          html_path=Path('frontend/historic-world/index.html')
+          html=html_path.read_text()
+          pattern=r'src="data:image/jpeg;base64,([^"]+)"'
+          matches=re.findall(pattern, html)
+          assert len(matches)==1, f'expected exactly one embedded JPEG, found {len(matches)}'
+          raw=base64.b64decode(matches[0], validate=True)
+          assert raw[:3]==b'\xff\xd8\xff', 'invalid JPEG signature'
+          assert raw[-2:]==b'\xff\xd9', 'invalid JPEG end marker'
+          assert len(raw)>100_000, f'unexpectedly small survey JPEG: {len(raw)} bytes'
+          asset=Path('frontend/historic-world/assets/texier-survey.jpg')
+          asset.parent.mkdir(parents=True, exist_ok=True)
+          asset.write_bytes(raw)
+          html=re.sub(pattern, 'src="./assets/texier-survey.jpg"', html, count=1)
+          assert 'data:image/jpeg;base64,' not in html
+          html_path.write_text(html)
+
+          test=Path('tests/final-polish.test.mjs')
+          text=test.read_text()
+          anchor="  assert.match(historic,/\\.\\/app\\.js/);"
+          if 'texier-survey.jpg' not in text:
+              assert anchor in text
+              text=text.replace(anchor, anchor+"\n  assert.doesNotMatch(historic,/data:image\\/jpeg;base64/);\n  assert.match(historic,/texier-survey\\.jpg/);\n  assert.ok(existsSync('frontend/historic-world/assets/texier-survey.jpg'));",1)
+              test.write_text(text)
+          print(f'extracted Texier survey JPEG: {len(raw)} bytes')
+          PY
+          node --test tests/final-polish.test.mjs
+          git diff --check
+
+      - name: Install Chromium for visual parity smoke
+        if: steps.gate.outputs.needed == 'true'
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0
+          npx playwright install chromium
+
+      - name: Start extracted Historic World
+        if: steps.gate.outputs.needed == 'true'
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-historic-http.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/historic-world/ >/dev/null && exit 0; sleep 0.5; done
+          cat /tmp/aizanoi-historic-http.log
+          exit 1
+
+      - name: Verify survey image loads as an external asset
+        if: steps.gate.outputs.needed == 'true'
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { chromium } from 'playwright';
+          const browser=await chromium.launch({headless:true});
+          const page=await browser.newPage({viewport:{width:1280,height:800}});
+          const errors=[]; page.on('pageerror',e=>errors.push(String(e)));
+          await page.goto('http://127.0.0.1:4173/historic-world/',{waitUntil:'networkidle'});
+          const result=await page.locator('#texierImg').evaluate(img=>({src:img.getAttribute('src'),complete:img.complete,w:img.naturalWidth,h:img.naturalHeight}));
+          assert.equal(result.src,'./assets/texier-survey.jpg');
+          assert.ok(result.complete && result.w>100 && result.h>100,JSON.stringify(result));
+          assert.deepEqual(errors,[]);
+          await browser.close();
+          console.log('Historic Texier external-image smoke passed',result);
+          NODE
+
+      - name: Commit extracted survey asset
+        if: steps.gate.outputs.needed == 'true'
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add frontend/historic-world tests/final-polish.test.mjs
+          git diff --cached --check
+          git commit -m "refactor: externalize Historic World survey image"
+          git fetch origin feat/final-polish-aaa-2026-08-18
+          git rebase origin/feat/final-polish-aaa-2026-08-18
+          git push origin HEAD:feat/final-polish-aaa-2026-08-18
