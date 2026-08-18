@@ -107,6 +107,7 @@ jobs:
         run: |
           node tests/ancient-city-browser-smoke.mjs
           node tests/os-browser-smoke.mjs
+          node tests/os-world-ai-browser-smoke.mjs
 
       - name: Capture final product visuals
         env:
