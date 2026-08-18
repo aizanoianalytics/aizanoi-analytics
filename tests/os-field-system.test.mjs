@@ -27,13 +27,20 @@ test('Aizanoi Field System ships as isolated shell modules over the mature SPA r
   assert.match(chatSource, /legacy shell remains available/i);
 });
 
-test('Field System registry contains the real product suite and keeps removed Market out', () => {
+test('Field System registry contains the real product suite and keeps removed Markets product out', () => {
   for (const label of ['Aizanoi AI','Historical Worlds','Projects','Field Terminal','Field Notes','Aizanoi TV','Games','Archive Docs']) {
     assert.match(stateSource, new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
   for (const world of ['Aizanoi','Rome','Athens']) assert.match(stateSource, new RegExp(`label:'${world}'`));
-  assert.doesNotMatch(stateSource, /\bmarket(s)?\b/i);
-  assert.doesNotMatch(shellSource, /\bmarket(s)?\b/i);
+
+  // Historical language such as “market” is valid for the Macellum. What stays
+  // removed is the former Markets product/route itself.
+  for (const source of [stateSource, shellSource]) {
+    assert.doesNotMatch(source, /\bid\s*:\s*['"]markets?['"]/i);
+    assert.doesNotMatch(source, /\b(appId|worldId)\s*:\s*['"]markets?['"]/i);
+    assert.doesNotMatch(source, /\/markets?\//i);
+    assert.doesNotMatch(source, /launchApp\(\s*['"]markets?['"]/i);
+  }
 });
 
 test('Field System owns original shell identity instead of exposing XP shell as primary UI', () => {
