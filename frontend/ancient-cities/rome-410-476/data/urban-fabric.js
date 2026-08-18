@@ -86,7 +86,9 @@ export function generateUrbanFabric({
   streets,
   mobile = false,
   tiberX = -505,
-  tiberClearance = 60,
+  // Keep cell centres slightly farther away than the public 60 m guarantee so
+  // deterministic jitter cannot move a generated footprint back into the river corridor.
+  tiberClearance = 65,
 } = {}) {
   if (!regions || !buildings || !streets) throw new TypeError('generateUrbanFabric requires regions, buildings and streets.');
 
@@ -123,6 +125,7 @@ export function generateUrbanFabric({
         const bz = z + jitterZ;
         const width = 15 + hash(`${seed}:w`) * (mobile ? 8 : 14);
         const depth = 12.5 + hash(`${seed}:d`) * (mobile ? 7.5 : 12.5);
+        if (Math.abs(bx - tiberX) < 60) continue;
         if (overlapsNamedBuilding(bx, bz, width, depth, buildings)) continue;
         if (overlapsFabric(bx, bz, width, depth, fabric)) continue;
 
