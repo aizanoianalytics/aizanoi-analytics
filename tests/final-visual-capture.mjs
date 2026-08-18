@@ -22,12 +22,18 @@ async function releasePointer(page) {
   await page.waitForFunction(() => document.pointerLockElement === null);
 }
 
+async function settleShell(page) {
+  await page.waitForFunction(() => !document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'), null, { timeout: 5000 });
+  await page.waitForFunction(() => Boolean(window.AIZANOI_OS && document.body.classList.contains('aizanoi-next')), null, { timeout:5000 });
+  // Capture the stable product state rather than the intentional boot fade frame.
+  await page.waitForTimeout(650);
+}
+
 // Aizanoi Field System: capture the shell itself before opening a product window.
 {
   const { context, page } = await newPage();
   await page.goto(`${base}/`, { waitUntil: 'networkidle' });
-  await page.waitForFunction(() => !document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'), null, { timeout: 5000 });
-  await page.waitForFunction(() => Boolean(window.AIZANOI_OS && document.body.classList.contains('aizanoi-next')), null, { timeout:5000 });
+  await settleShell(page);
   await page.screenshot({ path: `${out}/00-os-field-home.png` });
 
   await page.locator('#start-btn').click();
@@ -37,6 +43,7 @@ async function releasePointer(page) {
 
   await page.keyboard.press('Control+K');
   await page.locator('#az-command-input').fill('open Rome at Colosseum');
+  await page.waitForTimeout(80);
   await page.screenshot({ path: `${out}/00c-os-command.png` });
   await page.keyboard.press('Escape');
 
@@ -56,12 +63,12 @@ async function releasePointer(page) {
 {
   const { context, page } = await newPage({ width:390, height:844 }, true);
   await page.goto(`${base}/`, { waitUntil:'networkidle' });
-  await page.waitForFunction(() => !document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'), null, { timeout:5000 });
-  await page.waitForFunction(() => Boolean(window.AIZANOI_OS && document.body.classList.contains('aizanoi-next')), null, { timeout:5000 });
+  await settleShell(page);
   await page.waitForSelector('#az-mobile-home:not(.hidden)');
   await page.screenshot({ path:`${out}/01b-os-mobile-home.png` });
   await page.locator('[data-mobile-nav="search"]').click();
   await page.waitForSelector('#az-command.open');
+  await page.waitForTimeout(80);
   await page.screenshot({ path:`${out}/01c-os-mobile-command.png` });
   console.log('captured Aizanoi Field System mobile set');
   await context.close();
