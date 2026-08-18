@@ -9,6 +9,14 @@ const shader = read('frontend/ancient-world/engine/surface-shader.js');
 const environment = read('frontend/ancient-world/engine/environment-renderer.js');
 const materials = read('frontend/ancient-world/assets/materials.js');
 
+test('teleports prefer a spawn with forward walking clearance', () => {
+  for (const source of [rome, athens]) {
+    assert.match(source, /teleportForwardClearance/);
+    assert.match(source, /candidate\.clearance >= 3/);
+    assert.match(source, /building\.d \* 0\.84/);
+  }
+});
+
 test('Rome and Athens use the same horizontal mouse-look convention as Aizanoi', () => {
   for (const source of [rome, athens]) {
     assert.match(source, /player\.yaw \+= dx \* horizontal/);
