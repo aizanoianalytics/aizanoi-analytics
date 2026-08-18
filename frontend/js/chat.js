@@ -171,9 +171,12 @@ window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
   }
 
   function start() {
-    loadScript('/js/os-state.js').then(function() { return loadScript('/js/os-shell.js'); }).catch(function(error) {
-      console.error('Aizanoi Field System shell could not load; legacy shell remains available.', error);
-    });
+    loadScript('/js/os-state.js')
+      .then(function() { return loadScript('/js/os-shell.js'); })
+      .then(function() { return loadScript('/js/os-intent.js'); })
+      .catch(function(error) {
+        console.error('Aizanoi Field System shell could not load; legacy shell remains available.', error);
+      });
   }
   if (document.readyState === 'complete') start();
   else window.addEventListener('load', start, { once:true });
