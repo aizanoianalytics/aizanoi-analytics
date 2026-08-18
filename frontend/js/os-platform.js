@@ -7,8 +7,9 @@
   const bus = new EventTarget();
   const commandProviders = new Set();
   const capabilityProviders = new Map();
-  let installPrompt = null;
+  let installPrompt = window.__AIZANOI_INSTALL_PROMPT__ || null;
   let swRegistration = null;
+  let swScheduled = false;
 
   const VERSION = '2.1.0-field';
   const BUILD = '2026.08.19';
@@ -42,6 +43,7 @@
   }
 
   async function registerServiceWorker() {
+    if (swRegistration) return swRegistration;
     if (!('serviceWorker' in navigator) || !/^https?:$/.test(location.protocol)) return null;
     try {
       swRegistration = await navigator.serviceWorker.register('/service-worker.js', { scope:'/' });
@@ -52,6 +54,14 @@
       emit('platform:service-worker', { ready:false, error:String(error?.message || error) });
       return null;
     }
+  }
+
+  function scheduleServiceWorker() {
+    if (swScheduled) return;
+    swScheduled = true;
+    const schedule = () => setTimeout(() => registerServiceWorker(), 6500);
+    if (document.readyState === 'complete') schedule();
+    else window.addEventListener('load', schedule, { once:true });
   }
 
   async function storageEstimate() {
@@ -173,10 +183,12 @@
   window.addEventListener('beforeinstallprompt', (event) => {
     event.preventDefault();
     installPrompt = event;
+    window.__AIZANOI_INSTALL_PROMPT__ = event;
     emit('platform:installable', { available:true });
   });
   window.addEventListener('appinstalled', () => {
     installPrompt = null;
+    window.__AIZANOI_INSTALL_PROMPT__ = null;
     State.recordActivity('Aizanoi installed', 'Field System added as an installed web application.', 'system');
     emit('platform:installed', {});
   });
@@ -184,7 +196,7 @@
   window.addEventListener('offline', () => emit('platform:network', { online:false }));
 
   ensureInstallMetadata();
-  registerServiceWorker();
+  scheduleServiceWorker();
 
   window.AIZANOI_PLATFORM = Object.freeze({
     VERSION,
@@ -204,6 +216,7 @@
     supports,
     canInstall,
     install,
+    registerServiceWorker,
     get serviceWorkerRegistration() { return swRegistration; },
   });
 })();
