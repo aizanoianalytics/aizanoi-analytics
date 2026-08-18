@@ -3,15 +3,25 @@ import { chromium } from 'playwright';
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const browser = await chromium.launch({ headless:true });
 
+const LEGACY_PRE_SHELL_SVG_WARNING = /<g> attribute transform: Expected '\)', "translate\(50%, 100%\)"/;
+
 async function open(context,path='/'){
   const page = await context.newPage();
   const errors=[];
   page.on('pageerror',e=>errors.push(String(e)));
-  page.on('console',message=>{ if(message.type()==='error') errors.push(message.text()); });
+  page.on('console',message=>{
+    if(message.type()!=='error') return;
+    const text=message.text();
+    // The legacy monolithic HTML is parsed before the modular Field System can
+    // repair this obsolete percentage transform. We tolerate only this exact
+    // parser-time warning and assert the runtime DOM is sanitized below.
+    if(LEGACY_PRE_SHELL_SVG_WARNING.test(text)) return;
+    errors.push(text);
+  });
   await page.goto(base+path,{waitUntil:'networkidle'});
   if(path==='/'){
     await page.waitForFunction(()=>!document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'),null,{timeout:5000});
-    await page.waitForFunction(()=>Boolean(window.AIZANOI_OS && window.AIZANOI_OS_STATE && document.body.classList.contains('aizanoi-next')),null,{timeout:5000});
+    await page.waitForFunction(()=>Boolean(window.AIZANOI_OS && window.AIZANOI_OS_STATE && window.AIZANOI_OS_SANITIZER && document.body.classList.contains('aizanoi-next')),null,{timeout:5000});
   }
   return {page,errors};
 }
@@ -29,6 +39,8 @@ async function open(context,path='/'){
   assert.ok(await page.locator('#az-search-button').count(),'System Bar search missing');
   assert.match(await page.locator('#start-btn').innerText(),/Aizanoi/,'Start control was not rebranded as Aizanoi Index');
   assert.equal(await page.locator('#start-menu:visible').count(),0,'legacy XP Start menu should not be the primary shell');
+  assert.equal(await page.evaluate(()=>/%/.test(document.querySelector('#az-stars g[transform]')?.getAttribute('transform')||'')),false,'legacy screensaver transform was not repaired by Field System sanitizer');
+  assert.match(await page.locator('meta[name="description"]').getAttribute('content'),/AI-native digital archaeology/i,'Field System product metadata was not aligned');
 
   await page.locator('#start-btn').click();
   await page.waitForSelector('#az-index.open');
@@ -53,9 +65,11 @@ async function open(context,path='/'){
   await page.locator('.az-theme-choice[data-theme="field"]').click();
   await page.locator('[data-az-close="az-system-panel"]').click();
 
-  // An unmatched natural-language command should use Aizanoi AI rather than a fake OS action.
+  // Conversational language must route to AI even when an app keyword appears
+  // as a substring (e.g. the “ai” letters inside “explain”).
   await page.keyboard.press('Control+K');
   await commandInput.fill('Explain the evidence visible in my current workspace');
+  assert.equal(await page.evaluate(()=>window.AIZANOI_OS_INTENT.shouldAskAI('Explain the evidence visible in my current workspace')),true,'natural-language intent guard misclassified a conversational query');
   await commandInput.press('Enter');
   await page.waitForFunction(()=>document.getElementById('chat-input')?.tagName==='TEXTAREA');
   await page.waitForFunction(()=>document.querySelectorAll('.chat-msg.bot:not(.typing)').length>=2);
