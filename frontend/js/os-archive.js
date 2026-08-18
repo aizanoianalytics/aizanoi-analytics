@@ -10,6 +10,7 @@
   const COLLECTIONS = Object.freeze(['Notes','Sources','Screenshots','Datasets','Exports','Uploads']);
   const MAX_FILE_BYTES = 25 * 1024 * 1024;
   let dbPromise;
+  let initPromise;
 
   const ext = (name='') => (String(name).toLowerCase().match(/\.([a-z0-9]+)$/)?.[1] || '');
   const uid = (prefix='item') => `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
@@ -72,10 +73,10 @@
     });
   }
 
-  async function put(record={}) {
+  function normalizeRecord(record={}) {
     const now = Date.now();
     const kind = record.kind || kindFor(record.name,record.mime);
-    const item = {
+    return {
       id:record.id || uid(kind),
       name:String(record.name || 'Untitled'),
       kind,
@@ -87,12 +88,16 @@
       blob:record.blob instanceof Blob ? record.blob : null,
       meta:record.meta && typeof record.meta === 'object' ? record.meta : {},
     };
+  }
+
+  async function putRaw(record={}, emit=true) {
+    const item = normalizeRecord(record);
     await transaction('readwrite',(store) => store.put(item));
-    Platform.emit('archive:changed',{type:'put',item});
+    if (emit) Platform.emit('archive:changed',{type:'put',item});
     return item;
   }
 
-  async function get(id) {
+  async function getRaw(id) {
     const database = await db();
     return new Promise((resolve,reject) => {
       const request = database.transaction(STORE,'readonly').objectStore(STORE).get(id);
@@ -101,7 +106,7 @@
     });
   }
 
-  async function all() {
+  async function allRaw() {
     const database = await db();
     return new Promise((resolve,reject) => {
       const request = database.transaction(STORE,'readonly').objectStore(STORE).getAll();
@@ -110,7 +115,51 @@
     });
   }
 
+  async function initialize() {
+    if (initPromise) return initPromise;
+    initPromise = (async () => {
+      const items = await allRaw();
+      if (!items.length) {
+        await putRaw({
+          id:'system-field-guide',name:'Welcome to Aizanoi Field Archive.md',kind:'markdown',collection:'Sources',mime:'text/markdown',
+          text:'# Aizanoi Field Archive\n\nThis is the local research layer of Aizanoi OS.\n\n- Drop CSV or JSON files for Data Lab.\n- Drop PDFs, Markdown or text for Source Reader.\n- Drop images for Artifact Viewer.\n- Create Field Notes and send research between apps.\n\nEverything in this archive stays in this browser unless you explicitly download/export it.',
+          meta:{system:true}
+        }, false);
+      }
+      try {
+        if (!localStorage.getItem('aizanoi-field-note-migrated-v1')) {
+          const legacy=localStorage.getItem('aizanoi-notepad-text');
+          if (legacy?.trim()) {
+            await putRaw({name:'Imported legacy note.md',kind:'note',mime:'text/markdown',collection:'Notes',text:legacy,size:new Blob([legacy]).size}, false);
+          }
+          localStorage.setItem('aizanoi-field-note-migrated-v1','1');
+        }
+      } catch (_) {}
+      return true;
+    })().catch((error) => {
+      initPromise = null;
+      throw error;
+    });
+    return initPromise;
+  }
+
+  async function put(record={}) {
+    await initialize();
+    return putRaw(record,true);
+  }
+
+  async function get(id) {
+    await initialize();
+    return getRaw(id);
+  }
+
+  async function all() {
+    await initialize();
+    return allRaw();
+  }
+
   async function remove(id) {
+    await initialize();
     await transaction('readwrite',(store) => store.delete(id));
     Platform.emit('archive:changed',{type:'delete',id});
   }
@@ -119,7 +168,7 @@
     const item = await get(id);
     if (!item) return null;
     item.name = String(name || '').trim() || item.name;
-    return put(item);
+    return putRaw(item,true);
   }
 
   async function readFile(file) {
@@ -167,28 +216,11 @@
     return put({name:name.endsWith('.md')?name:`${name}.md`,kind:'note',mime:'text/markdown',collection:'Notes',text,size:new Blob([text]).size});
   }
 
-  async function seed() {
-    if ((await all()).length) return;
-    await put({
-      id:'system-field-guide',name:'Welcome to Aizanoi Field Archive.md',kind:'markdown',collection:'Sources',mime:'text/markdown',
-      text:'# Aizanoi Field Archive\n\nThis is the local research layer of Aizanoi OS.\n\n- Drop CSV or JSON files for Data Lab.\n- Drop PDFs, Markdown or text for Source Reader.\n- Drop images for Artifact Viewer.\n- Create Field Notes and send research between apps.\n\nEverything in this archive stays in this browser unless you explicitly download/export it.',
-      meta:{system:true}
-    });
-  }
-
-  async function migrateLegacyNote() {
-    try {
-      if (localStorage.getItem('aizanoi-field-note-migrated-v1')) return;
-      const legacy=localStorage.getItem('aizanoi-notepad-text');
-      if (legacy?.trim()) await createNote('Imported legacy note',legacy);
-      localStorage.setItem('aizanoi-field-note-migrated-v1','1');
-    } catch (_) {}
-  }
-
-  const ready = Promise.all([seed(),migrateLegacyNote()]).then(() => true);
+  /* Compatibility promise stays cheap; IndexedDB opens only when an archive API is used. */
+  const ready = Promise.resolve(true);
 
   window.AIZANOI_ARCHIVE = Object.freeze({
-    DB_NAME, STORE, MAX_FILE_BYTES, collections:[...COLLECTIONS], ready,
+    DB_NAME, STORE, MAX_FILE_BYTES, collections:[...COLLECTIONS], ready, initialize,
     ext, kindFor, collectionForKind, iconFor,
     put,get,all,remove,rename,readFile,importFiles,importLocalFolder,createNote,
   });
