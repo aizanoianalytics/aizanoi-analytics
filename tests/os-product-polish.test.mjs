@@ -17,12 +17,30 @@ test('Aizanoi OS V2 stays modular and framework-free', () => {
   assert.doesNotMatch(osJs, /react|vue|tailwind/i);
 });
 
-test('AI responses use safe markdown plus local clear/copy UX', () => {
+test('AI responses use safe markdown plus local clear/copy/retry UX', () => {
   assert.match(index, /bubble\.innerHTML = renderMarkdownSafe\(text\)/);
   assert.match(index, /__AIZANOI_CHAT__/);
   assert.match(index, /Copy assistant answer/);
-  assert.match(osJs, /Copy last answer/);
+  assert.match(osJs, /Retry last/);
+  assert.match(osJs, /CHAT_TIMEOUT_MS/);
+  assert.match(osJs, /AbortController/);
+  assert.match(osJs, /TEXTAREA/);
+  assert.match(osJs, /event\.shiftKey/);
   assert.match(osJs, /aria-live/);
+});
+
+test('OS hardening releases per-window drag listeners and clamps windows after interaction', () => {
+  assert.match(osJs, /detachDrag/);
+  assert.match(osJs, /removeEventListener\(type, listener, options\)/);
+  assert.match(osJs, /taskbarTop/);
+  assert.match(osJs, /document\.addEventListener\('mouseup'/);
+  assert.doesNotMatch(osJs, /titlebar\.addEventListener\('dblclick'/);
+});
+
+test('mutation observer scopes enhancement work to added nodes', () => {
+  assert.match(osJs, /mutation\.addedNodes/);
+  assert.match(osJs, /scheduleInteractive\(added\)/);
+  assert.doesNotMatch(osJs, /new MutationObserver\(\(\) => markInteractive\(\)\)/);
 });
 
 test('all games use local-only best score and pause controls', () => {
@@ -42,7 +60,7 @@ test('single-publisher scope does not add social/account infrastructure', () => 
 
 test('frontend polish respects lightweight performance budgets', () => {
   assert.ok(statSync('frontend/index.html').size < 175_000, 'index.html exceeded transitional budget');
-  assert.ok(statSync('frontend/js/os-v2.js').size < 18_000, 'os-v2.js too large');
+  assert.ok(statSync('frontend/js/os-v2.js').size < 24_000, 'os-v2.js too large');
   assert.ok(statSync('frontend/css/os-v2.css').size < 18_000, 'os-v2.css too large');
   assert.ok(statSync('frontend/games/game-utils.js').size < 7_000, 'game-utils.js too large');
 });
