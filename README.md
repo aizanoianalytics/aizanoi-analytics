@@ -6,6 +6,10 @@ Open-source source code for [aizanoianalytics.com](https://aizanoianalytics.com)
 
 - `frontend/` — static Windows XP-inspired website, browser games and the standalone Historic World
 - `frontend/historic-world/` — self-contained WebGL reconstruction served at `/historic-world/`
+- `frontend/ancient-cities/` — renderer-neutral source-led city experiences
+  - `rome-410-476/` — Late Antique Rome, AD 410–476, with the shared Ancient World engine
+  - `athens-450-430/` — Classical Athens of Pericles, 450–430 BCE
+- `frontend/ancient-world/` — shared traversal, lifecycle, navigation, evidence and adaptive performance modules
 - `backend/` — Node.js/Express API
 - `infra/` — sanitized nginx/systemd deployment examples; production files and credentials stay on the server
 
