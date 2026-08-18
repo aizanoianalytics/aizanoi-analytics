@@ -8,6 +8,10 @@ on:
       - scripts/apply-final-repo-polish.py
       - .github/workflows/apply-final-repo-polish.yml
 
+concurrency:
+  group: final-repo-polish-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
