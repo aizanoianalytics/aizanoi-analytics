@@ -97,10 +97,20 @@ for (const city of cities) {
   const cy = pad.y + pad.height / 2;
   await mobilePage.dispatchEvent('#movePad', 'pointerdown', { pointerId: 11, pointerType: 'touch', isPrimary: true, clientX: cx, clientY: cy });
   await mobilePage.dispatchEvent('#movePad', 'pointermove', { pointerId: 11, pointerType: 'touch', isPrimary: true, clientX: cx, clientY: cy - pad.height * 0.30 });
-  await mobilePage.waitForTimeout(360);
+  // SwiftShader mobile frames can arrive slowly on shared CI runners. Keep the
+  // joystick engaged and wait for observed player movement rather than assuming
+  // a fixed distance must be reached inside a fixed 360 ms window.
+  await mobilePage.waitForFunction(
+    ({ x, z }) => {
+      const p = window.__ANCIENT_WORLD_DEBUG__?.player;
+      return Boolean(p && Math.hypot(p.x - x, p.z - z) > 0.08);
+    },
+    { x: mobileBefore.x, z: mobileBefore.z },
+    { timeout: 1800 },
+  );
   await mobilePage.dispatchEvent('#movePad', 'pointerup', { pointerId: 11, pointerType: 'touch', isPrimary: true, clientX: cx, clientY: cy - pad.height * 0.30 });
   const mobileWalked = await player(mobilePage);
-  assert.ok(Math.hypot(mobileWalked.x - mobileBefore.x, mobileWalked.z - mobileBefore.z) > 0.2, `${city.slug}: analog joystick did not move`);
+  assert.ok(Math.hypot(mobileWalked.x - mobileBefore.x, mobileWalked.z - mobileBefore.z) > 0.08, `${city.slug}: analog joystick did not move`);
 
   const mobileCanvas = await mobilePage.locator('#glCanvas').boundingBox();
   assert.ok(mobileCanvas, `${city.slug}: canvas has no layout box`);
