@@ -9,8 +9,8 @@ const browser = await chromium.launch({
   args: ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-gpu-sandbox'],
 });
 
-async function newPage() {
-  const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+async function newPage(viewport = { width: 1440, height: 900 }, mobile = false) {
+  const context = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, isMobile:mobile, hasTouch:mobile });
   const page = await context.newPage();
   page.setDefaultTimeout(12000);
   page.on('pageerror', (error) => console.error('PAGEERROR', String(error)));
@@ -22,14 +22,55 @@ async function releasePointer(page) {
   await page.waitForFunction(() => document.pointerLockElement === null);
 }
 
+async function settleShell(page) {
+  await page.waitForFunction(() => !document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'), null, { timeout: 5000 });
+  await page.waitForFunction(() => Boolean(window.AIZANOI_OS && document.body.classList.contains('aizanoi-next')), null, { timeout:5000 });
+  // Capture the stable product state rather than the intentional boot fade frame.
+  await page.waitForTimeout(650);
+}
+
+// Aizanoi Field System: capture the shell itself before opening a product window.
 {
   const { context, page } = await newPage();
-  await page.goto(`${base}/`, { waitUntil: 'domcontentloaded' });
-  await page.waitForFunction(() => !document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'), null, { timeout: 5000 });
-  await page.evaluate(() => window.openApp?.('chatbot'));
+  await page.goto(`${base}/`, { waitUntil: 'networkidle' });
+  await settleShell(page);
+  await page.screenshot({ path: `${out}/00-os-field-home.png` });
+
+  await page.locator('#start-btn').click();
+  await page.waitForSelector('#az-index.open');
+  await page.screenshot({ path: `${out}/00b-os-aizanoi-index.png` });
+  await page.keyboard.press('Escape');
+
+  await page.keyboard.press('Control+K');
+  await page.locator('#az-command-input').fill('open Rome at Colosseum');
+  await page.waitForTimeout(80);
+  await page.screenshot({ path: `${out}/00c-os-command.png` });
+  await page.keyboard.press('Escape');
+
+  await page.evaluate(() => window.AIZANOI_OS.openSystemPanel());
+  await page.waitForSelector('#az-system-panel.open');
+  await page.screenshot({ path: `${out}/00d-os-system-panel.png` });
+  await page.keyboard.press('Escape');
+
+  await page.evaluate(() => window.AIZANOI_OS.launchApp('chatbot'));
   await page.waitForTimeout(350);
   await page.screenshot({ path: `${out}/01-os-desktop.png` });
-  console.log('captured OS');
+  console.log('captured Aizanoi Field System desktop set');
+  await context.close();
+}
+
+// Mobile is a first-class app home/switcher model, not a squeezed desktop.
+{
+  const { context, page } = await newPage({ width:390, height:844 }, true);
+  await page.goto(`${base}/`, { waitUntil:'networkidle' });
+  await settleShell(page);
+  await page.waitForSelector('#az-mobile-home:not(.hidden)');
+  await page.screenshot({ path:`${out}/01b-os-mobile-home.png` });
+  await page.locator('[data-mobile-nav="search"]').click();
+  await page.waitForSelector('#az-command.open');
+  await page.waitForTimeout(80);
+  await page.screenshot({ path:`${out}/01c-os-mobile-command.png` });
+  console.log('captured Aizanoi Field System mobile set');
   await context.close();
 }
 

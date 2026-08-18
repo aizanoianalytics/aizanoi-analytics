@@ -22,13 +22,13 @@ Local browser preferences and scores (`localStorage`) are appropriate. Server-si
 ## Areas
 
 - **Aizanoi AI / Chat** — `backend/server.js`, frontend chat window in `frontend/index.html`; `/api/chat`; provider keys stay in production `.env` and never enter Git. The chat is visitor-to-assistant only, not visitor-to-visitor.
-- **Aizanoi OS shell** — `frontend/index.html`, `frontend/css/aizanoi-polish.css`, `frontend/css/os-v2.css`, `frontend/js/os-v2.js`; boot, desktop, windows, taskbar, Start menu, routing, metadata, search and mobile shell. Keep the retro desktop identity while improving usability incrementally.
+- **Aizanoi OS shell / Aizanoi Field System** — the owner explicitly approved a major shell redesign on 2026-08-18. Preserve the mature window/app/runtime contracts, routes, AI, terminal, games and accessibility work, but **do not treat Windows XP/Luna imitation as the product identity anymore**. The target is an original AI-native digital archaeology and intelligence workstation: `frontend/js/os-state.js`, `frontend/js/os-shell.js`, `frontend/css/os-aizanoi-next.css` own the new registry/state/shell/design layer; the older XP-oriented CSS/markup is a compatibility/fallback layer unless deliberately removed after regression coverage proves it safe. Prefer useful Aizanoi-native behavior (Index, command/search, historical-world context, real settings, recents/session state, mobile app-first navigation) over decorative OS cosplay such as fake network drives or fake system commands.
 - **Games** — `frontend/games/`; games are local single-player experiences. `frontend/games/game-utils.js` owns local score helpers; do not turn local scores into a public leaderboard without an explicit product decision.
 - **Ancient World shared engine** — `frontend/ancient-world/engine/` plus `frontend/ancient-world/assets/`. Read `frontend/ancient-world/AGENTS.md` before changing traversal, navigation, lifecycle or reusable historical-world assets.
 - **Aizanoi Historic World** — `frontend/historic-world/index.html`; standalone WebGL reconstruction at `/historic-world/`. Read `frontend/historic-world/AGENTS.md` before touching movement, terrain, collision, or UI. Its mature traversal remains an important visual/traversal reference.
 - **Late Antique Rome** — `frontend/ancient-cities/rome-410-476/`; modular city data + shared Ancient World contracts + WebGL renderer.
 - **Classical Athens** — `frontend/ancient-cities/athens-450-430/`; modular city data + shared Ancient World contracts + WebGL renderer. Do not copy Rome-specific terminology or evidence claims into Athens.
-- **Legacy Ancient World launcher** — `frontend/index.html` (`FOLDER_CONTENTS.ancient`, `APPS.ancient`, `wireAncientIfNeeded`); `/ancient-world/` remains the XP-style information/entry window.
+- **Legacy Ancient World launcher** — `frontend/index.html` (`FOLDER_CONTENTS.ancient`, `APPS.ancient`, `wireAncientIfNeeded`); `/ancient-world/` remains an information/entry window, while the Field System may present it under the stronger `Historical Worlds` shell label.
 - **Aizanoi Markets** — removed from the current product; do not resurrect `/market/` without an explicit product decision.
 - **Backend** — `backend/server.js`; Express API, CORS, rate limits, sandbox boundary and provider fallback chain.
 - **Infrastructure / deployment** — production-only nginx/systemd configuration is outside this public repository. Live frontend root is `/var/www/aizanoianalytics.com`; backend is `/opt/aizanoi-backend`; credentials remain there.
@@ -43,6 +43,8 @@ Local browser preferences and scores (`localStorage`) are appropriate. Server-si
 6. Historical reconstructions must preserve evidence levels. Do not present plausible/atmospheric infill as archaeologically verified.
 7. Do not broaden the product into accounts, multiplayer, comments, community or shared leaderboard infrastructure unless the owner explicitly changes the product scope.
 8. Meaningful commits only (`feat:`, `fix:`, `refactor:`, `docs:`, `test:`). Keep production and `main` synchronized after verified deployment.
+9. For Aizanoi Field System work, preserve the existing working app/runtime layer unless a test proves a structural rewrite is necessary. New shell features should be real and useful; remove or de-emphasize fake OS affordances rather than adding more simulation for its own sake.
+10. AI-native OS actions must remain explicit client-side commands or contextual prompts to the existing Aizanoi AI endpoint. Never grant the browser assistant arbitrary server/system execution privileges.
 
 ## Required lightweight validation
 
@@ -54,6 +56,8 @@ node --check frontend/games/mines.js
 node --check frontend/games/snake.js
 node --check frontend/games/brick.js
 node --check frontend/games/game-utils.js
+node --check frontend/js/os-state.js
+node --check frontend/js/os-shell.js
 node --check frontend/js/os-v2.js
 node --check frontend/ancient-world/engine/traversal.js
 node --check frontend/ancient-world/engine/lifecycle.js
