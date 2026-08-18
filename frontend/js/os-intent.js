@@ -53,6 +53,35 @@
     return Boolean(query && !isExplicitShellCommand(query));
   }
 
+  function syncCommandResultIntent() {
+    const input = document.getElementById('az-command-input');
+    const panel = document.getElementById('az-command');
+    if (!input || !panel?.classList.contains('open')) return;
+    const explicit = isExplicitShellCommand(input.value);
+    const rows = [...panel.querySelectorAll('.az-command-result')];
+    let visibleSelected = false;
+    for (const row of rows) {
+      const isAI = row.querySelector('.az-result-kind')?.textContent?.trim().toUpperCase() === 'AI';
+      row.hidden = Boolean(explicit && isAI);
+      if (row.hidden) {
+        row.classList.remove('selected');
+        row.setAttribute('aria-selected','false');
+      } else if (row.classList.contains('selected')) {
+        visibleSelected = true;
+      }
+    }
+    if (explicit && !visibleSelected) {
+      const first = rows.find((row) => !row.hidden);
+      first?.classList.add('selected');
+      first?.setAttribute('aria-selected','true');
+    }
+  }
+
+  function scheduleCommandResultSync() {
+    queueMicrotask(syncCommandResultIntent);
+    requestAnimationFrame(syncCommandResultIntent);
+  }
+
   function readWorldAIContext() {
     try {
       const raw = sessionStorage.getItem('aizanoi-world-ai-context');
@@ -102,9 +131,13 @@
     return submitContextualAI(query, historicalContext);
   }
 
+  document.addEventListener('input', (event) => {
+    if (event.target?.id === 'az-command-input') scheduleCommandResultSync();
+  });
   document.addEventListener('keydown', (event) => {
-    if (event.key !== 'Enter' || event.shiftKey || event.ctrlKey || event.metaKey || event.altKey || event.isComposing) return;
     const input = event.target?.closest?.('#az-command-input');
+    if (input) scheduleCommandResultSync();
+    if (event.key !== 'Enter' || event.shiftKey || event.ctrlKey || event.metaKey || event.altKey || event.isComposing) return;
     if (!input || !document.getElementById('az-command')?.classList.contains('open')) return;
     const query = input.value.trim();
     if (!shouldAskAI(query)) return;
@@ -118,6 +151,7 @@
   window.AIZANOI_OS_INTENT = Object.freeze({
     isExplicitShellCommand,
     shouldAskAI,
+    syncCommandResultIntent,
     consumeAskDeepLink,
     submitContextualAI,
   });
