@@ -1,0 +1,58 @@
+name: Apply Teleport Support Fix
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - scripts/apply-teleport-support-fix-2026-08-18.py
+      - .github/workflows/apply-teleport-support-fix.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.head_ref == 'feat/final-polish-aaa-2026-08-18'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/final-polish-aaa-2026-08-18
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply guarded support-aware teleport patch
+        run: python3 scripts/apply-teleport-support-fix-2026-08-18.py
+      - name: Validate syntax and Node regressions
+        run: |
+          node --check frontend/ancient-world/engine/landmark-framing.js
+          node --check frontend/ancient-cities/rome-410-476/js/app.js
+          node --check frontend/ancient-cities/athens-450-430/js/app.js
+          node --test tests/*.test.mjs
+          git diff --check
+      - name: Install Chromium smoke dependency
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0
+          npx playwright install chromium
+      - name: Start frontend and run Ancient World browser smoke
+        env:
+          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-http.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && break; sleep 0.5; done
+          node tests/ancient-city-browser-smoke.mjs
+      - name: Remove one-shot patch machinery
+        run: |
+          rm scripts/apply-teleport-support-fix-2026-08-18.py
+          rm .github/workflows/apply-teleport-support-fix.yml
+      - name: Commit traversal-aware teleport fix
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add frontend tests
+          git diff --cached --check
+          git commit -m "fix: keep landmark arrivals immediately walkable"
+          git push origin HEAD:feat/final-polish-aaa-2026-08-18
