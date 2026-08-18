@@ -39,11 +39,11 @@ function wireChatIfNeeded() {
     input.style.height = 'auto';
     input.style.height = Math.min(120, Math.max(32, input.scrollHeight)) + 'px';
   }
-  function rollbackUnansweredUser(text) {
+  function rollbackUnansweredUser(payloadText) {
     const last = chatHistory[chatHistory.length - 1];
-    if (last?.role === 'user' && last.content === text) chatHistory.pop();
+    if (last?.role === 'user' && last.content === payloadText) chatHistory.pop();
   }
-  function addRetry(text, reason) {
+  function addRetry(request, reason) {
     const row = document.createElement('div');
     row.className = 'chat-msg bot chat-error';
     const bubble = document.createElement('div');
@@ -54,18 +54,22 @@ function wireChatIfNeeded() {
     retry.type = 'button'; retry.className = 'chat-retry'; retry.textContent = 'Retry';
     retry.addEventListener('click', () => {
       row.remove();
-      input.value = text; resizeComposer();
-      sendMessage();
+      sendMessage(request);
     });
     bubble.append(message, retry); row.appendChild(bubble); log.appendChild(row);
     log.scrollTop = log.scrollHeight;
   }
-  async function sendMessage() {
-    const text = input.value.trim(); if (!text || input.disabled) return;
+  async function sendMessage(request = null) {
+    const isProgrammatic = request && typeof request === 'object';
+    const visibleText = (isProgrammatic ? request.text : input.value).trim();
+    if (!visibleText || input.disabled) return false;
+    const context = isProgrammatic ? String(request.context || '').trim() : '';
+    const payloadText = context ? `${context}\n\nUser request: ${visibleText}` : visibleText;
+    const retryRequest = { text:visibleText, context };
     const starters = document.getElementById('chat-starters');
     if (starters) starters.style.display = 'none';
     input.value = ''; resizeComposer(); input.disabled = true; sendBtn.disabled = true; log.setAttribute('aria-busy','true');
-    addMessage('user', text); chatHistory.push({ role:'user', content:text });
+    addMessage('user', visibleText); chatHistory.push({ role:'user', content:payloadText });
     const typing = document.createElement('div');
     typing.className = 'chat-msg bot typing';
     typing.innerHTML = '<div class="bubble"><span class="typing-dots" aria-label="Aizanoi AI is thinking"><i></i><i></i><i></i></span></div>';
@@ -78,23 +82,24 @@ function wireChatIfNeeded() {
       const res = await fetch(CHAT_API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, signal:controller.signal, body: JSON.stringify({ history: chatHistory }) });
       const data = await res.json(); typing.remove();
       if (!res.ok || !data.reply) {
-        rollbackUnansweredUser(text); lastFailedMessage = text;
-        addRetry(text, data.error || 'Unable to reply right now.'); flashTaskItem('chatbot');
+        rollbackUnansweredUser(payloadText); lastFailedMessage = retryRequest;
+        addRetry(retryRequest, data.error || 'Unable to reply right now.'); flashTaskItem('chatbot');
       } else {
         addMessage('bot', data.reply); chatHistory.push({ role:'assistant', content:data.reply }); lastFailedMessage = null;
       }
     } catch (err) {
-      typing.remove(); rollbackUnansweredUser(text); lastFailedMessage = text;
+      typing.remove(); rollbackUnansweredUser(payloadText); lastFailedMessage = retryRequest;
       const reason = err?.name === 'AbortError' || controller.signal.aborted ? 'The request took too long. You can retry.' : 'Connection error. You can retry.';
-      addRetry(text, reason); flashTaskItem('chatbot');
+      addRetry(retryRequest, reason); flashTaskItem('chatbot');
     } finally {
       clearTimeout(timeout);
       if (chatRequestController === controller) chatRequestController = null;
       log.setAttribute('aria-busy','false');
       if (document.getElementById('chat-input') === input) { input.disabled = false; sendBtn.disabled = false; input.focus(); }
     }
+    return true;
   }
-  sendBtn.addEventListener('click', sendMessage);
+  sendBtn.addEventListener('click', () => sendMessage());
   input.addEventListener('input', resizeComposer);
   input.addEventListener('keydown', (e) => {
     if (!e.isComposing && e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
@@ -107,6 +112,12 @@ function wireChatIfNeeded() {
       const starters = document.getElementById('chat-starters');
       if (starters) starters.style.display = 'grid';
       input.value = ''; input.disabled = false; sendBtn.disabled = false; input.focus();
+    },
+    ask(text, context = '') {
+      return sendMessage({ text:String(text || ''), context:String(context || '') });
+    },
+    getContextSafeHistory() {
+      return chatHistory.map((item) => ({ ...item }));
     }
   };
   input.focus();
