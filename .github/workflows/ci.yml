@@ -105,6 +105,7 @@ jobs:
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
         run: |
+          set -o pipefail
           mkdir -p artifacts/diagnostics
           status=0
           for script in ancient-city-browser-smoke.mjs os-browser-smoke.mjs os-world-ai-browser-smoke.mjs os-workstation-browser-smoke.mjs; do
@@ -118,6 +119,7 @@ jobs:
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
         run: |
+          set -o pipefail
           mkdir -p artifacts/diagnostics
           status=0
           node tests/final-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/final-visual-capture.log || status=1
