@@ -152,6 +152,22 @@ window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
   if (window.__AIZANOI_FIELD_BOOTSTRAP__) return;
   window.__AIZANOI_FIELD_BOOTSTRAP__ = true;
 
+  function preload(href, as, priority) {
+    if (document.querySelector('link[data-aizanoi-preload="' + href + '"]')) return;
+    var link = document.createElement('link');
+    link.rel = 'preload';
+    link.href = href;
+    link.as = as;
+    if (priority) link.fetchPriority = priority;
+    link.dataset.aizanoiPreload = href;
+    document.head.appendChild(link);
+  }
+  preload('/assets/wallpapers/aizanoi-synthesis.svg', 'image', 'high');
+  preload('/css/os-aizanoi-next.css', 'style');
+  preload('/css/os-distribution.css', 'style');
+  preload('/css/os-distribution-polish.css', 'style');
+  preload('/css/os-distribution-panels.css', 'style');
+
   function loadStyle(href) {
     if (document.querySelector('link[data-aizanoi-shell-style="' + href + '"]')) return;
     var link = document.createElement('link');
