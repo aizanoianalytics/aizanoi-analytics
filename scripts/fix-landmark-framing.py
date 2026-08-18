@@ -7,29 +7,6 @@ FILES = [
     ROOT / 'frontend/ancient-cities/athens-450-430/js/app.js',
 ]
 
-OLD_LOOK = """function lookAtTarget(x, z) {
-  player.yaw = Math.atan2(x - player.x, -(z - player.z));
-  player.pitch = -0.03;
-}
-
-function teleportToPoint(x, z, { lookX = null, lookZ = null, label = 'destination' } = {}) {
-  clearMovementState();
-  const spawn = traversal.resolveSpawn(x, z);
-  const support = traversal.absoluteSupportAt(spawn.x, spawn.z);
-  player.x = spawn.x;
-  player.z = spawn.z;
-  player.floorY = support.y;
-  player.surfaceTag = support.tag;
-  player.y = support.y + EYE_HEIGHT;
-  if (lookX != null && lookZ != null) lookAtTarget(lookX, lookZ);
-  last = performance.now();
-  drawRegionalMap();
-  $('#place').textContent = label;
-  canvas.focus({ preventScroll: true });
-  return spawn;
-}
-"""
-
 NEW_LOOK = """function lookAtTarget(x, z, targetY = null) {
   const dx = x - player.x;
   const dz = z - player.z;
@@ -57,33 +34,6 @@ function teleportToPoint(x, z, { lookX = null, lookZ = null, lookY = null, label
   $('#place').textContent = label;
   canvas.focus({ preventScroll: true });
   return spawn;
-}
-"""
-
-OLD_TELEPORT = """function teleport(id) {
-  const building = BUILDINGS.find((item) => item.id === id);
-  if (!building) return false;
-  const offsets = [
-    [0, -building.d * 0.84 - 12],
-    [building.w * 0.84 + 12, 0],
-    [0, building.d * 0.84 + 12],
-    [-building.w * 0.84 - 12, 0],
-  ];
-  const candidates = offsets.map(([ox, oz]) => {
-    const candidate = traversal.resolveSpawn(building.x + ox, building.z + oz, 28);
-    return {
-      ...candidate,
-      clearance: traversal.collide(candidate.x, candidate.z) ? -1 : teleportForwardClearance(candidate, building),
-    };
-  });
-  candidates.sort((a, b) => b.clearance - a.clearance);
-  let chosen = candidates.find((candidate) => candidate.clearance >= 3) || candidates[0];
-  if (!chosen || chosen.clearance < 0) {
-    chosen = traversal.resolveSpawn(building.x, building.z - building.d * 0.84 - 12, 30);
-  }
-  teleportToPoint(chosen.x, chosen.z, { lookX: building.x, lookZ: building.z, label: building.name });
-  $('#jump').value = '';
-  return true;
 }
 """
 
@@ -124,22 +74,31 @@ function teleport(id) {
 }
 """
 
+LOOK_PATTERN = re.compile(
+    r"function lookAtTarget\(x, z\)\s*\{.*?\n\}\s*\n\s*function teleportToPoint\(x, z, \{ lookX = null, lookZ = null, label = 'destination' \} = \{\}\)\s*\{.*?\n\}\s*\n(?=function teleportForwardClearance)",
+    re.S,
+)
+TELEPORT_PATTERN = re.compile(
+    r"function teleport\(id\)\s*\{.*?\n\}\s*\n(?=function openAtlas)",
+    re.S,
+)
+
 for path in FILES:
     text = path.read_text()
-    if text.count(OLD_LOOK) != 1:
-        raise SystemExit(f'{path}: expected one look/teleportToPoint block')
-    if text.count(OLD_TELEPORT) != 1:
-        raise SystemExit(f'{path}: expected one teleport block')
-    text = text.replace(OLD_LOOK, NEW_LOOK, 1).replace(OLD_TELEPORT, NEW_TELEPORT, 1)
+    text, look_count = LOOK_PATTERN.subn(NEW_LOOK + "\n", text, count=1)
+    if look_count != 1:
+        raise SystemExit(f'{path}: expected one look/teleportToPoint regex match, found {look_count}')
+    text, teleport_count = TELEPORT_PATTERN.subn(NEW_TELEPORT + "\n", text, count=1)
+    if teleport_count != 1:
+        raise SystemExit(f'{path}: expected one teleport regex match, found {teleport_count}')
     path.write_text(text)
 
 rome = FILES[0]
 text = rome.read_text()
-mast = re.compile(r"\n  if \(!TOUCH\) \{\n    const mastCount = 24;.*?\n  \}\n\}\n\nfunction amphitheatre", re.S)
-replacement = "\n}\n\nfunction amphitheatre"
-text, count = mast.subn(replacement, text, count=1)
+mast = re.compile(r"\n  if \(!TOUCH\) \{\s*const mastCount = 24;.*?\n  \}\n(?=\}\n\nfunction amphitheatre)", re.S)
+text, count = mast.subn("\n", text, count=1)
 if count != 1:
-    raise SystemExit('Rome: Colosseum mast block not found')
+    raise SystemExit(f'Rome: expected one Colosseum mast block, found {count}')
 rome.write_text(text)
 
 # Extend regression coverage rather than depending on screenshot review alone.
@@ -148,7 +107,8 @@ s = test.read_text()
 needle = "test('Rome and Athens have city-specific final hero/detail vocabulary',()=>{\n"
 addition = """test('landmark teleports use cinematic footprint-aware framing',()=>{\n  for (const source of [rome,athens]) {\n    assert.match(source,/function landmarkViewRadius/);\n    assert.match(source,/footprint \* 1\\.38/);\n    assert.match(source,/lookY/);\n    assert.match(source,/Math\\.atan2\\(targetY - player\\.y, horizontal\\)/);\n    assert.match(source,/diagonal = radius \* 0\\.72/);\n  }\n});\n\n"""
 if addition not in s:
-    if needle not in s: raise SystemExit('test insertion point missing')
+    if needle not in s:
+        raise SystemExit('test insertion point missing')
     s = s.replace(needle, addition + needle, 1)
     test.write_text(s)
 
