@@ -73,10 +73,10 @@ function overlapsFabric(x, z, width, depth, fabric, padding = 1.4) {
 }
 
 function targetForDistrict(region, density, mobile) {
-  const cell = mobile ? 34 : 26;
+  const cell = mobile ? 30 : 22;
   const theoretical = Math.max(1, (region.w * region.d) / (cell * cell));
-  const scaled = Math.round(theoretical * density * 0.66);
-  return Math.max(mobile ? 6 : 10, Math.min(mobile ? 18 : 40, scaled));
+  const scaled = Math.round(theoretical * density * (mobile ? 0.72 : 0.92));
+  return Math.max(mobile ? 10 : 16, Math.min(mobile ? 30 : 62, scaled));
 }
 
 export function generateUrbanFabric({
@@ -89,8 +89,8 @@ export function generateUrbanFabric({
   if (!regions || !buildings || !streets) throw new TypeError('generateUrbanFabric requires regions, buildings and streets.');
 
   const fabric = [];
-  const globalCap = mobile ? 155 : 360;
-  const cell = mobile ? 34 : 26;
+  const globalCap = mobile ? 240 : 560;
+  const cell = mobile ? 30 : 22;
 
   // Density is intentionally concentrated in the lived lower city, Agora edge,
   // Kerameikos and Piraeus. The Acropolis/Pnyx retain breathing room so sacred

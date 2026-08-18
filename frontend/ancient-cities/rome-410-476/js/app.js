@@ -8,6 +8,7 @@ import {
 import { createLifecycle } from '../../../ancient-world/engine/lifecycle.js';
 import { createAdaptiveQualityController } from '../../../ancient-world/engine/performance.js';
 import { installMobileControls } from '../../../ancient-world/engine/mobile-controls.js';
+import { detectCurrentTouchExperience, footprintSupport } from '../../../ancient-world/engine/city-grounding.js';
 import { ANCIENT_CITY_FRAGMENT_SHADER } from '../../../ancient-world/engine/surface-shader.js';
 import {
   createAncientSkyRenderer,
@@ -31,7 +32,8 @@ const gl = canvas?.getContext('webgl', { antialias: true, alpha: false, powerPre
 if (!gl) throw new Error('WebGL is unavailable.');
 
 const lifecycle = createLifecycle();
-const TOUCH = matchMedia('(pointer:coarse)').matches || navigator.maxTouchPoints > 0;
+// Keep controls visible on real touch/mobile WebViews even when pointer media queries lie.
+const TOUCH = detectCurrentTouchExperience();
 const FINE_POINTER = matchMedia('(pointer:fine)').matches;
 const WORLD_BOUNDS = ROME_MANIFEST.bounds;
 const EYE_HEIGHT = 1.68;
@@ -200,9 +202,22 @@ function arch(x, y, z, width, height, depth, color) {
   box(x, y + spring, z, width, height - spring, depth, color);
 }
 
+function supportFor(building) {
+  return footprintSupport(building, terrainHeightAt);
+}
+
 function baseY(buildingOrX, z = null) {
-  if (typeof buildingOrX === 'object') return terrainHeightAt(buildingOrX.x, buildingOrX.z);
+  if (typeof buildingOrX === 'object') return supportFor(buildingOrX).baseY;
   return terrainHeightAt(buildingOrX, z);
+}
+
+function buildFoundation(building, material = C.limestone2) {
+  const support = supportFor(building);
+  if (support.foundationDepth < 0.08) return support;
+  // A compact rubble/stone podium fills the slope under the authored footprint.
+  // This removes visible air gaps without claiming a separately excavated structure.
+  box(building.x, support.minY - 0.035, building.z, building.w + 0.28, support.foundationDepth + 0.07, building.d + 0.28, material, building.rot || 0);
+  return support;
 }
 
 function temple(building, color) {
@@ -676,6 +691,7 @@ function renderBuilding(building) {
   const ground = baseY(building);
 
   if (building.type === 'wall') return wall(building);
+  if (!['aqueduct', 'bridge', 'garden', 'cemetery', 'island'].includes(building.type)) buildFoundation(building, C.limestone2);
   if (building.type === 'gate') return arch(building.x, ground, building.z, building.w, building.h, building.d, color);
   if (building.id === 'pantheon') pantheon(building, color);
   else if (building.type === 'temple') temple(building, color);
@@ -799,7 +815,8 @@ function addRomanStreetDetail(building, ground) {
 }
 
 function renderUrbanFabric(building) {
-  const ground = terrainHeightAt(building.x, building.z);
+  const support = buildFoundation(building, C.limestone2);
+  const ground = support.baseY;
   const material = C[building.material] || C.brick;
   if (building.courtyard) {
     const wingW = building.w * 0.38;

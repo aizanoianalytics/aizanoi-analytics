@@ -20,9 +20,9 @@
 
 @media(pointer:fine) and (min-width:901px){
   .topbar{opacity:.76}
-  #mapBox{opacity:.68;transform:scale(.84);transform-origin:top right}
-  .bottomBar{opacity:.56}
-  #headingHud,#elevationHud{opacity:.58}
+  #mapBox{opacity:.50;transform:scale(.78);transform-origin:top right}
+  .bottomBar{opacity:.32;transform:translateY(10px)}
+  #headingHud,#elevationHud{opacity:.46}
   .topbar:hover,.topbar:focus-within,
   #mapBox:hover,#mapBox:focus-within,
   .bottomBar:hover,.bottomBar:focus-within{opacity:1;transform:none}
