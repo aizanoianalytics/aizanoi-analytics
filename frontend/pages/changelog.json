@@ -1,6 +1,30 @@
 {
   "entries": [
     {
+      "version": "1.1.0",
+      "date": "2026-08-18",
+      "added": [
+        "Aizanoi OS V2 polish layer with improved window, taskbar, Start menu and mobile viewport behavior",
+        "Aizanoi AI answer copy controls, clear-chat action and safer readable Markdown presentation",
+        "Shared local-only game utilities with Best, Pause and Restart controls for Mines, Snake and Brick Breaker",
+        "Chromium desktop/mobile smoke coverage for Aizanoi OS and Ancient World experiences",
+        "Explicit single-publisher product scope for future agent and LLM reviews"
+      ],
+      "improved": [
+        "Desktop window clamping, Show Desktop behavior, focus semantics and accessibility metadata",
+        "Mobile safe-area handling and app-first sizing for retro desktop windows",
+        "Ancient World mobile browser smoke reliability under low-frame-rate SwiftShader rendering",
+        "Repository guidance and implementation documentation updated to the current Ancient World architecture"
+      ],
+      "fixed": [
+        "Stale roadmap references to multiplayer, accounts, comments, shared leaderboards and community features",
+        "Outdated implementation documentation that described Ancient World as a single Roman Aizanoi MVP"
+      ],
+      "removed": [
+        "Future-product assumptions that conflicted with the single-publisher site direction"
+      ]
+    },
+    {
       "version": "1.0.0",
       "date": "2026-08-14",
       "added": [
