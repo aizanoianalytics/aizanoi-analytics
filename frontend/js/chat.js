@@ -166,10 +166,17 @@ window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
   function loadScript(src) {
     return new Promise(function(resolve, reject) {
       var existing = document.querySelector('script[data-aizanoi-shell="' + src + '"]');
-      if (existing) { if (existing.dataset.loaded === '1') resolve(); else existing.addEventListener('load', resolve, { once:true }); return; }
+      if (existing) {
+        if (existing.dataset.loaded === '1') resolve();
+        else {
+          existing.addEventListener('load', resolve, { once:true });
+          existing.addEventListener('error', reject, { once:true });
+        }
+        return;
+      }
       var script = document.createElement('script');
       script.src = src;
-      script.defer = true;
+      script.async = false;
       script.dataset.aizanoiShell = src;
       script.addEventListener('load', function() { script.dataset.loaded = '1'; resolve(); }, { once:true });
       script.addEventListener('error', reject, { once:true });
@@ -178,10 +185,12 @@ window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
   }
 
   function start() {
-    loadScript('/js/os-state.js')
+    Promise.all([
+      loadScript('/js/os-state.js'),
+      loadScript('/js/os-legacy-sanitizer.js')
+    ])
       .then(function() { return loadScript('/js/os-shell.js'); })
       .then(function() { return loadScript('/js/os-intent.js'); })
-      .then(function() { return loadScript('/js/os-legacy-sanitizer.js'); })
       .catch(function(error) {
         console.error('Aizanoi Field System shell could not load; legacy shell remains available.', error);
       });
