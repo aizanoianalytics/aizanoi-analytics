@@ -146,3 +146,35 @@ function wireChatStartersIfNeeded() {
   }, 80);
 }
 window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
+
+/* Major shell bootstrap stays isolated from the legacy SPA markup. */
+(function bootstrapAizanoiFieldSystem() {
+  if (window.__AIZANOI_FIELD_BOOTSTRAP__) return;
+  window.__AIZANOI_FIELD_BOOTSTRAP__ = true;
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = '/css/os-aizanoi-next.css';
+  document.head.appendChild(link);
+
+  function loadScript(src) {
+    return new Promise(function(resolve, reject) {
+      var existing = document.querySelector('script[data-aizanoi-shell="' + src + '"]');
+      if (existing) { if (existing.dataset.loaded === '1') resolve(); else existing.addEventListener('load', resolve, { once:true }); return; }
+      var script = document.createElement('script');
+      script.src = src;
+      script.defer = true;
+      script.dataset.aizanoiShell = src;
+      script.addEventListener('load', function() { script.dataset.loaded = '1'; resolve(); }, { once:true });
+      script.addEventListener('error', reject, { once:true });
+      document.body.appendChild(script);
+    });
+  }
+
+  function start() {
+    loadScript('/js/os-state.js').then(function() { return loadScript('/js/os-shell.js'); }).catch(function(error) {
+      console.error('Aizanoi Field System shell could not load; legacy shell remains available.', error);
+    });
+  }
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once:true });
+})();
