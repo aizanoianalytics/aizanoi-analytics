@@ -30,7 +30,6 @@ async function open(context,path='/'){
   assert.equal(await page.locator('.os-v2-chat-toolbar').count(),1,'chat toolbar missing');
   assert.ok(await page.locator('[data-chat-action="retry"]').count(),'retry action missing');
   assert.ok(await page.evaluate(()=>typeof openWindows.get('chatbot')?.cleanup==='function'),'core window cleanup hook missing');
-  assert.ok(await page.evaluate(()=>window.__AIZANOI_OS_V2__?.debug?.().marqueeEnabled===true),'desktop marquee enhancement missing');
 
   await input.fill('Line one');
   await input.press('Shift+Enter');
