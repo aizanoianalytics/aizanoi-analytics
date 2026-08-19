@@ -4,6 +4,7 @@ import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const LEGACY_PRE_SHELL_SVG_WARNING = /<g> attribute transform: Expected '\)', "translate\(50%, 100%\)"/;
+const FEATURED_APP_COUNT = 11;
 mkdirSync('artifacts/diagnostics', { recursive:true });
 const browser = await chromium.launch({ headless:true });
 
@@ -29,12 +30,14 @@ async function openShell({ name, width, height, mobile = false, expected }) {
   await page.goto(`${base}/`, { waitUntil:'networkidle' });
   await page.waitForFunction(() => !document.getElementById('boot') || document.getElementById('boot').classList.contains('hide') || getComputedStyle(document.getElementById('boot')).display === 'none', null, { timeout:8000 });
   await page.waitForFunction(() => Boolean(window.AIZANOI_OS_STATE && window.AIZANOI_UNIFIED_SHELL), null, { timeout:8000 });
-  await page.waitForFunction(() => document.querySelectorAll('#az-mobile-apps .az-mobile-app').length === 8, null, { timeout:5000 });
+  await page.waitForFunction((count) => document.querySelectorAll('#az-mobile-apps .az-mobile-app').length === count, FEATURED_APP_COUNT, { timeout:5000 });
 
   assert.equal(await page.evaluate(() => document.body.dataset.azLayout), expected, `${name}: wrong responsive mode`);
-  assert.equal(await page.locator('#az-mobile-apps .az-mobile-app').count(), 8, `${name}: launcher must expose eight synchronized apps`);
+  assert.equal(await page.locator('#az-mobile-apps .az-mobile-app').count(), FEATURED_APP_COUNT, `${name}: launcher must expose eleven synchronized apps`);
   assert.equal(await page.locator('#az-mobile-apps [data-app="chatbot"]').count(), 0, `${name}: disabled AI leaked into launcher`);
-  assert.equal(await page.locator('#az-mobile-apps [data-app="terminal"]').count(), 1, `${name}: terminal missing from launcher`);
+  for (const appId of ['terminal','source-reader','artifact-viewer','monitor']) {
+    assert.equal(await page.locator(`#az-mobile-apps [data-app="${appId}"]`).count(), 1, `${name}: ${appId} missing from launcher`);
+  }
   assert.notEqual(await page.locator('#az-mobile-home').evaluate((node) => getComputedStyle(node).display), 'none', `${name}: unified home not visible`);
   assert.equal(
     await page.locator('#az-mobile-home').evaluate((node) => node.parentElement?.id || ''),

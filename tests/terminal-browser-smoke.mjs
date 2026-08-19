@@ -21,6 +21,19 @@ await page.waitForFunction(() => Boolean(window.AIZANOI_OS), null, { timeout:800
 await page.evaluate(() => window.AIZANOI_OS.launchApp('terminal'));
 await page.locator('#term-input').waitFor({ state:'visible', timeout:5000 });
 
+const initialOutput = await page.locator('#term-out').innerText();
+assert.match(initialOutput, /AIZANOI FIELD TERMINAL/);
+assert.match(initialOutput, /browser-only/i);
+assert.doesNotMatch(initialOutput, /Microsoft|Windows XP|Copyright 1985|C:\\Aizanoi/i);
+assert.match(await page.locator('#term-out .prompt').last().innerText(), /aizanoi@field:~\$/);
+const statusbarText = await page.locator('#term-input').evaluate((input) => input.closest('.win')?.querySelector('.win-statusbar')?.innerText || '');
+assert.match(statusbarText, /LOCAL VIRTUAL SHELL · \/aizanoi/);
+assert.doesNotMatch(statusbarText, /C:\\Aizanoi|Windows|Microsoft/i);
+const taskText = await page.locator('#task-terminal').innerText();
+assert.match(taskText, /Field Terminal/);
+assert.doesNotMatch(taskText, /C:\\Aizanoi|Windows|Microsoft/i);
+assert.equal(await page.locator('#task-terminal').getAttribute('aria-label'), 'Field Terminal');
+
 async function command(value) {
   const input = page.locator('#term-input');
   await input.fill(value);

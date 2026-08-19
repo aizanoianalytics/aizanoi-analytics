@@ -1,12 +1,17 @@
 'use strict';
 
-const CACHE = 'aizanoi-field-shell-v2.1.1';
-/* Keep install cheap. Once the worker controls the next visit, same-origin static
- * assets are populated into the runtime cache as they are actually requested. */
+const CACHE = 'aizanoi-field-shell-v2.1.2';
+/* Keep install cheap while guaranteeing that the final presentation bootstrap
+ * lands atomically across previously cached desktop/tablet/mobile sessions. */
 const PRECACHE = [
   '/',
   '/manifest.webmanifest',
-  '/assets/branding/aizanoi-logo-mark.svg'
+  '/assets/branding/aizanoi-logo-mark.svg',
+  '/js/os-platform.js',
+  '/js/os-unified.js',
+  '/js/os-product-polish.js',
+  '/css/os-product-polish.css',
+  '/css/os-product-polish-responsive.css'
 ];
 
 self.addEventListener('install', (event) => {
