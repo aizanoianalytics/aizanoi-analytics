@@ -1,4 +1,4 @@
-/* === AIZANOI TERMINAL — BROWSER-ONLY VIRTUAL SHELL === */
+/* === AIZANOI FIELD TERMINAL — BROWSER-ONLY VIRTUAL SHELL === */
 const TERM_HISTORY = [];
 let TERM_HIST_IDX = -1;
 let termWired = false;
@@ -7,7 +7,7 @@ const TERM_COMMANDS = ['pwd', 'whoami', 'date', 'echo', 'ls', 'cat', 'help', 'cl
 const TERM_VFS = Object.freeze({
   'README.txt': Object.freeze({
     type: 'file',
-    content: 'Welcome to Aizanoi Terminal.\nThis terminal is a browser-only simulation. No command is sent to the server.\nType help to see the available commands.\n'
+    content: 'Welcome to Aizanoi Field Terminal.\nThis terminal is a browser-only simulation. No command is sent to the server.\nType help to see the available commands.\n'
   }),
   'docs': Object.freeze({ type: 'dir' }),
   'docs/info.txt': Object.freeze({
@@ -36,7 +36,7 @@ function termClear() {
 }
 
 function termPrompt() {
-  return '<span class="prompt">C:\\Aizanoi&gt;</span> ';
+  return '<span class="prompt">aizanoi@field:~$</span> ';
 }
 
 function termEscape(value) {
@@ -132,9 +132,9 @@ async function wireTerminalIfNeeded() {
   if (!input || !out || termWired) return;
   termWired = true;
 
-  termOut('<span style="color:#aaa;">Microsoft Windows XP [Version 5.1.2600]</span>');
-  termOut('<span style="color:#aaa;">(C) Copyright 1985-2001 Microsoft Corp.</span>');
-  termOut('<span style="color:#aaa;">Aizanoi Terminal — browser-only virtual shell. No server commands are executed.</span>');
+  termOut('<span style="color:#d8c79f;">AIZANOI FIELD TERMINAL / LOCAL VIRTUAL SHELL</span>');
+  termOut('<span style="color:#8f9991;">Runtime: browser-only · static · no server command execution</span>');
+  termOut('<span style="color:#8f9991;">Workspace: /aizanoi · identity: aizanoi-guest</span>');
   termOut('<span style="color:#aaa;">Available: pwd, whoami, date, echo, ls, cat, help, clear. Type <b>help</b>.</span>');
   termOut(termPrompt());
 
@@ -171,8 +171,8 @@ async function wireTerminalIfNeeded() {
     }
     const cmd = command.trim();
     const last = out.lastElementChild;
-    if (last && last.innerHTML.indexOf('C:\\Aizanoi&gt;') !== -1) last.remove();
-    termOut(`<span style="color:#4ec04c;">C:\\Aizanoi&gt;</span> <span style="color:#fff;">${termEscape(cmd)}</span>`);
+    if (last?.querySelector('.prompt')) last.remove();
+    termOut(`<span class="prompt">aizanoi@field:~$</span> <span style="color:#fff;">${termEscape(cmd)}</span>`);
 
     if (cmd.toLowerCase() === 'clear' || cmd.toLowerCase() === 'cls') {
       termClear();
