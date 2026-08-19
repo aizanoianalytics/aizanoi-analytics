@@ -21,6 +21,12 @@ await page.waitForFunction(() => Boolean(window.AIZANOI_OS), null, { timeout:800
 await page.evaluate(() => window.AIZANOI_OS.launchApp('terminal'));
 await page.locator('#term-input').waitFor({ state:'visible', timeout:5000 });
 
+const initialOutput = await page.locator('#term-out').innerText();
+assert.match(initialOutput, /AIZANOI FIELD TERMINAL/);
+assert.match(initialOutput, /browser-only/i);
+assert.doesNotMatch(initialOutput, /Microsoft|Windows XP|Copyright 1985|C:\\Aizanoi/i);
+assert.match(await page.locator('#term-out .prompt').last().innerText(), /aizanoi@field:~\$/);
+
 async function command(value) {
   const input = page.locator('#term-input');
   await input.fill(value);
