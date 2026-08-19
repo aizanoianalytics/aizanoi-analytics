@@ -1,0 +1,17 @@
+/* Small high-specificity responsive contract layered over legacy distribution CSS. */
+@media (max-width:700px) {
+  html body.aizanoi-next .win.az-workbench-window .az-archive-sidebar {
+    display:flex !important;
+    flex:0 0 auto !important;
+    flex-direction:column !important;
+  }
+  html body.aizanoi-next .win.az-workbench-window .az-collection-list {
+    display:flex !important;
+    flex-direction:row !important;
+    gap:4px !important;
+    overflow:auto hidden !important;
+    padding-bottom:1px !important;
+    scrollbar-width:none;
+  }
+  html body.aizanoi-next .win.az-workbench-window .az-collection-list::-webkit-scrollbar { display:none; }
+}
