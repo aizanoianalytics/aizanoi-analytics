@@ -24,8 +24,8 @@ test('unified shell defines desktop, tablet and mobile from one design contract'
   assert.match(css, /width:100vw !important/);
 });
 
-test('unified launcher exposes the same core products and excludes disabled AI', () => {
-  for (const id of ['ancient','archive','notes','data-lab','terminal','projects','games','videos']) {
+test('unified launcher exposes every featured non-AI product from first paint', () => {
+  for (const id of ['ancient','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor','videos','games']) {
     assert.match(unified, new RegExp(`['\"]${id}['\"]`), `${id} missing from unified launcher`);
   }
   assert.doesNotMatch(unified, /CORE_APPS[^\n]*chatbot/);
