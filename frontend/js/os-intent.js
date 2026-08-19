@@ -5,6 +5,7 @@
   if (!State) return;
 
   const normalize = (value) => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const DISABLED_AI_COPY = /\b(?:open|ask)\s+aizanoi\s+ai\b|\baizanoi\s+ai\b/i;
 
   function exactShellTerms() {
     const terms = new Set([
@@ -41,7 +42,7 @@
 
   function isExplicitShellCommand(value) {
     const query = normalize(value);
-    if (!query) return false;
+    if (!query || DISABLED_AI_COPY.test(query)) return false;
     if (DIRECT_TERMS.has(query)) return true;
     if (ACTION_PREFIX.test(query)) return true;
     if (/^sound\s+(on|off|mute)\b/.test(query)) return true;
@@ -53,27 +54,87 @@
     return false;
   }
 
+  function isDisabledAIResult(row) {
+    if (!row) return false;
+    const kind = row.querySelector('.az-result-kind')?.textContent?.trim().toUpperCase();
+    const title = row.querySelector('.az-result-title')?.textContent?.trim() || row.textContent || '';
+    return kind === 'AI' || DISABLED_AI_COPY.test(title);
+  }
+
+  function visibleCommandRows(panel = document.getElementById('az-command')) {
+    return [...(panel?.querySelectorAll('.az-command-result') || [])].filter((row) => !row.hidden && !isDisabledAIResult(row));
+  }
+
   function syncCommandResultIntent() {
     const panel = document.getElementById('az-command');
     if (!panel?.classList.contains('open')) return;
+    const results = panel.querySelector('#az-command-results');
     const rows = [...panel.querySelectorAll('.az-command-result')];
+
     for (const row of rows) {
-      const isAI = row.querySelector('.az-result-kind')?.textContent?.trim().toUpperCase() === 'AI';
-      if (!isAI) continue;
-      row.hidden = true;
-      row.classList.remove('selected');
-      row.setAttribute('aria-selected','false');
+      const disabled = isDisabledAIResult(row);
+      row.hidden = disabled;
+      if (disabled) {
+        row.classList.remove('selected');
+        row.setAttribute('aria-selected','false');
+        row.setAttribute('aria-hidden','true');
+        row.tabIndex = -1;
+      } else {
+        row.removeAttribute('aria-hidden');
+      }
     }
-    if (!rows.some((row) => !row.hidden && row.classList.contains('selected'))) {
-      const first = rows.find((row) => !row.hidden);
+
+    const visible = visibleCommandRows(panel);
+    if (!visible.some((row) => row.classList.contains('selected'))) {
+      visible.forEach((row) => {
+        row.classList.remove('selected');
+        row.setAttribute('aria-selected','false');
+      });
+      const first = visible[0];
       first?.classList.add('selected');
       first?.setAttribute('aria-selected','true');
+    }
+
+    let empty = results?.querySelector('[data-ai-disabled-empty]');
+    if (!visible.length && rows.length) {
+      if (!empty && results) {
+        empty = document.createElement('div');
+        empty.className = 'az-activity-row';
+        empty.dataset.aiDisabledEmpty = 'true';
+        empty.innerHTML = '<b>No direct match</b><p>Try an application, historical world, landmark or system command.</p>';
+        results.appendChild(empty);
+      }
+    } else {
+      empty?.remove();
     }
   }
 
   function scheduleCommandResultSync() {
     queueMicrotask(syncCommandResultIntent);
     requestAnimationFrame(syncCommandResultIntent);
+  }
+
+  function executeVisibleSelection(event) {
+    if (event.key !== 'Enter' || event.isComposing) return false;
+    const input = event.target?.closest?.('#az-command-input');
+    const panel = input?.closest?.('#az-command');
+    if (!input || !panel?.classList.contains('open')) return false;
+
+    syncCommandResultIntent();
+    const selected = visibleCommandRows(panel).find((row) => row.classList.contains('selected')) || visibleCommandRows(panel)[0];
+    if (!selected) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return true;
+    }
+
+    // os-shell keeps a private commandSelection index. Clicking the visible DOM
+    // result is the authoritative safe path after disabled AI rows are filtered,
+    // so Enter can never execute a hidden stale command.
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    selected.click();
+    return true;
   }
 
   function clearWorldAIContext() {
@@ -99,7 +160,15 @@
     if (event.target?.id === 'az-command-input') scheduleCommandResultSync();
   });
   document.addEventListener('keydown', (event) => {
+    if (executeVisibleSelection(event)) return;
     if (event.target?.closest?.('#az-command-input')) scheduleCommandResultSync();
+  }, true);
+
+  document.addEventListener('click', (event) => {
+    const row = event.target?.closest?.('.az-command-result');
+    if (!row || !isDisabledAIResult(row)) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
   }, true);
 
   setTimeout(() => {
@@ -113,5 +182,6 @@
     syncCommandResultIntent,
     consumeAskDeepLink,
     submitContextualAI,
+    isDisabledAIResult,
   });
 })();
