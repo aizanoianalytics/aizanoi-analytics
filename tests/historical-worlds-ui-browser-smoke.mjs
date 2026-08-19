@@ -11,15 +11,19 @@ const layouts = [
 ];
 const worlds = [
   { id:'aizanoi', path:'/historic-world/', intro:'#boot:not(.hidden)', enter:'#enterBtn', entered:'#hud:not(.hidden)' },
-  { id:'rome', path:'/ancient-cities/rome-410-476/', intro:'#intro:not(.hidden)', enter:'#enter', entered:'#intro.hidden' },
-  { id:'athens', path:'/ancient-cities/athens-450-430/', intro:'#intro:not(.hidden)', enter:'#enter', entered:'#intro.hidden' },
+  { id:'rome', path:'/ancient-cities/rome-410-476/', intro:'#intro:not(.hidden)', enter:'#enter', hiddenAfterEnter:'#intro' },
+  { id:'athens', path:'/ancient-cities/athens-450-430/', intro:'#intro:not(.hidden)', enter:'#enter', hiddenAfterEnter:'#intro' },
 ];
 
 async function enterWorld(page, world) {
   await page.goto(`${base}${world.path}`, { waitUntil:'networkidle' });
   await page.waitForSelector(world.intro, { timeout:12000 });
   await page.locator(world.enter).click();
-  await page.waitForSelector(world.entered, { timeout:12000 });
+  if (world.hiddenAfterEnter) {
+    await page.waitForFunction((selector) => document.querySelector(selector)?.classList.contains('hidden'), world.hiddenAfterEnter, { timeout:12000 });
+  } else {
+    await page.waitForSelector(world.entered, { state:'visible', timeout:12000 });
+  }
   await page.waitForSelector('#aw-tools-toggle', { state:'visible', timeout:8000 });
   await page.waitForFunction(() => Boolean(document.getElementById('ancient-world-experience-style')?.sheet));
   // Desktop worlds may enter pointer lock immediately after the Enter gesture.
