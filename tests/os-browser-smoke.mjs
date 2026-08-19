@@ -65,7 +65,6 @@ async function open(context,path='/'){
   await page.locator('.az-theme-choice[data-theme="field"]').click();
   await page.locator('[data-az-close="az-system-panel"]').click();
 
-  // Verify normal non-AI app lifecycle remains healthy.
   await page.evaluate(()=>window.AIZANOI_OS.launchApp('games'));
   const win=page.locator('.win.active');
   await win.waitFor();
@@ -93,6 +92,10 @@ async function open(context,path='/'){
   await page.evaluate(()=>showBalloon({title:'Smoke',body:'Accessible notification',duration:2000}));
   await page.waitForSelector('.balloon[role="status"]');
   assert.equal(await page.locator('.balloon .b-close').getAttribute('role'),'button','notification close control lacks button semantics');
+
+  // Load the lazy Workbench platform before testing the exact notification boundary.
+  await page.evaluate(()=>window.AIZANOI_DISTRIBUTION.ensureReady());
+  await page.waitForFunction(()=>Boolean(window.AIZANOI_PLATFORM && window.AIZANOI_WORKSPACE),null,{timeout:8000});
 
   // Platform notifications must render attacker-like text as text, not markup.
   await page.evaluate(()=>window.AIZANOI_PLATFORM.notify('Security','<img src=x onerror="window.__xss=1">','warning'));
