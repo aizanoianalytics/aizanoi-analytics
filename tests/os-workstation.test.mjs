@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
 
 const read = (path) => readFileSync(path, 'utf8');
 const files = [
-  'frontend/js/os-state.js','frontend/js/os-platform.js','frontend/js/os-archive.js','frontend/js/os-workbench.js','frontend/js/os-workbench-archive.js','frontend/js/os-workbench-readers.js','frontend/js/os-workbench-data.js','frontend/js/os-workbench-shell.js','frontend/service-worker.js',
+  'frontend/js/os-state.js','frontend/js/os-platform.js','frontend/js/os-platform-runtime.js','frontend/js/os-distribution-loader.js','frontend/js/os-archive.js','frontend/js/os-workbench.js','frontend/js/os-workbench-archive.js','frontend/js/os-workbench-readers.js','frontend/js/os-workbench-data.js','frontend/js/os-workbench-shell.js','frontend/service-worker.js',
 ];
 for (const file of files) {
   const result = spawnSync(process.execPath, ['--check', file], { encoding:'utf8' });
@@ -17,9 +17,20 @@ for (const app of ['archive','notes','data-lab','source-reader','artifact-viewer
 }
 assert.match(state, /acceptedFileTypes|accepts:/, 'app capability/file metadata missing');
 assert.doesNotMatch(state, /id:'market'|route:'\/market\/'/i, 'removed Markets product must not return');
-for (const name of ['os-distribution.css','os-platform.js','os-archive.js','os-workbench.js','os-workbench-shell.js']) assert.match(state,new RegExp(name.replace('.','\\.')),`${name} bootstrap missing`);
+assert.match(state, /os-platform\.js/, 'distribution bootstrap bridge missing from state bootstrap');
+assert.match(state, /os-archive\.js/, 'archive bootstrap fallback missing');
 
-const platform = read('frontend/js/os-platform.js');
+const platformBootstrap = read('frontend/js/os-platform.js');
+assert.match(platformBootstrap, /os-distribution-loader\.js/, 'lazy distribution loader bridge missing');
+assert.doesNotMatch(platformBootstrap, /indexedDB\.open|navigator\.serviceWorker\.register/, 'initial platform bootstrap must remain lightweight');
+
+const loader = read('frontend/js/os-distribution-loader.js');
+assert.match(loader, /AIZANOI_DISTRIBUTION/, 'distribution loader contract missing');
+assert.match(loader, /ensureReady/, 'on-demand workstation readiness contract missing');
+assert.match(loader, /os-platform-runtime\.js/, 'lazy platform runtime missing from loader');
+assert.match(loader, /WORKBENCH_IDS/, 'workbench app lazy routing missing');
+
+const platform = read('frontend/js/os-platform-runtime.js');
 assert.match(platform, /AIZANOI_PLATFORM/, 'platform API missing');
 assert.match(platform, /registerCapability/, 'capability registry missing');
 assert.match(platform, /registerCommandProvider/, 'context command provider missing');
