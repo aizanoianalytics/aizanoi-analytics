@@ -20,15 +20,58 @@
     return 'desktop';
   }
 
+  function openRecent(index) {
+    const item = State.getState().recent?.[index];
+    if (!item) return;
+    if (item.type === 'world' && item.worldId) {
+      window.AIZANOI_OS?.launchWorld?.(item.worldId, item.landmark || null);
+      return;
+    }
+    const appId = item.appId || (item.type === 'app' ? item.id : null);
+    if (appId) window.AIZANOI_OS?.launchApp?.(appId);
+    else if (item.route) location.assign(item.route);
+  }
+
+  function wireRelocatedHome(home) {
+    if (!home || home.dataset.unifiedClick === '1') return;
+    home.dataset.unifiedClick = '1';
+    home.addEventListener('click', (event) => {
+      // While the home lives under #az-shell-layer the mature shell owns these
+      // events. This bridge only handles the desktop/tablet relocation.
+      if (home.closest('#az-shell-layer')) return;
+      const app = event.target.closest('[data-app]');
+      if (app) { window.AIZANOI_OS?.launchApp?.(app.dataset.app); return; }
+      const world = event.target.closest('[data-world]');
+      if (world) { window.AIZANOI_OS?.launchWorld?.(world.dataset.world); return; }
+      const recent = event.target.closest('[data-recent-index]');
+      if (recent) openRecent(Number(recent.dataset.recentIndex));
+    });
+  }
+
+  function relocateHome(mode) {
+    const home = $('#az-mobile-home');
+    const desktop = $('#desktop');
+    const shell = $('#az-shell-layer');
+    if (!home || !desktop || !shell) return;
+    wireRelocatedHome(home);
+
+    if (mode === 'mobile') {
+      if (home.parentElement !== shell) shell.appendChild(home);
+      home.style.setProperty('z-index', '4', 'important');
+      return;
+    }
+
+    // Desktop/tablet windows are children of #desktop with z=100+. Keep the
+    // shared home in that exact stacking context at z=0 so it can never cover
+    // title bars, resize handles or application content.
+    if (home.parentElement !== desktop) desktop.insertBefore(home, desktop.firstChild);
+    home.style.setProperty('z-index', '0', 'important');
+  }
+
   function applyLayoutMode() {
     const mode = layoutMode();
     document.body.dataset.azLayout = mode;
-    const home = $('#az-mobile-home');
-    if (home) {
-      // On larger screens the shared home is wallpaper/workspace content behind
-      // normal windows. On phones it becomes the active full-screen home layer.
-      home.style.setProperty('z-index', mode === 'mobile' ? '4' : '0', 'important');
-    }
+    relocateHome(mode);
   }
 
   function appMarkup(app) {
@@ -49,8 +92,7 @@
     const nav = $('#az-mobile-nav');
     if (!nav || nav.dataset.unifiedNav === '1') return;
     nav.dataset.unifiedNav = '1';
-    const ai = nav.querySelector('[data-mobile-nav="ai"]');
-    ai?.remove();
+    nav.querySelector('[data-mobile-nav="ai"]')?.remove();
     const home = nav.querySelector('[data-mobile-nav="home"]');
     const search = nav.querySelector('[data-mobile-nav="search"]');
     const recent = nav.querySelector('[data-mobile-nav="recent"]');
