@@ -21,7 +21,14 @@
   }
 
   function applyLayoutMode() {
-    document.body.dataset.azLayout = layoutMode();
+    const mode = layoutMode();
+    document.body.dataset.azLayout = mode;
+    const home = $('#az-mobile-home');
+    if (home) {
+      // On larger screens the shared home is wallpaper/workspace content behind
+      // normal windows. On phones it becomes the active full-screen home layer.
+      home.style.setProperty('z-index', mode === 'mobile' ? '4' : '0', 'important');
+    }
   }
 
   function appMarkup(app) {
