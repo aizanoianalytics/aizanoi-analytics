@@ -56,7 +56,7 @@ test('urban fabric uses district-specific style profiles without upgrading evide
 test('Historic World externalizes stable presentation/runtime boundaries without renderer rewrite',()=>{
   assert.ok(existsSync('frontend/historic-world/style.css'));
   assert.ok(existsSync('frontend/historic-world/style-source.css'));
-  assert.ok(existsSync('frontend/historic-world/aaa-final.css'));
+  assert.ok(existsSync('frontend/historic-world/cinematic-polish.css'));
   assert.ok(existsSync('frontend/historic-world/app.js'));
   assert.match(historic,/\.\/style\.css/);
   assert.match(historic,/\.\/app\.js/);
@@ -64,9 +64,9 @@ test('Historic World externalizes stable presentation/runtime boundaries without
   assert.match(historic,/texier-survey\.jpg/);
   assert.ok(existsSync('frontend/historic-world/assets/texier-survey.jpg'));
   assert.match(read('frontend/historic-world/style.css'),/style-source\.css/);
-  assert.match(read('frontend/historic-world/style.css'),/aaa-final\.css/);
+  assert.match(read('frontend/historic-world/style.css'),/cinematic-polish\.css/);
   assert.ok(statSync('frontend/historic-world/app.js').size > 80_000,'Historic World runtime extraction unexpectedly small');
-  const historicStyleBytes = statSync('frontend/historic-world/style-source.css').size + statSync('frontend/historic-world/aaa-final.css').size;
+  const historicStyleBytes = statSync('frontend/historic-world/style-source.css').size + statSync('frontend/historic-world/cinematic-polish.css').size;
   assert.ok(historicStyleBytes > 15_000,'Historic World layered style extraction unexpectedly small');
 });
 
