@@ -29,6 +29,10 @@ assert.match(await page.locator('#term-out .prompt').last().innerText(), /aizano
 const statusbarText = await page.locator('#term-input').evaluate((input) => input.closest('.win')?.querySelector('.win-statusbar')?.innerText || '');
 assert.match(statusbarText, /LOCAL VIRTUAL SHELL · \/aizanoi/);
 assert.doesNotMatch(statusbarText, /C:\\Aizanoi|Windows|Microsoft/i);
+const taskText = await page.locator('#task-terminal').innerText();
+assert.match(taskText, /Field Terminal/);
+assert.doesNotMatch(taskText, /C:\\Aizanoi|Windows|Microsoft/i);
+assert.equal(await page.locator('#task-terminal').getAttribute('aria-label'), 'Field Terminal');
 
 async function command(value) {
   const input = page.locator('#term-input');
