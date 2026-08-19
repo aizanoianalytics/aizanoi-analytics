@@ -37,7 +37,8 @@ for (const layout of layouts) {
     assert.equal(await page.locator('#aw-tools-panel').isVisible(), false, `${world.id}/${layout.name}: secondary tools should start closed`);
 
     if (world.id === 'aizanoi') {
-      assert.equal(await page.locator('.deviceChip').count(), 0, `${layout.name}: passive device chip should be removed`);
+      assert.equal(await page.locator('.deviceChip').count(), 1, `${layout.name}: runtime-owned device chip hook is missing`);
+      assert.equal(await page.locator('.deviceChip').evaluate((el) => getComputedStyle(el).display), 'none', `${layout.name}: passive device chip should be hidden`);
       assert.equal(await page.locator('.bottomBar').evaluate((el) => getComputedStyle(el).display), 'none', `${layout.name}: Aizanoi permanent bottom toolbar still occupies the viewport`);
       assert.equal(await page.locator('#headingHud').evaluate((el) => getComputedStyle(el).display), 'none', `${layout.name}: heading HUD should be retired from the passive view`);
       assert.equal(await page.locator('#elevationHud').evaluate((el) => getComputedStyle(el).display), 'none', `${layout.name}: elevation HUD should be retired from the passive view`);
