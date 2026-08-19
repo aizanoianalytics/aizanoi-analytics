@@ -19,6 +19,22 @@
   if(!body)return;
   const city=body.dataset.city||($('#hud')?'aizanoi':'');
   if(!city)return;
+  const movementKeys=new Set(['KeyW','KeyA','KeyS','KeyD','ShiftLeft','ShiftRight','ArrowLeft','ArrowRight','ArrowUp','ArrowDown']);
+
+  // The shared presentation layer owns only the temporary menu state, but it
+  // must prevent the underlying city from continuing to walk while that menu is
+  // being used. Capture-phase blocking works with both the mature Aizanoi input
+  // handler and the shared Rome/Athens traversal layer without coupling to either.
+  document.addEventListener('keydown',(event)=>{
+    if(!body.classList.contains('aw-tools-open')||!movementKeys.has(event.code))return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  },true);
+  document.addEventListener('keyup',(event)=>{
+    if(!body.classList.contains('aw-tools-open')||!movementKeys.has(event.code))return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  },true);
 
   function button(id,label){
     const el=document.createElement('button');
@@ -56,7 +72,15 @@
     body.appendChild(panel);
 
     const close=()=>{panel.hidden=true;toggle.setAttribute('aria-expanded','false');body.classList.remove('aw-tools-open')};
-    const open=()=>{panel.hidden=false;toggle.setAttribute('aria-expanded','true');body.classList.add('aw-tools-open')};
+    const open=()=>{
+      try{document.exitPointerLock?.()}catch(_){}
+      panel.hidden=false;
+      toggle.setAttribute('aria-expanded','true');
+      body.classList.add('aw-tools-open');
+      const active=document.activeElement;
+      if(active&&active!==toggle&&typeof active.blur==='function')active.blur();
+      toggle.focus({preventScroll:true});
+    };
     toggle.addEventListener('click',(event)=>{event.stopPropagation();panel.hidden?open():close()});
     panel.addEventListener('click',(event)=>event.stopPropagation());
     document.addEventListener('pointerdown',(event)=>{if(!panel.hidden&&!panel.contains(event.target)&&event.target!==toggle)close()});
