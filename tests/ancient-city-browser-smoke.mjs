@@ -33,9 +33,6 @@ async function openCity(context, city, suffix = '') {
   const errors = [];
   page.on('pageerror', (error) => {
     const text = String(error);
-    // Chrome 151 may reject an asynchronous pointer-lock request after the
-    // Enter click loses its transient user activation. The city intentionally
-    // supports drag-look as a fallback, which this smoke test exercises below.
     if (POINTER_LOCK_PERMISSION.test(text)) return;
     errors.push(text);
   });
@@ -61,11 +58,26 @@ for (const city of cities) {
     const deepContext = await browser.newContext({ viewport: { width: 1280, height: 800 } });
     const opened = await openCity(deepContext, city, `?jump=${city.teleport}`);
     const deepPage = opened.page;
-    await deepPage.waitForFunction(() => document.querySelector('#intro')?.classList.contains('hidden'));
-    await deepPage.waitForFunction((expected) => document.querySelector('#place')?.textContent?.toLowerCase().includes(expected), city.arrival.source.replace(/\\/g,'').toLowerCase().replace(/[^a-z-]/g,''));
-    assert.equal(new URL(deepPage.url()).searchParams.has('jump'), false, `${city.slug}: one-shot jump query was not consumed`);
+    // Query consumption is durable. The visible arrival label intentionally lasts
+    // only a few seconds, so verify the deep-link position against the city's own
+    // canonical teleport result instead of racing that temporary presentation.
+    await deepPage.waitForFunction(() => (
+      document.querySelector('#intro')?.classList.contains('hidden') &&
+      !new URL(location.href).searchParams.has('jump')
+    ));
     const deepPlayer = await player(deepPage);
     assert.ok(deepPlayer && Number.isFinite(deepPlayer.floorY), `${city.slug}: deep-link arrival produced invalid player state`);
+
+    const canonical = await deepPage.evaluate((id) => {
+      const debug = window.__ANCIENT_WORLD_DEBUG__;
+      const ok = debug?.teleport?.(id);
+      return { ok:Boolean(ok), player:debug?.player || null, place:document.querySelector('#place')?.textContent || '' };
+    }, city.teleport);
+    assert.equal(canonical.ok, true, `${city.slug}: canonical landmark teleport failed after deep-link`);
+    assert.match(canonical.place, city.arrival, `${city.slug}: canonical teleport did not publish the requested landmark label`);
+    const deepLinkDelta = Math.hypot(canonical.player.x - deepPlayer.x, canonical.player.z - deepPlayer.z);
+    assert.ok(deepLinkDelta < 0.75, `${city.slug}: deep-link arrival diverged from canonical ${city.teleport} spawn (${deepLinkDelta.toFixed(2)} m)`);
+    assert.equal(new URL(deepPage.url()).searchParams.has('jump'), false, `${city.slug}: one-shot jump query was not consumed`);
     assert.deepEqual(opened.errors, [], `${city.slug}: deep-link browser errors: ${opened.errors.join(' | ')}`);
     await deepContext.close();
   }
@@ -145,3 +157,6 @@ for (const city of cities) {
 
 await browser.close();
 console.log('Ancient city desktop/mobile/deep-link browser smoke passed');
+
+await import('./historical-worlds-ui-browser-smoke.mjs');
+await import('./historical-worlds-landmark-walk.mjs');

@@ -155,3 +155,8 @@ for (const city of [
 
 await browser.close();
 console.log('Final visual review captures complete');
+
+// The issue-level release gate also requires each Historical World to be
+// reviewed at desktop, tablet and mobile sizes. Keep that matrix isolated in a
+// second capture script so the existing detailed desktop hero set remains stable.
+await import('./historical-worlds-visual-capture.mjs');
