@@ -24,16 +24,14 @@ test('Aizanoi OS runtime is split into lightweight framework-free modules', () =
   assert.doesNotMatch([chat,router,terminal,osJs].join('\n'), /react|vue|tailwind/i);
 });
 
-test('AI responses keep safe markdown plus multiline timeout retry copy and clear UX', () => {
-  assert.match(chat, /bubble\.innerHTML = renderMarkdownSafe\(text\)/);
+test('AI surface is disabled, text-only and cannot issue network requests', () => {
+  assert.match(chat, /bubble\.textContent = String\(text \|\| ''\)/);
   assert.match(chat, /__AIZANOI_CHAT__/);
-  assert.match(chat, /80000/);
-  assert.match(chat, /AbortController/);
-  assert.match(chat, /!e\.isComposing/);
-  assert.match(chat, /!e\.shiftKey/);
-  assert.match(osJs, /Retry last/);
-  assert.match(osJs, /CHAT_TIMEOUT_MS/);
-  assert.match(osJs, /aria-live/);
+  assert.match(chat, /AI is disabled for security/);
+  assert.match(chat, /sendBtn\.disabled = true/);
+  assert.match(chat, /input\.disabled = true/);
+  assert.doesNotMatch(chat, /fetch\s*\(/);
+  assert.doesNotMatch(chat, /renderMarkdownSafe\(text\)|AbortController|CHAT_API_URL/);
 });
 
 test('core window cleanup and V2 recovery remain covered after extraction', () => {
