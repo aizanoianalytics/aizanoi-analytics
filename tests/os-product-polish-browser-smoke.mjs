@@ -42,6 +42,13 @@ async function openApp(page, appId, { direct = false } = {}) {
   return win;
 }
 
+async function waitForWorkbenchSurface(win, selector, label) {
+  const surface = win.locator(selector).first();
+  await surface.waitFor({ state:'visible', timeout:7000 });
+  assert.ok(await surface.isVisible(), `${label}: lazy workstation surface never became visible`);
+  return surface;
+}
+
 async function closeApp(page, appId) {
   await page.evaluate((id) => window.closeApp?.(id), appId);
   await page.waitForTimeout(80);
@@ -121,13 +128,14 @@ async function runViewport({ name, width, height, expected, mobile = false }) {
 
     for (const appId of ['archive','notes','data-lab','monitor','source-reader','artifact-viewer']) {
       const win = await openApp(page, appId);
+      await waitForWorkbenchSurface(win, '.az-workbench-body', `desktop ${appId}`);
       assert.equal(await win.getAttribute('data-product-polish'), 'true', `desktop: ${appId} not polished`);
-      assert.ok((await win.locator('.az-workbench-body').count()) === 1, `desktop: ${appId} missing workbench body`);
       await closeApp(page, appId);
     }
   } else if (name === 'tablet') {
     for (const appId of ['archive','notes','data-lab']) {
       const win = await openApp(page, appId);
+      await waitForWorkbenchSurface(win, '.az-workbench-body', `tablet ${appId}`);
       await assertNoHorizontalEscape(page, `.win[data-app-id="${appId}"]`, width, `tablet ${appId}`);
       const closeButton = win.locator('.win-btn.close');
       const buttonBox = await closeButton.boundingBox();
@@ -136,17 +144,20 @@ async function runViewport({ name, width, height, expected, mobile = false }) {
     }
   } else {
     const archive = await openApp(page, 'archive');
-    assert.ok(await archive.locator('.az-collection-list').isVisible(), 'mobile: archive collections missing');
+    await waitForWorkbenchSurface(archive, '.az-archive-shell', 'mobile archive');
+    const collections = await waitForWorkbenchSurface(archive, '.az-collection-list', 'mobile archive collections');
+    assert.ok(await collections.isVisible(), 'mobile: archive collections missing');
     assert.equal(await archive.locator('.az-archive-sidebar').evaluate((node)=>getComputedStyle(node).display), 'flex', 'mobile: archive sidebar did not become collection rail');
     await assertNoHorizontalEscape(page, '.win[data-app-id="archive"]', width, 'mobile archive');
     await closeApp(page, 'archive');
 
     const notes = await openApp(page, 'notes');
-    assert.ok(await notes.locator('.az-notes-shell').isVisible(), 'mobile: notes shell missing');
+    await waitForWorkbenchSurface(notes, '.az-notes-shell', 'mobile notes');
     await assertNoHorizontalEscape(page, '.win[data-app-id="notes"]', width, 'mobile notes');
     await closeApp(page, 'notes');
 
     const dataLab = await openApp(page, 'data-lab');
+    await waitForWorkbenchSurface(dataLab, '.az-lab-shell', 'mobile data lab');
     assert.match(await dataLab.innerText(), /Data Lab is ready|No dataset open/);
     await closeApp(page, 'data-lab');
   }
