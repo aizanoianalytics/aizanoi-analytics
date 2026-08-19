@@ -33,9 +33,6 @@ async function openCity(context, city, suffix = '') {
   const errors = [];
   page.on('pageerror', (error) => {
     const text = String(error);
-    // Chrome 151 may reject an asynchronous pointer-lock request after the
-    // Enter click loses its transient user activation. The city intentionally
-    // supports drag-look as a fallback, which this smoke test exercises below.
     if (POINTER_LOCK_PERMISSION.test(text)) return;
     errors.push(text);
   });
@@ -146,6 +143,5 @@ for (const city of cities) {
 await browser.close();
 console.log('Ancient city desktop/mobile/deep-link browser smoke passed');
 
-// Run the shared presentation contract in the same browser-smoke CI job so the
-// desktop/tablet/mobile HUD cannot regress independently from traversal.
 await import('./historical-worlds-ui-browser-smoke.mjs');
+await import('./historical-worlds-landmark-walk.mjs');
