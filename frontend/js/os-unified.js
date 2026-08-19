@@ -13,6 +13,14 @@
     }[char]));
   }
 
+  function ensureUnifiedRuntimeStyle() {
+    if ($('#az-unified-runtime-style')) return;
+    const style = document.createElement('style');
+    style.id = 'az-unified-runtime-style';
+    style.textContent = '@media (min-width:701px) and (max-width:1100px){html body.aizanoi-next #az-search-button::before{content:none!important;display:none!important}}';
+    document.head.appendChild(style);
+  }
+
   function layoutMode() {
     const width = document.documentElement.clientWidth || innerWidth;
     if (width <= 700) return 'mobile';
@@ -135,6 +143,7 @@
   }
 
   function sync() {
+    ensureUnifiedRuntimeStyle();
     applyLayoutMode();
     syncAppLauncher();
     simplifyMobileNav();
