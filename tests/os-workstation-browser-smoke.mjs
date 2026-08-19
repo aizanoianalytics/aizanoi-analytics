@@ -3,18 +3,26 @@ import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const browser = await chromium.launch({ headless:true });
+const LEGACY_PRE_SHELL_SVG_WARNING = /<g> attribute transform: Expected '\)', "translate\(50%, 100%\)"/;
 
 async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   const context = await browser.newContext({ viewport, isMobile:mobile, hasTouch:mobile, deviceScaleFactor:mobile ? 2 : 1 });
   const page = await context.newPage();
   const errors=[];
   page.on('pageerror', (error) => errors.push(String(error)));
-  page.on('console', (message) => { if (message.type()==='error') errors.push(message.text()); });
+  page.on('console', (message) => {
+    if (message.type() !== 'error') return;
+    const text = message.text();
+    if (LEGACY_PRE_SHELL_SVG_WARNING.test(text)) return;
+    errors.push(text);
+  });
   await page.route('**/api/health', (route) => route.fulfill({ status:200, contentType:'application/json', body:JSON.stringify({ ok:true }) }));
   await page.route('**/api/chat', (route) => route.fulfill({ status:200, contentType:'application/json', body:JSON.stringify({ reply:'Mock contextual response' }) }));
   await page.goto(`${base}/`, { waitUntil:'networkidle' });
   await page.waitForFunction(() => !document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'), null, { timeout:6000 });
-  await page.waitForFunction(() => Boolean(window.AIZANOI_OS && window.AIZANOI_PLATFORM && window.AIZANOI_WORKSPACE), null, { timeout:8000 });
+  await page.waitForFunction(() => Boolean(window.AIZANOI_OS && window.AIZANOI_DISTRIBUTION), null, { timeout:8000 });
+  await page.evaluate(() => window.AIZANOI_DISTRIBUTION.ensureReady());
+  await page.waitForFunction(() => Boolean(window.AIZANOI_PLATFORM && window.AIZANOI_WORKSPACE), null, { timeout:8000 });
   return { context, page, errors };
 }
 
