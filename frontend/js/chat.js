@@ -1,8 +1,92 @@
-/* === CHAT: SECURITY BUILD === */
+/* === CHAT: RETIRED SECURITY COMPATIBILITY === */
 let chatHistory = [];
 let chatWired = false;
 let chatRequestController = null;
 let lastFailedMessage = null;
+
+/*
+ * Aizanoi AI is a retired public product surface. The static shell still keeps
+ * a small fail-closed compatibility module so old cached markup or deep links
+ * cannot turn into a network-capable chat feature. Retire the UI before the
+ * modern Field System shell mounts and keep removing any legacy nodes that an
+ * older cached shell may re-create.
+ */
+function retireAizanoiAiSurfaces(root = document) {
+  const scope = root instanceof Element ? root : document;
+  const selectors = [
+    '[data-app="chatbot"]',
+    '#az-ai-button',
+    '[data-mobile-nav="ai"]',
+    '.chat-starter',
+    'a[href="/hr-analytics/"]',
+    'a[href="/hr-analytics"]'
+  ];
+
+  for (const selector of selectors) {
+    const nodes = scope.matches?.(selector) ? [scope] : [...scope.querySelectorAll?.(selector) || []];
+    nodes.forEach((node) => node.remove());
+  }
+
+  const interactive = scope.matches?.('button,a,.sm-item,.desktop-icon,.az-app-item,.az-mobile-app,.az-recent-item,.az-command-result')
+    ? [scope]
+    : [...scope.querySelectorAll?.('button,a,.sm-item,.desktop-icon,.az-app-item,.az-mobile-app,.az-recent-item,.az-command-result') || []];
+  interactive.forEach((node) => {
+    const text = (node.textContent || '').replace(/\s+/g, ' ').trim();
+    if (/\bAizanoi AI\b/i.test(text) || node.querySelector?.('.az-result-kind')?.textContent?.trim() === 'AI') node.remove();
+  });
+
+  const commandInput = document.getElementById('az-command-input');
+  if (commandInput && /Aizanoi AI/i.test(commandInput.placeholder || '')) {
+    commandInput.placeholder = 'Search apps, worlds, monuments or commands…';
+  }
+  const footer = document.querySelector('.az-command-footer');
+  if (footer && /Aizanoi AI|Natural language/i.test(footer.textContent || '')) {
+    footer.innerHTML = '<span>↑↓ Navigate</span><span>Enter Open</span><span>Esc Close</span>';
+  }
+  const callout = document.querySelector('.az-command-callout p');
+  if (callout && /Aizanoi AI/i.test(callout.textContent || '')) {
+    callout.textContent = 'Open apps, historical worlds and landmarks from the same searchable palette.';
+  }
+}
+window.retireAizanoiAiSurfaces = retireAizanoiAiSurfaces;
+
+(function installRetiredAiGuard() {
+  window.AIZANOI_AI_DISABLED = true;
+
+  if (/^\/hr-analytics\/?$/i.test(location.pathname)) {
+    history.replaceState({}, '', '/');
+  }
+
+  function guardOpenApp() {
+    const current = window.openApp;
+    if (typeof current !== 'function' || current.__aizanoiRetiredAiGuard) return;
+    const guarded = function(appId, ...args) {
+      if (appId === 'chatbot') return false;
+      return current.call(this, appId, ...args);
+    };
+    guarded.__aizanoiRetiredAiGuard = true;
+    window.openApp = guarded;
+  }
+
+  function clean() {
+    guardOpenApp();
+    retireAizanoiAiSurfaces();
+  }
+
+  clean();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', clean, { once:true });
+  window.addEventListener('load', clean, { once:true });
+  window.addEventListener('aizanoi:distribution-ready', clean);
+
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) {
+        if (node instanceof Element) retireAizanoiAiSurfaces(node);
+      }
+    }
+  });
+  observer.observe(document.documentElement, { childList:true, subtree:true });
+})();
 
 function wireChatIfNeeded() {
   const input = document.getElementById('chat-input');
@@ -23,7 +107,7 @@ function wireChatIfNeeded() {
   };
 
   function showDisabledNotice() {
-    addMessage('bot', 'Aizanoi AI is disabled in the security build. Local files, notes and datasets stay in this browser and are not sent to external AI providers.');
+    addMessage('bot', 'This retired compatibility surface is disabled. Local files, notes and datasets stay in this browser and are not sent to external AI providers.');
   }
 
   function sendMessage() {
@@ -37,7 +121,7 @@ function wireChatIfNeeded() {
 
   sendBtn.disabled = true;
   input.disabled = true;
-  input.placeholder = 'Aizanoi AI is disabled for security';
+  input.placeholder = 'Retired feature';
   const starters = document.getElementById('chat-starters');
   if (starters) starters.hidden = true;
   showDisabledNotice();
@@ -57,16 +141,13 @@ function wireChatIfNeeded() {
     }
   });
 
-  // Keep the function present for compatibility, but never perform network I/O.
+  // Compatibility only: never perform network I/O.
   window.__AIZANOI_CHAT_SEND_DISABLED__ = sendMessage;
 }
 
 function wireChatStartersIfNeeded() {
   document.body.dataset.chatStartersWired = '1';
-  document.querySelectorAll('.chat-starter').forEach((button) => {
-    button.hidden = true;
-    button.disabled = true;
-  });
+  document.querySelectorAll('.chat-starter').forEach((button) => button.remove());
 }
 window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
 
@@ -128,8 +209,9 @@ window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
       loadScript('/js/os-state.js'),
       loadScript('/js/os-legacy-sanitizer.js')
     ])
-      .then(function() { return loadScript('/js/os-shell.js'); })
+      .then(function() { retireAizanoiAiSurfaces(); return loadScript('/js/os-shell.js'); })
       .then(function() { return loadScript('/js/os-intent.js'); })
+      .then(function() { retireAizanoiAiSurfaces(); })
       .catch(function(error) {
         console.error('Aizanoi Field System shell could not load; legacy shell remains available.', error);
       });
