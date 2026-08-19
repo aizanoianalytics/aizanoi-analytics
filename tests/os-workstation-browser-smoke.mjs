@@ -16,8 +16,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
     if (LEGACY_PRE_SHELL_SVG_WARNING.test(text)) return;
     errors.push(text);
   });
-  await page.route('**/api/health', (route) => route.fulfill({ status:200, contentType:'application/json', body:JSON.stringify({ ok:true }) }));
-  await page.route('**/api/chat', (route) => route.fulfill({ status:200, contentType:'application/json', body:JSON.stringify({ reply:'Mock contextual response' }) }));
+  await page.route('**/api/health', (route) => route.fulfill({ status:200, contentType:'application/json', body:JSON.stringify({ status:'ok', aiEnabled:false }) }));
   await page.goto(`${base}/`, { waitUntil:'networkidle' });
   await page.waitForFunction(() => !document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'), null, { timeout:6000 });
   await page.waitForFunction(() => Boolean(window.AIZANOI_OS && window.AIZANOI_DISTRIBUTION), null, { timeout:8000 });
@@ -31,7 +30,8 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   assert.equal(await page.locator('link[rel="manifest"]').getAttribute('href'), '/manifest.webmanifest');
   assert.ok(await page.locator('link[href="/css/os-distribution.css"]').count(), 'distribution design layer missing');
   assert.deepEqual(await page.evaluate(() => window.AIZANOI_WORKSPACE.archive.collections), ['Notes','Sources','Screenshots','Datasets','Exports','Uploads']);
-  assert.equal(await page.evaluate(() => window.AIZANOI_PLATFORM.VERSION), '2.1.0-field');
+  assert.equal(await page.evaluate(() => window.AIZANOI_PLATFORM.VERSION), '2.1.1-field-security');
+  assert.equal(await page.evaluate(() => window.AIZANOI_AI_DISABLED), true, 'AI security flag missing');
 
   await page.evaluate(() => window.AIZANOI_OS.launchApp('archive'));
   const archive = page.locator('.az-workbench-window[data-workbench-app="archive"]');
@@ -39,6 +39,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await archive.locator('.az-archive-shell').waitFor();
   assert.match(await archive.innerText(), /FIELD ARCHIVE/);
   assert.match(await archive.innerText(), /Welcome to Aizanoi Field Archive/);
+  assert.equal(await archive.locator('[data-action="ai"], [data-notes-action="ai"]').count(), 0, 'Archive must not expose AI handoff actions');
 
   const fileInput = archive.locator('[data-archive-file-input]');
   await fileInput.setInputFiles([
@@ -66,6 +67,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   assert.match(await lab.innerText(), /DATA LAB/);
   assert.match(await lab.innerText(), /3\s*loaded locally/);
   assert.equal(await lab.locator('.az-data-table tbody tr').count(), 3, 'Data Lab row preview mismatch');
+  assert.equal(await lab.locator('[data-lab-action="ai"]').count(), 0, 'Data Lab must not expose AI handoff');
   await lab.locator('[data-lab-filter]').fill('Research');
   assert.equal(await lab.locator('.az-data-table tbody tr').count(), 2, 'Data Lab filtering failed');
 
@@ -81,6 +83,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await reader.locator('.az-source-document').waitFor();
   assert.match(await reader.innerText(), /SOURCE READER/);
   assert.match(await reader.innerText(), /Temple sector context/);
+  assert.equal(await reader.locator('[data-source-action="ai"]').count(), 0, 'Source Reader must not expose AI handoff');
   await reader.locator('[data-source-search]').fill('Temple');
   assert.match(await reader.innerText(), /1 MATCH/);
 
@@ -97,6 +100,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   const notes = page.locator('.az-workbench-window[data-workbench-app="notes"]');
   await notes.waitFor();
   await notes.locator('[data-note-area]').waitFor();
+  assert.equal(await notes.locator('[data-notes-action="ai"]').count(), 0, 'Notes must not expose AI handoff');
   await notes.locator('[data-notes-action="new"]').click();
   await notes.locator('[data-note-title]').fill('QA field note');
   await notes.locator('[data-note-area]').fill('Persistent workstation note from Chromium smoke.');
@@ -110,11 +114,12 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await monitor.waitFor();
   await monitor.locator('.az-monitor-shell').waitFor();
   assert.match(await monitor.innerText(), /Workspace Monitor/);
-  assert.match(await monitor.innerText(), /AI API\s*Online/i);
+  assert.match(await monitor.innerText(), /(AI API|BACKEND)\s*Online/i);
 
   await page.locator('#start-btn').click();
   await page.waitForSelector('#az-index.open');
   for (const id of ['archive','notes','data-lab','monitor']) assert.ok(await page.locator(`#az-index-apps [data-app="${id}"]`).count(), `Aizanoi Index missing ${id}`);
+  assert.equal(await page.locator('#az-index-apps [data-app="chatbot"]:visible').count(), 0, 'AI launcher must remain hidden');
   await page.keyboard.press('Escape');
 
   assert.deepEqual(errors, [], `workstation desktop browser errors: ${errors.join(' | ')}`);
@@ -126,6 +131,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await page.waitForSelector('#az-mobile-home:not(.hidden)');
   assert.ok(await page.locator('#az-mobile-apps [data-app="archive"]').count(), 'mobile Archive launcher missing');
   assert.ok(await page.locator('#az-mobile-apps [data-app="data-lab"]').count(), 'mobile Data Lab launcher missing');
+  assert.equal(await page.locator('#az-mobile-apps [data-app="chatbot"]:visible').count(), 0, 'mobile AI launcher must remain hidden');
   await page.locator('#az-mobile-apps [data-app="archive"]').click();
   const archive = page.locator('.az-workbench-window[data-workbench-app="archive"]');
   await archive.waitFor();
@@ -138,4 +144,4 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
 }
 
 await browser.close();
-console.log('Aizanoi distribution/workstation Chromium smoke passed');
+console.log('Aizanoi distribution/workstation Chromium security smoke passed');
