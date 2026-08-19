@@ -58,8 +58,15 @@ for (const city of cities) {
     const deepContext = await browser.newContext({ viewport: { width: 1280, height: 800 } });
     const opened = await openCity(deepContext, city, `?jump=${city.teleport}`);
     const deepPage = opened.page;
-    await deepPage.waitForFunction(() => document.querySelector('#intro')?.classList.contains('hidden'));
-    await deepPage.waitForFunction((expected) => document.querySelector('#place')?.textContent?.toLowerCase().includes(expected), city.arrival.source.replace(/\\/g,'').toLowerCase().replace(/[^a-z-]/g,''));
+    // Query consumption happens only after the public jump control has dispatched
+    // its change event. Waiting for that durable state is stronger and less flaky
+    // than polling the temporary 2.6-second arrival label indefinitely.
+    await deepPage.waitForFunction(() => (
+      document.querySelector('#intro')?.classList.contains('hidden') &&
+      !new URL(location.href).searchParams.has('jump')
+    ));
+    const arrivalText = (await deepPage.locator('#place').textContent()) || '';
+    assert.match(arrivalText, city.arrival, `${city.slug}: deep-link did not publish the requested landmark arrival`);
     assert.equal(new URL(deepPage.url()).searchParams.has('jump'), false, `${city.slug}: one-shot jump query was not consumed`);
     const deepPlayer = await player(deepPage);
     assert.ok(deepPlayer && Number.isFinite(deepPlayer.floorY), `${city.slug}: deep-link arrival produced invalid player state`);
