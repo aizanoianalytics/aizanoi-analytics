@@ -59,7 +59,7 @@
   function currentProductMeta() {
     const pathname = location.pathname.replace(/\/+$/, '') || '/';
     const routes = {
-      '/': ['Aizanoi Analytics | Interactive History & Digital Field System', 'Explore Aizanoi Analytics: interactive ancient worlds, a browser-native research workstation, local data tools, projects, games and digital experiments.'],
+      '/': ['Aizanoi Analytics | Interactive History & Digital Field System', 'Aizanoi Analytics is a local-first digital archaeology and interactive history workspace with browser-native research tools, ancient worlds, projects, games and digital experiments.'],
       '/ancient-world': ['Historical Worlds | Aizanoi Analytics', 'Explore Aizanoi, Late Antique Rome and Classical Athens through interactive historical environments.'],
       '/games': ['Games | Aizanoi Analytics', 'Small browser-native single-player experiments inside the Aizanoi Field System.'],
       '/projects': ['Projects | Aizanoi Analytics', 'Analytics, development and digital-history experiments from Aizanoi Analytics.'],
