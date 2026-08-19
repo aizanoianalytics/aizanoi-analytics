@@ -42,6 +42,7 @@ jobs:
           node --check frontend/js/os-legacy-sanitizer.js
           node --check frontend/js/os-v2.js
           node --check frontend/js/os-unified.js
+          node --check frontend/js/os-product-polish.js
           node --check frontend/js/os-platform.js
           node --check frontend/js/os-archive.js
           node --check frontend/js/os-workbench.js
@@ -110,7 +111,7 @@ jobs:
           set -o pipefail
           mkdir -p artifacts/diagnostics
           status=0
-          for script in ancient-city-browser-smoke.mjs os-browser-smoke.mjs os-world-ai-browser-smoke.mjs os-workstation-browser-smoke.mjs terminal-browser-smoke.mjs os-unified-shell-browser-smoke.mjs; do
+          for script in ancient-city-browser-smoke.mjs os-browser-smoke.mjs os-world-ai-browser-smoke.mjs os-workstation-browser-smoke.mjs terminal-browser-smoke.mjs os-unified-shell-browser-smoke.mjs os-product-polish-browser-smoke.mjs os-command-ai-disabled-browser-smoke.mjs; do
             echo "=== $script ===" | tee "artifacts/diagnostics/$script.log"
             node "tests/$script" 2>&1 | tee -a "artifacts/diagnostics/$script.log" || status=1
           done
@@ -126,6 +127,7 @@ jobs:
           status=0
           node tests/final-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/final-visual-capture.log || status=1
           node tests/os-distribution-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/os-distribution-visual-capture.log || status=1
+          node tests/os-product-polish-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/os-product-polish-visual-capture.log || status=1
           exit $status
       - name: Upload visual regression review
         if: success()

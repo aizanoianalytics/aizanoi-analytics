@@ -4,7 +4,9 @@
   const State = window.AIZANOI_OS_STATE;
   if (!State || window.AIZANOI_UNIFIED_SHELL) return;
 
-  const CORE_APPS = ['ancient','archive','notes','data-lab','terminal','projects','games','videos'];
+  // Match the featured non-AI workstation catalog exactly so the launcher does
+  // not change shape after the lazy workstation layer finishes loading.
+  const CORE_APPS = ['ancient','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor','videos','games'];
   const $ = (selector, root = document) => root.querySelector(selector);
 
   function escapeHtml(value) {
@@ -100,7 +102,7 @@
     if (!host) return;
     const apps = CORE_APPS.map((id) => State.findApp(id)).filter(Boolean);
     const signature = apps.map((app) => app.id).join('|');
-    if (host.dataset.unifiedSignature === signature) return;
+    if (host.dataset.unifiedSignature === signature && [...host.querySelectorAll('[data-app]')].map((node)=>node.dataset.app).join('|') === signature) return;
     host.dataset.unifiedSignature = signature;
     host.innerHTML = apps.map(appMarkup).join('');
   }
