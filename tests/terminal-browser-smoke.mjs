@@ -26,6 +26,9 @@ assert.match(initialOutput, /AIZANOI FIELD TERMINAL/);
 assert.match(initialOutput, /browser-only/i);
 assert.doesNotMatch(initialOutput, /Microsoft|Windows XP|Copyright 1985|C:\\Aizanoi/i);
 assert.match(await page.locator('#term-out .prompt').last().innerText(), /aizanoi@field:~\$/);
+const statusbarText = await page.locator('.win[data-app-id="terminal"] .statusbar').innerText();
+assert.match(statusbarText, /LOCAL VIRTUAL SHELL · \/aizanoi/);
+assert.doesNotMatch(statusbarText, /C:\\Aizanoi|Windows|Microsoft/i);
 
 async function command(value) {
   const input = page.locator('#term-input');
