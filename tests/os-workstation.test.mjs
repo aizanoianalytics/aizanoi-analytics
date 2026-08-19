@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
 
 const read = (path) => readFileSync(path, 'utf8');
 const files = [
-  'frontend/js/os-state.js','frontend/js/os-platform.js','frontend/js/os-platform-runtime.js','frontend/js/os-distribution-loader.js','frontend/js/os-archive.js','frontend/js/os-workbench.js','frontend/js/os-workbench-archive.js','frontend/js/os-workbench-readers.js','frontend/js/os-workbench-data.js','frontend/js/os-workbench-shell.js','frontend/service-worker.js',
+  'frontend/js/os-state.js','frontend/js/os-platform.js','frontend/js/os-platform-runtime.js','frontend/js/os-distribution-loader.js','frontend/js/os-archive.js','frontend/js/os-workbench.js','frontend/js/os-workbench-archive.js','frontend/js/os-workbench-readers.js','frontend/js/os-workbench-data.js','frontend/js/os-workbench-shell.js','frontend/js/terminal.js','frontend/service-worker.js',
 ];
 for (const file of files) {
   const result = spawnSync(process.execPath, ['--check', file], { encoding:'utf8' });
@@ -47,6 +47,11 @@ for (const pattern of [/data-archive-drop/,/QUICK LOOK|Quick Look/,/Send to Fiel
 assert.doesNotMatch(workbench, /data-action="ai"|data-notes-action="ai"|data-source-action="ai"|data-lab-action="ai"/, 'workstation must not expose research-to-AI actions');
 assert.match(workbench, /Local files, notes and datasets are not sent to third-party AI services/, 'local research egress guard missing');
 assert.doesNotMatch(workbench, /exec\(|spawn\(|child_process|\/bin\/|sudo\s/i, 'browser workbench must not gain arbitrary system execution');
+
+const terminal = read('frontend/js/terminal.js');
+assert.match(terminal, /browser-only virtual shell/i, 'terminal must disclose local-only runtime');
+assert.match(terminal, /TERM_VFS/, 'terminal virtual filesystem missing');
+assert.doesNotMatch(terminal, /fetch\s*\(|\/api\/terminal\/exec|WebSocket|XMLHttpRequest/, 'terminal must not depend on a server');
 
 const css = ['frontend/css/os-distribution.css','frontend/css/os-distribution-panels.css','frontend/css/os-workbench-archive.css','frontend/css/os-workbench-interactions.css','frontend/css/os-workbench-research.css','frontend/css/os-distribution-polish.css'].map(read).join('\n');
 for (const selector of ['az-archive-shell','az-lab-shell','az-reader-shell','az-artifact-shell','az-notes-shell','az-monitor-shell','az-quicklook','az-global-drop']) assert.match(css,new RegExp(selector),`${selector} styling missing`);
