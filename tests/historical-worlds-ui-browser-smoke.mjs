@@ -22,6 +22,11 @@ async function enterWorld(page, world) {
   await page.waitForSelector(world.entered, { timeout:12000 });
   await page.waitForSelector('#aw-tools-toggle', { state:'visible', timeout:8000 });
   await page.waitForFunction(() => Boolean(document.getElementById('ancient-world-experience-style')?.sheet));
+  // Desktop worlds may enter pointer lock immediately after the Enter gesture.
+  // Release it before testing clickable HUD controls; this mirrors the real
+  // visitor flow of pressing Esc to regain the cursor before opening Explore.
+  await page.evaluate(() => document.exitPointerLock?.());
+  await page.waitForFunction(() => document.pointerLockElement === null);
 }
 
 for (const layout of layouts) {
