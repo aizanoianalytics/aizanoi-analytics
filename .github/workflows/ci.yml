@@ -41,6 +41,7 @@ jobs:
           node --check frontend/js/os-intent.js
           node --check frontend/js/os-legacy-sanitizer.js
           node --check frontend/js/os-v2.js
+          node --check frontend/js/os-unified.js
           node --check frontend/js/os-platform.js
           node --check frontend/js/os-archive.js
           node --check frontend/js/os-workbench.js
@@ -102,14 +103,14 @@ jobs:
           done
           cat /tmp/aizanoi-http.log
           exit 1
-      - name: Ancient World and Aizanoi OS desktop/mobile smoke
+      - name: Ancient World and Aizanoi OS desktop/tablet/mobile smoke
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
         run: |
           set -o pipefail
           mkdir -p artifacts/diagnostics
           status=0
-          for script in ancient-city-browser-smoke.mjs os-browser-smoke.mjs os-world-ai-browser-smoke.mjs os-workstation-browser-smoke.mjs terminal-browser-smoke.mjs; do
+          for script in ancient-city-browser-smoke.mjs os-browser-smoke.mjs os-world-ai-browser-smoke.mjs os-workstation-browser-smoke.mjs terminal-browser-smoke.mjs os-unified-shell-browser-smoke.mjs; do
             echo "=== $script ===" | tee "artifacts/diagnostics/$script.log"
             node "tests/$script" 2>&1 | tee -a "artifacts/diagnostics/$script.log" || status=1
           done

@@ -12,7 +12,7 @@ const browser = await chromium.launch({
 async function newPage(viewport = { width: 1440, height: 900 }, mobile = false) {
   const context = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, isMobile:mobile, hasTouch:mobile });
   const page = await context.newPage();
-  page.setDefaultTimeout(12000);
+  page.setDefaultTimeout(30000);
   page.on('pageerror', (error) => console.error('PAGEERROR', String(error)));
   return { context, page };
 }
@@ -23,13 +23,15 @@ async function releasePointer(page) {
 }
 
 async function settleShell(page) {
-  await page.waitForFunction(() => !document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'), null, { timeout: 5000 });
-  await page.waitForFunction(() => Boolean(window.AIZANOI_OS && document.body.classList.contains('aizanoi-next')), null, { timeout:5000 });
-  // Capture the stable product state rather than the intentional boot fade frame.
+  await page.waitForFunction(() => {
+    const boot = document.getElementById('boot');
+    return !boot || boot.classList.contains('hide') || getComputedStyle(boot).display === 'none';
+  }, null, { timeout: 8000 });
+  await page.waitForFunction(() => Boolean(window.AIZANOI_OS && window.AIZANOI_UNIFIED_SHELL && document.body.classList.contains('aizanoi-next')), null, { timeout:8000 });
   await page.waitForTimeout(650);
 }
 
-// Aizanoi Field System: capture the shell itself before opening a product window.
+// Unified desktop shell: home, index, command palette, system panel and a real app window.
 {
   const { context, page } = await newPage();
   await page.goto(`${base}/`, { waitUntil: 'networkidle' });
@@ -52,14 +54,30 @@ async function settleShell(page) {
   await page.screenshot({ path: `${out}/00d-os-system-panel.png` });
   await page.keyboard.press('Escape');
 
-  await page.evaluate(() => window.AIZANOI_OS.launchApp('chatbot'));
-  await page.waitForTimeout(350);
-  await page.screenshot({ path: `${out}/01-os-desktop.png` });
-  console.log('captured Aizanoi Field System desktop set');
+  await page.evaluate(() => window.AIZANOI_OS.launchApp('terminal'));
+  await page.waitForSelector('.win.active');
+  await page.waitForTimeout(250);
+  await page.screenshot({ path: `${out}/01-os-desktop-terminal.png` });
+  console.log('captured unified Aizanoi Field System desktop set');
   await context.close();
 }
 
-// Mobile is a first-class app home/switcher model, not a squeezed desktop.
+// Tablet is explicitly reviewed as the same shell, not an accidental desktop midpoint.
+{
+  const { context, page } = await newPage({ width:900, height:1180 });
+  await page.goto(`${base}/`, { waitUntil:'networkidle' });
+  await settleShell(page);
+  await page.waitForFunction(() => document.body.dataset.azLayout === 'tablet');
+  await page.screenshot({ path:`${out}/01a-os-tablet-home.png` });
+  await page.evaluate(() => window.AIZANOI_OS.launchApp('archive'));
+  await page.waitForSelector('.win.active');
+  await page.waitForTimeout(180);
+  await page.screenshot({ path:`${out}/01aa-os-tablet-window.png` });
+  console.log('captured unified Aizanoi Field System tablet set');
+  await context.close();
+}
+
+// Mobile keeps the same materials/cards while apps become fullscreen-equivalent.
 {
   const { context, page } = await newPage({ width:390, height:844 }, true);
   await page.goto(`${base}/`, { waitUntil:'networkidle' });
@@ -70,7 +88,7 @@ async function settleShell(page) {
   await page.waitForSelector('#az-command.open');
   await page.waitForTimeout(80);
   await page.screenshot({ path:`${out}/01c-os-mobile-command.png` });
-  console.log('captured Aizanoi Field System mobile set');
+  console.log('captured unified Aizanoi Field System mobile set');
   await context.close();
 }
 

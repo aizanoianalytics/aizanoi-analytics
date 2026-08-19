@@ -1,3 +1,5 @@
+@import url('/css/os-unified.css');
+
 /* Aizanoi OS V2 — product polish without changing the retro desktop identity. */
 :root {
   --os-safe-top: env(safe-area-inset-top, 0px);
