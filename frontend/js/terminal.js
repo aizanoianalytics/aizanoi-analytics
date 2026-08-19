@@ -132,6 +132,11 @@ async function wireTerminalIfNeeded() {
   if (!input || !out || termWired) return;
   termWired = true;
 
+  const terminalWindow = input.closest('.win');
+  const statusbar = terminalWindow?.querySelector('.statusbar');
+  const statusRight = statusbar?.lastElementChild;
+  if (statusRight) statusRight.textContent = 'LOCAL VIRTUAL SHELL · /aizanoi';
+
   termOut('<span style="color:#d8c79f;">AIZANOI FIELD TERMINAL / LOCAL VIRTUAL SHELL</span>');
   termOut('<span style="color:#8f9991;">Runtime: browser-only · static · no server command execution</span>');
   termOut('<span style="color:#8f9991;">Workspace: /aizanoi · identity: aizanoi-guest</span>');
