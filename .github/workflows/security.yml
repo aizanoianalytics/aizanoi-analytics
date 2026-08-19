@@ -21,6 +21,8 @@ jobs:
     steps:
       # actions/checkout v4.2.2, pinned to immutable commit SHA.
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 2
       # setup-node v4 line, pinned to an immutable upstream commit.
       - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
         with:
