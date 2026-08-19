@@ -1,9 +1,17 @@
 /* Shared historical-world presentation shell.
-   This script only reorganises existing controls. It intentionally does not own
+   This module only reorganises existing controls. It intentionally does not own
    traversal, evidence, rendering or city data. */
 (function installHistoricalWorldExperience(){
   if(window.__AIZANOI_CITY_EXPERIENCE__)return;
   window.__AIZANOI_CITY_EXPERIENCE__=true;
+
+  const cssId='ancient-world-experience-style';
+  if(!document.getElementById(cssId)){
+    const link=document.createElement('link');
+    link.id=cssId;link.rel='stylesheet';
+    link.href=new URL('./city-experience.css',import.meta.url).href;
+    document.head.appendChild(link);
+  }
 
   const $=(s,r=document)=>r.querySelector(s);
   const body=document.body;
@@ -17,7 +25,7 @@
     return el;
   }
 
-  function installDrawer(host, secondaryIds, mapTarget){
+  function installDrawer(host,secondaryIds,mapTarget){
     if(!host||$('#aw-tools-toggle'))return;
     const toggle=button('aw-tools-toggle','Explore');
     toggle.setAttribute('aria-expanded','false');
@@ -61,8 +69,6 @@
     body.dataset.city='aizanoi';
     $('.deviceChip',hud||document)?.remove();
     const bottom=$('.bottomBar',hud||document);
-    // Keep the short keyboard reminder as documentation inside the drawer while
-    // removing the permanent strip from the walking view.
     const ids=['resumeBtn','settingsBtn','fullscreenBtn','tourBtn','atlasBtn','sourcesBtn','soundBtn','timeWrap'];
     const result=installDrawer(top,ids,$('#mapBox'));
     const hint=$('.controlHint',bottom||document);
