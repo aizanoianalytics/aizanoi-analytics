@@ -6,7 +6,7 @@
 
   const WORKBENCH_IDS = new Set((State.apps || []).filter((app) => app.runtime === 'workbench').map((app) => app.id));
   const SCRIPTS = [
-    '/js/os-platform.js',
+    '/js/os-platform-runtime.js',
     '/js/os-archive.js',
     '/js/os-workbench.js',
     '/js/os-workbench-archive.js',
@@ -37,9 +37,21 @@
     if (theme) theme.content = '#0b1017';
   }
 
+  function captureInstallPrompt() {
+    if (window.__AIZANOI_INSTALL_CAPTURE_WIRED__) return;
+    window.__AIZANOI_INSTALL_CAPTURE_WIRED__ = true;
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      window.__AIZANOI_INSTALL_PROMPT__ = event;
+    });
+    window.addEventListener('appinstalled', () => {
+      window.__AIZANOI_INSTALL_PROMPT__ = null;
+    });
+  }
+
   function loadScript(src) {
     return new Promise((resolve, reject) => {
-      const selector = `script[data-aizanoi-distribution="${src}"]`;
+      const selector = `script[data-aizanoi-runtime="${src}"]`;
       const existing = document.querySelector(selector);
       if (existing) {
         if (existing.dataset.loaded === '1') resolve();
@@ -52,7 +64,7 @@
       const script = document.createElement('script');
       script.src = src;
       script.async = false;
-      script.dataset.aizanoiDistribution = src;
+      script.dataset.aizanoiRuntime = src;
       script.addEventListener('load', () => { script.dataset.loaded = '1'; resolve(); }, { once:true });
       script.addEventListener('error', () => reject(new Error(`Could not load ${src}`)), { once:true });
       document.body.appendChild(script);
@@ -107,6 +119,7 @@
   }
 
   ensureManifest();
+  captureInstallPrompt();
   patchOpenApp();
   scheduleWarmup();
 
