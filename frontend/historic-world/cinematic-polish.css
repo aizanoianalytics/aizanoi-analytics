@@ -1,6 +1,6 @@
-/* Final Aizanoi cinematic/UI pass.
-   Keep archaeology/UI information available, but let the reconstructed world
-   dominate the viewport during ordinary walking. */
+/* Aizanoi Historic World cinematic/UI refinement.
+   Keep archaeology and interface information available while allowing the
+   reconstructed city to dominate the viewport during ordinary walking. */
 #glCanvas{
   filter:brightness(.78) contrast(1.16) saturate(.93);
 }
@@ -29,7 +29,6 @@
   #headingHud:hover,#elevationHud:hover{opacity:1}
 }
 
-/* Monument labels/inspection remain legible without reading as a permanent game HUD. */
 #prompt .kbd{background:rgba(26,21,14,.88)}
 .mapLegend,.mapLabel{letter-spacing:.035em}
 

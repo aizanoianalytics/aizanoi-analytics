@@ -21,7 +21,6 @@
 
 <p align="center">
   <a href="https://github.com/aizanoianalytics/aizanoi-analytics/actions/workflows/ci.yml"><img alt="Aizanoi CI" src="https://github.com/aizanoianalytics/aizanoi-analytics/actions/workflows/ci.yml/badge.svg"></a>
-  <a href="https://github.com/aizanoianalytics/aizanoi-analytics/actions/workflows/security.yml"><img alt="Security Gate" src="https://github.com/aizanoianalytics/aizanoi-analytics/actions/workflows/security.yml/badge.svg"></a>
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
   <a href="https://aizanoianalytics.com"><img alt="Static site" src="https://img.shields.io/badge/runtime-static--only-2f6f63"></a>
 </p>
@@ -122,6 +121,7 @@ Procedural detail must not silently become historical certainty. City implementa
 
 Useful starting points:
 
+- [`research/rome_410_476/RESEARCH_BRIEF.md`](research/rome_410_476/RESEARCH_BRIEF.md)
 - [`research/rome_410_476/`](research/rome_410_476/)
 - [`research/athens_450_430/`](research/athens_450_430/)
 - [`frontend/ancient-world/engine/evidence.js`](frontend/ancient-world/engine/evidence.js)
@@ -146,11 +146,11 @@ See **[SECURITY.md](SECURITY.md)** for the reporting policy and security boundar
 
 Changes are tested as a product, not only as source files.
 
-GitHub Actions currently cover:
+The main GitHub Actions workflow covers:
 
 - JavaScript syntax validation;
 - Node regression tests;
-- static-runtime security contracts;
+- static-runtime and security contracts;
 - desktop / tablet / mobile Chromium smoke tests;
 - browser-only Terminal behavior and no-API assertions;
 - Rome / Athens movement, landmark and deep-link behavior;
@@ -196,7 +196,7 @@ For interactive Chromium smoke tests, the CI workflow documents the pinned Playw
 │   └── assets/                  # branding, icons and wallpapers
 ├── research/                    # historical research and verified source material
 ├── tests/                       # regression, Chromium, security and visual QA
-├── docs/                        # accessibility, OS and project documentation
+├── docs/                        # maintained supporting documentation
 ├── infra/                       # sanitized static Nginx deployment reference
 ├── ARCHITECTURE.md              # maintained component map
 ├── SECURITY.md                  # vulnerability reporting and security boundaries

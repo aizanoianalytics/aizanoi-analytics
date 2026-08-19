@@ -1,37 +1,36 @@
 # Aizanoi Analytics Documentation
 
-This directory contains supporting documentation for the Aizanoi Analytics public project.
+This directory contains maintained supporting documentation for the public project.
 
-Start with the repository root for the main product story:
+## Core project documents
 
-- [`README.md`](../README.md) — public overview, live worlds, Field System, architecture summary and local setup;
-- [`ARCHITECTURE.md`](../ARCHITECTURE.md) — maintained technical ownership and runtime boundaries;
-- [`ROADMAP.md`](../ROADMAP.md) — current product direction;
+Start at the repository root:
+
+- [`README.md`](../README.md) — product overview, live worlds, Field System and local setup;
+- [`ARCHITECTURE.md`](../ARCHITECTURE.md) — current runtime boundaries and component ownership;
+- [`SECURITY.md`](../SECURITY.md) — security model and vulnerability reporting;
 - [`CONTRIBUTING.md`](../CONTRIBUTING.md) — contribution and historical-methodology rules;
-- [`SECURITY.md`](../SECURITY.md) — security boundary and vulnerability reporting;
+- [`ROADMAP.md`](../ROADMAP.md) — current product direction;
 - [`CHANGELOG.md`](../CHANGELOG.md) — major public milestones.
 
-## Field System
+## Supporting documentation
 
-- [`AIZANOI_OS_DISTRIBUTION.md`](AIZANOI_OS_DISTRIBUTION.md) — browser-native Field System architecture, local workstation and cross-device model;
-- [`ACCESSIBILITY.md`](ACCESSIBILITY.md) — accessibility baseline and manual verification guidance.
-
-## Search / public discovery
-
-- [`SEARCH_CONSOLE_CHECKLIST.md`](SEARCH_CONSOLE_CHECKLIST.md) — manual Search Console and indexing workflow, with current retired-route caveats.
-
-## Historical snapshots
-
-[`archive/`](archive/) contains explicitly superseded audits/plans retained for project history. Files in that directory are **not** current architecture or roadmap documents.
-
-When an archived document disagrees with a current root document, the current root document wins.
+- [`ACCESSIBILITY.md`](ACCESSIBILITY.md) — accessibility baseline and manual verification guidance;
+- [`AIZANOI_OS_DISTRIBUTION.md`](AIZANOI_OS_DISTRIBUTION.md) — Aizanoi Field System architecture and cross-device model.
 
 ## Historical research
 
-Research material is intentionally kept outside this docs folder so source/evidence work remains close to the historical-world structure:
+Research material lives under [`../research/`](../research/) so evidence work remains separate from product documentation and close to the historical-world implementations.
 
-- [`../research/rome_410_476/`](../research/rome_410_476/)
-- [`../research/athens_450_430/`](../research/athens_450_430/)
-- city implementation data under [`../frontend/ancient-cities/`](../frontend/ancient-cities/)
+Current research areas include:
 
-Aizanoi historical-world implementation lives under [`../frontend/historic-world/`](../frontend/historic-world/) and is the central product reference experience.
+- [`../research/rome_410_476/`](../research/rome_410_476/) — Late Antique Rome research, including the maintained [`RESEARCH_BRIEF.md`](../research/rome_410_476/RESEARCH_BRIEF.md);
+- [`../research/athens_450_430/`](../research/athens_450_430/) — Classical Athens research and verified source material.
+
+City-facing evidence, methodology and reconstruction data also live beside the implementations under [`../frontend/ancient-cities/`](../frontend/ancient-cities/).
+
+Aizanoi Historic World is maintained under [`../frontend/historic-world/`](../frontend/historic-world/) and remains the central reference experience.
+
+## Documentation rule
+
+Only maintained, current documentation belongs here. Temporary audits, implementation reports, task lists and superseded plans are intentionally left to Git history rather than kept as permanent public files.
