@@ -133,7 +133,7 @@ async function wireTerminalIfNeeded() {
   termWired = true;
 
   const terminalWindow = input.closest('.win');
-  const statusbar = terminalWindow?.querySelector('.statusbar');
+  const statusbar = terminalWindow?.querySelector('.win-statusbar');
   const statusRight = statusbar?.lastElementChild;
   if (statusRight) statusRight.textContent = 'LOCAL VIRTUAL SHELL · /aizanoi';
 
