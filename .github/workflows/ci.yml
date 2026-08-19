@@ -6,6 +6,7 @@ on:
       - main
       - 'fix/**'
       - 'feat/**'
+      - 'security/**'
   pull_request:
 
 permissions:
@@ -20,10 +21,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 2
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22'
       - name: JavaScript syntax checks
@@ -82,14 +83,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22'
-      - name: Install Chromium smoke dependency
+      - name: Install and audit Chromium smoke dependency
         run: |
           npm init -y >/dev/null 2>&1
-          npm install --no-save playwright@1.55.0
+          npm install --no-save --ignore-scripts playwright@1.62.1
+          npm audit --audit-level=high
           npx playwright install chromium
       - name: Start static frontend server
         run: |
@@ -127,14 +129,14 @@ jobs:
           exit $status
       - name: Upload visual regression review
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: aizanoi-final-visual-review
           path: artifacts/final-visual-review/*.png
           retention-days: 3
       - name: Upload browser diagnostics
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: aizanoi-browser-diagnostics
           path: artifacts/diagnostics/*
@@ -144,12 +146,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22'
-      - name: Install Lighthouse
-        run: npm install --no-save lighthouse@13.4.1
+      - name: Install and audit Lighthouse
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save --ignore-scripts lighthouse@13.4.1
+          npm audit --audit-level=high
       - name: Start static frontend server
         run: |
           python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-lighthouse-http.log 2>&1 &
@@ -193,7 +198,7 @@ jobs:
           exit "$budget_status"
       - name: Upload Lighthouse diagnostics
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: aizanoi-lighthouse-diagnostics
           path: artifacts/diagnostics/*
