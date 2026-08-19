@@ -1,3 +1,5 @@
+import './city-experience.js';
+
 const STYLE_ID = 'ancient-world-navigation-style';
 const LINK_ID = 'ancient-world-back-to-os';
 
