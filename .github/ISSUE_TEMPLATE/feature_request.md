@@ -1,0 +1,56 @@
+---
+name: Feature request
+about: Propose a focused improvement to Aizanoi Analytics
+title: "feat: "
+labels: "enhancement"
+assignees: ""
+---
+
+## Problem / opportunity
+
+What would this improve for a visitor, researcher or contributor?
+
+## Proposed change
+
+Describe the smallest useful version of the idea.
+
+## Product fit
+
+Which project goal does this support?
+
+- [ ] Aizanoi historical depth
+- [ ] Historical evidence / methodology clarity
+- [ ] Rome / Athens comparative world quality
+- [ ] Field System research workflow
+- [ ] Desktop / tablet / mobile parity
+- [ ] Accessibility
+- [ ] Performance
+- [ ] Security / operational simplicity
+- [ ] Documentation / public understanding
+- [ ] Other
+
+## Historical evidence impact
+
+If this changes a reconstruction or historical claim, what source/evidence basis exists? Which parts are inferred or procedural?
+
+Write `N/A` if not applicable.
+
+## Runtime / architecture impact
+
+- [ ] Can remain static/browser-native
+- [ ] Would require new server/API behavior
+- [ ] I am not sure
+
+If a backend seems necessary, explain why the requirement cannot reasonably stay browser-native.
+
+## Cross-device behavior
+
+How should the feature behave on desktop, tablet and mobile?
+
+## Alternatives considered
+
+What simpler approach could solve the same problem?
+
+## Additional context
+
+Mockups, references, source material or related issues are welcome.
