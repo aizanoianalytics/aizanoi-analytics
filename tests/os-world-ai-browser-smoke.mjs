@@ -15,7 +15,7 @@ await context.addInitScript(() => {
 
 const page = await context.newPage();
 const errors = [];
-const requests = [];
+let chatRequests = 0;
 page.on('pageerror', error => errors.push(String(error)));
 page.on('console', message => {
   if (message.type() !== 'error') return;
@@ -23,28 +23,23 @@ page.on('console', message => {
   if (/<g> attribute transform: Expected '\)', "translate\(50%, 100%\)"/.test(text)) return;
   errors.push(text);
 });
-await page.route('**/api/chat', async route => {
-  requests.push(JSON.parse(route.request().postData() || '{}'));
-  await route.fulfill({ status:200, contentType:'application/json', body:JSON.stringify({ reply:'The Colosseum remained a major monument in Late Antique Rome.' }) });
+page.on('request', request => {
+  if (new URL(request.url()).pathname === '/api/chat') chatRequests += 1;
 });
 
 const visibleQuestion = 'Explain the place I was viewing and its historical evidence.';
 await page.goto(`${base}/?ask=${encodeURIComponent(visibleQuestion)}`, { waitUntil:'networkidle' });
-await page.waitForFunction(() => Boolean(window.AIZANOI_OS_INTENT && window.__AIZANOI_CHAT__), null, { timeout:6000 });
-await page.waitForFunction(() => document.querySelectorAll('.chat-msg.bot:not(.typing)').length >= 2, null, { timeout:6000 });
+await page.waitForFunction(() => Boolean(window.AIZANOI_OS_INTENT && window.AIZANOI_AI_DISABLED), null, { timeout:6000 });
 
 const url = new URL(page.url());
-assert.equal(url.searchParams.has('ask'), false, 'one-shot Historical World AI query was not consumed');
-assert.equal(requests.length, 1, 'Historical World return should issue exactly one AI request');
-const history = requests[0].history;
-assert.ok(Array.isArray(history) && history.length >= 1, 'chat history missing');
-const userPayload = history.findLast(item => item.role === 'user')?.content || '';
-assert.match(userPayload, /Current Historical World context: Rome AD 410–476 · Colosseum/);
-assert.match(userPayload, /User request: Explain the place I was viewing and its historical evidence\./);
-assert.match(await page.locator('.chat-msg.user').last().innerText(), new RegExp(visibleQuestion.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-assert.equal(await page.evaluate(() => sessionStorage.getItem('aizanoi-world-ai-context')), null, 'consumed world AI context should be cleared');
-assert.deepEqual(errors, [], `Historical World AI bridge browser errors: ${errors.join(' | ')}`);
+assert.equal(url.searchParams.has('ask'), false, 'disabled AI deep-link parameter should be removed');
+assert.equal(chatRequests, 0, 'security build must never call /api/chat from the browser');
+assert.equal(await page.evaluate(() => window.AIZANOI_OS_INTENT.shouldAskAI('hello')), false, 'natural-language AI routing must stay disabled');
+assert.equal(await page.evaluate(() => window.AIZANOI_OS_INTENT.submitContextualAI('hello')), false, 'historical-world AI handoff must stay disabled');
+assert.equal(await page.evaluate(() => sessionStorage.getItem('aizanoi-world-ai-context')), null, 'stale world AI context should be cleared');
+assert.equal(await page.locator('[data-app="chatbot"]:visible').count(), 0, 'AI app launcher should be hidden');
+assert.deepEqual(errors, [], `AI-disabled browser errors: ${errors.join(' | ')}`);
 
 await context.close();
 await browser.close();
-console.log('Historical World → Aizanoi AI browser context bridge passed');
+console.log('Historical World AI bridge remains safely disabled');

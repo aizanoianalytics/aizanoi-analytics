@@ -9,10 +9,14 @@ server {
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header Referrer-Policy "strict-origin-when-cross-origin" always;
     add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
-    # The application intentionally retains inline CSS/JS while the legacy OS
-    # shell is being modularized. This policy still constrains network/object/
-    # framing capabilities and can be tightened further as inline code shrinks.
+    add_header Cross-Origin-Opener-Policy "same-origin" always;
+    # The legacy shell still contains inline CSS/JS. Keep this transitional CSP
+    # until inline code is mechanically extracted; do not weaken other sources.
     add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; frame-ancestors 'self'; worker-src 'self' blob:" always;
+
+    # The Node API never accepts a body larger than this. Reject oversized
+    # requests before proxying them to the application.
+    client_max_body_size 128k;
 
     error_page 404 /404.html;
     error_page 500 /500.html;
@@ -22,20 +26,51 @@ server {
     location = /503.html { internal; }
 
     # Product decisions / legacy URLs.
-    location = /ai {
-        return 301 /hr-analytics/;
-    }
+    location = /ai { return 410; }
+    location = /ai/ { return 410; }
+    location = /market { return 410; }
+    location ^~ /market/ { return 410; }
 
-    location = /ai/ {
-        return 301 /hr-analytics/;
-    }
-
-    location = /market {
+    # External AI integration is intentionally removed. Block the historical
+    # endpoint at the reverse proxy as well as in Node (defense in depth).
+    location = /api/chat {
         return 410;
     }
 
-    location ^~ /market/ {
-        return 410;
+    # Health endpoint is read-only and proxied explicitly.
+    location = /api/health {
+        limit_except GET { deny all; }
+        proxy_pass http://127.0.0.1:3001/api/health;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_connect_timeout 3s;
+        proxy_send_timeout 5s;
+        proxy_read_timeout 5s;
+        add_header Cache-Control "no-store" always;
+    }
+
+    # Fake terminal endpoint. The Node backend only dispatches a fixed command
+    # whitelist and binds to loopback; arbitrary shell execution is forbidden.
+    location = /api/terminal/exec {
+        limit_except POST { deny all; }
+        proxy_pass http://127.0.0.1:3001/api/terminal/exec;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_connect_timeout 3s;
+        proxy_send_timeout 10s;
+        proxy_read_timeout 10s;
+        add_header Cache-Control "no-store" always;
+    }
+
+    # Never proxy unknown API paths.
+    location ^~ /api/ {
+        return 404;
     }
 
     # Standalone Historic World (Roman Aizanoi).
@@ -67,19 +102,10 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    # Public API remains behind the loopback-only Node service. The backend can
-    # sequentially try up to five 15s providers, so the reverse-proxy timeout
-    # must be longer than that fallback chain and the 80s browser guard.
-    location /api/ {
-        proxy_pass http://127.0.0.1:3001/api/;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_connect_timeout 5s;
-        proxy_send_timeout 85s;
-        proxy_read_timeout 85s;
+    # Service workers should revalidate so security fixes propagate promptly.
+    location = /service-worker.js {
+        try_files $uri =404;
+        add_header Cache-Control "no-cache, no-store, must-revalidate" always;
     }
 
     # Static asset caching. File names under these directories are treated as
@@ -100,8 +126,7 @@ server {
         add_header Cache-Control "no-store";
     }
 
-    # Real files/directories work normally. Unknown paths return a real 404
-    # instead of silently becoming the desktop shell (soft-404).
+    # Real files/directories work normally. Unknown paths return a true 404.
     location / {
         try_files $uri $uri/ =404;
     }

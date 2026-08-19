@@ -24,14 +24,15 @@ test('OS observer batches newly-added interactive nodes instead of full rescans'
   assert.match(os,/mutationFrame = requestAnimationFrame/);
 });
 
-test('AI composer remains multiline with bounded timeout retry and abort protection',()=>{
+test('AI composer is fail-closed and incapable of browser network I/O',()=>{
   assert.match(index,/<textarea id="chat-input"/);
-  assert.match(chat,/!e\.isComposing/);
-  assert.match(chat,/!e\.shiftKey/);
-  assert.match(chat,/80000/);
-  assert.match(chat,/AbortController/);
-  assert.match(os,/data-chat-action="retry"/);
-  assert.match(os,/abortChatRequest/);
+  assert.match(chat,/AI is disabled for security/);
+  assert.match(chat,/sendBtn\.disabled = true/);
+  assert.match(chat,/input\.disabled = true/);
+  assert.match(chat,/ask\(\) \{/);
+  assert.match(chat,/return false/);
+  assert.doesNotMatch(chat,/fetch\s*\(/);
+  assert.doesNotMatch(chat,/AbortController|CHAT_API_URL|\/api\/chat/);
 });
 
 test('Brick Breaker uses a capped requestAnimationFrame fixed-step loop',()=>{
