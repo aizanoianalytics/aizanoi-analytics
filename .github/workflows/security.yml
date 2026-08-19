@@ -1,0 +1,39 @@
+name: Security Gate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'security/**'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aizanoi-security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # actions/checkout v4.2.2, pinned to immutable commit SHA.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      # setup-node v4 line, pinned to an immutable upstream commit.
+      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
+        with:
+          node-version: '22'
+      - name: Install backend dependencies without lifecycle scripts
+        working-directory: backend
+        run: npm ci --ignore-scripts
+      - name: Fail on high or critical production dependency vulnerabilities
+        working-directory: backend
+        run: npm audit --omit=dev --audit-level=high
+      - name: Backend syntax check
+        run: node --check backend/server.js
+      - name: Security regression tests
+        run: node --test tests/backend-config.test.mjs tests/security-hardening.test.mjs
+      - name: Reject whitespace errors
+        run: git diff --check HEAD^ HEAD
