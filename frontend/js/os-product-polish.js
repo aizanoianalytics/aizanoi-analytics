@@ -28,7 +28,7 @@
   }
 
   function appIdForWindow(win) {
-    const explicit = win?.dataset?.workbenchApp || win?.dataset?.appId;
+    const explicit = win?.dataset?.workbenchApp || win?.dataset?.appId || win?.dataset?.aizanoiApp;
     if (explicit) return explicit;
     const map = windowsMap();
     if (!map || !win) return null;
@@ -119,6 +119,28 @@
     }
   }
 
+  function cleanBootAndFallbackCopy() {
+    try {
+      if (typeof BOOT_TIPS !== 'undefined' && Array.isArray(BOOT_TIPS)) {
+        BOOT_TIPS.splice(0, BOOT_TIPS.length,
+          'Tip: Press <b>Ctrl/Cmd + K</b> to search apps, worlds and landmarks.',
+          'Tip: Open <b>Historical Worlds</b> to explore Aizanoi, Rome and Athens.',
+          'Tip: Use <b>Field Archive</b> for local files, notes and datasets.',
+          'Tip: Try <b>TAB</b> in Field Terminal for local command completion.',
+          'Tip: Desktop and tablet windows can be moved, resized and restored.',
+          'Tip: Mobile apps open fullscreen while keeping the same workspace identity.'
+        );
+      }
+    } catch (_) {}
+
+    const tip = $('#boot-tip');
+    if (tip && /AI|Start\s*›\s*All Programs|Recycle Bin/i.test(tip.textContent || '')) {
+      tip.innerHTML = 'Tip: Press <b>Ctrl/Cmd + K</b> to search apps, worlds and landmarks.';
+    }
+    const ssLabel = [...$$('#screensaver div')].find((node) => node.childElementCount === 0 && node.textContent.trim() === 'Aizanoi OS');
+    if (ssLabel) ssLabel.textContent = 'Aizanoi Field System';
+  }
+
   function removeLegacyAiEntrypoints() {
     $$('#start-menu [data-app="chatbot"], #icon-layer [data-app="chatbot"], [data-mobile-nav="ai"], #az-ai-button').forEach((node) => node.remove());
     const commandInput = $('#az-command-input');
@@ -140,8 +162,20 @@
       ${body}`;
   }
 
+  const EDITORIAL_APPS = new Set(['about','privacy','docs','terms','videos']);
+
+  function editorialPad(appId, win) {
+    let pad = $('.app-pad', win);
+    if (pad) return pad;
+    if (!EDITORIAL_APPS.has(appId)) return null;
+    const body = $('.win-body', win);
+    if (!body) return null;
+    body.innerHTML = '<div class="app-pad" data-product-editorial-shell="1"></div>';
+    return $('.app-pad', body);
+  }
+
   function polishEditorialWindow(appId, win) {
-    const pad = $('.app-pad', win);
+    const pad = editorialPad(appId, win);
     if (!pad || pad.dataset.productCopy === '1') return;
 
     if (appId === 'about') {
@@ -165,7 +199,7 @@
         facts:[['Accounts','Not required'],['App backend','None'],['Workspace data','Local browser storage'],['Advertising cookies','None']],
         body:`<h3>Local workspace data</h3><p>Field Archive, Field Notes and related workstation state are designed to remain in your browser unless you explicitly export or download something yourself.</p>
           <h3>Server logs</h3><p>The web server may retain ordinary request and security metadata such as IP address, path, timestamp and response status for operations and abuse prevention.</p>
-          <h3>External services</h3><p>The public Aizanoi application does not send research notes, datasets or terminal commands to an AI provider. The Field Terminal is a browser-only virtual shell.</p>`
+          <h3>External services</h3><p>The public Aizanoi application does not send research notes, datasets or terminal commands to an external model provider. The Field Terminal is a browser-only virtual shell.</p>`
       });
       return;
     }
@@ -255,6 +289,7 @@
     ensureStyleLast();
     refreshProductMeta();
     patchRouteMetaBridge();
+    cleanBootAndFallbackCopy();
     removeLegacyAiEntrypoints();
     tagAndPolishWindows();
     const homeCopy = $('.az-mobile-header p');
