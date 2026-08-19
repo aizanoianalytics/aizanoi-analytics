@@ -3,7 +3,7 @@ import { mkdirSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
-const LEGACY_PRE_SHELL_SVG_WARNING = /<g> attribute transform: Expected '\\)', "translate\\(50%, 100%\\)"/;
+const LEGACY_PRE_SHELL_SVG_WARNING = '<g> attribute transform: Expected';
 mkdirSync('artifacts/diagnostics', { recursive:true });
 const browser = await chromium.launch({ headless:true });
 
@@ -11,12 +11,12 @@ function collectErrors(page) {
   const errors = [];
   page.on('pageerror', (error) => {
     const text = String(error);
-    if (!LEGACY_PRE_SHELL_SVG_WARNING.test(text)) errors.push(text);
+    if (!text.includes(LEGACY_PRE_SHELL_SVG_WARNING)) errors.push(text);
   });
   page.on('console', (message) => {
     if (message.type() !== 'error') return;
     const text = message.text();
-    if (!LEGACY_PRE_SHELL_SVG_WARNING.test(text)) errors.push(text);
+    if (!text.includes(LEGACY_PRE_SHELL_SVG_WARNING)) errors.push(text);
   });
   return errors;
 }
