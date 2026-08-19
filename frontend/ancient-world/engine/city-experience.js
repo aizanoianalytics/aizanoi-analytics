@@ -2,6 +2,7 @@
    This module only reorganises existing controls. It intentionally does not own
    traversal, evidence, rendering or city data. */
 (function installHistoricalWorldExperience(){
+  if(typeof window==='undefined'||typeof document==='undefined')return;
   if(window.__AIZANOI_CITY_EXPERIENCE__)return;
   window.__AIZANOI_CITY_EXPERIENCE__=true;
 
