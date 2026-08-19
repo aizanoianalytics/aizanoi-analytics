@@ -58,18 +58,26 @@ for (const city of cities) {
     const deepContext = await browser.newContext({ viewport: { width: 1280, height: 800 } });
     const opened = await openCity(deepContext, city, `?jump=${city.teleport}`);
     const deepPage = opened.page;
-    // Query consumption happens only after the public jump control has dispatched
-    // its change event. Waiting for that durable state is stronger and less flaky
-    // than polling the temporary 2.6-second arrival label indefinitely.
+    // Query consumption is durable. The visible arrival label intentionally lasts
+    // only a few seconds, so verify the deep-link position against the city's own
+    // canonical teleport result instead of racing that temporary presentation.
     await deepPage.waitForFunction(() => (
       document.querySelector('#intro')?.classList.contains('hidden') &&
       !new URL(location.href).searchParams.has('jump')
     ));
-    const arrivalText = (await deepPage.locator('#place').textContent()) || '';
-    assert.match(arrivalText, city.arrival, `${city.slug}: deep-link did not publish the requested landmark arrival`);
-    assert.equal(new URL(deepPage.url()).searchParams.has('jump'), false, `${city.slug}: one-shot jump query was not consumed`);
     const deepPlayer = await player(deepPage);
     assert.ok(deepPlayer && Number.isFinite(deepPlayer.floorY), `${city.slug}: deep-link arrival produced invalid player state`);
+
+    const canonical = await deepPage.evaluate((id) => {
+      const debug = window.__ANCIENT_WORLD_DEBUG__;
+      const ok = debug?.teleport?.(id);
+      return { ok:Boolean(ok), player:debug?.player || null, place:document.querySelector('#place')?.textContent || '' };
+    }, city.teleport);
+    assert.equal(canonical.ok, true, `${city.slug}: canonical landmark teleport failed after deep-link`);
+    assert.match(canonical.place, city.arrival, `${city.slug}: canonical teleport did not publish the requested landmark label`);
+    const deepLinkDelta = Math.hypot(canonical.player.x - deepPlayer.x, canonical.player.z - deepPlayer.z);
+    assert.ok(deepLinkDelta < 0.75, `${city.slug}: deep-link arrival diverged from canonical ${city.teleport} spawn (${deepLinkDelta.toFixed(2)} m)`);
+    assert.equal(new URL(deepPage.url()).searchParams.has('jump'), false, `${city.slug}: one-shot jump query was not consumed`);
     assert.deepEqual(opened.errors, [], `${city.slug}: deep-link browser errors: ${opened.errors.join(' | ')}`);
     await deepContext.close();
   }
