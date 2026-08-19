@@ -1,3 +1,5 @@
+import './city-experience.js';
+
 const STYLE_ID = 'ancient-world-navigation-style';
 const LINK_ID = 'ancient-world-back-to-os';
 
@@ -80,6 +82,19 @@ function waitForElement(selector, { timeout = 7000, interval = 60 } = {}) {
   });
 }
 
+function waitForRuntime({ timeout = 9000, interval = 40 } = {}) {
+  return new Promise((resolve) => {
+    if (window.__ANCIENT_WORLD_DEBUG__) return resolve(true);
+    const started = performance.now();
+    const timer = setInterval(() => {
+      if (window.__ANCIENT_WORLD_DEBUG__ || performance.now() - started >= timeout) {
+        clearInterval(timer);
+        resolve(Boolean(window.__ANCIENT_WORLD_DEBUG__));
+      }
+    }, interval);
+  });
+}
+
 /**
  * Consume an Aizanoi OS world command without coupling the shared engine to a
  * city renderer. Each experience keeps ownership of its own enter and teleport
@@ -91,6 +106,7 @@ export async function consumeHistoricalWorldDeepLink({
   jumpSelector = '#jump',
   introHiddenSelector = '#intro.hidden',
   readySelector = null,
+  requireRuntime = false,
   timeout = 9000,
 } = {}) {
   if (!worldId) return { handled:false, reason:'missing-world-id' };
@@ -103,6 +119,10 @@ export async function consumeHistoricalWorldDeepLink({
   if (readySelector) {
     const ready = await waitForElement(readySelector, { timeout });
     if (!ready) return { handled:false, reason:'world-not-ready', landmark };
+  }
+  if (requireRuntime) {
+    const runtimeReady = await waitForRuntime({ timeout });
+    if (!runtimeReady) return { handled:false, reason:'runtime-not-ready', landmark };
   }
 
   const enter = await waitForElement(enterSelector, { timeout });
@@ -135,8 +155,8 @@ function detectWorldProfile() {
     enterSelector:'#enterBtn', jumpSelector:'#teleport',
     introHiddenSelector:'#boot.hidden', readySelector:'#boot:not(.hidden)',
   };
-  if (path.includes('/rome-410-476/')) return { worldId:'rome', worldLabel:'Rome AD 410–476' };
-  if (path.includes('/athens-450-430/')) return { worldId:'athens', worldLabel:'Classical Athens c. 432–430 BCE' };
+  if (path.includes('/rome-410-476/')) return { worldId:'rome', worldLabel:'Rome AD 410–476', requireRuntime:true };
+  if (path.includes('/athens-450-430/')) return { worldId:'athens', worldLabel:'Classical Athens c. 432–430 BCE', requireRuntime:true };
   return null;
 }
 

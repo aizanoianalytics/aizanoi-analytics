@@ -1,6 +1,13 @@
 // Deterministic, explicitly inferred urban fabric for Athens 450–430 BCE.
 // Named monuments remain in city.js. This module supplies plausible city scale
 // without claiming to reconstruct individual excavated houses.
+import {
+  deterministicHash as hash,
+  nearestStreet,
+  overlapsNamedBuilding,
+  overlapsFabric,
+  regionalPlacementTarget,
+} from '../../../ancient-world/assets/urban-fabric-tools.js';
 
 const DISTRICT_DENSITY = Object.freeze({
   acropolis: 0.10, 'south-slope': 0.48, agora: 0.62, 'lower-city': 0.82,
@@ -15,68 +22,17 @@ const DISTRICT_STYLE = Object.freeze({
   'south-slope': { kind:'slope-houses', height:[4,8], shop:0.34, courtyard:0.42, materials:['plaster','limestone2','plaster3'] },
 });
 
-const hash = (input) => {
-  let h = 2166136261;
-  for (let i = 0; i < input.length; i++) {
-    h ^= input.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return (h >>> 0) / 4294967295;
-};
-
-function pointToSegmentDistance(px, pz, a, b) {
-  const dx = b[0] - a[0];
-  const dz = b[1] - a[1];
-  const length2 = dx * dx + dz * dz || 1;
-  const t = Math.max(0, Math.min(1, ((px - a[0]) * dx + (pz - a[1]) * dz) / length2));
-  const x = a[0] + dx * t;
-  const z = a[1] + dz * t;
-  return Math.hypot(px - x, pz - z);
-}
-
-function nearestStreet(x, z, streets) {
-  let best = null;
-  let distance = Infinity;
-  for (const street of streets) {
-    for (let i = 1; i < street.points.length; i++) {
-      const a = street.points[i - 1];
-      const b = street.points[i];
-      const d = pointToSegmentDistance(x, z, a, b);
-      if (d < distance) {
-        distance = d;
-        best = { street, a, b, angle: Math.atan2(b[1] - a[1], b[0] - a[0]) };
-      }
-    }
-  }
-  return best ? { ...best, distance } : null;
-}
-
-function overlapsNamedBuilding(x, z, width, depth, buildings) {
-  for (const building of buildings) {
-    if (building.type === 'wall' || building.type === 'aqueduct') continue;
-    const monumental = Math.max(building.w || 0, building.d || 0) > 80 || (building.h || 0) > 18;
-    const padding = monumental ? 7 : 4.5;
-    const hx = (building.w || 0) / 2 + width / 2 + padding;
-    const hz = (building.d || 0) / 2 + depth / 2 + padding;
-    if (Math.abs(x - building.x) < hx && Math.abs(z - building.z) < hz) return true;
-  }
-  return false;
-}
-
-function overlapsFabric(x, z, width, depth, fabric, padding = 1.4) {
-  for (const building of fabric) {
-    const hx = building.w / 2 + width / 2 + padding;
-    const hz = building.d / 2 + depth / 2 + padding;
-    if (Math.abs(x - building.x) < hx && Math.abs(z - building.z) < hz) return true;
-  }
-  return false;
-}
-
 function targetForDistrict(region, density, mobile) {
-  const cell = mobile ? 30 : 22;
-  const theoretical = Math.max(1, (region.w * region.d) / (cell * cell));
-  const scaled = Math.round(theoretical * density * (mobile ? 0.72 : 0.92));
-  return Math.max(mobile ? 10 : 16, Math.min(mobile ? 30 : 62, scaled));
+  return regionalPlacementTarget(region, density, mobile, {
+    desktopCell:22,
+    mobileCell:30,
+    desktopScale:0.92,
+    mobileScale:0.72,
+    desktopMin:16,
+    desktopMax:62,
+    mobileMin:10,
+    mobileMax:30,
+  });
 }
 
 export function generateUrbanFabric({
@@ -125,8 +81,13 @@ export function generateUrbanFabric({
         const bz = z + jitterZ;
         const width = 12.5 + hash(`${seed}:w`) * (mobile ? 6.5 : 10.5);
         const depth = 10.5 + hash(`${seed}:d`) * (mobile ? 5.5 : 9.5);
-        if (overlapsNamedBuilding(bx, bz, width, depth, buildings)) continue;
-        if (overlapsFabric(bx, bz, width, depth, fabric)) continue;
+        if (overlapsNamedBuilding(bx, bz, width, depth, buildings, {
+          monumentalSize:80,
+          monumentalHeight:18,
+          monumentalPadding:7,
+          normalPadding:4.5,
+        })) continue;
+        if (overlapsFabric(bx, bz, width, depth, fabric, 1.4)) continue;
 
         const style = DISTRICT_STYLE[region.id] || { kind:'mixed-houses', height:[5,10], shop:0.44, courtyard:0.40, materials:['plaster','plaster2','limestone2'] };
         const heightBase = style.height[0] + hash(`${seed}:h`) * (style.height[1] - style.height[0]);
@@ -154,7 +115,7 @@ export function generateUrbanFabric({
           source: 'district-density',
           evidence: {
             level: 'plausible',
-            note: 'Procedural fifth-century massing based on district density and street relationships; not an individually excavated house restitution.',
+            note: 'Procedural Classical-period massing based on district density and street relationships; not an individually excavated house restitution.',
           },
         });
         districtPlaced += 1;
@@ -169,5 +130,6 @@ export const URBAN_FABRIC_METHOD = Object.freeze({
   evidence: 'plausible',
   deterministic: true,
   fairDistrictQuotas: true,
+  sharedPlacementToolkit:true,
   note: 'Generated fabric stays subordinate to named monuments and preserves low-density sacred/topographical zones while giving the lived lower city continuous street-scale massing.',
 });
