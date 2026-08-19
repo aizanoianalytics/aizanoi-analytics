@@ -21,20 +21,26 @@ const initialVisible = await page.locator('#az-command-results .az-command-resul
 assert.ok(initialVisible.length > 0, 'command palette has no visible results');
 assert.ok(initialVisible.every((text) => !/Aizanoi AI/i.test(text)), `disabled AI leaked into initial command results: ${initialVisible.join(' | ')}`);
 
+// Use the removed app id itself so normal Aizanoi historical-world search results
+// are not mistaken for the former AI surface.
 const input = page.locator('#az-command-input');
-await input.fill('ai');
+await input.fill('chatbot');
 await page.waitForTimeout(120);
-const aiVisible = await page.locator('#az-command-results .az-command-result:visible').allInnerTexts();
-assert.ok(aiVisible.every((text) => !/Aizanoi AI/i.test(text)), `disabled AI leaked after search: ${aiVisible.join(' | ')}`);
-assert.equal(await page.locator('#az-command-results [data-ai-disabled-empty]').count(), 1, 'AI-only search should fail closed with local no-match copy');
+const removedAppVisible = await page.locator('#az-command-results .az-command-result:visible').allInnerTexts();
+assert.ok(removedAppVisible.every((text) => !/Aizanoi AI/i.test(text)), `disabled AI leaked after chatbot search: ${removedAppVisible.join(' | ')}`);
+assert.equal(await page.locator('#az-command-results [data-ai-disabled-empty]').count(), 1, 'removed chatbot search should fail closed with local no-match copy');
 
-// Enter on an AI-only query must not resurrect/open the removed chatbot window.
+// Enter on a removed-app-only query must not resurrect/open the chatbot window.
 await input.press('Enter');
 await page.waitForTimeout(150);
 assert.equal(await page.locator('.win').filter({ hasText:'Aizanoi AI' }).count(), 0, 'Enter executed a hidden disabled AI command');
 assert.equal(await page.locator('[data-app-id="chatbot"]:visible').count(), 0, 'chatbot became visible from command palette');
 
-// A normal visible command still executes through the safe visible selection.
+// A normal visible command must still execute through the safe visible selection.
+if (!(await page.locator('#az-command').evaluate((node) => node.classList.contains('open')))) {
+  await page.evaluate(() => window.AIZANOI_OS?.openCommand?.(''));
+  await page.waitForSelector('#az-command.open');
+}
 await input.fill('terminal');
 await page.waitForTimeout(100);
 const visibleTerminal = page.locator('#az-command-results .az-command-result:visible').filter({ hasText:'Field Terminal' }).first();
