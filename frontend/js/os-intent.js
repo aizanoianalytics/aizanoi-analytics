@@ -6,6 +6,7 @@
 
   const normalize = (value) => String(value || '').trim().toLowerCase().replace(/\s+/g, ' ');
   const DISABLED_AI_COPY = /\b(?:open|ask)\s+aizanoi\s+ai\b|\baizanoi\s+ai\b/i;
+  let commandObserver = null;
 
   function exactShellTerms() {
     const terms = new Set([
@@ -114,6 +115,19 @@
     requestAnimationFrame(syncCommandResultIntent);
   }
 
+  function installCommandObserver() {
+    if (commandObserver) return;
+    const results = document.getElementById('az-command-results');
+    if (!results) {
+      requestAnimationFrame(installCommandObserver);
+      return;
+    }
+    commandObserver = new MutationObserver((mutations) => {
+      if (mutations.some((mutation) => mutation.addedNodes.length || mutation.removedNodes.length)) scheduleCommandResultSync();
+    });
+    commandObserver.observe(results, { childList:true, subtree:true });
+  }
+
   function executeVisibleSelection(event) {
     if (event.key !== 'Enter' || event.isComposing) return false;
     const input = event.target?.closest?.('#az-command-input');
@@ -121,7 +135,8 @@
     if (!input || !panel?.classList.contains('open')) return false;
 
     syncCommandResultIntent();
-    const selected = visibleCommandRows(panel).find((row) => row.classList.contains('selected')) || visibleCommandRows(panel)[0];
+    const visible = visibleCommandRows(panel);
+    const selected = visible.find((row) => row.classList.contains('selected')) || visible[0];
     if (!selected) {
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -173,6 +188,7 @@
 
   setTimeout(() => {
     consumeAskDeepLink();
+    installCommandObserver();
     syncCommandResultIntent();
   }, 0);
 
