@@ -36,6 +36,11 @@ async function openShell({ name, width, height, mobile = false, expected }) {
   assert.equal(await page.locator('#az-mobile-apps [data-app="chatbot"]').count(), 0, `${name}: disabled AI leaked into launcher`);
   assert.equal(await page.locator('#az-mobile-apps [data-app="terminal"]').count(), 1, `${name}: terminal missing from launcher`);
   assert.notEqual(await page.locator('#az-mobile-home').evaluate((node) => getComputedStyle(node).display), 'none', `${name}: unified home not visible`);
+  assert.equal(
+    await page.locator('#az-mobile-home').evaluate((node) => node.parentElement?.id || ''),
+    expected === 'mobile' ? 'az-shell-layer' : 'desktop',
+    `${name}: unified home is in the wrong stacking context`,
+  );
 
   const dock = await page.locator('#taskbar').boundingBox();
   assert.ok(dock, `${name}: dock missing`);
