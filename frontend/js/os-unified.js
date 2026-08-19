@@ -36,8 +36,6 @@
     if (!home || home.dataset.unifiedClick === '1') return;
     home.dataset.unifiedClick = '1';
     home.addEventListener('click', (event) => {
-      // While the home lives under #az-shell-layer the mature shell owns these
-      // events. This bridge only handles the desktop/tablet relocation.
       if (home.closest('#az-shell-layer')) return;
       const app = event.target.closest('[data-app]');
       if (app) { window.AIZANOI_OS?.launchApp?.(app.dataset.app); return; }
@@ -61,17 +59,28 @@
       return;
     }
 
-    // Desktop/tablet windows are children of #desktop with z=100+. Keep the
-    // shared home in that exact stacking context at z=0 so it can never cover
-    // title bars, resize handles or application content.
     if (home.parentElement !== desktop) desktop.insertBefore(home, desktop.firstChild);
     home.style.setProperty('z-index', '0', 'important');
+  }
+
+  function refineVisualDetails(mode) {
+    document.querySelectorAll('.az-mobile-world b,.az-mobile-world span').forEach((node) => {
+      node.style.display = 'block';
+    });
+
+    const search = $('#az-search-button');
+    if (search) {
+      search.querySelectorAll('span').forEach((node) => {
+        node.style.display = mode === 'tablet' ? 'none' : '';
+      });
+    }
   }
 
   function applyLayoutMode() {
     const mode = layoutMode();
     document.body.dataset.azLayout = mode;
     relocateHome(mode);
+    refineVisualDetails(mode);
   }
 
   function appMarkup(app) {
