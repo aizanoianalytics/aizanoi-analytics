@@ -15,9 +15,11 @@
     document.body.appendChild(script);
   }
 
-  // The unified shell bridge is a presentation/interaction layer only. It does
-  // not add network, backend or storage capabilities.
+  // Presentation/interaction bridges only. Neither adds network, backend or
+  // storage capabilities; the product-polish bridge owns final cross-app copy
+  // and visual consistency while the unified bridge owns responsive structure.
   appendScript('/js/os-unified.js', 'data-aizanoi-unified-bootstrap');
+  appendScript('/js/os-product-polish.js', 'data-aizanoi-product-polish-bootstrap');
 
   const loaderSrc = '/js/os-distribution-loader.js';
   const existing = document.querySelector(`script[data-aizanoi-platform-bootstrap="${loaderSrc}"]`);
