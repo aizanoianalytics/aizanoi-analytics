@@ -4,6 +4,7 @@ import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const LEGACY_PRE_SHELL_SVG_WARNING = '<g> attribute transform: Expected';
+const FEATURED_APP_COUNT = 11;
 mkdirSync('artifacts/diagnostics', { recursive:true });
 const browser = await chromium.launch({ headless:true });
 
@@ -27,7 +28,7 @@ async function settle(page) {
     return !boot || boot.classList.contains('hide') || getComputedStyle(boot).display === 'none';
   }, null, { timeout:9000 });
   await page.waitForFunction(() => Boolean(window.AIZANOI_UNIFIED_SHELL && window.AIZANOI_PRODUCT_POLISH), null, { timeout:9000 });
-  await page.waitForFunction(() => document.querySelectorAll('#az-mobile-apps .az-mobile-app').length === 8, null, { timeout:6000 });
+  await page.waitForFunction((count) => document.querySelectorAll('#az-mobile-apps .az-mobile-app').length === count, FEATURED_APP_COUNT, { timeout:6000 });
 }
 
 async function openApp(page, appId, { direct = false } = {}) {
@@ -67,7 +68,7 @@ async function runViewport({ name, width, height, expected, mobile = false }) {
   await settle(page);
 
   assert.equal(await page.evaluate(() => document.body.dataset.azLayout), expected, `${name}: responsive mode mismatch`);
-  assert.equal(await page.locator('#az-mobile-apps .az-mobile-app').count(), 8, `${name}: unified app count changed`);
+  assert.equal(await page.locator('#az-mobile-apps .az-mobile-app').count(), FEATURED_APP_COUNT, `${name}: unified app count changed`);
   assert.equal(await page.locator('[data-app="chatbot"]:visible').count(), 0, `${name}: disabled AI entrypoint visible`);
   assert.equal(await page.locator('[data-mobile-nav="ai"]').count(), 0, `${name}: disabled AI mobile action returned`);
   assert.match(await page.title(), /Interactive History|Historical Worlds|Games|Projects|Aizanoi TV|About|Documentation|Privacy|Terms|System Updates/);
@@ -76,6 +77,7 @@ async function runViewport({ name, width, height, expected, mobile = false }) {
   const polishLink = page.locator('link[data-aizanoi-product-polish]');
   assert.equal(await polishLink.count(), 1, `${name}: product stylesheet bootstrap missing`);
   assert.ok((await polishLink.getAttribute('href'))?.includes('os-product-polish.css'), `${name}: wrong product stylesheet`);
+  assert.equal(await page.locator('link[data-aizanoi-responsive-polish]').count(), 1, `${name}: responsive polish stylesheet missing`);
 
   const terminal = await openApp(page, 'terminal');
   assert.match(await terminal.locator('.win-title').innerText(), /Field Terminal/);
@@ -135,6 +137,7 @@ async function runViewport({ name, width, height, expected, mobile = false }) {
   } else {
     const archive = await openApp(page, 'archive');
     assert.ok(await archive.locator('.az-collection-list').isVisible(), 'mobile: archive collections missing');
+    assert.equal(await archive.locator('.az-archive-sidebar').evaluate((node)=>getComputedStyle(node).display), 'flex', 'mobile: archive sidebar did not become collection rail');
     await assertNoHorizontalEscape(page, '.win[data-app-id="archive"]', width, 'mobile archive');
     await closeApp(page, 'archive');
 
