@@ -15,7 +15,7 @@
   function mountPinnedTools(){
     const search=document.getElementById('az-search-button');if(!search||document.getElementById('az-pinned-tools'))return;
     const dock=document.createElement('div');dock.id='az-pinned-tools';dock.setAttribute('aria-label','Pinned workstation tools');
-    dock.innerHTML=[['archive','/assets/icons/field-archive.svg','Archive'],['notes','/assets/icons/notepad.svg','Notes'],['data-lab','/assets/icons/data-lab.svg','Data Lab'],['monitor','/assets/icons/workspace-monitor.svg','Monitor']].map(([id,icon,label])=>`<button type="button" data-pinned-app="${id}" title="${label}" aria-label="${label}"><img src="${icon}" alt=""><span>${label}</span></button>`).join('');search.after(dock);dock.onclick=(event)=>{const id=event.target.closest('[data-pinned-app]')?.dataset.pinnedApp;if(id)W.open(id);};
+    dock.innerHTML=[['archive','/assets/icons/field-archive.svg','Archive'],['notes','/assets/icons/notepad.svg','Notes'],['data-lab','/assets/icons/data-lab.svg','Data Lab'],['monitor','/assets/icons/workspace-monitor.svg','Monitor']].map(([id,icon,label])=>`<button type="button" data-pinned-app="${id}" title="${label}" aria-label="${label}"><img src="${icon}" alt=""></button>`).join('');search.after(dock);dock.onclick=(event)=>{const id=event.target.closest('[data-pinned-app]')?.dataset.pinnedApp;if(id)W.open(id);};
   }
 
   function featuredApps(){return S.apps.filter((app)=>app.featured!==false&&app.id!=='chatbot');}
