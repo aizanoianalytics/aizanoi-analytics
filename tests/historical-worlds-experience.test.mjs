@@ -22,7 +22,8 @@ test('all historical worlds receive the same restrained presentation layer', () 
 test('secondary city controls are moved behind one Explore drawer instead of duplicated', () => {
   for (const id of requiredAizanoiTools) assert.ok(experience.includes(`'${id}'`), `${id} is not routed into the Aizanoi tool drawer`);
   for (const id of requiredCityTools) assert.ok(experience.includes(`'${id}'`), `${id} is not routed into the Rome/Athens tool drawer`);
-  assert.match(experience, /\.deviceChip.*remove/);
+  assert.doesNotMatch(experience, /\.deviceChip.*remove/);
+  assert.match(style, /#hud \.deviceChip\{display:none!important\}/);
   assert.match(style, /#hud \.bottomBar\{display:none!important\}/);
   assert.match(style, /\.miniWrap:not\(\.aw-map-open\)/);
 });
