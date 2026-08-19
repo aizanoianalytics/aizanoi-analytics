@@ -1,0 +1,257 @@
+/* --- Boot is world-building, not a blocking loading screen ------------------- */
+@keyframes azd-boot-handoff {
+  0%,58% { opacity:1;visibility:visible; }
+  100% { opacity:0;visibility:hidden;pointer-events:none; }
+}
+body.aizanoi-next #boot:not(.hide) {
+  animation:azd-boot-handoff 1.15s cubic-bezier(.35,0,.2,1) .08s forwards!important;
+}
+body.aizanoi-next #boot.hide {
+  transition:opacity .22s ease!important;
+}
+
+/* --- System Panel refinements ------------------------------------------------ */
+body.aizanoi-next .az-settings-body {
+  background:
+    radial-gradient(circle at 90% 0,rgba(117,210,214,.045),transparent 34%),
+    #0b1117!important;
+}
+body.aizanoi-next .az-settings-group {
+  border-color:rgba(209,221,212,.085)!important;
+  background:rgba(255,255,255,.015)!important;
+  border-radius:14px!important;
+}
+body.aizanoi-next .az-theme-choice {
+  min-height:108px!important;
+  border-radius:12px!important;
+  background:rgba(255,255,255,.018)!important;
+}
+body.aizanoi-next .az-theme-choice.active {
+  border-color:rgba(117,210,214,.22)!important;
+  background:linear-gradient(145deg,rgba(117,210,214,.075),rgba(210,173,104,.025))!important;
+}
+
+/* --- Existing application interiors: modernize without breaking runtime ------ */
+body.aizanoi-next .chat-msg .bubble {
+  border-radius:14px!important;
+  border:1px solid rgba(48,58,54,.1)!important;
+  box-shadow:none!important;
+}
+body.aizanoi-next .chat-msg.bot .bubble { background:#f5f0e4!important;color:#25302c!important; }
+body.aizanoi-next .chat-msg.user .bubble { background:#1c3438!important;color:#e8f3ef!important;border-color:rgba(117,210,214,.2)!important; }
+body.aizanoi-next #chat-input {
+  border-radius:11px!important;
+  border-color:#b7b09f!important;
+  background:#fffdf7!important;
+}
+body.aizanoi-next #chat-send {
+  border:0!important;
+  border-radius:11px!important;
+  background:linear-gradient(180deg,#2c696d,#1d4e51)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.17)!important;
+}
+body.aizanoi-next .os-v2-chat-toolbar {
+  border-bottom:1px solid #d8d0be!important;
+  background:#e9e2d2!important;
+}
+
+/* --- Themes evolve palette without becoming separate skins ------------------- */
+body.aizanoi-next[data-aizanoi-theme="archive"] {
+  --azd-cyan:#8eb9b2;
+  --azd-cyan-hi:#c0d8ce;
+  --azd-brass:#d1a95d;
+  --azd-panel:rgba(26,22,16,.88);
+  --azd-panel-solid:#17130e;
+}
+body.aizanoi-next[data-aizanoi-theme="archive"] #desktop {
+  filter:sepia(.11) saturate(.92) brightness(.94)!important;
+}
+body.aizanoi-next[data-aizanoi-theme="night"] {
+  --azd-cyan:#6ec8d1;
+  --azd-cyan-hi:#9be9ed;
+  --azd-brass:#bfa56f;
+}
+body.aizanoi-next[data-aizanoi-theme="night"] #desktop { filter:brightness(.68) saturate(.78)!important; }
+
+/* --- Motion ------------------------------------------------------------------ */
+@keyframes azd-window-in {
+  from { opacity:0;transform:translateY(7px) scale(.992); }
+  to { opacity:1;transform:none; }
+}
+body.aizanoi-next .win { animation:azd-window-in .18s cubic-bezier(.2,.8,.2,1); }
+body.aizanoi-next.aizanoi-reduce-motion .win,
+body.aizanoi-next.aizanoi-reduce-motion * { animation-duration:.001ms!important;transition-duration:.001ms!important; }
+
+/* --- Mobile: handheld field console, not a shrunken desktop ------------------ */
+@media (max-width:700px) {
+  body.aizanoi-next { --az-bar-h:66px; }
+  body.aizanoi-next #desktop::after,
+  body.aizanoi-next #az-field-card,
+  body.aizanoi-next #az-pinned-tools,
+  body.aizanoi-next #az-search-button,
+  body.aizanoi-next #az-ai-button,
+  body.aizanoi-next #az-activity-button,
+  body.aizanoi-next #tray,
+  body.aizanoi-next #start-btn,
+  body.aizanoi-next #taskbar-items { display:none!important; }
+
+  body.aizanoi-next #taskbar {
+    left:12px!important;
+    right:12px!important;
+    bottom:max(10px,var(--az-safe-bottom))!important;
+    height:60px!important;
+    padding:5px!important;
+    border-radius:19px!important;
+  }
+  body.aizanoi-next #az-mobile-nav {
+    width:100%;
+    display:grid!important;
+    grid-template-columns:repeat(4,1fr);
+    gap:2px;
+  }
+  body.aizanoi-next .az-mobile-nav-btn {
+    min-height:48px!important;
+    border-radius:13px!important;
+    background:transparent!important;
+  }
+  body.aizanoi-next .az-mobile-nav-btn.active {
+    background:rgba(117,210,214,.075)!important;
+    color:var(--azd-cyan-hi)!important;
+  }
+
+  body.aizanoi-next #az-mobile-home {
+    padding:calc(18px + var(--az-safe-top)) 16px 92px!important;
+    background:
+      radial-gradient(circle at 82% 0,rgba(117,210,214,.09),transparent 32%),
+      linear-gradient(180deg,rgba(6,10,15,.16),rgba(6,10,15,.62)),
+      url('/assets/wallpapers/aizanoi-synthesis.svg') 62% center/cover no-repeat!important;
+  }
+  body.aizanoi-next .az-mobile-header {
+    min-height:76px!important;
+    margin-bottom:18px!important;
+    padding:10px!important;
+    border:1px solid rgba(209,221,212,.1)!important;
+    border-radius:16px!important;
+    background:rgba(8,14,20,.54)!important;
+    backdrop-filter:blur(14px);
+  }
+  body.aizanoi-next .az-mobile-header img { width:35px!important;height:35px!important; }
+  body.aizanoi-next .az-mobile-header h1 { font-size:18px!important; }
+  body.aizanoi-next .az-mobile-header p { font:600 6px/1.4 var(--azd-mono)!important;letter-spacing:.08em!important; }
+  body.aizanoi-next .az-mobile-app-grid {
+    grid-template-columns:repeat(4,1fr)!important;
+    gap:8px!important;
+  }
+  body.aizanoi-next .az-mobile-app {
+    min-height:82px!important;
+    padding:10px 4px!important;
+    border-radius:14px!important;
+    border:1px solid rgba(209,221,212,.085)!important;
+    background:rgba(9,15,20,.48)!important;
+    backdrop-filter:blur(9px);
+  }
+  body.aizanoi-next .az-mobile-app img { width:33px!important;height:33px!important; }
+  body.aizanoi-next .az-mobile-app span { margin-top:7px;font-size:8px!important; }
+
+  body.aizanoi-next .win.az-workbench-window {
+    inset:max(6px,var(--az-safe-top)) 6px calc(76px + var(--az-safe-bottom)) 6px!important;
+    width:auto!important;
+    height:auto!important;
+    max-width:none!important;
+    max-height:none!important;
+    border-radius:17px!important;
+  }
+  .az-workbench-badge { display:none; }
+  .az-workbench-toolbar {
+    min-height:58px;
+    padding:8px 10px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .az-workbench-toolbar::-webkit-scrollbar { display:none; }
+  .az-workbench-toolbar h2 { max-width:42vw;font-size:12px; }
+  .az-tool-btn { flex:0 0 auto; }
+  .az-search-field { min-width:140px;flex:0 0 150px; }
+
+  .az-archive-shell { grid-template-columns:1fr; }
+  .az-archive-sidebar { display:none; }
+  .az-archive-items.grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .az-archive-item { min-height:112px; }
+  .az-workbench-status { overflow:auto;white-space:nowrap; }
+
+  .az-metric-strip { grid-template-columns:repeat(2,1fr); }
+  .az-metric-strip article { min-height:80px;padding:11px; }
+  .az-metric-strip b { font-size:18px; }
+  .az-data-controls { align-items:flex-start;flex-direction:column; }
+
+  .az-notes-shell { grid-template-columns:1fr; }
+  .az-notes-list {
+    max-height:112px;
+    border-right:0;
+    border-bottom:1px solid var(--azd-line);
+  }
+  .az-notes-list header { height:42px; }
+  .az-notes-list > div { display:flex;gap:4px;overflow-x:auto;padding:5px; }
+  .az-notes-list [data-note-id] { min-width:145px;min-height:54px;margin:0; }
+  .az-note-title { width:42vw;font-size:12px; }
+  .az-note-area { padding:20px 18px;font-size:12px;line-height:26px; }
+
+  .az-reader-canvas { padding:8px; }
+  .az-source-document { padding:24px 19px;font-size:11px;border-radius:8px; }
+  .az-source-pdf { min-height:100%; }
+
+  .az-monitor-grid { grid-template-columns:repeat(2,1fr); }
+  .az-monitor-hero { min-height:96px;padding:12px; }
+  .az-monitor-orb { width:54px;height:54px; }
+
+  #az-quicklook { padding:8px; }
+  .az-quicklook-frame { width:100%;height:calc(100dvh - 18px);border-radius:17px; }
+
+  body.aizanoi-next #az-index .az-panel {
+    width:calc(100vw - 16px)!important;
+    height:calc(100dvh - 92px)!important;
+    max-height:none!important;
+  }
+  body.aizanoi-next .az-index-body {
+    display:block!important;
+    min-height:0;
+    overflow:auto;
+  }
+  body.aizanoi-next .az-index-section { border-right:0!important;border-bottom:1px solid var(--azd-line)!important; }
+  body.aizanoi-next .az-world-grid { grid-template-columns:1fr!important; }
+  body.aizanoi-next .az-world-card { min-height:120px!important; }
+}
+
+@media (max-width:430px) {
+  body.aizanoi-next .az-mobile-app-grid { grid-template-columns:repeat(3,1fr)!important; }
+  .az-archive-items.grid { grid-template-columns:1fr 1fr;gap:6px; }
+  .az-archive-item { padding:10px; }
+  .az-monitor-grid { grid-template-columns:1fr 1fr;gap:5px; }
+  .az-monitor-grid article { min-height:88px;padding:10px; }
+}
+
+/* Installable app / standalone mode can use every pixel of the field console. */
+@media (display-mode:standalone) {
+  body.aizanoi-next #desktop { min-height:100dvh; }
+  body.aizanoi-next::before { opacity:.85; }
+}
+
+/* Respect both explicit Field System preference and the operating-system setting. */
+body.aizanoi-reduce-motion *,
+body.aizanoi-reduce-motion *::before,
+body.aizanoi-reduce-motion *::after {
+  animation-duration:.001ms!important;
+  animation-iteration-count:1!important;
+  transition-duration:.001ms!important;
+  scroll-behavior:auto!important;
+}
+@media (prefers-reduced-motion: reduce) {
+  body.aizanoi-next *,
+  body.aizanoi-next *::before,
+  body.aizanoi-next *::after {
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+    scroll-behavior:auto!important;
+  }
+}

@@ -23,11 +23,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
-
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-
       - name: JavaScript syntax checks
         run: |
           node --check backend/server.js
@@ -43,6 +41,14 @@ jobs:
           node --check frontend/js/os-intent.js
           node --check frontend/js/os-legacy-sanitizer.js
           node --check frontend/js/os-v2.js
+          node --check frontend/js/os-platform.js
+          node --check frontend/js/os-archive.js
+          node --check frontend/js/os-workbench.js
+          node --check frontend/js/os-workbench-archive.js
+          node --check frontend/js/os-workbench-readers.js
+          node --check frontend/js/os-workbench-data.js
+          node --check frontend/js/os-workbench-shell.js
+          node --check frontend/service-worker.js
           node --check frontend/historic-world/app.js
           node --check frontend/ancient-world/engine/traversal.js
           node --check frontend/ancient-world/engine/lifecycle.js
@@ -67,10 +73,8 @@ jobs:
           node --check frontend/ancient-cities/athens-450-430/js/methodology.js
           node --check frontend/ancient-cities/athens-450-430/js/app.js
           node --check frontend/ancient-cities/_template/data/city.example.js
-
       - name: Regression tests
         run: node --test tests/*.test.mjs
-
       - name: Reject whitespace errors
         run: git diff --check HEAD^ HEAD
 
@@ -79,17 +83,14 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-
       - name: Install Chromium smoke dependency
         run: |
           npm init -y >/dev/null 2>&1
           npm install --no-save playwright@1.55.0
           npx playwright install chromium
-
       - name: Start static frontend server
         run: |
           python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-http.log 2>&1 &
@@ -100,28 +101,30 @@ jobs:
           done
           cat /tmp/aizanoi-http.log
           exit 1
-
       - name: Ancient World and Aizanoi OS desktop/mobile smoke
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
         run: |
+          set -o pipefail
           mkdir -p artifacts/diagnostics
           status=0
-          for script in ancient-city-browser-smoke.mjs os-browser-smoke.mjs os-world-ai-browser-smoke.mjs; do
+          for script in ancient-city-browser-smoke.mjs os-browser-smoke.mjs os-world-ai-browser-smoke.mjs os-workstation-browser-smoke.mjs; do
             echo "=== $script ===" | tee "artifacts/diagnostics/$script.log"
             node "tests/$script" 2>&1 | tee -a "artifacts/diagnostics/$script.log" || status=1
           done
           cp /tmp/aizanoi-http.log artifacts/diagnostics/browser-static-server.log || true
           exit $status
-
       - name: Capture final product visuals
         if: success()
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
         run: |
+          set -o pipefail
           mkdir -p artifacts/diagnostics
-          node tests/final-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/final-visual-capture.log
-
+          status=0
+          node tests/final-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/final-visual-capture.log || status=1
+          node tests/os-distribution-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/os-distribution-visual-capture.log || status=1
+          exit $status
       - name: Upload visual regression review
         if: success()
         uses: actions/upload-artifact@v4
@@ -129,7 +132,6 @@ jobs:
           name: aizanoi-final-visual-review
           path: artifacts/final-visual-review/*.png
           retention-days: 3
-
       - name: Upload browser diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -143,14 +145,11 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-
       - name: Install Lighthouse
         run: npm install --no-save lighthouse@13.4.1
-
       - name: Start static frontend server
         run: |
           python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-lighthouse-http.log 2>&1 &
@@ -160,7 +159,6 @@ jobs:
           done
           cat /tmp/aizanoi-lighthouse-http.log
           exit 1
-
       - name: Enforce Lighthouse budgets
         run: |
           mkdir -p artifacts/diagnostics
@@ -181,9 +179,11 @@ jobs:
             fi
             sleep 2
           done
+          if [ -s /tmp/aizanoi-lighthouse.json ]; then
+            cp /tmp/aizanoi-lighthouse.json artifacts/diagnostics/lighthouse-report.json
+          fi
           if [ "$lighthouse_status" -eq 0 ] && [ -s /tmp/aizanoi-lighthouse.json ]; then
-            node tests/lighthouse-budget.mjs /tmp/aizanoi-lighthouse.json \
-              >artifacts/diagnostics/lighthouse-budget.log 2>&1
+            node tests/lighthouse-budget.mjs /tmp/aizanoi-lighthouse.json >artifacts/diagnostics/lighthouse-budget.log 2>&1
             budget_status=$?
           else
             budget_status=$lighthouse_status
@@ -191,7 +191,6 @@ jobs:
           cp /tmp/aizanoi-lighthouse-http.log artifacts/diagnostics/lighthouse-static-server.log || true
           set -e
           exit "$budget_status"
-
       - name: Upload Lighthouse diagnostics
         if: always()
         uses: actions/upload-artifact@v4
