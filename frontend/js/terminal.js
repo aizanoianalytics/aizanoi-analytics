@@ -137,6 +137,14 @@ async function wireTerminalIfNeeded() {
   const statusRight = statusbar?.lastElementChild;
   if (statusRight) statusRight.textContent = 'LOCAL VIRTUAL SHELL · /aizanoi';
 
+  const taskItem = document.getElementById('task-terminal');
+  const taskLabel = taskItem?.querySelector('span:last-child');
+  if (taskLabel) taskLabel.textContent = 'Field Terminal';
+  if (taskItem) {
+    taskItem.setAttribute('aria-label', 'Field Terminal');
+    taskItem.title = 'Field Terminal';
+  }
+
   termOut('<span style="color:#d8c79f;">AIZANOI FIELD TERMINAL / LOCAL VIRTUAL SHELL</span>');
   termOut('<span style="color:#8f9991;">Runtime: browser-only · static · no server command execution</span>');
   termOut('<span style="color:#8f9991;">Workspace: /aizanoi · identity: aizanoi-guest</span>');
