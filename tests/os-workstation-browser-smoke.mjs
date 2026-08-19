@@ -16,7 +16,6 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
     if (LEGACY_PRE_SHELL_SVG_WARNING.test(text)) return;
     errors.push(text);
   });
-  await page.route('**/api/health', (route) => route.fulfill({ status:200, contentType:'application/json', body:JSON.stringify({ status:'ok', aiEnabled:false }) }));
   await page.goto(`${base}/`, { waitUntil:'networkidle' });
   await page.waitForFunction(() => !document.getElementById('boot') || document.getElementById('boot').classList.contains('hide'), null, { timeout:6000 });
   await page.waitForFunction(() => Boolean(window.AIZANOI_OS && window.AIZANOI_DISTRIBUTION), null, { timeout:8000 });
@@ -114,7 +113,7 @@ async function openWorkspace(viewport={width:1440,height:900}, mobile=false) {
   await monitor.waitFor();
   await monitor.locator('.az-monitor-shell').waitFor();
   assert.match(await monitor.innerText(), /Workspace Monitor/);
-  assert.match(await monitor.innerText(), /(AI API|BACKEND)\s*Online/i);
+  assert.match(await monitor.innerText(), /RUNTIME\s*STATIC/i);
 
   await page.locator('#start-btn').click();
   await page.waitForSelector('#az-index.open');

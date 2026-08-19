@@ -23,19 +23,17 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 2
-      # setup-node v4 line, pinned to an immutable upstream commit.
+      # setup-node pinned to an immutable upstream commit.
       - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b
         with:
           node-version: '22'
-      - name: Install backend dependencies without lifecycle scripts
-        working-directory: backend
-        run: npm ci --ignore-scripts
-      - name: Fail on high or critical production dependency vulnerabilities
-        working-directory: backend
-        run: npm audit --omit=dev --audit-level=high
-      - name: Backend syntax check
-        run: node --check backend/server.js
+      - name: Security-sensitive JavaScript syntax checks
+        run: |
+          node --check frontend/js/chat.js
+          node --check frontend/js/terminal.js
+          node --check frontend/js/os-workbench-shell.js
+          node --check frontend/js/os-platform-runtime.js
       - name: Security regression tests
-        run: node --test tests/backend-config.test.mjs tests/security-hardening.test.mjs
+        run: node --test tests/static-runtime.test.mjs tests/security-hardening.test.mjs
       - name: Reject whitespace errors
         run: git diff --check HEAD^ HEAD
