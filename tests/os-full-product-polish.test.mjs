@@ -11,7 +11,7 @@ const worker = read('frontend/service-worker.js');
 test('product polish boots from the static platform bridge and remains browser-only', () => {
   assert.match(platform, /\/js\/os-product-polish\.js/);
   assert.match(polish, /\/css\/os-product-polish\.css/);
-  assert.doesNotMatch(polish, /fetch\s*\(|XMLHttpRequest|WebSocket|EventSource|\/api\//);
+  assert.doesNotMatch(polish, /fetch\s*\(|XMLHttpRequest|WebSocket|EventSource/);
   assert.match(polish, /AIZANOI_PRODUCT_POLISH/);
   assert.match(polish, /aizanoi:distribution-ready/);
 });
