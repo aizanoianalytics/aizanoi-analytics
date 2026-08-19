@@ -54,7 +54,7 @@ test('stale AI and old desktop fallback copy are neutralized at runtime', () => 
 });
 
 test('service worker rolls cache and precaches the polish bootstrap', () => {
-  assert.match(worker, /aizanoi-field-shell-v2\.1\.2/);
+  assert.match(worker, /aizanoi-field-shell-v2\.1\.3/);
   assert.match(worker, /\/js\/os-product-polish\.js/);
   assert.match(worker, /\/css\/os-product-polish\.css/);
   assert.match(worker, /\/js\/os-platform\.js/);
