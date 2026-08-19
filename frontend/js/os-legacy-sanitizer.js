@@ -59,6 +59,7 @@
       nodes.forEach((node) => {
         node.hidden = true;
         node.setAttribute?.('aria-hidden','true');
+        node.style?.setProperty('display','none','important');
         if ('disabled' in node) node.disabled = true;
       });
     }
