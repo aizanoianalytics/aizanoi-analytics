@@ -144,7 +144,7 @@ jobs:
 
   lighthouse:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
@@ -168,34 +168,38 @@ jobs:
         run: |
           mkdir -p artifacts/diagnostics
           set +e
-          lighthouse_status=1
+          passes=0
+          valid=0
           for attempt in 1 2 3; do
-            rm -f /tmp/aizanoi-lighthouse.json
+            report="/tmp/aizanoi-lighthouse-$attempt.json"
+            rm -f "$report"
             echo "Lighthouse attempt $attempt" > "artifacts/diagnostics/lighthouse-cli-attempt-$attempt.log"
             npx lighthouse http://127.0.0.1:4173/ \
               --quiet \
               --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
               --output=json \
-              --output-path=/tmp/aizanoi-lighthouse.json \
+              --output-path="$report" \
               >>"artifacts/diagnostics/lighthouse-cli-attempt-$attempt.log" 2>&1
             lighthouse_status=$?
-            if [ "$lighthouse_status" -eq 0 ] && [ -s /tmp/aizanoi-lighthouse.json ]; then
+            if [ "$lighthouse_status" -eq 0 ] && [ -s "$report" ]; then
+              valid=$((valid + 1))
+              cp "$report" "artifacts/diagnostics/lighthouse-report-$attempt.json"
+              node tests/lighthouse-budget.mjs "$report" >"artifacts/diagnostics/lighthouse-budget-$attempt.log" 2>&1
+              if [ "$?" -eq 0 ]; then
+                passes=$((passes + 1))
+              fi
+            fi
+            if [ "$passes" -ge 2 ]; then
               break
             fi
-            sleep 2
+            sleep 1
           done
-          if [ -s /tmp/aizanoi-lighthouse.json ]; then
-            cp /tmp/aizanoi-lighthouse.json artifacts/diagnostics/lighthouse-report.json
-          fi
-          if [ "$lighthouse_status" -eq 0 ] && [ -s /tmp/aizanoi-lighthouse.json ]; then
-            node tests/lighthouse-budget.mjs /tmp/aizanoi-lighthouse.json >artifacts/diagnostics/lighthouse-budget.log 2>&1
-            budget_status=$?
-          else
-            budget_status=$lighthouse_status
-          fi
+          echo "Valid Lighthouse reports: $valid; budget passes: $passes" | tee artifacts/diagnostics/lighthouse-summary.log
           cp /tmp/aizanoi-lighthouse-http.log artifacts/diagnostics/lighthouse-static-server.log || true
           set -e
-          exit "$budget_status"
+          if [ "$passes" -lt 2 ]; then
+            exit 1
+          fi
       - name: Upload Lighthouse diagnostics
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
