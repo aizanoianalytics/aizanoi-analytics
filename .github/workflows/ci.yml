@@ -111,7 +111,7 @@ jobs:
           set -o pipefail
           mkdir -p artifacts/diagnostics
           status=0
-          for script in ancient-city-browser-smoke.mjs os-browser-smoke.mjs os-world-ai-browser-smoke.mjs os-workstation-browser-smoke.mjs terminal-browser-smoke.mjs os-unified-shell-browser-smoke.mjs os-product-polish-browser-smoke.mjs; do
+          for script in ancient-city-browser-smoke.mjs os-browser-smoke.mjs os-world-ai-browser-smoke.mjs os-workstation-browser-smoke.mjs terminal-browser-smoke.mjs os-unified-shell-browser-smoke.mjs os-product-polish-browser-smoke.mjs os-command-ai-disabled-browser-smoke.mjs; do
             echo "=== $script ===" | tee "artifacts/diagnostics/$script.log"
             node "tests/$script" 2>&1 | tee -a "artifacts/diagnostics/$script.log" || status=1
           done
