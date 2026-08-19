@@ -145,3 +145,7 @@ for (const city of cities) {
 
 await browser.close();
 console.log('Ancient city desktop/mobile/deep-link browser smoke passed');
+
+// Run the shared presentation contract in the same browser-smoke CI job so the
+// desktop/tablet/mobile HUD cannot regress independently from traversal.
+await import('./historical-worlds-ui-browser-smoke.mjs');
