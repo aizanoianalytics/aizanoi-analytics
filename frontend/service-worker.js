@@ -8,8 +8,10 @@ const PRECACHE = [
   '/manifest.webmanifest',
   '/assets/branding/aizanoi-logo-mark.svg',
   '/js/os-platform.js',
+  '/js/os-unified.js',
   '/js/os-product-polish.js',
-  '/css/os-product-polish.css'
+  '/css/os-product-polish.css',
+  '/css/os-product-polish-responsive.css'
 ];
 
 self.addEventListener('install', (event) => {
