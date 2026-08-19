@@ -22,10 +22,6 @@
   const compact=matchMedia('(pointer:coarse)').matches||innerWidth<=820;
   const movementKeys=new Set(['KeyW','KeyA','KeyS','KeyD','ShiftLeft','ShiftRight','ArrowLeft','ArrowRight','ArrowUp','ArrowDown']);
 
-  // The shared presentation layer owns only the temporary menu state, but it
-  // must prevent the underlying city from continuing to walk while that menu is
-  // being used. Capture-phase blocking works with both the mature Aizanoi input
-  // handler and the shared Rome/Athens traversal layer without coupling to either.
   document.addEventListener('keydown',(event)=>{
     if(!body.classList.contains('aw-tools-open')||!movementKeys.has(event.code))return;
     event.preventDefault();
@@ -93,7 +89,8 @@
     const hud=$('#hud');
     const top=$('.topbar',hud||document);
     body.dataset.city='aizanoi';
-    $('.deviceChip',hud||document)?.remove();
+    // Keep runtime-owned nodes in the DOM even when presentation CSS hides them.
+    // Aizanoi's mature renderer updates #modeLabel after entering the world.
     const bottom=$('.bottomBar',hud||document);
     const ids=['resumeBtn','settingsBtn','fullscreenBtn','tourBtn','atlasBtn','sourcesBtn','soundBtn','timeWrap'];
     const result=installDrawer(top,ids,$('#mapBox'));
