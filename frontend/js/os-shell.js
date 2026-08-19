@@ -695,13 +695,13 @@
         const id = icon.dataset.app;
         icon.hidden = LEGACY_DESKTOP_APPS.has(id);
         if (id === 'ancient') {
-          const label = $('.icon-label',icon); if (label) label.textContent = 'Historical Worlds';
+          const label = $('.icon-label',icon); if (label && label.textContent !== 'Historical Worlds') label.textContent = 'Historical Worlds';
         }
         if (id === 'terminal') {
-          const label = $('.icon-label',icon); if (label) label.textContent = 'Field Terminal';
+          const label = $('.icon-label',icon); if (label && label.textContent !== 'Field Terminal') label.textContent = 'Field Terminal';
         }
         if (id === 'notes') {
-          const label = $('.icon-label',icon); if (label) label.textContent = 'Field Notes';
+          const label = $('.icon-label',icon); if (label && label.textContent !== 'Field Notes') label.textContent = 'Field Notes';
         }
       });
     };

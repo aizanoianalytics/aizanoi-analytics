@@ -1,0 +1,17 @@
+{
+  "name": "Aizanoi Field System",
+  "short_name": "Aizanoi",
+  "description": "A digital archaeology, analytics and AI workstation in the browser.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#070b10",
+  "theme_color": "#0b1017",
+  "orientation": "any",
+  "categories": ["education","productivity","utilities"],
+  "icons": [{"src":"/assets/branding/aizanoi-logo-mark.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}],
+  "shortcuts": [
+    {"name":"Aizanoi AI","short_name":"AI","url":"/hr-analytics/","icons":[{"src":"/assets/icons/aizanoi-ai.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Historical Worlds","short_name":"Worlds","url":"/ancient-world/","icons":[{"src":"/assets/icons/ancient-world.svg","sizes":"any","type":"image/svg+xml"}]}
+  ]
+}
