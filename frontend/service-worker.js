@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'aizanoi-field-shell-v2.1.2';
+const CACHE = 'aizanoi-field-shell-v2.1.3';
 /* Keep install cheap while guaranteeing that the final presentation bootstrap
  * lands atomically across previously cached desktop/tablet/mobile sessions. */
 const PRECACHE = [
