@@ -19,6 +19,7 @@
   if(!body)return;
   const city=body.dataset.city||($('#hud')?'aizanoi':'');
   if(!city)return;
+  const compact=matchMedia('(pointer:coarse)').matches||innerWidth<=820;
   const movementKeys=new Set(['KeyW','KeyA','KeyS','KeyD','ShiftLeft','ShiftRight','ArrowLeft','ArrowRight','ArrowUp','ArrowDown']);
 
   // The shared presentation layer owns only the temporary menu state, but it
@@ -51,7 +52,7 @@
     panel.id='aw-tools-panel';panel.className='aw-tools-panel';panel.hidden=true;
     panel.setAttribute('role','group');panel.setAttribute('aria-label','Historical world tools');
 
-    if(mapTarget){
+    if(mapTarget&&!compact){
       const mapToggle=button('aw-mini-toggle','Map');
       mapToggle.setAttribute('aria-pressed','false');
       mapToggle.addEventListener('click',()=>{
