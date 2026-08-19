@@ -15,6 +15,7 @@
       'field','field theme','theme field','mute','sound off','sound on','unmute',
     ]);
     for (const app of State.apps || []) {
+      if (app.id === 'chatbot') continue;
       terms.add(normalize(app.id));
       terms.add(normalize(app.label));
       terms.add(normalize(app.short));
@@ -48,29 +49,22 @@
     return false;
   }
 
-  function shouldAskAI(value) {
-    const query = normalize(value);
-    return Boolean(query && !isExplicitShellCommand(query));
+  function shouldAskAI() {
+    return false;
   }
 
   function syncCommandResultIntent() {
-    const input = document.getElementById('az-command-input');
     const panel = document.getElementById('az-command');
-    if (!input || !panel?.classList.contains('open')) return;
-    const explicit = isExplicitShellCommand(input.value);
+    if (!panel?.classList.contains('open')) return;
     const rows = [...panel.querySelectorAll('.az-command-result')];
-    let visibleSelected = false;
     for (const row of rows) {
       const isAI = row.querySelector('.az-result-kind')?.textContent?.trim().toUpperCase() === 'AI';
-      row.hidden = Boolean(explicit && isAI);
-      if (row.hidden) {
-        row.classList.remove('selected');
-        row.setAttribute('aria-selected','false');
-      } else if (row.classList.contains('selected')) {
-        visibleSelected = true;
-      }
+      if (!isAI) continue;
+      row.hidden = true;
+      row.classList.remove('selected');
+      row.setAttribute('aria-selected','false');
     }
-    if (explicit && !visibleSelected) {
+    if (!rows.some((row) => !row.hidden && row.classList.contains('selected'))) {
       const first = rows.find((row) => !row.hidden);
       first?.classList.add('selected');
       first?.setAttribute('aria-selected','true');
@@ -82,71 +76,36 @@
     requestAnimationFrame(syncCommandResultIntent);
   }
 
-  function readWorldAIContext() {
-    try {
-      const raw = sessionStorage.getItem('aizanoi-world-ai-context');
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      if (!parsed || Date.now() - Number(parsed.timestamp || 0) > 120000) return null;
-      return parsed;
-    } catch (_) {
-      return null;
-    }
-  }
-
   function clearWorldAIContext() {
     try { sessionStorage.removeItem('aizanoi-world-ai-context'); } catch (_) {}
   }
 
-  function submitContextualAI(query, historicalContext = null) {
-    const shell = window.AIZANOI_OS;
-    if (!shell?.launchApp || !query) return false;
-    shell.launchApp('chatbot', { source:'historical-world' });
-    const hiddenContext = historicalContext
-      ? `Current Historical World context: ${historicalContext.worldLabel}${historicalContext.place ? ` · ${historicalContext.place}` : ''}. The visitor just returned from that interactive 3D view.`
-      : '';
-    let tries = 0;
-    const timer = setInterval(() => {
-      tries += 1;
-      if (window.__AIZANOI_CHAT__?.ask) {
-        clearInterval(timer);
-        window.__AIZANOI_CHAT__.ask(query, hiddenContext);
-      } else if (tries > 30) {
-        clearInterval(timer);
-      }
-    }, 60);
-    State.recordActivity('Asked Aizanoi AI from Historical World', historicalContext?.place || historicalContext?.worldLabel || query.slice(0, 100), 'ai');
-    return true;
+  function submitContextualAI() {
+    clearWorldAIContext();
+    return false;
   }
 
   function consumeAskDeepLink() {
     if (location.pathname !== '/' && location.pathname !== '/index.html') return false;
     const url = new URL(location.href);
-    const query = url.searchParams.get('ask')?.trim();
-    if (!query) return false;
-    const historicalContext = readWorldAIContext();
+    if (!url.searchParams.has('ask')) return false;
     url.searchParams.delete('ask');
     history.replaceState(history.state, '', `${url.pathname}${url.search}${url.hash}`);
     clearWorldAIContext();
-    return submitContextualAI(query, historicalContext);
+    return false;
   }
 
   document.addEventListener('input', (event) => {
     if (event.target?.id === 'az-command-input') scheduleCommandResultSync();
   });
   document.addEventListener('keydown', (event) => {
-    const input = event.target?.closest?.('#az-command-input');
-    if (input) scheduleCommandResultSync();
-    if (event.key !== 'Enter' || event.shiftKey || event.ctrlKey || event.metaKey || event.altKey || event.isComposing) return;
-    if (!input || !document.getElementById('az-command')?.classList.contains('open')) return;
-    const query = input.value.trim();
-    if (!shouldAskAI(query)) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.AIZANOI_OS?.askAi?.(query);
+    if (event.target?.closest?.('#az-command-input')) scheduleCommandResultSync();
   }, true);
 
-  setTimeout(consumeAskDeepLink, 0);
+  setTimeout(() => {
+    consumeAskDeepLink();
+    syncCommandResultIntent();
+  }, 0);
 
   window.AIZANOI_OS_INTENT = Object.freeze({
     isExplicitShellCommand,

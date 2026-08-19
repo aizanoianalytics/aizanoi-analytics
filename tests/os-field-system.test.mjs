@@ -42,8 +42,6 @@ test('Field System registry contains the real product suite and keeps removed Ma
   }
   for (const world of ['Aizanoi','Rome','Athens']) assert.match(stateSource, new RegExp(`label:'${world}'`));
 
-  // Historical language such as “market” is valid for the Macellum. What stays
-  // removed is the former Markets product/route itself.
   for (const source of [stateSource, shellSource]) {
     assert.doesNotMatch(source, /\bid\s*:\s*['"]markets?['"]/i);
     assert.doesNotMatch(source, /\b(appId|worldId)\s*:\s*['"]markets?['"]/i);
@@ -68,35 +66,35 @@ test('Field System owns original shell identity instead of exposing XP shell as 
   assert.match(sanitizerSource, /dataset\.aizanoiApp/);
 });
 
-test('command surface provides Index, universal search, real settings, AI and mobile navigation', () => {
+test('command surface provides Index, universal search, settings and mobile navigation while AI entrypoints are suppressed', () => {
   assert.match(shellSource, /Aizanoi Index/);
   assert.match(shellSource, /Search apps, worlds, monuments/);
   assert.match(shellSource, /System Panel/);
   assert.match(shellSource, /data-mobile-nav="home"/);
   assert.match(shellSource, /data-mobile-nav="search"/);
-  assert.match(shellSource, /data-mobile-nav="ai"/);
   assert.match(shellSource, /data-mobile-nav="recent"/);
   assert.match(shellSource, /event\.ctrlKey \|\| event\.metaKey/);
   assert.match(shellSource, /event\.key\.toLowerCase\(\) === 'k'/);
   assert.match(shellSource, /launchWorld\(world\.id, landmark\)/);
   assert.match(shellSource, /window\.AIZANOI_OS = Object\.freeze/);
+  assert.match(sanitizerSource, /AIZANOI_AI_DISABLED = true/);
+  assert.match(sanitizerSource, /\[data-app="chatbot"\]/);
+  assert.match(sanitizerSource, /\[data-mobile-nav="ai"\]/);
 });
 
-test('Aizanoi AI exposes a contextual programmatic ask surface without displaying hidden context in the user bubble', () => {
-  assert.match(chatSource, /ask\(text, context = ''\)/);
-  assert.match(chatSource, /User request:\s*\$\{visibleText\}/);
-  assert.match(chatSource, /addMessage\('user', visibleText\)/);
-  assert.match(chatSource, /body:\s*JSON\.stringify\(\{ history:\s*chatHistory \}\)/);
-  assert.match(intentSource, /shouldAskAI/);
-  assert.match(intentSource, /Current Historical World context:/);
+test('Aizanoi AI compatibility surface is fail-closed and has no browser request path', () => {
+  assert.match(chatSource, /AI is disabled for security/);
+  assert.match(chatSource, /ask\(\) \{/);
+  assert.match(chatSource, /return false/);
+  assert.match(chatSource, /getContextSafeHistory\(\)/);
+  assert.doesNotMatch(chatSource, /fetch\s*\(/);
+  assert.doesNotMatch(chatSource, /CHAT_API_URL|JSON\.stringify\(\{ history/);
+  assert.match(intentSource, /function shouldAskAI\(\)/);
+  assert.match(intentSource, /return false/);
 });
 
-test('shared historical navigation accepts deep links and provides a two-way AI context bridge for all worlds', () => {
+test('shared historical navigation keeps jump deep links but removes the AI context bridge', () => {
   assert.match(navigationSource, /consumeHistoricalWorldDeepLink/);
-  assert.match(navigationSource, /installAskAizanoiAI/);
-  assert.match(navigationSource, /Ask AI about this/);
-  assert.match(navigationSource, /aizanoi-world-ai-context/);
-  assert.match(navigationSource, /\?ask=/);
   assert.match(navigationSource, /worldId:'aizanoi'/);
   assert.match(navigationSource, /enterSelector:'#enterBtn'/);
   assert.match(navigationSource, /jumpSelector:'#teleport'/);
@@ -104,8 +102,10 @@ test('shared historical navigation accepts deep links and provides a two-way AI 
   assert.match(navigationSource, /worldId:'athens'/);
   assert.match(navigationSource, /url\.searchParams\.get\('jump'\)/);
   assert.match(navigationSource, /dispatchEvent\(new Event\('change'/);
-  assert.match(intentSource, /url\.searchParams\.get\('ask'\)/);
-  assert.match(intentSource, /submitContextualAI/);
+  assert.doesNotMatch(navigationSource, /installAskAizanoiAI|Ask AI about this|aizanoi-world-ai-context|\?ask=/);
+  assert.match(intentSource, /url\.searchParams\.has\('ask'\)/);
+  assert.match(intentSource, /url\.searchParams\.delete\('ask'\)/);
+  assert.match(intentSource, /function submitContextualAI\(\)/);
 });
 
 test('workspace session/context updates are idempotent and cannot self-trigger an endless state render loop', () => {

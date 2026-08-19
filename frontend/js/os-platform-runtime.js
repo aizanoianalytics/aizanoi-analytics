@@ -11,8 +11,12 @@
   let swRegistration = null;
   let swScheduled = false;
 
-  const VERSION = '2.1.0-field';
-  const BUILD = '2026.08.19';
+  const VERSION = '2.1.1-field-security';
+  const BUILD = '2026.08.19-security';
+
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+  }[char]));
 
   function emit(type, detail = {}) {
     bus.dispatchEvent(new CustomEvent(type, { detail }));
@@ -88,11 +92,21 @@
   }
 
   function notify(title, body = '', kind = 'system') {
-    State.recordActivity(title, body, kind);
+    const safeTitle = String(title ?? 'Notice').slice(0, 240);
+    const safeBody = String(body ?? '').slice(0, 4000);
+    State.recordActivity(safeTitle, safeBody, kind);
     if (typeof window.showBalloon === 'function') {
-      try { window.showBalloon({ title, body, icon:kind === 'warning' ? 'warning' : 'info' }); } catch (_) {}
+      try {
+        // Legacy showBalloon renders body with innerHTML. Escape all platform
+        // notification data before it crosses that boundary.
+        window.showBalloon({
+          title:safeTitle,
+          body:escapeHtml(safeBody),
+          icon:kind === 'warning' ? 'warning' : 'info'
+        });
+      } catch (_) {}
     }
-    emit('platform:notification', { title, body, kind });
+    emit('platform:notification', { title:safeTitle, body:safeBody, kind });
   }
 
   function registerCommandProvider(provider) {

@@ -1,149 +1,72 @@
-/* === CHAT === */
-const CHAT_API_URL = '/api/chat';
+/* === CHAT: SECURITY BUILD === */
 let chatHistory = [];
 let chatWired = false;
 let chatRequestController = null;
 let lastFailedMessage = null;
+
 function wireChatIfNeeded() {
   const input = document.getElementById('chat-input');
   const sendBtn = document.getElementById('chat-send');
   const log = document.getElementById('chat-log');
   if (!input || !sendBtn || !log || chatWired) return;
   chatWired = true;
-  function addMessage(role, text) {
+
+  const addMessage = (role, text) => {
     const row = document.createElement('div');
     row.className = 'chat-msg ' + (role === 'user' ? 'user' : 'bot');
     const bubble = document.createElement('div');
     bubble.className = 'bubble';
-    if (role === 'user') {
-      bubble.textContent = text;
-    } else {
-      bubble.innerHTML = renderMarkdownSafe(text);
-      const copy = document.createElement('button');
-      copy.type = 'button';
-      copy.className = 'chat-copy';
-      copy.textContent = 'Copy';
-      copy.setAttribute('aria-label', 'Copy assistant answer');
-      copy.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(text);
-          copy.textContent = 'Copied'; copy.classList.add('copied');
-          setTimeout(() => { copy.textContent = 'Copy'; copy.classList.remove('copied'); }, 1300);
-        } catch (_) { copy.textContent = 'Unavailable'; }
-      });
-      bubble.appendChild(copy);
-    }
-    row.appendChild(bubble); log.appendChild(row); log.scrollTop = log.scrollHeight;
-  }
-  function resizeComposer() {
-    input.style.height = 'auto';
-    input.style.height = Math.min(120, Math.max(32, input.scrollHeight)) + 'px';
-  }
-  function rollbackUnansweredUser(payloadText) {
-    const last = chatHistory[chatHistory.length - 1];
-    if (last?.role === 'user' && last.content === payloadText) chatHistory.pop();
-  }
-  function addRetry(request, reason) {
-    const row = document.createElement('div');
-    row.className = 'chat-msg bot chat-error';
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    const message = document.createElement('span');
-    message.textContent = reason || 'Aizanoi AI could not reply.';
-    const retry = document.createElement('button');
-    retry.type = 'button'; retry.className = 'chat-retry'; retry.textContent = 'Retry';
-    retry.addEventListener('click', () => {
-      row.remove();
-      sendMessage(request);
-    });
-    bubble.append(message, retry); row.appendChild(bubble); log.appendChild(row);
+    bubble.textContent = String(text || '');
+    row.appendChild(bubble);
+    log.appendChild(row);
     log.scrollTop = log.scrollHeight;
+  };
+
+  function showDisabledNotice() {
+    addMessage('bot', 'Aizanoi AI is disabled in the security build. Local files, notes and datasets stay in this browser and are not sent to external AI providers.');
   }
-  async function sendMessage(request = null) {
-    const isProgrammatic = request && typeof request === 'object';
-    const visibleText = (isProgrammatic ? request.text : input.value).trim();
-    if (!visibleText || input.disabled) return false;
-    const context = isProgrammatic ? String(request.context || '').trim() : '';
-    const payloadText = context ? `${context}\n\nUser request: ${visibleText}` : visibleText;
-    const retryRequest = { text:visibleText, context };
-    const starters = document.getElementById('chat-starters');
-    if (starters) starters.style.display = 'none';
-    input.value = ''; resizeComposer(); input.disabled = true; sendBtn.disabled = true; log.setAttribute('aria-busy','true');
-    addMessage('user', visibleText); chatHistory.push({ role:'user', content:payloadText });
-    const typing = document.createElement('div');
-    typing.className = 'chat-msg bot typing';
-    typing.innerHTML = '<div class="bubble"><span class="typing-dots" aria-label="Aizanoi AI is thinking"><i></i><i></i><i></i></span></div>';
-    log.appendChild(typing); log.scrollTop = log.scrollHeight;
-    chatRequestController?.abort();
-    const controller = new AbortController();
-    chatRequestController = controller;
-    const timeout = setTimeout(() => controller.abort('timeout'), 80000);
-    try {
-      const res = await fetch(CHAT_API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, signal:controller.signal, body: JSON.stringify({ history: chatHistory }) });
-      const data = await res.json(); typing.remove();
-      if (!res.ok || !data.reply) {
-        rollbackUnansweredUser(payloadText); lastFailedMessage = retryRequest;
-        addRetry(retryRequest, data.error || 'Unable to reply right now.'); flashTaskItem('chatbot');
-      } else {
-        addMessage('bot', data.reply); chatHistory.push({ role:'assistant', content:data.reply }); lastFailedMessage = null;
-      }
-    } catch (err) {
-      typing.remove(); rollbackUnansweredUser(payloadText); lastFailedMessage = retryRequest;
-      const reason = err?.name === 'AbortError' || controller.signal.aborted ? 'The request took too long. You can retry.' : 'Connection error. You can retry.';
-      addRetry(retryRequest, reason); flashTaskItem('chatbot');
-    } finally {
-      clearTimeout(timeout);
-      if (chatRequestController === controller) chatRequestController = null;
-      log.setAttribute('aria-busy','false');
-      if (document.getElementById('chat-input') === input) { input.disabled = false; sendBtn.disabled = false; input.focus(); }
-    }
-    return true;
+
+  function sendMessage() {
+    const visibleText = input.value.trim();
+    if (!visibleText) return false;
+    input.value = '';
+    addMessage('user', visibleText);
+    showDisabledNotice();
+    return false;
   }
-  sendBtn.addEventListener('click', () => sendMessage());
-  input.addEventListener('input', resizeComposer);
-  input.addEventListener('keydown', (e) => {
-    if (!e.isComposing && e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-  });
-  window.__AIZANOI_CHAT__ = {
+
+  sendBtn.disabled = true;
+  input.disabled = true;
+  input.placeholder = 'Aizanoi AI is disabled for security';
+  const starters = document.getElementById('chat-starters');
+  if (starters) starters.hidden = true;
+  showDisabledNotice();
+
+  window.__AIZANOI_CHAT__ = Object.freeze({
     clear() {
-      chatRequestController?.abort(); chatRequestController = null; lastFailedMessage = null;
       chatHistory = [];
       log.replaceChildren();
-      const starters = document.getElementById('chat-starters');
-      if (starters) starters.style.display = 'grid';
-      input.value = ''; input.disabled = false; sendBtn.disabled = false; input.focus();
+      showDisabledNotice();
     },
-    ask(text, context = '') {
-      return sendMessage({ text:String(text || ''), context:String(context || '') });
+    ask() {
+      showDisabledNotice();
+      return false;
     },
     getContextSafeHistory() {
-      return chatHistory.map((item) => ({ ...item }));
+      return [];
     }
-  };
-  input.focus();
+  });
+
+  // Keep the function present for compatibility, but never perform network I/O.
+  window.__AIZANOI_CHAT_SEND_DISABLED__ = sendMessage;
 }
 
-
 function wireChatStartersIfNeeded() {
-  if (document.body.dataset.chatStartersWired) return;
   document.body.dataset.chatStartersWired = '1';
-  setTimeout(function() {
-    document.querySelectorAll('.chat-starter').forEach(function(b) {
-      if (b._wired) return;
-      b._wired = true;
-      b.addEventListener('click', function() {
-        var q = b.dataset.q;
-        var inp = document.getElementById('chat-input');
-        var send = document.getElementById('chat-send');
-        if (inp && send) {
-          inp.value = q;
-          var starters = document.getElementById('chat-starters');
-          if (starters) starters.style.display = 'none';
-          send.click();
-        }
-      });
-    });
-  }, 80);
+  document.querySelectorAll('.chat-starter').forEach((button) => {
+    button.hidden = true;
+    button.disabled = true;
+  });
 }
 window.wireChatStartersIfNeeded = wireChatStartersIfNeeded;
 

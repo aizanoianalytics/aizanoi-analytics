@@ -141,9 +141,11 @@
     State.recordActivity('Sent archive item to Field Notes',record.name,'archive');return open('notes',{recordId:note.id});
   }
 
-  function askAI(question,context=''){
-    window.AIZANOI_OS?.launchApp?.('chatbot',{source:'workbench'});let tries=0;
-    const timer=setInterval(()=>{tries++;if(window.__AIZANOI_CHAT__?.ask){clearInterval(timer);window.__AIZANOI_CHAT__.ask(question,context);}else if(tries>30)clearInterval(timer);},60);
+  function askAI(){
+    // Security posture: local research material never leaves the browser from
+    // Workbench. Re-enable only after a separate explicit privacy design.
+    Platform.notify('AI handoff disabled','Local files, notes and datasets are not sent to third-party AI services.','warning');
+    return false;
   }
 
   function patchCore(){

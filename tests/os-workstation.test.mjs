@@ -38,12 +38,15 @@ assert.match(platform, /navigator\.serviceWorker\.register/, 'installable servic
 assert.match(platform, /beforeinstallprompt/, 'PWA install handoff missing');
 
 const archive = read('frontend/js/os-archive.js');
-const workbench = ['frontend/js/os-workbench.js','frontend/js/os-workbench-archive.js','frontend/js/os-workbench-readers.js','frontend/js/os-workbench-data.js','frontend/js/os-workbench-shell.js'].map(read).join('\n');
+const workbenchFiles = ['frontend/js/os-workbench.js','frontend/js/os-workbench-archive.js','frontend/js/os-workbench-readers.js','frontend/js/os-workbench-data.js','frontend/js/os-workbench-shell.js'];
+const workbench = workbenchFiles.map(read).join('\n');
 assert.match(archive, /indexedDB\.open\(DB_NAME/, 'Field Archive must use IndexedDB');
 assert.match(archive, /Notes','Sources','Screenshots','Datasets','Exports','Uploads/, 'archive collections missing');
 assert.match(archive, /showDirectoryPicker/, 'local folder import capability missing');
-for (const pattern of [/data-archive-drop/,/QUICK LOOK|Quick Look/,/Send to Field Notes/,/DATA LAB|Data Lab/,/SOURCE READER|Source Reader/,/ARTIFACT VIEWER|Artifact Viewer/,/Workspace Monitor/,/Sample rows|dataset structure and sample/i]) assert.match(workbench,pattern,`workstation contract missing: ${pattern}`);
-assert.doesNotMatch(workbench, /exec\(|spawn\(|child_process|\/bin\/|sudo\s/i, 'browser AI/workbench must not gain arbitrary system execution');
+for (const pattern of [/data-archive-drop/,/QUICK LOOK|Quick Look/,/Send to Field Notes/,/DATA LAB|Data Lab/,/SOURCE READER|Source Reader/,/ARTIFACT VIEWER|Artifact Viewer/,/Workspace Monitor/,/LOCAL ONLY|stays in this browser|Never sent to AI/i]) assert.match(workbench,pattern,`workstation contract missing: ${pattern}`);
+assert.doesNotMatch(workbench, /data-action="ai"|data-notes-action="ai"|data-source-action="ai"|data-lab-action="ai"/, 'workstation must not expose research-to-AI actions');
+assert.match(workbench, /Local files, notes and datasets are not sent to third-party AI services/, 'local research egress guard missing');
+assert.doesNotMatch(workbench, /exec\(|spawn\(|child_process|\/bin\/|sudo\s/i, 'browser workbench must not gain arbitrary system execution');
 
 const css = ['frontend/css/os-distribution.css','frontend/css/os-distribution-panels.css','frontend/css/os-workbench-archive.css','frontend/css/os-workbench-interactions.css','frontend/css/os-workbench-research.css','frontend/css/os-distribution-polish.css'].map(read).join('\n');
 for (const selector of ['az-archive-shell','az-lab-shell','az-reader-shell','az-artifact-shell','az-notes-shell','az-monitor-shell','az-quicklook','az-global-drop']) assert.match(css,new RegExp(selector),`${selector} styling missing`);
@@ -60,4 +63,4 @@ assert.match(sw, /\/api\//, 'service worker API bypass missing');
 assert.match(sw, /request\.mode === 'navigate'/, 'navigation strategy missing');
 assert.match(sw, /caches\.open/, 'offline shell cache missing');
 
-console.log('Aizanoi distribution/workstation static contract passed');
+console.log('Aizanoi distribution/workstation local-only security contract passed');
