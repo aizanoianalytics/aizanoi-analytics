@@ -2,6 +2,14 @@
 // Named monuments remain in city.js. This module fills otherwise empty regions
 // with plausible district massing without pretending to reconstruct individual
 // excavated fifth-century houses.
+import {
+  deterministicHash as hash,
+  nearestStreet,
+  overlapsNamedBuilding,
+  overlapsFabric,
+  overlapsClearZones,
+  regionalPlacementTarget,
+} from '../../../ancient-world/assets/urban-fabric-tools.js';
 
 const REGION_DENSITY = Object.freeze({
   I: 0.60, II: 0.68, III: 0.80, IV: 0.92, V: 0.78, VI: 0.68, VII: 0.76,
@@ -25,75 +33,17 @@ const CINEMATIC_CLEAR_ZONES = Object.freeze([
   { id:'pantheon-south', x:-365, z:28, radius:40 },
 ]);
 
-const hash = (input) => {
-  let h = 2166136261;
-  for (let i = 0; i < input.length; i++) {
-    h ^= input.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return (h >>> 0) / 4294967295;
-};
-
-function pointToSegmentDistance(px, pz, a, b) {
-  const dx = b[0] - a[0];
-  const dz = b[1] - a[1];
-  const length2 = dx * dx + dz * dz || 1;
-  const t = Math.max(0, Math.min(1, ((px - a[0]) * dx + (pz - a[1]) * dz) / length2));
-  const x = a[0] + dx * t;
-  const z = a[1] + dz * t;
-  return Math.hypot(px - x, pz - z);
-}
-
-function nearestStreet(x, z, streets) {
-  let best = null;
-  let distance = Infinity;
-  for (const street of streets) {
-    for (let i = 1; i < street.points.length; i++) {
-      const a = street.points[i - 1];
-      const b = street.points[i];
-      const d = pointToSegmentDistance(x, z, a, b);
-      if (d < distance) {
-        distance = d;
-        best = { street, a, b, angle: Math.atan2(b[1] - a[1], b[0] - a[0]) };
-      }
-    }
-  }
-  return best ? { ...best, distance } : null;
-}
-
-function overlapsNamedBuilding(x, z, width, depth, buildings) {
-  for (const building of buildings) {
-    if (building.type === 'wall' || building.type === 'aqueduct') continue;
-    const monumental = Math.max(building.w || 0, building.d || 0) > 105 || (building.h || 0) > 28;
-    const padding = monumental ? 8.5 : 5.5;
-    const hx = building.w / 2 + width / 2 + padding;
-    const hz = building.d / 2 + depth / 2 + padding;
-    if (Math.abs(x - building.x) < hx && Math.abs(z - building.z) < hz) return true;
-  }
-  return false;
-}
-
-function overlapsFabric(x, z, width, depth, fabric, padding = 0.85) {
-  for (const building of fabric) {
-    const hx = building.w / 2 + width / 2 + padding;
-    const hz = building.d / 2 + depth / 2 + padding;
-    if (Math.abs(x - building.x) < hx && Math.abs(z - building.z) < hz) return true;
-  }
-  return false;
-}
-
-function overlapsCinematicClearZone(x, z, width, depth) {
-  const footprintRadius = Math.hypot(width, depth) * 0.32;
-  return CINEMATIC_CLEAR_ZONES.some((zone) => (
-    Math.hypot(x - zone.x, z - zone.z) < zone.radius + footprintRadius
-  ));
-}
-
 function targetForRegion(region, density, mobile) {
-  const cell = mobile ? 30 : 22;
-  const theoretical = Math.max(1, (region.w * region.d) / (cell * cell));
-  const scaled = Math.round(theoretical * density * (mobile ? 0.80 : 1.02));
-  return Math.max(mobile ? 11 : 18, Math.min(mobile ? 34 : 66, scaled));
+  return regionalPlacementTarget(region, density, mobile, {
+    desktopCell:22,
+    mobileCell:30,
+    desktopScale:1.02,
+    mobileScale:0.80,
+    desktopMin:18,
+    desktopMax:66,
+    mobileMin:11,
+    mobileMax:34,
+  });
 }
 
 export function generateUrbanFabric({
@@ -142,9 +92,14 @@ export function generateUrbanFabric({
         const width = 11.5 + hash(`${seed}:w`) * (mobile ? 6.5 : 10.0);
         const depth = 10 + hash(`${seed}:d`) * (mobile ? 6.0 : 8.8);
         if (Math.abs(bx - tiberX) < 60) continue;
-        if (overlapsCinematicClearZone(bx, bz, width, depth)) continue;
-        if (overlapsNamedBuilding(bx, bz, width, depth, buildings)) continue;
-        if (overlapsFabric(bx, bz, width, depth, fabric)) continue;
+        if (overlapsClearZones(bx, bz, width, depth, CINEMATIC_CLEAR_ZONES)) continue;
+        if (overlapsNamedBuilding(bx, bz, width, depth, buildings, {
+          monumentalSize:105,
+          monumentalHeight:28,
+          monumentalPadding:8.5,
+          normalPadding:5.5,
+        })) continue;
+        if (overlapsFabric(bx, bz, width, depth, fabric, 0.85)) continue;
 
         const style = REGION_STYLE[region.id] || { kind:'mixed', height:[6.5,15], shop:0.50, courtyard:0.22, materials:['brick','plaster','brickDark'] };
         const heightBase = style.height[0] + hash(`${seed}:h`) * (style.height[1] - style.height[0]);
@@ -189,5 +144,6 @@ export const URBAN_FABRIC_METHOD = Object.freeze({
   deterministic: true,
   fairRegionalQuotas: true,
   cinematicClearZones: true,
+  sharedPlacementToolkit:true,
   note: 'Generated fabric is intentionally subordinate to named monuments, major streets and validated arrival sightlines. Region quotas keep the whole city inhabited instead of allowing early regions to exhaust a global procedural cap.',
 });
