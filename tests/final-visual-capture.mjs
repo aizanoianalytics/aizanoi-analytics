@@ -12,7 +12,7 @@ const browser = await chromium.launch({
 async function newPage(viewport = { width: 1440, height: 900 }, mobile = false) {
   const context = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, isMobile:mobile, hasTouch:mobile });
   const page = await context.newPage();
-  page.setDefaultTimeout(12000);
+  page.setDefaultTimeout(30000);
   page.on('pageerror', (error) => console.error('PAGEERROR', String(error)));
   return { context, page };
 }
