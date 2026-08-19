@@ -118,7 +118,7 @@ Its security contract is intentionally narrow:
 - no arbitrary process execution;
 - no host/server filesystem access;
 - no WebSocket shell;
-- no `/api/terminal/exec` dependency;
+- no visitor-facing terminal endpoint dependency;
 - no required network primitives for command execution.
 
 Any proposal to turn this into a real remote shell is an architecture/security change, not a Terminal feature tweak.
