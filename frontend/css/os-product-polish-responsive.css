@@ -1,8 +1,8 @@
 /* Small high-specificity responsive/legacy override contract. */
-html body.aizanoi-next .win[data-app-id="terminal"] .statusbar span:last-child {
+html body.aizanoi-next .win[data-app-id="terminal"] .win-statusbar span:last-child {
   font-size:0 !important;
 }
-html body.aizanoi-next .win[data-app-id="terminal"] .statusbar span:last-child::after {
+html body.aizanoi-next .win[data-app-id="terminal"] .win-statusbar span:last-child::after {
   content:'LOCAL VIRTUAL SHELL · /aizanoi';
   color:#5b615c;
   font:600 8px/1 var(--azp-mono);
