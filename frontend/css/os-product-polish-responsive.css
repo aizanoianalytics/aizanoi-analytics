@@ -1,4 +1,14 @@
-/* Small high-specificity responsive contract layered over legacy distribution CSS. */
+/* Small high-specificity responsive/legacy override contract. */
+html body.aizanoi-next .win[data-app-id="terminal"] .statusbar span:last-child {
+  font-size:0 !important;
+}
+html body.aizanoi-next .win[data-app-id="terminal"] .statusbar span:last-child::after {
+  content:'LOCAL VIRTUAL SHELL · /aizanoi';
+  color:#5b615c;
+  font:600 8px/1 var(--azp-mono);
+  letter-spacing:.035em;
+}
+
 @media (max-width:700px) {
   html body.aizanoi-next .win.az-workbench-window .az-archive-sidebar {
     display:flex !important;
