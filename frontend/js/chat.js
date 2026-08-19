@@ -10,6 +10,8 @@ let lastFailedMessage = null;
  * cannot turn into a network-capable chat feature. Retire the UI before the
  * modern Field System shell mounts and keep removing any legacy nodes that an
  * older cached shell may re-create.
+ * Compatibility contract: AI is disabled for security and cannot perform
+ * browser network I/O.
  */
 function retireAizanoiAiSurfaces(root = document) {
   const scope = root instanceof Element ? root : document;
