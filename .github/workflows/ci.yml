@@ -19,7 +19,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -29,52 +29,11 @@ jobs:
           node-version: '22'
       - name: JavaScript syntax checks
         run: |
-          node --check frontend/games/mines.js
-          node --check frontend/games/snake.js
-          node --check frontend/games/brick.js
-          node --check frontend/games/game-utils.js
-          node --check frontend/js/chat.js
-          node --check frontend/js/terminal.js
-          node --check frontend/js/os-router.js
-          node --check frontend/js/os-state.js
-          node --check frontend/js/os-shell.js
-          node --check frontend/js/os-intent.js
-          node --check frontend/js/os-legacy-sanitizer.js
-          node --check frontend/js/os-v2.js
-          node --check frontend/js/os-unified.js
-          node --check frontend/js/os-product-polish.js
-          node --check frontend/js/os-platform.js
-          node --check frontend/js/os-archive.js
-          node --check frontend/js/os-workbench.js
-          node --check frontend/js/os-workbench-archive.js
-          node --check frontend/js/os-workbench-readers.js
-          node --check frontend/js/os-workbench-data.js
-          node --check frontend/js/os-workbench-shell.js
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            node --check "$file"
+          done < <(find frontend/js/v3 frontend/games frontend/ancient-world frontend/ancient-cities frontend/historic-world -type f -name '*.js' -print0)
           node --check frontend/service-worker.js
-          node --check frontend/historic-world/app.js
-          node --check frontend/ancient-world/engine/traversal.js
-          node --check frontend/ancient-world/engine/lifecycle.js
-          node --check frontend/ancient-world/engine/navigation.js
-          node --check frontend/ancient-world/engine/evidence.js
-          node --check frontend/ancient-world/engine/city-contract.js
-          node --check frontend/ancient-world/engine/performance.js
-          node --check frontend/ancient-world/engine/mobile-controls.js
-          node --check frontend/ancient-world/engine/surface-shader.js
-          node --check frontend/ancient-world/engine/environment-renderer.js
-          node --check frontend/ancient-world/engine/landmark-framing.js
-          node --check frontend/ancient-world/assets/materials.js
-          node --check frontend/ancient-cities/rome-410-476/data/terrain.js
-          node --check frontend/ancient-cities/rome-410-476/data/urban-fabric.js
-          node --check frontend/ancient-cities/rome-410-476/data/manifest.js
-          node --check frontend/ancient-cities/rome-410-476/js/methodology.js
-          node --check frontend/ancient-cities/rome-410-476/js/app.js
-          node --check frontend/ancient-cities/athens-450-430/data/city.js
-          node --check frontend/ancient-cities/athens-450-430/data/terrain.js
-          node --check frontend/ancient-cities/athens-450-430/data/urban-fabric.js
-          node --check frontend/ancient-cities/athens-450-430/data/manifest.js
-          node --check frontend/ancient-cities/athens-450-430/js/methodology.js
-          node --check frontend/ancient-cities/athens-450-430/js/app.js
-          node --check frontend/ancient-cities/_template/data/city.example.js
       - name: Regression tests
         run: node --test tests/*.test.mjs
       - name: Reject whitespace errors
@@ -82,16 +41,16 @@ jobs:
 
   browser-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
           node-version: '22'
-      - name: Install and audit Chromium smoke dependency
+      - name: Install and audit browser QA dependencies
         run: |
           npm init -y >/dev/null 2>&1
-          npm install --ignore-scripts playwright@1.62.1
+          npm install --ignore-scripts playwright@1.62.1 axe-core@4.10.3
           npm audit --audit-level=high
           npx playwright install chromium
       - name: Start static frontend server
@@ -104,14 +63,14 @@ jobs:
           done
           cat /tmp/aizanoi-http.log
           exit 1
-      - name: Ancient World and Aizanoi OS desktop/tablet/mobile smoke
+      - name: Field System and Historical Worlds browser gates
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
         run: |
           set -o pipefail
           mkdir -p artifacts/diagnostics
           status=0
-          for script in ancient-city-browser-smoke.mjs os-browser-smoke.mjs os-world-ai-browser-smoke.mjs os-workstation-browser-smoke.mjs terminal-browser-smoke.mjs os-unified-shell-browser-smoke.mjs os-product-polish-browser-smoke.mjs os-command-ai-disabled-browser-smoke.mjs; do
+          for script in ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs field-system-v3-browser-smoke.mjs; do
             echo "=== $script ===" | tee "artifacts/diagnostics/$script.log"
             node "tests/$script" 2>&1 | tee -a "artifacts/diagnostics/$script.log" || status=1
           done
@@ -125,9 +84,8 @@ jobs:
           set -o pipefail
           mkdir -p artifacts/diagnostics
           status=0
-          node tests/final-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/final-visual-capture.log || status=1
-          node tests/os-distribution-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/os-distribution-visual-capture.log || status=1
-          node tests/os-product-polish-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/os-product-polish-visual-capture.log || status=1
+          node tests/historical-worlds-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/historical-worlds-visual-capture.log || status=1
+          node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-visual-capture.log || status=1
           exit $status
       - name: Upload visual regression review
         if: success()
