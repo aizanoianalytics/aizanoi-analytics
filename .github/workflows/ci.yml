@@ -74,16 +74,21 @@ jobs:
           done
           cat /tmp/aizanoi-http.log
           exit 1
-      - name: Field System and Historical Worlds browser gates
+      - name: Field System browser gate
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
         run: |
           set -o pipefail
           mkdir -p artifacts/diagnostics
+          echo "=== field-system-v3-browser-smoke.mjs ===" | tee artifacts/diagnostics/field-system-v3-browser-smoke.mjs.log
+          node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee -a artifacts/diagnostics/field-system-v3-browser-smoke.mjs.log
+      - name: Historical Worlds browser gates
+        env:
+          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+        run: |
+          set -o pipefail
           status=0
-          # Run the shell gate first for fast product/accessibility feedback, then
-          # city traversal, shared Historical Worlds UI and the 51-landmark walk.
-          for script in field-system-v3-browser-smoke.mjs ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs; do
+          for script in ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs; do
             echo "=== $script ===" | tee "artifacts/diagnostics/$script.log"
             node "tests/$script" 2>&1 | tee -a "artifacts/diagnostics/$script.log" || status=1
           done
