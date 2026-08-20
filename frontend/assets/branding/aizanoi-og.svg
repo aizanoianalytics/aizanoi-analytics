@@ -1,45 +1,76 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">Aizanoi Analytics</title>
-  <desc id="desc">Retro digital workspace for HR analytics, artificial intelligence and interactive ancient history.</desc>
+  <title id="title">Aizanoi Field System</title>
+  <desc id="desc">A calm archaeological research workspace connecting Historical Worlds, archive tools and local field notes.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0e2d62"/>
-      <stop offset="0.55" stop-color="#1f5aa7"/>
-      <stop offset="1" stop-color="#071a39"/>
+      <stop offset="0" stop-color="#0b1718"/>
+      <stop offset="0.55" stop-color="#132727"/>
+      <stop offset="1" stop-color="#081011"/>
     </linearGradient>
-    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#2f72df"/>
-      <stop offset="1" stop-color="#12429f"/>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f1eadc" stop-opacity=".97"/>
+      <stop offset="1" stop-color="#d8d2c6" stop-opacity=".93"/>
     </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000" flood-opacity=".35"/>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c7aa73"/>
+      <stop offset="1" stop-color="#79aaa4"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#000" flood-opacity=".38"/>
     </filter>
+    <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0V56" fill="none" stroke="#9dc0ba" stroke-opacity=".08" stroke-width="1"/>
+    </pattern>
   </defs>
+
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <circle cx="1010" cy="112" r="230" fill="#f4d58a" opacity=".08"/>
-  <circle cx="1080" cy="80" r="150" fill="#fff" opacity=".04"/>
-  <g opacity=".20" fill="#e5cf9b">
-    <rect x="820" y="250" width="300" height="22"/>
-    <polygon points="810,250 970,165 1130,250"/>
-    <rect x="835" y="270" width="16" height="185"/><rect x="885" y="270" width="16" height="185"/>
-    <rect x="935" y="270" width="16" height="185"/><rect x="985" y="270" width="16" height="185"/>
-    <rect x="1035" y="270" width="16" height="185"/><rect x="1085" y="270" width="16" height="185"/>
-    <rect x="815" y="455" width="320" height="28"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <circle cx="1030" cy="96" r="255" fill="#d7b67a" opacity=".075"/>
+  <circle cx="1130" cy="560" r="310" fill="#6fa8a0" opacity=".055"/>
+
+  <g opacity=".23" fill="#d6c39b">
+    <rect x="866" y="242" width="248" height="18" rx="3"/>
+    <polygon points="850,242 990,169 1130,242"/>
+    <rect x="880" y="260" width="14" height="176"/><rect x="925" y="260" width="14" height="176"/>
+    <rect x="970" y="260" width="14" height="176"/><rect x="1015" y="260" width="14" height="176"/>
+    <rect x="1060" y="260" width="14" height="176"/><rect x="1105" y="260" width="14" height="176"/>
+    <rect x="852" y="436" width="282" height="22" rx="3"/>
   </g>
+
   <g filter="url(#shadow)">
-    <rect x="72" y="72" width="720" height="486" rx="22" fill="#ece9d8" stroke="#8eb7f5" stroke-width="3"/>
-    <path d="M94 72h676a22 22 0 0 1 22 22v52H72V94a22 22 0 0 1 22-22z" fill="url(#bar)"/>
-    <circle cx="111" cy="109" r="13" fill="#79d353"/><circle cx="151" cy="109" r="13" fill="#f0ca45"/><circle cx="191" cy="109" r="13" fill="#e75d5d"/>
-    <rect x="110" y="190" width="610" height="6" rx="3" fill="#c6d2e3"/>
-    <rect x="110" y="223" width="490" height="6" rx="3" fill="#d3d9e2"/>
-    <rect x="110" y="315" width="295" height="94" rx="14" fill="#fff" stroke="#bcc9db"/>
-    <rect x="430" y="315" width="290" height="94" rx="14" fill="#fff" stroke="#bcc9db"/>
-    <rect x="110" y="435" width="610" height="72" rx="14" fill="#132c59" opacity=".94"/>
+    <rect x="70" y="66" width="742" height="500" rx="32" fill="#101c1d" stroke="#b7d0cb" stroke-opacity=".18" stroke-width="2"/>
+    <rect x="89" y="85" width="704" height="462" rx="24" fill="url(#glass)"/>
+    <rect x="89" y="85" width="704" height="64" rx="24" fill="#162829"/>
+    <rect x="89" y="125" width="704" height="24" fill="#162829"/>
+    <circle cx="127" cy="117" r="9" fill="#b66558"/>
+    <circle cx="157" cy="117" r="9" fill="#c9ac70"/>
+    <circle cx="187" cy="117" r="9" fill="#78a8a1"/>
+
+    <rect x="123" y="186" width="635" height="4" rx="2" fill="url(#accent)" opacity=".85"/>
+    <rect x="123" y="223" width="410" height="8" rx="4" fill="#1f3b3b" opacity=".22"/>
+    <rect x="123" y="247" width="520" height="8" rx="4" fill="#1f3b3b" opacity=".13"/>
+
+    <rect x="123" y="318" width="192" height="142" rx="19" fill="#fff" fill-opacity=".68" stroke="#2d5553" stroke-opacity=".15"/>
+    <rect x="333" y="318" width="192" height="142" rx="19" fill="#fff" fill-opacity=".68" stroke="#2d5553" stroke-opacity=".15"/>
+    <rect x="543" y="318" width="215" height="142" rx="19" fill="#122828" fill-opacity=".94"/>
+    <rect x="123" y="485" width="635" height="28" rx="14" fill="#17302f" fill-opacity=".08"/>
   </g>
-  <text x="110" y="282" fill="#12386e" font-family="Tahoma,Segoe UI,sans-serif" font-size="54" font-weight="700">Aizanoi Analytics</text>
-  <text x="136" y="371" fill="#174d96" font-family="Tahoma,Segoe UI,sans-serif" font-size="25" font-weight="700">Aizanoi AI</text>
-  <text x="456" y="371" fill="#174d96" font-family="Tahoma,Segoe UI,sans-serif" font-size="25" font-weight="700">Ancient World</text>
-  <text x="136" y="463" fill="#e8f2ff" font-family="Tahoma,Segoe UI,sans-serif" font-size="23" font-weight="700">HR analytics · AI · interactive history</text>
-  <text x="136" y="492" fill="#a9c7ee" font-family="Tahoma,Segoe UI,sans-serif" font-size="18">inside a retro digital workspace</text>
-  <text x="845" y="548" fill="#f1d89f" font-family="Georgia,serif" font-size="28">aizanoianalytics.com</text>
+
+  <text x="124" y="126" fill="#e9dfcd" font-family="Inter,Segoe UI,sans-serif" font-size="24" font-weight="650">Aizanoi Field System</text>
+  <text x="123" y="292" fill="#17302f" font-family="Georgia,serif" font-size="52" font-weight="700">Research across time.</text>
+
+  <text x="145" y="359" fill="#244744" font-family="Inter,Segoe UI,sans-serif" font-size="17" font-weight="700">HISTORICAL WORLDS</text>
+  <text x="145" y="390" fill="#183130" font-family="Georgia,serif" font-size="25">Aizanoi · Rome · Athens</text>
+  <text x="145" y="421" fill="#536c68" font-family="Inter,Segoe UI,sans-serif" font-size="15">Enter evidence-led reconstructions</text>
+
+  <text x="355" y="359" fill="#244744" font-family="Inter,Segoe UI,sans-serif" font-size="17" font-weight="700">FIELD ARCHIVE</text>
+  <text x="355" y="390" fill="#183130" font-family="Georgia,serif" font-size="25">Notes · Data · Sources</text>
+  <text x="355" y="421" fill="#536c68" font-family="Inter,Segoe UI,sans-serif" font-size="15">Browser-local research workspace</text>
+
+  <text x="565" y="359" fill="#d9c69e" font-family="Inter,Segoe UI,sans-serif" font-size="17" font-weight="700">FIELD SESSION</text>
+  <text x="565" y="390" fill="#f2eadc" font-family="Georgia,serif" font-size="25">Observe. Record.</text>
+  <text x="565" y="421" fill="#a9c8c2" font-family="Inter,Segoe UI,sans-serif" font-size="15">Move between world and evidence</text>
+
+  <text x="125" y="505" fill="#526b67" font-family="Inter,Segoe UI,sans-serif" font-size="15">Static-first · local tools · accessible across desktop, tablet and mobile</text>
+  <text x="864" y="532" fill="#d7c18e" font-family="Georgia,serif" font-size="30">aizanoianalytics.com</text>
 </svg>

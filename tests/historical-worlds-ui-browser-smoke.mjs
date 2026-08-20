@@ -87,6 +87,23 @@ for (const layout of layouts) {
     assert.equal(pageErrors.length, 0, `${world.id}/${layout.name}: browser errors: ${pageErrors.join(' | ')}`);
     await page.close();
   }
+
+  if (layout.name === 'desktop') {
+    const sessionPage=await context.newPage();
+    await sessionPage.goto(`${base}/historic-world/?jump=qa-aizanoi-landmark`,{waitUntil:'domcontentloaded'});
+    await sessionPage.waitForFunction(()=>document.body?.dataset.city==='aizanoi' && Boolean(window.__AIZANOI_CITY_EXPERIENCE__));
+    const first=await sessionPage.evaluate(()=>JSON.parse(localStorage.getItem('aizanoi-field-session-v1')||'null'));
+    assert.equal(first?.worldId,'aizanoi','field session did not record Aizanoi');
+    assert.equal(first?.landmark,'qa-aizanoi-landmark','field session did not record the Aizanoi landmark');
+
+    await sessionPage.goto(`${base}/ancient-cities/rome-410-476/`,{waitUntil:'domcontentloaded'});
+    await sessionPage.waitForFunction(()=>document.body?.dataset.city==='rome' && Boolean(window.__AIZANOI_CITY_EXPERIENCE__));
+    const second=await sessionPage.evaluate(()=>JSON.parse(localStorage.getItem('aizanoi-field-session-v1')||'null'));
+    assert.equal(second?.worldId,'rome','field session did not switch to Rome');
+    assert.equal(second?.landmark,null,'field session leaked an Aizanoi landmark into Rome');
+    await sessionPage.close();
+  }
+
   await context.close();
 }
 

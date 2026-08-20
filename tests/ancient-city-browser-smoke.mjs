@@ -58,9 +58,6 @@ for (const city of cities) {
     const deepContext = await browser.newContext({ viewport: { width: 1280, height: 800 } });
     const opened = await openCity(deepContext, city, `?jump=${city.teleport}`);
     const deepPage = opened.page;
-    // Query consumption is durable. The visible arrival label intentionally lasts
-    // only a few seconds, so verify the deep-link position against the city's own
-    // canonical teleport result instead of racing that temporary presentation.
     await deepPage.waitForFunction(() => (
       document.querySelector('#intro')?.classList.contains('hidden') &&
       !new URL(location.href).searchParams.has('jump')
@@ -157,6 +154,3 @@ for (const city of cities) {
 
 await browser.close();
 console.log('Ancient city desktop/mobile/deep-link browser smoke passed');
-
-await import('./historical-worlds-ui-browser-smoke.mjs');
-await import('./historical-worlds-landmark-walk.mjs');
