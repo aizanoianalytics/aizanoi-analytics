@@ -3,10 +3,11 @@ window.__AIZANOI_DEBUG__ = window.__AIZANOI_DEBUG__ || {};
 
 (async () => {
   try {
-    const [{ CITY, SOURCES, REGIONS, STREETS, BUILDINGS, WATERS, BOUNDS, SPAWN }, { generateAizanoiFabric }, { startFlatBlockyCity }] = await Promise.all([
+    const [{ CITY, SOURCES, REGIONS, STREETS, BUILDINGS, WATERS, BOUNDS, SPAWN }, { generateAizanoiFabric }, { startFlatBlockyCity }, { installCityCompatibility }] = await Promise.all([
       import('./data/city.js'),
       import('./data/urban-fabric.js'),
       import('../ancient-world/engine/flat-city-runtime.js'),
+      import('../ancient-world/engine/city-compatibility.js'),
     ]);
     const TOUCH = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches || innerWidth < 820;
     const runtime = startFlatBlockyCity({
@@ -23,6 +24,7 @@ window.__AIZANOI_DEBUG__ = window.__AIZANOI_DEBUG__ || {};
       era: 225,
       cityRoute: '/historic-world/',
     });
+    installCityCompatibility(runtime, { ui: 'aizanoi' });
     window.__AIZANOI_WORLD__ = runtime;
   } catch (error) {
     console.error('Aizanoi flat modular renderer failed:', error);
