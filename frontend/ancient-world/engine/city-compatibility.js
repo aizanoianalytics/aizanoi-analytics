@@ -6,7 +6,11 @@ const DEFAULT_DIRECTIONS = Object.freeze([
   [0, 1], [1, 0], [0, -1], [-1, 0],
   [1, 1], [-1, 1], [1, -1], [-1, -1],
 ]);
-const FIRST_STEP_DISTANCE = 1.35;
+const STEP_VECTORS = Object.freeze([
+  [1.25, 0], [-1.25, 0], [0, 1.25], [0, -1.25],
+  [0.9, 0.9], [0.9, -0.9], [-0.9, 0.9], [-0.9, -0.9],
+]);
+const SEARCH_RADII = Object.freeze([0, 2, 4, 6, 9, 13, 18, 25, 34, 48, 64]);
 
 function normalizedDirection(direction) {
   const x = Number(direction?.[0] || 0);
@@ -15,13 +19,50 @@ function normalizedDirection(direction) {
   return [x / length, z / length];
 }
 
+function collisionCorridorClear(debug, x, z, dx, dz) {
+  if (debug.collide?.(x, z)) return false;
+  for (const t of [0.25, 0.5, 0.75, 1]) {
+    if (debug.collide?.(x + dx * t, z + dz * t)) return false;
+  }
+  return true;
+}
+
+function movementProbeWorks(debug, x, z, dx, dz) {
+  if (typeof debug.setPlayer !== 'function' || typeof debug.moveWithSubsteps !== 'function') return collisionCorridorClear(debug, x, z, dx, dz);
+  debug.setPlayer(x, z);
+  const before = debug.player;
+  debug.moveWithSubsteps(dx, dz);
+  const after = debug.player;
+  const distance = before && after ? Math.hypot(after.x - before.x, after.z - before.z) : 0;
+  debug.setPlayer(x, z);
+  return distance > 0.30;
+}
+
 function hasFirstStepClearance(debug, x, z) {
   if (debug.collide?.(x, z)) return false;
-  return DEFAULT_DIRECTIONS.some((direction) => {
-    const [dx, dz] = normalizedDirection(direction);
-    return !debug.collide?.(x + dx * 0.35, z + dz * 0.35) &&
-      !debug.collide?.(x + dx * FIRST_STEP_DISTANCE, z + dz * FIRST_STEP_DISTANCE);
-  });
+  return STEP_VECTORS.some(([dx, dz]) => collisionCorridorClear(debug, x, z, dx, dz) && movementProbeWorks(debug, x, z, dx, dz));
+}
+
+function findWalkablePoint(debug, originX, originZ) {
+  if (!Number.isFinite(originX) || !Number.isFinite(originZ)) return null;
+  for (const radius of SEARCH_RADII) {
+    const directions = radius === 0 ? [[0, 0]] : DEFAULT_DIRECTIONS.map(normalizedDirection);
+    for (const [dx, dz] of directions) {
+      const x = originX + dx * radius;
+      const z = originZ + dz * radius;
+      if (hasFirstStepClearance(debug, x, z)) return { x, z };
+    }
+  }
+  return null;
+}
+
+function ensureCurrentArrivalIsWalkable(debug, preferred = null) {
+  const current = debug?.player;
+  if (!current) return null;
+  const safe = findWalkablePoint(debug, current.x, current.z) ||
+    (preferred ? findWalkablePoint(debug, preferred[0], preferred[1]) : null);
+  if (safe) debug.setPlayer?.(safe.x, safe.z);
+  return safe;
 }
 
 function applyAuthoredLandmarkFraming(debug) {
@@ -38,7 +79,7 @@ function applyAuthoredLandmarkFraming(debug) {
       .filter(([x, z], index, all) => all.findIndex(([ax, az]) => Math.abs(ax - x) < 0.001 && Math.abs(az - z) < 0.001) === index);
 
     let chosen = null;
-    for (const scale of [1, 1.12, 1.25, 0.9, 1.4]) {
+    for (const scale of [1, 1.12, 1.25, 0.9, 1.4, 1.65]) {
       for (const [dx, dz] of directions) {
         const x = record.x + dx * distance * scale;
         const z = record.z + dz * distance * scale;
@@ -59,14 +100,32 @@ export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
   const canvas = document.querySelector('#glCanvas');
   if (!debug) return runtime;
 
-  // The city data remains the owner of cinematic landmark composition. The
-  // shared runtime owns collision/safe-spawn resolution; this bridge simply
-  // rewrites its mutable teleport-view table from authored framing metadata.
+  // City-authored framing remains the source of cinematic composition. Every
+  // candidate must also survive the same real traversal step used by browser QA.
   applyAuthoredLandmarkFraming(debug);
 
+  // A city spawn is data, but dense procedural fabric can make that historical
+  // point unwalkable after a renderer refactor. Nudge only when a real first step
+  // cannot be taken, keeping the authored point whenever it is already usable.
+  ensureCurrentArrivalIsWalkable(debug);
+
+  // Wrap the shared teleport once so every entry path (selector, tour, deep link,
+  // debug tools) receives the same final walkability guarantee. The nudge keeps
+  // the original yaw/pitch and remains local to the authored cinematic arrival.
+  const rawTeleportTo = typeof debug.teleportTo === 'function' ? debug.teleportTo.bind(debug) : null;
+  if (rawTeleportTo) {
+    debug.teleportTo = (id, options = {}) => {
+      const ok = rawTeleportTo(id, options);
+      if (!ok) return ok;
+      const preferred = debug.teleportViews?.[id]?.pos || null;
+      ensureCurrentArrivalIsWalkable(debug, preferred);
+      return true;
+    };
+  }
+
   // Browser smoke tools and external helpers historically called `teleport`.
-  // Keep it as a stable alias to the new explicit method name.
-  if (!debug.teleport && debug.teleportTo) debug.teleport = (...args) => debug.teleportTo(...args);
+  // Keep it as a stable alias to the wrapped explicit method name.
+  if (debug.teleportTo) debug.teleport = (...args) => debug.teleportTo(...args);
 
   const params = new URL(location.href).searchParams;
   const jump = params.get('jump');
@@ -98,6 +157,9 @@ export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
 export const CITY_COMPATIBILITY = Object.freeze({
   authoredFraming: true,
   firstStepClearance: true,
+  realMovementProbe: true,
+  safeInitialSpawn: true,
+  safeTeleportArrival: true,
   deepLinkJump: true,
   legacyTeleportAlias: true,
 });
