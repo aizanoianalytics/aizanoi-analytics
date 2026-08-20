@@ -30,15 +30,19 @@ test('workspace monitor has no backend health dependency',()=>{
   assert.doesNotMatch(monitor,/\/api\/health|fetch\s*\(/);
 });
 
-test('archive accepts local files without egress primitives and normalizes restored metadata',()=>{
+test('archive accepts local files without egress primitives and validates restores before writing',()=>{
   assert.match(archive,/indexedDB\.open/);
   assert.match(archive,/MAX_FILE_BYTES/);
   assert.match(archive,/function normalizeMeta/);
+  assert.match(archive,/VALID_EVIDENCE/);
   assert.match(archive,/tags:Array\.isArray\(raw\.tags\)/);
   assert.match(archive,/meta:normalizeMeta\(record\.meta, name\)/);
   assert.match(archive,/encoded\.length>Math\.ceil\(MAX_FILE_BYTES\*4\/3\)\+8/);
-  assert.match(archive,/const restoredSize=blob \? blob\.size : restoredText!==null \? restoredTextSize : Math\.min\(MAX_FILE_BYTES,claimedSize\)/);
-  assert.match(archive,/size:restoredSize/);
+  assert.match(archive,/function prepareRestoreRecord/);
+  assert.match(archive,/logicalBytes>MAX_BUNDLE_BYTES\|\|payloadBytes>MAX_BUNDLE_BYTES\*2/);
+  assert.match(archive,/const prepared=\[\.\.\.preparedById\.values\(\)\]/);
+  assert.match(archive,/await run\('readwrite',\(store\)=>\{\s*if\(replace\) store\.clear\(\);\s*for\(const item of prepared\) store\.put\(item\);/s);
+  assert.doesNotMatch(archive,/if\(replace\) await run\('readwrite',\(store\)=>store\.clear\(\)\)/);
   assert.doesNotMatch(archive,/fetch\s*\(|XMLHttpRequest|WebSocket/);
 });
 
