@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'aizanoi-field-shell-v3.0.0';
+const CACHE = 'aizanoi-field-shell-v3.0.1';
 const PRECACHE = [
   '/',
   '/manifest.webmanifest',
@@ -9,19 +9,33 @@ const PRECACHE = [
   '/styles/base.css',
   '/styles/shell.css',
   '/styles/components.css',
+  '/styles/apps.css',
   '/js/v3/main.js',
   '/js/v3/registry.js',
   '/js/v3/store.js',
-  '/js/v3/shell.js'
+  '/js/v3/shell.js',
+  '/js/v3/archive-store.js',
+  '/js/v3/apps/archive.js',
+  '/js/v3/apps/research.js',
+  '/js/v3/apps/monitor.js',
+  '/js/v3/apps/terminal.js',
+  '/js/v3/apps/projects.js',
+  '/js/v3/apps/worlds.js',
+  '/js/v3/apps/media.js',
+  '/js/v3/apps/games.js'
 ];
 
+async function precacheShell() {
+  const cache = await caches.open(CACHE);
+  for (const url of PRECACHE) {
+    const response = await fetch(new Request(url, { cache:'reload' }));
+    if (!response.ok) throw new Error(`Precache failed for ${url}: ${response.status}`);
+    await cache.put(url, response);
+  }
+}
+
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE)
-      .then((cache) => cache.addAll(PRECACHE))
-      .then(() => self.skipWaiting())
-      .catch(() => self.skipWaiting())
-  );
+  event.waitUntil(precacheShell().then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (event) => {
