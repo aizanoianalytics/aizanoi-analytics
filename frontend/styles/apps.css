@@ -13,7 +13,7 @@
     font-size:12px;
   }
   .az-app-toolbar input[type="search"] { width:min(320px,42vw); }
-  .az-app-toolbar input::placeholder { color:var(--az-text-3); }
+  .az-app-toolbar input::placeholder, .az-field::placeholder { color:var(--az-text-3); opacity:1; }
   .az-app-caption { color:var(--az-text-3); font-size:11px; }
   .az-status-accent { color:var(--az-teal-hi); font:11px/1.4 var(--az-font-mono); }
   .az-project-session { margin-top:12px; }
