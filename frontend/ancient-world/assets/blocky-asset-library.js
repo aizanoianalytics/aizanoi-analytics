@@ -122,13 +122,44 @@ function stadium(scene, b) {
 }
 
 function amphitheatre(scene, b) {
-  const c = colourFor(b), w = b.w || 120, d = b.d || 95, h = Math.max(16, b.h || 42);
-  const rings = scene.mobile ? 5 : 8;
-  for (let i = 0; i < rings; i++) {
-    const t = i / rings;
-    scene.ellipseRing(b.x, i * h / rings, b.z, w * 0.5 * (1 - t * 0.34), d * 0.5 * (1 - t * 0.34), h / rings + 0.12, i % 2 ? M.limestone : c, 28);
+  const c = colourFor(b), w = b.w || 120, d = b.d || 95, h = Math.max(16, b.h || 42), rot = b.rot || 0;
+  const segments = scene.mobile ? 18 : 28;
+  const tiers = scene.mobile ? 2 : 3;
+  const tierH = h * 0.24;
+  const rx = w * 0.48;
+  const rz = d * 0.48;
+  const meanRadius = (rx + rz) * 0.5;
+  const arcadeSpan = Math.max(3.2, (Math.PI * 2 * meanRadius / segments) * 0.74);
+  const pierSpan = Math.max(1.5, arcadeSpan * 0.30);
+  const wallDepth = Math.max(2.6, Math.min(w, d) * 0.055);
+
+  scene.box(b.x, 0.02, b.z, w * 0.58, 0.10, d * 0.48, M.earth, rot);
+  for (let tier = 0; tier < tiers; tier++) {
+    const y = tier * tierH;
+    const inset = 1 - tier * 0.035;
+    for (let i = 0; i < segments; i++) {
+      const angle = i * Math.PI * 2 / segments;
+      const p = scene.localPoint(b.x, b.z, Math.cos(angle) * rx * inset, Math.sin(angle) * rz * inset, rot);
+      const tangent = rot + angle + Math.PI / 2;
+      const material = (i + tier) % 3 === 0 ? M.limestone2 : c;
+      scene.box(p[0], y, p[1], pierSpan, tierH * 0.68, wallDepth, material, tangent);
+      scene.box(p[0], y + tierH * 0.68, p[1], arcadeSpan, tierH * 0.17, wallDepth * 1.04, M.limestone, tangent);
+    }
   }
-  scene.box(b.x, 0.03, b.z, w * 0.52, 0.08, d * 0.42, M.earth, b.rot || 0);
+
+  const atticY = tiers * tierH;
+  const atticH = Math.max(2.8, h - atticY);
+  for (let i = 0; i < segments; i++) {
+    const angle = i * Math.PI * 2 / segments;
+    const p = scene.localPoint(b.x, b.z, Math.cos(angle) * rx * 0.91, Math.sin(angle) * rz * 0.91, rot);
+    scene.box(p[0], atticY, p[1], arcadeSpan * 0.78, atticH, wallDepth * 0.92, i % 2 ? M.limestone2 : c, rot + angle + Math.PI / 2);
+  }
+
+  const seatingRings = scene.mobile ? 2 : 3;
+  for (let i = 0; i < seatingRings; i++) {
+    const t = i / Math.max(1, seatingRings - 1);
+    scene.ellipseRing(b.x, 0.18 + i * 0.46, b.z, rx * (0.68 - t * 0.08), rz * (0.68 - t * 0.08), 0.42, M.limestone2, scene.mobile ? 18 : 26);
+  }
   footprint(scene, b);
 }
 
