@@ -81,7 +81,9 @@ jobs:
           set -o pipefail
           mkdir -p artifacts/diagnostics
           status=0
-          for script in ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs field-system-v3-browser-smoke.mjs; do
+          # ancient-city-browser-smoke imports the shared Historical Worlds UI and
+          # 51-landmark walk gates at its end, so do not execute those twice here.
+          for script in ancient-city-browser-smoke.mjs field-system-v3-browser-smoke.mjs; do
             echo "=== $script ===" | tee "artifacts/diagnostics/$script.log"
             node "tests/$script" 2>&1 | tee -a "artifacts/diagnostics/$script.log" || status=1
           done
