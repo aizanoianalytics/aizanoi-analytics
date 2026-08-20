@@ -6,13 +6,17 @@ import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
 const read = (path) => readFileSync(resolve(root, path), 'utf8');
 
-test('both historical worlds expose the shared Back to Aizanoi OS navigation', () => {
+test('historical worlds expose the shared Field System return navigation', () => {
   const aizanoi = read('frontend/historic-world/index.html');
   const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
+  const navigation = read('frontend/ancient-world/engine/navigation.js');
   assert.match(aizanoi, /installBackToOS/);
   assert.match(aizanoi, /__ANCIENT_WORLD_DEBUG__/);
   assert.match(rome, /installBackToOS/);
   assert.match(rome, /__ANCIENT_WORLD_DESTROY__/);
+  assert.match(navigation, /label = '← Field System'/);
+  assert.match(navigation, /Return to the Aizanoi Field System/);
+  assert.doesNotMatch(navigation, /label = '← Aizanoi OS'/);
 });
 
 test('Rome uses shared traversal and human-scale first-person movement', () => {
