@@ -282,9 +282,10 @@
   @media (max-width: 599px) {
     .az-shell { grid-template-rows: 48px minmax(0, 1fr) var(--az-bottom-nav); }
     .az-system-bar { padding-left: max(10px, env(safe-area-inset-left)); padding-right: max(10px, env(safe-area-inset-right)); }
+    .az-brand-button { min-height: 44px; }
     .az-brand-copy span, .az-local-state { display: none; }
     .az-system-action .az-system-label { display: none; }
-    .az-system-action { width: 40px; justify-content: center; padding: 0; }
+    .az-system-action { width: 44px; min-height: 44px; justify-content: center; padding: 0; }
     .az-home { width: calc(100% - 24px); padding: 18px 0 96px; }
     .az-home-intro { padding: 8px 2px 14px; }
     .az-home-intro h1 { font-size: 37px; }
