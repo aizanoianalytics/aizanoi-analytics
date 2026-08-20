@@ -18,7 +18,7 @@ export const WORLDS = Object.freeze([
 
 export const APPS = Object.freeze([
   { id:'worlds', label:'Historical Worlds', short:'Worlds', group:'research', icon:'/assets/icons/ancient-world.svg', module:'/js/v3/apps/worlds.js', description:'Aizanoi, Rome and Athens in one field index', keywords:['worlds','aizanoi','rome','athens','history','archaeology'] },
-  { id:'archive', label:'Field Archive', short:'Archive', group:'research', icon:'/assets/icons/field-archive.svg', module:'/js/v3/apps/research.js', description:'Local records, sources, datasets and captures', keywords:['archive','files','records','sources','local'] },
+  { id:'archive', label:'Field Archive', short:'Archive', group:'research', icon:'/assets/icons/field-archive.svg', module:'/js/v3/apps/archive.js', description:'Local records, sources, datasets and captures', keywords:['archive','files','records','sources','local'] },
   { id:'notes', label:'Field Notes', short:'Notes', group:'research', icon:'/assets/icons/notepad.svg', module:'/js/v3/apps/research.js', description:'Observations, hypotheses and source reviews', keywords:['notes','write','observation','hypothesis'] },
   { id:'data-lab', label:'Data Lab', short:'Data', group:'research', icon:'/assets/icons/data-lab.svg', module:'/js/v3/apps/research.js', description:'Inspect local CSV and JSON datasets', keywords:['data','csv','json','table','dataset'] },
   { id:'source-reader', label:'Source Reader', short:'Sources', group:'research', icon:'/assets/icons/source-reader.svg', module:'/js/v3/apps/research.js', description:'Read local PDF, Markdown and text sources', keywords:['source','reader','pdf','markdown','citation'] },
