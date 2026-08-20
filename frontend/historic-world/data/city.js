@@ -63,7 +63,7 @@ export const BUILDINGS = Object.freeze([
   B('southnec', 'Southern Necropolis', 'cemetery', -240, -760, 150, 150, 4, 'south', 'river', 'Southern funerary landscape.', { evidence: E_DOC }),
   B('reswest', 'Western Residential Quarter', 'building', -420, -80, 18, 16, 7, 'west-quarter', null, 'District marker for inferred housing.', { noCollision: true, evidence: E_PLAUS }),
   B('reseast', 'Eastern Residential Quarter', 'building', 360, -80, 18, 16, 7, 'east-quarter', null, 'District marker for inferred housing.', { noCollision: true, evidence: E_PLAUS }),
-  B('dam', 'Roman River Dam', 'wall', 80, -1200, 120, 8, 6, 'south', 'river', 'Roman hydraulic monument; real distance is compressed in this browser layout.'),
+  B('dam', 'Roman River Dam', 'monument', 80, -1200, 120, 8, 6, 'south', 'river', 'Roman hydraulic monument; real distance is compressed in this browser layout.', { asset: 'wall' }),
   B('meter', 'Sanctuary of Meter Steunene', 'sanctuary', -420, -1400, 70, 55, 10, 'south', 'meter', 'Open-air sanctuary about 4 km south of the Zeus temple; represented as a compressed remote zone.'),
 ]);
 
