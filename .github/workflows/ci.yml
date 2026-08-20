@@ -81,9 +81,9 @@ jobs:
           set -o pipefail
           mkdir -p artifacts/diagnostics
           status=0
-          # Each browser gate is atomic: city traversal, shared Historical Worlds UI,
-          # the 51-landmark walk, and the Field System shell all execute exactly once.
-          for script in ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs field-system-v3-browser-smoke.mjs; do
+          # Run the shell gate first for fast product/accessibility feedback, then
+          # city traversal, shared Historical Worlds UI and the 51-landmark walk.
+          for script in field-system-v3-browser-smoke.mjs ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs; do
             echo "=== $script ===" | tee "artifacts/diagnostics/$script.log"
             node "tests/$script" 2>&1 | tee -a "artifacts/diagnostics/$script.log" || status=1
           done
