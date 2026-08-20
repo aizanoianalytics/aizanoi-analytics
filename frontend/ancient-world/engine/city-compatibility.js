@@ -134,7 +134,10 @@ function applyAuthoredLandmarkFraming(debug) {
     const framing = record?.framing;
     if (!framing || !Number.isFinite(Number(framing.distance))) continue;
 
-    const distance = Math.max(8, Number(framing.distance));
+    // Keep the authored/source framing distance stable for compatibility and
+    // tests, while allowing compact live layouts to place the camera farther
+    // back than the short approach road when a hero silhouette needs breathing room.
+    const distance = Math.max(8, Number(framing.cameraDistance ?? framing.distance));
     const authored = Array.isArray(framing.preferredDirections) ? framing.preferredDirections : [];
     const directions = [...authored, ...DEFAULT_DIRECTIONS]
       .map(normalizedDirection)
