@@ -1,6 +1,6 @@
 import * as Archive from '../archive-store.js';
 
-const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[char]));
 const formatBytes=(bytes)=>{const n=Math.max(0,Number(bytes)||0);if(n<1024)return`${n} B`;if(n<1024*1024)return`${(n/1024).toFixed(n>10240?0:1)} KB`;return`${(n/1024/1024).toFixed(1)} MB`;};
 const dateLabel=(value)=>{try{return new Date(Number(value)||Date.now()).toLocaleDateString([],{month:'short',day:'numeric',year:'numeric'});}catch(_){return'';}};
 const evidenceOptions=['documented','archaeological','inferred','atmospheric','disputed'];
@@ -101,7 +101,7 @@ export async function mount({container,api,options}){
   const change=async(event)=>{if(event.target.matches('[data-archive-sort]')){sort=event.target.value;await draw();}};
   const submit=async(event)=>{if(!event.target.matches('[data-metadata-form]'))return;event.preventDefault();await saveMetadata(event.target);await draw();};
   const files=async()=>{if(!importInput.files?.length)return;const imported=await Archive.importFiles(importInput.files);importInput.value='';api.notify('Field Archive updated',`${imported.length} item${imported.length===1?'':'s'} added locally.`,'archive');await draw();};
-  const restore=async()=>{const file=restoreInput.files?.[0];restoreInput.value='';if(!file)return;try{if(file.size>Archive.MAX_BUNDLE_BYTES*1.5)throw new Error('Archive bundle is too large to restore safely in-browser.');const count=await Archive.restoreBundle(await file.text());api.notify('Archive restored',`${count} record${count===1?'':'s'} restored or updated locally.`,'archive');await draw();}catch(error){api.notify('Archive restore failed',error.message,'warning');}};
+  const restore=async()=>{const file=restoreInput.files?.[0];restoreInput.value='';if(!file)return;try{if(file.size>Archive.archiveStore.MAX_BUNDLE_BYTES*1.5)throw new Error('Archive bundle is too large to restore safely in-browser.');const count=await Archive.restoreBundle(await file.text());api.notify('Archive restored',`${count} record${count===1?'':'s'} restored or updated locally.`,'archive');await draw();}catch(error){api.notify('Archive restore failed',error.message,'warning');}};
   const changed=()=>draw();
 
   container.addEventListener('click',click);container.addEventListener('input',input);container.addEventListener('change',change);container.addEventListener('submit',submit);
