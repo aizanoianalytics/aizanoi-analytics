@@ -3,6 +3,7 @@
 // changing the historical source data that lives in each city's data folder.
 
 const finite = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
+const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
 function compactAxis(value, center, innerScale, coreRadius, outerScale) {
   if (!Number.isFinite(Number(value))) return value;
@@ -30,7 +31,7 @@ export const CITY_COMPACTION_PROFILES = Object.freeze({
     id: 'aizanoi-dense-core', centerX: 0, centerZ: 0,
     innerScaleX: 0.68, innerScaleZ: 0.66, coreX: 650, coreZ: 650,
     outerScaleX: 0.48, outerScaleZ: 0.42,
-    structureScale: 0.86, heightScale: 0.96,
+    structureScale: 0.96, heroScale: 0.86, heightScale: 1.0,
     regionScaleX: 0.72, regionScaleZ: 0.70,
     perimeterScaleX: 0.68, perimeterScaleZ: 0.66,
     roadWidthScale: 0.92, waterWidthScale: 0.90,
@@ -40,7 +41,7 @@ export const CITY_COMPACTION_PROFILES = Object.freeze({
     id: 'rome-dense-core', centerX: -140, centerZ: 0,
     innerScaleX: 0.68, innerScaleZ: 0.68, coreX: 650, coreZ: 600,
     outerScaleX: 0.52, outerScaleZ: 0.50,
-    structureScale: 0.84, heightScale: 0.96,
+    structureScale: 0.96, heroScale: 0.84, heightScale: 1.0,
     regionScaleX: 0.72, regionScaleZ: 0.72,
     perimeterScaleX: 0.68, perimeterScaleZ: 0.68,
     roadWidthScale: 0.90, waterWidthScale: 0.88,
@@ -50,7 +51,7 @@ export const CITY_COMPACTION_PROFILES = Object.freeze({
     id: 'athens-dense-core', centerX: 90, centerZ: 20,
     innerScaleX: 0.64, innerScaleZ: 0.68, coreX: 600, coreZ: 500,
     outerScaleX: 0.46, outerScaleZ: 0.50,
-    structureScale: 0.84, heightScale: 0.96,
+    structureScale: 0.96, heroScale: 0.88, heightScale: 1.0,
     regionScaleX: 0.69, regionScaleZ: 0.72,
     perimeterScaleX: 0.64, perimeterScaleZ: 0.68,
     roadWidthScale: 0.90, waterWidthScale: 0.88,
@@ -71,8 +72,10 @@ export function compactBuildings(records = [], profile) {
   return records.map((record) => {
     const [x, z] = compactPoint(record.x, record.z, profile);
     const perimeterEnvelope = record?.type === 'wall' && record.w > 80 && record.d > 80;
-    const widthScale = perimeterEnvelope ? profile.perimeterScaleX : profile.structureScale;
-    const depthScale = perimeterEnvelope ? profile.perimeterScaleZ : profile.structureScale;
+    const hero = !!record?.framing || !!record?.asset || ['parthenon','propylaea','colosseum','pantheon','temple'].includes(record?.id);
+    const regularScale = hero ? finite(profile.heroScale, profile.structureScale) : profile.structureScale;
+    const widthScale = perimeterEnvelope ? profile.perimeterScaleX : regularScale;
+    const depthScale = perimeterEnvelope ? profile.perimeterScaleZ : regularScale;
     return {
       ...record,
       x,
@@ -185,6 +188,87 @@ export function compactCityLayout({
   });
 }
 
+function approachDirection(record) {
+  const first = record?.framing?.preferredDirections?.[0];
+  if (!Array.isArray(first)) return null;
+  const x = Number(first[0] || 0);
+  const z = Number(first[1] || 0);
+  const length = Math.hypot(x, z);
+  if (!length) return null;
+  return [x / length, z / length];
+}
+
+function ellipseLoopPoints(record, segments = 14) {
+  const rx = Math.max(18, (record.w || 40) * 0.63 + 8);
+  const rz = Math.max(16, (record.d || 32) * 0.63 + 8);
+  const points = [];
+  for (let i = 0; i <= segments; i++) {
+    const angle = i * Math.PI * 2 / segments;
+    points.push([record.x + Math.cos(angle) * rx, record.z + Math.sin(angle) * rz]);
+  }
+  return points;
+}
+
+export function buildHeroApproachStreets(buildings = [], {
+  approachWidth = 10,
+  frontageWidth = 8,
+} = {}) {
+  const streets = [];
+  for (const record of buildings) {
+    const direction = approachDirection(record);
+    const distance = Number(record?.framing?.distance);
+    if (!direction || !Number.isFinite(distance)) continue;
+    const [dx, dz] = direction;
+    const radius = Math.max(record.w || 0, record.d || 0) * 0.52;
+    const edge = Math.min(distance * 0.72, Math.max(12, radius + 7));
+    const start = [record.x + dx * distance, record.z + dz * distance];
+    const mid = [record.x + dx * ((distance + edge) * 0.52), record.z + dz * ((distance + edge) * 0.52)];
+    const stop = [record.x + dx * edge, record.z + dz * edge];
+    const width = clamp(Math.max(approachWidth, Math.max(record.w || 0, record.d || 0) * 0.10), 8, 16);
+    streets.push({
+      id: `hero-approach-${record.id}`,
+      name: `${record.name || record.id} approach`,
+      points: [start, mid, stop],
+      width,
+      source: record.source || 'layout',
+      inferred: true,
+      visualStyle: 'blocky-low-poly',
+      layoutRole: 'hero-approach',
+    });
+
+    const px = -dz;
+    const pz = dx;
+    const half = Math.max(16, Math.min(42, Math.max(record.w || 0, record.d || 0) * 0.62));
+    streets.push({
+      id: `hero-frontage-${record.id}`,
+      name: `${record.name || record.id} frontage`,
+      points: [
+        [stop[0] - px * half, stop[1] - pz * half],
+        [stop[0] + px * half, stop[1] + pz * half],
+      ],
+      width: clamp(frontageWidth, 6, 11),
+      source: record.source || 'layout',
+      inferred: true,
+      visualStyle: 'blocky-low-poly',
+      layoutRole: 'hero-frontage',
+    });
+
+    if (record.id === 'colosseum' || record.type === 'amphitheatre') {
+      streets.push({
+        id: `hero-ring-${record.id}`,
+        name: `${record.name || record.id} circulation ring`,
+        points: ellipseLoopPoints(record, 16),
+        width: 9,
+        source: record.source || 'layout',
+        inferred: true,
+        visualStyle: 'blocky-low-poly',
+        layoutRole: 'hero-ring',
+      });
+    }
+  }
+  return streets;
+}
+
 export function expandPerimeterWalls(records = [], { thickness = 8 } = {}) {
   return records.flatMap((record) => {
     if (record?.type !== 'wall' || !(record.w > 80 && record.d > 80)) return [record];
@@ -227,5 +311,6 @@ export const CITY_LAYOUT_TOOLS = Object.freeze({
   flatGroundSafe: true,
   compactWalkableLayouts: true,
   sharedBlockyLanguage: true,
+  heroApproachStreets: true,
   purpose: 'Normalize source records into dense reusable blocky city placements without mutating the research ledger.',
 });
