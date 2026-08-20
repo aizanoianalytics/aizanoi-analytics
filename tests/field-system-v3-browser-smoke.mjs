@@ -63,7 +63,7 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   await page.waitForFunction(()=>document.activeElement?.id==='az-command-input');
   assert.equal(await page.evaluate(()=>document.activeElement?.id),'az-command-input','desktop: command did not receive initial focus');
   await page.keyboard.press('Escape');
-  await page.waitForSelector('#az-command-overlay:not(.is-open)');
+  await page.waitForSelector('#az-command-overlay',{state:'hidden'});
   await page.waitForFunction(()=>document.activeElement?.getAttribute('data-shell-action')==='search');
   assert.equal(await searchButton.evaluate((el)=>el===document.activeElement),true,'desktop: dialog did not restore opener focus');
 
