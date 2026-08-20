@@ -25,10 +25,12 @@ Before every production frontend rollout:
 3. verify the snapshot is readable;
 4. deploy only the intended static runtime files;
 5. verify source ↔ production checksums for changed files;
-6. test `/`, all three Historical Worlds and critical app assets;
-7. verify historical API fail-closed behavior;
-8. check for new browser/server errors;
-9. keep the rollback until the release has been exercised normally.
+6. run `nginx -t` before reloading any production Nginx configuration;
+7. test `/`, all three Historical Worlds and critical app assets;
+8. verify historical API fail-closed behavior;
+9. verify security headers on both HTML and cached static-asset responses;
+10. check for new browser/server errors;
+11. keep the rollback until the release has been exercised normally.
 
 Source-controlled reference: `infra/nginx/aizanoianalytics.com.conf.example`.
 
@@ -38,13 +40,16 @@ Production Nginx should be verified for:
 
 - gzip (and optionally Brotli if the installed module supports it);
 - `application/manifest+json` for `.webmanifest`;
-- no-cache/revalidate behavior for root HTML and manifest;
-- no-store for `service-worker.js`;
+- revalidation/no-cache behavior for root HTML, manifest and `service-worker.js`;
 - bounded caching for unhashed JS/CSS;
 - longer caching for stable image/icon assets;
 - `/.well-known/security.txt`;
+- CSP allowing `blob:` only where the browser-local PDF reader requires it (`frame-src`), without allowing inline JavaScript;
+- security headers remaining present on responses that also carry cache policy headers;
 - no application `proxy_pass` or listener on the retired visitor backend;
 - `/api/chat -> 410` and other `/api/* -> 404`.
+
+The reference config intentionally uses Nginx `expires` inside cache-specific locations rather than location-level `add_header Cache-Control`; on common Nginx versions, a location-level `add_header` would otherwise stop inheritance of the server-level security headers.
 
 Do not use one-year `immutable` caching until asset filenames are content-hashed.
 
