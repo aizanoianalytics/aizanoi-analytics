@@ -39,7 +39,7 @@ test('Athens c. 432–430 visual snapshot excludes later fifth-century buildings
   for (const laterId of ['athena-nike', 'erechtheion', 'erechtheion-north', 'erechtheion-karyatid', 'asclepieion', 'pompeion']) {
     assert.equal(byId.has(laterId), false, `${laterId} is later than the rendered c. 432–430 BCE snapshot`);
   }
-  assert.equal(byId.has('agoraios-kolonos'), false, 'Agoraios Kolonos is terrain, not a duplicate generic architecture box');
+  assert.equal(byId.has('agoraios-kolonos'), false, 'Agoraios Kolonos is terrain research, not duplicate architecture');
   assert.ok(byId.has('athena-nike-early'));
   assert.ok(byId.has('old-athena-polias'));
   assert.equal(byId.get('hephaisteion')?.state, 'working');
@@ -49,7 +49,7 @@ test('Athens c. 432–430 visual snapshot excludes later fifth-century buildings
   assert.ok(!TELEPORTS.some(([id]) => ['erechtheion', 'athena-nike', 'asclepieion', 'pompeion'].includes(id)));
 });
 
-test('Athens manifest is renderer-neutral and references all named monuments', async () => {
+test('Athens manifest remains renderer-neutral and references all named monuments', async () => {
   const { ATHENS_MANIFEST, ATHENS_CAPABILITIES } = await import(resolve(city, 'data/manifest.js'));
   assert.equal(ATHENS_MANIFEST.id, 'athens-450-430');
   assert.match(ATHENS_MANIFEST.title, /ATHENS/);
@@ -60,7 +60,7 @@ test('Athens manifest is renderer-neutral and references all named monuments', a
   assert.ok(ATHENS_CAPABILITIES.terrain);
 });
 
-test('Athens terrain preserves named hills and avoids a Tiber import', async () => {
+test('Athens topography remains available as research although live traversal is flat', async () => {
   const { HILLS, ERIDANOS, ILISSOS, KEPHISSOS, terrainHeightAt } = await import(resolve(city, 'data/terrain.js'));
   assert.ok(HILLS.some((h) => h.id === 'acropolis'));
   assert.ok(HILLS.some((h) => h.id === 'pnyx'));
@@ -72,7 +72,9 @@ test('Athens terrain preserves named hills and avoids a Tiber import', async () 
   assert.equal(typeof KEPHISSOS.x, 'number');
   const summit = terrainHeightAt(-25, -310);
   const plain = terrainHeightAt(80, 60);
-  assert.ok(summit > plain + 5, `Acropolis (${summit.toFixed(2)} m) should rise above Agora plain (${plain.toFixed(2)} m)`);
+  assert.ok(summit > plain + 5, `archived Acropolis field (${summit.toFixed(2)} m) should retain its research relationship to the plain (${plain.toFixed(2)} m)`);
+  const runtime = readFileSync(resolve(root, 'frontend/ancient-world/engine/flat-city-runtime.js'), 'utf8');
+  assert.match(runtime, /baseHeightAt:\s*\(\) => 0/);
 });
 
 test('Athens urban fabric is deterministic, bounded, evenly budgeted and explicitly plausible', () => {
@@ -83,14 +85,19 @@ test('Athens urban fabric is deterministic, bounded, evenly budgeted and explici
   assert.match(source, /evidence:\s*\{\s*level:\s*'plausible'/);
 });
 
-test('Athens renderer implements user-selected audio, modern overlay, regional minimap and no third-party runtime', () => {
+test('Athens adapter uses the shared flat blocky renderer and keeps user-facing controls', () => {
   const html = read('index.html');
   const app = read('js/app.js');
+  const assets = readFileSync(resolve(root, 'frontend/ancient-world/assets/blocky-asset-library.js'), 'utf8');
   assert.match(html, /id="audio"/);
   assert.match(html, /id="modern"/);
   assert.match(html, /id="minimap"/);
   assert.match(html, /id="atlas"/);
-  assert.match(app, /ATHENS_MANIFEST/);
+  assert.match(app, /startFlatBlockyCity/);
+  assert.match(app, /installCityCompatibility/);
+  assert.match(assets, /function parthenon\(/);
+  assert.match(assets, /function propylaea\(/);
+  assert.doesNotMatch(app, /terrainHeightAt|buildFoundation/);
   assert.doesNotMatch(html, /cdn\.|googleapis\.com|jsdelivr|unpkg/i);
   assert.doesNotMatch(app, /cdn\.|googleapis\.com|jsdelivr|unpkg/i);
 });
