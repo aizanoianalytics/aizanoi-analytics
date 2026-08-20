@@ -2,6 +2,7 @@ import { CITY, SOURCES, REGIONS, STREETS, BUILDINGS } from '../data/city.js';
 import { generateUrbanFabric } from '../data/urban-fabric.js';
 import { expandPerimeterWalls } from '../../../ancient-world/assets/city-layout-tools.js';
 import { startFlatBlockyCity } from '../../../ancient-world/engine/flat-city-runtime.js';
+import { installCityCompatibility } from '../../../ancient-world/engine/city-compatibility.js';
 
 const TOUCH = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches || innerWidth < 820;
 const urbanFabric = generateUrbanFabric({
@@ -26,4 +27,5 @@ const runtime = startFlatBlockyCity({
   cityRoute: '/ancient-cities/rome-410-476/',
 });
 
+installCityCompatibility(runtime, { ui: 'standard' });
 window.__ROME_WORLD__ = runtime;
