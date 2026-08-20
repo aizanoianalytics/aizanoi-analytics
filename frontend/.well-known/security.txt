@@ -1,0 +1,5 @@
+Contact: https://github.com/aizanoianalytics/aizanoi-analytics/issues/new
+Policy: https://github.com/aizanoianalytics/aizanoi-analytics/blob/main/SECURITY.md
+Canonical: https://aizanoianalytics.com/.well-known/security.txt
+Preferred-Languages: en, tr
+Expires: 2027-08-20T00:00:00Z
