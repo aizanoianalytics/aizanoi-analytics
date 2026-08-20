@@ -40,7 +40,7 @@ test('service worker never handles API routes', () => {
 });
 
 test('service worker core precache is complete-or-fail while app loading stays network-lazy', () => {
-  assert.match(sw, /aizanoi-field-shell-v3\.0\.1/);
+  assert.match(sw, /aizanoi-field-shell-v3\.0\.2/);
   assert.match(sw, /cache:'reload'/);
   assert.match(sw, /if \(!response\.ok\) throw new Error/);
   assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/);
@@ -48,8 +48,14 @@ test('service worker core precache is complete-or-fail while app loading stays n
   const precache = sw.match(/const PRECACHE = \[([\s\S]*?)\n\];/)?.[1] || '';
   assert.match(precache, /\/js\/v3\/shell\.js/);
   assert.doesNotMatch(precache, /\/styles\/apps\.css|\/js\/v3\/archive-store\.js|\/js\/v3\/apps\//, 'lazy app assets must not be pulled during service-worker install');
-  assert.match(sw, /sameOriginStatic/);
-  assert.match(sw, /caches\.open\(CACHE\).*cache\.put\(request/s, 'opened static assets should be cached at runtime');
+});
+
+test('mutable static requests are network-first with cache fallback for offline use', () => {
+  assert.match(sw, /async function networkFirstStatic\(request\)/);
+  assert.match(sw, /const response = await fetch\(request\)/);
+  assert.match(sw, /if \(response\.ok\) await cache\.put\(request, response\.clone\(\)\)/);
+  assert.match(sw, /const cached = await cache\.match\(request\)/);
+  assert.match(sw, /event\.respondWith\(networkFirstStatic\(request\)\)/);
 });
 
 test('nginx fails closed for historical API paths', () => {
