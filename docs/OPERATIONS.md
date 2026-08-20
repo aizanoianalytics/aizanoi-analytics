@@ -51,7 +51,7 @@ Production Nginx should be verified for:
 
 The reference config intentionally uses Nginx `expires` inside cache-specific locations rather than location-level `add_header Cache-Control`; on common Nginx versions, a location-level `add_header` would otherwise stop inheritance of the server-level security headers.
 
-The Field System service worker precaches only the small core shell with `cache: reload` and must fail installation rather than activate a partial precache. App CSS, research modules and Historical Worlds intentionally remain network-lazy; once requested, same-origin static assets are retained by the runtime cache for later/offline reuse. When the core precache contract changes in a future release, bump the `aizanoi-field-shell-*` cache version so activation can retire the previous shell cache cleanly.
+The Field System service worker precaches only the small core shell with `cache: reload` and must fail installation rather than activate a partial precache. App CSS, research modules and Historical Worlds intentionally remain network-lazy. Once requested, same-origin static assets use network-first delivery so mutable files can revalidate immediately after a release; a successful response refreshes the runtime cache and that cache is used only as the offline/network-failure fallback. When the core precache or delivery contract changes in a future release, bump the `aizanoi-field-shell-*` cache version so activation can retire the previous shell cache cleanly.
 
 Do not use long-lived `immutable` caching until asset filenames are content-hashed.
 
