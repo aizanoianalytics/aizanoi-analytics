@@ -11,6 +11,7 @@ const STEP_VECTORS = Object.freeze([
   [0.9, 0.9], [0.9, -0.9], [-0.9, 0.9], [-0.9, -0.9],
 ]);
 const SEARCH_RADII = Object.freeze([0, 2, 4, 6, 9, 13, 18, 25, 34, 48, 64]);
+const ARRIVAL_IDENTITY_CLEAR_DISTANCE = 3.5;
 let arrivalIdentityToken = 0;
 
 function normalizedDirection(direction) {
@@ -66,18 +67,29 @@ function ensureCurrentArrivalIsWalkable(debug, preferred = null) {
   return safe;
 }
 
-function holdAizanoiArrivalIdentity(debug, id, duration = 1400) {
+function pinArrivalIdentity(debug, id, ui) {
   const record = debug?.landmarks?.find((item) => item.id === id);
-  const label = document.querySelector('#locName');
-  if (!record?.name || !label) return;
+  const nameNode = document.querySelector(ui === 'aizanoi' ? '#locName' : '#place');
+  const detailNode = ui === 'aizanoi' ? null : document.querySelector('#detail');
+  const start = debug?.player;
+  if (!record?.name || !nameNode || !start) return;
+
   const token = ++arrivalIdentityToken;
-  const until = performance.now() + duration;
+  const startX = start.x;
+  const startZ = start.z;
+  const detail = record.detail || record.note || record.evidence?.note || 'Source-led landmark arrival.';
+
   const paint = () => {
-    if (token !== arrivalIdentityToken || performance.now() >= until) return;
-    if (label.textContent !== record.name) label.textContent = record.name;
+    if (token !== arrivalIdentityToken) return;
+    const current = debug.player;
+    if (!current || Math.hypot(current.x - startX, current.z - startZ) > ARRIVAL_IDENTITY_CLEAR_DISTANCE) return;
+    if (nameNode.textContent !== record.name) nameNode.textContent = record.name;
+    if (detailNode && detailNode.textContent !== detail) detailNode.textContent = detail;
     requestAnimationFrame(paint);
   };
-  label.textContent = record.name;
+
+  nameNode.textContent = record.name;
+  if (detailNode) detailNode.textContent = detail;
   requestAnimationFrame(paint);
 }
 
@@ -162,6 +174,8 @@ export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
   // Wrap the shared teleport once so every entry path (selector, tour, deep link,
   // debug tools) receives the same final walkability guarantee. The nudge keeps
   // the original yaw/pitch and remains local to the authored cinematic arrival.
+  // Keep the requested landmark identity pinned while the visitor is stationary;
+  // nearest-landmark discovery resumes only after meaningful walking begins.
   const rawTeleportTo = typeof debug.teleportTo === 'function' ? debug.teleportTo.bind(debug) : null;
   if (rawTeleportTo) {
     debug.teleportTo = (id, options = {}) => {
@@ -169,7 +183,7 @@ export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
       if (!ok) return ok;
       const preferred = debug.teleportViews?.[id]?.pos || null;
       ensureCurrentArrivalIsWalkable(debug, preferred);
-      if (ui === 'aizanoi') holdAizanoiArrivalIdentity(debug, id);
+      pinArrivalIdentity(debug, id, ui);
       return true;
     };
   }
@@ -223,6 +237,7 @@ export const CITY_COMPATIBILITY = Object.freeze({
   safeTeleportArrival: true,
   liveAizanoiDebugBridge: true,
   arrivalIdentityHold: true,
+  arrivalIdentityPinnedUntilMovement: true,
   gestureSafeDeepLink: true,
   deepLinkJump: true,
   legacyTeleportAlias: true,
