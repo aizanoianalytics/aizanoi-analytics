@@ -151,8 +151,8 @@
   }
   .az-app-card:hover { transform: translateY(-1px); background: rgba(32,47,44,.72); border-color: var(--az-border-strong); }
   .az-app-card img { width: 30px; height: 30px; }
-  .az-app-card strong { font-size: 13px; font-weight: 650; }
-  .az-app-card small { color: var(--az-text-3); font-size: 11px; line-height: 1.35; }
+  .az-app-card strong { display:block; font-size: 13px; font-weight: 650; }
+  .az-app-card small { display:block; margin-top:4px; color: var(--az-text-3); font-size: 11px; line-height: 1.35; }
   .az-tools-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .az-tools-grid .az-app-card { min-height: 82px; flex-direction: row; align-items: center; justify-content: flex-start; }
   .az-tools-grid .az-app-card div { min-width: 0; }
