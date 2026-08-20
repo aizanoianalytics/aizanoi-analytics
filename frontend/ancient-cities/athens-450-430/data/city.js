@@ -61,9 +61,11 @@ const LATER_BUILDINGS = new Set([
 const TERRAIN_ONLY_RECORDS = new Set(['agoraios-kolonos']);
 
 const FRAMING = Object.freeze({
-  // The western arrival echoes the processional approach through the Propylaea;
-  // the engine still validates terrain and collision before using it.
-  parthenon: { distance: 70, preferredDirections: [[-1,0],[-1,1]] },
+  // With city-wide terrain removed, the old west/Propylaea processional approach
+  // blocks the requested Parthenon behind the gateway mass. A south-first arrival
+  // keeps the Periclean precinct relationship visible while giving the hero a
+  // readable façade/colonnade in the flat-ground renderer.
+  parthenon: { distance: 95, preferredDirections: [[0,-1],[1,-1],[-1,-1],[1,0]] },
   propylaea: { distance: 62, preferredDirections: [[-1,0],[-1,1]] },
   // The west/south-west approach reveals the long peristyle instead of staring
   // squarely into the cella end wall from below Agoraios Kolonos.
