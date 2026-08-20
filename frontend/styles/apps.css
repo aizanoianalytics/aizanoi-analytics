@@ -34,7 +34,7 @@
   .az-record-card:hover, .az-record-card.is-selected { background:rgba(115,170,164,.085); border-color:rgba(115,170,164,.32); }
   .az-record-card img { width:30px; height:30px; }
   .az-record-card strong { font-size:12px; line-height:1.35; overflow-wrap:anywhere; }
-  .az-record-card small { margin-top:auto; color:var(--az-text-3); font-size:11px; }
+  .az-record-card small { margin-top:auto; color:var(--az-text-2); font-size:11px; }
   .az-record-kind { color:var(--az-brass-hi); font:700 11px/1.2 var(--az-font-mono); letter-spacing:.06em; text-transform:uppercase; }
   .az-inspector { overflow:auto; padding:15px; border-left:1px solid var(--az-border); background:rgba(7,12,12,.16); }
   .az-inspector h3 { margin:0 0 4px; font:400 19px/1.2 var(--az-font-display); }
