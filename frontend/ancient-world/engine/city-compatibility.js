@@ -127,6 +127,16 @@ export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
   // Keep it as a stable alias to the wrapped explicit method name.
   if (debug.teleportTo) debug.teleport = (...args) => debug.teleportTo(...args);
 
+  // Aizanoi's legacy runtime historically exposed a separate global debug object.
+  // The modular runtime initially populated it with Object.assign, which snapshots
+  // getters such as `player` and leaves old function references behind. Repoint
+  // both public debug names at the live shared object after wrapping teleport so
+  // QA and external tools observe the same player state and traversal methods.
+  if (ui === 'aizanoi') {
+    window.__AIZANOI_DEBUG__ = debug;
+    window.__ANCIENT_WORLD_DEBUG__ = debug;
+  }
+
   const params = new URL(location.href).searchParams;
   const jump = params.get('jump');
   if (jump && debug.landmarks?.some((record) => record.id === jump)) {
@@ -160,6 +170,7 @@ export const CITY_COMPATIBILITY = Object.freeze({
   realMovementProbe: true,
   safeInitialSpawn: true,
   safeTeleportArrival: true,
+  liveAizanoiDebugBridge: true,
   deepLinkJump: true,
   legacyTeleportAlias: true,
 });
