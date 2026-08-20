@@ -153,7 +153,7 @@ body[data-city="rome"] .place span,body[data-city="athens"] .place span{display:
     align-items:stretch;
   }
   body[data-city="aizanoi"] #hud .chip{display:none!important}
-  body[data-city="aizanoi"] #hud #teleport{grid-column:1;grid-row:1;margin:0!important;max-width:none!important;width:100%;min-width:0;min-height:44px;font-size:11px}
+  body[data-city="aizanoi"] #hud #teleport{display:block!important;grid-column:1;grid-row:1;margin:0!important;max-width:none!important;width:100%;min-width:0;min-height:44px;font-size:11px}
   body[data-city="aizanoi"] #hud #aw-tools-toggle{grid-column:2;grid-row:1;margin:0!important;white-space:nowrap}
   body[data-city="aizanoi"] #hud .eraWrap{grid-column:1/-1;grid-row:2;margin:0;width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
   body[data-city="aizanoi"] #hud .eraBtn{width:100%;min-height:44px;padding:9px 8px;font-size:11px}
