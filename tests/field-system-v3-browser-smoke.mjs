@@ -77,9 +77,31 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   assert.equal(typeof normalized.title,'string','desktop: restored title was not normalized to text');
   assert.deepEqual(normalized.tags,[],'desktop: malformed restored tags were not normalized');
   assert.equal(typeof normalized.source,'string','desktop: restored source was not normalized to text');
-  assert.equal(typeof normalized.evidence,'string','desktop: restored evidence was not normalized to text');
+  assert.equal(normalized.evidence,'documented','desktop: invalid evidence label survived normalization');
   assert.equal(typeof normalized.linkedRecord,'string','desktop: restored linked record was not normalized to text');
   assert.equal(normalized.lastModified,null,'desktop: invalid restored lastModified survived normalization');
+
+  // A failed replace restore must never clear the existing archive first.
+  const restoreSafety=await page.evaluate(async()=>{
+    const Archive=await import('/js/v3/archive-store.js');
+    const before=await Archive.get('sample-temple-zeus');
+    let rejected=false;
+    try {
+      await Archive.restoreBundle({
+        format:'aizanoi-field-archive',version:1,records:[{
+          id:'qa-invalid-binary',name:'QA invalid binary.bin',kind:'file',mime:'application/octet-stream',size:1,collection:'Uploads',
+          meta:{title:'QA invalid binary',evidence:'documented'},binary:{type:'application/octet-stream',base64:'%%%'}
+        }]
+      },{replace:true});
+    } catch (_) { rejected=true; }
+    const after=await Archive.get('sample-temple-zeus');
+    const invalid=await Archive.get('qa-invalid-binary');
+    return {rejected,before:Boolean(before),after:Boolean(after),invalid:Boolean(invalid)};
+  });
+  assert.equal(restoreSafety.rejected,true,'desktop: invalid binary restore did not reject');
+  assert.equal(restoreSafety.before,true,'desktop: baseline Archive seed missing before replace safety test');
+  assert.equal(restoreSafety.after,true,'desktop: failed replace restore cleared existing Archive data');
+  assert.equal(restoreSafety.invalid,false,'desktop: invalid restore record was partially written');
 
   // Dialog semantics: opener -> focus, background inert, Esc -> opener restore.
   // Shell focus transfer intentionally happens on the next task; wait for the actual
