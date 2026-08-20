@@ -27,7 +27,7 @@ const FRAMING = Object.freeze({
 // Camera composition is live-presentation metadata, separate from the authored
 // arrival distance contract above. It can widen a hero view without lengthening
 // the compact approach street or mutating the source/research ledger.
-const CAMERA_DISTANCE = Object.freeze({ colosseum: 205 });
+const CAMERA_DISTANCE = Object.freeze({ colosseum: 360 });
 
 export const BUILDINGS = base.BUILDINGS.map((building) => {
   const framing = FRAMING[building.id];
