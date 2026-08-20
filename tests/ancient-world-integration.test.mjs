@@ -5,41 +5,48 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
 const read = (path) => readFileSync(resolve(root, path), 'utf8');
+const runtime = read('frontend/ancient-world/engine/flat-city-runtime.js');
+const assets = read('frontend/ancient-world/assets/blocky-asset-library.js');
+const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
+const athens = read('frontend/ancient-cities/athens-450-430/js/app.js');
+const aizanoi = read('frontend/historic-world/app.js');
 
 test('historical worlds expose the shared Field System return navigation', () => {
-  const aizanoi = read('frontend/historic-world/index.html');
-  const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
   const navigation = read('frontend/ancient-world/engine/navigation.js');
-  assert.match(aizanoi, /installBackToOS/);
-  assert.match(aizanoi, /__ANCIENT_WORLD_DEBUG__/);
-  assert.match(rome, /installBackToOS/);
-  assert.match(rome, /__ANCIENT_WORLD_DESTROY__/);
+  assert.match(runtime, /installBackToOS/);
+  for (const source of [rome, athens, aizanoi]) assert.match(source, /startFlatBlockyCity/);
+  assert.match(runtime, /__ANCIENT_WORLD_DEBUG__/);
+  assert.match(runtime, /__ANCIENT_WORLD_DESTROY__/);
   assert.match(navigation, /label = '← Field System'/);
   assert.match(navigation, /Return to the Aizanoi Field System/);
-  assert.doesNotMatch(navigation, /label = '← Aizanoi OS'/);
 });
 
-test('Rome uses shared traversal and human-scale first-person movement', () => {
-  const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
-  assert.match(rome, /createTraversalSystem/);
-  assert.match(rome, /EYE_HEIGHT\s*=\s*1\.68/);
-  assert.match(rome, /WALK_SPEED\s*=\s*3\.8/);
-  assert.match(rome, /SPRINT_SPEED\s*=\s*7\.2/);
-  assert.match(rome, /moveWithSubsteps/);
-  assert.doesNotMatch(rome, /keys\.Shift\s*\?\s*120\s*:\s*55/);
+test('all cities use one shared human-scale traversal implementation', () => {
+  assert.match(runtime, /createTraversalSystem/);
+  assert.match(runtime, /EYE_HEIGHT = 1\.68/);
+  assert.match(runtime, /WALK_SPEED = 3\.8/);
+  assert.match(runtime, /SPRINT_SPEED = 7\.2/);
+  assert.match(runtime, /moveWithSubsteps/);
+  for (const source of [rome, athens, aizanoi]) {
+    assert.match(source, /startFlatBlockyCity/);
+    assert.doesNotMatch(source, /createTraversalSystem/);
+  }
 });
 
-test('Rome roads follow source polylines and terrain instead of axis-aligned boxes', () => {
-  const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
-  assert.match(rome, /const pieces = Math\.max\(1, Math\.ceil\(length \/ \(TOUCH \? 30 : 22\)\)\)/);
-  assert.match(rome, /terrainHeightAt\(x0, z0\)/);
-  assert.match(rome, /quad\(\s*\[x0 \+ nx \* half/);
+test('runtime ground is deliberately flat while roads and water remain city data', () => {
+  assert.match(runtime, /baseHeightAt:\s*\(\) => 0/);
+  assert.match(runtime, /function roadGeometry/);
+  assert.match(runtime, /function waterGeometry/);
+  assert.doesNotMatch(rome, /terrainHeightAt/);
+  assert.doesNotMatch(athens, /terrainHeightAt/);
 });
 
-test('Rome renderer has normals, cached shader locations and lifecycle cleanup', () => {
-  const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
-  assert.match(rome, /attribute vec3 aN/);
-  assert.match(rome, /const locations = Object\.freeze/);
-  assert.match(rome, /createLifecycle/);
-  assert.match(rome, /pagehide/);
+test('shared renderer owns normals, shader locations, lifecycle cleanup and reusable assets', () => {
+  assert.match(runtime, /attribute vec3 aN/);
+  assert.match(runtime, /const locations = Object\.freeze/);
+  assert.match(runtime, /createLifecycle/);
+  assert.match(runtime, /pagehide/);
+  assert.match(runtime, /createBlockyAssetLibrary/);
+  assert.match(assets, /createBlockyAssetLibrary/);
+  assert.match(assets, /trueVoxelEngine:\s*false/);
 });
