@@ -59,7 +59,7 @@ const legacyPaths = [
 for (const relative of legacyPaths) assert.equal(existsSync(path.join(root, relative)), false, `${relative} must remain retired`);
 
 assert.ok(statSync(path.join(frontend, 'index.html')).size < 12_000, 'canonical shell HTML regressed into an oversized document');
-assert.match(index, /Field System v3/);
+assert.match(index, /Aizanoi Field System/);
 assert.match(index, /\/styles\/tokens\.css/);
 assert.match(index, /\/styles\/base\.css/);
 assert.match(index, /\/styles\/shell\.css/);
