@@ -3,12 +3,15 @@ const STORE = 'items';
 const MAX_FILE_BYTES = 25 * 1024 * 1024;
 const MAX_BUNDLE_BYTES = 48 * 1024 * 1024;
 const BUNDLE_VERSION = 1;
+const VALID_KINDS = new Set(['dataset','pdf','image','markdown','text','note','file']);
 export const COLLECTIONS = Object.freeze(['Notes','Sources','Screenshots','Datasets','Exports','Uploads']);
 let databasePromise = null;
 let initialized = false;
 
 const extension = (name='') => String(name).toLowerCase().match(/\.([a-z0-9]+)$/)?.[1] || '';
 const uid = (prefix='item') => `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
+const finiteNumber = (value, fallback=0) => { const n=Number(value); return Number.isFinite(n) ? n : fallback; };
+const boundedString = (value, max=1024) => String(value ?? '').slice(0,max);
 
 export function kindFor(name='', mime='') {
   const ext = extension(name);
@@ -64,31 +67,43 @@ async function run(mode, operation) {
   });
 }
 
+function normalizeMeta(meta, fallbackTitle='Untitled') {
+  const raw = meta && typeof meta === 'object' && !Array.isArray(meta) ? meta : {};
+  const clean = {
+    title:boundedString(raw.title || fallbackTitle, 500),
+    place:boundedString(raw.place, 500),
+    period:boundedString(raw.period, 500),
+    source:boundedString(raw.source, 1200),
+    rights:boundedString(raw.rights, 1200),
+    evidence:boundedString(raw.evidence, 64),
+    tags:Array.isArray(raw.tags) ? raw.tags.map((tag) => boundedString(tag,128)).filter(Boolean).slice(0,30) : []
+  };
+  if (raw.system === true) clean.system = true;
+  const lastModified = finiteNumber(raw.lastModified, NaN);
+  if (Number.isFinite(lastModified) && lastModified >= 0) clean.lastModified = lastModified;
+  if (raw.linkedRecord != null) clean.linkedRecord = boundedString(raw.linkedRecord, 256);
+  return clean;
+}
+
 function normalize(record={}) {
   const now = Date.now();
-  const kind = record.kind || kindFor(record.name, record.mime);
-  const meta = record.meta && typeof record.meta === 'object' ? record.meta : {};
+  const name = boundedString(record.name || 'Untitled', 1024) || 'Untitled';
+  const proposedKind = boundedString(record.kind, 32);
+  const kind = VALID_KINDS.has(proposedKind) ? proposedKind : kindFor(name, record.mime);
+  const rawSize = Math.max(0, finiteNumber(record.size, 0));
+  const createdAt = Math.max(0, finiteNumber(record.createdAt, now));
   return {
-    id:record.id || uid(kind),
-    name:String(record.name || 'Untitled'),
+    id:boundedString(record.id || uid(kind), 256) || uid(kind),
+    name,
     kind,
-    mime:String(record.mime || ''),
-    size:Number(record.size || 0),
+    mime:boundedString(record.mime, 256),
+    size:rawSize,
     collection:COLLECTIONS.includes(record.collection) ? record.collection : collectionForKind(kind),
-    createdAt:Number(record.createdAt || now),
+    createdAt,
     updatedAt:now,
     text:typeof record.text === 'string' ? record.text : null,
     blob:record.blob instanceof Blob ? record.blob : null,
-    meta:{
-      title:String(meta.title || record.name || 'Untitled'),
-      place:String(meta.place || ''),
-      period:String(meta.period || ''),
-      source:String(meta.source || ''),
-      rights:String(meta.rights || ''),
-      evidence:String(meta.evidence || ''),
-      tags:Array.isArray(meta.tags) ? meta.tags.map(String).slice(0,30) : [],
-      ...meta
-    }
+    meta:normalizeMeta(record.meta, name)
   };
 }
 
@@ -210,20 +225,24 @@ export async function restoreBundle(bundle,{replace=false}={}) {
   if(replace) await run('readwrite',(store)=>store.clear());
   let restored=0;
   for(const source of value.records) {
-    if(!source||typeof source!=='object') continue;
+    if(!source||typeof source!=='object'||Array.isArray(source)) continue;
+    const restoredText=typeof source.text==='string'?source.text:null;
+    if(restoredText && new Blob([restoredText]).size>MAX_FILE_BYTES) throw new Error(`${source.name||'A record'} exceeds the per-file restore limit.`);
     let blob=null;
     if(source.binary?.base64) {
-      const bytes=base64ToBytes(String(source.binary.base64));
+      const encoded=String(source.binary.base64);
+      if(encoded.length>Math.ceil(MAX_FILE_BYTES*4/3)+8) throw new Error(`${source.name||'A record'} exceeds the per-file restore limit.`);
+      const bytes=base64ToBytes(encoded);
       if(bytes.byteLength>MAX_FILE_BYTES) throw new Error(`${source.name||'A record'} exceeds the per-file restore limit.`);
-      blob=new Blob([bytes],{type:String(source.binary.type||source.mime||'application/octet-stream')});
+      blob=new Blob([bytes],{type:boundedString(source.binary.type||source.mime||'application/octet-stream',256)});
     }
     await putRaw({
       ...source,
-      id:String(source.id||uid(source.kind||'item')),
-      name:String(source.name||'Restored record'),
+      id:boundedString(source.id||uid(source.kind||'item'),256),
+      name:boundedString(source.name||'Restored record',1024),
       blob,
-      text:typeof source.text==='string'?source.text:null,
-      meta:source.meta&&typeof source.meta==='object'?source.meta:{source:'Restored bundle',evidence:'documented',tags:[]}
+      text:restoredText,
+      meta:normalizeMeta(source.meta, source.name || 'Restored record')
     });
     restored++;
   }
