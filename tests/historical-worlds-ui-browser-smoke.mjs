@@ -89,6 +89,12 @@ for (const layout of layouts) {
           const toastBox=await toast.boundingBox();
           assert.equal(overlaps(era,toastBox,2),false,'aizanoi/mobile: entry toast overlaps chronology controls');
         }
+      }else{
+        const place=await page.locator('.place').boundingBox();
+        const movePad=await page.locator('#movePad').boundingBox();
+        assert.ok(place,`${world.id}/mobile: place card geometry unavailable`);
+        assert.ok(movePad,`${world.id}/mobile: movement pad geometry unavailable`);
+        assert.equal(overlaps(place,movePad,6),false,`${world.id}/mobile: place card overlaps movement pad`);
       }
     }
 
