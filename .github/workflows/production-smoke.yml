@@ -1,0 +1,64 @@
+name: Production Smoke QA
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  production-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+      - name: Verify production endpoints and deployed modular runtime
+        run: |
+          set -euo pipefail
+          base='https://aizanoianalytics.com'
+          for path in '/' '/historic-world/' '/ancient-cities/rome-410-476/' '/ancient-cities/athens-450-430/'; do
+            echo "Checking ${base}${path}"
+            curl -fSsL --max-time 25 -o /dev/null -w 'HTTP %{http_code} · %{size_download} bytes · %{time_total}s\n' "${base}${path}"
+          done
+          curl -fSsL --max-time 25 "${base}/ancient-world/engine/flat-city-runtime.js" | grep -F "terrain: 'flat-y0'"
+          curl -fSsL --max-time 25 "${base}/ancient-world/assets/blocky-asset-library.js" | grep -F 'createBlockyAssetLibrary'
+          curl -fSsL --max-time 25 "${base}/historic-world/data/city.js" | grep -F 'flat-ground modular Ancient World layout'
+          curl -fSsL --max-time 25 "${base}/ancient-cities/rome-410-476/js/app.js" | grep -F 'startFlatBlockyCity'
+          curl -fSsL --max-time 25 "${base}/ancient-cities/athens-450-430/js/app.js" | grep -F 'startFlatBlockyCity'
+      - name: Install browser QA dependencies
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --ignore-scripts playwright@1.62.1 axe-core@4.10.3
+          npx playwright install chromium
+      - name: Run production browser smoke
+        env:
+          ANCIENT_WORLD_BASE_URL: https://aizanoianalytics.com
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/production-smoke
+          status=0
+          for script in field-system-v3-browser-smoke.mjs ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs; do
+            echo "=== $script ===" | tee "artifacts/production-smoke/$script.log"
+            node "tests/$script" 2>&1 | tee -a "artifacts/production-smoke/$script.log" || status=1
+          done
+          exit $status
+      - name: Capture production visuals
+        if: success()
+        env:
+          ANCIENT_WORLD_BASE_URL: https://aizanoianalytics.com
+        run: |
+          set -euo pipefail
+          node tests/historical-worlds-visual-capture.mjs 2>&1 | tee artifacts/production-smoke/historical-worlds-visual-capture.log
+          node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/production-smoke/field-system-v3-visual-capture.log
+      - name: Upload production QA artifacts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: production-smoke-review
+          path: |
+            artifacts/production-smoke/*
+            artifacts/final-visual-review/*.png
+          retention-days: 1
