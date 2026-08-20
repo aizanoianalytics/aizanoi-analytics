@@ -4,6 +4,7 @@ const MAX_FILE_BYTES = 25 * 1024 * 1024;
 const MAX_BUNDLE_BYTES = 48 * 1024 * 1024;
 const BUNDLE_VERSION = 1;
 const VALID_KINDS = new Set(['dataset','pdf','image','markdown','text','note','file']);
+const VALID_EVIDENCE = new Set(['documented','archaeological','inferred','atmospheric','disputed']);
 export const COLLECTIONS = Object.freeze(['Notes','Sources','Screenshots','Datasets','Exports','Uploads']);
 let databasePromise = null;
 let initialized = false;
@@ -69,13 +70,14 @@ async function run(mode, operation) {
 
 function normalizeMeta(meta, fallbackTitle='Untitled') {
   const raw = meta && typeof meta === 'object' && !Array.isArray(meta) ? meta : {};
+  const proposedEvidence = boundedString(raw.evidence, 64).toLowerCase();
   const clean = {
     title:boundedString(raw.title || fallbackTitle, 500),
     place:boundedString(raw.place, 500),
     period:boundedString(raw.period, 500),
     source:boundedString(raw.source, 1200),
     rights:boundedString(raw.rights, 1200),
-    evidence:boundedString(raw.evidence, 64),
+    evidence:VALID_EVIDENCE.has(proposedEvidence) ? proposedEvidence : 'documented',
     tags:Array.isArray(raw.tags) ? raw.tags.map((tag) => boundedString(tag,128)).filter(Boolean).slice(0,30) : []
   };
   if (raw.system === true) clean.system = true;
@@ -218,40 +220,63 @@ export async function exportBundle() {
   };
 }
 
+function prepareRestoreRecord(source) {
+  if(!source||typeof source!=='object'||Array.isArray(source)) return null;
+  const label=boundedString(source.name||'A record',1024) || 'A record';
+  const restoredText=typeof source.text==='string'?source.text:null;
+  const restoredTextSize=restoredText===null?0:new Blob([restoredText]).size;
+  if(restoredTextSize>MAX_FILE_BYTES) throw new Error(`${label} exceeds the per-file restore limit.`);
+  let blob=null;
+  if(source.binary?.base64) {
+    const encoded=String(source.binary.base64);
+    if(encoded.length>Math.ceil(MAX_FILE_BYTES*4/3)+8) throw new Error(`${label} exceeds the per-file restore limit.`);
+    let bytes;
+    try { bytes=base64ToBytes(encoded); } catch (_) { throw new Error(`${label} contains invalid binary data.`); }
+    if(bytes.byteLength>MAX_FILE_BYTES) throw new Error(`${label} exceeds the per-file restore limit.`);
+    blob=new Blob([bytes],{type:boundedString(source.binary.type||source.mime||'application/octet-stream',256)});
+  }
+  const claimedSize=Math.max(0,finiteNumber(source.size,0));
+  const restoredSize=blob ? blob.size : restoredText!==null ? restoredTextSize : Math.min(MAX_FILE_BYTES,claimedSize);
+  return {
+    item:normalize({
+      ...source,
+      id:boundedString(source.id||uid(source.kind||'item'),256),
+      name:label,
+      size:restoredSize,
+      blob,
+      text:restoredText,
+      meta:normalizeMeta(source.meta, label)
+    }),
+    logicalBytes:restoredSize,
+    payloadBytes:restoredTextSize+(blob?.size||0)
+  };
+}
+
 export async function restoreBundle(bundle,{replace=false}={}) {
   const value=typeof bundle==='string'?JSON.parse(bundle):bundle;
   if(!value||value.format!=='aizanoi-field-archive'||Number(value.version)!==BUNDLE_VERSION||!Array.isArray(value.records)) throw new Error('Unsupported Field Archive bundle.');
   if(value.records.length>5000) throw new Error('Archive bundle contains too many records.');
-  if(replace) await run('readwrite',(store)=>store.clear());
-  let restored=0;
+
+  const preparedById=new Map();
+  let logicalBytes=0;
+  let payloadBytes=0;
   for(const source of value.records) {
-    if(!source||typeof source!=='object'||Array.isArray(source)) continue;
-    const restoredText=typeof source.text==='string'?source.text:null;
-    const restoredTextSize=restoredText===null?0:new Blob([restoredText]).size;
-    if(restoredTextSize>MAX_FILE_BYTES) throw new Error(`${source.name||'A record'} exceeds the per-file restore limit.`);
-    let blob=null;
-    if(source.binary?.base64) {
-      const encoded=String(source.binary.base64);
-      if(encoded.length>Math.ceil(MAX_FILE_BYTES*4/3)+8) throw new Error(`${source.name||'A record'} exceeds the per-file restore limit.`);
-      const bytes=base64ToBytes(encoded);
-      if(bytes.byteLength>MAX_FILE_BYTES) throw new Error(`${source.name||'A record'} exceeds the per-file restore limit.`);
-      blob=new Blob([bytes],{type:boundedString(source.binary.type||source.mime||'application/octet-stream',256)});
-    }
-    const claimedSize=Math.max(0,finiteNumber(source.size,0));
-    const restoredSize=blob ? blob.size : restoredText!==null ? restoredTextSize : Math.min(MAX_FILE_BYTES,claimedSize);
-    await putRaw({
-      ...source,
-      id:boundedString(source.id||uid(source.kind||'item'),256),
-      name:boundedString(source.name||'Restored record',1024),
-      size:restoredSize,
-      blob,
-      text:restoredText,
-      meta:normalizeMeta(source.meta, source.name || 'Restored record')
-    });
-    restored++;
+    const prepared=prepareRestoreRecord(source);
+    if(!prepared) continue;
+    logicalBytes+=prepared.logicalBytes;
+    payloadBytes+=prepared.payloadBytes;
+    if(logicalBytes>MAX_BUNDLE_BYTES||payloadBytes>MAX_BUNDLE_BYTES*2) throw new Error('Archive bundle exceeds the safe restore size limit.');
+    preparedById.set(prepared.item.id,prepared.item);
   }
-  window.dispatchEvent(new CustomEvent('aizanoi:archive-change',{detail:{type:'restore',count:restored}}));
-  return restored;
+
+  const prepared=[...preparedById.values()];
+  await run('readwrite',(store)=>{
+    if(replace) store.clear();
+    for(const item of prepared) store.put(item);
+    return prepared.length;
+  });
+  window.dispatchEvent(new CustomEvent('aizanoi:archive-change',{detail:{type:'restore',count:prepared.length}}));
+  return prepared.length;
 }
 
 export async function downloadBundle(filename='aizanoi-field-archive.json') {
