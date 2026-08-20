@@ -1,5 +1,4 @@
 'use strict';
-window.__AIZANOI_DEBUG__ = window.__AIZANOI_DEBUG__ || {};
 
 (async () => {
   try {
