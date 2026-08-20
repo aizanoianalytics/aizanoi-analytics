@@ -66,10 +66,13 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
   assert.match(nginx,/frame-src 'self' blob:/);
 });
 
-test('cache locations preserve inherited security headers on common nginx versions',()=>{
+test('cache locations preserve security headers and revalidate mutable unversioned code',()=>{
   assert.equal((nginx.match(/^\s*add_header\s+Cache-Control\b/gm)||[]).length,0,'location-level Cache-Control add_header can suppress inherited security headers');
-  assert.match(nginx,/expires -1;/);
-  assert.match(nginx,/expires 1d;/);
+  assert.match(nginx,/location \^~ \/styles\/[\s\S]*expires -1;/);
+  assert.match(nginx,/location \^~ \/js\/[\s\S]*expires -1;/);
+  assert.match(nginx,/location \^~ \/historic-world\/[\s\S]*expires -1;/);
+  assert.match(nginx,/location \^~ \/ancient-cities\/rome-410-476\/[\s\S]*expires -1;/);
+  assert.match(nginx,/location \^~ \/assets\/[\s\S]*expires 7d;/);
   assert.match(nginx,/X-Content-Type-Options/);
   assert.match(nginx,/Content-Security-Policy/);
 });
