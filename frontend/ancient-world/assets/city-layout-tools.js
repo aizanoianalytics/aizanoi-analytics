@@ -121,12 +121,15 @@ export function compactWaters(records = [], profile) {
       visualStyle: 'blocky-low-poly',
     };
     const [x, z] = compactPoint(record.x, record.z, profile);
+    const w = Number(record.w);
+    const d = Number(record.d);
+    const horizontal = Number.isFinite(w) && Number.isFinite(d) && w >= d;
     return {
       ...record,
       x,
       z,
-      w: Number.isFinite(Number(record.w)) ? Math.max(8, Number(record.w) * profile.waterWidthScale) : record.w,
-      d: Number.isFinite(Number(record.d)) ? Math.max(8, Number(record.d) * profile.innerScaleZ) : record.d,
+      w: Number.isFinite(w) ? Math.max(8, w * (horizontal ? profile.innerScaleX : profile.waterWidthScale)) : record.w,
+      d: Number.isFinite(d) ? Math.max(8, d * (horizontal ? profile.waterWidthScale : profile.innerScaleZ)) : record.d,
       visualStyle: 'blocky-low-poly',
     };
   });
@@ -162,6 +165,8 @@ export function compactCityLayout({
 } = {}, profile) {
   if (!profile) throw new TypeError('compactCityLayout requires a city compaction profile.');
   const averageScale = (profile.innerScaleX + profile.innerScaleZ) / 2;
+  const compactedBounds = compactBounds(bounds, profile);
+  const compactedSpawn = compactSpawn(spawn, profile);
   return Object.freeze({
     city: Object.freeze({
       ...city,
@@ -174,8 +179,8 @@ export function compactCityLayout({
     streets: Object.freeze(compactStreets(streets, profile)),
     buildings: Object.freeze(compactBuildings(buildings, profile)),
     waters: Object.freeze(compactWaters(waters, profile)),
-    bounds: Object.freeze(compactBounds(bounds, profile)),
-    spawn: Object.freeze(compactSpawn(spawn, profile)),
+    bounds: compactedBounds ? Object.freeze(compactedBounds) : null,
+    spawn: compactedSpawn ? Object.freeze(compactedSpawn) : null,
     profile,
   });
 }
