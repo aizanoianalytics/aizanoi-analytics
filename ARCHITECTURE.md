@@ -1,8 +1,6 @@
 # Aizanoi Analytics Architecture
 
-This document is the maintained component map for the public Aizanoi Analytics platform.
-
-The central architecture decision is simple: **the visitor-facing production application is static-only**. Interactive behavior lives in the browser unless a future product requirement is strong enough to justify a separate security and operations review.
+The visitor-facing product is **static-only**. Nginx serves HTML, CSS, JavaScript and assets; application state and research records live in the browser. There is no visitor-facing Node/Express service, terminal endpoint or application API.
 
 ## Runtime topology
 
@@ -10,213 +8,179 @@ The central architecture decision is simple: **the visitor-facing production app
 Browser
   |
   +-- Aizanoi Field System (/)
-  |     +-- app/world registry + persistent local state
-  |     +-- unified desktop/tablet/mobile shell
-  |     +-- final product-polish/accessibility layers
-  |     +-- local research workstation
-  |     |     +-- Field Archive
-  |     |     +-- Field Notes
-  |     |     +-- Data Lab
-  |     |     +-- Source Reader
-  |     |     +-- Artifact Viewer
-  |     |     +-- Workspace Monitor
-  |     +-- Projects / Games / TV
-  |     +-- browser-only Field Terminal
+  |     +-- js/v3/registry.js        app + world definitions
+  |     +-- js/v3/store.js           workspace + field-session state
+  |     +-- js/v3/shell.js           canonical window/router/dialog/commands
+  |     +-- js/v3/archive-store.js   IndexedDB local archive
+  |     +-- js/v3/apps/*             lazy application modules
+  |     +-- styles/tokens.css        canonical --az-* tokens
+  |     +-- styles/base.css          reset/base
+  |     +-- styles/shell.css         responsive shell/windows
+  |     +-- styles/components.css    dialogs/commands/components
+  |     +-- styles/apps.css          lazy application presentation
   |
   +-- Historical Worlds
   |     +-- /historic-world/                 Aizanoi reference world
   |     +-- /ancient-cities/rome-410-476/   Late Antique Rome
   |     +-- /ancient-cities/athens-450-430/ Classical Athens
-  |             |
-  |             +-- /ancient-world/engine/* shared traversal/input/evidence/render helpers
+  |     +-- /ancient-world/engine/*          shared traversal/evidence/UI helpers
   |
-  +-- HTTPS --> Nginx --> static frontend files only
+  +-- HTTPS -> Nginx -> static files only
 
-Historical /api/chat       -> 410 Gone
-Other historical /api/*   -> 404
-Public application backend -> none
+Historical /api/chat -> 410 Gone
+Other /api/*         -> 404
+Application backend  -> none
 ```
 
-There is intentionally **no visitor-facing Node/Express application service** in the current production web architecture.
+## Field System v3
 
-## Field System layers
+Field System v3 deliberately replaces the old compatibility stack instead of layering another theme over it. The root document is a small semantic bootstrap: four initial stylesheets and one ES module. Research/tool applications load only when opened.
 
-The Field System grew from an older desktop-style shell, so the current architecture uses layered compatibility rather than an unnecessary framework rewrite.
+### Registry
 
-### `frontend/index.html`
+`frontend/js/v3/registry.js` is the only application/world catalog.
 
-Owns the core document structure, legacy application factories and foundational window markup.
+Each app defines an id, label, icon, group, lazy module and searchable metadata. Device-specific launchers do not maintain separate catalogs.
 
-New work should avoid making this file more monolithic. The preferred direction is careful mechanical extraction while preserving browser behavior and test coverage.
+### Workspace Store
 
-### `frontend/js/os-state.js`
+`frontend/js/v3/store.js` owns:
 
-Owns shared application/world state and the canonical app registry.
+- open app ids;
+- active app intent;
+- desktop window rectangles;
+- recents/activity;
+- preferences;
+- browser-local Historical World session context.
 
-The featured launcher is intentionally synchronized across desktop, tablet and mobile. Device layout may change, but the product catalog should not silently become three separate products.
+The URL represents the **active app intent** (`?app=<id>`), not a serialized desktop snapshot. Back/forward may change focus without destroying unrelated open windows.
 
-### `frontend/js/os-shell.js`
+### Shell / WindowFrame / Router / Commands / Dialogs
 
-Owns the primary shell/window behavior, launch flows and shared desktop interactions.
+`frontend/js/v3/shell.js` is the canonical lifecycle.
 
-It is the window-management foundation; enhancement layers must not become competing window managers.
+It owns:
 
-### `frontend/js/os-unified.js`
+- responsive Home hierarchy;
+- app open/focus/minimize/maximize/close;
+- desktop drag/resize and keyboard move/resize path;
+- task shelf and app switcher;
+- route intent synchronization;
+- command palette;
+- modal focus trap, background inert state and opener focus restore;
+- lazy app loading.
 
-Owns the unified responsive shell contract.
+Applications mount content into a supplied container and may return cleanup logic. They do not create a second window manager.
 
-- desktop: free windowed workspace;
-- tablet: touch-friendly windowed workspace with stronger clamping/targets;
-- mobile: fullscreen-equivalent app surfaces with shared product identity.
+### Local Archive
 
-Breakpoints change layout, not the meaning of the application.
+`frontend/js/v3/archive-store.js` owns IndexedDB research records.
 
-### `frontend/js/os-v2.js`
+The Archive is local-first, not cloud-synced. Imported files and notes are not silently sent to a service. Browser/user storage controls can delete local data, so important material should be exported outside the browser when long-term retention matters.
 
-Progressive hardening/accessibility layer: viewport recovery, semantics, keyboard/focus improvements and compatibility behavior.
+### Research applications
 
-### `frontend/js/os-product-polish.js`
-
-Final product presentation bridge for legacy and workstation surfaces.
-
-It normalizes visible product identity, application chrome and stale compatibility copy without reimplementing mature application logic.
-
-### `frontend/js/os-platform.js`
-
-Coordinates the modern Field System loader chain and cross-device presentation assets.
-
-### `frontend/service-worker.js`
-
-Owns static PWA caching only.
-
-The service worker must not intercept historical `/api/*` paths or become a hidden synchronization/backend layer. Cache namespace bumps are used when rollout consistency matters across already-installed clients.
-
-## Local workstation applications
-
-### `frontend/js/os-workbench*.js`
-
-Own local research tools:
+`frontend/js/v3/apps/research.js` mounts:
 
 - Field Archive;
 - Field Notes;
 - Data Lab;
 - Source Reader;
-- Artifact Viewer;
-- Workspace Monitor;
-- shared workbench shell behavior.
+- Artifact Viewer.
 
-Workspace content is local-first. These modules should not silently transmit imported files, notes or datasets to external services.
+The applications share Archive records and metadata instead of duplicating storage systems.
 
-### `frontend/js/terminal.js`
+### Field Terminal
 
-Owns the browser-only Field Terminal.
+`frontend/js/v3/apps/terminal.js` is a browser-only task shell. It exposes domain commands such as `worlds`, `open`, `find`, `session` and `evidence` plus a tiny fixed virtual file set.
 
-Its security contract is intentionally narrow:
+It intentionally has no arbitrary process execution, host filesystem access, server hostname/process simulation, WebSocket shell or terminal API dependency.
 
-- fixed command set;
-- fixed in-memory virtual filesystem;
-- no arbitrary process execution;
-- no host/server filesystem access;
-- no WebSocket shell;
-- no visitor-facing terminal endpoint dependency;
-- no required network primitives for command execution.
+### Workspace Monitor
 
-Any proposal to turn this into a real remote shell is an architecture/security change, not a Terminal feature tweak.
+`frontend/js/v3/apps/monitor.js` reports only facts that the browser can actually measure: storage estimate, open apps, service-worker state, connectivity, viewport, installation mode and local field-session state. It does not invent CPU/RAM/server-health telemetry.
 
-## Games and project surfaces
+## CSS architecture
 
-### `frontend/games/`
+Canonical Field System styles use one namespace: `--az-*`.
 
-Each game owns its game rules/rendering. `game-utils.js` owns local-only score persistence and shared toolbar primitives.
+```css
+@layer reset, tokens, base, shell, components, apps, utilities;
+```
 
-Public/shared leaderboards are intentionally out of current scope.
+The old global `frontend/css/` compatibility stack is retired. New presentation work must modify the canonical layer that owns the behavior instead of creating another override/polish file.
 
-Projects and TV remain browser-facing presentation layers, not reasons to add accounts or a general application backend.
+See [DESIGN.md](DESIGN.md).
 
-## Historical World architecture
+## Responsive contract
 
-### `frontend/ancient-world/engine/`
+- Compact `<600px`: fullscreen-equivalent apps + bottom navigation.
+- Medium `600–839px`: single focus workspace.
+- Expanded `840–1199px`: large touch-friendly focus workspace.
+- Large `>=1200px`: freeform desktop windows.
 
-Renderer-neutral shared behavior. City implementations consume these contracts instead of cloning movement/input logic:
+Input capability still matters: coarse-pointer targets use a 44 px floor and required actions cannot depend on hover.
 
-- `traversal.js` — collision, substeps, support surfaces, safe spawn;
-- `lifecycle.js` — listeners/RAF/audio teardown;
-- `mobile-controls.js` — touch movement/look/run UI;
-- `navigation.js` — return to Aizanoi Field System;
-- `evidence.js` — archaeological/documentary/inferred presentation;
-- `performance.js` — adaptive quality policy;
-- `surface-shader.js`, `environment-renderer.js` — shared visual pipeline;
-- `landmark-framing.js` — sightline-aware landmark arrival selection;
-- `city-contract.js`, `city-grounding.js` — reusable city contract/grounding helpers.
+## Historical Worlds
 
-### City directories
+Historical Worlds remain city-specific where history demands it and shared where behavior is genuinely reusable.
 
-`frontend/ancient-cities/<city>/data/` owns historically scoped city facts, terrain, named structures, urban-fabric assumptions and source metadata.
+`frontend/ancient-world/engine/` contains shared traversal, lifecycle, input, evidence and presentation helpers. City data and hero monument decisions stay in their own city directories.
 
-`js/app.js` owns city-specific geometry/readability.
+`city-experience.js` also maintains a lightweight `aizanoi-field-session-v1` record. Entering or changing a landmark updates this browser-local context; the Explore drawer includes a Field System return action. The OS can then offer **Continue Field Session** without putting private note/archive payloads in the URL.
 
-Procedural detail must not upgrade the evidence certainty of inferred content.
+The prior 51-landmark Aizanoi/Rome/Athens walk QA remains a regression gate.
 
-### `frontend/historic-world/`
+## Evidence boundary
 
-Aizanoi remains the project's mature historical reference environment and product center.
+The project distinguishes documented/source information, archaeological evidence, explicit inference and atmospheric reconstruction. Generic shared geometry or urban-fabric helpers never upgrade the evidence certainty of city-local content.
 
-Refactoring should be behavior-preserving and evidence-aware. Shared behavior can move outward gradually; a renderer rewrite is not a prerequisite for improving the historical experience.
+## Service worker
 
-## Research boundary
-
-Research is deliberately visible in the repository.
-
-- `research/rome_410_476/` — Rome research and verified source material;
-- `research/athens_450_430/` — Athens research and verified source material;
-- city-level `data/` / methodology modules — implementation-facing historical assumptions;
-- evidence UI — communicates certainty without pretending all reconstructed detail is equally sourced.
-
-Historical-world contributions should preserve the difference between documented evidence, interpretation and atmosphere.
+`frontend/service-worker.js` caches only static shell/assets. It must never intercept `/api/*`, become a hidden sync layer or cache a visitor backend that does not exist. Root/service-worker updates revalidate promptly; lazy application files use bounded caching until content-hashed production assets are introduced.
 
 ## Deployment boundary
 
-### `infra/`
+`infra/nginx/aizanoianalytics.com.conf.example` is a sanitized static deployment baseline. It includes:
 
-Sanitized deployment examples only.
-
-Production files live on the server. Nginx owns:
-
-- HTTPS/static routing;
-- real HTTP error behavior;
+- fail-closed historical API paths;
+- gzip static compression;
+- explicit PWA manifest MIME;
+- no-cache shell/service-worker policy;
+- bounded static asset caching;
 - security headers;
-- fail-closed historical API paths.
+- `/.well-known/security.txt`;
+- no application proxy.
 
-There is no Aizanoi application service for Nginx to proxy to.
-
-Production secrets, private TLS material, backups and server-specific operational files do not belong in this repository.
+Provider/server actions such as production rollout, branch protection, off-site backups and accepted-login alerts require evidence outside the repository and must not be marked complete merely because guidance exists here.
 
 ## Change rules
 
-1. **Git first.** No direct production-only application fixes; source changes should exist in Git before deployment.
-2. **Keep the public web runtime static by default.** Do not add a server/API for a browser feature without a demonstrated requirement and separate security review.
-3. **One product across devices.** Desktop/tablet/mobile may adapt layout but should preserve application identity and feature equivalence.
-4. **No new movement engine per city.** Extend shared Ancient World contracts when behavior is reusable.
-5. **No certainty inflation.** Atmospheric/procedural reconstruction stays identifiable as interpretation rather than fact.
-6. **Keep local tools local.** Do not silently externalize Archive/Notes/Data Lab/Terminal data.
-7. **No social scope creep by accident.** Accounts, comments, multiplayer and shared leaderboards require an explicit product decision.
-8. **Measure before heavyweight rewrites.** No framework/renderer migration merely because a newer architecture exists.
-9. **Regression first.** Shared engine, OS lifecycle, routing, Terminal, storage and mobile changes need automated coverage plus browser smoke where behavior is interactive.
+1. Git first; no production-only application fixes.
+2. Keep visitor runtime static by default.
+3. One registry and one window lifecycle.
+4. One product across desktop/tablet/mobile.
+5. No new movement engine per city.
+6. No certainty inflation in reconstruction.
+7. Keep local research local unless export is explicit.
+8. No new override/polish compatibility layer.
+9. Measure before framework/renderer rewrites.
+10. Interactive changes need regression tests plus rendered browser review.
 
 ## Release gate
 
-A change is release-ready when applicable checks pass:
+Applicable release checks include:
 
 - JavaScript syntax validation;
-- Node regression suite (test runner only; not a production backend);
-- static-runtime security regression checks;
+- Node regression suite used only as a test runner;
+- Field System v3 source/security contract;
+- desktop/tablet/mobile Chromium smoke;
+- axe serious/critical gate on canonical shell surfaces;
+- route/window/dialog lifecycle checks;
+- Historical Worlds traversal/deep-link/landmark regression;
+- visual capture review;
+- Lighthouse budgets;
 - `git diff --check`;
-- desktop/tablet/mobile Chromium Field System smoke;
-- Terminal browser smoke with no application API dependency;
-- workstation application smoke;
-- Rome/Athens movement, deep-link and teleport/landmark behavior;
-- visual capture review for presentation changes;
-- Lighthouse budgets for the production-like static shell;
-- deployment config review when Nginx behavior changes.
+- Nginx example review when delivery behavior changes.
 
-Manual real-device touch checks and assistive-technology checks such as NVDA/VoiceOver remain human release checks because CI cannot faithfully reproduce those environments.
+Manual NVDA/VoiceOver/TalkBack and real-device touch checks remain human QA rather than being falsely claimed as automated.
