@@ -5,7 +5,7 @@
     const [
       { CITY, SOURCES, REGIONS, STREETS, BUILDINGS, WATERS, BOUNDS, SPAWN },
       { generateAizanoiFabric },
-      { compactCityLayout, CITY_COMPACTION_PROFILES },
+      { compactCityLayout, buildHeroApproachStreets, CITY_COMPACTION_PROFILES },
       { startFlatBlockyCity },
       { installCityCompatibility },
     ] = await Promise.all([
@@ -25,16 +25,20 @@
       bounds: BOUNDS,
       spawn: SPAWN,
     }, CITY_COMPACTION_PROFILES.aizanoi);
+    const liveStreets = Object.freeze([
+      ...layout.streets,
+      ...buildHeroApproachStreets(layout.buildings, { approachWidth: 9, frontageWidth: 7 }),
+    ]);
     const runtime = startFlatBlockyCity({
       city: layout.city,
       sources: SOURCES,
       regions: layout.regions,
-      streets: layout.streets,
+      streets: liveStreets,
       buildings: layout.buildings,
       urbanFabric: generateAizanoiFabric({
         regions: layout.regions,
         buildings: layout.buildings,
-        streets: layout.streets,
+        streets: liveStreets,
         waters: layout.waters,
         mobile: TOUCH,
       }),
