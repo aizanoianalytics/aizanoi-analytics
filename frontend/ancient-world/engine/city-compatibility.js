@@ -81,6 +81,40 @@ function holdAizanoiArrivalIdentity(debug, id, duration = 1400) {
   requestAnimationFrame(paint);
 }
 
+function activateWithoutPointerLock(enter, canvas) {
+  if (!enter) return;
+  if (!canvas || typeof canvas.requestPointerLock !== 'function') {
+    enter.click();
+    return;
+  }
+
+  // Programmatic .click() is not a browser user activation. The normal entry
+  // handler requests pointer lock synchronously, which Chromium rejects on a
+  // deep-link boot. Shadow only that method for this one synthetic activation;
+  // real user clicks immediately regain the browser's native implementation.
+  const hadOwn = Object.prototype.hasOwnProperty.call(canvas, 'requestPointerLock');
+  const previous = hadOwn ? Object.getOwnPropertyDescriptor(canvas, 'requestPointerLock') : null;
+  let shadowed = false;
+  try {
+    Object.defineProperty(canvas, 'requestPointerLock', {
+      configurable: true,
+      writable: true,
+      value: () => undefined,
+    });
+    shadowed = true;
+  } catch (_) {}
+
+  try {
+    enter.click();
+  } finally {
+    if (!shadowed) return;
+    try {
+      if (previous) Object.defineProperty(canvas, 'requestPointerLock', previous);
+      else delete canvas.requestPointerLock;
+    } catch (_) {}
+  }
+}
+
 function applyAuthoredLandmarkFraming(debug) {
   if (!debug?.teleportViews || !Array.isArray(debug.landmarks)) return;
 
@@ -158,9 +192,9 @@ export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
   const jump = params.get('jump');
   if (jump && debug.landmarks?.some((record) => record.id === jump)) {
     const enter = ui === 'aizanoi' ? document.querySelector('#enterBtn') : document.querySelector('#enter');
-    // The click path flips the runtime into its active state and keeps all UI
-    // startup side effects identical to a normal user entry.
-    enter?.click();
+    // Enter through the normal runtime path, but do not ask the browser for
+    // pointer lock during an automatic deep-link boot with no user gesture.
+    activateWithoutPointerLock(enter, canvas);
     debug.teleportTo(jump, { lock: false });
     const clean = new URL(location.href);
     clean.searchParams.delete('jump');
@@ -189,6 +223,7 @@ export const CITY_COMPATIBILITY = Object.freeze({
   safeTeleportArrival: true,
   liveAizanoiDebugBridge: true,
   arrivalIdentityHold: true,
+  gestureSafeDeepLink: true,
   deepLinkJump: true,
   legacyTeleportAlias: true,
 });
