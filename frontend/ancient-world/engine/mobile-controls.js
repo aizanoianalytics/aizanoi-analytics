@@ -54,7 +54,12 @@ export function installMobileControls({
     };
   }
 
-  document.body.classList.add('ancientTouchMode');
+  // `ancientTouchMode` is the canonical shared-engine hook. Aizanoi's preserved
+  // presentation stylesheet still keys its touch HUD off the older `touchMode`
+  // class, so publish both while the compatibility stylesheet remains in use.
+  // This keeps one controller implementation without silently hiding Aizanoi's
+  // joystick/action rail on real phones.
+  document.body.classList.add('ancientTouchMode', 'touchMode');
   controls?.removeAttribute('hidden');
 
   let joyId = null;
@@ -146,7 +151,7 @@ export function installMobileControls({
 
   lifecycle?.addCleanup?.(() => {
     reset();
-    document.body.classList.remove('ancientTouchMode');
+    document.body.classList.remove('ancientTouchMode', 'touchMode');
   });
 
   return {

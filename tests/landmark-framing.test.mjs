@@ -17,8 +17,8 @@ test('shared landmark framing keeps large monuments dramatic without unsafe clos
 });
 
 test('city data can author a framing distance without bypassing shared safety', () => {
-  assert.equal(landmarkFramingDistance({ w:125, d:102, h:48, framing:{ distance:152 } }), 152);
-  assert.equal(landmarkFramingDistance({ w:70, d:31, h:15, framing:{ distance:70 } }), 70);
+  assert.equal(landmarkFramingDistance({ w:125, d:102, h:48, framing:{ distance:165 } }), 165);
+  assert.equal(landmarkFramingDistance({ w:70, d:31, h:15, framing:{ distance:95 } }), 95);
 });
 
 test('shared landmark look targets the upper mass without extreme pitch', () => {
@@ -38,10 +38,10 @@ test('modular runtime preserves authored landmark framing through the shared com
   const { BUILDINGS: athens } = await import(resolve(root, 'frontend/ancient-cities/athens-450-430/data/city.js'));
   const colosseum = rome.find((record) => record.id === 'colosseum');
   const parthenon = athens.find((record) => record.id === 'parthenon');
-  assert.equal(colosseum?.framing?.distance, 152);
-  assert.deepEqual(colosseum?.framing?.preferredDirections?.[0], [0,-1]);
-  assert.equal(parthenon?.framing?.distance, 70);
-  assert.deepEqual(parthenon?.framing?.preferredDirections?.[0], [-1,0]);
+  assert.equal(colosseum?.framing?.distance, 165);
+  assert.deepEqual(colosseum?.framing?.preferredDirections?.[0], [1,0]);
+  assert.equal(parthenon?.framing?.distance, 95);
+  assert.deepEqual(parthenon?.framing?.preferredDirections?.[0], [0,-1]);
 });
 
 test('Aizanoi Temple keeps the authored open eastern sanctuary approach in city data', async () => {
