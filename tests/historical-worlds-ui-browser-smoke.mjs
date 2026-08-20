@@ -15,6 +15,11 @@ const worlds = [
   { id:'athens', path:'/ancient-cities/athens-450-430/', intro:'#intro:not(.hidden)', enter:'#enter', hiddenAfterEnter:'#intro' },
 ];
 
+function overlaps(a,b,pad=0){
+  if(!a||!b)return false;
+  return a.x < b.x+b.width+pad && a.x+a.width+pad > b.x && a.y < b.y+b.height+pad && a.y+a.height+pad > b.y;
+}
+
 async function enterWorld(page, world) {
   await page.goto(`${base}${world.path}`, { waitUntil:'networkidle' });
   await page.waitForSelector(world.intro, { timeout:12000 });
@@ -60,6 +65,27 @@ for (const layout of layouts) {
         assert.equal(await page.locator(`#${id}`).evaluate((el) => el.parentElement?.id), 'aw-tools-panel', `${world.id}/${layout.name}: ${id} was not moved to Explore`);
       }
       assert.equal(await page.locator('.miniWrap').evaluate((el) => getComputedStyle(el).display), 'none', `${world.id}/${layout.name}: passive minimap should be opt-in`);
+    }
+
+    if(layout.name==='mobile'){
+      const back=await page.locator('#ancient-world-back-to-os').boundingBox();
+      const primary=await page.locator(world.id==='aizanoi'?'.topbar':'.controls').boundingBox();
+      const jump=await page.locator(world.id==='aizanoi'?'#teleport':'#jump').boundingBox();
+      const explore=await page.locator('#aw-tools-toggle').boundingBox();
+      assert.ok(back&&primary&&jump&&explore,`${world.id}/mobile: primary mobile navigation geometry unavailable`);
+      assert.equal(overlaps(back,primary,2),false,`${world.id}/mobile: Field System return overlaps primary world controls`);
+      assert.equal(overlaps(jump,explore,2),false,`${world.id}/mobile: jump control overlaps Explore`);
+      assert.ok(primary.x>=0&&primary.y>=0&&primary.x+primary.width<=391&&primary.y+primary.height<=845,`${world.id}/mobile: primary controls escape viewport`);
+      assert.equal(await page.locator('#mobileCompass').evaluate((el)=>getComputedStyle(el).display),'none',`${world.id}/mobile: redundant top touch badge should be hidden`);
+      if(world.id==='aizanoi'){
+        const era=await page.locator('.eraWrap').boundingBox();
+        const toast=page.locator('#toast');
+        assert.ok(era,`${world.id}/mobile: chronology row geometry unavailable`);
+        if(await toast.isVisible()){
+          const toastBox=await toast.boundingBox();
+          assert.equal(overlaps(era,toastBox,2),false,'aizanoi/mobile: entry toast overlaps chronology controls');
+        }
+      }
     }
 
     await page.locator('#aw-tools-toggle').click();
