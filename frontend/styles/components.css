@@ -13,6 +13,7 @@
     font-size: 12px;
     font-weight: 620;
     cursor: pointer;
+    text-decoration: none;
     transition: background var(--az-motion-fast), border-color var(--az-motion-fast), transform var(--az-motion-fast);
   }
   .az-button:hover { background: rgba(255,255,255,.085); border-color: rgba(233,225,209,.3); }
@@ -46,6 +47,7 @@
     background: rgba(18,29,27,.94);
     box-shadow: 0 30px 100px rgba(0,0,0,.52);
   }
+  .az-window-menu-dialog { width: min(420px, 100%); }
   .az-dialog-header { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 10px 8px 16px; border-bottom: 1px solid var(--az-border); }
   .az-dialog-header strong { font-size: 14px; }
   .az-dialog-body { min-height: 0; overflow: auto; padding: 14px; }
@@ -107,6 +109,11 @@
   .az-switcher-item strong { display:block; font-size:13px; }
   .az-switcher-item small { color:var(--az-text-3); font-size:11px; }
 
+  .az-window-menu-grid { grid-template-columns: 1fr 1fr; }
+  .az-settings-grid { grid-template-columns: 1fr; }
+  .az-setting-row { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+  .az-setting-row input { width: 18px; height: 18px; accent-color: var(--az-teal); }
+
   .az-toast-stack { position: fixed; z-index: 1100; right: 16px; top: 58px; width: min(360px, calc(100vw - 32px)); display: grid; gap: 8px; pointer-events:none; }
   .az-toast { pointer-events:auto; padding: 12px 14px; border:1px solid var(--az-glass-border); border-radius:12px; background:rgba(18,29,27,.93); box-shadow:var(--az-shadow-soft); animation: az-toast-in var(--az-motion) ease-out; }
   .az-toast strong { display:block; font-size:12px; }
@@ -127,6 +134,11 @@
   .az-evidence[data-level="inferred"] { color:#985a4b; }
   .az-evidence[data-level="atmospheric"] { color:#6f756f; }
   .az-evidence[data-level="disputed"] { color:#8a6d32; border-style:dashed; }
+
+  .az-error-page { min-height: 100dvh; }
+  .az-error-logo { width: 58px; height: 58px; margin-bottom: 18px; }
+  .az-error-actions { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .az-noscript-card { max-width:720px; margin:12vh auto; padding:24px; color:var(--az-text); background:var(--az-surface-solid); border:1px solid var(--az-border); border-radius:16px; font:16px/1.6 var(--az-font-ui); }
 
   #az-boot {
     position: fixed;
@@ -157,5 +169,6 @@
     .az-command { height:auto; margin-top:auto; max-height:82dvh; border-radius:20px 20px 0 0; border-left:0; border-right:0; border-bottom:0; }
     .az-command-results { max-height:60dvh; }
     .az-switcher-list { grid-template-columns:1fr; }
+    .az-window-menu-grid { grid-template-columns:1fr; }
   }
 }
