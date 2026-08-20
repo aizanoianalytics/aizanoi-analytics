@@ -45,7 +45,7 @@ export const CITY_COMPACTION_PROFILES = Object.freeze({
     regionScaleX: 0.72, regionScaleZ: 0.72,
     perimeterScaleX: 0.68, perimeterScaleZ: 0.68,
     roadWidthScale: 0.90, waterWidthScale: 0.88,
-    framingScale: 0.78, boundsPadding: 68,
+    framingScale: 0.70, boundsPadding: 68,
   }),
   athens: Object.freeze({
     id: 'athens-dense-core', centerX: 90, centerZ: 20,
