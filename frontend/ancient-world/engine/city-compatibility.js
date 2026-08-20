@@ -6,12 +6,22 @@ const DEFAULT_DIRECTIONS = Object.freeze([
   [0, 1], [1, 0], [0, -1], [-1, 0],
   [1, 1], [-1, 1], [1, -1], [-1, -1],
 ]);
+const FIRST_STEP_DISTANCE = 1.35;
 
 function normalizedDirection(direction) {
   const x = Number(direction?.[0] || 0);
   const z = Number(direction?.[1] || 0);
   const length = Math.hypot(x, z) || 1;
   return [x / length, z / length];
+}
+
+function hasFirstStepClearance(debug, x, z) {
+  if (debug.collide?.(x, z)) return false;
+  return DEFAULT_DIRECTIONS.some((direction) => {
+    const [dx, dz] = normalizedDirection(direction);
+    return !debug.collide?.(x + dx * 0.35, z + dz * 0.35) &&
+      !debug.collide?.(x + dx * FIRST_STEP_DISTANCE, z + dz * FIRST_STEP_DISTANCE);
+  });
 }
 
 function applyAuthoredLandmarkFraming(debug) {
@@ -28,11 +38,11 @@ function applyAuthoredLandmarkFraming(debug) {
       .filter(([x, z], index, all) => all.findIndex(([ax, az]) => Math.abs(ax - x) < 0.001 && Math.abs(az - z) < 0.001) === index);
 
     let chosen = null;
-    for (const scale of [1, 1.12, 1.25, 0.9]) {
+    for (const scale of [1, 1.12, 1.25, 0.9, 1.4]) {
       for (const [dx, dz] of directions) {
         const x = record.x + dx * distance * scale;
         const z = record.z + dz * distance * scale;
-        if (!debug.collide?.(x, z)) {
+        if (hasFirstStepClearance(debug, x, z)) {
           chosen = { pos: [x, z], look: [record.x, record.z], authored: true };
           break;
         }
@@ -72,8 +82,8 @@ export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
   }
 
   // Preserve immediate mouse-look acquisition on a real pointer gesture. The
-  // runtime also supports click-to-lock; pointerdown means drag workflows start
-  // turning during the gesture instead of only after mouseup.
+  // runtime also supports click-to-lock; pointerdown keeps the historical feel
+  // while the runtime remains the sole owner of yaw/pitch movement math.
   const coarse = matchMedia('(pointer:coarse)').matches || navigator.maxTouchPoints > 0;
   if (canvas && !coarse) {
     canvas.addEventListener('pointerdown', () => {
@@ -87,6 +97,7 @@ export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
 
 export const CITY_COMPATIBILITY = Object.freeze({
   authoredFraming: true,
+  firstStepClearance: true,
   deepLinkJump: true,
   legacyTeleportAlias: true,
 });
