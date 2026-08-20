@@ -30,9 +30,13 @@ test('workspace monitor has no backend health dependency',()=>{
   assert.doesNotMatch(monitor,/\/api\/health|fetch\s*\(/);
 });
 
-test('archive accepts local files without egress primitives',()=>{
+test('archive accepts local files without egress primitives and normalizes restored metadata',()=>{
   assert.match(archive,/indexedDB\.open/);
   assert.match(archive,/MAX_FILE_BYTES/);
+  assert.match(archive,/function normalizeMeta/);
+  assert.match(archive,/tags:Array\.isArray\(raw\.tags\)/);
+  assert.match(archive,/meta:normalizeMeta\(record\.meta, name\)/);
+  assert.match(archive,/encoded\.length>Math\.ceil\(MAX_FILE_BYTES\*4\/3\)\+8/);
   assert.doesNotMatch(archive,/fetch\s*\(|XMLHttpRequest|WebSocket/);
 });
 
@@ -53,4 +57,13 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
   assert.doesNotMatch(index,/<script(?![^>]*src=)[^>]*>/i);
   assert.match(nginx,/script-src 'self';/);
   assert.doesNotMatch(nginx,/script-src[^;]*'unsafe-inline'/);
+  assert.match(nginx,/frame-src 'self' blob:/);
+});
+
+test('cache locations preserve inherited security headers on common nginx versions',()=>{
+  assert.equal((nginx.match(/add_header Cache-Control/g)||[]).length,0,'location-level Cache-Control add_header can suppress inherited security headers');
+  assert.match(nginx,/expires -1;/);
+  assert.match(nginx,/expires 1d;/);
+  assert.match(nginx,/X-Content-Type-Options/);
+  assert.match(nginx,/Content-Security-Policy/);
 });
