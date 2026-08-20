@@ -193,7 +193,7 @@ function overlayMarkup() {
   return `<div class="az-overlay" id="az-command-overlay" aria-hidden="true"><section class="az-dialog az-command" role="dialog" aria-modal="true" aria-labelledby="az-command-title"><h2 id="az-command-title" class="az-sr-only">Search Aizanoi</h2><div class="az-command-search">${icon('search')}<input id="az-command-input" type="search" autocomplete="off" spellcheck="false" placeholder="Open a world, app or field action…" aria-label="Search apps, worlds and commands"><span class="az-key">ESC</span></div><div class="az-command-results" role="listbox"></div></section></div>
   <div class="az-overlay" id="az-switcher-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-switcher-title"><header class="az-dialog-header"><strong id="az-switcher-title">Open Apps</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close open apps">×</button></header><div class="az-dialog-body"><div class="az-switcher-list" data-switcher-list></div></div></section></div>
   <div class="az-overlay" id="az-settings-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-settings-title"><header class="az-dialog-header"><strong id="az-settings-title">Field System Settings</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close settings">×</button></header><div class="az-dialog-body" data-settings-body></div></section></div>
-  <div class="az-overlay" id="az-window-menu-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-window-menu-title" style="width:min(420px,100%)"><header class="az-dialog-header"><strong id="az-window-menu-title">Window</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close window menu">×</button></header><div class="az-dialog-body" data-window-menu-body></div></section></div>`;
+  <div class="az-overlay" id="az-window-menu-overlay" aria-hidden="true"><section class="az-dialog az-window-menu-dialog" role="dialog" aria-modal="true" aria-labelledby="az-window-menu-title"><header class="az-dialog-header"><strong id="az-window-menu-title">Window</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close window menu">×</button></header><div class="az-dialog-body" data-window-menu-body></div></section></div>`;
 }
 
 function setBackgroundInert(value) {
@@ -244,7 +244,7 @@ function defaultRect(appId) {
 
 function clampRect(rect) {
   const mode = layoutMode();
-  if (mode !== 'large') return { left:innerWidth*.04, top:Math.max(8,innerHeight*.03), width:innerWidth*.92, height:Math.max(300,(innerHeight-126)*.94) };
+  if (mode !== 'large') return { left:0, top:0, width:innerWidth, height:Math.max(300, innerHeight - 126) };
   const width = Math.min(Math.max(360, Number(rect.width)||760), innerWidth-32);
   const height = Math.min(Math.max(260, Number(rect.height)||560), innerHeight-132);
   const left = Math.min(Math.max(12, Number(rect.left)||20), innerWidth-width-12);
@@ -320,7 +320,9 @@ export function closeApp(appId, { updateRoute=true } = {}) {
 
 function minimizeApp(appId) {
   const item = windows.get(appId); if (!item) return;
-  item.minimized = true; item.el.classList.add('is-minimized',''); item.el.classList.remove('is-active');
+  item.minimized = true;
+  item.el.classList.add('is-minimized');
+  item.el.classList.remove('is-active');
   Store.setActiveApp(null); renderShelf(); setRoute(null,'replace'); announce(`${item.app.label} minimized`);
 }
 
@@ -385,7 +387,7 @@ function handleKeyboardWindowMode(event) {
 function openWindowMenu(appId, opener) {
   const item=windows.get(appId); if(!item)return;
   const body=document.querySelector('[data-window-menu-body]');
-  body.innerHTML=`<div class="az-simple-grid" style="grid-template-columns:1fr 1fr"><button class="az-button" type="button" data-window-command="move">Move with keyboard</button><button class="az-button" type="button" data-window-command="resize">Resize with keyboard</button><button class="az-button" type="button" data-window-command="minimize">Minimize</button><button class="az-button" type="button" data-window-command="maximize">${item.maximized?'Restore':'Maximize'}</button><button class="az-button az-button-danger" type="button" data-window-command="close">Close</button></div>`;
+  body.innerHTML=`<div class="az-simple-grid az-window-menu-grid"><button class="az-button" type="button" data-window-command="move">Move with keyboard</button><button class="az-button" type="button" data-window-command="resize">Resize with keyboard</button><button class="az-button" type="button" data-window-command="minimize">Minimize</button><button class="az-button" type="button" data-window-command="maximize">${item.maximized?'Restore':'Maximize'}</button><button class="az-button az-button-danger" type="button" data-window-command="close">Close</button></div>`;
   body.dataset.appId=appId; openOverlay('az-window-menu-overlay',opener);
 }
 
@@ -408,7 +410,7 @@ function renderSwitcher() {
 
 function renderSettings() {
   const body=document.querySelector('[data-settings-body]'); if(!body)return; const state=Store.getState();
-  body.innerHTML=`<div class="az-simple-grid" style="grid-template-columns:1fr"><div class="az-simple-card"><h3>Appearance</h3><p>The Field palette stays calm and evidence-led. Motion follows your preference.</p><label style="display:flex;align-items:center;gap:10px"><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}> Reduce non-essential motion</label></div><div class="az-simple-card"><h3>Local workspace</h3><p>Recents, window positions and field-session context are stored in this browser. Archive records use IndexedDB and may be cleared by browser/user storage controls.</p><button class="az-button az-button-danger" type="button" data-reset-workspace>Reset workspace state</button></div></div>`;
+  body.innerHTML=`<div class="az-simple-grid az-settings-grid"><div class="az-simple-card"><h3>Appearance</h3><p>The Field palette stays calm and evidence-led. Motion follows your preference.</p><label class="az-setting-row"><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}> Reduce non-essential motion</label></div><div class="az-simple-card"><h3>Local workspace</h3><p>Recents, window positions and field-session context are stored in this browser. Archive records use IndexedDB and may be cleared by browser/user storage controls.</p><button class="az-button az-button-danger" type="button" data-reset-workspace>Reset workspace state</button></div></div>`;
 }
 
 function commandRows(query='') {
