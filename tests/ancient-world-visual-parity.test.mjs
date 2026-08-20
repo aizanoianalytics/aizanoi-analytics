@@ -5,70 +5,47 @@ import { readFileSync } from 'node:fs';
 const read = (path) => readFileSync(path, 'utf8');
 const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
 const athens = read('frontend/ancient-cities/athens-450-430/js/app.js');
-const shader = read('frontend/ancient-world/engine/surface-shader.js');
-const environment = read('frontend/ancient-world/engine/environment-renderer.js');
+const runtime = read('frontend/ancient-world/engine/flat-city-runtime.js');
+const compatibility = read('frontend/ancient-world/engine/city-compatibility.js');
+const assets = read('frontend/ancient-world/assets/blocky-asset-library.js');
 const materials = read('frontend/ancient-world/assets/materials.js');
 
-// Teleport safety is a movement-quality contract: a spawn must have usable
-// forward space, not merely sit outside the destination collider. Cinematic
-// framing now evaluates eight shared view directions and keeps clearance in
-// the candidate score rather than relying on one hard-coded offset formula.
-test('teleports prefer a safely framed spawn with forward walking clearance', () => {
-  for (const source of [rome, athens]) {
-    assert.match(source, /teleportForwardClearance/);
-    assert.match(source, /landmarkViewDirections/);
-    assert.match(source, /landmarkCandidateScore/);
-    assert.match(source, /traversal\.resolveSpawn\(wantedX, wantedZ, searchRadius\)/);
-    assert.match(source, /clearance = traversal\.collide/);
+test('teleports resolve a safe spawn and preserve forward movement after arrival', () => {
+  assert.match(runtime, /function candidateSpawn/);
+  assert.match(runtime, /traversal\.collide/);
+  assert.match(runtime, /traversal\.resolveSpawn/);
+  assert.match(runtime, /traversal\.snapPlayerToSupport/);
+  assert.match(runtime, /moveWithSubsteps/);
+});
+
+test('Rome, Athens and Aizanoi preserve mouse-look acquisition through one compatibility bridge', () => {
+  for (const source of [rome, athens]) assert.match(source, /installCityCompatibility/);
+  assert.match(compatibility, /pointerdown/);
+  assert.match(compatibility, /requestPointerLock/);
+  assert.match(runtime, /player\.yaw \+= event\.movementX/);
+});
+
+test('shared blocky library carries common street-scale architectural vocabulary', () => {
+  for (const name of ['genericHouse','shop','villa','temple','basilica','bath','theatre','stadium','bridge','market','church']) {
+    assert.match(assets, new RegExp(`function ${name}\\(`));
   }
-});
-
-test('Rome and Athens use the same horizontal mouse-look convention as Aizanoi', () => {
-  for (const source of [rome, athens]) {
-    assert.match(source, /player\.yaw \+= dx \* horizontal/);
-    assert.doesNotMatch(source, /player\.yaw -= event\.movementX/);
-    assert.match(source, /mouseDragDistance/);
-    assert.match(source, /setPointerCapture/);
-  }
-});
-
-test('shared renderer carries Aizanoi-derived material and atmosphere detail', () => {
-  assert.match(shader, /gridLine/);
-  assert.match(shader, /roofMask/);
-  assert.match(shader, /course/);
-  assert.match(environment, /fbm/);
-  assert.match(environment, /createAncientSkyRenderer/);
-  assert.match(environment, /createAncientWaterRenderer/);
-  assert.match(environment, /shimmer/);
-});
-
-test('both cities render shared sky and animated water passes', () => {
-  for (const source of [rome, athens]) {
-    assert.match(source, /createAncientSkyRenderer/);
-    assert.match(source, /createAncientWaterRenderer/);
-    assert.match(source, /skyRenderer\.draw/);
-    assert.match(source, /waterRenderer\.draw/);
-    assert.match(source, /ANCIENT_CITY_FRAGMENT_SHADER/);
-  }
-});
-
-test('street-level urban fabric has Aizanoi-style human-scale facade cues', () => {
-  assert.match(rome, /addRomanStreetDetail/);
-  assert.match(rome, /shopfront/);
-  assert.match(rome, /C\.darkStone/);
-  assert.match(athens, /addAthenianStreetDetail/);
-  assert.match(athens, /C\.plaster2/);
-  assert.match(athens, /C\.roof2/);
   assert.match(materials, /limestone2/);
   assert.match(materials, /plaster3/);
   assert.match(materials, /roof2/);
 });
 
-test('spectacle and hero buildings no longer rely only on generic massing', () => {
+test('hero monuments remain dedicated assets rather than generic city-app geometry', () => {
+  for (const hero of ['parthenon','propylaea','colosseum','pantheon','templeOfZeus']) assert.match(assets, new RegExp(`function ${hero}\\(`));
   for (const source of [rome, athens]) {
-    assert.match(source, /Stepped semicircular cavea/);
+    assert.doesNotMatch(source, /function\s+(?:parthenonHero|propylaeaHero|maxentiusHero|colosseum|pantheon)\s*\(/);
+    assert.match(source, /startFlatBlockyCity/);
   }
-  assert.match(rome, /maxentiusHero/);
-  assert.match(athens, /parthenonHero/);
-  assert.match(athens, /propylaeaHero/);
+});
+
+test('roads, water, sky/fog and lighting are rendered by the shared runtime', () => {
+  assert.match(runtime, /function roadGeometry/);
+  assert.match(runtime, /function waterGeometry/);
+  assert.match(runtime, /lightForHour/);
+  assert.match(runtime, /uFog/);
+  assert.match(runtime, /uSun/);
 });

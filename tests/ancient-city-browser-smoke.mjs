@@ -89,15 +89,19 @@ for (const city of cities) {
   await page.waitForFunction(() => document.pointerLockElement === null);
   const canvas = await page.locator('#glCanvas').boundingBox();
   assert.ok(canvas, `${city.slug}: desktop canvas has no layout box`);
-  const mouseBefore = await player(page);
   const mx = canvas.x + canvas.width * 0.62;
   const my = canvas.y + canvas.height * 0.48;
-  await page.mouse.move(mx, my);
-  await page.mouse.down({ button: 'left' });
-  await page.mouse.move(mx + 64, my, { steps: 4 });
-  await page.mouse.up({ button: 'left' });
+  await page.mouse.click(mx, my, { button:'left' });
+  await page.waitForFunction(() => document.pointerLockElement === document.querySelector('#glCanvas'));
+  const mouseBefore = await player(page);
+  await page.evaluate(() => {
+    const event = new MouseEvent('mousemove', { bubbles:true });
+    Object.defineProperty(event, 'movementX', { value:64 });
+    Object.defineProperty(event, 'movementY', { value:0 });
+    document.dispatchEvent(event);
+  });
   const mouseAfter = await player(page);
-  assert.ok(mouseAfter.yaw > mouseBefore.yaw + 0.05, `${city.slug}: dragging mouse right did not turn view right (${mouseBefore.yaw} -> ${mouseAfter.yaw})`);
+  assert.ok(mouseAfter.yaw > mouseBefore.yaw + 0.05, `${city.slug}: positive pointer-lock movementX did not turn view right (${mouseBefore.yaw} -> ${mouseAfter.yaw})`);
 
   const teleported = await page.evaluate((id) => window.__ANCIENT_WORLD_DEBUG__.teleport(id), city.teleport);
   assert.equal(teleported, true, `${city.slug}: teleport failed`);

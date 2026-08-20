@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 const html = readFileSync('frontend/ancient-cities/rome-410-476/index.html', 'utf8');
 const method = readFileSync('frontend/ancient-cities/rome-410-476/js/methodology.js', 'utf8');
 const app = readFileSync('frontend/ancient-cities/rome-410-476/js/app.js', 'utf8');
+const runtime = readFileSync('frontend/ancient-world/engine/flat-city-runtime.js', 'utf8');
 
 test('Rome keeps reconstruction methodology visible even outside the WebGL renderer', () => {
   assert.match(html, /id="evidence"/);
@@ -16,11 +17,12 @@ test('Rome keeps reconstruction methodology visible even outside the WebGL rende
   assert.match(method, /atmospheric/);
 });
 
-test('Rome renderer consumes manifest bounds and adaptive performance policy', () => {
-  assert.match(app, /ROME_MANIFEST/);
-  assert.match(app, /const WORLD_BOUNDS = ROME_MANIFEST\.bounds/);
-  assert.match(app, /createAdaptiveQualityController/);
-  assert.match(app, /quality\.pixelRatioCap\(\)/);
-  assert.match(app, /quality\.sample\(dt\)/);
-  assert.match(app, /quality: \(\) => quality\.snapshot\(\)/);
+test('Rome renderer delegates world bounds and conservative performance policy to the shared runtime', () => {
+  assert.match(app, /startFlatBlockyCity/);
+  assert.match(app, /bounds:\s*\{ minX: -900, maxX: 700, minZ: -700, maxZ: 700 \}/);
+  assert.match(runtime, /Math\.min\(devicePixelRatio \|\| 1, TOUCH \? 1\.15 : 1\.55\)/);
+  assert.match(runtime, /const TOUCH =/);
+  assert.match(runtime, /baseHeightAt:\s*\(\) => 0/);
+  assert.match(runtime, /renderer: 'custom-webgl-blocky'/);
+  assert.match(runtime, /trueVoxelEngine: false/);
 });

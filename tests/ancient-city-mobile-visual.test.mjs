@@ -5,6 +5,8 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
 const read = (path) => readFileSync(resolve(root, path), 'utf8');
+const runtime = read('frontend/ancient-world/engine/flat-city-runtime.js');
+const assets = read('frontend/ancient-world/assets/blocky-asset-library.js');
 const cities = [
   ['rome', 'frontend/ancient-cities/rome-410-476'],
   ['athens', 'frontend/ancient-cities/athens-450-430'],
@@ -25,30 +27,30 @@ test('Ancient World exposes a shared Aizanoi-style mobile controller', () => {
 });
 
 for (const [city, base] of cities) {
-  test(`${city} uses shared analog mobile controls and visual polish`, () => {
+  test(`${city} uses shared analog controls and the modular renderer`, () => {
     const html = read(`${base}/index.html`);
     const app = read(`${base}/js/app.js`);
     assert.match(html, /mobile-controls\.css/);
     assert.match(html, /city-polish\.css/);
     assert.match(html, new RegExp(`data-city="${city}"`));
-    assert.match(html, /id="movePad"/);
-    assert.match(html, /id="moveKnob"/);
-    assert.match(html, /id="mobileRun"/);
-    assert.match(html, /id="mobileInspect"/);
-    assert.match(html, /id="mobileMap"/);
+    for (const id of ['movePad','moveKnob','mobileRun','mobileInspect','mobileMap']) assert.match(html, new RegExp(`id="${id}"`));
     assert.doesNotMatch(html, /data-move="KeyW"/);
     assert.doesNotMatch(html, /id="lookPad"/);
-    assert.match(app, /installMobileControls/);
-    assert.match(app, /mobileControls\?\.snapshot/);
-    assert.match(app, /mobile\.running/);
-    assert.doesNotMatch(app, /\$\$\('\[data-move\]'\)/);
-    assert.match(app, /buildAtmosphericDetails/);
-    assert.match(app, /const bob = Math\.sin\(walkClock \* 2\)/);
-    assert.match(app, /installBackToOS/);
+    assert.match(app, /startFlatBlockyCity/);
+    assert.match(app, /installCityCompatibility/);
+    assert.doesNotMatch(app, /installMobileControls/);
   });
 }
 
-test('Athens visible experience has no Rome copy residue', () => {
+test('shared runtime owns analog movement, run state and mobile look', () => {
+  assert.match(runtime, /installMobileControls/);
+  assert.match(runtime, /mobile\.snapshot\(\)/);
+  assert.match(runtime, /mobileState\.running/);
+  assert.match(runtime, /onLook/);
+  assert.match(runtime, /SPRINT_SPEED = 7\.2/);
+});
+
+test('Athens visible adapter has no Rome copy residue', () => {
   const html = read('frontend/ancient-cities/athens-450-430/index.html');
   const app = read('frontend/ancient-cities/athens-450-430/js/app.js');
   for (const source of [html, app]) {
@@ -57,18 +59,14 @@ test('Athens visible experience has no Rome copy residue', () => {
     assert.doesNotMatch(source, /14 Augustan regiones/i);
     assert.doesNotMatch(source, /Walk the late-antique city/i);
   }
-  assert.match(app, /present-day Athens/);
-  assert.match(app, /District atlas · Classical Athens/);
+  assert.match(app, /athens-450-430/);
 });
 
-test('Athens gives Acropolis hero monuments dedicated builders', () => {
-  const app = read('frontend/ancient-cities/athens-450-430/js/app.js');
-  assert.match(app, /function parthenonHero/);
-  assert.match(app, /frontCount = TOUCH \? 8 : 8/);
-  assert.match(app, /sideCount = TOUCH \? 13 : 17/);
-  assert.match(app, /function propylaeaHero/);
-  assert.match(app, /building\.id === 'parthenon'/);
-  assert.match(app, /building\.id === 'propylaea'/);
+test('Athens hero monuments moved into the shared asset library', () => {
+  assert.match(assets, /function parthenon/);
+  assert.match(assets, /function propylaea/);
+  assert.match(assets, /parthenon,/);
+  assert.match(assets, /propylaea,/);
 });
 
 test('Athens research ledger no longer carries an Augustan filename', () => {
@@ -76,7 +74,7 @@ test('Athens research ledger no longer carries an Augustan filename', () => {
   assert.equal(existsSync(resolve(root, 'research/athens_450_430/classical_athens_450_430.md')), true);
 });
 
-test('city polish distinguishes Rome and Athens instead of applying one generic grade', () => {
+test('city polish still distinguishes Rome and Athens', () => {
   const css = read('frontend/ancient-world/engine/city-polish.css');
   assert.match(css, /body\[data-city="rome"\]/);
   assert.match(css, /body\[data-city="athens"\]/);

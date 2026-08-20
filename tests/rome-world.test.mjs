@@ -39,12 +39,16 @@ test('Rome city data includes late-antique monuments, regions, streets and sourc
   assert.ok(BUILDINGS.length >= 45, `expected >=45 records, got ${BUILDINGS.length}`);
 });
 
-test('Rome renderer implements user-selected audio, modern overlay, regional minimap and no third-party runtime', () => {
-  assert.ok(existsSync(resolve(city, 'js/app.js')));
+test('Rome adapter uses the shared flat blocky runtime with no third-party runtime', () => {
   const app = read('js/app.js');
-  for (const required of ['AudioContext', 'modernOverlay', 'drawRegionalMap', 'requestPointerLock', 'WebGL']) {
-    assert.match(app, new RegExp(required));
-  }
+  const runtime = readFileSync(resolve(root, 'frontend/ancient-world/engine/flat-city-runtime.js'), 'utf8');
+  assert.match(app, /startFlatBlockyCity/);
+  assert.match(app, /expandPerimeterWalls/);
+  assert.match(app, /installCityCompatibility/);
+  assert.match(runtime, /AudioContext/);
+  assert.match(runtime, /requestPointerLock/);
+  assert.match(runtime, /function drawMap/);
+  assert.match(runtime, /baseHeightAt:\s*\(\) => 0/);
   assert.doesNotMatch(app, /https?:\/\//);
 });
 
