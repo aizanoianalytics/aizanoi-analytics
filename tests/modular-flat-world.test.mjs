@@ -2,9 +2,21 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { BLOCKY_ASSET_LIBRARY } from '../frontend/ancient-world/assets/blocky-asset-library.js';
-import { expandPerimeterWalls } from '../frontend/ancient-world/assets/city-layout-tools.js';
+import {
+  expandPerimeterWalls,
+  compactCityLayout,
+  CITY_COMPACTION_PROFILES,
+} from '../frontend/ancient-world/assets/city-layout-tools.js';
 import { FLAT_CITY_RUNTIME } from '../frontend/ancient-world/engine/flat-city-runtime.js';
-import { BUILDINGS as AIZANOI_BUILDINGS, STREETS as AIZANOI_STREETS, WATERS as AIZANOI_WATERS } from '../frontend/historic-world/data/city.js';
+import {
+  CITY as AIZANOI_CITY,
+  REGIONS as AIZANOI_REGIONS,
+  BUILDINGS as AIZANOI_BUILDINGS,
+  STREETS as AIZANOI_STREETS,
+  WATERS as AIZANOI_WATERS,
+  BOUNDS as AIZANOI_BOUNDS,
+  SPAWN as AIZANOI_SPAWN,
+} from '../frontend/historic-world/data/city.js';
 import { generateAizanoiFabric } from '../frontend/historic-world/data/urban-fabric.js';
 
 const read = (path) => readFileSync(path, 'utf8');
@@ -47,8 +59,10 @@ test('asset library contains common historical building types and dedicated hero
   assert.match(assetSource, /function templeOfZeus/);
 });
 
-test('all three worlds are thin city adapters over one shared runtime', () => {
+test('all three worlds are thin compact city adapters over one shared runtime', () => {
   for (const source of adapters) {
+    assert.match(source, /compactCityLayout/);
+    assert.match(source, /CITY_COMPACTION_PROFILES/);
     assert.match(source, /startFlatBlockyCity/);
     assert.match(source, /installCityCompatibility/);
     assert.doesNotMatch(source, /function\s+(?:box|cylinder|temple|buildTerrainMesh)\s*\(/);
@@ -56,18 +70,36 @@ test('all three worlds are thin city adapters over one shared runtime', () => {
   }
 });
 
-test('Aizanoi is extracted into city, water, road and deterministic urban-fabric data', () => {
+test('Aizanoi is extracted into compact city, water, road and deterministic urban-fabric data', () => {
   const ids = new Set(AIZANOI_BUILDINGS.map((item) => item.id));
   for (const id of ['temple','agora','greatbath','stadium','theatre','mosaicbath','macellum','bridge2','bridge3','dam','meter']) {
     assert.ok(ids.has(id), `Aizanoi missing ${id}`);
   }
   assert.ok(AIZANOI_STREETS.length >= 6);
   assert.ok(AIZANOI_WATERS.some((water) => water.name === 'Penkalas'));
-  const a = generateAizanoiFabric({ mobile:false });
-  const b = generateAizanoiFabric({ mobile:false });
+
+  const layout = compactCityLayout({
+    city: AIZANOI_CITY,
+    regions: AIZANOI_REGIONS,
+    streets: AIZANOI_STREETS,
+    buildings: AIZANOI_BUILDINGS,
+    waters: AIZANOI_WATERS,
+    bounds: AIZANOI_BOUNDS,
+    spawn: AIZANOI_SPAWN,
+  }, CITY_COMPACTION_PROFILES.aizanoi);
+  const args = {
+    regions: layout.regions,
+    buildings: layout.buildings,
+    streets: layout.streets,
+    waters: layout.waters,
+    mobile:false,
+  };
+  const a = generateAizanoiFabric(args);
+  const b = generateAizanoiFabric(args);
   assert.deepEqual(a, b);
-  assert.ok(a.length >= 80, `Aizanoi fabric unexpectedly sparse: ${a.length}`);
+  assert.ok(a.length >= 100, `Aizanoi fabric unexpectedly sparse: ${a.length}`);
   assert.ok(a.every((item) => item.evidence?.level === 'plausible'));
+  assert.ok(a.every((item) => item.visualStyle === 'blocky-low-poly'));
 });
 
 test('shared runtime still owns movement, collision, mobile input, cleanup and navigation', () => {
