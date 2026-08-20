@@ -41,7 +41,7 @@ export const CITY_COMPACTION_PROFILES = Object.freeze({
     id: 'rome-dense-core', centerX: -140, centerZ: 0,
     innerScaleX: 0.68, innerScaleZ: 0.68, coreX: 650, coreZ: 600,
     outerScaleX: 0.52, outerScaleZ: 0.50,
-    structureScale: 0.84, heroScale: 0.90, heightScale: 0.98,
+    structureScale: 0.82, heroScale: 0.90, heightScale: 0.98,
     regionScaleX: 0.72, regionScaleZ: 0.72,
     perimeterScaleX: 0.68, perimeterScaleZ: 0.68,
     roadWidthScale: 0.90, waterWidthScale: 0.88,
