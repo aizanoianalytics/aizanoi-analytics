@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'aizanoi-field-shell-v3.0.1';
+const CACHE = 'aizanoi-field-shell-v3.0.2';
 // Keep install lightweight: only the core shell is precached. App presentation,
 // research modules and Historical Worlds remain network-lazy and are cached by
 // the runtime strategy after the visitor actually opens them.
@@ -44,6 +44,19 @@ function sameOriginStatic(request) {
   return request.method === 'GET' && url.origin === self.location.origin && /\.(?:css|js|mjs|svg|png|jpg|jpeg|webp|gif|woff2?)$/i.test(url.pathname);
 }
 
+async function networkFirstStatic(request) {
+  const cache = await caches.open(CACHE);
+  try {
+    const response = await fetch(request);
+    if (response.ok) await cache.put(request, response.clone());
+    return response;
+  } catch (_) {
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    throw _;
+  }
+}
+
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   const url = new URL(request.url);
@@ -63,17 +76,6 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (sameOriginStatic(request)) {
-    event.respondWith(
-      caches.match(request).then((cached) => {
-        const network = fetch(request).then((response) => {
-          if (response.ok) {
-            const copy = response.clone();
-            caches.open(CACHE).then((cache) => cache.put(request, copy)).catch(() => {});
-          }
-          return response;
-        }).catch(() => cached);
-        return cached || network;
-      })
-    );
+    event.respondWith(networkFirstStatic(request));
   }
 });
