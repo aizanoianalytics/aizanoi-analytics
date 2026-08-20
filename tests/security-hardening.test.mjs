@@ -7,6 +7,7 @@ const index=read('frontend/index.html');
 const registry=read('frontend/js/v3/registry.js');
 const shell=read('frontend/js/v3/shell.js');
 const archive=read('frontend/js/v3/archive-store.js');
+const archiveApp=read('frontend/js/v3/apps/archive.js');
 const terminal=read('frontend/js/v3/apps/terminal.js');
 const monitor=read('frontend/js/v3/apps/monitor.js');
 const nginx=read('infra/nginx/aizanoianalytics.com.conf.example');
@@ -43,6 +44,8 @@ test('archive accepts local files without egress primitives and validates restor
   assert.match(archive,/const prepared=\[\.\.\.preparedById\.values\(\)\]/);
   assert.match(archive,/await run\('readwrite',\(store\)=>\{\s*if\(replace\) store\.clear\(\);\s*for\(const item of prepared\) store\.put\(item\);/s);
   assert.doesNotMatch(archive,/if\(replace\) await run\('readwrite',\(store\)=>store\.clear\(\)\)/);
+  assert.match(archiveApp,/Archive\.archiveStore\.MAX_BUNDLE_BYTES\*1\.5/);
+  assert.doesNotMatch(archiveApp,/Archive\.MAX_BUNDLE_BYTES\*1\.5/);
   assert.doesNotMatch(archive,/fetch\s*\(|XMLHttpRequest|WebSocket/);
 });
 
