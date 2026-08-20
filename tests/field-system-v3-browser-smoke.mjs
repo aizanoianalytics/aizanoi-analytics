@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
-import { source as axeSource } from 'axe-core';
+import axeCore from 'axe-core';
 
+const { source: axeSource } = axeCore;
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const browser = await chromium.launch({ headless:true });
 
