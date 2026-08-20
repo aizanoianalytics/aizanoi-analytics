@@ -39,6 +39,16 @@ test('service worker never handles API routes', () => {
   assert.doesNotMatch(sw, /\/api\/chat|\/api\/health|\/api\/terminal\/exec/);
 });
 
+test('service worker precache is complete-or-fail and refreshes mutable shell assets', () => {
+  assert.match(sw, /aizanoi-field-shell-v3\.0\.1/);
+  assert.match(sw, /cache:'reload'/);
+  assert.match(sw, /if \(!response\.ok\) throw new Error/);
+  assert.match(sw, /\/styles\/apps\.css/);
+  assert.match(sw, /\/js\/v3\/archive-store\.js/);
+  assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/);
+  assert.doesNotMatch(sw, /catch\(\(\) => self\.skipWaiting\(\)\)/);
+});
+
 test('nginx fails closed for historical API paths', () => {
   assert.match(nginx, /location = \/api\/chat[\s\S]*return 410;/);
   assert.match(nginx, /location \^~ \/api\/[\s\S]*return 404;/);
