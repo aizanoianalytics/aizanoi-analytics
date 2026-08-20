@@ -1,11 +1,58 @@
 // Compatibility bridge for behaviours preserved from the pre-modular worlds.
-// Keeps deep-link jumps and the historical debug API stable while the renderer
-// itself is shared by every city.
+// Keeps deep-link jumps, authored landmark arrivals and the historical debug API
+// stable while the renderer itself is shared by every city.
+
+const DEFAULT_DIRECTIONS = Object.freeze([
+  [0, 1], [1, 0], [0, -1], [-1, 0],
+  [1, 1], [-1, 1], [1, -1], [-1, -1],
+]);
+
+function normalizedDirection(direction) {
+  const x = Number(direction?.[0] || 0);
+  const z = Number(direction?.[1] || 0);
+  const length = Math.hypot(x, z) || 1;
+  return [x / length, z / length];
+}
+
+function applyAuthoredLandmarkFraming(debug) {
+  if (!debug?.teleportViews || !Array.isArray(debug.landmarks)) return;
+
+  for (const record of debug.landmarks) {
+    const framing = record?.framing;
+    if (!framing || !Number.isFinite(Number(framing.distance))) continue;
+
+    const distance = Math.max(8, Number(framing.distance));
+    const authored = Array.isArray(framing.preferredDirections) ? framing.preferredDirections : [];
+    const directions = [...authored, ...DEFAULT_DIRECTIONS]
+      .map(normalizedDirection)
+      .filter(([x, z], index, all) => all.findIndex(([ax, az]) => Math.abs(ax - x) < 0.001 && Math.abs(az - z) < 0.001) === index);
+
+    let chosen = null;
+    for (const scale of [1, 1.12, 1.25, 0.9]) {
+      for (const [dx, dz] of directions) {
+        const x = record.x + dx * distance * scale;
+        const z = record.z + dz * distance * scale;
+        if (!debug.collide?.(x, z)) {
+          chosen = { pos: [x, z], look: [record.x, record.z], authored: true };
+          break;
+        }
+      }
+      if (chosen) break;
+    }
+
+    if (chosen) debug.teleportViews[record.id] = chosen;
+  }
+}
 
 export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
   const debug = runtime?.debug;
   const canvas = document.querySelector('#glCanvas');
   if (!debug) return runtime;
+
+  // The city data remains the owner of cinematic landmark composition. The
+  // shared runtime owns collision/safe-spawn resolution; this bridge simply
+  // rewrites its mutable teleport-view table from authored framing metadata.
+  applyAuthoredLandmarkFraming(debug);
 
   // Browser smoke tools and external helpers historically called `teleport`.
   // Keep it as a stable alias to the new explicit method name.
@@ -37,3 +84,9 @@ export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
 
   return runtime;
 }
+
+export const CITY_COMPATIBILITY = Object.freeze({
+  authoredFraming: true,
+  deepLinkJump: true,
+  legacyTeleportAlias: true,
+});
