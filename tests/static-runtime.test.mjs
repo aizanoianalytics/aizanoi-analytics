@@ -39,14 +39,17 @@ test('service worker never handles API routes', () => {
   assert.doesNotMatch(sw, /\/api\/chat|\/api\/health|\/api\/terminal\/exec/);
 });
 
-test('service worker precache is complete-or-fail and refreshes mutable shell assets', () => {
+test('service worker core precache is complete-or-fail while app loading stays network-lazy', () => {
   assert.match(sw, /aizanoi-field-shell-v3\.0\.1/);
   assert.match(sw, /cache:'reload'/);
   assert.match(sw, /if \(!response\.ok\) throw new Error/);
-  assert.match(sw, /\/styles\/apps\.css/);
-  assert.match(sw, /\/js\/v3\/archive-store\.js/);
   assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/);
   assert.doesNotMatch(sw, /catch\(\(\) => self\.skipWaiting\(\)\)/);
+  const precache = sw.match(/const PRECACHE = \[([\s\S]*?)\n\];/)?.[1] || '';
+  assert.match(precache, /\/js\/v3\/shell\.js/);
+  assert.doesNotMatch(precache, /\/styles\/apps\.css|\/js\/v3\/archive-store\.js|\/js\/v3\/apps\//, 'lazy app assets must not be pulled during service-worker install');
+  assert.match(sw, /sameOriginStatic/);
+  assert.match(sw, /caches\.open\(CACHE\).*cache\.put\(request/s, 'opened static assets should be cached at runtime');
 });
 
 test('nginx fails closed for historical API paths', () => {
