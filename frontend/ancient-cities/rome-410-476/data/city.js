@@ -11,7 +11,7 @@ const FRAMING = Object.freeze({
   // Flat-ground traversal no longer needs the old Palatine-side approach. Keep
   // the compact street short, but let the camera stand farther back so the full
   // arcade silhouette reads as one monument instead of an overhead fragment.
-  colosseum: { distance: 205, roadDistance: 165, preferredDirections: [[1,0],[1,1],[1,-1],[0,1]] },
+  colosseum: { distance: 165, preferredDirections: [[1,0],[1,1],[1,-1],[0,1]], cameraDistance: 205 },
   // Forum arrival is authored from the north-east civic corridor instead of the
   // dense Palatine-side fabric that can fill the camera with a single wall.
   forum: { distance: 96, preferredDirections: [[1,1],[0,1]] },
