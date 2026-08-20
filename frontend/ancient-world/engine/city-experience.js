@@ -33,7 +33,8 @@
   function saveSession(landmark=currentLandmark()){
     try{
       const previous=JSON.parse(localStorage.getItem(SESSION_KEY)||'{}');
-      const next={...previous,worldId:city,landmark:landmark||previous.landmark||null,route,source:'historical-world',updatedAt:Date.now()};
+      const previousLandmark=previous?.worldId===city?previous.landmark:null;
+      const next={...previous,worldId:city,landmark:landmark||previousLandmark||null,route,source:'historical-world',updatedAt:Date.now()};
       localStorage.setItem(SESSION_KEY,JSON.stringify(next));
     }catch(_){}
   }
