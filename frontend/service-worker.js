@@ -1,6 +1,9 @@
 'use strict';
 
 const CACHE = 'aizanoi-field-shell-v3.0.1';
+// Keep install lightweight: only the core shell is precached. App presentation,
+// research modules and Historical Worlds remain network-lazy and are cached by
+// the runtime strategy after the visitor actually opens them.
 const PRECACHE = [
   '/',
   '/manifest.webmanifest',
@@ -9,20 +12,10 @@ const PRECACHE = [
   '/styles/base.css',
   '/styles/shell.css',
   '/styles/components.css',
-  '/styles/apps.css',
   '/js/v3/main.js',
   '/js/v3/registry.js',
   '/js/v3/store.js',
-  '/js/v3/shell.js',
-  '/js/v3/archive-store.js',
-  '/js/v3/apps/archive.js',
-  '/js/v3/apps/research.js',
-  '/js/v3/apps/monitor.js',
-  '/js/v3/apps/terminal.js',
-  '/js/v3/apps/projects.js',
-  '/js/v3/apps/worlds.js',
-  '/js/v3/apps/media.js',
-  '/js/v3/apps/games.js'
+  '/js/v3/shell.js'
 ];
 
 async function precacheShell() {
