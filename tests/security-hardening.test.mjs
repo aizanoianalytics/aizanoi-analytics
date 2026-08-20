@@ -37,6 +37,8 @@ test('archive accepts local files without egress primitives and normalizes resto
   assert.match(archive,/tags:Array\.isArray\(raw\.tags\)/);
   assert.match(archive,/meta:normalizeMeta\(record\.meta, name\)/);
   assert.match(archive,/encoded\.length>Math\.ceil\(MAX_FILE_BYTES\*4\/3\)\+8/);
+  assert.match(archive,/const restoredSize=blob \? blob\.size : restoredText!==null \? restoredTextSize : Math\.min\(MAX_FILE_BYTES,claimedSize\)/);
+  assert.match(archive,/size:restoredSize/);
   assert.doesNotMatch(archive,/fetch\s*\(|XMLHttpRequest|WebSocket/);
 });
 
