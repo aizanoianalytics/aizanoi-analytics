@@ -3,6 +3,7 @@ import { generateUrbanFabric } from '../data/urban-fabric.js';
 import {
   expandPerimeterWalls,
   compactCityLayout,
+  buildHeroApproachStreets,
   CITY_COMPACTION_PROFILES,
 } from '../../../ancient-world/assets/city-layout-tools.js';
 import { startFlatBlockyCity } from '../../../ancient-world/engine/flat-city-runtime.js';
@@ -18,11 +19,15 @@ const layout = compactCityLayout({
   bounds: { minX: -900, maxX: 700, minZ: -700, maxZ: 700 },
   spawn: { x: -205, z: -165, yaw: Math.PI * 0.88, pitch: -0.03 },
 }, CITY_COMPACTION_PROFILES.rome);
+const liveStreets = Object.freeze([
+  ...layout.streets,
+  ...buildHeroApproachStreets(layout.buildings, { approachWidth: 11, frontageWidth: 9 }),
+]);
 
 const urbanFabric = generateUrbanFabric({
   regions: layout.regions,
   buildings: layout.buildings,
-  streets: layout.streets,
+  streets: liveStreets,
   waters: layout.waters,
   mobile: TOUCH,
 });
@@ -31,7 +36,7 @@ const runtime = startFlatBlockyCity({
   city: layout.city,
   sources: SOURCES,
   regions: layout.regions,
-  streets: layout.streets,
+  streets: liveStreets,
   buildings: expandPerimeterWalls(layout.buildings),
   urbanFabric,
   waters: layout.waters,
