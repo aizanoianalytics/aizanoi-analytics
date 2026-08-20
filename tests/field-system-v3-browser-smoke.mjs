@@ -41,7 +41,7 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   await page.locator('[data-app="archive"]').first().click();
   await page.waitForSelector('.az-archive-layout');
   assert.match(page.url(),/[?&]app=archive(?:&|$)/,'desktop: Archive route intent missing');
-  assert.ok(appModuleRequests(requests).some((path)=>path.endsWith('/apps/research.js')),'desktop: Archive did not lazy-load research module');
+  assert.ok(appModuleRequests(requests).some((path)=>path.endsWith('/apps/archive.js')),'desktop: Archive did not lazy-load archive module');
   assert.ok(requests.some((path)=>path.endsWith('/styles/apps.css')),'desktop: app styles did not lazy-load');
   assert.equal(await page.getByText('Temple of Zeus — sample field record',{exact:false}).count()>0,true,'desktop: sample Archive record missing');
   await axe(page,'desktop archive');
