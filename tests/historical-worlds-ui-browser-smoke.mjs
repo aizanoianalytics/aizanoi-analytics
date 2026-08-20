@@ -30,6 +30,7 @@ async function enterWorld(page, world) {
     await page.waitForSelector(world.entered, { state:'visible', timeout:12000 });
   }
   await page.waitForSelector('#aw-tools-toggle', { state:'visible', timeout:8000 });
+  await page.waitForSelector('#ancient-world-back-to-os', { state:'visible', timeout:8000 });
   await page.waitForFunction(() => Boolean(document.getElementById('ancient-world-experience-style')?.sheet));
   // Desktop worlds may enter pointer lock immediately after the Enter gesture.
   // Release it before testing clickable HUD controls; this mirrors the real
@@ -72,7 +73,10 @@ for (const layout of layouts) {
       const primary=await page.locator(world.id==='aizanoi'?'.topbar':'.controls').boundingBox();
       const jump=await page.locator(world.id==='aizanoi'?'#teleport':'#jump').boundingBox();
       const explore=await page.locator('#aw-tools-toggle').boundingBox();
-      assert.ok(back&&primary&&jump&&explore,`${world.id}/mobile: primary mobile navigation geometry unavailable`);
+      assert.ok(back,`${world.id}/mobile: Field System return geometry unavailable`);
+      assert.ok(primary,`${world.id}/mobile: primary controls geometry unavailable`);
+      assert.ok(jump,`${world.id}/mobile: jump control geometry unavailable`);
+      assert.ok(explore,`${world.id}/mobile: Explore geometry unavailable`);
       assert.equal(overlaps(back,primary,2),false,`${world.id}/mobile: Field System return overlaps primary world controls`);
       assert.equal(overlaps(jump,explore,2),false,`${world.id}/mobile: jump control overlaps Explore`);
       assert.ok(primary.x>=0&&primary.y>=0&&primary.x+primary.width<=391&&primary.y+primary.height<=845,`${world.id}/mobile: primary controls escape viewport`);
