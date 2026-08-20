@@ -8,10 +8,9 @@ export const REGIONS = base.REGIONS;
 export const STREETS = base.STREETS;
 
 const FRAMING = Object.freeze({
-  // Flat-ground traversal no longer needs the old Palatine-side approach. Arrive
-  // from the east first so the amphitheatre reads as the requested hero instead
-  // of placing the visitor among the Palatine/foreground residential masses.
-  colosseum: { distance: 165, preferredDirections: [[1,0],[1,1],[1,-1],[0,1]] },
+  // The compact live city keeps the Colosseum close enough to read clearly while
+  // retaining an eastern approach that avoids the Palatine-side monument cluster.
+  colosseum: { distance: 145, preferredDirections: [[1,0],[0,1],[1,1],[1,-1]] },
   // Forum arrival is authored from the north-east civic corridor instead of the
   // dense Palatine-side fabric that can fill the camera with a single wall.
   forum: { distance: 96, preferredDirections: [[1,1],[0,1]] },
