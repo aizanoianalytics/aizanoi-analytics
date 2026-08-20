@@ -217,10 +217,12 @@ function openOverlay(id, opener = document.activeElement) {
 
 function closeOverlay(restore = true) {
   if (!activeOverlay) return;
-  const last = activeOverlay; activeOverlay = null;
-  last.classList.remove('is-open'); last.setAttribute('aria-hidden','true'); setBackgroundInert(false);
-  if (restore && overlayOpener?.isConnected) setTimeout(() => overlayOpener.focus(), 0);
+  const last = activeOverlay;
+  const opener = overlayOpener;
+  activeOverlay = null;
   overlayOpener = null;
+  last.classList.remove('is-open'); last.setAttribute('aria-hidden','true'); setBackgroundInert(false);
+  if (restore && opener?.isConnected) setTimeout(() => opener.focus(), 0);
 }
 
 function trapOverlayKey(event) {
