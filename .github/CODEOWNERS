@@ -1,0 +1,19 @@
+# Default maintainer
+* @aizanoianalytics
+
+# Security-sensitive delivery/runtime boundaries
+/.github/workflows/ @aizanoianalytics
+/frontend/service-worker.js @aizanoianalytics
+/frontend/.well-known/ @aizanoianalytics
+/infra/ @aizanoianalytics
+/SECURITY.md @aizanoianalytics
+
+# Canonical Field System architecture
+/frontend/js/v3/ @aizanoianalytics
+/frontend/styles/ @aizanoianalytics
+
+# Historical reconstruction/evidence boundaries
+/frontend/ancient-world/ @aizanoianalytics
+/frontend/ancient-cities/ @aizanoianalytics
+/frontend/historic-world/ @aizanoianalytics
+/research/ @aizanoianalytics
