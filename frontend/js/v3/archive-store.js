@@ -227,7 +227,8 @@ export async function restoreBundle(bundle,{replace=false}={}) {
   for(const source of value.records) {
     if(!source||typeof source!=='object'||Array.isArray(source)) continue;
     const restoredText=typeof source.text==='string'?source.text:null;
-    if(restoredText && new Blob([restoredText]).size>MAX_FILE_BYTES) throw new Error(`${source.name||'A record'} exceeds the per-file restore limit.`);
+    const restoredTextSize=restoredText===null?0:new Blob([restoredText]).size;
+    if(restoredTextSize>MAX_FILE_BYTES) throw new Error(`${source.name||'A record'} exceeds the per-file restore limit.`);
     let blob=null;
     if(source.binary?.base64) {
       const encoded=String(source.binary.base64);
@@ -236,10 +237,13 @@ export async function restoreBundle(bundle,{replace=false}={}) {
       if(bytes.byteLength>MAX_FILE_BYTES) throw new Error(`${source.name||'A record'} exceeds the per-file restore limit.`);
       blob=new Blob([bytes],{type:boundedString(source.binary.type||source.mime||'application/octet-stream',256)});
     }
+    const claimedSize=Math.max(0,finiteNumber(source.size,0));
+    const restoredSize=blob ? blob.size : restoredText!==null ? restoredTextSize : Math.min(MAX_FILE_BYTES,claimedSize);
     await putRaw({
       ...source,
       id:boundedString(source.id||uid(source.kind||'item'),256),
       name:boundedString(source.name||'Restored record',1024),
+      size:restoredSize,
       blob,
       text:restoredText,
       meta:normalizeMeta(source.meta, source.name || 'Restored record')
