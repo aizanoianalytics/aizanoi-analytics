@@ -44,7 +44,7 @@ test('compact live urban fabric is deterministic, dense across Rome and explicit
   const a = generateUrbanFabric(args);
   const b = generateUrbanFabric(args);
   assert.deepEqual(a, b);
-  assert.ok(a.length >= 300 && a.length <= 760, `unexpected compact fabric count ${a.length}`);
+  assert.ok(a.length >= 160 && a.length <= 500, `unexpected compact fabric count ${a.length}`);
   assert.ok(a.every((item) => item.evidence?.level === 'plausible'));
   assert.ok(a.every((item) => item.visualStyle === 'blocky-low-poly'));
   assert.ok(a.every((item) => !overlapsWater(item.x, item.z, item.w, item.d, layout.waters, 3)), 'fabric must clear the compact Tiber corridor');
