@@ -63,7 +63,7 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
 });
 
 test('cache locations preserve inherited security headers on common nginx versions',()=>{
-  assert.equal((nginx.match(/add_header Cache-Control/g)||[]).length,0,'location-level Cache-Control add_header can suppress inherited security headers');
+  assert.equal((nginx.match(/^\s*add_header\s+Cache-Control\b/gm)||[]).length,0,'location-level Cache-Control add_header can suppress inherited security headers');
   assert.match(nginx,/expires -1;/);
   assert.match(nginx,/expires 1d;/);
   assert.match(nginx,/X-Content-Type-Options/);
