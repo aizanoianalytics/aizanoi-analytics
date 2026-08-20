@@ -107,7 +107,8 @@ assert.equal(new Set(registry.APPS.map((app) => app.id)).size, registry.APPS.len
 assert.match(manifest, /"name"\s*:\s*"Aizanoi Field System"/);
 assert.match(manifest, /"name"\s*:\s*"Historical Worlds"/);
 assert.doesNotMatch(manifest, /hr-analytics|Aizanoi AI|HR AI/i);
-assert.match(sw, /aizanoi-field-shell-v3\.0\.0/);
+assert.match(sw, /aizanoi-field-shell-v3\.0\.1/);
+assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/, 'service worker must activate only after a complete precache');
 assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/, 'service worker must explicitly ignore API routes');
 assert.doesNotMatch(sw, /os-(?:platform|unified|product-polish|v2)\.js/);
 
