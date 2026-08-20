@@ -1,6 +1,8 @@
 const DB_NAME = 'aizanoi-field-archive';
 const STORE = 'items';
 const MAX_FILE_BYTES = 25 * 1024 * 1024;
+const MAX_BUNDLE_BYTES = 48 * 1024 * 1024;
+const BUNDLE_VERSION = 1;
 export const COLLECTIONS = Object.freeze(['Notes','Sources','Screenshots','Datasets','Exports','Uploads']);
 let databasePromise = null;
 let initialized = false;
@@ -151,6 +153,94 @@ export async function importFiles(files) {
   return imported;
 }
 
+function bytesToBase64(bytes) {
+  let binary='';
+  const chunk=0x8000;
+  for(let i=0;i<bytes.length;i+=chunk) binary+=String.fromCharCode(...bytes.subarray(i,i+chunk));
+  return btoa(binary);
+}
+
+function base64ToBytes(value) {
+  const binary=atob(value);
+  const bytes=new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++) bytes[i]=binary.charCodeAt(i);
+  return bytes;
+}
+
+async function serializeRecord(record) {
+  let binary=null;
+  if(record.blob instanceof Blob) {
+    const bytes=new Uint8Array(await record.blob.arrayBuffer());
+    binary={ type:record.blob.type || record.mime || 'application/octet-stream', base64:bytesToBase64(bytes) };
+  }
+  return {
+    id:record.id,
+    name:record.name,
+    kind:record.kind,
+    mime:record.mime,
+    size:record.size,
+    collection:record.collection,
+    createdAt:record.createdAt,
+    updatedAt:record.updatedAt,
+    text:record.text,
+    meta:record.meta,
+    binary
+  };
+}
+
+export async function exportBundle() {
+  const records=await all();
+  const estimated=records.reduce((sum,record)=>sum+Number(record.size||0),0);
+  if(estimated>MAX_BUNDLE_BYTES) throw new Error('Archive is too large for a single portable browser bundle. Export smaller source sets instead.');
+  const serialized=[];
+  for(const record of records) serialized.push(await serializeRecord(record));
+  return {
+    format:'aizanoi-field-archive',
+    version:BUNDLE_VERSION,
+    exportedAt:new Date().toISOString(),
+    app:'Aizanoi Field System',
+    records:serialized
+  };
+}
+
+export async function restoreBundle(bundle,{replace=false}={}) {
+  const value=typeof bundle==='string'?JSON.parse(bundle):bundle;
+  if(!value||value.format!=='aizanoi-field-archive'||Number(value.version)!==BUNDLE_VERSION||!Array.isArray(value.records)) throw new Error('Unsupported Field Archive bundle.');
+  if(value.records.length>5000) throw new Error('Archive bundle contains too many records.');
+  if(replace) await run('readwrite',(store)=>store.clear());
+  let restored=0;
+  for(const source of value.records) {
+    if(!source||typeof source!=='object') continue;
+    let blob=null;
+    if(source.binary?.base64) {
+      const bytes=base64ToBytes(String(source.binary.base64));
+      if(bytes.byteLength>MAX_FILE_BYTES) throw new Error(`${source.name||'A record'} exceeds the per-file restore limit.`);
+      blob=new Blob([bytes],{type:String(source.binary.type||source.mime||'application/octet-stream')});
+    }
+    await putRaw({
+      ...source,
+      id:String(source.id||uid(source.kind||'item')),
+      name:String(source.name||'Restored record'),
+      blob,
+      text:typeof source.text==='string'?source.text:null,
+      meta:source.meta&&typeof source.meta==='object'?source.meta:{source:'Restored bundle',evidence:'documented',tags:[]}
+    });
+    restored++;
+  }
+  window.dispatchEvent(new CustomEvent('aizanoi:archive-change',{detail:{type:'restore',count:restored}}));
+  return restored;
+}
+
+export async function downloadBundle(filename='aizanoi-field-archive.json') {
+  const bundle=await exportBundle();
+  const blob=new Blob([JSON.stringify(bundle,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const anchor=document.createElement('a');
+  anchor.href=url;anchor.download=filename;anchor.rel='noopener';document.body.appendChild(anchor);anchor.click();anchor.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  return bundle.records.length;
+}
+
 export async function storageEstimate() {
   try {
     if (!navigator.storage?.estimate) return { usage:0, quota:0, percent:0 };
@@ -159,4 +249,4 @@ export async function storageEstimate() {
   } catch (_) { return { usage:0, quota:0, percent:0 }; }
 }
 
-export const archiveStore = Object.freeze({ DB_NAME, STORE, MAX_FILE_BYTES, COLLECTIONS, kindFor, collectionForKind, iconFor, all, get, put, remove, rename, updateMetadata, createNote, importFiles, storageEstimate });
+export const archiveStore = Object.freeze({ DB_NAME, STORE, MAX_FILE_BYTES, MAX_BUNDLE_BYTES, BUNDLE_VERSION, COLLECTIONS, kindFor, collectionForKind, iconFor, all, get, put, remove, rename, updateMetadata, createNote, importFiles, exportBundle, restoreBundle, downloadBundle, storageEstimate });
