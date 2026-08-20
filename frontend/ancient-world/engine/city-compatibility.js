@@ -11,6 +11,7 @@ const STEP_VECTORS = Object.freeze([
   [0.9, 0.9], [0.9, -0.9], [-0.9, 0.9], [-0.9, -0.9],
 ]);
 const SEARCH_RADII = Object.freeze([0, 2, 4, 6, 9, 13, 18, 25, 34, 48, 64]);
+let arrivalIdentityToken = 0;
 
 function normalizedDirection(direction) {
   const x = Number(direction?.[0] || 0);
@@ -63,6 +64,21 @@ function ensureCurrentArrivalIsWalkable(debug, preferred = null) {
     (preferred ? findWalkablePoint(debug, preferred[0], preferred[1]) : null);
   if (safe) debug.setPlayer?.(safe.x, safe.z);
   return safe;
+}
+
+function holdAizanoiArrivalIdentity(debug, id, duration = 1400) {
+  const record = debug?.landmarks?.find((item) => item.id === id);
+  const label = document.querySelector('#locName');
+  if (!record?.name || !label) return;
+  const token = ++arrivalIdentityToken;
+  const until = performance.now() + duration;
+  const paint = () => {
+    if (token !== arrivalIdentityToken || performance.now() >= until) return;
+    if (label.textContent !== record.name) label.textContent = record.name;
+    requestAnimationFrame(paint);
+  };
+  label.textContent = record.name;
+  requestAnimationFrame(paint);
 }
 
 function applyAuthoredLandmarkFraming(debug) {
@@ -119,6 +135,7 @@ export function installCityCompatibility(runtime, { ui = 'standard' } = {}) {
       if (!ok) return ok;
       const preferred = debug.teleportViews?.[id]?.pos || null;
       ensureCurrentArrivalIsWalkable(debug, preferred);
+      if (ui === 'aizanoi') holdAizanoiArrivalIdentity(debug, id);
       return true;
     };
   }
@@ -171,6 +188,7 @@ export const CITY_COMPATIBILITY = Object.freeze({
   safeInitialSpawn: true,
   safeTeleportArrival: true,
   liveAizanoiDebugBridge: true,
+  arrivalIdentityHold: true,
   deepLinkJump: true,
   legacyTeleportAlias: true,
 });
