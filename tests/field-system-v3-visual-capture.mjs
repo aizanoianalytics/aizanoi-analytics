@@ -22,13 +22,14 @@ async function capture(name,viewport,action){
 await capture('v3-00-desktop-home',{width:1440,height:900});
 await capture('v3-01-desktop-archive',{width:1440,height:900},async(page)=>{await page.locator('[data-app="archive"]').first().click();await page.waitForSelector('.az-archive-layout');});
 await capture('v3-02-desktop-notes',{width:1440,height:900},async(page)=>{await page.locator('[data-app="notes"]').first().click();await page.waitForSelector('.az-notes-layout');});
-await capture('v3-03-desktop-terminal',{width:1440,height:900},async(page)=>{await page.evaluate(()=>window.AIZANOI_FIELD_SYSTEM.openApp('terminal'));await page.waitForSelector('.az-terminal');});
-await capture('v3-04-desktop-command',{width:1440,height:900},async(page)=>{await page.locator('[data-shell-action="search"]').first().click();await page.waitForSelector('#az-command-overlay.is-open');});
-await capture('v3-05-tablet-home',{width:900,height:1180});
-await capture('v3-06-tablet-archive',{width:900,height:1180},async(page)=>{await page.locator('[data-app="archive"]').first().click();await page.waitForSelector('.az-archive-layout');});
-await capture('v3-07-mobile-home',{width:390,height:844});
-await capture('v3-08-mobile-archive',{width:390,height:844},async(page)=>{await page.locator('[data-app="archive"]').first().click();await page.waitForSelector('.az-archive-layout');});
-await capture('v3-09-mobile-command',{width:390,height:844},async(page)=>{await page.locator('[data-shell-action="search"]').first().click();await page.waitForSelector('#az-command-overlay.is-open');});
+await capture('v3-03-desktop-data',{width:1440,height:900},async(page)=>{await page.evaluate(()=>window.AIZANOI_FIELD_SYSTEM.openApp('data-lab'));await page.waitForSelector('.az-data-layout, .az-empty-state');});
+await capture('v3-04-desktop-terminal',{width:1440,height:900},async(page)=>{await page.evaluate(()=>window.AIZANOI_FIELD_SYSTEM.openApp('terminal'));await page.waitForSelector('.az-terminal');});
+await capture('v3-05-desktop-command',{width:1440,height:900},async(page)=>{await page.locator('[data-shell-action="search"]').first().click();await page.waitForSelector('#az-command-overlay.is-open');});
+await capture('v3-06-tablet-home',{width:900,height:1180});
+await capture('v3-07-tablet-archive',{width:900,height:1180},async(page)=>{await page.locator('[data-app="archive"]').first().click();await page.waitForSelector('.az-archive-layout');});
+await capture('v3-08-mobile-home',{width:390,height:844});
+await capture('v3-09-mobile-archive',{width:390,height:844},async(page)=>{await page.locator('[data-app="archive"]').first().click();await page.waitForSelector('.az-archive-layout');});
+await capture('v3-10-mobile-command',{width:390,height:844},async(page)=>{await page.locator('[data-shell-action="search"]').first().click();await page.waitForSelector('#az-command-overlay.is-open');});
 
 await browser.close();
 console.log('Field System v3 desktop/tablet/mobile visual review captures complete');
