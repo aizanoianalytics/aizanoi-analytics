@@ -23,6 +23,9 @@ function scaledFraming(framing, scale) {
     distance: Number.isFinite(Number(framing.distance))
       ? Math.max(8, Number(framing.distance) * scale)
       : framing.distance,
+    roadDistance: Number.isFinite(Number(framing.roadDistance))
+      ? Math.max(8, Number(framing.roadDistance) * scale)
+      : framing.roadDistance,
   };
 }
 
@@ -216,7 +219,8 @@ export function buildHeroApproachStreets(buildings = [], {
   const streets = [];
   for (const record of buildings) {
     const direction = approachDirection(record);
-    const distance = Number(record?.framing?.distance);
+    const framing = record?.framing;
+    const distance = Number(framing?.roadDistance ?? framing?.distance);
     if (!direction || !Number.isFinite(distance)) continue;
     const [dx, dz] = direction;
     const radius = Math.max(record.w || 0, record.d || 0) * 0.52;
