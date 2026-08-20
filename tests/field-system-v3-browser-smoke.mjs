@@ -46,6 +46,7 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
 
   await page.locator('[data-app="archive"]').first().click();
   await page.waitForSelector('.az-archive-layout');
+  await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')==='archive');
   assert.match(page.url(),/[?&]app=archive(?:&|$)/,'desktop: Archive route intent missing');
   assert.ok(appModuleRequests(requests).some((path)=>path.endsWith('/apps/archive.js')),'desktop: Archive did not lazy-load archive module');
   assert.ok(requests.some((path)=>path.endsWith('/styles/apps.css')),'desktop: app styles did not lazy-load');
