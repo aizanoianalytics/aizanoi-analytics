@@ -59,9 +59,10 @@ server {
         expires 1h;
     }
 
-    # Shell HTML and the service worker revalidate so product/security fixes are
-    # visible quickly. App modules/styles are intentionally lazy but not yet
-    # content-hashed, so they use a bounded cache rather than false immutability.
+    # HTML, service-worker code, app modules and world code are currently served
+    # under stable (non-content-hashed) URLs. Revalidate them on every use so a
+    # deploy cannot mix old JavaScript/CSS with new HTML. Long-lived caching is
+    # reserved for relatively stable media/branding assets below.
     location = / {
         try_files /index.html =404;
         expires -1;
@@ -82,11 +83,11 @@ server {
 
     location ^~ /styles/ {
         try_files $uri =404;
-        expires 1d;
+        expires -1;
     }
     location ^~ /js/ {
         try_files $uri =404;
-        expires 1d;
+        expires -1;
     }
     location ^~ /assets/ {
         try_files $uri =404;
@@ -94,7 +95,7 @@ server {
     }
     location ^~ /games/ {
         try_files $uri =404;
-        expires 1d;
+        expires -1;
     }
 
     # Standalone Historic World (Roman Aizanoi).
@@ -107,7 +108,7 @@ server {
     }
     location ^~ /historic-world/ {
         try_files $uri =404;
-        expires 1d;
+        expires -1;
     }
 
     # Standalone modular Ancient World cities.
@@ -116,14 +117,14 @@ server {
     }
     location ^~ /ancient-cities/rome-410-476/ {
         try_files $uri $uri/ =404;
-        expires 1d;
+        expires -1;
     }
     location = /ancient-cities/athens-450-430 {
         return 301 /ancient-cities/athens-450-430/;
     }
     location ^~ /ancient-cities/athens-450-430/ {
         try_files $uri $uri/ =404;
-        expires 1d;
+        expires -1;
     }
 
     # Current app state lives in ?app=<id>; these legacy convenience routes may
