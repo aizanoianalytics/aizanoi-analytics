@@ -93,6 +93,10 @@ for (const city of cities) {
   const my = canvas.y + canvas.height * 0.48;
   await page.mouse.click(mx, my, { button:'left' });
   await page.waitForFunction(() => document.pointerLockElement === document.querySelector('#glCanvas'));
+  // pointerLockElement can become visible to script a task before the runtime's
+  // pointerlockchange listener has updated its cached `locked` flag. Give that
+  // event loop turn time to settle before asserting synthetic movement.
+  await page.waitForTimeout(50);
   const mouseBefore = await player(page);
   await page.evaluate(() => {
     const event = new MouseEvent('mousemove', { bubbles:true });

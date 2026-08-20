@@ -46,7 +46,7 @@ const E_PLAUS = Object.freeze({ level: 'plausible', note: 'Atmospheric or inferr
 const B = (id, name, type, x, z, w, d, h, region, source, detail, extra = {}) => ({ id, name, type, x, z, w, d, h, region, source, detail, evidence: extra.evidence || E_ARCH, ...extra });
 
 export const BUILDINGS = Object.freeze([
-  B('temple', 'Temple of Zeus', 'temple', -160, 20, 55, 35, 18, 'sanctuary', 'temple', 'Octastyle pseudodipteral sanctuary; the blocky asset preserves the temple identity while terrain elevation is intentionally removed.', { asset: 'temple-of-zeus', framing: { distance: 92, preferredDirections: [[1,0]] } }),
+  B('temple', 'Temple of Zeus', 'temple', -160, 20, 55, 35, 18, 'sanctuary', 'temple', 'Octastyle pseudodipteral sanctuary; the blocky asset preserves the temple identity while terrain elevation is intentionally removed.', { asset: 'temple-of-zeus', framing: { distance: 92, preferredDirections: [[1,0]], cameraDistance: 210 } }),
   B('agora', 'Agora & Propylon', 'forum', -65, -35, 98, 82, 8, 'sanctuary', 'agora', 'Civic centre between the Zeus sanctuary and the Penkalas.'),
   B('odeon', 'Bouleuterion / Odeon', 'theatre', -78, -142, 48, 45, 9, 'sanctuary', 'odeon', 'Council/performance building with semicircular seating.'),
   B('greatbath', 'Great Bath–Palaestra', 'bath', -315, 280, 110, 145, 18, 'bath-quarter', 'bath', 'Mid-second-century bath and very large palaestra.'),

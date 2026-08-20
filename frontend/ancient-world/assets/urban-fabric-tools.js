@@ -70,6 +70,49 @@ export function overlapsClearZones(x, z, width, depth, zones, footprintScale = 0
   return (zones || []).some((zone) => Math.hypot(x - zone.x, z - zone.z) < zone.radius + footprintRadius);
 }
 
+export function overlapsWater(x, z, width, depth, waters, padding = 4) {
+  const footprintRadius = Math.max(width, depth) * 0.42;
+  for (const water of waters || []) {
+    if (water.type === 'rect') {
+      const hx = (water.w || 0) / 2 + footprintRadius + padding;
+      const hz = (water.d || 0) / 2 + footprintRadius + padding;
+      if (Math.abs(x - water.x) < hx && Math.abs(z - water.z) < hz) return true;
+      continue;
+    }
+    const points = water.points || [];
+    for (let i = 1; i < points.length; i++) {
+      const distance = pointToSegmentDistance(x, z, points[i - 1], points[i]);
+      if (distance < (water.width || 20) / 2 + footprintRadius + padding) return true;
+    }
+  }
+  return false;
+}
+
+export function buildFramingClearZones(buildings, {
+  radius = 24,
+  minimumDistance = 20,
+} = {}) {
+  const zones = [];
+  for (const building of buildings || []) {
+    const framing = building?.framing;
+    const directions = framing?.preferredDirections;
+    const distance = Number(framing?.distance);
+    if (!Array.isArray(directions) || !directions.length || !Number.isFinite(distance)) continue;
+    const [rawX, rawZ] = directions[0];
+    const length = Math.hypot(rawX || 0, rawZ || 0) || 1;
+    const dx = (rawX || 0) / length;
+    const dz = (rawZ || 0) / length;
+    const d = Math.max(minimumDistance, distance);
+    zones.push({
+      id: `${building.id}-hero-arrival`,
+      x: building.x + dx * d,
+      z: building.z + dz * d,
+      radius: Math.max(radius, Math.min(44, Math.max(building.w || 0, building.d || 0) * 0.24)),
+    });
+  }
+  return zones;
+}
+
 export function regionalPlacementTarget(region, density, mobile, {
   desktopCell = 22,
   mobileCell = 30,
@@ -89,5 +132,7 @@ export function regionalPlacementTarget(region, density, mobile, {
 export const URBAN_FABRIC_TOOLKIT = Object.freeze({
   deterministic:true,
   archaeologicalClaims:false,
+  waterAware:true,
+  heroArrivalAware:true,
   purpose:'Reusable placement math for explicitly inferred urban fabric; city-specific evidence, exclusions and style remain local.',
 });

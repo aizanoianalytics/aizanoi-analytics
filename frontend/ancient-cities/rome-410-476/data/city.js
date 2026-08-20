@@ -24,8 +24,19 @@ const FRAMING = Object.freeze({
   'diocletian': { distance: 150, preferredDirections: [[0,-1],[-1,-1]] },
 });
 
-export const BUILDINGS = base.BUILDINGS.map((building) => (
-  FRAMING[building.id] ? { ...building, framing: FRAMING[building.id] } : building
-));
+// Camera composition is live-presentation metadata, separate from the authored
+// arrival distance contract above. It can widen a hero view without lengthening
+// the compact approach street or mutating the source/research ledger.
+const CAMERA_DISTANCE = Object.freeze({ colosseum: 360 });
+
+export const BUILDINGS = base.BUILDINGS.map((building) => {
+  const framing = FRAMING[building.id];
+  if (!framing) return building;
+  const cameraDistance = CAMERA_DISTANCE[building.id];
+  return {
+    ...building,
+    framing: Number.isFinite(cameraDistance) ? { ...framing, cameraDistance } : framing,
+  };
+});
 
 export const TELEPORTS = base.TELEPORTS;
