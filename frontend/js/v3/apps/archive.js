@@ -1,6 +1,6 @@
 import * as Archive from '../archive-store.js';
 
-const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[char]));
+const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const formatBytes=(bytes)=>{const n=Math.max(0,Number(bytes)||0);if(n<1024)return`${n} B`;if(n<1024*1024)return`${(n/1024).toFixed(n>10240?0:1)} KB`;return`${(n/1024/1024).toFixed(1)} MB`;};
 const dateLabel=(value)=>{try{return new Date(Number(value)||Date.now()).toLocaleDateString([],{month:'short',day:'numeric',year:'numeric'});}catch(_){return'';}};
 const evidenceOptions=['documented','archaeological','inferred','atmospheric','disputed'];
