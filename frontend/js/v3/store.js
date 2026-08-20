@@ -49,7 +49,9 @@ function emit(type, detail = null) {
   try { window.dispatchEvent(new CustomEvent('aizanoi:v3-state', { detail:{ type, detail, state:snapshot } })); } catch (_) {}
 }
 
-export function getState() { return structuredClone ? structuredClone(state) : JSON.parse(JSON.stringify(state)); }
+export function getState() {
+  return typeof structuredClone === 'function' ? structuredClone(state) : JSON.parse(JSON.stringify(state));
+}
 export function subscribe(fn) { listeners.add(fn); return () => listeners.delete(fn); }
 
 export function setOpenApps(ids, active = null) {
