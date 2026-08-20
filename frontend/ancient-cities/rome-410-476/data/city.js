@@ -8,9 +8,10 @@ export const REGIONS = base.REGIONS;
 export const STREETS = base.STREETS;
 
 const FRAMING = Object.freeze({
-  // South remains the only fully traversable Colosseum approach in the current
-  // city fabric; camera-clearance scoring still keeps the player off the palace.
-  colosseum: { distance: 152, preferredDirections: [[0,-1],[-1,-1]] },
+  // Flat-ground traversal no longer needs the old Palatine-side approach. Arrive
+  // from the east first so the amphitheatre reads as the requested hero instead
+  // of placing the visitor among the Palatine/foreground residential masses.
+  colosseum: { distance: 165, preferredDirections: [[1,0],[1,1],[1,-1],[0,1]] },
   // Forum arrival is authored from the north-east civic corridor instead of the
   // dense Palatine-side fabric that can fill the camera with a single wall.
   forum: { distance: 96, preferredDirections: [[1,1],[0,1]] },
