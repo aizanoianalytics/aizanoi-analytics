@@ -23,7 +23,13 @@ async function axe(page,label) {
   await page.addScriptTag({content:axeSource});
   const result=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}}));
   const blocking=result.violations.filter((item)=>['serious','critical'].includes(item.impact));
-  assert.deepEqual(blocking.map((item)=>({id:item.id,impact:item.impact,nodes:item.nodes.length})),[],`${label}: serious/critical axe violations`);
+  const summary=blocking.map((item)=>({
+    id:item.id,
+    impact:item.impact,
+    nodes:item.nodes.map((node)=>({target:node.target,html:node.html,failureSummary:node.failureSummary}))
+  }));
+  if(summary.length) console.error(`${label} axe blocking violations:\n${JSON.stringify(summary,null,2)}`);
+  assert.deepEqual(summary,[],`${label}: serious/critical axe violations`);
 }
 
 function appModuleRequests(requests){return requests.filter((path)=>path.includes('/js/v3/apps/'));}
