@@ -129,9 +129,10 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   await page.locator('[data-app="archive"]').first().click();
   await page.waitForSelector('.az-archive-layout');
   await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')==='archive' && document.querySelector('.az-window[data-app-id="archive"]')?.classList.contains('is-active'));
+  await page.waitForFunction(()=>getComputedStyle(document.querySelector('.az-window[data-app-id="archive"]')).transform==='none');
   const win=await page.locator('.az-window[data-app-id="archive"]').boundingBox();
   const stage=await page.locator('.az-stage').boundingBox();
-  assert.ok(win && stage && Math.abs(win.x-stage.x)<=1 && Math.abs(win.y-stage.y)<=1 && Math.abs(win.width-stage.width)<=1 && Math.abs(win.height-stage.height)<=1,'mobile: Archive does not fill the compact shell stage');
+  assert.ok(win && stage && Math.abs(win.x-stage.x)<=1 && Math.abs(win.y-stage.y)<=1 && Math.abs(win.width-stage.width)<=1 && Math.abs(win.height-stage.height)<=1,`mobile: Archive does not fill the compact shell stage; window=${JSON.stringify(win)} stage=${JSON.stringify(stage)}`);
   assert.equal(await page.locator('.az-collection-nav').isVisible(),true,'mobile: collection rail hidden');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile: Archive horizontal overflow');
 
