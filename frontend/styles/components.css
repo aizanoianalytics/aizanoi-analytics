@@ -129,11 +129,16 @@
   .az-paper-surface :focus-visible { outline-color:#3b746f; }
   .az-evidence { display:inline-flex; align-items:center; gap:6px; min-height:24px; padding:3px 8px; border-radius:999px; border:1px solid currentColor; font:700 11px/1 var(--az-font-mono); text-transform:uppercase; letter-spacing:.05em; }
   .az-evidence::before { content:""; width:6px; height:6px; border-radius:50%; background:currentColor; }
-  .az-evidence[data-level="documented"] { color:#477e79; }
-  .az-evidence[data-level="archaeological"] { color:#8a6b36; }
-  .az-evidence[data-level="inferred"] { color:#985a4b; }
-  .az-evidence[data-level="atmospheric"] { color:#6f756f; }
-  .az-evidence[data-level="disputed"] { color:#8a6d32; border-style:dashed; }
+  .az-evidence[data-level="documented"] { color:var(--az-teal-hi); }
+  .az-evidence[data-level="archaeological"] { color:var(--az-brass-hi); }
+  .az-evidence[data-level="inferred"] { color:#d99a89; }
+  .az-evidence[data-level="atmospheric"] { color:var(--az-text-2); }
+  .az-evidence[data-level="disputed"] { color:#e2bd70; border-style:dashed; }
+  .az-paper-surface .az-evidence[data-level="documented"] { color:#2f6660; }
+  .az-paper-surface .az-evidence[data-level="archaeological"] { color:#75571f; }
+  .az-paper-surface .az-evidence[data-level="inferred"] { color:#8b493b; }
+  .az-paper-surface .az-evidence[data-level="atmospheric"] { color:#585e59; }
+  .az-paper-surface .az-evidence[data-level="disputed"] { color:#71571f; }
 
   .az-error-page { min-height: 100dvh; }
   .az-error-logo { width: 58px; height: 58px; margin-bottom: 18px; }
