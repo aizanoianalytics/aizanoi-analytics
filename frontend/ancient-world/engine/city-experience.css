@@ -159,7 +159,7 @@ body[data-city="rome"] .place span,body[data-city="athens"] .place span{display:
   body[data-city="aizanoi"] #hud .eraBtn{width:100%;min-height:44px;padding:9px 8px;font-size:11px}
   body[data-city="aizanoi"] #prompt{display:none!important}
   body[data-city="aizanoi"] #mapBox{display:none!important}
-  body[data-city="aizanoi"] #toast{top:max(166px,calc(env(safe-area-inset-top) + 158px));max-width:calc(100vw - 24px);text-align:center}
+  body[data-city="aizanoi"] #toast{top:max(190px,calc(env(safe-area-inset-top) + 182px));max-width:calc(100vw - 24px);text-align:center}
 
   /* Rome/Athens keep one uncluttered control row below the Field System return.
      Their city identity remains in the place card and intro; the desktop brand is
