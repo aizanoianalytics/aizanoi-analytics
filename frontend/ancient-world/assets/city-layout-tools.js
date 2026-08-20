@@ -35,7 +35,7 @@ export const CITY_COMPACTION_PROFILES = Object.freeze({
     regionScaleX: 0.72, regionScaleZ: 0.70,
     perimeterScaleX: 0.68, perimeterScaleZ: 0.66,
     roadWidthScale: 0.92, waterWidthScale: 0.90,
-    framingScale: 0.78, boundsPadding: 64,
+    framingScale: 0.66, boundsPadding: 64,
   }),
   rome: Object.freeze({
     id: 'rome-dense-core', centerX: -140, centerZ: 0,
@@ -45,7 +45,7 @@ export const CITY_COMPACTION_PROFILES = Object.freeze({
     regionScaleX: 0.72, regionScaleZ: 0.72,
     perimeterScaleX: 0.68, perimeterScaleZ: 0.68,
     roadWidthScale: 0.90, waterWidthScale: 0.88,
-    framingScale: 0.70, boundsPadding: 68,
+    framingScale: 0.60, boundsPadding: 68,
   }),
   athens: Object.freeze({
     id: 'athens-dense-core', centerX: 90, centerZ: 20,
@@ -55,7 +55,7 @@ export const CITY_COMPACTION_PROFILES = Object.freeze({
     regionScaleX: 0.69, regionScaleZ: 0.72,
     perimeterScaleX: 0.64, perimeterScaleZ: 0.68,
     roadWidthScale: 0.90, waterWidthScale: 0.88,
-    framingScale: 0.76, boundsPadding: 68,
+    framingScale: 0.60, boundsPadding: 68,
   }),
 });
 
@@ -210,8 +210,8 @@ function ellipseLoopPoints(record, segments = 14) {
 }
 
 export function buildHeroApproachStreets(buildings = [], {
-  approachWidth = 10,
-  frontageWidth = 8,
+  approachWidth = 8,
+  frontageWidth = 7,
 } = {}) {
   const streets = [];
   for (const record of buildings) {
@@ -224,7 +224,7 @@ export function buildHeroApproachStreets(buildings = [], {
     const start = [record.x + dx * distance, record.z + dz * distance];
     const mid = [record.x + dx * ((distance + edge) * 0.52), record.z + dz * ((distance + edge) * 0.52)];
     const stop = [record.x + dx * edge, record.z + dz * edge];
-    const width = clamp(Math.max(approachWidth, Math.max(record.w || 0, record.d || 0) * 0.10), 8, 16);
+    const width = clamp(Math.max(approachWidth, Math.max(record.w || 0, record.d || 0) * 0.07), 7, 12);
     streets.push({
       id: `hero-approach-${record.id}`,
       name: `${record.name || record.id} approach`,
@@ -238,7 +238,7 @@ export function buildHeroApproachStreets(buildings = [], {
 
     const px = -dz;
     const pz = dx;
-    const half = Math.max(16, Math.min(42, Math.max(record.w || 0, record.d || 0) * 0.62));
+    const half = Math.max(14, Math.min(34, Math.max(record.w || 0, record.d || 0) * 0.52));
     streets.push({
       id: `hero-frontage-${record.id}`,
       name: `${record.name || record.id} frontage`,
@@ -246,7 +246,7 @@ export function buildHeroApproachStreets(buildings = [], {
         [stop[0] - px * half, stop[1] - pz * half],
         [stop[0] + px * half, stop[1] + pz * half],
       ],
-      width: clamp(frontageWidth, 6, 11),
+      width: clamp(frontageWidth, 6, 9),
       source: record.source || 'layout',
       inferred: true,
       visualStyle: 'blocky-low-poly',
@@ -258,7 +258,7 @@ export function buildHeroApproachStreets(buildings = [], {
         id: `hero-ring-${record.id}`,
         name: `${record.name || record.id} circulation ring`,
         points: ellipseLoopPoints(record, 16),
-        width: 9,
+        width: 8,
         source: record.source || 'layout',
         inferred: true,
         visualStyle: 'blocky-low-poly',
