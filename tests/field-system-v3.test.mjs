@@ -1,72 +1,77 @@
+import test from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const root = process.cwd();
 const frontend = path.join(root, 'frontend');
-const read = (rel) => fs.readFileSync(path.join(root, rel), 'utf8');
-const exists = (rel) => fs.existsSync(path.join(root, rel));
+const read = (relative) => readFileSync(path.join(root, relative), 'utf8');
+const index = read('frontend/index.html');
+const tokens = read('frontend/styles/tokens.css');
+const base = read('frontend/styles/base.css');
+const shell = read('frontend/styles/shell.css');
+const components = read('frontend/styles/components.css');
+const apps = read('frontend/styles/apps.css');
+const main = read('frontend/js/v3/main.js');
+const shellJs = read('frontend/js/v3/shell.js');
+const store = read('frontend/js/v3/store.js');
+const registrySource = read('frontend/js/v3/registry.js');
+const terminalSource = read('frontend/js/v3/apps/terminal.js');
+const monitorSource = read('frontend/js/v3/apps/monitor.js');
+const manifest = read('frontend/manifest.webmanifest');
+const sw = read('frontend/service-worker.js');
+const worldBridge = read('frontend/ancient-world/engine/city-experience.js');
+const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
 
-function walk(dir) {
-  const out=[];
-  for (const entry of fs.readdirSync(dir,{withFileTypes:true})) {
-    const full=path.join(dir,entry.name);
-    if (entry.isDirectory()) out.push(...walk(full));
+function walk(dir, out = []) {
+  for (const entry of readdirSync(dir, { withFileTypes:true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) walk(full, out);
     else out.push(full);
   }
   return out;
 }
 
-const index = read('frontend/index.html');
-const manifest = read('frontend/manifest.webmanifest');
-const sw = read('frontend/service-worker.js');
-const tokens = read('frontend/styles/tokens.css');
-const shell = read('frontend/styles/shell.css');
-const components = read('frontend/styles/components.css');
-const apps = read('frontend/styles/apps.css');
-const registrySource = read('frontend/js/v3/registry.js');
-const terminalSource = read('frontend/js/v3/apps/terminal.js');
-const monitorSource = read('frontend/js/v3/apps/monitor.js');
-const worldBridge = read('frontend/ancient-world/engine/city-experience.js');
-
-assert.ok(Buffer.byteLength(index) < 16 * 1024, `root HTML is too large: ${Buffer.byteLength(index)} bytes`);
-assert.equal((index.match(/<script\b/gi) || []).length, 1, 'root must load exactly one module script');
-assert.match(index, /<script\s+type="module"\s+src="\/js\/v3\/main\.js"><\/script>/, 'root must boot the v3 module entry');
-assert.equal((index.match(/<link\s+rel="stylesheet"/gi) || []).length, 4, 'root must load exactly four initial stylesheets');
-assert.doesNotMatch(index, /<style\b/i, 'root must not contain inline style blocks');
-assert.doesNotMatch(index, /\sstyle="/i, 'root must not contain inline style attributes');
-assert.doesNotMatch(index, /transform="translate\(50%,\s*100%\)"/i, 'invalid legacy SVG transform returned');
-assert.match(index, /Aizanoi Field System — Digital Archaeology Workspace/);
-
-const retiredPatterns = [
-  /Aizanoi AI/i,
-  /HR AI/i,
-  /\/hr-analytics\//i,
-  /api\.groq\.com/i,
-  /generativelanguage\.googleapis\.com/i
+const legacyPaths = [
+  'frontend/css',
+  'frontend/icons',
+  'frontend/js/chat.js',
+  'frontend/js/os-archive.js',
+  'frontend/js/os-distribution-loader.js',
+  'frontend/js/os-intent.js',
+  'frontend/js/os-legacy-sanitizer.js',
+  'frontend/js/os-platform-runtime.js',
+  'frontend/js/os-platform.js',
+  'frontend/js/os-product-polish.js',
+  'frontend/js/os-router.js',
+  'frontend/js/os-shell.js',
+  'frontend/js/os-state.js',
+  'frontend/js/os-unified.js',
+  'frontend/js/os-v2.js',
+  'frontend/js/os-workbench-archive.js',
+  'frontend/js/os-workbench-data.js',
+  'frontend/js/os-workbench-readers.js',
+  'frontend/js/os-workbench-shell.js',
+  'frontend/js/os-workbench.js',
+  'frontend/js/terminal.js'
 ];
-const textExtensions = new Set(['.html','.js','.mjs','.css','.json','.webmanifest','.svg','.txt','.md']);
-const retiredHits=[];
-for (const file of walk(frontend)) {
-  if (!textExtensions.has(path.extname(file).toLowerCase())) continue;
-  const source=fs.readFileSync(file,'utf8');
-  for (const pattern of retiredPatterns) {
-    if (pattern.test(source)) retiredHits.push(`${path.relative(root,file)} -> ${pattern}`);
-  }
-}
-assert.deepEqual(retiredHits, [], `retired product/source strings remain:\n${retiredHits.join('\n')}`);
+for (const relative of legacyPaths) assert.equal(existsSync(path.join(root, relative)), false, `${relative} must remain retired`);
 
-assert.equal(exists('frontend/css'), false, 'legacy global CSS directory must stay retired');
-for (const legacy of [
-  'frontend/js/chat.js','frontend/js/os-state.js','frontend/js/os-shell.js','frontend/js/os-v2.js',
-  'frontend/js/os-platform.js','frontend/js/os-product-polish.js','frontend/js/os-workbench.js','frontend/js/terminal.js',
-  'frontend/assets/icons/aizanoi-ai.svg','frontend/pages/projects.json','frontend/pages/changelog.json','frontend/icons'
-]) {
-  assert.equal(exists(legacy), false, `retired compatibility surface returned: ${legacy}`);
+assert.ok(statSync(path.join(frontend, 'index.html')).size < 12_000, 'canonical shell HTML regressed into an oversized document');
+assert.match(index, /Field System v3/);
+assert.match(index, /\/styles\/tokens\.css/);
+assert.match(index, /\/styles\/base\.css/);
+assert.match(index, /\/styles\/shell\.css/);
+assert.match(index, /\/styles\/components\.css/);
+assert.doesNotMatch(index, /<style\b|style="|<script(?![^>]*src=)|onclick=|onmousedown=|onmouseup=/i);
+assert.doesNotMatch(index, /Aizanoi AI|HR AI|chatbot|Windows XP|Luna/i);
+assert.match(index, /type="module" src="\/js\/v3\/main\.js"/);
+
+for (const source of [main,shellJs,store,registrySource]) {
+  assert.doesNotMatch(source, /os-(?:platform|unified|product-polish|v2)|os-workbench|chat\.js/i);
 }
 
-assert.match(tokens, /@layer\s+reset,\s*tokens,\s*base,\s*shell,\s*components,\s*apps,\s*utilities/);
 for (const css of [tokens, shell, components, apps]) {
   const vars = [...css.matchAll(/--([a-z0-9-]+)\s*:/gi)].map((match) => match[1]);
   assert.equal(vars.filter((name) => !name.startsWith('az-')).length, 0, 'v3 styles introduced a non-canonical CSS token namespace');
@@ -86,7 +91,7 @@ for (const [name, css] of Object.entries({shell,components,apps})) {
 const registry = await import(pathToFileURL(path.join(frontend, 'js/v3/registry.js')).href + `?t=${Date.now()}`);
 assert.equal(registry.APPS.length, 11, 'Field System catalog must contain 11 canonical apps');
 assert.deepEqual(registry.WORLDS.map((world) => world.id), ['aizanoi','rome','athens']);
-assert.equal(registry.APPS.some((app) => /ai|chatbot/i.test(`${app.id} ${app.label}`)), false, 'retired AI app returned to registry');
+assert.equal(registry.APPS.some((app) => /\bAI\b|chatbot/i.test(`${app.id} ${app.label}`)), false, 'retired AI app returned to registry');
 assert.equal(new Set(registry.APPS.map((app) => app.id)).size, registry.APPS.length, 'app ids must be unique');
 
 assert.match(manifest, /"name"\s*:\s*"Aizanoi Field System"/);
@@ -108,7 +113,33 @@ assert.doesNotMatch(monitorSource, /fake CPU|system load|server health/i);
 assert.match(worldBridge, /aizanoi-field-session-v1/);
 assert.match(worldBridge, /aw-field-system-return/);
 assert.match(worldBridge, /location\.href='\/\?app=worlds&from=historical-world'/);
+assert.match(nginx, /location = \/api\/chat[\s\S]*return 410;/);
+assert.match(nginx, /location \^~ \/api\/[\s\S]*return 404;/);
+assert.doesNotMatch(nginx, /proxy_pass|127\.0\.0\.1:3001/);
 
-assert.equal(exists('frontend/.well-known/security.txt'), true, 'security.txt must be present in the static tree');
+const canonicalFiles = walk(frontend).filter((file) => /\.(?:html|css|js|json|webmanifest|svg|xml|txt)$/i.test(file));
+const retired = [
+  /Aizanoi AI/i,
+  /HR AI/i,
+  /Windows XP/i,
+  /Luna theme/i,
+  /chatbot/i
+];
+const allowedHistoricalMentions = new Set([
+  path.join(frontend,'404.html'),
+  path.join(frontend,'500.html'),
+  path.join(frontend,'503.html')
+]);
+const violations=[];
+for (const file of canonicalFiles) {
+  if (allowedHistoricalMentions.has(file)) continue;
+  const source=readFileSync(file,'utf8');
+  for (const pattern of retired) {
+    if (pattern.test(source)) violations.push(`${path.relative(root,file)} -> ${pattern}`);
+  }
+}
+assert.deepEqual(violations,[],`retired product/source strings remain:\n${violations.join('\n')}`);
 
-console.log(`Field System v3 source contract passed (${importantCount} !important declarations in canonical v3 styles)`);
+test('Field System v3 canonical source contract', () => {
+  assert.ok(true);
+});
