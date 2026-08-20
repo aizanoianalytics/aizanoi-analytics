@@ -53,6 +53,34 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   assert.equal(await page.getByText('Temple of Zeus — sample field record',{exact:false}).count()>0,true,'desktop: sample Archive record missing');
   await axe(page,'desktop archive');
 
+  // Restore input must be normalized before it reaches UI/rendering contracts.
+  const normalized=await page.evaluate(async()=>{
+    const Archive=await import('/js/v3/archive-store.js');
+    const id='qa-malformed-meta';
+    await Archive.restoreBundle({
+      format:'aizanoi-field-archive',version:1,records:[{
+        id,name:'QA malformed metadata.md',kind:'markdown',mime:'text/markdown',size:2,text:'qa',collection:'Sources',
+        meta:{title:{bad:true},tags:'not-an-array',source:['local'],evidence:{bad:true},linkedRecord:{bad:true},lastModified:'not-a-number'}
+      }]
+    });
+    const item=await Archive.get(id);
+    await Archive.remove(id);
+    return {
+      title:item?.meta?.title,
+      tags:item?.meta?.tags,
+      source:item?.meta?.source,
+      evidence:item?.meta?.evidence,
+      linkedRecord:item?.meta?.linkedRecord??null,
+      lastModified:item?.meta?.lastModified??null
+    };
+  });
+  assert.equal(typeof normalized.title,'string','desktop: restored title was not normalized to text');
+  assert.deepEqual(normalized.tags,[],'desktop: malformed restored tags were not normalized');
+  assert.equal(typeof normalized.source,'string','desktop: restored source was not normalized to text');
+  assert.equal(typeof normalized.evidence,'string','desktop: restored evidence was not normalized to text');
+  assert.equal(typeof normalized.linkedRecord,'string','desktop: restored linked record was not normalized to text');
+  assert.equal(normalized.lastModified,null,'desktop: invalid restored lastModified survived normalization');
+
   // Dialog semantics: opener -> focus, background inert, Esc -> opener restore.
   // Shell focus transfer intentionally happens on the next task; wait for the actual
   // accessibility contract rather than racing the zero-delay focus handoff.
