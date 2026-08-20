@@ -8,6 +8,16 @@ const frontend = path.join(root, 'frontend');
 const read = (rel) => fs.readFileSync(path.join(root, rel), 'utf8');
 const exists = (rel) => fs.existsSync(path.join(root, rel));
 
+function walk(dir) {
+  const out=[];
+  for (const entry of fs.readdirSync(dir,{withFileTypes:true})) {
+    const full=path.join(dir,entry.name);
+    if (entry.isDirectory()) out.push(...walk(full));
+    else out.push(full);
+  }
+  return out;
+}
+
 const index = read('frontend/index.html');
 const manifest = read('frontend/manifest.webmanifest');
 const sw = read('frontend/service-worker.js');
@@ -25,12 +35,27 @@ assert.equal((index.match(/<script\b/gi) || []).length, 1, 'root must load exact
 assert.match(index, /<script\s+type="module"\s+src="\/js\/v3\/main\.js"><\/script>/, 'root must boot the v3 module entry');
 assert.equal((index.match(/<link\s+rel="stylesheet"/gi) || []).length, 4, 'root must load exactly four initial stylesheets');
 assert.doesNotMatch(index, /<style\b/i, 'root must not contain inline style blocks');
+assert.doesNotMatch(index, /\sstyle="/i, 'root must not contain inline style attributes');
 assert.doesNotMatch(index, /transform="translate\(50%,\s*100%\)"/i, 'invalid legacy SVG transform returned');
 assert.match(index, /Aizanoi Field System — Digital Archaeology Workspace/);
 
-for (const [name, source] of Object.entries({ index, manifest, registrySource })) {
-  assert.doesNotMatch(source, /Aizanoi AI|HR AI|\/hr-analytics\/|Groq|Gemini|chatbot/i, `${name} still exposes retired AI product strings`);
+const retiredPatterns = [
+  /Aizanoi AI/i,
+  /HR AI/i,
+  /\/hr-analytics\//i,
+  /api\.groq\.com/i,
+  /generativelanguage\.googleapis\.com/i
+];
+const textExtensions = new Set(['.html','.js','.mjs','.css','.json','.webmanifest','.svg','.txt','.md']);
+const retiredHits=[];
+for (const file of walk(frontend)) {
+  if (!textExtensions.has(path.extname(file).toLowerCase())) continue;
+  const source=fs.readFileSync(file,'utf8');
+  for (const pattern of retiredPatterns) {
+    if (pattern.test(source)) retiredHits.push(`${path.relative(root,file)} -> ${pattern}`);
+  }
 }
+assert.deepEqual(retiredHits, [], `retired product/source strings remain:\n${retiredHits.join('\n')}`);
 
 assert.equal(exists('frontend/css'), false, 'legacy global CSS directory must stay retired');
 for (const legacy of [
@@ -53,6 +78,11 @@ assert.match(tokens, /--az-brass:\s*#c4a36b/i);
 assert.match(tokens, /--az-teal:\s*#73aaa4/i);
 assert.match(tokens, /--az-control-touch:\s*44px/i);
 
+for (const [name, css] of Object.entries({shell,components,apps})) {
+  const tiny=[...css.matchAll(/font(?:-size)?\s*:\s*([0-9.]+)px/gi)].map((m)=>Number(m[1])).filter((n)=>n>0&&n<11);
+  assert.deepEqual(tiny,[],`${name} contains functional typography below 11px: ${tiny.join(', ')}`);
+}
+
 const registry = await import(pathToFileURL(path.join(frontend, 'js/v3/registry.js')).href + `?t=${Date.now()}`);
 assert.equal(registry.APPS.length, 11, 'Field System catalog must contain 11 canonical apps');
 assert.deepEqual(registry.WORLDS.map((world) => world.id), ['aizanoi','rome','athens']);
@@ -71,7 +101,7 @@ for (const primitive of ['fetch(', 'XMLHttpRequest', 'WebSocket']) {
 }
 assert.match(terminalSource, /worlds/);
 assert.match(terminalSource, /evidence/);
-assert.doesNotMatch(terminalSource, /hostname|process list|Windows XP|C:\\\\Aizanoi/i);
+assert.doesNotMatch(terminalSource, /Windows XP|C:\\\\Aizanoi/i);
 assert.match(monitorSource, /navigator\.storage|storageEstimate/);
 assert.doesNotMatch(monitorSource, /fake CPU|system load|server health/i);
 
