@@ -23,6 +23,9 @@ function scaledFraming(framing, scale) {
     distance: Number.isFinite(Number(framing.distance))
       ? Math.max(8, Number(framing.distance) * scale)
       : framing.distance,
+    cameraDistance: Number.isFinite(Number(framing.cameraDistance))
+      ? Math.max(8, Number(framing.cameraDistance) * scale)
+      : framing.cameraDistance,
     roadDistance: Number.isFinite(Number(framing.roadDistance))
       ? Math.max(8, Number(framing.roadDistance) * scale)
       : framing.roadDistance,
