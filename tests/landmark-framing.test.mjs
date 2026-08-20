@@ -5,6 +5,8 @@ import { resolve } from 'node:path';
 import { landmarkCameraClearance, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkSightClearance, landmarkViewDirections, traversalApproachClearance } from '../frontend/ancient-world/engine/landmark-framing.js';
 
 const root = resolve(import.meta.dirname, '..');
+const compatibility = readFileSync(resolve(root, 'frontend/ancient-world/engine/city-compatibility.js'), 'utf8');
+const mobileControls = readFileSync(resolve(root, 'frontend/ancient-world/engine/mobile-controls.js'), 'utf8');
 
 test('shared landmark framing keeps large monuments dramatic without unsafe close-ups', () => {
   const colosseumDistance = landmarkFramingDistance({ w:125, d:102, h:48 });
@@ -25,32 +27,41 @@ test('shared landmark look targets the upper mass without extreme pitch', () => 
   assert.ok(pitch > 0 && pitch < 0.2);
 });
 
-for (const city of ['rome-410-476','athens-450-430']) {
-  test(`${city} uses shared cinematic landmark framing`, () => {
-    const source = readFileSync(resolve(root, `frontend/ancient-cities/${city}/js/app.js`), 'utf8');
-    assert.match(source, /landmarkFramingDistance/);
-    assert.match(source, /landmarkViewDirections/);
-    assert.match(source, /lookY/);
-    assert.match(source, /arrivalUntil/);
-    assert.match(source, /resolved = false/);
-    assert.match(source, /resolved: true/);
-  });
-}
+test('modular runtime preserves authored landmark framing through the shared compatibility bridge', async () => {
+  assert.match(compatibility, /applyAuthoredLandmarkFraming/);
+  assert.match(compatibility, /preferredDirections/);
+  assert.match(compatibility, /framing\.distance/);
+  assert.match(compatibility, /debug\.collide/);
+  assert.match(compatibility, /debug\.teleportViews\[record\.id\]/);
 
-test('Aizanoi Temple jump keeps the open eastern sanctuary approach and its arrival identity', () => {
-  const source = readFileSync(resolve(root, 'frontend/historic-world/app.js'), 'utf8');
-  assert.match(source, /temple:\{pos:\[-68,20\],look:\[-160,20\]\}/);
-  assert.match(source, /arrivalLabel/);
-  assert.match(source, /arrivalUntil/);
-  assert.match(source, /arrivalLabel\s*=\s*target\.name/);
+  const { BUILDINGS: rome } = await import(resolve(root, 'frontend/ancient-cities/rome-410-476/data/city.js'));
+  const { BUILDINGS: athens } = await import(resolve(root, 'frontend/ancient-cities/athens-450-430/data/city.js'));
+  const colosseum = rome.find((record) => record.id === 'colosseum');
+  const parthenon = athens.find((record) => record.id === 'parthenon');
+  assert.equal(colosseum?.framing?.distance, 152);
+  assert.deepEqual(colosseum?.framing?.preferredDirections?.[0], [0,-1]);
+  assert.equal(parthenon?.framing?.distance, 70);
+  assert.deepEqual(parthenon?.framing?.preferredDirections?.[0], [-1,0]);
 });
 
-test('Aizanoi touch controls support hybrid touch devices and reset on capture loss', () => {
-  const source = readFileSync(resolve(root, 'frontend/historic-world/app.js'), 'utf8');
-  assert.match(source, /const TOUCH=COARSE_POINTER\|\|HAS_TOUCH\|\|innerWidth<820/);
-  assert.match(source, /pad\.addEventListener\("lostpointercapture",resetJoy\)/);
-  assert.match(source, /run\.addEventListener\("lostpointercapture",runOff\)/);
-  assert.match(source, /canvas\.addEventListener\("lostpointercapture",endLook\)/);
+test('Aizanoi Temple keeps the authored open eastern sanctuary approach in city data', async () => {
+  const { BUILDINGS } = await import(resolve(root, 'frontend/historic-world/data/city.js'));
+  const temple = BUILDINGS.find((record) => record.id === 'temple');
+  assert.equal(temple?.x, -160);
+  assert.equal(temple?.z, 20);
+  assert.equal(temple?.framing?.distance, 92);
+  assert.deepEqual(temple?.framing?.preferredDirections, [[1,0]]);
+  assert.match(compatibility, /authoredFraming:\s*true/);
+});
+
+test('Aizanoi touch controls now inherit hybrid-device capture-loss safety from the shared controller', () => {
+  const adapter = readFileSync(resolve(root, 'frontend/historic-world/app.js'), 'utf8');
+  assert.match(adapter, /navigator\.maxTouchPoints > 0/);
+  assert.match(adapter, /pointer:coarse/);
+  assert.match(adapter, /innerWidth < 820/);
+  assert.match(mobileControls, /listen\(pad, 'lostpointercapture', endJoy\)/);
+  assert.match(mobileControls, /listen\(run, 'lostpointercapture', runOff\)/);
+  assert.match(mobileControls, /listen\(canvas, 'lostpointercapture', endLook\)/);
 });
 
 test('Aizanoi Penkalas jump reuses a collision-safe central bridge riverfront view', () => {

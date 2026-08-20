@@ -17,25 +17,27 @@ test('touch experience fallback enables city joystick on narrow touch-capable mo
   assert.equal(detectTouchExperience({ coarse: true, anyCoarse: false, touchPoints: 0, hasTouchEvent: false, viewportWidth: 1280 }), true);
 });
 
-test('footprint support raises a sloped building base to its highest sampled terrain edge and records a foundation depth', () => {
+test('legacy footprint helper remains valid for archived topography research', () => {
   const support = footprintSupport({ x: 0, z: 0, w: 20, d: 10, rot: 0 }, (x, z) => x * 0.2 + z * 0.1);
   assert.ok(support.baseY > 1 && support.baseY <= 1.5, `unexpected base ${support.baseY}`);
   assert.ok(support.foundationDepth > 2, `unexpected foundation depth ${support.foundationDepth}`);
   assert.equal(support.samples.length, 9);
 });
 
-for (const [city, app] of [
-  ['rome', 'frontend/ancient-cities/rome-410-476/js/app.js'],
-  ['athens', 'frontend/ancient-cities/athens-450-430/js/app.js'],
-]) {
-  test(`${city} uses shared touch detection and terrain-grounded building foundations`, () => {
+test('runtime, not each city adapter, owns mobile detection and flat support', () => {
+  const runtime = source('frontend/ancient-world/engine/flat-city-runtime.js');
+  assert.match(runtime, /installMobileControls/);
+  assert.match(runtime, /baseHeightAt:\s*\(\) => 0/);
+  assert.match(runtime, /EYE_HEIGHT = 1\.68/);
+  for (const app of [
+    'frontend/ancient-cities/rome-410-476/js/app.js',
+    'frontend/ancient-cities/athens-450-430/js/app.js',
+  ]) {
     const text = source(app);
-    assert.match(text, /detectCurrentTouchExperience/);
-    assert.match(text, /footprintSupport/);
-    assert.match(text, /buildFoundation/);
-    assert.doesNotMatch(text, /const TOUCH = matchMedia\('\(pointer:coarse\)'\)\.matches \|\| navigator\.maxTouchPoints > 0;/);
-  });
-}
+    assert.match(text, /startFlatBlockyCity/);
+    assert.doesNotMatch(text, /footprintSupport|buildFoundation|terrainHeightAt/);
+  }
+});
 
 test('urban fabric reaches a street-scale density without changing evidence status', () => {
   const athens = generateAthensFabric({ regions: athensRegions, buildings: athensBuildings, streets: athensStreets, mobile: false });
