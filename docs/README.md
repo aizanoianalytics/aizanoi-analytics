@@ -6,31 +6,31 @@ This directory contains maintained supporting documentation for the public proje
 
 Start at the repository root:
 
-- [`README.md`](../README.md) — product overview, live worlds, Field System and local setup;
-- [`ARCHITECTURE.md`](../ARCHITECTURE.md) — current runtime boundaries and component ownership;
+- [`README.md`](../README.md) — product overview, live worlds and local setup;
+- [`DESIGN.md`](../DESIGN.md) — canonical Field System v3 visual/interaction language;
+- [`ARCHITECTURE.md`](../ARCHITECTURE.md) — runtime boundaries and component ownership;
 - [`SECURITY.md`](../SECURITY.md) — security model and vulnerability reporting;
 - [`CONTRIBUTING.md`](../CONTRIBUTING.md) — contribution and historical-methodology rules;
-- [`ROADMAP.md`](../ROADMAP.md) — current product direction;
+- [`ROADMAP.md`](../ROADMAP.md) — product direction;
 - [`CHANGELOG.md`](../CHANGELOG.md) — major public milestones.
 
 ## Supporting documentation
 
-- [`ACCESSIBILITY.md`](ACCESSIBILITY.md) — accessibility baseline and manual verification guidance;
-- [`AIZANOI_OS_DISTRIBUTION.md`](AIZANOI_OS_DISTRIBUTION.md) — Aizanoi Field System architecture and cross-device model.
+- [`FIELD_SYSTEM.md`](FIELD_SYSTEM.md) — v3 shell, app, responsive and local-workspace contract;
+- [`ACCESSIBILITY.md`](ACCESSIBILITY.md) — automated and manual accessibility release checks;
+- [`OPERATIONS.md`](OPERATIONS.md) — provider/server follow-up that cannot be truthfully completed by source changes alone.
 
 ## Historical research
 
-Research material lives under [`../research/`](../research/) so evidence work remains separate from product documentation and close to the historical-world implementations.
+Research material lives under [`../research/`](../research/) so evidence work remains separate from product documentation and close to the Historical World implementations.
 
 Current research areas include:
 
-- [`../research/rome_410_476/`](../research/rome_410_476/) — Late Antique Rome research, including the maintained [`RESEARCH_BRIEF.md`](../research/rome_410_476/RESEARCH_BRIEF.md);
+- [`../research/rome_410_476/`](../research/rome_410_476/) — Late Antique Rome research and maintained research brief;
 - [`../research/athens_450_430/`](../research/athens_450_430/) — Classical Athens research and verified source material.
 
-City-facing evidence, methodology and reconstruction data also live beside the implementations under [`../frontend/ancient-cities/`](../frontend/ancient-cities/).
-
-Aizanoi Historic World is maintained under [`../frontend/historic-world/`](../frontend/historic-world/) and remains the central reference experience.
+City-facing evidence, methodology and reconstruction data also live beside the implementations under [`../frontend/ancient-cities/`](../frontend/ancient-cities/). Aizanoi remains the central reference experience under [`../frontend/historic-world/`](../frontend/historic-world/).
 
 ## Documentation rule
 
-Only maintained, current documentation belongs here. Temporary audits, implementation reports, task lists and superseded plans are intentionally left to Git history rather than kept as permanent public files.
+Only maintained, current documentation belongs here. Temporary audits, implementation reports, task lists and superseded plans belong in Git history/issues/PRs rather than being kept as permanent public clutter.

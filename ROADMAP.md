@@ -1,161 +1,119 @@
 # Aizanoi Analytics Roadmap
 
-This roadmap describes product direction, not a promise of delivery dates.
+This roadmap describes product direction, not delivery promises. The project is intentionally selective: **deepen the current product before adding new surface area**.
 
-The project is intentionally selective: the goal is not to maximize the number of features, cities or UI panels. The goal is to make **Aizanoi-centered interactive history deeper, more legible and more trustworthy** while keeping the public runtime simple.
+## Current 2026 baseline
 
-## Current baseline — 2026.08
+Completed/maintained foundations:
 
-Completed foundations:
-
-- static-only public production architecture;
+- static-only visitor runtime and fail-closed historical API paths;
+- Aizanoi, Late Antique Rome and Classical Athens as walkable Historical Worlds;
+- shared traversal/input/evidence behavior plus 51-landmark browser QA;
+- browser-local Archive, Notes, Data, Source Reader and Artifact Viewer;
 - browser-only Field Terminal;
-- external AI integration removed / fail-closed;
-- unified desktop, tablet and mobile Field System;
-- synchronized 11-app launcher;
-- Field Archive, Notes, Data Lab, Source Reader, Artifact Viewer and Workspace Monitor;
-- Aizanoi Historic World;
-- Late Antique Rome (AD 410–476);
-- Classical Athens (450–430 BCE);
-- shared Ancient World traversal/input/evidence/performance contracts;
-- regression, Chromium, visual, Lighthouse and security CI;
-- public documentation and contribution/security policies.
+- responsive desktop/tablet/mobile product identity;
+- GitHub regression, Chromium, visual and Lighthouse gates;
+- public architecture/design/security/contribution documentation.
 
-## Next major focus — Historical World depth
+## Field System v3
 
-### Aizanoi Historic World 2.x
+The immediate architectural goal is to finish v3 as the single product truth:
 
-Aizanoi is the center of the project. The next major development effort should improve depth rather than add decorative OS surface area.
+- one app/world registry;
+- one window/router/dialog lifecycle;
+- one `--az-*` token system;
+- Worlds-first Home with a useful first mission and field-session resume;
+- lazy noncritical applications;
+- no retired AI/XP compatibility surface;
+- readable typography and 44 px coarse-pointer target floor;
+- useful Archive sample/metadata workflow;
+- world → research → world session continuity;
+- source/security/performance/browser gates that prevent compatibility debt from returning.
 
-Priority areas:
+The goal is not to add another theme. v3 removes the need for the former compatibility/polish stack.
 
-- stronger landmark fidelity;
-- better terrain / elevation readability;
-- improved stairs, support surfaces and collision boundaries;
-- denser but historically defensible urban fabric;
-- guided exploration / curated tour path;
-- map and orientation layer;
-- clearer landmark arrival framing;
-- stronger evidence / uncertainty presentation;
-- richer contextual panels for temple, theatre/stadium, riverfront and residential areas;
-- mobile performance and touch movement polish;
-- visual atmosphere that supports historical readability without implying false certainty.
+## Research-product depth
 
-### Evidence UX
+After the v3 foundation is stable, the highest-value product work is deeper research interoperability rather than more launcher apps:
 
-Make the distinction between source, inference and atmosphere easier to understand while exploring.
+- editable Archive metadata: place, period, source, rights, confidence and tags;
+- annotation/relationship links;
+- portable archive manifest and export/restore;
+- richer source citations/backlinks in Notes;
+- dataset transform/reproducibility history;
+- compare workflows in Source Reader / Artifact Viewer;
+- JSON-LD / CSV / IIIF-friendly export where it genuinely improves interoperability.
 
-Possible work:
+## Historical Worlds
 
-- evidence badges that open concise source/methodology context;
-- per-landmark evidence summaries;
-- source links or citations where licensing and format allow;
-- reconstruction-confidence language shared across cities;
-- clearer separation of archaeological evidence from procedural infill.
+The three worlds are feature-complete enough to freeze as a baseline unless real user testing finds a defect. Future changes should be measured and evidence-led:
 
-### Guided exploration
+- preserve traversal and city-specific archaeology;
+- improve material/lighting/atmosphere only when readability improves;
+- keep documented/inferred/atmospheric boundaries explicit;
+- optionally add curated guided narratives using the existing landmark data;
+- never use photorealism as a substitute for historical confidence.
 
-A visitor should be able to understand why a place matters without already knowing the site.
+Aizanoi remains the center of the project; Rome and Athens are comparative worlds.
 
-Possible work:
-
-- optional guided route;
-- short landmark introductions;
-- timeline / period context;
-- “why this reconstruction looks this way” notes;
-- return-to-map / next-landmark flow.
-
-## Rome and Athens
-
-Rome and Athens should remain comparative historical worlds, not compete with Aizanoi for project identity.
+## Performance
 
 Priorities:
 
-- preserve shared engine parity;
-- improve city-specific grounding and landmark framing;
-- strengthen research manifests and methodology presentation;
-- avoid city-specific forks of shared movement/input behavior;
-- keep performance predictable on mobile and mid-range hardware.
+- keep the root shell small;
+- lazy-load app code/styles;
+- enable production compression;
+- use bounded caching while filenames are unhashed;
+- introduce content-hashed immutable assets only with a reliable build/deploy path;
+- progressively tighten Lighthouse budgets based on stable measured runs;
+- add privacy-preserving real-user Web Vitals only if it can avoid collecting private Archive/Notes content.
 
-## Field System
+## Accessibility
 
-The Field System is now a stable product frame. Near-term work should emphasize refinement, not app-count growth.
+Continue toward:
 
-Preferred improvements:
+- zero serious/critical automated axe violations;
+- keyboard-only shell lifecycle;
+- modal focus/inert/restore guarantees;
+- 44 px coarse-pointer controls;
+- 200% zoom / 320 CSS px reflow;
+- manual NVDA/VoiceOver/TalkBack checks on meaningful releases;
+- reduced-motion and high-contrast resilience.
 
-- clearer first-visit onboarding;
-- better relationship between Worlds and local research tools;
-- import/export ergonomics for local research data;
-- stronger source-to-artifact navigation;
-- accessibility and real-device touch verification;
-- fewer legacy compatibility layers over time through careful mechanical extraction.
+## Operations
 
-Not a near-term priority:
+Repository work should support, but never falsely claim, provider-side completion of:
 
-- adding many more launcher apps;
-- rebuilding the interface in a large framework for its own sake;
-- turning the OS shell into the primary attraction of the project.
+- protected `main` / required CI checks;
+- Dependabot alerts/security updates and private vulnerability reporting;
+- encrypted off-site backups with restore drills;
+- accepted SSH login monitoring;
+- production gzip/Brotli/cache verification;
+- release tags/notes and production checksum parity.
 
-## Research and documentation
+See [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
 
-- expand Aizanoi-specific research documentation;
-- keep Rome/Athens source verification data auditable;
-- document reconstruction assumptions near implementation;
-- keep methodology readable for non-developers;
-- add a concise contributor guide for historical data submissions if outside contributions increase.
+## Explicitly not planned
 
-## Performance and accessibility
+Unless a concrete requirement changes the architecture:
 
-- preserve Lighthouse budgets;
-- profile Historic World bottlenecks before large rendering rewrites;
-- keep adaptive quality centralized;
-- test mobile controls on real devices;
-- continue keyboard/focus/reduced-motion support;
-- periodically perform manual VoiceOver/NVDA checks where practical.
-
-## Security and operations
-
-The preferred direction is to keep reducing unnecessary public attack surface.
-
-- keep the visitor-facing application static unless a reviewed requirement changes that decision;
-- keep Terminal browser-only;
-- keep local research data local by default;
-- keep production secrets/config outside the repository;
-- maintain regression coverage for historical `/api/*` fail-closed behavior;
-- keep GitHub Actions permissions minimal and actions pinned.
-
-## Public launch / communication
-
-Planned presentation work outside core runtime:
-
-- stronger project walkthroughs;
-- video essays / build logs through Aizanoi TV and external video platforms;
-- clearer explanation of research methodology;
-- release notes for major visible milestones;
-- better showcase material for historical worlds as they mature.
-
-## Explicitly not planned right now
-
-These are not forbidden forever, but they are outside the current product strategy:
-
-- user accounts;
-- public comments;
-- social feeds;
-- multiplayer;
-- public shared leaderboards;
+- public AI chat;
+- visitor-facing Node/backend runtime;
 - server-side terminal execution;
-- external AI chat inside the public site;
-- a visitor-facing application backend for features that can remain browser-native;
-- a full framework rewrite without measured product/performance benefit.
+- user accounts/social feeds/multiplayer;
+- a framework rewrite for fashion;
+- many more launcher apps;
+- a fourth Historical World before the existing product has real-user feedback.
 
 ## Decision rule
 
-When choosing between two next features, prefer the one that makes the project more:
+Prefer changes that make Aizanoi more:
 
 1. historically legible;
 2. evidence-aware;
-3. explorable;
+3. calm and easy to explore;
 4. reliable across devices;
-5. simple to operate securely.
+5. interoperable for research;
+6. simple to operate securely.
 
-If a change mainly adds surface area without improving one of those dimensions, it is probably not the next priority.
+If a change mainly creates more chrome or maintenance surface, it is probably not the next priority.

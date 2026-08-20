@@ -1,0 +1,70 @@
+@layer reset, tokens, base, shell, components, apps, utilities;
+
+@layer tokens {
+  :root {
+    color-scheme: dark;
+    --az-canvas: #0b1212;
+    --az-canvas-deep: #070b0c;
+    --az-canvas-soft: #12201e;
+    --az-surface-1: rgba(22, 34, 32, .78);
+    --az-surface-2: rgba(31, 45, 42, .78);
+    --az-surface-3: rgba(45, 60, 56, .82);
+    --az-surface-solid: #182522;
+    --az-glass: rgba(19, 31, 29, .68);
+    --az-glass-strong: rgba(19, 31, 29, .88);
+    --az-glass-border: rgba(228, 216, 191, .14);
+    --az-paper: #e9e1d1;
+    --az-paper-raised: #f3ebdc;
+    --az-paper-muted: #d8ceba;
+    --az-ink: #242b28;
+    --az-ink-muted: #59615c;
+    --az-text: #f1ebdd;
+    --az-text-2: #c8c5ba;
+    --az-text-3: #9fa29a;
+    --az-brass: #c4a36b;
+    --az-brass-hi: #e4ca93;
+    --az-teal: #73aaa4;
+    --az-teal-hi: #a9d0ca;
+    --az-rust: #a76553;
+    --az-success: #93b88a;
+    --az-warning: #d2ae68;
+    --az-danger: #c4786e;
+    --az-focus: #9bd8d1;
+    --az-border: rgba(233, 225, 209, .12);
+    --az-border-strong: rgba(233, 225, 209, .22);
+    --az-shadow-window: 0 28px 80px rgba(0, 0, 0, .42), 0 3px 12px rgba(0, 0, 0, .28);
+    --az-shadow-float: 0 18px 52px rgba(0, 0, 0, .32);
+    --az-shadow-soft: 0 10px 30px rgba(0, 0, 0, .18);
+    --az-radius-control: 8px;
+    --az-radius-card: 14px;
+    --az-radius-window: 18px;
+    --az-radius-dialog: 20px;
+    --az-space-1: 4px;
+    --az-space-2: 8px;
+    --az-space-3: 12px;
+    --az-space-4: 16px;
+    --az-space-5: 24px;
+    --az-space-6: 32px;
+    --az-space-7: 48px;
+    --az-titlebar: 46px;
+    --az-titlebar-touch: 54px;
+    --az-control: 36px;
+    --az-control-touch: 44px;
+    --az-bottom-nav: 60px;
+    --az-shell-max: 1320px;
+    --az-font-ui: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --az-font-display: Georgia, "Times New Roman", serif;
+    --az-font-mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    --az-motion-fast: 100ms;
+    --az-motion: 180ms;
+    --az-motion-slow: 220ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --az-motion-fast: 0ms;
+      --az-motion: 0ms;
+      --az-motion-slow: 0ms;
+    }
+  }
+}
