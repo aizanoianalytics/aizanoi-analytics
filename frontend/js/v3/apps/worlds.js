@@ -1,7 +1,7 @@
 import { WORLDS } from '../registry.js';
 import { getFieldSession } from '../store.js';
 
-const escapeHtml=(value)=>String(value??'').replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
+const escapeHtml=(value)=>String(value??'').replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 export async function mount({container,api}) {
   const session=getFieldSession();
