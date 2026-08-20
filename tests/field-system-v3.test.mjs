@@ -72,6 +72,16 @@ for (const source of [main,shellJs,store,registrySource]) {
   assert.doesNotMatch(source, /os-(?:platform|unified|product-polish|v2)|os-workbench|chat\.js/i);
 }
 
+const v3ModuleFiles = walk(path.join(frontend, 'js/v3')).filter((file) => file.endsWith('.js'));
+const inlineMarkupDebt = [];
+for (const file of v3ModuleFiles) {
+  const source = readFileSync(file, 'utf8');
+  if (/style\s*=\s*["']|\son(?:click|mousedown|mouseup|touchstart|touchend)\s*=/i.test(source)) {
+    inlineMarkupDebt.push(path.relative(root, file));
+  }
+}
+assert.deepEqual(inlineMarkupDebt, [], `v3 modules reintroduced inline style/event-handler markup:\n${inlineMarkupDebt.join('\n')}`);
+
 for (const css of [tokens, shell, components, apps]) {
   const vars = [...css.matchAll(/--([a-z0-9-]+)\s*:/gi)].map((match) => match[1]);
   assert.equal(vars.filter((name) => !name.startsWith('az-')).length, 0, 'v3 styles introduced a non-canonical CSS token namespace');
