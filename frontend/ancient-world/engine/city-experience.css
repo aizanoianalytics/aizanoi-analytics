@@ -123,6 +123,9 @@ body[data-city="rome"] .place span,body[data-city="athens"] .place span{display:
 
 @media(pointer:coarse),(max-width:820px){
   #aw-tools-toggle,#aw-mini-toggle,.aw-field-system-return{min-height:44px;padding:10px 11px!important;font-size:11px!important}
+  /* The right-side look affordance already communicates touch input. Hiding the
+     redundant top-centre badge reserves a clean navigation row on small screens. */
+  #mobileCompass{display:none!important}
   .aw-tools-panel{
     top:auto;
     left:max(8px,env(safe-area-inset-left));
@@ -134,30 +137,58 @@ body[data-city="rome"] .place span,body[data-city="athens"] .place span{display:
     grid-template-columns:1fr 1fr;
   }
   .aw-tools-panel > button,.aw-tools-panel > select{min-height:44px!important;font-size:11px!important}
-  body[data-city="aizanoi"] #hud .topbar{left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));top:max(8px,env(safe-area-inset-top));gap:6px;flex-wrap:wrap}
-  body[data-city="aizanoi"] #hud .chip{max-width:155px;min-height:44px;padding:9px 10px;font-size:11px}
-  body[data-city="aizanoi"] #hud .eraWrap{margin-left:0;order:3}
-  body[data-city="aizanoi"] #hud .eraBtn{min-height:44px;padding:9px 10px;font-size:11px}
-  body[data-city="aizanoi"] #hud #teleport{order:2;margin-left:auto;max-width:155px;min-height:44px;font-size:11px}
-  body[data-city="aizanoi"] #hud #aw-tools-toggle{order:2}
+
+  /* Aizanoi gets two deliberate rows below the persistent Field System return:
+     row 1 = jump + Explore, row 2 = chronology. Location text is redundant on
+     touch because the selected jump/inspection surface already communicates it. */
+  body[data-city="aizanoi"] #hud .topbar{
+    left:max(8px,env(safe-area-inset-left));
+    right:max(8px,env(safe-area-inset-right));
+    top:max(62px,calc(env(safe-area-inset-top) + 54px));
+    width:auto;
+    max-width:none;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:6px;
+    align-items:stretch;
+  }
+  body[data-city="aizanoi"] #hud .chip{display:none!important}
+  body[data-city="aizanoi"] #hud #teleport{display:block!important;grid-column:1;grid-row:1;margin:0!important;max-width:none!important;width:100%;min-width:0;min-height:44px;font-size:11px}
+  body[data-city="aizanoi"] #hud #aw-tools-toggle{grid-column:2;grid-row:1;margin:0!important;white-space:nowrap}
+  body[data-city="aizanoi"] #hud .eraWrap{grid-column:1/-1;grid-row:2;margin:0;width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  body[data-city="aizanoi"] #hud .eraBtn{width:100%;min-height:44px;padding:9px 8px;font-size:11px}
   body[data-city="aizanoi"] #prompt{display:none!important}
   body[data-city="aizanoi"] #mapBox{display:none!important}
+  body[data-city="aizanoi"] #toast{top:max(190px,calc(env(safe-area-inset-top) + 182px));max-width:calc(100vw - 24px);text-align:center}
 
-  body[data-city="rome"] .brand,body[data-city="athens"] .brand{max-width:150px!important;padding:8px 9px!important}
-  body[data-city="rome"] .brand span,body[data-city="athens"] .brand span{display:none}
-  body[data-city="rome"] .controls,body[data-city="athens"] .controls{margin-left:auto;max-width:calc(100vw - 160px)!important;justify-content:flex-end!important}
+  /* Rome/Athens keep one uncluttered control row below the Field System return.
+     Their city identity remains in the place card and intro; the desktop brand is
+     intentionally hidden during touch traversal to avoid competing overlays. */
+  body[data-city="rome"] .brand,body[data-city="athens"] .brand{display:none!important}
+  body[data-city="rome"] .controls,body[data-city="athens"] .controls{
+    position:fixed!important;
+    left:max(8px,env(safe-area-inset-left))!important;
+    right:max(8px,env(safe-area-inset-right))!important;
+    top:max(62px,calc(env(safe-area-inset-top) + 54px))!important;
+    margin:0!important;
+    width:auto!important;
+    max-width:none!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:8px!important;
+    justify-content:stretch!important;
+  }
   body[data-city="rome"] .controls #inspect,body[data-city="athens"] .controls #inspect{display:none!important}
-  body[data-city="rome"] .controls #jump,body[data-city="athens"] .controls #jump{max-width:138px!important;min-height:44px!important;font-size:11px!important;padding:9px!important}
+  body[data-city="rome"] .controls #jump,body[data-city="athens"] .controls #jump{width:100%!important;max-width:none!important;min-width:0!important;min-height:44px!important;font-size:11px!important;padding:9px!important}
+  body[data-city="rome"] .controls #aw-tools-toggle,body[data-city="athens"] .controls #aw-tools-toggle{white-space:nowrap;margin:0!important}
   body[data-city="rome"] .miniWrap,body[data-city="athens"] .miniWrap{display:none!important}
-  body[data-city="rome"] .bottom,body[data-city="athens"] .bottom{left:8px!important;bottom:112px!important}
+  body[data-city="rome"] .bottom,body[data-city="athens"] .bottom{left:8px!important;bottom:max(176px,calc(env(safe-area-inset-bottom) + 168px))!important}
   body[data-city="rome"] .place,body[data-city="athens"] .place{max-width:205px!important;padding:8px 10px!important;font-size:11px!important}
   body[data-city="rome"] .place span,body[data-city="athens"] .place span{display:none}
 }
 
 @media(max-width:430px){
-  body[data-city="aizanoi"] #hud .chip{max-width:132px}
-  body[data-city="aizanoi"] #hud #teleport{max-width:132px}
-  body[data-city="aizanoi"] #hud .eraWrap{width:100%;justify-content:flex-start}
+  body[data-city="aizanoi"] #hud .eraWrap{width:100%}
   .aw-tools-panel{grid-template-columns:1fr 1fr}
 }
 
