@@ -91,7 +91,7 @@ function syncPinned(store) {
 function wireDockMagnification(store) {
   const dock=document.querySelector('.az-task-shelf');
   if(!dock || matchMedia('(pointer:coarse)').matches)return;
-  const reset=()=>dock.querySelectorAll('.az-shelf-button').forEach((button)=>{button.style.removeProperty('--dock-scale');button.style.removeProperty('--dock-lift');});
+  const reset=()=>dock.querySelectorAll('.az-shelf-button').forEach((button)=>{button.style.removeProperty('--az-dock-scale');button.style.removeProperty('--az-dock-lift');});
   dock.addEventListener('pointermove',(event)=>{
     if(store.getState().reduceMotion){reset();return;}
     for(const button of dock.querySelectorAll('.az-shelf-button')){
@@ -99,8 +99,8 @@ function wireDockMagnification(store) {
       const distance=Math.abs(event.clientX-(rect.left+rect.width/2));
       const influence=Math.max(0,1-distance/185);
       const eased=Math.sin(influence*Math.PI/2);
-      button.style.setProperty('--dock-scale',String(1+eased*.52));
-      button.style.setProperty('--dock-lift',`${Math.round(eased*15)}px`);
+      button.style.setProperty('--az-dock-scale',String(1+eased*.52));
+      button.style.setProperty('--az-dock-lift',`${Math.round(eased*15)}px`);
     }
   });
   dock.addEventListener('pointerleave',reset);
