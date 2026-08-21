@@ -31,18 +31,19 @@ async function axe(page,label) {
 
 function appModuleRequests(requests){return requests.filter((path)=>path.includes('/js/v3/apps/'));}
 
-// Desktop: wallpaper-first desktop, native-feeling system chrome, keyboard window switching,
+// Desktop: wallpaper-first desktop, umbrella-brand core apps, keyboard window switching,
 // launcher/search, snapping, lazy apps and canonical route/window lifecycle.
 {
   const {context,page,errors,requests}=await openPage({width:1440,height:900});
-  assert.equal(await page.locator('.az-world-shortcut').count(),3,'desktop: expected three Historical World shortcuts');
-  assert.equal(await page.locator('.az-desktop-shortcut').count(),5,'desktop: desktop should remain sparse rather than card-dense');
+  assert.equal(await page.locator('.az-world-shortcut').count(),0,'desktop: individual world shortcuts should not crowd the brand desktop');
+  assert.equal(await page.locator('.az-desktop-shortcut').count(),5,'desktop: expected five core Aizanoi shortcuts');
+  for(const id of ['news','videos','analytics','worlds','forge']) assert.equal(await page.locator(`.az-desktop-shortcut[data-app="${id}"]`).count(),1,`desktop: missing core shortcut ${id}`);
   assert.equal(await page.locator('.az-home-hero,.az-world-card,.az-app-card').count(),0,'desktop: old dashboard/card home returned');
   assert.equal(await page.getByText(/Aizanoi AI|HR AI/i).count(),0,'desktop: retired AI visible');
   assert.equal(appModuleRequests(requests).length,0,'desktop: app modules must not load before app open');
   assert.equal(requests.some((path)=>path.endsWith('/styles/apps.css')),false,'desktop: app styles must remain lazy');
   assert.equal(await page.locator('.az-task-shelf').isVisible(),true,'desktop: floating dock missing');
-  assert.ok(await page.locator('.az-task-shelf .az-shelf-button').count()>=9,'desktop: dock is not populated like a desktop launcher');
+  assert.ok(await page.locator('.az-task-shelf .az-shelf-button').count()>=8,'desktop: dock is missing core navigation');
   assert.equal((await page.locator('[data-active-app-title]').textContent())?.trim(),'Desktop','desktop: active app title should begin on Desktop');
   await axe(page,'desktop');
 
@@ -57,20 +58,24 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   assert.equal(await secondContext.evaluate((el)=>el===document.activeElement),true,'desktop: context menu ArrowDown navigation failed');
   await page.keyboard.press('Escape');
 
-  // Dock Applications opens Launchpad through the canonical shell overlay lifecycle.
+  // Dock Applications exposes only public product families. Workbench internals remain
+  // directly addressable by runtime, but are never rendered as launcher items.
   const applicationsButton=page.locator('[data-os-launcher]');
   await applicationsButton.click();
   await page.waitForSelector('#az-switcher-overlay.is-open .az-launchpad-search');
   assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: launcher did not use canonical inert overlay lifecycle');
+  for(const id of ['archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor']) {
+    assert.equal(await page.locator(`#az-switcher-overlay .az-launchpad-item[data-app="${id}"]`).count(),0,`desktop: Workbench internal ${id} leaked into Applications`);
+  }
   const launcherSearch=page.locator('[data-launcher-search]');
-  await launcherSearch.fill('archive');
-  assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item:not([hidden])').count(),1,'desktop: launcher search did not filter to Archive');
+  await launcherSearch.fill('analytics');
+  assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item:not([hidden])').count(),1,'desktop: launcher search did not filter to Analytics');
   await launcherSearch.fill('definitely-no-such-aizanoi-app');
   assert.equal(await page.locator('[data-launcher-empty]').isVisible(),true,'desktop: launcher missing empty-search state');
   await page.keyboard.press('Escape');
   await page.waitForSelector('#az-switcher-overlay',{state:'hidden'});
 
-  await page.locator('.az-desktop-shortcut[data-app="archive"]').click();
+  await page.evaluate(()=>window.AIZANOI_OS.openApp('archive'));
   await page.waitForSelector('.az-archive-layout');
   await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')==='archive');
   assert.match(page.url(),/[?&]app=archive(?:&|$)/,'desktop: Archive route intent missing');
@@ -111,10 +116,10 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   assert.ok(snapped&&snapStage&&snapped.x<=10,'desktop: left-edge snap did not align the window');
   assert.ok(snapped&&snapStage&&Math.abs(snapped.width-(snapStage.width-24)/2)<8,'desktop: left-edge snap did not produce a half-width window');
 
-  // Minimize/restore keeps the OS state intact and restores from the dock.
+  // Minimize/restore keeps the OS state intact and restores from the running-app area.
   await page.locator('.az-window[data-app-id="notes"] [data-action="minimize"]').click();
   await page.waitForSelector('.az-window[data-app-id="notes"]',{state:'hidden'});
-  await page.locator('[data-dock-app="notes"]').click();
+  await page.locator('[data-running-apps] [data-task-app="notes"]').click();
   await page.waitForSelector('.az-window[data-app-id="notes"].is-active');
 
   const normalized=await page.evaluate(async()=>{
@@ -183,7 +188,7 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
 {
   const {context,page,errors}=await openPage({width:900,height:1180});
   assert.equal(await page.locator('.az-shell').getAttribute('data-layout'),'expanded');
-  await page.locator('.az-desktop-shortcut[data-app="notes"]').click();
+  await page.evaluate(()=>window.AIZANOI_OS.openApp('notes'));
   await page.waitForSelector('.az-notes-layout');
   const rect=await page.locator('.az-window[data-app-id="notes"]').boundingBox();
   assert.ok(rect && rect.x>=0 && rect.y>=0 && rect.x+rect.width<=901 && rect.y+rect.height<=1181,'tablet: app window escaped viewport');
@@ -195,7 +200,8 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
 {
   const {context,page,errors}=await openPage({width:390,height:844});
   assert.equal(await page.locator('.az-shell').getAttribute('data-layout'),'compact');
-  assert.equal(await page.locator('.az-world-shortcut').count(),3,'mobile: worlds missing');
+  assert.equal(await page.locator('.az-world-shortcut').count(),0,'mobile: individual world shortcuts should stay inside Historical Worlds');
+  assert.equal(await page.locator('.az-desktop-shortcut').count(),5,'mobile: core Aizanoi shortcuts missing');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile: root horizontal overflow');
 
   const interactive=page.locator('button:visible,a.az-button:visible');
@@ -208,7 +214,7 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   }
   await axe(page,'mobile desktop');
 
-  await page.locator('.az-desktop-shortcut[data-app="archive"]').click();
+  await page.evaluate(()=>window.AIZANOI_OS.openApp('archive'));
   await page.waitForSelector('.az-archive-layout');
   await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')==='archive' && document.querySelector('.az-window[data-app-id="archive"]')?.classList.contains('is-active'));
   await page.waitForFunction(()=>getComputedStyle(document.querySelector('.az-window[data-app-id="archive"]')).transform==='none');

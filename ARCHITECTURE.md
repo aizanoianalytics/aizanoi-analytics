@@ -1,186 +1,121 @@
-# Aizanoi Analytics Architecture
+# Aizanoi Architecture
 
-The visitor-facing product is **static-only**. Nginx serves HTML, CSS, JavaScript and assets; application state and research records live in the browser. There is no visitor-facing Node/Express service, terminal endpoint or application API.
+The public visitor runtime is **static-first**. Nginx serves HTML, CSS, JavaScript, JSON and assets. Private automation such as Hermes may prepare content and deploy releases, but the browser does not receive a private-agent execution bridge.
 
 ## Runtime topology
 
 ```text
 Browser
   |
-  +-- Aizanoi Field System (/)
-  |     +-- js/v3/registry.js        app + world definitions
-  |     +-- js/v3/store.js           workspace + field-session state
-  |     +-- js/v3/shell.js           canonical window/router/dialog/commands
-  |     +-- js/v3/archive-store.js   IndexedDB local archive
-  |     +-- js/v3/apps/*             lazy application modules
-  |     +-- styles/tokens.css        canonical --az-* tokens
-  |     +-- styles/base.css          reset/base
-  |     +-- styles/shell.css         responsive shell/windows
-  |     +-- styles/components.css    dialogs/commands/components
-  |     +-- styles/apps.css          lazy application presentation
+  +-- AizanoiOS (/)
+  |     +-- brand-platform.js       umbrella-brand desktop/dock adaptation
+  |     +-- registry.js             app + world catalog
+  |     +-- store.js                workspace + field-session state
+  |     +-- shell.js                canonical window/router/dialog lifecycle
+  |     +-- apps/*                  lazy application modules
+  |     +-- IndexedDB               local Workbench records
+  |     +-- /content/news/index.json static News feed
   |
   +-- Historical Worlds
-  |     +-- /historic-world/                 Aizanoi reference world
-  |     +-- /ancient-cities/rome-410-476/   Late Antique Rome
-  |     +-- /ancient-cities/athens-450-430/ Classical Athens
-  |     +-- /ancient-world/engine/*          shared traversal/evidence/UI helpers
+  |     +-- /historic-world/                 Aizanoi
+  |     +-- /ancient-cities/rome-410-476/   Rome
+  |     +-- /ancient-cities/athens-450-430/ Athens
   |
-  +-- HTTPS -> Nginx -> static files only
-
-Historical /api/chat -> 410 Gone
-Other /api/*         -> 404
-Application backend  -> none
+Nginx -> static files only
 ```
 
-## Field System v3
+Historical `/api/chat` remains failed closed. Other `/api/*` paths remain unavailable unless the owner deliberately changes the public architecture.
 
-Field System v3 deliberately replaces the old compatibility stack instead of layering another theme over it. The root document is a small semantic bootstrap: four initial stylesheets and one ES module. Research/tool applications load only when opened.
+## AizanoiOS layers
+
+### Base shell
+
+`frontend/js/v3/aizanoi-os.js` owns the desktop interaction layer: wallpaper desktop, top chrome, dock behavior, launcher lifecycle, window motion and snapping.
+
+### Brand adapter
+
+`frontend/js/v3/brand-platform.js` owns the current umbrella-brand presentation on top of the base OS:
+- core dock apps;
+- sparse public desktop shortcuts;
+- Today at Aizanoi / resume widget;
+- hiding Workbench internals from the public launcher.
+
+It may adapt presentation, but must not create a second window manager or route system.
 
 ### Registry
 
-`frontend/js/v3/registry.js` is the only application/world catalog.
+`frontend/js/v3/registry.js` is the canonical app/world catalog. Public families are first-class entries. Internal Workbench apps remain addressable by id but may be hidden from the launcher/search surface.
 
-Each app defines an id, label, icon, group, lazy module and searchable metadata. Device-specific launchers do not maintain separate catalogs.
+### Lazy applications
 
-### Workspace Store
+`frontend/js/v3/apps/brand-hubs.js` mounts News, Analytics, Forge, Journal, Labs and Workbench hub surfaces. TV and Arcade retain dedicated modules.
 
-`frontend/js/v3/store.js` owns:
+## Aizanoi News pipeline
 
-- open app ids;
-- active app intent;
-- desktop window rectangles;
-- recents/activity;
-- preferences;
-- browser-local Historical World session context.
-
-The URL represents the **active app intent** (`?app=<id>`), not a serialized desktop snapshot. Back/forward may change focus without destroying unrelated open windows.
-
-### Shell / WindowFrame / Router / Commands / Dialogs
-
-`frontend/js/v3/shell.js` is the canonical lifecycle.
-
-It owns:
-
-- responsive Home hierarchy;
-- app open/focus/minimize/maximize/close;
-- desktop drag/resize and keyboard move/resize path;
-- task shelf and app switcher;
-- route intent synchronization;
-- command palette;
-- modal focus trap, background inert state and opener focus restore;
-- lazy app loading.
-
-Applications mount content into a supplied container and may return cleanup logic. They do not create a second window manager.
-
-### Local Archive
-
-`frontend/js/v3/archive-store.js` owns IndexedDB research records.
-
-The Archive is local-first, not cloud-synced. Imported files and notes are not silently sent to a service. Browser/user storage controls can delete local data, so important material should be exported outside the browser when long-term retention matters.
-
-### Research applications
-
-`frontend/js/v3/apps/research.js` mounts:
-
-- Field Archive;
-- Field Notes;
-- Data Lab;
-- Source Reader;
-- Artifact Viewer.
-
-The applications share Archive records and metadata instead of duplicating storage systems.
-
-### Field Terminal
-
-`frontend/js/v3/apps/terminal.js` is a browser-only task shell. It exposes domain commands such as `worlds`, `open`, `find`, `session` and `evidence` plus a tiny fixed virtual file set.
-
-It intentionally has no arbitrary process execution, host filesystem access, server hostname/process simulation, WebSocket shell or terminal API dependency.
-
-### Workspace Monitor
-
-`frontend/js/v3/apps/monitor.js` reports only facts that the browser can actually measure: storage estimate, open apps, service-worker state, connectivity, viewport, installation mode and local field-session state. It does not invent CPU/RAM/server-health telemetry.
-
-## CSS architecture
-
-Canonical Field System styles use one namespace: `--az-*`.
-
-```css
-@layer reset, tokens, base, shell, components, apps, utilities;
+```text
+Hermes / operator research
+        ↓
+content/news/items/*.json
+        ↓
+scripts/news/build-news.mjs
+        ↓
+frontend/content/news/index.json
+        ↓
+Aizanoi News app
 ```
 
-The old global `frontend/css/` compatibility stack is retired. New presentation work must modify the canonical layer that owns the behavior instead of creating another override/polish file.
+The compiler validates ids, dates, categories, summary length and mandatory source URLs. It does not fetch third-party sites itself. Source discovery stays in the private/operator layer.
 
-See [DESIGN.md](DESIGN.md).
+`CONTENT_POLICY.md` is the publication contract.
 
-## Responsive contract
+## Workbench privacy
 
-- Compact `<600px`: fullscreen-equivalent apps + bottom navigation.
-- Medium `600–839px`: single focus workspace.
-- Expanded `840–1199px`: large touch-friendly focus workspace.
-- Large `>=1200px`: freeform desktop windows.
+Archive, Notes, Data Lab, Source Reader and Artifact Viewer remain browser-local unless the visitor explicitly exports data. Browser/user storage controls may delete local material.
 
-Input capability still matters: coarse-pointer targets use a 44 px floor and required actions cannot depend on hover.
+Field Terminal remains browser-only and may never gain arbitrary server/process execution, server filesystem access or command transport to Hermes.
 
 ## Historical Worlds
 
-Historical Worlds remain city-specific where history demands it and shared where behavior is genuinely reusable.
+`frontend/ancient-world/engine/` owns shared traversal/input/evidence/presentation behavior. City-specific archaeology and hero decisions stay city-local.
 
-`frontend/ancient-world/engine/` contains shared traversal, lifecycle, input, evidence and presentation helpers. City data and hero monument decisions stay in their own city directories.
+The evidence boundary remains unchanged: documented/source-supported, archaeological/material, inferred, atmospheric and disputed where applicable.
 
-`city-experience.js` also maintains a lightweight `aizanoi-field-session-v1` record. Entering or changing a landmark updates this browser-local context; the Explore drawer includes a Field System return action. The OS can then offer **Continue Field Session** without putting private note/archive payloads in the URL.
+## Responsive contract
 
-The prior 51-landmark Aizanoi/Rome/Athens walk QA remains a regression gate.
+- Compact `<600px`: fullscreen-equivalent app surfaces + mobile navigation.
+- Medium `600–839px`: single focus workspace.
+- Expanded `840–1199px`: large touch-friendly focus workspace.
+- Large `>=1200px`: freeform windows.
 
-## Evidence boundary
-
-The project distinguishes documented/source information, archaeological evidence, explicit inference and atmospheric reconstruction. Generic shared geometry or urban-fabric helpers never upgrade the evidence certainty of city-local content.
+One app registry serves every device class.
 
 ## Service worker
 
-`frontend/service-worker.js` caches only static shell/assets. It must never intercept `/api/*`, become a hidden sync layer or cache a visitor backend that does not exist. Root/service-worker updates revalidate promptly; lazy application files use bounded caching until content-hashed production assets are introduced.
+The service worker precaches the shell, brand adapter and News feed baseline. Mutable same-origin static assets use network-first behavior with cached fallback. `/api/*` is never intercepted.
 
 ## Deployment boundary
 
-`infra/nginx/aizanoianalytics.com.conf.example` is a sanitized static deployment baseline. It includes:
+GitHub is source of truth. A merge is not a deployment.
 
-- fail-closed historical API paths;
-- gzip static compression;
-- explicit PWA manifest MIME;
-- no-cache shell/service-worker policy;
-- bounded static asset caching;
-- security headers;
-- `/.well-known/security.txt`;
-- no application proxy.
+Production rollout requires:
+- exact approved Git SHA;
+- known rollback SHA/snapshot;
+- applicable tests/builds;
+- static deployment using the existing server procedure;
+- post-deploy smoke checks;
+- no production-only hot fix that bypasses Git.
 
-Provider/server actions such as production rollout, branch protection, off-site backups and accepted-login alerts require evidence outside the repository and must not be marked complete merely because guidance exists here.
+See `docs/HERMES_OPERATIONS.md`.
 
 ## Change rules
 
-1. Git first; no production-only application fixes.
-2. Keep visitor runtime static by default.
+1. Git first.
+2. Static-first visitor runtime by default.
 3. One registry and one window lifecycle.
-4. One product across desktop/tablet/mobile.
-5. No new movement engine per city.
-6. No certainty inflation in reconstruction.
-7. Keep local research local unless export is explicit.
-8. No new override/polish compatibility layer.
-9. Measure before framework/renderer rewrites.
-10. Interactive changes need regression tests plus rendered browser review.
-
-## Release gate
-
-Applicable release checks include:
-
-- JavaScript syntax validation;
-- Node regression suite used only as a test runner;
-- Field System v3 source/security contract;
-- desktop/tablet/mobile Chromium smoke;
-- axe serious/critical gate on canonical shell surfaces;
-- route/window/dialog lifecycle checks;
-- Historical Worlds traversal/deep-link/landmark regression;
-- visual capture review;
-- Lighthouse budgets;
-- `git diff --check`;
-- Nginx example review when delivery behavior changes.
-
-Manual NVDA/VoiceOver/TalkBack and real-device touch checks remain human QA rather than being falsely claimed as automated.
+4. `brand-platform.js` adapts; it does not fork the shell.
+5. No Workbench upload path without explicit product decision.
+6. No server-backed public terminal.
+7. No certainty inflation in Historical Worlds.
+8. News requires structured source provenance.
+9. Preserve desktop/tablet/mobile equivalence.
+10. Interactive changes require regression coverage.

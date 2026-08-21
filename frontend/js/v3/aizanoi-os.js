@@ -1,6 +1,6 @@
 import { APPS, WORLDS, appById, worldById } from './registry.js';
 
-const PINNED_APPS = Object.freeze(['worlds','archive','notes','data-lab','source-reader','projects']);
+const PINNED_APPS = Object.freeze(['news','videos','analytics','worlds','forge']);
 const DESKTOP_APPS = Object.freeze(['archive','notes']);
 
 const icons = Object.freeze({
