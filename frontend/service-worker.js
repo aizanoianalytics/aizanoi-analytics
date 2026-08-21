@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'aizanoi-os-shell-v4.0.0';
+const CACHE = 'aizanoi-os-shell-v4.1.0';
 const PRECACHE = [
   '/',
   '/manifest.webmanifest',
@@ -12,9 +12,11 @@ const PRECACHE = [
   '/styles/components.css',
   '/js/v3/main.js',
   '/js/v3/aizanoi-os.js',
+  '/js/v3/brand-platform.js',
   '/js/v3/registry.js',
   '/js/v3/store.js',
-  '/js/v3/shell.js'
+  '/js/v3/shell.js',
+  '/content/news/index.json'
 ];
 
 async function precacheShell() {
@@ -40,7 +42,7 @@ self.addEventListener('activate', (event) => {
 
 function sameOriginStatic(request) {
   const url = new URL(request.url);
-  return request.method === 'GET' && url.origin === self.location.origin && /\.(?:css|js|mjs|svg|png|jpg|jpeg|webp|gif|woff2?)$/i.test(url.pathname);
+  return request.method === 'GET' && url.origin === self.location.origin && /\.(?:css|js|mjs|json|svg|png|jpg|jpeg|webp|gif|woff2?)$/i.test(url.pathname);
 }
 
 async function networkFirstStatic(request) {
