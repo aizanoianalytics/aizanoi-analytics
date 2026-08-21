@@ -1,14 +1,8 @@
 # AizanoiOS — Design System
 
-AizanoiOS is a browser-native digital archaeology desktop. It is deliberately **not** a generic dark research dashboard and it must not imitate one operating system pixel-for-pixel.
+AizanoiOS is the browser-native shell for **Aizanoi**, an independent digital studio for media, data, software, research and interactive worlds.
 
-The shell combines proven interaction ideas from three reference families while keeping its own visual identity:
-
-- **macOS-style web desktops** — calm top chrome, a tactile dock, magnification, clear active-app state and lightweight traffic-light window controls;
-- **Ubuntu-style web desktops** — a real desktop surface, recognizable app launcher, strong shortcut semantics and a sense that applications live on a desktop rather than inside a landing page;
-- **Win12-style web desktops** — bright wallpaper-first composition, airy Mica-like surfaces, modern rounded windows and restrained translucency.
-
-These are interaction references, not assets or templates. AizanoiOS uses original wallpaper, Aizanoi branding, archaeology-specific applications and its own evidence language.
+It is deliberately not a generic dark dashboard and it must not imitate one operating system pixel-for-pixel.
 
 ## Core visual direction
 
@@ -17,58 +11,76 @@ The default shell is **bright, spacious and wallpaper-first**.
 Do:
 - let the wallpaper occupy most of the screen;
 - keep permanent system chrome small;
-- use translucent white/light surfaces with readable dark text;
-- reserve dark surfaces for content that benefits from them, such as Terminal, image viewing and cinematic Historical Worlds;
-- keep desktop shortcuts sparse and useful;
-- use color to make the OS feel alive without turning every card into an accent block.
+- use translucent light surfaces with readable dark text;
+- keep desktop shortcuts sparse;
+- use color to make the OS feel alive without turning every card into an accent block;
+- let each product family have a little personality inside a coherent shell.
 
 Do not:
-- restore the old near-black green Field System canvas as the default shell;
-- rebuild the old Home page as a stack of mission/world/research/tool cards;
-- fill empty desktop space merely because it is available;
-- apply archaeological parchment/brass styling to every OS control;
-- copy Apple, Microsoft or Ubuntu branding/assets.
+- restore the old near-black research dashboard as the default shell;
+- rebuild Home as a dense grid of every app;
+- put all Workbench tools on the desktop;
+- copy Apple, Microsoft or Ubuntu branding/assets;
+- force archaeology styling onto News, TV, Analytics or Forge.
+
+## Brand hierarchy
+
+Aizanoi is the umbrella brand. AizanoiOS is the shell.
+
+Permanent desktop/dock priorities:
+1. **Aizanoi News**
+2. **Aizanoi TV**
+3. **Aizanoi Analytics**
+4. **Historical Worlds**
+5. **Aizanoi Forge**
+
+Secondary public families live in Applications/Search:
+- Aizanoi Journal
+- Aizanoi Labs
+- Aizanoi Arcade
+- Aizanoi Workbench
+
+Workbench internals should not visually compete with the public product families.
 
 ## Desktop anatomy
 
-On large desktop screens the canonical composition is:
+On large screens:
+1. compact top system bar;
+2. wallpaper desktop;
+3. sparse public shortcuts;
+4. one small contextual widget (Today at Aizanoi or resume a world);
+5. freeform windows;
+6. centered translucent dock;
+7. search/command palette;
+8. spacious Applications launcher.
 
-1. **Top system bar** — AizanoiOS brand, Desktop/Explore/Archive/Apps and compact status controls.
-2. **Wallpaper desktop** — original AizanoiOS landscape artwork with a sparse shortcut area.
-3. **Session widget** — one small optional resume/explore card; never a page-sized hero.
-4. **Freeform windows** — draggable, resizable, minimizable and maximizable.
-5. **Dock** — centered, translucent, icon-led and capable of pointer-proximity magnification.
-6. **Spotlight-style search** — commands, apps and worlds.
-7. **Launchpad-style Applications view** — all apps/worlds in one spacious overlay.
-
-The desktop itself is Home. “Show Desktop” minimizes open windows instead of navigating to a dashboard.
+The desktop itself is Home. Show Desktop minimizes open windows instead of navigating to a dashboard.
 
 ## Palette
 
-Canonical tokens remain in `frontend/styles/tokens.css` under `--az-*`.
+Canonical tokens remain `--az-*`.
 
 Default shell colors are light:
+- cool sky/ice canvas;
+- translucent white/pale blue-grey surfaces;
+- deep navy/slate text;
+- indigo/periwinkle primary accent;
+- clear blue secondary accent.
 
-- canvas: cool sky/ice blue;
-- surfaces: translucent white and pale blue-grey;
-- text: deep navy/slate;
-- primary accent: indigo/periwinkle;
-- secondary accent: clear blue;
-- archaeology accents: brass, teal and terracotta only where semantically useful.
-
-Evidence semantics remain distinct and must not rely on color alone:
-
+Historical evidence colors remain semantic and explicit:
 - documented — teal + label;
 - archaeological — brass + label;
 - inferred — terracotta/rust + label;
 - atmospheric — neutral + label;
 - disputed — warning + dashed/label treatment.
 
+News/TV/Analytics/Forge should not inherit evidence colors merely for decoration.
+
 ## Typography
 
 - shell/UI: system sans / Inter-class sans;
-- reading and long-form notes: serif is allowed and encouraged;
-- instrumentation/metadata: system monospace.
+- long-form Journal/Notes: serif is allowed;
+- data/instrumentation/metadata: system monospace.
 
 Functional text stays at least 11–12 px. Touch targets stay at least 44×44 px where coarse input is expected.
 
@@ -76,44 +88,46 @@ Functional text stays at least 11–12 px. Touch targets stay at least 44×44 px
 
 `frontend/js/v3/shell.js` remains the only window manager.
 
-Desktop:
-- drag and resize;
-- minimize;
-- maximize/restore;
-- close;
-- keyboard move/resize through Window menu;
-- active window focus/z-order;
-- saved browser-local rectangles.
+Desktop supports drag, resize, minimize, maximize/restore, close, keyboard move/resize, active focus/z-order and saved local rectangles.
 
-The title bar uses compact traffic-light controls as an interaction cue, while AizanoiOS retains its own app icons and window styling.
-
-Tablet uses a focused large-window workspace. Mobile uses fullscreen-equivalent app frames rather than a miniature desktop.
-
-The URL still represents active app intent; local workspace state owns the wider open-window snapshot.
+Tablet becomes a focused large-window workspace. Mobile uses fullscreen-equivalent app frames rather than a miniature desktop.
 
 ## Dock
 
 The dock is a primary identity surface.
 
 - centered on desktop;
-- translucent light material with blur and soft shadow;
-- pinned apps + running non-pinned apps;
-- active/open indicators;
-- pointer-proximity magnification with restrained maximum scale;
-- no magnification on coarse pointers or reduced-motion mode;
-- mobile reduces to essential navigation instead of squeezing a desktop dock onto the screen.
+- light translucent material with blur/shadow;
+- only the five core apps are permanently pinned;
+- running non-pinned apps may appear dynamically;
+- pointer-proximity magnification is restrained;
+- no magnification on coarse pointers or reduced-motion mode.
 
-## Applications
+## Product surfaces
 
-Application content uses light neutral surfaces by default so the OS remains coherent.
+### News
+Readable editorial cards, visible category, date and source links. Avoid faux newspaper clutter.
 
-Exceptions are intentional:
-- Notes/Source Reader may use warm paper reading surfaces;
-- Terminal remains dark;
-- Artifact Viewer may use a dark inspection stage;
-- Historical Worlds remain cinematic/fullscreen and can use their city-specific visual language.
+### TV
+Video/series presentation may be cinematic, but companion research/source links remain easy to find.
 
-Do not force every app into the wallpaper aesthetic; the shell should frame tools without overpowering them.
+### Analytics
+Data products should prioritize information hierarchy, clarity and usable controls over decorative dashboard density.
+
+### Forge
+Project/source cards should make Launch / Source / Documentation / Version states obvious where applicable.
+
+### Historical Worlds
+Cinematic/fullscreen and city-specific visual language remains appropriate.
+
+### Labs
+Experimental status should be visually explicit.
+
+### Arcade
+Playful presentation is allowed inside the app without changing the OS shell into a game UI.
+
+### Workbench
+Calm utility surfaces. Notes/Source Reader may use warm paper; Terminal stays dark; Artifact Viewer may use a dark inspection stage.
 
 ## Dialogs and accessibility
 
@@ -121,27 +135,22 @@ Every canonical overlay/dialog:
 - records its opener;
 - moves initial focus inside;
 - traps Tab;
-- makes the background inert;
+- makes background inert;
 - closes with Escape;
 - restores focus to the opener.
 
-`prefers-reduced-motion` and the local reduce-motion setting remove nonessential transitions/magnification.
-
-## Product boundaries
-
-AizanoiOS remains static-first and browser-local. The redesign does not justify adding accounts, social features, fabricated system telemetry, remote shell execution or a public backend.
-
-Historical evidence rules are unchanged. Generic geometry or visual polish must never upgrade archaeological certainty.
+`prefers-reduced-motion` and local reduce-motion settings remove nonessential motion/magnification.
 
 ## Quality gate
 
-A shell change is incomplete until applicable checks cover:
+A shell/product change is incomplete until applicable checks cover:
 - desktop/tablet/mobile layout;
 - no horizontal overflow;
 - route/window consistency;
+- launcher/search visibility rules;
 - dialog focus/inert/restore;
 - 44 px coarse-pointer target floor;
 - reduced-motion behavior;
-- no new serious/critical accessibility violations;
-- no new fatal browser/console errors;
-- final rendered screenshot review.
+- no serious/critical accessibility regression;
+- no fatal browser/console errors;
+- final rendered review.

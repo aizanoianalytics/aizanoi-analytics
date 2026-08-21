@@ -1,119 +1,115 @@
-# Aizanoi Analytics Roadmap
+# Aizanoi Roadmap
 
-This roadmap describes product direction, not delivery promises. The project is intentionally selective: **deepen the current product before adding new surface area**.
+This roadmap describes direction, not delivery promises.
 
-## Current 2026 baseline
+## 2026 platform baseline
 
-Completed/maintained foundations:
+Aizanoi is now an umbrella digital studio rather than a single-subject archaeology product. The current platform contract includes:
 
-- static-only visitor runtime and fail-closed historical API paths;
-- Aizanoi, Late Antique Rome and Classical Athens as walkable Historical Worlds;
-- shared traversal/input/evidence behavior plus 51-landmark browser QA;
-- browser-local Archive, Notes, Data, Source Reader and Artifact Viewer;
-- browser-only Field Terminal;
-- responsive desktop/tablet/mobile product identity;
-- GitHub regression, Chromium, visual and Lighthouse gates;
-- public architecture/design/security/contribution documentation.
+- AizanoiOS as the browser-native shell;
+- Aizanoi News;
+- Aizanoi TV;
+- Aizanoi Journal;
+- Aizanoi Analytics;
+- Aizanoi Forge;
+- Historical Worlds;
+- Aizanoi Labs;
+- Aizanoi Arcade;
+- Aizanoi Workbench.
 
-## Field System v3
+## Phase 1 — Brand platform foundation
 
-The immediate architectural goal is to finish v3 as the single product truth:
+- maintain `PRODUCT.md`, `AGENTS.md` and `CONTENT_POLICY.md` as canonical contracts;
+- keep the permanent desktop sparse: News, TV, Analytics, Worlds, Forge;
+- collect research/power tools behind Workbench;
+- separate Labs from Arcade;
+- preserve existing deep links and Historical World behavior;
+- keep the visitor runtime static-first.
 
-- one app/world registry;
-- one window/router/dialog lifecycle;
-- one `--az-*` token system;
-- Worlds-first Home with a useful first mission and field-session resume;
-- lazy noncritical applications;
-- no retired AI/XP compatibility surface;
-- readable typography and 44 px coarse-pointer target floor;
-- useful Archive sample/metadata workflow;
-- world → research → world session continuity;
-- source/security/performance/browser gates that prevent compatibility debt from returning.
+## Phase 2 — Aizanoi News
 
-The goal is not to add another theme. v3 removes the need for the former compatibility/polish stack.
+- Hermes-driven source discovery;
+- original summary generation with mandatory attribution;
+- build-time structured validation;
+- five initial categories: AI & Technology, Markets & Economy, World, Sports, Culture;
+- archive/search once the content volume justifies it;
+- RSS/sitemap/structured data for published stories;
+- correction metadata and transparent source provenance.
 
-## Research-product depth
+Do not turn News into a copied-article farm.
 
-After the v3 foundation is stable, the highest-value product work is deeper research interoperability rather than more launcher apps:
+## Phase 3 — Aizanoi TV
 
-- editable Archive metadata: place, period, source, rights, confidence and tags;
-- annotation/relationship links;
-- portable archive manifest and export/restore;
-- richer source citations/backlinks in Notes;
-- dataset transform/reproducibility history;
-- compare workflows in Source Reader / Artifact Viewer;
-- JSON-LD / CSV / IIIF-friendly export where it genuinely improves interoperability.
+- establish the English-language YouTube channel identity;
+- publish companion pages with transcript/chapters when useful;
+- attach meaningful sources to factual videos;
+- cross-link relevant News, Journal, Analytics and Forge items;
+- avoid eager third-party embeds when a lightweight preview/link is sufficient.
+
+## Phase 4 — Aizanoi Analytics
+
+- publish useful dashboards and interactive analytical tools;
+- each production project should expose Launch / Source / Documentation / Version where applicable;
+- prioritize data products that can stand alone as useful portfolio pieces;
+- keep private/employer data out of the public repository.
+
+## Phase 5 — Aizanoi Forge
+
+- GitHub remains canonical;
+- add project metadata, release state and source/build links;
+- mirror/catalog repository information rather than maintaining a second independent source tree;
+- surface open projects cleanly from AizanoiOS.
+
+## Phase 6 — Journal, Labs and Arcade
+
+### Journal
+Long-form analysis, essays and commentary. News reports events; Journal interprets them.
+
+### Labs
+Experimental / Prototype / Archived status for WebGL/WebGPU/UI/audio/physics/generative work.
+
+### Arcade
+Playable browser games separated from technical experiments.
 
 ## Historical Worlds
 
-The three worlds are feature-complete enough to freeze as a baseline unless real user testing finds a defect. Future changes should be measured and evidence-led:
+Aizanoi, Rome and Athens remain maintained flagship experiences. Future worlds should be added only when the current three are stable and there is enough research/production capacity to support another city properly.
 
-- preserve traversal and city-specific archaeology;
-- improve material/lighting/atmosphere only when readability improves;
-- keep documented/inferred/atmospheric boundaries explicit;
-- optionally add curated guided narratives using the existing landmark data;
-- never use photorealism as a substitute for historical confidence.
+Evidence boundaries remain mandatory.
 
-Aizanoi remains the center of the project; Rome and Athens are comparative worlds.
+## Workbench
 
-## Performance
+Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Monitor remain useful power tools, but should not compete visually with the public brand families.
+
+## Platform and operations
 
 Priorities:
+- Git-first deployment;
+- exact-SHA production releases;
+- rollback points and post-deploy smoke checks;
+- compression and bounded caching;
+- accessibility and desktop/tablet/mobile parity;
+- privacy-preserving analytics only if it avoids private Workbench content;
+- off-site backups/restore drills outside the public repository.
 
-- keep the root shell small;
-- lazy-load app code/styles;
-- enable production compression;
-- use bounded caching while filenames are unhashed;
-- introduce content-hashed immutable assets only with a reliable build/deploy path;
-- progressively tighten Lighthouse budgets based on stable measured runs;
-- add privacy-preserving real-user Web Vitals only if it can avoid collecting private Archive/Notes content.
+## Explicitly not planned in the current phase
 
-## Accessibility
-
-Continue toward:
-
-- zero serious/critical automated axe violations;
-- keyboard-only shell lifecycle;
-- modal focus/inert/restore guarantees;
-- 44 px coarse-pointer controls;
-- 200% zoom / 320 CSS px reflow;
-- manual NVDA/VoiceOver/TalkBack checks on meaningful releases;
-- reduced-motion and high-contrast resilience.
-
-## Operations
-
-Repository work should support, but never falsely claim, provider-side completion of:
-
-- protected `main` / required CI checks;
-- Dependabot alerts/security updates and private vulnerability reporting;
-- encrypted off-site backups with restore drills;
-- accepted SSH login monitoring;
-- production gzip/Brotli/cache verification;
-- release tags/notes and production checksum parity.
-
-See [`docs/OPERATIONS.md`](docs/OPERATIONS.md).
-
-## Explicitly not planned
-
-Unless a concrete requirement changes the architecture:
-
+Unless the owner explicitly changes the product constitution:
+- accounts;
+- comments/forums;
+- social feeds;
+- multiplayer/shared leaderboards;
 - public AI chat;
-- visitor-facing Node/backend runtime;
-- server-side terminal execution;
-- user accounts/social feeds/multiplayer;
-- a framework rewrite for fashion;
-- many more launcher apps;
-- a fourth Historical World before the existing product has real-user feedback.
+- remote shell execution;
+- framework rewrites for fashion;
+- a general visitor-facing backend.
 
 ## Decision rule
 
-Prefer changes that make Aizanoi more:
-
-1. historically legible;
-2. evidence-aware;
-3. calm and easy to explore;
-4. reliable across devices;
-5. interoperable for research;
+Prefer work that makes Aizanoi more:
+1. useful;
+2. distinctive;
+3. trustworthy and source-aware;
+4. easy to explore;
+5. coherent across product families;
 6. simple to operate securely.
-
-If a change mainly creates more chrome or maintenance surface, it is probably not the next priority.
