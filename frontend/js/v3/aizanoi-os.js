@@ -114,8 +114,12 @@ function observeShell(store) {
 }
 
 export function installAizanoiOS(api) {
-  document.getElementById('az-switcher-overlay')?.classList.add('az-launchpad-overlay');
-  document.querySelector('#az-switcher-overlay .az-dialog')?.classList.add('az-launchpad');
+  const switcher=document.getElementById('az-switcher-overlay');
+  switcher?.classList.add('az-launchpad-overlay');
+  switcher?.querySelector('.az-dialog')?.classList.add('az-launchpad');
+  switcher?.addEventListener('click',(event)=>{
+    if(event.target.closest('.az-launchpad-item')) switcher.querySelector('[data-overlay-close]')?.click();
+  },true);
   rewriteTopBar();
   renderDesktop(api.store);
   rewriteDock(api.store);
