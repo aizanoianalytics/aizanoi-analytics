@@ -1,151 +1,147 @@
-# Aizanoi Field System v3 — Design System
+# AizanoiOS — Design System
 
-Aizanoi is not a generic browser desktop and should not imitate a single operating system. The product is a **domain-specific digital archaeology workspace** with three connected contexts:
+AizanoiOS is a browser-native digital archaeology desktop. It is deliberately **not** a generic dark research dashboard and it must not imitate one operating system pixel-for-pixel.
 
-1. **Field Instrument** — shell, command palette, status and navigation: dark, precise and quiet.
-2. **Archive Room** — notes, sources, metadata and reading: warm paper, generous rhythm and comfortable typography.
-3. **Cinematic Expedition** — Historical Worlds: full-bleed scene, minimal HUD and evidence on demand.
+The shell combines proven interaction ideas from three reference families while keeping its own visual identity:
 
-The visual redesign takes interaction inspiration from modern web-OS experiments such as macOS Web, Vivek Patel's Ubuntu/Web desktop, Hyggshi OS Web Edition and Win12 Web: generous negative space, restrained translucency, coherent docks/shelves and adaptive window chrome. Those products are references, not templates. Aizanoi keeps its own archaeological identity.
+- **macOS-style web desktops** — calm top chrome, a tactile dock, magnification, clear active-app state and lightweight traffic-light window controls;
+- **Ubuntu-style web desktops** — a real desktop surface, recognizable app launcher, strong shortcut semantics and a sense that applications live on a desktop rather than inside a landing page;
+- **Win12-style web desktops** — bright wallpaper-first composition, airy Mica-like surfaces, modern rounded windows and restrained translucency.
 
-## Product hierarchy
+These are interaction references, not assets or templates. AizanoiOS uses original wallpaper, Aizanoi branding, archaeology-specific applications and its own evidence language.
 
-Home is not an app dump. The hierarchy is:
+## Core visual direction
 
-1. **Mission / Continue Field Session** — answer “what should I do first?”
-2. **Historical Worlds** — Aizanoi, Rome, Athens
-3. **Research Workspace** — Archive, Notes, Data, Sources, Viewer, Projects
-4. **Tools & Experiments** — Terminal, Monitor, TV, Experiments
+The default shell is **bright, spacious and wallpaper-first**.
 
-The catalog stays equivalent across desktop, tablet and mobile while presentation adapts.
+Do:
+- let the wallpaper occupy most of the screen;
+- keep permanent system chrome small;
+- use translucent white/light surfaces with readable dark text;
+- reserve dark surfaces for content that benefits from them, such as Terminal, image viewing and cinematic Historical Worlds;
+- keep desktop shortcuts sparse and useful;
+- use color to make the OS feel alive without turning every card into an accent block.
 
-## Canonical tokens
+Do not:
+- restore the old near-black green Field System canvas as the default shell;
+- rebuild the old Home page as a stack of mission/world/research/tool cards;
+- fill empty desktop space merely because it is available;
+- apply archaeological parchment/brass styling to every OS control;
+- copy Apple, Microsoft or Ubuntu branding/assets.
 
-All new Field System tokens use the `--az-*` namespace and live in `frontend/styles/tokens.css`.
+## Desktop anatomy
 
-Core palette:
+On large desktop screens the canonical composition is:
 
-| Token | Value | Role |
-|---|---|---|
-| `--az-canvas` | `#0B1212` | field canvas |
-| `--az-paper` | `#E9E1D1` | reading / note surface |
-| `--az-ink` | `#242B28` | paper ink |
-| `--az-text` | `#F1EBDD` | primary dark-shell text |
-| `--az-brass` | `#C4A36B` | evidence/primary emphasis |
-| `--az-teal` | `#73AAA4` | interactive/local state |
-| `--az-rust` | `#A76553` | inferred/reconstruction accent |
-| `--az-focus` | `#9BD8D1` | keyboard focus |
+1. **Top system bar** — AizanoiOS brand, Desktop/Explore/Archive/Apps and compact status controls.
+2. **Wallpaper desktop** — original AizanoiOS landscape artwork with a sparse shortcut area.
+3. **Session widget** — one small optional resume/explore card; never a page-sized hero.
+4. **Freeform windows** — draggable, resizable, minimizable and maximizable.
+5. **Dock** — centered, translucent, icon-led and capable of pointer-proximity magnification.
+6. **Spotlight-style search** — commands, apps and worlds.
+7. **Launchpad-style Applications view** — all apps/worlds in one spacious overlay.
 
-### Evidence language
+The desktop itself is Home. “Show Desktop” minimizes open windows instead of navigating to a dashboard.
 
-Evidence is never communicated by color alone.
+## Palette
 
-- documented — teal + label
-- archaeological — brass + label
-- inferred — rust + label
-- atmospheric — neutral + label
-- disputed — warning + dashed/label treatment
+Canonical tokens remain in `frontend/styles/tokens.css` under `--az-*`.
+
+Default shell colors are light:
+
+- canvas: cool sky/ice blue;
+- surfaces: translucent white and pale blue-grey;
+- text: deep navy/slate;
+- primary accent: indigo/periwinkle;
+- secondary accent: clear blue;
+- archaeology accents: brass, teal and terracotta only where semantically useful.
+
+Evidence semantics remain distinct and must not rely on color alone:
+
+- documented — teal + label;
+- archaeological — brass + label;
+- inferred — terracotta/rust + label;
+- atmospheric — neutral + label;
+- disputed — warning + dashed/label treatment.
 
 ## Typography
 
-- display: Georgia / suitable open serif
-- UI: system sans / Inter-class sans when available
-- instrumentation: system monospace
+- shell/UI: system sans / Inter-class sans;
+- reading and long-form notes: serif is allowed and encouraged;
+- instrumentation/metadata: system monospace.
 
-Rules:
-
-- functional text: **minimum 11 px**
-- normal UI: **12–14 px**
-- reading surfaces: **16 px / ~28 px line height**
-- tiny uppercase mono is not a substitute for hierarchy
-- faint text is decorative only, never required instructions or metadata
-
-## Space and shape
-
-Spacing scale: `4, 8, 12, 16, 24, 32, 48`.
-
-- controls: ~8 px radius
-- cards: ~14 px
-- windows: ~18 px
-- dialogs: ~20 px
-- touch controls: minimum 44×44 px
-
-Translucency is used to separate system chrome from the field canvas, not as decoration everywhere. Reading surfaces remain opaque and comfortable.
-
-## Responsive model
-
-| Layout | Width | Default behavior |
-|---|---:|---|
-| Compact | `<600px` | fullscreen-equivalent apps + bottom navigation |
-| Medium | `600–839px` | single focus workspace |
-| Expanded | `840–1199px` | large focus workspace, touch-sized chrome |
-| Large | `≥1200px` | freeform desktop windows |
-
-Input capability matters as much as width. Hover-only actions are not required on coarse-pointer layouts.
+Functional text stays at least 11–12 px. Touch targets stay at least 44×44 px where coarse input is expected.
 
 ## Window model
 
-There is one canonical window lifecycle in `frontend/js/v3/shell.js`.
+`frontend/js/v3/shell.js` remains the only window manager.
 
-- desktop: drag, resize, minimize, maximize/restore, close and keyboard move/resize through Window menu
-- tablet: focus workspace with touch-sized chrome rather than miniature desktop controls
-- mobile: fullscreen-equivalent app frame; minimize/maximize chrome is hidden
-- URL represents **active app intent**, not the entire open-window snapshot
-- local Workspace Store records open apps, active app and desktop window rectangles
+Desktop:
+- drag and resize;
+- minimize;
+- maximize/restore;
+- close;
+- keyboard move/resize through Window menu;
+- active window focus/z-order;
+- saved browser-local rectangles.
 
-No app creates a second window manager.
+The title bar uses compact traffic-light controls as an interaction cue, while AizanoiOS retains its own app icons and window styling.
 
-## Dialog model
+Tablet uses a focused large-window workspace. Mobile uses fullscreen-equivalent app frames rather than a miniature desktop.
+
+The URL still represents active app intent; local workspace state owns the wider open-window snapshot.
+
+## Dock
+
+The dock is a primary identity surface.
+
+- centered on desktop;
+- translucent light material with blur and soft shadow;
+- pinned apps + running non-pinned apps;
+- active/open indicators;
+- pointer-proximity magnification with restrained maximum scale;
+- no magnification on coarse pointers or reduced-motion mode;
+- mobile reduces to essential navigation instead of squeezing a desktop dock onto the screen.
+
+## Applications
+
+Application content uses light neutral surfaces by default so the OS remains coherent.
+
+Exceptions are intentional:
+- Notes/Source Reader may use warm paper reading surfaces;
+- Terminal remains dark;
+- Artifact Viewer may use a dark inspection stage;
+- Historical Worlds remain cinematic/fullscreen and can use their city-specific visual language.
+
+Do not force every app into the wallpaper aesthetic; the shell should frame tools without overpowering them.
+
+## Dialogs and accessibility
 
 Every canonical overlay/dialog:
+- records its opener;
+- moves initial focus inside;
+- traps Tab;
+- makes the background inert;
+- closes with Escape;
+- restores focus to the opener.
 
-- records its opener
-- places initial focus inside
-- traps Tab while open
-- makes the background inert
-- closes with Escape
-- restores focus to the opener
+`prefers-reduced-motion` and the local reduce-motion setting remove nonessential transitions/magnification.
 
-## Motion
+## Product boundaries
 
-Motion exists only to communicate state.
+AizanoiOS remains static-first and browser-local. The redesign does not justify adding accounts, social features, fabricated system telemetry, remote shell execution or a public backend.
 
-- hover/press: ~80–100 ms
-- window/overlay: ~180–220 ms
-- transform + opacity preferred
-- `prefers-reduced-motion` removes nonessential transitions
-- returning users should never wait through a long decorative boot
-
-## Historical Worlds
-
-World mode is the most immersive surface. Persistent HUD is deliberately small; secondary controls live behind **Explore**. A Field System return action preserves a browser-local Field Session so the user can return to research tools and later continue the world.
-
-City-specific archaeology stays city-local. Shared UI/traversal code must never imply that generic geometry is documented evidence.
-
-## Anti-patterns
-
-Do not:
-
-- add another “final polish” stylesheet to override previous layers
-- introduce a second token namespace
-- restore retired AI/backend/XP surfaces
-- make every app equally prominent on Home
-- fabricate CPU/server/network metrics
-- implement a real remote shell under the Field Terminal name
-- use photorealism as a proxy for archaeological certainty
-- hide required actions behind hover on touch devices
-- introduce a framework rewrite only for architectural fashion
+Historical evidence rules are unchanged. Generic geometry or visual polish must never upgrade archaeological certainty.
 
 ## Quality gate
 
-A design change is not complete until applicable tests cover:
-
-- desktop/tablet/mobile layout
-- no horizontal overflow
-- 44 px coarse-pointer target floor
-- useful accessible names
-- dialog focus/inert/restore
-- route/window consistency
-- zero serious/critical axe violations in automated surfaces
-- zero new fatal browser/console errors
-- final rendered screenshot review
+A shell change is incomplete until applicable checks cover:
+- desktop/tablet/mobile layout;
+- no horizontal overflow;
+- route/window consistency;
+- dialog focus/inert/restore;
+- 44 px coarse-pointer target floor;
+- reduced-motion behavior;
+- no new serious/critical accessibility violations;
+- no new fatal browser/console errors;
+- final rendered screenshot review.

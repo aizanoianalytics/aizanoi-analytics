@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9ecbf7"/>
+      <stop offset="0.42" stop-color="#cbd8fb"/>
+      <stop offset="0.72" stop-color="#eadcf5"/>
+      <stop offset="1" stop-color="#f6d8c8"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff8d8" stop-opacity=".98"/>
+      <stop offset="1" stop-color="#ffd8ae" stop-opacity=".52"/>
+    </linearGradient>
+    <linearGradient id="hill1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6886d6"/>
+      <stop offset="1" stop-color="#7e73c8"/>
+    </linearGradient>
+    <linearGradient id="hill2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6ca0b8"/>
+      <stop offset="1" stop-color="#6b789f"/>
+    </linearGradient>
+    <linearGradient id="earth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e0aa83"/>
+      <stop offset="1" stop-color="#b96958"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="26"/></filter>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+  <circle cx="1380" cy="230" r="180" fill="url(#sun)" filter="url(#blur)" opacity=".78"/>
+  <circle cx="1380" cy="230" r="78" fill="#fff4cf" opacity=".78"/>
+
+  <path d="M0 640 C240 560 430 585 610 645 C820 715 1010 690 1210 620 C1450 535 1690 545 1920 620 L1920 1080 L0 1080Z" fill="url(#hill2)" opacity=".88"/>
+  <path d="M0 730 C235 620 470 650 680 720 C925 802 1110 770 1320 682 C1540 588 1760 604 1920 680 L1920 1080 L0 1080Z" fill="url(#hill1)" opacity=".96"/>
+  <path d="M0 820 C250 760 480 790 690 835 C925 886 1160 860 1370 790 C1570 723 1760 740 1920 800 L1920 1080 L0 1080Z" fill="url(#earth)" opacity=".96"/>
+
+  <g opacity=".22" fill="#fff7e6">
+    <rect x="1188" y="456" width="22" height="124" rx="4"/>
+    <rect x="1240" y="440" width="22" height="140" rx="4"/>
+    <rect x="1292" y="452" width="22" height="128" rx="4"/>
+    <rect x="1344" y="438" width="22" height="142" rx="4"/>
+    <rect x="1396" y="450" width="22" height="130" rx="4"/>
+    <path d="M1154 438 L1432 438 L1398 412 L1188 412Z"/>
+    <path d="M1135 590 L1450 590 L1420 566 L1165 566Z"/>
+  </g>
+
+  <g opacity=".18" fill="none" stroke="#ffffff" stroke-width="2">
+    <path d="M145 172 C355 92 555 106 746 190"/>
+    <path d="M106 226 C336 142 565 154 785 244"/>
+    <path d="M1510 720 C1608 684 1718 692 1816 744"/>
+  </g>
+
+  <rect width="1920" height="1080" fill="url(#sky)" opacity=".06"/>
+</svg>

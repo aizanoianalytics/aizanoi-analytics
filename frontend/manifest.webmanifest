@@ -1,12 +1,12 @@
 {
-  "name": "Aizanoi Field System",
-  "short_name": "Aizanoi",
-  "description": "A local-first digital archaeology workspace with walkable historical worlds, field records, notes and evidence-aware research tools.",
+  "name": "AizanoiOS",
+  "short_name": "AizanoiOS",
+  "description": "A browser-native digital archaeology desktop with walkable historical worlds, local notes, sources, datasets and evidence-aware research tools.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#0b1212",
-  "theme_color": "#0b1212",
+  "background_color": "#dbe7f3",
+  "theme_color": "#dbe7f3",
   "orientation": "any",
   "categories": ["education", "productivity", "utilities"],
   "icons": [

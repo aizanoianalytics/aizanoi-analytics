@@ -8,15 +8,18 @@
   }
 
   @layer base {
-    html { background: var(--az-canvas-deep); }
+    html { background: #dce8f4; }
     body {
       min-height: 100dvh;
       overflow: hidden;
       color: var(--az-text);
-      background:
-        radial-gradient(70% 55% at 17% 0%, rgba(115,170,164,.16), transparent 62%),
-        radial-gradient(50% 52% at 86% 18%, rgba(196,163,107,.12), transparent 66%),
-        linear-gradient(145deg, #0d1716 0%, #0a1111 48%, #111c1a 100%);
+      background-color: #dfeaf6;
+      background-image:
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
+        url('/assets/wallpapers/aizanoi-os-sunrise.svg');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
       font: 14px/1.5 var(--az-font-ui);
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
@@ -27,22 +30,20 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: .32;
-      background-image:
-        linear-gradient(rgba(228,216,191,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(228,216,191,.025) 1px, transparent 1px);
-      background-size: 56px 56px;
-      mask-image: linear-gradient(to bottom, #000, transparent 82%);
+      opacity: .16;
+      background-image: radial-gradient(circle at 20% 10%, rgba(255,255,255,.8) 0 1px, transparent 1.5px);
+      background-size: 34px 34px;
+      mix-blend-mode: soft-light;
     }
 
-    a { color: var(--az-teal-hi); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a { color: var(--az-accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
     button, [role="button"] { -webkit-tap-highlight-color: transparent; }
     :focus-visible { outline: 2px solid var(--az-focus); outline-offset: 2px; }
-    ::selection { background: rgba(196,163,107,.34); color: var(--az-text); }
+    ::selection { background: rgba(89,105,220,.22); color: var(--az-text); }
     ::-webkit-scrollbar { width: 11px; height: 11px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(196,163,107,.28); border: 3px solid transparent; background-clip: padding-box; border-radius: 999px; }
-    ::-webkit-scrollbar-thumb:hover { background-color: rgba(196,163,107,.46); }
+    ::-webkit-scrollbar-thumb { background: rgba(53,68,94,.26); border: 3px solid transparent; background-clip: padding-box; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background-color: rgba(53,68,94,.40); }
   }
 
   @layer utilities {
