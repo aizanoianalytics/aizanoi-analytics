@@ -10,7 +10,7 @@ const icons = Object.freeze({
 });
 
 function escapeHtml(value) {
-  return String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  return String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[char]));
 }
 
 function mission(store) {
@@ -175,10 +175,10 @@ function installLauncherLifecycle(api) {
   const overlay=launcherOverlay(); if(!overlay)return;
 
   const activateLauncher=()=>{
-    queueMicrotask(()=>{
+    setTimeout(()=>{
       renderLauncher();
       setTimeout(()=>overlay.querySelector('[data-launcher-search]')?.focus(),0);
-    });
+    },0);
   };
 
   document.addEventListener('click',(event)=>{
