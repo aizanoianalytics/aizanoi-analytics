@@ -67,7 +67,7 @@
   .az-meta-list dt { color: #5f6b7c; }
   .az-record-kind { color: #8f622d; }
 
-  /* macOS-like traffic lights: 13px visible dots inside accessible 26px hit targets. */
+  /* AizanoiOS traffic lights: familiar semantics, brand-derived rust/brass/teal dots. */
   .az-window-control:not([data-action="menu"]) {
     position: relative;
     width: 26px;
@@ -86,9 +86,9 @@
     box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
     transition: filter var(--az-motion-fast), transform var(--az-motion-fast);
   }
-  .az-window-control[data-action="close"]::before { background: #ff6158; }
-  .az-window-control[data-action="minimize"]::before { background: #ffbd2e; }
-  .az-window-control[data-action="maximize"]::before { background: #28c840; }
+  .az-window-control[data-action="close"]::before { background: var(--az-rust) !important; }
+  .az-window-control[data-action="minimize"]::before { background: var(--az-brass-hi) !important; }
+  .az-window-control[data-action="maximize"]::before { background: var(--az-teal-hi) !important; }
   .az-window-control:not([data-action="menu"]):hover::before {
     filter: brightness(.94);
     transform: scale(1.06);
