@@ -2,7 +2,7 @@ import { appById, worldById } from './registry.js';
 
 const PINNED=Object.freeze(['news','videos','analytics','worlds','forge']);
 const DESKTOP=Object.freeze(['news','videos','analytics','worlds','forge']);
-const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[char]));
+const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 
 function appButton(id,className='az-desktop-shortcut'){
   const app=appById(id);if(!app)return '';
