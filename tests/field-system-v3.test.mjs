@@ -112,18 +112,21 @@ for (const [name, css] of Object.entries({shell,components,apps})) {
 }
 
 const registry = await import(pathToFileURL(path.join(frontend, 'js/v3/registry.js')).href + `?t=${Date.now()}`);
-assert.equal(registry.APPS.length, 17, 'AizanoiOS catalog must contain the public platform plus Workbench internals');
+assert.equal(registry.APPS.length, 9, 'public AizanoiOS catalog must contain only public product families');
+assert.equal(registry.WORKBENCH_APPS.length, 8, 'Workbench catalog must contain the eight local power tools');
+assert.equal(registry.ALL_APPS.length, 17, 'combined app catalog must preserve all public and Workbench applications');
 assert.deepEqual(registry.WORLDS.map((world) => world.id), ['aizanoi','rome','athens']);
 for (const id of ['news','videos','analytics','worlds','forge','journal','labs','games','workbench']) {
-  assert.ok(registry.APPS.some((app)=>app.id===id),`missing Aizanoi platform app ${id}`);
+  assert.ok(registry.APPS.some((app)=>app.id===id),`missing public Aizanoi platform app ${id}`);
 }
 for (const id of ['archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor']) {
-  const app=registry.APPS.find((item)=>item.id===id);
+  const app=registry.WORKBENCH_APPS.find((item)=>item.id===id);
   assert.equal(app?.group,'workbench',`${id} must be grouped under Workbench`);
-  assert.equal(app?.launcher,false,`${id} must stay out of the public launcher`);
+  assert.equal(registry.APPS.some((item)=>item.id===id),false,`${id} must not enter the public launcher catalog`);
+  assert.equal(registry.appById(id)?.id,id,`${id} must remain directly addressable from Workbench/runtime`);
 }
-assert.equal(registry.APPS.some((app) => /Aizanoi AI|HR AI|chatbot/i.test(`${app.id} ${app.label}`)), false, 'retired AI app returned to registry');
-assert.equal(new Set(registry.APPS.map((app) => app.id)).size, registry.APPS.length, 'app ids must be unique');
+assert.equal(registry.ALL_APPS.some((app) => /Aizanoi AI|HR AI|chatbot/i.test(`${app.id} ${app.label}`)), false, 'retired AI app returned to registry');
+assert.equal(new Set(registry.ALL_APPS.map((app) => app.id)).size, registry.ALL_APPS.length, 'app ids must be unique across public and Workbench catalogs');
 
 assert.match(product, /independent digital studio/i);
 assert.match(product, /Aizanoi News/);
