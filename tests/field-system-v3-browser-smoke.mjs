@@ -31,8 +31,8 @@ async function axe(page,label) {
 
 function appModuleRequests(requests){return requests.filter((path)=>path.includes('/js/v3/apps/'));}
 
-// Desktop: wallpaper-first desktop, macOS-like dock/window chrome, Ubuntu-like shortcuts/context menu,
-// Win12-like launcher surfaces, lazy apps and canonical route/window lifecycle.
+// Desktop: wallpaper-first desktop, native-feeling system chrome, keyboard window switching,
+// launcher/search, snapping, lazy apps and canonical route/window lifecycle.
 {
   const {context,page,errors,requests}=await openPage({width:1440,height:900});
   assert.equal(await page.locator('.az-world-shortcut').count(),3,'desktop: expected three Historical World shortcuts');
@@ -43,21 +43,30 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   assert.equal(requests.some((path)=>path.endsWith('/styles/apps.css')),false,'desktop: app styles must remain lazy');
   assert.equal(await page.locator('.az-task-shelf').isVisible(),true,'desktop: floating dock missing');
   assert.ok(await page.locator('.az-task-shelf .az-shelf-button').count()>=9,'desktop: dock is not populated like a desktop launcher');
+  assert.equal((await page.locator('[data-active-app-title]').textContent())?.trim(),'Desktop','desktop: active app title should begin on Desktop');
   await axe(page,'desktop');
 
-  // Ubuntu-style desktop context actions.
+  // Desktop context actions stay inside the viewport and support menu-key navigation.
   await page.locator('.az-desktop').click({button:'right',position:{x:520,y:320}});
   await page.waitForSelector('.az-desktop-context.is-open');
   assert.equal(await page.locator('.az-desktop-context [role="menuitem"]').count(),5,'desktop: context menu actions missing');
+  const firstContext=page.locator('.az-desktop-context [role="menuitem"]').nth(0);
+  const secondContext=page.locator('.az-desktop-context [role="menuitem"]').nth(1);
+  assert.equal(await firstContext.evaluate((el)=>el===document.activeElement),true,'desktop: context menu did not focus first action');
+  await page.keyboard.press('ArrowDown');
+  assert.equal(await secondContext.evaluate((el)=>el===document.activeElement),true,'desktop: context menu ArrowDown navigation failed');
   await page.keyboard.press('Escape');
 
-  // Win12/Launchpad-style applications grid with search.
-  const applicationsButton=page.locator('[data-shell-action="switcher"]').last();
+  // Dock Applications opens Launchpad through the canonical shell overlay lifecycle.
+  const applicationsButton=page.locator('[data-os-launcher]');
   await applicationsButton.click();
   await page.waitForSelector('#az-switcher-overlay.is-open .az-launchpad-search');
+  assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: launcher did not use canonical inert overlay lifecycle');
   const launcherSearch=page.locator('[data-launcher-search]');
   await launcherSearch.fill('archive');
   assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item:not([hidden])').count(),1,'desktop: launcher search did not filter to Archive');
+  await launcherSearch.fill('definitely-no-such-aizanoi-app');
+  assert.equal(await page.locator('[data-launcher-empty]').isVisible(),true,'desktop: launcher missing empty-search state');
   await page.keyboard.press('Escape');
   await page.waitForSelector('#az-switcher-overlay',{state:'hidden'});
 
@@ -68,12 +77,45 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   assert.ok(appModuleRequests(requests).some((path)=>path.endsWith('/apps/archive.js')),'desktop: Archive did not lazy-load archive module');
   assert.ok(requests.some((path)=>path.endsWith('/styles/apps.css')),'desktop: app styles did not lazy-load');
   assert.equal(await page.getByText('Temple of Zeus — sample field record',{exact:false}).count()>0,true,'desktop: sample Archive record missing');
+  assert.match((await page.locator('[data-active-app-title]').textContent())||'',/Archive/i,'desktop: top bar did not follow active Archive window');
 
-  // macOS-style traffic lights belong on the left side of the title.
+  // AizanoiOS traffic lights keep accessible hitboxes but use the product accent palette.
   const closeRect=await page.locator('.az-window[data-app-id="archive"] [data-action="close"]').boundingBox();
   const titleRect=await page.locator('.az-window[data-app-id="archive"] .az-window-title').boundingBox();
   assert.ok(closeRect&&titleRect&&closeRect.x<titleRect.x,'desktop: traffic-light controls are not left of the title');
+  const closeColor=await page.locator('.az-window[data-app-id="archive"] [data-action="close"]').evaluate((el)=>getComputedStyle(el,'::before').backgroundColor);
+  assert.equal(closeColor,'rgb(197, 109, 81)','desktop: close control is not using AizanoiOS rust accent');
   await axe(page,'desktop archive');
+
+  // Open a second app: Alt+Tab must show only open windows, never the full Applications launcher.
+  await page.evaluate(()=>window.AIZANOI_OS.openApp('notes'));
+  await page.waitForSelector('.az-window[data-app-id="notes"].is-active');
+  await page.keyboard.press('Alt+Tab');
+  await page.waitForSelector('#az-switcher-overlay.is-open');
+  assert.equal((await page.locator('#az-switcher-title').textContent())?.trim(),'Open Apps','desktop: Alt+Tab did not open the window switcher');
+  assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-search').count(),0,'desktop: Alt+Tab incorrectly opened Applications');
+  assert.ok(await page.locator('#az-switcher-overlay [data-switch-app]').count()>=2,'desktop: Alt+Tab switcher did not list open windows');
+  await page.keyboard.press('Escape');
+
+  // Edge snap is intentionally simple: drag a normal large-screen window to the left edge -> half stage.
+  const notesBar=page.locator('.az-window[data-app-id="notes"] .az-window-bar');
+  const notesBarBox=await notesBar.boundingBox();
+  assert.ok(notesBarBox,'desktop: Notes titlebar missing for snap test');
+  await page.mouse.move(notesBarBox.x+notesBarBox.width/2,notesBarBox.y+notesBarBox.height/2);
+  await page.mouse.down();
+  await page.mouse.move(2,notesBarBox.y+notesBarBox.height/2,{steps:8});
+  await page.mouse.up();
+  await page.waitForTimeout(220);
+  const snapped=await page.locator('.az-window[data-app-id="notes"]').boundingBox();
+  const snapStage=await page.locator('.az-stage').boundingBox();
+  assert.ok(snapped&&snapStage&&snapped.x<=10,'desktop: left-edge snap did not align the window');
+  assert.ok(snapped&&snapStage&&Math.abs(snapped.width-(snapStage.width-24)/2)<8,'desktop: left-edge snap did not produce a half-width window');
+
+  // Minimize/restore keeps the OS state intact and restores from the dock.
+  await page.locator('.az-window[data-app-id="notes"] [data-action="minimize"]').click();
+  await page.waitForSelector('.az-window[data-app-id="notes"]',{state:'hidden'});
+  await page.locator('[data-dock-app="notes"]').click();
+  await page.waitForSelector('.az-window[data-app-id="notes"].is-active');
 
   const normalized=await page.evaluate(async()=>{
     const Archive=await import('/js/v3/archive-store.js');
