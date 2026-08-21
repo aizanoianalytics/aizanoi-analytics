@@ -73,17 +73,13 @@ function rewriteDock(store) {
     const button=event.target.closest('.az-shelf-button');
     if(!button)return;
 
-    // Opening a modal makes the dock inert. Defer the dock launcher action by one
-    // task so the physical pointer/click sequence can finish before that happens.
-    // The replay stays on the same button, preserving opener/focus restoration.
-    if(button.dataset.shellAction==='switcher' && button.dataset.azDeferredLauncher!=='1') {
+    // Opening a modal makes the dock inert. Finish the physical click first,
+    // then route the same Applications command through the stable top-bar
+    // representative so shell.js can own focus trapping/inert/restore normally.
+    if(button.dataset.shellAction==='switcher') {
       event.preventDefault();
       event.stopPropagation();
-      button.dataset.azDeferredLauncher='1';
-      setTimeout(()=>{
-        button.click();
-        delete button.dataset.azDeferredLauncher;
-      },0);
+      setTimeout(()=>document.querySelector('.az-system-menu [data-shell-action="switcher"]')?.click(),0);
       return;
     }
 
