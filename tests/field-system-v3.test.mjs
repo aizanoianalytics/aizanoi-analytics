@@ -9,12 +9,12 @@ const frontend = path.join(root, 'frontend');
 const read = (relative) => readFileSync(path.join(root, relative), 'utf8');
 const index = read('frontend/index.html');
 const tokens = read('frontend/styles/tokens.css');
-const base = read('frontend/styles/base.css');
 const shell = read('frontend/styles/shell.css');
 const components = read('frontend/styles/components.css');
 const apps = read('frontend/styles/apps.css');
 const main = read('frontend/js/v3/main.js');
 const shellJs = read('frontend/js/v3/shell.js');
+const osJs = read('frontend/js/v3/aizanoi-os.js');
 const store = read('frontend/js/v3/store.js');
 const registrySource = read('frontend/js/v3/registry.js');
 const terminalSource = read('frontend/js/v3/apps/terminal.js');
@@ -59,7 +59,8 @@ const legacyPaths = [
 for (const relative of legacyPaths) assert.equal(existsSync(path.join(root, relative)), false, `${relative} must remain retired`);
 
 assert.ok(statSync(path.join(frontend, 'index.html')).size < 12_000, 'canonical shell HTML regressed into an oversized document');
-assert.match(index, /Aizanoi Field System/);
+assert.match(index, /AizanoiOS/);
+assert.match(index, /Digital Archaeology Desktop/);
 assert.match(index, /\/styles\/tokens\.css/);
 assert.match(index, /\/styles\/base\.css/);
 assert.match(index, /\/styles\/shell\.css/);
@@ -68,9 +69,14 @@ assert.doesNotMatch(index, /<style\b|style="|<script(?![^>]*src=)|onclick=|onmou
 assert.doesNotMatch(index, /Aizanoi AI|HR AI|chatbot|Windows XP|Luna/i);
 assert.match(index, /type="module" src="\/js\/v3\/main\.js"/);
 
-for (const source of [main,shellJs,store,registrySource]) {
+for (const source of [main,shellJs,osJs,store,registrySource]) {
   assert.doesNotMatch(source, /os-(?:platform|unified|product-polish|v2)|os-workbench|chat\.js/i);
 }
+assert.match(main, /installAizanoiOS/);
+assert.match(main, /window\.AIZANOI_OS/);
+assert.match(osJs, /wireDockMagnification/);
+assert.match(osJs, /az-launchpad-search/);
+assert.match(osJs, /contextmenu/);
 
 const v3ModuleFiles = walk(path.join(frontend, 'js/v3')).filter((file) => file.endsWith('.js'));
 const inlineMarkupDebt = [];
@@ -88,9 +94,9 @@ for (const css of [tokens, shell, components, apps]) {
 }
 const importantCount = [tokens, shell, components, apps].reduce((sum, css) => sum + (css.match(/!important/g) || []).length, 0);
 assert.ok(importantCount < 30, `v3 CSS important count is ${importantCount}; must stay below 30`);
-assert.match(tokens, /--az-paper:\s*#e9e1d1/i);
-assert.match(tokens, /--az-brass:\s*#c4a36b/i);
-assert.match(tokens, /--az-teal:\s*#73aaa4/i);
+assert.match(tokens, /--az-paper:\s*#fffaf0/i);
+assert.match(tokens, /--az-brass:\s*#a9783e/i);
+assert.match(tokens, /--az-teal:\s*#2d8791/i);
 assert.match(tokens, /--az-control-touch:\s*44px/i);
 
 for (const [name, css] of Object.entries({shell,components,apps})) {
@@ -99,15 +105,16 @@ for (const [name, css] of Object.entries({shell,components,apps})) {
 }
 
 const registry = await import(pathToFileURL(path.join(frontend, 'js/v3/registry.js')).href + `?t=${Date.now()}`);
-assert.equal(registry.APPS.length, 11, 'Field System catalog must contain 11 canonical apps');
+assert.equal(registry.APPS.length, 11, 'AizanoiOS catalog must contain 11 canonical apps');
 assert.deepEqual(registry.WORLDS.map((world) => world.id), ['aizanoi','rome','athens']);
 assert.equal(registry.APPS.some((app) => /\bAI\b|chatbot/i.test(`${app.id} ${app.label}`)), false, 'retired AI app returned to registry');
 assert.equal(new Set(registry.APPS.map((app) => app.id)).size, registry.APPS.length, 'app ids must be unique');
 
-assert.match(manifest, /"name"\s*:\s*"Aizanoi Field System"/);
+assert.match(manifest, /"name"\s*:\s*"AizanoiOS"/);
 assert.match(manifest, /"name"\s*:\s*"Historical Worlds"/);
 assert.doesNotMatch(manifest, /hr-analytics|Aizanoi AI|HR AI/i);
-assert.match(sw, /aizanoi-field-shell-v3\.0\.2/);
+assert.match(sw, /aizanoi-os-shell-v4\.0\.0/);
+assert.match(sw, /\/js\/v3\/aizanoi-os\.js/);
 assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/, 'service worker must activate only after a complete precache');
 assert.match(sw, /networkFirstStatic/, 'mutable static assets must prefer the revalidated network response');
 assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/, 'service worker must explicitly ignore API routes');
@@ -130,28 +137,16 @@ assert.match(nginx, /location \^~ \/api\/[\s\S]*return 404;/);
 assert.doesNotMatch(nginx, /proxy_pass|127\.0\.0\.1:3001/);
 
 const canonicalFiles = walk(frontend).filter((file) => /\.(?:html|css|js|json|webmanifest|svg|xml|txt)$/i.test(file));
-const retired = [
-  /Aizanoi AI/i,
-  /HR AI/i,
-  /Windows XP/i,
-  /Luna theme/i,
-  /chatbot/i
-];
-const allowedHistoricalMentions = new Set([
-  path.join(frontend,'404.html'),
-  path.join(frontend,'500.html'),
-  path.join(frontend,'503.html')
-]);
+const retired = [/Aizanoi AI/i,/HR AI/i,/Windows XP/i,/Luna theme/i,/chatbot/i];
+const allowedHistoricalMentions = new Set([path.join(frontend,'404.html'),path.join(frontend,'500.html'),path.join(frontend,'503.html')]);
 const violations=[];
 for (const file of canonicalFiles) {
   if (allowedHistoricalMentions.has(file)) continue;
   const source=readFileSync(file,'utf8');
-  for (const pattern of retired) {
-    if (pattern.test(source)) violations.push(`${path.relative(root,file)} -> ${pattern}`);
-  }
+  for (const pattern of retired) if (pattern.test(source)) violations.push(`${path.relative(root,file)} -> ${pattern}`);
 }
 assert.deepEqual(violations,[],`retired product/source strings remain:\n${violations.join('\n')}`);
 
-test('Field System v3 canonical source contract', () => {
+test('AizanoiOS canonical source contract', () => {
   assert.ok(true);
 });

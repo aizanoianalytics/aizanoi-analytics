@@ -1,18 +1,17 @@
 'use strict';
 
-const CACHE = 'aizanoi-field-shell-v3.0.2';
-// Keep install lightweight: only the core shell is precached. App presentation,
-// research modules and Historical Worlds remain network-lazy and are cached by
-// the runtime strategy after the visitor actually opens them.
+const CACHE = 'aizanoi-os-shell-v4.0.0';
 const PRECACHE = [
   '/',
   '/manifest.webmanifest',
   '/assets/branding/aizanoi-logo-mark.svg',
+  '/assets/wallpapers/aizanoi-os-sunrise.svg',
   '/styles/tokens.css',
   '/styles/base.css',
   '/styles/shell.css',
   '/styles/components.css',
   '/js/v3/main.js',
+  '/js/v3/aizanoi-os.js',
   '/js/v3/registry.js',
   '/js/v3/store.js',
   '/js/v3/shell.js'
@@ -34,7 +33,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((key) => key.startsWith('aizanoi-field-shell-') && key !== CACHE).map((key) => caches.delete(key))))
+      .then((keys) => Promise.all(keys.filter((key) => (key.startsWith('aizanoi-field-shell-') || key.startsWith('aizanoi-os-shell-')) && key !== CACHE).map((key) => caches.delete(key))))
       .then(() => self.clients.claim())
   );
 });
@@ -75,7 +74,5 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (sameOriginStatic(request)) {
-    event.respondWith(networkFirstStatic(request));
-  }
+  if (sameOriginStatic(request)) event.respondWith(networkFirstStatic(request));
 });
