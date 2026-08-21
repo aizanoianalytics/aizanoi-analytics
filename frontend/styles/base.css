@@ -102,5 +102,32 @@
   @media (max-width: 599px) {
     .az-window-control[data-action="close"] { width: 44px; height: 44px; }
     .az-window-control[data-action="close"]::before { width: 14px; height: 14px; }
+
+    /* A phone should read as a compact OS, not a horizontally cropped desktop. */
+    .az-desktop-shortcuts {
+      width: 100%;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      justify-items: center;
+    }
+    .az-desktop-shortcut { width: 100%; max-width: 112px; }
+    .az-session-widget { width: 100%; max-width: 100%; overflow: hidden; }
+
+    /* Keep the mobile dock centered and expose the primary apps plus Applications. */
+    [data-dock-app="data-lab"],
+    [data-dock-app="projects"] { display: none; }
+    .az-task-shelf { justify-content: center; overflow: hidden; }
+
+    /* Archive becomes a single-column reading surface instead of a squeezed desktop grid. */
+    .az-app-shell,
+    .az-archive-layout,
+    .az-app-toolbar,
+    .az-record-stage,
+    .az-record-grid { min-width: 0; width: 100%; max-width: 100%; }
+    .az-app-shell { overflow-x: hidden; }
+    .az-archive-toolbar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .az-archive-toolbar > * { min-width: 0 !important; max-width: 100%; }
+    .az-record-grid { grid-template-columns: 1fr !important; }
+    .az-record-card { min-width: 0; width: 100%; }
+    .az-collection-nav { width: 100%; max-width: 100%; }
   }
 }
