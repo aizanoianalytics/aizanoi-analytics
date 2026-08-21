@@ -1,106 +1,106 @@
-@layer reset, base, utilities {
-  @layer reset {
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { width: 100%; min-height: 100%; margin: 0; }
-    button, input, textarea, select { font: inherit; }
-    button { color: inherit; }
-    img, svg, canvas { max-width: 100%; }
+@layer reset, base, utilities;
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { width: 100%; min-height: 100%; margin: 0; }
+  button, input, textarea, select { font: inherit; }
+  button { color: inherit; }
+  img, svg, canvas { max-width: 100%; }
+}
+
+@layer base {
+  html { background: #dce8f4; }
+  body {
+    min-height: 100dvh;
+    overflow: hidden;
+    color: var(--az-text);
+    background-color: #dfeaf6;
+    background-image:
+      linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
+      url('/assets/wallpapers/aizanoi-os-sunrise.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font: 14px/1.5 var(--az-font-ui);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  @layer base {
-    html { background: #dce8f4; }
-    body {
-      min-height: 100dvh;
-      overflow: hidden;
-      color: var(--az-text);
-      background-color: #dfeaf6;
-      background-image:
-        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
-        url('/assets/wallpapers/aizanoi-os-sunrise.svg');
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      font: 14px/1.5 var(--az-font-ui);
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .16;
-      background-image: radial-gradient(circle at 20% 10%, rgba(255,255,255,.8) 0 1px, transparent 1.5px);
-      background-size: 34px 34px;
-      mix-blend-mode: soft-light;
-    }
-
-    a { color: var(--az-accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-    button, [role="button"] { -webkit-tap-highlight-color: transparent; }
-    :focus-visible { outline: 2px solid var(--az-focus); outline-offset: 2px; }
-    ::selection { background: rgba(89,105,220,.22); color: var(--az-text); }
-    ::-webkit-scrollbar { width: 11px; height: 11px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(53,68,94,.26); border: 3px solid transparent; background-clip: padding-box; border-radius: 999px; }
-    ::-webkit-scrollbar-thumb:hover { background-color: rgba(53,68,94,.40); }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .16;
+    background-image: radial-gradient(circle at 20% 10%, rgba(255,255,255,.8) 0 1px, transparent 1.5px);
+    background-size: 34px 34px;
+    mix-blend-mode: soft-light;
   }
 
-  @layer utilities {
-    .az-sr-only {
-      position: absolute !important;
-      width: 1px !important;
-      height: 1px !important;
-      padding: 0 !important;
-      margin: -1px !important;
-      overflow: hidden !important;
-      clip: rect(0, 0, 0, 0) !important;
-      white-space: nowrap !important;
-      border: 0 !important;
-    }
-    .az-hidden { display: none !important; }
+  a { color: var(--az-accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  button, [role="button"] { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 2px solid var(--az-focus); outline-offset: 2px; }
+  ::selection { background: rgba(89,105,220,.22); color: var(--az-text); }
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(53,68,94,.26); border: 3px solid transparent; background-clip: padding-box; border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background-color: rgba(53,68,94,.40); }
+}
 
-    /* Keep the airy light theme while maintaining WCAG AA contrast for compact metadata. */
-    .az-collection-nav h3,
-    .az-metadata-form > label,
-    .az-meta-list dt { color: #5f6b7c; }
-    .az-record-kind { color: #8f622d; }
+@layer utilities {
+  .az-sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+  .az-hidden { display: none !important; }
 
-    /* macOS-like traffic lights: 13px visible dots inside accessible 26px hit targets. */
-    .az-window-control:not([data-action="menu"]) {
-      position: relative;
-      width: 26px;
-      height: 26px;
-      padding: 0;
-      border: 0;
-      background: transparent !important;
-      transform: none;
-      filter: none;
-    }
-    .az-window-control:not([data-action="menu"])::before {
-      content: "";
-      width: 13px;
-      height: 13px;
-      border-radius: 50%;
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
-      transition: filter var(--az-motion-fast), transform var(--az-motion-fast);
-    }
-    .az-window-control[data-action="close"]::before { background: #ff6158; }
-    .az-window-control[data-action="minimize"]::before { background: #ffbd2e; }
-    .az-window-control[data-action="maximize"]::before { background: #28c840; }
-    .az-window-control:not([data-action="menu"]):hover::before {
-      filter: brightness(.94);
-      transform: scale(1.06);
-    }
+  /* Keep the airy light theme while maintaining WCAG AA contrast for compact metadata. */
+  .az-collection-nav h3,
+  .az-metadata-form > label,
+  .az-meta-list dt { color: #5f6b7c; }
+  .az-record-kind { color: #8f622d; }
 
-    @media (pointer: coarse) {
-      .az-window-control:not([data-action="menu"]) { width: 44px; height: 44px; }
-      .az-window-control:not([data-action="menu"])::before { width: 14px; height: 14px; }
-    }
+  /* macOS-like traffic lights: 13px visible dots inside accessible 26px hit targets. */
+  .az-window-control:not([data-action="menu"]) {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    background: transparent !important;
+    transform: none;
+    filter: none;
+  }
+  .az-window-control:not([data-action="menu"])::before {
+    content: "";
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+    transition: filter var(--az-motion-fast), transform var(--az-motion-fast);
+  }
+  .az-window-control[data-action="close"]::before { background: #ff6158; }
+  .az-window-control[data-action="minimize"]::before { background: #ffbd2e; }
+  .az-window-control[data-action="maximize"]::before { background: #28c840; }
+  .az-window-control:not([data-action="menu"]):hover::before {
+    filter: brightness(.94);
+    transform: scale(1.06);
+  }
 
-    @media (max-width: 599px) {
-      .az-window-control[data-action="close"] { width: 44px; height: 44px; }
-      .az-window-control[data-action="close"]::before { width: 14px; height: 14px; }
-    }
+  @media (pointer: coarse) {
+    .az-window-control:not([data-action="menu"]) { width: 44px; height: 44px; }
+    .az-window-control:not([data-action="menu"])::before { width: 14px; height: 14px; }
+  }
+
+  @media (max-width: 599px) {
+    .az-window-control[data-action="close"] { width: 44px; height: 44px; }
+    .az-window-control[data-action="close"]::before { width: 14px; height: 14px; }
   }
 }
