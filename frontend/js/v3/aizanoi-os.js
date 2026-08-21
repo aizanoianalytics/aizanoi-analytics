@@ -2,6 +2,7 @@ import { APPS, WORLDS, appById, worldById } from './registry.js';
 
 const PINNED_APPS = Object.freeze(['worlds','archive','notes','data-lab','source-reader','projects']);
 const DESKTOP_APPS = Object.freeze(['archive','notes']);
+let launcherOpener = null;
 
 const icons = Object.freeze({
   home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="m3.5 10.5 8.5-7 8.5 7v9H15v-6H9v6H3.5Z"/></svg>',
@@ -54,7 +55,7 @@ function rewriteTopBar() {
     const menu=document.createElement('nav');
     menu.className='az-system-menu';
     menu.setAttribute('aria-label','AizanoiOS menu');
-    menu.innerHTML='<button type="button" data-shell-action="home">Desktop</button><button type="button" data-app="worlds">Worlds</button><button type="button" data-app="archive">Archive</button><button type="button" data-app="notes">Notes</button><button type="button" data-shell-action="switcher">Applications</button>';
+    menu.innerHTML='<button type="button" data-shell-action="home">Desktop</button><button type="button" data-app="worlds">Worlds</button><button type="button" data-app="archive">Archive</button><button type="button" data-app="notes">Notes</button><button type="button" data-shell-action="switcher" aria-label="Applications">Applications</button>';
     brand.after(menu);
   }
   bar.querySelectorAll('.az-system-label').forEach((node)=>node.remove());
@@ -63,34 +64,6 @@ function rewriteTopBar() {
 function dockApp(id) {
   const app=appById(id); if(!app)return '';
   return `<button class="az-shelf-button az-shelf-app" type="button" data-app="${escapeHtml(app.id)}" data-dock-app="${escapeHtml(app.id)}" aria-label="Open ${escapeHtml(app.label)}"><img src="${escapeHtml(app.icon)}" alt=""><span class="az-dock-tooltip">${escapeHtml(app.short || app.label)}</span></button>`;
-}
-
-function rewriteDock(store) {
-  const dock=document.querySelector('.az-task-shelf'); if(!dock)return;
-  dock.innerHTML=`<button class="az-shelf-button" type="button" data-shell-action="home" aria-label="Show desktop">${icons.home}<span class="az-dock-tooltip">Desktop</span></button><button class="az-shelf-button" type="button" data-shell-action="search" aria-label="Search and commands">${icons.search}<span class="az-dock-tooltip">Search</span></button><div class="az-shelf-divider" aria-hidden="true"></div><div class="az-shelf-pinned">${PINNED_APPS.map(dockApp).join('')}</div><div class="az-shelf-running" data-running-apps></div><div class="az-shelf-divider" aria-hidden="true"></div><button class="az-shelf-button" type="button" data-shell-action="switcher" aria-label="Applications">${icons.grid}<span class="az-dock-tooltip">Applications</span></button>`;
-  syncPinned(store);
-  dock.addEventListener('click',(event)=>{
-    const button=event.target.closest('.az-shelf-button');
-    if(!button)return;
-
-    // A modal makes its opener background inert. Finish the physical dock click,
-    // then use shell.js's existing Alt+Tab lifecycle so activeOverlay, focus trap,
-    // Escape and focus restoration remain owned by one canonical implementation.
-    if(button.dataset.shellAction==='switcher') {
-      event.preventDefault();
-      event.stopPropagation();
-      setTimeout(()=>{
-        document.dispatchEvent(new KeyboardEvent('keydown',{key:'Tab',altKey:true,bubbles:true,cancelable:true}));
-        setTimeout(renderLauncher,0);
-      },0);
-      return;
-    }
-
-    if(store.getState().reduceMotion)return;
-    button.classList.remove('is-launching');
-    requestAnimationFrame(()=>button.classList.add('is-launching'));
-    setTimeout(()=>button.classList.remove('is-launching'),430);
-  },true);
 }
 
 function syncPinned(store) {
@@ -121,11 +94,30 @@ function wireDockMagnification(store) {
   dock.addEventListener('pointerleave',reset);
 }
 
+function launcherOverlay() {
+  return document.getElementById('az-switcher-overlay');
+}
+
+function setLauncherBackgroundInert(value) {
+  for(const selector of ['.az-system-bar','.az-stage','.az-task-shelf-wrap']) {
+    const node=document.querySelector(selector);
+    if(node)node.inert=Boolean(value);
+  }
+}
+
+function launcherFocusables() {
+  const overlay=launcherOverlay();
+  if(!overlay)return [];
+  return [...overlay.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])')]
+    .filter((node)=>!node.hidden && getComputedStyle(node).display!=='none');
+}
+
 function renderLauncher() {
-  const overlay=document.getElementById('az-switcher-overlay');
+  const overlay=launcherOverlay();
   overlay?.classList.add('az-launchpad-overlay');
   overlay?.querySelector('.az-dialog')?.classList.add('az-launchpad');
   const title=document.getElementById('az-switcher-title'); if(title)title.textContent='Applications';
+  const close=overlay?.querySelector('[data-overlay-close]'); if(close)close.setAttribute('aria-label','Close Applications');
   const host=document.querySelector('[data-switcher-list]'); if(!host)return;
   const worlds=WORLDS.map((world)=>`<button class="az-launchpad-item az-launchpad-world" type="button" data-world="${escapeHtml(world.id)}" data-launch-label="${escapeHtml(`${world.label} ${world.era}`.toLowerCase())}"><span class="az-launchpad-icon" data-accent="${escapeHtml(world.accent || 'blue')}"><img src="/assets/icons/ancient-world.svg" alt=""></span><strong>${escapeHtml(world.label)}</strong><small>${escapeHtml(world.era)}</small></button>`).join('');
   const apps=APPS.map((app)=>`<button class="az-launchpad-item" type="button" data-app="${escapeHtml(app.id)}" data-launch-label="${escapeHtml(`${app.label} ${app.description}`.toLowerCase())}"><span class="az-launchpad-icon"><img src="${escapeHtml(app.icon)}" alt=""></span><strong>${escapeHtml(app.label)}</strong><small>${escapeHtml(app.description)}</small></button>`).join('');
@@ -135,7 +127,102 @@ function renderLauncher() {
     const query=input.value.trim().toLowerCase();
     host.querySelectorAll('.az-launchpad-item').forEach((item)=>item.toggleAttribute('hidden',Boolean(query)&&!item.dataset.launchLabel.includes(query)));
   });
-  setTimeout(()=>input?.focus(),0);
+}
+
+function openLauncher(opener=document.activeElement) {
+  const overlay=launcherOverlay(); if(!overlay)return;
+  renderLauncher();
+  launcherOpener=opener instanceof HTMLElement ? opener : null;
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden','false');
+  setLauncherBackgroundInert(true);
+  setTimeout(()=>overlay.querySelector('[data-launcher-search]')?.focus(),0);
+}
+
+function closeLauncher({restore=true}={}) {
+  const overlay=launcherOverlay(); if(!overlay?.classList.contains('is-open'))return;
+  const opener=launcherOpener;
+  launcherOpener=null;
+  overlay.classList.remove('is-open');
+  overlay.setAttribute('aria-hidden','true');
+  setLauncherBackgroundInert(false);
+  if(restore && opener?.isConnected)setTimeout(()=>opener.focus(),0);
+}
+
+function launcherIsOpen() {
+  return Boolean(launcherOverlay()?.classList.contains('is-open'));
+}
+
+function installLauncherLifecycle() {
+  const overlay=launcherOverlay(); if(!overlay)return;
+  overlay.classList.add('az-launchpad-overlay');
+  overlay.querySelector('.az-dialog')?.classList.add('az-launchpad');
+
+  overlay.addEventListener('click',(event)=>{
+    if(event.target.closest('.az-launchpad-item')) {
+      closeLauncher({restore:false});
+      return;
+    }
+    if(event.target===overlay || event.target.closest('[data-overlay-close]')) {
+      event.preventDefault();
+      event.stopPropagation();
+      closeLauncher();
+    }
+  },true);
+
+  const topbarLauncher=document.querySelector('.az-system-menu [data-shell-action="switcher"]');
+  topbarLauncher?.addEventListener('click',(event)=>{
+    event.preventDefault();
+    event.stopPropagation();
+    const opener=event.currentTarget;
+    setTimeout(()=>openLauncher(opener),0);
+  },true);
+
+  window.addEventListener('keydown',(event)=>{
+    if(event.altKey && event.key==='Tab') {
+      event.preventDefault();
+      event.stopPropagation();
+      const opener=document.activeElement;
+      setTimeout(()=>openLauncher(opener),0);
+      return;
+    }
+    if(!launcherIsOpen())return;
+    if(event.key==='Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      closeLauncher();
+      return;
+    }
+    if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k' || event.altKey&&event.key==='F4') {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    if(event.key!=='Tab')return;
+    const items=launcherFocusables(); if(!items.length)return;
+    const first=items[0], last=items.at(-1);
+    if(event.shiftKey && document.activeElement===first) { event.preventDefault(); event.stopPropagation(); last.focus(); }
+    else if(!event.shiftKey && document.activeElement===last) { event.preventDefault(); event.stopPropagation(); first.focus(); }
+  },true);
+}
+
+function rewriteDock(store) {
+  const dock=document.querySelector('.az-task-shelf'); if(!dock)return;
+  dock.innerHTML=`<button class="az-shelf-button" type="button" data-shell-action="home" aria-label="Show desktop">${icons.home}<span class="az-dock-tooltip">Desktop</span></button><button class="az-shelf-button" type="button" data-shell-action="search" aria-label="Search and commands">${icons.search}<span class="az-dock-tooltip">Search</span></button><div class="az-shelf-divider" aria-hidden="true"></div><div class="az-shelf-pinned">${PINNED_APPS.map(dockApp).join('')}</div><div class="az-shelf-running" data-running-apps></div><div class="az-shelf-divider" aria-hidden="true"></div><button class="az-shelf-button" type="button" data-shell-action="switcher" aria-label="Applications">${icons.grid}<span class="az-dock-tooltip">Applications</span></button>`;
+  syncPinned(store);
+  dock.addEventListener('click',(event)=>{
+    const button=event.target.closest('.az-shelf-button'); if(!button)return;
+    if(button.dataset.shellAction==='switcher') {
+      event.preventDefault();
+      event.stopPropagation();
+      setTimeout(()=>openLauncher(button),0);
+      return;
+    }
+    if(store.getState().reduceMotion)return;
+    button.classList.remove('is-launching');
+    requestAnimationFrame(()=>button.classList.add('is-launching'));
+    setTimeout(()=>button.classList.remove('is-launching'),430);
+  },true);
 }
 
 function installDesktopContextMenu(api) {
@@ -164,35 +251,28 @@ function installDesktopContextMenu(api) {
     const action=event.target.closest('[data-context-action]')?.dataset.contextAction;
     if(!action)return;
     hide();
-    if(action==='apps') document.querySelector('[data-shell-action="switcher"]')?.click();
-    if(action==='search') document.querySelector('[data-shell-action="search"]')?.click();
-    if(action==='note') api.openApp('notes',{newNote:true});
-    if(action==='archive') api.openApp('archive');
-    if(action==='aizanoi') api.launchWorld('aizanoi');
+    if(action==='apps')setTimeout(()=>openLauncher(document.querySelector('.az-system-menu [data-shell-action="switcher"]')),0);
+    if(action==='search')document.querySelector('[data-shell-action="search"]')?.click();
+    if(action==='note')api.openApp('notes',{newNote:true});
+    if(action==='archive')api.openApp('archive');
+    if(action==='aizanoi')api.launchWorld('aizanoi');
   });
   document.addEventListener('pointerdown',(event)=>{if(!menu.contains(event.target))hide();},true);
   document.addEventListener('keydown',(event)=>{if(event.key==='Escape')hide();},true);
 }
 
-function observeShell(store) {
+function observeRunningApps(store) {
   const running=document.querySelector('[data-running-apps]');
   if(running)new MutationObserver(()=>queueMicrotask(()=>syncPinned(store))).observe(running,{childList:true,subtree:true});
-  const switcher=document.getElementById('az-switcher-overlay');
-  if(switcher)new MutationObserver(()=>{if(switcher.classList.contains('is-open'))queueMicrotask(renderLauncher);}).observe(switcher,{attributes:true,attributeFilter:['class']});
 }
 
 export function installAizanoiOS(api) {
-  const switcher=document.getElementById('az-switcher-overlay');
-  switcher?.classList.add('az-launchpad-overlay');
-  switcher?.querySelector('.az-dialog')?.classList.add('az-launchpad');
-  switcher?.addEventListener('click',(event)=>{
-    if(event.target.closest('.az-launchpad-item')) switcher.querySelector('[data-overlay-close]')?.click();
-  },true);
   rewriteTopBar();
   renderDesktop(api.store);
   rewriteDock(api.store);
   wireDockMagnification(api.store);
+  installLauncherLifecycle();
   installDesktopContextMenu(api);
-  observeShell(api.store);
+  observeRunningApps(api.store);
   document.documentElement.dataset.azShell='aizanoi-os';
 }
