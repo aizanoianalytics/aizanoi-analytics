@@ -10,7 +10,7 @@ const icons = Object.freeze({
 });
 
 function escapeHtml(value) {
-  return String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+  return String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[char]));
 }
 
 function mission(store) {
@@ -73,13 +73,16 @@ function rewriteDock(store) {
     const button=event.target.closest('.az-shelf-button');
     if(!button)return;
 
-    // Opening a modal makes the dock inert. Finish the physical click first,
-    // then route the same Applications command through the stable top-bar
-    // representative so shell.js can own focus trapping/inert/restore normally.
+    // A modal makes its opener background inert. Finish the physical dock click,
+    // then use shell.js's existing Alt+Tab lifecycle so activeOverlay, focus trap,
+    // Escape and focus restoration remain owned by one canonical implementation.
     if(button.dataset.shellAction==='switcher') {
       event.preventDefault();
       event.stopPropagation();
-      setTimeout(()=>document.querySelector('.az-system-menu [data-shell-action="switcher"]')?.click(),0);
+      setTimeout(()=>{
+        document.dispatchEvent(new KeyboardEvent('keydown',{key:'Tab',altKey:true,bubbles:true,cancelable:true}));
+        setTimeout(renderLauncher,0);
+      },0);
       return;
     }
 
