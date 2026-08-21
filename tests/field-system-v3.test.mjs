@@ -15,6 +15,7 @@ const apps = read('frontend/styles/apps.css');
 const main = read('frontend/js/v3/main.js');
 const shellJs = read('frontend/js/v3/shell.js');
 const osJs = read('frontend/js/v3/aizanoi-os.js');
+const brandJs = read('frontend/js/v3/brand-platform.js');
 const store = read('frontend/js/v3/store.js');
 const registrySource = read('frontend/js/v3/registry.js');
 const terminalSource = read('frontend/js/v3/apps/terminal.js');
@@ -23,6 +24,9 @@ const manifest = read('frontend/manifest.webmanifest');
 const sw = read('frontend/service-worker.js');
 const worldBridge = read('frontend/ancient-world/engine/city-experience.js');
 const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
+const product = read('PRODUCT.md');
+const contentPolicy = read('CONTENT_POLICY.md');
+const newsBuild = read('scripts/news/build-news.mjs');
 
 function walk(dir, out = []) {
   for (const entry of readdirSync(dir, { withFileTypes:true })) {
@@ -60,7 +64,7 @@ for (const relative of legacyPaths) assert.equal(existsSync(path.join(root, rela
 
 assert.ok(statSync(path.join(frontend, 'index.html')).size < 12_000, 'canonical shell HTML regressed into an oversized document');
 assert.match(index, /AizanoiOS/);
-assert.match(index, /Digital Archaeology Desktop/);
+assert.match(index, /Media, Data, Software & Historical Worlds/);
 assert.match(index, /\/styles\/tokens\.css/);
 assert.match(index, /\/styles\/base\.css/);
 assert.match(index, /\/styles\/shell\.css/);
@@ -69,14 +73,17 @@ assert.doesNotMatch(index, /<style\b|style="|<script(?![^>]*src=)|onclick=|onmou
 assert.doesNotMatch(index, /Aizanoi AI|HR AI|chatbot|Windows XP|Luna/i);
 assert.match(index, /type="module" src="\/js\/v3\/main\.js"/);
 
-for (const source of [main,shellJs,osJs,store,registrySource]) {
+for (const source of [main,shellJs,osJs,brandJs,store,registrySource]) {
   assert.doesNotMatch(source, /os-(?:platform|unified|product-polish|v2)|os-workbench|chat\.js/i);
 }
 assert.match(main, /installAizanoiOS/);
+assert.match(main, /installBrandPlatform/);
 assert.match(main, /window\.AIZANOI_OS/);
 assert.match(osJs, /wireDockMagnification/);
 assert.match(osJs, /az-launchpad-search/);
 assert.match(osJs, /contextmenu/);
+assert.match(brandJs, /\['news','videos','analytics','worlds','forge'\]/);
+assert.match(brandJs, /data-az-product|azProduct/);
 
 const v3ModuleFiles = walk(path.join(frontend, 'js/v3')).filter((file) => file.endsWith('.js'));
 const inlineMarkupDebt = [];
@@ -105,16 +112,37 @@ for (const [name, css] of Object.entries({shell,components,apps})) {
 }
 
 const registry = await import(pathToFileURL(path.join(frontend, 'js/v3/registry.js')).href + `?t=${Date.now()}`);
-assert.equal(registry.APPS.length, 11, 'AizanoiOS catalog must contain 11 canonical apps');
+assert.equal(registry.APPS.length, 17, 'AizanoiOS catalog must contain the public platform plus Workbench internals');
 assert.deepEqual(registry.WORLDS.map((world) => world.id), ['aizanoi','rome','athens']);
-assert.equal(registry.APPS.some((app) => /\bAI\b|chatbot/i.test(`${app.id} ${app.label}`)), false, 'retired AI app returned to registry');
+for (const id of ['news','videos','analytics','worlds','forge','journal','labs','games','workbench']) {
+  assert.ok(registry.APPS.some((app)=>app.id===id),`missing Aizanoi platform app ${id}`);
+}
+for (const id of ['archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor']) {
+  const app=registry.APPS.find((item)=>item.id===id);
+  assert.equal(app?.group,'workbench',`${id} must be grouped under Workbench`);
+  assert.equal(app?.launcher,false,`${id} must stay out of the public launcher`);
+}
+assert.equal(registry.APPS.some((app) => /Aizanoi AI|HR AI|chatbot/i.test(`${app.id} ${app.label}`)), false, 'retired AI app returned to registry');
 assert.equal(new Set(registry.APPS.map((app) => app.id)).size, registry.APPS.length, 'app ids must be unique');
 
+assert.match(product, /independent digital studio/i);
+assert.match(product, /Aizanoi News/);
+assert.match(product, /Aizanoi Analytics/);
+assert.match(product, /Aizanoi Forge/);
+assert.match(product, /Aizanoi Workbench/);
+assert.match(contentPolicy, /source links are mandatory/i);
+assert.match(newsBuild, /at least one source is required/);
+assert.match(newsBuild, /ai-technology/);
+assert.ok(existsSync(path.join(root,'frontend/content/news/index.json')),'generated News feed baseline missing');
+
 assert.match(manifest, /"name"\s*:\s*"AizanoiOS"/);
+assert.match(manifest, /"name"\s*:\s*"Aizanoi News"/);
 assert.match(manifest, /"name"\s*:\s*"Historical Worlds"/);
 assert.doesNotMatch(manifest, /hr-analytics|Aizanoi AI|HR AI/i);
-assert.match(sw, /aizanoi-os-shell-v4\.0\.0/);
+assert.match(sw, /aizanoi-os-shell-v4\.1\.0/);
 assert.match(sw, /\/js\/v3\/aizanoi-os\.js/);
+assert.match(sw, /\/js\/v3\/brand-platform\.js/);
+assert.match(sw, /\/content\/news\/index\.json/);
 assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/, 'service worker must activate only after a complete precache');
 assert.match(sw, /networkFirstStatic/, 'mutable static assets must prefer the revalidated network response');
 assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/, 'service worker must explicitly ignore API routes');
@@ -147,6 +175,6 @@ for (const file of canonicalFiles) {
 }
 assert.deepEqual(violations,[],`retired product/source strings remain:\n${violations.join('\n')}`);
 
-test('AizanoiOS canonical source contract', () => {
+test('AizanoiOS umbrella platform canonical source contract', () => {
   assert.ok(true);
 });
