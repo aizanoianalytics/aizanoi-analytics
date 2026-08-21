@@ -1,20 +1,21 @@
 {
   "name": "AizanoiOS",
   "short_name": "AizanoiOS",
-  "description": "A browser-native digital archaeology desktop with walkable historical worlds, local notes, sources, datasets and evidence-aware research tools.",
+  "description": "The browser-native shell for Aizanoi media, analytics, open projects, experiments and Historical Worlds.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#dbe7f3",
   "theme_color": "#dbe7f3",
   "orientation": "any",
-  "categories": ["education", "productivity", "utilities"],
+  "categories": ["news", "productivity", "education", "entertainment", "utilities"],
   "icons": [
     {"src":"/assets/branding/aizanoi-logo-mark.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
   ],
   "shortcuts": [
-    {"name":"Historical Worlds","short_name":"Worlds","url":"/?app=worlds","icons":[{"src":"/assets/icons/ancient-world.svg","sizes":"any","type":"image/svg+xml"}]},
-    {"name":"Field Archive","short_name":"Archive","url":"/?app=archive","icons":[{"src":"/assets/icons/field-archive.svg","sizes":"any","type":"image/svg+xml"}]},
-    {"name":"Field Notes","short_name":"Notes","url":"/?app=notes","icons":[{"src":"/assets/icons/notepad.svg","sizes":"any","type":"image/svg+xml"}]}
+    {"name":"Aizanoi News","short_name":"News","url":"/?app=news","icons":[{"src":"/assets/icons/source-reader.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Aizanoi TV","short_name":"TV","url":"/?app=videos","icons":[{"src":"/assets/icons/aizanoi-tv.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Aizanoi Analytics","short_name":"Analytics","url":"/?app=analytics","icons":[{"src":"/assets/icons/data-lab.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Historical Worlds","short_name":"Worlds","url":"/?app=worlds","icons":[{"src":"/assets/icons/ancient-world.svg","sizes":"any","type":"image/svg+xml"}]}
   ]
 }
