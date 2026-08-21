@@ -58,17 +58,18 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
   assert.equal(await secondContext.evaluate((el)=>el===document.activeElement),true,'desktop: context menu ArrowDown navigation failed');
   await page.keyboard.press('Escape');
 
-  // Dock Applications opens Launchpad through the canonical shell overlay lifecycle.
+  // Dock Applications exposes only public product families. Workbench internals remain
+  // directly addressable by runtime, but are never rendered as launcher items.
   const applicationsButton=page.locator('[data-os-launcher]');
   await applicationsButton.click();
   await page.waitForSelector('#az-switcher-overlay.is-open .az-launchpad-search');
   assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: launcher did not use canonical inert overlay lifecycle');
+  for(const id of ['archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor']) {
+    assert.equal(await page.locator(`#az-switcher-overlay .az-launchpad-item[data-app="${id}"]`).count(),0,`desktop: Workbench internal ${id} leaked into Applications`);
+  }
   const launcherSearch=page.locator('[data-launcher-search]');
   await launcherSearch.fill('analytics');
   assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item:not([hidden])').count(),1,'desktop: launcher search did not filter to Analytics');
-  await launcherSearch.fill('archive');
-  await page.waitForTimeout(20);
-  assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item:not([hidden])').count(),0,'desktop: Workbench internals leaked into Applications');
   await launcherSearch.fill('definitely-no-such-aizanoi-app');
   assert.equal(await page.locator('[data-launcher-empty]').isVisible(),true,'desktop: launcher missing empty-search state');
   await page.keyboard.press('Escape');
