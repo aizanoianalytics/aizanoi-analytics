@@ -44,7 +44,7 @@
   .az-shelf-pinned,.az-shelf-running { display:flex; align-items:flex-end; gap:3px; }
   .az-shelf-button { --az-dock-scale:1; --az-dock-lift:0px; position:relative; width:56px; height:56px; flex:0 0 56px; display:grid; place-items:center; padding:7px; border:0; border-radius:15px; background:transparent; cursor:pointer; transition:background var(--az-motion-fast); }
   .az-shelf-button:hover { background:rgba(255,255,255,.45); }
-  .az-shelf-button > svg,.az-shelf-button > img { transform:translateY(calc(-1 * var(--az-dock-lift))) scale(var(--az-dock-scale)); transform-origin:50% 100%; transition:transform 120ms ease-out; will-change:transform; }
+  .az-shelf-button > svg,.az-shelf-button > img { pointer-events:none; transform:translateY(calc(-1 * var(--az-dock-lift))) scale(var(--az-dock-scale)); transform-origin:50% 100%; transition:transform 120ms ease-out; will-change:transform; }
   .az-shelf-button > svg { width:27px; height:27px; color:#22304a; }
   .az-shelf-button > img { width:39px; height:39px; filter:drop-shadow(0 4px 6px rgba(35,49,75,.16)); }
   .az-shelf-button.is-launching > img,.az-shelf-button.is-launching > svg { animation:az-dock-bounce 420ms cubic-bezier(.2,.75,.25,1); }
