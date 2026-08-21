@@ -71,7 +71,23 @@ function rewriteDock(store) {
   syncPinned(store);
   dock.addEventListener('click',(event)=>{
     const button=event.target.closest('.az-shelf-button');
-    if(!button || store.getState().reduceMotion)return;
+    if(!button)return;
+
+    // Opening a modal makes the dock inert. Defer the dock launcher action by one
+    // task so the physical pointer/click sequence can finish before that happens.
+    // The replay stays on the same button, preserving opener/focus restoration.
+    if(button.dataset.shellAction==='switcher' && button.dataset.azDeferredLauncher!=='1') {
+      event.preventDefault();
+      event.stopPropagation();
+      button.dataset.azDeferredLauncher='1';
+      setTimeout(()=>{
+        button.click();
+        delete button.dataset.azDeferredLauncher;
+      },0);
+      return;
+    }
+
+    if(store.getState().reduceMotion)return;
     button.classList.remove('is-launching');
     requestAnimationFrame(()=>button.classList.add('is-launching'));
     setTimeout(()=>button.classList.remove('is-launching'),430);
