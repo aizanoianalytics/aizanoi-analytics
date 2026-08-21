@@ -72,7 +72,7 @@ function filterLauncher(){
   const host=document.querySelector('[data-switcher-list]');if(!host)return;
   host.querySelectorAll('.az-launchpad-item[data-app]').forEach((item)=>{
     const app=appById(item.dataset.app);
-    if(app?.launcher===false)item.hidden=true;
+    if(app?.launcher===false)item.remove();
   });
   const appHeading=[...host.querySelectorAll('.az-launchpad-group h3')].find((node)=>node.textContent==='Applications');
   if(appHeading)appHeading.textContent='Aizanoi';
