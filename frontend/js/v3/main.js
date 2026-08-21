@@ -1,8 +1,9 @@
 import { mountShell } from './shell.js';
 import { getState } from './store.js';
 import { installAizanoiOS } from './aizanoi-os.js';
+import { installBrandPlatform } from './brand-platform.js';
 
-const VERSION = '4.0.0-aizanoi-os';
+const VERSION = '4.1.0-aizanoi-platform';
 const BUILD = '2026.08.21';
 
 function finishBoot() {
@@ -21,7 +22,6 @@ async function registerServiceWorker() {
 function exposeRuntime(api) {
   const runtime=Object.freeze({VERSION,BUILD,...api});
   window.AIZANOI_OS=runtime;
-  // Compatibility alias for existing local integrations and browser tests.
   window.AIZANOI_FIELD_SYSTEM=runtime;
   document.documentElement.dataset.azVersion=VERSION;
 }
@@ -29,6 +29,7 @@ function exposeRuntime(api) {
 try {
   const api=mountShell();
   installAizanoiOS(api);
+  installBrandPlatform(api);
   exposeRuntime(api);
   finishBoot();
   registerServiceWorker();
