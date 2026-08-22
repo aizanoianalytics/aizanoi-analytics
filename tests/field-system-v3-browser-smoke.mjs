@@ -97,7 +97,7 @@ const retiredIds=['workbench','archive','notes','data-lab','source-reader','arti
   await page.locator('[data-dock-app="analytics"]').click();
   await page.waitForSelector('.az-window[data-app-id="analytics"].is-active');
 
-  const searchButton=page.locator('[data-shell-action="search"]').first();
+  const searchButton=page.locator('.az-task-shelf [data-shell-action="search"]');
   await searchButton.focus(); await searchButton.click();
   await page.waitForSelector('#az-command-overlay.is-open');
   assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: command dialog did not inert app stage');
