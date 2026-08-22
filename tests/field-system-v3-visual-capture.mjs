@@ -13,7 +13,7 @@ async function capture(name,viewport,action){
   await page.goto(`${base}/`,{waitUntil:'networkidle'});
   await page.waitForSelector('.az-desktop');
   await page.waitForFunction(()=>Boolean(window.AIZANOI_OS));
-  await page.evaluate(()=>{try{localStorage.removeItem('aizanoi-field-system-v3');}catch(_){}}); 
+  await page.evaluate(()=>{try{localStorage.removeItem('aizanoi-field-system-v3');}catch(_){}});
   if(action)await action(page);
   await page.waitForTimeout(300);
   await page.screenshot({path:path.join(out,`${name}.png`),fullPage:false});
@@ -27,7 +27,7 @@ await capture('aizanoi-os-03-news',{width:1440,height:900},async(page)=>{await p
 await capture('aizanoi-os-04-tv',{width:1440,height:900},async(page)=>{await page.locator('.az-desktop-shortcut[data-app="videos"]').click();await page.waitForSelector('.az-window[data-app-id="videos"]');});
 await capture('aizanoi-os-05-analytics',{width:1440,height:900},async(page)=>{await page.locator('.az-desktop-shortcut[data-app="analytics"]').click();await page.waitForSelector('.az-window[data-app-id="analytics"]');});
 await capture('aizanoi-os-06-forge',{width:1440,height:900},async(page)=>{await page.locator('.az-desktop-shortcut[data-app="forge"]').click();await page.waitForSelector('.az-window[data-app-id="forge"]');});
-await capture('aizanoi-os-07-command',{width:1440,height:900},async(page)=>{await page.locator('[data-shell-action="search"]').first().click();await page.waitForSelector('#az-command-overlay.is-open');});
+await capture('aizanoi-os-07-command',{width:1440,height:900},async(page)=>{await page.locator('.az-task-shelf [data-shell-action="search"]').click();await page.waitForSelector('#az-command-overlay.is-open');});
 await capture('aizanoi-os-08-labs',{width:1440,height:900},async(page)=>{await page.evaluate(()=>window.AIZANOI_OS.openApp('labs'));await page.waitForSelector('.az-window[data-app-id="labs"]');});
 
 await capture('aizanoi-os-09-tablet-home',{width:900,height:1180});
