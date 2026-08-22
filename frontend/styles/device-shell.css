@@ -423,6 +423,9 @@
     }
     .az-shelf-button > img { width:34px;height:34px; }
 
+    html:has(.az-window.is-active:not(.is-minimized)) .az-shell {
+      grid-template-rows:48px minmax(0,1fr) 0;
+    }
     html:has(.az-window.is-active:not(.is-minimized)) .az-task-shelf-wrap {
       opacity:0;
       transform:translateY(16px);
