@@ -3,12 +3,19 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 
 const read = (file) => readFileSync(file, 'utf8');
-const terminal = read('frontend/js/v3/apps/terminal.js');
-const monitor = read('frontend/js/v3/apps/monitor.js');
 const sw = read('frontend/service-worker.js');
 const index = read('frontend/index.html');
 const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
 const architecture = read('ARCHITECTURE.md');
+
+const retiredToolFiles = [
+  'frontend/js/v3/archive-store.js',
+  'frontend/js/v3/apps/archive.js',
+  'frontend/js/v3/apps/research.js',
+  'frontend/js/v3/apps/projects.js',
+  'frontend/js/v3/apps/terminal.js',
+  'frontend/js/v3/apps/monitor.js'
+];
 
 test('Aizanoi public runtime remains static-only', () => {
   assert.equal(existsSync('backend'), false, 'backend directory must remain removed');
@@ -18,20 +25,8 @@ test('Aizanoi public runtime remains static-only', () => {
   assert.doesNotMatch(architecture, /Node backend/i);
 });
 
-test('Field Terminal is a browser-only task shell', () => {
-  assert.match(terminal, /LOCAL VIRTUAL SHELL/);
-  assert.match(terminal, /worlds/);
-  assert.match(terminal, /session/);
-  assert.match(terminal, /evidence/);
-  assert.doesNotMatch(terminal, /fetch\s*\(|XMLHttpRequest|WebSocket|\/api\/terminal\/exec/);
-  assert.doesNotMatch(terminal, /child_process|\bexec\s*\(|\bspawn\s*\(/);
-});
-
-test('Workspace Monitor reports browser-local facts only', () => {
-  assert.match(monitor, /navigator\.storage|storageEstimate/);
-  assert.match(monitor, /serviceWorker/);
-  assert.match(monitor, /viewport/i);
-  assert.doesNotMatch(monitor, /\/api\/health|fetch\s*\(/);
+test('retired Workbench runtime files remain removed', () => {
+  for (const file of retiredToolFiles) assert.equal(existsSync(file), false, `${file} must remain retired`);
 });
 
 test('service worker never handles API routes', () => {
@@ -39,8 +34,8 @@ test('service worker never handles API routes', () => {
   assert.doesNotMatch(sw, /\/api\/chat|\/api\/health|\/api\/terminal\/exec/);
 });
 
-test('service worker core precache is complete-or-fail while app loading stays network-lazy', () => {
-  assert.match(sw, /aizanoi-os-shell-v4\.1\.0/);
+test('service worker core precache includes the adaptive shell and remains complete-or-fail', () => {
+  assert.match(sw, /aizanoi-os-shell-v4\.2\.0/);
   assert.match(sw, /cache:'reload'/);
   assert.match(sw, /if \(!response\.ok\) throw new Error/);
   assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/);
@@ -49,6 +44,7 @@ test('service worker core precache is complete-or-fail while app loading stays n
   assert.match(precache, /\/js\/v3\/shell\.js/);
   assert.match(precache, /\/js\/v3\/aizanoi-os\.js/);
   assert.match(precache, /\/js\/v3\/brand-platform\.js/);
+  assert.match(precache, /\/styles\/device-shell\.css/);
   assert.match(precache, /\/content\/news\/index\.json/);
   assert.match(precache, /\/assets\/wallpapers\/aizanoi-os-sunrise\.svg/);
   assert.doesNotMatch(precache, /\/styles\/apps\.css|\/js\/v3\/archive-store\.js|\/js\/v3\/apps\//, 'lazy app assets must not be pulled during service-worker install');

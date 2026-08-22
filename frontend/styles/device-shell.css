@@ -1,0 +1,504 @@
+@layer shell {
+  .az-phone-home,
+  .az-tablet-home { display:none; }
+
+  .az-device-date {
+    display:block;
+    color:rgba(29,43,66,.66);
+    font-size:12px;
+    font-weight:650;
+    letter-spacing:.01em;
+  }
+
+  .az-device-kicker {
+    display:block;
+    color:#67758a;
+    font:700 11px/1.25 var(--az-font-mono);
+    letter-spacing:.07em;
+    text-transform:uppercase;
+  }
+
+  .az-device-app {
+    min-width:0;
+    min-height:88px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    gap:7px;
+    padding:6px 3px;
+    border:0;
+    border-radius:18px;
+    background:transparent;
+    color:#17243a;
+    text-align:center;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform var(--az-motion-fast),background var(--az-motion-fast);
+  }
+  .az-device-app:active { transform:scale(.96); }
+  .az-device-app:hover { background:rgba(255,255,255,.22); }
+  .az-device-app-icon {
+    width:64px;
+    height:64px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(255,255,255,.78);
+    border-radius:19px;
+    background:linear-gradient(145deg,rgba(255,255,255,.91),rgba(229,237,249,.73));
+    box-shadow:0 11px 26px rgba(41,55,82,.16),inset 0 1px rgba(255,255,255,.84);
+    backdrop-filter:blur(18px) saturate(135%);
+    -webkit-backdrop-filter:blur(18px) saturate(135%);
+  }
+  .az-device-app-icon img {
+    width:40px;
+    height:40px;
+    filter:drop-shadow(0 4px 6px rgba(37,50,74,.13));
+  }
+  .az-device-app-label {
+    max-width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    color:#17243a;
+    font-size:11px;
+    font-weight:690;
+    line-height:1.15;
+    white-space:nowrap;
+    text-shadow:0 1px 4px rgba(255,255,255,.78);
+  }
+
+  .az-device-widget-action,
+  .az-tablet-feature button,
+  .az-tablet-apps-button {
+    min-height:44px;
+    padding:8px 13px;
+    border:1px solid rgba(49,67,96,.12);
+    border-radius:13px;
+    background:rgba(255,255,255,.58);
+    color:#27354b;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+  }
+
+  @media (min-width:600px) and (max-width:1199px) {
+    .az-shell { grid-template-rows:44px minmax(0,1fr) 86px; }
+    .az-home-scroll { overflow:auto; }
+    .az-desktop {
+      min-height:100%;
+      padding:0;
+    }
+    .az-desktop-signature,
+    .az-desktop-shortcuts,
+    .az-session-widget,
+    .az-phone-home { display:none; }
+
+    .az-tablet-home {
+      width:min(1180px,100%);
+      min-height:100%;
+      display:grid;
+      grid-template-columns:minmax(230px,.78fr) minmax(0,1.72fr);
+      gap:22px;
+      margin:0 auto;
+      padding:24px 24px 34px;
+    }
+    .az-tablet-rail {
+      display:grid;
+      align-content:start;
+      gap:16px;
+    }
+    .az-tablet-brand-card,
+    .az-tablet-widget,
+    .az-tablet-main {
+      border:1px solid rgba(255,255,255,.72);
+      background:rgba(249,252,255,.46);
+      box-shadow:0 18px 46px rgba(39,52,78,.12),inset 0 1px rgba(255,255,255,.78);
+      backdrop-filter:blur(30px) saturate(145%);
+      -webkit-backdrop-filter:blur(30px) saturate(145%);
+    }
+    .az-tablet-brand-card {
+      min-height:290px;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:flex-end;
+      padding:21px;
+      border-radius:26px;
+    }
+    .az-tablet-brand-card img {
+      width:68px;
+      height:68px;
+      margin:26px 0 13px;
+      filter:drop-shadow(0 8px 18px rgba(43,58,88,.13));
+    }
+    .az-tablet-brand-card h1 {
+      margin:0;
+      color:#17243a;
+      font:760 clamp(34px,5vw,50px)/.96 var(--az-font-ui);
+      letter-spacing:-.05em;
+    }
+    .az-tablet-brand-card p {
+      max-width:24ch;
+      margin:9px 0 0;
+      color:#5b6980;
+      font-size:13px;
+      line-height:1.45;
+    }
+    .az-tablet-quick-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:18px;
+    }
+    .az-tablet-quick-actions .az-button { min-height:44px; }
+
+    .az-tablet-widget {
+      min-height:178px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:16px;
+      padding:19px;
+      border-radius:22px;
+    }
+    .az-tablet-widget h2 {
+      margin:5px 0 5px;
+      color:#1f2c43;
+      font-size:20px;
+      line-height:1.08;
+      letter-spacing:-.025em;
+    }
+    .az-tablet-widget p {
+      margin:0;
+      color:#617087;
+      font-size:12px;
+      line-height:1.48;
+    }
+    .az-tablet-widget .az-device-widget-action { align-self:flex-start; }
+
+    .az-tablet-main {
+      min-width:0;
+      padding:22px;
+      border-radius:28px;
+    }
+    .az-tablet-section-head {
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:20px;
+    }
+    .az-tablet-section-head h2 {
+      margin:3px 0 4px;
+      color:#18263c;
+      font:740 28px/1 var(--az-font-ui);
+      letter-spacing:-.035em;
+    }
+    .az-tablet-section-head p {
+      max-width:54ch;
+      margin:0;
+      color:#68758a;
+      font-size:12px;
+      line-height:1.45;
+    }
+    .az-tablet-app-grid {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:11px 8px;
+      padding:5px 0 18px;
+    }
+    .az-tablet-app { min-height:106px; }
+    .az-tablet-app .az-device-app-icon {
+      width:72px;
+      height:72px;
+      border-radius:22px;
+    }
+    .az-tablet-app .az-device-app-icon img { width:44px;height:44px; }
+
+    .az-tablet-feature-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:5px;
+    }
+    .az-tablet-feature {
+      min-height:174px;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      padding:17px;
+      border:1px solid rgba(255,255,255,.7);
+      border-radius:21px;
+      background:rgba(255,255,255,.38);
+    }
+    .az-tablet-feature h3 {
+      margin:5px 0 5px;
+      color:#223149;
+      font-size:18px;
+      letter-spacing:-.02em;
+    }
+    .az-tablet-feature p {
+      margin:0 0 16px;
+      color:#69768a;
+      font-size:12px;
+      line-height:1.45;
+    }
+    .az-tablet-feature > button,
+    .az-tablet-feature > div { margin-top:auto; }
+    .az-tablet-feature > div { display:flex;gap:7px; }
+
+    .az-window {
+      left:2.5% !important;
+      top:2.5% !important;
+      width:95% !important;
+      height:95% !important;
+      border-radius:24px;
+    }
+    .az-task-shelf {
+      min-height:66px;
+      border-radius:21px;
+    }
+    .az-shelf-button {
+      width:52px;
+      height:52px;
+      flex-basis:52px;
+    }
+  }
+
+  @media (min-width:600px) and (max-width:839px) {
+    .az-tablet-home {
+      grid-template-columns:220px minmax(0,1fr);
+      gap:15px;
+      padding:18px 18px 28px;
+    }
+    .az-tablet-main { padding:18px; }
+    .az-tablet-app-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .az-tablet-feature-grid { grid-template-columns:1fr; }
+    .az-tablet-feature { min-height:145px; }
+  }
+
+  @media (max-width:599px) {
+    .az-shell { grid-template-rows:48px minmax(0,1fr) 76px; }
+    .az-home-scroll { overflow:auto; overscroll-behavior:contain; }
+    .az-desktop {
+      min-height:100%;
+      padding:0;
+    }
+    .az-desktop-signature,
+    .az-desktop-shortcuts,
+    .az-session-widget,
+    .az-tablet-home { display:none; }
+
+    .az-phone-home {
+      min-height:100%;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      padding:18px 14px 28px;
+    }
+    .az-phone-home-header {
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+      padding:4px 5px 0;
+    }
+    .az-phone-home-header h1 {
+      margin:3px 0 2px;
+      color:#16243a;
+      font:760 clamp(33px,10vw,44px)/.96 var(--az-font-ui);
+      letter-spacing:-.055em;
+    }
+    .az-phone-home-header p {
+      margin:0;
+      color:#66748a;
+      font-size:12px;
+      font-weight:570;
+    }
+    .az-phone-search {
+      width:48px;
+      height:48px;
+      flex:0 0 48px;
+      display:grid;
+      place-items:center;
+      padding:0;
+      border:1px solid rgba(255,255,255,.74);
+      border-radius:16px;
+      background:rgba(250,252,255,.48);
+      color:#30415d;
+      box-shadow:0 10px 24px rgba(43,57,84,.12);
+      backdrop-filter:blur(22px) saturate(145%);
+      -webkit-backdrop-filter:blur(22px) saturate(145%);
+    }
+    .az-phone-search svg { width:21px;height:21px; }
+
+    .az-phone-widgets {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+    }
+    .az-phone-widget {
+      min-height:164px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:12px;
+      padding:15px;
+      border:1px solid rgba(255,255,255,.72);
+      border-radius:22px;
+      background:rgba(249,252,255,.47);
+      box-shadow:0 14px 34px rgba(40,54,82,.12),inset 0 1px rgba(255,255,255,.78);
+      backdrop-filter:blur(26px) saturate(145%);
+      -webkit-backdrop-filter:blur(26px) saturate(145%);
+    }
+    .az-phone-widget h2 {
+      margin:5px 0 5px;
+      color:#1e2c43;
+      font-size:17px;
+      line-height:1.05;
+      letter-spacing:-.025em;
+    }
+    .az-phone-widget p {
+      margin:0;
+      color:#657289;
+      font-size:11px;
+      line-height:1.42;
+    }
+    .az-phone-widget .az-device-widget-action {
+      min-height:44px;
+      align-self:flex-start;
+      padding-inline:12px;
+    }
+
+    .az-phone-apps {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:9px 3px;
+      padding:2px 0 8px;
+    }
+    .az-phone-app {
+      min-height:94px;
+      padding-inline:1px;
+    }
+    .az-phone-app .az-device-app-icon {
+      width:62px;
+      height:62px;
+      border-radius:19px;
+    }
+    .az-phone-app .az-device-app-icon img {
+      width:39px;
+      height:39px;
+    }
+
+    .az-system-bar {
+      border-bottom-color:rgba(255,255,255,.34);
+      background:rgba(247,250,255,.48);
+    }
+    .az-brand-button strong { font-size:12px; }
+    .az-system-action[data-shell-action="settings"] { display:none; }
+
+    .az-task-shelf-wrap {
+      align-items:center;
+      padding:4px max(8px,env(safe-area-inset-right)) max(7px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));
+    }
+    .az-task-shelf {
+      width:auto;
+      max-width:calc(100vw - 16px);
+      min-height:60px;
+      justify-content:center;
+      gap:0;
+      overflow:visible;
+      padding:5px 7px;
+      border-radius:20px;
+    }
+    .az-task-shelf [data-shell-action="search"],
+    .az-task-shelf [data-dock-app="forge"],
+    .az-task-shelf .az-shelf-running,
+    .az-task-shelf .az-shelf-divider { display:none; }
+    .az-shelf-button {
+      width:48px;
+      height:48px;
+      flex-basis:48px;
+      padding:6px;
+    }
+    .az-shelf-button > img { width:34px;height:34px; }
+
+    html:has(.az-window.is-active:not(.is-minimized)) .az-shell {
+      grid-template-rows:48px minmax(0,1fr) 0;
+    }
+    html:has(.az-window.is-active:not(.is-minimized)) .az-task-shelf-wrap {
+      opacity:0;
+      transform:translateY(16px);
+      pointer-events:none;
+    }
+    .az-task-shelf-wrap {
+      transition:opacity var(--az-motion-fast),transform var(--az-motion-fast);
+    }
+
+    .az-window {
+      left:0 !important;
+      top:0 !important;
+      width:100% !important;
+      height:100% !important;
+      border-radius:0;
+    }
+  }
+
+  @media (max-width:350px) {
+    .az-phone-home { padding-inline:10px; }
+    .az-phone-widgets { grid-template-columns:1fr; }
+    .az-phone-app .az-device-app-icon { width:57px;height:57px;border-radius:17px; }
+    .az-phone-app .az-device-app-icon img { width:35px;height:35px; }
+  }
+}
+
+@layer components {
+  @media (min-width:600px) and (max-width:1199px) {
+    .az-launchpad {
+      width:min(920px,100%);
+      max-height:calc(100dvh - 88px);
+    }
+    .az-launchpad-grid { grid-template-columns:repeat(4,minmax(110px,1fr)); }
+    .az-launchpad-worlds { grid-template-columns:repeat(3,minmax(130px,1fr)); }
+  }
+
+  @media (max-width:599px) {
+    .az-launchpad-overlay {
+      align-items:flex-end;
+      padding:52px 0 0;
+      background:rgba(37,49,72,.22);
+    }
+    .az-launchpad {
+      width:100%;
+      max-height:84dvh;
+      border-width:1px 0 0;
+      border-radius:28px 28px 0 0;
+      background:rgba(247,250,255,.86);
+    }
+    .az-launchpad .az-dialog-header { min-height:54px; }
+    .az-launchpad .az-dialog-body { padding:14px 13px max(24px,env(safe-area-inset-bottom)); }
+    .az-launchpad-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px 2px; }
+    .az-launchpad-worlds { grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; }
+    .az-launchpad-item {
+      min-height:96px;
+      padding:8px 3px;
+      border-radius:15px;
+    }
+    .az-launchpad-item small { display:none; }
+    .az-launchpad-icon { width:58px;height:58px;border-radius:18px; }
+    .az-launchpad-icon img { width:36px;height:36px; }
+    .az-launchpad-item strong { font-size:11px; }
+    .az-launchpad-search {
+      width:100%;
+      min-height:48px;
+      margin-bottom:2px;
+    }
+    #az-command-overlay {
+      align-items:flex-start;
+      padding:58px 10px 10px;
+    }
+    #az-command-overlay .az-dialog {
+      border-radius:20px;
+    }
+  }
+}

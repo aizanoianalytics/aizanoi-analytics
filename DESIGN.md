@@ -2,59 +2,120 @@
 
 AizanoiOS is the browser-native shell for **Aizanoi**, an independent digital studio for media, data, software, research and interactive worlds.
 
-It is deliberately not a generic dark dashboard and it must not imitate one operating system pixel-for-pixel.
+It is deliberately not a generic dark dashboard and it must not imitate any operating system pixel-for-pixel.
 
 ## Core visual direction
 
-The default shell is **bright, spacious and wallpaper-first**.
+The shell is **bright, spacious, wallpaper-first and device-aware**.
 
 Do:
-- let the wallpaper occupy most of the screen;
-- keep permanent system chrome small;
+- let wallpaper and depth create atmosphere instead of dense chrome;
 - use translucent light surfaces with readable dark text;
-- keep desktop shortcuts sparse;
-- use color to make the OS feel alive without turning every card into an accent block;
-- let each product family have a little personality inside a coherent shell.
+- keep icons simple, recognizable and consistent;
+- make touch targets at least 44×44 px where coarse input is expected;
+- let each product family have personality inside one coherent Aizanoi identity;
+- adapt composition when the form factor changes.
 
 Do not:
-- restore the old near-black research dashboard as the default shell;
-- rebuild Home as a dense grid of every app;
-- put all Workbench tools on the desktop;
-- copy Apple, Microsoft or Ubuntu branding/assets;
-- force archaeology styling onto News, TV, Analytics or Forge.
+- restore the old near-black research dashboard;
+- expose retired Workbench/power tools;
+- shrink the desktop layout until it “fits” a phone;
+- copy Apple, Google, Microsoft or Ubuntu branding/assets;
+- fabricate phone status indicators, weather, battery, Wi-Fi or system telemetry.
 
 ## Brand hierarchy
 
 Aizanoi is the umbrella brand. AizanoiOS is the shell.
 
-Permanent desktop/dock priorities:
+Core public destinations:
 1. **Aizanoi News**
 2. **Aizanoi TV**
 3. **Aizanoi Analytics**
 4. **Historical Worlds**
 5. **Aizanoi Forge**
 
-Secondary public families live in Applications/Search:
+Secondary public families:
 - Aizanoi Journal
 - Aizanoi Labs
 - Aizanoi Arcade
-- Aizanoi Workbench
 
-Workbench internals should not visually compete with the public product families.
+## Desktop — large screens
 
-## Desktop anatomy
-
-On large screens:
+On `>=1200px`:
 1. compact top system bar;
 2. wallpaper desktop;
-3. sparse public shortcuts;
-4. one small contextual widget (Today at Aizanoi or resume a world);
+3. five sparse core shortcuts;
+4. one small contextual widget;
 5. freeform windows;
 6. centered translucent dock;
-7. search/command palette;
-8. spacious Applications launcher.
+7. Search and Applications launcher.
 
 The desktop itself is Home. Show Desktop minimizes open windows instead of navigating to a dashboard.
+
+## Tablet — medium and expanded screens
+
+Tablet is a **touch-first workspace**, not a scaled desktop.
+
+On `600–1199px`:
+- use a two-pane home;
+- reserve one pane for Aizanoi identity, date and one useful contextual card;
+- use the main pane for a large touch-friendly app grid and two small feature/supporting cards;
+- keep the bottom dock compact and centered;
+- open apps in focused, large rounded windows rather than freeform desktop rectangles;
+- let the number of grid columns adapt between narrower and wider tablets.
+
+The tablet design should feel at home in either portrait or landscape and should use the extra width for structure, not merely larger whitespace.
+
+## Mobile — compact screens
+
+Mobile is a **phone-like Aizanoi home screen**.
+
+On `<600px`:
+- show a clear Aizanoi header and real local date;
+- provide two small glanceable widgets with direct actions;
+- expose every public app in a four-column icon grid when space allows;
+- keep a compact bottom dock for Home + the most important destinations + Applications;
+- hide nonessential running-app clutter from the dock;
+- use fullscreen-equivalent app surfaces;
+- collapse the Applications launcher into a bottom-sheet/app-drawer style surface;
+- keep Search easy to reach from the home screen.
+
+The result may evoke modern iOS/Android interaction conventions, but it must remain original AizanoiOS.
+
+## App icons
+
+- Keep primary symbols centered and simple.
+- Use one consistent rounded-square container language across phone and tablet.
+- Avoid text inside the icon itself when the label already appears below.
+- Avoid tiny illustrative detail that becomes unreadable at mobile sizes.
+- Maintain consistent optical weight even when source SVGs differ.
+
+## Widgets
+
+Widgets must be glanceable and useful:
+- one concept per card;
+- short copy;
+- one obvious action;
+- no fake dynamic data;
+- no dashboard density.
+
+Useful initial widget subjects are News and a Historical World resume/explore action.
+
+## Dock
+
+Desktop:
+- five core pinned apps;
+- restrained pointer-proximity magnification;
+- running non-pinned apps may appear.
+
+Tablet:
+- same core identity, slightly reduced touch-friendly dock;
+- no pointer-only magnification requirement.
+
+Mobile:
+- Home + News + TV + Analytics + Worlds + Applications;
+- Forge remains available in the app grid/launcher but is not forced into the compact dock;
+- running non-pinned apps do not expand the dock.
 
 ## Palette
 
@@ -79,7 +140,7 @@ News/TV/Analytics/Forge should not inherit evidence colors merely for decoration
 ## Typography
 
 - shell/UI: system sans / Inter-class sans;
-- long-form Journal/Notes: serif is allowed;
+- long-form Journal: serif is allowed;
 - data/instrumentation/metadata: system monospace.
 
 Functional text stays at least 11–12 px. Touch targets stay at least 44×44 px where coarse input is expected.
@@ -90,18 +151,7 @@ Functional text stays at least 11–12 px. Touch targets stay at least 44×44 px
 
 Desktop supports drag, resize, minimize, maximize/restore, close, keyboard move/resize, active focus/z-order and saved local rectangles.
 
-Tablet becomes a focused large-window workspace. Mobile uses fullscreen-equivalent app frames rather than a miniature desktop.
-
-## Dock
-
-The dock is a primary identity surface.
-
-- centered on desktop;
-- light translucent material with blur/shadow;
-- only the five core apps are permanently pinned;
-- running non-pinned apps may appear dynamically;
-- pointer-proximity magnification is restrained;
-- no magnification on coarse pointers or reduced-motion mode.
+Tablet uses focused large rounded windows. Mobile uses fullscreen-equivalent app frames. Device-specific presentation must not fork routing or app state.
 
 ## Product surfaces
 
@@ -126,9 +176,6 @@ Experimental status should be visually explicit.
 ### Arcade
 Playful presentation is allowed inside the app without changing the OS shell into a game UI.
 
-### Workbench
-Calm utility surfaces. Notes/Source Reader may use warm paper; Terminal stays dark; Artifact Viewer may use a dark inspection stage.
-
 ## Dialogs and accessibility
 
 Every canonical overlay/dialog:
@@ -144,7 +191,9 @@ Every canonical overlay/dialog:
 ## Quality gate
 
 A shell/product change is incomplete until applicable checks cover:
-- desktop/tablet/mobile layout;
+- desktop, tablet and mobile as distinct presentations;
+- 320–430 px mobile widths and common tablet widths;
+- portrait/landscape-friendly responsive behavior;
 - no horizontal overflow;
 - route/window consistency;
 - launcher/search visibility rules;

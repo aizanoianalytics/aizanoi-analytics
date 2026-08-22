@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'aizanoi-os-shell-v4.1.0';
+const CACHE = 'aizanoi-os-shell-v4.2.0';
 const PRECACHE = [
   '/',
   '/manifest.webmanifest',
@@ -10,6 +10,7 @@ const PRECACHE = [
   '/styles/base.css',
   '/styles/shell.css',
   '/styles/components.css',
+  '/styles/device-shell.css',
   '/js/v3/main.js',
   '/js/v3/aizanoi-os.js',
   '/js/v3/brand-platform.js',
