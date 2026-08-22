@@ -4,9 +4,9 @@ This roadmap describes direction, not delivery promises.
 
 ## 2026 platform baseline
 
-Aizanoi is now an umbrella digital studio rather than a single-subject archaeology product. The current platform contract includes:
+Aizanoi is an umbrella digital studio rather than a single-subject archaeology product. The current public platform includes:
 
-- AizanoiOS as the browser-native shell;
+- AizanoiOS as the adaptive browser-native shell;
 - Aizanoi News;
 - Aizanoi TV;
 - Aizanoi Journal;
@@ -14,17 +14,19 @@ Aizanoi is now an umbrella digital studio rather than a single-subject archaeolo
 - Aizanoi Forge;
 - Historical Worlds;
 - Aizanoi Labs;
-- Aizanoi Arcade;
-- Aizanoi Workbench.
+- Aizanoi Arcade.
 
 ## Phase 1 — Brand platform foundation
 
 - maintain `PRODUCT.md`, `AGENTS.md` and `CONTENT_POLICY.md` as canonical contracts;
-- keep the permanent desktop sparse: News, TV, Analytics, Worlds, Forge;
-- collect research/power tools behind Workbench;
-- separate Labs from Arcade;
-- preserve existing deep links and Historical World behavior;
+- keep desktop sparse: News, TV, Analytics, Worlds, Forge;
+- make mobile a phone-like Aizanoi home screen rather than a reduced desktop;
+- make tablet a touch-first two-pane workspace;
+- keep one public catalog across form factors;
+- preserve existing Historical World behavior;
 - keep the visitor runtime static-first.
+
+The former Workbench/power-tool bundle is retired from the public product and should not be restored unless there is a new, explicit user-facing reason for it.
 
 ## Phase 2 — Aizanoi News
 
@@ -77,10 +79,6 @@ Aizanoi, Rome and Athens remain maintained flagship experiences. Future worlds s
 
 Evidence boundaries remain mandatory.
 
-## Workbench
-
-Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Monitor remain useful power tools, but should not compete visually with the public brand families.
-
 ## Platform and operations
 
 Priorities:
@@ -88,8 +86,8 @@ Priorities:
 - exact-SHA production releases;
 - rollback points and post-deploy smoke checks;
 - compression and bounded caching;
-- accessibility and desktop/tablet/mobile parity;
-- privacy-preserving analytics only if it avoids private Workbench content;
+- accessibility and device-specific desktop/tablet/mobile QA;
+- privacy-preserving analytics if introduced;
 - off-site backups/restore drills outside the public repository.
 
 ## Explicitly not planned in the current phase
@@ -101,6 +99,7 @@ Unless the owner explicitly changes the product constitution:
 - multiplayer/shared leaderboards;
 - public AI chat;
 - remote shell execution;
+- visitor-facing research/power tools without a clear public use case;
 - framework rewrites for fashion;
 - a general visitor-facing backend.
 
@@ -112,4 +111,5 @@ Prefer work that makes Aizanoi more:
 3. trustworthy and source-aware;
 4. easy to explore;
 5. coherent across product families;
-6. simple to operate securely.
+6. natural to use on the device in hand;
+7. simple to operate securely.
