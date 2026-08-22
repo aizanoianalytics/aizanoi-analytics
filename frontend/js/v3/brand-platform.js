@@ -162,6 +162,17 @@ function watchLauncher(){
   const host=document.querySelector('[data-switcher-list]');if(!host)return;
   new MutationObserver(()=>queueMicrotask(renameLauncher)).observe(host,{childList:true,subtree:true});
 }
+function rewriteDesktopContextMenu(api){
+  const menu=document.querySelector('.az-desktop-context');if(!menu)return;
+  menu.innerHTML='<button type="button" role="menuitem" data-context-action="apps">Applications</button><button type="button" role="menuitem" data-context-action="search">Search</button><div class="az-context-divider" aria-hidden="true"></div><button type="button" role="menuitem" data-context-action="news">Aizanoi News</button><button type="button" role="menuitem" data-context-action="analytics">Aizanoi Analytics</button><button type="button" role="menuitem" data-context-action="aizanoi">Explore Aizanoi</button>';
+  menu.addEventListener('click',(event)=>{
+    const action=event.target.closest('[data-context-action]')?.dataset.contextAction;
+    if(!['news','analytics'].includes(action))return;
+    event.preventDefault();event.stopPropagation();
+    menu.classList.remove('is-open');menu.setAttribute('aria-hidden','true');
+    api.openApp(action);
+  },true);
+}
 function updateDeviceDates(){
   const date=dateParts();
   document.querySelectorAll('.az-device-date').forEach((node)=>{
@@ -173,6 +184,7 @@ function updateDeviceDates(){
 export function installBrandPlatform(api){
   rewriteDesktop(api);
   rewriteDock(api);
+  rewriteDesktopContextMenu(api);
   watchLauncher();
   updateDeviceDates();
   setInterval(updateDeviceDates,60_000);
