@@ -8,12 +8,12 @@ The public visitor runtime is **static-first**. Nginx serves HTML, CSS, JavaScri
 Browser
   |
   +-- AizanoiOS (/)
-  |     +-- brand-platform.js       umbrella-brand desktop/dock adaptation
-  |     +-- registry.js             app + world catalog
-  |     +-- store.js                workspace + field-session state
+  |     +-- brand-platform.js       umbrella-brand + device composition
+  |     +-- registry.js             public app + world catalog
+  |     +-- store.js                shell + field-session state
   |     +-- shell.js                canonical window/router/dialog lifecycle
-  |     +-- apps/*                  lazy application modules
-  |     +-- IndexedDB               local Workbench records
+  |     +-- device-shell.css        tablet/mobile presentation
+  |     +-- apps/*                  lazy public application modules
   |     +-- /content/news/index.json static News feed
   |
   +-- Historical Worlds
@@ -30,25 +30,36 @@ Historical `/api/chat` remains failed closed. Other `/api/*` paths remain unavai
 
 ### Base shell
 
-`frontend/js/v3/aizanoi-os.js` owns the desktop interaction layer: wallpaper desktop, top chrome, dock behavior, launcher lifecycle, window motion and snapping.
+`frontend/js/v3/aizanoi-os.js` owns desktop interaction primitives such as wallpaper desktop, top chrome, dock behavior, launcher lifecycle, window motion and snapping.
 
-### Brand adapter
+### Brand/device adapter
 
-`frontend/js/v3/brand-platform.js` owns the current umbrella-brand presentation on top of the base OS:
-- core dock apps;
-- sparse public desktop shortcuts;
-- Today at Aizanoi / resume widget;
-- hiding Workbench internals from the public launcher.
+`frontend/js/v3/brand-platform.js` owns the current umbrella-brand composition:
+- five core desktop shortcuts/dock apps;
+- desktop contextual widget;
+- phone home app grid/widgets;
+- tablet two-pane home;
+- public catalog presentation.
 
 It may adapt presentation, but must not create a second window manager or route system.
 
+### Device presentation
+
+`frontend/styles/device-shell.css` is the canonical style owner for compact and tablet-specific home composition. It complements `shell.css`; it is not a compatibility or “fix” stylesheet.
+
+Breakpoints:
+- Compact `<600px`: phone-like home + fullscreen-equivalent apps.
+- Medium `600–839px`: tablet two-pane home with a tighter app grid.
+- Expanded `840–1199px`: larger tablet home + focused large windows.
+- Large `>=1200px`: wallpaper-first desktop + freeform windows.
+
 ### Registry
 
-`frontend/js/v3/registry.js` is the canonical app/world catalog. Public families are first-class entries. Internal Workbench apps remain addressable by id but may be hidden from the launcher/search surface.
+`frontend/js/v3/registry.js` contains only public apps and Historical Worlds. Retired Workbench/power tools must not remain directly addressable through `appById`, search, launcher or routing.
 
 ### Lazy applications
 
-`frontend/js/v3/apps/brand-hubs.js` mounts News, Analytics, Forge, Journal, Labs and Workbench hub surfaces. TV and Arcade retain dedicated modules.
+Public application modules load only when opened. `apps.css` remains lazy.
 
 ## Aizanoi News pipeline
 
@@ -68,12 +79,6 @@ The compiler validates ids, dates, categories, summary length and mandatory sour
 
 `CONTENT_POLICY.md` is the publication contract.
 
-## Workbench privacy
-
-Archive, Notes, Data Lab, Source Reader and Artifact Viewer remain browser-local unless the visitor explicitly exports data. Browser/user storage controls may delete local material.
-
-Field Terminal remains browser-only and may never gain arbitrary server/process execution, server filesystem access or command transport to Hermes.
-
 ## Historical Worlds
 
 `frontend/ancient-world/engine/` owns shared traversal/input/evidence/presentation behavior. City-specific archaeology and hero decisions stay city-local.
@@ -82,16 +87,13 @@ The evidence boundary remains unchanged: documented/source-supported, archaeolog
 
 ## Responsive contract
 
-- Compact `<600px`: fullscreen-equivalent app surfaces + mobile navigation.
-- Medium `600–839px`: single focus workspace.
-- Expanded `840–1199px`: large touch-friendly focus workspace.
-- Large `>=1200px`: freeform windows.
+The site uses one public catalog but distinct device composition. Product equivalence means the same meaningful public destinations remain reachable; it does not mean identical geometry or navigation chrome.
 
-One app registry serves every device class.
+Phone and tablet layouts must use real browser/device state only. Do not fabricate mobile OS status information.
 
 ## Service worker
 
-The service worker precaches the shell, brand adapter and News feed baseline. Mutable same-origin static assets use network-first behavior with cached fallback. `/api/*` is never intercepted.
+The service worker precaches the shell, brand/device adapter, device stylesheet and News feed baseline. Mutable same-origin static assets use network-first behavior with cached fallback. `/api/*` is never intercepted.
 
 ## Deployment boundary
 
@@ -113,9 +115,9 @@ See `docs/HERMES_OPERATIONS.md`.
 2. Static-first visitor runtime by default.
 3. One registry and one window lifecycle.
 4. `brand-platform.js` adapts; it does not fork the shell.
-5. No Workbench upload path without explicit product decision.
-6. No server-backed public terminal.
+5. Retired power tools stay out of the public catalog unless the owner explicitly reverses the decision.
+6. No server-backed public terminal or private-agent bridge.
 7. No certainty inflation in Historical Worlds.
 8. News requires structured source provenance.
-9. Preserve desktop/tablet/mobile equivalence.
+9. Preserve public destination parity while giving desktop, tablet and mobile device-appropriate UX.
 10. Interactive changes require regression coverage.
