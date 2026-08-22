@@ -23,13 +23,13 @@ async function mountNews(container){
 
 function mountAnalytics(container){container.innerHTML=shell('Aizanoi Analytics','Dashboards, data products & utilities',cards([
   {kicker:'DATA PRODUCTS',title:'Public analytical applications',body:'Dashboards, market tools, model comparisons and data utilities built under the Aizanoi brand will live here.'},
-  {kicker:'DESIGN RULE',title:'Launch · Source · Documentation · Version',body:'Each production project should expose a usable product surface, its source when public, concise documentation and a visible version/release state.'},
-  {kicker:'WORKBENCH',title:'Local Data Lab',body:'Need to inspect a local CSV or JSON file? The browser-local Workbench remains available.',button:'data-lab',buttonLabel:'Open Data Lab'}
+  {kicker:'PRODUCT STANDARD',title:'Launch · Source · Documentation · Version',body:'Each production project should expose a usable product surface, its source when public, concise documentation and a visible version or release state.'},
+  {kicker:'OPEN FOR BUILDS',title:'A growing public portfolio',body:'New analytical applications will be added here as complete, end-user-facing products rather than internal research utilities.'}
 ]));}
 
 function mountForge(container){container.innerHTML=shell('Aizanoi Forge','Source, builds & open projects',cards([
   {kicker:'SOURCE OF TRUTH',title:'aizanoianalytics/aizanoi-analytics',body:'GitHub remains canonical. Forge is the branded project catalog and mirror layer, not a second independent copy of source code.',href:'https://github.com/aizanoianalytics/aizanoi-analytics',hrefLabel:'Open GitHub'},
-  {kicker:'PROJECT',title:'AizanoiOS',body:'Browser-native desktop shell for Aizanoi media, studio products, Historical Worlds and experiments.'},
+  {kicker:'PROJECT',title:'AizanoiOS',body:'Browser-native adaptive shell for Aizanoi media, studio products, Historical Worlds and experiments.'},
   {kicker:'PROJECT',title:'Historical Worlds',body:'Shared runtime and city-local reconstructions for Aizanoi, Rome and Athens.',button:'worlds',buttonLabel:'Open Worlds'}
 ]));}
 
@@ -38,14 +38,6 @@ function mountLabs(container){container.innerHTML=shell('Aizanoi Labs','Experime
   {kicker:'EXPERIMENTAL',title:'Prototype shelf',body:'Small WebGL, WebGPU, UI, audio, physics and generative experiments belong here even when they are intentionally unfinished.'},
   {kicker:'SEPARATION',title:'Games live in Arcade',body:'Playable games are promoted to Aizanoi Arcade; Labs remains the place for prototypes and technical experiments.',button:'games',buttonLabel:'Open Arcade'}
 ]));}
-function mountWorkbench(container){container.innerHTML=shell('Aizanoi Workbench','Local power tools',cards([
-  {kicker:'LOCAL',title:'Field Archive',body:'Browser-local records, sources, datasets and captures.',button:'archive',buttonLabel:'Open Archive'},
-  {kicker:'LOCAL',title:'Field Notes',body:'Observations, hypotheses and source reviews.',button:'notes',buttonLabel:'Open Notes'},
-  {kicker:'LOCAL',title:'Data Lab',body:'Inspect local CSV and JSON datasets.',button:'data-lab',buttonLabel:'Open Data Lab'},
-  {kicker:'LOCAL',title:'Source Reader',body:'Read local PDF, Markdown and text sources.',button:'source-reader',buttonLabel:'Open Reader'},
-  {kicker:'LOCAL',title:'Artifact Viewer',body:'Inspect visual records with provenance metadata.',button:'artifact-viewer',buttonLabel:'Open Viewer'},
-  {kicker:'TOOLS',title:'Terminal & Monitor',body:'Browser-only field commands and real local workspace/PWA status.',button:'terminal',buttonLabel:'Open Terminal'}
-]));}
 
 export async function mount({container,appId,api}){
   if(appId==='news')await mountNews(container);
@@ -53,7 +45,6 @@ export async function mount({container,appId,api}){
   else if(appId==='forge')mountForge(container);
   else if(appId==='journal')mountJournal(container);
   else if(appId==='labs')mountLabs(container);
-  else if(appId==='workbench')mountWorkbench(container);
   else container.innerHTML=shell('Aizanoi','Digital studio','<div class="az-empty-state"><div><h3>Unknown hub</h3></div></div>');
   const click=(event)=>{const id=event.target.closest('[data-open-app]')?.dataset.openApp;if(id)api.openApp(id);};
   container.addEventListener('click',click);
