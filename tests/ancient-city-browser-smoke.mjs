@@ -97,15 +97,20 @@ for (const city of cities) {
   // pointerlockchange listener has updated its cached `locked` flag. Give that
   // event loop turn time to settle before asserting synthetic movement.
   await page.waitForTimeout(50);
-  const mouseBefore = await player(page);
-  await page.evaluate(() => {
+  // Measure before/after inside one browser task. Pointer-lock may enqueue native
+  // mousemove events around Playwright's click; separate evaluate calls let those
+  // events race the synthetic assertion and make the gate nondeterministic.
+  const mouseTurn = await page.evaluate(() => {
+    const before = window.__ANCIENT_WORLD_DEBUG__?.player?.yaw;
     const event = new MouseEvent('mousemove', { bubbles:true });
     Object.defineProperty(event, 'movementX', { value:64 });
     Object.defineProperty(event, 'movementY', { value:0 });
     document.dispatchEvent(event);
+    const after = window.__ANCIENT_WORLD_DEBUG__?.player?.yaw;
+    return { before, after, delta:after - before };
   });
-  const mouseAfter = await player(page);
-  assert.ok(mouseAfter.yaw > mouseBefore.yaw + 0.05, `${city.slug}: positive pointer-lock movementX did not turn view right (${mouseBefore.yaw} -> ${mouseAfter.yaw})`);
+  assert.ok(Number.isFinite(mouseTurn.before) && Number.isFinite(mouseTurn.after), `${city.slug}: pointer-lock yaw state is invalid`);
+  assert.ok(mouseTurn.delta > 0.05 && mouseTurn.delta < 0.25, `${city.slug}: positive pointer-lock movementX produced an invalid yaw delta (${mouseTurn.before} -> ${mouseTurn.after}; delta ${mouseTurn.delta})`);
 
   const teleported = await page.evaluate((id) => window.__ANCIENT_WORLD_DEBUG__.teleport(id), city.teleport);
   assert.equal(teleported, true, `${city.slug}: teleport failed`);
