@@ -87,7 +87,7 @@ function renderTabletHome(api){
       </div>
       ${sessionCard(api,false)}
     </aside>
-    <main class="az-tablet-main">
+    <section class="az-tablet-main" aria-label="Aizanoi tablet applications">
       <header class="az-tablet-section-head">
         <div><span class="az-device-kicker">AIZANOIOS</span><h2>Your apps</h2><p>Focused tools and public experiences, arranged for a larger touch screen.</p></div>
         <button class="az-tablet-apps-button" type="button" data-shell-action="switcher" data-os-launcher aria-label="Open Applications">All apps</button>
@@ -105,7 +105,7 @@ function renderTabletHome(api){
           <div><button type="button" data-app="forge">Forge</button><button type="button" data-app="labs">Labs</button></div>
         </article>
       </section>
-    </main>
+    </section>
   </section>`;
 }
 
