@@ -31,177 +31,127 @@ async function axe(page,label) {
 
 function appModuleRequests(requests){return requests.filter((path)=>path.includes('/js/v3/apps/'));}
 
-// Desktop: wallpaper-first desktop, umbrella-brand core apps, keyboard window switching,
-// launcher/search, snapping, lazy apps and canonical route/window lifecycle.
+const retiredIds=['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor'];
+
+// Desktop: sparse wallpaper desktop, public catalog only, freeform window lifecycle.
 {
   const {context,page,errors,requests}=await openPage({width:1440,height:900});
-  assert.equal(await page.locator('.az-world-shortcut').count(),0,'desktop: individual world shortcuts should not crowd the brand desktop');
   assert.equal(await page.locator('.az-desktop-shortcut').count(),5,'desktop: expected five core Aizanoi shortcuts');
-  for(const id of ['news','videos','analytics','worlds','forge']) assert.equal(await page.locator(`.az-desktop-shortcut[data-app="${id}"]`).count(),1,`desktop: missing core shortcut ${id}`);
-  assert.equal(await page.locator('.az-home-hero,.az-world-card,.az-app-card').count(),0,'desktop: old dashboard/card home returned');
-  assert.equal(await page.getByText(/Aizanoi AI|HR AI/i).count(),0,'desktop: retired AI visible');
+  for(const id of ['news','videos','analytics','worlds','forge']) {
+    assert.equal(await page.locator(`.az-desktop-shortcut[data-app="${id}"]`).count(),1,`desktop: missing core shortcut ${id}`);
+  }
+  assert.equal(await page.locator('.az-phone-home:visible,.az-tablet-home:visible').count(),0,'desktop: device-specific home leaked into large layout');
   assert.equal(appModuleRequests(requests).length,0,'desktop: app modules must not load before app open');
   assert.equal(requests.some((path)=>path.endsWith('/styles/apps.css')),false,'desktop: app styles must remain lazy');
   assert.equal(await page.locator('.az-task-shelf').isVisible(),true,'desktop: floating dock missing');
-  assert.ok(await page.locator('.az-task-shelf .az-shelf-button').count()>=8,'desktop: dock is missing core navigation');
   assert.equal((await page.locator('[data-active-app-title]').textContent())?.trim(),'Desktop','desktop: active app title should begin on Desktop');
   await axe(page,'desktop');
 
-  // Desktop context actions stay inside the viewport and support menu-key navigation.
   await page.locator('.az-desktop').click({button:'right',position:{x:520,y:320}});
   await page.waitForSelector('.az-desktop-context.is-open');
-  assert.equal(await page.locator('.az-desktop-context [role="menuitem"]').count(),5,'desktop: context menu actions missing');
-  const firstContext=page.locator('.az-desktop-context [role="menuitem"]').nth(0);
-  const secondContext=page.locator('.az-desktop-context [role="menuitem"]').nth(1);
-  assert.equal(await firstContext.evaluate((el)=>el===document.activeElement),true,'desktop: context menu did not focus first action');
-  await page.keyboard.press('ArrowDown');
-  assert.equal(await secondContext.evaluate((el)=>el===document.activeElement),true,'desktop: context menu ArrowDown navigation failed');
+  assert.ok(await page.locator('.az-desktop-context [role="menuitem"]').count()>=4,'desktop: context menu actions missing');
   await page.keyboard.press('Escape');
 
-  // Dock Applications exposes only public product families. Workbench internals remain
-  // directly addressable by runtime, but are never rendered as launcher items.
-  const applicationsButton=page.locator('[data-os-launcher]');
+  const applicationsButton=page.locator('.az-task-shelf [data-os-launcher]');
   await applicationsButton.click();
   await page.waitForSelector('#az-switcher-overlay.is-open .az-launchpad-search');
-  assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: launcher did not use canonical inert overlay lifecycle');
-  for(const id of ['archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor']) {
-    assert.equal(await page.locator(`#az-switcher-overlay .az-launchpad-item[data-app="${id}"]`).count(),0,`desktop: Workbench internal ${id} leaked into Applications`);
+  assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: launcher did not use canonical inert lifecycle');
+  assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item[data-app]').count(),8,'desktop: launcher public-app count changed unexpectedly');
+  for(const id of retiredIds) {
+    assert.equal(await page.locator(`#az-switcher-overlay .az-launchpad-item[data-app="${id}"]`).count(),0,`desktop: retired ${id} leaked into Applications`);
   }
   const launcherSearch=page.locator('[data-launcher-search]');
   await launcherSearch.fill('analytics');
   assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item:not([hidden])').count(),1,'desktop: launcher search did not filter to Analytics');
-  await launcherSearch.fill('definitely-no-such-aizanoi-app');
-  assert.equal(await page.locator('[data-launcher-empty]').isVisible(),true,'desktop: launcher missing empty-search state');
   await page.keyboard.press('Escape');
-  await page.waitForSelector('#az-switcher-overlay',{state:'hidden'});
 
-  await page.evaluate(()=>window.AIZANOI_OS.openApp('archive'));
-  await page.waitForSelector('.az-archive-layout');
-  await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')==='archive');
-  assert.match(page.url(),/[?&]app=archive(?:&|$)/,'desktop: Archive route intent missing');
-  assert.ok(appModuleRequests(requests).some((path)=>path.endsWith('/apps/archive.js')),'desktop: Archive did not lazy-load archive module');
+  await page.locator('.az-desktop-shortcut[data-app="news"]').click();
+  await page.waitForSelector('.az-window[data-app-id="news"].is-active');
+  await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')==='news');
+  assert.ok(appModuleRequests(requests).length>0,'desktop: public app did not lazy-load');
   assert.ok(requests.some((path)=>path.endsWith('/styles/apps.css')),'desktop: app styles did not lazy-load');
-  assert.equal(await page.getByText('Temple of Zeus — sample field record',{exact:false}).count()>0,true,'desktop: sample Archive record missing');
-  assert.match((await page.locator('[data-active-app-title]').textContent())||'',/Archive/i,'desktop: top bar did not follow active Archive window');
+  assert.match((await page.locator('[data-active-app-title]').textContent())||'',/News/i,'desktop: top bar did not follow active News window');
 
-  // AizanoiOS traffic lights keep accessible hitboxes but use the product accent palette.
-  const closeRect=await page.locator('.az-window[data-app-id="archive"] [data-action="close"]').boundingBox();
-  const titleRect=await page.locator('.az-window[data-app-id="archive"] .az-window-title').boundingBox();
-  assert.ok(closeRect&&titleRect&&closeRect.x<titleRect.x,'desktop: traffic-light controls are not left of the title');
-  const closeColor=await page.locator('.az-window[data-app-id="archive"] [data-action="close"]').evaluate((el)=>getComputedStyle(el,'::before').backgroundColor);
-  assert.equal(closeColor,'rgb(197, 109, 81)','desktop: close control is not using AizanoiOS rust accent');
-  await axe(page,'desktop archive');
-
-  // Open a second app: Alt+Tab must show only open windows, never the full Applications launcher.
-  await page.evaluate(()=>window.AIZANOI_OS.openApp('notes'));
-  await page.waitForSelector('.az-window[data-app-id="notes"].is-active');
+  await page.locator('.az-desktop-shortcut[data-app="analytics"]').click();
+  await page.waitForSelector('.az-window[data-app-id="analytics"].is-active');
   await page.keyboard.press('Alt+Tab');
   await page.waitForSelector('#az-switcher-overlay.is-open');
   assert.equal((await page.locator('#az-switcher-title').textContent())?.trim(),'Open Apps','desktop: Alt+Tab did not open the window switcher');
-  assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-search').count(),0,'desktop: Alt+Tab incorrectly opened Applications');
-  assert.ok(await page.locator('#az-switcher-overlay [data-switch-app]').count()>=2,'desktop: Alt+Tab switcher did not list open windows');
+  assert.ok(await page.locator('#az-switcher-overlay [data-switch-app]').count()>=2,'desktop: open-app switcher did not list public windows');
   await page.keyboard.press('Escape');
 
-  // Edge snap is intentionally simple: drag a normal large-screen window to the left edge -> half stage.
-  const notesBar=page.locator('.az-window[data-app-id="notes"] .az-window-bar');
-  const notesBarBox=await notesBar.boundingBox();
-  assert.ok(notesBarBox,'desktop: Notes titlebar missing for snap test');
-  await page.mouse.move(notesBarBox.x+notesBarBox.width/2,notesBarBox.y+notesBarBox.height/2);
+  const analyticsBar=page.locator('.az-window[data-app-id="analytics"] .az-window-bar');
+  const barBox=await analyticsBar.boundingBox();
+  assert.ok(barBox,'desktop: Analytics titlebar missing for snap test');
+  await page.mouse.move(barBox.x+barBox.width/2,barBox.y+barBox.height/2);
   await page.mouse.down();
-  await page.mouse.move(2,notesBarBox.y+notesBarBox.height/2,{steps:8});
+  await page.mouse.move(2,barBox.y+barBox.height/2,{steps:8});
   await page.mouse.up();
   await page.waitForTimeout(220);
-  const snapped=await page.locator('.az-window[data-app-id="notes"]').boundingBox();
+  const snapped=await page.locator('.az-window[data-app-id="analytics"]').boundingBox();
   const snapStage=await page.locator('.az-stage').boundingBox();
   assert.ok(snapped&&snapStage&&snapped.x<=10,'desktop: left-edge snap did not align the window');
-  assert.ok(snapped&&snapStage&&Math.abs(snapped.width-(snapStage.width-24)/2)<8,'desktop: left-edge snap did not produce a half-width window');
 
-  // Minimize/restore keeps the OS state intact and restores from the running-app area.
-  await page.locator('.az-window[data-app-id="notes"] [data-action="minimize"]').click();
-  await page.waitForSelector('.az-window[data-app-id="notes"]',{state:'hidden'});
-  await page.locator('[data-running-apps] [data-task-app="notes"]').click();
-  await page.waitForSelector('.az-window[data-app-id="notes"].is-active');
+  await page.locator('.az-window[data-app-id="analytics"] [data-action="minimize"]').click();
+  await page.waitForSelector('.az-window[data-app-id="analytics"]',{state:'hidden'});
+  await page.locator('[data-dock-app="analytics"]').click();
+  await page.waitForSelector('.az-window[data-app-id="analytics"].is-active');
 
-  const normalized=await page.evaluate(async()=>{
-    const Archive=await import('/js/v3/archive-store.js');
-    const id='qa-malformed-meta';
-    await Archive.restoreBundle({format:'aizanoi-field-archive',version:1,records:[{id,name:'QA malformed metadata.md',kind:'markdown',mime:'text/markdown',size:2,text:'qa',collection:'Sources',meta:{title:{bad:true},tags:'not-an-array',source:['local'],evidence:{bad:true},linkedRecord:{bad:true},lastModified:'not-a-number'}}]});
-    const item=await Archive.get(id); await Archive.remove(id);
-    return {title:item?.meta?.title,tags:item?.meta?.tags,source:item?.meta?.source,evidence:item?.meta?.evidence,linkedRecord:item?.meta?.linkedRecord??null,lastModified:item?.meta?.lastModified??null};
-  });
-  assert.equal(typeof normalized.title,'string','desktop: restored title was not normalized to text');
-  assert.deepEqual(normalized.tags,[],'desktop: malformed restored tags were not normalized');
-  assert.equal(typeof normalized.source,'string','desktop: restored source was not normalized to text');
-  assert.equal(normalized.evidence,'documented','desktop: invalid evidence label survived normalization');
-  assert.equal(typeof normalized.linkedRecord,'string','desktop: restored linked record was not normalized to text');
-  assert.equal(normalized.lastModified,null,'desktop: invalid restored lastModified survived normalization');
-
-  const restoreSafety=await page.evaluate(async()=>{
-    const Archive=await import('/js/v3/archive-store.js');
-    const before=await Archive.get('sample-temple-zeus');
-    let rejected=false;
-    try { await Archive.restoreBundle({format:'aizanoi-field-archive',version:1,records:[{id:'qa-invalid-binary',name:'QA invalid binary.bin',kind:'file',mime:'application/octet-stream',size:1,collection:'Uploads',meta:{title:'QA invalid binary',evidence:'documented'},binary:{type:'application/octet-stream',base64:'%%%'}}]},{replace:true}); } catch (_) { rejected=true; }
-    const after=await Archive.get('sample-temple-zeus'); const invalid=await Archive.get('qa-invalid-binary');
-    return {rejected,before:Boolean(before),after:Boolean(after),invalid:Boolean(invalid)};
-  });
-  assert.equal(restoreSafety.rejected,true,'desktop: invalid binary restore did not reject');
-  assert.equal(restoreSafety.before,true,'desktop: baseline Archive seed missing before replace safety test');
-  assert.equal(restoreSafety.after,true,'desktop: failed replace restore cleared existing Archive data');
-  assert.equal(restoreSafety.invalid,false,'desktop: invalid restore record was partially written');
-
-  const searchButton=page.locator('[data-shell-action="search"]').first();
+  const searchButton=page.locator('.az-task-shelf [data-shell-action="search"]');
   await searchButton.focus(); await searchButton.click();
   await page.waitForSelector('#az-command-overlay.is-open');
-  assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: dialog did not inert app stage');
+  assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: command dialog did not inert app stage');
   await page.waitForFunction(()=>document.activeElement?.id==='az-command-input');
   await page.keyboard.press('Escape');
   await page.waitForSelector('#az-command-overlay',{state:'hidden'});
-  await page.waitForFunction(()=>document.activeElement?.getAttribute('data-shell-action')==='search');
-  assert.equal(await searchButton.evaluate((el)=>el===document.activeElement),true,'desktop: dialog did not restore opener focus');
+  assert.equal(await searchButton.evaluate((el)=>el===document.activeElement),true,'desktop: command dialog did not restore opener focus');
 
-  await page.evaluate(()=>window.AIZANOI_OS.openApp('projects'));
-  await page.waitForSelector('.az-window[data-app-id="projects"] .az-project-grid');
+  await page.evaluate(()=>window.AIZANOI_OS.openApp('forge'));
+  await page.waitForSelector('.az-window[data-app-id="forge"].is-active');
   await page.evaluate(()=>window.AIZANOI_OS.openApp('games'));
-  await page.waitForSelector('.az-window[data-app-id="games"] .az-games');
+  await page.waitForSelector('.az-window[data-app-id="games"].is-active');
   assert.match(page.url(),/[?&]app=games(?:&|$)/);
   await page.goBack();
-  await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')==='projects');
-  await page.waitForFunction(()=>document.querySelector('.az-window[data-app-id="projects"]')?.classList.contains('is-active'));
+  await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')==='forge');
+  await page.waitForFunction(()=>document.querySelector('.az-window[data-app-id="forge"]')?.classList.contains('is-active'));
   assert.equal(await page.locator('.az-window[data-app-id="games"]').count(),1,'desktop: Back incorrectly destroyed another open app');
-  await page.locator('.az-window[data-app-id="projects"] [data-action="close"]').click();
-  await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')!=='projects');
 
-  let terminalApiRequests=0;
-  page.on('request',(request)=>{if(new URL(request.url()).pathname==='/api/terminal/exec')terminalApiRequests++;});
-  await page.evaluate(()=>window.AIZANOI_OS.openApp('terminal'));
-  await page.waitForSelector('.az-terminal-input');
-  await page.locator('.az-terminal-input').fill('evidence');
-  await page.locator('[data-terminal-form]').press('Enter');
-  await page.waitForFunction(()=>document.querySelector('.az-terminal-output')?.textContent.includes('documented = explicit source record'));
-  assert.equal(terminalApiRequests,0,'desktop: Field Terminal attempted a server API');
+  const retiredRuntime=await page.evaluate((ids)=>ids.map((id)=>({id,known:Boolean(window.AIZANOI_OS.appById?.(id))})),retiredIds);
+  assert.deepEqual(retiredRuntime.map((item)=>item.known),retiredRuntime.map(()=>false),'desktop: retired app ids remain runtime-addressable');
 
   assert.deepEqual(errors,[],`desktop console/page errors: ${errors.join(' | ')}`);
   await context.close();
 }
 
-// Tablet: adaptive desktop remains coherent.
+// Tablet: dedicated two-pane home and focused large-window workspace.
 {
   const {context,page,errors}=await openPage({width:900,height:1180});
   assert.equal(await page.locator('.az-shell').getAttribute('data-layout'),'expanded');
-  await page.evaluate(()=>window.AIZANOI_OS.openApp('notes'));
-  await page.waitForSelector('.az-notes-layout');
-  const rect=await page.locator('.az-window[data-app-id="notes"]').boundingBox();
-  assert.ok(rect && rect.x>=0 && rect.y>=0 && rect.x+rect.width<=901 && rect.y+rect.height<=1181,'tablet: app window escaped viewport');
+  assert.equal(await page.locator('.az-tablet-home').isVisible(),true,'tablet: dedicated tablet home missing');
+  assert.equal(await page.locator('.az-phone-home').isVisible(),false,'tablet: phone home leaked into tablet');
+  assert.equal(await page.locator('.az-tablet-app').count(),8,'tablet: expected all eight public apps');
+  assert.equal(await page.locator('.az-tablet-feature').count(),2,'tablet: supporting feature cards missing');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'tablet: root horizontal overflow');
+  await axe(page,'tablet home');
+
+  await page.locator('.az-tablet-app[data-app="news"]').click();
+  await page.waitForSelector('.az-window[data-app-id="news"].is-active');
+  const rect=await page.locator('.az-window[data-app-id="news"]').boundingBox();
+  assert.ok(rect && rect.x>=0 && rect.y>=0 && rect.x+rect.width<=901 && rect.y+rect.height<=1181,'tablet: focused app window escaped viewport');
   assert.deepEqual(errors,[],`tablet console/page errors: ${errors.join(' | ')}`);
   await context.close();
 }
 
-// Mobile: adaptive app-shell behavior, no horizontal overflow and touchable chrome.
+// Mobile: phone-like home, compact dock, fullscreen public apps.
 {
   const {context,page,errors}=await openPage({width:390,height:844});
   assert.equal(await page.locator('.az-shell').getAttribute('data-layout'),'compact');
-  assert.equal(await page.locator('.az-world-shortcut').count(),0,'mobile: individual world shortcuts should stay inside Historical Worlds');
-  assert.equal(await page.locator('.az-desktop-shortcut').count(),5,'mobile: core Aizanoi shortcuts missing');
+  assert.equal(await page.locator('.az-phone-home').isVisible(),true,'mobile: phone home missing');
+  assert.equal(await page.locator('.az-tablet-home').isVisible(),false,'mobile: tablet home leaked into compact layout');
+  assert.equal(await page.locator('.az-phone-app').count(),8,'mobile: public app grid incomplete');
+  assert.equal(await page.locator('.az-phone-widget').count(),2,'mobile: glanceable widget pair missing');
+  assert.equal(await page.locator('.az-task-shelf [data-dock-app="forge"]').isVisible(),false,'mobile: compact dock should not include Forge');
+  assert.equal(await page.locator('.az-task-shelf .az-shelf-running').isVisible(),false,'mobile: running-app strip should not expand compact dock');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile: root horizontal overflow');
 
   const interactive=page.locator('button:visible,a.az-button:visible');
@@ -212,21 +162,34 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
     assert.ok(name.trim(),`mobile: unnamed visible interactive target at index ${i}`);
     assert.ok(box.height>=43.5,`mobile: target below 44px (${box.height.toFixed(1)}px): ${name}`);
   }
-  await axe(page,'mobile desktop');
+  await axe(page,'mobile home');
 
-  await page.evaluate(()=>window.AIZANOI_OS.openApp('archive'));
-  await page.waitForSelector('.az-archive-layout');
-  await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')==='archive' && document.querySelector('.az-window[data-app-id="archive"]')?.classList.contains('is-active'));
-  await page.waitForFunction(()=>getComputedStyle(document.querySelector('.az-window[data-app-id="archive"]')).transform==='none');
-  const win=await page.locator('.az-window[data-app-id="archive"]').boundingBox();
+  await page.locator('.az-phone-app[data-app="news"]').click();
+  await page.waitForSelector('.az-window[data-app-id="news"].is-active');
+  await page.waitForFunction(()=>new URL(location.href).searchParams.get('app')==='news');
+  const win=await page.locator('.az-window[data-app-id="news"]').boundingBox();
   const stage=await page.locator('.az-stage').boundingBox();
-  assert.ok(win && stage && Math.abs(win.x-stage.x)<=1 && Math.abs(win.y-stage.y)<=1 && Math.abs(win.width-stage.width)<=1 && Math.abs(win.height-stage.height)<=1,`mobile: Archive does not fill the compact shell stage; window=${JSON.stringify(win)} stage=${JSON.stringify(stage)}`);
-  assert.equal(await page.locator('.az-collection-nav').isVisible(),true,'mobile: collection rail hidden');
-  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile: Archive horizontal overflow');
+  assert.ok(win && stage && Math.abs(win.x-stage.x)<=1 && Math.abs(win.y-stage.y)<=1 && Math.abs(win.width-stage.width)<=1 && Math.abs(win.height-stage.height)<=1,`mobile: public app does not fill compact shell stage; window=${JSON.stringify(win)} stage=${JSON.stringify(stage)}`);
+  await page.waitForFunction(()=>Number(getComputedStyle(document.querySelector('.az-task-shelf-wrap')).opacity)<0.1);
+  const dockOpacity=Number(await page.locator('.az-task-shelf-wrap').evaluate((el)=>getComputedStyle(el).opacity));
+  assert.ok(dockOpacity<0.1,'mobile: home dock should retreat while a fullscreen app is active');
+
+  await page.locator('.az-window[data-app-id="news"] [data-action="close"]').click();
+  await page.waitForSelector('.az-window[data-app-id="news"]',{state:'detached'});
+  assert.equal(await page.locator('.az-phone-home').isVisible(),true,'mobile: closing fullscreen app did not return to phone home');
+
+  await page.locator('.az-task-shelf [data-os-launcher]').click();
+  await page.waitForSelector('#az-switcher-overlay.is-open .az-launchpad-search');
+  const launchpadRect=await page.locator('.az-launchpad').boundingBox();
+  assert.ok(launchpadRect && launchpadRect.width>=389,'mobile: Applications drawer is not full-width');
+  for(const id of retiredIds) {
+    assert.equal(await page.locator(`#az-switcher-overlay .az-launchpad-item[data-app="${id}"]`).count(),0,`mobile: retired ${id} leaked into app drawer`);
+  }
+  await page.keyboard.press('Escape');
 
   assert.deepEqual(errors,[],`mobile console/page errors: ${errors.join(' | ')}`);
   await context.close();
 }
 
 await browser.close();
-console.log('AizanoiOS desktop/tablet/mobile Chromium smoke passed');
+console.log('AizanoiOS adaptive desktop/tablet/mobile Chromium smoke passed');

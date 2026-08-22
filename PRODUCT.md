@@ -24,21 +24,18 @@ Aizanoi is an independent digital studio for media, data, software, research and
 - **Historical Worlds** — evidence-aware walkable reconstructions. Aizanoi remains the reference world; Rome and Athens are comparative worlds.
 - **Aizanoi Arcade** — playable browser games. Games are separate from Labs.
 
-### Power tools
-- **Aizanoi Workbench** — local Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Workspace Monitor. These tools remain available without dominating the public brand surface.
+The former visitor-facing research/power-tool bundle (Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Workspace Monitor) is retired from the public product. Do not reintroduce it without an explicit owner decision.
 
 ## AizanoiOS
 
-AizanoiOS is the browser-native shell that presents the brand. It stays bright, spacious, wallpaper-first and window-based.
+AizanoiOS is the browser-native shell that presents the brand.
 
-Permanent desktop chrome is intentionally sparse:
-- News
-- TV
-- Analytics
-- Historical Worlds
-- Forge
+It uses one product catalog with three intentionally different device presentations:
+- **desktop:** wallpaper-first desktop, sparse shortcuts, freeform windows and centered dock;
+- **tablet:** touch-first two-pane home, larger app grid, glanceable feature cards and focused large windows;
+- **mobile:** phone-like home screen with app icons, compact widgets, bottom dock and fullscreen app surfaces.
 
-Everything else remains discoverable through Applications and Search.
+The design may learn from modern mobile and desktop operating systems, but it must remain recognizably Aizanoi and must not copy Apple, Google, Microsoft or Ubuntu branding/assets.
 
 ## Publishing principles
 
@@ -49,7 +46,7 @@ Everything else remains discoverable through Applications and Search.
 5. Hermes may automate preparation, validation and deployment; it must not silently publish copied articles or unverified claims.
 6. Historical evidence levels remain explicit.
 7. Experiments must look experimental; unfinished work is not disguised as production.
-8. One coherent product across desktop, tablet and mobile.
+8. One coherent product catalog across desktop, tablet and mobile, with device-appropriate UX rather than one stretched layout.
 
 ## Audience
 

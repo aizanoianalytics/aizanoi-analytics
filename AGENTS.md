@@ -4,7 +4,7 @@
 
 Before changing code or content, read `PRODUCT.md`, this file, `CONTENT_POLICY.md`, `DESIGN.md`, `ARCHITECTURE.md`, the nearest area-specific `AGENTS.md`, the affected runtime path and current Git history.
 
-Aizanoi is no longer scoped as only a digital-archaeology project. It is an independent digital studio for **media, data, software, research and interactive worlds**.
+Aizanoi is an independent digital studio for **media, data, software, research and interactive worlds**.
 
 ## Product scope
 
@@ -16,10 +16,11 @@ The umbrella brand is **Aizanoi**. Current public families are:
 - Aizanoi Forge;
 - Historical Worlds;
 - Aizanoi Labs;
-- Aizanoi Arcade;
-- Aizanoi Workbench.
+- Aizanoi Arcade.
 
 Aizanoi Analytics is one product family, not the umbrella brand. Historical Worlds remain a distinctive flagship experience but do not define the entire product scope.
+
+The former Workbench/power-tool product is retired from the visitor-facing catalog. Do not add Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal or Workspace Monitor back to navigation, search, deep-link routing or public product documentation without an explicit owner decision.
 
 ## Public architecture
 
@@ -29,10 +30,9 @@ The visitor-facing runtime remains static-first behind Nginx:
 Browser
    |
    +-- AizanoiOS
-   |     +-- media/studio/explore hubs
-   |     +-- local Workbench tools
+   |     +-- media/studio/explore apps
    |     +-- static News feed
-   |     +-- browser-only Field Terminal
+   |     +-- adaptive desktop/tablet/mobile shell
    |
    +-- Historical Worlds
    |     +-- Aizanoi
@@ -42,30 +42,45 @@ Browser
 Nginx -> static HTML/CSS/JS/JSON/assets
 ```
 
-Do not introduce a visitor-facing Node/Express app, remote shell, secret-bearing browser code or general public backend merely because Aizanoi now covers more subjects. Build-time/private automation may exist outside the visitor runtime.
+Do not introduce a visitor-facing Node/Express app, remote shell, secret-bearing browser code or general public backend merely because Aizanoi covers multiple subjects. Build-time/private automation may exist outside the visitor runtime.
 
 ## AizanoiOS canonical owners
 
-- `frontend/js/v3/registry.js` — app/world catalog;
-- `frontend/js/v3/store.js` — workspace and field-session state;
+- `frontend/js/v3/registry.js` — public app/world catalog;
+- `frontend/js/v3/store.js` — browser-local shell state and field-session state;
 - `frontend/js/v3/shell.js` — canonical window/router/dialog lifecycle;
 - `frontend/js/v3/aizanoi-os.js` — base desktop interaction adapter;
-- `frontend/js/v3/brand-platform.js` — umbrella-brand desktop/dock/launcher adaptation;
-- `frontend/js/v3/apps/` — lazy app modules;
-- `frontend/styles/*` — canonical `--az-*` presentation layers.
+- `frontend/js/v3/brand-platform.js` — umbrella-brand home/dock/device composition;
+- `frontend/styles/shell.css` — base shell/window/dock behavior;
+- `frontend/styles/components.css` — controls/dialogs/launcher;
+- `frontend/styles/device-shell.css` — canonical tablet/mobile home and compact launcher adaptation;
+- `frontend/js/v3/apps/` — lazy public app modules.
 
-Do not add compatibility wrappers such as `final.css`, `polish.css`, `unified.css`, `responsive-fix.css` or a second window manager.
+Do not add compatibility wrappers such as `final.css`, `polish.css`, `unified.css`, `responsive-fix.css` or a second window manager. `device-shell.css` is a deliberate canonical device presentation layer, not a patch layer.
 
-## Public navigation decision
+## Device navigation decision
 
-The permanent desktop surface stays intentionally sparse. Core pinned apps are:
+### Desktop
+Permanent shortcuts/dock priorities:
 1. Aizanoi News
 2. Aizanoi TV
 3. Aizanoi Analytics
 4. Historical Worlds
 5. Aizanoi Forge
 
-Journal, Labs, Arcade and Workbench remain discoverable through Applications/Search. Workbench owns the local research/power-tool surface so Archive/Notes/Data Lab/Source Reader/Artifact Viewer/Terminal/Monitor do not dominate the public shell.
+Journal, Labs and Arcade remain discoverable through Applications/Search.
+
+### Tablet
+Tablet is not a scaled desktop. Use a touch-first two-pane home with larger app targets, feature/supporting panes and focused large windows.
+
+### Mobile
+Mobile is not a miniature desktop. Use a phone-like home screen with:
+- all public apps available as a clear icon grid;
+- a small number of glanceable Aizanoi widgets;
+- a compact bottom dock for core navigation;
+- fullscreen-equivalent app surfaces.
+
+Do not fabricate battery, Wi-Fi, weather, server health or other system telemetry merely to imitate a phone OS.
 
 ## Content and News
 
@@ -81,15 +96,9 @@ Historical evidence rules are unchanged. `frontend/ancient-world/engine/` owns s
 
 Never present plausible, inferred or atmospheric reconstruction as verified fact.
 
-## Workbench privacy
-
-Archive, Notes, Data Lab, Source Reader and Artifact Viewer remain browser-local unless the visitor explicitly exports/downloads data. Do not add silent upload or telemetry paths for private workspace content.
-
-Field Terminal remains browser-only and must never gain arbitrary process execution, server filesystem access or network command transport.
-
 ## Hermes
 
-Hermes is a separate private operator/automation agent. It must use `docs/HERMES_OPERATIONS.md`. Never connect the public terminal or browser runtime directly to private Hermes/server execution.
+Hermes is a separate private operator/automation agent. It must use `docs/HERMES_OPERATIONS.md`. Never connect the public browser runtime directly to private Hermes/server execution.
 
 ## Deployment
 
@@ -101,7 +110,7 @@ GitHub is the source of truth. A merge is not a production deployment. Productio
 2. Git first; production is never the source of truth.
 3. Preserve the static-first visitor boundary by default.
 4. Modify canonical owners rather than adding compatibility layers.
-5. Preserve desktop/tablet/mobile product equivalence.
+5. Preserve one public app catalog while adapting presentation to each device class.
 6. Preserve Historical World evidence levels.
 7. Obey `CONTENT_POLICY.md` for sourced/publication work.
 8. Do not add accounts, comments/forums, social feeds, multiplayer or public AI chat without explicit owner direction.
@@ -125,4 +134,4 @@ node --test tests/*.test.mjs
 git diff --check
 ```
 
-GitHub Actions remains the full release gate.
+GitHub Actions remains the full release gate. Browser smoke must cover desktop, tablet and mobile as distinct product presentations.

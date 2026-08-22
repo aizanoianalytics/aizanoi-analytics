@@ -3,8 +3,8 @@ import { getState } from './store.js';
 import { installAizanoiOS } from './aizanoi-os.js';
 import { installBrandPlatform } from './brand-platform.js';
 
-const VERSION = '4.1.0-aizanoi-platform';
-const BUILD = '2026.08.21';
+const VERSION = '4.2.0-adaptive-shell';
+const BUILD = '2026.08.22';
 
 function finishBoot() {
   const boot=document.getElementById('az-boot');
