@@ -6,13 +6,17 @@ const read=(file)=>readFileSync(file,'utf8');
 const index=read('frontend/index.html');
 const registry=read('frontend/js/v3/registry.js');
 const shell=read('frontend/js/v3/shell.js');
-const archive=read('frontend/js/v3/archive-store.js');
-const archiveApp=read('frontend/js/v3/apps/archive.js');
-const terminal=read('frontend/js/v3/apps/terminal.js');
-const monitor=read('frontend/js/v3/apps/monitor.js');
 const nginx=read('infra/nginx/aizanoianalytics.com.conf.example');
 
 const retired=/Aizanoi AI|HR AI|\/hr-analytics\/|api\.groq\.com|generativelanguage\.googleapis\.com/i;
+const retiredToolFiles=[
+  'frontend/js/v3/archive-store.js',
+  'frontend/js/v3/apps/archive.js',
+  'frontend/js/v3/apps/research.js',
+  'frontend/js/v3/apps/projects.js',
+  'frontend/js/v3/apps/terminal.js',
+  'frontend/js/v3/apps/monitor.js'
+];
 
 test('retired AI product is absent from canonical discovery surfaces',()=>{
   for(const [name,source] of Object.entries({index,registry,shell})) assert.doesNotMatch(source,retired,`${name} still exposes retired AI product`);
@@ -20,33 +24,11 @@ test('retired AI product is absent from canonical discovery surfaces',()=>{
   assert.equal(existsSync('frontend/assets/icons/aizanoi-ai.svg'),false);
 });
 
-test('terminal cannot issue network or server commands',()=>{
-  assert.match(terminal,/browser-local field commands only/i);
-  assert.doesNotMatch(terminal,/fetch\s*\(|XMLHttpRequest|WebSocket|\/api\/terminal\/exec/);
-  assert.doesNotMatch(terminal,/child_process|\bexec\s*\(|\bspawn\s*\(/);
-});
-
-test('workspace monitor has no backend health dependency',()=>{
-  assert.match(monitor,/navigator\.storage|storageEstimate/);
-  assert.doesNotMatch(monitor,/\/api\/health|fetch\s*\(/);
-});
-
-test('archive accepts local files without egress primitives and validates restores before writing',()=>{
-  assert.match(archive,/indexedDB\.open/);
-  assert.match(archive,/MAX_FILE_BYTES/);
-  assert.match(archive,/function normalizeMeta/);
-  assert.match(archive,/VALID_EVIDENCE/);
-  assert.match(archive,/tags:Array\.isArray\(raw\.tags\)/);
-  assert.match(archive,/meta:normalizeMeta\(record\.meta, name\)/);
-  assert.match(archive,/encoded\.length>Math\.ceil\(MAX_FILE_BYTES\*4\/3\)\+8/);
-  assert.match(archive,/function prepareRestoreRecord/);
-  assert.match(archive,/logicalBytes>MAX_BUNDLE_BYTES\|\|payloadBytes>MAX_BUNDLE_BYTES\*2/);
-  assert.match(archive,/const prepared=\[\.\.\.preparedById\.values\(\)\]/);
-  assert.match(archive,/await run\('readwrite',\(store\)=>\{\s*if\(replace\) store\.clear\(\);\s*for\(const item of prepared\) store\.put\(item\);/s);
-  assert.doesNotMatch(archive,/if\(replace\) await run\('readwrite',\(store\)=>store\.clear\(\)\)/);
-  assert.match(archiveApp,/Archive\.archiveStore\.MAX_BUNDLE_BYTES\*1\.5/);
-  assert.doesNotMatch(archiveApp,/Archive\.MAX_BUNDLE_BYTES\*1\.5/);
-  assert.doesNotMatch(archive,/fetch\s*\(|XMLHttpRequest|WebSocket/);
+test('retired Workbench implementation is absent instead of merely hidden',()=>{
+  for(const file of retiredToolFiles) assert.equal(existsSync(file),false,`${file} returned after Workbench retirement`);
+  for(const id of ['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor']) {
+    assert.doesNotMatch(registry,new RegExp(`id:['\"]${id.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}['\"]`),`${id} returned to the public registry`);
+  }
 });
 
 test('shell escapes dynamic notification and command content',()=>{
