@@ -17,9 +17,9 @@
 
 ## What is Aizanoi?
 
-Aizanoi is an independent digital studio presented through **AizanoiOS**, a browser-native desktop.
+Aizanoi is an independent digital studio presented through **AizanoiOS**, an adaptive browser-native operating-system-style shell.
 
-The umbrella brand contains multiple product families rather than one narrow subject area:
+The umbrella brand contains multiple product families:
 
 - **Aizanoi News** — original, source-linked briefings across AI & Technology, Markets & Economy, World, Sports and Culture;
 - **Aizanoi TV** — the companion layer for the English-language Aizanoi YouTube channel;
@@ -28,8 +28,7 @@ The umbrella brand contains multiple product families rather than one narrow sub
 - **Aizanoi Forge** — source, builds and open projects, with GitHub as the source of truth;
 - **Historical Worlds** — evidence-aware walkable Aizanoi, Rome and Athens;
 - **Aizanoi Labs** — experiments and prototypes;
-- **Aizanoi Arcade** — playable browser games;
-- **Aizanoi Workbench** — local research and power tools.
+- **Aizanoi Arcade** — playable browser games.
 
 The working promise is simple: **Aizanoi is the home of everything we publish, build, research and experiment with.**
 
@@ -37,17 +36,13 @@ See [`PRODUCT.md`](PRODUCT.md).
 
 ## AizanoiOS
 
-The public shell is bright, spacious and wallpaper-first. Permanent desktop navigation stays intentionally small:
+AizanoiOS uses one public catalog with device-specific interaction models:
 
-1. News
-2. TV
-3. Analytics
-4. Historical Worlds
-5. Forge
+- **Desktop:** bright wallpaper-first home, five sparse core shortcuts, freeform windows and centered dock.
+- **Tablet:** touch-first two-pane home, larger app grid, feature cards and focused large windows.
+- **Mobile:** phone-like home screen, glanceable widgets, public app grid, compact bottom dock and fullscreen app surfaces.
 
-Journal, Labs, Arcade and Workbench remain available through Applications and Search instead of filling the desktop with icons.
-
-AizanoiOS keeps one window/router/dialog lifecycle across desktop, tablet and mobile.
+The retired Archive/Notes/Data Lab/Source Reader/Artifact Viewer/Projects/Terminal/Monitor tool bundle is no longer part of the visitor-facing product.
 
 ## Aizanoi News
 
@@ -91,7 +86,6 @@ The visitor-facing site intentionally minimizes attack surface:
 - no visitor-facing general application backend;
 - no public remote shell;
 - no public Hermes runtime;
-- Workbench data remains browser-local unless the visitor explicitly exports it;
 - historical `/api/chat` remains failed closed;
 - secrets/TLS keys/server credentials do not belong in this repository.
 
@@ -106,6 +100,7 @@ See [`ARCHITECTURE.md`](ARCHITECTURE.md) and [`SECURITY.md`](SECURITY.md).
 ├── frontend/                  # production static application
 │   ├── content/news/          # generated public News feed
 │   ├── js/v3/                 # AizanoiOS + brand platform + apps
+│   ├── styles/                # desktop + adaptive device shell
 │   ├── historic-world/        # Aizanoi
 │   ├── ancient-cities/        # Rome + Athens
 │   └── games/                 # Arcade games
@@ -147,9 +142,8 @@ node --test tests/*.test.mjs
 - **Sources before claims.**
 - **GitHub is the software source of truth.**
 - **Static first.**
-- **Sparse desktop, deep catalog.**
+- **Device-appropriate UX, one public catalog.**
 - **Historical evidence before spectacle.**
-- **Local research stays local unless export is explicit.**
 - **Regression and rendered review before release.**
 
 ## License
