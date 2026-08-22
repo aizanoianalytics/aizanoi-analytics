@@ -6,6 +6,7 @@ const read=(file)=>readFileSync(file,'utf8');
 const index=read('frontend/index.html');
 const registry=read('frontend/js/v3/registry.js');
 const shell=read('frontend/js/v3/shell.js');
+const brandHubs=read('frontend/js/v3/apps/brand-hubs.js');
 const nginx=read('infra/nginx/aizanoianalytics.com.conf.example');
 
 const retired=/Aizanoi AI|HR AI|\/hr-analytics\/|api\.groq\.com|generativelanguage\.googleapis\.com/i;
@@ -29,6 +30,7 @@ test('retired Workbench implementation is absent instead of merely hidden',()=>{
   for(const id of ['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor']) {
     assert.doesNotMatch(registry,new RegExp(`id:['\"]${id.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}['\"]`),`${id} returned to the public registry`);
   }
+  assert.doesNotMatch(brandHubs,/Aizanoi Workbench|Local Data Lab|Open Data Lab|Field Archive|Field Notes|Source Reader|Artifact Viewer|Field Terminal|Workspace Monitor/i,'retired tool copy returned to a public hub');
 });
 
 test('shell escapes dynamic notification and command content',()=>{
