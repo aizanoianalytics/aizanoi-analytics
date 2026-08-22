@@ -3,12 +3,19 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 
 const read = (file) => readFileSync(file, 'utf8');
-const terminal = read('frontend/js/v3/apps/terminal.js');
-const monitor = read('frontend/js/v3/apps/monitor.js');
 const sw = read('frontend/service-worker.js');
 const index = read('frontend/index.html');
 const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
 const architecture = read('ARCHITECTURE.md');
+
+const retiredToolFiles = [
+  'frontend/js/v3/archive-store.js',
+  'frontend/js/v3/apps/archive.js',
+  'frontend/js/v3/apps/research.js',
+  'frontend/js/v3/apps/projects.js',
+  'frontend/js/v3/apps/terminal.js',
+  'frontend/js/v3/apps/monitor.js'
+];
 
 test('Aizanoi public runtime remains static-only', () => {
   assert.equal(existsSync('backend'), false, 'backend directory must remain removed');
@@ -18,10 +25,8 @@ test('Aizanoi public runtime remains static-only', () => {
   assert.doesNotMatch(architecture, /Node backend/i);
 });
 
-test('retired local tools remain incapable of server execution while source files still exist', () => {
-  assert.doesNotMatch(terminal, /fetch\s*\(|XMLHttpRequest|WebSocket|\/api\/terminal\/exec/);
-  assert.doesNotMatch(terminal, /child_process|\bexec\s*\(|\bspawn\s*\(/);
-  assert.doesNotMatch(monitor, /\/api\/health|fetch\s*\(/);
+test('retired Workbench runtime files remain removed', () => {
+  for (const file of retiredToolFiles) assert.equal(existsSync(file), false, `${file} must remain retired`);
 });
 
 test('service worker never handles API routes', () => {
