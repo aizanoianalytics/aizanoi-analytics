@@ -93,7 +93,7 @@ Phone and tablet layouts must use real browser/device state only. Do not fabrica
 
 ## Service worker
 
-The service worker precaches the shell, brand/device adapter, device stylesheet and News feed baseline. Mutable same-origin static assets use network-first behavior with cached fallback. `/api/*` is never intercepted.
+The service worker precaches the shell, brand/device adapter, device stylesheet and News feed baseline with parallel independent fetches followed by a complete-or-fail cache write. Mutable same-origin assets and successful navigations use network-first behavior with cached offline fallback; non-core runtime entries are capped at 24. Activation removes superseded `aizanoi-field-shell-*` and `aizanoi-os-shell-*` caches. `/api/*` is never intercepted.
 
 ## Deployment boundary
 

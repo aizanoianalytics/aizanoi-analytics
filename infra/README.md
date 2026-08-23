@@ -2,7 +2,9 @@
 
 These are sanitized reference configurations for deployment. **Production Nginx/TLS files and credentials are maintained on the server and are not copied from this directory automatically.** A Git merge therefore does not, by itself, update the live Hetzner configuration.
 
-- `nginx/aizanoianalytics.com.conf.example` — static frontend, real 404/500/503 behavior, Historical World routes, compression/cache guidance, security-header/CSP baseline and fail-closed historical API paths
+- `nginx/aizanoianalytics.com.conf.example` — static frontend, canonical redirects, real 404/500/503 behavior, Historical World routes, compression/cache guidance and fail-closed historical API paths;
+- `nginx/snippets/aizanoi-static-security-headers.conf.example` — shared strict header/CSP baseline for the shell, landings and assets;
+- `nginx/snippets/aizanoi-historical-world-security-headers.conf.example` — complete route-scoped header set for worlds that still require inline boot code.
 
 The public Aizanoi web runtime does not require a Node/Express backend or an `aizanoi-backend.service` systemd unit. Hermes Agent is a separate server service and is outside this visitor-facing deployment example.
 
@@ -15,8 +17,9 @@ The reference Nginx configuration intentionally documents the operational assump
 - Aizanoi, Rome and Athens Historical World routes are explicitly served;
 - `/api/chat` returns `410 Gone` for stale historical clients;
 - every other `/api/*` path returns 404; there is no application reverse proxy;
-- Field System v3 uses external JavaScript and canonical stylesheet layers; `script-src` therefore needs no `unsafe-inline`;
-- `style-src 'unsafe-inline'` remains only for small city-local inline presentation metadata in the existing Historical World sources and should be removed when that markup is extracted;
+- the shell, product landings and shared assets use the strict shared CSP: neither `script-src` nor `style-src` permits `unsafe-inline`;
+- Historical Worlds still contain city-local inline boot scripts and styles, so only their exact route locations load the historical-world header snippet that permits inline code;
+- legacy `/videos` → `/tv/`, `/games` → `/arcade/` and `/projects` → `/forge/` redirects preserve old bookmarks without keeping duplicate discovery URLs;
 - `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, COOP and CORP are emitted at the edge;
 - root HTML, the manifest and service worker revalidate; unhashed application modules/styles use bounded caches; static assets use a longer cache;
 - gzip is enabled in the example. Brotli is an optional production addition only when the installed Nginx build exposes the Brotli module.
