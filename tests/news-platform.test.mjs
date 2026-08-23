@@ -158,7 +158,7 @@ test('rebuild removes editions that are no longer present in source items', asyn
 test('exclusive build lock rejects overlapping News generation', async () => {
   const dir = await projectWith([fixture]);
   await mkdir(path.join(dir, 'frontend'), { recursive:true });
-  await writeFile(path.join(dir, 'frontend/.aizanoi-news-build.lock'), `${process.pid}\n`);
+  await writeFile(path.join(dir, '.aizanoi-news-build.lock'), `${process.pid}\n`);
   const result = build(dir);
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /News build already in progress/);
@@ -181,10 +181,18 @@ test('stale lock and interrupted promotion recover before the next build', async
   await rename(path.join(frontend, 'news'), path.join(frontend, '.aizanoi-news-backup-crashed'));
   await mkdir(path.join(frontend, '.aizanoi-news-stage-crashed'));
   await writeFile(path.join(frontend, '.aizanoi-news-stage-crashed/partial'), 'partial');
-  await writeFile(path.join(frontend, '.aizanoi-news-build.lock'), '2147483647\n');
+  await writeFile(path.join(dir, '.aizanoi-news-build.lock'), '2147483647\n');
   const recovered = build(dir);
   assert.equal(recovered.status, 0, recovered.stderr);
   assert.match(await read(dir, 'frontend/news/index.html'), /The Daily Edition/);
   const leftovers = (await readdir(frontend)).filter((name) => name.startsWith('.aizanoi-news-'));
   assert.deepEqual(leftovers, []);
+  await assert.rejects(readFile(path.join(dir, '.aizanoi-news-build.lock')), { code:'ENOENT' });
+});
+
+test('SOURCE_DATE_EPOCH rejects typo-scale timestamps', async () => {
+  const dir = await projectWith([fixture]);
+  const result = build(dir, { SOURCE_DATE_EPOCH:'999999999999999' });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /SOURCE_DATE_EPOCH: must be a realistic Unix timestamp/);
 });

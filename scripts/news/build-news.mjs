@@ -5,7 +5,7 @@ const root = process.cwd();
 const sourceDir = path.join(root, 'content/news/items');
 const publicDir = path.join(root, 'frontend');
 const newsDir = path.join(publicDir, 'news');
-const lockFile = path.join(publicDir, '.aizanoi-news-build.lock');
+const lockFile = path.join(root, '.aizanoi-news-build.lock');
 const siteUrl = 'https://aizanoianalytics.com';
 const categoryLabels = new Map([
   ['ai', 'AI'],
@@ -184,7 +184,9 @@ try {
   let generatedAt;
   if (process.env.SOURCE_DATE_EPOCH !== undefined) {
     if (!/^\d+$/.test(process.env.SOURCE_DATE_EPOCH)) fail('SOURCE_DATE_EPOCH', 'must be a non-negative integer');
-    generatedAt = new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000).toISOString();
+    const epoch = Number(process.env.SOURCE_DATE_EPOCH);
+    if (!Number.isSafeInteger(epoch) || epoch > 4_102_444_800) fail('SOURCE_DATE_EPOCH', 'must be a realistic Unix timestamp');
+    generatedAt = new Date(epoch * 1000).toISOString();
   } else {
     generatedAt = new Date(items.length ? Math.max(...items.map((item) => Date.parse(item.retrievedAt))) : 0).toISOString();
   }
