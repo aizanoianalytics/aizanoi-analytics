@@ -69,7 +69,8 @@ assert.match(index, /\/styles\/base\.css/);
 assert.match(index, /\/styles\/shell\.css/);
 assert.match(index, /\/styles\/components\.css/);
 assert.match(index, /\/styles\/device-shell\.css/);
-assert.doesNotMatch(index, /<style\b|style="|<script(?![^>]*src=)|onclick=|onmousedown=|onmouseup=/i);
+assert.doesNotMatch(index, /<style\b|style="|<script(?![^>]*type="application\/ld\+json")(?![^>]*src=)|onclick=|onmousedown=|onmouseup=/i);
+assert.match(index, /<script type="application\/ld\+json">/);
 assert.doesNotMatch(index, /Aizanoi AI|HR AI|chatbot|Windows XP|Luna/i);
 assert.match(index, /type="module" src="\/js\/v3\/main\.js"/);
 
@@ -78,7 +79,7 @@ for (const source of [main,shellJs,osJs,brandJs,store,registrySource]) {
 }
 assert.match(main, /installAizanoiOS/);
 assert.match(main, /installBrandPlatform/);
-assert.match(main, /4\.2\.0-adaptive-shell/);
+assert.match(main, /4\.3\.0-platform-completion/);
 assert.match(main, /window\.AIZANOI_OS/);
 assert.match(osJs, /wireDockMagnification/);
 assert.match(osJs, /az-launchpad-search/);
@@ -150,7 +151,7 @@ assert.match(manifest, /"name"\s*:\s*"AizanoiOS"/);
 assert.match(manifest, /"name"\s*:\s*"Aizanoi News"/);
 assert.match(manifest, /"name"\s*:\s*"Historical Worlds"/);
 assert.doesNotMatch(manifest, /hr-analytics|Aizanoi AI|HR AI/i);
-assert.match(sw, /aizanoi-os-shell-v4\.2\.0/);
+assert.match(sw, /aizanoi-os-shell-v4\.3\.0/);
 assert.match(sw, /\/js\/v3\/aizanoi-os\.js/);
 assert.match(sw, /\/js\/v3\/brand-platform\.js/);
 assert.match(sw, /\/styles\/device-shell\.css/);

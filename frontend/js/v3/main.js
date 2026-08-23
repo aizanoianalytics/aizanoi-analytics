@@ -3,7 +3,7 @@ import { getState } from './store.js';
 import { installAizanoiOS } from './aizanoi-os.js';
 import { installBrandPlatform } from './brand-platform.js';
 
-const VERSION = '4.2.0-adaptive-shell';
+const VERSION = '4.3.0-platform-completion';
 const BUILD = '2026.08.22';
 
 function finishBoot() {
