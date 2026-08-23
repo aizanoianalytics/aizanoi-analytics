@@ -1,24 +1,28 @@
 const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const categoryLabel=(value)=>({
-  'ai-technology':'AI & Technology',
-  'markets-economy':'Markets & Economy',
-  world:'World',sports:'Sports',culture:'Culture'
+  ai:'AI',technology:'Technology','economy-markets':'Economy / Markets',football:'Football'
 }[value]||value);
 
 function shell(title,caption,body){return `<div class="az-app-shell"><div class="az-app-toolbar"><strong>${esc(title)}</strong><span class="az-system-spacer"></span><span class="az-app-caption">${esc(caption)}</span></div>${body}</div>`;}
 function cards(items){return `<div class="az-simple-grid">${items.map((item)=>`<article class="az-simple-card"><p class="az-kicker">${esc(item.kicker||'AIZANOI')}</p><h3>${esc(item.title)}</h3><p>${esc(item.body)}</p>${item.button?`<button class="az-button" type="button" data-open-app="${esc(item.button)}">${esc(item.buttonLabel||'Open')}</button>`:''}${item.href?`<a class="az-button" href="${esc(item.href)}" target="_blank" rel="noopener noreferrer">${esc(item.hrefLabel||'Open link')}</a>`:''}</article>`).join('')}</div>`;}
 
+export function renderNewsFeed(feed){
+  const editions=Array.isArray(feed?.editions)?feed.editions:[];
+  const items=Array.isArray(feed?.items)?feed.items:[];
+  const current=editions[0];
+  if(!current)return `<div class="az-news-empty"><p class="az-kicker">THE PRESS IS READY</p><h3>No edition has been published yet</h3><p>The News Desk is preparing original, concise reports with named editors and linked sources.</p><a class="az-button" href="/news/">Visit the News archive</a></div>`;
+  const currentItems=items.filter((item)=>String(item.publishedAt||'').slice(0,10)===current.date);
+  return `<section class="az-news-edition"><header><div><p class="az-kicker">Current edition · ${esc(current.date)}</p><h2>Aizanoi News</h2></div><div class="az-news-actions"><a class="az-button" href="${esc(current.path)}">Read current edition</a><a href="/news/">All editions</a></div></header><div class="az-news-columns">${currentItems.map((item)=>`<article><p class="az-kicker">${esc(categoryLabel(item.category))}</p><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><p class="az-news-byline">By ${esc(item.author?.name)} · Edited by ${esc(item.editor?.name)}</p><div class="az-source-list">${(item.sources||[]).map((source)=>`<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.publisher)}</a>`).join(' · ')}</div></article>`).join('')}</div></section>`;
+}
+
 async function mountNews(container){
-  container.innerHTML=shell('Aizanoi News','Source-linked daily briefing','<div class="az-media"><div class="az-empty-state"><div><h3>Loading briefing…</h3><p>Reading the static Aizanoi News feed.</p></div></div></div>');
+  container.innerHTML=shell('Aizanoi News','Daily editions · Source-linked','<div class="az-media"><div class="az-empty-state"><div><h3>Loading today’s edition…</h3><p>Reading the static edition feed.</p></div></div></div>');
   const host=container.querySelector('.az-media');
   try{
     const response=await fetch('/content/news/index.json',{cache:'no-cache'});
     if(!response.ok)throw new Error(`News feed returned ${response.status}`);
-    const feed=await response.json();
-    const items=Array.isArray(feed.items)?feed.items:[];
-    if(!items.length){host.innerHTML=`<div class="az-empty-state"><div><h3>No briefing published yet</h3><p>Aizanoi News is ready for Hermes to publish original, source-linked summaries in AI & Technology, Markets & Economy, World, Sports and Culture.</p></div></div>`;return;}
-    host.innerHTML=`<div class="az-simple-grid">${items.map((item)=>`<article class="az-simple-card"><p class="az-kicker">${esc(categoryLabel(item.category))}</p><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><small>${esc(new Date(item.publishedAt).toLocaleString())}</small><div class="az-source-list">${(item.sources||[]).map((source)=>`<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.publisher)}</a>`).join(' · ')}</div></article>`).join('')}</div>`;
-  }catch(error){host.innerHTML=`<div class="az-empty-state"><div><h3>News feed unavailable</h3><p>${esc(error.message)}</p></div></div>`;}
+    host.innerHTML=renderNewsFeed(await response.json());
+  }catch(error){host.innerHTML=`<div class="az-empty-state"><div><h3>News feed unavailable</h3><p>${esc(error.message)}</p><a class="az-button" href="/news/">Open the News archive</a></div></div>`;}
 }
 
 function mountAnalytics(container){container.innerHTML=shell('Aizanoi Analytics','Dashboards, data products & utilities',cards([

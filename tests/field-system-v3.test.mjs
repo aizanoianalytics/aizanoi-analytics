@@ -143,7 +143,7 @@ assert.match(product, /tablet/i);
 assert.doesNotMatch(product, /Aizanoi Workbench/);
 assert.match(contentPolicy, /source links are mandatory/i);
 assert.match(newsBuild, /at least one source is required/);
-assert.match(newsBuild, /ai-technology/);
+for (const category of ['ai','technology','economy-markets','football']) assert.match(newsBuild,new RegExp(`'${category}'`));
 assert.ok(existsSync(path.join(root,'frontend/content/news/index.json')),'generated News feed baseline missing');
 
 assert.match(manifest, /"name"\s*:\s*"AizanoiOS"/);
