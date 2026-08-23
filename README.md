@@ -8,9 +8,10 @@
 
 <p align="center">
   <a href="https://aizanoianalytics.com"><strong>Live site</strong></a> ·
-  <a href="https://aizanoianalytics.com/?app=news"><strong>News</strong></a> ·
-  <a href="https://aizanoianalytics.com/?app=analytics"><strong>Analytics</strong></a> ·
-  <a href="https://aizanoianalytics.com/?app=worlds"><strong>Historical Worlds</strong></a>
+  <a href="https://aizanoianalytics.com/news/"><strong>News</strong></a> ·
+  <a href="https://aizanoianalytics.com/tv/"><strong>TV</strong></a> ·
+  <a href="https://aizanoianalytics.com/analytics/"><strong>Analytics</strong></a> ·
+  <a href="https://aizanoianalytics.com/worlds/"><strong>Historical Worlds</strong></a>
 </p>
 
 ---
@@ -21,7 +22,7 @@ Aizanoi is an independent digital studio presented through **AizanoiOS**, an ada
 
 The umbrella brand contains multiple product families:
 
-- **Aizanoi News** — original, source-linked briefings across AI & Technology, Markets & Economy, World, Sports and Culture;
+- **Aizanoi News** — original, source-linked briefings across AI, Technology, Economy / Markets and Football;
 - **Aizanoi TV** — the companion layer for the English-language Aizanoi YouTube channel;
 - **Aizanoi Journal** — essays, analysis and commentary;
 - **Aizanoi Analytics** — dashboards, data products and analytical utilities;
@@ -57,7 +58,7 @@ content/news/items/*.json
         ↓
 node scripts/news/build-news.mjs
         ↓
-frontend/content/news/index.json
+frontend/news/index.json
         ↓
      AizanoiOS
 ```
@@ -98,7 +99,7 @@ See [`ARCHITECTURE.md`](ARCHITECTURE.md) and [`SECURITY.md`](SECURITY.md).
 ```text
 .
 ├── frontend/                  # production static application
-│   ├── content/news/          # generated public News feed
+│   ├── news/                  # atomic generated News feed, editions, archives and RSS
 │   ├── js/v3/                 # AizanoiOS + brand platform + apps
 │   ├── styles/                # desktop + adaptive device shell
 │   ├── historic-world/        # Aizanoi

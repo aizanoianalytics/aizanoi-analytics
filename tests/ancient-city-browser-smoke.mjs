@@ -24,8 +24,18 @@ async function player(page) {
 
 async function walkForward(page, milliseconds = 1000) {
   await page.keyboard.down('w');
-  await page.waitForTimeout(milliseconds);
+  await page.waitForFunction(() => window.__ANCIENT_WORLD_DEBUG__?.readiness?.movementInputActive);
+  await page.evaluate((seconds) => window.__ANCIENT_WORLD_DEBUG__.step(seconds), Math.min(0.5, milliseconds / 1000));
   await page.keyboard.up('w');
+  await page.waitForFunction(() => !window.__ANCIENT_WORLD_DEBUG__?.readiness?.movementInputActive);
+}
+
+async function waitForPlayable(page, { pointerLock = false } = {}) {
+  await page.locator('#glCanvas').focus();
+  await page.waitForFunction((requiresPointerLock) => {
+    const readiness = window.__ANCIENT_WORLD_DEBUG__?.readiness;
+    return readiness?.playable && (!requiresPointerLock || readiness.pointerLocked);
+  }, pointerLock);
 }
 
 async function openCity(context, city, suffix = '') {
@@ -112,10 +122,18 @@ for (const city of cities) {
   assert.ok(Number.isFinite(mouseTurn.before) && Number.isFinite(mouseTurn.after), `${city.slug}: pointer-lock yaw state is invalid`);
   assert.ok(mouseTurn.delta > 0.05 && mouseTurn.delta < 0.25, `${city.slug}: positive pointer-lock movementX produced an invalid yaw delta (${mouseTurn.before} -> ${mouseTurn.after}; delta ${mouseTurn.delta})`);
 
-  const teleported = await page.evaluate((id) => window.__ANCIENT_WORLD_DEBUG__.teleport(id), city.teleport);
-  assert.equal(teleported, true, `${city.slug}: teleport failed`);
+  const teleported = await page.evaluate((id) => {
+    const debug = window.__ANCIENT_WORLD_DEBUG__;
+    const ok = debug.teleport(id);
+    return { ok, readiness: debug.readiness };
+  }, city.teleport);
+  assert.equal(teleported.ok, true, `${city.slug}: teleport failed`);
+  assert.equal(teleported.readiness.travelLocked, true, `${city.slug}: teleport did not publish its travel lock`);
+  assert.equal(teleported.readiness.inputReady, true, `${city.slug}: desktop input was not ready after teleport`);
+  assert.equal(teleported.readiness.playable, false, `${city.slug}: travel-locked runtime reported itself playable`);
   const afterTeleport = await player(page);
   assert.ok(Math.abs(afterTeleport.y - (afterTeleport.floorY + 1.68)) < 0.2, `${city.slug}: teleport broke support/eye height`);
+  await waitForPlayable(page, { pointerLock: true });
   await walkForward(page, 1000);
   const afterTeleportWalk = await player(page);
   const teleportWalkDistance = Math.hypot(afterTeleportWalk.x - afterTeleport.x, afterTeleportWalk.z - afterTeleport.z);
@@ -132,6 +150,17 @@ for (const city of cities) {
   const opened = await openCity(mobile, city);
   const mobilePage = opened.page;
   await mobilePage.waitForFunction(() => getComputedStyle(document.querySelector('#mobileControls')).display !== 'none');
+  await waitForPlayable(mobilePage);
+  const mobileTeleport = await mobilePage.evaluate((id) => {
+    const debug = window.__ANCIENT_WORLD_DEBUG__;
+    const ok = debug.teleport(id);
+    return { ok, readiness: debug.readiness };
+  }, city.teleport);
+  assert.equal(mobileTeleport.ok, true, `${city.slug}: mobile teleport failed`);
+  assert.equal(mobileTeleport.readiness.travelLocked, true, `${city.slug}: mobile teleport did not publish its travel lock`);
+  assert.equal(mobileTeleport.readiness.inputReady, true, `${city.slug}: mobile input was not ready after teleport`);
+  assert.equal(mobileTeleport.readiness.playable, false, `${city.slug}: mobile travel-locked runtime reported itself playable`);
+  await waitForPlayable(mobilePage);
   const pad = await mobilePage.locator('#movePad').boundingBox();
   assert.ok(pad, `${city.slug}: joystick has no layout box`);
   const mobileBefore = await player(mobilePage);
@@ -139,8 +168,10 @@ for (const city of cities) {
   const cy = pad.y + pad.height / 2;
   await mobilePage.dispatchEvent('#movePad', 'pointerdown', { pointerId: 11, pointerType: 'touch', isPrimary: true, clientX: cx, clientY: cy });
   await mobilePage.dispatchEvent('#movePad', 'pointermove', { pointerId: 11, pointerType: 'touch', isPrimary: true, clientX: cx, clientY: cy - pad.height * 0.30 });
-  await mobilePage.waitForTimeout(1000);
+  await mobilePage.waitForFunction(() => window.__ANCIENT_WORLD_DEBUG__?.readiness?.movementInputActive);
+  await mobilePage.evaluate(() => window.__ANCIENT_WORLD_DEBUG__.step(0.5));
   await mobilePage.dispatchEvent('#movePad', 'pointerup', { pointerId: 11, pointerType: 'touch', isPrimary: true, clientX: cx, clientY: cy - pad.height * 0.30 });
+  await mobilePage.waitForFunction(() => !window.__ANCIENT_WORLD_DEBUG__?.readiness?.movementInputActive);
   const mobileAfter = await player(mobilePage);
   const mobileDistance = Math.hypot(mobileAfter.x - mobileBefore.x, mobileAfter.z - mobileBefore.z);
   assert.ok(mobileDistance > 0.08 && mobileDistance < 10, `${city.slug}: mobile movement is unstable (${mobileDistance})`);

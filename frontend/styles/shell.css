@@ -120,7 +120,7 @@
     .az-desktop-shortcuts { position:static; display:grid; grid-template-columns:repeat(3,minmax(84px,1fr)); grid-auto-rows:auto; gap:8px; justify-items:center; }
     .az-session-widget { position:static; width:min(100%,500px); margin:24px auto 0; }
   }
-  @media (max-width:599px) {
+  @media (max-width:599px), (max-height:500px) and (max-width:899px) {
     .az-shell { grid-template-rows:48px minmax(0,1fr) var(--az-bottom-nav); }
     .az-system-bar { padding-left:max(8px,env(safe-area-inset-left)); padding-right:max(8px,env(safe-area-inset-right)); }
     .az-brand-button { min-height:44px; }

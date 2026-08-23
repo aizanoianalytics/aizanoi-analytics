@@ -6,15 +6,17 @@ const { source: axeSource } = axeCore;
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const browser = await chromium.launch({ headless:true });
 
-async function openPage(viewport) {
+async function openPage(viewport,{url='/',storage=null,beforePage=null}={}) {
   const context = await browser.newContext({ viewport, serviceWorkers:'block' });
+  if(storage)await context.addInitScript((value)=>localStorage.setItem('aizanoi-field-system-v3',JSON.stringify(value)),storage);
   const page = await context.newPage();
+  if(beforePage)await beforePage(page);
   const errors=[];
   const requests=[];
   page.on('pageerror',(error)=>errors.push(String(error)));
   page.on('console',(message)=>{ if(message.type()==='error') errors.push(message.text()); });
   page.on('request',(request)=>requests.push(new URL(request.url()).pathname));
-  await page.goto(`${base}/`,{waitUntil:'networkidle'});
+  await page.goto(`${base}${url}`,{waitUntil:'networkidle'});
   await page.waitForSelector('.az-desktop');
   await page.waitForFunction(()=>Boolean(window.AIZANOI_OS));
   return {context,page,errors,requests};
@@ -100,6 +102,8 @@ const retiredIds=['workbench','archive','notes','data-lab','source-reader','arti
   const searchButton=page.locator('.az-task-shelf [data-shell-action="search"]');
   await searchButton.focus(); await searchButton.click();
   await page.waitForSelector('#az-command-overlay.is-open');
+  assert.equal(await page.locator('#az-command-input').getAttribute('aria-label'),'Search Aizanoi apps, worlds and commands','desktop: global search input has an ambiguous accessible name');
+  assert.equal(await page.locator('.az-command-results').getAttribute('aria-label'),'Search results','desktop: global search results lack an accessible name');
   assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: command dialog did not inert app stage');
   await page.waitForFunction(()=>document.activeElement?.id==='az-command-input');
   await page.keyboard.press('Escape');
@@ -173,6 +177,9 @@ const retiredIds=['workbench','archive','notes','data-lab','source-reader','arti
   await page.waitForFunction(()=>Number(getComputedStyle(document.querySelector('.az-task-shelf-wrap')).opacity)<0.1);
   const dockOpacity=Number(await page.locator('.az-task-shelf-wrap').evaluate((el)=>getComputedStyle(el).opacity));
   assert.ok(dockOpacity<0.1,'mobile: home dock should retreat while a fullscreen app is active');
+  assert.equal(await page.locator('.az-task-shelf-wrap').evaluate((el)=>el.inert),true,'mobile: fullscreen app did not isolate focus from the background dock');
+  assert.equal(await page.locator('.az-home-scroll').evaluate((el)=>el.inert),true,'mobile: fullscreen app did not isolate focus from the home surface');
+  await axe(page,'mobile News empty state');
 
   await page.locator('.az-window[data-app-id="news"] [data-action="close"]').click();
   await page.waitForSelector('.az-window[data-app-id="news"]',{state:'detached'});
@@ -188,6 +195,56 @@ const retiredIds=['workbench','archive','notes','data-lab','source-reader','arti
   await page.keyboard.press('Escape');
 
   assert.deepEqual(errors,[],`mobile console/page errors: ${errors.join(' | ')}`);
+  await context.close();
+}
+
+// Short landscape phones use the compact presentation rather than a clipped tablet workspace.
+{
+  const {context,page,errors}=await openPage({width:844,height:390});
+  assert.equal(await page.locator('.az-shell').getAttribute('data-layout'),'compact','landscape phone: shell did not select compact mode');
+  assert.equal(await page.locator('.az-phone-home').isVisible(),true,'landscape phone: phone home missing');
+  assert.equal(await page.locator('.az-tablet-home').isVisible(),false,'landscape phone: clipped tablet home remained visible');
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'landscape phone: root horizontal overflow');
+  assert.deepEqual(errors,[],`landscape phone console/page errors: ${errors.join(' | ')}`);
+  await context.close();
+}
+
+// Deep-link aliases canonicalize without changing the stable persisted app IDs.
+for(const [alias,canonical] of [['tv','videos'],['arcade','games']]){
+  const {context,page,errors}=await openPage({width:1440,height:900},{url:`/?app=${alias}`});
+  await page.waitForSelector(`.az-window[data-app-id="${canonical}"].is-active`);
+  await page.waitForFunction((id)=>new URL(location.href).searchParams.get('app')===id,canonical);
+  assert.deepEqual(await page.evaluate(()=>window.AIZANOI_OS.store.getState().openApps),[canonical],`${alias}: alias leaked into persisted app IDs`);
+  assert.deepEqual(errors,[],`${alias}: console/page errors: ${errors.join(' | ')}`);
+  await context.close();
+}
+
+// Concurrent opens share one lifecycle, and a stylesheet failure remains retryable.
+{
+  let failStyles=true;
+  const {context,page,errors}=await openPage({width:1440,height:900},{beforePage:async(page)=>{
+    await page.route('**/styles/apps.css',async(route)=>{
+      if(failStyles){failStyles=false;await route.abort('failed');}
+      else await route.continue();
+    });
+  }});
+  const first=await page.evaluate(async()=>{try{await window.AIZANOI_OS.openApp('games');return 'resolved';}catch(_){return 'rejected';}});
+  assert.equal(first,'rejected','lifecycle: initial stylesheet failure did not reject');
+  await page.evaluate(()=>Promise.all([window.AIZANOI_OS.openApp('games'),window.AIZANOI_OS.openApp('games'),window.AIZANOI_OS.openApp('games')]));
+  assert.equal(await page.locator('.az-window[data-app-id="games"]').count(),1,'lifecycle: concurrent opens created duplicate windows');
+  assert.equal(await page.locator('link[data-az-app-styles]').count(),1,'lifecycle: failed stylesheet element was not replaced cleanly');
+  assert.deepEqual(errors.filter((message)=>!message.includes('ERR_FAILED')),[],`lifecycle console/page errors: ${errors.join(' | ')}`);
+  await context.close();
+}
+
+// Persisted windows are recreated, then the persisted active app is presented.
+{
+  const storage={version:3,theme:'field',reduceMotion:true,openApps:['games','news'],activeApp:'games',windowRects:{},recents:[],activity:[],fieldSession:null};
+  const {context,page,errors}=await openPage({width:1440,height:900},{storage});
+  await page.waitForFunction(()=>document.querySelectorAll('.az-window').length===2);
+  assert.equal(await page.locator('.az-window[data-app-id="games"]').getAttribute('class').then((value)=>value.includes('is-active')),true,'restore: persisted active app was not presented');
+  assert.equal(new URL(page.url()).searchParams.get('app'),'games','restore: route did not represent the presented app');
+  assert.deepEqual(errors,[],`restore console/page errors: ${errors.join(' | ')}`);
   await context.close();
 }
 

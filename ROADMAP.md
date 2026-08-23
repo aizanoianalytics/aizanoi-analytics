@@ -33,7 +33,7 @@ The former Workbench/power-tool bundle is retired from the public product and sh
 - Hermes-driven source discovery;
 - original summary generation with mandatory attribution;
 - build-time structured validation;
-- five initial categories: AI & Technology, Markets & Economy, World, Sports, Culture;
+- four initial categories: AI, Technology, Economy / Markets and Football;
 - archive/search once the content volume justifies it;
 - RSS/sitemap/structured data for published stories;
 - correction metadata and transparent source provenance.

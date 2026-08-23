@@ -277,7 +277,7 @@
     .az-tablet-feature { min-height:145px; }
   }
 
-  @media (max-width:599px) {
+  @media (max-width:599px), (max-height:500px) and (max-width:899px) {
     .az-shell { grid-template-rows:48px minmax(0,1fr) 76px; }
     .az-home-scroll { overflow:auto; overscroll-behavior:contain; }
     .az-desktop {
@@ -462,7 +462,7 @@
     .az-launchpad-worlds { grid-template-columns:repeat(3,minmax(130px,1fr)); }
   }
 
-  @media (max-width:599px) {
+  @media (max-width:599px), (max-height:500px) and (max-width:899px) {
     .az-launchpad-overlay {
       align-items:flex-end;
       padding:52px 0 0;

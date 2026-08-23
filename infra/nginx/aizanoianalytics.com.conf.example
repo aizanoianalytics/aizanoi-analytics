@@ -3,29 +3,17 @@ server {
     root /var/www/example.com;
     index index.html;
 
-    # Common non-secret security baseline. TLS/HSTS belongs in the production
-    # HTTPS server block and is intentionally not fabricated in this example.
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header X-Frame-Options "SAMEORIGIN" always;
-    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
-    add_header Cross-Origin-Opener-Policy "same-origin" always;
-    add_header Cross-Origin-Resource-Policy "same-origin" always;
-    # Field System v3 no longer needs inline JavaScript. Historical-world source
-    # still contains a small amount of inline presentation metadata, so style-src
-    # keeps unsafe-inline until that city-local markup is extracted separately.
-    # blob: in frame-src is required for the browser-local PDF Source Reader.
-    add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self' blob: https://www.youtube.com https://www.youtube-nocookie.com; frame-ancestors 'self'; worker-src 'self' blob:" always;
+    # Copy the matching sanitized snippets from infra/nginx/snippets first.
+    # The shared CSP includes `script-src 'self';` and no unsafe-inline token.
+    # TLS/HSTS belongs in the real HTTPS server block and is not fabricated here.
+    include snippets/aizanoi-static-security-headers.conf;
 
     client_max_body_size 128k;
-
-    # Low-cost static compression. Brotli can be enabled too when the production
-    # Nginx build includes the module; gzip is available in standard packages.
     gzip on;
     gzip_vary on;
     gzip_comp_level 6;
     gzip_min_length 768;
-    gzip_types text/plain text/css text/javascript application/javascript application/json application/manifest+json image/svg+xml;
+    gzip_types text/plain text/javascript application/javascript text/css application/json application/manifest+json image/svg+xml;
 
     error_page 404 /404.html;
     error_page 500 /500.html;
@@ -34,35 +22,28 @@ server {
     location = /500.html { internal; }
     location = /503.html { internal; }
 
-    # Product decisions / retired public URLs.
+    # Retired product/API surfaces.
     location = /ai { return 410; }
     location = /ai/ { return 410; }
     location = /market { return 410; }
     location ^~ /market/ { return 410; }
+    location = /api/chat { return 410; }
+    location ^~ /api/ { return 404; }
 
-    # Historical clients receive an explicit retirement response only on the old
-    # chat endpoint. Aizanoi's public web runtime has no application API.
-    location = /api/chat {
-        return 410;
-    }
-    location ^~ /api/ {
-        return 404;
-    }
+    # Legacy product names permanently resolve to the canonical architecture.
+    location = /videos { return 301 /tv/; }
+    location = /videos/ { return 301 /tv/; }
+    location = /games { return 301 /arcade/; }
+    location = /games/ { return 301 /arcade/; }
+    location = /projects { return 301 /forge/; }
+    location = /projects/ { return 301 /forge/; }
 
-    # Use `expires` rather than location-level `add_header Cache-Control` here.
-    # On common Nginx versions, defining any add_header inside a location stops
-    # inheritance of the server-level security headers above. `expires` keeps
-    # those security headers inherited while still setting browser cache policy.
+    # Cache policy uses expires so server-level security headers keep inheriting.
     location = /.well-known/security.txt {
         try_files $uri =404;
         default_type text/plain;
         expires 1h;
     }
-
-    # HTML, service-worker code, app modules and world code are currently served
-    # under stable (non-content-hashed) URLs. Revalidate them on every use so a
-    # deploy cannot mix old JavaScript/CSS with new HTML. Long-lived caching is
-    # reserved for relatively stable media/branding assets below.
     location = / {
         try_files /index.html =404;
         expires -1;
@@ -80,7 +61,6 @@ server {
         try_files $uri =404;
         expires -1;
     }
-
     location ^~ /styles/ {
         try_files $uri =404;
         expires -1;
@@ -93,48 +73,37 @@ server {
         try_files $uri =404;
         expires 7d;
     }
+    # Game modules remain available below /games/*; only exact legacy landing
+    # requests above redirect to /arcade/.
     location ^~ /games/ {
         try_files $uri =404;
         expires -1;
     }
 
-    # Standalone Historic World (Roman Aizanoi).
-    location = /historic-world {
-        return 301 /historic-world/;
-    }
+    # Historical Worlds still require city-local inline boot scripts/styles.
+    # Their location-level CSP intentionally replaces the strict shared CSP, so
+    # the complete header set is repeated in the historical snippet.
+    location = /historic-world { return 301 /historic-world/; }
     location = /historic-world/ {
+        include snippets/aizanoi-historical-world-security-headers.conf;
         try_files /historic-world/index.html =404;
         expires -1;
     }
     location ^~ /historic-world/ {
+        include snippets/aizanoi-historical-world-security-headers.conf;
         try_files $uri =404;
         expires -1;
     }
-
-    # Standalone modular Ancient World cities.
-    location = /ancient-cities/rome-410-476 {
-        return 301 /ancient-cities/rome-410-476/;
-    }
-    location ^~ /ancient-cities/rome-410-476/ {
-        try_files $uri $uri/ =404;
-        expires -1;
-    }
-    location = /ancient-cities/athens-450-430 {
-        return 301 /ancient-cities/athens-450-430/;
-    }
-    location ^~ /ancient-cities/athens-450-430/ {
+    location = /ancient-cities/rome-410-476 { return 301 /ancient-cities/rome-410-476/; }
+    location = /ancient-cities/athens-450-430 { return 301 /ancient-cities/athens-450-430/; }
+    location ^~ /ancient-cities/ {
+        include snippets/aizanoi-historical-world-security-headers.conf;
         try_files $uri $uri/ =404;
         expires -1;
     }
 
-    # Current app state lives in ?app=<id>; these legacy convenience routes may
-    # still open the shell for old bookmarks, but no retired AI route is served.
-    location ~ ^/(ancient-world|games|projects|videos|about|docs|changelog|privacy|terms)/?$ {
-        try_files /index.html =404;
-        expires -1;
-    }
-
-    # Real files/directories work normally. Unknown paths return a true 404.
+    # Product landings and real files/directories resolve directly. Unknown paths
+    # return a true 404 instead of silently booting the shell.
     location / {
         try_files $uri $uri/ =404;
     }

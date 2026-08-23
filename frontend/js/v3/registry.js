@@ -17,7 +17,7 @@ export const WORLDS = Object.freeze([
 ]);
 
 export const APPS = Object.freeze([
-  { id:'news', label:'Aizanoi News', short:'News', group:'media', icon:'/assets/icons/source-reader.svg', module:'/js/v3/apps/brand-hubs.js', description:'Original source-linked daily briefings across technology, markets, world, sports and culture', keywords:['news','daily','technology','markets','economy','sports','culture','sources'] },
+  { id:'news', label:'Aizanoi News', short:'News', group:'media', icon:'/assets/icons/source-reader.svg', module:'/js/v3/apps/brand-hubs.js', description:'Original source-linked daily briefings across AI, Technology, Economy / Markets and Football', keywords:['news','daily','ai','technology','markets','economy','football','sources'] },
   { id:'videos', label:'Aizanoi TV', short:'TV', group:'media', icon:'/assets/icons/aizanoi-tv.svg', module:'/js/v3/apps/media.js', description:'The English-language Aizanoi channel for AI, technology, markets, cinema, football and conversations', keywords:['video','youtube','ai','technology','markets','cinema','football','conversation'] },
   { id:'analytics', label:'Aizanoi Analytics', short:'Analytics', group:'studio', icon:'/assets/icons/data-lab.svg', module:'/js/v3/apps/brand-hubs.js', description:'Public dashboards, data products, model comparisons and analytical utilities', keywords:['analytics','dashboard','data','markets','models','tools'] },
   { id:'worlds', label:'Historical Worlds', short:'Worlds', group:'explore', icon:'/assets/icons/ancient-world.svg', module:'/js/v3/apps/worlds.js', description:'Evidence-aware walkable Aizanoi, Rome and Athens', keywords:['worlds','aizanoi','rome','athens','history','archaeology'] },
@@ -31,8 +31,13 @@ export const ALL_APPS = APPS;
 
 const APP_MAP = new Map(ALL_APPS.map((app) => [app.id, app]));
 const WORLD_MAP = new Map(WORLDS.map((world) => [world.id, world]));
+const APP_ALIASES = Object.freeze({ tv:'videos', arcade:'games' });
 
 export function appById(id) { return APP_MAP.get(String(id || '')) || null; }
+export function canonicalAppId(id) {
+  const value=String(id || '');
+  return APP_ALIASES[value] || (APP_MAP.has(value) ? value : null);
+}
 export function worldById(id) { return WORLD_MAP.get(String(id || '')) || null; }
 export function appsByGroup(group) { return ALL_APPS.filter((app) => app.group === group); }
 export function searchableEntries() {

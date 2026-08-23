@@ -6,6 +6,22 @@ const read = (path) => readFileSync(path, 'utf8');
 const os = read('frontend/js/v3/aizanoi-os.js');
 const shell = read('frontend/js/v3/shell.js');
 const base = read('frontend/styles/base.css');
+const deviceShell = read('frontend/styles/device-shell.css');
+const apps = read('frontend/styles/apps.css');
+
+test('canonical app aliases preserve the public app ids', async () => {
+  const registry = await import('../frontend/js/v3/registry.js');
+  assert.equal(registry.canonicalAppId('tv'), 'videos');
+  assert.equal(registry.canonicalAppId('arcade'), 'games');
+  assert.equal(registry.canonicalAppId('videos'), 'videos');
+  assert.equal(registry.canonicalAppId('games'), 'games');
+  assert.equal(registry.appById('tv'), null, 'aliases must not become persisted app ids');
+  assert.equal(registry.appById('arcade'), null, 'aliases must not become persisted app ids');
+});
+
+test('retired Workbench, Archive and Notes have no AizanoiOS source paths', () => {
+  assert.doesNotMatch(os, /workbench|archive|notes|field note/i);
+});
 
 test('AizanoiOS separates Applications from open-window switching', () => {
   assert.match(os, /data-os-launcher/);
@@ -37,6 +53,11 @@ test('desktop shell includes active app chrome, snapping and window motion', () 
   assert.match(os, /installWindowMotion/);
   assert.match(os, /Math\.hypot/);
   assert.match(os, /animateWindowFromDock/);
+});
+
+test('app captions and empty states use explicit readable text colors', () => {
+  assert.match(apps, /\.az-app-caption\s*\{[^}]*color:#4f5d73/s);
+  assert.match(read('frontend/styles/components.css'), /\.az-empty-state p\s*\{[^}]*color:\s*#5b6678/s);
 });
 
 test('traffic lights use the AizanoiOS accent palette', () => {

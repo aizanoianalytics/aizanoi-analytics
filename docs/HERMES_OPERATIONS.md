@@ -38,8 +38,9 @@ Hermes may also implement engineering changes when asked, but must obey the same
 4. Never paste a full article into the repository.
 5. Include source publisher, URL and source publication time when available.
 6. Run `node scripts/news/build-news.mjs`.
+   The compiler must acquire its exclusive lock and complete staged validation; never copy a partially generated tree into production.
 7. Run `node --test tests/*.test.mjs` or the repository's current release gate.
-8. Inspect the generated `frontend/content/news/index.json` diff.
+8. Inspect the generated `frontend/news/index.json` and edition-tree diff.
 9. Commit with a meaningful message such as `content: publish 2026-08-21 news briefing`.
 10. Push to GitHub before production deployment.
 

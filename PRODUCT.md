@@ -11,7 +11,7 @@ Aizanoi is an independent digital studio for media, data, software, research and
 ## Product families
 
 ### Media
-- **Aizanoi News** — concise, original, source-linked daily coverage of AI & Technology, Markets & Economy, World, Sports and Culture.
+- **Aizanoi News** — concise, original, source-linked daily coverage of AI, Technology, Economy / Markets and Football.
 - **Aizanoi TV** — the site companion to the English-language Aizanoi YouTube channel: AI, technology, markets, cinema, football, conversations and experiments.
 - **Aizanoi Journal** — authored analysis, essays, commentary and long-form research. News reports events; Journal interprets them.
 
