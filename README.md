@@ -22,7 +22,7 @@ Aizanoi is an independent digital studio presented through **AizanoiOS**, an ada
 
 The umbrella brand contains multiple product families:
 
-- **Aizanoi News** — original, source-linked briefings across AI & Technology, Markets & Economy, World, Sports and Culture;
+- **Aizanoi News** — original, source-linked briefings across AI, Technology, Economy / Markets and Football;
 - **Aizanoi TV** — the companion layer for the English-language Aizanoi YouTube channel;
 - **Aizanoi Journal** — essays, analysis and commentary;
 - **Aizanoi Analytics** — dashboards, data products and analytical utilities;
