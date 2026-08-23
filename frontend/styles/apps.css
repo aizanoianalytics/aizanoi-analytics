@@ -24,7 +24,7 @@
   }
   .az-app-toolbar .az-system-spacer { flex:1; }
   .az-app-caption {
-    color:var(--az-text-3);
+    color:#4f5d73;
     font-size:11px;
   }
 
@@ -133,7 +133,7 @@
     .az-project-grid { grid-template-columns:1fr 1fr; }
   }
 
-  @media (max-width:599px) {
+  @media (max-width:599px), (max-height:500px) and (max-width:899px) {
     .az-app-toolbar {
       min-height:58px;
       flex-wrap:wrap;

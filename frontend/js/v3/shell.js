@@ -1,7 +1,9 @@
-import { APPS, WORLDS, appById, worldById, searchableEntries } from './registry.js';
+import { APPS, WORLDS, appById, canonicalAppId, worldById, searchableEntries } from './registry.js';
 import * as Store from './store.js';
 
 const windows = new Map();
+const openingApps = new Map();
+const appGenerations = new Map();
 let zCounter = 20;
 let commandSelection = 0;
 let activeOverlay = null;
@@ -22,6 +24,7 @@ function escapeHtml(value) {
 
 function layoutMode() {
   const width = innerWidth;
+  if (width < 900 && innerHeight <= 500) return 'compact';
   if (width < 600) return 'compact';
   if (width < 840) return 'medium';
   if (width < 1200) return 'expanded';
@@ -30,18 +33,31 @@ function layoutMode() {
 
 function ensureAppsStyle() {
   if (appsStylePromise) return appsStylePromise;
-  appsStylePromise = new Promise((resolve, reject) => {
-    const existing = document.querySelector('link[data-az-app-styles]');
-    if (existing) { resolve(); return; }
-    const link = document.createElement('link');
+  let link = document.querySelector('link[data-az-app-styles]');
+  if (link?.dataset.azLoaded === 'true') return Promise.resolve();
+  if (!link) {
+    link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = '/styles/apps.css';
     link.dataset.azAppStyles = 'true';
-    link.onload = resolve;
-    link.onerror = reject;
     document.head.appendChild(link);
+  }
+  const attempt = new Promise((resolve, reject) => {
+    link.addEventListener('load',resolve,{once:true});
+    link.addEventListener('error',()=>reject(new Error('Aizanoi application styles failed to load.')),{once:true});
+  }).then(()=>{link.dataset.azLoaded='true';}).catch((error)=>{
+    link.remove();
+    if(appsStylePromise===attempt)appsStylePromise=null;
+    throw error;
   });
+  appsStylePromise = attempt;
   return appsStylePromise;
+}
+
+function nextAppGeneration(appId) {
+  const generation=(appGenerations.get(appId)||0)+1;
+  appGenerations.set(appId,generation);
+  return generation;
 }
 
 function announce(message) {
@@ -185,7 +201,7 @@ function shellTemplate() {
 }
 
 function overlayMarkup() {
-  return `<div class="az-overlay" id="az-command-overlay" aria-hidden="true"><section class="az-dialog az-command" role="dialog" aria-modal="true" aria-labelledby="az-command-title"><h2 id="az-command-title" class="az-sr-only">Search Aizanoi</h2><div class="az-command-search">${icon('search')}<input id="az-command-input" type="search" autocomplete="off" spellcheck="false" placeholder="Open an app, world or action…" aria-label="Search apps, worlds and commands"><span class="az-key">ESC</span></div><div class="az-command-results" role="listbox"></div></section></div>
+  return `<div class="az-overlay" id="az-command-overlay" aria-hidden="true"><section class="az-dialog az-command" role="dialog" aria-modal="true" aria-labelledby="az-command-title"><h2 id="az-command-title" class="az-sr-only">Search Aizanoi</h2><div class="az-command-search">${icon('search')}<input id="az-command-input" type="search" autocomplete="off" spellcheck="false" placeholder="Open an app, world or action…" aria-label="Search Aizanoi apps, worlds and commands"><span class="az-key">ESC</span></div><div class="az-command-results" role="listbox" aria-label="Search results"></div></section></div>
   <div class="az-overlay" id="az-switcher-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-switcher-title"><header class="az-dialog-header"><strong id="az-switcher-title">Open Apps</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close open apps">×</button></header><div class="az-dialog-body"><div class="az-switcher-list" data-switcher-list></div></div></section></div>
   <div class="az-overlay" id="az-settings-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-settings-title"><header class="az-dialog-header"><strong id="az-settings-title">AizanoiOS Settings</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close settings">×</button></header><div class="az-dialog-body" data-settings-body></div></section></div>
   <div class="az-overlay" id="az-window-menu-overlay" aria-hidden="true"><section class="az-dialog az-window-menu-dialog" role="dialog" aria-modal="true" aria-labelledby="az-window-menu-title"><header class="az-dialog-header"><strong id="az-window-menu-title">Window</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close window menu">×</button></header><div class="az-dialog-body" data-window-menu-body></div></section></div>`;
@@ -283,8 +299,19 @@ function focusWindow(appId, { updateRoute=true } = {}) {
   item.el.style.zIndex = String(++zCounter);
   Store.setActiveApp(appId);
   renderShelf();
+  syncCompactIsolation();
   if (updateRoute) setRoute(appId, 'push');
   setTimeout(() => item.el.focus({ preventScroll:true }), 0);
+}
+
+function syncCompactIsolation() {
+  const activeId=Store.getState().activeApp;
+  const active=activeId ? windows.get(activeId) : null;
+  const isolated=layoutMode()==='compact' && Boolean(active && !active.minimized);
+  for(const selector of ['.az-home-scroll','.az-task-shelf-wrap']){
+    const node=document.querySelector(selector);
+    if(node)node.inert=isolated;
+  }
 }
 
 function setRoute(appId, mode='replace') {
@@ -296,15 +323,11 @@ function setRoute(appId, mode='replace') {
   history[mode === 'push' ? 'pushState' : 'replaceState']({ app:appId || null }, '', next);
 }
 
-export async function openApp(appId, options={}) {
-  const app = appById(appId); if (!app) return null;
-  if (windows.has(appId)) {
-    focusWindow(appId,{ updateRoute:!options.fromHistory });
-    return windows.get(appId).el;
-  }
+async function openAppInstance(appId, app, options, generation) {
   await ensureAppsStyle();
+  if(appGenerations.get(appId)!==generation)return null;
   const el = createWindow(app);
-  const item = { app, el, cleanup:null, minimized:false, maximized:false, previousRect:null };
+  const item = { app, el, cleanup:null, minimized:false, maximized:false, previousRect:null, generation };
   windows.set(appId, item);
   Store.markAppOpen(appId);
   renderShelf();
@@ -312,12 +335,12 @@ export async function openApp(appId, options={}) {
   body.innerHTML = '<div class="az-empty-state"><div><h3>Opening application…</h3><p>Loading only the code this app needs.</p></div></div>';
   try {
     const module = await import(app.module);
-    if (!windows.has(appId)) return null;
+    if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) return null;
     const result = await module.mount?.({ container:body, app, appId, api:appApi, options });
-    if (!windows.has(appId)) { try { (typeof result === 'function' ? result : result?.cleanup)?.(); } catch (_) {} return null; }
+    if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) { try { (typeof result === 'function' ? result : result?.cleanup)?.(); } catch (_) {} return null; }
     item.cleanup = typeof result === 'function' ? result : result?.cleanup || null;
   } catch (error) {
-    if (!windows.has(appId)) return null;
+    if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) return null;
     console.error(`Aizanoi app failed to open: ${appId}`, error);
     body.innerHTML = `<div class="az-empty-state"><div><h3>Could not open ${escapeHtml(app.label)}</h3><p>${escapeHtml(error?.message || 'Unknown application error')}</p><button class="az-button" type="button" data-retry-app="${escapeHtml(appId)}">Try again</button></div></div>`;
   }
@@ -327,8 +350,31 @@ export async function openApp(appId, options={}) {
   return el;
 }
 
+export function openApp(requestedAppId, options={}) {
+  const appId=canonicalAppId(requestedAppId);
+  const app = appById(appId); if (!app) return Promise.resolve(null);
+  if (windows.has(appId)) {
+    focusWindow(appId,{ updateRoute:!options.fromHistory });
+    return Promise.resolve(windows.get(appId).el);
+  }
+  if(openingApps.has(appId))return openingApps.get(appId);
+  const generation=nextAppGeneration(appId);
+  const promise=openAppInstance(appId,app,options,generation).finally(()=>{
+    if(openingApps.get(appId)===promise)openingApps.delete(appId);
+  });
+  openingApps.set(appId,promise);
+  return promise;
+}
+
 export function closeApp(appId, { updateRoute=true } = {}) {
-  const item = windows.get(appId); if (!item) return false;
+  const item = windows.get(appId);
+  if (!item) {
+    if(!openingApps.has(appId))return false;
+    nextAppGeneration(appId);
+    openingApps.delete(appId);
+    return true;
+  }
+  nextAppGeneration(appId);
   try { item.cleanup?.(); } catch (_) {}
   item.el.remove();
   windows.delete(appId);
@@ -337,6 +383,7 @@ export function closeApp(appId, { updateRoute=true } = {}) {
   const state = Store.getState();
   const next = state.activeApp && windows.has(state.activeApp) ? state.activeApp : [...windows.keys()].at(-1) || null;
   if (next) focusWindow(next,{ updateRoute:false }); else Store.setActiveApp(null);
+  syncCompactIsolation();
   if (updateRoute) setRoute(next,'replace');
   Store.recordActivity(`Closed ${item.app.label}`,'','app');
   announce(`${item.app.label} closed`);
@@ -350,6 +397,7 @@ function minimizeApp(appId) {
   item.el.classList.remove('is-active');
   Store.setActiveApp(null);
   renderShelf();
+  syncCompactIsolation();
   setRoute(null,'replace');
   announce(`${item.app.label} minimized`);
 }
@@ -369,6 +417,7 @@ function showHome({ push=true } = {}) {
   }
   Store.setActiveApp(null);
   renderShelf();
+  syncCompactIsolation();
   setRoute(null, push ? 'push' : 'replace');
   document.querySelector('.az-home-scroll')?.scrollTo({ top:0, behavior:Store.getState().reduceMotion ? 'auto' : 'smooth' });
 }
@@ -616,14 +665,31 @@ function handleKeydown(event) {
 
 function routeIntent() {
   const url=new URL(location.href);
-  const appId=url.searchParams.get('app');
-  return appById(appId)?appId:null;
+  return canonicalAppId(url.searchParams.get('app'));
 }
 
-function syncFromHistory() {
+async function syncFromHistory() {
   const appId=routeIntent();
-  if(appId)openApp(appId,{fromHistory:true});
-  else showHome({push:false});
+  if(appId){
+    await openApp(appId,{fromHistory:true});
+    if(windows.has(appId)){
+      focusWindow(appId,{updateRoute:false});
+      setRoute(appId,'replace');
+    }
+  } else showHome({push:false});
+}
+
+async function restoreWorkspace() {
+  const state=Store.getState();
+  const routedApp=routeIntent();
+  const presentedApp=routedApp || state.activeApp;
+  const appIds=[...state.openApps];
+  if(presentedApp && !appIds.includes(presentedApp))appIds.push(presentedApp);
+  for(const appId of appIds)await openApp(appId,{fromHistory:true,restoring:true});
+  if(presentedApp && windows.has(presentedApp)){
+    focusWindow(presentedApp,{updateRoute:false});
+    setRoute(presentedApp,'replace');
+  } else if(!presentedApp)showHome({push:false});
 }
 
 function resizeAll() {
@@ -637,6 +703,7 @@ function resizeAll() {
     Object.assign(item.el.style,{left:`${rect.left}px`,top:`${rect.top}px`,width:`${rect.width}px`,height:`${rect.height}px`});
     if(layoutMode()==='large')Store.saveWindowRect(id,rect);
   }
+  syncCompactIsolation();
 }
 
 const appApi=Object.freeze({
@@ -664,7 +731,10 @@ export function mountShell() {
   window.addEventListener('popstate',syncFromHistory);
   window.addEventListener('resize',()=>requestAnimationFrame(resizeAll));
   window.addEventListener('aizanoi:notify',(event)=>notify(event.detail?.title||'Notice',event.detail?.body||'',event.detail?.kind||'system'));
-  syncFromHistory();
+  restoreWorkspace().catch((error)=>{
+    console.error('AizanoiOS workspace restoration failed.',error);
+    notify('Workspace restoration failed',error?.message||'Open an app to try again.');
+  });
   return appApi;
 }
 
