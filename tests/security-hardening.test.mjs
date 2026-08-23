@@ -49,7 +49,8 @@ test('reverse proxy exposes no application backend',()=>{
 });
 
 test('new shell no longer requires inline JavaScript CSP permission',()=>{
-  assert.doesNotMatch(index,/<script(?![^>]*src=)[^>]*>/i);
+  assert.doesNotMatch(index,/<script(?![^>]*type="application\/ld\+json")(?![^>]*src=)[^>]*>/i);
+  assert.match(index,/<script type="application\/ld\+json">/);
   assert.match(nginx,/include snippets\/aizanoi-static-security-headers\.conf;/);
   assert.match(staticHeaders,/script-src 'self';/);
   assert.doesNotMatch(staticHeaders,/script-src[^;]*'unsafe-inline'/);

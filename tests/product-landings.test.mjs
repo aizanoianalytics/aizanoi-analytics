@@ -13,6 +13,7 @@ const landings = {
   labs: { app:'labs', title:'Aizanoi Labs', phrase:'in development' },
   arcade: { app:'games', title:'Aizanoi Arcade', phrase:'Snake' }
 };
+const productRoutes = ['news', ...Object.keys(landings)];
 
 function metadata(html, route, expected) {
   assert.match(html, new RegExp(`<title>[^<]*${expected.title}[^<]*<\\/title>`));
@@ -31,6 +32,15 @@ function metadata(html, route, expected) {
   assert.equal(structured.url, `${origin}/${route}/`);
   assert.equal(structured.name, expected.title);
 }
+
+test('root document exposes structured organization metadata and canonical product links without executable inline script', () => {
+  const root = read('frontend/index.html');
+  assert.match(root, /application\/ld\+json/);
+  assert.match(root, /"@type":"Organization"/);
+  assert.match(root, /"@type":"WebSite"/);
+  for (const route of productRoutes) assert.match(root, new RegExp(`href="/${route}/"`));
+  assert.doesNotMatch(root, /<script(?![^>]*type="application\/ld\+json")(?![^>]*src=)[^>]*>/i);
+});
 
 test('product routes are static, indexable landing documents with distinct metadata', () => {
   for (const [route, expected] of Object.entries(landings)) {
