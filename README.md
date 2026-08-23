@@ -8,9 +8,10 @@
 
 <p align="center">
   <a href="https://aizanoianalytics.com"><strong>Live site</strong></a> ·
-  <a href="https://aizanoianalytics.com/?app=news"><strong>News</strong></a> ·
-  <a href="https://aizanoianalytics.com/?app=analytics"><strong>Analytics</strong></a> ·
-  <a href="https://aizanoianalytics.com/?app=worlds"><strong>Historical Worlds</strong></a>
+  <a href="https://aizanoianalytics.com/news/"><strong>News</strong></a> ·
+  <a href="https://aizanoianalytics.com/tv/"><strong>TV</strong></a> ·
+  <a href="https://aizanoianalytics.com/analytics/"><strong>Analytics</strong></a> ·
+  <a href="https://aizanoianalytics.com/worlds/"><strong>Historical Worlds</strong></a>
 </p>
 
 ---

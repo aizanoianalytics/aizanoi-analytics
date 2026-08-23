@@ -1,128 +1,62 @@
 # Security Policy
 
-Aizanoi Analytics is a public, static-first web project. Security reports are welcome, especially when they identify a way for public frontend behavior to escape the project's intended browser-only boundaries.
-
-## Supported version
-
-Security fixes target the current `main` branch and the production deployment at [aizanoianalytics.com](https://aizanoianalytics.com).
-
-Older commits, abandoned branches, local modifications and third-party forks are not maintained as supported releases.
+Aizanoi is a public, static-first web project. Security fixes target the current `main` branch and the production deployment at [aizanoianalytics.com](https://aizanoianalytics.com). Older commits, abandoned branches, local modifications and third-party forks are unsupported.
 
 ## Reporting a vulnerability
 
-Please **do not publish exploit details, credentials, private server information or proof-of-concept payloads in a normal public issue**.
+Do not publish exploit details, credentials, private server information or proof-of-concept payloads in a normal public issue.
 
-Preferred reporting order:
+1. Prefer GitHub's private **Report a vulnerability** flow when available.
+2. Otherwise open a minimal issue titled **`Security contact requested`** with no sensitive technical details so a private channel can be established.
 
-1. Use GitHub's private **Report a vulnerability** flow if it is available for this repository.
-2. If private reporting is not available, open a minimal public issue titled **`Security contact requested`** with no sensitive technical details. A private channel can then be established before disclosure.
+Include the affected URL/component, realistic impact, minimal reproduction, browser/platform, required user interaction, suggested mitigation and whether production or source is affected. There is no guaranteed response SLA.
 
-A useful private report should include:
-
-- affected URL, file or component;
-- impact and realistic attack scenario;
-- minimal reproduction steps;
-- browser / platform where relevant;
-- whether exploitation requires user interaction;
-- any suggested mitigation;
-- whether the issue appears to affect production or source only.
-
-There is no guaranteed response SLA, but actionable reports will be triaged against the current production architecture.
-
-## Current public security boundary
-
-The production website is intentionally designed to have a small visitor-facing attack surface:
+## Public security boundary
 
 ```text
 Internet
    |
    +-- HTTPS / Nginx
            |
-           +-- static HTML / CSS / JavaScript / assets
+           +-- static HTML / CSS / JavaScript / JSON / assets
 ```
 
-There is intentionally no public Aizanoi Node/Express application backend.
+There is no public Aizanoi Node/Express backend, no public remote shell, no terminal WebSocket and no general visitor API. Historical `/api/chat` returns `410 Gone`; other `/api/*` paths return `404`.
 
-### Field Terminal
+The former browser research Workbench is retired. Its local archive, notes, data tools, source reader, artifact viewer, projects, virtual terminal and monitor are absent from the supported frontend. Reports should be evaluated against current reachable code, while any change that accidentally restores these removed surfaces is security-relevant.
 
-The Field Terminal is a **browser-only virtual shell**:
+The service worker is same-origin, ignores `/api/*`, removes superseded Aizanoi caches, bounds runtime entries and provides static offline fallback. It is not a data synchronization mechanism.
 
-- fixed in-memory virtual filesystem;
-- fixed command set;
-- no arbitrary process execution;
-- no host or server filesystem access;
-- no terminal WebSocket;
-- no `/api/terminal/exec` dependency;
-- no network primitive required for command execution.
+## In scope
 
-A report showing that Terminal input can execute server commands, access host files or introduce a real application backend would be high priority.
+Useful reports include:
 
-### Local workspace data
-
-Field Archive, Field Notes, Data Lab and related workspace state are designed to stay in browser storage unless the user explicitly exports data.
-
-A report showing unintended exfiltration of local workspace contents is in scope.
-
-### Historical API paths
-
-The public production contract intentionally fails closed:
-
-- historical `/api/chat` → `410 Gone`;
-- other historical or unknown `/api/*` paths → `404`;
-- the public app does not require a visitor-facing application service.
-
-## In-scope examples
-
-Examples of useful security reports include:
-
-- XSS that executes in a normal user flow;
-- CSP bypass with meaningful impact;
+- XSS in a normal user flow or a meaningful CSP bypass;
 - path traversal or unintended file exposure;
 - secrets committed to the repository;
-- unsafe service-worker behavior that crosses intended origin boundaries;
-- unintended external transmission of local Archive / Notes / Data Lab data;
-- Terminal behavior that escapes the virtual in-browser environment;
-- a frontend change that silently restores a public backend/API dependency;
-- dependency or GitHub Actions compromise with a practical repository impact;
-- production configuration examples that encourage unsafe deployment.
+- service worker behavior that escapes same-origin/static-delivery boundaries;
+- a frontend change that restores a public backend, remote shell or retired Workbench surface;
+- dependency or GitHub Actions compromise with practical impact;
+- deployment examples that encourage unsafe configuration.
 
 ## Generally out of scope
 
-Unless there is a concrete impact, the following are usually not treated as vulnerabilities:
-
-- self-XSS requiring users to paste arbitrary code into DevTools;
-- browser extensions or locally modified browser environments;
-- denial-of-service claims that require unrealistic client-side resource use only;
-- missing headers that are already provided by production Nginx but cannot be represented by a static development server;
-- findings against third-party forks or unofficial deployments;
-- generic automated-scanner output without a reproducible security consequence.
+Without concrete impact, self-XSS requiring DevTools paste, browser extensions, modified local environments, unrealistic client-only denial of service, findings against third-party forks and generic scanner output are usually out of scope. Missing-header reports must account for headers emitted by production Nginx rather than the simple local static server.
 
 ## Secrets and production configuration
 
-Never commit:
+Never commit `.env` files, credentials, API tokens, passwords, SSH/TLS private keys, production backups, server snapshots or sensitive operational logs. Production TLS keys and server-specific configuration remain outside this repository. `infra/` contains sanitized examples, not live configuration.
 
-- `.env` files;
-- API keys or access tokens;
-- passwords;
-- SSH private keys;
-- TLS private keys or certificates with private material;
-- production backups;
-- server snapshots;
-- private operational logs containing credentials or sensitive identifiers.
+## Security-sensitive changes
 
-Production TLS keys and server-specific configuration stay outside this public repository. Files under `infra/` are sanitized examples, not the complete live server configuration.
+Extra review and regression coverage are required for:
 
-## Security-sensitive contribution rules
-
-Changes touching any of the following require extra review and regression coverage:
-
-- service worker behavior;
-- HTML sanitization / rendering of untrusted strings;
-- local file import and archive handling;
-- virtual terminal execution;
-- routing of `/api/*` paths;
-- CSP / security headers in deployment examples;
+- service worker install, activation, fetch and cache behavior;
+- untrusted-string HTML rendering;
+- `/api/*` routing;
+- CSP and other security headers;
 - GitHub Actions permissions or third-party actions;
-- any proposal to introduce a visitor-facing backend.
+- any proposal for a visitor-facing backend;
+- any reintroduction of retired local-tool or shell behavior.
 
-The project prefers **removing unnecessary attack surface** over adding complexity to protect an unnecessary server component.
+Prefer removing unnecessary attack surface over protecting an unnecessary server component.

@@ -82,6 +82,12 @@ jobs:
           mkdir -p artifacts/diagnostics
           echo "=== field-system-v3-browser-smoke.mjs ===" | tee artifacts/diagnostics/field-system-v3-browser-smoke.mjs.log
           node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee -a artifacts/diagnostics/field-system-v3-browser-smoke.mjs.log
+      - name: Service worker browser lifecycle gate
+        env:
+          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+        run: |
+          set -o pipefail
+          node tests/service-worker-browser.mjs 2>&1 | tee artifacts/diagnostics/service-worker-browser.log
       - name: Historical Worlds browser gates
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173

@@ -1,0 +1,90 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { existsSync, readFileSync } from 'node:fs';
+
+const read = (file) => readFileSync(file, 'utf8');
+const origin = 'https://aizanoianalytics.com';
+const landings = {
+  tv: { app:'videos', title:'Aizanoi TV', phrase:'Coming Soon' },
+  analytics: { app:'analytics', title:'Aizanoi Analytics', phrase:'in development' },
+  worlds: { app:'worlds', title:'Historical Worlds', phrase:'Rome' },
+  forge: { app:'forge', title:'Aizanoi Forge', phrase:'Source' },
+  journal: { app:'journal', title:'Aizanoi Journal', phrase:'in development' },
+  labs: { app:'labs', title:'Aizanoi Labs', phrase:'in development' },
+  arcade: { app:'games', title:'Aizanoi Arcade', phrase:'Snake' }
+};
+
+function metadata(html, route, expected) {
+  assert.match(html, new RegExp(`<title>[^<]*${expected.title}[^<]*<\\/title>`));
+  assert.match(html, /<meta name="description" content="[^"]{40,}">/);
+  assert.match(html, new RegExp(`<link rel="canonical" href="${origin}/${route}/">`));
+  assert.match(html, new RegExp(`<meta property="og:url" content="${origin}/${route}/">`));
+  assert.match(html, /<meta property="og:title"/);
+  assert.match(html, /<meta property="og:description"/);
+  assert.match(html, /<meta property="og:image"/);
+  assert.match(html, /<meta name="twitter:card" content="summary_large_image">/);
+  assert.match(html, /<meta name="twitter:title"/);
+  assert.match(html, /<meta name="twitter:description"/);
+  const json = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(json, `${route} needs JSON-LD`);
+  const structured = JSON.parse(json);
+  assert.equal(structured.url, `${origin}/${route}/`);
+  assert.equal(structured.name, expected.title);
+}
+
+test('product routes are static, indexable landing documents with distinct metadata', () => {
+  for (const [route, expected] of Object.entries(landings)) {
+    const file = `frontend/${route}/index.html`;
+    assert.ok(existsSync(file), `${file} missing`);
+    const html = read(file);
+    metadata(html, route, expected);
+    assert.match(html, new RegExp(expected.phrase, 'i'));
+    assert.match(html, new RegExp(`href="/\\?app=${expected.app}"`));
+    assert.match(html, /<h1>/);
+  }
+});
+
+test('TV truthfully advertises a future companion without fabricated videos', () => {
+  const html = read('frontend/tv/index.html');
+  assert.match(html, /future English-language YouTube channel companion/i);
+  assert.match(html, /No videos have been published here yet/i);
+  assert.doesNotMatch(html, /<iframe|youtube\.com\/embed|youtu\.be\//i);
+});
+
+test('secondary product placeholders state their current status honestly', () => {
+  for (const route of ['analytics', 'journal', 'labs']) {
+    const html = read(`frontend/${route}/index.html`);
+    assert.match(html, /Status:\s*In development/i);
+    assert.doesNotMatch(html, /customer|subscriber|latest release|available now/i);
+  }
+});
+
+test('Forge exposes repository-backed project status, version, demo and source metadata', () => {
+  const html = read('frontend/forge/index.html');
+  for (const field of ['Status', 'Version', 'Demo', 'Source']) assert.match(html, new RegExp(`<dt>${field}<\\/dt>`));
+  assert.match(html, /aizanoianalytics\/aizanoi-analytics/);
+  assert.match(html, /AizanoiOS/);
+  assert.match(html, /Historical Worlds/);
+  assert.match(html, /Aizanoi Arcade/);
+});
+
+test('PWA and repository discovery point to canonical static product routes', () => {
+  const manifest = read('frontend/manifest.webmanifest');
+  const readme = read('README.md');
+  for (const route of ['/news/', '/tv/', '/analytics/', '/worlds/']) {
+    assert.match(manifest, new RegExp(`"url":"${route.replaceAll('/', '\\/')}"`));
+    assert.match(readme, new RegExp(`https://aizanoianalytics\\.com${route}`));
+  }
+});
+
+test('Rome and Athens publish canonical and social discovery metadata', () => {
+  for (const [slug, name] of [['rome-410-476', 'Rome'], ['athens-450-430', 'Athens']]) {
+    const html = read(`frontend/ancient-cities/${slug}/index.html`);
+    const url = `${origin}/ancient-cities/${slug}/`;
+    assert.match(html, new RegExp(`<link rel="canonical" href="${url}">`));
+    assert.match(html, new RegExp(`<meta property="og:url" content="${url}">`));
+    assert.match(html, new RegExp(`<meta property="og:title" content="[^"]*${name}`));
+    assert.match(html, /<meta name="twitter:card" content="summary_large_image">/);
+    assert.match(html, /<meta name="twitter:title"/);
+  }
+});
