@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { cp, mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdtemp, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -158,7 +158,7 @@ test('rebuild removes editions that are no longer present in source items', asyn
 test('exclusive build lock rejects overlapping News generation', async () => {
   const dir = await projectWith([fixture]);
   await mkdir(path.join(dir, 'frontend'), { recursive:true });
-  await writeFile(path.join(dir, 'frontend/.aizanoi-news-build.lock'), 'active\n');
+  await writeFile(path.join(dir, 'frontend/.aizanoi-news-build.lock'), `${process.pid}\n`);
   const result = build(dir);
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /News build already in progress/);
@@ -172,4 +172,19 @@ test('failed staged build preserves the previous complete News tree', async () =
   assert.notEqual(failed.status, 0);
   assert.match(failed.stderr, /Injected failure after staged News validation/);
   assert.equal(await read(dir, 'frontend/news/index.html'), before);
+});
+
+test('stale lock and interrupted promotion recover before the next build', async () => {
+  const dir = await projectWith([fixture]);
+  assert.equal(build(dir).status, 0);
+  const frontend = path.join(dir, 'frontend');
+  await rename(path.join(frontend, 'news'), path.join(frontend, '.aizanoi-news-backup-crashed'));
+  await mkdir(path.join(frontend, '.aizanoi-news-stage-crashed'));
+  await writeFile(path.join(frontend, '.aizanoi-news-stage-crashed/partial'), 'partial');
+  await writeFile(path.join(frontend, '.aizanoi-news-build.lock'), '2147483647\n');
+  const recovered = build(dir);
+  assert.equal(recovered.status, 0, recovered.stderr);
+  assert.match(await read(dir, 'frontend/news/index.html'), /The Daily Edition/);
+  const leftovers = (await readdir(frontend)).filter((name) => name.startsWith('.aizanoi-news-'));
+  assert.deepEqual(leftovers, []);
 });

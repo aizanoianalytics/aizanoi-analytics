@@ -75,7 +75,7 @@ frontend/news/index.json
 Aizanoi News app
 ```
 
-The compiler validates ids, dates, the four published sections (AI, Technology, Economy / Markets and Football), original summary length, author/editor identity, correction history and mandatory source publisher/URL/date provenance. It does not fetch third-party sites itself. Source discovery stays in the private/operator layer. It deterministically generates the current landing, daily edition paths, category archives, JSON edition feed and RSS; `SOURCE_DATE_EPOCH` may pin build metadata.
+The compiler validates ids, dates, the four published sections (AI, Technology, Economy / Markets and Football), original summary length, author/editor identity, correction history and mandatory source publisher/URL/date provenance. It does not fetch third-party sites itself. Source discovery stays in the private/operator layer. It deterministically generates the current landing, daily edition paths, category archives, JSON edition feed and RSS; `SOURCE_DATE_EPOCH` may pin build metadata. Generation is serialized by an exclusive lock, built and validated in a same-filesystem staging tree, rollback-safe, and recoverable after stale locks or interrupted promotion. The compiler runs in the private checkout; the public webroot changes only through the exact-SHA deployment loop.
 
 `CONTENT_POLICY.md` is the publication contract.
 

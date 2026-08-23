@@ -6,6 +6,8 @@ This directory stores Git-tracked source records used to build the public static
 - publishable item files belong in `content/news/items/`.
 - `scripts/news/build-news.mjs` validates those files and atomically generates the complete `frontend/news/` tree, including `index.json`.
 
+The compiler runs only in the private Git checkout, never in the live Nginx webroot. It uses an exclusive PID lock, same-filesystem staging, complete staged-artifact validation, rollback backup and interrupted-build recovery before replacing the generated tree. Public readers see a release only after Git commit, CI and the exact-SHA deployment gate.
+
 The generated public feed is intentionally summary-only. Full third-party article text must never be stored here.
 
 Recommended categories:

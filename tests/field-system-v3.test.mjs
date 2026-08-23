@@ -145,6 +145,9 @@ assert.doesNotMatch(product, /Aizanoi Workbench/);
 assert.match(contentPolicy, /source links are mandatory/i);
 assert.match(newsBuild, /at least one source is required/);
 for (const category of ['ai','technology','economy-markets','football']) assert.match(newsBuild,new RegExp(`'${category}'`));
+assert.match(registrySource, /AI, Technology, Economy \/ Markets and Football/i);
+assert.match(brandJs, /AI, Technology, Economy \/ Markets and Football/i);
+assert.doesNotMatch(`${registrySource}\n${brandJs}`, /world, sports and culture/i);
 assert.ok(existsSync(path.join(root,'frontend/news/index.json')),'generated News feed baseline missing');
 
 assert.match(manifest, /"name"\s*:\s*"AizanoiOS"/);

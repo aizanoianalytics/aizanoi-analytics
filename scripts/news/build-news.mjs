@@ -15,6 +15,41 @@ const categoryLabels = new Map([
 ]);
 
 function fail(file, message) { throw new Error(`${file}: ${message}`); }
+function processAlive(pid) {
+  if (!Number.isInteger(pid) || pid <= 0) return false;
+  try { process.kill(pid, 0); return true; }
+  catch (error) { return error.code === 'EPERM'; }
+}
+async function acquireBuildLock() {
+  await mkdir(publicDir, { recursive:true });
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const handle = await open(lockFile, 'wx');
+      await handle.writeFile(`${process.pid}\n`);
+      return handle;
+    } catch (error) {
+      if (error.code !== 'EEXIST') throw error;
+      const owner = Number.parseInt(await readFile(lockFile, 'utf8').catch(() => ''), 10);
+      if (processAlive(owner)) throw new Error('News build already in progress');
+      await rm(lockFile, { force:true });
+    }
+  }
+  throw new Error('News build already in progress');
+}
+async function recoverInterruptedBuild() {
+  const entries = await readdir(publicDir).catch(() => []);
+  const stages = entries.filter((name) => name.startsWith('.aizanoi-news-stage-'));
+  const backups = entries.filter((name) => name.startsWith('.aizanoi-news-backup-')).sort();
+  let liveExists = true;
+  try { await readdir(newsDir); }
+  catch (error) { if (error.code === 'ENOENT') liveExists = false; else throw error; }
+  if (!liveExists && backups.length) {
+    const restore = backups.pop();
+    await rename(path.join(publicDir, restore), newsDir);
+  }
+  await Promise.all(stages.map((name) => rm(path.join(publicDir, name), { recursive:true, force:true })));
+  await Promise.all(backups.map((name) => rm(path.join(publicDir, name), { recursive:true, force:true })));
+}
 function iso(value, file, field) {
   const match = typeof value === 'string' && value.match(/^(\d{4})-(\d{2})-(\d{2})T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$/);
   const parsed = match ? Date.parse(value) : NaN;
@@ -123,15 +158,8 @@ function rss(items, generatedAt) {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Aizanoi News</title><link>${siteUrl}/news/</link><description>Original, concise and source-linked coverage.</description><language>en</language><lastBuildDate>${new Date(generatedAt).toUTCString()}</lastBuildDate>${entries}</channel></rss>\n`;
 }
 
-await mkdir(publicDir, { recursive:true });
-let buildLock;
-try {
-  buildLock = await open(lockFile, 'wx');
-  await buildLock.writeFile(`${process.pid}\n`);
-} catch (error) {
-  if (error.code === 'EEXIST') throw new Error('News build already in progress');
-  throw error;
-}
+const buildLock = await acquireBuildLock();
+await recoverInterruptedBuild();
 
 const nonce = `${process.pid}-${Date.now()}`;
 const stageDir = path.join(publicDir, `.aizanoi-news-stage-${nonce}`);
@@ -183,7 +211,11 @@ try {
   await writeFile(path.join(stageDir, 'rss.xml'), rss(items, generatedAt));
 
   JSON.parse(await readFile(path.join(stageDir, 'index.json'), 'utf8'));
-  for (const required of ['index.html', 'news.css', 'rss.xml', ...[...categoryLabels.keys()].map((slug) => `category/${slug}/index.html`)]) {
+  for (const required of [
+    'index.json', 'index.html', 'news.css', 'rss.xml',
+    ...editions.map((edition) => `${edition.date}/index.html`),
+    ...[...categoryLabels.keys()].map((slug) => `category/${slug}/index.html`)
+  ]) {
     await readFile(path.join(stageDir, required));
   }
   if (process.env.AIZANOI_NEWS_FAIL_AFTER_STAGE === '1') throw new Error('Injected failure after staged News validation');

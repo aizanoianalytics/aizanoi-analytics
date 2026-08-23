@@ -99,7 +99,7 @@ See [`ARCHITECTURE.md`](ARCHITECTURE.md) and [`SECURITY.md`](SECURITY.md).
 ```text
 .
 ├── frontend/                  # production static application
-│   ├── content/news/          # generated public News feed
+│   ├── news/                  # atomic generated News feed, editions, archives and RSS
 │   ├── js/v3/                 # AizanoiOS + brand platform + apps
 │   ├── styles/                # desktop + adaptive device shell
 │   ├── historic-world/        # Aizanoi
