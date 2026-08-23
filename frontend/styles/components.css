@@ -171,7 +171,7 @@
   .az-empty-state { min-height: 260px; display: grid; place-items: center; padding: 32px; text-align: center; }
   .az-empty-state > div { max-width: 470px; }
   .az-empty-state h3 { margin: 0 0 8px; color: #26344a; font: 650 23px/1.15 var(--az-font-ui); letter-spacing: -.02em; }
-  .az-empty-state p { margin: 0 0 18px; color: #6e7a8b; font-size: 13px; }
+  .az-empty-state p { margin: 0 0 18px; color: #5b6678; font-size: 13px; }
 
   .az-paper-surface { color: var(--az-ink); background: var(--az-paper); }
   .az-paper-surface :focus-visible { outline-color: #4b66dd; }
@@ -213,7 +213,7 @@
     .az-launchpad-worlds { grid-template-columns: repeat(3, minmax(130px, 1fr)); }
   }
 
-  @media (max-width: 599px) {
+  @media (max-width: 599px), (max-height: 500px) and (max-width: 899px) {
     .az-button { min-height: 44px; }
     .az-icon-button { width: 44px; height: 44px; }
     .az-overlay { align-items: stretch; padding: 0; }

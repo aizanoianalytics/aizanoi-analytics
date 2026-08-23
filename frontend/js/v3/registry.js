@@ -31,8 +31,13 @@ export const ALL_APPS = APPS;
 
 const APP_MAP = new Map(ALL_APPS.map((app) => [app.id, app]));
 const WORLD_MAP = new Map(WORLDS.map((world) => [world.id, world]));
+const APP_ALIASES = Object.freeze({ tv:'videos', arcade:'games' });
 
 export function appById(id) { return APP_MAP.get(String(id || '')) || null; }
+export function canonicalAppId(id) {
+  const value=String(id || '');
+  return APP_ALIASES[value] || (APP_MAP.has(value) ? value : null);
+}
 export function worldById(id) { return WORLD_MAP.get(String(id || '')) || null; }
 export function appsByGroup(group) { return ALL_APPS.filter((app) => app.group === group); }
 export function searchableEntries() {

@@ -1,7 +1,6 @@
 import { APPS, WORLDS, appById, worldById } from './registry.js';
 
 const PINNED_APPS = Object.freeze(['news','videos','analytics','worlds','forge']);
-const DESKTOP_APPS = Object.freeze(['archive','notes']);
 
 const icons = Object.freeze({
   home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="m3.5 10.5 8.5-7 8.5 7v9H15v-6H9v6H3.5Z"/></svg>',
@@ -13,35 +12,9 @@ function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 }
 
-function mission(store) {
-  const session=store.getFieldSession();
-  if (session) {
-    const world=worldById(session.worldId);
-    return {
-      label:'Continue field session',
-      title:`Return to ${world?.label || 'Historical World'}`,
-      body:session.landmark ? `Resume near ${session.landmark}.` : `Resume your most recent ${world?.label || 'world'} exploration.`,
-      action:'continue-world', button:'Continue'
-    };
-  }
-  return {label:'Suggested journey',title:'Walk Aizanoi',body:'Begin with the reconstructed city and keep your evidence nearby.',action:'walk-aizanoi',button:'Explore Aizanoi'};
-}
-
-function appShortcut(id) {
-  const app=appById(id); if(!app)return '';
-  return `<button class="az-desktop-shortcut" type="button" data-app="${escapeHtml(app.id)}" aria-label="Open ${escapeHtml(app.label)}"><span class="az-desktop-icon"><img src="${escapeHtml(app.icon)}" alt=""></span><span class="az-desktop-label">${escapeHtml(app.short || app.label)}</span></button>`;
-}
-
-function worldShortcut(id) {
-  const world=worldById(id); if(!world)return '';
-  return `<button class="az-desktop-shortcut az-world-shortcut" type="button" data-world="${escapeHtml(world.id)}" aria-label="Explore ${escapeHtml(world.label)}"><span class="az-desktop-icon" data-accent="${escapeHtml(world.accent || 'blue')}"><img src="/assets/icons/ancient-world.svg" alt=""></span><span class="az-desktop-label">${escapeHtml(world.label)}</span></button>`;
-}
-
-function renderDesktop(store) {
+function renderDesktop() {
   const host=document.querySelector('.az-home-scroll'); if(!host)return;
-  const item=mission(store);
-  const shortcuts=`${WORLDS.map((world)=>worldShortcut(world.id)).join('')}${DESKTOP_APPS.map(appShortcut).join('')}`;
-  host.innerHTML=`<main class="az-desktop" aria-label="AizanoiOS desktop"><div class="az-desktop-signature" aria-hidden="true"><strong>AizanoiOS</strong><span>Digital archaeology desktop</span></div><section class="az-desktop-shortcuts" aria-label="Desktop shortcuts">${shortcuts}</section><section class="az-session-widget" aria-label="${escapeHtml(item.label)}"><div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">${escapeHtml(item.label)}</span><h1>${escapeHtml(item.title)}</h1><p>${escapeHtml(item.body)}</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-home-action="${escapeHtml(item.action)}">${escapeHtml(item.button)}</button><button class="az-button" type="button" data-app="archive">Archive</button></div></div></section></main>`;
+  host.innerHTML='<main class="az-desktop" aria-label="AizanoiOS desktop"></main>';
 }
 
 function activeAppLabel(store) {
@@ -344,7 +317,7 @@ function installDesktopContextMenu(api) {
   menu.className='az-desktop-context';
   menu.setAttribute('role','menu');
   menu.setAttribute('aria-hidden','true');
-  menu.innerHTML='<button type="button" role="menuitem" data-context-action="apps">Applications</button><button type="button" role="menuitem" data-context-action="search">Search</button><div class="az-context-divider" aria-hidden="true"></div><button type="button" role="menuitem" data-context-action="note">New field note</button><button type="button" role="menuitem" data-context-action="archive">Open Archive</button><button type="button" role="menuitem" data-context-action="aizanoi">Explore Aizanoi</button>';
+  menu.innerHTML='<button type="button" role="menuitem" data-context-action="apps">Applications</button><button type="button" role="menuitem" data-context-action="search">Search</button><div class="az-context-divider" aria-hidden="true"></div><button type="button" role="menuitem" data-context-action="aizanoi">Explore Aizanoi</button>';
   shell.appendChild(menu);
   const hide=()=>{menu.classList.remove('is-open');menu.setAttribute('aria-hidden','true');};
   const menuItems=()=>[...menu.querySelectorAll('[role="menuitem"]')];
@@ -364,8 +337,6 @@ function installDesktopContextMenu(api) {
     hide();
     if(action==='apps')document.querySelector('[data-os-launcher]')?.click();
     if(action==='search')document.querySelector('[data-shell-action="search"]')?.click();
-    if(action==='note')api.openApp('notes',{newNote:true});
-    if(action==='archive')api.openApp('archive');
     if(action==='aizanoi')api.launchWorld('aizanoi');
   });
   document.addEventListener('pointerdown',(event)=>{if(!menu.contains(event.target))hide();},true);
@@ -388,7 +359,7 @@ function observeRunningApps(store) {
 
 export function installAizanoiOS(api) {
   rewriteTopBar(api.store);
-  renderDesktop(api.store);
+  renderDesktop();
   rewriteDock(api.store);
   wireDockMagnification(api.store);
   installLauncherLifecycle(api);

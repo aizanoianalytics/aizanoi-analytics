@@ -99,7 +99,7 @@
     .az-window-control:not([data-action="menu"])::before { width: 14px; height: 14px; }
   }
 
-  @media (max-width: 599px) {
+  @media (max-width: 599px), (max-height: 500px) and (max-width: 899px) {
     .az-window-control[data-action="close"] { width: 44px; height: 44px; }
     .az-window-control[data-action="close"]::before { width: 14px; height: 14px; }
 
