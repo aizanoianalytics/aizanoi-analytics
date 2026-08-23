@@ -24,7 +24,7 @@
   }
   .az-app-toolbar .az-system-spacer { flex:1; }
   .az-app-caption {
-    color:var(--az-text-3);
+    color:#4f5d73;
     font-size:11px;
   }
 
@@ -86,6 +86,40 @@
     text-decoration-thickness:1px;
     text-underline-offset:2px;
   }
+  .az-news-edition,
+  .az-news-empty {
+    min-height:100%;
+    padding:clamp(18px,4vw,38px);
+    color:#1b1711;
+    background:#f3ead7;
+  }
+  .az-news-edition > header {
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px;
+    padding-bottom:16px;
+    border-bottom:4px double #272017;
+  }
+  .az-news-edition h2 {
+    margin:2px 0 0;
+    font:800 clamp(30px,6vw,62px)/.95 Georgia,serif;
+    letter-spacing:-.045em;
+  }
+  .az-news-edition .az-kicker,
+  .az-news-empty .az-kicker { color:#9a3f27; }
+  .az-news-actions { display:flex;align-items:center;gap:12px;flex-wrap:wrap; }
+  .az-news-actions > a:not(.az-button) { color:#704a17;font:700 11px var(--az-font-ui);text-transform:uppercase; }
+  .az-news-columns { display:grid;grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .az-news-columns article { padding:22px;border-left:1px solid #a99d88; }
+  .az-news-columns article:first-child { border-left:0; }
+  .az-news-columns h3 { margin:5px 0 11px;font:700 clamp(21px,3vw,34px)/1.02 Georgia,serif; }
+  .az-news-columns article > p:not(.az-kicker):not(.az-news-byline) { color:#4f473b;font:15px/1.55 Georgia,serif; }
+  .az-news-byline { color:#6d6253;font:700 10px/1.5 var(--az-font-ui);text-transform:uppercase;letter-spacing:.04em; }
+  .az-news-empty { display:grid;place-content:center;text-align:center; }
+  .az-news-empty h3 { margin:5px 0;font:700 clamp(28px,5vw,48px)/1 Georgia,serif; }
+  .az-news-empty p:not(.az-kicker) { max-width:560px;color:#615747;font:16px/1.6 Georgia,serif; }
+  .az-news-empty .az-button { justify-self:center; }
   .az-project-session { margin-top:12px; }
 
   .az-project-grid {
@@ -133,7 +167,7 @@
     .az-project-grid { grid-template-columns:1fr 1fr; }
   }
 
-  @media (max-width:599px) {
+  @media (max-width:599px), (max-height:500px) and (max-width:899px) {
     .az-app-toolbar {
       min-height:58px;
       flex-wrap:wrap;
@@ -153,6 +187,10 @@
       grid-template-columns:1fr;
       gap:10px;
     }
+    .az-news-edition > header { align-items:flex-start;flex-direction:column; }
+    .az-news-columns { grid-template-columns:1fr; }
+    .az-news-columns article,.az-news-columns article:first-child { padding:20px 0;border-left:0;border-top:1px solid #a99d88; }
+    .az-news-columns article:first-child { border-top:0; }
     .az-simple-card,
     .az-project-card {
       min-height:0;

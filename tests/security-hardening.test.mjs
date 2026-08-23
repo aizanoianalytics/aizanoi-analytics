@@ -8,6 +8,8 @@ const registry=read('frontend/js/v3/registry.js');
 const shell=read('frontend/js/v3/shell.js');
 const brandHubs=read('frontend/js/v3/apps/brand-hubs.js');
 const nginx=read('infra/nginx/aizanoianalytics.com.conf.example');
+const staticHeaders=read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
+const historicalHeaders=read('infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example');
 
 const retired=/Aizanoi AI|HR AI|\/hr-analytics\/|api\.groq\.com|generativelanguage\.googleapis\.com/i;
 const retiredToolFiles=[
@@ -47,10 +49,13 @@ test('reverse proxy exposes no application backend',()=>{
 });
 
 test('new shell no longer requires inline JavaScript CSP permission',()=>{
-  assert.doesNotMatch(index,/<script(?![^>]*src=)[^>]*>/i);
-  assert.match(nginx,/script-src 'self';/);
-  assert.doesNotMatch(nginx,/script-src[^;]*'unsafe-inline'/);
-  assert.match(nginx,/frame-src 'self' blob:/);
+  assert.doesNotMatch(index,/<script(?![^>]*type="application\/ld\+json")(?![^>]*src=)[^>]*>/i);
+  assert.match(index,/<script type="application\/ld\+json">/);
+  assert.match(nginx,/include snippets\/aizanoi-static-security-headers\.conf;/);
+  assert.match(staticHeaders,/script-src 'self';/);
+  assert.doesNotMatch(staticHeaders,/script-src[^;]*'unsafe-inline'/);
+  assert.match(staticHeaders,/frame-src 'self' https:\/\/www\.youtube\.com/);
+  assert.match(historicalHeaders,/script-src 'self' 'unsafe-inline';/,'Historical Worlds retain their explicitly scoped inline bootstrap policy');
 });
 
 test('cache locations preserve security headers and revalidate mutable unversioned code',()=>{
@@ -58,8 +63,10 @@ test('cache locations preserve security headers and revalidate mutable unversion
   assert.match(nginx,/location \^~ \/styles\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/js\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/historic-world\/[\s\S]*expires -1;/);
-  assert.match(nginx,/location \^~ \/ancient-cities\/rome-410-476\/[\s\S]*expires -1;/);
+  assert.match(nginx,/location \^~ \/ancient-cities\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/assets\/[\s\S]*expires 7d;/);
-  assert.match(nginx,/X-Content-Type-Options/);
-  assert.match(nginx,/Content-Security-Policy/);
+  assert.match(staticHeaders,/X-Content-Type-Options/);
+  assert.match(staticHeaders,/Content-Security-Policy/);
+  assert.match(historicalHeaders,/X-Content-Type-Options/);
+  assert.match(historicalHeaders,/Content-Security-Policy/);
 });

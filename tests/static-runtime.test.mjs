@@ -35,7 +35,7 @@ test('service worker never handles API routes', () => {
 });
 
 test('service worker core precache includes the adaptive shell and remains complete-or-fail', () => {
-  assert.match(sw, /aizanoi-os-shell-v4\.2\.0/);
+  assert.match(sw, /aizanoi-os-shell-v4\.3\.0/);
   assert.match(sw, /cache:'reload'/);
   assert.match(sw, /if \(!response\.ok\) throw new Error/);
   assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/);
@@ -45,7 +45,7 @@ test('service worker core precache includes the adaptive shell and remains compl
   assert.match(precache, /\/js\/v3\/aizanoi-os\.js/);
   assert.match(precache, /\/js\/v3\/brand-platform\.js/);
   assert.match(precache, /\/styles\/device-shell\.css/);
-  assert.match(precache, /\/content\/news\/index\.json/);
+  assert.match(precache, /\/news\/index\.json/);
   assert.match(precache, /\/assets\/wallpapers\/aizanoi-os-sunrise\.svg/);
   assert.doesNotMatch(precache, /\/styles\/apps\.css|\/js\/v3\/archive-store\.js|\/js\/v3\/apps\//, 'lazy app assets must not be pulled during service-worker install');
 });

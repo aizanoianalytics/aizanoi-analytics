@@ -69,7 +69,8 @@ assert.match(index, /\/styles\/base\.css/);
 assert.match(index, /\/styles\/shell\.css/);
 assert.match(index, /\/styles\/components\.css/);
 assert.match(index, /\/styles\/device-shell\.css/);
-assert.doesNotMatch(index, /<style\b|style="|<script(?![^>]*src=)|onclick=|onmousedown=|onmouseup=/i);
+assert.doesNotMatch(index, /<style\b|style="|<script(?![^>]*type="application\/ld\+json")(?![^>]*src=)|onclick=|onmousedown=|onmouseup=/i);
+assert.match(index, /<script type="application\/ld\+json">/);
 assert.doesNotMatch(index, /Aizanoi AI|HR AI|chatbot|Windows XP|Luna/i);
 assert.match(index, /type="module" src="\/js\/v3\/main\.js"/);
 
@@ -78,7 +79,7 @@ for (const source of [main,shellJs,osJs,brandJs,store,registrySource]) {
 }
 assert.match(main, /installAizanoiOS/);
 assert.match(main, /installBrandPlatform/);
-assert.match(main, /4\.2\.0-adaptive-shell/);
+assert.match(main, /4\.3\.0-platform-completion/);
 assert.match(main, /window\.AIZANOI_OS/);
 assert.match(osJs, /wireDockMagnification/);
 assert.match(osJs, /az-launchpad-search/);
@@ -143,18 +144,21 @@ assert.match(product, /tablet/i);
 assert.doesNotMatch(product, /Aizanoi Workbench/);
 assert.match(contentPolicy, /source links are mandatory/i);
 assert.match(newsBuild, /at least one source is required/);
-assert.match(newsBuild, /ai-technology/);
-assert.ok(existsSync(path.join(root,'frontend/content/news/index.json')),'generated News feed baseline missing');
+for (const category of ['ai','technology','economy-markets','football']) assert.match(newsBuild,new RegExp(`'${category}'`));
+assert.match(registrySource, /AI, Technology, Economy \/ Markets and Football/i);
+assert.match(brandJs, /AI, Technology, Economy \/ Markets and Football/i);
+assert.doesNotMatch(`${registrySource}\n${brandJs}`, /world, sports and culture/i);
+assert.ok(existsSync(path.join(root,'frontend/news/index.json')),'generated News feed baseline missing');
 
 assert.match(manifest, /"name"\s*:\s*"AizanoiOS"/);
 assert.match(manifest, /"name"\s*:\s*"Aizanoi News"/);
 assert.match(manifest, /"name"\s*:\s*"Historical Worlds"/);
 assert.doesNotMatch(manifest, /hr-analytics|Aizanoi AI|HR AI/i);
-assert.match(sw, /aizanoi-os-shell-v4\.2\.0/);
+assert.match(sw, /aizanoi-os-shell-v4\.3\.0/);
 assert.match(sw, /\/js\/v3\/aizanoi-os\.js/);
 assert.match(sw, /\/js\/v3\/brand-platform\.js/);
 assert.match(sw, /\/styles\/device-shell\.css/);
-assert.match(sw, /\/content\/news\/index\.json/);
+assert.match(sw, /\/news\/index\.json/);
 assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/, 'service worker must activate only after a complete precache');
 assert.match(sw, /networkFirstStatic/, 'mutable static assets must prefer the revalidated network response');
 assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/, 'service worker must explicitly ignore API routes');

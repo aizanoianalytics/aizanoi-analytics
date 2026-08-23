@@ -60,7 +60,7 @@ function renderPhoneHome(api){
     </header>
     <div class="az-phone-widgets">
       <article class="az-phone-widget az-phone-news-widget">
-        <div><span class="az-device-kicker">AIZANOI NEWS</span><h2>Briefings with sources</h2><p>Technology, markets, world, sports and culture in one place.</p></div>
+        <div><span class="az-device-kicker">AIZANOI NEWS</span><h2>Briefings with sources</h2><p>AI, Technology, Economy / Markets and Football in one concise edition.</p></div>
         <button class="az-device-widget-action" type="button" data-app="news">Read</button>
       </article>
       ${sessionCard(api,true)}

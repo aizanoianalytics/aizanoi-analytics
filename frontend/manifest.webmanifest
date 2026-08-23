@@ -13,9 +13,9 @@
     {"src":"/assets/branding/aizanoi-logo-mark.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
   ],
   "shortcuts": [
-    {"name":"Aizanoi News","short_name":"News","url":"/?app=news","icons":[{"src":"/assets/icons/source-reader.svg","sizes":"any","type":"image/svg+xml"}]},
-    {"name":"Aizanoi TV","short_name":"TV","url":"/?app=videos","icons":[{"src":"/assets/icons/aizanoi-tv.svg","sizes":"any","type":"image/svg+xml"}]},
-    {"name":"Aizanoi Analytics","short_name":"Analytics","url":"/?app=analytics","icons":[{"src":"/assets/icons/data-lab.svg","sizes":"any","type":"image/svg+xml"}]},
-    {"name":"Historical Worlds","short_name":"Worlds","url":"/?app=worlds","icons":[{"src":"/assets/icons/ancient-world.svg","sizes":"any","type":"image/svg+xml"}]}
+    {"name":"Aizanoi News","short_name":"News","url":"/news/","icons":[{"src":"/assets/icons/source-reader.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Aizanoi TV","short_name":"TV","url":"/tv/","icons":[{"src":"/assets/icons/aizanoi-tv.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Aizanoi Analytics","short_name":"Analytics","url":"/analytics/","icons":[{"src":"/assets/icons/data-lab.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Historical Worlds","short_name":"Worlds","url":"/worlds/","icons":[{"src":"/assets/icons/ancient-world.svg","sizes":"any","type":"image/svg+xml"}]}
   ]
 }

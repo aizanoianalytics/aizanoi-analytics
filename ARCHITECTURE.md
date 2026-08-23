@@ -14,7 +14,7 @@ Browser
   |     +-- shell.js                canonical window/router/dialog lifecycle
   |     +-- device-shell.css        tablet/mobile presentation
   |     +-- apps/*                  lazy public application modules
-  |     +-- /content/news/index.json static News feed
+  |     +-- /news/index.json static News feed
   |
   +-- Historical Worlds
   |     +-- /historic-world/                 Aizanoi
@@ -70,12 +70,12 @@ content/news/items/*.json
         ↓
 scripts/news/build-news.mjs
         ↓
-frontend/content/news/index.json
+frontend/news/index.json
         ↓
 Aizanoi News app
 ```
 
-The compiler validates ids, dates, categories, summary length and mandatory source URLs. It does not fetch third-party sites itself. Source discovery stays in the private/operator layer.
+The compiler validates ids, dates, the four published sections (AI, Technology, Economy / Markets and Football), original summary length, author/editor identity, correction history and mandatory source publisher/URL/date provenance. It does not fetch third-party sites itself. Source discovery stays in the private/operator layer. It deterministically generates the current landing, daily edition paths, category archives, JSON edition feed and RSS; `SOURCE_DATE_EPOCH` may pin build metadata. Generation is serialized by an exclusive lock, built and validated in a same-filesystem staging tree, rollback-safe, and recoverable after stale locks or interrupted promotion. The compiler runs in the private checkout; the public webroot changes only through the exact-SHA deployment loop.
 
 `CONTENT_POLICY.md` is the publication contract.
 
@@ -93,7 +93,7 @@ Phone and tablet layouts must use real browser/device state only. Do not fabrica
 
 ## Service worker
 
-The service worker precaches the shell, brand/device adapter, device stylesheet and News feed baseline. Mutable same-origin static assets use network-first behavior with cached fallback. `/api/*` is never intercepted.
+The service worker precaches the shell, brand/device adapter, device stylesheet and News feed baseline with parallel independent fetches followed by a complete-or-fail cache write. Mutable same-origin assets and successful navigations use network-first behavior with cached offline fallback; non-core runtime entries are capped at 24. Activation removes superseded `aizanoi-field-shell-*` and `aizanoi-os-shell-*` caches. `/api/*` is never intercepted.
 
 ## Deployment boundary
 

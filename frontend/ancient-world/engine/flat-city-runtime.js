@@ -279,7 +279,7 @@ export function startFlatBlockyCity({
   gl.disable(gl.CULL_FACE);
 
   const keys = new Set();
-  let started = false, locked = false, last = performance.now(), currentEra = era || 225, dayHour = 15, walkSpeed = WALK_SPEED;
+  let started = false, locked = false, rendered = false, last = performance.now(), currentEra = era || 225, dayHour = 15, walkSpeed = WALK_SPEED;
   let movementLockUntil = 0, audio = null, modernOverlay = false;
   const sourceById = sourceMap(sources);
   const landmarkRecords = buildings.filter((b) => b.name && b.type !== 'wall' && b.type !== 'urban-fabric');
@@ -348,6 +348,7 @@ export function startFlatBlockyCity({
     drawMiniMap();
     updatePlace();
     if (ui === 'aizanoi') updateAizanoiHud();
+    rendered = true;
     lifecycle.frame(render);
   }
 
@@ -596,6 +597,28 @@ export function startFlatBlockyCity({
 
   if (ui === 'aizanoi') setupAizanoiUI(); else setupStandardUI();
 
+  function readinessSnapshot() {
+    const now = performance.now();
+    const travelLockRemainingMs = Math.max(0, movementLockUntil - now);
+    const focused = document.hasFocus();
+    const pointerLocked = document.pointerLockElement === canvas && locked;
+    const inputReady = started && focused && (TOUCH || pointerLocked);
+    const mobileState = mobile.snapshot();
+    const movementInputActive = ['KeyW', 'KeyA', 'KeyS', 'KeyD'].some((code) => keys.has(code)) ||
+      Math.hypot(mobileState.moveX, mobileState.moveY) > 0;
+    return {
+      rendered,
+      started,
+      focused,
+      pointerLocked,
+      travelLocked: travelLockRemainingMs > 0,
+      travelLockRemainingMs,
+      inputReady,
+      movementInputActive,
+      playable: rendered && inputReady && travelLockRemainingMs === 0,
+    };
+  }
+
   const debug = {
     get player() { return { x: player.x, y: player.y, z: player.z, yaw: player.yaw, pitch: player.pitch, floorY: player.floorY, surfaceTag: player.surfaceTag }; },
     setPlayer(x, z, floor = null) { traversal.snapPlayerToSupport(x, z); if (floor != null) { player.floorY = floor; player.y = floor + EYE_HEIGHT; } return this.player; },
@@ -606,6 +629,7 @@ export function startFlatBlockyCity({
     resolveSupport: traversal.resolveSupport,
     moveWithSubsteps: traversal.moveWithSubsteps,
     get activeKeys() { return [...keys]; },
+    get readiness() { return readinessSnapshot(); },
     get geometry() { return { ...scene.stats(), houses: urbanFabric.length, roads: streets.length, bridges: bridges.length, flatGround: true, assetTypes: assets.types.length }; },
     get traversal() { return { floorY: player.floorY, eyeY: player.y, eyeHeight: EYE_HEIGHT, support: traversal.resolveSupport(player.x, player.z, player.floorY), surfaceTag: player.surfaceTag, flatGround: true }; },
     get movementLockUntil() { return movementLockUntil; },
