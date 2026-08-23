@@ -79,6 +79,11 @@ test('build emits deterministic edition, archive, category, feed and RSS artifac
 
   assert.match(before['frontend/news/index.html'], /The Daily Edition/);
   assert.match(before['frontend/news/index.html'], /2026-08-22/);
+  assert.match(before['frontend/news/index.html'], /rel="canonical" href="https:\/\/aizanoianalytics\.com\/news\/"/);
+  assert.match(before['frontend/news/index.html'], /property="og:title"/);
+  assert.match(before['frontend/news/index.html'], /application\/ld\+json/);
+  assert.match(before['frontend/news/2026-08-22/index.html'], /rel="canonical" href="https:\/\/aizanoianalytics\.com\/news\/2026-08-22\/"/);
+  assert.match(before['frontend/news/2026-08-22/index.html'], /NewsArticle/);
   assert.match(before['frontend/news/2026-08-22/index.html'], /Example Research Lab/);
   assert.match(before['frontend/news/2026-08-22/index.html'], /id="2026-08-22-model-release"/);
   assert.match(before['frontend/news/category/ai/index.html'], /AI Archive/);

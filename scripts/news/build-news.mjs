@@ -94,12 +94,23 @@ function story(item, lead = false) {
   return `<article id="${htmlEscape(item.id)}" class="story${lead ? ' lead' : ''}"><p class="kicker">${htmlEscape(categoryLabels.get(item.category))}</p><h2>${htmlEscape(item.title)}</h2><p class="summary">${htmlEscape(item.summary)}</p><p class="byline">By ${htmlEscape(item.author.name)} · Edited by ${htmlEscape(item.editor.name)}</p><p class="source-line"><strong>Sources</strong> ${sources}</p>${corrections}</article>`;
 }
 
-function page({ title, eyebrow, heading, deck, items, editionDate = '', archiveLinks = '' }) {
+function page({ title, eyebrow, heading, deck, items, editionDate = '', archiveLinks = '', canonicalPath = '/news/' }) {
+  const canonical = `${siteUrl}${canonicalPath}`;
+  const structured = editionDate && items.length
+    ? {
+        '@context':'https://schema.org', '@type':'ItemList', name:title, url:canonical,
+        itemListElement:items.map((item,index)=>({
+          '@type':'ListItem', position:index+1,
+          item:{ '@type':'NewsArticle', headline:item.title, description:item.summary, datePublished:item.publishedAt, dateModified:item.updatedAt, author:{ '@type':'Organization', name:item.author.name }, editor:{ '@type':'Person', name:item.editor.name }, mainEntityOfPage:`${canonical}#${item.id}` }
+        }))
+      }
+    : { '@context':'https://schema.org', '@type':'CollectionPage', name:title, description:deck, url:canonical, isPartOf:{ '@type':'WebSite', name:'Aizanoi', url:siteUrl } };
+  const jsonLd = JSON.stringify(structured).replace(/</g, '\\u003c');
   const content = items.length
     ? `<main class="news-grid">${items.map((item, index) => story(item, index === 0)).join('')}</main>`
     : `<main class="empty-edition"><p class="kicker">THE PRESS IS READY</p><h2>No edition has been published yet.</h2><p>The News Desk is preparing concise, original reports with named editors and linked sources. Return for the first edition.</p></main>`;
   return `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${htmlEscape(title)}</title><meta name="description" content="Original, concise and source-linked coverage from Aizanoi News."><link rel="alternate" type="application/rss+xml" title="Aizanoi News RSS" href="/news/rss.xml"><link rel="stylesheet" href="/news/news.css"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${htmlEscape(title)}</title><meta name="description" content="${htmlEscape(deck)}"><link rel="canonical" href="${htmlEscape(canonical)}"><meta property="og:type" content="website"><meta property="og:site_name" content="Aizanoi News"><meta property="og:title" content="${htmlEscape(title)}"><meta property="og:description" content="${htmlEscape(deck)}"><meta property="og:url" content="${htmlEscape(canonical)}"><meta property="og:image" content="${siteUrl}/assets/branding/aizanoi-og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${htmlEscape(title)}"><meta name="twitter:description" content="${htmlEscape(deck)}"><meta name="twitter:image" content="${siteUrl}/assets/branding/aizanoi-og.png"><script type="application/ld+json">${jsonLd}</script><link rel="alternate" type="application/rss+xml" title="Aizanoi News RSS" href="/news/rss.xml"><link rel="stylesheet" href="/news/news.css"></head>
 <body><header class="masthead"><a class="wordmark" href="/news/" aria-label="Aizanoi News home">AIZANOI <span>NEWS</span></a><p>${htmlEscape(eyebrow)}</p><nav aria-label="News sections">${[...categoryLabels].map(([slug, label]) => `<a href="/news/category/${slug}/">${htmlEscape(label)}</a>`).join('')}<a href="/news/rss.xml">RSS</a></nav></header>
 <section class="edition-head"><p class="edition-label">${editionDate ? 'THE DAILY EDITION' : 'THE NEWS ARCHIVE'}</p><h1>${htmlEscape(heading)}</h1><p>${htmlEscape(deck)}</p></section>${content}${archiveLinks}
 <footer><p>Aizanoi News · Original summaries · Sources before claims</p><a href="/">Return to AizanoiOS</a></footer></body></html>\n`;
@@ -145,12 +156,12 @@ await writeFile(path.join(newsDir, 'index.html'), page({ title: 'Aizanoi News �
 for (const date of dates) {
   const dir = path.join(newsDir, date);
   await mkdir(dir, { recursive: true });
-  await writeFile(path.join(dir, 'index.html'), page({ title: `${dateLabel(date)} — Aizanoi News`, eyebrow: 'Aizanoi News · Daily archive', heading: dateLabel(date), deck: 'A complete daily edition from the Aizanoi News archive.', items: items.filter((item) => itemDate(item) === date), editionDate: date }));
+  await writeFile(path.join(dir, 'index.html'), page({ title: `${dateLabel(date)} — Aizanoi News`, eyebrow: 'Aizanoi News · Daily archive', heading: dateLabel(date), deck: 'A complete daily edition from the Aizanoi News archive.', items: items.filter((item) => itemDate(item) === date), editionDate: date, canonicalPath: `/news/${date}/` }));
 }
 for (const [slug, label] of categoryLabels) {
   const dir = path.join(newsDir, 'category', slug);
   await mkdir(dir, { recursive: true });
-  await writeFile(path.join(dir, 'index.html'), page({ title: `${label} Archive — Aizanoi News`, eyebrow: 'Aizanoi News · Section archive', heading: `${label} Archive`, deck: `Every published ${label} report, newest first.`, items: items.filter((item) => item.category === slug) }));
+  await writeFile(path.join(dir, 'index.html'), page({ title: `${label} Archive — Aizanoi News`, eyebrow: 'Aizanoi News · Section archive', heading: `${label} Archive`, deck: `Every published ${label} report, newest first.`, items: items.filter((item) => item.category === slug), canonicalPath: `/news/category/${slug}/` }));
 }
 await writeFile(path.join(newsDir, 'rss.xml'), rss(items, generatedAt));
 console.log(`Aizanoi News: wrote ${items.length} item(s), ${editions.length} edition(s) and ${categoryLabels.size} archive(s)`);
