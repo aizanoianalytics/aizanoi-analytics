@@ -58,7 +58,7 @@ content/news/items/*.json
         ↓
 node scripts/news/build-news.mjs
         ↓
-frontend/content/news/index.json
+frontend/news/index.json
         ↓
      AizanoiOS
 ```

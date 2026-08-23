@@ -4,7 +4,7 @@ This directory stores Git-tracked source records used to build the public static
 
 - `_template.json` is the canonical item example.
 - publishable item files belong in `content/news/items/`.
-- `scripts/news/build-news.mjs` validates those files and generates `frontend/content/news/index.json`.
+- `scripts/news/build-news.mjs` validates those files and atomically generates the complete `frontend/news/` tree, including `index.json`.
 
 The generated public feed is intentionally summary-only. Full third-party article text must never be stored here.
 
@@ -17,7 +17,7 @@ Recommended categories:
 Each item requires `retrievedAt`, named author and editor identities, a `corrections` history array, and at least one source with publisher, public URL and publication date. Summaries must be original and 80–600 characters.
 
 The compiler writes:
-- the edition feed at `frontend/content/news/index.json`;
+- the edition feed at `frontend/news/index.json`;
 - the current landing at `/news/`;
 - immutable daily paths at `/news/YYYY-MM-DD/`;
 - section archives at `/news/category/<category>/`;

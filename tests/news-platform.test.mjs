@@ -56,7 +56,7 @@ test('build emits deterministic edition, archive, category, feed and RSS artifac
   assert.equal(first.status, 0, first.stderr);
 
   const files = [
-    'frontend/content/news/index.json',
+    'frontend/news/index.json',
     'frontend/news/index.html',
     'frontend/news/2026-08-22/index.html',
     'frontend/news/category/ai/index.html',
@@ -68,7 +68,7 @@ test('build emits deterministic edition, archive, category, feed and RSS artifac
   const after = Object.fromEntries(await Promise.all(files.map(async (file) => [file, await read(dir, file)])));
   assert.deepEqual(after, before, 'unchanged inputs must produce byte-identical output');
 
-  const feed = JSON.parse(before['frontend/content/news/index.json']);
+  const feed = JSON.parse(before['frontend/news/index.json']);
   assert.equal(feed.schemaVersion, 2);
   assert.equal(feed.generatedAt, '2026-08-22T11:00:00.000Z');
   assert.deepEqual(feed.editions, [{ date: '2026-08-22', path: '/news/2026-08-22/', itemCount: 1 }]);
@@ -96,7 +96,7 @@ test('SOURCE_DATE_EPOCH controls generated metadata without changing item dates'
   const dir = await projectWith([fixture]);
   const result = build(dir, { SOURCE_DATE_EPOCH: '0' });
   assert.equal(result.status, 0, result.stderr);
-  const feed = JSON.parse(await read(dir, 'frontend/content/news/index.json'));
+  const feed = JSON.parse(await read(dir, 'frontend/news/index.json'));
   assert.equal(feed.generatedAt, '1970-01-01T00:00:00.000Z');
   assert.equal(feed.items[0].publishedAt, '2026-08-22T09:30:00.000Z');
   assert.match(await read(dir, 'frontend/news/rss.xml'), /Thu, 01 Jan 1970 00:00:00 GMT/);
@@ -153,4 +153,23 @@ test('rebuild removes editions that are no longer present in source items', asyn
   const landing = await read(dir, 'frontend/news/index.html');
   assert.match(landing, /No edition has been published yet/);
   assert.doesNotMatch(landing, /model release/i);
+});
+
+test('exclusive build lock rejects overlapping News generation', async () => {
+  const dir = await projectWith([fixture]);
+  await mkdir(path.join(dir, 'frontend'), { recursive:true });
+  await writeFile(path.join(dir, 'frontend/.aizanoi-news-build.lock'), 'active\n');
+  const result = build(dir);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /News build already in progress/);
+});
+
+test('failed staged build preserves the previous complete News tree', async () => {
+  const dir = await projectWith([fixture]);
+  assert.equal(build(dir).status, 0);
+  const before = await read(dir, 'frontend/news/index.html');
+  const failed = build(dir, { AIZANOI_NEWS_FAIL_AFTER_STAGE:'1' });
+  assert.notEqual(failed.status, 0);
+  assert.match(failed.stderr, /Injected failure after staged News validation/);
+  assert.equal(await read(dir, 'frontend/news/index.html'), before);
 });

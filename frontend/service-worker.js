@@ -18,7 +18,7 @@ const PRECACHE = [
   '/js/v3/registry.js',
   '/js/v3/store.js',
   '/js/v3/shell.js',
-  '/content/news/index.json'
+  '/news/index.json'
 ];
 const PRECACHE_KEYS = new Set(PRECACHE);
 let pruneQueue = Promise.resolve();

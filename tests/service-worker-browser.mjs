@@ -47,7 +47,7 @@ try {
   const runtimeCount = await page.evaluate(async (cacheName) => {
     const cache = await caches.open(cacheName);
     const keys = await cache.keys();
-    const core = new Set(['/', '/manifest.webmanifest', '/assets/branding/aizanoi-logo-mark.svg', '/assets/wallpapers/aizanoi-os-sunrise.svg', '/styles/tokens.css', '/styles/base.css', '/styles/shell.css', '/styles/components.css', '/styles/device-shell.css', '/js/v3/main.js', '/js/v3/aizanoi-os.js', '/js/v3/brand-platform.js', '/js/v3/registry.js', '/js/v3/store.js', '/js/v3/shell.js', '/content/news/index.json']);
+    const core = new Set(['/', '/manifest.webmanifest', '/assets/branding/aizanoi-logo-mark.svg', '/assets/wallpapers/aizanoi-os-sunrise.svg', '/styles/tokens.css', '/styles/base.css', '/styles/shell.css', '/styles/components.css', '/styles/device-shell.css', '/js/v3/main.js', '/js/v3/aizanoi-os.js', '/js/v3/brand-platform.js', '/js/v3/registry.js', '/js/v3/store.js', '/js/v3/shell.js', '/news/index.json']);
     return keys.filter((request) => !core.has(new URL(request.url).pathname) || new URL(request.url).search).length;
   }, CURRENT_CACHE);
   assert.ok(runtimeCount <= 24, `runtime cache was not pruned (${runtimeCount} entries)`);

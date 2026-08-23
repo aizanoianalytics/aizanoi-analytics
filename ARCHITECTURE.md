@@ -14,7 +14,7 @@ Browser
   |     +-- shell.js                canonical window/router/dialog lifecycle
   |     +-- device-shell.css        tablet/mobile presentation
   |     +-- apps/*                  lazy public application modules
-  |     +-- /content/news/index.json static News feed
+  |     +-- /news/index.json static News feed
   |
   +-- Historical Worlds
   |     +-- /historic-world/                 Aizanoi
@@ -70,7 +70,7 @@ content/news/items/*.json
         ↓
 scripts/news/build-news.mjs
         ↓
-frontend/content/news/index.json
+frontend/news/index.json
         ↓
 Aizanoi News app
 ```

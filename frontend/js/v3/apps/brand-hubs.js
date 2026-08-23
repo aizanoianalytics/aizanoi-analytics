@@ -19,7 +19,7 @@ async function mountNews(container){
   container.innerHTML=shell('Aizanoi News','Daily editions · Source-linked','<div class="az-media"><div class="az-empty-state"><div><h3>Loading today’s edition…</h3><p>Reading the static edition feed.</p></div></div></div>');
   const host=container.querySelector('.az-media');
   try{
-    const response=await fetch('/content/news/index.json',{cache:'no-cache'});
+    const response=await fetch('/news/index.json',{cache:'no-cache'});
     if(!response.ok)throw new Error(`News feed returned ${response.status}`);
     host.innerHTML=renderNewsFeed(await response.json());
   }catch(error){host.innerHTML=`<div class="az-empty-state"><div><h3>News feed unavailable</h3><p>${esc(error.message)}</p><a class="az-button" href="/news/">Open the News archive</a></div></div>`;}

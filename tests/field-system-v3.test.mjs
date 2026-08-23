@@ -145,7 +145,7 @@ assert.doesNotMatch(product, /Aizanoi Workbench/);
 assert.match(contentPolicy, /source links are mandatory/i);
 assert.match(newsBuild, /at least one source is required/);
 for (const category of ['ai','technology','economy-markets','football']) assert.match(newsBuild,new RegExp(`'${category}'`));
-assert.ok(existsSync(path.join(root,'frontend/content/news/index.json')),'generated News feed baseline missing');
+assert.ok(existsSync(path.join(root,'frontend/news/index.json')),'generated News feed baseline missing');
 
 assert.match(manifest, /"name"\s*:\s*"AizanoiOS"/);
 assert.match(manifest, /"name"\s*:\s*"Aizanoi News"/);
@@ -155,7 +155,7 @@ assert.match(sw, /aizanoi-os-shell-v4\.3\.0/);
 assert.match(sw, /\/js\/v3\/aizanoi-os\.js/);
 assert.match(sw, /\/js\/v3\/brand-platform\.js/);
 assert.match(sw, /\/styles\/device-shell\.css/);
-assert.match(sw, /\/content\/news\/index\.json/);
+assert.match(sw, /\/news\/index\.json/);
 assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/, 'service worker must activate only after a complete precache');
 assert.match(sw, /networkFirstStatic/, 'mutable static assets must prefer the revalidated network response');
 assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/, 'service worker must explicitly ignore API routes');

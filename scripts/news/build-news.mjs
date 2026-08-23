@@ -1,11 +1,11 @@
-import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, open, readdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const root = process.cwd();
 const sourceDir = path.join(root, 'content/news/items');
 const publicDir = path.join(root, 'frontend');
-const feedFile = path.join(publicDir, 'content/news/index.json');
 const newsDir = path.join(publicDir, 'news');
+const lockFile = path.join(publicDir, '.aizanoi-news-build.lock');
 const siteUrl = 'https://aizanoianalytics.com';
 const categoryLabels = new Map([
   ['ai', 'AI'],
@@ -123,45 +123,91 @@ function rss(items, generatedAt) {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Aizanoi News</title><link>${siteUrl}/news/</link><description>Original, concise and source-linked coverage.</description><language>en</language><lastBuildDate>${new Date(generatedAt).toUTCString()}</lastBuildDate>${entries}</channel></rss>\n`;
 }
 
-let names = [];
-try { names = (await readdir(sourceDir)).filter((name) => name.endsWith('.json') && !name.startsWith('_')).sort(); }
-catch (error) { if (error.code !== 'ENOENT') throw error; }
-const items = [];
-const ids = new Set();
-for (const name of names) {
-  const item = validate(JSON.parse(await readFile(path.join(sourceDir, name), 'utf8')), name);
-  if (ids.has(item.id)) fail(name, `duplicate id ${item.id}`);
-  ids.add(item.id);
-  items.push(item);
+await mkdir(publicDir, { recursive:true });
+let buildLock;
+try {
+  buildLock = await open(lockFile, 'wx');
+  await buildLock.writeFile(`${process.pid}\n`);
+} catch (error) {
+  if (error.code === 'EEXIST') throw new Error('News build already in progress');
+  throw error;
 }
-items.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt) || a.id.localeCompare(b.id));
-const dates = [...new Set(items.map(itemDate))].sort().reverse();
-let generatedAt;
-if (process.env.SOURCE_DATE_EPOCH !== undefined) {
-  if (!/^\d+$/.test(process.env.SOURCE_DATE_EPOCH)) fail('SOURCE_DATE_EPOCH', 'must be a non-negative integer');
-  generatedAt = new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000).toISOString();
-} else {
-  generatedAt = new Date(items.length ? Math.max(...items.map((item) => Date.parse(item.retrievedAt))) : 0).toISOString();
+
+const nonce = `${process.pid}-${Date.now()}`;
+const stageDir = path.join(publicDir, `.aizanoi-news-stage-${nonce}`);
+const backupDir = path.join(publicDir, `.aizanoi-news-backup-${nonce}`);
+let oldTreeMoved = false;
+let promoted = false;
+
+try {
+  let names = [];
+  try { names = (await readdir(sourceDir)).filter((name) => name.endsWith('.json') && !name.startsWith('_')).sort(); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+  const items = [];
+  const ids = new Set();
+  for (const name of names) {
+    const item = validate(JSON.parse(await readFile(path.join(sourceDir, name), 'utf8')), name);
+    if (ids.has(item.id)) fail(name, `duplicate id ${item.id}`);
+    ids.add(item.id);
+    items.push(item);
+  }
+  items.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt) || a.id.localeCompare(b.id));
+  const dates = [...new Set(items.map(itemDate))].sort().reverse();
+  let generatedAt;
+  if (process.env.SOURCE_DATE_EPOCH !== undefined) {
+    if (!/^\d+$/.test(process.env.SOURCE_DATE_EPOCH)) fail('SOURCE_DATE_EPOCH', 'must be a non-negative integer');
+    generatedAt = new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000).toISOString();
+  } else {
+    generatedAt = new Date(items.length ? Math.max(...items.map((item) => Date.parse(item.retrievedAt))) : 0).toISOString();
+  }
+  const editions = dates.map((date) => ({ date, path: `/news/${date}/`, itemCount: items.filter((item) => itemDate(item) === date).length }));
+  const feed = { schemaVersion: 2, generatedAt, categories: [...categoryLabels.keys()], editions, items };
+
+  await rm(stageDir, { recursive:true, force:true });
+  await mkdir(stageDir, { recursive:true });
+  await writeFile(path.join(stageDir, 'index.json'), `${JSON.stringify(feed, null, 2)}\n`);
+  await writeFile(path.join(stageDir, 'news.css'), `${css}\n`);
+  const archiveLinks = editions.length ? `<aside class="archive-strip"><h2>Past editions</h2>${editions.map((edition) => `<a href="${edition.path}">${edition.date} (${edition.itemCount})</a>`).join('')}</aside>` : '';
+  const latestDate = dates[0];
+  await writeFile(path.join(stageDir, 'index.html'), page({ title: 'Aizanoi News — The Daily Edition', eyebrow: latestDate ? dateLabel(latestDate) : 'Independent · Original · Source-linked', heading: latestDate ? dateLabel(latestDate) : 'The Daily Edition', deck: latestDate ? 'AI, technology, markets and football — edited into one concise edition.' : 'The press is ready. The record remains empty until verified reporting is published.', items: latestDate ? items.filter((item) => itemDate(item) === latestDate) : [], editionDate: latestDate, archiveLinks }));
+  for (const date of dates) {
+    const dir = path.join(stageDir, date);
+    await mkdir(dir, { recursive:true });
+    await writeFile(path.join(dir, 'index.html'), page({ title: `${dateLabel(date)} — Aizanoi News`, eyebrow: 'Aizanoi News · Daily archive', heading: dateLabel(date), deck: 'A complete daily edition from the Aizanoi News archive.', items: items.filter((item) => itemDate(item) === date), editionDate: date, canonicalPath: `/news/${date}/` }));
+  }
+  for (const [slug, label] of categoryLabels) {
+    const dir = path.join(stageDir, 'category', slug);
+    await mkdir(dir, { recursive:true });
+    await writeFile(path.join(dir, 'index.html'), page({ title: `${label} Archive — Aizanoi News`, eyebrow: 'Aizanoi News · Section archive', heading: `${label} Archive`, deck: `Every published ${label} report, newest first.`, items: items.filter((item) => item.category === slug), canonicalPath: `/news/category/${slug}/` }));
+  }
+  await writeFile(path.join(stageDir, 'rss.xml'), rss(items, generatedAt));
+
+  JSON.parse(await readFile(path.join(stageDir, 'index.json'), 'utf8'));
+  for (const required of ['index.html', 'news.css', 'rss.xml', ...[...categoryLabels.keys()].map((slug) => `category/${slug}/index.html`)]) {
+    await readFile(path.join(stageDir, required));
+  }
+  if (process.env.AIZANOI_NEWS_FAIL_AFTER_STAGE === '1') throw new Error('Injected failure after staged News validation');
+
+  try {
+    await rename(newsDir, backupDir);
+    oldTreeMoved = true;
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  try {
+    await rename(stageDir, newsDir);
+    promoted = true;
+  } catch (error) {
+    if (oldTreeMoved) await rename(backupDir, newsDir);
+    throw error;
+  }
+  if (oldTreeMoved) await rm(backupDir, { recursive:true, force:true });
+  console.log(`Aizanoi News: wrote ${items.length} item(s), ${editions.length} edition(s) and ${categoryLabels.size} archive(s)`);
+} finally {
+  await rm(stageDir, { recursive:true, force:true });
+  if (!promoted && oldTreeMoved) {
+    try { await rename(backupDir, newsDir); } catch (_) {}
+  }
+  await buildLock?.close();
+  await rm(lockFile, { force:true });
 }
-const editions = dates.map((date) => ({ date, path: `/news/${date}/`, itemCount: items.filter((item) => itemDate(item) === date).length }));
-const feed = { schemaVersion: 2, generatedAt, categories: [...categoryLabels.keys()], editions, items };
-await rm(newsDir, { recursive: true, force: true });
-await mkdir(path.dirname(feedFile), { recursive: true });
-await mkdir(newsDir, { recursive: true });
-await writeFile(feedFile, `${JSON.stringify(feed, null, 2)}\n`);
-await writeFile(path.join(newsDir, 'news.css'), `${css}\n`);
-const archiveLinks = editions.length ? `<aside class="archive-strip"><h2>Past editions</h2>${editions.map((edition) => `<a href="${edition.path}">${edition.date} (${edition.itemCount})</a>`).join('')}</aside>` : '';
-const latestDate = dates[0];
-await writeFile(path.join(newsDir, 'index.html'), page({ title: 'Aizanoi News — The Daily Edition', eyebrow: latestDate ? dateLabel(latestDate) : 'Independent · Original · Source-linked', heading: latestDate ? dateLabel(latestDate) : 'The Daily Edition', deck: latestDate ? 'AI, technology, markets and football — edited into one concise edition.' : 'The press is ready. The record remains empty until verified reporting is published.', items: latestDate ? items.filter((item) => itemDate(item) === latestDate) : [], editionDate: latestDate, archiveLinks }));
-for (const date of dates) {
-  const dir = path.join(newsDir, date);
-  await mkdir(dir, { recursive: true });
-  await writeFile(path.join(dir, 'index.html'), page({ title: `${dateLabel(date)} — Aizanoi News`, eyebrow: 'Aizanoi News · Daily archive', heading: dateLabel(date), deck: 'A complete daily edition from the Aizanoi News archive.', items: items.filter((item) => itemDate(item) === date), editionDate: date, canonicalPath: `/news/${date}/` }));
-}
-for (const [slug, label] of categoryLabels) {
-  const dir = path.join(newsDir, 'category', slug);
-  await mkdir(dir, { recursive: true });
-  await writeFile(path.join(dir, 'index.html'), page({ title: `${label} Archive — Aizanoi News`, eyebrow: 'Aizanoi News · Section archive', heading: `${label} Archive`, deck: `Every published ${label} report, newest first.`, items: items.filter((item) => item.category === slug), canonicalPath: `/news/category/${slug}/` }));
-}
-await writeFile(path.join(newsDir, 'rss.xml'), rss(items, generatedAt));
-console.log(`Aizanoi News: wrote ${items.length} item(s), ${editions.length} edition(s) and ${categoryLabels.size} archive(s)`);
