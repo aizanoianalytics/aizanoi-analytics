@@ -5,6 +5,10 @@ import { readFileSync } from 'node:fs';
 const sw = readFileSync('frontend/service-worker.js', 'utf8');
 const ci = readFileSync('.github/workflows/ci.yml', 'utf8');
 
+test('service worker uses a fresh cache namespace for the expanded product platform', () => {
+  assert.match(sw, /const CACHE = 'aizanoi-os-shell-v4\.3\.0';/);
+});
+
 test('service worker precaches safe independent requests in parallel and fails as a unit', () => {
   assert.match(sw, /Promise\.all\(PRECACHE\.map\(async \(url\) =>/);
   assert.match(sw, /await Promise\.all\(responses\.map/);
