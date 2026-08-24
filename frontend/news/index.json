@@ -1,12 +1,258 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "generatedAt": "2026-08-24T05:06:40.000Z",
   "categories": [
     "ai",
     "technology",
     "economy-markets",
     "football"
   ],
-  "editions": [],
-  "items": []
+  "editions": [
+    {
+      "date": "2026-08-24",
+      "path": "/news/2026-08-24/",
+      "itemCount": 8
+    }
+  ],
+  "items": [
+    {
+      "id": "2026-08-24-alibaba-proposes-hk80-billion-placement",
+      "title": "Alibaba proposes HK$80 billion share placement for AI investment",
+      "summary": "Alibaba proposed placing newly issued shares with non-US investors for an aggregate HK$80 billion, subject to market and other conditions. The company says all net proceeds would fund its full-stack AI capabilities, including expanded infrastructure.",
+      "category": "economy-markets",
+      "publishedAt": "2026-08-24T05:07:04.000Z",
+      "updatedAt": "2026-08-24T05:07:04.000Z",
+      "retrievedAt": "2026-08-24T05:06:40.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Alibaba",
+        "equity placement",
+        "AI infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "Alibaba Group",
+          "url": "https://www.alibabagroup.com/en-US/document-2028246284372017152",
+          "publishedAt": "2026-08-23T11:05:15.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-24-amie-video-consultation-study",
+      "title": "Google tests medical AI in simulated video consultations",
+      "summary": "Google researchers evaluated AMIE in 300 simulated video consultations covering 100 scenarios and involving professional patient actors and 30 primary-care physicians. The team stresses that no real patients took part and that further validation and safety work are required before clinical use.",
+      "category": "ai",
+      "publishedAt": "2026-08-24T05:07:04.000Z",
+      "updatedAt": "2026-08-24T05:07:04.000Z",
+      "retrievedAt": "2026-08-24T05:06:40.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "medical AI",
+        "clinical research",
+        "video consultations"
+      ],
+      "sources": [
+        {
+          "publisher": "Google Research",
+          "url": "https://research.google/blog/advancing-amie-towards-expert-level-audio-visual-clinical-consultations/",
+          "publishedAt": "2026-08-11T17:00:00.000Z"
+        },
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-research/amie-video-consultations/",
+          "publishedAt": "2026-08-11T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-24-apple-unifies-eu-app-terms",
+      "title": "Apple sets unified EU app terms and revises commission structure",
+      "summary": "Apple announced a single set of business terms for developers distributing apps in the European Union, effective 1 October. Under the plan, its per-install Core Technology Fee gives way to a 5% charge on qualifying digital sales made through software obtained beyond the App Store.",
+      "category": "technology",
+      "publishedAt": "2026-08-24T05:07:04.000Z",
+      "updatedAt": "2026-08-24T05:07:04.000Z",
+      "retrievedAt": "2026-08-24T05:06:40.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "European Union",
+        "app distribution"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple",
+          "url": "https://www.apple.com/newsroom/2026/08/apple-announces-changes-for-apps-in-the-european-union/",
+          "publishedAt": "2026-08-18T15:59:46.948Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-24-euro-area-inflation-expectations-ease",
+      "title": "Euro-area consumers trim near-term inflation expectations",
+      "summary": "The ECB's July survey put median inflation expectations at 2.9% for the next 12 months and 2.7% three years ahead, each down 0.1 percentage point from June. Five-year expectations were unchanged at 2.4%, while expected economic growth improved but remained negative.",
+      "category": "economy-markets",
+      "publishedAt": "2026-08-24T05:07:04.000Z",
+      "updatedAt": "2026-08-24T05:07:04.000Z",
+      "retrievedAt": "2026-08-24T05:06:40.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ECB",
+        "inflation expectations",
+        "euro area"
+      ],
+      "sources": [
+        {
+          "publisher": "European Central Bank",
+          "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.pr260821~a044fdddd9.en.html",
+          "publishedAt": "2026-08-21T08:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-24-geforce-now-adds-firefox-support",
+      "title": "GeForce Now adds Firefox to its Windows browser lineup",
+      "summary": "Nvidia has added Firefox support for GeForce Now on Windows, allowing members to launch supported cloud games from the browser without installing the dedicated application. Firefox joins Chrome, Edge and Opera among the service's supported Windows browsers.",
+      "category": "technology",
+      "publishedAt": "2026-08-24T05:07:04.000Z",
+      "updatedAt": "2026-08-24T05:07:04.000Z",
+      "retrievedAt": "2026-08-24T05:06:40.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Nvidia",
+        "Firefox",
+        "cloud gaming"
+      ],
+      "sources": [
+        {
+          "publisher": "NVIDIA",
+          "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-firefox/",
+          "publishedAt": "2026-08-20T13:00:24.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-24-gemma-passes-one-billion-downloads",
+      "title": "Gemma passes one billion downloads as Google opens a project directory",
+      "summary": "Google says its Gemma model family has passed one billion downloads and spawned more than 100,000 community variants. The company also launched an Awesome Gemma repository intended to catalogue projects, fine-tunes, tutorials and developer tools.",
+      "category": "ai",
+      "publishedAt": "2026-08-24T05:07:04.000Z",
+      "updatedAt": "2026-08-24T05:07:04.000Z",
+      "retrievedAt": "2026-08-24T05:06:40.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Gemma",
+        "open models",
+        "developers"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemma-one-billion-downloads/",
+          "publishedAt": "2026-08-20T15:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-24-hull-beat-manchester-united",
+      "title": "Hull mark Premier League return with win over Manchester United",
+      "summary": "Hull City beat Manchester United 2-0 in their first Premier League match for nine years. The promoted side secured the result despite holding 28% of possession, giving Sergej Jakirovic's team a winning start against last season's third-place finishers.",
+      "category": "football",
+      "publishedAt": "2026-08-24T05:07:04.000Z",
+      "updatedAt": "2026-08-24T05:07:04.000Z",
+      "retrievedAt": "2026-08-24T05:06:40.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Premier League",
+        "Hull City",
+        "Manchester United"
+      ],
+      "sources": [
+        {
+          "publisher": "Hull City",
+          "url": "https://www.wearehullcity.co.uk/news/2026/august/22/hull-city-2-0-manchester-united/",
+          "publishedAt": "2026-08-22T17:06:22.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/football/articles/ce343r7245no",
+          "publishedAt": "2026-08-23T23:12:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-24-liverpool-rescue-point-at-newcastle",
+      "title": "Late Szoboszlai penalty earns Liverpool a point at Newcastle",
+      "summary": "Liverpool opened their Premier League season with a 2-2 draw at Newcastle after Dominik Szoboszlai converted a stoppage-time penalty. Cody Gakpo had cancelled out Harvey Barnes's opener before substitute Joe Willock restored Newcastle's lead.",
+      "category": "football",
+      "publishedAt": "2026-08-24T05:07:04.000Z",
+      "updatedAt": "2026-08-24T05:07:04.000Z",
+      "retrievedAt": "2026-08-24T05:06:40.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Premier League",
+        "Liverpool",
+        "Newcastle United"
+      ],
+      "sources": [
+        {
+          "publisher": "Newcastle United",
+          "url": "https://www.newcastleunited.com/en/news/liverpool-home-2627-match-report",
+          "publishedAt": "2026-08-23T17:33:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/football/articles/cdrvr73egnlo",
+          "publishedAt": "2026-08-23T19:27:12.000Z"
+        }
+      ]
+    }
+  ]
 }
