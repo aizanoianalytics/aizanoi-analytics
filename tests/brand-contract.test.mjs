@@ -18,9 +18,13 @@ const canonicalIcons = [
   'aizanoi-labs.svg',
   'aizanoi-arcade.svg'
 ];
-const retiredActiveIconNames = [
+const retiredCatalogIconNames = [
   'source-reader.svg', 'data-lab.svg', 'ancient-world.svg', 'projects.svg',
   'notepad.svg', 'workspace-monitor.svg', 'games.svg'
+];
+const removedWorkbenchIcons = [
+  'artifact-viewer.svg', 'data-lab.svg', 'field-archive.svg', 'games.svg', 'notepad.svg',
+  'projects.svg', 'recycle-bin.svg', 'source-reader.svg', 'terminal.svg', 'workspace-monitor.svg'
 ];
 
 test('AizanoiOS keeps analytics as compatibility id while presenting Dashboards to users', () => {
@@ -36,8 +40,14 @@ test('active product catalog uses canonical Aizanoi icon assets rather than reti
     assert.ok(existsSync(`frontend/assets/icons/${icon}`), `${icon} missing`);
     assert.match(registry + manifest, new RegExp(icon.replace('.', '\\.')));
   }
-  for (const legacy of retiredActiveIconNames) {
+  for (const legacy of retiredCatalogIconNames) {
     assert.doesNotMatch(registry + manifest, new RegExp(legacy.replace('.', '\\.')));
+  }
+});
+
+test('retired Workbench icon files remain removed from the public asset tree', () => {
+  for (const icon of removedWorkbenchIcons) {
+    assert.equal(existsSync(`frontend/assets/icons/${icon}`), false, `${icon} should remain retired`);
   }
 });
 
