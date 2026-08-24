@@ -1,6 +1,6 @@
-# Aizanoi Architecture
+# Aizanoi Analytics Architecture
 
-The public visitor runtime is **static-first**. Nginx serves HTML, CSS, JavaScript, JSON and assets. Private automation such as Hermes may prepare content and deploy releases, but the browser does not receive a private-agent execution bridge.
+The Aizanoi Analytics public visitor runtime is **static-first**. Nginx serves HTML, CSS, JavaScript, JSON and assets. Private automation such as Hermes may prepare content and deploy releases, but the browser does not receive a private-agent execution bridge.
 
 ## Runtime topology
 
@@ -8,13 +8,13 @@ The public visitor runtime is **static-first**. Nginx serves HTML, CSS, JavaScri
 Browser
   |
   +-- AizanoiOS (/)
-  |     +-- brand-platform.js       umbrella-brand + device composition
+  |     +-- brand-platform.js       Aizanoi Analytics + device composition
   |     +-- registry.js             public app + world catalog
   |     +-- store.js                shell + field-session state
   |     +-- shell.js                canonical window/router/dialog lifecycle
   |     +-- device-shell.css        tablet/mobile presentation
   |     +-- apps/*                  lazy public application modules
-  |     +-- /news/index.json static News feed
+  |     +-- /news/index.json        static News feed
   |
   +-- Historical Worlds
   |     +-- /historic-world/                 Aizanoi
@@ -34,7 +34,7 @@ Historical `/api/chat` remains failed closed. Other `/api/*` paths remain unavai
 
 ### Brand/device adapter
 
-`frontend/js/v3/brand-platform.js` owns the current umbrella-brand composition:
+`frontend/js/v3/brand-platform.js` owns the current Aizanoi Analytics composition:
 - five core desktop shortcuts/dock apps;
 - desktop contextual widget;
 - phone home app grid/widgets;
@@ -55,7 +55,7 @@ Breakpoints:
 
 ### Registry
 
-`frontend/js/v3/registry.js` contains only public apps and Historical Worlds. Retired Workbench/power tools must not remain directly addressable through `appById`, search, launcher or routing.
+`frontend/js/v3/registry.js` contains only public apps and Historical Worlds. The visible analytical product is **Dashboards**; `/analytics/` and the `analytics` app id remain compatibility contracts. Retired Workbench/power tools must not remain directly addressable through `appById`, search, launcher or routing.
 
 ### Lazy applications
 
@@ -70,12 +70,12 @@ content/news/items/*.json
         ↓
 scripts/news/build-news.mjs
         ↓
-frontend/news/index.json
+frontend/news/* + frontend/sitemap.xml
         ↓
-Aizanoi News app
+Aizanoi News app / public discovery
 ```
 
-The compiler validates ids, dates, the four published sections (AI, Technology, Economy / Markets and Football), original summary length, author/editor identity, correction history and mandatory source publisher/URL/date provenance. It does not fetch third-party sites itself. Source discovery stays in the private/operator layer. It deterministically generates the current landing, daily edition paths, category archives, JSON edition feed and RSS; `SOURCE_DATE_EPOCH` may pin build metadata. Generation is serialized by an exclusive lock, built and validated in a same-filesystem staging tree, rollback-safe, and recoverable after stale locks or interrupted promotion. The compiler runs in the private checkout; the public webroot changes only through the exact-SHA deployment loop.
+The compiler validates ids, dates, the four published sections (AI, Technology, Economy / Markets and Football), original summary length, author/editor identity, correction history and mandatory source publisher/URL/date provenance. It does not fetch third-party sites itself. Source discovery stays in the private/operator layer. It deterministically generates the current landing, daily edition paths, category archives, JSON edition feed, RSS and News sitemap discovery; `SOURCE_DATE_EPOCH` may pin build metadata. Generation is serialized by an exclusive lock, built and validated in same-filesystem staging, rollback-safe, and recoverable after stale locks or interrupted promotion. The compiler runs in the private checkout; generated outputs must return to Git before an approved exact-SHA production deployment.
 
 `CONTENT_POLICY.md` is the publication contract.
 
@@ -115,9 +115,10 @@ See `docs/HERMES_OPERATIONS.md`.
 2. Static-first visitor runtime by default.
 3. One registry and one window lifecycle.
 4. `brand-platform.js` adapts; it does not fork the shell.
-5. Retired power tools stay out of the public catalog unless the owner explicitly reverses the decision.
-6. No server-backed public terminal or private-agent bridge.
-7. No certainty inflation in Historical Worlds.
-8. News requires structured source provenance.
-9. Preserve public destination parity while giving desktop, tablet and mobile device-appropriate UX.
-10. Interactive changes require regression coverage.
+5. Aizanoi Analytics remains the company/umbrella brand unless `PRODUCT.md` is explicitly changed by the owner.
+6. Retired power tools stay out of the public catalog unless the owner explicitly reverses the decision.
+7. No server-backed public terminal or private-agent bridge.
+8. No certainty inflation in Historical Worlds.
+9. News requires structured source provenance.
+10. Preserve public destination parity while giving desktop, tablet and mobile device-appropriate UX.
+11. Interactive changes require regression coverage.
