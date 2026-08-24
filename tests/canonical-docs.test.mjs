@@ -14,10 +14,11 @@ const docs = {
   roadmap: read('ROADMAP.md'),
   changelog: read('CHANGELOG.md'),
   docsReadme: read('docs/README.md'),
-  operations: read('docs/OPERATIONS.md')
+  operations: read('docs/OPERATIONS.md'),
+  hermes: read('docs/HERMES_OPERATIONS.md')
 };
 
-const currentBrandDocs = [docs.product, docs.agents, docs.readme, docs.design, docs.roadmap];
+const currentBrandDocs = [docs.product, docs.agents, docs.readme, docs.design, docs.roadmap, docs.hermes];
 
 test('current AizanoiOS docs describe the eight-app public platform without retired Workbench surfaces', () => {
   assert.match(docs.field, /AizanoiOS/i);
@@ -33,10 +34,12 @@ test('canonical brand docs lock Aizanoi Analytics as umbrella company and Dashbo
   }
   assert.match(docs.product, /Aizanoi Analytics.*company.*primary public brand.*umbrella/is);
   assert.match(docs.agents, /Aizanoi Analytics.*company and umbrella brand/is);
+  assert.match(docs.hermes, /Aizanoi Analytics.*company and umbrella brand/is);
   assert.match(docs.product, /\*\*Dashboards\*\*/);
   assert.match(docs.agents, /public product label is \*\*Dashboards\*\*/);
   assert.match(docs.product, /route remains `\/analytics\/`/);
   assert.match(docs.agents, /app id remains `analytics`/);
+  assert.match(docs.hermes, /visible product is \*\*Dashboards\*\*/);
 });
 
 test('maintained documentation no longer presents Field System or retired reader tooling as current operations', () => {
