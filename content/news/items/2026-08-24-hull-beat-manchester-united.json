@@ -1,0 +1,25 @@
+{
+  "id": "2026-08-24-hull-beat-manchester-united",
+  "title": "Hull mark Premier League return with win over Manchester United",
+  "summary": "Hull City beat Manchester United 2-0 in their first Premier League match for nine years. The promoted side secured the result despite holding 28% of possession, giving Sergej Jakirovic's team a winning start against last season's third-place finishers.",
+  "category": "football",
+  "publishedAt": "2026-08-24T05:07:04Z",
+  "updatedAt": "2026-08-24T05:07:04Z",
+  "retrievedAt": "2026-08-24T05:06:40Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "corrections": [],
+  "tags": ["Premier League", "Hull City", "Manchester United"],
+  "sources": [
+    {
+      "publisher": "Hull City",
+      "url": "https://www.wearehullcity.co.uk/news/2026/august/22/hull-city-2-0-manchester-united/",
+      "publishedAt": "2026-08-22T17:06:22Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.co.uk/sport/football/articles/ce343r7245no",
+      "publishedAt": "2026-08-23T23:12:00Z"
+    }
+  ]
+}

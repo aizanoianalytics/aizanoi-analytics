@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-24-geforce-now-adds-firefox-support",
+  "title": "GeForce Now adds Firefox to its Windows browser lineup",
+  "summary": "Nvidia has added Firefox support for GeForce Now on Windows, allowing members to launch supported cloud games from the browser without installing the dedicated application. Firefox joins Chrome, Edge and Opera among the service's supported Windows browsers.",
+  "category": "technology",
+  "publishedAt": "2026-08-24T05:07:04Z",
+  "updatedAt": "2026-08-24T05:07:04Z",
+  "retrievedAt": "2026-08-24T05:06:40Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "corrections": [],
+  "tags": ["Nvidia", "Firefox", "cloud gaming"],
+  "sources": [
+    {
+      "publisher": "NVIDIA",
+      "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-firefox/",
+      "publishedAt": "2026-08-20T13:00:24Z"
+    }
+  ]
+}
