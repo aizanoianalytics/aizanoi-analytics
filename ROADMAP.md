@@ -1,26 +1,28 @@
-# Aizanoi Roadmap
+# Aizanoi Analytics Roadmap
 
 This roadmap describes direction, not delivery promises.
 
 ## 2026 platform baseline
 
-Aizanoi is an umbrella digital studio rather than a single-subject archaeology product. The current public platform includes:
+**Aizanoi Analytics** is the company and umbrella digital studio. AizanoiOS presents the current public platform:
 
-- AizanoiOS as the adaptive browser-native shell;
 - Aizanoi News;
 - Aizanoi TV;
 - Aizanoi Journal;
-- Aizanoi Analytics;
+- Dashboards (`/analytics/` compatibility route);
 - Aizanoi Forge;
 - Historical Worlds;
 - Aizanoi Labs;
 - Aizanoi Arcade.
 
+`Aizanoi` is a short-form identity used by several product names; it is not a separate umbrella company above Aizanoi Analytics.
+
 ## Phase 1 — Brand platform foundation
 
 - maintain `PRODUCT.md`, `AGENTS.md` and `CONTENT_POLICY.md` as canonical contracts;
-- keep desktop sparse: News, TV, Analytics, Worlds, Forge;
-- make mobile a phone-like Aizanoi home screen rather than a reduced desktop;
+- keep Aizanoi Analytics as the primary company/umbrella brand;
+- keep desktop sparse: News, TV, Dashboards, Worlds, Forge;
+- make mobile a phone-like AizanoiOS home screen rather than a reduced desktop;
 - make tablet a touch-first two-pane workspace;
 - keep one public catalog across form factors;
 - preserve existing Historical World behavior;
@@ -45,15 +47,16 @@ Do not turn News into a copied-article farm.
 - establish the English-language YouTube channel identity;
 - publish companion pages with transcript/chapters when useful;
 - attach meaningful sources to factual videos;
-- cross-link relevant News, Journal, Analytics and Forge items;
+- cross-link relevant News, Journal, Dashboards and Forge items;
 - avoid eager third-party embeds when a lightweight preview/link is sufficient.
 
-## Phase 4 — Aizanoi Analytics
+## Phase 4 — Dashboards
 
-- publish useful dashboards and interactive analytical tools;
+- publish useful dashboards and interactive analytical tools under Aizanoi Analytics;
 - each production project should expose Launch / Source / Documentation / Version where applicable;
 - prioritize data products that can stand alone as useful portfolio pieces;
-- keep private/employer data out of the public repository.
+- keep private/employer data out of the public repository;
+- preserve `/analytics/` and app id `analytics` for backward compatibility while presenting the product as Dashboards.
 
 ## Phase 5 — Aizanoi Forge
 
@@ -105,7 +108,7 @@ Unless the owner explicitly changes the product constitution:
 
 ## Decision rule
 
-Prefer work that makes Aizanoi more:
+Prefer work that makes Aizanoi Analytics more:
 1. useful;
 2. distinctive;
 3. trustworthy and source-aware;
