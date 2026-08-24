@@ -2,44 +2,59 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
+const read = (file) => readFileSync(file, 'utf8');
 const docs = {
-  field:readFileSync('docs/FIELD_SYSTEM.md', 'utf8'),
-  contributing:readFileSync('CONTRIBUTING.md', 'utf8'),
-  security:readFileSync('SECURITY.md', 'utf8'),
-  product:readFileSync('PRODUCT.md', 'utf8'),
-  readme:readFileSync('README.md', 'utf8'),
-  roadmap:readFileSync('ROADMAP.md', 'utf8')
+  field: read('docs/FIELD_SYSTEM.md'),
+  contributing: read('CONTRIBUTING.md'),
+  security: read('SECURITY.md'),
+  product: read('PRODUCT.md'),
+  agents: read('AGENTS.md'),
+  readme: read('README.md'),
+  design: read('DESIGN.md'),
+  roadmap: read('ROADMAP.md'),
+  changelog: read('CHANGELOG.md'),
+  docsReadme: read('docs/README.md'),
+  operations: read('docs/OPERATIONS.md')
 };
-const obsoletePaths = /os-state\.js|os-shell\.js|os-unified\.js|os-product-polish\.js|os-workbench|archive-store\.js|frontend\/js\/terminal\.js/;
 
-test('canonical shell documentation describes the current eight-app AizanoiOS catalog', () => {
-  assert.match(docs.field, /^# AizanoiOS/m);
-  assert.match(docs.field, /eight public apps/i);
-  assert.match(docs.field, /Workbench.*retired/i);
-  assert.match(docs.field, /frontend\/js\/v3\/registry\.js/);
-  assert.match(docs.field, /static product landings/i);
-  assert.doesNotMatch(docs.field, /11 canonical apps|Research Workspace|Field Terminal|Workspace Monitor/);
+const currentBrandDocs = [docs.product, docs.agents, docs.readme, docs.design, docs.roadmap];
+
+test('current AizanoiOS docs describe the eight-app public platform without retired Workbench surfaces', () => {
+  assert.match(docs.field, /AizanoiOS/i);
+  assert.doesNotMatch(docs.field, /11 canonical apps|Research Workspace|Field Terminal|Workspace Monitor/i);
+  assert.match(docs.security, /retired/i);
+  assert.match(docs.security, /Workbench/i);
 });
 
-test('contribution guidance points only to current canonical owners', () => {
-  assert.match(docs.contributing, /AizanoiOS contributions/);
-  assert.match(docs.contributing, /frontend\/js\/v3\/shell\.js/);
-  assert.match(docs.contributing, /frontend\/styles\/device-shell\.css/);
-  assert.match(docs.contributing, /retired Workbench/i);
-  assert.doesNotMatch(docs.contributing, obsoletePaths);
+test('canonical brand docs lock Aizanoi Analytics as umbrella company and Dashboards as the analytical product', () => {
+  for (const document of currentBrandDocs) {
+    assert.match(document, /Aizanoi Analytics/i);
+    assert.doesNotMatch(document, /Aizanoi is the umbrella brand|umbrella brand is \*\*Aizanoi\*\*|Aizanoi Analytics is one product family/i);
+  }
+  assert.match(docs.product, /Aizanoi Analytics.*company.*primary public brand.*umbrella/is);
+  assert.match(docs.agents, /Aizanoi Analytics.*company and umbrella brand/is);
+  assert.match(docs.product, /\*\*Dashboards\*\*/);
+  assert.match(docs.agents, /public product label is \*\*Dashboards\*\*/);
+  assert.match(docs.product, /route remains `\/analytics\/`/);
+  assert.match(docs.agents, /app id remains `analytics`/);
 });
 
-test('security policy scopes the retired Workbench as absent rather than supported', () => {
-  assert.match(docs.security, /Workbench.*retired/i);
-  assert.match(docs.security, /no public remote shell/i);
-  assert.match(docs.security, /service worker/i);
-  assert.doesNotMatch(docs.security, /Field Terminal is|Field Archive|Field Notes|Data Lab.*designed to stay/);
-  assert.doesNotMatch(docs.security, obsoletePaths);
+test('maintained documentation no longer presents Field System or retired reader tooling as current operations', () => {
+  assert.doesNotMatch(docs.docsReadme, /canonical Field System v3|v3 shell, app, responsive and local-workspace contract/i);
+  assert.doesNotMatch(docs.operations, /The Field System service worker|aizanoi-field-shell|FIELD SYSTEM DESKTOP|FIELD SYSTEM TABLET|FIELD SYSTEM MOBILE|PDF reader/i);
+  assert.doesNotMatch(docs.changelog, /^## Unreleased — Field System/m);
+  assert.match(docs.changelog, /Superseded Field System consolidation/);
+  assert.match(docs.changelog, /not the current public product contract/i);
 });
 
-test('canonical product documents define the approved four-section News scope', () => {
-  for (const source of [docs.product, docs.readme, docs.roadmap]) {
-    assert.match(source, /AI, Technology, Economy \/ Markets and Football/i);
-    assert.doesNotMatch(source, /World, Sports and Culture|five initial categories/i);
+test('contribution guidance points developers toward current canonical owners', () => {
+  assert.match(docs.contributing, /Aizanoi Analytics/i);
+  assert.doesNotMatch(docs.contributing, /final\.css|polish\.css|unified\.css|responsive-fix\.css/i);
+});
+
+test('product documentation keeps the approved News categories and current product families visible', () => {
+  for (const label of ['AI', 'Technology', 'Economy / Markets', 'Football']) assert.match(docs.product, new RegExp(label.replace('/', '\\/')));
+  for (const label of ['Aizanoi News', 'Aizanoi TV', 'Dashboards', 'Aizanoi Forge', 'Historical Worlds', 'Aizanoi Labs', 'Aizanoi Arcade']) {
+    assert.match(docs.product, new RegExp(label));
   }
 });
