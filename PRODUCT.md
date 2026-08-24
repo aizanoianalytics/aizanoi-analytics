@@ -2,7 +2,7 @@
 
 ## Brand definition
 
-**Aizanoi Analytics** is the company, primary public brand and umbrella for everything published, built, researched and experimented with in this repository.
+**Aizanoi Analytics** is the company, primary public brand and umbrella for everything published, built, researched and experimented with in this repository. It operates as an **independent digital studio** for media, data products, software, research and interactive worlds.
 
 **Working promise:** Aizanoi Analytics is the home of our media, data products, software, research and interactive worlds.
 
