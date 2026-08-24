@@ -11,6 +11,8 @@ const docs = {
   agents: read('AGENTS.md'),
   readme: read('README.md'),
   design: read('DESIGN.md'),
+  architecture: read('ARCHITECTURE.md'),
+  content: read('CONTENT_POLICY.md'),
   roadmap: read('ROADMAP.md'),
   changelog: read('CHANGELOG.md'),
   docsReadme: read('docs/README.md'),
@@ -18,11 +20,15 @@ const docs = {
   hermes: read('docs/HERMES_OPERATIONS.md')
 };
 
-const currentBrandDocs = [docs.product, docs.agents, docs.readme, docs.design, docs.roadmap, docs.hermes];
+const currentBrandDocs = [
+  docs.product, docs.agents, docs.readme, docs.design, docs.architecture, docs.content,
+  docs.roadmap, docs.field, docs.contributing, docs.security, docs.hermes
+];
 
 test('current AizanoiOS docs describe the eight-app public platform without retired Workbench surfaces', () => {
   assert.match(docs.field, /AizanoiOS/i);
-  assert.doesNotMatch(docs.field, /11 canonical apps|Research Workspace|Field Terminal|Workspace Monitor/i);
+  assert.match(docs.field, /3\. Dashboards/);
+  assert.doesNotMatch(docs.field, /3\. Aizanoi Analytics|11 canonical apps|Research Workspace|Field Terminal|Workspace Monitor/i);
   assert.match(docs.security, /retired/i);
   assert.match(docs.security, /Workbench/i);
 });
@@ -35,8 +41,11 @@ test('canonical brand docs lock Aizanoi Analytics as umbrella company and Dashbo
   assert.match(docs.product, /Aizanoi Analytics.*company.*primary public brand.*umbrella/is);
   assert.match(docs.agents, /Aizanoi Analytics.*company and umbrella brand/is);
   assert.match(docs.hermes, /Aizanoi Analytics.*company and umbrella brand/is);
+  assert.match(docs.architecture, /Aizanoi Analytics remains the company\/umbrella brand/is);
+  assert.match(docs.contributing, /Aizanoi Analytics.*company and umbrella brand/is);
   assert.match(docs.product, /\*\*Dashboards\*\*/);
   assert.match(docs.agents, /public product label is \*\*Dashboards\*\*/);
+  assert.match(docs.field, /visible analytical product; `\/analytics\/` and the internal app id `analytics` remain compatibility contracts/i);
   assert.match(docs.product, /route remains `\/analytics\/`/);
   assert.match(docs.agents, /app id remains `analytics`/);
   assert.match(docs.hermes, /visible product is \*\*Dashboards\*\*/);
@@ -52,6 +61,7 @@ test('maintained documentation no longer presents Field System or retired reader
 
 test('contribution guidance points developers toward current canonical owners', () => {
   assert.match(docs.contributing, /Aizanoi Analytics/i);
+  assert.match(docs.contributing, /Dashboards/);
   assert.doesNotMatch(docs.contributing, /final\.css|polish\.css|unified\.css|responsive-fix\.css/i);
 });
 
