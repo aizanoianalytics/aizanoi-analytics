@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="frontend/assets/branding/aizanoi-og.png" alt="Aizanoi" width="100%">
+  <img src="frontend/assets/branding/aizanoi-og.png" alt="Aizanoi Analytics" width="100%">
 </p>
 
-<h1 align="center">Aizanoi</h1>
+<h1 align="center">Aizanoi Analytics</h1>
 
 <p align="center"><strong>Media, data, software, research and interactive worlds.</strong></p>
 
@@ -10,30 +10,30 @@
   <a href="https://aizanoianalytics.com"><strong>Live site</strong></a> ·
   <a href="https://aizanoianalytics.com/news/"><strong>News</strong></a> ·
   <a href="https://aizanoianalytics.com/tv/"><strong>TV</strong></a> ·
-  <a href="https://aizanoianalytics.com/analytics/"><strong>Analytics</strong></a> ·
+  <a href="https://aizanoianalytics.com/analytics/"><strong>Dashboards</strong></a> ·
   <a href="https://aizanoianalytics.com/worlds/"><strong>Historical Worlds</strong></a>
 </p>
 
 ---
 
-## What is Aizanoi?
+## What is Aizanoi Analytics?
 
-Aizanoi is an independent digital studio presented through **AizanoiOS**, an adaptive browser-native operating-system-style shell.
+**Aizanoi Analytics** is the company and umbrella digital studio behind the public products in this repository. The experience is presented through **AizanoiOS**, an adaptive browser-native operating-system-style shell.
 
-The umbrella brand contains multiple product families:
+`Aizanoi` remains a short-form identity used in product names; it is not a separate parent brand above Aizanoi Analytics.
+
+The public product families are:
 
 - **Aizanoi News** — original, source-linked briefings across AI, Technology, Economy / Markets and Football;
 - **Aizanoi TV** — the companion layer for the English-language Aizanoi YouTube channel;
 - **Aizanoi Journal** — essays, analysis and commentary;
-- **Aizanoi Analytics** — dashboards, data products and analytical utilities;
+- **Dashboards** — dashboards, data products, model comparisons and analytical utilities; the compatibility route remains `/analytics/`;
 - **Aizanoi Forge** — source, builds and open projects, with GitHub as the source of truth;
 - **Historical Worlds** — evidence-aware walkable Aizanoi, Rome and Athens;
 - **Aizanoi Labs** — experiments and prototypes;
 - **Aizanoi Arcade** — playable browser games.
 
-The working promise is simple: **Aizanoi is the home of everything we publish, build, research and experiment with.**
-
-See [`PRODUCT.md`](PRODUCT.md).
+See [`PRODUCT.md`](PRODUCT.md) for the canonical brand and product contract.
 
 ## AizanoiOS
 
@@ -58,12 +58,12 @@ content/news/items/*.json
         ↓
 node scripts/news/build-news.mjs
         ↓
-frontend/news/index.json
+frontend/news/index.json + edition/category pages + RSS + sitemap
         ↓
      AizanoiOS
 ```
 
-Every publishable item requires original Aizanoi summary text and at least one source URL. Full third-party article bodies are not republished.
+Every publishable item requires original Aizanoi News summary text and at least one source URL. Full third-party article bodies are not republished.
 
 Read [`CONTENT_POLICY.md`](CONTENT_POLICY.md) and [`docs/HERMES_OPERATIONS.md`](docs/HERMES_OPERATIONS.md).
 
@@ -99,19 +99,19 @@ See [`ARCHITECTURE.md`](ARCHITECTURE.md) and [`SECURITY.md`](SECURITY.md).
 ```text
 .
 ├── frontend/                  # production static application
-│   ├── news/                  # atomic generated News feed, editions, archives and RSS
-│   ├── js/v3/                 # AizanoiOS + brand platform + apps
+│   ├── news/                  # generated News feed, editions, category archives and RSS
+│   ├── js/v3/                 # AizanoiOS + product platform + apps
 │   ├── styles/                # desktop + adaptive device shell
 │   ├── historic-world/        # Aizanoi
 │   ├── ancient-cities/        # Rome + Athens
 │   └── games/                 # Arcade games
 ├── content/news/              # Git-tracked News source records/templates
-├── scripts/news/              # News validation/build pipeline
+├── scripts/news/              # News validation/build + sitemap publishing
 ├── research/                  # Historical research/source material
 ├── tests/                     # regression/browser/security/visual QA
 ├── docs/                      # maintained documentation/runbooks
 ├── infra/                     # sanitized deployment references
-├── PRODUCT.md                 # umbrella-brand product constitution
+├── PRODUCT.md                 # brand/product constitution
 ├── CONTENT_POLICY.md          # sourcing/publishing rules
 ├── AGENTS.md                  # canonical agent instructions
 ├── DESIGN.md                  # visual/interaction contract
@@ -138,7 +138,8 @@ node --test tests/*.test.mjs
 
 ## Project principles
 
-- **One umbrella brand, many coherent product families.**
+- **Aizanoi Analytics is the umbrella/company brand.**
+- **One coherent family of public products.**
 - **Original value before aggregation.**
 - **Sources before claims.**
 - **GitHub is the software source of truth.**
