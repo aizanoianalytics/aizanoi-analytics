@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-24-gemma-passes-one-billion-downloads",
+  "title": "Gemma passes one billion downloads as Google opens a project directory",
+  "summary": "Google says its Gemma model family has passed one billion downloads and spawned more than 100,000 community variants. The company also launched an Awesome Gemma repository intended to catalogue projects, fine-tunes, tutorials and developer tools.",
+  "category": "ai",
+  "publishedAt": "2026-08-24T05:07:04Z",
+  "updatedAt": "2026-08-24T05:07:04Z",
+  "retrievedAt": "2026-08-24T05:06:40Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "corrections": [],
+  "tags": ["Gemma", "open models", "developers"],
+  "sources": [
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemma-one-billion-downloads/",
+      "publishedAt": "2026-08-20T15:30:00Z"
+    }
+  ]
+}

@@ -82,7 +82,7 @@
     line-height:1.5;
   }
   .az-source-list a {
-    color:var(--az-accent);
+    color:#4b5bc8;
     text-decoration-thickness:1px;
     text-underline-offset:2px;
   }

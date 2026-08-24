@@ -1,0 +1,25 @@
+{
+  "id": "2026-08-24-amie-video-consultation-study",
+  "title": "Google tests medical AI in simulated video consultations",
+  "summary": "Google researchers evaluated AMIE in 300 simulated video consultations covering 100 scenarios and involving professional patient actors and 30 primary-care physicians. The team stresses that no real patients took part and that further validation and safety work are required before clinical use.",
+  "category": "ai",
+  "publishedAt": "2026-08-24T05:07:04Z",
+  "updatedAt": "2026-08-24T05:07:04Z",
+  "retrievedAt": "2026-08-24T05:06:40Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "corrections": [],
+  "tags": ["medical AI", "clinical research", "video consultations"],
+  "sources": [
+    {
+      "publisher": "Google Research",
+      "url": "https://research.google/blog/advancing-amie-towards-expert-level-audio-visual-clinical-consultations/",
+      "publishedAt": "2026-08-11T17:00:00Z"
+    },
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-research/amie-video-consultations/",
+      "publishedAt": "2026-08-11T17:00:00Z"
+    }
+  ]
+}
