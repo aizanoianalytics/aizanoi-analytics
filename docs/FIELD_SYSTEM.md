@@ -1,6 +1,6 @@
 # AizanoiOS product shell
 
-AizanoiOS is the adaptive browser-native shell for the Aizanoi digital studio. It presents one catalog across desktop, tablet and mobile without pretending to be a host operating system.
+AizanoiOS is the adaptive browser-native shell for the **Aizanoi Analytics** digital studio. It presents one catalog across desktop, tablet and mobile without pretending to be a host operating system.
 
 The previous research Workbench bundle is retired. Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Monitor are not supported public apps and must not be restored through compatibility files or stale documentation.
 
@@ -10,12 +10,14 @@ The eight public apps are:
 
 1. Aizanoi News
 2. Aizanoi TV
-3. Aizanoi Analytics
+3. Dashboards
 4. Historical Worlds
 5. Aizanoi Forge
 6. Aizanoi Journal
 7. Aizanoi Labs
 8. Aizanoi Arcade
+
+`Dashboards` is the visible analytical product; `/analytics/` and the internal app id `analytics` remain compatibility contracts.
 
 Three Historical Worlds—Aizanoi, Rome and Athens—remain direct standalone experiences as well as catalog entries.
 
@@ -25,7 +27,7 @@ Three Historical Worlds—Aizanoi, Rome and Athens—remain direct standalone ex
 - `frontend/js/v3/store.js` — browser-local shell and open-window state;
 - `frontend/js/v3/shell.js` — window, router and dialog lifecycle;
 - `frontend/js/v3/aizanoi-os.js` — desktop interaction adapter;
-- `frontend/js/v3/brand-platform.js` — umbrella-brand and device composition;
+- `frontend/js/v3/brand-platform.js` — Aizanoi Analytics brand and device composition;
 - `frontend/js/v3/apps/` — lazy app implementations;
 - `frontend/styles/shell.css` and `components.css` — shell/window/control behavior;
 - `frontend/styles/device-shell.css` — canonical tablet/mobile adaptation;
@@ -65,5 +67,7 @@ The manifest and service worker improve installability and resilient static deli
 ## Quality contract
 
 A shell change should preserve eight public apps, three worlds, lazy app code/styles, canonical `--az-*` tokens, dialog focus/inert/restore behavior, mobile target/overflow checks, Historical World traversal regressions, real-browser service-worker coverage and rendered review.
+
+Aizanoi Analytics remains the company/umbrella brand unless the owner explicitly changes `PRODUCT.md`; agents must not restore the old hierarchy in which Aizanoi Analytics is presented as a subordinate app or product family.
 
 See [`../DESIGN.md`](../DESIGN.md), [`../ARCHITECTURE.md`](../ARCHITECTURE.md) and [`ACCESSIBILITY.md`](ACCESSIBILITY.md).
