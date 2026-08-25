@@ -5,16 +5,21 @@ import { readFileSync } from 'node:fs';
 const read = (file) => readFileSync(file, 'utf8');
 const sitemap = read('frontend/sitemap.xml');
 const feed = JSON.parse(read('frontend/news/index.json'));
+const robots = read('frontend/robots.txt');
 const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
 const infra = read('infra/README.md');
 
+const itemDate = (item) => item.publishedAt.slice(0, 10);
+const storySlug = (item) => item.id.startsWith(`${itemDate(item)}-`) ? item.id.slice(11) : item.id;
+const storyPath = (item) => `/news/${itemDate(item)}/${storySlug(item)}/`;
 const canonicalBase = [
-  '/', '/news/', '/tv/', '/analytics/', '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
+  '/', '/news/', '/news/about/', '/tv/', '/analytics/', '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
   '/historic-world/', '/ancient-cities/rome-410-476/', '/ancient-cities/athens-450-430/'
 ];
 const canonical = [
   ...canonicalBase,
   ...feed.editions.map((edition) => edition.path),
+  ...feed.items.map(storyPath),
   ...feed.categories.map((slug) => `/news/category/${slug}/`)
 ];
 
@@ -24,9 +29,15 @@ test('sitemap reflects canonical products, Historical Worlds and generated News 
   assert.deepEqual(urls.map(({ path }) => path), canonical);
   for (const { lastmod } of urls) assert.match(lastmod, /^\d{4}-\d{2}-\d{2}$/);
   for (const edition of feed.editions) assert.ok(urls.some(({ path }) => path === edition.path), `${edition.path} missing from sitemap`);
+  for (const item of feed.items) assert.ok(urls.some(({ path }) => path === storyPath(item)), `${item.id} permanent story route missing from sitemap`);
   for (const slug of feed.categories) assert.ok(urls.some(({ path }) => path === `/news/category/${slug}/`), `${slug} category missing from sitemap`);
-  assert.doesNotMatch(sitemap, /\/(?:projects|videos|games|ancient-world|about|docs|changelog|privacy|terms)\//);
+  assert.doesNotMatch(sitemap, /\/(?:projects|videos|games|ancient-world|docs|changelog|privacy|terms)\//);
   assert.doesNotMatch(sitemap, /<changefreq>|<priority>/);
+});
+
+test('robots advertises both general and dedicated News sitemaps', () => {
+  assert.match(robots, /Sitemap: https:\/\/aizanoianalytics\.com\/sitemap\.xml/);
+  assert.match(robots, /Sitemap: https:\/\/aizanoianalytics\.com\/news\/sitemap\.xml/);
 });
 
 test('legacy product paths permanently redirect to canonical landings', () => {
