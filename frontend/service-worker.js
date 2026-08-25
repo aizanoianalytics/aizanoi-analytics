@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'aizanoi-os-shell-v4.3.0';
+const CACHE = 'aizanoi-os-shell-v4.3.1';
 const MAX_RUNTIME_ENTRIES = 24;
 const PRECACHE = [
   '/',
@@ -34,7 +34,10 @@ async function precacheShell() {
 }
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(precacheShell().then(() => self.skipWaiting()));
+  // Do not force a waiting update over an already-open stateful AizanoiOS tab.
+  // First installs still activate normally; upgrades wait for the previous clients
+  // to close/reload so one document is never controlled by mixed shell versions.
+  event.waitUntil(precacheShell());
 });
 
 self.addEventListener('activate', (event) => {
