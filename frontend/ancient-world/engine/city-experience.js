@@ -39,6 +39,31 @@
     }catch(_){}
   }
 
+  function normalizeAizanoiPublicControls(){
+    // The current shared runtime only owns controls it can actually honour. Keep
+    // dormant historical markup hidden until a canonical implementation exists.
+    for(const id of ['settingsBtn','viewSettings','mobileLabels']){
+      const el=document.getElementById(id);
+      if(el){el.hidden=true;el.setAttribute('aria-hidden','true')}
+    }
+    const era301=document.querySelector('.eraBtn[data-era="301"]');
+    if(era301)era301.remove();
+
+    const desktopCopy=$('.desktopOnlyCopy');
+    if(desktopCopy)desktopCopy.textContent='Desktop: WASD walk · click the world to acquire mouse-look · Shift run · E inspect · M atlas.';
+    const controlHint=$('.controlHint');
+    if(controlHint)controlHint.innerHTML='<span class="kbd">WASD</span> walk &nbsp; <span class="kbd">MOUSE</span> look &nbsp; <span class="kbd">Shift</span> run &nbsp; <span class="kbd">E</span> inspect';
+
+    for(const fact of document.querySelectorAll('.fact')){
+      const heading=fact.querySelector('b');
+      if(heading?.textContent?.trim()==='Three historical layers'){
+        heading.textContent='Period-aware reconstruction';
+        const detail=fact.querySelector('small');
+        if(detail)detail.textContent='AD 225 is the primary High Imperial view. The Macellum preserves AD 301 Price Edict context, while the AD 425 control reveals the authored early-5th-century street/reuse layer.';
+      }
+    }
+  }
+
   saveSession();
   window.addEventListener('pagehide',()=>saveSession(),{once:true});
 
@@ -96,7 +121,7 @@
 
     for(const id of secondaryIds){
       const el=document.getElementById(id);
-      if(el)panel.appendChild(el);
+      if(el&&!el.hidden)panel.appendChild(el);
     }
 
     host.appendChild(toggle);
@@ -120,11 +145,12 @@
   }
 
   if(city==='aizanoi'){
+    normalizeAizanoiPublicControls();
     const hud=$('#hud');
     const top=$('.topbar',hud||document);
     body.dataset.city='aizanoi';
     const bottom=$('.bottomBar',hud||document);
-    const ids=['resumeBtn','settingsBtn','fullscreenBtn','tourBtn','atlasBtn','sourcesBtn','soundBtn','timeWrap'];
+    const ids=['resumeBtn','fullscreenBtn','tourBtn','atlasBtn','sourcesBtn','soundBtn','timeWrap'];
     const result=installDrawer(top,ids,$('#mapBox'));
     const hint=$('.controlHint',bottom||document);
     if(hint&&result?.panel)result.panel.appendChild(hint);
