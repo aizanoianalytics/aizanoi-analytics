@@ -11,13 +11,14 @@ const infra = read('infra/README.md');
 
 const itemDate = (item) => item.publishedAt.slice(0, 10);
 const storySlug = (item) => item.id.startsWith(`${itemDate(item)}-`) ? item.id.slice(11) : item.id;
-const storyPath = (item) => `/news/${itemDate(item)}/${storySlug(item)}/`;
+const storyPath = (item) => `/news/${item.kind === 'weekly' ? 'weekly/' : ''}${itemDate(item)}/${storySlug(item)}/`;
 const canonicalBase = [
   '/', '/news/', '/news/about/', '/tv/', '/analytics/', '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
   '/historic-world/', '/ancient-cities/rome-410-476/', '/ancient-cities/athens-450-430/'
 ];
 const canonical = [
   ...canonicalBase,
+  ...(feed.weeklyEditions || []).map((edition) => edition.path),
   ...feed.editions.map((edition) => edition.path),
   ...feed.items.map(storyPath),
   ...feed.categories.map((slug) => `/news/category/${slug}/`)

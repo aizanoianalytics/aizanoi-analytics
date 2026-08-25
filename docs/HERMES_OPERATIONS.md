@@ -41,9 +41,10 @@ Hermes may also implement engineering changes when asked, but must obey the same
 5. Include source publisher, URL and source publication time when available.
 6. Set `priority` only when making a real editorial prominence decision; do not let source prestige, source count or political viewpoint set it automatically.
 7. Add `image` only when provenance/rights satisfy `CONTENT_POLICY.md`. No image is preferable to invented or unclear rights metadata.
-8. Run `node scripts/news/build-news.mjs`.
-   The compiler must acquire its exclusive lock and complete staged validation; never copy a partially generated tree into production. The same build refreshes the News feed, edition/category pages, permanent article pages, `/news/about/`, RSS, `/news/sitemap.xml` and the root discovery sitemap.
-9. Run `node --test tests/*.test.mjs` or the repository's current release gate.
+8. For daily editions, target at least 15 original items across AI, Technology, Economy / Markets and Football, balanced roughly AI 5, Technology 4, Economy / Markets 3, Football 3. Do not manufacture quantity when source quality is weak. For weekly analysis (Mondays) target 4–6 longer pieces (≥ 240 characters each) with `"kind": "weekly"` and a matching `"week": "YYYY-Www"` label.
+9. Run `node scripts/news/build-news.mjs`.
+   The compiler must acquire its exclusive lock and complete staged validation; never copy a partially generated tree into production. The same build refreshes the News feed, daily edition/weekly edition/category pages, permanent article pages, `/news/about/`, RSS, `/news/sitemap.xml` and the root discovery sitemap.
+10. Run `node --test tests/*.test.mjs` or the repository's current release gate.
 10. Inspect the generated `frontend/news/index.json`, permanent article/edition/category tree, RSS and sitemap diffs.
 11. Commit with a meaningful message such as `content: publish 2026-08-21 news briefing`.
 12. Push to GitHub before production deployment.

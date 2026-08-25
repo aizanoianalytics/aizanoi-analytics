@@ -75,7 +75,7 @@ test('build emits deterministic edition, permanent article, methodology, categor
   assert.deepEqual(after, before, 'unchanged inputs must produce byte-identical output');
 
   const feed = JSON.parse(before['frontend/news/index.json']);
-  assert.equal(feed.schemaVersion, 3);
+  assert.equal(feed.schemaVersion, 4);
   assert.equal(feed.generatedAt, '2026-08-22T11:00:00.000Z');
   assert.deepEqual(feed.editions, [{ date: '2026-08-22', path: '/news/2026-08-22/', itemCount: 1 }]);
   assert.equal(feed.items[0].priority, 80);
@@ -188,6 +188,22 @@ test('News app presents the current edition feed and archive destination', async
   assert.doesNotMatch(html, /Hermes/i);
 });
 
+test('News app surfaces the current weekly edition alongside the daily edition', async () => {
+  const { renderNewsFeed } = await import(brandHubsUrl);
+  const html = renderNewsFeed({
+    editions: [{ date: '2026-08-31', path: '/news/2026-08-31/', itemCount: 8 }],
+    weeklyEditions: [{ date: '2026-08-31', week: '2026-W36', path: '/news/weekly/2026-08-31/', itemCount: 1 }],
+    items: [
+      { ...fixture, publishedAt:'2026-08-31T05:30:00Z', updatedAt:'2026-08-31T05:30:00Z', retrievedAt:'2026-08-31T05:30:00Z', id:'2026-08-31-daily' },
+      { ...weeklyFixture, publishedAt:'2026-08-31T06:00:00Z' }
+    ]
+  });
+  assert.match(html, /Weekly edition · 2026-W36/);
+  assert.match(html, /href="\/news\/weekly\/2026-08-31\/"/);
+  assert.match(html, /ECB July survey/);
+  assert.doesNotMatch(html, /Hermes/i);
+});
+
 test('rebuild removes editions and permanent article routes that are no longer present in source items', async () => {
   const dir = await projectWith([fixture]);
   assert.equal(build(dir).status, 0);
@@ -244,4 +260,74 @@ test('SOURCE_DATE_EPOCH rejects typo-scale timestamps', async () => {
   const result = build(dir, { SOURCE_DATE_EPOCH:'999999999999999' });
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /SOURCE_DATE_EPOCH: must be a realistic Unix timestamp/);
+});
+
+const weeklyFixture = {
+  id: '2026-08-31-ecb-inflation-expectations',
+  kind: 'weekly',
+  title: 'ECB July survey: euro-area consumers trim near-term inflation expectations',
+  summary: 'A reading of the European Central Bank\'s July consumer expectations survey, putting the July release in context with the prior three months, the five-year anchor and the surveyed growth and unemployment outlook — drawing only on the central bank\'s published release and the prior waves it links to.',
+  category: 'economy-markets',
+  priority: 70,
+  week: '2026-W36',
+  publishedAt: '2026-08-31T06:00:00Z',
+  updatedAt: '2026-08-31T06:00:00Z',
+  retrievedAt: '2026-08-31T05:30:00Z',
+  author: { name: 'Aizanoi Weekly Desk' },
+  editor: { name: 'Aizanoi Editorial Desk' },
+  image: null,
+  corrections: [],
+  tags: ['weekly', 'ECB', 'inflation expectations'],
+  sources: [
+    { publisher: 'European Central Bank', url: 'https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.pr260821~a044fdddd9.en.html', publishedAt: '2026-08-21T08:00:00Z' }
+  ]
+};
+
+test('weekly edition is generated at /news/weekly/YYYY-MM-DD/ with its own feed entry and sitemap exposure', async () => {
+  const dir = await projectWith([weeklyFixture]);
+  const result = build(dir);
+  assert.equal(result.status, 0, result.stderr);
+  const index = JSON.parse(await read(dir, 'frontend/news/index.json'));
+  assert.equal(index.schemaVersion, 4);
+  assert.equal(index.weeklyEditions.length, 1);
+  assert.equal(index.weeklyEditions[0].date, '2026-08-31');
+  assert.equal(index.weeklyEditions[0].week, '2026-W36');
+  assert.equal(index.weeklyEditions[0].path, '/news/weekly/2026-08-31/');
+  assert.equal(index.weeklyEditions[0].itemCount, 1);
+  assert.equal(index.items[0].kind, 'weekly');
+  const weeklyHtml = await read(dir, 'frontend/news/weekly/2026-08-31/index.html');
+  assert.match(weeklyHtml, /The Weekly Edition/);
+  assert.match(weeklyHtml, /rel="canonical" href="https:\/\/aizanoianalytics\.com\/news\/weekly\/2026-08-31\/"/);
+  assert.match(weeklyHtml, /NewsArticle/);
+  assert.match(weeklyHtml, /European Central Bank/);
+  const articleHtml = await read(dir, 'frontend/news/weekly/2026-08-31/ecb-inflation-expectations/index.html');
+  assert.match(articleHtml, /rel="canonical" href="https:\/\/aizanoianalytics\.com\/news\/weekly\/2026-08-31\/ecb-inflation-expectations\/"/);
+  assert.match(articleHtml, /NewsArticle/);
+  const landing = await read(dir, 'frontend/news/index.html');
+  assert.match(landing, /href="\/news\/weekly\/2026-08-31\/"/);
+  assert.match(landing, /Weekly archive/);
+  assert.match(await read(dir, 'frontend/sitemap.xml'), /\/news\/weekly\/2026-08-31\//);
+  assert.match(await read(dir, 'frontend/news/rss.xml'), /<category>Weekly<\/category>/);
+  assert.doesNotMatch(`${weeklyHtml}\n${landing}`, /Hermes/i);
+});
+
+test('weekly item must declare week and a longer minimum summary', async () => {
+  const tooShort = structuredClone(weeklyFixture);
+  tooShort.summary = 'Short weekly summary that must be at least 240 characters to be considered a real analysis paragraph rather than a daily headline rewrite — the editorial desk has been clear about this minimum length requirement.';
+  tooShort.summary = tooShort.summary.slice(0, 120);
+  tooShort.id = '2026-08-31-weekly-too-short';
+  const dir = await projectWith([tooShort]);
+  const result = build(dir);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /item-0\.json: summary must be at least 240 characters/);
+});
+
+test('weekly item must not pretend to a week that does not contain its publication date', async () => {
+  const wrongWeek = structuredClone(weeklyFixture);
+  wrongWeek.id = '2026-08-31-weekly-wrong-week';
+  wrongWeek.week = '2026-W01';
+  const dir = await projectWith([wrongWeek]);
+  const result = build(dir);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /week must match the ISO week of publishedAt/);
 });

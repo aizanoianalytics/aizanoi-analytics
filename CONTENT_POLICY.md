@@ -10,13 +10,14 @@ Aizanoi Analytics publishes **original summaries, analysis and presentation**. I
 
 Every Aizanoi News item must contain:
 - an original Aizanoi News title;
-- an original concise summary;
+- an original concise summary (80–600 characters for daily items, at least 240 characters for weekly analysis items);
 - category and publication timestamp;
 - an explicit editorial priority when the desk intends to control lead placement;
 - at least one source URL;
 - source publisher name;
 - source publication date when available;
-- retrieval/update timestamp in structured metadata.
+- retrieval/update timestamp in structured metadata;
+- a `kind` of either `daily` (default) or `weekly`. Weekly items must also declare a `week` label that matches the ISO week of the publication date (for example `2026-W36`).
 
 For important, disputed or fast-moving stories, prefer multiple **independent** sources and/or a primary source. Multiple links that ultimately repeat the same wire report, press release or organization do not count as independent corroboration.
 
