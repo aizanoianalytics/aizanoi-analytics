@@ -27,7 +27,7 @@ Athens is served at `/ancient-cities/athens-450-430/`. The historical frame rema
 2. Do not copy renderer, movement, collision, mobile, camera or teleport logic into Athens `app.js`.
 3. Reusable architecture belongs in the shared asset library; Parthenon/Propylaea identity belongs in dedicated shared hero assets.
 4. This is blocky/low-poly, not a voxel/chunk engine.
-5. Preserve deep-link jumps, mobile controls, evidence/source UI and `← Field System` navigation.
+5. Preserve deep-link jumps, mobile controls, evidence/source UI and `← AizanoiOS` navigation.
 6. Procedural urban fabric is always `plausible`.
 
 ## Required validation

@@ -75,7 +75,9 @@ frontend/news/* + frontend/sitemap.xml
 Aizanoi News app / public discovery
 ```
 
-The compiler validates ids, dates, the four published sections (AI, Technology, Economy / Markets and Football), original summary length, author/editor identity, correction history and mandatory source publisher/URL/date provenance. It does not fetch third-party sites itself. Source discovery stays in the private/operator layer. It deterministically generates the current landing, daily edition paths, category archives, JSON edition feed, RSS and News sitemap discovery; `SOURCE_DATE_EPOCH` may pin build metadata. Generation is serialized by an exclusive lock, built and validated in same-filesystem staging, rollback-safe, and recoverable after stale locks or interrupted promotion. The compiler runs in the private checkout; generated outputs must return to Git before an approved exact-SHA production deployment.
+The compiler validates ids, dates, the four published sections (AI, Technology, Economy / Markets and Football), editorial priority, original summary length, author/editor identity, optional image provenance, correction history and mandatory source publisher/URL/date provenance. It does not fetch third-party sites itself. Source discovery stays in the private/operator layer.
+
+It deterministically generates the current landing, daily edition paths, **permanent article pages**, category archives, `/news/about/`, the JSON edition feed, RSS, a dedicated `/news/sitemap.xml` and root sitemap discovery. `SOURCE_DATE_EPOCH` may pin build metadata. Generation is serialized by an exclusive lock, built and validated in same-filesystem staging, rollback-safe, and recoverable after stale locks or interrupted promotion. The compiler runs in the private checkout; generated outputs must be rebuilt and reviewed before an approved exact-SHA production deployment.
 
 `CONTENT_POLICY.md` is the publication contract.
 
@@ -83,7 +85,9 @@ The compiler validates ids, dates, the four published sections (AI, Technology, 
 
 `frontend/ancient-world/engine/` owns shared traversal/input/evidence/presentation behavior. City-specific archaeology and hero decisions stay city-local.
 
-The evidence boundary remains unchanged: documented/source-supported, archaeological/material, inferred, atmospheric and disputed where applicable.
+The evidence boundary remains unchanged: documented/source-supported, archaeological/material, inferred, atmospheric and disputed where applicable. Inferred/schematic massing must never become `documented` merely because its contextual source record exists.
+
+Historical World UI must advertise only behaviors the shared runtime actually owns. Dormant legacy controls are hidden rather than shown as false affordances until they have canonical implementation and browser regression coverage.
 
 ## Responsive contract
 
@@ -94,6 +98,8 @@ Phone and tablet layouts must use real browser/device state only. Do not fabrica
 ## Service worker
 
 The service worker precaches the shell, brand/device adapter, device stylesheet and News feed baseline with parallel independent fetches followed by a complete-or-fail cache write. Mutable same-origin assets and successful navigations use network-first behavior with cached offline fallback; non-core runtime entries are capped at 24. Activation removes superseded `aizanoi-field-shell-*` and `aizanoi-os-shell-*` caches. `/api/*` is never intercepted.
+
+AizanoiOS is a stateful shell, so **updates do not call `skipWaiting()` automatically**. A newly installed worker waits for clients using the previous worker to close/reload before activation. First-time installs activate normally. This avoids forcing a new cache/import graph over a document that booted with an older shell version. If an explicit in-app update flow is introduced later, it must coordinate activation with a deliberate reload and browser regression coverage.
 
 ## Deployment boundary
 

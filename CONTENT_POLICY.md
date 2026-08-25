@@ -12,12 +12,21 @@ Every Aizanoi News item must contain:
 - an original Aizanoi News title;
 - an original concise summary;
 - category and publication timestamp;
+- an explicit editorial priority when the desk intends to control lead placement;
 - at least one source URL;
 - source publisher name;
 - source publication date when available;
 - retrieval/update timestamp in structured metadata.
 
-For important, disputed or fast-moving stories, prefer multiple independent sources and/or a primary source.
+For important, disputed or fast-moving stories, prefer multiple **independent** sources and/or a primary source. Multiple links that ultimately repeat the same wire report, press release or organization do not count as independent corroboration.
+
+When a story is available both through an aggregator/rehost and from the original publisher, prefer linking the original publisher directly. An aggregator may remain as an additional source when it materially improves accessibility or context.
+
+## Editorial priority
+
+`priority` is an editorial signal, not a measure of truth. Higher values may control lead placement within an edition; the default is neutral. Priority must not be derived automatically from a publisher's prestige, source count, engagement bait or political viewpoint.
+
+Use it to express an actual desk decision about prominence. Do not let filename or identifier ordering silently choose the lead story.
 
 ## Attribution
 
@@ -36,22 +45,27 @@ Brief quotations may be used only when genuinely necessary and must remain short
 
 Do not copy third-party editorial images merely because they appear in a source article. Use:
 - original Aizanoi Analytics artwork/screenshots;
+- original editorial graphics generated from Aizanoi-owned design assets;
 - media explicitly licensed for reuse under compatible terms;
 - public-domain media;
 - official press assets whose terms permit the intended use;
 - embeds/links where appropriate instead of copying the file.
 
-Store rights/provenance metadata when third-party media is used.
+Store rights/provenance metadata when third-party media is used. A generic company logo must not be presented as though it were a story-specific editorial photograph. If no suitable story image exists, publishing without a story image is preferable to fabricating provenance.
 
 ## Corrections
 
-Material corrections should update the item timestamp and preserve a short correction note when the original publication could have misled readers.
+Material corrections should update the item timestamp and preserve a short correction note when the original publication could have misled readers. The generated article page must keep correction history visible and permanent.
+
+The corrections path should be exercised in automated fixtures even when the live correction count is zero.
 
 ## AI-assisted publishing
 
 Hermes or another model may collect sources, draft summaries, classify items and prepare commits. Before publication it must still satisfy this policy and the structured validation gate.
 
 Automation must never treat an LLM's unsupported memory as a source.
+
+Aizanoi News publicly discloses that AI-assisted tools may support source discovery, drafting and production while publication remains governed by this source/correction policy. The generated News methodology page is the canonical reader-facing explanation.
 
 ## TV and Journal
 

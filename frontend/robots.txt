@@ -8,5 +8,6 @@ Disallow: /api/
 # /market/ is intentionally removed and returns HTTP 410 in production.
 # Do not block it here: crawlers need to see the 410 to retire legacy URLs.
 
-# Sitemap
+# Sitemaps
 Sitemap: https://aizanoianalytics.com/sitemap.xml
+Sitemap: https://aizanoianalytics.com/news/sitemap.xml

@@ -60,9 +60,13 @@ test('compact live urban fabric is deterministic, dense across Rome and explicit
   assert.match(source, /denseStreetFrontage:\s*true/);
 });
 
-test('inferred source records resolve to a plausible evidence level', () => {
-  const inferred = BUILDINGS.find((building) => building.state === 'inferred');
-  assert.equal(evidenceForRecord(inferred).id, 'plausible');
+test('inferred source records remain explicitly plausible in the live Rome wrapper', () => {
+  const inferredRecords = BUILDINGS.filter((building) => building.state === 'inferred');
+  assert.ok(inferredRecords.length > 0, 'Rome should retain inferred source records for this regression');
+  for (const inferred of inferredRecords) {
+    assert.equal(inferred.evidence?.level, 'plausible', `${inferred.id} must not render as documented merely because it has source context`);
+    assert.equal(evidenceForRecord(inferred).id, 'plausible');
+  }
   const named = BUILDINGS.find((building) => building.id === 'pantheon');
   assert.equal(evidenceForRecord(named).id, 'documented');
 });

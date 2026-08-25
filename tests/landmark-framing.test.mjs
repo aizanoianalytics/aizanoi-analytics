@@ -2,11 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { landmarkCameraClearance, landmarkFramingDistance, landmarkLookHeight, landmarkLookPitch, landmarkSightClearance, landmarkViewDirections, traversalApproachClearance } from '../frontend/ancient-world/engine/landmark-framing.js';
 
 const root = resolve(import.meta.dirname, '..');
 const compatibility = readFileSync(resolve(root, 'frontend/ancient-world/engine/city-compatibility.js'), 'utf8');
 const mobileControls = readFileSync(resolve(root, 'frontend/ancient-world/engine/mobile-controls.js'), 'utf8');
+const importFromRoot = (relative) => import(pathToFileURL(resolve(root, relative)).href);
 
 test('shared landmark framing keeps large monuments dramatic without unsafe close-ups', () => {
   const colosseumDistance = landmarkFramingDistance({ w:125, d:102, h:48 });
@@ -34,8 +36,8 @@ test('modular runtime preserves authored landmark framing through the shared com
   assert.match(compatibility, /debug\.collide/);
   assert.match(compatibility, /debug\.teleportViews\[record\.id\]/);
 
-  const { BUILDINGS: rome } = await import(resolve(root, 'frontend/ancient-cities/rome-410-476/data/city.js'));
-  const { BUILDINGS: athens } = await import(resolve(root, 'frontend/ancient-cities/athens-450-430/data/city.js'));
+  const { BUILDINGS: rome } = await importFromRoot('frontend/ancient-cities/rome-410-476/data/city.js');
+  const { BUILDINGS: athens } = await importFromRoot('frontend/ancient-cities/athens-450-430/data/city.js');
   const colosseum = rome.find((record) => record.id === 'colosseum');
   const parthenon = athens.find((record) => record.id === 'parthenon');
   assert.equal(colosseum?.framing?.distance, 165);
@@ -45,7 +47,7 @@ test('modular runtime preserves authored landmark framing through the shared com
 });
 
 test('Aizanoi Temple keeps the authored open eastern sanctuary approach in city data', async () => {
-  const { BUILDINGS } = await import(resolve(root, 'frontend/historic-world/data/city.js'));
+  const { BUILDINGS } = await importFromRoot('frontend/historic-world/data/city.js');
   const temple = BUILDINGS.find((record) => record.id === 'temple');
   assert.equal(temple?.x, -160);
   assert.equal(temple?.z, 20);

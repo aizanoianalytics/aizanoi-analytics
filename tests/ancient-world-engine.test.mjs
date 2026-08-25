@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const root = resolve(import.meta.dirname, '..');
-const enginePath = resolve(root, 'frontend/ancient-world/engine/traversal.js');
+const enginePath = pathToFileURL(resolve(root, 'frontend/ancient-world/engine/traversal.js')).href;
 const {
   createTraversalSystem,
   rectCollider,

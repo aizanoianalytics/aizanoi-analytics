@@ -21,7 +21,7 @@ Rome is served at `/ancient-cities/rome-410-476/` and uses the shared Ancient Wo
 4. Reusable building vocabulary belongs in the shared asset library. Colosseum and Pantheon keep dedicated hero builders there.
 5. Urban fabric remains explicitly `plausible` and subordinate to named monuments/roads.
 6. Keep historical `state` separate from evidence confidence.
-7. Preserve deep-link jumps, mobile controls, inspect/evidence/source UI and `← Field System` navigation.
+7. Preserve deep-link jumps, mobile controls, inspect/evidence/source UI and `← AizanoiOS` navigation.
 
 ## Required validation
 

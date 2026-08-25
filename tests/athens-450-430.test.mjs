@@ -2,10 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const root = resolve(import.meta.dirname, '..');
 const city = resolve(root, 'frontend/ancient-cities/athens-450-430');
 const read = (path) => readFileSync(resolve(city, path), 'utf8');
+const importFromCity = (relative) => import(pathToFileURL(resolve(city, relative)).href);
 
 test('Athens experience provides a standalone WebGL entry page', () => {
   assert.ok(existsSync(resolve(city, 'index.html')));
@@ -18,7 +20,7 @@ test('Athens experience provides a standalone WebGL entry page', () => {
 test('Athens city data includes classical monuments, districts, roads and sourced records', async () => {
   assert.ok(existsSync(resolve(city, 'data/city.js')));
   assert.ok(existsSync(resolve(city, 'data/city-source.js')), 'period-correct wrapper should preserve the source dataset beside it');
-  const { CITY, SOURCES, REGIONS, STREETS, BUILDINGS, TELEPORTS } = await import(resolve(city, 'data/city.js'));
+  const { CITY, SOURCES, REGIONS, STREETS, BUILDINGS, TELEPORTS } = await importFromCity('data/city.js');
   assert.match(CITY.title, /ATHENS/);
   assert.match(CITY.title, /450.*430/);
   assert.match(CITY.description, /432.*430/);
@@ -34,7 +36,7 @@ test('Athens city data includes classical monuments, districts, roads and source
 });
 
 test('Athens c. 432–430 visual snapshot excludes later fifth-century buildings and duplicate terrain proxies', async () => {
-  const { BUILDINGS, TELEPORTS } = await import(resolve(city, 'data/city.js'));
+  const { BUILDINGS, TELEPORTS } = await importFromCity('data/city.js');
   const byId = new Map(BUILDINGS.map((item) => [item.id, item]));
   for (const laterId of ['athena-nike', 'erechtheion', 'erechtheion-north', 'erechtheion-karyatid', 'asclepieion', 'pompeion']) {
     assert.equal(byId.has(laterId), false, `${laterId} is later than the rendered c. 432–430 BCE snapshot`);
@@ -50,7 +52,7 @@ test('Athens c. 432–430 visual snapshot excludes later fifth-century buildings
 });
 
 test('Athens manifest remains renderer-neutral and references all named monuments', async () => {
-  const { ATHENS_MANIFEST, ATHENS_CAPABILITIES } = await import(resolve(city, 'data/manifest.js'));
+  const { ATHENS_MANIFEST, ATHENS_CAPABILITIES } = await importFromCity('data/manifest.js');
   assert.equal(ATHENS_MANIFEST.id, 'athens-450-430');
   assert.match(ATHENS_MANIFEST.title, /ATHENS/);
   assert.equal(typeof ATHENS_MANIFEST.contractVersion, 'number');
@@ -61,7 +63,7 @@ test('Athens manifest remains renderer-neutral and references all named monument
 });
 
 test('Athens topography remains available as research although live traversal is flat', async () => {
-  const { HILLS, ERIDANOS, ILISSOS, KEPHISSOS, terrainHeightAt } = await import(resolve(city, 'data/terrain.js'));
+  const { HILLS, ERIDANOS, ILISSOS, KEPHISSOS, terrainHeightAt } = await importFromCity('data/terrain.js');
   assert.ok(HILLS.some((h) => h.id === 'acropolis'));
   assert.ok(HILLS.some((h) => h.id === 'pnyx'));
   assert.ok(HILLS.some((h) => h.id === 'areopagus'));

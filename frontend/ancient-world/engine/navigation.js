@@ -25,7 +25,7 @@ async function cleanupForExit(onBeforeExit) {
   try { await onBeforeExit?.(); } catch (error) { console.warn('Ancient World exit cleanup failed:', error); }
 }
 
-export function installBackToOS({ href = '/', label = '← Field System', onBeforeExit } = {}) {
+export function installBackToOS({ href = '/', label = '← AizanoiOS', onBeforeExit } = {}) {
   ensureStyle();
   const existing = document.getElementById(LINK_ID);
   if (existing) return existing;
@@ -34,8 +34,8 @@ export function installBackToOS({ href = '/', label = '← Field System', onBefo
   link.id = LINK_ID;
   link.href = href;
   link.textContent = label;
-  link.setAttribute('aria-label', 'Return to the Aizanoi Field System');
-  link.dataset.ancientWorldNavigation = 'back-to-field-system';
+  link.setAttribute('aria-label', 'Return to AizanoiOS');
+  link.dataset.ancientWorldNavigation = 'back-to-aizanoi-os';
 
   link.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -96,7 +96,7 @@ function waitForRuntime({ timeout = 9000, interval = 40 } = {}) {
 }
 
 /**
- * Consume a Field System world command without coupling the shared engine to a
+ * Consume an AizanoiOS world command without coupling the shared engine to a
  * city renderer. Each experience keeps ownership of its own enter and teleport
  * behavior; this bridge only exercises the public DOM controls already used by visitors.
  */
