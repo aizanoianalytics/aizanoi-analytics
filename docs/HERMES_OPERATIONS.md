@@ -1,10 +1,12 @@
-# Hermes Operations — Aizanoi
+# Hermes Operations — Aizanoi Analytics
 
-Hermes is the private operator/automation agent. The public repository is still the software/content source of truth.
+Hermes is the private operator/automation agent for **Aizanoi Analytics**. The public repository remains the software/content source of truth.
+
+`Aizanoi` may appear in product names such as Aizanoi News and AizanoiOS, but Hermes must treat **Aizanoi Analytics** as the company and umbrella brand unless `PRODUCT.md` is explicitly changed by the owner.
 
 ## Always read first
 
-Before changing or deploying Aizanoi, read:
+Before changing or deploying Aizanoi Analytics, read:
 1. `PRODUCT.md`
 2. `AGENTS.md`
 3. `CONTENT_POLICY.md`
@@ -15,7 +17,7 @@ Before changing or deploying Aizanoi, read:
 ## Responsibility split
 
 ### Hermes owns routine operations
-- source discovery and daily News preparation;
+- source discovery and daily Aizanoi News preparation;
 - scheduled content maintenance;
 - server-side Git pull/fetch and deployment;
 - Nginx/static delivery checks;
@@ -28,7 +30,7 @@ Before changing or deploying Aizanoi, read:
 - test/CI changes;
 - product policy changes.
 
-Hermes may also implement engineering changes when asked, but must obey the same canonical-owner and test rules.
+Hermes may also implement engineering changes when asked, but must obey the same canonical-owner, brand and test rules.
 
 ## News publishing loop
 
@@ -38,9 +40,9 @@ Hermes may also implement engineering changes when asked, but must obey the same
 4. Never paste a full article into the repository.
 5. Include source publisher, URL and source publication time when available.
 6. Run `node scripts/news/build-news.mjs`.
-   The compiler must acquire its exclusive lock and complete staged validation; never copy a partially generated tree into production.
+   The compiler must acquire its exclusive lock and complete staged validation; never copy a partially generated tree into production. The same build also refreshes News edition/category sitemap discovery.
 7. Run `node --test tests/*.test.mjs` or the repository's current release gate.
-8. Inspect the generated `frontend/news/index.json` and edition-tree diff.
+8. Inspect the generated `frontend/news/index.json`, edition/category tree and `frontend/sitemap.xml` diff.
 9. Commit with a meaningful message such as `content: publish 2026-08-21 news briefing`.
 10. Push to GitHub before production deployment.
 
@@ -51,10 +53,10 @@ Do not treat a merge as a deployment.
 1. Confirm the exact approved Git SHA.
 2. Record the currently deployed SHA for rollback.
 3. Fetch/pull the approved commit on the server.
-4. Run the applicable validation/build step.
+4. Run the applicable validation/build step, including the News build when generated News/sitemap outputs must be refreshed.
 5. Deploy static files using the existing production procedure.
 6. Confirm source-to-production checksum/SHA parity where the deployment tooling supports it.
-7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, one Historical World and static assets.
+7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, one Historical World and static assets. The `analytics` route/app id remains a compatibility identifier; the visible product is **Dashboards**.
 8. If a regression appears, roll back to the recorded known-good SHA instead of hot-fixing production only.
 
 ## Safety boundaries

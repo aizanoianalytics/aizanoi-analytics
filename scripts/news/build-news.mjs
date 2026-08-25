@@ -5,6 +5,7 @@ const root = process.cwd();
 const sourceDir = path.join(root, 'content/news/items');
 const publicDir = path.join(root, 'frontend');
 const newsDir = path.join(publicDir, 'news');
+const sitemapFile = path.join(publicDir, 'sitemap.xml');
 const lockFile = path.join(root, '.aizanoi-news-build.lock');
 const siteUrl = 'https://aizanoianalytics.com';
 const categoryLabels = new Map([
@@ -12,6 +13,20 @@ const categoryLabels = new Map([
   ['technology', 'Technology'],
   ['economy-markets', 'Economy / Markets'],
   ['football', 'Football']
+]);
+const staticSitemapEntries = Object.freeze([
+  ['/', '2026-08-24'],
+  ['/news/', '2026-08-24'],
+  ['/tv/', '2026-08-24'],
+  ['/analytics/', '2026-08-24'],
+  ['/worlds/', '2026-08-24'],
+  ['/forge/', '2026-08-24'],
+  ['/journal/', '2026-08-24'],
+  ['/labs/', '2026-08-24'],
+  ['/arcade/', '2026-08-24'],
+  ['/historic-world/', '2026-08-23'],
+  ['/ancient-cities/rome-410-476/', '2026-08-23'],
+  ['/ancient-cities/athens-450-430/', '2026-08-23']
 ]);
 
 function fail(file, message) { throw new Error(`${file}: ${message}`); }
@@ -40,6 +55,8 @@ async function recoverInterruptedBuild() {
   const entries = await readdir(publicDir).catch(() => []);
   const stages = entries.filter((name) => name.startsWith('.aizanoi-news-stage-'));
   const backups = entries.filter((name) => name.startsWith('.aizanoi-news-backup-')).sort();
+  const sitemapStages = entries.filter((name) => name.startsWith('.aizanoi-sitemap-stage-'));
+  const sitemapBackups = entries.filter((name) => name.startsWith('.aizanoi-sitemap-backup-')).sort();
   let liveExists = true;
   try { await readdir(newsDir); }
   catch (error) { if (error.code === 'ENOENT') liveExists = false; else throw error; }
@@ -47,8 +64,17 @@ async function recoverInterruptedBuild() {
     const restore = backups.pop();
     await rename(path.join(publicDir, restore), newsDir);
   }
+  let sitemapExists = true;
+  try { await readFile(sitemapFile); }
+  catch (error) { if (error.code === 'ENOENT') sitemapExists = false; else throw error; }
+  if (!sitemapExists && sitemapBackups.length) {
+    const restore = sitemapBackups.pop();
+    await rename(path.join(publicDir, restore), sitemapFile);
+  }
   await Promise.all(stages.map((name) => rm(path.join(publicDir, name), { recursive:true, force:true })));
   await Promise.all(backups.map((name) => rm(path.join(publicDir, name), { recursive:true, force:true })));
+  await Promise.all(sitemapStages.map((name) => rm(path.join(publicDir, name), { force:true })));
+  await Promise.all(sitemapBackups.map((name) => rm(path.join(publicDir, name), { force:true })));
 }
 function iso(value, file, field) {
   const match = typeof value === 'string' && value.match(/^(\d{4})-(\d{2})-(\d{2})T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$/);
@@ -139,23 +165,34 @@ function page({ title, eyebrow, heading, deck, items, editionDate = '', archiveL
           item:{ '@type':'NewsArticle', headline:item.title, description:item.summary, datePublished:item.publishedAt, dateModified:item.updatedAt, author:{ '@type':'Organization', name:item.author.name }, editor:{ '@type':'Person', name:item.editor.name }, mainEntityOfPage:`${canonical}#${item.id}` }
         }))
       }
-    : { '@context':'https://schema.org', '@type':'CollectionPage', name:title, description:deck, url:canonical, isPartOf:{ '@type':'WebSite', name:'Aizanoi', url:siteUrl } };
+    : { '@context':'https://schema.org', '@type':'CollectionPage', name:title, description:deck, url:canonical, isPartOf:{ '@type':'WebSite', name:'Aizanoi Analytics', url:siteUrl } };
   const jsonLd = JSON.stringify(structured).replace(/</g, '\\u003c');
   const content = items.length
     ? `<main class="news-grid">${items.map((item, index) => story(item, index === 0)).join('')}</main>`
     : `<main class="empty-edition"><p class="kicker">THE PRESS IS READY</p><h2>No edition has been published yet.</h2><p>The News Desk is preparing concise, original reports with named editors and linked sources. Return for the first edition.</p></main>`;
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${htmlEscape(title)}</title><meta name="description" content="${htmlEscape(deck)}"><link rel="canonical" href="${htmlEscape(canonical)}"><meta property="og:type" content="website"><meta property="og:site_name" content="Aizanoi News"><meta property="og:title" content="${htmlEscape(title)}"><meta property="og:description" content="${htmlEscape(deck)}"><meta property="og:url" content="${htmlEscape(canonical)}"><meta property="og:image" content="${siteUrl}/assets/branding/aizanoi-og.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${htmlEscape(title)}"><meta name="twitter:description" content="${htmlEscape(deck)}"><meta name="twitter:image" content="${siteUrl}/assets/branding/aizanoi-og.png"><script type="application/ld+json">${jsonLd}</script><link rel="alternate" type="application/rss+xml" title="Aizanoi News RSS" href="/news/rss.xml"><link rel="stylesheet" href="/news/news.css"></head>
-<body><header class="masthead"><a class="wordmark" href="/news/" aria-label="Aizanoi News home">AIZANOI <span>NEWS</span></a><p>${htmlEscape(eyebrow)}</p><nav aria-label="News sections">${[...categoryLabels].map(([slug, label]) => `<a href="/news/category/${slug}/">${htmlEscape(label)}</a>`).join('')}<a href="/news/rss.xml">RSS</a></nav></header>
+<body><header class="masthead"><a class="wordmark" href="/news/" aria-label="Aizanoi News home">AIZANOI <span>NEWS</span></a><p>${htmlEscape(eyebrow)}</p><nav aria-label="News sections"><a href="/">Aizanoi Analytics</a>${[...categoryLabels].map(([slug, label]) => `<a href="/news/category/${slug}/">${htmlEscape(label)}</a>`).join('')}<a href="/news/rss.xml">RSS</a></nav></header>
 <section class="edition-head"><p class="edition-label">${editionDate ? 'THE DAILY EDITION' : 'THE NEWS ARCHIVE'}</p><h1>${htmlEscape(heading)}</h1><p>${htmlEscape(deck)}</p></section>${content}${archiveLinks}
-<footer><p>Aizanoi News · Original summaries · Sources before claims</p><a href="/">Return to AizanoiOS</a></footer></body></html>\n`;
+<footer><p>Aizanoi News · An Aizanoi Analytics publication · Sources before claims</p><a href="/">Return to AizanoiOS</a></footer></body></html>\n`;
 }
 
 const css = `:root{--paper:#f3ead7;--ink:#17130e;--muted:#675f52;--rule:#2a241b;--brass:#9a6c25;--rust:#9a3f27}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,'Times New Roman',serif;background-image:linear-gradient(rgba(154,108,37,.035) 1px,transparent 1px);background-size:100% 24px}.masthead,.edition-head,.news-grid,.empty-edition,footer,.archive-strip{width:min(1180px,calc(100% - 32px));margin-inline:auto}.masthead{padding:24px 0 12px;text-align:center;border-bottom:4px double var(--rule)}.wordmark{color:var(--ink);font-size:clamp(2rem,7vw,5rem);font-weight:900;letter-spacing:-.055em;text-decoration:none}.wordmark span{color:var(--rust)}.masthead>p{margin:3px 0 14px;font:700 .72rem/1.3 ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase}.masthead nav{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 22px;border-top:1px solid var(--rule);padding-top:10px}.masthead nav a,.archive-strip a,footer a{color:var(--ink);font:700 .76rem/1.4 Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;text-decoration-color:var(--brass);text-underline-offset:4px}.edition-head{text-align:center;padding:38px 8px 28px;border-bottom:1px solid var(--rule)}.edition-label,.kicker{font:800 .7rem/1.3 Arial,sans-serif;letter-spacing:.16em;color:var(--rust);text-transform:uppercase}.edition-head h1{margin:7px 0;font-size:clamp(2.1rem,5vw,4.8rem);line-height:.95}.edition-head>p:last-child{color:var(--muted);font-style:italic}.news-grid{display:grid;grid-template-columns:repeat(3,1fr);padding:26px 0;border-bottom:3px double var(--rule)}.story{padding:0 22px 22px;border-left:1px solid #9c907c}.story:nth-child(3n+1){border-left:0}.story h2{font-size:1.55rem;line-height:1.04;margin:7px 0 14px}.story.lead{grid-column:span 2}.story.lead h2{font-size:clamp(2rem,4vw,3.7rem)}.summary{font-size:1rem;line-height:1.55}.byline,.source-line,.corrections{font:600 .72rem/1.55 Arial,sans-serif;color:var(--muted)}.source-line a{color:var(--rust);font-weight:700}.corrections summary{cursor:pointer;color:var(--rust)}.empty-edition{max-width:780px;text-align:center;padding:80px 24px}.empty-edition h2{font-size:clamp(2rem,5vw,4rem);margin:8px}.empty-edition p:last-child{font-size:1.15rem;line-height:1.6;color:var(--muted)}.archive-strip{padding:24px 0;display:flex;gap:14px;flex-wrap:wrap}.archive-strip h2{width:100%;margin:0;font-size:1.15rem;text-transform:uppercase;letter-spacing:.08em}footer{display:flex;justify-content:space-between;gap:20px;padding:25px 0 50px;font:700 .72rem Arial,sans-serif;color:var(--muted)}@media(max-width:760px){.news-grid{grid-template-columns:1fr}.story,.story:nth-child(3n+1){grid-column:auto;border-left:0;border-top:1px solid #9c907c;padding:22px 4px}.story:first-child{border-top:0}.story.lead h2,.story h2{font-size:2rem}.masthead nav{gap:10px 16px}.edition-head{padding-top:28px}footer{display:block}}`;
 
 function rss(items, generatedAt) {
   const entries = items.map((item) => `<item><title>${xmlEscape(item.title)}</title><link>${siteUrl}/news/${itemDate(item)}/#${xmlEscape(item.id)}</link><guid isPermaLink="false">aizanoi-news:${xmlEscape(item.id)}</guid><pubDate>${new Date(item.publishedAt).toUTCString()}</pubDate><category>${xmlEscape(categoryLabels.get(item.category))}</category><dc:creator>${xmlEscape(item.author.name)}</dc:creator><description>${xmlEscape(item.summary)}</description><source url="${xmlEscape(item.sources[0].url)}">${xmlEscape(item.sources[0].publisher)}</source></item>`).join('');
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Aizanoi News</title><link>${siteUrl}/news/</link><description>Original, concise and source-linked coverage.</description><language>en</language><lastBuildDate>${new Date(generatedAt).toUTCString()}</lastBuildDate>${entries}</channel></rss>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Aizanoi News</title><link>${siteUrl}/news/</link><description>Original, concise and source-linked coverage from Aizanoi Analytics.</description><language>en</language><lastBuildDate>${new Date(generatedAt).toUTCString()}</lastBuildDate>${entries}</channel></rss>\n`;
+}
+
+function sitemap(editions) {
+  const dynamic = [
+    ...editions.map((edition) => [edition.path, edition.date]),
+    ...[...categoryLabels.keys()].map((slug) => [`/news/category/${slug}/`, editions[0]?.date || '2026-08-24'])
+  ];
+  const entries = [...staticSitemapEntries, ...dynamic];
+  const seen = new Set();
+  const urls = entries.filter(([route]) => !seen.has(route) && seen.add(route));
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(([route,lastmod]) => `  <url>\n    <loc>${siteUrl}${xmlEscape(route)}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`).join('\n')}\n</urlset>\n`;
 }
 
 const buildLock = await acquireBuildLock();
@@ -164,8 +201,12 @@ await recoverInterruptedBuild();
 const nonce = `${process.pid}-${Date.now()}`;
 const stageDir = path.join(publicDir, `.aizanoi-news-stage-${nonce}`);
 const backupDir = path.join(publicDir, `.aizanoi-news-backup-${nonce}`);
+const sitemapStage = path.join(publicDir, `.aizanoi-sitemap-stage-${nonce}.xml`);
+const sitemapBackup = path.join(publicDir, `.aizanoi-sitemap-backup-${nonce}.xml`);
 let oldTreeMoved = false;
-let promoted = false;
+let oldSitemapMoved = false;
+let newsPromoted = false;
+let sitemapPromoted = false;
 
 try {
   let names = [];
@@ -194,6 +235,7 @@ try {
   const feed = { schemaVersion: 2, generatedAt, categories: [...categoryLabels.keys()], editions, items };
 
   await rm(stageDir, { recursive:true, force:true });
+  await rm(sitemapStage, { force:true });
   await mkdir(stageDir, { recursive:true });
   await writeFile(path.join(stageDir, 'index.json'), `${JSON.stringify(feed, null, 2)}\n`);
   await writeFile(path.join(stageDir, 'news.css'), `${css}\n`);
@@ -211,6 +253,7 @@ try {
     await writeFile(path.join(dir, 'index.html'), page({ title: `${label} Archive — Aizanoi News`, eyebrow: 'Aizanoi News · Section archive', heading: `${label} Archive`, deck: `Every published ${label} report, newest first.`, items: items.filter((item) => item.category === slug), canonicalPath: `/news/category/${slug}/` }));
   }
   await writeFile(path.join(stageDir, 'rss.xml'), rss(items, generatedAt));
+  await writeFile(sitemapStage, sitemap(editions));
 
   JSON.parse(await readFile(path.join(stageDir, 'index.json'), 'utf8'));
   for (const required of [
@@ -220,6 +263,7 @@ try {
   ]) {
     await readFile(path.join(stageDir, required));
   }
+  await readFile(sitemapStage);
   if (process.env.AIZANOI_NEWS_FAIL_AFTER_STAGE === '1') throw new Error('Injected failure after staged News validation');
 
   try {
@@ -229,19 +273,37 @@ try {
     if (error.code !== 'ENOENT') throw error;
   }
   try {
-    await rename(stageDir, newsDir);
-    promoted = true;
+    await rename(sitemapFile, sitemapBackup);
+    oldSitemapMoved = true;
   } catch (error) {
-    if (oldTreeMoved) await rename(backupDir, newsDir);
+    if (error.code !== 'ENOENT') throw error;
+  }
+  try {
+    await rename(stageDir, newsDir);
+    newsPromoted = true;
+    await rename(sitemapStage, sitemapFile);
+    sitemapPromoted = true;
+  } catch (error) {
+    if (newsPromoted) await rm(newsDir, { recursive:true, force:true });
+    if (sitemapPromoted) await rm(sitemapFile, { force:true });
+    if (oldTreeMoved) await rename(backupDir, newsDir).catch(() => {});
+    if (oldSitemapMoved) await rename(sitemapBackup, sitemapFile).catch(() => {});
     throw error;
   }
   if (oldTreeMoved) await rm(backupDir, { recursive:true, force:true });
-  console.log(`Aizanoi News: wrote ${items.length} item(s), ${editions.length} edition(s) and ${categoryLabels.size} archive(s)`);
+  if (oldSitemapMoved) await rm(sitemapBackup, { force:true });
+  console.log(`Aizanoi News: wrote ${items.length} item(s), ${editions.length} edition(s), ${categoryLabels.size} archive(s) and sitemap discovery`);
 } finally {
   await rm(stageDir, { recursive:true, force:true });
-  if (!promoted && oldTreeMoved) {
+  await rm(sitemapStage, { force:true });
+  if (!newsPromoted && oldTreeMoved) {
     try { await rename(backupDir, newsDir); } catch (_) {}
   }
+  if (!sitemapPromoted && oldSitemapMoved) {
+    try { await rename(sitemapBackup, sitemapFile); } catch (_) {}
+  }
+  await rm(backupDir, { recursive:true, force:true });
+  await rm(sitemapBackup, { force:true });
   await buildLock?.close();
   await rm(lockFile, { force:true });
 }

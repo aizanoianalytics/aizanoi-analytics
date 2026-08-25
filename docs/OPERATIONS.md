@@ -1,6 +1,6 @@
 # Operations and recovery checklist
 
-This document separates source-controlled product work from provider/server actions that require independent evidence. Do not mark an item complete merely because configuration guidance exists in Git.
+This document separates source-controlled Aizanoi Analytics product work from provider/server actions that require independent evidence. Do not mark an item complete merely because configuration guidance exists in Git.
 
 ## GitHub repository controls
 
@@ -26,7 +26,7 @@ Before every production frontend rollout:
 4. deploy only the intended static runtime files;
 5. verify source ↔ production checksums for changed files;
 6. run `nginx -t` before reloading any production Nginx configuration;
-7. test `/`, all three Historical Worlds and critical app assets;
+7. test `/`, core AizanoiOS apps and all three Historical Worlds;
 8. verify historical API fail-closed behavior;
 9. verify security headers on both HTML and static-asset responses;
 10. verify mutable HTML/JS/CSS revalidate rather than remaining fresh under an old release;
@@ -44,14 +44,14 @@ Production Nginx should be verified for:
 - revalidation/no-cache behavior for root HTML, manifest, `service-worker.js`, unhashed JS/CSS and Historical World code;
 - longer caching only for relatively stable image/icon/media assets;
 - `/.well-known/security.txt`;
-- CSP allowing `blob:` only where the browser-local PDF reader requires it (`frame-src`), without allowing inline JavaScript;
+- CSP matching the actual active browser runtime without permissions retained solely for retired Workbench tools;
 - security headers remaining present on responses that also carry cache policy headers;
 - no application `proxy_pass` or listener on the retired visitor backend;
 - `/api/chat -> 410` and other `/api/* -> 404`.
 
 The reference config intentionally uses Nginx `expires` inside cache-specific locations rather than location-level `add_header Cache-Control`; on common Nginx versions, a location-level `add_header` would otherwise stop inheritance of the server-level security headers.
 
-The Field System service worker precaches only the small core shell with `cache: reload` and must fail installation rather than activate a partial precache. App CSS, research modules and Historical Worlds intentionally remain network-lazy. Once requested, same-origin static assets use network-first delivery so mutable files can revalidate immediately after a release; a successful response refreshes the runtime cache and that cache is used only as the offline/network-failure fallback. When the core precache or delivery contract changes in a future release, bump the `aizanoi-field-shell-*` cache version so activation can retire the previous shell cache cleanly.
+The AizanoiOS service worker precaches only the small core shell with `cache: reload` and must fail installation rather than activate a partial precache. Product modules and Historical Worlds intentionally remain network-lazy. Once requested, same-origin static assets use network-first delivery so mutable files can revalidate immediately after a release; a successful response refreshes the runtime cache and that cache is used only as the offline/network-failure fallback. When the core precache or delivery contract changes in a future release, bump the `aizanoi-os-shell-*` cache version so activation can retire the previous shell cache cleanly.
 
 Do not use long-lived `immutable` caching until asset filenames are content-hashed.
 
@@ -97,9 +97,10 @@ DEPLOYED COMMIT
 ROLLBACK SNAPSHOT
 CHECKSUM PARITY
 ROOT / PWA
-FIELD SYSTEM DESKTOP
-FIELD SYSTEM TABLET
-FIELD SYSTEM MOBILE
+AIZANOIOS DESKTOP
+AIZANOIOS TABLET
+AIZANOIOS MOBILE
+NEWS / DASHBOARDS / CORE APPS
 HISTORICAL WORLDS
 STATIC SECURITY
 DELIVERY HEADERS

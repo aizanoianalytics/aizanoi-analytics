@@ -2,110 +2,46 @@
 
 Aizanoi Analytics is developed as a continuous open-source project. This file records major public milestones rather than every internal commit.
 
-## Unreleased — Field System v3
+## Unreleased — Aizanoi Analytics platform cleanup
 
-### Product / design
+### Brand / product truth
 
-- rebuilt the root product as **Aizanoi Field System v3**, an archaeological field-workspace rather than a generic OS imitation;
-- introduced a calmer and more spacious visual system with restrained translucent chrome, warm paper research surfaces and Worlds-first hierarchy;
-- reorganized Home around a recommended/continuing field mission, Historical Worlds, Research Workspace and secondary Tools & Experiments;
-- kept one coherent product catalog across desktop, tablet and mobile while adapting window behavior to the available space/input model;
-- added `DESIGN.md` as the canonical visual/interaction contract.
+- locked **Aizanoi Analytics** as the company and umbrella public brand;
+- retained `Aizanoi` as short-form identity inside product names rather than a separate parent brand;
+- renamed the user-facing analytical product to **Dashboards** while preserving `/analytics/` and app id `analytics` for compatibility;
+- aligned AizanoiOS, static product landings, metadata and maintained documentation with that hierarchy.
 
-### Architecture
+### Discovery / publishing
 
-- replaced the compatibility-on-compatibility shell with one canonical v3 registry, workspace store, window/router/dialog lifecycle and command system;
-- retired the previous global OS CSS stack and legacy shell/workbench/product-polish JavaScript layers;
-- reduced the initial root document to a small semantic bootstrap with four initial stylesheets and one ES module;
-- moved noncritical research/tool applications behind lazy module loading and lazy app styles;
-- standardized Field System design tokens under a single `--az-*` namespace;
-- introduced one shared IndexedDB Archive store for Archive, Notes, Data Lab, Source Reader and Artifact Viewer.
+- added Aizanoi News to shared product navigation;
+- expanded News sitemap coverage to daily editions and category archives;
+- strengthened regression coverage so maintained documentation, navigation and sitemap discovery cannot silently drift back to retired contracts.
 
-### Research workspace
+### Asset cleanup
 
-- added useful first-launch Archive sample records instead of an empty canvas;
-- added Archive metadata inspection, local imports and record-to-app routing;
-- added Field Note templates for observation, reconstruction hypothesis and source review with local autosave;
-- added local CSV/JSON Data Lab preview and “send summary to Notes” workflow;
-- added local PDF/Markdown/text Source Reader and citation/note actions;
-- added local image Artifact Viewer with provenance metadata;
-- rewrote Projects around current Field System, Historical Worlds and research work only.
+- moved active AizanoiOS products away from retired Workbench icon filenames to canonical product icon names.
 
-### Historical Worlds integration
+## 2026-08-23 — AizanoiOS umbrella platform baseline
 
-- kept the finalized Aizanoi/Rome/Athens traversal/evidence baseline intact;
-- added a lightweight browser-local Field Session bridge between a Historical World and the Field System;
-- added a shared **Field System** return action inside the Historical World Explore drawer;
-- kept the 51-landmark walk/traversal regression as a release blocker.
+- established AizanoiOS as the adaptive browser-native shell across desktop, tablet and mobile;
+- introduced the current eight-app public catalog: News, TV, analytical products, Historical Worlds, Forge, Journal, Labs and Arcade;
+- retired the visitor-facing Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Workspace Monitor bundle;
+- added static product landing pages, source-led News publishing, responsive device presentations and product-level SEO metadata;
+- preserved a static-first visitor runtime behind Nginx.
 
-### Terminal / Monitor
+## 2026-08-20 — Superseded Field System consolidation
 
-- replaced generic shell cosplay with domain commands such as `worlds`, `open`, `find`, `session` and `evidence`;
-- kept Field Terminal browser-only with no remote/server command path;
-- changed Workspace Monitor to browser-observable facts only: storage, open apps, service-worker state, connectivity, viewport/install mode and field-session context.
+> Historical note: the Field System/Research Workspace described in this milestone is **not the current public product contract**. Its visitor-facing Workbench applications were subsequently retired. Current architecture and product truth live in `PRODUCT.md`, `AGENTS.md`, `DESIGN.md` and `ARCHITECTURE.md`.
 
-### Legacy retirement / product truth
+This milestone consolidated an earlier archaeological research-workspace iteration. It introduced the canonical v3 shell foundations, accessibility improvements, browser-local research tools and a shared Historical Worlds bridge. Those experiments informed the current AizanoiOS architecture, but Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Workspace Monitor are no longer public applications.
 
-- removed retired Aizanoi AI / HR AI discovery, manifest, registry and compatibility surfaces from the public frontend;
-- removed legacy XP icon pack and compatibility shell files;
-- aligned root HTML, meta/OG/Twitter, manifest and error surfaces with the current static/local-first digital archaeology product;
-- removed the invalid legacy SVG transform from the root shell by removing the old monolithic markup entirely.
+## 2026-08-19 — Static public-launch baseline
 
-### Accessibility / QA
-
-- introduced modal opener capture, initial focus, Tab containment, background `inert`, Escape close and focus restore;
-- added keyboard window Move/Resize through the Window menu;
-- enforced a 44 px mobile/coarse-pointer target floor on canonical shell actions;
-- raised canonical functional typography to an 11 px minimum;
-- added axe-core serious/critical browser gates for representative desktop/mobile Field System surfaces;
-- added route/window consistency and app-lazy-loading Chromium assertions;
-- replaced the compatibility-shell QA matrix with Field System v3 tests and rendered desktop/tablet/mobile review captures.
-
-### Static delivery / operations guidance
-
-- added `/.well-known/security.txt` to the static tree;
-- updated the sanitized Nginx reference with gzip, explicit manifest MIME, bounded cache policy, stronger static security headers and no application proxy;
-- added `docs/OPERATIONS.md` to separate provider/server tasks from source-controlled facts;
-- added `CODEOWNERS` for security-sensitive runtime, workflow and historical-evidence surfaces.
-
-See [ROADMAP.md](ROADMAP.md), [DESIGN.md](DESIGN.md) and [ARCHITECTURE.md](ARCHITECTURE.md).
-
-## 2026-08-19 — Field System public-launch baseline
-
-This milestone records the compatibility-era public baseline before the v3 consolidation above.
-
-### Added / improved
-
-- unified Aizanoi Field System across desktop, tablet and mobile;
-- synchronized 11-app launcher;
-- consistent application interiors and touch-friendly tablet/mobile layouts;
-- expanded desktop/tablet/mobile Chromium product smoke coverage;
-- expanded final visual-review capture;
-- public project showcase documentation, contribution policy, security policy and roadmap.
-
-### Terminal
-
-- moved fully to a browser-only virtual shell;
-- removed historical Windows / host-shell presentation leaks;
-- standardized Field Terminal identity;
-- added browser assertions that Terminal produces no application API requests.
-
-### Security / architecture
-
-- public web runtime became static-only;
-- visitor-facing Node/Express backend retired;
-- port/backend dependency removed from public application architecture;
-- historical `/api/chat` fails closed with `410 Gone`;
-- other historical/unknown `/api/*` routes fail closed;
-- external AI provider integration removed from the active runtime;
-- production deployment examples aligned with static Nginx serving.
-
-### Quality
-
-- regression suite expanded to cover product contracts, static runtime, security, historical worlds and local tools;
-- Chromium smoke tests covered Field System, Terminal, workstation applications, Rome and Athens;
-- Lighthouse budgets remained a release gate;
-- visual review artifacts generated for desktop, tablet, mobile and historical worlds.
+- moved the public web runtime to static-only delivery;
+- retired the visitor-facing Node/Express backend and external AI-provider runtime path;
+- made historical `/api/chat` fail closed with `410 Gone` and other unknown `/api/*` paths fail closed;
+- expanded desktop/tablet/mobile browser QA, accessibility checks, security policy and deployment documentation;
+- established Historical Worlds and local browser games as production-tested public surfaces.
 
 ## 2026-08-17 — Ancient World shared-engine expansion
 
@@ -120,6 +56,6 @@ This milestone records the compatibility-era public baseline before the v3 conso
 
 ## Earlier development
 
-Earlier commits established Aizanoi Historic World, the original browser-OS/Field System concept, local games/projects, Archive/Notes/Data experiments, PWA support, responsive hardening and the first CI/deployment documentation.
+Earlier commits established Aizanoi Historic World, the original browser-OS/Field System experiments, local games, PWA support, responsive hardening and the first CI/deployment documentation.
 
 For fine-grained history, use the repository commit and pull-request timeline.

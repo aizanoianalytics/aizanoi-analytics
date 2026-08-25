@@ -1,24 +1,24 @@
-# Aizanoi — Agent Context
+# Aizanoi Analytics — Agent Context
 
 ## Start here
 
 Before changing code or content, read `PRODUCT.md`, this file, `CONTENT_POLICY.md`, `DESIGN.md`, `ARCHITECTURE.md`, the nearest area-specific `AGENTS.md`, the affected runtime path and current Git history.
 
-Aizanoi is an independent digital studio for **media, data, software, research and interactive worlds**.
+**Aizanoi Analytics** is the company and umbrella brand for media, data, software, research and interactive worlds in this repository. `Aizanoi` is permitted as short-form identity inside product names, but must not be redefined as a separate umbrella company above Aizanoi Analytics.
 
 ## Product scope
 
-The umbrella brand is **Aizanoi**. Current public families are:
+Current public families are:
 - Aizanoi News;
 - Aizanoi TV;
 - Aizanoi Journal;
-- Aizanoi Analytics;
+- Dashboards;
 - Aizanoi Forge;
 - Historical Worlds;
 - Aizanoi Labs;
 - Aizanoi Arcade.
 
-Aizanoi Analytics is one product family, not the umbrella brand. Historical Worlds remain a distinctive flagship experience but do not define the entire product scope.
+**Dashboards** is the user-facing data-product area. For backward compatibility its route remains `/analytics/` and its internal AizanoiOS app id remains `analytics`.
 
 The former Workbench/power-tool product is retired from the visitor-facing catalog. Do not add Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal or Workspace Monitor back to navigation, search, deep-link routing or public product documentation without an explicit owner decision.
 
@@ -30,7 +30,7 @@ The visitor-facing runtime remains static-first behind Nginx:
 Browser
    |
    +-- AizanoiOS
-   |     +-- media/studio/explore apps
+   |     +-- Aizanoi Analytics public products
    |     +-- static News feed
    |     +-- adaptive desktop/tablet/mobile shell
    |
@@ -42,7 +42,7 @@ Browser
 Nginx -> static HTML/CSS/JS/JSON/assets
 ```
 
-Do not introduce a visitor-facing Node/Express app, remote shell, secret-bearing browser code or general public backend merely because Aizanoi covers multiple subjects. Build-time/private automation may exist outside the visitor runtime.
+Do not introduce a visitor-facing Node/Express app, remote shell, secret-bearing browser code or general public backend merely because Aizanoi Analytics covers multiple subjects. Build-time/private automation may exist outside the visitor runtime.
 
 ## AizanoiOS canonical owners
 
@@ -50,7 +50,7 @@ Do not introduce a visitor-facing Node/Express app, remote shell, secret-bearing
 - `frontend/js/v3/store.js` — browser-local shell state and field-session state;
 - `frontend/js/v3/shell.js` — canonical window/router/dialog lifecycle;
 - `frontend/js/v3/aizanoi-os.js` — base desktop interaction adapter;
-- `frontend/js/v3/brand-platform.js` — umbrella-brand home/dock/device composition;
+- `frontend/js/v3/brand-platform.js` — Aizanoi Analytics home/dock/device composition;
 - `frontend/styles/shell.css` — base shell/window/dock behavior;
 - `frontend/styles/components.css` — controls/dialogs/launcher;
 - `frontend/styles/device-shell.css` — canonical tablet/mobile home and compact launcher adaptation;
@@ -64,7 +64,7 @@ Do not add compatibility wrappers such as `final.css`, `polish.css`, `unified.cs
 Permanent shortcuts/dock priorities:
 1. Aizanoi News
 2. Aizanoi TV
-3. Aizanoi Analytics
+3. Dashboards
 4. Historical Worlds
 5. Aizanoi Forge
 
@@ -76,7 +76,7 @@ Tablet is not a scaled desktop. Use a touch-first two-pane home with larger app 
 ### Mobile
 Mobile is not a miniature desktop. Use a phone-like home screen with:
 - all public apps available as a clear icon grid;
-- a small number of glanceable Aizanoi widgets;
+- a small number of glanceable Aizanoi Analytics widgets;
 - a compact bottom dock for core navigation;
 - fullscreen-equivalent app surfaces.
 
@@ -118,6 +118,8 @@ GitHub is the source of truth. A merge is not a production deployment. Productio
 10. Security-sensitive and navigation changes require regression coverage.
 11. Never weaken a failing safety/quality test merely to make CI green.
 12. Never claim production or manual verification that was not actually performed.
+13. Never describe Aizanoi as the umbrella company or Aizanoi Analytics as a subordinate product unless the owner explicitly changes `PRODUCT.md`.
+14. Keep `analytics` only as a compatibility route/app identifier; the public product label is **Dashboards**.
 
 ## Validation
 

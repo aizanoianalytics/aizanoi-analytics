@@ -1,15 +1,15 @@
-# Aizanoi Content & Source Policy
+# Aizanoi Analytics Content & Source Policy
 
-This policy applies to Aizanoi News, Aizanoi TV companion pages, Journal research and any automated content prepared by Hermes or another agent.
+This policy applies to Aizanoi News, Aizanoi TV companion pages, Aizanoi Journal research and any automated content prepared for Aizanoi Analytics by Hermes or another agent.
 
 ## Core rule
 
-Aizanoi publishes **original summaries, analysis and presentation**. It does not republish full third-party articles.
+Aizanoi Analytics publishes **original summaries, analysis and presentation**. It does not republish full third-party articles.
 
 ## News requirements
 
-Every News item must contain:
-- an original Aizanoi title;
+Every Aizanoi News item must contain:
+- an original Aizanoi News title;
 - an original concise summary;
 - category and publication timestamp;
 - at least one source URL;
@@ -28,14 +28,14 @@ Do not:
 - lightly paraphrase one source sentence-by-sentence;
 - remove attribution from a sourced claim;
 - invent a source, publication date or quote;
-- imply that Aizanoi reporting occurred on location unless it actually did.
+- imply that Aizanoi Analytics or Aizanoi News reporting occurred on location unless it actually did.
 
 Brief quotations may be used only when genuinely necessary and must remain short, attributed and linked to the source.
 
 ## Images and media
 
 Do not copy third-party editorial images merely because they appear in a source article. Use:
-- original Aizanoi artwork/screenshots;
+- original Aizanoi Analytics artwork/screenshots;
 - media explicitly licensed for reuse under compatible terms;
 - public-domain media;
 - official press assets whose terms permit the intended use;
