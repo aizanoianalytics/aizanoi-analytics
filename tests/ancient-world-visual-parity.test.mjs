@@ -42,10 +42,16 @@ test('hero monuments remain dedicated assets rather than generic city-app geomet
   }
 });
 
-test('roads, water, sky/fog and lighting are rendered by the shared runtime', () => {
+test('roads, atmospheric sky, animated water and lighting are rendered by the shared runtime', () => {
   assert.match(runtime, /function roadGeometry/);
   assert.match(runtime, /function waterGeometry/);
+  assert.match(runtime, /createAncientSkyRenderer/);
+  assert.match(runtime, /createAncientWaterRenderer/);
+  assert.match(runtime, /ANCIENT_CITY_FRAGMENT_SHADER/);
   assert.match(runtime, /lightForHour/);
   assert.match(runtime, /uFog/);
   assert.match(runtime, /uSun/);
+  assert.match(runtime, /proceduralSky:\s*true/);
+  assert.match(runtime, /animatedWater:\s*true/);
+  assert.match(runtime, /surfaceShader:\s*'procedural-multiscale'/);
 });
