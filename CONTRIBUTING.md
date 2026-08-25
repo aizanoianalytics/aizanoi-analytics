@@ -30,7 +30,7 @@ The retired Workbench included Archive, Notes, Data Lab, Source Reader, Artifact
 
 ### Preserve product naming contracts
 
-**Aizanoi Analytics** is the company and umbrella brand. **Dashboards** is the visible analytical product; `/analytics/` and internal app id `analytics` remain compatibility identifiers. Do not invert that hierarchy or rename compatibility routes casually.
+**Aizanoi Analytics** is the company and umbrella brand. **Analytics** is the visible analytical product; `/analytics/` is its stable route and `analytics` is its internal app id. Dashboards are a format within Analytics. Do not invert that hierarchy or rename stable identifiers casually.
 
 ## Local setup
 

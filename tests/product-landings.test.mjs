@@ -6,7 +6,7 @@ const read = (file) => readFileSync(file, 'utf8');
 const origin = 'https://aizanoianalytics.com';
 const landings = {
   tv: { app:'videos', title:'Aizanoi TV', phrase:'Coming Soon' },
-  analytics: { app:'analytics', title:'Dashboards', phrase:'in development' },
+  analytics: { app:'analytics', title:'Analytics', phrase:'Workforce Turnover Analytics' },
   worlds: { app:'worlds', title:'Historical Worlds', phrase:'Rome' },
   forge: { app:'forge', title:'Aizanoi Forge', phrase:'Source' },
   journal: { app:'journal', title:'Aizanoi Journal', phrase:'in development' },
@@ -15,7 +15,7 @@ const landings = {
 };
 const productRoutes = ['news', ...Object.keys(landings)];
 const sharedNav = [
-  ['/news/', 'News'], ['/tv/', 'TV'], ['/analytics/', 'Dashboards'], ['/worlds/', 'Worlds'],
+  ['/news/', 'News'], ['/tv/', 'TV'], ['/analytics/', 'Analytics'], ['/worlds/', 'Worlds'],
   ['/forge/', 'Forge'], ['/journal/', 'Journal'], ['/labs/', 'Labs'], ['/arcade/', 'Arcade']
 ];
 
@@ -45,7 +45,7 @@ test('root document exposes Aizanoi Analytics structured metadata and canonical 
   assert.match(root, /"@type":"Organization","name":"Aizanoi Analytics"/);
   assert.match(root, /"@type":"WebSite","name":"Aizanoi Analytics"/);
   for (const route of productRoutes) assert.match(root, new RegExp(`href="/${route}/"`));
-  assert.match(root, /href="\/analytics\/">Dashboards<\/a>/);
+  assert.match(root, /href="\/analytics\/">Analytics<\/a>/);
   assert.doesNotMatch(root, /<script(?![^>]*type="application\/ld\+json")(?![^>]*src=)[^>]*>/i);
 });
 
@@ -73,11 +73,15 @@ test('TV truthfully advertises a future companion without fabricated videos', ()
 });
 
 test('secondary product placeholders state their current status honestly', () => {
-  for (const route of ['analytics', 'journal', 'labs']) {
+  for (const route of ['journal', 'labs']) {
     const html = read(`frontend/${route}/index.html`);
     assert.match(html, /Status:\s*In development/i);
     assert.doesNotMatch(html, /customer|subscriber|latest release|available now/i);
   }
+  const analytics = read('frontend/analytics/index.html');
+  assert.match(analytics, /Public pilot · v1\.0/i);
+  assert.match(analytics, /generated from scratch/i);
+  assert.match(analytics, /href="\/analytics\/workforce-turnover\/"/);
 });
 
 test('Forge exposes repository-backed project status, version, demo and source metadata', () => {
@@ -96,7 +100,7 @@ test('PWA and repository discovery point to canonical static product routes', ()
     assert.match(manifest, new RegExp(`"url":"${route.replaceAll('/', '\\/')}"`));
     assert.match(readme, new RegExp(`https://aizanoianalytics\\.com${route}`));
   }
-  assert.match(manifest, /"name":"Dashboards"/);
+  assert.match(manifest, /"name":"Analytics"/);
 });
 
 test('Rome and Athens publish canonical and social discovery metadata', () => {

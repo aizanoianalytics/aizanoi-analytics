@@ -30,15 +30,15 @@ async function mountNews(container){
   }catch(error){host.innerHTML=`<div class="az-empty-state"><div><h3>News feed unavailable</h3><p>${esc(error.message)}</p><a class="az-button" href="/news/">Open the News archive</a></div></div>`;}
 }
 
-function mountAnalytics(container){container.innerHTML=shell('Dashboards','Data products, comparisons & utilities',cards([
-  {kicker:'DATA PRODUCTS',title:'Public analytical applications',body:'Dashboards, market tools, model comparisons and data utilities built by Aizanoi Analytics will live here.'},
+function mountAnalytics(container){container.innerHTML=shell('Analytics','Data products, comparisons & utilities',cards([
+  {kicker:'PUBLIC PILOT · SYNTHETIC DATA',title:'Workforce Turnover Analytics',body:'Explore a two-year fictional workforce scenario built by Aizanoi Analytics with transparent formulas and aggregate data only.',href:'/analytics/workforce-turnover/',hrefLabel:'Launch dashboard'},
   {kicker:'PRODUCT STANDARD',title:'Launch · Source · Documentation · Version',body:'Each production project should expose a usable product surface, its source when public, concise documentation and a visible version or release state.'},
-  {kicker:'OPEN FOR BUILDS',title:'A growing public portfolio',body:'New analytical applications will be added here as complete, end-user-facing products rather than internal research utilities.'}
+  {kicker:'DATA SAFETY',title:'Synthetic first',body:'Public demonstrations use data generated from scratch. Employer files and person-level records do not enter the public build.'}
 ]));}
 
 function mountForge(container){container.innerHTML=shell('Aizanoi Forge','Source, builds & open projects',cards([
   {kicker:'SOURCE OF TRUTH',title:'aizanoianalytics/aizanoi-analytics',body:'GitHub remains canonical. Forge is the branded project catalog and mirror layer, not a second independent copy of source code.',href:'https://github.com/aizanoianalytics/aizanoi-analytics',hrefLabel:'Open GitHub'},
-  {kicker:'PROJECT',title:'AizanoiOS',body:'Browser-native adaptive shell for Aizanoi Analytics media, Dashboards, Historical Worlds and experiments.'},
+  {kicker:'PROJECT',title:'AizanoiOS',body:'Browser-native adaptive shell for Aizanoi Analytics media, data products, Historical Worlds and experiments.'},
   {kicker:'PROJECT',title:'Historical Worlds',body:'Shared runtime and city-local reconstructions for Aizanoi, Rome and Athens.',button:'worlds',buttonLabel:'Open Worlds'}
 ]));}
 

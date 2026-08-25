@@ -27,13 +27,13 @@ const currentBrandDocs = [
 
 test('current AizanoiOS docs describe the eight-app public platform without retired Workbench surfaces', () => {
   assert.match(docs.field, /AizanoiOS/i);
-  assert.match(docs.field, /3\. Dashboards/);
+  assert.match(docs.field, /3\. Analytics/);
   assert.doesNotMatch(docs.field, /3\. Aizanoi Analytics|11 canonical apps|Research Workspace|Field Terminal|Workspace Monitor/i);
   assert.match(docs.security, /retired/i);
   assert.match(docs.security, /Workbench/i);
 });
 
-test('canonical brand docs lock Aizanoi Analytics as umbrella company and Dashboards as the analytical product', () => {
+test('canonical brand docs lock Aizanoi Analytics as umbrella company and Analytics as the analytical product', () => {
   for (const document of currentBrandDocs) {
     assert.match(document, /Aizanoi Analytics/i);
     assert.doesNotMatch(document, /Aizanoi is the umbrella brand|umbrella brand is \*\*Aizanoi\*\*|Aizanoi Analytics is one product family/i);
@@ -43,12 +43,12 @@ test('canonical brand docs lock Aizanoi Analytics as umbrella company and Dashbo
   assert.match(docs.hermes, /Aizanoi Analytics.*company and umbrella brand/is);
   assert.match(docs.architecture, /Aizanoi Analytics remains the company\/umbrella brand/is);
   assert.match(docs.contributing, /Aizanoi Analytics.*company and umbrella brand/is);
-  assert.match(docs.product, /\*\*Dashboards\*\*/);
-  assert.match(docs.agents, /public product label is \*\*Dashboards\*\*/);
-  assert.match(docs.field, /visible analytical product; `\/analytics\/` and the internal app id `analytics` remain compatibility contracts/i);
-  assert.match(docs.product, /route remains `\/analytics\/`/);
-  assert.match(docs.agents, /app id remains `analytics`/);
-  assert.match(docs.hermes, /visible product is \*\*Dashboards\*\*/);
+  assert.match(docs.product, /\*\*Analytics\*\*/);
+  assert.match(docs.agents, /public label \*\*Analytics\*\*/);
+  assert.match(docs.field, /visible analytical product; `\/analytics\/` and the internal app id `analytics` are stable contracts/i);
+  assert.match(docs.product, /public route is `\/analytics\/`/);
+  assert.match(docs.agents, /app id is `analytics`/);
+  assert.match(docs.hermes, /visible label \*\*Analytics\*\*/);
 });
 
 test('maintained documentation no longer presents Field System or retired reader tooling as current operations', () => {
@@ -61,13 +61,13 @@ test('maintained documentation no longer presents Field System or retired reader
 
 test('contribution guidance points developers toward current canonical owners', () => {
   assert.match(docs.contributing, /Aizanoi Analytics/i);
-  assert.match(docs.contributing, /Dashboards/);
+  assert.match(docs.contributing, /Analytics/);
   assert.doesNotMatch(docs.contributing, /final\.css|polish\.css|unified\.css|responsive-fix\.css/i);
 });
 
 test('product documentation keeps the approved News categories and current product families visible', () => {
   for (const label of ['AI', 'Technology', 'Economy / Markets', 'Football']) assert.match(docs.product, new RegExp(label.replace('/', '\\/')));
-  for (const label of ['Aizanoi News', 'Aizanoi TV', 'Dashboards', 'Aizanoi Forge', 'Historical Worlds', 'Aizanoi Labs', 'Aizanoi Arcade']) {
+  for (const label of ['Aizanoi News', 'Aizanoi TV', 'Analytics', 'Aizanoi Forge', 'Historical Worlds', 'Aizanoi Labs', 'Aizanoi Arcade']) {
     assert.match(docs.product, new RegExp(label));
   }
 });

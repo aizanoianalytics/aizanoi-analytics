@@ -59,7 +59,7 @@ Do not treat a merge as a deployment.
 4. Run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed.
 5. Deploy static files using the existing production procedure.
 6. Confirm source-to-production checksum/SHA parity where the deployment tooling supports it.
-7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, `/news/about/`, one current permanent News article, `/news/sitemap.xml`, one Historical World and static assets. The `analytics` route/app id remains a compatibility identifier; the visible product is **Dashboards**.
+7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, `/analytics/workforce-turnover/`, `/news/about/`, one current permanent News article, `/news/sitemap.xml`, one Historical World and static assets. `/analytics/`, app id `analytics` and visible label **Analytics** remain aligned.
 8. If a regression appears, roll back to the recorded known-good SHA instead of hot-fixing production only.
 
 ## Safety boundaries

@@ -9,7 +9,7 @@ This roadmap describes direction, not delivery promises.
 - Aizanoi News;
 - Aizanoi TV;
 - Aizanoi Journal;
-- Dashboards (`/analytics/` compatibility route);
+- Analytics (`/analytics/` public route);
 - Aizanoi Forge;
 - Historical Worlds;
 - Aizanoi Labs;
@@ -21,7 +21,7 @@ This roadmap describes direction, not delivery promises.
 
 - maintain `PRODUCT.md`, `AGENTS.md` and `CONTENT_POLICY.md` as canonical contracts;
 - keep Aizanoi Analytics as the primary company/umbrella brand;
-- keep desktop sparse: News, TV, Dashboards, Worlds, Forge;
+- keep desktop sparse: News, TV, Analytics, Worlds, Forge;
 - make mobile a phone-like AizanoiOS home screen rather than a reduced desktop;
 - make tablet a touch-first two-pane workspace;
 - keep one public catalog across form factors;
@@ -47,16 +47,16 @@ Do not turn News into a copied-article farm.
 - establish the English-language YouTube channel identity;
 - publish companion pages with transcript/chapters when useful;
 - attach meaningful sources to factual videos;
-- cross-link relevant News, Journal, Dashboards and Forge items;
+- cross-link relevant News, Journal, Analytics and Forge items;
 - avoid eager third-party embeds when a lightweight preview/link is sufficient.
 
-## Phase 4 — Dashboards
+## Phase 4 — Analytics
 
 - publish useful dashboards and interactive analytical tools under Aizanoi Analytics;
 - each production project should expose Launch / Source / Documentation / Version where applicable;
 - prioritize data products that can stand alone as useful portfolio pieces;
 - keep private/employer data out of the public repository;
-- preserve `/analytics/` and app id `analytics` for backward compatibility while presenting the product as Dashboards.
+- preserve `/analytics/`, app id `analytics` and the visible Analytics label as one stable product contract.
 
 ## Phase 5 — Aizanoi Forge
 

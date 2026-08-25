@@ -10,6 +10,8 @@
 node_modules/
 logs/
 *.log
+__pycache__/
+*.pyc
 
 # Databases and backups
 *.db

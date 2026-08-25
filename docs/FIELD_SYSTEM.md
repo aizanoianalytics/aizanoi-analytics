@@ -10,14 +10,14 @@ The eight public apps are:
 
 1. Aizanoi News
 2. Aizanoi TV
-3. Dashboards
+3. Analytics
 4. Historical Worlds
 5. Aizanoi Forge
 6. Aizanoi Journal
 7. Aizanoi Labs
 8. Aizanoi Arcade
 
-`Dashboards` is the visible analytical product; `/analytics/` and the internal app id `analytics` remain compatibility contracts.
+`Analytics` is the visible analytical product; `/analytics/` and the internal app id `analytics` are stable contracts, and dashboards are a format within the product.
 
 Three Historical Worlds—Aizanoi, Rome and Athens—remain direct standalone experiences as well as catalog entries.
 

@@ -26,8 +26,8 @@ function dateParts(){
   const now=new Date();
   return {
     iso:now.toISOString(),
-    short:now.toLocaleDateString([], {weekday:'long',month:'long',day:'numeric'}),
-    full:now.toLocaleDateString([], {weekday:'long',year:'numeric',month:'long',day:'numeric'})
+    short:now.toLocaleDateString('en-GB', {weekday:'long',month:'long',day:'numeric'}),
+    full:now.toLocaleDateString('en-GB', {weekday:'long',year:'numeric',month:'long',day:'numeric'})
   };
 }
 function sessionCard(api,compact=false){
@@ -52,7 +52,7 @@ function renderPhoneHome(api){
       <div>
         <time class="az-device-date" datetime="${esc(date.iso)}">${esc(date.short)}</time>
         <h1>Aizanoi Analytics</h1>
-        <p>Media · dashboards · software · worlds</p>
+        <p>Media · analytics · software · worlds</p>
       </div>
       <button class="az-phone-search" type="button" data-shell-action="search" aria-label="Search Aizanoi Analytics">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="m20 20-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
@@ -115,7 +115,7 @@ function rewriteDesktop(api){
   const world=session?worldById(session.worldId):null;
   const desktopWidget=session
     ? `<div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">CONTINUE EXPLORING</span><h1>Return to ${esc(world?.label||'Historical Worlds')}</h1><p>${session.landmark?`Resume near ${esc(session.landmark)}.`:'Your last Historical World session is still available on this device.'}</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-home-action="continue-world">Continue</button><button class="az-button" type="button" data-app="news">Aizanoi News</button></div></div>`
-    : '<div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">TODAY AT AIZANOI ANALYTICS</span><h1>One studio. Many things worth exploring.</h1><p>Follow the latest briefing, watch Aizanoi TV, launch Dashboards or step into a Historical World.</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-app="news">Open News</button><button class="az-button" type="button" data-app="videos">Aizanoi TV</button></div></div>';
+    : '<div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">TODAY AT AIZANOI ANALYTICS</span><h1>One studio. Many things worth exploring.</h1><p>Follow the latest briefing, watch Aizanoi TV, launch Analytics or step into a Historical World.</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-app="news">Open News</button><button class="az-button" type="button" data-app="videos">Aizanoi TV</button></div></div>';
   desktop.innerHTML=`<div class="az-desktop-signature" aria-hidden="true"><strong>AizanoiOS</strong><span>Aizanoi Analytics · media · data · software · worlds</span></div>
     <section class="az-desktop-shortcuts" aria-label="Aizanoi Analytics shortcuts">${DESKTOP.map((id)=>appButton(id)).join('')}</section>
     <section class="az-session-widget" aria-label="${session?'Continue exploring':'Today at Aizanoi Analytics'}">${desktopWidget}</section>
@@ -164,7 +164,7 @@ function watchLauncher(){
 }
 function rewriteDesktopContextMenu(api){
   const menu=document.querySelector('.az-desktop-context');if(!menu)return;
-  menu.innerHTML='<button type="button" role="menuitem" data-context-action="apps">Applications</button><button type="button" role="menuitem" data-context-action="search">Search</button><div class="az-context-divider" aria-hidden="true"></div><button type="button" role="menuitem" data-context-action="news">Aizanoi News</button><button type="button" role="menuitem" data-context-action="analytics">Dashboards</button><button type="button" role="menuitem" data-context-action="aizanoi">Explore Aizanoi</button>';
+  menu.innerHTML='<button type="button" role="menuitem" data-context-action="apps">Applications</button><button type="button" role="menuitem" data-context-action="search">Search</button><div class="az-context-divider" aria-hidden="true"></div><button type="button" role="menuitem" data-context-action="news">Aizanoi News</button><button type="button" role="menuitem" data-context-action="analytics">Analytics</button><button type="button" role="menuitem" data-context-action="aizanoi">Explore Aizanoi</button>';
   menu.addEventListener('click',(event)=>{
     const action=event.target.closest('[data-context-action]')?.dataset.contextAction;
     if(!['news','analytics'].includes(action))return;
