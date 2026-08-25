@@ -7,7 +7,7 @@ const experience = read('frontend/ancient-world/engine/city-experience.js');
 const style = read('frontend/ancient-world/engine/city-experience.css');
 const navigation = read('frontend/ancient-world/engine/navigation.js');
 
-const requiredAizanoiTools = ['resumeBtn','settingsBtn','fullscreenBtn','tourBtn','atlasBtn','sourcesBtn','soundBtn','timeWrap'];
+const requiredAizanoiTools = ['resumeBtn','fullscreenBtn','tourBtn','atlasBtn','sourcesBtn','soundBtn','timeWrap'];
 const requiredCityTools = ['atlas','modern','audio','evidence','sources'];
 
 test('all historical worlds receive the same restrained presentation layer', () => {
@@ -26,6 +26,14 @@ test('secondary city controls are moved behind one Explore drawer instead of dup
   assert.match(style, /#hud \.deviceChip\{display:none!important\}/);
   assert.match(style, /#hud \.bottomBar\{display:none!important\}/);
   assert.match(style, /\.miniWrap:not\(\.aw-map-open\)/);
+});
+
+test('Aizanoi hides legacy controls that are not wired by the shared runtime', () => {
+  for (const id of ['settingsBtn','viewSettings','mobileLabels']) assert.ok(experience.includes(`'${id}'`), `${id} must be explicitly suppressed until implemented`);
+  assert.match(experience, /\.eraBtn\[data-era="301"\]/);
+  assert.match(experience, /Period-aware reconstruction/);
+  assert.match(experience, /click the world to acquire mouse-look/);
+  assert.doesNotMatch(experience, /DRAG fallback|L labels/);
 });
 
 test('opening secondary tools pauses traversal input without owning city physics', () => {

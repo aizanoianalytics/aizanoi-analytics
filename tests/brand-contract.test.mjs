@@ -7,6 +7,9 @@ const registry = read('frontend/js/v3/registry.js');
 const platform = read('frontend/js/v3/brand-platform.js');
 const hubs = read('frontend/js/v3/apps/brand-hubs.js');
 const manifest = read('frontend/manifest.webmanifest');
+const errorPages = ['frontend/404.html', 'frontend/500.html', 'frontend/503.html'].map(read).join('\n');
+const historicalNavigation = read('frontend/ancient-world/engine/navigation.js');
+const historicalExperience = read('frontend/ancient-world/engine/city-experience.js');
 
 const canonicalIcons = [
   'aizanoi-news.svg',
@@ -56,4 +59,12 @@ test('adaptive shell presents Aizanoi Analytics as the primary brand', () => {
   assert.match(platform, /TODAY AT AIZANOI ANALYTICS/);
   assert.match(platform, /Aizanoi Analytics apps/);
   assert.match(hubs, /built by Aizanoi Analytics/);
+});
+
+test('public error and Historical Worlds navigation copy no longer exposes the retired Field System name', () => {
+  const publicCopy = `${errorPages}\n${historicalNavigation}\n${historicalExperience}`;
+  assert.doesNotMatch(publicCopy, /Field System/);
+  assert.match(errorPages, /Aizanoi Analytics/);
+  assert.match(historicalNavigation, /← AizanoiOS/);
+  assert.match(historicalExperience, /Return to AizanoiOS/);
 });

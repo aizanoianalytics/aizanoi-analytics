@@ -29,13 +29,26 @@ const FRAMING = Object.freeze({
 // the compact approach street or mutating the source/research ledger.
 const CAMERA_DISTANCE = Object.freeze({ colosseum: 360 });
 
+function liveEvidence(building) {
+  if (building.evidence) return building.evidence;
+  if (building.state === 'inferred') {
+    return {
+      level:'plausible',
+      note:'Schematic/inferred urban massing; source context does not make the reconstructed form documented.'
+    };
+  }
+  return undefined;
+}
+
 export const BUILDINGS = base.BUILDINGS.map((building) => {
   const framing = FRAMING[building.id];
-  if (!framing) return building;
+  const evidence = liveEvidence(building);
+  if (!framing && !evidence) return building;
   const cameraDistance = CAMERA_DISTANCE[building.id];
   return {
     ...building,
-    framing: Number.isFinite(cameraDistance) ? { ...framing, cameraDistance } : framing,
+    ...(evidence ? { evidence } : {}),
+    ...(framing ? { framing:Number.isFinite(cameraDistance) ? { ...framing, cameraDistance } : framing } : {})
   };
 });
 

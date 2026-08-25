@@ -11,14 +11,15 @@ const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
 const athens = read('frontend/ancient-cities/athens-450-430/js/app.js');
 const aizanoi = read('frontend/historic-world/app.js');
 
-test('historical worlds expose the shared Field System return navigation', () => {
+test('historical worlds expose the shared AizanoiOS return navigation', () => {
   const navigation = read('frontend/ancient-world/engine/navigation.js');
   assert.match(runtime, /installBackToOS/);
   for (const source of [rome, athens, aizanoi]) assert.match(source, /startFlatBlockyCity/);
   assert.match(runtime, /__ANCIENT_WORLD_DEBUG__/);
   assert.match(runtime, /__ANCIENT_WORLD_DESTROY__/);
-  assert.match(navigation, /label = '← Field System'/);
-  assert.match(navigation, /Return to the Aizanoi Field System/);
+  assert.match(navigation, /label = '← AizanoiOS'/);
+  assert.match(navigation, /Return to AizanoiOS/);
+  assert.match(navigation, /back-to-aizanoi-os/);
 });
 
 test('all cities use one shared human-scale traversal implementation', () => {

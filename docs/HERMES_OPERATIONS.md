@@ -35,16 +35,18 @@ Hermes may also implement engineering changes when asked, but must obey the same
 ## News publishing loop
 
 1. Collect current information from reputable web/primary sources.
-2. Cross-check important or disputed claims.
+2. Cross-check important or disputed claims. Multiple rehosts of the same wire report do not count as independent corroboration; prefer direct original-publisher URLs where available.
 3. Write an original item JSON under `content/news/items/` using `_template.json` as the schema guide.
 4. Never paste a full article into the repository.
 5. Include source publisher, URL and source publication time when available.
-6. Run `node scripts/news/build-news.mjs`.
-   The compiler must acquire its exclusive lock and complete staged validation; never copy a partially generated tree into production. The same build also refreshes News edition/category sitemap discovery.
-7. Run `node --test tests/*.test.mjs` or the repository's current release gate.
-8. Inspect the generated `frontend/news/index.json`, edition/category tree and `frontend/sitemap.xml` diff.
-9. Commit with a meaningful message such as `content: publish 2026-08-21 news briefing`.
-10. Push to GitHub before production deployment.
+6. Set `priority` only when making a real editorial prominence decision; do not let source prestige, source count or political viewpoint set it automatically.
+7. Add `image` only when provenance/rights satisfy `CONTENT_POLICY.md`. No image is preferable to invented or unclear rights metadata.
+8. Run `node scripts/news/build-news.mjs`.
+   The compiler must acquire its exclusive lock and complete staged validation; never copy a partially generated tree into production. The same build refreshes the News feed, edition/category pages, permanent article pages, `/news/about/`, RSS, `/news/sitemap.xml` and the root discovery sitemap.
+9. Run `node --test tests/*.test.mjs` or the repository's current release gate.
+10. Inspect the generated `frontend/news/index.json`, permanent article/edition/category tree, RSS and sitemap diffs.
+11. Commit with a meaningful message such as `content: publish 2026-08-21 news briefing`.
+12. Push to GitHub before production deployment.
 
 ## Deployment loop
 
@@ -53,10 +55,10 @@ Do not treat a merge as a deployment.
 1. Confirm the exact approved Git SHA.
 2. Record the currently deployed SHA for rollback.
 3. Fetch/pull the approved commit on the server.
-4. Run the applicable validation/build step, including the News build when generated News/sitemap outputs must be refreshed.
+4. Run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed.
 5. Deploy static files using the existing production procedure.
 6. Confirm source-to-production checksum/SHA parity where the deployment tooling supports it.
-7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, one Historical World and static assets. The `analytics` route/app id remains a compatibility identifier; the visible product is **Dashboards**.
+7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, `/news/about/`, one current permanent News article, `/news/sitemap.xml`, one Historical World and static assets. The `analytics` route/app id remains a compatibility identifier; the visible product is **Dashboards**.
 8. If a regression appears, roll back to the recorded known-good SHA instead of hot-fixing production only.
 
 ## Safety boundaries

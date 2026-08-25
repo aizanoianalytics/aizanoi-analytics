@@ -35,11 +35,12 @@ test('service worker never handles API routes', () => {
 });
 
 test('service worker core precache includes the adaptive shell and remains complete-or-fail', () => {
-  assert.match(sw, /aizanoi-os-shell-v4\.3\.0/);
+  assert.match(sw, /aizanoi-os-shell-v4\.3\.1/);
   assert.match(sw, /cache:'reload'/);
   assert.match(sw, /if \(!response\.ok\) throw new Error/);
-  assert.match(sw, /precacheShell\(\)\.then\(\(\) => self\.skipWaiting\(\)\)/);
-  assert.doesNotMatch(sw, /catch\(\(\) => self\.skipWaiting\(\)\)/);
+  const installBlock = sw.match(/self\.addEventListener\('install',[\s\S]*?\n\}\);/)?.[0] || '';
+  assert.match(installBlock, /event\.waitUntil\(precacheShell\(\)\)/);
+  assert.doesNotMatch(installBlock, /skipWaiting/);
   const precache = sw.match(/const PRECACHE = \[([\s\S]*?)\n\];/)?.[1] || '';
   assert.match(precache, /\/js\/v3\/shell\.js/);
   assert.match(precache, /\/js\/v3\/aizanoi-os\.js/);

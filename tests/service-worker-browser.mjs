@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
-const CURRENT_CACHE = 'aizanoi-os-shell-v4.3.0';
+const CURRENT_CACHE = 'aizanoi-os-shell-v4.3.1';
 const browser = await chromium.launch({ headless:true });
 const context = await browser.newContext({ serviceWorkers:'allow' });
 const page = await context.newPage();
