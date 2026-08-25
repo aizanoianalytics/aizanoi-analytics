@@ -47,14 +47,14 @@ function sessionCard(api,compact=false){
 
 function renderPhoneHome(api){
   const date=dateParts();
-  return `<section class="az-phone-home" aria-label="Aizanoi mobile home">
+  return `<section class="az-phone-home" aria-label="Aizanoi Analytics mobile home">
     <header class="az-phone-home-header">
       <div>
         <time class="az-device-date" datetime="${esc(date.iso)}">${esc(date.short)}</time>
-        <h1>Aizanoi</h1>
-        <p>Media · data · software · worlds</p>
+        <h1>Aizanoi Analytics</h1>
+        <p>Media · dashboards · software · worlds</p>
       </div>
-      <button class="az-phone-search" type="button" data-shell-action="search" aria-label="Search Aizanoi">
+      <button class="az-phone-search" type="button" data-shell-action="search" aria-label="Search Aizanoi Analytics">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="m20 20-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
       </button>
     </header>
@@ -65,7 +65,7 @@ function renderPhoneHome(api){
       </article>
       ${sessionCard(api,true)}
     </div>
-    <section class="az-phone-apps" aria-label="Aizanoi apps">
+    <section class="az-phone-apps" aria-label="Aizanoi Analytics apps">
       ${PUBLIC_APPS.map((id)=>deviceAppButton(id,'az-phone-app')).join('')}
     </section>
   </section>`;
@@ -73,13 +73,13 @@ function renderPhoneHome(api){
 
 function renderTabletHome(api){
   const date=dateParts();
-  return `<section class="az-tablet-home" aria-label="Aizanoi tablet home">
+  return `<section class="az-tablet-home" aria-label="Aizanoi Analytics tablet home">
     <aside class="az-tablet-rail">
       <div class="az-tablet-brand-card">
         <time class="az-device-date" datetime="${esc(date.iso)}">${esc(date.full)}</time>
         <img src="/assets/branding/aizanoi-logo-mark.svg" alt="">
-        <h1>Aizanoi</h1>
-        <p>Everything we publish, build and explore.</p>
+        <h1>Aizanoi Analytics</h1>
+        <p>Everything we publish, build, analyze and explore.</p>
         <div class="az-tablet-quick-actions">
           <button class="az-button az-button-primary" type="button" data-app="news">Open News</button>
           <button class="az-button" type="button" data-shell-action="search">Search</button>
@@ -87,15 +87,15 @@ function renderTabletHome(api){
       </div>
       ${sessionCard(api,false)}
     </aside>
-    <section class="az-tablet-main" aria-label="Aizanoi tablet applications">
+    <section class="az-tablet-main" aria-label="Aizanoi Analytics tablet applications">
       <header class="az-tablet-section-head">
-        <div><span class="az-device-kicker">AIZANOIOS</span><h2>Your apps</h2><p>Focused tools and public experiences, arranged for a larger touch screen.</p></div>
+        <div><span class="az-device-kicker">AIZANOIOS</span><h2>Your apps</h2><p>Focused products and public experiences, arranged for a larger touch screen.</p></div>
         <button class="az-tablet-apps-button" type="button" data-shell-action="switcher" data-os-launcher aria-label="Open Applications">All apps</button>
       </header>
-      <section class="az-tablet-app-grid" aria-label="Aizanoi applications">
+      <section class="az-tablet-app-grid" aria-label="Aizanoi Analytics applications">
         ${PUBLIC_APPS.map((id)=>deviceAppButton(id,'az-tablet-app')).join('')}
       </section>
-      <section class="az-tablet-feature-grid" aria-label="Aizanoi highlights">
+      <section class="az-tablet-feature-grid" aria-label="Aizanoi Analytics highlights">
         <article class="az-tablet-feature az-tablet-feature-news">
           <span class="az-device-kicker">READ</span><h3>Aizanoi Journal</h3><p>Long-form analysis, commentary and research beyond the daily briefing.</p>
           <button type="button" data-app="journal">Open Journal</button>
@@ -115,10 +115,10 @@ function rewriteDesktop(api){
   const world=session?worldById(session.worldId):null;
   const desktopWidget=session
     ? `<div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">CONTINUE EXPLORING</span><h1>Return to ${esc(world?.label||'Historical Worlds')}</h1><p>${session.landmark?`Resume near ${esc(session.landmark)}.`:'Your last Historical World session is still available on this device.'}</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-home-action="continue-world">Continue</button><button class="az-button" type="button" data-app="news">Aizanoi News</button></div></div>`
-    : '<div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">TODAY AT AIZANOI</span><h1>One studio. Many things worth exploring.</h1><p>Follow the latest briefing, watch Aizanoi TV, launch analytical tools or step into a Historical World.</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-app="news">Open News</button><button class="az-button" type="button" data-app="videos">Aizanoi TV</button></div></div>';
-  desktop.innerHTML=`<div class="az-desktop-signature" aria-hidden="true"><strong>AizanoiOS</strong><span>Media · data · software · worlds</span></div>
-    <section class="az-desktop-shortcuts" aria-label="Aizanoi shortcuts">${DESKTOP.map((id)=>appButton(id)).join('')}</section>
-    <section class="az-session-widget" aria-label="${session?'Continue exploring':'Today at Aizanoi'}">${desktopWidget}</section>
+    : '<div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">TODAY AT AIZANOI ANALYTICS</span><h1>One studio. Many things worth exploring.</h1><p>Follow the latest briefing, watch Aizanoi TV, launch Dashboards or step into a Historical World.</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-app="news">Open News</button><button class="az-button" type="button" data-app="videos">Aizanoi TV</button></div></div>';
+  desktop.innerHTML=`<div class="az-desktop-signature" aria-hidden="true"><strong>AizanoiOS</strong><span>Aizanoi Analytics · media · data · software · worlds</span></div>
+    <section class="az-desktop-shortcuts" aria-label="Aizanoi Analytics shortcuts">${DESKTOP.map((id)=>appButton(id)).join('')}</section>
+    <section class="az-session-widget" aria-label="${session?'Continue exploring':'Today at Aizanoi Analytics'}">${desktopWidget}</section>
     ${renderPhoneHome(api)}
     ${renderTabletHome(api)}`;
 }
@@ -156,7 +156,7 @@ function rewriteDock(api){
 function renameLauncher(){
   const host=document.querySelector('[data-switcher-list]');if(!host)return;
   const appHeading=[...host.querySelectorAll('.az-launchpad-group h3')].find((node)=>node.textContent==='Applications');
-  if(appHeading)appHeading.textContent='Aizanoi apps';
+  if(appHeading)appHeading.textContent='Aizanoi Analytics apps';
 }
 function watchLauncher(){
   const host=document.querySelector('[data-switcher-list]');if(!host)return;
@@ -164,7 +164,7 @@ function watchLauncher(){
 }
 function rewriteDesktopContextMenu(api){
   const menu=document.querySelector('.az-desktop-context');if(!menu)return;
-  menu.innerHTML='<button type="button" role="menuitem" data-context-action="apps">Applications</button><button type="button" role="menuitem" data-context-action="search">Search</button><div class="az-context-divider" aria-hidden="true"></div><button type="button" role="menuitem" data-context-action="news">Aizanoi News</button><button type="button" role="menuitem" data-context-action="analytics">Aizanoi Analytics</button><button type="button" role="menuitem" data-context-action="aizanoi">Explore Aizanoi</button>';
+  menu.innerHTML='<button type="button" role="menuitem" data-context-action="apps">Applications</button><button type="button" role="menuitem" data-context-action="search">Search</button><div class="az-context-divider" aria-hidden="true"></div><button type="button" role="menuitem" data-context-action="news">Aizanoi News</button><button type="button" role="menuitem" data-context-action="analytics">Dashboards</button><button type="button" role="menuitem" data-context-action="aizanoi">Explore Aizanoi</button>';
   menu.addEventListener('click',(event)=>{
     const action=event.target.closest('[data-context-action]')?.dataset.contextAction;
     if(!['news','analytics'].includes(action))return;

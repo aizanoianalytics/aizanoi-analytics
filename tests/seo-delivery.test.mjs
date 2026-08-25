@@ -4,19 +4,27 @@ import { readFileSync } from 'node:fs';
 
 const read = (file) => readFileSync(file, 'utf8');
 const sitemap = read('frontend/sitemap.xml');
+const feed = JSON.parse(read('frontend/news/index.json'));
 const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
 const infra = read('infra/README.md');
 
-const canonical = [
+const canonicalBase = [
   '/', '/news/', '/tv/', '/analytics/', '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
   '/historic-world/', '/ancient-cities/rome-410-476/', '/ancient-cities/athens-450-430/'
 ];
+const canonical = [
+  ...canonicalBase,
+  ...feed.editions.map((edition) => edition.path),
+  ...feed.categories.map((slug) => `/news/category/${slug}/`)
+];
 
-test('sitemap reflects only the canonical product and Historical Worlds architecture', () => {
+test('sitemap reflects canonical products, Historical Worlds and generated News discovery routes', () => {
   const urls = [...sitemap.matchAll(/<url>\s*<loc>https:\/\/aizanoianalytics\.com([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)]
     .map(([, path, lastmod]) => ({ path, lastmod }));
   assert.deepEqual(urls.map(({ path }) => path), canonical);
   for (const { lastmod } of urls) assert.match(lastmod, /^\d{4}-\d{2}-\d{2}$/);
+  for (const edition of feed.editions) assert.ok(urls.some(({ path }) => path === edition.path), `${edition.path} missing from sitemap`);
+  for (const slug of feed.categories) assert.ok(urls.some(({ path }) => path === `/news/category/${slug}/`), `${slug} category missing from sitemap`);
   assert.doesNotMatch(sitemap, /\/(?:projects|videos|games|ancient-world|about|docs|changelog|privacy|terms)\//);
   assert.doesNotMatch(sitemap, /<changefreq>|<priority>/);
 });

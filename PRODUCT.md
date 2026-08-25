@@ -1,12 +1,12 @@
-# Aizanoi — Product Constitution
+# Aizanoi Analytics — Product Constitution
 
 ## Brand definition
 
-Aizanoi is an independent digital studio for media, data, software, research and interactive worlds.
+**Aizanoi Analytics** is the company, primary public brand and umbrella for everything published, built, researched and experimented with in this repository. It operates as an **independent digital studio** for media, data products, software, research and interactive worlds.
 
-**Working promise:** Aizanoi is the home of everything we publish, build, research and experiment with.
+**Working promise:** Aizanoi Analytics is the home of our media, data products, software, research and interactive worlds.
 
-`Aizanoi` is the umbrella brand. `Aizanoi Analytics` is one product family inside it; archaeology is a distinctive experience line, not the entire brand.
+`Aizanoi` may be used as a short-form visual identity inside product names such as Aizanoi News, Aizanoi TV, AizanoiOS and Aizanoi Labs. It is **not** a separate umbrella company above Aizanoi Analytics. Agents must not redefine Aizanoi Analytics as a sub-product unless the owner explicitly changes this constitution.
 
 ## Product families
 
@@ -16,7 +16,7 @@ Aizanoi is an independent digital studio for media, data, software, research and
 - **Aizanoi Journal** — authored analysis, essays, commentary and long-form research. News reports events; Journal interprets them.
 
 ### Studio
-- **Aizanoi Analytics** — public dashboards, data products, utilities and interactive analytical applications.
+- **Dashboards** — public dashboards, data products, model comparisons, utilities and interactive analytical applications built by Aizanoi Analytics. The compatibility route remains `/analytics/` and the internal AizanoiOS app id remains `analytics`.
 - **Aizanoi Forge** — source, builds and open projects. GitHub remains the source of truth; Forge is the branded catalog/mirror layer.
 - **Aizanoi Labs** — prototypes, interaction experiments and unfinished ideas with explicit Experimental / Prototype / Archived status.
 
@@ -28,14 +28,14 @@ The former visitor-facing research/power-tool bundle (Archive, Notes, Data Lab, 
 
 ## AizanoiOS
 
-AizanoiOS is the browser-native shell that presents the brand.
+AizanoiOS is the browser-native shell that presents Aizanoi Analytics and its public products.
 
 It uses one product catalog with three intentionally different device presentations:
 - **desktop:** wallpaper-first desktop, sparse shortcuts, freeform windows and centered dock;
 - **tablet:** touch-first two-pane home, larger app grid, glanceable feature cards and focused large windows;
 - **mobile:** phone-like home screen with app icons, compact widgets, bottom dock and fullscreen app surfaces.
 
-The design may learn from modern mobile and desktop operating systems, but it must remain recognizably Aizanoi and must not copy Apple, Google, Microsoft or Ubuntu branding/assets.
+The design may learn from modern mobile and desktop operating systems, but it must remain recognizably AizanoiOS and must not copy Apple, Google, Microsoft or Ubuntu branding/assets.
 
 ## Publishing principles
 
@@ -47,6 +47,7 @@ The design may learn from modern mobile and desktop operating systems, but it mu
 6. Historical evidence levels remain explicit.
 7. Experiments must look experimental; unfinished work is not disguised as production.
 8. One coherent product catalog across desktop, tablet and mobile, with device-appropriate UX rather than one stretched layout.
+9. Aizanoi Analytics remains the umbrella/company brand; product naming must not invert that hierarchy without an explicit owner decision.
 
 ## Audience
 

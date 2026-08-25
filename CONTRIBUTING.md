@@ -1,6 +1,6 @@
 # Contributing to Aizanoi Analytics
 
-Aizanoi combines media products, software, historical research, an adaptive browser shell and source-led interactive worlds. Contributions should preserve historical transparency, cross-device parity and the static-first security model.
+Aizanoi Analytics combines media products, software, historical research, an adaptive browser shell and source-led interactive worlds. Contributions should preserve historical transparency, cross-device parity, the static-first security model and the company/product hierarchy defined in `PRODUCT.md`.
 
 ## Before you start
 
@@ -26,7 +26,11 @@ Reusable movement, lifecycle, input, evidence, rendering, adaptive-performance a
 
 ### Keep retired scope retired
 
-The retired Workbench included Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Monitor. Do not restore those apps, their deleted files, a remote shell or stale compatibility layers. Propose a current umbrella-brand product instead.
+The retired Workbench included Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Monitor. Do not restore those apps, their deleted files, a remote shell or stale compatibility layers. Propose a current **Aizanoi Analytics** product instead.
+
+### Preserve product naming contracts
+
+**Aizanoi Analytics** is the company and umbrella brand. **Dashboards** is the visible analytical product; `/analytics/` and internal app id `analytics` remain compatibility identifiers. Do not invert that hierarchy or rename compatibility routes casually.
 
 ## Local setup
 
@@ -60,7 +64,7 @@ Canonical owners are:
 - `frontend/js/v3/store.js` — local shell state;
 - `frontend/js/v3/shell.js` — window/router/dialog lifecycle;
 - `frontend/js/v3/aizanoi-os.js` — base desktop interactions;
-- `frontend/js/v3/brand-platform.js` — brand/device composition;
+- `frontend/js/v3/brand-platform.js` — Aizanoi Analytics brand/device composition;
 - `frontend/js/v3/apps/` — lazy public apps;
 - `frontend/styles/shell.css` and `frontend/styles/components.css` — base presentation;
 - `frontend/styles/device-shell.css` — canonical tablet/mobile presentation.

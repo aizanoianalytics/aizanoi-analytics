@@ -6,7 +6,7 @@ const read = (file) => readFileSync(file, 'utf8');
 const origin = 'https://aizanoianalytics.com';
 const landings = {
   tv: { app:'videos', title:'Aizanoi TV', phrase:'Coming Soon' },
-  analytics: { app:'analytics', title:'Aizanoi Analytics', phrase:'in development' },
+  analytics: { app:'analytics', title:'Dashboards', phrase:'in development' },
   worlds: { app:'worlds', title:'Historical Worlds', phrase:'Rome' },
   forge: { app:'forge', title:'Aizanoi Forge', phrase:'Source' },
   journal: { app:'journal', title:'Aizanoi Journal', phrase:'in development' },
@@ -14,12 +14,17 @@ const landings = {
   arcade: { app:'games', title:'Aizanoi Arcade', phrase:'Snake' }
 };
 const productRoutes = ['news', ...Object.keys(landings)];
+const sharedNav = [
+  ['/news/', 'News'], ['/tv/', 'TV'], ['/analytics/', 'Dashboards'], ['/worlds/', 'Worlds'],
+  ['/forge/', 'Forge'], ['/journal/', 'Journal'], ['/labs/', 'Labs'], ['/arcade/', 'Arcade']
+];
 
 function metadata(html, route, expected) {
   assert.match(html, new RegExp(`<title>[^<]*${expected.title}[^<]*<\\/title>`));
   assert.match(html, /<meta name="description" content="[^"]{40,}">/);
   assert.match(html, new RegExp(`<link rel="canonical" href="${origin}/${route}/">`));
   assert.match(html, new RegExp(`<meta property="og:url" content="${origin}/${route}/">`));
+  assert.match(html, /<meta property="og:site_name" content="Aizanoi Analytics">/);
   assert.match(html, /<meta property="og:title"/);
   assert.match(html, /<meta property="og:description"/);
   assert.match(html, /<meta property="og:image"/);
@@ -31,18 +36,20 @@ function metadata(html, route, expected) {
   const structured = JSON.parse(json);
   assert.equal(structured.url, `${origin}/${route}/`);
   assert.equal(structured.name, expected.title);
+  assert.equal(structured.isPartOf?.name, 'Aizanoi Analytics');
 }
 
-test('root document exposes structured organization metadata and canonical product links without executable inline script', () => {
+test('root document exposes Aizanoi Analytics structured metadata and canonical product links without executable inline script', () => {
   const root = read('frontend/index.html');
   assert.match(root, /application\/ld\+json/);
-  assert.match(root, /"@type":"Organization"/);
-  assert.match(root, /"@type":"WebSite"/);
+  assert.match(root, /"@type":"Organization","name":"Aizanoi Analytics"/);
+  assert.match(root, /"@type":"WebSite","name":"Aizanoi Analytics"/);
   for (const route of productRoutes) assert.match(root, new RegExp(`href="/${route}/"`));
+  assert.match(root, /href="\/analytics\/">Dashboards<\/a>/);
   assert.doesNotMatch(root, /<script(?![^>]*type="application\/ld\+json")(?![^>]*src=)[^>]*>/i);
 });
 
-test('product routes are static, indexable landing documents with distinct metadata', () => {
+test('product routes are static, indexable landing documents with shared News-first navigation', () => {
   for (const [route, expected] of Object.entries(landings)) {
     const file = `frontend/${route}/index.html`;
     assert.ok(existsSync(file), `${file} missing`);
@@ -51,6 +58,10 @@ test('product routes are static, indexable landing documents with distinct metad
     assert.match(html, new RegExp(expected.phrase, 'i'));
     assert.match(html, new RegExp(`href="/\\?app=${expected.app}"`));
     assert.match(html, /<h1>/);
+    assert.match(html, /<span>Aizanoi Analytics<\/span>/);
+    for (const [href, label] of sharedNav) {
+      assert.match(html, new RegExp(`<a href="${href.replaceAll('/', '\\/')}">${label}<\\/a>`), `${route} navigation must expose ${label}`);
+    }
   }
 });
 
@@ -85,6 +96,7 @@ test('PWA and repository discovery point to canonical static product routes', ()
     assert.match(manifest, new RegExp(`"url":"${route.replaceAll('/', '\\/')}"`));
     assert.match(readme, new RegExp(`https://aizanoianalytics\\.com${route}`));
   }
+  assert.match(manifest, /"name":"Dashboards"/);
 });
 
 test('Rome and Athens publish canonical and social discovery metadata', () => {

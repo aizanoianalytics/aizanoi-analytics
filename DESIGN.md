@@ -1,6 +1,8 @@
 # AizanoiOS — Design System
 
-AizanoiOS is the browser-native shell for **Aizanoi**, an independent digital studio for media, data, software, research and interactive worlds.
+AizanoiOS is the browser-native shell for **Aizanoi Analytics**, the umbrella company and public brand for media, data, software, research and interactive worlds in this repository.
+
+`Aizanoi` may appear as a short-form product identity, but the company/umbrella name is Aizanoi Analytics.
 
 It is deliberately not a generic dark dashboard and it must not imitate any operating system pixel-for-pixel.
 
@@ -13,7 +15,7 @@ Do:
 - use translucent light surfaces with readable dark text;
 - keep icons simple, recognizable and consistent;
 - make touch targets at least 44×44 px where coarse input is expected;
-- let each product family have personality inside one coherent Aizanoi identity;
+- let each product family have personality inside one coherent Aizanoi Analytics identity;
 - adapt composition when the form factor changes.
 
 Do not:
@@ -25,12 +27,12 @@ Do not:
 
 ## Brand hierarchy
 
-Aizanoi is the umbrella brand. AizanoiOS is the shell.
+**Aizanoi Analytics** is the umbrella/company brand. **AizanoiOS** is the shell.
 
 Core public destinations:
 1. **Aizanoi News**
 2. **Aizanoi TV**
-3. **Aizanoi Analytics**
+3. **Dashboards**
 4. **Historical Worlds**
 5. **Aizanoi Forge**
 
@@ -38,6 +40,8 @@ Secondary public families:
 - Aizanoi Journal
 - Aizanoi Labs
 - Aizanoi Arcade
+
+The Dashboards compatibility route remains `/analytics/` and its internal app id remains `analytics`; those identifiers are not the user-facing product name.
 
 ## Desktop — large screens
 
@@ -58,20 +62,18 @@ Tablet is a **touch-first workspace**, not a scaled desktop.
 
 On `600–1199px`:
 - use a two-pane home;
-- reserve one pane for Aizanoi identity, date and one useful contextual card;
+- reserve one pane for Aizanoi Analytics identity, date and one useful contextual card;
 - use the main pane for a large touch-friendly app grid and two small feature/supporting cards;
 - keep the bottom dock compact and centered;
 - open apps in focused, large rounded windows rather than freeform desktop rectangles;
 - let the number of grid columns adapt between narrower and wider tablets.
 
-The tablet design should feel at home in either portrait or landscape and should use the extra width for structure, not merely larger whitespace.
-
 ## Mobile — compact screens
 
-Mobile is a **phone-like Aizanoi home screen**.
+Mobile is a **phone-like AizanoiOS home screen**.
 
 On `<600px`:
-- show a clear Aizanoi header and real local date;
+- show a clear Aizanoi Analytics header and real local date;
 - provide two small glanceable widgets with direct actions;
 - expose every public app in a four-column icon grid when space allows;
 - keep a compact bottom dock for Home + the most important destinations + Applications;
@@ -80,12 +82,11 @@ On `<600px`:
 - collapse the Applications launcher into a bottom-sheet/app-drawer style surface;
 - keep Search easy to reach from the home screen.
 
-The result may evoke modern iOS/Android interaction conventions, but it must remain original AizanoiOS.
-
 ## App icons
 
 - Keep primary symbols centered and simple.
 - Use one consistent rounded-square container language across phone and tablet.
+- Use canonical product asset names rather than retired Workbench names.
 - Avoid text inside the icon itself when the label already appears below.
 - Avoid tiny illustrative detail that becomes unreadable at mobile sizes.
 - Maintain consistent optical weight even when source SVGs differ.
@@ -113,7 +114,7 @@ Tablet:
 - no pointer-only magnification requirement.
 
 Mobile:
-- Home + News + TV + Analytics + Worlds + Applications;
+- Home + News + TV + Dashboards + Worlds + Applications;
 - Forge remains available in the app grid/launcher but is not forced into the compact dock;
 - running non-pinned apps do not expand the dock.
 
@@ -135,7 +136,7 @@ Historical evidence colors remain semantic and explicit:
 - atmospheric — neutral + label;
 - disputed — warning + dashed/label treatment.
 
-News/TV/Analytics/Forge should not inherit evidence colors merely for decoration.
+News/TV/Dashboards/Forge should not inherit evidence colors merely for decoration.
 
 ## Typography
 
@@ -161,7 +162,7 @@ Readable editorial cards, visible category, date and source links. Avoid faux ne
 ### TV
 Video/series presentation may be cinematic, but companion research/source links remain easy to find.
 
-### Analytics
+### Dashboards
 Data products should prioritize information hierarchy, clarity and usable controls over decorative dashboard density.
 
 ### Forge

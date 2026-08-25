@@ -1,6 +1,6 @@
 # Security Policy
 
-Aizanoi is a public, static-first web project. Security fixes target the current `main` branch and the production deployment at [aizanoianalytics.com](https://aizanoianalytics.com). Older commits, abandoned branches, local modifications and third-party forks are unsupported.
+Aizanoi Analytics is a public, static-first web project. Security fixes target the current `main` branch and the production deployment at [aizanoianalytics.com](https://aizanoianalytics.com). Older commits, abandoned branches, local modifications and third-party forks are unsupported.
 
 ## Reporting a vulnerability
 
@@ -21,11 +21,11 @@ Internet
            +-- static HTML / CSS / JavaScript / JSON / assets
 ```
 
-There is no public Aizanoi Node/Express backend, no public remote shell, no terminal WebSocket and no general visitor API. Historical `/api/chat` returns `410 Gone`; other `/api/*` paths return `404`.
+There is no public Aizanoi Analytics Node/Express backend, no public remote shell, no terminal WebSocket and no general visitor API. Historical `/api/chat` returns `410 Gone`; other `/api/*` paths return `404`.
 
 The former browser research Workbench is retired. Its local archive, notes, data tools, source reader, artifact viewer, projects, virtual terminal and monitor are absent from the supported frontend. Reports should be evaluated against current reachable code, while any change that accidentally restores these removed surfaces is security-relevant.
 
-The service worker is same-origin, ignores `/api/*`, removes superseded Aizanoi caches, bounds runtime entries and provides static offline fallback. It is not a data synchronization mechanism.
+The service worker is same-origin, ignores `/api/*`, removes superseded AizanoiOS shell caches, bounds runtime entries and provides static offline fallback. It is not a data synchronization mechanism.
 
 ## In scope
 
