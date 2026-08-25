@@ -1,7 +1,7 @@
 /* Shared historical-world presentation shell.
    This module reorganises existing controls without owning traversal, evidence,
    rendering or city data. It also records lightweight browser-local field-session
-   context so a world can return to the Field System without losing orientation. */
+   context so a world can return to AizanoiOS without losing orientation. */
 (function installHistoricalWorldExperience(){
   if(typeof window==='undefined'||typeof document==='undefined')return;
   if(window.__AIZANOI_CITY_EXPERIENCE__)return;
@@ -59,10 +59,11 @@
     return el;
   }
 
-  function addFieldSystemReturn(panel){
-    const back=button('aw-field-system-return','Field System');
+  function addAizanoiOSReturn(panel){
+    // Keep the legacy element id for CSS/test compatibility; only public language changes.
+    const back=button('aw-field-system-return','AizanoiOS');
     back.className='aw-field-system-return';
-    back.setAttribute('aria-label','Return to Aizanoi Field System');
+    back.setAttribute('aria-label','Return to AizanoiOS');
     back.addEventListener('click',()=>{
       saveSession();
       location.href='/?app=worlds&from=historical-world';
@@ -79,7 +80,7 @@
     panel.id='aw-tools-panel';panel.className='aw-tools-panel';panel.hidden=true;
     panel.setAttribute('role','group');panel.setAttribute('aria-label','Historical world tools');
 
-    addFieldSystemReturn(panel);
+    addAizanoiOSReturn(panel);
 
     if(mapTarget&&!compact){
       const mapToggle=button('aw-mini-toggle','Map');
