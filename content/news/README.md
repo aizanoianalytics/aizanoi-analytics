@@ -18,6 +18,10 @@ Recommended categories:
 
 Each item requires `retrievedAt`, named author and editor identities, a `corrections` history array, and at least one source with publisher, public URL and publication date. Summaries must be original and 80–600 characters.
 
+Daily items use `kind: "daily"` (default if omitted). The daily edition is the current `news/YYYY-MM-DD/` page.
+
+Weekly items add `"kind": "weekly"` and a `"week": "YYYY-Www"` label that must match the ISO week of their publication date. They generate a separate permanent page at `news/weekly/YYYY-MM-DD/` and a corresponding permanent article. The `index.json` feed exposes a parallel `weeklyEditions` array. Weekly summaries must be at least 240 characters to qualify as analysis paragraphs rather than headline rewrites.
+
 The compiler writes:
 - the edition feed at `frontend/news/index.json`;
 - the current landing at `/news/`;

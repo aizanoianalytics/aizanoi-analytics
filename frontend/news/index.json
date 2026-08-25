@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 4,
   "generatedAt": "2026-08-25T05:07:42.000Z",
   "categories": [
     "ai",
@@ -19,12 +19,50 @@
       "itemCount": 8
     }
   ],
+  "weeklyEditions": [],
   "items": [
     {
+      "id": "2026-08-25-taiwan-charges-nine-ai-server-exports",
+      "kind": "daily",
+      "title": "Taiwan charges nine in alleged AI-server export scheme",
+      "summary": "Taiwanese prosecutors have charged nine people over the alleged illegal export of high-end AI servers to mainland China. Reporting says employees linked to Nvidia and Super Micro were among those charged, intensifying scrutiny of advanced-computing supply chains.",
+      "category": "ai",
+      "priority": 90,
+      "publishedAt": "2026-08-25T05:08:00.000Z",
+      "updatedAt": "2026-08-25T05:08:00.000Z",
+      "retrievedAt": "2026-08-25T05:07:42.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Taiwan",
+        "AI servers",
+        "export controls"
+      ],
+      "sources": [
+        {
+          "publisher": "PBS News / Associated Press",
+          "url": "https://www.pbs.org/newshour/world/taiwan-charges-9-over-illegal-ai-server-exports-to-china-including-nvidia-and-super-micro-staffers",
+          "publishedAt": "2026-08-24T20:20:37.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/taiwan-indicts-9-over-alleged-illegal-export-ai-servers-china-2026-08-24/",
+          "publishedAt": "2026-08-24T23:53:39.000Z"
+        }
+      ]
+    },
+    {
       "id": "2026-08-25-3m-boe-display-laboratory",
+      "kind": "daily",
       "title": "3M and BOE open a joint laboratory for next-generation displays",
       "summary": "3M and BOE have opened a joint research laboratory focused on display materials and manufacturing. The programme will work across LCD, OLED and MLED applications, including optical films, adhesives, foldable screens and ultra-narrow bezel processes.",
       "category": "technology",
+      "priority": 50,
       "publishedAt": "2026-08-25T05:08:00.000Z",
       "updatedAt": "2026-08-25T05:08:00.000Z",
       "retrievedAt": "2026-08-25T05:07:42.000Z",
@@ -50,9 +88,11 @@
     },
     {
       "id": "2026-08-25-asian-markets-face-tech-led-pressure",
+      "kind": "daily",
       "title": "Asian markets face a cautious open after the US technology sell-off",
       "summary": "Asian equity futures pointed mostly lower after semiconductor shares pulled the Nasdaq 100 down nearly 1%. Investors were also weighing softer oil, firmer US Treasuries and a heavy calendar of economic data and corporate earnings.",
       "category": "economy-markets",
+      "priority": 50,
       "publishedAt": "2026-08-25T05:08:00.000Z",
       "updatedAt": "2026-08-25T05:08:00.000Z",
       "retrievedAt": "2026-08-25T05:07:42.000Z",
@@ -83,9 +123,11 @@
     },
     {
       "id": "2026-08-25-chelsea-edge-fulham-five-goal-match",
+      "kind": "daily",
       "title": "Chelsea edge Fulham in a five-goal Premier League contest",
       "summary": "Chelsea beat Fulham 3-2 at Craven Cottage in a match that swung through five goals. Club reports confirm the visitors secured the points after Fulham twice found the net, giving Chelsea their first league win of the new campaign.",
       "category": "football",
+      "priority": 50,
       "publishedAt": "2026-08-25T05:08:00.000Z",
       "updatedAt": "2026-08-25T05:08:00.000Z",
       "retrievedAt": "2026-08-25T05:07:42.000Z",
@@ -116,9 +158,11 @@
     },
     {
       "id": "2026-08-25-european-shares-flat-tech-drag",
+      "kind": "daily",
       "title": "European shares finish little changed as technology stocks weigh",
       "summary": "European equities ended broadly flat after weakness in technology shares offset gains elsewhere. Markets also tracked uncertainty around Iran-related sanctions and looked ahead to incoming economic data, keeping risk appetite restrained.",
       "category": "economy-markets",
+      "priority": 50,
       "publishedAt": "2026-08-25T05:08:00.000Z",
       "updatedAt": "2026-08-25T05:08:00.000Z",
       "retrievedAt": "2026-08-25T05:07:42.000Z",
@@ -149,9 +193,11 @@
     },
     {
       "id": "2026-08-25-gsa-quantum-resistant-migration",
+      "kind": "daily",
       "title": "GSA takes a coordinating role in the US post-quantum migration",
       "summary": "The US General Services Administration says its technology-policy office will help coordinate the federal shift to post-quantum cryptography. The work covers identity and building-access systems as agencies move toward encryption intended to withstand future quantum attacks.",
       "category": "technology",
+      "priority": 50,
       "publishedAt": "2026-08-25T05:08:00.000Z",
       "updatedAt": "2026-08-25T05:08:00.000Z",
       "retrievedAt": "2026-08-25T05:07:42.000Z",
@@ -177,9 +223,11 @@
     },
     {
       "id": "2026-08-25-malen-hat-trick-roma-fiorentina",
+      "kind": "daily",
       "title": "Malen hat-trick powers Roma past Fiorentina",
       "summary": "Donyell Malen scored three times as Roma opened their Serie A campaign with a 4-0 win over Fiorentina. Paulo Dybala supplied all three assists for Malen before Niccolo Pisilli added the fourth in a dominant home performance.",
       "category": "football",
+      "priority": 50,
       "publishedAt": "2026-08-25T05:08:00.000Z",
       "updatedAt": "2026-08-25T05:08:00.000Z",
       "retrievedAt": "2026-08-25T05:07:42.000Z",
@@ -210,9 +258,11 @@
     },
     {
       "id": "2026-08-25-spacexai-selects-nvidia-vera-cpus",
+      "kind": "daily",
       "title": "SpaceXAI selects Nvidia Vera CPUs for autonomous AI workloads",
       "summary": "Nvidia says SpaceXAI will deploy its Vera CPUs for a new generation of autonomous AI applications. The announcement positions the processor, designed around intensive reasoning workloads, inside one of the industry's largest planned compute deployments.",
       "category": "ai",
+      "priority": 50,
       "publishedAt": "2026-08-25T05:08:00.000Z",
       "updatedAt": "2026-08-25T05:08:00.000Z",
       "retrievedAt": "2026-08-25T05:07:42.000Z",
@@ -237,43 +287,12 @@
       ]
     },
     {
-      "id": "2026-08-25-taiwan-charges-nine-ai-server-exports",
-      "title": "Taiwan charges nine in alleged AI-server export scheme",
-      "summary": "Taiwanese prosecutors have charged nine people over the alleged illegal export of high-end AI servers to mainland China. Reporting says employees linked to Nvidia and Super Micro were among those charged, intensifying scrutiny of advanced-computing supply chains.",
-      "category": "ai",
-      "publishedAt": "2026-08-25T05:08:00.000Z",
-      "updatedAt": "2026-08-25T05:08:00.000Z",
-      "retrievedAt": "2026-08-25T05:07:42.000Z",
-      "author": {
-        "name": "Aizanoi News Desk"
-      },
-      "editor": {
-        "name": "Aizanoi Editorial Desk"
-      },
-      "corrections": [],
-      "tags": [
-        "Taiwan",
-        "AI servers",
-        "export controls"
-      ],
-      "sources": [
-        {
-          "publisher": "PBS News / Associated Press",
-          "url": "https://www.pbs.org/newshour/world/taiwan-charges-9-over-illegal-ai-server-exports-to-china-including-nvidia-and-super-micro-staffers",
-          "publishedAt": "2026-08-24T20:20:37.000Z"
-        },
-        {
-          "publisher": "Reuters",
-          "url": "https://www.reuters.com/world/asia-pacific/taiwan-indicts-9-over-alleged-illegal-export-ai-servers-china-2026-08-24/",
-          "publishedAt": "2026-08-24T23:53:39.000Z"
-        }
-      ]
-    },
-    {
       "id": "2026-08-24-alibaba-proposes-hk80-billion-placement",
+      "kind": "daily",
       "title": "Alibaba proposes HK$80 billion share placement for AI investment",
       "summary": "Alibaba proposed placing newly issued shares with non-US investors for an aggregate HK$80 billion, subject to market and other conditions. The company says all net proceeds would fund its full-stack AI capabilities, including expanded infrastructure.",
       "category": "economy-markets",
+      "priority": 50,
       "publishedAt": "2026-08-24T05:07:04.000Z",
       "updatedAt": "2026-08-24T05:07:04.000Z",
       "retrievedAt": "2026-08-24T05:06:40.000Z",
@@ -299,9 +318,11 @@
     },
     {
       "id": "2026-08-24-amie-video-consultation-study",
+      "kind": "daily",
       "title": "Google tests medical AI in simulated video consultations",
       "summary": "Google researchers evaluated AMIE in 300 simulated video consultations covering 100 scenarios and involving professional patient actors and 30 primary-care physicians. The team stresses that no real patients took part and that further validation and safety work are required before clinical use.",
       "category": "ai",
+      "priority": 50,
       "publishedAt": "2026-08-24T05:07:04.000Z",
       "updatedAt": "2026-08-24T05:07:04.000Z",
       "retrievedAt": "2026-08-24T05:06:40.000Z",
@@ -332,9 +353,11 @@
     },
     {
       "id": "2026-08-24-apple-unifies-eu-app-terms",
+      "kind": "daily",
       "title": "Apple sets unified EU app terms and revises commission structure",
       "summary": "Apple announced a single set of business terms for developers distributing apps in the European Union, effective 1 October. Under the plan, its per-install Core Technology Fee gives way to a 5% charge on qualifying digital sales made through software obtained beyond the App Store.",
       "category": "technology",
+      "priority": 50,
       "publishedAt": "2026-08-24T05:07:04.000Z",
       "updatedAt": "2026-08-24T05:07:04.000Z",
       "retrievedAt": "2026-08-24T05:06:40.000Z",
@@ -360,9 +383,11 @@
     },
     {
       "id": "2026-08-24-euro-area-inflation-expectations-ease",
+      "kind": "daily",
       "title": "Euro-area consumers trim near-term inflation expectations",
       "summary": "The ECB's July survey put median inflation expectations at 2.9% for the next 12 months and 2.7% three years ahead, each down 0.1 percentage point from June. Five-year expectations were unchanged at 2.4%, while expected economic growth improved but remained negative.",
       "category": "economy-markets",
+      "priority": 50,
       "publishedAt": "2026-08-24T05:07:04.000Z",
       "updatedAt": "2026-08-24T05:07:04.000Z",
       "retrievedAt": "2026-08-24T05:06:40.000Z",
@@ -388,9 +413,11 @@
     },
     {
       "id": "2026-08-24-geforce-now-adds-firefox-support",
+      "kind": "daily",
       "title": "GeForce Now adds Firefox to its Windows browser lineup",
       "summary": "Nvidia has added Firefox support for GeForce Now on Windows, allowing members to launch supported cloud games from the browser without installing the dedicated application. Firefox joins Chrome, Edge and Opera among the service's supported Windows browsers.",
       "category": "technology",
+      "priority": 50,
       "publishedAt": "2026-08-24T05:07:04.000Z",
       "updatedAt": "2026-08-24T05:07:04.000Z",
       "retrievedAt": "2026-08-24T05:06:40.000Z",
@@ -416,9 +443,11 @@
     },
     {
       "id": "2026-08-24-gemma-passes-one-billion-downloads",
+      "kind": "daily",
       "title": "Gemma passes one billion downloads as Google opens a project directory",
       "summary": "Google says its Gemma model family has passed one billion downloads and spawned more than 100,000 community variants. The company also launched an Awesome Gemma repository intended to catalogue projects, fine-tunes, tutorials and developer tools.",
       "category": "ai",
+      "priority": 50,
       "publishedAt": "2026-08-24T05:07:04.000Z",
       "updatedAt": "2026-08-24T05:07:04.000Z",
       "retrievedAt": "2026-08-24T05:06:40.000Z",
@@ -444,9 +473,11 @@
     },
     {
       "id": "2026-08-24-hull-beat-manchester-united",
+      "kind": "daily",
       "title": "Hull mark Premier League return with win over Manchester United",
       "summary": "Hull City beat Manchester United 2-0 in their first Premier League match for nine years. The promoted side secured the result despite holding 28% of possession, giving Sergej Jakirovic's team a winning start against last season's third-place finishers.",
       "category": "football",
+      "priority": 50,
       "publishedAt": "2026-08-24T05:07:04.000Z",
       "updatedAt": "2026-08-24T05:07:04.000Z",
       "retrievedAt": "2026-08-24T05:06:40.000Z",
@@ -477,9 +508,11 @@
     },
     {
       "id": "2026-08-24-liverpool-rescue-point-at-newcastle",
+      "kind": "daily",
       "title": "Late Szoboszlai penalty earns Liverpool a point at Newcastle",
       "summary": "Liverpool opened their Premier League season with a 2-2 draw at Newcastle after Dominik Szoboszlai converted a stoppage-time penalty. Cody Gakpo had cancelled out Harvey Barnes's opener before substitute Joe Willock restored Newcastle's lead.",
       "category": "football",
+      "priority": 50,
       "publishedAt": "2026-08-24T05:07:04.000Z",
       "updatedAt": "2026-08-24T05:07:04.000Z",
       "retrievedAt": "2026-08-24T05:06:40.000Z",
