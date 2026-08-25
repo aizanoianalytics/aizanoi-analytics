@@ -77,6 +77,8 @@ Aizanoi News app / public discovery
 
 The compiler validates ids, dates, the four published sections (AI, Technology, Economy / Markets and Football), editorial priority, original summary length, author/editor identity, optional image provenance, correction history and mandatory source publisher/URL/date provenance. It does not fetch third-party sites itself. Source discovery stays in the private/operator layer.
 
+Daily items use `kind: "daily"` (default) and publish at `news/YYYY-MM-DD/`. Weekly items add `"kind": "weekly"` plus a `"week": "YYYY-Www"` label that must match the ISO week of the publication date, publish at `news/weekly/YYYY-MM-DD/`, require summaries of at least 240 characters and are surfaced via a parallel `weeklyEditions` array in the edition feed.
+
 It deterministically generates the current landing, daily edition paths, **permanent article pages**, category archives, `/news/about/`, the JSON edition feed, RSS, a dedicated `/news/sitemap.xml` and root sitemap discovery. `SOURCE_DATE_EPOCH` may pin build metadata. Generation is serialized by an exclusive lock, built and validated in same-filesystem staging, rollback-safe, and recoverable after stale locks or interrupted promotion. The compiler runs in the private checkout; generated outputs must be rebuilt and reviewed before an approved exact-SHA production deployment.
 
 `CONTENT_POLICY.md` is the publication contract.
