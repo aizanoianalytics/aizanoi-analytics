@@ -1,0 +1,25 @@
+{
+  "id": "2026-08-25-asian-markets-face-tech-led-pressure",
+  "title": "Asian markets face a cautious open after the US technology sell-off",
+  "summary": "Asian equity futures pointed mostly lower after semiconductor shares pulled the Nasdaq 100 down nearly 1%. Investors were also weighing softer oil, firmer US Treasuries and a heavy calendar of economic data and corporate earnings.",
+  "category": "economy-markets",
+  "publishedAt": "2026-08-25T05:08:00Z",
+  "updatedAt": "2026-08-25T05:08:00Z",
+  "retrievedAt": "2026-08-25T05:07:42Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "corrections": [],
+  "tags": ["Asian markets", "technology stocks", "bonds"],
+  "sources": [
+    {
+      "publisher": "Bloomberg via Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/world-indices/articles/asian-stocks-under-pressure-us-220952003.html",
+      "publishedAt": "2026-08-24T22:09:52Z"
+    },
+    {
+      "publisher": "ABC News / Associated Press",
+      "url": "https://abcnews.com/Business/wireStory/asian-shares-decline-bond-market-pressure-mounts-135894853",
+      "publishedAt": "2026-08-24T20:25:15Z"
+    }
+  ]
+}

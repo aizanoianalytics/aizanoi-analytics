@@ -1,0 +1,25 @@
+{
+  "id": "2026-08-25-chelsea-edge-fulham-five-goal-match",
+  "title": "Chelsea edge Fulham in a five-goal Premier League contest",
+  "summary": "Chelsea beat Fulham 3-2 at Craven Cottage in a match that swung through five goals. Club reports confirm the visitors secured the points after Fulham twice found the net, giving Chelsea their first league win of the new campaign.",
+  "category": "football",
+  "publishedAt": "2026-08-25T05:08:00Z",
+  "updatedAt": "2026-08-25T05:08:00Z",
+  "retrievedAt": "2026-08-25T05:07:42Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "corrections": [],
+  "tags": ["Chelsea", "Fulham", "Premier League"],
+  "sources": [
+    {
+      "publisher": "Fulham FC",
+      "url": "https://www.fulhamfc.com/news/2026/august/24/fulham-2-3-chelsea/",
+      "publishedAt": "2026-08-24T21:14:07Z"
+    },
+    {
+      "publisher": "Chelsea FC",
+      "url": "https://www.chelseafc.com/en/news/article/match-report-fulham-chelsea-aug-26",
+      "publishedAt": "2026-08-25T02:23:27Z"
+    }
+  ]
+}
