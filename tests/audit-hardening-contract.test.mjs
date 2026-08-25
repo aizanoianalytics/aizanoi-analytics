@@ -12,7 +12,8 @@ const sw = read('frontend/service-worker.js');
 test('audit hardening keeps News v2 and deployment contracts documented together', () => {
   assert.match(architecture, /permanent article pages/);
   assert.match(architecture, /\/news\/sitemap\.xml/);
-  assert.match(policy, /AI-assisted production/);
+  assert.match(policy, /AI-assisted publishing/);
+  assert.match(policy, /AI-assisted tools may support source discovery, drafting and production/);
   assert.match(policy, /priority/);
   assert.match(hermes, /permanent article pages/);
   assert.match(hermes, /node scripts\/news\/build-news\.mjs/);
