@@ -2,9 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const root = resolve(import.meta.dirname, '..');
 const city = resolve(root, 'frontend/ancient-cities/rome-410-476');
+const importFromCity = (relative) => import(pathToFileURL(resolve(city, relative)).href);
 
 function read(relative) {
   return readFileSync(resolve(city, relative), 'utf8');
@@ -28,7 +30,7 @@ test('Rome entry page gives a visible fallback when WebGL is unavailable', () =>
 
 test('Rome city data includes late-antique monuments, regions, streets and sourced records', async () => {
   assert.ok(existsSync(resolve(city, 'data/city.js')));
-  const { BUILDINGS, REGIONS, STREETS, SOURCES } = await import(resolve(city, 'data/city.js'));
+  const { BUILDINGS, REGIONS, STREETS, SOURCES } = await importFromCity('data/city.js');
   const names = BUILDINGS.map((b) => b.name).join(' | ');
   for (const required of ['Aurelian Walls', 'Colosseum', 'Old St. Peter', 'Santa Maria Maggiore', 'Baths of Caracalla', 'Pantheon']) {
     assert.match(names, new RegExp(required));
