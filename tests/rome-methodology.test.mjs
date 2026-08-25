@@ -17,12 +17,15 @@ test('Rome keeps reconstruction methodology visible even outside the WebGL rende
   assert.match(method, /atmospheric/);
 });
 
-test('Rome renderer delegates world bounds and conservative performance policy to the shared runtime', () => {
+test('Rome renderer delegates world bounds and adaptive performance policy to the shared runtime', () => {
   assert.match(app, /startFlatBlockyCity/);
   assert.match(app, /bounds:\s*\{ minX: -900, maxX: 700, minZ: -700, maxZ: 700 \}/);
-  assert.match(runtime, /Math\.min\(devicePixelRatio \|\| 1, TOUCH \? 1\.15 : 1\.55\)/);
+  assert.match(runtime, /createAdaptiveQualityController\(\{ mobile:TOUCH \}\)/);
+  assert.match(runtime, /Math\.min\(devicePixelRatio \|\| 1, quality\.pixelRatioCap\(\)\)/);
+  assert.match(runtime, /quality\.sample\(frameDt\)/);
   assert.match(runtime, /const TOUCH =/);
   assert.match(runtime, /baseHeightAt:\s*\(\) => 0/);
   assert.match(runtime, /renderer: 'custom-webgl-blocky'/);
+  assert.match(runtime, /adaptiveQuality: true/);
   assert.match(runtime, /trueVoxelEngine: false/);
 });

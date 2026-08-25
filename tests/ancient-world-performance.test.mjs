@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createAdaptiveQualityController } from '../frontend/ancient-world/engine/performance.js';
+
+const runtime = readFileSync('frontend/ancient-world/engine/flat-city-runtime.js', 'utf8');
 
 test('adaptive quality starts conservatively on mobile and high on desktop', () => {
   assert.equal(createAdaptiveQualityController({ mobile: true }).snapshot().tier, 'balanced');
@@ -40,4 +43,12 @@ test('quality tier forcing validates requested tiers', () => {
   const quality = createAdaptiveQualityController();
   assert.equal(quality.forceTier('low'), 'low');
   assert.throws(() => quality.forceTier('ultra'), /Unknown quality tier/);
+});
+
+test('live flat runtime samples adaptive quality and uses its DPR cap', () => {
+  assert.match(runtime, /createAdaptiveQualityController\(\{ mobile:TOUCH \}\)/);
+  assert.match(runtime, /quality\.sample\(frameDt\)/);
+  assert.match(runtime, /quality\.pixelRatioCap\(\)/);
+  assert.match(runtime, /get quality\(\) \{ return quality\.snapshot\(\); \}/);
+  assert.match(runtime, /adaptiveQuality:\s*true/);
 });

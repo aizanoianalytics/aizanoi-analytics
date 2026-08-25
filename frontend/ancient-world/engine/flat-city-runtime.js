@@ -2,6 +2,9 @@ import { createTraversalSystem, rectCollider, walkRect } from './traversal.js';
 import { createLifecycle } from './lifecycle.js';
 import { installMobileControls } from './mobile-controls.js';
 import { installBackToOS } from './navigation.js';
+import { createAdaptiveQualityController } from './performance.js';
+import { ANCIENT_CITY_FRAGMENT_SHADER } from './surface-shader.js';
+import { createAncientSkyRenderer, createAncientWaterRenderer, waterRibbon } from './environment-renderer.js';
 import { ANCIENT_MATERIALS as M } from '../assets/materials.js';
 import { createBlockyAssetLibrary } from '../assets/blocky-asset-library.js';
 
@@ -147,19 +150,24 @@ function roadGeometry(scene, street) {
   }
 }
 
-function waterGeometry(scene, water) {
-  const colour = M.water;
+function rotatedRectPoints({ x, z, w, d, rot = 0, y = 0.04 }) {
+  const c = Math.cos(rot), s = Math.sin(rot);
+  const point = (lx, lz) => [x + lx * c - lz * s, y, z + lx * s + lz * c];
+  return [point(-w / 2, -d / 2), point(w / 2, -d / 2), point(w / 2, d / 2), point(-w / 2, d / 2)];
+}
+
+function waterGeometry(water) {
   if (water.type === 'rect') {
-    scene.box(water.x, 0.025, water.z, water.w, 0.025, water.d, colour, water.rot || 0);
-    return;
+    return [{ points: rotatedRectPoints({ ...water, y:0.04 }), color:M.water }];
   }
+  const surfaces = [];
   const points = water.points || [];
   for (let i = 1; i < points.length; i++) {
     const a = points[i - 1], b = points[i];
-    const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
-    if (!length) continue;
-    scene.box((a[0] + b[0]) / 2, 0.025, (a[1] + b[1]) / 2, length, 0.025, water.width || 22, colour, Math.atan2(dz, dx));
+    if (Math.hypot(b[0] - a[0], b[1] - a[1]) < 0.01) continue;
+    surfaces.push(waterRibbon({ x0:a[0], z0:a[1], x1:b[0], z1:b[1], halfWidth:(water.width || 22) / 2, y:0.04, color:M.water }));
   }
+  return surfaces;
 }
 
 function boundsFromCity(buildings, regions, fallback = { minX: -900, maxX: 900, minZ: -900, maxZ: 900 }) {
@@ -185,18 +193,46 @@ function createShader(gl, type, source) {
   const shader = gl.createShader(type);
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(shader) || 'Shader compilation failed');
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    const message = gl.getShaderInfoLog(shader) || 'Shader compilation failed';
+    gl.deleteShader(shader);
+    throw new Error(message);
+  }
   return shader;
 }
 
 function createProgram(gl) {
-  const vs = `attribute vec3 aPos;attribute vec3 aN;attribute vec3 aColor;uniform mat4 uProj;uniform mat4 uView;varying vec3 vN;varying vec3 vC;varying vec3 vW;void main(){vN=aN;vC=aColor;vW=aPos;gl_Position=uProj*uView*vec4(aPos,1.0);}`;
-  const fs = `precision mediump float;varying vec3 vN;varying vec3 vC;varying vec3 vW;uniform vec3 uSun;uniform vec3 uFog;uniform float uFogD;uniform float uAmbient;void main(){vec3 n=normalize(vN);float light=uAmbient+max(dot(n,normalize(uSun)),0.0)*.72+max(n.y,0.0)*.09;vec3 c=vC*(.62+light*.52);float d=gl_FragCoord.z/gl_FragCoord.w;float fog=clamp(1.0-exp(-uFogD*uFogD*d*d),0.0,.9);gl_FragColor=vec4(mix(c,uFog,fog),1.0);}`;
+  const vs = `
+attribute vec3 aPos;
+attribute vec3 aN;
+attribute vec3 aColor;
+uniform mat4 uProj;
+uniform mat4 uView;
+varying vec3 vN;
+varying vec3 vC;
+varying vec3 vW;
+varying float vDepth;
+void main(){
+  vec4 viewPos=uView*vec4(aPos,1.0);
+  vN=aN;
+  vC=aColor;
+  vW=aPos;
+  vDepth=max(0.0,-viewPos.z);
+  gl_Position=uProj*viewPos;
+}`;
+  const vertex = createShader(gl, gl.VERTEX_SHADER, vs);
+  const fragment = createShader(gl, gl.FRAGMENT_SHADER, ANCIENT_CITY_FRAGMENT_SHADER);
   const program = gl.createProgram();
-  gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, vs));
-  gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, fs));
+  gl.attachShader(program, vertex);
+  gl.attachShader(program, fragment);
   gl.linkProgram(program);
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(program) || 'Program link failed');
+  const ok = gl.getProgramParameter(program, gl.LINK_STATUS);
+  const message = gl.getProgramInfoLog(program) || 'Program link failed';
+  gl.detachShader(program, vertex);
+  gl.detachShader(program, fragment);
+  gl.deleteShader(vertex);
+  gl.deleteShader(fragment);
+  if (!ok) { gl.deleteProgram(program); throw new Error(message); }
   return program;
 }
 
@@ -234,6 +270,7 @@ export function startFlatBlockyCity({
   const WALK_SPEED = 3.8;
   const SPRINT_SPEED = 7.2;
   const lifecycle = createLifecycle();
+  const quality = createAdaptiveQualityController({ mobile:TOUCH });
   const scene = new SceneGeometry({ mobile: TOUCH });
   const allBuildings = [...buildings, ...urbanFabric];
   const worldBounds = bounds || boundsFromCity(allBuildings, regions);
@@ -241,7 +278,6 @@ export function startFlatBlockyCity({
   const depth = Math.max(400, worldBounds.maxZ - worldBounds.minZ + 80);
   scene.box((worldBounds.minX + worldBounds.maxX) / 2, -0.24, (worldBounds.minZ + worldBounds.maxZ) / 2, width, 0.24, depth, M.dryGrass);
   for (const street of streets) roadGeometry(scene, street);
-  for (const water of waters) waterGeometry(scene, water);
 
   const assets = createBlockyAssetLibrary(scene);
   for (const record of allBuildings) {
@@ -263,6 +299,9 @@ export function startFlatBlockyCity({
   });
 
   const program = createProgram(gl);
+  const skyRenderer = createAncientSkyRenderer(gl);
+  const waterSurfaces = waters.flatMap(waterGeometry);
+  const waterRenderer = createAncientWaterRenderer(gl, waterSurfaces);
   const locations = Object.freeze({
     aPos: gl.getAttribLocation(program, 'aPos'),
     aN: gl.getAttribLocation(program, 'aN'),
@@ -271,12 +310,18 @@ export function startFlatBlockyCity({
     uView: gl.getUniformLocation(program, 'uView'),
     uSun: gl.getUniformLocation(program, 'uSun'),
     uFog: gl.getUniformLocation(program, 'uFog'),
-    uFogD: gl.getUniformLocation(program, 'uFogD'),
+    uFogDensity: gl.getUniformLocation(program, 'uFogDensity'),
     uAmbient: gl.getUniformLocation(program, 'uAmbient'),
   });
   const buffers = new Map([...scene.layers].map(([name, data]) => [name, makeBuffer(gl, data)]));
   gl.enable(gl.DEPTH_TEST);
   gl.disable(gl.CULL_FACE);
+  lifecycle.addCleanup(() => {
+    for (const entry of buffers.values()) gl.deleteBuffer(entry.buffer);
+    skyRenderer.destroy();
+    waterRenderer.destroy();
+    gl.deleteProgram(program);
+  });
 
   const keys = new Set();
   let started = false, locked = false, rendered = false, last = performance.now(), currentEra = era || 225, dayHour = 15, walkSpeed = WALK_SPEED;
@@ -289,7 +334,7 @@ export function startFlatBlockyCity({
   function active(record) { return !record.era || Number(record.era) <= currentEra; }
   function resetMovementState() { keys.clear(); mobile.reset(); movementLockUntil = performance.now() + 80; }
   function resize() {
-    const dpr = Math.min(devicePixelRatio || 1, TOUCH ? 1.15 : 1.55);
+    const dpr = Math.min(devicePixelRatio || 1, quality.pixelRatioCap());
     const w = Math.max(1, Math.floor(innerWidth * dpr)), h = Math.max(1, Math.floor(innerHeight * dpr));
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; gl.viewport(0, 0, w, h); }
   }
@@ -310,6 +355,8 @@ export function startFlatBlockyCity({
       sun: [Math.cos(t * Math.PI * 1.4), Math.max(0.22, alt), -Math.sin(t * Math.PI * 1.4)],
       fog: [0.62 + alt * 0.16, 0.61 + alt * 0.14, 0.55 + alt * 0.11],
       sky: [0.46 + alt * 0.26, 0.50 + alt * 0.25, 0.52 + alt * 0.24],
+      skyTop: [0.30 + alt * 0.28, 0.38 + alt * 0.29, 0.47 + alt * 0.28],
+      skyHorizon: [0.70 + alt * 0.16, 0.61 + alt * 0.17, 0.49 + alt * 0.19],
       ambient: 0.42 + alt * 0.2,
     };
   }
@@ -330,21 +377,34 @@ export function startFlatBlockyCity({
   }
 
   function render(now = performance.now()) {
+    const frameDt = Math.max(0.001, Math.min(0.25, (now - last) / 1000));
+    last = now;
+    quality.sample(frameDt);
     resize();
-    const dt = Math.min(0.05, (now - last) / 1000); last = now; update(dt);
+    update(Math.min(0.05, frameDt));
+
     const light = lightForHour(dayHour);
+    const projection = perspective(62 * Math.PI / 180, canvas.width / canvas.height, 0.08, 2800);
+    const view = lookMatrix(player);
+    const fogDensity = TOUCH ? 0.00078 : 0.00062;
+    const sunYaw = Math.atan2(light.sun[0], -light.sun[2]);
+
     gl.clearColor(light.sky[0], light.sky[1], light.sky[2], 1);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    skyRenderer.draw({ top:light.skyTop, horizon:light.skyHorizon, yaw:player.yaw, pitch:player.pitch, sunYaw, time:now * 0.001 });
+
     gl.useProgram(program);
-    gl.uniformMatrix4fv(locations.uProj, false, perspective(62 * Math.PI / 180, canvas.width / canvas.height, 0.08, 2800));
-    gl.uniformMatrix4fv(locations.uView, false, lookMatrix(player));
+    gl.uniformMatrix4fv(locations.uProj, false, projection);
+    gl.uniformMatrix4fv(locations.uView, false, view);
     gl.uniform3fv(locations.uSun, new Float32Array(light.sun));
     gl.uniform3fv(locations.uFog, new Float32Array(light.fog));
-    gl.uniform1f(locations.uFogD, TOUCH ? 0.00078 : 0.00062);
+    gl.uniform1f(locations.uFogDensity, fogDensity);
     gl.uniform1f(locations.uAmbient, light.ambient);
     bindAndDraw(buffers.get('base'));
     if (currentEra >= 301) bindAndDraw(buffers.get('301'));
     if (currentEra >= 425) bindAndDraw(buffers.get('425'));
+
+    waterRenderer.draw({ projection, view, fog:light.fog, fogDensity, time:now * 0.001 });
     drawMiniMap();
     updatePlace();
     if (ui === 'aizanoi') updateAizanoiHud();
@@ -630,7 +690,9 @@ export function startFlatBlockyCity({
     moveWithSubsteps: traversal.moveWithSubsteps,
     get activeKeys() { return [...keys]; },
     get readiness() { return readinessSnapshot(); },
-    get geometry() { return { ...scene.stats(), houses: urbanFabric.length, roads: streets.length, bridges: bridges.length, flatGround: true, assetTypes: assets.types.length }; },
+    get quality() { return quality.snapshot(); },
+    forceQualityTier(tier) { return quality.forceTier(tier); },
+    get geometry() { return { ...scene.stats(), houses: urbanFabric.length, roads: streets.length, bridges: bridges.length, flatGround: true, waterSurfaces:waterSurfaces.length, assetTypes: assets.types.length }; },
     get traversal() { return { floorY: player.floorY, eyeY: player.y, eyeHeight: EYE_HEIGHT, support: traversal.resolveSupport(player.x, player.z, player.floorY), surfaceTag: player.surfaceTag, flatGround: true }; },
     get movementLockUntil() { return movementLockUntil; },
     step(dt = 0.016) { movementLockUntil = 0; update(dt); },
@@ -640,6 +702,7 @@ export function startFlatBlockyCity({
     teleportViews,
     stairFlights: [],
     assets: assets.types,
+    renderer: Object.freeze({ surfaceShader:'procedural-multiscale', proceduralSky:true, animatedWater:true, adaptiveQuality:true }),
     world: { flatGround: true, bounds: worldBounds, route: cityRoute },
   };
 
@@ -659,5 +722,9 @@ export const FLAT_CITY_RUNTIME = Object.freeze({
   eyeHeight: 1.68,
   walkSpeed: 3.8,
   sprintSpeed: 7.2,
+  surfaceShader: 'procedural-multiscale',
+  proceduralSky: true,
+  animatedWater: true,
+  adaptiveQuality: true,
   trueVoxelEngine: false,
 });
