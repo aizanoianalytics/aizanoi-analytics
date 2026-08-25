@@ -58,9 +58,14 @@ for (const layout of layouts) {
       assert.equal(await page.locator('#headingHud').evaluate((el) => getComputedStyle(el).display), 'none', `${layout.name}: heading HUD should be retired from the passive view`);
       assert.equal(await page.locator('#elevationHud').evaluate((el) => getComputedStyle(el).display), 'none', `${layout.name}: elevation HUD should be retired from the passive view`);
       assert.equal(await page.locator('#mapBox').evaluate((el) => getComputedStyle(el).display), 'none', `${layout.name}: Aizanoi minimap should be opt-in`);
-      for (const id of ['settingsBtn','fullscreenBtn','tourBtn','atlasBtn','sourcesBtn','soundBtn']) {
+      for (const id of ['settingsBtn','viewSettings','mobileLabels']) {
+        assert.equal(await page.locator(`#${id}`).getAttribute('aria-hidden'), 'true', `${layout.name}: ${id} should remain retired until it has a canonical runtime implementation`);
+        assert.equal(await page.locator(`#${id}`).evaluate((el) => el.hidden), true, `${layout.name}: ${id} should be hidden`);
+      }
+      for (const id of ['fullscreenBtn','tourBtn','atlasBtn','sourcesBtn','soundBtn']) {
         assert.equal(await page.locator(`#${id}`).evaluate((el) => el.parentElement?.id), 'aw-tools-panel', `${layout.name}: ${id} was not moved to Explore`);
       }
+      assert.equal(await page.locator('.eraBtn[data-era="301"]').count(), 0, `${layout.name}: dormant AD 301 layer control should not be presented`);
     } else {
       for (const id of ['atlas','modern','audio','evidence','sources']) {
         assert.equal(await page.locator(`#${id}`).evaluate((el) => el.parentElement?.id), 'aw-tools-panel', `${world.id}/${layout.name}: ${id} was not moved to Explore`);
@@ -73,11 +78,11 @@ for (const layout of layouts) {
       const primary=await page.locator(world.id==='aizanoi'?'.topbar':'.controls').boundingBox();
       const jump=await page.locator(world.id==='aizanoi'?'#teleport':'#jump').boundingBox();
       const explore=await page.locator('#aw-tools-toggle').boundingBox();
-      assert.ok(back,`${world.id}/mobile: Field System return geometry unavailable`);
+      assert.ok(back,`${world.id}/mobile: AizanoiOS return geometry unavailable`);
       assert.ok(primary,`${world.id}/mobile: primary controls geometry unavailable`);
       assert.ok(jump,`${world.id}/mobile: jump control geometry unavailable`);
       assert.ok(explore,`${world.id}/mobile: Explore geometry unavailable`);
-      assert.equal(overlaps(back,primary,2),false,`${world.id}/mobile: Field System return overlaps primary world controls`);
+      assert.equal(overlaps(back,primary,2),false,`${world.id}/mobile: AizanoiOS return overlaps primary world controls`);
       assert.equal(overlaps(jump,explore,2),false,`${world.id}/mobile: jump control overlaps Explore`);
       assert.ok(primary.x>=0&&primary.y>=0&&primary.x+primary.width<=391&&primary.y+primary.height<=845,`${world.id}/mobile: primary controls escape viewport`);
       assert.equal(await page.locator('#mobileCompass').evaluate((el)=>getComputedStyle(el).display),'none',`${world.id}/mobile: redundant top touch badge should be hidden`);
