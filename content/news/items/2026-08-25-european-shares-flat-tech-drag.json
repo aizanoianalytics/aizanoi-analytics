@@ -1,0 +1,25 @@
+{
+  "id": "2026-08-25-european-shares-flat-tech-drag",
+  "title": "European shares finish little changed as technology stocks weigh",
+  "summary": "European equities ended broadly flat after weakness in technology shares offset gains elsewhere. Markets also tracked uncertainty around Iran-related sanctions and looked ahead to incoming economic data, keeping risk appetite restrained.",
+  "category": "economy-markets",
+  "publishedAt": "2026-08-25T05:08:00Z",
+  "updatedAt": "2026-08-25T05:08:00Z",
+  "retrievedAt": "2026-08-25T05:07:42Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "corrections": [],
+  "tags": ["European stocks", "technology stocks", "markets"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/markets/europe/european-shares-slip-tech-drags-iran-sanctions-focus-2026-08-24/",
+      "publishedAt": "2026-08-24T16:46:23Z"
+    },
+    {
+      "publisher": "U.S. News & World Report",
+      "url": "https://money.usnews.com/investing/news/articles/2026-08-24/european-shares-slip-as-tech-drags-iran-sanctions-in-focus",
+      "publishedAt": "2026-08-24T16:41:21Z"
+    }
+  ]
+}

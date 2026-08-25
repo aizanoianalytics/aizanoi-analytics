@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-25-gsa-quantum-resistant-migration",
+  "title": "GSA takes a coordinating role in the US post-quantum migration",
+  "summary": "The US General Services Administration says its technology-policy office will help coordinate the federal shift to post-quantum cryptography. The work covers identity and building-access systems as agencies move toward encryption intended to withstand future quantum attacks.",
+  "category": "technology",
+  "publishedAt": "2026-08-25T05:08:00Z",
+  "updatedAt": "2026-08-25T05:08:00Z",
+  "retrievedAt": "2026-08-25T05:07:42Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "corrections": [],
+  "tags": ["cybersecurity", "post-quantum cryptography", "GSA"],
+  "sources": [
+    {
+      "publisher": "US General Services Administration",
+      "url": "https://www.gsa.gov/blog/2026/08/24/gsa-leads-the-transition-to-quantumresistant-technology",
+      "publishedAt": "2026-08-24T17:20:52Z"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "2026-08-25-taiwan-charges-nine-ai-server-exports",
+  "title": "Taiwan charges nine in alleged AI-server export scheme",
+  "summary": "Taiwanese prosecutors have charged nine people over the alleged illegal export of high-end AI servers to mainland China. Reporting says employees linked to Nvidia and Super Micro were among those charged, intensifying scrutiny of advanced-computing supply chains.",
+  "category": "ai",
+  "publishedAt": "2026-08-25T05:08:00Z",
+  "updatedAt": "2026-08-25T05:08:00Z",
+  "retrievedAt": "2026-08-25T05:07:42Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "corrections": [],
+  "tags": ["Taiwan", "AI servers", "export controls"],
+  "sources": [
+    {
+      "publisher": "PBS News / Associated Press",
+      "url": "https://www.pbs.org/newshour/world/taiwan-charges-9-over-illegal-ai-server-exports-to-china-including-nvidia-and-super-micro-staffers",
+      "publishedAt": "2026-08-24T20:20:37Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/taiwan-indicts-9-over-alleged-illegal-export-ai-servers-china-2026-08-24/",
+      "publishedAt": "2026-08-24T23:53:39Z"
+    }
+  ]
+}

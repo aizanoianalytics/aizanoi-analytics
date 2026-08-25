@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-24T05:06:40.000Z",
+  "generatedAt": "2026-08-25T05:07:42.000Z",
   "categories": [
     "ai",
     "technology",
@@ -9,12 +9,266 @@
   ],
   "editions": [
     {
+      "date": "2026-08-25",
+      "path": "/news/2026-08-25/",
+      "itemCount": 8
+    },
+    {
       "date": "2026-08-24",
       "path": "/news/2026-08-24/",
       "itemCount": 8
     }
   ],
   "items": [
+    {
+      "id": "2026-08-25-3m-boe-display-laboratory",
+      "title": "3M and BOE open a joint laboratory for next-generation displays",
+      "summary": "3M and BOE have opened a joint research laboratory focused on display materials and manufacturing. The programme will work across LCD, OLED and MLED applications, including optical films, adhesives, foldable screens and ultra-narrow bezel processes.",
+      "category": "technology",
+      "publishedAt": "2026-08-25T05:08:00.000Z",
+      "updatedAt": "2026-08-25T05:08:00.000Z",
+      "retrievedAt": "2026-08-25T05:07:42.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "3M",
+        "BOE",
+        "display technology"
+      ],
+      "sources": [
+        {
+          "publisher": "3M News Center",
+          "url": "https://news.3m.com/3M-and-BOE-launch-joint-laboratory-to-accelerate-display-technology-innovation",
+          "publishedAt": "2026-08-24T15:00:29.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-25-asian-markets-face-tech-led-pressure",
+      "title": "Asian markets face a cautious open after the US technology sell-off",
+      "summary": "Asian equity futures pointed mostly lower after semiconductor shares pulled the Nasdaq 100 down nearly 1%. Investors were also weighing softer oil, firmer US Treasuries and a heavy calendar of economic data and corporate earnings.",
+      "category": "economy-markets",
+      "publishedAt": "2026-08-25T05:08:00.000Z",
+      "updatedAt": "2026-08-25T05:08:00.000Z",
+      "retrievedAt": "2026-08-25T05:07:42.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Asian markets",
+        "technology stocks",
+        "bonds"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg via Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/world-indices/articles/asian-stocks-under-pressure-us-220952003.html",
+          "publishedAt": "2026-08-24T22:09:52.000Z"
+        },
+        {
+          "publisher": "ABC News / Associated Press",
+          "url": "https://abcnews.com/Business/wireStory/asian-shares-decline-bond-market-pressure-mounts-135894853",
+          "publishedAt": "2026-08-24T20:25:15.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-25-chelsea-edge-fulham-five-goal-match",
+      "title": "Chelsea edge Fulham in a five-goal Premier League contest",
+      "summary": "Chelsea beat Fulham 3-2 at Craven Cottage in a match that swung through five goals. Club reports confirm the visitors secured the points after Fulham twice found the net, giving Chelsea their first league win of the new campaign.",
+      "category": "football",
+      "publishedAt": "2026-08-25T05:08:00.000Z",
+      "updatedAt": "2026-08-25T05:08:00.000Z",
+      "retrievedAt": "2026-08-25T05:07:42.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Chelsea",
+        "Fulham",
+        "Premier League"
+      ],
+      "sources": [
+        {
+          "publisher": "Fulham FC",
+          "url": "https://www.fulhamfc.com/news/2026/august/24/fulham-2-3-chelsea/",
+          "publishedAt": "2026-08-24T21:14:07.000Z"
+        },
+        {
+          "publisher": "Chelsea FC",
+          "url": "https://www.chelseafc.com/en/news/article/match-report-fulham-chelsea-aug-26",
+          "publishedAt": "2026-08-25T02:23:27.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-25-european-shares-flat-tech-drag",
+      "title": "European shares finish little changed as technology stocks weigh",
+      "summary": "European equities ended broadly flat after weakness in technology shares offset gains elsewhere. Markets also tracked uncertainty around Iran-related sanctions and looked ahead to incoming economic data, keeping risk appetite restrained.",
+      "category": "economy-markets",
+      "publishedAt": "2026-08-25T05:08:00.000Z",
+      "updatedAt": "2026-08-25T05:08:00.000Z",
+      "retrievedAt": "2026-08-25T05:07:42.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "European stocks",
+        "technology stocks",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/markets/europe/european-shares-slip-tech-drags-iran-sanctions-focus-2026-08-24/",
+          "publishedAt": "2026-08-24T16:46:23.000Z"
+        },
+        {
+          "publisher": "U.S. News & World Report",
+          "url": "https://money.usnews.com/investing/news/articles/2026-08-24/european-shares-slip-as-tech-drags-iran-sanctions-in-focus",
+          "publishedAt": "2026-08-24T16:41:21.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-25-gsa-quantum-resistant-migration",
+      "title": "GSA takes a coordinating role in the US post-quantum migration",
+      "summary": "The US General Services Administration says its technology-policy office will help coordinate the federal shift to post-quantum cryptography. The work covers identity and building-access systems as agencies move toward encryption intended to withstand future quantum attacks.",
+      "category": "technology",
+      "publishedAt": "2026-08-25T05:08:00.000Z",
+      "updatedAt": "2026-08-25T05:08:00.000Z",
+      "retrievedAt": "2026-08-25T05:07:42.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "cybersecurity",
+        "post-quantum cryptography",
+        "GSA"
+      ],
+      "sources": [
+        {
+          "publisher": "US General Services Administration",
+          "url": "https://www.gsa.gov/blog/2026/08/24/gsa-leads-the-transition-to-quantumresistant-technology",
+          "publishedAt": "2026-08-24T17:20:52.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-25-malen-hat-trick-roma-fiorentina",
+      "title": "Malen hat-trick powers Roma past Fiorentina",
+      "summary": "Donyell Malen scored three times as Roma opened their Serie A campaign with a 4-0 win over Fiorentina. Paulo Dybala supplied all three assists for Malen before Niccolo Pisilli added the fourth in a dominant home performance.",
+      "category": "football",
+      "publishedAt": "2026-08-25T05:08:00.000Z",
+      "updatedAt": "2026-08-25T05:08:00.000Z",
+      "retrievedAt": "2026-08-25T05:07:42.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Roma",
+        "Fiorentina",
+        "Serie A"
+      ],
+      "sources": [
+        {
+          "publisher": "Goal",
+          "url": "https://www.goal.com/en/lists/dybala-and-malen-roma-are-a-spectacle-4-0-with-no-contest-against-fiorentina/bltf584fdf1d8fc8e2c",
+          "publishedAt": "2026-08-25T03:19:45.000Z"
+        },
+        {
+          "publisher": "FotMob",
+          "url": "https://www.fotmob.com/news/143dm7j4t45nkztaeei4u5y5e-roma-4-0-fiorentina-malen-hits-hat-trick-rampant-start",
+          "publishedAt": "2026-08-24T21:21:50.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-25-spacexai-selects-nvidia-vera-cpus",
+      "title": "SpaceXAI selects Nvidia Vera CPUs for autonomous AI workloads",
+      "summary": "Nvidia says SpaceXAI will deploy its Vera CPUs for a new generation of autonomous AI applications. The announcement positions the processor, designed around intensive reasoning workloads, inside one of the industry's largest planned compute deployments.",
+      "category": "ai",
+      "publishedAt": "2026-08-25T05:08:00.000Z",
+      "updatedAt": "2026-08-25T05:08:00.000Z",
+      "retrievedAt": "2026-08-25T05:07:42.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Nvidia",
+        "SpaceXAI",
+        "AI infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "NVIDIA Newsroom",
+          "url": "https://nvidianews.nvidia.com/news/spacexai-adopts-nvidia-vera-cpu-to-accelerate-agentic-ai-at-massive-scale",
+          "publishedAt": "2026-08-25T03:32:45.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-25-taiwan-charges-nine-ai-server-exports",
+      "title": "Taiwan charges nine in alleged AI-server export scheme",
+      "summary": "Taiwanese prosecutors have charged nine people over the alleged illegal export of high-end AI servers to mainland China. Reporting says employees linked to Nvidia and Super Micro were among those charged, intensifying scrutiny of advanced-computing supply chains.",
+      "category": "ai",
+      "publishedAt": "2026-08-25T05:08:00.000Z",
+      "updatedAt": "2026-08-25T05:08:00.000Z",
+      "retrievedAt": "2026-08-25T05:07:42.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Taiwan",
+        "AI servers",
+        "export controls"
+      ],
+      "sources": [
+        {
+          "publisher": "PBS News / Associated Press",
+          "url": "https://www.pbs.org/newshour/world/taiwan-charges-9-over-illegal-ai-server-exports-to-china-including-nvidia-and-super-micro-staffers",
+          "publishedAt": "2026-08-24T20:20:37.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/taiwan-indicts-9-over-alleged-illegal-export-ai-servers-china-2026-08-24/",
+          "publishedAt": "2026-08-24T23:53:39.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-08-24-alibaba-proposes-hk80-billion-placement",
       "title": "Alibaba proposes HK$80 billion share placement for AI investment",
