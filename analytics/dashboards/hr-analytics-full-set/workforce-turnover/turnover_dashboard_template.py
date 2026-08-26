@@ -9,7 +9,7 @@ HTML_TEMPLATE = r"""<!doctype html>
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="Explore full-featured workforce turnover analytics using a deterministic, fully synthetic demonstration workbook.">
   <meta name="robots" content="index,follow,max-image-preview:large">
-  <link rel="canonical" href="https://aizanoianalytics.com/analytics/workforce-turnover/">
+  <link rel="canonical" href="https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/workforce-turnover/">
   <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
   <title>Workforce Turnover Analytics — Aizanoi Analytics</title>
   <style>
@@ -406,7 +406,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       </section>
     </main>
 
-    <footer class="footer"><div class="footer-quote">“If you torture data long enough, it will confess to anything.”</div><nav class="footer-links" aria-label="Project links"><a href="/analytics/">All Analytics</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/analytics/workforce-turnover" target="_blank" rel="noopener noreferrer">Source</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics/blob/main/analytics/workforce-turnover/README.md" target="_blank" rel="noopener noreferrer">Methodology</a></nav></footer>
+    <footer class="footer"><div class="footer-quote">“If you torture data long enough, it will confess to anything.”</div><nav class="footer-links" aria-label="Project links"><a href="/analytics/dashboards/hr-analytics-full-set/">HR Analytics Full Set</a><a href="/analytics/">All Analytics</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/analytics/dashboards/hr-analytics-full-set/workforce-turnover" target="_blank" rel="noopener noreferrer">Source</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics/blob/main/analytics/dashboards/hr-analytics-full-set/workforce-turnover/README.md" target="_blank" rel="noopener noreferrer">Methodology</a></nav></footer>
   </div>
   <div class="tooltip" id="tooltip"></div>
   <script id="turnover-data" type="application/json">__TURNOVER_DATA__</script>

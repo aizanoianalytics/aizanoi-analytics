@@ -31,9 +31,10 @@ async function mountNews(container){
 }
 
 function mountAnalytics(container){container.innerHTML=shell('Analytics','Data products, comparisons & utilities',cards([
-  {kicker:'PUBLIC PILOT · SYNTHETIC DATA',title:'Workforce Turnover Analytics',body:'Explore a two-year fictional workforce scenario built by Aizanoi Analytics with transparent formulas and aggregate data only.',href:'/analytics/workforce-turnover/',hrefLabel:'Launch dashboard'},
+  {kicker:'DASHBOARD COLLECTION · 10 SURFACES',title:'HR Analytics Full Set',body:'Explore the complete product map and production pipeline. One full synthetic rebuild is live; nine remain closed until their data replacement is verified.',href:'/analytics/dashboards/hr-analytics-full-set/',hrefLabel:'Explore full set'},
+  {kicker:'LIVE · SYNTHETIC DATA',title:'Workforce Turnover Analytics',body:'Eight working views, forecasting, risk analysis, exports and a reproducible 14-sheet workbook built by Aizanoi Analytics entirely from generated records.',href:'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',hrefLabel:'Launch dashboard'},
   {kicker:'PRODUCT STANDARD',title:'Launch · Source · Documentation · Version',body:'Each production project should expose a usable product surface, its source when public, concise documentation and a visible version or release state.'},
-  {kicker:'DATA SAFETY',title:'Synthetic first',body:'Public demonstrations use data generated from scratch. Employer files and person-level records do not enter the public build.'}
+  {kicker:'DATA SAFETY',title:'Synthetic first',body:'Public demonstrations use data generated from scratch, including visibly synthetic row-level profiles where feature parity requires them. Employer files never enter the public build.'}
 ]));}
 
 function mountForge(container){container.innerHTML=shell('Aizanoi Forge','Source, builds & open projects',cards([

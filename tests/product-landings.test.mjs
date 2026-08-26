@@ -6,7 +6,7 @@ const read = (file) => readFileSync(file, 'utf8');
 const origin = 'https://aizanoianalytics.com';
 const landings = {
   tv: { app:'videos', title:'Aizanoi TV', phrase:'Coming Soon' },
-  analytics: { app:'analytics', title:'Analytics', phrase:'Workforce Turnover Analytics' },
+  analytics: { app:'analytics', title:'Analytics', phrase:'HR Analytics Full Set' },
   worlds: { app:'worlds', title:'Historical Worlds', phrase:'Rome' },
   forge: { app:'forge', title:'Aizanoi Forge', phrase:'Source' },
   journal: { app:'journal', title:'Aizanoi Journal', phrase:'in development' },
@@ -79,9 +79,9 @@ test('secondary product placeholders state their current status honestly', () =>
     assert.doesNotMatch(html, /customer|subscriber|latest release|available now/i);
   }
   const analytics = read('frontend/analytics/index.html');
-  assert.match(analytics, /Public pilot · v1\.0/i);
+  assert.match(analytics, /Dashboard collection · staged public rebuild/i);
   assert.match(analytics, /generated from scratch/i);
-  assert.match(analytics, /href="\/analytics\/workforce-turnover\/"/);
+  assert.match(analytics, /href="\/analytics\/dashboards\/hr-analytics-full-set\/"/);
 });
 
 test('Forge exposes repository-backed project status, version, demo and source metadata', () => {

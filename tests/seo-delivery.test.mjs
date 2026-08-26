@@ -13,7 +13,7 @@ const itemDate = (item) => item.publishedAt.slice(0, 10);
 const storySlug = (item) => item.id.startsWith(`${itemDate(item)}-`) ? item.id.slice(11) : item.id;
 const storyPath = (item) => `/news/${item.kind === 'weekly' ? 'weekly/' : ''}${itemDate(item)}/${storySlug(item)}/`;
 const canonicalBase = [
-  '/', '/news/', '/news/about/', '/tv/', '/analytics/', '/analytics/workforce-turnover/', '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
+  '/', '/news/', '/news/about/', '/tv/', '/analytics/', '/analytics/dashboards/hr-analytics-full-set/', '/analytics/dashboards/hr-analytics-full-set/workforce-turnover/', '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
   '/historic-world/', '/ancient-cities/rome-410-476/', '/ancient-cities/athens-450-430/'
 ];
 const canonical = [

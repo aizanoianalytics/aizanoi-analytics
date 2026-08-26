@@ -2,15 +2,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 
-const pagePath = 'frontend/analytics/workforce-turnover/index.html';
-const workbookPath = 'analytics/workforce-turnover/data/turnover_analytics_synthetic.xlsx';
-const templatePath = 'analytics/workforce-turnover/turnover_dashboard_template.py';
-const generatorPath = 'analytics/workforce-turnover/generate_turnover_dashboard.py';
-const commonPath = 'analytics/workforce-turnover/turnover_analytics_common.py';
-const readmePath = 'analytics/workforce-turnover/README.md';
+const root = 'analytics/dashboards/hr-analytics-full-set/workforce-turnover';
+const publicRoot = 'frontend/analytics/dashboards/hr-analytics-full-set/workforce-turnover';
+const pagePath = `${publicRoot}/index.html`;
+const workbookPath = `${root}/data/turnover_analytics_synthetic.xlsx`;
+const templatePath = `${root}/turnover_dashboard_template.py`;
+const generatorPath = `${root}/generate_turnover_dashboard.py`;
+const commonPath = `${root}/turnover_analytics_common.py`;
+const readmePath = `${root}/README.md`;
 
 const html = readFileSync(pagePath, 'utf8');
-const app = readFileSync('frontend/analytics/workforce-turnover/app.js', 'utf8');
+const app = readFileSync(`${publicRoot}/app.js`, 'utf8');
 const template = readFileSync(templatePath, 'utf8');
 const generator = readFileSync(generatorPath, 'utf8');
 const readme = readFileSync(readmePath, 'utf8');
@@ -30,7 +32,7 @@ const exits = unpack(data.exits);
 const riskPeople = unpack(data.risk_people);
 
 test('full standalone engine and synthetic workbook are published', () => {
-  for (const file of [pagePath, 'frontend/analytics/workforce-turnover/app.js', 'frontend/analytics/workforce-turnover/style.css', workbookPath, templatePath, generatorPath, commonPath, readmePath]) {
+  for (const file of [pagePath, `${publicRoot}/app.js`, `${publicRoot}/style.css`, workbookPath, templatePath, generatorPath, commonPath, readmePath]) {
     assert.ok(existsSync(file), `${file} missing`);
   }
   assert.ok(readFileSync(workbookPath).byteLength > 500_000, 'workbook is unexpectedly small');

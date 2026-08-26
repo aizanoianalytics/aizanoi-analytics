@@ -54,7 +54,7 @@ await capture('aizanoi-os-12-mobile-home',{width:390,height:844});
 await capture('aizanoi-os-13-mobile-news',{width:390,height:844},async(page)=>{await page.locator('.az-phone-app[data-app="news"]').click();await page.waitForSelector('.az-window[data-app-id="news"]');});
 await capture('aizanoi-os-14-mobile-app-drawer',{width:390,height:844},async(page)=>{await page.locator('.az-task-shelf [data-os-launcher]').click();await page.waitForSelector('#az-switcher-overlay.is-open .az-launchpad-search');});
 await capture('aizanoi-os-15-mobile-small',{width:320,height:568});
-await captureStandalone('aizanoi-os-16-workforce-turnover','/analytics/workforce-turnover/',{width:1440,height:900});
+await captureStandalone('aizanoi-os-16-workforce-turnover','/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',{width:1440,height:900});
 
 await browser.close();
 console.log('AizanoiOS adaptive desktop/tablet/mobile visual review captures complete');

@@ -34,10 +34,10 @@ Row-level records exist because the original exit-detail and risk features requi
 Install Python with `numpy`, `pandas`, and `openpyxl`, then run from the repository root:
 
 ```bash
-python analytics/workforce-turnover/generate_turnover_dashboard.py
+python analytics/dashboards/hr-analytics-full-set/workforce-turnover/generate_turnover_dashboard.py
 ```
 
-The command reads only the committed synthetic workbook and writes the public assets under `frontend/analytics/workforce-turnover/`.
+The command reads only the committed synthetic workbook and writes the public assets under `frontend/analytics/dashboards/hr-analytics-full-set/workforce-turnover/`.
 
 ## Workbook contract
 
