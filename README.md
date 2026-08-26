@@ -10,7 +10,7 @@
   <a href="https://aizanoianalytics.com"><strong>Live site</strong></a> ·
   <a href="https://aizanoianalytics.com/news/"><strong>News</strong></a> ·
   <a href="https://aizanoianalytics.com/tv/"><strong>TV</strong></a> ·
-  <a href="https://aizanoianalytics.com/analytics/"><strong>Dashboards</strong></a> ·
+  <a href="https://aizanoianalytics.com/analytics/"><strong>Analytics</strong></a> ·
   <a href="https://aizanoianalytics.com/worlds/"><strong>Historical Worlds</strong></a>
 </p>
 
@@ -27,7 +27,7 @@ The public product families are:
 - **Aizanoi News** — original, source-linked briefings across AI, Technology, Economy / Markets and Football;
 - **Aizanoi TV** — the companion layer for the English-language Aizanoi YouTube channel;
 - **Aizanoi Journal** — essays, analysis and commentary;
-- **Dashboards** — dashboards, data products, model comparisons and analytical utilities; the compatibility route remains `/analytics/`;
+- **Analytics** — dashboards, data products, model comparisons and analytical utilities at `/analytics/`;
 - **Aizanoi Forge** — source, builds and open projects, with GitHub as the source of truth;
 - **Historical Worlds** — evidence-aware walkable Aizanoi, Rome and Athens;
 - **Aizanoi Labs** — experiments and prototypes;

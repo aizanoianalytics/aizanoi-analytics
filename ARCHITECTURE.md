@@ -55,7 +55,7 @@ Breakpoints:
 
 ### Registry
 
-`frontend/js/v3/registry.js` contains only public apps and Historical Worlds. The visible analytical product is **Dashboards**; `/analytics/` and the `analytics` app id remain compatibility contracts. Retired Workbench/power tools must not remain directly addressable through `appById`, search, launcher or routing.
+`frontend/js/v3/registry.js` contains only public apps and Historical Worlds. The visible analytical product is **Analytics**; `/analytics/` and the `analytics` app id are stable contracts, while dashboards are a format inside the product. Retired Workbench/power tools must not remain directly addressable through `appById`, search, launcher or routing.
 
 ### Lazy applications
 

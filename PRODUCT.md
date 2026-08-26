@@ -16,7 +16,7 @@
 - **Aizanoi Journal** — authored analysis, essays, commentary and long-form research. News reports events; Journal interprets them.
 
 ### Studio
-- **Dashboards** — public dashboards, data products, model comparisons, utilities and interactive analytical applications built by Aizanoi Analytics. The compatibility route remains `/analytics/` and the internal AizanoiOS app id remains `analytics`.
+- **Analytics** — public dashboards, data products, model comparisons, utilities and interactive analytical applications built by Aizanoi Analytics. Its public route is `/analytics/` and its AizanoiOS app id is `analytics`; dashboards are a product format within Analytics.
 - **Aizanoi Forge** — source, builds and open projects. GitHub remains the source of truth; Forge is the branded catalog/mirror layer.
 - **Aizanoi Labs** — prototypes, interaction experiments and unfinished ideas with explicit Experimental / Prototype / Archived status.
 

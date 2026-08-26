@@ -32,7 +32,7 @@ Do not:
 Core public destinations:
 1. **Aizanoi News**
 2. **Aizanoi TV**
-3. **Dashboards**
+3. **Analytics**
 4. **Historical Worlds**
 5. **Aizanoi Forge**
 
@@ -41,7 +41,7 @@ Secondary public families:
 - Aizanoi Labs
 - Aizanoi Arcade
 
-The Dashboards compatibility route remains `/analytics/` and its internal app id remains `analytics`; those identifiers are not the user-facing product name.
+Analytics uses `/analytics/` as its stable public route and `analytics` as its internal app id. Dashboards are one interface format within Analytics.
 
 ## Desktop — large screens
 
@@ -114,7 +114,7 @@ Tablet:
 - no pointer-only magnification requirement.
 
 Mobile:
-- Home + News + TV + Dashboards + Worlds + Applications;
+- Home + News + TV + Analytics + Worlds + Applications;
 - Forge remains available in the app grid/launcher but is not forced into the compact dock;
 - running non-pinned apps do not expand the dock.
 
@@ -136,7 +136,7 @@ Historical evidence colors remain semantic and explicit:
 - atmospheric — neutral + label;
 - disputed — warning + dashed/label treatment.
 
-News/TV/Dashboards/Forge should not inherit evidence colors merely for decoration.
+News/TV/Analytics/Forge should not inherit evidence colors merely for decoration.
 
 ## Typography
 
@@ -162,7 +162,7 @@ Readable editorial cards, visible category, date and source links. Avoid faux ne
 ### TV
 Video/series presentation may be cinematic, but companion research/source links remain easy to find.
 
-### Dashboards
+### Analytics
 Data products should prioritize information hierarchy, clarity and usable controls over decorative dashboard density.
 
 ### Forge

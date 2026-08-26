@@ -15,7 +15,7 @@
   "shortcuts": [
     {"name":"Aizanoi News","short_name":"News","url":"/news/","icons":[{"src":"/assets/icons/aizanoi-news.svg","sizes":"any","type":"image/svg+xml"}]},
     {"name":"Aizanoi TV","short_name":"TV","url":"/tv/","icons":[{"src":"/assets/icons/aizanoi-tv.svg","sizes":"any","type":"image/svg+xml"}]},
-    {"name":"Dashboards","short_name":"Dashboards","url":"/analytics/","icons":[{"src":"/assets/icons/aizanoi-dashboards.svg","sizes":"any","type":"image/svg+xml"}]},
+    {"name":"Analytics","short_name":"Analytics","url":"/analytics/","icons":[{"src":"/assets/icons/aizanoi-dashboards.svg","sizes":"any","type":"image/svg+xml"}]},
     {"name":"Historical Worlds","short_name":"Worlds","url":"/worlds/","icons":[{"src":"/assets/icons/aizanoi-worlds.svg","sizes":"any","type":"image/svg+xml"}]}
   ]
 }

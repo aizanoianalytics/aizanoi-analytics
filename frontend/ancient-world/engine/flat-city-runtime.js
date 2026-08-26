@@ -325,7 +325,7 @@ export function startFlatBlockyCity({
 
   const keys = new Set();
   let started = false, locked = false, rendered = false, last = performance.now(), currentEra = era || 225, dayHour = 15, walkSpeed = WALK_SPEED;
-  let movementLockUntil = 0, audio = null, modernOverlay = false;
+  let movementLockUntil = 0, audio = null, modernOverlay = false, arrivalIdentity = null;
   const sourceById = sourceMap(sources);
   const landmarkRecords = buildings.filter((b) => b.name && b.type !== 'wall' && b.type !== 'urban-fabric');
   const landmarkById = new Map(landmarkRecords.map((b) => [b.id, b]));
@@ -449,6 +449,7 @@ export function startFlatBlockyCity({
     player.pitch = -0.04;
     resetMovementState();
     movementLockUntil = performance.now() + 140;
+    arrivalIdentity = { record, x: player.x, z: player.z };
     setPlace(record.name, recordDetail(record));
     if (lock && !TOUCH && started) setTimeout(() => requestLock(false), 0);
     return true;
@@ -516,6 +517,13 @@ export function startFlatBlockyCity({
   }
 
   function updatePlace() {
+    if (arrivalIdentity) {
+      if (Math.hypot(player.x - arrivalIdentity.x, player.z - arrivalIdentity.z) <= 3.5) {
+        setPlace(arrivalIdentity.record.name, recordDetail(arrivalIdentity.record));
+        return;
+      }
+      arrivalIdentity = null;
+    }
     const nearest = nearestLandmark(130);
     if (nearest) setPlace(nearest.record.name, recordDetail(nearest.record));
     else if (ui !== 'aizanoi') setPlace(city.title, 'Flat-ground blocky reconstruction · WASD to walk');
@@ -618,7 +626,17 @@ export function startFlatBlockyCity({
   function setupAizanoiUI() {
     $('#loading')?.classList.add('hidden'); $('#boot')?.classList.remove('hidden');
     populateJump($('#teleport'));
-    $('#enterBtn')?.addEventListener('click', () => { $('#boot')?.classList.add('hidden'); $('#hud')?.classList.remove('hidden'); started = true; canvas.focus(); if (!TOUCH) requestLock(false); });
+    const tour = landmarkRecords.slice(0, 10); let tourIndex = Math.max(0, tour.findIndex((record) => record.id === 'temple'));
+    const updateTour = () => { const r = tour[tourIndex]; $('#tourTitle') && ($('#tourTitle').textContent = r?.name || 'Guided walk'); $('#tourText') && ($('#tourText').textContent = r ? recordDetail(r) : ''); };
+    const enterWorld = ({ guided = false } = {}) => {
+      $('#boot')?.classList.add('hidden'); $('#hud')?.classList.remove('hidden'); started = true; canvas.focus();
+      if (guided) {
+        updateTour(); $('#tourCard')?.classList.remove('hidden');
+        const first = tour[tourIndex]; if (first) teleportTo(first.id, { lock: false });
+      } else if (!TOUCH) requestLock(false);
+    };
+    $('#guidedEnterBtn')?.addEventListener('click', () => enterWorld({ guided: true }));
+    $('#enterBtn')?.addEventListener('click', () => enterWorld());
     $('#atlasBtn')?.addEventListener('click', openAtlas); $('#mapOpenBtn')?.addEventListener('click', openAtlas); $('#openAtlasIntro')?.addEventListener('click', openAtlas);
     $('#atlasClose')?.addEventListener('click', () => $('#atlasOverlay')?.classList.add('hidden'));
     $('#sourcesBtn')?.addEventListener('click', openSources); $('#openSourcesIntro')?.addEventListener('click', openSources); $('#sourcesClose')?.addEventListener('click', () => $('#sourcesOverlay')?.classList.add('hidden'));
@@ -629,8 +647,6 @@ export function startFlatBlockyCity({
     $('#walkSpeedSlider')?.addEventListener('input', (e) => { walkSpeed = Number(e.target.value) || WALK_SPEED; $('#walkSpeedValue') && ($('#walkSpeedValue').textContent = `${walkSpeed.toFixed(1)} m/s`); });
     $('#timeSlider')?.addEventListener('input', (e) => { dayHour = Number(e.target.value) || 15; const hr = Math.floor(dayHour), min = Math.round((dayHour - hr) * 60); $('#timeLabel') && ($('#timeLabel').textContent = `${String(hr).padStart(2, '0')}:${String(min).padStart(2, '0')}`); });
     document.querySelectorAll('.eraBtn').forEach((button) => button.addEventListener('click', () => { currentEra = Number(button.dataset.era) || 225; document.querySelectorAll('.eraBtn').forEach((b) => b.classList.toggle('active', b === button)); toast(`${currentEra} · flat-ground city layer`); }));
-    const tour = landmarkRecords.slice(0, 10); let tourIndex = 0;
-    const updateTour = () => { const r = tour[tourIndex]; $('#tourTitle') && ($('#tourTitle').textContent = r?.name || 'Guided walk'); $('#tourText') && ($('#tourText').textContent = r ? recordDetail(r) : ''); };
     $('#tourBtn')?.addEventListener('click', () => { $('#tourCard')?.classList.toggle('hidden'); updateTour(); });
     $('#tourPrev')?.addEventListener('click', () => { tourIndex = (tourIndex - 1 + tour.length) % tour.length; updateTour(); });
     $('#tourNext')?.addEventListener('click', () => { tourIndex = (tourIndex + 1) % tour.length; updateTour(); });
