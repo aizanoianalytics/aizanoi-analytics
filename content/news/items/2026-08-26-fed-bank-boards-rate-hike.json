@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-fed-bank-boards-rate-hike",
+  "title": "Four regional Fed boards backed a higher discount rate",
+  "summary": "Minutes showed that four Federal Reserve bank boards favored raising the discount rate. The split is a useful window into regional inflation concerns, even though the recommendation is distinct from the central bank’s policy-rate decision.",
+  "category": "economy-markets",
+  "priority": 75,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Federal Reserve", "interest rates", "discount rate", "monetary policy"],
+  "sources": [{
+    "publisher": "Reuters",
+    "url": "https://www.reuters.com/markets/us/four-fed-bank-boards-wanted-rate-hike-minutes-show-2026-08-25/",
+    "publishedAt": "2026-08-25T18:25:44Z"
+  }]
+}

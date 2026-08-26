@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-26-celtic-lask-champions-league-exit",
+  "title": "LASK overturns Celtic’s four-goal cushion in a dramatic European exit",
+  "summary": "Celtic went out of Champions League qualifying after LASK reversed a four-goal aggregate deficit. The Austrian side’s 5-1 second-leg win turned a seemingly secure tie into one of the round’s most striking reversals.",
+  "category": "football",
+  "priority": 87,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Celtic", "LASK", "Champions League", "qualifying"],
+  "sources": [
+    {
+      "publisher": "AP News",
+      "url": "https://apnews.com/article/champions-league-celtic-lask-18821e3e2aae085f01eb034f3eb528ce",
+      "publishedAt": "2026-08-25T23:12:34Z"
+    },
+    {
+      "publisher": "The Athletic",
+      "url": "https://www.nytimes.com/athletic/7538850/2026/08/25/celtic-champions-league-defeat-lask/",
+      "publishedAt": "2026-08-25T16:05:00Z"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-amazon-mechanical-turk-shutdown",
+  "title": "Amazon prepares to close Mechanical Turk’s long-running task marketplace",
+  "summary": "Amazon is shutting down Mechanical Turk, the human-task service once described by Jeff Bezos as “artificial artificial intelligence.” Its closure marks the end of an early model for combining software workflows with on-demand human judgment.",
+  "category": "technology",
+  "priority": 79,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Amazon", "Mechanical Turk", "crowd work", "platforms"],
+  "sources": [{
+    "publisher": "CNBC",
+    "url": "https://www.cnbc.com/2026/08/25/amazon-service-that-jeff-bezos-called-artificial-ai-is-shutting-down.html",
+    "publishedAt": "2026-08-25T17:34:00Z"
+  }]
+}

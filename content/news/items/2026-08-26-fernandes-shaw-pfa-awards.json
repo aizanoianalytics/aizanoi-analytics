@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-fernandes-shaw-pfa-awards",
+  "title": "Fernandes and Shaw take the PFA’s top player honors",
+  "summary": "Bruno Fernandes and Khadija Shaw won the PFA Player of the Year awards, with Nico O’Reilly and Olivia Smith also recognized. The player-voted honors placed Manchester’s leading performers at the center of the season’s awards night.",
+  "category": "football",
+  "priority": 82,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["PFA", "Bruno Fernandes", "Khadija Shaw", "awards"],
+  "sources": [{
+    "publisher": "The Guardian",
+    "url": "https://www.theguardian.com/football/2026/aug/25/bruno-fernandes-khadija-shaw-pfa-player-of-the-year",
+    "publishedAt": "2026-08-25T21:50:00Z"
+  }]
+}
