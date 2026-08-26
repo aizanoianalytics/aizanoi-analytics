@@ -127,9 +127,18 @@ test('public catalog describes the pipeline without private artifacts or identit
   assert.match(combined, /Reference workbooks and exported HTML are not part/i);
 });
 
-test('legacy turnover route points to the new Full Set location', () => {
-  const legacy = readFileSync('frontend/analytics/workforce-turnover/index.html', 'utf8');
-  const route = '/analytics/dashboards/hr-analytics-full-set/workforce-turnover/';
-  assert.match(legacy, new RegExp(route.replaceAll('/', '\\/')));
-  assert.match(legacy, /noindex,follow/);
+test('legacy /analytics/workforce-turnover/ stays retired (owner decision 2026-08-26)', () => {
+  // Owner retired the legacy route on 2026-08-26. The canonical Workforce
+  // Turnover dashboard now lives at:
+  //   /analytics/dashboards/hr-analytics-full-set/workforce-turnover/
+  // This test locks the retirement contract: no legacy stub in repo, no
+  // nginx rewrite, no canonical rescue. If you change your mind, update this
+  // test and HERMES_OPERATIONS.md smoke-check in lockstep.
+  const legacyFrontend = 'frontend/analytics/workforce-turnover/index.html';
+  assert.equal(existsSync(legacyFrontend), false,
+    `Legacy redirect stub must not be reintroduced: ${legacyFrontend}`);
+  // The HR Full Set generator manifest must NOT reference the legacy path.
+  const manifest = readFileSync('analytics/dashboards/hr-analytics-full-set/pipeline-manifest.json', 'utf8');
+  assert.doesNotMatch(manifest, /\/analytics\/workforce-turnover\//,
+    'pipeline-manifest.json must not reference the legacy route');
 });

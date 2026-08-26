@@ -10,6 +10,16 @@ HTML_TEMPLATE = r"""<!doctype html>
   <meta name="description" content="Explore full-featured workforce turnover analytics using a deterministic, fully synthetic demonstration workbook.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/workforce-turnover/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aizanoi Analytics">
+  <meta property="og:title" content="Workforce Turnover Analytics">
+  <meta property="og:description" content="Eight working analytical views: overview, breakdown, comparison, forecast, early turnover, exit explorer, survival and risk, plus settings and exports. Synthetic public data only.">
+  <meta property="og:url" content="https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/workforce-turnover/">
+  <meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Workforce Turnover Analytics">
+  <meta name="twitter:description" content="Eight working analytical views: overview, breakdown, comparison, forecast, early turnover, exit explorer, survival and risk, plus settings and exports. Synthetic public data only.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Workforce Turnover Analytics","applicationCategory":"BusinessApplication","url":"https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/workforce-turnover/","isPartOf":{"@type":"WebSite","name":"Aizanoi Analytics","url":"https://aizanoianalytics.com/"}}</script>
   <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
   <title>Workforce Turnover Analytics — Aizanoi Analytics</title>
   <style>
