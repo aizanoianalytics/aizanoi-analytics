@@ -79,7 +79,7 @@ test('secondary product placeholders state their current status honestly', () =>
     assert.doesNotMatch(html, /customer|subscriber|latest release|available now/i);
   }
   const analytics = read('frontend/analytics/index.html');
-  assert.match(analytics, /Public pilot · v1\.0/i);
+  assert.match(analytics, /Public product · v2\.0/i);
   assert.match(analytics, /generated from scratch/i);
   assert.match(analytics, /href="\/analytics\/workforce-turnover\/"/);
 });

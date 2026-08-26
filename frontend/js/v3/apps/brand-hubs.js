@@ -31,7 +31,7 @@ async function mountNews(container){
 }
 
 function mountAnalytics(container){container.innerHTML=shell('Analytics','Data products, comparisons & utilities',cards([
-  {kicker:'PUBLIC PILOT · SYNTHETIC DATA',title:'Workforce Turnover Analytics',body:'Explore a two-year fictional workforce scenario built by Aizanoi Analytics with transparent formulas and aggregate data only.',href:'/analytics/workforce-turnover/',hrefLabel:'Launch dashboard'},
+  {kicker:'PUBLIC PRODUCT · SYNTHETIC DATA',title:'Workforce Turnover Analytics',body:'Explore a full three-year analytical centre built by Aizanoi Analytics with breakdowns, comparison, forecasting, retention and risk workflows powered entirely by generated scenario data.',href:'/analytics/workforce-turnover/',hrefLabel:'Launch dashboard'},
   {kicker:'PRODUCT STANDARD',title:'Launch · Source · Documentation · Version',body:'Each production project should expose a usable product surface, its source when public, concise documentation and a visible version or release state.'},
   {kicker:'DATA SAFETY',title:'Synthetic first',body:'Public demonstrations use data generated from scratch. Employer files and person-level records do not enter the public build.'}
 ]));}

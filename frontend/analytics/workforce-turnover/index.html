@@ -4,84 +4,114 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#102b3f">
-  <meta name="description" content="Explore a fully synthetic workforce turnover scenario with transparent formulas, filters and aggregate data.">
+  <meta name="description" content="A full-featured workforce turnover analytics laboratory powered entirely by deterministic synthetic scenario data.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://aizanoianalytics.com/analytics/workforce-turnover/">
   <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css?v=1.0.0">
+  <link rel="stylesheet" href="./style.css?v=2.0.0">
   <title>Workforce Turnover Analytics — Aizanoi Analytics</title>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="/analytics/">
-      <img src="/assets/branding/aizanoi-logo-mark.svg" alt="">
-      <span><b>Aizanoi Analytics</b><small>Public data products</small></span>
-    </a>
-    <nav aria-label="Project links">
-      <a href="/analytics/">All analytics</a>
-      <a href="https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/analytics/workforce-turnover" target="_blank" rel="noopener noreferrer">Source</a>
-      <a href="https://github.com/aizanoianalytics/aizanoi-analytics/blob/main/analytics/workforce-turnover/README.md" target="_blank" rel="noopener noreferrer">Methodology</a>
-    </nav>
+    <a class="brand" href="/analytics/"><img src="/assets/branding/aizanoi-logo-mark.svg" alt=""><span><b>Aizanoi Analytics</b><small>Public data products</small></span></a>
+    <nav aria-label="Project links"><a href="/analytics/">All analytics</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/analytics/workforce-turnover" target="_blank" rel="noopener noreferrer">Source</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics/blob/main/analytics/workforce-turnover/README.md" target="_blank" rel="noopener noreferrer">Methodology</a></nav>
   </header>
 
   <main>
     <section class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">Open analytics · v1.0</p>
-        <h1>Workforce<br>Turnover Analytics</h1>
-        <p>Explore workforce movement across time, regions, departments and contract types. Every number in this demonstration is generated from scratch.</p>
-      </div>
-      <aside class="data-notice">
-        <span class="notice-mark" aria-hidden="true">S</span>
-        <div><b>100% synthetic data</b><p>No employer records. No employees. No direct identifiers. The source and formula are public.</p></div>
-      </aside>
+      <div><p class="eyebrow">Open analytics · v2.0</p><h1>Workforce Turnover<br>Analytics Centre</h1><p>A complete analytical workspace for movement, retention, forecasting, comparison and risk exploration.</p></div>
+      <aside class="data-notice"><span class="notice-mark" aria-hidden="true">S</span><div><b>100% synthetic scenario</b><p>No real employer, business location or person appears here. Profile codes and every value are generated from scratch.</p></div></aside>
     </section>
 
-    <section class="control-panel" aria-labelledby="filter-title">
-      <div class="control-heading"><div><p class="eyebrow">Scenario controls</p><h2 id="filter-title">Shape the view</h2></div><button id="downloadCsv" type="button">Download filtered CSV</button></div>
+    <section class="filter-shell" aria-labelledby="filter-title">
+      <header class="section-head"><div><p class="eyebrow">Analysis controls</p><h2 id="filter-title">Global scope</h2></div><div class="button-row"><button type="button" class="secondary" id="resetFilters">Reset filters</button><button type="button" id="exportActive">Export active view</button></div></header>
+      <div class="period-presets" aria-label="Period shortcuts"><button type="button" data-period="6">Last 6 months</button><button type="button" data-period="12">Last 12 months</button><button type="button" data-period="24">Last 24 months</button><button type="button" data-period="all">All history</button></div>
       <div class="filters">
-        <label>Period<select id="periodFilter"><option value="all">All 24 months</option><option value="2024">2024</option><option value="2025">2025</option></select></label>
-        <label>Region<select id="regionFilter"><option value="all">All regions</option></select></label>
-        <label>Department<select id="departmentFilter"><option value="all">All departments</option></select></label>
-        <label>Contract type<select id="contractFilter"><option value="all">All contract types</option></select></label>
+        <label>Scope<select id="scopeFilter"></select></label>
+        <label>Exit type<select id="typeFilter"><option value="all">All exits</option><option value="voluntary">Voluntary turnover</option><option value="involuntary">Involuntary turnover</option></select></label>
+        <label>Start month<select id="startFilter"></select></label>
+        <label>End month<select id="endFilter"></select></label>
+        <label>Region<select id="regionFilter"></select></label>
+        <label>Site<select id="siteFilter"></select></label>
+        <label>Department<select id="departmentFilter"></select></label>
+        <label>Division<select id="divisionFilter"></select></label>
+        <label>City<select id="cityFilter"></select></label>
+        <label>Gender<select id="genderFilter"></select></label>
+        <label>Contract<select id="contractFilter"></select></label>
+        <label>Role level<select id="roleFilter"></select></label>
       </div>
-      <p id="scopeSummary" class="scope-summary" aria-live="polite"></p>
+      <div id="filterChips" class="chips" aria-live="polite"></div>
     </section>
 
-    <section id="kpis" class="kpi-grid" aria-label="Key metrics"></section>
+    <nav id="tabs" class="tabs" aria-label="Turnover analysis views">
+      <button type="button" class="tab active" data-tab="overview">Overview</button>
+      <button type="button" class="tab" data-tab="breakdown">Breakdown analysis</button>
+      <button type="button" class="tab" data-tab="comparison">Comparison</button>
+      <button type="button" class="tab" data-tab="forecast">Forecast &amp; backtest</button>
+      <button type="button" class="tab" data-tab="early">Early tenure</button>
+      <button type="button" class="tab" data-tab="exits">Exit detail</button>
+      <button type="button" class="tab" data-tab="risk">Analytical risk</button>
+      <button type="button" class="tab" data-tab="settings">Settings</button>
+    </nav>
 
-    <section class="analysis-grid">
-      <article class="panel trend-panel">
-        <header><div><p class="eyebrow">Movement over time</p><h2>Monthly turnover rate</h2></div><span class="formula">exits ÷ average workforce</span></header>
-        <div id="trendChart" class="chart" role="img" aria-label="Monthly turnover rate line chart"></div>
-      </article>
-
-      <article class="panel comparison-panel">
-        <header><div><p class="eyebrow">Where movement happens</p><h2>Department comparison</h2></div></header>
-        <div id="departmentBars" class="bars"></div>
-      </article>
-
-      <article class="panel reasons-panel">
-        <header><div><p class="eyebrow">Why people leave</p><h2>Exit reasons</h2></div><span id="reasonTotal" class="formula"></span></header>
-        <div id="reasonList" class="reason-list"></div>
-      </article>
-
-      <article class="panel insight-panel">
-        <p class="eyebrow">Analyst note</p>
-        <h2>What stands out?</h2>
-        <p id="insightText"></p>
-        <div class="method-note"><b>Interpret carefully.</b> This is a fictional planning scenario designed to demonstrate an analytical interface, not a benchmark for any real organisation.</div>
-      </article>
+    <section class="view active" data-view="overview">
+      <div id="overviewKpis" class="kpi-grid" aria-label="Key metrics"></div>
+      <div class="grid two-thirds">
+        <article class="panel"><header class="panel-head"><div><p class="eyebrow">Movement over time</p><h2>Monthly turnover trend</h2></div><span class="formula">exits ÷ monthly average workforce</span></header><div id="trendChart" class="chart"></div></article>
+        <article class="panel"><header class="panel-head"><div><p class="eyebrow">Exit composition</p><h2>Voluntary mix</h2></div></header><div id="typeDonut" class="donut-host"></div></article>
+      </div>
+      <div class="grid halves">
+        <article class="panel"><header class="panel-head"><div><p class="eyebrow">Workforce flow</p><h2>Monthly hires and exits</h2></div></header><div id="flowChart" class="chart"></div></article>
+        <article class="panel"><header class="panel-head"><div><p class="eyebrow">Scope snapshot</p><h2>Latest scope comparison</h2></div></header><div id="scopeTable"></div></article>
+      </div>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Portfolio view</p><h2>Scope turnover comparison</h2></div><label class="inline-control">Mode<select id="scopeTrendMode"><option value="monthly">Monthly turnover</option><option value="ytd">Year-to-date cumulative</option></select></label></header><div id="scopeTrendChart" class="chart"></div></article>
     </section>
 
-    <section class="panel monthly-panel">
-      <header><div><p class="eyebrow">Audit the calculation</p><h2>Monthly aggregate table</h2></div><span class="formula">Selected scope</span></header>
-      <div class="table-wrap"><table><thead><tr><th>Month</th><th>Start</th><th>Hires</th><th>Exits</th><th>End</th><th>Turnover</th></tr></thead><tbody id="monthlyRows"></tbody></table></div>
+    <section class="view" data-view="breakdown">
+      <article class="panel controls-panel"><header class="panel-head"><div><p class="eyebrow">Slice the organisation</p><h2>Breakdown controls</h2></div><button type="button" data-export="breakdown">Export breakdown</button></header><div class="local-controls"><label>Dimension<select id="breakdownDimension"><option value="region">Region</option><option value="site">Site</option><option value="department">Department</option><option value="division">Division</option><option value="city">City</option><option value="gender">Gender</option><option value="contractType">Contract type</option><option value="roleLevel">Role level</option></select></label><label>Metric<select id="breakdownMetric"><option value="latest">Latest month turnover</option><option value="period">Selected-period cumulative turnover</option><option value="last12">Last 12 months turnover</option><option value="exits">Selected-period exits</option></select></label></div></article>
+      <div class="grid halves"><article class="panel"><header class="panel-head"><div><p class="eyebrow">Ranked view</p><h2>Entity comparison</h2></div></header><div id="breakdownBars" class="bars"></div></article><article class="panel"><header class="panel-head"><div><p class="eyebrow">Monthly pattern</p><h2>Turnover heat map</h2></div></header><div id="breakdownHeatmap"></div></article></div>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Audit view</p><h2>Breakdown table</h2></div></header><div id="breakdownTable"></div></article>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Role composition</p><h2>Cumulative role turnover matrix</h2></div><div class="panel-actions"><label class="inline-control">Mode<select id="roleMatrixMode"><option value="contribution">Share of turnover</option><option value="rate">Role turnover rate</option></select></label><button type="button" data-export="matrix">Export matrix</button></div></header><p id="matrixNote" class="note"></p><div id="roleMatrix"></div></article>
+    </section>
+
+    <section class="view" data-view="comparison">
+      <article class="panel controls-panel"><header class="panel-head"><div><p class="eyebrow">Side by side</p><h2>Turnover comparison</h2></div><button type="button" data-export="comparison">Export comparison</button></header><div class="local-controls comparison-controls"><label>Entity type<select id="compareKind"><option value="region">Region</option><option value="site">Site</option></select></label><label>Entity A<select id="compareA"></select></label><label>Year A<select id="compareYearA"></select></label><label>Entity B<select id="compareB"></select></label><label>Year B<select id="compareYearB"></select></label></div></article>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Monthly profile</p><h2>Comparison trend</h2></div></header><div id="comparisonChart" class="chart"></div></article>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Variance audit</p><h2>Comparison table</h2></div></header><div id="comparisonTable"></div></article>
+    </section>
+
+    <section class="view" data-view="forecast">
+      <article id="forecastNotice" class="notice"></article>
+      <div id="forecastKpis" class="kpi-grid compact"></div>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Six-month horizon</p><h2>Forecast and confidence interval</h2></div><span class="formula">Scenario model · illustrative</span></header><div id="forecastChart" class="chart"></div></article>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Annual audit</p><h2>Backtest detail</h2></div></header><div id="annualBacktest"></div></article>
+    </section>
+
+    <section class="view" data-view="early">
+      <div id="earlyKpis" class="kpi-grid compact"></div>
+      <div class="grid halves"><article class="panel"><header class="panel-head"><div><p class="eyebrow">Exit tenure</p><h2>Tenure distribution</h2></div></header><div id="tenureBars" class="bars"></div></article><article class="panel"><header class="panel-head"><div><p class="eyebrow">Year comparison</p><h2>Early exits by year</h2></div></header><div id="earlyTable"></div></article></div>
+    </section>
+
+    <section class="view" data-view="exits">
+      <div class="grid halves"><article class="panel"><header class="panel-head"><div><p class="eyebrow">Reason mix</p><h2>Exit reason distribution</h2></div></header><div id="reasonBars" class="bars"></div></article><article class="panel"><header class="panel-head"><div><p class="eyebrow">Data quality</p><h2>Classification quality</h2></div></header><div id="classificationQuality"></div></article></div>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Synthetic event ledger</p><h2>Exit detail</h2><p class="note">Profile codes are fictional scenario labels, not anonymised employee numbers.</p></div><button type="button" data-export="exits">Export exit detail</button></header><div id="exitTable"></div></article>
+    </section>
+
+    <section class="view" data-view="risk">
+      <div class="grid halves"><article class="panel"><header class="panel-head"><div><p class="eyebrow">Critical talent signal</p><h2>Regrettable turnover</h2></div></header><div id="regrettableChart" class="chart"></div><div id="regrettableTable"></div></article><article class="panel"><header class="panel-head"><div><p class="eyebrow">Retention curve</p><h2>Survival analysis</h2></div></header><div id="survivalKpis" class="mini-kpis"></div><div id="survivalChart" class="chart"></div></article></div>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Location signal</p><h2>Risk locations</h2></div></header><div id="riskLocationTable"></div></article>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Scenario drill-down</p><h2>Synthetic profile risk detail</h2><p class="note">These profiles are generated analytical test cases and do not represent people.</p></div></header><div id="riskProfileTable"></div></article>
+    </section>
+
+    <section class="view" data-view="settings">
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Business rule</p><h2>Exit reason classification</h2><p class="note">Changing a reason affects the numerator only. The workforce denominator remains fixed.</p></div></header><div class="settings-tools"><label>Search reasons<input id="reasonSearch" type="search" placeholder="Search synthetic reasons"></label><div class="button-row"><button type="button" class="secondary" id="resetReasons">Restore defaults</button><button type="button" class="secondary" id="importReasons">Import JSON</button><button type="button" class="secondary" id="exportReasons">Export JSON</button><button type="button" id="applyReasons">Apply locally</button><input id="reasonFile" type="file" accept="application/json" hidden></div></div><div id="reasonSettings"></div></article>
+      <article class="panel"><header class="panel-head"><div><p class="eyebrow">Privacy contract</p><h2>Clean-room publication</h2></div></header><div class="privacy-grid"><div><b>Input sources</b><span>None</span></div><div><b>Real people</b><span>None</span></div><div><b>Real businesses</b><span>None</span></div><div><b>Generator seed</b><span>410225</span></div></div></article>
     </section>
   </main>
 
-  <footer><span>Aizanoi Analytics · Open data products</span><span>Dataset seed 410225 · Aggregate records only</span></footer>
+  <footer><span>Aizanoi Analytics · Open data products</span><span>Deterministic synthetic scenario · seed 410225</span></footer>
+  <div id="tooltip" class="tooltip" hidden></div>
   <div id="errorState" class="error-state" hidden><b>Dashboard data could not be loaded.</b><span>Serve the repository over HTTP and try again.</span></div>
-  <script type="module" src="./app.js?v=1.0.0"></script>
+  <script type="module" src="./app.js?v=2.0.0"></script>
 </body>
 </html>
