@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-us-consumer-confidence-falls",
+  "title": "US consumer confidence loses ground in August",
+  "summary": "The Conference Board’s August reading showed US consumer confidence declining. The result adds a softer household signal to the outlook, even as investors continue to weigh inflation, interest rates and labor-market resilience.",
+  "category": "economy-markets",
+  "priority": 83,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["United States", "consumer confidence", "economy", "households"],
+  "sources": [{
+    "publisher": "Reuters",
+    "url": "https://www.reuters.com/business/us-consumer-confidence-falls-august-conference-board-says-2026-08-25/",
+    "publishedAt": "2026-08-25T14:57:45Z"
+  }]
+}

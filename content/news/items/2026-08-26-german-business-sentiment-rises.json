@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-german-business-sentiment-rises",
+  "title": "German business sentiment improves more than expected",
+  "summary": "Germany’s Ifo business-sentiment reading rose more than economists expected in August. The improvement offers a cautiously positive signal for Europe’s largest economy, though survey momentum still has to translate into sustained activity.",
+  "category": "economy-markets",
+  "priority": 77,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Germany", "Ifo", "business sentiment", "Europe"],
+  "sources": [{
+    "publisher": "Reuters",
+    "url": "https://www.reuters.com/world/europe/german-business-sentiment-rises-more-than-expected-august-ifo-survey-finds-2026-08-25/",
+    "publishedAt": "2026-08-25T08:23:18Z"
+  }]
+}

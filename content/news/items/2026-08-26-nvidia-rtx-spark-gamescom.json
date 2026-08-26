@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-nvidia-rtx-spark-gamescom",
+  "title": "Nvidia brings RTX Spark’s game and anti-cheat stack to Gamescom",
+  "summary": "Nvidia used Gamescom to showcase RTX Spark support across upcoming PC games, anti-cheat technology and visual-quality features. The package treats compatibility and competitive integrity as part of the graphics platform, not separate add-ons.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Nvidia", "RTX Spark", "Gamescom", "PC gaming"],
+  "sources": [{
+    "publisher": "NVIDIA Blog",
+    "url": "https://blogs.nvidia.com/blog/gamescom-rtx-spark-pc-games-technology/",
+    "publishedAt": "2026-08-25T15:30:48Z"
+  }]
+}

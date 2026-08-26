@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-apple-m6-m5-ultra-ai-compute",
+  "title": "Apple splits its latest silicon push between M6 and M5 Ultra",
+  "summary": "Apple introduced M6 for the Mac mini and M5 Ultra for Mac Studio, framing both chips around higher performance and expanded AI compute. The two-track launch shows local model workloads becoming a central measure of desktop hardware progress.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "M6", "M5 Ultra", "AI compute"],
+  "sources": [{
+    "publisher": "Apple Newsroom",
+    "url": "https://www.apple.com/newsroom/2026/08/apple-introduces-m6-and-m5-ultra-for-a-big-leap-in-performance-and-ai-compute/",
+    "publishedAt": "2026-08-26T03:51:16Z"
+  }]
+}

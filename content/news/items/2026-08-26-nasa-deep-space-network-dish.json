@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-nasa-deep-space-network-dish",
+  "title": "NASA adds a next-generation dish to deep-space communications",
+  "summary": "NASA’s Jet Propulsion Laboratory unveiled a new next-generation dish for the Deep Space Network. Expanding the ground system is a reminder that distant missions depend as much on reliable communications capacity as on spacecraft hardware.",
+  "category": "technology",
+  "priority": 84,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["NASA", "JPL", "Deep Space Network", "space communications"],
+  "sources": [{
+    "publisher": "NASA Jet Propulsion Laboratory",
+    "url": "https://www.jpl.nasa.gov/news/new-next-gen-dish-adds-muscle-to-nasas-deep-space-network/",
+    "publishedAt": "2026-08-25T22:38:27Z"
+  }]
+}
