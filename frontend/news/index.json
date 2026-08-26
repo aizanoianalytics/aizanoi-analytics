@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-08-25T05:07:42.000Z",
+  "generatedAt": "2026-08-26T05:08:03.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-08-26",
+      "path": "/news/2026-08-26/",
+      "itemCount": 15
+    },
     {
       "date": "2026-08-25",
       "path": "/news/2026-08-25/",
@@ -21,6 +26,476 @@
   ],
   "weeklyEditions": [],
   "items": [
+    {
+      "id": "2026-08-26-apple-m6-m5-ultra-ai-compute",
+      "kind": "daily",
+      "title": "Apple splits its latest silicon push between M6 and M5 Ultra",
+      "summary": "Apple introduced M6 for the Mac mini and M5 Ultra for Mac Studio, framing both chips around higher performance and expanded AI compute. The two-track launch shows local model workloads becoming a central measure of desktop hardware progress.",
+      "category": "ai",
+      "priority": 88,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "M6",
+        "M5 Ultra",
+        "AI compute"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple Newsroom",
+          "url": "https://www.apple.com/newsroom/2026/08/apple-introduces-m6-and-m5-ultra-for-a-big-leap-in-performance-and-ai-compute/",
+          "publishedAt": "2026-08-26T03:51:16.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-celtic-lask-champions-league-exit",
+      "kind": "daily",
+      "title": "LASK overturns Celtic’s four-goal cushion in a dramatic European exit",
+      "summary": "Celtic went out of Champions League qualifying after LASK reversed a four-goal aggregate deficit. The Austrian side’s 5-1 second-leg win turned a seemingly secure tie into one of the round’s most striking reversals.",
+      "category": "football",
+      "priority": 87,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Celtic",
+        "LASK",
+        "Champions League",
+        "qualifying"
+      ],
+      "sources": [
+        {
+          "publisher": "AP News",
+          "url": "https://apnews.com/article/champions-league-celtic-lask-18821e3e2aae085f01eb034f3eb528ce",
+          "publishedAt": "2026-08-25T23:12:34.000Z"
+        },
+        {
+          "publisher": "The Athletic",
+          "url": "https://www.nytimes.com/athletic/7538850/2026/08/25/celtic-champions-league-defeat-lask/",
+          "publishedAt": "2026-08-25T16:05:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-openai-jalapeno-inference-results",
+      "kind": "daily",
+      "title": "OpenAI publishes first Jalapeño inference results",
+      "summary": "OpenAI released initial results for Jalapeño, presenting the system as a high-speed, efficiency-focused approach to AI inference. The disclosure shifts attention from training scale toward the cost and throughput of serving models in production.",
+      "category": "ai",
+      "priority": 86,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "Jalapeño",
+        "inference",
+        "AI infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/jalapeno-first-results/",
+          "publishedAt": "2026-08-25T14:28:01.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-nasa-deep-space-network-dish",
+      "kind": "daily",
+      "title": "NASA adds a next-generation dish to deep-space communications",
+      "summary": "NASA’s Jet Propulsion Laboratory unveiled a new next-generation dish for the Deep Space Network. Expanding the ground system is a reminder that distant missions depend as much on reliable communications capacity as on spacecraft hardware.",
+      "category": "technology",
+      "priority": 84,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "NASA",
+        "JPL",
+        "Deep Space Network",
+        "space communications"
+      ],
+      "sources": [
+        {
+          "publisher": "NASA Jet Propulsion Laboratory",
+          "url": "https://www.jpl.nasa.gov/news/new-next-gen-dish-adds-muscle-to-nasas-deep-space-network/",
+          "publishedAt": "2026-08-25T22:38:27.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-us-consumer-confidence-falls",
+      "kind": "daily",
+      "title": "US consumer confidence loses ground in August",
+      "summary": "The Conference Board’s August reading showed US consumer confidence declining. The result adds a softer household signal to the outlook, even as investors continue to weigh inflation, interest rates and labor-market resilience.",
+      "category": "economy-markets",
+      "priority": 83,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "United States",
+        "consumer confidence",
+        "economy",
+        "households"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/us-consumer-confidence-falls-august-conference-board-says-2026-08-25/",
+          "publishedAt": "2026-08-25T14:57:45.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-anthropic-wellbeing-research-grants",
+      "kind": "daily",
+      "title": "Anthropic funds independent study of AI and wellbeing",
+      "summary": "Anthropic launched a $5 million grant program for independent research into how AI systems affect user wellbeing. The initiative puts evaluation of human outcomes alongside technical performance and safety testing.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "wellbeing",
+        "AI evaluation",
+        "research grants"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/wellbeing-research-grants",
+          "publishedAt": "2026-08-25T16:10:44.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-fernandes-shaw-pfa-awards",
+      "kind": "daily",
+      "title": "Fernandes and Shaw take the PFA’s top player honors",
+      "summary": "Bruno Fernandes and Khadija Shaw won the PFA Player of the Year awards, with Nico O’Reilly and Olivia Smith also recognized. The player-voted honors placed Manchester’s leading performers at the center of the season’s awards night.",
+      "category": "football",
+      "priority": 82,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "PFA",
+        "Bruno Fernandes",
+        "Khadija Shaw",
+        "awards"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/aug/25/bruno-fernandes-khadija-shaw-pfa-player-of-the-year",
+          "publishedAt": "2026-08-25T21:50:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-mantel-carbon-capture-commercial-scale",
+      "kind": "daily",
+      "title": "Mantel Capture moves its carbon-removal process to commercial scale",
+      "summary": "MIT-linked startup Mantel Capture demonstrated its carbon-capture technology at commercial scale. The milestone moves the discussion from laboratory performance toward whether industrial sites can deploy lower-cost capture in everyday operations.",
+      "category": "technology",
+      "priority": 81,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "carbon capture",
+        "MIT",
+        "industrial technology",
+        "climate technology"
+      ],
+      "sources": [
+        {
+          "publisher": "MIT Energy Initiative",
+          "url": "https://energy.mit.edu/news/mantel-capture-demonstrates-its-novel-carbon-capture-technology-at-commercial-scale/",
+          "publishedAt": "2026-08-25T19:49:32.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-australia-ai-music-chart-ban",
+      "kind": "daily",
+      "title": "Australia’s official music charts draw a line at fully AI-made tracks",
+      "summary": "Australia’s recorded-music industry will exclude wholly AI-generated tracks from its official charts. The rule separates machine-made releases from chart eligibility while the industry works through authorship, labor and audience-trust questions.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Australia",
+        "AI music",
+        "music charts",
+        "creative industries"
+      ],
+      "sources": [
+        {
+          "publisher": "AP News",
+          "url": "https://apnews.com/article/australia-ai-generated-music-charts-ban-aria-9bfb0c91166ae4405a6df1a3c4891687",
+          "publishedAt": "2026-08-25T06:40:59.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-amazon-mechanical-turk-shutdown",
+      "kind": "daily",
+      "title": "Amazon prepares to close Mechanical Turk’s long-running task marketplace",
+      "summary": "Amazon is shutting down Mechanical Turk, the human-task service once described by Jeff Bezos as “artificial artificial intelligence.” Its closure marks the end of an early model for combining software workflows with on-demand human judgment.",
+      "category": "technology",
+      "priority": 79,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Amazon",
+        "Mechanical Turk",
+        "crowd work",
+        "platforms"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/08/25/amazon-service-that-jeff-bezos-called-artificial-ai-is-shutting-down.html",
+          "publishedAt": "2026-08-25T17:34:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-carabao-cup-leeds-brentford",
+      "kind": "daily",
+      "title": "Leeds advances at Forest as Brentford scores six in the League Cup",
+      "summary": "Leeds beat Nottingham Forest for the second time in three days to move on in the Carabao Cup, while Brentford defeated Birmingham 6-1. The round paired a quick rematch with the night’s clearest attacking statement.",
+      "category": "football",
+      "priority": 79,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Carabao Cup",
+        "Leeds United",
+        "Brentford",
+        "Nottingham Forest"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/aug/25/carabao-cup-round-up-leeds-nottingham-forest-brentford-birmingham",
+          "publishedAt": "2026-08-25T22:41:53.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-nvidia-rtx-spark-gamescom",
+      "kind": "daily",
+      "title": "Nvidia brings RTX Spark’s game and anti-cheat stack to Gamescom",
+      "summary": "Nvidia used Gamescom to showcase RTX Spark support across upcoming PC games, anti-cheat technology and visual-quality features. The package treats compatibility and competitive integrity as part of the graphics platform, not separate add-ons.",
+      "category": "technology",
+      "priority": 78,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Nvidia",
+        "RTX Spark",
+        "Gamescom",
+        "PC gaming"
+      ],
+      "sources": [
+        {
+          "publisher": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/gamescom-rtx-spark-pc-games-technology/",
+          "publishedAt": "2026-08-25T15:30:48.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-german-business-sentiment-rises",
+      "kind": "daily",
+      "title": "German business sentiment improves more than expected",
+      "summary": "Germany’s Ifo business-sentiment reading rose more than economists expected in August. The improvement offers a cautiously positive signal for Europe’s largest economy, though survey momentum still has to translate into sustained activity.",
+      "category": "economy-markets",
+      "priority": 77,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Germany",
+        "Ifo",
+        "business sentiment",
+        "Europe"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/europe/german-business-sentiment-rises-more-than-expected-august-ifo-survey-finds-2026-08-25/",
+          "publishedAt": "2026-08-25T08:23:18.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-openai-webmcp-challenge",
+      "kind": "daily",
+      "title": "OpenAI turns WebMCP experimentation into a public challenge",
+      "summary": "OpenAI announced a challenge centered on WebMCP, bringing fresh attention to structured ways for AI systems to interact with web capabilities. The format invites practical testing of an emerging interface layer rather than another model-only benchmark.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "WebMCP",
+        "web agents",
+        "developer tools"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/webmcp-challenge/",
+          "publishedAt": "2026-08-25T20:54:17.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-26-fed-bank-boards-rate-hike",
+      "kind": "daily",
+      "title": "Four regional Fed boards backed a higher discount rate",
+      "summary": "Minutes showed that four Federal Reserve bank boards favored raising the discount rate. The split is a useful window into regional inflation concerns, even though the recommendation is distinct from the central bank’s policy-rate decision.",
+      "category": "economy-markets",
+      "priority": 75,
+      "publishedAt": "2026-08-26T05:10:00.000Z",
+      "updatedAt": "2026-08-26T05:10:00.000Z",
+      "retrievedAt": "2026-08-26T05:08:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Federal Reserve",
+        "interest rates",
+        "discount rate",
+        "monetary policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/markets/us/four-fed-bank-boards-wanted-rate-hike-minutes-show-2026-08-25/",
+          "publishedAt": "2026-08-25T18:25:44.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-08-25-taiwan-charges-nine-ai-server-exports",
       "kind": "daily",

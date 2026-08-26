@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-openai-webmcp-challenge",
+  "title": "OpenAI turns WebMCP experimentation into a public challenge",
+  "summary": "OpenAI announced a challenge centered on WebMCP, bringing fresh attention to structured ways for AI systems to interact with web capabilities. The format invites practical testing of an emerging interface layer rather than another model-only benchmark.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "WebMCP", "web agents", "developer tools"],
+  "sources": [{
+    "publisher": "OpenAI",
+    "url": "https://openai.com/webmcp-challenge/",
+    "publishedAt": "2026-08-25T20:54:17Z"
+  }]
+}

@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/apple-m6-m5-ultra-ai-compute/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>Apple splits its latest silicon push between M6 and M5 Ultra</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/celtic-lask-champions-league-exit/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>LASK overturns Celtic’s four-goal cushion in a dramatic European exit</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/openai-jalapeno-inference-results/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>OpenAI publishes first Jalapeño inference results</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/nasa-deep-space-network-dish/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>NASA adds a next-generation dish to deep-space communications</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/us-consumer-confidence-falls/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>US consumer confidence loses ground in August</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/anthropic-wellbeing-research-grants/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>Anthropic funds independent study of AI and wellbeing</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/fernandes-shaw-pfa-awards/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>Fernandes and Shaw take the PFA’s top player honors</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/mantel-carbon-capture-commercial-scale/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>Mantel Capture moves its carbon-removal process to commercial scale</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/australia-ai-music-chart-ban/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>Australia’s official music charts draw a line at fully AI-made tracks</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/amazon-mechanical-turk-shutdown/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>Amazon prepares to close Mechanical Turk’s long-running task marketplace</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/carabao-cup-leeds-brentford/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>Leeds advances at Forest as Brentford scores six in the League Cup</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/nvidia-rtx-spark-gamescom/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>Nvidia brings RTX Spark’s game and anti-cheat stack to Gamescom</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/german-business-sentiment-rises/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>German business sentiment improves more than expected</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/openai-webmcp-challenge/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>OpenAI turns WebMCP experimentation into a public challenge</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-26/fed-bank-boards-rate-hike/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-26T05:10:00.000Z</news:publication_date>
+      <news:title>Four regional Fed boards backed a higher discount rate</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-08-25/taiwan-charges-nine-ai-server-exports/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -62,70 +182,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-08-25T05:08:00.000Z</news:publication_date>
       <news:title>SpaceXAI selects Nvidia Vera CPUs for autonomous AI workloads</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-24/alibaba-proposes-hk80-billion-placement/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-24T05:07:04.000Z</news:publication_date>
-      <news:title>Alibaba proposes HK$80 billion share placement for AI investment</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-24/amie-video-consultation-study/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-24T05:07:04.000Z</news:publication_date>
-      <news:title>Google tests medical AI in simulated video consultations</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-24/apple-unifies-eu-app-terms/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-24T05:07:04.000Z</news:publication_date>
-      <news:title>Apple sets unified EU app terms and revises commission structure</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-24/euro-area-inflation-expectations-ease/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-24T05:07:04.000Z</news:publication_date>
-      <news:title>Euro-area consumers trim near-term inflation expectations</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-24/geforce-now-adds-firefox-support/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-24T05:07:04.000Z</news:publication_date>
-      <news:title>GeForce Now adds Firefox to its Windows browser lineup</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-24/gemma-passes-one-billion-downloads/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-24T05:07:04.000Z</news:publication_date>
-      <news:title>Gemma passes one billion downloads as Google opens a project directory</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-24/hull-beat-manchester-united/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-24T05:07:04.000Z</news:publication_date>
-      <news:title>Hull mark Premier League return with win over Manchester United</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-24/liverpool-rescue-point-at-newcastle/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-24T05:07:04.000Z</news:publication_date>
-      <news:title>Late Szoboszlai penalty earns Liverpool a point at Newcastle</news:title>
     </news:news>
   </url>
 </urlset>

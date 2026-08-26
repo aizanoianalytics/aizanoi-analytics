@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-anthropic-wellbeing-research-grants",
+  "title": "Anthropic funds independent study of AI and wellbeing",
+  "summary": "Anthropic launched a $5 million grant program for independent research into how AI systems affect user wellbeing. The initiative puts evaluation of human outcomes alongside technical performance and safety testing.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "wellbeing", "AI evaluation", "research grants"],
+  "sources": [{
+    "publisher": "Anthropic",
+    "url": "https://www.anthropic.com/news/wellbeing-research-grants",
+    "publishedAt": "2026-08-25T16:10:44Z"
+  }]
+}
