@@ -98,7 +98,7 @@ function renderTrend(months) {
 function renderDepartments(rows) {
   const stats = groupStats(rows, 'department');
   const max = Math.max(...stats.map((item) => item.rate), 1);
-  document.querySelector('#departmentBars').innerHTML = stats.length ? stats.map((item) => `<div class="bar-row"><div class="bar-copy"><span>${item.label}</span><b>${decimal.format(item.rate)}%</b></div><div class="bar-track"><div class="bar-fill" style="width:${item.rate / max * 100}%"></div></div></div>`).join('') : '<p class="empty">No department data.</p>';
+  document.querySelector('#departmentBars').innerHTML = stats.length ? stats.map((item) => `<div class="bar-row"><div class="bar-copy"><span>${item.label}</span><b>${decimal.format(item.rate)}%</b></div><div class="bar-track"><progress class="bar-progress" max="${max}" value="${item.rate}" aria-label="${item.label}: ${decimal.format(item.rate)} percent"></progress></div></div>`).join('') : '<p class="empty">No department data.</p>';
 }
 
 function renderReasons() {
@@ -109,7 +109,7 @@ function renderReasons() {
   const total = sorted.reduce((sum, item) => sum + item.count, 0);
   const max = Math.max(...sorted.map((item) => item.count), 1);
   document.querySelector('#reasonTotal').textContent = `${number.format(total)} exits classified`;
-  document.querySelector('#reasonList').innerHTML = sorted.map((item) => `<div class="reason-row"><span>${item.label}</span><div class="reason-track"><div class="reason-fill" style="width:${item.count / max * 100}%"></div></div><b>${number.format(item.count)}</b></div>`).join('');
+  document.querySelector('#reasonList').innerHTML = sorted.map((item) => `<div class="reason-row"><span>${item.label}</span><div class="reason-track"><progress class="reason-progress" max="${max}" value="${item.count}" aria-label="${item.label}: ${number.format(item.count)} exits"></progress></div><b>${number.format(item.count)}</b></div>`).join('');
 }
 
 function renderInsight(months, rows) {
