@@ -1,43 +1,44 @@
 # Workforce Turnover Analytics
 
-An open, static-first workforce planning demonstration for **Aizanoi Analytics**.
+This directory contains the full standalone turnover analytics engine used by the public Aizanoi Analytics demonstration.
+
+## Architecture
+
+The dashboard keeps the original analytical structure and behavior:
+
+- eight analytical views;
+- global scope, exit-type, period, region, store, department, city, gender, contract, and title filters;
+- monthly and cumulative turnover, flow, exit mix, scope trends, heat maps, and title matrices;
+- region/store/year comparisons;
+- forecasts, confidence intervals, rolling-origin backtests, and annual backtests;
+- early-tenure analysis and exit drill-down;
+- regrettable turnover, survival analysis, entity risk, and synthetic profile risk detail;
+- browser-local reason classification with CSV and JSON import/export.
+
+`generate_turnover_dashboard.py` reads the workbook, injects its compact payload into the offline HTML template, and emits CSP-compatible `index.html`, `app.js`, and `style.css` assets. The published page has no runtime backend or network data dependency.
 
 ## Data safety
 
-The public dataset is generated from scratch by `generate_data.py` with a fixed random seed. The generator:
+The committed workbook at `data/turnover_analytics_synthetic.xlsx` was created from scratch with deterministic fictional scenarios. It is not an anonymized, masked, sampled, or transformed employer workbook.
 
-- reads no external workbook, database, employee file or environment variable;
-- emits aggregate region, department and contract-type totals only;
-- contains no names, employee numbers, contact details or row-level people records;
-- states its synthetic status in both the dataset and the interface.
+- all IDs use explicit `SYN-` prefixes;
+- profile labels use `Synthetic Employee` placeholders;
+- business units and locations are fictional demo labels;
+- no former employer workbook is read by the public build;
+- no real employee, contact, payroll, or employer identifier is present.
 
-This project is a clean public implementation of a general analytical pattern. It is not an anonymized or transformed employer dataset.
+Row-level records exist because the original exit-detail and risk features require them. Every such record is synthetic.
 
-## Rebuild the data
+## Rebuild the dashboard
 
-From the repository root:
+Install Python with `numpy`, `pandas`, and `openpyxl`, then run from the repository root:
 
 ```bash
-python analytics/workforce-turnover/generate_data.py
+python analytics/workforce-turnover/generate_turnover_dashboard.py
 ```
 
-The command deterministically writes `frontend/analytics/workforce-turnover/data.json`.
+The command reads only the committed synthetic workbook and writes the public assets under `frontend/analytics/workforce-turnover/`.
 
-## Metric
+## Workbook contract
 
-For any selected period and scope:
-
-```text
-turnover rate = total exits / sum of monthly average workforce × 100
-monthly average workforce = (start headcount + end headcount) / 2
-```
-
-This keeps totals additive across filters while making the denominator explicit.
-
-## Public files
-
-- Application: `/analytics/workforce-turnover/`
-- Dataset: `/analytics/workforce-turnover/data.json`
-- Source: `analytics/workforce-turnover/`
-
-The application uses browser-native HTML, CSS, JavaScript and SVG. It has no runtime dependency or backend.
+The workbook preserves all 14 sheets consumed by the engine: monthly analysis, exit detail, reason settings, forecasts, monthly and annual backtests, regrettable turnover, survival curves, and entity/profile risk outputs.

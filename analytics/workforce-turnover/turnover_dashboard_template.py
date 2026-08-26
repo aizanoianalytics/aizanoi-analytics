@@ -1,4 +1,417 @@
-(() => {
+"""Offline HTML template for the Aizanoi workforce turnover analytics dashboard."""
+
+HTML_TEMPLATE = r"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="Explore full-featured workforce turnover analytics using a deterministic, fully synthetic demonstration workbook.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://aizanoianalytics.com/analytics/workforce-turnover/">
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
+  <title>Workforce Turnover Analytics — Aizanoi Analytics</title>
+  <style>
+    :root{
+      --ink:#f7f2e8;--muted:#9fb0c7;--faint:#708198;--bg:#07111f;--bg2:#0b1728;
+      --panel:#101f32;--panel2:#14263c;--line:#2a3b52;--blue:#4ea5ff;--cyan:#32d6c5;
+      --amber:#ffb84d;--orange:#ff7a45;--rose:#ff5d77;--green:#66d19e;--violet:#a98cff;
+      --danger:#ff6b6b;--shadow:0 22px 64px rgba(0,0,0,.28);--radius:22px;
+      --font:"Aptos","Bahnschrift","Trebuchet MS",sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-width:320px;color:var(--ink);font-family:var(--font);background:
+      radial-gradient(circle at 9% 4%,rgba(78,165,255,.14),transparent 28rem),
+      radial-gradient(circle at 92% 8%,rgba(255,184,77,.10),transparent 26rem),
+      linear-gradient(160deg,var(--bg),#081422 48%,#050c16);min-height:100vh}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+      background-size:38px 38px;mask-image:linear-gradient(to bottom,#000,transparent 78%)}
+    button,select,input{font:inherit}
+    button{cursor:pointer}
+    .shell{width:min(1880px,100%);margin:auto;padding:22px clamp(14px,2.2vw,38px) 54px}
+    .hero{position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:space-between;
+      gap:24px;padding:28px 30px;border:1px solid rgba(255,255,255,.09);border-radius:28px;
+      background:linear-gradient(125deg,rgba(16,34,56,.98),rgba(11,26,43,.9));box-shadow:var(--shadow)}
+    .hero:after{content:"";position:absolute;width:440px;height:440px;border:78px solid rgba(50,214,197,.07);
+      border-radius:50%;right:-180px;top:-250px}
+    .eyebrow{display:flex;align-items:center;gap:9px;color:var(--cyan);font-size:12px;font-weight:800;
+      letter-spacing:.14em;text-transform:uppercase}
+    .eyebrow:before{content:"";width:30px;height:2px;background:var(--cyan)}
+    h1{font-size:clamp(30px,4vw,58px);line-height:.98;letter-spacing:-.045em;margin:13px 0 12px;max-width:820px}
+    .hero p{max-width:820px;color:var(--muted);font-size:14px;line-height:1.55;margin:0}
+    .hero-meta{position:relative;z-index:1;display:grid;gap:9px;min-width:250px}
+    .meta-pill{padding:10px 13px;border-radius:12px;background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.08);font-size:12px;color:var(--muted)}
+    .meta-pill strong{display:block;color:var(--ink);font-size:14px;margin-top:2px}
+    .tabs{display:flex;gap:8px;overflow:auto;padding:18px 2px 10px;scrollbar-width:thin}
+    .tab{white-space:nowrap;border:1px solid var(--line);color:var(--muted);background:rgba(13,28,47,.82);
+      border-radius:999px;padding:10px 15px;font-weight:750;font-size:12px;transition:.18s ease}
+    .tab:hover{color:var(--ink);border-color:#45617f}
+    .tab.active{color:#07111f;border-color:var(--amber);background:var(--amber);box-shadow:0 8px 22px rgba(255,184,77,.2)}
+    .filter-shell{position:sticky;top:0;z-index:50;margin:8px 0 18px;border:1px solid rgba(255,255,255,.1);
+      border-radius:18px;background:rgba(8,19,33,.94);backdrop-filter:blur(18px);box-shadow:0 14px 40px rgba(0,0,0,.22)}
+    .filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;padding:12px}
+    .field{min-width:0}
+    .field label{display:block;margin:0 0 5px 3px;color:var(--faint);font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+    .select,.input{width:100%;height:40px;border:1px solid var(--line);border-radius:10px;color:var(--ink);
+      background:#0d1b2d;padding:0 11px;outline:none}
+    .select:focus,.input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(78,165,255,.12)}
+    .select:disabled{opacity:.45}
+    .filter-actions{display:flex;align-items:end;gap:6px}
+    .btn{min-height:40px;border:1px solid var(--line);border-radius:10px;padding:0 13px;color:var(--ink);
+      background:#15283f;font-weight:800;font-size:12px}
+    .btn:hover{border-color:#58718d;background:#1b314b}
+    .btn.primary{background:var(--blue);color:#06111e;border-color:var(--blue)}
+    .btn.warn{background:var(--amber);color:#111827;border-color:var(--amber)}
+    .btn.danger{background:rgba(255,93,119,.12);border-color:rgba(255,93,119,.45);color:#ff9daf}
+    .filter-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 13px 11px}
+    .chips{display:flex;flex-wrap:wrap;gap:6px}
+    .chip{padding:5px 9px;border:1px solid rgba(78,165,255,.24);background:rgba(78,165,255,.08);
+      color:#b9ddff;border-radius:999px;font-size:10px;font-weight:750}
+    .period-buttons{display:flex;gap:5px}
+    .mini{border:1px solid var(--line);border-radius:8px;background:#102239;color:var(--muted);padding:5px 8px;font-size:10px;font-weight:800}
+    .mini:hover{color:var(--ink)}
+    .page{display:none;animation:reveal .28s ease}
+    .page.active{display:block}
+    @keyframes reveal{from{opacity:.25;transform:translateY(6px)}to{opacity:1;transform:none}}
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:27px 2px 12px}
+    .section-head h2{font-size:22px;margin:0;letter-spacing:-.025em}
+    .section-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
+    .badge{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding:6px 9px;border-radius:999px;
+      border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--muted);font-size:10px;font-weight:800}
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(102,209,158,.1)}
+    .grid{display:grid;gap:14px}.grid>*{min-width:0}
+    .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:11px}
+    .card,.kpi{border:1px solid rgba(255,255,255,.085);background:linear-gradient(155deg,rgba(18,36,58,.96),rgba(12,27,45,.94));
+      border-radius:var(--radius);box-shadow:0 12px 36px rgba(0,0,0,.16)}
+    .card{padding:16px;min-width:0}
+    .kpi{padding:15px 16px;position:relative;overflow:hidden;min-height:112px}
+    .kpi:after{content:"";position:absolute;right:-32px;bottom:-43px;width:90px;height:90px;border-radius:50%;background:var(--tone,rgba(78,165,255,.12))}
+    .kpi .label{color:var(--muted);font-size:10px;font-weight:850;letter-spacing:.055em;text-transform:uppercase}
+    .kpi .value{font-size:clamp(24px,2.5vw,36px);font-weight:900;letter-spacing:-.035em;margin:9px 0 5px}
+    .kpi .sub{color:var(--faint);font-size:10px;line-height:1.35}
+    .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:11px}
+    .card-head h3{font-size:15px;margin:0}
+    .card-head p{margin:4px 0 0;color:var(--faint);font-size:10px;line-height:1.4}
+    .card-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .chart{min-height:310px;width:100%;position:relative;overflow:hidden}
+    .chart.compact{min-height:245px}
+    .chart svg{display:block;width:100%;height:auto;overflow:visible}
+    .empty{display:grid;place-items:center;min-height:230px;color:var(--muted);border:1px dashed var(--line);border-radius:14px;text-align:center;padding:24px}
+    .notice{padding:12px 14px;border-radius:13px;border:1px solid rgba(255,184,77,.3);
+      background:rgba(255,184,77,.075);color:#ffd89a;font-size:11px;line-height:1.55}
+    .notice.info{border-color:rgba(78,165,255,.3);background:rgba(78,165,255,.07);color:#b9ddff}
+    .legend{display:flex;flex-wrap:wrap;gap:8px 14px;color:var(--muted);font-size:10px;margin-top:8px}
+    .legend span{display:inline-flex;align-items:center;gap:6px}
+    .swatch{width:18px;height:4px;border-radius:4px;background:var(--c)}
+    .table-wrap{width:100%;overflow:auto;border:1px solid var(--line);border-radius:14px;scrollbar-color:#49637f #0b1828}
+    table{width:100%;border-collapse:separate;border-spacing:0;font-size:11px}
+    th{position:sticky;top:0;z-index:2;color:#caddf3;background:#172b43;font-size:10px;letter-spacing:.035em;text-transform:none;
+      text-align:left;padding:10px 9px;border-bottom:1px solid #3a506b;white-space:nowrap}
+    td{padding:9px;border-bottom:1px solid rgba(255,255,255,.055);color:#dce7f3;white-space:nowrap}
+    tr:hover td{background:rgba(78,165,255,.055)}
+    tbody tr:last-child td{border-bottom:0}
+    .num{text-align:right;font-variant-numeric:tabular-nums}
+    .total-row td{font-weight:900;background:rgba(255,184,77,.075)}
+    .table-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 9px}
+    .table-tools .left,.table-tools .right{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+    .search{height:36px;min-width:220px;border:1px solid var(--line);border-radius:9px;background:#0c1a2b;color:var(--ink);padding:0 11px}
+    .count{color:var(--muted);font-size:10px}
+    .sort-btn{all:unset;cursor:pointer;color:inherit;font:inherit}
+    .sort-btn:hover{color:white}
+    .heat{font-weight:850;text-align:center;border-radius:5px}
+    .hbar-list{display:grid;gap:9px}
+    .hbar-row{display:grid;grid-template-columns:minmax(130px,1.2fr) minmax(170px,3fr) 74px;align-items:center;gap:10px;font-size:10px}
+    .hbar-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#d9e6f4}
+    .track{height:14px;border-radius:99px;background:#0a1524;overflow:hidden;border:1px solid rgba(255,255,255,.055)}
+    .fill{height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--blue),var(--cyan));transform-origin:left}
+    .hbar-value{text-align:right;font-weight:900;font-variant-numeric:tabular-nums}
+    .control-row{display:flex;align-items:end;gap:9px;flex-wrap:wrap;margin-bottom:12px}
+    .control-row .field{min-width:155px;flex:1}
+    .metric-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .metric-card{border:1px solid var(--line);background:#0d1b2d;border-radius:14px;padding:13px}
+    .metric-card .big{font-size:25px;font-weight:900;margin:6px 0}
+    .metric-card .small{font-size:10px;color:var(--muted);line-height:1.45}
+    .status{display:inline-flex;padding:4px 7px;border-radius:999px;font-size:9px;font-weight:900}
+    .status.good{color:#9ff0c7;background:rgba(102,209,158,.12);border:1px solid rgba(102,209,158,.28)}
+    .status.bad{color:#ff9daf;background:rgba(255,93,119,.12);border:1px solid rgba(255,93,119,.28)}
+    .status.mid{color:#ffd490;background:rgba(255,184,77,.11);border:1px solid rgba(255,184,77,.28)}
+    .settings-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px}
+    .reason-row{display:grid;grid-template-columns:minmax(250px,2.3fr) minmax(150px,1fr) 90px 120px;gap:8px;
+      align-items:center;padding:9px;border-bottom:1px solid rgba(255,255,255,.055);font-size:11px}
+    .reason-row.header{position:sticky;top:0;background:#172b43;z-index:2;font-weight:900;color:#caddf3}
+    .reason-list{max-height:650px;overflow:auto;border:1px solid var(--line);border-radius:14px;background:#0b1828}
+    .formula{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:13px;border-left:3px solid var(--cyan);
+      background:rgba(50,214,197,.055);border-radius:0 12px 12px 0;font-size:11px;color:var(--muted);line-height:1.55}
+    .formula strong{color:var(--cyan)}
+    .footer{margin-top:36px;padding:18px 2px 0;border-top:1px solid rgba(255,255,255,.08);
+      color:#687a91;font-size:9px;letter-spacing:.08em;text-align:center}
+    .footer-quote{text-transform:lowercase}.footer-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:10px}
+    .footer-links a{color:#91a7c1;text-decoration:none;text-transform:uppercase}.footer-links a:hover{color:var(--cyan)}
+    .tooltip{position:fixed;z-index:200;pointer-events:none;display:none;max-width:260px;padding:9px 10px;
+      border:1px solid #48627f;background:#081523;color:#eef7ff;border-radius:10px;box-shadow:var(--shadow);font-size:10px;line-height:1.45}
+    .axis{fill:#8496ad;font-size:9px}
+    .axis-title{fill:#aabbd0;font-size:9px;font-weight:800}
+    .gridline{stroke:#263a51;stroke-width:1}
+    .chart-title{fill:#dce8f4;font-size:10px;font-weight:800}
+    .mobile-note{display:none}
+    .mt-9{margin-top:9px}.mt-10{margin-top:10px}.mt-12{margin-top:12px}.mt-14{margin-top:14px}
+    .min-w-190{min-width:190px}.min-w-230{min-width:230px}
+    .synthetic-notice{margin:14px 0}
+    .settings-copy{color:var(--muted);font-size:11px;line-height:1.6;margin-top:0}
+    .metric-cards.two-cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .metric-cards.three-cols{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:10px}
+    .heat-value{display:block;padding:5px 7px}
+    .metric-inline{font-size:14px;color:var(--muted)}
+    @media(max-width:1450px){
+      .filter-grid{grid-template-columns:repeat(5,minmax(130px,1fr))}
+      .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
+    @media(max-width:980px){
+      .hero{align-items:flex-start;flex-direction:column}.hero-meta{width:100%;grid-template-columns:repeat(2,minmax(0,1fr))}
+      .filter-shell{position:relative}.filter-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .grid.two,.grid.three,.settings-grid{grid-template-columns:1fr}
+      .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .metric-cards{grid-template-columns:1fr}
+      .mobile-note{display:block}
+    }
+    @media(max-width:580px){
+      .shell{padding:10px 9px 36px}.hero{padding:22px 18px;border-radius:20px}.hero-meta{grid-template-columns:1fr}
+      .filter-grid{grid-template-columns:1fr}.filter-foot{align-items:flex-start;flex-direction:column}
+      .kpis{grid-template-columns:1fr}.card{padding:12px}.chart{min-height:270px}
+      .hbar-row{grid-template-columns:minmax(100px,1fr) minmax(110px,2fr) 58px}
+      .reason-row{grid-template-columns:1fr 110px}.reason-row>*:nth-child(3){display:none}
+      .table-tools{align-items:flex-start;flex-direction:column}.search{width:100%;min-width:0}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">Aizanoi Analytics · Synthetic Workforce Lab</div>
+        <h1>Workforce Turnover Analytics</h1>
+        <p>Explore all exits, voluntary departures, and employer-initiated exits on one canonical denominator across trends, comparisons, forecasts, early tenure, survival, and risk layers.</p>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-pill">Data range<strong id="meta-period">-</strong></div>
+        <div class="meta-pill">Generated<strong id="meta-generated">-</strong></div>
+      </div>
+    </header>
+
+    <div class="notice info synthetic-notice">100% synthetic demonstration data. No employer records, real employees, contact details, or direct identifiers are used.</div>
+
+    <nav class="tabs" id="tabs" aria-label="Turnover sections">
+      <button class="tab active" data-tab="overview">Overview</button>
+      <button class="tab" data-tab="breakdown">Breakdown Analysis</button>
+      <button class="tab" data-tab="compare">Comparison</button>
+      <button class="tab" data-tab="forecast">Forecast &amp; Backtest</button>
+      <button class="tab" data-tab="early">Early Tenure &amp; Service</button>
+      <button class="tab" data-tab="exits">Exit Detail</button>
+      <button class="tab" data-tab="v2">V2 Analytics &amp; Risk</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <section class="filter-shell" aria-label="Global filters">
+      <div class="filter-grid">
+        <div class="field"><label>Scope</label><select class="select" id="scope-filter"></select></div>
+        <div class="field"><label>Turnover Type</label><select class="select" id="type-filter">
+          <option value="all">All Exits</option>
+          <option value="voluntary">Voluntary Turnover</option>
+          <option value="forced">Employer-Initiated Turnover</option>
+        </select></div>
+        <div class="field"><label>Start</label><select class="select" id="start-filter"></select></div>
+        <div class="field"><label>End</label><select class="select" id="end-filter"></select></div>
+        <div class="field"><label>Region</label><select class="select" id="region-filter"></select></div>
+        <div class="field"><label>Store</label><select class="select" id="store-filter"></select></div>
+        <div class="field"><label>Department</label><select class="select" id="department-filter"></select></div>
+        <div class="field"><label>City</label><select class="select" id="city-filter"></select></div>
+        <div class="field"><label>Gender</label><select class="select" id="gender-filter"></select></div>
+        <div class="field"><label>Contract Type</label><select class="select" id="contract-filter"></select></div>
+        <div class="field"><label>Title</label><select class="select" id="title-filter"></select></div>
+        <div class="filter-actions"><button class="btn" id="reset-filters">Reset</button></div>
+      </div>
+      <div class="filter-foot">
+        <div class="chips" id="active-chips"></div>
+        <div class="period-buttons">
+          <button class="mini" data-period="12">Last 12 Months</button>
+          <button class="mini" data-period="24">Last 24 Months</button>
+          <button class="mini" data-period="all">All</button>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="page active" data-page="overview">
+        <div class="section-head"><div><h2>Executive Summary</h2><p id="overview-subtitle">Selected scope and period</p></div><span class="badge"><span class="dot"></span>canonical exit metric</span></div>
+        <div class="kpis" id="overview-kpis"></div>
+        <div class="grid two mt-14">
+          <article class="card">
+            <div class="card-head"><div><h3>Monthly Turnover Trend</h3><p>Exits / monthly average workforce</p></div><div class="card-actions"><button class="mini" data-export="trend">CSV</button></div></div>
+            <div class="chart" id="trend-chart"></div>
+          </article>
+          <article class="card">
+            <div class="card-head"><div><h3>Exit Type Composition</h3><p>Classified exits within the selected period</p></div><span class="badge" id="match-badge">-</span></div>
+            <div class="chart" id="composition-chart"></div>
+          </article>
+        </div>
+        <div class="grid two mt-14">
+          <article class="card">
+            <div class="card-head"><div><h3>Monthly Hire / Exit Balance</h3><p>Hires and exits shown as comparable series</p></div></div>
+            <div class="chart compact" id="flow-chart"></div>
+          </article>
+          <article class="card">
+            <div class="card-head"><div><h3>Scope Comparison</h3><p>Results for the selected end month using the same formula</p></div></div>
+            <div id="scope-comparison"></div>
+          </article>
+        </div>
+        <article class="card mt-14">
+          <div class="card-head">
+            <div><h3>Turnover Across Scopes</h3><p>Six primary scopes compared on the same monthly axis and canonical formula</p></div>
+            <div class="card-actions"><select class="select min-w-190" id="scope-trend-mode"><option value="monthly">Monthly Turnover</option><option value="ytd">Year-to-Date Cumulative Turnover</option></select></div>
+          </div>
+          <div class="chart" id="scope-trend-chart"></div>
+        </article>
+        <div class="formula mt-14"><strong>Formula</strong><span><b>Turnover = Exits / ((Opening Workforce + Closing Workforce) / 2)</b>. Voluntary and employer-initiated views change only the exit numerator. Opening, closing, and average workforce remain unchanged.</span></div>
+      </section>
+
+      <section class="page" data-page="breakdown">
+        <div class="section-head"><div><h2>Breakdown Analysis</h2><p>Audit the same denominator by region, store, department, section, city, gender, contract type, and title</p></div></div>
+        <article class="card">
+          <div class="control-row">
+            <div class="field"><label>Breakdown</label><select class="select" id="breakdown-dimension">
+              <option value="bolge">Region</option><option value="magaza">Store</option>
+              <option value="departman">Department</option><option value="bolum">Section</option><option value="il">City</option>
+              <option value="cinsiyet">Gender</option><option value="sozlesme_turu">Contract Type</option><option value="title">Title</option>
+            </select></div>
+            <div class="field"><label>Metric</label><select class="select" id="breakdown-metric">
+              <option value="latest">Latest Month Turnover</option><option value="period">Selected Period Cumulative Turnover</option>
+              <option value="last12">Last 12 Months Turnover</option><option value="exits">Selected Period Exits</option>
+            </select></div>
+            <button class="btn" data-export="breakdown">Breakdown CSV</button>
+          </div>
+          <div class="grid two">
+            <div><div class="card-head"><div><h3>Ranked Comparison</h3><p id="breakdown-note">-</p></div></div><div class="chart" id="breakdown-bars"></div></div>
+            <div><div class="card-head"><div><h3>Monthly Heat Map</h3><p>Cells show the monthly turnover rate</p></div></div><div id="breakdown-heatmap"></div></div>
+          </div>
+          <div class="mt-14" id="breakdown-table"></div>
+        </article>
+        <article class="card mt-14">
+          <div class="card-head">
+            <div><h3>Cumulative Title Turnover Matrix</h3><p>Shows each title's contribution and its own turnover rate by region or department using separate business rules</p></div>
+            <div class="card-actions">
+              <select class="select min-w-230" id="title-matrix-mode">
+                <option value="contribution">Share of Turnover</option>
+                <option value="title_rate">Title Turnover Rate</option>
+              </select>
+              <button class="mini" data-export="title-matrix">CSV</button>
+            </div>
+          </div>
+          <div class="notice info" id="title-matrix-note"></div>
+          <div class="mt-12" id="title-matrix-table"></div>
+        </article>
+      </section>
+
+      <section class="page" data-page="compare">
+        <div class="section-head"><div><h2>Turnover Comparison</h2><p>Compare regions, stores, and years month-for-month on the same X-axis</p></div></div>
+        <article class="card">
+          <div class="control-row">
+            <div class="field"><label>Type</label><select class="select" id="compare-kind"><option value="bolge">Region</option><option value="magaza">Store</option></select></div>
+            <div class="field"><label>First</label><select class="select" id="compare-a"></select></div>
+            <div class="field"><label>Year A</label><select class="select" id="compare-year-a"></select></div>
+            <div class="field"><label>Second</label><select class="select" id="compare-b"></select></div>
+            <div class="field"><label>Year B</label><select class="select" id="compare-year-b"></select></div>
+            <button class="btn" data-export="comparison">Comparison CSV</button>
+          </div>
+          <div class="chart" id="comparison-chart"></div>
+          <div id="comparison-table"></div>
+        </article>
+      </section>
+
+      <section class="page" data-page="forecast">
+        <div class="section-head"><div><h2>Forecast &amp; Backtest</h2><p>Actual series, forward forecast, forecast-only confidence intervals, and rolling-origin tests</p></div><span class="badge">model scope: all exits</span></div>
+        <article class="card">
+          <div id="forecast-warning"></div>
+          <div class="chart" id="forecast-chart"></div>
+          <div class="grid two mt-12">
+            <div id="backtest-summary"></div>
+            <div id="backtest-quality"></div>
+          </div>
+          <div class="mt-14" id="annual-backtest-table"></div>
+        </article>
+      </section>
+
+      <section class="page" data-page="early">
+        <div class="section-head"><div><h2>Early Tenure &amp; Service</h2><p>Exit-tenure distribution using 31, 62, and 183-day thresholds</p></div></div>
+        <div class="metric-cards" id="early-cards"></div>
+        <div class="grid two mt-14">
+          <article class="card"><div class="card-head"><div><h3>Exit Tenure Distribution</h3><p>Mutually exclusive service-length bands</p></div></div><div class="chart compact" id="tenure-chart"></div></article>
+          <article class="card"><div class="card-head"><div><h3>Early Exits by Year</h3><p>Share of total exits within each year</p></div></div><div id="early-year-table"></div></article>
+        </div>
+        <div class="formula mt-14"><strong>Thresholds</strong><span>First month: tenure ≤ 31 days. First 2 months: tenure ≤ 62 days. First 6 months: tenure ≤ 183 days. These metrics are nested; a first-month exit is also included in the 2- and 6-month counts. The denominator is total exits in the selected scope.</span></div>
+      </section>
+
+      <section class="page" data-page="exits">
+        <div class="section-head"><div><h2>Exit Detail</h2><p>Latest exit reason, classification source, and workforce dimensions</p></div><button class="btn" data-export="exits">Filtered Full CSV</button></div>
+        <div class="grid two">
+          <article class="card"><div class="card-head"><div><h3>Exit Reason Distribution</h3><p>Based on the current Settings classification</p></div></div><div class="chart compact" id="reason-bars"></div></article>
+          <article class="card"><div class="card-head"><div><h3>Classification Quality</h3><p>Audit matched and default-classified exits</p></div></div><div id="classification-quality"></div></article>
+        </div>
+        <article class="card mt-14"><div id="exit-table"></div></article>
+      </section>
+
+      <section class="page" data-page="v2">
+        <div class="section-head"><div><h2>V2 Analytics &amp; Turnover Risk</h2><p>Regrettable turnover, survival analysis, and the current risk model in one audit surface</p></div><span class="badge">model rules fixed</span></div>
+        <div class="notice info">V2 models use their own data preparation and performance thresholds. Changing the global exit type does not retrain historical model results.</div>
+        <div class="grid two mt-14">
+          <article class="card"><div class="card-head"><div><h3>Regrettable Turnover V2</h3><p>High-performing retail workforce exits</p></div></div><div class="chart compact" id="regrettable-chart"></div><div id="regrettable-table"></div></article>
+          <article class="card"><div class="card-head"><div><h3>Survival Analysis V2</h3><p>Probability of remaining as tenure increases</p></div></div><div class="chart compact" id="survival-chart"></div><div id="survival-cards"></div></article>
+        </div>
+        <div class="grid two mt-14">
+          <article class="card"><div class="card-head"><div><h3>High-Risk Regions / Stores</h3><p>Average risk in the latest model output</p></div></div><div id="risk-entities"></div></article>
+          <article class="card"><div class="card-head"><div><h3>Workforce Risk Detail</h3><p>Records from the latest retail risk model</p></div></div><div id="risk-people"></div></article>
+        </div>
+      </section>
+
+      <section class="page" data-page="settings">
+        <div class="section-head"><div><h2>Exit Reason Settings</h2><p>Classify each unique source-list reason as Voluntary or Employer Initiated</p></div><span class="badge">stored locally in this browser</span></div>
+        <div class="settings-grid">
+          <article class="card">
+            <div class="table-tools">
+              <div class="left"><input class="search" id="reason-search" placeholder="Search exit reasons..."><span class="count" id="reason-count"></span></div>
+              <div class="right"><button class="btn" id="apply-reasons">Apply and Save</button><button class="btn" id="export-reasons">Download JSON</button><button class="btn" id="import-reasons">Upload JSON</button><input type="file" id="reason-file" accept=".json,application/json" hidden></div>
+            </div>
+            <div class="reason-list" id="reason-list"></div>
+          </article>
+          <aside class="grid">
+            <article class="card">
+              <div class="card-head"><div><h3>Business Rule</h3><p>Mathematical effect of classification</p></div></div>
+              <div class="formula"><strong>Numerator</strong><span>All Exits uses canonical <code>cikis</code>. Voluntary uses voluntary-classified exits. Employer Initiated uses employer-initiated exits.</span></div>
+              <div class="formula mt-9"><strong>Denominator</strong><span>All three views use <code>(Opening Workforce + Closing Workforce) / 2</code>. Classification settings never change the denominator.</span></div>
+              <div class="formula mt-9"><strong>Matching</strong><span>The latest source-list exit reason is used for each synthetic employee ID. Unmatched reasons default to Voluntary.</span></div>
+            </article>
+            <article class="card">
+              <div class="card-head"><div><h3>Local Settings Management</h3><p>Static HTML behavior</p></div></div>
+              <p class="settings-copy">Changes are stored in this browser's localStorage. Settings do not move automatically with the file; export them with Download JSON and import them on another device.</p>
+              <button class="btn danger" id="reset-reasons">Restore Base Mapping</button>
+            </article>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer"><div class="footer-quote">“If you torture data long enough, it will confess to anything.”</div><nav class="footer-links" aria-label="Project links"><a href="/analytics/">All Analytics</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/analytics/workforce-turnover" target="_blank" rel="noopener noreferrer">Source</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics/blob/main/analytics/workforce-turnover/README.md" target="_blank" rel="noopener noreferrer">Methodology</a></nav></footer>
+  </div>
+  <div class="tooltip" id="tooltip"></div>
+  <script id="turnover-data" type="application/json">__TURNOVER_DATA__</script>
+  <script>
+  (() => {
     "use strict";
     const DATA = JSON.parse(document.getElementById("turnover-data").textContent);
     const $ = id => document.getElementById(id);
@@ -639,3 +1052,7 @@
     }
     init();
   })();
+  </script>
+</body>
+</html>
+"""

@@ -2,80 +2,105 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 
-const dataPath = 'frontend/analytics/workforce-turnover/data.json';
-const data = JSON.parse(readFileSync(dataPath, 'utf8'));
-const html = readFileSync('frontend/analytics/workforce-turnover/index.html', 'utf8');
+const pagePath = 'frontend/analytics/workforce-turnover/index.html';
+const workbookPath = 'analytics/workforce-turnover/data/turnover_analytics_synthetic.xlsx';
+const templatePath = 'analytics/workforce-turnover/turnover_dashboard_template.py';
+const generatorPath = 'analytics/workforce-turnover/generate_turnover_dashboard.py';
+const commonPath = 'analytics/workforce-turnover/turnover_analytics_common.py';
+const readmePath = 'analytics/workforce-turnover/README.md';
+
+const html = readFileSync(pagePath, 'utf8');
 const app = readFileSync('frontend/analytics/workforce-turnover/app.js', 'utf8');
-const generator = readFileSync('analytics/workforce-turnover/generate_data.py', 'utf8');
-const readme = readFileSync('analytics/workforce-turnover/README.md', 'utf8');
+const template = readFileSync(templatePath, 'utf8');
+const generator = readFileSync(generatorPath, 'utf8');
+const readme = readFileSync(readmePath, 'utf8');
+const payloadMatch = html.match(/<div id="turnover-data" hidden>([\s\S]*?)<\/div>/);
+assert.ok(payloadMatch, 'embedded turnover payload missing');
+const data = JSON.parse(payloadMatch[1]);
 
-const cellKey = (row) => [row.month, row.region, row.department, row.contractType].join('|');
+function unpack(block) {
+  return block.rows.map((values) => Object.fromEntries(block.columns.map((column, index) => [
+    column,
+    Object.hasOwn(block.dictionaries, column) ? block.dictionaries[column][values[index]] : values[index],
+  ])));
+}
 
-test('public turnover product ships a documented static application', () => {
-  for (const file of ['index.html', 'style.css', 'app.js', 'data.json']) {
-    assert.ok(existsSync(`frontend/analytics/workforce-turnover/${file}`), `${file} missing`);
+const monthly = unpack(data.monthly);
+const exits = unpack(data.exits);
+const riskPeople = unpack(data.risk_people);
+
+test('full standalone engine and synthetic workbook are published', () => {
+  for (const file of [pagePath, 'frontend/analytics/workforce-turnover/app.js', 'frontend/analytics/workforce-turnover/style.css', workbookPath, templatePath, generatorPath, commonPath, readmePath]) {
+    assert.ok(existsSync(file), `${file} missing`);
   }
-  assert.match(html, /100% synthetic data/i);
-  assert.match(html, /No employer records\. No employees\. No direct identifiers\./i);
-  assert.match(html, /Source/);
-  assert.match(html, /Methodology/);
-  assert.match(readme, /not an anonymized or transformed employer dataset/i);
+  assert.ok(readFileSync(workbookPath).byteLength > 500_000, 'workbook is unexpectedly small');
+  assert.match(readme, /not an anonymized, masked, sampled, or transformed employer workbook/i);
+  assert.match(html, /Synthetic Workforce Lab/i);
 });
 
-test('dataset contains only the declared aggregate contract', () => {
-  assert.equal(data.privacy.granularity, 'aggregate');
-  assert.equal(data.privacy.individualRecords, false);
-  assert.deepEqual(data.privacy.directIdentifiers, []);
-  assert.deepEqual(data.privacy.inputSources, []);
-  assert.equal(data.monthly.length, 24 * 4 * 5 * 2);
-  const monthlyKeys = ['month', 'region', 'department', 'contractType', 'startHeadcount', 'hires', 'exits', 'endHeadcount'];
-  const reasonKeys = ['month', 'region', 'department', 'contractType', 'reason', 'count'];
-  for (const row of data.monthly) assert.deepEqual(Object.keys(row), monthlyKeys);
-  for (const row of data.exitReasons) assert.deepEqual(Object.keys(row), reasonKeys);
-});
-
-test('headcount accounting and exit-reason totals reconcile for every aggregate cell', () => {
-  const reasonTotals = new Map();
-  data.exitReasons.forEach((row) => reasonTotals.set(cellKey(row), (reasonTotals.get(cellKey(row)) || 0) + row.count));
-  const seen = new Set();
-  for (const row of data.monthly) {
-    assert.equal(row.startHeadcount + row.hires - row.exits, row.endHeadcount);
-    assert.equal(reasonTotals.get(cellKey(row)) || 0, row.exits);
-    assert.ok(!seen.has(cellKey(row)), `duplicate aggregate cell ${cellKey(row)}`);
-    seen.add(cellKey(row));
-  }
-});
-
-test('generator is deterministic, input-free and intentionally aggregate-only', () => {
-  assert.match(generator, /random\.Random\(SEED\)/);
-  assert.match(generator, /SEED = 410225/);
-  assert.doesNotMatch(generator, /read_excel|read_csv|openpyxl|pandas|requests|os\.environ|dotenv/i);
-  assert.doesNotMatch(generator, /["'](?:name|personName|employeeId|email|phone|address|nationalId)["']\s*:/i);
-});
-
-test('public payload has no direct-identifier fields or contact-shaped strings', () => {
-  const keys = [];
-  const strings = [];
-  const walk = (value) => {
-    if (Array.isArray(value)) return value.forEach(walk);
-    if (typeof value === 'string') strings.push(value);
-    if (value && typeof value === 'object') Object.entries(value).forEach(([key, child]) => { keys.push(key); walk(child); });
-  };
-  walk(data);
-  assert.equal(keys.some((key) => /^(name|employeeId|email|phone|address|birthDate|nationalId)$/i.test(key)), false);
-  for (const value of strings) {
-    assert.doesNotMatch(value, /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
-    if (!/^\d{4}-\d{2}(?:-\d{2})?$/.test(value)) assert.ok(value.replace(/\D/g, '').length < 10, `contact-shaped number in ${value}`);
+test('all eight original analytical views and controls remain available', () => {
+  const tabs = [...html.matchAll(/data-tab="([^"]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(tabs.slice(0, 8), ['overview', 'breakdown', 'compare', 'forecast', 'early', 'exits', 'v2', 'settings']);
+  for (const id of [
+    'scope-filter', 'type-filter', 'start-filter', 'end-filter', 'region-filter', 'store-filter',
+    'department-filter', 'city-filter', 'gender-filter', 'contract-filter', 'title-filter',
+    'scope-trend-chart', 'breakdown-heatmap', 'title-matrix-table', 'comparison-chart',
+    'forecast-chart', 'annual-backtest-table', 'tenure-chart', 'exit-table', 'survival-chart',
+    'risk-entities', 'risk-people', 'reason-list',
+  ]) assert.match(html, new RegExp(`id="${id}"`), `${id} missing`);
+  for (const exportName of ['trend', 'breakdown', 'title-matrix', 'comparison', 'exits']) {
+    assert.match(html, new RegExp(`data-export="${exportName}"`), `${exportName} export missing`);
   }
 });
 
-test('dashboard computes the published formula and supports all declared filters', () => {
-  assert.match(app, /row\.exits, 0\) \/ denominator \* 100/);
-  assert.match(app, /startHeadcount \+ row\.endHeadcount/);
-  for (const id of ['period', 'region', 'department', 'contract']) assert.match(app, new RegExp(`${id}: document\\.querySelector`));
-  assert.match(app, /synthetic-workforce-turnover\.csv/);
-  assert.match(app, /class="bar-progress"/);
-  assert.match(app, /class="reason-progress"/);
-  assert.doesNotMatch(app, /\sstyle=/i, 'strict CSP forbids generated inline style attributes');
-  assert.doesNotMatch(app, /eval\(|new Function|innerHTML\s*=\s*location/i);
+test('synthetic workbook payload is deep enough to exercise every feature', () => {
+  assert.equal(data.meta.month_count, 36);
+  assert.equal(data.meta.monthly_row_count, 9_936);
+  assert.equal(data.meta.exit_row_count, 849);
+  assert.deepEqual(data.meta.scopes, ['Aizanoi Demo Group', 'Retail', 'Retail Part-Time', 'Retail Full-Time', 'Head Office', 'Operations']);
+  for (const key of ['forecasts', 'backtest_summary', 'backtest_detail', 'annual_backtest', 'regrettable', 'regrettable_detail', 'survival_curve', 'survival_summary', 'risk_regions', 'risk_stores']) {
+    assert.ok(data[key].rows?.length || data[key].length, `${key} is empty`);
+  }
+  assert.equal(riskPeople.length, 360);
+});
+
+test('headcount arithmetic and synthetic exit detail reconcile', () => {
+  for (const row of monthly) {
+    assert.equal(row.donem_basi + row.giris - row.cikis, row.donem_sonu);
+    assert.equal(row.ortalama_calisan, (row.donem_basi + row.donem_sonu) / 2);
+  }
+  assert.equal(monthly.reduce((sum, row) => sum + row.cikis, 0), exits.reduce((sum, row) => sum + row.cikis, 0));
+});
+
+test('every person-like record is explicitly synthetic', () => {
+  for (const row of exits) {
+    assert.match(row.sicil_no, /^SYN-EMP-\d{6}$/);
+    assert.match(row.adi_soyadi, /^Synthetic Employee \d{6}$/);
+    assert.match(row.reason_match_status, /^Source list · synthetic match$/);
+  }
+  for (const row of riskPeople) {
+    assert.match(row.sicil_no, /^SYN-RISK-\d{5}$/);
+    assert.match(row.adi_soyadi, /^Synthetic Employee R\d{5}$/);
+  }
+});
+
+test('public source preserves the canonical calculation and offline build path', () => {
+  assert.match(template, /function cumulative\(series\)/);
+  assert.match(template, /series\.reduce\(\(sum,row\)=>sum\+n\(row\.cikis\),0\)\/denominator/);
+  assert.match(template, /localStorage\.setItem/);
+  assert.match(template, /csvDownload/);
+  assert.match(generator, /pd\.ExcelFile\(xlsx_path\)/);
+  assert.match(generator, /Turnover_Analiz_Aylik/);
+  assert.match(generator, /V2_Survival_Curve/);
+  assert.doesNotMatch(generator, /requests|urllib|socket|os\.environ|dotenv/i);
+  assert.doesNotMatch(html, /\sstyle=/i);
+  assert.doesNotMatch(app, /\sstyle=/i);
+  assert.match(app, /toLocaleLowerCase\("en-US"\)\.startsWith\("source list"\)/);
+});
+
+test('former identity and contact-shaped data are absent from public assets', () => {
+  const combined = [html, template, generator, readme].join('\n');
+  assert.doesNotMatch(combined, /ipekyol|erduran/i);
+  assert.doesNotMatch(combined, /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+  assert.doesNotMatch(combined, /\b(?:\+?90)?5\d{9}\b/);
 });
