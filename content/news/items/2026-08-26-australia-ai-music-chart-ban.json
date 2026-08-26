@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-australia-ai-music-chart-ban",
+  "title": "Australia’s official music charts draw a line at fully AI-made tracks",
+  "summary": "Australia’s recorded-music industry will exclude wholly AI-generated tracks from its official charts. The rule separates machine-made releases from chart eligibility while the industry works through authorship, labor and audience-trust questions.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Australia", "AI music", "music charts", "creative industries"],
+  "sources": [{
+    "publisher": "AP News",
+    "url": "https://apnews.com/article/australia-ai-generated-music-charts-ban-aria-9bfb0c91166ae4405a6df1a3c4891687",
+    "publishedAt": "2026-08-25T06:40:59Z"
+  }]
+}

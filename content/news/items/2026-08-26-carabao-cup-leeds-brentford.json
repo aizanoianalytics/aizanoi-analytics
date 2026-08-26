@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-carabao-cup-leeds-brentford",
+  "title": "Leeds advances at Forest as Brentford scores six in the League Cup",
+  "summary": "Leeds beat Nottingham Forest for the second time in three days to move on in the Carabao Cup, while Brentford defeated Birmingham 6-1. The round paired a quick rematch with the night’s clearest attacking statement.",
+  "category": "football",
+  "priority": 79,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Carabao Cup", "Leeds United", "Brentford", "Nottingham Forest"],
+  "sources": [{
+    "publisher": "The Guardian",
+    "url": "https://www.theguardian.com/football/2026/aug/25/carabao-cup-round-up-leeds-nottingham-forest-brentford-birmingham",
+    "publishedAt": "2026-08-25T22:41:53Z"
+  }]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-26-openai-jalapeno-inference-results",
+  "title": "OpenAI publishes first Jalapeño inference results",
+  "summary": "OpenAI released initial results for Jalapeño, presenting the system as a high-speed, efficiency-focused approach to AI inference. The disclosure shifts attention from training scale toward the cost and throughput of serving models in production.",
+  "category": "ai",
+  "priority": 86,
+  "publishedAt": "2026-08-26T05:10:00Z",
+  "updatedAt": "2026-08-26T05:10:00Z",
+  "retrievedAt": "2026-08-26T05:08:03Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "Jalapeño", "inference", "AI infrastructure"],
+  "sources": [{
+    "publisher": "OpenAI",
+    "url": "https://openai.com/index/jalapeno-first-results/",
+    "publishedAt": "2026-08-25T14:28:01Z"
+  }]
+}
