@@ -30,11 +30,11 @@ const removedWorkbenchIcons = [
   'projects.svg', 'recycle-bin.svg', 'source-reader.svg', 'terminal.svg', 'workspace-monitor.svg'
 ];
 
-test('AizanoiOS keeps analytics as compatibility id while presenting Dashboards to users', () => {
-  assert.match(registry, /id:'analytics', label:'Dashboards', short:'Dashboards'/);
+test('AizanoiOS keeps the stable analytics id while presenting Analytics to users', () => {
+  assert.match(registry, /id:'analytics', label:'Analytics', short:'Analytics'/);
   assert.match(registry, /keywords:\['analytics','dashboard','dashboards'/);
-  assert.match(hubs, /shell\('Dashboards','Data products, comparisons & utilities'/);
-  assert.match(platform, /data-context-action="analytics">Dashboards</);
+  assert.match(hubs, /shell\('Analytics','Data products, comparisons & utilities'/);
+  assert.match(platform, /data-context-action="analytics">Analytics</);
   assert.doesNotMatch(registry, /id:'analytics', label:'Aizanoi Analytics'/);
 });
 
@@ -59,6 +59,11 @@ test('adaptive shell presents Aizanoi Analytics as the primary brand', () => {
   assert.match(platform, /TODAY AT AIZANOI ANALYTICS/);
   assert.match(platform, /Aizanoi Analytics apps/);
   assert.match(hubs, /built by Aizanoi Analytics/);
+});
+
+test('device dates stay English regardless of browser locale', () => {
+  assert.match(platform, /toLocaleDateString\('en-GB'/);
+  assert.doesNotMatch(platform, /toLocaleDateString\(\[\]/);
 });
 
 test('public error and Historical Worlds navigation copy no longer exposes the retired Field System name', () => {

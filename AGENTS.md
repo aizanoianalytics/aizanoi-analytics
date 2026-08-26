@@ -12,13 +12,13 @@ Current public families are:
 - Aizanoi News;
 - Aizanoi TV;
 - Aizanoi Journal;
-- Dashboards;
+- Analytics;
 - Aizanoi Forge;
 - Historical Worlds;
 - Aizanoi Labs;
 - Aizanoi Arcade.
 
-**Dashboards** is the user-facing data-product area. For backward compatibility its route remains `/analytics/` and its internal AizanoiOS app id remains `analytics`.
+**Analytics** is the user-facing data-product area. Its stable route is `/analytics/` and its internal AizanoiOS app id is `analytics`; dashboards are one format within this product family.
 
 The former Workbench/power-tool product is retired from the visitor-facing catalog. Do not add Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal or Workspace Monitor back to navigation, search, deep-link routing or public product documentation without an explicit owner decision.
 
@@ -64,7 +64,7 @@ Do not add compatibility wrappers such as `final.css`, `polish.css`, `unified.cs
 Permanent shortcuts/dock priorities:
 1. Aizanoi News
 2. Aizanoi TV
-3. Dashboards
+3. Analytics
 4. Historical Worlds
 5. Aizanoi Forge
 
@@ -119,7 +119,7 @@ GitHub is the source of truth. A merge is not a production deployment. Productio
 11. Never weaken a failing safety/quality test merely to make CI green.
 12. Never claim production or manual verification that was not actually performed.
 13. Never describe Aizanoi as the umbrella company or Aizanoi Analytics as a subordinate product unless the owner explicitly changes `PRODUCT.md`.
-14. Keep `analytics` only as a compatibility route/app identifier; the public product label is **Dashboards**.
+14. Keep `/analytics/`, app id `analytics` and public label **Analytics** aligned; treat dashboards as a format within that product family.
 
 ## Validation
 
