@@ -71,6 +71,21 @@ test('current executive surface contains no pre-2024 analytical periods', () => 
   assert.ok(datedPeriods.every((period) => String(period) >= '2024'));
 });
 
+test('current executive employee views use 2024+ employment snapshots instead of hire-date periods', () => {
+  const html = readFileSync(`${publicRoot}/hr-executive-board-current/index.html`, 'utf8');
+  const payload = JSON.parse(html.match(/<div id="dashboard-data" hidden>([\s\S]+?)<\/div><script src=/)[1]);
+  const history = payload.datasets.employment_monthly || [];
+  assert.ok(history.length > 0, 'current executive employment history missing');
+  assert.ok(history.every((row) => String(row.period || row.month) >= '2024'), 'pre-2024 employment month leaked into current surface');
+  const engine = readFileSync(`${publicRoot}/shared/dashboard.js`, 'utf8');
+  assert.match(engine, /function currentExecutiveEmployeeSnapshot/);
+  assert.match(engine, /payload\.meta\?\.id==='hr-executive-board-current'/);
+  assert.match(engine, /view\.dataset==='employees'/);
+  assert.match(engine, /row\.period\|\|row\.month/);
+  assert.match(engine, /period<'2024'/);
+  assert.doesNotMatch(engine, /start_date.*2024|2024.*start_date/);
+});
+
 test('shared core generator and committed workbook preserve the reproducible contract', () => {
   const generator = readFileSync(`${sourceRoot}/synthetic-core/generate_hr_demo_core.mjs`, 'utf8');
   const webGenerator = readFileSync(`${sourceRoot}/generate_full_set_dashboards.py`, 'utf8');
@@ -91,6 +106,15 @@ test('shared web engine keeps filtering, sorting, profiles and exports', () => {
   assert.match(engine, /function renderProfile/);
   assert.match(engine, /Export filtered CSV/);
   assert.match(engine, /URL\.createObjectURL/);
+});
+
+test('shared chart engine renders signed attendance variance around a real zero baseline', () => {
+  const engine = readFileSync(`${publicRoot}/shared/dashboard.js`, 'utf8');
+  assert.match(engine, /Math\.min\(0,\.\.\.values\.map/);
+  assert.match(engine, /Math\.max\(0,\.\.\.values\.map/);
+  assert.match(engine, /const zeroX=xFor\(0\)/);
+  assert.match(engine, /const zeroY=yFor\(0\)/);
+  assert.match(engine, /Math\.abs\(valueX-zeroX\)/);
 });
 
 test('public catalog describes the pipeline without private artifacts or identities', () => {
