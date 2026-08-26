@@ -7,10 +7,33 @@ const pct=new Intl.NumberFormat('en-US',{style:'percent',maximumFractionDigits:1
 
 function esc(value){return String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));}
 function text(value){return String(value??'').trim();}
-function rowsFor(view){return Array.isArray(payload.datasets?.[view.dataset])?payload.datasets[view.dataset]:[];}
+function isCurrentExecutiveEmployeeView(view){return payload.meta?.id==='hr-executive-board-current'&&view.dataset==='employees';}
+function currentExecutiveEmployeeSnapshot(){
+  const history=Array.isArray(payload.datasets?.employment_monthly)?payload.datasets.employment_monthly:[];
+  const selectedPeriod=state.filters.period;
+  const latestByEmployee=new Map();
+  for(const row of history){
+    const period=text(row.period||row.month);
+    if(!period||period<'2024')continue;
+    if(selectedPeriod!=='All'&&period!==selectedPeriod)continue;
+    const employeeId=text(row.employee_id);
+    if(!employeeId)continue;
+    const previous=latestByEmployee.get(employeeId);
+    const previousPeriod=text(previous?.period||previous?.month);
+    if(!previous||period>=previousPeriod){
+      latestByEmployee.set(employeeId,{...row,period,status:row.month_end_status||row.status||'Active'});
+    }
+  }
+  return [...latestByEmployee.values()];
+}
+function rowsFor(view){
+  if(isCurrentExecutiveEmployeeView(view))return currentExecutiveEmployeeSnapshot();
+  return Array.isArray(payload.datasets?.[view.dataset])?payload.datasets[view.dataset]:[];
+}
 function valueForFilter(row,key){const field=payload.filterFields?.[key]||key;return text(row[field]);}
 function filtered(view){
-  let rows=rowsFor(view).filter((row)=>filters.every((key)=>state.filters[key]==='All'||valueForFilter(row,key)===state.filters[key]));
+  const periodHandledBySnapshot=isCurrentExecutiveEmployeeView(view);
+  let rows=rowsFor(view).filter((row)=>filters.every((key)=>state.filters[key]==='All'||(key==='period'&&periodHandledBySnapshot)||valueForFilter(row,key)===state.filters[key]));
   if(state.search){const needle=state.search.toLocaleLowerCase('en-US');rows=rows.filter((row)=>Object.values(row).some((value)=>text(value).toLocaleLowerCase('en-US').includes(needle)));}
   if(state.sort){rows=[...rows].sort((a,b)=>{const av=a[state.sort],bv=b[state.sort];return (typeof av==='number'&&typeof bv==='number'?av-bv:text(av).localeCompare(text(bv)))*state.direction;});}
   return rows;
@@ -34,14 +57,27 @@ function aggregate(rows,chart){
 }
 function barChart(values){
   if(!values.length)return '<div class="empty">No matching chart data.</div>';
-  const width=680,height=260,left=150,right=35,top=12,rowH=(height-top-15)/values.length,max=Math.max(...values.map((item)=>item.value),1);
-  return `<svg viewBox="0 0 ${width} ${height}" role="img">${values.map((item,index)=>{const y=top+index*rowH,w=(item.value/max)*(width-left-right),label=max<=1?pct.format(item.value):fmt.format(item.value);return `<text x="0" y="${y+rowH*.64}">${esc(item.label.slice(0,22))}</text><rect class="bar" x="${left}" y="${y+4}" width="${Math.max(w,1)}" height="${Math.max(rowH-8,4)}" rx="3"></rect><text x="${Math.min(left+w+6,width-30)}" y="${y+rowH*.64}">${esc(label)}</text>`;}).join('')}</svg>`;
+  const width=680,height=260,left=150,right=42,top=12,rowH=(height-top-15)/values.length;
+  const min=Math.min(0,...values.map((item)=>Number(item.value)||0));
+  const max=Math.max(0,...values.map((item)=>Number(item.value)||0));
+  const span=max-min||1;
+  const plotWidth=width-left-right;
+  const xFor=(value)=>left+((value-min)/span)*plotWidth;
+  const zeroX=xFor(0);
+  const compactAsPercent=Math.max(...values.map((item)=>Math.abs(Number(item.value)||0)),0)<=1;
+  return `<svg viewBox="0 0 ${width} ${height}" role="img"><line class="gridline" x1="${zeroX}" x2="${zeroX}" y1="${top}" y2="${height-12}"></line>${values.map((item,index)=>{const value=Number(item.value)||0,y=top+index*rowH,valueX=xFor(value),barX=Math.min(zeroX,valueX),barWidth=Math.max(Math.abs(valueX-zeroX),1),label=compactAsPercent?pct.format(value):fmt.format(value),labelX=value<0?Math.max(left,valueX-6):Math.min(valueX+6,width-right+4),anchor=value<0?'end':'start';return `<text x="0" y="${y+rowH*.64}">${esc(item.label.slice(0,22))}</text><rect class="bar" x="${barX}" y="${y+4}" width="${barWidth}" height="${Math.max(rowH-8,4)}" rx="3"></rect><text x="${labelX}" y="${y+rowH*.64}" text-anchor="${anchor}">${esc(label)}</text>`;}).join('')}</svg>`;
 }
 function lineChart(values){
   if(values.length<2)return barChart(values);
-  const width=680,height=260,left=38,right=20,top=18,bottom=35,max=Math.max(...values.map((item)=>item.value),1),step=(width-left-right)/(values.length-1);
-  const points=values.map((item,index)=>`${left+index*step},${top+(height-top-bottom)*(1-item.value/max)}`).join(' ');
-  return `<svg viewBox="0 0 ${width} ${height}" role="img"><line class="gridline" x1="${left}" x2="${width-right}" y1="${height-bottom}" y2="${height-bottom}"></line><polyline class="line" points="${points}"></polyline>${values.map((item,index)=>index%Math.max(1,Math.ceil(values.length/6))===0?`<text x="${left+index*step}" y="${height-10}" text-anchor="middle">${esc(item.label)}</text>`:'').join('')}</svg>`;
+  const width=680,height=260,left=38,right=20,top=18,bottom=35,step=(width-left-right)/(values.length-1);
+  const min=Math.min(0,...values.map((item)=>Number(item.value)||0));
+  const max=Math.max(0,...values.map((item)=>Number(item.value)||0));
+  const span=max-min||1;
+  const plotHeight=height-top-bottom;
+  const yFor=(value)=>top+((max-value)/span)*plotHeight;
+  const zeroY=yFor(0);
+  const points=values.map((item,index)=>`${left+index*step},${yFor(Number(item.value)||0)}`).join(' ');
+  return `<svg viewBox="0 0 ${width} ${height}" role="img"><line class="gridline" x1="${left}" x2="${width-right}" y1="${zeroY}" y2="${zeroY}"></line><polyline class="line" points="${points}"></polyline>${values.map((item,index)=>index%Math.max(1,Math.ceil(values.length/6))===0?`<text x="${left+index*step}" y="${height-10}" text-anchor="middle">${esc(item.label)}</text>`:'').join('')}</svg>`;
 }
 function renderTable(rows,view){
   const columns=view.columns||Object.keys(rows[0]||{}).slice(0,8);
