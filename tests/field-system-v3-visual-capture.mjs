@@ -28,8 +28,9 @@ async function captureStandalone(name,route,viewport){
   page.on('console',(message)=>{if(message.type()==='error')errors.push(message.text());});
   const response=await page.goto(`${base}${route}`,{waitUntil:'networkidle'});
   if(!response?.ok())throw new Error(`${route} returned ${response?.status()}`);
-  await page.waitForSelector('#departmentBars .bar-progress');
-  await page.waitForSelector('#reasonList .reason-progress');
+  await page.waitForSelector('#overview-kpis .kpi');
+  await page.waitForSelector('#trend-chart svg');
+  await page.waitForSelector('#composition-chart svg');
   if(errors.length)throw new Error(`${route} browser errors: ${errors.join(' | ')}`);
   await page.screenshot({path:path.join(out,`${name}.png`),fullPage:true});
   await context.close();
@@ -53,7 +54,7 @@ await capture('aizanoi-os-12-mobile-home',{width:390,height:844});
 await capture('aizanoi-os-13-mobile-news',{width:390,height:844},async(page)=>{await page.locator('.az-phone-app[data-app="news"]').click();await page.waitForSelector('.az-window[data-app-id="news"]');});
 await capture('aizanoi-os-14-mobile-app-drawer',{width:390,height:844},async(page)=>{await page.locator('.az-task-shelf [data-os-launcher]').click();await page.waitForSelector('#az-switcher-overlay.is-open .az-launchpad-search');});
 await capture('aizanoi-os-15-mobile-small',{width:320,height:568});
-await captureStandalone('aizanoi-os-16-workforce-turnover','/analytics/workforce-turnover/',{width:1440,height:900});
+await captureStandalone('aizanoi-os-16-workforce-turnover','/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',{width:1440,height:900});
 
 await browser.close();
 console.log('AizanoiOS adaptive desktop/tablet/mobile visual review captures complete');
