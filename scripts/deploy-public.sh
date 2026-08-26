@@ -24,9 +24,11 @@ fi
 
 echo "[deploy] mirroring ${SOURCE}/ -> ${WEBROOT}/"
 # Allowlist copy: every regular file under frontend/ becomes a webroot file
-# at the same relative path. No directory outside frontend/ is ever read.
-(cd "${SOURCE}" && find . -type f -print0) | \
-  rsync -a --delete --from0 --files-from=- ./ "${WEBROOT}/"
+# at the same relative path. We feed rsync an absolute path list and pass
+# --relative so each file is placed under the destination at its frontend-
+# relative path. Source path is locked to the frontend/ subtree by SOURCE.
+find "${SOURCE}" -type f -printf '%P\0' | \
+  rsync -a --delete --from0 --relative --files-from=- "${SOURCE}/" "${WEBROOT}/"
 
 # Remove any stale source/build artifacts that may have leaked into the
 # webroot by a prior bad deploy. The denylist mirrors tests/audit/.
