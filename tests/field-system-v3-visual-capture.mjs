@@ -28,8 +28,9 @@ async function captureStandalone(name,route,viewport){
   page.on('console',(message)=>{if(message.type()==='error')errors.push(message.text());});
   const response=await page.goto(`${base}${route}`,{waitUntil:'networkidle'});
   if(!response?.ok())throw new Error(`${route} returned ${response?.status()}`);
-  await page.waitForSelector('#departmentBars .bar-progress');
-  await page.waitForSelector('#reasonList .reason-progress');
+  await page.waitForSelector('#overview-kpis .kpi');
+  await page.waitForSelector('#trend-chart svg');
+  await page.waitForSelector('#composition-chart svg');
   if(errors.length)throw new Error(`${route} browser errors: ${errors.join(' | ')}`);
   await page.screenshot({path:path.join(out,`${name}.png`),fullPage:true});
   await context.close();
