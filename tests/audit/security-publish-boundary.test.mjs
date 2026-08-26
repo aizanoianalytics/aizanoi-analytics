@@ -109,6 +109,37 @@ test('deploy procedure only mirrors frontend/ → webroot', () => {
   const body = readFileSync(script, 'utf8');
   assert.match(body, /\/opt\/aizanoi-analytics-public\/frontend/, 'Script must source from frontend/');
   assert.match(body, /\/var\/www\/aizanoianalytics\.com/, 'Script must target /var/www/aizanoianalytics.com');
+  // Publish contract must be cwd-independent: rsync source is an absolute
+  // path with a trailing slash, not a relative ./ that depends on the
+  // caller's working directory.
+  assert.match(body, /rsync\s+-a\s+--delete\s+"\$\{SOURCE\}\/"/, 'Script must use absolute-source rsync (cwd-independent)');
+  assert.doesNotMatch(body, /rsync[^n]*\.\/\s+"?\$\{WEBROOT\}/, 'Script must not use ./ as rsync source (cwd-dependent)');
+});
+
+test('deploy is cwd-independent: same frontend/ → staging result from different cwds', async () => {
+  const { mkdtempSync, rmSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { execFileSync } = await import('node:child_process');
+  const stagingA = mkdtempSync(path.join(tmpdir(), 'aizanoi-staging-a-'));
+  const stagingB = mkdtempSync(path.join(tmpdir(), 'aizanoi-staging-b-'));
+  const unrelated = mkdtempSync(path.join(tmpdir(), 'aizanoi-unrelated-'));
+  try {
+    // Replicate the publish contract's core: absolute SOURCE, cwd must not matter.
+    const source = path.join(repoRoot, 'frontend');
+    execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingA}/"`], { cwd: repoRoot });
+    execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingB}/"`], { cwd: unrelated });
+    const list = (root) =>
+      execFileSync('bash', ['-c', `cd "${root}" && find . -type f | sort`], { encoding: 'utf8' });
+    const a = list(stagingA);
+    const b = list(stagingB);
+    assert.equal(a, b, 'Publish must be cwd-independent: staging trees differ');
+    assert.match(a, /analytics\/dashboards\/hr-analytics-full-set\/index\.html/, 'Staging must contain HR catalog');
+    assert.match(a, /analytics\/dashboards\/hr-analytics-full-set\/workforce-turnover\/index\.html/, 'Staging must contain canonical turnover');
+  } finally {
+    rmSync(stagingA, { recursive: true, force: true });
+    rmSync(stagingB, { recursive: true, force: true });
+    rmSync(unrelated, { recursive: true, force: true });
+  }
 });
 
 test('webroot smoke: all 11 dashboard HTML routes exist under frontend/', () => {
