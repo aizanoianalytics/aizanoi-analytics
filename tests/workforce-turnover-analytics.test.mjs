@@ -74,5 +74,8 @@ test('dashboard computes the published formula and supports all declared filters
   assert.match(app, /startHeadcount \+ row\.endHeadcount/);
   for (const id of ['period', 'region', 'department', 'contract']) assert.match(app, new RegExp(`${id}: document\\.querySelector`));
   assert.match(app, /synthetic-workforce-turnover\.csv/);
+  assert.match(app, /class="bar-progress"/);
+  assert.match(app, /class="reason-progress"/);
+  assert.doesNotMatch(app, /\sstyle=/i, 'strict CSP forbids generated inline style attributes');
   assert.doesNotMatch(app, /eval\(|new Function|innerHTML\s*=\s*location/i);
 });
