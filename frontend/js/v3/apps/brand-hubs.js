@@ -31,7 +31,7 @@ async function mountNews(container){
 }
 
 function mountAnalytics(container){container.innerHTML=shell('Analytics','Data products, comparisons & utilities',cards([
-  {kicker:'DASHBOARD COLLECTION · 10 SURFACES',title:'HR Analytics Full Set',body:'Explore the complete product map and production pipeline. One full synthetic rebuild is live; nine remain closed until their data replacement is verified.',href:'/analytics/dashboards/hr-analytics-full-set/',hrefLabel:'Explore full set'},
+  {kicker:'DASHBOARD COLLECTION · 10 LIVE SURFACES',title:'HR Analytics Full Set',body:'Explore ten complete analytical products powered by one verified 20-sheet Synthetic HR Demo Core, with their controls, drill-downs and exports intact.',href:'/analytics/dashboards/hr-analytics-full-set/',hrefLabel:'Explore full set'},
   {kicker:'LIVE · SYNTHETIC DATA',title:'Workforce Turnover Analytics',body:'Eight working views, forecasting, risk analysis, exports and a reproducible 14-sheet workbook built by Aizanoi Analytics entirely from generated records.',href:'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',hrefLabel:'Launch dashboard'},
   {kicker:'PRODUCT STANDARD',title:'Launch · Source · Documentation · Version',body:'Each production project should expose a usable product surface, its source when public, concise documentation and a visible version or release state.'},
   {kicker:'DATA SAFETY',title:'Synthetic first',body:'Public demonstrations use data generated from scratch, including visibly synthetic row-level profiles where feature parity requires them. Employer files never enter the public build.'}

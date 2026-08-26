@@ -1,3 +1,3 @@
 # HR Executive Board — 2024 to Present
 
-Status: synthetic rebuild pending. The public rebuild will retain the current-period workforce, organization, hiring, exit, tenure, promotion, learning and risk views. No reference HTML or employer workbook is published here.
+Status: public. Workforce, hiring, exits, tenure, promotion, learning and risk views are restricted to 2024 onward and use the shared Synthetic HR Demo Core.

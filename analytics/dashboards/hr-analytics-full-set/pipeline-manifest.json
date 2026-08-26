@@ -3,29 +3,29 @@
   "product": "HR Analytics Full Set",
   "dataPolicy": "synthetic-only",
   "dashboardCount": 10,
-  "publicDashboardCount": 1,
+  "publicDashboardCount": 10,
   "pipeline": [
-    {"order": 1, "id": "integrated-workbook", "name": "Integrated Analytics Workbook", "output": "Synthetic HR Demo Core workbook", "status": "synthetic-rebuild-pending"},
-    {"order": 2, "id": "executive-board", "name": "HR Executive Board", "output": "Full-history and current-period dashboard pair", "status": "synthetic-rebuild-pending"},
-    {"order": 3, "id": "administration", "name": "HR Administration & Deep Dive", "output": "Administrative deep-dive dashboard", "status": "synthetic-rebuild-pending"},
-    {"order": 4, "id": "store-operations", "name": "Store Operations Tracking", "output": "Regional and store operations dashboard", "status": "synthetic-rebuild-pending"},
+    {"order": 1, "id": "integrated-workbook", "name": "Integrated Analytics Workbook", "output": "20-sheet Synthetic HR Demo Core workbook", "status": "public"},
+    {"order": 2, "id": "executive-board", "name": "HR Executive Board", "output": "Full-history and current-period dashboard pair", "status": "public"},
+    {"order": 3, "id": "administration", "name": "HR Administration & Deep Dive", "output": "Administrative deep-dive dashboard", "status": "public"},
+    {"order": 4, "id": "store-operations", "name": "Store Operations Tracking", "output": "Regional and store operations dashboard", "status": "public"},
     {"order": 5, "id": "turnover", "name": "Workforce Turnover Analytics", "output": "Eight-view standalone dashboard and 14-sheet synthetic workbook", "status": "public"},
-    {"order": 6, "id": "learning-compliance", "name": "Store Learning & Compliance", "output": "Learning and compliance scorecard", "status": "synthetic-rebuild-pending"},
-    {"order": 7, "id": "academy", "name": "Learning Academy Analytics", "output": "Academy delivery and planning dashboard", "status": "synthetic-rebuild-pending"},
-    {"order": 8, "id": "performance", "name": "Performance, Hiring & Turnover", "output": "Performance and workforce outcomes dashboard", "status": "synthetic-rebuild-pending"},
-    {"order": 9, "id": "goals", "name": "Corporate Goals Dashboard", "output": "Strategic goals and KPI dashboard", "status": "synthetic-rebuild-pending"},
-    {"order": 10, "id": "time-attendance", "name": "Workforce Time & Attendance", "output": "Time, attendance and exception dashboard", "status": "synthetic-rebuild-pending"}
+    {"order": 6, "id": "learning-compliance", "name": "Store Learning & Compliance", "output": "Learning and compliance scorecard", "status": "public"},
+    {"order": 7, "id": "academy", "name": "Learning Academy Analytics", "output": "Academy delivery and planning dashboard", "status": "public"},
+    {"order": 8, "id": "performance", "name": "Performance, Hiring & Turnover", "output": "Performance and workforce outcomes dashboard", "status": "public"},
+    {"order": 9, "id": "goals", "name": "Corporate Goals Dashboard", "output": "Strategic goals and KPI dashboard", "status": "public"},
+    {"order": 10, "id": "time-attendance", "name": "Workforce Time & Attendance", "output": "Time, attendance and exception dashboard", "status": "public"}
   ],
   "dashboards": [
-    {"id": "hr-executive-board-full-history", "name": "HR Executive Board — Full History", "status": "synthetic-rebuild-pending", "capabilities": ["workforce overview", "organization", "hiring and exits", "tenure", "promotions", "learning", "risk"]},
-    {"id": "hr-executive-board-current", "name": "HR Executive Board — 2024 to Present", "status": "synthetic-rebuild-pending", "capabilities": ["current workforce", "organization", "hiring and exits", "tenure", "promotions", "learning", "risk"]},
-    {"id": "hr-administration-deep-dive", "name": "HR Administration & Deep Dive", "status": "synthetic-rebuild-pending", "capabilities": ["synthetic person search", "employment timelines", "performance", "learning", "discipline", "exit analysis"]},
-    {"id": "store-operations-tracking", "name": "Store Operations Tracking", "status": "synthetic-rebuild-pending", "capabilities": ["regional operations", "store comparison", "hiring", "promotion", "turnover", "forecast", "learning"]},
+    {"id": "hr-executive-board-full-history", "name": "HR Executive Board — Full History", "status": "public", "route": "/analytics/dashboards/hr-analytics-full-set/hr-executive-board-full-history/", "capabilities": ["workforce overview", "organization", "hiring and exits", "tenure", "promotions", "learning", "risk"]},
+    {"id": "hr-executive-board-current", "name": "HR Executive Board — 2024 to Present", "status": "public", "route": "/analytics/dashboards/hr-analytics-full-set/hr-executive-board-current/", "capabilities": ["current workforce", "organization", "hiring and exits", "tenure", "promotions", "learning", "risk"]},
+    {"id": "hr-administration-deep-dive", "name": "HR Administration & Deep Dive", "status": "public", "route": "/analytics/dashboards/hr-analytics-full-set/hr-administration-deep-dive/", "capabilities": ["synthetic person search", "employment timelines", "performance", "learning", "discipline", "exit analysis"]},
+    {"id": "store-operations-tracking", "name": "Store Operations Tracking", "status": "public", "route": "/analytics/dashboards/hr-analytics-full-set/store-operations-tracking/", "capabilities": ["regional operations", "store comparison", "hiring", "promotion", "turnover", "forecast", "learning"]},
     {"id": "workforce-turnover", "name": "Workforce Turnover Analytics", "status": "public", "route": "/analytics/dashboards/hr-analytics-full-set/workforce-turnover/", "capabilities": ["overview", "breakdown", "comparison", "forecast", "early turnover", "exit explorer", "survival and risk", "settings and exports"]},
-    {"id": "store-learning-compliance", "name": "Store Learning & Compliance", "status": "synthetic-rebuild-pending", "capabilities": ["participation", "safety", "mandatory learning", "checklists", "turnover and compliance scoring"]},
-    {"id": "learning-academy-analytics", "name": "Learning Academy Analytics", "status": "synthetic-rebuild-pending", "capabilities": ["training delivery", "compliance", "planning", "exams", "development journeys", "academy performance"]},
-    {"id": "performance-hiring-turnover", "name": "Performance, Hiring & Turnover", "status": "synthetic-rebuild-pending", "capabilities": ["performance", "time to hire", "early turnover", "target attainment", "store scorecards"]},
-    {"id": "corporate-goals", "name": "Corporate Goals Dashboard", "status": "synthetic-rebuild-pending", "capabilities": ["strategic goals", "KPI progress", "target status", "executive summary"]},
-    {"id": "workforce-time-attendance", "name": "Workforce Time & Attendance", "status": "synthetic-rebuild-pending", "capabilities": ["schedules", "worked versus required hours", "exceptions", "synthetic person detail", "monthly balance", "spreadsheet export"]}
+    {"id": "store-learning-compliance", "name": "Store Learning & Compliance", "status": "public", "route": "/analytics/dashboards/hr-analytics-full-set/store-learning-compliance/", "capabilities": ["participation", "safety", "mandatory learning", "checklists", "turnover and compliance scoring"]},
+    {"id": "learning-academy-analytics", "name": "Learning Academy Analytics", "status": "public", "route": "/analytics/dashboards/hr-analytics-full-set/learning-academy-analytics/", "capabilities": ["training delivery", "compliance", "planning", "exams", "development journeys", "academy performance"]},
+    {"id": "performance-hiring-turnover", "name": "Performance, Hiring & Turnover", "status": "public", "route": "/analytics/dashboards/hr-analytics-full-set/performance-hiring-turnover/", "capabilities": ["performance", "time to hire", "early turnover", "target attainment", "store scorecards"]},
+    {"id": "corporate-goals", "name": "Corporate Goals Dashboard", "status": "public", "route": "/analytics/dashboards/hr-analytics-full-set/corporate-goals/", "capabilities": ["strategic goals", "KPI progress", "target status", "executive summary"]},
+    {"id": "workforce-time-attendance", "name": "Workforce Time & Attendance", "status": "public", "route": "/analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/", "capabilities": ["schedules", "worked versus required hours", "exceptions", "synthetic person detail", "monthly balance", "spreadsheet export"]}
   ]
 }

@@ -1,3 +1,3 @@
 # HR Administration & Deep Dive
 
-Status: synthetic rebuild pending. This is the highest-privacy surface because its feature set includes person search and employment timelines. Those interactions will use visibly synthetic identities only; no reference HTML or employer workbook is published here.
+Status: public. Directory search, employment timelines, performance, learning, discipline and exit views use visibly synthetic identities from the shared Synthetic HR Demo Core. No reference HTML or employer workbook is published here.

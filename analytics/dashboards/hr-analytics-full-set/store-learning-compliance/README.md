@@ -1,3 +1,3 @@
 # Store Learning & Compliance
 
-Status: synthetic rebuild pending. The public rebuild will preserve participation, safety, mandatory-learning, checklist and scoring features using generated records only.
+Status: public. Participation, safety, mandatory-learning, checklist, risk and store-ranking views use generated records only.

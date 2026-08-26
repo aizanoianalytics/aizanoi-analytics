@@ -79,8 +79,8 @@ test('secondary product placeholders state their current status honestly', () =>
     assert.doesNotMatch(html, /customer|subscriber|latest release|available now/i);
   }
   const analytics = read('frontend/analytics/index.html');
-  assert.match(analytics, /Dashboard collection · staged public rebuild/i);
-  assert.match(analytics, /generated from scratch/i);
+  assert.match(analytics, /Dashboard collection · 10 live products/i);
+  assert.match(analytics, /20-sheet synthetic data core/i);
   assert.match(analytics, /href="\/analytics\/dashboards\/hr-analytics-full-set\/"/);
 });
 

@@ -1,3 +1,3 @@
 # Workforce Time & Attendance
 
-Status: synthetic rebuild pending. The public rebuild will preserve schedules, worked-versus-required hours, exception handling, monthly balances, person detail and spreadsheet exports using generated records only.
+Status: public. Schedules, worked-versus-required hours, exception handling, monthly balances, person detail and CSV exports use generated records only.
