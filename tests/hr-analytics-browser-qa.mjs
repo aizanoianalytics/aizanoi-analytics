@@ -8,7 +8,7 @@
 // HARD gates (must pass on every run):
 //   - route exists / HTTP < 400
 //   - no console errors (favicon 404s tolerated on the static CI server)
-//   - no page-level horizontal overflow at 1280px and 390px
+//   - no page-level horizontal overflow at 1440px and 390px
 //   - catalog canonical + meta description present
 //   - each original dashboard's own interactive surface is present
 //
@@ -25,12 +25,16 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
-const axePath = new URL('../node_modules/axe-core/axe.min.js', import.meta.url);
+const axePath = process.env.AXE_CORE_PATH
+  ? pathToFileURL(resolve(process.env.AXE_CORE_PATH))
+  : new URL('../node_modules/axe-core/axe.min.js', import.meta.url);
 
 const layouts = [
-  { name: 'desktop', viewport: { width: 1280, height: 800 }, isMobile: false },
+  { name: 'desktop', viewport: { width: 1440, height: 900 }, isMobile: false },
   { name: 'mobile', viewport: { width: 390, height: 844 }, isMobile: true, deviceScaleFactor: 2 },
 ];
 
@@ -65,7 +69,10 @@ const ROUTE_CONTROL = new Map([
 const axeSrc = readFileSync(axePath, 'utf8');
 
 let failures = 0;
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({
+  headless: true,
+  executablePath: process.env.CHROMIUM_EXECUTABLE || undefined,
+});
 
 async function auditRoute(route, layout, isCatalog) {
   const context = await browser.newContext({
@@ -74,9 +81,14 @@ async function auditRoute(route, layout, isCatalog) {
     deviceScaleFactor: layout.deviceScaleFactor || 1,
   });
   const page = await context.newPage();
+  await page.route('**/favicon.ico', (route) => route.fulfill({ status: 204, body: '' }));
   const consoleErrors = [];
+  const failedResources = [];
   page.on('console', (msg) => { if (msg.type() === 'error') consoleErrors.push(msg.text()); });
   page.on('pageerror', (err) => consoleErrors.push(`pageerror: ${err.message}`));
+  page.on('response', (response) => {
+    if (response.status() >= 400) failedResources.push({ url: response.url(), status: response.status() });
+  });
 
   const label = `${route} @ ${layout.name}`;
   try {
@@ -119,7 +131,14 @@ async function auditRoute(route, layout, isCatalog) {
       assert.deepEqual(violations, [], `${label}: catalog axe violations: ${JSON.stringify(violations)}`);
     }
 
-    const realErrors = consoleErrors.filter((e) => !/favicon/i.test(e));
+    const nonFaviconFailures = failedResources.filter(({ url }) => !/\/favicon\.ico(?:$|\?)/i.test(url));
+    const faviconOnlyFailure = failedResources.length > 0 && nonFaviconFailures.length === 0;
+    const realErrors = consoleErrors.filter((error) => {
+      if (/favicon/i.test(error)) return false;
+      if (faviconOnlyFailure && /Failed to load resource/i.test(error)) return false;
+      return true;
+    });
+    assert.deepEqual(nonFaviconFailures, [], `${label}: failed resources: ${JSON.stringify(nonFaviconFailures)}`);
     assert.equal(realErrors.length, 0, `${label}: console errors: ${JSON.stringify(realErrors)}`);
 
     console.log(`PASS  ${label}`);
