@@ -63,6 +63,31 @@ Do not treat a merge as a deployment.
    - `/analytics/workforce-turnover/` is intentionally retired (owner decision 2026-08-26) and MUST return HTTP 404. The canonical Workforce Turnover dashboard is at `/analytics/dashboards/hr-analytics-full-set/workforce-turnover/`. Do not reintroduce the legacy redirect or stub.
 8. If a regression appears, roll back to the recorded known-good SHA instead of hot-fixing production only.
 
+## Local data regeneration (Analytics dashboards)
+
+The HR Analytics Full Set is a **synthetic-data** product. The generators are
+kept separate by design (owner decision 2026-08-26): a 9-dashboard shared-core
+generator and a standalone Workforce Turnover generator. Do NOT merge or rewrite
+them.
+
+Single canonical orchestration command (synthetic core → 9 shared-core
+dashboards → standalone turnover → sanity + denylist regression check):
+
+```bash
+bash scripts/regenerate-hr-dashboards.sh
+```
+
+This script does NOT rewrite the generators; it orchestrates them in order,
+emits all 11 expected dashboard `index.html` files under
+`frontend/analytics/dashboards/hr-analytics-full-set/`, and asserts no
+source/build artifacts (`.py`, `.xlsx`, `pipeline-manifest.json`) leaked into
+the public `frontend/` tree. Run it from the repo root. The repo commits the
+pre-built synthetic workbook, so the Node synthetic-core regenerator is optional.
+
+If you change the HR generators, dashboards or synthetic data, re-run the script
+and the CI `tests/audit/hr-analytics-full-set.test.mjs` parity suite before
+opening a PR.
+
 ## Safety boundaries
 
 - Never commit `.env`, tokens, API keys, passwords, TLS keys/certificates, production backups or private user data.
