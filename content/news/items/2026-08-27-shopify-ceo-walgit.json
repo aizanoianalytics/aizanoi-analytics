@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-27-shopify-ceo-walgit",
+  "title": "Shopify CEO Lütke ships walgit, an S3-native Git server",
+  "summary": "Shopify chief executive Tobias Lütke released walgit, an open-source database-free Git server written in Rust that runs directly on top of S3-compatible object storage. The initial release on Aug. 24 supports Git's bundle-uri mechanism for distributing large repositories via object storage or CDNs, Git LFS, a built-in web interface and OIDC authentication, with no leader node and no relational database dependencies.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T04:56:30Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Shopify", "walgit", "open source", "Git", "Rust"],
+  "sources": [{
+    "publisher": "Open Source For You",
+    "url": "https://www.opensourceforu.com/2026/08/shopify-ceo-builds-walgit-server/",
+    "publishedAt": "2026-08-25T08:00:00Z"
+  }]
+}

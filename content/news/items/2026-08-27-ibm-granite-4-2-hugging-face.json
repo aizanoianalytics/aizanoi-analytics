@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-27-ibm-granite-4-2-hugging-face",
+  "title": "IBM releases Granite 4.2 with native reasoning on Hugging Face",
+  "summary": "IBM published its Granite 4.2 large language models on Hugging Face under open weights, alongside a technical deep dive on how the models were built. The release adds a native reasoning capability tuned for enterprise agent workflows and is also available via Ollama and GitHub, with a separate Hypernova-60B model shipped at the same time.",
+  "category": "ai",
+  "priority": 71,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T04:51:30Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["IBM", "Granite", "open weights", "enterprise AI"],
+  "sources": [{
+    "publisher": "AI Briefing",
+    "url": "https://aibriefing.dev/",
+    "publishedAt": "2026-08-25T20:00:00Z"
+  }]
+}

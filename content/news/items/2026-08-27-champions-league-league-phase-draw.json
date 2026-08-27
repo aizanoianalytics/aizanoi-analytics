@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-27-champions-league-league-phase-draw",
+  "title": "Champions League league phase draw takes place in Monaco",
+  "summary": "UEFA holds the league phase draw for the 2026-27 Champions League in Monaco from 18:00 CET on Thursday Aug. 27, allocating 36 clubs into eight matchdays across the new single-league format. The fixture list with kick-off times is due to be published no later than Saturday Aug. 29, with matchday one starting on Tuesday Sept. 8.",
+  "category": "football",
+  "priority": 79,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T05:06:30Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["UEFA", "Champions League", "draw", "Monaco"],
+  "sources": [{
+    "publisher": "UEFA",
+    "url": "https://www.uefa.com/uefachampionsleague/draws/2027/2002239",
+    "publishedAt": "2026-08-25T16:00:00Z"
+  }]
+}

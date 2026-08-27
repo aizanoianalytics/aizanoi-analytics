@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-27-mbappe-hat-trick-real-madrid",
+  "title": "Mbappé hat-trick gives Real Madrid a 4-1 win over Real Sociedad",
+  "summary": "Kylian Mbappé scored three times and Jude Bellingham provided two assists as Real Madrid beat Real Sociedad 4-1 at the Santiago Bernabéu, picking up a first home La Liga win of the season under coach José Mourinho. Vinícius Júnior added the third before Mbappé completed his treble, lifting Madrid to the top of the early table while leaving Sociedad bottom with two defeats from two.",
+  "category": "football",
+  "priority": 84,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T05:05:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["La Liga", "Real Madrid", "Mbappé", "Bellingham", "Real Sociedad"],
+  "sources": [
+    {
+      "publisher": "Tribal Football",
+      "url": "https://news.7msport.com/news/newsdata/20260827/264639.shtml",
+      "publishedAt": "2026-08-26T22:30:00Z"
+    },
+    {
+      "publisher": "The Peninsula Qatar",
+      "url": "https://thepeninsulaqatar.com/article/27/08/2026/mbappehits-treble-as-real-madrid-thrash-real-sociedad",
+      "publishedAt": "2026-08-26T22:00:00Z"
+    }
+  ]
+}

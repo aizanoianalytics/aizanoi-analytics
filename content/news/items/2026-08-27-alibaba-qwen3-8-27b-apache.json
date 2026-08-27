@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-27-alibaba-qwen3-8-27b-apache",
+  "title": "Alibaba ships Qwen3.8-27B under Apache 2.0",
+  "summary": "Alibaba published the weights of Qwen3.8-27B on Hugging Face and ModelScope under the Apache 2.0 licence, with a 262,144-token native context that can be extended to one million tokens. The release is the deployable half of the Qwen3.8 family: a 27-billion-parameter dense multimodal model that Alibaba says outperforms its previous open releases on coding and computer-use benchmarks, while a larger 2.4-trillion-parameter mixture-of-experts sibling ships under a separate commercial licence.",
+  "category": "ai",
+  "priority": 84,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T04:48:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Alibaba", "Qwen", "Apache 2.0", "open weights", "LLM"],
+  "sources": [
+    {
+      "publisher": "eWeek",
+      "url": "https://www.eweek.com/news/alibaba-qwen3-8-27b-license-apac-china/",
+      "publishedAt": "2026-08-17T13:00:00Z"
+    },
+    {
+      "publisher": "DeepLearning.AI The Batch",
+      "url": "https://www.deeplearning.ai/the-batch/qwen3-8-max-lands-with-a-bang",
+      "publishedAt": "2026-08-15T12:00:00Z"
+    }
+  ]
+}
