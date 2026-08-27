@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-27-us-q2-gdp-consumer-spending",
+  "title": "US second-quarter GDP rises 1.5% as consumer spending accelerates",
+  "summary": "U.S. second-quarter gross domestic product rose 1.5 percent, down from 2.1 percent in the first quarter, with consumer spending accelerating to 3.2 percent from 0.5 percent earlier. Private domestic demand, excluding trade, government spending and inventories, expanded at a 3.9 percent annualised rate, illustrating how household outlays rather than net exports did most of the work in the quarter.",
+  "category": "economy-markets",
+  "priority": 69,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T05:02:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["US GDP", "consumer spending", "Bureau of Economic Analysis"],
+  "sources": [{
+    "publisher": "Camden National Bank Market Brief",
+    "url": "https://www.camdennational.bank/wealth/market-briefs/market-brief-august-2026",
+    "publishedAt": "2026-08-15T13:00:00Z"
+  }]
+}
