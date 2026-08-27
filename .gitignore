@@ -12,6 +12,7 @@ logs/
 *.log
 __pycache__/
 *.pyc
+/outputs/
 
 # Databases and backups
 *.db

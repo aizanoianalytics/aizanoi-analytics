@@ -1,11 +1,10 @@
-"""Generate the standalone Aizanoi workforce turnover analytics dashboard."""
+"""Generate the standalone Aizanoi turnover analytics dashboard."""
 
 from __future__ import annotations
 
 import argparse
 import json
 import math
-import re
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Iterable
@@ -128,14 +127,10 @@ def compact_frame(
             continue
 
         prepared = series.map(lambda value: clean_turnover_text(value) or None)
-        prepared_values = [
-            None if value is None or pd.isna(value) else value
-            for value in prepared.astype(object).tolist()
-        ]
-        values = list(dict.fromkeys(prepared_values))
+        values = list(dict.fromkeys(prepared.tolist()))
         dictionaries[column] = values
         lookup = {value: index for index, value in enumerate(values)}
-        encoded_columns[column] = [lookup[value] for value in prepared_values]
+        encoded_columns[column] = [lookup[value] for value in prepared]
 
     rows = [
         [encoded_columns[column][row_index] for column in columns]
@@ -278,7 +273,7 @@ def build_payload(xlsx_path: Path) -> dict[str, Any]:
     exit_match = (
         exits.get("reason_match_status", pd.Series(dtype="object"))
         .map(clean_turnover_text)
-        .str.startswith("Source list", na=False)
+        .str.startswith("Ayrılanlar", na=False)
     )
     exit_weights = pd.to_numeric(
         exits.get("cikis", pd.Series(1, index=exits.index)),
@@ -302,20 +297,20 @@ def build_payload(xlsx_path: Path) -> dict[str, Any]:
             if len(exit_match)
             else 0,
             "reason_record_count": int(reason_counts.sum()),
-            "formula": "Exits / ((Opening Workforce + Closing Workforce) / 2)",
+            "formula": "Çıkış / ((Dönem Başı + Dönem Sonu) / 2)",
             "exit_metric": "cikis",
-            "classification_default": "Unmatched reasons default to Voluntary.",
+            "classification_default": "Eşleşmeyen nedenler İstifa kabul edilir.",
             "classification_note": (
-                "The latest source-list exit reason is used for each synthetic ID. "
-                "Settings change only the numerator; the denominator remains fixed."
+                "Her sicil için Ayrılanlar Listesi'ndeki en son tarihli çıkış nedeni "
+                "kullanılır. Ayarlar yalnızca payı değiştirir; payda sabit kalır."
             ),
             "scopes": [
-                "Aizanoi Demo Group",
-                "Retail",
-                "Retail Part-Time",
-                "Retail Full-Time",
-                "Head Office",
-                "Operations",
+                "Aurelia Group",
+                "Mağaza",
+                "Mağaza Part",
+                "Mağaza Full",
+                "Merkez",
+                "Edirne",
             ],
         },
         "monthly": compact_frame(monthly),
@@ -362,29 +357,6 @@ def write_dashboard(payload: dict[str, Any], output_path: Path) -> Path:
         separators=(",", ":"),
     ).replace("</", "<\\/")
     html = HTML_TEMPLATE.replace("__TURNOVER_DATA__", json_payload)
-    style_match = re.search(r"<style>([\s\S]*?)</style>", html)
-    script_matches = list(re.finditer(r"<script>([\s\S]*?)</script>", html))
-    if not style_match or not script_matches:
-        raise RuntimeError("Dashboard CSS or application script could not be extracted.")
-    app_match = script_matches[-1]
-    stylesheet = style_match.group(1).strip() + "\n"
-    application = app_match.group(1).strip() + "\n"
-    html = html[: app_match.start()] + '<script src="./app.js" defer></script>' + html[app_match.end() :]
-    html = html[: style_match.start()] + '<link rel="stylesheet" href="./style.css">' + html[style_match.end() :]
-    html = html.replace(
-        '<script id="turnover-data" type="application/json">',
-        '<div id="turnover-data" hidden>',
-    ).replace("</script>\n  <script src=\"./app.js\"", "</div>\n  <script src=\"./app.js\"")
-    (output_path.parent / "style.css").write_text(
-        stylesheet,
-        encoding="utf-8",
-        newline="\n",
-    )
-    (output_path.parent / "app.js").write_text(
-        application,
-        encoding="utf-8",
-        newline="\n",
-    )
     temp_path = output_path.with_suffix(output_path.suffix + ".tmp")
     temp_path.write_text(html, encoding="utf-8", newline="\n")
     temp_path.replace(output_path)

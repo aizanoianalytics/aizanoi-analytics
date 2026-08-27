@@ -1,27 +1,12 @@
-"""Offline HTML template for the Aizanoi workforce turnover analytics dashboard."""
+"""Offline HTML template for the Aizanoi turnover analytics dashboard."""
 
 HTML_TEMPLATE = r"""<!doctype html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#07111f">
-  <meta name="description" content="Explore full-featured workforce turnover analytics using a deterministic, fully synthetic demonstration workbook.">
-  <meta name="robots" content="index,follow,max-image-preview:large">
-  <link rel="canonical" href="https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/workforce-turnover/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Aizanoi Analytics">
-  <meta property="og:title" content="Workforce Turnover Analytics">
-  <meta property="og:description" content="Eight working analytical views: overview, breakdown, comparison, forecast, early turnover, exit explorer, survival and risk, plus settings and exports. Synthetic public data only.">
-  <meta property="og:url" content="https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/workforce-turnover/">
-  <meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Workforce Turnover Analytics">
-  <meta name="twitter:description" content="Eight working analytical views: overview, breakdown, comparison, forecast, early turnover, exit explorer, survival and risk, plus settings and exports. Synthetic public data only.">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Workforce Turnover Analytics","applicationCategory":"BusinessApplication","url":"https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/workforce-turnover/","isPartOf":{"@type":"WebSite","name":"Aizanoi Analytics","url":"https://aizanoianalytics.com/"}}</script>
-  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
-  <title>Workforce Turnover Analytics — Aizanoi Analytics</title>
+  <title>Turnover Analitik Merkezi</title>
   <style>
     :root{
       --ink:#f7f2e8;--muted:#9fb0c7;--faint:#708198;--bg:#07111f;--bg2:#0b1728;
@@ -94,7 +79,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     .badge{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding:6px 9px;border-radius:999px;
       border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--muted);font-size:10px;font-weight:800}
     .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(102,209,158,.1)}
-    .grid{display:grid;gap:14px}.grid>*{min-width:0}
+    .grid{display:grid;gap:14px}
     .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
     .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
     .kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:11px}
@@ -161,9 +146,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       background:rgba(50,214,197,.055);border-radius:0 12px 12px 0;font-size:11px;color:var(--muted);line-height:1.55}
     .formula strong{color:var(--cyan)}
     .footer{margin-top:36px;padding:18px 2px 0;border-top:1px solid rgba(255,255,255,.08);
-      color:#687a91;font-size:9px;letter-spacing:.08em;text-align:center}
-    .footer-quote{text-transform:lowercase}.footer-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:10px}
-    .footer-links a{color:#91a7c1;text-decoration:none;text-transform:uppercase}.footer-links a:hover{color:var(--cyan)}
+      color:#687a91;font-size:9px;text-transform:lowercase;letter-spacing:.08em;text-align:center}
     .tooltip{position:fixed;z-index:200;pointer-events:none;display:none;max-width:260px;padding:9px 10px;
       border:1px solid #48627f;background:#081523;color:#eef7ff;border-radius:10px;box-shadow:var(--shadow);font-size:10px;line-height:1.45}
     .axis{fill:#8496ad;font-size:9px}
@@ -171,14 +154,6 @@ HTML_TEMPLATE = r"""<!doctype html>
     .gridline{stroke:#263a51;stroke-width:1}
     .chart-title{fill:#dce8f4;font-size:10px;font-weight:800}
     .mobile-note{display:none}
-    .mt-9{margin-top:9px}.mt-10{margin-top:10px}.mt-12{margin-top:12px}.mt-14{margin-top:14px}
-    .min-w-190{min-width:190px}.min-w-230{min-width:230px}
-    .synthetic-notice{margin:14px 0}
-    .settings-copy{color:var(--muted);font-size:11px;line-height:1.6;margin-top:0}
-    .metric-cards.two-cols{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .metric-cards.three-cols{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:10px}
-    .heat-value{display:block;padding:5px 7px}
-    .metric-inline{font-size:14px;color:var(--muted)}
     @media(max-width:1450px){
       .filter-grid{grid-template-columns:repeat(5,minmax(130px,1fr))}
       .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -205,139 +180,137 @@ HTML_TEMPLATE = r"""<!doctype html>
   <div class="shell">
     <header class="hero">
       <div>
-        <div class="eyebrow">Aizanoi Analytics · Synthetic Workforce Lab</div>
-        <h1>Workforce Turnover Analytics</h1>
-        <p>Explore all exits, voluntary departures, and employer-initiated exits on one canonical denominator across trends, comparisons, forecasts, early tenure, survival, and risk layers.</p>
+        <div class="eyebrow">Aizanoi İK Analitik Sistemi</div>
+        <h1>Turnover Analitik Merkezi</h1>
+        <p>Tüm çıkışlar, gönüllü ayrılıklar ve zorunlu fesihler aynı kanonik payda üzerinde; trend, kıyaslama, tahmin, erken dönem, survival ve risk katmanlarıyla birlikte izlenir.</p>
       </div>
       <div class="hero-meta">
-        <div class="meta-pill">Data range<strong id="meta-period">-</strong></div>
-        <div class="meta-pill">Generated<strong id="meta-generated">-</strong></div>
+        <div class="meta-pill">Veri aralığı<strong id="meta-period">-</strong></div>
+        <div class="meta-pill">Son üretim<strong id="meta-generated">-</strong></div>
       </div>
     </header>
 
-    <div class="notice info synthetic-notice">100% synthetic demonstration data. No employer records, real employees, contact details, or direct identifiers are used.</div>
-
-    <nav class="tabs" id="tabs" aria-label="Turnover sections" tabindex="0">
-      <button class="tab active" data-tab="overview">Overview</button>
-      <button class="tab" data-tab="breakdown">Breakdown Analysis</button>
-      <button class="tab" data-tab="compare">Comparison</button>
-      <button class="tab" data-tab="forecast">Forecast &amp; Backtest</button>
-      <button class="tab" data-tab="early">Early Tenure &amp; Service</button>
-      <button class="tab" data-tab="exits">Exit Detail</button>
-      <button class="tab" data-tab="v2">V2 Analytics &amp; Risk</button>
-      <button class="tab" data-tab="settings">Settings</button>
+    <nav class="tabs" id="tabs" aria-label="Turnover bölümleri">
+      <button class="tab active" data-tab="overview">Genel Bakış</button>
+      <button class="tab" data-tab="breakdown">Kırılım Analizi</button>
+      <button class="tab" data-tab="compare">Kıyaslama</button>
+      <button class="tab" data-tab="forecast">Tahmin &amp; Backtest</button>
+      <button class="tab" data-tab="early">Erken Dönem &amp; Kıdem</button>
+      <button class="tab" data-tab="exits">Çıkış Detayı</button>
+      <button class="tab" data-tab="v2">V2 Analitik &amp; Risk</button>
+      <button class="tab" data-tab="settings">Ayarlar</button>
     </nav>
 
-    <section class="filter-shell" aria-label="Global filters">
+    <section class="filter-shell" aria-label="Global filtreler">
       <div class="filter-grid">
-        <div class="field"><label for="scope-filter">Scope</label><select class="select" id="scope-filter" aria-label="Scope"></select></div>
-        <div class="field"><label for="type-filter">Turnover Type</label><select class="select" id="type-filter" aria-label="Turnover Type">
-          <option value="all">All Exits</option>
-          <option value="voluntary">Voluntary Turnover</option>
-          <option value="forced">Employer-Initiated Turnover</option>
+        <div class="field"><label>Kapsam</label><select class="select" id="scope-filter"></select></div>
+        <div class="field"><label>Turnover Türü</label><select class="select" id="type-filter">
+          <option value="all">Bütün Çıkışlar</option>
+          <option value="voluntary">Gönüllü Turnover</option>
+          <option value="forced">Zorunlu Turnover</option>
         </select></div>
-        <div class="field"><label for="start-filter">Start</label><select class="select" id="start-filter" aria-label="Start"></select></div>
-        <div class="field"><label for="end-filter">End</label><select class="select" id="end-filter" aria-label="End"></select></div>
-        <div class="field"><label for="region-filter">Region</label><select class="select" id="region-filter" aria-label="Region"></select></div>
-        <div class="field"><label for="store-filter">Store</label><select class="select" id="store-filter" aria-label="Store"></select></div>
-        <div class="field"><label for="department-filter">Department</label><select class="select" id="department-filter" aria-label="Department"></select></div>
-        <div class="field"><label for="city-filter">City</label><select class="select" id="city-filter" aria-label="City"></select></div>
-        <div class="field"><label for="gender-filter">Gender</label><select class="select" id="gender-filter" aria-label="Gender"></select></div>
-        <div class="field"><label for="contract-filter">Contract Type</label><select class="select" id="contract-filter" aria-label="Contract Type"></select></div>
-        <div class="field"><label for="title-filter">Title</label><select class="select" id="title-filter" aria-label="Title"></select></div>
-        <div class="filter-actions"><button class="btn" id="reset-filters">Reset</button></div>
+        <div class="field"><label>Başlangıç</label><select class="select" id="start-filter"></select></div>
+        <div class="field"><label>Bitiş</label><select class="select" id="end-filter"></select></div>
+        <div class="field"><label>Bölge</label><select class="select" id="region-filter"></select></div>
+        <div class="field"><label>Mağaza</label><select class="select" id="store-filter"></select></div>
+        <div class="field"><label>Departman</label><select class="select" id="department-filter"></select></div>
+        <div class="field"><label>Şehir</label><select class="select" id="city-filter"></select></div>
+        <div class="field"><label>Cinsiyet</label><select class="select" id="gender-filter"></select></div>
+        <div class="field"><label>Sözleşme Türü</label><select class="select" id="contract-filter"></select></div>
+        <div class="field"><label>Title</label><select class="select" id="title-filter"></select></div>
+        <div class="filter-actions"><button class="btn" id="reset-filters">Sıfırla</button></div>
       </div>
       <div class="filter-foot">
         <div class="chips" id="active-chips"></div>
         <div class="period-buttons">
-          <button class="mini" data-period="12">Last 12 Months</button>
-          <button class="mini" data-period="24">Last 24 Months</button>
-          <button class="mini" data-period="all">All</button>
+          <button class="mini" data-period="12">Son 12 Ay</button>
+          <button class="mini" data-period="24">Son 24 Ay</button>
+          <button class="mini" data-period="all">Tümü</button>
         </div>
       </div>
     </section>
 
     <main>
       <section class="page active" data-page="overview">
-        <div class="section-head"><div><h2>Executive Summary</h2><p id="overview-subtitle">Selected scope and period</p></div><span class="badge"><span class="dot"></span>canonical exit metric</span></div>
+        <div class="section-head"><div><h2>Yönetici Özeti</h2><p id="overview-subtitle">Seçili kapsam ve dönem</p></div><span class="badge"><span class="dot"></span>kanonik çıkış metriği</span></div>
         <div class="kpis" id="overview-kpis"></div>
-        <div class="grid two mt-14">
+        <div class="grid two" style="margin-top:14px">
           <article class="card">
-            <div class="card-head"><div><h3>Monthly Turnover Trend</h3><p>Exits / monthly average workforce</p></div><div class="card-actions"><button class="mini" data-export="trend">CSV</button></div></div>
+            <div class="card-head"><div><h3>Aylık Turnover Trendi</h3><p>Çıkış / aylık ortalama çalışan</p></div><div class="card-actions"><button class="mini" data-export="trend">CSV</button></div></div>
             <div class="chart" id="trend-chart"></div>
           </article>
           <article class="card">
-            <div class="card-head"><div><h3>Exit Type Composition</h3><p>Classified exits within the selected period</p></div><span class="badge" id="match-badge">-</span></div>
+            <div class="card-head"><div><h3>Çıkış Türü Bileşimi</h3><p>Seçili dönem içindeki sınıflandırılmış çıkışlar</p></div><span class="badge" id="match-badge">-</span></div>
             <div class="chart" id="composition-chart"></div>
           </article>
         </div>
-        <div class="grid two mt-14">
+        <div class="grid two" style="margin-top:14px">
           <article class="card">
-            <div class="card-head"><div><h3>Monthly Hire / Exit Balance</h3><p>Hires and exits shown as comparable series</p></div></div>
+            <div class="card-head"><div><h3>Aylık Giriş / Çıkış Dengesi</h3><p>Giriş pozitif, çıkış karşılaştırmalı seri</p></div></div>
             <div class="chart compact" id="flow-chart"></div>
           </article>
           <article class="card">
-            <div class="card-head"><div><h3>Scope Comparison</h3><p>Results for the selected end month using the same formula</p></div></div>
+            <div class="card-head"><div><h3>Kapsam Karşılaştırması</h3><p>Seçili bitiş ayının aynı formülle hesaplanan sonuçları</p></div></div>
             <div id="scope-comparison"></div>
           </article>
         </div>
-        <article class="card mt-14">
+        <article class="card" style="margin-top:14px">
           <div class="card-head">
-            <div><h3>Turnover Across Scopes</h3><p>Six primary scopes compared on the same monthly axis and canonical formula</p></div>
-            <div class="card-actions"><select class="select min-w-190" id="scope-trend-mode" aria-label="Trend metric mode"><option value="monthly">Monthly Turnover</option><option value="ytd">Year-to-Date Cumulative Turnover</option></select></div>
+            <div><h3>Kapsamlar Arası Turnover Karşılaştırması</h3><p>Altı ana kapsam aynı ay ekseninde ve aynı kanonik formülle karşılaştırılır</p></div>
+            <div class="card-actions"><select class="select" id="scope-trend-mode" style="min-width:190px"><option value="monthly">Aylık Turnover</option><option value="ytd">Yıl İçi Kümülatif Turnover</option></select></div>
           </div>
           <div class="chart" id="scope-trend-chart"></div>
         </article>
-        <div class="formula mt-14"><strong>Formula</strong><span><b>Turnover = Exits / ((Opening Workforce + Closing Workforce) / 2)</b>. Voluntary and employer-initiated views change only the exit numerator. Opening, closing, and average workforce remain unchanged.</span></div>
+        <div class="formula" style="margin-top:14px"><strong>Formül</strong><span><b>Turnover = Çıkış / ((Dönem Başı + Dönem Sonu) / 2)</b>. Gönüllü ve zorunlu görünüm yalnızca çıkış payını değiştirir. Dönem başı, dönem sonu ve ortalama çalışan aynen korunur.</span></div>
       </section>
 
       <section class="page" data-page="breakdown">
-        <div class="section-head"><div><h2>Breakdown Analysis</h2><p>Audit the same denominator by region, store, department, section, city, gender, contract type, and title</p></div></div>
+        <div class="section-head"><div><h2>Kırılım Analizi</h2><p>Bölge, mağaza, departman, bölüm, şehir, cinsiyet, sözleşme türü ve title bazında aynı paydanın denetimi</p></div></div>
         <article class="card">
           <div class="control-row">
-            <div class="field"><label for="breakdown-dimension">Breakdown</label><select class="select" id="breakdown-dimension" aria-label="Breakdown">
-              <option value="bolge">Region</option><option value="magaza">Store</option>
-              <option value="departman">Department</option><option value="bolum">Section</option><option value="il">City</option>
-              <option value="cinsiyet">Gender</option><option value="sozlesme_turu">Contract Type</option><option value="title">Title</option>
+            <div class="field"><label>Kırılım</label><select class="select" id="breakdown-dimension">
+              <option value="bolge">Bölge</option><option value="magaza">Mağaza</option>
+              <option value="departman">Departman</option><option value="bolum">Bölüm</option><option value="il">Şehir</option>
+              <option value="cinsiyet">Cinsiyet</option><option value="sozlesme_turu">Sözleşme Türü</option><option value="title">Title</option>
             </select></div>
-            <div class="field"><label for="breakdown-metric">Metric</label><select class="select" id="breakdown-metric" aria-label="Metric">
-              <option value="latest">Latest Month Turnover</option><option value="period">Selected Period Cumulative Turnover</option>
-              <option value="last12">Last 12 Months Turnover</option><option value="exits">Selected Period Exits</option>
+            <div class="field"><label>Metrik</label><select class="select" id="breakdown-metric">
+              <option value="latest">Son Ay Turnover</option><option value="period">Seçili Dönem Kümüle Turnover</option>
+              <option value="last12">Son 12 Ay Turnover</option><option value="exits">Seçili Dönem Çıkış</option>
             </select></div>
-            <button class="btn" data-export="breakdown">Breakdown CSV</button>
+            <button class="btn" data-export="breakdown">Kırılım CSV</button>
           </div>
           <div class="grid two">
-            <div><div class="card-head"><div><h3>Ranked Comparison</h3><p id="breakdown-note">-</p></div></div><div class="chart" id="breakdown-bars"></div></div>
-            <div><div class="card-head"><div><h3>Monthly Heat Map</h3><p>Cells show the monthly turnover rate</p></div></div><div id="breakdown-heatmap"></div></div>
+            <div><div class="card-head"><div><h3>Sıralı Karşılaştırma</h3><p id="breakdown-note">-</p></div></div><div class="chart" id="breakdown-bars"></div></div>
+            <div><div class="card-head"><div><h3>Aylık Isı Haritası</h3><p>Hücreler aylık turnover oranını gösterir</p></div></div><div id="breakdown-heatmap"></div></div>
           </div>
-          <div class="mt-14" id="breakdown-table"></div>
+          <div style="margin-top:14px" id="breakdown-table"></div>
         </article>
-        <article class="card mt-14">
+        <article class="card" style="margin-top:14px">
           <div class="card-head">
-            <div><h3>Cumulative Title Turnover Matrix</h3><p>Shows each title's contribution and its own turnover rate by region or department using separate business rules</p></div>
+            <div><h3>Kümüle Title Turnover Matrisi</h3><p>Bölge veya departman satırında title katkısı ile title'ın kendi oranını ayrı iş kurallarıyla gösterir</p></div>
             <div class="card-actions">
-              <select class="select min-w-230" id="title-matrix-mode" aria-label="Title matrix display mode">
-                <option value="contribution">Share of Turnover</option>
-                <option value="title_rate">Title Turnover Rate</option>
+              <select class="select" id="title-matrix-mode" style="min-width:230px">
+                <option value="contribution">Turnover İçindeki Pay</option>
+                <option value="title_rate">Title Turnover Oranı</option>
               </select>
               <button class="mini" data-export="title-matrix">CSV</button>
             </div>
           </div>
           <div class="notice info" id="title-matrix-note"></div>
-          <div class="mt-12" id="title-matrix-table"></div>
+          <div style="margin-top:12px" id="title-matrix-table"></div>
         </article>
       </section>
 
       <section class="page" data-page="compare">
-        <div class="section-head"><div><h2>Turnover Comparison</h2><p>Compare regions, stores, and years month-for-month on the same X-axis</p></div></div>
+        <div class="section-head"><div><h2>Turnover Kıyaslama</h2><p>Aynı aylar aynı X ekseninde; farklı bölge/mağaza ve yıllar birebir karşılaştırılır</p></div></div>
         <article class="card">
           <div class="control-row">
-            <div class="field"><label for="compare-kind">Type</label><select class="select" id="compare-kind" aria-label="Type"><option value="bolge">Region</option><option value="magaza">Store</option></select></div>
-            <div class="field"><label for="compare-a">First</label><select class="select" id="compare-a" aria-label="First"></select></div>
-            <div class="field"><label for="compare-year-a">Year A</label><select class="select" id="compare-year-a" aria-label="Year A"></select></div>
-            <div class="field"><label for="compare-b">Second</label><select class="select" id="compare-b" aria-label="Second"></select></div>
-            <div class="field"><label for="compare-year-b">Year B</label><select class="select" id="compare-year-b" aria-label="Year B"></select></div>
-            <button class="btn" data-export="comparison">Comparison CSV</button>
+            <div class="field"><label>Tür</label><select class="select" id="compare-kind"><option value="bolge">Bölge</option><option value="magaza">Mağaza</option></select></div>
+            <div class="field"><label>Birinci</label><select class="select" id="compare-a"></select></div>
+            <div class="field"><label>Yıl A</label><select class="select" id="compare-year-a"></select></div>
+            <div class="field"><label>İkinci</label><select class="select" id="compare-b"></select></div>
+            <div class="field"><label>Yıl B</label><select class="select" id="compare-year-b"></select></div>
+            <button class="btn" data-export="comparison">Kıyaslama CSV</button>
           </div>
           <div class="chart" id="comparison-chart"></div>
           <div id="comparison-table"></div>
@@ -345,78 +318,78 @@ HTML_TEMPLATE = r"""<!doctype html>
       </section>
 
       <section class="page" data-page="forecast">
-        <div class="section-head"><div><h2>Forecast &amp; Backtest</h2><p>Actual series, forward forecast, forecast-only confidence intervals, and rolling-origin tests</p></div><span class="badge">model scope: all exits</span></div>
+        <div class="section-head"><div><h2>Tahmin &amp; Backtest</h2><p>Gerçekleşen seri, ileri tahmin, yalnızca tahmin aylarında güven bandı ve rolling-origin testler</p></div><span class="badge">model kapsamı: bütün çıkışlar</span></div>
         <article class="card">
           <div id="forecast-warning"></div>
           <div class="chart" id="forecast-chart"></div>
-          <div class="grid two mt-12">
+          <div class="grid two" style="margin-top:12px">
             <div id="backtest-summary"></div>
             <div id="backtest-quality"></div>
           </div>
-          <div class="mt-14" id="annual-backtest-table"></div>
+          <div style="margin-top:14px" id="annual-backtest-table"></div>
         </article>
       </section>
 
       <section class="page" data-page="early">
-        <div class="section-head"><div><h2>Early Tenure &amp; Service</h2><p>Exit-tenure distribution using 31, 62, and 183-day thresholds</p></div></div>
+        <div class="section-head"><div><h2>Erken Dönem &amp; Kıdem</h2><p>İlk 31, 62 ve 183 gün eşikleri ile çıkış anındaki çalışma süresi dağılımı</p></div></div>
         <div class="metric-cards" id="early-cards"></div>
-        <div class="grid two mt-14">
-          <article class="card"><div class="card-head"><div><h3>Exit Tenure Distribution</h3><p>Mutually exclusive service-length bands</p></div></div><div class="chart compact" id="tenure-chart"></div></article>
-          <article class="card"><div class="card-head"><div><h3>Early Exits by Year</h3><p>Share of total exits within each year</p></div></div><div id="early-year-table"></div></article>
+        <div class="grid two" style="margin-top:14px">
+          <article class="card"><div class="card-head"><div><h3>Çıkış Kıdem Dağılımı</h3><p>Birbirini dışlayan çalışma süresi bantları</p></div></div><div class="chart compact" id="tenure-chart"></div></article>
+          <article class="card"><div class="card-head"><div><h3>Yıllara Göre Erken Çıkış</h3><p>Yıl içindeki toplam çıkışa oranlar</p></div></div><div id="early-year-table"></div></article>
         </div>
-        <div class="formula mt-14"><strong>Thresholds</strong><span>First month: tenure ≤ 31 days. First 2 months: tenure ≤ 62 days. First 6 months: tenure ≤ 183 days. These metrics are nested; a first-month exit is also included in the 2- and 6-month counts. The denominator is total exits in the selected scope.</span></div>
+        <div class="formula" style="margin-top:14px"><strong>Eşikler</strong><span>İlk ay: kıdem ≤ 31 gün. İlk 2 ay: kıdem ≤ 62 gün. İlk 6 ay: kıdem ≤ 183 gün. Bu metrikler iç içedir; ilk ay çıkan kişi ilk 2 ve ilk 6 ay sayılarına da dahildir. Oran paydası seçili kapsamdaki toplam çıkıştır.</span></div>
       </section>
 
       <section class="page" data-page="exits">
-        <div class="section-head"><div><h2>Exit Detail</h2><p>Latest exit reason, classification source, and workforce dimensions</p></div><button class="btn" data-export="exits">Filtered Full CSV</button></div>
+        <div class="section-head"><div><h2>Çıkış Detayı</h2><p>Son tarihli ayrılma nedeni, sınıflandırma kaynağı ve özlük kırılımları</p></div><button class="btn" data-export="exits">Filtrelenmiş Tam CSV</button></div>
         <div class="grid two">
-          <article class="card"><div class="card-head"><div><h3>Exit Reason Distribution</h3><p>Based on the current Settings classification</p></div></div><div class="chart compact" id="reason-bars"></div></article>
-          <article class="card"><div class="card-head"><div><h3>Classification Quality</h3><p>Audit matched and default-classified exits</p></div></div><div id="classification-quality"></div></article>
+          <article class="card"><div class="card-head"><div><h3>Ayrılma Nedeni Dağılımı</h3><p>Ayarlar ekranındaki güncel sınıflandırmaya göre</p></div></div><div class="chart compact" id="reason-bars"></div></article>
+          <article class="card"><div class="card-head"><div><h3>Sınıflandırma Kalitesi</h3><p>Eşleşen ve varsayılan atanan çıkışların denetimi</p></div></div><div id="classification-quality"></div></article>
         </div>
-        <article class="card mt-14"><div id="exit-table"></div></article>
+        <article class="card" style="margin-top:14px"><div id="exit-table"></div></article>
       </section>
 
       <section class="page" data-page="v2">
-        <div class="section-head"><div><h2>V2 Analytics &amp; Turnover Risk</h2><p>Regrettable turnover, survival analysis, and the current risk model in one audit surface</p></div><span class="badge">model rules fixed</span></div>
-        <div class="notice info">V2 models use their own data preparation and performance thresholds. Changing the global exit type does not retrain historical model results.</div>
-        <div class="grid two mt-14">
-          <article class="card"><div class="card-head"><div><h3>Regrettable Turnover V2</h3><p>High-performing retail workforce exits</p></div></div><div class="chart compact" id="regrettable-chart"></div><div id="regrettable-table"></div></article>
-          <article class="card"><div class="card-head"><div><h3>Survival Analysis V2</h3><p>Probability of remaining as tenure increases</p></div></div><div class="chart compact" id="survival-chart"></div><div id="survival-cards"></div></article>
+        <div class="section-head"><div><h2>V2 Analitik &amp; Turnover Riski</h2><p>Regrettable turnover, survival analizi ve mevcut risk modeli aynı denetim alanında</p></div><span class="badge">model kuralları sabit</span></div>
+        <div class="notice info">Bu bölümdeki V2 modeller kendi veri hazırlama ve performans eşiklerini kullanır. Global gönüllü/zorunlu ayarı geçmiş model sonuçlarını yeniden eğitmez.</div>
+        <div class="grid two" style="margin-top:14px">
+          <article class="card"><div class="card-head"><div><h3>Regrettable Turnover V2</h3><p>Yüksek performanslı mağaza çalışanı çıkışları</p></div></div><div class="chart compact" id="regrettable-chart"></div><div id="regrettable-table"></div></article>
+          <article class="card"><div class="card-head"><div><h3>Survival Analizi V2</h3><p>Kıdem ilerledikçe sistemde kalma olasılığı</p></div></div><div class="chart compact" id="survival-chart"></div><div id="survival-cards"></div></article>
         </div>
-        <div class="grid two mt-14">
-          <article class="card"><div class="card-head"><div><h3>High-Risk Regions / Stores</h3><p>Average risk in the latest model output</p></div></div><div id="risk-entities"></div></article>
-          <article class="card"><div class="card-head"><div><h3>Workforce Risk Detail</h3><p>Records from the latest retail risk model</p></div></div><div id="risk-people"></div></article>
+        <div class="grid two" style="margin-top:14px">
+          <article class="card"><div class="card-head"><div><h3>Riskli Bölgeler / Mağazalar</h3><p>En güncel model çıktısındaki ortalama risk</p></div></div><div id="risk-entities"></div></article>
+          <article class="card"><div class="card-head"><div><h3>Çalışan Risk Detayı</h3><p>En güncel mağaza risk modelindeki kayıtlar</p></div></div><div id="risk-people"></div></article>
         </div>
       </section>
 
       <section class="page" data-page="settings">
-        <div class="section-head"><div><h2>Exit Reason Settings</h2><p>Classify each unique source-list reason as Voluntary or Employer Initiated</p></div><span class="badge">stored locally in this browser</span></div>
+        <div class="section-head"><div><h2>Ayrılma Nedeni Ayarları</h2><p>Ayrılanlar Listesi'ndeki benzersiz nedenleri İstifa veya Fesih olarak yönetin</p></div><span class="badge">tarayıcıda yerel olarak saklanır</span></div>
         <div class="settings-grid">
           <article class="card">
             <div class="table-tools">
-              <div class="left"><input class="search" id="reason-search" placeholder="Search exit reasons..."><span class="count" id="reason-count"></span></div>
-              <div class="right"><button class="btn" id="apply-reasons">Apply and Save</button><button class="btn" id="export-reasons">Download JSON</button><button class="btn" id="import-reasons">Upload JSON</button><input type="file" id="reason-file" accept=".json,application/json" hidden></div>
+              <div class="left"><input class="search" id="reason-search" placeholder="Ayrılma nedeni ara..."><span class="count" id="reason-count"></span></div>
+              <div class="right"><button class="btn" id="apply-reasons">Uygula ve Sakla</button><button class="btn" id="export-reasons">JSON İndir</button><button class="btn" id="import-reasons">JSON Yükle</button><input type="file" id="reason-file" accept=".json,application/json" hidden></div>
             </div>
-            <div class="reason-list" id="reason-list" tabindex="0" aria-label="Exit reasons list, scrollable"></div>
+            <div class="reason-list" id="reason-list"></div>
           </article>
           <aside class="grid">
             <article class="card">
-              <div class="card-head"><div><h3>Business Rule</h3><p>Mathematical effect of classification</p></div></div>
-              <div class="formula"><strong>Numerator</strong><span>All Exits uses canonical <code>cikis</code>. Voluntary uses voluntary-classified exits. Employer Initiated uses employer-initiated exits.</span></div>
-              <div class="formula mt-9"><strong>Denominator</strong><span>All three views use <code>(Opening Workforce + Closing Workforce) / 2</code>. Classification settings never change the denominator.</span></div>
-              <div class="formula mt-9"><strong>Matching</strong><span>The latest source-list exit reason is used for each synthetic employee ID. Unmatched reasons default to Voluntary.</span></div>
+              <div class="card-head"><div><h3>İş Kuralı</h3><p>Sınıflandırmanın matematiksel etkisi</p></div></div>
+              <div class="formula"><strong>Pay</strong><span>Bütün Çıkışlar: kanonik <code>cikis</code>. Gönüllü: İstifa sınıfındaki çıkışlar. Zorunlu: Fesih sınıfındaki çıkışlar.</span></div>
+              <div class="formula" style="margin-top:9px"><strong>Payda</strong><span>Her üç görünümde de <code>(Dönem Başı + Dönem Sonu) / 2</code>. Ayar değişikliği paydayı değiştirmez.</span></div>
+              <div class="formula" style="margin-top:9px"><strong>Eşleme</strong><span>Her sicilin Ayrılanlar Listesi'ndeki en son tarihli çıkış nedeni kullanılır. Eşleşmeyen neden İstifa kabul edilir.</span></div>
             </article>
             <article class="card">
-              <div class="card-head"><div><h3>Local Settings Management</h3><p>Static HTML behavior</p></div></div>
-              <p class="settings-copy">Changes are stored in this browser's localStorage. Settings do not move automatically with the file; export them with Download JSON and import them on another device.</p>
-              <button class="btn danger" id="reset-reasons">Restore Base Mapping</button>
+              <div class="card-head"><div><h3>Yerel Ayar Yönetimi</h3><p>Statik HTML çalışma biçimi</p></div></div>
+              <p style="color:var(--muted);font-size:11px;line-height:1.6;margin-top:0">Değişiklikler bu tarayıcının localStorage alanında saklanır. Dosyayı başka bilgisayara gönderdiğinizde ayarlar otomatik taşınmaz; “JSON İndir” ile dışa aktarıp diğer bilgisayarda yükleyebilirsiniz.</p>
+              <button class="btn danger" id="reset-reasons">Temel Eşleştirmeye Dön</button>
             </article>
           </aside>
         </div>
       </section>
     </main>
 
-    <footer class="footer"><div class="footer-quote">“If you torture data long enough, it will confess to anything.”</div><nav class="footer-links" aria-label="Project links"><a href="/analytics/dashboards/hr-analytics-full-set/">HR Analytics Full Set</a><a href="/analytics/">All Analytics</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/analytics/dashboards/hr-analytics-full-set/workforce-turnover" target="_blank" rel="noopener noreferrer">Source</a><a href="https://github.com/aizanoianalytics/aizanoi-analytics/blob/main/analytics/dashboards/hr-analytics-full-set/workforce-turnover/README.md" target="_blank" rel="noopener noreferrer">Methodology</a></nav></footer>
+    <footer class="footer">“ıf you torture data long enough, it will confess to anything.”</footer>
   </div>
   <div class="tooltip" id="tooltip"></div>
   <script id="turnover-data" type="application/json">__TURNOVER_DATA__</script>
@@ -426,7 +399,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     const DATA = JSON.parse(document.getElementById("turnover-data").textContent);
     const $ = id => document.getElementById(id);
     const ALL = "__ALL__";
-    const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const MONTH_NAMES = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
     const COLORS = {blue:"#4ea5ff",cyan:"#32d6c5",amber:"#ffb84d",orange:"#ff7a45",rose:"#ff5d77",green:"#66d19e",violet:"#a98cff",muted:"#708198"};
     const STORAGE_KEY = "aizanoi_turnover_reason_map_v1";
     const TABLE_STATE = new Map();
@@ -452,7 +425,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     const MONTHS = [...new Set(MONTHLY.map(row => row.donem).filter(Boolean))].sort();
     const DEFAULT_START = MONTHS[Math.max(0,MONTHS.length-24)] || "";
     const DEFAULT_END = MONTHS[MONTHS.length-1] || "";
-    const BASE_REASON_MAP = Object.fromEntries((DATA.reasons||[]).map(row => [row.reason_key,row.turnover_turu_base || "Voluntary"]));
+    const BASE_REASON_MAP = Object.fromEntries((DATA.reasons||[]).map(row => [row.reason_key,row.turnover_turu_base || "İstifa"]));
     let reasonOverrides = loadReasonOverrides();
     let reasonDraft = {...reasonOverrides};
     let breakdownRows = [];
@@ -461,7 +434,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     let titleMatrixExportRows = [];
 
     const STATE = {
-      tab:"overview", scope:"Aizanoi Demo Group", type:"all", start:DEFAULT_START, end:DEFAULT_END,
+      tab:"overview", scope:"Aurelia Group", type:"all", start:DEFAULT_START, end:DEFAULT_END,
       region:ALL, store:ALL, department:ALL, city:ALL, gender:ALL, contract:ALL, title:ALL,
       breakdownDimension:"bolge", breakdownMetric:"latest", scopeTrendMode:"monthly", titleMatrixMode:"contribution",
       compareKind:"bolge", compareA:"", compareB:"", compareYearA:"", compareYearB:"",
@@ -472,10 +445,10 @@ HTML_TEMPLATE = r"""<!doctype html>
     }
     function n(value){ const x=Number(value); return Number.isFinite(x)?x:0; }
     function fmt(value,digits=0){
-      const x=Number(value); return Number.isFinite(x)?x.toLocaleString("en-US",{minimumFractionDigits:digits,maximumFractionDigits:digits}):"-";
+      const x=Number(value); return Number.isFinite(x)?x.toLocaleString("tr-TR",{minimumFractionDigits:digits,maximumFractionDigits:digits}):"-";
     }
     function pct(value,digits=1){
-      const x=Number(value); return Number.isFinite(x)?`${(x*100).toLocaleString("en-US",{minimumFractionDigits:digits,maximumFractionDigits:digits})}%`:"-";
+      const x=Number(value); return Number.isFinite(x)?`%${(x*100).toLocaleString("tr-TR",{minimumFractionDigits:digits,maximumFractionDigits:digits})}`:"-";
     }
     function monthLabel(month,short=false){
       if(!month || !/^\d{4}-\d{2}$/.test(month)) return month || "-";
@@ -485,7 +458,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     function dateLabel(value){
       if(!value) return "-";
       const date=new Date(`${String(value).slice(0,10)}T00:00:00`);
-      return Number.isNaN(date.getTime())?String(value):date.toLocaleDateString("en-US");
+      return Number.isNaN(date.getTime())?String(value):date.toLocaleDateString("tr-TR");
     }
     function addMonths(month,delta){
       if(!month) return "";
@@ -493,20 +466,20 @@ HTML_TEMPLATE = r"""<!doctype html>
       const d=new Date(y,m-1+delta,1);
       return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
     }
-    function unique(values){ return [...new Set(values.filter(value => value!==null && value!==undefined && String(value).trim()!==""))].sort((a,b)=>String(a).localeCompare(String(b),"en")); }
-    function typeLabel(type=STATE.type){ return type==="voluntary"?"Voluntary Turnover":type==="forced"?"Employer-Initiated Turnover":"All Exits"; }
-    function classification(row){ return reasonOverrides[row.reason_key] || BASE_REASON_MAP[row.reason_key] || row.turnover_turu_base || "Voluntary"; }
+    function unique(values){ return [...new Set(values.filter(value => value!==null && value!==undefined && String(value).trim()!==""))].sort((a,b)=>String(a).localeCompare(String(b),"tr")); }
+    function typeLabel(type=STATE.type){ return type==="voluntary"?"Gönüllü Turnover":type==="forced"?"Zorunlu Turnover":"Bütün Çıkışlar"; }
+    function classification(row){ return reasonOverrides[row.reason_key] || BASE_REASON_MAP[row.reason_key] || row.turnover_turu_base || "İstifa"; }
     function scopeMatch(row,scope=STATE.scope){
-      if(scope==="Aizanoi Demo Group") return true;
-      if(scope==="Retail") return row.scope==="Retail";
-      if(scope==="Retail Part-Time") return row.scope==="Retail" && row.calisma_tipi==="Part Time";
-      if(scope==="Retail Full-Time") return row.scope==="Retail" && row.calisma_tipi==="Full Time";
+      if(scope==="Aurelia Group") return true;
+      if(scope==="Mağaza") return row.scope==="Mağaza";
+      if(scope==="Mağaza Part") return row.scope==="Mağaza" && row.calisma_tipi==="Part Time";
+      if(scope==="Mağaza Full") return row.scope==="Mağaza" && row.calisma_tipi==="Full Time";
       return row.scope===scope;
     }
     function typeMatch(row,type=STATE.type){
       if(type==="all") return true;
       const current=classification(row);
-      return type==="voluntary" ? current==="Voluntary" : current==="Employer Initiated";
+      return type==="voluntary" ? current==="İstifa" : current==="Fesih";
     }
     function dimensionsMatch(row,ignore=null){
       if(ignore!=="bolge" && STATE.region!==ALL && row.bolge!==STATE.region) return false;
@@ -579,7 +552,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       tooltip.style.left=`${Math.max(8,left)}px`;tooltip.style.top=`${Math.max(8,top)}px`;
     }
     function hideTooltip(){ tooltip.style.display="none"; }
-    function empty(target,message="No data found for these filters."){
+    function empty(target,message="Bu filtreler için veri bulunamadı."){
       target.innerHTML=`<div class="empty">${esc(message)}</div>`;
     }
     function download(name,content,type="text/plain;charset=utf-8"){
@@ -593,7 +566,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       const content="\ufeff"+[cols.map(cell).join(";"),...rows.map(row=>cols.map(col=>cell(row[col])).join(";"))].join("\r\n");
       download(name,content,"text/csv;charset=utf-8");
     }
-    function fillSelect(element,values,current,allLabel="All"){
+    function fillSelect(element,values,current,allLabel="Tümü"){
       const opts=[`<option value="${ALL}">${esc(allLabel)}</option>`,...values.map(value=>`<option value="${esc(value)}">${esc(value)}</option>`)];
       element.innerHTML=opts.join("");
       element.value=values.includes(current)?current:ALL;
@@ -604,13 +577,6 @@ HTML_TEMPLATE = r"""<!doctype html>
       element.value=values.includes(current)?current:(values[0]||"");
       return element.value;
     }
-    function applyDataStyles(root){
-      root.querySelectorAll("[data-color]").forEach(node=>node.style.setProperty("--c",node.dataset.color));
-      root.querySelectorAll("[data-width]").forEach(node=>node.style.width=node.dataset.width);
-      root.querySelectorAll("[data-background]").forEach(node=>node.style.background=node.dataset.background);
-      root.querySelectorAll("[data-tone]").forEach(node=>node.style.setProperty("--tone",node.dataset.tone));
-      root.querySelectorAll("[data-border-color]").forEach(node=>{node.style.borderTopWidth="3px";node.style.borderTopStyle="solid";node.style.borderTopColor=node.dataset.borderColor;});
-    }
 
     function renderLineChart(target,series,options={}){
       if(!series.length || !series.some(item=>(item.values||[]).some(value=>Number.isFinite(Number(value))))){empty(target);return;}
@@ -620,7 +586,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       const max=Math.max(...all,options.max||0.01)*1.12;const min=options.min??0;
       const x=index=>margin.left+(labels.length<=1?innerW/2:index*innerW/(labels.length-1));
       const y=value=>margin.top+innerH-(Number(value)-min)/(max-min||1)*innerH;
-      let svg=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(options.aria||"Line chart")}">`;
+      let svg=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(options.aria||"Çizgi grafik")}">`;
       for(let i=0;i<=4;i++){const value=min+(max-min)*i/4;const yy=y(value);svg+=`<line class="gridline" x1="${margin.left}" y1="${yy}" x2="${width-margin.right}" y2="${yy}"/><text class="axis" x="${margin.left-8}" y="${yy+3}" text-anchor="end">${options.percent===false?fmt(value,options.digits??0):pct(value,1)}</text>`;}
       const stride=Math.max(1,Math.ceil(labels.length/10));
       labels.forEach((label,index)=>{if(index%stride===0||index===labels.length-1)svg+=`<text class="axis" x="${x(index)}" y="${height-20}" text-anchor="middle">${esc(options.labelFormatter?options.labelFormatter(label):monthLabel(label,true))}</text>`;});
@@ -630,7 +596,7 @@ HTML_TEMPLATE = r"""<!doctype html>
           points.forEach(point=>{const label=labels[point[3]];svg+=`<circle cx="${point[0]}" cy="${point[1]}" r="4" fill="${item.color||COLORS.blue}" stroke="#07111f" stroke-width="2" data-tip="${esc(`<b>${item.name}</b><br>${options.labelFormatter?options.labelFormatter(label):monthLabel(label)} · ${options.percent===false?fmt(point[2],options.digits??0):pct(point[2],2)}`)}"/>`;});
         }
       });
-      svg+="</svg>";target.innerHTML=svg+`<div class="legend">${series.map(item=>`<span><i class="swatch" data-color="${esc(item.color)}"></i>${esc(item.name)}</span>`).join("")}</div>`;applyDataStyles(target);
+      svg+="</svg>";target.innerHTML=svg+`<div class="legend">${series.map(item=>`<span><i class="swatch" style="--c:${item.color}"></i>${esc(item.name)}</span>`).join("")}</div>`;
       target.querySelectorAll("[data-tip]").forEach(node=>{node.addEventListener("mouseenter",event=>showTooltip(event,node.dataset.tip));node.addEventListener("mousemove",event=>showTooltip(event,node.dataset.tip));node.addEventListener("mouseleave",hideTooltip);});
     }
 
@@ -642,7 +608,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       const values=[...actualTail.map(row=>row.turnover),...forecast.flatMap(row=>[row.tahmini_turnover_orani,row.alt_guven_araligi,row.ust_guven_araligi])].filter(Number.isFinite);
       const max=Math.max(...values,0.01)*1.13,innerW=width-margin.left-margin.right,innerH=height-margin.top-margin.bottom;
       const x=month=>margin.left+labels.indexOf(month)*innerW/Math.max(1,labels.length-1),y=value=>margin.top+innerH-n(value)/max*innerH;
-      let svg=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Turnover forecast and confidence interval">`;
+      let svg=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Turnover tahmini ve güven aralığı">`;
       for(let i=0;i<=4;i++){const val=max*i/4,yy=y(val);svg+=`<line class="gridline" x1="${margin.left}" y1="${yy}" x2="${width-margin.right}" y2="${yy}"/><text class="axis" x="${margin.left-8}" y="${yy+3}" text-anchor="end">${pct(val,1)}</text>`;}
       labels.forEach((label,index)=>{svg+=`<text class="axis" x="${x(label)}" y="${height-20}" text-anchor="middle">${esc(monthLabel(label,true))}</text>`;});
       if(forecast.length>=2){
@@ -655,9 +621,9 @@ HTML_TEMPLATE = r"""<!doctype html>
       const joined=[];const last=actualTail[actualTail.length-1];if(last)joined.push([x(last.donem),y(last.turnover),{...last,tahmini_turnover_orani:last.turnover}]);
       forecast.forEach(row=>joined.push([x(row.donem),y(row.tahmini_turnover_orani),row]));
       if(joined.length>1)svg+=`<path d="${joined.map((point,i)=>`${i?"L":"M"}${point[0]},${point[1]}`).join(" ")}" fill="none" stroke="${COLORS.cyan}" stroke-width="3" stroke-dasharray="7 6" stroke-linecap="round"/>`;
-      actualPoints.forEach(point=>svg+=`<circle cx="${point[0]}" cy="${point[1]}" r="4" fill="${COLORS.blue}" data-tip="${esc(`<b>${monthLabel(point[2].donem)}</b><br>Actual · ${pct(point[2].turnover,2)}`)}"/>`);
-      forecast.forEach(row=>svg+=`<circle cx="${x(row.donem)}" cy="${y(row.tahmini_turnover_orani)}" r="4" fill="${COLORS.cyan}" data-tip="${esc(`<b>${monthLabel(row.donem)}</b><br>Forecast · ${pct(row.tahmini_turnover_orani,2)}<br>Confidence · ${pct(row.alt_guven_araligi,2)} – ${pct(row.ust_guven_araligi,2)}`)}"/>`);
-      svg+="</svg>";target.innerHTML=svg+`<div class="legend"><span><i class="swatch" data-color="${COLORS.blue}"></i>Actual</span><span><i class="swatch" data-color="${COLORS.cyan}"></i>Forecast</span><span><i class="swatch" data-color="rgba(50,214,197,.35)"></i>Confidence Interval (forecast months only)</span></div>`;applyDataStyles(target);
+      actualPoints.forEach(point=>svg+=`<circle cx="${point[0]}" cy="${point[1]}" r="4" fill="${COLORS.blue}" data-tip="${esc(`<b>${monthLabel(point[2].donem)}</b><br>Gerçekleşen · ${pct(point[2].turnover,2)}`)}"/>`);
+      forecast.forEach(row=>svg+=`<circle cx="${x(row.donem)}" cy="${y(row.tahmini_turnover_orani)}" r="4" fill="${COLORS.cyan}" data-tip="${esc(`<b>${monthLabel(row.donem)}</b><br>Tahmin · ${pct(row.tahmini_turnover_orani,2)}<br>Güven · ${pct(row.alt_guven_araligi,2)} – ${pct(row.ust_guven_araligi,2)}`)}"/>`);
+      svg+="</svg>";target.innerHTML=svg+`<div class="legend"><span><i class="swatch" style="--c:${COLORS.blue}"></i>Gerçekleşen</span><span><i class="swatch" style="--c:${COLORS.cyan}"></i>Tahmin</span><span><i class="swatch" style="--c:rgba(50,214,197,.35)"></i>Güven Aralığı (yalnızca tahmin ayları)</span></div>`;
       target.querySelectorAll("[data-tip]").forEach(node=>{node.addEventListener("mouseenter",event=>showTooltip(event,node.dataset.tip));node.addEventListener("mousemove",event=>showTooltip(event,node.dataset.tip));node.addEventListener("mouseleave",hideTooltip);});
     }
 
@@ -669,7 +635,7 @@ HTML_TEMPLATE = r"""<!doctype html>
         const p=(rad,radAngle)=>[cx+rad*Math.cos(radAngle),cy+rad*Math.sin(radAngle)];
         const [x1,y1]=p(R,a1),[x2,y2]=p(R,a2),[ix1,iy1]=p(r,a1),[ix2,iy2]=p(r,a2);
         paths+=`<path d="M${ix1},${iy1} L${x1},${y1} A${R},${R} 0 ${large} 1 ${x2},${y2} L${ix2},${iy2} A${r},${r} 0 ${large} 0 ${ix1},${iy1}Z" fill="${item.color}" stroke="#0b1728" stroke-width="2" data-tip="${esc(`<b>${item.label}</b><br>${fmt(item.value)} · ${pct(share,1)}`)}"/>`;angle=a2;});
-      target.innerHTML=`<svg viewBox="0 0 ${size} ${size}">${paths}<text x="${cx}" y="${cy-2}" text-anchor="middle" fill="#f7f2e8" font-size="28" font-weight="900">${fmt(total)}</text><text x="${cx}" y="${cy+18}" text-anchor="middle" fill="#8496ad" font-size="10">exits</text></svg><div class="legend">${data.map(item=>`<span><i class="swatch" data-color="${esc(item.color)}"></i>${esc(item.label)} · ${fmt(item.value)}</span>`).join("")}</div>`;applyDataStyles(target);
+      target.innerHTML=`<svg viewBox="0 0 ${size} ${size}">${paths}<text x="${cx}" y="${cy-2}" text-anchor="middle" fill="#f7f2e8" font-size="28" font-weight="900">${fmt(total)}</text><text x="${cx}" y="${cy+18}" text-anchor="middle" fill="#8496ad" font-size="10">çıkış</text></svg><div class="legend">${data.map(item=>`<span><i class="swatch" style="--c:${item.color}"></i>${esc(item.label)} · ${fmt(item.value)}</span>`).join("")}</div>`;
       target.querySelectorAll("[data-tip]").forEach(node=>{node.addEventListener("mouseenter",event=>showTooltip(event,node.dataset.tip));node.addEventListener("mousemove",event=>showTooltip(event,node.dataset.tip));node.addEventListener("mouseleave",hideTooltip);});
     }
 
@@ -681,16 +647,16 @@ HTML_TEMPLATE = r"""<!doctype html>
       for(let i=0;i<=4;i++){const val=max*i/4,yy=margin.top+innerH-innerH*i/4;svg+=`<line class="gridline" x1="${margin.left}" y1="${yy}" x2="${width-margin.right}" y2="${yy}"/><text class="axis" x="${margin.left-7}" y="${yy+3}" text-anchor="end">${fmt(val,0)}</text>`;}
       const stride=Math.max(1,Math.ceil(series.length/9));
       series.forEach((row,index)=>{const center=margin.left+groupW*(index+.5),gh=n(row.giris)/max*innerH,ch=n(row.cikis)/max*innerH;
-        svg+=`<rect x="${center-barW-1}" y="${margin.top+innerH-gh}" width="${barW}" height="${gh}" rx="3" fill="${COLORS.green}" data-tip="${esc(`${monthLabel(row.donem)}<br>Hires · ${fmt(row.giris)}`)}"/><rect x="${center+1}" y="${margin.top+innerH-ch}" width="${barW}" height="${ch}" rx="3" fill="${COLORS.rose}" data-tip="${esc(`${monthLabel(row.donem)}<br>Exits · ${fmt(row.cikis)}`)}"/>`;
+        svg+=`<rect x="${center-barW-1}" y="${margin.top+innerH-gh}" width="${barW}" height="${gh}" rx="3" fill="${COLORS.green}" data-tip="${esc(`${monthLabel(row.donem)}<br>Giriş · ${fmt(row.giris)}`)}"/><rect x="${center+1}" y="${margin.top+innerH-ch}" width="${barW}" height="${ch}" rx="3" fill="${COLORS.rose}" data-tip="${esc(`${monthLabel(row.donem)}<br>Çıkış · ${fmt(row.cikis)}`)}"/>`;
         if(index%stride===0||index===series.length-1)svg+=`<text class="axis" x="${center}" y="${height-19}" text-anchor="middle">${esc(monthLabel(row.donem,true))}</text>`;
-      });svg+="</svg>";target.innerHTML=svg+`<div class="legend"><span><i class="swatch" data-color="${COLORS.green}"></i>Hires</span><span><i class="swatch" data-color="${COLORS.rose}"></i>Exits</span></div>`;applyDataStyles(target);
+      });svg+="</svg>";target.innerHTML=svg+`<div class="legend"><span><i class="swatch" style="--c:${COLORS.green}"></i>Giriş</span><span><i class="swatch" style="--c:${COLORS.rose}"></i>Çıkış</span></div>`;
       target.querySelectorAll("[data-tip]").forEach(node=>{node.addEventListener("mouseenter",event=>showTooltip(event,node.dataset.tip));node.addEventListener("mousemove",event=>showTooltip(event,node.dataset.tip));node.addEventListener("mouseleave",hideTooltip);});
     }
 
     function renderBars(target,items,options={}){
       if(!items.length){empty(target);return;}
       const shown=items.slice(0,options.limit||20),max=Math.max(...shown.map(item=>Math.abs(n(item.value))),.0001);
-      target.innerHTML=`<div class="hbar-list">${shown.map(item=>`<div class="hbar-row"><div class="hbar-label" title="${esc(item.label)}">${esc(item.label)}</div><div class="track"><div class="fill" data-width="${Math.max(1,Math.abs(n(item.value))/max*100)}%" data-background="${esc(item.color||COLORS.blue)}"></div></div><div class="hbar-value">${options.percent===false?fmt(item.value,options.digits??0):pct(item.value,1)}</div></div>`).join("")}</div>`;applyDataStyles(target);
+      target.innerHTML=`<div class="hbar-list">${shown.map(item=>`<div class="hbar-row"><div class="hbar-label" title="${esc(item.label)}">${esc(item.label)}</div><div class="track"><div class="fill" style="width:${Math.max(1,Math.abs(n(item.value))/max*100)}%;background:${item.color||""}"></div></div><div class="hbar-value">${options.percent===false?fmt(item.value,options.digits??0):pct(item.value,1)}</div></div>`).join("")}</div>`;
     }
     function heatColor(value,max){
       const ratio=Math.min(1,Math.max(0,n(value)/(max||1)));
@@ -700,20 +666,20 @@ HTML_TEMPLATE = r"""<!doctype html>
     }
 
     function simpleTable(target,rows,columns,options={}){
-      if(!rows.length){empty(target,options.empty||"No data found for this table.");return;}
-      target.innerHTML=`<div class="table-wrap" tabindex="0" aria-label="Data table, scrollable"><table><thead><tr>${columns.map(col=>`<th class="${col.numeric?"num":""}">${esc(col.label)}</th>`).join("")}</tr></thead><tbody>${rows.map((row,rowIndex)=>`<tr class="${row.total?"total-row":""}">${columns.map(col=>`<td class="${col.numeric?"num":""}">${col.render?col.render(row[col.key],row,rowIndex):esc(row[col.key]??"-")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;applyDataStyles(target);
+      if(!rows.length){empty(target,options.empty||"Tablo için veri bulunamadı.");return;}
+      target.innerHTML=`<div class="table-wrap"><table><thead><tr>${columns.map(col=>`<th class="${col.numeric?"num":""}">${esc(col.label)}</th>`).join("")}</tr></thead><tbody>${rows.map((row,rowIndex)=>`<tr class="${row.total?"total-row":""}">${columns.map(col=>`<td class="${col.numeric?"num":""}">${col.render?col.render(row[col.key],row,rowIndex):esc(row[col.key]??"-")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
     }
 
     function renderSmartTable(target,rows,columns,options={}){
       const id=options.id||target.id||"table";
       const prior=TABLE_STATE.get(id)||{query:"",sort:options.defaultSort||"",direction:options.defaultDirection||"desc",page:0,limit:options.limit||25};
       TABLE_STATE.set(id,prior);
-      const query=prior.query.toLocaleLowerCase("en-US").trim();
-      let filtered=query?rows.filter(row=>columns.some(col=>String(row[col.key]??"").toLocaleLowerCase("en-US").includes(query))):[...rows];
+      const query=prior.query.toLocaleLowerCase("tr-TR").trim();
+      let filtered=query?rows.filter(row=>columns.some(col=>String(row[col.key]??"").toLocaleLowerCase("tr-TR").includes(query))):[...rows];
       if(prior.sort){filtered.sort((a,b)=>{const av=a[prior.sort],bv=b[prior.sort];const an=Number(av),bn=Number(bv);let result=Number.isFinite(an)&&Number.isFinite(bn)?an-bn:String(av??"").localeCompare(String(bv??""),"tr");return prior.direction==="asc"?result:-result;});}
       const pages=Math.max(1,Math.ceil(filtered.length/prior.limit));prior.page=Math.min(prior.page,pages-1);
       const visible=filtered.slice(prior.page*prior.limit,(prior.page+1)*prior.limit);
-      target.innerHTML=`<div class="table-tools"><div class="left"><input class="search" value="${esc(prior.query)}" placeholder="${esc(options.placeholder||"Search table...")}"><span class="count">${fmt(filtered.length)} records</span></div><div class="right"><button class="mini prev" ${prior.page===0?"disabled":""}>Previous</button><span class="count">${prior.page+1}/${pages}</span><button class="mini next" ${prior.page>=pages-1?"disabled":""}>Next</button></div></div><div class="table-wrap" tabindex="0" aria-label="Data table, scrollable"><table><thead><tr>${columns.map(col=>`<th class="${col.numeric?"num":""}"><button class="sort-btn" data-sort="${esc(col.key)}">${esc(col.label)} ${prior.sort===col.key?(prior.direction==="asc"?"↑":"↓"):""}</button></th>`).join("")}</tr></thead><tbody>${visible.map((row,rowIndex)=>`<tr>${columns.map(col=>`<td class="${col.numeric?"num":""}">${col.render?col.render(row[col.key],row,rowIndex):esc(row[col.key]??"-")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;applyDataStyles(target);
+      target.innerHTML=`<div class="table-tools"><div class="left"><input class="search" value="${esc(prior.query)}" placeholder="${esc(options.placeholder||"Tabloda ara...")}"><span class="count">${fmt(filtered.length)} kayıt</span></div><div class="right"><button class="mini prev" ${prior.page===0?"disabled":""}>Önceki</button><span class="count">${prior.page+1}/${pages}</span><button class="mini next" ${prior.page>=pages-1?"disabled":""}>Sonraki</button></div></div><div class="table-wrap"><table><thead><tr>${columns.map(col=>`<th class="${col.numeric?"num":""}"><button class="sort-btn" data-sort="${esc(col.key)}">${esc(col.label)} ${prior.sort===col.key?(prior.direction==="asc"?"↑":"↓"):""}</button></th>`).join("")}</tr></thead><tbody>${visible.map((row,rowIndex)=>`<tr>${columns.map(col=>`<td class="${col.numeric?"num":""}">${col.render?col.render(row[col.key],row,rowIndex):esc(row[col.key]??"-")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
       const input=target.querySelector(".search");let timer;
       input?.addEventListener("input",()=>{clearTimeout(timer);timer=setTimeout(()=>{prior.query=input.value;prior.page=0;renderSmartTable(target,rows,columns,options);},180);});
       target.querySelectorAll("[data-sort]").forEach(button=>button.addEventListener("click",()=>{const key=button.dataset.sort;if(prior.sort===key)prior.direction=prior.direction==="asc"?"desc":"asc";else{prior.sort=key;prior.direction="asc";}prior.page=0;renderSmartTable(target,rows,columns,options);}));
@@ -724,19 +690,19 @@ HTML_TEMPLATE = r"""<!doctype html>
 
     function updateDimensionFilters(){
       const base=MONTHLY.filter(row=>scopeMatch(row)&&periodMatch(row));
-        const isStore=STATE.scope==="Aizanoi Demo Group"||STATE.scope.startsWith("Retail");
+      const isStore=STATE.scope==="Aurelia Group"||STATE.scope.startsWith("Mağaza");
       const definitions=[
-        ["region","bolge","region-filter","All Regions"],
-        ["store","magaza","store-filter","All Stores"],
-        ["department","departman","department-filter","All Departments"],
-        ["city","il","city-filter","All Cities"],
-        ["gender","cinsiyet","gender-filter","All Genders"],
-        ["contract","sozlesme_turu","contract-filter","All Contract Types"],
-        ["title","title","title-filter","All Titles"],
+        ["region","bolge","region-filter","Tüm Bölgeler"],
+        ["store","magaza","store-filter","Tüm Mağazalar"],
+        ["department","departman","department-filter","Tüm Departmanlar"],
+        ["city","il","city-filter","Tüm Şehirler"],
+        ["gender","cinsiyet","gender-filter","Tüm Cinsiyetler"],
+        ["contract","sozlesme_turu","contract-filter","Tüm Sözleşme Türleri"],
+        ["title","title","title-filter","Tüm Title'lar"],
       ];
       definitions.forEach(([stateKey,field,id,label])=>{
         let candidates=base.filter(row=>dimensionsMatch(row,field));
-        if(field==="bolge"||field==="magaza")candidates=candidates.filter(row=>row.scope==="Retail");
+        if(field==="bolge"||field==="magaza")candidates=candidates.filter(row=>row.scope==="Mağaza");
         const values=unique(candidates.map(row=>row[field]).filter(value=>value&&value!=="Belirsiz"));
         STATE[stateKey]=fillSelect($(id),values,STATE[stateKey],label);
       });
@@ -745,38 +711,38 @@ HTML_TEMPLATE = r"""<!doctype html>
       renderChips();
     }
     function renderChips(){
-      const pairs=[["Scope",STATE.scope],["Type",typeLabel()],["Period",currentPeriodText()]];
-      if(STATE.region!==ALL)pairs.push(["Region",STATE.region]);if(STATE.store!==ALL)pairs.push(["Store",STATE.store]);
-      if(STATE.department!==ALL)pairs.push(["Department",STATE.department]);if(STATE.city!==ALL)pairs.push(["City",STATE.city]);
-      if(STATE.gender!==ALL)pairs.push(["Gender",STATE.gender]);if(STATE.contract!==ALL)pairs.push(["Contract",STATE.contract]);
+      const pairs=[["Kapsam",STATE.scope],["Tür",typeLabel()],["Dönem",currentPeriodText()]];
+      if(STATE.region!==ALL)pairs.push(["Bölge",STATE.region]);if(STATE.store!==ALL)pairs.push(["Mağaza",STATE.store]);
+      if(STATE.department!==ALL)pairs.push(["Departman",STATE.department]);if(STATE.city!==ALL)pairs.push(["Şehir",STATE.city]);
+      if(STATE.gender!==ALL)pairs.push(["Cinsiyet",STATE.gender]);if(STATE.contract!==ALL)pairs.push(["Sözleşme",STATE.contract]);
       if(STATE.title!==ALL)pairs.push(["Title",STATE.title]);
       $("active-chips").innerHTML=pairs.map(([key,value])=>`<span class="chip">${esc(key)} · ${esc(value)}</span>`).join("");
     }
 
     function renderOverview(){
       const series=seriesFor(),latest=series[series.length-1],allExits=filteredExits({ignoreType:true}),selectedExits=filteredExits();
-      const voluntary=allExits.filter(row=>classification(row)==="Voluntary"),forced=allExits.filter(row=>classification(row)==="Employer Initiated");
-      const matched=allExits.filter(row=>String(row.reason_match_status||"").toLocaleLowerCase("en-US").startsWith("source list")).length;
+      const voluntary=allExits.filter(row=>classification(row)==="İstifa"),forced=allExits.filter(row=>classification(row)==="Fesih");
+      const matched=allExits.filter(row=>String(row.reason_match_status||"").startsWith("Ayrılanlar")).length;
       const last12=series.slice(-12),cum=cumulative(last12);
       const prior=series.length>1?series[series.length-2]:null,delta=latest&&prior&&Number.isFinite(latest.turnover)&&Number.isFinite(prior.turnover)?latest.turnover-prior.turnover:null;
       $("overview-subtitle").textContent=`${STATE.scope} · ${typeLabel()} · ${currentPeriodText()}`;
       const kpis=[
-        ["Latest Month Turnover",latest?pct(latest.turnover,1):"-",latest?monthLabel(latest.donem):"-","rgba(78,165,255,.15)"],
-        ["Vs Previous Month",delta===null?"-":`${delta>=0?"+":""}${pct(delta,1)}`,prior?monthLabel(prior.donem):"-","rgba(255,184,77,.14)"],
-        ["Latest Month Exits",latest?fmt(latest.cikis):"-",typeLabel(),"rgba(255,93,119,.14)"],
-        ["Last 12 Months Turnover",pct(cum,1),`${last12.length}-month cumulative rate`,"rgba(169,140,255,.14)"],
-        ["Voluntary Share",pct(sum(voluntary,"cikis")/Math.max(1,sum(allExits,"cikis")),1),`${fmt(sum(voluntary,"cikis"))} exits`,"rgba(50,214,197,.13)"],
-        ["Employer-Initiated Share",pct(sum(forced,"cikis")/Math.max(1,sum(allExits,"cikis")),1),`${fmt(sum(forced,"cikis"))} exits`,"rgba(255,122,69,.13)"],
+        ["Son Ay Turnover",latest?pct(latest.turnover,1):"-",latest?monthLabel(latest.donem):"-","rgba(78,165,255,.15)"],
+        ["Önceki Aya Göre",delta===null?"-":`${delta>=0?"+":""}${pct(delta,1)}`,prior?monthLabel(prior.donem):"-","rgba(255,184,77,.14)"],
+        ["Son Ay Çıkış",latest?fmt(latest.cikis):"-",typeLabel(),"rgba(255,93,119,.14)"],
+        ["Son 12 Ay Turnover",pct(cum,1),`${last12.length} aylık kümüle oran`,"rgba(169,140,255,.14)"],
+        ["Gönüllü Pay",pct(sum(voluntary,"cikis")/Math.max(1,sum(allExits,"cikis")),1),`${fmt(sum(voluntary,"cikis"))} çıkış`,"rgba(50,214,197,.13)"],
+        ["Zorunlu Pay",pct(sum(forced,"cikis")/Math.max(1,sum(allExits,"cikis")),1),`${fmt(sum(forced,"cikis"))} çıkış`,"rgba(255,122,69,.13)"],
       ];
-      $("overview-kpis").innerHTML=kpis.map(item=>`<div class="kpi" data-tone="${esc(item[3])}"><div class="label">${esc(item[0])}</div><div class="value">${esc(item[1])}</div><div class="sub">${esc(item[2])}</div></div>`).join("");applyDataStyles($("overview-kpis"));
-      trendExportRows=series.map(row=>({Period:monthLabel(row.donem),Hires:row.giris,Exits:row.cikis,"Opening Workforce":row.donem_basi,"Closing Workforce":row.donem_sonu,"Average Workforce":row.ortalama_calisan,Turnover:row.turnover}));
+      $("overview-kpis").innerHTML=kpis.map(item=>`<div class="kpi" style="--tone:${item[3]}"><div class="label">${esc(item[0])}</div><div class="value">${esc(item[1])}</div><div class="sub">${esc(item[2])}</div></div>`).join("");
+      trendExportRows=series.map(row=>({Dönem:monthLabel(row.donem),Giriş:row.giris,Çıkış:row.cikis,"Dönem Başı":row.donem_basi,"Dönem Sonu":row.donem_sonu,"Ortalama Çalışan":row.ortalama_calisan,Turnover:row.turnover}));
       renderLineChart($("trend-chart"),[{name:typeLabel(),values:series.map(row=>row.turnover),color:COLORS.blue}],{labels:series.map(row=>row.donem),percent:true});
-      renderDonut($("composition-chart"),[{label:"Voluntary",value:sum(voluntary,"cikis"),color:COLORS.cyan},{label:"Employer Initiated",value:sum(forced,"cikis"),color:COLORS.rose}]);
-      const matchedWeight=allExits.filter(row=>String(row.reason_match_status||"").toLocaleLowerCase("en-US").startsWith("source list")).reduce((total,row)=>total+n(row.cikis),0);
-      $("match-badge").textContent=allExits.length?`${pct(matchedWeight/Math.max(1,sum(allExits,"cikis")),1)} reason match`:"No reason records";
+      renderDonut($("composition-chart"),[{label:"İstifa",value:sum(voluntary,"cikis"),color:COLORS.cyan},{label:"Fesih",value:sum(forced,"cikis"),color:COLORS.rose}]);
+      const matchedWeight=allExits.filter(row=>String(row.reason_match_status||"").startsWith("Ayrılanlar")).reduce((total,row)=>total+n(row.cikis),0);
+      $("match-badge").textContent=allExits.length?`${pct(matchedWeight/Math.max(1,sum(allExits,"cikis")),1)} neden eşleşmesi`:"Neden kaydı yok";
       renderFlowChart($("flow-chart"),series.slice(-18));
       const scopes=DATA.meta.scopes||[];const rows=scopes.map(scope=>{const scoped=seriesFor({scope}),row=scoped[scoped.length-1];return {scope,month:row?.donem,turnover:row?.turnover,cikis:row?.cikis,avg:row?.ortalama_calisan};}).filter(row=>row.month);
-      simpleTable($("scope-comparison"),rows,[{key:"scope",label:"Scope"},{key:"month",label:"Period",render:value=>esc(monthLabel(value))},{key:"cikis",label:"Exits",numeric:true,render:value=>fmt(value)},{key:"avg",label:"Avg. Workforce",numeric:true,render:value=>fmt(value,1)},{key:"turnover",label:"Turnover",numeric:true,render:value=>pct(value,1)}]);
+      simpleTable($("scope-comparison"),rows,[{key:"scope",label:"Kapsam"},{key:"month",label:"Dönem",render:value=>esc(monthLabel(value))},{key:"cikis",label:"Çıkış",numeric:true,render:value=>fmt(value)},{key:"avg",label:"Ort. Çalışan",numeric:true,render:value=>fmt(value,1)},{key:"turnover",label:"Turnover",numeric:true,render:value=>pct(value,1)}]);
       renderScopeTrend();
     }
 
@@ -796,7 +762,7 @@ HTML_TEMPLATE = r"""<!doctype html>
         const raw=seriesFor({scope}),rows=STATE.scopeTrendMode==="ytd"?yearToDateSeries(raw):raw,map=new Map(rows.map(row=>[row.donem,row.turnover]));
         return {name:scope,values:labels.map(month=>map.get(month)),color:palette[index%palette.length],width:scope===STATE.scope?4:2.4};
       });
-      renderLineChart($("scope-trend-chart"),series,{labels,percent:true,height:340,aria:"Turnover comparison across primary scopes"});
+      renderLineChart($("scope-trend-chart"),series,{labels,percent:true,height:340,aria:"Ana kapsamlar turnover karşılaştırması"});
     }
 
     function entitySeries(dimension,entity,baseRows){
@@ -817,32 +783,34 @@ HTML_TEMPLATE = r"""<!doctype html>
         if(STATE.type!=="all"){const exits=filteredExits({ignoreDimension:dim}).filter(row=>row[dim]===entity);const map=new Map();exits.forEach(row=>map.set(row.donem,(map.get(row.donem)||0)+n(row.cikis)));series.forEach(row=>{row.cikis=map.get(row.donem)||0;row.turnover=row.ortalama_calisan>0?row.cikis/row.ortalama_calisan:null;});}
         const latest=series[series.length-1];return {entity,value:entityMetric(series,metric),series,latest_month:latest?.donem,cikis:sum(series,"cikis"),avg:series.length?series.reduce((s,r)=>s+n(r.ortalama_calisan),0)/series.length:0};
       }).filter(row=>Number.isFinite(Number(row.value))).sort((a,b)=>n(b.value)-n(a.value));
-      breakdownRows=rows.map(row=>({[dim]:row.entity,Metric:row.value,Exits:row.cikis,"Average Workforce":row.avg}));
-      $("breakdown-note").textContent=`${rows.length} ${$("breakdown-dimension").selectedOptions[0]?.textContent||"breakdowns"} · ${typeLabel()}`;
+      breakdownRows=rows.map(row=>({[dim]:row.entity,Metrik:row.value,Çıkış:row.cikis,"Ortalama Çalışan":row.avg}));
+      $("breakdown-note").textContent=`${rows.length} ${$("breakdown-dimension").selectedOptions[0]?.textContent||"kırılım"} · ${typeLabel()}`;
       renderBars($("breakdown-bars"),rows.map(row=>({label:row.entity,value:row.value})),{limit:24,percent:metric!=="exits"});
       const heatRows=rows.slice(0,30),months=MONTHS.filter(month=>month>=STATE.start&&month<=STATE.end).slice(-12);
       const allVals=heatRows.flatMap(row=>row.series.filter(item=>months.includes(item.donem)).map(item=>n(item.turnover))),max=Math.max(...allVals,.01);
-      const htmlRows=heatRows.map(row=>{const map=new Map(row.series.map(item=>[item.donem,item.turnover]));return `<tr><td>${esc(row.entity)}</td>${months.map(month=>{const value=map.get(month);return `<td class="num heat" data-background="${heatColor(value,max)}">${Number.isFinite(Number(value))?pct(value,1):"-"}</td>`;}).join("")}</tr>`;}).join("");
-      $("breakdown-heatmap").innerHTML=heatRows.length?`<div class="table-wrap" tabindex="0" aria-label="Data table, scrollable"><table><thead><tr><th>${esc($("breakdown-dimension").selectedOptions[0]?.textContent||"Breakdown")}</th>${months.map(month=>`<th class="num">${esc(monthLabel(month,true))}</th>`).join("")}</tr></thead><tbody>${htmlRows}</tbody></table></div>`:`<div class="empty">No data found for the heat map.</div>`;applyDataStyles($("breakdown-heatmap"));
-      simpleTable($("breakdown-table"),rows,[{key:"entity",label:"Breakdown"},{key:"latest_month",label:"Latest Period",render:value=>esc(monthLabel(value))},{key:"cikis",label:"Selected Period Exits",numeric:true,render:value=>fmt(value)},{key:"avg",label:"Avg. Workforce",numeric:true,render:value=>fmt(value,1)},{key:"value",label:"Selected Metric",numeric:true,render:value=>metric==="exits"?fmt(value):pct(value,1)}]);
+      const htmlRows=heatRows.map(row=>{const map=new Map(row.series.map(item=>[item.donem,item.turnover]));return `<tr><td>${esc(row.entity)}</td>${months.map(month=>{const value=map.get(month);return `<td class="num heat" style="background:${heatColor(value,max)}">${Number.isFinite(Number(value))?pct(value,1):"-"}</td>`;}).join("")}</tr>`;}).join("");
+      $("breakdown-heatmap").innerHTML=heatRows.length?`<div class="table-wrap"><table><thead><tr><th>${esc($("breakdown-dimension").selectedOptions[0]?.textContent||"Kırılım")}</th>${months.map(month=>`<th class="num">${esc(monthLabel(month,true))}</th>`).join("")}</tr></thead><tbody>${htmlRows}</tbody></table></div>`:`<div class="empty">Isı haritası için veri bulunamadı.</div>`;
+      simpleTable($("breakdown-table"),rows,[{key:"entity",label:"Kırılım"},{key:"latest_month",label:"Son Dönem",render:value=>esc(monthLabel(value))},{key:"cikis",label:"Seçili Dönem Çıkış",numeric:true,render:value=>fmt(value)},{key:"avg",label:"Ort. Çalışan",numeric:true,render:value=>fmt(value,1)},{key:"value",label:"Seçili Metrik",numeric:true,render:value=>metric==="exits"?fmt(value):pct(value,1)}]);
       renderTitleMatrix();
     }
 
     function renderTitleMatrix(){
-      const storeMode=STATE.scope==="Aizanoi Demo Group"||STATE.scope.startsWith("Retail");
-      const matrixScope=storeMode?(STATE.scope==="Aizanoi Demo Group"?"Retail":STATE.scope):STATE.scope;
-      const groupField=storeMode?"bolge":"departman",groupLabel=storeMode?"Region":"Department";
+      const storeMode=STATE.scope==="Aurelia Group"||STATE.scope.startsWith("Mağaza");
+      const matrixScope=storeMode?(STATE.scope==="Aurelia Group"?"Mağaza":STATE.scope):STATE.scope;
+      const groupField=storeMode?"bolge":"departman",groupLabel=storeMode?"Bölge":"Departman";
       const base=filteredMonthly({scope:matrixScope,ignoreDimension:"title"});
       const exitBase=filteredExits({scope:matrixScope,ignoreDimension:"title"});
       const preferred=[
-        "Store Manager","Assistant Store Manager","Sales Advisor",
-        "Part-Time Sales Advisor","Cashier","Store Support",
+        "Mağaza Müdürü","Mağaza İkinci Müdürü / Mağaza Müdür Yardımcısı","Pasör Satış Danışmanı",
+        "Satış Danışmanı","Part Time Satış Danışmanı","Kasiyer","Mağaza Destek Elemanı",
+        "Belirli Süreli Full Time Satış Danışmanı","Belirli Süreli Part Time Satış Danışmanı",
+        "Corner Satış Danışmanı","Temizlik Elemanı",
       ];
       const order=new Map(preferred.map((value,index)=>[value,index]));
       const titles=unique(base.map(row=>row.title).filter(Boolean)).sort((a,b)=>{
         const ai=order.has(a)?order.get(a):999,bi=order.has(b)?order.get(b):999;
         if(a==="Belirsiz")return 1;if(b==="Belirsiz")return -1;
-        return ai-bi||String(a).localeCompare(String(b),"en");
+        return ai-bi||String(a).localeCompare(String(b),"tr");
       });
       const groups=unique(base.map(row=>row[groupField]).filter(value=>value&&value!=="Belirsiz"));
       const groupMonth=new Map(),titleMonth=new Map(),groupExits=new Map(),titleExits=new Map(),sep="\u0001";
@@ -878,21 +846,21 @@ HTML_TEMPLATE = r"""<!doctype html>
         return row;
       }).sort((a,b)=>n(b.total)-n(a.total));
       const max=Math.max(...rows.flatMap(row=>titles.concat("total").map(key=>n(row[key]))),.001);
-      const heat=value=>Number.isFinite(Number(value))?`<span class="heat heat-value" data-background="${heatColor(value,max)}">${pct(value,1)}</span>`:"-";
-      const titleLabel=title=>title==="Unknown"?"Other / Unknown":title;
-      const columns=[{key:"group",label:groupLabel},...titles.map(title=>({key:title,label:titleLabel(title),numeric:true,render:heat})),{key:"total",label:"Total Turnover",numeric:true,render:heat}];
-      titleMatrixExportRows=rows.map(row=>Object.fromEntries([[groupLabel,row.group],...titles.map(title=>[titleLabel(title),row[title]]),["Total Turnover",row.total]]));
+      const heat=value=>Number.isFinite(Number(value))?`<span class="heat" style="display:block;padding:5px 7px;background:${heatColor(value,max)}">${pct(value,1)}</span>`:"-";
+      const titleLabel=title=>title==="Belirsiz"?"Diğer / Belirsiz":title;
+      const columns=[{key:"group",label:groupLabel},...titles.map(title=>({key:title,label:titleLabel(title),numeric:true,render:heat})),{key:"total",label:"Toplam Turnover",numeric:true,render:heat}];
+      titleMatrixExportRows=rows.map(row=>Object.fromEntries([[groupLabel,row.group],...titles.map(title=>[titleLabel(title),row[title]]),["Toplam Turnover",row.total]]));
       $("title-matrix-note").textContent=STATE.titleMatrixMode==="title_rate"
-        ?"Title Turnover Rate = title exits / the title's average workforce over the selected months. Each title uses its own denominator."
-        :"Share of Turnover = title exits / the shared average workforce of the relevant region or department. Title columns show their contribution to total turnover.";
-      simpleTable($("title-matrix-table"),rows,columns,{empty:"No data found for the title turnover matrix."});
+        ?"Title Turnover Oranı = title çıkışı / title'ın seçili aylardaki ortalama çalışanı. Her title kendi paydasında değerlendirilir."
+        :"Turnover İçindeki Pay = title çıkışı / ilgili bölge veya departmanın ortak ortalama çalışanı. Title sütunları toplam turnover'a katkıyı gösterir.";
+      simpleTable($("title-matrix-table"),rows,columns,{empty:"Title turnover matrisi için veri bulunamadı."});
     }
 
     function compareEntityRows(kind,entity,year){
       const start=`${year}-01`,end=`${year}-12`;
-      const cube=MONTHLY.filter(row=>row.scope==="Retail"&&row[kind]===entity&&row.donem>=start&&row.donem<=end&&scopeMatch(row)&&dimensionsMatch(row,kind));
+      const cube=MONTHLY.filter(row=>row.scope==="Mağaza"&&row[kind]===entity&&row.donem>=start&&row.donem<=end&&scopeMatch(row)&&dimensionsMatch(row,kind));
       const series=aggregateMonthly(cube),type=STATE.type;
-      if(type!=="all"){const exits=EXITS.filter(row=>row.scope==="Retail"&&row[kind]===entity&&row.donem>=start&&row.donem<=end&&scopeMatch(row)&&dimensionsMatch(row,kind)&&typeMatch(row));const map=new Map();exits.forEach(row=>map.set(row.donem,(map.get(row.donem)||0)+n(row.cikis)));series.forEach(row=>{row.cikis=map.get(row.donem)||0;row.turnover=row.ortalama_calisan>0?row.cikis/row.ortalama_calisan:null;});}
+      if(type!=="all"){const exits=EXITS.filter(row=>row.scope==="Mağaza"&&row[kind]===entity&&row.donem>=start&&row.donem<=end&&scopeMatch(row)&&dimensionsMatch(row,kind)&&typeMatch(row));const map=new Map();exits.forEach(row=>map.set(row.donem,(map.get(row.donem)||0)+n(row.cikis)));series.forEach(row=>{row.cikis=map.get(row.donem)||0;row.turnover=row.ortalama_calisan>0?row.cikis/row.ortalama_calisan:null;});}
       return series;
     }
     function renderComparison(){
@@ -905,41 +873,41 @@ HTML_TEMPLATE = r"""<!doctype html>
       const metricRows=[
         {metric:`${STATE.compareA} ${STATE.compareYearA} Turnover`,get:(a,b)=>a?.turnover,format:pct},
         {metric:`${STATE.compareB} ${STATE.compareYearB} Turnover`,get:(a,b)=>b?.turnover,format:pct},
-        {metric:"Difference",get:(a,b)=>Number.isFinite(a?.turnover)&&Number.isFinite(b?.turnover)?a.turnover-b.turnover:null,format:pct},
-        {metric:`${STATE.compareA} Exits`,get:a=>a?.cikis,format:fmt},
-        {metric:`${STATE.compareB} Exits`,get:(a,b)=>b?.cikis,format:fmt},
-        {metric:`${STATE.compareA} Opening Workforce`,get:a=>a?.donem_basi,format:fmt},
-        {metric:`${STATE.compareA} Closing Workforce`,get:a=>a?.donem_sonu,format:fmt},
-        {metric:`${STATE.compareB} Opening Workforce`,get:(a,b)=>b?.donem_basi,format:fmt},
-        {metric:`${STATE.compareB} Closing Workforce`,get:(a,b)=>b?.donem_sonu,format:fmt},
-      ].map(def=>{const row={Metric:def.metric};labels.forEach((label,i)=>{const a=byMonth(aRows,i+1),b=byMonth(bRows,i+1);row[label]=def.format(def.get(a,b),def.format===pct?1:0);});return row;});
+        {metric:"Fark",get:(a,b)=>Number.isFinite(a?.turnover)&&Number.isFinite(b?.turnover)?a.turnover-b.turnover:null,format:pct},
+        {metric:`${STATE.compareA} Çıkış`,get:a=>a?.cikis,format:fmt},
+        {metric:`${STATE.compareB} Çıkış`,get:(a,b)=>b?.cikis,format:fmt},
+        {metric:`${STATE.compareA} Dönem Başı`,get:a=>a?.donem_basi,format:fmt},
+        {metric:`${STATE.compareA} Dönem Sonu`,get:a=>a?.donem_sonu,format:fmt},
+        {metric:`${STATE.compareB} Dönem Başı`,get:(a,b)=>b?.donem_basi,format:fmt},
+        {metric:`${STATE.compareB} Dönem Sonu`,get:(a,b)=>b?.donem_sonu,format:fmt},
+      ].map(def=>{const row={Metrik:def.metric};labels.forEach((label,i)=>{const a=byMonth(aRows,i+1),b=byMonth(bRows,i+1);row[label]=def.format(def.get(a,b),def.format===pct?1:0);});return row;});
       comparisonExportRows=metricRows;
-      simpleTable($("comparison-table"),metricRows,[{key:"Metric",label:"Metric"},...labels.map(label=>({key:label,label,numeric:true}))]);
+      simpleTable($("comparison-table"),metricRows,[{key:"Metrik",label:"Metrik"},...labels.map(label=>({key:label,label,numeric:true}))]);
     }
 
     function normalizedScope(value){
-      const text=String(value||"").toLocaleLowerCase("en-US");
-      if(text.includes("group"))return "Aizanoi Demo Group";if(text.includes("part"))return "Retail Part-Time";if(text.includes("full"))return "Retail Full-Time";
-      if(text.includes("retail"))return "Retail";if(text.includes("head"))return "Head Office";if(text.includes("operations"))return "Operations";return value;
+      const text=String(value||"").toLocaleLowerCase("tr-TR");
+      if(text.includes("group"))return "Aurelia Group";if(text.includes("part"))return "Mağaza Part";if(text.includes("full"))return "Mağaza Full";
+      if(text.includes("mağaza")||text.includes("magaza"))return "Mağaza";if(text.includes("merkez"))return "Merkez";if(text.includes("edirne"))return "Edirne";return value;
     }
     function renderForecast(){
       if(STATE.type!=="all"){
-        $("forecast-warning").innerHTML=`<div class="notice">Forecast models were trained on all exits. Plotting them under a voluntary or employer-initiated selection would misrepresent model scope. Select “All Exits” to view the forecast.</div>`;
-        empty($("forecast-chart"),"No separate forecast model exists for the selected turnover type.");$("backtest-summary").innerHTML="";$("backtest-quality").innerHTML="";$("annual-backtest-table").innerHTML="";return;
+        $("forecast-warning").innerHTML=`<div class="notice">Tahmin modelleri bütün çıkışlar ile eğitildi. Gönüllü veya zorunlu turnover seçiliyken tahmin çizmek model kapsamını yanlış temsil eder. Grafiği görmek için “Bütün Çıkışlar” seçin.</div>`;
+        empty($("forecast-chart"),"Seçili turnover türü için ayrı bir tahmin modeli bulunmuyor.");$("backtest-summary").innerHTML="";$("backtest-quality").innerHTML="";$("annual-backtest-table").innerHTML="";return;
       }
       $("forecast-warning").innerHTML="";
       const scope=STATE.scope,actual=seriesFor({scope,type:"all",ignorePeriod:true,ignoreDimensions:true});
       const forecast=(DATA.forecasts||[]).filter(row=>normalizedScope(row.ust_bolum_adi)===scope).sort((a,b)=>String(a.donem).localeCompare(String(b.donem)));
       const hasLocalFilter=[STATE.region,STATE.store,STATE.department,STATE.title].some(value=>value!==ALL);
-      if(hasLocalFilter)$("forecast-warning").innerHTML=`<div class="notice info">The forecast was produced only for the <b>${esc(scope)}</b> scope. Region, store, department, and title filters do not apply to the forecast series.</div>`;
+      if(hasLocalFilter)$("forecast-warning").innerHTML=`<div class="notice info">Tahmin modeli yalnızca <b>${esc(scope)}</b> kapsamı için üretildi. Bölge, mağaza, departman ve title filtreleri tahmin serisine uygulanmaz.</div>`;
       renderForecastChart($("forecast-chart"),actual,forecast);
       const summary=(DATA.backtest_summary||[]).find(row=>normalizedScope(row.scope)===scope);
-      if(summary){const cards=[["MAE",pct(summary.mae,2),"Mean absolute error"],["RMSE",pct(summary.rmse,2),"Penalizes larger errors more heavily"],["MAPE",`${fmt(summary.mape,1)}%`,"Percentage error"],["Band Coverage",`${fmt(summary.band_coverage_pct,1)}%`,"Share of actuals within the confidence band"]];
-        $("backtest-summary").innerHTML=`<div class="metric-cards two-cols">${cards.map(card=>`<div class="metric-card"><div class="small">${card[0]}</div><div class="big">${card[1]}</div><div class="small">${card[2]}</div></div>`).join("")}</div>`;
-        $("backtest-quality").innerHTML=`<div class="notice info"><b>Model:</b> ${esc(summary.model_versiyonu||"-")}<br><b>Training / test:</b> ${fmt(summary.n_train)} / ${fmt(summary.n_test)} months<br><b>Interpretation:</b> Error metrics come from historical rolling-origin tests and do not guarantee future performance.</div>`;
-      }else{empty($("backtest-summary"),"No backtest summary is available for this scope.");$("backtest-quality").innerHTML="";}
+      if(summary){const cards=[["MAE",pct(summary.mae,2),"Ortalama mutlak hata"],["RMSE",pct(summary.rmse,2),"Büyük hataları daha fazla cezalandırır"],["MAPE",`${fmt(summary.mape,1)}%`,"Oransal hata"],["Bant Kapsaması",`${fmt(summary.band_coverage_pct,1)}%`,"Gerçekleşenlerin güven bandında kalma oranı"]];
+        $("backtest-summary").innerHTML=`<div class="metric-cards" style="grid-template-columns:repeat(2,minmax(0,1fr))">${cards.map(card=>`<div class="metric-card"><div class="small">${card[0]}</div><div class="big">${card[1]}</div><div class="small">${card[2]}</div></div>`).join("")}</div>`;
+        $("backtest-quality").innerHTML=`<div class="notice info"><b>Model:</b> ${esc(summary.model_versiyonu||"-")}<br><b>Eğitim / test:</b> ${fmt(summary.n_train)} / ${fmt(summary.n_test)} ay<br><b>Yorum:</b> Hata metrikleri geçmiş dönem rolling-origin testinden gelir; ileri tahmin garantisi değildir.</div>`;
+      }else{empty($("backtest-summary"),"Bu kapsam için backtest özeti yok.");$("backtest-quality").innerHTML="";}
       const annual=(DATA.annual_backtest||[]).filter(row=>normalizedScope(row.scope)===scope).sort((a,b)=>String(b.hedef_donem).localeCompare(String(a.hedef_donem)));
-      renderSmartTable($("annual-backtest-table"),annual,[{key:"hedef_donem",label:"Target Period",render:value=>monthLabel(value)},{key:"durum",label:"Status"},{key:"gerceklesen",label:"Actual",numeric:true,render:value=>pct(value,2)},{key:"tahmin",label:"Forecast",numeric:true,render:value=>pct(value,2)},{key:"abs_hata",label:"Absolute Error",numeric:true,render:value=>pct(value,2)},{key:"ape_pct",label:"APE",numeric:true,render:value=>Number.isFinite(Number(value))?`${fmt(value,1)}%`:"-"},{key:"guven_bandi_icinde",label:"Band",render:value=>value?'<span class="status good">Inside</span>':'<span class="status bad">Outside</span>'}],{id:"annual-backtest",limit:15,defaultSort:"hedef_donem"});
+      renderSmartTable($("annual-backtest-table"),annual,[{key:"hedef_donem",label:"Hedef Dönem",render:value=>monthLabel(value)},{key:"durum",label:"Durum"},{key:"gerceklesen",label:"Gerçekleşen",numeric:true,render:value=>pct(value,2)},{key:"tahmin",label:"Tahmin",numeric:true,render:value=>pct(value,2)},{key:"abs_hata",label:"Mutlak Hata",numeric:true,render:value=>pct(value,2)},{key:"ape_pct",label:"APE",numeric:true,render:value=>Number.isFinite(Number(value))?`${fmt(value,1)}%`:"-"},{key:"guven_bandi_icinde",label:"Bant",render:value=>value?'<span class="status good">İçinde</span>':'<span class="status bad">Dışında</span>'}],{id:"annual-backtest",limit:15,defaultSort:"hedef_donem"});
     }
 
     function tenureDays(row){
@@ -953,48 +921,48 @@ HTML_TEMPLATE = r"""<!doctype html>
     }
     function renderEarly(){
       const rows=filteredExits(),metrics=earlyMetrics(rows);
-      const cards=[["First Month",metrics.m1,31,COLORS.rose],["First 2 Months",metrics.m2,62,COLORS.orange],["First 6 Months",metrics.m6,183,COLORS.amber]];
-      $("early-cards").innerHTML=cards.map(([label,value,days,color])=>`<div class="metric-card" data-border-color="${color}"><div class="small">${label} · ≤ ${days} days</div><div class="big">${fmt(value)} <span class="metric-inline">· ${pct(value/Math.max(1,metrics.total),1)}</span></div><div class="small">Share of ${fmt(metrics.total)} total exits in the selected period</div></div>`).join("");applyDataStyles($("early-cards"));
-      const buckets=[["Under 10 Days",0,9],["10 Days - 2 Months",10,62],["2-6 Months",63,183],["6 Months - 1 Year",184,365],["1-2 Years",366,730],["2+ Years",731,Infinity]];
+      const cards=[["İlk Ay",metrics.m1,31,COLORS.rose],["İlk 2 Ay",metrics.m2,62,COLORS.orange],["İlk 6 Ay",metrics.m6,183,COLORS.amber]];
+      $("early-cards").innerHTML=cards.map(([label,value,days,color])=>`<div class="metric-card" style="border-top:3px solid ${color}"><div class="small">${label} · ≤ ${days} gün</div><div class="big">${fmt(value)} <span style="font-size:14px;color:var(--muted)">· ${pct(value/Math.max(1,metrics.total),1)}</span></div><div class="small">Seçili dönemdeki ${fmt(metrics.total)} toplam çıkışın içindeki pay</div></div>`).join("");
+      const buckets=[["10 Günden Az",0,9],["10 Gün - 2 Ay",10,62],["2-6 Ay",63,183],["6 Ay - 1 Yıl",184,365],["1-2 Yıl",366,730],["2 Yıl ve Üstü",731,Infinity]];
       const bucketRows=buckets.map(([label,min,max])=>({label,value:rows.filter(row=>{const day=tenureDays(row);return Number.isFinite(day)&&day>=min&&day<=max;}).reduce((s,row)=>s+n(row.cikis),0)}));
       renderBars($("tenure-chart"),bucketRows,{limit:10,percent:false});
       const years=unique(rows.map(row=>String(row.donem||"").slice(0,4))).sort().reverse();
       const yearRows=years.map(year=>{const m=earlyMetrics(rows.filter(row=>String(row.donem).startsWith(year)));return {year,total:m.total,m1:m.m1,m1r:m.m1/Math.max(1,m.total),m2:m.m2,m2r:m.m2/Math.max(1,m.total),m6:m.m6,m6r:m.m6/Math.max(1,m.total)};});
-      simpleTable($("early-year-table"),yearRows,[{key:"year",label:"Year"},{key:"total",label:"Total Exits",numeric:true,render:value=>fmt(value)},{key:"m1",label:"First Month",numeric:true,render:(value,row)=>`${fmt(value)} · ${pct(row.m1r,1)}`},{key:"m2",label:"First 2 Months",numeric:true,render:(value,row)=>`${fmt(value)} · ${pct(row.m2r,1)}`},{key:"m6",label:"First 6 Months",numeric:true,render:(value,row)=>`${fmt(value)} · ${pct(row.m6r,1)}`}]);
+      simpleTable($("early-year-table"),yearRows,[{key:"year",label:"Yıl"},{key:"total",label:"Toplam Çıkış",numeric:true,render:value=>fmt(value)},{key:"m1",label:"İlk Ay",numeric:true,render:(value,row)=>`${fmt(value)} · ${pct(row.m1r,1)}`},{key:"m2",label:"İlk 2 Ay",numeric:true,render:(value,row)=>`${fmt(value)} · ${pct(row.m2r,1)}`},{key:"m6",label:"İlk 6 Ay",numeric:true,render:(value,row)=>`${fmt(value)} · ${pct(row.m6r,1)}`}]);
     }
 
     function renderExits(){
       const rows=filteredExits(),reasonMap=new Map();rows.forEach(row=>reasonMap.set(row.ayrilma_sebebi,(reasonMap.get(row.ayrilma_sebebi)||0)+n(row.cikis)));
       const reasons=[...reasonMap].map(([label,value])=>({label,value})).sort((a,b)=>b.value-a.value);
       renderBars($("reason-bars"),reasons,{limit:16,percent:false});
-      const matched=rows.filter(row=>String(row.reason_match_status||"").toLocaleLowerCase("en-US").startsWith("source list")).reduce((s,row)=>s+n(row.cikis),0),total=sum(rows,"cikis"),defaults=total-matched;
-      $("classification-quality").innerHTML=`<div class="metric-cards two-cols"><div class="metric-card"><div class="small">Latest Reason Matched</div><div class="big">${fmt(matched)}</div><div class="small">${pct(matched/Math.max(1,total),1)} · source list</div></div><div class="metric-card"><div class="small">Default Voluntary</div><div class="big">${fmt(defaults)}</div><div class="small">${pct(defaults/Math.max(1,total),1)} · unmatched records</div></div></div><div class="notice info mt-10">Changes in Settings update classification immediately. Default Voluntary usage remains explicitly visible.</div>`;
+      const matched=rows.filter(row=>String(row.reason_match_status||"").startsWith("Ayrılanlar")).reduce((s,row)=>s+n(row.cikis),0),total=sum(rows,"cikis"),defaults=total-matched;
+      $("classification-quality").innerHTML=`<div class="metric-cards" style="grid-template-columns:1fr 1fr"><div class="metric-card"><div class="small">Son Neden Eşleşti</div><div class="big">${fmt(matched)}</div><div class="small">${pct(matched/Math.max(1,total),1)} · Ayrılanlar Listesi</div></div><div class="metric-card"><div class="small">Varsayılan İstifa</div><div class="big">${fmt(defaults)}</div><div class="small">${pct(defaults/Math.max(1,total),1)} · eşleşmeyen kayıt</div></div></div><div class="notice info" style="margin-top:10px">Ayarlar ekranındaki değişiklikler sınıflandırmayı anında günceller. “Varsayılan İstifa” kullanımı ayrıca görünür tutulur.</div>`;
       const display=rows.map(row=>({...row,turnover_turu:classification(row)}));
-      renderSmartTable($("exit-table"),display,[{key:"donem",label:"Period",render:value=>monthLabel(value)},{key:"sicil_no",label:"Synthetic ID"},{key:"adi_soyadi",label:"Synthetic Profile"},{key:"scope",label:"Scope"},{key:"bolge",label:"Region"},{key:"magaza",label:"Store"},{key:"il",label:"City"},{key:"departman",label:"Department"},{key:"cinsiyet",label:"Gender"},{key:"sozlesme_turu",label:"Contract Type"},{key:"title",label:"Title"},{key:"calisma_tipi",label:"Work Type"},{key:"ise_giris_tarihi",label:"Start Date",render:value=>dateLabel(value)},{key:"cikis_tarihi",label:"Exit Date",render:value=>dateLabel(value)},{key:"kidem_yil",label:"Tenure Years",numeric:true,render:value=>fmt(value,2)},{key:"ayrilma_sebebi_grubu",label:"Reason Group"},{key:"ayrilma_sebebi",label:"Exit Reason"},{key:"turnover_turu",label:"Type",render:value=>`<span class="status ${value==="Employer Initiated"?"bad":"good"}">${esc(value)}</span>`},{key:"reason_match_status",label:"Matching"}],{id:"exit-detail",limit:30,placeholder:"Search synthetic ID, profile, store, city, reason, or title...",defaultSort:"donem"});
+      renderSmartTable($("exit-table"),display,[{key:"donem",label:"Dönem",render:value=>monthLabel(value)},{key:"sicil_no",label:"Sicil"},{key:"adi_soyadi",label:"Ad Soyad"},{key:"scope",label:"Kapsam"},{key:"bolge",label:"Bölge"},{key:"magaza",label:"Mağaza"},{key:"il",label:"Şehir"},{key:"departman",label:"Departman"},{key:"cinsiyet",label:"Cinsiyet"},{key:"sozlesme_turu",label:"Sözleşme Türü"},{key:"title",label:"Title"},{key:"calisma_tipi",label:"Çalışma Tipi"},{key:"ise_giris_tarihi",label:"İşe Giriş",render:value=>dateLabel(value)},{key:"cikis_tarihi",label:"Çıkış",render:value=>dateLabel(value)},{key:"kidem_yil",label:"Kıdem Yıl",numeric:true,render:value=>fmt(value,2)},{key:"ayrilma_sebebi_grubu",label:"Sebep Grubu"},{key:"ayrilma_sebebi",label:"Ayrılma Sebebi"},{key:"turnover_turu",label:"Tür",render:value=>`<span class="status ${value==="Fesih"?"bad":"good"}">${esc(value)}</span>`},{key:"reason_match_status",label:"Eşleme"}],{id:"exit-detail",limit:30,placeholder:"Sicil, ad, mağaza, şehir, neden veya title ara...",defaultSort:"donem"});
     }
 
     function renderV2(){
-      const scope=STATE.scope,reg=(DATA.regrettable||[]).filter(row=>normalizedScope(row.scope)==="Retail"&&(!STATE.start||row.donem>=STATE.start)&&(!STATE.end||row.donem<=STATE.end)).sort((a,b)=>String(a.donem).localeCompare(String(b.donem)));
-      renderLineChart($("regrettable-chart"),[{name:"Regrettable Turnover",values:reg.map(row=>row.regrettable_turnover_rate),color:COLORS.violet},{name:"High-Performer Attrition",values:reg.map(row=>row.high_perf_attrition_rate),color:COLORS.rose}],{labels:reg.map(row=>row.donem),percent:true,height:245});
-      simpleTable($("regrettable-table"),reg.slice(-12).reverse(),[{key:"donem",label:"Period",render:value=>monthLabel(value)},{key:"toplam_cikis",label:"Total Exits",numeric:true,render:value=>fmt(value)},{key:"regrettable_cikis",label:"Regrettable",numeric:true,render:value=>fmt(value)},{key:"regrettable_turnover_rate",label:"Rate",numeric:true,render:value=>pct(value,2)},{key:"regrettable_share_of_exits",label:"Share of Exits",numeric:true,render:value=>pct(value,1)}]);
-      const survivalScope=["Aizanoi Demo Group","Retail","Head Office","Operations"].includes(scope)?scope:"Retail";
+      const scope=STATE.scope,reg=(DATA.regrettable||[]).filter(row=>normalizedScope(row.scope)==="Mağaza"&&(!STATE.start||row.donem>=STATE.start)&&(!STATE.end||row.donem<=STATE.end)).sort((a,b)=>String(a.donem).localeCompare(String(b.donem)));
+      renderLineChart($("regrettable-chart"),[{name:"Regrettable Turnover",values:reg.map(row=>row.regrettable_turnover_rate),color:COLORS.violet},{name:"Yüksek Performanslı Ayrılma",values:reg.map(row=>row.high_perf_attrition_rate),color:COLORS.rose}],{labels:reg.map(row=>row.donem),percent:true,height:245});
+      simpleTable($("regrettable-table"),reg.slice(-12).reverse(),[{key:"donem",label:"Dönem",render:value=>monthLabel(value)},{key:"toplam_cikis",label:"Toplam Çıkış",numeric:true,render:value=>fmt(value)},{key:"regrettable_cikis",label:"Regrettable",numeric:true,render:value=>fmt(value)},{key:"regrettable_turnover_rate",label:"Oran",numeric:true,render:value=>pct(value,2)},{key:"regrettable_share_of_exits",label:"Çıkış Payı",numeric:true,render:value=>pct(value,1)}]);
+      const survivalScope=["Aurelia Group","Mağaza","Merkez","Edirne"].includes(scope)?scope:"Mağaza";
       const curve=(DATA.survival_curve||[]).filter(row=>normalizedScope(row.scope)===survivalScope).sort((a,b)=>n(a.tenure_month)-n(b.tenure_month)).filter(row=>n(row.tenure_month)<=120);
-      renderLineChart($("survival-chart"),[{name:`${survivalScope} Retention Probability`,values:curve.map(row=>row.survival_probability),color:COLORS.cyan}],{labels:curve.map(row=>row.tenure_month),labelFormatter:value=>`${fmt(value)} mo`,percent:true,height:245});
+      renderLineChart($("survival-chart"),[{name:`${survivalScope} Kalma Olasılığı`,values:curve.map(row=>row.survival_probability),color:COLORS.cyan}],{labels:curve.map(row=>row.tenure_month),labelFormatter:value=>`${fmt(value)} ay`,percent:true,height:245});
       const summary=(DATA.survival_summary||[]).find(row=>normalizedScope(row.scope)===survivalScope);
-      $("survival-cards").innerHTML=summary?`<div class="metric-cards three-cols">${[[6,summary.survival_6m],[12,summary.survival_12m],[24,summary.survival_24m]].map(([month,value])=>`<div class="metric-card"><div class="small">Month ${month}</div><div class="big">${pct(value,1)}</div><div class="small">probability of remaining</div></div>`).join("")}</div>`:"";
-      const entities=[...(DATA.risk_regions||[]).map(row=>({type:"Region",name:row.departman_adi,score:row.ortalama_risk_skoru,count:row.personel_sayisi})),...(DATA.risk_stores||[]).map(row=>({type:"Store",name:row.isletme_adi,score:row.ortalama_risk_skoru,count:row.personel_sayisi}))].sort((a,b)=>n(b.score)-n(a.score));
+      $("survival-cards").innerHTML=summary?`<div class="metric-cards" style="grid-template-columns:repeat(3,1fr);margin-top:10px">${[[6,summary.survival_6m],[12,summary.survival_12m],[24,summary.survival_24m]].map(([month,value])=>`<div class="metric-card"><div class="small">${month}. Ay</div><div class="big">${pct(value,1)}</div><div class="small">sistemde kalma olasılığı</div></div>`).join("")}</div>`:"";
+      const entities=[...(DATA.risk_regions||[]).map(row=>({type:"Bölge",name:row.departman_adi,score:row.ortalama_risk_skoru,count:row.personel_sayisi})),...(DATA.risk_stores||[]).map(row=>({type:"Mağaza",name:row.isletme_adi,score:row.ortalama_risk_skoru,count:row.personel_sayisi}))].sort((a,b)=>n(b.score)-n(a.score));
       renderBars($("risk-entities"),entities.map(row=>({label:`${row.type} · ${row.name}`,value:row.score})),{limit:18,percent:false,digits:1});
-      renderSmartTable($("risk-people"),RISK_PEOPLE,[{key:"sicil_no",label:"Synthetic ID"},{key:"adi_soyadi",label:"Synthetic Profile"},{key:"departman_adi",label:"Region"},{key:"isletme_adi",label:"Store"},{key:"gorev",label:"Role"},{key:"risk_puani",label:"Risk",numeric:true,render:value=>fmt(value,1)},{key:"risk_seviyesi",label:"Level"},{key:"risk_aciklama",label:"Explanation"}],{id:"risk-people",limit:18,defaultSort:"risk_puani"});
+      renderSmartTable($("risk-people"),RISK_PEOPLE,[{key:"sicil_no",label:"Sicil"},{key:"adi_soyadi",label:"Ad Soyad"},{key:"departman_adi",label:"Bölge"},{key:"isletme_adi",label:"Mağaza"},{key:"gorev",label:"Görev"},{key:"risk_puani",label:"Risk",numeric:true,render:value=>fmt(value,1)},{key:"risk_seviyesi",label:"Seviye"},{key:"risk_aciklama",label:"Açıklama"}],{id:"risk-people",limit:18,defaultSort:"risk_puani"});
     }
 
     function loadReasonOverrides(){
-      try{const raw=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");return Object.fromEntries(Object.entries(raw).filter(([,value])=>value==="Voluntary"||value==="Employer Initiated"));}catch{return {};}
+      try{const raw=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");return Object.fromEntries(Object.entries(raw).filter(([,value])=>value==="İstifa"||value==="Fesih"));}catch{return {};}
     }
     function renderSettings(){
-      const query=$("reason-search").value.toLocaleLowerCase("en-US").trim();
-      const reasons=(DATA.reasons||[]).filter(row=>!query||String(row.ayrilma_sebebi||"").toLocaleLowerCase("en-US").includes(query));
-      $("reason-count").textContent=`${reasons.length} / ${(DATA.reasons||[]).length} reasons`;
-      $("reason-list").innerHTML=`<div class="reason-row header"><span>Exit Reason</span><span>Group</span><span>Records</span><span>Class</span></div>${reasons.map(row=>{const current=reasonDraft[row.reason_key]||BASE_REASON_MAP[row.reason_key]||"Voluntary";return `<div class="reason-row"><span>${esc(row.ayrilma_sebebi)}</span><span>${esc(row.ayrilma_sebebi_grubu||"-")}</span><span class="num">${fmt(row.kayit_sayisi)}</span><select class="select reason-select" data-key="${esc(row.reason_key)}"><option value="Voluntary" ${current==="Voluntary"?"selected":""}>Voluntary</option><option value="Employer Initiated" ${current==="Employer Initiated"?"selected":""}>Employer Initiated</option></select></div>`;}).join("")}`;
+      const query=$("reason-search").value.toLocaleLowerCase("tr-TR").trim();
+      const reasons=(DATA.reasons||[]).filter(row=>!query||String(row.ayrilma_sebebi||"").toLocaleLowerCase("tr-TR").includes(query));
+      $("reason-count").textContent=`${reasons.length} / ${(DATA.reasons||[]).length} neden`;
+      $("reason-list").innerHTML=`<div class="reason-row header"><span>Ayrılma Sebebi</span><span>Grup</span><span>Kayıt</span><span>Sınıf</span></div>${reasons.map(row=>{const current=reasonDraft[row.reason_key]||BASE_REASON_MAP[row.reason_key]||"İstifa";return `<div class="reason-row"><span>${esc(row.ayrilma_sebebi)}</span><span>${esc(row.ayrilma_sebebi_grubu||"-")}</span><span class="num">${fmt(row.kayit_sayisi)}</span><select class="select reason-select" data-key="${esc(row.reason_key)}"><option value="İstifa" ${current==="İstifa"?"selected":""}>İstifa</option><option value="Fesih" ${current==="Fesih"?"selected":""}>Fesih</option></select></div>`;}).join("")}`;
       $("reason-list").querySelectorAll(".reason-select").forEach(select=>select.addEventListener("change",()=>{reasonDraft[select.dataset.key]=select.value;}));
     }
 
@@ -1011,7 +979,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     }
 
     function initComparison(){
-      const kind=STATE.compareKind,base=MONTHLY.filter(row=>row.scope==="Retail"&&scopeMatch(row));
+      const kind=STATE.compareKind,base=MONTHLY.filter(row=>row.scope==="Mağaza"&&scopeMatch(row));
       const entities=unique(base.map(row=>row[kind]).filter(value=>value&&value!=="Belirsiz"));
       const years=unique(base.map(row=>String(row.donem).slice(0,4))).sort().reverse();
       STATE.compareA=selectOptions($("compare-a"),entities,STATE.compareA);
@@ -1027,7 +995,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     function bind(){
       $("tabs").addEventListener("click",event=>{const button=event.target.closest("[data-tab]");if(!button)return;STATE.tab=button.dataset.tab;document.querySelectorAll(".tab").forEach(node=>node.classList.toggle("active",node===button));document.querySelectorAll(".page").forEach(node=>node.classList.toggle("active",node.dataset.page===STATE.tab));renderActive();});
       [["scope-filter","scope"],["type-filter","type"],["start-filter","start"],["end-filter","end"],["region-filter","region"],["store-filter","store"],["department-filter","department"],["city-filter","city"],["gender-filter","gender"],["contract-filter","contract"],["title-filter","title"]].forEach(([id,key])=>$(id).addEventListener("change",()=>{STATE[key]=$(id).value;if(key==="scope"){STATE.region=STATE.store=STATE.department=STATE.city=STATE.gender=STATE.contract=STATE.title=ALL;initComparison();}if(key==="region")STATE.store=ALL;if(key==="start"&&STATE.start>STATE.end){STATE.end=STATE.start;$("end-filter").value=STATE.end;}if(key==="end"&&STATE.end<STATE.start){STATE.start=STATE.end;$("start-filter").value=STATE.start;}renderActive();}));
-      $("reset-filters").addEventListener("click",()=>{Object.assign(STATE,{scope:"Aizanoi Demo Group",type:"all",start:DEFAULT_START,end:DEFAULT_END,region:ALL,store:ALL,department:ALL,city:ALL,gender:ALL,contract:ALL,title:ALL});initFilterControls();initComparison();renderActive();});
+      $("reset-filters").addEventListener("click",()=>{Object.assign(STATE,{scope:"Aurelia Group",type:"all",start:DEFAULT_START,end:DEFAULT_END,region:ALL,store:ALL,department:ALL,city:ALL,gender:ALL,contract:ALL,title:ALL});initFilterControls();initComparison();renderActive();});
       document.querySelectorAll("[data-period]").forEach(button=>button.addEventListener("click",()=>setPeriod(button.dataset.period)));
       $("scope-trend-mode").addEventListener("change",()=>{STATE.scopeTrendMode=$("scope-trend-mode").value;renderScopeTrend();});
       $("breakdown-dimension").addEventListener("change",()=>{STATE.breakdownDimension=$("breakdown-dimension").value;renderBreakdown();});
@@ -1037,11 +1005,11 @@ HTML_TEMPLATE = r"""<!doctype html>
       [["compare-a","compareA"],["compare-b","compareB"],["compare-year-a","compareYearA"],["compare-year-b","compareYearB"]].forEach(([id,key])=>$(id).addEventListener("change",()=>{STATE[key]=$(id).value;renderComparison();}));
       document.addEventListener("click",event=>{const button=event.target.closest("[data-export]");if(!button)return;const kind=button.dataset.export;if(kind==="trend")csvDownload("turnover_trendi.csv",trendExportRows);if(kind==="breakdown")csvDownload("turnover_kirilim.csv",breakdownRows);if(kind==="title-matrix")csvDownload("kumule_title_turnover.csv",titleMatrixExportRows);if(kind==="comparison")csvDownload("turnover_kiyaslama.csv",comparisonExportRows);if(kind==="exits")csvDownload("turnover_cikis_detayi.csv",filteredExits().map(row=>({...row,turnover_turu:classification(row)})));});
       $("reason-search").addEventListener("input",renderSettings);
-      $("apply-reasons").addEventListener("click",()=>{reasonOverrides={...reasonDraft};localStorage.setItem(STORAGE_KEY,JSON.stringify(reasonOverrides));renderActive();alert("Exit-reason classifications were saved in this browser.");});
-      $("reset-reasons").addEventListener("click",()=>{if(!confirm("Delete local classifications and restore the base mapping?"))return;localStorage.removeItem(STORAGE_KEY);reasonOverrides={};reasonDraft={};renderSettings();});
-      $("export-reasons").addEventListener("click",()=>download("turnover_reason_settings.json",JSON.stringify({schema:1,exported_at:new Date().toISOString(),mapping:{...BASE_REASON_MAP,...reasonOverrides}},null,2),"application/json;charset=utf-8"));
+      $("apply-reasons").addEventListener("click",()=>{reasonOverrides={...reasonDraft};localStorage.setItem(STORAGE_KEY,JSON.stringify(reasonOverrides));renderActive();alert("Ayrılma nedeni sınıflandırmaları bu tarayıcıda saklandı.");});
+      $("reset-reasons").addEventListener("click",()=>{if(!confirm("Yerel sınıflandırmaları silip temel eşleştirmeye dönmek istiyor musunuz?"))return;localStorage.removeItem(STORAGE_KEY);reasonOverrides={};reasonDraft={};renderSettings();});
+      $("export-reasons").addEventListener("click",()=>download("turnover_neden_ayarlari.json",JSON.stringify({schema:1,exported_at:new Date().toISOString(),mapping:{...BASE_REASON_MAP,...reasonOverrides}},null,2),"application/json;charset=utf-8"));
       $("import-reasons").addEventListener("click",()=>$("reason-file").click());
-      $("reason-file").addEventListener("change",async()=>{const file=$("reason-file").files[0];if(!file)return;try{const parsed=JSON.parse(await file.text());const mapping=parsed.mapping||parsed;reasonDraft=Object.fromEntries(Object.entries(mapping).filter(([,value])=>value==="Voluntary"||value==="Employer Initiated"));renderSettings();}catch{alert("Select a valid settings JSON file.");}$("reason-file").value="";});
+      $("reason-file").addEventListener("change",async()=>{const file=$("reason-file").files[0];if(!file)return;try{const parsed=JSON.parse(await file.text());const mapping=parsed.mapping||parsed;reasonDraft=Object.fromEntries(Object.entries(mapping).filter(([,value])=>value==="İstifa"||value==="Fesih"));renderSettings();}catch{alert("Geçerli bir ayar JSON dosyası seçin.");}$("reason-file").value="";});
       let resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(renderActive,180);});
     }
     function initFilterControls(){
@@ -1055,7 +1023,7 @@ HTML_TEMPLATE = r"""<!doctype html>
     }
     function init(){
       $("meta-period").textContent=DATA.meta.min_month&&DATA.meta.latest_month?`${monthLabel(DATA.meta.min_month)} – ${monthLabel(DATA.meta.latest_month)}`:"-";
-      $("meta-generated").textContent=new Date(DATA.meta.generated_at).toLocaleString("en-US");
+      $("meta-generated").textContent=new Date(DATA.meta.generated_at).toLocaleString("tr-TR");
       initFilterControls();initComparison();bind();renderActive();
       window.__TURNOVER_READY__=true;
       window.__TURNOVER_AUDIT__={monthlyRows:MONTHLY.length,exitRows:EXITS.length,reasonCount:(DATA.reasons||[]).length,formula:DATA.meta.formula};

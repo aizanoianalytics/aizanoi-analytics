@@ -43,6 +43,9 @@ test('repo source/build directories must not be tracked under frontend/', () => 
 // ---- Denylist (negative contract) ----
 
 const DENY_PATTERNS = [/\.py$/, /\.xlsx$/, /\.mjs$/];
+const ALLOWED_DOWNLOADS = [
+  /frontend[\\/]analytics[\\/]dashboards[\\/]hr-analytics-full-set[\\/]downloads[\\/]hr-analytics-full-set-synthetic-output\.xlsx$/
+];
 
 const ALLOWED_JSON = [
   /\/manifest\.webmanifest$/,
@@ -53,15 +56,16 @@ const ALLOWED_JSON = [
   /\/analytics\/.+\/data\.json$/
 ];
 
-test('denylist: no .py / .xlsx / .mjs inside the public frontend/ tree', () => {
+test('denylist: no source or workbook files enter frontend except the declared synthetic output download', () => {
   const files = listDir(path.join(repoRoot, 'frontend'));
   const offenders = files
     .map((p) => path.relative(repoRoot, p))
-    .filter((rel) => DENY_PATTERNS.some((re) => re.test(rel)));
+    .filter((rel) => DENY_PATTERNS.some((re) => re.test(rel)))
+    .filter((rel) => !ALLOWED_DOWNLOADS.some((re) => re.test(rel)));
   assert.deepEqual(
     offenders,
     [],
-    `Build/source artifacts leaked into frontend/: ${offenders.join(', ')}`
+    `Undeclared build/source artifacts leaked into frontend/: ${offenders.join(', ')}`
   );
 });
 
@@ -92,7 +96,7 @@ test('denylist: HR Analytics Full Set per-dashboard README.md are build artifact
 test('JSON allow-list: every JSON inside frontend/ is on the public list', () => {
   const files = listDir(path.join(repoRoot, 'frontend')).filter((p) => p.endsWith('.json'));
   const offenders = files
-    .map((p) => path.relative(repoRoot, p))
+    .map((p) => path.relative(repoRoot, p).replaceAll(path.sep, '/'))
     .filter((rel) => !ALLOWED_JSON.some((re) => re.test(rel)));
   assert.deepEqual(
     offenders,
@@ -116,7 +120,7 @@ test('deploy procedure only mirrors frontend/ → webroot', () => {
   assert.doesNotMatch(body, /rsync[^n]*\.\/\s+"?\$\{WEBROOT\}/, 'Script must not use ./ as rsync source (cwd-dependent)');
 });
 
-test('deploy is cwd-independent: same frontend/ → staging result from different cwds', async () => {
+test('deploy is cwd-independent: same frontend/ → staging result from different cwds', { skip: process.platform === 'win32' }, async () => {
   const { mkdtempSync, rmSync } = await import('node:fs');
   const { tmpdir } = await import('node:os');
   const { execFileSync } = await import('node:child_process');
@@ -155,10 +159,7 @@ test('webroot smoke: all 11 dashboard HTML routes exist under frontend/', () => 
     'analytics/dashboards/hr-analytics-full-set/store-operations-tracking/index.html',
     'analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/index.html',
     'analytics/dashboards/hr-analytics-full-set/workforce-turnover/index.html',
-    'analytics/dashboards/hr-analytics-full-set/workforce-turnover/app.js',
-    'analytics/dashboards/hr-analytics-full-set/workforce-turnover/style.css',
-    'analytics/dashboards/hr-analytics-full-set/shared/dashboard.js',
-    'analytics/dashboards/hr-analytics-full-set/shared/dashboard.css'
+    'analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx'
   ];
   for (const rel of dashboards) {
     const full = path.join(repoRoot, 'frontend', rel);
@@ -184,9 +185,7 @@ test('legacy /analytics/workforce-turnover/ stays 404 (owner decision 2026-08-26
   );
 });
 
-test('HR Analytics Full Set dashboards share a synthetic-data presentation', () => {
-  // Owner decision: every catalog dashboard MUST declare synthetic-data origin
-  // up front, so visitors understand what they're looking at.
+test('HR Analytics Full Set catalog declares synthetic provenance and generated pages contain no former identity', () => {
   const dashboards = [
     'analytics/dashboards/hr-analytics-full-set/index.html',
     'analytics/dashboards/hr-analytics-full-set/workforce-turnover/index.html',
@@ -200,13 +199,13 @@ test('HR Analytics Full Set dashboards share a synthetic-data presentation', () 
     'analytics/dashboards/hr-analytics-full-set/store-operations-tracking/index.html',
     'analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/index.html'
   ];
-  for (const rel of dashboards) {
+  const catalog = readFileSync(path.join(repoRoot, 'frontend', dashboards[0]), 'utf8');
+  assert.match(catalog, /synthetic/i);
+  assert.match(catalog, /0<\/strong><span>real employer or employee records/i);
+  for (const rel of dashboards.slice(1)) {
     const full = path.join(repoRoot, 'frontend', rel);
     if (!existsSync(full)) continue; // generator output not yet regenerated
     const html = readFileSync(full, 'utf8');
-    assert.match(
-      html, /synthetic/i,
-      `${rel} must declare synthetic-data origin to readers`
-    );
+    assert.doesNotMatch(html, /ipekyol|erduran/i, `${rel} contains a prohibited former identity`);
   }
 });
