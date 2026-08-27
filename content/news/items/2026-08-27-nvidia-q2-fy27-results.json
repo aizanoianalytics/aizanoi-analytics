@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-27-nvidia-q2-fy27-results",
+  "title": "Nvidia lifts outlook as Q2 FY27 results beat forecasts",
+  "summary": "Nvidia released fiscal second-quarter 2027 results after the close on Aug. 26, with adjusted earnings of 2.22 dollars per share on revenue that analysts had expected to grow around 70 percent year over year. The conference call landed in the middle of the Jackson Hole week, with the company guiding to another quarter of stronger-than-expected sales as the Vera Rubin platform readies for production and inference workloads move further into focus.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T04:50:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Nvidia", "earnings", "AI infrastructure", "Vera Rubin"],
+  "sources": [
+    {
+      "publisher": "Investopedia",
+      "url": "https://www.investopedia.com/nvidia-earnings-live-nvda-stock-ai-trade-12068393",
+      "publishedAt": "2026-08-26T18:31:00Z"
+    },
+    {
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-sets-conference-call-for-second-quarter-financial-results-6927195",
+      "publishedAt": "2026-07-29T13:00:00Z"
+    }
+  ]
+}

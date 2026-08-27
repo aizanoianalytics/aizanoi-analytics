@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-27-cloudflare-os-open-source",
+  "title": "Cloudflare open-sources Cloudflare OS for corporate AI apps",
+  "summary": "Cloudflare released Cloudflare OS under the Apache 2.0 licence, packaging a capability-based security model on top of its open-source workerd runtime and V8 isolates. Each user gets their own copy of every generated application, with Gatekeeper-mediated access to enterprise resources, and the company says its own staff built more than 4,000 internal tools in the 30 days before the public release.",
+  "category": "ai",
+  "priority": 73,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T04:53:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Cloudflare", "open source", "enterprise AI", "sandboxing"],
+  "sources": [{
+    "publisher": "InfoQ",
+    "url": "https://www.infoq.com/news/2026/08/cloudflare-os-ai-platform-secure/",
+    "publishedAt": "2026-08-23T16:00:00Z"
+  }]
+}

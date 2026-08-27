@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-27-cncf-kubeflow-graduation",
+  "title": "CNCF graduates Kubeflow as a cloud-native AI standard",
+  "summary": "The Cloud Native Computing Foundation promoted Kubeflow from incubating to graduated status, marking it as a mature, production-ready platform for running AI and machine-learning workloads on Kubernetes. The project, originally created at Google in 2017, has accumulated more than 33,000 GitHub stars across its repositories and roughly 260 million PyPI downloads for its Python packages, with Bloomberg, NVIDIA, Red Hat, LinkedIn and Spotify among the named adopters.",
+  "category": "technology",
+  "priority": 72,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T04:58:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["CNCF", "Kubeflow", "Kubernetes", "open source", "MLOps"],
+  "sources": [{
+    "publisher": "CNCF",
+    "url": "https://www.cncf.io/announcements/2026/08/17/cncf-announces-kubeflows-graduation-solidifying-the-standard-for-cloud-native-ai-operations/",
+    "publishedAt": "2026-08-17T12:00:00Z"
+  }]
+}

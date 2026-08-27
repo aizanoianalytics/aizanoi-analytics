@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-27-marvell-q2-fy27-earnings",
+  "title": "Marvell Technology reports Q2 FY27 earnings after the close",
+  "summary": "Marvell Technology is scheduled to release fiscal second-quarter 2027 results after the U.S. close on Aug. 27, with analysts estimating non-GAAP earnings per share of about 0.93 dollars, up 39 percent year over year, on roughly 2.71 billion dollars in revenue. The print comes roughly a week after Marvell disclosed a 7 percent warrant to Google tied to the custom AI silicon work the chipmaker is doing around Google's Tensor Processing Unit program.",
+  "category": "economy-markets",
+  "priority": 76,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T05:03:30Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Marvell", "earnings", "Google", "AI chips", "TPU"],
+  "sources": [{
+    "publisher": "Edgen Tech",
+    "url": "https://edgen.tech/news/post/marvell-grants-google-7-warrant-in-122-billion-custom-chip-deal",
+    "publishedAt": "2026-08-19T13:00:00Z"
+  }]
+}

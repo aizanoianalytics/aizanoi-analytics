@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-08-26T05:08:03.000Z",
+  "generatedAt": "2026-08-27T05:08:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-08-27",
+      "path": "/news/2026-08-27/",
+      "itemCount": 15
+    },
     {
       "date": "2026-08-26",
       "path": "/news/2026-08-26/",
@@ -26,6 +31,490 @@
   ],
   "weeklyEditions": [],
   "items": [
+    {
+      "id": "2026-08-27-nvidia-q2-fy27-results",
+      "kind": "daily",
+      "title": "Nvidia lifts outlook as Q2 FY27 results beat forecasts",
+      "summary": "Nvidia released fiscal second-quarter 2027 results after the close on Aug. 26, with adjusted earnings of 2.22 dollars per share on revenue that analysts had expected to grow around 70 percent year over year. The conference call landed in the middle of the Jackson Hole week, with the company guiding to another quarter of stronger-than-expected sales as the Vera Rubin platform readies for production and inference workloads move further into focus.",
+      "category": "ai",
+      "priority": 88,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T04:50:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Nvidia",
+        "earnings",
+        "AI infrastructure",
+        "Vera Rubin"
+      ],
+      "sources": [
+        {
+          "publisher": "Investopedia",
+          "url": "https://www.investopedia.com/nvidia-earnings-live-nvda-stock-ai-trade-12068393",
+          "publishedAt": "2026-08-26T18:31:00.000Z"
+        },
+        {
+          "publisher": "NVIDIA Newsroom",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-sets-conference-call-for-second-quarter-financial-results-6927195",
+          "publishedAt": "2026-07-29T13:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-zai-glm-5-3-flash-chinese-chips",
+      "kind": "daily",
+      "title": "Z.ai releases GLM-5.3-Flash, says it runs entirely on Chinese chips",
+      "summary": "Z.ai released GLM-5.3-Flash, a low-cost variant of its flagship model that the company claims is served entirely on China-made semiconductors. The Hong Kong-listed shares climbed more than 8 percent in Thursday trade after the company said it used 100,000 domestic chips to handle all online requests, including the initial release under the codename Ox Alpha on Aug. 20.",
+      "category": "ai",
+      "priority": 86,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T04:46:30.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Z.ai",
+        "GLM-5.3",
+        "Chinese semiconductors",
+        "open weights"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://cnbc.com/2026/08/27/zai-shares-surge-new-ai-model-using-chinese-chips.html",
+          "publishedAt": "2026-08-27T03:12:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-alibaba-qwen3-8-27b-apache",
+      "kind": "daily",
+      "title": "Alibaba ships Qwen3.8-27B under Apache 2.0",
+      "summary": "Alibaba published the weights of Qwen3.8-27B on Hugging Face and ModelScope under the Apache 2.0 licence, with a 262,144-token native context that can be extended to one million tokens. The release is the deployable half of the Qwen3.8 family: a 27-billion-parameter dense multimodal model that Alibaba says outperforms its previous open releases on coding and computer-use benchmarks, while a larger 2.4-trillion-parameter mixture-of-experts sibling ships under a separate commercial licence.",
+      "category": "ai",
+      "priority": 84,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T04:48:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Alibaba",
+        "Qwen",
+        "Apache 2.0",
+        "open weights",
+        "LLM"
+      ],
+      "sources": [
+        {
+          "publisher": "eWeek",
+          "url": "https://www.eweek.com/news/alibaba-qwen3-8-27b-license-apac-china/",
+          "publishedAt": "2026-08-17T13:00:00.000Z"
+        },
+        {
+          "publisher": "DeepLearning.AI The Batch",
+          "url": "https://www.deeplearning.ai/the-batch/qwen3-8-max-lands-with-a-bang",
+          "publishedAt": "2026-08-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-mbappe-hat-trick-real-madrid",
+      "kind": "daily",
+      "title": "Mbappé hat-trick gives Real Madrid a 4-1 win over Real Sociedad",
+      "summary": "Kylian Mbappé scored three times and Jude Bellingham provided two assists as Real Madrid beat Real Sociedad 4-1 at the Santiago Bernabéu, picking up a first home La Liga win of the season under coach José Mourinho. Vinícius Júnior added the third before Mbappé completed his treble, lifting Madrid to the top of the early table while leaving Sociedad bottom with two defeats from two.",
+      "category": "football",
+      "priority": 84,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T05:05:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "La Liga",
+        "Real Madrid",
+        "Mbappé",
+        "Bellingham",
+        "Real Sociedad"
+      ],
+      "sources": [
+        {
+          "publisher": "Tribal Football",
+          "url": "https://news.7msport.com/news/newsdata/20260827/264639.shtml",
+          "publishedAt": "2026-08-26T22:30:00.000Z"
+        },
+        {
+          "publisher": "The Peninsula Qatar",
+          "url": "https://thepeninsulaqatar.com/article/27/08/2026/mbappehits-treble-as-real-madrid-thrash-real-sociedad",
+          "publishedAt": "2026-08-26T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-jackson-hole-symposium-opens",
+      "kind": "daily",
+      "title": "Jackson Hole symposium opens with Fed chair's first keynote",
+      "summary": "The Kansas City Fed's annual Jackson Hole Economic Policy Symposium runs Aug. 27-29 with the theme Financial Innovation: Implications for Payments and Policy. The conference is closely watched as a venue for central-bank signalling, with the U.S. Federal Reserve chair set to deliver the keynote address in his first Jackson Hole appearance in the role.",
+      "category": "economy-markets",
+      "priority": 82,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T05:00:30.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Jackson Hole",
+        "Federal Reserve",
+        "monetary policy",
+        "central banks"
+      ],
+      "sources": [
+        {
+          "publisher": "Federal Reserve Bank of Kansas City",
+          "url": "https://www.kansascityfed.org/research/jackson-hole-economic-symposium/",
+          "publishedAt": "2026-08-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-champions-league-league-phase-draw",
+      "kind": "daily",
+      "title": "Champions League league phase draw takes place in Monaco",
+      "summary": "UEFA holds the league phase draw for the 2026-27 Champions League in Monaco from 18:00 CET on Thursday Aug. 27, allocating 36 clubs into eight matchdays across the new single-league format. The fixture list with kick-off times is due to be published no later than Saturday Aug. 29, with matchday one starting on Tuesday Sept. 8.",
+      "category": "football",
+      "priority": 79,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T05:06:30.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "UEFA",
+        "Champions League",
+        "draw",
+        "Monaco"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/draws/2027/2002239",
+          "publishedAt": "2026-08-25T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-marvell-q2-fy27-earnings",
+      "kind": "daily",
+      "title": "Marvell Technology reports Q2 FY27 earnings after the close",
+      "summary": "Marvell Technology is scheduled to release fiscal second-quarter 2027 results after the U.S. close on Aug. 27, with analysts estimating non-GAAP earnings per share of about 0.93 dollars, up 39 percent year over year, on roughly 2.71 billion dollars in revenue. The print comes roughly a week after Marvell disclosed a 7 percent warrant to Google tied to the custom AI silicon work the chipmaker is doing around Google's Tensor Processing Unit program.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T05:03:30.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Marvell",
+        "earnings",
+        "Google",
+        "AI chips",
+        "TPU"
+      ],
+      "sources": [
+        {
+          "publisher": "Edgen Tech",
+          "url": "https://edgen.tech/news/post/marvell-grants-google-7-warrant-in-122-billion-custom-chip-deal",
+          "publishedAt": "2026-08-19T13:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-cloudflare-os-open-source",
+      "kind": "daily",
+      "title": "Cloudflare open-sources Cloudflare OS for corporate AI apps",
+      "summary": "Cloudflare released Cloudflare OS under the Apache 2.0 licence, packaging a capability-based security model on top of its open-source workerd runtime and V8 isolates. Each user gets their own copy of every generated application, with Gatekeeper-mediated access to enterprise resources, and the company says its own staff built more than 4,000 internal tools in the 30 days before the public release.",
+      "category": "ai",
+      "priority": 73,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T04:53:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Cloudflare",
+        "open source",
+        "enterprise AI",
+        "sandboxing"
+      ],
+      "sources": [
+        {
+          "publisher": "InfoQ",
+          "url": "https://www.infoq.com/news/2026/08/cloudflare-os-ai-platform-secure/",
+          "publishedAt": "2026-08-23T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-cncf-kubeflow-graduation",
+      "kind": "daily",
+      "title": "CNCF graduates Kubeflow as a cloud-native AI standard",
+      "summary": "The Cloud Native Computing Foundation promoted Kubeflow from incubating to graduated status, marking it as a mature, production-ready platform for running AI and machine-learning workloads on Kubernetes. The project, originally created at Google in 2017, has accumulated more than 33,000 GitHub stars across its repositories and roughly 260 million PyPI downloads for its Python packages, with Bloomberg, NVIDIA, Red Hat, LinkedIn and Spotify among the named adopters.",
+      "category": "technology",
+      "priority": 72,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T04:58:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "CNCF",
+        "Kubeflow",
+        "Kubernetes",
+        "open source",
+        "MLOps"
+      ],
+      "sources": [
+        {
+          "publisher": "CNCF",
+          "url": "https://www.cncf.io/announcements/2026/08/17/cncf-announces-kubeflows-graduation-solidifying-the-standard-for-cloud-native-ai-operations/",
+          "publishedAt": "2026-08-17T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-ibm-granite-4-2-hugging-face",
+      "kind": "daily",
+      "title": "IBM releases Granite 4.2 with native reasoning on Hugging Face",
+      "summary": "IBM published its Granite 4.2 large language models on Hugging Face under open weights, alongside a technical deep dive on how the models were built. The release adds a native reasoning capability tuned for enterprise agent workflows and is also available via Ollama and GitHub, with a separate Hypernova-60B model shipped at the same time.",
+      "category": "ai",
+      "priority": 71,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T04:51:30.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "IBM",
+        "Granite",
+        "open weights",
+        "enterprise AI"
+      ],
+      "sources": [
+        {
+          "publisher": "AI Briefing",
+          "url": "https://aibriefing.dev/",
+          "publishedAt": "2026-08-25T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-premier-league-transfer-watch",
+      "kind": "daily",
+      "title": "Premier League clubs finalise moves as the transfer window narrows",
+      "summary": "Premier League clubs continued to finalise squad moves through Aug. 26, with Aston Villa announcing Ezri Konsa's move to Arsenal and Aaron Wan-Bissaka's loan to West Ham, alongside Coventry City's additions of Taiwo Awoniyi from Nottingham Forest and Gustavo Hamer from Sheffield United. The summer window closes at 23:00 UK time on Sept. 1, with most clubs still working on at least one late deal before the deadline.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T05:08:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Premier League",
+        "transfers",
+        "Aston Villa",
+        "Coventry City"
+      ],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/transfers/2026-27/summer",
+          "publishedAt": "2026-08-26T15:23:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-rackspace-cloud-vmware-foundation",
+      "kind": "daily",
+      "title": "Rackspace Cloud launches on VMware Cloud Foundation 9.1",
+      "summary": "Rackspace Technology launched Rackspace Cloud, a fully managed multitenant platform built on Broadcom's VMware Cloud Foundation 9.1, with initial availability in Dallas followed by Northern Virginia and Chicago. The company frames the launch around demand for governed private infrastructure, citing Broadcom research that 56 percent of organisations are now running or planning production AI inferencing in a private cloud.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Rackspace",
+        "VMware",
+        "private cloud",
+        "AI inference"
+      ],
+      "sources": [
+        {
+          "publisher": "Business News for Profit",
+          "url": "https://businessnewsforprofit.com/technology/rackspace-technology-launches-rackspace-cloud-among-the-first-fully-managed-multitenant-cloud-platforms-built-on-vmware-cloud-foundation-9-1/",
+          "publishedAt": "2026-08-26T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-us-q2-gdp-consumer-spending",
+      "kind": "daily",
+      "title": "US second-quarter GDP rises 1.5% as consumer spending accelerates",
+      "summary": "U.S. second-quarter gross domestic product rose 1.5 percent, down from 2.1 percent in the first quarter, with consumer spending accelerating to 3.2 percent from 0.5 percent earlier. Private domestic demand, excluding trade, government spending and inventories, expanded at a 3.9 percent annualised rate, illustrating how household outlays rather than net exports did most of the work in the quarter.",
+      "category": "economy-markets",
+      "priority": 69,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T05:02:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "US GDP",
+        "consumer spending",
+        "Bureau of Economic Analysis"
+      ],
+      "sources": [
+        {
+          "publisher": "Camden National Bank Market Brief",
+          "url": "https://www.camdennational.bank/wealth/market-briefs/market-brief-august-2026",
+          "publishedAt": "2026-08-15T13:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-shopify-ceo-walgit",
+      "kind": "daily",
+      "title": "Shopify CEO Lütke ships walgit, an S3-native Git server",
+      "summary": "Shopify chief executive Tobias Lütke released walgit, an open-source database-free Git server written in Rust that runs directly on top of S3-compatible object storage. The initial release on Aug. 24 supports Git's bundle-uri mechanism for distributing large repositories via object storage or CDNs, Git LFS, a built-in web interface and OIDC authentication, with no leader node and no relational database dependencies.",
+      "category": "technology",
+      "priority": 68,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T04:56:30.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Shopify",
+        "walgit",
+        "open source",
+        "Git",
+        "Rust"
+      ],
+      "sources": [
+        {
+          "publisher": "Open Source For You",
+          "url": "https://www.opensourceforu.com/2026/08/shopify-ceo-builds-walgit-server/",
+          "publishedAt": "2026-08-25T08:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-27-kuberay-v1-7-launch",
+      "kind": "daily",
+      "title": "KubeRay 1.7 lands with a History Server and stronger security",
+      "summary": "The KubeRay project released versions 1.6 and 1.7 of its Kubernetes operator for Ray distributed workloads, adding a beta History Server that retains cluster and job logs after a RayCluster is deleted. The 1.7 release also brings native Kubernetes NetworkPolicy support, automated mTLS via cert-manager, RayCronJob scheduling and an embedded RocksDB backend that removes the external Redis dependency for GCS fault tolerance.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-08-27T05:00:00.000Z",
+      "updatedAt": "2026-08-27T05:00:00.000Z",
+      "retrievedAt": "2026-08-27T04:59:30.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "KubeRay",
+        "Ray",
+        "Kubernetes",
+        "MLOps"
+      ],
+      "sources": [
+        {
+          "publisher": "Blockchain News",
+          "url": "https://blockchain.news/news/kuberay-v1-7-upgrade-features",
+          "publishedAt": "2026-08-25T17:43:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-08-26-apple-m6-m5-ultra-ai-compute",
       "kind": "daily",

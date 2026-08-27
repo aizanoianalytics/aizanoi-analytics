@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/nvidia-q2-fy27-results/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Nvidia lifts outlook as Q2 FY27 results beat forecasts</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/zai-glm-5-3-flash-chinese-chips/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Z.ai releases GLM-5.3-Flash, says it runs entirely on Chinese chips</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/alibaba-qwen3-8-27b-apache/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Alibaba ships Qwen3.8-27B under Apache 2.0</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/mbappe-hat-trick-real-madrid/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Mbappé hat-trick gives Real Madrid a 4-1 win over Real Sociedad</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/jackson-hole-symposium-opens/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Jackson Hole symposium opens with Fed chair&#39;s first keynote</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/champions-league-league-phase-draw/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Champions League league phase draw takes place in Monaco</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/marvell-q2-fy27-earnings/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Marvell Technology reports Q2 FY27 earnings after the close</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/cloudflare-os-open-source/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Cloudflare open-sources Cloudflare OS for corporate AI apps</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/cncf-kubeflow-graduation/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>CNCF graduates Kubeflow as a cloud-native AI standard</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/ibm-granite-4-2-hugging-face/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>IBM releases Granite 4.2 with native reasoning on Hugging Face</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/premier-league-transfer-watch/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Premier League clubs finalise moves as the transfer window narrows</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/rackspace-cloud-vmware-foundation/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Rackspace Cloud launches on VMware Cloud Foundation 9.1</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/us-q2-gdp-consumer-spending/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>US second-quarter GDP rises 1.5% as consumer spending accelerates</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/shopify-ceo-walgit/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>Shopify CEO Lütke ships walgit, an S3-native Git server</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-27/kuberay-v1-7-launch/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
+      <news:title>KubeRay 1.7 lands with a History Server and stronger security</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-08-26/apple-m6-m5-ultra-ai-compute/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>

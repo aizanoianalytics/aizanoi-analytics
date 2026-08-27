@@ -1,0 +1,20 @@
+{
+  "id": "2026-08-27-zai-glm-5-3-flash-chinese-chips",
+  "title": "Z.ai releases GLM-5.3-Flash, says it runs entirely on Chinese chips",
+  "summary": "Z.ai released GLM-5.3-Flash, a low-cost variant of its flagship model that the company claims is served entirely on China-made semiconductors. The Hong Kong-listed shares climbed more than 8 percent in Thursday trade after the company said it used 100,000 domestic chips to handle all online requests, including the initial release under the codename Ox Alpha on Aug. 20.",
+  "category": "ai",
+  "priority": 86,
+  "publishedAt": "2026-08-27T05:00:00Z",
+  "updatedAt": "2026-08-27T05:00:00Z",
+  "retrievedAt": "2026-08-27T04:46:30Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Z.ai", "GLM-5.3", "Chinese semiconductors", "open weights"],
+  "sources": [{
+    "publisher": "CNBC",
+    "url": "https://cnbc.com/2026/08/27/zai-shares-surge-new-ai-model-using-chinese-chips.html",
+    "publishedAt": "2026-08-27T03:12:00Z"
+  }]
+}
