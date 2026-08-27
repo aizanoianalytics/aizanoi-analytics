@@ -41,7 +41,16 @@ jobs:
       - name: Regression tests
         run: |
           set -o pipefail
+          # Top-level regression suite (node:test glob is non-recursive).
           node --test tests/*.test.mjs 2>&1 | tee artifacts/diagnostics/regression-tests.log
+      - name: Audit contract tests (security boundary + HR dashboard parity)
+        run: |
+          set -o pipefail
+          # These live in tests/audit/ and are NOT matched by tests/*.test.mjs.
+          # They are the enforceable contract for the public-only publish
+          # boundary (per owner decision 2026-08-26) and HR dashboard metadata
+          # parity, so they MUST run on every PR.
+          node --test tests/audit/*.test.mjs 2>&1 | tee artifacts/diagnostics/audit-contract-tests.log
       - name: Reject whitespace errors
         if: success()
         run: git diff --check HEAD^ HEAD
@@ -104,6 +113,14 @@ jobs:
             node "tests/$script" 2>&1 | tee -a "artifacts/diagnostics/$script.log" || status=1
           done
           cp /tmp/aizanoi-http.log artifacts/diagnostics/browser-static-server.log || true
+          exit $status
+      - name: HR Analytics Full Set browser gates
+        env:
+          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+        run: |
+          set -o pipefail
+          status=0
+          node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
           exit $status
       - name: Capture final product visuals
         if: success()
