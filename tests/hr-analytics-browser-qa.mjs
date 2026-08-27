@@ -34,12 +34,9 @@ const axePath = new URL('../node_modules/axe-core/axe.min.js', import.meta.url);
 
 // Pre-existing axe serious/critical debt captured at baseline 2026-08-26.
 // Any violation id NOT in this set is treated as a regression and fails the run.
-const BASELINE_AXE_DEBT = new Set([
-  'select-name',            // 12 nodes across dashboards (unlabeled <select>)
-  'aria-allowed-attr',      // 4-7 nodes (role/attr mismatch in chart SVGs)
-  'scrollable-region-focusable', // 1 node per dashboard (scrollable table)
-  'svg-img-alt',            // 2 nodes (chart SVGs missing role/title)
-]);
+// All pre-existing debt was eliminated in PR #62 (2026-08-27). The set is
+// kept empty on purpose: ANY axe serious/critical violation now fails QA.
+const BASELINE_AXE_DEBT = new Set([]);
 
 const layouts = [
   { name: 'desktop', viewport: { width: 1280, height: 800 }, isMobile: false },
