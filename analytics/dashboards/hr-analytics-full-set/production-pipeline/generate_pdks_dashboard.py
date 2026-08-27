@@ -32,7 +32,7 @@ DEFAULT_OUTPUT = PDKS_DASHBOARD
 STANDARD_DAILY_HOURS = 9.75
 DEFAULT_WORKDAY_START = "08:00"
 DEFAULT_WORKDAY_END = "17:45"
-AUTO_EXCLUDED_SICILS = {"2208", "14794", "10373", "10723", "1076"}
+AUTO_EXCLUDED_SICILS = {"99990001", "99990002", "99990003", "99990004", "99990005"}
 AUTO_EXCLUDED_UNVAN_TOKENS = ("direktor", "stajyer")
 AUTO_EXCLUDED_POSITION_TOKENS = ("genc yetenek", "bekci", "prova mankeni", "corner satis danismani")
 
@@ -865,7 +865,7 @@ HTML_TEMPLATE = r'''<!doctype html>
       <section class="toolbar" aria-label="Filtreler">
         <div class="field"><label for="departmentSelect">Departman</label><select id="departmentSelect"></select></div>
         <div class="field"><label for="yearSelect">Yıl</label><select id="yearSelect"></select></div>
-        <div class="field"><label for="searchInput">Sicil veya ad soyad ara</label><input id="searchInput" type="search" placeholder="Örn. 10007 veya Taner Kerti"></div>
+        <div class="field"><label for="searchInput">Sicil veya ad soyad ara</label><input id="searchInput" type="search" placeholder="Örn. 99000007 veya Synthetic Employee 0007"></div>
         <label class="toggle-field"><input id="hideInactiveInput" type="checkbox"> Fiili listede olmayan kişileri gösterme</label>
         <label class="toggle-field"><input id="hideHiddenInput" type="checkbox"> Gizlenen kişileri gizle</label>
         <label class="toggle-field"><input id="ignoreWeekendInput" type="checkbox"> Hafta sonu çalışmalarını yoksay</label>
@@ -941,7 +941,7 @@ HTML_TEMPLATE = r'''<!doctype html>
           <option value="watch">Alarm + Kritik + İzlemeli</option>
           <option value="all">Tümü</option>
         </select></div>
-        <div class="field"><label for="trackingSearchInput">Sicil veya ad soyad ara</label><input id="trackingSearchInput" type="search" placeholder="Örn. 10007 veya Taner Kerti"></div>
+        <div class="field"><label for="trackingSearchInput">Sicil veya ad soyad ara</label><input id="trackingSearchInput" type="search" placeholder="Örn. 99000007 veya Synthetic Employee 0007"></div>
         <label class="toggle-field"><input id="trackingHideInactiveInput" type="checkbox" checked> Fiili listede olmayanları gizle</label>
         <label class="toggle-field"><input id="trackingHideHiddenInput" type="checkbox" checked> Gizlenen kişileri gizle</label>
         <label class="toggle-field"><input id="trackingIgnoreWeekendInput" type="checkbox"> Hafta sonu çalışmalarını yoksay</label>
@@ -962,7 +962,7 @@ HTML_TEMPLATE = r'''<!doctype html>
         <div class="field"><label for="filterDepartmentSelect">Departman</label><select id="filterDepartmentSelect"></select></div>
         <div class="field"><label for="filterStartDate">Başlangıç tarihi</label><input id="filterStartDate" type="date"></div>
         <div class="field"><label for="filterEndDate">Bitiş tarihi</label><input id="filterEndDate" type="date"></div>
-        <div class="field"><label for="filterSearchInput">Sicil veya ad soyad ara</label><input id="filterSearchInput" type="search" placeholder="Örn. 10007 veya Taner Kerti"></div>
+        <div class="field"><label for="filterSearchInput">Sicil veya ad soyad ara</label><input id="filterSearchInput" type="search" placeholder="Örn. 99000007 veya Synthetic Employee 0007"></div>
         <label class="toggle-field"><input id="filterHideInactiveInput" type="checkbox" checked> Fiili listede olmayanları gizle</label>
         <label class="toggle-field"><input id="filterHideHiddenInput" type="checkbox" checked> Gizlenen kişileri gizle</label>
         <label class="toggle-field"><input id="filterIgnoreWeekendInput" type="checkbox"> Hafta sonu çalışmalarını yoksay</label>

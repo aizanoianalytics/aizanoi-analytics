@@ -109,6 +109,24 @@ test('download exactly matches the integrated pipeline output', () => {
   assert.equal(sha256(download), sha256(integrated));
 });
 
+test('executive boards retain their original embedded time-attendance dependency', () => {
+  const canonical = `${publicRoot}/workforce-time-attendance/index.html`;
+  const generator = readFileSync(`${pipelineRoot}/generate_pdks_dashboard.py`, 'utf8');
+  assert.doesNotMatch(`${generator}\n${readFileSync(canonical, 'utf8')}`, /Taner Kerti|\b10007\b/i,
+    'former employee example identity remains in the PDKS template');
+  assert.doesNotMatch(generator, /\b(?:2208|14794|10373|10723|1076)\b/,
+    'former employee exclusion identifiers remain in the PDKS source');
+  assert.match(generator, /99000007 veya Synthetic Employee 0007/);
+  assert.match(generator, /99990001.*99990005/);
+  for (const id of ['hr-executive-board-full-history', 'hr-executive-board-current']) {
+    const page = readFileSync(`${publicRoot}/${id}/index.html`, 'utf8');
+    const embedded = `${publicRoot}/${id}/pdks_takip_dashboard.html`;
+    assert.match(page, /src="pdks_takip_dashboard\.html"/);
+    assert.ok(existsSync(embedded), `${id} embedded PDKS dependency missing`);
+    assert.equal(sha256(embedded), sha256(canonical), `${id} embeds a divergent PDKS build`);
+  }
+});
+
 test('synthetic generation is deterministic and spreadsheet-tool backed', () => {
   const generator = readFileSync(`${sourceRoot}/tools/generate_synthetic_source_workbooks.mjs`, 'utf8');
   assert.match(generator, /@oai\/artifact-tool/);
