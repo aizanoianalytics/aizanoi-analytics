@@ -55,7 +55,7 @@ function aggregate(rows,chart){
   values.sort(chart.order==='time'?(a,b)=>a.label.localeCompare(b.label):(a,b)=>b.value-a.value);
   return chart.order==='time'?values.slice(-(chart.limit||12)):values.slice(0,chart.limit||12);
 }
-function barChart(values){
+function barChart(values,title){
   if(!values.length)return '<div class="empty">No matching chart data.</div>';
   const width=680,height=260,left=150,right=42,top=12,rowH=(height-top-15)/values.length;
   const min=Math.min(0,...values.map((item)=>Number(item.value)||0));
@@ -65,10 +65,10 @@ function barChart(values){
   const xFor=(value)=>left+((value-min)/span)*plotWidth;
   const zeroX=xFor(0);
   const compactAsPercent=Math.max(...values.map((item)=>Math.abs(Number(item.value)||0)),0)<=1;
-  return `<svg viewBox="0 0 ${width} ${height}" role="img"><line class="gridline" x1="${zeroX}" x2="${zeroX}" y1="${top}" y2="${height-12}"></line>${values.map((item,index)=>{const value=Number(item.value)||0,y=top+index*rowH,valueX=xFor(value),barX=Math.min(zeroX,valueX),barWidth=Math.max(Math.abs(valueX-zeroX),1),label=compactAsPercent?pct.format(value):fmt.format(value),labelX=value<0?Math.max(left,valueX-6):Math.min(valueX+6,width-right+4),anchor=value<0?'end':'start';return `<text x="0" y="${y+rowH*.64}">${esc(item.label.slice(0,22))}</text><rect class="bar" x="${barX}" y="${y+4}" width="${barWidth}" height="${Math.max(rowH-8,4)}" rx="3"></rect><text x="${labelX}" y="${y+rowH*.64}" text-anchor="${anchor}">${esc(label)}</text>`;}).join('')}</svg>`;
+  return `<svg viewBox="0 0 ${width} ${height}" role="img"><title>${esc(title||'Distribution chart')}</title><line class="gridline" x1="${zeroX}" x2="${zeroX}" y1="${top}" y2="${height-12}"></line>${values.map((item,index)=>{const value=Number(item.value)||0,y=top+index*rowH,valueX=xFor(value),barX=Math.min(zeroX,valueX),barWidth=Math.max(Math.abs(valueX-zeroX),1),label=compactAsPercent?pct.format(value):fmt.format(value),labelX=value<0?Math.max(left,valueX-6):Math.min(valueX+6,width-right+4),anchor=value<0?'end':'start';return `<text x="0" y="${y+rowH*.64}">${esc(item.label.slice(0,22))}</text><rect class="bar" x="${barX}" y="${y+4}" width="${barWidth}" height="${Math.max(rowH-8,4)}" rx="3"></rect><text x="${labelX}" y="${y+rowH*.64}" text-anchor="${anchor}">${esc(label)}</text>`;}).join('')}</svg>`;
 }
-function lineChart(values){
-  if(values.length<2)return barChart(values);
+function lineChart(values,title){
+  if(values.length<2)return barChart(values,title);
   const width=680,height=260,left=38,right=20,top=18,bottom=35,step=(width-left-right)/(values.length-1);
   const min=Math.min(0,...values.map((item)=>Number(item.value)||0));
   const max=Math.max(0,...values.map((item)=>Number(item.value)||0));
@@ -77,13 +77,13 @@ function lineChart(values){
   const yFor=(value)=>top+((max-value)/span)*plotHeight;
   const zeroY=yFor(0);
   const points=values.map((item,index)=>`${left+index*step},${yFor(Number(item.value)||0)}`).join(' ');
-  return `<svg viewBox="0 0 ${width} ${height}" role="img"><line class="gridline" x1="${left}" x2="${width-right}" y1="${zeroY}" y2="${zeroY}"></line><polyline class="line" points="${points}"></polyline>${values.map((item,index)=>index%Math.max(1,Math.ceil(values.length/6))===0?`<text x="${left+index*step}" y="${height-10}" text-anchor="middle">${esc(item.label)}</text>`:'').join('')}</svg>`;
+  return `<svg viewBox="0 0 ${width} ${height}" role="img"><title>${esc(title||'Trend chart')}</title><line class="gridline" x1="${left}" x2="${width-right}" y1="${zeroY}" y2="${zeroY}"></line><polyline class="line" points="${points}"></polyline>${values.map((item,index)=>index%Math.max(1,Math.ceil(values.length/6))===0?`<text x="${left+index*step}" y="${height-10}" text-anchor="middle">${esc(item.label)}</text>`:'').join('')}</svg>`;
 }
 function renderTable(rows,view){
   const columns=view.columns||Object.keys(rows[0]||{}).slice(0,8);
   const shown=rows.slice(0,view.rowLimit||150);
   if(!shown.length)return '<div class="empty">No rows match the current filters.</div>';
-  return `<div class="table-scroll"><table class="data-table"><thead><tr>${columns.map((column)=>`<th data-sort="${esc(column)}">${esc((view.labels?.[column]||column).replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${shown.map((row)=>`<tr data-profile-id="${esc(row.employee_id||'')}">${columns.map((column)=>`<td>${esc(row[column])}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="eyebrow">Showing ${shown.length} of ${rows.length} matching rows</p>`;
+  return `<div class="table-scroll" tabindex="0" aria-label="Data table, scrollable"><table class="data-table"><thead><tr>${columns.map((column)=>`<th data-sort="${esc(column)}">${esc((view.labels?.[column]||column).replaceAll('_',' '))}</th>`).join('')}</tr></thead><tbody>${shown.map((row)=>`<tr data-profile-id="${esc(row.employee_id||'')}">${columns.map((column)=>`<td>${esc(row[column])}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="eyebrow">Showing ${shown.length} of ${rows.length} matching rows</p>`;
 }
 function renderProfile(rows,view){
   const person=rows.find((row)=>row.employee_id===state.profileId)||rows[0];
@@ -95,9 +95,9 @@ function renderProfile(rows,view){
 function render(){
   const view=payload.views.find((item)=>item.id===state.tab)||payload.views[0];
   const rows=filtered(view);
-  document.querySelector('#tabs').innerHTML=payload.views.map((item)=>`<button class="tab" type="button" data-tab="${esc(item.id)}" aria-selected="${item.id===view.id}">${esc(item.label)}</button>`).join('');
+  {const tabsEl=document.querySelector('#tabs');tabsEl.setAttribute('role','tablist');tabsEl.innerHTML=payload.views.map((item)=>`<button class="tab" type="button" role="tab" data-tab="${esc(item.id)}" aria-selected="${item.id===view.id}" tabindex="${item.id===view.id?0:-1}">${esc(item.label)}</button>`).join('');}
   const kpis=(view.kpis||[]).map((metric)=>{const value=compute(rows,metric);return `<article class="kpi"><span>${esc(metric.label)}</span><strong>${esc(formatMetric(value,metric))}</strong><small>${esc(metric.note||'Updates with filters')}</small></article>`;}).join('');
-  const charts=(view.charts||[]).map((chart)=>{const values=aggregate(rows,chart);return `<article class="panel"><h3>${esc(chart.title)}</h3><div class="chart">${chart.type==='line'?lineChart(values):barChart(values)}</div></article>`;}).join('');
+  const charts=(view.charts||[]).map((chart)=>{const values=aggregate(rows,chart);return `<article class="panel"><h3>${esc(chart.title)}</h3><div class="chart">${chart.type==='line'?lineChart(values,chart.title):barChart(values,chart.title)}</div></article>`;}).join('');
   const body=view.kind==='profile'?renderProfile(rows,view):`<section class="kpis">${kpis}</section><section class="visual-grid">${charts}</section><section class="panel table-panel"><h3>${esc(view.tableTitle||'Detail explorer')}</h3>${renderTable(rows,view)}</section>`;
   document.querySelector('#view').innerHTML=`<div class="view-head"><div><h2>${esc(view.title)}</h2><p>${esc(view.description)}</p></div><button class="export-button" type="button" id="export-current">Export filtered CSV</button></div>${body}`;
   bindView();

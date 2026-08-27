@@ -217,7 +217,7 @@ HTML_TEMPLATE = r"""<!doctype html>
 
     <div class="notice info synthetic-notice">100% synthetic demonstration data. No employer records, real employees, contact details, or direct identifiers are used.</div>
 
-    <nav class="tabs" id="tabs" aria-label="Turnover sections">
+    <nav class="tabs" id="tabs" aria-label="Turnover sections" tabindex="0">
       <button class="tab active" data-tab="overview">Overview</button>
       <button class="tab" data-tab="breakdown">Breakdown Analysis</button>
       <button class="tab" data-tab="compare">Comparison</button>
@@ -230,21 +230,21 @@ HTML_TEMPLATE = r"""<!doctype html>
 
     <section class="filter-shell" aria-label="Global filters">
       <div class="filter-grid">
-        <div class="field"><label>Scope</label><select class="select" id="scope-filter"></select></div>
-        <div class="field"><label>Turnover Type</label><select class="select" id="type-filter">
+        <div class="field"><label for="scope-filter">Scope</label><select class="select" id="scope-filter" aria-label="Scope"></select></div>
+        <div class="field"><label for="type-filter">Turnover Type</label><select class="select" id="type-filter" aria-label="Turnover Type">
           <option value="all">All Exits</option>
           <option value="voluntary">Voluntary Turnover</option>
           <option value="forced">Employer-Initiated Turnover</option>
         </select></div>
-        <div class="field"><label>Start</label><select class="select" id="start-filter"></select></div>
-        <div class="field"><label>End</label><select class="select" id="end-filter"></select></div>
-        <div class="field"><label>Region</label><select class="select" id="region-filter"></select></div>
-        <div class="field"><label>Store</label><select class="select" id="store-filter"></select></div>
-        <div class="field"><label>Department</label><select class="select" id="department-filter"></select></div>
-        <div class="field"><label>City</label><select class="select" id="city-filter"></select></div>
-        <div class="field"><label>Gender</label><select class="select" id="gender-filter"></select></div>
-        <div class="field"><label>Contract Type</label><select class="select" id="contract-filter"></select></div>
-        <div class="field"><label>Title</label><select class="select" id="title-filter"></select></div>
+        <div class="field"><label for="start-filter">Start</label><select class="select" id="start-filter" aria-label="Start"></select></div>
+        <div class="field"><label for="end-filter">End</label><select class="select" id="end-filter" aria-label="End"></select></div>
+        <div class="field"><label for="region-filter">Region</label><select class="select" id="region-filter" aria-label="Region"></select></div>
+        <div class="field"><label for="store-filter">Store</label><select class="select" id="store-filter" aria-label="Store"></select></div>
+        <div class="field"><label for="department-filter">Department</label><select class="select" id="department-filter" aria-label="Department"></select></div>
+        <div class="field"><label for="city-filter">City</label><select class="select" id="city-filter" aria-label="City"></select></div>
+        <div class="field"><label for="gender-filter">Gender</label><select class="select" id="gender-filter" aria-label="Gender"></select></div>
+        <div class="field"><label for="contract-filter">Contract Type</label><select class="select" id="contract-filter" aria-label="Contract Type"></select></div>
+        <div class="field"><label for="title-filter">Title</label><select class="select" id="title-filter" aria-label="Title"></select></div>
         <div class="filter-actions"><button class="btn" id="reset-filters">Reset</button></div>
       </div>
       <div class="filter-foot">
@@ -284,7 +284,7 @@ HTML_TEMPLATE = r"""<!doctype html>
         <article class="card mt-14">
           <div class="card-head">
             <div><h3>Turnover Across Scopes</h3><p>Six primary scopes compared on the same monthly axis and canonical formula</p></div>
-            <div class="card-actions"><select class="select min-w-190" id="scope-trend-mode"><option value="monthly">Monthly Turnover</option><option value="ytd">Year-to-Date Cumulative Turnover</option></select></div>
+            <div class="card-actions"><select class="select min-w-190" id="scope-trend-mode" aria-label="Trend metric mode"><option value="monthly">Monthly Turnover</option><option value="ytd">Year-to-Date Cumulative Turnover</option></select></div>
           </div>
           <div class="chart" id="scope-trend-chart"></div>
         </article>
@@ -295,12 +295,12 @@ HTML_TEMPLATE = r"""<!doctype html>
         <div class="section-head"><div><h2>Breakdown Analysis</h2><p>Audit the same denominator by region, store, department, section, city, gender, contract type, and title</p></div></div>
         <article class="card">
           <div class="control-row">
-            <div class="field"><label>Breakdown</label><select class="select" id="breakdown-dimension">
+            <div class="field"><label for="breakdown-dimension">Breakdown</label><select class="select" id="breakdown-dimension" aria-label="Breakdown">
               <option value="bolge">Region</option><option value="magaza">Store</option>
               <option value="departman">Department</option><option value="bolum">Section</option><option value="il">City</option>
               <option value="cinsiyet">Gender</option><option value="sozlesme_turu">Contract Type</option><option value="title">Title</option>
             </select></div>
-            <div class="field"><label>Metric</label><select class="select" id="breakdown-metric">
+            <div class="field"><label for="breakdown-metric">Metric</label><select class="select" id="breakdown-metric" aria-label="Metric">
               <option value="latest">Latest Month Turnover</option><option value="period">Selected Period Cumulative Turnover</option>
               <option value="last12">Last 12 Months Turnover</option><option value="exits">Selected Period Exits</option>
             </select></div>
@@ -316,7 +316,7 @@ HTML_TEMPLATE = r"""<!doctype html>
           <div class="card-head">
             <div><h3>Cumulative Title Turnover Matrix</h3><p>Shows each title's contribution and its own turnover rate by region or department using separate business rules</p></div>
             <div class="card-actions">
-              <select class="select min-w-230" id="title-matrix-mode">
+              <select class="select min-w-230" id="title-matrix-mode" aria-label="Title matrix display mode">
                 <option value="contribution">Share of Turnover</option>
                 <option value="title_rate">Title Turnover Rate</option>
               </select>
@@ -332,11 +332,11 @@ HTML_TEMPLATE = r"""<!doctype html>
         <div class="section-head"><div><h2>Turnover Comparison</h2><p>Compare regions, stores, and years month-for-month on the same X-axis</p></div></div>
         <article class="card">
           <div class="control-row">
-            <div class="field"><label>Type</label><select class="select" id="compare-kind"><option value="bolge">Region</option><option value="magaza">Store</option></select></div>
-            <div class="field"><label>First</label><select class="select" id="compare-a"></select></div>
-            <div class="field"><label>Year A</label><select class="select" id="compare-year-a"></select></div>
-            <div class="field"><label>Second</label><select class="select" id="compare-b"></select></div>
-            <div class="field"><label>Year B</label><select class="select" id="compare-year-b"></select></div>
+            <div class="field"><label for="compare-kind">Type</label><select class="select" id="compare-kind" aria-label="Type"><option value="bolge">Region</option><option value="magaza">Store</option></select></div>
+            <div class="field"><label for="compare-a">First</label><select class="select" id="compare-a" aria-label="First"></select></div>
+            <div class="field"><label for="compare-year-a">Year A</label><select class="select" id="compare-year-a" aria-label="Year A"></select></div>
+            <div class="field"><label for="compare-b">Second</label><select class="select" id="compare-b" aria-label="Second"></select></div>
+            <div class="field"><label for="compare-year-b">Year B</label><select class="select" id="compare-year-b" aria-label="Year B"></select></div>
             <button class="btn" data-export="comparison">Comparison CSV</button>
           </div>
           <div class="chart" id="comparison-chart"></div>
@@ -397,7 +397,7 @@ HTML_TEMPLATE = r"""<!doctype html>
               <div class="left"><input class="search" id="reason-search" placeholder="Search exit reasons..."><span class="count" id="reason-count"></span></div>
               <div class="right"><button class="btn" id="apply-reasons">Apply and Save</button><button class="btn" id="export-reasons">Download JSON</button><button class="btn" id="import-reasons">Upload JSON</button><input type="file" id="reason-file" accept=".json,application/json" hidden></div>
             </div>
-            <div class="reason-list" id="reason-list"></div>
+            <div class="reason-list" id="reason-list" tabindex="0" aria-label="Exit reasons list, scrollable"></div>
           </article>
           <aside class="grid">
             <article class="card">
@@ -701,7 +701,7 @@ HTML_TEMPLATE = r"""<!doctype html>
 
     function simpleTable(target,rows,columns,options={}){
       if(!rows.length){empty(target,options.empty||"No data found for this table.");return;}
-      target.innerHTML=`<div class="table-wrap"><table><thead><tr>${columns.map(col=>`<th class="${col.numeric?"num":""}">${esc(col.label)}</th>`).join("")}</tr></thead><tbody>${rows.map((row,rowIndex)=>`<tr class="${row.total?"total-row":""}">${columns.map(col=>`<td class="${col.numeric?"num":""}">${col.render?col.render(row[col.key],row,rowIndex):esc(row[col.key]??"-")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;applyDataStyles(target);
+      target.innerHTML=`<div class="table-wrap" tabindex="0" aria-label="Data table, scrollable"><table><thead><tr>${columns.map(col=>`<th class="${col.numeric?"num":""}">${esc(col.label)}</th>`).join("")}</tr></thead><tbody>${rows.map((row,rowIndex)=>`<tr class="${row.total?"total-row":""}">${columns.map(col=>`<td class="${col.numeric?"num":""}">${col.render?col.render(row[col.key],row,rowIndex):esc(row[col.key]??"-")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;applyDataStyles(target);
     }
 
     function renderSmartTable(target,rows,columns,options={}){
@@ -713,7 +713,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       if(prior.sort){filtered.sort((a,b)=>{const av=a[prior.sort],bv=b[prior.sort];const an=Number(av),bn=Number(bv);let result=Number.isFinite(an)&&Number.isFinite(bn)?an-bn:String(av??"").localeCompare(String(bv??""),"tr");return prior.direction==="asc"?result:-result;});}
       const pages=Math.max(1,Math.ceil(filtered.length/prior.limit));prior.page=Math.min(prior.page,pages-1);
       const visible=filtered.slice(prior.page*prior.limit,(prior.page+1)*prior.limit);
-      target.innerHTML=`<div class="table-tools"><div class="left"><input class="search" value="${esc(prior.query)}" placeholder="${esc(options.placeholder||"Search table...")}"><span class="count">${fmt(filtered.length)} records</span></div><div class="right"><button class="mini prev" ${prior.page===0?"disabled":""}>Previous</button><span class="count">${prior.page+1}/${pages}</span><button class="mini next" ${prior.page>=pages-1?"disabled":""}>Next</button></div></div><div class="table-wrap"><table><thead><tr>${columns.map(col=>`<th class="${col.numeric?"num":""}"><button class="sort-btn" data-sort="${esc(col.key)}">${esc(col.label)} ${prior.sort===col.key?(prior.direction==="asc"?"↑":"↓"):""}</button></th>`).join("")}</tr></thead><tbody>${visible.map((row,rowIndex)=>`<tr>${columns.map(col=>`<td class="${col.numeric?"num":""}">${col.render?col.render(row[col.key],row,rowIndex):esc(row[col.key]??"-")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;applyDataStyles(target);
+      target.innerHTML=`<div class="table-tools"><div class="left"><input class="search" value="${esc(prior.query)}" placeholder="${esc(options.placeholder||"Search table...")}"><span class="count">${fmt(filtered.length)} records</span></div><div class="right"><button class="mini prev" ${prior.page===0?"disabled":""}>Previous</button><span class="count">${prior.page+1}/${pages}</span><button class="mini next" ${prior.page>=pages-1?"disabled":""}>Next</button></div></div><div class="table-wrap" tabindex="0" aria-label="Data table, scrollable"><table><thead><tr>${columns.map(col=>`<th class="${col.numeric?"num":""}"><button class="sort-btn" data-sort="${esc(col.key)}">${esc(col.label)} ${prior.sort===col.key?(prior.direction==="asc"?"↑":"↓"):""}</button></th>`).join("")}</tr></thead><tbody>${visible.map((row,rowIndex)=>`<tr>${columns.map(col=>`<td class="${col.numeric?"num":""}">${col.render?col.render(row[col.key],row,rowIndex):esc(row[col.key]??"-")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;applyDataStyles(target);
       const input=target.querySelector(".search");let timer;
       input?.addEventListener("input",()=>{clearTimeout(timer);timer=setTimeout(()=>{prior.query=input.value;prior.page=0;renderSmartTable(target,rows,columns,options);},180);});
       target.querySelectorAll("[data-sort]").forEach(button=>button.addEventListener("click",()=>{const key=button.dataset.sort;if(prior.sort===key)prior.direction=prior.direction==="asc"?"desc":"asc";else{prior.sort=key;prior.direction="asc";}prior.page=0;renderSmartTable(target,rows,columns,options);}));
@@ -823,7 +823,7 @@ HTML_TEMPLATE = r"""<!doctype html>
       const heatRows=rows.slice(0,30),months=MONTHS.filter(month=>month>=STATE.start&&month<=STATE.end).slice(-12);
       const allVals=heatRows.flatMap(row=>row.series.filter(item=>months.includes(item.donem)).map(item=>n(item.turnover))),max=Math.max(...allVals,.01);
       const htmlRows=heatRows.map(row=>{const map=new Map(row.series.map(item=>[item.donem,item.turnover]));return `<tr><td>${esc(row.entity)}</td>${months.map(month=>{const value=map.get(month);return `<td class="num heat" data-background="${heatColor(value,max)}">${Number.isFinite(Number(value))?pct(value,1):"-"}</td>`;}).join("")}</tr>`;}).join("");
-      $("breakdown-heatmap").innerHTML=heatRows.length?`<div class="table-wrap"><table><thead><tr><th>${esc($("breakdown-dimension").selectedOptions[0]?.textContent||"Breakdown")}</th>${months.map(month=>`<th class="num">${esc(monthLabel(month,true))}</th>`).join("")}</tr></thead><tbody>${htmlRows}</tbody></table></div>`:`<div class="empty">No data found for the heat map.</div>`;applyDataStyles($("breakdown-heatmap"));
+      $("breakdown-heatmap").innerHTML=heatRows.length?`<div class="table-wrap" tabindex="0" aria-label="Data table, scrollable"><table><thead><tr><th>${esc($("breakdown-dimension").selectedOptions[0]?.textContent||"Breakdown")}</th>${months.map(month=>`<th class="num">${esc(monthLabel(month,true))}</th>`).join("")}</tr></thead><tbody>${htmlRows}</tbody></table></div>`:`<div class="empty">No data found for the heat map.</div>`;applyDataStyles($("breakdown-heatmap"));
       simpleTable($("breakdown-table"),rows,[{key:"entity",label:"Breakdown"},{key:"latest_month",label:"Latest Period",render:value=>esc(monthLabel(value))},{key:"cikis",label:"Selected Period Exits",numeric:true,render:value=>fmt(value)},{key:"avg",label:"Avg. Workforce",numeric:true,render:value=>fmt(value,1)},{key:"value",label:"Selected Metric",numeric:true,render:value=>metric==="exits"?fmt(value):pct(value,1)}]);
       renderTitleMatrix();
     }
