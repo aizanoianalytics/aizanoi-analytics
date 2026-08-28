@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-28-salesforce-q2-fy27-agentforce",
+  "title": "Salesforce posts record $11.35B quarter as Agentforce ARR tops $1.5B",
+  "summary": "Salesforce reported fiscal second-quarter revenue of $11.35 billion after the bell on Wednesday, up 11% year-on-year, with adjusted EPS of $5.90 beating the $3.27 consensus. Agentforce annual recurring revenue crossed $1.5 billion and combined Agentforce and Data 360 ARR reached nearly $3.9 billion, while the company credited a $2.6 billion gain on its Anthropic investment for pushing net income up 87% to $3.53 billion.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-08-28T05:00:00Z",
+  "updatedAt": "2026-08-28T05:00:00Z",
+  "retrievedAt": "2026-08-28T04:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Salesforce", "Agentforce", "earnings", "Anthropic"],
+  "sources": [
+    {
+      "publisher": "Salesforce Investor Relations",
+      "url": "https://www.salesforce.com/news/press-releases/2026/08/26/fy27-q2-earnings/",
+      "publishedAt": "2026-08-26T20:05:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/08/26/salesforce-crm-q2-earnings-report-2027.html",
+      "publishedAt": "2026-08-27T11:30:00Z"
+    }
+  ]
+}

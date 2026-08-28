@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-28-red-hat-hardened-images-aws",
+  "title": "Red Hat Hardened Images gain AWS Inspector and ECR scanning, OTel 2.0 telco AI lands",
+  "summary": "Red Hat's Friday Five notes that AWS InspectorScan API and ECR Basic scanning now support Red Hat Hardened Images, giving container security teams vulnerability alerts and supply-chain verification against the same images they already pull. Separately, Red Hat, AT&T, AMD, Dell, Microsoft and GSMA released OTel 2.0, a domain-specific AI model for telecommunications built on the open-source SDG Hub to convert technical standards into synthetic training data.",
+  "category": "technology",
+  "priority": 48,
+  "publishedAt": "2026-08-28T05:00:00Z",
+  "updatedAt": "2026-08-28T05:00:00Z",
+  "retrievedAt": "2026-08-28T04:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Red Hat", "AWS", "container security", "telecom AI"],
+  "sources": [
+    {
+      "publisher": "Red Hat",
+      "url": "https://www.redhat.com/en/blog/friday-five-august-28-2026-red-hat",
+      "publishedAt": "2026-08-28T00:00:00Z"
+    }
+  ]
+}
