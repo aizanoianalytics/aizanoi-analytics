@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-28-accuknox-agentz-launch",
+  "title": "AccuKnox launches AgentZ to govern enterprise AI agents at scale",
+  "summary": "Menlo Park-based AccuKnox unveiled AgentZ on Wednesday as a platform for building, running and governing AI agents across teams and workflows. The hosted platform and its open-source repository bundle agents, execution environments, tools, permissions and audit logs into a single stack, with sandboxed execution and tool-level permissions designed to make agent rollouts auditable rather than experimental.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-08-28T05:00:00Z",
+  "updatedAt": "2026-08-28T05:00:00Z",
+  "retrievedAt": "2026-08-28T04:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["AccuKnox", "AI agents", "governance", "enterprise software"],
+  "sources": [
+    {
+      "publisher": "TechStartups",
+      "url": "https://techstartups.com/2026/08/27/accuknox-launches-agentz-to-help-enterprises-build-run-and-govern-ai-agents-at-scale",
+      "publishedAt": "2026-08-27T12:30:00Z"
+    }
+  ]
+}

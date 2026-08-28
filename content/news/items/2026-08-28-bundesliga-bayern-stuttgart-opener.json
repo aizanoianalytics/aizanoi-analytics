@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-28-bundesliga-bayern-stuttgart-opener",
+  "title": "Bundesliga kicks off 2026/27 with Bayern Munich hosting VfB Stuttgart at the Allianz",
+  "summary": "The 64th Bundesliga season opens on Friday at 18:30 UTC when defending champions Bayern Munich welcome VfB Stuttgart to the Allianz Arena in a repeat of the 2025/26 DFB-Pokal final, which Bayern won 3-0. Newly promoted SV Elversberg begin their first top-flight campaign at home to Bayer 04 Leverkusen, and the Revierderby dates between Schalke and Borussia Dortmund are set for December and April.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-08-28T05:00:00Z",
+  "updatedAt": "2026-08-28T05:00:00Z",
+  "retrievedAt": "2026-08-28T04:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Bundesliga", "Bayern Munich", "VfB Stuttgart", "season opener"],
+  "sources": [
+    {
+      "publisher": "Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/2026%E2%80%9327_Bundesliga",
+      "publishedAt": "2026-08-22T00:00:00Z"
+    },
+    {
+      "publisher": "Bundesliga.com",
+      "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/1/fc-bayern-muenchen-vs-vfb-stuttgart/liveticker",
+      "publishedAt": "2026-08-28T00:00:00Z"
+    }
+  ]
+}
