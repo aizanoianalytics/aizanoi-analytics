@@ -91,43 +91,10 @@ jobs:
       - name: Verify deterministic tracked outputs
         run: |
           set -euo pipefail
-          python - <<'PY'
-          import hashlib
-          import re
-          import zipfile
-
-          def normalized_xlsx_digest(filename):
-              digest = hashlib.sha256()
-              with zipfile.ZipFile(filename) as archive:
-                  for name in sorted(archive.namelist()):
-                      data = archive.read(name)
-                      if name == 'docProps/core.xml':
-                          data = re.sub(
-                              rb'<dcterms:created[^>]*>.*?</dcterms:created>',
-                              b'<dcterms:created/>',
-                              data,
-                              flags=re.S,
-                          )
-                          data = re.sub(
-                              rb'<dcterms:modified[^>]*>.*?</dcterms:modified>',
-                              b'<dcterms:modified/>',
-                              data,
-                              flags=re.S,
-                          )
-                      digest.update(name.encode('utf-8'))
-                      digest.update(b'\0')
-                      digest.update(data)
-                      digest.update(b'\0')
-              return digest.hexdigest()
-
-          before = normalized_xlsx_digest('/tmp/hr-integrated-baseline.xlsx')
-          after = normalized_xlsx_digest(
-              'analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx'
-          )
-          if before != after:
-              raise SystemExit(f'integrated workbook semantic/package drift: {before} != {after}')
-          print(f'integrated workbook normalized SHA-256: {after}')
-          PY
+          python scripts/verify-hr-workbook-semantics.py \
+            /tmp/hr-integrated-baseline.xlsx \
+            analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx \
+            2>&1 | tee artifacts/diagnostics/hr-workbook-semantics.log
           git diff --exit-code -- \
             ':(glob)frontend/analytics/dashboards/hr-analytics-full-set/**/*.html'
           git diff --check
