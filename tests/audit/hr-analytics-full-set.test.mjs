@@ -1,144 +1,152 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 
 const sourceRoot = 'analytics/dashboards/hr-analytics-full-set';
+const pipelineRoot = `${sourceRoot}/production-pipeline`;
 const publicRoot = 'frontend/analytics/dashboards/hr-analytics-full-set';
 const manifest = JSON.parse(readFileSync(`${sourceRoot}/pipeline-manifest.json`, 'utf8'));
 const catalog = readFileSync(`${publicRoot}/index.html`, 'utf8');
-
 const dashboardIds = [
   'hr-executive-board-full-history', 'hr-executive-board-current', 'hr-administration-deep-dive',
   'store-operations-tracking', 'workforce-turnover', 'store-learning-compliance',
   'learning-academy-analytics', 'performance-hiring-turnover', 'corporate-goals',
   'workforce-time-attendance',
 ];
+const expectedControlCounts = new Map([
+  ['hr-executive-board-full-history', 136], ['hr-executive-board-current', 136],
+  ['hr-administration-deep-dive', 13], ['store-operations-tracking', 59],
+  ['workforce-turnover', 43], ['store-learning-compliance', 6],
+  ['learning-academy-analytics', 46], ['performance-hiring-turnover', 45],
+  ['corporate-goals', 13], ['workforce-time-attendance', 63],
+]);
+const sha256 = (file) => createHash('sha256').update(readFileSync(file)).digest('hex');
 
-test('catalog and source expose the complete ten-dashboard product map', () => {
+test('manifest locks the complete original production contract', () => {
+  assert.equal(manifest.dataPolicy, 'synthetic-only');
+  assert.equal(manifest.sourceWorkbookCount, 27);
+  assert.equal(manifest.pythonModuleCount, 22);
+  assert.equal(manifest.pipelineStageCount, 10);
   assert.equal(manifest.dashboardCount, 10);
-  assert.equal(manifest.dashboards.length, 10);
-  assert.equal(manifest.pipeline.length, 10);
+  assert.equal(manifest.publicDashboardCount, 10);
+  assert.equal(manifest.sourceParity, 'normalized-text-and-ast-equal');
+  assert.equal(manifest.dashboardSurfaceParity, 'exact');
   assert.deepEqual(manifest.dashboards.map(({ id }) => id), dashboardIds);
-  for (const dashboard of manifest.dashboards) {
-    const publicName = dashboard.name.replaceAll('&', '&amp;');
-    assert.match(catalog, new RegExp(publicName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-    assert.ok(existsSync(`${sourceRoot}/${dashboard.id}/README.md`), `${dashboard.id} source folder missing`);
-    assert.ok(dashboard.capabilities.length >= 4, `${dashboard.id} capability inventory is too shallow`);
+  assert.deepEqual(manifest.pipeline.map(({ order }) => order), [1,2,3,4,5,6,7,8,9,10]);
+});
+
+test('all 27 synthetic inputs and all 22 production modules are present', () => {
+  const workbooks = readdirSync(pipelineRoot).filter((name) => name.endsWith('.xlsx'));
+  const modules = readdirSync(pipelineRoot).filter((name) => name.endsWith('.py'));
+  assert.equal(workbooks.length, 27);
+  assert.equal(modules.length, 22);
+  for (const file of workbooks) assert.ok(statSync(`${pipelineRoot}/${file}`).size > 4_000, `${file} is unexpectedly small`);
+  for (const required of ['run_full_pipeline.py', 'hr_data_pipeline.py', 'refresh_data.py', 'generate_turnover_dashboard.py', 'generate_pdks_dashboard.py']) {
+    assert.ok(modules.includes(required), `${required} missing`);
   }
 });
 
-test('all ten verified synthetic dashboards are public', () => {
-  assert.equal(manifest.publicDashboardCount, 10);
-  assert.equal(manifest.dashboards.filter(({ status }) => status === 'public').length, 10);
-  assert.equal(manifest.pipeline.filter(({ status }) => status === 'public').length, 10);
-  assert.match(catalog, /Eight working views/i);
-  assert.match(catalog, /14-sheet synthetic workbook/i);
-  assert.match(catalog, /20-sheet Synthetic HR Demo Core/i);
-  assert.match(catalog, /10<\/strong><span>verified public builds/i);
-  assert.match(catalog, /0<\/strong><span>employer records published/i);
+test('unchanged ten-stage orchestration remains explicit', () => {
+  const source = readFileSync(`${pipelineRoot}/run_full_pipeline.py`, 'utf8');
+  for (const stage of ['icmal', 'dashboard', 'admin', 'magaza', 'turnover', 'uyum', 'akademi', 'performans', 'hedefler', 'pdks']) {
+    assert.match(source, new RegExp(`['"]${stage}['"]`), `${stage} stage missing`);
+  }
+  for (const script of ['hr_data_pipeline.py', 'refresh_data.py', 'generate_admin_panel.py', 'generate_magaza_takip_panel.py', 'generate_turnover_dashboard.py', 'generate_magaza_uyum_dashboard.py', 'generate_akademi_dashboard.py', 'generate_performans_dashboard.py', 'generate_hedefler_dashboard.py', 'generate_pdks_dashboard.py']) {
+    assert.match(source, new RegExp(script.replaceAll('.', '\\.')));
+  }
 });
 
-test('nine shared-core dashboards expose full interactive surfaces', () => {
-  const sharedIds = dashboardIds.filter((id) => id !== 'workforce-turnover');
-  for (const id of sharedIds) {
+test('all ten original dashboard interaction surfaces are published intact', () => {
+  for (const id of dashboardIds) {
     const file = `${publicRoot}/${id}/index.html`;
     assert.ok(existsSync(file), `${id} public route missing`);
+    assert.ok(statSync(file).size > 25_000, `${id} output is unexpectedly shallow`);
     const html = readFileSync(file, 'utf8');
-    assert.match(html, /id="filter-period"/);
-    assert.match(html, /id="filter-region"/);
-    assert.match(html, /id="filter-store"/);
-    assert.match(html, /id="filter-department"/);
-    assert.match(html, /id="search" type="search"/);
-    assert.match(html, /Synthetic HR Demo Core/);
-    assert.match(html, /"dataPolicy":"synthetic-only"/);
-    assert.match(html, /shared\/dashboard\.js/);
-    assert.match(html, /shared\/dashboard\.css/);
-    assert.doesNotMatch(html, /ipekyol|erduran|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
-    const payloadText = html.match(/<div id="dashboard-data" hidden>([\s\S]+?)<\/div><script src=/)?.[1];
-    assert.ok(payloadText, `${id} payload missing`);
-    const payload = JSON.parse(payloadText);
-    assert.equal(payload.meta.id, id);
-    assert.ok(payload.views.length >= 4, `${id} view inventory is too shallow`);
-    for (const view of payload.views) assert.ok(payload.datasets[view.dataset]?.length > 0, `${id}/${view.id} has no data`);
+    assert.match(html, /<style\b/i);
+    assert.match(html, /<script\b/i);
+    assert.doesNotMatch(html, /ipekyol|erduran/i);
+    for (const email of html.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi) || []) {
+      assert.match(email, /@example\.test$/i, `${id} contains a non-test email: ${email}`);
+    }
   }
 });
 
-test('current executive surface contains no pre-2024 analytical periods', () => {
-  const html = readFileSync(`${publicRoot}/hr-executive-board-current/index.html`, 'utf8');
-  const payload = JSON.parse(html.match(/<div id="dashboard-data" hidden>([\s\S]+?)<\/div><script src=/)[1]);
-  const datedPeriods = Object.values(payload.datasets).flat().map((row) => row.period).filter((period) => period && period !== 'Current');
-  assert.ok(datedPeriods.length > 0);
-  assert.ok(datedPeriods.every((period) => String(period) >= '2024'));
+test('HTML-aware parser locks the exact original control counts', () => {
+  const python = process.platform === 'win32' ? 'python' : 'python3';
+  const script = [
+    'import importlib.util,json,pathlib',
+    "p=pathlib.Path('analytics/dashboards/hr-analytics-full-set/tools/verify_dashboard_parity.py')",
+    "s=importlib.util.spec_from_file_location('surface',p)",
+    'm=importlib.util.module_from_spec(s)',
+    's.loader.exec_module(m)',
+    "root=pathlib.Path('frontend/analytics/dashboards/hr-analytics-full-set')",
+    `ids=${JSON.stringify(dashboardIds)}`,
+    "print(json.dumps({i:m.inspect(root/i/'index.html')['control_count'] for i in ids}))",
+  ].join(';');
+  const actual = JSON.parse(execFileSync(python, ['-c', script], { encoding: 'utf8' }));
+  assert.deepEqual(actual, Object.fromEntries(expectedControlCounts));
 });
 
-test('current executive employee views use 2024+ employment snapshots instead of hire-date periods', () => {
-  const html = readFileSync(`${publicRoot}/hr-executive-board-current/index.html`, 'utf8');
-  const payload = JSON.parse(html.match(/<div id="dashboard-data" hidden>([\s\S]+?)<\/div><script src=/)[1]);
-  const history = payload.datasets.employment_monthly || [];
-  assert.ok(history.length > 0, 'current executive employment history missing');
-  assert.ok(history.every((row) => String(row.period || row.month) >= '2024'), 'pre-2024 employment month leaked into current surface');
-  const engine = readFileSync(`${publicRoot}/shared/dashboard.js`, 'utf8');
-  assert.match(engine, /function currentExecutiveEmployeeSnapshot/);
-  assert.match(engine, /payload\.meta\?\.id==='hr-executive-board-current'/);
-  assert.match(engine, /view\.dataset==='employees'/);
-  assert.match(engine, /row\.period\|\|row\.month/);
-  assert.match(engine, /period<'2024'/);
-  assert.doesNotMatch(engine, /start_date.*2024|2024.*start_date/);
+test('catalog exposes every dashboard and accurately describes the full pipeline', () => {
+  for (const dashboard of manifest.dashboards) {
+    assert.match(catalog, new RegExp(dashboard.route.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    assert.ok(existsSync(`${sourceRoot}/${dashboard.id}/README.md`));
+    assert.ok(dashboard.capabilities.length >= 4);
+  }
+  assert.match(catalog, /10<\/strong><span>original dashboard surfaces/i);
+  assert.match(catalog, /27<\/strong><span>synthetic source workbooks/i);
+  assert.match(catalog, /22<\/strong><span>parity-verified Python modules/i);
+  assert.match(catalog, /same 10-stage Python line/i);
+  assert.match(catalog, /0<\/strong><span>real employer or employee records/i);
 });
 
-test('shared core generator and committed workbook preserve the reproducible contract', () => {
-  const generator = readFileSync(`${sourceRoot}/synthetic-core/generate_hr_demo_core.mjs`, 'utf8');
-  const webGenerator = readFileSync(`${sourceRoot}/generate_full_set_dashboards.py`, 'utf8');
-  const workbook = `${sourceRoot}/synthetic-core/data/hr_demo_core_synthetic.xlsx`;
-  assert.ok(existsSync(workbook));
-  assert.ok(readFileSync(workbook).byteLength > 2_000_000);
-  assert.match(generator, /20260826/);
+test('download exactly matches the integrated pipeline output', () => {
+  const integrated = `${pipelineRoot}/dashboardlar/icmal_sorgu_sonuc.xlsx`;
+  const download = `${publicRoot}/downloads/hr-analytics-full-set-synthetic-output.xlsx`;
+  assert.ok(statSync(download).size > 5_000_000);
+  assert.equal(sha256(download), sha256(integrated));
+});
+
+test('executive boards retain their original embedded time-attendance dependency', () => {
+  const canonical = `${publicRoot}/workforce-time-attendance/index.html`;
+  const generator = readFileSync(`${pipelineRoot}/generate_pdks_dashboard.py`, 'utf8');
+  assert.doesNotMatch(`${generator}\n${readFileSync(canonical, 'utf8')}`, /Taner Kerti|\b10007\b/i,
+    'former employee example identity remains in the PDKS template');
+  assert.doesNotMatch(generator, /\b(?:2208|14794|10373|10723|1076)\b/,
+    'former employee exclusion identifiers remain in the PDKS source');
+  assert.match(generator, /99000007 veya Synthetic Employee 0007/);
+  assert.match(generator, /99990001.*99990005/);
+  for (const id of ['hr-executive-board-full-history', 'hr-executive-board-current']) {
+    const page = readFileSync(`${publicRoot}/${id}/index.html`, 'utf8');
+    const embedded = `${publicRoot}/${id}/pdks_takip_dashboard.html`;
+    assert.match(page, /src="pdks_takip_dashboard\.html"/);
+    assert.ok(existsSync(embedded), `${id} embedded PDKS dependency missing`);
+    assert.equal(sha256(embedded), sha256(canonical), `${id} embeds a divergent PDKS build`);
+  }
+});
+
+test('synthetic generation is deterministic and spreadsheet-tool backed', () => {
+  const generator = readFileSync(`${sourceRoot}/tools/generate_synthetic_source_workbooks.mjs`, 'utf8');
   assert.match(generator, /@oai\/artifact-tool/);
-  for (const sheet of ['Employees', 'Employment_Monthly', 'Exits', 'Hiring', 'Promotions', 'Performance', 'Learning_Events', 'Compliance', 'Goals', 'Attendance', 'Turnover_Analysis', 'QA_Control']) assert.match(generator, new RegExp(sheet));
-  assert.match(webGenerator, /Synthetic HR Demo Core/);
-  assert.doesNotMatch(`${generator}\n${webGenerator}`, /ipekyol|erduran|@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+  assert.match(generator, /Synthetic Employee/);
+  assert.match(generator, /example\.test/);
+  assert.match(generator, /99000001/);
+  assert.doesNotMatch(generator, /ipekyol|erduran/i);
+  assert.ok([...generator.matchAll(/\.xlsx/g)].length >= 27);
 });
 
-test('shared web engine keeps filtering, sorting, profiles and exports', () => {
-  const engine = readFileSync(`${publicRoot}/shared/dashboard.js`, 'utf8');
-  assert.match(engine, /function filtered/);
-  assert.match(engine, /data-sort/);
-  assert.match(engine, /function renderProfile/);
-  assert.match(engine, /Export filtered CSV/);
-  assert.match(engine, /URL\.createObjectURL/);
-});
-
-test('shared chart engine renders signed attendance variance around a real zero baseline', () => {
-  const engine = readFileSync(`${publicRoot}/shared/dashboard.js`, 'utf8');
-  assert.match(engine, /Math\.min\(0,\.\.\.values\.map/);
-  assert.match(engine, /Math\.max\(0,\.\.\.values\.map/);
-  assert.match(engine, /const zeroX=xFor\(0\)/);
-  assert.match(engine, /const zeroY=yFor\(0\)/);
-  assert.match(engine, /Math\.abs\(valueX-zeroX\)/);
-});
-
-test('public catalog describes the pipeline without private artifacts or identities', () => {
+test('documentation states parity and the zero-real-data release boundary', () => {
   const readme = readFileSync(`${sourceRoot}/README.md`, 'utf8');
-  const combined = `${catalog}\n${readme}\n${JSON.stringify(manifest)}`;
-  assert.doesNotMatch(combined, /ipekyol|erduran/i);
-  assert.doesNotMatch(combined, /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
-  assert.doesNotMatch(combined, /\.html|\.xlsx/i);
-  assert.match(combined, /Synthetic HR Demo Core/i);
-  assert.match(combined, /Reference workbooks and exported HTML are not part/i);
+  assert.match(readme, /not a simplified reimplementation/i);
+  assert.match(readme, /22 Python modules preserve the original algorithms/i);
+  assert.match(readme, /27 source workbooks are fully synthetic/i);
+  assert.match(readme, /Never replace the synthetic .* inputs/i);
+  assert.doesNotMatch(`${catalog}\n${readme}\n${JSON.stringify(manifest)}`, /ipekyol|erduran/i);
 });
 
-test('legacy /analytics/workforce-turnover/ stays retired (owner decision 2026-08-26)', () => {
-  // Owner retired the legacy route on 2026-08-26. The canonical Workforce
-  // Turnover dashboard now lives at:
-  //   /analytics/dashboards/hr-analytics-full-set/workforce-turnover/
-  // This test locks the retirement contract: no legacy stub in repo, no
-  // nginx rewrite, no canonical rescue. If you change your mind, update this
-  // test and HERMES_OPERATIONS.md smoke-check in lockstep.
-  const legacyFrontend = 'frontend/analytics/workforce-turnover/index.html';
-  assert.equal(existsSync(legacyFrontend), false,
-    `Legacy redirect stub must not be reintroduced: ${legacyFrontend}`);
-  // The HR Full Set generator manifest must NOT reference the legacy path.
-  const manifest = readFileSync('analytics/dashboards/hr-analytics-full-set/pipeline-manifest.json', 'utf8');
-  assert.doesNotMatch(manifest, /\/analytics\/workforce-turnover\//,
-    'pipeline-manifest.json must not reference the legacy route');
+test('legacy turnover route stays retired', () => {
+  assert.equal(existsSync('frontend/analytics/workforce-turnover/index.html'), false);
+  assert.doesNotMatch(JSON.stringify(manifest), /\/analytics\/workforce-turnover\//);
 });

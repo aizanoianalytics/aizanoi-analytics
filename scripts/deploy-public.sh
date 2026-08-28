@@ -7,18 +7,21 @@
 # Only the frontend/ subtree is published. Repo-level source/build directories
 # (analytics/, tests/, docs/, scripts/, .github/, infra/, the repo root) MUST
 # NEVER be copied into the webroot.
-#
-# This script is the single deployment surface. PR that adds it locks in the
-# contract enforced by tests/audit/security-publish-boundary.test.mjs.
 
 set -euo pipefail
 
 REPO="/opt/aizanoi-analytics-public"
 WEBROOT="/var/www/aizanoianalytics.com"
 SOURCE="${REPO}/frontend"
+PUBLIC_SYNTHETIC_XLSX="analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx"
 
 if [[ ! -d "${SOURCE}" ]]; then
   echo "FATAL: source tree missing: ${SOURCE}" >&2
+  exit 2
+fi
+
+if [[ ! -s "${SOURCE}/${PUBLIC_SYNTHETIC_XLSX}" ]]; then
+  echo "FATAL: declared public synthetic workbook missing: ${SOURCE}/${PUBLIC_SYNTHETIC_XLSX}" >&2
   exit 2
 fi
 
@@ -28,34 +31,27 @@ echo "[deploy] mirroring ${SOURCE}/ -> ${WEBROOT}/"
 # cwd-independent: the caller may run from any working directory.
 rsync -a --delete "${SOURCE}/" "${WEBROOT}/"
 
-# Remove any stale source/build artifacts that may have leaked into the
-# webroot by a prior bad deploy. The denylist mirrors tests/audit/.
+# Remove stale source/build artifacts that may have leaked into the webroot by
+# a prior bad deploy. One explicitly declared synthetic workbook is a public
+# product download and must survive the scrub.
 echo "[deploy] scrubbing denylisted artifacts from webroot"
-DENY_PATTERNS=(
-  '*.py'
-  '*.xlsx'
-  'README.md'
-  'pipeline-manifest.json'
-  'synthetic-core'
-  'workforce-turnover/dashboard_build_common.py'
-  'workforce-turnover/dashboard_paths.py'
-  'workforce-turnover/generate_turnover_dashboard.py'
-  'workforce-turnover/turnover_analytics_common.py'
-  'workforce-turnover/turnover_dashboard_template.py'
+(
+  cd "${WEBROOT}"
+  find . -type f \( \
+      -name '*.py' -o \
+      -name 'pipeline-manifest.json' -o \
+      \( -name '*.xlsx' ! -path "./${PUBLIC_SYNTHETIC_XLSX}" \) \
+    \) -print -delete 2>/dev/null || true
 )
-(cd "${WEBROOT}" && find . -type f \( \
-    -name '*.py' -o \
-    -name '*.xlsx' -o \
-    -name 'pipeline-manifest.json' \
-  \) -print -delete 2>/dev/null || true)
 
 # README.md and synthetic-core/ under analytics/dashboards/hr-analytics-full-set/
-# are scraped too (regex catches nested ones under synthetic-core and the
-# dashboard subdirectory README files).
-(cd "${WEBROOT}/analytics" 2>/dev/null && \
-  find . -path '*synthetic-core*' -prune -exec rm -rf {} +; \
-  find . -name 'README.md' -path '*/dashboards/*' -delete; \
-  true)
+# are build/source artifacts rather than public product assets.
+(
+  cd "${WEBROOT}/analytics" 2>/dev/null || exit 0
+  find . -path '*synthetic-core*' -prune -exec rm -rf {} +
+  find . -name 'README.md' -path '*/dashboards/*' -delete
+  true
+)
 
 # Remove the intentional-retirement legacy route if it sneaks back.
 # /analytics/workforce-turnover/ 404 contract (owner decision 2026-08-26).
@@ -64,16 +60,24 @@ if [[ -d "${WEBROOT}/analytics/workforce-turnover" ]]; then
   echo "[deploy] removed legacy /analytics/workforce-turnover/ (owner-retired)"
 fi
 
-# Public negative-smoke: nothing denylisted should remain in webroot.
+# Public negative-smoke: no undeclared source/build artifact may remain, while
+# the declared synthetic workbook must still be present and non-empty.
 echo "[deploy] running negative security smoke"
-LEAKS=$(cd "${WEBROOT}" && find . -type f \( \
-  -name '*.py' -o -name '*.xlsx' -o -name 'pipeline-manifest.json' \
-  -path '*synthetic-core*' \
-\) 2>/dev/null)
+LEAKS=$(
+  cd "${WEBROOT}" && find . -type f \( \
+    -name '*.py' -o \
+    -name 'pipeline-manifest.json' -o \
+    \( -name '*.xlsx' ! -path "./${PUBLIC_SYNTHETIC_XLSX}" \) \
+  \) -print 2>/dev/null || true
+)
 if [[ -n "${LEAKS}" ]]; then
   echo "FATAL: denylisted artifacts still in webroot:" >&2
   printf '%s\n' "${LEAKS}" >&2
   exit 3
+fi
+if [[ ! -s "${WEBROOT}/${PUBLIC_SYNTHETIC_XLSX}" ]]; then
+  echo "FATAL: public synthetic workbook was removed or is empty after deploy" >&2
+  exit 4
 fi
 
 echo "[deploy] OK"

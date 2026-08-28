@@ -45,9 +45,9 @@ Hermes may also implement engineering changes when asked, but must obey the same
 9. Run `node scripts/news/build-news.mjs`.
    The compiler must acquire its exclusive lock and complete staged validation; never copy a partially generated tree into production. The same build refreshes the News feed, daily edition/weekly edition/category pages, permanent article pages, `/news/about/`, RSS, `/news/sitemap.xml` and the root discovery sitemap.
 10. Run `node --test tests/*.test.mjs` or the repository's current release gate.
-10. Inspect the generated `frontend/news/index.json`, permanent article/edition/category tree, RSS and sitemap diffs.
-11. Commit with a meaningful message such as `content: publish 2026-08-21 news briefing`.
-12. Push to GitHub before production deployment.
+11. Inspect the generated `frontend/news/index.json`, permanent article/edition/category tree, RSS and sitemap diffs.
+12. Commit with a meaningful message such as `content: publish 2026-08-21 news briefing`.
+13. Push to GitHub before production deployment.
 
 ## Deployment loop
 
@@ -56,37 +56,43 @@ Do not treat a merge as a deployment.
 1. Confirm the exact approved Git SHA.
 2. Record the currently deployed SHA for rollback.
 3. Fetch/pull the approved commit on the server.
-4. Run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed.
-5. Deploy static files using the existing production procedure.
+4. Run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed. If HR Analytics source, synthetic inputs or generated dashboard artifacts changed, run `bash scripts/regenerate-hr-dashboards.sh` first.
+5. Deploy the public static tree with `bash scripts/deploy-public.sh`. This is the canonical allowlist boundary; do not replace it with a repo-root copy or ad-hoc rsync.
 6. Confirm source-to-production checksum/SHA parity where the deployment tooling supports it.
 7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, `/analytics/`, `/analytics/dashboards/hr-analytics-full-set/` (catalog index) plus each of its 10 dashboard routes, `/news/about/`, one current permanent News article, `/news/sitemap.xml`, one Historical World and static assets. `/analytics/`, app id `analytics` and visible label **Analytics** remain aligned.
    - `/analytics/workforce-turnover/` is intentionally retired (owner decision 2026-08-26) and MUST return HTTP 404. The canonical Workforce Turnover dashboard is at `/analytics/dashboards/hr-analytics-full-set/workforce-turnover/`. Do not reintroduce the legacy redirect or stub.
+   - `frontend/analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx` is the only spreadsheet allowed through the public deploy scrub. It must exist and be non-empty after deployment; every other `.xlsx` remains denylisted.
 8. If a regression appears, roll back to the recorded known-good SHA instead of hot-fixing production only.
 
 ## Local data regeneration (Analytics dashboards)
 
-The HR Analytics Full Set is a **synthetic-data** product. The generators are
-kept separate by design (owner decision 2026-08-26): a 9-dashboard shared-core
-generator and a standalone Workforce Turnover generator. Do NOT merge or rewrite
-them.
+The HR Analytics Full Set is a **synthetic-data** product built by the parity-preserved original ten-stage Python pipeline. The public repository commits 27 deterministic synthetic input workbooks and the sanitized production modules; private/employer workbooks are never inputs to the public build.
 
-Single canonical orchestration command (synthetic core → 9 shared-core
-dashboards → standalone turnover → sanity + denylist regression check):
+Install the locked Python 3.11 dependencies, then use the single canonical orchestration command:
 
 ```bash
+python -m pip install -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
 bash scripts/regenerate-hr-dashboards.sh
 ```
 
-This script does NOT rewrite the generators; it orchestrates them in order,
-emits all 11 expected dashboard `index.html` files under
-`frontend/analytics/dashboards/hr-analytics-full-set/`, and asserts no
-source/build artifacts (`.py`, `.xlsx`, `pipeline-manifest.json`) leaked into
-the public `frontend/` tree. Run it from the repo root. The repo commits the
-pre-built synthetic workbook, so the Node synthetic-core regenerator is optional.
+The script:
+- verifies that exactly 27 committed synthetic source workbooks are present;
+- runs `analytics/dashboards/hr-analytics-full-set/production-pipeline/run_full_pipeline.py`;
+- maps the ten generated dashboard HTML outputs to their canonical `frontend/` routes;
+- preserves the executive-board embedded PDKS dependency;
+- publishes the integrated synthetic workbook as the single declared public spreadsheet download;
+- rejects source/build leakage into `frontend/`;
+- runs the HR parity, public-artifact-safety and publish-boundary audit contracts.
 
-If you change the HR generators, dashboards or synthetic data, re-run the script
-and the CI `tests/audit/hr-analytics-full-set.test.mjs` parity suite before
-opening a PR.
+Normal rebuilds use the committed synthetic inputs. Only when intentionally changing the synthetic dataset, and only when `@oai/artifact-tool` is available, regenerate the 27 source workbooks too:
+
+```bash
+REGENERATE_SYNTHETIC_INPUTS=1 bash scripts/regenerate-hr-dashboards.sh
+```
+
+Do not call the removed `synthetic-core` or `generate_full_set_dashboards.py` paths; they belong to the retired shared-demo implementation and are not part of the restored HR production pipeline.
+
+If you change HR generators, dashboard templates, synthetic inputs, public mappings or deployment policy, the `hr-pipeline-rebuild` CI job must complete from committed inputs and the normal validate/browser gates must remain green before opening or merging a PR.
 
 ## Safety boundaries
 
