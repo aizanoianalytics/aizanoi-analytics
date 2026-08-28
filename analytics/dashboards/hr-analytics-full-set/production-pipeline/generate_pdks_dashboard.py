@@ -18,7 +18,7 @@ import unicodedata
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from pathlib import Path
-from dashboard_paths import PDKS_DASHBOARD, PROJECT_ROOT
+from dashboard_paths import PDKS_DASHBOARD, PROJECT_ROOT, deterministic_build_time
 from typing import Any
 
 import numpy as np
@@ -485,7 +485,7 @@ def aggregate_payload(work: pd.DataFrame, fiili: pd.DataFrame) -> dict[str, Any]
     )
     fiili_matches = sum(1 for record in records if record["is_in_fiili"])
     return {
-        "generated_at": datetime.now().strftime("%d.%m.%Y %H:%M"),
+        "generated_at": deterministic_build_time().strftime("%d.%m.%Y %H:%M"),
         "source": "1-11 pdks.xlsx",
         "fiili_source": "fiili_list.xlsx" if not fiili.empty else None,
         "rows_source": int(len(work)),

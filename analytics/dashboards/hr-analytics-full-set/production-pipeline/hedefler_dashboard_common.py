@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+from dashboard_paths import deterministic_build_time
 
 from dashboard_build_common import clean_text, first_col, json_safe, normalize_key, numeric
 
@@ -610,7 +611,7 @@ def build_hedefler_data(xlsx_path: Path) -> dict[str, Any]:
             "meta": {
                 "title": "2026 CEO & Şirket Hedefleri Dashboard",
                 "source_file": xlsx_path.name,
-                "generated_at": datetime.now().isoformat(timespec="seconds"),
+                "generated_at": deterministic_build_time().isoformat(timespec="seconds"),
                 "selected_period": selected_period,
                 "latest_quarter": latest_quarter,
                 "annual_rule": (

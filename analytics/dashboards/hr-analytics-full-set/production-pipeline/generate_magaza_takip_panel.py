@@ -1,13 +1,12 @@
 from __future__ import annotations
 import argparse
 import math
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 import pandas as pd
 import refresh_data as rd
-from dashboard_build_common import json_for_html_script
+from dashboard_build_common import deterministic_build_time, json_for_html_script
 from dashboard_paths import ICMAL_XLSX, MAGAZA_DASHBOARD, PROJECT_ROOT
 BASE_DIR = PROJECT_ROOT
 DEFAULT_XLSX = ICMAL_XLSX
@@ -1599,7 +1598,7 @@ def build_prev_year_current_month_store_counts(store_df: pd.DataFrame) -> tuple[
     comparison is not latest dashboard month - 12. It is today's year-month
     shifted back by one year, read from the historical Sonuc rows.
     """
-    today = datetime.now()
+    today = deterministic_build_time()
     current_month = f"{today.year}-{today.month:02d}"
     prev_year_month = f"{today.year - 1}-{today.month:02d}"
     if store_df is None or store_df.empty:
@@ -1692,7 +1691,7 @@ def build_entry_report(
     store_region_lookup: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     """Build current/previous calendar-month store entries from live employee sources."""
-    selected_month = str(pd.Period(datetime.now(), freq="M"))
+    selected_month = str(pd.Period(deterministic_build_time(), freq="M"))
     previous_month = _previous_month(selected_month)
     keep_months = {selected_month, previous_month}
     unique_rows: dict[tuple[str, str, str], dict[str, Any]] = {}
@@ -1752,7 +1751,7 @@ def build_exit_report(
     person_store: dict[str, dict[str, Any]] | None = None,
     store_region_lookup: dict[str, str] | None = None,
 ) -> dict[str, Any]:
-    selected_month = str(pd.Period(datetime.now(), freq="M"))
+    selected_month = str(pd.Period(deterministic_build_time(), freq="M"))
     prev_month = _previous_month(selected_month)
     empty_payload = {
         "selected_month": selected_month,
@@ -1990,7 +1989,6 @@ def build_weekly_payload(sources: dict[str, Any], latest_month: str, store_df: p
         },
     }
 def build_magaza_data(xlsx_path: Path, *, min_month: str = DEFAULT_MIN_MONTH, max_months: int = DEFAULT_MAX_MONTHS) -> dict[str, Any]:
-    started = time.perf_counter()
     log(f"Kaynak okunuyor: {xlsx_path}")
     sources = rd.load_dashboard_sources(xlsx_path, allow_external_fallback=False)
     log("Mevcut dashboard hesap katmanı güvenli veri seçimi için kullanılıyor...")
@@ -2278,14 +2276,13 @@ def build_magaza_data(xlsx_path: Path, *, min_month: str = DEFAULT_MIN_MONTH, ma
         "meta": {
             "title": "Mağaza Takip Dosyası",
             "subtitle": "Bölge müdürleri için mağaza operasyon, turnover ve gelişim takip raporu",
-            "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "generated_week": int(datetime.now().isocalendar().week),
+            "generated_at": deterministic_build_time().strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "generated_week": int(deterministic_build_time().isocalendar().week),
             "source_file": xlsx_path.name,
             "min_month": min_month,
             "latest_month": latest_month,
             "months": months,
             "all_months": all_months,
-            "build_seconds": round(time.perf_counter() - started, 2),
         },
         "filters": {
             "regions": filter_regions,

@@ -36,7 +36,7 @@ from dashboard_analytics_v2 import (
 )
 from hedefler_dashboard_common import build_hedefler_data
 from performance_dashboard_template import HTML_TEMPLATE as HTML_TEMPLATE_V2
-from dashboard_paths import ICMAL_XLSX, PERFORMANS_DASHBOARD, PROJECT_ROOT
+from dashboard_paths import ICMAL_XLSX, PERFORMANS_DASHBOARD, PROJECT_ROOT, deterministic_build_time
 
 
 BASE_DIR = PROJECT_ROOT
@@ -412,7 +412,7 @@ def build_dashboard_data(xlsx_path: Path, targets_path: Path = DEFAULT_TARGETS) 
     }
     return json_safe({
         "meta": {
-            "title": "Performans Dashboard", "generated_at": datetime.now().isoformat(timespec="seconds"),
+            "title": "Performans Dashboard", "generated_at": deterministic_build_time().isoformat(timespec="seconds"),
             "source_file": xlsx_path.name, "latest_month": max(turnover.get("months") or [""]),
             "person_count": len(person_pool.get("people", [])), "mandatory_count": len(mandatory.get("rows", [])),
             "source_periods": source_periods,

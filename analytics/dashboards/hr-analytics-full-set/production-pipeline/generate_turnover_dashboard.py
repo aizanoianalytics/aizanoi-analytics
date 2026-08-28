@@ -5,14 +5,14 @@ from __future__ import annotations
 import argparse
 import json
 import math
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
 import numpy as np
 import pandas as pd
 
-from dashboard_paths import ICMAL_XLSX, TURNOVER_DASHBOARD, ensure_dashboard_dir
+from dashboard_paths import ICMAL_XLSX, TURNOVER_DASHBOARD, ensure_dashboard_dir, deterministic_build_time
 from turnover_analytics_common import (
     UNMATCHED_REASON,
     build_turnover_analysis_tables,
@@ -282,7 +282,7 @@ def build_payload(xlsx_path: Path) -> dict[str, Any]:
 
     payload = {
         "meta": {
-            "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+            "generated_at": deterministic_build_time().astimezone(timezone.utc).isoformat(timespec="seconds"),
             "source_file": xlsx_path.name,
             "min_month": months[0] if months else None,
             "latest_month": months[-1] if months else None,

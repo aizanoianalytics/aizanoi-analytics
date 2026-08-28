@@ -20,7 +20,7 @@ import numpy as np
 import pandas as pd
 
 import refresh_data as rd
-from dashboard_paths import ICMAL_XLSX, MAGAZA_UYUM_DASHBOARD, PROJECT_ROOT
+from dashboard_paths import ICMAL_XLSX, MAGAZA_UYUM_DASHBOARD, PROJECT_ROOT, deterministic_build_time
 
 
 BASE_DIR = PROJECT_ROOT
@@ -430,11 +430,11 @@ def build_dashboard_data(xlsx_path: Path) -> dict[str, Any]:
     data = {
         "meta": {
             "title": "Mağaza Eğitim ve Uyum Skor Kartı",
-            "generated_at": datetime.now().isoformat(timespec="seconds"),
+            "generated_at": deterministic_build_time().isoformat(timespec="seconds"),
             "source_file": xlsx_path.name,
-            "source_modified_at": datetime.fromtimestamp(
-                xlsx_path.stat().st_mtime
-            ).isoformat(timespec="seconds"),
+            "source_modified_at": deterministic_build_time()
+            .astimezone()
+            .isoformat(timespec="seconds"),
             "latest_turnover_month": latest_turnover_month,
             "checklist_hire_cutoff": CHECKLIST_HIRE_CUTOFF.strftime("%d.%m.%Y"),
             "store_count": len(rows),

@@ -20,6 +20,10 @@ from typing import Any, Iterable
 import numpy as np
 import pandas as pd
 
+from dashboard_paths import deterministic_build_time
+
+__all__ = ["deterministic_build_time"]
+
 
 def ensure_utf8_stdio() -> None:
     for stream in (sys.stdout, sys.stderr):

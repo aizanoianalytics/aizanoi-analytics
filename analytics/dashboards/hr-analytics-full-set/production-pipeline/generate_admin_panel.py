@@ -9,7 +9,7 @@ import pandas as pd
 
 import refresh_data as rd
 from dashboard_build_common import json_for_html_script
-from dashboard_paths import ADMIN_DASHBOARD, ICMAL_XLSX, PROJECT_ROOT
+from dashboard_paths import ADMIN_DASHBOARD, ICMAL_XLSX, PROJECT_ROOT, deterministic_build_time
 
 BASE_DIR = PROJECT_ROOT
 DEFAULT_XLSX = ICMAL_XLSX
@@ -638,12 +638,11 @@ def build_admin_data(xlsx_path: Path) -> dict:
 
     payload = {
         "meta": {
-            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "generated_at": deterministic_build_time().isoformat(),
             "source_xlsx": str(xlsx_path.name),
             "latest_month": latest_month,
             "months": months,
             "employee_count": len(employees),
-            "build_seconds": round(time.perf_counter() - started, 2),
             "note": "Statik admin panel. Maskeleme yoktur; dosya erişimi olan kişi tüm gömülü veriyi görebilir.",
         },
         "employees": employees,
@@ -1192,8 +1191,7 @@ ADMIN_TEMPLATE = r'''<!doctype html>
     renderKV($('metaKv'), [
       ['Kaynak', DATA.meta.source_xlsx],
       ['Son dönem', monthLabel(DATA.meta.latest_month)],
-      ['Üretim zamanı', new Date(DATA.meta.generated_at).toLocaleString('tr-TR')],
-      ['Çalışma süresi', `${DATA.meta.build_seconds} sn`]
+      ['Üretim zamanı', new Date(DATA.meta.generated_at).toLocaleString('tr-TR')]
     ]);
   }
   function renderOverview(){

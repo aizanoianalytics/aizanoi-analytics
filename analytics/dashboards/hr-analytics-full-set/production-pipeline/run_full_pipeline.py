@@ -39,6 +39,8 @@ from dashboard_paths import (
     PY_DIR,
     TURNOVER_DASHBOARD,
     ensure_dashboard_dir,
+    canonicalize_xlsx,
+    deterministic_build_time,
 )
 
 
@@ -483,6 +485,11 @@ def run_pipeline(options: PipelineOptions) -> PipelineState:
 
     validate_stage_outputs(active_keys, state)
     if tuple(active_keys) == PIPELINE_ORDER:
+        # Deterministic rebuild contract: rewrite the integrated workbook with
+        # fixed container/docProps timestamps derived from the committed
+        # source-workbook metadata, so byte-for-byte rebuild verification in
+        # CI holds regardless of wall-clock time.
+        canonicalize_xlsx(ICMAL_XLSX, deterministic_build_time())
         write_production_state(run_id, run_started_at, state)
         emit(options, "PRODUCTION_STATE", "all", run_id)
     else:

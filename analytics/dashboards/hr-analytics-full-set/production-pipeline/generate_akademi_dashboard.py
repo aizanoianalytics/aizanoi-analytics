@@ -42,7 +42,7 @@ from dashboard_analytics_v2 import (
     status_flags,
 )
 from academy_dashboard_template import HTML_TEMPLATE as HTML_TEMPLATE_V2
-from dashboard_paths import AKADEMI_DASHBOARD, ICMAL_XLSX, PROJECT_ROOT
+from dashboard_paths import AKADEMI_DASHBOARD, ICMAL_XLSX, PROJECT_ROOT, deterministic_build_time
 
 
 BASE_DIR = PROJECT_ROOT
@@ -1188,7 +1188,7 @@ def build_dashboard_data(xlsx_path: Path) -> dict[str, Any]:
         {
             "meta": {
                 "title": "Akademi Dashboard",
-                "generated_at": datetime.now().isoformat(timespec="seconds"),
+                "generated_at": deterministic_build_time().isoformat(timespec="seconds"),
                 "source_file": xlsx_path.name,
                 "employee_count": int(len(employees)),
                 "store_count": int(len(store_scores)),
