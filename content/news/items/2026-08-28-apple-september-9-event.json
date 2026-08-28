@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-28-apple-september-9-event",
+  "title": "Apple confirms September 9 launch event for the iPhone 18 Pro and iPhone Ultra",
+  "summary": "Apple is widely expected to hold its annual fall event at 10:00 a.m. Pacific on 9 September at the Steve Jobs Theater, with invitations expected to land on 26 August. Reports point to the iPhone 18 Pro with an A20 Pro chip on a 2nm process, a slimmer Dynamic Island and a variable-aperture wide camera, plus the long-rumoured iPhone Ultra and a first foldable iPhone, with prices tipped to climb $200–$300 across the lineup.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-08-28T05:00:00Z",
+  "updatedAt": "2026-08-28T05:00:00Z",
+  "retrievedAt": "2026-08-28T04:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iPhone 18 Pro", "iPhone Ultra", "product launch"],
+  "sources": [
+    {
+      "publisher": "Digital Trends",
+      "url": "https://www.digitaltrends.com/phones/apples-september-2026-event-everything-we-know-about-the-iphone-18-pro-and-iphone-ultra-launch-event",
+      "publishedAt": "2026-08-23T00:00:00Z"
+    },
+    {
+      "publisher": "MacRumors",
+      "url": "https://www.macrumors.com/2026/08/13/apple-september-announcement-rumors",
+      "publishedAt": "2026-08-13T00:00:00Z"
+    }
+  ]
+}

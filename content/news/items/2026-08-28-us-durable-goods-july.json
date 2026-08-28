@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-28-us-durable-goods-july",
+  "title": "US durable-goods orders jump 1.1% in July as transportation equipment rebounds",
+  "summary": "New orders for US manufactured durable goods rose 1.1% in July to $339.3 billion, the Commerce Department said on Wednesday, well above the 0.5% consensus. Transportation equipment led the gain with a 2.3% rise as nondefense aircraft and parts surged 12.7% after a 51.1% May plunge, while orders excluding transportation climbed 0.4% and the closely watched nondefense capital goods ex-aircraft proxy edged up 0.2% to $85.9 billion.",
+  "category": "economy-markets",
+  "priority": 62,
+  "publishedAt": "2026-08-28T05:00:00Z",
+  "updatedAt": "2026-08-28T05:00:00Z",
+  "retrievedAt": "2026-08-28T04:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["durable goods", "US economy", "manufacturing", "Census Bureau"],
+  "sources": [
+    {
+      "publisher": "RTTNews",
+      "url": "https://www.rttnews.com/3684890/u-s-durable-goods-orders-jump-1-1-in-july-much-more-than-expected.aspx",
+      "publishedAt": "2026-08-26T14:33:00Z"
+    },
+    {
+      "publisher": "U.S. Census Bureau",
+      "url": "https://www.census.gov/manufacturing/m3/adv/current/index.html",
+      "publishedAt": "2026-08-26T12:30:00Z"
+    }
+  ]
+}

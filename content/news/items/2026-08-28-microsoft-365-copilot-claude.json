@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-28-microsoft-365-copilot-claude",
+  "title": "Microsoft 365 Copilot rolls out Anthropic's Claude across chat, research and Excel",
+  "summary": "Microsoft's release notes for 11–25 August confirm that Anthropic's Claude models are now available natively inside Microsoft 365 Copilot Chat, Researcher, Copilot Studio and Excel's AI Agent Mode, letting paying users pick Claude as the engine for routine enterprise work. The move deepens the November 2025 strategic partnership with NVIDIA and Anthropic and gives customers a second frontier model family alongside OpenAI without leaving the Microsoft 365 surface.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-08-28T05:00:00Z",
+  "updatedAt": "2026-08-28T05:00:00Z",
+  "retrievedAt": "2026-08-28T04:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Microsoft", "Anthropic", "Microsoft 365 Copilot", "enterprise AI"],
+  "sources": [
+    {
+      "publisher": "Microsoft Learn",
+      "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/release-notes",
+      "publishedAt": "2026-08-25T00:00:00Z"
+    }
+  ]
+}

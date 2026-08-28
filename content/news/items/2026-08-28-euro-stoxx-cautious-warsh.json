@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-28-euro-stoxx-cautious-warsh",
+  "title": "European shares turn cautious ahead of Warsh's first Jackson Hole keynote",
+  "summary": "Asian and European equities traded cautiously on Friday morning with currency and bond markets holding their breath for Kevin Warsh's first Jackson Hole keynote as Fed chair. S&P 500 and Nasdaq futures were off 0.1% while EURO STOXX 50 futures edged up 0.3% after Thursday's sharp sell-off, when a stronger-than-expected US durable goods print met an ECB account showing selected policymakers did not oppose a June hike.",
+  "category": "economy-markets",
+  "priority": 50,
+  "publishedAt": "2026-08-28T05:00:00Z",
+  "updatedAt": "2026-08-28T05:00:00Z",
+  "retrievedAt": "2026-08-28T04:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Euro Stoxx 50", "Jackson Hole", "European markets", "central banks"],
+  "sources": [
+    {
+      "publisher": "Global Banking and Finance",
+      "url": "https://www.globalbankingandfinance.com/shares-turn-cautious-ahead-warsh-speech-fx-bonds-hold-breath/",
+      "publishedAt": "2026-08-28T02:00:00Z"
+    },
+    {
+      "publisher": "Trading Economics",
+      "url": "https://tradingeconomics.com/euro-area/stock-market",
+      "publishedAt": "2026-08-28T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-28-champions-league-draw-reaction",
+  "title": "Champions League draw pairs Arsenal with Real Madrid and Manchester United with Bayern",
+  "summary": "The 36-team league phase draw for the 2026/27 UEFA Champions League took place in Monaco on Thursday, setting Manchester City against holders Paris Saint-Germain and Barcelona, Arsenal against Real Madrid and Bayern Munich, and returning Manchester United with home ties against Bayern, Roma, RB Leipzig and Sabah. The road ends at Atletico Madrid's Estadio Metropolitano on 5 June 2027, with league-phase matchdays running from 8 September through January.",
+  "category": "football",
+  "priority": 58,
+  "publishedAt": "2026-08-28T05:00:00Z",
+  "updatedAt": "2026-08-28T05:00:00Z",
+  "retrievedAt": "2026-08-28T04:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Champions League", "UEFA", "draw", "Arsenal", "Manchester United"],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/aug/27/champions-league-draw-arsenal-face-real-madrid-as-manchester-city-get-psg",
+      "publishedAt": "2026-08-27T20:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/articles/c5ywxxll10jo",
+      "publishedAt": "2026-08-27T19:00:00Z"
+    }
+  ]
+}

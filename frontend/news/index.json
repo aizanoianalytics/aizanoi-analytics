@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-08-27T05:08:00.000Z",
+  "generatedAt": "2026-08-28T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-08-28",
+      "path": "/news/2026-08-28/",
+      "itemCount": 15
+    },
     {
       "date": "2026-08-27",
       "path": "/news/2026-08-27/",
@@ -31,6 +36,507 @@
   ],
   "weeklyEditions": [],
   "items": [
+    {
+      "id": "2026-08-28-warsh-jackson-hole-keynote",
+      "kind": "daily",
+      "title": "Warsh to deliver first Jackson Hole keynote as Fed chair on Friday",
+      "summary": "Federal Reserve Chair Kevin Warsh takes the podium at the Kansas City Fed's annual symposium in Jackson Lake Lodge, Wyoming, on Friday morning for his first keynote as chair. The 2026 programme runs Thursday 27 through Saturday 29 August under the theme \"Financial Innovation: Implications for Payments and Policy\", and his twenty-minute address will be parsed for signals on the September 16 FOMC decision 19 days later.",
+      "category": "economy-markets",
+      "priority": 82,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Jackson Hole",
+        "Federal Reserve",
+        "Kevin Warsh",
+        "monetary policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Federal Reserve Bank of Kansas City",
+          "url": "https://www.kansascityfed.org/research/jackson-hole-economic-symposium/2026/",
+          "publishedAt": "2026-08-27T00:00:00.000Z"
+        },
+        {
+          "publisher": "Regards of Wallstreet",
+          "url": "https://www.regardsofwallstreet.com/news/jackson-hole-2026-dates-schedule-warsh-first-speech",
+          "publishedAt": "2026-08-10T14:50:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-salesforce-q2-fy27-agentforce",
+      "kind": "daily",
+      "title": "Salesforce posts record $11.35B quarter as Agentforce ARR tops $1.5B",
+      "summary": "Salesforce reported fiscal second-quarter revenue of $11.35 billion after the bell on Wednesday, up 11% year-on-year, with adjusted EPS of $5.90 beating the $3.27 consensus. Agentforce annual recurring revenue crossed $1.5 billion and combined Agentforce and Data 360 ARR reached nearly $3.9 billion, while the company credited a $2.6 billion gain on its Anthropic investment for pushing net income up 87% to $3.53 billion.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Salesforce",
+        "Agentforce",
+        "earnings",
+        "Anthropic"
+      ],
+      "sources": [
+        {
+          "publisher": "Salesforce Investor Relations",
+          "url": "https://www.salesforce.com/news/press-releases/2026/08/26/fy27-q2-earnings/",
+          "publishedAt": "2026-08-26T20:05:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/08/26/salesforce-crm-q2-earnings-report-2027.html",
+          "publishedAt": "2026-08-27T11:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-bundesliga-bayern-stuttgart-opener",
+      "kind": "daily",
+      "title": "Bundesliga kicks off 2026/27 with Bayern Munich hosting VfB Stuttgart at the Allianz",
+      "summary": "The 64th Bundesliga season opens on Friday at 18:30 UTC when defending champions Bayern Munich welcome VfB Stuttgart to the Allianz Arena in a repeat of the 2025/26 DFB-Pokal final, which Bayern won 3-0. Newly promoted SV Elversberg begin their first top-flight campaign at home to Bayer 04 Leverkusen, and the Revierderby dates between Schalke and Borussia Dortmund are set for December and April.",
+      "category": "football",
+      "priority": 66,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Bundesliga",
+        "Bayern Munich",
+        "VfB Stuttgart",
+        "season opener"
+      ],
+      "sources": [
+        {
+          "publisher": "Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/2026%E2%80%9327_Bundesliga",
+          "publishedAt": "2026-08-22T00:00:00.000Z"
+        },
+        {
+          "publisher": "Bundesliga.com",
+          "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/1/fc-bayern-muenchen-vs-vfb-stuttgart/liveticker",
+          "publishedAt": "2026-08-28T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-microsoft-365-copilot-claude",
+      "kind": "daily",
+      "title": "Microsoft 365 Copilot rolls out Anthropic's Claude across chat, research and Excel",
+      "summary": "Microsoft's release notes for 11–25 August confirm that Anthropic's Claude models are now available natively inside Microsoft 365 Copilot Chat, Researcher, Copilot Studio and Excel's AI Agent Mode, letting paying users pick Claude as the engine for routine enterprise work. The move deepens the November 2025 strategic partnership with NVIDIA and Anthropic and gives customers a second frontier model family alongside OpenAI without leaving the Microsoft 365 surface.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "Anthropic",
+        "Microsoft 365 Copilot",
+        "enterprise AI"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft Learn",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/release-notes",
+          "publishedAt": "2026-08-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-us-durable-goods-july",
+      "kind": "daily",
+      "title": "US durable-goods orders jump 1.1% in July as transportation equipment rebounds",
+      "summary": "New orders for US manufactured durable goods rose 1.1% in July to $339.3 billion, the Commerce Department said on Wednesday, well above the 0.5% consensus. Transportation equipment led the gain with a 2.3% rise as nondefense aircraft and parts surged 12.7% after a 51.1% May plunge, while orders excluding transportation climbed 0.4% and the closely watched nondefense capital goods ex-aircraft proxy edged up 0.2% to $85.9 billion.",
+      "category": "economy-markets",
+      "priority": 62,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "durable goods",
+        "US economy",
+        "manufacturing",
+        "Census Bureau"
+      ],
+      "sources": [
+        {
+          "publisher": "RTTNews",
+          "url": "https://www.rttnews.com/3684890/u-s-durable-goods-orders-jump-1-1-in-july-much-more-than-expected.aspx",
+          "publishedAt": "2026-08-26T14:33:00.000Z"
+        },
+        {
+          "publisher": "U.S. Census Bureau",
+          "url": "https://www.census.gov/manufacturing/m3/adv/current/index.html",
+          "publishedAt": "2026-08-26T12:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-qwen3-8-flash-next",
+      "kind": "daily",
+      "title": "Alibaba's Qwen team releases open-weight 125B multimodal model trained at one-ninth the cost",
+      "summary": "The Qwen team at Alibaba released Qwen3.8-Flash-Next on 27 August, a 125-billion-parameter mixture-of-experts model that activates roughly 6B parameters per token and is described as a preview of the Qwen4 architecture. The model handles text, images and video natively, ships with a 1-million-token context window, lists pricing of $0.15 per million input tokens and $0.50 per million output tokens, and is released under MIT with weights on Hugging Face.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Qwen",
+        "Alibaba",
+        "open weights",
+        "mixture of experts"
+      ],
+      "sources": [
+        {
+          "publisher": "AI News Briefs Bulletin Board",
+          "url": "https://radicaldatascience.wordpress.com/2026/08/12/ai-news-briefs-bulletin-board-for-august-2026",
+          "publishedAt": "2026-08-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-accuknox-agentz-launch",
+      "kind": "daily",
+      "title": "AccuKnox launches AgentZ to govern enterprise AI agents at scale",
+      "summary": "Menlo Park-based AccuKnox unveiled AgentZ on Wednesday as a platform for building, running and governing AI agents across teams and workflows. The hosted platform and its open-source repository bundle agents, execution environments, tools, permissions and audit logs into a single stack, with sandboxed execution and tool-level permissions designed to make agent rollouts auditable rather than experimental.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "AccuKnox",
+        "AI agents",
+        "governance",
+        "enterprise software"
+      ],
+      "sources": [
+        {
+          "publisher": "TechStartups",
+          "url": "https://techstartups.com/2026/08/27/accuknox-launches-agentz-to-help-enterprises-build-run-and-govern-ai-agents-at-scale",
+          "publishedAt": "2026-08-27T12:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-champions-league-draw-reaction",
+      "kind": "daily",
+      "title": "Champions League draw pairs Arsenal with Real Madrid and Manchester United with Bayern",
+      "summary": "The 36-team league phase draw for the 2026/27 UEFA Champions League took place in Monaco on Thursday, setting Manchester City against holders Paris Saint-Germain and Barcelona, Arsenal against Real Madrid and Bayern Munich, and returning Manchester United with home ties against Bayern, Roma, RB Leipzig and Sabah. The road ends at Atletico Madrid's Estadio Metropolitano on 5 June 2027, with league-phase matchdays running from 8 September through January.",
+      "category": "football",
+      "priority": 58,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Champions League",
+        "UEFA",
+        "draw",
+        "Arsenal",
+        "Manchester United"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/aug/27/champions-league-draw-arsenal-face-real-madrid-as-manchester-city-get-psg",
+          "publishedAt": "2026-08-27T20:00:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/articles/c5ywxxll10jo",
+          "publishedAt": "2026-08-27T19:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-apple-september-9-event",
+      "kind": "daily",
+      "title": "Apple confirms September 9 launch event for the iPhone 18 Pro and iPhone Ultra",
+      "summary": "Apple is widely expected to hold its annual fall event at 10:00 a.m. Pacific on 9 September at the Steve Jobs Theater, with invitations expected to land on 26 August. Reports point to the iPhone 18 Pro with an A20 Pro chip on a 2nm process, a slimmer Dynamic Island and a variable-aperture wide camera, plus the long-rumoured iPhone Ultra and a first foldable iPhone, with prices tipped to climb $200–$300 across the lineup.",
+      "category": "technology",
+      "priority": 56,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "iPhone 18 Pro",
+        "iPhone Ultra",
+        "product launch"
+      ],
+      "sources": [
+        {
+          "publisher": "Digital Trends",
+          "url": "https://www.digitaltrends.com/phones/apples-september-2026-event-everything-we-know-about-the-iphone-18-pro-and-iphone-ultra-launch-event",
+          "publishedAt": "2026-08-23T00:00:00.000Z"
+        },
+        {
+          "publisher": "MacRumors",
+          "url": "https://www.macrumors.com/2026/08/13/apple-september-announcement-rumors",
+          "publishedAt": "2026-08-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-anthropic-funding-round",
+      "kind": "daily",
+      "title": "Anthropic set to close $30B funding at over $900B valuation",
+      "summary": "Anthropic is expected to close a new funding round as soon as next week with commitments exceeding $30 billion at a post-money valuation above $900 billion, according to a Bloomberg report. The round would extend Anthropic's lead-up to a potential IPO after its $65 billion raise in May 2026 brought the company to a $965 billion valuation and made it one of the highest-valued private AI labs worldwide.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "funding",
+        "valuation",
+        "AI startups"
+      ],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/sectors/technology/articles/anthropic-set-close-30-billion-203545596.html",
+          "publishedAt": "2026-08-22T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-crystal-palace-manchester-city",
+      "kind": "daily",
+      "title": "Crystal Palace host Manchester City in Friday night Premier League clash",
+      "summary": "Crystal Palace welcome Manchester City to Selhurst Park on Friday at 19:00 UTC in a Premier League matchweek 2 fixture, with the Athletic's preview tabbing City eighth in the table after one match and Palace sixteenth. The match lands 24 hours before the Bundesliga opener and rounds out a full Friday of European top-flight football, with the new Premier League season already two matchdays old.",
+      "category": "football",
+      "priority": 54,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Premier League",
+        "Crystal Palace",
+        "Manchester City",
+        "matchweek 2"
+      ],
+      "sources": [
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401879294/manchester-city-crystal-palace",
+          "publishedAt": "2026-08-28T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-kubernetes-1-37-garhwal",
+      "kind": "daily",
+      "title": "Kubernetes 1.37 \"Garhwal\" ships with metrics API graduating after nine years in beta",
+      "summary": "The Cloud Native Computing Foundation released Kubernetes 1.37, codenamed Garhwal, with 67 enhancements across stable, beta and alpha maturity. Headline changes include the metrics.k8s.io API graduating to general availability after nearly nine years in beta, KYAML output for kubectl reaching stable, and dynamic resource allocation gaining device taints, tolerations and a NUMA-aware attribute so schedulers can place GPU and accelerator workloads without bespoke device plugins.",
+      "category": "technology",
+      "priority": 52,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Kubernetes",
+        "CNCF",
+        "cloud native",
+        "open source"
+      ],
+      "sources": [
+        {
+          "publisher": "Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Kubernetes",
+          "publishedAt": "2026-08-20T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-euro-stoxx-cautious-warsh",
+      "kind": "daily",
+      "title": "European shares turn cautious ahead of Warsh's first Jackson Hole keynote",
+      "summary": "Asian and European equities traded cautiously on Friday morning with currency and bond markets holding their breath for Kevin Warsh's first Jackson Hole keynote as Fed chair. S&P 500 and Nasdaq futures were off 0.1% while EURO STOXX 50 futures edged up 0.3% after Thursday's sharp sell-off, when a stronger-than-expected US durable goods print met an ECB account showing selected policymakers did not oppose a June hike.",
+      "category": "economy-markets",
+      "priority": 50,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Euro Stoxx 50",
+        "Jackson Hole",
+        "European markets",
+        "central banks"
+      ],
+      "sources": [
+        {
+          "publisher": "Global Banking and Finance",
+          "url": "https://www.globalbankingandfinance.com/shares-turn-cautious-ahead-warsh-speech-fx-bonds-hold-breath/",
+          "publishedAt": "2026-08-28T02:00:00.000Z"
+        },
+        {
+          "publisher": "Trading Economics",
+          "url": "https://tradingeconomics.com/euro-area/stock-market",
+          "publishedAt": "2026-08-28T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-red-hat-hardened-images-aws",
+      "kind": "daily",
+      "title": "Red Hat Hardened Images gain AWS Inspector and ECR scanning, OTel 2.0 telco AI lands",
+      "summary": "Red Hat's Friday Five notes that AWS InspectorScan API and ECR Basic scanning now support Red Hat Hardened Images, giving container security teams vulnerability alerts and supply-chain verification against the same images they already pull. Separately, Red Hat, AT&T, AMD, Dell, Microsoft and GSMA released OTel 2.0, a domain-specific AI model for telecommunications built on the open-source SDG Hub to convert technical standards into synthetic training data.",
+      "category": "technology",
+      "priority": 48,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Red Hat",
+        "AWS",
+        "container security",
+        "telecom AI"
+      ],
+      "sources": [
+        {
+          "publisher": "Red Hat",
+          "url": "https://www.redhat.com/en/blog/friday-five-august-28-2026-red-hat",
+          "publishedAt": "2026-08-28T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-28-cnf-kubernetes-learning",
+      "kind": "daily",
+      "title": "CNCF blog reframes Kubernetes as five pieces of scaffolding, not a body of APIs",
+      "summary": "CNCF published a primer for IT generalists moving off VMware, arguing that Kubernetes is best learned through five pieces of scaffolding — desired state and reconciliation, the disposable machine, the four networking layers, storage as a plugin, and policy as a later choice — instead of trying to absorb the whole API surface at once. The post lands alongside Kubernetes 1.37 and the 1.36 release of mid-August, both of which tighten the default control plane.",
+      "category": "technology",
+      "priority": 38,
+      "publishedAt": "2026-08-28T05:00:00.000Z",
+      "updatedAt": "2026-08-28T05:00:00.000Z",
+      "retrievedAt": "2026-08-28T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "CNCF",
+        "Kubernetes",
+        "developer tooling",
+        "learning"
+      ],
+      "sources": [
+        {
+          "publisher": "CNCF Blog",
+          "url": "https://www.cncf.io/blog/2026/08/25/stop-trying-to-learn-all-of-kubernetes-at-once/",
+          "publishedAt": "2026-08-25T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-08-27-nvidia-q2-fy27-results",
       "kind": "daily",
