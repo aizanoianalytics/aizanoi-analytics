@@ -10,6 +10,7 @@ const brandHubs=read('frontend/js/v3/apps/brand-hubs.js');
 const nginx=read('infra/nginx/aizanoianalytics.com.conf.example');
 const staticHeaders=read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const historicalHeaders=read('infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example');
+const hrAnalyticsHeaders=read('infra/nginx/snippets/aizanoi-hr-analytics-security-headers.conf.example');
 
 const retired=/Aizanoi AI|HR AI|\/hr-analytics\/|api\.groq\.com|generativelanguage\.googleapis\.com/i;
 const retiredToolFiles=[
@@ -56,6 +57,9 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
   assert.doesNotMatch(staticHeaders,/script-src[^;]*'unsafe-inline'/);
   assert.match(staticHeaders,/frame-src 'self' https:\/\/www\.youtube\.com/);
   assert.match(historicalHeaders,/script-src 'self' 'unsafe-inline';/,'Historical Worlds retain their explicitly scoped inline bootstrap policy');
+  assert.match(nginx,/location \^~ \/analytics\/dashboards\/hr-analytics-full-set\/[\s\S]*include snippets\/aizanoi-hr-analytics-security-headers\.conf;/);
+  assert.match(hrAnalyticsHeaders,/script-src 'self' 'unsafe-inline';/,'Original self-contained HR exports retain their route-scoped inline policy');
+  assert.match(hrAnalyticsHeaders,/style-src 'self' 'unsafe-inline';/);
 });
 
 test('cache locations preserve security headers and revalidate mutable unversioned code',()=>{
@@ -69,4 +73,6 @@ test('cache locations preserve security headers and revalidate mutable unversion
   assert.match(staticHeaders,/Content-Security-Policy/);
   assert.match(historicalHeaders,/X-Content-Type-Options/);
   assert.match(historicalHeaders,/Content-Security-Policy/);
+  assert.match(hrAnalyticsHeaders,/X-Content-Type-Options/);
+  assert.match(hrAnalyticsHeaders,/Content-Security-Policy/);
 });

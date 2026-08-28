@@ -4,6 +4,7 @@ These are sanitized reference configurations for deployment. **Production Nginx/
 
 - `nginx/aizanoianalytics.com.conf.example` — static frontend, canonical redirects, real 404/500/503 behavior, Historical World routes, compression/cache guidance and fail-closed historical API paths;
 - `nginx/snippets/aizanoi-static-security-headers.conf.example` — shared strict header/CSP baseline for the shell, landings and assets;
+- `nginx/snippets/aizanoi-hr-analytics-security-headers.conf.example` — complete route-scoped header set for the original self-contained HR dashboard exports;
 - `nginx/snippets/aizanoi-historical-world-security-headers.conf.example` — complete route-scoped header set for worlds that still require inline boot code.
 
 The public Aizanoi web runtime does not require a Node/Express backend or an `aizanoi-backend.service` systemd unit. Hermes Agent is a separate server service and is outside this visitor-facing deployment example.
@@ -18,6 +19,7 @@ The reference Nginx configuration intentionally documents the operational assump
 - `/api/chat` returns `410 Gone` for stale historical clients;
 - every other `/api/*` path returns 404; there is no application reverse proxy;
 - the shell, product landings and shared assets use the strict shared CSP: neither `script-src` nor `style-src` permits `unsafe-inline`;
+- the HR Analytics Full Set keeps the original generator's self-contained HTML format, so only that exact route loads the HR-specific header snippet that permits embedded scripts and styles;
 - Historical Worlds still contain city-local inline boot scripts and styles, so only their exact route locations load the historical-world header snippet that permits inline code;
 - legacy `/videos` → `/tv/`, `/games` → `/arcade/` and `/projects` → `/forge/` redirects preserve old bookmarks without keeping duplicate discovery URLs;
 - `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, COOP and CORP are emitted at the edge;
@@ -33,7 +35,7 @@ When the example changes in Git, apply the corresponding production change delib
 3. preserve the static-only boundary: no Aizanoi application reverse proxy or visitor-facing Node listener;
 4. run `nginx -t` before reload;
 5. reload rather than restart when possible;
-6. verify `/`, `/historic-world/`, Rome, Athens, `/api/chat`, another missing `/api/...` path and the custom error documents;
+6. verify `/`, the HR Analytics Full Set and one interactive dashboard, `/historic-world/`, Rome, Athens, `/api/chat`, another missing `/api/...` path and the custom error documents;
 7. verify compression and cache headers from the public edge rather than assuming the example is active;
 8. keep credentials, production snapshots and off-site backups outside this repository.
 

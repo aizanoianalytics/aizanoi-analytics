@@ -1,43 +1,56 @@
 # HR Analytics Full Set
 
-HR Analytics Full Set is the public, synthetic-data reconstruction of a ten-dashboard analytics production line. The objective is feature parity with the reference dashboards—not a reduced showcase—while excluding every former employer, employee, store, contact and operational record.
+This directory publishes the complete ten-dashboard HR analytics production line with synthetic-only inputs.
 
-## Publishing status
+The public version is not a simplified reimplementation. The 22 Python modules preserve the original algorithms, functions, pipeline order, dashboard templates, controls, exports, filters and visual structure. Public-safe changes are limited to identity-bearing product labels and two module filenames. All workbook content is generated from scratch.
 
-| Dashboard | Folder | Status |
-| --- | --- | --- |
-| HR Executive Board — Full History | `hr-executive-board-full-history/` | Public, synthetic and reproducible |
-| HR Executive Board — 2024 to Present | `hr-executive-board-current/` | Public, synthetic and reproducible |
-| HR Administration & Deep Dive | `hr-administration-deep-dive/` | Public, synthetic and reproducible |
-| Store Operations Tracking | `store-operations-tracking/` | Public, synthetic and reproducible |
-| Workforce Turnover Analytics | `workforce-turnover/` | Public, synthetic and reproducible |
-| Store Learning & Compliance | `store-learning-compliance/` | Public, synthetic and reproducible |
-| Learning Academy Analytics | `learning-academy-analytics/` | Public, synthetic and reproducible |
-| Performance, Hiring & Turnover | `performance-hiring-turnover/` | Public, synthetic and reproducible |
-| Corporate Goals Dashboard | `corporate-goals/` | Public, synthetic and reproducible |
-| Workforce Time & Attendance | `workforce-time-attendance/` | Public, synthetic and reproducible |
+## Verified contract
 
-The machine-readable inventory is in [`pipeline-manifest.json`](pipeline-manifest.json). All ten dashboards are backed by the same deterministic 20-sheet Synthetic HR Demo Core so cross-product metrics reconcile without including reference HTML, source workbooks, real identifiers or production values.
+- 27 source workbooks are fully synthetic.
+- 144 synthetic people use reserved test identifiers, fictional organization names, placeholder phone numbers and `example.test` email addresses.
+- The integrated workbook contains 9,497 synthetic monthly workforce rows.
+- The original ten-stage pipeline completes successfully without calculation or control removal.
+- All 22 Python modules pass normalized text and AST parity checks against the private reference code.
+- All ten generated dashboards pass exact DOM interaction-surface comparison: tag counts, IDs, classes, controls and scripts.
+- Private workbooks, private HTML exports, real employer names and real employee records are not included.
 
-## Safety contract
+## Directory map
 
-- Reference workbooks and HTML exports are never committed or copied into the public build.
-- Public records are generated from scratch and must be visibly synthetic.
-- A rebuild must preserve calculations, controls, drill-downs and exports wherever synthetic data can exercise them safely.
-- A dashboard remains unavailable until automated scans and manual review confirm that its public assets contain no former employer or employee data.
+- `production-pipeline/`: parity-preserved Python source, sanitized HTML template, dependency locks, 27 synthetic input workbooks and the generated integrated workbook.
+- `tools/generate_synthetic_source_workbooks.mjs`: deterministic synthetic workbook generator.
+- `tools/verify_dashboard_parity.py`: original-versus-synthetic dashboard surface verification.
+- Per-dashboard folders: product notes and public route mapping.
 
-## Public routes
+## Production order
 
-- Catalog: <https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/>
-- Dashboard routes are listed in [`pipeline-manifest.json`](pipeline-manifest.json); all ten are public from the catalog.
+1. Build the integrated analytical workbook.
+2. Build the full-history and 2024+ executive boards.
+3. Build the administration deep dive.
+4. Build store operations tracking.
+5. Build turnover analytics.
+6. Build store learning and compliance.
+7. Build academy analytics.
+8. Build performance, hiring and turnover.
+9. Build corporate goals.
+10. Build time and attendance.
 
 ## Rebuild
 
-Generate the shared workbook first, then the nine connected dashboard surfaces:
+Install the locked Python dependencies, then use the repository orchestration script. It runs the ten-stage pipeline, maps all generated HTML to the canonical public routes, publishes the integrated synthetic workbook as the single allowed `.xlsx` download, and runs the HR audit contracts.
 
-```powershell
-node analytics/dashboards/hr-analytics-full-set/synthetic-core/generate_hr_demo_core.mjs
-python analytics/dashboards/hr-analytics-full-set/generate_full_set_dashboards.py
+```bash
+python -m pip install -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
+bash scripts/regenerate-hr-dashboards.sh
 ```
 
-The standalone Workforce Turnover package keeps its dedicated 14-sheet model and generator. The other nine surfaces share the full Synthetic HR Demo Core and the common interactive web engine.
+The 27 synthetic input workbooks are committed so the normal rebuild does not require the workbook-generation tool. Recreate those inputs only when intentionally changing the synthetic dataset and when `@oai/artifact-tool` is available:
+
+```bash
+REGENERATE_SYNTHETIC_INPUTS=1 bash scripts/regenerate-hr-dashboards.sh
+```
+
+The ten-stage entry point remains `production-pipeline/run_full_pipeline.py`. Its temporary HTML outputs are written under `production-pipeline/dashboardlar/`; the orchestration script copies them to the routes listed in [`pipeline-manifest.json`](pipeline-manifest.json). The generated integrated workbook is copied byte-for-byte to `frontend/analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx`.
+
+## Safety rule
+
+Never replace the synthetic `.xlsx` inputs in this public directory with private or employer-provided workbooks. The public deploy boundary allows exactly one spreadsheet: the declared synthetic output download. A release is allowed only after source parity, dashboard parity, workbook validation, prohibited-identity scanning, a clean ten-stage CI rebuild and browser QA all pass.

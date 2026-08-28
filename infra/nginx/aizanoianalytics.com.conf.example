@@ -73,6 +73,15 @@ server {
         try_files $uri =404;
         expires 7d;
     }
+
+    # Original HR dashboards are self-contained HTML exports with embedded
+    # styles and scripts. This narrow route-level CSP preserves their complete
+    # behavior without weakening the shell or any other product surface.
+    location ^~ /analytics/dashboards/hr-analytics-full-set/ {
+        include snippets/aizanoi-hr-analytics-security-headers.conf;
+        try_files $uri $uri/ =404;
+        expires -1;
+    }
     # Game modules remain available below /games/*; only exact legacy landing
     # requests above redirect to /arcade/.
     location ^~ /games/ {

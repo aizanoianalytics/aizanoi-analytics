@@ -80,7 +80,7 @@ test('secondary product placeholders state their current status honestly', () =>
   }
   const analytics = read('frontend/analytics/index.html');
   assert.match(analytics, /Dashboard collection · 10 live products/i);
-  assert.match(analytics, /20-sheet synthetic data core/i);
+  assert.match(analytics, /complete 22-module production code from 27 newly created synthetic source workbooks/i);
   assert.match(analytics, /href="\/analytics\/dashboards\/hr-analytics-full-set\/"/);
 });
 
