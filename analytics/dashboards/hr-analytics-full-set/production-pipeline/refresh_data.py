@@ -4138,6 +4138,11 @@ def build_pages(
         backtest_rows = []
     pages["p016_forecasts"] = {"rows": rows, "backtest": backtest_rows}
 
+    stable_year_values = pd.to_numeric(
+        df.get("year", pd.Series(dtype="float64")), errors="coerce"
+    ).dropna()
+    stable_data_year = int(stable_year_values.max()) if not stable_year_values.empty else 1970
+
     if not tahmin_yillik_backtest_df.empty:
         annual_backtest = tahmin_yillik_backtest_df.copy()
         for date_col in ["hedef_donem", "egitim_bitis_donemi"]:
@@ -4151,10 +4156,10 @@ def build_pages(
             if "hedef_yil" in annual_backtest.columns
             else pd.Series(dtype="float64")
         )
-        annual_year = int(year_values.max()) if not year_values.empty else datetime.now().year
+        annual_year = int(year_values.max()) if not year_values.empty else stable_data_year
     else:
         annual_rows = []
-        annual_year = datetime.now().year
+        annual_year = stable_data_year
     pages["p052_turnover_forecast_backtest"] = {
         "year": annual_year,
         "rows": annual_rows,
@@ -7078,7 +7083,9 @@ def build_dashboard_data_from_sources(
         "available_months": months_sorted,
         "available_years": sorted(df["year"].dropna().unique()),
         "default_month": months_sorted[-1] if months_sorted else None,
-        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        # Static build metadata follows the latest dataset snapshot so identical inputs
+        # always produce identical tracked HTML across machines and calendar time.
+        "generated_at": (f"{months_sorted[-1]}-01T00:00:00Z" if months_sorted else "1970-01-01T00:00:00Z"),
         "notes": ([f"Veri kapsamı {min_month} ve sonrası."] if min_month else []),
     }
 
