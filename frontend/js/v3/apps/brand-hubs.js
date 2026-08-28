@@ -30,12 +30,23 @@ async function mountNews(container){
   }catch(error){host.innerHTML=`<div class="az-empty-state"><div><h3>News feed unavailable</h3><p>${esc(error.message)}</p><a class="az-button" href="/news/">Open the News archive</a></div></div>`;}
 }
 
-function mountAnalytics(container){container.innerHTML=shell('Analytics','Data products, comparisons & utilities',cards([
-  {kicker:'DASHBOARD COLLECTION · 10 LIVE SURFACES',title:'HR Analytics Full Set',body:'Explore ten complete analytical products powered by one verified 20-sheet Synthetic HR Demo Core, with their controls, drill-downs and exports intact.',href:'/analytics/dashboards/hr-analytics-full-set/',hrefLabel:'Explore full set'},
-  {kicker:'LIVE · SYNTHETIC DATA',title:'Workforce Turnover Analytics',body:'Eight working views, forecasting, risk analysis, exports and a reproducible 14-sheet workbook built by Aizanoi Analytics entirely from generated records.',href:'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',hrefLabel:'Launch dashboard'},
-  {kicker:'PRODUCT STANDARD',title:'Launch · Source · Documentation · Version',body:'Each production project should expose a usable product surface, its source when public, concise documentation and a visible version or release state.'},
-  {kicker:'DATA SAFETY',title:'Synthetic first',body:'Public demonstrations use data generated from scratch, including visibly synthetic row-level profiles where feature parity requires them. Employer files never enter the public build.'}
-]));}
+function mountAnalytics(container){container.innerHTML=shell('Analytics','HR Analytics Full Set',`
+  <section class="az-hr-spotlight">
+    <div class="az-hr-spotlight-copy">
+      <p class="az-kicker">LIVE ANALYTICS COLLECTION · SYNTHETIC DATA</p>
+      <h2>HR Analytics<br><span>Full Set</span></h2>
+      <p class="az-hr-lede">One complete HR analytics product built by Aizanoi Analytics: ten connected dashboard surfaces, rebuilt from 27 synthetic source workbooks with the original controls, drill-downs and exports intact.</p>
+      <div class="az-hr-actions">
+        <a class="az-button az-hr-primary" href="/analytics/dashboards/hr-analytics-full-set/" target="_blank" rel="noopener noreferrer">Explore all dashboards</a>
+        <a class="az-hr-text-link" href="/analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx">Download synthetic output</a>
+      </div>
+    </div>
+    <div class="az-hr-status" aria-label="HR Analytics Full Set status">
+      <article><strong>10</strong><span>live dashboard surfaces</span></article>
+      <article><strong>27</strong><span>synthetic source workbooks</span></article>
+      <article><strong>0</strong><span>real employee records</span></article>
+    </div>
+  </section>`);}
 
 function mountForge(container){container.innerHTML=shell('Aizanoi Forge','Source, builds & open projects',cards([
   {kicker:'SOURCE OF TRUTH',title:'aizanoianalytics/aizanoi-analytics',body:'GitHub remains canonical. Forge is the branded project catalog and mirror layer, not a second independent copy of source code.',href:'https://github.com/aizanoianalytics/aizanoi-analytics',hrefLabel:'Open GitHub'},
