@@ -119,6 +119,9 @@ if [[ -n "${leaks}" ]]; then
 fi
 
 echo "[4/4] running HR audit contracts"
-node --test tests/audit/hr-analytics-full-set.test.mjs tests/audit/security-publish-boundary.test.mjs
+node --test \
+  tests/audit/hr-analytics-full-set.test.mjs \
+  tests/audit/hr-public-artifact-safety.test.mjs \
+  tests/audit/security-publish-boundary.test.mjs
 
 echo "[done] HR Analytics Full Set rebuilt and verified"

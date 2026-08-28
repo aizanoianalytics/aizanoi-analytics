@@ -36,16 +36,21 @@ The public version is not a simplified reimplementation. The 22 Python modules p
 
 ## Rebuild
 
-Install the locked Python dependencies, regenerate the sources if required, then run the original production entry point:
+Install the locked Python dependencies, then use the repository orchestration script. It runs the ten-stage pipeline, maps all generated HTML to the canonical public routes, publishes the integrated synthetic workbook as the single allowed `.xlsx` download, and runs the HR audit contracts.
 
-```powershell
+```bash
 python -m pip install -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
-node analytics/dashboards/hr-analytics-full-set/tools/generate_synthetic_source_workbooks.mjs analytics/dashboards/hr-analytics-full-set/production-pipeline
-python analytics/dashboards/hr-analytics-full-set/production-pipeline/run_full_pipeline.py
+bash scripts/regenerate-hr-dashboards.sh
 ```
 
-The integrated workbook and generated HTML files are written to `production-pipeline/dashboardlar/`. The website publishes those same ten HTML outputs at the routes listed in [`pipeline-manifest.json`](pipeline-manifest.json).
+The 27 synthetic input workbooks are committed so the normal rebuild does not require the workbook-generation tool. Recreate those inputs only when intentionally changing the synthetic dataset and when `@oai/artifact-tool` is available:
+
+```bash
+REGENERATE_SYNTHETIC_INPUTS=1 bash scripts/regenerate-hr-dashboards.sh
+```
+
+The ten-stage entry point remains `production-pipeline/run_full_pipeline.py`. Its temporary HTML outputs are written under `production-pipeline/dashboardlar/`; the orchestration script copies them to the routes listed in [`pipeline-manifest.json`](pipeline-manifest.json). The generated integrated workbook is copied byte-for-byte to `frontend/analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx`.
 
 ## Safety rule
 
-Never replace the synthetic `.xlsx` inputs in this public directory with private or employer-provided workbooks. A release is allowed only after source parity, dashboard parity, workbook validation, repository-wide prohibited-identity scanning and browser QA all pass.
+Never replace the synthetic `.xlsx` inputs in this public directory with private or employer-provided workbooks. The public deploy boundary allows exactly one spreadsheet: the declared synthetic output download. A release is allowed only after source parity, dashboard parity, workbook validation, prohibited-identity scanning, a clean ten-stage CI rebuild and browser QA all pass.
