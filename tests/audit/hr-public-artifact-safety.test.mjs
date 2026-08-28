@@ -197,7 +197,8 @@ print(json.dumps(findings, ensure_ascii=False))
 
 test('canonical HR rebuild script targets the restored ten-stage pipeline, not removed shared-core files', () => {
   const body = readFileSync(path.join(repoRoot, 'scripts/regenerate-hr-dashboards.sh'), 'utf8');
-  assert.match(body, /production-pipeline\/run_full_pipeline\.py/);
+  assert.match(body, /PIPELINE="\$\{SOURCE_ROOT\}\/production-pipeline"/);
+  assert.match(body, /python3 "\$\{PIPELINE\}\/run_full_pipeline\.py"/);
   assert.match(body, /generate_synthetic_source_workbooks\.mjs/);
   assert.match(body, /hr-analytics-full-set-synthetic-output\.xlsx/);
   assert.match(body, /hr-public-artifact-safety\.test\.mjs/);
