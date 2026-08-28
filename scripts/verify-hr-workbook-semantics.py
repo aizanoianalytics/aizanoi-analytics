@@ -9,7 +9,8 @@ non-empty cell values/formulas, number formats, hyperlinks, merged ranges,
 freeze panes, autofilters and sheet visibility.
 
 If a mismatch exists, the script prints concrete sheet/cell differences before
-returning a non-zero exit status.
+returning a non-zero exit status and preserves the rebuilt workbook in the
+existing CI diagnostics artifact for review/re-baselining.
 """
 
 from __future__ import annotations
@@ -19,6 +20,7 @@ import datetime as dt
 import hashlib
 import json
 import math
+import shutil
 import sys
 from pathlib import Path
 from typing import Any
@@ -148,6 +150,14 @@ def compare_workbooks(before_path: Path, after_path: Path) -> list[str]:
         after.close()
 
 
+def preserve_rebuilt_workbook(rebuilt: Path) -> Path:
+    diagnostics = Path("artifacts/diagnostics")
+    diagnostics.mkdir(parents=True, exist_ok=True)
+    destination = diagnostics / "hr-rebuilt-production.xlsx"
+    shutil.copy2(rebuilt, destination)
+    return destination
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("baseline", type=Path)
@@ -163,6 +173,8 @@ def main() -> int:
 
     diffs = compare_workbooks(args.baseline, args.rebuilt)
     if diffs:
+        preserved = preserve_rebuilt_workbook(args.rebuilt)
+        print(f"rebuilt workbook preserved for CI review: {preserved}", file=sys.stderr)
         print(f"HR workbook semantic drift detected ({len(diffs)} reported difference(s)): ", file=sys.stderr)
         for diff in diffs:
             print(f"  - {diff}", file=sys.stderr)
