@@ -73,6 +73,13 @@ test('all ten original dashboard interaction surfaces are published intact', () 
   }
 });
 
+test('public HR dashboards remain self-contained under the route-scoped CSP', () => {
+  for (const id of dashboardIds) {
+    const html = readFileSync(`${publicRoot}/${id}/index.html`, 'utf8');
+    assert.doesNotMatch(html, /fonts\.(?:googleapis|gstatic)\.com/i, `${id} depends on an external font provider`);
+  }
+});
+
 test('HTML-aware parser locks the exact original control counts', () => {
   const python = process.platform === 'win32' ? 'python' : 'python3';
   const script = [
