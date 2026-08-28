@@ -712,7 +712,13 @@ def build_current_year_turnover_backtest(
     if df_ts is None or df_ts.empty or value_col not in df_ts.columns:
         return pd.DataFrame(columns=columns)
 
-    target_year = int(target_year or pd.Timestamp.now().year)
+    if target_year is None:
+        latest_year = pd.to_datetime(df_ts["donem"], errors="coerce").dt.year.max()
+        if pd.isna(latest_year):
+            return pd.DataFrame(columns=columns)
+        target_year = int(latest_year)
+    else:
+        target_year = int(target_year)
     ts = df_ts.copy()
     ts["donem"] = pd.to_datetime(ts["donem"], errors="coerce")
     ts[value_col] = pd.to_numeric(ts[value_col], errors="coerce")
@@ -3012,7 +3018,17 @@ def olustur_satis_akademisi_takip_tablosu(satis_akademisi_kaynak, fiili_list, ay
 
     giris_calc_dt = pd.to_datetime(takip_tablosu["giris_tarihi"], dayfirst=True, errors="coerce")
     cikis_calc_dt = pd.to_datetime(takip_tablosu["cikis_tarihi"], dayfirst=True, errors="coerce")
-    active_now = pd.Timestamp.now()
+    snapshot_dates = (
+        parse_mixed_date(takip_tablosu["donem"], dayfirst=True)
+        if "donem" in takip_tablosu.columns
+        else pd.Series(dtype="datetime64[ns]")
+    )
+    active_now = snapshot_dates.max() if not snapshot_dates.empty else pd.NaT
+    if pd.isna(active_now):
+        active_now = pd.to_datetime(giris_calc_dt, errors="coerce").max()
+    if pd.isna(active_now):
+        active_now = pd.Timestamp("1970-01-01")
+    active_now = pd.Timestamp(active_now) + pd.offsets.MonthEnd(0)
     cikis_calc_dt = cikis_calc_dt.where(~cikis_marker_mask, active_now)
     kidem_calc = ((cikis_calc_dt - giris_calc_dt).dt.days // 365).where(giris_calc_dt.notna())
     kidem_calc = kidem_calc.where(kidem_calc.isna() | (kidem_calc >= 0))
@@ -3123,7 +3139,15 @@ def olustur_uzun_zamandır_egitim_almayanlar(satis_akademisi_takip_tablosu, bugu
         return None
 
     if bugun_tarihi is None:
-        bugun_tarihi = datetime.now()
+        reference_dates = (
+            parse_mixed_date(satis_akademisi_takip_tablosu["donem"], dayfirst=True)
+            if "donem" in satis_akademisi_takip_tablosu.columns
+            else pd.Series(dtype="datetime64[ns]")
+        )
+        reference_date = reference_dates.max() if not reference_dates.empty else pd.NaT
+        if pd.isna(reference_date):
+            return None
+        bugun_tarihi = (pd.Timestamp(reference_date) + pd.offsets.MonthEnd(0)).to_pydatetime()
 
     # Yalnızca gerçekten katıldığı eğitimler son eğitim kabul edilir. Metin
     # karşılaştırmaları Türkçe karakter ve büyük/küçük harf farkından etkilenmez.
@@ -4546,7 +4570,8 @@ def main():
     # --- Cari yil aylik rolling-origin turnover tahmin/backtest tablosu ---
     tahmin_yillik_backtest = pd.DataFrame()
     try:
-        current_year = int(pd.Timestamp.now().year)
+        latest_observed_period = pd.to_datetime(genel_turnover.get("donem"), errors="coerce").max()
+        current_year = int(latest_observed_period.year) if pd.notna(latest_observed_period) else None
         annual_backtest_frames = []
         if not genel_turnover.empty:
             annual_backtest_frames.append(
@@ -4817,7 +4842,12 @@ def main():
 
     if turnover_tahmin_3ay is not None and not turnover_tahmin_3ay.empty:
         tahmin_detay_rows = []
-        current_time = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M")
+        forecast_as_of = pd.to_datetime(latest_donem, errors="coerce")
+        if pd.isna(forecast_as_of) and not genel_turnover.empty:
+            forecast_as_of = pd.to_datetime(genel_turnover["donem"], errors="coerce").max()
+        if pd.isna(forecast_as_of):
+            forecast_as_of = pd.to_datetime(turnover_tahmin_3ay["donem"], errors="coerce").min() - pd.offsets.MonthBegin(1)
+        current_time = (pd.Timestamp(forecast_as_of) + pd.offsets.MonthEnd(0)).strftime("%Y-%m-%d %H:%M")
         forecast_scope_cols = [
             c for c in turnover_tahmin_3ay.columns
             if c != "donem"
@@ -4887,7 +4917,7 @@ def main():
             tahmin_aylar = turnover_tahmin_3ay[turnover_tahmin_3ay["donem"] > son_gercek_tarih].copy()
             if not tahmin_aylar.empty:
                 tahmin_rows = []
-                current_time = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M")
+                current_time = (pd.Timestamp(son_gercek_tarih) + pd.offsets.MonthEnd(0)).strftime("%Y-%m-%d %H:%M")
                 forecast_scope_cols = [
                     c for c in tahmin_aylar.columns
                     if c != "donem"
