@@ -114,6 +114,15 @@ export async function mount({ container, api }) {
     URL.revokeObjectURL(url);
   }
 
+  /** Full teardown: stop media tracks, revoke gallery object URLs, detach listeners. */
+  function teardown() {
+    stop();
+    gallery.querySelectorAll('img[data-photo-src]').forEach((img) => {
+      if (img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
+    });
+    window.removeEventListener('pagehide', stop);
+  }
+
   const click = async (event) => {
     const startBtn = event.target.closest('[data-cam-start]');
     if (startBtn) { await start(); return; }
@@ -127,5 +136,5 @@ export async function mount({ container, api }) {
 
   await refreshGallery();
   window.addEventListener('pagehide', stop, { once: true });
-  return () => stop();
+  return () => teardown();
 }
