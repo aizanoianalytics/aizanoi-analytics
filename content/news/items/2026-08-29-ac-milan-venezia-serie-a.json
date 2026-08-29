@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-29-ac-milan-venezia-serie-a",
+  "title": "AC Milan open Serie A season with 2-0 win over promoted Venezia",
+  "summary": "AC Milan began their Serie A campaign with a 2-0 home victory over promoted Venezia at San Siro on Friday, building on last weekend's 2-1 win at Torino with a controlled performance that featured expected-goals dominance of 2.13 to 0.82. The result leaves Massimiliano Allegri's side among the early pacesetters at the top of the table heading into Saturday's matchday, which features Fiorentina hosting promoted Frosinone, Monza against Udinese, Sassuolo versus Torino and Juventus welcoming Parma to Turin.",
+  "category": "football",
+  "priority": 62,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["AC Milan", "Venezia", "Serie A", "Matchday 2"],
+  "sources": [
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401874758/venezia-ac-milan",
+      "publishedAt": "2026-08-28T20:45:00Z"
+    },
+    {
+      "publisher": "The Athletic",
+      "url": "https://www.nytimes.com/athletic/football/game/milan-vs-venezia/b8xkOWU6DPQRmxfS",
+      "publishedAt": "2026-08-28T20:45:00Z"
+    }
+  ]
+}

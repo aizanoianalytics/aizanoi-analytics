@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-29-ai-infrastructure-boom-bigger-than-gpus",
+  "title": "AI infrastructure spending is outgrowing the GPU, analyst brief argues",
+  "summary": "A Friday analyst column in AI Business argues that the buildout behind generative AI is becoming bigger than the accelerator market that anchors it, as hyperscalers, sovereign clouds and air-gapped enterprise sites now buy networking, storage, power and rack-scale systems in roughly equal proportion to chips. The piece cites Nvidia's own commentary that non-hyperscaler buyers, including NeoClouds and on-premise operators, will account for about half of its data-center revenue, framing the next leg of capacity as data-center, energy and cooling investment rather than raw GPU throughput.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["AI infrastructure", "data centers", "Nvidia", "NeoCloud"],
+  "sources": [
+    {
+      "publisher": "AI Business",
+      "url": "https://aibusiness.com/generative-ai/prompt-ai-infrastructure-boom-getting-bigger-than-gpus",
+      "publishedAt": "2026-08-28T13:00:00Z"
+    }
+  ]
+}

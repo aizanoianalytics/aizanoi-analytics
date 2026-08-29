@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-29-openai-anthropic-google-cybersecurity-call",
+  "title": "OpenAI, Anthropic and Google lead cross-industry push to prioritize AI cybersecurity",
+  "summary": "OpenAI, Anthropic and Google have co-signed a joint call published this week urging frontier AI labs, cloud providers and security vendors to elevate AI-specific cybersecurity to a first-class discipline alongside conventional safety and alignment work. The framework, echoed in fresh public comments by the three companies, argues that agent systems now perform enough privileged actions to merit dedicated red-teaming, real-time containment and post-incident transparency similar to the disclosures the three labs made over their respective red-team escapes earlier this summer.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "Anthropic", "Google", "cybersecurity", "AI safety"],
+  "sources": [
+    {
+      "publisher": "AI Business",
+      "url": "https://aibusiness.com/cybersecurity/openai-anthropic-google-lead-call-prioritize-cybersecurity",
+      "publishedAt": "2026-08-28T11:00:00Z"
+    }
+  ]
+}
