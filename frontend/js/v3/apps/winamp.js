@@ -120,14 +120,24 @@ export async function mount({ container, api }) {
     }
   };
 
-  fileInput.addEventListener('change', () => {
+  fileInput.addEventListener('change', async () => {
+    const fs = await import('/js/v3/workspace/fs.js');
     for (const file of fileInput.files || []) {
-      localBlobs.set(file.name, file);
-      playlist.push({ source: 'local', name: file.name });
+      // Import into the Workspace so the playlist survives reloads (blobs
+      // cannot live in localStorage; IndexedDB is the durable home).
+      try {
+        const node = await fs.createFile({ name: file.name, parent: fs.MUSIC_ID, blob: file, mime: file.type || 'audio/mpeg' });
+        playlist.push({ source: 'workspace', id: node.id, name: node.name });
+      } catch (error) {
+        localBlobs.set(file.name, file);
+        playlist.push({ source: 'local', name: file.name });
+      }
     }
     fileInput.value = '';
+    persist();
     renderPlaylist();
-    if (index === -1 && playlist.length) play(0);
+    if (index === -1 && playlist.length) play(playlist.length - (fileInput.files?.length || 1));
+    else renderPlaylist();
   });
 
   seekEl.addEventListener('input', () => {
@@ -142,5 +152,16 @@ export async function mount({ container, api }) {
 
   container.addEventListener('click', (event) => { click(event).catch((error) => api.notify('Winamp', error.message, 'error')); });
   renderPlaylist();
-  return () => { audio.pause(); if (audio.dataset.blobUrl) URL.revokeObjectURL(audio.dataset.blobUrl); };
+  function onOpen(newOptions) {
+    const trackId = newOptions?.trackId;
+    if (trackId) {
+      const existing = playlist.findIndex((item) => item.source === 'workspace' && item.id === trackId);
+      if (existing >= 0) play(existing);
+      else { playlist.push({ source: 'workspace', id: trackId, name: newOptions?.name || 'Workspace track' }); persist(); renderPlaylist(); play(playlist.length - 1); }
+    }
+  }
+  return {
+    cleanup: () => { audio.pause(); if (audio.dataset.blobUrl) URL.revokeObjectURL(audio.dataset.blobUrl); },
+    onOpen,
+  };
 }

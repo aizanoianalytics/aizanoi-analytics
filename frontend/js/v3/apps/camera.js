@@ -36,6 +36,10 @@ export async function mount({ container, api }) {
   let stream = null;
 
   async function refreshGallery() {
+    // Revoke previous object URLs before rebuilding the gallery.
+    gallery.querySelectorAll('img[data-photo-src]').forEach((img) => {
+      if (img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
+    });
     const items = await fs.childrenOf(fs.PICTURES_ID);
     const photos = items.filter((node) => node.kind === 'file' && (node.mime || '').startsWith('image/')).slice(-12).reverse();
     gallery.innerHTML = photos.length
@@ -55,7 +59,10 @@ export async function mount({ container, api }) {
       return;
     }
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+      // Owner requirement: the camera app should also request microphone
+      // permission. The audio track is requested here but NOT recorded —
+      // capture is photo-only; a future clip-recording mode can use it.
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: true });
       video.srcObject = stream;
       offPanel.hidden = true;
       shotBtn.disabled = false;

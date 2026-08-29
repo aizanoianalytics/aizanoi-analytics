@@ -36,12 +36,10 @@ const toneMap = {
   trash: [300, 200, 'triangle'],
 };
 
-const fileMap = {
-  startup: '/sounds/startup.mp3',
-  error: '/sounds/error.mp3',
-  notification: '/sounds/notification.mp3',
-  shutdown: '/sounds/shutdown.mp3',
-};
+/* No shipped audio assets yet: fileMap is intentionally empty so every sound
+ * goes through the oscillator fallback (zero 404s, zero downloads). Ship real
+ * files later by adding entries here. */
+const fileMap = {};
 
 async function playFile(name) {
   const src = fileMap[name];
