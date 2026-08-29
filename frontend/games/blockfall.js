@@ -30,6 +30,13 @@
             <button class="az-button" type="button" data-bf-restart>Restart</button>
           </div>
         </div>
+        <div class="az-blockfall-touch" data-bf-touch aria-label="Touch controls">
+          <button class="az-button" type="button" data-bf-left aria-label="Move left">◀</button>
+          <button class="az-button" type="button" data-bf-rotate aria-label="Rotate">⟳</button>
+          <button class="az-button" type="button" data-bf-right aria-label="Move right">▶</button>
+          <button class="az-button" type="button" data-bf-down aria-label="Soft drop">▼</button>
+          <button class="az-button" type="button" data-bf-drop aria-label="Hard drop">⤓</button>
+        </div>
       </section>`;
 
     const canvas = container.querySelector('[data-bf-canvas]');
@@ -157,6 +164,17 @@
       running = !running;
       event.target.textContent = running ? 'Pause' : 'Resume';
     });
+    const touch = (event) => {
+      const button = event.target.closest('[data-bf-left],[data-bf-right],[data-bf-rotate],[data-bf-down],[data-bf-drop]');
+      if (!button || !running) return;
+      event.preventDefault();
+      if (button.dataset.bfLeft !== undefined && !collide(piece.x - 1, piece.y, piece.cells)) piece.x--;
+      else if (button.dataset.bfRight !== undefined && !collide(piece.x + 1, piece.y, piece.cells)) piece.x++;
+      else if (button.dataset.bfRotate !== undefined) rotate();
+      else if (button.dataset.bfDown !== undefined) drop();
+      else if (button.dataset.bfDrop !== undefined) hardDrop();
+    };
+    container.querySelector('[data-bf-touch]').addEventListener('click', touch);
 
     restart();
     raf = requestAnimationFrame(loop);

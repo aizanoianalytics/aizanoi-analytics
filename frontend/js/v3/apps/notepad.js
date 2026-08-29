@@ -1,4 +1,9 @@
-/** AizanoiOS Notepad — text editor that saves plain-text documents into the Workspace VFS. */
+/** AizanoiOS Notepad — text editor that saves plain-text documents into the Workspace VFS.
+ *
+ *  Unsaved changes are protected: closing the app or opening another document
+ *  goes through a Save / Discard / Cancel guard (Win98-style dialog).
+ *  Returns { cleanup, onOpen } so the shell can hot-swap files while running.
+ */
 
 const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 
@@ -32,21 +37,40 @@ export async function mount({ container, api, options }) {
   const itemsEl = container.querySelector('[data-note-items]');
 
   const fs = await import('/js/v3/workspace/fs.js');
+  const { win98Dialog } = await import('/js/v3/workspace/dialog.js');
 
   function renderTitle() {
     titleEl.textContent = `${dirty ? '*' : ''}${fileName} — Notepad`;
     statusEl.textContent = dirty ? 'Unsaved changes' : `Saved · ${new Date().toLocaleTimeString('en-GB')}`;
   }
 
+  /** Returns true when it is safe to discard the current buffer. */
+  async function confirmDiscard() {
+    if (!dirty) return true;
+    const choice = await win98Dialog({
+      title: 'Notepad',
+      message: `Do you want to save changes to ${fileName}?`,
+      kind: 'warn',
+      confirmLabel: 'Save',
+      cancelLabel: 'Discard',
+    });
+    if (choice === 'ok') { await save(false); return !dirty; }
+    // Explicit "Discard" chosen via the dialog's cancel path is still data loss;
+    // re-ask with a plain confirm so cancel truly cancels.
+    return window.confirm('Discard unsaved changes?');
+  }
+
   async function loadFile(id) {
+    if (!(await confirmDiscard())) return false;
     const node = await fs.getNode(id);
-    if (!node || node.kind !== 'file') return;
+    if (!node || node.kind !== 'file') return false;
     fileId = node.id;
     fileName = node.name;
     const blob = await fs.readFileBlob(id);
     textEl.value = blob ? await blob.text() : '';
     dirty = false;
     renderTitle();
+    return true;
   }
 
   async function refreshList() {
@@ -76,29 +100,47 @@ export async function mount({ container, api, options }) {
   }
 
   textEl.addEventListener('input', () => { dirty = true; renderTitle(); });
-
-  const click = async (event) => {
-    const action = event.target.closest('[data-note-action]')?.dataset.noteAction;
+  container.addEventListener('click', async (event) => {
     const openId = event.target.closest('[data-note-open]')?.dataset.noteOpen;
-    if (openId) { await loadFile(openId); listEl.hidden = true; return; }
+    if (openId) { await loadFile(openId).catch((error) => api.notify('Notepad', error.message, 'error')); listEl.hidden = true; return; }
     if (event.target.closest('[data-note-close-list]')) { listEl.hidden = true; return; }
+    const action = event.target.closest('[data-note-action]')?.dataset.noteAction;
     if (!action) return;
     api.playSound('click');
-    if (action === 'save') await save(false);
-    else if (action === 'saveas') await save(true);
-    else if (action === 'open') { await refreshList(); listEl.hidden = false; }
-    else if (action === 'download') {
-      const url = URL.createObjectURL(new Blob([textEl.value], { type: 'text/plain' }));
-      const link = document.createElement('a');
-      link.href = url; link.download = fileName.endsWith('.txt') ? fileName : `${fileName}.txt`;
-      link.click();
-      URL.revokeObjectURL(url);
-    }
-  };
-  container.addEventListener('click', (event) => { click(event).catch((error) => api.notify('Notepad', error.message, 'error')); });
+    try {
+      if (action === 'save') await save(false);
+      else if (action === 'saveas') await save(true);
+      else if (action === 'open') { await refreshList(); listEl.hidden = false; }
+      else if (action === 'download') {
+        const url = URL.createObjectURL(new Blob([textEl.value], { type: 'text/plain' }));
+        const link = document.createElement('a');
+        link.href = url; link.download = fileName.endsWith('.txt') ? fileName : `${fileName}.txt`;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch (error) { api.notify('Notepad', error.message, 'error'); }
+  });
+
+  /** Shell contract: react to openApp('notepad', { fileId }) while running. */
+  function onOpen(newOptions) {
+    const id = newOptions?.fileId;
+    if (id && id !== fileId) loadFile(id).catch((error) => api.notify('Notepad', error.message, 'error'));
+  }
+
+  /** Shell contract: veto closing when there are unsaved changes. */
+  function beforeClose() {
+    if (!dirty) return true;
+    // Synchronous veto path: ask with a plain confirm (async dialogs cannot
+    // block the close call), giving Save / Cancel semantics.
+    return window.confirm(`${fileName} has unsaved changes. Close anyway?`);
+  }
 
   if (fileId) await loadFile(fileId);
   renderTitle();
   textEl.focus();
-  return () => {};
+  return {
+    cleanup: () => {},
+    onOpen,
+    beforeClose,
+  };
 }

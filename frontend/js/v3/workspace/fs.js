@@ -11,11 +11,16 @@
  *     mime, size, blob?(File|Blob) }
  *
  * Special folders are stable ids so the shell can always find them:
- *   root /documents /pictures /music /system
+ *   root /documents /pictures /music /recycle
+ *
+ * Initialization contract: every public API awaits ensureInitialized(),
+ * which upgrades/migrates the database and guarantees the special folder
+ * tree (root → Documents/Pictures/Music, plus the detached Recycle Bin)
+ * exists with correct children arrays before any read or write.
  */
 
 const DB_NAME = 'aizanoi-workspace';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const STORE = 'files';
 
 export const ROOT_ID = 'root';
@@ -25,16 +30,17 @@ export const MUSIC_ID = 'folder-music';
 export const RECYCLE_ID = 'folder-recycle';
 
 const SPECIAL_FOLDERS = [
-  { id: ROOT_ID, name: 'Workspace', parent: null, locked: true },
-  { id: DOCUMENTS_ID, name: 'Documents', parent: ROOT_ID, locked: true },
-  { id: PICTURES_ID, name: 'Pictures', parent: ROOT_ID, locked: true },
-  { id: MUSIC_ID, name: 'Music', parent: ROOT_ID, locked: true },
-  { id: RECYCLE_ID, name: 'Recycle Bin', parent: null, locked: true },
+  { id: ROOT_ID, name: 'Workspace', parent: null, children: [DOCUMENTS_ID, PICTURES_ID, MUSIC_ID] },
+  { id: DOCUMENTS_ID, name: 'Documents', parent: ROOT_ID, children: [] },
+  { id: PICTURES_ID, name: 'Pictures', parent: ROOT_ID, children: [] },
+  { id: MUSIC_ID, name: 'Music', parent: ROOT_ID, children: [] },
+  { id: RECYCLE_ID, name: 'Recycle Bin', parent: null, children: [] },
 ];
 
-const LOCKED_IDS = new Set(SPECIAL_FOLDERS.filter((f) => f.locked).map((f) => f.id));
+const LOCKED_IDS = new Set(SPECIAL_FOLDERS.map((f) => f.id));
 
 let dbPromise = null;
+let initPromise = null;
 
 function openDb() {
   if (dbPromise) return dbPromise;
@@ -68,46 +74,74 @@ export function newId(prefix = 'f') {
   return `${prefix}-${Date.now().toString(36)}-${random}`;
 }
 
-export async function allNodes() {
-  const db = await openDb();
-  const nodes = await requestAsPromise(tx(db).getAll());
-  const map = new Map(nodes.map((node) => [node.id, node]));
-  let changed = false;
-  for (const folder of SPECIAL_FOLDERS) {
-    if (!map.has(folder.id)) {
-      const node = {
-        id: folder.id,
-        kind: 'folder',
-        name: folder.name,
-        parent: folder.parent,
-        children: [],
-        locked: folder.locked || undefined,
-        createdAt: 0,
-        updatedAt: 0,
-      };
-      map.set(node.id, node);
-      changed = true;
-    }
-  }
-  if (changed) {
-    const db2 = await openDb();
-    const store = tx(db2, 'readwrite');
-    for (const folder of SPECIAL_FOLDERS) {
-      if (!nodes.some((node) => node.id === folder.id)) {
-        store.put(map.get(folder.id));
+/**
+ * Guarantee the special folder tree exists and is consistent.
+ * Safe to call repeatedly; runs at most once per page load, and repairs
+ * databases created by v1 (missing root.children wiring, missing folders).
+ */
+export async function ensureInitialized() {
+  if (initPromise) return initPromise;
+  initPromise = (async () => {
+    const db = await openDb();
+    const existing = await requestAsPromise(tx(db).getAll());
+    const byId = new Map(existing.map((node) => [node.id, node]));
+    const writes = [];
+    for (const spec of SPECIAL_FOLDERS) {
+      const current = byId.get(spec.id);
+      if (!current) {
+        writes.push({
+          id: spec.id, kind: 'folder', name: spec.name, parent: spec.parent,
+          children: [...spec.children], createdAt: 0, updatedAt: 0,
+        });
+      } else {
+        // Repair pass: keep special folders pointing at the canonical tree.
+        let changed = false;
+        if (current.parent !== spec.parent) { current.parent = spec.parent; changed = true; }
+        if (spec.id === ROOT_ID) {
+          const canonical = JSON.stringify(spec.children);
+          if (JSON.stringify(current.children || []) !== canonical) {
+            current.children = [...spec.children];
+            changed = true;
+          }
+        }
+        if (!Array.isArray(current.children)) { current.children = []; changed = true; }
+        if (changed) writes.push(current);
       }
     }
-  }
-  return map;
+    // Drop stale children references pointing at nodes that no longer exist.
+    for (const node of byId.values()) {
+      if (LOCKED_IDS.has(node.id)) continue;
+      if (!Array.isArray(node.children)) continue;
+      const valid = node.children.filter((childId) => byId.has(childId) || SPECIAL_FOLDERS.some((s) => s.id === childId));
+      if (valid.length !== node.children.length) {
+        node.children = valid;
+        writes.push(node);
+      }
+    }
+    if (writes.length) {
+      const store = tx(db, 'readwrite');
+      await Promise.all(writes.map((node) => requestAsPromise(store.put(node))));
+    }
+  })();
+  return initPromise;
+}
+
+export async function allNodes() {
+  await ensureInitialized();
+  const db = await openDb();
+  const nodes = await requestAsPromise(tx(db).getAll());
+  return new Map(nodes.map((node) => [node.id, node]));
 }
 
 export async function getNode(id) {
+  await ensureInitialized();
   if (!id) return null;
   const db = await openDb();
   return requestAsPromise(tx(db).get(id));
 }
 
 export async function childrenOf(id) {
+  await ensureInitialized();
   const map = await allNodes();
   const parent = map.get(id);
   if (!parent || !Array.isArray(parent.children)) return [];
@@ -115,12 +149,14 @@ export async function childrenOf(id) {
 }
 
 export async function putNode(node) {
+  await ensureInitialized();
   const db = await openDb();
   await requestAsPromise(tx(db, 'readwrite').put(node));
   return node;
 }
 
 export async function createFile({ name, parent, blob, mime }) {
+  await ensureInitialized();
   const parentId = parent || DOCUMENTS_ID;
   const map = await allNodes();
   const parentNode = map.get(parentId);
@@ -146,6 +182,7 @@ export async function createFile({ name, parent, blob, mime }) {
 }
 
 export async function createFolder({ name, parent }) {
+  await ensureInitialized();
   const parentId = parent || DOCUMENTS_ID;
   const map = await allNodes();
   const parentNode = map.get(parentId);
@@ -168,9 +205,10 @@ export async function createFolder({ name, parent }) {
 }
 
 export async function renameNode(id, name) {
+  await ensureInitialized();
   const node = await getNode(id);
   if (!node) throw new Error('Item not found');
-  if (node.locked) throw new Error('System items cannot be renamed');
+  if (LOCKED_IDS.has(node.id)) throw new Error('System items cannot be renamed');
   node.name = String(name || node.name);
   node.updatedAt = Date.now();
   await putNode(node);
@@ -178,6 +216,7 @@ export async function renameNode(id, name) {
 }
 
 export async function updateFileContent(id, blob) {
+  await ensureInitialized();
   const node = await getNode(id);
   if (!node || node.kind !== 'file') throw new Error('File not found');
   node.blob = blob;
@@ -189,6 +228,7 @@ export async function updateFileContent(id, blob) {
 }
 
 export async function readFileBlob(id) {
+  await ensureInitialized();
   const node = await getNode(id);
   if (!node || node.kind !== 'file') return null;
   return node.blob || null;
@@ -207,12 +247,14 @@ async function detachFromParent(node) {
 
 /** Move a node into the Recycle Bin (or delete permanently if already there). */
 export async function trashNode(id) {
+  await ensureInitialized();
   const node = await getNode(id);
   if (!node) return false;
-  if (node.locked) throw new Error('System items cannot be deleted');
+  if (LOCKED_IDS.has(node.id)) throw new Error('System items cannot be deleted');
   if (node.parent === RECYCLE_ID || node.id === RECYCLE_ID) {
     return deleteNode(id);
   }
+  node.previousParent = node.parent;
   await detachFromParent(node);
   node.updatedAt = Date.now();
   const bin = await getNode(RECYCLE_ID);
@@ -225,9 +267,10 @@ export async function trashNode(id) {
 
 /** Recursively delete a node and everything under it. */
 export async function deleteNode(id) {
+  await ensureInitialized();
   const node = await getNode(id);
   if (!node) return false;
-  if (node.locked) throw new Error('System items cannot be deleted');
+  if (LOCKED_IDS.has(node.id)) throw new Error('System items cannot be deleted');
   await detachFromParent(node);
   const collect = async (current) => {
     for (const childId of current.children || []) {
@@ -243,6 +286,7 @@ export async function deleteNode(id) {
 
 /** Restore a recycled item to its original parent when possible, else Documents. */
 export async function restoreNode(id) {
+  await ensureInitialized();
   const node = await getNode(id);
   if (!node) return false;
   if (node.parent !== RECYCLE_ID) return false;
@@ -262,6 +306,7 @@ export async function restoreNode(id) {
 }
 
 export async function emptyRecycleBin() {
+  await ensureInitialized();
   const bin = await getNode(RECYCLE_ID);
   for (const childId of [...(bin.children || [])]) {
     await deleteNode(childId);
