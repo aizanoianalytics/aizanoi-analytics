@@ -58,7 +58,7 @@ const retiredIds=['workbench','archive','notes','data-lab','source-reader','arti
   await applicationsButton.click();
   await page.waitForSelector('#az-switcher-overlay.is-open .az-launchpad-search');
   assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: launcher did not use canonical inert lifecycle');
-  assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item[data-app]').count(),8,'desktop: launcher public-app count changed unexpectedly');
+  assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item[data-app]').count(),14,'desktop: launcher public-app count changed unexpectedly');
   for(const id of retiredIds) {
     assert.equal(await page.locator(`#az-switcher-overlay .az-launchpad-item[data-app="${id}"]`).count(),0,`desktop: retired ${id} leaked into Applications`);
   }
