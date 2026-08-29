@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-29-european-stocks-warsh-rebound",
+  "title": "European shares end higher as Warsh speech lets French banks rebound",
+  "summary": "European equities closed higher on Friday with the pan-European STOXX 600 up 0.5 percent at 655.16, leaving the index with a modest weekly gain after two consecutive weekly declines. French lender stocks led the rebound, with Societe Generale, BNP Paribas and Credit Agricole rising between 1 percent and 1.9 percent as investors stepped back into names that had slumped Thursday on worries over France's fiscal outlook, while automakers climbed 2.5 percent led by a 4.5 percent gain for BMW and energy added 0.3 percent after digesting Warsh's Jackson Hole speech.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["European stocks", "STOXX 600", "French banks", "automakers"],
+  "sources": [
+    {
+      "publisher": "Reuters via Business Times",
+      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/european-shares-rise-french-stocks-rebound-markets-digest-warsh-speech",
+      "publishedAt": "2026-08-28T15:20:00Z"
+    },
+    {
+      "publisher": "Reuters via YTV Market News",
+      "url": "https://ytvmarketnews.com/european-shares-rise-as-french-stocks-rebound-markets-digest-warsh-speech",
+      "publishedAt": "2026-08-28T15:20:00Z"
+    }
+  ]
+}

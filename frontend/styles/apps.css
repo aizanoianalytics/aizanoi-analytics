@@ -245,7 +245,7 @@
   .az-w98-actions { display:flex;justify-content:flex-end;gap:8px;padding:12px 16px 16px; }
   .az-source-list {
     margin-top:9px;
-    color:var(--az-text-3);
+    color:var(--az-text-2);
     font-size:11px;
     line-height:1.5;
   }

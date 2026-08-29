@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-29-asian-markets-jackson-hole-mixed",
+  "title": "Asian markets close mixed as Kospi falls 1.8 percent on tech sell-off",
+  "summary": "Asia-Pacific stocks ended Friday's session divided ahead of Federal Reserve Chair Kevin Warsh's Jackson Hole keynote, with Japan's Nikkei 225 rising 0.41 percent to 66,405.56 and Australia's ASX 200 up 0.6 percent while South Korea's Kospi dropped 1.8 percent and China's CSI 300 slipped 0.5 percent. Hong Kong's Hang Seng was almost flat at 25,584.79 and Taiwan's TAIEX added 0.8 percent, leaving MSCI's Asia-Pacific gauge modestly higher as investors unwound positions in Korean AI-exposed names and rotated into Japanese exporters.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Asian markets", "Nikkei", "Kospi", "Hang Seng", "Jackson Hole"],
+  "sources": [
+    {
+      "publisher": "Reuters via Business Times",
+      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/south-koreas-kospi-falls-1-2-asian-shares-rise",
+      "publishedAt": "2026-08-28T10:46:00Z"
+    },
+    {
+      "publisher": "STL News",
+      "url": "https://www.stl.news/overseas-markets-end-week-friday-aug-28-2026/",
+      "publishedAt": "2026-08-28T20:30:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-29-manchester-city-palace-result",
+  "title": "Haaland and Cherki braces send Manchester City past Crystal Palace 4-1",
+  "summary": "Erling Haaland and Rayan Cherki each scored twice as Manchester City beat Crystal Palace 4-1 at Selhurst Park on Friday night, maintaining their winning start to the Premier League season with a second consecutive victory. Haaland opened the scoring in the 17th minute with a looping header from Antoine Semenyo's cross for his first league goal of the campaign, Cherki doubled the lead early in the second half after dribbling through the Palace box, and both added late goals inside five minutes to seal Enzo Maresca's third consecutive win in all competitions.",
+  "category": "football",
+  "priority": 78,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Premier League", "Manchester City", "Crystal Palace", "Haaland", "Cherki"],
+  "sources": [
+    {
+      "publisher": "Reuters via Hindustan Times",
+      "url": "https://hindustantimes.com/sports/football/soccerdoubles-for-cherki-haaland-as-man-city-cruise-to-4-1-win-over-palace-101787951972692.html",
+      "publishedAt": "2026-08-28T22:30:00Z"
+    },
+    {
+      "publisher": "AP via WSLS",
+      "url": "https://wsls.com/sports/2026/08/28/man-city-overrun-palace-to-stay-perfect-in-the-premier-league",
+      "publishedAt": "2026-08-28T23:45:00Z"
+    }
+  ]
+}
