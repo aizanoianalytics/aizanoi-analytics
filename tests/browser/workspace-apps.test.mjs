@@ -192,15 +192,23 @@ test('camera round 2: close stops media tracks AND revokes object URLs', async (
     await page.waitForTimeout(600);
     const urlsBefore = await page.evaluate(() => document.querySelectorAll('img[data-photo-src]').length);
     assert.ok(urlsBefore > 0, 'gallery must render at least one photo for the teardown check');
+    // Spy on URL.revokeObjectURL — teardown must call it for gallery images.
+    await page.evaluate(() => {
+      window.__qaRevoked = [];
+      const orig = URL.revokeObjectURL.bind(URL);
+      URL.revokeObjectURL = (url) => { window.__qaRevoked.push(url); return orig(url); };
+    });
     // Close the app — cleanup contract runs.
     await page.evaluate(() => window.AIZANOI_OS?.closeApp?.('camera'));
     await page.waitForTimeout(500);
     const state = await page.evaluate(() => ({
       liveTracks: window.__qaLiveTracks.filter((track) => track.readyState === 'live').length,
       anyImgLeft: Boolean(document.querySelector('[data-cam-gallery] img[data-photo-src]')),
+      revokedCount: window.__qaRevoked.length,
     }));
     assert.equal(state.liveTracks, 0, 'all media tracks must be stopped after close');
     assert.equal(state.anyImgLeft, false, 'camera DOM (and its blob URLs) must be torn down on close');
+    assert.ok(state.revokedCount >= urlsBefore, `teardown must revoke gallery object URLs (expected >= ${urlsBefore}, got ${state.revokedCount})`);
   });
 });
 
@@ -279,5 +287,55 @@ test('workspace round 2: ⋯ opens a real action menu (not a typing prompt)', as
     await page.waitForTimeout(200);
     const gone = await page.evaluate(() => !document.querySelector('[data-ws-actionmenu]'));
     assert.ok(gone, 'Escape must dismiss the action menu');
+  });
+});
+
+/** Helper: seed a text file into Documents via the fs module directly. */
+async function seedWorkspaceFile(page, name) {
+  await page.evaluate(async (fileName) => {
+    const fs = await import('/js/v3/workspace/fs.js');
+    await fs.createFile({ name: fileName, parent: fs.DOCUMENTS_ID, blob: new Blob(['x'], { type: 'text/plain' }), mime: 'text/plain' });
+  }, name);
+}
+
+test('workspace round 3: × button closes the action menu', async () => {
+  await withPage(this, async (page) => {
+    await seedWorkspaceFile(page, 'x-close.txt');
+    await openApp(page, 'workspace');
+    await page.click('.az-workspace-more');
+    await page.waitForTimeout(300);
+    assert.ok(await page.evaluate(() => Boolean(document.querySelector('[data-ws-actionmenu]'))), 'menu must be open');
+    await page.click('[data-ws-menu-close]');
+    await page.waitForTimeout(200);
+    assert.ok(await page.evaluate(() => !document.querySelector('[data-ws-actionmenu]')), '× must close the menu');
+  });
+});
+
+test('workspace round 3: Escape closes the menu and restores focus to the opener', async () => {
+  await withPage(this, async (page) => {
+    await seedWorkspaceFile(page, 'esc-close.txt');
+    await openApp(page, 'workspace');
+    await page.click('.az-workspace-more');
+    await page.waitForTimeout(300);
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(200);
+    assert.ok(await page.evaluate(() => !document.querySelector('[data-ws-actionmenu]')), 'Escape must close the menu');
+    const isOpener = await page.evaluate(() => document.activeElement?.classList?.contains('az-workspace-more'));
+    assert.equal(isOpener, true, `focus must return to the ⋯ opener (got ${await page.evaluate(() => document.activeElement?.className)})`);
+  });
+});
+
+test('workspace round 3: outside click closes the menu and restores focus to the opener', async () => {
+  await withPage(this, async (page) => {
+    await seedWorkspaceFile(page, 'outside-close.txt');
+    await openApp(page, 'workspace');
+    await page.click('.az-workspace-more');
+    await page.waitForTimeout(300);
+    // Click a neutral area (the app toolbar) outside the menu.
+    await page.click('.az-app-toolbar strong');
+    await page.waitForTimeout(200);
+    assert.ok(await page.evaluate(() => !document.querySelector('[data-ws-actionmenu]')), 'outside click must close the menu');
+    const isOpener = await page.evaluate(() => document.activeElement?.classList?.contains('az-workspace-more'));
+    assert.equal(isOpener, true, 'focus must return to the ⋯ opener after outside click');
   });
 });

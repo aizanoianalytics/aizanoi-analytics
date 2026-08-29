@@ -87,10 +87,24 @@ export async function mount({ container, api, options }) {
     setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
 
+  /** Focus restoration target for the currently open action menu. */
+  let menuOpener = null;
+
   function closeMenu() {
-    document.querySelector('[data-ws-actionmenu]')?.remove();
+    const menu = document.querySelector('[data-ws-actionmenu]');
+    const shouldRestoreFocus = Boolean(menu);
+    menu?.remove();
     document.removeEventListener('click', onDocClick, true);
     document.removeEventListener('keydown', onMenuKey, true);
+    if (shouldRestoreFocus && menuOpener?.isConnected) {
+      // Defer one tick so an outside click's native focus change (which runs
+      // after this capture-phase handler) cannot override the restore.
+      const opener = menuOpener;
+      menuOpener = null;
+      setTimeout(() => { if (opener.isConnected) opener.focus(); }, 0);
+    } else {
+      menuOpener = null;
+    }
   }
   function onDocClick(event) {
     if (!event.target.closest('[data-ws-actionmenu]')) closeMenu();
@@ -100,16 +114,17 @@ export async function mount({ container, api, options }) {
   }
 
   /** Real accessible action menu (owner review round 2): buttons with labels,
-   *  Escape/outside-click dismissal, focus restore to the invoking control. */
+   *  Escape/outside-click/× dismissal — all restoring focus to the opener. */
   function openMenu(id, anchor) {
     closeMenu();
+    menuOpener = anchor;
     const menu = document.createElement('div');
     menu.className = 'az-w98-dialog az-ws-actionmenu';
     menu.dataset.wsActionmenu = id;
     menu.setAttribute('role', 'menu');
     menu.setAttribute('aria-label', `Actions for item`);
     menu.innerHTML = `
-      <div class="az-w98-titlebar"><span>Item actions</span><button class="az-w98-x" type="button" role="menuitem" aria-label="Close menu">×</button></div>
+      <div class="az-w98-titlebar"><span>Item actions</span><button class="az-w98-x" type="button" role="menuitem" data-ws-menu-close aria-label="Close menu">×</button></div>
       <div class="az-ws-actionmenu-body">
         <button class="az-button" type="button" role="menuitem" data-ws-act="rename">Rename</button>
         <button class="az-button" type="button" role="menuitem" data-ws-act="trash">Move to Recycle Bin</button>
@@ -124,10 +139,10 @@ export async function mount({ container, api, options }) {
     menu.querySelector('[data-ws-act="rename"]').focus();
 
     menu.addEventListener('click', async (event) => {
+      if (event.target.closest('[data-ws-menu-close]')) { closeMenu(); return; }
       const action = event.target.closest('[data-ws-act]')?.dataset.wsAct;
       if (!action) return;
       closeMenu();
-      anchor.focus();
       try {
         if (action === 'rename') {
           const name = (window.prompt('New name:', (await fs.getNode(id))?.name || '') || '').trim();
