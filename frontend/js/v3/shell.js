@@ -338,7 +338,9 @@ async function openAppInstance(appId, app, options, generation) {
     if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) return null;
     const result = await module.mount?.({ container:body, app, appId, api:appApi, options });
     if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) { try { (typeof result === 'function' ? result : result?.cleanup)?.(); } catch (_) {} return null; }
-    item.cleanup = typeof result === 'function' ? result : result?.cleanup || null;
+    item.cleanup = (typeof result === 'object' && result) ? (result.cleanup || null) : (typeof result === 'function' ? result : null);
+    item.onOpen = (typeof result === 'object' && result && typeof result.onOpen === 'function') ? result.onOpen : null;
+    item.beforeClose = (typeof result === 'object' && result && typeof result.beforeClose === 'function') ? result.beforeClose : null;
   } catch (error) {
     if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) return null;
     console.error(`Aizanoi app failed to open: ${appId}`, error);
@@ -354,8 +356,12 @@ export function openApp(requestedAppId, options={}) {
   const appId=canonicalAppId(requestedAppId);
   const app = appById(appId); if (!app) return Promise.resolve(null);
   if (windows.has(appId)) {
+    const item = windows.get(appId);
     focusWindow(appId,{ updateRoute:!options.fromHistory });
-    return Promise.resolve(windows.get(appId).el);
+    // Give already-running apps a chance to react to new open options
+    // (e.g. Notepad loading a different file, Winamp playing a track).
+    try { item.onOpen?.(options); } catch (error) { console.error(`AizanoiOS onOpen failed: ${appId}`, error); }
+    return Promise.resolve(item.el);
   }
   if(openingApps.has(appId))return openingApps.get(appId);
   const generation=nextAppGeneration(appId);
@@ -374,6 +380,22 @@ export function closeApp(appId, { updateRoute=true } = {}) {
     openingApps.delete(appId);
     return true;
   }
+  // Apps can veto closing (e.g. Notepad with unsaved changes) via beforeClose.
+  if (typeof item.beforeClose === 'function') {
+    let verdict = item.beforeClose();
+    if (verdict && typeof verdict.then === 'function') {
+      verdict.then((allowed) => { if (allowed) finalizeClose(appId, { updateRoute }); }).catch(() => {});
+      return true;
+    }
+    if (!verdict) return false;
+  }
+  finalizeClose(appId, { updateRoute });
+  return true;
+}
+
+function finalizeClose(appId, { updateRoute=true } = {}) {
+  const item = windows.get(appId);
+  if (!item) return false;
   nextAppGeneration(appId);
   try { item.cleanup?.(); } catch (_) {}
   item.el.remove();
@@ -713,6 +735,7 @@ const appApi=Object.freeze({
   notify,
   announce,
   store:Store,
+  playSound:(name)=>{ import('./workspace/sounds.js').then((module)=>module.playSound(name)).catch(()=>{}); },
   get openWindows(){return [...windows.keys()];},
   get activeApp(){return Store.getState().activeApp;}
 });

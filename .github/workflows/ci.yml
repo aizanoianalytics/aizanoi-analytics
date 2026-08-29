@@ -165,6 +165,7 @@ jobs:
           set -o pipefail
           status=0
           node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
+          node --test tests/browser/workspace-apps.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-apps-browser.log || status=1
           exit $status
       - name: Capture final product visuals
         if: success()
