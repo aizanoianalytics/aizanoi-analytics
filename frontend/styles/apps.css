@@ -199,6 +199,9 @@
   .az-workspace-item:focus-visible { outline:2px solid #5265db;outline-offset:2px; }
   .az-workspace-more { position:absolute;top:6px;right:8px;min-width:28px;min-height:28px;padding:0 6px;border:1px solid var(--az-border);border-radius:8px;background:rgba(255,255,255,.92);color:#4d5b72;font-size:14px;line-height:1;cursor:pointer; }
   .az-workspace-more:hover { background:#eef1f8;color:#172033; }
+  .az-ws-actionmenu { display:grid;gap:8px;min-width:220px; }
+  .az-ws-actionmenu-body { display:grid;gap:6px;padding:12px 14px 14px; }
+  .az-ws-actionmenu-body .az-button { width:100%;justify-content:flex-start; }
   .az-workspace-icon { font-size:26px;line-height:1; }
   .az-workspace-item strong { font-size:12.5px;color:#172033;word-break:break-word; }
   .az-workspace-item small { color:#66728a;font-size:11px; }
