@@ -7,7 +7,7 @@
  * Node-side suite exercises the pure logic contract through jsdom-free
  * integration: we drive fs.js directly using the browser's IndexedDB by
  * running in Playwright. To keep `node --test` hermetic, these tests are
- * executed through the browser gate (tests/workspace-apps-browser.test.mjs);
+ * executed through the browser gate (tests/browser/workspace-apps.test.mjs);
  * here we lock the pure-function surface (formatSize, id shape).
  */
 import test from 'node:test';
