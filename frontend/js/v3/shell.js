@@ -713,6 +713,7 @@ const appApi=Object.freeze({
   notify,
   announce,
   store:Store,
+  playSound:(name)=>{ import('./workspace/sounds.js').then((module)=>module.playSound(name)).catch(()=>{}); },
   get openWindows(){return [...windows.keys()];},
   get activeApp(){return Store.getState().activeApp;}
 });
