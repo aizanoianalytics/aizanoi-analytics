@@ -1,7 +1,8 @@
 const GAMES={
   snake:{label:'Signal Snake',description:'Keyboard/touch grid arcade game',container:'game-snake-container',script:'/games/snake.js'},
   mines:{label:'Survey Mines',description:'Local logic game',container:'game-mines-container',script:'/games/mines.js'},
-  brick:{label:'Strata Breaker',description:'Canvas timing arcade game',container:'game-brick-container',script:'/games/brick.js'}
+  brick:{label:'Strata Breaker',description:'Canvas timing arcade game',container:'game-brick-container',script:'/games/brick.js'},
+  blockfall:{label:'Blockfall',description:'Stack falling blocks and clear lines',container:'game-blockfall-container',script:'/games/blockfall.js'}
 };
 let utilsPromise=null;
 function loadScript(src){return new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=src;script.async=true;script.onload=()=>resolve(script);script.onerror=()=>reject(new Error(`Could not load ${src}`));document.body.appendChild(script);});}

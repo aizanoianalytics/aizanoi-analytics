@@ -216,7 +216,7 @@ def build_current_employees(fiili: pd.DataFrame) -> pd.DataFrame:
     out["bolge"] = np.where(out["scope"].eq("Mağaza"), out["ust_bolum"], "")
     out["ise_giris_tarihi"] = parse_datetime(out["ise_giris_tarihi"])
     out["dogum_tarihi"] = parse_datetime(out["dogum_tarihi"])
-    today = pd.Timestamp.today().normalize()
+    today = pd.Timestamp(deterministic_build_time()).tz_localize(None).normalize()
     out["yas"] = ((today - out["dogum_tarihi"]).dt.days / 365.25).where(out["dogum_tarihi"].notna())
     out["kidem_yili"] = numeric(out["kidem_yili"])
     out = out.sort_values(["sicil", "ise_giris_tarihi"], na_position="first").drop_duplicates("sicil", keep="last")
