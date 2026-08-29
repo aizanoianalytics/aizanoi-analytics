@@ -18,6 +18,7 @@ export async function mount({ container, api }) {
   const listEl = container.querySelector('[data-bin-list]');
   const countEl = container.querySelector('[data-bin-count]');
   const fs = await import('/js/v3/workspace/fs.js');
+  const { win98Dialog } = await import('/js/v3/workspace/dialog.js');
 
   async function refresh() {
     const items = await fs.childrenOf(fs.RECYCLE_ID);
@@ -38,7 +39,14 @@ export async function mount({ container, api }) {
   const click = async (event) => {
     if (event.target.closest('[data-bin-refresh]')) return refresh();
     if (event.target.closest('[data-bin-empty]')) {
-      if (!window.confirm('Permanently delete everything in the Recycle Bin?')) return;
+      const choice = await win98Dialog({
+        title: 'Recycle Bin',
+        message: 'Permanently delete everything in the Recycle Bin?',
+        kind: 'warn',
+        confirmLabel: 'Delete all',
+        cancelLabel: 'Cancel',
+      });
+      if (choice !== 'ok') return;
       await fs.emptyRecycleBin();
       api.playSound('trash');
       api.notify('Recycle Bin', 'All items permanently deleted.', 'system');
@@ -52,6 +60,15 @@ export async function mount({ container, api }) {
     }
     const deleteId = event.target.closest('[data-bin-delete]')?.dataset.binDelete;
     if (deleteId) {
+      const node = await fs.getNode(deleteId);
+      const choice = await win98Dialog({
+        title: 'Recycle Bin',
+        message: `Permanently delete "${node?.name || 'this item'}"?`,
+        kind: 'warn',
+        confirmLabel: 'Delete',
+        cancelLabel: 'Cancel',
+      });
+      if (choice !== 'ok') return;
       await fs.deleteNode(deleteId);
       api.playSound('trash');
       return refresh();

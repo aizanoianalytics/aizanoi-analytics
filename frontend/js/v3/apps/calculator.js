@@ -11,7 +11,7 @@ export async function mount({ container, api }) {
     <div class="az-calc-keys" role="group" aria-label="Calculator keypad">
       ${[['MC','m'],['MR','r'],['MS','s'],['M+','p'],['Back','back'],['CE','ce'],['C','c'],['±','neg'],['√','sqrt']]
         .map(([label, action]) => `<button class="az-calc-key az-calc-key--fn" type="button" data-calc="${action}">${label}</button>`).join('')}
-      ${['7','8','9','/','4','5','6','*','1','2','3','-','0','.','+'].map((k) => `<button class="az-calc-key" type="button" data-calc="${k === '*' ? '×' : k}">${k === '*' ? '×' : k}</button>`).join('')}
+      ${['7','8','9','/','4','5','6','*','1','2','3','-','0','.','+'].map((k) => { const label = k === '*' ? '×' : k === '/' ? '÷' : k; return `<button class="az-calc-key" type="button" data-calc="${label}">${label}</button>`; }).join('')}
       <button class="az-calc-key az-calc-key--eq" type="button" data-calc="=">=</button>
     </div>
   </div></div>`;
