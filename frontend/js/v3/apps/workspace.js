@@ -50,7 +50,7 @@ export async function mount({ container, api, options }) {
     children.sort((a, b) => (a.kind === b.kind ? a.name.localeCompare(b.name) : a.kind === 'folder' ? -1 : 1));
     grid.innerHTML = children.length
       ? children.map((child) => `
-        <div class="az-workspace-item" role="listitem" data-ws-id="${esc(child.id)}" data-ws-kind="${child.kind}" tabindex="0" role="button" aria-label="${esc(child.name)}">
+        <div class="az-workspace-item" data-ws-id="${esc(child.id)}" data-ws-kind="${child.kind}" tabindex="0" role="button" aria-label="${esc(child.name)}">
           <span class="az-workspace-icon">${iconFor(child)}</span>
           <strong>${esc(child.name)}</strong>
           <small>${child.kind === 'folder' ? `${(child.children || []).length} items` : fs.formatSize(child.size)}</small>
@@ -87,23 +87,61 @@ export async function mount({ container, api, options }) {
     setTimeout(() => URL.revokeObjectURL(url), 60000);
   }
 
-  async function menu(id) {
-    const node = await fs.getNode(id);
-    if (!node) return;
-    const choice = window.prompt(`Actions for "${node.name}"\n\nrename / trash / cancel:`, 'rename');
-    if (!choice) return;
-    const action = choice.trim().toLowerCase();
-    try {
-      if (action === 'rename') {
-        const name = (window.prompt('New name:', node.name) || '').trim();
-        if (name && name !== node.name) { await fs.renameNode(id, name); api.playSound('notification'); }
-      } else if (action === 'trash' || action === 'delete') {
-        await fs.trashNode(id);
-        api.playSound('trash');
-        api.notify('Workspace', `${node.name} moved to the Recycle Bin.`, 'system');
-      }
-      await refresh();
-    } catch (error) { api.notify('Workspace', error.message, 'error'); }
+  function closeMenu() {
+    document.querySelector('[data-ws-actionmenu]')?.remove();
+    document.removeEventListener('click', onDocClick, true);
+    document.removeEventListener('keydown', onMenuKey, true);
+  }
+  function onDocClick(event) {
+    if (!event.target.closest('[data-ws-actionmenu]')) closeMenu();
+  }
+  function onMenuKey(event) {
+    if (event.key === 'Escape') { event.stopPropagation(); closeMenu(); }
+  }
+
+  /** Real accessible action menu (owner review round 2): buttons with labels,
+   *  Escape/outside-click dismissal, focus restore to the invoking control. */
+  function openMenu(id, anchor) {
+    closeMenu();
+    const menu = document.createElement('div');
+    menu.className = 'az-w98-dialog az-ws-actionmenu';
+    menu.dataset.wsActionmenu = id;
+    menu.setAttribute('role', 'menu');
+    menu.setAttribute('aria-label', `Actions for item`);
+    menu.innerHTML = `
+      <div class="az-w98-titlebar"><span>Item actions</span><button class="az-w98-x" type="button" role="menuitem" aria-label="Close menu">×</button></div>
+      <div class="az-ws-actionmenu-body">
+        <button class="az-button" type="button" role="menuitem" data-ws-act="rename">Rename</button>
+        <button class="az-button" type="button" role="menuitem" data-ws-act="trash">Move to Recycle Bin</button>
+        <button class="az-button" type="button" role="menuitem" data-ws-act="cancel">Cancel</button>
+      </div>`;
+    const rect = anchor.getBoundingClientRect();
+    menu.style.position = 'fixed';
+    menu.style.left = `${Math.min(rect.left, window.innerWidth - 260)}px`;
+    menu.style.top = `${Math.min(rect.bottom + 6, window.innerHeight - 190)}px`;
+    menu.style.zIndex = '8600';
+    document.body.appendChild(menu);
+    menu.querySelector('[data-ws-act="rename"]').focus();
+
+    menu.addEventListener('click', async (event) => {
+      const action = event.target.closest('[data-ws-act]')?.dataset.wsAct;
+      if (!action) return;
+      closeMenu();
+      anchor.focus();
+      try {
+        if (action === 'rename') {
+          const name = (window.prompt('New name:', (await fs.getNode(id))?.name || '') || '').trim();
+          if (name) { await fs.renameNode(id, name); api.playSound('notification'); await refresh(); }
+        } else if (action === 'trash') {
+          await fs.trashNode(id);
+          api.playSound('trash');
+          api.notify('Workspace', `${(await fs.getNode(id))?.name || 'Item'} moved to the Recycle Bin.`, 'system');
+          await refresh();
+        }
+      } catch (error) { api.notify('Workspace', error.message, 'error'); }
+    });
+    document.addEventListener('click', onDocClick, true);
+    document.addEventListener('keydown', onMenuKey, true);
   }
 
   const click = async (event) => {
@@ -120,8 +158,12 @@ export async function mount({ container, api, options }) {
       return refresh();
     }
     if (event.target.closest('[data-ws-import]')) { fileInput.click(); return; }
-    const menuId = event.target.closest('[data-ws-menu]')?.dataset.wsMenu;
-    if (menuId) { event.stopPropagation(); return menu(menuId); }
+    const menuAnchor = event.target.closest('[data-ws-menu]');
+    if (menuAnchor) {
+      event.stopPropagation();
+      openMenu(menuAnchor.dataset.wsMenu, menuAnchor);
+      return;
+    }
     const target = event.target.closest('[data-ws-id]');
     if (target) return openNode(target.dataset.wsId);
   };
@@ -145,5 +187,5 @@ export async function mount({ container, api, options }) {
   });
 
   await refresh();
-  return () => {};
+  return () => closeMenu();
 }

@@ -98,9 +98,13 @@ export async function ensureInitialized() {
         let changed = false;
         if (current.parent !== spec.parent) { current.parent = spec.parent; changed = true; }
         if (spec.id === ROOT_ID) {
-          const canonical = JSON.stringify(spec.children);
-          if (JSON.stringify(current.children || []) !== canonical) {
-            current.children = [...spec.children];
+          // System folders must be present and come first, but user-created
+          // root-level folders must survive reloads (owner review round 2).
+          const existing = Array.isArray(current.children) ? current.children : [];
+          const userExtras = existing.filter((id) => !spec.children.includes(id));
+          const repaired = [...new Set([...spec.children, ...userExtras])];
+          if (JSON.stringify(current.children || []) !== JSON.stringify(repaired)) {
+            current.children = repaired;
             changed = true;
           }
         }
