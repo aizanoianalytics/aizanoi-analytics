@@ -1,0 +1,32 @@
+{
+  "id": "2026-08-29-warsh-jackson-hole-keynote-results",
+  "title": "Warsh opens door to a Fed rate hike as Jackson Hole keynote flags 'more concerning' inflation",
+  "summary": "Federal Reserve Chair Kevin Warsh used his first Jackson Hole keynote on Friday to warn that inflation remains too high and that policymakers have 'work to do' if underlying price pressures do not ease, sending the two-year Treasury yield to 4.31 percent, its highest since late July. CME FedWatch put the implied probability of a quarter-point September hike at about 59.5 percent after the speech, up from 35.4 percent a day earlier, as the chair declined to commit to forward guidance and instead argued for a 'quieter Fed' more deliberate in its communications.",
+  "category": "economy-markets",
+  "priority": 85,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:50:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Federal Reserve", "Jackson Hole", "Warsh", "monetary policy", "inflation"],
+  "sources": [
+    {
+      "publisher": "Federal Reserve Board",
+      "url": "https://www.federalreserve.gov/newsevents/speech/warsh20260828a.htm",
+      "publishedAt": "2026-08-28T14:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/08/28/kevin-warsh-jackson-hole-federal-reserve-inflation.html",
+      "publishedAt": "2026-08-28T16:18:00Z"
+    },
+    {
+      "publisher": "PBS NewsHour",
+      "url": "https://www.pbs.org/newshour/economy/watch-live-fed-chair-warsh-speaks-at-jackson-hole-economic-policy-symposium",
+      "publishedAt": "2026-08-28T19:02:00Z"
+    }
+  ]
+}

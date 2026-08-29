@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-29-bayern-stuttgart-bundesliga-opener",
+  "title": "Bayern Munich thrash Stuttgart 5-1 to launch Bundesliga title defence",
+  "summary": "Bayern Munich opened the 2026/27 Bundesliga with a 5-1 win over VfB Stuttgart at the Allianz Arena on Friday, with Michael Olise among the scorers and Aleksandar Pavlovic adding a late goal as Vincent Kompany's side signalled their intent to reclaim the title. The result extends Bayern's domestic momentum after last season's DFB-Pokal triumph over the same opponent and moves them three points clear at the top before the rest of Matchday 1 plays out over the weekend.",
+  "category": "football",
+  "priority": 74,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Bayern Munich", "Stuttgart", "Bundesliga", "Matchday 1"],
+  "sources": [
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401884817/vfb-stuttgart-bayern-munich",
+      "publishedAt": "2026-08-28T20:44:00Z"
+    },
+    {
+      "publisher": "FC Bayern Munich",
+      "url": "https://fcbayern.com/en/matches/profis/bundesliga/2026-2027/fc-bayern-muenchen-vfb-stuttgart-28-08-2026/liveticker",
+      "publishedAt": "2026-08-28T20:30:00Z"
+    }
+  ]
+}

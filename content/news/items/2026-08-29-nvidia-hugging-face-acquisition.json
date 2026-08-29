@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-29-nvidia-hugging-face-acquisition",
+  "title": "Nvidia agrees to buy open-source hub Hugging Face for 12.9 billion dollars",
+  "summary": "Nvidia has agreed to acquire Hugging Face, the open-source model and dataset repository, for roughly 12.9 billion dollars, The Information reported late Wednesday citing a person familiar with the deal. The price is roughly triple Hugging Face's last private valuation of about 4.5 billion dollars from its 2023 round led by Salesforce Ventures, and would give Nvidia direct access to a developer community that already powers much of its open-model push as the chipmaker seeks to defend its accelerator lead against custom silicon from OpenAI, Anthropic, Amazon and Google.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Nvidia", "Hugging Face", "M&A", "open source", "AI infrastructure"],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/26/nvidia-closes-in-on-hugging-face-acquisition/",
+      "publishedAt": "2026-08-27T06:32:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/08/27/nvidia-hugging-face-acquisition.html",
+      "publishedAt": "2026-08-27T07:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-29-aws-nvidia-2m-gpu-deal",
+  "title": "AWS commits to 2 million more Nvidia GPUs across 2027 and 2028",
+  "summary": "Amazon Web Services and Nvidia said on Wednesday that AWS will deploy an additional 2 million Nvidia Blackwell Ultra, Rubin and Rubin Ultra GPUs across its global regions in 2027 and 2028 on top of the 1 million GPUs AWS committed to at GTC earlier this year. The expansion lifts AWS's publicly disclosed three-year Nvidia GPU commitment past 3 million units, the largest such program by any single cloud provider, alongside plans to bring Nvidia's Vera CPUs to AWS and build dedicated AI factories for U.S. government workloads with 100,000 secure-region GPUs.",
+  "category": "technology",
+  "priority": 72,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["AWS", "Nvidia", "GPUs", "AI infrastructure", "cloud"],
+  "sources": [
+    {
+      "publisher": "Nvidia Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/aws-and-nvidia-to-deliver-2-million-additional-gpus-and-next-generation-infrastructure-for-agentic-and-physical-ai",
+      "publishedAt": "2026-08-26T20:00:00Z"
+    },
+    {
+      "publisher": "TechTimes",
+      "url": "https://www.techtimes.com/articles/325711/20260827/aws-adds-2-million-more-nvidia-gpus-prior-1-million-commitment-ran-out-early.htm",
+      "publishedAt": "2026-08-27T11:00:00Z"
+    }
+  ]
+}

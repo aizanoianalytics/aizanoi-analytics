@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-29-cisa-100-water-systems-cyberattack",
+  "title": "CISA confirms more than 100 US water systems were targeted in July cyberattacks",
+  "summary": "The U.S. Cybersecurity and Infrastructure Security Agency disclosed this week that it observed malicious activity targeting over 100 internet-exposed systems in the Water and Wastewater Systems sector during July, with attackers most often gaining entry through programmable logic controllers wired directly to cellular modems. CISA urged utilities to move remote access behind VPNs or gateways, audit which assets really need internet connectivity and enable multi-factor authentication, while continuing to offer free vulnerability scanning and on-site support.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-08-29T05:00:00Z",
+  "updatedAt": "2026-08-29T05:00:00Z",
+  "retrievedAt": "2026-08-29T04:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["CISA", "water utilities", "critical infrastructure", "OT security"],
+  "sources": [
+    {
+      "publisher": "The Register",
+      "url": "https://www.theregister.com/cyber-crime/2026/08/26/more-than-100-water-systems-were-hit-in-july-cyberattacks/5292685",
+      "publishedAt": "2026-08-26T15:30:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/26/cisa-confirms-hackers-targeted-over-100-us-water-systems-during-july",
+      "publishedAt": "2026-08-26T17:45:00Z"
+    }
+  ]
+}
