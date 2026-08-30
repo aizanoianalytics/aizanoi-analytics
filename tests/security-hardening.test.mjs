@@ -6,7 +6,13 @@ const read=(file)=>readFileSync(file,'utf8');
 const index=read('frontend/index.html');
 const registry=read('frontend/js/v3/registry.js');
 const shell=read('frontend/js/v3/shell.js');
-const brandHubs=read('frontend/js/v3/apps/brand-hubs.js');
+const productModules=[
+  'frontend/js/v3/apps/analytics/src/app.js',
+  'frontend/js/v3/apps/forge/src/app.js',
+  'frontend/js/v3/apps/journal/src/app.js',
+  'frontend/js/v3/apps/labs/src/app.js',
+  'frontend/js/v3/apps/news/src/app.js'
+].map(read).join('\n');
 const nginx=read('infra/nginx/aizanoianalytics.com.conf.example');
 const staticHeaders=read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const historicalHeaders=read('infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example');
@@ -33,7 +39,8 @@ test('retired Workbench implementation is absent instead of merely hidden',()=>{
   for(const id of ['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor']) {
     assert.doesNotMatch(registry,new RegExp(`id:['\"]${id.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}['\"]`),`${id} returned to the public registry`);
   }
-  assert.doesNotMatch(brandHubs,/Aizanoi Workbench|Local Data Lab|Open Data Lab|Field Archive|Field Notes|Source Reader|Artifact Viewer|Field Terminal|Workspace Monitor/i,'retired tool copy returned to a public hub');
+  assert.equal(existsSync('frontend/js/v3/apps/brand-hubs.js'),false,'retired shared brand hub returned');
+  assert.doesNotMatch(productModules,/Aizanoi Workbench|Local Data Lab|Open Data Lab|Field Archive|Field Notes|Source Reader|Artifact Viewer|Field Terminal|Workspace Monitor/i,'retired tool copy returned to a product module');
 });
 
 test('shell escapes dynamic notification and command content',()=>{
