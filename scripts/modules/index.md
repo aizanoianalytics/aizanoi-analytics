@@ -8,13 +8,14 @@ Scope: build-time validation, dependency guards and deterministic wiring for man
 - Module contract → `../../MODULE_CONTRACT.md`
 - Generated browser wiring → `../../frontend/js/v3/module-registry.generated.js`
 - Mandatory boundary/unplug guards → `../../tests/aizanoi-os-module-boundaries.test.mjs`
+- Canonical module-shape guard → `../../tests/aizanoi-os-module-shape.test.mjs`
 - Discovery/dependency graph tests → `../../tests/aizanoi-os-module-discovery.test.mjs`
 
 ## Source and output
 
 Source manifests are discovered only at `frontend/js/v3/apps/<module-id>/manifest.json`.
 
-The generated file is committed so the static visitor runtime never needs filesystem discovery or a server-side registry. `registry.js` remains the single public app catalog; generated wiring only tells it which migrated modules are installed/enabled and what public entry each exposes.
+The generated file is committed so the static visitor runtime never needs filesystem discovery or a server-side registry. `registry.js` remains the single public app catalog; generated wiring only tells it which modules are installed/enabled, what public entry each exposes and which capabilities each declares.
 
 ## Capability and dependency contract
 
@@ -34,13 +35,16 @@ A future capability addition must update the contract deliberately; do not accep
 
 ## Architecture guards
 
-The mandatory top-level regression suite also checks that:
+The mandatory top-level regression suite checks that:
 
-- migrated modules never import another module's private source;
-- migrated modules never bypass capability injection with direct Workspace implementation imports;
-- canonical app metadata addresses migrated apps through `moduleId` and filters absent/disabled modules;
-- every currently migrated optional module can be removed from a temporary discovery tree while all unrelated module wiring remains intact;
-- each module public source entry stays `src/index.js`.
+- modules never import another module's private source;
+- modules never bypass capability injection with direct Workspace implementation imports;
+- canonical app metadata addresses every discovered app through matching `moduleId` and filters absent/disabled modules;
+- every current optional module can be removed from a temporary discovery tree while all unrelated module wiring remains intact;
+- each module public source entry stays `src/index.js`;
+- the top-level `apps/` directory contains no flat JavaScript app implementations;
+- every top-level app directory participates in manifest discovery;
+- every discovered app module has `index.md`, `manifest.json` and `src/index.js`.
 
 These are replacement-safety tests, not style lint. Do not weaken them to accommodate a shortcut.
 
@@ -48,6 +52,6 @@ These are replacement-safety tests, not style lint. Do not weaken them to accomm
 
 - Regenerate: `node scripts/modules/build-module-registry.mjs`
 - Validate without writing: `node scripts/modules/build-module-registry.mjs --check`
-- Run architecture guards: `node --test tests/aizanoi-os-module-discovery.test.mjs tests/aizanoi-os-module-boundaries.test.mjs`
+- Run architecture guards: `node --test tests/aizanoi-os-module-discovery.test.mjs tests/aizanoi-os-module-boundaries.test.mjs tests/aizanoi-os-module-shape.test.mjs`
 
-CI must use `--check` and the top-level regression suite. A stale generated file, invalid manifest, duplicate id, escaped/missing public entry, invalid dependency graph, private cross-import or failed unplug simulation is a build failure.
+CI must use `--check` and the top-level regression suite. A stale generated file, invalid manifest, duplicate id, escaped/missing public entry, invalid dependency graph, private cross-import, flat app implementation or failed unplug simulation is a build failure.

@@ -36,15 +36,15 @@ The existing game engines are intentionally not rewritten during the ownership m
 - Blockfall exposes `window.AizanoiArcadeBlocks` as an explicit mount/cleanup factory;
 - Snake, Mines and Brick remain self-initializing owned assets and stop their timers/animation loops when their container is disconnected.
 
-These globals are module-internal compatibility surfaces, not public APIs for other AizanoiOS modules.
+These globals are module-internal compatibility surfaces, not public APIs for other AizanoiOS modules. Their legacy inline styling/event patterns are covered by one exact compatibility allow-list in the V3 source guard; the exception must not be widened to the whole module or directory.
 
 ## Cleanup
 
-The launcher removes its click listener, active script node and explicit game cleanup on teardown. Blockfall cancels its animation frame and keyboard listener; the legacy games stop their timer/RAF loops after their module-owned container is removed.
+The launcher owns its click listener, active/pending game script nodes and explicit game cleanup. Each launch receives a lifecycle generation; close, switch or module teardown invalidates stale asynchronous continuations before they can request/mount a game after the UI has been closed. Blockfall cancels its animation frame and keyboard listener; the legacy games stop their timer/RAF loops after their module-owned container is removed.
 
 ## Tests
 
 - `../../../../../tests/aizanoi-os-games-module.test.mjs` — manifest, ownership, storage, path and cleanup contracts.
-- `../../../../../tests/browser/arcade-module.test.mjs` — real Chromium launch/play/close lifecycle coverage.
+- `../../../../../tests/browser/arcade-module.test.mjs` — real Chromium launch/play/close plus pending-load invalidation coverage.
 
 Private files under `src/` and `assets/` are not cross-module APIs.
