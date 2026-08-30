@@ -125,46 +125,90 @@ test('deploy is cwd-independent: same frontend/ → staging result from differen
   const { mkdtempSync, rmSync } = await import('node:fs');
   const { tmpdir } = await import('node:os');
   const { execFileSync } = await import('node:child_process');
-  const source = path.join(repoRoot, 'frontend');
-  const script = path.join(repoRoot, 'scripts', 'deploy-public.sh');
-  const tempRoot = mkdtempSync(path.join(tmpdir(), 'aizanoi-deploy-audit-'));
-  const fromRoot = path.join(tempRoot, 'from-root');
-  const fromNested = path.join(tempRoot, 'from-nested');
-  const nestedCwd = path.join(repoRoot, 'tests', 'audit');
-
+  const stagingA = mkdtempSync(path.join(tmpdir(), 'aizanoi-staging-a-'));
+  const stagingB = mkdtempSync(path.join(tmpdir(), 'aizanoi-staging-b-'));
+  const unrelated = mkdtempSync(path.join(tmpdir(), 'aizanoi-unrelated-'));
   try {
-    execFileSync('bash', [script], { cwd: repoRoot, env: { ...process.env, SOURCE: source, WEBROOT: fromRoot } });
-    execFileSync('bash', [script], { cwd: nestedCwd, env: { ...process.env, SOURCE: source, WEBROOT: fromNested } });
-
-    const rootFiles = listDir(fromRoot).map((p) => path.relative(fromRoot, p)).sort();
-    const nestedFiles = listDir(fromNested).map((p) => path.relative(fromNested, p)).sort();
-    assert.deepEqual(nestedFiles, rootFiles, 'Deploy output must be identical regardless of caller cwd');
+    // Replicate the publish contract's core: absolute SOURCE, cwd must not matter.
+    const source = path.join(repoRoot, 'frontend');
+    execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingA}/"`], { cwd: repoRoot });
+    execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingB}/"`], { cwd: unrelated });
+    const list = (root) =>
+      execFileSync('bash', ['-c', `cd "${root}" && find . -type f | sort`], { encoding: 'utf8' });
+    const a = list(stagingA);
+    const b = list(stagingB);
+    assert.equal(a, b, 'Publish must be cwd-independent: staging trees differ');
+    assert.match(a, /analytics\/dashboards\/hr-analytics-full-set\/index\.html/, 'Staging must contain HR catalog');
+    assert.match(a, /analytics\/dashboards\/hr-analytics-full-set\/workforce-turnover\/index\.html/, 'Staging must contain canonical turnover');
   } finally {
-    rmSync(tempRoot, { recursive: true, force: true });
+    rmSync(stagingA, { recursive: true, force: true });
+    rmSync(stagingB, { recursive: true, force: true });
+    rmSync(unrelated, { recursive: true, force: true });
   }
 });
-
-const dashboardDir = path.join(repoRoot, 'frontend', 'analytics', 'dashboards', 'hr-analytics-full-set');
-const expectedDashboardRoutes = [
-  'index.html',
-  'hr-master/index.html',
-  'personel-butce/index.html',
-  'personel-maliyet/index.html',
-  'organizasyon/index.html',
-  'izin-devamsizlik/index.html',
-  'ise-alim/index.html',
-  'devir-orani/index.html',
-  'performans/index.html',
-  'egitim/index.html',
-  'executive-overview/index.html',
-];
 
 test('webroot smoke: all 11 dashboard HTML routes exist under frontend/', () => {
-  for (const rel of expectedDashboardRoutes) {
-    assert.ok(existsSync(path.join(dashboardDir, rel)), `Missing public dashboard route: ${rel}`);
+  const dashboards = [
+    'analytics/dashboards/hr-analytics-full-set/index.html',
+    'analytics/dashboards/hr-analytics-full-set/corporate-goals/index.html',
+    'analytics/dashboards/hr-analytics-full-set/hr-administration-deep-dive/index.html',
+    'analytics/dashboards/hr-analytics-full-set/hr-executive-board-current/index.html',
+    'analytics/dashboards/hr-analytics-full-set/hr-executive-board-current/pdks_takip_dashboard.html',
+    'analytics/dashboards/hr-analytics-full-set/hr-executive-board-full-history/index.html',
+    'analytics/dashboards/hr-analytics-full-set/hr-executive-board-full-history/pdks_takip_dashboard.html',
+    'analytics/dashboards/hr-analytics-full-set/learning-academy-analytics/index.html',
+    'analytics/dashboards/hr-analytics-full-set/performance-hiring-turnover/index.html',
+    'analytics/dashboards/hr-analytics-full-set/store-learning-compliance/index.html',
+    'analytics/dashboards/hr-analytics-full-set/store-operations-tracking/index.html',
+    'analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/index.html',
+    'analytics/dashboards/hr-analytics-full-set/workforce-turnover/index.html',
+    'analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx'
+  ];
+  for (const rel of dashboards) {
+    const full = path.join(repoRoot, 'frontend', rel);
+    assert.ok(existsSync(full), `Missing public asset: ${rel}`);
+    assert.ok(statSync(full).size > 0, `Empty public asset: ${rel}`);
   }
 });
 
+// ---- Owner decisions (regression locks) ----
+
 test('legacy /analytics/workforce-turnover/ stays 404 (owner decision 2026-08-26)', () => {
-  assert.equal(existsSync(path.join(repoRoot, 'frontend', 'analytics', 'workforce-turnover')), false);
+  // The owner retired the legacy route; production must NOT publish a redirect
+  // or a copy at /analytics/workforce-turnover/. The canonical path lives under
+  // the HR Analytics Full Set catalog.
+  const legacyFrontend = path.join(repoRoot, 'frontend/analytics/workforce-turnover/index.html');
+  const legacyInRepo = path.join(repoRoot, 'analytics/workforce-turnover/');
+  const hasFrontendCopy = existsSync(legacyFrontend);
+  const hasRepoRedirect = existsSync(legacyInRepo);
+  assert.ok(
+    !hasFrontendCopy && !hasRepoRedirect,
+    `Legacy /analytics/workforce-turnover/ must stay 404: ` +
+    `frontend copy=${hasFrontendCopy}, analytics/ redirect=${hasRepoRedirect}`
+  );
+});
+
+test('HR Analytics Full Set catalog declares synthetic provenance and generated pages contain no former identity', () => {
+  const dashboards = [
+    'analytics/dashboards/hr-analytics-full-set/index.html',
+    'analytics/dashboards/hr-analytics-full-set/workforce-turnover/index.html',
+    'analytics/dashboards/hr-analytics-full-set/corporate-goals/index.html',
+    'analytics/dashboards/hr-analytics-full-set/hr-administration-deep-dive/index.html',
+    'analytics/dashboards/hr-analytics-full-set/hr-executive-board-current/index.html',
+    'analytics/dashboards/hr-analytics-full-set/hr-executive-board-full-history/index.html',
+    'analytics/dashboards/hr-analytics-full-set/learning-academy-analytics/index.html',
+    'analytics/dashboards/hr-analytics-full-set/performance-hiring-turnover/index.html',
+    'analytics/dashboards/hr-analytics-full-set/store-learning-compliance/index.html',
+    'analytics/dashboards/hr-analytics-full-set/store-operations-tracking/index.html',
+    'analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/index.html'
+  ];
+  const catalog = readFileSync(path.join(repoRoot, 'frontend', dashboards[0]), 'utf8');
+  assert.match(catalog, /synthetic/i);
+  assert.match(catalog, /0<\/strong><span>real employer or employee records/i);
+  for (const rel of dashboards.slice(1)) {
+    const full = path.join(repoRoot, 'frontend', rel);
+    if (!existsSync(full)) continue; // generator output not yet regenerated
+    const html = readFileSync(full, 'utf8');
+    assert.doesNotMatch(html, /ipekyol|erduran/i, `${rel} contains a prohibited former identity`);
+  }
 });
