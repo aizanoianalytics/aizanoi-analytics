@@ -83,7 +83,7 @@ test('manifest public entry cannot escape its module directory', async () => {
     await writeFile(path.join(root, 'outside.js'), 'export function mount() {}\n', 'utf8');
     await assert.rejects(
       () => discoverModules({ appsRoot: root }),
-      /entry must be a relative \.\/ JavaScript public entry/
+      /entry must stay inside its module directory/
     );
   } finally {
     await rm(root, { recursive: true, force: true });
