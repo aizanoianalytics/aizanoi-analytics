@@ -6,6 +6,7 @@ const read = (file) => readFileSync(file, 'utf8');
 const registry = read('frontend/js/v3/registry.js');
 const platform = read('frontend/js/v3/brand-platform.js');
 const hubs = read('frontend/js/v3/apps/brand-hubs.js');
+const analyticsApp = read('frontend/js/v3/apps/analytics/src/app.js');
 const manifest = read('frontend/manifest.webmanifest');
 const errorPages = ['frontend/404.html', 'frontend/500.html', 'frontend/503.html'].map(read).join('\n');
 const historicalNavigation = read('frontend/ancient-world/engine/navigation.js');
@@ -33,17 +34,16 @@ const removedWorkbenchIcons = [
 test('AizanoiOS keeps the stable analytics id while presenting Analytics to users', () => {
   assert.match(registry, /id:'analytics', label:'Analytics', short:'Analytics'/);
   assert.match(registry, /keywords:\['analytics','dashboard','dashboards'/);
-  assert.match(hubs, /shell\('Analytics','HR Analytics Full Set'/);
+  assert.match(analyticsApp, /shell\('Analytics', 'HR Analytics Full Set'/);
   assert.match(platform, /data-context-action="analytics">Analytics</);
   assert.doesNotMatch(registry, /id:'analytics', label:'Aizanoi Analytics'/);
 });
 
 test('Analytics app presents only the HR Analytics Full Set product', () => {
-  const analytics = hubs.slice(hubs.indexOf('function mountAnalytics'), hubs.indexOf('function mountForge'));
-  assert.match(analytics, /HR Analytics[\s\S]*Full Set/);
-  assert.match(analytics, /10[\s\S]*live dashboard surfaces/);
-  assert.match(analytics, /27[\s\S]*synthetic source workbooks/);
-  assert.doesNotMatch(analytics, /Workforce Turnover Analytics|PRODUCT STANDARD|DATA SAFETY/);
+  assert.match(analyticsApp, /HR Analytics[\s\S]*Full Set/);
+  assert.match(analyticsApp, /10[\s\S]*live dashboard surfaces/);
+  assert.match(analyticsApp, /27[\s\S]*synthetic source workbooks/);
+  assert.doesNotMatch(analyticsApp, /Workforce Turnover Analytics|PRODUCT STANDARD|DATA SAFETY/);
 });
 
 test('active product catalog uses canonical Aizanoi icon assets rather than retired Workbench filenames', () => {
@@ -66,7 +66,7 @@ test('adaptive shell presents Aizanoi Analytics as the primary brand', () => {
   assert.match(platform, /<h1>Aizanoi Analytics<\/h1>/);
   assert.match(platform, /TODAY AT AIZANOI ANALYTICS/);
   assert.match(platform, /Aizanoi Analytics apps/);
-  assert.match(hubs, /built by Aizanoi Analytics/);
+  assert.match(analyticsApp, /built by Aizanoi Analytics/);
 });
 
 test('device dates stay English regardless of browser locale', () => {
