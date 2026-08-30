@@ -52,7 +52,12 @@ test('generated wiring contains runtime wiring, not duplicate public catalog met
   assert.doesNotMatch(source, /\bkeywords\s*:/);
 });
 
-test('registry resolves migrated Notepad through generated wiring', async () => {
+test('visitor registry consumes generated static wiring and never discovers manifests at runtime', async () => {
+  const source = await readFile('frontend/js/v3/registry.js', 'utf8');
+  assert.match(source, /from ['"]\.\/module-registry\.generated\.js['"]/);
+  assert.doesNotMatch(source, /manifest\.json/);
+  assert.doesNotMatch(source, /fetch\s*\(/);
+
   const registry = await import('../frontend/js/v3/registry.js');
   assert.equal(registry.appById('notepad')?.module, '/js/v3/apps/notepad/src/index.js');
 });
