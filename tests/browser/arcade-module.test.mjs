@@ -60,13 +60,19 @@ test('Arcade close invalidates a pending game launch before the game script can 
   const page = await context.newPage();
   const errors = [];
   const scriptRequests = [];
+  let releaseUtils;
+  let markUtilsRequested;
+  const holdUtils = new Promise((resolve) => { releaseUtils = resolve; });
+  const utilsRequested = new Promise((resolve) => { markUtilsRequested = resolve; });
+
   page.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
   page.on('console', (message) => { if (message.type() === 'error') errors.push(`console: ${message.text()}`); });
   page.on('request', (request) => {
     if (request.resourceType() === 'script') scriptRequests.push(new URL(request.url()).pathname);
   });
   await page.route('**/js/v3/apps/games/assets/game-utils.js', async (route) => {
-    await new Promise((resolve) => setTimeout(resolve, 250));
+    markUtilsRequested();
+    await holdUtils;
     await route.continue();
   });
 
@@ -75,9 +81,15 @@ test('Arcade close invalidates a pending game launch before the game script can 
     await page.evaluate(() => window.AIZANOI_OS?.openApp?.('games'));
     await page.locator('[data-play-game="blockfall"]').waitFor({ state: 'visible' });
     await page.click('[data-play-game="blockfall"]');
+    await utilsRequested;
     await page.locator('[data-close-game]').waitFor({ state: 'visible' });
     await page.click('[data-close-game]');
-    await page.waitForTimeout(450);
+
+    // Only after the close has definitely invalidated this launch do we allow
+    // the utility response to finish. A stale continuation must stop before it
+    // can request or mount the game-specific Blockfall script.
+    releaseUtils();
+    await page.waitForTimeout(250);
 
     const state = await page.evaluate(() => ({
       canvas: Boolean(document.querySelector('[data-bf-canvas]')),
@@ -89,6 +101,7 @@ test('Arcade close invalidates a pending game launch before the game script can 
     assert.equal(scriptRequests.includes('/js/v3/apps/games/assets/blockfall.js'), false, `stale game script loaded after close: ${JSON.stringify(scriptRequests)}`);
     assert.deepEqual(errors, [], `page errors: ${JSON.stringify(errors)}`);
   } finally {
+    releaseUtils?.();
     await browser.close();
   }
 });
