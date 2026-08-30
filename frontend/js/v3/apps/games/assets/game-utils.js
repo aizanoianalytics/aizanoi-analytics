@@ -1,15 +1,18 @@
 (() => {
   'use strict';
   const KEY = 'aizanoi-games';
-  const read = () => {
+
+  function read() {
     try { return JSON.parse(localStorage.getItem(KEY) || '{}'); }
     catch (_) { return {}; }
-  };
-  const list = (game) => {
+  }
+
+  function list(game) {
     const scores = read();
     return Array.isArray(scores[game]) ? scores[game] : [];
-  };
-  const save = (game, score) => {
+  }
+
+  function save(game, score) {
     try {
       const scores = read();
       if (!Array.isArray(scores[game])) scores[game] = [];
@@ -17,41 +20,46 @@
       scores[game] = scores[game].slice(-20);
       localStorage.setItem(KEY, JSON.stringify(scores));
     } catch (_) {}
-  };
-  const best = (game, { lowerBetter = false } = {}) => {
+  }
+
+  function best(game, { lowerBetter = false } = {}) {
     const values = list(game).map((entry) => Number(entry?.score)).filter(Number.isFinite);
     if (!values.length) return null;
     return lowerBetter ? Math.min(...values) : Math.max(...values);
-  };
-  const toolbar = ({ game, lowerBetter = false, onPause, onRestart, paused = false, formatBest } = {}) => {
+  }
+
+  function toolbar({ game, lowerBetter = false, onPause, onRestart, paused = false, formatBest } = {}) {
     const bar = document.createElement('div');
     bar.className = 'game-v2-toolbar';
-    const value = best(game, { lowerBetter });
-    bar.innerHTML = `<span class="game-v2-best"><b>Best:</b> <span data-game-best>${value == null ? '—' : (formatBest ? formatBest(value) : String(value))}</span></span>`;
+    const bestValue = best(game, { lowerBetter });
+    const bestText = bestValue == null ? '—' : (formatBest ? formatBest(bestValue) : String(bestValue));
+    bar.innerHTML = `<span class="game-v2-best"><b>Best:</b> <span data-game-best>${bestText}</span></span>`;
     if (onPause) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.dataset.gameAction = 'pause';
-      button.setAttribute('aria-pressed', paused ? 'true' : 'false');
-      button.textContent = paused ? 'Resume' : 'Pause';
-      button.addEventListener('click', onPause);
-      bar.appendChild(button);
+      const pause = document.createElement('button');
+      pause.type = 'button';
+      pause.dataset.gameAction = 'pause';
+      pause.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      pause.textContent = paused ? 'Resume' : 'Pause';
+      pause.addEventListener('click', () => onPause());
+      bar.appendChild(pause);
     }
     if (onRestart) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.dataset.gameAction = 'restart';
-      button.textContent = 'Restart';
-      button.addEventListener('click', onRestart);
-      bar.appendChild(button);
+      const restart = document.createElement('button');
+      restart.type = 'button';
+      restart.dataset.gameAction = 'restart';
+      restart.textContent = 'Restart';
+      restart.addEventListener('click', () => onRestart());
+      bar.appendChild(restart);
     }
     return bar;
-  };
-  const refreshToolbar = (container, game, options = {}) => {
+  }
+
+  function refreshToolbar(container, game, options = {}) {
     const node = container?.querySelector('[data-game-best]');
     if (!node) return;
     const value = best(game, options);
     node.textContent = value == null ? '—' : (options.formatBest ? options.formatBest(value) : String(value));
-  };
+  }
+
   window.AizanoiGames = Object.freeze({ read, list, save, best, toolbar, refreshToolbar });
 })();
