@@ -5,7 +5,7 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 ## Current app entries
 
 - `brand-hubs.js` — public brand/product hub surfaces
-- `calculator.js` — Calculator
+- [`calculator/index.md`](calculator/index.md) — manifest-driven Calculator with injected sound
 - [`camera/index.md`](camera/index.md) — manifest-driven Camera with explicit media capability
 - `games.js` — Arcade/game launcher integration
 - `media.js` — media surfaces
@@ -30,6 +30,7 @@ Legacy apps remain individual `.js` files until migrated deliberately. Manifest-
 
 ```text
 apps/
+├── calculator/
 ├── camera/
 ├── notepad/
 ├── recycle-bin/
@@ -52,7 +53,9 @@ Recycle Bin reuses that same boundary without creating new core services. Its fo
 
 Winamp reuses the filesystem/notifications/sound surfaces. Workspace Music access is exposed only as `filesystem.musicId`; playlist metadata stays in the module-owned `aizanoi-winamp-playlist-v1` namespace; and click, file-input, seek, audio and volume listeners are deterministically removed during cleanup.
 
-Camera now adds one explicit `media` capability instead of reaching into `navigator.mediaDevices` from private app code. It still requests camera plus microphone permission on Start, remains photo-only/local-only, stores captures through `filesystem.picturesId`, and owns media-track, object-URL and listener teardown.
+Camera adds one explicit `media` capability instead of reaching into `navigator.mediaDevices` from private app code. It still requests camera plus microphone permission on Start, remains photo-only/local-only, stores captures through `filesystem.picturesId`, and owns media-track, object-URL and listener teardown.
+
+Calculator is dependency-light: it declares only `sound`, owns no persistent storage, and removes both its container click listener and document keyboard listener during cleanup.
 
 ## Boundary rule
 
