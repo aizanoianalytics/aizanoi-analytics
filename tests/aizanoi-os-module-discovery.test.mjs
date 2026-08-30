@@ -45,7 +45,7 @@ test('actual module manifests generate the committed wiring exactly', async () =
 });
 
 test('platform capability contract covers every currently injected shared/host surface', () => {
-  assert.deepEqual([...PLATFORM_CAPABILITIES], ['apps', 'dialog', 'filesystem', 'media', 'notifications', 'sound']);
+  assert.deepEqual([...PLATFORM_CAPABILITIES], ['apps', 'dialog', 'filesystem', 'media', 'notifications', 'sound', 'worlds']);
 });
 
 test('generated wiring contains runtime wiring, not duplicate public catalog metadata', async () => {
