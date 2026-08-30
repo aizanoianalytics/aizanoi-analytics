@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-30-cxmt-sues-pentagon-memory-chips",
+  "title": "China's top memory chipmaker CXMT sues Pentagon over 'Chinese military company' designation",
+  "summary": "ChangXin Memory Technologies, China's largest DRAM maker whose chips go into smartphones, PCs, servers and AI systems, filed a federal lawsuit in Washington on Friday seeking to overturn its designation as a Chinese military company, arguing the listing was arbitrary and lacked evidentiary support. First designated by the Biden administration in January 2025 and kept on the list by the Trump administration in June, CXMT joins Alibaba and other Chinese firms challenging the Pentagon list after the Defense Department reversed a February removal notice the same day it was published.",
+  "category": "ai",
+  "priority": 56,
+  "publishedAt": "2026-08-30T05:00:00Z",
+  "updatedAt": "2026-08-30T05:00:00Z",
+  "retrievedAt": "2026-08-30T04:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["CXMT", "Pentagon", "semiconductors", "China", "DRAM", "AI chips"],
+  "sources": [
+    {
+      "publisher": "Reuters via AsiaOne",
+      "url": "https://www.asiaone.com/world/chinese-memory-chipmaker-cxmt-sues-pentagon-over-chinese-military-company-designation",
+      "publishedAt": "2026-08-29T03:15:00Z"
+    },
+    {
+      "publisher": "Reuters via Macon",
+      "url": "https://macon.com/news/business/article317053087.html",
+      "publishedAt": "2026-08-28T00:00:00Z"
+    }
+  ]
+}

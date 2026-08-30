@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-30-amazon-acquires-ducklabs-duckdb",
+  "title": "Amazon to acquire DuckLabs, bringing the DuckDB open-source analytics team into AWS",
+  "summary": "Amazon has agreed to acquire DuckLabs, the company behind the popular open-source columnar database DuckDB, with founders Hannes Mühleisen and Mark Raasveldt and the rest of the team joining AWS in early September once the deal closes. Amazon is not acquiring the DuckDB project itself — the database, the DuckLake extension and the Quack protocol will remain under the DuckDB Foundation's MIT-licensed governance — and DuckLabs said the small team had concluded the project's growth was outrunning its ability to support it, nine days after previewing DuckDB 2.0.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-08-30T05:00:00Z",
+  "updatedAt": "2026-08-30T05:00:00Z",
+  "retrievedAt": "2026-08-30T04:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Amazon", "AWS", "DuckDB", "DuckLabs", "open source", "acquisitions"],
+  "sources": [
+    {
+      "publisher": "Amazon",
+      "url": "https://www.aboutamazon.com/news/company-news/aws-ducklabs",
+      "publishedAt": "2026-08-26T00:00:00Z"
+    },
+    {
+      "publisher": "GeekWire",
+      "url": "https://www.geekwire.com/2026/amazon-acquires-ducklabs-adding-the-team-behind-duckdb-amid-broader-shakeup-in-cloud-data/",
+      "publishedAt": "2026-08-26T08:19:00Z"
+    }
+  ]
+}
