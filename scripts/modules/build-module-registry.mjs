@@ -5,9 +5,11 @@ import { fileURLToPath } from 'node:url';
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 export const DEFAULT_APPS_ROOT = path.join(repoRoot, 'frontend/js/v3/apps');
 export const DEFAULT_OUTPUT = path.join(repoRoot, 'frontend/js/v3/module-registry.generated.js');
+export const PLATFORM_CAPABILITIES = Object.freeze(['dialog', 'filesystem', 'media', 'notifications', 'sound']);
 
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const CAPABILITY_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const PLATFORM_CAPABILITY_SET = new Set(PLATFORM_CAPABILITIES);
 
 function fail(source, message) {
   throw new Error(`${source}: ${message}`);
@@ -72,6 +74,51 @@ export async function validateManifest(manifest, { moduleDir, manifestPath }) {
   });
 }
 
+export function validateModuleDependencies(modules) {
+  const providers = new Map();
+  const graph = new Map(modules.map((module) => [module.id, new Set()]));
+
+  for (const module of modules) {
+    for (const capability of module.provides) {
+      const owners = providers.get(capability) || [];
+      owners.push(module.id);
+      providers.set(capability, owners);
+    }
+  }
+
+  for (const module of modules) {
+    for (const capability of module.requires) {
+      if (PLATFORM_CAPABILITY_SET.has(capability)) continue;
+      const owners = providers.get(capability) || [];
+      if (!owners.length) fail(`module ${module.id}`, `requires unavailable capability: ${capability}`);
+      if (owners.length > 1) {
+        fail(`module ${module.id}`, `requires ambiguous capability ${capability} provided by: ${owners.join(', ')}`);
+      }
+      graph.get(module.id).add(owners[0]);
+    }
+  }
+
+  const visited = new Set();
+  const visiting = new Set();
+  const stack = [];
+  const visit = (id) => {
+    if (visited.has(id)) return;
+    if (visiting.has(id)) {
+      const start = stack.indexOf(id);
+      const cycle = [...stack.slice(start), id].join(' -> ');
+      fail('module dependency graph', `cycle detected: ${cycle}`);
+    }
+    visiting.add(id);
+    stack.push(id);
+    for (const dependency of graph.get(id) || []) visit(dependency);
+    stack.pop();
+    visiting.delete(id);
+    visited.add(id);
+  };
+  for (const module of modules) visit(module.id);
+  return true;
+}
+
 export async function discoverModules({ appsRoot = DEFAULT_APPS_ROOT } = {}) {
   const entries = (await readdir(appsRoot, { withFileTypes: true }))
     .filter((entry) => entry.isDirectory())
@@ -101,7 +148,9 @@ export async function discoverModules({ appsRoot = DEFAULT_APPS_ROOT } = {}) {
     modules.push(validated);
   }
 
-  return Object.freeze(modules.sort((a, b) => a.id.localeCompare(b.id, 'en')));
+  const sorted = modules.sort((a, b) => a.id.localeCompare(b.id, 'en'));
+  validateModuleDependencies(sorted);
+  return Object.freeze(sorted);
 }
 
 function js(value) {
