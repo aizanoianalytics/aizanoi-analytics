@@ -6,7 +6,6 @@ const read = (path) => readFileSync(path, 'utf8');
 const moduleRoot = 'frontend/js/v3/apps/analytics';
 const manifest = JSON.parse(read(`${moduleRoot}/manifest.json`));
 const privateApp = read(`${moduleRoot}/src/app.js`);
-const legacyHubs = read('frontend/js/v3/apps/brand-hubs.js');
 
 test('Analytics is a zero-capability manifest module', () => {
   assert.equal(manifest.manifestVersion, 1);
@@ -35,8 +34,7 @@ test('Analytics module owns the launcher but not the dashboard product', () => {
   assert.ok(existsSync('frontend/analytics/dashboards/hr-analytics-full-set/index.html'));
 });
 
-test('legacy brand hubs no longer contain the Analytics implementation', () => {
-  assert.doesNotMatch(legacyHubs, /mountAnalytics/);
-  assert.doesNotMatch(legacyHubs, /az-hr-spotlight/);
-  assert.doesNotMatch(legacyHubs, /appId\s*===\s*['"]analytics['"]/);
+test('retired shared brand hub cannot regain Analytics ownership', () => {
+  assert.equal(existsSync('frontend/js/v3/apps/brand-hubs.js'), false);
+  assert.match(privateApp, /az-hr-spotlight/);
 });
