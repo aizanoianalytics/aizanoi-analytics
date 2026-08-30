@@ -6,20 +6,20 @@ Hermes is the private operator/automation agent for **Aizanoi Analytics**. The p
 
 ## Always read first
 
-Before changing or deploying Aizanoi Analytics, read:
-1. `PRODUCT.md`
-2. `AGENTS.md`
-3. `CONTENT_POLICY.md`
-4. `ARCHITECTURE.md`
-5. the nearest scoped `AGENTS.md`
-6. the current Git history / target SHA
+Before changing or deploying Aizanoi Analytics:
+1. Start at root `index.md` and route into the smallest relevant repository area instead of recursively scanning the repository.
+2. Read root `AGENTS.md`, the nearest area-specific `AGENTS.md` when one exists, and this operator runbook for deployment/operations work.
+3. Confirm the current Git history and the exact approved target SHA.
+4. Read only the canonical contracts named by that scope: `PRODUCT.md` for brand/product decisions, `CONTENT_POLICY.md` for sourced/publication work, `ARCHITECTURE.md` for runtime/deployment-boundary changes, `MODULE_CONTRACT.md` for modular application work, `DESIGN.md` for visual/interaction changes and `SECURITY.md` for security-sensitive work.
+
+Do not expand scope merely for completeness. Follow local `index.md` links, declared dependencies, failing tests or the task itself.
 
 ## Responsibility split
 
 ### Hermes owns routine operations
 - source discovery and daily Aizanoi News preparation;
 - scheduled content maintenance;
-- server-side Git pull/fetch and deployment;
+- server-side Git fetch/checkout and deployment;
 - Nginx/static delivery checks;
 - production smoke checks and rollback execution;
 - routine repository housekeeping when explicitly requested.
@@ -54,15 +54,15 @@ Hermes may also implement engineering changes when asked, but must obey the same
 Do not treat a merge as a deployment.
 
 1. Confirm the exact approved Git SHA.
-2. Record the currently deployed SHA for rollback.
-3. Fetch/pull the approved commit on the server.
-4. Run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed. If HR Analytics source, synthetic inputs or generated dashboard artifacts changed, run `bash scripts/regenerate-hr-dashboards.sh` first.
+2. Record the currently deployed SHA for rollback. If the deployed SHA cannot be proven, capture a rollback snapshot before replacing the webroot.
+3. Fetch the approved commit in the canonical server checkout and check out/reset to that **exact SHA**. Do not deploy an unpinned moving `main` tip merely because it is newer.
+4. Run `node scripts/modules/build-module-registry.mjs --check` for every AizanoiOS/static-shell release so manifests and committed generated wiring cannot drift. Then run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed. If HR Analytics source, synthetic inputs or generated dashboard artifacts changed, run `bash scripts/regenerate-hr-dashboards.sh` first. Do not regenerate News or HR artifacts unnecessarily when the approved diff does not touch those inputs/outputs.
 5. Deploy the public static tree with `bash scripts/deploy-public.sh`. This is the canonical allowlist boundary; do not replace it with a repo-root copy or ad-hoc rsync.
 6. Confirm source-to-production checksum/SHA parity where the deployment tooling supports it.
 7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, `/analytics/`, `/analytics/dashboards/hr-analytics-full-set/` (catalog index) plus each of its 10 dashboard routes, `/news/about/`, one current permanent News article, `/news/sitemap.xml`, one Historical World and static assets. `/analytics/`, app id `analytics` and visible label **Analytics** remain aligned.
    - `/analytics/workforce-turnover/` is intentionally retired (owner decision 2026-08-26) and MUST return HTTP 404. The canonical Workforce Turnover dashboard is at `/analytics/dashboards/hr-analytics-full-set/workforce-turnover/`. Do not reintroduce the legacy redirect or stub.
    - `frontend/analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx` is the only spreadsheet allowed through the public deploy scrub. It must exist and be non-empty after deployment; every other `.xlsx` remains denylisted.
-8. If a regression appears, roll back to the recorded known-good SHA instead of hot-fixing production only.
+8. If a regression appears, roll back to the recorded known-good SHA/snapshot instead of hot-fixing production only.
 
 ## Local data regeneration (Analytics dashboards)
 
