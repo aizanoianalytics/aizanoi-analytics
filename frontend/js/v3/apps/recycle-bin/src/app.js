@@ -1,8 +1,10 @@
-/** AizanoiOS Recycle Bin — restore or permanently delete items trashed from the Workspace. */
+/** Private Recycle Bin implementation. Shared services arrive only as capabilities. */
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({
+  '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+}[c]));
 
-const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
-
-export async function mount({ container, api }) {
+export async function mountRecycleBin({ container, capabilities }) {
+  const { filesystem, dialog, notifications, sound } = capabilities;
   container.innerHTML = `
   <div class="az-app-shell"><div class="az-app-toolbar"><strong>Recycle Bin</strong><span class="az-system-spacer"></span><span class="az-app-caption">Deleted Workspace items</span></div>
   <div class="az-recycle">
@@ -17,18 +19,16 @@ export async function mount({ container, api }) {
 
   const listEl = container.querySelector('[data-bin-list]');
   const countEl = container.querySelector('[data-bin-count]');
-  const fs = await import('/js/v3/workspace/fs.js');
-  const { win98Dialog } = await import('/js/v3/workspace/dialog.js');
 
   async function refresh() {
-    const items = await fs.childrenOf(fs.RECYCLE_ID);
+    const items = await filesystem.childrenOf(filesystem.recycleId);
     countEl.textContent = `${items.length} item${items.length === 1 ? '' : 's'}`;
     listEl.innerHTML = items.length
       ? items.map((node) => `
         <div class="az-recycle-row" role="listitem">
           <span class="az-recycle-kind">${node.kind === 'folder' ? 'Folder' : 'File'}</span>
           <strong>${esc(node.name)}</strong>
-          <small>${node.kind === 'file' ? fs.formatSize(node.size) : `${(node.children || []).length} items`} · deleted ${node.updatedAt ? new Date(node.updatedAt).toLocaleDateString('en-GB') : ''}</small>
+          <small>${node.kind === 'file' ? filesystem.formatSize(node.size) : `${(node.children || []).length} items`} · deleted ${node.updatedAt ? new Date(node.updatedAt).toLocaleDateString('en-GB') : ''}</small>
           <span class="az-system-spacer"></span>
           <button class="az-button" type="button" data-bin-restore="${esc(node.id)}">Restore</button>
           <button class="az-button" type="button" data-bin-delete="${esc(node.id)}">Delete</button>
@@ -36,10 +36,10 @@ export async function mount({ container, api }) {
       : '<div class="az-empty-state"><div><h3>Recycle Bin is empty</h3><p>Items deleted from Workspace files land here first.</p></div></div>';
   }
 
-  const click = async (event) => {
+  async function handleAction(event) {
     if (event.target.closest('[data-bin-refresh]')) return refresh();
     if (event.target.closest('[data-bin-empty]')) {
-      const choice = await win98Dialog({
+      const choice = await dialog.confirm({
         title: 'Recycle Bin',
         message: 'Permanently delete everything in the Recycle Bin?',
         kind: 'warn',
@@ -47,21 +47,21 @@ export async function mount({ container, api }) {
         cancelLabel: 'Cancel',
       });
       if (choice !== 'ok') return;
-      await fs.emptyRecycleBin();
-      api.playSound('trash');
-      api.notify('Recycle Bin', 'All items permanently deleted.', 'system');
+      await filesystem.emptyRecycleBin();
+      sound.play('trash');
+      notifications.notify('Recycle Bin', 'All items permanently deleted.', 'system');
       return refresh();
     }
     const restoreId = event.target.closest('[data-bin-restore]')?.dataset.binRestore;
     if (restoreId) {
-      await fs.restoreNode(restoreId);
-      api.playSound('notification');
+      await filesystem.restoreNode(restoreId);
+      sound.play('notification');
       return refresh();
     }
     const deleteId = event.target.closest('[data-bin-delete]')?.dataset.binDelete;
     if (deleteId) {
-      const node = await fs.getNode(deleteId);
-      const choice = await win98Dialog({
+      const node = await filesystem.getNode(deleteId);
+      const choice = await dialog.confirm({
         title: 'Recycle Bin',
         message: `Permanently delete "${node?.name || 'this item'}"?`,
         kind: 'warn',
@@ -69,13 +69,22 @@ export async function mount({ container, api }) {
         cancelLabel: 'Cancel',
       });
       if (choice !== 'ok') return;
-      await fs.deleteNode(deleteId);
-      api.playSound('trash');
+      await filesystem.deleteNode(deleteId);
+      sound.play('trash');
       return refresh();
     }
-  };
-  container.addEventListener('click', (event) => { click(event).catch((error) => api.notify('Recycle Bin', error.message, 'error')); });
+  }
 
+  const handleClick = (event) => {
+    handleAction(event).catch((error) => notifications.notify('Recycle Bin', error.message, 'error'));
+  };
+
+  container.addEventListener('click', handleClick);
   await refresh();
-  return () => {};
+
+  return {
+    cleanup() {
+      container.removeEventListener('click', handleClick);
+    },
+  };
 }
