@@ -118,6 +118,9 @@ test('deploy procedure only mirrors frontend/ → webroot', () => {
   const body = readFileSync(script, 'utf8');
   assert.match(body, /\/opt\/aizanoi-analytics-public\/frontend/, 'Script must source from frontend/');
   assert.match(body, /\/var\/www\/aizanoianalytics\.com/, 'Script must target /var/www/aizanoianalytics.com');
+  // Publish contract must be cwd-independent: rsync source is an absolute
+  // path with a trailing slash, not a relative ./ that depends on the
+  // caller's working directory.
   assert.match(body, /rsync\s+-a\s+--delete\s+"\$\{SOURCE\}\/"/, 'Script must use absolute-source rsync (cwd-independent)');
   assert.doesNotMatch(body, /rsync[^n]*\.\/\s+"?\$\{WEBROOT\}/, 'Script must not use ./ as rsync source (cwd-dependent)');
 });
@@ -130,6 +133,7 @@ test('deploy is cwd-independent: same frontend/ → staging result from differen
   const stagingB = mkdtempSync(path.join(tmpdir(), 'aizanoi-staging-b-'));
   const unrelated = mkdtempSync(path.join(tmpdir(), 'aizanoi-unrelated-'));
   try {
+    // Replicate the publish contract's core: absolute SOURCE, cwd must not matter.
     const source = path.join(repoRoot, 'frontend');
     execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingA}/"`], { cwd: repoRoot });
     execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingB}/"`], { cwd: unrelated });
@@ -174,6 +178,9 @@ test('webroot smoke: all 11 dashboard HTML routes exist under frontend/', () => 
 // ---- Owner decisions (regression locks) ----
 
 test('legacy /analytics/workforce-turnover/ stays 404 (owner decision 2026-08-26)', () => {
+  // The owner retired the legacy route; production must NOT publish a redirect
+  // or a copy at /analytics/workforce-turnover/. The canonical path lives under
+  // the HR Analytics Full Set catalog.
   const legacyFrontend = path.join(repoRoot, 'frontend/analytics/workforce-turnover/index.html');
   const legacyInRepo = path.join(repoRoot, 'analytics/workforce-turnover/');
   const hasFrontendCopy = existsSync(legacyFrontend);
@@ -204,7 +211,7 @@ test('HR Analytics Full Set catalog declares synthetic provenance and generated 
   assert.match(catalog, /0<\/strong><span>real employer or employee records/i);
   for (const rel of dashboards.slice(1)) {
     const full = path.join(repoRoot, 'frontend', rel);
-    if (!existsSync(full)) continue;
+    if (!existsSync(full)) continue; // generator output not yet regenerated
     const html = readFileSync(full, 'utf8');
     assert.doesNotMatch(html, /ipekyol|erduran/i, `${rel} contains a prohibited former identity`);
   }
