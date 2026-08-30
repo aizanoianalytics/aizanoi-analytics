@@ -1,39 +1,38 @@
 # Aizanoi Module Contract v1
 
-This contract defines the target boundary for independently addable, removable and replaceable repository modules. It complements `ARCHITECTURE.md`; it does not replace the static-first visitor architecture, canonical shell, registry or product contracts.
+This contract defines the enforced boundary for independently addable, removable and replaceable repository modules. It complements `ARCHITECTURE.md`; it does not replace the static-first visitor architecture, canonical shell, registry or product contracts.
 
 ## Goal
 
-A module should behave like a replaceable component:
+A replaceable module:
 
-- it owns its implementation and local assets;
-- it exposes a small public surface;
-- it declares what it needs and what it provides;
-- consumers do not import its private internals;
-- disabling or removing an optional module must not break unrelated modules or the shell;
-- an agent should be able to understand the module by reading its local `index.md` before exploring implementation files.
+- owns its implementation and module-specific assets/state;
+- exposes one small public entry surface;
+- declares what capabilities it requires and provides;
+- does not consume another module's private internals;
+- does not import a concrete shared implementation when a capability contract exists;
+- can be disabled or removed without breaking unrelated modules or the shell;
+- can be understood by entering through its local `index.md` rather than recursively scanning the repository.
 
-This is the direction of travel. Existing code may temporarily violate parts of this contract while it is migrated in controlled phases.
+The repository now enforces this contract for manifest-driven AizanoiOS modules. Legacy surfaces remain outside the manifest set until they are migrated deliberately.
 
-## Target module shape
+## Current module shape
 
 ```text
 module-name/
-├── index.md          # short router and ownership map
-├── manifest.json     # machine-readable identity/capabilities/dependencies
-├── src/
-│   └── index.js      # public runtime entry when applicable
-├── assets/           # module-owned assets when applicable
-└── tests/            # module-local tests when applicable
+├── index.md          # short router, ownership and boundary map
+├── manifest.json     # machine-readable identity/capabilities
+└── src/
+    ├── index.js      # only public runtime entry
+    ├── app.js        # private app behavior
+    └── capabilities.js # optional private narrowing adapter
 ```
 
-A module may omit folders it does not need. Do not create empty structure for appearance alone.
+Modules may add owned assets or local tests when needed. Do not create empty folders merely for symmetry.
 
 ## Manifest v1
 
-New plug-in-style modules should converge on a manifest with an explicit schema version.
-
-Illustrative shape:
+Current shape:
 
 ```json
 {
@@ -42,175 +41,232 @@ Illustrative shape:
   "type": "desktop-app",
   "entry": "./src/index.js",
   "enabledByDefault": true,
-  "requires": ["filesystem", "dialog", "window-manager"],
+  "requires": ["dialog", "filesystem", "notifications", "sound"],
   "provides": ["desktop-app"]
 }
 ```
 
 Rules:
 
-1. `manifestVersion` is required once a module is migrated to manifest discovery.
-2. `id` is stable and unique within its registry scope and matches the module directory name.
-3. `entry` points only to the module public JavaScript entry, remains inside the module directory and must exist.
-4. `requires` names capabilities/contracts, not private implementation paths.
-5. `provides` describes public capabilities or extension points.
-6. Optional enable/disable state is explicit; absence is not treated as a fatal condition unless the dependency is declared required.
+1. `manifestVersion` is required and currently equals `1`.
+2. `id` is stable, unique, lowercase kebab-case and matches the module directory name.
+3. `entry` points to the module public JavaScript entry, stays inside the module directory and must exist.
+4. `requires` names declared capability ids, never implementation paths.
+5. `provides` names public capabilities or extension points.
+6. `enabledByDefault` makes installed/enabled state explicit.
 7. Manifest schema changes require a version change or backward-compatible extension.
-8. Manifest discovery is build-time only. The visitor runtime must not crawl directories, fetch manifest files to construct the catalog, or require a server-side module registry.
+8. Discovery is build-time only. The visitor runtime does not crawl directories or fetch manifests to construct the app catalog.
 
 ## Static discovery and generated wiring
 
-Migrated AizanoiOS app manifests are discovered by `scripts/modules/build-module-registry.mjs` from `frontend/js/v3/apps/<module-id>/manifest.json`.
+`scripts/modules/build-module-registry.mjs` discovers manifests only from:
 
-The generator produces `frontend/js/v3/module-registry.generated.js`, which is committed and served as a normal static browser module. It contains installation state, declared capabilities and public entry paths only.
+`frontend/js/v3/apps/<module-id>/manifest.json`
 
-The generated wiring is **not** a second public app catalog:
+It generates the committed static browser file:
 
-- `frontend/js/v3/registry.js` remains the canonical owner of public labels, descriptions, ordering, groups, icons and search metadata;
-- generated wiring tells that registry whether a migrated module is installed/enabled and which public entry to launch;
-- a disabled or absent migrated module is omitted from the public catalog instead of becoming a broken launcher;
-- generated wiring is never hand-edited;
-- CI runs `node scripts/modules/build-module-registry.mjs --check` and fails when manifests are invalid or generated wiring is stale.
+`frontend/js/v3/module-registry.generated.js`
 
-Because the canonical registry imports the generated wiring, the generated file is part of the offline shell dependency chain and must remain covered by service-worker browser tests.
+Generated wiring contains installation state, public entry paths and declared capability metadata. It is **not** a second public product catalog.
+
+- `frontend/js/v3/registry.js` remains the canonical owner of public ids, labels, descriptions, ordering, groups, icons, aliases and search metadata.
+- Migrated public apps are addressed by `moduleId`, then resolved through generated wiring.
+- Disabled or absent migrated modules are filtered out rather than becoming broken launchers.
+- Generated wiring is never hand-edited.
+- CI runs `node scripts/modules/build-module-registry.mjs --check` and rejects invalid manifests or stale output.
+
+Because the canonical registry imports generated wiring, that file remains inside the ordinary static/offline shell dependency chain and existing browser/service-worker regression coverage.
+
+## Current platform capabilities
+
+Manifest dependency validation currently recognizes these platform capability ids:
+
+- `apps` — narrow public app navigation: `apps.open(appId, options)`;
+- `dialog` — shared confirmation/dialog surface;
+- `filesystem` — narrowed Workspace filesystem operations and stable folder ids;
+- `media` — browser media availability and `getUserMedia`;
+- `notifications` — shell-owned notification surface;
+- `sound` — shared UI sound playback.
+
+Adding a platform capability is an architecture change. Update the resolver, generator contract and tests deliberately; do not accept arbitrary requirement strings just to make a manifest pass.
+
+### Capability boundary
+
+The shell resolves only capabilities declared by the module manifest. Public module entry code may receive the host launch envelope, but private module behavior must be narrowed to the declared surfaces rather than receiving the full shell API.
+
+Example:
+
+```js
+export async function mount({ container, capabilities }) {
+  const app = createApp({
+    filesystem: capabilities.filesystem,
+    notifications: capabilities.notifications,
+  });
+  return app.mount(container);
+}
+```
+
+For app-to-app navigation, the allowed direction is:
+
+```text
+module private code
+  -> capabilities.apps.open(...)
+  -> canonical AIZANOI_OS.openApp(...)
+  -> shell
+```
+
+Do not create a second router, event bus, dependency container, filesystem or window manager.
 
 ## Public vs private boundary
 
-Only documented module entry points are public. Everything else is private by default.
+Only documented module public entries are public. Everything under a module is private by default unless its local `index.md` explicitly says otherwise.
 
-Allowed direction:
+Allowed:
 
 ```text
-consumer -> module public entry / declared capability
+consumer -> module public entry
+module private code -> declared capability
 ```
 
-Disallowed direction:
+Disallowed:
 
 ```text
 consumer -> module private source file
 module A  -> module B private source file
-app       -> concrete core implementation when a capability contract exists
+module    -> workspace/* concrete implementation when a capability exists
+module    -> unrelated product internals
 ```
 
-A filename being importable by the browser does not make it a public API.
+A browser-importable filename is not automatically a public API.
 
 ## Dependency direction
 
-Dependencies must form a directed acyclic graph wherever practical.
+Module dependencies must remain acyclic.
 
 Preferred direction:
 
 ```text
-modules -> shared contracts/capabilities -> canonical core
+optional modules
+  -> declared capabilities
+  -> canonical shared/core implementations
 ```
 
 Avoid:
 
 ```text
-core -> optional module internals
+core -> optional module private internals
 module A <-> module B
-module -> unrelated product internals
+optional module -> concrete shared implementation
 ```
 
-Cross-module behavior should use a declared capability, event, public adapter or registry contract instead of a private import.
-
-## Capability injection
-
-Optional applications should not need to know which concrete implementation provides filesystem, dialogs, window lifecycle, media, camera, storage or similar shared services.
-
-Target style:
-
-```js
-export function createApp(context) {
-  const filesystem = context.capabilities.filesystem;
-  const dialog = context.capabilities.dialog;
-}
-```
-
-The exact API will be introduced incrementally. Existing direct imports are migration candidates, not reasons to create a second shell or duplicate service implementation.
+The generator rejects unavailable required capabilities, ambiguous module capability providers and dependency cycles before generated wiring is accepted.
 
 ## Ownership and storage
 
-Each module owns:
+A migrated module owns:
 
 - its private implementation;
-- module-specific assets;
+- module-specific assets when applicable;
 - module-specific persistent keys/namespaces;
-- local tests and fixtures;
-- its local `index.md` and manifest once migrated.
+- lifecycle cleanup for listeners, timers, media streams, observers and temporary resources;
+- its local `index.md` and manifest;
+- focused architecture/regression tests where behavior warrants them.
 
 A module must not silently write into another module's storage namespace. Shared state requires an explicit shared contract.
 
 ## Enable, disable and remove semantics
 
-For optional modules, these states are distinct:
+These states are distinct:
 
-- **installed + enabled** — discoverable and usable;
-- **installed + disabled** — code may exist, but the public catalog must not expose or launch it;
-- **not installed** — discovery and generated wiring tolerate absence; the canonical registry must not expose a migrated launcher with no installed module behind it.
+- **installed + enabled** — discoverable and launchable;
+- **installed + disabled** — code exists but the public catalog does not expose it;
+- **not installed** — discovery tolerates absence and unrelated generated wiring survives.
 
-Removing an optional module should remove its generated registration, launcher/search presence and owned assets without requiring unrelated module implementation edits. Regenerating committed wiring after manifest install/remove is part of that operation.
+Removing an optional module means removing its module directory and regenerating committed wiring. It must not require edits to unrelated module implementations.
 
-## Cleanup contract
+CI simulates removing every migrated module from a temporary module tree and verifies that all unrelated discovered/generated module wiring remains valid.
 
-A module that registers listeners, timers, media streams, observers or temporary resources must release them when its lifecycle ends. Replaceability requires deterministic cleanup, not only deterministic startup.
+## Mandatory architecture guards
 
-## Navigation contract
+The manifest-driven module set is protected by mandatory CI checks for:
 
-Every independently replaceable module should eventually have a local `index.md` containing only:
-
-- purpose;
-- public entry points;
-- declared dependencies/capabilities;
-- owned storage/assets;
-- relevant tests;
-- explicit private boundaries;
-- links to deeper files only when needed.
-
-Agents should enter through that file rather than recursively reading the module.
-
-## Automated architecture guards
-
-The target CI guard set is:
-
-1. manifest schema validation;
+1. manifest schema and public-entry validation;
 2. unique module ids;
-3. declared dependency/capability validation;
-4. no cross-module private imports;
-5. no dependency cycles;
+3. declared capability availability;
+4. ambiguous capability providers;
+5. dependency cycles;
 6. generated registry consistency;
-7. optional-module disable/remove smoke tests;
-8. existing product, security and browser regression tests.
-
-Manifest validation and generated-wiring consistency become mandatory in Phase 3. The remaining dependency/private-import/unplug guards are added incrementally as the capability boundary and additional modules are migrated.
+7. canonical `moduleId` catalog wiring;
+8. cross-module private imports;
+9. direct Workspace implementation bypasses from migrated modules;
+10. per-module unplug/remove simulation;
+11. existing product, security, audit, Lighthouse and browser regressions.
 
 Architecture checks are quality gates. Do not weaken them merely to make CI green.
 
-## Migration phases
+## Current migrated AizanoiOS modules
 
-### Phase 1 — navigation and contract
+The manifest-driven set currently consists of:
 
-Completed: repository and area `index.md` routers, this Module Contract and token-efficient agent navigation were introduced without runtime behavior changes.
+- `notepad` — filesystem/dialog/notifications/sound;
+- `recycle-bin` — filesystem/dialog/notifications/sound;
+- `winamp` — filesystem/notifications/sound, with module-owned playlist state;
+- `camera` — filesystem/media/notifications/sound, including deterministic media-track/object-URL cleanup;
+- `calculator` — sound only;
+- `videos` — apps only; Aizanoi TV opens companion apps through the narrow navigation capability.
 
-### Phase 2 — pilot module
+Each is resolved through the same generator, registry and capability boundary rather than having custom infrastructure.
 
-Completed: Notepad was migrated into a self-contained module with a manifest, one public entry, private implementation, capability adapter and deterministic listener cleanup while preserving the canonical shell.
+## Deliberately unmigrated surfaces
 
-### Phase 3 — manifest discovery
+Do not convert legacy files merely to increase the module count.
 
-Validated manifests and deterministic committed module wiring feed the single canonical public registry. Discovery remains build-time/static-first; CI rejects invalid manifests and stale generated wiring.
+- `games.js` / Arcade: the launcher is simple, but playable scripts/assets are still owned under shared `frontend/games/`. Resolve asset ownership before calling the launcher independently replaceable.
+- `workspace.js`: the UI sits directly on the canonical filesystem core and opens other apps. Separate the Workspace UI boundary from filesystem-core ownership before migration.
+- `worlds.js`: it consumes canonical world registry and field-session state. Introduce only the minimal world/session capability if migration actually reduces coupling.
+- `brand-hubs.js`: one implementation currently serves several public product ids. Decompose only when those products gain independent ownership/behavior; do not manufacture wrapper modules around the same shared private implementation.
 
-### Phase 4 — capability boundary
+Stable legacy surfaces may remain plain `.js` files indefinitely when replacement value is low.
 
-Replace direct optional-app imports of concrete shared implementations with injected capability contracts.
+## Navigation contract
 
-### Phase 5 — remaining modules
+Every independently replaceable module has a local `index.md` containing only high-signal routing information:
 
-Move Camera, Winamp, Recycle Bin and other suitable applications one at a time. Do not perform a risky all-at-once rewrite.
+- purpose;
+- public entry;
+- declared dependencies/capabilities;
+- owned state/assets;
+- cleanup expectations;
+- relevant tests;
+- private boundaries.
 
-### Phase 6 — architecture CI
+Agents should enter through that file first. Repository and area `index.md` files remain routers, not encyclopedias.
 
-Make dependency-boundary, cycle, private-import and unplug tests mandatory across the migrated module set.
+## Migration phases — implementation status
+
+### Phase 1 — navigation and contract — completed
+
+Repository/area routers, this contract and token-efficient agent navigation are established.
+
+### Phase 2 — pilot module — completed
+
+Notepad proved the complete manifest/public-entry/private-code/capability/cleanup pattern.
+
+### Phase 3 — static manifest discovery — completed
+
+Build-time discovery, committed deterministic wiring and stale-wiring CI validation are active.
+
+### Phase 4 — capability boundary — completed for the migrated set
+
+Migrated modules no longer consume concrete Workspace implementations directly. Shared and host services are declared and injected. New capability boundaries are added only when a real migration requires them.
+
+### Phase 5 — suitable app migrations — ongoing by design
+
+Recycle Bin, Winamp, Camera, Calculator and Aizanoi TV followed the Notepad pattern. Remaining legacy surfaces are migrated only where ownership and replacement value are real; there is no bulk-conversion target.
+
+### Phase 6 — architecture CI — completed and mandatory
+
+Dependency, cycle, private-import, canonical-catalog and unplug/remove guards are part of the top-level CI gate for the manifest-driven set.
 
 ## Non-goals
 
@@ -218,10 +274,11 @@ This contract does **not** authorize:
 
 - a Node/Express visitor runtime;
 - npm workspaces merely for organizational symmetry;
-- a second window manager, router, registry or filesystem implementation;
-- runtime directory/manifest crawling to build the visitor app catalog;
+- a second window manager, router, registry, filesystem or dependency container;
+- runtime manifest/directory crawling;
 - public Hermes/private-agent execution;
-- unnecessary abstraction of stable, non-replaceable code;
-- converting every folder into a module.
+- unnecessary abstraction of stable code;
+- converting every folder or every app into a module;
+- moving shared assets into a module without first establishing true ownership.
 
 Modularity exists to reduce coupling and replacement cost, not to maximize folder count.
