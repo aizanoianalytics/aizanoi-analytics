@@ -2,6 +2,15 @@
 export const INSTALLED_MODULES = Object.freeze([
   Object.freeze({
     manifestVersion: 1,
+    id: "calculator",
+    type: "desktop-app",
+    entry: "/js/v3/apps/calculator/src/index.js",
+    enabledByDefault: true,
+    requires: Object.freeze(["sound"]),
+    provides: Object.freeze(["desktop-app"]),
+  }),
+  Object.freeze({
+    manifestVersion: 1,
     id: "camera",
     type: "desktop-app",
     entry: "/js/v3/apps/camera/src/index.js",
