@@ -8,13 +8,15 @@ The Aizanoi Analytics public visitor runtime is **static-first**. Nginx serves H
 Browser
   |
   +-- AizanoiOS (/)
-  |     +-- brand-platform.js       Aizanoi Analytics + device composition
-  |     +-- registry.js             public app + world catalog
-  |     +-- store.js                shell + field-session state
-  |     +-- shell.js                canonical window/router/dialog lifecycle
-  |     +-- device-shell.css        tablet/mobile presentation
-  |     +-- apps/*                  lazy public application modules
-  |     +-- /news/index.json        static News feed
+  |     +-- brand-platform.js             Aizanoi Analytics + device composition
+  |     +-- registry.js                   canonical public app + world catalog
+  |     +-- module-registry.generated.js  installed/enabled module wiring
+  |     +-- capabilities.js               declared host capability bridge
+  |     +-- store.js                      shell + field-session state
+  |     +-- shell.js                      canonical window/router/lifecycle host
+  |     +-- device-shell.css              tablet/mobile presentation
+  |     +-- apps/<id>/                    lazy manifest-driven public applications
+  |     +-- /news/index.json              static News feed
   |
   +-- Historical Worlds
   |     +-- /historic-world/                 Aizanoi
@@ -53,13 +55,19 @@ Breakpoints:
 - Expanded `840–1199px`: larger tablet home + focused large windows.
 - Large `>=1200px`: wallpaper-first desktop + freeform windows.
 
-### Registry
+### Registry and module wiring
 
-`frontend/js/v3/registry.js` contains only public apps and Historical Worlds. The visible analytical product is **Analytics**; `/analytics/` and the `analytics` app id are stable contracts, while dashboards are a format inside the product. Retired Workbench/power tools must not remain directly addressable through `appById`, search, launcher or routing.
+`frontend/js/v3/registry.js` is the single human-authored public catalog for app/world labels, ordering, groups, icons, descriptions and search metadata. The visible analytical product is **Analytics**; `/analytics/` and the `analytics` app id are stable contracts, while dashboards are a format inside the product. Retired Workbench/power tools must not remain directly addressable through `appById`, search, launcher or routing.
+
+Every current public AizanoiOS application lives under `frontend/js/v3/apps/<id>/` with a manifest and `src/index.js` public entry. `scripts/modules/build-module-registry.mjs` discovers manifests at build time and produces committed `module-registry.generated.js` containing installation/enabled state, public entry paths and declared requirements only. The browser never crawls directories or fetches manifests to construct the catalog.
+
+The registry combines public product metadata with generated installation wiring. Missing/disabled optional modules are filtered instead of becoming broken launchers. Shared host behavior is resolved through `capabilities.js`; module-private code must not import another module's private implementation or a concrete shared provider when a capability contract exists.
+
+See `MODULE_CONTRACT.md` for ownership, cleanup, unplug and CI rules.
 
 ### Lazy applications
 
-Public application modules load only when opened. `apps.css` remains lazy.
+Public application modules load only when opened. `apps.css` remains lazy. Module-owned assets and persistent namespaces move with the module where applicable; cleanup must release or invalidate listeners, timers, media, object URLs and pending asynchronous work.
 
 ## Aizanoi News pipeline
 
@@ -99,7 +107,7 @@ Phone and tablet layouts must use real browser/device state only. Do not fabrica
 
 ## Service worker
 
-The service worker precaches the shell, brand/device adapter, device stylesheet and News feed baseline with parallel independent fetches followed by a complete-or-fail cache write. Mutable same-origin assets and successful navigations use network-first behavior with cached offline fallback; non-core runtime entries are capped at 24. Activation removes superseded `aizanoi-field-shell-*` and `aizanoi-os-shell-*` caches. `/api/*` is never intercepted.
+The service worker precaches the shell, brand/device adapter, generated module wiring, device stylesheet and News feed baseline with parallel independent fetches followed by a complete-or-fail cache write. Mutable same-origin assets and successful navigations use network-first behavior with cached offline fallback; non-core runtime entries are capped at 24. Activation removes superseded `aizanoi-field-shell-*` and `aizanoi-os-shell-*` caches. `/api/*` is never intercepted.
 
 AizanoiOS is a stateful shell, so **updates do not call `skipWaiting()` automatically**. A newly installed worker waits for clients using the previous worker to close/reload before activation. First-time installs activate normally. This avoids forcing a new cache/import graph over a document that booted with an older shell version. If an explicit in-app update flow is introduced later, it must coordinate activation with a deliberate reload and browser regression coverage.
 
@@ -122,11 +130,14 @@ See `docs/HERMES_OPERATIONS.md`.
 1. Git first.
 2. Static-first visitor runtime by default.
 3. One registry and one window lifecycle.
-4. `brand-platform.js` adapts; it does not fork the shell.
-5. Aizanoi Analytics remains the company/umbrella brand unless `PRODUCT.md` is explicitly changed by the owner.
-6. Retired power tools stay out of the public catalog unless the owner explicitly reverses the decision.
-7. No server-backed public terminal or private-agent bridge.
-8. No certainty inflation in Historical Worlds.
-9. News requires structured source provenance.
-10. Preserve public destination parity while giving desktop, tablet and mobile device-appropriate UX.
-11. Interactive changes require regression coverage.
+4. All current public AizanoiOS apps remain behind manifest-driven module directories; flat app implementations must not return.
+5. Generated module wiring contains installation/entry/requirements data only; human-authored product metadata stays in the canonical registry.
+6. Module-private imports and undeclared host-service dependencies are forbidden; use public entries or declared capabilities.
+7. `brand-platform.js` adapts; it does not fork the shell.
+8. Aizanoi Analytics remains the company/umbrella brand unless `PRODUCT.md` is explicitly changed by the owner.
+9. Retired power tools stay out of the public catalog unless the owner explicitly reverses the decision.
+10. No server-backed public terminal or private-agent bridge.
+11. No certainty inflation in Historical Worlds.
+12. News requires structured source provenance.
+13. Preserve public destination parity while giving desktop, tablet and mobile device-appropriate UX.
+14. Interactive changes require regression coverage.

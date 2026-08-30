@@ -14,7 +14,7 @@ Before changing frontend behavior, read root `AGENTS.md`, `ARCHITECTURE.md`, `DE
 - Aizanoi Journal → `journal/`
 - Aizanoi Forge → `forge/`
 - Aizanoi Labs → `labs/`
-- Aizanoi Arcade / browser games → `arcade/` and `games/`
+- Aizanoi Arcade public landing → `arcade/`; AizanoiOS Arcade launcher/game runtime → [`js/v3/apps/games/index.md`](js/v3/apps/games/index.md)
 - Aizanoi Historical World → `historic-world/`
 - Rome / Athens → `ancient-cities/`
 - Shared Historical Worlds engine → `ancient-world/engine/`
