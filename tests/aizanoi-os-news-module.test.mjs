@@ -1,12 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 
 const read = (path) => readFileSync(path, 'utf8');
 const moduleRoot = 'frontend/js/v3/apps/news';
 const manifest = JSON.parse(read(`${moduleRoot}/manifest.json`));
 const privateApp = read(`${moduleRoot}/src/app.js`);
-const legacyHubs = read('frontend/js/v3/apps/brand-hubs.js');
 
 test('Aizanoi News is a zero-capability manifest module', () => {
   assert.equal(manifest.manifestVersion, 1);
@@ -35,9 +34,8 @@ test('News owns its static feed and does not depend on shell or shared hub inter
   assert.doesNotMatch(privateApp, /workspace\//);
 });
 
-test('legacy brand hubs no longer contain the News implementation', () => {
-  assert.doesNotMatch(legacyHubs, /renderNewsFeed/);
-  assert.doesNotMatch(legacyHubs, /mountNews/);
-  assert.doesNotMatch(legacyHubs, /\/news\/index\.json/);
-  assert.doesNotMatch(legacyHubs, /appId\s*===\s*['"]news['"]/);
+test('retired shared brand hub cannot regain News ownership', () => {
+  assert.equal(existsSync('frontend/js/v3/apps/brand-hubs.js'), false);
+  assert.match(privateApp, /renderNewsFeed/);
+  assert.match(privateApp, /\/news\/index\.json/);
 });
