@@ -38,6 +38,15 @@ export const INSTALLED_MODULES = Object.freeze([
   }),
   Object.freeze({
     manifestVersion: 1,
+    id: "games",
+    type: "desktop-app",
+    entry: "/js/v3/apps/games/src/index.js",
+    enabledByDefault: true,
+    requires: Object.freeze([]),
+    provides: Object.freeze(["desktop-app"]),
+  }),
+  Object.freeze({
+    manifestVersion: 1,
     id: "journal",
     type: "desktop-app",
     entry: "/js/v3/apps/journal/src/index.js",
