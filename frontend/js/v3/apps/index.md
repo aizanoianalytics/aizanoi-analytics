@@ -13,7 +13,7 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 - [`recycle-bin/index.md`](recycle-bin/index.md) — manifest-driven, capability-injected Recycle Bin module
 - [`winamp/index.md`](winamp/index.md) — manifest-driven, capability-injected local audio player
 - [`workspace/index.md`](workspace/index.md) — manifest-driven Workspace UI over the shared filesystem core
-- `worlds.js` — Historical Worlds integration; still depends on registry/store/world navigation internals
+- [`worlds/index.md`](worlds/index.md) — manifest-driven Historical Worlds index over the shared catalog/session/router
 
 ## Before changing an app
 
@@ -36,7 +36,8 @@ apps/
 ├── recycle-bin/
 ├── videos/
 ├── winamp/
-└── workspace/
+├── workspace/
+└── worlds/
     ├── index.md
     ├── manifest.json
     └── src/
@@ -61,7 +62,9 @@ Calculator is dependency-light: it declares only `sound`, owns no persistent sto
 
 Aizanoi TV declares only `apps`. Its companion links use the narrow `apps.open()` facade rather than the full shell API, and the former shared `media.js` entry is retired.
 
-Workspace UI now declares `apps`, `filesystem`, `notifications` and `sound`. The IndexedDB filesystem core stays canonical under `../workspace/fs.js`; private Workspace UI code no longer imports it. Listener, action-menu, focus-restore and temporary download object-URL resources are module-owned and cleaned up on close.
+Workspace UI declares `apps`, `filesystem`, `notifications` and `sound`. The IndexedDB filesystem core stays canonical under `../workspace/fs.js`; private Workspace UI code no longer imports it. Listener, action-menu, focus-restore and temporary download object-URL resources are module-owned and cleaned up on close.
+
+Historical Worlds declares only `worlds`. Its private UI receives a frozen catalog plus `currentSession()` and `launch()` instead of importing the canonical registry/store or receiving the full shell API.
 
 ## Boundary rule
 
