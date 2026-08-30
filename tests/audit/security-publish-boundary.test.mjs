@@ -141,7 +141,7 @@ test('deploy is cwd-independent: same frontend/ → staging result from differen
     execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingA}/"`], { cwd: repoRoot });
     execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingB}/"`], { cwd: unrelated });
     const list = (root) =>
-      execFileSync('bash', ['-c', `cd "${root}" && find . -type f | sort`], { encoding:'utf8' });
+      execFileSync('bash', ['-c', `cd "${root}" && find . -type f | sort`], { encoding: 'utf8' });
     const a = list(stagingA);
     const b = list(stagingB);
     assert.equal(a, b, 'Publish must be cwd-independent: staging trees differ');
