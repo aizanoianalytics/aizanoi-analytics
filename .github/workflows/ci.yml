@@ -36,6 +36,9 @@ jobs:
           done < <(find frontend/js/v3 frontend/games frontend/ancient-world frontend/ancient-cities frontend/historic-world -type f -name '*.js' -print0)
           node --check frontend/service-worker.js
           node --check scripts/news/build-news.mjs
+          node --check scripts/modules/build-module-registry.mjs
+      - name: Validate module manifests and generated wiring
+        run: node scripts/modules/build-module-registry.mjs --check
       - name: Build generated News surfaces
         run: node scripts/news/build-news.mjs
       - name: Regression tests
