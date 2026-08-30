@@ -18,7 +18,10 @@ The generated file is committed so the static visitor runtime never needs filesy
 
 ## Capability and dependency contract
 
-`build-module-registry.mjs` owns the v1 platform-capability id list used by manifest validation. Current shared/host capability ids are `dialog`, `filesystem`, `media`, `notifications` and `sound`.
+`build-module-registry.mjs` owns the v1 platform-capability id list used by manifest validation. Current shared/host capability ids are `apps`, `dialog`, `filesystem`, `media`, `notifications` and `sound`.
+
+- `apps` is the narrow application-navigation facade backed by canonical `AIZANOI_OS.openApp`; it is not the full shell `appApi` object.
+- capability consumers receive only names declared in their manifest.
 
 Discovery fails before registry generation when a module:
 
