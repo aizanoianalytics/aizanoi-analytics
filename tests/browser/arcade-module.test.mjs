@@ -6,7 +6,10 @@ const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
 test('Arcade loads module-owned Blockfall assets and cleans the stage on close', async () => {
   const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({ viewport: { width: 1280, height: 860 } });
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 860 },
+    serviceWorkers: 'block',
+  });
   const page = await context.newPage();
   const errors = [];
   const scriptRequests = [];
@@ -56,7 +59,10 @@ test('Arcade loads module-owned Blockfall assets and cleans the stage on close',
 
 test('Arcade close invalidates a pending game launch before the game script can resurrect the stage', async () => {
   const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({ viewport: { width: 1280, height: 860 } });
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 860 },
+    serviceWorkers: 'block',
+  });
   const page = await context.newPage();
   const errors = [];
   const scriptRequests = [];
