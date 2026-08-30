@@ -32,7 +32,7 @@ const APP_DEFINITIONS = Object.freeze([
   { id:'calculator', label:'Calculator', short:'Calculator', group:'studio', icon:'/assets/icons/control-panel.svg', module:'/js/v3/apps/calculator.js', description:'Standard four-function calculator with memory keys', keywords:['calculator','calc','math','arithmetic'] },
   { id:'camera', label:'Camera', short:'Camera', group:'media', icon:'/assets/icons/aizanoi-news.svg', module:'/js/v3/apps/camera.js', description:'Local camera capture — photos stay on this device', keywords:['camera','photo','webcam','picture','capture'] },
   { id:'winamp', label:'Winamp', short:'Winamp', group:'media', icon:'/assets/icons/aizanoi-tv.svg', module:'/js/v3/apps/winamp.js', description:'Playlist player for local and Workspace audio', keywords:['winamp','music','audio','player','playlist','mp3'] },
-  { id:'recycle-bin', label:'Recycle Bin', short:'Recycle Bin', group:'studio', icon:'/assets/icons/about.svg', module:'/js/v3/apps/recycle-bin.js', description:'Restore or permanently delete trashed Workspace items', keywords:['recycle','bin','trash','delete','restore'] }
+  { id:'recycle-bin', label:'Recycle Bin', short:'Recycle Bin', group:'studio', icon:'/assets/icons/about.svg', moduleId:'recycle-bin', description:'Restore or permanently delete trashed Workspace items', keywords:['recycle','bin','trash','delete','restore'] }
 ]);
 
 function resolveAppDefinition(definition) {
