@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-30-openai-hires-meta-dugan-ads",
+  "title": "OpenAI hires former Meta vice president Dave Dugan to lead global ad sales",
+  "summary": "OpenAI has named Dave Dugan, who stepped down earlier this month as Meta's vice president of global clients and agencies, as its new vice president of global ad solutions reporting to COO Brad Lightcap. The hire comes as OpenAI scales its first material advertising business, having launched ChatGPT ads in India with 50 brands through WPP and Omnicom and a self-serve manager scheduled for September 4, and follows a wave of senior departures from the company in 2026.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-08-30T05:00:00Z",
+  "updatedAt": "2026-08-30T05:00:00Z",
+  "retrievedAt": "2026-08-30T04:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "Meta", "advertising", "hiring", "Dave Dugan"],
+  "sources": [
+    {
+      "publisher": "The Wall Street Journal",
+      "url": "https://www.wsj.com/tech/ai/openai-taps-former-meta-executive-to-lead-ad-push-60d39af2",
+      "publishedAt": "2026-08-29T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-30-tottenham-newcastle-premier-league",
+  "title": "Tottenham lose 0-2 at home to Newcastle as Elanga and Wissa seal second straight defeat",
+  "summary": "Tottenham are pointless from their opening two Premier League games after a 0-2 home loss to Newcastle United on Friday, with Anthony Elanga finishing off debutant Gonzalez's knockdown in the second half and Yoane Wissa adding an improvised second to leave Spurs bottom of the table on goal difference. Elanga became the first Newcastle player to score in the club's opening two Premier League matches of a season since Alan Shearer in 2003-04, while Spurs' 17 shots produced an xG of just 1.04 against Newcastle's two shots on target and 0.75 xG.",
+  "category": "football",
+  "priority": 72,
+  "publishedAt": "2026-08-30T05:00:00Z",
+  "updatedAt": "2026-08-30T05:00:00Z",
+  "retrievedAt": "2026-08-30T04:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Tottenham", "Newcastle", "Premier League", "Elanga", "Wissa"],
+  "sources": [
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401879312/newcastle-united-tottenham-hotspur",
+      "publishedAt": "2026-08-29T19:59:00Z"
+    }
+  ]
+}

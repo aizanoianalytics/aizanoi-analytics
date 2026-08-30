@@ -1,0 +1,32 @@
+{
+  "id": "2026-08-30-zhipu-glm-5-3-flash-open-source",
+  "title": "Zhipu open-sources GLM-5.3-Flash, the 320B model that briefly led OpenRouter as Ox Alpha",
+  "summary": "Beijing-based Z.ai (Zhipu) has open-sourced GLM-5.3-Flash, a 320 billion parameter mixture-of-experts model with 18 billion active parameters, released under the MIT license and priced at roughly $0.15 per million input tokens. The release confirmed that the anonymous Ox Alpha model that briefly topped OpenRouter usage charts earlier this month was Zhipu's own, and the company says the model is architected to run on roughly 100,000 Chinese-made AI accelerators — a direct rebuttal to the assumption that frontier Chinese AI still depends on Nvidia silicon.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-08-30T05:00:00Z",
+  "updatedAt": "2026-08-30T05:00:00Z",
+  "retrievedAt": "2026-08-30T04:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Zhipu", "Z.ai", "GLM-5.3-Flash", "open source", "Chinese AI"],
+  "sources": [
+    {
+      "publisher": "Z.ai",
+      "url": "https://z.ai/blog/glm-5.3-flash",
+      "publishedAt": "2026-08-26T00:00:00Z"
+    },
+    {
+      "publisher": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/08/26/z-ai-open-sources-ox-alpha-model-as-glm-5-3-flash/",
+      "publishedAt": "2026-08-26T20:26:00Z"
+    },
+    {
+      "publisher": "TechNode",
+      "url": "https://technode.com/2026/08/27/zhipu-identifies-ox-alpha-as-glm-5-3-flash-and-releases-model-weights/",
+      "publishedAt": "2026-08-27T00:00:00Z"
+    }
+  ]
+}
