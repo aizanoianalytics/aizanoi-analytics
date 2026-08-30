@@ -18,6 +18,7 @@ async function filesystemCapability() {
   return Object.freeze({
     documentsId: fs.DOCUMENTS_ID,
     recycleId: fs.RECYCLE_ID,
+    musicId: fs.MUSIC_ID,
     getNode: fs.getNode,
     readFileBlob: fs.readFileBlob,
     childrenOf: fs.childrenOf,
