@@ -170,6 +170,12 @@ jobs:
           node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
           node --test tests/browser/workspace-apps.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-apps-browser.log || status=1
           exit $status
+      - name: Camera capability browser gate
+        env:
+          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+        run: |
+          set -o pipefail
+          node --test tests/browser/camera-module.test.mjs 2>&1 | tee artifacts/diagnostics/camera-module-browser.log
       - name: Capture final product visuals
         if: success()
         env:

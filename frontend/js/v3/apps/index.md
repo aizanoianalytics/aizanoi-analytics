@@ -6,7 +6,7 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 
 - `brand-hubs.js` — public brand/product hub surfaces
 - `calculator.js` — Calculator
-- `camera.js` — Camera
+- [`camera/index.md`](camera/index.md) — manifest-driven Camera with explicit media capability
 - `games.js` — Arcade/game launcher integration
 - `media.js` — media surfaces
 - [`notepad/index.md`](notepad/index.md) — manifest-driven, capability-injected Notepad module
@@ -26,10 +26,11 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 
 ## Current vs target structure
 
-Legacy apps are still individual `.js` files and some directly depend on shared concrete implementations. Migrated apps use the manifest/module shape below instead of adding parallel infrastructure.
+Legacy apps remain individual `.js` files until migrated deliberately. Manifest-driven apps use one module shape and one shared resolver rather than creating parallel infrastructure.
 
 ```text
 apps/
+├── camera/
 ├── notepad/
 ├── recycle-bin/
 └── winamp/
@@ -49,9 +50,9 @@ Notepad established the first complete boundary: build-time manifest discovery s
 
 Recycle Bin reuses that same boundary without creating new core services. Its former direct filesystem/dialog imports and no-op cleanup are gone; restore/delete behavior goes through the shared filesystem/dialog/notification/sound capabilities and its owned click listener is removed on teardown.
 
-Winamp now reuses the filesystem/notifications/sound surfaces as well. Workspace Music access is exposed only as `filesystem.musicId`; playlist metadata stays in the module-owned `aizanoi-winamp-playlist-v1` namespace; and click, file-input, seek, audio and volume listeners are deterministically removed during cleanup.
+Winamp reuses the filesystem/notifications/sound surfaces. Workspace Music access is exposed only as `filesystem.musicId`; playlist metadata stays in the module-owned `aizanoi-winamp-playlist-v1` namespace; and click, file-input, seek, audio and volume listeners are deterministically removed during cleanup.
 
-Camera is the next migration candidate. Unlike the three migrated modules above, it requires a new explicit media capability for browser camera/microphone permission and must preserve strict media-track and object-URL teardown.
+Camera now adds one explicit `media` capability instead of reaching into `navigator.mediaDevices` from private app code. It still requests camera plus microphone permission on Start, remains photo-only/local-only, stores captures through `filesystem.picturesId`, and owns media-track, object-URL and listener teardown.
 
 ## Boundary rule
 
