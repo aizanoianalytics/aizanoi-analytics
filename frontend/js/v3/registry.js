@@ -19,7 +19,7 @@ export const WORLDS = Object.freeze([
 ]);
 
 const APP_DEFINITIONS = Object.freeze([
-  { id:'news', label:'Aizanoi News', short:'News', group:'media', icon:'/assets/icons/aizanoi-news.svg', module:'/js/v3/apps/brand-hubs.js', description:'Original source-linked daily briefings across AI, Technology, Economy / Markets and Football', keywords:['news','daily','ai','technology','markets','economy','football','sources'] },
+  { id:'news', label:'Aizanoi News', short:'News', group:'media', icon:'/assets/icons/aizanoi-news.svg', moduleId:'news', description:'Original source-linked daily briefings across AI, Technology, Economy / Markets and Football', keywords:['news','daily','ai','technology','markets','economy','football','sources'] },
   { id:'videos', label:'Aizanoi TV', short:'TV', group:'media', icon:'/assets/icons/aizanoi-tv.svg', moduleId:'videos', description:'The English-language Aizanoi channel for AI, technology, markets, cinema, football and conversations', keywords:['video','youtube','ai','technology','markets','cinema','football','conversation'] },
   { id:'analytics', label:'Analytics', short:'Analytics', group:'studio', icon:'/assets/icons/aizanoi-dashboards.svg', module:'/js/v3/apps/brand-hubs.js', description:'Public dashboards, data products, model comparisons and analytical utilities by Aizanoi Analytics', keywords:['analytics','dashboard','dashboards','data','markets','models','tools','aizanoi analytics'] },
   { id:'worlds', label:'Historical Worlds', short:'Worlds', group:'explore', icon:'/assets/icons/aizanoi-worlds.svg', moduleId:'worlds', description:'Evidence-aware walkable Aizanoi, Rome and Athens', keywords:['worlds','aizanoi','rome','athens','history','archaeology'] },

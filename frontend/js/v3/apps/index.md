@@ -4,10 +4,11 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 
 ## Current app entries
 
-- `brand-hubs.js` — public brand/product hub surfaces
+- `brand-hubs.js` — remaining shared Analytics / Forge / Journal / Labs surfaces; shrink this file one product at a time
 - [`calculator/index.md`](calculator/index.md) — manifest-driven Calculator with injected sound
 - [`camera/index.md`](camera/index.md) — manifest-driven Camera with explicit media capability
 - `games.js` — Arcade/game launcher integration; game assets still live under shared `frontend/games/`, so this is not yet a self-contained module
+- [`news/index.md`](news/index.md) — manifest-driven Aizanoi News reading its own static publication feed
 - [`videos/index.md`](videos/index.md) — manifest-driven Aizanoi TV with narrow app navigation
 - [`notepad/index.md`](notepad/index.md) — manifest-driven, capability-injected Notepad module
 - [`recycle-bin/index.md`](recycle-bin/index.md) — manifest-driven, capability-injected Recycle Bin module
@@ -32,6 +33,7 @@ Legacy apps remain individual `.js` files until migrated deliberately. Manifest-
 apps/
 ├── calculator/
 ├── camera/
+├── news/
 ├── notepad/
 ├── recycle-bin/
 ├── videos/
@@ -43,7 +45,7 @@ apps/
     └── src/
         ├── index.js
         ├── app.js
-        └── capabilities.js
+        └── capabilities.js  # only when the module has injected requirements
 ```
 
 Each migrated module follows the same contract, but its implementation and owned storage remain local. The shared resolver contract lives at `../../../../tests/aizanoi-os-capabilities.test.mjs`; each migrated module has a focused architecture test. Do not create empty module folders merely to make every tree look identical.
@@ -65,6 +67,8 @@ Aizanoi TV declares only `apps`. Its companion links use the narrow `apps.open()
 Workspace UI declares `apps`, `filesystem`, `notifications` and `sound`. The IndexedDB filesystem core stays canonical under `../workspace/fs.js`; private Workspace UI code no longer imports it. Listener, action-menu, focus-restore and temporary download object-URL resources are module-owned and cleaned up on close.
 
 Historical Worlds declares only `worlds`. Its private UI receives a frozen catalog plus `currentSession()` and `launch()` instead of importing the canonical registry/store or receiving the full shell API.
+
+Aizanoi News is the first zero-capability content module. It owns the `/news/index.json` fetch and feed rendering that previously lived inside `brand-hubs.js`; Analytics, Forge, Journal and Labs remain unchanged in the shrinking legacy hub file.
 
 ## Boundary rule
 

@@ -1,0 +1,11 @@
+{
+  "manifestVersion": 1,
+  "id": "news",
+  "type": "desktop-app",
+  "entry": "./src/index.js",
+  "enabledByDefault": true,
+  "requires": [],
+  "provides": [
+    "desktop-app"
+  ]
+}
