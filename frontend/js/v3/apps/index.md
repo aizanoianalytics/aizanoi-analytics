@@ -11,7 +11,7 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 - `media.js` — media surfaces
 - [`notepad/index.md`](notepad/index.md) — manifest-driven, capability-injected Notepad module
 - [`recycle-bin/index.md`](recycle-bin/index.md) — manifest-driven, capability-injected Recycle Bin module
-- `winamp.js` — Winamp-style player
+- [`winamp/index.md`](winamp/index.md) — manifest-driven, capability-injected local audio player
 - `workspace.js` — workspace UI
 - `worlds.js` — Historical Worlds launcher/integration
 
@@ -31,13 +31,8 @@ Legacy apps are still individual `.js` files and some directly depend on shared 
 ```text
 apps/
 ├── notepad/
-│   ├── index.md
-│   ├── manifest.json
-│   └── src/
-│       ├── index.js
-│       ├── app.js
-│       └── capabilities.js
-└── recycle-bin/
+├── recycle-bin/
+└── winamp/
     ├── index.md
     ├── manifest.json
     └── src/
@@ -46,15 +41,17 @@ apps/
         └── capabilities.js
 ```
 
-The shared resolver contract lives at `../../../../tests/aizanoi-os-capabilities.test.mjs`; each migrated module has a focused architecture test. Do not create empty module folders merely to make every tree look identical.
+Each migrated module follows the same contract, but its implementation and owned storage remain local. The shared resolver contract lives at `../../../../tests/aizanoi-os-capabilities.test.mjs`; each migrated module has a focused architecture test. Do not create empty module folders merely to make every tree look identical.
 
 ## Migration result
 
 Notepad established the first complete boundary: build-time manifest discovery supplies installation state, entry path and requirements; the shell resolves those requirements through `../capabilities.js`; private app logic sees only injected surfaces; lifecycle cleanup owns module resources.
 
-Recycle Bin now reuses that same boundary without creating new core services. Its former direct filesystem/dialog imports and no-op cleanup are gone; restore/delete behavior goes through the shared filesystem/dialog/notification/sound capabilities and its owned click listener is removed on teardown.
+Recycle Bin reuses that same boundary without creating new core services. Its former direct filesystem/dialog imports and no-op cleanup are gone; restore/delete behavior goes through the shared filesystem/dialog/notification/sound capabilities and its owned click listener is removed on teardown.
 
-Winamp is the next low-risk migration candidate because it can reuse filesystem, notifications and sound. Camera should follow after Winamp because camera/microphone permission and media-track teardown introduce a new media capability and stronger cleanup requirements.
+Winamp now reuses the filesystem/notifications/sound surfaces as well. Workspace Music access is exposed only as `filesystem.musicId`; playlist metadata stays in the module-owned `aizanoi-winamp-playlist-v1` namespace; and click, file-input, seek, audio and volume listeners are deterministically removed during cleanup.
+
+Camera is the next migration candidate. Unlike the three migrated modules above, it requires a new explicit media capability for browser camera/microphone permission and must preserve strict media-track and object-URL teardown.
 
 ## Boundary rule
 
