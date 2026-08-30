@@ -55,7 +55,7 @@ Do not treat a merge as a deployment.
 
 1. Confirm the exact approved Git SHA.
 2. Record the currently deployed SHA for rollback. If the deployed SHA cannot be proven, capture a rollback snapshot before replacing the webroot.
-3. Fetch the approved commit in the canonical server checkout and check out/reset to that **exact SHA**. Do not deploy an unpinned moving `main` tip merely because it is newer.
+3. In the canonical server checkout, require a clean working tree before changing refs. If `git status --porcelain` is non-empty, stop and preserve/report the local diff; never use reset/checkout to erase unknown server-only changes. Once clean, fetch the approved commit and check out/reset to that **exact SHA**. Do not deploy an unpinned moving `main` tip merely because it is newer.
 4. Run `node scripts/modules/build-module-registry.mjs --check` for every AizanoiOS/static-shell release so manifests and committed generated wiring cannot drift. Then run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed. If HR Analytics source, synthetic inputs or generated dashboard artifacts changed, run `bash scripts/regenerate-hr-dashboards.sh` first. Do not regenerate News or HR artifacts unnecessarily when the approved diff does not touch those inputs/outputs.
 5. Deploy the public static tree with `bash scripts/deploy-public.sh`. This is the canonical allowlist boundary; do not replace it with a repo-root copy or ad-hoc rsync.
 6. Confirm source-to-production checksum/SHA parity where the deployment tooling supports it.
