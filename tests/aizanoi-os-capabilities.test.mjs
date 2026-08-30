@@ -16,6 +16,27 @@ test('capability resolver returns only explicitly requested host capabilities', 
   assert.equal(Object.isFrozen(resolved), true);
 });
 
+test('apps capability delegates only to the canonical AizanoiOS runtime facade', async () => {
+  const previous = globalThis.AIZANOI_OS;
+  const calls = [];
+  globalThis.AIZANOI_OS = Object.freeze({
+    openApp(appId, options) {
+      calls.push({ appId, options });
+      return `opened:${appId}`;
+    },
+  });
+  try {
+    const resolved = await resolveCapabilities(['apps']);
+    assert.deepEqual(Object.keys(resolved), ['apps']);
+    assert.equal(Object.isFrozen(resolved.apps), true);
+    assert.equal(resolved.apps.open('news', { source: 'test' }), 'opened:news');
+    assert.deepEqual(calls, [{ appId: 'news', options: { source: 'test' } }]);
+  } finally {
+    if (previous === undefined) delete globalThis.AIZANOI_OS;
+    else globalThis.AIZANOI_OS = previous;
+  }
+});
+
 test('capability resolver rejects unknown undeclared providers instead of silently degrading', async () => {
   await assert.rejects(
     () => resolveCapabilities(['definitely-not-a-capability']),
