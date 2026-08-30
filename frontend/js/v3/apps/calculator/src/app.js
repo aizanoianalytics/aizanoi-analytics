@@ -1,8 +1,6 @@
-/** AizanoiOS Calculator — Win98-style four-function calculator with memory keys. */
-
-const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
-
-export async function mount({ container, api }) {
+/** Private Calculator implementation. Shared services arrive only as capabilities. */
+export async function mountCalculator({ container, capabilities }) {
+  const { sound } = capabilities;
   container.innerHTML = `
   <div class="az-app-shell"><div class="az-app-toolbar"><strong>Calculator</strong><span class="az-system-spacer"></span><span class="az-app-caption">Standard</span></div>
   <div class="az-calc">
@@ -11,7 +9,10 @@ export async function mount({ container, api }) {
     <div class="az-calc-keys" role="group" aria-label="Calculator keypad">
       ${[['MC','m'],['MR','r'],['MS','s'],['M+','p'],['Back','back'],['CE','ce'],['C','c'],['±','neg'],['√','sqrt']]
         .map(([label, action]) => `<button class="az-calc-key az-calc-key--fn" type="button" data-calc="${action}">${label}</button>`).join('')}
-      ${['7','8','9','/','4','5','6','*','1','2','3','-','0','.','+'].map((k) => { const label = k === '*' ? '×' : k === '/' ? '÷' : k; return `<button class="az-calc-key" type="button" data-calc="${label}">${label}</button>`; }).join('')}
+      ${['7','8','9','/','4','5','6','*','1','2','3','-','0','.','+'].map((key) => {
+        const label = key === '*' ? '×' : key === '/' ? '÷' : key;
+        return `<button class="az-calc-key" type="button" data-calc="${label}">${label}</button>`;
+      }).join('')}
       <button class="az-calc-key az-calc-key--eq" type="button" data-calc="=">=</button>
     </div>
   </div></div>`;
@@ -32,8 +33,10 @@ export async function mount({ container, api }) {
 
   function showError() {
     current = 'Error';
-    operand = null; operator = null; resetNext = true;
-    api.playSound('error');
+    operand = null;
+    operator = null;
+    resetNext = true;
+    sound.play('error');
     render();
   }
 
@@ -53,12 +56,18 @@ export async function mount({ container, api }) {
       current = resetNext || current === '0' ? key : current + key;
       resetNext = false;
     } else if (key === '.') {
-      if (resetNext) { current = '0.'; resetNext = false; }
-      else if (!current.includes('.')) current += '.';
+      if (resetNext) {
+        current = '0.';
+        resetNext = false;
+      } else if (!current.includes('.')) current += '.';
     } else if (key === 'c') {
-      current = '0'; operand = null; operator = null; resetNext = false;
+      current = '0';
+      operand = null;
+      operator = null;
+      resetNext = false;
     } else if (key === 'ce') {
-      current = '0'; resetNext = false;
+      current = '0';
+      resetNext = false;
     } else if (key === 'back') {
       current = current.length > 1 ? current.slice(0, -1) : '0';
     } else if (key === 'neg') {
@@ -82,36 +91,49 @@ export async function mount({ container, api }) {
         const result = applyOperator(operand, parseFloat(current), operator);
         if (!Number.isFinite(result)) return showError();
         current = String(Number(result.toPrecision(12)));
-        operand = null; operator = null; resetNext = true;
+        operand = null;
+        operator = null;
+        resetNext = true;
       }
-    } else if (key === 'm') { memory = 0;
-    } else if (key === 'r') { current = String(memory); resetNext = true;
-    } else if (key === 's') { memory = parseFloat(current) || 0;
-    } else if (key === 'p') { memory += parseFloat(current) || 0; }
+    } else if (key === 'm') {
+      memory = 0;
+    } else if (key === 'r') {
+      current = String(memory);
+      resetNext = true;
+    } else if (key === 's') {
+      memory = parseFloat(current) || 0;
+    } else if (key === 'p') {
+      memory += parseFloat(current) || 0;
+    }
     render();
   }
 
-  const click = (event) => {
+  function handleClick(event) {
     const key = event.target.closest('[data-calc]')?.dataset.calc;
     if (!key) return;
-    api.playSound('click');
+    sound.play('click');
     press(key);
-  };
-  const keyboard = (event) => {
+  }
+
+  function handleKeydown(event) {
     if (!container.contains(document.activeElement) && document.activeElement !== document.body) return;
     const map = { '*': '×', '/': '÷', Enter: '=', '=': '=', Escape: 'c', Backspace: 'back' };
     const key = map[event.key] ?? event.key;
     if (/[0-9.]|^[+\-×÷]$|^=$|^back$|^c$/.test(key)) {
       event.preventDefault();
-      api.playSound('click');
+      sound.play('click');
       press(key);
     }
-  };
-  container.addEventListener('click', click);
-  document.addEventListener('keydown', keyboard);
+  }
+
+  container.addEventListener('click', handleClick);
+  document.addEventListener('keydown', handleKeydown);
   render();
-  return () => {
-    container.removeEventListener('click', click);
-    document.removeEventListener('keydown', keyboard);
+
+  return {
+    cleanup() {
+      container.removeEventListener('click', handleClick);
+      document.removeEventListener('keydown', handleKeydown);
+    },
   };
 }
