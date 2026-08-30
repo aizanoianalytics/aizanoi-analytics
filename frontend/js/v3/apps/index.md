@@ -7,13 +7,13 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 - `brand-hubs.js` — public brand/product hub surfaces
 - [`calculator/index.md`](calculator/index.md) — manifest-driven Calculator with injected sound
 - [`camera/index.md`](camera/index.md) — manifest-driven Camera with explicit media capability
-- `games.js` — Arcade/game launcher integration
-- `media.js` — media surfaces
+- `games.js` — Arcade/game launcher integration; game assets still live under shared `frontend/games/`, so this is not yet a self-contained module
+- [`videos/index.md`](videos/index.md) — manifest-driven Aizanoi TV with narrow app navigation
 - [`notepad/index.md`](notepad/index.md) — manifest-driven, capability-injected Notepad module
 - [`recycle-bin/index.md`](recycle-bin/index.md) — manifest-driven, capability-injected Recycle Bin module
 - [`winamp/index.md`](winamp/index.md) — manifest-driven, capability-injected local audio player
-- `workspace.js` — workspace UI
-- `worlds.js` — Historical Worlds launcher/integration
+- `workspace.js` — workspace UI over the shared filesystem core; migrate only with a deliberate core/app boundary
+- `worlds.js` — Historical Worlds integration; still depends on registry/store/world navigation internals
 
 ## Before changing an app
 
@@ -34,6 +34,7 @@ apps/
 ├── camera/
 ├── notepad/
 ├── recycle-bin/
+├── videos/
 └── winamp/
     ├── index.md
     ├── manifest.json
@@ -56,6 +57,8 @@ Winamp reuses the filesystem/notifications/sound surfaces. Workspace Music acces
 Camera adds one explicit `media` capability instead of reaching into `navigator.mediaDevices` from private app code. It still requests camera plus microphone permission on Start, remains photo-only/local-only, stores captures through `filesystem.picturesId`, and owns media-track, object-URL and listener teardown.
 
 Calculator is dependency-light: it declares only `sound`, owns no persistent storage, and removes both its container click listener and document keyboard listener during cleanup.
+
+Aizanoi TV declares only `apps`. Its companion links use the narrow `apps.open()` facade rather than the full shell API, and the former shared `media.js` entry is retired.
 
 ## Boundary rule
 
