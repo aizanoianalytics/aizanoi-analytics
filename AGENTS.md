@@ -2,7 +2,11 @@
 
 ## Start here
 
-Before changing code or content, read `PRODUCT.md`, this file, `CONTENT_POLICY.md`, `DESIGN.md`, `ARCHITECTURE.md`, the nearest area-specific `AGENTS.md`, the affected runtime path and current Git history.
+Start at `index.md`. Use it to route into the smallest relevant repository area before reading implementation files. Then read this file, the nearest area-specific `AGENTS.md` if one exists, the affected runtime path, and only the canonical contracts named by that scope.
+
+Do **not** recursively scan the repository by default. Expand scope only when a local `index.md`, a declared dependency, a failing test, or the task itself requires it. For modular application work, also obey `MODULE_CONTRACT.md`.
+
+Canonical contracts remain mandatory when relevant: `PRODUCT.md` for brand/product changes, `CONTENT_POLICY.md` for sourced/publication work, `DESIGN.md` for visual/interaction changes, `ARCHITECTURE.md` for runtime/boundary changes, and `SECURITY.md` for security-sensitive work.
 
 **Aizanoi Analytics** is the company and umbrella brand for media, data, software, research and interactive worlds in this repository. `Aizanoi` is permitted as short-form identity inside product names, but must not be redefined as a separate umbrella company above Aizanoi Analytics.
 
@@ -120,6 +124,8 @@ GitHub is the source of truth. A merge is not a production deployment. Productio
 12. Never claim production or manual verification that was not actually performed.
 13. Never describe Aizanoi as the umbrella company or Aizanoi Analytics as a subordinate product unless the owner explicitly changes `PRODUCT.md`.
 14. Keep `/analytics/`, app id `analytics` and public label **Analytics** aligned; treat dashboards as a format within that product family.
+15. Keep `index.md` files concise and navigational; update the nearest index when a new top-level area or independently replaceable module is introduced.
+16. Do not cross a module's documented private boundary; prefer declared public entries and capabilities as defined by `MODULE_CONTRACT.md`.
 
 ## Validation
 
