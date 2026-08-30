@@ -9,8 +9,8 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 - `camera.js` — Camera
 - `games.js` — Arcade/game launcher integration
 - `media.js` — media surfaces
-- [`notepad/index.md`](notepad/index.md) — manifest-driven, capability-injected Notepad module pilot
-- `recycle-bin.js` — Recycle Bin
+- [`notepad/index.md`](notepad/index.md) — manifest-driven, capability-injected Notepad module
+- [`recycle-bin/index.md`](recycle-bin/index.md) — manifest-driven, capability-injected Recycle Bin module
 - `winamp.js` — Winamp-style player
 - `workspace.js` — workspace UI
 - `worlds.js` — Historical Worlds launcher/integration
@@ -26,28 +26,35 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 
 ## Current vs target structure
 
-Most apps are still individual `.js` files and some directly depend on shared concrete implementations. This directory is therefore **not yet fully plug-and-play**.
-
-Notepad is the first migrated pilot:
+Legacy apps are still individual `.js` files and some directly depend on shared concrete implementations. Migrated apps use the manifest/module shape below instead of adding parallel infrastructure.
 
 ```text
 apps/
-└── notepad/
+├── notepad/
+│   ├── index.md
+│   ├── manifest.json
+│   └── src/
+│       ├── index.js
+│       ├── app.js
+│       └── capabilities.js
+└── recycle-bin/
     ├── index.md
     ├── manifest.json
     └── src/
-        ├── index.js          # public entry
-        ├── app.js            # private UI/lifecycle logic
-        └── capabilities.js   # validates injected module contract
+        ├── index.js
+        ├── app.js
+        └── capabilities.js
 ```
 
-The central architecture test for the pilot lives at `../../../../tests/aizanoi-os-notepad-module.test.mjs`; the shared resolver contract lives at `../../../../tests/aizanoi-os-capabilities.test.mjs`. Do not create empty module folders merely to make every tree look identical.
+The shared resolver contract lives at `../../../../tests/aizanoi-os-capabilities.test.mjs`; each migrated module has a focused architecture test. Do not create empty module folders merely to make every tree look identical.
 
-## Pilot result
+## Migration result
 
-Notepad proves the full first module boundary while keeping one canonical shell and one public registry: build-time manifest discovery supplies installation state, entry path and declared requirements; the shell resolves those requirements through `../capabilities.js` and injects them into `mount()`; private Notepad logic sees only capability surfaces; and lifecycle cleanup removes module-owned listeners.
+Notepad established the first complete boundary: build-time manifest discovery supplies installation state, entry path and requirements; the shell resolves those requirements through `../capabilities.js`; private app logic sees only injected surfaces; lifecycle cleanup owns module resources.
 
-Recycle Bin is the lowest-risk next migration candidate because it can reuse the existing filesystem, dialog, notifications and sound capability surfaces. Camera should follow after the reused-capability modules because camera/microphone permission and media-track teardown introduce a new media capability and stronger cleanup requirements.
+Recycle Bin now reuses that same boundary without creating new core services. Its former direct filesystem/dialog imports and no-op cleanup are gone; restore/delete behavior goes through the shared filesystem/dialog/notification/sound capabilities and its owned click listener is removed on teardown.
+
+Winamp is the next low-risk migration candidate because it can reuse filesystem, notifications and sound. Camera should follow after Winamp because camera/microphone permission and media-track teardown introduce a new media capability and stronger cleanup requirements.
 
 ## Boundary rule
 
