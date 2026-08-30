@@ -16,7 +16,7 @@ Everything else under `src/` is private to this module.
 - `notifications` — shell notifications
 - `sound` — shell interaction/notification sounds
 
-`src/capabilities.js` is the compatibility boundary that maps the current AizanoiOS shared implementations into these capabilities. Private application logic must not import `workspace/fs.js` or `workspace/dialog.js` directly.
+The manifest is the source of truth for this requirement list. The canonical shell resolves the declared surfaces through `../../capabilities.js` and injects them into the module mount context. `src/capabilities.js` validates that injected contract only; it contains no concrete Workspace implementation imports. Private application logic must not import `workspace/fs.js`, `workspace/dialog.js` or `workspace/sounds.js` directly.
 
 ## Lifecycle
 
@@ -24,8 +24,8 @@ The public `mount()` contract returns `cleanup`, `onOpen` and `beforeClose` hook
 
 ## Storage
 
-Notepad owns no separate database. Documents are stored through the shared Workspace filesystem in the canonical Documents folder.
+Notepad owns no separate database. Documents are stored through the injected filesystem capability in the canonical Documents folder.
 
 ## Tests
 
-Architecture/runtime wiring is covered by `../../../../../tests/aizanoi-os-notepad-module.test.mjs`.
+Architecture/runtime wiring is covered by `../../../../../tests/aizanoi-os-notepad-module.test.mjs` and the shared resolver contract by `../../../../../tests/aizanoi-os-capabilities.test.mjs`.
