@@ -8,6 +8,15 @@ export const INSTALLED_MODULES = Object.freeze([
     enabledByDefault: true,
     requires: Object.freeze(["dialog","filesystem","notifications","sound"]),
     provides: Object.freeze(["desktop-app"]),
+  }),
+  Object.freeze({
+    manifestVersion: 1,
+    id: "recycle-bin",
+    type: "desktop-app",
+    entry: "/js/v3/apps/recycle-bin/src/index.js",
+    enabledByDefault: true,
+    requires: Object.freeze(["dialog","filesystem","notifications","sound"]),
+    provides: Object.freeze(["desktop-app"]),
   })
 ]);
 
