@@ -17,6 +17,7 @@ async function filesystemCapability() {
   const fs = await import('./workspace/fs.js');
   return Object.freeze({
     documentsId: fs.DOCUMENTS_ID,
+    picturesId: fs.PICTURES_ID,
     recycleId: fs.RECYCLE_ID,
     musicId: fs.MUSIC_ID,
     getNode: fs.getNode,
@@ -41,10 +42,24 @@ async function soundCapability() {
   return Object.freeze({ play: (...args) => sounds.playSound(...args) });
 }
 
+async function mediaCapability() {
+  return Object.freeze({
+    isAvailable: () => typeof globalThis.navigator?.mediaDevices?.getUserMedia === 'function',
+    getUserMedia: (constraints) => {
+      const getUserMedia = globalThis.navigator?.mediaDevices?.getUserMedia;
+      if (typeof getUserMedia !== 'function') {
+        return Promise.reject(new Error('Media capture is unavailable in this browser.'));
+      }
+      return getUserMedia.call(globalThis.navigator.mediaDevices, constraints);
+    },
+  });
+}
+
 const SHARED_PROVIDERS = Object.freeze({
   filesystem: filesystemCapability,
   dialog: dialogCapability,
   sound: soundCapability,
+  media: mediaCapability,
 });
 
 function requestedNames(required) {
