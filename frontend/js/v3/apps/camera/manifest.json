@@ -1,0 +1,16 @@
+{
+  "manifestVersion": 1,
+  "id": "camera",
+  "type": "desktop-app",
+  "entry": "./src/index.js",
+  "enabledByDefault": true,
+  "requires": [
+    "filesystem",
+    "media",
+    "notifications",
+    "sound"
+  ],
+  "provides": [
+    "desktop-app"
+  ]
+}
