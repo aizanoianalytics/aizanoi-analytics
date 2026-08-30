@@ -1,0 +1,11 @@
+{
+  "manifestVersion": 1,
+  "id": "games",
+  "type": "desktop-app",
+  "entry": "./src/index.js",
+  "enabledByDefault": true,
+  "requires": [],
+  "provides": [
+    "desktop-app"
+  ]
+}

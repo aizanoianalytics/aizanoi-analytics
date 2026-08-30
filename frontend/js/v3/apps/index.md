@@ -8,7 +8,7 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 - [`calculator/index.md`](calculator/index.md) — manifest-driven Calculator with injected sound
 - [`camera/index.md`](camera/index.md) — manifest-driven Camera with explicit media capability
 - [`forge/index.md`](forge/index.md) — manifest-driven Forge surface with narrow app navigation to Historical Worlds
-- `games.js` — Arcade/game launcher integration; game assets still live under shared `frontend/games/`, so this is not yet a self-contained module
+- [`games/index.md`](games/index.md) — zero-capability Aizanoi Arcade module owning its launcher, local scores and playable game assets
 - [`journal/index.md`](journal/index.md) — zero-capability long-form Journal surface
 - [`labs/index.md`](labs/index.md) — Labs surface with narrow app navigation to Arcade
 - [`news/index.md`](news/index.md) — manifest-driven Aizanoi News reading its own static publication feed
@@ -28,9 +28,9 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 5. Do not import private internals from another app.
 6. Follow `../../../../MODULE_CONTRACT.md` for new boundaries and migration work.
 
-## Current vs target structure
+## Current structure
 
-Legacy apps remain individual `.js` files until migrated deliberately. Manifest-driven apps use one module shape and one shared resolver rather than creating parallel infrastructure.
+Manifest-driven apps use one module shape and one shared resolver rather than creating parallel infrastructure.
 
 ```text
 apps/
@@ -38,6 +38,7 @@ apps/
 ├── calculator/
 ├── camera/
 ├── forge/
+├── games/
 ├── journal/
 ├── labs/
 ├── news/
@@ -55,7 +56,7 @@ apps/
         └── capabilities.js  # only when the module has injected requirements
 ```
 
-Each migrated module follows the same contract, but its implementation and owned storage remain local. The shared resolver contract lives at `../../../../tests/aizanoi-os-capabilities.test.mjs`; each migrated module has a focused architecture test. Do not create empty module folders merely to make every tree look identical.
+A module may additionally own local `assets/` when those assets are replaceable with the module, as Arcade does. Each migrated module follows the same contract, but its implementation, assets and owned storage remain local. The shared resolver contract lives at `../../../../tests/aizanoi-os-capabilities.test.mjs`; each migrated module has a focused architecture test. Do not create empty module folders merely to make every tree look identical.
 
 ## Migration result
 
@@ -85,8 +86,10 @@ Aizanoi Journal is a zero-capability surface and owns its long-form desk present
 
 Aizanoi Labs declares only `apps`. It owns experimental/prototype presentation and reaches Arcade only through `apps.open()`; playable game implementation stays owned by Arcade.
 
+Aizanoi Arcade keeps the stable `games` id and is zero-capability. Its launcher, five game assets and `aizanoi-games` local score namespace now move together under `apps/games/`; the old flat launcher and shared `frontend/games/` asset paths are retired.
+
 The former `brand-hubs.js` shared implementation is retired. News, Analytics, Forge, Journal and Labs now have independent module ownership instead of one cross-product source file.
 
 ## Boundary rule
 
-App-private files are private by default. Consumers must use the module public entry or a declared capability rather than reaching into another app's implementation.
+App-private files and module-owned assets are private by default. Consumers must use the module public entry or a declared capability rather than reaching into another app's implementation.
