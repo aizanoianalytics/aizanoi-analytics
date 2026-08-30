@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 export const DEFAULT_APPS_ROOT = path.join(repoRoot, 'frontend/js/v3/apps');
 export const DEFAULT_OUTPUT = path.join(repoRoot, 'frontend/js/v3/module-registry.generated.js');
-export const PLATFORM_CAPABILITIES = Object.freeze(['apps', 'dialog', 'filesystem', 'media', 'notifications', 'sound']);
+export const PLATFORM_CAPABILITIES = Object.freeze(['apps', 'dialog', 'filesystem', 'media', 'notifications', 'sound', 'worlds']);
 
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const CAPABILITY_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
