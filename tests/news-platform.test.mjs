@@ -8,7 +8,7 @@ import { pathToFileURL } from 'node:url';
 
 const root = process.cwd();
 const script = path.join(root, 'scripts/news/build-news.mjs');
-const brandHubsUrl = pathToFileURL(path.join(root, 'frontend/js/v3/apps/brand-hubs.js')).href;
+const newsAppUrl = pathToFileURL(path.join(root, 'frontend/js/v3/apps/news/src/app.js')).href;
 
 const fixture = {
   id: '2026-08-22-model-release',
@@ -175,7 +175,7 @@ test('validation requires updatedAt to include the complete correction history',
 });
 
 test('News app presents the current edition feed and archive destination', async () => {
-  const { renderNewsFeed } = await import(brandHubsUrl);
+  const { renderNewsFeed } = await import(newsAppUrl);
   const html = renderNewsFeed({
     editions: [{ date: '2026-08-22', path: '/news/2026-08-22/', itemCount: 1 }],
     items: [fixture]
@@ -189,7 +189,7 @@ test('News app presents the current edition feed and archive destination', async
 });
 
 test('News app surfaces the current weekly edition alongside the daily edition', async () => {
-  const { renderNewsFeed } = await import(brandHubsUrl);
+  const { renderNewsFeed } = await import(newsAppUrl);
   const html = renderNewsFeed({
     editions: [{ date: '2026-08-31', path: '/news/2026-08-31/', itemCount: 8 }],
     weeklyEditions: [{ date: '2026-08-31', week: '2026-W36', path: '/news/weekly/2026-08-31/', itemCount: 1 }],
