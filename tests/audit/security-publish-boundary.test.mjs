@@ -59,6 +59,7 @@ const ALLOWED_JSON = [
   /\/js\/v3\/apps\/notepad\/manifest\.json$/,
   /\/js\/v3\/apps\/recycle-bin\/manifest\.json$/,
   /\/js\/v3\/apps\/videos\/manifest\.json$/,
+  /\/js\/v3\/apps\/workspace\/manifest\.json$/,
   /\/js\/v3\/apps\/winamp\/manifest\.json$/
 ];
 
