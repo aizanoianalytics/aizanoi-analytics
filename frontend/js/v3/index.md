@@ -7,7 +7,8 @@ Scope: canonical AizanoiOS browser runtime.
 - `main.js` — runtime bootstrap
 - `registry.js` — single public app/world catalog
 - `module-registry.generated.js` — generated installed-module wiring; never a second public catalog and never hand-edited
-- `shell.js` — canonical window, router and dialog lifecycle
+- `capabilities.js` — shared capability bridge for migrated modules; concrete shared implementations stay behind this boundary
+- `shell.js` — canonical window, router, lifecycle and capability-injection host
 - `aizanoi-os.js` — desktop interaction primitives
 - `brand-platform.js` — Aizanoi Analytics home/dock/device composition
 - `store.js` — browser-local shell and field-session state
@@ -20,17 +21,18 @@ Scope: canonical AizanoiOS browser runtime.
 - Add/remove/change a legacy app → start at [`apps/index.md`](apps/index.md), then inspect `registry.js` only as required.
 - Change public app metadata/order/search terms → `registry.js`; generated wiring intentionally does not duplicate those catalog fields.
 - Change manifest validation/generation → `../../../scripts/modules/`.
-- Change shell/window/dialog behavior → `shell.js`.
+- Add/change a shared capability provider → `capabilities.js`; optional app internals must not import the concrete provider directly.
+- Change shell/window/dialog/lifecycle or capability injection → `shell.js`.
 - Change desktop primitives → `aizanoi-os.js`.
 - Change tablet/mobile/brand composition → `brand-platform.js` plus canonical styles named in root `AGENTS.md`.
 - Change shared browser-local state → `store.js`.
-- Change filesystem/workspace implementation → `workspace/`; preserve callers until capability migration is complete.
+- Change filesystem/workspace implementation → `workspace/`; keep migrated app consumers behind `capabilities.js`.
 
 ## Current modularity state
 
-The runtime still has one shell and one exported public catalog. Migrated modules are discovered at build time from `apps/<id>/manifest.json`; a deterministic generated wiring file supplies installation state and public entry paths to `registry.js`. The browser does not scan directories or need a server-side registry.
+The runtime still has one shell and one exported public catalog. Migrated modules are discovered at build time from `apps/<id>/manifest.json`; a deterministic generated wiring file supplies installation state, declared requirements and public entry paths to `registry.js`. The browser does not scan directories or need a server-side registry.
 
-Notepad is the first manifest-driven pilot. Legacy apps remain directly registered until migrated one at a time.
+Notepad is the first manifest-driven and capability-injected pilot. Its private implementation consumes only its declared `filesystem`, `dialog`, `notifications` and `sound` capability surfaces. The canonical shell resolves those declarations through `capabilities.js` and injects them into the app mount context. Legacy apps remain directly registered until migrated one at a time.
 
 Migration follows `../../../MODULE_CONTRACT.md`:
 
