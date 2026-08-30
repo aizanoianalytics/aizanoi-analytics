@@ -62,6 +62,15 @@ export const INSTALLED_MODULES = Object.freeze([
     enabledByDefault: true,
     requires: Object.freeze(["apps","filesystem","notifications","sound"]),
     provides: Object.freeze(["desktop-app"]),
+  }),
+  Object.freeze({
+    manifestVersion: 1,
+    id: "worlds",
+    type: "desktop-app",
+    entry: "/js/v3/apps/worlds/src/index.js",
+    enabledByDefault: true,
+    requires: Object.freeze(["worlds"]),
+    provides: Object.freeze(["desktop-app"]),
   })
 ]);
 
