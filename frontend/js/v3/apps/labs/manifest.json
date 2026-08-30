@@ -1,0 +1,13 @@
+{
+  "manifestVersion": 1,
+  "id": "labs",
+  "type": "desktop-app",
+  "entry": "./src/index.js",
+  "enabledByDefault": true,
+  "requires": [
+    "apps"
+  ],
+  "provides": [
+    "desktop-app"
+  ]
+}
