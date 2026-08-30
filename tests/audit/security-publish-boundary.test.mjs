@@ -55,7 +55,8 @@ const ALLOWED_JSON = [
   /\/news\/.+\/index\.json$/,
   /\/analytics\/.+\/data\.json$/,
   /\/js\/v3\/apps\/notepad\/manifest\.json$/,
-  /\/js\/v3\/apps\/recycle-bin\/manifest\.json$/
+  /\/js\/v3\/apps\/recycle-bin\/manifest\.json$/,
+  /\/js\/v3\/apps\/winamp\/manifest\.json$/
 ];
 
 test('denylist: no source or workbook files enter frontend except the declared synthetic output download', () => {
@@ -130,7 +131,6 @@ test('deploy is cwd-independent: same frontend/ → staging result from differen
   const stagingB = mkdtempSync(path.join(tmpdir(), 'aizanoi-staging-b-'));
   const unrelated = mkdtempSync(path.join(tmpdir(), 'aizanoi-unrelated-'));
   try {
-    // Replicate the publish contract's core: absolute SOURCE, cwd must not matter.
     const source = path.join(repoRoot, 'frontend');
     execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingA}/"`], { cwd: repoRoot });
     execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingB}/"`], { cwd: unrelated });
@@ -175,9 +175,6 @@ test('webroot smoke: all 11 dashboard HTML routes exist under frontend/', () => 
 // ---- Owner decisions (regression locks) ----
 
 test('legacy /analytics/workforce-turnover/ stays 404 (owner decision 2026-08-26)', () => {
-  // The owner retired the legacy route; production must NOT publish a redirect
-  // or a copy at /analytics/workforce-turnover/. The canonical path lives under
-  // the HR Analytics Full Set catalog.
   const legacyFrontend = path.join(repoRoot, 'frontend/analytics/workforce-turnover/index.html');
   const legacyInRepo = path.join(repoRoot, 'analytics/workforce-turnover/');
   const hasFrontendCopy = existsSync(legacyFrontend);
@@ -208,7 +205,7 @@ test('HR Analytics Full Set catalog declares synthetic provenance and generated 
   assert.match(catalog, /0<\/strong><span>real employer or employee records/i);
   for (const rel of dashboards.slice(1)) {
     const full = path.join(repoRoot, 'frontend', rel);
-    if (!existsSync(full)) continue; // generator output not yet regenerated
+    if (!existsSync(full)) continue;
     const html = readFileSync(full, 'utf8');
     assert.doesNotMatch(html, /ipekyol|erduran/i, `${rel} contains a prohibited former identity`);
   }
