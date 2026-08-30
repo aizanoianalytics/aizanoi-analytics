@@ -4,12 +4,13 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 
 ## Current app entries
 
-- `brand-hubs.js` — remaining shared Journal / Labs surfaces; shrink this file one product at a time
 - [`analytics/index.md`](analytics/index.md) — manifest-driven Analytics launcher surface with no shared capabilities
 - [`calculator/index.md`](calculator/index.md) — manifest-driven Calculator with injected sound
 - [`camera/index.md`](camera/index.md) — manifest-driven Camera with explicit media capability
 - [`forge/index.md`](forge/index.md) — manifest-driven Forge surface with narrow app navigation to Historical Worlds
 - `games.js` — Arcade/game launcher integration; game assets still live under shared `frontend/games/`, so this is not yet a self-contained module
+- [`journal/index.md`](journal/index.md) — zero-capability long-form Journal surface
+- [`labs/index.md`](labs/index.md) — Labs surface with narrow app navigation to Arcade
 - [`news/index.md`](news/index.md) — manifest-driven Aizanoi News reading its own static publication feed
 - [`videos/index.md`](videos/index.md) — manifest-driven Aizanoi TV with narrow app navigation
 - [`notepad/index.md`](notepad/index.md) — manifest-driven, capability-injected Notepad module
@@ -37,6 +38,8 @@ apps/
 ├── calculator/
 ├── camera/
 ├── forge/
+├── journal/
+├── labs/
 ├── news/
 ├── notepad/
 ├── recycle-bin/
@@ -72,11 +75,17 @@ Workspace UI declares `apps`, `filesystem`, `notifications` and `sound`. The Ind
 
 Historical Worlds declares only `worlds`. Its private UI receives a frozen catalog plus `currentSession()` and `launch()` instead of importing the canonical registry/store or receiving the full shell API.
 
-Aizanoi News is a zero-capability content module. It owns the `/news/index.json` fetch and feed rendering that previously lived inside `brand-hubs.js`.
+Aizanoi News is a zero-capability content module. It owns the `/news/index.json` fetch and feed rendering that previously lived inside the retired shared hub.
 
 Analytics is also zero-capability. It owns only the AizanoiOS HR Analytics launcher surface; the actual dashboard product and deterministic build pipeline remain in their canonical `frontend/analytics/` and repo pipeline locations.
 
-Aizanoi Forge declares only `apps`. It owns the branded source/project catalog and canonical GitHub link; Historical Worlds navigation goes through `apps.open()` rather than the full shell API. Journal and Labs remain in the shrinking legacy hub file.
+Aizanoi Forge declares only `apps`. It owns the branded source/project catalog and canonical GitHub link; Historical Worlds navigation goes through `apps.open()` rather than the full shell API.
+
+Aizanoi Journal is a zero-capability surface and owns its long-form desk presentation independently.
+
+Aizanoi Labs declares only `apps`. It owns experimental/prototype presentation and reaches Arcade only through `apps.open()`; playable game implementation stays owned by Arcade.
+
+The former `brand-hubs.js` shared implementation is retired. News, Analytics, Forge, Journal and Labs now have independent module ownership instead of one cross-product source file.
 
 ## Boundary rule
 

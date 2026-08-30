@@ -5,7 +5,6 @@ import { existsSync, readFileSync } from 'node:fs';
 const read = (file) => readFileSync(file, 'utf8');
 const registry = read('frontend/js/v3/registry.js');
 const platform = read('frontend/js/v3/brand-platform.js');
-const hubs = read('frontend/js/v3/apps/brand-hubs.js');
 const analyticsApp = read('frontend/js/v3/apps/analytics/src/app.js');
 const manifest = read('frontend/manifest.webmanifest');
 const errorPages = ['frontend/404.html', 'frontend/500.html', 'frontend/503.html'].map(read).join('\n');
