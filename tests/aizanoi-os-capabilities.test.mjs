@@ -65,6 +65,37 @@ test('filesystem capability exposes the complete shared surface needed by migrat
   }
 });
 
+test('worlds capability narrows catalog, current session and launch through the canonical runtime facade', async () => {
+  const previous = globalThis.AIZANOI_OS;
+  const calls = [];
+  const session = { worldId: 'aizanoi', landmark: 'Temple of Zeus' };
+  globalThis.AIZANOI_OS = Object.freeze({
+    store: Object.freeze({ getFieldSession: () => session }),
+    launchWorld(worldId, landmark) {
+      calls.push({ worldId, landmark });
+      return `world:${worldId}`;
+    },
+  });
+  try {
+    const resolved = await resolveCapabilities(['worlds']);
+    const worlds = resolved.worlds;
+    assert.deepEqual(Object.keys(worlds), ['list', 'currentSession', 'launch']);
+    const catalog = worlds.list();
+    assert.equal(Object.isFrozen(catalog), true);
+    assert.ok(catalog.some((world) => world.id === 'aizanoi'));
+    assert.equal(catalog.every((world) => Object.isFrozen(world)), true);
+    const current = worlds.currentSession();
+    assert.notEqual(current, session);
+    assert.deepEqual(current, session);
+    assert.equal(Object.isFrozen(current), true);
+    assert.equal(worlds.launch('rome', 'Forum'), 'world:rome');
+    assert.deepEqual(calls, [{ worldId: 'rome', landmark: 'Forum' }]);
+  } finally {
+    if (previous === undefined) delete globalThis.AIZANOI_OS;
+    else globalThis.AIZANOI_OS = previous;
+  }
+});
+
 test('capability resolver rejects unknown undeclared providers instead of silently degrading', async () => {
   await assert.rejects(
     () => resolveCapabilities(['definitely-not-a-capability']),

@@ -71,12 +71,36 @@ async function appsCapability() {
   });
 }
 
+async function worldsCapability() {
+  const { WORLDS } = await import('./registry.js');
+  const catalog = Object.freeze(WORLDS.map((world) => Object.freeze({ ...world })));
+  return Object.freeze({
+    list: () => catalog,
+    currentSession: () => {
+      const runtime = globalThis.AIZANOI_OS;
+      if (typeof runtime?.store?.getFieldSession !== 'function') {
+        throw new Error('AizanoiOS field session is unavailable.');
+      }
+      const session = runtime.store.getFieldSession();
+      return session ? Object.freeze({ ...session }) : null;
+    },
+    launch: (worldId, landmark) => {
+      const runtime = globalThis.AIZANOI_OS;
+      if (typeof runtime?.launchWorld !== 'function') {
+        throw new Error('AizanoiOS world navigation is unavailable.');
+      }
+      return runtime.launchWorld(worldId, landmark);
+    },
+  });
+}
+
 const SHARED_PROVIDERS = Object.freeze({
   apps: appsCapability,
   filesystem: filesystemCapability,
   dialog: dialogCapability,
   sound: soundCapability,
   media: mediaCapability,
+  worlds: worldsCapability,
 });
 
 function requestedNames(required) {
