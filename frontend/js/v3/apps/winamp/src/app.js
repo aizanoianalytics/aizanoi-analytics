@@ -1,7 +1,7 @@
-/** AizanoiOS Winamp-style music player. Playlist seeds come from the Workspace Music folder;
- *  users can also load local audio files (and later a shipped playlist file) without any upload. */
-
-const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+/** Private Winamp-style player. Shared services arrive only as capabilities. */
+const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({
+  '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+}[c]));
 
 const PLAYLIST_KEY = 'aizanoi-winamp-playlist-v1';
 
@@ -9,7 +9,8 @@ function readPersisted() {
   try { return JSON.parse(localStorage.getItem(PLAYLIST_KEY)) || []; } catch (_) { return []; }
 }
 
-export async function mount({ container, api }) {
+export async function mountWinamp({ container, capabilities }) {
+  const { filesystem, notifications, sound } = capabilities;
   container.innerHTML = `
   <div class="az-app-shell"><div class="az-app-toolbar"><strong>Winamp</strong><span class="az-system-spacer"></span><span class="az-app-caption">AizanoiOS audio player</span></div>
   <div class="az-winamp">
@@ -42,20 +43,22 @@ export async function mount({ container, api }) {
   const seekEl = container.querySelector('[data-wa-seek]');
   const playlistEl = container.querySelector('[data-wa-playlist]');
   const fileInput = container.querySelector('[data-wa-file-input]');
+  const vol = container.querySelector('[data-wa-vol]');
 
-  /** playlist item: {name, blob?} — blobs live in-memory during the session; persistent
-   *  items point at Workspace file ids resolved on demand. */
-  let playlist = readPersisted(); // [{source:'workspace', id, name} | {source:'local', name}]
+  let playlist = readPersisted();
   let index = -1;
-  const localBlobs = new Map(); // name -> File (session only)
+  const localBlobs = new Map();
 
   function persist() {
-    try { localStorage.setItem(PLAYLIST_KEY, JSON.stringify(playlist.filter((item) => item.source === 'workspace'))); } catch (_) {}
+    try {
+      localStorage.setItem(PLAYLIST_KEY, JSON.stringify(playlist.filter((item) => item.source === 'workspace')));
+    } catch (_) {}
   }
 
   function fmt(seconds) {
     if (!Number.isFinite(seconds)) return '00:00';
-    const m = Math.floor(seconds / 60), s = Math.floor(seconds % 60);
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   }
 
@@ -67,8 +70,13 @@ export async function mount({ container, api }) {
 
   async function resolveSource(item) {
     if (item.source === 'local') return localBlobs.get(item.name) || null;
-    const fs = await import('/js/v3/workspace/fs.js');
-    return fs.readFileBlob(item.id);
+    return filesystem.readFileBlob(item.id);
+  }
+
+  function revokeActiveUrl() {
+    if (!audio.dataset.blobUrl) return;
+    URL.revokeObjectURL(audio.dataset.blobUrl);
+    delete audio.dataset.blobUrl;
   }
 
   async function play(i) {
@@ -76,22 +84,25 @@ export async function mount({ container, api }) {
     index = (i + playlist.length) % playlist.length;
     const item = playlist[index];
     const blob = await resolveSource(item);
-    if (!blob) { api.notify('Winamp', `Cannot load ${item.name}`, 'error'); return; }
+    if (!blob) {
+      notifications.notify('Winamp', `Cannot load ${item.name}`, 'error');
+      return;
+    }
     const url = URL.createObjectURL(blob);
-    if (audio.dataset.blobUrl) URL.revokeObjectURL(audio.dataset.blobUrl);
+    revokeActiveUrl();
     audio.dataset.blobUrl = url;
     audio.src = url;
     trackEl.textContent = `${index + 1}. ${item.name}`;
-    audio.play().catch(() => api.notify('Winamp', 'Press play to start audio.', 'system'));
+    audio.play().catch(() => notifications.notify('Winamp', 'Press play to start audio.', 'system'));
     renderPlaylist();
   }
 
-  function tick() {
+  function handleTimeUpdate() {
     timeEl.textContent = fmt(audio.currentTime);
     if (audio.duration) seekEl.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
   }
 
-  const click = async (event) => {
+  async function handleAction(event) {
     const itemIdx = event.target.closest('[data-wa-item]')?.dataset.waItem;
     if (itemIdx !== undefined) return play(Number(itemIdx));
     const action = event.target.closest('[data-wa-action]')?.dataset.waAction
@@ -102,66 +113,100 @@ export async function mount({ container, api }) {
       || (event.target.closest('[data-wa-next]') ? 'next' : '')
       || (event.target.closest('[data-wa-add-local]') ? 'add-local' : '')
       || (event.target.closest('[data-wa-add-workspace]') ? 'add-ws' : '');
-    api.playSound('click');
+    sound.play('click');
     if (action === 'play') audio.play().catch(() => {});
     else if (action === 'pause') audio.pause();
     else if (action === 'stop') { audio.pause(); audio.currentTime = 0; }
-    else if (action === 'prev') play(index - 1);
-    else if (action === 'next') play(index + 1);
+    else if (action === 'prev') return play(index - 1);
+    else if (action === 'next') return play(index + 1);
     else if (action === 'add-local') fileInput.click();
     else if (action === 'add-ws') {
-      const fs = await import('/js/v3/workspace/fs.js');
-      const items = await fs.childrenOf(fs.MUSIC_ID);
+      const items = await filesystem.childrenOf(filesystem.musicId);
       const tracks = items.filter((node) => node.kind === 'file' && (node.mime || '').startsWith('audio/'));
-      if (!tracks.length) { api.notify('Winamp', 'No audio files in Workspace · Music yet. Add local files instead.', 'system'); return; }
-      playlist = tracks.map((node) => ({ source: 'workspace', id: node.id, name: node.name }));
-      persist(); renderPlaylist();
-      play(0);
+      if (!tracks.length) {
+        notifications.notify('Winamp', 'No audio files in Workspace · Music yet. Add local files instead.', 'system');
+        return;
+      }
+      playlist = tracks.map((node) => ({ source:'workspace', id:node.id, name:node.name }));
+      persist();
+      renderPlaylist();
+      return play(0);
     }
+  }
+
+  const handleClick = (event) => {
+    handleAction(event).catch((error) => notifications.notify('Winamp', error.message, 'error'));
   };
 
-  fileInput.addEventListener('change', async () => {
-    const fs = await import('/js/v3/workspace/fs.js');
-    for (const file of fileInput.files || []) {
-      // Import into the Workspace so the playlist survives reloads (blobs
-      // cannot live in localStorage; IndexedDB is the durable home).
+  async function handleFileChange() {
+    const files = [...(fileInput.files || [])];
+    const firstAddedIndex = playlist.length;
+    for (const file of files) {
       try {
-        const node = await fs.createFile({ name: file.name, parent: fs.MUSIC_ID, blob: file, mime: file.type || 'audio/mpeg' });
-        playlist.push({ source: 'workspace', id: node.id, name: node.name });
-      } catch (error) {
+        const node = await filesystem.createFile({
+          name:file.name,
+          parent:filesystem.musicId,
+          blob:file,
+          mime:file.type || 'audio/mpeg',
+        });
+        playlist.push({ source:'workspace', id:node.id, name:node.name });
+      } catch (_) {
         localBlobs.set(file.name, file);
-        playlist.push({ source: 'local', name: file.name });
+        playlist.push({ source:'local', name:file.name });
       }
     }
     fileInput.value = '';
     persist();
     renderPlaylist();
-    if (index === -1 && playlist.length) play(playlist.length - (fileInput.files?.length || 1));
-    else renderPlaylist();
-  });
+    if (index === -1 && files.length) await play(firstAddedIndex);
+  }
 
-  seekEl.addEventListener('input', () => {
+  function handleSeekInput() {
     if (audio.duration) audio.currentTime = (Number(seekEl.value) / 1000) * audio.duration;
-  });
-  audio.addEventListener('timeupdate', tick);
-  audio.addEventListener('ended', () => play(index + 1));
+  }
 
-  const vol = container.querySelector('[data-wa-vol]');
-  vol.addEventListener('input', () => { audio.volume = Number(vol.value) / 100; });
+  function handleEnded() {
+    play(index + 1).catch((error) => notifications.notify('Winamp', error.message, 'error'));
+  }
+
+  function handleVolumeInput() {
+    audio.volume = Number(vol.value) / 100;
+  }
+
+  container.addEventListener('click', handleClick);
+  fileInput.addEventListener('change', handleFileChange);
+  seekEl.addEventListener('input', handleSeekInput);
+  audio.addEventListener('timeupdate', handleTimeUpdate);
+  audio.addEventListener('ended', handleEnded);
+  vol.addEventListener('input', handleVolumeInput);
   audio.volume = 0.8;
-
-  container.addEventListener('click', (event) => { click(event).catch((error) => api.notify('Winamp', error.message, 'error')); });
   renderPlaylist();
+
   function onOpen(newOptions) {
     const trackId = newOptions?.trackId;
-    if (trackId) {
-      const existing = playlist.findIndex((item) => item.source === 'workspace' && item.id === trackId);
-      if (existing >= 0) play(existing);
-      else { playlist.push({ source: 'workspace', id: trackId, name: newOptions?.name || 'Workspace track' }); persist(); renderPlaylist(); play(playlist.length - 1); }
+    if (!trackId) return;
+    const existing = playlist.findIndex((item) => item.source === 'workspace' && item.id === trackId);
+    if (existing >= 0) {
+      play(existing).catch((error) => notifications.notify('Winamp', error.message, 'error'));
+      return;
     }
+    playlist.push({ source:'workspace', id:trackId, name:newOptions?.name || 'Workspace track' });
+    persist();
+    renderPlaylist();
+    play(playlist.length - 1).catch((error) => notifications.notify('Winamp', error.message, 'error'));
   }
+
   return {
-    cleanup: () => { audio.pause(); if (audio.dataset.blobUrl) URL.revokeObjectURL(audio.dataset.blobUrl); },
+    cleanup() {
+      container.removeEventListener('click', handleClick);
+      fileInput.removeEventListener('change', handleFileChange);
+      seekEl.removeEventListener('input', handleSeekInput);
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('ended', handleEnded);
+      vol.removeEventListener('input', handleVolumeInput);
+      audio.pause();
+      revokeActiveUrl();
+    },
     onOpen,
   };
 }
