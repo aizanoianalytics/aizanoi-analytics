@@ -1,0 +1,13 @@
+{
+  "manifestVersion": 1,
+  "id": "calculator",
+  "type": "desktop-app",
+  "entry": "./src/index.js",
+  "enabledByDefault": true,
+  "requires": [
+    "sound"
+  ],
+  "provides": [
+    "desktop-app"
+  ]
+}
