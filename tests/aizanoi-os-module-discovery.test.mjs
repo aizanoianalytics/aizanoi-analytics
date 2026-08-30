@@ -6,6 +6,7 @@ import path from 'node:path';
 
 import {
   DEFAULT_OUTPUT,
+  PLATFORM_CAPABILITIES,
   buildRegistrySource,
   discoverModules,
 } from '../scripts/modules/build-module-registry.mjs';
@@ -41,6 +42,10 @@ test('actual module manifests generate the committed wiring exactly', async () =
 
   const committed = await readFile(DEFAULT_OUTPUT, 'utf8');
   assert.equal(committed, buildRegistrySource(modules), 'generated module wiring is stale');
+});
+
+test('platform capability contract covers every currently injected shared/host surface', () => {
+  assert.deepEqual([...PLATFORM_CAPABILITIES], ['dialog', 'filesystem', 'media', 'notifications', 'sound']);
 });
 
 test('generated wiring contains runtime wiring, not duplicate public catalog metadata', async () => {
@@ -84,6 +89,60 @@ test('manifest public entry cannot escape its module directory', async () => {
     await assert.rejects(
       () => discoverModules({ appsRoot: root }),
       /entry must stay inside its module directory/
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('module discovery rejects an unavailable required capability', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'aizanoi-modules-'));
+  try {
+    await writeFixtureModule(root, 'orphan', { requires: ['ghost-service'] });
+    await assert.rejects(
+      () => discoverModules({ appsRoot: root }),
+      /requires unavailable capability: ghost-service/
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('module discovery accepts one explicit module-provided capability dependency', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'aizanoi-modules-'));
+  try {
+    await writeFixtureModule(root, 'provider', { provides: ['desktop-app', 'preview-service'] });
+    await writeFixtureModule(root, 'consumer', { requires: ['preview-service'] });
+    const modules = await discoverModules({ appsRoot: root });
+    assert.deepEqual(modules.map((module) => module.id), ['consumer', 'provider']);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('module discovery rejects ambiguous module capability providers', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'aizanoi-modules-'));
+  try {
+    await writeFixtureModule(root, 'provider-a', { provides: ['desktop-app', 'preview-service'] });
+    await writeFixtureModule(root, 'provider-b', { provides: ['desktop-app', 'preview-service'] });
+    await writeFixtureModule(root, 'consumer', { requires: ['preview-service'] });
+    await assert.rejects(
+      () => discoverModules({ appsRoot: root }),
+      /requires ambiguous capability preview-service provided by: provider-a, provider-b/
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+test('module discovery rejects dependency cycles', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'aizanoi-modules-'));
+  try {
+    await writeFixtureModule(root, 'alpha', { requires: ['beta-service'], provides: ['desktop-app', 'alpha-service'] });
+    await writeFixtureModule(root, 'beta', { requires: ['alpha-service'], provides: ['desktop-app', 'beta-service'] });
+    await assert.rejects(
+      () => discoverModules({ appsRoot: root }),
+      /cycle detected: alpha -> beta -> alpha/
     );
   } finally {
     await rm(root, { recursive: true, force: true });
