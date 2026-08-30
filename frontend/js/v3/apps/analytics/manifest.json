@@ -1,0 +1,11 @@
+{
+  "manifestVersion": 1,
+  "id": "analytics",
+  "type": "desktop-app",
+  "entry": "./src/index.js",
+  "enabledByDefault": true,
+  "requires": [],
+  "provides": [
+    "desktop-app"
+  ]
+}
