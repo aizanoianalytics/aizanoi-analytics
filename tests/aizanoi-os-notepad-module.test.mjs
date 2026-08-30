@@ -40,6 +40,6 @@ test('only the module capability adapter knows current shared implementation pat
 });
 
 test('Notepad lifecycle cleanup removes its owned listeners', () => {
-  assert.match(privateApp, /removeEventListener\('input', onInput\)/);
-  assert.match(privateApp, /removeEventListener\('click', onClick\)/);
+  assert.match(privateApp, /removeEventListener\('input', handleInput\)/);
+  assert.match(privateApp, /removeEventListener\('click', handleClick\)/);
 });
