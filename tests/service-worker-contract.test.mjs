@@ -6,13 +6,14 @@ const sw = readFileSync('frontend/service-worker.js', 'utf8');
 const ci = readFileSync('.github/workflows/ci.yml', 'utf8');
 
 test('service worker uses the current cache namespace for the hardened platform', () => {
-  assert.match(sw, /const CACHE = 'aizanoi-os-shell-v4\.3\.1';/);
+  assert.match(sw, /const CACHE = 'aizanoi-os-shell-v4\.3\.2';/);
 });
 
 test('service worker precaches safe independent requests in parallel and fails as a unit', () => {
   assert.match(sw, /Promise\.all\(PRECACHE\.map\(async \(url\) =>/);
   assert.match(sw, /await Promise\.all\(responses\.map/);
   assert.match(sw, /if \(!response\.ok\) throw new Error/);
+  assert.match(sw, /\/js\/v3\/module-registry\.generated\.js/);
 });
 
 test('service worker upgrades wait rather than forcing new code over open AizanoiOS clients', () => {
