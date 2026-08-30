@@ -336,7 +336,15 @@ async function openAppInstance(appId, app, options, generation) {
   try {
     const module = await import(app.module);
     if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) return null;
-    const result = await module.mount?.({ container:body, app, appId, api:appApi, options });
+    let capabilities = Object.freeze({});
+    if (Array.isArray(app.requires) && app.requires.length) {
+      const runtime = await import('./capabilities.js');
+      capabilities = await runtime.resolveCapabilities(app.requires, {
+        notifications: Object.freeze({ notify }),
+      });
+      if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) return null;
+    }
+    const result = await module.mount?.({ container:body, app, appId, api:appApi, capabilities, options });
     if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) { try { (typeof result === 'function' ? result : result?.cleanup)?.(); } catch (_) {} return null; }
     item.cleanup = (typeof result === 'object' && result) ? (result.cleanup || null) : (typeof result === 'function' ? result : null);
     item.onOpen = (typeof result === 'object' && result && typeof result.onOpen === 'function') ? result.onOpen : null;

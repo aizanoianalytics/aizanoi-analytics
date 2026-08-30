@@ -40,7 +40,7 @@ function resolveAppDefinition(definition) {
   const installed = enabledModuleById(definition.moduleId);
   if (!installed) return null;
   const { moduleId, ...app } = definition;
-  return { ...app, module: installed.entry };
+  return { ...app, module: installed.entry, requires: installed.requires };
 }
 
 export const APPS = Object.freeze(APP_DEFINITIONS.map(resolveAppDefinition).filter(Boolean));
