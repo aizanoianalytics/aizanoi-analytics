@@ -1,9 +1,21 @@
 import { enabledModuleById } from './module-registry.generated.js';
 
 export const WORLDS = Object.freeze([
-  { id:'aizanoi', label:'Aizanoi', era:'Roman Phrygia · c. AD 2nd–3rd century', route:'/historic-world/', summary:'Temple of Zeus, theatre–stadium, Penkalas riverfront and a source-led reconstruction of the ancient city.', duration:'10 min guided survey', evidence:'Documented + archaeological + inferred', accent:'brass' },
-  { id:'rome', label:'Rome', era:'Late Antiquity · AD 410–476', route:'/ancient-cities/rome-410-476/', summary:'Walk a transformed imperial capital from the Forum and Colosseum to churches, baths and dense late-antique districts.', duration:'Free explore', evidence:'Source-led + explicitly inferred fabric', accent:'rust' },
-  { id:'athens', label:'Athens', era:'Classical period · c. 432–430 BCE', route:'/ancient-cities/athens-450-430/', summary:'Move between the Acropolis, Agora, Pnyx and civic landscape with reconstruction confidence kept visible.', duration:'Free explore', evidence:'Source-led + explicitly inferred fabric', accent:'teal' }
+  {
+    id:'aizanoi', label:'Aizanoi', era:'Roman Phrygia · c. AD 2nd–3rd century', route:'/historic-world/',
+    summary:'Temple of Zeus, theatre–stadium, Penkalas riverfront and a source-led reconstruction of the ancient city.',
+    duration:'10 min guided survey', evidence:'Documented + archaeological + inferred', accent:'brass'
+  },
+  {
+    id:'rome', label:'Rome', era:'Late Antiquity · AD 410–476', route:'/ancient-cities/rome-410-476/',
+    summary:'Walk a transformed imperial capital from the Forum and Colosseum to churches, baths and dense late-antique districts.',
+    duration:'Free explore', evidence:'Source-led + explicitly inferred fabric', accent:'rust'
+  },
+  {
+    id:'athens', label:'Athens', era:'Classical period · c. 432–430 BCE', route:'/ancient-cities/athens-450-430/',
+    summary:'Move between the Acropolis, Agora, Pnyx and civic landscape with reconstruction confidence kept visible.',
+    duration:'Free explore', evidence:'Source-led + explicitly inferred fabric', accent:'teal'
+  }
 ]);
 
 const APP_DEFINITIONS = Object.freeze([
@@ -33,11 +45,16 @@ function resolveAppDefinition(definition) {
 
 export const APPS = Object.freeze(APP_DEFINITIONS.map(resolveAppDefinition).filter(Boolean));
 export const ALL_APPS = APPS;
+
 const APP_MAP = new Map(ALL_APPS.map((app) => [app.id, app]));
 const WORLD_MAP = new Map(WORLDS.map((world) => [world.id, world]));
 const APP_ALIASES = Object.freeze({ tv:'videos', arcade:'games' });
+
 export function appById(id) { return APP_MAP.get(String(id || '')) || null; }
-export function canonicalAppId(id) { const value=String(id || ''); return APP_ALIASES[value] || (APP_MAP.has(value) ? value : null); }
+export function canonicalAppId(id) {
+  const value=String(id || '');
+  return APP_ALIASES[value] || (APP_MAP.has(value) ? value : null);
+}
 export function worldById(id) { return WORLD_MAP.get(String(id || '')) || null; }
 export function appsByGroup(group) { return ALL_APPS.filter((app) => app.group === group); }
 export function searchableEntries() {
