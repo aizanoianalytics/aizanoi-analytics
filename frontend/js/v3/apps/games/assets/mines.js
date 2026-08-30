@@ -23,10 +23,12 @@
 
     container.innerHTML = '';
     container.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px;background:linear-gradient(145deg,#d8d6cb,#b9b8ae);border:1px solid #8e8d84;box-shadow:inset 1px 1px #fff,inset -1px -1px #777;max-width:100%;overflow:auto;';
+
     const header = document.createElement('div');
     header.style.cssText = 'width:' + (W * SIZE + 4) + 'px;max-width:100%;display:grid;grid-template-columns:72px 1fr 72px;align-items:center;gap:8px;padding:7px;background:#c6c4b9;border:2px solid;border-color:#777 #fff #fff #777;';
     header.innerHTML = '<div id="mines-counter" aria-label="Mines remaining"></div><button id="mines-face" aria-label="Restart game">🙂</button><div id="mines-timer" aria-label="Elapsed time"></div>';
     container.appendChild(header);
+
     ['mines-counter','mines-timer'].forEach(id => {
       const el = header.querySelector('#' + id);
       el.style.cssText = 'height:34px;background:#210606;color:#ff3b30;border:2px inset #777;display:flex;align-items:center;justify-content:center;font:700 24px/1 Consolas,monospace;letter-spacing:2px;text-shadow:0 0 7px rgba(255,50,40,.75);';
@@ -41,6 +43,7 @@
     const grid = document.createElement('div');
     grid.id = 'mines-grid';
     grid.style.cssText = 'display:grid;grid-template-columns:repeat(' + W + ',' + SIZE + 'px);gap:0;background:#8c8c84;padding:2px;width:fit-content;max-width:none;box-shadow:inset 2px 2px #777,inset -2px -2px #fff;touch-action:manipulation;';
+
     for (let y = 0; y < H; y++) {
       for (let x = 0; x < W; x++) {
         const cell = document.createElement('button');
@@ -60,13 +63,19 @@
       }
     }
     container.appendChild(grid);
+
     const status = document.createElement('div');
     status.id = 'mines-status';
     status.style.cssText = 'width:min(' + (W * SIZE + 4) + 'px,100%);min-height:30px;padding:7px 9px;background:#ecebe4;border:1px solid #9b9a92;color:#252525;font:11px/1.35 Tahoma,sans-serif;';
     container.appendChild(status);
+
     if (window.AizanoiGames) {
-      container.appendChild(window.AizanoiGames.toolbar({ game: 'mines', lowerBetter: true, onPause: togglePause, onRestart: init, formatBest: (value) => value + 's' }));
+      container.appendChild(window.AizanoiGames.toolbar({
+        game: 'mines', lowerBetter: true, onPause: togglePause, onRestart: init,
+        formatBest: (value) => value + 's'
+      }));
     }
+
     const hint = document.createElement('div');
     hint.style.cssText = 'font:10px Tahoma,sans-serif;color:#5b5b56;text-align:center;';
     hint.textContent = 'Click to reveal · Right-click or long-press to flag';
@@ -141,7 +150,9 @@
   function end(result) {
     over = true; won = result;
     if (timer) clearInterval(timer); timer = null;
-    if (!won) for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (board[y][x] === -1) revealed[y][x] = true;
+    if (!won) {
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (board[y][x] === -1) revealed[y][x] = true;
+    }
     render(); updateStatus();
     const face = document.getElementById('mines-face');
     if (face) face.textContent = won ? '😎' : '😵';
