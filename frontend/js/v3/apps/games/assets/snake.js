@@ -78,6 +78,9 @@
   }
 
   function tick() {
+    // The Games window/game loader removes this container when switching games
+    // or closing the window. Stop the timer immediately instead of leaving an
+    // orphaned interval running in the background.
     if (!container.isConnected) {
       if (interval) clearInterval(interval);
       interval = null;
@@ -107,14 +110,17 @@
     const bg = ctx.createLinearGradient(0,0,0,c.height);
     bg.addColorStop(0,'#081828'); bg.addColorStop(1,'#030b13');
     ctx.fillStyle = bg; ctx.fillRect(0,0,c.width,c.height);
+
     ctx.strokeStyle = 'rgba(104,155,192,.10)'; ctx.lineWidth = 1;
     for (let x=0;x<=W;x++){ctx.beginPath();ctx.moveTo(x*CELL+.5,0);ctx.lineTo(x*CELL+.5,c.height);ctx.stroke();}
     for (let y=0;y<=H;y++){ctx.beginPath();ctx.moveTo(0,y*CELL+.5);ctx.lineTo(c.width,y*CELL+.5);ctx.stroke();}
+
     const fx = food.x*CELL + CELL/2, fy = food.y*CELL + CELL/2;
     ctx.save(); ctx.shadowColor = '#ff6d55'; ctx.shadowBlur = 14 + pulse*2;
     const fg = ctx.createRadialGradient(fx-3,fy-4,2,fx,fy,9);
     fg.addColorStop(0,'#fff0ae'); fg.addColorStop(.24,'#ff855f'); fg.addColorStop(1,'#c8242d');
     ctx.fillStyle = fg; ctx.beginPath(); ctx.arc(fx,fy,7.5,0,Math.PI*2); ctx.fill(); ctx.restore();
+
     snake.slice().reverse().forEach((s, revIndex) => {
       const i = snake.length - 1 - revIndex;
       const x=s.x*CELL+2,y=s.y*CELL+2,w=CELL-4;
@@ -132,6 +138,7 @@
       }
     });
     ctx.shadowBlur=0;
+
     if (paused && !over) {
       ctx.fillStyle='rgba(2,8,14,.58)';ctx.fillRect(0,0,c.width,c.height);
       ctx.textAlign='center';ctx.fillStyle='#eef8ff';ctx.font='700 25px Segoe UI,Tahoma';ctx.fillText('PAUSED',c.width/2,c.height/2);
@@ -141,6 +148,7 @@
       ctx.textAlign='center';ctx.fillStyle='#eef8ff';ctx.font='700 28px Segoe UI,Tahoma';ctx.fillText('GAME OVER',c.width/2,c.height/2-8);
       ctx.fillStyle='#8fc9ef';ctx.font='13px Segoe UI,Tahoma';ctx.fillText('Press Space / Enter or New Game',c.width/2,c.height/2+20);
     }
+
     const scoreEl=document.getElementById('snake-score'); if(scoreEl) scoreEl.textContent=String(score).padStart(4,'0');
     const status=document.getElementById('snake-status');
     if(status) status.textContent=paused ? 'Paused · Press P or Resume' : (over ? 'Run ended · Score: '+score : 'Score: '+score+' · Arrow keys or D-pad · Eat the glowing signal');
