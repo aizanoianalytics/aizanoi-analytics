@@ -4,10 +4,11 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 
 ## Current app entries
 
-- `brand-hubs.js` — remaining shared Forge / Journal / Labs surfaces; shrink this file one product at a time
+- `brand-hubs.js` — remaining shared Journal / Labs surfaces; shrink this file one product at a time
 - [`analytics/index.md`](analytics/index.md) — manifest-driven Analytics launcher surface with no shared capabilities
 - [`calculator/index.md`](calculator/index.md) — manifest-driven Calculator with injected sound
 - [`camera/index.md`](camera/index.md) — manifest-driven Camera with explicit media capability
+- [`forge/index.md`](forge/index.md) — manifest-driven Forge surface with narrow app navigation to Historical Worlds
 - `games.js` — Arcade/game launcher integration; game assets still live under shared `frontend/games/`, so this is not yet a self-contained module
 - [`news/index.md`](news/index.md) — manifest-driven Aizanoi News reading its own static publication feed
 - [`videos/index.md`](videos/index.md) — manifest-driven Aizanoi TV with narrow app navigation
@@ -35,6 +36,7 @@ apps/
 ├── analytics/
 ├── calculator/
 ├── camera/
+├── forge/
 ├── news/
 ├── notepad/
 ├── recycle-bin/
@@ -72,7 +74,9 @@ Historical Worlds declares only `worlds`. Its private UI receives a frozen catal
 
 Aizanoi News is a zero-capability content module. It owns the `/news/index.json` fetch and feed rendering that previously lived inside `brand-hubs.js`.
 
-Analytics is also zero-capability. It owns only the AizanoiOS HR Analytics launcher surface; the actual dashboard product and deterministic build pipeline remain in their canonical `frontend/analytics/` and repo pipeline locations. Forge, Journal and Labs remain unchanged in the shrinking legacy hub file.
+Analytics is also zero-capability. It owns only the AizanoiOS HR Analytics launcher surface; the actual dashboard product and deterministic build pipeline remain in their canonical `frontend/analytics/` and repo pipeline locations.
+
+Aizanoi Forge declares only `apps`. It owns the branded source/project catalog and canonical GitHub link; Historical Worlds navigation goes through `apps.open()` rather than the full shell API. Journal and Labs remain in the shrinking legacy hub file.
 
 ## Boundary rule
 
