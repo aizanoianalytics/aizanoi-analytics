@@ -35,7 +35,7 @@ test('service worker never handles API routes', () => {
 });
 
 test('service worker core precache includes the adaptive shell and remains complete-or-fail', () => {
-  assert.match(sw, /aizanoi-os-shell-v4\.3\.1/);
+  assert.match(sw, /aizanoi-os-shell-v4\.3\.2/);
   assert.match(sw, /cache:'reload'/);
   assert.match(sw, /if \(!response\.ok\) throw new Error/);
   const installBlock = sw.match(/self\.addEventListener\('install',[\s\S]*?\n\}\);/)?.[0] || '';
@@ -45,6 +45,7 @@ test('service worker core precache includes the adaptive shell and remains compl
   assert.match(precache, /\/js\/v3\/shell\.js/);
   assert.match(precache, /\/js\/v3\/aizanoi-os\.js/);
   assert.match(precache, /\/js\/v3\/brand-platform\.js/);
+  assert.match(precache, /\/js\/v3\/module-registry\.generated\.js/);
   assert.match(precache, /\/styles\/device-shell\.css/);
   assert.match(precache, /\/news\/index\.json/);
   assert.match(precache, /\/assets\/wallpapers\/aizanoi-os-sunrise\.svg/);
