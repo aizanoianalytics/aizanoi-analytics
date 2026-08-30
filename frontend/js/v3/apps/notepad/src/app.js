@@ -103,12 +103,12 @@ export async function mountNotepad({ container, options, capabilities }) {
     renderTitle();
   }
 
-  const onInput = () => {
+  const handleInput = () => {
     dirty = true;
     renderTitle();
   };
 
-  const onClick = async (event) => {
+  const handleClick = async (event) => {
     const openId = event.target.closest('[data-note-open]')?.dataset.noteOpen;
     if (openId) {
       await loadFile(openId).catch((error) => notifications.notify('Notepad', error.message, 'error'));
@@ -141,8 +141,8 @@ export async function mountNotepad({ container, options, capabilities }) {
     }
   };
 
-  textEl.addEventListener('input', onInput);
-  container.addEventListener('click', onClick);
+  textEl.addEventListener('input', handleInput);
+  container.addEventListener('click', handleClick);
 
   function onOpen(newOptions) {
     const id = newOptions?.fileId;
@@ -162,8 +162,8 @@ export async function mountNotepad({ container, options, capabilities }) {
 
   return {
     cleanup() {
-      textEl.removeEventListener('input', onInput);
-      container.removeEventListener('click', onClick);
+      textEl.removeEventListener('input', handleInput);
+      container.removeEventListener('click', handleClick);
     },
     onOpen,
     beforeClose,
