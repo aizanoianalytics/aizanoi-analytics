@@ -55,7 +55,20 @@ async function mediaCapability() {
   });
 }
 
+async function appsCapability() {
+  return Object.freeze({
+    open: (appId, options = {}) => {
+      const runtime = globalThis.AIZANOI_OS;
+      if (typeof runtime?.openApp !== 'function') {
+        throw new Error('AizanoiOS app navigation is unavailable.');
+      }
+      return runtime.openApp(appId, options);
+    },
+  });
+}
+
 const SHARED_PROVIDERS = Object.freeze({
+  apps: appsCapability,
   filesystem: filesystemCapability,
   dialog: dialogCapability,
   sound: soundCapability,
@@ -73,9 +86,9 @@ function requestedNames(required) {
 /**
  * Resolve only the capabilities explicitly declared by a migrated module.
  *
- * Host capabilities are shell-owned surfaces such as notifications. Concrete
- * Workspace implementations remain behind this shared bridge rather than
- * leaking into optional application modules.
+ * Host capabilities are shell-owned surfaces such as notifications. Canonical
+ * runtime facades and concrete Workspace implementations stay behind this
+ * shared bridge rather than leaking into optional application modules.
  */
 export async function resolveCapabilities(required = [], hostCapabilities = {}) {
   const resolved = {};
