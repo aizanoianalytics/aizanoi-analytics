@@ -1,0 +1,16 @@
+{
+  "manifestVersion": 1,
+  "id": "recycle-bin",
+  "type": "desktop-app",
+  "entry": "./src/index.js",
+  "enabledByDefault": true,
+  "requires": [
+    "filesystem",
+    "dialog",
+    "notifications",
+    "sound"
+  ],
+  "provides": [
+    "desktop-app"
+  ]
+}

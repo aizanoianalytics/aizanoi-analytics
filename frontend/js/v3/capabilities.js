@@ -17,12 +17,16 @@ async function filesystemCapability() {
   const fs = await import('./workspace/fs.js');
   return Object.freeze({
     documentsId: fs.DOCUMENTS_ID,
+    recycleId: fs.RECYCLE_ID,
     getNode: fs.getNode,
     readFileBlob: fs.readFileBlob,
     childrenOf: fs.childrenOf,
     createFile: fs.createFile,
     updateFileContent: fs.updateFileContent,
     formatSize: fs.formatSize,
+    emptyRecycleBin: fs.emptyRecycleBin,
+    restoreNode: fs.restoreNode,
+    deleteNode: fs.deleteNode,
   });
 }
 
