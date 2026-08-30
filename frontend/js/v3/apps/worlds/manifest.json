@@ -1,0 +1,13 @@
+{
+  "manifestVersion": 1,
+  "id": "worlds",
+  "type": "desktop-app",
+  "entry": "./src/index.js",
+  "enabledByDefault": true,
+  "requires": [
+    "worlds"
+  ],
+  "provides": [
+    "desktop-app"
+  ]
+}
