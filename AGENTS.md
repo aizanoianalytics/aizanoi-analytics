@@ -135,8 +135,8 @@ At minimum run applicable syntax/tests including:
 node --check frontend/js/v3/main.js
 node --check frontend/js/v3/registry.js
 node --check frontend/js/v3/brand-platform.js
-node --check frontend/js/v3/apps/brand-hubs.js
 node --check frontend/service-worker.js
+node scripts/modules/build-module-registry.mjs --check
 node scripts/news/build-news.mjs
 node --test tests/*.test.mjs
 git diff --check
