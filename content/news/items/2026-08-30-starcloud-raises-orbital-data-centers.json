@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-30-starcloud-raises-orbital-data-centers",
+  "title": "Starcloud raises $250M Series A to build orbital data centers with Nvidia",
+  "summary": "Starcloud has raised a $250 million Series A round backed by Nvidia to build a network of orbital data centers, joining SpaceX's separately filed Starmind plan to put up to a million data-center satellites in orbit. The funding highlights a new race to move compute off the planet as ground-based AI demand strains power and cooling capacity, with Starcloud positioning its constellation as a power- and water-light alternative for hyperscale training and inference workloads.",
+  "category": "technology",
+  "priority": 64,
+  "publishedAt": "2026-08-30T05:00:00Z",
+  "updatedAt": "2026-08-30T05:00:00Z",
+  "retrievedAt": "2026-08-30T04:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Starcloud", "Nvidia", "orbital data centers", "satellites", "AI infrastructure"],
+  "sources": [
+    {
+      "publisher": "GeekWire",
+      "url": "https://www.geekwire.com/2026/starcloud-250m-data-center-satellite-network-nvidia/",
+      "publishedAt": "2026-08-29T00:00:00Z"
+    }
+  ]
+}

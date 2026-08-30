@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-30-warsh-jackson-hole-stocks-bond-yields",
+  "title": "Warsh's hawkish Jackson Hole debut sends two-year yield above 4.35% and tech stocks lower",
+  "summary": "Federal Reserve Chair Kevin Warsh used his first Jackson Hole symposium address on Friday to argue that short-term rates remain the Fed's 'predominant tool' and that he would be 'hard pressed to describe broad financial conditions as restrictive,' pushing two-year Treasury yields up 13 basis points to roughly 4.35% and lifting the implied odds of a September rate hike to about 58% from 35% the prior day. U.S. stocks closed modestly lower — S&P 500 off 0.25%, Nasdaq down 0.52%, Dow essentially flat — while small caps led the decline and the peso slid against the dollar.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-08-30T05:00:00Z",
+  "updatedAt": "2026-08-30T05:00:00Z",
+  "retrievedAt": "2026-08-30T04:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Federal Reserve", "Kevin Warsh", "Jackson Hole", "Treasury yields", "monetary policy"],
+  "sources": [
+    {
+      "publisher": "Associated Press via Narrative News",
+      "url": "https://narrative-news.com/the-bond-market-prepares-for-a-hike-to-rates-of-interest-while-us-shares-drift-decrease/",
+      "publishedAt": "2026-08-28T20:30:00Z"
+    },
+    {
+      "publisher": "WalletInvestor",
+      "url": "https://walletinvestor.com/news/trading-news/nasdaq-100-falls-after-warshs-jackson-hole-speech-pushes-the-fed-toward-another-hike/",
+      "publishedAt": "2026-08-29T00:00:00Z"
+    }
+  ]
+}

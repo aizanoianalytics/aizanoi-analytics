@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-30-openai-cuts-cursor-spacex",
+  "title": "OpenAI to cut off Cursor after SpaceX acquisition, escalating Sam Altman-Elon Musk feud",
+  "summary": "OpenAI said on Friday it will wind down its contract supplying AI models to the coding assistant Cursor, with a proposed shutoff date of November 12, 2026, after Elon Musk's SpaceX closed a roughly $60 billion all-stock acquisition of the company. OpenAI said it could not be confident SpaceX would use the technology in line with its policies and would also withhold its forthcoming Astra model from Cursor, the latest flashpoint in a long-running dispute between CEO Sam Altman and Musk.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-08-30T05:00:00Z",
+  "updatedAt": "2026-08-30T05:00:00Z",
+  "retrievedAt": "2026-08-30T04:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "Cursor", "SpaceX", "Elon Musk", "Sam Altman"],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/our-decision-on-cursor-following-its-acquisition-by-spacex/",
+      "publishedAt": "2026-08-28T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/media-telecom/openai-end-partnership-with-spacexs-cursor-2026-08-29/",
+      "publishedAt": "2026-08-29T00:00:00Z"
+    }
+  ]
+}

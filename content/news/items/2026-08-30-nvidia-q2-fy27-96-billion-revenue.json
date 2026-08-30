@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-30-nvidia-q2-fy27-96-billion-revenue",
+  "title": "Nvidia posts $96.2 billion Q2 FY27 revenue, up 106% year-on-year, guides $108B for next quarter",
+  "summary": "Nvidia reported second-quarter fiscal 2027 revenue of $96.2 billion on Wednesday, up 18% from the previous quarter and 106% from a year earlier, with Data Center revenue rising 117% to $89.0 billion and both GAAP and non-GAAP gross margins holding at 75.0%. CEO Jensen Huang said 'AI has reached its inflection point — compute is revenue' and the company guided Q3 revenue to $108 billion plus or minus 2%, explicitly excluding any China Data Center compute revenue, while returning $26 billion to shareholders and leaving $99 billion under repurchase authorization.",
+  "category": "economy-markets",
+  "priority": 76,
+  "publishedAt": "2026-08-30T05:00:00Z",
+  "updatedAt": "2026-08-30T05:00:00Z",
+  "retrievedAt": "2026-08-30T04:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Nvidia", "earnings", "Q2 FY27", "AI chips", "data center"],
+  "sources": [
+    {
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027",
+      "publishedAt": "2026-08-26T00:00:00Z"
+    },
+    {
+      "publisher": "Business Insider Markets",
+      "url": "https://markets.businessinsider.com/news/stocks/nvidia-announces-financial-results-for-second-quarter-fiscal-2027-1036495427",
+      "publishedAt": "2026-08-27T00:00:00Z"
+    }
+  ]
+}

@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/openai-cuts-cursor-spacex/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI to cut off Cursor after SpaceX acquisition, escalating Sam Altman-Elon Musk feud</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/warsh-jackson-hole-stocks-bond-yields/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Warsh&#39;s hawkish Jackson Hole debut sends two-year yield above 4.35% and tech stocks lower</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/anthropic-wins-pentagon-court-case/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Federal judge rules Pentagon&#39;s Anthropic supply-chain risk label was illegal retaliation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/nvidia-q2-fy27-96-billion-revenue/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Nvidia posts $96.2 billion Q2 FY27 revenue, up 106% year-on-year, guides $108B for next quarter</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/zhipu-glm-5-3-flash-open-source/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Zhipu open-sources GLM-5.3-Flash, the 320B model that briefly led OpenRouter as Ox Alpha</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/tottenham-newcastle-premier-league/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Tottenham lose 0-2 at home to Newcastle as Elanga and Wissa seal second straight defeat</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/anthropic-automated-alignment-paper/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Anthropic paper shows automated systems beat human researchers at alignment training for $4 an hour</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/amazon-acquires-ducklabs-duckdb/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Amazon to acquire DuckLabs, bringing the DuckDB open-source analytics team into AWS</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/starcloud-raises-orbital-data-centers/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Starcloud raises $250M Series A to build orbital data centers with Nvidia</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/bayern-stuttgart-bundesliga-opener/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Bayern Munich open Bundesliga title defence with 5-1 rout of Stuttgart</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/openai-hires-meta-dugan-ads/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI hires former Meta vice president Dave Dugan to lead global ad sales</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/chinese-automakers-humanoid-robotics-bet/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Chinese automakers follow Tesla&#39;s bet that humanoid robots are the next profit machine</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/juventus-parma-serie-a-2-0/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Juventus break down Parma 2-0 with second-half goals from Gonzalez and Koopmeiners</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/cxmt-sues-pentagon-memory-chips/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>China&#39;s top memory chipmaker CXMT sues Pentagon over &#39;Chinese military company&#39; designation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-30/marvell-shares-fall-earnings/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
+      <news:title>Marvell shares drop 10% after earnings despite CEO&#39;s &#39;robust&#39; AI outlook</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-08-29/warsh-jackson-hole-keynote-results/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -238,126 +358,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
       <news:title>CNCF blog reframes Kubernetes as five pieces of scaffolding, not a body of APIs</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/nvidia-q2-fy27-results/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Nvidia lifts outlook as Q2 FY27 results beat forecasts</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/zai-glm-5-3-flash-chinese-chips/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Z.ai releases GLM-5.3-Flash, says it runs entirely on Chinese chips</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/alibaba-qwen3-8-27b-apache/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Alibaba ships Qwen3.8-27B under Apache 2.0</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/mbappe-hat-trick-real-madrid/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Mbappé hat-trick gives Real Madrid a 4-1 win over Real Sociedad</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/jackson-hole-symposium-opens/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Jackson Hole symposium opens with Fed chair&#39;s first keynote</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/champions-league-league-phase-draw/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Champions League league phase draw takes place in Monaco</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/marvell-q2-fy27-earnings/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Marvell Technology reports Q2 FY27 earnings after the close</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/cloudflare-os-open-source/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Cloudflare open-sources Cloudflare OS for corporate AI apps</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/cncf-kubeflow-graduation/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>CNCF graduates Kubeflow as a cloud-native AI standard</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/ibm-granite-4-2-hugging-face/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>IBM releases Granite 4.2 with native reasoning on Hugging Face</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/premier-league-transfer-watch/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Premier League clubs finalise moves as the transfer window narrows</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/rackspace-cloud-vmware-foundation/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Rackspace Cloud launches on VMware Cloud Foundation 9.1</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/us-q2-gdp-consumer-spending/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>US second-quarter GDP rises 1.5% as consumer spending accelerates</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/shopify-ceo-walgit/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>Shopify CEO Lütke ships walgit, an S3-native Git server</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-27/kuberay-v1-7-launch/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-27T05:00:00.000Z</news:publication_date>
-      <news:title>KubeRay 1.7 lands with a History Server and stronger security</news:title>
     </news:news>
   </url>
 </urlset>

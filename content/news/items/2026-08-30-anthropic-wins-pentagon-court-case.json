@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-30-anthropic-wins-pentagon-court-case",
+  "title": "Federal judge rules Pentagon's Anthropic supply-chain risk label was illegal retaliation",
+  "summary": "U.S. District Judge Rita Lin ruled Thursday evening that Defense Secretary Pete Hegseth's designation of Anthropic as a supply-chain risk was unlawful First Amendment retaliation and arbitrary and capricious under the Fifth, handing the AI company its first court win. The order pointed to the government's continuing contract pursuit and collaboration on Anthropic's Mythos model as evidence the company 'undisputedly lacks' any backdoor access — and that the labeling was a bid to make a public example of Anthropic for its 'arrogance'.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-08-30T05:00:00Z",
+  "updatedAt": "2026-08-30T05:00:00Z",
+  "retrievedAt": "2026-08-30T04:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "Pentagon", "court ruling", "First Amendment", "supply chain"],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/28/anthropic-gets-its-first-court-win-over-the-pentagons-supply-chain-risk-label/",
+      "publishedAt": "2026-08-28T05:46:00Z"
+    },
+    {
+      "publisher": "Court Listener (Anthropic v. US Department of War)",
+      "url": "https://www.courtlistener.com/docket/72379655/250/anthropic-pbc-v-us-department-of-war/",
+      "publishedAt": "2026-08-28T00:00:00Z"
+    }
+  ]
+}

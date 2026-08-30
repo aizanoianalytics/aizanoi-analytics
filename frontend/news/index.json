@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-08-29T04:50:00.000Z",
+  "generatedAt": "2026-08-30T04:35:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-08-30",
+      "path": "/news/2026-08-30/",
+      "itemCount": 15
+    },
     {
       "date": "2026-08-29",
       "path": "/news/2026-08-29/",
@@ -41,6 +46,534 @@
   ],
   "weeklyEditions": [],
   "items": [
+    {
+      "id": "2026-08-30-openai-cuts-cursor-spacex",
+      "kind": "daily",
+      "title": "OpenAI to cut off Cursor after SpaceX acquisition, escalating Sam Altman-Elon Musk feud",
+      "summary": "OpenAI said on Friday it will wind down its contract supplying AI models to the coding assistant Cursor, with a proposed shutoff date of November 12, 2026, after Elon Musk's SpaceX closed a roughly $60 billion all-stock acquisition of the company. OpenAI said it could not be confident SpaceX would use the technology in line with its policies and would also withhold its forthcoming Astra model from Cursor, the latest flashpoint in a long-running dispute between CEO Sam Altman and Musk.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "Cursor",
+        "SpaceX",
+        "Elon Musk",
+        "Sam Altman"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/our-decision-on-cursor-following-its-acquisition-by-spacex/",
+          "publishedAt": "2026-08-28T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/media-telecom/openai-end-partnership-with-spacexs-cursor-2026-08-29/",
+          "publishedAt": "2026-08-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-warsh-jackson-hole-stocks-bond-yields",
+      "kind": "daily",
+      "title": "Warsh's hawkish Jackson Hole debut sends two-year yield above 4.35% and tech stocks lower",
+      "summary": "Federal Reserve Chair Kevin Warsh used his first Jackson Hole symposium address on Friday to argue that short-term rates remain the Fed's 'predominant tool' and that he would be 'hard pressed to describe broad financial conditions as restrictive,' pushing two-year Treasury yields up 13 basis points to roughly 4.35% and lifting the implied odds of a September rate hike to about 58% from 35% the prior day. U.S. stocks closed modestly lower — S&P 500 off 0.25%, Nasdaq down 0.52%, Dow essentially flat — while small caps led the decline and the peso slid against the dollar.",
+      "category": "economy-markets",
+      "priority": 80,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Federal Reserve",
+        "Kevin Warsh",
+        "Jackson Hole",
+        "Treasury yields",
+        "monetary policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Associated Press via Narrative News",
+          "url": "https://narrative-news.com/the-bond-market-prepares-for-a-hike-to-rates-of-interest-while-us-shares-drift-decrease/",
+          "publishedAt": "2026-08-28T20:30:00.000Z"
+        },
+        {
+          "publisher": "WalletInvestor",
+          "url": "https://walletinvestor.com/news/trading-news/nasdaq-100-falls-after-warshs-jackson-hole-speech-pushes-the-fed-toward-another-hike/",
+          "publishedAt": "2026-08-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-anthropic-wins-pentagon-court-case",
+      "kind": "daily",
+      "title": "Federal judge rules Pentagon's Anthropic supply-chain risk label was illegal retaliation",
+      "summary": "U.S. District Judge Rita Lin ruled Thursday evening that Defense Secretary Pete Hegseth's designation of Anthropic as a supply-chain risk was unlawful First Amendment retaliation and arbitrary and capricious under the Fifth, handing the AI company its first court win. The order pointed to the government's continuing contract pursuit and collaboration on Anthropic's Mythos model as evidence the company 'undisputedly lacks' any backdoor access — and that the labeling was a bid to make a public example of Anthropic for its 'arrogance'.",
+      "category": "technology",
+      "priority": 78,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "Pentagon",
+        "court ruling",
+        "First Amendment",
+        "supply chain"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/08/28/anthropic-gets-its-first-court-win-over-the-pentagons-supply-chain-risk-label/",
+          "publishedAt": "2026-08-28T05:46:00.000Z"
+        },
+        {
+          "publisher": "Court Listener (Anthropic v. US Department of War)",
+          "url": "https://www.courtlistener.com/docket/72379655/250/anthropic-pbc-v-us-department-of-war/",
+          "publishedAt": "2026-08-28T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-nvidia-q2-fy27-96-billion-revenue",
+      "kind": "daily",
+      "title": "Nvidia posts $96.2 billion Q2 FY27 revenue, up 106% year-on-year, guides $108B for next quarter",
+      "summary": "Nvidia reported second-quarter fiscal 2027 revenue of $96.2 billion on Wednesday, up 18% from the previous quarter and 106% from a year earlier, with Data Center revenue rising 117% to $89.0 billion and both GAAP and non-GAAP gross margins holding at 75.0%. CEO Jensen Huang said 'AI has reached its inflection point — compute is revenue' and the company guided Q3 revenue to $108 billion plus or minus 2%, explicitly excluding any China Data Center compute revenue, while returning $26 billion to shareholders and leaving $99 billion under repurchase authorization.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Nvidia",
+        "earnings",
+        "Q2 FY27",
+        "AI chips",
+        "data center"
+      ],
+      "sources": [
+        {
+          "publisher": "NVIDIA Newsroom",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027",
+          "publishedAt": "2026-08-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Business Insider Markets",
+          "url": "https://markets.businessinsider.com/news/stocks/nvidia-announces-financial-results-for-second-quarter-fiscal-2027-1036495427",
+          "publishedAt": "2026-08-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-zhipu-glm-5-3-flash-open-source",
+      "kind": "daily",
+      "title": "Zhipu open-sources GLM-5.3-Flash, the 320B model that briefly led OpenRouter as Ox Alpha",
+      "summary": "Beijing-based Z.ai (Zhipu) has open-sourced GLM-5.3-Flash, a 320 billion parameter mixture-of-experts model with 18 billion active parameters, released under the MIT license and priced at roughly $0.15 per million input tokens. The release confirmed that the anonymous Ox Alpha model that briefly topped OpenRouter usage charts earlier this month was Zhipu's own, and the company says the model is architected to run on roughly 100,000 Chinese-made AI accelerators — a direct rebuttal to the assumption that frontier Chinese AI still depends on Nvidia silicon.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Zhipu",
+        "Z.ai",
+        "GLM-5.3-Flash",
+        "open source",
+        "Chinese AI"
+      ],
+      "sources": [
+        {
+          "publisher": "Z.ai",
+          "url": "https://z.ai/blog/glm-5.3-flash",
+          "publishedAt": "2026-08-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "SiliconANGLE",
+          "url": "https://siliconangle.com/2026/08/26/z-ai-open-sources-ox-alpha-model-as-glm-5-3-flash/",
+          "publishedAt": "2026-08-26T20:26:00.000Z"
+        },
+        {
+          "publisher": "TechNode",
+          "url": "https://technode.com/2026/08/27/zhipu-identifies-ox-alpha-as-glm-5-3-flash-and-releases-model-weights/",
+          "publishedAt": "2026-08-27T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-tottenham-newcastle-premier-league",
+      "kind": "daily",
+      "title": "Tottenham lose 0-2 at home to Newcastle as Elanga and Wissa seal second straight defeat",
+      "summary": "Tottenham are pointless from their opening two Premier League games after a 0-2 home loss to Newcastle United on Friday, with Anthony Elanga finishing off debutant Gonzalez's knockdown in the second half and Yoane Wissa adding an improvised second to leave Spurs bottom of the table on goal difference. Elanga became the first Newcastle player to score in the club's opening two Premier League matches of a season since Alan Shearer in 2003-04, while Spurs' 17 shots produced an xG of just 1.04 against Newcastle's two shots on target and 0.75 xG.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Tottenham",
+        "Newcastle",
+        "Premier League",
+        "Elanga",
+        "Wissa"
+      ],
+      "sources": [
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401879312/newcastle-united-tottenham-hotspur",
+          "publishedAt": "2026-08-29T19:59:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-anthropic-automated-alignment-paper",
+      "kind": "daily",
+      "title": "Anthropic paper shows automated systems beat human researchers at alignment training for $4 an hour",
+      "summary": "Anthropic has published an Automated Alignment Researcher paper led by fellow Chen Yueh-Han showing that AI systems can improve a model's performance across ten misaligned-behavior benchmarks without degrading overall capability. The company says the best automated method beats what experienced human researchers propose on average within six hours of compute, at roughly $4 per hour of API inference versus $150 per hour for human researchers, an early step toward recursive self-improvement of safety training.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "alignment",
+        "self-improving AI",
+        "safety"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/research/automated-researchers-mitigate-alignment-failures",
+          "publishedAt": "2026-08-28T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/08/28/an-anthropic-researcher-just-gave-us-a-peek-at-self-improving-ai/",
+          "publishedAt": "2026-08-28T12:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-amazon-acquires-ducklabs-duckdb",
+      "kind": "daily",
+      "title": "Amazon to acquire DuckLabs, bringing the DuckDB open-source analytics team into AWS",
+      "summary": "Amazon has agreed to acquire DuckLabs, the company behind the popular open-source columnar database DuckDB, with founders Hannes Mühleisen and Mark Raasveldt and the rest of the team joining AWS in early September once the deal closes. Amazon is not acquiring the DuckDB project itself — the database, the DuckLake extension and the Quack protocol will remain under the DuckDB Foundation's MIT-licensed governance — and DuckLabs said the small team had concluded the project's growth was outrunning its ability to support it, nine days after previewing DuckDB 2.0.",
+      "category": "technology",
+      "priority": 68,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Amazon",
+        "AWS",
+        "DuckDB",
+        "DuckLabs",
+        "open source",
+        "acquisitions"
+      ],
+      "sources": [
+        {
+          "publisher": "Amazon",
+          "url": "https://www.aboutamazon.com/news/company-news/aws-ducklabs",
+          "publishedAt": "2026-08-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "GeekWire",
+          "url": "https://www.geekwire.com/2026/amazon-acquires-ducklabs-adding-the-team-behind-duckdb-amid-broader-shakeup-in-cloud-data/",
+          "publishedAt": "2026-08-26T08:19:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-starcloud-raises-orbital-data-centers",
+      "kind": "daily",
+      "title": "Starcloud raises $250M Series A to build orbital data centers with Nvidia",
+      "summary": "Starcloud has raised a $250 million Series A round backed by Nvidia to build a network of orbital data centers, joining SpaceX's separately filed Starmind plan to put up to a million data-center satellites in orbit. The funding highlights a new race to move compute off the planet as ground-based AI demand strains power and cooling capacity, with Starcloud positioning its constellation as a power- and water-light alternative for hyperscale training and inference workloads.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Starcloud",
+        "Nvidia",
+        "orbital data centers",
+        "satellites",
+        "AI infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "GeekWire",
+          "url": "https://www.geekwire.com/2026/starcloud-250m-data-center-satellite-network-nvidia/",
+          "publishedAt": "2026-08-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-bayern-stuttgart-bundesliga-opener",
+      "kind": "daily",
+      "title": "Bayern Munich open Bundesliga title defence with 5-1 rout of Stuttgart",
+      "summary": "Bayern Munich began their pursuit of a third straight Bundesliga title under Vincent Kompany with a 5-1 home win over VfB Stuttgart on Friday, capping a domestic double after last term's DFB-Pokal final victory over the same opponent. The result continues Bayern's recent dominance of the league opener against a Stuttgart side that has finished in the top four in two of the past three seasons, with the Bavarians now turning attention to the international break before resuming their title chase.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Bayern Munich",
+        "Stuttgart",
+        "Bundesliga",
+        "Kompany",
+        "Matchday 1"
+      ],
+      "sources": [
+        {
+          "publisher": "ESPN Singapore",
+          "url": "https://www.espn.com.sg/football/report/_/gameId/401884817",
+          "publishedAt": "2026-08-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-openai-hires-meta-dugan-ads",
+      "kind": "daily",
+      "title": "OpenAI hires former Meta vice president Dave Dugan to lead global ad sales",
+      "summary": "OpenAI has named Dave Dugan, who stepped down earlier this month as Meta's vice president of global clients and agencies, as its new vice president of global ad solutions reporting to COO Brad Lightcap. The hire comes as OpenAI scales its first material advertising business, having launched ChatGPT ads in India with 50 brands through WPP and Omnicom and a self-serve manager scheduled for September 4, and follows a wave of senior departures from the company in 2026.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "Meta",
+        "advertising",
+        "hiring",
+        "Dave Dugan"
+      ],
+      "sources": [
+        {
+          "publisher": "The Wall Street Journal",
+          "url": "https://www.wsj.com/tech/ai/openai-taps-former-meta-executive-to-lead-ad-push-60d39af2",
+          "publishedAt": "2026-08-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-chinese-automakers-humanoid-robotics-bet",
+      "kind": "daily",
+      "title": "Chinese automakers follow Tesla's bet that humanoid robots are the next profit machine",
+      "summary": "Chinese automakers including Xpeng, BYD and others are doubling down on humanoid robotics, a strategic pivot that mirrors Tesla's Optimus program and reflects a broader hope that robots — not cars — will be the long-tail revenue line for the world's largest auto industry. The push comes as domestic EV price competition compresses margins and as Beijing-backed supply chains for motors, reducers and AI compute give Chinese manufacturers a structural cost edge in bringing humanoid platforms to mass production.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "China",
+        "humanoid robots",
+        "Tesla",
+        "Xpeng",
+        "BYD",
+        "automotive"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/08/28/chinese-automakers-are-following-teslas-bet-that-robots-are-the-next-big-profit-machine/",
+          "publishedAt": "2026-08-28T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-juventus-parma-serie-a-2-0",
+      "kind": "daily",
+      "title": "Juventus break down Parma 2-0 with second-half goals from Gonzalez and Koopmeiners",
+      "summary": "Juventus made it two straight Serie A wins to open the season with a 2-0 home victory over Parma at the Allianz Stadium on Sunday, breaking through a goalless first half with a 62nd-minute rebound strike from substitute Nicolas Gonzalez and Teun Koopmeiners' first appearance off the bench to curl in a late second. Luciano Spalletti's side controlled possession throughout but squandered several one-on-one chances through Randal Kolo Muani, while Parma managed just nine touches in the Juventus box by the 72nd minute and has now failed to score in two consecutive matches.",
+      "category": "football",
+      "priority": 58,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Juventus",
+        "Parma",
+        "Serie A",
+        "Gonzalez",
+        "Koopmeiners",
+        "Spalletti"
+      ],
+      "sources": [
+        {
+          "publisher": "7msport (via Goal)",
+          "url": "https://news.7msport.com/news/newsdata/20260830/265120.shtml",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-cxmt-sues-pentagon-memory-chips",
+      "kind": "daily",
+      "title": "China's top memory chipmaker CXMT sues Pentagon over 'Chinese military company' designation",
+      "summary": "ChangXin Memory Technologies, China's largest DRAM maker whose chips go into smartphones, PCs, servers and AI systems, filed a federal lawsuit in Washington on Friday seeking to overturn its designation as a Chinese military company, arguing the listing was arbitrary and lacked evidentiary support. First designated by the Biden administration in January 2025 and kept on the list by the Trump administration in June, CXMT joins Alibaba and other Chinese firms challenging the Pentagon list after the Defense Department reversed a February removal notice the same day it was published.",
+      "category": "ai",
+      "priority": 56,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "CXMT",
+        "Pentagon",
+        "semiconductors",
+        "China",
+        "DRAM",
+        "AI chips"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via AsiaOne",
+          "url": "https://www.asiaone.com/world/chinese-memory-chipmaker-cxmt-sues-pentagon-over-chinese-military-company-designation",
+          "publishedAt": "2026-08-29T03:15:00.000Z"
+        },
+        {
+          "publisher": "Reuters via Macon",
+          "url": "https://macon.com/news/business/article317053087.html",
+          "publishedAt": "2026-08-28T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-30-marvell-shares-fall-earnings",
+      "kind": "daily",
+      "title": "Marvell shares drop 10% after earnings despite CEO's 'robust' AI outlook",
+      "summary": "Marvell Technology fell 10.3% in Friday trading even as CEO Matt Murphy told investors the company's AI-related business is 'robust' and raised forecasts for upcoming revenue growth, with revenue and income for the quarter edging past analyst expectations. The selloff reflected investor skepticism that much of the optimism was already priced in — Marvell had entered the day with a year-to-date gain of 184% — and a broader cooling across chip stocks as the market questioned whether AI demand can keep outrunning supply.",
+      "category": "economy-markets",
+      "priority": 54,
+      "publishedAt": "2026-08-30T05:00:00.000Z",
+      "updatedAt": "2026-08-30T05:00:00.000Z",
+      "retrievedAt": "2026-08-30T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Marvell",
+        "earnings",
+        "AI chips",
+        "semiconductors",
+        "valuation"
+      ],
+      "sources": [
+        {
+          "publisher": "Associated Press via Narrative News",
+          "url": "https://narrative-news.com/the-bond-market-prepares-for-a-hike-to-rates-of-interest-while-us-shares-drift-decrease/",
+          "publishedAt": "2026-08-28T20:30:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-08-29-warsh-jackson-hole-keynote-results",
       "kind": "daily",
