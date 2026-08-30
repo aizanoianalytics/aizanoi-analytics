@@ -136,16 +136,16 @@ test('deploy is cwd-independent: same frontend/ → staging result from differen
     execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingA}/"`], { cwd: repoRoot });
     execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingB}/"`], { cwd: unrelated });
     const list = (root) =>
-      execFileSync('bash', ['-c', `cd "${root}" && find . -type f | sort`], { encoding:'utf8' });
+      execFileSync('bash', ['-c', `cd "${root}" && find . -type f | sort`], { encoding: 'utf8' });
     const a = list(stagingA);
     const b = list(stagingB);
     assert.equal(a, b, 'Publish must be cwd-independent: staging trees differ');
     assert.match(a, /analytics\/dashboards\/hr-analytics-full-set\/index\.html/, 'Staging must contain HR catalog');
     assert.match(a, /analytics\/dashboards\/hr-analytics-full-set\/workforce-turnover\/index\.html/, 'Staging must contain canonical turnover');
   } finally {
-    rmSync(stagingA, { recursive:true, force:true });
-    rmSync(stagingB, { recursive:true, force:true });
-    rmSync(unrelated, { recursive:true, force:true });
+    rmSync(stagingA, { recursive: true, force: true });
+    rmSync(stagingB, { recursive: true, force: true });
+    rmSync(unrelated, { recursive: true, force: true });
   }
 });
 
