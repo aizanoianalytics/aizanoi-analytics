@@ -54,7 +54,8 @@ const ALLOWED_JSON = [
   /\/news\/index\.json$/,
   /\/news\/.+\/index\.json$/,
   /\/analytics\/.+\/data\.json$/,
-  /\/js\/v3\/apps\/notepad\/manifest\.json$/
+  /\/js\/v3\/apps\/notepad\/manifest\.json$/,
+  /\/js\/v3\/apps\/recycle-bin\/manifest\.json$/
 ];
 
 test('denylist: no source or workbook files enter frontend except the declared synthetic output download', () => {
