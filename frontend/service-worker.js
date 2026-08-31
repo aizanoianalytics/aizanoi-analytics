@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'aizanoi-os-shell-v4.3.2';
+const CACHE = 'aizanoi-os-shell-v4.3.3';
 const MAX_RUNTIME_ENTRIES = 24;
 const PRECACHE = [
   '/',
@@ -12,6 +12,7 @@ const PRECACHE = [
   '/styles/shell.css',
   '/styles/components.css',
   '/styles/device-shell.css',
+  '/styles/polish.css',
   '/js/v3/main.js',
   '/js/v3/aizanoi-os.js',
   '/js/v3/brand-platform.js',
