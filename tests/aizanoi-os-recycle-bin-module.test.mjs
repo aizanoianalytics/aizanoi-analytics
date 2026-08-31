@@ -40,6 +40,13 @@ test('private Recycle Bin logic consumes capabilities and no concrete Workspace 
   assert.match(privateApp, /sound\.play/);
 });
 
+test('Recycle Bin count and empty state are derived from the same items snapshot', () => {
+  assert.match(privateApp, /const items = await filesystem\.childrenOf\(filesystem\.recycleId\);/);
+  assert.match(privateApp, /countEl\.textContent = `\$\{items\.length\} item/);
+  assert.match(privateApp, /listEl\.innerHTML = items\.length\s*\? items\.map/s);
+  assert.match(privateApp, /: '<div class="az-empty-state"><div><h3>Recycle Bin is empty<\/h3>/);
+});
+
 test('Recycle Bin capability adapter validates injection without concrete imports', () => {
   assert.doesNotMatch(adapter, /workspace\/(?:fs|dialog|sounds)\.js/);
   assert.match(adapter, /filesystem\.recycleId/);
