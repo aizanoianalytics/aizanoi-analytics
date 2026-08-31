@@ -52,7 +52,8 @@ function mountModal({ title, message, kind = 'info', body, initialFocus, onReady
   overlay.querySelector('[data-app-dialog-close]').addEventListener('click', () => settle(null));
   overlay.addEventListener('click', (event) => { if (event.target === overlay) settle(null); });
   onReady?.({ overlay, settle });
-  setTimeout(() => (initialFocus?.(overlay) || focusables(overlay)[0])?.focus(), 0);
+  const focusTarget = initialFocus?.(overlay) || focusables(overlay)[0];
+  focusTarget?.focus({ preventScroll:true });
 
   return new Promise((resolve) => {
     resolver = resolve;
