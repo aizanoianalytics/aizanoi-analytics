@@ -4,6 +4,12 @@
   .az-app-prompt-input { width:100%;min-height:44px;padding:9px 11px;border:1px solid var(--az-border);border-radius:10px;background:#fff;color:var(--az-text);font:14px var(--az-font-ui); }
   .az-app-prompt-input:focus { outline:2px solid rgba(82,101,219,.26);outline-offset:2px; }
 
+  /* Workspace empty state is static CSS so production CSP style-src 'self' remains clean. */
+  .az-workspace-grid > .az-empty-state { grid-column:1/-1;min-height:280px;display:grid;place-items:center;padding:32px;text-align:center; }
+  .az-workspace-grid > .az-empty-state > div { max-width:380px; }
+  .az-workspace-grid > .az-empty-state h3 { margin:0 0 8px;color:#25324a;font-size:22px;line-height:1.15; }
+  .az-workspace-grid > .az-empty-state p { margin:0;color:#66728a;font-size:12.5px;line-height:1.55; }
+
   .az-workspace-item { padding:0;grid-template-columns:minmax(0,1fr) 34px;align-items:stretch;gap:2px; }
   .az-workspace-open { min-width:0;display:grid;grid-template-columns:40px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;gap:1px 9px;padding:9px 7px;border:0;border-radius:10px;background:transparent;color:inherit;text-align:left;cursor:pointer; }
   .az-workspace-open:hover,.az-workspace-open:focus-visible { background:rgba(82,101,219,.08);outline:none; }
