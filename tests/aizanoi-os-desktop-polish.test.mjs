@@ -14,12 +14,13 @@ const serviceWorker = read('frontend/service-worker.js');
 
 test('desktop keeps the five core apps and adds Arcade plus Recycle Bin', () => {
   assert.match(brandPlatform, /const DESKTOP=Object\.freeze\(\[\.\.\.PINNED,'games','recycle-bin'\]\)/);
-  assert.match(registry, /id:'recycle-bin'.*icon:'\/assets\/icons\/recycle-bin\.svg'/s);
+  assert.match(registry, /id:'recycle-bin'.*icon:'\/assets\/icons\/aizanoi-recycle-bin\.svg'/s);
   assert.match(registry, /id:'camera'.*icon:'\/assets\/icons\/camera\.svg'/s);
   assert.match(registry, /id:'winamp'.*icon:'\/assets\/icons\/winamp\.svg'/s);
-  for (const icon of ['recycle-bin.svg', 'camera.svg', 'winamp.svg']) {
+  for (const icon of ['aizanoi-recycle-bin.svg', 'camera.svg', 'winamp.svg']) {
     assert.ok(existsSync(`frontend/assets/icons/${icon}`), `${icon} should exist`);
   }
+  assert.equal(existsSync('frontend/assets/icons/recycle-bin.svg'), false, 'retired Recycle Bin asset name must remain absent');
 });
 
 test('Analytics is a data-driven multi-set catalog and does not need the standalone collection page for navigation', () => {
