@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-08-30T04:35:00.000Z",
+  "generatedAt": "2026-08-31T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-08-31",
+      "path": "/news/2026-08-31/",
+      "itemCount": 15
+    },
     {
       "date": "2026-08-30",
       "path": "/news/2026-08-30/",
@@ -44,8 +49,705 @@
       "itemCount": 8
     }
   ],
-  "weeklyEditions": [],
+  "weeklyEditions": [
+    {
+      "date": "2026-08-31",
+      "week": "2026-W36",
+      "path": "/news/weekly/2026-08-31/",
+      "itemCount": 5
+    }
+  ],
   "items": [
+    {
+      "id": "2026-08-31-weekly-anthropic-ip-ruling",
+      "kind": "weekly",
+      "title": "Weekly AI: the Anthropic music-publisher suit reopens the training-data question",
+      "summary": "Sony Music Publishing and Warner Chappell's late-August federal complaint against Anthropic lands weeks after the $1.5 billion Bartz judgment and reopens the same question with broader scope: was the source acquisition legal even if training on copyrighted material was not? The publishers frame torrenting and 'flagrant piracy' as the next legal theory, and Anthropic says it will defend itself robustly. Discovery will expose training-data sourcing practices the industry has kept opaque.",
+      "category": "ai",
+      "priority": 90,
+      "publishedAt": "2026-08-31T05:15:00.000Z",
+      "updatedAt": "2026-08-31T05:15:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "week": "2026-W36",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "copyright",
+        "AI training",
+        "litigation",
+        "weekly analysis"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/08/29/sony-music-warner-sue-anthropic-alleging-a-brazen-campaign-of-intellectual-property-theft/",
+          "publishedAt": "2026-08-29T18:41:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-weekly-ai-capex-vs-cashflow",
+      "kind": "weekly",
+      "title": "Weekly Markets: Warsh's hawkish turn reorders the September Fed decision and the AI capex trade",
+      "summary": "Kevin Warsh's Jackson Hole speech shifted the Fed debate from when to cut to whether to hike, lifting the implied probability of a September move to 55.7% from 35.4% and pushing short-dated Treasury yields and the dollar higher. Equity reaction split along AI exposure: Nvidia gave back Thursday's post-earnings gains as financing costs rose, while Amazon added roughly $110 billion of market value despite a $7.6 billion free-cash-flow outflow. The September dot-plot will determine if the move is tactical or a tighter-for-longer regime.",
+      "category": "economy-markets",
+      "priority": 88,
+      "publishedAt": "2026-08-31T05:15:00.000Z",
+      "updatedAt": "2026-08-31T05:15:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "week": "2026-W36",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Federal Reserve",
+        "Jackson Hole",
+        "AI capex",
+        "Treasury yields",
+        "weekly analysis"
+      ],
+      "sources": [
+        {
+          "publisher": "MarketScreener",
+          "url": "https://hk.marketscreener.com/news/stocks-fall-while-dollar-bond-yields-rise-as-warsh-prompts-rate-hike-bets-ce7858dfd080f724",
+          "publishedAt": "2026-08-29T05:16:00.000Z"
+        },
+        {
+          "publisher": "TS2",
+          "url": "https://ts2.tech/en/amazon-stock-jumps-4-adding-110-billion-as-ai-spending-turns-free-cash-flow-negative/",
+          "publishedAt": "2026-08-29T15:55:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-weekly-open-models-vs-sovereign",
+      "kind": "weekly",
+      "title": "Weekly Technology: open-weight frontier models and sovereign AI stacks race past closed APIs",
+      "summary": "Two releases in the same week reframed the model-supply landscape. Tencent published a 770-billion-parameter open-weights system on August 30, and India's Gnani AI formally launched the Gnani Artha stack built around the 30-billion-parameter Evon 3.3 model and the Plexus agentic platform at Uprashtrapati Bhavan two days earlier. Together they show two parallel pressures on closed-API providers: capability is no longer a moat, and national buyers increasingly want self-hosted systems whose weights, training data and inference paths stay inside their jurisdictions.",
+      "category": "technology",
+      "priority": 85,
+      "publishedAt": "2026-08-31T05:15:00.000Z",
+      "updatedAt": "2026-08-31T05:15:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "week": "2026-W36",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "open weights",
+        "Tencent",
+        "Gnani AI",
+        "sovereign AI",
+        "weekly analysis"
+      ],
+      "sources": [
+        {
+          "publisher": "Startup Corners",
+          "url": "https://startupcorners.com/digest/product-digest-2026-08-30",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        },
+        {
+          "publisher": "Dharmakshethra",
+          "url": "https://dharmakshethra.com/indian-startup-gnani-ai-unveils-sovereign-ai-stack-built-around-30-billion-parameter-evon-3-3/",
+          "publishedAt": "2026-08-31T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-weekly-transfer-deadline-eve",
+      "kind": "weekly",
+      "title": "Weekly Football: deadline day looms as Premier League clubs chase the last deals of a frenetic window",
+      "summary": "Premier League clubs have 48 hours to complete signings before Tuesday's 11 p.m. BST deadline, with two-hour deal-sheet grace periods for paperwork filed in time. Aston Villa are in transition after confirming Ollie Watkins's £51 million move to Al-Hilal and signing Nicolas Jackson plus Taylor Harwood-Bellis. Tottenham have been among the busiest, completing a Sandro Tonali deal worth £100 million and adding Mateus Fernandes and Savio, while Manchester City rebuilt midfield with Elliot Anderson and Ayyoub Bouaddi.",
+      "category": "football",
+      "priority": 84,
+      "publishedAt": "2026-08-31T05:15:00.000Z",
+      "updatedAt": "2026-08-31T05:15:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "week": "2026-W36",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Premier League",
+        "transfer window",
+        "deadline day",
+        "weekly analysis"
+      ],
+      "sources": [
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/story/_/id/48955344/premier-league-2026-summer-transfers-all-confirmed-ins-outs-every-club",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        },
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/news/4698998/copy-transfer-deadline-day-everything-you-need-to-know",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-weekly-ai-investment-flywheel",
+      "kind": "weekly",
+      "title": "Weekly AI: agent infrastructure draws capital while foundation-model economics get repriced",
+      "summary": "The week's deal flow shows where investors are placing the next tranche of AI capital. Rillet raised a $100 million Series C at a $1 billion valuation after a single board update, Instinct reached a $2.5 billion valuation four months after founding, and Socure closed $156 million while absorbing agentic-AI compliance startup Fravity. Infrastructure plays drew comparable attention: Agentrys raised $24.5 million for chip-design agents, Keenable raised $26 million for an agent-optimised web index, and Arga Labs raised $10 million for agent sandboxes.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-08-31T05:15:00.000Z",
+      "updatedAt": "2026-08-31T05:15:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "week": "2026-W36",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "AI agents",
+        "venture capital",
+        "agent infrastructure",
+        "weekly analysis"
+      ],
+      "sources": [
+        {
+          "publisher": "Startup Fortune",
+          "url": "https://startupfortune.com/rillet-turned-an-unsolicited-board-update-into-a-1-billion-accounting-startup-in-48-hours/",
+          "publishedAt": "2026-08-30T15:06:00.000Z"
+        },
+        {
+          "publisher": "Pomegra Startups",
+          "url": "https://pomegra.io/startups/instinct-hits-2-5b-valuation-four-months-after-founding-2026-08-30",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-anthropic-music-publisher-lawsuit",
+      "kind": "daily",
+      "title": "Sony Music and Warner sue Anthropic over alleged training-data piracy",
+      "summary": "Sony Music Publishing, Warner Chappell and other publishers filed a federal lawsuit in California accusing Anthropic of a brazen campaign to torrent, scrape and download copyrighted works to train Claude. The complaint leans on the same factual record that produced the $1.5 billion Bartz judgment, and Anthropic says it will defend itself robustly.",
+      "category": "ai",
+      "priority": 92,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "Sony Music",
+        "Warner Chappell",
+        "copyright",
+        "AI training",
+        "litigation"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/08/29/sony-music-warner-sue-anthropic-alleging-a-brazen-campaign-of-intellectual-property-theft/",
+          "publishedAt": "2026-08-29T18:41:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-warsh-rate-hike-bets",
+      "kind": "daily",
+      "title": "Warsh's Jackson Hole speech pushes September Fed rate-hike bets above 55 percent",
+      "summary": "Federal Reserve Chair Kevin Warsh used his first Jackson Hole symposium address to warn that the U.S. central bank will have more work to do if inflation does not move convincingly toward its 2% target. CME FedWatch now puts the probability of a September rate hike at 55.7%, up from 35.4% on Thursday, helping drive the dollar and short-dated Treasury yields higher while global equities slipped.",
+      "category": "economy-markets",
+      "priority": 88,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Federal Reserve",
+        "Kevin Warsh",
+        "Jackson Hole",
+        "interest rates",
+        "Treasury yields"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/markets/us/four-fed-bank-boards-wanted-rate-hike-minutes-show-2026-08-25/",
+          "publishedAt": "2026-08-28T22:00:00.000Z"
+        },
+        {
+          "publisher": "MarketScreener",
+          "url": "https://hk.marketscreener.com/news/stocks-fall-while-dollar-bond-yields-rise-as-warsh-prompts-rate-hike-bets-ce7858dfd080f724",
+          "publishedAt": "2026-08-29T05:16:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-chelsea-brighton-alonso-win",
+      "kind": "daily",
+      "title": "Chelsea edge Brighton 4-3 to extend Xabi Alonso's perfect Premier League start",
+      "summary": "Chelsea beat Brighton 4-3 at Stamford Bridge in a frenetic seven-goal game that included a Cole Palmer strike and a stoppage-time Pascal Gross header. The result is Alonso's second consecutive Premier League win since taking charge, but a third straight game conceding three leaves defensive questions lingering ahead of the trip to Arsenal.",
+      "category": "football",
+      "priority": 86,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Chelsea",
+        "Brighton",
+        "Xabi Alonso",
+        "Premier League",
+        "Cole Palmer"
+      ],
+      "sources": [
+        {
+          "publisher": "Al Jazeera",
+          "url": "https://www.aljazeera.com/sports/2026/8/30/chelsea-beat-brighton-4-3-to-extend-perfect-start-under-xabi-alonso",
+          "publishedAt": "2026-08-30T15:30:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401879317/brighton-hove-albion-chelsea",
+          "publishedAt": "2026-08-30T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-amazon-ai-spending-cash-flow",
+      "kind": "daily",
+      "title": "Amazon adds $110 billion in value as Wall Street rewards AI capex despite negative free cash flow",
+      "summary": "Amazon closed Friday up 3.97% at $266.43, adding roughly $110 billion in market value after Fed Chair Kevin Warsh said AI growth had exceeded even its proponents' expectations. Trailing twelve-month free cash flow swung from an $18.2 billion inflow to a $7.6 billion outflow as AI-related property and equipment purchases rose by $66.1 billion, leaving cash conversion the central valuation question for the next quarter.",
+      "category": "economy-markets",
+      "priority": 85,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Amazon",
+        "AWS",
+        "AI capex",
+        "free cash flow",
+        "Q2 earnings"
+      ],
+      "sources": [
+        {
+          "publisher": "TS2",
+          "url": "https://ts2.tech/en/amazon-stock-jumps-4-adding-110-billion-as-ai-spending-turns-free-cash-flow-negative/",
+          "publishedAt": "2026-08-29T15:55:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-gnani-artha-india-sovereign-ai",
+      "kind": "daily",
+      "title": "India's Gnani AI launches a sovereign AI stack built around its 30-billion-parameter Evon 3.3 model",
+      "summary": "Bengaluru-based Gnani AI formally launched its end-to-end sovereign AI stack, Gnani Artha, built around the 30-billion-parameter Evon 3.3 large language model and the Plexus agentic platform. Vice President C. P. Radhakrishnan unveiled the system at Uprashtrapati Bhavan, advancing India's IndiaAI Mission objective of domestically controlled AI infrastructure.",
+      "category": "technology",
+      "priority": 84,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Gnani AI",
+        "Evon 3.3",
+        "Plexus",
+        "IndiaAI",
+        "sovereign AI",
+        "large language model"
+      ],
+      "sources": [
+        {
+          "publisher": "Dharmakshethra",
+          "url": "https://dharmakshethra.com/indian-startup-gnani-ai-unveils-sovereign-ai-stack-built-around-30-billion-parameter-evon-3-3/",
+          "publishedAt": "2026-08-31T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Hindu BusinessLine",
+          "url": "https://www.thehindubusinessline.com/info-tech/ai-is-like-a-marathon-but-you-have-to-run-it-like-a-sprint-ganesh-gopalan-of-gnaniai/article71407543.ece",
+          "publishedAt": "2026-08-28T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-rillet-billion-dollar-series-c",
+      "kind": "daily",
+      "title": "AI accounting startup Rillet closes $100 million round at a $1 billion valuation",
+      "summary": "Two-year-old AI-native accounting platform Rillet raised a $100 million Series C led by ICONIQ Growth at a $1 billion valuation in under 48 hours after a routine board update. Investors say the raise signals how quickly AI systems embedded in core finance workflows are displacing legacy suites such as Oracle and NetSuite.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Rillet",
+        "ICONIQ",
+        "AI accounting",
+        "Series C",
+        "enterprise software"
+      ],
+      "sources": [
+        {
+          "publisher": "Startup Fortune",
+          "url": "https://startupfortune.com/rillet-turned-an-unsolicited-board-update-into-a-1-billion-accounting-startup-in-48-hours/",
+          "publishedAt": "2026-08-30T15:06:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-watkins-al-hilal-transfer",
+      "kind": "daily",
+      "title": "Ollie Watkins completes £51 million move from Aston Villa to Al-Hilal",
+      "summary": "England striker Ollie Watkins completed a £51 million transfer from Aston Villa to Saudi Pro League side Al-Hilal on a three-year contract, ending a six-year spell at Villa Park where he became the club's all-time Premier League top scorer with 91 goals. Villa have replaced Watkins with Nicolas Jackson from Chelsea and agreed a £30 million package for Southampton defender Taylor Harwood-Bellis.",
+      "category": "football",
+      "priority": 82,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Ollie Watkins",
+        "Aston Villa",
+        "Al-Hilal",
+        "Saudi Pro League",
+        "transfer"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/articles/c70le5gllyeo",
+          "publishedAt": "2026-08-30T17:00:00.000Z"
+        },
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/11677/13579158/aston-villa-transfer-news-ollie-watkins-joins-al-hilal-as-deal-agreed-for-taylor-harwood-bellis",
+          "publishedAt": "2026-08-30T20:20:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-tencent-770b-open-model",
+      "kind": "daily",
+      "title": "Tencent releases a 770-billion-parameter open model",
+      "summary": "Tencent published a 770-billion-parameter open-weights model as one of the highest-capacity openly licensed language systems yet released. The release is the latest signal that the open-source frontier is moving closer to the largest closed frontier models, with implications for hosted-API pricing and on-premises deployment.",
+      "category": "technology",
+      "priority": 80,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Tencent",
+        "open-source AI",
+        "large language model",
+        "open weights"
+      ],
+      "sources": [
+        {
+          "publisher": "Startup Corners",
+          "url": "https://startupcorners.com/digest/product-digest-2026-08-30",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-instinct-ai-assistant-valuation",
+      "kind": "daily",
+      "title": "Twenty-three-year-old founder's AI assistant Instinct reaches a $2.5 billion valuation",
+      "summary": "Instinct, an AI personal-assistant startup founded by 23-year-old Noah Shinn in April, raised a $250 million Series B co-led by Index Ventures and Benchmark at a $2.5 billion valuation. The round pushes total funding to $350 million and underscores how rapidly capable consumer assistants can outgrow their early pricing.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Instinct",
+        "Index Ventures",
+        "Benchmark",
+        "Series B",
+        "AI assistant"
+      ],
+      "sources": [
+        {
+          "publisher": "Pomegra Startups",
+          "url": "https://pomegra.io/startups/instinct-hits-2-5b-valuation-four-months-after-founding-2026-08-30",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-paypal-bid-collapse",
+      "kind": "daily",
+      "title": "PayPal drops 12.7 percent as Stripe-Advent consortium walks away from a $53 billion approach",
+      "summary": "PayPal closed Friday down 12.71% at $53.66 after Reuters reported that a consortium led by Stripe and private equity firm Advent ended its pursuit of the payments company. The abandoned $60.50-per-share indication had implied roughly a 12.7% premium, leaving standalone execution and 5% revenue growth as the main supports for the stock.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "PayPal",
+        "Stripe",
+        "Advent",
+        "M&A",
+        "payments"
+      ],
+      "sources": [
+        {
+          "publisher": "TS2",
+          "url": "https://ts2.tech/en/paypal-stock-falls-12-7-as-53-billion-bid-collapse-exposes-margin-test/",
+          "publishedAt": "2026-08-29T04:58:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-agentrys-chip-design-funding",
+      "kind": "daily",
+      "title": "Agentrys raises $24.5 million to put AI agents across the chip-design pipeline",
+      "summary": "U.S. chip-design startup Agentrys disclosed a $24.5 million combined seed and pre-seed round led by Etna Labs with MediaTek as the first strategic backer. The company says its agents have already produced a sign-off-clean 32-bit CPU layout from a written specification without human intervention.",
+      "category": "ai",
+      "priority": 75,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Agentrys",
+        "chip design",
+        "AI agents",
+        "MediaTek",
+        "semiconductor"
+      ],
+      "sources": [
+        {
+          "publisher": "Pomegra Startups",
+          "url": "https://pomegra.io/startups/agentrys-raises-24-5m-to-automate-chip-design-2026-08-30",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-serie-a-monday-matchday-2",
+      "kind": "daily",
+      "title": "Serie A Monday double-header closes matchday two with Roma and Atalanta favoured",
+      "summary": "Serie A's second matchday closes with Atalanta v Bologna at 19:45 local time and Lecce v Roma at 17:30, both teams coming off opening-weekend victories. Roma arrived in Lecce on a six-match league winning streak after a 4-0 start under Gian Piero Gasperini, while Atalanta opened with a 2-1 win to set up an early-season test against Bologna.",
+      "category": "football",
+      "priority": 73,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Serie A",
+        "Atalanta",
+        "Bologna",
+        "Lecce",
+        "Roma",
+        "matchday 2"
+      ],
+      "sources": [
+        {
+          "publisher": "Sports Mole",
+          "url": "https://www.sportsmole.co.uk/football/lecce/preview/lecce-vs-roma-prediction-team-news-lineups_604024.html",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        },
+        {
+          "publisher": "Football Web Pages",
+          "url": "https://www.footballwebpages.co.uk/italian-serie-a/fixtures-results",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-keenable-agent-search-index",
+      "kind": "daily",
+      "title": "Accel-backed Keenable raises $26 million to index the web for AI agents",
+      "summary": "Keenable emerged from stealth with $26 million in seed funding led by Accel and a web search index purpose-built for autonomous AI agents rather than human readers. The company joins a growing field of infrastructure providers positioning themselves for an agent-driven internet.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Keenable",
+        "Accel",
+        "AI agents",
+        "search index",
+        "infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "PulseAugur",
+          "url": "https://pulseaugur.com/cluster/225640-keenable-launches-ai-agent-search-index-raises-26m-seed-funding",
+          "publishedAt": "2026-08-30T03:06:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-flova-ai-video-funding",
+      "kind": "daily",
+      "title": "Sequoia and IDG back Flova with $80 million for an AI-native video production platform",
+      "summary": "Flova.ai, founded by former FaceU and ByteDance executive Guo Lie, raised more than $80 million from Sequoia Capital, IDG Capital and Yunji Capital to build an AI-native video production environment. The platform positions itself around scripts up to 100,000 characters long and a library of reusable production skills aimed at professional creators.",
+      "category": "technology",
+      "priority": 71,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Flova",
+        "Sequoia",
+        "IDG Capital",
+        "AI video",
+        "generative AI",
+        "creator tools"
+      ],
+      "sources": [
+        {
+          "publisher": "Complete AI Training",
+          "url": "https://completeaitraining.com/news/flova-raises-80-million-for-ai-native-video-production/",
+          "publishedAt": "2026-08-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-08-31-caterpillar-ai-mining-lessons",
+      "kind": "daily",
+      "title": "Caterpillar brings lessons from automated mining to enterprise AI deployment",
+      "summary": "Construction and mining equipment maker Caterpillar is exporting its experience running autonomous mining fleets into broader enterprise AI deployments. The move highlights how industrial automation know-how is being repositioned as a competitive asset in the race to put generative AI into production environments.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-08-31T05:10:00.000Z",
+      "updatedAt": "2026-08-31T05:10:00.000Z",
+      "retrievedAt": "2026-08-31T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Caterpillar",
+        "enterprise AI",
+        "autonomous mining",
+        "industrial AI"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/08/",
+          "publishedAt": "2026-08-30T19:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-08-30-openai-cuts-cursor-spacex",
       "kind": "daily",

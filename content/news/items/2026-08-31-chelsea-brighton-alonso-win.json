@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-31-chelsea-brighton-alonso-win",
+  "title": "Chelsea edge Brighton 4-3 to extend Xabi Alonso's perfect Premier League start",
+  "summary": "Chelsea beat Brighton 4-3 at Stamford Bridge in a frenetic seven-goal game that included a Cole Palmer strike and a stoppage-time Pascal Gross header. The result is Alonso's second consecutive Premier League win since taking charge, but a third straight game conceding three leaves defensive questions lingering ahead of the trip to Arsenal.",
+  "category": "football",
+  "priority": 86,
+  "publishedAt": "2026-08-31T05:10:00Z",
+  "updatedAt": "2026-08-31T05:10:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Chelsea", "Brighton", "Xabi Alonso", "Premier League", "Cole Palmer"],
+  "sources": [
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/sports/2026/8/30/chelsea-beat-brighton-4-3-to-extend-perfect-start-under-xabi-alonso",
+      "publishedAt": "2026-08-30T15:30:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401879317/brighton-hove-albion-chelsea",
+      "publishedAt": "2026-08-30T16:00:00Z"
+    }
+  ]
+}

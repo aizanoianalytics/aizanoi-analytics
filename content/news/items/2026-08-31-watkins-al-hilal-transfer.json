@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-31-watkins-al-hilal-transfer",
+  "title": "Ollie Watkins completes £51 million move from Aston Villa to Al-Hilal",
+  "summary": "England striker Ollie Watkins completed a £51 million transfer from Aston Villa to Saudi Pro League side Al-Hilal on a three-year contract, ending a six-year spell at Villa Park where he became the club's all-time Premier League top scorer with 91 goals. Villa have replaced Watkins with Nicolas Jackson from Chelsea and agreed a £30 million package for Southampton defender Taylor Harwood-Bellis.",
+  "category": "football",
+  "priority": 82,
+  "publishedAt": "2026-08-31T05:10:00Z",
+  "updatedAt": "2026-08-31T05:10:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Ollie Watkins", "Aston Villa", "Al-Hilal", "Saudi Pro League", "transfer"],
+  "sources": [
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/articles/c70le5gllyeo",
+      "publishedAt": "2026-08-30T17:00:00Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/11677/13579158/aston-villa-transfer-news-ollie-watkins-joins-al-hilal-as-deal-agreed-for-taylor-harwood-bellis",
+      "publishedAt": "2026-08-30T20:20:00Z"
+    }
+  ]
+}

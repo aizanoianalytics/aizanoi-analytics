@@ -1,0 +1,29 @@
+{
+  "id": "2026-08-31-weekly-ai-investment-flywheel",
+  "kind": "weekly",
+  "week": "2026-W36",
+  "title": "Weekly AI: agent infrastructure draws capital while foundation-model economics get repriced",
+  "summary": "The week's deal flow shows where investors are placing the next tranche of AI capital. Rillet raised a $100 million Series C at a $1 billion valuation after a single board update, Instinct reached a $2.5 billion valuation four months after founding, and Socure closed $156 million while absorbing agentic-AI compliance startup Fravity. Infrastructure plays drew comparable attention: Agentrys raised $24.5 million for chip-design agents, Keenable raised $26 million for an agent-optimised web index, and Arga Labs raised $10 million for agent sandboxes.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-08-31T05:15:00Z",
+  "updatedAt": "2026-08-31T05:15:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["AI agents", "venture capital", "agent infrastructure", "weekly analysis"],
+  "sources": [
+    {
+      "publisher": "Startup Fortune",
+      "url": "https://startupfortune.com/rillet-turned-an-unsolicited-board-update-into-a-1-billion-accounting-startup-in-48-hours/",
+      "publishedAt": "2026-08-30T15:06:00Z"
+    },
+    {
+      "publisher": "Pomegra Startups",
+      "url": "https://pomegra.io/startups/instinct-hits-2-5b-valuation-four-months-after-founding-2026-08-30",
+      "publishedAt": "2026-08-30T00:00:00Z"
+    }
+  ]
+}

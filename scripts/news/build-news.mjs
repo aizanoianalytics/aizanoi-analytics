@@ -242,8 +242,8 @@ function rss(items, generatedAt) {
 }
 function sitemap(editions, items, weeklyEditions = []) {
   const dynamic = [
-    ...editions.map((edition) => [edition.path, edition.date]),
     ...weeklyEditions.map((edition) => [edition.path, edition.date]),
+    ...editions.map((edition) => [edition.path, edition.date]),
     ...items.map((item) => [storyPath(item), itemDate(item)]),
     ...[...categoryLabels.keys()].map((slug) => [`/news/category/${slug}/`, editions[0]?.date || '2026-08-24'])
   ];
