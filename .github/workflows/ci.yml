@@ -2,12 +2,9 @@ name: Aizanoi CI
 
 on:
   push:
-    branches:
-      - main
-      - 'fix/**'
-      - 'feat/**'
-      - 'security/**'
+    branches: [main]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -22,18 +19,15 @@ jobs:
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with:
-          fetch-depth: 2
+        with: { fetch-depth: 2 }
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with:
-          node-version: '22'
+        with: { node-version: '22' }
       - name: JavaScript syntax checks
         run: |
           set -euo pipefail
           mkdir -p artifacts/diagnostics
-          while IFS= read -r -d '' file; do
-            node --check "$file"
-          done < <(find frontend/js/v3 frontend/ancient-world frontend/ancient-cities frontend/historic-world -type f -name '*.js' -print0)
+          while IFS= read -r -d '' file; do node --check "$file"; done < <(find frontend/js/v3 frontend/ancient-world frontend/ancient-cities frontend/historic-world -type f -name '*.js' -print0)
+          node --check frontend/release.js
           node --check frontend/analytics/catalog.js
           node --check frontend/analytics/app.js
           node --check frontend/service-worker.js
@@ -47,7 +41,7 @@ jobs:
         run: |
           set -o pipefail
           node --test tests/*.test.mjs 2>&1 | tee artifacts/diagnostics/regression-tests.log
-      - name: Audit contract tests (security boundary + HR dashboard parity)
+      - name: Audit contract tests
         run: |
           set -o pipefail
           node --test tests/audit/*.test.mjs 2>&1 | tee artifacts/diagnostics/audit-contract-tests.log
@@ -57,10 +51,7 @@ jobs:
       - name: Upload validate diagnostics
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: aizanoi-validate-diagnostics
-          path: artifacts/diagnostics/*
-          retention-days: 3
+        with: { name: aizanoi-validate-diagnostics, path: 'artifacts/diagnostics/*', retention-days: 3 }
 
   hr-pipeline-rebuild:
     runs-on: ubuntu-latest
@@ -68,21 +59,16 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with:
-          node-version: '22'
+        with: { node-version: '22' }
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.11'
-          cache: 'pip'
+          cache: pip
           cache-dependency-path: analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
       - name: Install locked HR pipeline dependencies
-        run: |
-          python -m pip install --disable-pip-version-check \
-            -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
+        run: python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
       - name: Capture committed integrated-workbook baseline
-        run: |
-          cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx \
-            /tmp/hr-integrated-baseline.xlsx
+        run: cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx /tmp/hr-integrated-baseline.xlsx
       - name: Rebuild HR Analytics Full Set from committed synthetic inputs
         run: |
           set -o pipefail
@@ -91,33 +77,27 @@ jobs:
       - name: Verify deterministic tracked outputs
         run: |
           set -euo pipefail
-          python scripts/verify-hr-workbook-semantics.py \
-            /tmp/hr-integrated-baseline.xlsx \
-            analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx \
-            2>&1 | tee artifacts/diagnostics/hr-workbook-semantics.log
-          git diff --exit-code -- \
-            ':(glob)frontend/analytics/dashboards/hr-analytics-full-set/**/*.html'
+          python scripts/verify-hr-workbook-semantics.py /tmp/hr-integrated-baseline.xlsx analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx 2>&1 | tee artifacts/diagnostics/hr-workbook-semantics.log
+          git diff --exit-code -- ':(glob)frontend/analytics/dashboards/hr-analytics-full-set/**/*.html'
           git diff --check
       - name: Upload HR rebuild diagnostics
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: aizanoi-hr-pipeline-diagnostics
-          path: artifacts/diagnostics/*
-          retention-days: 3
+        with: { name: aizanoi-hr-pipeline-diagnostics, path: 'artifacts/diagnostics/*', retention-days: 3 }
 
   browser-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 32
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with:
-          node-version: '22'
-      - name: Install and audit browser QA dependencies
+        with: { node-version: '22' }
+      - name: Materialize pinned browser QA lock and install
         run: |
-          npm init -y >/dev/null 2>&1
-          npm install --ignore-scripts playwright@1.62.1 axe-core@4.10.3
+          mkdir -p artifacts/diagnostics
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          cp package-lock.json artifacts/diagnostics/package-lock.json
+          npm ci --ignore-scripts --no-fund
           npm audit --audit-level=high
           npx playwright install chromium
       - name: Build generated News surfaces
@@ -125,16 +105,10 @@ jobs:
       - name: Start static frontend server
         run: |
           python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-http.log 2>&1 &
-          echo $! >/tmp/aizanoi-http.pid
-          for i in {1..20}; do
-            curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0
-            sleep 0.5
-          done
-          cat /tmp/aizanoi-http.log
-          exit 1
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
+          cat /tmp/aizanoi-http.log; exit 1
       - name: Production-like Nginx policy gate
-        env:
-          AIZANOI_NGINX_BASE_URL: http://127.0.0.1:4174
+        env: { AIZANOI_NGINX_BASE_URL: 'http://127.0.0.1:4174' }
         run: |
           set -euo pipefail
           sudo apt-get update -qq
@@ -145,18 +119,16 @@ jobs:
           events {}
           http {
             include /etc/nginx/mime.types;
-            access_log /tmp/aizanoi-nginx-access.log;
             server {
               listen 127.0.0.1:4174;
-              server_name localhost;
               root ${GITHUB_WORKSPACE}/frontend;
               index index.html;
               include ${GITHUB_WORKSPACE}/infra/nginx/snippets/aizanoi-static-security-headers.conf.example;
-              location = / { try_files /index.html =404; expires -1; }
-              location ^~ /js/ { try_files \$uri =404; expires -1; }
-              location ^~ /styles/ { try_files \$uri =404; expires -1; }
-              location ^~ /assets/ { try_files \$uri =404; expires 7d; }
-              location ^~ /news/ { try_files \$uri \$uri/ =404; expires -1; }
+              location = / { try_files /index.html =404; }
+              location ^~ /js/ { try_files \$uri =404; }
+              location ^~ /styles/ { try_files \$uri =404; }
+              location ^~ /assets/ { try_files \$uri =404; }
+              location ^~ /news/ { try_files \$uri \$uri/ =404; }
               location / { try_files \$uri \$uri/ =404; }
             }
           }
@@ -164,65 +136,34 @@ jobs:
           nginx -t -c /tmp/aizanoi-nginx.conf
           nginx -c /tmp/aizanoi-nginx.conf
           trap 'nginx -s stop -c /tmp/aizanoi-nginx.conf || true' EXIT
-          for i in {1..20}; do
-            curl -fsSI http://127.0.0.1:4174/ >/dev/null && break
-            sleep 0.5
-          done
+          for i in {1..20}; do curl -fsSI http://127.0.0.1:4174/ >/dev/null && break; sleep 0.5; done
           node --test tests/browser/nginx-production-policy.test.mjs 2>&1 | tee artifacts/diagnostics/nginx-production-policy.log
-      - name: Field System browser gate
-        env:
-          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
-        run: |
-          set -o pipefail
-          mkdir -p artifacts/diagnostics
-          echo "=== field-system-v3-browser-smoke.mjs ===" | tee artifacts/diagnostics/field-system-v3-browser-smoke.mjs.log
-          node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee -a artifacts/diagnostics/field-system-v3-browser-smoke.mjs.log
-      - name: Service worker browser lifecycle gate
-        env:
-          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
-        run: |
-          set -o pipefail
-          node tests/service-worker-browser.mjs 2>&1 | tee artifacts/diagnostics/service-worker-browser.log
-      - name: Historical Worlds browser gates
-        env:
-          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+      - name: Core browser gates
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
           set -o pipefail
           status=0
-          for script in ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs; do
-            echo "=== $script ===" | tee "artifacts/diagnostics/$script.log"
-            node "tests/$script" 2>&1 | tee -a "artifacts/diagnostics/$script.log" || status=1
-          done
-          cp /tmp/aizanoi-http.log artifacts/diagnostics/browser-static-server.log || true
-          exit $status
-      - name: HR Analytics Full Set and Workspace browser gates
-        env:
-          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
-        run: |
-          set -o pipefail
-          status=0
+          node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-browser-smoke.log || status=1
+          node tests/service-worker-browser.mjs 2>&1 | tee artifacts/diagnostics/service-worker-browser.log || status=1
+          for script in ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs; do node "tests/$script" 2>&1 | tee "artifacts/diagnostics/$script.log" || status=1; done
           node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
-          node --test tests/browser/workspace-apps.test.mjs tests/browser/workspace-atomic.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-apps-browser.log || status=1
           exit $status
-      - name: Camera capability browser gate
-        env:
-          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+      - name: AizanoiOS utility browser gates
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
           set -o pipefail
-          node --test tests/browser/camera-module.test.mjs 2>&1 | tee artifacts/diagnostics/camera-module-browser.log
-      - name: Arcade module browser gate
-        env:
-          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
-        run: |
-          set -o pipefail
-          node --test tests/browser/arcade-module.test.mjs 2>&1 | tee artifacts/diagnostics/arcade-module-browser.log
+          status=0
+          node --test tests/browser/workspace-apps.test.mjs tests/browser/workspace-atomic.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-browser.log || status=1
+          node --test tests/browser/calculator-module.test.mjs 2>&1 | tee artifacts/diagnostics/calculator-browser.log || status=1
+          node --test tests/browser/camera-module.test.mjs 2>&1 | tee artifacts/diagnostics/camera-browser.log || status=1
+          node --test tests/browser/arcade-module.test.mjs tests/browser/arcade-legacy-lifecycle.test.mjs 2>&1 | tee artifacts/diagnostics/arcade-browser.log || status=1
+          node --test tests/browser/mobile-home.test.mjs 2>&1 | tee artifacts/diagnostics/mobile-home.log || status=1
+          exit $status
       - name: Capture final product visuals
         if: success()
-        env:
-          ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
           set -o pipefail
-          mkdir -p artifacts/diagnostics
           status=0
           node tests/historical-worlds-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/historical-worlds-visual-capture.log || status=1
           node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-visual-capture.log || status=1
@@ -230,76 +171,50 @@ jobs:
       - name: Upload visual regression review
         if: success()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: aizanoi-final-visual-review
-          path: artifacts/final-visual-review/*.png
-          retention-days: 3
+        with: { name: aizanoi-final-visual-review, path: 'artifacts/final-visual-review/*.png', retention-days: 3 }
       - name: Upload browser diagnostics
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: aizanoi-browser-diagnostics
-          path: artifacts/diagnostics/*
-          retention-days: 3
+        with: { name: aizanoi-browser-diagnostics, path: 'artifacts/diagnostics/*', retention-days: 3 }
 
   lighthouse:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 14
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with:
-          node-version: '22'
-      - name: Install and audit Lighthouse
+        with: { node-version: '22' }
+      - name: Materialize pinned Lighthouse lock and install
         run: |
-          npm init -y >/dev/null 2>&1
-          npm install --ignore-scripts lighthouse@13.4.1
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+          npm ci --ignore-scripts --no-fund
           npm audit --audit-level=high
       - name: Build generated News surfaces
         run: node scripts/news/build-news.mjs
       - name: Start static frontend server
         run: |
           python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-lighthouse-http.log 2>&1 &
-          for i in {1..20}; do
-            curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0
-            sleep 0.5
-          done
-          cat /tmp/aizanoi-lighthouse-http.log
-          exit 1
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
+          cat /tmp/aizanoi-lighthouse-http.log; exit 1
       - name: Enforce Lighthouse budgets
         run: |
           mkdir -p artifacts/diagnostics
           set +e
-          passes=0
-          valid=0
+          passes=0; valid=0
           for attempt in 1 2 3; do
-            report="/tmp/aizanoi-lighthouse-$attempt.json"
-            rm -f "$report"
-            echo "Lighthouse attempt $attempt" > "artifacts/diagnostics/lighthouse-cli-attempt-$attempt.log"
-            npx lighthouse http://127.0.0.1:4173/ \
-              --quiet \
-              --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
-              --output=json \
-              --output-path="$report" \
-              >>"artifacts/diagnostics/lighthouse-cli-attempt-$attempt.log" 2>&1
-            lighthouse_status=$?
-            if [ "$lighthouse_status" -eq 0 ] && [ -s "$report" ]; then
-              valid=$((valid + 1))
-              cp "$report" "artifacts/diagnostics/lighthouse-report-$attempt.json"
-              node tests/lighthouse-budget.mjs "$report" >"artifacts/diagnostics/lighthouse-budget-$attempt.log" 2>&1
-              if [ "$?" -eq 0 ]; then passes=$((passes + 1)); fi
+            report="/tmp/aizanoi-lighthouse-$attempt.json"; rm -f "$report"
+            npx lighthouse http://127.0.0.1:4173/ --quiet --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --output=json --output-path="$report" >"artifacts/diagnostics/lighthouse-cli-attempt-$attempt.log" 2>&1
+            if [ "$?" -eq 0 ] && [ -s "$report" ]; then
+              valid=$((valid+1)); cp "$report" "artifacts/diagnostics/lighthouse-report-$attempt.json"
+              node tests/lighthouse-budget.mjs "$report" >"artifacts/diagnostics/lighthouse-budget-$attempt.log" 2>&1 && passes=$((passes+1))
             fi
-            if [ "$passes" -ge 2 ]; then break; fi
+            [ "$passes" -ge 2 ] && break
             sleep 1
           done
           echo "Valid Lighthouse reports: $valid; budget passes: $passes" | tee artifacts/diagnostics/lighthouse-summary.log
-          cp /tmp/aizanoi-lighthouse-http.log artifacts/diagnostics/lighthouse-static-server.log || true
           set -e
-          if [ "$passes" -lt 2 ]; then exit 1; fi
+          [ "$passes" -ge 2 ]
       - name: Upload Lighthouse diagnostics
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: aizanoi-lighthouse-diagnostics
-          path: artifacts/diagnostics/*
-          retention-days: 3
+        with: { name: aizanoi-lighthouse-diagnostics, path: 'artifacts/diagnostics/*', retention-days: 3 }
