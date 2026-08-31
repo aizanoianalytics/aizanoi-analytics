@@ -87,7 +87,7 @@ export async function mountCamera({ container, capabilities }) {
     const ready = Boolean(video.videoWidth && video.videoHeight);
     shotBtn.disabled = !ready;
     statusEl.textContent = ready
-      ? (microphoneActive ? 'Camera + microphone active · audio is not recorded' : 'Camera active · microphone unavailable')
+      ? (microphoneActive ? 'Camera active' : 'Camera active · microphone unavailable')
       : 'Camera connected, waiting for video…';
     return ready;
   }
@@ -113,6 +113,7 @@ export async function mountCamera({ container, capabilities }) {
     } catch (error) {
       stream?.getTracks().forEach((track) => track.stop());
       stream = null;
+      video.srcObject = null;
       if (CAMERA_ONLY_FALLBACK_ERRORS.has(error?.name)) {
         try {
           const cameraOnly = await media.getUserMedia({ video: { facingMode: 'user' }, audio: false });
@@ -120,6 +121,9 @@ export async function mountCamera({ container, capabilities }) {
           notifications.notify('Camera', 'Camera connected without microphone. Photos still stay on this device.', 'system');
           return;
         } catch (fallbackError) {
+          stream?.getTracks().forEach((track) => track.stop());
+          stream = null;
+          video.srcObject = null;
           error = fallbackError;
         }
       }
