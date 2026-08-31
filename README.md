@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="frontend/assets/branding/aizanoi-og.png" alt="Aizanoi Analytics" width="100%">
+  <img src="https://raw.githubusercontent.com/aizanoianalytics/aizanoi-analytics/main/frontend/assets/branding/aizanoi-og.png" alt="Aizanoi Analytics" width="100%">
 </p>
 
 <h1 align="center">Aizanoi Analytics</h1>
@@ -39,7 +39,7 @@ See [`PRODUCT.md`](PRODUCT.md) for the canonical brand and product contract.
 
 AizanoiOS uses one public catalog with device-specific interaction models:
 
-- **Desktop:** bright wallpaper-first home, five sparse core shortcuts, freeform windows and centered dock.
+- **Desktop:** bright wallpaper-first home, seven focused shortcuts including Arcade and Recycle Bin, freeform windows and centered dock.
 - **Tablet:** touch-first two-pane home, larger app grid, feature cards and focused large windows.
 - **Mobile:** phone-like home screen, glanceable widgets, public app grid, compact bottom dock and fullscreen app surfaces.
 
