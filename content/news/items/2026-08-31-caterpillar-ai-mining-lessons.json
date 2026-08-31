@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-31-caterpillar-ai-mining-lessons",
+  "title": "Caterpillar brings lessons from automated mining to enterprise AI deployment",
+  "summary": "Construction and mining equipment maker Caterpillar is exporting its experience running autonomous mining fleets into broader enterprise AI deployments. The move highlights how industrial automation know-how is being repositioned as a competitive asset in the race to put generative AI into production environments.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-08-31T05:10:00Z",
+  "updatedAt": "2026-08-31T05:10:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Caterpillar", "enterprise AI", "autonomous mining", "industrial AI"],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/",
+      "publishedAt": "2026-08-30T19:00:00Z"
+    }
+  ]
+}

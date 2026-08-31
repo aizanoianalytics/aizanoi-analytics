@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-31-gnani-artha-india-sovereign-ai",
+  "title": "India's Gnani AI launches a sovereign AI stack built around its 30-billion-parameter Evon 3.3 model",
+  "summary": "Bengaluru-based Gnani AI formally launched its end-to-end sovereign AI stack, Gnani Artha, built around the 30-billion-parameter Evon 3.3 large language model and the Plexus agentic platform. Vice President C. P. Radhakrishnan unveiled the system at Uprashtrapati Bhavan, advancing India's IndiaAI Mission objective of domestically controlled AI infrastructure.",
+  "category": "technology",
+  "priority": 84,
+  "publishedAt": "2026-08-31T05:10:00Z",
+  "updatedAt": "2026-08-31T05:10:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Gnani AI", "Evon 3.3", "Plexus", "IndiaAI", "sovereign AI", "large language model"],
+  "sources": [
+    {
+      "publisher": "Dharmakshethra",
+      "url": "https://dharmakshethra.com/indian-startup-gnani-ai-unveils-sovereign-ai-stack-built-around-30-billion-parameter-evon-3-3/",
+      "publishedAt": "2026-08-31T00:00:00Z"
+    },
+    {
+      "publisher": "The Hindu BusinessLine",
+      "url": "https://www.thehindubusinessline.com/info-tech/ai-is-like-a-marathon-but-you-have-to-run-it-like-a-sprint-ganesh-gopalan-of-gnaniai/article71407543.ece",
+      "publishedAt": "2026-08-28T00:00:00Z"
+    }
+  ]
+}

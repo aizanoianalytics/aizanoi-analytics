@@ -1,0 +1,29 @@
+{
+  "id": "2026-08-31-weekly-open-models-vs-sovereign",
+  "kind": "weekly",
+  "week": "2026-W36",
+  "title": "Weekly Technology: open-weight frontier models and sovereign AI stacks race past closed APIs",
+  "summary": "Two releases in the same week reframed the model-supply landscape. Tencent published a 770-billion-parameter open-weights system on August 30, and India's Gnani AI formally launched the Gnani Artha stack built around the 30-billion-parameter Evon 3.3 model and the Plexus agentic platform at Uprashtrapati Bhavan two days earlier. Together they show two parallel pressures on closed-API providers: capability is no longer a moat, and national buyers increasingly want self-hosted systems whose weights, training data and inference paths stay inside their jurisdictions.",
+  "category": "technology",
+  "priority": 85,
+  "publishedAt": "2026-08-31T05:15:00Z",
+  "updatedAt": "2026-08-31T05:15:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["open weights", "Tencent", "Gnani AI", "sovereign AI", "weekly analysis"],
+  "sources": [
+    {
+      "publisher": "Startup Corners",
+      "url": "https://startupcorners.com/digest/product-digest-2026-08-30",
+      "publishedAt": "2026-08-30T00:00:00Z"
+    },
+    {
+      "publisher": "Dharmakshethra",
+      "url": "https://dharmakshethra.com/indian-startup-gnani-ai-unveils-sovereign-ai-stack-built-around-30-billion-parameter-evon-3-3/",
+      "publishedAt": "2026-08-31T00:00:00Z"
+    }
+  ]
+}

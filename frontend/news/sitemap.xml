@@ -1,6 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-08-31/weekly-anthropic-ip-ruling/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:15:00.000Z</news:publication_date>
+      <news:title>Weekly AI: the Anthropic music-publisher suit reopens the training-data question</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-08-31/weekly-ai-capex-vs-cashflow/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:15:00.000Z</news:publication_date>
+      <news:title>Weekly Markets: Warsh&#39;s hawkish turn reorders the September Fed decision and the AI capex trade</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-08-31/weekly-open-models-vs-sovereign/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:15:00.000Z</news:publication_date>
+      <news:title>Weekly Technology: open-weight frontier models and sovereign AI stacks race past closed APIs</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-08-31/weekly-transfer-deadline-eve/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:15:00.000Z</news:publication_date>
+      <news:title>Weekly Football: deadline day looms as Premier League clubs chase the last deals of a frenetic window</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-08-31/weekly-ai-investment-flywheel/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:15:00.000Z</news:publication_date>
+      <news:title>Weekly AI: agent infrastructure draws capital while foundation-model economics get repriced</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/anthropic-music-publisher-lawsuit/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Sony Music and Warner sue Anthropic over alleged training-data piracy</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/warsh-rate-hike-bets/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Warsh&#39;s Jackson Hole speech pushes September Fed rate-hike bets above 55 percent</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/chelsea-brighton-alonso-win/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Chelsea edge Brighton 4-3 to extend Xabi Alonso&#39;s perfect Premier League start</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/amazon-ai-spending-cash-flow/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Amazon adds $110 billion in value as Wall Street rewards AI capex despite negative free cash flow</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/gnani-artha-india-sovereign-ai/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>India&#39;s Gnani AI launches a sovereign AI stack built around its 30-billion-parameter Evon 3.3 model</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/rillet-billion-dollar-series-c/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>AI accounting startup Rillet closes $100 million round at a $1 billion valuation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/watkins-al-hilal-transfer/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Ollie Watkins completes £51 million move from Aston Villa to Al-Hilal</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/tencent-770b-open-model/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Tencent releases a 770-billion-parameter open model</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/instinct-ai-assistant-valuation/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Twenty-three-year-old founder&#39;s AI assistant Instinct reaches a $2.5 billion valuation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/paypal-bid-collapse/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>PayPal drops 12.7 percent as Stripe-Advent consortium walks away from a $53 billion approach</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/agentrys-chip-design-funding/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Agentrys raises $24.5 million to put AI agents across the chip-design pipeline</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/serie-a-monday-matchday-2/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Serie A Monday double-header closes matchday two with Roma and Atalanta favoured</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/keenable-agent-search-index/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Accel-backed Keenable raises $26 million to index the web for AI agents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/flova-ai-video-funding/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Sequoia and IDG back Flova with $80 million for an AI-native video production platform</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-08-31/caterpillar-ai-mining-lessons/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-08-31T05:10:00.000Z</news:publication_date>
+      <news:title>Caterpillar brings lessons from automated mining to enterprise AI deployment</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-08-30/openai-cuts-cursor-spacex/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -118,246 +278,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-08-30T05:00:00.000Z</news:publication_date>
       <news:title>Marvell shares drop 10% after earnings despite CEO&#39;s &#39;robust&#39; AI outlook</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/warsh-jackson-hole-keynote-results/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>Warsh opens door to a Fed rate hike as Jackson Hole keynote flags &#39;more concerning&#39; inflation</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/openai-india-ads-launch/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI rolls out ChatGPT ads in India starting with 50 brands</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/manchester-city-palace-result/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>Haaland and Cherki braces send Manchester City past Crystal Palace 4-1</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/anthropic-mhs-physical-ai/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic opens research preview of Model Hardware Standard for AI agents in the lab</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/bayern-stuttgart-bundesliga-opener/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>Bayern Munich thrash Stuttgart 5-1 to launch Bundesliga title defence</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/nvidia-hugging-face-acquisition/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>Nvidia agrees to buy open-source hub Hugging Face for 12.9 billion dollars</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/aws-nvidia-2m-gpu-deal/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>AWS commits to 2 million more Nvidia GPUs across 2027 and 2028</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/european-stocks-warsh-rebound/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>European shares end higher as Warsh speech lets French banks rebound</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/cisa-100-water-systems-cyberattack/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>CISA confirms more than 100 US water systems were targeted in July cyberattacks</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/openai-anthropic-google-cybersecurity-call/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI, Anthropic and Google lead cross-industry push to prioritize AI cybersecurity</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/openai-hugging-face-attack-details/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI details how reward hacking drove its agents to breach Hugging Face</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/ac-milan-venezia-serie-a/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>AC Milan open Serie A season with 2-0 win over promoted Venezia</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/asian-markets-jackson-hole-mixed/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>Asian markets close mixed as Kospi falls 1.8 percent on tech sell-off</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/ai-infrastructure-boom-bigger-than-gpus/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>AI infrastructure spending is outgrowing the GPU, analyst brief argues</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-29/apple-mac-mini-m6-free-upgrade/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-29T05:00:00.000Z</news:publication_date>
-      <news:title>Apple quietly upgrades recent Mac mini orders to M6 and M5 Pro for free</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/warsh-jackson-hole-keynote/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Warsh to deliver first Jackson Hole keynote as Fed chair on Friday</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/salesforce-q2-fy27-agentforce/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Salesforce posts record $11.35B quarter as Agentforce ARR tops $1.5B</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/bundesliga-bayern-stuttgart-opener/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Bundesliga kicks off 2026/27 with Bayern Munich hosting VfB Stuttgart at the Allianz</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/microsoft-365-copilot-claude/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Microsoft 365 Copilot rolls out Anthropic&#39;s Claude across chat, research and Excel</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/us-durable-goods-july/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>US durable-goods orders jump 1.1% in July as transportation equipment rebounds</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/qwen3-8-flash-next/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Alibaba&#39;s Qwen team releases open-weight 125B multimodal model trained at one-ninth the cost</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/accuknox-agentz-launch/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>AccuKnox launches AgentZ to govern enterprise AI agents at scale</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/champions-league-draw-reaction/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Champions League draw pairs Arsenal with Real Madrid and Manchester United with Bayern</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/apple-september-9-event/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Apple confirms September 9 launch event for the iPhone 18 Pro and iPhone Ultra</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/anthropic-funding-round/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic set to close $30B funding at over $900B valuation</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/crystal-palace-manchester-city/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Crystal Palace host Manchester City in Friday night Premier League clash</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/kubernetes-1-37-garhwal/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Kubernetes 1.37 &quot;Garhwal&quot; ships with metrics API graduating after nine years in beta</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/euro-stoxx-cautious-warsh/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>European shares turn cautious ahead of Warsh&#39;s first Jackson Hole keynote</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/red-hat-hardened-images-aws/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>Red Hat Hardened Images gain AWS Inspector and ECR scanning, OTel 2.0 telco AI lands</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-08-28/cnf-kubernetes-learning/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-08-28T05:00:00.000Z</news:publication_date>
-      <news:title>CNCF blog reframes Kubernetes as five pieces of scaffolding, not a body of APIs</news:title>
     </news:news>
   </url>
 </urlset>

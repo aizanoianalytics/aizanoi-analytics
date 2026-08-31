@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-31-paypal-bid-collapse",
+  "title": "PayPal drops 12.7 percent as Stripe-Advent consortium walks away from a $53 billion approach",
+  "summary": "PayPal closed Friday down 12.71% at $53.66 after Reuters reported that a consortium led by Stripe and private equity firm Advent ended its pursuit of the payments company. The abandoned $60.50-per-share indication had implied roughly a 12.7% premium, leaving standalone execution and 5% revenue growth as the main supports for the stock.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-08-31T05:10:00Z",
+  "updatedAt": "2026-08-31T05:10:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["PayPal", "Stripe", "Advent", "M&A", "payments"],
+  "sources": [
+    {
+      "publisher": "TS2",
+      "url": "https://ts2.tech/en/paypal-stock-falls-12-7-as-53-billion-bid-collapse-exposes-margin-test/",
+      "publishedAt": "2026-08-29T04:58:00Z"
+    }
+  ]
+}
