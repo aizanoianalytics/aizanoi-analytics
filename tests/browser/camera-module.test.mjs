@@ -4,7 +4,7 @@ import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
-test('Camera module requests camera+microphone and stops all media on close', async () => {
+test('Camera module requests camera first, microphone second and stops all media on close', async () => {
   const browser = await chromium.launch({
     headless: true,
     args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'],
@@ -22,11 +22,11 @@ test('Camera module requests camera+microphone and stops all media on close', as
 
   try {
     await page.addInitScript(() => {
-      window.__cameraQa = { constraints: null, tracks: [], revoked: [] };
+      window.__cameraQa = { constraints: [], tracks: [], revoked: [] };
       const mediaDevices = navigator.mediaDevices;
       const originalGetUserMedia = mediaDevices.getUserMedia.bind(mediaDevices);
       mediaDevices.getUserMedia = async (constraints) => {
-        window.__cameraQa.constraints = structuredClone(constraints);
+        window.__cameraQa.constraints.push(structuredClone(constraints));
         const stream = await originalGetUserMedia(constraints);
         window.__cameraQa.tracks.push(...stream.getTracks());
         return stream;
@@ -63,16 +63,19 @@ test('Camera module requests camera+microphone and stops all media on close', as
     assert.ok(galleryUrls > 0, 'Camera gallery must create at least one blob URL before teardown');
 
     await page.click('[data-cam-start]');
-    await page.waitForTimeout(900);
+    await page.waitForTimeout(1100);
 
     const active = await page.evaluate(() => ({
       constraints: window.__cameraQa.constraints,
       liveTracks: window.__cameraQa.tracks.filter((track) => track.readyState === 'live').length,
       status: document.querySelector('[data-cam-status]')?.textContent || '',
     }));
-    assert.deepEqual(active.constraints, { video: { facingMode: 'user' }, audio: true });
+    assert.deepEqual(active.constraints.slice(0, 2), [
+      { video: { facingMode: 'user' }, audio: false },
+      { video: false, audio: true },
+    ]);
     assert.ok(active.liveTracks > 0, 'Camera start must create live media tracks');
-    assert.equal(active.status, 'Camera active');
+    assert.match(active.status, /^Camera active/);
 
     await page.evaluate(() => window.AIZANOI_OS?.closeApp?.('camera'));
     await page.waitForTimeout(500);
