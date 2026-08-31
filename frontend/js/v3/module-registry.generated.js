@@ -114,7 +114,7 @@ export const INSTALLED_MODULES = Object.freeze([
     type: "desktop-app",
     entry: "/js/v3/apps/workspace/src/index.js",
     enabledByDefault: true,
-    requires: Object.freeze(["apps","filesystem","notifications","sound"]),
+    requires: Object.freeze(["apps","dialog","filesystem","notifications","sound"]),
     provides: Object.freeze(["desktop-app"]),
   }),
   Object.freeze({

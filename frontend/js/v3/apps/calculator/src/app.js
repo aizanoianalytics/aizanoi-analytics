@@ -2,20 +2,38 @@
 export async function mountCalculator({ container, capabilities }) {
   const { sound } = capabilities;
   container.innerHTML = `
-  <div class="az-app-shell"><div class="az-app-toolbar"><strong>Calculator</strong><span class="az-system-spacer"></span><span class="az-app-caption">Standard</span></div>
-  <div class="az-calc">
-    <div class="az-calc-display" data-calc-display role="status" aria-live="polite">0</div>
-    <div class="az-calc-modes"><span data-calc-memory-indicator></span><span>Standard</span></div>
-    <div class="az-calc-keys" role="group" aria-label="Calculator keypad">
-      ${[['MC','m'],['MR','r'],['MS','s'],['M+','p'],['Back','back'],['CE','ce'],['C','c'],['±','neg'],['√','sqrt']]
-        .map(([label, action]) => `<button class="az-calc-key az-calc-key--fn" type="button" data-calc="${action}">${label}</button>`).join('')}
-      ${['7','8','9','/','4','5','6','*','1','2','3','-','0','.','+'].map((key) => {
-        const label = key === '*' ? '×' : key === '/' ? '÷' : key;
-        return `<button class="az-calc-key" type="button" data-calc="${label}">${label}</button>`;
-      }).join('')}
-      <button class="az-calc-key az-calc-key--eq" type="button" data-calc="=">=</button>
+  <div class="az-app-shell az-utility-shell az-calculator-shell">
+    <div class="az-calc" aria-label="Standard calculator">
+      <div class="az-calc-meta"><span>Standard</span><strong data-calc-memory-indicator aria-label="Memory status"></strong></div>
+      <div class="az-calc-display" data-calc-display role="status" aria-live="polite">0</div>
+      <div class="az-calc-memory" role="group" aria-label="Memory controls">
+        ${[['MC','m'],['MR','r'],['MS','s'],['M+','p']].map(([label, action]) => `<button class="az-calc-key az-calc-key--memory" type="button" data-calc="${action}">${label}</button>`).join('')}
+      </div>
+      <div class="az-calc-keys" role="group" aria-label="Calculator keypad">
+        <button class="az-calc-key az-calc-key--fn" type="button" data-calc="sqrt">√</button>
+        <button class="az-calc-key az-calc-key--fn" type="button" data-calc="back">Back</button>
+        <button class="az-calc-key az-calc-key--fn" type="button" data-calc="ce">CE</button>
+        <button class="az-calc-key az-calc-key--fn" type="button" data-calc="c">C</button>
+        <button class="az-calc-key" type="button" data-calc="7">7</button>
+        <button class="az-calc-key" type="button" data-calc="8">8</button>
+        <button class="az-calc-key" type="button" data-calc="9">9</button>
+        <button class="az-calc-key az-calc-key--operator" type="button" data-calc="÷">÷</button>
+        <button class="az-calc-key" type="button" data-calc="4">4</button>
+        <button class="az-calc-key" type="button" data-calc="5">5</button>
+        <button class="az-calc-key" type="button" data-calc="6">6</button>
+        <button class="az-calc-key az-calc-key--operator" type="button" data-calc="×">×</button>
+        <button class="az-calc-key" type="button" data-calc="1">1</button>
+        <button class="az-calc-key" type="button" data-calc="2">2</button>
+        <button class="az-calc-key" type="button" data-calc="3">3</button>
+        <button class="az-calc-key az-calc-key--operator" type="button" data-calc="-">−</button>
+        <button class="az-calc-key" type="button" data-calc="neg">±</button>
+        <button class="az-calc-key" type="button" data-calc="0">0</button>
+        <button class="az-calc-key" type="button" data-calc=".">.</button>
+        <button class="az-calc-key az-calc-key--operator" type="button" data-calc="+">+</button>
+        <button class="az-calc-key az-calc-key--eq" type="button" data-calc="=">=</button>
+      </div>
     </div>
-  </div></div>`;
+  </div>`;
 
   const display = container.querySelector('[data-calc-display]');
   const memoryIndicator = container.querySelector('[data-calc-memory-indicator]');
@@ -52,7 +70,7 @@ export async function mountCalculator({ container, capabilities }) {
 
   function press(key) {
     if (current === 'Error' && key !== 'c' && key !== 'ce') return;
-    if (/[0-9]/.test(key)) {
+    if (/^[0-9]$/.test(key)) {
       current = resetNext || current === '0' ? key : current + key;
       resetNext = false;
     } else if (key === '.') {
@@ -69,6 +87,7 @@ export async function mountCalculator({ container, capabilities }) {
       current = '0';
       resetNext = false;
     } else if (key === 'back') {
+      if (resetNext) return;
       current = current.length > 1 ? current.slice(0, -1) : '0';
     } else if (key === 'neg') {
       current = current.startsWith('-') ? current.slice(1) : (current === '0' ? current : `-${current}`);
@@ -116,10 +135,12 @@ export async function mountCalculator({ container, capabilities }) {
   }
 
   function handleKeydown(event) {
-    if (!container.contains(document.activeElement) && document.activeElement !== document.body) return;
-    const map = { '*': '×', '/': '÷', Enter: '=', '=': '=', Escape: 'c', Backspace: 'back' };
+    const active = document.activeElement;
+    const hostWindow = container.closest('.az-window');
+    if (!container.contains(active) && active !== document.body && active !== hostWindow) return;
+    const map = { '*':'×', '/':'÷', Enter:'=', '=':'=', Escape:'c', Backspace:'back' };
     const key = map[event.key] ?? event.key;
-    if (/[0-9.]|^[+\-×÷]$|^=$|^back$|^c$/.test(key)) {
+    if (/^[0-9.]$|^[+\-×÷]$|^=$|^back$|^c$/.test(key)) {
       event.preventDefault();
       sound.play('click');
       press(key);

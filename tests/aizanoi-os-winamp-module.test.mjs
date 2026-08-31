@@ -61,16 +61,16 @@ test('shared filesystem capability exposes Workspace Music without a second stor
 
 test('Winamp cleanup removes owned listeners and revokes the active media URL', () => {
   for (const pair of [
-    ["container", 'click', 'handleClick'],
-    ["fileInput", 'change', 'handleFileChange'],
-    ["seekEl", 'input', 'handleSeekInput'],
-    ["audio", 'timeupdate', 'handleTimeUpdate'],
-    ["audio", 'ended', 'handleEnded'],
-    ["vol", 'input', 'handleVolumeInput'],
+    ['container', 'click', 'handleClick'],
+    ['fileInput', 'change', 'handleFileChange'],
+    ['seekEl', 'input', 'handleSeekInput'],
+    ['audio', 'timeupdate', 'updateTime'],
+    ['audio', 'ended', 'handleEnded'],
+    ['vol', 'input', 'handleVolumeInput'],
   ]) {
     const [owner, event, handler] = pair;
-    assert.match(privateApp, new RegExp(`${owner}\\.addEventListener\\('${event}', ${handler}\\)`));
-    assert.match(privateApp, new RegExp(`${owner}\\.removeEventListener\\('${event}', ${handler}\\)`));
+    assert.match(privateApp, new RegExp(`${owner}\\.addEventListener\\('${event}',\\s*${handler}\\)`));
+    assert.match(privateApp, new RegExp(`${owner}\\.removeEventListener\\('${event}',\\s*${handler}\\)`));
   }
   assert.match(privateApp, /audio\.pause\(\)/);
   assert.match(privateApp, /revokeActiveUrl\(\)/);

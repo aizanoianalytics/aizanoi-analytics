@@ -1,0 +1,36 @@
+@layer polish {
+  .az-app-dialog-message { margin:0 0 18px;color:var(--az-text-2);line-height:1.55; }
+  .az-app-prompt-label { display:grid;gap:7px;color:var(--az-text-2);font-size:12px;font-weight:700; }
+  .az-app-prompt-input { width:100%;min-height:44px;padding:9px 11px;border:1px solid var(--az-border);border-radius:10px;background:#fff;color:var(--az-text);font:14px var(--az-font-ui); }
+  .az-app-prompt-input:focus { outline:2px solid rgba(82,101,219,.26);outline-offset:2px; }
+
+  .az-workspace-item { padding:0;grid-template-columns:minmax(0,1fr) 34px;align-items:stretch;gap:2px; }
+  .az-workspace-open { min-width:0;display:grid;grid-template-columns:40px minmax(0,1fr);grid-template-rows:auto auto;align-items:center;gap:1px 9px;padding:9px 7px;border:0;border-radius:10px;background:transparent;color:inherit;text-align:left;cursor:pointer; }
+  .az-workspace-open:hover,.az-workspace-open:focus-visible { background:rgba(82,101,219,.08);outline:none; }
+  .az-workspace-open .az-workspace-icon { grid-row:1/3; }
+  .az-workspace-open strong,.az-workspace-open small { min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+  .az-workspace-preview { margin:0 12px 12px;padding:12px;border:1px solid var(--az-border);border-radius:16px;background:rgba(255,255,255,.86);box-shadow:0 14px 36px rgba(41,59,88,.08); }
+  .az-workspace-preview[hidden] { display:none; }
+  .az-workspace-preview header { display:flex;align-items:center;gap:8px;margin-bottom:10px; }
+  .az-workspace-preview img { width:100%;max-height:360px;display:block;object-fit:contain;border-radius:10px;background:#edf1f7; }
+  .az-ws-actionmenu { min-width:250px;padding:0;overflow:hidden;border-radius:16px;box-shadow:0 20px 50px rgba(28,39,61,.22); }
+  .az-ws-actionmenu-body { padding:10px; }
+
+  .az-winamp-row { display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:5px;border-bottom:1px solid rgba(148,163,184,.12); }
+  .az-winamp-row.is-active { background:rgba(86,214,163,.08); }
+  .az-winamp-row .az-winamp-item { min-width:0;display:flex;gap:7px;align-items:center; }
+  .az-winamp-row .az-winamp-item strong { overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:inherit; }
+  .az-winamp-row-actions { display:flex;gap:2px;padding-right:4px; }
+  .az-winamp-row-actions button { width:28px;height:28px;padding:0;border:1px solid rgba(143,162,187,.22);border-radius:6px;background:#172034;color:#b7c6da;cursor:pointer; }
+  .az-winamp-row-actions button:disabled { opacity:.3;cursor:default; }
+  .az-winamp-row-actions button:not(:disabled):hover { background:#243149; }
+
+  /* Refine the active-app breadcrumb without duplicating the AizanoiOS wordmark. */
+  .az-system-menu button > span[aria-hidden="true"] { font-size:0;opacity:.46; }
+  .az-system-menu button > span[aria-hidden="true"]::after { content:'/';font-size:12px;font-weight:500; }
+
+  @media (max-width:599px), (max-height:500px) and (max-width:899px) {
+    .az-phone-home { padding-bottom:max(56px,calc(34px + env(safe-area-inset-bottom)));scroll-padding-bottom:56px; }
+    .az-workspace-preview img { max-height:45dvh; }
+  }
+}

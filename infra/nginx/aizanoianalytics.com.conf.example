@@ -2,12 +2,7 @@ server {
     server_name example.com;
     root /var/www/example.com;
     index index.html;
-
-    # Copy the matching sanitized snippets from infra/nginx/snippets first.
-    # The shared CSP includes `script-src 'self';` and no unsafe-inline token.
-    # TLS/HSTS belongs in the real HTTPS server block and is not fabricated here.
     include snippets/aizanoi-static-security-headers.conf;
-
     client_max_body_size 128k;
     gzip on;
     gzip_vary on;
@@ -22,7 +17,6 @@ server {
     location = /500.html { internal; }
     location = /503.html { internal; }
 
-    # Retired product/API surfaces.
     location = /ai { return 410; }
     location = /ai/ { return 410; }
     location = /market { return 410; }
@@ -30,7 +24,7 @@ server {
     location = /api/chat { return 410; }
     location ^~ /api/ { return 404; }
 
-    # Legacy product names permanently resolve to the canonical architecture.
+    # Exact retired landing names redirect; old /games/* assets no longer exist.
     location = /videos { return 301 /tv/; }
     location = /videos/ { return 301 /tv/; }
     location = /games { return 301 /arcade/; }
@@ -38,82 +32,24 @@ server {
     location = /projects { return 301 /forge/; }
     location = /projects/ { return 301 /forge/; }
 
-    # Cache policy uses expires so server-level security headers keep inheriting.
-    location = /.well-known/security.txt {
-        try_files $uri =404;
-        default_type text/plain;
-        expires 1h;
-    }
-    location = / {
-        try_files /index.html =404;
-        expires -1;
-    }
-    location = /index.html {
-        try_files $uri =404;
-        expires -1;
-    }
-    location = /manifest.webmanifest {
-        try_files $uri =404;
-        default_type application/manifest+json;
-        expires -1;
-    }
-    location = /service-worker.js {
-        try_files $uri =404;
-        expires -1;
-    }
-    location ^~ /styles/ {
-        try_files $uri =404;
-        expires -1;
-    }
-    location ^~ /js/ {
-        try_files $uri =404;
-        expires -1;
-    }
-    location ^~ /assets/ {
-        try_files $uri =404;
-        expires 7d;
-    }
+    location = /.well-known/security.txt { try_files $uri =404; default_type text/plain; expires 1h; }
+    location = / { try_files /index.html =404; expires -1; }
+    location = /index.html { try_files $uri =404; expires -1; }
+    location = /manifest.webmanifest { try_files $uri =404; default_type application/manifest+json; expires -1; }
+    location = /release.js { try_files $uri =404; expires -1; }
+    location = /service-worker.js { try_files $uri =404; expires -1; }
+    location ^~ /styles/ { try_files $uri =404; expires -1; }
+    location ^~ /js/ { try_files $uri =404; expires -1; }
+    location ^~ /assets/ { try_files $uri =404; expires 7d; }
 
-    # Original HR dashboards are self-contained HTML exports with embedded
-    # styles and scripts. This narrow route-level CSP preserves their complete
-    # behavior without weakening the shell or any other product surface.
-    location ^~ /analytics/dashboards/hr-analytics-full-set/ {
-        include snippets/aizanoi-hr-analytics-security-headers.conf;
-        try_files $uri $uri/ =404;
-        expires -1;
-    }
-    # Game modules remain available below /games/*; only exact legacy landing
-    # requests above redirect to /arcade/.
-    location ^~ /games/ {
-        try_files $uri =404;
-        expires -1;
-    }
+    location ^~ /analytics/dashboards/hr-analytics-full-set/ { include snippets/aizanoi-hr-analytics-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
 
-    # Historical Worlds still require city-local inline boot scripts/styles.
-    # Their location-level CSP intentionally replaces the strict shared CSP, so
-    # the complete header set is repeated in the historical snippet.
     location = /historic-world { return 301 /historic-world/; }
-    location = /historic-world/ {
-        include snippets/aizanoi-historical-world-security-headers.conf;
-        try_files /historic-world/index.html =404;
-        expires -1;
-    }
-    location ^~ /historic-world/ {
-        include snippets/aizanoi-historical-world-security-headers.conf;
-        try_files $uri =404;
-        expires -1;
-    }
+    location = /historic-world/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files /historic-world/index.html =404; expires -1; }
+    location ^~ /historic-world/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri =404; expires -1; }
     location = /ancient-cities/rome-410-476 { return 301 /ancient-cities/rome-410-476/; }
     location = /ancient-cities/athens-450-430 { return 301 /ancient-cities/athens-450-430/; }
-    location ^~ /ancient-cities/ {
-        include snippets/aizanoi-historical-world-security-headers.conf;
-        try_files $uri $uri/ =404;
-        expires -1;
-    }
+    location ^~ /ancient-cities/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
 
-    # Product landings and real files/directories resolve directly. Unknown paths
-    # return a true 404 instead of silently booting the shell.
-    location / {
-        try_files $uri $uri/ =404;
-    }
+    location / { try_files $uri $uri/ =404; }
 }

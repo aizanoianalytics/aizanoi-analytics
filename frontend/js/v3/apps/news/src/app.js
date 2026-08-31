@@ -1,37 +1,5 @@
 const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-const categoryLabel=(value)=>({
-  ai:'AI',technology:'Technology','economy-markets':'Economy / Markets',football:'Football'
-}[value]||value);
-
+const categoryLabel=(value)=>({ai:'AI',technology:'Technology','economy-markets':'Economy / Markets',football:'Football'}[value]||value);
 function shell(title,caption,body){return `<div class="az-app-shell"><div class="az-app-toolbar"><strong>${esc(title)}</strong><span class="az-system-spacer"></span><span class="az-app-caption">${esc(caption)}</span></div>${body}</div>`;}
-
-export function renderNewsFeed(feed){
-  const editions=Array.isArray(feed?.editions)?feed.editions:[];
-  const weeklyEditions=Array.isArray(feed?.weeklyEditions)?feed.weeklyEditions:[];
-  const items=Array.isArray(feed?.items)?feed.items:[];
-  const current=editions[0];
-  if(!current&&!weeklyEditions[0])return `<div class="az-news-empty"><p class="az-kicker">THE PRESS IS READY</p><h3>No edition has been published yet</h3><p>The News Desk is preparing original, concise reports with named editors and linked sources.</p><a class="az-button" href="/news/">Visit the News archive</a></div>`;
-  const currentItems=current?items.filter((item)=>String(item.publishedAt||'').slice(0,10)===current.date&&item.kind!=='weekly'):[];
-  const weekly=weeklyEditions[0];
-  const weeklyItems=weekly?items.filter((item)=>item.kind==='weekly'&&String(item.publishedAt||'').slice(0,10)===weekly.date):[];
-  const weeklyBlock=weekly?`<aside class="az-news-weekly"><header><p class="az-kicker">Weekly edition · ${esc(weekly.week)}</p><h3>Aizanoi News · ${esc(weekly.date)}</h3></header><div class="az-news-columns">${weeklyItems.map((item)=>`<article><p class="az-kicker">${esc(categoryLabel(item.category))}</p><h4>${esc(item.title)}</h4><p>${esc(item.summary)}</p><p class="az-news-byline">By ${esc(item.author?.name)} · Edited by ${esc(item.editor?.name)}</p><div class="az-source-list">${(item.sources||[]).map((source)=>`<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.publisher)}</a>`).join(' · ')}</div><a class="az-button" href="${esc(weekly.path)}">Read the weekly edition</a></article>`).join('')}</div></aside>`:'';
-  const dailyBlock=current?`<section class="az-news-edition"><header><div><p class="az-kicker">Current edition · ${esc(current.date)}</p><h2>Aizanoi News</h2></div><div class="az-news-actions"><a class="az-button" href="${esc(current.path)}">Read current edition</a><a href="/news/">All editions</a></div></header><div class="az-news-columns">${currentItems.map((item)=>`<article><p class="az-kicker">${esc(categoryLabel(item.category))}</p><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><p class="az-news-byline">By ${esc(item.author?.name)} · Edited by ${esc(item.editor?.name)}</p><div class="az-source-list">${(item.sources||[]).map((source)=>`<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.publisher)}</a>`).join(' · ')}</div></article>`).join('')}</div></section>`:'';
-  return dailyBlock+weeklyBlock;
-}
-
-export function createNewsApp(){
-  return {
-    async mount(container){
-      container.innerHTML=shell('Aizanoi News','Daily editions · Source-linked','<div class="az-media"><div class="az-empty-state"><div><h3>Loading today’s edition…</h3><p>Reading the static edition feed.</p></div></div></div>');
-      const host=container.querySelector('.az-media');
-      try{
-        const response=await fetch('/news/index.json',{cache:'no-cache'});
-        if(!response.ok)throw new Error(`News feed returned ${response.status}`);
-        host.innerHTML=renderNewsFeed(await response.json());
-      }catch(error){
-        host.innerHTML=`<div class="az-empty-state"><div><h3>News feed unavailable</h3><p>${esc(error.message)}</p><a class="az-button" href="/news/">Open the News archive</a></div></div>`;
-      }
-      return ()=>{};
-    },
-  };
-}
+export function renderNewsFeed(feed){const editions=Array.isArray(feed?.editions)?feed.editions:[],weeklyEditions=Array.isArray(feed?.weeklyEditions)?feed.weeklyEditions:[],items=Array.isArray(feed?.items)?feed.items:[],current=editions[0];if(!current&&!weeklyEditions[0])return `<div class="az-news-empty"><p class="az-kicker">THE PRESS IS READY</p><h3>No edition has been published yet</h3><p>The News Desk is preparing original, concise reports with named editors and linked sources.</p><a class="az-button" href="/news/">Visit the News archive</a></div>`;const currentItems=current?items.filter((item)=>String(item.publishedAt||'').slice(0,10)===current.date&&item.kind!=='weekly'):[],weekly=weeklyEditions[0],weeklyItems=weekly?items.filter((item)=>item.kind==='weekly'&&String(item.publishedAt||'').slice(0,10)===weekly.date):[];const weeklyBlock=weekly?`<aside class="az-news-weekly"><header><p class="az-kicker">Weekly edition · ${esc(weekly.week)}</p><h3>Aizanoi News · ${esc(weekly.date)}</h3></header><div class="az-news-columns">${weeklyItems.map((item)=>`<article><p class="az-kicker">${esc(categoryLabel(item.category))}</p><h4>${esc(item.title)}</h4><p>${esc(item.summary)}</p><p class="az-news-byline">By ${esc(item.author?.name)} · Edited by ${esc(item.editor?.name)}</p><div class="az-source-list">${(item.sources||[]).map((source)=>`<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.publisher)}</a>`).join(' · ')}</div><a class="az-button" href="${esc(weekly.path)}">Read the weekly edition</a></article>`).join('')}</div></aside>`:'';const dailyBlock=current?`<section class="az-news-edition"><header><div><p class="az-kicker">Current edition · ${esc(current.date)}</p><h2>Aizanoi News</h2></div><div class="az-news-actions"><a class="az-button" href="${esc(current.path)}">Read current edition</a><a href="/news/">All editions</a></div></header><div class="az-news-columns">${currentItems.map((item)=>`<article><p class="az-kicker">${esc(categoryLabel(item.category))}</p><h3>${esc(item.title)}</h3><p>${esc(item.summary)}</p><p class="az-news-byline">By ${esc(item.author?.name)} · Edited by ${esc(item.editor?.name)}</p><div class="az-source-list">${(item.sources||[]).map((source)=>`<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.publisher)}</a>`).join(' · ')}</div></article>`).join('')}</div></section>`:'';return dailyBlock+weeklyBlock;}
+export function createNewsApp(){return{async mount(container){const controller=new AbortController();let disposed=false;container.innerHTML=shell('Aizanoi News','Daily editions · Source-linked','<div class="az-media"><div class="az-empty-state"><div><h3>Loading today’s edition…</h3><p>Reading the static edition feed.</p></div></div></div>');const host=container.querySelector('.az-media');try{const response=await fetch('/news/index.json',{cache:'no-cache',signal:controller.signal});if(!response.ok)throw new Error(`News feed returned ${response.status}`);const feed=await response.json();if(!disposed)host.innerHTML=renderNewsFeed(feed);}catch(error){if(error?.name!=='AbortError'&&!disposed)host.innerHTML=`<div class="az-empty-state"><div><h3>News feed unavailable</h3><p>${esc(error.message)}</p><a class="az-button" href="/news/">Open the News archive</a></div></div>`;}return()=>{disposed=true;controller.abort();};}};}
