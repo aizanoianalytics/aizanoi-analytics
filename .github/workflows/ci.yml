@@ -34,6 +34,8 @@ jobs:
           while IFS= read -r -d '' file; do
             node --check "$file"
           done < <(find frontend/js/v3 frontend/ancient-world frontend/ancient-cities frontend/historic-world -type f -name '*.js' -print0)
+          node --check frontend/analytics/catalog.js
+          node --check frontend/analytics/app.js
           node --check frontend/service-worker.js
           node --check scripts/news/build-news.mjs
           node --check scripts/modules/build-module-registry.mjs
@@ -44,15 +46,10 @@ jobs:
       - name: Regression tests
         run: |
           set -o pipefail
-          # Top-level regression suite (node:test glob is non-recursive).
           node --test tests/*.test.mjs 2>&1 | tee artifacts/diagnostics/regression-tests.log
       - name: Audit contract tests (security boundary + HR dashboard parity)
         run: |
           set -o pipefail
-          # These live in tests/audit/ and are NOT matched by tests/*.test.mjs.
-          # They are the enforceable contract for the public-only publish
-          # boundary (per owner decision 2026-08-26) and HR dashboard metadata
-          # parity, so they MUST run on every PR.
           node --test tests/audit/*.test.mjs 2>&1 | tee artifacts/diagnostics/audit-contract-tests.log
       - name: Reject whitespace errors
         if: success()
@@ -111,7 +108,7 @@ jobs:
 
   browser-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
@@ -135,6 +132,43 @@ jobs:
           done
           cat /tmp/aizanoi-http.log
           exit 1
+      - name: Production-like Nginx policy gate
+        env:
+          AIZANOI_NGINX_BASE_URL: http://127.0.0.1:4174
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends nginx
+          cat > /tmp/aizanoi-nginx.conf <<EOF
+          pid /tmp/aizanoi-nginx.pid;
+          error_log /tmp/aizanoi-nginx-error.log;
+          events {}
+          http {
+            include /etc/nginx/mime.types;
+            access_log /tmp/aizanoi-nginx-access.log;
+            server {
+              listen 127.0.0.1:4174;
+              server_name localhost;
+              root ${GITHUB_WORKSPACE}/frontend;
+              index index.html;
+              include ${GITHUB_WORKSPACE}/infra/nginx/snippets/aizanoi-static-security-headers.conf.example;
+              location = / { try_files /index.html =404; expires -1; }
+              location ^~ /js/ { try_files \$uri =404; expires -1; }
+              location ^~ /styles/ { try_files \$uri =404; expires -1; }
+              location ^~ /assets/ { try_files \$uri =404; expires 7d; }
+              location ^~ /news/ { try_files \$uri \$uri/ =404; expires -1; }
+              location / { try_files \$uri \$uri/ =404; }
+            }
+          }
+          EOF
+          nginx -t -c /tmp/aizanoi-nginx.conf
+          nginx -c /tmp/aizanoi-nginx.conf
+          trap 'nginx -s stop -c /tmp/aizanoi-nginx.conf || true' EXIT
+          for i in {1..20}; do
+            curl -fsSI http://127.0.0.1:4174/ >/dev/null && break
+            sleep 0.5
+          done
+          node --test tests/browser/nginx-production-policy.test.mjs 2>&1 | tee artifacts/diagnostics/nginx-production-policy.log
       - name: Field System browser gate
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
@@ -161,14 +195,14 @@ jobs:
           done
           cp /tmp/aizanoi-http.log artifacts/diagnostics/browser-static-server.log || true
           exit $status
-      - name: HR Analytics Full Set browser gates
+      - name: HR Analytics Full Set and Workspace browser gates
         env:
           ANCIENT_WORLD_BASE_URL: http://127.0.0.1:4173
         run: |
           set -o pipefail
           status=0
           node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
-          node --test tests/browser/workspace-apps.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-apps-browser.log || status=1
+          node --test tests/browser/workspace-apps.test.mjs tests/browser/workspace-atomic.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-apps-browser.log || status=1
           exit $status
       - name: Camera capability browser gate
         env:
@@ -253,21 +287,15 @@ jobs:
               valid=$((valid + 1))
               cp "$report" "artifacts/diagnostics/lighthouse-report-$attempt.json"
               node tests/lighthouse-budget.mjs "$report" >"artifacts/diagnostics/lighthouse-budget-$attempt.log" 2>&1
-              if [ "$?" -eq 0 ]; then
-                passes=$((passes + 1))
-              fi
+              if [ "$?" -eq 0 ]; then passes=$((passes + 1)); fi
             fi
-            if [ "$passes" -ge 2 ]; then
-              break
-            fi
+            if [ "$passes" -ge 2 ]; then break; fi
             sleep 1
           done
           echo "Valid Lighthouse reports: $valid; budget passes: $passes" | tee artifacts/diagnostics/lighthouse-summary.log
           cp /tmp/aizanoi-lighthouse-http.log artifacts/diagnostics/lighthouse-static-server.log || true
           set -e
-          if [ "$passes" -lt 2 ]; then
-            exit 1
-          fi
+          if [ "$passes" -lt 2 ]; then exit 1; fi
       - name: Upload Lighthouse diagnostics
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a

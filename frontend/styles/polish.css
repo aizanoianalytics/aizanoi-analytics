@@ -5,7 +5,7 @@
     background:linear-gradient(145deg,rgba(250,252,255,.98),rgba(241,245,252,.94));
   }
 
-  /* Calculator: compact, predictable four-column keypad. */
+  /* Calculator: compact, predictable four-column keypad. Window geometry is owned by shell.js. */
   .az-window[data-app-id="calculator"] .az-calculator-shell {
     display:grid;
     place-items:center;
@@ -314,27 +314,6 @@
     text-decoration:none;
   }
   .az-window[data-app-id="analytics"] .az-analytics-dashboard-card a:hover { text-decoration:underline;text-underline-offset:3px; }
-
-  @media (min-width:1200px) {
-    .az-window[data-app-id="calculator"]:not(.is-maximized) {
-      width:430px !important;
-      height:590px !important;
-      left:calc(50% - 215px) !important;
-      top:max(10px,calc(50% - 295px)) !important;
-    }
-    .az-window[data-app-id="winamp"]:not(.is-maximized) {
-      width:540px !important;
-      height:590px !important;
-      left:calc(50% - 270px) !important;
-      top:max(10px,calc(50% - 295px)) !important;
-    }
-    .az-window[data-app-id="recycle-bin"]:not(.is-maximized) {
-      width:820px !important;
-      height:560px !important;
-      left:calc(50% - 410px) !important;
-      top:max(10px,calc(50% - 280px)) !important;
-    }
-  }
 
   @media (max-width:760px) {
     .az-window[data-app-id="analytics"] .az-analytics-set-grid,

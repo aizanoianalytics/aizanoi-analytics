@@ -1,38 +1,8 @@
+import { ANALYTICS_SETS, analyticsSetById } from '/analytics/catalog.js';
+
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
   '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
 }[char]));
-
-const HR_DASHBOARDS = Object.freeze([
-  { title:'HR Executive Board — Full History', summary:'Workforce overview, organization, hiring and exits, tenure, promotions, learning and risk across the complete synthetic history.', href:'/analytics/dashboards/hr-analytics-full-set/hr-executive-board-full-history/' },
-  { title:'HR Executive Board — 2024 to Present', summary:'A current-period executive lens across workforce movement, organization, tenure, promotions, learning and risk.', href:'/analytics/dashboards/hr-analytics-full-set/hr-executive-board-current/' },
-  { title:'HR Administration & Deep Dive', summary:'Synthetic person search, employment timelines, performance, learning, discipline and exit analysis.', href:'/analytics/dashboards/hr-analytics-full-set/hr-administration-deep-dive/' },
-  { title:'Store Operations Tracking', summary:'Regional and store comparison, hiring, promotion, turnover, forecast, learning and workforce operations.', href:'/analytics/dashboards/hr-analytics-full-set/store-operations-tracking/' },
-  { title:'Workforce Turnover Analytics', summary:'Overview, comparison, forecast, early turnover, exit explorer, survival and risk, settings and exports.', href:'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/' },
-  { title:'Store Learning & Compliance', summary:'Participation, safety, mandatory learning, checklists, turnover and compliance scoring.', href:'/analytics/dashboards/hr-analytics-full-set/store-learning-compliance/' },
-  { title:'Learning Academy Analytics', summary:'Training delivery, compliance, planning, exams, development journeys and academy performance.', href:'/analytics/dashboards/hr-analytics-full-set/learning-academy-analytics/' },
-  { title:'Performance, Hiring & Turnover', summary:'Performance, time to hire, early turnover, target attainment and store scorecards.', href:'/analytics/dashboards/hr-analytics-full-set/performance-hiring-turnover/' },
-  { title:'Corporate Goals Dashboard', summary:'Strategic goals, KPI progress, target status and an executive summary for a fictional organization.', href:'/analytics/dashboards/hr-analytics-full-set/corporate-goals/' },
-  { title:'Workforce Time & Attendance', summary:'Schedules, worked versus required hours, exceptions, synthetic person detail, monthly balance and spreadsheet export.', href:'/analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/' },
-]);
-
-export const ANALYTICS_SETS = Object.freeze([
-  Object.freeze({
-    id:'hr-analytics-full-set',
-    eyebrow:'LIVE ANALYTICS COLLECTION · SYNTHETIC DATA',
-    title:'HR Analytics',
-    accent:'Full Set',
-    summary:'One complete HR analytics product built by Aizanoi Analytics: ten connected dashboard surfaces, rebuilt from 27 synthetic source workbooks with the original controls, drill-downs and exports intact.',
-    description:'Ten original HR dashboard products from one unchanged analytics production line. Public outputs use fictional organizations and synthetic people only.',
-    metrics:Object.freeze([
-      Object.freeze({ value:'10', label:'live dashboard surfaces' }),
-      Object.freeze({ value:'27', label:'synthetic source workbooks' }),
-      Object.freeze({ value:'22', label:'parity-verified Python modules' }),
-      Object.freeze({ value:'0', label:'real employee records' }),
-    ]),
-    download:'/analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx',
-    dashboards:HR_DASHBOARDS,
-  }),
-]);
 
 function renderCatalog(container) {
   container.innerHTML = `
@@ -41,7 +11,7 @@ function renderCatalog(container) {
         <header class="az-analytics-intro">
           <p class="az-kicker">AIZANOI ANALYTICS</p>
           <h2 id="az-analytics-sets-title">Analytics Sets</h2>
-          <p>Complete analytical products live here as independent sets. The catalog is data-driven, so future sets can be added without redesigning the application.</p>
+          <p>Complete analytical products live here as independent sets. The same canonical catalog drives this app and the public Analytics landing page.</p>
         </header>
         <div class="az-analytics-set-grid">
           ${ANALYTICS_SETS.map((set) => `
@@ -90,7 +60,7 @@ function renderSet(container, set) {
             <p class="az-hr-lede">${esc(set.summary)}</p>
             <div class="az-hr-actions">
               <button class="az-button az-hr-primary" type="button" data-analytics-dashboard-list>Explore all dashboards</button>
-              <a class="az-hr-text-link" href="${esc(set.download)}">Download synthetic output</a>
+              ${set.download ? `<a class="az-hr-text-link" href="${esc(set.download)}">Download synthetic output</a>` : ''}
             </div>
           </div>
           <div class="az-hr-status" aria-label="${esc(set.title)} ${esc(set.accent)} status">
@@ -117,7 +87,7 @@ export function createAnalyticsApp() {
       function handleClick(event) {
         const setId = event.target.closest('[data-analytics-set]')?.dataset.analyticsSet;
         if (setId) {
-          const set = ANALYTICS_SETS.find((candidate) => candidate.id === setId);
+          const set = analyticsSetById(setId);
           if (set) renderSet(container, set);
           return;
         }
