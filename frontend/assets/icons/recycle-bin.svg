@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Recycle Bin">
+  <defs>
+    <linearGradient id="bin" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8fb7ff"/>
+      <stop offset="1" stop-color="#5575d8"/>
+    </linearGradient>
+  </defs>
+  <rect x="5" y="5" width="54" height="54" rx="16" fill="#f4f7ff"/>
+  <path d="M20 22h24l-2.2 29H22.2L20 22Z" fill="url(#bin)" stroke="#3654a6" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M18 18h28M27 18l1.5-5h7l1.5 5" fill="none" stroke="#3654a6" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M27 31.5a7 7 0 0 1 10.7-1.8l1.6 1.5m0-4v4h-4M38 42.5a7 7 0 0 1-10.7 1.8l-1.6-1.5m0 4v-4h4" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
