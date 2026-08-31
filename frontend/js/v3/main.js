@@ -45,12 +45,14 @@ function installUtilityWindowPreferences(api){
   scan();
   new MutationObserver(()=>queueMicrotask(scan)).observe(layer,{childList:true});
 }
-function installWorkspaceEmptyStatePolish(){
-  if(document.getElementById('az-workspace-empty-state-polish'))return;
-  const style=document.createElement('style');
-  style.id='az-workspace-empty-state-polish';
-  style.textContent='@layer polish{.az-workspace-grid > .az-empty-state{grid-column:1/-1;min-height:280px;display:grid;place-items:center;padding:32px;text-align:center}.az-workspace-grid > .az-empty-state > div{max-width:380px}.az-workspace-grid > .az-empty-state h3{margin:0 0 8px;color:#25324a;font-size:22px;line-height:1.15}.az-workspace-grid > .az-empty-state p{margin:0;color:#66728a;font-size:12.5px;line-height:1.55}}';
-  document.head.appendChild(style);
+function installReducedMotionSync(api){
+  const media=matchMedia('(prefers-reduced-motion: reduce)');
+  const sync=()=>document.body.classList.toggle('az-reduce-motion',Boolean(api.store.getState().reduceMotion||media.matches));
+  const schedule=()=>queueMicrotask(sync);
+  sync();
+  api.store.subscribe((event)=>{if(event.type==='preference'||event.type==='reset')schedule();});
+  if(typeof media.addEventListener==='function')media.addEventListener('change',sync);
+  else media.addListener?.(sync);
 }
 
-try{const api=mountShell();installAizanoiOS(api);installBrandPlatform(api);installUtilityWindowPreferences(api);installWorkspaceEmptyStatePolish();exposeRuntime(api);finishBoot();registerServiceWorker();}catch(error){console.error('AizanoiOS could not start.',error);const boot=document.getElementById('az-boot');if(boot)boot.innerHTML='<div class="az-boot-inner"><img src="/assets/branding/aizanoi-logo-mark.svg" alt="AizanoiOS"><strong>AizanoiOS could not start</strong><span>Reload the page or open a Historical World directly.</span><a class="az-button" href="/historic-world/">Open Aizanoi</a></div>';}
+try{const api=mountShell();installReducedMotionSync(api);installAizanoiOS(api);installBrandPlatform(api);installUtilityWindowPreferences(api);exposeRuntime(api);finishBoot();registerServiceWorker();}catch(error){console.error('AizanoiOS could not start.',error);const boot=document.getElementById('az-boot');if(boot)boot.innerHTML='<div class="az-boot-inner"><img src="/assets/branding/aizanoi-logo-mark.svg" alt="AizanoiOS"><strong>AizanoiOS could not start</strong><span>Reload the page or open a Historical World directly.</span><a class="az-button" href="/historic-world/">Open Aizanoi</a></div>';}
