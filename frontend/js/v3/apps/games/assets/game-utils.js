@@ -28,7 +28,7 @@
     return lowerBetter ? Math.min(...values) : Math.max(...values);
   }
 
-  function toolbar({ game, lowerBetter = false, onPause, onRestart, paused = false, formatBest } = {}) {
+  function toolbar({ game, lowerBetter = false, onPause, paused = false, formatBest } = {}) {
     const bar = document.createElement('div');
     bar.className = 'game-v2-toolbar';
     const bestValue = best(game, { lowerBetter });
@@ -42,14 +42,6 @@
       pause.textContent = paused ? 'Resume' : 'Pause';
       pause.addEventListener('click', () => onPause());
       bar.appendChild(pause);
-    }
-    if (onRestart) {
-      const restart = document.createElement('button');
-      restart.type = 'button';
-      restart.dataset.gameAction = 'restart';
-      restart.textContent = 'Restart';
-      restart.addEventListener('click', () => onRestart());
-      bar.appendChild(restart);
     }
     return bar;
   }

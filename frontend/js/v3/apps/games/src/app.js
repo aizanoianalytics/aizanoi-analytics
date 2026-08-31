@@ -1,9 +1,9 @@
 const ASSET_ROOT = '/js/v3/apps/games/assets';
 const GAMES = {
-  snake:{label:'Signal Snake',description:'Keyboard/touch grid arcade game',container:'game-snake-container',script:`${ASSET_ROOT}/snake.js`},
-  mines:{label:'Survey Mines',description:'Local logic game',container:'game-mines-container',script:`${ASSET_ROOT}/mines.js`},
-  brick:{label:'Strata Breaker',description:'Canvas timing arcade game',container:'game-brick-container',script:`${ASSET_ROOT}/brick.js`},
-  blockfall:{label:'Blockfall',description:'Stack falling blocks and clear lines',container:'game-blockfall-container',script:`${ASSET_ROOT}/blockfall.js`,mount:'AizanoiArcadeBlocks'}
+  snake:{label:'Signal Snake',description:'Collect glowing signals without crossing your own trail.',meta:'Reflex · Keyboard + touch',container:'game-snake-container',script:`${ASSET_ROOT}/snake.js`},
+  mines:{label:'Survey Mines',description:'Clear the field by reading the numbers and marking hazards.',meta:'Logic · Mouse + touch',container:'game-mines-container',script:`${ASSET_ROOT}/mines.js`},
+  brick:{label:'Strata Breaker',description:'Keep the signal in play and break through every layer.',meta:'Arcade · Keyboard + pointer',container:'game-brick-container',script:`${ASSET_ROOT}/brick.js`},
+  blockfall:{label:'Blockfall',description:'Stack falling forms, clear lines and keep the field open.',meta:'Puzzle · Keyboard + touch',container:'game-blockfall-container',script:`${ASSET_ROOT}/blockfall.js`,mount:'AizanoiArcadeBlocks'}
 };
 let utilsPromise = null;
 
@@ -34,8 +34,9 @@ export async function mountArcade(container) {
   let lifecycleVersion = 0;
   let disposed = false;
 
-  container.innerHTML = `<div class="az-app-shell"><div class="az-app-toolbar"><strong>Aizanoi Arcade</strong><span class="az-system-spacer"></span><span class="az-app-caption">Small playable browser games</span></div><div class="az-games"><div class="az-simple-grid">${Object.entries(GAMES).map(([id,game])=>`<article class="az-simple-card"><p class="az-kicker">ARCADE</p><h3>${esc(game.label)}</h3><p>${esc(game.description)}</p><button class="az-button" type="button" data-play-game="${id}">Play</button></article>`).join('')}</div><div class="az-game-stage" data-game-stage></div></div></div>`;
+  container.innerHTML = `<div class="az-arcade"><header class="az-arcade-head"><div><p class="az-kicker">AIZANOI ARCADE</p><h2>Pick a cabinet.</h2><p>Four small browser games. No account, no network scoreboards, no clutter.</p></div><span class="az-arcade-count">04 games</span></header><div class="az-arcade-library" data-arcade-library>${Object.entries(GAMES).map(([id,game],index)=>`<button class="az-arcade-tile" type="button" data-play-game="${id}" aria-label="Play ${esc(game.label)}"><span class="az-arcade-number">0${index+1}</span><span class="az-arcade-tile-copy"><strong>${esc(game.label)}</strong><small>${esc(game.meta)}</small><span>${esc(game.description)}</span></span><span class="az-arcade-enter" aria-hidden="true">→</span></button>`).join('')}</div><div class="az-game-stage" data-game-stage hidden></div></div>`;
   const stage = container.querySelector('[data-game-stage]');
+  const library = container.querySelector('[data-arcade-library]');
 
   function teardownGame() {
     try { gameCleanup?.(); } catch (_) {}
@@ -47,6 +48,12 @@ export async function mountArcade(container) {
     pendingScriptNode = null;
   }
 
+  function showLibrary() {
+    stage.hidden = true;
+    stage.innerHTML = '';
+    library.hidden = false;
+  }
+
   async function play(id) {
     const game = GAMES[id];
     if (!game || disposed) return;
@@ -55,7 +62,9 @@ export async function mountArcade(container) {
     cancelPendingScript();
     scriptNode?.remove();
     scriptNode = null;
-    stage.innerHTML = `<section class="az-simple-card"><div class="az-game-stage-head"><h3>${esc(game.label)}</h3><span class="az-system-spacer"></span><button class="az-button" type="button" data-close-game>Close game</button></div><div id="${game.container}"></div></section>`;
+    library.hidden = true;
+    stage.hidden = false;
+    stage.innerHTML = `<section class="az-arcade-session"><header class="az-arcade-session-head"><button class="az-arcade-back" type="button" data-close-game aria-label="Back to Arcade">← Arcade</button><div><p class="az-kicker">NOW PLAYING</p><h3>${esc(game.label)}</h3></div><span>${esc(game.meta)}</span></header><div class="az-arcade-cabinet" id="${game.container}"></div></section>`;
 
     await ensureUtils();
     if (disposed || requestVersion !== lifecycleVersion) return;
@@ -70,31 +79,22 @@ export async function mountArcade(container) {
     }
     scriptNode = load.script;
 
-    // Module-owned legacy game assets may self-initialize; Blockfall exposes
-    // an explicit mount/cleanup factory through its compatibility global.
     const factory = game.mount ? window[game.mount] : null;
     if (factory && typeof factory.mount === 'function') {
       const host = stage.querySelector(`#${CSS.escape(game.container)}`);
       if (!host) return;
-      gameCleanup = factory.mount(host, () => {
-        lifecycleVersion++;
-        stage.innerHTML = '';
-        teardownGame();
-        cancelPendingScript();
-        scriptNode?.remove();
-        scriptNode = null;
-      }) || null;
+      gameCleanup = factory.mount(host, closeGame) || null;
     }
   }
 
-  const closeGame = () => {
+  function closeGame() {
     lifecycleVersion++;
-    stage.innerHTML = '';
     teardownGame();
     cancelPendingScript();
     scriptNode?.remove();
     scriptNode = null;
-  };
+    showLibrary();
+  }
 
   const click = (event) => {
     const id = event.target.closest('[data-play-game]')?.dataset.playGame;
@@ -104,7 +104,9 @@ export async function mountArcade(container) {
         if (disposed || requestVersion !== lifecycleVersion) return;
         teardownGame();
         cancelPendingScript();
-        stage.innerHTML = `<div class="az-empty-state"><div><h3>Game unavailable</h3><p>${esc(error.message)}</p></div></div>`;
+        library.hidden = true;
+        stage.hidden = false;
+        stage.innerHTML = `<div class="az-empty-state"><div><h3>Game unavailable</h3><p>${esc(error.message)}</p><button class="az-button" type="button" data-close-game>Back to Arcade</button></div></div>`;
       });
     }
     if (event.target.closest('[data-close-game]')) closeGame();
