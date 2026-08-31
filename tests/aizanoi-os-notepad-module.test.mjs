@@ -58,6 +58,6 @@ test('canonical shell resolves manifest requirements and injects capabilities in
 });
 
 test('Notepad lifecycle cleanup removes its owned listeners', () => {
-  assert.match(privateApp, /removeEventListener\('input', handleInput\)/);
-  assert.match(privateApp, /removeEventListener\('click', handleClick\)/);
+  assert.match(privateApp, /removeEventListener\('input',\s*handleInput\)/);
+  assert.match(privateApp, /removeEventListener\('click',\s*handleClick\)/);
 });

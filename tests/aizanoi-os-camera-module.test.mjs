@@ -39,22 +39,23 @@ test('Camera private code sees capability surfaces, not host implementations', (
 });
 
 test('Camera preserves camera plus microphone permission contract without recording audio', () => {
-  assert.match(privateApp, /media\.getUserMedia\(\{ video: \{ facingMode: 'user' \}, audio: true \}\)/);
+  assert.match(privateApp, /media\.getUserMedia\(\{\s*video:\s*\{\s*facingMode:\s*'user'\s*\},\s*audio:\s*true\s*\}\)/);
+  assert.match(privateApp, /media\.getUserMedia\(\{\s*video:\s*\{\s*facingMode:\s*'user'\s*\},\s*audio:\s*false\s*\}\)/);
   assert.doesNotMatch(privateApp, /MediaRecorder|audio\.srcObject|createMediaStreamSource/);
 });
 
 test('shared capability bridge owns mediaDevices and Pictures implementation knowledge', () => {
-  assert.match(sharedCapabilities, /picturesId: fs\.PICTURES_ID/);
-  assert.match(sharedCapabilities, /navigator\?\.mediaDevices\?\.getUserMedia/);
-  assert.match(sharedCapabilities, /media: mediaCapability/);
+  assert.match(sharedCapabilities, /picturesId:\s*fs\.PICTURES_ID/);
+  assert.match(sharedCapabilities, /globalThis\.navigator\?\.mediaDevices\?\.getUserMedia/);
+  assert.match(sharedCapabilities, /media:\s*mediaCapability/);
   assert.doesNotMatch(adapter, /workspace\//);
   assert.doesNotMatch(adapter, /navigator\.mediaDevices/);
 });
 
 test('Camera cleanup owns stream, object URLs and listeners', () => {
-  assert.match(privateApp, /track\) => track\.stop\(\)/);
+  assert.match(privateApp, /getTracks\(\)\.forEach\(\(track\)\s*=>\s*track\.stop\(\)\)/);
   assert.match(privateApp, /revokeGalleryUrls\(\)/);
-  assert.match(privateApp, /removeEventListener\('click', handleClick\)/);
-  assert.match(privateApp, /removeEventListener\('change', handleMirrorChange\)/);
-  assert.match(privateApp, /removeEventListener\('pagehide', handlePageHide\)/);
+  assert.match(privateApp, /removeEventListener\('click',\s*handleClick\)/);
+  assert.match(privateApp, /removeEventListener\('change',\s*handleMirrorChange\)/);
+  assert.match(privateApp, /removeEventListener\('pagehide',\s*handlePageHide\)/);
 });

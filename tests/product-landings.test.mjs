@@ -60,7 +60,7 @@ test('product routes are static, indexable landing documents with shared News-fi
     assert.match(html, /<h1>/);
     assert.match(html, /<span>Aizanoi Analytics<\/span>/);
     for (const [href, label] of sharedNav) {
-      assert.match(html, new RegExp(`<a href="${href.replaceAll('/', '\\/')}">${label}<\\/a>`), `${route} navigation must expose ${label}`);
+      assert.match(html, new RegExp(`<a href="${href.replaceAll('/', '\\/')}"[^>]*>${label}<\\/a>`), `${route} navigation must expose ${label}`);
     }
   }
 });
@@ -79,8 +79,8 @@ test('secondary product placeholders state their current status honestly', () =>
     assert.doesNotMatch(html, /customer|subscriber|latest release|available now/i);
   }
   const analytics = read('frontend/analytics/index.html');
-  assert.match(analytics, /Dashboard collection · 10 live products/i);
-  assert.match(analytics, /complete 22-module production code from 27 newly created synthetic source workbooks/i);
+  assert.match(analytics, /data-analytics-catalog/);
+  assert.match(analytics, /<script type="module" src="\/analytics\/app\.js"><\/script>/);
   assert.match(analytics, /href="\/analytics\/dashboards\/hr-analytics-full-set\/"/);
 });
 

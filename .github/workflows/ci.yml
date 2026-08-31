@@ -92,10 +92,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with: { node-version: '22' }
-      - name: Materialize pinned browser QA lock and install
+      - name: Install pinned browser QA dependencies
         run: |
           mkdir -p artifacts/diagnostics
-          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
           cp package-lock.json artifacts/diagnostics/package-lock.json
           npm ci --ignore-scripts --no-fund
           npm audit --audit-level=high
@@ -119,6 +118,7 @@ jobs:
           events {}
           http {
             include /etc/nginx/mime.types;
+            access_log /tmp/aizanoi-nginx-access.log;
             server {
               listen 127.0.0.1:4174;
               root ${GITHUB_WORKSPACE}/frontend;
@@ -184,9 +184,8 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with: { node-version: '22' }
-      - name: Materialize pinned Lighthouse lock and install
+      - name: Install pinned Lighthouse dependencies
         run: |
-          npm install --package-lock-only --ignore-scripts --no-audit --no-fund
           npm ci --ignore-scripts --no-fund
           npm audit --audit-level=high
       - name: Build generated News surfaces

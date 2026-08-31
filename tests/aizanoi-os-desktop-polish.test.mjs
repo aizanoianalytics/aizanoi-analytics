@@ -29,7 +29,7 @@ test('desktop keeps the five core apps and adds Arcade plus Recycle Bin', () => 
 test('Analytics has one canonical catalog consumed by both public surfaces', () => {
   assert.match(analyticsCatalog, /export const ANALYTICS_SETS/);
   assert.match(analyticsCatalog, /hr-analytics-full-set-synthetic-output\.xlsx/);
-  assert.match(analytics, /from '\/analytics\/catalog\.js'/);
+  assert.match(analytics, /from ['"][^'"]*analytics\/catalog\.js['"]/);
   assert.doesNotMatch(analytics, /const HR_DASHBOARDS/);
   assert.match(analyticsLanding, /\/analytics\/app\.js/);
   assert.doesNotMatch(analyticsLanding, /Workforce Turnover Analytics/);
@@ -50,7 +50,7 @@ test('Calculator keypad is explicitly four-column friendly', () => {
 
 test('Winamp play resumes a persisted playlist by resolving the first track', () => {
   assert.match(winamp, /async function resumePlayback\(\)/);
-  assert.match(winamp, /if \(index < 0 \|\| !audio\.getAttribute\('src'\)\) return play\(index < 0 \? 0 : index\)/);
+  assert.match(winamp, /if\s*\(\s*index\s*<\s*0\s*\|\|\s*!audio\.getAttribute\('src'\)\s*\)\s*return\s+play\(\s*index\s*<\s*0\s*\?\s*0\s*:\s*index\s*\)/);
 });
 
 test('Workspace multi-node writes use one serialized read-write mutation transaction', () => {

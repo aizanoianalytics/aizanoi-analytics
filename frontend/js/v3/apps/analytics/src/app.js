@@ -1,4 +1,4 @@
-import { ANALYTICS_SETS, analyticsSetById } from '/analytics/catalog.js';
+import { ANALYTICS_SETS, analyticsSetById } from '../../../../../analytics/catalog.js';
 
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
   '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
