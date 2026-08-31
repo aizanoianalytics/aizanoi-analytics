@@ -6,6 +6,7 @@ const read = (path) => readFileSync(path, 'utf8');
 
 const brandPlatform = read('frontend/js/v3/brand-platform.js');
 const registry = read('frontend/js/v3/registry.js');
+const main = read('frontend/js/v3/main.js');
 const analytics = read('frontend/js/v3/apps/analytics/src/app.js');
 const analyticsCatalog = read('frontend/analytics/catalog.js');
 const analyticsLanding = read('frontend/analytics/index.html');
@@ -35,10 +36,26 @@ test('Analytics has one canonical catalog consumed by both public surfaces', () 
   assert.doesNotMatch(analyticsLanding, /Workforce Turnover Analytics/);
 });
 
-test('desktop app polish never overrides canonical window geometry', () => {
+test('desktop app polish never overrides canonical window geometry with CSS importance', () => {
   assert.doesNotMatch(polish, /data-app-id="calculator"[^}]*!important/s);
   assert.doesNotMatch(polish, /data-app-id="winamp"[^}]*!important/s);
   assert.doesNotMatch(polish, /data-app-id="recycle-bin"[^}]*!important/s);
+});
+
+test('utility windows get compact first-run geometry while preserving user-sized windows', () => {
+  assert.match(main, /const UTILITY_WINDOW_PREFS=Object\.freeze/);
+  assert.match(main, /calculator:Object\.freeze\(\{width:470,height:640/);
+  assert.match(main, /winamp:Object\.freeze\(\{width:620,height:520/);
+  assert.match(main, /'recycle-bin':Object\.freeze\(\{width:860,height:560/);
+  assert.match(main, /api\.store\.windowRect\?\.\(appId\)/);
+  assert.match(main, /windowEl\.dataset\.azPreferredRectApplied='preserved'/);
+  assert.match(main, /api\.store\.saveWindowRect\?\.\(appId,rect\)/);
+});
+
+test('Workspace empty state spans the explorer grid instead of collapsing into one tile', () => {
+  assert.match(main, /\.az-workspace-grid > \.az-empty-state\{grid-column:1\/-1/);
+  assert.match(main, /min-height:280px/);
+  assert.match(main, /max-width:380px/);
 });
 
 test('Calculator keypad is explicitly four-column friendly', () => {
