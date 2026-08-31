@@ -30,9 +30,9 @@ const APP_DEFINITIONS = Object.freeze([
   { id:'workspace', label:'Workspace', short:'Files', group:'studio', icon:'/assets/icons/aizanoi-forge.svg', moduleId:'workspace', description:'Local file explorer for documents, photos and audio stored in this browser', keywords:['files','workspace','documents','folders','storage','local'] },
   { id:'notepad', label:'Notepad', short:'Notepad', group:'studio', icon:'/assets/icons/aizanoi-journal.svg', moduleId:'notepad', description:'Plain-text editor that saves documents into the Workspace', keywords:['notepad','text','editor','notes','txt'] },
   { id:'calculator', label:'Calculator', short:'Calculator', group:'studio', icon:'/assets/icons/control-panel.svg', moduleId:'calculator', description:'Standard four-function calculator with memory keys', keywords:['calculator','calc','math','arithmetic'] },
-  { id:'camera', label:'Camera', short:'Camera', group:'media', icon:'/assets/icons/aizanoi-news.svg', moduleId:'camera', description:'Local camera capture — photos stay on this device', keywords:['camera','photo','webcam','picture','capture'] },
-  { id:'winamp', label:'Winamp', short:'Winamp', group:'media', icon:'/assets/icons/aizanoi-tv.svg', moduleId:'winamp', description:'Playlist player for local and Workspace audio', keywords:['winamp','music','audio','player','playlist','mp3'] },
-  { id:'recycle-bin', label:'Recycle Bin', short:'Recycle Bin', group:'studio', icon:'/assets/icons/about.svg', moduleId:'recycle-bin', description:'Restore or permanently delete trashed Workspace items', keywords:['recycle','bin','trash','delete','restore'] }
+  { id:'camera', label:'Camera', short:'Camera', group:'media', icon:'/assets/icons/camera.svg', moduleId:'camera', description:'Local camera capture — photos stay on this device', keywords:['camera','photo','webcam','picture','capture'] },
+  { id:'winamp', label:'Winamp', short:'Winamp', group:'media', icon:'/assets/icons/winamp.svg', moduleId:'winamp', description:'Playlist player for local and Workspace audio', keywords:['winamp','music','audio','player','playlist','mp3'] },
+  { id:'recycle-bin', label:'Recycle Bin', short:'Recycle Bin', group:'studio', icon:'/assets/icons/aizanoi-recycle-bin.svg', moduleId:'recycle-bin', description:'Restore or permanently delete trashed Workspace items', keywords:['recycle','bin','trash','delete','restore'] }
 ]);
 
 function resolveAppDefinition(definition) {

@@ -4,8 +4,10 @@ import { existsSync, readFileSync } from 'node:fs';
 
 const read = (file) => readFileSync(file, 'utf8');
 const sw = read('frontend/service-worker.js');
+const release = read('frontend/release.js');
 const index = read('frontend/index.html');
 const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
+const nginxStaticHeaders = read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const architecture = read('ARCHITECTURE.md');
 
 const retiredToolFiles = [
@@ -16,6 +18,14 @@ const retiredToolFiles = [
   'frontend/js/v3/apps/terminal.js',
   'frontend/js/v3/apps/monitor.js'
 ];
+
+function releaseMetadata() {
+  const version = release.match(/VERSION:\s*'([^']+)'/)?.[1];
+  const cache = release.match(/CACHE:\s*'([^']+)'/)?.[1];
+  assert.ok(version, 'release VERSION missing');
+  assert.ok(cache, 'release CACHE missing');
+  return { version, cache };
+}
 
 test('Aizanoi public runtime remains static-only', () => {
   assert.equal(existsSync('backend'), false, 'backend directory must remain removed');
@@ -35,13 +45,14 @@ test('service worker never handles API routes', () => {
 });
 
 test('service worker core precache includes the adaptive shell and remains complete-or-fail', () => {
-  assert.match(sw, /aizanoi-os-shell-v4\.3\.2/);
+  const { version, cache } = releaseMetadata();
+  assert.equal(cache, `aizanoi-os-shell-v${version}`);
+  assert.match(sw, /const CACHE\s*=\s*self\.AIZANOI_RELEASE\.CACHE/);
   assert.match(sw, /cache:'reload'/);
-  assert.match(sw, /if \(!response\.ok\) throw new Error/);
-  const installBlock = sw.match(/self\.addEventListener\('install',[\s\S]*?\n\}\);/)?.[0] || '';
-  assert.match(installBlock, /event\.waitUntil\(precacheShell\(\)\)/);
-  assert.doesNotMatch(installBlock, /skipWaiting/);
-  const precache = sw.match(/const PRECACHE = \[([\s\S]*?)\n\];/)?.[1] || '';
+  assert.match(sw, /if\s*\(!response\.ok\)\s*throw new Error/);
+  assert.match(sw, /self\.addEventListener\('install',\s*\(event\)\s*=>\s*event\.waitUntil\(precacheShell\(\)\)\)/);
+  assert.doesNotMatch(sw, /skipWaiting/);
+  const precache = sw.match(/const PRECACHE\s*=\s*\[([\s\S]*?)\];/)?.[1] || '';
   assert.match(precache, /\/js\/v3\/shell\.js/);
   assert.match(precache, /\/js\/v3\/aizanoi-os\.js/);
   assert.match(precache, /\/js\/v3\/brand-platform\.js/);
@@ -54,9 +65,9 @@ test('service worker core precache includes the adaptive shell and remains compl
 
 test('mutable static requests are network-first with cache fallback for offline use', () => {
   assert.match(sw, /async function networkFirstStatic\(request\)/);
-  assert.match(sw, /const response = await fetch\(request\)/);
-  assert.match(sw, /if \(response\.ok\) await cache\.put\(request, response\.clone\(\)\)/);
-  assert.match(sw, /const cached = await cache\.match\(request\)/);
+  assert.match(sw, /const response\s*=\s*await fetch\(request\)/);
+  assert.match(sw, /if\s*\(response\.ok\)\s*await cache\.put\(request,\s*response\.clone\(\)\)/);
+  assert.match(sw, /const cached\s*=\s*await cache\.match\(request\)/);
   assert.match(sw, /event\.respondWith\(networkFirstStatic\(request\)\)/);
 });
 
@@ -66,10 +77,10 @@ test('nginx fails closed for historical API paths', () => {
   assert.doesNotMatch(nginx, /proxy_pass|127\.0\.0\.1:3001/);
 });
 
-test('static delivery baseline enables compression and correct manifest MIME', () => {
+test('static delivery baseline enables compression, manifest MIME and hardened script policy', () => {
   assert.match(nginx, /gzip on;/);
   assert.match(nginx, /application\/manifest\+json/);
   assert.match(nginx, /location = \/\.well-known\/security\.txt/);
-  assert.match(nginx, /script-src 'self';/);
-  assert.doesNotMatch(nginx, /script-src[^;]*unsafe-inline/);
+  assert.match(nginxStaticHeaders, /script-src 'self';/);
+  assert.doesNotMatch(nginxStaticHeaders, /script-src[^;]*unsafe-inline/);
 });

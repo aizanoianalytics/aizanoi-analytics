@@ -38,9 +38,9 @@ const retiredIds=['workbench','archive','notes','data-lab','source-reader','arti
 // Desktop: sparse wallpaper desktop, public catalog only, freeform window lifecycle.
 {
   const {context,page,errors,requests}=await openPage({width:1440,height:900});
-  assert.equal(await page.locator('.az-desktop-shortcut').count(),5,'desktop: expected five core Aizanoi shortcuts');
-  for(const id of ['news','videos','analytics','worlds','forge']) {
-    assert.equal(await page.locator(`.az-desktop-shortcut[data-app="${id}"]`).count(),1,`desktop: missing core shortcut ${id}`);
+  assert.equal(await page.locator('.az-desktop-shortcut').count(),7,'desktop: expected five core shortcuts plus Arcade and Recycle Bin');
+  for(const id of ['news','videos','analytics','worlds','forge','games','recycle-bin']) {
+    assert.equal(await page.locator(`.az-desktop-shortcut[data-app="${id}"]`).count(),1,`desktop: missing shortcut ${id}`);
   }
   assert.equal(await page.locator('.az-phone-home:visible,.az-tablet-home:visible').count(),0,'desktop: device-specific home leaked into large layout');
   assert.equal(appModuleRequests(requests).length,0,'desktop: app modules must not load before app open');

@@ -48,7 +48,7 @@ Analytics uses `/analytics/` as its stable public route and `analytics` as its i
 On `>=1200px`:
 1. compact top system bar;
 2. wallpaper desktop;
-3. five sparse core shortcuts;
+3. seven focused shortcuts — the five core destinations plus Arcade and Recycle Bin;
 4. one small contextual widget;
 5. freeform windows;
 6. centered translucent dock;

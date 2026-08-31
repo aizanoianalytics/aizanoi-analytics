@@ -20,6 +20,11 @@ async function capture(name,viewport,action){
   await context.close();
 }
 
+async function openUtility(page,id,selector=`.az-window[data-app-id="${id}"]`){
+  await page.evaluate((appId)=>window.AIZANOI_OS.openApp(appId),id);
+  await page.waitForSelector(selector);
+}
+
 async function captureStandalone(name,route,viewport){
   const context=await browser.newContext({viewport,deviceScaleFactor:1,serviceWorkers:'block'});
   const page=await context.newPage();
@@ -44,12 +49,19 @@ await capture('aizanoi-os-04-tv',{width:1440,height:900},async(page)=>{await pag
 await capture('aizanoi-os-05-analytics',{width:1440,height:900},async(page)=>{await page.locator('.az-desktop-shortcut[data-app="analytics"]').click();await page.waitForSelector('.az-window[data-app-id="analytics"]');});
 await capture('aizanoi-os-06-forge',{width:1440,height:900},async(page)=>{await page.locator('.az-desktop-shortcut[data-app="forge"]').click();await page.waitForSelector('.az-window[data-app-id="forge"]');});
 await capture('aizanoi-os-07-command',{width:1440,height:900},async(page)=>{await page.locator('.az-task-shelf [data-shell-action="search"]').click();await page.waitForSelector('#az-command-overlay.is-open');});
-await capture('aizanoi-os-08-labs',{width:1440,height:900},async(page)=>{await page.evaluate(()=>window.AIZANOI_OS.openApp('labs'));await page.waitForSelector('.az-window[data-app-id="labs"]');});
+await capture('aizanoi-os-08-labs',{width:1440,height:900},async(page)=>{await openUtility(page,'labs');});
+await capture('aizanoi-os-08a-calculator',{width:1440,height:900},async(page)=>{await openUtility(page,'calculator');});
+await capture('aizanoi-os-08b-notepad',{width:1440,height:900},async(page)=>{await openUtility(page,'notepad');});
+await capture('aizanoi-os-08c-workspace',{width:1440,height:900},async(page)=>{await openUtility(page,'workspace');});
+await capture('aizanoi-os-08d-camera',{width:1440,height:900},async(page)=>{await openUtility(page,'camera');});
+await capture('aizanoi-os-08e-winamp',{width:1440,height:900},async(page)=>{await openUtility(page,'winamp');});
+await capture('aizanoi-os-08f-recycle-bin',{width:1440,height:900},async(page)=>{await openUtility(page,'recycle-bin');});
+await capture('aizanoi-os-08g-arcade',{width:1440,height:900},async(page)=>{await openUtility(page,'games');});
+await capture('aizanoi-os-08h-blockfall',{width:1440,height:900},async(page)=>{await openUtility(page,'games');await page.click('[data-play-game="blockfall"]');await page.waitForSelector('[data-bf-canvas]');});
 
 await capture('aizanoi-os-09-tablet-home',{width:900,height:1180});
 await capture('aizanoi-os-10-tablet-news',{width:900,height:1180},async(page)=>{await page.locator('.az-tablet-app[data-app="news"]').click();await page.waitForSelector('.az-window[data-app-id="news"]');});
 await capture('aizanoi-os-11-tablet-landscape',{width:1180,height:820});
-
 await capture('aizanoi-os-12-mobile-home',{width:390,height:844});
 await capture('aizanoi-os-13-mobile-news',{width:390,height:844},async(page)=>{await page.locator('.az-phone-app[data-app="news"]').click();await page.waitForSelector('.az-window[data-app-id="news"]');});
 await capture('aizanoi-os-14-mobile-app-drawer',{width:390,height:844},async(page)=>{await page.locator('.az-task-shelf [data-os-launcher]').click();await page.waitForSelector('#az-switcher-overlay.is-open .az-launchpad-search');});
@@ -57,4 +69,4 @@ await capture('aizanoi-os-15-mobile-small',{width:320,height:568});
 await captureStandalone('aizanoi-os-16-workforce-turnover','/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',{width:1440,height:900});
 
 await browser.close();
-console.log('AizanoiOS adaptive desktop/tablet/mobile visual review captures complete');
+console.log('AizanoiOS adaptive desktop/tablet/mobile and utility visual review captures complete');

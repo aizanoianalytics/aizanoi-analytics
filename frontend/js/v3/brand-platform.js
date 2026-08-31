@@ -1,7 +1,7 @@
 import { APPS, appById, worldById } from './registry.js';
 
 const PINNED=Object.freeze(['news','videos','analytics','worlds','forge']);
-const DESKTOP=PINNED;
+const DESKTOP=Object.freeze([...PINNED,'games','recycle-bin']);
 const PUBLIC_APPS=Object.freeze(APPS.map((app)=>app.id));
 const PHONE_DOCK=Object.freeze(['news','videos','analytics','worlds']);
 const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));

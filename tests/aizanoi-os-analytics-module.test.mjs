@@ -6,6 +6,7 @@ const read = (path) => readFileSync(path, 'utf8');
 const moduleRoot = 'frontend/js/v3/apps/analytics';
 const manifest = JSON.parse(read(`${moduleRoot}/manifest.json`));
 const privateApp = read(`${moduleRoot}/src/app.js`);
+const catalog = read('frontend/analytics/catalog.js');
 
 test('Analytics is a zero-capability manifest module', () => {
   assert.equal(manifest.manifestVersion, 1);
@@ -26,9 +27,12 @@ test('canonical registry loads Analytics only through its public module entry', 
   assert.equal(typeof publicEntry.mount, 'function');
 });
 
-test('Analytics module owns the launcher but not the dashboard product', () => {
-  assert.match(privateApp, /\/analytics\/dashboards\/hr-analytics-full-set\//);
-  assert.match(privateApp, /hr-analytics-full-set-synthetic-output\.xlsx/);
+test('Analytics launcher consumes the canonical public dashboard catalog', () => {
+  assert.match(privateApp, /ANALYTICS_SETS/);
+  assert.match(privateApp, /analyticsSetById/);
+  assert.match(privateApp, /analytics\/catalog\.js/);
+  assert.match(catalog, /\/analytics\/dashboards\/hr-analytics-full-set\//);
+  assert.match(catalog, /hr-analytics-full-set-synthetic-output\.xlsx/);
   assert.doesNotMatch(privateApp, /\bapi\./);
   assert.doesNotMatch(privateApp, /workspace\//);
   assert.ok(existsSync('frontend/analytics/dashboards/hr-analytics-full-set/index.html'));

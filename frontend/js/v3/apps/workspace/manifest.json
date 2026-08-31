@@ -4,13 +4,6 @@
   "type": "desktop-app",
   "entry": "./src/index.js",
   "enabledByDefault": true,
-  "requires": [
-    "apps",
-    "filesystem",
-    "notifications",
-    "sound"
-  ],
-  "provides": [
-    "desktop-app"
-  ]
+  "requires": ["apps", "dialog", "filesystem", "notifications", "sound"],
+  "provides": ["desktop-app"]
 }

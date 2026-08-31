@@ -14,6 +14,7 @@ const components = read('frontend/styles/components.css');
 const deviceShell = read('frontend/styles/device-shell.css');
 const apps = read('frontend/styles/apps.css');
 const main = read('frontend/js/v3/main.js');
+const release = read('frontend/release.js');
 const shellJs = read('frontend/js/v3/shell.js');
 const osJs = read('frontend/js/v3/aizanoi-os.js');
 const brandJs = read('frontend/js/v3/brand-platform.js');
@@ -26,6 +27,11 @@ const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
 const product = read('PRODUCT.md');
 const contentPolicy = read('CONTENT_POLICY.md');
 const newsBuild = read('scripts/news/build-news.mjs');
+
+const releaseVersion = release.match(/VERSION:\s*'([^']+)'/)?.[1];
+const releaseCache = release.match(/CACHE:\s*'([^']+)'/)?.[1];
+assert.ok(releaseVersion, 'release VERSION missing');
+assert.equal(releaseCache, `aizanoi-os-shell-v${releaseVersion}`, 'release cache namespace must track VERSION');
 
 function walk(dir, out = []) {
   for (const entry of readdirSync(dir, { withFileTypes:true })) {
@@ -79,7 +85,8 @@ for (const source of [main,shellJs,osJs,brandJs,store,registrySource]) {
 }
 assert.match(main, /installAizanoiOS/);
 assert.match(main, /installBrandPlatform/);
-assert.match(main, /4\.3\.0-platform-completion/);
+assert.match(main, /const RELEASE=globalThis\.AIZANOI_RELEASE/);
+assert.match(main, /const \{VERSION,BUILD\}=RELEASE/);
 assert.match(main, /window\.AIZANOI_OS/);
 assert.match(osJs, /wireDockMagnification/);
 assert.match(osJs, /az-launchpad-search/);
@@ -175,15 +182,15 @@ assert.match(manifest, /"name"\s*:\s*"AizanoiOS"/);
 assert.match(manifest, /"name"\s*:\s*"Aizanoi News"/);
 assert.match(manifest, /"name"\s*:\s*"Historical Worlds"/);
 assert.doesNotMatch(manifest, /hr-analytics|Aizanoi AI|HR AI/i);
-assert.match(sw, /aizanoi-os-shell-v4\.3\.2/);
+assert.match(sw, /importScripts\('\/release\.js'\)/);
+assert.match(sw, /const CACHE\s*=\s*self\.AIZANOI_RELEASE\.CACHE/);
 assert.match(sw, /\/js\/v3\/aizanoi-os\.js/);
 assert.match(sw, /\/js\/v3\/brand-platform\.js/);
 assert.match(sw, /\/js\/v3\/module-registry\.generated\.js/);
 assert.match(sw, /\/styles\/device-shell\.css/);
 assert.match(sw, /\/news\/index\.json/);
-const swInstall = sw.match(/self\.addEventListener\('install',[\s\S]*?\n\}\);/)?.[0] || '';
-assert.match(swInstall, /event\.waitUntil\(precacheShell\(\)\)/, 'service worker install must wait for a complete precache');
-assert.doesNotMatch(swInstall, /skipWaiting/, 'service worker upgrades must not force new code over open AizanoiOS clients');
+assert.match(sw, /self\.addEventListener\('install',\s*\(event\)\s*=>\s*event\.waitUntil\(precacheShell\(\)\)\)/, 'service worker install must wait for a complete precache');
+assert.doesNotMatch(sw, /skipWaiting/, 'service worker upgrades must not force new code over open AizanoiOS clients');
 assert.match(sw, /networkFirstStatic/, 'mutable static assets must prefer the revalidated network response');
 assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/, 'service worker must explicitly ignore API routes');
 assert.doesNotMatch(sw, /os-(?:platform|unified|product-polish|v2)\.js/);
