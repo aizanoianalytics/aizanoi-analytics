@@ -129,9 +129,25 @@ test('deploy procedure only mirrors frontend/ → webroot', () => {
   assert.match(body, /\/var\/www\/aizanoianalytics\.com/, 'Script must target /var/www/aizanoianalytics.com');
   // Publish contract must be cwd-independent: rsync source is an absolute
   // path with a trailing slash, not a relative ./ that depends on the
-  // caller's working directory.
-  assert.match(body, /rsync\s+-a\s+--delete\s+"\$\{SOURCE\}\/"/, 'Script must use absolute-source rsync (cwd-independent)');
+  // caller's working directory. Security excludes may appear before source.
+  assert.match(body, /rsync\s+-a\s+--delete[\s\S]*?"\$\{SOURCE\}\/"\s+"\$\{WEBROOT\}\/"/, 'Script must use absolute-source rsync (cwd-independent)');
   assert.doesNotMatch(body, /rsync[^n]*\.\/\s+"?\$\{WEBROOT\}/, 'Script must not use ./ as rsync source (cwd-dependent)');
+});
+
+test('deploy blocks ignored backup/editor artifacts before transfer and scrubs stale webroot copies', () => {
+  const script = path.join(repoRoot, 'scripts', 'deploy-public.sh');
+  const body = readFileSync(script, 'utf8');
+  const denied = ['*.bak', '*.bak_*', '*.broken_*', '*.tmp', '*.old', '*~', '*.swp', '.DS_Store'];
+  for (const pattern of denied) {
+    assert.ok(
+      body.includes(`--exclude='${pattern}'`),
+      `Deploy rsync must exclude local artifact pattern ${pattern}`
+    );
+    assert.ok(
+      body.includes(`-name '${pattern}'`),
+      `Deploy scrub/negative smoke must recognize local artifact pattern ${pattern}`
+    );
+  }
 });
 
 test('deploy is cwd-independent: same frontend/ → staging result from different cwds', { skip: process.platform === 'win32' }, async () => {
