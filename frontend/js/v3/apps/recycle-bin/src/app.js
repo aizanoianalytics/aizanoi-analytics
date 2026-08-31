@@ -6,9 +6,10 @@ const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({
 export async function mountRecycleBin({ container, capabilities }) {
   const { filesystem, dialog, notifications, sound } = capabilities;
   container.innerHTML = `
-  <div class="az-app-shell"><div class="az-app-toolbar"><strong>Recycle Bin</strong><span class="az-system-spacer"></span><span class="az-app-caption">Deleted Workspace items</span></div>
+  <div class="az-app-shell az-utility-shell az-recycle-shell">
   <div class="az-recycle">
     <div class="az-recycle-actions">
+      <strong>Deleted Workspace items</strong>
       <button class="az-button" type="button" data-bin-refresh>Refresh</button>
       <button class="az-button" type="button" data-bin-empty>Empty Recycle Bin</button>
       <span class="az-system-spacer"></span>
