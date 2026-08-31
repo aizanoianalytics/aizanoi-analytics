@@ -30,19 +30,24 @@ const removedWorkbenchIcons = [
   'projects.svg', 'recycle-bin.svg', 'source-reader.svg', 'terminal.svg', 'workspace-monitor.svg'
 ];
 
-test('AizanoiOS keeps the stable analytics id while presenting Analytics to users', () => {
+test('AizanoiOS keeps the stable analytics id while presenting a scalable Analytics Sets catalog', () => {
   assert.match(registry, /id:'analytics', label:'Analytics', short:'Analytics'/);
   assert.match(registry, /keywords:\['analytics','dashboard','dashboards'/);
-  assert.match(analyticsApp, /shell\('Analytics', 'HR Analytics Full Set'/);
+  assert.match(analyticsApp, /export const ANALYTICS_SETS/);
+  assert.match(analyticsApp, /id:'hr-analytics-full-set'/);
+  assert.match(analyticsApp, /data-analytics-set=/);
   assert.match(platform, /data-context-action="analytics">Analytics</);
   assert.doesNotMatch(registry, /id:'analytics', label:'Aizanoi Analytics'/);
 });
 
-test('Analytics app presents only the HR Analytics Full Set product', () => {
+test('Analytics Sets launches HR today and remains ready for future collections', () => {
   assert.match(analyticsApp, /HR Analytics[\s\S]*Full Set/);
   assert.match(analyticsApp, /10[\s\S]*live dashboard surfaces/);
   assert.match(analyticsApp, /27[\s\S]*synthetic source workbooks/);
-  assert.doesNotMatch(analyticsApp, /Workforce Turnover Analytics|PRODUCT STANDARD|DATA SAFETY/);
+  assert.match(analyticsApp, /More sets can land here/);
+  assert.match(analyticsApp, /data-analytics-dashboard-inventory/);
+  assert.match(analyticsApp, /Workforce Turnover Analytics/);
+  assert.doesNotMatch(analyticsApp, /PRODUCT STANDARD|DATA SAFETY/);
 });
 
 test('active product catalog uses canonical Aizanoi icon assets rather than retired Workbench filenames', () => {
@@ -59,6 +64,7 @@ test('retired Workbench icon files remain removed from the public asset tree', (
   for (const icon of removedWorkbenchIcons) {
     assert.equal(existsSync(`frontend/assets/icons/${icon}`), false, `${icon} should remain retired`);
   }
+  assert.equal(existsSync('frontend/assets/icons/aizanoi-recycle-bin.svg'), true, 'canonical Recycle Bin icon should exist');
 });
 
 test('adaptive shell presents Aizanoi Analytics as the primary brand', () => {
