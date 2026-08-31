@@ -15,6 +15,7 @@ const winamp = read('frontend/js/v3/apps/winamp/src/app.js');
 const dialog = read('frontend/js/v3/workspace/dialog.js');
 const workspaceFs = read('frontend/js/v3/workspace/fs.js');
 const polish = read('frontend/styles/polish.css');
+const utilityPolish = read('frontend/styles/utility-polish.css');
 const nginxStaticHeaders = read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const root = read('frontend/index.html');
 const serviceWorker = read('frontend/service-worker.js');
@@ -52,10 +53,20 @@ test('utility windows get compact first-run geometry while preserving user-sized
   assert.match(main, /api\.store\.saveWindowRect\?\.\(appId,rect\)/);
 });
 
-test('Workspace empty state spans the explorer grid instead of collapsing into one tile', () => {
-  assert.match(main, /\.az-workspace-grid > \.az-empty-state\{grid-column:1\/-1/);
-  assert.match(main, /min-height:280px/);
-  assert.match(main, /max-width:380px/);
+test('Workspace empty-state polish is static CSS and does not inject a CSP-blocked style element', () => {
+  assert.match(utilityPolish, /\.az-workspace-grid > \.az-empty-state \{ grid-column:1\/-1;min-height:280px/);
+  assert.match(utilityPolish, /\.az-workspace-grid > \.az-empty-state > div \{ max-width:380px/);
+  assert.doesNotMatch(main, /document\.createElement\(['"]style['"]\)/);
+  assert.doesNotMatch(main, /installWorkspaceEmptyStatePolish/);
+});
+
+test('effective reduced motion bridges saved preference and live system preference to the body class', () => {
+  assert.match(main, /function installReducedMotionSync\(api\)/);
+  assert.match(main, /matchMedia\('\(prefers-reduced-motion: reduce\)'\)/);
+  assert.match(main, /api\.store\.getState\(\)\.reduceMotion\|\|media\.matches/);
+  assert.match(main, /document\.body\.classList\.toggle\('az-reduce-motion'/);
+  assert.match(main, /media\.addEventListener\('change',sync\)/);
+  assert.match(main, /api\.store\.subscribe/);
 });
 
 test('Calculator keypad is explicitly four-column friendly', () => {
@@ -91,8 +102,10 @@ test('application confirmations use the canonical focus-safe dialog and never pr
   assert.doesNotMatch(dialog, /az-w98-overlay|az-w98-dialog|az-w98-titlebar/);
 });
 
-test('polish stylesheet is loaded and precached', () => {
-  assert.ok(existsSync('frontend/styles/polish.css'));
-  assert.match(root, /\/styles\/polish\.css/);
-  assert.match(serviceWorker, /\/styles\/polish\.css/);
+test('polish stylesheets are loaded and precached', () => {
+  for (const stylesheet of ['polish.css', 'utility-polish.css']) {
+    assert.ok(existsSync(`frontend/styles/${stylesheet}`));
+    assert.match(root, new RegExp(`/styles/${stylesheet.replace('.', '\\.')}`));
+    assert.match(serviceWorker, new RegExp(`/styles/${stylesheet.replace('.', '\\.')}`));
+  }
 });
