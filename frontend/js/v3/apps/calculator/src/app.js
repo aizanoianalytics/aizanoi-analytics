@@ -135,7 +135,9 @@ export async function mountCalculator({ container, capabilities }) {
   }
 
   function handleKeydown(event) {
-    if (!container.contains(document.activeElement) && document.activeElement !== document.body) return;
+    const active = document.activeElement;
+    const hostWindow = container.closest('.az-window');
+    if (!container.contains(active) && active !== document.body && active !== hostWindow) return;
     const map = { '*':'×', '/':'÷', Enter:'=', '=':'=', Escape:'c', Backspace:'back' };
     const key = map[event.key] ?? event.key;
     if (/^[0-9.]$|^[+\-×÷]$|^=$|^back$|^c$/.test(key)) {
