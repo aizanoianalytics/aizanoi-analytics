@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-31-amazon-ai-spending-cash-flow",
+  "title": "Amazon adds $110 billion in value as Wall Street rewards AI capex despite negative free cash flow",
+  "summary": "Amazon closed Friday up 3.97% at $266.43, adding roughly $110 billion in market value after Fed Chair Kevin Warsh said AI growth had exceeded even its proponents' expectations. Trailing twelve-month free cash flow swung from an $18.2 billion inflow to a $7.6 billion outflow as AI-related property and equipment purchases rose by $66.1 billion, leaving cash conversion the central valuation question for the next quarter.",
+  "category": "economy-markets",
+  "priority": 85,
+  "publishedAt": "2026-08-31T05:10:00Z",
+  "updatedAt": "2026-08-31T05:10:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Amazon", "AWS", "AI capex", "free cash flow", "Q2 earnings"],
+  "sources": [
+    {
+      "publisher": "TS2",
+      "url": "https://ts2.tech/en/amazon-stock-jumps-4-adding-110-billion-as-ai-spending-turns-free-cash-flow-negative/",
+      "publishedAt": "2026-08-29T15:55:00Z"
+    }
+  ]
+}

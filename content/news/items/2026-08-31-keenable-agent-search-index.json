@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-31-keenable-agent-search-index",
+  "title": "Accel-backed Keenable raises $26 million to index the web for AI agents",
+  "summary": "Keenable emerged from stealth with $26 million in seed funding led by Accel and a web search index purpose-built for autonomous AI agents rather than human readers. The company joins a growing field of infrastructure providers positioning themselves for an agent-driven internet.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-08-31T05:10:00Z",
+  "updatedAt": "2026-08-31T05:10:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Keenable", "Accel", "AI agents", "search index", "infrastructure"],
+  "sources": [
+    {
+      "publisher": "PulseAugur",
+      "url": "https://pulseaugur.com/cluster/225640-keenable-launches-ai-agent-search-index-raises-26m-seed-funding",
+      "publishedAt": "2026-08-30T03:06:00Z"
+    }
+  ]
+}

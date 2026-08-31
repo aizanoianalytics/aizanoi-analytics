@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-31-agentrys-chip-design-funding",
+  "title": "Agentrys raises $24.5 million to put AI agents across the chip-design pipeline",
+  "summary": "U.S. chip-design startup Agentrys disclosed a $24.5 million combined seed and pre-seed round led by Etna Labs with MediaTek as the first strategic backer. The company says its agents have already produced a sign-off-clean 32-bit CPU layout from a written specification without human intervention.",
+  "category": "ai",
+  "priority": 75,
+  "publishedAt": "2026-08-31T05:10:00Z",
+  "updatedAt": "2026-08-31T05:10:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Agentrys", "chip design", "AI agents", "MediaTek", "semiconductor"],
+  "sources": [
+    {
+      "publisher": "Pomegra Startups",
+      "url": "https://pomegra.io/startups/agentrys-raises-24-5m-to-automate-chip-design-2026-08-30",
+      "publishedAt": "2026-08-30T00:00:00Z"
+    }
+  ]
+}

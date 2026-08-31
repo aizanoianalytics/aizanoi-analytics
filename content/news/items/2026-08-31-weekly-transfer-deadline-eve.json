@@ -1,0 +1,29 @@
+{
+  "id": "2026-08-31-weekly-transfer-deadline-eve",
+  "kind": "weekly",
+  "week": "2026-W36",
+  "title": "Weekly Football: deadline day looms as Premier League clubs chase the last deals of a frenetic window",
+  "summary": "Premier League clubs have 48 hours to complete signings before Tuesday's 11 p.m. BST deadline, with two-hour deal-sheet grace periods for paperwork filed in time. Aston Villa are in transition after confirming Ollie Watkins's £51 million move to Al-Hilal and signing Nicolas Jackson plus Taylor Harwood-Bellis. Tottenham have been among the busiest, completing a Sandro Tonali deal worth £100 million and adding Mateus Fernandes and Savio, while Manchester City rebuilt midfield with Elliot Anderson and Ayyoub Bouaddi.",
+  "category": "football",
+  "priority": 84,
+  "publishedAt": "2026-08-31T05:15:00Z",
+  "updatedAt": "2026-08-31T05:15:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Premier League", "transfer window", "deadline day", "weekly analysis"],
+  "sources": [
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/story/_/id/48955344/premier-league-2026-summer-transfers-all-confirmed-ins-outs-every-club",
+      "publishedAt": "2026-08-30T00:00:00Z"
+    },
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/news/4698998/copy-transfer-deadline-day-everything-you-need-to-know",
+      "publishedAt": "2026-08-30T00:00:00Z"
+    }
+  ]
+}

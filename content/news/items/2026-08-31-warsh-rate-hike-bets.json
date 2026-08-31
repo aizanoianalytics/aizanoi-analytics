@@ -1,0 +1,27 @@
+{
+  "id": "2026-08-31-warsh-rate-hike-bets",
+  "title": "Warsh's Jackson Hole speech pushes September Fed rate-hike bets above 55 percent",
+  "summary": "Federal Reserve Chair Kevin Warsh used his first Jackson Hole symposium address to warn that the U.S. central bank will have more work to do if inflation does not move convincingly toward its 2% target. CME FedWatch now puts the probability of a September rate hike at 55.7%, up from 35.4% on Thursday, helping drive the dollar and short-dated Treasury yields higher while global equities slipped.",
+  "category": "economy-markets",
+  "priority": 88,
+  "publishedAt": "2026-08-31T05:10:00Z",
+  "updatedAt": "2026-08-31T05:10:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Federal Reserve", "Kevin Warsh", "Jackson Hole", "interest rates", "Treasury yields"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/markets/us/four-fed-bank-boards-wanted-rate-hike-minutes-show-2026-08-25/",
+      "publishedAt": "2026-08-28T22:00:00Z"
+    },
+    {
+      "publisher": "MarketScreener",
+      "url": "https://hk.marketscreener.com/news/stocks-fall-while-dollar-bond-yields-rise-as-warsh-prompts-rate-hike-bets-ce7858dfd080f724",
+      "publishedAt": "2026-08-29T05:16:00Z"
+    }
+  ]
+}

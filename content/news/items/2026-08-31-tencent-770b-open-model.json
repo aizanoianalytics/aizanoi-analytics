@@ -1,0 +1,22 @@
+{
+  "id": "2026-08-31-tencent-770b-open-model",
+  "title": "Tencent releases a 770-billion-parameter open model",
+  "summary": "Tencent published a 770-billion-parameter open-weights model as one of the highest-capacity openly licensed language systems yet released. The release is the latest signal that the open-source frontier is moving closer to the largest closed frontier models, with implications for hosted-API pricing and on-premises deployment.",
+  "category": "technology",
+  "priority": 80,
+  "publishedAt": "2026-08-31T05:10:00Z",
+  "updatedAt": "2026-08-31T05:10:00Z",
+  "retrievedAt": "2026-08-31T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Tencent", "open-source AI", "large language model", "open weights"],
+  "sources": [
+    {
+      "publisher": "Startup Corners",
+      "url": "https://startupcorners.com/digest/product-digest-2026-08-30",
+      "publishedAt": "2026-08-30T00:00:00Z"
+    }
+  ]
+}
