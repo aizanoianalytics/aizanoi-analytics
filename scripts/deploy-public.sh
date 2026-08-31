@@ -26,20 +26,38 @@ if [[ ! -s "${SOURCE}/${PUBLIC_SYNTHETIC_XLSX}" ]]; then
 fi
 
 echo "[deploy] mirroring ${SOURCE}/ -> ${WEBROOT}/"
-# Allowlist copy: every regular file under frontend/ becomes a webroot file
-# at the same relative path. Absolute-source form is intentionally
-# cwd-independent: the caller may run from any working directory.
-rsync -a --delete "${SOURCE}/" "${WEBROOT}/"
+# frontend/ is the public source tree, but local/editor artifacts inside it are
+# never publishable even when Git ignores them. Exclude them before transfer;
+# the later scrub also deletes stale copies that may already exist in webroot.
+# Absolute-source form is intentionally cwd-independent.
+rsync -a --delete \
+  --exclude='*.bak' \
+  --exclude='*.bak_*' \
+  --exclude='*.broken_*' \
+  --exclude='*.tmp' \
+  --exclude='*.old' \
+  --exclude='*~' \
+  --exclude='*.swp' \
+  --exclude='.DS_Store' \
+  "${SOURCE}/" "${WEBROOT}/"
 
-# Remove stale source/build artifacts that may have leaked into the webroot by
-# a prior bad deploy. One explicitly declared synthetic workbook is a public
-# product download and must survive the scrub.
+# Remove stale source/build/editor artifacts that may have leaked into the
+# webroot by a prior bad deploy. One explicitly declared synthetic workbook is
+# a public product download and must survive the scrub.
 echo "[deploy] scrubbing denylisted artifacts from webroot"
 (
   cd "${WEBROOT}"
   find . -type f \( \
       -name '*.py' -o \
       -name 'pipeline-manifest.json' -o \
+      -name '*.bak' -o \
+      -name '*.bak_*' -o \
+      -name '*.broken_*' -o \
+      -name '*.tmp' -o \
+      -name '*.old' -o \
+      -name '*~' -o \
+      -name '*.swp' -o \
+      -name '.DS_Store' -o \
       \( -name '*.xlsx' ! -path "./${PUBLIC_SYNTHETIC_XLSX}" \) \
     \) -print -delete 2>/dev/null || true
 )
@@ -60,13 +78,21 @@ if [[ -d "${WEBROOT}/analytics/workforce-turnover" ]]; then
   echo "[deploy] removed legacy /analytics/workforce-turnover/ (owner-retired)"
 fi
 
-# Public negative-smoke: no undeclared source/build artifact may remain, while
-# the declared synthetic workbook must still be present and non-empty.
+# Public negative-smoke: no undeclared source/build/editor artifact may remain,
+# while the declared synthetic workbook must still be present and non-empty.
 echo "[deploy] running negative security smoke"
 LEAKS=$(
   cd "${WEBROOT}" && find . -type f \( \
     -name '*.py' -o \
     -name 'pipeline-manifest.json' -o \
+    -name '*.bak' -o \
+    -name '*.bak_*' -o \
+    -name '*.broken_*' -o \
+    -name '*.tmp' -o \
+    -name '*.old' -o \
+    -name '*~' -o \
+    -name '*.swp' -o \
+    -name '.DS_Store' -o \
     \( -name '*.xlsx' ! -path "./${PUBLIC_SYNTHETIC_XLSX}" \) \
   \) -print 2>/dev/null || true
 )
