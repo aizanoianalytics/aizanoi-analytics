@@ -29,7 +29,7 @@ try {
   assert.ok(installed.keys.includes(CURRENT_CACHE), 'install did not create current shell cache');
   assert.equal(installed.keys.includes('aizanoi-field-shell-v1'), false, 'activate did not delete old Field cache');
   assert.equal(installed.keys.includes('aizanoi-os-shell-v0.0.1'), false, 'activate did not delete old OS cache');
-  for (const required of ['/', '/manifest.webmanifest', '/js/v3/main.js', '/js/v3/module-registry.generated.js']) {
+  for (const required of ['/', '/manifest.webmanifest', '/js/v3/main.js', '/js/v3/module-registry.generated.js', '/styles/polish.css']) {
     assert.ok(installed.current.includes(required), `precache missing ${required}`);
   }
 
@@ -47,7 +47,7 @@ try {
   const runtimeCount = await page.evaluate(async (cacheName) => {
     const cache = await caches.open(cacheName);
     const keys = await cache.keys();
-    const core = new Set(['/', '/manifest.webmanifest', '/assets/branding/aizanoi-logo-mark.svg', '/assets/wallpapers/aizanoi-os-sunrise.svg', '/styles/tokens.css', '/styles/base.css', '/styles/shell.css', '/styles/components.css', '/styles/device-shell.css', '/js/v3/main.js', '/js/v3/aizanoi-os.js', '/js/v3/brand-platform.js', '/js/v3/registry.js', '/js/v3/module-registry.generated.js', '/js/v3/store.js', '/js/v3/shell.js', '/news/index.json']);
+    const core = new Set(['/', '/manifest.webmanifest', '/assets/branding/aizanoi-logo-mark.svg', '/assets/wallpapers/aizanoi-os-sunrise.svg', '/styles/tokens.css', '/styles/base.css', '/styles/shell.css', '/styles/components.css', '/styles/device-shell.css', '/styles/polish.css', '/js/v3/main.js', '/js/v3/aizanoi-os.js', '/js/v3/brand-platform.js', '/js/v3/registry.js', '/js/v3/module-registry.generated.js', '/js/v3/store.js', '/js/v3/shell.js', '/news/index.json']);
     return keys.filter((request) => !core.has(new URL(request.url).pathname) || new URL(request.url).search).length;
   }, CURRENT_CACHE);
   assert.ok(runtimeCount <= 24, `runtime cache was not pruned (${runtimeCount} entries)`);
