@@ -12,8 +12,9 @@ function readPersisted() {
 export async function mountWinamp({ container, capabilities }) {
   const { filesystem, notifications, sound } = capabilities;
   container.innerHTML = `
-  <div class="az-app-shell"><div class="az-app-toolbar"><strong>Winamp</strong><span class="az-system-spacer"></span><span class="az-app-caption">AizanoiOS audio player</span></div>
+  <div class="az-app-shell az-utility-shell az-winamp-shell">
   <div class="az-winamp">
+    <div class="az-winamp-brand"><strong>WINAMP</strong><span>Local + Workspace audio</span></div>
     <div class="az-winamp-display" data-wa-display>
       <div class="az-winamp-track" data-wa-track>— nothing playing —</div>
       <div class="az-winamp-time" data-wa-time>00:00</div>
@@ -80,12 +81,15 @@ export async function mountWinamp({ container, capabilities }) {
   }
 
   async function play(i) {
-    if (!playlist.length) return;
+    if (!playlist.length) {
+      notifications.notify('Winamp', 'Playlist is empty. Add an audio file first.', 'system');
+      return;
+    }
     index = (i + playlist.length) % playlist.length;
     const item = playlist[index];
     const blob = await resolveSource(item);
     if (!blob) {
-      notifications.notify('Winamp', `Cannot load ${item.name}`, 'error');
+      notifications.notify('Winamp', `Cannot load ${item.name}. It may have been removed from Workspace.`, 'error');
       return;
     }
     const url = URL.createObjectURL(blob);
@@ -93,8 +97,25 @@ export async function mountWinamp({ container, capabilities }) {
     audio.dataset.blobUrl = url;
     audio.src = url;
     trackEl.textContent = `${index + 1}. ${item.name}`;
-    audio.play().catch(() => notifications.notify('Winamp', 'Press play to start audio.', 'system'));
+    try {
+      await audio.play();
+    } catch (_) {
+      notifications.notify('Winamp', 'Press play to start audio.', 'system');
+    }
     renderPlaylist();
+  }
+
+  async function resumePlayback() {
+    if (!playlist.length) {
+      notifications.notify('Winamp', 'Playlist is empty. Add an audio file first.', 'system');
+      return;
+    }
+    if (index < 0 || !audio.getAttribute('src')) return play(index < 0 ? 0 : index);
+    try {
+      await audio.play();
+    } catch (_) {
+      notifications.notify('Winamp', 'The browser blocked playback. Press play again after interacting with the page.', 'system');
+    }
   }
 
   function handleTimeUpdate() {
@@ -114,11 +135,11 @@ export async function mountWinamp({ container, capabilities }) {
       || (event.target.closest('[data-wa-add-local]') ? 'add-local' : '')
       || (event.target.closest('[data-wa-add-workspace]') ? 'add-ws' : '');
     sound.play('click');
-    if (action === 'play') audio.play().catch(() => {});
+    if (action === 'play') return resumePlayback();
     else if (action === 'pause') audio.pause();
     else if (action === 'stop') { audio.pause(); audio.currentTime = 0; }
-    else if (action === 'prev') return play(index - 1);
-    else if (action === 'next') return play(index + 1);
+    else if (action === 'prev') return play(index < 0 ? playlist.length - 1 : index - 1);
+    else if (action === 'next') return play(index < 0 ? 0 : index + 1);
     else if (action === 'add-local') fileInput.click();
     else if (action === 'add-ws') {
       const items = await filesystem.childrenOf(filesystem.musicId);
