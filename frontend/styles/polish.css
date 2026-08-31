@@ -113,7 +113,7 @@
     justify-content:space-between;
     gap:12px;
     color:#8ff3cf;
-    font-size:10.5px;
+    font-size:11px;
     letter-spacing:.08em;
   }
   .az-window[data-app-id="winamp"] .az-winamp-brand strong { font-size:13px;letter-spacing:.14em; }
@@ -145,7 +145,7 @@
   .az-window[data-app-id="analytics"] .az-analytics-section-head .az-kicker {
     margin:0 0 10px;
     color:#4b5bc8;
-    font-size:10.5px;
+    font-size:11px;
     font-weight:760;
     letter-spacing:.1em;
   }
@@ -208,7 +208,7 @@
     border-radius:12px;
     background:#f2f5fc;
     color:#68758a;
-    font-size:9.5px;
+    font-size:11px;
     line-height:1.25;
   }
   .az-window[data-app-id="analytics"] .az-analytics-set-metrics strong {
@@ -225,7 +225,7 @@
     border:1px dashed rgba(82,101,219,.34);
     border-radius:999px;
     color:#5366db;
-    font-size:10.5px;
+    font-size:11px;
     font-weight:700;
   }
   .az-window[data-app-id="analytics"] .az-analytics-detail-bar {
@@ -320,19 +320,19 @@
       width:430px !important;
       height:590px !important;
       left:calc(50% - 215px) !important;
-      top:calc(50% - 295px) !important;
+      top:max(10px,calc(50% - 295px)) !important;
     }
     .az-window[data-app-id="winamp"]:not(.is-maximized) {
       width:540px !important;
       height:590px !important;
       left:calc(50% - 270px) !important;
-      top:calc(50% - 295px) !important;
+      top:max(10px,calc(50% - 295px)) !important;
     }
     .az-window[data-app-id="recycle-bin"]:not(.is-maximized) {
       width:820px !important;
       height:560px !important;
       left:calc(50% - 410px) !important;
-      top:calc(50% - 280px) !important;
+      top:max(10px,calc(50% - 280px)) !important;
     }
   }
 
