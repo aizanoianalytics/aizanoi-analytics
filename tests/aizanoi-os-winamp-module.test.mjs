@@ -64,7 +64,7 @@ test('Winamp cleanup removes owned listeners and revokes the active media URL', 
     ['container', 'click', 'handleClick'],
     ['fileInput', 'change', 'handleFileChange'],
     ['seekEl', 'input', 'handleSeekInput'],
-    ['audio', 'timeupdate', 'handleTimeUpdate'],
+    ['audio', 'timeupdate', 'updateTime'],
     ['audio', 'ended', 'handleEnded'],
     ['vol', 'input', 'handleVolumeInput'],
   ]) {
