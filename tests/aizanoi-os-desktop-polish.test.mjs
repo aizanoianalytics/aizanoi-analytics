@@ -48,5 +48,5 @@ test('polish stylesheet is loaded and precached', () => {
   assert.ok(existsSync('frontend/styles/polish.css'));
   assert.match(root, /\/styles\/polish\.css/);
   assert.match(serviceWorker, /\/styles\/polish\.css/);
-  assert.match(serviceWorker, /aizanoi-os-shell-v4\.3\.3/);
+  assert.match(serviceWorker, /aizanoi-os-shell-v4\.3\.2/);
 });
