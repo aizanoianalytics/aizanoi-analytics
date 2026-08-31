@@ -9,6 +9,8 @@ const registry = read('frontend/js/v3/registry.js');
 const analytics = read('frontend/js/v3/apps/analytics/src/app.js');
 const calculator = read('frontend/js/v3/apps/calculator/src/app.js');
 const winamp = read('frontend/js/v3/apps/winamp/src/app.js');
+const dialog = read('frontend/js/v3/workspace/dialog.js');
+const nginxStaticHeaders = read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const root = read('frontend/index.html');
 const serviceWorker = read('frontend/service-worker.js');
 
@@ -43,6 +45,22 @@ test('Winamp play resumes a persisted playlist by resolving the first track', ()
   assert.match(winamp, /async function resumePlayback\(\)/);
   assert.match(winamp, /if \(index < 0 \|\| !audio\.getAttribute\('src'\)\) return play\(index < 0 \? 0 : index\)/);
   assert.doesNotMatch(winamp, /az-app-toolbar/);
+});
+
+test('production shell policy permits explicit local Camera and blob-backed Winamp playback', () => {
+  assert.match(nginxStaticHeaders, /microphone=\(self\)/);
+  assert.match(nginxStaticHeaders, /camera=\(self\)/);
+  assert.match(nginxStaticHeaders, /media-src 'self' blob:/);
+  assert.match(nginxStaticHeaders, /geolocation=\(\)/);
+});
+
+test('application confirmations use the canonical focus-safe dialog and never promote Enter globally', () => {
+  assert.match(dialog, /az-overlay is-open/);
+  assert.match(dialog, /aria-modal="true"/);
+  assert.match(dialog, /root\.inert = true/);
+  assert.match(dialog, /opener\?\.isConnected/);
+  assert.doesNotMatch(dialog, /event\.key === 'Enter'/);
+  assert.doesNotMatch(dialog, /az-w98-overlay|az-w98-dialog|az-w98-titlebar/);
 });
 
 test('polish stylesheet is loaded and precached', () => {
