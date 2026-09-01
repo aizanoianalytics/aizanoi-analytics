@@ -68,20 +68,20 @@ export function mountBrowser({ container }) {
         </div>
         <div class="az-browser-info">
           <span data-browser-status role="status" aria-live="polite">Ready</span>
-          <span>Sandboxed preview · some sites block embedded viewing</span>
+          <span>Direct browser connection · no Aizanoi proxy · some sites block embedded viewing</span>
         </div>
         <div class="az-browser-viewport">
           <section class="az-browser-home" data-browser-home-panel>
             <div class="az-browser-home-mark" aria-hidden="true">◎</div>
             <p class="az-browser-kicker">AIZANOIOS</p>
             <h2>Browser</h2>
-            <p>Search the web or enter an HTTPS address above. If a website refuses to appear here, use <strong>Open external</strong>.</p>
+            <p>Search the web or enter an HTTPS address above. Pages are requested directly by your browser; Aizanoi Analytics does not proxy or relay them. If a website refuses to appear here, use <strong>Open external</strong>.</p>
             <div class="az-browser-home-actions">
               <button class="az-button az-hr-primary" type="button" data-browser-search-home>Open Google</button>
               <button class="az-button" type="button" data-browser-site-home>Open Aizanoi Analytics</button>
             </div>
           </section>
-          <iframe class="az-browser-frame" data-browser-frame title="Browser page" sandbox="allow-downloads allow-forms allow-modals allow-popups allow-same-origin allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
+          <iframe class="az-browser-frame" data-browser-frame title="Browser page" sandbox="allow-downloads allow-forms allow-modals allow-popups allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
         </div>
       </section>
     </div>`;

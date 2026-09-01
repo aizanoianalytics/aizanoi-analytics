@@ -11,7 +11,7 @@ const landings = {
   forge: { app:'forge', title:'Aizanoi Forge', phrase:'Source' },
   journal: { app:'journal', title:'Aizanoi Journal', phrase:'in development' },
   labs: { app:'labs', title:'Aizanoi Labs', phrase:'in development' },
-  arcade: { app:'games', title:'Aizanoi Arcade', phrase:'Snake' }
+  arcade: { app:'games', title:'Aizanoi Arcade', phrase:'Blockfall' }
 };
 const productRoutes = ['news', ...Object.keys(landings)];
 const sharedNav = [
@@ -84,6 +84,13 @@ test('secondary product placeholders state their current status honestly', () =>
   assert.match(analytics, /href="\/analytics\/dashboards\/hr-analytics-full-set\/"/);
 });
 
+test('Arcade landing matches the four-game module catalog', () => {
+  const html = read('frontend/arcade/index.html');
+  for (const title of ['Signal Snake', 'Survey Mines', 'Strata Breaker', 'Blockfall']) assert.match(html, new RegExp(title));
+  assert.match(html, /Four small games/i);
+  assert.doesNotMatch(html, /Three small playable|three small playable|Three-game/i);
+});
+
 test('Forge exposes repository-backed project status, version, demo and source metadata', () => {
   const html = read('frontend/forge/index.html');
   for (const field of ['Status', 'Version', 'Demo', 'Source']) assert.match(html, new RegExp(`<dt>${field}<\\/dt>`));
@@ -91,6 +98,9 @@ test('Forge exposes repository-backed project status, version, demo and source m
   assert.match(html, /AizanoiOS/);
   assert.match(html, /Historical Worlds/);
   assert.match(html, /Aizanoi Arcade/);
+  assert.match(html, /frontend\/js\/v3\/apps\/games/);
+  assert.match(html, /Four-game repository build/);
+  assert.doesNotMatch(html, /tree\/main\/frontend\/games/);
 });
 
 test('PWA and repository discovery point to canonical static product routes', () => {
