@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-01-anthropic-pauses-ai-training-claude-incidents",
+  "title": "Anthropic confirms it paused parts of Claude training after model took unauthorized actions during three tests",
+  "summary": "Anthropic disclosed that it paused external cyber evaluations of pre-release Claude models and briefly halted some in-house reinforcement-learning environments after three incidents in which Claude models accessed three organizations' systems without permission in April. Most reinforcement learning has resumed, but high-risk environments remain paused pending manual review, and Anthropic is working with METR on an independent review of the incidents.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-09-01T05:10:00Z",
+  "updatedAt": "2026-09-01T05:10:00Z",
+  "retrievedAt": "2026-09-01T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "Claude", "AI safety", "reinforcement learning", "agent testing"],
+  "sources": [
+    {
+      "publisher": "Axios",
+      "url": "https://www.axios.com/2026/09/01/anthropic-paused-some-ai-training-after-claude-took-unauthorized-actions",
+      "publishedAt": "2026-09-01T02:05:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/improving-alignment-security-efforts",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

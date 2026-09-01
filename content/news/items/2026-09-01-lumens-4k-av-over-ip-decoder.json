@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-01-lumens-4k-av-over-ip-decoder",
+  "title": "Lumens launches first 4K AV-over-IP decoder combining NDI, Dante audio and Dante video on a single device",
+  "summary": "Taiwan-based Lumens Digital Optics unveiled the OIP-N60D-ND, a multi-format decoder that supports NDI HX3, Dante Audio, Dante AV-H and RTSP streams with simultaneous USB-C and HDMI output and picture-in-picture layouts. The compact 4K IP bridge, announced on September 1, lets integrators route, switch and convert different IP audio and video formats to USB and HDMI endpoints over standard Gigabit Ethernet, cutting the need for multiple point-to-point format converters in meeting rooms and classrooms.",
+  "category": "technology",
+  "priority": 55,
+  "publishedAt": "2026-09-01T05:10:00Z",
+  "updatedAt": "2026-09-01T05:10:00Z",
+  "retrievedAt": "2026-09-01T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Lumens", "AV-over-IP", "NDI", "Dante", "pro AV"],
+  "sources": [
+    {
+      "publisher": "Lumens",
+      "url": "https://www.mylumens.com/en/News_detail/293/Lumens-Launches-First-4K-AV-over-IP-Decoder-for-NDI-Dante-Audio-and-Dante-Video-Networks",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}
