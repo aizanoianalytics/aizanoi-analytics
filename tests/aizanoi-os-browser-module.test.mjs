@@ -46,6 +46,14 @@ test('Browser uses a compatibility sandbox without granting top-level navigation
   assert.doesNotMatch(privateApp, /proxy_pass|fetch\(.*https?:\/\//s);
 });
 
+test('Browser refuses to iframe Aizanoi same-origin pages under the compatibility sandbox', () => {
+  assert.match(privateApp, /new URL\(url\)\.origin === window\.location\.origin/);
+  assert.match(privateApp, /if \(isSameOrigin\(url\)\)/);
+  assert.match(privateApp, /Opened Aizanoi Analytics externally to preserve Browser isolation/);
+  assert.match(privateApp, /data-browser-site-home/);
+  assert.match(privateApp, /openUrlExternal\(window\.location\.origin/);
+});
+
 test('Browser tells users that remote requests are direct and not proxied by Aizanoi', () => {
   assert.match(privateApp, /Direct browser connection · no Aizanoi proxy/i);
   assert.match(privateApp, /requested directly by your browser/i);
