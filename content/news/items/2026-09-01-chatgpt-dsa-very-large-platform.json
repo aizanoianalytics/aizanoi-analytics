@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-01-chatgpt-dsa-very-large-platform",
+  "title": "ChatGPT becomes first generative-AI service to fall under the EU's Digital Services Act as a 'very large' platform",
+  "summary": "The European Commission added ChatGPT to its list of very large online platforms under the Digital Services Act on August 31, the first generative-AI service to face that level of scrutiny, alongside Reddit and Roblox. OpenAI reported more than 159 million ChatGPT users in the EU at the end of March, well above the 45-million-user threshold, and the three services now have four months to comply with additional risk-assessment and mitigation obligations, with penalties of up to six percent of global turnover for breaches.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-09-01T05:10:00Z",
+  "updatedAt": "2026-09-01T05:10:00Z",
+  "retrievedAt": "2026-09-01T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ChatGPT", "OpenAI", "EU", "Digital Services Act", "AI regulation"],
+  "sources": [
+    {
+      "publisher": "Yahoo News / Deutsche Welle (AFP)",
+      "url": "https://uk.news.yahoo.com/eu-puts-chatgpt-reddit-roblox-133600500.html",
+      "publishedAt": "2026-08-31T13:36:00Z"
+    }
+  ]
+}

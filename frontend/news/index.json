@@ -213,10 +213,10 @@
       ]
     },
     {
-      "id": "2026-09-01-chatgpt-first-ai-chatbot-dsa-rules",
+      "id": "2026-09-01-chatgpt-dsa-very-large-platform",
       "kind": "daily",
-      "title": "ChatGPT becomes first AI chatbot to fall under the EU's Digital Services Act as a 'very large' platform",
-      "summary": "The European Commission added ChatGPT to its list of very large online platforms under the Digital Services Act on August 31, the first AI chatbot to face that level of scrutiny, alongside Reddit and Roblox. OpenAI reported more than 159 million ChatGPT users in the EU at the end of March, well above the 45-million-user threshold, and the three services now have four months to comply with additional risk-assessment and mitigation obligations, with penalties of up to six percent of global turnover for breaches.",
+      "title": "ChatGPT becomes first generative-AI service to fall under the EU's Digital Services Act as a 'very large' platform",
+      "summary": "The European Commission added ChatGPT to its list of very large online platforms under the Digital Services Act on August 31, the first generative-AI service to face that level of scrutiny, alongside Reddit and Roblox. OpenAI reported more than 159 million ChatGPT users in the EU at the end of March, well above the 45-million-user threshold, and the three services now have four months to comply with additional risk-assessment and mitigation obligations, with penalties of up to six percent of global turnover for breaches.",
       "category": "ai",
       "priority": 80,
       "publishedAt": "2026-09-01T05:10:00.000Z",
@@ -238,9 +238,9 @@
       ],
       "sources": [
         {
-          "publisher": "The Star",
-          "url": "https://www.thestar.com.my/tech/tech-news/2026/09/01/chatgpt-becomes-first-ai-chatbot-to-face-tougher-eu-rules",
-          "publishedAt": "2026-09-01T01:00:00.000Z"
+          "publisher": "Yahoo News / Deutsche Welle (AFP)",
+          "url": "https://uk.news.yahoo.com/eu-puts-chatgpt-reddit-roblox-133600500.html",
+          "publishedAt": "2026-08-31T13:36:00.000Z"
         }
       ]
     },
