@@ -6,7 +6,7 @@ The previous research Workbench bundle is retired. Archive, Notes, Data Lab, Sou
 
 ## Public catalog
 
-The eight public apps are:
+The eight public product families are:
 
 1. Aizanoi News
 2. Aizanoi TV
@@ -16,6 +16,8 @@ The eight public apps are:
 6. Aizanoi Journal
 7. Aizanoi Labs
 8. Aizanoi Arcade
+
+The canonical AizanoiOS application registry also contains browser-local workspace utilities such as Workspace, Notepad, Calculator, Browser, Camera, Winamp and Recycle Bin. Product-family count and total launcher-app count are deliberately different contracts.
 
 `Analytics` is the visible analytical product; `/analytics/` and the internal app id `analytics` are stable contracts, and dashboards are a format within the product.
 
@@ -41,7 +43,7 @@ Do not add `final`, `polish`, `unified`, `responsive-fix` or other compatibility
 - tablet uses a touch-first home and focused large windows;
 - mobile uses a phone-like home and fullscreen app surfaces;
 - required coarse-pointer actions keep a 44 px target floor;
-- all device classes expose the same public catalog.
+- all device classes expose the same product families and workspace utilities from the canonical registry.
 
 ## Routes and discovery
 
@@ -66,7 +68,7 @@ The manifest and service worker improve installability and resilient static deli
 
 ## Quality contract
 
-A shell change should preserve eight public apps, three worlds, lazy app code/styles, canonical `--az-*` tokens, dialog focus/inert/restore behavior, mobile target/overflow checks, Historical World traversal regressions, real-browser service-worker coverage and rendered review.
+A shell change should preserve the eight public product families plus the workspace utilities represented by the canonical app registry, three worlds, lazy app code/styles, canonical `--az-*` tokens, dialog focus/inert/restore behavior, mobile target/overflow checks, Historical World traversal regressions, real-browser service-worker coverage and rendered review.
 
 Aizanoi Analytics remains the company/umbrella brand unless the owner explicitly changes `PRODUCT.md`; agents must not restore the old hierarchy in which Aizanoi Analytics is presented as a subordinate app or product family.
 

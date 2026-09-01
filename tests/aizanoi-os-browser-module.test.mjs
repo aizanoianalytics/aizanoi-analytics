@@ -38,11 +38,17 @@ test('Browser normalizes navigation to HTTPS or a safe search URL', async () => 
   assert.equal(resolveBrowserInput('   '), null);
 });
 
-test('Browser embeds remote pages inside a sandbox and keeps an external fallback', () => {
-  assert.match(privateApp, /sandbox="allow-downloads allow-forms allow-modals allow-popups allow-same-origin allow-scripts"/);
-  assert.doesNotMatch(privateApp, /allow-top-navigation/);
+test('Browser embeds remote pages in an opaque-origin sandbox and keeps an external fallback', () => {
+  assert.match(privateApp, /sandbox="allow-downloads allow-forms allow-modals allow-popups allow-scripts"/);
+  assert.doesNotMatch(privateApp, /allow-same-origin|allow-top-navigation/);
   assert.match(privateApp, /window\.open\(url, '_blank', 'noopener,noreferrer'\)/);
   assert.doesNotMatch(privateApp, /proxy_pass|fetch\(.*https?:\/\//s);
+});
+
+test('Browser tells users that remote requests are direct and not proxied by Aizanoi', () => {
+  assert.match(privateApp, /Direct browser connection · no Aizanoi proxy/i);
+  assert.match(privateApp, /requested directly by your browser/i);
+  assert.match(privateApp, /does not proxy or relay them/i);
 });
 
 test('Browser owns responsive external styles and hidden-state behavior', () => {

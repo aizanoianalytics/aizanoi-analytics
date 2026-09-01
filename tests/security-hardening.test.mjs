@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 
 const read=(file)=>readFileSync(file,'utf8');
+const packageJson=JSON.parse(read('package.json'));
 const index=read('frontend/index.html');
 const registry=read('frontend/js/v3/registry.js');
 const shell=read('frontend/js/v3/shell.js');
@@ -65,12 +66,16 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
   assert.match(staticHeaders,/script-src 'self';/);
   assert.doesNotMatch(staticHeaders,/script-src[^;]*'unsafe-inline'/);
   assert.match(staticHeaders,/frame-src 'self' https:;/);
-  assert.match(browserApp,/sandbox="allow-downloads allow-forms allow-modals allow-popups allow-same-origin allow-scripts"/);
-  assert.doesNotMatch(browserApp,/allow-top-navigation/);
+  assert.match(browserApp,/sandbox="allow-downloads allow-forms allow-modals allow-popups allow-scripts"/);
+  assert.doesNotMatch(browserApp,/allow-same-origin|allow-top-navigation/);
   assert.match(historicalHeaders,/script-src 'self' 'unsafe-inline';/,'Historical Worlds retain their explicitly scoped inline bootstrap policy');
   assert.match(nginx,/location \^~ \/analytics\/dashboards\/hr-analytics-full-set\/[\s\S]*include snippets\/aizanoi-hr-analytics-security-headers\.conf;/);
   assert.match(hrAnalyticsHeaders,/script-src 'self' 'unsafe-inline';/,'Original self-contained HR exports retain their route-scoped inline policy');
   assert.match(hrAnalyticsHeaders,/style-src 'self' 'unsafe-inline';/);
+});
+
+test('QA package declares ESM explicitly instead of relying on syntax detection',()=>{
+  assert.equal(packageJson.type,'module');
 });
 
 test('cache locations preserve security headers and revalidate mutable unversioned code',()=>{

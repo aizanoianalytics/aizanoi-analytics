@@ -1,6 +1,7 @@
 {
   "name":"aizanoi-analytics-qa",
   "private":true,
+  "type":"module",
   "version":"0.0.0",
   "engines":{"node":">=22"},
   "devDependencies":{"axe-core":"4.10.3","lighthouse":"13.4.1","playwright":"1.62.1"}
