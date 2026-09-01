@@ -16,16 +16,18 @@ const dialog = read('frontend/js/v3/workspace/dialog.js');
 const workspaceFs = read('frontend/js/v3/workspace/fs.js');
 const polish = read('frontend/styles/polish.css');
 const utilityPolish = read('frontend/styles/utility-polish.css');
+const toolWindows = read('frontend/styles/tool-windows.css');
 const nginxStaticHeaders = read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const root = read('frontend/index.html');
 const serviceWorker = read('frontend/service-worker.js');
 
-test('desktop keeps the five core apps and adds Arcade plus Recycle Bin', () => {
-  assert.match(brandPlatform, /const DESKTOP=Object\.freeze\(\[\.\.\.PINNED,'games','recycle-bin'\]\)/);
+test('desktop keeps the five core apps and promotes a curated utility set', () => {
+  assert.match(brandPlatform, /const DESKTOP=Object\.freeze\(\[\.\.\.PINNED,'browser','notepad','calculator','camera','winamp','games','recycle-bin'\]\)/);
   assert.match(registry, /id:'recycle-bin'.*icon:'\/assets\/icons\/aizanoi-recycle-bin\.svg'/s);
   assert.match(registry, /id:'camera'.*icon:'\/assets\/icons\/camera\.svg'/s);
   assert.match(registry, /id:'winamp'.*icon:'\/assets\/icons\/winamp\.svg'/s);
-  for (const icon of ['aizanoi-recycle-bin.svg', 'camera.svg', 'winamp.svg']) assert.ok(existsSync(`frontend/assets/icons/${icon}`));
+  assert.match(registry, /id:'browser'.*icon:'\/assets\/icons\/browser\.svg'/s);
+  for (const icon of ['aizanoi-recycle-bin.svg', 'camera.svg', 'winamp.svg', 'browser.svg']) assert.ok(existsSync(`frontend/assets/icons/${icon}`));
 });
 
 test('Analytics has one canonical catalog consumed by both public surfaces', () => {
@@ -41,12 +43,15 @@ test('desktop app polish never overrides canonical window geometry with CSS impo
   assert.doesNotMatch(polish, /data-app-id="calculator"[^}]*!important/s);
   assert.doesNotMatch(polish, /data-app-id="winamp"[^}]*!important/s);
   assert.doesNotMatch(polish, /data-app-id="recycle-bin"[^}]*!important/s);
+  assert.doesNotMatch(toolWindows, /(?:left|top|width|height|transform):[^;{}]*!important/);
 });
 
 test('utility windows get compact first-run geometry while preserving user-sized windows', () => {
   assert.match(main, /const UTILITY_WINDOW_PREFS=Object\.freeze/);
   assert.match(main, /calculator:Object\.freeze\(\{width:470,height:640/);
   assert.match(main, /winamp:Object\.freeze\(\{width:620,height:520/);
+  assert.match(main, /camera:Object\.freeze\(\{width:760,height:620/);
+  assert.match(main, /games:Object\.freeze\(\{width:920,height:700/);
   assert.match(main, /'recycle-bin':Object\.freeze\(\{width:860,height:560/);
   assert.match(main, /api\.store\.windowRect\?\.\(appId\)/);
   assert.match(main, /windowEl\.dataset\.azPreferredRectApplied='preserved'/);
@@ -102,10 +107,13 @@ test('application confirmations use the canonical focus-safe dialog and never pr
   assert.doesNotMatch(dialog, /az-w98-overlay|az-w98-dialog|az-w98-titlebar/);
 });
 
-test('polish stylesheets are loaded and precached', () => {
+test('polish stylesheets are loaded or owned by the shell and precached', () => {
   for (const stylesheet of ['polish.css', 'utility-polish.css']) {
     assert.ok(existsSync(`frontend/styles/${stylesheet}`));
     assert.match(root, new RegExp(`/styles/${stylesheet.replace('.', '\\.')}`));
     assert.match(serviceWorker, new RegExp(`/styles/${stylesheet.replace('.', '\\.')}`));
   }
+  assert.ok(existsSync('frontend/styles/tool-windows.css'));
+  assert.match(brandPlatform, /\/styles\/tool-windows\.css/);
+  assert.match(serviceWorker, /\/styles\/tool-windows\.css/);
 });

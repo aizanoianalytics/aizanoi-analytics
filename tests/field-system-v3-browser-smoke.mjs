@@ -35,12 +35,13 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
 
 const retiredIds=['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor'];
 const publicAppIds=['news','videos','analytics','worlds','forge','journal','labs','games','workspace','notepad','calculator','browser','camera','winamp','recycle-bin'];
+const desktopAppIds=['news','videos','analytics','worlds','forge','browser','notepad','calculator','camera','winamp','games','recycle-bin'];
 
-// Desktop: sparse wallpaper desktop, public catalog only, freeform window lifecycle.
+// Desktop: sparse wallpaper desktop, curated product + utility shortcuts, freeform window lifecycle.
 {
   const {context,page,errors,requests}=await openPage({width:1440,height:900});
-  assert.equal(await page.locator('.az-desktop-shortcut').count(),7,'desktop: expected five core shortcuts plus Arcade and Recycle Bin');
-  for(const id of ['news','videos','analytics','worlds','forge','games','recycle-bin']) {
+  assert.equal(await page.locator('.az-desktop-shortcut').count(),desktopAppIds.length,'desktop: curated shortcut count changed unexpectedly');
+  for(const id of desktopAppIds) {
     assert.equal(await page.locator(`.az-desktop-shortcut[data-app="${id}"]`).count(),1,`desktop: missing shortcut ${id}`);
   }
   assert.equal(await page.locator('.az-phone-home:visible,.az-tablet-home:visible').count(),0,'desktop: device-specific home leaked into large layout');
@@ -139,6 +140,7 @@ const publicAppIds=['news','videos','analytics','worlds','forge','journal','labs
   assert.equal(await page.locator('.az-phone-home').isVisible(),false,'tablet: phone home leaked into tablet');
   assert.equal(await page.locator('.az-tablet-app').count(),publicAppIds.length,'tablet: public app grid does not match the canonical catalog');
   assert.equal(await page.locator('.az-tablet-feature').count(),2,'tablet: supporting feature cards missing');
+  assert.equal(await page.locator('[data-home-action="continue-world"],.az-device-session').count(),0,'tablet: Historical Worlds continue card returned');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'tablet: root horizontal overflow');
   await axe(page,'tablet home');
 
@@ -157,7 +159,8 @@ const publicAppIds=['news','videos','analytics','worlds','forge','journal','labs
   assert.equal(await page.locator('.az-phone-home').isVisible(),true,'mobile: phone home missing');
   assert.equal(await page.locator('.az-tablet-home').isVisible(),false,'mobile: tablet home leaked into compact layout');
   assert.equal(await page.locator('.az-phone-app').count(),publicAppIds.length,'mobile: public app grid incomplete');
-  assert.equal(await page.locator('.az-phone-widget').count(),2,'mobile: glanceable widget pair missing');
+  assert.equal(await page.locator('.az-phone-widget').count(),1,'mobile: only the News glanceable widget should remain');
+  assert.equal(await page.locator('[data-home-action="continue-world"],.az-device-session').count(),0,'mobile: Historical Worlds continue card returned');
   assert.equal(await page.locator('.az-task-shelf [data-dock-app="forge"]').isVisible(),false,'mobile: compact dock should not include Forge');
   assert.equal(await page.locator('.az-task-shelf .az-shelf-running').isVisible(),false,'mobile: running-app strip should not expand compact dock');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'mobile: root horizontal overflow');

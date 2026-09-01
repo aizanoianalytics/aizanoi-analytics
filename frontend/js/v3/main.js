@@ -10,6 +10,8 @@ const {VERSION,BUILD}=RELEASE;
 const UTILITY_WINDOW_PREFS=Object.freeze({
   calculator:Object.freeze({width:470,height:640,migrateWidth:620,migrateHeight:700}),
   winamp:Object.freeze({width:620,height:520,migrateWidth:760,migrateHeight:650}),
+  camera:Object.freeze({width:760,height:620,migrateWidth:900,migrateHeight:720}),
+  games:Object.freeze({width:920,height:700,migrateWidth:1040,migrateHeight:800}),
   'recycle-bin':Object.freeze({width:860,height:560,migrateWidth:940,migrateHeight:660})
 });
 

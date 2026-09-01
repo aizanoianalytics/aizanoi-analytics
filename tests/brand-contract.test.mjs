@@ -68,10 +68,11 @@ test('retired Workbench icon files remain removed from the public asset tree', (
   assert.equal(existsSync('frontend/assets/icons/aizanoi-recycle-bin.svg'), true, 'canonical Recycle Bin icon should exist');
 });
 
-test('adaptive shell presents Aizanoi Analytics as the primary brand', () => {
+test('adaptive shell presents Aizanoi Analytics as the primary brand without return-session widgets', () => {
   assert.match(platform, /<h1>Aizanoi Analytics<\/h1>/);
-  assert.match(platform, /TODAY AT AIZANOI ANALYTICS/);
   assert.match(platform, /Aizanoi Analytics apps/);
+  assert.match(platform, /AizanoiOS/);
+  assert.doesNotMatch(platform, /TODAY AT AIZANOI ANALYTICS|az-session-widget|desktopWidget|sessionCard|getFieldSession|CONTINUE EXPLORING|data-home-action="continue-world"|az-device-session/);
   assert.match(analyticsCatalog, /built by Aizanoi Analytics/);
 });
 

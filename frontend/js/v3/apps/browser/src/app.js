@@ -81,7 +81,7 @@ export function mountBrowser({ container }) {
               <button class="az-button" type="button" data-browser-site-home>Open Aizanoi Analytics</button>
             </div>
           </section>
-          <iframe class="az-browser-frame" data-browser-frame title="Browser page" sandbox="allow-downloads allow-forms allow-modals allow-popups allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
+          <iframe class="az-browser-frame" data-browser-frame title="Browser page" sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
         </div>
       </section>
     </div>`;
@@ -182,11 +182,14 @@ export function mountBrowser({ container }) {
       navigate(SEARCH_HOME);
       return;
     }
-    if (event.target.closest('[data-browser-site-home]')) navigate(window.location.origin);
+    if (event.target.closest('[data-browser-site-home]')) {
+      const opened = window.open(window.location.origin, '_blank', 'noopener,noreferrer');
+      if (opened) opened.opener = null;
+    }
   }
 
   function handleFrameLoad() {
-    status.textContent = 'Request loaded · blank page? The site may block embedded viewing.';
+    status.textContent = 'Loaded · blank page? The destination may block embedded viewing.';
   }
 
   function handleKeydown(event) {
