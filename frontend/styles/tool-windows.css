@@ -1,0 +1,234 @@
+@layer polish {
+  /* Keep the desktop useful without turning it into a second Applications grid. */
+  @media (min-width:1200px) {
+    .az-desktop-shortcuts {
+      top:20px;
+      right:20px;
+      grid-template-columns:repeat(3,84px);
+      grid-auto-rows:88px;
+      gap:5px 6px;
+    }
+    .az-desktop-shortcut {
+      width:82px;
+      min-height:82px;
+      gap:5px;
+      padding:4px 3px;
+    }
+    .az-desktop-icon {
+      width:52px;
+      height:52px;
+      border-radius:15px;
+    }
+    .az-desktop-icon img { width:32px;height:32px; }
+    .az-desktop-label { max-width:80px;font-size:10.5px; }
+
+    /* Calculator, Winamp and Arcade are objects of their own. The OS supplies
+       lifecycle, focus and routing, but does not draw a second visible frame. */
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) {
+      overflow:visible;
+      border:0;
+      border-radius:22px;
+      background:transparent;
+      box-shadow:none;
+    }
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]).is-active {
+      box-shadow:none;
+    }
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-bar {
+      position:absolute;
+      top:8px;
+      right:8px;
+      z-index:45;
+      width:34px;
+      height:34px;
+      min-height:0;
+      flex:0 0 auto;
+      padding:0;
+      border:0;
+      background:transparent;
+      box-shadow:none;
+      pointer-events:none;
+      backdrop-filter:none;
+      -webkit-backdrop-filter:none;
+    }
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-icon,
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-title,
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-context,
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control:not([data-action="close"]),
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-resize-handle {
+      display:none;
+    }
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-controls {
+      width:34px;
+      height:34px;
+      margin:0;
+      gap:0;
+      pointer-events:auto;
+    }
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"] {
+      width:32px;
+      height:32px;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(255,255,255,.52);
+      border-radius:50%;
+      background:rgba(17,25,40,.72);
+      box-shadow:0 7px 22px rgba(13,20,34,.2);
+      color:#fff;
+      font:500 19px/1 var(--az-font-ui);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+    }
+    .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-body {
+      min-height:100%;
+      overflow:hidden;
+      border-radius:22px;
+      background:transparent;
+      box-shadow:0 24px 64px rgba(35,47,72,.2);
+    }
+    .az-window[data-app-id="calculator"] {
+      left:50% !important;
+      top:48% !important;
+      width:410px !important;
+      height:540px !important;
+      transform:translate(-50%,-50%) !important;
+    }
+    .az-window[data-app-id="winamp"] {
+      left:50% !important;
+      top:48% !important;
+      width:500px !important;
+      height:590px !important;
+      transform:translate(-50%,-50%) !important;
+    }
+    .az-window[data-app-id="games"] {
+      left:50% !important;
+      top:48% !important;
+      width:min(920px,calc(100vw - 88px)) !important;
+      height:min(700px,calc(100vh - 138px)) !important;
+      transform:translate(-50%,-50%) !important;
+    }
+
+    /* Camera remains an OS window, just a calmer and more appropriately sized one. */
+    .az-window[data-app-id="camera"] {
+      left:50% !important;
+      top:48% !important;
+      width:min(760px,calc(100vw - 88px)) !important;
+      height:min(620px,calc(100vh - 138px)) !important;
+      transform:translate(-50%,-50%) !important;
+    }
+  }
+
+  .az-window[data-app-id="camera"] .az-camera-shell { align-items:center; }
+  .az-window[data-app-id="camera"] .az-camera {
+    width:min(100%,760px);
+    gap:10px;
+    padding:12px;
+  }
+  .az-window[data-app-id="camera"] .az-camera-stage {
+    width:100%;
+    min-height:0;
+    max-height:400px;
+    aspect-ratio:4/3;
+  }
+  .az-window[data-app-id="camera"] .az-camera-video {
+    min-height:0;
+    height:100%;
+  }
+  .az-window[data-app-id="camera"] .az-camera-gallery {
+    grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
+  }
+
+  /* A running Arcade game is a page inside Arcade, not a card beneath the library. */
+  .az-arcade { position:relative; }
+  .az-game-stage:not([hidden]) {
+    position:absolute;
+    inset:0;
+    z-index:20;
+    overflow:auto;
+    padding:clamp(14px,2.5vw,26px);
+    background:radial-gradient(circle at 85% 0,rgba(102,126,255,.2),transparent 30%),linear-gradient(145deg,#0d1423,#070b13 74%);
+  }
+  .az-arcade-session {
+    width:100%;
+    min-height:100%;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .az-arcade-session-head {
+    min-height:58px;
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    align-items:center;
+    gap:14px;
+    padding:0 0 14px;
+    border-bottom:1px solid rgba(169,188,225,.16);
+  }
+  .az-arcade-session-head h3 {
+    margin:2px 0 0;
+    color:#f4f7ff;
+    font:720 clamp(24px,3vw,36px)/1 var(--az-font-ui);
+    letter-spacing:-.045em;
+  }
+  .az-arcade-session-meta {
+    color:#8291ac;
+    font-size:11px;
+    text-align:right;
+  }
+  .az-arcade-back,
+  .az-arcade-session-close {
+    min-height:44px;
+    border:1px solid rgba(154,174,216,.2);
+    background:rgba(29,40,64,.78);
+    color:#eaf1ff;
+    cursor:pointer;
+  }
+  .az-arcade-back {
+    padding:0 13px;
+    border-radius:12px;
+    font:700 11px var(--az-font-ui);
+  }
+  .az-arcade-session-close {
+    width:44px;
+    padding:0;
+    border-radius:50%;
+    font:500 22px/1 var(--az-font-ui);
+  }
+  .az-arcade-session-close:hover,
+  .az-arcade-back:hover { border-color:rgba(127,240,200,.5);background:rgba(38,53,82,.94); }
+  .az-arcade-session-title { min-width:0; }
+  .az-arcade-cabinet {
+    min-height:0;
+    flex:1;
+    display:grid;
+    place-items:center;
+  }
+  .az-arcade-cabinet > * { max-width:100%; }
+  .az-blockfall canvas { touch-action:none; }
+
+  @media (max-width:1199px) {
+    .az-window[data-app-id="camera"] .az-camera-stage { max-height:360px; }
+  }
+  @media (max-width:599px), (max-height:500px) and (max-width:899px) {
+    .az-window[data-app-id="camera"] .az-camera {
+      width:100%;
+      padding:9px;
+    }
+    .az-window[data-app-id="camera"] .az-camera-stage {
+      max-height:min(44vh,330px);
+      aspect-ratio:4/3;
+    }
+    .az-game-stage:not([hidden]) {
+      position:fixed;
+      inset:48px 0 0;
+      padding:10px;
+    }
+    .az-arcade-session-head {
+      grid-template-columns:auto minmax(0,1fr) 44px;
+      gap:8px;
+    }
+    .az-arcade-session-meta { display:none; }
+    .az-arcade-session-head h3 { font-size:22px; }
+    .az-arcade-cabinet { align-items:start; }
+  }
+}
