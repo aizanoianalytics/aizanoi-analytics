@@ -81,7 +81,7 @@ export function mountBrowser({ container }) {
               <button class="az-button" type="button" data-browser-site-home>Open Aizanoi Analytics</button>
             </div>
           </section>
-          <iframe class="az-browser-frame" data-browser-frame title="Browser page" sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
+          <iframe class="az-browser-frame" data-browser-frame title="Browser page" sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-scripts" referrerpolicy="no-referrer" hidden></iframe>
         </div>
       </section>
     </div>`;
@@ -137,38 +137,16 @@ export function mountBrowser({ container }) {
     applyHistoryEntry(entry);
   }
 
-  function openUrlExternal(url, message = '') {
-    const opened = window.open(url, '_blank', 'noopener,noreferrer');
-    if (opened) opened.opener = null;
-    if (message) status.textContent = message;
-    return opened;
-  }
-
-  function isSameOrigin(url) {
-    try {
-      return new URL(url).origin === window.location.origin;
-    } catch {
-      return false;
-    }
-  }
-
   function navigate(value) {
     const url = resolveBrowserInput(value);
     if (!url) return;
-    // The compatibility sandbox intentionally allows scripts + same-origin for
-    // cross-origin sites. Never place an Aizanoi same-origin page inside that
-    // frame, where it would share the parent origin; open it externally instead.
-    if (isSameOrigin(url)) {
-      address.value = url;
-      openUrlExternal(url, 'Opened Aizanoi Analytics externally to preserve Browser isolation.');
-      return;
-    }
     pushEntry({ kind: 'url', url });
   }
 
   function openExternal() {
     const url = currentUrl || resolveBrowserInput(address.value) || SEARCH_HOME;
-    openUrlExternal(url);
+    const opened = window.open(url, '_blank', 'noopener,noreferrer');
+    if (opened) opened.opener = null;
   }
 
   function handleSubmit(event) {
@@ -205,7 +183,8 @@ export function mountBrowser({ container }) {
       return;
     }
     if (event.target.closest('[data-browser-site-home]')) {
-      openUrlExternal(window.location.origin, 'Opened Aizanoi Analytics externally to preserve Browser isolation.');
+      const opened = window.open(window.location.origin, '_blank', 'noopener,noreferrer');
+      if (opened) opened.opener = null;
     }
   }
 
