@@ -38,20 +38,18 @@ test('Browser normalizes navigation to HTTPS or a safe search URL', async () => 
   assert.equal(resolveBrowserInput('   '), null);
 });
 
-test('Browser uses a compatibility sandbox without granting top-level navigation', () => {
-  assert.match(privateApp, /sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"/);
-  assert.match(privateApp, /allow-same-origin/);
-  assert.doesNotMatch(privateApp, /allow-top-navigation/);
+test('Browser keeps destinations on an opaque sandbox origin and blocks top-level navigation', () => {
+  assert.match(privateApp, /sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-scripts"/);
+  assert.doesNotMatch(privateApp, /allow-same-origin|allow-top-navigation/);
   assert.match(privateApp, /window\.open\(url, '_blank', 'noopener,noreferrer'\)/);
   assert.doesNotMatch(privateApp, /proxy_pass|fetch\(.*https?:\/\//s);
 });
 
-test('Browser refuses to iframe Aizanoi same-origin pages under the compatibility sandbox', () => {
-  assert.match(privateApp, /new URL\(url\)\.origin === window\.location\.origin/);
-  assert.match(privateApp, /if \(isSameOrigin\(url\)\)/);
-  assert.match(privateApp, /Opened Aizanoi Analytics externally to preserve Browser isolation/);
+test('Browser uses iframe-compatible Google URLs while preserving an external fallback', () => {
+  assert.match(privateApp, /https:\/\/www\.google\.com\/webhp\?igu=1/);
+  assert.match(privateApp, /https:\/\/www\.google\.com\/search\?igu=1&q=/);
+  assert.match(privateApp, /data-browser-external/);
   assert.match(privateApp, /data-browser-site-home/);
-  assert.match(privateApp, /openUrlExternal\(window\.location\.origin/);
 });
 
 test('Browser tells users that remote requests are direct and not proxied by Aizanoi', () => {
