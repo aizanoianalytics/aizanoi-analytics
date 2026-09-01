@@ -4,7 +4,7 @@ import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
-test('Camera module requests camera first, microphone second and stops all media on close', async () => {
+test('Camera module requests camera first, microphone second, reveals live preview and stops all media on close', async () => {
   const browser = await chromium.launch({
     headless: true,
     args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'],
@@ -65,17 +65,30 @@ test('Camera module requests camera first, microphone second and stops all media
     await page.click('[data-cam-start]');
     await page.waitForTimeout(1100);
 
-    const active = await page.evaluate(() => ({
-      constraints: window.__cameraQa.constraints,
-      liveTracks: window.__cameraQa.tracks.filter((track) => track.readyState === 'live').length,
-      status: document.querySelector('[data-cam-status]')?.textContent || '',
-    }));
+    const active = await page.evaluate(() => {
+      const offPanel = document.querySelector('[data-cam-off]');
+      const video = document.querySelector('[data-cam-video]');
+      return {
+        constraints: window.__cameraQa.constraints,
+        liveTracks: window.__cameraQa.tracks.filter((track) => track.readyState === 'live').length,
+        status: document.querySelector('[data-cam-status]')?.textContent || '',
+        offPanelHidden: Boolean(offPanel?.hidden),
+        offPanelDisplay: offPanel ? getComputedStyle(offPanel).display : null,
+        offPanelHasDisplayClass: Boolean(offPanel?.classList.contains('az-camera-off')),
+        videoWidth: video?.videoWidth || 0,
+        videoHeight: video?.videoHeight || 0,
+      };
+    });
     assert.deepEqual(active.constraints.slice(0, 2), [
       { video: { facingMode: 'user' }, audio: false },
       { video: false, audio: true },
     ]);
     assert.ok(active.liveTracks > 0, 'Camera start must create live media tracks');
     assert.match(active.status, /^Camera active/);
+    assert.equal(active.offPanelHidden, true, 'Camera off panel must carry the hidden state after the stream attaches');
+    assert.equal(active.offPanelDisplay, 'none', 'Camera off panel must not cover the live preview');
+    assert.equal(active.offPanelHasDisplayClass, false, 'Camera off display class must be removed while live');
+    assert.ok(active.videoWidth > 0 && active.videoHeight > 0, 'Live camera preview must expose real video dimensions');
 
     await page.evaluate(() => window.AIZANOI_OS?.closeApp?.('camera'));
     await page.waitForTimeout(500);
