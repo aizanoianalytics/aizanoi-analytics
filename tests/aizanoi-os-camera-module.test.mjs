@@ -50,6 +50,13 @@ test('Camera requests video first and treats microphone as a separate optional p
   assert.doesNotMatch(privateApp, /MediaRecorder|audio\.srcObject|createMediaStreamSource/);
 });
 
+test('Camera removes the off-state display class while the live stream is attached', () => {
+  assert.match(privateApp, /function setOffPanelVisible\(visible\)\{offPanel\.hidden=!visible;offPanel\.classList\.toggle\('az-camera-off',visible\);\}/);
+  assert.match(privateApp, /async function attachCamera[\s\S]*setOffPanelVisible\(false\)/);
+  assert.match(privateApp, /catch\(error\)[\s\S]*setOffPanelVisible\(true\)/);
+  assert.match(privateApp, /function stop\(\)[\s\S]*setOffPanelVisible\(true\)/);
+});
+
 test('shared capability bridge owns mediaDevices and Pictures implementation knowledge', () => {
   assert.match(sharedCapabilities, /picturesId:\s*fs\.PICTURES_ID/);
   assert.match(sharedCapabilities, /globalThis\.navigator\?\.mediaDevices\?\.getUserMedia/);
