@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 
 const read = (path) => readFileSync(path, 'utf8');
 const brand = read('frontend/js/v3/brand-platform.js');
+const main = read('frontend/js/v3/main.js');
 const polish = read('frontend/styles/tool-windows.css');
 const arcade = read('frontend/js/v3/apps/games/src/app.js');
 const snake = read('frontend/js/v3/apps/games/assets/snake.js');
@@ -28,11 +29,12 @@ test('calculator, Winamp and Arcade use frameless native tool presentation', () 
   assert.match(polish, /az-resize-handle/);
 });
 
-test('Camera has a bounded smaller preview and desktop window', () => {
+test('Camera has a bounded smaller preview and user-resizable first-run window', () => {
+  assert.match(main, /camera:Object\.freeze\(\{width:760,height:620,migrateWidth:900,migrateHeight:720\}\)/);
   assert.match(polish, /data-app-id="camera"/);
-  assert.match(polish, /width:min\(760px,calc\(100vw - 88px\)\)/);
   assert.match(polish, /max-height:400px/);
   assert.match(polish, /aspect-ratio:4\/3/);
+  assert.doesNotMatch(polish, /(?:left|top|width|height|transform):[^;{}]*!important/);
 });
 
 test('Arcade launches each game as an owned page with its own exit controls', () => {
