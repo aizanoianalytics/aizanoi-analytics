@@ -38,9 +38,10 @@ test('Browser normalizes navigation to HTTPS or a safe search URL', async () => 
   assert.equal(resolveBrowserInput('   '), null);
 });
 
-test('Browser embeds remote pages in an opaque-origin sandbox and keeps an external fallback', () => {
-  assert.match(privateApp, /sandbox="allow-downloads allow-forms allow-modals allow-popups allow-scripts"/);
-  assert.doesNotMatch(privateApp, /allow-same-origin|allow-top-navigation/);
+test('Browser uses a compatibility sandbox without granting top-level navigation', () => {
+  assert.match(privateApp, /sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"/);
+  assert.match(privateApp, /allow-same-origin/);
+  assert.doesNotMatch(privateApp, /allow-top-navigation/);
   assert.match(privateApp, /window\.open\(url, '_blank', 'noopener,noreferrer'\)/);
   assert.doesNotMatch(privateApp, /proxy_pass|fetch\(.*https?:\/\//s);
 });
