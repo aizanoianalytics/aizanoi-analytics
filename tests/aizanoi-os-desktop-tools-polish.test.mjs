@@ -21,7 +21,7 @@ test('desktop exposes a curated utility set without the old session popup', () =
 
 test('calculator, Winamp and Arcade use frameless native tool presentation', () => {
   for (const id of ['calculator','winamp','games']) {
-    assert.match(polish, new RegExp(`data-app-id=\\?"${id}\\?"`));
+    assert.ok(polish.includes(`data-app-id="${id}"`), `${id} frameless selector missing`);
   }
   assert.match(polish, /az-window-control\[data-action="close"\]/);
   assert.match(polish, /az-window-control:not\(\[data-action="close"\]\)/);
