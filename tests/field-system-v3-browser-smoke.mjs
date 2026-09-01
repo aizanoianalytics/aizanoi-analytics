@@ -34,6 +34,7 @@ async function axe(page,label) {
 function appModuleRequests(requests){return requests.filter((path)=>path.includes('/js/v3/apps/'));}
 
 const retiredIds=['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor'];
+const publicAppIds=['news','videos','analytics','worlds','forge','journal','labs','games','workspace','notepad','calculator','browser','camera','winamp','recycle-bin'];
 
 // Desktop: sparse wallpaper desktop, public catalog only, freeform window lifecycle.
 {
@@ -58,7 +59,10 @@ const retiredIds=['workbench','archive','notes','data-lab','source-reader','arti
   await applicationsButton.click();
   await page.waitForSelector('#az-switcher-overlay.is-open .az-launchpad-search');
   assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: launcher did not use canonical inert lifecycle');
-  assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item[data-app]').count(),14,'desktop: launcher public-app count changed unexpectedly');
+  assert.equal(await page.locator('#az-switcher-overlay .az-launchpad-item[data-app]').count(),publicAppIds.length,'desktop: launcher public-app count changed unexpectedly');
+  for(const id of publicAppIds) {
+    assert.equal(await page.locator(`#az-switcher-overlay .az-launchpad-item[data-app="${id}"]`).count(),1,`desktop: launcher missing public app ${id}`);
+  }
   for(const id of retiredIds) {
     assert.equal(await page.locator(`#az-switcher-overlay .az-launchpad-item[data-app="${id}"]`).count(),0,`desktop: retired ${id} leaked into Applications`);
   }
@@ -133,7 +137,7 @@ const retiredIds=['workbench','archive','notes','data-lab','source-reader','arti
   assert.equal(await page.locator('.az-shell').getAttribute('data-layout'),'expanded');
   assert.equal(await page.locator('.az-tablet-home').isVisible(),true,'tablet: dedicated tablet home missing');
   assert.equal(await page.locator('.az-phone-home').isVisible(),false,'tablet: phone home leaked into tablet');
-  assert.equal(await page.locator('.az-tablet-app').count(),14,'tablet: expected all fourteen public apps');
+  assert.equal(await page.locator('.az-tablet-app').count(),publicAppIds.length,'tablet: public app grid does not match the canonical catalog');
   assert.equal(await page.locator('.az-tablet-feature').count(),2,'tablet: supporting feature cards missing');
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'tablet: root horizontal overflow');
   await axe(page,'tablet home');
@@ -152,7 +156,7 @@ const retiredIds=['workbench','archive','notes','data-lab','source-reader','arti
   assert.equal(await page.locator('.az-shell').getAttribute('data-layout'),'compact');
   assert.equal(await page.locator('.az-phone-home').isVisible(),true,'mobile: phone home missing');
   assert.equal(await page.locator('.az-tablet-home').isVisible(),false,'mobile: tablet home leaked into compact layout');
-  assert.equal(await page.locator('.az-phone-app').count(),14,'mobile: public app grid incomplete');
+  assert.equal(await page.locator('.az-phone-app').count(),publicAppIds.length,'mobile: public app grid incomplete');
   assert.equal(await page.locator('.az-phone-widget').count(),2,'mobile: glanceable widget pair missing');
   assert.equal(await page.locator('.az-task-shelf [data-dock-app="forge"]').isVisible(),false,'mobile: compact dock should not include Forge');
   assert.equal(await page.locator('.az-task-shelf .az-shelf-running').isVisible(),false,'mobile: running-app strip should not expand compact dock');
