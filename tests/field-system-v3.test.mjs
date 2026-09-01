@@ -147,14 +147,14 @@ for (const [name, css] of Object.entries({shell,components,deviceShell,apps})) {
 }
 
 const registry = await import(pathToFileURL(path.join(frontend, 'js/v3/registry.js')).href + `?t=${Date.now()}`);
-assert.equal(registry.APPS.length, 14, 'public AizanoiOS catalog must contain the eight product families plus the six workspace utilities');
-assert.equal(registry.ALL_APPS.length, 14, 'combined public app catalog must match the registry exactly');
+assert.equal(registry.APPS.length, 15, 'public AizanoiOS catalog must contain the eight product families plus the seven workspace utilities');
+assert.equal(registry.ALL_APPS.length, 15, 'combined public app catalog must match the registry exactly');
 assert.equal('WORKBENCH_APPS' in registry, false, 'retired Workbench catalog export returned');
 assert.deepEqual(registry.WORLDS.map((world) => world.id), ['aizanoi','rome','athens']);
 for (const id of ['news','videos','analytics','worlds','forge','journal','labs','games']) {
   assert.ok(registry.APPS.some((app)=>app.id===id),`missing public Aizanoi platform app ${id}`);
 }
-for (const id of ['workspace','notepad','calculator','camera','winamp','recycle-bin']) {
+for (const id of ['workspace','notepad','calculator','browser','camera','winamp','recycle-bin']) {
   assert.ok(registry.APPS.some((app)=>app.id===id),`missing AizanoiOS workspace app ${id}`);
 }
 for (const id of ['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor']) {
