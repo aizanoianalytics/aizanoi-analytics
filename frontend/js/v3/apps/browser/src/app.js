@@ -1,6 +1,6 @@
-const STYLE_SELECTOR = 'link[data-az-browser-style]';
+const STYLE_SELECTOR = 'link[data-az-browser-css]';
 const STYLE_HREF = '/js/v3/apps/browser/assets/browser.css';
-const SEARCH_HOME = 'https://www.google.com/';
+const SEARCH_HOME = 'https://www.google.com/webhp?igu=1';
 
 function acquireStylesheet() {
   let link = document.querySelector(STYLE_SELECTOR);
@@ -8,7 +8,7 @@ function acquireStylesheet() {
     link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = STYLE_HREF;
-    link.dataset.azBrowserStyle = 'true';
+    link.dataset.azBrowserCss = 'true';
     link.dataset.azBrowserRefs = '0';
     document.head.append(link);
   }
