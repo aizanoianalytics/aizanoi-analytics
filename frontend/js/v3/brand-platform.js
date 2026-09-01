@@ -1,11 +1,20 @@
 import { APPS, appById, worldById } from './registry.js';
 
 const PINNED=Object.freeze(['news','videos','analytics','worlds','forge']);
-const DESKTOP=Object.freeze([...PINNED,'games','recycle-bin']);
+const DESKTOP=Object.freeze([...PINNED,'browser','notepad','calculator','camera','winamp','games','recycle-bin']);
 const PUBLIC_APPS=Object.freeze(APPS.map((app)=>app.id));
 const PHONE_DOCK=Object.freeze(['news','videos','analytics','worlds']);
+const PLATFORM_STYLE_HREF='/styles/tool-windows.css';
 const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 
+function ensurePlatformStyles(){
+  if(document.querySelector('link[data-az-platform-polish]'))return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href=PLATFORM_STYLE_HREF;
+  link.dataset.azPlatformPolish='true';
+  document.head.appendChild(link);
+}
 function appButton(id,className='az-desktop-shortcut'){
   const app=appById(id);if(!app)return '';
   return `<button class="${className}" type="button" data-app="${esc(app.id)}" aria-label="Open ${esc(app.label)}"><span class="az-desktop-icon"><img src="${esc(app.icon)}" alt=""></span><span class="az-desktop-label">${esc(app.short||app.label)}</span></button>`;
@@ -111,14 +120,8 @@ function renderTabletHome(api){
 
 function rewriteDesktop(api){
   const desktop=document.querySelector('.az-desktop');if(!desktop)return;
-  const session=api.store.getFieldSession();
-  const world=session?worldById(session.worldId):null;
-  const desktopWidget=session
-    ? `<div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">CONTINUE EXPLORING</span><h1>Return to ${esc(world?.label||'Historical Worlds')}</h1><p>${session.landmark?`Resume near ${esc(session.landmark)}.`:'Your last Historical World session is still available on this device.'}</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-home-action="continue-world">Continue</button><button class="az-button" type="button" data-app="news">Aizanoi News</button></div></div>`
-    : '<div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">TODAY AT AIZANOI ANALYTICS</span><h1>One studio. Many things worth exploring.</h1><p>Follow the latest briefing, watch Aizanoi TV, launch Analytics or step into a Historical World.</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-app="news">Open News</button><button class="az-button" type="button" data-app="videos">Aizanoi TV</button></div></div>';
   desktop.innerHTML=`<div class="az-desktop-signature" aria-hidden="true"><strong>AizanoiOS</strong><span>Aizanoi Analytics · media · data · software · worlds</span></div>
     <section class="az-desktop-shortcuts" aria-label="Aizanoi Analytics shortcuts">${DESKTOP.map((id)=>appButton(id)).join('')}</section>
-    <section class="az-session-widget" aria-label="${session?'Continue exploring':'Today at Aizanoi Analytics'}">${desktopWidget}</section>
     ${renderPhoneHome(api)}
     ${renderTabletHome(api)}`;
 }
@@ -182,6 +185,7 @@ function updateDeviceDates(){
 }
 
 export function installBrandPlatform(api){
+  ensurePlatformStyles();
   rewriteDesktop(api);
   rewriteDock(api);
   rewriteDesktopContextMenu(api);
