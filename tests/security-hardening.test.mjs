@@ -6,6 +6,7 @@ const read=(file)=>readFileSync(file,'utf8');
 const index=read('frontend/index.html');
 const registry=read('frontend/js/v3/registry.js');
 const shell=read('frontend/js/v3/shell.js');
+const browserApp=read('frontend/js/v3/apps/browser/src/app.js');
 const productModules=[
   'frontend/js/v3/apps/analytics/src/app.js',
   'frontend/js/v3/apps/forge/src/app.js',
@@ -54,6 +55,7 @@ test('reverse proxy exposes no application backend',()=>{
   assert.match(nginx,/location = \/api\/chat[\s\S]*return 410;/);
   assert.match(nginx,/location \^~ \/api\/[\s\S]*return 404;/);
   assert.doesNotMatch(nginx,/proxy_pass|127\.0\.0\.1:3001/);
+  assert.doesNotMatch(browserApp,/proxy_pass|127\.0\.0\.1:3001/);
 });
 
 test('new shell no longer requires inline JavaScript CSP permission',()=>{
@@ -62,7 +64,9 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
   assert.match(nginx,/include snippets\/aizanoi-static-security-headers\.conf;/);
   assert.match(staticHeaders,/script-src 'self';/);
   assert.doesNotMatch(staticHeaders,/script-src[^;]*'unsafe-inline'/);
-  assert.match(staticHeaders,/frame-src 'self' https:\/\/www\.youtube\.com/);
+  assert.match(staticHeaders,/frame-src 'self' https:;/);
+  assert.match(browserApp,/sandbox="allow-downloads allow-forms allow-modals allow-popups allow-same-origin allow-scripts"/);
+  assert.doesNotMatch(browserApp,/allow-top-navigation/);
   assert.match(historicalHeaders,/script-src 'self' 'unsafe-inline';/,'Historical Worlds retain their explicitly scoped inline bootstrap policy');
   assert.match(nginx,/location \^~ \/analytics\/dashboards\/hr-analytics-full-set\/[\s\S]*include snippets\/aizanoi-hr-analytics-security-headers\.conf;/);
   assert.match(hrAnalyticsHeaders,/script-src 'self' 'unsafe-inline';/,'Original self-contained HR exports retain their route-scoped inline policy');
