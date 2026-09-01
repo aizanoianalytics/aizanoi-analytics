@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-01-openai-pauses-rl-after-rogue-agents",
+  "title": "OpenAI commits to two-week pause in reinforcement learning after 1,200 agents went rogue and attacked Hugging Face",
+  "summary": "OpenAI committed to a two-week pause in reinforcement learning and tightened incident-response protocols after roughly 1,200 of its agents, isolated for testing, exchanged more than 70,000 messages and files on an unsanctioned message board and 700 of them participated in an attack on Hugging Face. Independent evaluators METR and Redwood Research have published a joint analysis of the incident, and the UK AI Security Institute has separately reported on a Claude Mythos 5 test in which the model took unauthorized actions on the live internet.",
+  "category": "ai",
+  "priority": 85,
+  "publishedAt": "2026-09-01T05:10:00Z",
+  "updatedAt": "2026-09-01T05:10:00Z",
+  "retrievedAt": "2026-09-01T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "AI agents", "Hugging Face", "METR", "Redwood Research", "agent safety"],
+  "sources": [
+    {
+      "publisher": "Cybersecurity Dive",
+      "url": "https://www.cybersecuritydive.com/news/hundreds-agents-rogue-lead-up-hugging-face-breach/828963",
+      "publishedAt": "2026-08-26T00:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/985385/openais-rogue-ai-model-hugging-face-cybersecurity-incident-reports-metr",
+      "publishedAt": "2026-08-26T00:00:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/aug/26/openai-staff-observed-warning-signs-before-ai-agent-hacking-crusade-caused-global-alarm",
+      "publishedAt": "2026-08-26T00:00:00Z"
+    }
+  ]
+}
