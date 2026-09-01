@@ -1,11 +1,20 @@
-import { APPS, appById, worldById } from './registry.js';
+import { APPS, appById } from './registry.js';
 
 const PINNED=Object.freeze(['news','videos','analytics','worlds','forge']);
-const DESKTOP=Object.freeze([...PINNED,'games','recycle-bin']);
+const DESKTOP=Object.freeze([...PINNED,'browser','notepad','calculator','camera','winamp','games','recycle-bin']);
 const PUBLIC_APPS=Object.freeze(APPS.map((app)=>app.id));
 const PHONE_DOCK=Object.freeze(['news','videos','analytics','worlds']);
+const PLATFORM_STYLE_HREF='/styles/tool-windows.css';
 const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 
+function ensurePlatformStyles(){
+  if(document.querySelector('link[data-az-platform-polish]'))return;
+  const link=document.createElement('link');
+  link.rel='stylesheet';
+  link.href=PLATFORM_STYLE_HREF;
+  link.dataset.azPlatformPolish='true';
+  document.head.appendChild(link);
+}
 function appButton(id,className='az-desktop-shortcut'){
   const app=appById(id);if(!app)return '';
   return `<button class="${className}" type="button" data-app="${esc(app.id)}" aria-label="Open ${esc(app.label)}"><span class="az-desktop-icon"><img src="${esc(app.icon)}" alt=""></span><span class="az-desktop-label">${esc(app.short||app.label)}</span></button>`;
@@ -30,22 +39,8 @@ function dateParts(){
     full:now.toLocaleDateString('en-GB', {weekday:'long',year:'numeric',month:'long',day:'numeric'})
   };
 }
-function sessionCard(api,compact=false){
-  const session=api.store.getFieldSession();
-  if(session){
-    const world=worldById(session.worldId);
-    return `<article class="${compact?'az-phone-widget':'az-tablet-widget'} az-device-session">
-      <div><span class="az-device-kicker">CONTINUE EXPLORING</span><h2>${esc(world?.label||'Historical Worlds')}</h2><p>${session.landmark?`Resume near ${esc(session.landmark)}.`:'Your latest Historical World session is available on this device.'}</p></div>
-      <button class="az-device-widget-action" type="button" data-home-action="continue-world">Continue</button>
-    </article>`;
-  }
-  return `<article class="${compact?'az-phone-widget':'az-tablet-widget'} az-device-session">
-    <div><span class="az-device-kicker">HISTORICAL WORLDS</span><h2>Walk through the past</h2><p>Explore Aizanoi, late-antique Rome and classical Athens with evidence levels kept visible.</p></div>
-    <button class="az-device-widget-action" type="button" data-app="worlds">Explore</button>
-  </article>`;
-}
 
-function renderPhoneHome(api){
+function renderPhoneHome(){
   const date=dateParts();
   return `<section class="az-phone-home" aria-label="Aizanoi Analytics mobile home">
     <header class="az-phone-home-header">
@@ -63,7 +58,6 @@ function renderPhoneHome(api){
         <div><span class="az-device-kicker">AIZANOI NEWS</span><h2>Briefings with sources</h2><p>AI, Technology, Economy / Markets and Football in one concise edition.</p></div>
         <button class="az-device-widget-action" type="button" data-app="news">Read</button>
       </article>
-      ${sessionCard(api,true)}
     </div>
     <section class="az-phone-apps" aria-label="Aizanoi Analytics apps">
       ${PUBLIC_APPS.map((id)=>deviceAppButton(id,'az-phone-app')).join('')}
@@ -71,7 +65,7 @@ function renderPhoneHome(api){
   </section>`;
 }
 
-function renderTabletHome(api){
+function renderTabletHome(){
   const date=dateParts();
   return `<section class="az-tablet-home" aria-label="Aizanoi Analytics tablet home">
     <aside class="az-tablet-rail">
@@ -85,7 +79,6 @@ function renderTabletHome(api){
           <button class="az-button" type="button" data-shell-action="search">Search</button>
         </div>
       </div>
-      ${sessionCard(api,false)}
     </aside>
     <section class="az-tablet-main" aria-label="Aizanoi Analytics tablet applications">
       <header class="az-tablet-section-head">
@@ -109,18 +102,12 @@ function renderTabletHome(api){
   </section>`;
 }
 
-function rewriteDesktop(api){
+function rewriteDesktop(){
   const desktop=document.querySelector('.az-desktop');if(!desktop)return;
-  const session=api.store.getFieldSession();
-  const world=session?worldById(session.worldId):null;
-  const desktopWidget=session
-    ? `<div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">CONTINUE EXPLORING</span><h1>Return to ${esc(world?.label||'Historical Worlds')}</h1><p>${session.landmark?`Resume near ${esc(session.landmark)}.`:'Your last Historical World session is still available on this device.'}</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-home-action="continue-world">Continue</button><button class="az-button" type="button" data-app="news">Aizanoi News</button></div></div>`
-    : '<div class="az-session-orb" aria-hidden="true"></div><div class="az-session-copy"><span class="az-eyebrow">TODAY AT AIZANOI ANALYTICS</span><h1>One studio. Many things worth exploring.</h1><p>Follow the latest briefing, watch Aizanoi TV, launch Analytics or step into a Historical World.</p><div class="az-session-actions"><button class="az-button az-button-primary" type="button" data-app="news">Open News</button><button class="az-button" type="button" data-app="videos">Aizanoi TV</button></div></div>';
   desktop.innerHTML=`<div class="az-desktop-signature" aria-hidden="true"><strong>AizanoiOS</strong><span>Aizanoi Analytics · media · data · software · worlds</span></div>
     <section class="az-desktop-shortcuts" aria-label="Aizanoi Analytics shortcuts">${DESKTOP.map((id)=>appButton(id)).join('')}</section>
-    <section class="az-session-widget" aria-label="${session?'Continue exploring':'Today at Aizanoi Analytics'}">${desktopWidget}</section>
-    ${renderPhoneHome(api)}
-    ${renderTabletHome(api)}`;
+    ${renderPhoneHome()}
+    ${renderTabletHome()}`;
 }
 
 function syncDock(api){
@@ -182,7 +169,8 @@ function updateDeviceDates(){
 }
 
 export function installBrandPlatform(api){
-  rewriteDesktop(api);
+  ensurePlatformStyles();
+  rewriteDesktop();
   rewriteDock(api);
   rewriteDesktopContextMenu(api);
   watchLauncher();

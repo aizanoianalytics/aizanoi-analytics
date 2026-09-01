@@ -50,6 +50,7 @@ export async function mountArcade(container) {
 
   function showLibrary() {
     stage.hidden = true;
+    stage.removeAttribute('data-active-game');
     stage.innerHTML = '';
     library.hidden = false;
   }
@@ -64,7 +65,8 @@ export async function mountArcade(container) {
     scriptNode = null;
     library.hidden = true;
     stage.hidden = false;
-    stage.innerHTML = `<section class="az-arcade-session"><header class="az-arcade-session-head"><button class="az-arcade-back" type="button" data-close-game aria-label="Back to Arcade">← Arcade</button><div><p class="az-kicker">NOW PLAYING</p><h3>${esc(game.label)}</h3></div><span>${esc(game.meta)}</span></header><div class="az-arcade-cabinet" id="${game.container}"></div></section>`;
+    stage.dataset.activeGame = id;
+    stage.innerHTML = `<section class="az-arcade-session" aria-label="${esc(game.label)} game session"><header class="az-arcade-session-head"><button class="az-arcade-back" type="button" data-arcade-back aria-label="Back to Arcade">← Arcade</button><div class="az-arcade-session-title"><p class="az-kicker">NOW PLAYING</p><h3>${esc(game.label)}</h3></div><div class="az-arcade-session-actions"><span class="az-arcade-session-meta">${esc(game.meta)}</span><button class="az-arcade-session-close" type="button" data-close-game aria-label="Close ${esc(game.label)}">×</button></div></header><div class="az-arcade-cabinet" id="${game.container}"></div></section>`;
 
     await ensureUtils();
     if (disposed || requestVersion !== lifecycleVersion) return;
@@ -94,6 +96,7 @@ export async function mountArcade(container) {
     scriptNode?.remove();
     scriptNode = null;
     showLibrary();
+    library.querySelector('[data-play-game]')?.focus({ preventScroll:true });
   }
 
   const click = (event) => {
@@ -106,16 +109,23 @@ export async function mountArcade(container) {
         cancelPendingScript();
         library.hidden = true;
         stage.hidden = false;
-        stage.innerHTML = `<div class="az-empty-state"><div><h3>Game unavailable</h3><p>${esc(error.message)}</p><button class="az-button" type="button" data-close-game>Back to Arcade</button></div></div>`;
+        stage.innerHTML = `<div class="az-empty-state"><div><h3>Game unavailable</h3><p>${esc(error.message)}</p><button class="az-button" type="button" data-arcade-back>Back to Arcade</button></div></div>`;
       });
     }
-    if (event.target.closest('[data-close-game]')) closeGame();
+    if (event.target.closest('[data-close-game],[data-arcade-back]')) closeGame();
+  };
+  const keydown = (event) => {
+    if (event.key !== 'Escape' || stage.hidden) return;
+    event.preventDefault();
+    closeGame();
   };
 
   container.addEventListener('click', click);
+  container.addEventListener('keydown', keydown);
   return () => {
     disposed = true;
     container.removeEventListener('click', click);
+    container.removeEventListener('keydown', keydown);
     closeGame();
   };
 }

@@ -2,13 +2,13 @@
 (function () {
   'use strict';
   const SHAPES = [
-    { cells: [[1, 1, 1, 1]], color: '#4ade80' },                    // I
-    { cells: [[1, 1], [1, 1]], color: '#facc15' },                  // O
-    { cells: [[0, 1, 0], [1, 1, 1]], color: '#c084fc' },            // T
-    { cells: [[0, 1, 1], [1, 1, 0]], color: '#38bdf8' },            // S
-    { cells: [[1, 1, 0], [0, 1, 1]], color: '#fb923c' },            // Z
-    { cells: [[1, 0, 0], [1, 1, 1]], color: '#60a5fa' },            // J
-    { cells: [[0, 0, 1], [1, 1, 1]], color: '#f87171' }             // L
+    { cells: [[1, 1, 1, 1]], color: '#4ade80' },
+    { cells: [[1, 1], [1, 1]], color: '#facc15' },
+    { cells: [[0, 1, 0], [1, 1, 1]], color: '#c084fc' },
+    { cells: [[0, 1, 1], [1, 1, 0]], color: '#38bdf8' },
+    { cells: [[1, 1, 0], [0, 1, 1]], color: '#fb923c' },
+    { cells: [[1, 0, 0], [1, 1, 1]], color: '#60a5fa' },
+    { cells: [[0, 0, 1], [1, 1, 1]], color: '#f87171' }
   ];
   const COLS = 10, ROWS = 20, CELL = 22;
 
@@ -21,21 +21,14 @@
           <button class="az-button" type="button" data-bf-close>Close game</button>
         </div>
         <div class="az-blockfall" data-bf-wrap>
-          <canvas data-bf-canvas width="${COLS * CELL}" height="${ROWS * CELL}" aria-label="Blockfall playfield"></canvas>
+          <canvas data-bf-canvas width="${COLS * CELL}" height="${ROWS * CELL}" tabindex="0" aria-label="Blockfall playfield. On touch screens, tap left or right to move, upper center to rotate, lower center to drop, and double tap for hard drop."></canvas>
           <div class="az-blockfall-side">
             <strong>Next</strong>
             <canvas data-bf-next width="${4 * CELL}" height="${4 * CELL}"></canvas>
-            <small>← → move · ↑ rotate · ↓ soft drop · Space hard drop</small>
+            <small>Keyboard: ← → move · ↑ rotate · ↓ drop · Space hard drop. Touch: tap the playfield; double tap for hard drop.</small>
             <button class="az-button" type="button" data-bf-pause>Pause</button>
             <button class="az-button" type="button" data-bf-restart>Restart</button>
           </div>
-        </div>
-        <div class="az-blockfall-touch" data-bf-touch aria-label="Touch controls">
-          <button class="az-button" type="button" data-bf-left aria-label="Move left">◀</button>
-          <button class="az-button" type="button" data-bf-rotate aria-label="Rotate">⟳</button>
-          <button class="az-button" type="button" data-bf-right aria-label="Move right">▶</button>
-          <button class="az-button" type="button" data-bf-down aria-label="Soft drop">▼</button>
-          <button class="az-button" type="button" data-bf-drop aria-label="Hard drop">⤓</button>
         </div>
       </section>`;
 
@@ -47,6 +40,7 @@
     const linesEl = container.querySelector('[data-bf-lines]');
 
     let grid, piece, next, dropCounter, dropInterval, score, lines, running = true, raf;
+    let lastTouchAt = 0;
 
     function emptyGrid() { return Array.from({ length: ROWS }, () => Array(COLS).fill(null)); }
     function spawn() {
@@ -54,7 +48,7 @@
       next = SHAPES[Math.floor(Math.random() * SHAPES.length)];
       piece = { ...shape, cells: shape.cells.map((row) => [...row]), x: Math.floor((COLS - shape.cells[0].length) / 2), y: 0 };
       drawNext();
-      if (collide(piece.x, piece.y, piece.cells)) { running = false; window.AizanoiGames?.flashMessage?.('Game over'); }
+      if (collide(piece.x, piece.y, piece.cells)) { running = false; }
     }
     function collide(px, py, cells) {
       for (let y = 0; y < cells.length; y++) {
@@ -98,9 +92,7 @@
     }
     function drop() {
       if (!collide(piece.x, piece.y + 1, piece.cells)) piece.y++;
-      else {
-        merge(); sweep(); spawn();
-      }
+      else { merge(); sweep(); spawn(); }
       dropCounter = 0;
     }
     function hardDrop() { while (!collide(piece.x, piece.y + 1, piece.cells)) { piece.y++; score += 1; } drop(); scoreEl.textContent = Math.floor(score); }
@@ -157,28 +149,45 @@
       else if (event.key === 'ArrowUp') rotate();
       else if (event.key === ' ') hardDrop();
     };
+    const pointerdown = (event) => {
+      canvas.focus();
+      if (event.pointerType === 'mouse' || !running) return;
+      event.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const now = performance.now();
+      if (now - lastTouchAt < 320) {
+        lastTouchAt = 0;
+        hardDrop();
+        return;
+      }
+      lastTouchAt = now;
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = (event.clientY - rect.top) / rect.height;
+      if (x < .34) {
+        if (!collide(piece.x - 1, piece.y, piece.cells)) piece.x--;
+      } else if (x > .66) {
+        if (!collide(piece.x + 1, piece.y, piece.cells)) piece.x++;
+      } else if (y < .52) rotate();
+      else drop();
+    };
     document.addEventListener('keydown', keydown);
+    canvas.addEventListener('pointerdown', pointerdown);
     container.querySelector('[data-bf-close]').addEventListener('click', onClose);
     container.querySelector('[data-bf-restart]').addEventListener('click', restart);
     container.querySelector('[data-bf-pause]').addEventListener('click', (event) => {
       running = !running;
       event.target.textContent = running ? 'Pause' : 'Resume';
     });
-    const touch = (event) => {
-      const button = event.target.closest('[data-bf-left],[data-bf-right],[data-bf-rotate],[data-bf-down],[data-bf-drop]');
-      if (!button || !running) return;
-      event.preventDefault();
-      if (button.dataset.bfLeft !== undefined && !collide(piece.x - 1, piece.y, piece.cells)) piece.x--;
-      else if (button.dataset.bfRight !== undefined && !collide(piece.x + 1, piece.y, piece.cells)) piece.x++;
-      else if (button.dataset.bfRotate !== undefined) rotate();
-      else if (button.dataset.bfDown !== undefined) drop();
-      else if (button.dataset.bfDrop !== undefined) hardDrop();
-    };
-    container.querySelector('[data-bf-touch]').addEventListener('click', touch);
 
     restart();
+    canvas.focus();
     raf = requestAnimationFrame(loop);
-    return () => { cancelAnimationFrame(raf); document.removeEventListener('keydown', keydown); };
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener('keydown', keydown);
+      canvas.removeEventListener('pointerdown', pointerdown);
+    };
   }
 
   window.AizanoiArcadeBlocks = { mount };

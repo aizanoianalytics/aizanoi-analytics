@@ -25,7 +25,7 @@
     const canvas = document.createElement('canvas');
     canvas.width = W * CELL; canvas.height = H * CELL;
     canvas.id = 'snake-canvas'; canvas.tabIndex = 0;
-    canvas.setAttribute('aria-label','Snake game. Use arrow keys or touch controls.');
+    canvas.setAttribute('aria-label','Snake game. Use arrow keys, or tap the playfield in the direction you want to turn.');
     canvas.style.cssText = 'width:100%;height:auto;aspect-ratio:4/3;background:#07111d;display:block;border:1px solid #4d6580;border-radius:3px;image-rendering:auto;touch-action:none;';
     shell.appendChild(canvas);
     container.appendChild(shell);
@@ -36,17 +36,6 @@
     container.appendChild(status);
     if (window.AizanoiGames) container.appendChild(window.AizanoiGames.toolbar({ game:'snake', onPause:togglePause, onRestart:init }));
 
-    const controls = document.createElement('div');
-    controls.id = 'snake-dpad';
-    controls.style.cssText = 'display:grid;grid-template-columns:46px 46px 46px;grid-template-rows:38px 38px;gap:5px;user-select:none;touch-action:none;';
-    controls.innerHTML = '<span></span><button data-d="up" aria-label="Move up">▲</button><span></span><button data-d="left" aria-label="Move left">◀</button><button data-d="down" aria-label="Move down">▼</button><button data-d="right" aria-label="Move right">▶</button>';
-    controls.querySelectorAll('button').forEach(b => {
-      b.style.cssText = 'padding:0;font:bold 17px Tahoma,sans-serif;background:linear-gradient(#fbfdff,#c8d5e5);border:1px solid #788ba5;border-radius:5px;color:#224a7d;box-shadow:inset 0 1px #fff;touch-action:manipulation;';
-      const go = (e) => { e.preventDefault(); setDirection(b.dataset.d); canvas.focus(); };
-      b.addEventListener('pointerdown', go);
-    });
-    container.appendChild(controls);
-
     const btn = document.createElement('button');
     btn.textContent = 'New Game';
     btn.style.cssText = 'font:11px Tahoma,sans-serif;padding:5px 14px;';
@@ -54,7 +43,7 @@
     container.appendChild(btn);
 
     canvas.addEventListener('keydown', onKey);
-    canvas.addEventListener('pointerdown', () => canvas.focus());
+    canvas.addEventListener('pointerdown', onPointerDown);
     canvas.focus(); draw();
     interval = setInterval(tick, 118);
   }
@@ -70,6 +59,22 @@
     pendingDir = next;
   }
 
+  function onPointerDown(e) {
+    const canvas = e.currentTarget;
+    canvas.focus();
+    if (e.pointerType === 'mouse' || !snake?.length) return;
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+    const headX = (snake[0].x + .5) * CELL;
+    const headY = (snake[0].y + .5) * CELL;
+    const dx = x - headX, dy = y - headY;
+    if (Math.abs(dx) < CELL * .4 && Math.abs(dy) < CELL * .4) return;
+    setDirection(Math.abs(dx) > Math.abs(dy) ? (dx < 0 ? 'left' : 'right') : (dy < 0 ? 'up' : 'down'));
+  }
+
   function onKey(e) {
     const map = {ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'};
     if (map[e.key]) { e.preventDefault(); setDirection(map[e.key]); }
@@ -78,9 +83,6 @@
   }
 
   function tick() {
-    // The Games window/game loader removes this container when switching games
-    // or closing the window. Stop the timer immediately instead of leaving an
-    // orphaned interval running in the background.
     if (!container.isConnected) {
       if (interval) clearInterval(interval);
       interval = null;
@@ -151,7 +153,7 @@
 
     const scoreEl=document.getElementById('snake-score'); if(scoreEl) scoreEl.textContent=String(score).padStart(4,'0');
     const status=document.getElementById('snake-status');
-    if(status) status.textContent=paused ? 'Paused · Press P or Resume' : (over ? 'Run ended · Score: '+score : 'Score: '+score+' · Arrow keys or D-pad · Eat the glowing signal');
+    if(status) status.textContent=paused ? 'Paused · Press P or Resume' : (over ? 'Run ended · Score: '+score : 'Score: '+score+' · Arrow keys or tap around the snake to turn · Eat the glowing signal');
   }
 
   function togglePause() {
