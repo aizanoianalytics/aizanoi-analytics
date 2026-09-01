@@ -5,6 +5,7 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 ## Current app entries
 
 - [`analytics/index.md`](analytics/index.md) — manifest-driven Analytics launcher surface with no shared capabilities
+- [`browser/index.md`](browser/index.md) — zero-capability sandboxed HTTPS browser surface with an explicit external fallback
 - [`calculator/index.md`](calculator/index.md) — manifest-driven Calculator with injected sound
 - [`camera/index.md`](camera/index.md) — manifest-driven Camera with explicit media capability
 - [`forge/index.md`](forge/index.md) — manifest-driven Forge surface with narrow app navigation to Historical Worlds
@@ -35,6 +36,7 @@ All current public apps use one module shape and one shared resolver rather than
 ```text
 apps/
 ├── analytics/
+├── browser/
 ├── calculator/
 ├── camera/
 ├── forge/
@@ -56,7 +58,7 @@ apps/
         └── capabilities.js  # only when the module has injected requirements
 ```
 
-A module may additionally own local `assets/` when those assets are replaceable with the module, as Arcade does. Each module follows the same contract, but its implementation, assets and owned storage remain local. The shared resolver contract lives at `../../../../tests/aizanoi-os-capabilities.test.mjs`; each module has focused architecture coverage. Do not create empty module folders merely to make every tree look identical.
+A module may additionally own local `assets/` when those assets are replaceable with the module, as Arcade and Browser do. Each module follows the same contract, but its implementation, assets and owned storage remain local. The shared resolver contract lives at `../../../../tests/aizanoi-os-capabilities.test.mjs`; each module has focused architecture coverage. Do not create empty module folders merely to make every tree look identical.
 
 ## Migration result
 
@@ -66,9 +68,11 @@ Recycle Bin reuses that same boundary without creating new core services. Its fo
 
 Winamp reuses the filesystem/notifications/sound surfaces. Workspace Music access is exposed only as `filesystem.musicId`; playlist metadata stays in the module-owned `aizanoi-winamp-playlist-v1` namespace; and click, file-input, seek, audio and volume listeners are deterministically removed during cleanup.
 
-Camera adds one explicit `media` capability instead of reaching into `navigator.mediaDevices` from private app code. It still requests camera plus microphone permission on Start, remains photo-only/local-only, stores captures through `filesystem.picturesId`, and owns media-track, object-URL and listener teardown.
+Camera adds one explicit `media` capability instead of reaching into `navigator.mediaDevices` from private app code. It requests camera permission first, then requests microphone permission separately as optional, remains photo-only/local-only, stores captures through `filesystem.picturesId`, and owns media-track, object-URL and listener teardown.
 
 Calculator is dependency-light: it declares only `sound`, owns no persistent storage, and removes both its container click listener and document keyboard listener during cleanup.
+
+Browser is zero-capability and owns its responsive browser UI locally. It normalizes typed destinations to HTTPS, runs remote pages inside a sandboxed iframe, never proxies remote content through Aizanoi Analytics, and exposes an explicit external-browser fallback for destinations that refuse iframe embedding.
 
 Aizanoi TV declares only `apps`. Its companion links use the narrow `apps.open()` facade rather than the full shell API, and the former shared `media.js` entry is retired.
 
