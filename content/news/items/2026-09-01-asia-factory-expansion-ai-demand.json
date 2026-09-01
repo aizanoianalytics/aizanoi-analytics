@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-01-asia-factory-expansion-ai-demand",
+  "title": "Asian factory activity expands for eighth straight month as AI-chip demand lifts PMI readings",
+  "summary": "Private surveys showed factory activity expanded in China, Japan and South Korea in August, with Japan's manufacturing PMI rising to 55.1 from 54.5 in July and global demand for AI hardware cited as the dominant driver across the region. The eight-month streak marks the strongest sustained run for Asian manufacturing in several years, although analysts warned that the prolonged Middle East conflict, rising energy costs and uneven monsoon rainfall could weigh on the outlook in the coming months.",
+  "category": "technology",
+  "priority": 76,
+  "publishedAt": "2026-09-01T05:10:00Z",
+  "updatedAt": "2026-09-01T05:10:00Z",
+  "retrievedAt": "2026-09-01T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Asia", "manufacturing PMI", "AI chips", "Japan", "South Korea", "China"],
+  "sources": [
+    {
+      "publisher": "MarketScreener",
+      "url": "https://www.marketscreener.com/news/global-economy-global-ai-boom-fuels-asia-factory-expansion-in-august-ce7858ddda81ff25",
+      "publishedAt": "2026-08-31T22:35:00Z"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-01-grok-4-7-spacex-employee-data",
+  "title": "xAI prepares Grok 4.7 for early September with supplemental training on SpaceX employee data",
+  "summary": "xAI is running a supplemental training phase for Grok 4.7 using SpaceX engineering records, including Starlink telemetry, rocket development logs and internal engineering documents from roughly 14,000 to 15,000 SpaceX employees, with no public opt-out mechanism reported. Elon Musk said on August 12 that initial training had completed and that the release window pointed at three to four weeks out, placing Grok 4.7 between September 2 and September 9, but xAI's developer documentation still lists Grok 4.6 as its newest model.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-09-01T05:10:00Z",
+  "updatedAt": "2026-09-01T05:10:00Z",
+  "retrievedAt": "2026-09-01T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["xAI", "Grok 4.7", "SpaceX", "Elon Musk", "model training"],
+  "sources": [
+    {
+      "publisher": "Business Insider",
+      "url": "https://www.businessinsider.com/elon-musk-grok-trained-on-spacex-employee-data-2026-8",
+      "publishedAt": "2026-08-12T00:00:00Z"
+    }
+  ]
+}

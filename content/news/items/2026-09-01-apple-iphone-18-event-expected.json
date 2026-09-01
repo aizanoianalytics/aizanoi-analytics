@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-01-apple-iphone-18-event-expected",
+  "title": "Apple's September 2026 keynote expected around September 8 or 9, with iPhone 18 Pro and a foldable iPhone",
+  "summary": "Multiple outlets now expect Apple to hold its fall hardware keynote on September 8 or 9, 2026, with the line-up limited to the iPhone 18 Pro, iPhone 18 Pro Max and Apple's first foldable iPhone, while the standard iPhone 18 and a budget iPhone 18e slip to spring 2027. The Pro models are tipped to run the A20 Pro chip on TSMC's 2nm process and to start at roughly $1,299, with the foldable expected to cross $2,000 and to carry Touch ID instead of Face ID.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-09-01T05:10:00Z",
+  "updatedAt": "2026-09-01T05:10:00Z",
+  "retrievedAt": "2026-09-01T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iPhone 18", "foldable iPhone", "A20 Pro", "TSMC 2nm"],
+  "sources": [
+    {
+      "publisher": "MacRumors",
+      "url": "https://www.macrumors.com/roundup/iphone-18/",
+      "publishedAt": "2026-08-28T00:00:00Z"
+    }
+  ]
+}
