@@ -8,7 +8,7 @@ Recommended `main` policy:
 
 - require pull requests before merge;
 - block force-push and branch deletion;
-- require the Aizanoi CI `validate`, `browser-smoke` and `lighthouse` jobs;
+- require the Aizanoi CI `validate`, `browser-smoke`, `lighthouse` and `hr-pipeline-rebuild` jobs;
 - enable Dependabot alerts and security updates;
 - enable private vulnerability reporting;
 - keep secret scanning/push protection enabled;
