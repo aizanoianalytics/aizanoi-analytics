@@ -86,39 +86,10 @@
     }
     .az-desktop-icon img { width:32px;height:32px; }
     .az-desktop-label { max-width:80px;font-size:10.5px; }
-
-    .az-window[data-app-id="calculator"] {
-      left:50% !important;
-      top:48% !important;
-      width:410px !important;
-      height:540px !important;
-      transform:translate(-50%,-50%) !important;
-    }
-    .az-window[data-app-id="winamp"] {
-      left:50% !important;
-      top:48% !important;
-      width:500px !important;
-      height:590px !important;
-      transform:translate(-50%,-50%) !important;
-    }
-    .az-window[data-app-id="games"] {
-      left:50% !important;
-      top:48% !important;
-      width:min(920px,calc(100vw - 88px)) !important;
-      height:min(700px,calc(100vh - 138px)) !important;
-      transform:translate(-50%,-50%) !important;
-    }
-
-    /* Camera remains an OS window, just a calmer and more appropriately sized one. */
-    .az-window[data-app-id="camera"] {
-      left:50% !important;
-      top:48% !important;
-      width:min(760px,calc(100vw - 88px)) !important;
-      height:min(620px,calc(100vh - 138px)) !important;
-      transform:translate(-50%,-50%) !important;
-    }
   }
 
+  /* Camera remains an OS window, just a calmer and more appropriately sized one.
+     First-run geometry is owned by main.js so user-resized windows remain respected. */
   .az-window[data-app-id="camera"] .az-camera-shell { align-items:center; }
   .az-window[data-app-id="camera"] .az-camera {
     width:min(100%,760px);
