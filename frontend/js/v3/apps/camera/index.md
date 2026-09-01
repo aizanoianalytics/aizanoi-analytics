@@ -20,7 +20,9 @@ The canonical shell resolves the manifest requirements through `../../capabiliti
 
 ## Permission contract
 
-Starting Camera requests `{ video: { facingMode: 'user' }, audio: true }`. The microphone track is requested because this is an explicit owner requirement, but Camera remains photo-only and does not record or upload audio/video.
+Starting Camera first requests `{ video: { facingMode: 'user' }, audio: false }`, attaches the live preview, then requests microphone access separately with `{ video: false, audio: true }`. Microphone permission is optional; Camera remains photo-only and does not record or upload audio/video.
+
+The off-state overlay must be removed from display while a live stream is attached and restored when capture fails or the app stops.
 
 ## Lifecycle
 
@@ -32,4 +34,4 @@ Captured JPEGs are stored only through the injected filesystem capability in Wor
 
 ## Tests
 
-Architecture wiring is covered by `../../../../../tests/aizanoi-os-camera-module.test.mjs`; real Chromium media constraints, track teardown and object-URL cleanup are covered by `../../../../../tests/browser/workspace-apps.test.mjs`.
+Architecture wiring and live-overlay state are covered by `../../../../../tests/aizanoi-os-camera-module.test.mjs`; real Chromium media constraints, track teardown and object-URL cleanup are covered by `../../../../../tests/browser/workspace-apps.test.mjs`.
