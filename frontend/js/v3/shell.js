@@ -138,7 +138,7 @@ function renderHome() {
       <div class="az-world-grid">${renderWorldCards()}</div>
     </section>
     <section class="az-home-section" aria-labelledby="az-apps-title">
-      <div class="az-section-head"><div><h2 id="az-apps-title">Applications</h2><p>The eight public Aizanoi product families.</p></div></div>
+      <div class="az-section-head"><div><h2 id="az-apps-title">Applications</h2><p>Public Aizanoi products and local workspace utilities.</p></div></div>
       <div class="az-app-grid">${renderAppCards()}</div>
     </section>
   </main>`;

@@ -2,10 +2,12 @@
 # Install as /etc/nginx/snippets/aizanoi-static-security-headers.conf.
 # Camera and microphone are permitted only for this origin so the explicit
 # AizanoiOS Camera start action can request them; geolocation stays disabled.
+# AizanoiOS Browser may frame HTTPS destinations inside its sandboxed iframe;
+# destination sites can still deny embedding with their own frame policy.
 add_header X-Content-Type-Options "nosniff" always;
 add_header X-Frame-Options "SAMEORIGIN" always;
 add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 add_header Permissions-Policy "geolocation=(), microphone=(self), camera=(self)" always;
 add_header Cross-Origin-Opener-Policy "same-origin" always;
 add_header Cross-Origin-Resource-Policy "same-origin" always;
-add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; frame-ancestors 'self'; worker-src 'self' blob:" always;
+add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self' https:; frame-ancestors 'self'; worker-src 'self' blob:" always;

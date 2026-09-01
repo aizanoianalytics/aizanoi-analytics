@@ -15,6 +15,7 @@ export function createForgeApp({ apps }) {
         { kicker:'SOURCE OF TRUTH', title:'aizanoianalytics/aizanoi-analytics', body:'GitHub remains canonical. Forge is the branded project catalog and mirror layer, not a second independent copy of source code.', href:'https://github.com/aizanoianalytics/aizanoi-analytics', hrefLabel:'Open GitHub' },
         { kicker:'PROJECT', title:'AizanoiOS', body:'Browser-native adaptive shell for Aizanoi Analytics media, data products, Historical Worlds and experiments.' },
         { kicker:'PROJECT', title:'Historical Worlds', body:'Shared runtime and city-local reconstructions for Aizanoi, Rome and Athens.', button:'worlds', buttonLabel:'Open Worlds' },
+        { kicker:'PROJECT', title:'Aizanoi Arcade', body:'Four local browser games — Signal Snake, Survey Mines, Strata Breaker and Blockfall — owned by the manifest-driven Arcade module.', button:'games', buttonLabel:'Open Arcade', href:'https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/frontend/js/v3/apps/games', hrefLabel:'Open source' },
       ]));
 
       function handleClick(event) {
