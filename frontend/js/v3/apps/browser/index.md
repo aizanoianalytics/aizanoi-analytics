@@ -17,10 +17,11 @@ None. Browser is a zero-capability module and does not receive filesystem, media
 
 - Only HTTPS destinations are embedded; plain HTTP input is upgraded to HTTPS.
 - Non-URL text becomes a Google search URL.
-- The remote page runs inside a sandboxed `iframe` with scripts allowed but **without `allow-same-origin`**, so framed documents keep an opaque sandbox origin even when the user opens an Aizanoi Analytics URL.
-- The app never proxies remote content through Aizanoi Analytics and never receives credentials or server-side secrets. Remote requests are made directly by the visitor's browser.
+- The remote page runs inside a sandboxed `iframe`. Scripts, forms, downloads, popups and the destination's normal origin semantics are allowed for compatibility, while top-level navigation is not granted.
+- `allow-same-origin` is intentionally present because many ordinary sites break under an opaque sandbox origin. Cross-origin destinations remain isolated from the AizanoiOS parent by the browser same-origin policy.
+- The app never proxies remote content through Aizanoi Analytics and never receives server-side secrets. Remote requests are made directly by the visitor's browser.
 - Some websites deliberately deny iframe embedding with their own `X-Frame-Options` or `frame-ancestors` policy. The **Open external** action is the supported fallback for those sites.
-- The root static CSP must permit sandboxed HTTPS frames for this module; this does not bypass a destination site's own embedding policy.
+- The root static CSP must permit HTTPS frames for this module; this does not bypass a destination site's own embedding policy.
 
 ## Owned assets
 
@@ -33,7 +34,7 @@ Cleanup removes Browser-owned listeners, clears the iframe and releases the modu
 
 ## Navigation behavior
 
-Back and Forward cover destinations explicitly entered through the Browser address bar. Sandboxed cross-origin pages cannot expose their internal link history to the parent shell.
+Back and Forward cover destinations explicitly entered through the Browser address bar. Cross-origin pages cannot expose their internal link history to the parent shell.
 
 ## Tests
 
