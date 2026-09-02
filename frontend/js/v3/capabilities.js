@@ -10,12 +10,15 @@ function cachedProvider(name, loader) {
 
 async function filesystemCapability() {
   const fs = await import('./workspace/fs.js');
+  const backup = await import('./workspace/backup.js');
   return Object.freeze({
     documentsId:fs.DOCUMENTS_ID, picturesId:fs.PICTURES_ID, recycleId:fs.RECYCLE_ID, musicId:fs.MUSIC_ID,
     allNodes:fs.allNodes, getNode:fs.getNode, readFileBlob:fs.readFileBlob, childrenOf:fs.childrenOf,
     createFile:fs.createFile, createFolder:fs.createFolder, renameNode:fs.renameNode, trashNode:fs.trashNode,
     updateFileContent:fs.updateFileContent, formatSize:fs.formatSize, emptyRecycleBin:fs.emptyRecycleBin,
     restoreNode:fs.restoreNode, deleteNode:fs.deleteNode,
+    exportBackup:backup.exportWorkspaceBackup, importBackup:backup.importWorkspaceBackup,
+    storageStatus:backup.workspaceStorageStatus, requestPersistence:backup.requestWorkspacePersistence,
   });
 }
 

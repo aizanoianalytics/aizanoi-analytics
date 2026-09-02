@@ -20,6 +20,11 @@ function acquireStylesheet() {
   };
 }
 
+function isLoopbackHost(hostname) {
+  const host = String(hostname || '').replace(/^\[|\]$/g, '').toLowerCase();
+  return host === 'localhost' || host.endsWith('.localhost') || host === '127.0.0.1' || host === '::1';
+}
+
 export function resolveBrowserInput(value) {
   const raw = String(value || '').trim();
   if (!raw) return null;
@@ -28,7 +33,6 @@ export function resolveBrowserInput(value) {
     try {
       const url = new URL(raw);
       if (!['http:', 'https:'].includes(url.protocol)) return null;
-      url.protocol = 'https:';
       return url.href;
     } catch {
       // Fall through to a safe search URL.
@@ -38,7 +42,9 @@ export function resolveBrowserInput(value) {
   const looksLikeHost = /^(?:localhost(?::\d+)?|(?:\d{1,3}\.){3}\d{1,3}(?::\d+)?|(?:[a-z0-9-]+\.)+[a-z]{2,})(?:[/?#].*)?$/i.test(raw);
   if (looksLikeHost) {
     try {
-      return new URL(`https://${raw}`).href;
+      const candidate = new URL(`https://${raw}`);
+      if (isLoopbackHost(candidate.hostname)) candidate.protocol = 'http:';
+      return candidate.href;
     } catch {
       // Fall through to search.
     }
@@ -75,7 +81,7 @@ export function mountBrowser({ container }) {
             <div class="az-browser-home-mark" aria-hidden="true">◎</div>
             <p class="az-browser-kicker">AIZANOIOS</p>
             <h2>Browser</h2>
-            <p>Search the web or enter an HTTPS address above. Pages are requested directly by your browser; Aizanoi Analytics does not proxy or relay them. If a website refuses to appear here, use <strong>Open external</strong>.</p>
+            <p>Search the web or enter an address above. Pages are requested directly by your browser; Aizanoi Analytics does not proxy or relay them. HTTPS is used by default for normal host names, while an explicitly entered protocol is preserved. If a website refuses to appear here, use <strong>Open external</strong>.</p>
             <div class="az-browser-home-actions">
               <button class="az-button az-hr-primary" type="button" data-browser-search-home>Open Google</button>
               <button class="az-button" type="button" data-browser-site-home>Open Aizanoi Analytics</button>
