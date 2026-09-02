@@ -4,7 +4,7 @@ import { chromium } from 'playwright';
 
 const base=process.env.ANCIENT_WORLD_BASE_URL||'http://127.0.0.1:4173';
 
-test('Web Editor fills its window and Open Apps keeps application icons compact',async()=>{
+test('Web Editor fills its window, keeps Run visible and Open Apps keeps application icons compact',async()=>{
   const browser=await chromium.launch({headless:true});
   const context=await browser.newContext({viewport:{width:1440,height:900}});
   const page=await context.newPage();
@@ -15,9 +15,8 @@ test('Web Editor fills its window and Open Apps keeps application icons compact'
     await page.goto(`${base}/?web-editor-layout=${Date.now()}`,{waitUntil:'networkidle'});
     await page.evaluate(()=>window.AIZANOI_OS.openApp('web-editor'));
     const window=page.locator('.az-window[data-app-id="web-editor"]');
-    const body=window.locator('[data-app-body]');
     const editor=window.locator('.az-web-editor');
-    const layout=window.locator('.az-web-editor-layout');
+    const run=window.locator('[data-web-run]');
     await editor.waitFor({state:'visible'});
     await page.waitForTimeout(150);
     const metrics=await page.evaluate(()=>{
@@ -30,6 +29,16 @@ test('Web Editor fills its window and Open Apps keeps application icons compact'
     assert.ok(metrics.body.height>400,'Web Editor test window should have useful vertical space');
     assert.ok(metrics.editor.height>=metrics.body.height-2,`editor should fill window body (${metrics.editor.height} vs ${metrics.body.height})`);
     assert.ok(Math.abs(metrics.layout.bottom-metrics.body.bottom)<=2,`split layout should reach the window bottom (${metrics.layout.bottom} vs ${metrics.body.bottom})`);
+
+    assert.equal((await run.innerText()).trim(),'Run','primary Web Editor action should retain its label');
+    const runStyle=await run.evaluate((node)=>{
+      const style=getComputedStyle(node);
+      const rect=node.getBoundingClientRect();
+      return{color:style.color,backgroundImage:style.backgroundImage,width:rect.width,height:rect.height};
+    });
+    assert.equal(runStyle.color,'rgb(255, 255, 255)','Run label should remain white on the primary action');
+    assert.notEqual(runStyle.backgroundImage,'none','Run should retain a visible primary gradient background');
+    assert.ok(runStyle.width>=70&&runStyle.height>=30,`Run should remain a clear primary target, got ${runStyle.width}x${runStyle.height}`);
 
     await page.locator('[data-os-switcher]').click();
     const overlay=page.locator('#az-switcher-overlay');
