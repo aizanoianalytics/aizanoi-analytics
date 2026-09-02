@@ -43,7 +43,7 @@ const identityMetadata = /"(company|brand|vendor|partner|customer|client|project
 const personMetadata = /"(employee_name|person_name|contact_name|manager_name)"\s*:\s*"([^"]+)"/gi;
 const allowedSyntheticIdentity = /^(?:aizanoi|aurelia|borealis|cyrene|synthetic|example|generic|logistics|lojistik|external|harici|corporate|kurumsal|employee\b|person\b)/i;
 const emailPattern = /\b[A-Z0-9._%+-]+@([A-Z0-9.-]+\.[A-Z]{2,})\b/gi;
-const allowedEmailDomain = /(?:^|\.)(?:example\.com|example\.org|example\.net|aizanoi\.test|invalid)$/i;
+const allowedEmailDomain = /(?:^|\.)(?:example\.com|example\.org|example\.net|example\.test|aizanoi\.test|invalid)$/i;
 
 function scanIdentityMetadata(html, file) {
   for (const match of html.matchAll(identityMetadata)) {
