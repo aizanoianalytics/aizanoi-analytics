@@ -2,6 +2,7 @@ const MESSAGE_RUN='aizanoi-web-editor-run';
 const MESSAGE_READY='aizanoi-web-editor-ready';
 const MESSAGE_DONE='aizanoi-web-editor-done';
 const MESSAGE_ERROR='aizanoi-web-editor-error';
+const MESSAGE_CONSOLE='aizanoi-web-editor-console';
 let activeRunId=0;
 
 function send(type,payload={}){
@@ -10,6 +11,43 @@ function send(type,payload={}){
 function serializeError(error){
   if(error instanceof Error)return error.stack||error.message||String(error);
   return String(error??'Unknown preview error');
+}
+function serializeConsoleValue(value){
+  const crop=(text)=>String(text).length>1200?`${String(text).slice(0,1199)}…`:String(text);
+  if(typeof value==='string')return crop(value);
+  if(typeof value==='undefined')return 'undefined';
+  if(typeof value==='bigint')return `${value}n`;
+  if(typeof value==='symbol'||typeof value==='function')return crop(String(value));
+  if(value instanceof Error)return crop(value.stack||value.message||String(value));
+  const seen=new WeakSet();
+  try{
+    const json=JSON.stringify(value,(key,current)=>{
+      if(typeof current==='bigint')return `${current}n`;
+      if(current&&typeof current==='object'){
+        if(seen.has(current))return '[Circular]';
+        seen.add(current);
+      }
+      return current;
+    });
+    return crop(json===undefined?String(value):json);
+  }catch{return crop(String(value));}
+}
+const nativeConsole=Object.freeze({
+  log:console.log.bind(console),
+  warn:console.warn.bind(console),
+  error:console.error.bind(console),
+});
+for(const level of ['log','warn','error']){
+  console[level]=(...args)=>{
+    nativeConsole[level](...args);
+    send(MESSAGE_CONSOLE,{level,args:args.map(serializeConsoleValue)});
+  };
+}
+function reportRuntimeError(error,{prefix=''}={}){
+  const detail=serializeError(error);
+  const message=prefix?`${prefix}: ${detail}`:detail;
+  send(MESSAGE_CONSOLE,{level:'error',args:[message]});
+  send(MESSAGE_ERROR,{message:detail});
 }
 function copyStylesheetLinks(parsed){
   for(const node of [...parsed.querySelectorAll('link[rel~="stylesheet"][href]')]){
@@ -68,12 +106,17 @@ async function render(source={}){
   send(MESSAGE_DONE);
 }
 
-window.addEventListener('error',(event)=>send(MESSAGE_ERROR,{message:serializeError(event.error||event.message)}));
-window.addEventListener('unhandledrejection',(event)=>send(MESSAGE_ERROR,{message:serializeError(event.reason)}));
+window.onerror=(message,_source,_line,_column,error)=>{
+  reportRuntimeError(error||message);
+  return false;
+};
+window.onunhandledrejection=(event)=>{
+  reportRuntimeError(event.reason,{prefix:'Unhandled rejection'});
+};
 window.addEventListener('message',(event)=>{
   if(event.source!==parent||event.data?.type!==MESSAGE_RUN)return;
   activeRunId=Number(event.data.runId)||0;
-  render(event.data.source).catch((error)=>send(MESSAGE_ERROR,{message:serializeError(error)}));
+  render(event.data.source).catch((error)=>reportRuntimeError(error));
 });
 
 parent.postMessage({type:MESSAGE_READY},'*');
