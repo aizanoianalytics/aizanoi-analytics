@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-02-matt-clifford-joins-anthropic",
+  "title": "Architect of the UK government's AI strategy Matt Clifford joins Anthropic",
+  "summary": "Matt Clifford, the entrepreneur who drafted the UK's AI Opportunities Action Plan, advised prime ministers Rishi Sunak and Keir Starmer and chaired the Advanced Research and Invention Agency, has been hired by Anthropic for a senior role. The appointment, reported on 2 September 2026, brings one of the UK's most prominent AI policy figures inside a frontier US lab at a moment when Anthropic has just published its second Responsible Scaling Policy risk report.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "Matt Clifford", "UK AI policy", "ARIA", "AI talent"],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/sep/02/architect-of-uks-ai-strategy-joins-anthropic",
+      "publishedAt": "2026-09-02T05:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-02-dell-q2-ai-servers",
+  "title": "Dell raises full-year AI server guidance to $20 billion after Q2 record on AI demand",
+  "summary": "Dell Technologies reported Q2 fiscal 2026 revenue of $29.8 billion, up 19% year on year, with Infrastructure Solutions Group revenue up 44% to a record $16.8 billion and Servers and Networking revenue up 69% on AI demand. Operating chief Jeff Clarke said Dell has now shipped $10 billion of AI solutions in the first half of FY26 and raised its full-year AI server shipment guidance to $20 billion, after-hours trading pushed the stock up more than 10% as the company also lifted its annual outlook.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Dell Technologies", "AI servers", "Q2 FY26 earnings", "data center", "FY26 guidance"],
+  "sources": [
+    {
+      "publisher": "Dell Technologies",
+      "url": "https://investors.delltechnologies.com/news-releases/news-release-details/dell-technologies-delivers-second-quarter-fiscal-2026-financial",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/01/dell-q2-earnings-report-2027.html",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

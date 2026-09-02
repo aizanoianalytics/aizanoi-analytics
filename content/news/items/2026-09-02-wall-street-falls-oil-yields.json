@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-02-wall-street-falls-oil-yields",
+  "title": "Wall Street slides as oil tops $90 and Treasury yields hit a 19-month high on US-Iran tensions",
+  "summary": "US stocks closed sharply lower on Tuesday 1 September 2026, with the Dow Jones Industrial Average down 419.02 points or 0.79% at 52,766.88, the S&P 500 off 54.67 points or 0.71% at 7,631.47 and the Nasdaq Composite down 271.11 points or 1.03% at 26,099.77. WTI crude jumped 5.2% to $90.22 a barrel and Brent rose 4.6% to $94.65 after US strikes on Iranian Revolutionary Guard targets, while the 10-year US Treasury yield reached about 4.79%-4.80%, the highest since January 2025, and CME FedWatch showed roughly a 68-70% probability of a September rate hike.",
+  "category": "economy-markets",
+  "priority": 82,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T11:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Wall Street", "oil prices", "Treasury yields", "US-Iran", "Federal Reserve"],
+  "sources": [
+    {
+      "publisher": "Business Times",
+      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/us-stocks-wall-street-ends-lower-due-higher-yields-rising-oil-prices",
+      "publishedAt": "2026-09-02T05:47:00Z"
+    },
+    {
+      "publisher": "Channel News Asia",
+      "url": "https://www.channelnewsasia.com/business/stocks-yields-oil-prices-iran-us-mideast-6356686",
+      "publishedAt": "2026-09-02T11:30:00Z"
+    },
+    {
+      "publisher": "HTX",
+      "url": "https://www.htx.com/en-in/news/us-stock-market-trend-sep-2-us-military-strike-on-iran-drive-fhD6P0am/",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

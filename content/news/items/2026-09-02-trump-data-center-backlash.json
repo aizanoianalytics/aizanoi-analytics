@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-02-trump-data-center-backlash",
+  "title": "Trump blasts data center opposition as 'backwards and poor' as bipartisan backlash grows ahead of US midterms",
+  "summary": "President Donald Trump on 31 August 2026 attacked communities opposing new data centers, writing on Truth Social that those rejecting the projects risk becoming 'backwards and poor' and urging Americans to 'let Data Reign'. The comments deepened a split inside the Republican Party, with Representatives Tim Burchett, Thomas Massie and Marjorie Taylor Greene publicly disagreeing, while a recent Gallup survey found that seven in ten Americans oppose constructing data centers for AI in their local area.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Trump", "data centers", "AI infrastructure", "US midterm elections", "Republican Party"],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/08/31/trump-data-centers-backlash-elections-congress.html",
+      "publishedAt": "2026-08-31T00:00:00Z"
+    },
+    {
+      "publisher": "Forbes",
+      "url": "https://www.forbes.com/sites/saradorn/2026/08/31/trump-berates-data-center-opposition-despite-threat-to-republicans-reelection-chances/",
+      "publishedAt": "2026-08-31T00:00:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/sep/01/datacenter-backlash-conservatives-silicon-valley",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}
