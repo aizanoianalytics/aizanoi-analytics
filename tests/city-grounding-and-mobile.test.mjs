@@ -24,18 +24,21 @@ test('legacy footprint helper remains valid for archived topography research', (
   assert.equal(support.samples.length, 9);
 });
 
-test('runtime, not each city adapter, owns mobile detection and flat support', () => {
+test('shared runtime/bootstrap, not each city adapter, owns mobile detection and flat support', () => {
   const runtime = source('frontend/ancient-world/engine/flat-city-runtime.js');
+  const bootstrap = source('frontend/ancient-world/engine/city-bootstrap.js');
   assert.match(runtime, /installMobileControls/);
   assert.match(runtime, /baseHeightAt:\s*\(\) => 0/);
   assert.match(runtime, /EYE_HEIGHT = 1\.68/);
+  assert.match(bootstrap, /ancientWorldTouchMode/);
+  assert.match(bootstrap, /startFlatBlockyCity/);
   for (const app of [
     'frontend/ancient-cities/rome-410-476/js/app.js',
     'frontend/ancient-cities/athens-450-430/js/app.js',
   ]) {
     const text = source(app);
-    assert.match(text, /startFlatBlockyCity/);
-    assert.doesNotMatch(text, /footprintSupport|buildFoundation|terrainHeightAt/);
+    assert.match(text, /startAncientCity/);
+    assert.doesNotMatch(text, /footprintSupport|buildFoundation|terrainHeightAt|installMobileControls|startFlatBlockyCity/);
   }
 });
 
