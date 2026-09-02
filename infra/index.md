@@ -2,6 +2,12 @@
 
 Scope: sanitized deployment and infrastructure references.
 
+## Route by task
+
+- Infrastructure overview and reference inventory → [`README.md`](README.md)
+- Nginx site configuration and scoped security snippets → `nginx/`
+- Hermes/server/deployment operator procedure → `../docs/HERMES_OPERATIONS.md`
+
 ## Before changing infrastructure
 
 - GitHub remains the source of truth.

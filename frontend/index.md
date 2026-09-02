@@ -18,9 +18,21 @@ Before changing frontend behavior, read root `AGENTS.md`, `ARCHITECTURE.md`, `DE
 - Aizanoi Historical World → `historic-world/`
 - Rome / Athens → `ancient-cities/`
 - Shared Historical Worlds engine → `ancient-world/engine/`
+- Historical Worlds public index route → `worlds/`
+- Web Editor isolated preview runner → `web-editor-preview/` (sandbox-only execution surface with route-scoped Nginx/CSP policy; not a standalone product)
 - Static media/branding assets → `assets/`
 - Service worker / offline behavior → `service-worker.js`
 - Public entry document → `index.html`
+
+## Historical Worlds naming map
+
+The similarly named paths have distinct owners and should not be renamed casually because public routes, tests, cache and SEO depend on them:
+
+- `historic-world/` — the Aizanoi visitor world;
+- `ancient-cities/` — Rome and Athens visitor worlds;
+- `ancient-world/engine/` — shared Historical Worlds runtime;
+- `worlds/` — public world index route;
+- `js/v3/apps/worlds/` — AizanoiOS Historical Worlds launcher module.
 
 ## Boundary
 

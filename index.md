@@ -20,6 +20,7 @@ This file is the shortest path into the repository. It is a **router, not a full
 - Historical/source research → [`research/index.md`](research/index.md)
 - Deployment and sanitized infrastructure references → [`infra/index.md`](infra/index.md)
 - Maintained documentation and operator runbooks → [`docs/index.md`](docs/index.md)
+- GitHub Actions and repository automation → `.github/workflows/`
 
 ## Canonical repository contracts
 

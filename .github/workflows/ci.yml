@@ -153,7 +153,7 @@ jobs:
         run: |
           set -o pipefail
           status=0
-          node --test tests/browser/workspace-apps.test.mjs tests/browser/workspace-atomic.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-browser.log || status=1
+          node --test tests/browser/workspace-apps.test.mjs tests/browser/workspace-atomic.test.mjs tests/browser/web-editor-layout.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-browser.log || status=1
           node --test tests/browser/calculator-module.test.mjs 2>&1 | tee artifacts/diagnostics/calculator-browser.log || status=1
           node --test tests/browser/camera-module.test.mjs 2>&1 | tee artifacts/diagnostics/camera-browser.log || status=1
           node --test tests/browser/arcade-module.test.mjs tests/browser/arcade-legacy-lifecycle.test.mjs 2>&1 | tee artifacts/diagnostics/arcade-browser.log || status=1
