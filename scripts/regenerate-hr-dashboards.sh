@@ -16,6 +16,7 @@ PIPELINE="${SOURCE_ROOT}/production-pipeline"
 OUTPUTS="${PIPELINE}/dashboardlar"
 PUBLIC="frontend/analytics/dashboards/hr-analytics-full-set"
 SYNTHETIC_DOWNLOAD="${PUBLIC}/downloads/hr-analytics-full-set-synthetic-output.xlsx"
+SANITIZER="scripts/hr/sanitize-public-dashboard.mjs"
 
 EXPECTED_INPUT_COUNT=27
 INPUT_COUNT=$(find "${PIPELINE}" -maxdepth 1 -type f -name '*.xlsx' | wc -l | tr -d '[:space:]')
@@ -70,6 +71,33 @@ for executive in hr-executive-board-current hr-executive-board-full-history; do
   cp "${OUTPUTS}/pdks_takip_dashboard.html" "${PUBLIC}/${executive}/pdks_takip_dashboard.html"
 done
 
+GENERATED_PUBLIC_HTML=(
+  "${PUBLIC}/corporate-goals/index.html"
+  "${PUBLIC}/hr-administration-deep-dive/index.html"
+  "${PUBLIC}/hr-executive-board-current/index.html"
+  "${PUBLIC}/hr-executive-board-current/pdks_takip_dashboard.html"
+  "${PUBLIC}/hr-executive-board-full-history/index.html"
+  "${PUBLIC}/hr-executive-board-full-history/pdks_takip_dashboard.html"
+  "${PUBLIC}/learning-academy-analytics/index.html"
+  "${PUBLIC}/performance-hiring-turnover/index.html"
+  "${PUBLIC}/store-learning-compliance/index.html"
+  "${PUBLIC}/store-operations-tracking/index.html"
+  "${PUBLIC}/workforce-time-attendance/index.html"
+  "${PUBLIC}/workforce-turnover/index.html"
+)
+
+# The production pipeline keeps its original synthetic input filenames for
+# parity/rebuild purposes. Public HTML receives a separate deterministic
+# sanitization boundary so internal workbook labels and vendor identifiers do
+# not become visitor-facing metadata or explanatory copy.
+node "${SANITIZER}" "${GENERATED_PUBLIC_HTML[@]}"
+
+# Preserve the exact regenerated public HTML in CI diagnostics. This makes a
+# failed deterministic-diff gate reviewable and allows committed generated
+# artifacts to be updated from the same pipeline output instead of hand edits.
+mkdir -p artifacts/diagnostics
+tar -czf artifacts/diagnostics/hr-public-generated-html.tar.gz "${GENERATED_PUBLIC_HTML[@]}"
+
 mkdir -p "$(dirname "${SYNTHETIC_DOWNLOAD}")"
 cp "${OUTPUTS}/icmal_sorgu_sonuc.xlsx" "${SYNTHETIC_DOWNLOAD}"
 
@@ -122,6 +150,7 @@ echo "[4/4] running HR audit contracts"
 node --test \
   tests/audit/hr-analytics-full-set.test.mjs \
   tests/audit/hr-public-artifact-safety.test.mjs \
+  tests/audit/hr-public-entity-safety.test.mjs \
   tests/audit/security-publish-boundary.test.mjs
 
 echo "[done] HR Analytics Full Set rebuilt and verified"
