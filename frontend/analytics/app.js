@@ -11,6 +11,7 @@ if (host) {
       <p class="eyebrow">${esc(set.eyebrow)}</p>
       <h2>${esc(set.title)} ${esc(set.accent)}</h2>
       <p>${esc(set.description)}</p>
+      ${set.interfaceLanguage ? `<p class="muted"><strong>Interface language:</strong> ${esc(set.interfaceLanguage)}</p>` : ''}
       <div class="actions">
         <a class="button" href="${esc(set.landing)}">View full set</a>
         ${set.source ? `<a class="button secondary" href="${esc(set.source)}" target="_blank" rel="noopener noreferrer">${esc(set.sourceLabel || 'Source')}</a>` : ''}
