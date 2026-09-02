@@ -40,8 +40,9 @@ test('legacy three-file projects remain readable and convert into a single HTML 
   assert.match(app,/legacy project loaded · save to convert/);
 });
 
-test('Workspace routes web source files to Web Editor before generic text handling',()=>{
-  assert.match(workspace,/function isWebSource/);
+test('Workspace routes only HTML documents to Web Editor while standalone CSS and JavaScript stay text files',()=>{
+  assert.match(workspace,/function isWebSource\(node\).*return \/\\\.html\?\$\/\.test\(name\)\|\|mime==='text\/html'/s);
+  assert.doesNotMatch(workspace,/html\?\|css|m\?js|text\/css|text\/javascript|application\/javascript/);
   assert.match(workspace,/if\(isWebSource\(node\)\)apps\.open\('web-editor',\{fileId:node\.id\}\);else if\(mime\.startsWith\('text\/'\)/);
 });
 
