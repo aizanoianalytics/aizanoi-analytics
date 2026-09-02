@@ -752,9 +752,9 @@ export function mountShell() {
   const root=document.getElementById('az-root');
   if(!root)throw new Error('AizanoiOS root missing.');
   root.innerHTML=shellTemplate();
-  renderHome();
   renderShelf();
   renderClock();
+  requestAnimationFrame(()=>renderHome());
   setInterval(renderClock,30000);
   root.addEventListener('click',handleRootClick);
   root.addEventListener('input',(event)=>{if(event.target.id==='az-command-input'){commandSelection=0;renderCommands(event.target.value);}});
@@ -762,10 +762,10 @@ export function mountShell() {
   window.addEventListener('popstate',syncFromHistory);
   window.addEventListener('resize',()=>requestAnimationFrame(resizeAll));
   window.addEventListener('aizanoi:notify',(event)=>notify(event.detail?.title||'Notice',event.detail?.body||'',event.detail?.kind||'system'));
-  restoreWorkspace().catch((error)=>{
+  requestAnimationFrame(()=>restoreWorkspace().catch((error)=>{
     console.error('AizanoiOS workspace restoration failed.',error);
     notify('Workspace restoration failed',error?.message||'Open an app to try again.');
-  });
+  }));
   return appApi;
 }
 
