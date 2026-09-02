@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Static research notes, evidence vocabulary and source ledger for the Aizanoi Historical World reconstruction.">
+  <title>Aizanoi Historical World — Research notes</title>
+  <link rel="canonical" href="https://aizanoianalytics.com/historic-world/research/">
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
+  <style>
+    :root{color-scheme:dark;--paper:#17130e;--panel:#211b13;--ink:#ead9bc;--muted:#bbaa8d;--line:#4a3d2a;--accent:#e0aa62;--green:#77b989;--yellow:#d2c678;--orange:#d59a55;--rose:#c98778;--red:#c66b78}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#2b2115 0,transparent 28%),var(--paper);color:var(--ink);font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    main{width:min(940px,calc(100% - 32px));margin:0 auto;padding:34px 0 64px}a{color:#f0c27d}a:focus-visible,button:focus-visible{outline:2px solid #fff;outline-offset:3px}.back{display:inline-flex;min-height:44px;align-items:center;margin-bottom:28px;font-weight:800;text-decoration:none}.kicker{font:800 11px/1.2 ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}h1{font:800 clamp(36px,8vw,72px)/.98 Georgia,serif;letter-spacing:-.04em;margin:10px 0 16px}h2{font:800 24px/1.2 Georgia,serif;margin:0 0 9px}.lede{max-width:760px;color:#d1c09f;font-size:18px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:28px 0}.card{padding:18px;border:1px solid var(--line);border-radius:16px;background:rgba(33,27,19,.78)}.card p:last-child{margin-bottom:0}.legend{display:grid;gap:8px}.legend div{display:grid;grid-template-columns:14px 1fr;gap:9px;align-items:start}.dot{width:11px;height:11px;border-radius:50%;margin-top:7px}.sources{display:grid;gap:9px;padding:0;list-style:none}.sources li{padding:13px 15px;border-left:3px solid var(--line);background:rgba(255,255,255,.025)}.sources a{font-weight:750}.note{padding:14px;border:1px solid #72562f;border-radius:12px;background:#241b10;color:#d8c6a5}@media(max-width:700px){main{width:min(100% - 22px,940px);padding-top:22px}.grid{grid-template-columns:1fr}h1{font-size:46px}}
+  </style>
+</head>
+<body>
+<main>
+  <a class="back" href="/historic-world/">← Return to Aizanoi Historical World</a>
+  <div class="kicker">Aizanoi Analytics · Historical Worlds · Research</div>
+  <h1>Aizanoi research notes</h1>
+  <p class="lede">This is the non-WebGL companion to the Aizanoi reconstruction. It exposes the same project boundary, evidence vocabulary and source ledger without requiring the interactive renderer.</p>
+
+  <section class="grid" aria-label="Reconstruction method">
+    <article class="card">
+      <h2>Reconstruction boundary</h2>
+      <p>The live city represents the Penkalas valley urban core and uses the authored periods AD 225, 301 and 425. The browser layout compresses remote monuments where necessary and deliberately keeps playable city ground flat at Y=0.</p>
+    </article>
+    <article class="card">
+      <h2>What the 3D view claims</h2>
+      <p>Named monuments and topographical relationships come from the project source records. The low-poly/blocky visual language is schematic: visual detail is not evidence of archaeological certainty.</p>
+    </article>
+    <article class="card">
+      <h2>Known reconstruction choices</h2>
+      <p>Residential and workshop infill is explicitly plausible rather than an individually excavated footprint. The Early 5th-Century Colonnaded Street is period-gated, while the Roman River Dam and Meter Steunene sanctuary are spatially compressed in the browser layout.</p>
+    </article>
+    <article class="card">
+      <h2>Research Lens</h2>
+      <p>The interactive world exposes a shared Research Lens. Press <strong>V</strong> or use the Evidence control to inspect the nearest labelled monuments and their evidence class.</p>
+    </article>
+  </section>
+
+  <section class="card">
+    <h2>Evidence vocabulary</h2>
+    <div class="legend">
+      <div><i class="dot" style="background:var(--green)"></i><p><strong>Archaeological</strong> — physical archaeological remains and published excavation data support the represented monument; exact blocky restitution remains schematic.</p></div>
+      <div><i class="dot" style="background:var(--yellow)"></i><p><strong>Documented</strong> — topography or function is source-supported while exact restitution may remain incomplete.</p></div>
+      <div><i class="dot" style="background:var(--orange)"></i><p><strong>Inferred</strong> — an informed reconstruction completes an unresolved architectural or urban gap. Legacy <em>plausible</em> records are grouped here by Research Lens without rewriting their authored source label.</p></div>
+      <div><i class="dot" style="background:var(--rose)"></i><p><strong>Atmospheric</strong> — illustrative ambience is not a claim about an exact excavated object or placement.</p></div>
+      <div><i class="dot" style="background:var(--red)"></i><p><strong>Disputed</strong> — a represented identification or restitution is contested and must be read as an interpretation.</p></div>
+    </div>
+  </section>
+
+  <section style="margin-top:26px">
+    <h2>Project source ledger</h2>
+    <p class="note">These links are the source records already attached to the Aizanoi city dataset. This page does not add unsupported historical claims beyond that dataset.</p>
+    <ul class="sources">
+      <li><a href="https://aizanoi.dpu.edu.tr/en/index/sayfa/13884/temple-of-zeus-in-aizanoi">DPU Aizanoi — Temple of Zeus</a></li>
+      <li><a href="https://aizanoi.dpu.edu.tr/en/index/sayfa/13885/theatre-stadion-structure-complex">DPU Aizanoi — Theatre–Stadium</a></li>
+      <li><a href="https://aizanoi.dpu.edu.tr/en/index/sayfa/13886/agora-and-the-propylon">DPU Aizanoi — Agora &amp; Propylon</a></li>
+      <li><a href="https://aizanoi.dpu.edu.tr/en/index/sayfa/13888/roman-bath-palaestra-structure-complex">DPU Aizanoi — Great Bath–Palaestra</a></li>
+      <li><a href="https://aizanoi.dpu.edu.tr/en/index/sayfa/13889/mosaic-bath">DPU Aizanoi — Mosaic Bath</a></li>
+      <li><a href="https://aizanoi.dpu.edu.tr/en/index/sayfa/13890/columned-street">DPU Aizanoi — Colonnaded Street</a></li>
+      <li><a href="https://aizanoi.dpu.edu.tr/en/index/sayfa/13891/macellum">DPU Aizanoi — Macellum</a></li>
+      <li><a href="https://aizanoi.dpu.edu.tr/en/index/sayfa/13892/odeon-bouleterion">DPU Aizanoi — Odeon / Bouleuterion</a></li>
+      <li><a href="https://aizanoi.dpu.edu.tr/en/index/sayfa/13893/sacred-place-of-the-meter-steunene-cybele">DPU Aizanoi — Meter Steunene</a></li>
+      <li><a href="https://aizanoi.dpu.edu.tr/en/index/sayfa/13894/penkalas-and-the-bridges">DPU Aizanoi — Penkalas &amp; Bridges</a></li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

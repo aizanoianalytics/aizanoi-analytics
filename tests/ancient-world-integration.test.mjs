@@ -6,15 +6,20 @@ import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
 const read = (path) => readFileSync(resolve(root, path), 'utf8');
 const runtime = read('frontend/ancient-world/engine/flat-city-runtime.js');
+const bootstrap = read('frontend/ancient-world/engine/city-bootstrap.js');
+const evidenceMode = read('frontend/ancient-world/engine/evidence-mode.js');
 const assets = read('frontend/ancient-world/assets/blocky-asset-library.js');
 const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
 const athens = read('frontend/ancient-cities/athens-450-430/js/app.js');
 const aizanoi = read('frontend/historic-world/app.js');
 
-test('historical worlds expose the shared AizanoiOS return navigation', () => {
+test('historical worlds expose the shared AizanoiOS return navigation through one bootstrap', () => {
   const navigation = read('frontend/ancient-world/engine/navigation.js');
+  for (const source of [rome, athens, aizanoi]) assert.match(source, /startAncientCity/);
+  assert.match(bootstrap, /startFlatBlockyCity/);
+  assert.match(bootstrap, /installCityCompatibility/);
+  assert.match(bootstrap, /installEvidenceMode/);
   assert.match(runtime, /installBackToOS/);
-  for (const source of [rome, athens, aizanoi]) assert.match(source, /startFlatBlockyCity/);
   assert.match(runtime, /__ANCIENT_WORLD_DEBUG__/);
   assert.match(runtime, /__ANCIENT_WORLD_DESTROY__/);
   assert.match(navigation, /label = '← AizanoiOS'/);
@@ -29,8 +34,8 @@ test('all cities use one shared human-scale traversal implementation', () => {
   assert.match(runtime, /SPRINT_SPEED = 7\.2/);
   assert.match(runtime, /moveWithSubsteps/);
   for (const source of [rome, athens, aizanoi]) {
-    assert.match(source, /startFlatBlockyCity/);
-    assert.doesNotMatch(source, /createTraversalSystem/);
+    assert.match(source, /startAncientCity/);
+    assert.doesNotMatch(source, /createTraversalSystem|startFlatBlockyCity|installCityCompatibility/);
   }
 });
 
@@ -50,4 +55,13 @@ test('shared renderer owns normals, shader locations, lifecycle cleanup and reus
   assert.match(runtime, /createBlockyAssetLibrary/);
   assert.match(assets, /createBlockyAssetLibrary/);
   assert.match(assets, /trueVoxelEngine:\s*false/);
+});
+
+test('Research Lens is a shared evidence-aware runtime surface with keyboard and touch-sized controls', () => {
+  assert.match(evidenceMode, /Research Lens/);
+  assert.match(evidenceMode, /KeyV/);
+  assert.match(evidenceMode, /min-width:44px/);
+  assert.match(evidenceMode, /min-height:44px/);
+  assert.match(evidenceMode, /data-aw-evidence-visit/);
+  assert.match(evidenceMode, /teleportTo/);
 });

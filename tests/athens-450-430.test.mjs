@@ -87,16 +87,20 @@ test('Athens urban fabric is deterministic, bounded, evenly budgeted and explici
   assert.match(source, /evidence:\s*\{\s*level:\s*'plausible'/);
 });
 
-test('Athens adapter uses the shared flat blocky renderer and keeps user-facing controls', () => {
+test('Athens adapter uses the unified city bootstrap and keeps user-facing controls', () => {
   const html = read('index.html');
   const app = read('js/app.js');
+  const bootstrap = readFileSync(resolve(root, 'frontend/ancient-world/engine/city-bootstrap.js'), 'utf8');
   const assets = readFileSync(resolve(root, 'frontend/ancient-world/assets/blocky-asset-library.js'), 'utf8');
   assert.match(html, /id="audio"/);
   assert.match(html, /id="modern"/);
   assert.match(html, /id="minimap"/);
   assert.match(html, /id="atlas"/);
-  assert.match(app, /startFlatBlockyCity/);
-  assert.match(app, /installCityCompatibility/);
+  assert.match(app, /startAncientCity/);
+  assert.match(app, /compactionProfile:'athens'/);
+  assert.doesNotMatch(app, /startFlatBlockyCity|installCityCompatibility|compactCityLayout|expandPerimeterWalls/);
+  assert.match(bootstrap, /startFlatBlockyCity/);
+  assert.match(bootstrap, /installCityCompatibility/);
   assert.match(assets, /function parthenon\(/);
   assert.match(assets, /function propylaea\(/);
   assert.doesNotMatch(app, /terrainHeightAt|buildFoundation/);
