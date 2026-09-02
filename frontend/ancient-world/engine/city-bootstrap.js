@@ -2,6 +2,7 @@ import {
   expandPerimeterWalls,
   compactCityLayout,
   buildHeroApproachStreets,
+  CITY_COMPACTION_PROFILES,
 } from '../assets/city-layout-tools.js';
 import { startFlatBlockyCity } from './flat-city-runtime.js';
 import { installCityCompatibility } from './city-compatibility.js';
@@ -9,6 +10,16 @@ import { installEvidenceMode } from './evidence-mode.js';
 
 export function ancientWorldTouchMode() {
   return ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches || innerWidth < 820;
+}
+
+function resolveCompactionProfile(profile) {
+  if (typeof profile === 'string') {
+    const value = CITY_COMPACTION_PROFILES[profile];
+    if (!value) throw new TypeError(`Unknown Ancient World compaction profile: ${profile}`);
+    return value;
+  }
+  if (!profile || typeof profile !== 'object') throw new TypeError('startAncientCity requires a compaction profile.');
+  return profile;
 }
 
 /**
@@ -34,9 +45,10 @@ export function startAncientCity({
   era = null,
   cityRoute = null,
 } = {}) {
-  if (!city || !compactionProfile) throw new TypeError('startAncientCity requires city metadata and a compaction profile.');
+  if (!city) throw new TypeError('startAncientCity requires city metadata.');
+  const profile = resolveCompactionProfile(compactionProfile);
   const touch = ancientWorldTouchMode();
-  const layout = compactCityLayout({ city, regions, streets, buildings, waters, bounds, spawn }, compactionProfile);
+  const layout = compactCityLayout({ city, regions, streets, buildings, waters, bounds, spawn }, profile);
   const liveStreets = Object.freeze([
     ...layout.streets,
     ...buildHeroApproachStreets(layout.buildings, { approachWidth, frontageWidth }),
