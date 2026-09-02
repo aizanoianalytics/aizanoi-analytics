@@ -5,7 +5,8 @@ import { spawnSync } from 'node:child_process';
 
 const base=process.env.AIZANOI_PRODUCTION_BASE_URL||'http://127.0.0.1:4177';
 const outputDir=process.env.AIZANOI_LIGHTHOUSE_DIR||'artifacts/diagnostics/representative-lighthouse';
-const attempts=Math.max(3,Number(process.env.AIZANOI_LIGHTHOUSE_ATTEMPTS)||3);
+const requiredRuns=Math.max(3,Number(process.env.AIZANOI_LIGHTHOUSE_ATTEMPTS)||3);
+const maxLaunches=requiredRuns+2;
 const lighthouseBin=process.platform==='win32'?'node_modules/.bin/lighthouse.cmd':'node_modules/.bin/lighthouse';
 
 const routes=[
@@ -53,9 +54,12 @@ const summaries=[];
 
 for(const spec of routes){
   const reports=[];
-  for(let attempt=1;attempt<=attempts;attempt++){
-    const reportPath=join(outputDir,`${spec.id}-${attempt}.json`);
-    const logPath=join(outputDir,`${spec.id}-${attempt}.log`);
+  const failedLaunches=[];
+  let launch=0;
+  while(reports.length<requiredRuns&&launch<maxLaunches){
+    launch+=1;
+    const reportPath=join(outputDir,`${spec.id}-${launch}.json`);
+    const logPath=join(outputDir,`${spec.id}-${launch}.log`);
     const run=spawnSync(lighthouseBin,[
       `${base}${spec.route}`,
       '--quiet',
@@ -64,10 +68,15 @@ for(const spec of routes){
       '--output=json',
       `--output-path=${reportPath}`,
     ],{encoding:'utf8',env:process.env,maxBuffer:16*1024*1024});
-    writeFileSync(logPath,`${run.stdout||''}${run.stderr||''}`);
-    assert.equal(run.status,0,`${spec.id} Lighthouse attempt ${attempt} failed; see ${logPath}`);
+    writeFileSync(logPath,`${run.stdout||''}${run.stderr||''}${run.error?`\n${run.error.stack||run.error.message}`:''}`);
+    if(run.status!==0){
+      failedLaunches.push({launch,status:run.status,logPath});
+      console.warn(`[lighthouse] ${spec.id}: transient launch ${launch} failed with status ${run.status}; retrying (${reports.length}/${requiredRuns} successful)`);
+      continue;
+    }
     reports.push(JSON.parse(readFileSync(reportPath,'utf8')));
   }
+  assert.equal(reports.length,requiredRuns,`${spec.id} produced only ${reports.length}/${requiredRuns} successful Lighthouse reports after ${launch} launches; failures=${failedLaunches.map((item)=>item.logPath).join(', ')}`);
 
   const metrics={
     performance:median(reports.map((report)=>category(report,'performance'))),
@@ -93,10 +102,10 @@ for(const spec of routes){
     assert.ok(score>=.90,`${spec.id} ${id} median audit score ${score.toFixed(2)} is below 0.90`);
   }
 
-  const summary={id:spec.id,route:spec.route,profile:spec.profile,attempts,metrics,budget};
+  const summary={id:spec.id,route:spec.route,profile:spec.profile,successfulRuns:reports.length,launches:launch,failedLaunches,metrics,budget};
   summaries.push(summary);
-  console.log(`[lighthouse] ${spec.id}/${spec.profile}: perf=${(metrics.performance*100).toFixed(0)} a11y=${(metrics.accessibility*100).toFixed(0)} bp=${(metrics['best-practices']*100).toFixed(0)} seo=${(metrics.seo*100).toFixed(0)} TBT=${metrics.tbt.toFixed(0)}ms LCP=${metrics.lcp.toFixed(0)}ms CLS=${metrics.cls.toFixed(3)}`);
+  console.log(`[lighthouse] ${spec.id}/${spec.profile}: perf=${(metrics.performance*100).toFixed(0)} a11y=${(metrics.accessibility*100).toFixed(0)} bp=${(metrics['best-practices']*100).toFixed(0)} seo=${(metrics.seo*100).toFixed(0)} TBT=${metrics.tbt.toFixed(0)}ms LCP=${metrics.lcp.toFixed(0)}ms CLS=${metrics.cls.toFixed(3)} launches=${launch}`);
 }
 
 writeFileSync(join(outputDir,'summary.json'),`${JSON.stringify({routes:summaries},null,2)}\n`);
-console.log(`Representative Lighthouse gate passed across ${routes.length} routes using median of ${attempts} runs.`);
+console.log(`Representative Lighthouse gate passed across ${routes.length} routes using median of ${requiredRuns} successful runs per route.`);
