@@ -201,10 +201,18 @@ export function mountBrowser({ container }) {
     }
   }
 
+  function restoreAddressFocus() {
+    requestAnimationFrame(() => {
+      if (address.isConnected && document.activeElement !== address) address.focus({ preventScroll:true });
+    });
+  }
+
   form.addEventListener('submit', handleSubmit);
   container.addEventListener('click', handleClick);
   frame.addEventListener('load', handleFrameLoad);
   container.addEventListener('keydown', handleKeydown);
+  address.addEventListener('pointerdown', restoreAddressFocus);
+  address.addEventListener('click', restoreAddressFocus);
   updateNavigationButtons();
 
   return {
@@ -213,6 +221,8 @@ export function mountBrowser({ container }) {
       container.removeEventListener('click', handleClick);
       frame.removeEventListener('load', handleFrameLoad);
       container.removeEventListener('keydown', handleKeydown);
+      address.removeEventListener('pointerdown', restoreAddressFocus);
+      address.removeEventListener('click', restoreAddressFocus);
       frame.removeAttribute('src');
       releaseStylesheet();
     }
