@@ -58,6 +58,8 @@ await capture('aizanoi-os-08e-winamp',{width:1440,height:900},async(page)=>{awai
 await capture('aizanoi-os-08f-recycle-bin',{width:1440,height:900},async(page)=>{await openUtility(page,'recycle-bin');});
 await capture('aizanoi-os-08g-arcade',{width:1440,height:900},async(page)=>{await openUtility(page,'games');});
 await capture('aizanoi-os-08h-blockfall',{width:1440,height:900},async(page)=>{await openUtility(page,'games');await page.click('[data-play-game="blockfall"]');await page.waitForSelector('[data-bf-canvas]');});
+await capture('aizanoi-os-08i-web-editor',{width:1440,height:900},async(page)=>{await openUtility(page,'web-editor');await page.waitForSelector('.az-web-editor-layout');});
+await capture('aizanoi-os-08j-open-apps',{width:1440,height:900},async(page)=>{await openUtility(page,'web-editor');await page.locator('[data-os-switcher]').click();await page.waitForSelector('#az-switcher-overlay.is-open .az-switcher-item');});
 
 await capture('aizanoi-os-09-tablet-home',{width:900,height:1180});
 await capture('aizanoi-os-10-tablet-news',{width:900,height:1180},async(page)=>{await page.locator('.az-tablet-app[data-app="news"]').click();await page.waitForSelector('.az-window[data-app-id="news"]');});

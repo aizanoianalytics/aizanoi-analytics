@@ -56,10 +56,13 @@ test('preview transport never runs authored code in the AizanoiOS shell and repo
   assert.doesNotMatch(runner,/indexedDB|localStorage|sessionStorage/);
 });
 
-test('Web Editor removes duplicate chrome and keeps a compact one-toolbar split view',()=>{
+test('Web Editor is a full-height single-toolbar split workspace',()=>{
   assert.doesNotMatch(app,/az-app-toolbar/);
-  assert.doesNotMatch(css,/az-web-editor-tabs|az-web-editor-tab|az-web-editor-preview-head/);
-  assert.match(css,/\.az-web-editor-layout[\s\S]*grid-template-columns/);
+  assert.match(css,/\.az-window\[data-app-id="web-editor"\] \.az-window-body[\s\S]*display:flex[\s\S]*overflow:hidden/);
+  assert.match(css,/\.az-web-editor\{[\s\S]*height:100%[\s\S]*min-height:100%/);
+  assert.match(css,/\.az-web-editor-layout[\s\S]*grid-template-columns[\s\S]*overflow:hidden/);
+  assert.match(css,/\.az-web-editor-code::before[\s\S]*Source  ·  HTML \/ CSS \/ JS/);
+  assert.match(css,/\.az-web-editor-preview::before[\s\S]*Live preview/);
   assert.match(css,/\.az-web-editor-security[\s\S]*position:absolute/);
 });
 

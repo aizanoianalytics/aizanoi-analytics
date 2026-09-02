@@ -4,8 +4,12 @@ Scope: maintained documentation and operator runbooks.
 
 ## Route by task
 
+- Full maintained documentation map → [`README.md`](README.md)
 - Hermes / server / deployment operations → `HERMES_OPERATIONS.md`
-- Product, architecture, design, security and content constitutions live at repository root; use `../index.md` to reach them.
+- Provider/server follow-up outside source-only changes → `OPERATIONS.md`
+- Accessibility release checks → `ACCESSIBILITY.md`
+- AizanoiOS field/system behavior → `FIELD_SYSTEM.md`
+- Product, architecture, design, security and content constitutions → use `../index.md` to reach the canonical root documents.
 
 ## Documentation rule
 

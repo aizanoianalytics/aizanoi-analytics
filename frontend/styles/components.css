@@ -99,6 +99,67 @@
   .az-launchpad .az-dialog-body { padding: 18px 24px 30px; }
   .az-switcher-list { display: grid; gap: 22px; }
 
+  #az-switcher-overlay:not(.az-launchpad-overlay) .az-dialog {
+    width: min(520px, 100%);
+    max-height: min(600px, calc(100dvh - 118px));
+  }
+  #az-switcher-overlay:not(.az-launchpad-overlay) .az-dialog-body {
+    padding: 10px;
+  }
+  #az-switcher-overlay:not(.az-launchpad-overlay) .az-switcher-list {
+    gap: 7px;
+  }
+  .az-switcher-item {
+    width: 100%;
+    min-height: 70px;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    background: transparent;
+    color: #26344a;
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--az-motion-fast), border-color var(--az-motion-fast), transform var(--az-motion-fast), box-shadow var(--az-motion-fast);
+  }
+  .az-switcher-item:hover,
+  .az-switcher-item:focus-visible {
+    border-color: rgba(79, 96, 202, .14);
+    background: rgba(255, 255, 255, .72);
+    box-shadow: 0 8px 22px rgba(47, 61, 89, .08);
+    transform: translateY(-1px);
+  }
+  .az-switcher-item > img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    padding: 6px;
+    border: 1px solid rgba(255, 255, 255, .84);
+    border-radius: 14px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, .94), rgba(230, 237, 248, .78));
+    box-shadow: 0 7px 18px rgba(50, 65, 91, .12), inset 0 1px rgba(255, 255, 255, .9);
+  }
+  .az-switcher-item > span {
+    min-width: 0;
+    display: grid;
+    gap: 4px;
+  }
+  .az-switcher-item strong {
+    overflow: hidden;
+    color: #253249;
+    font-size: 13px;
+    font-weight: 720;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .az-switcher-item small {
+    color: #6a768a;
+    font-size: 11px;
+  }
+
   .az-launchpad-search {
     position: sticky;
     top: 0;
@@ -211,10 +272,12 @@
   @media (prefers-reduced-motion: reduce) {
     .az-toast, .az-boot-progress::after { animation: none !important; }
     .az-launchpad-item:hover { transform: none; }
+    .az-switcher-item:hover { transform:none; }
   }
   body.az-reduce-motion .az-toast,
   body.az-reduce-motion .az-boot-progress::after { animation: none !important; }
-  body.az-reduce-motion .az-launchpad-item:hover { transform: none; }
+  body.az-reduce-motion .az-launchpad-item:hover,
+  body.az-reduce-motion .az-switcher-item:hover { transform: none; }
 
   @media (max-width: 899px) {
     .az-launchpad-grid { grid-template-columns: repeat(4, minmax(100px, 1fr)); }
@@ -237,6 +300,10 @@
     .az-launchpad-item { min-height: 104px; padding: 9px 4px; }
     .az-launchpad-icon { width: 52px; height: 52px; border-radius: 15px; }
     .az-launchpad-icon img { width: 33px; height: 33px; }
+    #az-switcher-overlay:not(.az-launchpad-overlay) .az-dialog { max-height:100%; }
+    #az-switcher-overlay:not(.az-launchpad-overlay) .az-dialog-body { padding:10px 12px 86px; }
+    .az-switcher-item { min-height:68px; }
+    .az-switcher-item > img { width:44px; height:44px; }
     .az-window-menu-grid { grid-template-columns: 1fr; }
   }
 }
