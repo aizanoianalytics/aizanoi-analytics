@@ -1,18 +1,22 @@
 # Aizanoi Analytics Ancient World
 
-Ancient World is now one reusable historical first-person platform. Aizanoi, Rome and Athens share the same runtime, movement/collision system, mobile controls and blocky procedural asset library; city folders primarily own historical data and layout.
+Ancient World is one reusable historical first-person platform. Aizanoi, Rome and Athens share the same renderer, traversal/collision system, mobile controls, compatibility layer, share-link contract, Research Lens and blocky procedural asset library. City folders primarily own historical data, chronology, layout choices and optional deterministic urban fabric.
 
 ## Runtime architecture
 
 ```text
 frontend/ancient-world/
 ├── engine/
+│   ├── city-bootstrap.js         # canonical city bootstrap / platform owner
 │   ├── flat-city-runtime.js      # shared WebGL renderer + flat Y=0 world
 │   ├── traversal.js              # movement, collision, support, safe spawn
 │   ├── mobile-controls.js        # analog touch movement/look
 │   ├── lifecycle.js              # cleanup / frame lifecycle
-│   ├── navigation.js             # ← Field System
-│   ├── city-compatibility.js     # deep links + legacy debug API
+│   ├── navigation.js             # ← AizanoiOS escape path
+│   ├── city-compatibility.js     # legacy ?jump= + debug compatibility
+│   ├── shareable-location.js     # canonical ?at= + declared ?period=
+│   ├── evidence.js               # shared evidence vocabulary
+│   ├── evidence-mode.js          # interactive Research Lens
 │   └── ...
 └── assets/
     ├── blocky-asset-library.js   # houses, temples, baths, theatres, bridges...
@@ -29,7 +33,7 @@ frontend/ancient-cities/rome-410-476/data/    # Rome
 frontend/ancient-cities/athens-450-430/data/  # Athens
 ```
 
-Each city adapter now mainly does four things: load city data, generate explicitly plausible urban fabric, normalize layout records where needed, and call `startFlatBlockyCity(...)`.
+A city adapter should now be declarative: load its city/source data, choose the shared compaction profile, provide optional urban-fabric generation and call `startAncientCity(...)`. It must not own renderer, traversal, compatibility, Research Lens or mobile-input implementation.
 
 ## Flat-ground rule
 
@@ -53,16 +57,37 @@ Shared assets cover repeatable vocabulary such as:
 
 Identity-critical monuments keep dedicated hero builders. Current examples include the Parthenon, Propylaea, Colosseum, Pantheon and Aizanoi Temple of Zeus.
 
-## Evidence vocabulary
+## Evidence vocabulary and Research Lens
 
-Visual modularity does not change evidence status:
+Visual modularity does not change evidence status. Authored records retain their source labels. The platform supports:
 
 - `archaeological` — physical archaeological evidence supports the represented feature;
 - `documented` — historical/topographical sources support it but exact restitution may be incomplete;
-- `plausible` — informed reconstruction used to complete an unresolved urban/architectural gap;
-- `atmospheric` — illustrative ambience/clutter that is not a claim about an exact excavated object or placement.
+- `plausible` — legacy authored label for informed reconstruction;
+- `inferred` — Research Lens grouping for informed reconstruction where exact form/placement is unresolved;
+- `atmospheric` — illustrative ambience/clutter that is not a claim about an exact excavated object or placement;
+- `disputed` — a contested identification or restitution that must remain visibly interpretive.
 
-Procedural urban fabric remains `plausible` and must stay subordinate to named monuments and documented routes.
+Research Lens groups legacy `plausible` records under the user-facing **Inferred** category without mutating the authored city data. Procedural urban fabric remains `plausible` in source data and must stay subordinate to named monuments and documented routes.
+
+Press **V** or use the floating **Evidence** control to open Research Lens. It shows the evidence legend plus the nearest labelled landmark, note and distance, and can move the visitor to that record through the same safe teleport system.
+
+## Shareable locations
+
+Canonical links use:
+
+```text
+?at=<landmark-id>
+?at=<landmark-id>&period=<declared-era>
+```
+
+Successful in-world teleports update `at=`. The older `?jump=` form remains supported by `city-compatibility.js` for existing links but is not the canonical share format.
+
+Chronology is city-declared. A period query cannot activate a dormant/unpublished visual layer. Aizanoi currently exposes AD 225 and AD 425 as shareable active periods; the retained AD 301 dataset layer remains dormant.
+
+## Static research surfaces
+
+Interactive reconstruction must not be the only way to inspect the project basis. Rome and Athens retain their static research routes, and Aizanoi exposes `/historic-world/research/` with the reconstruction boundary, evidence vocabulary and project source ledger.
 
 ## Adding a city
 
@@ -73,7 +98,7 @@ A new city should normally require:
 3. named monument placements using existing asset types or a small number of new hero assets;
 4. optional deterministic urban-fabric generation;
 5. water/layout records;
-6. a thin adapter calling the shared runtime;
-7. browser smoke coverage for movement and landmark teleports.
+6. a thin adapter calling `startAncientCity(...)`;
+7. browser smoke coverage for movement, landmark teleports, Research Lens and share links where applicable.
 
-Do not fork movement, collision, mobile controls or the renderer into a new city-specific `app.js` without an explicit architecture reason.
+Do not fork movement, collision, mobile controls, compatibility or the renderer into a new city-specific `app.js` without an explicit architecture reason.
