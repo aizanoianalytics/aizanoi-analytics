@@ -40,15 +40,16 @@ function canonicalPeriod(value) {
  * Canonical share contract for Historical Worlds.
  *
  * `?at=<landmark-id>` opens a safe landmark approach.
- * `?period=<era>` activates an authored era button when the city exposes one.
+ * `?period=<era>` activates only a city-declared shareable era.
  * Legacy `?jump=` remains owned by city-compatibility.js.
  */
-export function installShareableLocation(runtime, { ui = 'standard' } = {}) {
+export function installShareableLocation(runtime, { ui = 'standard', periods = [] } = {}) {
   const debug = runtime?.debug;
   if (!debug) return Object.freeze({ destroy() {}, sync() {} });
 
   const canvas = document.querySelector('#glCanvas');
   const entry = document.querySelector(ui === 'aizanoi' ? '#enterBtn' : '#enter');
+  const allowedPeriods = new Set(periods.map(canonicalPeriod).filter(Boolean));
   let destroyed = false;
   const listeners = [];
 
@@ -57,7 +58,6 @@ export function installShareableLocation(runtime, { ui = 'standard' } = {}) {
     if (!url) return;
     if (value == null || value === '') url.searchParams.delete(name);
     else url.searchParams.set(name, String(value));
-    // `jump` is the legacy alias; canonical links use `at`.
     if (name === 'at') url.searchParams.delete('jump');
     replaceUrl(url);
   }
@@ -74,7 +74,7 @@ export function installShareableLocation(runtime, { ui = 'standard' } = {}) {
 
   function applyPeriod(period) {
     const canonical = canonicalPeriod(period);
-    if (!canonical) return false;
+    if (!canonical || !allowedPeriods.has(canonical)) return false;
     const button = [...document.querySelectorAll('.eraBtn[data-era]')]
       .find((node) => canonicalPeriod(node.dataset.era) === canonical);
     if (!button) return false;
@@ -84,7 +84,9 @@ export function installShareableLocation(runtime, { ui = 'standard' } = {}) {
   }
 
   for (const button of document.querySelectorAll('.eraBtn[data-era]')) {
-    const handler = () => setParam('period', canonicalPeriod(button.dataset.era));
+    const canonical = canonicalPeriod(button.dataset.era);
+    if (!canonical || !allowedPeriods.has(canonical)) continue;
+    const handler = () => setParam('period', canonical);
     button.addEventListener('click', handler);
     listeners.push([button, handler]);
   }
@@ -105,6 +107,7 @@ export function installShareableLocation(runtime, { ui = 'standard' } = {}) {
   return Object.freeze({
     setLocation(id) { if (id) debug.teleportTo?.(id); },
     setPeriod:applyPeriod,
+    periods:Object.freeze([...allowedPeriods]),
     sync() {
       const url = safeUrl();
       return Object.freeze({ at:url?.searchParams.get('at') || null, period:url?.searchParams.get('period') || null });
