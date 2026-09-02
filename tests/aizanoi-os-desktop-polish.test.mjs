@@ -22,11 +22,12 @@ const root = read('frontend/index.html');
 const serviceWorker = read('frontend/service-worker.js');
 
 test('desktop keeps the five core apps and promotes a curated utility set', () => {
-  assert.match(brandPlatform, /const DESKTOP=Object\.freeze\(\[\.\.\.PINNED,'browser','notepad','calculator','camera','winamp','games','recycle-bin','workspace'\]\)/);
+  assert.match(brandPlatform, /const DESKTOP=Object\.freeze\(\[\.\.\.PINNED,'browser','notepad','web-editor','calculator','camera','winamp','games','recycle-bin','workspace'\]\)/);
   assert.match(registry, /id:'recycle-bin'.*icon:'\/assets\/icons\/aizanoi-recycle-bin\.svg'/s);
   assert.match(registry, /id:'camera'.*icon:'\/assets\/icons\/camera\.svg'/s);
   assert.match(registry, /id:'winamp'.*icon:'\/assets\/icons\/winamp\.svg'/s);
   assert.match(registry, /id:'browser'.*icon:'\/assets\/icons\/browser\.svg'/s);
+  assert.match(registry, /id:'web-editor'.*label:'Aizanoi Web Editor'/s);
   for (const icon of ['aizanoi-recycle-bin.svg', 'camera.svg', 'winamp.svg', 'browser.svg']) assert.ok(existsSync(`frontend/assets/icons/${icon}`));
 });
 
