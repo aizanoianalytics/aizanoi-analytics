@@ -38,15 +38,13 @@ test('Camera private code sees capability surfaces, not host implementations', (
   assert.match(privateApp, /sound\.play/);
 });
 
-test('Camera requests video first and treats microphone as a separate optional permission', () => {
+test('Camera photo flow requests video only and cannot request microphone access', () => {
   const cameraRequest = "media.getUserMedia({video:{facingMode:'user'},audio:false})";
-  const microphoneRequest = 'media.getUserMedia({video:false,audio:true})';
   const startBody = privateApp.match(/async function start\(\)\{([\s\S]*?)\n  function stop/)?.[1] || '';
   assert.ok(privateApp.includes(cameraRequest), 'camera permission must be requested independently');
-  assert.ok(privateApp.includes(microphoneRequest), 'microphone permission must be requested separately');
   assert.ok(startBody.includes(cameraRequest), 'Start camera must request video itself');
-  assert.ok(startBody.indexOf(cameraRequest) < startBody.indexOf('requestOptionalMicrophone(cameraStream)'), 'Start camera must attach video before invoking optional microphone flow');
-  assert.match(privateApp, /microphone permission was not granted/);
+  assert.doesNotMatch(privateApp, /getUserMedia\(\{video:false,audio:true\}\)/);
+  assert.doesNotMatch(privateApp, /requestOptionalMicrophone|microphone permission|microphoneActive/);
   assert.doesNotMatch(privateApp, /MediaRecorder|audio\.srcObject|createMediaStreamSource/);
 });
 
