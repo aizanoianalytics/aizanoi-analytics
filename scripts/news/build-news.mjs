@@ -207,8 +207,18 @@ function correctionMarkup(item) {
     ? `<details class="corrections"><summary>Corrections (${item.corrections.length})</summary><ol>${item.corrections.map((entry) => `<li><time datetime="${entry.correctedAt}">${entry.correctedAt.slice(0, 10)}</time> — ${htmlEscape(entry.note)}</li>`).join('')}</ol></details>`
     : '';
 }
+function editionSummary(item) {
+  if (item.kind === 'weekly') return item.summary;
+  const punctuation = /[.!?](?=\s|$)/g;
+  let match;
+  while ((match = punctuation.exec(item.summary))) {
+    const end = match.index + 1;
+    if (end >= 160 && end < item.summary.length - 20) return item.summary.slice(0, end).trim();
+  }
+  return item.summary;
+}
 function story(item, lead = false) {
-  return `<article id="${htmlEscape(item.id)}" class="story${lead ? ' lead' : ''}" data-priority="${item.priority}"><p class="kicker">${htmlEscape(categoryLabels.get(item.category))}</p><h2><a href="${storyPath(item)}">${htmlEscape(item.title)}</a></h2><p class="summary">${htmlEscape(item.summary)}</p><p class="byline">By ${htmlEscape(item.author.name)} · Edited by ${htmlEscape(item.editor.name)}</p><p class="source-line"><strong>Sources</strong> ${sourceLinks(item)}</p>${correctionMarkup(item)}</article>`;
+  return `<article id="${htmlEscape(item.id)}" class="story${lead ? ' lead' : ''}" data-priority="${item.priority}"><p class="kicker">${htmlEscape(categoryLabels.get(item.category))}</p><h2><a href="${storyPath(item)}">${htmlEscape(item.title)}</a></h2><p class="summary">${htmlEscape(editionSummary(item))}</p><p class="byline">By ${htmlEscape(item.author.name)} · Edited by ${htmlEscape(item.editor.name)}</p><p class="source-line"><strong>Sources</strong> ${sourceLinks(item)}</p>${correctionMarkup(item)}</article>`;
 }
 function page({ title, eyebrow, heading, deck, items, editionDate = '', archiveLinks = '', canonicalPath = '/news/', isWeekly = false, extraArchive = '' }) {
   const canonical = `${siteUrl}${canonicalPath}`;
