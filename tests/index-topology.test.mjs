@@ -6,7 +6,6 @@ import { discoverModules } from '../scripts/modules/build-module-registry.mjs';
 
 const root=process.cwd();
 const read=(file)=>readFileSync(path.join(root,file),'utf8');
-const escapeRegExp=(value)=>String(value).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 
 function assertLocalLinksResolve(file){
   const source=read(file);
@@ -23,28 +22,29 @@ function assertLocalLinksResolve(file){
 test('root index routes every canonical top-level work area',()=>{
   const source=read('index.md');
   for(const area of ['frontend','content','analytics','scripts','tests','research','infra','docs']){
-    assert.match(source,new RegExp(`\\]\(${area}\\/index\\.md\\)`),`root index must route ${area}`);
+    assert.ok(source.includes(`](${area}/index.md)`),`root index must route ${area}`);
   }
-  assert.match(source,/\.github\/workflows\//,'root index must route repository automation');
+  assert.ok(source.includes('.github/workflows/'),'root index must route repository automation');
 });
 
 test('apps index stays synchronized with manifest discovery',async()=>{
   const source=read('frontend/js/v3/apps/index.md');
   const modules=await discoverModules();
   for(const module of modules){
-    assert.match(source,new RegExp(`\\]\(${escapeRegExp(module.id)}\\/index\\.md\\)`),`apps index is missing ${module.id}`);
+    assert.ok(source.includes(`](${module.id}/index.md)`),`apps index is missing ${module.id}`);
   }
 });
 
 test('major routers expose current independently maintained subsystems',()=>{
-  assert.match(read('frontend/index.md'),/web-editor-preview\//);
-  assert.match(read('frontend/index.md'),/Historical Worlds naming map/);
-  assert.match(read('analytics/index.md'),/dashboards\/hr-analytics-full-set\/index\.md/);
-  assert.match(read('research/index.md'),/athens_450_430\//);
-  assert.match(read('research/index.md'),/rome_410_476\//);
-  assert.match(read('infra/index.md'),/nginx\//);
+  assert.ok(read('frontend/index.md').includes('web-editor-preview/'));
+  assert.ok(read('frontend/index.md').includes('Historical Worlds naming map'));
+  assert.ok(read('analytics/index.md').includes('dashboards/hr-analytics-full-set/index.md'));
+  assert.ok(read('research/index.md').includes('athens_450_430/'));
+  assert.ok(read('research/index.md').includes('rome_410_476/'));
+  assert.ok(read('infra/index.md').includes('nginx/'));
+  const docs=read('docs/index.md');
   for(const doc of ['README.md','HERMES_OPERATIONS.md','OPERATIONS.md','ACCESSIBILITY.md','FIELD_SYSTEM.md']){
-    assert.match(read('docs/index.md'),new RegExp(escapeRegExp(doc)));
+    assert.ok(docs.includes(doc),`docs index is missing ${doc}`);
   }
 });
 
