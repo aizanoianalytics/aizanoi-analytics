@@ -24,13 +24,16 @@ const DASHBOARDS = new Map(HR_SET.dashboards.map((dashboard) => {
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
   '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
 }[char]));
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 function stripManagedBlock(html, start, end) {
   const startIndex = html.indexOf(start);
   if (startIndex === -1) return html;
-  const endIndex = html.indexOf(end, startIndex);
-  if (endIndex === -1) throw new Error(`Managed dashboard block is missing its closing marker: ${start}`);
-  return `${html.slice(0, startIndex)}${html.slice(endIndex + end.length)}`;
+  if (html.indexOf(end, startIndex) === -1) {
+    throw new Error(`Managed dashboard block is missing its closing marker: ${start}`);
+  }
+  const pattern = new RegExp(`[\\t ]*\\n?${escapeRegExp(start)}[\\s\\S]*?${escapeRegExp(end)}[\\t ]*\\n?`, 'g');
+  return html.replace(pattern, '\n');
 }
 
 function stripOwnedMetadata(html) {
