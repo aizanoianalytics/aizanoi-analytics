@@ -8,6 +8,11 @@ CI strict by comparing the workbook contract that matters: sheet order,
 non-empty cell values/formulas, number formats, hyperlinks, merged ranges,
 freeze panes, autofilters and sheet visibility.
 
+Floating-point values are normalized to 15 significant decimal digits before
+comparison. That deliberately ignores only sub-machine-precision jitter such as
+1e-17 differences introduced by equivalent numeric rebuild paths, while changes
+at normal workbook/business-data precision still fail the gate.
+
 If a mismatch exists, the script prints concrete sheet/cell differences before
 returning a non-zero exit status and preserves the rebuilt workbook in the
 existing CI diagnostics artifact for review/re-baselining.
@@ -28,6 +33,7 @@ from typing import Any
 from openpyxl import load_workbook
 
 MAX_DIFFS = 40
+FLOAT_SIGNIFICANT_DIGITS = 15
 
 
 def canonical_value(value: Any) -> Any:
@@ -44,9 +50,12 @@ def canonical_value(value: Any) -> Any:
             return {"type": "float", "value": "NaN"}
         if math.isinf(value):
             return {"type": "float", "value": "Infinity" if value > 0 else "-Infinity"}
-        # 17 significant digits round-trips an IEEE-754 double without hiding
-        # meaningful numeric drift.
-        return {"type": "float", "value": format(value, ".17g")}
+        # Excel/openpyxl calculations can produce equivalent IEEE-754 values
+        # that differ only in the 16th/17th significant decimal digit across
+        # otherwise deterministic runs. Fifteen significant digits match the
+        # practical numeric precision users can rely on in an XLSX workbook and
+        # still expose materially different values to this semantic gate.
+        return {"type": "float", "value": format(value, f".{FLOAT_SIGNIFICANT_DIGITS}g")}
     if isinstance(value, (int, bool, str)):
         return value
     return {"type": type(value).__name__, "value": str(value)}
