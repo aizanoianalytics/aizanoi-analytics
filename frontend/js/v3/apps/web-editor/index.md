@@ -15,6 +15,6 @@ Aizanoi Web Editor is the browser-local single-file web playground inside Aizano
 
 ## UX
 
-The app has one compact toolbar (`New`, `Open`, `Save`, `Save as`, `Run`), one code surface and one preview surface. There are no HTML/CSS/JavaScript tabs or duplicate internal title bars. `Ctrl/Cmd+Enter` runs the current document and `Ctrl/Cmd+S` saves it.
+The app uses the full available window body as a split authoring workspace: one compact action bar, one dark source pane and one live preview pane. There are no HTML/CSS/JavaScript tabs or duplicate internal title bars. `Ctrl/Cmd+Enter` runs the current document and `Ctrl/Cmd+S` saves it.
 
 The preview route reports an explicit in-app error if its isolated runner cannot start. Production deployments must have the route-scoped Web Editor preview Nginx policy installed before promotion.

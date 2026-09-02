@@ -6,7 +6,8 @@ Scope: analytics source/data-product work stored outside the production static f
 
 - Public Analytics product UI/route → `../frontend/analytics/`
 - AizanoiOS Analytics catalog/routing → `../frontend/js/v3/registry.js`
-- Analytics source assets, models or supporting material → remain within this area and follow the nearest local documentation.
+- HR Analytics deterministic source, synthetic inputs and rebuild pipeline → [`dashboards/hr-analytics-full-set/index.md`](dashboards/hr-analytics-full-set/index.md)
+- Other Analytics source assets, models or supporting material → remain within this area and follow the nearest local documentation.
 
 ## Boundary
 

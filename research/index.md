@@ -4,7 +4,8 @@ Scope: source material, evidence notes and research inputs, especially for Histo
 
 ## Route by task
 
-- Historical/source research → locate the relevant world/topic within this area.
+- Classical Athens, 450–430 BCE research → `athens_450_430/`
+- Late Antique Rome, 410–476 CE research → `rome_410_476/`
 - Shared Historical Worlds runtime → `../frontend/ancient-world/engine/`
 - Aizanoi public world → `../frontend/historic-world/`
 - Rome / Athens public worlds → `../frontend/ancient-cities/`

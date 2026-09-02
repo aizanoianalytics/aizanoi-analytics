@@ -1,104 +1,183 @@
 @layer apps {
+  .az-window[data-app-id="web-editor"] .az-window-body{
+    display:flex;
+    overflow:hidden;
+    background:#f3f5f9;
+  }
   .az-web-editor{
     position:relative;
-    flex:1;
-    min-height:0;
+    width:100%;
+    height:100%;
+    min-height:100%;
     overflow:hidden;
-    background:#0e1523;
+    background:#f3f5f9;
     color:#172033;
   }
   .az-web-editor-actions{
-    min-height:48px;
+    flex:0 0 auto;
+    min-height:52px;
     display:flex;
     align-items:center;
-    gap:8px;
-    padding:7px 10px;
-    border-bottom:1px solid var(--az-border);
-    background:rgba(255,255,255,.92);
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
+    gap:7px;
+    padding:8px 10px;
+    border-bottom:1px solid rgba(41,57,85,.12);
+    background:rgba(248,250,254,.96);
+    box-shadow:0 1px 0 rgba(255,255,255,.72) inset;
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
   }
   .az-web-editor-actions .az-button{
     min-height:34px;
     padding-inline:12px;
+    border-color:rgba(41,57,85,.12);
+    background:rgba(255,255,255,.76);
+    box-shadow:none;
+  }
+  .az-web-editor-actions .az-button:hover{
+    border-color:rgba(41,57,85,.2);
+    background:#fff;
   }
   .az-web-editor-run{
-    min-width:74px;
+    min-width:82px;
     font-weight:800;
+    letter-spacing:.01em;
+  }
+  .az-web-editor-run::before{
+    content:'▶';
+    font-size:11px;
+    line-height:1;
   }
   .az-web-editor-status{
-    max-width:min(34vw,430px);
+    max-width:min(36vw,460px);
     overflow:hidden;
-    color:#66728a;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color:#647188;
     font-size:11px;
     text-overflow:ellipsis;
     white-space:nowrap;
   }
+  .az-web-editor-status::before{
+    content:'';
+    width:7px;
+    height:7px;
+    flex:0 0 7px;
+    border-radius:50%;
+    background:#73a27d;
+    box-shadow:0 0 0 3px rgba(115,162,125,.12);
+  }
   .az-web-editor-layout{
     flex:1;
     min-height:0;
+    height:100%;
     display:grid;
-    grid-template-columns:minmax(340px,.96fr) minmax(380px,1.04fr);
+    grid-template-columns:minmax(340px,1fr) minmax(360px,1fr);
+    overflow:hidden;
+    background:#dfe4ed;
   }
-  .az-web-editor-code{
-    min-width:0;
-    min-height:0;
-    display:flex;
-    border-right:1px solid rgba(255,255,255,.09);
-    background:#0e1523;
-  }
-  .az-web-editor-text{
-    width:100%;
-    min-height:100%;
-    resize:none;
-    border:0;
-    outline:0;
-    padding:20px 22px 28px;
-    background:#0e1523;
-    color:#e7edf7;
-    caret-color:#8fb5ff;
-    font:13px/1.62 ui-monospace,'Cascadia Mono',Consolas,monospace;
-    tab-size:2;
-    white-space:pre;
-  }
-  .az-web-editor-text::selection{background:#2e4c7a}
+  .az-web-editor-code,
   .az-web-editor-preview{
     position:relative;
     min-width:0;
     min-height:0;
+    display:grid;
+    grid-template-rows:38px minmax(0,1fr);
     overflow:hidden;
+  }
+  .az-web-editor-code{
+    border-right:1px solid #2c3544;
+    background:#101722;
+  }
+  .az-web-editor-code::before,
+  .az-web-editor-preview::before{
+    grid-row:1;
+    display:flex;
+    align-items:center;
+    min-width:0;
+    padding:0 14px;
+    font:750 11px/1 var(--az-font-ui);
+    letter-spacing:.045em;
+    text-transform:uppercase;
+  }
+  .az-web-editor-code::before{
+    content:'Source  ·  HTML / CSS / JS';
+    border-bottom:1px solid rgba(255,255,255,.08);
+    background:#151e2b;
+    color:#9eabc0;
+  }
+  .az-web-editor-preview::before{
+    content:'Live preview';
+    border-bottom:1px solid rgba(41,57,85,.1);
+    background:#f8fafe;
+    color:#637089;
+  }
+  .az-web-editor-text{
+    grid-row:2;
+    width:100%;
+    height:100%;
+    min-height:0;
+    overflow:auto;
+    resize:none;
+    border:0;
+    outline:0;
+    padding:18px 20px 32px;
+    background:#101722;
+    color:#e6edf7;
+    caret-color:#8facff;
+    font:13px/1.62 ui-monospace,'Cascadia Mono','SFMono-Regular',Consolas,monospace;
+    tab-size:2;
+    white-space:pre;
+  }
+  .az-web-editor-text:focus{
+    box-shadow:inset 3px 0 #7188ef;
+  }
+  .az-web-editor-text::selection{background:#314c78}
+  .az-web-editor-preview{
     background:#fff;
   }
   .az-web-editor-frame{
+    grid-row:2;
     display:block;
     width:100%;
     height:100%;
-    min-height:280px;
+    min-height:0;
     border:0;
     background:#fff;
   }
   .az-web-editor-security{
     position:absolute;
-    top:10px;
+    top:7px;
     right:10px;
     z-index:2;
-    padding:5px 8px;
-    border:1px solid rgba(23,32,51,.12);
+    display:inline-flex;
+    align-items:center;
+    min-height:24px;
+    padding:0 8px;
+    border:1px solid rgba(23,32,51,.1);
     border-radius:999px;
-    background:rgba(255,255,255,.9);
-    color:#66728a;
-    box-shadow:0 5px 16px rgba(31,43,68,.08);
+    background:rgba(255,255,255,.82);
+    color:#6a768b;
+    box-shadow:0 2px 8px rgba(31,43,68,.05);
     font:700 11px/1 var(--az-font-ui);
     pointer-events:none;
   }
+  .az-web-editor-security::before{
+    content:'';
+    width:6px;
+    height:6px;
+    margin-right:6px;
+    border-radius:50%;
+    background:#4e9a78;
+  }
   .az-web-editor-preview-state{
     position:absolute;
-    inset:0;
+    inset:38px 0 0;
     z-index:3;
     display:grid;
     place-items:center;
     padding:28px;
-    background:rgba(247,249,252,.94);
+    background:rgba(247,249,252,.95);
     color:#526078;
     font:650 12px/1.5 var(--az-font-ui);
     text-align:center;
@@ -107,15 +186,15 @@
   .az-web-editor-preview-state[hidden]{display:none}
   .az-web-editor-projects{
     position:absolute;
-    inset:60px 14px 14px auto;
+    inset:66px 14px 14px auto;
     z-index:20;
-    width:min(410px,calc(100% - 28px));
-    max-height:calc(100% - 74px);
+    width:min(420px,calc(100% - 28px));
+    max-height:calc(100% - 80px);
     overflow:auto;
-    border:1px solid var(--az-border);
-    border-radius:14px;
-    background:rgba(248,250,254,.98);
-    box-shadow:0 22px 50px rgba(31,43,68,.2);
+    border:1px solid rgba(41,57,85,.14);
+    border-radius:16px;
+    background:rgba(248,250,254,.985);
+    box-shadow:0 24px 56px rgba(31,43,68,.22);
   }
   .az-web-editor-projects-head{
     position:sticky;
@@ -125,7 +204,7 @@
     align-items:center;
     gap:10px;
     padding:11px 13px;
-    border-bottom:1px solid var(--az-border);
+    border-bottom:1px solid rgba(41,57,85,.11);
     background:rgba(248,250,254,.98);
   }
   .az-web-editor-project-list{
@@ -140,14 +219,19 @@
     gap:12px;
     width:100%;
     padding:12px 13px;
-    border:1px solid var(--az-border);
-    border-radius:10px;
+    border:1px solid rgba(41,57,85,.12);
+    border-radius:11px;
     background:#fff;
     color:#172033;
     text-align:left;
     cursor:pointer;
+    transition:background var(--az-motion-fast),border-color var(--az-motion-fast),transform var(--az-motion-fast);
   }
-  .az-web-editor-project:hover{background:#eef2fb}
+  .az-web-editor-project:hover{
+    border-color:rgba(79,96,202,.22);
+    background:#f4f6fd;
+    transform:translateY(-1px);
+  }
   .az-web-editor-project span{
     display:grid;
     gap:3px;
@@ -165,7 +249,7 @@
   }
   .az-web-editor-empty{
     margin:0;
-    padding:20px;
+    padding:22px;
     color:#66728a;
     font-size:12px;
     text-align:center;
@@ -173,30 +257,32 @@
 
   @media (max-width:760px){
     .az-web-editor-actions{
-      min-height:52px;
+      min-height:54px;
       flex-wrap:wrap;
     }
     .az-web-editor-status{
       order:3;
       width:100%;
       max-width:none;
+      padding:0 2px 2px;
     }
     .az-web-editor-layout{
       grid-template-columns:1fr;
-      grid-template-rows:minmax(310px,1fr) minmax(250px,.85fr);
+      grid-template-rows:minmax(330px,55dvh) minmax(280px,45dvh);
+      overflow:auto;
     }
     .az-web-editor-code{
       border-right:0;
-      border-bottom:1px solid rgba(255,255,255,.09);
+      border-bottom:1px solid #2c3544;
     }
     .az-web-editor-text{
-      min-height:310px;
-      padding:16px 17px 24px;
+      padding:16px 17px 26px;
       font-size:12px;
     }
-    .az-web-editor-security{
-      top:8px;
-      right:8px;
+    .az-web-editor-projects{
+      inset:104px 10px 10px;
+      width:auto;
+      max-height:calc(100% - 114px);
     }
   }
 }
