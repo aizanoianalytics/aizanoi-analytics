@@ -37,10 +37,20 @@
     border-color:rgba(41,57,85,.2);
     background:#fff;
   }
-  .az-web-editor-run{
+  .az-web-editor-actions .az-web-editor-run{
     min-width:82px;
+    border-color:rgba(73,88,196,.34);
+    background:linear-gradient(180deg,#5868d5,#4f60ca);
+    color:#fff;
+    box-shadow:0 7px 18px rgba(73,87,190,.20);
     font-weight:800;
     letter-spacing:.01em;
+  }
+  .az-web-editor-actions .az-web-editor-run:hover{
+    border-color:rgba(73,88,196,.42);
+    background:linear-gradient(180deg,#6070dc,#5667cf);
+    color:#fff;
+    box-shadow:0 9px 20px rgba(73,87,190,.24);
   }
   .az-web-editor-run::before{
     content:'▶';
