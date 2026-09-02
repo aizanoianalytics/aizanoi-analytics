@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mağaza Takip Dosyası</title>
+  <title>Store Operations Tracking — Aizanoi Analytics</title>
   <style>
     :root{
       --canvas:#f3efe6;--canvas2:#ebe4d7;--paper:#fffaf0;--paper2:#fff6e6;
@@ -40,8 +40,35 @@
     .norm-title-select{width:auto;min-width:260px;padding:9px 11px;border-radius:12px;background:#fffdf8;color:var(--navy);font-size:12px;font-weight:850}.cumule-turnover-wrap{overflow:auto;border:1px solid var(--line2);border-radius:18px;background:#fffdf8}.cumule-turnover-table{width:max-content;min-width:100%;border-collapse:separate;border-spacing:0}.cumule-turnover-table th,.cumule-turnover-table td{padding:10px 12px;text-align:center;border-bottom:1px solid #eadfce;border-right:1px solid #eadfce;font-size:13px;font-weight:850}.cumule-turnover-table thead th{background:#ffc20a;color:#10243d;font-size:14px;font-weight:950}.cumule-turnover-table thead th:first-child{background:#475b78;color:#fff}.cumule-turnover-table tbody th{position:sticky;left:0;background:#475b78;color:#fff;text-align:left;z-index:2}.cumule-turnover-table tbody tr.total-row th,.cumule-turnover-table tbody tr.total-row td{background:#f7c9a7!important;color:#10243d;font-weight:950}.cumule-turnover-table td.low{background:#e7f7ef;color:#116342}.cumule-turnover-table td.mid{background:#fff1d6;color:#7c4a00}.cumule-turnover-table td.high{background:#ffe1e4;color:#8a2430}.cumule-turnover-table td.empty{color:#98a2b3;background:#fffdf8}
     @media(max-width:1200px){.hero,.two,.three,.viz-grid,.profile-summary,.profile-radar-layout,.weekly-summary-board,.weekly-yoy-panel{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.filterbar{grid-template-columns:1fr 1fr}.brand-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.weekly-summary-block{gap:18px}}@media(max-width:1000px){.turnover-compare-tools{grid-template-columns:1fr 1fr}}@media(max-width:760px){.wrap{width:min(100vw - 18px,1480px);padding-top:10px}.kpi-grid,.mini-grid,.brand-grid,.metric-strip{grid-template-columns:1fr}.filterbar{position:static;grid-template-columns:1fr}.hero-main,.hero-side,.card{border-radius:20px;padding:16px}h1{font-size:42px}.meta-grid{grid-template-columns:1fr}.profile-head{grid-template-columns:1fr}.profile-head select{min-width:0;width:100%}.report-tab{flex:1 1 44%;padding:10px}.turnover-compare-tools{grid-template-columns:1fr}.weekly-summary-card{padding:0}.weekly-summary-table th,.weekly-summary-table td,.weekly-yoy-table th,.weekly-yoy-table td{font-size:17px;padding:9px 8px}.weekly-summary-table td.value{font-size:20px}.weekly-summary-table .sub{display:block;margin-left:0;margin-top:3px;font-size:11px}.weekly-yoy-row{grid-template-columns:100px 1fr 48px}.table-wrap:not(.norm-table-wrap){overflow:visible;max-height:none;border:0;background:transparent}.table-wrap:not(.norm-table-wrap) table,.table-wrap:not(.norm-table-wrap) thead,.table-wrap:not(.norm-table-wrap) tbody,.table-wrap:not(.norm-table-wrap) th,.table-wrap:not(.norm-table-wrap) td,.table-wrap:not(.norm-table-wrap) tr{display:block;width:100%;min-width:0}.table-wrap:not(.norm-table-wrap) thead{display:none}.table-wrap:not(.norm-table-wrap) tr{border:1px solid var(--line2);border-radius:16px;margin:0 0 10px;padding:10px;background:#fffdf8;box-shadow:0 8px 24px rgba(56,40,20,.05)}.table-wrap:not(.norm-table-wrap) td{display:flex;justify-content:space-between;gap:12px;border:0;padding:7px 0;max-width:none;white-space:normal;text-align:right}.table-wrap:not(.norm-table-wrap) td:before{content:attr(data-label);font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-size:10px;text-align:left}.table-wrap:not(.norm-table-wrap) td.num{text-align:right}}@media print{body{background:white}.filterbar,button{display:none!important}.wrap{width:100%;padding:0}.card,.hero-main,.hero-side{box-shadow:none;break-inside:avoid;background:white}.table-wrap{max-height:none}}
   </style>
+<!-- AIZANOI_PUBLIC_META_START -->
+<meta name="description" content="Regional and store comparison, hiring, promotion, turnover, forecast, learning and workforce operations.">
+<meta name="theme-color" content="#111827">
+<link rel="canonical" href="https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/store-operations-tracking/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aizanoi Analytics">
+<meta property="og:title" content="Store Operations Tracking — Aizanoi Analytics">
+<meta property="og:description" content="Regional and store comparison, hiring, promotion, turnover, forecast, learning and workforce operations.">
+<meta property="og:url" content="https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/store-operations-tracking/">
+<style data-aizanoi-public-dashboard-style>
+  .aizanoi-public-dashboard-bar{box-sizing:border-box;width:100%;min-height:38px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:7px 12px;border-bottom:1px solid rgba(148,163,184,.28);background:#111827;color:#e5e7eb;font:600 12px/1.35 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em}
+  .aizanoi-public-dashboard-bar a{min-height:24px;display:inline-flex;align-items:center;color:#f8fafc;text-decoration:none}
+  .aizanoi-public-dashboard-bar a:hover,.aizanoi-public-dashboard-bar a:focus-visible{text-decoration:underline;text-underline-offset:3px}
+  .aizanoi-public-dashboard-bar__language{margin-left:auto;padding:3px 8px;border:1px solid rgba(165,180,252,.35);border-radius:999px;background:rgba(79,70,229,.16);color:#e0e7ff;white-space:nowrap}
+  .aizanoi-embedded-dashboard .aizanoi-public-dashboard-bar{display:none!important}
+  @media(max-width:640px){.aizanoi-public-dashboard-bar{gap:7px;padding:7px 9px;font-size:11px}.aizanoi-public-dashboard-bar__language{width:100%;margin-left:0;border-radius:7px}}
+</style>
+<script>try{if(window.self!==window.top)document.documentElement.classList.add('aizanoi-embedded-dashboard')}catch{}</script>
+<!-- AIZANOI_PUBLIC_META_END -->
 </head>
 <body>
+<!-- AIZANOI_PUBLIC_BAR_START -->
+<nav class="aizanoi-public-dashboard-bar" aria-label="Aizanoi Analytics dashboard navigation">
+  <a href="/analytics/dashboards/hr-analytics-full-set/" target="_top">Aizanoi Analytics · HR Analytics Full Set</a>
+  <span aria-hidden="true">·</span>
+  <a href="/analytics/" target="_top">Back to Analytics</a>
+  <span class="aizanoi-public-dashboard-bar__language">Interface language: Turkish</span>
+</nav>
+<!-- AIZANOI_PUBLIC_BAR_END -->
   <main class="wrap">
     <section class="hero"><div class="hero-main"><h1>Mağaza Takip Dosyası</h1><div class="report-tabs"><button class="report-tab" data-report="monthly" type="button">Aylık Rapor</button><button class="report-tab active" data-report="weekly" type="button">Haftalık Rapor</button><button class="report-tab" data-report="turnover" type="button">Turnover Sayfası</button><button class="report-tab" data-report="profile" type="button">Mağaza Profili</button></div></div><aside class="hero-side"><div class="meta-grid" id="reportMeta"></div></aside></section>
     <section class="filterbar"><input id="searchInput" type="search" placeholder="Mağaza, bölge, kişi veya görev ara..."><select id="regionSelect"></select><select id="storeSelect"></select><button id="resetBtn" class="secondary" type="button">Filtreleri Temizle</button><button id="printBtn" type="button">Yazdır / PDF</button></section>

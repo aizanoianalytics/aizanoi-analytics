@@ -16,6 +16,7 @@ PIPELINE="${SOURCE_ROOT}/production-pipeline"
 OUTPUTS="${PIPELINE}/dashboardlar"
 PUBLIC="frontend/analytics/dashboards/hr-analytics-full-set"
 SYNTHETIC_DOWNLOAD="${PUBLIC}/downloads/hr-analytics-full-set-synthetic-output.xlsx"
+DECORATOR="scripts/hr/decorate-public-dashboard.mjs"
 SANITIZER="scripts/hr/sanitize-public-dashboard.mjs"
 
 EXPECTED_INPUT_COUNT=27
@@ -67,8 +68,30 @@ for source_name in "${!HTML_MAP[@]}"; do
   cp "${src}" "${dst}"
 done
 
+PUBLIC_DASHBOARD_HTML=(
+  "${PUBLIC}/corporate-goals/index.html"
+  "${PUBLIC}/hr-administration-deep-dive/index.html"
+  "${PUBLIC}/hr-executive-board-current/index.html"
+  "${PUBLIC}/hr-executive-board-full-history/index.html"
+  "${PUBLIC}/learning-academy-analytics/index.html"
+  "${PUBLIC}/performance-hiring-turnover/index.html"
+  "${PUBLIC}/store-learning-compliance/index.html"
+  "${PUBLIC}/store-operations-tracking/index.html"
+  "${PUBLIC}/workforce-time-attendance/index.html"
+  "${PUBLIC}/workforce-turnover/index.html"
+)
+
+# Public chrome and metadata belong to the publish layer, not the ten-stage
+# analytics calculation pipeline. The decorator reads titles, summaries and
+# interface-language metadata from the canonical Analytics catalog and is
+# deterministic/idempotent so generated HTML is never hand-forked.
+node "${DECORATOR}" "${PUBLIC_DASHBOARD_HTML[@]}"
+
+# The executive boards embed the same PDKS document. Copy the decorated
+# canonical public artifact so the historical exact-hash dependency remains
+# true; the publish chrome hides itself automatically when rendered in-frame.
 for executive in hr-executive-board-current hr-executive-board-full-history; do
-  cp "${OUTPUTS}/pdks_takip_dashboard.html" "${PUBLIC}/${executive}/pdks_takip_dashboard.html"
+  cp "${PUBLIC}/workforce-time-attendance/index.html" "${PUBLIC}/${executive}/pdks_takip_dashboard.html"
 done
 
 GENERATED_PUBLIC_HTML=(
