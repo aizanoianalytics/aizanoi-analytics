@@ -201,21 +201,21 @@
 
     <section class="filter-shell" aria-label="Global filtreler">
       <div class="filter-grid">
-        <div class="field"><label>Kapsam</label><select class="select" id="scope-filter"></select></div>
-        <div class="field"><label>Turnover Türü</label><select class="select" id="type-filter">
+        <div class="field"><label>Kapsam</label><select class="select" id="scope-filter" aria-label="Kapsam"></select></div>
+        <div class="field"><label>Turnover Türü</label><select class="select" id="type-filter" aria-label="Turnover Türü">
           <option value="all">Bütün Çıkışlar</option>
           <option value="voluntary">Gönüllü Turnover</option>
           <option value="forced">Zorunlu Turnover</option>
         </select></div>
-        <div class="field"><label>Başlangıç</label><select class="select" id="start-filter"></select></div>
-        <div class="field"><label>Bitiş</label><select class="select" id="end-filter"></select></div>
-        <div class="field"><label>Bölge</label><select class="select" id="region-filter"></select></div>
-        <div class="field"><label>Mağaza</label><select class="select" id="store-filter"></select></div>
-        <div class="field"><label>Departman</label><select class="select" id="department-filter"></select></div>
-        <div class="field"><label>Şehir</label><select class="select" id="city-filter"></select></div>
-        <div class="field"><label>Cinsiyet</label><select class="select" id="gender-filter"></select></div>
-        <div class="field"><label>Sözleşme Türü</label><select class="select" id="contract-filter"></select></div>
-        <div class="field"><label>Title</label><select class="select" id="title-filter"></select></div>
+        <div class="field"><label>Başlangıç</label><select class="select" id="start-filter" aria-label="Başlangıç Dönemi"></select></div>
+        <div class="field"><label>Bitiş</label><select class="select" id="end-filter" aria-label="Bitiş Dönemi"></select></div>
+        <div class="field"><label>Bölge</label><select class="select" id="region-filter" aria-label="Bölge"></select></div>
+        <div class="field"><label>Mağaza</label><select class="select" id="store-filter" aria-label="Mağaza"></select></div>
+        <div class="field"><label>Departman</label><select class="select" id="department-filter" aria-label="Departman"></select></div>
+        <div class="field"><label>Şehir</label><select class="select" id="city-filter" aria-label="Şehir"></select></div>
+        <div class="field"><label>Cinsiyet</label><select class="select" id="gender-filter" aria-label="Cinsiyet"></select></div>
+        <div class="field"><label>Sözleşme Türü</label><select class="select" id="contract-filter" aria-label="Sözleşme Türü"></select></div>
+        <div class="field"><label>Title</label><select class="select" id="title-filter" aria-label="Title"></select></div>
         <div class="filter-actions"><button class="btn" id="reset-filters">Sıfırla</button></div>
       </div>
       <div class="filter-foot">
@@ -255,7 +255,7 @@
         <article class="card" style="margin-top:14px">
           <div class="card-head">
             <div><h3>Kapsamlar Arası Turnover Karşılaştırması</h3><p>Altı ana kapsam aynı ay ekseninde ve aynı kanonik formülle karşılaştırılır</p></div>
-            <div class="card-actions"><select class="select" id="scope-trend-mode" style="min-width:190px"><option value="monthly">Aylık Turnover</option><option value="ytd">Yıl İçi Kümülatif Turnover</option></select></div>
+            <div class="card-actions"><select class="select" id="scope-trend-mode" aria-label="Trend Hesaplama Modu" style="min-width:190px"><option value="monthly">Aylık Turnover</option><option value="ytd">Yıl İçi Kümülatif Turnover</option></select></div>
           </div>
           <div class="chart" id="scope-trend-chart"></div>
         </article>
