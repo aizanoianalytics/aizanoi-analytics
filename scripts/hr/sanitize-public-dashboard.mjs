@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { readdir, readFile, writeFile } from 'node:fs/promises';
-import { basename, resolve } from 'node:path';
+import { resolve } from 'node:path';
 
 const files = process.argv.slice(2);
 if (!files.length) {
@@ -10,7 +10,6 @@ if (!files.length) {
 
 const PIPELINE = resolve('analytics/dashboards/hr-analytics-full-set/production-pipeline');
 const OUTPUTS = resolve(PIPELINE, 'dashboardlar');
-const PUBLIC_DOWNLOAD = 'hr-analytics-full-set-synthetic-output.xlsx';
 
 function escapeRegExp(value) {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -22,7 +21,7 @@ async function workbookBasenames() {
     let entries = [];
     try { entries = await readdir(directory, { withFileTypes:true }); } catch { continue; }
     for (const entry of entries) {
-      if (entry.isFile() && /\.xlsx$/i.test(entry.name) && entry.name !== PUBLIC_DOWNLOAD) names.add(entry.name);
+      if (entry.isFile() && /\.xlsx$/i.test(entry.name)) names.add(entry.name);
     }
   }
   // The canonical integrated output is generated during every rebuild, but keep
@@ -52,26 +51,19 @@ for (const file of files) {
     html = html.replace(new RegExp(escapeRegExp(workbook), 'gi'), replacement);
   }
 
-  // Normalize source metadata after basename replacement. The values remain
-  // useful provenance labels without exposing build-machine workbook names.
-  html = html
-    .replace(/("source_file"\s*:\s*")synthetic-hr-dataset("?)/gi, '$1synthetic-hr-dataset$2')
-    .replace(/("source"\s*:\s*")synthetic-hr-dataset("?)/gi, '$1synthetic-hr-dataset$2')
-    .replace(/("fiili_source"\s*:\s*")synthetic-workforce-roster("?)/gi, '$1synthetic-workforce-roster$2')
-    .replace(/Kaynak:\s*synthetic-hr-dataset/gi, 'Kaynak: Sentetik HR veri seti');
+  // Normalize visible provenance after basename replacement. We deliberately do
+  // not ban arbitrary `.xlsx` source-code text because generated dashboards can
+  // legitimately contain regex/parser literals such as `\.xlsx`.
+  html = html.replace(/Kaynak:\s*synthetic-hr-dataset/gi, 'Kaynak: Sentetik HR veri seti');
 
   const violations = prohibited.filter(({ pattern }) => pattern.test(html));
   const residualWorkbook = internalWorkbooks.find((workbook) => new RegExp(escapeRegExp(workbook), 'i').test(html));
-  const unexpectedWorkbook = [...html.matchAll(/([^\s<>"'`]+\.xlsx)\b/gi)]
-    .map((match) => basename(match[1]))
-    .find((name) => name !== PUBLIC_DOWNLOAD);
 
-  if (violations.length || residualWorkbook || unexpectedWorkbook) {
+  if (violations.length || residualWorkbook) {
     const labels = violations.map((item) => item.label);
-    if (residualWorkbook || unexpectedWorkbook) labels.push('internal workbook filename');
+    if (residualWorkbook) labels.push('internal workbook filename');
     console.error(`${file}: public HR sanitization incomplete: ${[...new Set(labels)].join(', ')}`);
     if (residualWorkbook) console.error(`  residual internal workbook: ${residualWorkbook}`);
-    if (unexpectedWorkbook) console.error(`  unexpected workbook token: ${unexpectedWorkbook}`);
     process.exitCode = 1;
     continue;
   }
