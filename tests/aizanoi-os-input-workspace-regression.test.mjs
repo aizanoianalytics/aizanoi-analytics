@@ -4,11 +4,15 @@ import { readFileSync } from 'node:fs';
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 
-test('Browser restores focus to its editable address field after shell activation', () => {
+test('Browser restores focus to its editable address field after shell activation settles', () => {
   const source = read('frontend/js/v3/apps/browser/src/app.js');
   assert.match(source, /function restoreAddressFocus\(\)/);
+  assert.match(source, /focusRestoreTimer = setTimeout\(\(\) =>/);
+  assert.match(source, /requestAnimationFrame\(\(\) =>/);
   assert.match(source, /address\.addEventListener\('pointerdown', restoreAddressFocus\)/);
+  assert.match(source, /address\.addEventListener\('click', restoreAddressFocus\)/);
   assert.match(source, /address\.focus\(\{ preventScroll:true \}\)/);
+  assert.match(source, /if \(focusRestoreTimer !== null\) clearTimeout\(focusRestoreTimer\)/);
 });
 
 test('Signal Snake keeps keyboard restart available and renders a legible New Game control', () => {
