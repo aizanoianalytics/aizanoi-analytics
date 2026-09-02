@@ -1,5 +1,4 @@
 import { enabledModuleById } from './module-registry.generated.js';
-import { STATIC_SEARCH_ENTRIES } from './search-index.generated.js';
 
 export const WORLDS = Object.freeze([
   {
@@ -60,10 +59,10 @@ export function canonicalAppId(id) {
 }
 export function worldById(id) { return WORLD_MAP.get(String(id || '')) || null; }
 export function appsByGroup(group) { return ALL_APPS.filter((app) => app.group === group); }
-export function searchableEntries() {
+export function searchableEntries(extraEntries=[]) {
   return [
     ...WORLDS.map((world) => ({ type:'world', id:world.id, label:world.label, description:world.era, keywords:[world.label,world.era,world.summary] })),
     ...APPS.map((app) => ({ type:'app', id:app.id, label:app.label, description:app.description, keywords:[app.label,app.short,app.description,...app.keywords] })),
-    ...STATIC_SEARCH_ENTRIES
+    ...extraEntries
   ];
 }

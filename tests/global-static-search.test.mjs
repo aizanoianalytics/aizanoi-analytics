@@ -16,8 +16,10 @@ test('static search index is deterministic and covers News plus Analytics conten
 });
 
 test('existing Cmd/Ctrl+K palette consumes static content without introducing a parallel search surface',()=>{
-  assert.match(registry,/STATIC_SEARCH_ENTRIES/);
-  assert.match(registry,/\.\.\.STATIC_SEARCH_ENTRIES/);
+  assert.doesNotMatch(registry,/search-index\.generated\.js/,'static content index must not join initial registry evaluation');
+  assert.match(registry,/\.\.\.extraEntries/);
+  assert.match(shell,/import\('\.\/search-index\.generated\.js'\)/,'static content index should lazy-load when search opens');
+  assert.match(shell,/searchableEntries\(staticSearchEntries\)/);
   assert.match(shell,/\['action','world','app','content'\]/);
   assert.match(shell,/row\.type==='content'\)location\.href=row\.href/);
   assert.match(shell,/type==='content'\?'Content'/);
