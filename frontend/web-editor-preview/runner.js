@@ -49,6 +49,17 @@ function reportRuntimeError(error,{prefix=''}={}){
   send(MESSAGE_CONSOLE,{level:'error',args:[message]});
   send(MESSAGE_ERROR,{message:detail});
 }
+const nativeSetTimeout=window.setTimeout.bind(window);
+const nativeSetInterval=window.setInterval.bind(window);
+function wrapScheduledCallback(callback){
+  if(typeof callback!=='function')return callback;
+  return (...args)=>{
+    try{return callback.apply(window,args);}
+    catch(error){reportRuntimeError(error);return undefined;}
+  };
+}
+window.setTimeout=(callback,delay,...args)=>nativeSetTimeout(wrapScheduledCallback(callback),delay,...args);
+window.setInterval=(callback,delay,...args)=>nativeSetInterval(wrapScheduledCallback(callback),delay,...args);
 function copyStylesheetLinks(parsed){
   for(const node of [...parsed.querySelectorAll('link[rel~="stylesheet"][href]')]){
     const link=document.createElement('link');
