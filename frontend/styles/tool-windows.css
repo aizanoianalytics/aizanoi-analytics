@@ -41,21 +41,38 @@
     pointer-events:auto;
   }
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"] {
+    position:relative;
     width:32px;
     height:32px;
     display:grid;
     place-items:center;
+    overflow:hidden;
     padding:0;
     border:1px solid rgba(255,255,255,.52);
     border-radius:50%;
-    background:rgba(17,25,40,.76);
+    appearance:none;
+    background:rgba(17,25,40,.86) !important;
     box-shadow:0 7px 22px rgba(13,20,34,.2);
-    color:#fff;
-    font:500 19px/1 var(--az-font-ui);
+    color:transparent !important;
+    font-size:0 !important;
     pointer-events:auto;
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
   }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::before,
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::after {
+    content:'';
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:13px;
+    height:2px;
+    border-radius:999px;
+    background:#fff;
+    transform-origin:center;
+  }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::before { transform:translate(-50%,-50%) rotate(45deg); }
+  .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-control[data-action="close"]::after { transform:translate(-50%,-50%) rotate(-45deg); }
   .az-window:is([data-app-id="calculator"],[data-app-id="winamp"],[data-app-id="games"]) .az-window-body {
     min-height:100%;
     overflow:hidden;

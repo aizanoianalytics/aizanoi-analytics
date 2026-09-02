@@ -38,11 +38,11 @@
 
     const btn = document.createElement('button');
     btn.textContent = 'New Game';
-    btn.style.cssText = 'font:11px Tahoma,sans-serif;padding:5px 14px;';
+    btn.type = 'button';
+    btn.style.cssText = 'min-height:38px;padding:7px 16px;border:1px solid #6f7ee5;border-radius:8px;background:#5265db;color:#fff;font:700 12px/1 Tahoma,sans-serif;cursor:pointer;box-shadow:0 3px 10px rgba(28,43,90,.2);';
     btn.onclick = init;
     container.appendChild(btn);
 
-    canvas.addEventListener('keydown', onKey);
     canvas.addEventListener('pointerdown', onPointerDown);
     canvas.focus(); draw();
     interval = setInterval(tick, 118);
@@ -75,17 +75,34 @@
     setDirection(Math.abs(dx) > Math.abs(dy) ? (dx < 0 ? 'left' : 'right') : (dy < 0 ? 'up' : 'down'));
   }
 
+  function isEditableTarget(target) {
+    return target instanceof HTMLElement && (target.matches('input,textarea,select,[contenteditable="true"]') || target.isContentEditable);
+  }
+
   function onKey(e) {
+    if (!container.isConnected || container.offsetParent === null || isEditableTarget(e.target)) return;
+    const gameWindow = container.closest('.az-window');
+    if (gameWindow && !gameWindow.classList.contains('is-active')) return;
     const map = {ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right'};
     if (map[e.key]) { e.preventDefault(); setDirection(map[e.key]); }
     else if ((e.key === ' ' || e.key === 'Enter') && over) { e.preventDefault(); init(); }
     else if (e.key.toLowerCase() === 'p' && !over) { e.preventDefault(); togglePause(); }
   }
 
+  if (typeof window.__aizanoiSnakeKeyHandler === 'function') {
+    window.removeEventListener('keydown', window.__aizanoiSnakeKeyHandler);
+  }
+  window.__aizanoiSnakeKeyHandler = onKey;
+  window.addEventListener('keydown', onKey);
+
   function tick() {
     if (!container.isConnected) {
       if (interval) clearInterval(interval);
       interval = null;
+      if (window.__aizanoiSnakeKeyHandler === onKey) {
+        window.removeEventListener('keydown', onKey);
+        delete window.__aizanoiSnakeKeyHandler;
+      }
       return;
     }
     if (over || paused) return;
