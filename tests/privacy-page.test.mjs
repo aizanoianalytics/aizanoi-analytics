@@ -7,6 +7,7 @@ const camera = readFileSync('frontend/js/v3/apps/camera/src/app.js', 'utf8');
 const workspaceBackup = readFileSync('frontend/js/v3/workspace/backup.js', 'utf8');
 const workspaceFs = readFileSync('frontend/js/v3/workspace/fs.js', 'utf8');
 const browserApp = readFileSync('frontend/js/v3/apps/browser/src/app.js', 'utf8');
+const staticHeaders = readFileSync('infra/nginx/snippets/aizanoi-static-security-headers.conf.example', 'utf8');
 
 test('public privacy route is indexable, canonical and uses published local assets only', () => {
   assert.match(privacy, /<link rel="canonical" href="https:\/\/aizanoianalytics\.com\/privacy\/">/);
@@ -31,6 +32,11 @@ test('privacy Camera disclosure matches photo-only permission implementation', (
   assert.match(camera, /getUserMedia\(\{video:\{facingMode:'user'\},audio:false\}\)/);
   assert.doesNotMatch(camera, /getUserMedia\(\{video:false,audio:true\}\)/);
   assert.match(camera, /filesystem\.createFile/);
+});
+
+test('privacy geolocation disclosure matches production Permissions-Policy', () => {
+  assert.match(privacy, /Geolocation is disabled by the current production Permissions-Policy/i);
+  assert.match(staticHeaders, /Permissions-Policy\s+"[^"]*geolocation=\(\)/i);
 });
 
 test('privacy Browser disclosure matches direct non-proxied navigation contract', () => {
