@@ -40,10 +40,10 @@ test('legacy three-file projects remain readable and convert into a single HTML 
   assert.match(app,/legacy project loaded · save to convert/);
 });
 
-test('Workspace routes only HTML documents to Web Editor while standalone CSS and JavaScript stay text files',()=>{
+test('Workspace routes only HTML documents to Web Editor while standalone CSS and JavaScript stay editable in Notepad',()=>{
   assert.match(workspace,/function isWebSource\(node\).*return \/\\\.html\?\$\/\.test\(name\)\|\|mime==='text\/html'/s);
-  assert.doesNotMatch(workspace,/html\?\|css|m\?js|text\/css|text\/javascript|application\/javascript/);
-  assert.match(workspace,/if\(isWebSource\(node\)\)apps\.open\('web-editor',\{fileId:node\.id\}\);else if\(mime\.startsWith\('text\/'\)/);
+  assert.match(workspace,/function isCodeText\(node\).*application\/javascript.*\\\.\(\?:css\|m\?js\)/s);
+  assert.match(workspace,/if\(isWebSource\(node\)\)apps\.open\('web-editor',\{fileId:node\.id\}\);else if\(isCodeText\(node\)\)apps\.open\('notepad',\{fileId:node\.id\}\)/);
 });
 
 test('preview transport never runs authored code in the AizanoiOS shell and reports runner startup failures',()=>{
