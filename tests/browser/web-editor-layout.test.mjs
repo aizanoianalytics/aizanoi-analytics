@@ -16,7 +16,7 @@ test('Web Editor fills its window, keeps Run visible and Open Apps keeps applica
     await page.evaluate(()=>window.AIZANOI_OS.openApp('web-editor'));
     const window=page.locator('.az-window[data-app-id="web-editor"]');
     const editor=window.locator('.az-web-editor');
-    const run=window.locator('[data-web-run]');
+    const run=window.locator('[data-web-action="run"]');
     await editor.waitFor({state:'visible'});
     await page.waitForTimeout(150);
     const metrics=await page.evaluate(()=>{
