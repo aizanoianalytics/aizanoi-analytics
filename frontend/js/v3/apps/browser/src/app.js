@@ -98,6 +98,7 @@ export function mountBrowser({ container }) {
   const history = [{ kind: 'home', url: '' }];
   let cursor = 0;
   let currentUrl = '';
+  let focusRestoreTimer = null;
 
   function updateNavigationButtons() {
     backButton.disabled = cursor <= 0;
@@ -202,9 +203,13 @@ export function mountBrowser({ container }) {
   }
 
   function restoreAddressFocus() {
-    requestAnimationFrame(() => {
-      if (address.isConnected && document.activeElement !== address) address.focus({ preventScroll:true });
-    });
+    if (focusRestoreTimer !== null) clearTimeout(focusRestoreTimer);
+    focusRestoreTimer = setTimeout(() => {
+      focusRestoreTimer = null;
+      requestAnimationFrame(() => {
+        if (address.isConnected && document.activeElement !== address) address.focus({ preventScroll:true });
+      });
+    }, 0);
   }
 
   form.addEventListener('submit', handleSubmit);
@@ -223,6 +228,7 @@ export function mountBrowser({ container }) {
       container.removeEventListener('keydown', handleKeydown);
       address.removeEventListener('pointerdown', restoreAddressFocus);
       address.removeEventListener('click', restoreAddressFocus);
+      if (focusRestoreTimer !== null) clearTimeout(focusRestoreTimer);
       frame.removeAttribute('src');
       releaseStylesheet();
     }
