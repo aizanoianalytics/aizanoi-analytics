@@ -1,5 +1,5 @@
 /** AizanoiOS Workspace — file explorer over the browser-local virtual file system. */
-const esc=(v)=>String(v??'').replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
+const esc=(v)=>String(v??'').replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ICONS={folder:'📁',text:'📄',image:'🖼️',audio:'🎵',default:'📦'};
 function isWebSource(node){const name=String(node?.name||'').toLowerCase(),mime=String(node?.mime||'').toLowerCase();return /\.html?$/.test(name)||mime==='text/html';}
 function isCodeText(node){const name=String(node?.name||'').toLowerCase(),mime=String(node?.mime||'').toLowerCase();return mime.startsWith('text/')||mime==='application/json'||mime==='application/javascript'||/\.(?:css|m?js)$/.test(name);}
