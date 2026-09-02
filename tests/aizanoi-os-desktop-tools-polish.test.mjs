@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 
 const read = (path) => readFileSync(path, 'utf8');
 const brand = read('frontend/js/v3/brand-platform.js');
+const registry = read('frontend/js/v3/registry.js');
 const main = read('frontend/js/v3/main.js');
 const polish = read('frontend/styles/tool-windows.css');
 const arcade = read('frontend/js/v3/apps/games/src/app.js');
@@ -12,9 +13,11 @@ const blockfall = read('frontend/js/v3/apps/games/assets/blockfall.js');
 const release = read('frontend/release.js');
 const serviceWorker = read('frontend/service-worker.js');
 
-test('adaptive home exposes curated apps without Historical Worlds return/continue cards', () => {
-  for (const id of ['browser','notepad','calculator','camera','winamp','games','recycle-bin']) {
-    assert.match(brand, new RegExp(`['"]${id}['"]`), `${id} should be represented in the desktop shortcut contract`);
+test('adaptive home keeps a seven-shortcut desktop while utilities remain discoverable', () => {
+  assert.match(brand, /const DESKTOP=Object\.freeze\(\[\.\.\.PINNED,'games','recycle-bin'\]\)/);
+  assert.match(brand, /const PUBLIC_APPS=Object\.freeze\(APPS\.map\(\(app\)=>app\.id\)\)/);
+  for (const id of ['browser','notepad','calculator','camera','winamp','workspace','web-editor']) {
+    assert.match(registry, new RegExp(`id:['"]${id}['"]`), `${id} should remain in the canonical app registry`);
   }
   assert.doesNotMatch(brand, /sessionCard|getFieldSession|CONTINUE EXPLORING|data-home-action="continue-world"|az-device-session|az-session-widget|desktopWidget/);
   assert.match(brand, /\/styles\/tool-windows\.css/);
