@@ -6,6 +6,7 @@ import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '..');
 const read = (path) => readFileSync(resolve(root, path), 'utf8');
 const runtime = read('frontend/ancient-world/engine/flat-city-runtime.js');
+const bootstrap = read('frontend/ancient-world/engine/city-bootstrap.js');
 const assets = read('frontend/ancient-world/assets/blocky-asset-library.js');
 const cities = [
   ['rome', 'frontend/ancient-cities/rome-410-476'],
@@ -27,7 +28,7 @@ test('Ancient World exposes a shared Aizanoi-style mobile controller', () => {
 });
 
 for (const [city, base] of cities) {
-  test(`${city} uses shared analog controls and the modular renderer`, () => {
+  test(`${city} uses shared analog controls and unified city bootstrap`, () => {
     const html = read(`${base}/index.html`);
     const app = read(`${base}/js/app.js`);
     assert.match(html, /mobile-controls\.css/);
@@ -36,11 +37,17 @@ for (const [city, base] of cities) {
     for (const id of ['movePad','moveKnob','mobileRun','mobileInspect','mobileMap']) assert.match(html, new RegExp(`id="${id}"`));
     assert.doesNotMatch(html, /data-move="KeyW"/);
     assert.doesNotMatch(html, /id="lookPad"/);
-    assert.match(app, /startFlatBlockyCity/);
-    assert.match(app, /installCityCompatibility/);
-    assert.doesNotMatch(app, /installMobileControls/);
+    assert.match(app, /startAncientCity/);
+    assert.doesNotMatch(app, /startFlatBlockyCity|installCityCompatibility|installMobileControls/);
   });
 }
+
+test('shared bootstrap delegates compatibility and Research Lens installation once', () => {
+  assert.match(bootstrap, /startFlatBlockyCity/);
+  assert.match(bootstrap, /installCityCompatibility/);
+  assert.match(bootstrap, /installEvidenceMode/);
+  assert.match(bootstrap, /ancientWorldTouchMode/);
+});
 
 test('shared runtime owns analog movement, run state and mobile look', () => {
   assert.match(runtime, /installMobileControls/);
