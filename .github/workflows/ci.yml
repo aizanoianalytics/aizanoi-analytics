@@ -87,7 +87,7 @@ jobs:
 
   browser-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 32
+    timeout-minutes: 34
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
@@ -106,38 +106,20 @@ jobs:
           python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-http.log 2>&1 &
           for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
           cat /tmp/aizanoi-http.log; exit 1
+      - name: Install production Nginx
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends nginx
       - name: Production-like Nginx policy gate
         env: { AIZANOI_NGINX_BASE_URL: 'http://127.0.0.1:4174' }
         run: |
-          set -euo pipefail
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends nginx
-          cat > /tmp/aizanoi-nginx.conf <<EOF
-          pid /tmp/aizanoi-nginx.pid;
-          error_log /tmp/aizanoi-nginx-error.log;
-          events {}
-          http {
-            include /etc/nginx/mime.types;
-            access_log /tmp/aizanoi-nginx-access.log;
-            server {
-              listen 127.0.0.1:4174;
-              root ${GITHUB_WORKSPACE}/frontend;
-              index index.html;
-              include ${GITHUB_WORKSPACE}/infra/nginx/snippets/aizanoi-static-security-headers.conf.example;
-              location = / { try_files /index.html =404; }
-              location ^~ /js/ { try_files \$uri =404; }
-              location ^~ /styles/ { try_files \$uri =404; }
-              location ^~ /assets/ { try_files \$uri =404; }
-              location ^~ /news/ { try_files \$uri \$uri/ =404; }
-              location / { try_files \$uri \$uri/ =404; }
-            }
-          }
-          EOF
-          nginx -t -c /tmp/aizanoi-nginx.conf
-          nginx -c /tmp/aizanoi-nginx.conf
-          trap 'nginx -s stop -c /tmp/aizanoi-nginx.conf || true' EXIT
-          for i in {1..20}; do curl -fsSI http://127.0.0.1:4174/ >/dev/null && break; sleep 0.5; done
-          node --test tests/browser/nginx-production-policy.test.mjs 2>&1 | tee artifacts/diagnostics/nginx-production-policy.log
+          set -o pipefail
+          bash scripts/ci/with-production-nginx.sh 4174 node --test tests/browser/nginx-production-policy.test.mjs 2>&1 | tee artifacts/diagnostics/nginx-production-policy.log
+      - name: Representative accessibility gate
+        env: { AIZANOI_A11Y_REPORT: 'artifacts/diagnostics/representative-a11y.json' }
+        run: |
+          set -o pipefail
+          bash scripts/ci/with-production-nginx.sh 4176 node tests/representative-a11y.mjs 2>&1 | tee artifacts/diagnostics/representative-a11y.log
       - name: Core browser gates
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
@@ -179,7 +161,7 @@ jobs:
 
   lighthouse:
     runs-on: ubuntu-latest
-    timeout-minutes: 14
+    timeout-minutes: 24
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
@@ -190,29 +172,18 @@ jobs:
           npm audit --audit-level=high
       - name: Build generated News surfaces
         run: node scripts/news/build-news.mjs
-      - name: Start static frontend server
+      - name: Install production Nginx
         run: |
-          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-lighthouse-http.log 2>&1 &
-          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
-          cat /tmp/aizanoi-lighthouse-http.log; exit 1
-      - name: Enforce Lighthouse budgets
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends nginx
+      - name: Enforce representative Lighthouse budgets
+        env:
+          AIZANOI_LIGHTHOUSE_DIR: 'artifacts/diagnostics/representative-lighthouse'
+          AIZANOI_LIGHTHOUSE_ATTEMPTS: '3'
         run: |
           mkdir -p artifacts/diagnostics
-          set +e
-          passes=0; valid=0
-          for attempt in 1 2 3; do
-            report="/tmp/aizanoi-lighthouse-$attempt.json"; rm -f "$report"
-            npx lighthouse http://127.0.0.1:4173/ --quiet --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --output=json --output-path="$report" >"artifacts/diagnostics/lighthouse-cli-attempt-$attempt.log" 2>&1
-            if [ "$?" -eq 0 ] && [ -s "$report" ]; then
-              valid=$((valid+1)); cp "$report" "artifacts/diagnostics/lighthouse-report-$attempt.json"
-              node tests/lighthouse-budget.mjs "$report" >"artifacts/diagnostics/lighthouse-budget-$attempt.log" 2>&1 && passes=$((passes+1))
-            fi
-            [ "$passes" -ge 2 ] && break
-            sleep 1
-          done
-          echo "Valid Lighthouse reports: $valid; budget passes: $passes" | tee artifacts/diagnostics/lighthouse-summary.log
-          set -e
-          [ "$passes" -ge 2 ]
+          set -o pipefail
+          bash scripts/ci/with-production-nginx.sh 4177 node tests/representative-lighthouse.mjs 2>&1 | tee artifacts/diagnostics/representative-lighthouse.log
       - name: Upload Lighthouse diagnostics
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
