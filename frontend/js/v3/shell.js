@@ -218,247 +218,433 @@ function focusables(root) {
   return [...root.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])')].filter((node) => !node.hidden && getComputedStyle(node).display !== 'none');
 }
 
-function openOverlay(id, opener=null) {
+function openOverlay(id, opener = document.activeElement) {
+  closeOverlay(false);
   const overlay = document.getElementById(id); if (!overlay) return;
-  if(activeOverlay && activeOverlay!==overlay)closeOverlay(false);
-  activeOverlay=overlay;overlayOpener=opener instanceof HTMLElement ? opener : document.activeElement instanceof HTMLElement ? document.activeElement : null;
-  overlay.classList.add('is-open'); overlay.setAttribute('aria-hidden','false');
+  activeOverlay = overlay;
+  overlayOpener = opener instanceof HTMLElement ? opener : null;
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden','false');
   setBackgroundInert(true);
-  const focusTarget=overlay.querySelector('input,button,[tabindex]:not([tabindex="-1"])');
-  queueMicrotask(()=>focusTarget?.focus());
+  const first = focusables(overlay)[0];
+  setTimeout(() => first?.focus(), 0);
 }
 
-function closeOverlay(restoreFocus=true) {
+function closeOverlay(restore = true) {
   if (!activeOverlay) return;
-  const previous=activeOverlay;activeOverlay=null;
-  previous.classList.remove('is-open'); previous.setAttribute('aria-hidden','true');
+  const last = activeOverlay;
+  const opener = overlayOpener;
+  activeOverlay = null;
+  overlayOpener = null;
+  last.classList.remove('is-open');
+  last.setAttribute('aria-hidden','true');
   setBackgroundInert(false);
-  if(restoreFocus){const opener=overlayOpener;overlayOpener=null;queueMicrotask(()=>opener?.isConnected&&opener.focus());}
-  else overlayOpener=null;
+  if (restore && opener?.isConnected) opener.focus({ preventScroll:true });
 }
 
 function trapOverlayKey(event) {
-  if(!activeOverlay)return;
-  if(event.key==='Escape'){event.preventDefault();closeOverlay();return;}
-  if(event.key!=='Tab')return;
-  const nodes=focusables(activeOverlay);if(!nodes.length){event.preventDefault();return;}
-  const first=nodes[0],last=nodes[nodes.length-1];
-  if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
-  else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+  if (!activeOverlay) return false;
+  if (event.key === 'Escape') { event.preventDefault(); closeOverlay(); return true; }
+  if (event.key !== 'Tab') return false;
+  const items = focusables(activeOverlay); if (!items.length) return false;
+  const first = items[0], last = items.at(-1);
+  if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+  else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  return true;
+}
+
+function defaultRect(appId) {
+  const saved = Store.windowRect(appId); if (saved) return clampRect(saved);
+  const index = Math.max(0, APPS.findIndex((app) => app.id === appId));
+  const width = Math.min(980, Math.max(620, innerWidth * .66));
+  const height = Math.min(700, Math.max(460, innerHeight * .70));
+  return clampRect({ width, height, left:(innerWidth-width)/2 + (index%4)*14, top:Math.max(10,(innerHeight-height)/2 - 24 + (index%4)*10) });
 }
 
 function clampRect(rect) {
-  const stage = document.querySelector('.az-stage');
-  const bounds = stage?.getBoundingClientRect() || { left:0, top:44, right:innerWidth, bottom:innerHeight-72, width:innerWidth, height:innerHeight-116 };
-  let width = Math.min(Math.max(rect.width || 840, 380), Math.max(380, bounds.width));
-  let height = Math.min(Math.max(rect.height || 620, 320), Math.max(320, bounds.height));
-  let left = Math.min(Math.max(rect.left ?? bounds.left + 36, bounds.left), Math.max(bounds.left, bounds.right - width));
-  let top = Math.min(Math.max(rect.top ?? bounds.top + 20, bounds.top), Math.max(bounds.top, bounds.bottom - height));
+  const mode = layoutMode();
+  if (mode !== 'large') return { left:0, top:0, width:innerWidth, height:Math.max(300, innerHeight - 126) };
+  const width = Math.min(Math.max(360, Number(rect.width)||760), innerWidth-32);
+  const height = Math.min(Math.max(260, Number(rect.height)||560), innerHeight-132);
+  const left = Math.min(Math.max(12, Number(rect.left)||20), innerWidth-width-12);
+  const top = Math.min(Math.max(8, Number(rect.top)||20), innerHeight-height-88);
   return { left, top, width, height };
 }
 
-function positionFor(appId) {
-  const saved = Store.windowRect(appId);
-  const stage = document.querySelector('.az-stage')?.getBoundingClientRect();
-  if (saved) return clampRect(saved);
-  const offset = windows.size * 28;
-  return clampRect({ left:(stage?.left || 0) + 68 + offset, top:(stage?.top || 44) + 32 + offset, width:860, height:620 });
+function resizeMarkup() {
+  return ['n','s','e','w','ne','nw','se','sw'].map((edge) => `<span class="az-resize-handle" data-edge="${edge}" tabindex="-1" aria-hidden="true"></span>`).join('');
+}
+
+function createWindow(app) {
+  const layer = document.querySelector('.az-window-layer');
+  const rect = defaultRect(app.id);
+  const el = document.createElement('section');
+  el.className = 'az-window';
+  el.dataset.appId = app.id;
+  el.setAttribute('role','region');
+  el.setAttribute('aria-label', app.label);
+  el.tabIndex = -1;
+  Object.assign(el.style,{ left:`${rect.left}px`, top:`${rect.top}px`, width:`${rect.width}px`, height:`${rect.height}px`, zIndex:String(++zCounter) });
+  el.innerHTML = `<header class="az-window-bar" data-window-drag><img class="az-window-icon" src="${escapeHtml(app.icon)}" alt=""><strong class="az-window-title">${escapeHtml(app.label)}</strong><span class="az-window-context">AIZANOI</span><div class="az-window-controls"><button class="az-window-control" type="button" data-action="menu" aria-label="Window menu">⋯</button><button class="az-window-control" type="button" data-action="minimize" aria-label="Minimize ${escapeHtml(app.label)}">—</button><button class="az-window-control" type="button" data-action="maximize" aria-label="Maximize or restore ${escapeHtml(app.label)}">□</button><button class="az-window-control" type="button" data-action="close" aria-label="Close ${escapeHtml(app.label)}">×</button></div></header><div class="az-window-body" data-app-body></div>${resizeMarkup()}`;
+  layer.appendChild(el);
+  wireWindow(el, app.id);
+  return el;
+}
+
+function focusWindow(appId, { updateRoute=true } = {}) {
+  const item = windows.get(appId); if (!item) return;
+  for (const [id, other] of windows) other.el.classList.toggle('is-active', id === appId);
+  item.minimized = false;
+  item.el.classList.remove('is-minimized');
+  item.el.style.zIndex = String(++zCounter);
+  Store.setActiveApp(appId);
+  renderShelf();
+  syncCompactIsolation();
+  if (updateRoute) setRoute(appId, 'push');
+  setTimeout(() => item.el.focus({ preventScroll:true }), 0);
+}
+
+function syncCompactIsolation() {
+  const activeId=Store.getState().activeApp;
+  const active=activeId ? windows.get(activeId) : null;
+  const isolated=layoutMode()==='compact' && Boolean(active && !active.minimized);
+  for(const selector of ['.az-home-scroll','.az-task-shelf-wrap']){
+    const node=document.querySelector(selector);
+    if(node)node.inert=isolated;
+  }
 }
 
 function setRoute(appId, mode='replace') {
   const url = new URL(location.href);
   if (appId) url.searchParams.set('app', appId); else url.searchParams.delete('app');
-  const state = { ...(history.state || {}), app:appId || null };
-  history[mode === 'push' ? 'pushState' : 'replaceState'](state, '', url);
+  url.hash = '';
+  const next = `${url.pathname}${url.search}`;
+  if (`${location.pathname}${location.search}` === next) return;
+  history[mode === 'push' ? 'pushState' : 'replaceState']({ app:appId || null }, '', next);
 }
 
-function syncCompactIsolation() {
-  const compact=layoutMode()==='compact';
-  const active=Store.getState().activeApp;
-  const home=document.querySelector('.az-home-scroll');
-  const dock=document.querySelector('.az-task-shelf-wrap');
-  if(home)home.inert=Boolean(compact&&active);
-  if(dock)dock.inert=Boolean(compact&&active);
-}
-
-function windowTemplate(app) {
-  return `<section class="az-window" data-app-id="${escapeHtml(app.id)}" tabindex="-1" role="region" aria-label="${escapeHtml(app.label)} window">
-    <div class="az-window-bar" data-drag-handle>
-      <button class="az-window-app-menu" type="button" data-window-menu aria-label="${escapeHtml(app.label)} window menu"><img src="${escapeHtml(app.icon)}" alt=""></button>
-      <strong>${escapeHtml(app.label)}</strong>
-      <div class="az-window-controls">
-        <button class="az-window-control" type="button" data-action="minimize" aria-label="Minimize ${escapeHtml(app.label)}">−</button>
-        <button class="az-window-control" type="button" data-action="maximize" aria-label="Maximize ${escapeHtml(app.label)}">□</button>
-        <button class="az-window-control" type="button" data-action="close" aria-label="Close ${escapeHtml(app.label)}">×</button>
-      </div>
-    </div>
-    <div class="az-window-body" data-app-body></div>
-    <div class="az-resize-handle az-resize-e" data-resize="e"></div><div class="az-resize-handle az-resize-s" data-resize="s"></div><div class="az-resize-handle az-resize-se" data-resize="se"></div>
-  </section>`;
-}
-
-function focusWindow(appId,{updateRoute=true}={}) {
-  const item = windows.get(appId); if (!item) return;
-  for (const [id, other] of windows) {
-    const active = id === appId;
-    other.el.classList.toggle('is-active', active);
-    if(active){other.minimized=false;other.el.classList.remove('is-minimized');}
+async function openAppInstance(appId, app, options, generation) {
+  await ensureAppsStyle();
+  if(appGenerations.get(appId)!==generation)return null;
+  const el = createWindow(app);
+  const item = { app, el, cleanup:null, minimized:false, maximized:false, previousRect:null, generation };
+  windows.set(appId, item);
+  Store.markAppOpen(appId);
+  renderShelf();
+  const body = el.querySelector('[data-app-body]');
+  body.innerHTML = '<div class="az-empty-state"><div><h3>Opening application…</h3><p>Loading only the code this app needs.</p></div></div>';
+  try {
+    const module = await import(app.module);
+    if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) return null;
+    let capabilities = Object.freeze({});
+    if (Array.isArray(app.requires) && app.requires.length) {
+      const runtime = await import('./capabilities.js');
+      capabilities = await runtime.resolveCapabilities(app.requires, {
+        notifications: Object.freeze({ notify }),
+      });
+      if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) return null;
+    }
+    const result = await module.mount?.({ container:body, app, appId, api:appApi, capabilities, options });
+    if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) { try { (typeof result === 'function' ? result : result?.cleanup)?.(); } catch (_) {} return null; }
+    item.cleanup = (typeof result === 'object' && result) ? (result.cleanup || null) : (typeof result === 'function' ? result : null);
+    item.onOpen = (typeof result === 'object' && result && typeof result.onOpen === 'function') ? result.onOpen : null;
+    item.beforeClose = (typeof result === 'object' && result && typeof result.beforeClose === 'function') ? result.beforeClose : null;
+  } catch (error) {
+    if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) return null;
+    console.error(`Aizanoi app failed to open: ${appId}`, error);
+    body.innerHTML = `<div class="az-empty-state"><div><h3>Could not open ${escapeHtml(app.label)}</h3><p>${escapeHtml(error?.message || 'Unknown application error')}</p><button class="az-button" type="button" data-retry-app="${escapeHtml(appId)}">Try again</button></div></div>`;
   }
-  item.el.style.zIndex = String(++zCounter);
-  Store.setActiveApp(appId);
-  renderShelf();
-  syncCompactIsolation();
-  if(updateRoute)setRoute(appId,'replace');
-  announce(`${item.app.label} active`);
+  focusWindow(appId,{ updateRoute:!options.fromHistory });
+  Store.recordActivity(`Opened ${app.label}`, app.description, 'app');
+  announce(`${app.label} opened`);
+  return el;
 }
 
-function removeWindow(appId,{deletePersisted=false}={}) {
-  const item=windows.get(appId); if(!item)return;
-  nextAppGeneration(appId);
-  item.module?.unmount?.();
-  item.el.remove();
-  windows.delete(appId);
-  openingApps.delete(appId);
-  Store.closeApp(appId);
-  if(deletePersisted)Store.clearWindowRect(appId);
-  renderShelf();
-  const remaining=[...windows.keys()];
-  if(remaining.length)focusWindow(remaining[remaining.length-1]);
-  else {Store.setActiveApp(null);syncCompactIsolation();setRoute(null,'replace');}
-}
-
-export function closeApp(appId,{deletePersisted=false}={}) { removeWindow(appId,{deletePersisted}); }
-
-export async function openApp(appId,{fromHistory=false,restoring=false}={}) {
-  const app = appById(appId); if (!app) return false;
-  const existing = windows.get(appId);
-  if (existing) { focusWindow(appId,{updateRoute:!fromHistory}); return true; }
+export function openApp(requestedAppId, options={}) {
+  const appId=canonicalAppId(requestedAppId);
+  const app = appById(appId); if (!app) return Promise.resolve(null);
+  if (windows.has(appId)) {
+    const item = windows.get(appId);
+    focusWindow(appId,{ updateRoute:!options.fromHistory });
+    // Give already-running apps a chance to react to new open options
+    // (e.g. Notepad loading a different file, Winamp playing a track).
+    try { item.onOpen?.(options); } catch (error) { console.error(`AizanoiOS onOpen failed: ${appId}`, error); }
+    return Promise.resolve(item.el);
+  }
   if(openingApps.has(appId))return openingApps.get(appId);
   const generation=nextAppGeneration(appId);
-  const promise=(async()=>{
-    await ensureAppsStyle();
-    if(generation!==appGenerations.get(appId))return false;
-    const layer = document.querySelector('.az-window-layer'); if (!layer) return false;
-    const wrap = document.createElement('div'); wrap.innerHTML = windowTemplate(app); const el=wrap.firstElementChild;
-    const rect=positionFor(appId); Object.assign(el.style,{left:`${rect.left}px`,top:`${rect.top}px`,width:`${rect.width}px`,height:`${rect.height}px`,zIndex:String(++zCounter)});
-    layer.appendChild(el);
-    const body=el.querySelector('[data-app-body]');
-    try{
-      const module = await import(app.module);
-      if(generation!==appGenerations.get(appId)||!el.isConnected){module.unmount?.();return false;}
-      const appApi = { ...appApi, app };
-      await module.mount?.(body, appApi);
-      if(generation!==appGenerations.get(appId)||!el.isConnected){module.unmount?.();return false;}
-      windows.set(appId,{app,el,module,minimized:false,maximized:false});
-      Store.openApp(appId);
-      renderShelf();
-      if(!restoring || Store.getState().activeApp===appId)focusWindow(appId,{updateRoute:!fromHistory});
-      el.querySelector('[data-drag-handle]')?.addEventListener('pointerdown',(event)=>pointerDrag(event,appId));
-      el.querySelectorAll('[data-resize]').forEach((handle)=>handle.addEventListener('pointerdown',(event)=>pointerDrag(event,appId,handle.dataset.resize)));
-      return true;
-    }catch(error){
-      el.remove();
-      notify(`Could not open ${app.label}`, error?.message || 'Unexpected application error.');
-      console.error(error);
-      return false;
-    }
-  })();
+  const promise=openAppInstance(appId,app,options,generation).finally(()=>{
+    if(openingApps.get(appId)===promise)openingApps.delete(appId);
+  });
   openingApps.set(appId,promise);
-  try{return await promise;}finally{if(openingApps.get(appId)===promise)openingApps.delete(appId);}
+  return promise;
 }
 
-function renderCommands(query='') {
-  const host = document.querySelector('.az-command-results'); if (!host) return;
-  const results=searchableEntries(query).slice(0,18);
-  commandSelection=Math.max(0,Math.min(commandSelection,Math.max(0,results.length-1)));
-  if(!results.length){host.innerHTML='<div class="az-command-empty">No apps, worlds or commands match.</div>';return;}
-  host.innerHTML=results.map((item,index)=>`<button class="az-command-row${index===commandSelection?' is-selected':''}" type="button" role="option" aria-selected="${index===commandSelection?'true':'false'}" data-command-index="${index}"><img src="${escapeHtml(item.icon)}" alt=""><span><strong>${escapeHtml(item.label)}</strong><small>${escapeHtml(item.description)}</small></span><span class="az-command-kind">${escapeHtml(item.kind)}</span></button>`).join('');
+export function closeApp(appId, { updateRoute=true } = {}) {
+  const item = windows.get(appId);
+  if (!item) {
+    if(!openingApps.has(appId))return false;
+    nextAppGeneration(appId);
+    openingApps.delete(appId);
+    return true;
+  }
+  // Apps can veto closing (e.g. Notepad with unsaved changes) via beforeClose.
+  if (typeof item.beforeClose === 'function') {
+    let verdict = item.beforeClose();
+    if (verdict && typeof verdict.then === 'function') {
+      verdict.then((allowed) => { if (allowed) finalizeClose(appId, { updateRoute }); }).catch(() => {});
+      return true;
+    }
+    if (!verdict) return false;
+  }
+  finalizeClose(appId, { updateRoute });
+  return true;
 }
 
-function commandRows(query='') { return searchableEntries(query).slice(0,18); }
+function finalizeClose(appId, { updateRoute=true } = {}) {
+  const item = windows.get(appId);
+  if (!item) return false;
+  nextAppGeneration(appId);
+  try { item.cleanup?.(); } catch (_) {}
+  item.el.remove();
+  windows.delete(appId);
+  Store.markAppClosed(appId);
+  renderShelf();
+  const state = Store.getState();
+  const next = state.activeApp && windows.has(state.activeApp) ? state.activeApp : [...windows.keys()].at(-1) || null;
+  if (next) focusWindow(next,{ updateRoute:false }); else Store.setActiveApp(null);
+  syncCompactIsolation();
+  if (updateRoute) setRoute(next,'replace');
+  Store.recordActivity(`Closed ${item.app.label}`,'','app');
+  announce(`${item.app.label} closed`);
+  return true;
+}
 
-function executeCommand(index) {
-  const input=document.getElementById('az-command-input');
-  const item=commandRows(input?.value || '')[index];if(!item)return;
+function minimizeApp(appId) {
+  const item = windows.get(appId); if (!item) return;
+  item.minimized = true;
+  item.el.classList.add('is-minimized');
+  item.el.classList.remove('is-active');
+  Store.setActiveApp(null);
+  renderShelf();
+  syncCompactIsolation();
+  setRoute(null,'replace');
+  announce(`${item.app.label} minimized`);
+}
+
+function maximizeApp(appId) {
+  const item = windows.get(appId); if (!item) return;
+  item.maximized = !item.maximized;
+  item.el.classList.toggle('is-maximized', item.maximized);
+  announce(`${item.app.label} ${item.maximized ? 'maximized' : 'restored'}`);
+}
+
+function showHome({ push=true } = {}) {
+  for (const item of windows.values()) {
+    item.minimized = true;
+    item.el.classList.add('is-minimized');
+    item.el.classList.remove('is-active');
+  }
+  Store.setActiveApp(null);
+  renderShelf();
+  syncCompactIsolation();
+  setRoute(null, push ? 'push' : 'replace');
+  document.querySelector('.az-home-scroll')?.scrollTo({ top:0, behavior:Store.getState().reduceMotion ? 'auto' : 'smooth' });
+}
+
+export function launchWorld(worldId, landmark=null) {
+  const world = worldById(worldId); if (!world) return false;
+  Store.updateFieldSession({ worldId, landmark, route:world.route, source:'field-system' });
+  Store.recordActivity(`Entered ${world.label}`, world.era, 'world');
+  const url = landmark ? `${world.route}?jump=${encodeURIComponent(landmark)}&from=field-system` : `${world.route}?from=field-system`;
+  location.href = url;
+  return true;
+}
+
+function pointerDrag(event, appId, edge=null) {
+  if (layoutMode() !== 'large') return;
+  const item = windows.get(appId); if (!item || item.maximized || event.button !== 0) return;
+  event.preventDefault();
+  focusWindow(appId,{updateRoute:false});
+  const start = { x:event.clientX, y:event.clientY, rect:item.el.getBoundingClientRect() };
+  const move = (e) => {
+    const dx=e.clientX-start.x, dy=e.clientY-start.y;
+    let rect={ left:start.rect.left, top:start.rect.top, width:start.rect.width, height:start.rect.height };
+    if (!edge) { rect.left += dx; rect.top += dy; }
+    else {
+      if (edge.includes('e')) rect.width += dx;
+      if (edge.includes('s')) rect.height += dy;
+      if (edge.includes('w')) { rect.left += dx; rect.width -= dx; }
+      if (edge.includes('n')) { rect.top += dy; rect.height -= dy; }
+    }
+    rect=clampRect(rect);
+    Object.assign(item.el.style,{left:`${rect.left}px`,top:`${rect.top}px`,width:`${rect.width}px`,height:`${rect.height}px`});
+  };
+  const finish = () => {
+    document.removeEventListener('pointermove',move);
+    document.removeEventListener('pointerup',finish);
+    document.removeEventListener('pointercancel',finish);
+    if (!item.el.isConnected) return;
+    Store.saveWindowRect(appId,item.el.getBoundingClientRect());
+  };
+  document.addEventListener('pointermove',move);
+  document.addEventListener('pointerup',finish,{once:true});
+  document.addEventListener('pointercancel',finish,{once:true});
+}
+
+function startKeyboardWindowMode(appId, mode) {
+  const item=windows.get(appId); if(!item) return;
+  keyboardWindowMode={appId,mode,original:item.el.getBoundingClientRect()};
   closeOverlay(false);
-  if(item.kind==='app')openApp(item.id);
-  else if(item.kind==='world')launchWorld(item.id);
-  else if(item.id==='clear-activity'){Store.clearActivity();notify('Activity cleared','Recent local activity has been removed.');}
-  else if(item.id==='reset-workspace'){Store.resetWorkspace();location.reload();}
-}
-
-function renderSwitcher() {
-  const host=document.querySelector('[data-switcher-list]');if(!host)return;
-  const open=[...windows.values()].sort((a,b)=>(Number(b.el.style.zIndex)||0)-(Number(a.el.style.zIndex)||0));
-  host.innerHTML=open.length?open.map((item)=>`<button class="az-switcher-item" type="button" data-switch-app="${escapeHtml(item.app.id)}"><img src="${escapeHtml(item.app.icon)}" alt=""><span><strong>${escapeHtml(item.app.label)}</strong><small>${item.minimized?'Minimized':'Open'}</small></span></button>`).join(''):'<div class="az-command-empty">No applications are open.</div>';
-}
-
-function renderSettings() {
-  const state=Store.getState();
-  const host=document.querySelector('[data-settings-body]');if(!host)return;
-  host.innerHTML=`<div class="az-settings-list"><label><span><strong>Reduce motion</strong><small>Prefer calmer window transitions.</small></span><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}></label><label><span><strong>Stored workspace</strong><small>${state.openApps.length} open app${state.openApps.length===1?'':'s'} saved locally in this browser.</small></span><button class="az-button" type="button" data-reset-workspace>Reset workspace</button></label></div>`;
-}
-
-function openWindowMenu(appId, opener) {
-  const item=windows.get(appId);if(!item)return;
-  const host=document.querySelector('[data-window-menu-body]');if(!host)return;
-  host.dataset.appId=appId;
-  host.innerHTML=`<div class="az-window-menu-actions"><button type="button" class="az-button" data-window-command="minimize">Minimize</button><button type="button" class="az-button" data-window-command="maximize">${item.maximized?'Restore':'Maximize'}</button><button type="button" class="az-button" data-window-command="move">Move with keyboard</button><button type="button" class="az-button" data-window-command="resize">Resize with keyboard</button><button type="button" class="az-button az-button-danger" data-window-command="close">Close</button></div>`;
-  openOverlay('az-window-menu-overlay',opener);
+  item.el.focus();
+  announce(`${mode} mode. Use arrow keys, Shift for larger steps, Enter to accept, Escape to cancel.`);
 }
 
 function handleKeyboardWindowMode(event) {
-  if(!keyboardWindowMode)return false;
-  const item=windows.get(keyboardWindowMode.appId);if(!item){keyboardWindowMode=null;return false;}
-  if(event.key==='Escape'){
-    event.preventDefault();event.stopPropagation();
-    const rect=keyboardWindowMode.original;Object.assign(item.el.style,{left:`${rect.left}px`,top:`${rect.top}px`,width:`${rect.width}px`,height:`${rect.height}px`});
-    keyboardWindowMode=null;announce('Window move or resize cancelled');return true;
-  }
+  if (!keyboardWindowMode) return false;
+  const {appId,mode,original}=keyboardWindowMode;
+  const item=windows.get(appId);
+  if(!item){keyboardWindowMode=null;return false;}
   if(event.key==='Enter'){
-    event.preventDefault();event.stopPropagation();Store.saveWindowRect(item.app.id,item.el.getBoundingClientRect());keyboardWindowMode=null;announce('Window position saved');return true;
+    event.preventDefault();
+    keyboardWindowMode=null;
+    Store.saveWindowRect(appId,item.el.getBoundingClientRect());
+    announce(`${item.app.label} ${mode} complete`);
+    return true;
   }
-  if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return false;
-  event.preventDefault();event.stopPropagation();
-  const step=event.shiftKey?32:12;const rect=item.el.getBoundingClientRect();
-  if(keyboardWindowMode.mode==='move'){
-    if(event.key==='ArrowLeft')rect.x-=step;if(event.key==='ArrowRight')rect.x+=step;if(event.key==='ArrowUp')rect.y-=step;if(event.key==='ArrowDown')rect.y+=step;
-  }else{
-    if(event.key==='ArrowLeft')rect.width-=step;if(event.key==='ArrowRight')rect.width+=step;if(event.key==='ArrowUp')rect.height-=step;if(event.key==='ArrowDown')rect.height+=step;
+  if(event.key==='Escape'){
+    event.preventDefault();
+    Object.assign(item.el.style,{left:`${original.left}px`,top:`${original.top}px`,width:`${original.width}px`,height:`${original.height}px`});
+    keyboardWindowMode=null;
+    announce(`${mode} cancelled`);
+    return true;
   }
-  const next=clampRect({left:rect.x,top:rect.y,width:rect.width,height:rect.height});Object.assign(item.el.style,{left:`${next.left}px`,top:`${next.top}px`,width:`${next.width}px`,height:`${next.height}px`});return true;
+  const map={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]};
+  if(!map[event.key])return false;
+  event.preventDefault();
+  const step=event.shiftKey?24:6;
+  const [dx,dy]=map[event.key];
+  const current=item.el.getBoundingClientRect();
+  let rect={left:current.left,top:current.top,width:current.width,height:current.height};
+  if(mode==='move'){rect.left+=dx*step;rect.top+=dy*step;} else {rect.width+=dx*step;rect.height+=dy*step;}
+  rect=clampRect(rect);
+  Object.assign(item.el.style,{left:`${rect.left}px`,top:`${rect.top}px`,width:`${rect.width}px`,height:`${rect.height}px`});
+  return true;
+}
+
+function openWindowMenu(appId, opener) {
+  const item=windows.get(appId); if(!item)return;
+  const body=document.querySelector('[data-window-menu-body]');
+  body.innerHTML=`<div class="az-simple-grid az-window-menu-grid"><button class="az-button" type="button" data-window-command="move">Move with keyboard</button><button class="az-button" type="button" data-window-command="resize">Resize with keyboard</button><button class="az-button" type="button" data-window-command="minimize">Minimize</button><button class="az-button" type="button" data-window-command="maximize">${item.maximized?'Restore':'Maximize'}</button><button class="az-button az-button-danger" type="button" data-window-command="close">Close</button></div>`;
+  body.dataset.appId=appId;
+  openOverlay('az-window-menu-overlay',opener);
+}
+
+function wireWindow(el, appId) {
+  el.addEventListener('pointerdown',()=>focusWindow(appId,{updateRoute:false}));
+  el.querySelector('[data-window-drag]').addEventListener('pointerdown',(event)=>{if(event.target.closest('button'))return;pointerDrag(event,appId);});
+  el.querySelector('[data-window-drag]').addEventListener('dblclick',(event)=>{if(!event.target.closest('button'))maximizeApp(appId);});
+  el.querySelectorAll('.az-resize-handle').forEach((handle)=>handle.addEventListener('pointerdown',(event)=>pointerDrag(event,appId,handle.dataset.edge)));
+  el.querySelector('.az-window-controls').addEventListener('click',(event)=>{
+    const action=event.target.closest('button')?.dataset.action; if(!action)return;
+    if(action==='close')closeApp(appId);
+    else if(action==='minimize')minimizeApp(appId);
+    else if(action==='maximize')maximizeApp(appId);
+    else if(action==='menu')openWindowMenu(appId,event.target.closest('button'));
+  });
+}
+
+function renderSwitcher() {
+  const host=document.querySelector('[data-switcher-list]'); if(!host)return;
+  const state=Store.getState();
+  host.innerHTML=state.openApps.length ? state.openApps.map((id)=>{
+    const app=appById(id); if(!app)return '';
+    return `<button class="az-switcher-item" type="button" data-switch-app="${escapeHtml(id)}"><img src="${escapeHtml(app.icon)}" alt=""><span><strong>${escapeHtml(app.label)}</strong><small>${state.activeApp===id?'Active application':'Open'}</small></span></button>`;
+  }).join('') : '<div class="az-empty-state"><div><h3>No apps open</h3><p>Open an Aizanoi application or Historical World from Home.</p></div></div>';
+}
+
+function renderSettings() {
+  const body=document.querySelector('[data-settings-body]'); if(!body)return;
+  const state=Store.getState();
+  body.innerHTML=`<div class="az-simple-grid az-settings-grid"><div class="az-simple-card"><h3>Appearance</h3><p>Motion follows your preference across the AizanoiOS shell.</p><label class="az-setting-row"><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}> Reduce non-essential motion</label></div><div class="az-simple-card"><h3>Local state</h3><p>Open apps, recent activity, window positions and Historical Worlds session context are stored in this browser.</p><button class="az-button az-button-danger" type="button" data-reset-workspace>Reset local state</button></div></div>`;
+}
+
+function commandRows(query='') {
+  const q=query.trim().toLowerCase();
+  const entries=searchableEntries().filter((entry)=>!q || [entry.label,entry.description,...entry.keywords].join(' ').toLowerCase().includes(q));
+  const commands=[
+    {type:'action',id:'home',label:'Go Home',description:'Return to the AizanoiOS home screen',keywords:['home','desktop']},
+    {type:'action',id:'continue',label:'Continue Historical World',description:'Return to your most recent historical journey',keywords:['continue','resume','world','session']}
+  ].filter((entry)=>!q || [entry.label,entry.description,...entry.keywords].join(' ').toLowerCase().includes(q));
+  return [...commands,...entries].slice(0,18);
+}
+
+function renderCommands(query='') {
+  const host=document.querySelector('.az-command-results'); if(!host)return;
+  const rows=commandRows(query);
+  commandSelection=Math.min(commandSelection,Math.max(0,rows.length-1));
+  if(!rows.length){host.innerHTML='<div class="az-command-empty">No direct match. Try an app, Historical World or action.</div>';return;}
+  const groups=[];
+  for(const type of ['action','world','app']){
+    const subset=rows.filter((row)=>row.type===type);
+    if(subset.length)groups.push({type,subset});
+  }
+  let index=0;
+  host.innerHTML=groups.map(({type,subset})=>`<div class="az-command-group">${type==='action'?'Actions':type==='world'?'Historical Worlds':'Apps'}</div>${subset.map((row)=>{
+    const current=index++;
+    const image=row.type==='app'?appById(row.id)?.icon:row.type==='world'?'/assets/icons/ancient-world.svg':'/assets/branding/aizanoi-logo-mark.svg';
+    return `<button class="az-command-row${current===commandSelection?' is-selected':''}" type="button" role="option" aria-selected="${current===commandSelection}" data-command-index="${current}"><img src="${escapeHtml(image)}" alt=""><span><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.description)}</small></span><span class="az-command-kind">${escapeHtml(row.type)}</span></button>`;
+  }).join('')}`).join('');
+}
+
+function executeCommand(index) {
+  const input=document.getElementById('az-command-input');
+  const rows=commandRows(input?.value||'');
+  const row=rows[index]; if(!row)return;
+  closeOverlay(false);
+  if(row.type==='app')openApp(row.id);
+  else if(row.type==='world')launchWorld(row.id);
+  else if(row.id==='home')showHome();
+  else if(row.id==='continue'){
+    const session=Store.getFieldSession();
+    session?launchWorld(session.worldId,session.landmark):launchWorld('aizanoi');
+  }
+}
+
+function openCommand(opener) {
+  commandSelection=0;
+  const input=document.getElementById('az-command-input');
+  if(input)input.value='';
+  renderCommands('');
+  openOverlay('az-command-overlay',opener);
 }
 
 function handleRootClick(event) {
-  const contextAction=event.target.closest('[data-context-action]')?.dataset.contextAction;
-  if(contextAction){
-    const menu=document.querySelector('.az-desktop-context');menu?.classList.remove('is-open');menu?.setAttribute('aria-hidden','true');
-    if(contextAction==='apps'){document.querySelector('[data-os-launcher]')?.click();return;}
-    if(contextAction==='search'){document.querySelector('[data-shell-action="search"]')?.click();return;}
-    if(contextAction==='news'){openApp('news');return;}
-    if(contextAction==='analytics'){openApp('analytics');return;}
-    if(contextAction==='aizanoi'){launchWorld('aizanoi');return;}
-  }
-  const appButton=event.target.closest('[data-app]');if(appButton){openApp(appButton.dataset.app);return;}
-  const worldButton=event.target.closest('[data-world]');if(worldButton){launchWorld(worldButton.dataset.world);return;}
-  const shellAction=event.target.closest('[data-shell-action]')?.dataset.shellAction;
-  if(shellAction==='home'){showHome();return;}
-  if(shellAction==='search'){renderCommands();openOverlay('az-command-overlay',event.target.closest('[data-shell-action]'));return;}
-  if(shellAction==='settings'){renderSettings();openOverlay('az-settings-overlay',event.target.closest('[data-shell-action]'));return;}
-  if(shellAction==='switcher'){renderSwitcher();openOverlay('az-switcher-overlay',event.target.closest('[data-shell-action]'));return;}
-  const taskButton=event.target.closest('[data-task-app]');if(taskButton){
-    const id=taskButton.dataset.taskApp;const item=windows.get(id);if(!item)return;
-    if(!item.minimized&&Store.getState().activeApp===id)minimizeApp(id);else focusWindow(id);
+  const app=event.target.closest('[data-app]')?.dataset.app;
+  if(app){openApp(app);return;}
+  const world=event.target.closest('[data-world]')?.dataset.world;
+  if(world){launchWorld(world);return;}
+  const homeAction=event.target.closest('[data-home-action]')?.dataset.homeAction;
+  if(homeAction==='walk-aizanoi'){launchWorld('aizanoi');return;}
+  if(homeAction==='continue-world'){
+    const session=Store.getFieldSession();
+    session?launchWorld(session.worldId,session.landmark):launchWorld('aizanoi');
     return;
   }
-  const control=event.target.closest('[data-action]');if(control){
-    const id=control.closest('.az-window')?.dataset.appId;if(!id)return;
-    if(control.dataset.action==='close')closeApp(id);if(control.dataset.action==='minimize')minimizeApp(id);if(control.dataset.action==='maximize')maximizeApp(id);return;
-  }
-  const windowMenu=event.target.closest('[data-window-menu]');if(windowMenu){const id=windowMenu.closest('.az-window')?.dataset.appId;if(id)openWindowMenu(id,windowMenu);return;}
-  const switchItem=event.target.closest('[data-switch-app]');if(switchItem){closeOverlay(false);focusWindow(switchItem.dataset.switchApp);return;}
-  const commandItem=event.target.closest('[data-command-index]');if(commandItem){executeCommand(Number(commandItem.dataset.commandIndex));return;}
+  const shellAction=event.target.closest('[data-shell-action]')?.dataset.shellAction;
+  if(shellAction==='home'){showHome();return;}
+  if(shellAction==='search'){openCommand(event.target.closest('button'));return;}
+  if(shellAction==='switcher'){renderSwitcher();openOverlay('az-switcher-overlay',event.target.closest('button'));return;}
+  if(shellAction==='settings'){renderSettings();openOverlay('az-settings-overlay',event.target.closest('button'));return;}
+  const task=event.target.closest('[data-task-app]')?.dataset.taskApp;
+  if(task){focusWindow(task);return;}
+  const switchApp=event.target.closest('[data-switch-app]')?.dataset.switchApp;
+  if(switchApp){closeOverlay(false);focusWindow(switchApp);return;}
   if(event.target.closest('[data-overlay-close]')){closeOverlay();return;}
+  const retry=event.target.closest('[data-retry-app]')?.dataset.retryApp;
+  if(retry){closeApp(retry,{updateRoute:false});openApp(retry);return;}
+  const commandIndex=event.target.closest('[data-command-index]')?.dataset.commandIndex;
+  if(commandIndex!=null){executeCommand(Number(commandIndex));return;}
   const windowCommand=event.target.closest('[data-window-command]')?.dataset.windowCommand;
   if(windowCommand){
     const body=document.querySelector('[data-window-menu-body]');
