@@ -33,7 +33,7 @@ function build(dir, env={}) {
   return spawnSync(process.execPath, ['scripts/news/build-news.mjs'], { cwd:dir, encoding:'utf8', env:{ ...process.env, ...env } });
 }
 
-test('News build publishes editions, permanent stories, methodology and categories into root sitemap', async () => {
+test('News build publishes editions, permanent stories, methodology and static product routes into root sitemap', async () => {
   const dir = await project();
   const result = build(dir);
   assert.equal(result.status, 0, result.stderr);
@@ -45,6 +45,7 @@ test('News build publishes editions, permanent stories, methodology and categori
     assert.match(sitemap, new RegExp(`https:\\/\\/aizanoianalytics\\.com\\/news\\/category\\/${slug}\\/`));
   }
   assert.match(sitemap, /https:\/\/aizanoianalytics\.com\/analytics\//);
+  assert.match(sitemap, /https:\/\/aizanoianalytics\.com\/privacy\//);
   assert.match(sitemap, /<lastmod>2026-08-22<\/lastmod>/);
 });
 
