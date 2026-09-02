@@ -56,11 +56,14 @@ test('Aizanoi Temple keeps the authored open eastern sanctuary approach in city 
   assert.match(compatibility, /authoredFraming:\s*true/);
 });
 
-test('Aizanoi touch controls now inherit hybrid-device capture-loss safety from the shared controller', () => {
+test('Aizanoi touch controls inherit hybrid-device capture-loss safety from shared platform owners', () => {
   const adapter = readFileSync(resolve(root, 'frontend/historic-world/app.js'), 'utf8');
-  assert.match(adapter, /navigator\.maxTouchPoints > 0/);
-  assert.match(adapter, /pointer:coarse/);
-  assert.match(adapter, /innerWidth < 820/);
+  const bootstrap = readFileSync(resolve(root, 'frontend/ancient-world/engine/city-bootstrap.js'), 'utf8');
+  assert.match(bootstrap, /navigator\.maxTouchPoints > 0/);
+  assert.match(bootstrap, /pointer:coarse/);
+  assert.match(bootstrap, /innerWidth < 820/);
+  assert.doesNotMatch(adapter, /navigator\.maxTouchPoints|pointer:coarse|innerWidth < 820/);
+  assert.match(adapter, /startAncientCity/);
   assert.match(mobileControls, /listen\(pad, 'lostpointercapture', endJoy\)/);
   assert.match(mobileControls, /listen\(run, 'lostpointercapture', runOff\)/);
   assert.match(mobileControls, /listen\(canvas, 'lostpointercapture', endLook\)/);

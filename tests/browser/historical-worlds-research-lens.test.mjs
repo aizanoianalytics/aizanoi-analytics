@@ -10,7 +10,7 @@ async function waitForWorld(page, city) {
   await page.waitForFunction(() => window.__ANCIENT_WORLD_DEBUG__?.readiness?.rendered === true, null, { timeout:12000 });
 }
 
-test('Historical Worlds expose Research Lens and canonical shareable landmark/period URLs', async () => {
+test('Historical Worlds expose shared Research Lens and Aizanoi static research', async () => {
   const browser = await chromium.launch({ headless:true });
   const context = await browser.newContext({ viewport:{ width:1280, height:860 } });
   const page = await context.newPage();
@@ -19,33 +19,23 @@ test('Historical Worlds expose Research Lens and canonical shareable landmark/pe
   page.on('console', (message) => { if (message.type() === 'error') errors.push(`console: ${message.text()}`); });
 
   try {
-    await page.goto(`${base}/ancient-cities/rome-410-476/?at=pantheon`, { waitUntil:'networkidle' });
+    await page.goto(`${base}/ancient-cities/rome-410-476/`, { waitUntil:'networkidle' });
     await waitForWorld(page, 'rome');
-    assert.equal(new URL(page.url()).searchParams.get('at'), 'pantheon');
-    assert.equal(await page.locator('#intro').evaluate((node) => node.classList.contains('hidden')), true, 'canonical at= deep link should enter Rome without pointer lock');
-
     await page.locator('[data-aw-evidence-toggle]').click();
     await page.locator('[data-aw-evidence-panel]').waitFor({ state:'visible' });
     assert.equal(await page.locator('[data-aw-evidence-toggle]').getAttribute('aria-pressed'), 'true');
     assert.match(await page.locator('[data-aw-evidence-panel]').innerText(), /Research Lens/i);
-    assert.ok(await page.locator('[data-evidence-group="archaeological"]').count());
-    assert.ok(await page.locator('[data-evidence-group="inferred"]').count());
-    assert.ok(await page.locator('[data-evidence-group="disputed"]').count());
-
+    for (const group of ['archaeological','documented','inferred','atmospheric','disputed']) {
+      assert.ok(await page.locator(`[data-evidence-group="${group}"]`).count(), `Research Lens missing ${group}`);
+    }
     await page.evaluate(() => window.__ANCIENT_WORLD_DEBUG__.teleportTo('colosseum', { lock:false }));
-    await page.waitForFunction(() => new URL(location.href).searchParams.get('at') === 'colosseum');
-    assert.equal(new URL(page.url()).searchParams.get('jump'), null, 'canonical sharing should remove the legacy jump alias');
+    assert.ok(await page.evaluate(() => Number.isFinite(window.__ANCIENT_WORLD_DEBUG__?.player?.x)), 'shared teleport remains usable from Research Lens runtime');
 
-    await page.goto(`${base}/historic-world/?at=temple&period=425`, { waitUntil:'networkidle' });
+    await page.goto(`${base}/historic-world/`, { waitUntil:'networkidle' });
     await waitForWorld(page, 'aizanoi');
     await page.waitForFunction(() => Boolean(window.__AIZANOI_CITY_EXPERIENCE__));
-    assert.equal(new URL(page.url()).searchParams.get('at'), 'temple');
-    assert.equal(new URL(page.url()).searchParams.get('period'), '425');
-    assert.equal(await page.locator('.eraBtn[data-era="425"]').evaluate((node) => node.classList.contains('active')), true, 'shareable active period should select AD 425');
     assert.equal(await page.locator('.eraBtn[data-era="301"]').count(), 0, 'dormant AD 301 layer must remain suppressed');
-
-    const shareState = await page.evaluate(() => window.__ANCIENT_WORLD_DEBUG__?.evidenceMode?.enabled ?? null);
-    assert.equal(shareState, false, 'Research Lens should remain opt-in after deep-link entry');
+    assert.equal(await page.evaluate(() => window.__ANCIENT_WORLD_DEBUG__?.evidenceMode?.enabled ?? null), false, 'Research Lens remains opt-in');
     await page.keyboard.press('v');
     await page.waitForFunction(() => window.__ANCIENT_WORLD_DEBUG__?.evidenceMode?.enabled === true);
     assert.equal(await page.locator('[data-aw-evidence-panel]').isVisible(), true);

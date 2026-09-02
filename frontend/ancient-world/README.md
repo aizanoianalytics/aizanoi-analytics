@@ -1,6 +1,6 @@
 # Aizanoi Analytics Ancient World
 
-Ancient World is one reusable historical first-person platform. Aizanoi, Rome and Athens share the same renderer, traversal/collision system, mobile controls, compatibility layer, share-link contract, Research Lens and blocky procedural asset library. City folders primarily own historical data, chronology, layout choices and optional deterministic urban fabric.
+Ancient World is one reusable historical first-person platform. Aizanoi, Rome and Athens share the same renderer, traversal/collision system, mobile controls, compatibility layer, Research Lens and blocky procedural asset library. City folders primarily own historical data, chronology, layout choices and optional deterministic urban fabric.
 
 ## Runtime architecture
 
@@ -14,7 +14,6 @@ frontend/ancient-world/
 │   ├── lifecycle.js              # cleanup / frame lifecycle
 │   ├── navigation.js             # ← AizanoiOS escape path
 │   ├── city-compatibility.js     # legacy ?jump= + debug compatibility
-│   ├── shareable-location.js     # canonical ?at= + declared ?period=
 │   ├── evidence.js               # shared evidence vocabulary
 │   ├── evidence-mode.js          # interactive Research Lens
 │   └── ...
@@ -72,19 +71,6 @@ Research Lens groups legacy `plausible` records under the user-facing **Inferred
 
 Press **V** or use the floating **Evidence** control to open Research Lens. It shows the evidence legend plus the nearest labelled landmark, note and distance, and can move the visitor to that record through the same safe teleport system.
 
-## Shareable locations
-
-Canonical links use:
-
-```text
-?at=<landmark-id>
-?at=<landmark-id>&period=<declared-era>
-```
-
-Successful in-world teleports update `at=`. The older `?jump=` form remains supported by `city-compatibility.js` for existing links but is not the canonical share format.
-
-Chronology is city-declared. A period query cannot activate a dormant/unpublished visual layer. Aizanoi currently exposes AD 225 and AD 425 as shareable active periods; the retained AD 301 dataset layer remains dormant.
-
 ## Static research surfaces
 
 Interactive reconstruction must not be the only way to inspect the project basis. Rome and Athens retain their static research routes, and Aizanoi exposes `/historic-world/research/` with the reconstruction boundary, evidence vocabulary and project source ledger.
@@ -99,6 +85,6 @@ A new city should normally require:
 4. optional deterministic urban-fabric generation;
 5. water/layout records;
 6. a thin adapter calling `startAncientCity(...)`;
-7. browser smoke coverage for movement, landmark teleports, Research Lens and share links where applicable.
+7. browser smoke coverage for movement, landmark teleports and Research Lens.
 
 Do not fork movement, collision, mobile controls, compatibility or the renderer into a new city-specific `app.js` without an explicit architecture reason.

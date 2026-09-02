@@ -140,8 +140,8 @@ test('all three worlds are declarative city adapters over one shared bootstrap/r
   assert.match(bootstrapSource, /CITY_COMPACTION_PROFILES/);
   assert.match(bootstrapSource, /startFlatBlockyCity/);
   assert.match(bootstrapSource, /installCityCompatibility/);
-  assert.match(bootstrapSource, /installShareableLocation/);
   assert.match(bootstrapSource, /installEvidenceMode/);
+  assert.doesNotMatch(bootstrapSource, /installShareableLocation|sharePeriods/);
 });
 
 test('live city bounds are materially smaller than the research coordinate envelopes', () => {

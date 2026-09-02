@@ -27,7 +27,6 @@
       generateFabric:generateAizanoiFabric,
       ui:'aizanoi',
       era:225,
-      sharePeriods:[225,425],
       cityRoute:'/historic-world/',
     });
     window.__AIZANOI_WORLD__ = runtime;

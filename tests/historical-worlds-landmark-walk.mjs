@@ -92,7 +92,7 @@ for (const world of worlds) {
   await context.close();
 }
 
-// Research Lens + canonical share contract run in the same required browser gate.
+// Research Lens and Aizanoi's static research fallback run in the same required browser gate.
 {
   const context = await browser.newContext({ viewport:{ width:1280, height:860 } });
   const page = await context.newPage();
@@ -108,11 +108,9 @@ for (const world of worlds) {
     if (!/Pointer Lock|user gesture/i.test(text)) errors.push(text);
   });
 
-  await page.goto(`${base}/ancient-cities/rome-410-476/?at=pantheon`, { waitUntil:'networkidle' });
+  await page.goto(`${base}/ancient-cities/rome-410-476/`, { waitUntil:'networkidle' });
   await page.waitForFunction(() => Boolean(window.__ANCIENT_WORLD_DEBUG__?.readiness?.rendered));
   await page.locator('[data-aw-evidence-toggle]').waitFor({ state:'visible' });
-  assert.equal(new URL(page.url()).searchParams.get('at'), 'pantheon');
-  assert.equal(await page.locator('#intro').evaluate((node) => node.classList.contains('hidden')), true, 'Rome at= deep link should enter without pointer lock');
   await page.locator('[data-aw-evidence-toggle]').click();
   await page.locator('[data-aw-evidence-panel]').waitFor({ state:'visible' });
   assert.equal(await page.locator('[data-aw-evidence-toggle]').getAttribute('aria-pressed'), 'true');
@@ -121,16 +119,12 @@ for (const world of worlds) {
     assert.equal(await page.locator(`[data-evidence-group="${group}"]`).count(), 1, `Research Lens missing ${group}`);
   }
   await page.evaluate(() => window.__ANCIENT_WORLD_DEBUG__.teleportTo('colosseum', { lock:false }));
-  await page.waitForFunction(() => new URL(location.href).searchParams.get('at') === 'colosseum');
-  assert.equal(new URL(page.url()).searchParams.get('jump'), null, 'canonical sharing should remove legacy jump alias');
+  assert.ok(await page.evaluate(() => Number.isFinite(window.__ANCIENT_WORLD_DEBUG__?.player?.x)), 'Research Lens runtime keeps safe teleport usable');
 
-  await page.goto(`${base}/historic-world/?at=temple&period=425`, { waitUntil:'networkidle' });
+  await page.goto(`${base}/historic-world/`, { waitUntil:'networkidle' });
   await page.waitForFunction(() => Boolean(window.__AIZANOI_DEBUG__?.readiness?.rendered));
   await page.waitForFunction(() => Boolean(window.__AIZANOI_CITY_EXPERIENCE__));
   await page.locator('[data-aw-evidence-toggle]').waitFor({ state:'visible' });
-  assert.equal(new URL(page.url()).searchParams.get('at'), 'temple');
-  assert.equal(new URL(page.url()).searchParams.get('period'), '425');
-  assert.equal(await page.locator('.eraBtn[data-era="425"]').evaluate((node) => node.classList.contains('active')), true, 'Aizanoi deep link should activate AD 425');
   assert.equal(await page.locator('.eraBtn[data-era="301"]').count(), 0, 'dormant AD 301 must remain suppressed');
   await page.keyboard.press('v');
   await page.waitForFunction(() => window.__AIZANOI_DEBUG__?.evidenceMode?.enabled === true);
@@ -143,7 +137,7 @@ for (const world of worlds) {
   assert.match(await research.locator('body').innerText(), /DPU Aizanoi — Temple of Zeus/i);
   await research.close();
 
-  assert.deepEqual(errors, [], `Research Lens/share browser errors: ${errors.join(' | ')}`);
+  assert.deepEqual(errors, [], `Research Lens browser errors: ${errors.join(' | ')}`);
   await context.close();
 }
 
