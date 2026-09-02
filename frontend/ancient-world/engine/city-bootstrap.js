@@ -44,6 +44,7 @@ export function startAncientCity({
   expandWalls = false,
   ui = 'standard',
   era = null,
+  sharePeriods = [],
   cityRoute = null,
 } = {}) {
   if (!city) throw new TypeError('startAncientCity requires city metadata.');
@@ -80,7 +81,7 @@ export function startAncientCity({
     cityRoute,
   });
   installCityCompatibility(runtime, { ui });
-  const share = installShareableLocation(runtime, { ui });
+  const share = installShareableLocation(runtime, { ui, periods:sharePeriods });
   const evidenceMode = installEvidenceMode({ runtime, city:layout.city });
 
   return Object.freeze({ runtime, layout, liveStreets, urbanFabric, evidenceMode, share, touch });
