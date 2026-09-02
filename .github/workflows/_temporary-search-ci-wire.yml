@@ -1,0 +1,39 @@
+name: Temporary search CI wire
+
+on:
+  push:
+    branches: [feat/global-static-search-v4]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: feat/global-static-search-v4
+          fetch-depth: 0
+      - name: Wire browser regression into utility gate
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path=Path('.github/workflows/ci.yml')
+          text=path.read_text()
+          old='node --test tests/browser/workspace-apps.test.mjs tests/browser/workspace-atomic.test.mjs tests/browser/web-editor-layout.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-browser.log || status=1'
+          new='node --test tests/browser/workspace-apps.test.mjs tests/browser/workspace-atomic.test.mjs tests/browser/web-editor-layout.test.mjs tests/browser/global-static-search.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-browser.log || status=1'
+          if text.count(old)!=1:
+              raise SystemExit(f'expected one utility command, found {text.count(old)}')
+          path.write_text(text.replace(old,new,1))
+          PY
+          git diff --check
+      - name: Commit CI wiring
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .github/workflows/ci.yml
+          git diff --cached --quiet && exit 0
+          git commit -m 'test: gate global static search in Chromium'
+          git push origin HEAD:feat/global-static-search-v4
