@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-02-android-drop-september",
+  "title": "Google announces September 2026 Android Drop with Gemini-driven Find Hub and Motion Assist",
+  "summary": "Google unveiled its September 2026 Android Drop on 1 September, adding Gemini's ability to remember item locations in Find Hub, native Google Keep notes and lists inside Google Messages, Gemini Live Guided Vision for low-light and fine-print assistance, official custom Chat Themes in Messages and Motion Assist for Android 17 devices. Most features are rolling out across the wider Android ecosystem over the coming weeks, with some already live since August.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Google", "Android 17", "Gemini", "Find Hub", "Google Messages"],
+  "sources": [
+    {
+      "publisher": "Android Authority",
+      "url": "https://www.androidauthority.com/september-2026-android-drop-3705528/",
+      "publishedAt": "2026-09-01T14:00:00Z"
+    }
+  ]
+}

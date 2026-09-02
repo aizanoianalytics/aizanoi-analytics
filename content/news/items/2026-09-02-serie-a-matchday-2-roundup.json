@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-02-serie-a-matchday-2-roundup",
+  "title": "Serie A matchday 2 wrapped with wins for Milan, Juventus, Inter, Roma and Atalanta, Napoli beaten at home",
+  "summary": "Italy's Serie A completed matchday 2 by 31 August 2026, with AC Milan beating Venezia 2-0, Juventus downing Parma 2-0, Inter winning 1-0 away at Cagliari, Roma thrashing Lecce 4-0, Atalanta edging Bologna 1-0 and Napoli surprisingly losing 1-2 at home to Como. The early-season standings already separate the unbeaten top four from promoted sides Frosinone and Monza, with Sassuolo's 2-1 home win over Torino another of the round's talking points.",
+  "category": "football",
+  "priority": 65,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Serie A", "matchday 2", "AC Milan", "Juventus", "Napoli"],
+  "sources": [
+    {
+      "publisher": "Lega Serie A",
+      "url": "https://en.legaseriea.it/serie-a/fixtures-results",
+      "publishedAt": "2026-08-31T00:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.co.uk/sport/football/articles/c209g6e3yx7o",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

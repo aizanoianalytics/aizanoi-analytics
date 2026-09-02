@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-02-asia-factory-ai-demand",
+  "title": "Asia factory activity expanded in August on AI hardware demand, even as Middle East war lifted costs",
+  "summary": "Private manufacturing surveys released on 1-2 September 2026 showed that China, Japan and South Korea all saw factory activity expand in August, with Japan's new-business growth running at the fastest pace since January 2018 on demand for semiconductors and AI-related products, and South Korea logging a ninth straight month of expansion. S&P Global Market Intelligence's David Owen called the rise in export demand 'an encouraging sign that firms are still benefiting from the current AI and semiconductor supercycle', even as Middle East-driven energy costs added to input pressure.",
+  "category": "technology",
+  "priority": 72,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Asia manufacturing", "semiconductors", "AI hardware", "Japan factory PMI", "South Korea exports"],
+  "sources": [
+    {
+      "publisher": "Manila Times",
+      "url": "https://www.manilatimes.net/2026/09/02/business/foreign-business/global-ai-boom-fuels-asia-factory-expansion/2416415",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}
