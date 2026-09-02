@@ -22,26 +22,45 @@ test('Aizanoi Web Editor is a discoverable capability-scoped desktop module',()=
   for(const method of ['allNodes','childrenOf','createFile','createFolder','getNode','readFileBlob','updateFileContent'])assert.match(capabilities,new RegExp(`['"]${method}['"]`));
 });
 
-test('Web Editor persists the canonical three-file project shape under Editor',()=>{
-  assert.match(app,/FILES=Object\.freeze\(\{html:'index\.html',css:'style\.css',js:'script\.js'\}\)/);
+test('Web Editor uses one source surface and persists one HTML file directly under Editor',()=>{
+  assert.match(app,/const HTML_MIME='text\/html'/);
   assert.match(app,/createFolder\(\{name:'Editor',parent:rootId\}\)/);
-  assert.match(app,/createFile\(\{name,parent:folderId,blob,mime:MIME\[key\]\}\)/);
-  assert.match(app,/updateFileContent\(existing\.id,blob\)/);
-  assert.match(app,/Workspace \/ Editor/);
+  assert.match(app,/createFile\(\{name:fileName,parent:editorFolderId,blob,mime:HTML_MIME\}\)/);
+  assert.match(app,/updateFileContent\(target\.id,blob\)/);
+  assert.match(app,/one HTML file in Workspace \/ Editor/);
+  assert.match(app,/data-web-source spellcheck="false"/);
+  assert.doesNotMatch(app,/data-web-tab=/);
+  assert.doesNotMatch(app,/role="tablist"/);
 });
 
-test('Workspace routes web source files to Web Editor before generic text handling',()=>{
-  assert.match(workspace,/function isWebSource/);
-  assert.match(workspace,/if\(isWebSource\(node\)\)apps\.open\('web-editor',\{fileId:node\.id\}\);else if\(mime\.startsWith\('text\/'\)/);
+test('legacy three-file projects remain readable and convert into a single HTML document',()=>{
+  assert.match(app,/function mergeLegacySources/);
+  assert.match(app,/byName\.get\('style\.css'\)/);
+  assert.match(app,/byName\.get\('script\.js'\)/);
+  assert.match(app,/legacy project loaded · save to convert/);
 });
 
-test('preview transport never runs authored code in the AizanoiOS shell',()=>{
+test('Workspace routes only HTML documents to Web Editor while standalone CSS and JavaScript stay editable in Notepad',()=>{
+  assert.match(workspace,/function isWebSource\(node\).*return \/\\\.html\?\$\/\.test\(name\)\|\|mime==='text\/html'/s);
+  assert.match(workspace,/function isCodeText\(node\).*application\/javascript.*\\\.\(\?:css\|m\?js\)/s);
+  assert.match(workspace,/if\(isWebSource\(node\)\)apps\.open\('web-editor',\{fileId:node\.id\}\);else if\(isCodeText\(node\)\)apps\.open\('notepad',\{fileId:node\.id\}\)/);
+});
+
+test('preview transport never runs authored code in the AizanoiOS shell and reports runner startup failures',()=>{
   assert.match(app,/sandbox="allow-scripts"/);
   assert.doesNotMatch(app,/srcdoc|allow-same-origin|allow-top-navigation|allow-popups|allow-forms/);
   assert.match(app,/postMessage\(\{type:MESSAGE_RUN/);
+  assert.match(app,/Preview could not start\. The server preview policy may be missing or blocked\./);
   assert.match(runner,/event\.source!==parent/);
   assert.match(runner,/new Function/);
   assert.doesNotMatch(runner,/indexedDB|localStorage|sessionStorage/);
+});
+
+test('Web Editor removes duplicate chrome and keeps a compact one-toolbar split view',()=>{
+  assert.doesNotMatch(app,/az-app-toolbar/);
+  assert.doesNotMatch(css,/az-web-editor-tabs|az-web-editor-tab|az-web-editor-preview-head/);
+  assert.match(css,/\.az-web-editor-layout[\s\S]*grid-template-columns/);
+  assert.match(css,/\.az-web-editor-security[\s\S]*position:absolute/);
 });
 
 test('Web Editor functional type never drops below 11px',()=>{
