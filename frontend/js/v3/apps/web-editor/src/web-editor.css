@@ -144,6 +144,7 @@
   }
   .az-web-editor-text::selection{background:#314c78}
   .az-web-editor-preview{
+    grid-template-rows:38px minmax(0,1fr) 120px;
     background:#fff;
   }
   .az-web-editor-frame{
@@ -182,7 +183,7 @@
   }
   .az-web-editor-preview-state{
     position:absolute;
-    inset:38px 0 0;
+    inset:38px 0 120px;
     z-index:3;
     display:grid;
     place-items:center;
@@ -194,6 +195,53 @@
     pointer-events:none;
   }
   .az-web-editor-preview-state[hidden]{display:none}
+  .az-web-editor-console{
+    grid-row:3;
+    min-width:0;
+    min-height:0;
+    display:grid;
+    grid-template-rows:32px minmax(0,1fr);
+    border-top:1px solid #273349;
+    background:#0d1420;
+    color:#dce5f3;
+  }
+  .az-web-editor-console>header{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 9px 0 12px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    color:#9eabc0;
+    font:750 11px/1 var(--az-font-ui);
+    letter-spacing:.05em;
+    text-transform:uppercase;
+  }
+  .az-web-editor-console>header .az-button{
+    min-height:24px;
+    margin-left:auto;
+    padding-inline:8px;
+    border-color:rgba(255,255,255,.12);
+    background:#182234;
+    color:#c7d2e4;
+    font-size:11px;
+  }
+  .az-web-editor-console-output{
+    min-height:0;
+    overflow:auto;
+    padding:5px 0 8px;
+    font:11px/1.45 ui-monospace,'Cascadia Mono','SFMono-Regular',Consolas,monospace;
+  }
+  .az-web-editor-console-line{
+    display:grid;
+    grid-template-columns:42px minmax(0,1fr);
+    gap:7px;
+    padding:3px 10px;
+    border-bottom:1px solid rgba(255,255,255,.035);
+  }
+  .az-web-editor-console-level{color:#7f8da5;text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:.04em}
+  .az-web-editor-console-message{min-width:0;overflow-wrap:anywhere;white-space:pre-wrap}
+  .az-web-editor-console-line.is-warn{background:rgba(201,154,60,.08);color:#f0d99b}
+  .az-web-editor-console-line.is-error{background:rgba(190,75,84,.09);color:#ffb5ba}
   .az-web-editor-projects{
     position:absolute;
     inset:66px 14px 14px auto;
@@ -285,6 +333,8 @@
       border-right:0;
       border-bottom:1px solid #2c3544;
     }
+    .az-web-editor-preview{grid-template-rows:38px minmax(0,1fr) 108px}
+    .az-web-editor-preview-state{bottom:108px}
     .az-web-editor-text{
       padding:16px 17px 26px;
       font-size:12px;
