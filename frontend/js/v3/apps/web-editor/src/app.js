@@ -4,6 +4,7 @@ const MESSAGE_RUN='aizanoi-web-editor-run';
 const MESSAGE_READY='aizanoi-web-editor-ready';
 const MESSAGE_DONE='aizanoi-web-editor-done';
 const MESSAGE_ERROR='aizanoi-web-editor-error';
+const MESSAGE_CONSOLE='aizanoi-web-editor-console';
 const HTML_MIME='text/html';
 const DEFAULT_DOCUMENT=`<!doctype html>
 <html lang="en">
@@ -122,6 +123,10 @@ export async function mountWebEditor({container,options,capabilities}){
         <span class="az-web-editor-security">sandboxed preview</span>
         <iframe class="az-web-editor-frame" data-web-preview title="Web project preview" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
         <div class="az-web-editor-preview-state" data-web-preview-state hidden></div>
+        <section class="az-web-editor-console" aria-label="Preview console">
+          <header><strong>Console</strong><button class="az-button" type="button" data-web-console-clear>Clear</button></header>
+          <div class="az-web-editor-console-output" data-web-console-output role="log" aria-live="polite" aria-label="Preview console output"></div>
+        </section>
       </section>
     </div>
     <aside class="az-web-editor-projects" data-web-projects hidden aria-label="Saved Web Editor files">
@@ -138,6 +143,7 @@ export async function mountWebEditor({container,options,capabilities}){
   const statusEl=container.querySelector('[data-web-status]');
   const preview=container.querySelector('[data-web-preview]');
   const previewState=container.querySelector('[data-web-preview-state]');
+  const consoleOutput=container.querySelector('[data-web-console-output]');
   const projectPanel=container.querySelector('[data-web-projects]');
   const projectList=container.querySelector('[data-web-project-list]');
   editor.value=source;
@@ -162,6 +168,21 @@ export async function mountWebEditor({container,options,capabilities}){
     previewState.hidden=true;
     previewState.textContent='';
   }
+  function clearConsole(){consoleOutput.replaceChildren();}
+  function appendConsole(level,args=[]){
+    const line=document.createElement('div');
+    line.className=`az-web-editor-console-line is-${level}`;
+    const tag=document.createElement('span');
+    tag.className='az-web-editor-console-level';
+    tag.textContent=level;
+    const message=document.createElement('span');
+    message.className='az-web-editor-console-message';
+    message.textContent=args.map((value)=>String(value)).join(' ');
+    line.append(tag,message);
+    consoleOutput.append(line);
+    while(consoleOutput.childElementCount>200)consoleOutput.firstElementChild?.remove();
+    consoleOutput.scrollTop=consoleOutput.scrollHeight;
+  }
   function postPendingPreview(){
     if(!pendingPreview||!preview.contentWindow)return;
     preview.contentWindow.postMessage({type:MESSAGE_RUN,runId:pendingPreview.runId,source:{html:pendingPreview.html,css:'',js:''}},'*');
@@ -171,6 +192,7 @@ export async function mountWebEditor({container,options,capabilities}){
     const runId=++previewRunId;
     pendingPreview={runId,html:source};
     clearPreviewTimer();
+    clearConsole();
     showPreviewState('Starting preview…');
     renderState(dirty?'Running preview · unsaved changes':'Running preview');
     preview.src=`${PREVIEW_ROUTE}?run=${runId}`;
@@ -184,6 +206,13 @@ export async function mountWebEditor({container,options,capabilities}){
   }
   function handlePreviewMessage(event){
     if(event.source!==preview.contentWindow||!event.data||typeof event.data!=='object')return;
+    if(event.data.type===MESSAGE_CONSOLE){
+      if(!pendingPreview||event.data.runId!==pendingPreview.runId)return;
+      const level=['log','warn','error'].includes(event.data.level)?event.data.level:'log';
+      const args=Array.isArray(event.data.args)?event.data.args.slice(0,24).map((value)=>String(value).slice(0,1200)):[];
+      appendConsole(level,args);
+      return;
+    }
     if(event.data.type===MESSAGE_READY){
       clearPreviewTimer();
       showPreviewState('Running…');
@@ -360,6 +389,7 @@ export async function mountWebEditor({container,options,capabilities}){
     }
   };
   const handleClick=async(event)=>{
+    if(event.target.closest('[data-web-console-clear]')){clearConsole();return;}
     const openButton=event.target.closest('[data-web-open-id]');
     if(openButton){
       const opened=openButton.dataset.webOpenKind==='legacy'

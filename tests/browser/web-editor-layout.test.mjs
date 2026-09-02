@@ -78,3 +78,47 @@ test('Web Editor fills its window and keeps Run accessible while Open Apps stays
   }
   assert.deepEqual(errors,[],`page errors: ${JSON.stringify(errors)}`);
 });
+
+test('Web Editor streams preview console output without relaxing the opaque sandbox',async()=>{
+  const browser=await chromium.launch({headless:true});
+  const context=await browser.newContext({viewport:{width:1440,height:900},serviceWorkers:'block'});
+  const page=await context.newPage();
+  try{
+    await page.goto(`${base}/?web-editor-console=${Date.now()}`,{waitUntil:'networkidle'});
+    await page.evaluate(()=>localStorage.setItem('aizanoi-console-sentinel','kept'));
+    await page.evaluate(()=>window.AIZANOI_OS.openApp('web-editor'));
+    const window=page.locator('.az-window[data-app-id="web-editor"]');
+    await window.locator('.az-web-editor').waitFor({state:'visible'});
+    const frame=window.locator('[data-web-preview]');
+    const sandbox=await frame.getAttribute('sandbox');
+    assert.match(sandbox||'',/(^|\s)allow-scripts(\s|$)/,'preview must keep script execution enabled');
+    assert.doesNotMatch(sandbox||'',/(^|\s)allow-same-origin(\s|$)/,'preview must remain an opaque-origin sandbox');
+
+    const source=window.locator('[data-web-source]');
+    await source.fill(`<!doctype html><html><body><h1>Console test</h1><script>
+      console.log('alpha', {answer:42});
+      console.warn('beta warning');
+      console.error('gamma error');
+      let storage='unexpected';
+      try { localStorage.setItem('aizanoi-console-sentinel','changed'); storage='allowed'; } catch { storage='blocked'; }
+      console.log('storage', storage);
+      setTimeout(()=>{ throw new Error('runtime-boom'); },30);
+      setTimeout(()=>{ Promise.reject(new Error('rejection-boom')); },60);
+    <\/script></body></html>`);
+    await window.locator('[data-web-action="run"]').click();
+
+    const output=window.locator('[data-web-console-output]');
+    await output.getByText(/alpha.*answer.*42/i).waitFor({state:'visible',timeout:5000});
+    await output.getByText(/beta warning/i).waitFor({state:'visible',timeout:5000});
+    await output.getByText(/gamma error/i).waitFor({state:'visible',timeout:5000});
+    await output.getByText(/storage blocked/i).waitFor({state:'visible',timeout:5000});
+    await output.getByText(/runtime-boom/i).waitFor({state:'visible',timeout:5000});
+    await output.getByText(/Unhandled rejection:.*rejection-boom/i).waitFor({state:'visible',timeout:5000});
+    assert.equal(await page.evaluate(()=>localStorage.getItem('aizanoi-console-sentinel')),'kept','opaque preview must not mutate shell localStorage');
+
+    await window.locator('[data-web-console-clear]').click();
+    assert.equal(await output.locator('.az-web-editor-console-line').count(),0,'Clear should empty console output');
+  }finally{
+    await browser.close();
+  }
+});
