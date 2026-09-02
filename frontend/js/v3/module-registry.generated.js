@@ -110,6 +110,15 @@ export const INSTALLED_MODULES = Object.freeze([
   }),
   Object.freeze({
     manifestVersion: 1,
+    id: "web-editor",
+    type: "desktop-app",
+    entry: "/js/v3/apps/web-editor/src/index.js",
+    enabledByDefault: true,
+    requires: Object.freeze(["dialog","filesystem","notifications","sound"]),
+    provides: Object.freeze(["desktop-app"]),
+  }),
+  Object.freeze({
+    manifestVersion: 1,
     id: "winamp",
     type: "desktop-app",
     entry: "/js/v3/apps/winamp/src/index.js",

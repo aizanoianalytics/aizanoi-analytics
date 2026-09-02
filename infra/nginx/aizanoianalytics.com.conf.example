@@ -38,6 +38,14 @@ server {
     location = /manifest.webmanifest { try_files $uri =404; default_type application/manifest+json; expires -1; }
     location = /release.js { try_files $uri =404; expires -1; }
     location = /service-worker.js { try_files $uri =404; expires -1; }
+
+    # Web Editor user code is executed only in this isolated sandbox route.
+    # The route owns a narrowly scoped CSP; the parent shell keeps the default
+    # strict script-src/style-src policy from aizanoi-static-security-headers.
+    location = /web-editor-preview { return 301 /web-editor-preview/; }
+    location = /web-editor-preview/ { include snippets/aizanoi-web-editor-preview-headers.conf; try_files /web-editor-preview/index.html =404; expires -1; }
+    location ^~ /web-editor-preview/ { include snippets/aizanoi-web-editor-preview-headers.conf; try_files $uri =404; expires -1; }
+
     location ^~ /styles/ { try_files $uri =404; expires -1; }
     location ^~ /js/ { try_files $uri =404; expires -1; }
     location ^~ /assets/ { try_files $uri =404; expires 7d; }

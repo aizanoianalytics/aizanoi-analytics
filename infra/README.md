@@ -4,6 +4,7 @@ These are sanitized reference configurations for deployment. **Production Nginx/
 
 - `nginx/aizanoianalytics.com.conf.example` — static frontend, canonical redirects, real 404/500/503 behavior, Historical World routes, compression/cache guidance and fail-closed historical API paths;
 - `nginx/snippets/aizanoi-static-security-headers.conf.example` — shared strict header/CSP baseline for the shell, landings and assets;
+- `nginx/snippets/aizanoi-web-editor-preview-headers.conf.example` — isolated CSP for the sandboxed Web Editor preview runner; this is the only AizanoiOS route allowed to evaluate visitor-authored browser code;
 - `nginx/snippets/aizanoi-hr-analytics-security-headers.conf.example` — complete route-scoped header set for the original self-contained HR dashboard exports;
 - `nginx/snippets/aizanoi-historical-world-security-headers.conf.example` — complete route-scoped header set for worlds that still require inline boot code.
 
@@ -19,6 +20,7 @@ The reference Nginx configuration intentionally documents the operational assump
 - `/api/chat` returns `410 Gone` for stale historical clients;
 - every other `/api/*` path returns 404; there is no application reverse proxy;
 - the shell, product landings and shared assets use the strict shared CSP: neither `script-src` nor `style-src` permits `unsafe-inline`;
+- `/web-editor-preview/` is the sole route with the Web Editor preview policy; it permits authored script/style execution only because the parent embeds it with an opaque-origin iframe sandbox that omits same-origin, forms, popups, downloads and top navigation;
 - the HR Analytics Full Set keeps the original generator's self-contained HTML format, so only that exact route loads the HR-specific header snippet that permits embedded scripts and styles;
 - Historical Worlds still contain city-local inline boot scripts and styles, so only their exact route locations load the historical-world header snippet that permits inline code;
 - legacy `/videos` → `/tv/`, `/games` → `/arcade/` and `/projects` → `/forge/` redirects preserve old bookmarks without keeping duplicate discovery URLs;
@@ -33,11 +35,12 @@ When the example changes in Git, apply the corresponding production change delib
 1. compare the server's active Nginx virtual host with the example;
 2. preserve the real domain, TLS certificate paths and server-specific settings;
 3. preserve the static-only boundary: no Aizanoi application reverse proxy or visitor-facing Node listener;
-4. run `nginx -t` before reload;
-5. reload rather than restart when possible;
-6. verify `/`, the HR Analytics Full Set and one interactive dashboard, `/historic-world/`, Rome, Athens, `/api/chat`, another missing `/api/...` path and the custom error documents;
-7. verify compression and cache headers from the public edge rather than assuming the example is active;
-8. keep credentials, production snapshots and off-site backups outside this repository.
+4. install/update every route-scoped header snippet referenced by the virtual host, including the Web Editor preview snippet when that feature is released;
+5. run `nginx -t` before reload;
+6. reload rather than restart when possible;
+7. verify `/`, `/web-editor-preview/`, the HR Analytics Full Set and one interactive dashboard, `/historic-world/`, Rome, Athens, `/api/chat`, another missing `/api/...` path and the custom error documents;
+8. verify compression and cache headers from the public edge rather than assuming the example is active;
+9. keep credentials, production snapshots and off-site backups outside this repository.
 
 ## Provider / server settings that Git cannot prove
 
