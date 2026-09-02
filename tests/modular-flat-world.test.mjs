@@ -36,6 +36,7 @@ import { generateUrbanFabric as generateAthensFabric } from '../frontend/ancient
 
 const read = (path) => readFileSync(path, 'utf8');
 const runtimeSource = read('frontend/ancient-world/engine/flat-city-runtime.js');
+const bootstrapSource = read('frontend/ancient-world/engine/city-bootstrap.js');
 const assetSource = read('frontend/ancient-world/assets/blocky-asset-library.js');
 const adapters = [
   read('frontend/historic-world/app.js'),
@@ -128,15 +129,19 @@ test('asset library contains common historical building types and dedicated hero
   assert.match(assetSource, /function templeOfZeus/);
 });
 
-test('all three worlds are thin compact city adapters over one shared runtime', () => {
+test('all three worlds are declarative city adapters over one shared bootstrap/runtime', () => {
   for (const source of adapters) {
-    assert.match(source, /compactCityLayout/);
-    assert.match(source, /CITY_COMPACTION_PROFILES/);
-    assert.match(source, /startFlatBlockyCity/);
-    assert.match(source, /installCityCompatibility/);
+    assert.match(source, /startAncientCity/);
+    assert.doesNotMatch(source, /compactCityLayout|CITY_COMPACTION_PROFILES|startFlatBlockyCity|installCityCompatibility/);
     assert.doesNotMatch(source, /function\s+(?:box|cylinder|temple|buildTerrainMesh)\s*\(/);
     assert.doesNotMatch(source, /baseHeightAt:\s*terrainHeightAt/);
   }
+  assert.match(bootstrapSource, /compactCityLayout/);
+  assert.match(bootstrapSource, /CITY_COMPACTION_PROFILES/);
+  assert.match(bootstrapSource, /startFlatBlockyCity/);
+  assert.match(bootstrapSource, /installCityCompatibility/);
+  assert.match(bootstrapSource, /installShareableLocation/);
+  assert.match(bootstrapSource, /installEvidenceMode/);
 });
 
 test('live city bounds are materially smaller than the research coordinate envelopes', () => {
