@@ -28,11 +28,14 @@ test('canonical registry loads Browser only through its public module entry', as
   assert.equal(typeof publicEntry.mount, 'function');
 });
 
-test('Browser normalizes navigation to HTTPS or a safe search URL', async () => {
+test('Browser preserves explicit protocols, defaults public hosts to HTTPS and loopback hosts to HTTP', async () => {
   const { resolveBrowserInput } = await import('../frontend/js/v3/apps/browser/src/app.js');
   assert.equal(resolveBrowserInput('example.com'), 'https://example.com/');
-  assert.equal(resolveBrowserInput('http://example.com/docs'), 'https://example.com/docs');
+  assert.equal(resolveBrowserInput('http://example.com/docs'), 'http://example.com/docs');
   assert.equal(resolveBrowserInput('https://example.com/path?q=1'), 'https://example.com/path?q=1');
+  assert.equal(resolveBrowserInput('localhost:4173/app'), 'http://localhost:4173/app');
+  assert.equal(resolveBrowserInput('127.0.0.1:8000'), 'http://127.0.0.1:8000/');
+  assert.equal(resolveBrowserInput('http://localhost:4173/test'), 'http://localhost:4173/test');
   assert.match(resolveBrowserInput('aizanoi analytics') || '', /^https:\/\/www\.google\.com\/search\?igu=1&q=aizanoi%20analytics$/);
   assert.match(resolveBrowserInput('javascript:alert(1)') || '', /^https:\/\/www\.google\.com\/search\?/);
   assert.equal(resolveBrowserInput('   '), null);
