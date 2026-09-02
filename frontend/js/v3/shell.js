@@ -585,15 +585,15 @@ function renderCommands(query='') {
   commandSelection=Math.min(commandSelection,Math.max(0,rows.length-1));
   if(!rows.length){host.innerHTML='<div class="az-command-empty">No direct match. Try an app, Historical World or action.</div>';return;}
   const groups=[];
-  for(const type of ['action','world','app']){
+  for(const type of ['action','world','app','content']){
     const subset=rows.filter((row)=>row.type===type);
     if(subset.length)groups.push({type,subset});
   }
   let index=0;
-  host.innerHTML=groups.map(({type,subset})=>`<div class="az-command-group">${type==='action'?'Actions':type==='world'?'Historical Worlds':'Apps'}</div>${subset.map((row)=>{
+  host.innerHTML=groups.map(({type,subset})=>`<div class="az-command-group">${type==='action'?'Actions':type==='world'?'Historical Worlds':type==='content'?'Content':'Apps'}</div>${subset.map((row)=>{
     const current=index++;
-    const image=row.type==='app'?appById(row.id)?.icon:row.type==='world'?'/assets/icons/ancient-world.svg':'/assets/branding/aizanoi-logo-mark.svg';
-    return `<button class="az-command-row${current===commandSelection?' is-selected':''}" type="button" role="option" aria-selected="${current===commandSelection}" data-command-index="${current}"><img src="${escapeHtml(image)}" alt=""><span><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.description)}</small></span><span class="az-command-kind">${escapeHtml(row.type)}</span></button>`;
+    const image=row.type==='app'?appById(row.id)?.icon:row.type==='world'?'/assets/icons/ancient-world.svg':row.type==='content'?row.icon:'/assets/branding/aizanoi-logo-mark.svg';
+    return `<button class="az-command-row${current===commandSelection?' is-selected':''}" type="button" role="option" aria-selected="${current===commandSelection}" data-command-index="${current}"><img src="${escapeHtml(image)}" alt=""><span><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.description)}</small></span><span class="az-command-kind">${escapeHtml(row.kind||row.type)}</span></button>`;
   }).join('')}`).join('');
 }
 
@@ -604,6 +604,7 @@ function executeCommand(index) {
   closeOverlay(false);
   if(row.type==='app')openApp(row.id);
   else if(row.type==='world')launchWorld(row.id);
+  else if(row.type==='content')location.href=row.href;
   else if(row.id==='home')showHome();
   else if(row.id==='continue'){
     const session=Store.getFieldSession();
