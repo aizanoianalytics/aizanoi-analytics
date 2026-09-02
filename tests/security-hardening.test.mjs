@@ -8,6 +8,8 @@ const index=read('frontend/index.html');
 const registry=read('frontend/js/v3/registry.js');
 const shell=read('frontend/js/v3/shell.js');
 const browserApp=read('frontend/js/v3/apps/browser/src/app.js');
+const webEditorApp=read('frontend/js/v3/apps/web-editor/src/app.js');
+const webEditorRunner=read('frontend/web-editor-preview/runner.js');
 const productModules=[
   'frontend/js/v3/apps/analytics/src/app.js',
   'frontend/js/v3/apps/forge/src/app.js',
@@ -17,6 +19,7 @@ const productModules=[
 ].map(read).join('\n');
 const nginx=read('infra/nginx/aizanoianalytics.com.conf.example');
 const staticHeaders=read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
+const webEditorPreviewHeaders=read('infra/nginx/snippets/aizanoi-web-editor-preview-headers.conf.example');
 const historicalHeaders=read('infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example');
 const hrAnalyticsHeaders=read('infra/nginx/snippets/aizanoi-hr-analytics-security-headers.conf.example');
 
@@ -65,6 +68,7 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
   assert.match(nginx,/include snippets\/aizanoi-static-security-headers\.conf;/);
   assert.match(staticHeaders,/script-src 'self';/);
   assert.doesNotMatch(staticHeaders,/script-src[^;]*'unsafe-inline'/);
+  assert.doesNotMatch(staticHeaders,/script-src[^;]*'unsafe-eval'/);
   assert.match(staticHeaders,/frame-src 'self' https:;/);
   assert.match(browserApp,/sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-scripts"/);
   assert.doesNotMatch(browserApp,/allow-same-origin|allow-top-navigation/);
@@ -75,6 +79,21 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
   assert.match(hrAnalyticsHeaders,/style-src 'self' 'unsafe-inline';/);
 });
 
+test('Web Editor executes user code only inside an opaque-origin sandbox route',()=>{
+  assert.match(webEditorApp,/sandbox="allow-scripts"/);
+  assert.doesNotMatch(webEditorApp,/allow-same-origin|allow-top-navigation|allow-popups|allow-forms|srcdoc/);
+  assert.match(webEditorApp,/PREVIEW_ROUTE='\/web-editor-preview\/'/);
+  assert.match(webEditorRunner,/new Function/);
+  assert.doesNotMatch(webEditorRunner,/indexedDB|localStorage|sessionStorage/);
+  assert.match(nginx,/location = \/web-editor-preview\/[\s\S]*include snippets\/aizanoi-web-editor-preview-headers\.conf;/);
+  assert.match(nginx,/location \^~ \/web-editor-preview\/[\s\S]*include snippets\/aizanoi-web-editor-preview-headers\.conf;/);
+  assert.match(webEditorPreviewHeaders,/script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:/);
+  assert.match(webEditorPreviewHeaders,/form-action 'none'/);
+  assert.match(webEditorPreviewHeaders,/frame-ancestors 'self'/);
+  assert.match(webEditorPreviewHeaders,/microphone=\(\)/);
+  assert.match(webEditorPreviewHeaders,/camera=\(\)/);
+});
+
 test('QA package declares ESM explicitly instead of relying on syntax detection',()=>{
   assert.equal(packageJson.type,'module');
 });
@@ -83,11 +102,14 @@ test('cache locations preserve security headers and revalidate mutable unversion
   assert.equal((nginx.match(/^\s*add_header\s+Cache-Control\b/gm)||[]).length,0,'location-level Cache-Control add_header can suppress inherited security headers');
   assert.match(nginx,/location \^~ \/styles\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/js\/[\s\S]*expires -1;/);
+  assert.match(nginx,/location \^~ \/web-editor-preview\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/historic-world\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/ancient-cities\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/assets\/[\s\S]*expires 7d;/);
   assert.match(staticHeaders,/X-Content-Type-Options/);
   assert.match(staticHeaders,/Content-Security-Policy/);
+  assert.match(webEditorPreviewHeaders,/X-Content-Type-Options/);
+  assert.match(webEditorPreviewHeaders,/Content-Security-Policy/);
   assert.match(historicalHeaders,/X-Content-Type-Options/);
   assert.match(historicalHeaders,/Content-Security-Policy/);
   assert.match(hrAnalyticsHeaders,/X-Content-Type-Options/);
