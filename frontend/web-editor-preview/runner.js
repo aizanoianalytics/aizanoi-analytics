@@ -2,22 +2,24 @@ const MESSAGE_RUN='aizanoi-web-editor-run';
 const MESSAGE_READY='aizanoi-web-editor-ready';
 const MESSAGE_DONE='aizanoi-web-editor-done';
 const MESSAGE_ERROR='aizanoi-web-editor-error';
+let activeRunId=0;
 
 function send(type,payload={}){
-  parent.postMessage({type,...payload},'*');
+  parent.postMessage({type,runId:activeRunId,...payload},'*');
 }
 function serializeError(error){
   if(error instanceof Error)return error.stack||error.message||String(error);
   return String(error??'Unknown preview error');
 }
 function copyStylesheetLinks(parsed){
-  for(const node of parsed.querySelectorAll('link[rel~="stylesheet"][href]')){
+  for(const node of [...parsed.querySelectorAll('link[rel~="stylesheet"][href]')]){
     const link=document.createElement('link');
     link.rel='stylesheet';
     link.href=node.getAttribute('href');
     const media=node.getAttribute('media');
     if(media)link.media=media;
     document.head.appendChild(link);
+    node.remove();
   }
 }
 async function runExternalScript(spec){
@@ -50,6 +52,7 @@ async function render(source={}){
   copyStylesheetLinks(parsed);
 
   const inlineStyles=[...parsed.querySelectorAll('style')].map((node)=>node.textContent||'');
+  parsed.querySelectorAll('style').forEach((node)=>node.remove());
   const style=document.createElement('style');
   style.textContent=`${inlineStyles.join('\n')}\n${String(source.css||'')}`;
   document.head.appendChild(style);
@@ -69,7 +72,8 @@ window.addEventListener('error',(event)=>send(MESSAGE_ERROR,{message:serializeEr
 window.addEventListener('unhandledrejection',(event)=>send(MESSAGE_ERROR,{message:serializeError(event.reason)}));
 window.addEventListener('message',(event)=>{
   if(event.source!==parent||event.data?.type!==MESSAGE_RUN)return;
+  activeRunId=Number(event.data.runId)||0;
   render(event.data.source).catch((error)=>send(MESSAGE_ERROR,{message:serializeError(error)}));
 });
 
-send(MESSAGE_READY);
+parent.postMessage({type:MESSAGE_READY},'*');
