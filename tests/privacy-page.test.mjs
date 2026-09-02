@@ -22,9 +22,12 @@ test('privacy Workspace disclosure matches IndexedDB backup and persistence impl
   assert.match(privacy, /versioned backup\/export and restore/i);
   assert.match(privacy, /persistent storage is not a backup/i);
   assert.match(workspaceFs, /indexedDB\.open\(DB_NAME, DB_VERSION\)/);
-  assert.match(workspaceBackup, /exportBackup/);
-  assert.match(workspaceBackup, /importBackup/);
-  assert.match(workspaceBackup, /navigator\.storage\?\.persist/);
+  assert.match(workspaceBackup, /export async function exportWorkspaceBackup\(/);
+  assert.match(workspaceBackup, /export async function importWorkspaceBackup\(/);
+  assert.match(workspaceBackup, /export async function workspaceStorageStatus\(/);
+  assert.match(workspaceBackup, /export async function requestWorkspacePersistence\(/);
+  assert.match(workspaceBackup, /storage\.estimate\(\)/);
+  assert.match(workspaceBackup, /storage\.persist\(\)/);
 });
 
 test('privacy Camera disclosure matches photo-only permission implementation', () => {
