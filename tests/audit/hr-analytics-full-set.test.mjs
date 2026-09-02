@@ -9,6 +9,7 @@ const pipelineRoot = `${sourceRoot}/production-pipeline`;
 const publicRoot = 'frontend/analytics/dashboards/hr-analytics-full-set';
 const manifest = JSON.parse(readFileSync(`${sourceRoot}/pipeline-manifest.json`, 'utf8'));
 const catalog = readFileSync(`${publicRoot}/index.html`, 'utf8');
+const analyticsCatalog = readFileSync('frontend/analytics/catalog.js', 'utf8');
 const dashboardIds = [
   'hr-executive-board-full-history', 'hr-executive-board-current', 'hr-administration-deep-dive',
   'store-operations-tracking', 'workforce-turnover', 'store-learning-compliance',
@@ -23,6 +24,7 @@ const expectedControlCounts = new Map([
   ['corporate-goals', 13], ['workforce-time-attendance', 63],
 ]);
 const sha256 = (file) => createHash('sha256').update(readFileSync(file)).digest('hex');
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 test('manifest locks the complete original production contract', () => {
   assert.equal(manifest.dataPolicy, 'synthetic-only');
@@ -73,6 +75,24 @@ test('all ten original dashboard interaction surfaces are published intact', () 
   }
 });
 
+test('public publish layer adds language, brand navigation and canonical metadata to every HR dashboard', () => {
+  for (const id of dashboardIds) {
+    const html = readFileSync(`${publicRoot}/${id}/index.html`, 'utf8');
+    const canonical = `https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/${id}/`;
+    assert.match(html, /<html\b[^>]*\blang="tr"/i, `${id} must declare its Turkish interface language`);
+    assert.equal((html.match(/AIZANOI_PUBLIC_META_START/g) || []).length, 1, `${id} must have one managed metadata block`);
+    assert.equal((html.match(/AIZANOI_PUBLIC_BAR_START/g) || []).length, 1, `${id} must have one managed public bar`);
+    assert.match(html, /Aizanoi Analytics · HR Analytics Full Set/);
+    assert.match(html, /Back to Analytics/);
+    assert.match(html, /Interface language: Turkish/);
+    assert.match(html, /<meta name="description" content="[^"]+">/i);
+    assert.match(html, new RegExp(`<link rel="canonical" href="${escapeRegExp(canonical)}">`, 'i'));
+    assert.match(html, /<meta property="og:title" content="[^"]+ — Aizanoi Analytics">/i);
+    assert.match(html, /<meta property="og:description" content="[^"]+">/i);
+    assert.match(html, new RegExp(`<meta property="og:url" content="${escapeRegExp(canonical)}">`, 'i'));
+  }
+});
+
 test('public HR dashboards remain self-contained under the route-scoped CSP', () => {
   for (const id of dashboardIds) {
     const html = readFileSync(`${publicRoot}/${id}/index.html`, 'utf8');
@@ -80,7 +100,7 @@ test('public HR dashboards remain self-contained under the route-scoped CSP', ()
   }
 });
 
-test('HTML-aware parser locks the exact original control counts', () => {
+test('dashboard-native control counts remain exact beneath two publish-chrome links', () => {
   const python = process.platform === 'win32' ? 'python' : 'python3';
   const script = [
     'import importlib.util,json,pathlib',
@@ -93,7 +113,8 @@ test('HTML-aware parser locks the exact original control counts', () => {
     "print(json.dumps({i:m.inspect(root/i/'index.html')['control_count'] for i in ids}))",
   ].join(';');
   const actual = JSON.parse(execFileSync(python, ['-c', script], { encoding: 'utf8' }));
-  assert.deepEqual(actual, Object.fromEntries(expectedControlCounts));
+  const expectedWithPublicChrome = Object.fromEntries([...expectedControlCounts].map(([id, count]) => [id, count + 2]));
+  assert.deepEqual(actual, expectedWithPublicChrome);
 });
 
 test('catalog exposes every dashboard and accurately describes the full pipeline', () => {
@@ -102,11 +123,24 @@ test('catalog exposes every dashboard and accurately describes the full pipeline
     assert.ok(existsSync(`${sourceRoot}/${dashboard.id}/README.md`));
     assert.ok(dashboard.capabilities.length >= 4);
   }
+  assert.match(catalog, /Interface language · Turkish/i);
+  assert.match(analyticsCatalog, /interfaceLanguage:'Turkish'/);
+  assert.match(analyticsCatalog, /interfaceLanguageCode:'tr'/);
   assert.match(catalog, /10<\/strong><span>original dashboard surfaces/i);
   assert.match(catalog, /27<\/strong><span>synthetic source workbooks/i);
   assert.match(catalog, /22<\/strong><span>parity-verified Python modules/i);
   assert.match(catalog, /same 10-stage Python line/i);
   assert.match(catalog, /0<\/strong><span>real employer or employee records/i);
+});
+
+test('canonical publish pipeline decorates before sanitization and embeds the decorated PDKS artifact', () => {
+  const publish = readFileSync('scripts/regenerate-hr-dashboards.sh', 'utf8');
+  const decorateAt = publish.indexOf('node "${DECORATOR}" "${PUBLIC_DASHBOARD_HTML[@]}"');
+  const embedAt = publish.indexOf('cp "${PUBLIC}/workforce-time-attendance/index.html"');
+  const sanitizeAt = publish.indexOf('node "${SANITIZER}" "${GENERATED_PUBLIC_HTML[@]}"');
+  assert.ok(decorateAt >= 0, 'public decorator is not wired into the canonical rebuild');
+  assert.ok(embedAt > decorateAt, 'embedded PDKS copies must come from the decorated canonical artifact');
+  assert.ok(sanitizeAt > embedAt, 'sanitization must remain the final public-content boundary');
 });
 
 test('download exactly matches the integrated pipeline output', () => {
