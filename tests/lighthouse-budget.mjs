@@ -7,7 +7,7 @@ const report = JSON.parse(readFileSync(reportPath, 'utf8'));
 const categories = report.categories || {};
 
 const budgets = {
-  performance: 0.65,
+  performance: 0.80,
   accessibility: 0.90,
   'best-practices': 0.85,
   seo: 0.90,
