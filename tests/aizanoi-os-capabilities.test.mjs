@@ -49,18 +49,25 @@ test('filesystem capability exposes the complete shared surface needed by migrat
     'deleteNode',
     'documentsId',
     'emptyRecycleBin',
+    'exportBackup',
     'formatSize',
     'getNode',
+    'importBackup',
     'musicId',
     'picturesId',
     'readFileBlob',
     'recycleId',
     'renameNode',
+    'requestPersistence',
     'restoreNode',
+    'storageStatus',
     'trashNode',
     'updateFileContent',
   ]);
-  for (const name of ['allNodes', 'createFolder', 'renameNode', 'trashNode']) {
+  for (const name of [
+    'allNodes', 'createFolder', 'renameNode', 'trashNode',
+    'exportBackup', 'importBackup', 'requestPersistence', 'storageStatus',
+  ]) {
     assert.equal(typeof fs[name], 'function', `${name} must be available through the shared filesystem boundary`);
   }
 });
