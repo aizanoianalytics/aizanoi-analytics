@@ -21,6 +21,7 @@ function renderCatalog(container) {
                 <h3>${esc(set.title)} <span>${esc(set.accent)}</span></h3>
                 <p>${esc(set.description)}</p>
               </div>
+              ${set.interfaceLanguage ? `<span class="az-analytics-language-badge">Interface language · ${esc(set.interfaceLanguage)}</span>` : ''}
               <div class="az-analytics-set-metrics" aria-label="${esc(set.title)} ${esc(set.accent)} summary">
                 ${set.metrics.slice(0,3).map((metric) => `<span><strong>${esc(metric.value)}</strong>${esc(metric.label)}</span>`).join('')}
               </div>
@@ -40,6 +41,7 @@ function dashboardCards(set) {
     <article class="az-analytics-dashboard-card">
       <div class="az-analytics-dashboard-number">${String(index + 1).padStart(2, '0')}</div>
       <h3>${esc(dashboard.title)}</h3>
+      ${set.interfaceLanguage ? `<span class="az-analytics-language-badge">Interface language · ${esc(set.interfaceLanguage)}</span>` : ''}
       <p>${esc(dashboard.summary)}</p>
       <a href="${esc(dashboard.href)}" target="_blank" rel="noopener noreferrer">Launch dashboard <span aria-hidden="true">↗</span></a>
     </article>`).join('');
@@ -50,7 +52,7 @@ function renderSet(container, set) {
     <div class="az-app-shell az-analytics-app">
       <div class="az-analytics-detail-bar">
         <button class="az-button" type="button" data-analytics-back>← Analytics Sets</button>
-        <span>Collection · ${esc(set.title)} ${esc(set.accent)}</span>
+        <span>Collection · ${esc(set.title)} ${esc(set.accent)}${set.interfaceLanguage ? ` · Interface language: ${esc(set.interfaceLanguage)}` : ''}</span>
       </div>
       <div class="az-analytics-detail">
         <section class="az-hr-spotlight">
