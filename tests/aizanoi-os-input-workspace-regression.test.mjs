@@ -23,10 +23,12 @@ test('Signal Snake keeps keyboard restart available and renders a legible New Ga
   assert.match(source, /background:#5265db;color:#fff/);
 });
 
-test('desktop exposes Workspace and Workspace opens at the local root with Photos, Music, Text and Editor', () => {
+test('Workspace stays available through Applications and opens at the local root with Photos, Music, Text and Editor', () => {
   const platform = read('frontend/js/v3/brand-platform.js');
+  const registry = read('frontend/js/v3/registry.js');
   const workspace = read('frontend/js/v3/apps/workspace/src/app.js');
-  assert.match(platform, /'recycle-bin','workspace'/);
+  assert.match(platform, /const PUBLIC_APPS=Object\.freeze\(APPS\.map\(\(app\)=>app\.id\)\)/);
+  assert.match(registry, /id:'workspace'.*label:'Workspace'/s);
   assert.match(workspace, /node\?\.id===fs\.documentsId\?'Text'/);
   assert.match(workspace, /node\?\.id===fs\.picturesId\?'Photos'/);
   assert.match(workspace, /createFolder\(\{name:'Editor',parent:rootId\}\)/);
