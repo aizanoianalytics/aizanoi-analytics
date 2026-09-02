@@ -1,11 +1,11 @@
 import { APPS, appById } from './registry.js';
 
 const PINNED=Object.freeze(['news','videos','analytics','worlds','forge']);
-const DESKTOP=Object.freeze([...PINNED,'browser','notepad','calculator','camera','winamp','games','recycle-bin','workspace']);
+const DESKTOP=Object.freeze([...PINNED,'browser','notepad','web-editor','calculator','camera','winamp','games','recycle-bin','workspace']);
 const PUBLIC_APPS=Object.freeze(APPS.map((app)=>app.id));
 const PHONE_DOCK=Object.freeze(['news','videos','analytics','worlds']);
 const PLATFORM_STYLE_HREF='/styles/tool-windows.css';
-const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[char]));
 
 function ensurePlatformStyles(){
   if(document.querySelector('link[data-az-platform-polish]'))return;
