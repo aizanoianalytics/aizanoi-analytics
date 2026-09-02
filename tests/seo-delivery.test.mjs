@@ -13,7 +13,7 @@ const itemDate = (item) => item.publishedAt.slice(0, 10);
 const storySlug = (item) => item.id.startsWith(`${itemDate(item)}-`) ? item.id.slice(11) : item.id;
 const storyPath = (item) => `/news/${item.kind === 'weekly' ? 'weekly/' : ''}${itemDate(item)}/${storySlug(item)}/`;
 const canonicalBase = [
-  '/', '/news/', '/news/about/', '/tv/', '/analytics/', '/analytics/dashboards/hr-analytics-full-set/',
+  '/', '/news/', '/news/about/', '/privacy/', '/tv/', '/analytics/', '/analytics/dashboards/hr-analytics-full-set/',
   '/analytics/dashboards/hr-analytics-full-set/hr-executive-board-full-history/',
   '/analytics/dashboards/hr-analytics-full-set/hr-executive-board-current/',
   '/analytics/dashboards/hr-analytics-full-set/hr-administration-deep-dive/',
@@ -34,7 +34,7 @@ const canonical = [
   ...feed.categories.map((slug) => `/news/category/${slug}/`)
 ];
 
-test('sitemap reflects canonical products, Historical Worlds and generated News discovery routes', () => {
+test('sitemap reflects canonical products, privacy, Historical Worlds and generated News discovery routes', () => {
   const urls = [...sitemap.matchAll(/<url>\s*<loc>https:\/\/aizanoianalytics\.com([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)]
     .map(([, path, lastmod]) => ({ path, lastmod }));
   assert.deepEqual(urls.map(({ path }) => path), canonical);
@@ -42,7 +42,8 @@ test('sitemap reflects canonical products, Historical Worlds and generated News 
   for (const edition of feed.editions) assert.ok(urls.some(({ path }) => path === edition.path), `${edition.path} missing from sitemap`);
   for (const item of feed.items) assert.ok(urls.some(({ path }) => path === storyPath(item)), `${item.id} permanent story route missing from sitemap`);
   for (const slug of feed.categories) assert.ok(urls.some(({ path }) => path === `/news/category/${slug}/`), `${slug} category missing from sitemap`);
-  assert.doesNotMatch(sitemap, /\/(?:projects|videos|games|ancient-world|docs|changelog|privacy|terms)\//);
+  assert.ok(urls.some(({ path }) => path === '/privacy/'), 'privacy route missing from sitemap');
+  assert.doesNotMatch(sitemap, /\/(?:projects|videos|games|ancient-world|docs|changelog|terms)\//);
   assert.doesNotMatch(sitemap, /<changefreq>|<priority>/);
 });
 
