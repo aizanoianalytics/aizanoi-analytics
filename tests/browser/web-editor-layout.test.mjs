@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import axeCore from 'axe-core';
 
 const base=process.env.ANCIENT_WORLD_BASE_URL||'http://127.0.0.1:4173';
 
-test('Web Editor fills its window, keeps Run visible and Open Apps keeps application icons compact',async()=>{
+test('Web Editor fills its window and keeps Run accessible while Open Apps stays compact',async()=>{
   const browser=await chromium.launch({headless:true});
   const context=await browser.newContext({viewport:{width:1440,height:900}});
   const page=await context.newPage();
@@ -16,7 +17,9 @@ test('Web Editor fills its window, keeps Run visible and Open Apps keeps applica
     await page.evaluate(()=>window.AIZANOI_OS.openApp('web-editor'));
     const window=page.locator('.az-window[data-app-id="web-editor"]');
     const editor=window.locator('.az-web-editor');
+    const source=window.locator('[data-web-source]');
     const run=window.locator('[data-web-action="run"]');
+    const saveAs=window.locator('[data-web-action="saveas"]');
     await editor.waitFor({state:'visible'});
     await page.waitForTimeout(150);
     const metrics=await page.evaluate(()=>{
@@ -30,15 +33,34 @@ test('Web Editor fills its window, keeps Run visible and Open Apps keeps applica
     assert.ok(metrics.editor.height>=metrics.body.height-2,`editor should fill window body (${metrics.editor.height} vs ${metrics.body.height})`);
     assert.ok(Math.abs(metrics.layout.bottom-metrics.body.bottom)<=2,`split layout should reach the window bottom (${metrics.layout.bottom} vs ${metrics.body.bottom})`);
 
-    assert.equal((await run.innerText()).trim(),'Run','primary Web Editor action should retain its label');
-    const runStyle=await run.evaluate((node)=>{
-      const style=getComputedStyle(node);
-      const rect=node.getBoundingClientRect();
-      return{color:style.color,backgroundImage:style.backgroundImage,width:rect.width,height:rect.height};
+    assert.equal((await run.innerText()).trim(),'Run','primary Web Editor action should retain its accessible label');
+    const runBox=await run.boundingBox();
+    assert.ok(runBox&&runBox.width>=24&&runBox.height>=24,`Run must meet the WCAG 2.2 minimum target size, got ${runBox?.width}x${runBox?.height}`);
+    assert.equal(await run.isVisible(),true,'Run must be visibly available without scrolling the toolbar');
+    const visuallyDistinct=await page.evaluate(()=>{
+      const primary=document.querySelector('.az-window[data-app-id="web-editor"] [data-web-action="run"]');
+      const secondary=document.querySelector('.az-window[data-app-id="web-editor"] [data-web-action="saveas"]');
+      if(!primary||!secondary)return false;
+      const a=getComputedStyle(primary),b=getComputedStyle(secondary);
+      return a.backgroundImage!==b.backgroundImage||a.backgroundColor!==b.backgroundColor||a.boxShadow!==b.boxShadow||a.fontWeight!==b.fontWeight;
     });
-    assert.equal(runStyle.color,'rgb(255, 255, 255)','Run label should remain white on the primary action');
-    assert.notEqual(runStyle.backgroundImage,'none','Run should retain a visible primary gradient background');
-    assert.ok(runStyle.width>=70&&runStyle.height>=30,`Run should remain a clear primary target, got ${runStyle.width}x${runStyle.height}`);
+    assert.equal(visuallyDistinct,true,'Run should remain visually distinguishable from a secondary toolbar action');
+
+    await page.addScriptTag({content:axeCore.source});
+    const contrastViolations=await page.evaluate(async()=>{
+      const target=document.querySelector('.az-window[data-app-id="web-editor"] [data-web-action="run"]');
+      const result=await axe.run(target,{runOnly:{type:'rule',values:['color-contrast']}});
+      return result.violations.map(({id,impact,nodes})=>({id,impact,nodes:nodes.map(({target,html,failureSummary})=>({target,html,failureSummary}))}));
+    });
+    assert.deepEqual(contrastViolations,[],'Run must pass axe color-contrast checks');
+
+    await source.fill('<!doctype html><html><body><h1 id="keyboard-run">Waiting</h1><script>document.querySelector("#keyboard-run").textContent="Keyboard run works";<\/script></body></html>');
+    await run.focus();
+    assert.equal(await run.evaluate((node)=>node===document.activeElement),true,'Run should accept keyboard focus');
+    await run.press('Enter');
+    const preview=page.frameLocator('.az-window[data-app-id="web-editor"] [data-web-preview]');
+    await preview.locator('#keyboard-run').waitFor({state:'visible',timeout:5000});
+    assert.equal((await preview.locator('#keyboard-run').innerText()).trim(),'Keyboard run works','Enter should activate Run');
 
     await page.locator('[data-os-switcher]').click();
     const overlay=page.locator('#az-switcher-overlay');
