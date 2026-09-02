@@ -7,6 +7,7 @@ import {
 import { startFlatBlockyCity } from './flat-city-runtime.js';
 import { installCityCompatibility } from './city-compatibility.js';
 import { installEvidenceMode } from './evidence-mode.js';
+import { installShareableLocation } from './shareable-location.js';
 
 export function ancientWorldTouchMode() {
   return ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches || innerWidth < 820;
@@ -24,8 +25,8 @@ function resolveCompactionProfile(profile) {
 
 /**
  * Shared city bootstrap. City folders own evidence/data/layout choices while
- * renderer, traversal, compatibility, Research Lens and touch detection remain
- * Ancient World platform responsibilities.
+ * renderer, traversal, compatibility, share URLs, Research Lens and touch
+ * detection remain Ancient World platform responsibilities.
  */
 export function startAncientCity({
   city,
@@ -79,7 +80,8 @@ export function startAncientCity({
     cityRoute,
   });
   installCityCompatibility(runtime, { ui });
+  const share = installShareableLocation(runtime, { ui });
   const evidenceMode = installEvidenceMode({ runtime, city:layout.city });
 
-  return Object.freeze({ runtime, layout, liveStreets, urbanFabric, evidenceMode, touch });
+  return Object.freeze({ runtime, layout, liveStreets, urbanFabric, evidenceMode, share, touch });
 }
