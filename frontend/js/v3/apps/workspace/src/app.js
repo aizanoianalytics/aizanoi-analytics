@@ -2,7 +2,7 @@
 const esc=(v)=>String(v??'').replace(/[&<>"']/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const ICONS={folder:'📁',text:'📄',image:'🖼️',audio:'🎵',default:'📦'};
 function iconFor(node){if(node.kind==='folder')return ICONS.folder;if((node.mime||'').startsWith('text/')||node.mime==='application/json')return ICONS.text;if((node.mime||'').startsWith('image/'))return ICONS.image;if((node.mime||'').startsWith('audio/'))return ICONS.audio;return ICONS.default;}
-function isWebSource(node){const name=String(node?.name||'').toLowerCase(),mime=String(node?.mime||'').toLowerCase();return /\.(?:html?|css|m?js)$/.test(name)||['text/html','text/css','text/javascript','application/javascript'].includes(mime);}
+function isWebSource(node){const name=String(node?.name||'').toLowerCase(),mime=String(node?.mime||'').toLowerCase();return /\.html?$/.test(name)||mime==='text/html';}
 
 export function createWorkspaceApp({apps,dialog,filesystem:fs,notifications,sound}){
   return {async mount({container,options}){
