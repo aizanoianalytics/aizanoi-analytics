@@ -1,0 +1,83 @@
+name: Temporary shell startup performance experiment
+
+on:
+  push:
+    branches: [perf/shell-startup-yield]
+
+permissions:
+  contents: read
+
+jobs:
+  compare-shell-startup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: '22' }
+      - name: Install pinned Lighthouse dependencies
+        run: npm ci --ignore-scripts --no-fund
+      - name: Start static server
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-shell-perf-http.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
+          cat /tmp/aizanoi-shell-perf-http.log; exit 1
+      - name: Run baseline samples
+        run: |
+          mkdir -p artifacts/shell-perf
+          for attempt in 1 2 3; do
+            npx lighthouse http://127.0.0.1:4173/ --quiet --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --output=json --output-path="artifacts/shell-perf/baseline-$attempt.json"
+          done
+      - name: Apply experiment in runner only
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path=Path('frontend/js/v3/shell.js')
+          text=path.read_text()
+          old="""  root.innerHTML=shellTemplate();\n  renderHome();\n  renderShelf();\n  renderClock();"""
+          new="""  root.innerHTML=shellTemplate();\n  renderShelf();\n  renderClock();\n  requestAnimationFrame(()=>renderHome());"""
+          if old not in text:
+              raise SystemExit('mountShell render block changed; refusing experiment')
+          text=text.replace(old,new,1)
+          old_restore="""  restoreWorkspace().catch((error)=>{\n    console.error('AizanoiOS workspace restoration failed.',error);\n    notify('Workspace restoration failed',error?.message||'Open an app to try again.');\n  });"""
+          new_restore="""  requestAnimationFrame(()=>restoreWorkspace().catch((error)=>{\n    console.error('AizanoiOS workspace restoration failed.',error);\n    notify('Workspace restoration failed',error?.message||'Open an app to try again.');\n  }));"""
+          if old_restore not in text:
+              raise SystemExit('restoreWorkspace block changed; refusing experiment')
+          path.write_text(text.replace(old_restore,new_restore,1))
+          PY
+      - name: Run yielded samples
+        run: |
+          for attempt in 1 2 3; do
+            npx lighthouse http://127.0.0.1:4173/ --quiet --only-categories=performance --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" --output=json --output-path="artifacts/shell-perf/yielded-$attempt.json"
+          done
+      - name: Summarize comparable metrics
+        run: |
+          python3 - <<'PY'
+          import json, glob, statistics
+          from pathlib import Path
+          out=[]
+          keys=['total-blocking-time','mainthread-work-breakdown','bootup-time']
+          for label in ['baseline','yielded']:
+              rows=[]
+              for file in sorted(glob.glob(f'artifacts/shell-perf/{label}-*.json')):
+                  report=json.load(open(file))
+                  long_items=report['audits']['long-tasks']['details']['items']
+                  shell_tasks=[x['duration'] for x in long_items if x.get('url','').endswith('/js/v3/shell.js')]
+                  row={
+                      'performance':report['categories']['performance']['score']*100,
+                      'tbt':report['audits']['total-blocking-time']['numericValue'],
+                      'mainthread':report['audits']['mainthread-work-breakdown']['numericValue'],
+                      'bootup':report['audits']['bootup-time']['numericValue'],
+                      'shell_longest':max(shell_tasks,default=0),
+                      'long_tasks':len(long_items),
+                  }
+                  rows.append(row)
+              summary={key:round(statistics.median(row[key] for row in rows),2) for key in rows[0]}
+              out.append({'variant':label,'samples':rows,'median':summary})
+          Path('artifacts/shell-perf/summary.json').write_text(json.dumps(out,indent=2))
+          print(json.dumps(out,indent=2))
+          PY
+      - name: Upload experiment artifact
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with: { name: aizanoi-shell-perf-experiment, path: artifacts/shell-perf, retention-days: 3 }
