@@ -1,6 +1,11 @@
 const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const FILES=Object.freeze({html:'index.html',css:'style.css',js:'script.js'});
 const MIME=Object.freeze({html:'text/html',css:'text/css',js:'text/javascript'});
+const PREVIEW_ROUTE='/web-editor-preview/';
+const MESSAGE_RUN='aizanoi-web-editor-run';
+const MESSAGE_READY='aizanoi-web-editor-ready';
+const MESSAGE_DONE='aizanoi-web-editor-done';
+const MESSAGE_ERROR='aizanoi-web-editor-error';
 const DEFAULTS=Object.freeze({
   html:`<main class="demo-card">\n  <span class="eyebrow">AIZANOI WEB EDITOR</span>\n  <h1>Hello, Aizanoi.</h1>\n  <p>Edit HTML, CSS and JavaScript, then press Run.</p>\n  <button id="hello">Test JavaScript</button>\n</main>`,
   css:`:root {\n  font-family: Inter, system-ui, sans-serif;\n  color: #172033;\n  background: #eef2f8;\n}\n\nbody {\n  min-height: 100vh;\n  margin: 0;\n  display: grid;\n  place-items: center;\n}\n\n.demo-card {\n  width: min(520px, calc(100% - 48px));\n  padding: 32px;\n  border: 1px solid #d9e0ec;\n  border-radius: 20px;\n  background: white;\n  box-shadow: 0 24px 60px rgba(30, 44, 72, .12);\n}\n\n.eyebrow {\n  font-size: 11px;\n  font-weight: 800;\n  letter-spacing: .12em;\n  color: #5265db;\n}\n\nbutton {\n  min-height: 42px;\n  padding: 0 16px;\n  border: 0;\n  border-radius: 10px;\n  background: #172033;\n  color: white;\n  cursor: pointer;\n}`,
@@ -22,19 +27,13 @@ async function textOf(filesystem,node){
   const blob=await filesystem.readFileBlob(node.id);
   return blob?blob.text():'';
 }
-function previewDocument(source){
-  const css=String(source.css||'').replace(/<\/style/gi,'<\\/style');
-  const js=String(source.js||'').replace(/<\/script/gi,'<\\/script');
-  const policy="default-src 'none'; script-src 'unsafe-inline' https: http:; style-src 'unsafe-inline' https: http:; img-src data: blob: https: http:; font-src data: https:; media-src data: blob: https: http:; connect-src https: http:; object-src 'none'; base-uri 'none'; form-action 'none'";
-  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="${policy}"><style>${css}</style></head><body>${source.html||''}<script>${js}<\/script></body></html>`;
-}
 
 export async function mountWebEditor({container,options,capabilities}){
   const {filesystem,dialog,notifications,sound}=capabilities;
-  let editorFolderId=null,projectFolderId=null,projectName='Untitled project',activeTab='html',dirty=false,lastSavedAt=null;
+  let editorFolderId=null,projectFolderId=null,projectName='Untitled project',activeTab='html',dirty=false,lastSavedAt=null,previewRunId=0,pendingPreview=null;
   const source={html:DEFAULTS.html,css:DEFAULTS.css,js:DEFAULTS.js};
 
-  container.innerHTML=`<div class="az-app-shell"><div class="az-app-toolbar"><strong data-web-editor-title>Aizanoi Web Editor</strong><span class="az-system-spacer"></span><span class="az-app-caption">HTML · CSS · JavaScript · sandboxed preview</span></div><div class="az-web-editor"><div class="az-web-editor-actions" role="toolbar" aria-label="Web Editor actions"><button class="az-button" type="button" data-web-action="new">New</button><button class="az-button" type="button" data-web-action="open">Open…</button><button class="az-button" type="button" data-web-action="save">Save</button><button class="az-button" type="button" data-web-action="saveas">Save as…</button><button class="az-button az-button-primary" type="button" data-web-action="run">Run</button><span class="az-system-spacer"></span><span class="az-web-editor-status" data-web-status>Unsaved local project</span></div><div class="az-web-editor-layout"><section class="az-web-editor-code" aria-label="Source editor"><div class="az-web-editor-tabs" role="tablist" aria-label="Source files"><button class="az-web-editor-tab" type="button" role="tab" aria-selected="true" data-web-tab="html">HTML</button><button class="az-web-editor-tab" type="button" role="tab" aria-selected="false" data-web-tab="css">CSS</button><button class="az-web-editor-tab" type="button" role="tab" aria-selected="false" data-web-tab="js">JavaScript</button></div><div class="az-web-editor-pane"><textarea class="az-web-editor-text" data-web-source="html" spellcheck="false" aria-label="HTML source"></textarea><textarea class="az-web-editor-text" data-web-source="css" spellcheck="false" aria-label="CSS source" hidden></textarea><textarea class="az-web-editor-text" data-web-source="js" spellcheck="false" aria-label="JavaScript source" hidden></textarea></div></section><section class="az-web-editor-preview" aria-label="Preview"><header class="az-web-editor-preview-head"><strong>Preview</strong><span class="az-system-spacer"></span><span class="az-web-editor-security">sandboxed iframe · local source</span></header><iframe class="az-web-editor-frame" data-web-preview title="Web project preview" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe></section></div><aside class="az-web-editor-projects" data-web-projects hidden aria-label="Saved Web Editor projects"><header class="az-web-editor-projects-head"><strong>Editor projects</strong><span class="az-system-spacer"></span><button class="az-button" type="button" data-web-close-projects>Close</button></header><div class="az-web-editor-project-list" data-web-project-list></div></aside></div></div>`;
+  container.innerHTML=`<div class="az-app-shell"><div class="az-app-toolbar"><strong data-web-editor-title>Aizanoi Web Editor</strong><span class="az-system-spacer"></span><span class="az-app-caption">HTML · CSS · JavaScript · sandboxed preview</span></div><div class="az-web-editor"><div class="az-web-editor-actions" role="toolbar" aria-label="Web Editor actions"><button class="az-button" type="button" data-web-action="new">New</button><button class="az-button" type="button" data-web-action="open">Open…</button><button class="az-button" type="button" data-web-action="save">Save</button><button class="az-button" type="button" data-web-action="saveas">Save as…</button><button class="az-button az-button-primary" type="button" data-web-action="run">Run</button><span class="az-system-spacer"></span><span class="az-web-editor-status" data-web-status>Unsaved local project</span></div><div class="az-web-editor-layout"><section class="az-web-editor-code" aria-label="Source editor"><div class="az-web-editor-tabs" role="tablist" aria-label="Source files"><button class="az-web-editor-tab" type="button" role="tab" aria-selected="true" data-web-tab="html">HTML</button><button class="az-web-editor-tab" type="button" role="tab" aria-selected="false" data-web-tab="css">CSS</button><button class="az-web-editor-tab" type="button" role="tab" aria-selected="false" data-web-tab="js">JavaScript</button></div><div class="az-web-editor-pane"><textarea class="az-web-editor-text" data-web-source="html" spellcheck="false" aria-label="HTML source"></textarea><textarea class="az-web-editor-text" data-web-source="css" spellcheck="false" aria-label="CSS source" hidden></textarea><textarea class="az-web-editor-text" data-web-source="js" spellcheck="false" aria-label="JavaScript source" hidden></textarea></div></section><section class="az-web-editor-preview" aria-label="Preview"><header class="az-web-editor-preview-head"><strong>Preview</strong><span class="az-system-spacer"></span><span class="az-web-editor-security">isolated sandbox · no Workspace access</span></header><iframe class="az-web-editor-frame" data-web-preview title="Web project preview" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe></section></div><aside class="az-web-editor-projects" data-web-projects hidden aria-label="Saved Web Editor projects"><header class="az-web-editor-projects-head"><strong>Editor projects</strong><span class="az-system-spacer"></span><button class="az-button" type="button" data-web-close-projects>Close</button></header><div class="az-web-editor-project-list" data-web-project-list></div></aside></div></div>`;
 
   const titleEl=container.querySelector('[data-web-editor-title]');
   const statusEl=container.querySelector('[data-web-status]');
@@ -56,11 +55,27 @@ export async function mountWebEditor({container,options,capabilities}){
     for(const [key,node] of Object.entries(editors))node.hidden=key!==activeTab;
     queueMicrotask(()=>editors[activeTab]?.focus({preventScroll:true}));
   }
+  function postPendingPreview(){
+    if(!pendingPreview||!preview.contentWindow)return;
+    preview.contentWindow.postMessage({type:MESSAGE_RUN,runId:pendingPreview.runId,source:pendingPreview.source},'*');
+  }
   function runPreview(){
     syncEditorsToSource();
-    preview.srcdoc=previewDocument(source);
+    const runId=++previewRunId;
+    pendingPreview={runId,source:{html:source.html,css:source.css,js:source.js}};
+    preview.src=`${PREVIEW_ROUTE}?run=${runId}`;
     sound.play('click');
-    statusEl.textContent=dirty?'Preview updated · unsaved changes':'Preview updated';
+    statusEl.textContent=dirty?'Running preview · unsaved changes':'Running preview';
+  }
+  function handlePreviewMessage(event){
+    if(event.source!==preview.contentWindow||!event.data||typeof event.data!=='object')return;
+    if(event.data.type===MESSAGE_READY){postPendingPreview();return;}
+    if(!pendingPreview||event.data.runId!==pendingPreview.runId)return;
+    if(event.data.type===MESSAGE_DONE){statusEl.textContent=dirty?'Preview ready · unsaved changes':'Preview ready';return;}
+    if(event.data.type===MESSAGE_ERROR){
+      const message=String(event.data.message||'Runtime error').split('\n')[0].slice(0,180);
+      statusEl.textContent=`Preview error · ${message}`;
+    }
   }
   async function ensureEditorFolder(){
     if(editorFolderId&&await filesystem.getNode(editorFolderId))return editorFolderId;
@@ -133,7 +148,7 @@ export async function mountWebEditor({container,options,capabilities}){
     if(!file||file.kind!=='file')return false;
     await ensureEditorFolder();
     const parent=await filesystem.getNode(file.parent);
-    if(parent?.kind==='folder'&&parent.id!==editorFolderId){
+    if(parent?.kind==='folder'&&parent.parent===editorFolderId){
       await loadProject(parent.id,{skipUnsaved:true});
       switchTab(tabForName(file.name));
       return true;
@@ -186,6 +201,7 @@ export async function mountWebEditor({container,options,capabilities}){
   container.addEventListener('pointerdown',handlePointerDown);
   container.addEventListener('keydown',handleKeyDown);
   container.addEventListener('click',handleClick);
+  window.addEventListener('message',handlePreviewMessage);
   syncSourceToEditors();renderState();
   await ensureEditorFolder();
   if(options?.fileId)await loadFile(options.fileId);
@@ -194,7 +210,7 @@ export async function mountWebEditor({container,options,capabilities}){
   switchTab(activeTab);
 
   return{
-    cleanup(){for(const node of Object.values(editors))node.removeEventListener('input',handleInput);container.removeEventListener('pointerdown',handlePointerDown);container.removeEventListener('keydown',handleKeyDown);container.removeEventListener('click',handleClick);preview.srcdoc='';},
+    cleanup(){for(const node of Object.values(editors))node.removeEventListener('input',handleInput);container.removeEventListener('pointerdown',handlePointerDown);container.removeEventListener('keydown',handleKeyDown);container.removeEventListener('click',handleClick);window.removeEventListener('message',handlePreviewMessage);pendingPreview=null;preview.removeAttribute('src');},
     onOpen(newOptions){if(newOptions?.fileId)loadFile(newOptions.fileId).catch((error)=>notifications.notify('Web Editor',error.message,'error'));else if(newOptions?.projectFolderId)loadProject(newOptions.projectFolderId).catch((error)=>notifications.notify('Web Editor',error.message,'error'));},
     beforeClose(){return resolveUnsaved();}
   };
