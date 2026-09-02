@@ -1,0 +1,39 @@
+name: Cross-browser critical smoke
+
+on:
+  schedule:
+    - cron: '17 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  critical-smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [firefox, webkit]
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: '22' }
+      - name: Install pinned browser QA dependencies
+        run: |
+          npm ci --ignore-scripts --no-fund
+          npm audit --audit-level=high
+          npx playwright install --with-deps "${{ matrix.browser }}"
+      - name: Build generated News surfaces
+        run: node scripts/news/build-news.mjs
+      - name: Start static frontend server
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-cross-browser-http.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
+          cat /tmp/aizanoi-cross-browser-http.log; exit 1
+      - name: Run selected critical paths
+        env:
+          AIZANOI_BROWSER: '${{ matrix.browser }}'
+          ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
+        run: node tests/cross-browser-critical.mjs
