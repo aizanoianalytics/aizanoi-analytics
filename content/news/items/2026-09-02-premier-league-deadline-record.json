@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-02-premier-league-deadline-record",
+  "title": "Premier League clubs spend record £3.46 billion as Manchester City land Fernandez and Ndiaye on deadline day",
+  "summary": "Premier League clubs shattered the £3.1 billion record set in a single transfer window as the 11pm BST deadline passed on 1 September 2026, with total summer spending reaching £3.46 billion. Manchester City drove the late flurry by signing Argentina midfielder Enzo Fernandez from Chelsea for £125 million, equalling the British transfer record Liverpool paid for Alexander Isak, and by adding Senegal forward Iliman Ndiaye from Everton for £65 million, taking City's own summer outlay past £450 million under coach Enzo Maresca.",
+  "category": "football",
+  "priority": 88,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Premier League", "transfer deadline day", "Manchester City", "Enzo Fernandez", "Iliman Ndiaye"],
+  "sources": [
+    {
+      "publisher": "The Sun",
+      "url": "https://thesun.my/news/man-city-sign-fernandez-ndiaye-as-premier-league-clubs-spend-record-3-46bn",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    },
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/sports/2026/8/31/transfer-deadline-day-2026-football-summer-signing-window-barcola-gakpo-alvarez",
+      "publishedAt": "2026-08-31T00:00:00Z"
+    },
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/news/4698998/summer-2026-transfer-deadline-day-everything-you-need-to-know",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

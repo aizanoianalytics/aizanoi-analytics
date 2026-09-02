@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-02-broadcom-q3-ai-chip-preview",
+  "title": "Broadcom set to report Q3 FY26 results on 2 September with $16 billion AI semiconductor revenue guidance",
+  "summary": "Broadcom is expected to report fiscal third-quarter results on 2 September 2026, with consensus forecasting roughly $29.4 billion in total revenue and about $16 billion in AI semiconductor revenue, up more than 200% year on year. Management has set a full-year fiscal 2026 AI semiconductor revenue target of $56 billion and has projected AI semiconductor revenue exceeding $100 billion in fiscal 2027, supported by OpenAI's in-house Jalapeño accelerator and a backlog roughly three times quarterly shipments.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Broadcom", "AI semiconductors", "custom silicon", "OpenAI Jalapeño", "Q3 FY26 earnings"],
+  "sources": [
+    {
+      "publisher": "CryptoBriefing",
+      "url": "https://cryptobriefing.com/broadcom-earnings-16b-ai-revenue",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

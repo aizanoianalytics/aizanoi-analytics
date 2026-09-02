@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-02-asian-markets-oil-fed",
+  "title": "Asian stocks and bonds sell off as oil tops $96 and traders price in September rate hikes",
+  "summary": "Asia-Pacific equities fell sharply on 2 September 2026, with Japan's Nikkei 225 futures down 2.6% and Topix off 2.2%, Australia's S&P/ASX 200 losing 1.1%, Hong Kong's Hang Seng slipping 0.7% and the Shanghai Composite retreating 0.7%. Brent crude rose about 2% to around $96.50 a barrel and is up roughly 60% year to date, while the 10-year US Treasury yield climbed to 4.81%, Australian 10-year yields hit their highest since July 2011 at 5.25%, and traders put the odds of a September rate hike above 50% for five major central banks.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T11:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Asian equities", "Brent crude", "global bond selloff", "central banks", "Nikkei"],
+  "sources": [
+    {
+      "publisher": "Business Times",
+      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/south-korea-japan-stocks-slide-asian-equities-fall-amid-oil-gains-fed-rate-hike-bets",
+      "publishedAt": "2026-09-02T09:32:00Z"
+    },
+    {
+      "publisher": "Channel News Asia",
+      "url": "https://www.channelnewsasia.com/business/stocks-yields-oil-prices-iran-us-mideast-6356686",
+      "publishedAt": "2026-09-02T11:30:00Z"
+    }
+  ]
+}

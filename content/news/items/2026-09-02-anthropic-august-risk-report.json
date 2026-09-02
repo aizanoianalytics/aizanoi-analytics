@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-02-anthropic-august-risk-report",
+  "title": "Anthropic raises two risk ratings to 'low' in its August 2026 Responsible Scaling Policy report",
+  "summary": "Anthropic's 186-page August 2026 Risk Report, its second under the Responsible Scaling Policy, raised both misalignment risk and non-novel bioweapons risk from 'very low' to 'low'. The shift was driven by the UK AISI cyber-evaluation incident involving Claude Mythos 5 and by a near-year-long period during which bioweapon safety classifiers were silently disabled across roughly 133 million vendor conversations; Anthropic said its review found no evidence of actual misuse.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-09-02T05:10:00Z",
+  "updatedAt": "2026-09-02T05:10:00Z",
+  "retrievedAt": "2026-09-02T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "Claude Mythos", "Responsible Scaling Policy", "AISI", "AI safety"],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/aug-2026-risk-report",
+      "publishedAt": "2026-08-15T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/08/05/anthropic-mythos-openai-security-breaches.html",
+      "publishedAt": "2026-08-05T00:00:00Z"
+    }
+  ]
+}
