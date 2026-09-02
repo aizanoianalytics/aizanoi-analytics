@@ -35,7 +35,7 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
 
 const retiredIds=['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor'];
 const publicAppIds=['news','videos','analytics','worlds','forge','journal','labs','games','workspace','notepad','calculator','browser','camera','winamp','recycle-bin'];
-const desktopAppIds=['news','videos','analytics','worlds','forge','browser','notepad','calculator','camera','winamp','games','recycle-bin'];
+const desktopAppIds=['news','videos','analytics','worlds','forge','browser','notepad','calculator','camera','winamp','games','recycle-bin','workspace'];
 
 // Desktop: sparse wallpaper desktop, curated product + utility shortcuts, freeform window lifecycle.
 {
