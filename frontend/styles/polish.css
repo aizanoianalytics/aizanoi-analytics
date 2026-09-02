@@ -215,6 +215,19 @@
     color:#33415e;
     font-size:20px;
   }
+  .az-window[data-app-id="analytics"] .az-analytics-language-badge {
+    display:inline-flex;
+    align-items:center;
+    min-height:28px;
+    padding:5px 9px;
+    border:1px solid rgba(82,101,219,.2);
+    border-radius:999px;
+    background:#eef1ff;
+    color:#4859bd;
+    font-size:10.5px;
+    font-weight:740;
+    letter-spacing:.01em;
+  }
   .az-window[data-app-id="analytics"] .az-analytics-set-card--future {
     background:linear-gradient(145deg,rgba(245,247,252,.88),rgba(237,241,249,.78));
     box-shadow:none;
@@ -299,6 +312,9 @@
     color:#25324a;
     font-size:17px;
     letter-spacing:-.025em;
+  }
+  .az-window[data-app-id="analytics"] .az-analytics-dashboard-card .az-analytics-language-badge {
+    margin-top:9px;
   }
   .az-window[data-app-id="analytics"] .az-analytics-dashboard-card p {
     margin:8px 0 14px;
