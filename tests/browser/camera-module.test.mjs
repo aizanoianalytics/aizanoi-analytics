@@ -4,14 +4,14 @@ import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
-test('Camera module requests camera first, microphone second, reveals live preview and stops all media on close', async () => {
+test('Camera module requests video only, reveals live preview and stops all media on close', async () => {
   const browser = await chromium.launch({
     headless: true,
     args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream'],
   });
   const context = await browser.newContext({
     viewport: { width: 1280, height: 860 },
-    permissions: ['camera', 'microphone'],
+    permissions: ['camera'],
   });
   const page = await context.newPage();
   const errors = [];
@@ -72,6 +72,7 @@ test('Camera module requests camera first, microphone second, reveals live previ
         constraints: window.__cameraQa.constraints,
         liveTracks: window.__cameraQa.tracks.filter((track) => track.readyState === 'live').length,
         status: document.querySelector('[data-cam-status]')?.textContent || '',
+        privacy: document.querySelector('.az-camera-privacy')?.textContent || '',
         offPanelHidden: Boolean(offPanel?.hidden),
         offPanelDisplay: offPanel ? getComputedStyle(offPanel).display : null,
         offPanelHasDisplayClass: Boolean(offPanel?.classList.contains('az-camera-off')),
@@ -79,12 +80,12 @@ test('Camera module requests camera first, microphone second, reveals live previ
         videoHeight: video?.videoHeight || 0,
       };
     });
-    assert.deepEqual(active.constraints.slice(0, 2), [
+    assert.deepEqual(active.constraints, [
       { video: { facingMode: 'user' }, audio: false },
-      { video: false, audio: true },
-    ]);
-    assert.ok(active.liveTracks > 0, 'Camera start must create live media tracks');
+    ], 'photo capture must never request microphone permission');
+    assert.ok(active.liveTracks > 0, 'Camera start must create a live video track');
     assert.match(active.status, /^Camera active/);
+    assert.match(active.privacy, /Audio is not requested, recorded or uploaded/i);
     assert.equal(active.offPanelHidden, true, 'Camera off panel must carry the hidden state after the stream attaches');
     assert.equal(active.offPanelDisplay, 'none', 'Camera off panel must not cover the live preview');
     assert.equal(active.offPanelHasDisplayClass, false, 'Camera off display class must be removed while live');
@@ -98,7 +99,7 @@ test('Camera module requests camera first, microphone second, reveals live previ
       revoked: window.__cameraQa.revoked.length,
       cameraDomPresent: Boolean(document.querySelector('[data-cam-video]')),
     }));
-    assert.equal(closed.liveTracks, 0, 'Camera cleanup must stop every camera/microphone track');
+    assert.equal(closed.liveTracks, 0, 'Camera cleanup must stop every camera track');
     assert.ok(closed.revoked >= galleryUrls, 'Camera cleanup must revoke gallery object URLs');
     assert.equal(closed.cameraDomPresent, false, 'Camera window DOM must be removed after close');
     assert.deepEqual(errors, [], `page errors: ${JSON.stringify(errors)}`);
