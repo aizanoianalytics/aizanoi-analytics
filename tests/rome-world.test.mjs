@@ -41,12 +41,17 @@ test('Rome city data includes late-antique monuments, regions, streets and sourc
   assert.ok(BUILDINGS.length >= 45, `expected >=45 records, got ${BUILDINGS.length}`);
 });
 
-test('Rome adapter uses the shared flat blocky runtime with no third-party runtime', () => {
+test('Rome adapter uses the unified city bootstrap with no third-party runtime', () => {
   const app = read('js/app.js');
+  const bootstrap = readFileSync(resolve(root, 'frontend/ancient-world/engine/city-bootstrap.js'), 'utf8');
   const runtime = readFileSync(resolve(root, 'frontend/ancient-world/engine/flat-city-runtime.js'), 'utf8');
-  assert.match(app, /startFlatBlockyCity/);
-  assert.match(app, /expandPerimeterWalls/);
-  assert.match(app, /installCityCompatibility/);
+  assert.match(app, /startAncientCity/);
+  assert.match(app, /compactionProfile:'rome'/);
+  assert.match(app, /expandWalls:true/);
+  assert.doesNotMatch(app, /startFlatBlockyCity|installCityCompatibility|expandPerimeterWalls/);
+  assert.match(bootstrap, /startFlatBlockyCity/);
+  assert.match(bootstrap, /expandPerimeterWalls/);
+  assert.match(bootstrap, /installCityCompatibility/);
   assert.match(runtime, /AudioContext/);
   assert.match(runtime, /requestPointerLock/);
   assert.match(runtime, /function drawMap/);

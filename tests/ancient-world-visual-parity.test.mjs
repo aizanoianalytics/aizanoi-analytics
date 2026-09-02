@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 const read = (path) => readFileSync(path, 'utf8');
 const rome = read('frontend/ancient-cities/rome-410-476/js/app.js');
 const athens = read('frontend/ancient-cities/athens-450-430/js/app.js');
+const bootstrap = read('frontend/ancient-world/engine/city-bootstrap.js');
 const runtime = read('frontend/ancient-world/engine/flat-city-runtime.js');
 const compatibility = read('frontend/ancient-world/engine/city-compatibility.js');
 const assets = read('frontend/ancient-world/assets/blocky-asset-library.js');
@@ -19,7 +20,8 @@ test('teleports resolve a safe spawn and preserve forward movement after arrival
 });
 
 test('Rome, Athens and Aizanoi preserve mouse-look acquisition through one compatibility bridge', () => {
-  for (const source of [rome, athens]) assert.match(source, /installCityCompatibility/);
+  for (const source of [rome, athens]) assert.match(source, /startAncientCity/);
+  assert.match(bootstrap, /installCityCompatibility/);
   assert.match(compatibility, /pointerdown/);
   assert.match(compatibility, /requestPointerLock/);
   assert.match(runtime, /player\.yaw \+= event\.movementX/);
@@ -38,8 +40,10 @@ test('hero monuments remain dedicated assets rather than generic city-app geomet
   for (const hero of ['parthenon','propylaea','colosseum','pantheon','templeOfZeus']) assert.match(assets, new RegExp(`function ${hero}\\(`));
   for (const source of [rome, athens]) {
     assert.doesNotMatch(source, /function\s+(?:parthenonHero|propylaeaHero|maxentiusHero|colosseum|pantheon)\s*\(/);
-    assert.match(source, /startFlatBlockyCity/);
+    assert.match(source, /startAncientCity/);
+    assert.doesNotMatch(source, /startFlatBlockyCity/);
   }
+  assert.match(bootstrap, /startFlatBlockyCity/);
 });
 
 test('roads, atmospheric sky, animated water and lighting are rendered by the shared runtime', () => {

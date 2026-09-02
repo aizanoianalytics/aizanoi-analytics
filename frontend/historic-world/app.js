@@ -5,51 +5,30 @@
     const [
       { CITY, SOURCES, REGIONS, STREETS, BUILDINGS, WATERS, BOUNDS, SPAWN },
       { generateAizanoiFabric },
-      { compactCityLayout, buildHeroApproachStreets, CITY_COMPACTION_PROFILES },
-      { startFlatBlockyCity },
-      { installCityCompatibility },
+      { startAncientCity },
     ] = await Promise.all([
       import('./data/city.js'),
       import('./data/urban-fabric.js'),
-      import('../ancient-world/assets/city-layout-tools.js'),
-      import('../ancient-world/engine/flat-city-runtime.js'),
-      import('../ancient-world/engine/city-compatibility.js'),
+      import('../ancient-world/engine/city-bootstrap.js'),
     ]);
-    const TOUCH = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches || innerWidth < 820;
-    const layout = compactCityLayout({
-      city: CITY,
-      regions: REGIONS,
-      streets: STREETS,
-      buildings: BUILDINGS,
-      waters: WATERS,
-      bounds: BOUNDS,
-      spawn: SPAWN,
-    }, CITY_COMPACTION_PROFILES.aizanoi);
-    const liveStreets = Object.freeze([
-      ...layout.streets,
-      ...buildHeroApproachStreets(layout.buildings, { approachWidth: 9, frontageWidth: 7 }),
-    ]);
-    const runtime = startFlatBlockyCity({
-      city: layout.city,
-      sources: SOURCES,
-      regions: layout.regions,
-      streets: liveStreets,
-      buildings: layout.buildings,
-      urbanFabric: generateAizanoiFabric({
-        regions: layout.regions,
-        buildings: layout.buildings,
-        streets: liveStreets,
-        waters: layout.waters,
-        mobile: TOUCH,
-      }),
-      waters: layout.waters,
-      bounds: layout.bounds,
-      spawn: layout.spawn,
-      ui: 'aizanoi',
-      era: 225,
-      cityRoute: '/historic-world/',
+
+    const { runtime } = startAncientCity({
+      city:CITY,
+      sources:SOURCES,
+      regions:REGIONS,
+      streets:STREETS,
+      buildings:BUILDINGS,
+      waters:WATERS,
+      bounds:BOUNDS,
+      spawn:SPAWN,
+      compactionProfile:'aizanoi',
+      approachWidth:9,
+      frontageWidth:7,
+      generateFabric:generateAizanoiFabric,
+      ui:'aizanoi',
+      era:225,
+      cityRoute:'/historic-world/',
     });
-    installCityCompatibility(runtime, { ui: 'aizanoi' });
     window.__AIZANOI_WORLD__ = runtime;
   } catch (error) {
     console.error('Aizanoi flat modular renderer failed:', error);
