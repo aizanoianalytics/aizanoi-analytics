@@ -35,14 +35,17 @@ function appModuleRequests(requests){return requests.filter((path)=>path.include
 
 const retiredIds=['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor'];
 const publicAppIds=['news','videos','analytics','worlds','forge','journal','labs','games','workspace','notepad','web-editor','calculator','browser','camera','winamp','recycle-bin'];
-const desktopAppIds=['news','videos','analytics','worlds','forge','browser','notepad','web-editor','calculator','camera','winamp','games','recycle-bin','workspace'];
+const desktopAppIds=['news','videos','analytics','worlds','forge','games','recycle-bin'];
 
-// Desktop: sparse wallpaper desktop, curated product + utility shortcuts, freeform window lifecycle.
+// Desktop: sparse wallpaper desktop, seven permanent shortcuts, utilities remain in Applications/Search.
 {
   const {context,page,errors,requests}=await openPage({width:1440,height:900});
   assert.equal(await page.locator('.az-desktop-shortcut').count(),desktopAppIds.length,'desktop: curated shortcut count changed unexpectedly');
   for(const id of desktopAppIds) {
     assert.equal(await page.locator(`.az-desktop-shortcut[data-app="${id}"]`).count(),1,`desktop: missing shortcut ${id}`);
+  }
+  for(const id of publicAppIds.filter((id)=>!desktopAppIds.includes(id))) {
+    assert.equal(await page.locator(`.az-desktop-shortcut[data-app="${id}"]`).count(),0,`desktop: utility/product ${id} leaked onto the permanent desktop`);
   }
   assert.equal(await page.locator('.az-phone-home:visible,.az-tablet-home:visible').count(),0,'desktop: device-specific home leaked into large layout');
   assert.equal(appModuleRequests(requests).length,0,'desktop: app modules must not load before app open');
