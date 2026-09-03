@@ -7,6 +7,8 @@ const files = {
   adminPublic: 'frontend/analytics/dashboards/hr-analytics-full-set/hr-administration-deep-dive/index.html',
   storeSource: 'analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/magaza_takip_dosya.html',
   storePublic: 'frontend/analytics/dashboards/hr-analytics-full-set/store-operations-tracking/index.html',
+  performanceSource: 'analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/performans_dashboard.html',
+  performancePublic: 'frontend/analytics/dashboards/hr-analytics-full-set/performance-hiring-turnover/index.html',
 };
 
 function read(path) {
@@ -49,5 +51,15 @@ test('store generated chart labels escape data-derived month/value text before H
     for (const token of forbidden) {
       assert.ok(!html.includes(token), `${path}: raw data-derived token remains in HTML template: ${token}`);
     }
+  }
+});
+
+test('performance month options escape values and visible labels before HTML parsing', () => {
+  for (const path of [files.performanceSource, files.performancePublic]) {
+    const html = read(path);
+    const safe = '<option value="${esc(m)}">${esc(monthLabel(m))}</option>';
+    const raw = '<option value="${m}">${monthLabel(m)}</option>';
+    assert.ok(html.includes(safe), `${path}: missing hardened month option`);
+    assert.ok(!html.includes(raw), `${path}: raw month option remains`);
   }
 });
