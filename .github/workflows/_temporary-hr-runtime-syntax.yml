@@ -23,31 +23,32 @@ jobs:
           path = Path('frontend/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js')
           text = path.read_text()
           marker = 'const postRenderSweep = () => translateSurface(document.body);'
-          if marker in text:
-              raise SystemExit(0)
-          needle = """    observer.observe(document.documentElement, {
-      subtree: true,
-      childList: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ATTRS,
-    });
-"""
-          replacement = needle + """
-    // Some dashboards finish their first render around DOMContentLoaded. Keep the
-    // observer for all later mutations, and sweep the initial post-render frames
-    // so mixed visitor-facing attributes cannot escape the presentation layer.
-    const postRenderSweep = () => translateSurface(document.body);
-    queueMicrotask(postRenderSweep);
-    requestAnimationFrame(() => {
-      postRenderSweep();
-      requestAnimationFrame(postRenderSweep);
-    });
-    window.addEventListener('load', postRenderSweep, { once: true });
-"""
-          if needle not in text:
-              raise SystemExit('visible runtime observer anchor not found')
-          path.write_text(text.replace(needle, replacement, 1))
+          if marker not in text:
+              needle = (
+                  "    observer.observe(document.documentElement, {\n"
+                  "      subtree: true,\n"
+                  "      childList: true,\n"
+                  "      characterData: true,\n"
+                  "      attributes: true,\n"
+                  "      attributeFilter: ATTRS,\n"
+                  "    });\n"
+              )
+              addition = (
+                  "\n"
+                  "    // Some dashboards finish their first render around DOMContentLoaded. Keep the\n"
+                  "    // observer for all later mutations, and sweep the initial post-render frames\n"
+                  "    // so mixed visitor-facing attributes cannot escape the presentation layer.\n"
+                  "    const postRenderSweep = () => translateSurface(document.body);\n"
+                  "    queueMicrotask(postRenderSweep);\n"
+                  "    requestAnimationFrame(() => {\n"
+                  "      postRenderSweep();\n"
+                  "      requestAnimationFrame(postRenderSweep);\n"
+                  "    });\n"
+                  "    window.addEventListener('load', postRenderSweep, { once: true });\n"
+              )
+              if needle not in text:
+                  raise SystemExit('visible runtime observer anchor not found')
+              path.write_text(text.replace(needle, needle + addition, 1))
           PY
           node --check frontend/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js
           git diff --check
@@ -56,8 +57,8 @@ jobs:
             echo 'Visible runtime already patched.'
             exit 0
           fi
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'fix(hr): sweep dynamic English attributes after render'
           git push origin HEAD:feat/hr-dashboard-english-only-v3
       - name: Generate and syntax-check base runtime
