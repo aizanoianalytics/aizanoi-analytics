@@ -2133,9 +2133,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
           <td>${escapeHtml(text(r.unit) || "—")}</td>
           <td><span class="pill pill-blue">${escapeHtml(text(r.resource) || "Unspecified")}</span></td>
           <td>${escapeHtml(text(r.responsible) || "—")}</td>
-          <td>${formatDate(r.offer_date)}</td>
+          <td>${escapeHtml(formatDate(r.offer_date))}</td>
           <td>${escapeHtml(text(r.position_level) || "—")}</td>
-          <td>${r.source_row}</td>
+          <td>${escapeHtml(r.source_row)}</td>
         </tr>
       `).join("") : `<tr><td colspan="8" style="text-align: center; color: var(--slate-400); padding: 2rem;">No candidates placed under active filters</td></tr>`;
 
@@ -2159,7 +2159,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 
       $("#recordsTableBody").innerHTML = slice.length ? slice.map(r => `
         <tr>
-          <td>${r.source_row}</td>
+          <td>${escapeHtml(r.source_row)}</td>
           <td><code>${escapeHtml(text(r.ptf))}</code></td>
           <td>${escapeHtml(text(r.unit))}</td>
           <td><strong>${escapeHtml(text(r.position_name))}</strong></td>
@@ -2168,7 +2168,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
           <td>${escapeHtml(text(r.hiring_manager))}</td>
           <td>${escapeHtml(text(r.responsible))}</td>
           <td>${formatDate(r.position_start_date)}</td>
-          <td>${formatDate(r.offer_date)}</td>
+          <td>${escapeHtml(formatDate(r.offer_date))}</td>
           <td>${escapeHtml(text(r.hired_employee)) || "—"}</td>
           <td>${escapeHtml(text(r.resource)) || "—"}</td>
           <td>${escapeHtml(text(r.position_level)) || "—"}</td>
