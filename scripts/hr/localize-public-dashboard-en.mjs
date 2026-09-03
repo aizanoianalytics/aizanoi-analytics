@@ -36,9 +36,13 @@ const suspiciousTurkish = (value) => {
   return Boolean(normalized && (TR_CHARS.test(normalized) || TR_WORDS.test(normalized)));
 };
 
-function decodeHtmlEntities(value) {
+// Decode display-only entities to fold against a normalized source string.
+// Keep &amp; encoded: this fold runs on a single text node; downstream code
+// re-inserts the translated string via textContent / setAttribute and the
+// browser escapes '&' back to &amp; on serialize. Decoding &amp; here would
+// produce a double-decoded '&' that survives re-serialization.
+function decodeDisplayEntities(value) {
   return String(value)
-    .replace(/&amp;/gi, '&')
     .replace(/&lt;/gi, '<')
     .replace(/&gt;/gi, '>')
     .replace(/&quot;/gi, '"')
@@ -47,7 +51,7 @@ function decodeHtmlEntities(value) {
     .replace(/&#([0-9]+);/g, (_m, dec) => String.fromCodePoint(Number.parseInt(dec, 10)));
 }
 
-const normalize = (value) => decodeHtmlEntities(value).replace(/\s+/g, ' ').trim();
+const normalize = (value) => decodeDisplayEntities(value).replace(/\s+/g, ' ').trim();
 const exact = new Map();
 const conflicts = [];
 function addExact(source, target, provenance, { override = false } = {}) {
