@@ -170,6 +170,7 @@ if [[ -n "${leaks}" ]]; then
 fi
 
 echo "[4/4] running HR audit contracts"
+python3 scripts/verify-hr-historical-event-dates.py
 node --test \
   tests/audit/hr-analytics-full-set.test.mjs \
   tests/audit/hr-public-artifact-safety.test.mjs \
