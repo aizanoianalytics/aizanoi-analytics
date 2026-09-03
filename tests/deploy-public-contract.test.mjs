@@ -119,5 +119,3 @@ test('HERMES_OPERATIONS.md documents the exact-SHA invocation form', () => {
   const ops = readFileSync(`${repoRoot}/docs/HERMES_OPERATIONS.md`, 'utf8');
   assert.match(ops, /AIZANOI_DEPLOY_SHA="\$TARGET_SHA" bash scripts\/deploy-public\.sh/);
 });
-
-
