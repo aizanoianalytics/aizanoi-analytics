@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-03-european-shares-one-month-low",
+  "title": "European shares pin to one-month low as German 10-year Bund yield hits a 14-year high",
+  "summary": "European equities hovered near a one-month low on 2 September 2026, with the pan-European STOXX 600 flat at 647.87 after a Reuters early-session check, Germany's DAX down 0.2% and the FTSE 100 closing 0.3% lower at 10,756.45 as a spike in bond yields and a fresh round of US-Iran strikes reignited energy-inflation fears. The 10-year German Bund yield climbed to its highest since April 2011, the 10-year UK gilt yield touched 5.294% - the highest since August 2007 - and LSEG data put the odds of the ECB's deposit rate hitting 3% by March 2027 at about 40%.",
+  "category": "economy-markets",
+  "priority": 76,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["STOXX 600", "DAX", "FTSE 100", "Bund yield", "gilt yields"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/markets/europe/european-shares-pinned-one-month-low-flaring-mideast-tensions-lift-bond-yields-2026-09-02/",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    },
+    {
+      "publisher": "BlueWater Healthy Living (Reuters wire)",
+      "url": "https://bluewaterhealthyliving.com/news/business-and-economy/european-shares-pinned-at-one-month-low-as-flaring-mideast-tensions-lift-bond-yields/",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

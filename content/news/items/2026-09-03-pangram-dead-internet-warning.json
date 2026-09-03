@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-03-pangram-dead-internet-warning",
+  "title": "Pangram CEO warns 'dead internet' scenario is perilously close as the AI-detection startup adds image forensics",
+  "summary": "Pangram, an AI-detection startup founded by former Tesla and Google engineers, launched a new AI image-detection model on 2 September 2026 alongside an interview in which its CEO argued that the 'dead internet' scenario of predominantly synthetic content is no longer hypothetical. The fourth-generation text model and the new image model are being integrated into publishing workflows as platforms including Substack begin adopting Pangram's API to label or filter synthetic material across social, news and customer-support channels.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Pangram", "AI detection", "synthetic media", "image forensics", "Substack"],
+  "sources": [
+    {
+      "publisher": "BPData (AI Newsroom)",
+      "url": "https://news.bpdata.com/article/pangram-ceo-warns-dead-internet-scenario-could-be-65c77a00",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

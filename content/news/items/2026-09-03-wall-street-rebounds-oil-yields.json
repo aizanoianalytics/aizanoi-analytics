@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-03-wall-street-rebounds-oil-yields",
+  "title": "Wall Street rebounds as Dell and Brown-Forman lead a partial recovery from a three-day sell-off",
+  "summary": "US stocks snapped a three-day losing streak on 2 September 2026, with the Dow Jones Industrial Average up 0.56% at 53,061.89, the S&P 500 up 0.46% at 7,666.63 and the Nasdaq Composite up 0.45% at 26,217.83, while the small-cap Russell 2000 outperformed with a 1.1% gain. The move came as investors bought oversold names after a week of bond-yield and oil-price pressure, with Dell jumping 15.8% after raising its full-year sales and profit forecasts and Brown-Forman climbing on a Q1 profit beat.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Wall Street", "S&P 500", "Dell", "Brown-Forman", "US Treasury yields"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/us-stock-index-futures-subdued-oil-treasury-yields-rise-iran-tensions-2026-09-02/",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    },
+    {
+      "publisher": "Local 10 (AP)",
+      "url": "https://www.local10.com/business/2026/09/02/stocks-drift-on-wall-street-amid-jobs-market-updates-renewed-fighting-in-us-war-with-iran/",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}
