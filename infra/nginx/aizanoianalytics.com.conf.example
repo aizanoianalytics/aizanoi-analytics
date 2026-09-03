@@ -52,6 +52,11 @@ server {
 
     location ^~ /analytics/dashboards/hr-analytics-full-set/ { include snippets/aizanoi-hr-analytics-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
 
+    # New HR Collection: standalone self-contained HR dashboards (PACS +
+    # Recruitment Analytics) generated with embedded CSS/JS. Same narrow
+    # route-scoped policy as the HR Full Set; the rest of the site stays strict.
+    location ^~ /analytics/dashboards/new-hr-collection/ { include snippets/aizanoi-hr-analytics-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
+
     location = /historic-world { return 301 /historic-world/; }
     location = /historic-world/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files /historic-world/index.html =404; expires -1; }
     location ^~ /historic-world/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri =404; expires -1; }
