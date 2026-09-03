@@ -18,16 +18,17 @@ jobs:
           python-version: '3.11'
           cache: pip
           cache-dependency-path: analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
-      - name: Install locked HR dependencies and workbook generator
-        run: |
-          python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
-          npm install --no-save --package-lock=false @oai/artifact-tool
-      - name: Apply candidate historical-date fix in runner
+      - name: Install locked HR dependencies
+        run: python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
+      - name: Apply candidate generator fix and synchronize committed discipline input
         run: |
           python - <<'PY'
           from pathlib import Path
-          p=Path('analytics/dashboards/hr-analytics-full-set/tools/generate_synthetic_source_workbooks.mjs')
-          s=p.read_text(encoding='utf-8')
+          from datetime import datetime
+          import openpyxl
+
+          generator=Path('analytics/dashboards/hr-analytics-full-set/tools/generate_synthetic_source_workbooks.mjs')
+          s=generator.read_text(encoding='utf-8')
           changes=[
             ('const monthEnd = new Date(Date.UTC(2026, 7, 1));\n', 'const monthEnd = new Date(Date.UTC(2026, 7, 1));\nconst reportingDate = new Date(Date.UTC(monthEnd.getUTCFullYear(), monthEnd.getUTCMonth() + 1, 0));\n'),
             ('function seeded(index, salt = 0) {\n  const x = Math.sin((index + 1) * 12.9898 + salt * 78.233) * 43758.5453;\n  return x - Math.floor(x);\n}\n', 'function seeded(index, salt = 0) {\n  const x = Math.sin((index + 1) * 12.9898 + salt * 78.233) * 43758.5453;\n  return x - Math.floor(x);\n}\n\nfunction historicalDate(year, month, dayValue = 1) {\n  const candidate = new Date(Date.UTC(year, month, dayValue));\n  if (candidate <= reportingDate) return candidate;\n  return new Date(Date.UTC(year - 1, month, dayValue));\n}\n'),
@@ -36,32 +37,50 @@ jobs:
           for old,new in changes:
             if old not in s: raise SystemExit(f'missing expected source fragment: {old[:80]}')
             s=s.replace(old,new,1)
-          p.write_text(s,encoding='utf-8')
+          generator.write_text(s,encoding='utf-8')
+
+          book=Path('analytics/dashboards/hr-analytics-full-set/production-pipeline/cezalar.xlsx')
+          wb=openpyxl.load_workbook(book)
+          ws=wb['sheet_1']
+          headers=[cell.value for cell in ws[1]]
+          date_col=headers.index('TARIH')+1
+          limit=datetime(2026,8,31)
+          changed=[]
+          for row in range(2,ws.max_row+1):
+            value=ws.cell(row,date_col).value
+            if isinstance(value,datetime) and value>limit:
+              replacement=value.replace(year=value.year-1)
+              ws.cell(row,date_col).value=replacement
+              changed.append((row,value.date().isoformat(),replacement.date().isoformat()))
+          if not changed: raise SystemExit('expected at least one future discipline date to repair')
+          wb.save(book)
+          print('discipline dates repaired:',changed)
           PY
-      - name: Regenerate synthetic inputs and canonical HR outputs
+      - name: Rebuild canonical HR outputs and verify date contract
         run: |
           set -euo pipefail
           mkdir -p artifacts/hr-date
-          cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx /tmp/hr-before.xlsx
-          REGENERATE_SYNTHETIC_INPUTS=1 bash scripts/regenerate-hr-dashboards.sh
+          bash scripts/regenerate-hr-dashboards.sh
           cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx /tmp/hr-first.xlsx
           bash scripts/regenerate-hr-dashboards.sh
           python scripts/verify-hr-workbook-semantics.py /tmp/hr-first.xlsx analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx
           python - <<'PY'
           from pathlib import Path
-          import openpyxl
+          from datetime import datetime
+          import openpyxl,re
           root=Path('analytics/dashboards/hr-analytics-full-set/production-pipeline')
           wb=openpyxl.load_workbook(root/'cezalar.xlsx',data_only=True,read_only=True)
           ws=wb['sheet_1']
           headers=[c.value for c in next(ws.iter_rows(min_row=1,max_row=1))]
           col=headers.index('TARIH')
-          limit=__import__('datetime').datetime(2026,8,31)
-          bad=[]
-          for row in ws.iter_rows(min_row=2,values_only=True):
-            value=row[col]
-            if value and value>limit: bad.append(value.isoformat())
-          if bad: raise SystemExit(f'future discipline dates: {bad}')
-          print('discipline historical-date contract: OK')
+          limit=datetime(2026,8,31)
+          bad=[row[col] for row in ws.iter_rows(min_row=2,values_only=True) if row[col] and row[col]>limit]
+          if bad: raise SystemExit(f'future discipline dates remain: {bad}')
+          for page in Path('frontend/analytics/dashboards/hr-analytics-full-set').glob('*/index.html'):
+            text=page.read_text(encoding='utf-8')
+            if re.search(r'(?:ceza|disciplin)[^<]{0,160}-\d+\s*(?:day|gün)',text,re.I):
+              raise SystemExit(f'negative discipline age found in {page}')
+          print('historical discipline date + negative-age contracts: OK')
           PY
           git diff --binary > artifacts/hr-date/generated.patch
           git status --short > artifacts/hr-date/status.txt
