@@ -15,30 +15,40 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           ref: build/axe-core-4.13-v2
+          fetch-depth: 0
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
           node-version: '22'
-      - name: Regenerate exact root lock
-        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
-      - name: Verify requested dependency only
+      - name: Rebuild root axe entry from verified main graph
         run: |
+          git fetch origin main
+          git show origin/main:package-lock.json > /tmp/main-package-lock.json
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const lock = JSON.parse(fs.readFileSync('/tmp/main-package-lock.json', 'utf8'));
+          const nested = lock.packages['node_modules/lighthouse/node_modules/axe-core'];
+          if (!nested || nested.version !== '4.13.0') throw new Error('main lock does not contain verified axe-core 4.13 metadata');
+          if (pkg.devDependencies['axe-core'] !== '4.13.0') throw new Error('package.json axe-core is not 4.13.0');
+          lock.packages[''].devDependencies['axe-core'] = '4.13.0';
+          lock.packages['node_modules/axe-core'] = {...nested, dev: true};
+          fs.writeFileSync('package-lock.json', JSON.stringify(lock));
+          NODE
+      - name: Verify complete lock installs
+        run: |
+          npm ci --ignore-scripts --no-fund
+          npm audit --audit-level=high
           node - <<'NODE'
           const pkg = require('./package.json');
           const lock = require('./package-lock.json');
-          if (pkg.devDependencies['axe-core'] !== '4.13.0') throw new Error('package axe-core is not 4.13.0');
-          if (lock.packages[''].devDependencies['axe-core'] !== '4.13.0') throw new Error('lock root axe-core is not 4.13.0');
-          if (lock.packages['node_modules/axe-core']?.version !== '4.13.0') throw new Error('locked axe-core node is not 4.13.0');
+          if (lock.packages[''].devDependencies['axe-core'] !== '4.13.0') throw new Error('root lock axe-core mismatch');
+          if (lock.packages['node_modules/axe-core']?.version !== '4.13.0') throw new Error('locked root axe-core node mismatch');
           if (pkg.devDependencies.lighthouse !== '13.4.1' || pkg.devDependencies.playwright !== '1.62.1') throw new Error('unrelated root dependency changed');
           NODE
-          git diff -- package.json package-lock.json
-      - name: Commit regenerated lock
+      - name: Commit verified lock
         run: |
-          if git diff --quiet -- package-lock.json; then
-            echo 'package-lock.json already current'
-            exit 0
-          fi
           git config user.name 'aizanoianalytics'
           git config user.email 'huseyiin.erduran@gmail.com'
           git add package-lock.json
-          git commit -m 'build: regenerate axe-core lock'
+          git commit -m 'build: regenerate complete axe-core lock'
           git push origin HEAD:build/axe-core-4.13-v2
