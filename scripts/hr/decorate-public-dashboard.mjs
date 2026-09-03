@@ -8,6 +8,7 @@ const META_END = '<!-- AIZANOI_PUBLIC_META_END -->';
 const BAR_START = '<!-- AIZANOI_PUBLIC_BAR_START -->';
 const BAR_END = '<!-- AIZANOI_PUBLIC_BAR_END -->';
 const SITE_ORIGIN = 'https://aizanoianalytics.com';
+const HR_VISIBLE_EN_SRC = '/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js';
 
 const HR_SET = ANALYTICS_SETS.find((set) => set.id === 'hr-analytics-full-set');
 if (!HR_SET) throw new Error('Canonical HR Analytics set is missing from frontend/analytics/catalog.js');
@@ -87,6 +88,7 @@ function metadataBlock(dashboard) {
   @media(max-width:640px){.aizanoi-public-dashboard-bar{gap:7px;padding:7px 9px;font-size:11px}.aizanoi-public-dashboard-bar__language{width:100%;margin-left:0;border-radius:7px}}
 </style>
 <script>try{if(window.self!==window.top)document.documentElement.classList.add('aizanoi-embedded-dashboard')}catch{}</script>
+<script data-aizanoi-hr-public-en-visible src="${HR_VISIBLE_EN_SRC}" defer></script>
 ${META_END}`;
 }
 
