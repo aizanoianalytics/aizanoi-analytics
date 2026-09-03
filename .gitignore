@@ -32,3 +32,6 @@ backups/
 
 # Large local web research snapshots (reports remain versioned)
 research/**/wikipedia_snapshots/
+venv*
+.venv*/
+artifacts/

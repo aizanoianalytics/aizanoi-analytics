@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -333,19 +333,25 @@
   .aizanoi-public-dashboard-bar a{min-height:24px;display:inline-flex;align-items:center;color:#f8fafc;text-decoration:none}
   .aizanoi-public-dashboard-bar a:hover,.aizanoi-public-dashboard-bar a:focus-visible{text-decoration:underline;text-underline-offset:3px}
   .aizanoi-public-dashboard-bar__language{margin-left:auto;padding:3px 8px;border:1px solid rgba(165,180,252,.35);border-radius:999px;background:rgba(79,70,229,.16);color:#e0e7ff;white-space:nowrap}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-item{grid-template-columns:auto minmax(0,1fr) auto;min-width:0}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-item span{min-width:0;overflow-wrap:anywhere}
+  body[data-aizanoi-dashboard="corporate-goals"] .color-scale{min-width:0}
   .aizanoi-embedded-dashboard .aizanoi-public-dashboard-bar{display:none!important}
   @media(max-width:640px){.aizanoi-public-dashboard-bar{gap:7px;padding:7px 9px;font-size:11px}.aizanoi-public-dashboard-bar__language{width:100%;margin-left:0;border-radius:7px}}
 </style>
 <script>try{if(window.self!==window.top)document.documentElement.classList.add('aizanoi-embedded-dashboard')}catch{}</script>
+<script data-aizanoi-hr-public-en-visible src="/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js"></script>
 <!-- AIZANOI_PUBLIC_META_END -->
+<script data-aizanoi-hr-public-en src="/analytics/dashboards/hr-analytics-full-set/hr-public-en.js"></script>
 </head>
-<body>
+<body data-aizanoi-dashboard="workforce-time-attendance">
 <!-- AIZANOI_PUBLIC_BAR_START -->
 <nav class="aizanoi-public-dashboard-bar" aria-label="Aizanoi Analytics dashboard navigation">
   <a href="/analytics/dashboards/hr-analytics-full-set/" target="_top">Aizanoi Analytics · HR Analytics Full Set</a>
   <span aria-hidden="true">·</span>
   <a href="/analytics/" target="_top">Back to Analytics</a>
-  <span class="aizanoi-public-dashboard-bar__language">Interface language: Turkish</span>
+  <span class="aizanoi-public-dashboard-bar__language">Interface language: English</span>
 </nav>
 <!-- AIZANOI_PUBLIC_BAR_END -->
   <main class="shell">
@@ -752,7 +758,7 @@
     function num(value, digits = 0) {
       const parsed = Number(value);
       if (!Number.isFinite(parsed)) return 0;
-      return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(parsed);
+      return new Intl.NumberFormat("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(parsed);
     }
     function hour(value) { return num(value, 1); }
     function monthLabel(month) {

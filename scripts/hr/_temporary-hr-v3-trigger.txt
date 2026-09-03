@@ -1,2 +1,0 @@
-Temporary user-authored trigger for repaired HR English runtime validation. Remove before final PR.
-Post-render attribute sweep validation trigger.

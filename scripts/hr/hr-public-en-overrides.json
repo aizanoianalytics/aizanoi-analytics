@@ -343,7 +343,16 @@
     "kanonik çıkış metriği": "canonical exit metric",
     "Çizgi grafik": "Line Chart",
     "Ana kapsamlar turnover karşılaştırması": "Turnover Comparison Across Main Scopes",
-    "Yıl İçi Kümülatif Turnover": "Year-to-Date Cumulative Turnover"
+    "Yıl İçi Kümülatif Turnover": "Year-to-Date Cumulative Turnover",
+    "Hesaplama Rehberi": "Calculation Guide",
+    "Kapsam:": "Coverage:",
+    "Kaynak": "Source",
+    "Kaynak:": "Source:",
+    "Kaynak department": "Source department",
+    "Kaynak Department": "Source Department",
+    "Kaynak Rol": "Source Role",
+    "Target / Maksimum": "Target / Maximum",
+    "Kapsam · Aurelia Group": "Coverage · Aurelia Group"
   },
   "exact": {
     "AİZANOİ ANALYTİCS STUDİO": "AIZANOI ANALYTICS STUDIO",

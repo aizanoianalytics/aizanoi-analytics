@@ -66,30 +66,82 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { fetch-depth: 0 }
+      - name: Determine HR pipeline impact
+        id: hr-impact
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          run_full=true
+          reason="${EVENT_NAME} requires the full HR rebuild"
+
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            if [[ -z "${PR_BASE_SHA:-}" ]]; then
+              reason="pull request base SHA unavailable; failing safe to full HR rebuild"
+            else
+              git fetch --no-tags --prune origin "$PR_BASE_SHA"
+              mapfile -t changed_paths < <(git diff --name-only "$PR_BASE_SHA"...HEAD)
+              run_full=false
+              reason="no HR-impacting paths changed"
+              for changed_path in "${changed_paths[@]}"; do
+                case "$changed_path" in
+                  analytics/dashboards/hr-analytics-full-set/*|\
+                  frontend/analytics/dashboards/hr-analytics-full-set/*|\
+                  frontend/analytics/catalog.js|\
+                  scripts/regenerate-hr-dashboards.sh|\
+                  scripts/hr/*|\
+                  scripts/verify-hr-*.py|\
+                  tests/hr-analytics-browser-qa.mjs|\
+                  tests/audit/hr-*.test.mjs|\
+                  .github/workflows/*)
+                    run_full=true
+                    reason="HR-impacting path changed: $changed_path"
+                    break
+                    ;;
+                esac
+              done
+            fi
+          fi
+
+          echo "run_full=$run_full" >> "$GITHUB_OUTPUT"
+          echo "reason=$reason" >> "$GITHUB_OUTPUT"
+          printf '### HR pipeline rebuild decision\n\n- full rebuild: `%s`\n- reason: %s\n' "$run_full" "$reason" >> "$GITHUB_STEP_SUMMARY"
+      - name: HR rebuild not required for this PR
+        if: steps.hr-impact.outputs.run_full != 'true'
+        run: echo "Skipping locked HR rebuild — ${{ steps.hr-impact.outputs.reason }}"
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        if: steps.hr-impact.outputs.run_full == 'true'
         with: { node-version: '22' }
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        if: steps.hr-impact.outputs.run_full == 'true'
         with:
           python-version: '3.11'
           cache: pip
           cache-dependency-path: analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
       - name: Install locked HR pipeline dependencies
+        if: steps.hr-impact.outputs.run_full == 'true'
         run: python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
       - name: Capture committed integrated-workbook baseline
+        if: steps.hr-impact.outputs.run_full == 'true'
         run: cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx /tmp/hr-integrated-baseline.xlsx
       - name: Rebuild HR Analytics Full Set from committed synthetic inputs
+        if: steps.hr-impact.outputs.run_full == 'true'
         run: |
           set -o pipefail
           mkdir -p artifacts/diagnostics
           bash scripts/regenerate-hr-dashboards.sh 2>&1 | tee artifacts/diagnostics/hr-pipeline-rebuild.log
       - name: Verify deterministic tracked outputs
+        if: steps.hr-impact.outputs.run_full == 'true'
         run: |
           set -euo pipefail
           python scripts/verify-hr-workbook-semantics.py /tmp/hr-integrated-baseline.xlsx analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx 2>&1 | tee artifacts/diagnostics/hr-workbook-semantics.log
           git diff --exit-code -- ':(glob)frontend/analytics/dashboards/hr-analytics-full-set/**/*.html'
           git diff --check
       - name: Upload HR rebuild diagnostics
-        if: always()
+        if: always() && steps.hr-impact.outputs.run_full == 'true'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with: { name: aizanoi-hr-pipeline-diagnostics, path: 'artifacts/diagnostics/*', retention-days: 3 }
 

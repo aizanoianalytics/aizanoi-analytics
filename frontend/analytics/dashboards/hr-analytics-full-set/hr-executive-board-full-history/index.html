@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="tr">
+<html lang="en">
 
 
 
@@ -3933,22 +3933,28 @@
   .aizanoi-public-dashboard-bar a{min-height:24px;display:inline-flex;align-items:center;color:#f8fafc;text-decoration:none}
   .aizanoi-public-dashboard-bar a:hover,.aizanoi-public-dashboard-bar a:focus-visible{text-decoration:underline;text-underline-offset:3px}
   .aizanoi-public-dashboard-bar__language{margin-left:auto;padding:3px 8px;border:1px solid rgba(165,180,252,.35);border-radius:999px;background:rgba(79,70,229,.16);color:#e0e7ff;white-space:nowrap}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-item{grid-template-columns:auto minmax(0,1fr) auto;min-width:0}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-item span{min-width:0;overflow-wrap:anywhere}
+  body[data-aizanoi-dashboard="corporate-goals"] .color-scale{min-width:0}
   .aizanoi-embedded-dashboard .aizanoi-public-dashboard-bar{display:none!important}
   @media(max-width:640px){.aizanoi-public-dashboard-bar{gap:7px;padding:7px 9px;font-size:11px}.aizanoi-public-dashboard-bar__language{width:100%;margin-left:0;border-radius:7px}}
 </style>
 <script>try{if(window.self!==window.top)document.documentElement.classList.add('aizanoi-embedded-dashboard')}catch{}</script>
+<script data-aizanoi-hr-public-en-visible src="/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js"></script>
 <!-- AIZANOI_PUBLIC_META_END -->
+<script data-aizanoi-hr-public-en src="/analytics/dashboards/hr-analytics-full-set/hr-public-en.js"></script>
 </head>
 
 
 
-<body class="dashboard-rendering">
+<body data-aizanoi-dashboard="hr-executive-board-full-history" class="dashboard-rendering">
 <!-- AIZANOI_PUBLIC_BAR_START -->
 <nav class="aizanoi-public-dashboard-bar" aria-label="Aizanoi Analytics dashboard navigation">
   <a href="/analytics/dashboards/hr-analytics-full-set/" target="_top">Aizanoi Analytics · HR Analytics Full Set</a>
   <span aria-hidden="true">·</span>
   <a href="/analytics/" target="_top">Back to Analytics</a>
-  <span class="aizanoi-public-dashboard-bar__language">Interface language: Turkish</span>
+  <span class="aizanoi-public-dashboard-bar__language">Interface language: English</span>
 </nav>
 <!-- AIZANOI_PUBLIC_BAR_END -->
 
@@ -6176,7 +6182,7 @@
       return luminance > 0.68 ? "#0f172a" : "#fff";
     }
 
-    const trNum = new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 0 }), trNum1 = new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 1 }), trNum2 = new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 2 });
+    const trNum = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }), trNum1 = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 }), trNum2 = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
 
     const MONTH_LABELS = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
     function fmt(v, d = 0) { const n = Number(v); if (v == null || !Number.isFinite(n)) return "\u2014"; return d === 0 ? trNum.format(n) : d === 1 ? trNum1.format(n) : trNum2.format(n) }
@@ -16137,8 +16143,8 @@
         { key: "isletme_adi", label: "Mağaza / Birim" },
         { key: "unvan", label: "Unvan" },
         { key: "cinsiyet", label: "Cinsiyet" },
-        { key: "ise_giris_tarihi", label: "İşe Giriş", format: v => v ? new Date(v).toLocaleDateString("tr-TR") : "—" },
-        { key: "cikis_tarihi", label: "Çıkış Tarihi", format: v => v ? new Date(v).toLocaleDateString("tr-TR") : "—" },
+        { key: "ise_giris_tarihi", label: "İşe Giriş", format: v => v ? new Date(v).toLocaleDateString("en-US") : "—" },
+        { key: "cikis_tarihi", label: "Çıkış Tarihi", format: v => v ? new Date(v).toLocaleDateString("en-US") : "—" },
         { key: "kidem_yil", label: "Kıdem", format: v => fmtTenureYears(v) }
       ], rows, 20, { exportName: "isten_cikislar" });
     }
