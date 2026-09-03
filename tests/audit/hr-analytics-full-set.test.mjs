@@ -78,13 +78,18 @@ test('all ten original dashboard interaction surfaces are published intact', () 
 test('public publish layer adds English language, brand navigation and canonical metadata to every HR dashboard', () => {
   assert.ok(existsSync(`${publicRoot}/hr-public-en.js`), 'shared HR English presentation runtime is missing');
   assert.ok(statSync(`${publicRoot}/hr-public-en.js`).size > 1_000, 'shared HR English presentation runtime is unexpectedly shallow');
+  assert.ok(existsSync(`${publicRoot}/hr-public-en-visible.js`), 'shared HR mixed-presentation runtime is missing');
+  assert.ok(statSync(`${publicRoot}/hr-public-en-visible.js`).size > 1_000, 'shared HR mixed-presentation runtime is unexpectedly shallow');
   for (const id of dashboardIds) {
     const html = readFileSync(`${publicRoot}/${id}/index.html`, 'utf8');
     const canonical = `https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/${id}/`;
     assert.match(html, /<html\b[^>]*\blang="en"/i, `${id} must declare its English interface language`);
     assert.equal((html.match(/AIZANOI_PUBLIC_META_START/g) || []).length, 1, `${id} must have one managed metadata block`);
     assert.equal((html.match(/AIZANOI_PUBLIC_BAR_START/g) || []).length, 1, `${id} must have one managed public bar`);
-    assert.equal((html.match(/data-aizanoi-hr-public-en/g) || []).length, 1, `${id} must load one managed English presentation runtime`);
+    assert.equal((html.match(/data-aizanoi-hr-public-en(?=\s|=)/g) || []).length, 1,
+      `${id} must load exactly one base English presentation runtime`);
+    assert.equal((html.match(/data-aizanoi-hr-public-en-visible(?=\s|=)/g) || []).length, 1,
+      `${id} must load exactly one mixed English presentation runtime`);
     assert.match(html, /Aizanoi Analytics · HR Analytics Full Set/);
     assert.match(html, /Back to Analytics/);
     assert.match(html, /Interface language: English/);
@@ -102,6 +107,8 @@ test('public HR dashboards stay self-hosted under the route-scoped CSP', () => {
     assert.doesNotMatch(html, /fonts\.(?:googleapis|gstatic)\.com/i, `${id} depends on an external font provider`);
     assert.match(html, /src="\/analytics\/dashboards\/hr-analytics-full-set\/hr-public-en\.js"/i,
       `${id} must use the shared same-origin English presentation runtime`);
+    assert.match(html, /src="\/analytics\/dashboards\/hr-analytics-full-set\/hr-public-en-visible\.js"/i,
+      `${id} must use the shared same-origin mixed presentation runtime`);
   }
 });
 
@@ -154,13 +161,24 @@ test('canonical publish pipeline decorates, localizes, embeds and only then sani
 
 test('English localization is presentation-only and does not rewrite raw analytics source values', () => {
   const localizer = readFileSync('scripts/hr/localize-public-dashboard-en.mjs', 'utf8');
-  assert.match(localizer, /const SKIP = 'script,style,noscript,template,textarea,pre,code'/,
-    'runtime must skip embedded raw data and business-logic script content');
+  const visibleRuntime = readFileSync(`${publicRoot}/hr-public-en-visible.js`, 'utf8');
+  assert.match(localizer, /const SKIP = 'script,style,noscript,template,textarea'/,
+    'base runtime must explicitly identify embedded/raw non-presentation surfaces');
+  assert.match(localizer, /parent\.closest\(SKIP\)/,
+    'base runtime must skip text nodes inside embedded/raw non-presentation surfaces');
+  assert.match(localizer, /node\.closest\(SKIP\)/,
+    'base runtime must skip element subtrees inside embedded/raw non-presentation surfaces');
   assert.match(localizer, /MutationObserver/);
   assert.match(localizer, /CanvasRenderingContext2D/);
   assert.match(localizer, /\.toLocaleString/);
+  assert.match(visibleRuntime, /const SKIP = 'script,style,noscript,template'/,
+    'mixed runtime must keep script/template source out of presentation translation');
+  assert.match(visibleRuntime, /parent\.closest\(SKIP\)/,
+    'mixed runtime must not translate raw script/template text');
   assert.doesNotMatch(localizer, /const WORDS\s*=\s*new Map/,
     'rejected generic word-replacement localization must not return');
+  assert.doesNotMatch(visibleRuntime, /const WORDS\s*=\s*new Map/,
+    'mixed presentation runtime must not introduce generic word replacement');
 });
 
 test('download exactly matches the integrated pipeline output', () => {
