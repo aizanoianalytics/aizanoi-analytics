@@ -1,0 +1,36 @@
+name: Temporary HR Runtime Syntax
+
+on:
+  push:
+    branches:
+      - feat/hr-dashboard-english-only-v3
+
+permissions:
+  contents: read
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Generate and syntax-check runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=frontend/analytics/dashboards/hr-analytics-full-set
+          files=(
+            "$root/corporate-goals/index.html"
+            "$root/hr-administration-deep-dive/index.html"
+            "$root/hr-executive-board-current/index.html"
+            "$root/hr-executive-board-full-history/index.html"
+            "$root/learning-academy-analytics/index.html"
+            "$root/performance-hiring-turnover/index.html"
+            "$root/store-learning-compliance/index.html"
+            "$root/store-operations-tracking/index.html"
+            "$root/workforce-time-attendance/index.html"
+            "$root/workforce-turnover/index.html"
+          )
+          node scripts/hr/decorate-public-dashboard.mjs "${files[@]}"
+          node scripts/hr/localize-public-dashboard-en.mjs "${files[@]}"
+          node --check "$root/hr-public-en.js"
