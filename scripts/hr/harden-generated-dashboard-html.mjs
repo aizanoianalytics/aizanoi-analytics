@@ -3,6 +3,9 @@
 import { basename } from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
 
+// The canonical generators embed static JSON in application/json script tags.
+// Keep source-parity Python untouched and escape data-derived text here before
+// generated HTML/SVG templates are parsed by the browser.
 const plans = new Map([
   ['ERD_P_admin.html', [
     ['${fmt(r.risk_puani,1)}', '${esc(fmt(r.risk_puani,1))}'],
