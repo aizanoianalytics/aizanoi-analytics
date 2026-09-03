@@ -59,7 +59,7 @@ jobs:
           cat /tmp/hr-english-server.log
           exit 1
 
-      - name: Scan rendered visitor-facing language with provenance
+      - name: Scan visitor-facing rendered language
         run: |
           node --input-type=module <<'NODE'
           import { chromium } from 'playwright';
@@ -69,8 +69,9 @@ jobs:
             'workforce-time-attendance','workforce-turnover'
           ];
           const trChars=/[çğıöşüÇĞİÖŞÜ]/u;
-          const trWords=/\b(?:acik|açık|aktif|aksiyon|alt|ana|anket|ara|arasi|arası|ay|aylik|aylık|ayril|ayrıl|baslangic|başlangıç|bazi|bazı|bazli|bazlı|bitis|bitiş|bolge|bölge|bolum|bölüm|brut|brüt|bu|calisan|çalışan|calisma|çalışma|ceza|cikis|çıkış|cinsiyet|dagilim|dağılım|daha|deger|değer|departman|detay|diger|diğer|donem|dönem|dusuk|düşük|egitim|eğitim|eksik|erken|esik|eşik|evden|fazla|fiili|filtre|gelen|genel|gerceklesen|gerçekleşen|giris|giriş|gore|görev|goster|göster|gun|gün|hedef|hesap|icin|için|izin|kayit|kayıt|kidem|kıdem|kisi|kişi|kirilim|kırılım|kritik|kullan|lokasyon|magaza|mağaza|maas|maaş|merkez|mesai|metrik|mudur|müdür|onceki|önceki|ortalama|ozet|özet|personel|puan|riskli|saat|satis|satış|sayfa|sayisi|sayısı|sebep|secili|seçili|seciniz|seçiniz|sicil|son|sozlesme|sözleşme|sure|süre|surekli|sürekli|tahmin|tamam|toplam|tum|tüm|tur|tür|unvan|ust|üst|uyari|uyarı|uygun|uzman|ucret|ücret|veri|ve|veya|yil|yıl|yonet|yönet|yuksek|yüksek|zorunlu)\b/iu;
-          const suspicious=value=>{const s=String(value??'').replace(/\s+/g,' ').trim();return Boolean(s&&(trChars.test(s)||trWords.test(s)));};
+          const trWords=/\b(?:acik|açık|aktif|aksiyon|alt|ana|anket|ara|arasi|arası|ay|aylik|aylık|ayril|ayrıl|baslangic|başlangıç|bazi|bazı|bazli|bazlı|bitis|bitiş|bolge|bölge|bolum|bölüm|brut|brüt|bu|calisan|çalışan|calisma|çalışma|ceza|cikis|çıkış|cinsiyet|dagilim|dağılım|daha|deger|değer|departman|detay|diger|diğer|donem|dönem|dusuk|düşük|egitim|eğitim|eksik|erken|esik|eşik|evden|fazla|fiili|filtre|gelen|genel|gerceklesen|gerçekleşen|giris|giriş|gore|göre|gorev|görev|goster|göster|gun|gün|hedef|hesap|icin|için|izin|kayit|kayıt|kidem|kıdem|kisi|kişi|kirilim|kırılım|kritik|kullan|lokasyon|magaza|mağaza|maas|maaş|merkez|mesai|metrik|mudur|müdür|onceki|önceki|ortalama|ozet|özet|personel|puan|riskli|saat|satis|satış|sayfa|sayisi|sayısı|sebep|secili|seçili|seciniz|seçiniz|sicil|son|sozlesme|sözleşme|sure|süre|surekli|sürekli|tahmin|tamam|toplam|tum|tüm|tur|tür|unvan|ust|üst|uyari|uyarı|uygun|uzman|ucret|ücret|veri|ve|veya|yil|yıl|yonet|yönet|yuksek|yüksek|zorunlu)\b/iu;
+          const normalize=v=>String(v??'').replace(/\s+/g,' ').trim();
+          const suspicious=v=>{const s=normalize(v);return Boolean(s&&(trChars.test(s)||trWords.test(s)));};
           const browser=await chromium.launch({headless:true});
           let failed=false;
           for(const route of routes){
@@ -82,50 +83,38 @@ jobs:
               for(const name of ['fillText','strokeText']){
                 const original=proto[name];
                 if(typeof original!=='function')continue;
-                proto[name]=function(text,...args){globalThis.__hrCanvasText.push({method:name,text:String(text)});return original.call(this,text,...args);};
+                proto[name]=function(text,...args){globalThis.__hrCanvasText.push(String(text));return original.call(this,text,...args);};
               }
             });
             const errors=[];
             page.on('pageerror',error=>errors.push(error?.stack||String(error)));
             await page.goto(`http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/${route}/`,{waitUntil:'networkidle'});
-            await page.waitForTimeout(350);
+            await page.waitForTimeout(450);
             const snapshot=await page.evaluate(()=>{
-              const textNodes=[];
+              const text=[];
               const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
               let node;
               while((node=walker.nextNode())){
+                const parent=node.parentElement;
+                if(!parent||parent.closest('script,style,noscript,template'))continue;
                 const value=String(node.nodeValue??'').replace(/\s+/g,' ').trim();
-                if(!value)continue;
-                const el=node.parentElement;
-                textNodes.push({value,tag:el?.tagName||'',id:el?.id||'',className:typeof el?.className==='string'?el.className:'',closest:el?.closest('pre,code,svg,table,thead,tbody,tr,th,td,button,label,nav')?.tagName||''});
+                if(value)text.push(value);
               }
               const attrs=[];
               for(const el of document.querySelectorAll('[aria-label],[title],[placeholder],[alt],[data-label],[data-title]')){
-                for(const name of ['aria-label','title','placeholder','alt','data-label','data-title']) if(el.hasAttribute(name)) attrs.push({value:el.getAttribute(name),name,tag:el.tagName,id:el.id||'',className:typeof el.className==='string'?el.className:''});
+                if(el.closest('script,style,noscript,template'))continue;
+                for(const name of ['aria-label','title','placeholder','alt','data-label','data-title'])if(el.hasAttribute(name))attrs.push(el.getAttribute(name));
               }
-              return {
-                lang:document.documentElement.lang,
-                title:document.title,
-                description:document.querySelector('meta[name="description"]')?.content||'',
-                textNodes,
-                attrs,
-                canvas:globalThis.__hrCanvasText||[],
-              };
+              return {lang:document.documentElement.lang,title:document.title,description:document.querySelector('meta[name="description"]')?.content||'',text,attrs,canvas:globalThis.__hrCanvasText||[]};
             });
-            const textHits=snapshot.textNodes.filter(item=>suspicious(item.value));
-            const attrHits=snapshot.attrs.filter(item=>suspicious(item.value));
-            const canvasHits=snapshot.canvas.filter(item=>suspicious(item.text));
-            const metaHits=[snapshot.title,snapshot.description].filter(suspicious);
-            const total=textHits.length+attrHits.length+canvasHits.length+metaHits.length;
-            console.log(`\n=== ${route}: lang=${snapshot.lang} suspiciousNodes=${total} pageErrors=${errors.length} ===`);
-            for(const error of errors) console.log(`  ! PAGEERROR ${String(error).replace(/\n/g,' | ')}`);
-            for(const item of textHits.slice(0,120)) console.log(`  TEXT <${item.tag.toLowerCase()} id=${JSON.stringify(item.id)} class=${JSON.stringify(item.className)} closest=${item.closest.toLowerCase()}> :: ${item.value.slice(0,700)}`);
-            for(const item of attrHits.slice(0,60)) console.log(`  ATTR ${item.name} <${item.tag.toLowerCase()} id=${JSON.stringify(item.id)} class=${JSON.stringify(item.className)}> :: ${String(item.value).slice(0,700)}`);
-            for(const item of canvasHits.slice(0,60)) console.log(`  CANVAS ${item.method} :: ${item.text.slice(0,700)}`);
-            for(const item of metaHits) console.log(`  META :: ${String(item).slice(0,700)}`);
-            if(snapshot.lang!=='en'||total||errors.length) failed=true;
+            const candidates=[snapshot.title,snapshot.description,...snapshot.text,...snapshot.attrs,...snapshot.canvas];
+            const remaining=[...new Set(candidates.map(normalize).filter(suspicious))];
+            console.log(`\n=== ${route}: lang=${snapshot.lang} remaining=${remaining.length} pageErrors=${errors.length} ===`);
+            for(const error of errors)console.log(`  ! PAGEERROR ${String(error).replace(/\n/g,' | ')}`);
+            for(const item of remaining.slice(0,160))console.log(`  - ${item.slice(0,900)}`);
+            if(snapshot.lang!=='en'||remaining.length||errors.length)failed=true;
             await page.close();
           }
           await browser.close();
-          if(failed) process.exit(1);
+          if(failed)process.exit(1);
           NODE
