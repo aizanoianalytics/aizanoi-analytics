@@ -6,6 +6,7 @@ const outputDir = path.resolve(process.argv[2] || "outputs/hr-original-parity-sy
 const onlyFiles = new Set(process.argv.slice(3));
 const monthStart = new Date(Date.UTC(2019, 0, 1));
 const monthEnd = new Date(Date.UTC(2026, 7, 1));
+const reportingDate = new Date(Date.UTC(monthEnd.getUTCFullYear(), monthEnd.getUTCMonth() + 1, 0));
 
 const brands = ["Aurelia", "Borealis", "Cyrene"];
 const cities = ["Istanbul", "Ankara", "Izmir", "Bursa", "Antalya", "Adana", "Samsun", "Eskisehir", "Gaziantep", "Mugla", "Konya", "Trabzon"];
@@ -41,12 +42,19 @@ function seeded(index, salt = 0) {
   return x - Math.floor(x);
 }
 
+function historicalDate(year, month, dayValue = 1) {
+  const candidate = new Date(Date.UTC(year, month, dayValue));
+  if (candidate <= reportingDate) return candidate;
+  return new Date(Date.UTC(year - 1, month, dayValue));
+}
+
 const employees = Array.from({ length: 144 }, (_, index) => {
   const store = stores[index % stores.length];
   const corporate = index % 12 === 0;
   const hire = addMonths(new Date(Date.UTC(2017 + (index % 7), index % 12, 3 + (index % 20))), index % 8);
   const exits = index % 7 === 0 && index > 20;
-  const exit = exits ? addMonths(new Date(Date.UTC(2023 + (index % 4), (index * 3) % 12, 15)), 0) : null;
+  const exitCandidate = exits ? addMonths(new Date(Date.UTC(2023 + (index % 4), (index * 3) % 12, 15)), 0) : null;
+  const exit = exitCandidate && exitCandidate <= reportingDate ? exitCandidate : null;
   const manager = index % 19 === 0;
   const assistant = !manager && index % 11 === 0;
   const title = corporate ? ["Veri Analisti", "Finans Uzmanı", "İnsan Kaynakları İş Ortağı", "Teknoloji Uzmanı"][index % 4]
@@ -228,10 +236,11 @@ manifest.push(await writeWorkbook("yurtdisi_veri_icmal.xlsx", [{ name: "Sheet1",
 manifest.push(await writeWorkbook("gelisim_yolculuk.xlsx", [{ name: "Sheet1", headers: ["Kullanıcı Kodu", "Tamamlama Durumu", "Durum Oran"], rows: activeEmployees.map((employee, index) => [employee.id, index % 5 === 0 ? "In Progress" : "Completed", index % 5 === 0 ? 65 : 100]) }]));
 
 const performanceHeaders = ["donem", "sicil", "isim_soyisim", "yetkinlik_puani", "120_li_yetkinlik_puani", "dengeli_karne_puani", "yetkinlik_puani_25", "dengeli_karne_puani_75", "performans_notu", "sonuc_notu", "not"];
-const performanceRows = activeEmployees.flatMap((employee, index) => [2025, 2026].map((year) => { const score = 65 + Math.round(seeded(index, year) * 32); return [new Date(Date.UTC(year, 11, 1)), employee.id, employee.name, score, Math.min(120, score * 1.2), score + 2, score * 0.25, (score + 2) * 0.75, score >= 90 ? "A" : score >= 75 ? "B" : "C", score >= 75 ? "Successful" : "Development", "Synthetic performance assessment"]; }));
+const performancePeriods = [new Date(Date.UTC(2025, 11, 1)), new Date(Date.UTC(2026, monthEnd.getUTCMonth(), 1))];
+const performanceRows = activeEmployees.flatMap((employee, index) => performancePeriods.map((period) => { const year = period.getUTCFullYear(); const score = 65 + Math.round(seeded(index, year) * 32); return [period, employee.id, employee.name, score, Math.min(120, score * 1.2), score + 2, score * 0.25, (score + 2) * 0.75, score >= 90 ? "A" : score >= 75 ? "B" : "C", score >= 75 ? "Successful" : "Development", "Synthetic performance assessment"]; }));
 manifest.push(await writeWorkbook("performans_magaza_verileri.xlsx", [{ name: "Sheet1", headers: performanceHeaders, rows: performanceRows }]));
 
-const disciplineRows = employees.filter((_, index) => index % 8 === 0).map((employee, index) => [employee.id, ["C001", "C002", "C010", "C019"][index % 4], new Date(Date.UTC(2025 + (index % 2), index % 12, 5 + (index % 20))), "Synthetic policy record"]);
+const disciplineRows = employees.filter((_, index) => index % 8 === 0).map((employee, index) => [employee.id, ["C001", "C002", "C010", "C019"][index % 4], historicalDate(2025 + (index % 2), index % 12, 5 + (index % 20)), "Synthetic policy record"]);
 manifest.push(await writeWorkbook("cezalar.xlsx", [{ name: "sheet_1", headers: ["PERNO", "OCKOD", "TARIH", "ACIKLAMA"], rows: disciplineRows }]));
 
 const normHeaders = ["Bölge", "Mağaza", "İl", "Marka", "Toplam", "Mağaza Müdürü", "Unnamed: 6", "Mağaza Müdür Yardımcısı", "Unnamed: 8", "Satış Danışmanı", "Unnamed: 10", "Kasiyer", "Unnamed: 12"];
