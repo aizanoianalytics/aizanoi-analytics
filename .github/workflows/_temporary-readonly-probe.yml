@@ -1,18 +1,17 @@
-name: Temporary Readonly HR Date Rebuild
+name: Temporary HR Historical Date Commit
 on:
   push:
     branches: [fix/hr-synthetic-historical-dates]
 permissions:
-  contents: read
+  contents: write
 jobs:
-  rebuild:
+  apply:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
-          node-version: '22'
+          ref: fix/hr-synthetic-historical-dates
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.11'
@@ -20,7 +19,7 @@ jobs:
           cache-dependency-path: analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
       - name: Install locked HR dependencies
         run: python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
-      - name: Apply candidate generator fix and synchronize affected synthetic inputs
+      - name: Apply validated source and synthetic-input fix
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -38,31 +37,24 @@ jobs:
             ('const disciplineRows = employees.filter((_, index) => index % 8 === 0).map((employee, index) => [employee.id, ["C001", "C002", "C010", "C019"][index % 4], new Date(Date.UTC(2025 + (index % 2), index % 12, 5 + (index % 20))), "Synthetic policy record"]);', 'const disciplineRows = employees.filter((_, index) => index % 8 === 0).map((employee, index) => [employee.id, ["C001", "C002", "C010", "C019"][index % 4], historicalDate(2025 + (index % 2), index % 12, 5 + (index % 20)), "Synthetic policy record"]);')
           ]
           for old,new in changes:
-            if old not in s: raise SystemExit(f'missing expected source fragment: {old[:90]}')
+            if old not in s: raise SystemExit(f'missing expected generator fragment: {old[:90]}')
             s=s.replace(old,new,1)
           generator.write_text(s,encoding='utf-8')
 
           limit=datetime(2026,8,31)
-          # Discipline: keep deterministic record cardinality but move would-be future events back one year.
-          book=root/'cezalar.xlsx'; wb=openpyxl.load_workbook(book); ws=wb['sheet_1']; headers=[c.value for c in ws[1]]; date_col=headers.index('TARIH')+1
-          repaired=[]
+          book=root/'cezalar.xlsx'; wb=openpyxl.load_workbook(book); ws=wb['sheet_1']; h=[c.value for c in ws[1]]; col=h.index('TARIH')+1
           for row in range(2,ws.max_row+1):
-            value=ws.cell(row,date_col).value
-            if isinstance(value,datetime) and value>limit:
-              replacement=value.replace(year=value.year-1); ws.cell(row,date_col).value=replacement; repaired.append((value.date(),replacement.date()))
-          if not repaired: raise SystemExit('expected future discipline dates')
-          wb.save(book); print('discipline repaired',repaired)
+            value=ws.cell(row,col).value
+            if isinstance(value,datetime) and value>limit: ws.cell(row,col).value=value.replace(year=value.year-1)
+          wb.save(book)
 
-          # Future synthetic exits are not completed leaver events. Remove them from leaver sources and blank exit fields elsewhere.
-          leavers=root/'Ayrilanlar_Listesi.xlsx'; wb=openpyxl.load_workbook(leavers); ws=wb['Sayfa1']; h=[c.value for c in ws[1]]; id_col=h.index('Sicil No')+1; exit_col=h.index('Çıkış Tarihi')+1
-          future_ids=set()
+          leavers=root/'Ayrilanlar_Listesi.xlsx'; wb=openpyxl.load_workbook(leavers); ws=wb['Sayfa1']; h=[c.value for c in ws[1]]; id_col=h.index('Sicil No')+1; exit_col=h.index('Çıkış Tarihi')+1; future_ids=set()
           for row in range(ws.max_row,1,-1):
             value=ws.cell(row,exit_col).value
             if isinstance(value,datetime) and value>limit:
               future_ids.add(str(ws.cell(row,id_col).value).split('.')[0]); ws.delete_rows(row,1)
-          if not future_ids: raise SystemExit('expected future synthetic leavers')
-          wb.save(leavers); print('future leavers removed',sorted(future_ids))
-
+          if len(future_ids)!=4: raise SystemExit(f'expected 4 future synthetic leavers, got {sorted(future_ids)}')
+          wb.save(leavers)
           for filename,sheet,id_name,exit_name,delete_rows in [
             ('cikis_sebepleri.xlsx','Sheet1','Sicil','Çıkış Tarihi',True),
             ('eski_kaynak.xlsx','Sayfa1','sicil','cikis_tarihi',False),
@@ -70,64 +62,80 @@ jobs:
           ]:
             path=root/filename; wb=openpyxl.load_workbook(path); ws=wb[sheet]; h=[c.value for c in ws[1]]; id_col=h.index(id_name)+1; exit_col=h.index(exit_name)+1
             for row in range(ws.max_row,1,-1):
-              sid=str(ws.cell(row,id_col).value).split('.')[0]
-              if sid in future_ids:
+              if str(ws.cell(row,id_col).value).split('.')[0] in future_ids:
                 if delete_rows: ws.delete_rows(row,1)
                 else: ws.cell(row,exit_col).value=None
             wb.save(path)
 
-          # Completed 2026 performance assessments use the reporting month, not a future December event date.
-          perf=root/'performans_magaza_verileri.xlsx'; wb=openpyxl.load_workbook(perf); ws=wb['Sheet1']; h=[c.value for c in ws[1]]; period_col=h.index('donem')+1
-          perf_changed=0
+          perf=root/'performans_magaza_verileri.xlsx'; wb=openpyxl.load_workbook(perf); ws=wb['Sheet1']; h=[c.value for c in ws[1]]; col=h.index('donem')+1; changed=0
           for row in range(2,ws.max_row+1):
-            value=ws.cell(row,period_col).value
+            value=ws.cell(row,col).value
             if isinstance(value,datetime) and value>limit:
-              ws.cell(row,period_col).value=datetime(2026,8,1); perf_changed+=1
-          if not perf_changed: raise SystemExit('expected future 2026 performance periods')
-          wb.save(perf); print('performance periods repaired',perf_changed)
+              ws.cell(row,col).value=datetime(2026,8,1); changed+=1
+          if not changed: raise SystemExit('expected future completed performance periods')
+          wb.save(perf)
           PY
-      - name: Rebuild canonical HR outputs and verify historical-event contracts
+      - name: Add permanent historical-event regression verifier
+        run: |
+          cat > scripts/verify-hr-historical-event-dates.py <<'PY'
+          #!/usr/bin/env python3
+          """Reject synthetic historical HR events dated after the reporting reference date."""
+          from datetime import datetime
+          from pathlib import Path
+          import re
+          import openpyxl
+
+          REPO = Path(__file__).resolve().parents[1]
+          ROOT = REPO / 'analytics/dashboards/hr-analytics-full-set/production-pipeline'
+          PUBLIC = REPO / 'frontend/analytics/dashboards/hr-analytics-full-set'
+          LIMIT = datetime(2026, 8, 31)
+          CHECKS = (
+              ('cezalar.xlsx', 'sheet_1', 'TARIH'),
+              ('Ayrilanlar_Listesi.xlsx', 'Sayfa1', 'Çıkış Tarihi'),
+              ('cikis_sebepleri.xlsx', 'Sheet1', 'Çıkış Tarihi'),
+              ('performans_magaza_verileri.xlsx', 'Sheet1', 'donem'),
+              ('ise_alma_suresi.xlsx', 'Sayfa1', 'İşe Giriş Tarihi'),
+          )
+
+          for filename, sheet, column in CHECKS:
+              workbook = openpyxl.load_workbook(ROOT / filename, data_only=True, read_only=True)
+              worksheet = workbook[sheet]
+              rows = worksheet.iter_rows(values_only=True)
+              headers = list(next(rows))
+              index = headers.index(column)
+              future = [row[index] for row in rows if isinstance(row[index], datetime) and row[index] > LIMIT]
+              if future:
+                  raise SystemExit(f'{filename}:{column} contains future historical events: {future[:5]}')
+
+          symptom = re.compile(r'(?:ceza|disciplin)[^<]{0,180}-\d+\s*(?:day|gün)', re.I)
+          for page in PUBLIC.glob('*/index.html'):
+              if symptom.search(page.read_text(encoding='utf-8')):
+                  raise SystemExit(f'negative days-since-discipline symptom in {page}')
+          print('HR synthetic historical-event dates: OK')
+          PY
+          chmod +x scripts/verify-hr-historical-event-dates.py
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('scripts/regenerate-hr-dashboards.sh')
+          s=p.read_text(encoding='utf-8')
+          old='echo "[4/4] running HR audit contracts"\nnode --test \\\n'
+          new='echo "[4/4] running HR audit contracts"\npython3 scripts/verify-hr-historical-event-dates.py\nnode --test \\\n'
+          if old not in s: raise SystemExit('HR audit insertion point missing')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+          PY
+      - name: Rebuild, verify determinism, and commit exact generated outputs
         run: |
           set -euo pipefail
-          mkdir -p artifacts/hr-date
           bash scripts/regenerate-hr-dashboards.sh
           cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx /tmp/hr-first.xlsx
           bash scripts/regenerate-hr-dashboards.sh
           python scripts/verify-hr-workbook-semantics.py /tmp/hr-first.xlsx analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx
-          python - <<'PY'
-          from pathlib import Path
-          from datetime import datetime
-          import openpyxl,re
-          root=Path('analytics/dashboards/hr-analytics-full-set/production-pipeline'); limit=datetime(2026,8,31)
-          checks=[
-            ('cezalar.xlsx','sheet_1','TARIH'),
-            ('Ayrilanlar_Listesi.xlsx','Sayfa1','Çıkış Tarihi'),
-            ('cikis_sebepleri.xlsx','Sheet1','Çıkış Tarihi'),
-            ('performans_magaza_verileri.xlsx','Sheet1','donem'),
-            ('ise_alma_suresi.xlsx','Sayfa1','İşe Giriş Tarihi'),
-          ]
-          for filename,sheet,column in checks:
-            wb=openpyxl.load_workbook(root/filename,data_only=True,read_only=True); ws=wb[sheet]; rows=ws.iter_rows(values_only=True); headers=list(next(rows)); idx=headers.index(column); bad=[]
-            for row in rows:
-              value=row[idx]
-              if isinstance(value,datetime) and value>limit: bad.append(value.isoformat())
-            if bad: raise SystemExit(f'{filename}:{column} has future historical dates: {bad[:5]}')
-          for page in Path('frontend/analytics/dashboards/hr-analytics-full-set').glob('*/index.html'):
-            text=page.read_text(encoding='utf-8')
-            if re.search(r'(?:ceza|disciplin)[^<]{0,180}-\d+\s*(?:day|gün)',text,re.I): raise SystemExit(f'negative discipline age found in {page}')
-          print('historical event date contracts + negative discipline age: OK')
-          PY
-          git diff --binary > artifacts/hr-date/generated.patch
-          git status --short > artifacts/hr-date/status.txt
-          cp analytics/dashboards/hr-analytics-full-set/tools/generate_synthetic_source_workbooks.mjs artifacts/hr-date/generate_synthetic_source_workbooks.mjs
-          for f in cezalar.xlsx Ayrilanlar_Listesi.xlsx cikis_sebepleri.xlsx eski_kaynak.xlsx ise_alma_suresi.xlsx performans_magaza_verileri.xlsx; do cp "analytics/dashboards/hr-analytics-full-set/production-pipeline/$f" artifacts/hr-date/; done
-          cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx artifacts/hr-date/icmal_sorgu_sonuc.xlsx
-          cp frontend/analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx artifacts/hr-date/hr-analytics-full-set-synthetic-output.xlsx
-          find frontend/analytics/dashboards/hr-analytics-full-set -name '*.html' -print0 | tar --null -T - -czf artifacts/hr-date/public-html.tar.gz
-      - name: Upload candidate artifacts
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with:
-          name: hr-date-candidate
-          path: artifacts/hr-date/*
-          retention-days: 3
+          python scripts/verify-hr-historical-event-dates.py
+          git rm .github/workflows/_temporary-readonly-probe.yml
+          rm -rf artifacts
+          git add analytics/dashboards/hr-analytics-full-set frontend/analytics/dashboards/hr-analytics-full-set scripts/regenerate-hr-dashboards.sh scripts/verify-hr-historical-event-dates.py
+          git diff --cached --check
+          git config user.name 'aizanoi-ci'
+          git config user.email 'actions@users.noreply.github.com'
+          git commit -m 'fix(hr): bound synthetic historical events to reporting date'
+          git push origin HEAD:fix/hr-synthetic-historical-dates
