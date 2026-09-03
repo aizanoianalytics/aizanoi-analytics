@@ -36,7 +36,7 @@ jobs:
             cp "$file" "/tmp/hr-en-oracle/$rel"
           done < <(find frontend/analytics/dashboards/hr-analytics-full-set -type f -name '*.html' | sort)
           mapfile -t copies < <(find /tmp/hr-en-oracle -type f -name '*.html' | sort)
-          node /tmp/hr-v2-oracle.mjs "${copies[@]}"
+          node /tmp/hr-v2-oracle.mjs "${copies[@]}" || true
 
       - name: Derive exact context-aware visitor string map
         run: |
