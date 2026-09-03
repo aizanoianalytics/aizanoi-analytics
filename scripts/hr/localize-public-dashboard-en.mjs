@@ -47,20 +47,20 @@ function decodeHtmlEntities(value) {
 const normalize = (value) => decodeHtmlEntities(value).replace(/\s+/g, ' ').trim();
 const exact = new Map();
 const conflicts = [];
-function addExact(source, target, provenance) {
+function addExact(source, target, provenance, { override = false } = {}) {
   const from = normalize(source);
   const to = normalize(target);
   if (!from || !to || from === to || !suspiciousTurkish(from) || suspiciousTurkish(to)) return;
   const previous = exact.get(from);
-  if (previous && previous !== to) conflicts.push({ source: from, previous, target: to, provenance });
+  if (previous && previous !== to && !override) conflicts.push({ source: from, previous, target: to, provenance });
   else exact.set(from, to);
 }
 
 for (const bucket of ['text', 'script', 'attributes']) {
   for (const [source, target] of Object.entries(oracle[bucket] || {})) addExact(source, target, `oracle:${bucket}`);
 }
-for (const [source, target] of Object.entries(overrides.values || {})) addExact(source, target, 'override:value');
-for (const [source, target] of Object.entries(overrides.exact || {})) addExact(source, target, 'override:exact');
+for (const [source, target] of Object.entries(overrides.values || {})) addExact(source, target, 'override:value', { override: true });
+for (const [source, target] of Object.entries(overrides.exact || {})) addExact(source, target, 'override:exact', { override: true });
 if (conflicts.length) {
   console.error(JSON.stringify(conflicts.slice(0, 20), null, 2));
   throw new Error(`${conflicts.length} conflicting HR public English exact translations`);
