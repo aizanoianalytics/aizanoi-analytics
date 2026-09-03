@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-03-ibm-k12-ai-readiness-survey",
+  "title": "IBM survey finds 76% of US middle-school teachers now use AI weekly, but only 20% have had extensive training",
+  "summary": "IBM's Morning Consult poll of 2,048 US adults released on 2 September 2026 found that 76% of middle-school and 73% of high-school classroom educators use AI at least weekly, against only 20% of K-12 teachers who say they have received extensive AI training. Forty-two percent cite lack of training as the top barrier to building AI literacy, and 41% of both educators and parents point to middle school as the stage at which students should first learn about AI; IBM also launched the K-12 AI leaders fellowship for superintendents and district leaders to support responsible adoption.",
+  "category": "ai",
+  "priority": 65,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["IBM", "AI in education", "K-12", "AI literacy", "teacher training"],
+  "sources": [
+    {
+      "publisher": "IBM Newsroom",
+      "url": "https://newsroom.ibm.com/2026-09-02-new-ibm-study-finds-ai-adoption-is-outpacing-k-12-readiness",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    },
+    {
+      "publisher": "PR Newswire",
+      "url": "https://www.prnewswire.com/news-releases/new-ibm-study-finds-ai-adoption-is-outpacing-k-12-readiness-302866692.html",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

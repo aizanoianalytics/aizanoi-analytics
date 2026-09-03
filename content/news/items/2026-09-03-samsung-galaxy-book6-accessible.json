@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-03-samsung-galaxy-book6-accessible",
+  "title": "Samsung adds a $799 14-inch Galaxy Book6 with 25-hour battery to its AI PC line-up",
+  "summary": "Samsung Electronics launched a new 14-inch Galaxy Book6 on 1 September 2026 in South Korea starting at ₩1.19 million (around $819) or $799 in the US, undercutting the rest of the Galaxy Book6 line-up by up to ₩1.02 million. The Windows laptop ships with Intel Core Series 3 or Core 5 processors, claims up to 25 hours of video playback, runs Samsung's Galaxy AI suite and comes in a single Gray colourway, with Samsung positioning it as a value-oriented everyday PC that still meets the AI PC bar.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Samsung", "Galaxy Book6", "AI PC", "Intel Core", "laptop"],
+  "sources": [
+    {
+      "publisher": "Samsung Newsroom",
+      "url": "https://news.samsung.com/global/samsung-expands-the-galaxy-book6-lineup-making-galaxy-book-more-accessible",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "Samsung Mobile Press",
+      "url": "https://www.samsungmobilepress.com/articles/samsung-expands-galaxy-book6-lineup-more-accessible",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

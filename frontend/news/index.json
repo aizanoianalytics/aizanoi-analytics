@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-02T11:30:00.000Z",
+  "generatedAt": "2026-09-03T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-03",
+      "path": "/news/2026-09-03/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-02",
       "path": "/news/2026-09-02/",
@@ -68,6 +73,551 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-03-openai-astra-critical-cyber",
+      "kind": "daily",
+      "title": "OpenAI designates Astra as its first 'Critical' cybersecurity model after it discovered two unknown Chrome vulnerabilities during a benchmark",
+      "summary": "OpenAI said on 1 September 2026 that its upcoming Astra model is the first to meet the Critical cybersecurity threshold under its Preparedness Framework, after the system independently found two previously unknown V8 JavaScript engine vulnerabilities during a routine exploit benchmark and folded them into a working attack chain. Astra's advanced offensive capabilities will initially be limited to a small group of vetted alpha testers and to OpenAI's Daybreak Blue defender programme, with the two zero-days in coordinated disclosure.",
+      "category": "ai",
+      "priority": 88,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "Astra",
+        "Preparedness Framework",
+        "zero-day",
+        "Daybreak Blue"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/path-to-astra/",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via TBS News)",
+          "url": "https://www.tbsnews.net/tech/openai-says-upcoming-model-so-capable-it-requires-stronger-guardrails-1530901",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechTimes",
+          "url": "https://www.techtimes.com/articles/326271/20260902/openai-astra-finds-zero-days-mid-benchmark-unasked-exploit-caps-access-vetted-defenders.htm",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-uber-wayve-london-robotaxi",
+      "kind": "daily",
+      "title": "Uber and Wayve launch London's first public robotaxi service with safety drivers on board",
+      "summary": "Uber and British self-driving startup Wayve switched on London's first public robotaxi service on 3 September 2026, with a small fleet of camera-and-radar-equipped Ford Mustang Mach-E vehicles available through the Uber app at no premium over standard UberX, Comfort or Electric fares. A licensed safety operator remains in the driver's seat pending regulatory approval of an automated passenger services permit, and Wayve plans to expand the rollout to Tokyo and then to ten more cities with Uber.",
+      "category": "technology",
+      "priority": 82,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Uber",
+        "Wayve",
+        "robotaxi",
+        "London",
+        "autonomous vehicles"
+      ],
+      "sources": [
+        {
+          "publisher": "CNET Roadshow",
+          "url": "https://cnet.com/roadshow/automobiles/uber-wayve-launch-londons-first-public-robotaxi-service",
+          "publishedAt": "2026-09-03T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Star (AFP)",
+          "url": "https://thestar.com.my/tech/tech-news/2026/09/03/uber-wayve-launch-london039s-first-robotaxi-service",
+          "publishedAt": "2026-09-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-apple-september-9-event-confirmed",
+      "kind": "daily",
+      "title": "Apple confirms 9 September 'Surprise and Shine' event for iPhone 18 Pro and first foldable iPhone Ultra",
+      "summary": "Apple confirmed on 2 September 2026 that it will hold its fall event at 10:00 a.m. Pacific on 9 September at Apple Park under the tagline 'Surprise and shine', with new iPhone 18 Pro and iPhone 18 Pro Max models expected alongside the company's first foldable iPhone, marketed as iPhone Ultra, and an A20 Pro chip on a 2-nanometer process. The lineup is also expected to bring Apple Watch Series 12, Apple Watch Ultra 4 and a long-rumoured Apple HomePad smart home hub, with Pro pricing tipped to rise $100 to $200 as memory and storage costs climb.",
+      "category": "technology",
+      "priority": 78,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "iPhone 18",
+        "iPhone Ultra",
+        "Apple Watch",
+        "Apple Event"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple",
+          "url": "https://www.apple.com/apple-events",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "GoTechTor",
+          "url": "https://gotechtor.com/apple-september-9-event-iphone-ultra-foldable-iphone-18-pro",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-wall-street-rebounds-oil-yields",
+      "kind": "daily",
+      "title": "Wall Street rebounds as Dell and Brown-Forman lead a partial recovery from a three-day sell-off",
+      "summary": "US stocks snapped a three-day losing streak on 2 September 2026, with the Dow Jones Industrial Average up 0.56% at 53,061.89, the S&P 500 up 0.46% at 7,666.63 and the Nasdaq Composite up 0.45% at 26,217.83, while the small-cap Russell 2000 outperformed with a 1.1% gain. The move came as investors bought oversold names after a week of bond-yield and oil-price pressure, with Dell jumping 15.8% after raising its full-year sales and profit forecasts and Brown-Forman climbing on a Q1 profit beat.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Wall Street",
+        "S&P 500",
+        "Dell",
+        "Brown-Forman",
+        "US Treasury yields"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/us-stock-index-futures-subdued-oil-treasury-yields-rise-iran-tensions-2026-09-02/",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "Local 10 (AP)",
+          "url": "https://www.local10.com/business/2026/09/02/stocks-drift-on-wall-street-amid-jobs-market-updates-renewed-fighting-in-us-war-with-iran/",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-european-shares-one-month-low",
+      "kind": "daily",
+      "title": "European shares pin to one-month low as German 10-year Bund yield hits a 14-year high",
+      "summary": "European equities hovered near a one-month low on 2 September 2026, with the pan-European STOXX 600 flat at 647.87 after a Reuters early-session check, Germany's DAX down 0.2% and the FTSE 100 closing 0.3% lower at 10,756.45 as a spike in bond yields and a fresh round of US-Iran strikes reignited energy-inflation fears. The 10-year German Bund yield climbed to its highest since April 2011, the 10-year UK gilt yield touched 5.294% - the highest since August 2007 - and LSEG data put the odds of the ECB's deposit rate hitting 3% by March 2027 at about 40%.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "STOXX 600",
+        "DAX",
+        "FTSE 100",
+        "Bund yield",
+        "gilt yields"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/markets/europe/european-shares-pinned-one-month-low-flaring-mideast-tensions-lift-bond-yields-2026-09-02/",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "BlueWater Healthy Living (Reuters wire)",
+          "url": "https://bluewaterhealthyliving.com/news/business-and-economy/european-shares-pinned-at-one-month-low-as-flaring-mideast-tensions-lift-bond-yields/",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-leagues-cup-semifinals-all-mexican",
+      "kind": "daily",
+      "title": "Toluca beat 10-man León 2-0 to reach first Leagues Cup final as Liga MX sweeps the semifinals",
+      "summary": "Toluca advanced to its first Leagues Cup final on 2 September 2026 with a 2-0 win over 10-man León at Shell Energy Stadium in Houston, with Federico Pereira opening the scoring before the break and a second-half goal sealing the result after Jhohan Romaña was sent off for a second yellow card. The result confirmed the first all-Liga MX Leagues Cup final in the modern 36-team format, guarantees a Mexican club the trophy and locks a Concacaf Champions Cup place; the 2026 final is scheduled for 6 September.",
+      "category": "football",
+      "priority": 75,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Leagues Cup",
+        "Toluca",
+        "León",
+        "Liga MX",
+        "Concacaf Champions Cup"
+      ],
+      "sources": [
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401914297/leon-toluca",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "Wikipedia (2026 Leagues Cup)",
+          "url": "https://en.wikipedia.org/wiki/2026_Leagues_Cup",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "VAVEL",
+          "url": "https://www.vavel.com/en-us/soccer/2026/09/03/1269910-toluca-vs-leon-live-score-in-leagues-cup.html",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-google-gemini-3-8-flash-antigravity",
+      "kind": "daily",
+      "title": "Google ships Gemini 3.8 Flash inside the Antigravity coding agent at $0.75 per million input tokens",
+      "summary": "Google released Gemini 3.8 Flash in its Antigravity coding agent on 1 September 2026, marking the third Flash release in six weeks and positioning 3.8 Flash as a daily workhorse for agentic development at $0.75 per million input tokens and $3.75 per million output tokens. Google says the model closes most of the gap to higher-cost frontier models on code and reasoning while letting developers tune thinking levels per task, with 3.7 Flash remaining available for workflows that prioritise compute efficiency.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Google",
+        "Gemini 3.8 Flash",
+        "Antigravity",
+        "developer tools",
+        "pricing"
+      ],
+      "sources": [
+        {
+          "publisher": "Google Antigravity",
+          "url": "https://antigravity.google/blog/gemini-3-8-flash-in-google-antigravity",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-microsoft-maia-300-september-unveil",
+      "kind": "daily",
+      "title": "Microsoft targets September unveil of Maia 300 AI chip and 300,000-unit TSMC run for 2027",
+      "summary": "Microsoft is preparing to unveil its third-generation Maia 300 AI accelerator as early as September 2026 and is negotiating with TSMC for manufacturing capacity of more than 300,000 units for delivery in 2027, with a longer-term goal of producing more than one million units. The Information reported the timeline on Monday, citing two people with direct knowledge; the Maia 300 is intended to reduce Microsoft's reliance on Nvidia hardware after the limited deployment of the Maia 200 earlier this year.",
+      "category": "technology",
+      "priority": 72,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "Maia 300",
+        "TSMC",
+        "AI silicon",
+        "data center"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via Yahoo Finance)",
+          "url": "https://finance.yahoo.com/technology/ai/articles/microsoft-plans-maia-300-chip-140432692.html",
+          "publishedAt": "2026-08-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-bayern-osnabruck-dfb-pokal",
+      "kind": "daily",
+      "title": "Bayern survive early Osnabrück scare as Kane brace seals 4-1 DFB-Pokal title defence",
+      "summary": "Harry Kane scored twice as holders Bayern Munich came from a goal down to beat second-division VfL Osnabrück 4-1 in the first round of the DFB-Pokal on 2 September 2026, with Tom Bischof, Michael Olise and Kane from the penalty spot completing the scoring after Robin Meibner had given the hosts an early lead. Vincent Kompany's side, who opened their Bundesliga account with a 5-1 win over Stuttgart, finished with an expected-goals total of 3.11 from 22 shots and next face Schalke in the Bundesliga on Saturday.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Bayern Munich",
+        "DFB-Pokal",
+        "Harry Kane",
+        "Osnabrück",
+        "Vincent Kompany"
+      ],
+      "sources": [
+        {
+          "publisher": "Associated Press",
+          "url": "https://apnews.com/article/bayern-german-cup-kane-osnabrueck-d5202c62d8db432712e26ea6dce4ecd0",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "beIN Sports",
+          "url": "https://www.beinsports.com/en-us/soccer/dfb-pokal/articles/osnabruck-1-4-bayern-munich-kane-nets-brace-in-dfb-pokal-comeback-2026-09-02",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-microsoft-copilot-autocomplete-off",
+      "kind": "daily",
+      "title": "Microsoft turns off Copilot text predictions by default in Word and Outlook as user pushback grows",
+      "summary": "Microsoft disabled text predictions by default in Word and Outlook on 1 September 2026 after years of complaints that the autocomplete suggestions broke writers' flow and surfaced phrases that did not fit the context. The change, which covers classic Outlook for Windows, Outlook for Mac and most mobile Outlook surfaces, follows the August retirement of Group Chat, AI-generated Podcasts, the experimental Copilot Labs and the animated Mico character; users can still re-enable the toggle manually under Advanced options.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "Copilot",
+        "Word",
+        "Outlook",
+        "AI defaults"
+      ],
+      "sources": [
+        {
+          "publisher": "WebProNews",
+          "url": "https://webpronews.com/microsoft-dials-back-autocomplete-in-word-and-outlook-as-copilot-fatigue-sets-in",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-ballon-dor-nominees-september-8",
+      "kind": "daily",
+      "title": "Ballon d'Or 2026 shortlist of 30 men to be revealed on 8 September at ballondor.com",
+      "summary": "France Football and UEFA confirmed that the 30-man Ballon d'Or 2026 shortlist will be unveiled on 8 September 2026, with parallel shortlists for the women's awards, the Kopa Trophy, goalkeeper of the year, striker of the year, coach of the year and club of the year categories. The latest in-season reference points include Paris Saint-Germain's Ousmane Dembélé, Barcelona's Lamine Yamal and Viktor Gyökeres of Sporting CP, with last year's male forward of the year Harry Kane and male club of the year Real Madrid among the recent laureates.",
+      "category": "football",
+      "priority": 68,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Ballon d'Or",
+        "France Football",
+        "Lamine Yamal",
+        "Dembélé",
+        "Gyökeres"
+      ],
+      "sources": [
+        {
+          "publisher": "Ballon d'Or (official)",
+          "url": "https://ballondor.com/news/posts/the-ballon-dor-2026-unveiling-of-nominees-imminent-check-when",
+          "publishedAt": "2026-08-31T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-south-korea-inflation-august-3-1",
+      "kind": "daily",
+      "title": "South Korea's August inflation quickens to 3.1% on telecom base effect, just below 3.2% forecast",
+      "summary": "South Korea's consumer price index rose 3.1% year on year in August 2026, the Ministry of Data and Statistics said on 2 September, accelerating from 2.8% in July but undershooting a 3.2% Reuters poll forecast as the headline was inflated by a one-off mobile-bill base effect. Mobile phone charges jumped 26.7% on the year after SK Telecom's August 2025 50% customer discount dropped out of the comparison; the Bank of Korea, which raised its policy rate 25 basis points to 3% in August, expects core inflation to retain upward momentum into September.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "South Korea",
+        "CPI",
+        "Bank of Korea",
+        "core inflation",
+        "telecom"
+      ],
+      "sources": [
+        {
+          "publisher": "EconoTimes",
+          "url": "https://econotimes.com/South-Korea-Inflation-Rises-to-31-in-August-1751029",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "Aju Press",
+          "url": "https://ajupress.com/view/20260902081636459",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-ibm-k12-ai-readiness-survey",
+      "kind": "daily",
+      "title": "IBM survey finds 76% of US middle-school teachers now use AI weekly, but only 20% have had extensive training",
+      "summary": "IBM's Morning Consult poll of 2,048 US adults released on 2 September 2026 found that 76% of middle-school and 73% of high-school classroom educators use AI at least weekly, against only 20% of K-12 teachers who say they have received extensive AI training. Forty-two percent cite lack of training as the top barrier to building AI literacy, and 41% of both educators and parents point to middle school as the stage at which students should first learn about AI; IBM also launched the K-12 AI leaders fellowship for superintendents and district leaders to support responsible adoption.",
+      "category": "ai",
+      "priority": 65,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "IBM",
+        "AI in education",
+        "K-12",
+        "AI literacy",
+        "teacher training"
+      ],
+      "sources": [
+        {
+          "publisher": "IBM Newsroom",
+          "url": "https://newsroom.ibm.com/2026-09-02-new-ibm-study-finds-ai-adoption-is-outpacing-k-12-readiness",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "PR Newswire",
+          "url": "https://www.prnewswire.com/news-releases/new-ibm-study-finds-ai-adoption-is-outpacing-k-12-readiness-302866692.html",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-pangram-dead-internet-warning",
+      "kind": "daily",
+      "title": "Pangram CEO warns 'dead internet' scenario is perilously close as the AI-detection startup adds image forensics",
+      "summary": "Pangram, an AI-detection startup founded by former Tesla and Google engineers, launched a new AI image-detection model on 2 September 2026 alongside an interview in which its CEO argued that the 'dead internet' scenario of predominantly synthetic content is no longer hypothetical. The fourth-generation text model and the new image model are being integrated into publishing workflows as platforms including Substack begin adopting Pangram's API to label or filter synthetic material across social, news and customer-support channels.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Pangram",
+        "AI detection",
+        "synthetic media",
+        "image forensics",
+        "Substack"
+      ],
+      "sources": [
+        {
+          "publisher": "BPData (AI Newsroom)",
+          "url": "https://news.bpdata.com/article/pangram-ceo-warns-dead-internet-scenario-could-be-65c77a00",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-03-samsung-galaxy-book6-accessible",
+      "kind": "daily",
+      "title": "Samsung adds a $799 14-inch Galaxy Book6 with 25-hour battery to its AI PC line-up",
+      "summary": "Samsung Electronics launched a new 14-inch Galaxy Book6 on 1 September 2026 in South Korea starting at ₩1.19 million (around $819) or $799 in the US, undercutting the rest of the Galaxy Book6 line-up by up to ₩1.02 million. The Windows laptop ships with Intel Core Series 3 or Core 5 processors, claims up to 25 hours of video playback, runs Samsung's Galaxy AI suite and comes in a single Gray colourway, with Samsung positioning it as a value-oriented everyday PC that still meets the AI PC bar.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-03T05:10:00.000Z",
+      "updatedAt": "2026-09-03T05:10:00.000Z",
+      "retrievedAt": "2026-09-03T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Samsung",
+        "Galaxy Book6",
+        "AI PC",
+        "Intel Core",
+        "laptop"
+      ],
+      "sources": [
+        {
+          "publisher": "Samsung Newsroom",
+          "url": "https://news.samsung.com/global/samsung-expands-the-galaxy-book6-lineup-making-galaxy-book-more-accessible",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "Samsung Mobile Press",
+          "url": "https://www.samsungmobilepress.com/articles/samsung-expands-galaxy-book6-lineup-more-accessible",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-02-premier-league-deadline-record",
       "kind": "daily",

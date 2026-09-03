@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-03-south-korea-inflation-august-3-1",
+  "title": "South Korea's August inflation quickens to 3.1% on telecom base effect, just below 3.2% forecast",
+  "summary": "South Korea's consumer price index rose 3.1% year on year in August 2026, the Ministry of Data and Statistics said on 2 September, accelerating from 2.8% in July but undershooting a 3.2% Reuters poll forecast as the headline was inflated by a one-off mobile-bill base effect. Mobile phone charges jumped 26.7% on the year after SK Telecom's August 2025 50% customer discount dropped out of the comparison; the Bank of Korea, which raised its policy rate 25 basis points to 3% in August, expects core inflation to retain upward momentum into September.",
+  "category": "economy-markets",
+  "priority": 68,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["South Korea", "CPI", "Bank of Korea", "core inflation", "telecom"],
+  "sources": [
+    {
+      "publisher": "EconoTimes",
+      "url": "https://econotimes.com/South-Korea-Inflation-Rises-to-31-in-August-1751029",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    },
+    {
+      "publisher": "Aju Press",
+      "url": "https://ajupress.com/view/20260902081636459",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

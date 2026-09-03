@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-03-microsoft-maia-300-september-unveil",
+  "title": "Microsoft targets September unveil of Maia 300 AI chip and 300,000-unit TSMC run for 2027",
+  "summary": "Microsoft is preparing to unveil its third-generation Maia 300 AI accelerator as early as September 2026 and is negotiating with TSMC for manufacturing capacity of more than 300,000 units for delivery in 2027, with a longer-term goal of producing more than one million units. The Information reported the timeline on Monday, citing two people with direct knowledge; the Maia 300 is intended to reduce Microsoft's reliance on Nvidia hardware after the limited deployment of the Maia 200 earlier this year.",
+  "category": "technology",
+  "priority": 72,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Microsoft", "Maia 300", "TSMC", "AI silicon", "data center"],
+  "sources": [
+    {
+      "publisher": "Reuters (via Yahoo Finance)",
+      "url": "https://finance.yahoo.com/technology/ai/articles/microsoft-plans-maia-300-chip-140432692.html",
+      "publishedAt": "2026-08-11T00:00:00Z"
+    }
+  ]
+}

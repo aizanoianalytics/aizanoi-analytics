@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-03-google-gemini-3-8-flash-antigravity",
+  "title": "Google ships Gemini 3.8 Flash inside the Antigravity coding agent at $0.75 per million input tokens",
+  "summary": "Google released Gemini 3.8 Flash in its Antigravity coding agent on 1 September 2026, marking the third Flash release in six weeks and positioning 3.8 Flash as a daily workhorse for agentic development at $0.75 per million input tokens and $3.75 per million output tokens. Google says the model closes most of the gap to higher-cost frontier models on code and reasoning while letting developers tune thinking levels per task, with 3.7 Flash remaining available for workflows that prioritise compute efficiency.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Google", "Gemini 3.8 Flash", "Antigravity", "developer tools", "pricing"],
+  "sources": [
+    {
+      "publisher": "Google Antigravity",
+      "url": "https://antigravity.google/blog/gemini-3-8-flash-in-google-antigravity",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "Google Blog",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}
