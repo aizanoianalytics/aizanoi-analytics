@@ -619,7 +619,7 @@ function processExcelWorkbook(workbook, fileName) {
 async function handlePDKSExcelUpload(file) {
   if (!file) return;
   const el = document.getElementById("pacsUploadStatus");
-  if (el) el.innerHTML = '<div style="padding:1rem;background:var(--blue);color:#fff;border-radius:8px;">Parsing ' + file.name + '...</div>';
+  if (el) el.innerHTML = '<div style="padding:1rem;background:var(--blue);color:#fff;border-radius:8px;">Parsing ' + escapeHtml(file.name) + '...</div>';
   try {
     const buf = await file.arrayBuffer();
     const wb = XLSX.read(buf, {type:"array",cellDates:true});
@@ -629,7 +629,7 @@ async function handlePDKSExcelUpload(file) {
     renderGlobalPeriodSelector();
     updateHeroBanner();
     showView("dashboardView");
-    if (el) el.innerHTML = '<div style="padding:1rem;background:#d1fae5;border:1px solid #10b981;border-radius:8px;color:#065f46;"><b>' + file.name + ' loaded successfully!</b><br>' + newData.meta.person_count + ' staff, ' + newData.meta.rows_count + ' records (' + newData.meta.date_min + ' to ' + newData.meta.date_max + ')<br><br><button class="button" onclick="downloadPortablePACS()" style="background:#047857;">Download Portable PACS.html</button></div>';
+    if (el) el.innerHTML = '<div style="padding:1rem;background:#d1fae5;border:1px solid #10b981;border-radius:8px;color:#065f46;"><b>' + escapeHtml(file.name) + ' loaded successfully!</b><br>' + escapeHtml(newData.meta.person_count) + ' staff, ' + escapeHtml(newData.meta.rows_count) + ' records (' + escapeHtml(newData.meta.date_min) + ' to ' + escapeHtml(newData.meta.date_max) + ')<br><br><button class="button" onclick="downloadPortablePACS()" style="background:#047857;">Download Portable PACS.html</button></div>';
     flashStatus(newData.meta.person_count + " staff loaded from " + file.name);
   } catch(err) {
     if (el) el.innerHTML = '<div style="padding:1rem;background:#fee2e2;border:1px solid #ef4444;border-radius:8px;color:#991b1b;"><b>Upload Failed</b><br>' + err.message + '</div>';
