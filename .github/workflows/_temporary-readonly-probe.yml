@@ -20,43 +20,73 @@ jobs:
           cache-dependency-path: analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
       - name: Install locked HR dependencies
         run: python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
-      - name: Apply candidate generator fix and synchronize committed discipline input
+      - name: Apply candidate generator fix and synchronize affected synthetic inputs
         run: |
           python - <<'PY'
           from pathlib import Path
           from datetime import datetime
           import openpyxl
 
+          root=Path('analytics/dashboards/hr-analytics-full-set/production-pipeline')
           generator=Path('analytics/dashboards/hr-analytics-full-set/tools/generate_synthetic_source_workbooks.mjs')
           s=generator.read_text(encoding='utf-8')
           changes=[
             ('const monthEnd = new Date(Date.UTC(2026, 7, 1));\n', 'const monthEnd = new Date(Date.UTC(2026, 7, 1));\nconst reportingDate = new Date(Date.UTC(monthEnd.getUTCFullYear(), monthEnd.getUTCMonth() + 1, 0));\n'),
             ('function seeded(index, salt = 0) {\n  const x = Math.sin((index + 1) * 12.9898 + salt * 78.233) * 43758.5453;\n  return x - Math.floor(x);\n}\n', 'function seeded(index, salt = 0) {\n  const x = Math.sin((index + 1) * 12.9898 + salt * 78.233) * 43758.5453;\n  return x - Math.floor(x);\n}\n\nfunction historicalDate(year, month, dayValue = 1) {\n  const candidate = new Date(Date.UTC(year, month, dayValue));\n  if (candidate <= reportingDate) return candidate;\n  return new Date(Date.UTC(year - 1, month, dayValue));\n}\n'),
+            ('  const exit = exits ? addMonths(new Date(Date.UTC(2023 + (index % 4), (index * 3) % 12, 15)), 0) : null;', '  const exitCandidate = exits ? addMonths(new Date(Date.UTC(2023 + (index % 4), (index * 3) % 12, 15)), 0) : null;\n  const exit = exitCandidate && exitCandidate <= reportingDate ? exitCandidate : null;'),
+            ('const performanceRows = activeEmployees.flatMap((employee, index) => [2025, 2026].map((year) => { const score = 65 + Math.round(seeded(index, year) * 32); return [new Date(Date.UTC(year, 11, 1)), employee.id, employee.name, score, Math.min(120, score * 1.2), score + 2, score * 0.25, (score + 2) * 0.75, score >= 90 ? "A" : score >= 75 ? "B" : "C", score >= 75 ? "Successful" : "Development", "Synthetic performance assessment"]; }));', 'const performancePeriods = [new Date(Date.UTC(2025, 11, 1)), new Date(Date.UTC(2026, monthEnd.getUTCMonth(), 1))];\nconst performanceRows = activeEmployees.flatMap((employee, index) => performancePeriods.map((period) => { const year = period.getUTCFullYear(); const score = 65 + Math.round(seeded(index, year) * 32); return [period, employee.id, employee.name, score, Math.min(120, score * 1.2), score + 2, score * 0.25, (score + 2) * 0.75, score >= 90 ? "A" : score >= 75 ? "B" : "C", score >= 75 ? "Successful" : "Development", "Synthetic performance assessment"]; }));'),
             ('const disciplineRows = employees.filter((_, index) => index % 8 === 0).map((employee, index) => [employee.id, ["C001", "C002", "C010", "C019"][index % 4], new Date(Date.UTC(2025 + (index % 2), index % 12, 5 + (index % 20))), "Synthetic policy record"]);', 'const disciplineRows = employees.filter((_, index) => index % 8 === 0).map((employee, index) => [employee.id, ["C001", "C002", "C010", "C019"][index % 4], historicalDate(2025 + (index % 2), index % 12, 5 + (index % 20)), "Synthetic policy record"]);')
           ]
           for old,new in changes:
-            if old not in s: raise SystemExit(f'missing expected source fragment: {old[:80]}')
+            if old not in s: raise SystemExit(f'missing expected source fragment: {old[:90]}')
             s=s.replace(old,new,1)
           generator.write_text(s,encoding='utf-8')
 
-          book=Path('analytics/dashboards/hr-analytics-full-set/production-pipeline/cezalar.xlsx')
-          wb=openpyxl.load_workbook(book)
-          ws=wb['sheet_1']
-          headers=[cell.value for cell in ws[1]]
-          date_col=headers.index('TARIH')+1
           limit=datetime(2026,8,31)
-          changed=[]
+          # Discipline: keep deterministic record cardinality but move would-be future events back one year.
+          book=root/'cezalar.xlsx'; wb=openpyxl.load_workbook(book); ws=wb['sheet_1']; headers=[c.value for c in ws[1]]; date_col=headers.index('TARIH')+1
+          repaired=[]
           for row in range(2,ws.max_row+1):
             value=ws.cell(row,date_col).value
             if isinstance(value,datetime) and value>limit:
-              replacement=value.replace(year=value.year-1)
-              ws.cell(row,date_col).value=replacement
-              changed.append((row,value.date().isoformat(),replacement.date().isoformat()))
-          if not changed: raise SystemExit('expected at least one future discipline date to repair')
-          wb.save(book)
-          print('discipline dates repaired:',changed)
+              replacement=value.replace(year=value.year-1); ws.cell(row,date_col).value=replacement; repaired.append((value.date(),replacement.date()))
+          if not repaired: raise SystemExit('expected future discipline dates')
+          wb.save(book); print('discipline repaired',repaired)
+
+          # Future synthetic exits are not completed leaver events. Remove them from leaver sources and blank exit fields elsewhere.
+          leavers=root/'Ayrilanlar_Listesi.xlsx'; wb=openpyxl.load_workbook(leavers); ws=wb['Sayfa1']; h=[c.value for c in ws[1]]; id_col=h.index('Sicil No')+1; exit_col=h.index('Çıkış Tarihi')+1
+          future_ids=set()
+          for row in range(ws.max_row,1,-1):
+            value=ws.cell(row,exit_col).value
+            if isinstance(value,datetime) and value>limit:
+              future_ids.add(str(ws.cell(row,id_col).value).split('.')[0]); ws.delete_rows(row,1)
+          if not future_ids: raise SystemExit('expected future synthetic leavers')
+          wb.save(leavers); print('future leavers removed',sorted(future_ids))
+
+          for filename,sheet,id_name,exit_name,delete_rows in [
+            ('cikis_sebepleri.xlsx','Sheet1','Sicil','Çıkış Tarihi',True),
+            ('eski_kaynak.xlsx','Sayfa1','sicil','cikis_tarihi',False),
+            ('ise_alma_suresi.xlsx','Sayfa1','Sicil No','Çıkış Tarihi',False),
+          ]:
+            path=root/filename; wb=openpyxl.load_workbook(path); ws=wb[sheet]; h=[c.value for c in ws[1]]; id_col=h.index(id_name)+1; exit_col=h.index(exit_name)+1
+            for row in range(ws.max_row,1,-1):
+              sid=str(ws.cell(row,id_col).value).split('.')[0]
+              if sid in future_ids:
+                if delete_rows: ws.delete_rows(row,1)
+                else: ws.cell(row,exit_col).value=None
+            wb.save(path)
+
+          # Completed 2026 performance assessments use the reporting month, not a future December event date.
+          perf=root/'performans_magaza_verileri.xlsx'; wb=openpyxl.load_workbook(perf); ws=wb['Sheet1']; h=[c.value for c in ws[1]]; period_col=h.index('donem')+1
+          perf_changed=0
+          for row in range(2,ws.max_row+1):
+            value=ws.cell(row,period_col).value
+            if isinstance(value,datetime) and value>limit:
+              ws.cell(row,period_col).value=datetime(2026,8,1); perf_changed+=1
+          if not perf_changed: raise SystemExit('expected future 2026 performance periods')
+          wb.save(perf); print('performance periods repaired',perf_changed)
           PY
-      - name: Rebuild canonical HR outputs and verify date contract
+      - name: Rebuild canonical HR outputs and verify historical-event contracts
         run: |
           set -euo pipefail
           mkdir -p artifacts/hr-date
@@ -68,24 +98,29 @@ jobs:
           from pathlib import Path
           from datetime import datetime
           import openpyxl,re
-          root=Path('analytics/dashboards/hr-analytics-full-set/production-pipeline')
-          wb=openpyxl.load_workbook(root/'cezalar.xlsx',data_only=True,read_only=True)
-          ws=wb['sheet_1']
-          headers=[c.value for c in next(ws.iter_rows(min_row=1,max_row=1))]
-          col=headers.index('TARIH')
-          limit=datetime(2026,8,31)
-          bad=[row[col] for row in ws.iter_rows(min_row=2,values_only=True) if row[col] and row[col]>limit]
-          if bad: raise SystemExit(f'future discipline dates remain: {bad}')
+          root=Path('analytics/dashboards/hr-analytics-full-set/production-pipeline'); limit=datetime(2026,8,31)
+          checks=[
+            ('cezalar.xlsx','sheet_1','TARIH'),
+            ('Ayrilanlar_Listesi.xlsx','Sayfa1','Çıkış Tarihi'),
+            ('cikis_sebepleri.xlsx','Sheet1','Çıkış Tarihi'),
+            ('performans_magaza_verileri.xlsx','Sheet1','donem'),
+            ('ise_alma_suresi.xlsx','Sayfa1','İşe Giriş Tarihi'),
+          ]
+          for filename,sheet,column in checks:
+            wb=openpyxl.load_workbook(root/filename,data_only=True,read_only=True); ws=wb[sheet]; rows=ws.iter_rows(values_only=True); headers=list(next(rows)); idx=headers.index(column); bad=[]
+            for row in rows:
+              value=row[idx]
+              if isinstance(value,datetime) and value>limit: bad.append(value.isoformat())
+            if bad: raise SystemExit(f'{filename}:{column} has future historical dates: {bad[:5]}')
           for page in Path('frontend/analytics/dashboards/hr-analytics-full-set').glob('*/index.html'):
             text=page.read_text(encoding='utf-8')
-            if re.search(r'(?:ceza|disciplin)[^<]{0,160}-\d+\s*(?:day|gün)',text,re.I):
-              raise SystemExit(f'negative discipline age found in {page}')
-          print('historical discipline date + negative-age contracts: OK')
+            if re.search(r'(?:ceza|disciplin)[^<]{0,180}-\d+\s*(?:day|gün)',text,re.I): raise SystemExit(f'negative discipline age found in {page}')
+          print('historical event date contracts + negative discipline age: OK')
           PY
           git diff --binary > artifacts/hr-date/generated.patch
           git status --short > artifacts/hr-date/status.txt
           cp analytics/dashboards/hr-analytics-full-set/tools/generate_synthetic_source_workbooks.mjs artifacts/hr-date/generate_synthetic_source_workbooks.mjs
-          cp analytics/dashboards/hr-analytics-full-set/production-pipeline/cezalar.xlsx artifacts/hr-date/cezalar.xlsx
+          for f in cezalar.xlsx Ayrilanlar_Listesi.xlsx cikis_sebepleri.xlsx eski_kaynak.xlsx ise_alma_suresi.xlsx performans_magaza_verileri.xlsx; do cp "analytics/dashboards/hr-analytics-full-set/production-pipeline/$f" artifacts/hr-date/; done
           cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx artifacts/hr-date/icmal_sorgu_sonuc.xlsx
           cp frontend/analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx artifacts/hr-date/hr-analytics-full-set-synthetic-output.xlsx
           find frontend/analytics/dashboards/hr-analytics-full-set -name '*.html' -print0 | tar --null -T - -czf artifacts/hr-date/public-html.tar.gz
