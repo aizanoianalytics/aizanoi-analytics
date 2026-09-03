@@ -14,9 +14,8 @@ const calculator = read('frontend/js/v3/apps/calculator/src/app.js');
 const winamp = read('frontend/js/v3/apps/winamp/src/app.js');
 const dialog = read('frontend/js/v3/workspace/dialog.js');
 const workspaceFs = read('frontend/js/v3/workspace/fs.js');
-const polish = read('frontend/styles/polish.css');
-const utilityPolish = read('frontend/styles/utility-polish.css');
-const toolWindows = read('frontend/styles/tool-windows.css');
+const shellCss = read('frontend/styles/shell.css');
+const appsCss = read('frontend/styles/apps.css');
 const nginxStaticHeaders = read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const root = read('frontend/index.html');
 const serviceWorker = read('frontend/service-worker.js');
@@ -40,11 +39,16 @@ test('Analytics has one canonical catalog consumed by both public surfaces', () 
   assert.doesNotMatch(analyticsLanding, /Workforce Turnover Analytics/);
 });
 
-test('desktop app polish never overrides canonical window geometry with CSS importance', () => {
-  assert.doesNotMatch(polish, /data-app-id="calculator"[^}]*!important/s);
-  assert.doesNotMatch(polish, /data-app-id="winamp"[^}]*!important/s);
-  assert.doesNotMatch(polish, /data-app-id="recycle-bin"[^}]*!important/s);
-  assert.doesNotMatch(toolWindows, /(?:left|top|width|height|transform):[^;{}]*!important/);
+test('canonical shell layer never overrides window geometry with CSS importance', () => {
+  // Per-app shell finalization lives in @layer shell (formerly polish.css/tool-windows.css).
+  // Compact frameless windows are part of canonical shell ownership and are allowed to use
+  // !important; what we forbid is shell-level geometry being clobbered by a separate patch layer.
+  for (const stylesheet of ['polish.css', 'tool-windows.css', 'utility-polish.css']) {
+    assert.ok(!existsSync(`frontend/styles/${stylesheet}`), `legacy patch stylesheet ${stylesheet} must be retired`);
+  }
+  // The shell layer may declare !important for canonical responsive + frameless windows.
+  // The apps layer must not introduce window geometry !important rules.
+  assert.doesNotMatch(appsCss, /data-app-id="[^"]+"[^}]*(?:left|top|width|height|transform):[^;{}]*!important/s);
 });
 
 test('utility windows get compact first-run geometry while preserving user-sized windows', () => {
@@ -59,9 +63,10 @@ test('utility windows get compact first-run geometry while preserving user-sized
   assert.match(main, /api\.store\.saveWindowRect\?\.\(appId,rect\)/);
 });
 
-test('Workspace empty-state polish is static CSS and does not inject a CSP-blocked style element', () => {
-  assert.match(utilityPolish, /\.az-workspace-grid > \.az-empty-state \{ grid-column:1\/-1;min-height:280px/);
-  assert.match(utilityPolish, /\.az-workspace-grid > \.az-empty-state > div \{ max-width:380px/);
+test('canonical apps layer keeps Workspace empty-state static CSS without injecting a style element', () => {
+  // App-interior polish (formerly utility-polish.css) lives in @layer apps.
+  assert.match(appsCss, /\.az-workspace-grid > \.az-empty-state \{ grid-column:1\/-1;min-height:280px/);
+  assert.match(appsCss, /\.az-workspace-grid > \.az-empty-state > div \{ max-width:380px/);
   assert.doesNotMatch(main, /document\.createElement\(['"]style['"]\)/);
   assert.doesNotMatch(main, /installWorkspaceEmptyStatePolish/);
 });
@@ -108,13 +113,21 @@ test('application confirmations use the canonical focus-safe dialog and never pr
   assert.doesNotMatch(dialog, /az-w98-overlay|az-w98-dialog|az-w98-titlebar/);
 });
 
-test('polish stylesheets are loaded or owned by the shell and precached', () => {
-  for (const stylesheet of ['polish.css', 'utility-polish.css']) {
-    assert.ok(existsSync(`frontend/styles/${stylesheet}`));
-    assert.match(root, new RegExp(`/styles/${stylesheet.replace('.', '\\.')}`));
-    assert.match(serviceWorker, new RegExp(`/styles/${stylesheet.replace('.', '\\.')}`));
+test('canonical stylesheets are loaded by the shell and precached', () => {
+  // Root shell loads the canonical boot stylesheet chain.
+  for (const stylesheet of ['tokens.css', 'base.css', 'shell.css', 'components.css', 'device-shell.css']) {
+    assert.match(root, new RegExp(`/styles/${stylesheet.replace('.', '\\.')}`), `root must load ${stylesheet}`);
+    assert.match(serviceWorker, new RegExp(`/styles/${stylesheet.replace('.', '\\.')}`), `service worker must precache ${stylesheet}`);
   }
-  assert.ok(existsSync('frontend/styles/tool-windows.css'));
-  assert.match(brandPlatform, /\/styles\/tool-windows\.css/);
-  assert.match(serviceWorker, /\/styles\/tool-windows\.css/);
+  // apps.css is the lazy app-interior layer; the shell dynamically attaches it
+  // when an app opens. It must NOT be in the root boot chain (avoids first-paint waste)
+  // and must NOT be precached (lazy network-first keeps it fresh).
+  assert.doesNotMatch(root, /\/styles\/apps\.css/);
+  assert.doesNotMatch(serviceWorker, /'\/styles\/apps\.css'/);
+  // brand-platform dynamic style wire points at the canonical shell, not a patch layer.
+  assert.doesNotMatch(root, /\/styles\/polish\.css/);
+  assert.doesNotMatch(root, /\/styles\/utility-polish\.css/);
+  assert.doesNotMatch(root, /\/styles\/tool-windows\.css/);
+  assert.match(brandPlatform, /\/styles\/shell\.css/);
+  assert.doesNotMatch(brandPlatform, /\/styles\/tool-windows\.css/);
 });

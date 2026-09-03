@@ -34,7 +34,7 @@ test('desktop exposes Workspace and Workspace opens at the local root with Photo
 });
 
 test('frameless utility windows draw a deterministic close glyph', () => {
-  const css = read('frontend/styles/tool-windows.css');
+  const css = read('frontend/styles/shell.css');
   assert.match(css, /\.az-window-control\[data-action="close"\]::before/);
   assert.match(css, /rotate\(45deg\)/);
   assert.match(css, /rotate\(-45deg\)/);
