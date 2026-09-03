@@ -33,7 +33,16 @@ if [[ -n "$(git -C "${REPO}" status --porcelain)" ]]; then
 fi
 
 CURRENT_SHA="$(git -C "${REPO}" rev-parse HEAD)"
-if [[ -n "${AIZANOI_DEPLOY_SHA:-}" && "${CURRENT_SHA}" != "${AIZANOI_DEPLOY_SHA}" ]]; then
+# Exact-SHA gate is mandatory per HERMES_OPERATIONS.md: env variable missing OR
+# mismatched both fail-closed. Skip-gate behaviour is not allowed for production
+# invocations. Example:
+#   AIZANOI_DEPLOY_SHA="$TARGET_SHA" bash scripts/deploy-public.sh
+if [[ -z "${AIZANOI_DEPLOY_SHA:-}" ]]; then
+  echo "FATAL: AIZANOI_DEPLOY_SHA env variable is required for production deployment (HERMES_OPERATIONS.md)." >&2
+  echo "  usage: AIZANOI_DEPLOY_SHA=\"<approved-sha>\" bash scripts/deploy-public.sh" >&2
+  exit 2
+fi
+if [[ "${CURRENT_SHA}" != "${AIZANOI_DEPLOY_SHA}" ]]; then
   echo "FATAL: checked-out SHA ${CURRENT_SHA} does not match approved AIZANOI_DEPLOY_SHA ${AIZANOI_DEPLOY_SHA}" >&2
   exit 2
 fi

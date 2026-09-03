@@ -12,10 +12,11 @@ Describe the problem clearly.
 
 ## Where?
 
-Route / application / historical world:
+Route / application / module:
 
 ```text
-Example: /historic-world/ or Field Archive
+Example: /analytics/dashboards/hr-analytics-full-set/performance-hiring-turnover/
+or ?app=workspace, ?app=camera, etc.
 ```
 
 ## Steps to reproduce
@@ -36,9 +37,9 @@ What happened instead?
 
 - Device:
 - OS:
-- Browser + version:
+- Browser + version (Chromium / Firefox / WebKit):
 - Viewport / orientation if relevant:
-- Touch or mouse/keyboard:
+- Touch or mouse / keyboard:
 
 ## Console / error details
 
@@ -58,7 +59,7 @@ Attach visuals if they help reproduce a UI, layout, movement or historical-world
 - [ ] I do not know
 - [ ] This appears to have always been broken
 
-If known, mention the last working version/commit/date.
+If known, mention the last working version / commit / date.
 
 ## Security note
 

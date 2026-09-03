@@ -57,7 +57,16 @@ Do not treat a merge as a deployment.
 2. Record the currently deployed SHA for rollback. If the deployed SHA cannot be proven, capture a rollback snapshot before replacing the webroot.
 3. In the canonical server checkout, require a clean working tree before changing refs. If `git status --porcelain` is non-empty, stop and preserve/report the local diff; never use reset/checkout to erase unknown server-only changes. Once clean, fetch the approved commit and check out/reset to that **exact SHA**. Do not deploy an unpinned moving `main` tip merely because it is newer.
 4. Run `node scripts/modules/build-module-registry.mjs --check` for every AizanoiOS/static-shell release so manifests and committed generated wiring cannot drift. Then run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed. If HR Analytics source, synthetic inputs or generated dashboard artifacts changed, run `bash scripts/regenerate-hr-dashboards.sh` first. Do not regenerate News or HR artifacts unnecessarily when the approved diff does not touch those inputs/outputs.
-5. Deploy the public static tree with `bash scripts/deploy-public.sh`. This is the canonical allowlist boundary; do not replace it with a repo-root copy or ad-hoc rsync.
+5. Deploy the public static tree with the exact-SHA invocation:
+
+   ```bash
+   AIZANOI_DEPLOY_SHA="$TARGET_SHA" bash scripts/deploy-public.sh
+   ```
+
+   The script is fail-closed: a missing or mismatched `AIZANOI_DEPLOY_SHA`
+   aborts with exit code 2 before any staging work. This is the canonical
+   allowlist boundary; do not replace it with a repo-root copy or ad-hoc
+   rsync, and do not bypass the gate with an empty/unset env var.
 6. Confirm source-to-production checksum/SHA parity where the deployment tooling supports it.
 7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, `/analytics/`, `/analytics/dashboards/hr-analytics-full-set/` (catalog index) plus each of its 10 dashboard routes, `/news/about/`, one current permanent News article, `/news/sitemap.xml`, all three Historical Worlds and representative static assets. `/analytics/`, app id `analytics` and visible label **Analytics** remain aligned.
    - When an AizanoiOS utility changed, also smoke-check the affected app route(s), including `/?app=browser`, `/?app=camera`, `/?app=calculator`, `/?app=notepad`, `/?app=workspace`, `/?app=recycle-bin`, `/?app=winamp` and `/?app=games` as applicable. For Browser changes, verify direct HTTPS navigation, the sandbox boundary and the **Open external** fallback; destination sites may independently refuse iframe embedding. For Camera changes, verify the start/permission flow and effective production `Permissions-Policy`; do not claim real camera/microphone capture unless it was actually observed on a capable client.
