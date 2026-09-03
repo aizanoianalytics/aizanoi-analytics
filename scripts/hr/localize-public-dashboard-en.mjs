@@ -113,6 +113,37 @@ const runtime = `(() => {
     m=value.match(/^Bir Önceki Yıl Aynı Ay \\((.+)\\)$/u); if(m){const d=monthYear(m[1]);if(d)return 'Same Month Previous Year ('+d+')';}
     m=value.match(/^Turnover:\\s*(.+)$/u); if(m){const d=monthYear(m[1]);if(d)return 'Turnover: '+d;}
     m=value.match(/^İşe Alım:\\s*(.+)$/u); if(m){const d=monthYear(m[1]);if(d)return 'Hiring: '+d;}
+    m=value.match(/^Üretim:\s*(.+)$/u); if(m) return 'Generated: '+m[1];
+    m=value.match(/^(\d+)\s+değerlendirildi$/u); if(m) return m[1]+' evaluated';
+    m=value.match(/^(\d+)\s+ağırlıklı KPI$/u); if(m) return m[1]+' weighted KPIs';
+    m=value.match(/^(\d+)\s+maksimum · (\d+)\s+hedef$/u); if(m) return m[1]+' maximum · '+m[2]+' target';
+    m=value.match(/^100 puan dönem hedefi:\s*(.+)$/u); if(m) return '100-point period target: '+m[1];
+    m=value.match(/^Hedef ve Üzeri:\s*(.+)$/u); if(m) return 'At or Above Target: '+m[1];
+    m=value.match(/^Eşik-Hedef Arası:\s*(.+)$/u); if(m) return 'Between Threshold and Target: '+m[1];
+    m=value.match(/^Eşik Altı:\s*(.+)$/u); if(m) return 'Below Threshold: '+m[1];
+    m=value.match(/^Daha fazla göster \((\d+)\)$/u); if(m) return 'Show more ('+m[1]+')';
+    m=value.match(/^Geçen aya göre:\s*(.+)$/u); if(m) return 'vs previous month: '+m[1];
+    m=value.match(/^(\d+)\s+yıl\s+(\d+)\s+ay$/u); if(m) return m[1]+' years '+m[2]+' months';
+    m=value.match(/^(.+?)\s+(\d+(?:[.,]\d+)?)\s+(\d+)\s+yıl\s+(\d+)\s+ay$/u); if(m) return m[1]+' '+number(m[2])+' '+m[3]+' years '+m[4]+' months';
+    m=value.match(/^(\d+)\s+satır · (\d+)\s+çalışan$/u); if(m) return m[1]+' rows · '+m[2]+' employees';
+    m=value.match(/^(\d+)\s+fiili listede · (\d+)\s+fiili dışı$/u); if(m) return m[1]+' in active roster · '+m[2]+' outside roster';
+    m=value.match(/^(\d+)\s+çıkış \/ (\d+(?:[.,]\d+)?)\s+ort\.$/u); if(m) return m[1]+' exits / '+number(m[2])+' avg.';
+    m=value.match(/^(\d+)\s+eksik \/ (\d+)\s+fiili$/u); if(m) return m[1]+' missing / '+m[2]+' active';
+    m=value.match(/^(\d+)\s+tamamladı \/ (\d+)\s+fiili$/u); if(m) return m[1]+' completed / '+m[2]+' active';
+    m=value.match(/^(\d+)\/(\d+)\s+metrik$/u); if(m) return m[1]+'/'+m[2]+' metrics';
+    m=value.match(/^Gereken süre:\s*(.+?)\s+saat$/u); if(m) return 'Required duration: '+number(m[1])+' hours';
+    m=value.match(/^(Ocak|Şubat|Mart|Nisan|Mayıs|Haziran|Temmuz|Ağustos|Eylül|Ekim|Kasım|Aralık)\s+(\d{4}):\s*(.+?)\s+saat \/ (.+?)\s+saat$/u); if(m) return MONTHS[m[1]]+' '+m[2]+': '+m[3]+' hours / '+m[4]+' hours';
+    m=value.match(/^(Ocak|Şubat|Mart|Nisan|Mayıs|Haziran|Temmuz|Ağustos|Eylül|Ekim|Kasım|Aralık)\s+(\d{4})\s*[–-]\s*(Ocak|Şubat|Mart|Nisan|Mayıs|Haziran|Temmuz|Ağustos|Eylül|Ekim|Kasım|Aralık)\s+(\d{4})$/u); if(m) return MONTHS[m[1]]+' '+m[2]+' – '+MONTHS[m[3]]+' '+m[4];
+    m=value.match(/^(\d{8}) · (Merkez|Mağaza) · (.+)$/u); if(m) return m[1]+' · '+(m[2]==='Merkez'?'Head Office':'Store')+' · '+m[3];
+    m=value.match(/^(.+?) · İSG ([-\d.]+) · Zorunlu Eğitim ([-\d.]+)$/u); if(m) return m[1]+' · OHS '+m[2]+' · Mandatory Training '+m[3];
+    m=value.match(/^Oluşturulma:\s*(.+)$/u); if(m) return 'Created: '+m[1];
+    m=value.match(/^Son dönem\s+(.+)$/u); if(m) return 'Latest period '+m[1];
+    const middleDot=value.split(' · ');
+    if(middleDot.length>1){
+      let changed=false;
+      const translated=middleDot.map(part=>{const next=EXACT[part]||pattern(part);if(next&&next!==part){changed=true;return next;}return part;});
+      if(changed) return translated.join(' · ');
+    }
     return null;
   }
   function translate(value){
