@@ -1584,7 +1584,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       if (!payload) throw new Error("Empty payload.");
       const headers = Array.from(payload.headers || []).map(v => text(v));
       const rawRows = Array.from(payload.rows || []);
-      
+
       // Determine if Column 0 is check_area
       let offset = 0;
       if (headers.length > 0 && fold(headers[0]).includes("check")) {
@@ -1596,7 +1596,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         if (!row || !row.some(c => text(c) !== "")) return;
         const activeVals = row.slice(offset, offset + FIELD_KEYS.length);
         while (activeVals.length < FIELD_KEYS.length) activeVals.push("");
-        
+
         const record = {
           source_row: idx + 2,
           raw: activeVals
@@ -1687,7 +1687,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const hired = records.filter(r => hasHiredEmployee(r.hired_employee)).length;
       const offers = records.filter(r => text(r.offer_date) !== "").length;
       const acceptRate = offers > 0 ? (hired / offers * 100) : 0;
-      
+
       const leadTimes = records.map(r => r.lead_time_days).filter(d => d != null);
       const avgDays = average(leadTimes);
       const avgWeeks = avgDays != null ? (avgDays / 7) : null;
@@ -1756,7 +1756,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const items = Object.entries(statusMap)
         .map(([label, val]) => ({ label, val }))
         .sort((a, b) => b.val - a.val);
-      
+
       const total = items.reduce((acc, x) => acc + x.val, 0) || 1;
       let angle = 0;
       const gradientParts = items.map((item, idx) => {
@@ -2264,7 +2264,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       try {
         const buffer = await file.arrayBuffer();
         const workbook = XLSX.read(buffer, { type: "array", cellDates: true, cellFormula: false });
-        
+
         let targetSheet = SHEET_NAME;
         if (!workbook.SheetNames.includes(targetSheet)) {
           targetSheet = workbook.SheetNames[0]; // fallback to first sheet
