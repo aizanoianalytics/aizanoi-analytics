@@ -1,0 +1,122 @@
+name: Temporary HR English Residual Pass
+
+on:
+  push:
+    branches:
+      - feat/hr-dashboard-english-only-v3
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - name: Curate remaining public English display vocabulary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          overrides_path = Path('scripts/hr/hr-public-en-overrides.json')
+          data = json.loads(overrides_path.read_text())
+          values = data.setdefault('values', {})
+          exact = data.setdefault('exact', {})
+
+          values.update({
+            'ANA':'HOME','Ceza / Disiplin':'Discipline / Sanctions','AĞIRLIKLI GERÇEKLEŞME':'WEIGHTED ACHIEVEMENT',
+            'CEO Hedefleri':'CEO Goals','Hedef ve üzeri':'At or Above Target','Eşik-hedef arası':'Between Threshold and Target','Eşik altı':'Below Threshold',
+            'GÖSTERGE ADI':'KPI NAME','YÖN':'DIRECTION','AĞIRLIK':'WEIGHT','EŞIK':'THRESHOLD','DEĞER':'VALUE','MAKSIMUM':'MAXIMUM',
+            'KÜMÜLE HEDEF':'CUMULATIVE TARGET','GERÇEKLEŞEN DEĞER':'ACTUAL VALUE','TAHMINI YIL SONU HEDEF':'FORECAST YEAR-END TARGET','DURUM':'STATUS',
+            'Topla ve orantıla':'Sum and prorate','— puan':'— points','Mart 2026 görünümü':'March 2026 view','Q1 çeyrek verisi':'Q1 quarter data','Ocak-Mart':'January–March',
+            'DONEM':'PERIOD','UST_BOLUM':'TOP_LEVEL_DIVISION','DEPARTMAN_ADI':'DEPARTMENT_NAME','ISLETME_ADI':'BUSINESS_UNIT','IL':'PROVINCE','GOREV':'ROLE',
+            'KADRO_ADI':'STAFF_TYPE','YONETIM_SEVIYE':'MANAGEMENT_LEVEL','ORTALAMA_HEADCOUNT':'AVERAGE_HEADCOUNT','FAZLA_MESAI_SAAT':'OVERTIME_HOURS',
+            'FAZLA_MESAI_KISI_BASI':'OVERTIME_PER_PERSON','IZIN_YUKU_ORANI':'LEAVE_BURDEN_RATE','EKSIK_SGK_GUN':'MISSING_SSI_DAYS',
+            'OPERASYONEL_YUK_SKORU':'OPERATIONAL_LOAD_SCORE','RISK_SEVIYESI':'RISK_LEVEL','VERI_KAPSAM_AGIRLIGI':'DATA_COVERAGE_WEIGHT',
+            'TOPLAM_CIKIS':'TOTAL_EXITS','REGRETTABLE_CIKIS':'REGRETTABLE_EXITS','HIGH_PERF_HEADCOUNT':'HIGH_PERFORMER_HEADCOUNT',
+            'PERFORMANS_VERISI_OLAN':'WITH_PERFORMANCE_DATA','KONTROL':'CHECK','ADET':'COUNT','ORAN':'RATE','AKSIYON':'ACTION',
+            'SICIL_NO':'EMPLOYEE_ID','ADI_SOYADI':'FULL_NAME','AD_SOYAD':'FULL_NAME','BIRIM':'UNIT','SEGMENT':'SEGMENT','RISK_PUANI':'RISK_SCORE',
+            'PERFORMANS_BILESIK':'PERFORMANCE_COMPOSITE','KARNE_TOPLAM':'SCORECARD_TOTAL','TIP':'TYPE','ÖNCELIK':'PRIORITY',
+            'TOPLAM GIRIŞ':'TOTAL ENTRIES','KÜMÜLE TURNOVER':'CUMULATIVE TURNOVER','Çıkış / ort. çalışan':'Exits / avg. employees',
+            'SON AY ÇALIŞAN':'LATEST MONTH EMPLOYEES','GIRIŞ / ÇIKIŞ':'ENTRIES / EXITS','Kümüle Giriş':'Cumulative Entries','Kümüle Çıkış':'Cumulative Exits',
+            'Net Hareket':'Net Movement','Ort. Çalışan':'Avg. Employees','Son Ay Çalışan':'Latest Month Employees','Çalışan Sayısı (Yıllara Göre + 12 Ay Detay)':'Employee Count (Yearly + 12-Month Detail)',
+            '2026 Aylık Detay':'2026 Monthly Detail','Yaş Ort.':'Avg. Age','Kıdem Ort.':'Avg. Tenure','Mağaza Kırılım':'Store Breakdown','Seçili Ay':'Selected Month',
+            'Ücret Hakedişi Ort.':'Avg. Salary Accrual','Prim Ort.':'Avg. Bonus','Diğer Ort.':'Avg. Other','Net Ortalama':'Net Average','Ücret %':'Salary %','Prim %':'Bonus %','Diğer %':'Other %',
+            'İşgücü Kaybı':'Workforce Loss','Önceki Ay':'Previous Month','Önceki Yıl':'Previous Year','Toplam İzin':'Total Leave','Toplam Brüt TL':'Total Gross TRY',
+            'İSG & Checklist':'OHS & Checklist','ORTALAMA PUAN':'AVERAGE SCORE','KRITIK AKSIYON':'CRITICAL ACTION','seçici aksiyon merkezi':'selective action center',
+            'DÜŞÜK ÖRNEKLEM':'LOW SAMPLE','70 altı':'below 70','Seviye':'Level','Bileşen':'Component','Odak':'Focus','Satış Akademisi Kanıt':'Sales Academy Evidence',
+            'Enocta Kanıt':'Enocta Evidence','Zorunlu Kanıt':'Mandatory Evidence','Checklist Kanıt':'Checklist Evidence','Neden':'Reason','Toplam Puan':'Total Score',
+            'Sorumlu':'Owner','12 Ay Turnover':'12-Month Turnover','Ad Soyad':'Full Name','Ana Title':'Primary Title','Satış Akademisi Durumu':'Sales Academy Status',
+            'Son Satış Akademisi':'Latest Sales Academy','İSG Durumu':'OHS Status','İNSAN · SÜREÇ · SONUÇ':'PEOPLE · PROCESS · OUTCOMES',
+            '30 GÜN ÜSTÜ':'OVER 30 DAYS','45 GÜN ÜSTÜ':'OVER 45 DAYS','Doldurma Grubu':'Fill Group','Ort. Gün':'Avg. Days','30 Gün Üstü':'Over 30 Days',
+            '30 Gün Üstü Oran':'Over 30 Days Rate','45 Gün Üstü':'Over 45 Days','45 Gün Üstü Oran':'Over 45 Days Rate','Filtre':'Filter','Mağaza/Birim':'Store/Unit',
+            'Unvan Grubu':'Title Group','Pozisyon Açılış':'Position Opened','Teklif':'Offer','Doldurma Süresi':'Time to Fill','Açık Gün':'Open Days',
+            'İK OPERASYON KONTROLÜ':'HR OPERATIONS CONTROL','MAĞAZA ARA':'SEARCH STORE','FIILI ÇALIŞAN':'ACTUAL EMPLOYEES','tekil aktif sicil':'unique active employee IDs',
+            'MAĞAZA SKORU ORT.':'AVG. STORE SCORE','AKADEMI AÇIĞI':'ACADEMY GAP','katılmayan tekil çalışan':'unique non-attending employees','CHECKLIST AÇIĞI':'CHECKLIST GAP',
+            'Son Turnover':'Latest Turnover','Akademi Katılım':'Academy Participation','İSG Oranı':'OHS Rate','Fiili Çalışan':'Actual Employees','0/10/20% eşikleri':'0/10/20% thresholds','Hesaplanamadı':'Not Calculable',
+            'ÜRETIM ZAMANI':'GENERATED AT','NORM MAĞAZA':'PLANNED STORES','norm kaynağındaki mağaza':'store in staffing-plan source','EKSIK POZISYON':'OPEN POSITIONS',
+            'pozisyon kırılımı':'position breakdown','FAZLA POZISYON':'SURPLUS POSITIONS','seçili + önceki ay':'selected + previous month','.gs. kapsamı':'.gs. scope','mağaza grubu':'store group',
+            'Norm / Fiili Kadro Takibi':'Planned / Actual Staffing Tracking','PDKS · ÇALIŞMA ZAMANI KONTROLÜ':'PDKS · WORKING TIME CONTROL','KAYNAK / ÜRETIM':'SOURCE / GENERATED',
+            'SICIL VEYA AD SOYAD ARA':'SEARCH EMPLOYEE ID OR NAME','GELDIĞI GÜN':'DAYS PRESENT','TOPLAM EVDEN GÜN':'TOTAL REMOTE DAYS','ÇALIŞTIĞI SAAT':'HOURS WORKED',
+            'GEREKEN SAAT':'REQUIRED HOURS','SAAT FARKI':'HOUR DIFFERENCE','Geldiği Gün':'Days Present','Evden Gün':'Remote Days','Harici Evden Gün':'External Remote Days',
+            'Toplam Evden Gün':'Total Remote Days','Çalıştığı Saat':'Hours Worked','Çalışılması Gereken Saat':'Required Hours','Fark':'Difference','Filtrelenmiş Toplam':'Filtered Total',
+            'AIZANOI İK ANALITIK SISTEMI':'AIZANOI HR ANALYTICS SYSTEM','SON AY TURNOVER':'LATEST MONTH TURNOVER','ÖNCEKI AYA GÖRE':'VS PREVIOUS MONTH',
+            'SON AY ÇIKIŞ':'LATEST MONTH EXITS','SON 12 AY TURNOVER':'LAST 12 MONTHS TURNOVER','12 aylık kümüle oran':'12-month cumulative rate','GÖNÜLLÜ PAY':'VOLUNTARY SHARE',
+            'ZORUNLU PAY':'INVOLUNTARY SHARE','Çıkış / aylık ortalama çalışan':'Exits / monthly avg. employees','çıkış':'exit'
+          })
+
+          exact.update({
+            '2026 Ocak - Ağustos 2026 arası · Aurelia Group':'January–August 2026 · Aurelia Group',
+            'Karşılaştırmalar: Temmuz 2026 ve Ağustos 2025':'Comparisons: July 2026 and August 2025',
+            'İNSAN · SÜREÇ · SONUÇ':'PEOPLE · PROCESS · OUTCOMES',
+            'Sicil / ad soyad ara (Enter veya Filtrele)':'Search employee ID / full name (Enter or Filter)',
+            'TC, sicil, ad soyad, görev ara':'Search national ID, employee ID, full name, or role',
+            'All Departments · All Years · ay grupları soldan sağa en güncel dönemden geçmişe sıralıdır.':'All Departments · All Years · month groups are ordered from the latest period to the oldest, left to right.',
+            'Hesaplama notu: Geldiği gün, ilgili kişi-ay için PDKS listesindeki sicil geçişi satırlarının sayısıdır. Toplam evden gün = Evden gün + Harici evden gün. Turnike ve harici sistem kayıtları evden gün hesabına dahil edilmez. Çalıştığı saat, kaynakta bulunan gun_saat alanından; alan boşsa calisma_saat_toplam saat bilgisinden alınır. Çalışılması gereken saat, yalnızca PDKS kaydı bulunan günler için hesaplanır. Hafta sonu 0 saat; resmi tatil, yarım gün ve erken çıkış istisnaları görünür takvim kurallarıyla uygulanır. Fark = Çalıştığı saat - Çalışılması gereken saat. Pozitif değer fazla, negatif değer eksik süreyi gösterir.':'Calculation note: Days present is the number of employee access rows in the PDKS list for the employee-month. Total remote days = Remote days + External remote days. Turnstile and external-system records are excluded from the remote-day count. Hours worked comes from the gun_saat source field, or calisma_saat_toplam when that field is blank. Required hours are calculated only for days with a PDKS record. Weekends are 0 hours; public holidays, half days, and early-exit exceptions follow the visible calendar rules. Difference = Hours worked - Required hours. Positive values indicate surplus time and negative values indicate missing time.',
+            'Çalışma saati standardı: 9.8 saat / 08:00-17:45 standart iş günü':'Working-time standard: 9.8 hours / standard workday 08:00–17:45',
+            'Turnover = Çıkış / ((Dönem Başı + Dönem Sonu) / 2). Gönüllü ve zorunlu görünüm yalnızca çıkış payını değiştirir. Dönem başı, dönem sonu ve ortalama çalışan aynen korunur.':'Turnover = Exits / ((Period Start + Period End) / 2). Voluntary and involuntary views change only the exit numerator; period-start, period-end, and average employee counts remain unchanged.',
+            'Çıkış nedenleri, norm/fiili yük ve yönetici değişimi birlikte incelenmeli.':'Exit reasons, planned/actual staffing load, and manager changes should be reviewed together.'
+          })
+
+          overrides_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
+
+          localizer = Path('scripts/hr/localize-public-dashboard-en.mjs')
+          text = localizer.read_text()
+          marker = "    const middleDot=value.split(' · ');"
+          block = r"""    m=value.match(/^(\\d+)\\s+değerlendirilen KPI$/u); if(m) return m[1]+' evaluated KPIs';
+    m=value.match(/^(\\d+)\\s+çeyrek$/u); if(m) return m[1]+' quarter';
+    m=value.match(/^(\\d+)\\s+evden \\+ (\\d+)\\s+harici$/u); if(m) return m[1]+' remote + '+m[2]+' external';
+    m=value.match(/^(\\d+)\\s*\\/\\s*(\\d+)\\s+kayıt gösteriliyor\\.$/u); if(m) return m[1]+' / '+m[2]+' records shown.';
+    m=value.match(/^Toplam:\\s*(.+)$/u); if(m) return 'Total: '+m[1];
+    m=value.match(/^Son 12 ay turnover\\s*(.+)$/u); if(m) return 'Last 12 months turnover '+m[1];
+    m=value.match(/^Eksik:\\s*(.+)$/u); if(m) return 'Missing: '+(EXACT[m[1]]||m[1]);
+    m=value.match(/^Toplam puan\\s*(.+)$/u); if(m) return 'Total score '+m[1];
+    m=value.match(/^Çok zayıf odak bileşen:\\s*(.+)$/u); if(m) return 'Very weak focus component: '+m[1];
+    m=value.match(/^Turnover üst %10:\\s*(.+)$/u); if(m) return 'Turnover top 10%: '+m[1];
+    m=value.match(/^(\\d+)\\s+bileşen\\s+(\\d+)\\s+altı$/u); if(m) return m[1]+' components below '+m[2];
+    m=value.match(/^%([\\d.]+)\\s+neden eşleşmesi$/u); if(m) return '%'+m[1]+' reason match';
+    m=value.match(/^Örn\\.\\s*(.+)$/u); if(m) return 'e.g. '+m[1];
+    m=value.match(/^(Mağaza|Merkez)\\s+(\\d{4})$/u); if(m) return (m[1]==='Mağaza'?'Store':'Head Office')+' '+m[2];
+    m=value.match(/^(Ocak|Şubat|Mart|Nisan|Mayıs|Haziran|Temmuz|Ağustos|Eylül|Ekim|Kasım|Aralık)\\s+(\\d{4})\\s+· Seçili metrik:\\s*(.+)$/u); if(m) return MONTHS[m[1]]+' '+m[2]+' · Selected metric: '+(EXACT[m[3]]||m[3]);
+    m=value.match(/^Fiili liste:\\s*(.+?) · (\\d+) eşleşen \\/ (\\d+) eşleşmeyen sicil$/u); if(m) return 'Actual roster: '+m[1]+' · '+m[2]+' matched / '+m[3]+' unmatched employee IDs';
+"""
+          if block.strip() not in text:
+              text = text.replace(marker, block + marker, 1)
+          localizer.write_text(text)
+
+          Path('.github/workflows/_temporary-hr-english-residual-pass.yml').unlink()
+          PY
+          node scripts/hr/localize-public-dashboard-en.mjs --help >/dev/null 2>&1 || true
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add scripts/hr/hr-public-en-overrides.json scripts/hr/localize-public-dashboard-en.mjs .github/workflows/_temporary-hr-english-residual-pass.yml
+          git diff --cached --check
+          git commit -m "fix(hr): close English public display gaps"
+          git push origin HEAD:feat/hr-dashboard-english-only-v3
