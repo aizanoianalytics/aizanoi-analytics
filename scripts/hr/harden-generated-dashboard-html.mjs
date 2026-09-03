@@ -27,6 +27,7 @@ const plans = new Map([
     ['${num(DATA.meta.mandatory_count,0)}', '${esc(num(DATA.meta.mandatory_count,0))}'],
     ['<option>${y}</option>', '<option>${esc(y)}</option>'],
     ['<option>${m}</option>', '<option>${esc(m)}</option>'],
+    ['<option value="${m}">${monthLabel(m)}</option>', '<option value="${esc(m)}">${esc(monthLabel(m))}</option>'],
   ]],
 ]);
 
