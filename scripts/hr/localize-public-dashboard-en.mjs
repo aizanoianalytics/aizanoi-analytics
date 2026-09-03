@@ -36,9 +36,11 @@ const suspiciousTurkish = (value) => {
   return Boolean(normalized && (TR_CHARS.test(normalized) || TR_WORDS.test(normalized)));
 };
 
-function decodeHtmlEntities(value) {
+// Decode display-only entities for dictionary matching. Keep &amp; encoded:
+// runtime translation writes through text nodes/attributes, so decoding it here
+// can turn a previously escaped ampersand into a doubly-decoded output value.
+function decodeDisplayEntities(value) {
   return String(value)
-    .replace(/&amp;/gi, '&')
     .replace(/&lt;/gi, '<')
     .replace(/&gt;/gi, '>')
     .replace(/&quot;/gi, '"')
@@ -47,7 +49,7 @@ function decodeHtmlEntities(value) {
     .replace(/&#([0-9]+);/g, (_m, dec) => String.fromCodePoint(Number.parseInt(dec, 10)));
 }
 
-const normalize = (value) => decodeHtmlEntities(value).replace(/\s+/g, ' ').trim();
+const normalize = (value) => decodeDisplayEntities(value).replace(/\s+/g, ' ').trim();
 const exact = new Map();
 const conflicts = [];
 function addExact(source, target, provenance, { override = false } = {}) {
