@@ -171,7 +171,7 @@ test('English localization is presentation-only and does not rewrite raw analyti
   assert.match(localizer, /MutationObserver/);
   assert.match(localizer, /CanvasRenderingContext2D/);
   assert.match(localizer, /\.toLocaleString/);
-  assert.match(visibleRuntime, /const SKIP = 'script,style,noscript,template'/,
+  assert.match(visibleRuntime, /const SKIP = 'script,style,noscript,template,textarea'/,
     'mixed runtime must keep script/template source out of presentation translation');
   assert.match(visibleRuntime, /parent\.closest\(SKIP\)/,
     'mixed runtime must not translate raw script/template text');
