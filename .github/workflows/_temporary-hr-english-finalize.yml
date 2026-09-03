@@ -35,6 +35,52 @@ jobs:
           python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
           npm ci --ignore-scripts --no-fund
           npx playwright install chromium
+      - name: Close final permanent-English residuals
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          localizer = Path('scripts/hr/localize-public-dashboard-en.mjs')
+          text = localizer.read_text()
+          old = '|hedef|hesap|icin|için|izin|kayit|kayıt|kidem|kıdem|'
+          new = '|hedef|hesap|hesaplama|icin|için|izin|kayit|kayıt|kaynak|kapsam|kidem|kıdem|'
+          if old not in text:
+              raise SystemExit('Expected localizer Turkish-word anchor not found')
+          text = text.replace(old, new, 1)
+          old = '|maas|maaş|merkez|mesai|metrik|'
+          new = '|maas|maaş|maksimum|merkez|mesai|metrik|'
+          if old not in text:
+              raise SystemExit('Expected localizer maximum-word anchor not found')
+          text = text.replace(old, new, 1)
+          old = '|puan|riskli|saat|'
+          new = '|puan|rehberi|riskli|saat|'
+          if old not in text:
+              raise SystemExit('Expected localizer guide-word anchor not found')
+          text = text.replace(old, new, 1)
+          localizer.write_text(text)
+
+          map_path = Path('scripts/hr/hr-public-en-presentation-map.json')
+          data = json.loads(map_path.read_text())
+          exact = data.setdefault('exact', {})
+          exact.update({
+              'Kapsam': 'Scope',
+              'Kapsam · Aurelia Group': 'Scope · Aurelia Group',
+              'Kaynak': 'Source',
+              'Kaynak Rol': 'Source Role',
+              'Hesaplama Rehberi': 'Calculation Guide',
+              'Target / Maksimum': 'Target / Maximum',
+              'Maksimum: 0': 'Maximum: 0',
+              'Kaynak department': 'Source department',
+              'Kaynak Department': 'Source Department',
+              'Kaynak:': 'Source:',
+              'Kapsam:': 'Scope:',
+          })
+          map_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
+          PY
+          git diff --check
       - name: Canonical rebuild and deterministic replay
         shell: bash
         run: |
@@ -74,10 +120,11 @@ jobs:
           set -euo pipefail
           rm -f \
             .github/workflows/_temporary-hr-english-candidate.yml \
+            .github/workflows/_temporary-hr-english-finalize.yml \
+            .github/workflows/_temporary-hr-permanent-qa-diagnostic.yml \
             .github/workflows/_temporary-hr-runtime-syntax.yml \
             .github/workflows/_temporary-hr-translate-probe.yml \
             .github/workflows/_temporary-hr-wire-presentation-map.yml \
-            .github/workflows/_temporary-hr-english-finalize.yml \
             scripts/hr/_temporary-hr-public-en-residuals.json \
             scripts/hr/_temporary-hr-v3-trigger.txt
           rm -rf artifacts
