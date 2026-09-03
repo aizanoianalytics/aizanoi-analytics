@@ -93,6 +93,13 @@
     'Satış Danışmanı': 'Sales Associate',
     'Mağaza Müdür Yardımcısı': 'Assistant Store Manager',
     'Mağaza Müdürü': 'Store Manager',
+    'Maksimum': 'Maximum',
+    'Turuncu': 'Orange',
+    'Skor Okuma Rehberi': 'Score Reading Guide',
+    'CEO Hedefleri': 'CEO Goals',
+    'Kapsam: CEO Hedefleri': 'Scope: CEO Goals',
+    'Kaynak: synthetic-hr-dataset': 'Source: synthetic-hr-dataset',
+    'Ocak-Mart': 'January-March',
     'Dış Aday': 'External Candidate'
   });
 
