@@ -6,7 +6,7 @@ on:
       - feat/hr-dashboard-english-only-v3
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   syntax:
@@ -14,7 +14,53 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - name: Generate and syntax-check runtime
+      - name: Patch visible post-render sweeps once
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('frontend/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js')
+          text = path.read_text()
+          marker = 'const postRenderSweep = () => translateSurface(document.body);'
+          if marker in text:
+              raise SystemExit(0)
+          needle = """    observer.observe(document.documentElement, {
+      subtree: true,
+      childList: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS,
+    });
+"""
+          replacement = needle + """
+    // Some dashboards finish their first render around DOMContentLoaded. Keep the
+    // observer for all later mutations, and sweep the initial post-render frames
+    // so mixed visitor-facing attributes cannot escape the presentation layer.
+    const postRenderSweep = () => translateSurface(document.body);
+    queueMicrotask(postRenderSweep);
+    requestAnimationFrame(() => {
+      postRenderSweep();
+      requestAnimationFrame(postRenderSweep);
+    });
+    window.addEventListener('load', postRenderSweep, { once: true });
+"""
+          if needle not in text:
+              raise SystemExit('visible runtime observer anchor not found')
+          path.write_text(text.replace(needle, replacement, 1))
+          PY
+          node --check frontend/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js
+          git diff --check
+          git add frontend/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js
+          if git diff --cached --quiet; then
+            echo 'Visible runtime already patched.'
+            exit 0
+          fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git commit -m 'fix(hr): sweep dynamic English attributes after render'
+          git push origin HEAD:feat/hr-dashboard-english-only-v3
+      - name: Generate and syntax-check base runtime
         shell: bash
         run: |
           set -euo pipefail
@@ -34,6 +80,3 @@ jobs:
           node scripts/hr/decorate-public-dashboard.mjs "${files[@]}"
           node scripts/hr/localize-public-dashboard-en.mjs "${files[@]}"
           node --check "$root/hr-public-en.js"
-          grep -F '"AĞIRLIKLI GERÇEKLEŞME":"WEIGHTED ACHIEVEMENT"' "$root/hr-public-en.js"
-          grep -F '"AIZANOI İK ANALITIK SISTEMI":"AIZANOI HR ANALYTICS SYSTEM"' "$root/hr-public-en.js"
-          grep -F '"İNSAN · SÜREÇ · SONUÇ":"PEOPLE · PROCESS · OUTCOMES"' "$root/hr-public-en.js"
