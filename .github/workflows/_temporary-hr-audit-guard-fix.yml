@@ -1,0 +1,42 @@
+name: Temporary HR Audit Guard Fix
+
+on:
+  push:
+    branches:
+      - feat/hr-dashboard-english-only-v3
+    paths:
+      - .github/workflows/_temporary-hr-audit-guard-fix.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: feat/hr-dashboard-english-only-v3
+          fetch-depth: 2
+      - name: Align audit assertion with mixed-runtime guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('tests/audit/hr-analytics-full-set.test.mjs')
+          text = path.read_text()
+          old = "assert.match(visibleRuntime, /const SKIP = 'script,style,noscript,template'/,"
+          new = "assert.match(visibleRuntime, /const SKIP = 'script,style,noscript,template,textarea'/,"
+          if old not in text:
+              raise SystemExit('expected stale assertion not found')
+          path.write_text(text.replace(old, new, 1))
+          PY
+          git diff --check
+          git diff -- tests/audit/hr-analytics-full-set.test.mjs
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add tests/audit/hr-analytics-full-set.test.mjs
+          git commit -m 'test(hr): match mixed runtime raw-surface guard'
+          git push origin HEAD:feat/hr-dashboard-english-only-v3
