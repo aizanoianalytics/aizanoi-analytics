@@ -1,0 +1,44 @@
+name: Temporary axe lock regeneration
+
+on:
+  push:
+    branches: [build/axe-core-4.13-v2]
+    paths: [.github/workflows/_temporary-axe-lock.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  regenerate-lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: build/axe-core-4.13-v2
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+      - name: Regenerate exact root lock
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Verify requested dependency only
+        run: |
+          node - <<'NODE'
+          const pkg = require('./package.json');
+          const lock = require('./package-lock.json');
+          if (pkg.devDependencies['axe-core'] !== '4.13.0') throw new Error('package axe-core is not 4.13.0');
+          if (lock.packages[''].devDependencies['axe-core'] !== '4.13.0') throw new Error('lock root axe-core is not 4.13.0');
+          if (lock.packages['node_modules/axe-core']?.version !== '4.13.0') throw new Error('locked axe-core node is not 4.13.0');
+          if (pkg.devDependencies.lighthouse !== '13.4.1' || pkg.devDependencies.playwright !== '1.62.1') throw new Error('unrelated root dependency changed');
+          NODE
+          git diff -- package.json package-lock.json
+      - name: Commit regenerated lock
+        run: |
+          if git diff --quiet -- package-lock.json; then
+            echo 'package-lock.json already current'
+            exit 0
+          fi
+          git config user.name 'aizanoianalytics'
+          git config user.email 'huseyiin.erduran@gmail.com'
+          git add package-lock.json
+          git commit -m 'build: regenerate axe-core lock'
+          git push origin HEAD:build/axe-core-4.13-v2
