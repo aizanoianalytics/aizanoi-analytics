@@ -18,6 +18,7 @@ PUBLIC="frontend/analytics/dashboards/hr-analytics-full-set"
 SYNTHETIC_DOWNLOAD="${PUBLIC}/downloads/hr-analytics-full-set-synthetic-output.xlsx"
 DECORATOR="scripts/hr/decorate-public-dashboard.mjs"
 SANITIZER="scripts/hr/sanitize-public-dashboard.mjs"
+HARDENER="scripts/hr/harden-generated-dashboard-html.mjs"
 
 EXPECTED_INPUT_COUNT=27
 INPUT_COUNT=$(find "${PIPELINE}" -maxdepth 1 -type f -name '*.xlsx' | wc -l | tr -d '[:space:]')
@@ -42,6 +43,13 @@ fi
 
 echo "[2/4] running the canonical ten-stage HR production pipeline"
 python3 "${PIPELINE}/run_full_pipeline.py"
+
+# Keep the parity-preserved Python source untouched while hardening the generated
+# static HTML at the artifact boundary. These transformations are deterministic,
+# idempotent and only escape data-derived text before it reaches HTML/SVG sinks.
+node "${HARDENER}" \
+  "${OUTPUTS}/ERD_P_admin.html" \
+  "${OUTPUTS}/magaza_takip_dosya.html"
 
 declare -A HTML_MAP=(
   ["ik_takip_dashboard.html"]="hr-executive-board-full-history/index.html"
@@ -173,6 +181,7 @@ echo "[4/4] running HR audit contracts"
 python3 scripts/verify-hr-historical-event-dates.py
 node --test \
   tests/audit/hr-analytics-full-set.test.mjs \
+  tests/audit/hr-generated-html-security.test.mjs \
   tests/audit/hr-public-artifact-safety.test.mjs \
   tests/audit/hr-public-entity-safety.test.mjs \
   tests/audit/security-publish-boundary.test.mjs
