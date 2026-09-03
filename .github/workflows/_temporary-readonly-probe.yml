@@ -1,12 +1,79 @@
-name: Temporary Readonly Probe
+name: Temporary Readonly HR Date Rebuild
 on:
   push:
     branches: [fix/hr-synthetic-historical-dates]
 permissions:
   contents: read
 jobs:
-  probe:
+  rebuild:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - run: node --version
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
+      - name: Install locked HR dependencies and workbook generator
+        run: |
+          python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
+          npm install --no-save --package-lock=false @oai/artifact-tool
+      - name: Apply candidate historical-date fix in runner
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('analytics/dashboards/hr-analytics-full-set/tools/generate_synthetic_source_workbooks.mjs')
+          s=p.read_text(encoding='utf-8')
+          changes=[
+            ('const monthEnd = new Date(Date.UTC(2026, 7, 1));\n', 'const monthEnd = new Date(Date.UTC(2026, 7, 1));\nconst reportingDate = new Date(Date.UTC(monthEnd.getUTCFullYear(), monthEnd.getUTCMonth() + 1, 0));\n'),
+            ('function seeded(index, salt = 0) {\n  const x = Math.sin((index + 1) * 12.9898 + salt * 78.233) * 43758.5453;\n  return x - Math.floor(x);\n}\n', 'function seeded(index, salt = 0) {\n  const x = Math.sin((index + 1) * 12.9898 + salt * 78.233) * 43758.5453;\n  return x - Math.floor(x);\n}\n\nfunction historicalDate(year, month, dayValue = 1) {\n  const candidate = new Date(Date.UTC(year, month, dayValue));\n  if (candidate <= reportingDate) return candidate;\n  return new Date(Date.UTC(year - 1, month, dayValue));\n}\n'),
+            ('const disciplineRows = employees.filter((_, index) => index % 8 === 0).map((employee, index) => [employee.id, ["C001", "C002", "C010", "C019"][index % 4], new Date(Date.UTC(2025 + (index % 2), index % 12, 5 + (index % 20))), "Synthetic policy record"]);', 'const disciplineRows = employees.filter((_, index) => index % 8 === 0).map((employee, index) => [employee.id, ["C001", "C002", "C010", "C019"][index % 4], historicalDate(2025 + (index % 2), index % 12, 5 + (index % 20)), "Synthetic policy record"]);')
+          ]
+          for old,new in changes:
+            if old not in s: raise SystemExit(f'missing expected source fragment: {old[:80]}')
+            s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Regenerate synthetic inputs and canonical HR outputs
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/hr-date
+          cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx /tmp/hr-before.xlsx
+          REGENERATE_SYNTHETIC_INPUTS=1 bash scripts/regenerate-hr-dashboards.sh
+          cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx /tmp/hr-first.xlsx
+          bash scripts/regenerate-hr-dashboards.sh
+          python scripts/verify-hr-workbook-semantics.py /tmp/hr-first.xlsx analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx
+          python - <<'PY'
+          from pathlib import Path
+          import openpyxl
+          root=Path('analytics/dashboards/hr-analytics-full-set/production-pipeline')
+          wb=openpyxl.load_workbook(root/'cezalar.xlsx',data_only=True,read_only=True)
+          ws=wb['sheet_1']
+          headers=[c.value for c in next(ws.iter_rows(min_row=1,max_row=1))]
+          col=headers.index('TARIH')
+          limit=__import__('datetime').datetime(2026,8,31)
+          bad=[]
+          for row in ws.iter_rows(min_row=2,values_only=True):
+            value=row[col]
+            if value and value>limit: bad.append(value.isoformat())
+          if bad: raise SystemExit(f'future discipline dates: {bad}')
+          print('discipline historical-date contract: OK')
+          PY
+          git diff --binary > artifacts/hr-date/generated.patch
+          git status --short > artifacts/hr-date/status.txt
+          cp analytics/dashboards/hr-analytics-full-set/tools/generate_synthetic_source_workbooks.mjs artifacts/hr-date/generate_synthetic_source_workbooks.mjs
+          cp analytics/dashboards/hr-analytics-full-set/production-pipeline/cezalar.xlsx artifacts/hr-date/cezalar.xlsx
+          cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx artifacts/hr-date/icmal_sorgu_sonuc.xlsx
+          cp frontend/analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx artifacts/hr-date/hr-analytics-full-set-synthetic-output.xlsx
+          find frontend/analytics/dashboards/hr-analytics-full-set -name '*.html' -print0 | tar --null -T - -czf artifacts/hr-date/public-html.tar.gz
+      - name: Upload candidate artifacts
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: hr-date-candidate
+          path: artifacts/hr-date/*
+          retention-days: 3
