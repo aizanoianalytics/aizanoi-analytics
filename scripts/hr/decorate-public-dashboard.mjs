@@ -8,6 +8,7 @@ const META_END = '<!-- AIZANOI_PUBLIC_META_END -->';
 const BAR_START = '<!-- AIZANOI_PUBLIC_BAR_START -->';
 const BAR_END = '<!-- AIZANOI_PUBLIC_BAR_END -->';
 const SITE_ORIGIN = 'https://aizanoianalytics.com';
+const HR_VISIBLE_EN_SRC = '/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js';
 
 const HR_SET = ANALYTICS_SETS.find((set) => set.id === 'hr-analytics-full-set');
 if (!HR_SET) throw new Error('Canonical HR Analytics set is missing from frontend/analytics/catalog.js');
@@ -83,10 +84,15 @@ function metadataBlock(dashboard) {
   .aizanoi-public-dashboard-bar a{min-height:24px;display:inline-flex;align-items:center;color:#f8fafc;text-decoration:none}
   .aizanoi-public-dashboard-bar a:hover,.aizanoi-public-dashboard-bar a:focus-visible{text-decoration:underline;text-underline-offset:3px}
   .aizanoi-public-dashboard-bar__language{margin-left:auto;padding:3px 8px;border:1px solid rgba(165,180,252,.35);border-radius:999px;background:rgba(79,70,229,.16);color:#e0e7ff;white-space:nowrap}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-item{grid-template-columns:auto minmax(0,1fr) auto;min-width:0}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-item span{min-width:0;overflow-wrap:anywhere}
+  body[data-aizanoi-dashboard="corporate-goals"] .color-scale{min-width:0}
   .aizanoi-embedded-dashboard .aizanoi-public-dashboard-bar{display:none!important}
   @media(max-width:640px){.aizanoi-public-dashboard-bar{gap:7px;padding:7px 9px;font-size:11px}.aizanoi-public-dashboard-bar__language{width:100%;margin-left:0;border-radius:7px}}
 </style>
 <script>try{if(window.self!==window.top)document.documentElement.classList.add('aizanoi-embedded-dashboard')}catch{}</script>
+<script data-aizanoi-hr-public-en-visible src="${HR_VISIBLE_EN_SRC}"></script>
 ${META_END}`;
 }
 
@@ -114,7 +120,10 @@ export function decorateDashboardHtml(html, dashboardId) {
   next = withDocumentLanguage(next, HR_SET.interfaceLanguageCode);
   next = withTitle(next, `${dashboard.title} — Aizanoi Analytics`);
   next = next.replace(/<\/head>/i, `${metadataBlock(dashboard)}\n</head>`);
-  next = next.replace(/<body\b([^>]*)>/i, (body) => `${body}\n${navigationBlock()}`);
+  next = next.replace(/<body\b([^>]*)>/i, (_body, attrs) => {
+    const cleanAttrs = attrs.replace(/\s+data-aizanoi-dashboard\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/i, '');
+    return `<body data-aizanoi-dashboard="${escapeHtml(dashboardId)}"${cleanAttrs}>\n${navigationBlock()}`;
+  });
   return next;
 }
 

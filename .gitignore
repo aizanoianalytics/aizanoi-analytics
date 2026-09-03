@@ -32,3 +32,7 @@ backups/
 
 # Large local web research snapshots (reports remain versioned)
 research/**/wikipedia_snapshots/
+
+# Local HR regeneration environment and diagnostics
+.venv-hr/
+artifacts/

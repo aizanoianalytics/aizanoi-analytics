@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -187,19 +187,25 @@
   .aizanoi-public-dashboard-bar a{min-height:24px;display:inline-flex;align-items:center;color:#f8fafc;text-decoration:none}
   .aizanoi-public-dashboard-bar a:hover,.aizanoi-public-dashboard-bar a:focus-visible{text-decoration:underline;text-underline-offset:3px}
   .aizanoi-public-dashboard-bar__language{margin-left:auto;padding:3px 8px;border:1px solid rgba(165,180,252,.35);border-radius:999px;background:rgba(79,70,229,.16);color:#e0e7ff;white-space:nowrap}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-item{grid-template-columns:auto minmax(0,1fr) auto;min-width:0}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-item span{min-width:0;overflow-wrap:anywhere}
+  body[data-aizanoi-dashboard="corporate-goals"] .color-scale{min-width:0}
   .aizanoi-embedded-dashboard .aizanoi-public-dashboard-bar{display:none!important}
   @media(max-width:640px){.aizanoi-public-dashboard-bar{gap:7px;padding:7px 9px;font-size:11px}.aizanoi-public-dashboard-bar__language{width:100%;margin-left:0;border-radius:7px}}
 </style>
 <script>try{if(window.self!==window.top)document.documentElement.classList.add('aizanoi-embedded-dashboard')}catch{}</script>
+<script data-aizanoi-hr-public-en-visible src="/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js"></script>
 <!-- AIZANOI_PUBLIC_META_END -->
+<script data-aizanoi-hr-public-en src="/analytics/dashboards/hr-analytics-full-set/hr-public-en.js"></script>
 </head>
-<body>
+<body data-aizanoi-dashboard="workforce-turnover">
 <!-- AIZANOI_PUBLIC_BAR_START -->
 <nav class="aizanoi-public-dashboard-bar" aria-label="Aizanoi Analytics dashboard navigation">
   <a href="/analytics/dashboards/hr-analytics-full-set/" target="_top">Aizanoi Analytics · HR Analytics Full Set</a>
   <span aria-hidden="true">·</span>
   <a href="/analytics/" target="_top">Back to Analytics</a>
-  <span class="aizanoi-public-dashboard-bar__language">Interface language: Turkish</span>
+  <span class="aizanoi-public-dashboard-bar__language">Interface language: English</span>
 </nav>
 <!-- AIZANOI_PUBLIC_BAR_END -->
   <div class="shell">
@@ -470,10 +476,10 @@
     }
     function n(value){ const x=Number(value); return Number.isFinite(x)?x:0; }
     function fmt(value,digits=0){
-      const x=Number(value); return Number.isFinite(x)?x.toLocaleString("tr-TR",{minimumFractionDigits:digits,maximumFractionDigits:digits}):"-";
+      const x=Number(value); return Number.isFinite(x)?x.toLocaleString("en-US",{minimumFractionDigits:digits,maximumFractionDigits:digits}):"-";
     }
     function pct(value,digits=1){
-      const x=Number(value); return Number.isFinite(x)?`%${(x*100).toLocaleString("tr-TR",{minimumFractionDigits:digits,maximumFractionDigits:digits})}`:"-";
+      const x=Number(value); return Number.isFinite(x)?`%${(x*100).toLocaleString("en-US",{minimumFractionDigits:digits,maximumFractionDigits:digits})}`:"-";
     }
     function monthLabel(month,short=false){
       if(!month || !/^\d{4}-\d{2}$/.test(month)) return month || "-";
@@ -483,7 +489,7 @@
     function dateLabel(value){
       if(!value) return "-";
       const date=new Date(`${String(value).slice(0,10)}T00:00:00`);
-      return Number.isNaN(date.getTime())?String(value):date.toLocaleDateString("tr-TR");
+      return Number.isNaN(date.getTime())?String(value):date.toLocaleDateString("en-US");
     }
     function addMonths(month,delta){
       if(!month) return "";
@@ -1048,7 +1054,7 @@
     }
     function init(){
       $("meta-period").textContent=DATA.meta.min_month&&DATA.meta.latest_month?`${monthLabel(DATA.meta.min_month)} – ${monthLabel(DATA.meta.latest_month)}`:"-";
-      $("meta-generated").textContent=new Date(DATA.meta.generated_at).toLocaleString("tr-TR");
+      $("meta-generated").textContent=new Date(DATA.meta.generated_at).toLocaleString("en-US");
       initFilterControls();initComparison();bind();renderActive();
       window.__TURNOVER_READY__=true;
       window.__TURNOVER_AUDIT__={monthlyRows:MONTHLY.length,exitRows:EXITS.length,reasonCount:(DATA.reasons||[]).length,formula:DATA.meta.formula};
