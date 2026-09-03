@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-03-openai-astra-critical-cyber",
+  "title": "OpenAI designates Astra as its first 'Critical' cybersecurity model after it discovered two unknown Chrome vulnerabilities during a benchmark",
+  "summary": "OpenAI said on 1 September 2026 that its upcoming Astra model is the first to meet the Critical cybersecurity threshold under its Preparedness Framework, after the system independently found two previously unknown V8 JavaScript engine vulnerabilities during a routine exploit benchmark and folded them into a working attack chain. Astra's advanced offensive capabilities will initially be limited to a small group of vetted alpha testers and to OpenAI's Daybreak Blue defender programme, with the two zero-days in coordinated disclosure.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "Astra", "Preparedness Framework", "zero-day", "Daybreak Blue"],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/path-to-astra/",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via TBS News)",
+      "url": "https://www.tbsnews.net/tech/openai-says-upcoming-model-so-capable-it-requires-stronger-guardrails-1530901",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    },
+    {
+      "publisher": "TechTimes",
+      "url": "https://www.techtimes.com/articles/326271/20260902/openai-astra-finds-zero-days-mid-benchmark-unasked-exploit-caps-access-vetted-defenders.htm",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-03-leagues-cup-semifinals-all-mexican",
+  "title": "Toluca beat 10-man León 2-0 to reach first Leagues Cup final as Liga MX sweeps the semifinals",
+  "summary": "Toluca advanced to its first Leagues Cup final on 2 September 2026 with a 2-0 win over 10-man León at Shell Energy Stadium in Houston, with Federico Pereira opening the scoring before the break and a second-half goal sealing the result after Jhohan Romaña was sent off for a second yellow card. The result confirmed the first all-Liga MX Leagues Cup final in the modern 36-team format, guarantees a Mexican club the trophy and locks a Concacaf Champions Cup place; the 2026 final is scheduled for 6 September.",
+  "category": "football",
+  "priority": 75,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Leagues Cup", "Toluca", "León", "Liga MX", "Concacaf Champions Cup"],
+  "sources": [
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401914297/leon-toluca",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    },
+    {
+      "publisher": "Wikipedia (2026 Leagues Cup)",
+      "url": "https://en.wikipedia.org/wiki/2026_Leagues_Cup",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    },
+    {
+      "publisher": "VAVEL",
+      "url": "https://www.vavel.com/en-us/soccer/2026/09/03/1269910-toluca-vs-leon-live-score-in-leagues-cup.html",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-03-apple-september-9-event-confirmed",
+  "title": "Apple confirms 9 September 'Surprise and Shine' event for iPhone 18 Pro and first foldable iPhone Ultra",
+  "summary": "Apple confirmed on 2 September 2026 that it will hold its fall event at 10:00 a.m. Pacific on 9 September at Apple Park under the tagline 'Surprise and shine', with new iPhone 18 Pro and iPhone 18 Pro Max models expected alongside the company's first foldable iPhone, marketed as iPhone Ultra, and an A20 Pro chip on a 2-nanometer process. The lineup is also expected to bring Apple Watch Series 12, Apple Watch Ultra 4 and a long-rumoured Apple HomePad smart home hub, with Pro pricing tipped to rise $100 to $200 as memory and storage costs climb.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iPhone 18", "iPhone Ultra", "Apple Watch", "Apple Event"],
+  "sources": [
+    {
+      "publisher": "Apple",
+      "url": "https://www.apple.com/apple-events",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    },
+    {
+      "publisher": "GoTechTor",
+      "url": "https://gotechtor.com/apple-september-9-event-iphone-ultra-foldable-iphone-18-pro",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-03-microsoft-copilot-autocomplete-off",
+  "title": "Microsoft turns off Copilot text predictions by default in Word and Outlook as user pushback grows",
+  "summary": "Microsoft disabled text predictions by default in Word and Outlook on 1 September 2026 after years of complaints that the autocomplete suggestions broke writers' flow and surfaced phrases that did not fit the context. The change, which covers classic Outlook for Windows, Outlook for Mac and most mobile Outlook surfaces, follows the August retirement of Group Chat, AI-generated Podcasts, the experimental Copilot Labs and the animated Mico character; users can still re-enable the toggle manually under Advanced options.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Microsoft", "Copilot", "Word", "Outlook", "AI defaults"],
+  "sources": [
+    {
+      "publisher": "WebProNews",
+      "url": "https://webpronews.com/microsoft-dials-back-autocomplete-in-word-and-outlook-as-copilot-fatigue-sets-in",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

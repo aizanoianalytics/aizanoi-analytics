@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-03-uber-wayve-london-robotaxi",
+  "title": "Uber and Wayve launch London's first public robotaxi service with safety drivers on board",
+  "summary": "Uber and British self-driving startup Wayve switched on London's first public robotaxi service on 3 September 2026, with a small fleet of camera-and-radar-equipped Ford Mustang Mach-E vehicles available through the Uber app at no premium over standard UberX, Comfort or Electric fares. A licensed safety operator remains in the driver's seat pending regulatory approval of an automated passenger services permit, and Wayve plans to expand the rollout to Tokyo and then to ten more cities with Uber.",
+  "category": "technology",
+  "priority": 82,
+  "publishedAt": "2026-09-03T05:10:00Z",
+  "updatedAt": "2026-09-03T05:10:00Z",
+  "retrievedAt": "2026-09-03T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Uber", "Wayve", "robotaxi", "London", "autonomous vehicles"],
+  "sources": [
+    {
+      "publisher": "CNET Roadshow",
+      "url": "https://cnet.com/roadshow/automobiles/uber-wayve-launch-londons-first-public-robotaxi-service",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "The Star (AFP)",
+      "url": "https://thestar.com.my/tech/tech-news/2026/09/03/uber-wayve-launch-london039s-first-robotaxi-service",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}
