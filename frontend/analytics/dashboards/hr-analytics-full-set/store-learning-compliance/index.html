@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,19 +78,25 @@
   .aizanoi-public-dashboard-bar a{min-height:24px;display:inline-flex;align-items:center;color:#f8fafc;text-decoration:none}
   .aizanoi-public-dashboard-bar a:hover,.aizanoi-public-dashboard-bar a:focus-visible{text-decoration:underline;text-underline-offset:3px}
   .aizanoi-public-dashboard-bar__language{margin-left:auto;padding:3px 8px;border:1px solid rgba(165,180,252,.35);border-radius:999px;background:rgba(79,70,229,.16);color:#e0e7ff;white-space:nowrap}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-item{grid-template-columns:auto minmax(0,1fr) auto;min-width:0}
+  body[data-aizanoi-dashboard="corporate-goals"] .status-item span{min-width:0;overflow-wrap:anywhere}
+  body[data-aizanoi-dashboard="corporate-goals"] .color-scale{min-width:0}
   .aizanoi-embedded-dashboard .aizanoi-public-dashboard-bar{display:none!important}
   @media(max-width:640px){.aizanoi-public-dashboard-bar{gap:7px;padding:7px 9px;font-size:11px}.aizanoi-public-dashboard-bar__language{width:100%;margin-left:0;border-radius:7px}}
 </style>
 <script>try{if(window.self!==window.top)document.documentElement.classList.add('aizanoi-embedded-dashboard')}catch{}</script>
+<script data-aizanoi-hr-public-en-visible src="/analytics/dashboards/hr-analytics-full-set/hr-public-en-visible.js"></script>
 <!-- AIZANOI_PUBLIC_META_END -->
+<script data-aizanoi-hr-public-en src="/analytics/dashboards/hr-analytics-full-set/hr-public-en.js"></script>
 </head>
-<body>
+<body data-aizanoi-dashboard="store-learning-compliance">
 <!-- AIZANOI_PUBLIC_BAR_START -->
 <nav class="aizanoi-public-dashboard-bar" aria-label="Aizanoi Analytics dashboard navigation">
   <a href="/analytics/dashboards/hr-analytics-full-set/" target="_top">Aizanoi Analytics · HR Analytics Full Set</a>
   <span aria-hidden="true">·</span>
   <a href="/analytics/" target="_top">Back to Analytics</a>
-  <span class="aizanoi-public-dashboard-bar__language">Interface language: Turkish</span>
+  <span class="aizanoi-public-dashboard-bar__language">Interface language: English</span>
 </nav>
 <!-- AIZANOI_PUBLIC_BAR_END -->
   <main class="shell">
@@ -144,9 +150,9 @@
   const $=id=>document.getElementById(id);
   const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const trSort=(a,b)=>String(a??'').localeCompare(String(b??''),'tr',{numeric:true,sensitivity:'base'});
-  const nfmt=(v,d=0)=>Number(v).toLocaleString('tr-TR',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const nfmt=(v,d=0)=>Number(v).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
   const ratio100=v=>v==null?'—':nfmt(Number(v)*100,1);
-  const monthLabel=v=>{if(!v)return 'Veri yok';const [y,m]=v.split('-').map(Number);return new Intl.DateTimeFormat('tr-TR',{month:'long',year:'numeric'}).format(new Date(y,m-1,1));};
+  const monthLabel=v=>{if(!v)return 'Veri yok';const [y,m]=v.split('-').map(Number);return new Intl.DateTimeFormat("en-US",{month:'long',year:'numeric'}).format(new Date(y,m-1,1));};
   const state={query:'',region:'Tümü',city:'Tümü',band:'Tümü',sort:'average_score',dir:'asc',selected:null};
   const columns=[
     ['store','Mağaza','text'],['turnover_rate','Son Turnover (0-100)','metric'],['academy_rate','Akademi Katılım (0-100)','metric'],
@@ -159,7 +165,7 @@
     fillSelect('region',[...new Set(DATA.rows.map(r=>r.region))].sort(trSort),'Tüm Bölgeler');
     fillSelect('city',[...new Set(DATA.rows.map(r=>r.city))].sort(trSort),'Tüm İller');
     fillSelect('band',['Güçlü','İzlemeli','Aksiyon','Eksik Metrik'],'Tüm Skorlar');
-    $('heroMeta').innerHTML=`<span>${nfmt(DATA.meta.store_count)} mağaza</span><span>${nfmt(DATA.meta.employee_count)} aktif çalışan</span><span>Turnover: ${esc(monthLabel(DATA.meta.latest_turnover_month))}</span><span>Üretim: ${esc(new Date(DATA.meta.generated_at).toLocaleString('tr-TR'))}</span>`;
+    $('heroMeta').innerHTML=`<span>${nfmt(DATA.meta.store_count)} mağaza</span><span>${nfmt(DATA.meta.employee_count)} aktif çalışan</span><span>Turnover: ${esc(monthLabel(DATA.meta.latest_turnover_month))}</span><span>Üretim: ${esc(new Date(DATA.meta.generated_at).toLocaleString("en-US"))}</span>`;
     $('footer').textContent=`Kaynak: ${DATA.meta.source_file} · Çalışan düzeyi kişisel veri bu HTML'e gömülmemiştir.`;
     $('search').addEventListener('input',e=>{state.query=e.target.value.trim().toLocaleLowerCase('tr-TR');render();});
     ['region','city','band'].forEach(id=>$(id).addEventListener('change',e=>{state[id]=e.target.value;render();}));
