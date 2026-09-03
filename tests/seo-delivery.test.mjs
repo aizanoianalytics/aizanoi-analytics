@@ -23,7 +23,11 @@ const canonicalBase = [
   '/analytics/dashboards/hr-analytics-full-set/performance-hiring-turnover/',
   '/analytics/dashboards/hr-analytics-full-set/corporate-goals/',
   '/analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/',
-  '/analytics/dashboards/hr-analytics-full-set/workforce-turnover/', '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
+  '/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',
+  '/analytics/dashboards/new-hr-collection/',
+  '/analytics/dashboards/new-hr-collection/pacs/',
+  '/analytics/dashboards/new-hr-collection/recruitment-analytics/',
+  '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
   '/historic-world/', '/ancient-cities/rome-410-476/', '/ancient-cities/athens-450-430/'
 ];
 const canonical = [
