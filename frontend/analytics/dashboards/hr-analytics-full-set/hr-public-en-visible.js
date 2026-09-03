@@ -241,6 +241,17 @@
       attributes: true,
       attributeFilter: ATTRS,
     });
+
+    // Some dashboards finish their first render around DOMContentLoaded. Keep the
+    // observer for all later mutations, and sweep the initial post-render frames
+    // so mixed visitor-facing attributes cannot escape the presentation layer.
+    const postRenderSweep = () => translateSurface(document.body);
+    queueMicrotask(postRenderSweep);
+    requestAnimationFrame(() => {
+      postRenderSweep();
+      requestAnimationFrame(postRenderSweep);
+    });
+    window.addEventListener('load', postRenderSweep, { once: true });
   }
 
   globalThis.AizanoiHrEnglishVisible = Object.freeze({ translate: translateMixed });
