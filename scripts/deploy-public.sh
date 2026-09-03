@@ -19,6 +19,15 @@ RELEASE_ROOT="/var/www/aizanoianalytics.com-releases"
 SOURCE="${REPO}/frontend"
 PUBLIC_SYNTHETIC_XLSX="analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx"
 
+# Exact-SHA gate is mandatory per HERMES_OPERATIONS.md and runs before any
+# filesystem mutation so a missing/mismatched value fails closed immediately.
+# Example:
+#   AIZANOI_DEPLOY_SHA="$TARGET_SHA" bash scripts/deploy-public.sh
+if [[ -z "${AIZANOI_DEPLOY_SHA:-}" ]]; then
+  echo "FATAL: AIZANOI_DEPLOY_SHA env variable is required for production deployment (HERMES_OPERATIONS.md)." >&2
+  echo "  usage: AIZANOI_DEPLOY_SHA=\"<approved-sha>\" bash scripts/deploy-public.sh" >&2
+  exit 2
+fi
 if [[ ! -d "${SOURCE}" ]]; then
   echo "FATAL: source tree missing: ${SOURCE}" >&2
   exit 2
@@ -33,7 +42,7 @@ if [[ -n "$(git -C "${REPO}" status --porcelain)" ]]; then
 fi
 
 CURRENT_SHA="$(git -C "${REPO}" rev-parse HEAD)"
-if [[ -n "${AIZANOI_DEPLOY_SHA:-}" && "${CURRENT_SHA}" != "${AIZANOI_DEPLOY_SHA}" ]]; then
+if [[ "${CURRENT_SHA}" != "${AIZANOI_DEPLOY_SHA}" ]]; then
   echo "FATAL: checked-out SHA ${CURRENT_SHA} does not match approved AIZANOI_DEPLOY_SHA ${AIZANOI_DEPLOY_SHA}" >&2
   exit 2
 fi

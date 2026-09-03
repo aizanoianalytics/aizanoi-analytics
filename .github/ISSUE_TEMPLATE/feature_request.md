@@ -21,7 +21,13 @@ Which project goal does this support?
 - [ ] Aizanoi historical depth
 - [ ] Historical evidence / methodology clarity
 - [ ] Rome / Athens comparative world quality
-- [ ] Field System research workflow
+- [ ] News publishing pipeline
+- [ ] TV / Journal surface
+- [ ] Analytics — HR Analytics Full Set
+- [ ] Analytics — New HR Collection (PACS, Recruitment)
+- [ ] Forge / Labs / Arcade surface
+- [ ] Browser-local utility (Workspace, Notepad, Calculator, Camera, Winamp, Recycle Bin, Web Editor)
+- [ ] AizanoiOS shell / device / module lifecycle
 - [ ] Desktop / tablet / mobile parity
 - [ ] Accessibility
 - [ ] Performance
@@ -31,21 +37,29 @@ Which project goal does this support?
 
 ## Historical evidence impact
 
-If this changes a reconstruction or historical claim, what source/evidence basis exists? Which parts are inferred or procedural?
+If this changes a reconstruction or historical claim, what source / evidence basis exists? Which parts are inferred or procedural?
 
 Write `N/A` if not applicable.
 
 ## Runtime / architecture impact
 
-- [ ] Can remain static/browser-native
-- [ ] Would require new server/API behavior
+- [ ] Can remain static / browser-local
+- [ ] Would require new server / API behaviour
 - [ ] I am not sure
 
 If a backend seems necessary, explain why the requirement cannot reasonably stay browser-native.
 
-## Cross-device behavior
+## Module boundary impact (when AizanoiOS is involved)
 
-How should the feature behave on desktop, tablet and mobile?
+- [ ] No new module needed
+- [ ] New module: declares `requires` / `provides` and owned assets / storage
+- [ ] Capability injection only; no module added
+- [ ] Affects existing module boundary — describe above
+- [ ] N/A
+
+## Cross-device behaviour
+
+How should the feature behave on desktop, tablet and mobile (and landscape compact)?
 
 ## Alternatives considered
 
