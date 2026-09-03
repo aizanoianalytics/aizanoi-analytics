@@ -41,7 +41,7 @@ test('production-like Nginx permits explicit camera/microphone and blob media wh
       audio.src = url;
       document.body.appendChild(audio);
       audio.load();
-      await new Promise((resolve) => setTimeout(resolve, 150));
+      await new Promise((resolve) => { setTimeout(resolve, 150); });
       audio.remove();
       URL.revokeObjectURL(url);
       return { capture, violations };
@@ -70,7 +70,7 @@ test('route-scoped production policy lets the Web Editor Run action execute sand
     let response=null;
     for(let attempt=0;attempt<20;attempt++){
       try{response=await page.goto(`http://127.0.0.1:${port}/?web-editor-policy=${Date.now()}`,{waitUntil:'networkidle',timeout:3000});if(response?.ok())break;}catch{}
-      await new Promise((resolve)=>setTimeout(resolve,100));
+      await new Promise((resolve)=>{setTimeout(resolve,100);});
     }
     assert.ok(response?.ok(),`Web Editor Nginx root returned ${response?.status()}`);
     await page.evaluate(()=>window.AIZANOI_OS.openApp('web-editor'));
