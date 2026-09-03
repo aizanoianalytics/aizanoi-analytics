@@ -39,48 +39,66 @@ jobs:
           node scripts/hr/localize-public-dashboard-en.mjs "${files[@]}"
           python3 -m http.server 4173 --directory frontend >/tmp/hr-probe.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/ >/dev/null && break; sleep 1; done
-      - name: Trace PDKS residual provenance
+      - name: Trace only final residuals
         run: |
           node --input-type=module <<'NODE'
           import { chromium } from 'playwright';
-          const tr=/\b(?:veya|saat|sicil|çalış|gün|ay|eşleş|pdks)\b|[çğıöşüÇĞİÖŞÜ]/iu;
-          const browser=await chromium.launch({headless:true});
-          const page=await browser.newPage({viewport:{width:1440,height:1100}});
-          await page.addInitScript(()=>{
-            globalThis.__canvas=[];
-            const proto=globalThis.CanvasRenderingContext2D?.prototype;
-            if(!proto)return;
-            for(const name of ['fillText','strokeText']){
-              const original=proto[name];
-              if(typeof original!=='function')continue;
-              proto[name]=function(text,...args){globalThis.__canvas.push({method:name,text:String(text)});return original.call(this,text,...args);};
+          const wanted = value => /PDKS satırı| veya Synthetic Employee| saat \/ .* saat/u.test(String(value ?? ''));
+          const browser = await chromium.launch({ headless: true });
+          const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
+          await page.addInitScript(() => {
+            globalThis.__canvas = [];
+            const proto = globalThis.CanvasRenderingContext2D?.prototype;
+            if (!proto) return;
+            for (const name of ['fillText', 'strokeText']) {
+              const original = proto[name];
+              if (typeof original !== 'function') continue;
+              proto[name] = function(text, ...args) {
+                if (/PDKS satırı| veya Synthetic Employee| saat \/ .* saat/u.test(String(text ?? ''))) {
+                  globalThis.__canvas.push({ method: name, text: String(text) });
+                }
+                return original.call(this, text, ...args);
+              };
             }
           });
-          await page.goto('http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/',{waitUntil:'networkidle'});
-          await page.waitForTimeout(600);
-          const out=await page.evaluate(()=>{
-            const hits=[];
-            const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+          await page.goto('http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/', { waitUntil: 'networkidle' });
+          await page.waitForTimeout(700);
+          const out = await page.evaluate(() => {
+            const text = [];
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
             let node;
-            while((node=walker.nextNode())){
-              const value=String(node.nodeValue??'').replace(/\s+/g,' ').trim();
-              if(!value || !(/\b(?:veya|saat|sicil|çalış|gün|ay|eşleş|pdks)\b|[çğıöşüÇĞİÖŞÜ]/iu.test(value)))continue;
-              const el=node.parentElement;
-              hits.push({kind:'text',value,tag:el?.tagName||'',id:el?.id||'',className:typeof el?.className==='string'?el.className:'',closest:el?.closest('textarea,pre,code,svg,canvas,table,div,span')?.tagName||''});
+            while ((node = walker.nextNode())) {
+              const value = String(node.nodeValue ?? '').replace(/\s+/g, ' ').trim();
+              if (!/PDKS satırı| veya Synthetic Employee| saat \/ .* saat/u.test(value)) continue;
+              const el = node.parentElement;
+              text.push({ value, tag: el?.tagName || '', id: el?.id || '', className: typeof el?.className === 'string' ? el.className : '', skipped: Boolean(el?.closest('script,style,noscript,template,textarea')) });
             }
-            const attrs=[];
-            for(const el of document.querySelectorAll('[aria-label],[title],[placeholder],[alt],[data-label],[data-title]')){
-              for(const name of ['aria-label','title','placeholder','alt','data-label','data-title']){
-                if(!el.hasAttribute(name))continue;
-                const value=el.getAttribute(name)||'';
-                if(/\b(?:veya|saat|sicil|çalış|gün|ay|eşleş|pdks)\b|[çğıöşüÇĞİÖŞÜ]/iu.test(value))attrs.push({kind:'attr',name,value,tag:el.tagName,id:el.id||'',className:typeof el.className==='string'?el.className:''});
+            const attrs = [];
+            for (const el of document.querySelectorAll('[aria-label],[title],[placeholder],[alt],[data-label],[data-title]')) {
+              for (const name of ['aria-label','title','placeholder','alt','data-label','data-title']) {
+                if (!el.hasAttribute(name)) continue;
+                const value = el.getAttribute(name) || '';
+                if (/PDKS satırı| veya Synthetic Employee| saat \/ .* saat/u.test(value)) attrs.push({ name, value, tag: el.tagName, id: el.id || '' });
               }
             }
-            return {hits,attrs,canvas:globalThis.__canvas||[],base:typeof globalThis.AizanoiHrEnglish?.translate,visible:typeof globalThis.AizanoiHrEnglishVisible?.translate};
+            const samples = [
+              '1, 375 PDKS satırı · 11 unique employee IDs · January 2026, February 2026, March 2026, April 2026, May 2026, June 2026, July 2026, August 2026',
+              'e.g. 99000007 veya Synthetic Employee 0007',
+              'January 2026: 1,600.8 saat / 1,589.5 saat'
+            ];
+            return {
+              text,
+              attrs,
+              canvas: globalThis.__canvas || [],
+              translations: samples.map(sample => ({
+                sample,
+                base: globalThis.AizanoiHrEnglish?.translate?.(sample) ?? null,
+                visible: globalThis.AizanoiHrEnglishVisible?.translate?.(sample) ?? null,
+              })),
+              baseType: typeof globalThis.AizanoiHrEnglish?.translate,
+              visibleType: typeof globalThis.AizanoiHrEnglishVisible?.translate,
+            };
           });
-          console.log(`base=${out.base} visible=${out.visible}`);
-          for(const item of out.hits.slice(0,100))console.log('TEXT '+JSON.stringify(item));
-          for(const item of out.attrs.slice(0,100))console.log('ATTR '+JSON.stringify(item));
-          for(const item of out.canvas.filter(item=>tr.test(item.text)).slice(0,100))console.log('CANVAS '+JSON.stringify(item));
+          console.log(JSON.stringify(out));
           await browser.close();
           NODE
