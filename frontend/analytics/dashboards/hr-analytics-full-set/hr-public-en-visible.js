@@ -36,7 +36,6 @@
     'Genel - Tekrar çalışmayı tercih eder misiniz?': 'Overall - Would you choose to work here again?',
     'Seçili Ay - Çıkış Mülakatı Kapsamı': 'Selected Month - Exit Interview Coverage',
     'Seçili Yıl Toplamı - Çıkış Mülakatı Kapsamı': 'Selected Year Total - Exit Interview Coverage',
-
     'İSG & Checklist': 'OHS & Checklist',
     'Kritik Aksiyon': 'Critical Action',
     'seçici aksiyon merkezi': 'selective action center',
@@ -54,24 +53,20 @@
     'Satış Akademisi Durumu': 'Sales Academy Status',
     'Son Satış Akademisi': 'Latest Sales Academy',
     'İSG Durumu': 'OHS Status',
-
     '30 Gün Üstü Oran': 'Over 30 Days Rate',
     '45 Gün Üstü Oran': 'Over 45 Days Rate',
     '▾ Filtre': '▾ Filter',
     'Açık Gün': 'Open Days',
-    'Mağaza Kırılım': 'Store Breakdown',
     'Seçili kapsamda veri bulunamadı.': 'No data found in the selected scope.',
     "İşaretli KPI'lar toplanır, dönem hedefleri orantılanır ve yıl sonuna projekte edilir. Ayarlar tarayıcıda saklanır.": 'Selected KPIs are summed, period targets are prorated, and results are projected to year-end. Settings are stored in the browser.',
     '2026 Hedef Gerçekleşmeleri': '2026 Target Achievements',
     'Hedef puanı nasıl hesaplanır?': 'How is the target score calculated?',
     "Q1-Q4 kaynak değerleri bağımsız çeyreklerdir. Eski “1 Ocak–...” kümülatif sütunları algılanırsa toplanacak KPI'lar önce bağımsız çeyreklere ayrılır ve iki kez toplama önlenir. Ayarlarda işaretli KPI'larda dolu çeyrekler toplanır ve dönem hedefleri yıllık hedef ÷ 4 × dolu çeyrek sayısı ile orantılanır. İşaretli olmayan KPI'larda son dolu çeyrek kullanılır. Yıl sonu projeksiyonu işaretli KPI'da kümülatif gerçekleşen ÷ dolu çeyrek × 4, diğerinde son dolu çeyrek değeridir. Eşik hedef 80, yıllık hedef 100, maksimum hedef 120 puana karşılık gelir. Durum renkleri: 80 altı kırmızı; 80 ve üzeri, 100 altı turuncu; 100 ve üzeri, 120 altı açık yeşil; 120 ve üzeri koyu yeşildir.": 'Q1-Q4 source values are independent quarters. If legacy cumulative columns in the “1 January–...” format are detected, summable KPIs are first separated into independent quarters to prevent double counting. For KPIs selected in Settings, populated quarters are summed and period targets are prorated as annual target ÷ 4 × populated-quarter count. For unselected KPIs, the latest populated quarter is used. Year-end projection is cumulative actual ÷ populated-quarter count × 4 for selected KPIs, and the latest populated-quarter value for others. The threshold target corresponds to 80 points, annual target to 100, and maximum target to 120. Status colors: below 80 red; 80 to below 100 orange; 100 to below 120 light green; 120 and above dark green.',
-
     'tekil aktif sicil': 'unique active employee IDs',
     'Akademi Açığı': 'Academy Gap',
     'katılmayan tekil çalışan': 'unique non-attending employees',
     'Checklist Açığı': 'Checklist Gap',
     '0/10/20% eşikleri': '0/10/20% thresholds',
-
     'norm kaynağındaki mağaza': 'store in staffing-plan source',
     'Eksik Pozisyon': 'Missing Positions',
     'pozisyon kırılımı': 'position breakdown',
@@ -80,13 +75,11 @@
     '.gs. kapsamı': '.gs. scope',
     'mağaza grubu': 'store group',
     'Norm / Fiili Kadro Takibi': 'Planned / Actual Staffing Tracking',
-
     'Kaynak / üretim': 'Source / Generated',
     'Sicil veya ad soyad ara': 'Search employee ID or full name',
     'Gereken Saat': 'Required Hours',
     'All Departments · All Years · ay grupları soldan sağa en güncel dönemden geçmişe sıralıdır.': 'All Departments · All Years · month groups are ordered from the latest period to the oldest, left to right.',
     'e.g. 08:00-17:45 = 9,75 saat. Resmi tatil, yarım gün ve erken çıkış kuralları bu genel ayarın üstüne özel istisna olarak çalışır.': 'e.g. 08:00-17:45 = 9.75 hours. Public-holiday, half-day, and early-departure rules operate as exceptions on top of this general setting.',
-
     'Önceki Aya Göre': 'Vs Previous Month',
     'cikis': 'exit',
     'Kritik Takip': 'Critical Follow-up',
@@ -116,6 +109,12 @@
     return FALLBACK[source] || FALLBACK_FOLDED[fold(source)] || null;
   }
 
+  function preserveSpace(original, translated) {
+    const leading = String(original).match(/^\s*/)?.[0] || '';
+    const trailing = String(original).match(/\s*$/)?.[0] || '';
+    return leading + translated + trailing;
+  }
+
   function translateMixed(value) {
     const raw = String(value ?? '');
     const source = raw.replace(/\s+/g, ' ').trim();
@@ -140,34 +139,26 @@
 
     match = source.match(/^(\d+) Çıkış \/ (.+?) ort\. Çalışan$/u);
     if (match) return preserveSpace(raw, `${match[1]} Exits / ${match[2]} Avg. Employees`);
-
     match = source.match(/^Dış Aday → (Mağaza Müdür Yardımcısı|Mağaza Müdürü): (\d+)$/u);
     if (match) return preserveSpace(raw, `External Candidate → ${exactTranslate(match[1])}: ${match[2]}`);
-
     match = source.match(/^(\d+) tekil kişi$/u);
     if (match) return preserveSpace(raw, `${match[1]} unique people`);
-
     match = source.match(/^Zorunlu Eğitim: (.+)$/u);
     if (match) return preserveSpace(raw, `Mandatory Training: ${baseTranslate(match[1])}`);
-
     match = source.match(/^İlk (\d+) \/ (\d+) filtreli kayıt gösteriliyor\. CSV filtreli tam listeyi indirir\.$/u);
     if (match) return preserveSpace(raw, `First ${match[1]} / ${match[2]} filtered records shown. CSV downloads the full filtered list.`);
 
     match = source.match(/^synthetic-workforce-roster · (\d+) eşleşen \/ (\d+) eşleşmeyen sicil$/u);
     if (match) return preserveSpace(raw, `synthetic-workforce-roster · ${match[1]} matched / ${match[2]} unmatched employee IDs`);
-
-    match = source.match(/^([\d, ]+) PDKS satırı · (\d+) benzersiz sicil · (.+)$/u);
+    match = source.match(/^([\d, ]+) PDKS satırı · (\d+) (?:benzersiz sicil|unique employee IDs) · (.+)$/u);
     if (match) {
       const months = match[3].split(/,\s*/u).map((part) => baseTranslate(part)).join(', ');
       return preserveSpace(raw, `${match[1].replace(/,\s+/g, ',')} PDKS rows · ${match[2]} unique employee IDs · ${months}`);
     }
-
     match = source.match(/^([\d.]+) saat \/ ([\d:–-]+) standart iş günü$/u);
     if (match) return preserveSpace(raw, `${match[1]} hours / standard workday ${match[2]}`);
-
     match = source.match(/^e\.g\. (.+?) veya (.+)$/u);
     if (match) return preserveSpace(raw, `e.g. ${match[1]} or ${match[2]}`);
-
     match = source.match(/^((?:January|February|March|April|May|June|July|August|September|October|November|December) \d{4}): (.+?) saat \/ (.+?) saat$/u);
     if (match) return preserveSpace(raw, `${match[1]}: ${match[2]} hours / ${match[3]} hours`);
 
@@ -180,14 +171,7 @@
       });
       if (translated.some((part, index) => part !== parts[index])) return preserveSpace(raw, translated.join(' · '));
     }
-
     return raw;
-  }
-
-  function preserveSpace(original, translated) {
-    const leading = String(original).match(/^\s*/)?.[0] || '';
-    const trailing = String(original).match(/\s*$/)?.[0] || '';
-    return leading + translated + trailing;
   }
 
   function translateTextNode(node) {
@@ -234,11 +218,12 @@
     });
   }
 
+  patchCanvas('fillText');
+  patchCanvas('strokeText');
+  patchCanvas('measureText');
+
   function boot() {
     translateSurface(document.body);
-    patchCanvas('fillText');
-    patchCanvas('strokeText');
-    patchCanvas('measureText');
     const observer = new MutationObserver((records) => {
       for (const record of records) {
         if (record.type === 'characterData') {
