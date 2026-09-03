@@ -1,0 +1,139 @@
+name: Temporary HR Exact Map Oracle
+
+on:
+  push:
+    branches:
+      - feat/hr-dashboard-english-only-v3
+
+permissions:
+  contents: write
+
+jobs:
+  derive:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout v3 branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: feat/hr-dashboard-english-only-v3
+          fetch-depth: 0
+
+      - name: Fetch rejected v2 only as one-time translation oracle
+        run: |
+          git fetch origin feat/hr-dashboard-english-only-v2:refs/remotes/origin/feat/hr-dashboard-english-only-v2
+          git show origin/feat/hr-dashboard-english-only-v2:scripts/hr/localize-public-dashboard-en.mjs > /tmp/hr-v2-oracle.mjs
+
+      - name: Translate disposable public copies
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/hr-en-oracle
+          mkdir -p /tmp/hr-en-oracle
+          while IFS= read -r file; do
+            rel="${file#frontend/analytics/dashboards/hr-analytics-full-set/}"
+            mkdir -p "/tmp/hr-en-oracle/$(dirname "$rel")"
+            cp "$file" "/tmp/hr-en-oracle/$rel"
+          done < <(find frontend/analytics/dashboards/hr-analytics-full-set -type f -name '*.html' | sort)
+          mapfile -t copies < <(find /tmp/hr-en-oracle -type f -name '*.html' | sort)
+          node /tmp/hr-v2-oracle.mjs "${copies[@]}"
+
+      - name: Derive exact context-aware visitor string map
+        run: |
+          mkdir -p scripts/hr
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          import { relative, join } from 'node:path';
+          import { execFileSync } from 'node:child_process';
+
+          const root='frontend/analytics/dashboards/hr-analytics-full-set';
+          const oracle='/tmp/hr-en-oracle';
+          const files=execFileSync('find',[root,'-type','f','-name','*.html'],{encoding:'utf8'}).trim().split('\n').filter(Boolean).sort();
+          const ATTR=/\b(aria-label|title|placeholder|alt|data-label|data-title)\s*=\s*(["'])([\s\S]*?)\2/giu;
+          const JS_STRING=/(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`)/gs;
+          const BLOCK=/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/giu;
+
+          function markupTokens(markup,out){
+            for(const part of markup.split(/(<[^>]+>)/g)){
+              if(!part.startsWith('<')){
+                if(part.trim()) out.push({kind:'text',value:part});
+                continue;
+              }
+              for(const match of part.matchAll(ATTR)) out.push({kind:`attr:${match[1].toLowerCase()}`,value:match[3]});
+            }
+          }
+          function scriptTokens(script,out){
+            for(const match of script.matchAll(JS_STRING)){
+              const literal=match[0];
+              const after=script.slice(match.index+literal.length).match(/^\s*(.)/s)?.[1]||'';
+              if(after===':') continue;
+              out.push({kind:'script',value:literal.slice(1,-1)});
+            }
+          }
+          function tokenize(source){
+            const out=[]; let cursor=0;
+            for(const match of source.matchAll(BLOCK)){
+              const start=match.index; const block=match[0]; const tag=match[1].toLowerCase();
+              markupTokens(source.slice(cursor,start),out);
+              const openEnd=block.indexOf('>')+1;
+              markupTokens(block.slice(0,openEnd),out);
+              if(tag==='script'){
+                const closeStart=block.toLocaleLowerCase('en-US').lastIndexOf('</script');
+                scriptTokens(block.slice(openEnd,closeStart),out);
+              }
+              cursor=start+block.length;
+            }
+            markupTokens(source.slice(cursor),out);
+            return out;
+          }
+
+          const maps={text:new Map(),script:new Map(),attributes:new Map()};
+          const conflicts=[];
+          function add(bucket,source,target,where){
+            if(source===target) return;
+            const map=maps[bucket];
+            const previous=map.get(source);
+            if(previous && previous!==target) conflicts.push({bucket,source,previous,target,where});
+            else map.set(source,target);
+          }
+
+          for(const file of files){
+            const rel=relative(root,file);
+            const before=tokenize(readFileSync(file,'utf8'));
+            const after=tokenize(readFileSync(join(oracle,rel),'utf8'));
+            if(before.length!==after.length) throw new Error(`${rel}: token count changed ${before.length} -> ${after.length}`);
+            for(let i=0;i<before.length;i++){
+              const a=before[i], b=after[i];
+              if(a.kind!==b.kind) throw new Error(`${rel}: token kind drift at ${i}: ${a.kind} -> ${b.kind}`);
+              const bucket=a.kind==='text'?'text':a.kind==='script'?'script':'attributes';
+              add(bucket,a.value,b.value,`${rel}:${i}:${a.kind}`);
+            }
+          }
+          if(conflicts.length){
+            console.error(JSON.stringify(conflicts.slice(0,20),null,2));
+            throw new Error(`${conflicts.length} exact translation conflicts`);
+          }
+          const output={
+            schemaVersion:1,
+            provenance:'One-time exact visitor-string pairs derived from the rejected v2 translator; v3 never executes its generic WORDS fallback.',
+            text:Object.fromEntries([...maps.text].sort(([a],[b])=>a.localeCompare(b,'tr'))),
+            script:Object.fromEntries([...maps.script].sort(([a],[b])=>a.localeCompare(b,'tr'))),
+            attributes:Object.fromEntries([...maps.attributes].sort(([a],[b])=>a.localeCompare(b,'tr'))),
+          };
+          writeFileSync('scripts/hr/hr-public-en-exact-map.json',JSON.stringify(output,null,2)+'\n');
+          console.log(`exact-map: text=${maps.text.size} script=${maps.script.size} attributes=${maps.attributes.size}`);
+          NODE
+
+      - name: Commit exact map and remove temporary oracle workflows
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/_temporary-hr-exact-map-oracle.yml
+          rm -f .github/workflows/_temporary-hr-language-inventory.yml
+          git add scripts/hr/hr-public-en-exact-map.json .github/workflows
+          git diff --cached --check
+          git diff --cached --name-only
+          git config user.name aizanoi-ci
+          git config user.email actions@users.noreply.github.com
+          git commit -m "feat(hr): add exact English visitor-string map"
+          git push origin HEAD:feat/hr-dashboard-english-only-v3
