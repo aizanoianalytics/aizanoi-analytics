@@ -1,0 +1,115 @@
+name: Temporary HR English Candidate
+
+on:
+  push:
+    branches:
+      - feat/hr-dashboard-english-only-v3
+
+permissions:
+  contents: read
+
+concurrency:
+  group: temporary-hr-english-candidate-v3
+  cancel-in-progress: true
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout v3 branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Install browser QA dependencies
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install chromium
+
+      - name: Build English public candidate in working tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=frontend/analytics/dashboards/hr-analytics-full-set
+          files=(
+            "$root/corporate-goals/index.html"
+            "$root/hr-administration-deep-dive/index.html"
+            "$root/hr-executive-board-current/index.html"
+            "$root/hr-executive-board-full-history/index.html"
+            "$root/learning-academy-analytics/index.html"
+            "$root/performance-hiring-turnover/index.html"
+            "$root/store-learning-compliance/index.html"
+            "$root/store-operations-tracking/index.html"
+            "$root/workforce-time-attendance/index.html"
+            "$root/workforce-turnover/index.html"
+          )
+          node scripts/hr/decorate-public-dashboard.mjs "${files[@]}"
+          node scripts/hr/localize-public-dashboard-en.mjs "${files[@]}"
+          cp "$root/workforce-time-attendance/index.html" "$root/hr-executive-board-current/pdks_takip_dashboard.html"
+          cp "$root/workforce-time-attendance/index.html" "$root/hr-executive-board-full-history/pdks_takip_dashboard.html"
+          node scripts/hr/sanitize-public-dashboard.mjs \
+            "${files[@]}" \
+            "$root/hr-executive-board-current/pdks_takip_dashboard.html" \
+            "$root/hr-executive-board-full-history/pdks_takip_dashboard.html"
+          node scripts/hr/localize-public-dashboard-en.mjs --check "${files[@]}"
+
+      - name: Start static server
+        run: |
+          python3 -m http.server 4173 --directory frontend > /tmp/hr-english-server.log 2>&1 &
+          echo $! > /tmp/hr-english-server.pid
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/ >/dev/null && exit 0; sleep 1; done
+          cat /tmp/hr-english-server.log
+          exit 1
+
+      - name: Scan rendered visitor-facing language
+        run: |
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright';
+          const routes=[
+            'corporate-goals','hr-administration-deep-dive','hr-executive-board-current','hr-executive-board-full-history',
+            'learning-academy-analytics','performance-hiring-turnover','store-learning-compliance','store-operations-tracking',
+            'workforce-time-attendance','workforce-turnover'
+          ];
+          const trChars=/[çğıöşüÇĞİÖŞÜ]/u;
+          const trWords=/\b(?:acik|açık|aktif|aksiyon|alt|ana|anket|ara|arasi|arası|ay|aylik|aylık|ayril|ayrıl|baslangic|başlangıç|bazi|bazı|bazli|bazlı|bitis|bitiş|bolge|bölge|bolum|bölüm|brut|brüt|bu|calisan|çalışan|calisma|çalışma|ceza|cikis|çıkış|cinsiyet|dagilim|dağılım|daha|deger|değer|departman|detay|diger|diğer|donem|dönem|dusuk|düşük|egitim|eğitim|eksik|erken|esik|eşik|evden|fazla|fiili|filtre|gelen|genel|gerceklesen|gerçekleşen|giris|giriş|gore|göre|gorev|görev|goster|göster|gun|gün|hedef|hesap|icin|için|izin|kayit|kayıt|kidem|kıdem|kisi|kişi|kirilim|kırılım|kritik|kullan|lokasyon|magaza|mağaza|maas|maaş|merkez|mesai|metrik|mudur|müdür|onceki|önceki|ortalama|ozet|özet|personel|puan|riskli|saat|satis|satış|sayfa|sayisi|sayısı|sebep|secili|seçili|seciniz|seçiniz|sicil|son|sozlesme|sözleşme|sure|süre|surekli|sürekli|tahmin|tamam|toplam|tum|tüm|tur|tür|unvan|ust|üst|uyari|uyarı|uygun|uzman|ucret|ücret|veri|ve|veya|yil|yıl|yonet|yönet|yuksek|yüksek|zorunlu)\b/iu;
+          const suspicious=value=>{const s=String(value??'').replace(/\s+/g,' ').trim();return Boolean(s&&(trChars.test(s)||trWords.test(s)));};
+          const browser=await chromium.launch({headless:true});
+          let failed=false;
+          for(const route of routes){
+            const page=await browser.newPage({viewport:{width:1440,height:1100}});
+            await page.addInitScript(()=>{
+              globalThis.__hrCanvasText=[];
+              const proto=globalThis.CanvasRenderingContext2D?.prototype;
+              if(!proto)return;
+              for(const name of ['fillText','strokeText']){
+                const original=proto[name];
+                if(typeof original!=='function')continue;
+                proto[name]=function(text,...args){globalThis.__hrCanvasText.push(String(text));return original.call(this,text,...args);};
+              }
+            });
+            const errors=[];
+            page.on('pageerror',error=>errors.push(String(error)));
+            await page.goto(`http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/${route}/`,{waitUntil:'networkidle'});
+            await page.waitForTimeout(350);
+            const snapshot=await page.evaluate(()=>{
+              const attrs=[];
+              for(const el of document.querySelectorAll('[aria-label],[title],[placeholder],[alt],[data-label],[data-title]')){
+                for(const name of ['aria-label','title','placeholder','alt','data-label','data-title']) if(el.hasAttribute(name)) attrs.push(el.getAttribute(name));
+              }
+              return {
+                lang:document.documentElement.lang,
+                title:document.title,
+                description:document.querySelector('meta[name="description"]')?.content||'',
+                text:document.body.innerText.split(/\n+/),
+                attrs,
+                canvas:globalThis.__hrCanvasText||[],
+              };
+            });
+            const candidates=[snapshot.title,snapshot.description,...snapshot.text,...snapshot.attrs,...snapshot.canvas];
+            const remaining=[...new Set(candidates.map(v=>String(v??'').replace(/\s+/g,' ').trim()).filter(suspicious))];
+            console.log(`\n=== ${route}: lang=${snapshot.lang} remaining=${remaining.length} pageErrors=${errors.length} ===`);
+            for(const item of remaining.slice(0,300)) console.log(`  - ${item.slice(0,700)}`);
+            if(snapshot.lang!=='en'||remaining.length||errors.length) failed=true;
+            await page.close();
+          }
+          await browser.close();
+          if(failed) process.exit(1);
+          NODE
