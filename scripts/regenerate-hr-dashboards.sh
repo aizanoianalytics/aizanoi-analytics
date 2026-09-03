@@ -21,6 +21,7 @@ LOCALIZER="scripts/hr/localize-public-dashboard-en.mjs"
 SANITIZER="scripts/hr/sanitize-public-dashboard.mjs"
 HARDENER="scripts/hr/harden-generated-dashboard-html.mjs"
 ENGLISH_RUNTIME="${PUBLIC}/hr-public-en.js"
+VISIBLE_ENGLISH_RUNTIME="${PUBLIC}/hr-public-en-visible.js"
 
 EXPECTED_INPUT_COUNT=27
 INPUT_COUNT=$(find "${PIPELINE}" -maxdepth 1 -type f -name '*.xlsx' | wc -l | tr -d '[:space:]')
@@ -133,11 +134,16 @@ node "${SANITIZER}" "${GENERATED_PUBLIC_HTML[@]}"
 
 # Fail closed if the committed English runtime/tag/visitor-format locale drifts.
 node "${LOCALIZER}" --check "${GENERATED_PUBLIC_HTML[@]}"
+node --check "${ENGLISH_RUNTIME}"
+node --check "${VISIBLE_ENGLISH_RUNTIME}"
 
-# Preserve exact regenerated public HTML and its shared English runtime in CI
-# diagnostics so committed outputs can be synchronized from canonical output.
+# Preserve exact regenerated public HTML and both English presentation runtimes
+# in CI diagnostics so committed outputs can be synchronized from canonical output.
 mkdir -p artifacts/diagnostics
-tar -czf artifacts/diagnostics/hr-public-generated-html.tar.gz "${GENERATED_PUBLIC_HTML[@]}" "${ENGLISH_RUNTIME}"
+tar -czf artifacts/diagnostics/hr-public-generated-html.tar.gz \
+  "${GENERATED_PUBLIC_HTML[@]}" \
+  "${ENGLISH_RUNTIME}" \
+  "${VISIBLE_ENGLISH_RUNTIME}"
 
 mkdir -p "$(dirname "${SYNTHETIC_DOWNLOAD}")"
 cp "${OUTPUTS}/icmal_sorgu_sonuc.xlsx" "${SYNTHETIC_DOWNLOAD}"
@@ -145,6 +151,7 @@ cp "${OUTPUTS}/icmal_sorgu_sonuc.xlsx" "${SYNTHETIC_DOWNLOAD}"
 EXPECTED_PUBLIC=(
   index.html
   hr-public-en.js
+  hr-public-en-visible.js
   corporate-goals/index.html
   hr-administration-deep-dive/index.html
   hr-executive-board-current/index.html
