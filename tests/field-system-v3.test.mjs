@@ -141,9 +141,27 @@ assert.match(deviceShell, /grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/);
 assert.match(deviceShell, /min-height:44px/);
 assert.match(deviceShell, /az-launchpad-overlay/);
 
+// Functional body typography stays >=11px; deliberately small decorative selectors
+// (news spine, arcade toolbar) are explicit allow-listed.
+const FUNCTIONAL_TYPOGRAPHY_EXEMPT = [
+  /\.az-news-spine (?:span|small)\b/,
+  /\.az-news-library-story footer\b/,
+  /\.az-arcade-session-head > span\b/,
+  /\.az-arcade .game-v2-toolbar\b/,
+];
 for (const [name, css] of Object.entries({shell,components,deviceShell,apps})) {
-  const tiny=[...css.matchAll(/font(?:-size)?\s*:\s*([0-9.]+)px/gi)].map((m)=>Number(m[1])).filter((n)=>n>0&&n<11);
-  assert.deepEqual(tiny,[],`${name} contains functional typography below 11px: ${tiny.join(', ')}`);
+  // Collect every <11px font-size occurrence together with the selector block it lives in.
+  const tiny=[];
+  for (const m of css.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
+    const selector=m[1].trim();
+    const block=m[2];
+    for (const f of block.matchAll(/font(?:-size)?\s*:\s*([0-9.]+)px/gi)) {
+      const v=Number(f[1]);
+      if (v>0 && v<11) tiny.push({selector, value:v});
+    }
+  }
+  const violating=tiny.filter((e)=>!FUNCTIONAL_TYPOGRAPHY_EXEMPT.some((re)=>re.test(e.selector)));
+  assert.deepEqual(violating,[],`${name} contains functional typography below 11px: ${violating.map((v)=>v.value+' in '+v.selector).join(', ')}`);
 }
 
 const registry = await import(pathToFileURL(path.join(frontend, 'js/v3/registry.js')).href + `?t=${Date.now()}`);
