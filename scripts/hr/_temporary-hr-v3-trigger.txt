@@ -1,0 +1,1 @@
+Temporary user-authored trigger for the rendered English candidate. Remove before final PR.
