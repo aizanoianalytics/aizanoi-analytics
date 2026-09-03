@@ -1,0 +1,70 @@
+name: Temporary HR Date Metadata Normalize
+on:
+  push:
+    branches: [fix/hr-synthetic-historical-dates]
+permissions:
+  contents: write
+jobs:
+  normalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: fix/hr-synthetic-historical-dates
+          fetch-depth: 0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
+      - name: Install locked HR dependencies
+        run: python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
+      - name: Normalize affected synthetic workbook container metadata
+        run: |
+          python - <<'PY'
+          from datetime import datetime, timezone
+          from pathlib import Path
+          import sys
+          pipeline = Path('analytics/dashboards/hr-analytics-full-set/production-pipeline').resolve()
+          sys.path.insert(0, str(pipeline))
+          from dashboard_paths import canonicalize_xlsx
+          stamp = datetime(2026, 8, 27, 9, 11, 36, tzinfo=timezone.utc)
+          names = [
+              'Ayrilanlar_Listesi.xlsx',
+              'cezalar.xlsx',
+              'cikis_sebepleri.xlsx',
+              'eski_kaynak.xlsx',
+              'ise_alma_suresi.xlsx',
+              'performans_magaza_verileri.xlsx',
+          ]
+          for name in names:
+              canonicalize_xlsx(pipeline / name, stamp)
+              print('canonicalized', name, stamp.isoformat())
+          PY
+      - name: Rebuild canonical HR outputs and verify
+        run: |
+          set -euo pipefail
+          bash scripts/regenerate-hr-dashboards.sh
+          python scripts/verify-hr-historical-event-dates.py
+          if grep -R -n '"generated_at":"2026-09-03' analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar frontend/analytics/dashboards/hr-analytics-full-set --include='*.html'; then
+            echo 'unexpected metadata-only Sep 3 build timestamp remains' >&2
+            exit 1
+          fi
+          git diff --check
+      - name: Commit normalized canonical artifacts and remove temporary workflow
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/_temporary-hr-date-metadata-normalize.yml
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'No normalization changes to commit'
+            exit 1
+          fi
+          git config user.name 'aizanoi-ci'
+          git config user.email 'actions@users.noreply.github.com'
+          git commit -m 'fix(hr): preserve synthetic source metadata baseline'
+          git push origin HEAD:fix/hr-synthetic-historical-dates
