@@ -1,1 +1,1 @@
-Temporary user-authored trigger for the rendered English candidate. Remove before final PR.
+Temporary user-authored trigger for repaired HR English runtime validation. Remove before final PR.
