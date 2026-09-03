@@ -12,11 +12,14 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - run: |
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Install browser
+        run: |
           npm ci --ignore-scripts
           npx playwright install chromium
-      - shell: bash
+      - name: Build and serve candidate
+        shell: bash
         run: |
           set -euo pipefail
           root=frontend/analytics/dashboards/hr-analytics-full-set
@@ -36,36 +39,48 @@ jobs:
           node scripts/hr/localize-public-dashboard-en.mjs "${files[@]}"
           python3 -m http.server 4173 --directory frontend >/tmp/hr-probe.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/ >/dev/null && break; sleep 1; done
-      run: |
+      - name: Trace PDKS residual provenance
+        run: |
           node --input-type=module <<'NODE'
           import { chromium } from 'playwright';
-          const cases = [
-            ['hr-executive-board-current','Çalışan Sayısı (Yıllara Göre + 12 Ay Detay)'],
-            ['learning-academy-analytics','Kritik Aksiyon'],
-            ['store-learning-compliance','Akademi Açığı'],
-            ['workforce-turnover','Önceki Aya Göre'],
-            ['hr-administration-deep-dive','Veri Eksik'],
-          ];
+          const tr=/\b(?:veya|saat|sicil|çalış|gün|ay|eşleş|pdks)\b|[çğıöşüÇĞİÖŞÜ]/iu;
           const browser=await chromium.launch({headless:true});
-          for(const [route,sample] of cases){
-            const page=await browser.newPage();
-            await page.goto(`http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/${route}/`,{waitUntil:'networkidle'});
-            await page.waitForTimeout(500);
-            const result=await page.evaluate((sample)=>{
-              const translate=globalThis.AizanoiHrEnglish?.translate;
-              const nodes=[];
-              const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-              let node;
-              while((node=walker.nextNode())){
-                if(String(node.nodeValue??'').replace(/\s+/g,' ').trim()===sample){
-                  const el=node.parentElement;
-                  nodes.push({tag:el?.tagName,id:el?.id||'',className:typeof el?.className==='string'?el.className:'',skip:Boolean(el?.closest('script,style,noscript,template,textarea')),connected:node.isConnected});
-                }
+          const page=await browser.newPage({viewport:{width:1440,height:1100}});
+          await page.addInitScript(()=>{
+            globalThis.__canvas=[];
+            const proto=globalThis.CanvasRenderingContext2D?.prototype;
+            if(!proto)return;
+            for(const name of ['fillText','strokeText']){
+              const original=proto[name];
+              if(typeof original!=='function')continue;
+              proto[name]=function(text,...args){globalThis.__canvas.push({method:name,text:String(text)});return original.call(this,text,...args);};
+            }
+          });
+          await page.goto('http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/',{waitUntil:'networkidle'});
+          await page.waitForTimeout(600);
+          const out=await page.evaluate(()=>{
+            const hits=[];
+            const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+            let node;
+            while((node=walker.nextNode())){
+              const value=String(node.nodeValue??'').replace(/\s+/g,' ').trim();
+              if(!value || !(/\b(?:veya|saat|sicil|çalış|gün|ay|eşleş|pdks)\b|[çğıöşüÇĞİÖŞÜ]/iu.test(value)))continue;
+              const el=node.parentElement;
+              hits.push({kind:'text',value,tag:el?.tagName||'',id:el?.id||'',className:typeof el?.className==='string'?el.className:'',closest:el?.closest('textarea,pre,code,svg,canvas,table,div,span')?.tagName||''});
+            }
+            const attrs=[];
+            for(const el of document.querySelectorAll('[aria-label],[title],[placeholder],[alt],[data-label],[data-title]')){
+              for(const name of ['aria-label','title','placeholder','alt','data-label','data-title']){
+                if(!el.hasAttribute(name))continue;
+                const value=el.getAttribute(name)||'';
+                if(/\b(?:veya|saat|sicil|çalış|gün|ay|eşleş|pdks)\b|[çğıöşüÇĞİÖŞÜ]/iu.test(value))attrs.push({kind:'attr',name,value,tag:el.tagName,id:el.id||'',className:typeof el.className==='string'?el.className:''});
               }
-              return {sample,translated:typeof translate==='function'?translate(sample):null,runtime:typeof translate,nodes};
-            },sample);
-            console.log(JSON.stringify({route,...result}));
-            await page.close();
-          }
+            }
+            return {hits,attrs,canvas:globalThis.__canvas||[],base:typeof globalThis.AizanoiHrEnglish?.translate,visible:typeof globalThis.AizanoiHrEnglishVisible?.translate};
+          });
+          console.log(`base=${out.base} visible=${out.visible}`);
+          for(const item of out.hits.slice(0,100))console.log('TEXT '+JSON.stringify(item));
+          for(const item of out.attrs.slice(0,100))console.log('ATTR '+JSON.stringify(item));
+          for(const item of out.canvas.filter(item=>tr.test(item.text)).slice(0,100))console.log('CANVAS '+JSON.stringify(item));
           await browser.close();
           NODE
