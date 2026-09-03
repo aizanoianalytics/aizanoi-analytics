@@ -10,6 +10,8 @@ let activeOverlay = null;
 let overlayOpener = null;
 let keyboardWindowMode = null;
 let appsStylePromise = null;
+let staticSearchEntries = [];
+let staticSearchPromise = null;
 
 const icon = (name) => ({
   search:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="m20 20-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>',
@@ -569,9 +571,22 @@ function renderSettings() {
   body.innerHTML=`<div class="az-simple-grid az-settings-grid"><div class="az-simple-card"><h3>Appearance</h3><p>Motion follows your preference across the AizanoiOS shell.</p><label class="az-setting-row"><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}> Reduce non-essential motion</label></div><div class="az-simple-card"><h3>Local state</h3><p>Open apps, recent activity, window positions and Historical Worlds session context are stored in this browser.</p><button class="az-button az-button-danger" type="button" data-reset-workspace>Reset local state</button></div></div>`;
 }
 
+function loadStaticSearchEntries() {
+  if (staticSearchPromise) return staticSearchPromise;
+  staticSearchPromise=import('./search-index.generated.js').then(({ STATIC_SEARCH_ENTRIES })=>{
+    staticSearchEntries=STATIC_SEARCH_ENTRIES;
+    return staticSearchEntries;
+  }).catch((error)=>{
+    staticSearchPromise=null;
+    console.warn('Aizanoi static search index failed to load.',error);
+    return staticSearchEntries;
+  });
+  return staticSearchPromise;
+}
+
 function commandRows(query='') {
   const q=query.trim().toLowerCase();
-  const entries=searchableEntries().filter((entry)=>!q || [entry.label,entry.description,...entry.keywords].join(' ').toLowerCase().includes(q));
+  const entries=searchableEntries(staticSearchEntries).filter((entry)=>!q || [entry.label,entry.description,...entry.keywords].join(' ').toLowerCase().includes(q));
   const commands=[
     {type:'action',id:'home',label:'Go Home',description:'Return to the AizanoiOS home screen',keywords:['home','desktop']},
     {type:'action',id:'continue',label:'Continue Historical World',description:'Return to your most recent historical journey',keywords:['continue','resume','world','session']}
@@ -585,15 +600,15 @@ function renderCommands(query='') {
   commandSelection=Math.min(commandSelection,Math.max(0,rows.length-1));
   if(!rows.length){host.innerHTML='<div class="az-command-empty">No direct match. Try an app, Historical World or action.</div>';return;}
   const groups=[];
-  for(const type of ['action','world','app']){
+  for(const type of ['action','world','app','content']){
     const subset=rows.filter((row)=>row.type===type);
     if(subset.length)groups.push({type,subset});
   }
   let index=0;
-  host.innerHTML=groups.map(({type,subset})=>`<div class="az-command-group">${type==='action'?'Actions':type==='world'?'Historical Worlds':'Apps'}</div>${subset.map((row)=>{
+  host.innerHTML=groups.map(({type,subset})=>`<div class="az-command-group">${type==='action'?'Actions':type==='world'?'Historical Worlds':type==='content'?'Content':'Apps'}</div>${subset.map((row)=>{
     const current=index++;
-    const image=row.type==='app'?appById(row.id)?.icon:row.type==='world'?'/assets/icons/ancient-world.svg':'/assets/branding/aizanoi-logo-mark.svg';
-    return `<button class="az-command-row${current===commandSelection?' is-selected':''}" type="button" role="option" aria-selected="${current===commandSelection}" data-command-index="${current}"><img src="${escapeHtml(image)}" alt=""><span><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.description)}</small></span><span class="az-command-kind">${escapeHtml(row.type)}</span></button>`;
+    const image=row.type==='app'?appById(row.id)?.icon:row.type==='world'?'/assets/icons/ancient-world.svg':row.type==='content'?row.icon:'/assets/branding/aizanoi-logo-mark.svg';
+    return `<button class="az-command-row${current===commandSelection?' is-selected':''}" type="button" role="option" aria-selected="${current===commandSelection}" data-command-index="${current}"><img src="${escapeHtml(image)}" alt=""><span><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.description)}</small></span><span class="az-command-kind">${escapeHtml(row.kind||row.type)}</span></button>`;
   }).join('')}`).join('');
 }
 
@@ -604,6 +619,7 @@ function executeCommand(index) {
   closeOverlay(false);
   if(row.type==='app')openApp(row.id);
   else if(row.type==='world')launchWorld(row.id);
+  else if(row.type==='content')location.href=row.href;
   else if(row.id==='home')showHome();
   else if(row.id==='continue'){
     const session=Store.getFieldSession();
@@ -617,6 +633,10 @@ function openCommand(opener) {
   if(input)input.value='';
   renderCommands('');
   openOverlay('az-command-overlay',opener);
+  loadStaticSearchEntries().then(()=>{
+    if(activeOverlay?.id!=='az-command-overlay')return;
+    renderCommands(document.getElementById('az-command-input')?.value||'');
+  });
 }
 
 function handleRootClick(event) {
