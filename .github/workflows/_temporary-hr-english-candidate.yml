@@ -15,106 +15,58 @@ concurrency:
 jobs:
   inspect:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
-      - name: Checkout v3 branch
+      - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-
-      - name: Install browser QA dependencies
-        run: |
-          npm ci --ignore-scripts
-          npx playwright install chromium
-
-      - name: Build English public candidate in working tree
-        shell: bash
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
+      - name: Install locked dependencies
         run: |
           set -euo pipefail
-          root=frontend/analytics/dashboards/hr-analytics-full-set
-          files=(
-            "$root/corporate-goals/index.html"
-            "$root/hr-administration-deep-dive/index.html"
-            "$root/hr-executive-board-current/index.html"
-            "$root/hr-executive-board-full-history/index.html"
-            "$root/learning-academy-analytics/index.html"
-            "$root/performance-hiring-turnover/index.html"
-            "$root/store-learning-compliance/index.html"
-            "$root/store-operations-tracking/index.html"
-            "$root/workforce-time-attendance/index.html"
-            "$root/workforce-turnover/index.html"
-          )
-          node scripts/hr/decorate-public-dashboard.mjs "${files[@]}"
-          node scripts/hr/localize-public-dashboard-en.mjs "${files[@]}"
-          cp "$root/workforce-time-attendance/index.html" "$root/hr-executive-board-current/pdks_takip_dashboard.html"
-          cp "$root/workforce-time-attendance/index.html" "$root/hr-executive-board-full-history/pdks_takip_dashboard.html"
-          node scripts/hr/sanitize-public-dashboard.mjs \
-            "${files[@]}" \
-            "$root/hr-executive-board-current/pdks_takip_dashboard.html" \
-            "$root/hr-executive-board-full-history/pdks_takip_dashboard.html"
-          node scripts/hr/localize-public-dashboard-en.mjs --check "${files[@]}"
-
-      - name: Start static server
+          python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
+          npm ci --ignore-scripts --no-fund
+          npx playwright install chromium
+      - name: Canonical rebuild
+        run: bash scripts/regenerate-hr-dashboards.sh >/tmp/hr-rebuild.log 2>&1
+      - name: Permanent QA concise diagnostic
+        shell: bash
         run: |
-          python3 -m http.server 4173 --directory frontend > /tmp/hr-english-server.log 2>&1 &
-          echo $! > /tmp/hr-english-server.pid
-          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/ >/dev/null && exit 0; sleep 1; done
-          cat /tmp/hr-english-server.log
-          exit 1
-
-      - name: Scan visitor-facing rendered language
-        run: |
-          node --input-type=module <<'NODE'
-          import { chromium } from 'playwright';
-          const routes=[
-            'corporate-goals','hr-administration-deep-dive','hr-executive-board-current','hr-executive-board-full-history',
-            'learning-academy-analytics','performance-hiring-turnover','store-learning-compliance','store-operations-tracking',
-            'workforce-time-attendance','workforce-turnover'
-          ];
-          const trChars=/[çğıöşüÇĞİÖŞÜ]/u;
-          const trWords=/\b(?:acik|açık|aktif|aksiyon|alt|ana|anket|ara|arasi|arası|ay|aylik|aylık|ayril|ayrıl|baslangic|başlangıç|bazi|bazı|bazli|bazlı|bitis|bitiş|bolge|bölge|bolum|bölüm|brut|brüt|bu|calisan|çalışan|calisma|çalışma|ceza|cikis|çıkış|cinsiyet|dagilim|dağılım|daha|deger|değer|departman|detay|diger|diğer|donem|dönem|dusuk|düşük|egitim|eğitim|eksik|erken|esik|eşik|evden|fazla|fiili|filtre|gelen|genel|gerceklesen|gerçekleşen|giris|giriş|gore|göre|gorev|görev|goster|göster|gun|gün|hedef|hesap|icin|için|izin|kayit|kayıt|kidem|kıdem|kisi|kişi|kirilim|kırılım|kritik|kullan|lokasyon|magaza|mağaza|maas|maaş|merkez|mesai|metrik|mudur|müdür|onceki|önceki|ortalama|ozet|özet|personel|puan|riskli|saat|satis|satış|sayfa|sayisi|sayısı|sebep|secili|seçili|seciniz|seçiniz|sicil|son|sozlesme|sözleşme|sure|süre|surekli|sürekli|tahmin|tamam|toplam|tum|tüm|tur|tür|unvan|ust|üst|uyari|uyarı|uygun|uzman|ucret|ücret|veri|ve|veya|yil|yıl|yonet|yönet|yuksek|yüksek|zorunlu)\b/iu;
-          const normalize=v=>String(v??'').replace(/\s+/g,' ').trim();
-          const suspicious=v=>{const s=normalize(v);return Boolean(s&&(trChars.test(s)||trWords.test(s)));};
-          const browser=await chromium.launch({headless:true});
-          let failed=false;
-          for(const route of routes){
-            const page=await browser.newPage({viewport:{width:1440,height:1100}});
-            await page.addInitScript(()=>{
-              globalThis.__hrCanvasText=[];
-              const proto=globalThis.CanvasRenderingContext2D?.prototype;
-              if(!proto)return;
-              for(const name of ['fillText','strokeText']){
-                const original=proto[name];
-                if(typeof original!=='function')continue;
-                proto[name]=function(text,...args){globalThis.__hrCanvasText.push(String(text));return original.call(this,text,...args);};
-              }
-            });
-            const errors=[];
-            page.on('pageerror',error=>errors.push(error?.stack||String(error)));
-            await page.goto(`http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/${route}/`,{waitUntil:'networkidle'});
-            await page.waitForTimeout(450);
-            const snapshot=await page.evaluate(()=>{
-              const text=[];
-              const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-              let node;
-              while((node=walker.nextNode())){
-                const parent=node.parentElement;
-                if(!parent||parent.closest('script,style,noscript,template'))continue;
-                const value=String(node.nodeValue??'').replace(/\s+/g,' ').trim();
-                if(value)text.push(value);
-              }
-              const attrs=[];
-              for(const el of document.querySelectorAll('[aria-label],[title],[placeholder],[alt],[data-label],[data-title]')){
-                if(el.closest('script,style,noscript,template'))continue;
-                for(const name of ['aria-label','title','placeholder','alt','data-label','data-title'])if(el.hasAttribute(name))attrs.push(el.getAttribute(name));
-              }
-              return {lang:document.documentElement.lang,title:document.title,description:document.querySelector('meta[name="description"]')?.content||'',text,attrs,canvas:globalThis.__hrCanvasText||[]};
-            });
-            const candidates=[snapshot.title,snapshot.description,...snapshot.text,...snapshot.attrs,...snapshot.canvas];
-            const remaining=[...new Set(candidates.map(normalize).filter(suspicious))];
-            console.log(`\n=== ${route}: lang=${snapshot.lang} remaining=${remaining.length} pageErrors=${errors.length} ===`);
-            for(const error of errors)console.log(`  ! PAGEERROR ${String(error).replace(/\n/g,' | ')}`);
-            for(const item of remaining.slice(0,160))console.log(`  - ${item.slice(0,900)}`);
-            if(snapshot.lang!=='en'||remaining.length||errors.length)failed=true;
-            await page.close();
-          }
-          await browser.close();
-          if(failed)process.exit(1);
-          NODE
+          set -uo pipefail
+          python3 -m http.server 4173 --directory frontend >/tmp/hr-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/ >/dev/null; then break; fi
+            sleep 1
+          done
+          set +e
+          ANCIENT_WORLD_BASE_URL=http://127.0.0.1:4173 node tests/hr-analytics-browser-qa.mjs >/tmp/hr-qa.log 2>&1
+          status=$?
+          set -e
+          echo '=== PERMANENT QA FAILURE SUMMARY ==='
+          python3 - <<'PY'
+          from pathlib import Path
+          lines=Path('/tmp/hr-qa.log').read_text(errors='replace').splitlines()
+          markers=('AssertionError','ERR_ASSERTION','residual','console','overflow','pageerror','desktop','mobile','lang=', 'actual:', 'expected:', 'operator:')
+          idx=[i for i,line in enumerate(lines) if any(m in line.lower() for m in [x.lower() for x in markers])]
+          if idx:
+              keep=set()
+              for i in idx:
+                  keep.update(range(max(0,i-3),min(len(lines),i+7)))
+              selected=[lines[i] for i in sorted(keep)]
+          else:
+              selected=lines[-120:]
+          print('\n'.join(selected[-180:]))
+          PY
+          echo "QA_EXIT=${status}"
+          exit "$status"
