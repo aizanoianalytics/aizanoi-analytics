@@ -34,27 +34,28 @@ function createFakeRepo() {
   git(['config', 'user.email', 'aizanoi-deploy-test@example.invalid']);
   git(['config', 'user.name', 'aizanoi-deploy-test']);
   git(['config', 'commit.gpgsign', 'false']);
-  writeFileSync(join(root, '.gitkeep'), '');
-  git(['add', '-A']);
+  // Stage the synthetic workbook only so git status stays clean.
+  git(['add', join(frontend, 'analytics', 'dashboards', 'hr-analytics-full-set', 'downloads', 'hr-analytics-full-set-synthetic-output.xlsx')]);
+  git(['add', join(frontend, 'index.html')]);
+  git(['add', join(frontend, 'release.js')]);
+  git(['add', join(frontend, 'service-worker.js')]);
   git(['commit', '-q', '-m', 'init']);
   return root;
 }
 
-// Override REPO via a wrapper script that exports the path and invokes
-// the canonical deploy-public.sh. The wrapper does not change behaviour; it
-// only re-points REPO so CI can exercise the gate without /opt access.
-function buildWrapper(fakeRepo) {
-  const wrapperPath = join(fakeRepo, 'run-with-override.sh');
-  writeFileSync(wrapperPath, `#!/usr/bin/env bash
-set -euo pipefail
-export REPO="${fakeRepo}"
-export WEBROOT="${fakeRepo}/webroot"
-export RELEASE_ROOT="${fakeRepo}/webroot-releases"
-# shellcheck disable=SC1091
-exec bash "${scriptPath}" "\$@"
-`);
-  execFileSync('chmod', ['+x', wrapperPath]);
-  return wrapperPath;
+// Build a deployable copy of scripts/deploy-public.sh in a *separate* tmp dir
+// from the fake checkout so the test copy never dirties git status inside
+// the fake REPO. The copy only swaps REPO/WEBROOT/RELEASE_ROOT paths.
+function createDeployableCopy(fakeRepo, sourceScript) {
+  const sibling = mkdtempSync(join(tmpdir(), 'aizanoi-deploy-script-'));
+  const dst = join(sibling, 'deploy-public.sh');
+  const patched = sourceScript
+    .replace(/REPO="[^"]*"/, `REPO="${fakeRepo}"`)
+    .replace(/WEBROOT="[^"]*"/, `WEBROOT="${fakeRepo}/webroot"`)
+    .replace(/RELEASE_ROOT="[^"]*"/, `RELEASE_ROOT="${fakeRepo}/webroot-releases"`);
+  writeFileSync(dst, patched);
+  execFileSync('chmod', ['+x', dst]);
+  return { script: dst, cleanup: () => rmSync(sibling, { recursive: true, force: true }) };
 }
 
 test('deploy-public.sh script file exists with strict shell mode', () => {
@@ -94,12 +95,14 @@ test('deploy-public.sh refuses to run without AIZANOI_DEPLOY_SHA env', async () 
 
 test('deploy-public.sh refuses when AIZANOI_DEPLOY_SHA mismatches HEAD', async () => {
   const fakeRepo = createFakeRepo();
-  const wrapper = buildWrapper(fakeRepo);
+  let copy;
   try {
+    const source = readFileSync(scriptPath, 'utf8');
+    copy = createDeployableCopy(fakeRepo, source);
     const env = { ...process.env, AIZANOI_DEPLOY_SHA: '0000000000000000000000000000000000000000' };
     let caught = null;
     try {
-      await execFileAsync('bash', [wrapper], { env, timeout: 30000 });
+      await execFileAsync('bash', [copy.script], { env, timeout: 30000 });
     } catch (err) {
       caught = err;
     }
@@ -107,6 +110,7 @@ test('deploy-public.sh refuses when AIZANOI_DEPLOY_SHA mismatches HEAD', async (
     assert.notEqual(caught.code, 0, 'exit code must be non-zero');
     assert.match(String(caught.stderr || caught.stdout || ''), /does not match approved AIZANOI_DEPLOY_SHA/);
   } finally {
+    if (copy) copy.cleanup();
     rmSync(fakeRepo, { recursive: true, force: true });
   }
 });
