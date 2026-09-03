@@ -20,7 +20,7 @@ test('HR public dashboard decoration is deterministic and catalog-backed', () =>
   const second = decorateDashboardHtml(first, 'workforce-turnover');
 
   assert.equal(second, first, 'decorator must be idempotent');
-  assert.match(first, /<html lang="tr">/i);
+  assert.match(first, /<html lang="en">/i);
   assert.match(first, /<title>Workforce Turnover Analytics — Aizanoi Analytics<\/title>/);
   assert.match(first, /<meta name="description" content="Overview, comparison, forecast, early turnover, exit explorer, survival and risk, settings and exports\.">/);
   assert.match(first, /<link rel="canonical" href="https:\/\/aizanoianalytics\.com\/analytics\/dashboards\/hr-analytics-full-set\/workforce-turnover\/">/);
@@ -29,7 +29,7 @@ test('HR public dashboard decoration is deterministic and catalog-backed', () =>
   assert.match(first, /<meta property="og:url" content="https:\/\/aizanoianalytics\.com\/analytics\/dashboards\/hr-analytics-full-set\/workforce-turnover\/">/);
   assert.match(first, /Aizanoi Analytics · HR Analytics Full Set/);
   assert.match(first, /Back to Analytics/);
-  assert.match(first, /Interface language: Turkish/);
+  assert.match(first, /Interface language: English/);
   assert.match(first, /id="native-control"/);
   assert.match(first, />Native link<\/a>/);
   assert.equal((first.match(/AIZANOI_PUBLIC_META_START/g) || []).length, 1);
