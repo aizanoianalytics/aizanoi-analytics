@@ -1,0 +1,73 @@
+name: Temporary HR Language Inventory
+
+on:
+  push:
+    branches:
+      - feat/hr-dashboard-english-only-v3
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install pinned browser dependencies
+        run: |
+          npm ci --ignore-scripts --no-fund
+          npx playwright install chromium
+      - name: Start static frontend server
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-http.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
+          cat /tmp/aizanoi-http.log; exit 1
+      - name: Inventory rendered Turkish visitor copy
+        run: |
+          node --input-type=module <<'NODE'
+          import { chromium } from 'playwright';
+
+          const routes = [
+            'hr-executive-board-full-history',
+            'hr-executive-board-current',
+            'hr-administration-deep-dive',
+            'store-operations-tracking',
+            'workforce-turnover',
+            'store-learning-compliance',
+            'learning-academy-analytics',
+            'performance-hiring-turnover',
+            'corporate-goals',
+            'workforce-time-attendance',
+          ];
+          const marker = /[çğıöşüÇĞİÖŞÜ]|\b(?:ve|veya|için|göre|tüm|toplam|çalışan|personel|mağaza|bölge|departman|eğitim|izin|çıkış|giriş|başlangıç|bitiş|dönem|gün|saat|oran|ortalama|özet|detay|durum|seçiniz|göster|kaydet|sıfırla|ara|bulunamadı|başarılı|başarısız|evet|hayır|kadın|erkek|bekar|evli|yüksek|düşük|zorunlu|hedef|gerçekleşen|kıdem|ünvan|unvan|vardiya|veri|kayıt|riskli|ayrılan|işe|işveren|emeklilik|istifa)\b/iu;
+          const browser = await chromium.launch({ headless:true });
+          for (const route of routes) {
+            const page = await browser.newPage({ viewport:{ width:1440, height:1200 } });
+            await page.goto(`http://127.0.0.1:4173/analytics/dashboards/hr-analytics-full-set/${route}/`, { waitUntil:'networkidle' });
+            await page.waitForTimeout(300);
+            const values = await page.evaluate(() => {
+              const found = [];
+              for (const line of document.body.innerText.split(/\n+/)) {
+                const value = line.replace(/\s+/g,' ').trim();
+                if (value) found.push(value);
+              }
+              for (const el of document.querySelectorAll('[placeholder],[title],[aria-label]')) {
+                for (const name of ['placeholder','title','aria-label']) {
+                  const value = (el.getAttribute(name) || '').replace(/\s+/g,' ').trim();
+                  if (value) found.push(`${name}: ${value}`);
+                }
+              }
+              return found;
+            });
+            const suspicious = [...new Set(values.filter((value) => marker.test(value)))].sort((a,b) => a.localeCompare(b,'tr'));
+            console.log(`\n===== ${route} (${suspicious.length}) =====`);
+            for (const value of suspicious) console.log(value);
+            await page.close();
+          }
+          await browser.close();
+          NODE
