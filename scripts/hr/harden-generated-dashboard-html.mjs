@@ -19,6 +19,15 @@ const plans = new Map([
     ['${def.fmt(r[def.key])}', '${esc(def.fmt(r[def.key]))}'],
     ['${pct(pt.v)}', '${esc(pct(pt.v))}'],
   ]],
+  ['performans_dashboard.html', [
+    // The dashboard template reads these values from its embedded JSON data
+    // and writes them through innerHTML. Escape every data-derived display
+    // value at the generated-artifact boundary before browser HTML parsing.
+    ['${num(DATA.meta.person_count,0)}', '${esc(num(DATA.meta.person_count,0))}'],
+    ['${num(DATA.meta.mandatory_count,0)}', '${esc(num(DATA.meta.mandatory_count,0))}'],
+    ['<option>${y}</option>', '<option>${esc(y)}</option>'],
+    ['<option>${m}</option>', '<option>${esc(m)}</option>'],
+  ]],
 ]);
 
 function replaceRequired(text, unsafeToken, safeToken, fileName) {

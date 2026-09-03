@@ -17,8 +17,11 @@ OUTPUTS="${PIPELINE}/dashboardlar"
 PUBLIC="frontend/analytics/dashboards/hr-analytics-full-set"
 SYNTHETIC_DOWNLOAD="${PUBLIC}/downloads/hr-analytics-full-set-synthetic-output.xlsx"
 DECORATOR="scripts/hr/decorate-public-dashboard.mjs"
+LOCALIZER="scripts/hr/localize-public-dashboard-en.mjs"
 SANITIZER="scripts/hr/sanitize-public-dashboard.mjs"
 HARDENER="scripts/hr/harden-generated-dashboard-html.mjs"
+ENGLISH_RUNTIME="${PUBLIC}/hr-public-en.js"
+VISIBLE_ENGLISH_RUNTIME="${PUBLIC}/hr-public-en-visible.js"
 
 EXPECTED_INPUT_COUNT=27
 INPUT_COUNT=$(find "${PIPELINE}" -maxdepth 1 -type f -name '*.xlsx' | wc -l | tr -d '[:space:]')
@@ -49,7 +52,8 @@ python3 "${PIPELINE}/run_full_pipeline.py"
 # idempotent and only escape data-derived text before it reaches HTML/SVG sinks.
 node "${HARDENER}" \
   "${OUTPUTS}/ERD_P_admin.html" \
-  "${OUTPUTS}/magaza_takip_dosya.html"
+  "${OUTPUTS}/magaza_takip_dosya.html" \
+  "${OUTPUTS}/performans_dashboard.html"
 
 declare -A HTML_MAP=(
   ["ik_takip_dashboard.html"]="hr-executive-board-full-history/index.html"
@@ -89,14 +93,19 @@ PUBLIC_DASHBOARD_HTML=(
   "${PUBLIC}/workforce-turnover/index.html"
 )
 
-# Public chrome and metadata belong to the publish layer, not the ten-stage
-# analytics calculation pipeline. The decorator reads titles, summaries and
-# interface-language metadata from the canonical Analytics catalog and is
-# deterministic/idempotent so generated HTML is never hand-forked.
+# Public chrome, metadata and language declaration belong to the publish layer,
+# not the ten-stage analytics calculation pipeline. The decorator reads titles,
+# summaries and interface-language metadata from the canonical Analytics catalog.
 node "${DECORATOR}" "${PUBLIC_DASHBOARD_HTML[@]}"
 
-# The executive boards embed the same PDKS document. Copy the decorated
-# canonical public artifact so the historical exact-hash dependency remains
+# English presentation is also a publish-layer concern. The localizer preserves
+# raw embedded data and business-logic values, and translates only rendered
+# visitor-facing presentation through a deterministic shared runtime. It also
+# switches explicit number/date presentation formatters from tr-TR to en-US.
+node "${LOCALIZER}" "${PUBLIC_DASHBOARD_HTML[@]}"
+
+# The executive boards embed the same PDKS document. Copy the fully decorated
+# and localized canonical public artifact so the exact-hash dependency remains
 # true; the publish chrome hides itself automatically when rendered in-frame.
 for executive in hr-executive-board-current hr-executive-board-full-history; do
   cp "${PUBLIC}/workforce-time-attendance/index.html" "${PUBLIC}/${executive}/pdks_takip_dashboard.html"
@@ -120,20 +129,30 @@ GENERATED_PUBLIC_HTML=(
 # The production pipeline keeps its original synthetic input filenames for
 # parity/rebuild purposes. Public HTML receives a separate deterministic
 # sanitization boundary so internal workbook labels and vendor identifiers do
-# not become visitor-facing metadata or explanatory copy.
+# not become visitor-facing metadata or explanatory copy. Sanitization remains
+# the final content mutation at the public boundary.
 node "${SANITIZER}" "${GENERATED_PUBLIC_HTML[@]}"
 
-# Preserve the exact regenerated public HTML in CI diagnostics. This makes a
-# failed deterministic-diff gate reviewable and allows committed generated
-# artifacts to be updated from the same pipeline output instead of hand edits.
+# Fail closed if the committed English runtime/tag/visitor-format locale drifts.
+node "${LOCALIZER}" --check "${GENERATED_PUBLIC_HTML[@]}"
+node --check "${ENGLISH_RUNTIME}"
+node --check "${VISIBLE_ENGLISH_RUNTIME}"
+
+# Preserve exact regenerated public HTML and both English presentation runtimes
+# in CI diagnostics so committed outputs can be synchronized from canonical output.
 mkdir -p artifacts/diagnostics
-tar -czf artifacts/diagnostics/hr-public-generated-html.tar.gz "${GENERATED_PUBLIC_HTML[@]}"
+tar -czf artifacts/diagnostics/hr-public-generated-html.tar.gz \
+  "${GENERATED_PUBLIC_HTML[@]}" \
+  "${ENGLISH_RUNTIME}" \
+  "${VISIBLE_ENGLISH_RUNTIME}"
 
 mkdir -p "$(dirname "${SYNTHETIC_DOWNLOAD}")"
 cp "${OUTPUTS}/icmal_sorgu_sonuc.xlsx" "${SYNTHETIC_DOWNLOAD}"
 
 EXPECTED_PUBLIC=(
   index.html
+  hr-public-en.js
+  hr-public-en-visible.js
   corporate-goals/index.html
   hr-administration-deep-dive/index.html
   hr-executive-board-current/index.html
