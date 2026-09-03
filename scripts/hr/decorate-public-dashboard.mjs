@@ -88,7 +88,7 @@ function metadataBlock(dashboard) {
   @media(max-width:640px){.aizanoi-public-dashboard-bar{gap:7px;padding:7px 9px;font-size:11px}.aizanoi-public-dashboard-bar__language{width:100%;margin-left:0;border-radius:7px}}
 </style>
 <script>try{if(window.self!==window.top)document.documentElement.classList.add('aizanoi-embedded-dashboard')}catch{}</script>
-<script data-aizanoi-hr-public-en-visible src="${HR_VISIBLE_EN_SRC}" defer></script>
+<script data-aizanoi-hr-public-en-visible src="${HR_VISIBLE_EN_SRC}"></script>
 ${META_END}`;
 }
 
