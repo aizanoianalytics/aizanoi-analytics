@@ -38,9 +38,9 @@ jobs:
           node --check scripts/modules/build-module-registry.mjs
       - name: Enforce isolated bug-class ESLint gate
         run: |
-          npm ci --ignore-scripts --no-fund --prefix tools/eslint
-          npm audit --audit-level=high --prefix tools/eslint
-          npm --prefix tools/eslint run lint
+          npm ci --prefix tools/eslint --ignore-scripts --no-fund
+          npm audit --prefix tools/eslint --audit-level=high
+          ./tools/eslint/node_modules/.bin/eslint -c eslint.config.js frontend/js/v3 frontend/analytics frontend/service-worker.js frontend/web-editor-preview/runner.js scripts tests
       - name: Validate module manifests and generated wiring
         run: node scripts/modules/build-module-registry.mjs --check
       - name: Build generated News surfaces
