@@ -248,11 +248,21 @@ function publicEnglishRuntime(exactInput) {
     translateNode(document.body);
     const observer = new MutationObserver((records) => {
       for (const record of records) {
+        if (record.type === 'characterData') {
+          translateNode(record.target);
+          continue;
+        }
         for (const node of record.addedNodes) translateNode(node);
         if (record.type === 'attributes') translateAttrs(record.target);
       }
     });
-    observer.observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ATTRS });
+    observer.observe(document.documentElement, {
+      subtree: true,
+      childList: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS,
+    });
   }
 
   function patchCanvas(name) {
