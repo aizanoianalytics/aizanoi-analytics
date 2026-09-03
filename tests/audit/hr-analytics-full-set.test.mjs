@@ -75,16 +75,19 @@ test('all ten original dashboard interaction surfaces are published intact', () 
   }
 });
 
-test('public publish layer adds language, brand navigation and canonical metadata to every HR dashboard', () => {
+test('public publish layer adds English language, brand navigation and canonical metadata to every HR dashboard', () => {
+  assert.ok(existsSync(`${publicRoot}/hr-public-en.js`), 'shared HR English presentation runtime is missing');
+  assert.ok(statSync(`${publicRoot}/hr-public-en.js`).size > 1_000, 'shared HR English presentation runtime is unexpectedly shallow');
   for (const id of dashboardIds) {
     const html = readFileSync(`${publicRoot}/${id}/index.html`, 'utf8');
     const canonical = `https://aizanoianalytics.com/analytics/dashboards/hr-analytics-full-set/${id}/`;
-    assert.match(html, /<html\b[^>]*\blang="tr"/i, `${id} must declare its Turkish interface language`);
+    assert.match(html, /<html\b[^>]*\blang="en"/i, `${id} must declare its English interface language`);
     assert.equal((html.match(/AIZANOI_PUBLIC_META_START/g) || []).length, 1, `${id} must have one managed metadata block`);
     assert.equal((html.match(/AIZANOI_PUBLIC_BAR_START/g) || []).length, 1, `${id} must have one managed public bar`);
+    assert.equal((html.match(/data-aizanoi-hr-public-en/g) || []).length, 1, `${id} must load one managed English presentation runtime`);
     assert.match(html, /Aizanoi Analytics · HR Analytics Full Set/);
     assert.match(html, /Back to Analytics/);
-    assert.match(html, /Interface language: Turkish/);
+    assert.match(html, /Interface language: English/);
     assert.match(html, /<meta name="description" content="[^"]+">/i);
     assert.match(html, new RegExp(`<link rel="canonical" href="${escapeRegExp(canonical)}">`, 'i'));
     assert.match(html, /<meta property="og:title" content="[^"]+ — Aizanoi Analytics">/i);
@@ -93,10 +96,12 @@ test('public publish layer adds language, brand navigation and canonical metadat
   }
 });
 
-test('public HR dashboards remain self-contained under the route-scoped CSP', () => {
+test('public HR dashboards stay self-hosted under the route-scoped CSP', () => {
   for (const id of dashboardIds) {
     const html = readFileSync(`${publicRoot}/${id}/index.html`, 'utf8');
     assert.doesNotMatch(html, /fonts\.(?:googleapis|gstatic)\.com/i, `${id} depends on an external font provider`);
+    assert.match(html, /src="\/analytics\/dashboards\/hr-analytics-full-set\/hr-public-en\.js"/i,
+      `${id} must use the shared same-origin English presentation runtime`);
   }
 });
 
@@ -123,9 +128,9 @@ test('catalog exposes every dashboard and accurately describes the full pipeline
     assert.ok(existsSync(`${sourceRoot}/${dashboard.id}/README.md`));
     assert.ok(dashboard.capabilities.length >= 4);
   }
-  assert.match(catalog, /Interface language · Turkish/i);
-  assert.match(analyticsCatalog, /interfaceLanguage:'Turkish'/);
-  assert.match(analyticsCatalog, /interfaceLanguageCode:'tr'/);
+  assert.match(catalog, /Interface language · English/i);
+  assert.match(analyticsCatalog, /interfaceLanguage:'English'/);
+  assert.match(analyticsCatalog, /interfaceLanguageCode:'en'/);
   assert.match(catalog, /10<\/strong><span>original dashboard surfaces/i);
   assert.match(catalog, /27<\/strong><span>synthetic source workbooks/i);
   assert.match(catalog, /22<\/strong><span>parity-verified Python modules/i);
@@ -133,14 +138,29 @@ test('catalog exposes every dashboard and accurately describes the full pipeline
   assert.match(catalog, /0<\/strong><span>real employer or employee records/i);
 });
 
-test('canonical publish pipeline decorates before sanitization and embeds the decorated PDKS artifact', () => {
+test('canonical publish pipeline decorates, localizes, embeds and only then sanitizes', () => {
   const publish = readFileSync('scripts/regenerate-hr-dashboards.sh', 'utf8');
   const decorateAt = publish.indexOf('node "${DECORATOR}" "${PUBLIC_DASHBOARD_HTML[@]}"');
+  const localizeAt = publish.indexOf('node "${LOCALIZER}" "${PUBLIC_DASHBOARD_HTML[@]}"');
   const embedAt = publish.indexOf('cp "${PUBLIC}/workforce-time-attendance/index.html"');
   const sanitizeAt = publish.indexOf('node "${SANITIZER}" "${GENERATED_PUBLIC_HTML[@]}"');
+  const englishCheckAt = publish.indexOf('node "${LOCALIZER}" --check "${GENERATED_PUBLIC_HTML[@]}"');
   assert.ok(decorateAt >= 0, 'public decorator is not wired into the canonical rebuild');
-  assert.ok(embedAt > decorateAt, 'embedded PDKS copies must come from the decorated canonical artifact');
-  assert.ok(sanitizeAt > embedAt, 'sanitization must remain the final public-content boundary');
+  assert.ok(localizeAt > decorateAt, 'English presentation localization must run after canonical metadata decoration');
+  assert.ok(embedAt > localizeAt, 'embedded PDKS copies must come from the localized canonical artifact');
+  assert.ok(sanitizeAt > embedAt, 'sanitization must remain the final public-content mutation boundary');
+  assert.ok(englishCheckAt > sanitizeAt, 'English drift verification must inspect the final sanitized public artifacts');
+});
+
+test('English localization is presentation-only and does not rewrite raw analytics source values', () => {
+  const localizer = readFileSync('scripts/hr/localize-public-dashboard-en.mjs', 'utf8');
+  assert.match(localizer, /const SKIP = 'script,style,noscript,template,textarea,pre,code'/,
+    'runtime must skip embedded raw data and business-logic script content');
+  assert.match(localizer, /MutationObserver/);
+  assert.match(localizer, /CanvasRenderingContext2D/);
+  assert.match(localizer, /\.toLocaleString/);
+  assert.doesNotMatch(localizer, /const WORDS\s*=\s*new Map/,
+    'rejected generic word-replacement localization must not return');
 });
 
 test('download exactly matches the integrated pipeline output', () => {
