@@ -11,6 +11,8 @@
 //   - no page-level horizontal overflow at 1440px and 390px
 //   - catalog canonical + meta description present
 //   - each original dashboard's own interactive surface is present
+//   - public HR dashboards declare lang=en and expose no visitor-facing Turkish
+//     in rendered DOM text, accessibility/display attributes or canvas text
 //
 // ACCESSIBILITY regression budget:
 //   Axe remains a hard gate for the public catalog. The generated dashboard
@@ -66,6 +68,19 @@ const ROUTE_CONTROL = new Map([
   ['workforce-time-attendance', '[data-view="personView"]'],
 ]);
 
+// Deliberately presentation-oriented. Raw embedded source/business values inside
+// script/template nodes are allowed to remain Turkish so joins, calculations,
+// filters and exports retain canonical semantics. The gate below inspects only
+// surfaces a visitor or assistive technology can actually receive.
+const TURKISH_CHARS = /[çğıöşüÇĞİÖŞÜ]/u;
+const TURKISH_WORDS = /\b(?:acik|açık|aktif|aksiyon|alt|ana|anket|ara|arasi|arası|ay|aylik|aylık|ayril|ayrıl|baslangic|başlangıç|bazi|bazı|bazli|bazlı|bitis|bitiş|bolge|bölge|bolum|bölüm|brut|brüt|bu|calisan|çalışan|calisma|çalışma|ceza|cikis|çıkış|cinsiyet|dagilim|dağılım|daha|deger|değer|departman|detay|diger|diğer|donem|dönem|dusuk|düşük|egitim|eğitim|eksik|erken|esik|eşik|evden|fazla|fiili|filtre|gelen|genel|gerceklesen|gerçekleşen|giris|giriş|gore|göre|gorev|görev|goster|göster|gun|gün|hedef|hesap|icin|için|izin|kayit|kayıt|kidem|kıdem|kisi|kişi|kirilim|kırılım|kritik|kullan|lokasyon|magaza|mağaza|maas|maaş|merkez|mesai|metrik|mudur|müdür|onceki|önceki|ortalama|ozet|özet|personel|puan|riskli|saat|satis|satış|sayfa|sayisi|sayısı|sebep|secili|seçili|seciniz|seçiniz|sicil|son|sozlesme|sözleşme|sure|süre|surekli|sürekli|tahmin|tamam|toplam|tum|tüm|tur|tür|unvan|ust|üst|uyari|uyarı|uygun|uzman|ucret|ücret|veri|ve|veya|yil|yıl|yonet|yönet|yuksek|yüksek|zorunlu)\b/iu;
+const DISPLAY_ATTRS = ['aria-label', 'title', 'placeholder', 'alt', 'data-label', 'data-title'];
+const normalizeVisitorText = (value) => String(value ?? '').replace(/\s+/g, ' ').trim();
+const looksTurkish = (value) => {
+  const text = normalizeVisitorText(value);
+  return Boolean(text && (TURKISH_CHARS.test(text) || TURKISH_WORDS.test(text)));
+};
+
 const axeSrc = readFileSync(axePath, 'utf8');
 
 let failures = 0;
@@ -73,6 +88,38 @@ const browser = await chromium.launch({
   headless: true,
   executablePath: process.env.CHROMIUM_EXECUTABLE || undefined,
 });
+
+async function renderedLanguageSnapshot(page) {
+  return page.evaluate((displayAttrs) => {
+    const text = [];
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      const parent = node.parentElement;
+      if (!parent || parent.closest('script,style,noscript,template,textarea')) continue;
+      const value = String(node.nodeValue ?? '').replace(/\s+/g, ' ').trim();
+      if (value) text.push(value);
+    }
+
+    const attrs = [];
+    const selector = displayAttrs.map((name) => `[${name}]`).join(',');
+    for (const element of document.querySelectorAll(selector)) {
+      if (element.closest('script,style,noscript,template')) continue;
+      for (const name of displayAttrs) {
+        if (element.hasAttribute(name)) attrs.push(element.getAttribute(name));
+      }
+    }
+
+    return {
+      lang: document.documentElement.lang,
+      title: document.title,
+      description: document.querySelector('meta[name="description"]')?.content || '',
+      text,
+      attrs,
+      canvas: globalThis.__hrCanvasText || [],
+    };
+  }, DISPLAY_ATTRS);
+}
 
 async function auditRoute(route, layout, isCatalog) {
   const context = await browser.newContext({
@@ -82,6 +129,19 @@ async function auditRoute(route, layout, isCatalog) {
   });
   const page = await context.newPage();
   await page.route('**/favicon.ico', (route) => route.fulfill({ status: 204, body: '' }));
+  await page.addInitScript(() => {
+    globalThis.__hrCanvasText = [];
+    const proto = globalThis.CanvasRenderingContext2D?.prototype;
+    if (!proto) return;
+    for (const name of ['fillText', 'strokeText']) {
+      const original = proto[name];
+      if (typeof original !== 'function') continue;
+      proto[name] = function collectHrCanvasText(text, ...args) {
+        globalThis.__hrCanvasText.push(String(text));
+        return original.call(this, text, ...args);
+      };
+    }
+  });
   const consoleErrors = [];
   const failedResources = [];
   page.on('console', (msg) => { if (msg.type() === 'error') consoleErrors.push(msg.text()); });
@@ -111,6 +171,22 @@ async function auditRoute(route, layout, isCatalog) {
       assert.ok(await page.locator(selector).count() > 0, `${label}: original control ${selector} missing`);
       assert.ok(await page.locator('button,select,input,textarea,a').count() > 0,
         `${label}: dashboard has no interactive controls`);
+
+      // Match the publish-layer validation timing: dashboards may finish their
+      // initial synchronous render just after DOMContentLoaded/network idle.
+      await page.waitForTimeout(450);
+      const snapshot = await renderedLanguageSnapshot(page);
+      const candidates = [
+        snapshot.title,
+        snapshot.description,
+        ...snapshot.text,
+        ...snapshot.attrs,
+        ...snapshot.canvas,
+      ];
+      const residuals = [...new Set(candidates.map(normalizeVisitorText).filter(looksTurkish))];
+      assert.equal(snapshot.lang, 'en', `${label}: expected html lang=en, found ${snapshot.lang || '(empty)'}`);
+      assert.deepEqual(residuals, [],
+        `${label}: visitor-facing Turkish residuals: ${JSON.stringify(residuals.slice(0, 20))}`);
     }
 
     // No page-level horizontal overflow at this viewport.
@@ -162,4 +238,4 @@ if (failures > 0) {
   console.error(`\n${failures} HR dashboard browser QA failure(s) — fix before merge`);
   process.exit(1);
 }
-console.log('\nHR Analytics Full Set browser QA: all routes passed (desktop + 390px), no new a11y regressions.');
+console.log('\nHR Analytics Full Set browser QA: all routes passed (desktop + 390px), rendered English clean, no new a11y regressions.');
