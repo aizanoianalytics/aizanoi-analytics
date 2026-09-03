@@ -8,7 +8,7 @@ function audioContext() {
     contextPromise = new Promise((resolve, reject) => {
       try {
         const Ctx = window.AudioContext || window.webkitAudioContext;
-        if (!Ctx) return reject(new Error('Web Audio unavailable'));
+        if (!Ctx) { reject(new Error('Web Audio unavailable')); return; }
         resolve(new Ctx());
       } catch (error) { reject(error); }
     });
