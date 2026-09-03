@@ -1,6 +1,6 @@
 # Aizanoi HR Analytics Full Set Python 3.11 x64 dependency lock
 numpy==2.3.3
-pandas==2.3.3
+pandas==3.0.5
 openpyxl==3.1.5
 scikit-learn==1.7.2
 statsmodels==0.15.0
