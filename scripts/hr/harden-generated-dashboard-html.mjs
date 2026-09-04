@@ -33,6 +33,19 @@ const plans = new Map([
     // the helper consistent with every other interpolation in the same template).
     // Idempotent guard: only apply if not already esc()'d.
     ['data-add="${p.i}"', 'data-add="${esc(p.i)}"'],
+    // renderBonusSettings writes user-editable bonus coefficients (persisted
+    // in localStorage under aizanoi_bonus_settings_v2) into the `value="..."`
+    // attribute of inputs inside an innerHTML template. The key loop variable
+    // `k` ranges over a fixed literal list, but the VALUE r[k] is
+    // attacker-influenced local state — it must be esc()'d, never classified
+    // safe just because the index is numeric. Idempotent guard: the canonical
+    // Python template already emits the esc() form.
+    ["data-key=\"${k}\" value=\"${r[k]??''}\"", "data-key=\"${esc(k)}\" value=\"${esc(r[k]??'')}\""],
+    ['data-bonus-grade="${esc(r.grade)}" value="${r.value}"', 'data-bonus-grade="${esc(r.grade)}" value="${esc(r.value)}"'],
+    // The delete-scenario button column formatter interpolates the row index
+    // raw into a data attribute inside an innerHTML template. v is numeric in
+    // practice but the formatter contract cannot prove it — escape at source.
+    ['data-del-scenario="${v}"', 'data-del-scenario="${esc(v)}"'],
   ]],
   ['hedefler_dashboard.html', [
     // PR-1: the canonical Python template (hedefler_dashboard_template.py) now
