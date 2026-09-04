@@ -1,0 +1,50 @@
+name: Recruitment browser gate wiring
+
+on:
+  push:
+    branches:
+      - feat/recruitment-multiselect-settings
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: feat/recruitment-multiselect-settings
+          fetch-depth: 0
+
+      - name: Wire Recruitment QA through existing HR browser entrypoint
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('tests/hr-analytics-browser-qa.mjs')
+          source = path.read_text(encoding='utf-8')
+          marker = "await import('./recruitment-analytics-browser-qa.mjs');"
+          if marker in source:
+              raise SystemExit('Recruitment browser QA is already wired')
+          anchor = "console.log('\\nHR Analytics Full Set browser QA: all routes passed (desktop + 390px), rendered English clean, no new a11y regressions.');"
+          if source.count(anchor) != 1:
+              raise SystemExit(f'HR browser QA anchor count={source.count(anchor)}')
+          source = source.replace(anchor, anchor + "\n\n// Keep New HR Recruitment interactions inside the existing required browser-smoke context.\n" + marker, 1)
+          path.write_text(source, encoding='utf-8')
+          PY
+
+      - name: Validate wiring
+        run: |
+          node --check tests/hr-analytics-browser-qa.mjs
+          node --check tests/recruitment-analytics-browser-qa.mjs
+          git diff --check
+
+      - name: Commit permanent test wiring
+        run: |
+          rm .github/workflows/recruitment-browser-gate-wire.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'test(recruitment): wire browser QA through existing smoke entrypoint'
+          git push origin HEAD:feat/recruitment-multiselect-settings
