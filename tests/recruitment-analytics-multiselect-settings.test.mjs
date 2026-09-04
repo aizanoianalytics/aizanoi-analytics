@@ -58,5 +58,8 @@ test("Reset Filters does not erase Settings exclusions", () => {
 });
 
 test("Settings remains usable on narrow screens", () => {
-  assert.match(html, /@media \(max-width: 820px\)[\s\S]*?\.settings-transfer-grid \{ grid-template-columns: 1fr; \}/);
+  assert.match(html, /@media \(max-width: 820px\)[\s\S]*?\.nav-tabs \{ width: 100%; max-width: 100%; overflow-x: auto;/);
+  assert.match(html, /\.settings-transfer-grid \{ grid-template-columns: minmax\(0, 1fr\); min-width: 0; \}/);
+  assert.match(html, /\.settings-transfer-actions \{ display: grid; grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); width: 100%; min-width: 0; \}/);
+  assert.match(html, /\.settings-transfer-actions \.btn \{ width: auto; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; \}/);
 });
