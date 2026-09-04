@@ -1,0 +1,39 @@
+name: Recruitment mobile header diagnostic
+
+on:
+  push:
+    branches:
+      - feat/recruitment-multiselect-settings
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: feat/recruitment-multiselect-settings
+          fetch-depth: 0
+      - name: Inspect header CSS and markup
+        run: |
+          set -euo pipefail
+          FILE='frontend/analytics/dashboards/new-hr-collection/recruitment-analytics/index.html'
+          echo '--- header-actions CSS context ---'
+          grep -n -C 12 'header-actions' "$FILE" || true
+          echo '--- quickImportBtn markup context ---'
+          grep -n -C 12 'quickImportBtn' "$FILE" || true
+          echo '--- header markup context ---'
+          grep -n -C 12 '<header' "$FILE" || true
+          echo '--- mobile media contexts ---'
+          grep -n -C 6 '@media (max-width' "$FILE" || true
+      - name: Remove diagnostic workflow
+        run: |
+          rm .github/workflows/recruitment-mobile-header-diagnostic.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'chore(recruitment): remove mobile header diagnostic'
+          git push origin HEAD:feat/recruitment-multiselect-settings
