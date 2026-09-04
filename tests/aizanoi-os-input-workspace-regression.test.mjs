@@ -23,6 +23,11 @@ test('Signal Snake keeps keyboard restart available and renders a legible New Ga
   assert.match(source, /background:#5265db;color:#fff/);
 });
 
+test('Mines cancels a pending long-press when touch movement begins', () => {
+  const source = read('frontend/js/v3/apps/games/assets/mines.js');
+  assert.match(source, /cell\.addEventListener\('pointermove',[\s\S]*clearTimeout\(longPressTimer\)/);
+});
+
 test('desktop exposes Workspace and Workspace opens at the local root with Photos, Music, Text and Editor', () => {
   const platform = read('frontend/js/v3/brand-platform.js');
   const workspace = read('frontend/js/v3/apps/workspace/src/app.js');

@@ -38,6 +38,15 @@ const canonical = [
   ...feed.categories.map((slug) => `/news/category/${slug}/`)
 ];
 
+test('New HR collection exposes parseable CollectionPage JSON-LD', () => {
+  const html = read('frontend/analytics/dashboards/new-hr-collection/index.html');
+  const raw = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(raw, 'Collection page must include JSON-LD');
+  const jsonLd = JSON.parse(raw);
+  assert.equal(jsonLd['@context'], 'https://schema.org');
+  assert.equal(jsonLd['@type'], 'CollectionPage');
+});
+
 test('sitemap reflects canonical products, privacy, Historical Worlds and generated News discovery routes', () => {
   const urls = [...sitemap.matchAll(/<url>\s*<loc>https:\/\/aizanoianalytics\.com([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)]
     .map(([, path, lastmod]) => ({ path, lastmod }));

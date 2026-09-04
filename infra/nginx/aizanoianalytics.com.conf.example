@@ -1,6 +1,7 @@
 server {
     server_name example.com;
     root /var/www/example.com;
+    disable_symlinks if_not_owner from=$document_root;
     index index.html;
     include snippets/aizanoi-static-security-headers.conf;
     client_max_body_size 128k;

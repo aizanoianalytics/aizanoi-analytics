@@ -115,6 +115,12 @@ test('deploy-public.sh refuses when AIZANOI_DEPLOY_SHA mismatches HEAD', async (
   }
 });
 
+test('deploy-public.sh rejects symbolic links before promotion', () => {
+  const src = readFileSync(scriptPath, 'utf8');
+  assert.match(src, /find "\$\{STAGING\}" -type l -print -quit/);
+  assert.match(src, /FATAL: staged release contains symbolic links/);
+});
+
 test('HERMES_OPERATIONS.md documents the exact-SHA invocation form', () => {
   const ops = readFileSync(`${repoRoot}/docs/HERMES_OPERATIONS.md`, 'utf8');
   assert.match(ops, /AIZANOI_DEPLOY_SHA="\$TARGET_SHA" bash scripts\/deploy-public\.sh/);
