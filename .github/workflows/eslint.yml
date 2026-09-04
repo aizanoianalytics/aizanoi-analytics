@@ -29,6 +29,6 @@ jobs:
         # gate; Dependabot is the repository's vulnerability intake.
         run: |
           npm ci --prefix tools/eslint --ignore-scripts --no-fund
-          timeout 90s npm audit --prefix tools/eslint --audit-level=high || echo '[eslint] npm audit unavailable or timed out; Dependabot remains the canonical vulnerability surface' >&2
+          timeout --foreground --kill-after=10s 90s env npm_config_fetch_timeout=60000 npm_config_fetch_retries=0 npm audit --prefix tools/eslint --audit-level=high || echo '[eslint] npm audit unavailable or timed out; Dependabot remains the canonical vulnerability surface' >&2
       - name: Enforce bug-class JavaScript rules
         run: ./tools/eslint/node_modules/.bin/eslint -c eslint.config.js frontend/js/v3 frontend/analytics frontend/service-worker.js frontend/web-editor-preview/runner.js scripts tests
