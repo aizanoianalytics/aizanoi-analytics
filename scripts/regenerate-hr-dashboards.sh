@@ -53,7 +53,8 @@ python3 "${PIPELINE}/run_full_pipeline.py"
 node "${HARDENER}" \
   "${OUTPUTS}/ERD_P_admin.html" \
   "${OUTPUTS}/magaza_takip_dosya.html" \
-  "${OUTPUTS}/performans_dashboard.html"
+  "${OUTPUTS}/performans_dashboard.html" \
+  "${OUTPUTS}/hedefler_dashboard.html"
 
 declare -A HTML_MAP=(
   ["ik_takip_dashboard.html"]="hr-executive-board-full-history/index.html"
