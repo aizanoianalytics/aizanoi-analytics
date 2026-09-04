@@ -145,6 +145,7 @@ jobs:
           node tests/service-worker-browser.mjs 2>&1 | tee artifacts/diagnostics/service-worker-browser.log || status=1
           for script in ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs; do node "tests/$script" 2>&1 | tee "artifacts/diagnostics/$script.log" || status=1; done
           node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
+          node tests/recruitment-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/recruitment-analytics-browser-qa.log || status=1
           exit $status
       - name: AizanoiOS utility browser gates
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
