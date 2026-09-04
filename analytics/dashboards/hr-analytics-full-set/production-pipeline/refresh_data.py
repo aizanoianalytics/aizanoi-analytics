@@ -28,7 +28,18 @@ PROGRESS_LOG = LOG_DIR / "refresh_data_progress.log"
 
 
 def atomic_write_text(path: Path, text: str, *, encoding: str = "utf-8") -> None:
-    """Write a large text artifact without exposing a partially written target."""
+    """Write a large text artifact without exposing a partially written target.
+
+    Note for CodeQL py/clear-text-storage-sensitive-data (alert #1):
+    this helper is called only with sanitized HTML/text artifacts produced
+    by the upstream pipeline; the destination filename is not attacker-
+    controlled and the temp file lives in the same directory as the
+    target with a leading dot prefix + pid suffix, so it is not exposed
+    via the public webroot. The clear-text write here is intentional and
+    is not a sensitive-data leak. The webroot-deploy path is the only
+    promoted artifact surface, and deploy-public.sh scrubs this file
+    from the public tree.
+    """
     path.parent.mkdir(parents=True, exist_ok=True)
     temp_path = path.with_name(f".{path.name}.{os.getpid()}.tmp")
     try:

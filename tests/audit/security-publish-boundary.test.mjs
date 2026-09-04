@@ -132,11 +132,17 @@ test('deploy is cwd-independent: same frontend/ → staging result from differen
   const unrelated = mkdtempSync(path.join(tmpdir(), 'aizanoi-unrelated-'));
   try {
     const source = path.join(repoRoot, 'frontend');
-    execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingA}/"`], { cwd: repoRoot });
-    execFileSync('bash', ['-c', `rsync -a --delete "${source}/" "${stagingB}/"`], { cwd: unrelated });
-    const list = (root) => execFileSync('bash', ['-c', `cd "${root}" && find . -type f | sort`], { encoding: 'utf8' });
-    const a = list(stagingA);
-    const b = list(stagingB);
+    // Use execFileSync with an explicit argv (no shell interpolation). The test
+    // builds the rsync command with literal `${tmpdir}/...` paths that the test
+    // itself controls; passing them as separate argv entries means no shell
+    // parsing happens, so js/shell-command-injection-from-environment does not
+    // see any environment-derived data flowing into a command sink.
+    execFileSync('rsync', ['-a', '--delete', `${source}/`, `${stagingA}/`], { cwd: repoRoot });
+    execFileSync('rsync', ['-a', '--delete', `${source}/`, `${stagingB}/`], { cwd: unrelated });
+    const list = (root) => execFileSync('find', ['.', '-type', 'f'], { cwd: root, encoding: 'utf8' });
+    const sortLines = (s) => s.split('\n').filter(Boolean).sort().join('\n');
+    const a = sortLines(list(stagingA));
+    const b = sortLines(list(stagingB));
     assert.equal(a, b, 'Publish must be cwd-independent: staging trees differ');
     assert.match(a, /analytics\/dashboards\/hr-analytics-full-set\/index\.html/, 'Staging must contain HR catalog');
     assert.match(a, /analytics\/dashboards\/hr-analytics-full-set\/workforce-turnover\/index\.html/, 'Staging must contain canonical turnover');
