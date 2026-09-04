@@ -23,7 +23,7 @@ jobs:
       - name: Install pinned browser QA dependencies
         run: |
           npm ci --ignore-scripts --no-fund
-          npm audit --audit-level=high
+          node scripts/ci/npm-audit-gate.mjs
           npx playwright install --with-deps "${{ matrix.browser }}"
       - name: Build generated News surfaces
         run: node scripts/news/build-news.mjs
