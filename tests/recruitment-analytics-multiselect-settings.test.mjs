@@ -46,6 +46,8 @@ test("Settings exclusions are browser-local and form a global analysis boundary"
   assert.match(html, /state\.excludedValues\.unit\.has\(text\(record\.unit\)\)/);
   assert.match(html, /state\.excludedValues\.position_name\.has\(text\(record\.position_name\)\)/);
   assert.match(html, /function recordMatches\(record, filters\) \{\s*if \(recordExcluded\(record\)\) return false/);
+  assert.match(html, /function reconcileGlobalFiltersToOptions\(\)/);
+  assert.match(html, /reconcileGlobalFiltersToOptions\(\);/);
 });
 
 test("Reset Filters does not erase Settings exclusions", () => {
