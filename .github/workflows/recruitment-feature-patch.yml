@@ -1,0 +1,49 @@
+name: Recruitment feature patch
+
+on:
+  push:
+    branches:
+      - feat/recruitment-multiselect-settings
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: feat/recruitment-multiselect-settings
+          fetch-depth: 0
+      - name: Repair staging-script typo
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('scripts/tmp-recruitment-feature-patch.py')
+          s = p.read_text()
+          bad = '''    pattern = (\n        rf'<select class="filter-control" data-global-filter="{re.escape(field)}">\\s*'\n        rf'<option value="">{re.escape(placeholder)}</option>\\s*'</n        rf'</select>'\n    )\n    # Build pattern without accidental Python source concatenation artifacts.\n'''
+          if bad not in s:
+              raise SystemExit('expected staging typo anchor not found')
+          p.write_text(s.replace(bad, '    # Build the exact select pattern.\n', 1))
+          PY
+          python3 -m py_compile scripts/tmp-recruitment-feature-patch.py
+      - name: Apply deterministic Recruitment patch
+        run: python3 scripts/tmp-recruitment-feature-patch.py
+      - name: Run focused regression test
+        run: node --test tests/recruitment-analytics-multiselect-settings.test.mjs
+      - name: Validate patch
+        run: |
+          git diff --check
+          grep -q 'data-view-panel="settings"' frontend/analytics/dashboards/new-hr-collection/recruitment-analytics/index.html
+          grep -q 'aizanoi-recruitment-settings-v1' frontend/analytics/dashboards/new-hr-collection/recruitment-analytics/index.html
+      - name: Commit only final feature artifacts
+        run: |
+          rm scripts/tmp-recruitment-feature-patch.py
+          rm .github/workflows/recruitment-feature-patch.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'feat(recruitment): add multi-select filters and exclusion settings'
+          git push origin HEAD:feat/recruitment-multiselect-settings
