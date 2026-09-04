@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-04-ecb-poll-second-and-final-hike",
+  "kind": "daily",
+  "title": "ECB set for second and likely final hike to 2.5% next week, Reuters poll finds, as inflation hits 3.3%",
+  "summary": "All 65 economists in a Reuters poll published on 3 September expect the European Central Bank to lift its deposit rate by a quarter point to 2.50 percent at the 10 September meeting, the second increase of a hiking campaign that would be its shortest in 15 years, with about nine in ten expecting no further move this year. Euro zone inflation accelerated to 3.3 percent in August, driven largely by energy costs linked to the Middle East war, though most economists said the surge should not trigger broad inflation pressure and cautioned against over-tightening into a fragile economy.",
+  "category": "economy-markets",
+  "priority": 68,
+  "publishedAt": "2026-09-04T18:20:00Z",
+  "updatedAt": "2026-09-04T18:20:00Z",
+  "retrievedAt": "2026-09-04T16:25:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ECB", "euro zone", "interest rates", "inflation", "Reuters poll"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/ecb-raise-rates-second-time-september-then-done-say-economists-2026-09-03/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

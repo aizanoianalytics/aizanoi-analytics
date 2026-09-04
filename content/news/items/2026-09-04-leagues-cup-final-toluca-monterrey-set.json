@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-04-leagues-cup-final-toluca-monterrey-set",
+  "kind": "daily",
+  "title": "All-Liga MX Leagues Cup final set: Toluca face Monterrey in Houston on Sunday",
+  "summary": "Leagues Cup officials confirmed that Toluca and Monterrey will meet in the 2026 final at Shell Energy Stadium in Houston on Sunday, 6 September, the first all-Liga MX final in the tournament's history, after Toluca beat ten-man León 2-0 in one semifinal and Monterrey eliminated América in the other. The champion earns direct entry to the Round of 16 of the 2027 Concacaf Champions Cup. León and América play the third-place match earlier the same day, with León chasing the remaining Champions Cup qualification spot.",
+  "category": "football",
+  "priority": 58,
+  "publishedAt": "2026-09-04T19:00:00Z",
+  "updatedAt": "2026-09-04T19:00:00Z",
+  "retrievedAt": "2026-09-04T16:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Leagues Cup", "Toluca", "Monterrey", "Liga MX", "Concacaf"],
+  "sources": [
+    {
+      "publisher": "Leagues Cup",
+      "url": "https://www.leaguescup.com/news/leagues-cup-2026-final-and-third-place-match-set-for-shell-energy-stadium",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "MARCA",
+      "url": "https://www.marca.com/en/football/leagues-cup/2026/09/03/2026-leagues-cup-final-date-time-venue-and-where-to-watch-toluca-vs-monterrey.html",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

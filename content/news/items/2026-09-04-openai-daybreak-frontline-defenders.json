@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-04-openai-daybreak-frontline-defenders",
+  "kind": "daily",
+  "title": "OpenAI commits $1 billion in subsidized cyber defense access for utilities, governments and nonprofits",
+  "summary": "OpenAI announced Daybreak for Frontline Defenders, a $1 billion commitment of subsidized access to its Daybreak cyber models, training and technical support, targeted to be consumed over six months and aimed first at United States operators of essential services such as water systems, grid operators, state and local governments and community banks. The program includes a pilot with the Multi-State Information Sharing and Analysis Center and comes a day after Astra's limited rollout, part of the industry's push to arm defenders before AI-enabled attacks spread.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-09-04T16:30:00Z",
+  "updatedAt": "2026-09-04T16:30:00Z",
+  "retrievedAt": "2026-09-04T15:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "Daybreak", "cybersecurity", "critical infrastructure"],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/daybreak-for-frontline-defenders",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/litigation/openai-commits-1-billion-cyberdefense-effort-amid-ai-safety-scrutiny-2026-09-03/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

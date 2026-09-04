@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-04-serie-a-matchday-3-inter-napoli",
+  "kind": "daily",
+  "title": "Serie A matchday 3 brings Inter-Napoli and Juventus-Milan as the early table splits",
+  "summary": "Serie A's third matchday runs 4-7 September with a headline Saturday meeting of Inter and Napoli at San Siro, both teams on maximum points after two rounds, and a Juventus-Milan clash at the Allianz Stadium on Sunday. Roma, who opened with a 4-0 win over Fiorentina, host Atalanta on Saturday, while Genoa-Como opened the round on Friday evening. The fixture list was confirmed by the league before the season and leaves matchday 3 as the first genuine test of the early pace-setters.",
+  "category": "football",
+  "priority": 52,
+  "publishedAt": "2026-09-04T19:10:00Z",
+  "updatedAt": "2026-09-04T19:10:00Z",
+  "retrievedAt": "2026-09-04T16:40:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Serie A", "Inter", "Napoli", "Juventus", "AC Milan"],
+  "sources": [
+    {
+      "publisher": "Yahoo Sports (NBC Sports)",
+      "url": "https://sports.yahoo.com/articles/serie-2026-27-season-upcoming-143114912.html",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "Transfermarkt",
+      "url": "https://www.transfermarkt.us/serie-a/gesamtspielplan/wettbewerb/IT1/saison_id/2026",
+      "publishedAt": "2026-08-29T00:00:00Z"
+    }
+  ]
+}

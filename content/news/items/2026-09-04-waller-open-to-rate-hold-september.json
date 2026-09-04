@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-04-waller-open-to-rate-hold-september",
+  "kind": "daily",
+  "title": "Fed's Waller says he could back holding rates in September if inflation data keeps improving",
+  "summary": "Federal Reserve Governor Christopher Waller said on 3 September he is willing to support holding the policy rate at its current 3.50-3.75 percent range at the 15-16 September meeting if August inflation data shows continued progress toward the 2 percent goal, quipping that policymakers should 'give disinflation a chance'. He still warned he would consider a hike if inflation runs hot. Wall Street rallied on the remarks, with the Dow climbing 624 points, the S&P 500 up 1.1 percent and two-year yields falling as traders cut the odds of a September hike to roughly even.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-09-04T18:10:00Z",
+  "updatedAt": "2026-09-04T18:10:00Z",
+  "retrievedAt": "2026-09-04T16:20:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Federal Reserve", "Christopher Waller", "interest rates", "inflation", "Wall Street"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/feds-waller-open-leaving-rates-unchanged-september-meeting-if-inflation-cools-2026-09-03/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "The Wall Street Journal",
+      "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-09-03-2026",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}
