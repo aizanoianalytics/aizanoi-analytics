@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-04-moonshot-files-hong-kong-ipo",
+  "kind": "daily",
+  "title": "Chinese AI firm Moonshot files confidentially for Hong Kong IPO, Reuters reports",
+  "summary": "Moonshot AI, the Chinese lab behind the Kim model family, has filed confidentially for an initial public offering in Hong Kong, according to sources cited by Reuters. The filing would make the Kimi maker one of the first major Chinese frontier-model developers to seek a public listing, offering investors a direct read on valuations in a market where open-weight models from Chinese labs have been priced well below their American rivals. No offering size or timeline has been confirmed by the company.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-09-04T16:40:00Z",
+  "updatedAt": "2026-09-04T16:40:00Z",
+  "retrievedAt": "2026-09-04T15:50:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Moonshot AI", "Hong Kong IPO", "Chinese AI", "Kimi"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/chinese-ai-firm-moonshot-files-confidentially-hong-kong-ipo-sources-say-2026-09-03/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

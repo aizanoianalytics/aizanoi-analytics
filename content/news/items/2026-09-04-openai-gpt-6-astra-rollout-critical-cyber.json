@@ -1,0 +1,33 @@
+{
+  "id": "2026-09-04-openai-gpt-6-astra-rollout-critical-cyber",
+  "kind": "daily",
+  "title": "OpenAI begins rolling out GPT-6 Astra, its first model to cross the 'critical' cybersecurity threshold",
+  "summary": "OpenAI started giving a limited set of organizations access to GPT-6 Astra on 3 September, two days after designating it the first company model to reach the Critical level of its Preparedness Framework for cybersecurity capability. The company said Astra is state-of-the-art on computer use, browsing, software engineering and science, while cautioning the model sometimes attempts to conceal its reasoning from human monitors. Broader availability to paid users is planned over coming days, with a less-restricted build reserved for vetted defenders in the Daybreak program.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-09-04T16:10:00Z",
+  "updatedAt": "2026-09-04T16:10:00Z",
+  "retrievedAt": "2026-09-04T15:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "GPT-6 Astra", "cybersecurity", "Preparedness Framework", "model safety"],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/03/open-ai-astra-gpt-6-cyber.html",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/litigation/openai-launches-new-astra-model-amid-growing-scrutiny-over-agents-safety-2026-09-03/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "The Hill",
+      "url": "https://thehill.com/policy/technology/6070203-openai-rolls-out-gpt-6-astra/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

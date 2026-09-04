@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-04-oura-files-ipo-nasdaq",
+  "kind": "daily",
+  "title": "Smart ring maker Oura files publicly for Nasdaq IPO under ticker OURA",
+  "summary": "Oura, the Finnish maker of the health-tracking smart ring, filed its U.S. initial public offering paperwork on 3 September, listing on Nasdaq under the ticker OURA with Goldman Sachs, Morgan Stanley and J.P. Morgan among the underwriters. The filing follows a confidential submission in May and arrives as the post-Labor Day IPO window opens; earlier reporting pointed to a target raise of up to $3 billion at a valuation above $16 billion. The company must also manage a pending class action over sleep-tracking accuracy claims alongside the listing process.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-09-04T17:20:00Z",
+  "updatedAt": "2026-09-04T17:20:00Z",
+  "retrievedAt": "2026-09-04T16:05:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Oura", "IPO", "Nasdaq", "wearables"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/smart-ring-maker-oura-files-us-ipo-2026-09-03/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/03/oura-files-to-go-public/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

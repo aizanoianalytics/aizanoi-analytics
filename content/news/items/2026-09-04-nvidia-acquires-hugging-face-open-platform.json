@@ -1,0 +1,33 @@
+{
+  "id": "2026-09-04-nvidia-acquires-hugging-face-open-platform",
+  "kind": "daily",
+  "title": "Nvidia agrees to buy Hugging Face for $12.93 billion and promises the open-source hub stays open",
+  "summary": "Nvidia has agreed to acquire Hugging Face, the central hub for open-source AI models, for $12,930,300,000 in one of the chipmaker's largest deals. CEO Jensen Huang said the platform will stay open for the entire AI ecosystem and that Nvidia compute will not be required to build on or deploy through it, seeking to reassure the more than 18 million developers who use the site. Reuters reported about $11.9 billion goes to investors, with up to $1 billion reserved for an employee retention program.",
+  "category": "ai",
+  "priority": 84,
+  "publishedAt": "2026-09-04T16:00:00Z",
+  "updatedAt": "2026-09-04T16:00:00Z",
+  "retrievedAt": "2026-09-04T15:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Nvidia", "Hugging Face", "acquisition", "open source", "AI infrastructure"],
+  "sources": [
+    {
+      "publisher": "NVIDIA Blog",
+      "url": "https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/nvidia-buy-hugging-face-nearly-13-billion-big-bet-open-ai-models-2026-09-03/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/03/nvidia-agrees-to-buy-hugging-face-for-almost-13-billion-ai-expansion.html",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

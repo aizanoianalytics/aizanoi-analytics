@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-04-nvidia-rtx-spark-ai-pcs-october",
+  "kind": "daily",
+  "title": "Nvidia sets October launch for first RTX Spark AI PCs from Lenovo and Acer",
+  "summary": "Nvidia said Lenovo and Acer will launch the first Windows PCs powered by its RTX Spark chip in October, bringing on-device AI processing to mainstream laptops and desktops. The chip combines a Blackwell graphics processor with a Grace CPU and was developed with MediaTek as part of Nvidia's PC partnership with Microsoft. The move follows Apple's August refresh of Mac mini and Mac Studio machines, which the company said can run larger AI models and autonomous agents locally, sharpening the competition to move AI workloads off the cloud and onto the desk.",
+  "category": "technology",
+  "priority": 66,
+  "publishedAt": "2026-09-04T17:10:00Z",
+  "updatedAt": "2026-09-04T17:10:00Z",
+  "retrievedAt": "2026-09-04T16:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Nvidia", "RTX Spark", "Lenovo", "Acer", "AI PCs"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/china/nvidia-sets-october-launch-rtx-spark-ai-pcs-2026-09-03/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "NVIDIA Blog",
+      "url": "https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

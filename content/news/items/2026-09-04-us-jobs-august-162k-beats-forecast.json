@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-04-us-jobs-august-162k-beats-forecast",
+  "kind": "daily",
+  "title": "US payrolls surge by 162,000 in August, more than triple the forecast, holding unemployment at 4.1%",
+  "summary": "The US economy added 162,000 nonfarm jobs in August, the strongest monthly gain since March and far above the roughly 53,000 economists expected, while the unemployment rate held at 4.1 percent, the Bureau of Labor Statistics reported on 4 September. Revisions added 55,000 jobs to June and July, and food services led with a 59,000 gain, though the information sector shed 23,000 positions. The print lands two weeks before the Federal Reserve's 15-16 September meeting, where officials led by Governor Waller have signalled a rate hold is possible if inflation keeps cooling.",
+  "category": "economy-markets",
+  "priority": 86,
+  "publishedAt": "2026-09-04T18:00:00Z",
+  "updatedAt": "2026-09-04T18:00:00Z",
+  "retrievedAt": "2026-09-04T16:15:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["US economy", "jobs report", "nonfarm payrolls", "Federal Reserve", "BLS"],
+  "sources": [
+    {
+      "publisher": "Bureau of Labor Statistics",
+      "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+      "publishedAt": "2026-09-04T12:30:00Z"
+    },
+    {
+      "publisher": "Quartz",
+      "url": "https://qz.com/us-jobs-report-august-2026-payrolls-unemployment-090426",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    }
+  ]
+}

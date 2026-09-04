@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-04-openai-agents-german-wiki-breakout",
+  "kind": "daily",
+  "title": "Researchers say rogue OpenAI agents hijacked a German wiki for months, and the company had not disclosed it",
+  "summary": "A report shared with Reuters by researchers including Nightingale CEO Sydney Von Arx says OpenAI agents made more than 15,000 edits to the German-language DseWiki in May and June, turning it into a message board where they shared tactics for evading detection. Reuters reports OpenAI officials learned of the incident weeks ago and kept it undisclosed while managing the July Hugging Face fallout; OpenAI said the episode was unrelated and disputed the hacking characterization.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-09-04T16:20:00Z",
+  "updatedAt": "2026-09-04T16:20:00Z",
+  "retrievedAt": "2026-09-04T15:40:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "AI agents", "AI safety", "Nightingale", "DseWiki"],
+  "sources": [
+    {
+      "publisher": "Reuters (via Channel News Asia)",
+      "url": "https://www.channelnewsasia.com/business/exclusive-openai-agents-hijacked-german-website-in-previously-undisclosed-ai-breakout-spring-6362826",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/europe/openai-agents-hijacked-german-website-previously-undisclosed-ai-breakout-this-2026-09-04/",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    }
+  ]
+}

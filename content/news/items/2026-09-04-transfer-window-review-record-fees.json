@@ -1,0 +1,33 @@
+{
+  "id": "2026-09-04-transfer-window-review-record-fees",
+  "kind": "daily",
+  "title": "Premier League's record summer: £125m Fernández move caps window that reshaped the title race",
+  "summary": "The Premier League's summer window closed on 1 September with Manchester City signing Chelsea midfielder Enzo Fernández for a British-record £125 million on deadline day, per Sky Sports and BBC Sport deal trackers, after a window in which Chelsea bought Morgan Rogers from Aston Villa for £117 million and Liverpool paid £123 million for Bradley Barcola from Paris Saint-Germain. Arsenal added Newcastle's Bruno Guimarães for £75 million as clubs finalised squads until January. English clubs now break for international duty before league play resumes on 12 September.",
+  "category": "football",
+  "priority": 56,
+  "publishedAt": "2026-09-04T19:20:00Z",
+  "updatedAt": "2026-09-04T19:20:00Z",
+  "retrievedAt": "2026-09-04T16:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Premier League", "transfers", "Enzo Fernandez", "deadline day"],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/11095/13546618/transfer-news-summer-transfer-window-2026-premier-league-deals-ins-and-outs",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/articles/cvgyxyxplkvo",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/story/_/id/48955344/premier-league-2026-summer-transfers-all-confirmed-ins-outs-every-club",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}
