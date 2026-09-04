@@ -20,13 +20,10 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with: { node-version: '22' }
-      - name: Install pinned browser dependencies
-        # Cross-browser behavior is the blocking gate here. Do not let the
-        # public npm audit endpoint's availability decide it; Dependabot owns
-        # dependency-vulnerability reporting.
+      - name: Install pinned browser QA dependencies
         run: |
           npm ci --ignore-scripts --no-fund
-          timeout --foreground --kill-after=10s 90s env npm_config_fetch_timeout=60000 npm_config_fetch_retries=0 npm audit --audit-level=high || echo '[cross-browser] npm audit unavailable or timed out; Dependabot remains the canonical vulnerability surface' >&2
+          npm audit --audit-level=high
           npx playwright install --with-deps "${{ matrix.browser }}"
       - name: Build generated News surfaces
         run: node scripts/news/build-news.mjs

@@ -16,9 +16,7 @@ concurrency:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    # npm ci can legitimately consume several minutes during registry
-    # slowness before the deterministic local lint gate runs.
-    timeout-minutes: 15
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
@@ -27,10 +25,8 @@ jobs:
           cache: npm
           cache-dependency-path: tools/eslint/package-lock.json
       - name: Install locked ESLint toolchain
-        # A registry audit outage must not block the deterministic local lint
-        # gate; Dependabot is the repository's vulnerability intake.
         run: |
           npm ci --prefix tools/eslint --ignore-scripts --no-fund
-          timeout --foreground --kill-after=10s 90s env npm_config_fetch_timeout=60000 npm_config_fetch_retries=0 npm audit --prefix tools/eslint --audit-level=high || echo '[eslint] npm audit unavailable or timed out; Dependabot remains the canonical vulnerability surface' >&2
+          npm audit --prefix tools/eslint --audit-level=high
       - name: Enforce bug-class JavaScript rules
         run: ./tools/eslint/node_modules/.bin/eslint -c eslint.config.js frontend/js/v3 frontend/analytics frontend/service-worker.js frontend/web-editor-preview/runner.js scripts tests

@@ -351,7 +351,7 @@ function renderDistribution(){
   const s=dynamicSummary(),counts=s.counts||{},den=Math.max(1,s.evaluated||0);
   const order=['Maksimum','Hedef ve Üzeri','Eşik-Hedef Arası','Eşik Altı'];
   $('distributionHint').textContent=`${scope().label} · ${period().label} · ${num(s.evaluated,0)} değerlendirilen KPI`;
-  $('statusDistribution').innerHTML=`<div class="status-strip">${order.map(k=>`<span style="width:${(counts[k]||0)/den*100}%;background:${STATUS[k].color}" title="${esc(k)}: ${counts[k]||0}"></span>`).join('')}</div><div class="status-grid">${order.map(k=>`<div class="status-item"><i class="dot" style="background:${STATUS[k].color}"></i><span>${esc(STATUS[k].short)}</span><b>${num(counts[k]||0,0)}</b></div>`).join('')}</div>`;
+  $('statusDistribution').innerHTML=`<div class="status-strip">${order.map(k=>`<span style="width:${esc((counts[k]||0)/den*100)}%;background:${esc(STATUS[k].color)}" title="${esc(k)}: ${esc(counts[k]||0)}"></span>`).join('')}</div><div class="status-grid">${order.map(k=>`<div class="status-item"><i class="dot" style="background:${esc(STATUS[k].color)}"></i><span>${esc(STATUS[k].short)}</span><b>${num(counts[k]||0,0)}</b></div>`).join('')}</div>`;
 }
 function renderGuide(){
   const guide=['Maksimum','Hedef ve Üzeri','Eşik-Hedef Arası','Eşik Altı'].map(status=>SCORE_BANDS.find(item=>item.status===status)).filter(Boolean);
