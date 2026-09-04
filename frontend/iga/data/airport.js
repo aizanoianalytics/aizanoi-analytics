@@ -1,6 +1,5 @@
 // Spatial model for an original, navigable interpretation of İstanbul Airport.
-// It does not reproduce architectural drawings or imagery. Dimensions are compacted
-// for browser traversal; references explain the real design cues represented here.
+// References explain the real design cues represented here.
 export const CITY = Object.freeze({
   id:'iga-istanbul-airport',
   title:'İGA · ISTANBUL AIRPORT',
@@ -16,6 +15,8 @@ export const SOURCES = Object.freeze([
   { id:'iga-map', title:'İGA — Airport Map', url:'https://www.istairport.com/en/airport/maps/airport-map?locale=en', note:'Public wayfinding and passenger-facing spatial reference.' },
   { id:'iga-departures', title:'İGA — Departing Passenger Guide', url:'https://www.istairport.com/en/flights/airport-guides/departing-passenger-guide?locale=en', note:'Check-in islands, passenger flow and accessibility details.' },
   { id:'iga-arrivals', title:'İGA — Arriving Passenger Guide', url:'https://www.istairport.com/en/flights/airport-guides/arrival-passenger-guide?locale=en', note:'Arrival, exit gates, metro and landside movement details.' },
+  { id:'iga-transfer', title:'İGA — Transfer Passenger Guide', url:'https://www.istairport.com/en/flights/airport-guides/transfer-passenger-guide?locale=en', note:'Transfer flows, baggage and onward routing.' },
+  { id:'iga-leed', title:'İGA — LEED certification + Time Travel', url:'https://www.istairport.com/en/flights/airport-guides/iga-cares-accessibility/time-travel?locale=en', note:'World\'s largest LEED-certified building; operational milestones.' },
 ]);
 
 export const REGIONS = Object.freeze([
@@ -46,9 +47,14 @@ export const BUILDINGS = Object.freeze([
   B('pier-west','Pier A–B','terminal',-470,570,105,720,18,'airside-west','International pier with gates, waiting zones and a continuous apron-facing window wall.'),
   B('pier-east','Pier C–F','terminal',470,570,105,720,18,'airside-east','International pier with retail, napzone cues and a continuous apron-facing window wall.'),
   B('domestic-wing','Domestic wing','terminal',0,575,230,320,20,'domestic','Domestic gates, food-court rhythm and short onward routes.'),
-  B('tower','Tulip-inspired ATC tower','tower',-250,1030,35,35,90,'airfield','Original simplified tower silhouette informed by the airport’s tulip-inspired air traffic control tower.',{noCollision:true}),
+  B('tower','Tulip-inspired ATC tower','tower',-250,1030,35,35,90,'airfield','Original simplified tower silhouette informed by the airport\'s tulip-inspired air traffic control tower.',{noCollision:true}),
   B('apron-west','Apron stands west','apron',-470,1010,260,260,1,'airfield','Aircraft stand field and taxiway atmosphere.',{noCollision:true}),
   B('apron-east','Apron stands east','apron',470,1010,260,260,1,'airfield','Aircraft stand field and taxiway atmosphere.',{noCollision:true}),
+  B('plaza','Departure forecourt plaza','monument',0,-220,180,40,2,'landside','Arrival/departure drop-off axis and first impression of the terminal mass.'),
+  B('passport-west','Passport control west','gateway',-180,160,100,24,11,'processor','Formal boundary between landside and airside zones.'),
+  B('passport-east','Passport control east','gateway',180,160,100,24,11,'processor','Formal boundary between landside and airside zones.'),
+  B('retail-belt','Pier retail belt','market',0,740,500,30,4,'domestic','Rhythmic duty-free and F&B presence along the pier transition.'),
+  B('terrace','Fresh-air terrace','stoa',-520,680,40,60,3,'airside-west','Open-air terrace reference from the official passenger guide.'),
 ]);
 export const WATERS = Object.freeze([]);
 export const BOUNDS = Object.freeze({ minX:-900,maxX:900,minZ:-430,maxZ:1240 });
