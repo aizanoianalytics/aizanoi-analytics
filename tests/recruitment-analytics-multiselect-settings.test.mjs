@@ -60,8 +60,14 @@ test("Reset Filters does not erase Settings exclusions", () => {
   assert.match(html, /function resetRecruitmentExclusions\(\)/);
 });
 
-test("Settings remains usable on narrow screens", () => {
+test("Recruitment Settings and header remain usable on narrow screens", () => {
   assert.match(html, /@media \(max-width: 820px\)[\s\S]*?\.nav-tabs \{ width: 100%; max-width: 100%; overflow-x: auto;/);
+  assert.match(html, /\.header-top \{ flex-direction: column; align-items: stretch; \}/);
+  assert.match(html, /\.brand-group, \.header-meta, \.header-actions \{ width: 100%; min-width: 0; \}/);
+  assert.match(html, /\.status-pill \{ max-width: 100%; min-width: 0; flex-wrap: wrap; \}/);
+  assert.match(html, /#datasetMeta \{ min-width: 0; overflow-wrap: anywhere; \}/);
+  assert.match(html, /\.header-actions \{ display: grid; grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); \}/);
+  assert.match(html, /\.header-actions \.btn \{ width: 100%; min-width: 0; max-width: 100%; white-space: normal; \}/);
   assert.match(html, /\.settings-transfer-grid \{ grid-template-columns: minmax\(0, 1fr\); min-width: 0; \}/);
   assert.match(html, /\.settings-transfer-actions \{ display: grid; grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); width: 100%; min-width: 0; \}/);
   assert.match(html, /\.settings-transfer-actions \.btn \{ width: auto; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; \}/);
