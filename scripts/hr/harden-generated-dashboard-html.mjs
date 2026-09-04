@@ -28,6 +28,21 @@ const plans = new Map([
     ['<option>${y}</option>', '<option>${esc(y)}</option>'],
     ['<option>${m}</option>', '<option>${esc(m)}</option>'],
     ['<option value="${m}">${monthLabel(m)}</option>', '<option value="${esc(m)}">${esc(monthLabel(m))}</option>'],
+    // PR-1: renderPoolSearch now uses esc() for the data-add attribute value
+    // (was unescaped ${p.i}; p.i is a numeric poolPeople index but escape makes
+    // the helper consistent with every other interpolation in the same template).
+    // Idempotent guard: only apply if not already esc()'d.
+    ['data-add="${p.i}"', 'data-add="${esc(p.i)}"'],
+  ]],
+  ['hedefler_dashboard.html', [
+    // PR-1: the canonical Python template (hedefler_dashboard_template.py) now
+    // writes esc() around data-period values and CSS-custom-property tones.
+    // The hardener's idempotent guard ensures these substitutions are
+    // no-ops if the template already includes esc() — we register them
+    // explicitly so the hardener accepts this file in its input set and
+    // emits "already hardened" rather than failing with "no plan registered".
+    ['data-period="${p.key}"', 'data-period="${esc(p.key)}"'],
+    ['style="--tone:${c[3]}"', 'style="--tone:${esc(c[3])}"'],
   ]],
 ]);
 
