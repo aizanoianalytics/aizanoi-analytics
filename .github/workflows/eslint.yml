@@ -16,7 +16,10 @@ concurrency:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    # Registry slowness can consume most of the old 8-minute budget before
+    # the deterministic local ESLint gate starts. The audit subprocess itself
+    # remains bounded to 90 seconds by npm-audit-gate.mjs.
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
@@ -27,6 +30,6 @@ jobs:
       - name: Install locked ESLint toolchain
         run: |
           npm ci --prefix tools/eslint --ignore-scripts --no-fund
-          npm audit --prefix tools/eslint --audit-level=high
+          node scripts/ci/npm-audit-gate.mjs --prefix tools/eslint
       - name: Enforce bug-class JavaScript rules
         run: ./tools/eslint/node_modules/.bin/eslint -c eslint.config.js frontend/js/v3 frontend/analytics frontend/service-worker.js frontend/web-editor-preview/runner.js scripts tests
