@@ -230,12 +230,32 @@ function terminal(scene, b) {
 }
 function tower(scene,b) {
   const h=Math.max(28,b.h||72),r=Math.max(5,Math.min(b.w||24,b.d||24)*.42);
-  scene.cylinder(b.x,0,b.z,r,h*.72,[0.64,0.62,0.54],scene.mobile?12:20);
-  scene.cylinder(b.x,h*.72,b.z,r*1.35,h*.17,[0.20,0.30,0.33],scene.mobile?12:20);
-  scene.cylinder(b.x,h*.89,b.z,r*.55,h*.11,[0.77,0.72,0.55],scene.mobile?12:20);
+  const conc=[0.64,0.62,0.54],dark=[0.20,0.30,0.33],gold=[0.77,0.72,0.55],seg=scene.mobile?12:20;
+  scene.cylinder(b.x,0,b.z,r,h*.36,conc,seg);
+  scene.cylinder(b.x,h*.36,b.z,r*.62,h*.36,[0.58,0.56,0.48],seg);
+  const bulge=(i)=>{const t=(i+1)/5;return r*0.62*Math.sin(t*Math.PI)*1.6;};
+  for(let i=0;i<5;i++){
+    const rr=Math.max(1.2,bulge(i)),y=h*.36+i*h*.11;
+    scene.cylinder(b.x,y,b.z,rr,h*.12,i%2?dark:conc,seg);
+  }
+  scene.cylinder(b.x,h*.91,b.z,r*.7,h*.09,dark,seg);
+  scene.cylinder(b.x,h,b.z,r*.38,h*.05,gold,seg);
 }
 function checkin(scene,b) { scene.box(b.x,0.1,b.z,b.w||80,1.1,b.d||14,[0.22,0.29,0.31],b.rot||0); }
-function apron(scene,b) { scene.box(b.x,0,b.z,b.w||160,.06,b.d||160,[0.22,0.24,0.25],b.rot||0); }
+function apron(scene,b) {
+  const w=b.w||160,d=b.d||160,rot=b.rot||0;
+  scene.box(b.x,0,b.z,w,.06,d,[0.22,0.24,0.25],rot);
+  const stands=scene.mobile?3:6;
+  for(let i=0;i<stands;i++){
+    const sx=-w*.35+w*i/(stands-1);
+    const p=scene.localPoint(b.x,b.z,sx,0,rot);
+    scene.box(p[0],0.06,p[1],6,.08,40,[0.28,0.30,0.31],rot);
+    const ax=p[0],az=p[1];
+    scene.box(ax,0.08,az-14,18,.12,3.5,[0.72,0.72,0.7],rot);
+    scene.box(ax,0.20,az-14,4,.10,3.5,[0.72,0.72,0.7],rot);
+    scene.box(ax,0.08,az-14,18,.06,12,[0.62,0.62,0.6],rot);
+  }
+}
 
 function bridge(scene, b) {
   const c = colourFor(b), w = b.w || 42, d = Math.max(6, b.d || 10), rot = b.rot || 0;
