@@ -1,0 +1,84 @@
+name: Recruitment mobile overflow fix
+
+on:
+  push:
+    branches:
+      - feat/recruitment-multiselect-settings
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: feat/recruitment-multiselect-settings
+          fetch-depth: 0
+
+      - name: Apply guarded responsive fix and wire permanent browser QA
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          html_path = Path('frontend/analytics/dashboards/new-hr-collection/recruitment-analytics/index.html')
+          html = html_path.read_text(encoding='utf-8')
+          old_mobile = '''      .settings-transfer-grid { grid-template-columns: 1fr; }
+                .settings-transfer-actions { flex-direction: row; min-width: 0; }
+                .settings-transfer-actions .btn { white-space: normal; }'''
+          new_mobile = '''      .nav-tabs { width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; }
+                .nav-tab { flex: 0 0 auto; }
+                .multi-filter-trigger { min-width: 0; }
+                .settings-transfer-grid { grid-template-columns: minmax(0, 1fr); min-width: 0; }
+                .settings-transfer-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; min-width: 0; }
+                .settings-transfer-actions .btn { width: auto; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }'''
+          if html.count(old_mobile) != 1:
+              raise SystemExit(f'mobile CSS anchor count={html.count(old_mobile)}')
+          html = html.replace(old_mobile, new_mobile, 1)
+          html_path.write_text(html, encoding='utf-8')
+
+          ci_path = Path('.github/workflows/ci.yml')
+          ci = ci_path.read_text(encoding='utf-8')
+          old_ci = '''          node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
+                    exit $status'''
+          new_ci = '''          node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
+                    node tests/recruitment-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/recruitment-analytics-browser-qa.log || status=1
+                    exit $status'''
+          if ci.count(old_ci) != 1:
+              raise SystemExit(f'CI browser gate anchor count={ci.count(old_ci)}')
+          ci = ci.replace(old_ci, new_ci, 1)
+          ci_path.write_text(ci, encoding='utf-8')
+
+          test_path = Path('tests/recruitment-analytics-multiselect-settings.test.mjs')
+          test = test_path.read_text(encoding='utf-8')
+          old_test = '''test("Settings remains usable on narrow screens", () => {
+            assert.match(html, /@media \\(max-width: 820px\\)[\\s\\S]*?\\.settings-transfer-grid \\{ grid-template-columns: 1fr; \\}/);
+          });'''
+          new_test = '''test("Settings remains usable on narrow screens", () => {
+            assert.match(html, /@media \\(max-width: 820px\\)[\\s\\S]*?\\.nav-tabs \\{ width: 100%; max-width: 100%; overflow-x: auto;/);
+            assert.match(html, /\\.settings-transfer-grid \\{ grid-template-columns: minmax\\(0, 1fr\\); min-width: 0; \\}/);
+            assert.match(html, /\\.settings-transfer-actions \\{ display: grid; grid-template-columns: repeat\\(2, minmax\\(0, 1fr\\)\\); width: 100%; min-width: 0; \\}/);
+            assert.match(html, /\\.settings-transfer-actions \\.btn \\{ width: auto; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; \\}/);
+          });'''
+          if test.count(old_test) != 1:
+              raise SystemExit(f'mobile regression anchor count={test.count(old_test)}')
+          test = test.replace(old_test, new_test, 1)
+          test_path.write_text(test, encoding='utf-8')
+          PY
+
+      - name: Run focused regression checks
+        run: |
+          node --test tests/recruitment-analytics-multiselect-settings.test.mjs
+          node --check tests/recruitment-analytics-browser-qa.mjs
+          git diff --check
+
+      - name: Commit final feature changes only
+        run: |
+          rm .github/workflows/recruitment-mobile-overflow-fix.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'fix(recruitment): prevent mobile settings overflow'
+          git push origin HEAD:feat/recruitment-multiselect-settings
