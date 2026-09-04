@@ -1,0 +1,55 @@
+// Spatial model for an original, navigable interpretation of İstanbul Airport.
+// It does not reproduce architectural drawings or imagery. Dimensions are compacted
+// for browser traversal; references explain the real design cues represented here.
+export const CITY = Object.freeze({
+  id:'iga-istanbul-airport',
+  title:'İGA · ISTANBUL AIRPORT',
+  subtitle:'Present-day global gateway · original interactive interpretation',
+  period:'Present day · Arnavutköy, Istanbul',
+  description:'A source-led walk through the check-in hall, security transition, international piers and apron of an original procedural interpretation of Istanbul Airport.',
+  boundary:'Terminal processor, airside piers and apron',
+  scaleMetres:1400000,
+});
+
+export const SOURCES = Object.freeze([
+  { id:'nordic', title:'Nordic Office of Architecture — Istanbul Airport', url:'https://nordicarch.com/projects/istanbul-airport', note:'1.4m m² terminal; 36×36 m roof grid; two-and-a-half-level main processor and piers.' },
+  { id:'iga-map', title:'İGA — Airport Map', url:'https://www.istairport.com/en/airport/maps/airport-map?locale=en', note:'Public wayfinding and passenger-facing spatial reference.' },
+  { id:'iga-departures', title:'İGA — Departing Passenger Guide', url:'https://www.istairport.com/en/flights/airport-guides/departing-passenger-guide?locale=en', note:'Check-in islands, passenger flow and accessibility details.' },
+  { id:'iga-arrivals', title:'İGA — Arriving Passenger Guide', url:'https://www.istairport.com/en/flights/airport-guides/arrival-passenger-guide?locale=en', note:'Arrival, exit gates, metro and landside movement details.' },
+]);
+
+export const REGIONS = Object.freeze([
+  { id:'landside', name:'Landside forecourt', x:0, z:-320, w:820, d:240, note:'Compressed curbside arrival and terminal frontage.' },
+  { id:'processor', name:'Main processor', x:0, z:0, w:860, d:410, note:'Check-in, security and passport-flow interpretation beneath the roof grid.' },
+  { id:'airside-west', name:'International Pier A–B', x:-470, z:340, w:250, d:660, note:'Gate concourse and apron view.' },
+  { id:'airside-east', name:'International Pier C–F', x:470, z:340, w:250, d:660, note:'Gate concourse, retail and quiet-zone interpretation.' },
+  { id:'domestic', name:'Domestic wing', x:0, z:510, w:360, d:330, note:'Domestic gates and onward travel zone.' },
+  { id:'airfield', name:'Apron and tower vista', x:0, z:980, w:1500, d:420, note:'Compressed aircraft stands, taxiways and original tulip-inspired tower silhouette.' },
+]);
+
+export const STREETS = Object.freeze([
+  { id:'curb', name:'Departures curb', points:[[-420,-255],[-180,-255],[0,-255],[180,-255],[420,-255]], width:24 },
+  { id:'checkin-axis', name:'Check-in hall axis', points:[[0,-190],[0,-20],[0,145],[0,305]], width:42 },
+  { id:'west-pier', name:'Pier A–B concourse', points:[[-260,195],[-430,310],[-470,610],[-470,910]], width:26 },
+  { id:'east-pier', name:'Pier C–F concourse', points:[[260,195],[430,310],[470,610],[470,910]], width:26 },
+  { id:'domestic-pier', name:'Domestic concourse', points:[[0,180],[0,430],[0,700]], width:28 },
+]);
+
+const E = Object.freeze({ level:'documented', note:'Spatial cue is based on public architecture or passenger-guide material; this is an original, compact interactive interpretation rather than an as-built plan.' });
+const B = (id,name,type,x,z,w,d,h,region,detail,extra={}) => ({ id,name,type,x,z,w,d,h,region,detail,evidence:E,material:'terminal',...extra });
+export const BUILDINGS = Object.freeze([
+  B('terminal','Grand terminal hall','terminal',0,0,860,410,38,'processor','A single, daylight-led terminal volume with an original vaulted grid and check-in islands.'),
+  B('checkin-bcd','Domestic check-in islands B–D','checkin',-205,-38,190,68,5,'processor','Domestic check-in island reference from the departing passenger guide.',{noCollision:true}),
+  B('checkin-fgh','International check-in islands F–H', 'checkin',0,-38,190,68,5,'processor','International check-in flow interpretation.',{noCollision:true}),
+  B('checkin-mps','International check-in islands M–S', 'checkin',205,-38,190,68,5,'processor','Long-hall check-in rhythm and wayfinding cues.',{noCollision:true}),
+  B('security','Security and passport transition','gateway',0,125,410,26,11,'processor','A broad transition zone where focused skylight and signage pull the journey onward.'),
+  B('pier-west','Pier A–B','terminal',-470,570,105,720,18,'airside-west','International pier with gates, waiting zones and a continuous apron-facing window wall.'),
+  B('pier-east','Pier C–F','terminal',470,570,105,720,18,'airside-east','International pier with retail, napzone cues and a continuous apron-facing window wall.'),
+  B('domestic-wing','Domestic wing','terminal',0,575,230,320,20,'domestic','Domestic gates, food-court rhythm and short onward routes.'),
+  B('tower','Tulip-inspired ATC tower','tower',-250,1030,35,35,90,'airfield','Original simplified tower silhouette informed by the airport’s tulip-inspired air traffic control tower.',{noCollision:true}),
+  B('apron-west','Apron stands west','apron',-470,1010,260,260,1,'airfield','Aircraft stand field and taxiway atmosphere.',{noCollision:true}),
+  B('apron-east','Apron stands east','apron',470,1010,260,260,1,'airfield','Aircraft stand field and taxiway atmosphere.',{noCollision:true}),
+]);
+export const WATERS = Object.freeze([]);
+export const BOUNDS = Object.freeze({ minX:-900,maxX:900,minZ:-430,maxZ:1240 });
+export const SPAWN = Object.freeze({ x:0,z:-210,yaw:0,pitch:-0.05 });

@@ -208,6 +208,35 @@ function wall(scene, b) {
 
 function gate(scene, b) { arch(scene, { ...b, w: b.w || 34, d: b.d || 14, h: b.h || 20 }); }
 
+// Modern, non-historical public-infrastructure assets. They intentionally use
+// original low-poly geometry rather than copied plans, branding or photography.
+function terminal(scene, b) {
+  const w=b.w||220,d=b.d||120,h=Math.max(16,b.h||30),rot=b.rot||0, glass=[0.33,0.53,0.61];
+  scene.box(b.x,0,b.z,w,h*0.22,d,[0.56,0.58,0.57],rot);
+  for(const side of [-1,1]) {
+    const p=scene.localPoint(b.x,b.z,0,side*d*0.47,rot);
+    scene.box(p[0],h*0.22,p[1],w*0.94,h*0.46,0.55,glass,rot);
+  }
+  const bays=scene.mobile?Math.max(5,Math.round(w/80)):Math.max(8,Math.round(w/52));
+  for(let i=0;i<=bays;i++) {
+    const p=scene.localPoint(b.x,b.z,-w*0.46+w*i/bays,0,rot);
+    scene.box(p[0],h*0.18,p[1],0.7,h*0.74,d*0.96,[0.76,0.75,0.69],rot);
+  }
+  for(let i=0;i<bays;i++) {
+    const p=scene.localPoint(b.x,b.z,-w*0.42+w*(i+.5)/bays,0,rot);
+    scene.roof(p[0],h*0.7,p[1],w/bays*1.04,h*0.3,d*0.98,[0.72,0.73,0.7],rot);
+  }
+  footprint(scene,b);
+}
+function tower(scene,b) {
+  const h=Math.max(28,b.h||72),r=Math.max(5,Math.min(b.w||24,b.d||24)*.42);
+  scene.cylinder(b.x,0,b.z,r,h*.72,[0.64,0.62,0.54],scene.mobile?12:20);
+  scene.cylinder(b.x,h*.72,b.z,r*1.35,h*.17,[0.20,0.30,0.33],scene.mobile?12:20);
+  scene.cylinder(b.x,h*.89,b.z,r*.55,h*.11,[0.77,0.72,0.55],scene.mobile?12:20);
+}
+function checkin(scene,b) { scene.box(b.x,0.1,b.z,b.w||80,1.1,b.d||14,[0.22,0.29,0.31],b.rot||0); }
+function apron(scene,b) { scene.box(b.x,0,b.z,b.w||160,.06,b.d||160,[0.22,0.24,0.25],b.rot||0); }
+
 function bridge(scene, b) {
   const c = colourFor(b), w = b.w || 42, d = Math.max(6, b.d || 10), rot = b.rot || 0;
   scene.box(b.x, 0.12, b.z, w, 0.8, d, c, rot);
@@ -319,6 +348,10 @@ const TYPE_BUILDERS = Object.freeze({
   wall,
   gate,
   gateway,
+  terminal,
+  tower,
+  checkin,
+  apron,
   bridge,
   market,
   forum,
