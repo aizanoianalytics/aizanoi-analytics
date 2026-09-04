@@ -46,6 +46,13 @@ test('every discovered public app module has the canonical navigation, manifest 
   }
 });
 
+test('state store starts with defaults when browser storage is unavailable', () => {
+  const store = readFileSync(path.join(repoRoot, 'frontend/js/v3/store.js'), 'utf8');
+  assert.match(store, /function safeStorageGet\(/);
+  assert.match(store, /const initialRaw=safeStorageGet\(KEY\)\|\|safeStorageGet\(LEGACY_KEY\)/);
+  assert.match(store, /if\(!safeStorageGet\(KEY\)&&safeStorageGet\(LEGACY_KEY\)\)persist\(\);/);
+});
+
 test('every top-level app directory is discoverable through a manifest', async () => {
   const modules = await discoverModules();
   const discovered = modules.map((module) => module.id).sort();

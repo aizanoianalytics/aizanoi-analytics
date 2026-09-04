@@ -98,6 +98,13 @@ rsync -a --delete \
   --exclude='.DS_Store' \
   "${SOURCE}/" "${STAGING}/"
 
+# A static release must never contain symlinks: rsync -a preserves them and
+# Nginx could otherwise resolve a path outside the immutable release tree.
+if find "${STAGING}" -type l -print -quit | grep -q .; then
+  echo "FATAL: staged release contains symbolic links; refusing promotion" >&2
+  exit 3
+fi
+
 # Remove source/build/editor artifacts before a release can be promoted.
 echo "[deploy] scrubbing denylisted artifacts from staged release"
 (

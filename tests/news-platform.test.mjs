@@ -119,6 +119,17 @@ test('priority determines lead placement within the same publication timestamp',
   assert.equal(lead, high.title);
 });
 
+test('build rejects distinct IDs that would overwrite the same permanent article path', async () => {
+  const dated = structuredClone(fixture);
+  dated.id = '2026-08-22-collision';
+  const plain = structuredClone(fixture);
+  plain.id = 'collision';
+  const dir = await projectWith([dated, plain]);
+  const result = build(dir);
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /duplicate permanent story path/);
+});
+
 test('SOURCE_DATE_EPOCH controls generated metadata without changing item dates', async () => {
   const dir = await projectWith([fixture]);
   const result = build(dir, { SOURCE_DATE_EPOCH: '0' });

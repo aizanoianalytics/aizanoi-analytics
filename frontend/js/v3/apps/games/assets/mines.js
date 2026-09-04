@@ -59,6 +59,7 @@
         });
         cell.addEventListener('pointerup', () => { if (longPressTimer) clearTimeout(longPressTimer); longPressTimer = null; });
         cell.addEventListener('pointercancel', () => { if (longPressTimer) clearTimeout(longPressTimer); longPressTimer = null; });
+        cell.addEventListener('pointermove', () => { if (longPressTimer) clearTimeout(longPressTimer); longPressTimer = null; });
         grid.appendChild(cell);
       }
     }

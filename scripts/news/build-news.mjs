@@ -288,10 +288,14 @@ try {
   catch (error) { if (error.code !== 'ENOENT') throw error; }
   const items = [];
   const ids = new Set();
+  const permanentPaths = new Set();
   for (const name of names) {
     const item = validate(JSON.parse(await readFile(path.join(sourceDir, name), 'utf8')), name);
     if (ids.has(item.id)) fail(name, `duplicate id ${item.id}`);
+    const permanentPath = storyPath(item);
+    if (permanentPaths.has(permanentPath)) fail(name, `duplicate permanent story path ${permanentPath}`);
     ids.add(item.id);
+    permanentPaths.add(permanentPath);
     items.push(item);
   }
   items.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt) || b.priority - a.priority || Date.parse(b.updatedAt) - Date.parse(a.updatedAt) || a.id.localeCompare(b.id));

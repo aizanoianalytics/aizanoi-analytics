@@ -2,10 +2,11 @@ import { appById, worldById } from './registry.js';
 const KEY='aizanoi-os-state-v1',LEGACY_KEY='aizanoi-field-system-v3',WORLD_SESSION_KEY='aizanoi-world-session-v1',LEGACY_SESSION_KEY='aizanoi-field-session-v1';
 const defaults=()=>({version:3,theme:'aizanoi',reduceMotion:matchMedia('(prefers-reduced-motion: reduce)').matches,openApps:[],activeApp:null,windowRects:{},recents:[],activity:[],missionDismissed:false,lastUpdated:Date.now()});
 function safeParse(raw,fallback){try{return raw?JSON.parse(raw):fallback;}catch(_){return fallback;}}
+function safeStorageGet(key){try{return localStorage.getItem(key);}catch(_){return null;}}
 function sanitizeState(value){const base=defaults(),data=value&&typeof value==='object'?value:{};return{...base,...data,version:3,openApps:Array.isArray(data.openApps)?[...new Set(data.openApps.filter((id)=>appById(id)))].slice(0,10):[],activeApp:appById(data.activeApp)?data.activeApp:null,windowRects:data.windowRects&&typeof data.windowRects==='object'?data.windowRects:{},recents:Array.isArray(data.recents)?data.recents.slice(0,18):[],activity:Array.isArray(data.activity)?data.activity.slice(0,30):[]};}
-const initialRaw=localStorage.getItem(KEY)||localStorage.getItem(LEGACY_KEY);let state=sanitizeState(safeParse(initialRaw,defaults()));const listeners=new Set();
+const initialRaw=safeStorageGet(KEY)||safeStorageGet(LEGACY_KEY);let state=sanitizeState(safeParse(initialRaw,defaults()));const listeners=new Set();
 function persist(){state.lastUpdated=Date.now();try{const value=JSON.stringify(state);localStorage.setItem(KEY,value);/* dual-write during the v4→v5 migration window */localStorage.setItem(LEGACY_KEY,value);}catch(_){}}
-if(!localStorage.getItem(KEY)&&localStorage.getItem(LEGACY_KEY))persist();
+if(!safeStorageGet(KEY)&&safeStorageGet(LEGACY_KEY))persist();
 function emit(type,detail=null){const snapshot=getState();listeners.forEach((fn)=>{try{fn({type,detail,state:snapshot});}catch(_){}});try{window.dispatchEvent(new CustomEvent('aizanoi:v3-state',{detail:{type,detail,state:snapshot}}));}catch(_){}}
 export function getState(){return typeof structuredClone==='function'?structuredClone(state):JSON.parse(JSON.stringify(state));}
 export function subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn);}
@@ -19,7 +20,7 @@ export function markRecent(entry){if(!entry?.type||!entry?.id)return;const key=`
 export function recordActivity(title,detail='',kind='system'){const item={id:`${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:String(title),detail:String(detail||''),kind,at:Date.now()};state={...state,activity:[item,...state.activity].slice(0,30)};persist();emit('activity',item);return item;}
 export function setPreference(name,value){if(!['theme','reduceMotion','missionDismissed'].includes(name))return false;state={...state,[name]:value};persist();emit('preference',{name,value});return true;}
 export function resetWorkspace(){const keep={theme:state.theme,reduceMotion:state.reduceMotion};state={...defaults(),...keep};persist();emit('reset');}
-function readWorldSession(){const current=localStorage.getItem(WORLD_SESSION_KEY),legacy=localStorage.getItem(LEGACY_SESSION_KEY),value=safeParse(current||legacy,null);if(value&&worldById(value.worldId)&&!current&&legacy){try{localStorage.setItem(WORLD_SESSION_KEY,JSON.stringify(value));}catch(_){}}return value&&worldById(value.worldId)?value:null;}
+function readWorldSession(){const current=safeStorageGet(WORLD_SESSION_KEY),legacy=safeStorageGet(LEGACY_SESSION_KEY),value=safeParse(current||legacy,null);if(value&&worldById(value.worldId)&&!current&&legacy){try{localStorage.setItem(WORLD_SESSION_KEY,JSON.stringify(value));}catch(_){}}return value&&worldById(value.worldId)?value:null;}
 export function getFieldSession(){return readWorldSession();}
 export function updateFieldSession(patch={}){const current=getFieldSession()||{},next={...current,...patch,updatedAt:Date.now()};if(!worldById(next.worldId))return null;try{const value=JSON.stringify(next);localStorage.setItem(WORLD_SESSION_KEY,value);localStorage.setItem(LEGACY_SESSION_KEY,value);}catch(_){}markRecent({type:'world',id:next.worldId,label:worldById(next.worldId).label,landmark:next.landmark||null});emit('field-session',next);return next;}
 export function clearFieldSession(){try{localStorage.removeItem(WORLD_SESSION_KEY);localStorage.removeItem(LEGACY_SESSION_KEY);}catch(_){}emit('field-session-clear');}
