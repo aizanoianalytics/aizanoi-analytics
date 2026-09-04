@@ -28,6 +28,34 @@ const plans = new Map([
     ['<option>${y}</option>', '<option>${esc(y)}</option>'],
     ['<option>${m}</option>', '<option>${esc(m)}</option>'],
     ['<option value="${m}">${monthLabel(m)}</option>', '<option value="${esc(m)}">${esc(monthLabel(m))}</option>'],
+    // PR-1: renderPoolSearch now uses esc() for the data-add attribute value
+    // (was unescaped ${p.i}; p.i is a numeric poolPeople index but escape makes
+    // the helper consistent with every other interpolation in the same template).
+    // Idempotent guard: only apply if not already esc()'d.
+    ['data-add="${p.i}"', 'data-add="${esc(p.i)}"'],
+    // renderBonusSettings writes user-editable bonus coefficients (persisted
+    // in localStorage under aizanoi_bonus_settings_v2) into the `value="..."`
+    // attribute of inputs inside an innerHTML template. The key loop variable
+    // `k` ranges over a fixed literal list, but the VALUE r[k] is
+    // attacker-influenced local state — it must be esc()'d, never classified
+    // safe just because the index is numeric. Idempotent guard: the canonical
+    // Python template already emits the esc() form.
+    ["data-key=\"${k}\" value=\"${r[k]??''}\"", "data-key=\"${esc(k)}\" value=\"${esc(r[k]??'')}\""],
+    ['data-bonus-grade="${esc(r.grade)}" value="${r.value}"', 'data-bonus-grade="${esc(r.grade)}" value="${esc(r.value)}"'],
+    // The delete-scenario button column formatter interpolates the row index
+    // raw into a data attribute inside an innerHTML template. v is numeric in
+    // practice but the formatter contract cannot prove it — escape at source.
+    ['data-del-scenario="${v}"', 'data-del-scenario="${esc(v)}"'],
+  ]],
+  ['hedefler_dashboard.html', [
+    // PR-1: the canonical Python template (hedefler_dashboard_template.py) now
+    // writes esc() around data-period values and CSS-custom-property tones.
+    // The hardener's idempotent guard ensures these substitutions are
+    // no-ops if the template already includes esc() — we register them
+    // explicitly so the hardener accepts this file in its input set and
+    // emits "already hardened" rather than failing with "no plan registered".
+    ['data-period="${p.key}"', 'data-period="${esc(p.key)}"'],
+    ['style="--tone:${c[3]}"', 'style="--tone:${esc(c[3])}"'],
   ]],
 ]);
 
