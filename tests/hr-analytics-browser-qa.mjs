@@ -239,3 +239,6 @@ if (failures > 0) {
   process.exit(1);
 }
 console.log('\nHR Analytics Full Set browser QA: all routes passed (desktop + 390px), rendered English clean, no new a11y regressions.');
+
+// Keep New HR Recruitment interactions inside the existing required browser-smoke context.
+await import('./recruitment-analytics-browser-qa.mjs');
