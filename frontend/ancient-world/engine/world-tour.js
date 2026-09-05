@@ -22,9 +22,9 @@
       'caracalla', 'diocletian', 'maxentius', 'circus', 'palatine',
     ]),
     athens: Object.freeze([
-      'parthenon', 'propylaea', 'athena-nike', 'erechtheion',
+      'parthenon', 'propylaea', 'athena-nike-early', 'old-athena-polias',
       'hephaisteion', 'theatre-dionysus', 'stoa-poikile',
-      'agora', 'kerameikos-gate', 'pnyx-bema',
+      'bouleuterion', 'dipylon-gate', 'pnyx-bema',
     ]),
     iga: Object.freeze([
       'terminal', 'checkin-bcd', 'checkin-fgh', 'checkin-mps',
@@ -62,13 +62,13 @@
     /* Athens */
     parthenon: 'The octastyle Doric temple of Athena Parthenos, completed 432 BCE under Iktinos and Kallikrates with Phidias overseeing the sculptural programme.',
     propylaea: 'The monumental Doric gateway to the Acropolis by Mnesicles, begun ca. 437 BCE and completed 432 BCE.',
-    'athena-nike': 'The tetrastyle amphiprostyle Temple of Athena Nike on the bastion west of the Propylaea, designed by Kallikrates.',
-    erechtheion: 'Ionic temple begun 421 BCE, still under construction — housing the olive-wood Athena Polias cult statue and the Panathenaic peplos.',
+    'athena-nike-early': 'The tetrastyle amphiprostyle Temple of Athena Nike on the bastion west of the Propylaea, designed by Kallikrates.',
+    'old-athena-polias': 'The Old Temple of Athena Polias — the pre-Parthenon cult shrine on the Acropolis, replaced by the Erechtheion building programme.',
     hephaisteion: 'Doric peripteral temple on Agoraios Kolonos hill, rededicated 449 BCE — the best-preserved Classical temple in Athens.',
     'theatre-dionysus': 'Theatre of Dionysus Eleuthereus on the south slope — a stone-seated cavea hosting the City Dionysia festival in this period.',
     'stoa-poikile': 'The Painted Stoa of the 460s BCE, adorned with paintings of the Marathon and mythological battles by Polygnotos and Micon.',
-    agora: 'The Agora civic core — marketplace, law courts and public life of Classical Athens surrounded by stoas and civic buildings.',
-    'kerameikos-gate': 'The Kerameikos district — potters\' quarter and cemetery, approached through the Dipylon and Sacred Gates.',
+    bouleuterion: 'The Athenian Bouleuterion — the council chamber of the Five Hundred, anchoring the civic core near the Agora.',
+    'dipylon-gate': 'The Dipylon Gate — the main western entry to the city through the Kerameikos district, beside the Sacred Gate.',
     'pnyx-bema': 'The Pnyx hill meeting-place of the Athenian assembly, with its carved bema (speaker\'s platform) overlooking the Agora.',
 
     /* İGA */
