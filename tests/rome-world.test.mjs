@@ -15,17 +15,20 @@ function read(relative) {
 test('Rome experience provides a standalone WebGL entry page', () => {
   assert.ok(existsSync(resolve(city, 'index.html')));
   const html = read('index.html');
+  const boot = read('js/boot.js');
   assert.match(html, /<canvas[^>]+id="glCanvas"/);
-  assert.match(html, /import\(['"]\.\/js\/app\.js['"]\)/);
+  assert.match(html, /<script type="module" src="\.\/js\/boot\.js"><\/script>/);
+  assert.match(boot, /import\(['"]\.\/app\.js['"]\)/);
   assert.match(html, /Rome.*410.*476/i);
 });
 
 test('Rome entry page gives a visible fallback when WebGL is unavailable', () => {
-  const html = read('index.html');
-  assert.match(html, /WEBGL UNAVAILABLE/i);
-  assert.match(html, /__AIZANOI_WEBGL_UNAVAILABLE__/);
-  assert.match(html, /needs WebGL/i);
-  assert.match(html, /renderer could not start/i);
+  const guard = read('js/webgl-guard.js');
+  const boot = read('js/boot.js');
+  assert.match(guard, /WEBGL UNAVAILABLE/i);
+  assert.match(guard, /__AIZANOI_WEBGL_UNAVAILABLE__/);
+  assert.match(guard, /needs WebGL/i);
+  assert.match(boot, /renderer could not start/i);
 });
 
 test('Rome city data includes late-antique monuments, regions, streets and sourced records', async () => {

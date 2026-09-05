@@ -12,8 +12,10 @@ const importFromCity = (relative) => import(pathToFileURL(resolve(city, relative
 test('Athens experience provides a standalone WebGL entry page', () => {
   assert.ok(existsSync(resolve(city, 'index.html')));
   const html = read('index.html');
+  const boot = read('js/boot.js');
   assert.match(html, /<canvas[^>]+id="glCanvas"/);
-  assert.match(html, /import\(['"]\.\/js\/app\.js['"]\)/);
+  assert.match(html, /<script type="module" src="\.\/js\/boot\.js"><\/script>/);
+  assert.match(boot, /import\(['"]\.\/app\.js['"]\)/);
   assert.match(html, /450.*430.*BCE/i);
 });
 
