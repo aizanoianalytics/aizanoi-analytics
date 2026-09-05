@@ -324,7 +324,7 @@ export function startFlatBlockyCity({
   });
 
   const keys = new Set();
-  let started = false, locked = false, rendered = false, last = performance.now(), currentEra = era || 225, dayHour = 15, walkSpeed = WALK_SPEED;
+  let started = false, locked = false, rendered = false, renderedOnce = false, last = performance.now(), currentEra = era || 225, dayHour = 15, walkSpeed = WALK_SPEED;
   let movementLockUntil = 0, audio = null, modernOverlay = false, arrivalIdentity = null;
   const sourceById = sourceMap(sources);
   const landmarkRecords = buildings.filter((b) => b.name && b.type !== 'wall' && b.type !== 'urban-fabric');
@@ -382,8 +382,10 @@ export function startFlatBlockyCity({
     // While a full-screen intro/boot overlay is still up the world is not visible.
     // Keep the frame clock warm but skip WebGL work: the renderer otherwise burns
     // a full draw per frame behind the overlay, which spikes TBT on slow devices
-    // and costs battery for visitors who linger on the intro.
-    if (document.querySelector('#intro:not(.hidden), #boot:not(.hidden)')) {
+    // and costs battery for visitors who linger on the intro. The first frame must
+    // still run so readiness.rendered flips for deep-link/QA gates.
+    const introUp = document.querySelector('#intro:not(.hidden), #boot:not(.hidden)');
+    if (introUp && renderedOnce) {
       lifecycle.frame(render);
       return;
     }
@@ -417,6 +419,7 @@ export function startFlatBlockyCity({
     updatePlace();
     if (ui === 'aizanoi') updateAizanoiHud();
     rendered = true;
+    renderedOnce = true;
     lifecycle.frame(render);
   }
 
