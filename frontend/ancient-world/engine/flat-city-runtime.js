@@ -379,6 +379,14 @@ export function startFlatBlockyCity({
   function render(now = performance.now()) {
     const frameDt = Math.max(0.001, Math.min(0.25, (now - last) / 1000));
     last = now;
+    // While a full-screen intro/boot overlay is still up the world is not visible.
+    // Keep the frame clock warm but skip WebGL work: the renderer otherwise burns
+    // a full draw per frame behind the overlay, which spikes TBT on slow devices
+    // and costs battery for visitors who linger on the intro.
+    if (document.querySelector('#intro:not(.hidden), #boot:not(.hidden)')) {
+      lifecycle.frame(render);
+      return;
+    }
     quality.sample(frameDt);
     resize();
     update(Math.min(0.05, frameDt));
