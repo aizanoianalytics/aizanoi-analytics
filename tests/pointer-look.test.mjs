@@ -8,8 +8,9 @@ test('pointer lock acquisition discards cursor recenter delta, then applies real
 });
 test('unlock and reacquire cannot leak old cursor movement into camera',()=>{
  const p={yaw:0,pitch:0};const look=createPointerLook(p);look.move({movementX:100,movementY:100});assert.equal(p.yaw,0);
- look.setLocked(true);look.move({movementX:100,movementY:100});look.move({movementX:10,movementY:0});
- const yaw=p.yaw;look.setLocked(false);look.move({movementX:200,movementY:200});look.setLocked(true);look.move({movementX:200,movementY:200});assert.equal(p.yaw,yaw);
+ look.setLocked(true);look.move({movementX:500,movementY:-400});look.move({movementX:10,movementY:0});
+ const yaw=p.yaw;look.setLocked(false);look.move({movementX:200,movementY:200});look.setLocked(true);look.move({movementX:500,movementY:200});look.move({movementX:10,movementY:0});
+ assert.ok(Math.abs(p.yaw-(yaw+10*0.00185))<1e-9,`relock leaked or lost movement: ${p.yaw} vs ${yaw}`);
 });
 test('pointer look rejects invalid deltas and clamps pitch',()=>{
  const p={yaw:0,pitch:0};const look=createPointerLook(p);look.setLocked(true);look.move({movementX:0,movementY:0});
