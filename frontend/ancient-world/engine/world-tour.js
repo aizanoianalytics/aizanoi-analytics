@@ -27,7 +27,9 @@
       'bouleuterion', 'dipylon-gate', 'pnyx-bema',
     ]),
     iga: Object.freeze([
-      'terminal', 'checkin-bcd', 'checkin-fgh', 'checkin-mps',
+      'flight-board', 'checkin-hall-mark', 'dutyfree-north', 'terminal',
+      'apron-west', 'apron-east', 'gate-pod-west', 'lounge-west',
+      'checkin-bcd', 'checkin-fgh', 'checkin-mps',
       'security', 'pier-west', 'pier-east', 'domestic-wing',
       'tower', 'apron-west',
     ]),
@@ -205,15 +207,42 @@
 
     if (title) title.textContent = 'World Tour';
     if (progress) progress.textContent = `${currentIndex + 1} / ${total}`;
-    if (copy) copy.textContent = landmark;
+    if (copy) {
+      const debug = window.__ANCIENT_WORLD_DEBUG__;
+      const record = debug?.landmarks?.find((item) => item.id === landmark);
+      copy.textContent = record?.name || landmark;
+    }
     if (prev) prev.disabled = currentIndex === 0;
     if (next) next.disabled = currentIndex === total - 1;
+  }
+
+  function orientCamera(debug, id) {
+    /* The authored view carries the monument-relative look target. Aim the player
+       there so every stop frames its landmark instead of the arrival default. */
+    const view = debug.teleportViews?.[id];
+    if (!view || !Array.isArray(view.look) || !debug.player) return;
+    const lookX = view.look.length > 2 ? view.look[0] : view.look[0];
+    const lookZ = view.look.length > 2 ? view.look[2] : view.look[1];
+    const dx = lookX - debug.player.x;
+    const dz = lookZ - debug.player.z;
+    if (!Number.isFinite(dx) || !Number.isFinite(dz) || (dx === 0 && dz === 0)) {
+      return;
+    }
+    debug.player.yaw = Math.atan2(dx, -dz);
+    if (Array.isArray(view.pos)) {
+      const rise = (view.look[1] ?? 0) - (view.pos[1] ?? 0);
+      const run = Math.hypot(dx, dz);
+      if (run > 1 && Number.isFinite(rise)) {
+        debug.player.pitch = Math.max(-0.5, Math.min(0.5, Math.atan2(rise, run) * 0.6));
+      }
+    }
   }
 
   function teleportStop(id) {
     const debug = window.__ANCIENT_WORLD_DEBUG__;
     if (debug?.teleportTo) {
       debug.teleportTo(id, { lock: false });
+      orientCamera(debug, id);
     }
   }
 

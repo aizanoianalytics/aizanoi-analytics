@@ -275,3 +275,11 @@ test('world-tour.js creates DOM elements via document.createElement (no template
     'Must use createElement for DOM construction',
   );
 });
+
+test('tour orients the camera toward the authored look target after each teleport', () => {
+  const content = readEngineFile('world-tour.js');
+  // The tour must not leave the camera at the volume facade default: after teleportTo
+  // it should read the authored teleportViews[id].look and aim the player there.
+  assert.match(content, /teleportViews/, 'tour must read authored views');
+  assert.match(content, /orientCamera|aimCamera|lookTarget|atan2/, 'tour must orient the camera');
+});
