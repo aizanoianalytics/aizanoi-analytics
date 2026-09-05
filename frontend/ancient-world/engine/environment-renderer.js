@@ -47,8 +47,10 @@ void main(){
   float sunx=.5+sin(uSunRel)*.57;
   float suny=.70-uPitch*.24;
   float d=distance(vUv,vec2(sunx,suny));
+  // Sun glow and tight disc: outer glow for atmosphere, inner disc for focus.
   c+=vec3(1.0,.72,.34)*smoothstep(.13,0.0,d)*.38*front;
   c+=vec3(1.0,.86,.58)*smoothstep(.035,0.0,d)*.72*front;
+  c+=vec3(1.0,.96,.82)*smoothstep(.012,0.0,d)*1.10*front;
   c+=vec3(.72,.61,.47)*(1.0-smoothstep(.0,.22,y))*.14;
   gl_FragColor=vec4(c,1.0);
 }`;
@@ -79,6 +81,11 @@ void main(){
   float shimmer=.88+.10*w1+.04*w2;
   vec3 c=mix(vC,vec3(.22,.42,.43),.32)*shimmer;
   c+=vec3(.18,.20,.17)*max(0.0,w1)*.12;
+  // Fresnel reflectivity: grazing-angle surfaces reflect the sky, near-vertical
+  // surfaces let the water body color through.  This separates flat water from
+  // reflective edges and sells the water surface orientation.
+  float fresnel=.82+.18*smoothstep(.0,.65,max(0.0,vW.y*0.05+w1*.03));
+  c=mix(c,vec3(.42,.55,.58),fresnel*.12);
   float z=gl_FragCoord.z/gl_FragCoord.w;
   float fog=clamp(1.0-exp(-uFogDensity*uFogDensity*z*z),0.0,.84);
   gl_FragColor=vec4(mix(c,uFog,fog),.83);
