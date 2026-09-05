@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-05-premier-league-matchweek-3-saturday",
+  "kind": "daily",
+  "title": "Premier League matchweek 3: seven Saturday fixtures kick off with Newcastle vs Bournemouth at 12:30 BST",
+  "summary": "The Premier League returns on Saturday 5 September with seven fixtures across matchweek 3, opening at 12:30 BST with Newcastle United hosting AFC Bournemouth at St James' Park before Brentford-Sunderland, Brighton-Leeds, Fulham-Crystal Palace, Manchester City-Coventry and Nottingham Forest-Tottenham kick off at 15:00 BST. Hull City host Aston Villa at 17:30 BST to close the Saturday slate, after Friday's opener saw Liverpool beat Ipswich Town 2-0 with both goals from Alexander Isak. Arsenal-Chelsea and Everton-Man United close the weekend.",
+  "category": "football",
+  "priority": 70,
+  "publishedAt": "2026-09-05T07:00:00Z",
+  "updatedAt": "2026-09-05T07:00:00Z",
+  "retrievedAt": "2026-09-05T06:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Premier League", "Newcastle United", "Liverpool", "Alexander Isak", "matchweek 3"],
+  "sources": [
+    {
+      "publisher": "Football Web Pages — Premier League fixtures",
+      "url": "https://www.footballwebpages.co.uk/premier-league/fixtures-results/september",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    },
+    {
+      "publisher": "Premier League (official)",
+      "url": "https://www.premierleague.com/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    }
+  ]
+}

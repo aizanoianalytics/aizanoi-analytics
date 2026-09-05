@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-05-quantum-weekly-round-up",
+  "kind": "daily",
+  "title": "Quantum computing weekly: Pasqal-KACST pact, Xanadu CAD 195M, IBM Nighthawk r2 specs published",
+  "summary": "The quantum computing sector opened September with a string of hardware and capital moves, according to The Qubit Report's weekly round-up for the week ending 5 September. Pasqal signed with Saudi Arabia's KACST, Xanadu locked in CAD 195 million in financing, IBM published specs for the 120-qubit Nighthawk r2 with mid-circuit reset and more than 100,000 circuits per second — about 25 times Heron throughput — and Diraq confirmed an eight-qubit silicon machine destined for an Equinix cage in Sydney with installation aimed at October 2026.",
+  "category": "technology",
+  "priority": 48,
+  "publishedAt": "2026-09-05T06:30:00Z",
+  "updatedAt": "2026-09-05T06:30:00Z",
+  "retrievedAt": "2026-09-05T05:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["quantum computing", "Pasqal", "Xanadu", "IBM Nighthawk", "Diraq"],
+  "sources": [
+    {
+      "publisher": "The Qubit Report",
+      "url": "https://thequbitreport.com/quantum-computing-weekly-round-up/2026/09/04/quantum-computing-weekly-round-up-week-ending-september-5-2026/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    }
+  ]
+}

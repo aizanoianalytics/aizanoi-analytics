@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-05-week-wrap-fed-waller-rally",
+  "kind": "daily",
+  "title": "Wall Street closes strong week as Waller's rate-hold signal trims September hike odds",
+  "summary": "US stocks capped the trading week with gains on Friday, the Dow climbing 1.18 percent to 53,686, the S&P 500 1.06 percent to 7,748 and the Nasdaq 1.40 percent to 26,584 after Federal Reserve Governor Christopher Waller urged patience on rates and revived risk appetite. A weaker-than-expected July payrolls print and softer US CPI, combined with gold near USD 4,450 per ounce and Brent crude around USD 96 per barrel on Middle East tensions, set up markets for next week's ECB meeting and the 15-16 September Federal Reserve decision.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-09-05T06:00:00Z",
+  "updatedAt": "2026-09-05T06:00:00Z",
+  "retrievedAt": "2026-09-05T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Wall Street", "Federal Reserve", "Christopher Waller", "gold", "Brent"],
+  "sources": [
+    {
+      "publisher": "Rio Times Global Economy Briefing",
+      "url": "https://www.riotimesonline.com/global-economy-briefing-september-4-2026/",
+      "publishedAt": "2026-09-04T06:48:00Z"
+    }
+  ]
+}

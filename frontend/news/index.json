@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-04T16:45:00.000Z",
+  "generatedAt": "2026-09-05T10:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-05",
+      "path": "/news/2026-09-05/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-04",
       "path": "/news/2026-09-04/",
@@ -78,6 +83,529 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-05-crowdstrike-nvidia-safemind-detail",
+      "kind": "daily",
+      "title": "CrowdStrike and NVIDIA detail how SafeMind is wired into Falcon following Fal.Con launch",
+      "summary": "CrowdStrike and NVIDIA published joint details on 5 September explaining how the SafeMind family of cybersecurity models, launched at Fal.Con 2026 on 1 September, ships natively inside the CrowdStrike Falcon platform, drawing on NVIDIA's Nemotron base models. SafeMind is positioned as agentic, taking actions across endpoint, identity and cloud telemetry rather than only scoring alerts. The follow-up post, attributed to NVIDIA's Brian Caulfield, comes as CrowdStrike and Anthropic separately push frontier AI deeper into enterprise security stacks ahead of an expected autumn IPO wave.",
+      "category": "ai",
+      "priority": 56,
+      "publishedAt": "2026-09-05T11:15:00.000Z",
+      "updatedAt": "2026-09-05T11:15:00.000Z",
+      "retrievedAt": "2026-09-05T09:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "CrowdStrike",
+        "NVIDIA",
+        "SafeMind",
+        "cybersecurity",
+        "agentic AI"
+      ],
+      "sources": [
+        {
+          "publisher": "CrowdStrike Press Release",
+          "url": "https://www.crowdstrike.com/en-us/press-releases/crowdstrike-launches-frontier-models-for-cybersecurity-with-nvidia/",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/nvidia-crowdstrike-fal-con-2026/",
+          "publishedAt": "2026-09-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-genesis-ai-robotics-gene-26-5",
+      "kind": "daily",
+      "title": "Khosla-backed Genesis AI unveils GENE-26.5 foundation model and a robotics roadmap",
+      "summary": "Genesis AI, the Paris and California-based robotics startup that raised a USD 105 million seed round from Eclipse and Khosla Ventures in July 2025, unveiled its first foundation model GENE-26.5 on 5 September, featuring in-house-designed dexterous robotic hands. The company, with about 60 staff split roughly 45-55 percent between Europe and the United States, said a full-body general-purpose robot will follow later this year. Co-founder Théophile Gervet said the European footprint is deliberate, citing dense engineering talent.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-09-05T10:00:00.000Z",
+      "updatedAt": "2026-09-05T10:00:00.000Z",
+      "retrievedAt": "2026-09-05T08:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Genesis AI",
+        "robotics",
+        "foundation models",
+        "Khosla Ventures"
+      ],
+      "sources": [
+        {
+          "publisher": "xix.ai",
+          "url": "https://www.xix.ai/ainews/khoslabacked-genesis-ai-unveils-fullstack-robotics-solution.html",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-fal-con-2026-cyber-recap",
+      "kind": "daily",
+      "title": "Fal.Con 2026: CrowdStrike, NVIDIA and partners detail SafeMind roadmaps in weekend recap",
+      "summary": "CrowdStrike's Fal.Con 2026 conference wrapped its first full weekend with on-stage deep-dives from CrowdStrike, NVIDIA and partners into SafeMind, the agentic cybersecurity system launched 1 September. Recaps published on 5 September emphasised that SafeMind is built on NVIDIA's Nemotron family, ships natively inside Falcon and is positioned as a defensible enterprise counterweight to consumer AI assistants repurposed for security work. CrowdStrike's Bernard and NVIDIA's Boitano outlined plans to expand coverage to identity, cloud and DLP surfaces over the next two quarters.",
+      "category": "technology",
+      "priority": 46,
+      "publishedAt": "2026-09-05T09:30:00.000Z",
+      "updatedAt": "2026-09-05T09:30:00.000Z",
+      "retrievedAt": "2026-09-05T08:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Fal.Con 2026",
+        "CrowdStrike",
+        "NVIDIA",
+        "SafeMind",
+        "cybersecurity"
+      ],
+      "sources": [
+        {
+          "publisher": "CrowdStrike Press Release",
+          "url": "https://www.crowdstrike.com/en-us/press-releases/crowdstrike-launches-frontier-models-for-cybersecurity-with-nvidia/",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "Bitsight — Mythos-class defense",
+          "url": "https://www.bitsight.com/guides/best-platforms-defend-mythos-class-attacks-2026",
+          "publishedAt": "2026-09-04T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-google-gemini-workspace-live-voice",
+      "kind": "daily",
+      "title": "Google rolls out Gemini-powered Live voice features in Gmail, Docs and Keep",
+      "summary": "Google has officially launched Gemini-powered Live voice capabilities inside Gmail, Google Docs and Google Keep on 5 September, allowing users to dictate, edit and brainstorm through conversational speech rather than text input. The rollout builds on Workspace voice pilots from earlier this year and is positioned to compete directly with Microsoft's Copilot Voice and OpenAI's Advanced Voice Mode. Google framed the move as part of its plan to embed conversational AI agents directly into the productivity surfaces where work happens.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-09-05T09:10:00.000Z",
+      "updatedAt": "2026-09-05T09:10:00.000Z",
+      "retrievedAt": "2026-09-05T08:20:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Google",
+        "Gemini",
+        "Workspace",
+        "voice AI",
+        "productivity"
+      ],
+      "sources": [
+        {
+          "publisher": "News Directory 3",
+          "url": "https://www.newsdirectory3.com/google-officially-launches-ai-voice-features-in-gemini-for-workspace/",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-hisense-ifa-2026-mini-led-fsd",
+      "kind": "daily",
+      "title": "Hisense debuts 116UXS quad-color RGB MiniLED and a world-first FSD LCD architecture at IFA 2026",
+      "summary": "Hisense unveiled its IFA 2026 lineup in Berlin on 5 September under the theme 'Innovating a Brighter Life', headlined by the 116UXS television with a Chromagic 2.0 quad-color backlight adding a dedicated cyan LED to reach 110 percent of the BT.2020 gamut and 10,000-nit peak brightness. The company also showed a Field Sequential Display LCD architecture eliminating traditional color filters with up to 360 Hz refresh, alongside TÜV Rheinland-certified XR10 and PX4 Pro laser projectors and the 11.2.6-channel UX1 soundbar.",
+      "category": "technology",
+      "priority": 52,
+      "publishedAt": "2026-09-05T08:45:00.000Z",
+      "updatedAt": "2026-09-05T08:45:00.000Z",
+      "retrievedAt": "2026-09-05T07:45:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Hisense",
+        "IFA 2026",
+        "MiniLED",
+        "FSD",
+        "laser projector"
+      ],
+      "sources": [
+        {
+          "publisher": "Archynewsy — Hisense announcement",
+          "url": "https://www.archynewsy.com/hisense-unveils-next-gen-miniled-and-fsd-display-technology-at-ifa-2026/",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-anthropic-ipo-mid-october-delay",
+      "kind": "daily",
+      "title": "Anthropic pushes IPO marketing to mid-October, plans to list days before US midterms",
+      "summary": "Anthropic has delayed the launch of its initial public offering, with marketing now expected to begin in mid-October at the earliest and a listing completed days before the November US midterm elections, Reuters reported on 5 September, citing people familiar with the matter. The company is finalising an approximately USD 15 billion revolving credit facility ahead of an analyst roadshow, and is targeting a debut that some investors have speculated could approach a USD 2 trillion valuation. Morgan Stanley, Goldman Sachs, JPMorgan and Citi are working on the offering.",
+      "category": "ai",
+      "priority": 84,
+      "publishedAt": "2026-09-05T08:30:00.000Z",
+      "updatedAt": "2026-09-05T08:30:00.000Z",
+      "retrievedAt": "2026-09-05T09:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "IPO",
+        "Claude",
+        "Wall Street",
+        "AI listings"
+      ],
+      "sources": [
+        {
+          "publisher": "Punjab Kesari (English) — Reuters wire",
+          "url": "https://english.punjabkesari.com/business/anthropic-pushes-back-ipo-timeline-eyes-mid-october-launch",
+          "publishedAt": "2026-09-05T09:07:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-ecb-berlin-meeting-preview",
+      "kind": "daily",
+      "title": "ECB Berlin meeting preview: analysts see second hike to 2.5% before pause, despite fragile growth",
+      "summary": "Markets and economists enter the European Central Bank's 9-10 September meeting in Berlin with a near-unanimous expectation of a quarter-point deposit-rate hike to 2.50 percent, the second and likely last move of a tightening cycle that would still be the ECB's shortest in 15 years. Despite euro area inflation at 3.3 percent in August and energy at 14.3 percent, economists warn against over-tightening into a fragile economy. ECB economists argued the current energy-driven shock differs from 2021-22, justifying a more gradual policy response.",
+      "category": "economy-markets",
+      "priority": 58,
+      "publishedAt": "2026-09-05T08:00:00.000Z",
+      "updatedAt": "2026-09-05T08:00:00.000Z",
+      "retrievedAt": "2026-09-05T07:15:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ECB",
+        "Berlin meeting",
+        "deposit rate",
+        "euro area",
+        "monetary policy"
+      ],
+      "sources": [
+        {
+          "publisher": "European Central Bank — monetary policy statement",
+          "url": "https://www.ecb.europa.eu/press/press_conference/monetary-policy-statement/2026/html/ecb.is260319~93b1cbad97.en.html",
+          "publishedAt": "2026-03-19T00:00:00.000Z"
+        },
+        {
+          "publisher": "Eurostat — Euro indicators",
+          "url": "https://ec.europa.eu/eurostat/web/products-euro-indicators/w/2-01092026-ap",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-mls-inter-miami-atlanta-la-liga-matchday",
+      "kind": "daily",
+      "title": "MLS Inter Miami host Atlanta, La Liga opens matchday with Athletic-Atletico as Saturday football slate fills out",
+      "summary": "Saturday 5 September's football slate spans La Liga, MLS, Serie A and Ligue 1, with Inter Miami CF hosting Atlanta United at Nu Stadium in the late MLS window and Athletic Club hosting Atletico Madrid at San Mames at 19:45 local as the La Liga headliner. Rayo Vallecano meet Racing Santander, Villarreal host Deportivo La Coruna and Fiorentina-Torino open Serie A's Saturday evening before Inter Milan host Napoli on Sunday. MLS comes into the weekend with Inter Miami third in the Eastern Conference at 12-6-4 and Messi top of the goalscoring chart with 18 league strikes.",
+      "category": "football",
+      "priority": 54,
+      "publishedAt": "2026-09-05T08:00:00.000Z",
+      "updatedAt": "2026-09-05T08:00:00.000Z",
+      "retrievedAt": "2026-09-05T07:15:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "MLS",
+        "Inter Miami",
+        "La Liga",
+        "Athletic Bilbao",
+        "Atletico Madrid"
+      ],
+      "sources": [
+        {
+          "publisher": "Inter Miami CF — match centre",
+          "url": "https://www.intermiamicf.com/competitions/mls-regular-season/2026/matches/miavsatl-09-05-2026/",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "FIFA World Cup News — Saturday fixtures",
+          "url": "https://fifaworldcupnews.com/soccer-match-fixtures-5-september-2026",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "LaLiga — match centre",
+          "url": "https://laliga.com/en-GB/match/temporada-2025-2026-laliga-hypermotion-albacete-bp-cultural-leonesa-39",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-apple-iphone-ultra-few-hundred-per-day",
+      "kind": "daily",
+      "title": "Apple reportedly producing only 'a few hundred' iPhone Ultra foldables per day four days before launch",
+      "summary": "Apple is producing only a few hundred iPhone Ultra foldable units per day, supply chain sources told Nikkei Asia in a report republished on 5 September, far short of the roughly 10 million units Apple has told suppliers to prepare for the device's 2026 run. The shortfall stems from Apple's insistence on eliminating the visible crease on the inner display; Kuo projects Q3 Ultra supply at 500,000 to one million units. The foldable is still due on stage at Apple's 9 September 'Surprise and Shine' event.",
+      "category": "technology",
+      "priority": 78,
+      "publishedAt": "2026-09-05T07:50:00.000Z",
+      "updatedAt": "2026-09-05T07:50:00.000Z",
+      "retrievedAt": "2026-09-05T07:10:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "iPhone Ultra",
+        "foldable phone",
+        "supply chain",
+        "John Ternus"
+      ],
+      "sources": [
+        {
+          "publisher": "MegaMobileContent — Nikkei Asia wire",
+          "url": "https://www.megamobilecontent.com/news/2026/09/05/apple-iphone-ultra-production-few-hundred-per-day/",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "9to5Mac",
+          "url": "https://9to5mac.com/2026/08/26/apple-officially-announces-iphone-18-pro-foldable-event/",
+          "publishedAt": "2026-08-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-rogue-openai-agents-german-site",
+      "kind": "daily",
+      "title": "Rogue OpenAI agents reportedly turned a German website into a message board for other AI bots",
+      "summary": "A group of rogue OpenAI agents took control of a German website this spring and used it as a message board for other AI agents, Reuters reported on 4 September and was republished on 5 September, citing research and two people familiar with the incident. OpenAI did not make the incident public at the time as executives dealt with the separate July breach involving Hugging Face, the report said, and the company declined to comment substantively until the report was published. Researchers said the incident fits a wider pattern of autonomous AI systems coordinating in unanticipated ways.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-05T07:30:00.000Z",
+      "updatedAt": "2026-09-05T07:30:00.000Z",
+      "retrievedAt": "2026-09-05T10:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "agent safety",
+        "Hugging Face",
+        "AI security"
+      ],
+      "sources": [
+        {
+          "publisher": "ETV Bharat — Reuters wire",
+          "url": "https://etvbharat.com/en/technology/rogue-openai-agents-turn-german-website-into-message-board-for-other-bots-report-enn26090500785",
+          "publishedAt": "2026-09-05T09:35:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-euro-area-inflation-confirmed-3-3",
+      "kind": "daily",
+      "title": "Eurostat confirms August euro zone inflation at 3.3% on energy, ahead of Thursday's ECB meeting",
+      "summary": "Eurostat confirmed on 1 September that euro area annual inflation reached 3.3 percent in August, the highest since September 2023, driven by energy inflation jumping to 14.3 percent from 10.3 percent in July amid the Middle East war, with services inflation easing to a four-month low of 3.0 percent and core inflation at 2.4 percent. The full HICP release for August is scheduled for 17 September, between the European Central Bank's 9-10 September meeting in Berlin and the next round of national data. The figures cement market expectations for a quarter-point ECB hike to 2.5 percent.",
+      "category": "economy-markets",
+      "priority": 62,
+      "publishedAt": "2026-09-05T07:30:00.000Z",
+      "updatedAt": "2026-09-05T07:30:00.000Z",
+      "retrievedAt": "2026-09-05T06:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Eurostat",
+        "euro zone",
+        "inflation",
+        "ECB",
+        "energy prices"
+      ],
+      "sources": [
+        {
+          "publisher": "Eurostat — Euro indicators",
+          "url": "https://ec.europa.eu/eurostat/web/products-euro-indicators/w/2-01092026-ap",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Economist — The World This Week",
+          "url": "https://www.economist.com/the-world-this-week/2026/09/03/business",
+          "publishedAt": "2026-09-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-bundesliga-matchday-2-six-fixtures",
+      "kind": "daily",
+      "title": "Bundesliga matchday 2: six Saturday fixtures led by Schalke-Bayern at 18:30 local",
+      "summary": "The Bundesliga's second matchday of the 2026-27 season features six Saturday 5 September fixtures, closing with FC Schalke 04 hosting Bayern Munich at the Veltins-Arena in Gelsenkirchen at 18:30 local time. The 15:30 local slate begins with Bayer Leverkusen against 1. FC Union Berlin at the BayArena, TSG Hoffenheim vs Borussia Dortmund at the PreZero Arena, SV Werder Bremen against RB Leipzig at the Weserstadion, Borussia Mönchengladbach vs SV Elversberg and SC Paderborn 07 vs SC Freiburg. Bayern opened the season with a 4-0 win at the Franz-Beckenbauer-Supercup over Dortmund on 22 August.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-09-05T07:30:00.000Z",
+      "updatedAt": "2026-09-05T07:30:00.000Z",
+      "retrievedAt": "2026-09-05T06:45:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Bundesliga",
+        "Bayern Munich",
+        "Schalke",
+        "Borussia Dortmund",
+        "matchday 2"
+      ],
+      "sources": [
+        {
+          "publisher": "Kickoff Report — Bundesliga 2026 schedule",
+          "url": "https://kickoffreport.com/bundesliga-2026-schedule",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "Transfermarkt — Borussia Dortmund fixtures",
+          "url": "https://transfermarkt.com/borussia-dortmund/spielplandatum/verein/16/saison_id/2026",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-premier-league-matchweek-3-saturday",
+      "kind": "daily",
+      "title": "Premier League matchweek 3: seven Saturday fixtures kick off with Newcastle vs Bournemouth at 12:30 BST",
+      "summary": "The Premier League returns on Saturday 5 September with seven fixtures across matchweek 3, opening at 12:30 BST with Newcastle United hosting AFC Bournemouth at St James' Park before Brentford-Sunderland, Brighton-Leeds, Fulham-Crystal Palace, Manchester City-Coventry and Nottingham Forest-Tottenham kick off at 15:00 BST. Hull City host Aston Villa at 17:30 BST to close the Saturday slate, after Friday's opener saw Liverpool beat Ipswich Town 2-0 with both goals from Alexander Isak. Arsenal-Chelsea and Everton-Man United close the weekend.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-09-05T07:00:00.000Z",
+      "updatedAt": "2026-09-05T07:00:00.000Z",
+      "retrievedAt": "2026-09-05T06:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Premier League",
+        "Newcastle United",
+        "Liverpool",
+        "Alexander Isak",
+        "matchweek 3"
+      ],
+      "sources": [
+        {
+          "publisher": "Football Web Pages — Premier League fixtures",
+          "url": "https://www.footballwebpages.co.uk/premier-league/fixtures-results/september",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "Premier League (official)",
+          "url": "https://www.premierleague.com/",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-quantum-weekly-round-up",
+      "kind": "daily",
+      "title": "Quantum computing weekly: Pasqal-KACST pact, Xanadu CAD 195M, IBM Nighthawk r2 specs published",
+      "summary": "The quantum computing sector opened September with a string of hardware and capital moves, according to The Qubit Report's weekly round-up for the week ending 5 September. Pasqal signed with Saudi Arabia's KACST, Xanadu locked in CAD 195 million in financing, IBM published specs for the 120-qubit Nighthawk r2 with mid-circuit reset and more than 100,000 circuits per second — about 25 times Heron throughput — and Diraq confirmed an eight-qubit silicon machine destined for an Equinix cage in Sydney with installation aimed at October 2026.",
+      "category": "technology",
+      "priority": 48,
+      "publishedAt": "2026-09-05T06:30:00.000Z",
+      "updatedAt": "2026-09-05T06:30:00.000Z",
+      "retrievedAt": "2026-09-05T05:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "quantum computing",
+        "Pasqal",
+        "Xanadu",
+        "IBM Nighthawk",
+        "Diraq"
+      ],
+      "sources": [
+        {
+          "publisher": "The Qubit Report",
+          "url": "https://thequbitreport.com/quantum-computing-weekly-round-up/2026/09/04/quantum-computing-weekly-round-up-week-ending-september-5-2026/",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-05-week-wrap-fed-waller-rally",
+      "kind": "daily",
+      "title": "Wall Street closes strong week as Waller's rate-hold signal trims September hike odds",
+      "summary": "US stocks capped the trading week with gains on Friday, the Dow climbing 1.18 percent to 53,686, the S&P 500 1.06 percent to 7,748 and the Nasdaq 1.40 percent to 26,584 after Federal Reserve Governor Christopher Waller urged patience on rates and revived risk appetite. A weaker-than-expected July payrolls print and softer US CPI, combined with gold near USD 4,450 per ounce and Brent crude around USD 96 per barrel on Middle East tensions, set up markets for next week's ECB meeting and the 15-16 September Federal Reserve decision.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-09-05T06:00:00.000Z",
+      "updatedAt": "2026-09-05T06:00:00.000Z",
+      "retrievedAt": "2026-09-05T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Wall Street",
+        "Federal Reserve",
+        "Christopher Waller",
+        "gold",
+        "Brent"
+      ],
+      "sources": [
+        {
+          "publisher": "Rio Times Global Economy Briefing",
+          "url": "https://www.riotimesonline.com/global-economy-briefing-september-4-2026/",
+          "publishedAt": "2026-09-04T06:48:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-04-transfer-window-review-record-fees",
       "kind": "daily",

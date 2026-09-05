@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-05-crowdstrike-nvidia-safemind-detail",
+  "kind": "daily",
+  "title": "CrowdStrike and NVIDIA detail how SafeMind is wired into Falcon following Fal.Con launch",
+  "summary": "CrowdStrike and NVIDIA published joint details on 5 September explaining how the SafeMind family of cybersecurity models, launched at Fal.Con 2026 on 1 September, ships natively inside the CrowdStrike Falcon platform, drawing on NVIDIA's Nemotron base models. SafeMind is positioned as agentic, taking actions across endpoint, identity and cloud telemetry rather than only scoring alerts. The follow-up post, attributed to NVIDIA's Brian Caulfield, comes as CrowdStrike and Anthropic separately push frontier AI deeper into enterprise security stacks ahead of an expected autumn IPO wave.",
+  "category": "ai",
+  "priority": 56,
+  "publishedAt": "2026-09-05T11:15:00Z",
+  "updatedAt": "2026-09-05T11:15:00Z",
+  "retrievedAt": "2026-09-05T09:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["CrowdStrike", "NVIDIA", "SafeMind", "cybersecurity", "agentic AI"],
+  "sources": [
+    {
+      "publisher": "CrowdStrike Press Release",
+      "url": "https://www.crowdstrike.com/en-us/press-releases/crowdstrike-launches-frontier-models-for-cybersecurity-with-nvidia/",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "NVIDIA Blog",
+      "url": "https://blogs.nvidia.com/blog/nvidia-crowdstrike-fal-con-2026/",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    }
+  ]
+}
