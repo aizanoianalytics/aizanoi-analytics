@@ -242,6 +242,21 @@ function tower(scene,b) {
   scene.cylinder(b.x,h,b.z,r*.38,h*.05,gold,seg);
 }
 function checkin(scene,b) { scene.box(b.x,0.1,b.z,b.w||80,1.1,b.d||14,[0.22,0.29,0.31],b.rot||0); }
+// Airliner parked nose-in toward the pier: vertical fuselage, tail fin, swept
+// wings, engine pods. Fuselage runs along -Z so the nose faces the terminal.
+function airliner(scene,x,z,rot,livery=[0.27,0.42,0.50]) {
+  const white=[0.88,0.88,0.87];
+  scene.box(x,1.7,z,3.6,3.4,30,white,rot);            // main fuselage
+  scene.box(x,2.6,z+13,2.2,2.0,4.4,[0.16,0.18,0.20],rot); // cockpit nose
+  scene.box(x,4.6,z-13.2,0.8,6.0,5.0,livery,rot);     // tail fin
+  scene.box(x,2.6,z-14.5,9.0,0.5,2.4,white,rot);      // tailplane
+  scene.box(x-8.5,1.3,z-2.5,15.0,0.4,4.2,white,rot);  // port wing
+  scene.box(x+8.5,1.3,z-2.5,15.0,0.4,4.2,white,rot);  // starboard wing
+  scene.box(x-5.0,0.75,z+1.5,1.5,1.5,3.4,[0.30,0.30,0.31],rot); // port engine
+  scene.box(x+5.0,0.75,z+1.5,1.5,1.5,3.4,[0.30,0.30,0.31],rot); // starboard engine
+  scene.box(x,0.12,z,1.2,0.24,1.2,[0.16,0.18,0.20],rot); // nose gear
+  scene.box(x,0.12,z-11,1.4,0.24,2.6,[0.16,0.18,0.20],rot); // main gear
+}
 function forecourt(scene,b) {
   const w=b.w||420,d=b.d||130,rot=b.rot||0, asphalt=[0.25,0.27,0.28],paving=[0.46,0.48,0.47],mark=[0.76,0.71,0.52];
   scene.box(b.x,0,b.z,w,.08,d,asphalt,rot);
@@ -274,23 +289,17 @@ function apron(scene,b) {
   const w=b.w||160,d=b.d||160,rot=b.rot||0;
   scene.box(b.x,0,b.z,w,.06,d,[0.22,0.24,0.25],rot);
   const stands=scene.mobile?3:6;
+  const liveries=[[0.27,0.42,0.50],[0.62,0.16,0.16],[0.30,0.34,0.36],[0.20,0.34,0.24]];
   for(let i=0;i<stands;i++){
     const sx=-w*.35+w*i/(stands-1);
     const p=scene.localPoint(b.x,b.z,sx,0,rot);
     scene.box(p[0],0.06,p[1],6,.08,40,[0.28,0.30,0.31],rot);
-    const ax=p[0],az=p[1];
-    scene.box(ax,0.08,az-14,20,.95,3.8,[0.78,0.80,0.80],rot);
-    scene.box(ax+8.8,1.03,az-14,2.3,.64,3.45,[0.27,0.42,0.50],rot);
-    scene.box(ax,0.20,az-14,19,.16,12,[0.68,0.70,0.69],rot);
-    scene.box(ax-7.4,1.00,az-14,.65,4.6,2.4,[0.72,0.73,0.72],rot);
-  }
-  const jetBridges=scene.mobile?3:6;
-  for(let i=0;i<jetBridges;i++){
-    const sx=-w*.35+w*i/Math.max(1,jetBridges-1);
-    const p=scene.localPoint(b.x,b.z,sx,0,rot);
-    scene.box(p[0],3.2,p[1]+10,4.6,2.5,19,[0.55,0.60,0.62],rot);
-    scene.box(p[0],.08,p[1]+18,.55,3.2,.55,[0.63,0.65,0.64],rot);
-    scene.box(p[0],5.7,p[1]+18,8,.22,6,[0.48,0.52,0.53],rot);
+    const ax=p[0],az=p[1]-14;
+    airliner(scene,ax,az,rot,liveries[i%liveries.length]);
+    // Jet bridge plugs into the forward fuselage from the terminal side.
+    scene.box(ax,3.4,az-6.5,3.2,2.6,12,[0.55,0.60,0.62],rot);
+    scene.box(ax,0,az-12.5,0.9,3.4,0.9,[0.63,0.65,0.64],rot);
+    scene.box(ax,6.0,az-6.5,4.4,0.25,13,[0.48,0.52,0.53],rot);
   }
 }
 

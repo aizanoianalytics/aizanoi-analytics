@@ -33,7 +33,7 @@ test('IGA compaction retains real terminal dimensions and finite cinematic frami
 test('IGA apron landmarks use authored camera framing rather than a generic empty tarmac view', () => {
   for (const id of ['apron-west', 'apron-east']) {
     const apron = BUILDINGS.find((building) => building.id === id);
-    assert.ok(apron?.framing?.distance >= 100, `${id} needs a cinematic stand-view distance`);
+    assert.ok(apron?.framing?.distance >= 45 && apron?.framing?.distance <= 90, `${id} needs a close cinematic stand-view distance`);
     assert.ok(apron?.framing?.pitch <= -0.10, `${id} needs a downward apron-view pitch`);
     assert.ok(Array.isArray(apron?.framing?.preferredDirections), `${id} needs an authored view direction`);
   }
@@ -63,8 +63,8 @@ test('IGA architecture is rendered through a dedicated terminal asset rather tha
   const assets = read('frontend/ancient-world/assets/blocky-asset-library.js');
   assert.match(assets, /function terminal\(/);
   assert.match(assets, /function forecourt\(/);
+  assert.match(assets, /function airliner\(/);
   assert.match(assets, /const vehicles=scene\.mobile\?3:7/);
-  assert.match(assets, /const jetBridges=scene\.mobile\?3:6/);
   assert.match(assets, /terminal,/);
   assert.match(assets, /forecourt,/);
 });
