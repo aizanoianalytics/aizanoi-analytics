@@ -20,6 +20,12 @@ test('IGA world has a standalone static entry and researched data module', () =>
   assert.match(airport, /istairport\.com/);
 });
 
+test('IGA participates in shared deep-link routing and teardown semantics', () => {
+  const navigation = read('frontend/ancient-world/engine/navigation.js');
+  assert.match(navigation, /path\.includes\('\/iga\/'\)/);
+  assert.match(navigation, /worldId:'iga'/);
+});
+
 test('IGA architecture is rendered through a dedicated terminal asset rather than an ancient generic house', () => {
   const assets = read('frontend/ancient-world/assets/blocky-asset-library.js');
   assert.match(assets, /function terminal\(/);
