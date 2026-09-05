@@ -242,6 +242,27 @@ function tower(scene,b) {
   scene.cylinder(b.x,h,b.z,r*.38,h*.05,gold,seg);
 }
 function checkin(scene,b) { scene.box(b.x,0.1,b.z,b.w||80,1.1,b.d||14,[0.22,0.29,0.31],b.rot||0); }
+function forecourt(scene,b) {
+  const w=b.w||420,d=b.d||130,rot=b.rot||0, asphalt=[0.25,0.27,0.28],paving=[0.46,0.48,0.47],mark=[0.76,0.71,0.52];
+  scene.box(b.x,0,b.z,w,.08,d,asphalt,rot);
+  for(const lane of [-.30,0,.30]){
+    const p=scene.localPoint(b.x,b.z,0,lane*d,rot);
+    scene.box(p[0],.09,p[1],w*.92,.035,1.1,mark,rot);
+  }
+  for(const side of [-1,1]){
+    const p=scene.localPoint(b.x,b.z,0,side*d*.43,rot);
+    scene.box(p[0],.10,p[1],w,.14,d*.11,paving,rot);
+  }
+  const bays=scene.mobile?5:9;
+  for(let i=0;i<bays;i++){
+    const x=-w*.40+w*.80*i/Math.max(1,bays-1);
+    const curb=scene.localPoint(b.x,b.z,x,-d*.16,rot);
+    scene.box(curb[0],.12,curb[1],w/(bays*2.2),.18,d*.10,[0.60,0.62,0.60],rot);
+    const canopy=scene.localPoint(b.x,b.z,x,-d*.31,rot);
+    scene.box(canopy[0],.16,canopy[1],.42,5.6,.42,[0.67,0.68,0.65],rot);
+    scene.box(canopy[0],5.72,canopy[1],w/(bays*.78),.20,d*.18,[0.55,0.59,0.59],rot);
+  }
+}
 function apron(scene,b) {
   const w=b.w||160,d=b.d||160,rot=b.rot||0;
   scene.box(b.x,0,b.z,w,.06,d,[0.22,0.24,0.25],rot);
@@ -371,6 +392,7 @@ const TYPE_BUILDERS = Object.freeze({
   terminal,
   tower,
   checkin,
+  forecourt,
   apron,
   bridge,
   market,

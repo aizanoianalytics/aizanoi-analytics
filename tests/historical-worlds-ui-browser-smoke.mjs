@@ -12,6 +12,7 @@ const layouts = [
 const worlds = [
   { id:'aizanoi', path:'/historic-world/', intro:'#boot:not(.hidden)', enter:'#enterBtn', entered:'#hud:not(.hidden)' },
   { id:'rome', path:'/ancient-cities/rome-410-476/', intro:'#intro:not(.hidden)', enter:'#enter', hiddenAfterEnter:'#intro' },
+  { id:'iga', path:'/iga/', intro:'#intro:not(.hidden)', enter:'#enter', hiddenAfterEnter:'#intro' },
   { id:'athens', path:'/ancient-cities/athens-450-430/', intro:'#intro:not(.hidden)', enter:'#enter', hiddenAfterEnter:'#intro' },
 ];
 
@@ -29,8 +30,8 @@ async function enterWorld(page, world) {
   } else {
     await page.waitForSelector(world.entered, { state:'visible', timeout:12000 });
   }
-  await page.waitForSelector('#aw-tools-toggle', { state:'visible', timeout:8000 });
-  await page.waitForSelector('#ancient-world-back-to-os', { state:'visible', timeout:8000 });
+  assert.equal(await page.locator('#aw-tools-toggle').isVisible(), true, `${world.id}: Explore control was not installed`);
+  assert.equal(await page.locator('#ancient-world-back-to-os').isVisible(), true, `${world.id}: AizanoiOS return control was not installed`);
   await page.waitForFunction(() => Boolean(document.getElementById('ancient-world-experience-style')?.sheet));
   // Desktop worlds may enter pointer lock immediately after the Enter gesture.
   // Release it before testing clickable HUD controls; this mirrors the real

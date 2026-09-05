@@ -50,7 +50,7 @@ export const BUILDINGS = Object.freeze([
   B('tower','Tulip-inspired ATC tower','tower',-250,1030,35,35,90,'airfield','Original simplified tower silhouette informed by the airport\'s tulip-inspired air traffic control tower.',{noCollision:true}),
   B('apron-west','Apron stands west','apron',-470,1010,260,260,1,'airfield','Aircraft stand field and taxiway atmosphere.',{noCollision:true}),
   B('apron-east','Apron stands east','apron',470,1010,260,260,1,'airfield','Aircraft stand field and taxiway atmosphere.',{noCollision:true}),
-  B('plaza','Departure forecourt plaza','monument',0,-220,180,40,2,'landside','Arrival/departure drop-off axis and first impression of the terminal mass.'),
+  B('plaza','Departure forecourt plaza','forecourt',0,-290,800,240,6,'landside','Original curbside, covered drop-off and lane rhythm for a legible terminal arrival sequence.',{noCollision:true}),
   B('passport-west','Passport control west','gateway',-180,160,100,24,11,'processor','Formal boundary between landside and airside zones.'),
   B('passport-east','Passport control east','gateway',180,160,100,24,11,'processor','Formal boundary between landside and airside zones.'),
   B('retail-belt','Pier retail belt','market',0,740,500,30,4,'domestic','Rhythmic duty-free and F&B presence along the pier transition.'),
@@ -58,4 +58,4 @@ export const BUILDINGS = Object.freeze([
 ]);
 export const WATERS = Object.freeze([]);
 export const BOUNDS = Object.freeze({ minX:-900,maxX:900,minZ:-430,maxZ:1240 });
-export const SPAWN = Object.freeze({ x:0,z:-210,yaw:0,pitch:-0.05 });
+export const SPAWN = Object.freeze({ x:0,z:-410,yaw:Math.PI-0.22,pitch:-0.14 });
