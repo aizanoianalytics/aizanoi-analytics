@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-05-fal-con-2026-cyber-recap",
+  "kind": "daily",
+  "title": "Fal.Con 2026: CrowdStrike, NVIDIA and partners detail SafeMind roadmaps in weekend recap",
+  "summary": "CrowdStrike's Fal.Con 2026 conference wrapped its first full weekend with on-stage deep-dives from CrowdStrike, NVIDIA and partners into SafeMind, the agentic cybersecurity system launched 1 September. Recaps published on 5 September emphasised that SafeMind is built on NVIDIA's Nemotron family, ships natively inside Falcon and is positioned as a defensible enterprise counterweight to consumer AI assistants repurposed for security work. CrowdStrike's Bernard and NVIDIA's Boitano outlined plans to expand coverage to identity, cloud and DLP surfaces over the next two quarters.",
+  "category": "technology",
+  "priority": 46,
+  "publishedAt": "2026-09-05T09:30:00Z",
+  "updatedAt": "2026-09-05T09:30:00Z",
+  "retrievedAt": "2026-09-05T08:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Fal.Con 2026", "CrowdStrike", "NVIDIA", "SafeMind", "cybersecurity"],
+  "sources": [
+    {
+      "publisher": "CrowdStrike Press Release",
+      "url": "https://www.crowdstrike.com/en-us/press-releases/crowdstrike-launches-frontier-models-for-cybersecurity-with-nvidia/",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "Bitsight — Mythos-class defense",
+      "url": "https://www.bitsight.com/guides/best-platforms-defend-mythos-class-attacks-2026",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    }
+  ]
+}

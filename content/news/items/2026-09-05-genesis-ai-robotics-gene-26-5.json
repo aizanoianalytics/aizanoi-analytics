@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-05-genesis-ai-robotics-gene-26-5",
+  "kind": "daily",
+  "title": "Khosla-backed Genesis AI unveils GENE-26.5 foundation model and a robotics roadmap",
+  "summary": "Genesis AI, the Paris and California-based robotics startup that raised a USD 105 million seed round from Eclipse and Khosla Ventures in July 2025, unveiled its first foundation model GENE-26.5 on 5 September, featuring in-house-designed dexterous robotic hands. The company, with about 60 staff split roughly 45-55 percent between Europe and the United States, said a full-body general-purpose robot will follow later this year. Co-founder Théophile Gervet said the European footprint is deliberate, citing dense engineering talent.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-09-05T10:00:00Z",
+  "updatedAt": "2026-09-05T10:00:00Z",
+  "retrievedAt": "2026-09-05T08:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Genesis AI", "robotics", "foundation models", "Khosla Ventures"],
+  "sources": [
+    {
+      "publisher": "xix.ai",
+      "url": "https://www.xix.ai/ainews/khoslabacked-genesis-ai-unveils-fullstack-robotics-solution.html",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    }
+  ]
+}

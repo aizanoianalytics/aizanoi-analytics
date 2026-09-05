@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-05-bundesliga-matchday-2-six-fixtures",
+  "kind": "daily",
+  "title": "Bundesliga matchday 2: six Saturday fixtures led by Schalke-Bayern at 18:30 local",
+  "summary": "The Bundesliga's second matchday of the 2026-27 season features six Saturday 5 September fixtures, closing with FC Schalke 04 hosting Bayern Munich at the Veltins-Arena in Gelsenkirchen at 18:30 local time. The 15:30 local slate begins with Bayer Leverkusen against 1. FC Union Berlin at the BayArena, TSG Hoffenheim vs Borussia Dortmund at the PreZero Arena, SV Werder Bremen against RB Leipzig at the Weserstadion, Borussia Mönchengladbach vs SV Elversberg and SC Paderborn 07 vs SC Freiburg. Bayern opened the season with a 4-0 win at the Franz-Beckenbauer-Supercup over Dortmund on 22 August.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-09-05T07:30:00Z",
+  "updatedAt": "2026-09-05T07:30:00Z",
+  "retrievedAt": "2026-09-05T06:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Bundesliga", "Bayern Munich", "Schalke", "Borussia Dortmund", "matchday 2"],
+  "sources": [
+    {
+      "publisher": "Kickoff Report — Bundesliga 2026 schedule",
+      "url": "https://kickoffreport.com/bundesliga-2026-schedule",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    },
+    {
+      "publisher": "Transfermarkt — Borussia Dortmund fixtures",
+      "url": "https://transfermarkt.com/borussia-dortmund/spielplandatum/verein/16/saison_id/2026",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    }
+  ]
+}

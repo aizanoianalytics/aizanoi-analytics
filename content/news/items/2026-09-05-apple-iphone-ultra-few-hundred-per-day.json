@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-05-apple-iphone-ultra-few-hundred-per-day",
+  "kind": "daily",
+  "title": "Apple reportedly producing only 'a few hundred' iPhone Ultra foldables per day four days before launch",
+  "summary": "Apple is producing only a few hundred iPhone Ultra foldable units per day, supply chain sources told Nikkei Asia in a report republished on 5 September, far short of the roughly 10 million units Apple has told suppliers to prepare for the device's 2026 run. The shortfall stems from Apple's insistence on eliminating the visible crease on the inner display; Kuo projects Q3 Ultra supply at 500,000 to one million units. The foldable is still due on stage at Apple's 9 September 'Surprise and Shine' event.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-09-05T07:50:00Z",
+  "updatedAt": "2026-09-05T07:50:00Z",
+  "retrievedAt": "2026-09-05T07:10:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iPhone Ultra", "foldable phone", "supply chain", "John Ternus"],
+  "sources": [
+    {
+      "publisher": "MegaMobileContent — Nikkei Asia wire",
+      "url": "https://www.megamobilecontent.com/news/2026/09/05/apple-iphone-ultra-production-few-hundred-per-day/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    },
+    {
+      "publisher": "9to5Mac",
+      "url": "https://9to5mac.com/2026/08/26/apple-officially-announces-iphone-18-pro-foldable-event/",
+      "publishedAt": "2026-08-26T00:00:00Z"
+    }
+  ]
+}
