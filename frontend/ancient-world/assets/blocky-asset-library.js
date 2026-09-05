@@ -279,9 +279,18 @@ function apron(scene,b) {
     const p=scene.localPoint(b.x,b.z,sx,0,rot);
     scene.box(p[0],0.06,p[1],6,.08,40,[0.28,0.30,0.31],rot);
     const ax=p[0],az=p[1];
-    scene.box(ax,0.08,az-14,18,.12,3.5,[0.72,0.72,0.7],rot);
-    scene.box(ax,0.20,az-14,4,.10,3.5,[0.72,0.72,0.7],rot);
-    scene.box(ax,0.08,az-14,18,.06,12,[0.62,0.62,0.6],rot);
+    scene.box(ax,0.08,az-14,20,.95,3.8,[0.78,0.80,0.80],rot);
+    scene.box(ax+8.8,1.03,az-14,2.3,.64,3.45,[0.27,0.42,0.50],rot);
+    scene.box(ax,0.20,az-14,19,.16,12,[0.68,0.70,0.69],rot);
+    scene.box(ax-7.4,1.00,az-14,.65,4.6,2.4,[0.72,0.73,0.72],rot);
+  }
+  const jetBridges=scene.mobile?3:6;
+  for(let i=0;i<jetBridges;i++){
+    const sx=-w*.35+w*i/Math.max(1,jetBridges-1);
+    const p=scene.localPoint(b.x,b.z,sx,0,rot);
+    scene.box(p[0],3.2,p[1]+10,4.6,2.5,19,[0.55,0.60,0.62],rot);
+    scene.box(p[0],.08,p[1]+18,.55,3.2,.55,[0.63,0.65,0.64],rot);
+    scene.box(p[0],5.7,p[1]+18,8,.22,6,[0.48,0.52,0.53],rot);
   }
 }
 
