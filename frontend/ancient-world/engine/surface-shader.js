@@ -34,6 +34,21 @@ void main(){
   vec3 color=vC*(.61+light*.50);
 
   float lum=dot(vC,vec3(.299,.587,.114));
+
+  // Blinn-Phong specular: polished stone (marble, plaster) catches a highlight
+  // while rough earth stays matte.  Amplitude is luminance-gated so dark
+  // surfaces do not produce spurious glints.
+  vec3 halfDir=normalize(sun+normalize(-vW));
+  float spec=pow(max(dot(n,halfDir),0.0),24.0);
+  float specAmp=smoothstep(.30,.78,lum)*.10;
+  color+=spec*specAmp;
+
+  // Fresnel rim lighting: pseudo eye-direction derived from depth separates
+  // blocky geometry from background and from each other at silhouette edges.
+  vec3 eyeDir=normalize(vec3(vW.xy*vDepth*.0012+vec2(.0,.08),-1.0));
+  float fresnel=pow(1.0-max(dot(n,eyeDir),0.0),3.0)*.13;
+  color+=fresnel;
+
   float macro=valueNoise(vW.xz*.018);
   float meso=valueNoise(vW.xz*.105+vec2(17.0,3.0));
   float micro=hash(floor(vW.xz*1.85));
