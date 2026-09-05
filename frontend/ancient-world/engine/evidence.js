@@ -63,10 +63,12 @@ export function evidenceBadgeHTML(value) {
   return `<span class="awEvidence awEvidence-${evidence.id}" data-evidence="${evidence.id}">${evidence.label}</span>`;
 }
 
+/* Historical Worlds evidence styles now live in
+   `frontend/ancient-world/engine/evidence.css`, which is linked from every
+   Historical World entry page. Previously this function created a runtime
+   `<style>` element and assigned its `.textContent`; that pattern is blocked
+   by `style-src 'self'`. Keep the exported no-op for callers that still
+   invoke it (Rome methodology, Athens …) so the public API stays stable. */
 export function installEvidenceStyles() {
-  if (document.getElementById('ancient-world-evidence-style')) return;
-  const style = document.createElement('style');
-  style.id = 'ancient-world-evidence-style';
-  style.textContent = `.awEvidence{display:inline-flex;align-items:center;padding:5px 8px;border-radius:999px;border:1px solid rgba(235,197,125,.28);font:800 9px/1 system-ui;letter-spacing:.065em;text-transform:uppercase}.awEvidence-archaeological{color:#bde1c1;background:rgba(74,130,85,.18);border-color:rgba(111,178,126,.34)}.awEvidence-documented{color:#e3dca6;background:rgba(124,116,72,.17)}.awEvidence-inferred,.awEvidence-plausible{color:#e6c07d;background:rgba(174,126,54,.16)}.awEvidence-atmospheric{color:#d7aaa0;background:rgba(146,78,66,.15)}.awEvidence-disputed{color:#efb0ba;background:rgba(153,58,77,.18);border-color:rgba(209,92,113,.36)}.awEvidenceNote{color:#c8b998;font-size:11px;border-left:2px solid rgba(211,166,90,.42);padding-left:9px}`;
-  document.head.appendChild(style);
+  /* intentional no-op — see evidence.css */
 }

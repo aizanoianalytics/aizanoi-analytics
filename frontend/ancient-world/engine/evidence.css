@@ -1,0 +1,15 @@
+/* Historical Worlds evidence badge styles. Replaces the previous runtime
+   `<style>.textContent = ...` injection that violated
+   `style-src 'self' 'unsafe-inline'`. Same-origin stylesheet — allowed. */
+
+.awEvidence{display:inline-flex;align-items:center;padding:5px 8px;border-radius:999px;border:1px solid rgba(235,197,125,.28);font:800 9px/1 system-ui;letter-spacing:.065em;text-transform:uppercase}
+.awEvidence-archaeological{color:#bde1c1;background:rgba(74,130,85,.18);border-color:rgba(111,178,126,.34)}
+.awEvidence-documented{color:#e3dca6;background:rgba(124,116,72,.17)}
+.awEvidence-inferred,.awEvidence-plausible{color:#e6c07d;background:rgba(174,126,54,.16)}
+.awEvidence-atmospheric{color:#d7aaa0;background:rgba(146,78,66,.15)}
+.awEvidence-disputed{color:#efb0ba;background:rgba(153,58,77,.18);border-color:rgba(209,92,113,.36)}
+.awEvidenceNote{color:#c8b998;font-size:11px;border-left:2px solid rgba(211,166,90,.42);padding-left:9px}
+.awEvidenceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}
+.awEvidenceGrid>div{border:1px solid rgba(235,197,125,.18);border-radius:9px;padding:11px;background:rgba(255,255,255,.025)}
+.awEvidenceGrid p{margin:8px 0 0;color:#cdbf9f;font-size:11px;line-height:1.5}
+@media(max-width:620px){.awEvidenceGrid{grid-template-columns:1fr}}

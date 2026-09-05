@@ -1,0 +1,30 @@
+/* Historical Worlds Research Lens styles. Replaces the previous runtime
+   `<style>.textContent = ...` injection that violated
+   `style-src 'self' 'unsafe-inline'`. Same-origin stylesheet — allowed. */
+
+.awResearchToggle{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:7990;min-width:44px;min-height:44px;padding:10px 13px;border:1px solid rgba(232,205,153,.35);border-radius:12px;background:rgba(22,20,16,.88);color:#f0dfbd;font:800 11px/1.2 system-ui;letter-spacing:.07em;text-transform:uppercase;backdrop-filter:blur(10px);cursor:pointer;box-shadow:0 10px 32px rgba(0,0,0,.28)}
+.awResearchToggle[aria-pressed="true"]{background:#f0dfbd;color:#211b13;border-color:#f0dfbd}
+.awResearchPanel{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:70px;z-index:7989;width:min(390px,calc(100vw - 28px));max-height:min(620px,calc(100vh - 110px));overflow:auto;padding:15px;border:1px solid rgba(232,205,153,.28);border-radius:16px;background:rgba(20,18,14,.95);color:#eadfc9;font:13px/1.45 system-ui;box-shadow:0 24px 70px rgba(0,0,0,.42);backdrop-filter:blur(14px)}
+.awResearchPanel[hidden]{display:none!important}
+.awResearchPanel h2{margin:0 0 5px;font:800 18px/1.15 Georgia,serif}
+.awResearchPanel>p{margin:0 0 12px;color:#cbbd9f;font-size:12px}
+.awResearchLegend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0 14px}
+.awResearchLegend div{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;padding:9px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.025)}
+.awEvidenceDot{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.05);background:var(--aw-dot-color,#8a8a8a)}
+.awResearchLegendCopy{display:grid;gap:2px;min-width:0}
+.awResearchLegend b{font-size:11px;line-height:1.15;text-transform:uppercase;letter-spacing:.05em}
+.awResearchLegend small{color:#cbbd9f;font-size:10px;line-height:1.25}
+.awResearchCount{min-width:24px;padding:3px 5px;border-radius:999px;background:rgba(255,255,255,.055);color:#d7c9ac;font:800 10px/1 system-ui;text-align:center}
+.awResearchFocus{padding:10px 11px;margin:0 0 12px;border-left:3px solid var(--aw-evidence-focus,#d59a55);border-radius:8px;background:rgba(255,255,255,.035)}
+.awResearchFocus b{display:block}
+.awResearchFocus small{display:block;margin-top:3px;color:#bcae91}
+.awResearchNearby{display:grid;gap:6px}
+.awResearchNearby button{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;width:100%;min-height:44px;padding:8px 9px;border:1px solid rgba(255,255,255,.08);border-radius:9px;background:rgba(255,255,255,.025);color:inherit;text-align:left;cursor:pointer}
+.awResearchNearby button:hover,.awResearchNearby button:focus-visible{background:rgba(240,223,189,.1);outline:1px solid rgba(240,223,189,.42)}
+.awResearchNearby strong{font-size:11px}
+.awResearchNearby small{color:#bcae91}
+.awResearchKey{margin-top:12px!important;font:700 10px/1.4 ui-monospace,monospace!important;color:#a99b80!important}
+.awEvidenceModeActive::before{content:"";position:fixed;inset:0;z-index:7975;pointer-events:none;border:2px dashed rgba(240,223,189,.32);border-radius:0;mix-blend-mode:screen}
+@media(max-width:720px){.awResearchToggle{right:10px;bottom:max(10px,env(safe-area-inset-bottom));font-size:10px}.awResearchPanel{right:8px;bottom:64px;width:calc(100vw - 16px);max-height:56vh}.awResearchLegend{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.awResearchLegend{grid-template-columns:1fr}.awResearchPanel{padding:13px}.awResearchLegend div{padding:9px 10px}}
+@media(prefers-reduced-motion:reduce){.awResearchToggle,.awResearchPanel{scroll-behavior:auto}}

@@ -32,7 +32,3 @@ function openMethodology() {
 }
 
 if (button) button.addEventListener('click', openMethodology);
-
-const style = document.createElement('style');
-style.textContent = `.awEvidenceGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0}.awEvidenceGrid>div{border:1px solid rgba(235,197,125,.18);border-radius:9px;padding:11px;background:rgba(255,255,255,.025)}.awEvidenceGrid p{margin:8px 0 0;color:#cdbf9f;font-size:11px;line-height:1.5}@media(max-width:620px){.awEvidenceGrid{grid-template-columns:1fr}}`;
-document.head.appendChild(style);

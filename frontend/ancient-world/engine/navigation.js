@@ -4,18 +4,13 @@ import './world-tour.js';
 const STYLE_ID = 'ancient-world-navigation-style';
 const LINK_ID = 'ancient-world-back-to-os';
 
+/* Historical Worlds shared navigation chrome (back to AizanoiOS button)
+   styles live in `frontend/ancient-world/engine/navigation.css`. The previous
+   version created a runtime `<style>` element and assigned its `.textContent`,
+   which is blocked under `style-src 'self'`. Each Historical World entry
+   page links the stylesheet directly. */
 function ensureStyle() {
-  if (document.getElementById(STYLE_ID)) return;
-  const style = document.createElement('style');
-  style.id = STYLE_ID;
-  style.textContent = `
-#${LINK_ID}{position:fixed;z-index:2147483000;top:max(68px,calc(env(safe-area-inset-top) + 58px));left:max(12px,env(safe-area-inset-left));display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid rgba(236,203,145,.32);border-radius:9px;background:linear-gradient(180deg,rgba(28,24,18,.90),rgba(12,11,9,.90));color:#f2dfbd;text-decoration:none;font:800 10px/1.1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.055em;box-shadow:0 8px 28px rgba(0,0,0,.30);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);touch-action:manipulation;user-select:none;cursor:pointer}
-#${LINK_ID}:hover{border-color:rgba(240,195,111,.70);transform:translateY(-1px)}
-#${LINK_ID}:focus-visible{outline:2px solid #f0c77f;outline-offset:3px}
-@media(max-width:720px),(pointer:coarse){#${LINK_ID}{top:max(8px,env(safe-area-inset-top));left:max(8px,env(safe-area-inset-left));padding:8px 9px;font-size:9px;opacity:.94}}
-@media(prefers-reduced-motion:reduce){#${LINK_ID}{transition:none!important}#${LINK_ID}:hover{transform:none}}
-`;
-  document.head.appendChild(style);
+  /* intentional no-op — see navigation.css */
 }
 
 async function cleanupForExit(onBeforeExit) {
@@ -99,8 +94,27 @@ function waitForRuntime({ timeout = 9000, interval = 40 } = {}) {
 /**
  * Consume an AizanoiOS world command without coupling the shared engine to a
  * city renderer. Each experience keeps ownership of its own enter and teleport
- * behavior; this bridge only exercises the public DOM controls already used by visitors.
  */
+export async function consumePendingWorldCommand({ worldId, onEnter, onTeleport, onLandmark, timeout = 9000 } = {}) {
+  if (!worldId) return null;
+  const pending = readPendingWorldCommand(worldId);
+  if (!pending) return null;
+  clearPendingWorldCommand(worldId);
+  await waitForRuntime({ timeout });
+  if (pending.action === 'teleport' && pending.landmark) {
+    await onTeleport?.(pending.landmark);
+    onLandmark?.(pending.landmark);
+    return pending;
+  }
+  if (pending.action === 'enter' || pending.action === 'open') {
+    await onEnter?.(pending);
+    return pending;
+  }
+  return pending;
+}
+
+export default installBackToOS;
+
 export async function consumeHistoricalWorldDeepLink({
   worldId,
   enterSelector = '#enter',
