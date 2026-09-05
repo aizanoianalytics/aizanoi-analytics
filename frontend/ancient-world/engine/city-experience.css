@@ -108,13 +108,13 @@ body[data-city="aizanoi"] .aw-tools-panel #atlasBtn,
 body[data-city="aizanoi"] .aw-tools-panel #sourcesBtn,
 body[data-city="aizanoi"] .aw-tools-panel #soundBtn{display:block!important}
 
-/* Rome/Athens use the same presentation contract. */
-body[data-city="rome"] .controls,body[data-city="athens"] .controls{align-items:center;flex-wrap:nowrap;gap:7px}
-body[data-city="rome"] .controls #jump,body[data-city="athens"] .controls #jump{max-width:210px;min-height:36px;font-size:11px}
-body[data-city="rome"] .controls #inspect,body[data-city="athens"] .controls #inspect{min-height:36px;padding:8px 11px;font-size:11px}
-body[data-city="rome"] .miniWrap:not(.aw-map-open),body[data-city="athens"] .miniWrap:not(.aw-map-open){display:none!important}
-body[data-city="rome"] .place,body[data-city="athens"] .place{min-width:0!important;max-width:min(380px,calc(100vw - 28px))!important;padding:8px 11px!important;opacity:.94}
-body[data-city="rome"] .place span,body[data-city="athens"] .place span{display:block;max-width:330px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Rome, Athens and IGA use the same presentation contract. */
+body[data-city="rome"] .controls,body[data-city="athens"] .controls,body[data-city="iga"] .controls{align-items:center;flex-wrap:nowrap;gap:7px}
+body[data-city="rome"] .controls #jump,body[data-city="athens"] .controls #jump,body[data-city="iga"] .controls #jump{max-width:210px;min-height:36px;font-size:11px}
+body[data-city="rome"] .controls #inspect,body[data-city="athens"] .controls #inspect,body[data-city="iga"] .controls #inspect{min-height:36px;padding:8px 11px;font-size:11px}
+body[data-city="rome"] .miniWrap:not(.aw-map-open),body[data-city="athens"] .miniWrap:not(.aw-map-open),body[data-city="iga"] .miniWrap:not(.aw-map-open){display:none!important}
+body[data-city="rome"] .place,body[data-city="athens"] .place,body[data-city="iga"] .place{min-width:0!important;max-width:min(380px,calc(100vw - 28px))!important;padding:8px 11px!important;opacity:.94}
+body[data-city="rome"] .place span,body[data-city="athens"] .place span,body[data-city="iga"] .place span{display:block;max-width:330px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 @media(pointer:fine) and (min-width:821px){
   .aw-tools-panel{transition:opacity .14s ease,transform .14s ease;transform-origin:top right}
@@ -161,11 +161,11 @@ body[data-city="rome"] .place span,body[data-city="athens"] .place span{display:
   body[data-city="aizanoi"] #mapBox{display:none!important}
   body[data-city="aizanoi"] #toast{top:max(190px,calc(env(safe-area-inset-top) + 182px));max-width:calc(100vw - 24px);text-align:center}
 
-  /* Rome/Athens keep one uncluttered control row below the Field System return.
+  /* Rome, Athens and IGA keep one uncluttered control row below the Field System return.
      Their city identity remains in the place card and intro; the desktop brand is
      intentionally hidden during touch traversal to avoid competing overlays. */
-  body[data-city="rome"] .brand,body[data-city="athens"] .brand{display:none!important}
-  body[data-city="rome"] .controls,body[data-city="athens"] .controls{
+  body[data-city="rome"] .brand,body[data-city="athens"] .brand,body[data-city="iga"] .brand{display:none!important}
+  body[data-city="rome"] .controls,body[data-city="athens"] .controls,body[data-city="iga"] .controls{
     position:fixed!important;
     left:max(8px,env(safe-area-inset-left))!important;
     right:max(8px,env(safe-area-inset-right))!important;
@@ -178,13 +178,13 @@ body[data-city="rome"] .place span,body[data-city="athens"] .place span{display:
     gap:8px!important;
     justify-content:stretch!important;
   }
-  body[data-city="rome"] .controls #inspect,body[data-city="athens"] .controls #inspect{display:none!important}
-  body[data-city="rome"] .controls #jump,body[data-city="athens"] .controls #jump{width:100%!important;max-width:none!important;min-width:0!important;min-height:44px!important;font-size:11px!important;padding:9px!important}
-  body[data-city="rome"] .controls #aw-tools-toggle,body[data-city="athens"] .controls #aw-tools-toggle{white-space:nowrap;margin:0!important}
-  body[data-city="rome"] .miniWrap,body[data-city="athens"] .miniWrap{display:none!important}
-  body[data-city="rome"] .bottom,body[data-city="athens"] .bottom{left:8px!important;bottom:max(176px,calc(env(safe-area-inset-bottom) + 168px))!important}
-  body[data-city="rome"] .place,body[data-city="athens"] .place{max-width:205px!important;padding:8px 10px!important;font-size:11px!important}
-  body[data-city="rome"] .place span,body[data-city="athens"] .place span{display:none}
+  body[data-city="rome"] .controls #inspect,body[data-city="athens"] .controls #inspect,body[data-city="iga"] .controls #inspect{display:none!important}
+  body[data-city="rome"] .controls #jump,body[data-city="athens"] .controls #jump,body[data-city="iga"] .controls #jump{width:100%!important;max-width:none!important;min-width:0!important;min-height:44px!important;font-size:11px!important;padding:9px!important}
+  body[data-city="rome"] .controls #aw-tools-toggle,body[data-city="athens"] .controls #aw-tools-toggle,body[data-city="iga"] .controls #aw-tools-toggle{white-space:nowrap;margin:0!important}
+  body[data-city="rome"] .miniWrap,body[data-city="athens"] .miniWrap,body[data-city="iga"] .miniWrap{display:none!important}
+  body[data-city="rome"] .bottom,body[data-city="athens"] .bottom,body[data-city="iga"] .bottom{left:8px!important;bottom:max(176px,calc(env(safe-area-inset-bottom) + 168px))!important}
+  body[data-city="rome"] .place,body[data-city="athens"] .place,body[data-city="iga"] .place{max-width:205px!important;padding:8px 10px!important;font-size:11px!important}
+  body[data-city="rome"] .place span,body[data-city="athens"] .place span,body[data-city="iga"] .place span{display:none}
 }
 
 @media(max-width:430px){

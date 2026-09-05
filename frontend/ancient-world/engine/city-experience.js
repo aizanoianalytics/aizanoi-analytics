@@ -159,7 +159,7 @@
     return;
   }
 
-  if(city==='rome'||city==='athens'){
+  if(city==='rome'||city==='athens'||city==='iga'){
     const controls=$('.controls');
     const mini=$('.miniWrap');
     installDrawer(controls,['atlas','modern','audio','evidence','sources'],mini);

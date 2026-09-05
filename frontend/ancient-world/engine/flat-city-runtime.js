@@ -324,7 +324,7 @@ export function startFlatBlockyCity({
   });
 
   const keys = new Set();
-  let started = false, locked = false, rendered = false, last = performance.now(), currentEra = era || 225, dayHour = 15, walkSpeed = WALK_SPEED;
+  let started = false, locked = false, rendered = false, renderedOnce = false, last = performance.now(), currentEra = era || 225, dayHour = 15, walkSpeed = WALK_SPEED;
   let movementLockUntil = 0, audio = null, modernOverlay = false, arrivalIdentity = null;
   const sourceById = sourceMap(sources);
   const landmarkRecords = buildings.filter((b) => b.name && b.type !== 'wall' && b.type !== 'urban-fabric');
@@ -379,6 +379,16 @@ export function startFlatBlockyCity({
   function render(now = performance.now()) {
     const frameDt = Math.max(0.001, Math.min(0.25, (now - last) / 1000));
     last = now;
+    // While a full-screen intro/boot overlay is still up the world is not visible.
+    // Keep the frame clock warm but skip WebGL work: the renderer otherwise burns
+    // a full draw per frame behind the overlay, which spikes TBT on slow devices
+    // and costs battery for visitors who linger on the intro. The first frame must
+    // still run so readiness.rendered flips for deep-link/QA gates.
+    const introUp = document.querySelector('#intro:not(.hidden), #boot:not(.hidden)');
+    if (introUp && renderedOnce) {
+      lifecycle.frame(render);
+      return;
+    }
     quality.sample(frameDt);
     resize();
     update(Math.min(0.05, frameDt));
@@ -409,6 +419,7 @@ export function startFlatBlockyCity({
     updatePlace();
     if (ui === 'aizanoi') updateAizanoiHud();
     rendered = true;
+    renderedOnce = true;
     lifecycle.frame(render);
   }
 
@@ -446,7 +457,7 @@ export function startFlatBlockyCity({
     traversal.snapPlayerToSupport(spawnPoint.x, spawnPoint.z);
     const dx = view.look[0] - player.x, dz = view.look[1] - player.z;
     player.yaw = Math.atan2(dx, -dz);
-    player.pitch = -0.04;
+    player.pitch = Number.isFinite(view.pitch) ? view.pitch : -0.04;
     resetMovementState();
     movementLockUntil = performance.now() + 140;
     arrivalIdentity = { record, x: player.x, z: player.z };
@@ -660,9 +671,31 @@ export function startFlatBlockyCity({
       const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return toast('Web Audio unavailable.');
       const ctx = lifecycle.trackAudioContext(new AC());
       const gain = ctx.createGain(); gain.gain.value = 0.018;
-      const osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 82;
-      const filter = ctx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 180;
-      osc.connect(filter).connect(gain).connect(ctx.destination); osc.start(); audio = { ctx, gain, osc, enabled: true };
+      if (ui === 'iga') {
+        // Terminal ambience: soft filtered noise bed (hall hum) plus a faint
+        // tonal sweep, evoking the big-volume hum of the real processor hall.
+        const seconds = 2;
+        const noise = ctx.createBufferSource();
+        const bed = ctx.createBuffer(1, ctx.sampleRate * seconds, ctx.sampleRate);
+        const channel = bed.getChannelData(0);
+        for (let i = 0; i < channel.length; i++) channel[i] = (Math.random() * 2 - 1) * 0.5;
+        noise.buffer = bed; noise.loop = true;
+        const bedFilter = ctx.createBiquadFilter(); bedFilter.type = 'bandpass';
+        bedFilter.frequency.value = 240; bedFilter.Q.value = 0.6;
+        const bedGain = ctx.createGain(); bedGain.gain.value = 0.5;
+        const hum = ctx.createOscillator(); hum.type = 'sine'; hum.frequency.value = 96;
+        const humGain = ctx.createGain(); humGain.gain.value = 0.05;
+        noise.connect(bedFilter).connect(bedGain).connect(gain);
+        hum.connect(humGain).connect(gain);
+        gain.connect(ctx.destination);
+        noise.start(); hum.start();
+        audio = { ctx, gain, sources: [noise, hum], enabled: true };
+      } else {
+        const osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 82;
+        const filter = ctx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 180;
+        osc.connect(filter).connect(gain).connect(ctx.destination); osc.start();
+        audio = { ctx, gain, sources: [osc], enabled: true };
+      }
     } else { audio.enabled = !audio.enabled; audio.gain.gain.setTargetAtTime(audio.enabled ? 0.018 : 0, audio.ctx.currentTime, 0.08); }
   }
 

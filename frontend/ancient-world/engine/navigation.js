@@ -157,6 +157,7 @@ function detectWorldProfile() {
   };
   if (path.includes('/rome-410-476/')) return { worldId:'rome', worldLabel:'Rome AD 410–476', requireRuntime:true };
   if (path.includes('/athens-450-430/')) return { worldId:'athens', worldLabel:'Classical Athens c. 432–430 BCE', requireRuntime:true };
+  if (path.includes('/iga/')) return { worldId:'iga', worldLabel:'İGA Istanbul Airport', requireRuntime:true };
   return null;
 }
 

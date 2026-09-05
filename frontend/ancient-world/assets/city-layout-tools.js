@@ -63,6 +63,16 @@ export const CITY_COMPACTION_PROFILES = Object.freeze({
     roadWidthScale: 0.90, waterWidthScale: 0.88,
     framingScale: 0.60, boundsPadding: 68,
   }),
+  iga: Object.freeze({
+    id: 'iga-terminal-campus', centerX: 0, centerZ: 300,
+    innerScaleX: 0.92, innerScaleZ: 0.86, coreX: 950, coreZ: 1100,
+    outerScaleX: 0.76, outerScaleZ: 0.72,
+    structureScale: 0.96, heroScale: 0.96, heightScale: 1.0,
+    regionScaleX: 0.92, regionScaleZ: 0.88,
+    perimeterScaleX: 0.92, perimeterScaleZ: 0.88,
+    roadWidthScale: 0.94, waterWidthScale: 0.90,
+    framingScale: 0.86, boundsPadding: 72,
+  }),
 });
 
 export function compactPoint(x, z, profile) {

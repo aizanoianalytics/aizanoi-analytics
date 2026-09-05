@@ -208,6 +208,158 @@ function wall(scene, b) {
 
 function gate(scene, b) { arch(scene, { ...b, w: b.w || 34, d: b.d || 14, h: b.h || 20 }); }
 
+// Modern, non-historical public-infrastructure assets. They intentionally use
+// original low-poly geometry rather than copied plans, branding or photography.
+function terminal(scene, b) {
+  const w=b.w||220,d=b.d||120,h=Math.max(16,b.h||30),rot=b.rot||0, glass=[0.33,0.53,0.61];
+  scene.box(b.x,0,b.z,w,h*0.14,d,[0.68,0.67,0.65],rot);
+  for(const side of [-1,1]) {
+    const p=scene.localPoint(b.x,b.z,0,side*d*0.47,rot);
+    scene.box(p[0],h*0.14,p[1],w*0.94,h*0.56,0.55,glass,rot);
+  }
+  const bays=scene.mobile?Math.max(5,Math.round(w/80)):Math.max(8,Math.round(w/52));
+  for(let i=0;i<=bays;i++) {
+    const p=scene.localPoint(b.x,b.z,-w*0.46+w*i/bays,0,rot);
+    scene.box(p[0],h*0.10,p[1],0.7,h*0.82,d*0.96,[0.76,0.75,0.69],rot);
+  }
+  for(let i=0;i<bays;i++) {
+    const p=scene.localPoint(b.x,b.z,-w*0.42+w*(i+.5)/bays,0,rot);
+    scene.roof(p[0],h*0.7,p[1],w/bays*1.04,h*0.3,d*0.98,[0.72,0.73,0.7],rot);
+  }
+  // Deep transverse peytral arcs across the volume (real terminal signature):
+  // wide shallow arch ribs spanning the depth at regular intervals, reading
+  // from inside the hall as the great white structural leaps.
+  if (w > 300) {
+    const arcs=scene.mobile?3:6;
+    for(let i=0;i<arcs;i++){
+      const p=scene.localPoint(b.x,b.z,-w*0.42+w*(i+0.5)/arcs,0,rot);
+      scene.roof(p[0],h*0.56,p[1],w/arcs*0.5,h*0.10,d*0.90,[0.86,0.86,0.84],rot);
+    }
+  }
+  footprint(scene,b);
+}
+function tower(scene,b) {
+  const h=Math.max(28,b.h||72),r=Math.max(5,Math.min(b.w||24,b.d||24)*.42);
+  const conc=[0.64,0.62,0.54],dark=[0.20,0.30,0.33],gold=[0.77,0.72,0.55],seg=scene.mobile?12:20;
+  scene.cylinder(b.x,0,b.z,r,h*.36,conc,seg);
+  scene.cylinder(b.x,h*.36,b.z,r*.62,h*.36,[0.58,0.56,0.48],seg);
+  const bulge=(i)=>{const t=(i+1)/5;return r*0.62*Math.sin(t*Math.PI)*1.6;};
+  for(let i=0;i<5;i++){
+    const rr=Math.max(1.2,bulge(i)),y=h*.36+i*h*.11;
+    scene.cylinder(b.x,y,b.z,rr,h*.12,i%2?dark:conc,seg);
+  }
+  scene.cylinder(b.x,h*.91,b.z,r*.7,h*.09,dark,seg);
+  scene.cylinder(b.x,h,b.z,r*.38,h*.05,gold,seg);
+}
+function checkin(scene,b) {
+  // Check-in island: long counter slab with paired desk towers and back-wall
+  // signage, reading as the real processor's island rhythm from inside the hall.
+  const w=b.w||80,d=b.d||14,h=Math.max(2,b.h||3),rot=b.rot||0;
+  const counter=[0.24,0.32,0.34], tower=[0.85,0.85,0.83], screen=[0.16,0.22,0.28];
+  scene.box(b.x,0.1,b.z,w,1.15,d,counter,rot);
+  const towers=scene.mobile?4:8;
+  for(let i=0;i<towers;i++) {
+    const p=scene.localPoint(b.x,b.z,-w*0.44+w*i/(towers-1||1),0,rot);
+    scene.box(p[0],1.25,p[1],1.6,h,1.1,tower,rot);
+    scene.box(p[0],1.25+h*0.5,p[1],1.6,0.5,1.0,screen,rot);
+  }
+  footprint(scene,b);
+}
+// Dark-glass departures board: slim panel on two slim pylons, screen face toward
+// the check-in hall so the interior tour reads the board across the islands.
+function signage(scene,b) {
+  const w=b.w||18,d=b.d||1.4,h=Math.max(2,b.h||4),rot=b.rot||0;
+  const frame=[0.10,0.13,0.17], screen=[0.07,0.16,0.26], lit=[0.16,0.42,0.55];
+  scene.box(b.x,0,b.z,0.8,h*0.55,0.8,frame,rot);
+  scene.box(b.x,h*0.55,b.z,w,h*0.45,d,screen,rot);
+  const cells=scene.mobile?4:9;
+  for(let i=0;i<cells;i++){
+    const p=scene.localPoint(b.x,b.z,-w*0.5+w*(i+0.5)/cells,-d*0.51,rot);
+    scene.box(p[0],h*0.60,p[1],w/cells*0.8,h*0.30,0.15,i%3===1?lit:[0.55,0.68,0.74],rot);
+  }
+  footprint(scene,b);
+}
+// Low seating deck: bench slats on paired legs, sized for pier lounge rhythm.
+function bench(scene,b) {
+  const w=b.w||40,d=b.d||10,h=Math.max(0.6,b.h||1.4),rot=b.rot||0;
+  const wood=[0.62,0.52,0.38], leg=[0.30,0.32,0.34];
+  const legs=scene.mobile?3:6;
+  for(let i=0;i<legs;i++){
+    const p=scene.localPoint(b.x,b.z,-w*0.45+w*0.9*i/(legs-1||1),0,rot);
+    scene.box(p[0],0,p[1],0.5,h*0.72,d*0.85,leg,rot);
+  }
+  scene.box(b.x,h*0.72,b.z,w,h*0.28,d*0.9,wood,rot);
+  footprint(scene,b,0);
+}
+// Interior viewpoint marker: slim beacon column with a lit head so the teleport
+// list can anchor a position inside the check-in hall volume.
+function hallmark(scene,b) {
+  const h=Math.max(3,b.h||6);
+  scene.cylinder(b.x,0,b.z,0.5,h*0.7,[0.80,0.80,0.78],10);
+  scene.cylinder(b.x,h*0.7,b.z,1.1,h*0.30,[0.16,0.42,0.55],10);
+  footprint(scene,b,0);
+}
+// Airliner parked nose-in toward the pier: vertical fuselage, tail fin, swept
+// wings, engine pods. Fuselage runs along -Z so the nose faces the terminal.
+function airliner(scene,x,z,rot,livery=[0.27,0.42,0.50]) {
+  const white=[0.88,0.88,0.87];
+  scene.box(x,1.7,z,3.6,3.4,30,white,rot);            // main fuselage
+  scene.box(x,2.6,z+13,2.2,2.0,4.4,[0.16,0.18,0.20],rot); // cockpit nose
+  scene.box(x,4.6,z-13.2,0.8,6.0,5.0,livery,rot);     // tail fin
+  scene.box(x,2.6,z-14.5,9.0,0.5,2.4,white,rot);      // tailplane
+  scene.box(x-8.5,1.3,z-2.5,15.0,0.4,4.2,white,rot);  // port wing
+  scene.box(x+8.5,1.3,z-2.5,15.0,0.4,4.2,white,rot);  // starboard wing
+  scene.box(x-5.0,0.75,z+1.5,1.5,1.5,3.4,[0.30,0.30,0.31],rot); // port engine
+  scene.box(x+5.0,0.75,z+1.5,1.5,1.5,3.4,[0.30,0.30,0.31],rot); // starboard engine
+  scene.box(x,0.12,z,1.2,0.24,1.2,[0.16,0.18,0.20],rot); // nose gear
+  scene.box(x,0.12,z-11,1.4,0.24,2.6,[0.16,0.18,0.20],rot); // main gear
+}
+function forecourt(scene,b) {
+  const w=b.w||420,d=b.d||130,rot=b.rot||0, asphalt=[0.25,0.27,0.28],paving=[0.46,0.48,0.47],mark=[0.76,0.71,0.52];
+  scene.box(b.x,0,b.z,w,.08,d,asphalt,rot);
+  for(const lane of [-.30,0,.30]){
+    const p=scene.localPoint(b.x,b.z,0,lane*d,rot);
+    scene.box(p[0],.09,p[1],w*.92,.035,1.1,mark,rot);
+  }
+  for(const side of [-1,1]){
+    const p=scene.localPoint(b.x,b.z,0,side*d*.43,rot);
+    scene.box(p[0],.10,p[1],w,.14,d*.11,paving,rot);
+  }
+  const bays=scene.mobile?5:9;
+  for(let i=0;i<bays;i++){
+    const x=-w*.40+w*.80*i/Math.max(1,bays-1);
+    const curb=scene.localPoint(b.x,b.z,x,-d*.16,rot);
+    scene.box(curb[0],.12,curb[1],w/(bays*2.2),.18,d*.10,[0.60,0.62,0.60],rot);
+    const canopy=scene.localPoint(b.x,b.z,x,-d*.31,rot);
+    scene.box(canopy[0],.16,canopy[1],.42,5.6,.42,[0.67,0.68,0.65],rot);
+    scene.box(canopy[0],5.72,canopy[1],w/(bays*.78),.20,d*.18,[0.55,0.59,0.59],rot);
+  }
+  const vehicles=scene.mobile?3:7, vehicleColours=[[0.12,0.20,0.26],[0.56,0.58,0.57],[0.22,0.24,0.25],[0.48,0.20,0.16]];
+  for(let i=0;i<vehicles;i++){
+    const lane=i%3-1,x=-w*.38+w*.76*i/Math.max(1,vehicles-1);
+    const p=scene.localPoint(b.x,b.z,x,lane*d*.18,rot),c=vehicleColours[i%vehicleColours.length];
+    scene.box(p[0],.14,p[1],7.2,1.25,3.1,c,rot);
+    scene.box(p[0],1.39,p[1],3.7,.72,2.75,[0.38,0.51,0.57],rot);
+  }
+}
+function apron(scene,b) {
+  const w=b.w||160,d=b.d||160,rot=b.rot||0;
+  scene.box(b.x,0,b.z,w,.06,d,[0.22,0.24,0.25],rot);
+  const stands=scene.mobile?3:6;
+  const liveries=[[0.27,0.42,0.50],[0.62,0.16,0.16],[0.30,0.34,0.36],[0.20,0.34,0.24]];
+  for(let i=0;i<stands;i++){
+    const sx=-w*.35+w*i/(stands-1);
+    const p=scene.localPoint(b.x,b.z,sx,0,rot);
+    scene.box(p[0],0.06,p[1],6,.08,40,[0.28,0.30,0.31],rot);
+    const ax=p[0],az=p[1]-14;
+    airliner(scene,ax,az,rot,liveries[i%liveries.length]);
+    // Jet bridge plugs into the forward fuselage from the terminal side.
+    scene.box(ax,3.4,az-6.5,3.2,2.6,12,[0.55,0.60,0.62],rot);
+    scene.box(ax,0,az-12.5,0.9,3.4,0.9,[0.63,0.65,0.64],rot);
+    scene.box(ax,6.0,az-6.5,4.4,0.25,13,[0.48,0.52,0.53],rot);
+  }
+}
+
 function bridge(scene, b) {
   const c = colourFor(b), w = b.w || 42, d = Math.max(6, b.d || 10), rot = b.rot || 0;
   scene.box(b.x, 0.12, b.z, w, 0.8, d, c, rot);
@@ -289,7 +441,35 @@ function porch(scene, b) { basilica(scene, { ...b, h: Math.max(5, b.h || 7) }); 
 function stoa(scene, b) { basilica(scene, { ...b, h: Math.max(5, b.h || 8), d: Math.max(8, b.d || 10) }); }
 function arena(scene, b) { stadium(scene, { ...b, d: b.d || 70, w: b.w || 70 }); }
 function mausoleum(scene, b) { round(scene, b); }
-function aqueduct(scene, b) { arch(scene, { ...b, w: b.w || 80, d: b.d || 8, h: b.h || 18 }); }
+function aqueduct(scene, b) {
+  // Aqueducts read as repeated arcade lines, not single monument arches: a pier
+  // and arch rhythm along the long axis with the specus (water channel) on top.
+  const c = colourFor(b);
+  const w = b.w || 80, d = Math.max(3, b.d || 8), h = Math.max(8, b.h || 18), rot = b.rot || 0;
+  const longAxis = Math.max(w, d);
+  const shortAxis = Math.min(w, d) === d ? 'z' : 'x';
+  const bay = Math.max(6, longAxis / Math.round(longAxis / 14));
+  const pier = Math.max(1.6, bay * 0.3);
+  const count = Math.round(longAxis / bay);
+  const channelH = Math.max(1.4, h * 0.14);
+  const pillarH = h - channelH;
+  for (let i = 0; i <= count; i++) {
+    const offset = -longAxis * 0.5 + i * (longAxis / count);
+    if (i === count && offset > longAxis * 0.5 + 0.01) continue;
+    const p = scene.localPoint(b.x, b.z, shortAxis === 'x' ? offset : 0, shortAxis === 'z' ? offset : 0, rot);
+    scene.box(p[0], 0, p[1], shortAxis === 'x' ? pier : d, pillarH, shortAxis === 'z' ? pier : d, c, rot);
+  }
+  const archY = pillarH * 0.55;
+  for (let i = 0; i < count; i++) {
+    const offset = -longAxis * 0.5 + (i + 0.5) * (longAxis / count);
+    const p = scene.localPoint(b.x, b.z, shortAxis === 'x' ? offset : 0, shortAxis === 'z' ? offset : 0, rot);
+    const span = longAxis / count - pier;
+    scene.box(p[0], archY, p[1], shortAxis === 'x' ? span : d * 0.7, Math.max(1.2, pillarH * 0.45 - archY), shortAxis === 'z' ? span : d * 0.7, M.limestone2, rot);
+  }
+  const top = scene.localPoint(b.x, b.z, 0, 0, rot);
+  scene.box(top[0], pillarH, top[1], shortAxis === 'x' ? w : d * 1.15, channelH, shortAxis === 'z' ? w : d * 1.15, M.limestone, rot);
+  footprint(scene, b);
+}
 function circus(scene, b) { stadium(scene, b); }
 function gateway(scene, b) { gate(scene, b); }
 function building(scene, b) { genericHouse(scene, b); }
@@ -319,6 +499,14 @@ const TYPE_BUILDERS = Object.freeze({
   wall,
   gate,
   gateway,
+  terminal,
+  tower,
+  checkin,
+  signage,
+  bench,
+  hallmark,
+  forecourt,
+  apron,
   bridge,
   market,
   forum,

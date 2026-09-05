@@ -60,6 +60,12 @@ const LATER_BUILDINGS = new Set([
 // the Hephaisteion. Preserve it in city-source.js, but do not double-render it.
 const TERRAIN_ONLY_RECORDS = new Set(['agoraios-kolonos']);
 
+// The ledger's city-wall record is a single schematic envelope. Expanding that
+// solid rectangle in a walkable renderer hides both named Kerameikos gates.
+// Keep it documented in city-source.js; render the gates and local fabric as
+// the visitor-facing boundary rather than a false continuous wall mass.
+const NON_RENDERED_BOUNDARY_RECORDS = new Set(['themistoclean-walls']);
+
 const FRAMING = Object.freeze({
   // With city-wide terrain removed, the old west/Propylaea processional approach
   // blocks the requested Parthenon behind the gateway mass. A south-first arrival
@@ -83,7 +89,7 @@ function withFraming(building) {
 }
 
 export const BUILDINGS = base.BUILDINGS.flatMap((building) => {
-  if (LATER_BUILDINGS.has(building.id) || TERRAIN_ONLY_RECORDS.has(building.id)) return [];
+  if (LATER_BUILDINGS.has(building.id) || TERRAIN_ONLY_RECORDS.has(building.id) || NON_RENDERED_BOUNDARY_RECORDS.has(building.id)) return [];
 
   if (building.id === 'athena-nike') return [{
     ...building,

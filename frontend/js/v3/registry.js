@@ -12,6 +12,11 @@ export const WORLDS = Object.freeze([
     duration:'Free explore', evidence:'Source-led + explicitly inferred fabric', accent:'rust'
   },
   {
+    id:'iga', label:'İGA · Istanbul Airport', era:'Present day · global gateway', route:'/iga/',
+    summary:'Walk an original, source-led interpretation of the terminal hall, passenger journey, piers and apron of Istanbul Airport.',
+    duration:'12 min terminal exploration', evidence:'Public architecture + passenger-guide sources', accent:'sky'
+  },
+  {
     id:'athens', label:'Athens', era:'Classical period · c. 432–430 BCE', route:'/ancient-cities/athens-450-430/',
     summary:'Move between the Acropolis, Agora, Pnyx and civic landscape with reconstruction confidence kept visible.',
     duration:'Free explore', evidence:'Source-led + explicitly inferred fabric', accent:'teal'
