@@ -43,6 +43,7 @@ test('IGA architecture is rendered through a dedicated terminal asset rather tha
   const assets = read('frontend/ancient-world/assets/blocky-asset-library.js');
   assert.match(assets, /function terminal\(/);
   assert.match(assets, /function forecourt\(/);
+  assert.match(assets, /const vehicles=scene\.mobile\?3:7/);
   assert.match(assets, /terminal,/);
   assert.match(assets, /forecourt,/);
 });

@@ -262,6 +262,13 @@ function forecourt(scene,b) {
     scene.box(canopy[0],.16,canopy[1],.42,5.6,.42,[0.67,0.68,0.65],rot);
     scene.box(canopy[0],5.72,canopy[1],w/(bays*.78),.20,d*.18,[0.55,0.59,0.59],rot);
   }
+  const vehicles=scene.mobile?3:7, vehicleColours=[[0.12,0.20,0.26],[0.56,0.58,0.57],[0.22,0.24,0.25],[0.48,0.20,0.16]];
+  for(let i=0;i<vehicles;i++){
+    const lane=i%3-1,x=-w*.38+w*.76*i/Math.max(1,vehicles-1);
+    const p=scene.localPoint(b.x,b.z,x,lane*d*.18,rot),c=vehicleColours[i%vehicleColours.length];
+    scene.box(p[0],.14,p[1],7.2,1.25,3.1,c,rot);
+    scene.box(p[0],1.39,p[1],3.7,.72,2.75,[0.38,0.51,0.57],rot);
+  }
 }
 function apron(scene,b) {
   const w=b.w||160,d=b.d||160,rot=b.rot||0;
