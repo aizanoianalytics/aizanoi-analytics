@@ -1,0 +1,183 @@
+/* World Tour — polished lightweight guided-tour overlay.
+   No inline styles in JS; all visual presentation here. */
+
+.wt-toggle {
+  position: fixed;
+  z-index: 2147483000;
+  /* Park above the Research Lens toggle (bottom 14px, ~44px tall) so both
+     bottom-right controls stay independently clickable. */
+  bottom: max(70px, calc(env(safe-area-inset-bottom) + 64px));
+  right: max(12px, env(safe-area-inset-right));
+  padding: 8px 14px;
+  border: 1px solid rgba(236, 203, 145, 0.32);
+  border-radius: 9px;
+  background: linear-gradient(180deg, rgba(28, 24, 18, 0.92), rgba(12, 11, 9, 0.92));
+  color: #f2dfbd;
+  font: 800 10px/1.1 system-ui, -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: 0.055em;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.30);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  touch-action: manipulation;
+  user-select: none;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.wt-toggle:hover {
+  border-color: rgba(240, 195, 111, 0.70);
+  transform: translateY(-1px);
+}
+
+.wt-toggle:focus-visible {
+  outline: 2px solid #f0c77f;
+  outline-offset: 3px;
+}
+
+.wt-toggle[aria-pressed="true"] {
+  border-color: rgba(240, 195, 111, 0.85);
+  background: linear-gradient(180deg, rgba(40, 34, 24, 0.95), rgba(20, 17, 12, 0.95));
+}
+
+/* Card */
+.wt-card {
+  position: fixed;
+  z-index: 2147483001;
+  bottom: max(56px, calc(env(safe-area-inset-bottom) + 50px));
+  right: max(12px, env(safe-area-inset-right));
+  width: min(340px, calc(100vw - 32px));
+  max-height: 40vh;
+  border: 1px solid rgba(236, 203, 145, 0.28);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(24, 20, 16, 0.96), rgba(10, 9, 7, 0.96));
+  color: #f2dfbd;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: wt-fade-in 0.22s ease-out;
+}
+
+@keyframes wt-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.wt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px 6px;
+  border-bottom: 1px solid rgba(236, 203, 145, 0.12);
+}
+
+.wt-title {
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #d6a65d;
+}
+
+.wt-progress {
+  font-weight: 600;
+  font-size: 10px;
+  color: rgba(242, 223, 189, 0.6);
+}
+
+/* Body */
+.wt-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+  min-height: 0;
+}
+
+.wt-landmark {
+  /* Landmark name if shown separately */
+}
+
+.wt-copy {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #e8dcc5;
+}
+
+/* Controls */
+.wt-controls {
+  display: flex;
+  gap: 6px;
+  padding: 8px 14px 10px;
+  border-top: 1px solid rgba(236, 203, 145, 0.12);
+}
+
+.wt-btn {
+  flex: 1;
+  padding: 6px 0;
+  border: 1px solid rgba(236, 203, 145, 0.25);
+  border-radius: 6px;
+  background: rgba(40, 34, 24, 0.6);
+  color: #f2dfbd;
+  font: 700 10px/1 system-ui, -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.wt-btn:hover:not(:disabled) {
+  border-color: rgba(240, 195, 111, 0.6);
+  background: rgba(60, 50, 36, 0.7);
+}
+
+.wt-btn:focus-visible {
+  outline: 2px solid #f0c77f;
+  outline-offset: 2px;
+}
+
+.wt-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.wt-close {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+}
+
+/* Responsive */
+@media (max-width: 720px), (pointer: coarse) {
+  .wt-toggle {
+    bottom: max(64px, calc(env(safe-area-inset-bottom) + 58px));
+    right: max(8px, env(safe-area-inset-right));
+    padding: 8px 10px;
+    font-size: 9px;
+    opacity: 0.94;
+  }
+
+  .wt-card {
+    bottom: max(46px, calc(env(safe-area-inset-bottom) + 40px));
+    right: max(8px, env(safe-area-inset-right));
+    width: min(300px, calc(100vw - 24px));
+    max-height: 36vh;
+  }
+
+  .wt-copy {
+    font-size: 11px;
+  }
+
+  .wt-btn {
+    font-size: 9px;
+    padding: 7px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wt-toggle { transition: none !important; }
+  .wt-toggle:hover { transform: none; }
+  .wt-card { animation: none; }
+}

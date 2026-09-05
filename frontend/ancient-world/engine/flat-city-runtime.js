@@ -1,4 +1,5 @@
 import { createTraversalSystem, rectCollider, walkRect } from './traversal.js';
+import { createPointerLook } from './pointer-look.js';
 import { createLifecycle } from './lifecycle.js';
 import { installMobileControls } from './mobile-controls.js';
 import { installBackToOS } from './navigation.js';
@@ -588,7 +589,8 @@ export function startFlatBlockyCity({
     try { canvas.requestPointerLock?.(); if (showMessage) toast('Mouse look locked · Esc releases it'); } catch (_) {}
   }
 
-  function onMouseMove(event) { if (!locked) return; player.yaw += event.movementX * 0.00185; player.pitch = clamp(player.pitch - event.movementY * 0.00165, -1.3, 1.3); }
+  const pointerLook = createPointerLook(player);
+  function onMouseMove(event) { pointerLook.move(event); }
   function onKeyDown(event) {
     if (['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ShiftLeft', 'ShiftRight'].includes(event.code)) { keys.add(event.code); if (started) event.preventDefault(); }
     if (event.code === 'KeyE' && started) openInspect();
@@ -597,7 +599,7 @@ export function startFlatBlockyCity({
   function onKeyUp(event) { keys.delete(event.code); }
   lifecycle.listen(document, 'keydown', onKeyDown); lifecycle.listen(document, 'keyup', onKeyUp);
   lifecycle.listen(document, 'mousemove', onMouseMove);
-  lifecycle.listen(document, 'pointerlockchange', () => { locked = document.pointerLockElement === canvas; if (!locked) resetMovementState(); });
+  lifecycle.listen(document, 'pointerlockchange', () => { locked = document.pointerLockElement === canvas; pointerLook.setLocked(locked); if (!locked) resetMovementState(); });
   lifecycle.listen(canvas, 'click', () => { if (started && !TOUCH) requestLock(false); });
   lifecycle.listen(window, 'blur', resetMovementState);
   lifecycle.listen(document, 'visibilitychange', () => { if (document.hidden) resetMovementState(); });

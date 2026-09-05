@@ -7,6 +7,7 @@ import {
 import { startFlatBlockyCity } from './flat-city-runtime.js';
 import { installCityCompatibility } from './city-compatibility.js';
 import { installEvidenceMode } from './evidence-mode.js';
+import './world-tour.js';
 
 export function ancientWorldTouchMode() {
   return ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches || innerWidth < 820;
@@ -80,6 +81,9 @@ export function startAncientCity({
   });
   installCityCompatibility(runtime, { ui });
   const evidenceMode = installEvidenceMode({ runtime, city:layout.city });
+  /* Keep the QA/debug handle contract: browser gates read
+     window.__*_DEBUG__.evidenceMode.enabled to verify the Research Lens state. */
+  if (runtime?.debug && evidenceMode) runtime.debug.evidenceMode = evidenceMode;
 
   return Object.freeze({ runtime, layout, liveStreets, urbanFabric, evidenceMode, touch });
 }

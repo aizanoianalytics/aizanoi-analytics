@@ -25,7 +25,7 @@ test('Athens begins on an open Dipylon approach instead of between unlabelled wa
   assert.match(athens, /NON_RENDERED_BOUNDARY_RECORDS/, 'Athens needs a visual boundary policy for gates');
   assert.match(athens, /'themistoclean-walls'/, 'the giant wall envelope must not occlude Dipylon');
   const app = await read('frontend/ancient-cities/athens-450-430/js/app.js');
-  assert.match(app, /spawn:\{ x:318, z:320, yaw:2\.56, pitch:-0\.06 \}/);
+  assert.match(app, /spawn:\{ x:271, z:326, yaw:0\.903, pitch:-0\.06 \}/);
 });
 
 test('flat-ground hero arrivals avoid the old blocking approaches', async () => {

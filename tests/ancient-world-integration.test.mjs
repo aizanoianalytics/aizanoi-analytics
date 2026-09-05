@@ -58,10 +58,12 @@ test('shared renderer owns normals, shader locations, lifecycle cleanup and reus
 });
 
 test('Research Lens is a shared evidence-aware runtime surface with keyboard and touch-sized controls', () => {
+  const evidenceStyles = readFileSync('frontend/ancient-world/engine/evidence-mode.css', 'utf8');
   assert.match(evidenceMode, /Research Lens/);
   assert.match(evidenceMode, /KeyV/);
-  assert.match(evidenceMode, /min-width:44px/);
-  assert.match(evidenceMode, /min-height:44px/);
+  // Touch-size contract lives in the CSP-safe external stylesheet (no inline styles).
+  assert.match(evidenceStyles, /min-width:44px/);
+  assert.match(evidenceStyles, /min-height:44px/);
   assert.match(evidenceMode, /data-aw-evidence-visit/);
   assert.match(evidenceMode, /teleportTo/);
 });

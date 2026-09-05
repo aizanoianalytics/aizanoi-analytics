@@ -16,20 +16,36 @@ function recordEvidence(record) {
   return { raw, display, modeId:evidenceModeId(raw) };
 }
 
+/* Historical Worlds Research Lens styles live in
+   `frontend/ancient-world/engine/evidence-mode.css`. The previous version
+   created a runtime `<style>` element and assigned its `.textContent`, which
+   is blocked under `style-src 'self'`. Same-origin stylesheet links are
+   allowed by that policy, so each Historical World entry HTML page links the
+   file directly. */
 function installStyles() {
-  if (document.getElementById('aw-research-lens-style')) return;
-  const style = document.createElement('style');
-  style.id = 'aw-research-lens-style';
-  style.textContent = `
-    .awResearchToggle{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:7990;min-width:44px;min-height:44px;padding:10px 13px;border:1px solid rgba(232,205,153,.35);border-radius:12px;background:rgba(22,20,16,.88);color:#f0dfbd;font:800 11px/1.2 system-ui;letter-spacing:.07em;text-transform:uppercase;backdrop-filter:blur(10px);cursor:pointer;box-shadow:0 10px 32px rgba(0,0,0,.28)}
-    .awResearchToggle[aria-pressed="true"]{background:#f0dfbd;color:#211b13;border-color:#f0dfbd}
-    .awResearchPanel{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:70px;z-index:7989;width:min(390px,calc(100vw - 28px));max-height:min(620px,calc(100vh - 110px));overflow:auto;padding:15px;border:1px solid rgba(232,205,153,.28);border-radius:16px;background:rgba(20,18,14,.95);color:#eadfc9;font:13px/1.45 system-ui;box-shadow:0 24px 70px rgba(0,0,0,.42);backdrop-filter:blur(14px)}
-    .awResearchPanel[hidden]{display:none!important}.awResearchPanel h2{margin:0 0 5px;font:800 18px/1.15 Georgia,serif}.awResearchPanel>p{margin:0 0 12px;color:#cbbd9f;font-size:12px}.awResearchLegend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0 14px}.awResearchLegend div{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;padding:9px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.025)}.awEvidenceDot{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 0 2px rgba(255,255,255,.05)}.awResearchLegendCopy{display:grid;gap:2px;min-width:0}.awResearchLegend b{font-size:11px;line-height:1.15;text-transform:uppercase;letter-spacing:.05em}.awResearchLegend small{color:#cbbd9f;font-size:10px;line-height:1.25}.awResearchCount{min-width:24px;padding:3px 5px;border-radius:999px;background:rgba(255,255,255,.055);color:#d7c9ac;font:800 10px/1 system-ui;text-align:center}.awResearchFocus{padding:10px 11px;margin:0 0 12px;border-left:3px solid var(--aw-evidence-focus,#d59a55);border-radius:8px;background:rgba(255,255,255,.035)}.awResearchFocus b{display:block}.awResearchFocus small{display:block;margin-top:3px;color:#bcae91}.awResearchNearby{display:grid;gap:6px}.awResearchNearby button{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;width:100%;min-height:44px;padding:8px 9px;border:1px solid rgba(255,255,255,.08);border-radius:9px;background:rgba(255,255,255,.025);color:inherit;text-align:left;cursor:pointer}.awResearchNearby button:hover,.awResearchNearby button:focus-visible{background:rgba(240,223,189,.1);outline:1px solid rgba(240,223,189,.42)}.awResearchNearby strong{font-size:11px}.awResearchNearby small{color:#bcae91}.awResearchKey{margin-top:12px!important;font:700 10px/1.4 ui-monospace,monospace!important;color:#a99b80!important}.awEvidenceModeActive::before{content:"";position:fixed;inset:0;z-index:7975;pointer-events:none;border:3px solid color-mix(in srgb,var(--aw-evidence-focus,#d59a55) 65%,transparent);box-shadow:inset 0 0 80px rgba(0,0,0,.12)}
-    @media(max-width:720px){.awResearchToggle{right:10px;bottom:max(10px,env(safe-area-inset-bottom));font-size:10px}.awResearchPanel{right:8px;bottom:64px;width:calc(100vw - 16px);max-height:56vh}.awResearchLegend{grid-template-columns:1fr 1fr}}
-    @media(max-width:520px){.awResearchLegend{grid-template-columns:1fr}.awResearchPanel{padding:13px}.awResearchLegend div{padding:9px 10px}}
-    @media(prefers-reduced-motion:reduce){.awResearchToggle,.awResearchPanel{scroll-behavior:auto}}
-  `;
-  document.head.appendChild(style);
+  /* intentional no-op — see evidence-mode.css */
+}
+
+function renderLegendDot(item) {
+  // Color is supplied by an attribute on the dot, then promoted to a CSS
+  // custom property by `paintDotColors`. CSP `style-src 'self'` blocks inline
+  // `style="..."` attributes but permits programmatic `style.setProperty`,
+  // so we never bake the color into the markup string.
+  return `<i class="awEvidenceDot" data-evidence-dot="${esc(item.id)}" aria-hidden="true"></i>`;
+}
+
+function renderNearbyButton(record, distance, display) {
+  return `<button type="button" data-aw-evidence-visit="${esc(record.id)}"><i class="awEvidenceDot" data-evidence-dot="${esc(display.id)}" aria-hidden="true"></i><strong>${esc(record.name || record.id)}</strong><small>${esc(display.label)} · ${Math.round(distance)} m</small></button>`;
+}
+
+function paintDotColors(container, items) {
+  if (!container) return;
+  for (const dot of container.querySelectorAll('[data-evidence-dot]')) {
+    const id = dot.dataset.evidenceDot;
+    const item = items[id];
+    if (!item) continue;
+    dot.style.setProperty('--aw-dot-color', item.color);
+  }
 }
 
 function countsFor(records) {
@@ -69,12 +85,13 @@ export function installEvidenceMode({ runtime, city = {}, root = document.body }
       ${EVIDENCE_MODE_ORDER.map((id) => {
         const item = EVIDENCE_LEVELS[id];
         const count = counts[id] || 0;
-        return `<div data-evidence-group="${id}"><i class="awEvidenceDot" aria-hidden="true" style="background:${item.color}"></i><span class="awResearchLegendCopy"><b>${esc(item.short)}</b><small>${esc(item.label)}</small></span><span class="awResearchCount" aria-label="${count} labelled places">${count}</span></div>`;
+        return `<div data-evidence-group="${id}">${renderLegendDot(item)}<span class="awResearchLegendCopy"><b>${esc(item.short)}</b><small>${esc(item.label)}</small></span><span class="awResearchCount" aria-label="${count} labelled places">${count}</span></div>`;
       }).join('')}
     </div>
     <div class="awResearchFocus" data-aw-evidence-focus><b>${esc(city.title || 'Historical World')}</b><small>Move near a labelled monument to inspect its evidence status.</small></div>
     <div class="awResearchNearby" data-aw-evidence-nearby></div>
     <p class="awResearchKey">V toggles Research Lens · click a nearby place to move to its safe approach point</p>`;
+  paintDotColors(panel, EVIDENCE_LEVELS);
 
   root.append(panel, toggle);
   let enabled = false;
@@ -116,8 +133,19 @@ export function installEvidenceMode({ runtime, city = {}, root = document.body }
     if (nearbyNode) {
       nearbyNode.innerHTML = nearby.map(({ record, distance }) => {
         const { display } = recordEvidence(record);
-        return `<button type="button" data-aw-evidence-visit="${esc(record.id)}"><i class="awEvidenceDot" aria-hidden="true" style="background:${display.color}"></i><strong>${esc(record.name || record.id)}</strong><small>${esc(display.label)} · ${Math.round(distance)} m</small></button>`;
+        return renderNearbyButton(record, distance, display);
       }).join('') || '<small>No labelled monuments in this scene.</small>';
+      // Paint the nearby-button dot colors via per-element style.setProperty;
+      // CSP `style-src 'self'` blocks inline `style="..."` attributes but
+      // permits programmatic property writes.
+      const buttons = nearbyNode.querySelectorAll('[data-aw-evidence-visit]');
+      nearby.forEach(({ record, distance }, index) => {
+        const button = buttons[index];
+        if (!button) return;
+        const { display } = recordEvidence(record);
+        const dot = button.querySelector('[data-evidence-dot]');
+        if (dot) dot.style.setProperty('--aw-dot-color', display.color);
+      });
     }
   }
 
@@ -158,11 +186,11 @@ export function installEvidenceMode({ runtime, city = {}, root = document.body }
       document.removeEventListener('keydown', onKey);
       document.body.classList.remove('awEvidenceModeActive');
       document.documentElement.style.removeProperty('--aw-evidence-focus');
-      toggle.remove();
       panel.remove();
+      toggle.remove();
     },
   });
-  runtime.debug.evidenceMode = api;
-  window.addEventListener('pagehide', () => api.destroy(), { once:true });
   return api;
 }
+
+export default installEvidenceMode;
