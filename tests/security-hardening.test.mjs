@@ -73,7 +73,10 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
   assert.match(browserApp,/sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-scripts"/);
   assert.doesNotMatch(browserApp,/allow-same-origin|allow-top-navigation/);
   assert.match(browserApp,/noopener,noreferrer/);
-  assert.match(historicalHeaders,/script-src 'self' 'unsafe-inline';/,'Historical Worlds retain their explicitly scoped inline bootstrap policy');
+  assert.doesNotMatch(historicalHeaders,/script-src[^;]*'unsafe-inline'/,'Historical Worlds CSP must not permit unsafe-inline scripts');
+  assert.doesNotMatch(historicalHeaders,/style-src[^;]*'unsafe-inline'/,'Historical Worlds CSP must not permit unsafe-inline styles');
+  assert.match(historicalHeaders,/script-src 'self';/,'Historical Worlds CSP uses the strict script-src policy');
+  assert.match(historicalHeaders,/style-src 'self';/,'Historical Worlds CSP uses the strict style-src policy');
   assert.match(nginx,/location \^~ \/analytics\/dashboards\/hr-analytics-full-set\/[\s\S]*include snippets\/aizanoi-hr-analytics-security-headers\.conf;/);
   assert.match(hrAnalyticsHeaders,/script-src 'self' 'unsafe-inline';/,'Original self-contained HR exports retain their route-scoped inline policy');
   assert.match(hrAnalyticsHeaders,/style-src 'self' 'unsafe-inline';/);
