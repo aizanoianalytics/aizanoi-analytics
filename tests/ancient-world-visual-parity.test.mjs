@@ -24,7 +24,8 @@ test('Rome, Athens and Aizanoi preserve mouse-look acquisition through one compa
   assert.match(bootstrap, /installCityCompatibility/);
   assert.match(compatibility, /pointerdown/);
   assert.match(compatibility, /requestPointerLock/);
-  assert.match(runtime, /player\.yaw \+= event\.movementX/);
+  assert.match(runtime, /createPointerLook\(player\)/);
+  assert.match(runtime, /pointerLook\.move\(event\)/);
 });
 
 test('shared blocky library carries common street-scale architectural vocabulary', () => {
