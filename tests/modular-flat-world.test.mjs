@@ -182,7 +182,7 @@ test('compact procedural neighbourhoods are dense, deterministic and water-safe'
   const athensArgs = { regions:athens.regions, buildings:athens.buildings, streets:athens.streets, waters:athens.waters, mobile:false };
   const fabrics = [
     ['Aizanoi', generateAizanoiFabric(aizanoiArgs), 100, aizanoi.waters],
-    ['Rome', generateRomeFabric(romeArgs), 160, rome.waters],
+    ['Rome', generateRomeFabric(romeArgs), 150, rome.waters],
     ['Athens', generateAthensFabric(athensArgs), 120, athens.waters],
   ];
   assert.deepEqual(generateAizanoiFabric(aizanoiArgs), fabrics[0][1]);

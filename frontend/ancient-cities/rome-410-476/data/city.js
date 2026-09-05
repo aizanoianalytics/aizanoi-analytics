@@ -11,7 +11,7 @@ const FRAMING = Object.freeze({
   // Flat-ground traversal no longer needs the old Palatine-side approach. Arrive
   // from the east first so the amphitheatre reads as the requested hero instead
   // of placing the visitor among the Palatine/foreground residential masses.
-  colosseum: { distance: 165, preferredDirections: [[1,0],[1,1],[1,-1],[0,1]] },
+  colosseum: { distance: 110, cameraDistance: 225, preferredDirections: [[1,0],[1,1],[1,-1],[0,1]] },
   // Forum arrival is authored from the north-east civic corridor instead of the
   // dense Palatine-side fabric that can fill the camera with a single wall.
   forum: { distance: 96, preferredDirections: [[1,1],[0,1]] },
@@ -27,7 +27,7 @@ const FRAMING = Object.freeze({
 // Camera composition is live-presentation metadata, separate from the authored
 // arrival distance contract above. It can widen a hero view without lengthening
 // the compact approach street or mutating the source/research ledger.
-const CAMERA_DISTANCE = Object.freeze({ colosseum: 360 });
+const CAMERA_DISTANCE = Object.freeze({ colosseum: 225 });
 
 function liveEvidence(building) {
   if (building.evidence) return building.evidence;

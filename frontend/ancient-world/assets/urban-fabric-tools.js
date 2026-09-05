@@ -109,6 +109,18 @@ export function buildFramingClearZones(buildings, {
       z: building.z + dz * d,
       radius: Math.max(radius, Math.min(44, Math.max(building.w || 0, building.d || 0) * 0.24)),
     });
+    // The authored arrival camera sits farther back than the approach road. Keep
+    // the viewing corridor fabric-free too, or generated blocks crowd the very
+    // foreground of the hero composition and violate the frame edges.
+    const corridor = Math.max(minimumDistance, d * 1.8);
+    if (corridor > d * 1.4) {
+      zones.push({
+        id: `${building.id}-hero-corridor`,
+        x: building.x + dx * corridor,
+        z: building.z + dz * corridor,
+        radius: Math.max(radius, 32),
+      });
+    }
   }
   return zones;
 }

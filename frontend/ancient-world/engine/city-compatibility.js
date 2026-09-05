@@ -31,12 +31,16 @@ function collisionCorridorClear(debug, x, z, dx, dz) {
 
 function movementProbeWorks(debug, x, z, dx, dz) {
   if (typeof debug.setPlayer !== 'function' || typeof debug.moveWithSubsteps !== 'function') return collisionCorridorClear(debug, x, z, dx, dz);
+  // Probing relocates the live player; the boot arrival position must survive the
+  // entire framing sweep, so restore the true pre-probe position — not the
+  // candidate that was just tested.
+  const origin = { x: debug.player.x, z: debug.player.z };
   debug.setPlayer(x, z);
   const before = debug.player;
   debug.moveWithSubsteps(dx, dz);
   const after = debug.player;
   const distance = before && after ? Math.hypot(after.x - before.x, after.z - before.z) : 0;
-  debug.setPlayer(x, z);
+  debug.setPlayer(origin.x, origin.z);
   return distance > 0.30;
 }
 

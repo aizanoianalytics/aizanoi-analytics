@@ -72,4 +72,4 @@ export const WATERS = Object.freeze([
 ]);
 
 export const BOUNDS = Object.freeze({ minX: -820, maxX: 860, minZ: -1500, maxZ: 1120 });
-export const SPAWN = Object.freeze({ x: -40, z: -105, yaw: Math.PI * 0.76, pitch: -0.03 });
+export const SPAWN = Object.freeze({ x: -38, z: 13, yaw: -Math.PI / 2, pitch: -0.06 });

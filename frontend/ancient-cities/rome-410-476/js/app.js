@@ -10,7 +10,7 @@ const { runtime } = startAncientCity({
   buildings:BUILDINGS,
   waters:[{ type:'rect', x:-505, z:0, w:92, d:1450, name:'Tiber' }],
   bounds:{ minX:-900, maxX:700, minZ:-700, maxZ:700 },
-  spawn:{ x:-205, z:-165, yaw:Math.PI * 0.88, pitch:-0.03 },
+  spawn:{ x:250, z:-65, yaw:-Math.PI / 2, pitch:-0.10 },
   compactionProfile:'rome',
   approachWidth:11,
   frontageWidth:9,

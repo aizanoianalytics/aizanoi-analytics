@@ -384,7 +384,35 @@ function porch(scene, b) { basilica(scene, { ...b, h: Math.max(5, b.h || 7) }); 
 function stoa(scene, b) { basilica(scene, { ...b, h: Math.max(5, b.h || 8), d: Math.max(8, b.d || 10) }); }
 function arena(scene, b) { stadium(scene, { ...b, d: b.d || 70, w: b.w || 70 }); }
 function mausoleum(scene, b) { round(scene, b); }
-function aqueduct(scene, b) { arch(scene, { ...b, w: b.w || 80, d: b.d || 8, h: b.h || 18 }); }
+function aqueduct(scene, b) {
+  // Aqueducts read as repeated arcade lines, not single monument arches: a pier
+  // and arch rhythm along the long axis with the specus (water channel) on top.
+  const c = colourFor(b);
+  const w = b.w || 80, d = Math.max(3, b.d || 8), h = Math.max(8, b.h || 18), rot = b.rot || 0;
+  const longAxis = Math.max(w, d);
+  const shortAxis = Math.min(w, d) === d ? 'z' : 'x';
+  const bay = Math.max(6, longAxis / Math.round(longAxis / 14));
+  const pier = Math.max(1.6, bay * 0.3);
+  const count = Math.round(longAxis / bay);
+  const channelH = Math.max(1.4, h * 0.14);
+  const pillarH = h - channelH;
+  for (let i = 0; i <= count; i++) {
+    const offset = -longAxis * 0.5 + i * (longAxis / count);
+    if (i === count && offset > longAxis * 0.5 + 0.01) continue;
+    const p = scene.localPoint(b.x, b.z, shortAxis === 'x' ? offset : 0, shortAxis === 'z' ? offset : 0, rot);
+    scene.box(p[0], 0, p[1], shortAxis === 'x' ? pier : d, pillarH, shortAxis === 'z' ? pier : d, c, rot);
+  }
+  const archY = pillarH * 0.55;
+  for (let i = 0; i < count; i++) {
+    const offset = -longAxis * 0.5 + (i + 0.5) * (longAxis / count);
+    const p = scene.localPoint(b.x, b.z, shortAxis === 'x' ? offset : 0, shortAxis === 'z' ? offset : 0, rot);
+    const span = longAxis / count - pier;
+    scene.box(p[0], archY, p[1], shortAxis === 'x' ? span : d * 0.7, Math.max(1.2, pillarH * 0.45 - archY), shortAxis === 'z' ? span : d * 0.7, M.limestone2, rot);
+  }
+  const top = scene.localPoint(b.x, b.z, 0, 0, rot);
+  scene.box(top[0], pillarH, top[1], shortAxis === 'x' ? w : d * 1.15, channelH, shortAxis === 'z' ? w : d * 1.15, M.limestone, rot);
+  footprint(scene, b);
+}
 function circus(scene, b) { stadium(scene, b); }
 function gateway(scene, b) { gate(scene, b); }
 function building(scene, b) { genericHouse(scene, b); }

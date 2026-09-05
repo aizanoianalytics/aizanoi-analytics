@@ -40,7 +40,7 @@ test('modular runtime preserves authored landmark framing through the shared com
   const { BUILDINGS: athens } = await importFromRoot('frontend/ancient-cities/athens-450-430/data/city.js');
   const colosseum = rome.find((record) => record.id === 'colosseum');
   const parthenon = athens.find((record) => record.id === 'parthenon');
-  assert.equal(colosseum?.framing?.distance, 165);
+  assert.equal(colosseum?.framing?.distance, 110);
   assert.deepEqual(colosseum?.framing?.preferredDirections?.[0], [1,0]);
   assert.equal(parthenon?.framing?.distance, 95);
   assert.deepEqual(parthenon?.framing?.preferredDirections?.[0], [0,-1]);
