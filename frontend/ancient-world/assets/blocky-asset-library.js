@@ -226,6 +226,16 @@ function terminal(scene, b) {
     const p=scene.localPoint(b.x,b.z,-w*0.42+w*(i+.5)/bays,0,rot);
     scene.roof(p[0],h*0.7,p[1],w/bays*1.04,h*0.3,d*0.98,[0.72,0.73,0.7],rot);
   }
+  // Deep transverse peytral arcs across the volume (real terminal signature):
+  // wide shallow arch ribs spanning the depth at regular intervals, reading
+  // from inside the hall as the great white structural leaps.
+  if (w > 300) {
+    const arcs=scene.mobile?3:6;
+    for(let i=0;i<arcs;i++){
+      const p=scene.localPoint(b.x,b.z,-w*0.42+w*(i+0.5)/arcs,0,rot);
+      scene.roof(p[0],h*0.56,p[1],w/arcs*0.5,h*0.10,d*0.90,[0.86,0.86,0.84],rot);
+    }
+  }
   footprint(scene,b);
 }
 function tower(scene,b) {

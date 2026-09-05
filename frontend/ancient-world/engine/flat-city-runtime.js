@@ -671,9 +671,31 @@ export function startFlatBlockyCity({
       const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return toast('Web Audio unavailable.');
       const ctx = lifecycle.trackAudioContext(new AC());
       const gain = ctx.createGain(); gain.gain.value = 0.018;
-      const osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 82;
-      const filter = ctx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 180;
-      osc.connect(filter).connect(gain).connect(ctx.destination); osc.start(); audio = { ctx, gain, osc, enabled: true };
+      if (ui === 'iga') {
+        // Terminal ambience: soft filtered noise bed (hall hum) plus a faint
+        // tonal sweep, evoking the big-volume hum of the real processor hall.
+        const seconds = 2;
+        const noise = ctx.createBufferSource();
+        const bed = ctx.createBuffer(1, ctx.sampleRate * seconds, ctx.sampleRate);
+        const channel = bed.getChannelData(0);
+        for (let i = 0; i < channel.length; i++) channel[i] = (Math.random() * 2 - 1) * 0.5;
+        noise.buffer = bed; noise.loop = true;
+        const bedFilter = ctx.createBiquadFilter(); bedFilter.type = 'bandpass';
+        bedFilter.frequency.value = 240; bedFilter.Q.value = 0.6;
+        const bedGain = ctx.createGain(); bedGain.gain.value = 0.5;
+        const hum = ctx.createOscillator(); hum.type = 'sine'; hum.frequency.value = 96;
+        const humGain = ctx.createGain(); humGain.gain.value = 0.05;
+        noise.connect(bedFilter).connect(bedGain).connect(gain);
+        hum.connect(humGain).connect(gain);
+        gain.connect(ctx.destination);
+        noise.start(); hum.start();
+        audio = { ctx, gain, sources: [noise, hum], enabled: true };
+      } else {
+        const osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 82;
+        const filter = ctx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 180;
+        osc.connect(filter).connect(gain).connect(ctx.destination); osc.start();
+        audio = { ctx, gain, sources: [osc], enabled: true };
+      }
     } else { audio.enabled = !audio.enabled; audio.gain.gain.setTargetAtTime(audio.enabled ? 0.018 : 0, audio.ctx.currentTime, 0.08); }
   }
 
