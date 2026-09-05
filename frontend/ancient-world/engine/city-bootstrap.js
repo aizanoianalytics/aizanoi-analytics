@@ -7,6 +7,7 @@ import {
 import { startFlatBlockyCity } from './flat-city-runtime.js';
 import { installCityCompatibility } from './city-compatibility.js';
 import { installEvidenceMode } from './evidence-mode.js';
+import './world-tour.js';
 
 export function ancientWorldTouchMode() {
   return ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches || innerWidth < 820;

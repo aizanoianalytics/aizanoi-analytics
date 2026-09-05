@@ -1,4 +1,5 @@
 import './city-experience.js';
+import './world-tour.js';
 
 const STYLE_ID = 'ancient-world-navigation-style';
 const LINK_ID = 'ancient-world-back-to-os';
