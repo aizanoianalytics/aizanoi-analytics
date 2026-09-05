@@ -39,14 +39,14 @@ export const STREETS = Object.freeze([
 const E = Object.freeze({ level:'documented', note:'Spatial cue is based on public architecture or passenger-guide material; this is an original, compact interactive interpretation rather than an as-built plan.' });
 const B = (id,name,type,x,z,w,d,h,region,detail,extra={}) => ({ id,name,type,x,z,w,d,h,region,detail,evidence:E,material:'terminal',...extra });
 export const BUILDINGS = Object.freeze([
-  B('terminal','Grand terminal hall','terminal',0,0,860,410,38,'processor','A single, daylight-led terminal volume with an original vaulted grid and check-in islands.'),
+  B('terminal','Grand terminal hall','terminal',0,0,860,410,38,'processor','A single, daylight-led terminal volume with an original vaulted grid and check-in islands.',{noCollision:true}),
   B('checkin-bcd','Domestic check-in islands B–D','checkin',-205,-38,190,68,5,'processor','Domestic check-in island reference from the departing passenger guide.',{noCollision:true}),
   B('checkin-fgh','International check-in islands F–H', 'checkin',0,-38,190,68,5,'processor','International check-in flow interpretation.',{noCollision:true}),
   B('checkin-mps','International check-in islands M–S', 'checkin',205,-38,190,68,5,'processor','Long-hall check-in rhythm and wayfinding cues.',{noCollision:true}),
   B('security','Security and passport transition','gateway',0,125,410,26,11,'processor','A broad transition zone where focused skylight and signage pull the journey onward.'),
-  B('pier-west','Pier A–B','terminal',-470,570,105,720,18,'airside-west','International pier with gates, waiting zones and a continuous apron-facing window wall.'),
-  B('pier-east','Pier C–F','terminal',470,570,105,720,18,'airside-east','International pier with retail, napzone cues and a continuous apron-facing window wall.'),
-  B('domestic-wing','Domestic wing','terminal',0,575,230,320,20,'domestic','Domestic gates, food-court rhythm and short onward routes.'),
+  B('pier-west','Pier A–B','terminal',-470,570,105,720,18,'airside-west','International pier with gates, waiting zones and a continuous apron-facing window wall.',{noCollision:true}),
+  B('pier-east','Pier C–F','terminal',470,570,105,720,18,'airside-east','International pier with retail, napzone cues and a continuous apron-facing window wall.',{noCollision:true}),
+  B('domestic-wing','Domestic wing','terminal',0,575,230,320,20,'domestic','Domestic gates, food-court rhythm and short onward routes.',{noCollision:true}),
   B('tower','Tulip-inspired ATC tower','tower',-250,1030,35,35,90,'airfield','Original simplified tower silhouette informed by the airport\'s tulip-inspired air traffic control tower.',{noCollision:true}),
   B('apron-west','Apron stands west','apron',-470,1010,260,260,1,'airfield','Aircraft stand field and taxiway atmosphere.',{noCollision:true,framing:{distance:58,cameraDistance:64,pitch:-0.18,preferredDirections:[[1,1],[1,0]]}}),
   B('apron-east','Apron stands east','apron',470,1010,260,260,1,'airfield','Aircraft stand field and taxiway atmosphere.',{noCollision:true,framing:{distance:58,cameraDistance:64,pitch:-0.18,preferredDirections:[[-1,1],[-1,0]]}}),
@@ -54,6 +54,13 @@ export const BUILDINGS = Object.freeze([
   B('passport-west','Passport control west','gateway',-180,160,100,24,11,'processor','Formal boundary between landside and airside zones.'),
   B('passport-east','Passport control east','gateway',180,160,100,24,11,'processor','Formal boundary between landside and airside zones.'),
   B('retail-belt','Pier retail belt','market',0,740,500,30,4,'domestic','Rhythmic duty-free and F&B presence along the pier transition.'),
+  B('checkin-hall-mark','Check-in hall viewpoint','hallmark',0,-120,2,2,6,'processor','Interior viewpoint marker anchoring the check-in hall tour.',{noCollision:true,framing:{distance:34,cameraDistance:16,pitch:0.02,preferredDirections:[[0,-1]],interior:true}}),
+  B('flight-board','Departures flight board','signage',0,-152,30,1.4,5,'processor','Split-flap-era departures board rendered as a modern dark-glass display over the check-in islands.',{noCollision:true,framing:{distance:26,cameraDistance:14,pitch:0.05,preferredDirections:[[0,-1]],interior:true}}),
+  B('dutyfree-north','Duty-free transfer band','market',0,172,240,20,4,'processor','Security-side duty-free and retail band before the passport control line.'),
+  B('gate-pod-west','Pier A–B gate pod','gate',-430,300,26,18,12,'airside-west','Boarding-gate pod with lounge sightlines along the west pier.',{noCollision:true,framing:{distance:30,cameraDistance:22,pitch:0.0,preferredDirections:[[0,1]],interior:true}}),
+  B('gate-pod-east','Pier C–F gate pod','gate',430,300,26,18,12,'airside-east','Boarding-gate pod with lounge sightlines along the east pier.',{noCollision:true,framing:{distance:30,cameraDistance:22,pitch:0.0,preferredDirections:[[0,1]],interior:true}}),
+  B('lounge-west','Pier A–B lounge deck','bench',-455,640,60,10,1.4,'airside-west','Seating rhythm and window-wall rest zone along the west pier.',{noCollision:true}),
+  B('lounge-east','Pier C–F lounge deck','bench',455,640,60,10,1.4,'airside-east','Seating rhythm and window-wall rest zone along the east pier.',{noCollision:true}),
   B('terrace','Fresh-air terrace','stoa',-520,680,40,60,3,'airside-west','Open-air terrace reference from the official passenger guide.'),
 ]);
 export const WATERS = Object.freeze([]);

@@ -141,18 +141,26 @@ function applyAuthoredLandmarkFraming(debug) {
     // Keep the authored/source framing distance stable for compatibility and
     // tests, while allowing compact live layouts to place the camera farther
     // back than the short approach road when a hero silhouette needs breathing room.
-    const distance = Math.max(8, Number(framing.cameraDistance ?? framing.distance));
+    // Interior viewpoints (inside a large volume) pin the camera just past the
+    // marker instead of pushing it outside the building shell.
+    const interiorMode = framing.interior === true;
+    const distance = interiorMode
+      ? Math.max(8, Math.min(18, Number(framing.cameraDistance ?? framing.distance)))
+      : Math.max(8, Number(framing.cameraDistance ?? framing.distance));
     const authored = Array.isArray(framing.preferredDirections) ? framing.preferredDirections : [];
     const directions = [...authored, ...DEFAULT_DIRECTIONS]
       .map(normalizedDirection)
       .filter(([x, z], index, all) => all.findIndex(([ax, az]) => Math.abs(ax - x) < 0.001 && Math.abs(az - z) < 0.001) === index);
 
     let chosen = null;
-    for (const scale of [1, 1.12, 1.25, 0.9, 1.4, 1.65]) {
+    for (const scale of (interiorMode ? [1, 0.9, 1.12] : [1, 1.12, 1.25, 0.9, 1.4, 1.65])) {
       for (const [dx, dz] of directions) {
         const x = record.x + dx * distance * scale;
         const z = record.z + dz * distance * scale;
-        if (hasFirstStepClearance(debug, x, z)) {
+        const clear = interiorMode
+          ? Array.isArray(framing.preferredDirections) // interior cameras trust the authored pin fully
+          : hasFirstStepClearance(debug, x, z);
+        if (clear) {
           chosen = { pos: [x, z], look: [record.x, record.z], pitch: Number.isFinite(Number(framing.pitch)) ? Number(framing.pitch) : undefined, authored: true };
           break;
         }

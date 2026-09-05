@@ -212,7 +212,7 @@ function gate(scene, b) { arch(scene, { ...b, w: b.w || 34, d: b.d || 14, h: b.h
 // original low-poly geometry rather than copied plans, branding or photography.
 function terminal(scene, b) {
   const w=b.w||220,d=b.d||120,h=Math.max(16,b.h||30),rot=b.rot||0, glass=[0.33,0.53,0.61];
-  scene.box(b.x,0,b.z,w,h*0.14,d,[0.56,0.58,0.57],rot);
+  scene.box(b.x,0,b.z,w,h*0.14,d,[0.68,0.67,0.65],rot);
   for(const side of [-1,1]) {
     const p=scene.localPoint(b.x,b.z,0,side*d*0.47,rot);
     scene.box(p[0],h*0.14,p[1],w*0.94,h*0.56,0.55,glass,rot);
@@ -241,7 +241,54 @@ function tower(scene,b) {
   scene.cylinder(b.x,h*.91,b.z,r*.7,h*.09,dark,seg);
   scene.cylinder(b.x,h,b.z,r*.38,h*.05,gold,seg);
 }
-function checkin(scene,b) { scene.box(b.x,0.1,b.z,b.w||80,1.1,b.d||14,[0.22,0.29,0.31],b.rot||0); }
+function checkin(scene,b) {
+  // Check-in island: long counter slab with paired desk towers and back-wall
+  // signage, reading as the real processor's island rhythm from inside the hall.
+  const w=b.w||80,d=b.d||14,h=Math.max(2,b.h||3),rot=b.rot||0;
+  const counter=[0.24,0.32,0.34], tower=[0.85,0.85,0.83], screen=[0.16,0.22,0.28];
+  scene.box(b.x,0.1,b.z,w,1.15,d,counter,rot);
+  const towers=scene.mobile?4:8;
+  for(let i=0;i<towers;i++) {
+    const p=scene.localPoint(b.x,b.z,-w*0.44+w*i/(towers-1||1),0,rot);
+    scene.box(p[0],1.25,p[1],1.6,h,1.1,tower,rot);
+    scene.box(p[0],1.25+h*0.5,p[1],1.6,0.5,1.0,screen,rot);
+  }
+  footprint(scene,b);
+}
+// Dark-glass departures board: slim panel on two slim pylons, screen face toward
+// the check-in hall so the interior tour reads the board across the islands.
+function signage(scene,b) {
+  const w=b.w||18,d=b.d||1.4,h=Math.max(2,b.h||4),rot=b.rot||0;
+  const frame=[0.10,0.13,0.17], screen=[0.07,0.16,0.26], lit=[0.16,0.42,0.55];
+  scene.box(b.x,0,b.z,0.8,h*0.55,0.8,frame,rot);
+  scene.box(b.x,h*0.55,b.z,w,h*0.45,d,screen,rot);
+  const cells=scene.mobile?4:9;
+  for(let i=0;i<cells;i++){
+    const p=scene.localPoint(b.x,b.z,-w*0.5+w*(i+0.5)/cells,-d*0.51,rot);
+    scene.box(p[0],h*0.60,p[1],w/cells*0.8,h*0.30,0.15,i%3===1?lit:[0.55,0.68,0.74],rot);
+  }
+  footprint(scene,b);
+}
+// Low seating deck: bench slats on paired legs, sized for pier lounge rhythm.
+function bench(scene,b) {
+  const w=b.w||40,d=b.d||10,h=Math.max(0.6,b.h||1.4),rot=b.rot||0;
+  const wood=[0.62,0.52,0.38], leg=[0.30,0.32,0.34];
+  const legs=scene.mobile?3:6;
+  for(let i=0;i<legs;i++){
+    const p=scene.localPoint(b.x,b.z,-w*0.45+w*0.9*i/(legs-1||1),0,rot);
+    scene.box(p[0],0,p[1],0.5,h*0.72,d*0.85,leg,rot);
+  }
+  scene.box(b.x,h*0.72,b.z,w,h*0.28,d*0.9,wood,rot);
+  footprint(scene,b,0);
+}
+// Interior viewpoint marker: slim beacon column with a lit head so the teleport
+// list can anchor a position inside the check-in hall volume.
+function hallmark(scene,b) {
+  const h=Math.max(3,b.h||6);
+  scene.cylinder(b.x,0,b.z,0.5,h*0.7,[0.80,0.80,0.78],10);
+  scene.cylinder(b.x,h*0.7,b.z,1.1,h*0.30,[0.16,0.42,0.55],10);
+  footprint(scene,b,0);
+}
 // Airliner parked nose-in toward the pier: vertical fuselage, tail fin, swept
 // wings, engine pods. Fuselage runs along -Z so the nose faces the terminal.
 function airliner(scene,x,z,rot,livery=[0.27,0.42,0.50]) {
@@ -445,6 +492,9 @@ const TYPE_BUILDERS = Object.freeze({
   terminal,
   tower,
   checkin,
+  signage,
+  bench,
+  hallmark,
   forecourt,
   apron,
   bridge,
