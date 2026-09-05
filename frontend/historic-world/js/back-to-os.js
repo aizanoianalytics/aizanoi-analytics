@@ -21,4 +21,3 @@ if (historicDebug?.teleportViews?.bridge3) {
 window.__ANCIENT_WORLD_DESTROY__ = destroyHistoricWorld;
 if (historicDebug) window.__ANCIENT_WORLD_DEBUG__ = historicDebug;
 installBackToOS({ onBeforeExit: destroyHistoricWorld });
-
