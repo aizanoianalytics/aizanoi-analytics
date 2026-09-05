@@ -58,4 +58,4 @@ export const BUILDINGS = Object.freeze([
 ]);
 export const WATERS = Object.freeze([]);
 export const BOUNDS = Object.freeze({ minX:-900,maxX:900,minZ:-430,maxZ:1240 });
-export const SPAWN = Object.freeze({ x:0,z:-410,yaw:Math.PI-0.22,pitch:-0.14 });
+export const SPAWN = Object.freeze({ x:0,z:-270,yaw:2.76,pitch:0.02 });

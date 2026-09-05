@@ -212,15 +212,15 @@ function gate(scene, b) { arch(scene, { ...b, w: b.w || 34, d: b.d || 14, h: b.h
 // original low-poly geometry rather than copied plans, branding or photography.
 function terminal(scene, b) {
   const w=b.w||220,d=b.d||120,h=Math.max(16,b.h||30),rot=b.rot||0, glass=[0.33,0.53,0.61];
-  scene.box(b.x,0,b.z,w,h*0.22,d,[0.56,0.58,0.57],rot);
+  scene.box(b.x,0,b.z,w,h*0.14,d,[0.56,0.58,0.57],rot);
   for(const side of [-1,1]) {
     const p=scene.localPoint(b.x,b.z,0,side*d*0.47,rot);
-    scene.box(p[0],h*0.22,p[1],w*0.94,h*0.46,0.55,glass,rot);
+    scene.box(p[0],h*0.14,p[1],w*0.94,h*0.56,0.55,glass,rot);
   }
   const bays=scene.mobile?Math.max(5,Math.round(w/80)):Math.max(8,Math.round(w/52));
   for(let i=0;i<=bays;i++) {
     const p=scene.localPoint(b.x,b.z,-w*0.46+w*i/bays,0,rot);
-    scene.box(p[0],h*0.18,p[1],0.7,h*0.74,d*0.96,[0.76,0.75,0.69],rot);
+    scene.box(p[0],h*0.10,p[1],0.7,h*0.82,d*0.96,[0.76,0.75,0.69],rot);
   }
   for(let i=0;i<bays;i++) {
     const p=scene.localPoint(b.x,b.z,-w*0.42+w*(i+.5)/bays,0,rot);

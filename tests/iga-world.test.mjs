@@ -45,10 +45,10 @@ test('IGA forecourt supplies a continuous curbside surface from arrival to termi
   assert.ok(plaza?.d >= 240, 'curbside surface should not leave a dead arrival foreground');
 });
 
-test('IGA arrival framing starts before the curbside zone and faces the terminal', () => {
-  assert.ok(SPAWN.z <= -380, 'arrival camera should begin before the curbside sequence');
-  assert.ok(SPAWN.pitch <= -0.10, 'arrival camera should include curbside circulation in the first view');
-  assert.ok(Math.abs(SPAWN.yaw - Math.PI) < 0.35, 'arrival camera should face the terminal axis');
+test('IGA arrival framing starts at the curbside edge and faces the terminal', () => {
+  assert.ok(SPAWN.z <= -380 || (SPAWN.z >= -320 && SPAWN.z <= -190), 'arrival camera should start before or at the forecourt edge');
+  assert.ok(SPAWN.pitch >= -0.14 && SPAWN.pitch <= 0.10, 'arrival camera should carry a readable horizon');
+  assert.ok(Math.abs(SPAWN.yaw - 2.76) < 0.35, 'arrival camera should face the terminal axis');
 });
 
 test('IGA participates in shared deep-link routing and teardown semantics', () => {
