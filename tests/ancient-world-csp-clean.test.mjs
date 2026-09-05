@@ -145,3 +145,10 @@ test('Historical World index pages link every required engine stylesheet', () =>
     }
   }
 });
+
+test('Aizanoi entry links the strict-CSP engine stylesheets for shared engine chrome', () => {
+  const html = readFileSync(resolve(root, 'frontend/historic-world/index.html'), 'utf8');
+  for (const sheet of ['evidence.css', 'evidence-mode.css', 'navigation.css']) {
+    assert.match(html, new RegExp(`ancient-world/engine/${sheet}`), `historic-world must link ${sheet}`);
+  }
+});

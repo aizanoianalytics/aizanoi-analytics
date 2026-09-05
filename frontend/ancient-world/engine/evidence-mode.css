@@ -2,7 +2,7 @@
    `<style>.textContent = ...` injection that violated
    `style-src 'self' 'unsafe-inline'`. Same-origin stylesheet — allowed. */
 
-.awResearchToggle{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:7990;min-width:44px;min-height:44px;padding:10px 13px;border:1px solid rgba(232,205,153,.35);border-radius:12px;background:rgba(22,20,16,.88);color:#f0dfbd;font:800 11px/1.2 system-ui;letter-spacing:.07em;text-transform:uppercase;backdrop-filter:blur(10px);cursor:pointer;box-shadow:0 10px 32px rgba(0,0,0,.28)}
+.awResearchToggle{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:7990;min-width:44px;min-height:44px;padding:10px 13px;border:1px solid rgba(232,205,153,.35);border-radius:12px;background:rgba(16,14,11,.92);color:#f0dfbd;font:800 11px/1.2 system-ui;letter-spacing:.07em;text-transform:uppercase;backdrop-filter:blur(10px);cursor:pointer;box-shadow:0 10px 32px rgba(0,0,0,.28)}
 .awResearchToggle[aria-pressed="true"]{background:#f0dfbd;color:#211b13;border-color:#f0dfbd}
 .awResearchPanel{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:70px;z-index:7989;width:min(390px,calc(100vw - 28px));max-height:min(620px,calc(100vh - 110px));overflow:auto;padding:15px;border:1px solid rgba(232,205,153,.28);border-radius:16px;background:rgba(20,18,14,.95);color:#eadfc9;font:13px/1.45 system-ui;box-shadow:0 24px 70px rgba(0,0,0,.42);backdrop-filter:blur(14px)}
 .awResearchPanel[hidden]{display:none!important}
