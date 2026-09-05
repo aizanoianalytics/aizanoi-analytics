@@ -152,3 +152,9 @@ test('Aizanoi entry links the strict-CSP engine stylesheets for shared engine ch
     assert.match(html, new RegExp(`ancient-world/engine/${sheet}`), `historic-world must link ${sheet}`);
   }
 });
+
+test('evidence mode attaches its state API to the runtime debug handle', async () => {
+  const bootstrap = readFileSync(resolve(root, 'frontend/ancient-world/engine/city-bootstrap.js'), 'utf8');
+  assert.match(bootstrap, /runtime\.debug\.evidenceMode = evidenceMode/,
+    'city-bootstrap must publish evidenceMode on runtime.debug for browser QA gates');
+});
