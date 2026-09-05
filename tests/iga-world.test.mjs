@@ -34,6 +34,7 @@ test('IGA apron landmarks use authored camera framing rather than a generic empt
   for (const id of ['apron-west', 'apron-east']) {
     const apron = BUILDINGS.find((building) => building.id === id);
     assert.ok(apron?.framing?.distance >= 100, `${id} needs a cinematic stand-view distance`);
+    assert.ok(apron?.framing?.pitch <= -0.10, `${id} needs a downward apron-view pitch`);
     assert.ok(Array.isArray(apron?.framing?.preferredDirections), `${id} needs an authored view direction`);
   }
 });
@@ -52,8 +53,10 @@ test('IGA arrival framing starts before the curbside zone and faces the terminal
 
 test('IGA participates in shared deep-link routing and teardown semantics', () => {
   const navigation = read('frontend/ancient-world/engine/navigation.js');
+  const runtime = read('frontend/ancient-world/engine/flat-city-runtime.js');
   assert.match(navigation, /path\.includes\('\/iga\/'\)/);
   assert.match(navigation, /worldId:'iga'/);
+  assert.match(runtime, /Number\.isFinite\(view\.pitch\)/);
 });
 
 test('IGA architecture is rendered through a dedicated terminal asset rather than an ancient generic house', () => {

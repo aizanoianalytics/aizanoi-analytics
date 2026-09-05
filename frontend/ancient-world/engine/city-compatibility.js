@@ -149,7 +149,7 @@ function applyAuthoredLandmarkFraming(debug) {
         const x = record.x + dx * distance * scale;
         const z = record.z + dz * distance * scale;
         if (hasFirstStepClearance(debug, x, z)) {
-          chosen = { pos: [x, z], look: [record.x, record.z], authored: true };
+          chosen = { pos: [x, z], look: [record.x, record.z], pitch: Number.isFinite(Number(framing.pitch)) ? Number(framing.pitch) : undefined, authored: true };
           break;
         }
       }

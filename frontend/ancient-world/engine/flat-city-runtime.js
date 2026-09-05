@@ -446,7 +446,7 @@ export function startFlatBlockyCity({
     traversal.snapPlayerToSupport(spawnPoint.x, spawnPoint.z);
     const dx = view.look[0] - player.x, dz = view.look[1] - player.z;
     player.yaw = Math.atan2(dx, -dz);
-    player.pitch = -0.04;
+    player.pitch = Number.isFinite(view.pitch) ? view.pitch : -0.04;
     resetMovementState();
     movementLockUntil = performance.now() + 140;
     arrivalIdentity = { record, x: player.x, z: player.z };
