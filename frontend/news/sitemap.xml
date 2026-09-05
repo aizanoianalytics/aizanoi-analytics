@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/crowdstrike-nvidia-safemind-detail/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T11:15:00.000Z</news:publication_date>
+      <news:title>CrowdStrike and NVIDIA detail how SafeMind is wired into Falcon following Fal.Con launch</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/genesis-ai-robotics-gene-26-5/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T10:00:00.000Z</news:publication_date>
+      <news:title>Khosla-backed Genesis AI unveils GENE-26.5 foundation model and a robotics roadmap</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/fal-con-2026-cyber-recap/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T09:30:00.000Z</news:publication_date>
+      <news:title>Fal.Con 2026: CrowdStrike, NVIDIA and partners detail SafeMind roadmaps in weekend recap</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/google-gemini-workspace-live-voice/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T09:10:00.000Z</news:publication_date>
+      <news:title>Google rolls out Gemini-powered Live voice features in Gmail, Docs and Keep</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/hisense-ifa-2026-mini-led-fsd/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T08:45:00.000Z</news:publication_date>
+      <news:title>Hisense debuts 116UXS quad-color RGB MiniLED and a world-first FSD LCD architecture at IFA 2026</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/anthropic-ipo-mid-october-delay/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T08:30:00.000Z</news:publication_date>
+      <news:title>Anthropic pushes IPO marketing to mid-October, plans to list days before US midterms</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/ecb-berlin-meeting-preview/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T08:00:00.000Z</news:publication_date>
+      <news:title>ECB Berlin meeting preview: analysts see second hike to 2.5% before pause, despite fragile growth</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/mls-inter-miami-atlanta-la-liga-matchday/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T08:00:00.000Z</news:publication_date>
+      <news:title>MLS Inter Miami host Atlanta, La Liga opens matchday with Athletic-Atletico as Saturday football slate fills out</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/apple-iphone-ultra-few-hundred-per-day/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T07:50:00.000Z</news:publication_date>
+      <news:title>Apple reportedly producing only &#39;a few hundred&#39; iPhone Ultra foldables per day four days before launch</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/rogue-openai-agents-german-site/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T07:30:00.000Z</news:publication_date>
+      <news:title>Rogue OpenAI agents reportedly turned a German website into a message board for other AI bots</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/euro-area-inflation-confirmed-3-3/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T07:30:00.000Z</news:publication_date>
+      <news:title>Eurostat confirms August euro zone inflation at 3.3% on energy, ahead of Thursday&#39;s ECB meeting</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/bundesliga-matchday-2-six-fixtures/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T07:30:00.000Z</news:publication_date>
+      <news:title>Bundesliga matchday 2: six Saturday fixtures led by Schalke-Bayern at 18:30 local</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/premier-league-matchweek-3-saturday/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T07:00:00.000Z</news:publication_date>
+      <news:title>Premier League matchweek 3: seven Saturday fixtures kick off with Newcastle vs Bournemouth at 12:30 BST</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/quantum-weekly-round-up/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T06:30:00.000Z</news:publication_date>
+      <news:title>Quantum computing weekly: Pasqal-KACST pact, Xanadu CAD 195M, IBM Nighthawk r2 specs published</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-05/week-wrap-fed-waller-rally/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-05T06:00:00.000Z</news:publication_date>
+      <news:title>Wall Street closes strong week as Waller&#39;s rate-hold signal trims September hike odds</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-09-04/transfer-window-review-record-fees/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -118,126 +238,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-09-04T16:00:00.000Z</news:publication_date>
       <news:title>Nvidia agrees to buy Hugging Face for $12.93 billion and promises the open-source hub stays open</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/openai-astra-critical-cyber/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>OpenAI designates Astra as its first &#39;Critical&#39; cybersecurity model after it discovered two unknown Chrome vulnerabilities during a benchmark</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/uber-wayve-london-robotaxi/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Uber and Wayve launch London&#39;s first public robotaxi service with safety drivers on board</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/apple-september-9-event-confirmed/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Apple confirms 9 September &#39;Surprise and Shine&#39; event for iPhone 18 Pro and first foldable iPhone Ultra</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/wall-street-rebounds-oil-yields/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Wall Street rebounds as Dell and Brown-Forman lead a partial recovery from a three-day sell-off</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/european-shares-one-month-low/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>European shares pin to one-month low as German 10-year Bund yield hits a 14-year high</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/leagues-cup-semifinals-all-mexican/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Toluca beat 10-man León 2-0 to reach first Leagues Cup final as Liga MX sweeps the semifinals</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/google-gemini-3-8-flash-antigravity/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Google ships Gemini 3.8 Flash inside the Antigravity coding agent at $0.75 per million input tokens</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/microsoft-maia-300-september-unveil/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Microsoft targets September unveil of Maia 300 AI chip and 300,000-unit TSMC run for 2027</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/bayern-osnabruck-dfb-pokal/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Bayern survive early Osnabrück scare as Kane brace seals 4-1 DFB-Pokal title defence</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/microsoft-copilot-autocomplete-off/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Microsoft turns off Copilot text predictions by default in Word and Outlook as user pushback grows</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/ballon-dor-nominees-september-8/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Ballon d&#39;Or 2026 shortlist of 30 men to be revealed on 8 September at ballondor.com</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/south-korea-inflation-august-3-1/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>South Korea&#39;s August inflation quickens to 3.1% on telecom base effect, just below 3.2% forecast</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/ibm-k12-ai-readiness-survey/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>IBM survey finds 76% of US middle-school teachers now use AI weekly, but only 20% have had extensive training</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/pangram-dead-internet-warning/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Pangram CEO warns &#39;dead internet&#39; scenario is perilously close as the AI-detection startup adds image forensics</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-03/samsung-galaxy-book6-accessible/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-03T05:10:00.000Z</news:publication_date>
-      <news:title>Samsung adds a $799 14-inch Galaxy Book6 with 25-hour battery to its AI PC line-up</news:title>
     </news:news>
   </url>
 </urlset>

@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-05-google-gemini-workspace-live-voice",
+  "kind": "daily",
+  "title": "Google rolls out Gemini-powered Live voice features in Gmail, Docs and Keep",
+  "summary": "Google has officially launched Gemini-powered Live voice capabilities inside Gmail, Google Docs and Google Keep on 5 September, allowing users to dictate, edit and brainstorm through conversational speech rather than text input. The rollout builds on Workspace voice pilots from earlier this year and is positioned to compete directly with Microsoft's Copilot Voice and OpenAI's Advanced Voice Mode. Google framed the move as part of its plan to embed conversational AI agents directly into the productivity surfaces where work happens.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-09-05T09:10:00Z",
+  "updatedAt": "2026-09-05T09:10:00Z",
+  "retrievedAt": "2026-09-05T08:20:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Google", "Gemini", "Workspace", "voice AI", "productivity"],
+  "sources": [
+    {
+      "publisher": "News Directory 3",
+      "url": "https://www.newsdirectory3.com/google-officially-launches-ai-voice-features-in-gemini-for-workspace/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    }
+  ]
+}

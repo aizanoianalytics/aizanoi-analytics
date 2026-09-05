@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-05-hisense-ifa-2026-mini-led-fsd",
+  "kind": "daily",
+  "title": "Hisense debuts 116UXS quad-color RGB MiniLED and a world-first FSD LCD architecture at IFA 2026",
+  "summary": "Hisense unveiled its IFA 2026 lineup in Berlin on 5 September under the theme 'Innovating a Brighter Life', headlined by the 116UXS television with a Chromagic 2.0 quad-color backlight adding a dedicated cyan LED to reach 110 percent of the BT.2020 gamut and 10,000-nit peak brightness. The company also showed a Field Sequential Display LCD architecture eliminating traditional color filters with up to 360 Hz refresh, alongside TÜV Rheinland-certified XR10 and PX4 Pro laser projectors and the 11.2.6-channel UX1 soundbar.",
+  "category": "technology",
+  "priority": 52,
+  "publishedAt": "2026-09-05T08:45:00Z",
+  "updatedAt": "2026-09-05T08:45:00Z",
+  "retrievedAt": "2026-09-05T07:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Hisense", "IFA 2026", "MiniLED", "FSD", "laser projector"],
+  "sources": [
+    {
+      "publisher": "Archynewsy — Hisense announcement",
+      "url": "https://www.archynewsy.com/hisense-unveils-next-gen-miniled-and-fsd-display-technology-at-ifa-2026/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-05-euro-area-inflation-confirmed-3-3",
+  "kind": "daily",
+  "title": "Eurostat confirms August euro zone inflation at 3.3% on energy, ahead of Thursday's ECB meeting",
+  "summary": "Eurostat confirmed on 1 September that euro area annual inflation reached 3.3 percent in August, the highest since September 2023, driven by energy inflation jumping to 14.3 percent from 10.3 percent in July amid the Middle East war, with services inflation easing to a four-month low of 3.0 percent and core inflation at 2.4 percent. The full HICP release for August is scheduled for 17 September, between the European Central Bank's 9-10 September meeting in Berlin and the next round of national data. The figures cement market expectations for a quarter-point ECB hike to 2.5 percent.",
+  "category": "economy-markets",
+  "priority": 62,
+  "publishedAt": "2026-09-05T07:30:00Z",
+  "updatedAt": "2026-09-05T07:30:00Z",
+  "retrievedAt": "2026-09-05T06:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Eurostat", "euro zone", "inflation", "ECB", "energy prices"],
+  "sources": [
+    {
+      "publisher": "Eurostat — Euro indicators",
+      "url": "https://ec.europa.eu/eurostat/web/products-euro-indicators/w/2-01092026-ap",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "The Economist — The World This Week",
+      "url": "https://www.economist.com/the-world-this-week/2026/09/03/business",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

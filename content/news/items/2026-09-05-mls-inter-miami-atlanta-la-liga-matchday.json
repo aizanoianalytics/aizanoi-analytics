@@ -1,0 +1,33 @@
+{
+  "id": "2026-09-05-mls-inter-miami-atlanta-la-liga-matchday",
+  "kind": "daily",
+  "title": "MLS Inter Miami host Atlanta, La Liga opens matchday with Athletic-Atletico as Saturday football slate fills out",
+  "summary": "Saturday 5 September's football slate spans La Liga, MLS, Serie A and Ligue 1, with Inter Miami CF hosting Atlanta United at Nu Stadium in the late MLS window and Athletic Club hosting Atletico Madrid at San Mames at 19:45 local as the La Liga headliner. Rayo Vallecano meet Racing Santander, Villarreal host Deportivo La Coruna and Fiorentina-Torino open Serie A's Saturday evening before Inter Milan host Napoli on Sunday. MLS comes into the weekend with Inter Miami third in the Eastern Conference at 12-6-4 and Messi top of the goalscoring chart with 18 league strikes.",
+  "category": "football",
+  "priority": 54,
+  "publishedAt": "2026-09-05T08:00:00Z",
+  "updatedAt": "2026-09-05T08:00:00Z",
+  "retrievedAt": "2026-09-05T07:15:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["MLS", "Inter Miami", "La Liga", "Athletic Bilbao", "Atletico Madrid"],
+  "sources": [
+    {
+      "publisher": "Inter Miami CF — match centre",
+      "url": "https://www.intermiamicf.com/competitions/mls-regular-season/2026/matches/miavsatl-09-05-2026/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    },
+    {
+      "publisher": "FIFA World Cup News — Saturday fixtures",
+      "url": "https://fifaworldcupnews.com/soccer-match-fixtures-5-september-2026",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    },
+    {
+      "publisher": "LaLiga — match centre",
+      "url": "https://laliga.com/en-GB/match/temporada-2025-2026-laliga-hypermotion-albacete-bp-cultural-leonesa-39",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    }
+  ]
+}
