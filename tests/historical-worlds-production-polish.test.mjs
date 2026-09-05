@@ -20,6 +20,14 @@ test('landmark identity stays pinned until the visitor actually walks away', asy
   assert.match(compatibility, /arrivalIdentityPinnedUntilMovement: true/, 'compatibility contract should publish the movement-based identity guarantee');
 });
 
+test('Athens begins on an open Dipylon approach instead of between unlabelled wall planes', async () => {
+  const athens = await read('frontend/ancient-cities/athens-450-430/data/city.js');
+  assert.match(athens, /NON_RENDERED_BOUNDARY_RECORDS/, 'Athens needs a visual boundary policy for gates');
+  assert.match(athens, /'themistoclean-walls'/, 'the giant wall envelope must not occlude Dipylon');
+  const app = await read('frontend/ancient-cities/athens-450-430/js/app.js');
+  assert.match(app, /spawn:\{ x:240, z:140, yaw:0, pitch:-0\.06 \}/);
+});
+
 test('flat-ground hero arrivals avoid the old blocking approaches', async () => {
   const rome = await read('frontend/ancient-cities/rome-410-476/data/city.js');
   const athens = await read('frontend/ancient-cities/athens-450-430/data/city.js');

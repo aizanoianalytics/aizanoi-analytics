@@ -14,7 +14,7 @@ const { runtime } = startAncientCity({
     { type:'rect', x:260, z:470, w:900, d:70, name:'Kephissos plain channel' },
   ],
   bounds:{ minX:-700, maxX:1200, minZ:-480, maxZ:720 },
-  spawn:{ x:110, z:230, yaw:Math.PI * 0.95, pitch:-0.03 },
+  spawn:{ x:240, z:140, yaw:0, pitch:-0.06 },
   compactionProfile:'athens',
   approachWidth:10,
   frontageWidth:8,
