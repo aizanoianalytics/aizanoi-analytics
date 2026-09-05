@@ -70,11 +70,12 @@ test('Aizanoi touch controls inherit hybrid-device capture-loss safety from shar
 });
 
 test('Aizanoi Penkalas jump reuses a collision-safe central bridge riverfront view', () => {
-  const source = readFileSync(resolve(root, 'frontend/historic-world/index.html'), 'utf8');
+  const source = readFileSync(resolve(root, 'frontend/historic-world/js/back-to-os.js'), 'utf8');
+  const entry = readFileSync(resolve(root, 'frontend/historic-world/index.html'), 'utf8');
   assert.match(source, /historicDebug\.teleportViews\.penkalas/);
   assert.match(source, /historicDebug\.teleportViews\.bridge3/);
-  assert.match(source, /audited in this V8 build/);
-  assert.doesNotMatch(source, /embedded locally in the HTML/);
+  assert.match(entry, /audited in this V8 build/);
+  assert.doesNotMatch(entry, /<script type="module">[\s\S]*embedded locally in the HTML/);
 });
 
 test('landmark approach clearance rejects traversal-breaking support changes', () => {
