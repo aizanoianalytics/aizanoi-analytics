@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-06-ecb-hold-pause-next-meeting-september-9",
+  "kind": "daily",
+  "title": "ECB holds next rate decision for 9 September with markets pricing 25bp hike to 2.50%",
+  "summary": "The European Central Bank's next monetary policy meeting is scheduled for 9 September, with ECB Watch Tool showing markets imply a 100% probability of a 25bp hike that would lift the deposit facility rate from the current 2.25% to 2.50%. The 11 June decision raised the deposit rate by 25bp to 2.25% and the main refinancing rate to 2.40%, citing Middle East-driven energy inflation, while new staff projections pointed to headline HICP of 3.0% in 2026, 2.3% in 2027 and 2.0% in 2028 with growth lowered to 0.8%, 1.2% and 1.5% respectively.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-09-06T07:45:00Z",
+  "updatedAt": "2026-09-06T07:45:00Z",
+  "retrievedAt": "2026-09-06T07:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ECB", "interest rates", "deposit facility", "inflation", "euro area"],
+  "sources": [
+    {
+      "publisher": "ECB Watch — market-implied probabilities",
+      "url": "https://ecb-watch.eu/",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    },
+    {
+      "publisher": "ECB — official interest rates",
+      "url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/key_ecb_interest_rates/html/index.en.html",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    }
+  ]
+}

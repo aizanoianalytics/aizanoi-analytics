@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-06-qualcomm-snapdragon-summit-september-22-24",
+  "kind": "daily",
+  "title": "Qualcomm confirms Snapdragon Summit for 22–24 September with 2nm Elite Gen 6 lineup expected",
+  "summary": "Qualcomm will host its annual Snapdragon Summit in Maui, Hawaii, from 22 to 24 September, the company confirmed on its event page and TrueTech reported on 30 August. The keynote is widely expected to introduce the 2nm Snapdragon 8 Elite Gen 6 and a Pro variant, both built on TSMC's 2nm node with LPDDR5X or LPDDR6 RAM and UFS 5.0 storage. Counterpoint Research forecasts that the combined chip and memory cost increases could push flagship Android retail prices up by USD 200, with the Samsung Galaxy S27 Ultra tipped as the first Pro-volume phone.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-09-06T08:10:00Z",
+  "updatedAt": "2026-09-06T08:10:00Z",
+  "retrievedAt": "2026-09-06T08:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Qualcomm", "Snapdragon Summit", "Snapdragon 8 Elite Gen 6", "TSMC 2nm", "Xiaomi 18"],
+  "sources": [
+    {
+      "publisher": "Qualcomm — Snapdragon Summit 2026",
+      "url": "https://www.qualcomm.com/company/events/snapdragon-summit",
+      "publishedAt": "2026-08-30T00:00:00Z"
+    },
+    {
+      "publisher": "TrueTech",
+      "url": "https://true-tech.net/snapdragon-summit-2026-event-announced/",
+      "publishedAt": "2026-08-30T00:00:00Z"
+    }
+  ]
+}

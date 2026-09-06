@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-06-meta-connect-2026-ray-ban-display-september-23",
+  "kind": "daily",
+  "title": "Meta Connect 2026 set for 23–24 September with Ray-Ban Display, Malibu 2 watch expected",
+  "summary": "Meta's annual Connect conference will run on 23 and 24 September at its Menlo Park headquarters, GrackerAI and SmartWearables noted, with the keynote widely expected to introduce the Ray-Ban Display glasses with a built-in HUD and the Malibu 2 smartwatch that doubles as a gestural controller. Reports describe a USD 799 starting price for the display glasses, an Oakley-branded Vanguard sports model at USD 499 and a refreshed Ray-Ban Gen 3 at USD 379, while Meta CTO Andrew Bosworth has separately acknowledged a privacy push-back over covert filming and outlined a capture-LED fix.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-09-06T07:30:00Z",
+  "updatedAt": "2026-09-06T07:30:00Z",
+  "retrievedAt": "2026-09-06T07:20:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Meta Connect", "Ray-Ban Display", "Malibu 2", "smart glasses", "Quest"],
+  "sources": [
+    {
+      "publisher": "Florida Statesman — Meta Connect 2025 recap and forward look",
+      "url": "https://floridastatesman.com/news/278586755/meta-unveils-usd799-smart-glasses-bets-on-ai-superintelligence",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    }
+  ]
+}

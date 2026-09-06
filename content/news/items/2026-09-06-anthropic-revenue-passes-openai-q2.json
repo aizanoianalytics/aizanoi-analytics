@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-06-anthropic-revenue-passes-openai-q2",
+  "kind": "daily",
+  "title": "Anthropic's Q2 revenue tops OpenAI's for the first time as enterprise race tightens",
+  "summary": "Anthropic reported second-quarter revenue above USD 11.5 billion, more than double the previous quarter and a small operating profit, narrowly overtaking OpenAI's USD 6.7 billion, which grew 18% quarter over quarter but posted USD 12.3 billion in operating losses, BigGo reported on 6 September. By end-July Anthropic disclosed annualised revenue above USD 65 billion, against roughly USD 40 billion for OpenAI. The gap is driving OpenAI to refocus on Codex and foundation-model work after CEO Sam Altman acknowledged shortfalls on product direction and pre-training.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-09-06T07:10:00Z",
+  "updatedAt": "2026-09-06T07:10:00Z",
+  "retrievedAt": "2026-09-06T07:05:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "OpenAI", "Claude Fable", "Codex", "AI enterprise market"],
+  "sources": [
+    {
+      "publisher": "BigGo (citing TIME interview and disclosures)",
+      "url": "https://finance.biggo.com/news/c18412e9-69b2-4057-b866-f02f8f5c8ae4",
+      "publishedAt": "2026-09-06T02:05:40.000Z"
+    }
+  ]
+}
