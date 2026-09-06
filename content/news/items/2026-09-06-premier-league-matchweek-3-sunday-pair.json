@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-06-premier-league-matchweek-3-sunday-pair",
+  "kind": "daily",
+  "title": "Premier League Sunday double-header: Moyes reunion as Everton host Manchester United at 14:00 BST",
+  "summary": "Premier League matchweek three closes on Sunday with two London and Merseyside fixtures: Everton host Manchester United at the Hill Dickinson Stadium at 14:00 BST and Arsenal face Chelsea at the Emirates at 16:30 BST, the Premier League confirmed in its full 2026/27 fixture list. United arrive on the back of a 5-2 home win over Ipswich in which captain Bruno Fernandes scored a hat-trick and recorded an assist, having lost 2-0 at promoted Hull on opening day. The two managers, David Moyes and Michael Carrick, are former colleagues from Moyes's 2013–14 tenure at Old Trafford.",
+  "category": "football",
+  "priority": 84,
+  "publishedAt": "2026-09-06T08:00:00Z",
+  "updatedAt": "2026-09-06T08:00:00Z",
+  "retrievedAt": "2026-09-06T07:50:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Premier League", "Everton", "Manchester United", "Bruno Fernandes", "Moyes"],
+  "sources": [
+    {
+      "publisher": "Goal.com — Everton vs Manchester United preview",
+      "url": "https://www.goal.com/en/news/everton-manchester-united-premier-league-preview/bltc4cd7f6497714041",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport — Everton vs Manchester United preview",
+      "url": "https://www.bbc.com/sport/football/live/crwyzggqgw5yt",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    }
+  ]
+}

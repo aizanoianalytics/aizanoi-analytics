@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-06-ai-package-model-comparison-weekly-cadence",
+  "kind": "daily",
+  "title": "Frontier-model cadence tightens as Fable, Gemini 3.8 and Muse Spark 1.3 stack within four days",
+  "summary": "Anthropic released Claude Fable 5.1 on 1 September, Google launched Gemini 3.8 Flash on 2 September and Meta updated Muse Spark 1.3 the same day, with OpenAI's GPT-6 Astra following on 3 September, The Rundown AI summarised on 6 September. Anthropic claims fewer safeguard interruptions and lower costs at typical settings; Astra's public benchmark edge is real but contested on third-party indices, where Fable 5.1 still leads at the highest tier. The next competitive test, the note argues, will be completion rates and cost per task rather than headline scores.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-06T06:40:00Z",
+  "updatedAt": "2026-09-06T06:40:00Z",
+  "retrievedAt": "2026-09-06T06:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Claude Fable 5.1", "Gemini 3.8", "Muse Spark 1.3", "frontier models", "benchmarks"],
+  "sources": [
+    {
+      "publisher": "The Rundown AI",
+      "url": "https://www.therundown.ai/news/fable-5-1-frontier-competition-workflow-safeguards",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    }
+  ]
+}

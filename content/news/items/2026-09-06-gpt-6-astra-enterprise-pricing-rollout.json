@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-06-gpt-6-astra-enterprise-pricing-rollout",
+  "kind": "daily",
+  "title": "GPT-6 Astra API priced at $10/$50 per million tokens, doubling Sol as enterprise rollout continues",
+  "summary": "OpenAI's GPT-6 Astra is now generally available through the API and to ChatGPT Plus, Pro, Business and Enterprise users, with a standard price of USD 10 per million input tokens and USD 50 per million output tokens, The Verge and the Decoder reported on 3 September. The price is 2.5 times the previous-generation GPT-5.6 Sol and matches Anthropic's Claude Fable 5.1. OpenAI president Greg Brockman said Astra could mark the start of the AGI era and that the company would expand access to its Daybreak Blue defensive program as it had delayed parts of development to strengthen safeguards.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-09-06T07:00:00Z",
+  "updatedAt": "2026-09-06T07:00:00Z",
+  "retrievedAt": "2026-09-06T06:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "GPT-6 Astra", "API pricing", "AGI", "enterprise AI"],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/989601/openai-gpt-6-astra-release",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "OpenAI — GPT-6 Astra safety overview",
+      "url": "https://openai.com/index/safety-overview-gpt-6-astra/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

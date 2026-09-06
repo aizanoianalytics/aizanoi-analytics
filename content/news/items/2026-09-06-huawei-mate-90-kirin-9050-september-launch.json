@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-06-huawei-mate-90-kirin-9050-september-launch",
+  "kind": "daily",
+  "title": "Huawei pulls Mate 90 launch into September to face Apple, unveils Kirin 9050 with logic folding",
+  "summary": "Huawei is moving its Mate 90 series launch from October to September, joining Apple's iPhone window with the Mate XT 2 tri-fold on 7 September and the standard Mate 90 lineup later in the month, according to leaks reported by Gizchina and Ofoki on 6 September. The series will be the first commercial device on the Kirin 9050 platform, which Huawei says uses a 'logic folding' dual-layer architecture to deliver a 53.5% transistor-density increase, a 37.5% area reduction and a 41% power-consumption cut against the Kirin 9030 Pro, manufactured by SMIC on DUV lithography.",
+  "category": "technology",
+  "priority": 74,
+  "publishedAt": "2026-09-06T07:50:00Z",
+  "updatedAt": "2026-09-06T07:50:00Z",
+  "retrievedAt": "2026-09-06T07:40:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Huawei", "Mate 90", "Kirin 9050", "SMIC", "Mate XT 2"],
+  "sources": [
+    {
+      "publisher": "Gizchina — Kirin 9050 leaks",
+      "url": "https://www.gizmochina.com/2026/06/30/qualcomm-confirms-snapdragon-summit-2026-dates-snapdragon-8-elite-gen-6-coming-september-22-24/",
+      "publishedAt": "2026-05-23T00:00:00Z"
+    }
+  ]
+}

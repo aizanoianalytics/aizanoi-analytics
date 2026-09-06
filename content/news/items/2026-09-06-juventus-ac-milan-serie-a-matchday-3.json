@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-06-juventus-ac-milan-serie-a-matchday-3",
+  "kind": "daily",
+  "title": "Juventus host AC Milan at the Allianz on Sunday in the Derby d'Italia on six points apiece",
+  "summary": "Juventus welcome AC Milan to the Allianz Stadium on Sunday at 21:15 CET in the 183rd Serie A meeting between the two clubs, the Juventus official preview confirmed. The clubs are level on six points after two matchdays, with Juventus opening at home to promoted Cremonese and Milan taking maximum points from Cagliari and Lecce. Milan have not beaten Juventus in Serie A since May 2023, when Olivier Giroud's first-half strike sealed a 1-0 win at the Allianz, leaving the head-to-head at 69 wins for the Bianconeri, 53 for the Rossoneri and 60 draws.",
+  "category": "football",
+  "priority": 76,
+  "publishedAt": "2026-09-06T07:00:00Z",
+  "updatedAt": "2026-09-06T07:00:00Z",
+  "retrievedAt": "2026-09-06T06:50:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Juventus", "AC Milan", "Serie A", "Derby d'Italia", "Allianz Stadium"],
+  "sources": [
+    {
+      "publisher": "Juventus.com — match preview",
+      "url": "https://www.juventus.com/en/news/articles/preview-juventus-vs-milan-04-09-26",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    }
+  ]
+}

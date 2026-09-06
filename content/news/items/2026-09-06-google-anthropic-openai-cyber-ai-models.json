@@ -1,0 +1,23 @@
+{
+  "id": "2026-09-06-google-anthropic-openai-cyber-ai-models",
+  "kind": "daily",
+  "title": "Google, Anthropic and OpenAI unveil cyber-capable AI models behind trust-gated access programs",
+  "summary": "Google's Gemini 3.8 Flash Cyber, Anthropic's Claude Fable 5.1 and Claude Mythos 5.1, and OpenAI's Astra are clustered within a single week of releases, each bounded by gated access for vetted defenders, The Hacker News reported on 2 September. Anthropic paired Mythos with Enterprise Frontier Safeguards combining zero data retention with misuse detection, while OpenAI said Astra crosses the Critical cybersecurity threshold and routed access through Daybreak Blue. The push comes after a coalition of more than 100 companies called for stronger defences against AI-fuelled cyber attacks.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-09-06T06:50:00Z",
+  "updatedAt": "2026-09-06T06:50:00Z",
+  "retrievedAt": "2026-09-06T06:40:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Google DeepMind", "Anthropic", "OpenAI", "cybersecurity AI", "Daybreak", "Mythos"],
+  "sources": [
+    {
+      "publisher": "The Hacker News",
+      "url": "https://thehackernews.com/2026/09/google-anthropic-and-openai-unveil.html",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}
