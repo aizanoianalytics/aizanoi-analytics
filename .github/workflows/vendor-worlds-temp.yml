@@ -20,12 +20,24 @@ jobs:
       - name: Unpack reviewed migration payload
         run: |
           set -euo pipefail
+          rm -rf /tmp/aizanoi-worlds-migration /tmp/worlds-payload
           mkdir -p /tmp/aizanoi-worlds-migration /tmp/worlds-payload
-          base64 -d .migration/worlds.bundle.b64 > /tmp/aizanoi-worlds-migration/bundle.tar.gz
-          tar -tzf /tmp/aizanoi-worlds-migration/bundle.tar.gz >/dev/null
-          tar -xzf /tmp/aizanoi-worlds-migration/bundle.tar.gz -C /tmp/aizanoi-worlds-migration
-          tar -tzf /tmp/aizanoi-worlds-migration/worlds_no_vendor.tar.gz >/dev/null
-          tar -xzf /tmp/aizanoi-worlds-migration/worlds_no_vendor.tar.gz -C /tmp/worlds-payload
+          python - <<'PY'
+          import base64, pathlib, tarfile
+          root = pathlib.Path('/tmp/aizanoi-worlds-migration')
+          packed = pathlib.Path('.migration/worlds.bundle.b64').read_bytes()
+          archive = root / 'bundle.tar.gz'
+          archive.write_bytes(base64.b64decode(packed))
+          with tarfile.open(archive, 'r:gz') as tf:
+              tf.extractall(root)
+          PY
+          migration_script="$(find /tmp/aizanoi-worlds-migration -type f -name 'migrate_worlds.py' -print -quit)"
+          worlds_archive="$(find /tmp/aizanoi-worlds-migration -type f -name 'worlds_no_vendor.tar.gz' -print -quit)"
+          test -n "$migration_script"
+          test -n "$worlds_archive"
+          tar -tzf "$worlds_archive" >/dev/null
+          tar -xzf "$worlds_archive" -C /tmp/worlds-payload
+          cp "$migration_script" /tmp/aizanoi-worlds-migration/migrate_worlds.py
       - name: Apply unified Worlds migration
         run: |
           set -euo pipefail
