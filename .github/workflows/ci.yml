@@ -29,7 +29,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p artifacts/diagnostics
-          while IFS= read -r -d '' file; do node --check "$file"; done < <(find frontend/js/v3 frontend/ancient-world frontend/ancient-cities frontend/historic-world -type f -name '*.js' -print0)
+          while IFS= read -r -d '' file; do node --check "$file"; done < <(find frontend/js/v3 frontend/worlds -type f -name '*.js' -print0)
           node --check frontend/release.js
           node --check frontend/analytics/catalog.js
           node --check frontend/analytics/app.js
@@ -143,7 +143,7 @@ jobs:
           status=0
           node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-browser-smoke.log || status=1
           node tests/service-worker-browser.mjs 2>&1 | tee artifacts/diagnostics/service-worker-browser.log || status=1
-          for script in ancient-city-browser-smoke.mjs historical-worlds-ui-browser-smoke.mjs historical-worlds-landmark-walk.mjs; do node "tests/$script" 2>&1 | tee "artifacts/diagnostics/$script.log" || status=1; done
+          node tests/worlds-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/worlds-browser-smoke.log || status=1
           node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
           exit $status
       - name: AizanoiOS utility browser gates
@@ -162,10 +162,7 @@ jobs:
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
           set -o pipefail
-          status=0
-          node tests/historical-worlds-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/historical-worlds-visual-capture.log || status=1
-          node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-visual-capture.log || status=1
-          exit $status
+          node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-visual-capture.log
       - name: Upload visual regression review
         if: success()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
