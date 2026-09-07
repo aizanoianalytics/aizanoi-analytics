@@ -48,6 +48,29 @@ jobs:
           npm pack three@0.174.0 --ignore-scripts --pack-destination /tmp/three >/tmp/three-pack.log
           tar -xzf /tmp/three/three-0.174.0.tgz -C /tmp/three
           python /tmp/aizanoi-worlds-migration/migrate_worlds.py
+
+          # Retire the last implementation-specific test that imports the deleted
+          # blocky legacy engine. Its coverage is superseded by unified-worlds.test.mjs.
+          rm -f tests/modular-flat-world.test.mjs
+
+          # Keep the repository topology contract stable while documenting the new
+          # canonical ownership map. Legacy paths now own redirects only.
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('frontend/index.md')
+          text = path.read_text()
+          heading = '## Historical Worlds naming map'
+          if heading not in text:
+              block = '''\n## Historical Worlds naming map\n\nHistorical Worlds now has one canonical static runtime family:\n\n- `worlds/` — public portal and canonical world routes;\n- `worlds/shared/` — shared Three.js r174 engine, assets, styles and local vendor files;\n- `worlds/aizanoi-225/` — Aizanoi · AD 225;\n- `worlds/rome-410-476/` — Rome · AD 410–476;\n- `worlds/athens-450-430/` — Athens · 450–430 BCE;\n- `worlds/iga-airport/` — Istanbul Airport / İGA present-day spatial study.\n\n`historic-world/`, `ancient-cities/` and `iga/` are compatibility redirects only. The retired `ancient-world/` shared runtime is not a production owner. Research and source methodology remain under `../research/`, separate from browser runtime code.\n'''
+              marker = '\n## Boundary\n'
+              if marker in text:
+                  text = text.replace(marker, block + marker, 1)
+              else:
+                  text = text.rstrip() + block + '\n'
+              path.write_text(text)
+          PY
+
           rm -rf .migration .vendor-cache .worlds-migration .github/workflows/vendor-worlds-temp.yml
 
       - name: Validate migrated source contracts
