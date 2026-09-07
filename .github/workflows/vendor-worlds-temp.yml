@@ -1,4 +1,4 @@
-name: Temporary Worlds Vendor Bootstrap
+name: Temporary Worlds Migration
 
 on:
   push:
@@ -8,25 +8,43 @@ permissions:
   contents: write
 
 jobs:
-  vendor:
+  migrate:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - name: Fetch and verify Three.js r174 vendor modules
+        with: { fetch-depth: 2 }
+      - name: Unpack reviewed migration payload
         run: |
           set -euo pipefail
-          mkdir -p .vendor-cache
-          curl -fsSLo .vendor-cache/three.core.js https://raw.githubusercontent.com/mrdoob/three.js/r174/build/three.core.js
-          curl -fsSLo .vendor-cache/three.module.js https://raw.githubusercontent.com/mrdoob/three.js/r174/build/three.module.js
-          printf '%s  %s\n' '87b9d59e385b7e64adc8ad18236018bf7e51f2df93dab83c1ccbdca5e1f5caa7' '.vendor-cache/three.core.js' | sha256sum -c -
-          printf '%s  %s\n' '8cd1b1ed9c81fb3e433615f5277f3feeebfb7404836b1fa22c282c02da26b080' '.vendor-cache/three.module.js' | sha256sum -c -
-      - name: Seed verified blobs in this repository
+          mkdir -p /tmp/aizanoi-worlds-migration /tmp/worlds-payload
+          base64 -d .migration/worlds.bundle.b64 > /tmp/aizanoi-worlds-migration/bundle.tar.gz
+          printf '%s  %s\n' 'beeae399ad8c5f9f23ae23ef5c3163d191afb1318c995b853ab63d7b30da680b' '/tmp/aizanoi-worlds-migration/bundle.tar.gz' | sha256sum -c -
+          tar -xzf /tmp/aizanoi-worlds-migration/bundle.tar.gz -C /tmp/aizanoi-worlds-migration
+          tar -xzf /tmp/aizanoi-worlds-migration/worlds_no_vendor.tar.gz -C /tmp/worlds-payload
+      - name: Apply unified Worlds migration
+        run: |
+          set -euo pipefail
+          python /tmp/aizanoi-worlds-migration/migrate_worlds.py
+          mkdir -p frontend/worlds/shared/vendor
+          curl -fsSLo frontend/worlds/shared/vendor/three.core.js https://raw.githubusercontent.com/mrdoob/three.js/c6620cee323838ead14035b37008f401edbc2ea1/build/three.core.js
+          curl -fsSLo frontend/worlds/shared/vendor/three.module.js https://raw.githubusercontent.com/mrdoob/three.js/c6620cee323838ead14035b37008f401edbc2ea1/build/three.module.js
+          grep -q "const REVISION = '174'" frontend/worlds/shared/vendor/three.core.js
+          rm -rf .migration .vendor-cache .github/workflows/vendor-worlds-temp.yml
+      - name: Validate migrated source contracts
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do node --check "$file"; done < <(find frontend/worlds -type f -name '*.js' -print0)
+          node scripts/modules/build-module-registry.mjs --check
+          node scripts/news/build-news.mjs
+          node --test tests/*.test.mjs
+          git diff --check
+      - name: Commit migration
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add .vendor-cache/three.core.js .vendor-cache/three.module.js
-          git commit -m 'chore(worlds): seed verified Three.js r174 blobs'
+          git add -A
+          git commit -m 'refactor(worlds): replace legacy ancient-cities and iga with unified zero-dependency 3d engine'
           git push origin HEAD:refactor/unified-worlds-threejs
