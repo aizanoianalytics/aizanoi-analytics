@@ -1,6 +1,6 @@
 /**
  * controls.js — Unified Desktop + Mobile Input System
- * Athens 450-430 BCE · AAA Rebuild
+ * Aizanoi Analytics unified worlds runtime (originally Athens 450-430 BCE reference implementation)
  *
  * Desktop: PointerLockControls (mouse look + WASD)
  * Mobile:  Virtual joystick (left) + touch-look (right)
@@ -173,11 +173,22 @@ export class Controls {
     this._movePad = document.getElementById('movePad');
     this._moveKnob = document.getElementById('moveKnob');
 
-    // Joystick area (left half of screen)
-    this.canvas.addEventListener('touchstart', (e) => this._onTouchStart(e), { passive: false });
-    this.canvas.addEventListener('touchmove', (e) => this._onTouchMove(e), { passive: false });
-    this.canvas.addEventListener('touchend', (e) => this._onTouchEnd(e), { passive: false });
-    this.canvas.addEventListener('touchcancel', (e) => this._onTouchEnd(e), { passive: false });
+    // Joystick now drives movement directly: bind touch listeners to the pad
+    // element itself so the user's tap lands on the visible control. Canvas
+    // listeners are kept ONLY for the right-half look area.
+    const pad = this._movePad;
+    if (pad) {
+      pad.addEventListener('touchstart', (e) => this._onJoystickStart(e), { passive: false });
+      pad.addEventListener('touchmove',  (e) => this._onJoystickMove(e),  { passive: false });
+      pad.addEventListener('touchend',   (e) => this._onJoystickEnd(e),   { passive: false });
+      pad.addEventListener('touchcancel',(e) => this._onJoystickEnd(e),   { passive: false });
+    }
+
+    // Right-half look: still canvas-scoped (no visible control there)
+    this.canvas.addEventListener('touchstart', (e) => this._onLookStart(e), { passive: false });
+    this.canvas.addEventListener('touchmove',  (e) => this._onLookMove(e),  { passive: false });
+    this.canvas.addEventListener('touchend',   (e) => this._onLookEnd(e),   { passive: false });
+    this.canvas.addEventListener('touchcancel',(e) => this._onLookEnd(e),   { passive: false });
 
     // Mobile buttons
     const runBtn = document.getElementById('btn-mobile-run');
@@ -219,82 +230,90 @@ export class Controls {
     });
   }
 
-  _onTouchStart(e) {
+  _onJoystickStart(e) {
     if (!this.enabled) return;
     e.preventDefault();
-    const midX = window.innerWidth * 0.4;
+    if (this._moveTouchId !== null) return;
+    const touch = e.changedTouches[0];
+    this._moveTouchId = touch.identifier;
+    this._joystickOrigin.x = touch.clientX;
+    this._joystickOrigin.y = touch.clientY;
+    this._joystickCurrent.x = touch.clientX;
+    this._joystickCurrent.y = touch.clientY;
+
+    if (this._movePad) {
+      this._movePad.style.left = `${touch.clientX}px`;
+      this._movePad.style.top = `${touch.clientY}px`;
+      this._movePad.classList.add('active');
+    }
+  }
+
+  _onJoystickMove(e) {
+    if (!this.enabled) return;
+    e.preventDefault();
 
     for (const touch of e.changedTouches) {
-      if (touch.clientX < midX && this._moveTouchId === null) {
-        // Left side — joystick
-        this._moveTouchId = touch.identifier;
-        this._joystickOrigin.x = touch.clientX;
-        this._joystickOrigin.y = touch.clientY;
-        this._joystickCurrent.x = touch.clientX;
-        this._joystickCurrent.y = touch.clientY;
+      if (touch.identifier !== this._moveTouchId) continue;
+      this._joystickCurrent.x = touch.clientX;
+      this._joystickCurrent.y = touch.clientY;
 
-        if (this._movePad) {
-          this._movePad.style.left = `${touch.clientX}px`;
-          this._movePad.style.top = `${touch.clientY}px`;
-          this._movePad.classList.add('active');
-        }
-      } else if (touch.clientX >= midX && this._lookTouchId === null) {
-        // Right side — camera look
+      const dx = touch.clientX - this._joystickOrigin.x;
+      const dy = touch.clientY - this._joystickOrigin.y;
+      const maxRadius = 50;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const clampDist = Math.min(dist, maxRadius);
+      const angle = Math.atan2(dy, dx);
+      const knobX = Math.cos(angle) * clampDist;
+      const knobY = Math.sin(angle) * clampDist;
+
+      if (this._moveKnob) {
+        this._moveKnob.style.transform = `translate(${knobX}px, ${knobY}px)`;
+      }
+    }
+  }
+
+  _onJoystickEnd(e) {
+    for (const touch of e.changedTouches) {
+      if (touch.identifier !== this._moveTouchId) continue;
+      this._moveTouchId = null;
+      if (this._moveKnob) this._moveKnob.style.transform = 'translate(0, 0)';
+      if (this._movePad) this._movePad.classList.remove('active');
+    }
+  }
+
+  _onLookStart(e) {
+    if (!this.enabled) return;
+    e.preventDefault();
+    if (this._lookTouchId !== null) return;
+    for (const touch of e.changedTouches) {
+      if (touch.clientX >= window.innerWidth * 0.5) {
         this._lookTouchId = touch.identifier;
         this._lastLookX = touch.clientX;
         this._lastLookY = touch.clientY;
+        break;
       }
     }
   }
 
-  _onTouchMove(e) {
+  _onLookMove(e) {
     if (!this.enabled) return;
     e.preventDefault();
-
     for (const touch of e.changedTouches) {
-      if (touch.identifier === this._moveTouchId) {
-        this._joystickCurrent.x = touch.clientX;
-        this._joystickCurrent.y = touch.clientY;
-
-        // Update knob visual position
-        const dx = touch.clientX - this._joystickOrigin.x;
-        const dy = touch.clientY - this._joystickOrigin.y;
-        const maxRadius = 50;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const clampDist = Math.min(dist, maxRadius);
-        const angle = Math.atan2(dy, dx);
-        const knobX = Math.cos(angle) * clampDist;
-        const knobY = Math.sin(angle) * clampDist;
-
-        if (this._moveKnob) {
-          this._moveKnob.style.transform = `translate(${knobX}px, ${knobY}px)`;
-        }
-      }
-
-      if (touch.identifier === this._lookTouchId) {
-        const dx = touch.clientX - this._lastLookX;
-        const dy = touch.clientY - this._lastLookY;
-        inputState.yawDelta -= dx * TOUCH_SENSITIVITY;
-        inputState.pitchDelta -= dy * TOUCH_SENSITIVITY;
-        this._lastLookX = touch.clientX;
-        this._lastLookY = touch.clientY;
-      }
+      if (touch.identifier !== this._lookTouchId) continue;
+      const dx = touch.clientX - this._lastLookX;
+      const dy = touch.clientY - this._lastLookY;
+      inputState.yawDelta   -= dx * TOUCH_SENSITIVITY;
+      inputState.pitchDelta -= dy * TOUCH_SENSITIVITY;
+      this._lastLookX = touch.clientX;
+      this._lastLookY = touch.clientY;
     }
   }
 
-  _onTouchEnd(e) {
+  _onLookEnd(e) {
     for (const touch of e.changedTouches) {
-      if (touch.identifier === this._moveTouchId) {
-        this._moveTouchId = null;
-        if (this._moveKnob) {
-          this._moveKnob.style.transform = 'translate(0, 0)';
-        }
-        if (this._movePad) {
-          this._movePad.classList.remove('active');
-        }
-      }
       if (touch.identifier === this._lookTouchId) {
         this._lookTouchId = null;
+        break;
       }
     }
   }

@@ -1,6 +1,6 @@
 /**
  * water.js — Animated Water System
- * Athens 450-430 BCE · AAA Rebuild
+ * Aizanoi Analytics unified worlds runtime (originally Athens 450-430 BCE reference implementation)
  *
  * Renders the Eridanos stream, Ilissos river, and Kallirrhoe spring
  * with animated vertex displacement and Fresnel reflective shading.

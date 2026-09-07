@@ -1,9 +1,9 @@
 /**
- * tour.js — Guided Historical Tour System
- * Athens 450-430 BCE · AAA Rebuild
+ * tour.js — Guided Historical Tour System (per-world shared runtime)
  *
  * Provides a curated, step-by-step interactive walking/flying tour
- * through the architectural highlights of Periclean Athens.
+ * through the architectural highlights of the active world; the title
+ * and description for each stop are owned by the world's TOUR_STOPS array.
  */
 
 export class TourSystem {
@@ -29,12 +29,12 @@ export class TourSystem {
     this.panel.className = 'tour-bar';
     this.panel.innerHTML = `
       <div class="tour-bar__header">
-        <span id="tour-step-badge" class="tour-bar__badge">GUIDED TOUR · STOP 1 / 10</span>
+        <span id="tour-step-badge" class="tour-bar__badge">GUIDED TOUR</span>
         <button type="button" id="btn-tour-close" class="tour-bar__close" aria-label="Close guided tour">✖</button>
       </div>
       <div>
-        <h3 id="tour-title" class="tour-bar__title">Parthenon</h3>
-        <p id="tour-desc" class="tour-bar__desc">Description here...</p>
+        <h3 id="tour-title" class="tour-bar__title">Loading…</h3>
+        <p id="tour-desc" class="tour-bar__desc"></p>
       </div>
       <div class="tour-bar__footer">
         <div class="tour-bar__actions">

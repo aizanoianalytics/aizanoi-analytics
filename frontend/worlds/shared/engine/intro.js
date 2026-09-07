@@ -1,15 +1,19 @@
 /**
- * intro.js — Cinematic Flyover & Opening Sequence
- * Athens 450-430 BCE · AAA Rebuild
+ * intro.js — Cinematic Flyover & Opening Sequence (per-world shared runtime)
+ * Default curve targets Athens; each world overrides .curve/.lookAtCurve in main.js.
  */
 
 import * as THREE from '../vendor/three.module.js';
 
 export class IntroSequence {
-  constructor(camera, scene, controls) {
+  constructor(camera, scene, controls, opts = {}) {
     this.camera = camera;
     this.scene = scene;
     this.controls = controls;
+
+    // Per-world overlay text (defaults preserve Athens legacy copy).
+    this.heading  = opts.heading  || 'ATHENS';
+    this.subtitle = opts.subtitle || '450–430 BCE · THE PERICLEAN GOLDEN AGE';
 
     this.isComplete = false;
     this.onComplete = null;
@@ -42,8 +46,8 @@ export class IntroSequence {
     this.overlay.id = 'cinematic-title';
     this.overlay.className = 'cinematic-title';
     this.overlay.innerHTML = `
-      <h1 class="cinematic-title__heading">ATHENS</h1>
-      <p class="cinematic-title__subtitle">450–430 BCE · THE PERICLEAN GOLDEN AGE</p>
+      <h1 class="cinematic-title__heading"></h1>
+      <p class="cinematic-title__subtitle"></p>
       <div class="cinematic-title__skip">[Press ESC to skip intro]</div>
     `;
     document.body.appendChild(this.overlay);
@@ -64,8 +68,12 @@ export class IntroSequence {
       }
     }, { once: true });
 
-    // Fade in title overlay
+    // Apply per-world text on each start() so the same instance can be reused
     if (this.overlay) {
+      const h = this.overlay.querySelector('.cinematic-title__heading');
+      const s = this.overlay.querySelector('.cinematic-title__subtitle');
+      if (h) h.textContent = this.heading;
+      if (s) s.textContent = this.subtitle;
       this.overlay.style.display = 'block';
       setTimeout(() => { if (this.overlay) this.overlay.style.opacity = '1'; }, 200);
     }

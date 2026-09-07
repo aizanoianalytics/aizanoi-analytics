@@ -1,6 +1,6 @@
 /**
  * collision.js — Spatial Grid Collision System
- * Athens 450-430 BCE · AAA Rebuild
+ * Aizanoi Analytics unified worlds runtime (originally Athens 450-430 BCE reference implementation)
  *
  * Features:
  *  - 2D spatial hash grid for O(1) broad-phase lookup

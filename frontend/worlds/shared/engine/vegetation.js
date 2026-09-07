@@ -1,10 +1,10 @@
 /**
  * vegetation.js — Procedural Mediterranean Vegetation System
- * Athens 450-430 BCE · AAA Rebuild
+ * Aizanoi Analytics unified worlds runtime (originally Athens 450-430 BCE reference implementation)
  *
  * Implements InstancedMesh rendering for olive trees, cypress, fig trees,
  * and dry Mediterranean shrubs with authentic historical placement
- * (Academy grove, Kerameikos cemetery, stream banks, Agora borders).
+ * (river banks, sanctuary borders, civic-core corners).
  */
 
 import * as THREE from '../vendor/three.module.js';
@@ -207,7 +207,7 @@ export class VegetationSystem {
       }
     }
 
-    // 5. Agora borders and street corners
+    // 5. Civic-core borders and street corners
     for (let i = 0; i < (this.isMobile ? 20 : 45); i++) {
       const ax = 110 + (Math.random() - 0.5) * 260;
       const az = 10 + (Math.random() - 0.5) * 220;

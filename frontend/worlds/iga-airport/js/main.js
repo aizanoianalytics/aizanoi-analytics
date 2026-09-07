@@ -125,7 +125,10 @@ async function init() {
   tour = new TourSystem(TOUR_STOPS, controls, ui);
 
   // 11. Cinematic Intro (High aerial overview of runways and terminal)
-  intro = new IntroSequence(camera, scene, controls);
+  intro = new IntroSequence(camera, scene, controls, {
+    heading:  CITY.title,
+    subtitle: 'Present-Day Global Aviation Gateway · Interactive Walkthrough',
+  });
   intro.curve = new THREE.CatmullRomCurve3([
     new THREE.Vector3(-250, 240, 1030), // High above Tulip Tower
     new THREE.Vector3(0, 120, 500),      // Over Pier concourses
