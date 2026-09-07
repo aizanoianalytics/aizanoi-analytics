@@ -1,0 +1,32 @@
+name: Temporary Worlds Vendor Bootstrap
+
+on:
+  push:
+    branches: [refactor/unified-worlds-threejs]
+
+permissions:
+  contents: write
+
+jobs:
+  vendor:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Fetch and verify Three.js r174 vendor modules
+        run: |
+          set -euo pipefail
+          mkdir -p .vendor-cache
+          curl -fsSLo .vendor-cache/three.core.js https://raw.githubusercontent.com/mrdoob/three.js/r174/build/three.core.js
+          curl -fsSLo .vendor-cache/three.module.js https://raw.githubusercontent.com/mrdoob/three.js/r174/build/three.module.js
+          printf '%s  %s\n' '87b9d59e385b7e64adc8ad18236018bf7e51f2df93dab83c1ccbdca5e1f5caa7' '.vendor-cache/three.core.js' | sha256sum -c -
+          printf '%s  %s\n' '8cd1b1ed9c81fb3e433615f5277f3feeebfb7404836b1fa22c282c02da26b080' '.vendor-cache/three.module.js' | sha256sum -c -
+      - name: Seed verified blobs in this repository
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .vendor-cache/three.core.js .vendor-cache/three.module.js
+          git commit -m 'chore(worlds): seed verified Three.js r174 blobs'
+          git push origin HEAD:refactor/unified-worlds-threejs
