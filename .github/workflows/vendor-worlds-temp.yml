@@ -2,7 +2,7 @@ name: Temporary Worlds Migration
 
 on:
   push:
-    branches: [never/worlds-staging]
+    branches: [refactor/unified-worlds-threejs]
 
 permissions:
   contents: write
@@ -11,29 +11,34 @@ jobs:
   migrate:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with: { fetch-depth: 2 }
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with: { node-version: '22' }
-      - name: Reassemble and unpack reviewed migration payload
+
+      - name: Reassemble reviewed v6 payload
         run: |
           set -euo pipefail
           rm -rf /tmp/aizanoi-worlds-migration /tmp/worlds-payload
           mkdir -p /tmp/aizanoi-worlds-migration /tmp/worlds-payload
-          cat .migration/parts/worlds.bundle.b64.part-* > /tmp/aizanoi-worlds-migration/worlds.bundle.b64
-          base64 -d /tmp/aizanoi-worlds-migration/worlds.bundle.b64 > /tmp/aizanoi-worlds-migration/bundle.tar.gz
-          printf '%s  %s\n' 'beeae399ad8c5f9f23ae23ef5c3163d191afb1318c995b853ab63d7b30da680b' '/tmp/aizanoi-worlds-migration/bundle.tar.gz' | sha256sum -c -
-          tar -tzf /tmp/aizanoi-worlds-migration/bundle.tar.gz >/dev/null
-          tar -xzf /tmp/aizanoi-worlds-migration/bundle.tar.gz -C /tmp/aizanoi-worlds-migration
-          worlds_archive="$(find /tmp/aizanoi-worlds-migration -type f -name 'worlds_no_vendor.tar.gz' -print -quit)"
-          migration_script="$(find /tmp/aizanoi-worlds-migration -type f -name 'migrate_worlds.py' -print -quit)"
-          test -n "$worlds_archive"
-          test -n "$migration_script"
-          tar -tzf "$worlds_archive" >/dev/null
-          tar -xzf "$worlds_archive" -C /tmp/worlds-payload
-          cp "$migration_script" /tmp/aizanoi-worlds-migration/migrate_worlds.py
+
+          cat .migration/v6/worlds/chunk-* > /tmp/aizanoi-worlds-migration/worlds.b64
+          base64 -d /tmp/aizanoi-worlds-migration/worlds.b64 > /tmp/aizanoi-worlds-migration/worlds.tar.xz
+          printf '%s  %s\n' 'e56096c31f8c0b124e93b11e790b0d5af5190ba7d4a5511132f6b1d63dee6df7' '/tmp/aizanoi-worlds-migration/worlds.tar.xz' | sha256sum -c -
+          xz -t /tmp/aizanoi-worlds-migration/worlds.tar.xz
+          xz -dc /tmp/aizanoi-worlds-migration/worlds.tar.xz > /tmp/aizanoi-worlds-migration/worlds.tar
+          tar -tf /tmp/aizanoi-worlds-migration/worlds.tar >/dev/null
+          tar -xf /tmp/aizanoi-worlds-migration/worlds.tar -C /tmp/worlds-payload
+
+          cat .migration/v6/script/chunk-* > /tmp/aizanoi-worlds-migration/script.b64
+          base64 -d /tmp/aizanoi-worlds-migration/script.b64 > /tmp/aizanoi-worlds-migration/migrate_worlds.py.xz
+          xz -t /tmp/aizanoi-worlds-migration/migrate_worlds.py.xz
+          xz -dc /tmp/aizanoi-worlds-migration/migrate_worlds.py.xz > /tmp/aizanoi-worlds-migration/migrate_worlds.py
+          printf '%s  %s\n' '2e72ffcbd338590c2780c84c07e24bfbb7bd645d9ef0823c9932fdece8bb037f' '/tmp/aizanoi-worlds-migration/migrate_worlds.py' | sha256sum -c -
+          python -m py_compile /tmp/aizanoi-worlds-migration/migrate_worlds.py
+
       - name: Apply unified Worlds migration
         env:
           THREE_BUILD_DIR: /tmp/three/package/build
@@ -44,6 +49,7 @@ jobs:
           tar -xzf /tmp/three/three-0.174.0.tgz -C /tmp/three
           python /tmp/aizanoi-worlds-migration/migrate_worlds.py
           rm -rf .migration .vendor-cache .worlds-migration .github/workflows/vendor-worlds-temp.yml
+
       - name: Validate migrated source contracts
         run: |
           set -euo pipefail
@@ -52,6 +58,7 @@ jobs:
           node scripts/news/build-news.mjs
           node --test tests/*.test.mjs
           git diff --check
+
       - name: Commit migration
         run: |
           set -euo pipefail
