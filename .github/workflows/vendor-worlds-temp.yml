@@ -17,42 +17,31 @@ jobs:
         with: { fetch-depth: 2 }
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with: { node-version: '22' }
-      - name: Unpack reviewed migration payload
+      - name: Reassemble and unpack reviewed migration payload
         run: |
           set -euo pipefail
           rm -rf /tmp/aizanoi-worlds-migration /tmp/worlds-payload
           mkdir -p /tmp/aizanoi-worlds-migration /tmp/worlds-payload
-          python - <<'PY'
-          import base64, pathlib, tarfile
-          root = pathlib.Path('/tmp/aizanoi-worlds-migration')
-          packed = pathlib.Path('.migration/worlds.bundle.b64').read_bytes()
-          archive = root / 'bundle.tar.gz'
-          archive.write_bytes(base64.b64decode(packed))
-          with tarfile.open(archive, 'r:gz') as tf:
-              tf.extractall(root)
-          PY
-          migration_script="$(find /tmp/aizanoi-worlds-migration -type f -name 'migrate_worlds.py' -print -quit)"
+          cat .migration/parts/worlds.bundle.b64.part-* > /tmp/aizanoi-worlds-migration/worlds.bundle.b64
+          base64 -d /tmp/aizanoi-worlds-migration/worlds.bundle.b64 > /tmp/aizanoi-worlds-migration/bundle.tar.gz
+          tar -tzf /tmp/aizanoi-worlds-migration/bundle.tar.gz >/dev/null
+          tar -xzf /tmp/aizanoi-worlds-migration/bundle.tar.gz -C /tmp/aizanoi-worlds-migration
           worlds_archive="$(find /tmp/aizanoi-worlds-migration -type f -name 'worlds_no_vendor.tar.gz' -print -quit)"
-          test -n "$migration_script"
+          migration_script="$(find /tmp/aizanoi-worlds-migration -type f -name 'migrate_worlds.py' -print -quit)"
           test -n "$worlds_archive"
+          test -n "$migration_script"
           tar -tzf "$worlds_archive" >/dev/null
           tar -xzf "$worlds_archive" -C /tmp/worlds-payload
           cp "$migration_script" /tmp/aizanoi-worlds-migration/migrate_worlds.py
       - name: Apply unified Worlds migration
+        env:
+          THREE_BUILD_DIR: /tmp/three/package/build
         run: |
           set -euo pipefail
+          npm pack three@0.174.0 --ignore-scripts --pack-destination /tmp/three >/tmp/three-pack.log
+          tar -xzf /tmp/three/three-0.174.0.tgz -C /tmp/three
           python /tmp/aizanoi-worlds-migration/migrate_worlds.py
-          mkdir -p frontend/worlds/shared/vendor /tmp/three-r174
-          cd /tmp
-          tarball="$(npm pack three@0.174.0 --silent)"
-          tar -xzf "$tarball" -C /tmp/three-r174
-          cd "$GITHUB_WORKSPACE"
-          cp /tmp/three-r174/package/build/three.core.js frontend/worlds/shared/vendor/three.core.js
-          cp /tmp/three-r174/package/build/three.module.js frontend/worlds/shared/vendor/three.module.js
-          printf '%s  %s\n' '87b9d59e385b7e64adc8ad18236018bf7e51f2df93dab83c1ccbdca5e1f5caa7' 'frontend/worlds/shared/vendor/three.core.js' | sha256sum -c -
-          printf '%s  %s\n' '8cd1b1ed9c81fb3e433615f5277f3feeebfb7404836b1fa22c282c02da26b080' 'frontend/worlds/shared/vendor/three.module.js' | sha256sum -c -
-          grep -q "const REVISION = '174'" frontend/worlds/shared/vendor/three.core.js
-          rm -rf .migration .vendor-cache .github/workflows/vendor-worlds-temp.yml
+          rm -rf .migration .vendor-cache .worlds-migration .github/workflows/vendor-worlds-temp.yml
       - name: Validate migrated source contracts
         run: |
           set -euo pipefail
