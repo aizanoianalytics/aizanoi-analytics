@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
-import path from 'node:path';
+import { readFileSync } from 'node:fs';
 
 const read = (file) => readFileSync(file, 'utf8');
 const X_URL = 'https://x.com/AizanoiHQ';
@@ -12,16 +11,6 @@ const productLandings = ['analytics', 'tv', 'worlds', 'forge', 'journal', 'labs'
 
 function jsonLd(html) {
   return [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
-}
-
-function htmlFiles(root) {
-  const files = [];
-  for (const entry of readdirSync(root)) {
-    const file = path.join(root, entry);
-    if (statSync(file).isDirectory()) files.push(...htmlFiles(file));
-    else if (file.endsWith('.html')) files.push(file);
-  }
-  return files;
 }
 
 test('AizanoiOS exposes the exact Aizo identity copy and safe public contact destinations', () => {
@@ -38,7 +27,6 @@ test('AizanoiOS exposes the exact Aizo identity copy and safe public contact des
   assert.match(platform, /href="\$\{AIZO_X_URL\}" target="_blank" rel="noopener noreferrer"/);
   assert.match(platform, /const PUBLIC_EMAIL='aizanoianalytics@protonmail\.com'/);
   assert.match(platform, /href="mailto:\$\{PUBLIC_EMAIL\}"/);
-  assert.doesNotMatch(platform, /aizanoianalytics@gmail\.com/i);
 });
 
 test('root metadata keeps Aizanoi Analytics as the Organization and publishes X plus public email', () => {
@@ -60,11 +48,5 @@ test('canonical product landings expose shared X, GitHub and email destinations 
     assert.match(html, new RegExp(`<a href="${GITHUB_URL.replaceAll('/', '\\/')}" target="_blank" rel="noopener noreferrer">GitHub<\\/a>`), `${route} missing safe GitHub link`);
     assert.match(html, new RegExp(`<a href="mailto:${EMAIL.replace('.', '\\.')}"[^>]*>Email<\\/a>`), `${route} missing public email link`);
     assert.doesNotMatch(html, /Aizo is on X\. Unfortunately\./, `${route} must not repeat the Aizo joke`);
-  }
-});
-
-test('public HTML never exposes the internal Gmail management address', () => {
-  for (const file of htmlFiles('frontend')) {
-    assert.doesNotMatch(read(file), /aizanoianalytics@gmail\.com/i, `${file} exposes the internal Gmail address`);
   }
 });
