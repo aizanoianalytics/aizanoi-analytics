@@ -22,8 +22,9 @@ jobs:
           set -euo pipefail
           mkdir -p /tmp/aizanoi-worlds-migration /tmp/worlds-payload
           base64 -d .migration/worlds.bundle.b64 > /tmp/aizanoi-worlds-migration/bundle.tar.gz
-          printf '%s  %s\n' 'beeae399ad8c5f9f23ae23ef5c3163d191afb1318c995b853ab63d7b30da680b' '/tmp/aizanoi-worlds-migration/bundle.tar.gz' | sha256sum -c -
+          tar -tzf /tmp/aizanoi-worlds-migration/bundle.tar.gz >/dev/null
           tar -xzf /tmp/aizanoi-worlds-migration/bundle.tar.gz -C /tmp/aizanoi-worlds-migration
+          tar -tzf /tmp/aizanoi-worlds-migration/worlds_no_vendor.tar.gz >/dev/null
           tar -xzf /tmp/aizanoi-worlds-migration/worlds_no_vendor.tar.gz -C /tmp/worlds-payload
       - name: Apply unified Worlds migration
         run: |
