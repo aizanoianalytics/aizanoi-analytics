@@ -125,11 +125,7 @@ The Rome research folder contains the working historical reports used to build a
 - `augustan_rome_410_476.md` — regional/topographical inventory and monument notes;
 - `rome_410_476_report.md` — Late Antique historical synthesis and monument/state research.
 
-The implementation also keeps source/evidence data close to the city itself under:
-
-- `frontend/ancient-cities/rome-410-476/data/`;
-- `frontend/ancient-cities/rome-410-476/js/methodology.js`;
-- `frontend/ancient-cities/rome-410-476/research/`.
+The current public implementation keeps source/evidence data with the world under `frontend/worlds/rome-410-476/`; the shared runtime lives at `frontend/worlds/shared/`.
 
 ## Core bibliography and reference families
 

@@ -9,8 +9,7 @@ const analyticsApp = read('frontend/js/v3/apps/analytics/src/app.js');
 const analyticsCatalog = read('frontend/analytics/catalog.js');
 const manifest = read('frontend/manifest.webmanifest');
 const errorPages = ['frontend/404.html', 'frontend/500.html', 'frontend/503.html'].map(read).join('\n');
-const historicalNavigation = read('frontend/ancient-world/engine/navigation.js');
-const historicalExperience = read('frontend/ancient-world/engine/city-experience.js');
+const historicalExperience = read('frontend/worlds/shared/engine/ui.js') + read('frontend/worlds/index.html');
 
 const canonicalIcons = [
   'aizanoi-news.svg',
@@ -82,9 +81,9 @@ test('device dates stay English regardless of browser locale', () => {
 });
 
 test('public error and Historical Worlds navigation copy no longer exposes the retired Field System name', () => {
-  const publicCopy = `${errorPages}\n${historicalNavigation}\n${historicalExperience}`;
+  const publicCopy = `${errorPages}\n${historicalExperience}`;
   assert.doesNotMatch(publicCopy, /Field System/);
   assert.match(errorPages, /Aizanoi Analytics/);
-  assert.match(historicalNavigation, /← AizanoiOS/);
-  assert.match(historicalExperience, /Return to AizanoiOS/);
+  assert.match(historicalExperience, /Sources & Reconstruction Notes/);
+  assert.match(historicalExperience, /Aizanoi Analytics/);
 });

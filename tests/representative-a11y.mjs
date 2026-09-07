@@ -12,7 +12,7 @@ const routes=[
   {id:'analytics',route:'/analytics/',settle:250},
   {id:'dashboard',route:'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',settle:600},
   {id:'worlds',route:'/worlds/',settle:250},
-  {id:'historic',route:'/historic-world/',settle:1200},
+  {id:'historic',route:'/worlds/aizanoi-225/',settle:1200},
 ];
 
 const browser=await chromium.launch({headless:true});

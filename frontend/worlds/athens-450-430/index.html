@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Athens · 450–430 BCE — Aizanoi Analytics</title>
+  <meta name="description" content="Explore a source-led, evidence-aware 3D reconstruction of Classical Athens during the Periclean building programme, 450–430 BCE.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#11100d">
+  <link rel="canonical" href="https://aizanoianalytics.com/worlds/athens-450-430/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aizanoi Analytics">
+  <meta property="og:title" content="Athens · 450–430 BCE — Historical Worlds">
+  <meta property="og:description" content="Explore a source-led, evidence-aware 3D reconstruction of Classical Athens during the Periclean building programme, 450–430 BCE.">
+  <meta property="og:url" content="https://aizanoianalytics.com/worlds/athens-450-430/">
+  <meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@AizanoiHQ">
+  <meta name="twitter:title" content="Athens · 450–430 BCE — Historical Worlds">
+  <meta name="twitter:description" content="Explore a source-led, evidence-aware 3D reconstruction of Classical Athens during the Periclean building programme, 450–430 BCE.">
+  <meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  
+  <link rel="stylesheet" href="../shared/css/base-theme.css" />
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml" />
+</head>
+<body>
+  <!-- 3D Viewport -->
+  <canvas id="viewport"></canvas>
+
+  <!-- Atmospheric Overlay -->
+  <div class="scene-tone"></div>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <h2 class="loading-title">Entering the Periclean Age...</h2>
+      <div class="loading-progress-bar">
+        <div class="loading-progress" id="loading-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HUD Top Bar -->
+  <header class="hud-top">
+    <div class="hud-badge">
+      <h1>ATHENS · 450–430 BCE</h1>
+    </div>
+    <nav class="hud-controls">
+      <a href="/worlds/" class="hud-btn world-exit" title="All Worlds" aria-label="Back to Historical Worlds">←</a>
+      <button type="button" id="btn-tour" aria-label="Start guided tour" class="hud-btn" title="Guided Tour">🏛️</button>
+      <button type="button" id="btn-teleport" aria-label="Open fast travel" class="hud-btn" title="Jump/Teleport">📍</button>
+      <button type="button" id="btn-inspect" aria-label="Inspect nearby structure" class="hud-btn" title="Inspect Element">🔍</button>
+      <button type="button" id="btn-map" aria-label="Toggle minimap" class="hud-btn" title="Toggle Minimap">🗺️</button>
+      <button type="button" id="btn-audio" aria-label="Toggle ambient audio" class="hud-btn" title="Toggle Audio">🔊</button>
+      <button type="button" id="btn-evidence" aria-label="Toggle evidence colors" class="hud-btn" title="Toggle Evidence Colors">🎨</button>
+      <button type="button" id="btn-sources" aria-label="Open sources" class="hud-btn" title="Historical Sources">📚</button>
+      <button type="button" id="btn-daynight" aria-label="Toggle day and night" class="hud-btn" title="Toggle Day/Night">🌙</button>
+    </nav>
+  </header>
+
+  <!-- HUD Bottom Bar -->
+  <footer class="hud-bottom">
+    <div class="location-info">
+      <h2 id="place-name">Acropolis</h2>
+      <p id="place-detail">Approaching the Propylaia</p>
+    </div>
+  </footer>
+
+  <!-- Minimap -->
+  <div id="minimap-wrapper">
+    <div id="compass" class="compass-badge">N 0°</div>
+    <canvas id="minimap"></canvas>
+  </div>
+
+  <!-- Mobile Controls (Hidden by default, shown via body.mobile) -->
+  <div id="mobile-controls">
+    <div class="touch-look-area" id="touch-look"></div>
+    <div class="touch-look-hint">Drag to Look</div>
+    <div id="movePad" class="joystick-pad">
+      <div id="moveKnob" class="joystick-knob"></div>
+    </div>
+    <div class="action-rail">
+      <button type="button" id="btn-mobile-run" aria-label="Run" class="mobile-btn">🏃</button>
+      <button type="button" id="btn-mobile-inspect" aria-label="Inspect nearby structure" class="mobile-btn">🔍</button>
+      <button type="button" id="btn-mobile-map" aria-label="Toggle minimap" class="mobile-btn">🗺️</button>
+    </div>
+  </div>
+
+  <!-- Crosshair Overlay -->
+  <div id="crosshair"></div>
+
+  <!-- Intro/Splash Modal -->
+  <div id="intro-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-content intro-content">
+      <h1 class="modal-title">ATHENS · 450–430 BCE</h1>
+      <h2 class="modal-subtitle">The Periclean city between the Thirty Years' Peace and the Plague</h2>
+      <p class="intro-text">
+        Explore the peak of Classical Athens. Walk among the monuments, 
+        temples, and stoas exactly as they might have stood during the Golden Age. 
+        Every stone is placed according to the latest archaeological evidence.
+      </p>
+      <div class="key-facts">
+        <div class="fact"><strong>Period:</strong> Classical Antiquity</div>
+        <div class="fact"><strong>Scale:</strong> 1:1 True Scale</div>
+        <div class="fact"><strong>Monuments:</strong> 100+ Detailed Structures</div>
+        <div class="fact"><strong>Sources:</strong> Pausanias, ASCSA, Travlos</div>
+      </div>
+      <button type="button" id="btn-enter" class="btn-primary">Enter the City</button>
+      <p class="webgl-fallback hidden">WebGL is not supported or disabled on your device.</p>
+    </div>
+  </div>
+
+  <!-- Generic Research/Source Modal -->
+  <div id="research-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Sources and reconstruction notes">
+    <div class="modal-panel slide-up">
+      <button type="button" class="btn-close" id="btn-close-modal" aria-label="Close sources">✖</button>
+      <div class="modal-body" id="modal-body">
+        <!-- Dynamic content goes here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Evidence Side Panel -->
+  <aside id="evidence-panel" class="side-panel hidden" aria-label="Evidence layers">
+    <div class="panel-header">
+      <h3>Evidence Layers</h3>
+      <button type="button" class="btn-close" id="btn-close-evidence" aria-label="Close evidence panel">✖</button>
+    </div>
+    <div class="evidence-legend">
+      <div class="legend-item"><span class="dot arch"></span> Archaeological (Certain)</div>
+      <div class="legend-item"><span class="dot doc"></span> Documented (Textual)</div>
+      <div class="legend-item"><span class="dot plaus"></span> Plausible (Contextual)</div>
+      <div class="legend-item"><span class="dot atm"></span> Atmospheric (Generative)</div>
+      <div class="legend-item"><span class="dot disp"></span> Disputed (Conflicting)</div>
+    </div>
+    <div class="monuments-list" id="monuments-list">
+      <!-- Monument items populated via JS -->
+    </div>
+  </aside>
+
+  <!-- Teleport Menu -->
+  <div id="teleport-menu" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Fast travel">
+    <div class="modal-panel">
+      <div class="panel-header">
+        <h3>Fast Travel</h3>
+        <button type="button" class="btn-close" id="btn-close-teleport" aria-label="Close fast travel">✖</button>
+      </div>
+      <input type="text" id="teleport-search" placeholder="Search landmarks..." />
+      <ul class="teleport-list" id="teleport-list">
+        <!-- List populated via JS -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- Info Card for Inspection -->
+  <div id="info-card" class="floating-card hidden">
+    <h4 class="info-title">Parthenon</h4>
+    <div class="info-meta">Temple · 447–432 BCE <span class="badge arch">Arch</span></div>
+    <p class="info-desc">A resplendent marble temple dedicated to the goddess Athena, sitting on the Acropolis.</p>
+    <a class="info-link" hidden rel="noopener noreferrer">View Source ➔</a>
+  </div>
+
+  <!-- FPS Counter -->
+  <div id="fps-counter" class="hidden">60 FPS</div>
+
+  <!-- Main Application Logic -->
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

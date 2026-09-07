@@ -1,0 +1,18 @@
+/* Rome 410-476 AD Specific Styling */
+@import '../../shared/css/base-theme.css';
+
+:root {
+  --panel: rgba(22, 14, 12, 0.90);
+  --gold: #d8a04e;
+  --accent: #a83232; /* Imperial Roman Crimson */
+  --edge: rgba(216, 160, 78, 0.28);
+}
+
+.hud-badge h1 {
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+.card-title {
+  color: #f5eedc;
+}

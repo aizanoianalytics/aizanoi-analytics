@@ -19,9 +19,10 @@ Browser
   |     +-- /news/index.json              static News feed
   |
   +-- Historical Worlds
-  |     +-- /historic-world/                 Aizanoi
-  |     +-- /ancient-cities/rome-410-476/   Rome
-  |     +-- /ancient-cities/athens-450-430/ Athens
+  |     +-- /worlds/aizanoi-225/       Aizanoi
+  |     +-- /worlds/rome-410-476/    Rome
+  |     +-- /worlds/athens-450-430/  Athens
+  |     +-- /worlds/iga-airport/     Istanbul Airport
   |
 Nginx -> static files only
 ```
@@ -93,7 +94,7 @@ It deterministically generates the current landing, daily edition paths, **perma
 
 ## Historical Worlds
 
-`frontend/ancient-world/engine/` owns shared traversal/input/evidence/presentation behavior. City-specific archaeology and hero decisions stay city-local.
+`frontend/worlds/shared/` owns shared traversal, collision, input, evidence UI, environment and procedural asset behavior. World-specific archaeology, source data and hero decisions stay world-local.
 
 The evidence boundary remains unchanged: documented/source-supported, archaeological/material, inferred, atmospheric and disputed where applicable. Inferred/schematic massing must never become `documented` merely because its contextual source record exists.
 

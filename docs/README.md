@@ -32,7 +32,7 @@ Current research areas include:
 - [`../research/rome_410_476/`](../research/rome_410_476/) — Late Antique Rome research and maintained research brief;
 - [`../research/athens_450_430/`](../research/athens_450_430/) — Classical Athens research and verified source material.
 
-City-facing evidence, methodology and reconstruction data also live beside the implementations under [`../frontend/ancient-cities/`](../frontend/ancient-cities/). Aizanoi remains the central reference experience under [`../frontend/historic-world/`](../frontend/historic-world/).
+World-facing runtime and evidence data live under [`../frontend/worlds/`](../frontend/worlds/); Rome and Athens research briefs remain under `../research/` as independent evidence material.
 
 ## Documentation rule
 

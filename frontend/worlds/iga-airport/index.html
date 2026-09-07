@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>İGA · Istanbul Airport — Aizanoi Analytics</title>
+  <meta name="description" content="Explore a source-led, schematic 3D interpretation of Istanbul Airport’s terminal, passenger journey, piers, apron and control tower.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#11100d">
+  <link rel="canonical" href="https://aizanoianalytics.com/worlds/iga-airport/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aizanoi Analytics">
+  <meta property="og:title" content="İGA · Istanbul Airport — Aizanoi Worlds">
+  <meta property="og:description" content="Explore a source-led, schematic 3D interpretation of Istanbul Airport’s terminal, passenger journey, piers, apron and control tower.">
+  <meta property="og:url" content="https://aizanoianalytics.com/worlds/iga-airport/">
+  <meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@AizanoiHQ">
+  <meta name="twitter:title" content="İGA · Istanbul Airport — Aizanoi Worlds">
+  <meta name="twitter:description" content="Explore a source-led, schematic 3D interpretation of Istanbul Airport’s terminal, passenger journey, piers, apron and control tower.">
+  <meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  
+  <link rel="stylesheet" href="../shared/css/base-theme.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml" />
+</head>
+<body>
+  <!-- 3D Viewport -->
+  <canvas id="viewport"></canvas>
+
+  <!-- Atmospheric Overlay -->
+  <div class="scene-tone"></div>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <h2 class="loading-title">Entering Istanbul Airport...</h2>
+      <div class="loading-progress-bar">
+        <div class="loading-progress" id="loading-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HUD Top Bar -->
+  <header class="hud-top">
+    <div class="hud-badge">
+      <h1>İGA · ISTANBUL AIRPORT</h1>
+    </div>
+    <nav class="hud-controls">
+      <a href="/worlds/" class="hud-btn world-exit" title="All Worlds" aria-label="Back to Historical Worlds">←</a>
+      <button type="button" id="btn-tour" aria-label="Start guided tour" class="hud-btn" title="Guided Tour">🏛️</button>
+      <button type="button" id="btn-teleport" aria-label="Open fast travel" class="hud-btn" title="Jump/Teleport">📍</button>
+      <button type="button" id="btn-inspect" aria-label="Inspect nearby structure" class="hud-btn" title="Inspect Element">🔍</button>
+      <button type="button" id="btn-map" aria-label="Toggle minimap" class="hud-btn" title="Toggle Minimap">🗺️</button>
+      <button type="button" id="btn-audio" aria-label="Toggle ambient audio" class="hud-btn" title="Toggle Audio">🔊</button>
+      <button type="button" id="btn-evidence" aria-label="Toggle evidence colors" class="hud-btn" title="Toggle Evidence Colors">🎨</button>
+      <button type="button" id="btn-sources" aria-label="Open sources" class="hud-btn" title="Design Sources">📚</button>
+      <button type="button" id="btn-daynight" aria-label="Toggle day and night" class="hud-btn" title="Toggle Day/Night">🌙</button>
+    </nav>
+  </header>
+
+  <!-- HUD Bottom Bar -->
+  <footer class="hud-bottom">
+    <div class="location-info">
+      <h2 id="place-name">Departures Curbside</h2>
+      <p id="place-detail">Approaching Terminal Entrance</p>
+    </div>
+  </footer>
+
+  <!-- Minimap -->
+  <div id="minimap-wrapper">
+    <div id="compass" class="compass-badge">N 0°</div>
+    <canvas id="minimap"></canvas>
+  </div>
+
+  <!-- Mobile Controls -->
+  <div id="mobile-controls">
+    <div class="touch-look-area" id="touch-look"></div>
+    <div class="touch-look-hint">Drag to Look</div>
+    <div id="movePad" class="joystick-pad">
+      <div id="moveKnob" class="joystick-knob"></div>
+    </div>
+    <div class="action-rail">
+      <button type="button" id="btn-mobile-run" aria-label="Run" class="mobile-btn">🏃</button>
+      <button type="button" id="btn-mobile-inspect" aria-label="Inspect nearby structure" class="mobile-btn">🔍</button>
+      <button type="button" id="btn-mobile-map" aria-label="Toggle minimap" class="mobile-btn">🗺️</button>
+    </div>
+  </div>
+
+  <!-- Crosshair Overlay -->
+  <div id="crosshair"></div>
+
+  <!-- Intro/Splash Modal -->
+  <div id="intro-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-content intro-content">
+      <h1 class="modal-title">İGA · ISTANBUL AIRPORT</h1>
+      <h2 class="modal-subtitle">Present-day global gateway · original interactive interpretation</h2>
+      <p class="intro-text">
+        Experience Istanbul Airport in 3D. Walk through the vast daylight check-in hall beneath vaulted geometric skylights, 
+        navigate the security and international piers, explore widebody aircraft on the apron, 
+        and admire the iconic 90-meter tulip-inspired Air Traffic Control tower.
+      </p>
+      <div class="key-facts">
+        <div class="fact"><strong>Scale:</strong> 1.4 Million m² Terminal Complex</div>
+        <div class="fact"><strong>Landmarks:</strong> Tulip ATC Tower, Check-in Islands, Piers A–F</div>
+        <div class="fact"><strong>Aviation:</strong> Apron Stands & Airliners</div>
+        <div class="fact"><strong>Sources:</strong> Nordic Architecture, İGA Official Guides</div>
+      </div>
+      <button type="button" id="btn-enter" class="btn-primary">Enter the Terminal</button>
+    </div>
+  </div>
+
+  <!-- Generic Research/Source Modal -->
+  <div id="research-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Sources and reconstruction notes">
+    <div class="modal-panel slide-up">
+      <button type="button" class="btn-close" id="btn-close-modal" aria-label="Close sources">✖</button>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Evidence Side Panel -->
+  <aside id="evidence-panel" class="side-panel hidden" aria-label="Evidence layers">
+    <div class="panel-header">
+      <h3>Design Layers</h3>
+      <button type="button" class="btn-close" id="btn-close-evidence" aria-label="Close evidence panel">✖</button>
+    </div>
+    <div class="evidence-legend">
+      <div class="legend-item"><span class="dot doc"></span> Documented / source-supported</div>
+      <div class="legend-item"><span class="dot plaus"></span> Schematic / plausible</div>
+    </div>
+    <div class="monuments-list" id="monuments-list"></div>
+  </aside>
+
+  <!-- Teleport Menu -->
+  <div id="teleport-menu" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Fast travel">
+    <div class="modal-panel">
+      <div class="panel-header">
+        <h3>Fast Travel Wayfinding</h3>
+        <button type="button" class="btn-close" id="btn-close-teleport" aria-label="Close fast travel">✖</button>
+      </div>
+      <input type="text" id="teleport-search" placeholder="Search gates and zones..." />
+      <ul class="teleport-list" id="teleport-list"></ul>
+    </div>
+  </div>
+
+  <!-- Info Card for Inspection -->
+  <div id="info-card" class="floating-card hidden">
+    <h4 class="info-title">Grand Terminal Hall</h4>
+    <div class="info-meta">Main Processor · 1.4M m² <span class="badge arch">Built asset</span></div>
+    <p class="info-desc">Vaulted geometric ceiling volume inspired by Istanbul architecture.</p>
+    <a class="info-link" hidden rel="noopener noreferrer">View Source ➔</a>
+  </div>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

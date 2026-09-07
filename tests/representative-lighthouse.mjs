@@ -16,7 +16,7 @@ const routes=[
   {id:'analytics',route:'/analytics/',profile:'static'},
   {id:'dashboard',route:'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',profile:'dashboard'},
   {id:'worlds',route:'/worlds/',profile:'static'},
-  {id:'historic',route:'/historic-world/',profile:'webgl'},
+  {id:'historic',route:'/worlds/aizanoi-225/',profile:'webgl'},
 ];
 
 const budgets={

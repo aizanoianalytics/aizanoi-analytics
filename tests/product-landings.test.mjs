@@ -113,13 +113,13 @@ test('PWA and repository discovery point to canonical static product routes', ()
   assert.match(manifest, /"name":"Analytics"/);
 });
 
-test('Rome and Athens publish canonical and social discovery metadata', () => {
-  for (const [slug, name] of [['rome-410-476', 'Rome'], ['athens-450-430', 'Athens']]) {
-    const html = read(`frontend/ancient-cities/${slug}/index.html`);
-    const url = `${origin}/ancient-cities/${slug}/`;
+test('all four Worlds publish canonical and social discovery metadata', () => {
+  for (const [slug, name] of [['aizanoi-225','Aizanoi'],['rome-410-476','Rome'],['athens-450-430','Athens'],['iga-airport','Istanbul']]) {
+    const html = read(`frontend/worlds/${slug}/index.html`);
+    const url = `${origin}/worlds/${slug}/`;
     assert.match(html, new RegExp(`<link rel="canonical" href="${url}">`));
     assert.match(html, new RegExp(`<meta property="og:url" content="${url}">`));
-    assert.match(html, new RegExp(`<meta property="og:title" content="[^"]*${name}`));
+    assert.match(html, new RegExp(`<meta property="og:title" content="[^"]*${name}`, 'i'));
     assert.match(html, /<meta name="twitter:card" content="summary_large_image">/);
     assert.match(html, /<meta name="twitter:title"/);
   }
