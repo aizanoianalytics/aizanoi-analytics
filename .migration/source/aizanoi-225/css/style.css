@@ -1,0 +1,13 @@
+/* Aizanoi AD 225 Specific Styling */
+@import '../../shared/css/base-theme.css';
+
+:root {
+  --panel: rgba(16, 20, 18, 0.90);
+  --gold: #d4a84e;
+  --accent: #3e706c; /* Phrygian Turquoise / Penkalas River Teal */
+  --edge: rgba(212, 168, 78, 0.28);
+}
+
+.hud-badge h1 {
+  color: var(--gold);
+}
