@@ -36,6 +36,7 @@ test('HR public dashboard decoration is deterministic and catalog-backed', () =>
   assert.equal((first.match(/AIZANOI_PUBLIC_BAR_START/g) || []).length, 1);
   assert.equal((first.match(/target="_top"/g) || []).length, 2);
   assert.equal((first.match(/name="description"/g) || []).length, 1);
+  assert.equal((first.match(/name="twitter:site" content="@AizanoiHQ"/g) || []).length, 1);
   assert.equal((first.match(/rel="canonical"/g) || []).length, 1);
 });
 

@@ -5,10 +5,13 @@ const DESKTOP=Object.freeze([...PINNED,'browser','notepad','web-editor','calcula
 const PUBLIC_APPS=Object.freeze(APPS.map((app)=>app.id));
 const PHONE_DOCK=Object.freeze(['news','videos','analytics','worlds']);
 const PLATFORM_STYLE_HREF='/styles/shell.css';
+const AIZO_X_URL='https://x.com/AizanoiHQ';
+const PUBLIC_EMAIL='aizanoianalytics@protonmail.com';
 const esc=(value)=>String(value??'').replace(/[&<>"']/g,(char)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 
 function ensurePlatformStyles(){
-  if(document.querySelector('link[data-az-platform-polish]'))return;
+  const existing=document.querySelector(`link[href="${PLATFORM_STYLE_HREF}"],link[data-az-platform-polish]`);
+  if(existing){existing.dataset.azPlatformPolish='true';return;}
   const link=document.createElement('link');
   link.rel='stylesheet';
   link.href=PLATFORM_STYLE_HREF;
@@ -39,6 +42,18 @@ function dateParts(){
     full:now.toLocaleDateString('en-GB', {weekday:'long',year:'numeric',month:'long',day:'numeric'})
   };
 }
+function renderAizoCard(className){
+  return `<aside class="az-aizo-card ${esc(className)}" aria-label="Aizo social and Aizanoi Analytics contact">
+    <span class="az-aizo-kicker">AIZO / ONLINE</span>
+    <h2>Aizo is on X. Unfortunately.</h2>
+    <p>AI, data, cinema, football, markets, experiments, and questionable opinions from a small piece of ancient marble.</p>
+    <div class="az-aizo-actions">
+      <a class="az-aizo-action az-aizo-action-primary" href="${AIZO_X_URL}" target="_blank" rel="noopener noreferrer">Follow @AizanoiHQ ↗</a>
+      <a class="az-aizo-action" href="mailto:${PUBLIC_EMAIL}">Contact Aizanoi Analytics ↗</a>
+    </div>
+    <a class="az-aizo-email" href="mailto:${PUBLIC_EMAIL}">${PUBLIC_EMAIL}</a>
+  </aside>`;
+}
 
 function renderPhoneHome(){
   const date=dateParts();
@@ -58,6 +73,7 @@ function renderPhoneHome(){
         <div><span class="az-device-kicker">AIZANOI NEWS</span><h2>Briefings with sources</h2><p>AI, Technology, Economy / Markets and Football in one concise edition.</p></div>
         <button class="az-device-widget-action" type="button" data-app="news">Read</button>
       </article>
+      ${renderAizoCard('az-phone-aizo-card')}
     </div>
     <section class="az-phone-apps" aria-label="Aizanoi Analytics apps">
       ${PUBLIC_APPS.map((id)=>deviceAppButton(id,'az-phone-app')).join('')}
@@ -79,6 +95,7 @@ function renderTabletHome(){
           <button class="az-button" type="button" data-shell-action="search">Search</button>
         </div>
       </div>
+      ${renderAizoCard('az-tablet-aizo-card')}
     </aside>
     <section class="az-tablet-main" aria-label="Aizanoi Analytics tablet applications">
       <header class="az-tablet-section-head">
@@ -106,6 +123,7 @@ function rewriteDesktop(){
   const desktop=document.querySelector('.az-desktop');if(!desktop)return;
   desktop.innerHTML=`<div class="az-desktop-signature" aria-hidden="true"><strong>AizanoiOS</strong><span>Aizanoi Analytics · media · data · software · worlds</span></div>
     <section class="az-desktop-shortcuts" aria-label="Aizanoi Analytics shortcuts">${DESKTOP.map((id)=>appButton(id)).join('')}</section>
+    ${renderAizoCard('az-desktop-aizo-card')}
     ${renderPhoneHome()}
     ${renderTabletHome()}`;
 }

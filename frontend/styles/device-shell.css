@@ -91,7 +91,9 @@
     .az-desktop-signature,
     .az-desktop-shortcuts,
     .az-session-widget,
+    .az-desktop-aizo-card,
     .az-phone-home { display:none; }
+    .az-tablet-home .az-tablet-aizo-card { position:static;width:100%;display:block; }
 
     .az-tablet-home {
       width:min(1180px,100%);
@@ -287,7 +289,11 @@
     .az-desktop-signature,
     .az-desktop-shortcuts,
     .az-session-widget,
+    .az-desktop-aizo-card,
     .az-tablet-home { display:none; }
+    .az-phone-home .az-phone-aizo-card { position:static;width:auto;display:flex;grid-column:1/-1;flex-direction:column; }
+    .az-phone-aizo-card .az-aizo-actions { display:grid; }
+    .az-phone-aizo-card .az-aizo-action { width:100%; }
 
     .az-phone-home {
       min-height:100%;

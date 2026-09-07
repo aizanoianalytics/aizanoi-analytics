@@ -47,6 +47,7 @@ function stripOwnedMetadata(html) {
     /<meta\b(?=[^>]*\bproperty\s*=\s*["']og:url["'])[^>]*>\s*/gi,
     /<meta\b(?=[^>]*\bproperty\s*=\s*["']og:type["'])[^>]*>\s*/gi,
     /<meta\b(?=[^>]*\bproperty\s*=\s*["']og:site_name["'])[^>]*>\s*/gi,
+    /<meta\b(?=[^>]*\bname\s*=\s*["']twitter:site["'])[^>]*>\s*/gi,
   ];
   return patterns.reduce((result, pattern) => result.replace(pattern, ''), html);
 }
@@ -79,6 +80,7 @@ function metadataBlock(dashboard) {
 <meta property="og:title" content="${escapeHtml(title)}">
 <meta property="og:description" content="${escapeHtml(description)}">
 <meta property="og:url" content="${escapeHtml(canonical)}">
+<meta name="twitter:site" content="@AizanoiHQ">
 <style data-aizanoi-public-dashboard-style>
   .aizanoi-public-dashboard-bar{box-sizing:border-box;width:100%;min-height:38px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:7px 12px;border-bottom:1px solid rgba(148,163,184,.28);background:#111827;color:#e5e7eb;font:600 12px/1.35 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.01em}
   .aizanoi-public-dashboard-bar a{min-height:24px;display:inline-flex;align-items:center;color:#f8fafc;text-decoration:none}
