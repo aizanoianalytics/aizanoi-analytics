@@ -85,6 +85,19 @@ test('build emits deterministic edition, permanent article, methodology, categor
   assert.equal(feed.items[0].corrections[0].note, fixture.corrections[0].note);
 
   assert.match(before['frontend/news/index.html'], /The Daily Edition/);
+  for (const file of [
+    'frontend/news/index.html',
+    'frontend/news/2026-08-22/index.html',
+    'frontend/news/2026-08-22/model-release/index.html',
+    'frontend/news/about/index.html',
+    'frontend/news/category/ai/index.html'
+  ]) {
+    assert.match(before[file], /<meta name="twitter:site" content="@AizanoiHQ">/, `${file} needs twitter:site`);
+    assert.match(before[file], /<a href="https:\/\/x\.com\/AizanoiHQ" target="_blank" rel="noopener noreferrer">X — @AizanoiHQ<\/a>/, `${file} needs safe X discovery`);
+    assert.match(before[file], /<a href="https:\/\/github\.com\/aizanoianalytics\/aizanoi-analytics" target="_blank" rel="noopener noreferrer">GitHub<\/a>/, `${file} needs safe GitHub discovery`);
+    assert.match(before[file], /<a href="mailto:aizanoianalytics@protonmail\.com">Email<\/a>/, `${file} needs public email discovery`);
+    assert.doesNotMatch(before[file], /aizanoianalytics@gmail\.com/i);
+  }
   assert.match(before['frontend/news/index.html'], /href="\/news\/2026-08-22\/model-release\/"/);
   assert.match(before['frontend/news/index.html'], /AI-assisted production is disclosed/);
   assert.match(before['frontend/news/2026-08-22/index.html'], /rel="canonical" href="https:\/\/aizanoianalytics\.com\/news\/2026-08-22\/"/);
