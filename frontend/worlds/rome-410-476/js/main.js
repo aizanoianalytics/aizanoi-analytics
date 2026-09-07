@@ -153,7 +153,10 @@ async function init() {
   tour = new TourSystem(TOUR_STOPS, controls, ui);
 
   // 14. Cinematic Intro (High Colosseum view down to Forum)
-  intro = new IntroSequence(camera, scene, controls);
+  intro = new IntroSequence(camera, scene, controls, {
+    heading:  CITY.title,
+    subtitle: 'Late Antique Capital · Sack, Survival, Transformation',
+  });
   intro.curve = new THREE.CatmullRomCurve3([
     new THREE.Vector3(52, 220, -65),    // Over Colosseum
     new THREE.Vector3(-60, 110, 35),    // Over Basilica of Maxentius

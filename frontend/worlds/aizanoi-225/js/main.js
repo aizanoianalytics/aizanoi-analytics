@@ -150,7 +150,10 @@ async function init() {
   tour = new TourSystem(TOUR_STOPS, controls, ui);
 
   // 15. Cinematic Intro
-  intro = new IntroSequence(camera, scene, controls);
+  intro = new IntroSequence(camera, scene, controls, {
+    heading:  CITY.title,
+    subtitle: 'Phrygia Epiktetos · Temple of Zeus · Roman Imperial',
+  });
   intro.curve = new THREE.CatmullRomCurve3([
     new THREE.Vector3(-160, 180, 20),   // High above Temple of Zeus
     new THREE.Vector3(-65, 80, -35),    // Agora & Propylon

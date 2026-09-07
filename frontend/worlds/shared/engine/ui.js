@@ -1,6 +1,6 @@
 /**
  * ui.js — Comprehensive HUD, Minimap, Evidence Lens, Teleport Menu, & Source Dialogs
- * Athens 450-430 BCE · AAA Rebuild
+ * Aizanoi Analytics unified worlds runtime (originally Athens 450-430 BCE reference implementation)
  */
 
 export class UISystem {

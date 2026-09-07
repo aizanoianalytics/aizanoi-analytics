@@ -1,6 +1,6 @@
 /**
  * environment.js — Sky, Atmosphere, Lighting & Day/Night Cycle
- * Athens 450-430 BCE · AAA Rebuild
+ * Aizanoi Analytics unified worlds runtime (originally Athens 450-430 BCE reference implementation)
  *
  * Provides:
  *  - Procedural sky dome with gradient, sun disc, and FBM clouds
