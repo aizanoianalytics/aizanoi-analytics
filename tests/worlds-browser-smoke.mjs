@@ -14,7 +14,7 @@ async function enter(page,spec){await page.locator('#btn-enter').click();await p
 for(const spec of worlds){
   const context=await browser.newContext({viewport:{width:1280,height:800},serviceWorkers:'block'});const opened=await open(context,spec);const page=opened.page;
   await enter(page,spec);
-  const before=await position(page);await page.keyboard.down('w');await page.waitForTimeout(450);await page.keyboard.up('w');await page.waitForTimeout(80);const after=await position(page);const d=Math.hypot(after.x-before.x,after.z-before.z);assert.ok(d>0.05&&d<20,`${spec.id}: WASD movement unstable (${d})`);
+  const before=await position(page);await page.keyboard.down('w');assert.equal(await page.evaluate(()=>window.__WORLD_DEBUG__.step(0.25)),true,`${spec.id}: deterministic movement step unavailable`);await page.keyboard.up('w');const after=await position(page);const d=Math.hypot(after.x-before.x,after.z-before.z);assert.ok(d>0.05&&d<20,`${spec.id}: WASD movement unstable (${d})`);
   assert.equal(await page.evaluate((id)=>window.__WORLD_DEBUG__.teleport(id),spec.hero),true,`${spec.id}: hero teleport failed`);
   assert.equal(await page.evaluate(()=>window.__WORLD_DEBUG__.toggleEvidence()),true,`${spec.id}: evidence did not enable`);assert.equal(await page.evaluate(()=>window.__WORLD_DEBUG__.toggleEvidence()),false,`${spec.id}: evidence did not disable`);
   assert.deepEqual(opened.errors,[],`${spec.id}: browser errors: ${opened.errors.join(' | ')}`);await context.close();
