@@ -8,9 +8,25 @@ const worlds=[
   {id:'iga',path:'/worlds/iga-airport/',hero:'tower'},
 ];
 const browser=await chromium.launch({headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-gpu-sandbox']});
-async function open(context,spec){const page=await context.newPage();const errors=[];page.on('pageerror',(e)=>errors.push(String(e)));page.on('console',(m)=>{if(m.type()==='error')errors.push(m.text());});const response=await page.goto(`${base}${spec.path}`,{waitUntil:'networkidle'});assert.ok(response?.ok(),`${spec.id}: HTTP ${response?.status()}`);await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready,null,{timeout:20000});await page.waitForFunction(()=>document.documentElement.dataset.worldReady==='true');assert.equal(await page.locator('canvas#viewport').count(),1,`${spec.id}: WebGL canvas missing`);return{page,errors};}
+async function open(context,spec){
+  const page=await context.newPage();const errors=[];
+  page.on('pageerror',(e)=>errors.push(String(e)));
+  page.on('console',(m)=>{if(m.type()==='error')errors.push(m.text());});
+  const response=await page.goto(`${base}${spec.path}`,{waitUntil:'networkidle'});
+  assert.ok(response?.ok(),`${spec.id}: HTTP ${response?.status()}`);
+  await page.waitForFunction(()=>window.__WORLD_BOOTSTRAP__?.ready===true||window.__WORLD_DEBUG__?.ready===true,null,{timeout:20000});
+  assert.equal(await page.locator('canvas#viewport').count(),1,`${spec.id}: WebGL canvas missing`);
+  return{page,errors};
+}
 async function position(page){return page.evaluate(()=>window.__WORLD_DEBUG__.player);}
-async function enter(page,spec){await page.locator('#btn-enter').click();await page.keyboard.press('Escape');await page.waitForFunction(()=>window.__WORLD_DEBUG__?.player?.controlsEnabled===true,null,{timeout:5000});assert.ok(await page.locator('.hud-top').count(),`${spec.id}: HUD missing`);}
+async function enter(page,spec){
+  await page.locator('#btn-enter').click();
+  await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:30000});
+  await page.waitForFunction(()=>document.documentElement.dataset.worldReady==='true',null,{timeout:30000});
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(()=>window.__WORLD_DEBUG__?.player?.controlsEnabled===true,null,{timeout:5000});
+  assert.ok(await page.locator('.hud-top').count(),`${spec.id}: HUD missing`);
+}
 for(const spec of worlds){
   const context=await browser.newContext({viewport:{width:1280,height:800},serviceWorkers:'block'});const opened=await open(context,spec);const page=opened.page;
   await enter(page,spec);
