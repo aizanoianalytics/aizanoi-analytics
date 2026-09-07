@@ -71,7 +71,7 @@ jobs:
               path.write_text(text)
           PY
 
-          rm -rf .migration .vendor-cache .worlds-migration .github/workflows/vendor-worlds-temp.yml
+          rm -rf .migration .vendor-cache .worlds-migration
 
       - name: Validate migrated source contracts
         run: |
@@ -85,6 +85,10 @@ jobs:
       - name: Commit migration
         run: |
           set -euo pipefail
+          # The Actions token intentionally has no workflows permission. Keep every
+          # workflow byte-identical in this bot push; workflow changes are committed
+          # separately through the authenticated GitHub connector after migration.
+          git checkout HEAD -- .github/workflows
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
