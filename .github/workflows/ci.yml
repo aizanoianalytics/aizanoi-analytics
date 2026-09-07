@@ -162,7 +162,10 @@ jobs:
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
           set -o pipefail
-          node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-visual-capture.log
+          status=0
+          node tests/historical-worlds-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/historical-worlds-visual-capture.log || status=1
+          node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-visual-capture.log || status=1
+          exit $status
       - name: Upload visual regression review
         if: success()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
