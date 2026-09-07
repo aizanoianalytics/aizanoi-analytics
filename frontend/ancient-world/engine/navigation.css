@@ -1,9 +1,0 @@
-/* Historical Worlds shared navigation chrome (back to AizanoiOS button).
-   Replaces the previous runtime `<style>.textContent = ...` injection that
-   violated `style-src 'self' 'unsafe-inline'`. Same-origin stylesheet — allowed. */
-
-#ancient-world-back-to-os{position:fixed;z-index:2147483000;top:max(68px,calc(env(safe-area-inset-top) + 58px));left:max(12px,env(safe-area-inset-left));display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid rgba(236,203,145,.32);border-radius:9px;background:linear-gradient(180deg,rgba(28,24,18,.90),rgba(12,11,9,.90));color:#f2dfbd;text-decoration:none;font:800 10px/1.1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.055em;box-shadow:0 8px 28px rgba(0,0,0,.30);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);touch-action:manipulation;user-select:none;cursor:pointer}
-#ancient-world-back-to-os:hover{border-color:rgba(240,195,111,.70);transform:translateY(-1px)}
-#ancient-world-back-to-os:focus-visible{outline:2px solid #f0c77f;outline-offset:3px}
-@media(max-width:720px),(pointer:coarse){#ancient-world-back-to-os{top:max(8px,env(safe-area-inset-top));left:max(8px,env(safe-area-inset-left));padding:8px 9px;font-size:9px;opacity:.94}}
-@media(prefers-reduced-motion:reduce){#ancient-world-back-to-os{transition:none!important}#ancient-world-back-to-os:hover{transform:none}}

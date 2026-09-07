@@ -106,8 +106,8 @@ test('cache locations preserve security headers and revalidate mutable unversion
   assert.match(nginx,/location \^~ \/styles\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/js\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/web-editor-preview\/[\s\S]*expires -1;/);
-  assert.match(nginx,/location \^~ \/historic-world\/[\s\S]*expires -1;/);
-  assert.match(nginx,/location \^~ \/ancient-cities\/[\s\S]*expires -1;/);
+  assert.match(nginx,/location \^~ \/worlds\/aizanoi-225\/[\s\S]*expires -1;/);
+  assert.match(nginx,/location \^~ \/worlds\/rome-410-476\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/assets\/[\s\S]*expires 7d;/);
   assert.match(staticHeaders,/X-Content-Type-Options/);
   assert.match(staticHeaders,/Content-Security-Policy/);

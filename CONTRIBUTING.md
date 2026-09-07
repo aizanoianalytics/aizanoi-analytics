@@ -22,7 +22,7 @@ AizanoiOS has one public catalog. Test desktop windows, tablet focus behavior, m
 
 ### Extend shared world systems
 
-Reusable movement, lifecycle, input, evidence, rendering, adaptive-performance and landmark behavior belongs in `frontend/ancient-world/engine/`. City-local data and research belong under `frontend/ancient-cities/<city>/` and `research/`.
+Reusable movement, collision, input, evidence UI, environment and procedural asset behavior belongs in `frontend/worlds/shared/`. World-local data and research stay with the world package and under `research/` where maintained.
 
 ### Keep retired scope retired
 
@@ -54,7 +54,7 @@ Interactive behavior requires the matching Chromium test, not only source-patter
 
 ## Historical-world contributions
 
-Start a city from `frontend/ancient-cities/_template/` and consume contracts documented in `frontend/ancient-world/engine/README.md`. Keep source data, inferred fabric and runtime implementation distinguishable. Preserve deep links, evidence/source UI, movement and mobile controls.
+Start from the contracts in `frontend/worlds/README.md` and the nearest `frontend/worlds/AGENTS.md`. Keep source data, inferred fabric and runtime implementation distinguishable; never copy the shared engine into a world-local folder.
 
 ## AizanoiOS contributions
 

@@ -1,0 +1,2 @@
+# Vendored upstream builds are byte-preserved and are not subject to authored-source whitespace rules.
+frontend/worlds/shared/vendor/*.js -whitespace

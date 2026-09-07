@@ -2,22 +2,22 @@ import { enabledModuleById } from './module-registry.generated.js';
 
 export const WORLDS = Object.freeze([
   {
-    id:'aizanoi', label:'Aizanoi', era:'Roman Phrygia · c. AD 2nd–3rd century', route:'/historic-world/',
+    id:'aizanoi', label:'Aizanoi', era:'Roman Phrygia · AD 225', route:'/worlds/aizanoi-225/',
     summary:'Temple of Zeus, theatre–stadium, Penkalas riverfront and a source-led reconstruction of the ancient city.',
     duration:'10 min guided survey', evidence:'Documented + archaeological + inferred', accent:'brass'
   },
   {
-    id:'rome', label:'Rome', era:'Late Antiquity · AD 410–476', route:'/ancient-cities/rome-410-476/',
+    id:'rome', label:'Rome', era:'Late Antiquity · AD 410–476', route:'/worlds/rome-410-476/',
     summary:'Walk a transformed imperial capital from the Forum and Colosseum to churches, baths and dense late-antique districts.',
     duration:'Free explore', evidence:'Source-led + explicitly inferred fabric', accent:'rust'
   },
   {
-    id:'iga', label:'İGA · Istanbul Airport', era:'Present day · global gateway', route:'/iga/',
+    id:'iga', label:'İGA · Istanbul Airport', era:'Present day · global gateway', route:'/worlds/iga-airport/',
     summary:'Walk an original, source-led interpretation of the terminal hall, passenger journey, piers and apron of Istanbul Airport.',
     duration:'12 min terminal exploration', evidence:'Public architecture + passenger-guide sources', accent:'sky'
   },
   {
-    id:'athens', label:'Athens', era:'Classical period · c. 432–430 BCE', route:'/ancient-cities/athens-450-430/',
+    id:'athens', label:'Athens', era:'Classical period · c. 432–430 BCE', route:'/worlds/athens-450-430/',
     summary:'Move between the Acropolis, Agora, Pnyx and civic landscape with reconstruction confidence kept visible.',
     duration:'Free explore', evidence:'Source-led + explicitly inferred fabric', accent:'teal'
   }
@@ -27,7 +27,7 @@ const APP_DEFINITIONS = Object.freeze([
   { id:'news', label:'Aizanoi News', short:'News', group:'media', icon:'/assets/icons/aizanoi-news.svg', moduleId:'news', description:'Original source-linked daily briefings across AI, Technology, Economy / Markets and Football', keywords:['news','daily','ai','technology','markets','economy','football','sources'] },
   { id:'videos', label:'Aizanoi TV', short:'TV', group:'media', icon:'/assets/icons/aizanoi-tv.svg', moduleId:'videos', description:'The English-language Aizanoi channel for AI, technology, markets, cinema, football and conversations', keywords:['video','youtube','ai','technology','markets','cinema','football','conversation'] },
   { id:'analytics', label:'Analytics', short:'Analytics', group:'studio', icon:'/assets/icons/aizanoi-dashboards.svg', moduleId:'analytics', description:'Public dashboards, data products, model comparisons and analytical utilities by Aizanoi Analytics', keywords:['analytics','dashboard','dashboards','data','markets','models','tools','aizanoi analytics'] },
-  { id:'worlds', label:'Historical Worlds', short:'Worlds', group:'explore', icon:'/assets/icons/aizanoi-worlds.svg', moduleId:'worlds', description:'Evidence-aware walkable Aizanoi, Rome and Athens', keywords:['worlds','aizanoi','rome','athens','history','archaeology'] },
+  { id:'worlds', label:'Historical Worlds', short:'Worlds', group:'explore', icon:'/assets/icons/aizanoi-worlds.svg', moduleId:'worlds', description:'Evidence-aware walkable Aizanoi, Rome, Athens and a source-led Istanbul Airport companion', keywords:['worlds','aizanoi','rome','athens','iga','istanbul airport','history','archaeology','webgl'] },
   { id:'forge', label:'Aizanoi Forge', short:'Forge', group:'studio', icon:'/assets/icons/aizanoi-forge.svg', moduleId:'forge', description:'Source, builds and open projects with GitHub as the canonical source of truth', keywords:['forge','source','github','code','open source','builds','projects'] },
   { id:'journal', label:'Aizanoi Journal', short:'Journal', group:'media', icon:'/assets/icons/aizanoi-journal.svg', moduleId:'journal', description:'Analysis, essays, commentary and long-form research', keywords:['journal','analysis','essay','commentary','research','opinion'] },
   { id:'labs', label:'Aizanoi Labs', short:'Labs', group:'explore', icon:'/assets/icons/aizanoi-labs.svg', moduleId:'labs', description:'Experimental, prototype and archived technical ideas', keywords:['labs','experiment','prototype','webgl','webgpu','creative coding'] },

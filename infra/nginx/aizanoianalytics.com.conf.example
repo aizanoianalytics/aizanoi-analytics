@@ -58,12 +58,24 @@ server {
     # route-scoped policy as the HR Full Set; the rest of the site stays strict.
     location ^~ /analytics/dashboards/new-hr-collection/ { include snippets/aizanoi-hr-analytics-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
 
-    location = /historic-world { return 301 /historic-world/; }
-    location = /historic-world/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files /historic-world/index.html =404; expires -1; }
-    location ^~ /historic-world/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri =404; expires -1; }
-    location = /ancient-cities/rome-410-476 { return 301 /ancient-cities/rome-410-476/; }
-    location = /ancient-cities/athens-450-430 { return 301 /ancient-cities/athens-450-430/; }
-    location ^~ /ancient-cities/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
+    location = /worlds { return 301 /worlds/; }
+    location = /worlds/ { try_files /worlds/index.html =404; expires -1; }
+    location ^~ /worlds/shared/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri =404; expires 7d; }
+    location ^~ /worlds/aizanoi-225/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
+    location ^~ /worlds/rome-410-476/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
+    location ^~ /worlds/athens-450-430/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
+    location ^~ /worlds/iga-airport/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
+
+    location = /historic-world { return 301 /worlds/aizanoi-225/; }
+    location ^~ /historic-world/ { return 301 /worlds/aizanoi-225/; }
+    location = /ancient-cities { return 301 /worlds/; }
+    location = /ancient-cities/ { return 301 /worlds/; }
+    location = /ancient-cities/rome-410-476 { return 301 /worlds/rome-410-476/; }
+    location ^~ /ancient-cities/rome-410-476/ { return 301 /worlds/rome-410-476/; }
+    location = /ancient-cities/athens-450-430 { return 301 /worlds/athens-450-430/; }
+    location ^~ /ancient-cities/athens-450-430/ { return 301 /worlds/athens-450-430/; }
+    location = /iga { return 301 /worlds/iga-airport/; }
+    location ^~ /iga/ { return 301 /worlds/iga-airport/; }
 
     location / { try_files $uri $uri/ =404; }
 }

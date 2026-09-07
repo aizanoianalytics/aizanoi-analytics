@@ -39,9 +39,10 @@ Browser
    |     +-- adaptive desktop/tablet/mobile shell
    |
    +-- Historical Worlds
-   |     +-- Aizanoi
-   |     +-- Rome
-   |     +-- Athens
+   |     +-- Aizanoi · AD 225
+   |     +-- Rome · AD 410–476
+   |     +-- Athens · 450–430 BCE
+   |     +-- İGA · Istanbul Airport
    |
 Nginx -> static HTML/CSS/JS/JSON/assets
 ```
@@ -96,7 +97,7 @@ Primary public language is English.
 
 ## Historical Worlds
 
-Historical evidence rules are unchanged. `frontend/ancient-world/engine/` owns shared behavior; city-local data and evidence claims stay city-local.
+Historical evidence rules are unchanged. `frontend/worlds/shared/` owns shared behavior; world-local data and evidence claims stay world-local.
 
 Never present plausible, inferred or atmospheric reconstruction as verified fact.
 

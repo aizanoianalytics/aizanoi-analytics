@@ -22,7 +22,7 @@ const store = read('frontend/js/v3/store.js');
 const registrySource = read('frontend/js/v3/registry.js');
 const manifest = read('frontend/manifest.webmanifest');
 const sw = read('frontend/service-worker.js');
-const worldBridge = read('frontend/ancient-world/engine/city-experience.js');
+const worldsIndex = read('frontend/worlds/index.html');
 const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
 const product = read('PRODUCT.md');
 const contentPolicy = read('CONTENT_POLICY.md');
@@ -213,9 +213,7 @@ assert.match(sw, /networkFirstStatic/, 'mutable static assets must prefer the re
 assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/, 'service worker must explicitly ignore API routes');
 assert.doesNotMatch(sw, /os-(?:platform|unified|product-polish|v2)\.js/);
 
-assert.match(worldBridge, /aizanoi-field-session-v1/);
-assert.match(worldBridge, /aw-field-system-return/);
-assert.match(worldBridge, /location\.href='\/\?app=worlds&from=historical-world'/);
+for (const route of ['/worlds/aizanoi-225/','/worlds/rome-410-476/','/worlds/athens-450-430/','/worlds/iga-airport/']) assert.match(worldsIndex, new RegExp(route.replaceAll('/', '\/')));
 assert.match(nginx, /location = \/api\/chat[\s\S]*return 410;/);
 assert.match(nginx, /location \^~ \/api\/[\s\S]*return 404;/);
 assert.doesNotMatch(nginx, /proxy_pass|127\.0\.0\.1:3001/);

@@ -1,0 +1,26 @@
+/* İGA Istanbul Airport Specific Styling */
+@import '../../shared/css/base-theme.css';
+
+:root {
+  --panel: rgba(14, 18, 24, 0.92);
+  --gold: #00b4d8; /* Modern Aviation Cyan */
+  --accent: #0077b6;
+  --edge: rgba(0, 180, 216, 0.35);
+  --text: #eef2f6;
+  --marble: #ffffff;
+}
+
+.hud-badge h1 {
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+
+.btn-primary {
+  background: #00b4d8 !important;
+  color: #0b131f !important;
+  border-color: #00b4d8 !important;
+}
+
+.btn-primary:hover {
+  background: #90e0ef !important;
+}

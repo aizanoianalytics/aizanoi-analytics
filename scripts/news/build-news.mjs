@@ -42,9 +42,10 @@ const staticSitemapEntries = Object.freeze([
   ['/journal/', '2026-08-24'],
   ['/labs/', '2026-08-24'],
   ['/arcade/', '2026-08-24'],
-  ['/historic-world/', '2026-08-23'],
-  ['/ancient-cities/rome-410-476/', '2026-08-23'],
-  ['/ancient-cities/athens-450-430/', '2026-08-23']
+  ['/worlds/aizanoi-225/', '2026-09-07'],
+  ['/worlds/rome-410-476/', '2026-09-07'],
+  ['/worlds/athens-450-430/', '2026-09-07'],
+  ['/worlds/iga-airport/', '2026-09-07']
 ]);
 
 function fail(file, message) { throw new Error(`${file}: ${message}`); }

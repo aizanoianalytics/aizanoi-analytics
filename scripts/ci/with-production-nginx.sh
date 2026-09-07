@@ -47,18 +47,37 @@ http {
       try_files \$uri \$uri/ =404;
     }
 
-    location = /historic-world/ {
-      include ${root}/infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example;
-      try_files /historic-world/index.html =404;
-    }
-    location ^~ /historic-world/ {
+    location = /worlds/ { try_files /worlds/index.html =404; }
+    location ^~ /worlds/shared/ {
       include ${root}/infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example;
       try_files \$uri =404;
     }
-    location ^~ /ancient-cities/ {
+    location ^~ /worlds/aizanoi-225/ {
       include ${root}/infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example;
       try_files \$uri \$uri/ =404;
     }
+    location ^~ /worlds/rome-410-476/ {
+      include ${root}/infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example;
+      try_files \$uri \$uri/ =404;
+    }
+    location ^~ /worlds/athens-450-430/ {
+      include ${root}/infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example;
+      try_files \$uri \$uri/ =404;
+    }
+    location ^~ /worlds/iga-airport/ {
+      include ${root}/infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example;
+      try_files \$uri \$uri/ =404;
+    }
+    location = /historic-world { return 301 /worlds/aizanoi-225/; }
+    location ^~ /historic-world/ { return 301 /worlds/aizanoi-225/; }
+    location = /ancient-cities { return 301 /worlds/; }
+    location = /ancient-cities/ { return 301 /worlds/; }
+    location = /ancient-cities/rome-410-476 { return 301 /worlds/rome-410-476/; }
+    location ^~ /ancient-cities/rome-410-476/ { return 301 /worlds/rome-410-476/; }
+    location = /ancient-cities/athens-450-430 { return 301 /worlds/athens-450-430/; }
+    location ^~ /ancient-cities/athens-450-430/ { return 301 /worlds/athens-450-430/; }
+    location = /iga { return 301 /worlds/iga-airport/; }
+    location ^~ /iga/ { return 301 /worlds/iga-airport/; }
 
     location / { try_files \$uri \$uri/ =404; }
   }

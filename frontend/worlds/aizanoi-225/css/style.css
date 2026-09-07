@@ -1,0 +1,23 @@
+/* Aizanoi AD 225 Specific Styling */
+
+:root {
+  --panel: rgba(16, 20, 18, 0.90);
+  --gold: #d4a84e;
+  --accent: #3e706c; /* Phrygian Turquoise / Penkalas River Teal */
+  --edge: rgba(212, 168, 78, 0.28);
+}
+
+/* Keep the source-led entry card instant; mount the heavy WebGL runtime only after Enter. */
+body.pre-entry #loading-screen,
+body.pre-entry .hud-top,
+body.pre-entry .hud-bottom,
+body.pre-entry #minimap-wrapper,
+body.pre-entry #mobile-controls,
+body.pre-entry #crosshair,
+body.pre-entry .scene-tone {
+  display: none;
+}
+
+.hud-badge h1 {
+  color: var(--gold);
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Aizanoi · AD 225 — Aizanoi Analytics</title>
+  <meta name="description" content="Explore a source-led, evidence-aware 3D reconstruction of Roman Aizanoi in Phrygia around AD 225.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#11100d">
+  <link rel="canonical" href="https://aizanoianalytics.com/worlds/aizanoi-225/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aizanoi Analytics">
+  <meta property="og:title" content="Aizanoi · AD 225 — Historical Worlds">
+  <meta property="og:description" content="Explore a source-led, evidence-aware 3D reconstruction of Roman Aizanoi in Phrygia around AD 225.">
+  <meta property="og:url" content="https://aizanoianalytics.com/worlds/aizanoi-225/">
+  <meta property="og:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@AizanoiHQ">
+  <meta name="twitter:title" content="Aizanoi · AD 225 — Historical Worlds">
+  <meta name="twitter:description" content="Explore a source-led, evidence-aware 3D reconstruction of Roman Aizanoi in Phrygia around AD 225.">
+  <meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+
+  <link rel="stylesheet" href="../shared/css/base-theme.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml" />
+</head>
+<body class="pre-entry">
+  <!-- 3D Viewport -->
+  <canvas id="viewport"></canvas>
+
+  <!-- Atmospheric Overlay -->
+  <div class="scene-tone"></div>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <h2 class="loading-title">Entering Roman Aizanoi...</h2>
+      <div class="loading-progress-bar">
+        <div class="loading-progress" id="loading-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HUD Top Bar -->
+  <header class="hud-top">
+    <div class="hud-badge">
+      <h1>AIZANOI · AD 225</h1>
+    </div>
+    <nav class="hud-controls">
+      <a href="/worlds/" class="hud-btn world-exit" title="All Worlds" aria-label="Back to Historical Worlds">←</a>
+      <button type="button" id="btn-tour" aria-label="Start guided tour" class="hud-btn" title="Guided Tour">🏛️</button>
+      <button type="button" id="btn-teleport" aria-label="Open fast travel" class="hud-btn" title="Jump/Teleport">📍</button>
+      <button type="button" id="btn-inspect" aria-label="Inspect nearby structure" class="hud-btn" title="Inspect Element">🔍</button>
+      <button type="button" id="btn-map" aria-label="Toggle minimap" class="hud-btn" title="Toggle Minimap">🗺️</button>
+      <button type="button" id="btn-audio" aria-label="Toggle ambient audio" class="hud-btn" title="Toggle Audio">🔊</button>
+      <button type="button" id="btn-evidence" aria-label="Toggle evidence colors" class="hud-btn" title="Toggle Evidence Colors">🎨</button>
+      <button type="button" id="btn-sources" aria-label="Open sources" class="hud-btn" title="Historical Sources">📚</button>
+      <button type="button" id="btn-daynight" aria-label="Toggle day and night" class="hud-btn" title="Toggle Day/Night">🌙</button>
+    </nav>
+  </header>
+
+  <!-- HUD Bottom Bar -->
+  <footer class="hud-bottom">
+    <div class="location-info">
+      <h2 id="place-name">Zeus Sanctuary</h2>
+      <p id="place-detail">Approaching Temple of Zeus</p>
+    </div>
+  </footer>
+
+  <!-- Minimap -->
+  <div id="minimap-wrapper">
+    <div id="compass" class="compass-badge">N 0°</div>
+    <canvas id="minimap"></canvas>
+  </div>
+
+  <!-- Mobile Controls -->
+  <div id="mobile-controls">
+    <div class="touch-look-area" id="touch-look"></div>
+    <div class="touch-look-hint">Drag to Look</div>
+    <div id="movePad" class="joystick-pad">
+      <div id="moveKnob" class="joystick-knob"></div>
+    </div>
+    <div class="action-rail">
+      <button type="button" id="btn-mobile-run" aria-label="Run" class="mobile-btn">🏃</button>
+      <button type="button" id="btn-mobile-inspect" aria-label="Inspect nearby structure" class="mobile-btn">🔍</button>
+      <button type="button" id="btn-mobile-map" aria-label="Toggle minimap" class="mobile-btn">🗺️</button>
+    </div>
+  </div>
+
+  <!-- Crosshair Overlay -->
+  <div id="crosshair"></div>
+
+  <!-- Intro/Splash Modal -->
+  <div id="intro-modal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-content intro-content">
+      <h1 class="modal-title">AIZANOI · AD 225</h1>
+      <h2 class="modal-subtitle">Phrygia Epiktetos · Penkalas Valley · Roman Imperial Aizanoi</h2>
+      <p class="intro-text">
+        Experience the city of Zeus in Roman Phrygia. Walk beneath the majestic pseudodipteral colonnade of the Temple of Zeus,
+        descend into the subterranean vault, visit the round Macellum whose walls preserve Diocletian’s AD 301 Price Edict,
+        and cross the stone arches of Hadrian over the Penkalas river.
+      </p>
+      <div class="key-facts">
+        <div class="fact"><strong>Period:</strong> Roman Imperial (AD 225)</div>
+        <div class="fact"><strong>Scale:</strong> 1.8 km River Valley Grid</div>
+        <div class="fact"><strong>Monuments:</strong> Temple of Zeus, Macellum, Theatre–Stadium</div>
+        <div class="fact"><strong>Sources:</strong> DPU Excavations, Tandoğan & Erdoğan (2020)</div>
+      </div>
+      <button type="button" id="btn-enter" class="btn-primary">Enter the Sanctuary</button>
+    </div>
+  </div>
+
+  <!-- Generic Research/Source Modal -->
+  <div id="research-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Sources and reconstruction notes">
+    <div class="modal-panel slide-up">
+      <button type="button" class="btn-close" id="btn-close-modal" aria-label="Close sources">✖</button>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Evidence Side Panel -->
+  <aside id="evidence-panel" class="side-panel hidden" aria-label="Evidence layers">
+    <div class="panel-header">
+      <h3>Evidence Layers</h3>
+      <button type="button" class="btn-close" id="btn-close-evidence" aria-label="Close evidence panel">✖</button>
+    </div>
+    <div class="evidence-legend">
+      <div class="legend-item"><span class="dot arch"></span> Archaeological (Standing)</div>
+      <div class="legend-item"><span class="dot doc"></span> Documented (Epigraphical)</div>
+      <div class="legend-item"><span class="dot plaus"></span> Plausible (Contextual)</div>
+    </div>
+    <div class="monuments-list" id="monuments-list"></div>
+  </aside>
+
+  <!-- Teleport Menu -->
+  <div id="teleport-menu" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Fast travel">
+    <div class="modal-panel">
+      <div class="panel-header">
+        <h3>Fast Travel</h3>
+        <button type="button" class="btn-close" id="btn-close-teleport" aria-label="Close fast travel">✖</button>
+      </div>
+      <input type="text" id="teleport-search" placeholder="Search landmarks..." />
+      <ul class="teleport-list" id="teleport-list"></ul>
+    </div>
+  </div>
+
+  <!-- Info Card for Inspection -->
+  <div id="info-card" class="floating-card hidden">
+    <h4 class="info-title">Temple of Zeus</h4>
+    <div class="info-meta">Pseudodipteral Temple <span class="badge arch">Arch</span></div>
+    <p class="info-desc">Standing Temple of Zeus with subterranean vaulted crypt.</p>
+    <a class="info-link" hidden rel="noopener noreferrer">View Source ➔</a>
+  </div>
+
+  <script type="module" src="./js/bootstrap.js"></script>
+</body>
+</html>

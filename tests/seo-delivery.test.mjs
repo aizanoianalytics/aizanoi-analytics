@@ -28,7 +28,7 @@ const canonicalBase = [
   '/analytics/dashboards/new-hr-collection/pacs/',
   '/analytics/dashboards/new-hr-collection/recruitment-analytics/',
   '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
-  '/historic-world/', '/ancient-cities/rome-410-476/', '/ancient-cities/athens-450-430/'
+  '/worlds/aizanoi-225/', '/worlds/rome-410-476/', '/worlds/athens-450-430/', '/worlds/iga-airport/'
 ];
 const canonical = [
   ...canonicalBase,
@@ -76,7 +76,7 @@ test('legacy product paths permanently redirect to canonical landings', () => {
 test('static delivery shares hardened headers and compresses web asset MIME types', () => {
   assert.match(nginx, /include snippets\/aizanoi-static-security-headers\.conf;/);
   assert.match(nginx, /gzip_types[^;]*application\/javascript[^;]*text\/css[^;]*application\/json[^;]*image\/svg\+xml;/s);
-  assert.match(nginx, /location \^~ \/ancient-cities\/[\s\S]*include snippets\/aizanoi-historical-world-security-headers\.conf;/);
-  assert.match(nginx, /location \^~ \/historic-world\/[\s\S]*include snippets\/aizanoi-historical-world-security-headers\.conf;/);
+  assert.match(nginx, /location \^~ \/worlds\/aizanoi-225\/[\s\S]*include snippets\/aizanoi-historical-world-security-headers\.conf;/);
+  assert.match(nginx, /location \^~ \/worlds\/shared\/[\s\S]*include snippets\/aizanoi-historical-world-security-headers\.conf;/);
   assert.doesNotMatch(nginx, /script-src[^;\n]*unsafe-inline/);
 });
