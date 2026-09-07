@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
@@ -30,7 +30,8 @@ test('four entry pages use local strict-CSP-compatible static resources',()=>{
     const html=read(`frontend/worlds/${slug}/index.html`);
     assert.match(html,new RegExp(`<link rel="canonical" href="https://aizanoianalytics\\.com/worlds/${slug}/">`));
     assert.match(html,/href="\.\.\/shared\/css\/base-theme\.css"/);
-    assert.match(html,/type="module" src="\.\/js\/main\.js"/);
+    const entry=slug==='aizanoi-225'?'bootstrap':'main';
+    assert.match(html,new RegExp(`type="module" src="\\.\\/js\\/${entry}\\.js"`));
     assert.doesNotMatch(html,/<script(?![^>]*src=)[^>]*>|<style\b|style="|type="importmap"/i,`${name} reintroduced inline runtime content`);
   }
   for(const file of walk('frontend/worlds/shared/engine').filter((p)=>p.endsWith('.js'))){assert.doesNotMatch(readFileSync(file,'utf8'),/\.style\.cssText\s*=/,`${path.relative(root,file)} reintroduced cssText`);}
@@ -63,6 +64,7 @@ test('all authored relative module imports resolve and use the shared runtime',(
     }
   }
   for(const [slug] of worlds){const main=read(`frontend/worlds/${slug}/js/main.js`);assert.match(main,/\.\.\/\.\.\/shared\/engine\/controls\.js/);assert.match(main,/\.\.\/\.\.\/shared\/engine\/collision\.js/);assert.match(main,/__WORLD_DEBUG__/);}
+  assert.match(read('frontend/worlds/aizanoi-225/js/bootstrap.js'),/import\(['"]\.\/main\.js['"]\)/);
 });
 
 test('source-led hero records survive the migration without certainty inflation',async()=>{
