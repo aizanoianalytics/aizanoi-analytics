@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-arsenal-chelsea-london-derby",
+  "kind": "daily",
+  "title": "Arsenal beat Chelsea 2-1 in the London derby as Havertz and Odegaard end Chelsea's perfect start",
+  "summary": "Kai Havertz and Martin Odegaard scored as Arsenal came from behind to beat Chelsea 2-1 at the Emirates on Sunday, ending their rivals' 100% start to the Premier League season. Chelsea, who have spent close to GBP 350 million this summer, had gone ahead before Havertz equalised against his former club and Odegaard netted the winner. The result keeps Arsenal level with Manchester City at the top on six points; BBC Sport notes it is the third time Arsenal have opened a season with three wins while conceding no more than one goal.",
+  "category": "football",
+  "priority": 72,
+  "publishedAt": "2026-09-07T07:05:00Z",
+  "updatedAt": "2026-09-07T07:05:00Z",
+  "retrievedAt": "2026-09-07T06:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Arsenal", "Chelsea", "Premier League", "Kai Havertz", "Martin Odegaard", "London derby"],
+  "sources": [
+    {
+      "publisher": "BBC Sport — Arsenal 2-1 Chelsea",
+      "url": "https://www.bbc.com/sport/football/articles/cqjkql0rkneo",
+      "publishedAt": "2026-09-06T20:25:24Z"
+    },
+    {
+      "publisher": "Sky Sports — PL 2026 coverage",
+      "url": "https://www.skysports.com/football/news/11095/13565582/everton-2-2-man-utd-ainsley-maitland-niles-scores-outrageous-stoppage-time-equaliser-to-earn-dramatic-draw",
+      "publishedAt": "2026-09-06T16:07:00Z"
+    }
+  ]
+}

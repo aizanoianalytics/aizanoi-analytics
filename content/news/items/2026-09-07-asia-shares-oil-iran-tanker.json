@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-asia-shares-oil-iran-tanker",
+  "kind": "daily",
+  "title": "Asia shares rebound on US jobs beat but Brent pushes toward $97 as Iran declares restricted zone outside Strait of Hormuz",
+  "summary": "Asian equities rallied on Monday as Friday's 162,000 August payrolls print was read as supportive for global growth, while oil extended last week's 8-10% rally after US forces struck three Iranian tankers and Iran's Revolutionary Guards fired ballistic missiles at two US Navy ships. Brent crude added 0.54% to USD 96.80 a barrel and US West Texas Intermediate gained 0.72% to USD 92.14, according to Reuters and HDFC Sky. Kpler data shows average daily tanker traffic through the Strait of Hormuz at its lowest level since May.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-09-07T06:50:00Z",
+  "updatedAt": "2026-09-07T06:50:00Z",
+  "retrievedAt": "2026-09-07T06:40:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Asia markets", "Brent crude", "Iran", "Strait of Hormuz", "US jobs report"],
+  "sources": [
+    {
+      "publisher": "Reuters via LSE",
+      "url": "https://lse.co.uk/news/global-markets-asia-shares-bounce-others-cautious-as-oil-rises-gsjkb0ott3bok4x.html",
+      "publishedAt": "2026-09-07T00:00:00Z"
+    },
+    {
+      "publisher": "HDFC Sky — Brent near $97",
+      "url": "https://hdfcsky.com/news/brent-crude-oil-price-today-september-7-2026-crude-rises-as-us-iran-strikes-raise-supply-concerns-brent-near-97",
+      "publishedAt": "2026-09-07T00:00:00Z"
+    }
+  ]
+}

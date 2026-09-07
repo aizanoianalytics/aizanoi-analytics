@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-ecb-thursday-hike-pricing",
+  "kind": "daily",
+  "title": "ECB all but certain to lift the deposit rate to 2.75% on Thursday; futures imply 75% odds of a follow-up hike to 3.0% by December",
+  "summary": "ECB Watch Tool prices a 100% probability of a 25-basis-point ECB hike to a 2.75% deposit rate on September 9, with futures implying a 75% chance of another move to 3.0% by year-end. A Reuters poll of economists published 3 September found 91% expect the deposit rate to end 2026 at 2.50% and 78% see it there through mid-2027, suggesting the September move may be the final hike of the cycle. JPMorgan's Bruce Kasman said central banks are now \"on the move\" and flagged a 75% probability the Bank of Japan will raise rates a quarter point at its September 18 meeting.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-09-07T07:00:00Z",
+  "updatedAt": "2026-09-07T07:00:00Z",
+  "retrievedAt": "2026-09-07T06:50:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ECB", "deposit rate", "Bank of Japan", "central banks", "Reuters poll"],
+  "sources": [
+    {
+      "publisher": "ECB Watch Tool",
+      "url": "https://ecb-watch.eu/",
+      "publishedAt": "2026-09-07T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters — ECB to raise rates a second time in September, but then done",
+      "url": "https://www.reuters.com/world/ecb-raise-rates-second-time-september-then-done-say-economists-2026-09-03/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

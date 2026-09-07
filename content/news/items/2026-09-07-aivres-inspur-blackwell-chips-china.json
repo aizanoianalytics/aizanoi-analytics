@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-aivres-inspur-blackwell-chips-china",
+  "kind": "daily",
+  "title": "NYT investigation: Inspur's US unit Aivres routed more than $3 billion of Nvidia Blackwell servers to Alibaba and ByteDance data centres",
+  "summary": "A New York Times investigation with ImportGenius trade records shows Aivres, the Fremont, California-based US subsidiary of blacklisted Inspur Group, exported at least USD 5.6 billion of advanced technology to Southeast Asia between April 2024 and February 2026, including more than USD 3 billion of computers built with Nvidia Blackwell chips, ultimately serving Alibaba and ByteDance data centres. Federal officials told the Times a probe into Aivres is under way; in June 2026 the Defense Department added Inspur Group to the Section 1260H list of Chinese military companies.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-07T06:25:00Z",
+  "updatedAt": "2026-09-07T06:25:00Z",
+  "retrievedAt": "2026-09-07T06:15:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Inspur", "Aivres", "Nvidia Blackwell", "export controls", "Alibaba", "ByteDance", "Section 1260H"],
+  "sources": [
+    {
+      "publisher": "The New York Times",
+      "url": "https://www.nytimes.com/2026/09/06/technology/ai-chips-china-blacklist.html",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    },
+    {
+      "publisher": "The Indian Express",
+      "url": "https://indianexpress.com/article/technology/tech-news-technology/how-a-blacklisted-chinese-tech-giant-kept-buying-americas-best-ai-chips-10866468",
+      "publishedAt": "2026-09-07T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-nvidia-rtx-spark-october-ship",
+  "kind": "daily",
+  "title": "Nvidia's RTX Spark AI PCs to ship in October with 1-petaflop Blackwell GPUs and a free RTX PAIR router for local AI clusters",
+  "summary": "Nvidia confirmed at IFA 2026 in Berlin that its RTX Spark Windows PCs will arrive in October from Acer, ASUS, Dell, Gigabyte, HP, MSI, Lenovo and Microsoft. The N1X superchip pairs a 20-core Grace CPU with up to 6,144 Blackwell RTX GPU cores and up to 128 GB of unified memory. Alongside the silicon, Nvidia released RTX PAIR, a free, Apache 2.0-licensed Personal AI Router that distributes inference across multiple idle RTX and Apple Silicon PCs on a local network; in an IFA demo three RTX systems completed a Sunday-morning checklist in roughly nine minutes versus 18 on a single PC.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-09-07T06:35:00Z",
+  "updatedAt": "2026-09-07T06:35:00Z",
+  "retrievedAt": "2026-09-07T06:25:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Nvidia", "RTX Spark", "IFA 2026", "PAIR", "Grace Blackwell", "local AI"],
+  "sources": [
+    {
+      "publisher": "NVIDIA Blog — Sparks Fly at IFA 2026",
+      "url": "https://blogs.nvidia.com/blog/local-ai-ifa-next-gen-agents-nv-pair-rtx-spark/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "HotHardware — RTX Spark PCs packing 1 Petaflop",
+      "url": "https://hothardware.com/news/nvidia-rtx-spark-pcs-1-petaflop-local-ai-land-october",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "2026-09-07-weekly-frontier-model-window",
+  "kind": "weekly",
+  "week": "2026-W37",
+  "title": "Weekly AI: Four frontier labs shipped flagship models in 72 hours — and the shape of the 2026 model market is now visible",
+  "summary": "Anthropic, Google, Meta and OpenAI released flagship or specialised models in the same 72-hour window from 1 to 3 September 2026: Claude Fable 5.1 and Mythos 5.1, Gemini 3.8 Flash plus a Cyber variant, Muse Spark 1.3 and GPT-6 Astra. Nvidia followed on 7 September with a USD 12.93 billion agreement to acquire Hugging Face. Anthropic and OpenAI now price the same token at USD 10 in and USD 50 out, Meta undercuts at USD 1.25 and USD 4.25, and Google sits in the middle at USD 0.75 and USD 3.75. The next phase is consolidation around compute and platform.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-07T07:20:00Z",
+  "updatedAt": "2026-09-07T07:20:00Z",
+  "retrievedAt": "2026-09-07T07:10:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Claude Fable", "GPT-6 Astra", "Gemini 3.8 Flash", "Muse Spark", "model pricing", "Nvidia Hugging Face"],
+  "sources": [
+    {
+      "publisher": "Tech Insider — GPT-6 Astra launches as 4 AI labs ship",
+      "url": "https://tech-insider.org/gpt-6-astra-launch-four-ai-labs-september-2026/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "ScriptByAI — AI Model Release Calendar",
+      "url": "https://www.scriptbyai.com/ai-model-release-calendar/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "NVIDIA Blog — Nvidia to acquire Hugging Face",
+      "url": "https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

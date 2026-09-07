@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-gemini-hiker-rescue-mount-shasta",
+  "kind": "daily",
+  "title": "Google Gemini misadvised three Mount Shasta hikers to bring too little food and water; rescuers had to intervene overnight",
+  "summary": "Siskiyou County sheriff's deputies say three young men who summited Mount Shasta at around 7 p.m. and spent the night in Mud Creek Canyon \"were advised by Gemini to bring far less food and water than their group required,\" according to a Bleeping Computer report on 5 September. The hikers were rescued the next morning. Rangers urged backcountry users to consult local ranger stations rather than relying on AI assistants for safety-critical planning. It is the latest case where general-purpose models have given confidently wrong guidance in wilderness contexts.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-09-07T06:45:00Z",
+  "updatedAt": "2026-09-07T06:45:00Z",
+  "retrievedAt": "2026-09-07T06:35:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Google Gemini", "AI safety", "Mount Shasta", "outdoor planning", "AI assistant risk"],
+  "sources": [
+    {
+      "publisher": "Bleeping Computer",
+      "url": "https://www.bleepingcomputer.com/news/security/google-gemini-misadvised-mt-shasta-hikers-rescue/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/05/hikers-rescued-after-using-google-gemini-for-planning/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    }
+  ]
+}

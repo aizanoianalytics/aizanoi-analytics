@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-wall-street-jobs-fed-hike-odds",
+  "kind": "daily",
+  "title": "Wall Street closed lower on Friday as 162,000 August payrolls tripled expectations and lifted Fed September hike odds to 58.4%",
+  "summary": "US stocks fell on Friday after the Bureau of Labor Statistics reported 162,000 nonfarm payrolls for August against a 53,000 consensus, with June and July revisions adding another 55,000 jobs and the unemployment rate steady at 4.1%. The Dow lost 272.51 points, or 0.51%, to 53,413.60, the S&P 500 fell 29.30 points, or 0.38%, to 7,718.41, and the Nasdaq dropped 77.07 points, or 0.29%, to 26,506.99. CME FedWatch put the implied probability of a 25-basis-point Fed hike on September 16 at 58.4%, up from 49.4% on Thursday; the 2-year Treasury yield reached 4.377%, its highest since January 2025.",
+  "category": "economy-markets",
+  "priority": 66,
+  "publishedAt": "2026-09-07T06:55:00Z",
+  "updatedAt": "2026-09-07T06:55:00Z",
+  "retrievedAt": "2026-09-07T06:45:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Wall Street", "nonfarm payrolls", "Fed", "September FOMC", "CME FedWatch"],
+  "sources": [
+    {
+      "publisher": "Free Malaysia Today — Wall Street ends lower",
+      "url": "https://freemalaysiatoday.com/category/business/2026/09/05/wall-street-ends-lower-as-solid-jobs-data-fuels-hawkish-fed-bets",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    },
+    {
+      "publisher": "Swingfolio — US week recap",
+      "url": "https://swingfolio.com/daily/us/2026-09-05/weekend",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "2026-09-07-weekly-premier-league-title-shape",
+  "kind": "weekly",
+  "week": "2026-W37",
+  "title": "Weekly Football: Premier League title race takes early shape as Arsenal's depth outlasts Chelsea's GBP 350m rebuild",
+  "summary": "Three weeks into the Premier League season the table has separated into legible bands. Manchester City lead on nine points, with Hull City and Arsenal on six and Chelsea on six after their first loss. Arsenal 2-1 Chelsea on Sunday, decided by Kai Havertz and Martin Odegaard, was the first real stress test of the new-look London rivals and vindicated Mikel Arteta over Chelsea 350 million summer rebuild. Everton drew Manchester United 2-2 with Ainsley Maitland-Niles scoring a 95th-minute equaliser on his debut. Tuesdays Ballon dOr nominee announcement sets up the Champions League run-up.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-09-07T07:35:00Z",
+  "updatedAt": "2026-09-07T07:35:00Z",
+  "retrievedAt": "2026-09-07T07:25:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Premier League", "Arsenal", "Chelsea", "Ballon d'Or", "Champions League"],
+  "sources": [
+    {
+      "publisher": "BBC Sport — Arsenal 2-1 Chelsea",
+      "url": "https://www.bbc.com/sport/football/articles/cqjkql0rkneo",
+      "publishedAt": "2026-09-06T20:25:24Z"
+    },
+    {
+      "publisher": "Sky Sports — Everton 2-2 Man Utd",
+      "url": "https://www.skysports.com/football/news/11095/13565582/everton-2-2-man-utd-ainsley-maitland-niles-scores-outrageous-stoppage-time-equaliser-to-earn-dramatic-draw",
+      "publishedAt": "2026-09-06T17:07:00Z"
+    },
+    {
+      "publisher": "beIN Sports — Ballon d'Or 2026 nominee announcement date",
+      "url": "https://www.beinsports.com/en-us/soccer/articles/ballon-d-or-2026-nominees-announcement-date-revealed-2026-09-01",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

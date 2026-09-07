@@ -1,0 +1,39 @@
+{
+  "id": "2026-09-07-weekly-five-things-to-watch",
+  "kind": "weekly",
+  "week": "2026-W37",
+  "title": "Weekly cross-cutting: Five things to watch in the week of 7 September — ECB, Apple, Ballon d'Or, Hormuz, and the Aivres fallout",
+  "summary": "The week of 7 to 14 September carries five catalysts. First, the ECBs 9 September decision is priced for a 25-basis-point hike to 2.75%; the question is whether the statement opens the door to a December follow-up. Second, Apples 9 September event is new CEO John Ternuss first keynote and the expected debut of the first foldable iPhone Ultra. Third, the Ballon dOr 2026 nominees are announced on 8 September, with the ceremony in London on 26 October. Fourth, oil is repricing a Hormuz premium. Fifth, the NYT investigation into Aivres tests whether US export controls reach remote Chinese compute.",
+  "category": "economy-markets",
+  "priority": 65,
+  "publishedAt": "2026-09-07T07:40:00Z",
+  "updatedAt": "2026-09-07T07:40:00Z",
+  "retrievedAt": "2026-09-07T07:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["week ahead", "ECB", "Apple", "Ballon d'Or", "Hormuz", "Aivres"],
+  "sources": [
+    {
+      "publisher": "ECB Watch Tool",
+      "url": "https://ecb-watch.eu/",
+      "publishedAt": "2026-09-07T00:00:00Z"
+    },
+    {
+      "publisher": "MacRumors — Apple September 2026 event preview",
+      "url": "https://www.macrumors.com/guide/apple-september-2026-what-to-expect/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    },
+    {
+      "publisher": "beIN Sports — Ballon d'Or 2026 nominee announcement date",
+      "url": "https://www.beinsports.com/en-us/soccer/articles/ballon-d-or-2026-nominees-announcement-date-revealed-2026-09-01",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "The New York Times — Inspur Aivres Blackwell chips",
+      "url": "https://www.nytimes.com/2026/09/06/technology/ai-chips-china-blacklist.html",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    }
+  ]
+}

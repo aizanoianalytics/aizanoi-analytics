@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-ubs-ai-junior-banker-hiring",
+  "kind": "daily",
+  "title": "UBS makes AI proficiency a formal hiring bar for 2027 junior investment bankers, a first among bulge-bracket banks",
+  "summary": "UBS will require prospective graduates and interns joining its global banking and markets division from the 2027 intake to demonstrate working AI proficiency alongside academics and finance aptitude, the Financial Times reported on 6 September, citing people familiar with the move. Applicants will be assessed on their ability to use AI tools for research, modelling and first drafts, and on their judgement about when the model is wrong. UBS is the first major global bank to formalise AI fluency as an explicit gate rather than a soft skill, the FT said.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-07T06:05:00Z",
+  "updatedAt": "2026-09-07T06:05:00Z",
+  "retrievedAt": "2026-09-07T05:55:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["UBS", "AI hiring", "investment banking", "junior bankers", "AI workforce"],
+  "sources": [
+    {
+      "publisher": "Financial Times",
+      "url": "https://www.ft.com/content/76b370ff-b5f6-4e22-aa30-da08b1abb8f8",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    },
+    {
+      "publisher": "Techmeme",
+      "url": "https://www.techmeme.com/260906/p48",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    }
+  ]
+}

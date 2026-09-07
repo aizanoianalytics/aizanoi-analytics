@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-google-assistant-gemini-replaces",
+  "kind": "daily",
+  "title": "Google Assistant begins shutdown on Android and Wear OS as Gemini takes over \"Hey Google\" triggers on a one-way switch",
+  "summary": "Google started removing Google Assistant from Android phones, tablets, Wear OS watches, compatible audio devices and Android Auto on 4 September, with Gemini replacing the \"Hey Google\" trigger and power-button long-press on a phased, one-way schedule. Once a device flips to Gemini, the user cannot switch back, according to Google's product notice. Home speakers, smart displays, Google TV and vehicles with Google built-in still run Assistant for now, and the transition is expected to take several weeks to roll out across regions.",
+  "category": "technology",
+  "priority": 55,
+  "publishedAt": "2026-09-07T06:40:00Z",
+  "updatedAt": "2026-09-07T06:40:00Z",
+  "retrievedAt": "2026-09-07T06:30:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Google Assistant", "Gemini", "Android", "Wear OS", "voice assistant"],
+  "sources": [
+    {
+      "publisher": "Implicator — Google Assistant shutdown schedule",
+      "url": "https://www.implicator.ai/google-sets-september-4-date-to-replace-assistant-with-gemini-on-android/",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    },
+    {
+      "publisher": "AI Weekly — Top Stories for September 7",
+      "url": "https://aiweekly.co/ai-news-today",
+      "publishedAt": "2026-09-07T00:00:00Z"
+    }
+  ]
+}

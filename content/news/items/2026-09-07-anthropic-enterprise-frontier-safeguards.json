@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-anthropic-enterprise-frontier-safeguards",
+  "kind": "daily",
+  "title": "Anthropic launches Enterprise Frontier Safeguards so regulated firms can run Claude with logs that never leave their own cloud",
+  "summary": "Anthropic on 1 September introduced Enterprise Frontier Safeguards, a deployment pattern that pairs Claude Fable 5.1 and Mythos 5.1 capabilities with zero-data-retention and customer-held monitoring logs. The system stores activity data in the customer's own cloud rather than in Anthropic infrastructure, and Anthropic said EFS would roll out to enterprise customers in phases from later in the autumn. The launch marks the first time Anthropic is packaging a Mythos-class restricted model behind an architecture whose safety telemetry never reaches the lab by default.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-09-07T06:10:00Z",
+  "updatedAt": "2026-09-07T06:10:00Z",
+  "retrievedAt": "2026-09-07T06:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "Claude Fable", "Mythos", "Enterprise Frontier Safeguards", "zero data retention"],
+  "sources": [
+    {
+      "publisher": "Anthropic — Enterprise Frontier Safeguards",
+      "url": "https://www.anthropic.com/news/enterprise-frontier-safeguards",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "Help Net Security",
+      "url": "https://www.helpnetsecurity.com/2026/09/02/anthropic-enterprise-frontier-safeguards/",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-apple-event-preview-foldable-ultra",
+  "kind": "daily",
+  "title": "Apple's September 9 \"Surprise and Shine\" event to host first foldable iPhone Ultra alongside iPhone 18 Pro, Watch Series 12 and AirPods 5",
+  "summary": "Apple has invited media to its September 9 keynote at Apple Park, themed \"Surprise and Shine\", where new CEO John Ternus will host his first major launch. Reporting from MacRumors, Tom's Guide and Firstpost sketches a lineup of the iPhone 18 Pro and 18 Pro Max with the A20 Pro chip and C2 modem, the long-rumoured foldable iPhone Ultra with a 7.8-inch inner display and Touch ID, Apple Watch Series 12 and Ultra 4, AirPods 5, and possibly a new HomePod mini and Apple TV 4K. Pre-orders are widely expected on September 12 with retail availability on September 18.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-09-07T06:30:00Z",
+  "updatedAt": "2026-09-07T06:30:00Z",
+  "retrievedAt": "2026-09-07T06:20:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iPhone Ultra", "iPhone 18 Pro", "Surprise and Shine", "John Ternus", "foldable iPhone"],
+  "sources": [
+    {
+      "publisher": "MacRumors — iPhone Ultra, iPhone 18 Pro, and More",
+      "url": "https://www.macrumors.com/guide/apple-september-2026-what-to-expect/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    },
+    {
+      "publisher": "Tom's Guide — Apple iPhone 18 event preview",
+      "url": "https://www.tomsguide.com/phones/iphones/apple-iphone-18-event-all-the-new-products-expected-to-launch-in-september",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

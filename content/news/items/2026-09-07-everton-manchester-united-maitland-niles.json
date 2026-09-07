@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-everton-manchester-united-maitland-niles",
+  "kind": "daily",
+  "title": "Maitland-Niles curls a 25-yard stoppage-time stunner on his Everton debut to rescue a 2-2 draw with Manchester United",
+  "summary": "Manchester United twice led at Hill Dickinson Stadium through Bryan Mbeumo and Benjamin Sesko, whose 88th-minute header looked to have won the game, but Everton substitute Ainsley Maitland-Niles curled a 25-yard shot into the top corner in the 95th minute to make it 2-2. The GBP 4.3 million deadline-day signing from Arsenal, who had joined Everton the previous Monday, became the first player to score on his Premier League debut for the club since August 2024. The draw keeps Everton one point ahead of United; United had beaten Ipswich 5-2 the previous weekend.",
+  "category": "football",
+  "priority": 68,
+  "publishedAt": "2026-09-07T07:10:00Z",
+  "updatedAt": "2026-09-07T07:10:00Z",
+  "retrievedAt": "2026-09-07T07:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Everton", "Manchester United", "Ainsley Maitland-Niles", "Premier League", "Hill Dickinson Stadium"],
+  "sources": [
+    {
+      "publisher": "Sky Sports — Everton 2-2 Man Utd",
+      "url": "https://www.skysports.com/football/news/11095/13565582/everton-2-2-man-utd-ainsley-maitland-niles-scores-outrageous-stoppage-time-equaliser-to-earn-dramatic-draw",
+      "publishedAt": "2026-09-06T17:07:00Z"
+    },
+    {
+      "publisher": "AP News — Man United stunned at Everton",
+      "url": "https://apnews.com/article/premier-league-scores-arsenal-chelsea-everton-man-united-48ede14af4b89d9a8e224f2bfb26e83b",
+      "publishedAt": "2026-09-06T00:00:00Z"
+    }
+  ]
+}

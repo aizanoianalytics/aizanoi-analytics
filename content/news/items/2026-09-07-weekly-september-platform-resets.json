@@ -1,0 +1,34 @@
+{
+  "id": "2026-09-07-weekly-september-platform-resets",
+  "kind": "weekly",
+  "week": "2026-W37",
+  "title": "Weekly Technology: September opens with two platform resets — Apple's first foldable silicon and Nvidia's local-AI PC push",
+  "summary": "The first full week of September crystallises two parallel resets in consumer technology. On 3 September, Nvidia used IFA Berlin to confirm its RTX Spark Windows PCs will ship in October from eight OEMs with a one-petaflop RTX Blackwell GPU, up to 128 GB of unified memory and a 20-core Grace CPU; the company also open-sourced RTX PAIR, a free router that spreads local inference across RTX and Apple Silicon PCs on a home network. Apple followed with invitations to its Surprise and Shine event, where the iPhone 18 Pro and the first foldable iPhone Ultra are expected.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-09-07T07:25:00Z",
+  "updatedAt": "2026-09-07T07:25:00Z",
+  "retrievedAt": "2026-09-07T07:15:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["IFA 2026", "RTX Spark", "Apple Surprise and Shine", "iPhone Ultra", "Gemini"],
+  "sources": [
+    {
+      "publisher": "NVIDIA Blog — Sparks Fly at IFA 2026",
+      "url": "https://blogs.nvidia.com/blog/local-ai-ifa-next-gen-agents-nv-pair-rtx-spark/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "MacRumors — Apple September 2026 event preview",
+      "url": "https://www.macrumors.com/guide/apple-september-2026-what-to-expect/",
+      "publishedAt": "2026-09-05T00:00:00Z"
+    },
+    {
+      "publisher": "Implicator — Google Assistant shutdown schedule",
+      "url": "https://www.implicator.ai/google-sets-september-4-date-to-replace-assistant-with-gemini-on-android/",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    }
+  ]
+}

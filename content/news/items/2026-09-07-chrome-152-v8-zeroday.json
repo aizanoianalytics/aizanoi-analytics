@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-07-chrome-152-v8-zeroday",
+  "kind": "daily",
+  "title": "Chrome 152 patches sixth 2026 zero-day, an actively exploited V8 type confusion bug also affecting other Chromium browsers",
+  "summary": "Google on 4 September shipped Chrome 152.0.7977.82/.83 to fix CVE-2026-85046, a high-severity type confusion in the V8 JavaScript and WebAssembly engine that has been exploited in the wild, according to Google's release notes and a SecurityWeek advisory. The bug, which chained Maglev JIT compiler optimisation handling of Array.prototype.sort with Array.prototype.fill map migration, is the sixth Chrome zero-day of 2026 and the third to target V8 this year. CISA added it to its Known Exploited Vulnerabilities catalogue and set a federal patching deadline of 25 September.",
+  "category": "technology",
+  "priority": 65,
+  "publishedAt": "2026-09-07T06:20:00Z",
+  "updatedAt": "2026-09-07T06:20:00Z",
+  "retrievedAt": "2026-09-07T06:10:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Chrome", "V8", "zero day", "CVE-2026-85046", "CISA", "browser security"],
+  "sources": [
+    {
+      "publisher": "SecurityWeek",
+      "url": "https://www.securityweek.com/google-patches-6th-chrome-zero-day-of-2026/",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    },
+    {
+      "publisher": "The Hacker News",
+      "url": "https://thehackernews.com/2026/09/google-releases-chrome-update-to-patch.html",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    }
+  ]
+}
