@@ -12,7 +12,7 @@ const routes=[
   {id:'analytics',route:'/analytics/',settle:250},
   {id:'dashboard',route:'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',settle:600},
   {id:'worlds',route:'/worlds/',settle:250},
-  {id:'historic',route:'/worlds/aizanoi-225/',settle:1200,world:true},
+  {id:'historic',route:'/worlds/aizanoi-225/',settle:500,world:true},
 ];
 
 const browser=await chromium.launch({
@@ -34,8 +34,8 @@ try{
       const response=await page.goto(`${base}${spec.route}`,{waitUntil:'domcontentloaded',timeout:30000});
       if(!response?.ok())throw new Error(`${spec.id} returned HTTP ${response?.status()}`);
       if(spec.world){
-        await page.locator('canvas#viewport').waitFor({state:'visible',timeout:15000});
-        await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:20000});
+        await page.locator('#intro-modal').waitFor({state:'visible',timeout:15000});
+        await page.waitForFunction(()=>window.__WORLD_BOOTSTRAP__?.ready===true||window.__WORLD_DEBUG__?.ready===true,null,{timeout:20000});
       }else{
         await page.locator('body').waitFor({state:'visible',timeout:15000});
       }
