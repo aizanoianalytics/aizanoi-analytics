@@ -144,7 +144,7 @@ export const TOUR_STOPS = [
   { id: 'temple', title: 'Temple of Zeus', description: 'The magnificent pseudodipteral temple of Zeus with its intact subterranean vaulted crypt dedicated to Cybele.', duration: 40 },
   { id: 'agora', title: 'Agora & Propylon', description: 'The grand civic marketplace connected to the sanctuary by a 30-step monumental propylon.', duration: 30 },
   { id: 'bridge2', title: 'Hadrianic Bridge across the Penkalas', description: 'One of the four stone bridges built during the reign of Hadrian that transformed the river into an urban spine.', duration: 25 },
-  { id: 'macellum', title: 'The Macellum & Price Edict', description: 'The round market building where Emperor Diocletian carved his Price Edict into stone to halt inflation.', duration: 35 },
+  { id: 'macellum', title: 'The Macellum & Price Edict', description: 'The round market whose surviving stone inscription preserves the AD 301 Edict on Maximum Prices, a major witness to Diocletian\'s empire-wide price legislation.', duration: 35 },
   { id: 'theatre', title: 'Theatre–Stadium Complex', description: 'A unique architectural feat in the ancient world: a 15,000-seat theatre conjoined on one axis with a 13,500-seat stadium.', duration: 45 },
   { id: 'greatbath', title: 'Great Bath–Palaestra', description: 'Vast Roman bathing halls and wrestling grounds reflecting the opulent public lifestyle of Roman Phrygia.', duration: 30 }
 ];
