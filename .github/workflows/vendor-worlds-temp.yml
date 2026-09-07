@@ -2,7 +2,7 @@ name: Temporary Worlds Migration
 
 on:
   push:
-    branches: [refactor/unified-worlds-threejs]
+    branches: [never/worlds-staging]
 
 permissions:
   contents: write
@@ -24,6 +24,7 @@ jobs:
           mkdir -p /tmp/aizanoi-worlds-migration /tmp/worlds-payload
           cat .migration/parts/worlds.bundle.b64.part-* > /tmp/aizanoi-worlds-migration/worlds.bundle.b64
           base64 -d /tmp/aizanoi-worlds-migration/worlds.bundle.b64 > /tmp/aizanoi-worlds-migration/bundle.tar.gz
+          printf '%s  %s\n' 'beeae399ad8c5f9f23ae23ef5c3163d191afb1318c995b853ab63d7b30da680b' '/tmp/aizanoi-worlds-migration/bundle.tar.gz' | sha256sum -c -
           tar -tzf /tmp/aizanoi-worlds-migration/bundle.tar.gz >/dev/null
           tar -xzf /tmp/aizanoi-worlds-migration/bundle.tar.gz -C /tmp/aizanoi-worlds-migration
           worlds_archive="$(find /tmp/aizanoi-worlds-migration -type f -name 'worlds_no_vendor.tar.gz' -print -quit)"
@@ -38,6 +39,7 @@ jobs:
           THREE_BUILD_DIR: /tmp/three/package/build
         run: |
           set -euo pipefail
+          mkdir -p /tmp/three
           npm pack three@0.174.0 --ignore-scripts --pack-destination /tmp/three >/tmp/three-pack.log
           tar -xzf /tmp/three/three-0.174.0.tgz -C /tmp/three
           python /tmp/aizanoi-worlds-migration/migrate_worlds.py
