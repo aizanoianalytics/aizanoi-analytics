@@ -806,4 +806,3 @@ export function buildSundialMonument(x, z) {
 
   return group;
 }
-

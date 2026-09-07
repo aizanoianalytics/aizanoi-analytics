@@ -131,7 +131,7 @@ export class CollisionSystem {
         const towerW = Math.max(3, b.w * 0.28);
         const towerD = b.d;
         const offsetX = (b.w / 2 - towerW / 2);
-        
+
         // Left tower
         this.grid.insert({
           type: 'rect', id: `${b.id}-left`,
@@ -177,7 +177,7 @@ export class CollisionSystem {
         const halfW = b.w / 2;
         const halfD = b.d / 2;
         const doorW = 50; // Central curbside passenger entrance
-        
+
         // North wall (apron side)
         this.grid.insert({
           type: 'rect', id: `${b.id}-wall-n`,

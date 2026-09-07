@@ -5,7 +5,7 @@ import { getMaterial } from '../../shared/assets/materials.js';
 
 function createFlutedCylinder(height, radius, flutes, segments) {
     const geometry = new THREE.CylinderGeometry(radius * 0.8, radius, height, segments, 1);
-    // Approximate flutes by using fewer segments or a custom shape. Here we use basic cylinder 
+    // Approximate flutes by using fewer segments or a custom shape. Here we use basic cylinder
     // for performance but a real application might use a custom buffer geometry.
     return geometry;
 }
@@ -13,7 +13,7 @@ function createFlutedCylinder(height, radius, flutes, segments) {
 function createDoricColumn(height, radius) {
     const group = new THREE.Group();
     const shaftMat = getMaterial('marble');
-    
+
     // Shaft with entasis (approximated here by taper)
     const shaftGeo = createFlutedCylinder(height * 0.9, radius, 20, 16);
     const shaft = new THREE.Mesh(shaftGeo, shaftMat);
@@ -75,7 +75,7 @@ function createIonicColumn(height, radius) {
 function createSteps(width, depth, count, stepHeight) {
     const group = new THREE.Group();
     const mat = getMaterial('limestone');
-    
+
     for (let i = 0; i < count; i++) {
         const w = width - (i * stepHeight * 2);
         const d = depth - (i * stepHeight * 2);
@@ -109,14 +109,14 @@ export function buildTemple(b) {
     group.userData.buildingId = b.id;
 
     const isParthenon = b.id === 'parthenon';
-    
+
     const wReal = isParthenon ? 30.9 : (b.w || 20);
     const dReal = isParthenon ? 69.5 : (b.d || 40);
     const colCountW = isParthenon ? 8 : (Math.floor(wReal / 5) > 4 ? Math.floor(wReal / 5) : 6);
     const colCountD = isParthenon ? 17 : (colCountW * 2 + 1);
     const colHeight = isParthenon ? 10.4 : (b.h || (wReal / colCountW) * 2);
     const colRadius = colHeight / 11;
-    
+
     // Krepidoma
     const steps = createSteps(wReal + 2, dReal + 2, 3, 0.4);
     group.add(steps);
@@ -129,13 +129,13 @@ export function buildTemple(b) {
     const iMesh = new THREE.InstancedMesh(colGeo, colMat, colCount);
     iMesh.castShadow = true;
     iMesh.receiveShadow = true;
-    
+
     let idx = 0;
     const dummy = new THREE.Object3D();
-    
+
     const stepW = (wReal - colRadius * 4) / (colCountW - 1);
     const stepD = (dReal - colRadius * 4) / (colCountD - 1);
-    
+
     const startX = -(wReal/2) + colRadius * 2;
     const startZ = -(dReal/2) + colRadius * 2;
 
@@ -181,7 +181,7 @@ export function buildTemple(b) {
     ped.castShadow = true;
     ped.receiveShadow = true;
     group.add(ped);
-    
+
     // Roof tiles
     const roofGeo = createPediment(wReal + 1, dReal + 1, pedHeight + 0.2);
     const roofMat = getMaterial('roofTile');
@@ -199,14 +199,14 @@ export function buildGateway(b) {
     group.userData.buildingId = b.id;
     const w = b.w || 30;
     const d = b.d || 20;
-    
+
     const wallGeo = new THREE.BoxGeometry(w, 10, d);
     const wall = new THREE.Mesh(wallGeo, getMaterial('marble'));
     wall.position.y = 5;
     wall.castShadow = true;
     wall.receiveShadow = true;
     group.add(wall);
-    
+
     return group;
 }
 
@@ -215,15 +215,15 @@ export function buildStoa(b) {
     group.userData.buildingId = b.id;
     const w = b.w || 50;
     const d = b.d || 15;
-    
+
     const floor = new THREE.Mesh(new THREE.BoxGeometry(w, 0.5, d), getMaterial('limestone'));
     floor.position.y = 0.25;
     group.add(floor);
-    
+
     const backWall = new THREE.Mesh(new THREE.BoxGeometry(w, 6, 1), getMaterial('plaster'));
     backWall.position.set(0, 3, -d/2 + 0.5);
     group.add(backWall);
-    
+
     return group;
 }
 
@@ -231,12 +231,12 @@ export function buildTheatre(b) {
     const group = new THREE.Group();
     group.userData.buildingId = b.id;
     const radius = b.w || 40;
-    
+
     const orchGeo = new THREE.CylinderGeometry(radius * 0.3, radius * 0.3, 0.2, 32);
     const orch = new THREE.Mesh(orchGeo, getMaterial('ground'));
     orch.position.y = 0.1;
     group.add(orch);
-    
+
     return group;
 }
 
@@ -244,15 +244,15 @@ export function buildRound(b) {
     const group = new THREE.Group();
     group.userData.buildingId = b.id;
     const radius = (b.w || 15) / 2;
-    
+
     const base = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, 1, 32), getMaterial('limestone'));
     base.position.y = 0.5;
     group.add(base);
-    
+
     const roof = new THREE.Mesh(new THREE.ConeGeometry(radius * 1.1, 5, 32), getMaterial('roofTile'));
     roof.position.y = 6;
     group.add(roof);
-    
+
     return group;
 }
 
@@ -262,13 +262,13 @@ export function buildBuilding(b) {
     const w = b.w || 10;
     const d = b.d || 15;
     const h = 5;
-    
+
     const box = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), getMaterial('plaster'));
     box.position.y = h/2;
     box.castShadow = true;
     box.receiveShadow = true;
     group.add(box);
-    
+
     return group;
 }
 
@@ -303,15 +303,15 @@ export function buildRock(b) {
 export function buildStatue(b) {
     const group = new THREE.Group();
     group.userData.buildingId = b.id;
-    
+
     const ped = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), getMaterial('marble'));
     ped.position.y = 1;
     group.add(ped);
-    
+
     const stat = new THREE.Mesh(new THREE.CapsuleGeometry(1, 4, 4, 8), getMaterial('bronze'));
     stat.position.y = 5;
     group.add(stat);
-    
+
     return group;
 }
 
@@ -429,7 +429,7 @@ export function buildStructure(building) {
         case 'porch': return buildSanctuary(building);
         case 'altar': return buildSanctuary(building);
         case 'hill': return buildRock(building);
-        case 'building': 
+        case 'building':
         default: return buildBuilding(building);
     }
 }

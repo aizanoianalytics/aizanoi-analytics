@@ -361,7 +361,7 @@ export class UISystem {
     const level = building.evidence?.level || 'plausible';
     if (metaEl) {
       metaEl.innerHTML = `
-        <span>${building.type ? building.type.toUpperCase() : 'STRUCTURE'}</span> · 
+        <span>${building.type ? building.type.toUpperCase() : 'STRUCTURE'}</span> ·
         <span>${building.state || 'standing'}</span>
         <span class="badge evidence-${level}">${level}</span>
       `;
