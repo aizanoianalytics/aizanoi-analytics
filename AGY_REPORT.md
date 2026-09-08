@@ -289,3 +289,45 @@ Kanıt ekran görüntüleri:
 - `artifacts/water/aizanoi-penkalas-living-water.png`
 - `artifacts/water/athens-eridanos-living-water.png`
 - `artifacts/water/rome-tiber-living-water.png`
+
+---
+
+## 3. İGA Havalimanı Dinamik Hava & Yer Trafiği (Aircraft Movement Implementation)
+
+İGA İstanbul Havalimanı'ndaki donmuş apron statikliği tamamen kaldırılarak apron ve pistler yaşayan bir havacılık merkezine dönüştürülmüştür (`frontend/worlds/iga-airport/js/aircraft.js`).
+
+### Yapılan Teknik ve Operasyonel Geliştirmeler:
+1. **Körük Geri İtme (Pushback) & Çekici (Tug) Etkileşimi (Pier West Gate 1):**
+   - Batı İskelesi (Pier West) Stand 1'de park halindeki yolcu uçağı ve burun dikmesine bağlı geri itme traktörü (`buildBaggageTug`) modellenmiştir.
+   - Gerçek havacılık prosedürlerine uygun çok fazlı manevra döngüsü:
+     - Hazırlık ve körük ayrılması (0–8 sn),
+     - Burun tekeri çekici manevrasıyla geri itme ve apron taksi merkez hattına 90° dönüş (8–38 sn),
+     - Çekicinin burun dikmesinden ayrılarak emniyet bölgesine yanaşması (38–46 sn),
+     - Uçağın motor gücüyle taksiyolunda kuzeye doğru taksiye başlaması (46–56 sn),
+     - Döngünün pürüzsüzce sıfırlanarak yeni sefere hazırlanması (56–60 sn).
+2. **Aktif Taksiyolu Trafiği (Continuous Taxiing Loop):**
+   - Apron ve ana taksiyolları boyunca 8 kritik dönüş noktasından oluşan sürekli seyrüsefer döngüsü (`waypoints`, kümülatif uzunluk interpolasyonu).
+   - Gerçekçi 15.5 m/s (~30 knot) yer hızı ve teğet yönelimli pürüzsüz pruva/heading dönüşleri.
+3. **Pist 34L Kalkış Koşturması, Rotasyon & Tırmanış (Takeoff Roll & Climb-Out):**
+   - 34L pisti eşiğinde bekleme (0–4 sn),
+   - Tarmac üzerinde ivmelenen kalkış koşturması (4–16 sn),
+   - $V_R$ rotasyonu ve 11° burun yukarı hücum açısıyla havalanma (16–22 sn, 38m irtifa),
+   - 248 metre tırmanış koridoruna hafif sağ yatışlı (banking) tırmanış ve ayrılış (22–38 sn),
+   - Ufukta sönümlenme ve pist başına emniyetli respawn (38–44 sn).
+4. **Pist 35R İniş Yaklaşması, Parşömen & Teker Koyma (Landing Final Approach & Rollout):**
+   - 3° standart ILS süzülüş hattında (glideslope) 180 metre irtifadan piste yaklaşma (0–17 sn),
+   - Pist eşiğinde flare ve teker koyma (17–21 sn),
+   - Pist üzerinde frenleme koşturması (rollout) ve yüksek hızlı taksiyolu çıkışına sapma (21–34 sn).
+5. **Yürüyüş Emniyeti ve Geometri İhlal Koruması (Walk-Safe Collision Bubble):**
+   - `_handlePlayerClearance`: Hareket halindeki uçakların gövdesi çevresinde 8 metrelik dinamik emniyet balonu tanımlanmıştır.
+   - Oyuncunun uçağın altında veya burnunun önünde durması durumunda itme adımı (`stepDist`), statik çarpışma ızgarasını (`collision._checkCollision`) sorgulamadan uygulanmaz. Oyuncu terminal duvarlarının veya binaların içinden **asla geçirilmez**, güvenli alana nazikçe yönlendirilir.
+6. **ICAO Standartlarında Seyrüsefer, Strobe ve Flaşör Işıkları:**
+   - İskele (sol) kanat ucunda kırmızı, sancak (sağ) kanat ucunda yeşil, kuyruk konisinde beyaz seyrüsefer ışıkları (`buildModernAirliner`).
+   - Gövde üstü ve karnında ritmik dönen kırmızı anti-collision beacon lambaları.
+   - Kanat uçlarında çift palsli beyaz yüksek parlaklıklı flaşörler (strobe), gece modunda (`isNight`) parlaklık artışıyla dinamik olarak senkronize edilir.
+
+Kanıt ekran görüntüleri:
+- `artifacts/aircraft/iga-pushback-tug.png`
+- `artifacts/aircraft/iga-taxiing-airliner.png`
+- `artifacts/aircraft/iga-takeoff-climbout.png`
+- `artifacts/after/airliner-nav-lights.png`

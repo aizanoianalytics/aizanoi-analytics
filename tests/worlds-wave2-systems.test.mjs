@@ -28,3 +28,64 @@ test('Living water: buildWaterSamplePoints generates dense river audio coverage 
   const springPt = athensPts.find(p => Math.hypot(p.x - (-260), p.z - 160) < 1.0);
   assert.ok(springPt, 'Kallirrhoe spring must be included in Athens water sample points');
 });
+
+test('Aircraft movement: modern airliner includes ICAO navigation & strobe lights', async () => {
+  const { buildModernAirliner } = await import('../frontend/worlds/shared/assets/props.js');
+  const airliner = buildModernAirliner(0, 0, 0);
+
+  assert.ok(airliner, 'Airliner group must be created');
+  assert.equal(typeof airliner.userData.updateLights, 'function', 'Airliner must have updateLights function');
+
+  // Find light points in group hierarchy
+  const lightNames = [];
+  airliner.traverse(child => {
+    if (child.name) lightNames.push(child.name);
+  });
+
+  assert.ok(lightNames.includes('nav-red-port'), 'Must include port red nav light');
+  assert.ok(lightNames.includes('nav-green-starboard'), 'Must include starboard green nav light');
+  assert.ok(lightNames.includes('nav-white-tail'), 'Must include tail white nav light');
+  assert.ok(lightNames.includes('strobe-left-wing'), 'Must include left wing strobe');
+  assert.ok(lightNames.includes('strobe-right-wing'), 'Must include right wing strobe');
+  assert.ok(lightNames.includes('beacon-top'), 'Must include fuselage beacon');
+});
+
+test('Aircraft movement: AirportTrafficSystem advances pushback, taxi, takeoff and landing cycles', async () => {
+  const THREE = await import('../frontend/worlds/shared/vendor/three.module.js');
+  const { AirportTrafficSystem } = await import('../frontend/worlds/iga-airport/js/aircraft.js');
+
+  const scene = new THREE.Scene();
+  let collisionChecked = 0;
+  const mockCollision = {
+    _checkCollision: () => {
+      collisionChecked++;
+      return null;
+    }
+  };
+
+  const traffic = new AirportTrafficSystem(scene, mockCollision);
+  traffic.init();
+
+  assert.ok(traffic.pushbackState, 'Must initialize pushback state');
+  assert.ok(traffic.taxiState, 'Must initialize taxi state');
+  assert.ok(traffic.takeoffState, 'Must initialize takeoff state');
+  assert.ok(traffic.landingState, 'Must initialize landing state');
+
+  const initialTakeoffZ = traffic.takeoffState.airliner.position.z;
+  const initialTaxiDist = traffic.taxiState.dist || 0;
+
+  // Simulate 10 seconds of airport operations
+  const playerPos = new THREE.Vector3(-650, 1.7, 300); // Player standing on runway near takeoff start
+  for (let step = 0; step < 100; step++) {
+    traffic.update(0.1, false, playerPos);
+  }
+
+  // Verify taxiing airliner moved
+  assert.ok(traffic.taxiState.dist > initialTaxiDist, 'Taxiing airliner should advance along waypoints');
+
+  // Verify takeoff airliner rolled down runway
+  assert.ok(traffic.takeoffState.airliner.position.z > initialTakeoffZ, 'Takeoff airliner should roll along runway');
+
+  // Verify soft player clearance check was invoked to keep runway walk-safe
+  assert.ok(collisionChecked > 0, 'Should check static collision to avoid pushing player through geometry');
+});

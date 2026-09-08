@@ -502,6 +502,78 @@ export function buildModernAirliner(x, z, rot = 0) {
   nWheel.rotateZ(Math.PI / 2);
   nWheel.position.set(0, 0.55, 24);
   group.add(nWheel);
+  // Main gear (left and right)
+  for (const side of [-1, 1]) {
+    const mLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 3.8, 8), steelMat);
+    mLeg.position.set(side * 5.8, 1.9, -2);
+    group.add(mLeg);
+    for (const zOffset of [-0.6, 0.6]) {
+      const mWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.62, 0.45, 12), gearMat);
+      mWheel.rotateZ(Math.PI / 2);
+      mWheel.position.set(side * 5.8, 0.62, -2 + zOffset);
+      group.add(mWheel);
+    }
+  }
+
+  // Navigation & Strobe Lights (ICAO standard)
+  const lightGeo = new THREE.SphereGeometry(0.32, 8, 8);
+
+  // Port (Left) Wingtip: Red Navigation Light
+  const navRedMat = new THREE.MeshStandardMaterial({ color: 0xff0022, emissive: 0xff0022, emissiveIntensity: 1.0, roughness: 0.2 });
+  const leftNav = new THREE.Mesh(lightGeo, navRedMat);
+  leftNav.name = 'nav-red-port';
+  leftNav.position.set(-33.4, 6.4, -12);
+  group.add(leftNav);
+
+  // Starboard (Right) Wingtip: Green Navigation Light
+  const navGreenMat = new THREE.MeshStandardMaterial({ color: 0x00e676, emissive: 0x00e676, emissiveIntensity: 1.0, roughness: 0.2 });
+  const rightNav = new THREE.Mesh(lightGeo, navGreenMat);
+  rightNav.name = 'nav-green-starboard';
+  rightNav.position.set(33.4, 6.4, -12);
+  group.add(rightNav);
+
+  // Tailcone: White Navigation Light
+  const navWhiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 1.0, roughness: 0.2 });
+  const tailNav = new THREE.Mesh(lightGeo, navWhiteMat);
+  tailNav.name = 'nav-white-tail';
+  tailNav.position.set(0, 5.5, -43);
+  group.add(tailNav);
+
+  // Fuselage Anti-Collision Red Beacons (Top and Belly)
+  const beaconMat = new THREE.MeshStandardMaterial({ color: 0xff1100, emissive: 0xff1100, emissiveIntensity: 0.2, roughness: 0.2 });
+  const topBeacon = new THREE.Mesh(new THREE.SphereGeometry(0.38, 8, 8), beaconMat);
+  topBeacon.name = 'beacon-top';
+  topBeacon.position.set(0, 8.2, 5);
+  group.add(topBeacon);
+  const btmBeacon = new THREE.Mesh(new THREE.SphereGeometry(0.38, 8, 8), beaconMat);
+  btmBeacon.name = 'beacon-belly';
+  btmBeacon.position.set(0, 2.2, 5);
+  group.add(btmBeacon);
+
+  // Wingtip White Strobes
+  const strobeMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 0.1, roughness: 0.1 });
+  const leftStrobe = new THREE.Mesh(new THREE.SphereGeometry(0.28, 8, 8), strobeMat);
+  leftStrobe.name = 'strobe-left-wing';
+  leftStrobe.position.set(-33.6, 6.5, -12.3);
+  group.add(leftStrobe);
+  const rightStrobe = new THREE.Mesh(new THREE.SphereGeometry(0.28, 8, 8), strobeMat);
+  rightStrobe.name = 'strobe-right-wing';
+  rightStrobe.position.set(33.6, 6.5, -12.3);
+  group.add(rightStrobe);
+
+  group.userData.updateLights = function(time, isNight) {
+    const strobePhase = time % 1.2;
+    const strobeOn = (strobePhase < 0.08) || (strobePhase > 0.16 && strobePhase < 0.24);
+    strobeMat.emissiveIntensity = strobeOn ? (isNight ? 3.5 : 2.0) : 0.05;
+
+    const beaconOn = (time % 1.0 < 0.14);
+    beaconMat.emissiveIntensity = beaconOn ? (isNight ? 2.8 : 1.5) : 0.1;
+
+    const navIntensity = isNight ? 1.6 : 0.9;
+    navRedMat.emissiveIntensity = navIntensity;
+    navGreenMat.emissiveIntensity = navIntensity;
+    navWhiteMat.emissiveIntensity = navIntensity;
+  };
 
   return group;
 }
