@@ -231,3 +231,34 @@ Headless Chromium ile SwiftShader ortamında tüm anıtlar için 1280x720 çöz�
    - Prosedürel üretilen Roma ve Atina evleri için 4 farklı çatı ve cephe stili tanımlanmıştır; ancak gerçek Roma Subura'sındaki çok katlı ahşap cumbalar gibi uç mimari detaylar performans amacıyla sade tutulmuştur.
 3. **Pist ve Taksiyolu Çizgileri:**
    - İGA pist çizgileri ve apron park noktaları procedürel düzlem geometrisi ile çizilmiştir; dinamik uçak yanaşma rehber sistemi (VDGS) dijital tabelası statik göstergedir.
+
+---
+
+# DALGA 2 (WAVE 2): CANLI SU, HAREKETLİ UÇAKLAR, ROMA ÇÖKÜŞÜ VE DÖNEMSEL VARLIKLAR
+
+**Tarih:** 8 Eylül 2026
+**Çalışma Dalı:** `feat/worlds-alive-w2`
+**Kapsam:** Dört dünya (Aizanoi, Atina, Roma, İGA) ve paylaşılan motor (`frontend/worlds/shared/`)
+
+---
+
+## 1. Dalga 2 Keşif Bulguları (Reconnaissance)
+
+Chromium headless ve SwiftShader software rendering ortamında tüm dünyaların su yolları, İGA apron/pist trafiği ve Roma kentsel dokusu ziyaret edilmiş, telemetri toplanmış ve başlangıç ekran görüntüleri kaydedilmiştir (`artifacts/recon/`, `artifacts/before/`).
+
+### Tespit Edilen Başlıca Eksiklikler:
+1. **Canlı Su (Living Water) Eksikliği:**
+   - Aizanoi (Penkalas), Atina (Ilissos / Eridanos) ve Roma (Tiber) nehirlerinde su yüzeyi yalnızca dünya uzayında statik bir sinüs dalgalanması yapmaktadır.
+   - Nehir yatağının kıvrımları boyunca akıntı yönünde yüzey sürüklenmesi (surface drift), kıyıya paralel akış (bank-parallel flow) ve güneşe göre dinamik mikro ışıltı (shimmer/specular glints) bulunmamaktadır.
+   - Kıyılarda sönümleme (bank damping) olmadığı için bazı kıvrımlarda rıhtım taşları ile su geometrisi arasında düzensiz kesişmeler oluşmaktadır.
+   - Ses sistemi (`audio.js`) nehir yakınlığı için seyrek örnekleme noktaları kullandığından, geniş nehir kısımlarında (özellikle Roma Tiber nehrinde) kıyıda dururken su sesi kesilebilmektedir.
+2. **İGA Donmuş Uçaklar (Frozen Aircraft):**
+   - Havalimanındaki tüm yolcu jetleri körüklerde ve açık park pozisyonlarında tamamen hareketsiz durmaktadır.
+   - Taksiyolu üzerinde pist başına ilerleyen, pistte kalkış koşturması yapıp havalanan veya yaklaşmada süzülen dinamik uçak bulunmamaktadır.
+   - Körükten geri itme (pushback tug) manevrası eksiktir.
+   - Gece modunda uçakların kanat ucu seyrüsefer ve gövde flaşör/strobe ışıkları yanmamaktadır.
+3. **Roma Çöküş Dokusunun Yokluğu (Rome in Decay - MS 410–476):**
+   - Roma dünyası Alaric (410) ve Gaiseric (455) yağmaları sonrasını temsil etmesine rağmen kentsel doku klasik dönem parlaklığındadır.
+   - Bakımsız taş döşemelerin arasından çıkan yabani otlar/çimler, yıkılmış sütun tamburları ve kırık steller, yanmış/çatısız insula kalıntıları, moloz yığınları, çökmüş kemerler ve bronz heykeller üzerindeki oksit/verdigris patinası eksiktir.
+4. **Varlık Envanteri Eksikleri:**
+   - Nehir kıyı sazlıkları, ahşap yaya köprüleri, yük sandalları, moloz ve yıkıntı yığınları, kırık mermer steller ve nehir/şehir üzerinde süzülen kuşlar henüz mevcut değildir.
