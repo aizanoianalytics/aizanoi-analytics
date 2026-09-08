@@ -27,6 +27,24 @@ import {
   buildRunwayApproachLights,
 } from '../../shared/assets/props.js';
 
+
+  // Dense sample points along rivers + springs — feeds proximity-based water ambience
+  const WATER_POINTS = (() => {
+    const pts = [];
+    for (const w of (WATERS || [])) {
+      if (Array.isArray(w.points)) {
+        for (const p of w.points) pts.push({ x: p.x, z: p.z });
+        // densify segments (two-corner rivers are coarse; midpoint raises resolution)
+        for (let i = 0; i < w.points.length - 1; i++) {
+          const a = w.points[i], b = w.points[i + 1];
+          pts.push({ x: (a.x + b.x) / 2, z: (a.z + b.z) / 2 });
+        }
+      } else if (typeof w.x === 'number' && typeof w.z === 'number') {
+        pts.push({ x: w.x, z: w.z });
+      }
+    }
+    return pts;
+  })();
 let renderer, scene, camera, clock;
 let environment, particles, collision, controls, audio, ui, tour, intro;
 let buildingGroups = new Map();
@@ -147,6 +165,7 @@ async function init() {
   intro.onComplete = () => {
     controls.enable();
     audio.init();
+    audio.setSoundset('airport');
     isRunning = true;
   };
 
@@ -298,6 +317,7 @@ function bindEvents() {
       }
       intro.start();
       audio.init();
+      audio.setSoundset('airport');
     });
   }
 
@@ -317,7 +337,15 @@ function bindEvents() {
   bind('btn-map', () => ui.toggleMinimap());
   bind('btn-mobile-map', () => ui.toggleMinimap());
   bind('btn-audio', () => {
-    if (audio) audio.muted ? audio.unmute() : audio.mute();
+    if (!audio) return;
+    audio.resume();
+    audio.muted ? audio.unmute() : audio.mute();
+    const b = document.getElementById('btn-audio');
+    if (b) {
+      b.textContent = audio.muted ? '🔇' : '🔊';
+      b.setAttribute('aria-pressed', String(audio.muted));
+      b.title = audio.muted ? 'Unmute ambient audio' : 'Mute ambient audio';
+    }
   });
   bind('btn-evidence', () => {
     ui.toggleEvidence();
@@ -334,7 +362,8 @@ function bindEvents() {
     const building = BUILDINGS.find(b => b.id === teleportId);
     if (!building) return;
     const safe = collision.findSafeSpawn(building.x, building.z);
-    const angle = Math.atan2(building.x - safe.x, building.z - safe.z);
+    // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
+    const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
     controls.teleportTo(safe.x, safe.z, angle);
     ui.hideTeleportMenu();
   };
@@ -434,7 +463,9 @@ function render() {
   particles.update(dt, camera.position, environment.isNight);
 
   const isMoving = Math.abs(inputState.forward) > 0.1 || Math.abs(inputState.strafe) > 0.1;
-  audio.update(dt, camera.position, environment.isNight, isMoving, inputState.run);
+  audio.update(dt, camera.position, environment.isNight, isMoving, inputState.run, {
+    waters: WATER_POINTS,
+  });
 
   const euler = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ');
   ui.updateMinimap(camera.position.x, camera.position.z, euler.y);
