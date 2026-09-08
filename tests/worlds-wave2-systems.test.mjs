@@ -150,3 +150,62 @@ test('Rome decay: verdigris bronze statuary, charred insulae, collapsed arcade a
   assert.ok(evidenceMat, 'Evidence material for atmospheric/inferred must resolve');
   assert.equal(evidenceMat.color.getHex(), 0xc98778, 'Evidence color must match atmospheric tint 0xc98778');
 });
+
+test('Wave 5 — Period small assets: river reeds, cargo skiffs, footbridges, and aerial bird flocks', async () => {
+  const {
+    buildRiverReeds,
+    buildCargoSkiff,
+    buildWoodenFootbridge,
+    buildBirdFlock,
+  } = await import('../frontend/worlds/shared/assets/props.js');
+
+  // 1. River reeds
+  const reeds = buildRiverReeds(10, 20, 15, 3);
+  assert.equal(reeds.name, 'river-reeds', 'River reeds group name');
+  assert.equal(reeds.position.x, 10);
+  assert.equal(reeds.position.z, 20);
+  assert.ok(reeds.children.length >= 15, 'Reeds should contain at least 15 stalks');
+
+  // 2. Cargo skiff
+  const skiff = buildCargoSkiff(50, 60, 0.5);
+  assert.equal(skiff.name, 'cargo-skiff', 'Cargo skiff group name');
+  assert.equal(skiff.position.x, 50);
+  assert.equal(skiff.position.z, 60);
+  assert.equal(skiff.rotation.y, 0.5);
+  let hasAmphoraCargo = false;
+  let hasMooringPost = false;
+  skiff.traverse(child => {
+    if (child.name === 'skiff-amphora') hasAmphoraCargo = true;
+    if (child.name === 'skiff-mooring-post') hasMooringPost = true;
+  });
+  assert.ok(hasAmphoraCargo, 'Skiff must carry amphora cargo');
+  assert.ok(hasMooringPost, 'Skiff must have mooring post');
+
+  // 3. Wooden footbridge
+  const bridge = buildWoodenFootbridge(100, 200, 0.2, 16, 2.5);
+  assert.equal(bridge.name, 'wooden-footbridge', 'Wooden footbridge group name');
+  assert.equal(bridge.position.x, 100);
+  assert.equal(bridge.position.z, 200);
+  let stringerCount = 0;
+  let plankCount = 0;
+  bridge.traverse(child => {
+    if (child.name === 'bridge-stringer') stringerCount++;
+    if (child.name === 'bridge-plank') plankCount++;
+  });
+  assert.ok(stringerCount >= 2, 'Must have at least 2 longitudinal stringers');
+  assert.ok(plankCount >= 10, 'Must have transverse decking planks');
+
+  // 4. Aerial bird flock
+  const flock = buildBirdFlock(0, 45, 0, 12, 35);
+  assert.equal(flock.name, 'bird-flock', 'Bird flock group name');
+  assert.equal(flock.children.length, 12, 'Flock must instantiate 12 bird meshes');
+  assert.ok(typeof flock.userData.update === 'function', 'Flock must expose update(dt)');
+
+  // Test orbital progression over time
+  const initialAngle = flock.children[0].userData.orbitAngle;
+  flock.userData.update(0.5);
+  const updatedAngle = flock.children[0].userData.orbitAngle;
+  assert.notEqual(initialAngle, updatedAngle, 'Bird orbit angles must advance on update()');
+  assert.equal(flock.position.y, 45, 'Flock group maintains flight altitude');
+  assert.ok(flock.children[0].position.y >= 0, 'Birds maintain local elevation');
+});

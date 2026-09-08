@@ -38,7 +38,10 @@ import {
   buildPavingWeeds,
   buildFallenColumnDrums,
   buildShatteredStele,
-  buildDebrisPile
+  buildDebrisPile,
+  buildRiverReeds,
+  buildCargoSkiff,
+  buildBirdFlock,
 } from '../../shared/assets/props.js';
 
 
@@ -46,7 +49,7 @@ import {
   const WATER_POINTS = buildWaterSamplePoints(WATERS, 25);
 let renderer, scene, camera, clock;
 let environment, waterSystem, vegetation, particles;
-let collision, controls, audio, ui, tour, intro;
+let collision, controls, audio, ui, tour, intro, birdFlock;
 let buildingGroups = new Map();
 let isRunning = false;
 
@@ -425,6 +428,21 @@ function populateRomeDressing() {
     dressingGroup.add(buildPavingWeeds(wx, wz, (i * 0.7) % Math.PI, 0.9 + (i % 3) * 0.2));
   }
 
+  // 14. Living Water & Bird Life (Tiber Reeds, Moored Skiffs, Capitolium Flock)
+  // Reeds along Tiber river banks near Forum Boarium & wharves
+  dressingGroup.add(buildRiverReeds(-195, -200, 18, 3.2));
+  dressingGroup.add(buildRiverReeds(-220, -250, 16, 3.0));
+  dressingGroup.add(buildRiverReeds(-175, -170, 14, 2.8));
+  dressingGroup.add(buildRiverReeds(-430, -370, 20, 3.5));
+
+  // Small river cargo skiffs moored at Tiber wharves
+  dressingGroup.add(buildCargoSkiff(-190, -210, 0.18));
+  dressingGroup.add(buildCargoSkiff(-215, -265, -0.22));
+
+  // Aerial bird flock circling over the Forum Romanum & Capitoline Hill
+  birdFlock = buildBirdFlock(-65, 46, 25, 14, 36);
+  dressingGroup.add(birdFlock);
+
   scene.add(dressingGroup);
 }
 
@@ -592,6 +610,10 @@ function inspectLookedAt() {
 
 function render() {
   const dt = Math.min(clock.getDelta(), 0.05);
+
+  if (birdFlock?.userData?.update) {
+    birdFlock.userData.update(dt);
+  }
 
   if (intro && !intro.isComplete) {
     intro.update(dt);

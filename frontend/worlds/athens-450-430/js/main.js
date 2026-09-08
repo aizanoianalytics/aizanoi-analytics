@@ -37,6 +37,10 @@ import {
   buildSacrificialAltar,
   buildMerchantVessel,
   buildSundialMonument,
+  buildRiverReeds,
+  buildCargoSkiff,
+  buildWoodenFootbridge,
+  buildBirdFlock,
 } from '../../shared/assets/props.js';
 
 /* ── Global state ─────────────────────────────────────────── */
@@ -46,7 +50,7 @@ import {
   const WATER_POINTS = buildWaterSamplePoints(WATERS, 25);
 let renderer, scene, camera, clock;
 let environment, waterSystem, vegetation, particles;
-let collision, controls, audio, ui, tour, intro;
+let collision, controls, audio, ui, tour, intro, birdFlock;
 let buildingGroups = new Map();    // id → THREE.Group
 let urbanFabricGroup;
 let groundMesh;
@@ -458,6 +462,24 @@ function populateStreetDressing() {
   dressingGroup.add(buildMerchantVessel(920, 240, 0.4));
   dressingGroup.add(buildMerchantVessel(880, 270, -0.3));
 
+  // 11. Living Water Assets & Acropolis Bird Flock
+  // Riverbank reeds along Ilissos / Kallirrhoe spring and Eridanos stream
+  dressingGroup.add(buildRiverReeds(-255, 163, 16, 2.8));
+  dressingGroup.add(buildRiverReeds(-272, 155, 14, 2.5));
+  dressingGroup.add(buildRiverReeds(-310, 150, 18, 3.2));
+  dressingGroup.add(buildRiverReeds(280, 225, 16, 2.6));
+  dressingGroup.add(buildRiverReeds(375, 235, 18, 3.0));
+
+  // Ancient wooden cargo skiff moored along Ilissos
+  dressingGroup.add(buildCargoSkiff(-280, 172, 0.25));
+
+  // Rustic wooden footbridge across Ilissos river near Kallirrhoe
+  dressingGroup.add(buildWoodenFootbridge(-270, 160, 0.78, 14, 2.4));
+
+  // Aerial bird flock circling over the Acropolis sanctuary
+  birdFlock = buildBirdFlock(0, 48, -280, 12, 36);
+  dressingGroup.add(birdFlock);
+
   scene.add(dressingGroup);
 }
 
@@ -652,6 +674,10 @@ function inspectLookedAt() {
 
 function render() {
   const dt = Math.min(clock.getDelta(), 0.05); // Cap at 50ms
+
+  if (birdFlock?.userData?.update) {
+    birdFlock.userData.update(dt);
+  }
 
   /* ── Intro sequence ─────────────────────────────────── */
   if (intro && !intro.isComplete) {

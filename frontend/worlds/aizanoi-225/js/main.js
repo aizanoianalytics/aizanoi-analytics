@@ -34,6 +34,10 @@ import {
   buildSacrificialAltar,
   buildMerchantVessel,
   buildSundialMonument,
+  buildRiverReeds,
+  buildCargoSkiff,
+  buildWoodenFootbridge,
+  buildBirdFlock,
 } from '../../shared/assets/props.js';
 
 
@@ -41,7 +45,7 @@ import {
   const WATER_POINTS = buildWaterSamplePoints(WATERS, 25);
 let renderer, scene, camera, clock;
 let environment, waterSystem, vegetation, particles;
-let collision, controls, audio, ui, tour, intro;
+let collision, controls, audio, ui, tour, intro, birdFlock;
 let buildingGroups = new Map();
 let isRunning = false;
 
@@ -401,6 +405,24 @@ function populateAizanoiDressing() {
   dressingGroup.add(buildStoneBench(-55, -580, 0));
   dressingGroup.add(buildStoneBench(-75, -580, 0));
 
+  // 6. Penkalas River Living Assets & Sanctuary Birds
+  // Riverbank reeds along Penkalas shallows and quays
+  dressingGroup.add(buildRiverReeds(90, -220, 14, 3.2));
+  dressingGroup.add(buildRiverReeds(130, -20, 12, 3.0));
+  dressingGroup.add(buildRiverReeds(140, 110, 15, 3.5));
+  dressingGroup.add(buildRiverReeds(95, -70, 10, 2.5));
+
+  // Ancient wooden cargo skiffs moored along Penkalas riverbank
+  dressingGroup.add(buildCargoSkiff(100, -115, 0.25));
+  dressingGroup.add(buildCargoSkiff(125, 10, -0.3));
+
+  // Rustic wooden footbridge spanning upper Penkalas
+  dressingGroup.add(buildWoodenFootbridge(105, -290, 0.45, 16, 2.4));
+
+  // Aerial bird flock circling over the Temple of Zeus sanctuary
+  birdFlock = buildBirdFlock(-150, 42, 25, 10, 28);
+  dressingGroup.add(birdFlock);
+
   scene.add(dressingGroup);
 }
 
@@ -566,6 +588,10 @@ function inspectLookedAt() {
 
 function render() {
   const dt = Math.min(clock.getDelta(), 0.05);
+
+  if (birdFlock?.userData?.update) {
+    birdFlock.userData.update(dt);
+  }
 
   if (intro && !intro.isComplete) {
     intro.update(dt);
