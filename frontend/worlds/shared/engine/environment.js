@@ -21,7 +21,7 @@ const PALETTES = {
   noon:    { sky: [0.40, 0.65, 0.95], ambient: [0.55, 0.55, 0.60], sun: [1.0, 0.97, 0.90], fog: [0.60, 0.68, 0.80], intensity: 1.0 },
   afternoon: { sky: [0.50, 0.68, 0.90], ambient: [0.52, 0.50, 0.50], sun: [1.0, 0.88, 0.68], fog: [0.62, 0.66, 0.74], intensity: 0.85 },
   dusk:    { sky: [0.90, 0.45, 0.25], ambient: [0.40, 0.28, 0.25], sun: [1.0, 0.50, 0.20], fog: [0.70, 0.40, 0.28], intensity: 0.5 },
-  night:   { sky: [0.05, 0.06, 0.12], ambient: [0.08, 0.08, 0.14], sun: [0.15, 0.18, 0.30], fog: [0.04, 0.05, 0.10], intensity: 0.08 },
+  night:   { sky: [0.06, 0.09, 0.18], ambient: [0.22, 0.24, 0.35], sun: [0.30, 0.38, 0.55], fog: [0.06, 0.08, 0.15], intensity: 0.35 },
 };
 
 const PHASE_TIMES = [
@@ -169,8 +169,8 @@ export class Environment {
     this.sunLight.shadow.camera.right = 300;
     this.sunLight.shadow.camera.top = 300;
     this.sunLight.shadow.camera.bottom = -300;
-    this.sunLight.shadow.bias = -0.0005;
-    this.sunLight.shadow.normalBias = 0.02;
+    this.sunLight.shadow.bias = -0.00008;
+    this.sunLight.shadow.normalBias = 0.04;
     this.scene.add(this.sunLight);
 
     // Shadow camera follows the player for quality
