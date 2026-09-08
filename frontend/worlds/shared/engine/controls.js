@@ -430,8 +430,8 @@ export class Controls {
   /* ── Camera position helpers ────────────────────────── */
 
   /** Set camera position and look direction */
-  teleportTo(x, z, angle) {
-    this.camera.position.set(x, 1.7, z);
+  teleportTo(x, z, angle, y = 1.7) {
+    this.camera.position.set(x, y, z);
     this.euler.set(0, angle, 0, 'YXZ');
     this.camera.quaternion.setFromEuler(this.euler);
   }

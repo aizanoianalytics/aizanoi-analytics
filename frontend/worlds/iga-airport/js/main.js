@@ -386,7 +386,8 @@ function bindEvents() {
     const safe = collision.findSafeSpawn(building.x, building.z);
     // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
-    controls.teleportTo(safe.x, safe.z, angle);
+    const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
+    controls.teleportTo(safe.x, safe.z, angle, targetY);
     ui.hideTeleportMenu();
   };
 }

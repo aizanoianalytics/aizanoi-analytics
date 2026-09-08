@@ -195,29 +195,82 @@ export function createAqueductArcade(length, height, depth, archCount = 5, mater
 export function createRotundaWithDome(radius, wallHeight, domeHeight, oculusRadius = 2.5, material = 'travertine') {
   const group = new THREE.Group();
   const mat = getMaterial(material);
+  const wallThick = 2.4;
 
-  // Cylinder drum
-  const drumGeo = new THREE.CylinderGeometry(radius, radius, wallHeight, 32);
-  const drum = new THREE.Mesh(drumGeo, mat);
-  drum.position.y = wallHeight / 2;
-  drum.castShadow = true;
-  drum.receiveShadow = true;
-  group.add(drum);
+  // 1. Paved Interior Floor (Polished imperial marble circle)
+  const floorMat = getMaterial('marble', { roughness: 0.25 });
+  const floorMesh = new THREE.Mesh(new THREE.CircleGeometry(radius - 0.2, 32), floorMat);
+  floorMesh.rotateX(-Math.PI / 2);
+  floorMesh.position.y = 0.1;
+  floorMesh.receiveShadow = true;
+  group.add(floorMesh);
 
-  // Hemispherical dome
-  const domeGeo = new THREE.SphereGeometry(radius * 0.98, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2);
+  // 2. Drum Wall with Open Northern Portal
+  // Outer drum shell (open-ended cylinder)
+  const outerDrumGeo = new THREE.CylinderGeometry(radius, radius, wallHeight, 36, 1, true);
+  const outerDrum = new THREE.Mesh(outerDrumGeo, mat);
+  outerDrum.position.y = wallHeight / 2;
+  outerDrum.castShadow = true;
+  outerDrum.receiveShadow = true;
+  group.add(outerDrum);
+
+  // Inner drum shell (inward-facing surface)
+  const innerRadius = radius - wallThick;
+  const innerDrumGeo = new THREE.CylinderGeometry(innerRadius, innerRadius, wallHeight, 36, 1, true);
+  const innerMat = getMaterial('travertine', { side: THREE.BackSide, roughness: 0.8 });
+  const innerDrum = new THREE.Mesh(innerDrumGeo, innerMat);
+  innerDrum.position.y = wallHeight / 2;
+  innerDrum.receiveShadow = true;
+  group.add(innerDrum);
+
+  // Drum top cap ring
+  const capRingGeo = new THREE.RingGeometry(innerRadius, radius, 36);
+  capRingGeo.rotateX(-Math.PI / 2);
+  const capRing = new THREE.Mesh(capRingGeo, mat);
+  capRing.position.y = wallHeight;
+  group.add(capRing);
+
+  // 3. Coffered Hemispherical Concrete Dome (visible from both inside and outside)
+  const domeMat = getMaterial('concrete', { side: THREE.DoubleSide, roughness: 0.75 });
+  const domeGeo = new THREE.SphereGeometry(radius * 0.98, 36, 18, 0, Math.PI * 2, 0, Math.PI / 2);
   domeGeo.scale(1, domeHeight / radius, 1);
-  const dome = new THREE.Mesh(domeGeo, getMaterial('concrete'));
+  const dome = new THREE.Mesh(domeGeo, domeMat);
   dome.position.y = wallHeight;
   dome.castShadow = true;
+  dome.receiveShadow = true;
   group.add(dome);
 
-  // Oculus rim ring
-  const oculusGeo = new THREE.TorusGeometry(oculusRadius, 0.4, 8, 24);
+  // Interior dome coffering stepped rings
+  for (let ring = 1; ring <= 5; ring++) {
+    const ringRadius = (radius * 0.96) * Math.cos((ring / 6) * (Math.PI / 2));
+    const ringY = wallHeight + (domeHeight * Math.sin((ring / 6) * (Math.PI / 2)));
+    const cofferRing = new THREE.Mesh(new THREE.TorusGeometry(ringRadius, 0.4, 6, 32), mat);
+    cofferRing.rotateX(Math.PI / 2);
+    cofferRing.position.y = ringY;
+    group.add(cofferRing);
+  }
+
+  // 4. Bronze Oculus Rim Ring
+  const oculusGeo = new THREE.TorusGeometry(oculusRadius, 0.5, 8, 32);
   oculusGeo.rotateX(Math.PI / 2);
   const oculus = new THREE.Mesh(oculusGeo, getMaterial('bronze'));
   oculus.position.y = wallHeight + domeHeight;
   group.add(oculus);
+
+  // 5. Oculus Golden Sunlight Beam descending through the rotunda
+  const sunBeamMat = new THREE.MeshStandardMaterial({
+    color: 0xfff3cc,
+    emissive: 0xffe6aa,
+    emissiveIntensity: 0.5,
+    transparent: true,
+    opacity: 0.2,
+    side: THREE.DoubleSide,
+    depthWrite: false
+  });
+  const beamGeo = new THREE.CylinderGeometry(oculusRadius * 0.9, oculusRadius * 2.5, wallHeight + domeHeight, 16, 1, true);
+  const beam = new THREE.Mesh(beamGeo, sunBeamMat);
+  beam.position.y = (wallHeight + domeHeight) / 2;
+  group.add(beam);
 
   return group;
 }
