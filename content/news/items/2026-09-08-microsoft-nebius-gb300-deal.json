@@ -1,0 +1,24 @@
+{
+  "id": "2026-09-08-microsoft-nebius-gb300-deal",
+  "title": "Microsoft locks in 100,000+ Nvidia GB300 chips via $19.4B Nebius deal",
+  "summary": "Microsoft agreed a five-year, up-to-$19.4 billion arrangement with neocloud operator Nebius Group, securing access to more than 100,000 Nvidia GB300 accelerators for its internal large-language-model and consumer AI teams. The capacity is meant to relieve a data-center crunch that has forced Microsoft to rent power elsewhere, freeing its own server farms for paid AI services. Nebius shares jumped about 16-19% on the September 8 announcement, which stopped short of disclosing the exact chip and power schedule.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-09-08T08:15:00Z",
+  "updatedAt": "2026-09-08T08:15:00Z",
+  "retrievedAt": "2026-09-08T08:07:55Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Microsoft", "Nebius", "Nvidia GB300", "neocloud", "AI infrastructure", "hyperscaler"],
+  "sources": [{
+    "publisher": "Data Center Knowledge",
+    "url": "https://datacenterknowledge.com/cloud/microsoft-bets-33b-on-neoclouds-to-ease-ai-crunch",
+    "publishedAt": "2026-09-08T00:00:00Z"
+  }, {
+    "publisher": "Yahoo Finance",
+    "url": "https://finance.yahoo.com/news/why-nebius-group-nbis-16-122453851.html",
+    "publishedAt": "2026-09-08T00:00:00Z"
+  }]
+}

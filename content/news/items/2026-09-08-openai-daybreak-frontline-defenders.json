@@ -1,0 +1,24 @@
+{
+  "id": "2026-09-08-openai-daybreak-frontline-defenders",
+  "title": "OpenAI commits $1 billion to frontline defenders via Daybreak cyber program",
+  "summary": "OpenAI framed its Daybreak for Frontline Defenders program as a $1 billion commitment expanding access to its frontier cyber AI, training and incident-response support for essential service providers. The launch follows the early-September release of GPT-6 Astra, the first OpenAI model classified Critical under the Preparedness Framework for autonomously finding and exploiting vulnerabilities. Daybreak is positioned as the controlled-access counterpart for screened enterprise and infrastructure customers that need the same capability class with stronger guardrails.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-08T08:45:00Z",
+  "updatedAt": "2026-09-08T08:45:00Z",
+  "retrievedAt": "2026-09-08T08:36:18Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "Daybreak", "cybersecurity", "GPT-6 Astra", "Preparedness Framework"],
+  "sources": [{
+    "publisher": "OpenAI",
+    "url": "https://openai.com/index/daybreak-for-frontline-defenders/",
+    "publishedAt": "2026-09-08T00:00:00Z"
+  }, {
+    "publisher": "Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/OpenAI_GPT-6_Astra",
+    "publishedAt": "2026-09-05T00:00:00Z"
+  }]
+}

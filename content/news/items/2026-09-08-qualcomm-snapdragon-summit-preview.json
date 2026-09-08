@@ -1,0 +1,24 @@
+{
+  "id": "2026-09-08-qualcomm-snapdragon-summit-preview",
+  "title": "Qualcomm's Snapdragon Summit 2026 set for September 22-24 with 2nm Gen 6 flagship",
+  "summary": "Qualcomm confirmed its ninth annual Snapdragon Summit will run September 22-24 in Maui, Hawaii, where it is expected to introduce the Snapdragon 8 Elite Gen 6 family as the first 2nm mobile flagship chip at scale. Pre-event reporting frames the chip as the silicon for next year's premium Android tier, including the Galaxy S27 and Xiaomi 18, with neural and agentic AI silicon sharing the stage with traditional mobile CPU and GPU upgrades. The Maui keynote also marks Qualcomm's annual bet beyond the smartphone into PCs, automotive and XR reference designs.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-08T09:45:00Z",
+  "updatedAt": "2026-09-08T09:45:00Z",
+  "retrievedAt": "2026-09-08T09:38:09Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Qualcomm", "Snapdragon Summit 2026", "Snapdragon 8 Elite Gen 6", "2nm", "Android flagships"],
+  "sources": [{
+    "publisher": "Qualcomm",
+    "url": "https://www.qualcomm.com/company/events/snapdragon-summit",
+    "publishedAt": "2026-09-08T00:00:00Z"
+  }, {
+    "publisher": "Gadgets Now",
+    "url": "https://gadgetsnow.indiatimes.com/tech-news/qualcomm-sets-snapdragon-summit-2026-in-maui-as-it-bets-billions-beyond-the-smartphone/articleshow/132087977.cms",
+    "publishedAt": "2026-09-08T00:00:00Z"
+  }]
+}

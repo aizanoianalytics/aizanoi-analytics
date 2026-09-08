@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-07T07:30:00.000Z",
+  "generatedAt": "2026-09-08T12:48:18.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-08",
+      "path": "/news/2026-09-08/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-07",
       "path": "/news/2026-09-07/",
@@ -99,6 +104,556 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-08-ballon-d-or-nominees-revealed",
+      "kind": "daily",
+      "title": "Ballon d'Or 2026 names 30-man shortlist across men's, women's and club awards",
+      "summary": "France Football unveiled the full 2026 Ballon d'Or shortlists on Tuesday, September 8, with announcements running between 11:00 and 16:00 CET across the official Ballon d'Or platforms. The men's and women's Ballon d'Or each carry 30 names, supported by shortlists of 10 men's and 5 women's Young Talent, Goalkeeper, Striker, Club and Coach of the Year candidates. Voting now shifts to an international journalist jury ahead of the October 26 ceremony in London, the first Ballon d'Or gala held outside Paris.",
+      "category": "football",
+      "priority": 80,
+      "publishedAt": "2026-09-08T13:00:00.000Z",
+      "updatedAt": "2026-09-08T13:00:00.000Z",
+      "retrievedAt": "2026-09-08T12:48:18.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Ballon d'Or",
+        "France Football",
+        "Harry Kane",
+        "Champions League",
+        "World Cup 2026",
+        "London ceremony"
+      ],
+      "sources": [
+        {
+          "publisher": "Ballon d'Or (official)",
+          "url": "https://ballondor.com/news/posts/the-ballon-dor-2026-unveiling-of-nominees-imminent-check-when",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "beIN Sports",
+          "url": "https://www.beinsports.com/en-us/soccer/articles/ballon-d-or-2026-nominees-announcement-date-revealed-2026-09-01",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-bayern-held-by-schalke-dortmund-win",
+      "kind": "daily",
+      "title": "Bayern's 67-matchday Bundesliga lead ends in Schalke draw as Dortmund rally",
+      "summary": "Defending champions Bayern Munich were held to a 0-0 draw at promoted Schalke on September 6, ending a 67-matchday run atop the Bundesliga table and marking the first time they had failed to score since February 2025. Schalke, who had not taken a point off Bayern in nine years, lifted the result in Gelsenkirchen with goalkeeper Manuel Neuer playing what he said could be his final match at the club. Borussia Dortmund came from 2-0 down to win 3-2 at Hoffenheim, with Arsenal loanee Ethan Nwaneri setting up the late deflected winner.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-09-08T12:25:00.000Z",
+      "updatedAt": "2026-09-08T12:25:00.000Z",
+      "retrievedAt": "2026-09-08T12:17:05.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Bayern Munich",
+        "Schalke",
+        "Borussia Dortmund",
+        "Hoffenheim",
+        "Bundesliga",
+        "Nwaneri"
+      ],
+      "sources": [
+        {
+          "publisher": "Newswav",
+          "url": "https://newswav.com/article/bayern-stunned-by-promoted-schalke-champions-67-match-day-reign-at-bundesli-A2609_AMdobe",
+          "publishedAt": "2026-09-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-arsenal-beat-chelsea-london-derby",
+      "kind": "daily",
+      "title": "Arsenal comeback beats Chelsea 2-1 to stay perfect in Premier League",
+      "summary": "Defending champions Arsenal came from behind at the Emirates to beat Chelsea 2-1 on September 6 and stretch their Premier League start to three wins from three. Morgan Rogers, a Chelsea summer signing, put the visitors ahead after 77 seconds before Kai Havertz equalised from the edge of the box and Martin Ødegaard finished a Christos Tzolis pass via a Havertz dummy to complete the turnaround. The match is being read as an early marker on Arsenal's title credentials and on Chelsea's challenger potential under new manager Liam Rosenior.",
+      "category": "football",
+      "priority": 75,
+      "publishedAt": "2026-09-08T12:00:00.000Z",
+      "updatedAt": "2026-09-08T12:00:00.000Z",
+      "retrievedAt": "2026-09-08T11:54:21.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Arsenal",
+        "Chelsea",
+        "Premier League",
+        "Havertz",
+        "Odegaard",
+        "Rogers",
+        "London derby"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://skysports.com/football/news/11095/13571847/arsenal-2-1-chelsea-kai-havertz-and-martin-odegaard-secure-comeback-win-for-champions-in-pulsating-london-derby",
+          "publishedAt": "2026-09-06T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-fed-sept-hike-odds-firm",
+      "kind": "daily",
+      "title": "Fed Sept 16 hike odds firm near 50% as Warsh's Jackson Hole echoes stick",
+      "summary": "Prediction markets and CME fed funds futures continue to price a near-coin-flip chance of a 25-basis-point Federal Reserve hike at the September 15-16 meeting, with Kalshi at 50.0% and CME implied at 57.9% on the latest cross-venue capture. The shift from a 26% Kalshi print two weeks ago traces to Chair Kevin Warsh's Jackson Hole emphasis on prices, a 3.7% July PCE print and a 9-3 July hold with three dissents. The implied path points to two hikes by year-end as the base case, with a 39% chance the policy rate ends December a half-point above today's range.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-09-08T11:25:00.000Z",
+      "updatedAt": "2026-09-08T11:25:00.000Z",
+      "retrievedAt": "2026-09-08T11:17:30.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Federal Reserve",
+        "FOMC",
+        "Kevin Warsh",
+        "Jackson Hole",
+        "PCE",
+        "prediction markets"
+      ],
+      "sources": [
+        {
+          "publisher": "PredictionMarketsPicks",
+          "url": "https://predictionmarketspicks.com/tools/fed-rate-tracker/september-2026",
+          "publishedAt": "2026-09-07T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/wall-st-futures-kick-off-september-under-pressure-yields-oil-prices-rise-2026-09-01",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-ecb-policy-meeting-preview",
+      "kind": "daily",
+      "title": "ECB set to keep rates at 2.25% in Thursday's Berlin meeting preview",
+      "summary": "The European Central Bank's Governing Council meets September 9-10 in Berlin, hosted by the Deutsche Bundesbank, with the rate decision and Christine Lagarde's press conference scheduled for the second day. The deposit facility rate has been held at 2.25% since the June 11 hike from 2.00%, and the July 23 meeting kept the three key rates unchanged. Market pricing is split on whether the September decision marks the end of the post-energy-shock tightening or the start of a more sustained pause, with new staff macroeconomic projections adding the usual projection-meeting weight.",
+      "category": "economy-markets",
+      "priority": 65,
+      "publishedAt": "2026-09-08T11:00:00.000Z",
+      "updatedAt": "2026-09-08T11:00:00.000Z",
+      "retrievedAt": "2026-09-08T10:52:54.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ECB",
+        "deposit facility rate",
+        "Berlin",
+        "Lagarde",
+        "euro area inflation",
+        "monetary policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Wall Street Economicists",
+          "url": "https://wallstreeteconomicists.com/articles/ecb-september-2026-rate-decision",
+          "publishedAt": "2026-09-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "Finance Calendar",
+          "url": "https://www.financecalendar.com/event/ecb-rate-decision-september-2026",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-oil-stuck-below-100-us-iran",
+      "kind": "daily",
+      "title": "Brent holds below $100 despite Strait of Hormuz and Red Sea disruption",
+      "summary": "Brent crude rallied through September but remained under $100 a barrel on September 8, even as US-Iran escalation has disrupted Gulf exports through the Strait of Hormuz and the Red Sea. WTI traded near $92.30 in the Asian session after touching a two-month high of $93.29, with Trading Economics data showing crude at $92.37, up 12.47% over the past month. The disconnect between physical supply pressure and price action is the puzzle Reuters flagged in a September 8 explainer on the US-Iran shock.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-09-08T10:30:00.000Z",
+      "updatedAt": "2026-09-08T10:30:00.000Z",
+      "retrievedAt": "2026-09-08T10:23:07.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil prices",
+        "Brent",
+        "WTI",
+        "Strait of Hormuz",
+        "Red Sea",
+        "US-Iran"
+      ],
+      "sources": [
+        {
+          "publisher": "Trading Economics",
+          "url": "https://tradingeconomics.com/commodity/crude-oil",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/energy/why-isnt-oil-above-100-despite-supply-disruptions-2026-09-08/",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-openai-jalapeno-vs-nvidia-inference",
+      "kind": "daily",
+      "title": "OpenAI's Jalapeño chip claims 1.5-1.9x Nvidia efficiency on inference",
+      "summary": "OpenAI's Jalapeño inference ASIC, co-designed with Broadcom and fabricated by TSMC, was presented at Hot Chips 2026 as delivering 1.5 to 1.9 times higher throughput per kilowatt and 1.7 to 3.6 times lower latency than Nvidia's GB200 and GB300 on selected inference workloads. The chip went from architectural concept to running OpenAI's Codex model in nine months, with AI models writing more than half the core in the XLS hardware language. Independent verification has not yet been published, and Nvidia's $1 trillion combined Blackwell-and-Vera-Rubin forecast for 2026-27 is unchanged.",
+      "category": "ai",
+      "priority": 65,
+      "publishedAt": "2026-09-08T10:10:00.000Z",
+      "updatedAt": "2026-09-08T10:10:00.000Z",
+      "retrievedAt": "2026-09-08T10:01:48.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "Jalapeño",
+        "Broadcom",
+        "TSMC",
+        "Hot Chips 2026",
+        "Nvidia inference"
+      ],
+      "sources": [
+        {
+          "publisher": "AutoNaiNews",
+          "url": "https://autonainews.com/openais-jalapeno-chip-claims-inference-efficiency-over-nvidia",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/data-center-chips/gtc-2026-nvidia-unveils-vera-rubin-ai-platform-eyes-1t-by-2027",
+          "publishedAt": "2026-03-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-qualcomm-snapdragon-summit-preview",
+      "kind": "daily",
+      "title": "Qualcomm's Snapdragon Summit 2026 set for September 22-24 with 2nm Gen 6 flagship",
+      "summary": "Qualcomm confirmed its ninth annual Snapdragon Summit will run September 22-24 in Maui, Hawaii, where it is expected to introduce the Snapdragon 8 Elite Gen 6 family as the first 2nm mobile flagship chip at scale. Pre-event reporting frames the chip as the silicon for next year's premium Android tier, including the Galaxy S27 and Xiaomi 18, with neural and agentic AI silicon sharing the stage with traditional mobile CPU and GPU upgrades. The Maui keynote also marks Qualcomm's annual bet beyond the smartphone into PCs, automotive and XR reference designs.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-08T09:45:00.000Z",
+      "updatedAt": "2026-09-08T09:45:00.000Z",
+      "retrievedAt": "2026-09-08T09:38:09.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Qualcomm",
+        "Snapdragon Summit 2026",
+        "Snapdragon 8 Elite Gen 6",
+        "2nm",
+        "Android flagships"
+      ],
+      "sources": [
+        {
+          "publisher": "Qualcomm",
+          "url": "https://www.qualcomm.com/company/events/snapdragon-summit",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Gadgets Now",
+          "url": "https://gadgetsnow.indiatimes.com/tech-news/qualcomm-sets-snapdragon-summit-2026-in-maui-as-it-bets-billions-beyond-the-smartphone/articleshow/132087977.cms",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-huawei-mate-xt-2-kirin-9050-pro",
+      "kind": "daily",
+      "title": "Huawei's Mate XT 2 debuts as the first tri-fold with Kirin 9050 Pro and LogicFolding chip",
+      "summary": "Huawei unveiled the Mate XT 2 Ultimate Design on September 7, billing it as the first smartphone to carry the new LogicFolding Tau (τ) chip alongside the Kirin 9050 Pro and to reach mass commercialization. The tri-fold device adds the Xuanwu Ultra-Durable Tri-Fold Architecture, an IP58/59-rated hinge, a Smart Shield Privacy Screen, True-to-Color Camera 3.0 and the HarmonyOS 7 large-screen experience. Huawei says overall performance is up 42% over the previous generation, with the LinxiCore CPU and Ultra-smooth Ark Engine paired for heavy multitasking.",
+      "category": "technology",
+      "priority": 65,
+      "publishedAt": "2026-09-08T09:25:00.000Z",
+      "updatedAt": "2026-09-08T09:25:00.000Z",
+      "retrievedAt": "2026-09-08T09:18:42.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Huawei",
+        "Mate XT 2",
+        "Kirin 9050 Pro",
+        "LogicFolding",
+        "HarmonyOS 7",
+        "tri-fold"
+      ],
+      "sources": [
+        {
+          "publisher": "AsiaNews",
+          "url": "https://asianews.network/huawei-mate-xt-2-ultimate-design-debuts-as-the-first-smartphone-to-feature-logicfolding-tau-%CF%84-chip-and-reach-mass-commercialization",
+          "publishedAt": "2026-09-07T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-microsoft-copilot-anthropic-default",
+      "kind": "daily",
+      "title": "Microsoft turns Anthropic models on by default in commercial Copilot",
+      "summary": "Microsoft is enabling Anthropic models by default for most commercial cloud customers of Microsoft Copilot, excluding EU/EFTA and UK, after onboarding Anthropic as a Microsoft Online Services subprocessor. The change sits inside the broader 'Frontier' Copilot direction that mixes OpenAI and Anthropic models across Word, Excel and PowerPoint experiences, with Anthropic's Claude available in mainline chat via the Frontier program. Microsoft says the Microsoft Customer Copyright Commitment and Enterprise Data Protection apply to Anthropic use through its enterprise Online Services.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-09-08T09:05:00.000Z",
+      "updatedAt": "2026-09-08T09:05:00.000Z",
+      "retrievedAt": "2026-09-08T08:56:23.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "Copilot",
+        "Anthropic",
+        "Claude",
+        "Frontier program",
+        "enterprise AI"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft Learn",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/connect-to-ai-subprocessor",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-openai-daybreak-frontline-defenders",
+      "kind": "daily",
+      "title": "OpenAI commits $1 billion to frontline defenders via Daybreak cyber program",
+      "summary": "OpenAI framed its Daybreak for Frontline Defenders program as a $1 billion commitment expanding access to its frontier cyber AI, training and incident-response support for essential service providers. The launch follows the early-September release of GPT-6 Astra, the first OpenAI model classified Critical under the Preparedness Framework for autonomously finding and exploiting vulnerabilities. Daybreak is positioned as the controlled-access counterpart for screened enterprise and infrastructure customers that need the same capability class with stronger guardrails.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-08T08:45:00.000Z",
+      "updatedAt": "2026-09-08T08:45:00.000Z",
+      "retrievedAt": "2026-09-08T08:36:18.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "Daybreak",
+        "cybersecurity",
+        "GPT-6 Astra",
+        "Preparedness Framework"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/daybreak-for-frontline-defenders/",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/OpenAI_GPT-6_Astra",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-microsoft-nebius-gb300-deal",
+      "kind": "daily",
+      "title": "Microsoft locks in 100,000+ Nvidia GB300 chips via $19.4B Nebius deal",
+      "summary": "Microsoft agreed a five-year, up-to-$19.4 billion arrangement with neocloud operator Nebius Group, securing access to more than 100,000 Nvidia GB300 accelerators for its internal large-language-model and consumer AI teams. The capacity is meant to relieve a data-center crunch that has forced Microsoft to rent power elsewhere, freeing its own server farms for paid AI services. Nebius shares jumped about 16-19% on the September 8 announcement, which stopped short of disclosing the exact chip and power schedule.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-09-08T08:15:00.000Z",
+      "updatedAt": "2026-09-08T08:15:00.000Z",
+      "retrievedAt": "2026-09-08T08:07:55.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "Nebius",
+        "Nvidia GB300",
+        "neocloud",
+        "AI infrastructure",
+        "hyperscaler"
+      ],
+      "sources": [
+        {
+          "publisher": "Data Center Knowledge",
+          "url": "https://datacenterknowledge.com/cloud/microsoft-bets-33b-on-neoclouds-to-ease-ai-crunch",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/news/why-nebius-group-nbis-16-122453851.html",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-apple-folds-tuesday-into-event",
+      "kind": "daily",
+      "title": "Apple confirms foldable iPhone Ultra for Wednesday's 'Surprise and Shine' event",
+      "summary": "Apple's September 9 event will stage the long-rumored iPhone Ultra as its first foldable, joining the iPhone 18 Pro and iPhone 18 Pro Max on a fall lineup that withholds the standard iPhone 18 until spring 2027. Reporting points to a 5.5-inch cover display opening to a roughly 7.8-inch inner screen, a Touch ID power button replacing Face ID, dual rear cameras and a price expected to clear $2,000. The keynote will mark the first major launch under new CEO John Ternus, with Tim Cook shifted to executive chairman and not appearing in the event video.",
+      "category": "technology",
+      "priority": 90,
+      "publishedAt": "2026-09-08T07:50:00.000Z",
+      "updatedAt": "2026-09-08T07:50:00.000Z",
+      "retrievedAt": "2026-09-08T07:42:11.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "iPhone Ultra",
+        "foldable iPhone",
+        "iPhone 18 Pro",
+        "Ternus",
+        "Tim Cook"
+      ],
+      "sources": [
+        {
+          "publisher": "GCN",
+          "url": "https://gcn.com/apple-first-foldable-iphone-joins-iphone/21363",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/09/07/what-we-expect-from-the-upcoming-apple-launch/",
+          "publishedAt": "2026-09-07T15:58:00.000Z"
+        },
+        {
+          "publisher": "MacRumors",
+          "url": "https://www.macrumors.com/2026/09/07/tim-cook-wont-appear-apple-sept-9-event-video/",
+          "publishedAt": "2026-09-07T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-arm-ai-portal-launch",
+      "kind": "daily",
+      "title": "Arm opens AI Portal connecting 22 million developers to optimized models",
+      "summary": "Arm unveiled its AI Portal on September 8 as a single entry point that connects more than 22 million developers and their agents to models pre-optimized for Arm-based cloud, edge and physical AI targets. The launch catalog includes Alibaba Qwen, Google Gemma and Ultralytics YOLO running on ExecuTorch, LiteRT and ONNX-RT, with developer tooling to bring and optimize proprietary models. Arm CSS for Mobile 2 is the first platform to be wired into the portal with SME2 and neural-GPU acceleration exposed directly.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-08T07:30:00.000Z",
+      "updatedAt": "2026-09-08T07:30:00.000Z",
+      "retrievedAt": "2026-09-08T07:18:02.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Arm",
+        "AI Portal",
+        "developer tools",
+        "Qwen",
+        "Gemma",
+        "YOLO",
+        "SME2"
+      ],
+      "sources": [
+        {
+          "publisher": "Arm Newsroom",
+          "url": "https://newsroom.arm.com/news/arm-unveils-arm-ai-portal",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-08-arm-css-for-mobile-2-launch",
+      "kind": "daily",
+      "title": "Arm launches CSS for Mobile 2 with neural GPU and on-device AI cluster",
+      "summary": "Arm announced its CSS for Mobile 2 platform on September 8, combining the new Mali G2-Ultra NX GPU with a C2 CPU cluster and SME2 acceleration tuned for agentic on-device AI and neural graphics. The Mali G2-Ultra NX is the first Mali GPU with dedicated neural accelerators wired into the graphics pipeline, alongside a third-generation ray tracing unit. Arm framed the launch as the foundation for an 'agentic era' spanning cloud, edge and physical AI.",
+      "category": "technology",
+      "priority": 75,
+      "publishedAt": "2026-09-08T07:10:00.000Z",
+      "updatedAt": "2026-09-08T07:10:00.000Z",
+      "retrievedAt": "2026-09-08T07:02:14.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Arm",
+        "mobile GPU",
+        "on-device AI",
+        "neural graphics",
+        "Mali",
+        "agentic AI"
+      ],
+      "sources": [
+        {
+          "publisher": "Arm Newsroom",
+          "url": "https://newsroom.arm.com/news/arm-css-for-mobile-2-agentic-ai-mobile-graphics",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Arm Newsroom (blog)",
+          "url": "https://newsroom.arm.com/blog/arm-mali-g2-ultra-nx-ai-native-mobile-graphics",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-07-weekly-five-things-to-watch",
       "kind": "weekly",
