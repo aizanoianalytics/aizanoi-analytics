@@ -91,6 +91,15 @@ export class UISystem {
         this.hideInfoCard();
       }
     });
+
+    // Close overlay menus when tapping/clicking outside them (mobile has no Escape key;
+    // desktop users expect outside-click dismiss like every other modal).
+    document.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('#teleport-menu, #research-modal, #evidence-panel, #info-card, .hud-top, .hud-bottom, #mobile-controls')) return;
+      this.hideTeleportMenu();
+      this.hideSourcesModal();
+      this.hideInfoCard();
+    });
   }
 
   /* ── Minimap ────────────────────────────────────────────── */

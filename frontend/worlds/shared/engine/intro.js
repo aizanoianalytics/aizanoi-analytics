@@ -48,8 +48,10 @@ export class IntroSequence {
     this.overlay.innerHTML = `
       <h1 class="cinematic-title__heading"></h1>
       <p class="cinematic-title__subtitle"></p>
-      <div class="cinematic-title__skip">[Press ESC to skip intro]</div>
+      <div class="cinematic-title__skip">[Press ESC or tap to skip intro]</div>
     `;
+    // Touch devices have no Escape key — tap anywhere skips the intro.
+    this.overlay.addEventListener('pointerdown', () => this.skipIntro());
     document.body.appendChild(this.overlay);
   }
 

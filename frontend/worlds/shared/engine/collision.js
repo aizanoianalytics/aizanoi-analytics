@@ -680,12 +680,16 @@ export class CollisionSystem {
   /**
    * Find a collision-free position near a target.
    */
-  findSafeSpawn(targetX, targetZ, maxRadius = 160) {
-    if (!this._checkCollision(targetX, targetZ, GROUND_Y)) {
+  findSafeSpawn(targetX, targetZ, maxRadius = 160, minDistance = 0) {
+    // Never demand a stand-off beyond the search ring — otherwise no candidate qualifies
+    // and we fall back to the (indoor) center point.
+    minDistance = Math.min(minDistance, maxRadius - 20);
+    if (!this._checkCollision(targetX, targetZ, GROUND_Y) && minDistance <= 0) {
       return { x: targetX, z: targetZ, y: this._getGroundLevel(targetX, targetZ) };
     }
 
     for (let radius = 6; radius < maxRadius; radius += 4) {
+      if (radius < minDistance) continue;
       for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 8) {
         const x = targetX + Math.cos(angle) * radius;
         const z = targetZ + Math.sin(angle) * radius;
