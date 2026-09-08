@@ -17,6 +17,8 @@ export class AudioSystem {
 
         this.waterFilter = null;
         this.waterGain = null;
+        this.waterLowFilter = null;
+        this.waterLowGain = null;
 
         this.nextBirdTime = 0;
         this.nextFootstepTime = 0;
@@ -165,14 +167,25 @@ export class AudioSystem {
         this.waterFilter = this.ctx.createBiquadFilter();
         this.waterFilter.type = 'bandpass';
         this.waterFilter.frequency.value = 800;
-        this.waterFilter.Q.value = 1.5;
+        this.waterFilter.Q.value = 1.4;
+
+        this.waterLowFilter = this.ctx.createBiquadFilter();
+        this.waterLowFilter.type = 'lowpass';
+        this.waterLowFilter.frequency.value = 340;
 
         this.waterGain = this.ctx.createGain();
         this.waterGain.gain.value = 0;
 
+        this.waterLowGain = this.ctx.createGain();
+        this.waterLowGain.gain.value = 0;
+
         noise.connect(this.waterFilter);
         this.waterFilter.connect(this.waterGain);
         this.waterGain.connect(this.masterGain);
+
+        noise.connect(this.waterLowFilter);
+        this.waterLowFilter.connect(this.waterLowGain);
+        this.waterLowGain.connect(this.masterGain);
 
         noise.start();
     }
@@ -256,11 +269,14 @@ export class AudioSystem {
                 const d = Math.sqrt(dx * dx + dz * dz);
                 if (d < best) best = d;
             }
-            const radius = 90;                       // audible range in world units
+            const radius = 95;                       // audible range in world units
             const t = Math.max(0, 1 - best / radius);
-            const target = t * t * 0.35;             // fade + level cap
+            const target = t * t * 0.38;             // fade + level cap
             this.waterGain.gain.setTargetAtTime(target, now, 0.4);
-            this.waterFilter.frequency.setTargetAtTime(600 + t * 500, now, 0.4);
+            this.waterFilter.frequency.setTargetAtTime(550 + t * 500, now, 0.4);
+            if (this.waterLowGain) {
+                this.waterLowGain.gain.setTargetAtTime(target * 0.65, now, 0.4);
+            }
         }
 
         if (airport) {

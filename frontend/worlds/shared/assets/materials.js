@@ -249,11 +249,16 @@ export const MATERIAL_DEFINITIONS = {
   roofTile:        { roughness: 0.68, metalness: 0.00, color: 0xc46e42, bumpScale: 0.05 },
   bronze:          { roughness: 0.26, metalness: 0.88, color: 0xb58234 },
   bronzePatina:    { roughness: 0.52, metalness: 0.58, color: 0x628268 },
+  verdigrisBronze: { roughness: 0.65, metalness: 0.38, color: 0x42735d },
   goldLeaf:        { roughness: 0.16, metalness: 0.94, color: 0xd8aa38 },
 
   // ──── Roman Imperial Palette ────
   travertine:      { roughness: 0.58, metalness: 0.02, color: 0xdfd6c2, bumpScale: 0.04 },
   romanBrick:      { roughness: 0.78, metalness: 0.00, color: 0xb55c3c, bumpScale: 0.06 },
+  scorchedBrick:   { roughness: 0.88, metalness: 0.00, color: 0x4a342e, bumpScale: 0.08 },
+  charredWood:     { roughness: 0.95, metalness: 0.00, color: 0x221f1c },
+  rubbleStone:     { roughness: 0.92, metalness: 0.00, color: 0x9a8f82, bumpScale: 0.06 },
+  overgrownGrass:  { roughness: 0.85, metalness: 0.00, color: 0x4c6b32 },
   porphyry:        { roughness: 0.35, metalness: 0.05, color: 0x6c2a38, bumpScale: 0.02 },
   tufa:            { roughness: 0.90, metalness: 0.00, color: 0x8a7862, bumpScale: 0.08 },
   concrete:        { roughness: 0.82, metalness: 0.00, color: 0x9e988e, bumpScale: 0.04 },
@@ -340,11 +345,13 @@ export function getMaterial(name, overrides = {}) {
 // ──── Evidence Confidence Tints ────
 
 export const EVIDENCE_COLORS = {
-  archaeological: 0x77b989, // Green
-  documented:     0xd2c678, // Ochre
-  plausible:      0xd59a55, // Terracotta
-  atmospheric:    0xc98778, // Neutral rose
-  disputed:       0xc66b78, // Crimson
+  archaeological:         0x77b989, // Green
+  documented:             0xd2c678, // Ochre
+  plausible:              0xd59a55, // Terracotta
+  atmospheric:            0xc98778, // Neutral rose
+  'atmospheric/inferred': 0xc98778,
+  hypothetical:           0xc98778,
+  disputed:               0xc66b78, // Crimson
 };
 
 const evidenceCache = new Map();

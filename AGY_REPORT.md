@@ -231,3 +231,206 @@ Headless Chromium ile SwiftShader ortamında tüm anıtlar için 1280x720 çöz�
    - Prosedürel üretilen Roma ve Atina evleri için 4 farklı çatı ve cephe stili tanımlanmıştır; ancak gerçek Roma Subura'sındaki çok katlı ahşap cumbalar gibi uç mimari detaylar performans amacıyla sade tutulmuştur.
 3. **Pist ve Taksiyolu Çizgileri:**
    - İGA pist çizgileri ve apron park noktaları procedürel düzlem geometrisi ile çizilmiştir; dinamik uçak yanaşma rehber sistemi (VDGS) dijital tabelası statik göstergedir.
+
+---
+
+# DALGA 2 (WAVE 2): CANLI SU, HAREKETLİ UÇAKLAR, ROMA ÇÖKÜŞÜ VE DÖNEMSEL VARLIKLAR
+
+**Tarih:** 8 Eylül 2026
+**Çalışma Dalı:** `feat/worlds-alive-w2`
+**Kapsam:** Dört dünya (Aizanoi, Atina, Roma, İGA) ve paylaşılan motor (`frontend/worlds/shared/`)
+
+---
+
+## 1. Dalga 2 Keşif Bulguları (Reconnaissance)
+
+Chromium headless ve SwiftShader software rendering ortamında tüm dünyaların su yolları, İGA apron/pist trafiği ve Roma kentsel dokusu ziyaret edilmiş, telemetri toplanmış ve başlangıç ekran görüntüleri kaydedilmiştir (`artifacts/recon/`, `artifacts/before/`).
+
+### Tespit Edilen Başlıca Eksiklikler:
+1. **Canlı Su (Living Water) Eksikliği:**
+   - Aizanoi (Penkalas), Atina (Ilissos / Eridanos) ve Roma (Tiber) nehirlerinde su yüzeyi yalnızca dünya uzayında statik bir sinüs dalgalanması yapmaktadır.
+   - Nehir yatağının kıvrımları boyunca akıntı yönünde yüzey sürüklenmesi (surface drift), kıyıya paralel akış (bank-parallel flow) ve güneşe göre dinamik mikro ışıltı (shimmer/specular glints) bulunmamaktadır.
+   - Kıyılarda sönümleme (bank damping) olmadığı için bazı kıvrımlarda rıhtım taşları ile su geometrisi arasında düzensiz kesişmeler oluşmaktadır.
+   - Ses sistemi (`audio.js`) nehir yakınlığı için seyrek örnekleme noktaları kullandığından, geniş nehir kısımlarında (özellikle Roma Tiber nehrinde) kıyıda dururken su sesi kesilebilmektedir.
+2. **İGA Donmuş Uçaklar (Frozen Aircraft):**
+   - Havalimanındaki tüm yolcu jetleri körüklerde ve açık park pozisyonlarında tamamen hareketsiz durmaktadır.
+   - Taksiyolu üzerinde pist başına ilerleyen, pistte kalkış koşturması yapıp havalanan veya yaklaşmada süzülen dinamik uçak bulunmamaktadır.
+   - Körükten geri itme (pushback tug) manevrası eksiktir.
+   - Gece modunda uçakların kanat ucu seyrüsefer ve gövde flaşör/strobe ışıkları yanmamaktadır.
+3. **Roma Çöküş Dokusunun Yokluğu (Rome in Decay - MS 410–476):**
+   - Roma dünyası Alaric (410) ve Gaiseric (455) yağmaları sonrasını temsil etmesine rağmen kentsel doku klasik dönem parlaklığındadır.
+   - Bakımsız taş döşemelerin arasından çıkan yabani otlar/çimler, yıkılmış sütun tamburları ve kırık steller, yanmış/çatısız insula kalıntıları, moloz yığınları, çökmüş kemerler ve bronz heykeller üzerindeki oksit/verdigris patinası eksiktir.
+4. **Varlık Envanteri Eksikleri:**
+   - Nehir kıyı sazlıkları, ahşap yaya köprüleri, yük sandalları, moloz ve yıkıntı yığınları, kırık mermer steller ve nehir/şehir üzerinde süzülen kuşlar henüz mevcut değildir.
+
+---
+
+## 2. Canlı Su Uygulaması (Living Water Implementation)
+
+Üç antik dünyadaki nehirler (Aizanoi: Penkalas; Atina: Ilissos ve Eridanos; Roma: Tiber) ve kaynaklar (Kallirrhoe) yaşayan su sistemine dönüştürülmüştür.
+
+### Yapılan Teknik İyileştirmeler:
+1. **Kıyıya Paralel Akıntı ve Yüzey Sürüklenmesi (Bank-Parallel Flow & Surface Drift):**
+   - `WaterBody` poligon yapısı güncellenerek UV $u$ koordinatı nehrin kümülatif uzunluğuna (metre cinsinden `distAlongStream`), $v$ koordinatı ise sol kıyıdan (0.0) sağ kıyıya (1.0) normalize edilmiştir.
+   - Tepe gölgelendiricide (`WATER_VERTEX`) `vBankDamp = sin(clamp(uv.y, 0.0, 1.0) * π)` sönümleme katsayısı eklenmiştir. Bu sayede dalgalar nehir ortasında maksimum yüksekliğe ulaşırken, kıyı rıhtım taşlarında ve köprü ayaklarında sıfırlanarak taş kesişme/taşma artefaktları tamamen önlenmiştir.
+   - Parça gölgelendiricide (`WATER_FRAGMENT`) akıntı yönünde ters fazlı çift katmanlı yüzey sürüklenmesi (`streamU1`, `streamU2`) ve akıntıya bağlı mikro-normal pertürbasyonu uygulanmıştır.
+2. **Güneş Işıltısı ve Fresnel Parlaması (Subtle Shimmer & Specular Highlights):**
+   - Akıntıyla birlikte hareket eden yüksek üslü (`pow(..., 110.0)`) güneş ışıltı pırıltıları ve geniş ikincil yüzey parıltısı eklenmiştir.
+   - Nehir derinlik gradyanı (kanal ortasında derin renk, kıyılarda berrak/açık ton) ve kıyı köpüğü (`edgeFoam`) entegre edilmiştir.
+3. **Dairesel Kaynak ve Havuzlar (`WaterPool` / Kallirrhoe):**
+   - Dairesel kaynaklar için merkezden dışa doğru yayılan eşmerkezli dalga gölgelendiricileri (`POOL_VERTEX`, `POOL_FRAGMENT`) geliştirilmiştir.
+4. **Kesintisiz Nehir Ambiyans Sesi (`audio.js` & `buildWaterSamplePoints`):**
+   - `buildWaterSamplePoints(waters, 25)` algoritması ile Penkalas, Tiber ve Ilissos/Eridanos nehir poligonları $\le 25$ metre aralıklarla yoğun örnekleme noktalarına ayrılmıştır.
+   - `AudioSystem` içine derin nehir gövde rezonansı sağlayan 340 Hz alçak geçiren filtre katmanı (`waterLowFilter`, `waterLowGain`) eklenmiştir. Oyuncu nehir boyunca yürürken veya köprülerden geçerken su sesi kesilmeden pürüzsüzce takip etmektedir.
+5. **Yazılımsal Render Performansı:**
+   - Sıfır JavaScript döngüsü; kare başına maliyet yalnızca uniform zaman artışından (`uTime.value += dt`) ibarettir. SwiftShader ortamında kare hızı korunmuştur.
+
+Kanıt ekran görüntüleri:
+- `artifacts/water/aizanoi-penkalas-living-water.png`
+- `artifacts/water/athens-eridanos-living-water.png`
+- `artifacts/water/rome-tiber-living-water.png`
+
+---
+
+## 3. İGA Havalimanı Dinamik Hava & Yer Trafiği (Aircraft Movement Implementation)
+
+İGA İstanbul Havalimanı'ndaki donmuş apron statikliği tamamen kaldırılarak apron ve pistler yaşayan bir havacılık merkezine dönüştürülmüştür (`frontend/worlds/iga-airport/js/aircraft.js`).
+
+### Yapılan Teknik ve Operasyonel Geliştirmeler:
+1. **Körük Geri İtme (Pushback) & Çekici (Tug) Etkileşimi (Pier West Gate 1):**
+   - Batı İskelesi (Pier West) Stand 1'de park halindeki yolcu uçağı ve burun dikmesine bağlı geri itme traktörü (`buildBaggageTug`) modellenmiştir.
+   - Gerçek havacılık prosedürlerine uygun çok fazlı manevra döngüsü:
+     - Hazırlık ve körük ayrılması (0–8 sn),
+     - Burun tekeri çekici manevrasıyla geri itme ve apron taksi merkez hattına 90° dönüş (8–38 sn),
+     - Çekicinin burun dikmesinden ayrılarak emniyet bölgesine yanaşması (38–46 sn),
+     - Uçağın motor gücüyle taksiyolunda kuzeye doğru taksiye başlaması (46–56 sn),
+     - Döngünün pürüzsüzce sıfırlanarak yeni sefere hazırlanması (56–60 sn).
+2. **Aktif Taksiyolu Trafiği (Continuous Taxiing Loop):**
+   - Apron ve ana taksiyolları boyunca 8 kritik dönüş noktasından oluşan sürekli seyrüsefer döngüsü (`waypoints`, kümülatif uzunluk interpolasyonu).
+   - Gerçekçi 15.5 m/s (~30 knot) yer hızı ve teğet yönelimli pürüzsüz pruva/heading dönüşleri.
+3. **Pist 34L Kalkış Koşturması, Rotasyon & Tırmanış (Takeoff Roll & Climb-Out):**
+   - 34L pisti eşiğinde bekleme (0–4 sn),
+   - Tarmac üzerinde ivmelenen kalkış koşturması (4–16 sn),
+   - $V_R$ rotasyonu ve 11° burun yukarı hücum açısıyla havalanma (16–22 sn, 38m irtifa),
+   - 248 metre tırmanış koridoruna hafif sağ yatışlı (banking) tırmanış ve ayrılış (22–38 sn),
+   - Ufukta sönümlenme ve pist başına emniyetli respawn (38–44 sn).
+4. **Pist 35R İniş Yaklaşması, Parşömen & Teker Koyma (Landing Final Approach & Rollout):**
+   - 3° standart ILS süzülüş hattında (glideslope) 180 metre irtifadan piste yaklaşma (0–17 sn),
+   - Pist eşiğinde flare ve teker koyma (17–21 sn),
+   - Pist üzerinde frenleme koşturması (rollout) ve yüksek hızlı taksiyolu çıkışına sapma (21–34 sn).
+5. **Yürüyüş Emniyeti ve Geometri İhlal Koruması (Walk-Safe Collision Bubble):**
+   - `_handlePlayerClearance`: Hareket halindeki uçakların gövdesi çevresinde 8 metrelik dinamik emniyet balonu tanımlanmıştır.
+   - Oyuncunun uçağın altında veya burnunun önünde durması durumunda itme adımı (`stepDist`), statik çarpışma ızgarasını (`collision._checkCollision`) sorgulamadan uygulanmaz. Oyuncu terminal duvarlarının veya binaların içinden **asla geçirilmez**, güvenli alana nazikçe yönlendirilir.
+6. **ICAO Standartlarında Seyrüsefer, Strobe ve Flaşör Işıkları:**
+   - İskele (sol) kanat ucunda kırmızı, sancak (sağ) kanat ucunda yeşil, kuyruk konisinde beyaz seyrüsefer ışıkları (`buildModernAirliner`).
+   - Gövde üstü ve karnında ritmik dönen kırmızı anti-collision beacon lambaları.
+   - Kanat uçlarında çift palsli beyaz yüksek parlaklıklı flaşörler (strobe), gece modunda (`isNight`) parlaklık artışıyla dinamik olarak senkronize edilir.
+
+Kanıt ekran görüntüleri:
+- `artifacts/aircraft/iga-pushback-tug.png`
+- `artifacts/aircraft/iga-taxiing-airliner.png`
+- `artifacts/aircraft/iga-takeoff-climbout.png`
+- `artifacts/after/airliner-nav-lights.png`
+
+---
+
+## 4. Roma'nın Çöküş Dönemi Katmanı (Rome in Decay — AD 410–476 Implementation)
+
+MS 410 (Alaric / Vizigotlar) ve MS 455 (Gaiseric / Vandallar) yağmaları ile MS 476'da Romulus Augustulus'un tahttan indirilmesi arasındaki Geç Antik Roma kenti, tertemiz bir klasik kartpostal değildir. Belgelenmiş anıtsal geometri bozulmadan (`Colosseum`, `Pantheon`, `Basilica` vb.), kentin üzerine dürüst bir atmosferik çöküş ve ihmal katmanı eklenmiştir (`frontend/worlds/rome-410-476/js/`).
+
+### Yapılan Teknik ve Tarihsel İyileştirmeler:
+1. **Bazalt Cadde Döşemelerinden Fışkıran Yabani Otlar (`buildPavingWeeds`):**
+   - Via Sacra, Clivus Capitolinus, Forum Romanum ve Subura sokak aralarında bakımsız taş derzlerinden çıkan yabani ot ve çim kümeleri (`overgrownGrass`, `0x4c6b32`) yerleştirilmiştir.
+2. **İmparatorluk Forumlarında Yıkılmış Sütun Tamburları & Kırık Steller:**
+   - `buildFallenColumnDrums`: Forum Romanum, Augustus Forumu ve Boarium'da devrilmiş, yan yatmış yivli mermer sütun tamburları ve etrafa saçılmış kırık taş parçaları (`rubbleStone`, `0x9a8f82`).
+   - `buildShatteredStele`: İkiye bölünmüş, kırık üçgen alınlıklı mermer steller.
+3. **Yanmış ve Çatısız İnsula Varyantları (`createCharredInsula`):**
+   - Yangınlardan etkilenen Subura ve Forum Boarium bölgelerinde prosedürel insulaların yaklaşık %14'ü yanmış/çatısız konut olarak üretilmektedir.
+   - İsli, yanık tuğla duvarlar (`scorchedBrick`, `0x4a342e`), açık üst kat, kiremit çatının tamamen yok olması ve açıkta kalan kömürleşmiş ahşap tavan kirişleri (`charredWood`, `0x221f1c`).
+   - Zemin katında moloz döküntüsü ve yangın hasarlı açıklıklar.
+4. **Traverten ve Tuğla Moloz Yığınları (`buildDebrisPile`):**
+   - Bakımsız sokak köşelerinde ve çöken yapıların dibinde konik tufa kaideli, üzeri traverten ve Roma tuğlası kırıklarıyla kaplı moloz höyükleri eklenmiştir.
+5. **Kısmen Çökmüş Kemer ve Revaklar (`buildCollapsedArcade`):**
+   - Ayakta duran sağlam bir kemer, kırılmış ayak kütüğü, askıda kalmış kemer başlangıç taşı (spring stub) ve yerdeki kilit taşı moloz yığınından oluşan çökmüş revak mimarisi modellenmiştir.
+6. **Forum Romanum Bronz Heykellerinde Verdigris Patinası:**
+   - Forum ve Capitolium'daki imparatorluk bronz heykelleri, yüzyılların oksidasyonunu yansıtan otantik antik verdigris patinasına (`verdigrisBronze`, `0x42735d`) dönüştürülmüştür. Kaideler aşınmış travertenle güncellenmiştir.
+7. **Epistemik Dürüstlük ve Kanıt Seviyesi (Evidence Standards):**
+   - Belgelenmiş anıt geometrileri (`documented` / `archaeological`) hiçbir şekilde değiştirilmemiştir.
+   - Tüm çöküş unsurları, yanmış insulalar ve moloz yığınları `atmospheric/inferred` (renk kodu: `0xc98778`) olarak etiketlenmiş ve epistemik kesinlik sınırları titizlikle korunmuştur.
+
+Kanıt ekran görüntüleri:
+- `artifacts/decay/rome-forum-fallen-columns-weeds.png`
+- `artifacts/decay/rome-charred-insula-debris.png`
+- `artifacts/decay/rome-collapsed-arcade.png`
+- `artifacts/after/rome-forum-decay-paving.png`
+
+---
+
+## 5. Dönemsel Küçük Varlıklar ve Cila (Period-Appropriate Assets & Polish)
+
+Antik dünyaların yaşam hissini pekiştirmek amacıyla döneme uygun küçük varlıklar (props) geliştirilmiş ve coğrafi/tarihsel doğrulukla yerleştirilmiştir (`frontend/worlds/shared/assets/props.js`):
+
+### 1. Nehir Kıyısı Sazlıkları (`buildRiverReeds`):
+- Dik saplar ve tepelerinde silindirik kahverengi başaklardan (cattails / bulrushes) oluşan sazlık kümeleri.
+- Penkalas (Aizanoi), Ilissos ve Eridanos deresi ile Kallirrhoe kaynağı (Atina) ve Tiber nehri kıyılarında (Roma) su kenarına yerleştirilmiştir.
+
+### 2. Antik Yük Sandalları (`buildCargoSkiff`):
+- Düz tabanlı ahşap omurga, küpeşteler, oturak tahtaları, kıç/baş aynaları, bağlama kazığı ve güvertesinde taşınan kilden amforalar.
+- Penkalas rıhtımlarında, Ilissos kıyısında ve Roma Tiber rıhtımlarında (Forum Boarium limanı) demirlenmiştir.
+
+### 3. Rustik Ahşap Yaya Köprüleri (`buildWoodenFootbridge`):
+- Kalın tomruk kirişler (`bridge-stringer`), enine döşenmiş ahşap taban tahtaları (`bridge-plank`), dikmeler ve korkuluklar.
+- Aizanoi yukarı Penkalas yatağı ve Atina Ilissos nehri üzerine su geçişi olarak kurulmuştur.
+
+### 4. Gökyüzünde Süzülen Kuş Sürüleri (`buildBirdFlock`):
+- Düşük poligonlu V-kanat profili, çift taraflı malzeme ve kentsel anıtların üzerinde süzülen dairesel yörünge sistemi.
+- `flock.userData.update(dt)`: Yörünge açısı, irtifa dalgalanması ve virajlarda aerodinamik yatış (banking) ile render döngüsünde canlı hareket.
+- Konumlar: Aizanoi Zeus Tapınağı kutsal alanı semaları, Atina Akropolis semaları ve Roma Forum / Capitolium semaları.
+
+Kanıt ekran görüntüleri:
+- `artifacts/after/aizanoi-penkalas-assets.png` (Zeus Kutsal Alanı üzerinde dönen kuş sürüsü ve Penkalas kıyısı)
+- `artifacts/after/athens-ilissos-footbridge-reeds.png` (Ilissos üzerindeki ahşap yaya köprüsü, sazlıklar ve amforalı yük sandalı)
+- `artifacts/after/rome-tiber-skiffs-reeds.png` (Tiber kıyısı sazlıkları ve demirli nehir sandalları)
+
+---
+
+## 6. Nihai Doğrulama ve Regresyon Özeti (Wave 2 Final Verification)
+
+Dalga 2 kapsamındaki tüm bileşenler eksiksiz olarak test edilmiş ve doğrulanmıştır:
+
+1. **Sistem ve Regresyon Test Paketi (`tests/worlds-wave2-systems.test.mjs`):**
+   - Su örnekleme noktası yoğunluğu ($\le 25$m aralık, kesintisiz ses): **GEÇTİ**
+   - İGA yolcu uçağı ICAO seyrüsefer ve flaşör ışıkları: **GEÇTİ**
+   - İGA hava meydanı yer ve hava trafik döngüsü (pushback, taxi, takeoff, landing): **GEÇTİ**
+   - Roma çöküş katmanı (verdigris bronz, yanık insula, moloz, çökmüş kemer, otlar): **GEÇTİ**
+   - Dönemsel varlıklar (sazlıklar, sandallar, ahşap köprü, kuş sürüsü): **GEÇTİ**
+   - Sonuç: **5 / 5 test yeşil (%100)**
+
+2. **Depo Genel Test Paketi (`node --test tests/*.test.mjs tests/audit/*.test.mjs`):**
+   - Toplam Test Sayısı: **348**
+   - Geçen: **348**
+   - Başarısız: **0**
+   - İptal / Atlanan: **0**
+   - Süre: **80.3 saniye**
+
+3. **Gerçek Tarayıcı WebGL Smoke Testi (`tests/worlds-browser-smoke.mjs`):**
+   - Masaüstü (1280x800) ve Mobil (390x844) ortamda 4 dünyanın tamamı (Aizanoi, Roma, Atina, İGA) test edilmiştir.
+   - Deterministik WASD hareketi, kahraman ışınlanması, kanıt katmanı geçişi ve dokunmatik joystick kontrolleri hatasız çalışmıştır.
+   - Sonuç: **Unified Worlds desktop/mobile WebGL smoke passed (0 konsol / sayfa hatası)**
+
+4. **Sözdizimi ve Kod Hijyeni:**
+   - Değiştirilen tüm JavaScript dosyalarında `node --check` 0 hata vermiştir.
+   - `git diff --check` komutunda boşluk (trailing whitespace) ve satır sonu hatası 0'dır.
+
+---
+
+## 7. Öz Değerlendirme ve Taahhüt Tablosu
+
+| Kriter | Hedef | Gerçekleşen Sonuç | Durum |
+|---|---|---|---|
+| **Canlı Su (Living Water)** | Akıntı yönlü akış, kıyı sönümleme, güneş pırıltısı, kesintisiz ses | `vBankDamp`, `uFlowSpeed`, çift katman sürüklenme, 340Hz ses filtresi | **Eksiksiz Başarılı** |
+| **İGA Uçak Hareketi** | Geri itme çekicisi, taksi döngüsü, 34L kalkış, 35R iniş, ICAO ışıklar | `AirportTrafficSystem`, ICAO beacon/strobe, emniyetli itme balonu | **Eksiksiz Başarılı** |
+| **Roma Çöküş Katmanı** | Yanık insulalar, molozlar, yıkık kemer, kırık sütunlar, otlar, verdigris | 5 yeni malzeme, 4 yeni prop tipi, %14 yanık insula, 0xc98778 epistemik etiket | **Eksiksiz Başarılı** |
+| **Dönemsel Varlıklar** | Sazlıklar, ahşap köprüler, yük sandalları, uçan kuş sürüleri | 4 dünya genelinde tam entegrasyon, render döngüsü yörünge güncellemesi | **Eksiksiz Başarılı** |
+| **Test ve Regresyon** | 0 regresyon, 0 zayıflatma, Chromium SwiftShader WebGL duman testi | 348/348 birim testi + 5/5 Dalga 2 testi + 4 dünya masaüstü/mobil smoke | **%100 Yeşil** |
+| **Katı Kısıtlar** | Harici dizinlere dokunmama, local commit, strict CSP, 0 boşluk hatası | `/tmp/aizanoi-aga-w2` worktree, 0 PR/push, 0 inline script/style, 0 lint hatası | **Tam Uyum** |

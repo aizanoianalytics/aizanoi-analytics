@@ -160,14 +160,14 @@ export function buildBrazier(x, z, height = 1.4) {
 
 /* ── 4. Classical Statues & Monuments ─────────────────────── */
 
-export function buildStatueMonument(x, z, rot = 0, isAthena = false) {
+export function buildStatueMonument(x, z, rot = 0, isAthena = false, isDecayed = false) {
   const group = new THREE.Group();
   group.position.set(x, 0, z);
   group.rotation.y = rot;
 
-  const marbleMat = getMaterial('marble');
-  const bronzeMat = getMaterial('bronze');
-  const goldMat = getMaterial('goldLeaf');
+  const marbleMat = isDecayed ? getMaterial('travertine') : getMaterial('marble');
+  const bronzeMat = isDecayed ? getMaterial('verdigrisBronze') : getMaterial('bronze');
+  const goldMat = isDecayed ? getMaterial('verdigrisBronze') : getMaterial('goldLeaf');
 
   // Stepped marble pedestal (3 tiers)
   const base1 = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.4, 2.4), marbleMat);
@@ -502,6 +502,78 @@ export function buildModernAirliner(x, z, rot = 0) {
   nWheel.rotateZ(Math.PI / 2);
   nWheel.position.set(0, 0.55, 24);
   group.add(nWheel);
+  // Main gear (left and right)
+  for (const side of [-1, 1]) {
+    const mLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 3.8, 8), steelMat);
+    mLeg.position.set(side * 5.8, 1.9, -2);
+    group.add(mLeg);
+    for (const zOffset of [-0.6, 0.6]) {
+      const mWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.62, 0.45, 12), gearMat);
+      mWheel.rotateZ(Math.PI / 2);
+      mWheel.position.set(side * 5.8, 0.62, -2 + zOffset);
+      group.add(mWheel);
+    }
+  }
+
+  // Navigation & Strobe Lights (ICAO standard)
+  const lightGeo = new THREE.SphereGeometry(0.32, 8, 8);
+
+  // Port (Left) Wingtip: Red Navigation Light
+  const navRedMat = new THREE.MeshStandardMaterial({ color: 0xff0022, emissive: 0xff0022, emissiveIntensity: 1.0, roughness: 0.2 });
+  const leftNav = new THREE.Mesh(lightGeo, navRedMat);
+  leftNav.name = 'nav-red-port';
+  leftNav.position.set(-33.4, 6.4, -12);
+  group.add(leftNav);
+
+  // Starboard (Right) Wingtip: Green Navigation Light
+  const navGreenMat = new THREE.MeshStandardMaterial({ color: 0x00e676, emissive: 0x00e676, emissiveIntensity: 1.0, roughness: 0.2 });
+  const rightNav = new THREE.Mesh(lightGeo, navGreenMat);
+  rightNav.name = 'nav-green-starboard';
+  rightNav.position.set(33.4, 6.4, -12);
+  group.add(rightNav);
+
+  // Tailcone: White Navigation Light
+  const navWhiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 1.0, roughness: 0.2 });
+  const tailNav = new THREE.Mesh(lightGeo, navWhiteMat);
+  tailNav.name = 'nav-white-tail';
+  tailNav.position.set(0, 5.5, -43);
+  group.add(tailNav);
+
+  // Fuselage Anti-Collision Red Beacons (Top and Belly)
+  const beaconMat = new THREE.MeshStandardMaterial({ color: 0xff1100, emissive: 0xff1100, emissiveIntensity: 0.2, roughness: 0.2 });
+  const topBeacon = new THREE.Mesh(new THREE.SphereGeometry(0.38, 8, 8), beaconMat);
+  topBeacon.name = 'beacon-top';
+  topBeacon.position.set(0, 8.2, 5);
+  group.add(topBeacon);
+  const btmBeacon = new THREE.Mesh(new THREE.SphereGeometry(0.38, 8, 8), beaconMat);
+  btmBeacon.name = 'beacon-belly';
+  btmBeacon.position.set(0, 2.2, 5);
+  group.add(btmBeacon);
+
+  // Wingtip White Strobes
+  const strobeMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 0.1, roughness: 0.1 });
+  const leftStrobe = new THREE.Mesh(new THREE.SphereGeometry(0.28, 8, 8), strobeMat);
+  leftStrobe.name = 'strobe-left-wing';
+  leftStrobe.position.set(-33.6, 6.5, -12.3);
+  group.add(leftStrobe);
+  const rightStrobe = new THREE.Mesh(new THREE.SphereGeometry(0.28, 8, 8), strobeMat);
+  rightStrobe.name = 'strobe-right-wing';
+  rightStrobe.position.set(33.6, 6.5, -12.3);
+  group.add(rightStrobe);
+
+  group.userData.updateLights = function(time, isNight) {
+    const strobePhase = time % 1.2;
+    const strobeOn = (strobePhase < 0.08) || (strobePhase > 0.16 && strobePhase < 0.24);
+    strobeMat.emissiveIntensity = strobeOn ? (isNight ? 3.5 : 2.0) : 0.05;
+
+    const beaconOn = (time % 1.0 < 0.14);
+    beaconMat.emissiveIntensity = beaconOn ? (isNight ? 2.8 : 1.5) : 0.1;
+
+    const navIntensity = isNight ? 1.6 : 0.9;
+    navRedMat.emissiveIntensity = navIntensity;
+    navGreenMat.emissiveIntensity = navIntensity;
+    navWhiteMat.emissiveIntensity = navIntensity;
+  };
 
   return group;
 }
@@ -803,6 +875,328 @@ export function buildSundialMonument(x, z) {
   gnomon.position.set(0, 1.4, 0);
   gnomon.rotation.x = 0.45;
   group.add(gnomon);
+
+  return group;
+}
+
+/* ── 17. Overgrown Street Paving Weeds ──────────────────────── */
+
+export function buildPavingWeeds(x, z, rot = 0, scale = 1.0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0.02, z);
+  group.rotation.y = rot;
+  group.name = 'paving-weeds';
+
+  const weedMat = getMaterial('overgrownGrass');
+  const bladeGeo = new THREE.PlaneGeometry(0.55 * scale, 0.42 * scale);
+  bladeGeo.translate(0, (0.42 * scale) / 2, 0);
+
+  for (let i = 0; i < 3; i++) {
+    const blade = new THREE.Mesh(bladeGeo, weedMat);
+    blade.rotation.y = (i * Math.PI) / 3;
+    blade.rotation.x = ((i * 0.13) % 0.2) - 0.1;
+    group.add(blade);
+  }
+  return group;
+}
+
+/* ── 18. Fallen Column Drums & Shattered Stelae ────────────── */
+
+export function buildFallenColumnDrums(x, z, rot = 0, count = 3) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+  group.name = 'fallen-column-drums';
+
+  const stoneMat = getMaterial('marble');
+  const drumR = 0.65;
+  const drumH = 1.25;
+
+  for (let i = 0; i < count; i++) {
+    const drumGeo = new THREE.CylinderGeometry(drumR, drumR, drumH, 12);
+    drumGeo.rotateZ(Math.PI / 2);
+    const drum = new THREE.Mesh(drumGeo, stoneMat);
+    drum.position.set(i * 1.35, drumR * 0.85, (i % 2 === 0 ? 0.2 : -0.2));
+    drum.rotation.y = (i * 0.15);
+    drum.castShadow = true;
+    drum.receiveShadow = true;
+    group.add(drum);
+  }
+
+  const chunkMat = getMaterial('rubbleStone');
+  for (let j = 0; j < 5; j++) {
+    const chunk = new THREE.Mesh(
+      new THREE.BoxGeometry(0.35 + (j % 3) * 0.15, 0.25, 0.4),
+      chunkMat
+    );
+    chunk.position.set((j - 2) * 0.9, 0.12, (j % 2 === 0 ? 1.0 : -0.9));
+    chunk.rotation.set(0.2 * j, 0.5 * j, 0.1 * j);
+    group.add(chunk);
+  }
+
+  return group;
+}
+
+export function buildShatteredStele(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+  group.name = 'shattered-stele';
+
+  const stoneMat = getMaterial('travertine');
+  const lower = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.2, 1.1), stoneMat);
+  lower.position.set(0, 0.1, 0);
+  lower.castShadow = true;
+  group.add(lower);
+
+  const upper = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.2, 0.9), stoneMat);
+  upper.position.set(0.4, 0.12, 1.15);
+  upper.rotation.y = 0.35;
+  upper.rotation.z = 0.08;
+  upper.castShadow = true;
+  group.add(upper);
+
+  return group;
+}
+
+/* ── 19. Travertine & Brick Debris / Rubble Piles ───────────── */
+
+export function buildDebrisPile(x, z, radius = 3.0, height = 1.2) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.name = 'debris-pile';
+
+  const moundGeo = new THREE.ConeGeometry(radius, height, 9);
+  const mound = new THREE.Mesh(moundGeo, getMaterial('tufa'));
+  mound.position.y = height / 2;
+  mound.scale.set(1.0, 1.0, 0.85);
+  mound.receiveShadow = true;
+  group.add(mound);
+
+  const brickMat = getMaterial('romanBrick');
+  const travMat = getMaterial('travertine');
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 2 + 0.3;
+    const dist = (radius * 0.35) + (i % 3) * (radius * 0.22);
+    const px = Math.cos(angle) * dist;
+    const pz = Math.sin(angle) * dist;
+    const py = Math.max(0.15, height * (1 - dist / radius) * 0.7);
+
+    const isBrick = i % 2 === 0;
+    const chunk = new THREE.Mesh(
+      new THREE.BoxGeometry(0.55 + (i % 2) * 0.25, 0.3, 0.45),
+      isBrick ? brickMat : travMat
+    );
+    chunk.position.set(px, py, pz);
+    chunk.rotation.set((i * 0.4) % 1, (i * 0.7) % 2, (i * 0.3) % 1);
+    chunk.castShadow = true;
+    group.add(chunk);
+  }
+
+  return group;
+}
+
+/* ── 20. Period Riverbank Bulrushes & Reeds ─────────────────── */
+
+export function buildRiverReeds(x, z, count = 12, spread = 3.0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.name = 'river-reeds';
+
+  const stemMat = getMaterial('overgrownGrass');
+  const catMat = new THREE.MeshStandardMaterial({ color: 0x483222, roughness: 0.9, metalness: 0.0 });
+
+  const stemGeo = new THREE.CylinderGeometry(0.025, 0.035, 2.2, 5);
+  stemGeo.translate(0, 1.1, 0);
+
+  const cattailGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.42, 6);
+  cattailGeo.translate(0, 2.1, 0);
+
+  for (let i = 0; i < count; i++) {
+    const reed = new THREE.Group();
+    const rx = ((i * 1.7) % spread) - spread / 2;
+    const rz = (((i + 2) * 2.3) % spread) - spread / 2;
+
+    const stem = new THREE.Mesh(stemGeo, stemMat);
+    reed.add(stem);
+
+    if (i % 2 === 0) {
+      const cattail = new THREE.Mesh(cattailGeo, catMat);
+      reed.add(cattail);
+    }
+
+    reed.position.set(rx, 0, rz);
+    reed.rotation.z = (Math.sin(i * 1.4) * 0.12);
+    reed.rotation.x = (Math.cos(i * 1.1) * 0.12);
+    group.add(reed);
+  }
+
+  return group;
+}
+
+/* ── 21. Ancient Wooden River Cargo Skiff ───────────────────── */
+
+export function buildCargoSkiff(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0.1, z);
+  group.rotation.y = rot;
+  group.name = 'cargo-skiff';
+
+  const woodMat = getMaterial('woodPlanks');
+  const darkWoodMat = getMaterial('wood');
+
+  const floor = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.14, 5.8), woodMat);
+  floor.receiveShadow = true;
+  group.add(floor);
+
+  for (const side of [-1, 1]) {
+    const gunwale = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.72, 5.8), woodMat);
+    gunwale.position.set(side * 1.05, 0.36, 0);
+    gunwale.castShadow = true;
+    group.add(gunwale);
+  }
+
+  for (const end of [-1, 1]) {
+    const transom = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.72, 0.16), woodMat);
+    transom.position.set(0, 0.36, end * 2.9);
+    transom.castShadow = true;
+    group.add(transom);
+  }
+
+  for (const pos of [-1.5, 0, 1.5]) {
+    const thwart = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.08, 0.32), darkWoodMat);
+    thwart.position.set(0, 0.52, pos);
+    group.add(thwart);
+  }
+
+  const amp1 = buildAmphora(0.85);
+  amp1.name = 'skiff-amphora';
+  amp1.position.set(-0.4, 0.2, -0.6);
+  amp1.rotation.z = 0.2;
+  group.add(amp1);
+
+  const amp2 = buildAmphora(0.85);
+  amp2.name = 'skiff-amphora';
+  amp2.position.set(0.4, 0.2, -0.5);
+  amp2.rotation.z = -0.15;
+  group.add(amp2);
+
+  const amp3 = buildAmphora(0.8);
+  amp3.name = 'skiff-amphora';
+  amp3.position.set(0, 0.2, 0.6);
+  group.add(amp3);
+
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 1.8, 8), darkWoodMat);
+  post.name = 'skiff-mooring-post';
+  post.position.set(1.6, 0.9, 1.8);
+  post.castShadow = true;
+  group.add(post);
+
+  return group;
+}
+
+/* ── 22. Ancient Rustic Wooden Footbridge ────────────────────── */
+
+export function buildWoodenFootbridge(x, z, rot = 0, span = 14, width = 2.4) {
+  const group = new THREE.Group();
+  group.position.set(x, 0.8, z);
+  group.rotation.y = rot;
+  group.name = 'wooden-footbridge';
+
+  const woodMat = getMaterial('woodPlanks');
+  const logMat = getMaterial('wood');
+
+  for (const side of [-1, 1]) {
+    const beamGeo = new THREE.CylinderGeometry(0.2, 0.22, span, 8);
+    beamGeo.rotateX(Math.PI / 2);
+    const beam = new THREE.Mesh(beamGeo, logMat);
+    beam.name = 'bridge-stringer';
+    beam.position.set(side * (width / 2 - 0.25), -0.2, 0);
+    beam.castShadow = true;
+    group.add(beam);
+  }
+
+  const plankSpacing = 0.38;
+  const numPlanks = Math.floor(span / plankSpacing);
+  const plankGeo = new THREE.BoxGeometry(width, 0.12, 0.32);
+  for (let i = 0; i < numPlanks; i++) {
+    const pz = -span / 2 + (i + 0.5) * plankSpacing;
+    const plank = new THREE.Mesh(plankGeo, woodMat);
+    plank.name = 'bridge-plank';
+    plank.position.set(0, 0, pz);
+    plank.castShadow = true;
+    plank.receiveShadow = true;
+    group.add(plank);
+  }
+
+  const postCount = Math.max(3, Math.floor(span / 3.0));
+  for (const side of [-1, 1]) {
+    for (let p = 0; p <= postCount; p++) {
+      const pz = -span / 2 + p * (span / postCount);
+      const post = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.09, 1.2, 6), logMat);
+      post.position.set(side * (width / 2 - 0.1), 0.6, pz);
+      post.castShadow = true;
+      group.add(post);
+    }
+
+    const railGeo = new THREE.CylinderGeometry(0.07, 0.07, span, 8);
+    railGeo.rotateX(Math.PI / 2);
+    const rail = new THREE.Mesh(railGeo, logMat);
+    rail.position.set(side * (width / 2 - 0.1), 1.15, 0);
+    group.add(rail);
+  }
+
+  return group;
+}
+
+/* ── 23. Aerial Bird Flock ─────────────────────────────────── */
+
+export function buildBirdFlock(x, y, z, count = 8, radius = 24) {
+  const group = new THREE.Group();
+  group.position.set(x, y, z);
+  group.name = 'bird-flock';
+
+  const birdMat = new THREE.MeshStandardMaterial({
+    color: 0x3a3f47,
+    roughness: 0.8,
+    metalness: 0.1,
+    side: THREE.DoubleSide
+  });
+
+  const birdGeo = new THREE.BufferGeometry();
+  const vertices = new Float32Array([
+    0, 0, 0.5,     -1.1, 0.25, 0.0,   0, 0, -0.4,
+    0, 0, 0.5,      0, 0, -0.4,       1.1, 0.25, 0.0
+  ]);
+  birdGeo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+  birdGeo.computeVertexNormals();
+
+  const birds = [];
+  for (let i = 0; i < count; i++) {
+    const mesh = new THREE.Mesh(birdGeo, birdMat);
+    const orbitR = radius + (i % 3) * 5.0;
+    const angle = (i / count) * Math.PI * 2;
+    const alt = (i % 4) * 1.8;
+    const speed = 0.45 + (i % 3) * 0.1;
+
+    mesh.position.set(Math.cos(angle) * orbitR, alt, Math.sin(angle) * orbitR);
+    mesh.rotation.y = -angle + Math.PI / 2;
+    mesh.userData.orbitAngle = angle;
+    group.add(mesh);
+
+    birds.push({ mesh, orbitR, angle, alt, speed });
+  }
+
+  group.userData.update = function(dt) {
+    for (const b of birds) {
+      b.angle += b.speed * dt;
+      b.mesh.userData.orbitAngle = b.angle;
+      b.mesh.position.x = Math.cos(b.angle) * b.orbitR;
+      b.mesh.position.z = Math.sin(b.angle) * b.orbitR;
+      b.mesh.rotation.y = -b.angle + Math.PI / 2;
+      b.mesh.rotation.z = Math.sin(b.angle * 8) * 0.15;
+    }
+  };
 
   return group;
 }

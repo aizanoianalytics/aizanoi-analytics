@@ -8,6 +8,7 @@
 
 import * as THREE from '../../shared/vendor/three.module.js';
 import { getMaterial } from '../../shared/assets/materials.js';
+import { buildDebrisPile } from '../../shared/assets/props.js';
 import {
   createDoricColumn,
   createIonicColumn,
@@ -498,6 +499,118 @@ export function buildTrajanColumn(b) {
   return group;
 }
 
+/* ── 11. Charred Roofless Insula (Late Antique Sack Damage) ── */
+
+export function createCharredInsula(width, depth, floors = 3) {
+  const group = new THREE.Group();
+  group.name = 'charred-roofless-insula';
+
+  const wallMat = getMaterial('scorchedBrick');
+  const woodMat = getMaterial('charredWood');
+  const floorH = 3.4;
+  const totalH = floors * floorH;
+  const wallThick = 0.9;
+
+  // Front wall with jagged damaged profile
+  const frontWall = new THREE.Mesh(new THREE.BoxGeometry(width, totalH * 0.82, wallThick), wallMat);
+  frontWall.position.set(0, (totalH * 0.82) / 2, depth / 2 - wallThick / 2);
+  frontWall.castShadow = true;
+  frontWall.receiveShadow = true;
+  group.add(frontWall);
+
+  // Back wall standing higher
+  const backWall = new THREE.Mesh(new THREE.BoxGeometry(width, totalH, wallThick), wallMat);
+  backWall.position.set(0, totalH / 2, -depth / 2 + wallThick / 2);
+  backWall.castShadow = true;
+  backWall.receiveShadow = true;
+  group.add(backWall);
+
+  // Left wall
+  const leftWall = new THREE.Mesh(new THREE.BoxGeometry(wallThick, totalH * 0.88, depth), wallMat);
+  leftWall.position.set(-width / 2 + wallThick / 2, (totalH * 0.88) / 2, 0);
+  leftWall.castShadow = true;
+  group.add(leftWall);
+
+  // Right wall with collapsed upper corner
+  const rightWall = new THREE.Mesh(new THREE.BoxGeometry(wallThick, totalH * 0.62, depth), wallMat);
+  rightWall.position.set(width / 2 - wallThick / 2, (totalH * 0.62) / 2, 0);
+  rightWall.castShadow = true;
+  group.add(rightWall);
+
+  // Ground level charred lintel openings
+  const shopCount = Math.max(1, Math.floor(width / 7));
+  for (let i = 0; i < shopCount; i++) {
+    const x = -width / 2 + (width / (shopCount + 1)) * (i + 1);
+    const lintel = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.45, 1.2), woodMat);
+    lintel.position.set(x, 2.6, depth / 2);
+    group.add(lintel);
+  }
+
+  // Exposed charred timber ceiling joists (NO TILED ROOF!)
+  const joistCount = Math.max(3, Math.floor(width / 2.2));
+  for (let j = 0; j < joistCount; j++) {
+    if (j % 4 === 1) continue; // burned through
+    const jx = -width / 2 + 1.2 + j * ((width - 2.4) / (joistCount - 1));
+    const joist = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.24, depth - wallThick * 1.5), woodMat);
+    joist.position.set(jx, totalH * 0.72, 0);
+    if (j % 3 === 0) joist.rotation.z = 0.04;
+    group.add(joist);
+  }
+
+  // Interior debris mound inside shell
+  const rubble = buildDebrisPile(0, 0, Math.min(width, depth) * 0.35, 1.1);
+  group.add(rubble);
+
+  return group;
+}
+
+/* ── 12. Partially Collapsed Arcade ────────────────────────── */
+
+export function buildCollapsedArcade(width = 24, height = 12, depth = 5) {
+  const group = new THREE.Group();
+  group.name = 'collapsed-arcade';
+
+  const travMat = getMaterial('travertine');
+  const brickMat = getMaterial('romanBrick');
+  const pierW = 3.0;
+
+  // Standing left pier
+  const leftPier = new THREE.Mesh(new THREE.BoxGeometry(pierW, height, depth), travMat);
+  leftPier.position.set(-width / 4 - pierW / 2, height / 2, 0);
+  leftPier.castShadow = true;
+  leftPier.receiveShadow = true;
+  group.add(leftPier);
+
+  // Intact arch span on left
+  const intactArch = createRomanArch(width / 2, height, depth, (width / 2) - pierW, height * 0.75, 'travertine');
+  intactArch.position.set(-width / 4, 0, 0);
+  group.add(intactArch);
+
+  // Center pier: standing
+  const centerPier = new THREE.Mesh(new THREE.BoxGeometry(pierW, height * 0.95, depth), travMat);
+  centerPier.position.set(0, (height * 0.95) / 2, 0);
+  centerPier.castShadow = true;
+  group.add(centerPier);
+
+  // Right pier: fractured lower stump
+  const brokenPier = new THREE.Mesh(new THREE.BoxGeometry(pierW, height * 0.42, depth), brickMat);
+  brokenPier.position.set(width / 4 + pierW / 2, (height * 0.42) / 2, 0);
+  brokenPier.castShadow = true;
+  group.add(brokenPier);
+
+  // Broken spring stub cantilevered right from center pier
+  const springStub = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.2, depth * 0.9), travMat);
+  springStub.position.set(1.2, height * 0.82, 0);
+  springStub.rotation.z = -0.22;
+  group.add(springStub);
+
+  // Rubble pile of fallen arch keystones below
+  const rubble = buildDebrisPile(width / 4, 0, 3.2, 1.4);
+  group.add(rubble);
+
+  return group;
+}
+
 /* ── Master Dispatcher ────────────────────────────────────── */
 
 export function buildStructure(building) {
@@ -518,6 +631,8 @@ export function buildStructure(building) {
     case 'wall': return createCurtainWall(building.w || 200, building.h || 16, building.d || 4, 'romanBrick');
     case 'gate': return createFortifiedGate(building.w || 38, building.h || 22, building.d || 18, 12, 'travertine');
     case 'insula': return createRomanInsula(building.w || 24, building.d || 18, Math.max(2, Math.round((building.h || 15) / 3.4)), 'romanBrick');
+    case 'charred-insula': return createCharredInsula(building.w || 22, building.d || 16, Math.max(2, Math.round((building.h || 12) / 3.4)));
+    case 'collapsed-arcade': return buildCollapsedArcade(building.w || 24, building.h || 12, building.d || 5);
     case 'forum':
     case 'market':
     default: {

@@ -26,6 +26,7 @@ import {
   buildFuelTruck,
   buildRunwayApproachLights,
 } from '../../shared/assets/props.js';
+import { AirportTrafficSystem } from './aircraft.js';
 
 
   // Dense sample points along rivers + springs — feeds proximity-based water ambience
@@ -46,7 +47,7 @@ import {
     return pts;
   })();
 let renderer, scene, camera, clock;
-let environment, particles, collision, controls, audio, ui, tour, intro;
+let environment, particles, collision, controls, audio, ui, tour, intro, traffic;
 let buildingGroups = new Map();
 let isRunning = false;
 
@@ -128,6 +129,8 @@ async function init() {
 
   // 9. Apron Airliners & Ground Service Equipment Props
   populateAirportApron();
+  traffic = new AirportTrafficSystem(scene, collision);
+  traffic.init();
 
   // 10. Controls
   controls = new Controls(camera, canvas, document.body);
@@ -232,7 +235,7 @@ function populateAirportApron() {
   // 1. Commercial Passenger Jets (Turkish Red Livery) at Pier Gates
   const aircraftStands = [
     // Pier West (International Pier A-B) Outer Gates
-    { x: -555, z: 420, rot: -Math.PI / 2, tug: true, fuel: true },
+    // Note: Gate 1 at (-555, 420) is managed dynamically by AirportTrafficSystem (pushback + tug sequence)
     { x: -555, z: 600, rot: -Math.PI / 2, tug: true, fuel: false },
     { x: -555, z: 780, rot: -Math.PI / 2, tug: false, fuel: true },
     // Pier West Inner Gates
@@ -396,6 +399,9 @@ function installWorldDebugHandle() {
   window.__WORLD_DEBUG__ = {
     id: 'iga',
     get ready() { return Boolean(renderer && camera && controls && collision && ui); },
+    get camera() { return camera; },
+    get controls() { return controls; },
+    get traffic() { return traffic; },
     get player() {
       if (!camera) return null;
       return { x: camera.position.x, y: camera.position.y, z: camera.position.z, controlsEnabled: Boolean(controls?.enabled) };
@@ -462,6 +468,10 @@ function inspectLookedAt() {
 
 function render() {
   const dt = Math.min(clock.getDelta(), 0.05);
+
+  if (traffic) {
+    traffic.update(dt, environment?.isNight ?? false, camera.position);
+  }
 
   if (intro && !intro.isComplete) {
     intro.update(dt);
