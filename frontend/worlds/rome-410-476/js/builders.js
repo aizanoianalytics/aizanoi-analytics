@@ -35,6 +35,8 @@ export function buildColosseum(b) {
   const h = b.h || 48;
   const tiers = 4;
   const tierH = h / tiers;
+  const travMat = getMaterial('travertine');
+  const marbleColMat = getMaterial('marbleColosseum');
 
   // 4 tiered arcaded exterior shell
   for (let t = 0; t < tiers; t++) {
@@ -49,13 +51,45 @@ export function buildColosseum(b) {
     mesh.receiveShadow = true;
     group.add(mesh);
 
+    // Exterior pilasters / half-columns along the perimeter
+    const numCols = 32;
+    const colR = 0.55;
+    const colGeo = new THREE.CylinderGeometry(colR * 0.9, colR, tierH * 0.9, 8);
+    for (let i = 0; i < numCols; i++) {
+      // Skip the 4 cardinal entrance vomitoria openings on ground tier
+      const angle = (i / numCols) * Math.PI * 2;
+      const isCardinal = Math.abs(Math.sin(angle)) < 0.1 || Math.abs(Math.cos(angle)) < 0.1;
+      if (t === 0 && isCardinal) continue;
+
+      const px = Math.cos(angle) * (rx * scale + 0.3);
+      const pz = Math.sin(angle) * (rz * scale + 0.3);
+      const col = new THREE.Mesh(colGeo, travMat);
+      col.position.set(px, tierH / 2 + t * tierH, pz);
+      col.castShadow = true;
+      group.add(col);
+    }
+
     // Cornice ring separating tiers
-    const corniceGeo = new THREE.TorusGeometry(rx * scale, 0.6, 6, 48);
+    const corniceGeo = new THREE.TorusGeometry(rx * scale + 0.2, 0.6, 6, 48);
     corniceGeo.scale(1, 1, rz / rx);
     corniceGeo.rotateX(Math.PI / 2);
-    const cornice = new THREE.Mesh(corniceGeo, getMaterial('travertine'));
+    const cornice = new THREE.Mesh(corniceGeo, travMat);
     cornice.position.y = (t + 1) * tierH;
     group.add(cornice);
+  }
+
+  // 4 Cardinal Grand Entrance Portals (North, South, East, West Porta Sanivivaria & Triumphalis)
+  for (const sign of [-1, 1]) {
+    // East-West axis portals
+    const archEW = createRomanArch(10, 8, 8, 6.5, 6.5, 'travertine');
+    archEW.position.set(sign * (rx - 4), 0, 0);
+    archEW.rotation.y = Math.PI / 2;
+    group.add(archEW);
+
+    // North-South axis portals
+    const archNS = createRomanArch(10, 8, 8, 6.5, 6.5, 'travertine');
+    archNS.position.set(0, 0, sign * (rz - 4));
+    group.add(archNS);
   }
 
   // Interior Cavea Seating
@@ -67,7 +101,7 @@ export function buildColosseum(b) {
     ringGeo.scale(1, rz / rx, 1);
     ringGeo.rotateX(-Math.PI / 2);
 
-    const step = new THREE.Mesh(ringGeo, getMaterial('travertine'));
+    const step = new THREE.Mesh(ringGeo, travMat);
     step.position.y = 3 + c * 2.2;
     step.receiveShadow = true;
     group.add(step);
@@ -80,6 +114,23 @@ export function buildColosseum(b) {
   arena.position.y = 0.6;
   arena.receiveShadow = true;
   group.add(arena);
+
+  // Marble Podium Balustrade surrounding the arena
+  const podiumGeo = new THREE.TorusGeometry(rx * 0.43, 0.45, 6, 32);
+  podiumGeo.scale(1, 1, rz / rx);
+  podiumGeo.rotateX(Math.PI / 2);
+  const podium = new THREE.Mesh(podiumGeo, marbleColMat);
+  podium.position.y = 2.2;
+  group.add(podium);
+
+  // Hypogeum subterranean access corridors visible on arena floor
+  const hypogeumMat = getMaterial('romanBrick');
+  for (const hx of [-rx * 0.15, 0, rx * 0.15]) {
+    const wall = new THREE.Mesh(new THREE.BoxGeometry(0.8, 1.4, rz * 0.6), hypogeumMat);
+    wall.position.set(hx, 1.3, 0);
+    wall.castShadow = true;
+    group.add(wall);
+  }
 
   return group;
 }

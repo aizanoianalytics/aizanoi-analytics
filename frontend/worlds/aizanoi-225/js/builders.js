@@ -33,10 +33,26 @@ export function buildTempleOfZeus(b) {
   podium.receiveShadow = true;
   group.add(podium);
 
-  // Subterranean Vaulted Crypt beneath Cella (visible as vaulted basement opening)
-  const cryptOpening = createRomanArch(8, 2.2, 4, 4.5, 2.0, 'limestone');
-  cryptOpening.position.set(0, 0, d / 2 + 1.2);
-  group.add(cryptOpening);
+  // Subterranean Vaulted Crypt Chamber (Meter Steunene / Cybele underground shrine)
+  const cryptW = w * 0.45;
+  const cryptD = d * 0.45;
+  const cryptH = 2.2;
+  const cryptFloor = new THREE.Mesh(new THREE.BoxGeometry(cryptW, 0.2, cryptD), getMaterial('limestone'));
+  cryptFloor.position.set(0, 0.1, 0);
+  cryptFloor.receiveShadow = true;
+  group.add(cryptFloor);
+
+  // Vaulted stone ceiling over crypt
+  const cryptArch = createRomanArch(cryptW * 0.9, cryptH, cryptD, cryptW * 0.75, cryptH * 0.85, 'limestone');
+  cryptArch.position.set(0, 0, 0);
+  group.add(cryptArch);
+
+  // Subterranean Crypt Entrance Portals (on both North and South podium flanks)
+  for (const zSide of [-d / 2 - 0.2, d / 2 + 0.2]) {
+    const cryptOpening = createRomanArch(6.5, 2.4, 3.2, 4.2, 2.0, 'limestone');
+    cryptOpening.position.set(0, 0, zSide);
+    group.add(cryptOpening);
+  }
 
   // Peristyle: 8 x 15 Pseudodipteral Ionic columns
   const colH = h * 0.58;
@@ -85,28 +101,53 @@ export function buildTempleOfZeus(b) {
   return group;
 }
 
-/* ── 2. Macellum (Circular Food Market & Price Edict) ──────── */
-
 export function buildMacellum(b) {
   const group = new THREE.Group();
   group.userData.buildingId = b.id;
 
   const radius = (b.w || 54) / 2;
   const h = b.h || 11;
+  const marbleMat = getMaterial('marble');
+  const wallH = h * 0.65;
 
-  // Circular outer stone enclosure wall with price edict inscriptions
-  const wallGeo = new THREE.CylinderGeometry(radius, radius, h * 0.65, 32, 1, true);
-  const wall = new THREE.Mesh(wallGeo, getMaterial('marble'));
-  wall.position.y = (h * 0.65) / 2;
-  wall.castShadow = true;
-  group.add(wall);
+  // 1. Circular outer stone enclosure wall with 4 cardinal arched entrance gateways
+  const numWallSegments = 4;
+  for (let s = 0; s < numWallSegments; s++) {
+    const startAngle = s * (Math.PI / 2) + 0.18;
+    const arcLength = (Math.PI / 2) - 0.36;
+    const wallGeo = new THREE.CylinderGeometry(radius, radius, wallH, 16, 1, true, startAngle, arcLength);
+    const wall = new THREE.Mesh(wallGeo, marbleMat);
+    wall.position.y = wallH / 2;
+    wall.castShadow = true;
+    group.add(wall);
 
-  // Paved floor
+    // Wall cap molding
+    const capGeo = new THREE.RingGeometry(radius - 0.6, radius + 0.6, 16, 1, startAngle, arcLength);
+    capGeo.rotateX(-Math.PI / 2);
+    const cap = new THREE.Mesh(capGeo, marbleMat);
+    cap.position.y = wallH;
+    group.add(cap);
+  }
+
+  // Four Arched Gateway Portals at Cardinal Entrances
+  for (const sign of [-1, 1]) {
+    const archX = createRomanArch(6.5, 4.5, 2.4, 4.2, 3.6, 'marble');
+    archX.position.set(sign * radius, 0, 0);
+    archX.rotation.y = Math.PI / 2;
+    group.add(archX);
+
+    const archZ = createRomanArch(6.5, 4.5, 2.4, 4.2, 3.6, 'marble');
+    archZ.position.set(0, 0, sign * radius);
+    group.add(archZ);
+  }
+
+  // 2. Concentric Paved Marble Market Floor
   const floor = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, 0.4, 32), getMaterial('road'));
   floor.position.y = 0.2;
+  floor.receiveShadow = true;
   group.add(floor);
 
-  // Central Tholos (kiosk with ring of columns)
+  // 3. Central Tholos (kiosk with ring of columns)
   const tholosR = radius * 0.35;
   const colCount = 12;
   for (let i = 0; i < colCount; i++) {
@@ -120,7 +161,23 @@ export function buildMacellum(b) {
   const roofGeo = new THREE.ConeGeometry(tholosR * 1.25, 3.5, 24);
   const roof = new THREE.Mesh(roofGeo, getMaterial('roofTile'));
   roof.position.y = h * 0.7 + 1.75;
+  roof.castShadow = true;
   group.add(roof);
+
+  // 4. Stone Vendor Counters surrounding the central tholos
+  const counterCount = 8;
+  const counterR = radius * 0.65;
+  for (let i = 0; i < counterCount; i++) {
+    const angle = (i / counterCount) * Math.PI * 2 + 0.15;
+    const counter = new THREE.Mesh(
+      new THREE.BoxGeometry(3.6, 0.9, 1.4),
+      getMaterial('limestone')
+    );
+    counter.position.set(Math.cos(angle) * counterR, 0.65, Math.sin(angle) * counterR);
+    counter.rotation.y = -angle + Math.PI / 2;
+    counter.castShadow = true;
+    group.add(counter);
+  }
 
   return group;
 }

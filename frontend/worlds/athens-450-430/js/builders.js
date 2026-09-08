@@ -110,10 +110,10 @@ export function buildTemple(b) {
 
     const isParthenon = b.id === 'parthenon';
 
-    const wReal = isParthenon ? 30.9 : (b.w || 20);
-    const dReal = isParthenon ? 69.5 : (b.d || 40);
-    const colCountW = isParthenon ? 8 : (Math.floor(wReal / 5) > 4 ? Math.floor(wReal / 5) : 6);
-    const colCountD = isParthenon ? 17 : (colCountW * 2 + 1);
+    const wReal = b.w || (isParthenon ? 30.9 : 20);
+    const dReal = b.d || (isParthenon ? 69.5 : 40);
+    const colCountW = isParthenon ? 8 : Math.max(4, Math.floor(wReal / 3.5));
+    const colCountD = isParthenon ? 17 : Math.max(6, Math.floor(dReal / 3.2));
     const colHeight = isParthenon ? 10.4 : (b.h || (wReal / colCountW) * 2);
     const colRadius = colHeight / 11;
 
@@ -133,8 +133,8 @@ export function buildTemple(b) {
     let idx = 0;
     const dummy = new THREE.Object3D();
 
-    const stepW = (wReal - colRadius * 4) / (colCountW - 1);
-    const stepD = (dReal - colRadius * 4) / (colCountD - 1);
+    const stepW = (wReal - colRadius * 4) / Math.max(1, colCountW - 1);
+    const stepD = (dReal - colRadius * 4) / Math.max(1, colCountD - 1);
 
     const startX = -(wReal/2) + colRadius * 2;
     const startZ = -(dReal/2) + colRadius * 2;
@@ -198,14 +198,58 @@ export function buildGateway(b) {
     const group = new THREE.Group();
     group.userData.buildingId = b.id;
     const w = b.w || 30;
-    const d = b.d || 20;
+    const d = b.d || 16;
+    const h = b.h || 12;
 
-    const wallGeo = new THREE.BoxGeometry(w, 10, d);
-    const wall = new THREE.Mesh(wallGeo, getMaterial('marble'));
-    wall.position.y = 5;
-    wall.castShadow = true;
-    wall.receiveShadow = true;
-    group.add(wall);
+    const marbleMat = getMaterial('marble');
+
+    // Mnesicles Propylaea: two solid flanking wings and an open central sacred passageway
+    const wingW = Math.max(4, w * 0.28);
+    const wingH = h * 0.75;
+    const wingX = w / 2 - wingW / 2;
+
+    // North wing (Pinakotheke)
+    const leftWing = new THREE.Mesh(new THREE.BoxGeometry(wingW, wingH, d), marbleMat);
+    leftWing.position.set(-wingX, wingH / 2, 0);
+    leftWing.castShadow = true;
+    leftWing.receiveShadow = true;
+    group.add(leftWing);
+
+    // South wing
+    const rightWing = new THREE.Mesh(new THREE.BoxGeometry(wingW, wingH, d), marbleMat);
+    rightWing.position.set(wingX, wingH / 2, 0);
+    rightWing.castShadow = true;
+    rightWing.receiveShadow = true;
+    group.add(rightWing);
+
+    // Doric columns flanking the open central passageway
+    const colH = wingH;
+    const colR = 0.45;
+    const colGeo = new THREE.CylinderGeometry(colR * 0.85, colR, colH, 16);
+    const portalHalfW = (w - 2 * wingW) / 2;
+    for (const zOff of [-d / 2 + 1.2, d / 2 - 1.2]) {
+        for (const sign of [-1, 1]) {
+            const col = new THREE.Mesh(colGeo, marbleMat);
+            col.position.set(sign * Math.max(1.5, portalHalfW - 1.0), colH / 2, zOff);
+            col.castShadow = true;
+            group.add(col);
+        }
+    }
+
+    // Overhead monumental entablature spanning across the central portal (leaving ground open)
+    const beamH = h - wingH;
+    const beam = new THREE.Mesh(new THREE.BoxGeometry(w, beamH, d), marbleMat);
+    beam.position.set(0, wingH + beamH / 2, 0);
+    beam.castShadow = true;
+    beam.receiveShadow = true;
+    group.add(beam);
+
+    // Classical pediment over the central gateway
+    const pedHeight = Math.max(2, w * 0.12);
+    const ped = new THREE.Mesh(createPediment(w, d, pedHeight), marbleMat);
+    ped.position.y = h;
+    ped.castShadow = true;
+    group.add(ped);
 
     return group;
 }
@@ -215,14 +259,55 @@ export function buildStoa(b) {
     group.userData.buildingId = b.id;
     const w = b.w || 50;
     const d = b.d || 15;
+    const h = b.h || 6;
+    const marbleMat = getMaterial('marble');
 
+    // Stepped floor
     const floor = new THREE.Mesh(new THREE.BoxGeometry(w, 0.5, d), getMaterial('limestone'));
     floor.position.y = 0.25;
+    floor.receiveShadow = true;
     group.add(floor);
 
-    const backWall = new THREE.Mesh(new THREE.BoxGeometry(w, 6, 1), getMaterial('plaster'));
-    backWall.position.set(0, 3, -d/2 + 0.5);
+    // Enclosing back wall
+    const backWall = new THREE.Mesh(new THREE.BoxGeometry(w, h, 0.8), getMaterial('plaster'));
+    backWall.position.set(0, h / 2 + 0.5, -d / 2 + 0.4);
+    backWall.castShadow = true;
     group.add(backWall);
+
+    // Side walls
+    const sideWallGeo = new THREE.BoxGeometry(0.8, h, d);
+    const leftWall = new THREE.Mesh(sideWallGeo, getMaterial('plaster'));
+    leftWall.position.set(-w / 2 + 0.4, h / 2 + 0.5, 0);
+    group.add(leftWall);
+
+    const rightWall = new THREE.Mesh(sideWallGeo, getMaterial('plaster'));
+    rightWall.position.set(w / 2 - 0.4, h / 2 + 0.5, 0);
+    group.add(rightWall);
+
+    // Front colonnade
+    const colSpacing = 3.6;
+    const numCols = Math.max(4, Math.floor((w - 4) / colSpacing));
+    const colH = h - 0.6;
+    const colR = 0.32;
+    const colGeo = new THREE.CylinderGeometry(colR * 0.85, colR, colH, 16);
+    const actualSpacing = (w - 4) / (numCols - 1);
+    for (let i = 0; i < numCols; i++) {
+        const col = new THREE.Mesh(colGeo, marbleMat);
+        col.position.set(-w / 2 + 2 + i * actualSpacing, 0.5 + colH / 2, d / 2 - 1);
+        col.castShadow = true;
+        group.add(col);
+    }
+
+    // Architrave across colonnade
+    const arch = new THREE.Mesh(new THREE.BoxGeometry(w, 0.6, 1.4), marbleMat);
+    arch.position.set(0, 0.5 + colH + 0.3, d / 2 - 1);
+    group.add(arch);
+
+    // Pitched terracotta roof
+    const roof = new THREE.Mesh(new THREE.BoxGeometry(w + 1, 0.4, d + 1), getMaterial('roofTile'));
+    roof.position.set(0, h + 0.7, 0);
+    roof.castShadow = true;
+    group.add(roof);
 
     return group;
 }
@@ -230,12 +315,55 @@ export function buildStoa(b) {
 export function buildTheatre(b) {
     const group = new THREE.Group();
     group.userData.buildingId = b.id;
-    const radius = b.w || 40;
+    const radius = (b.w || 80) / 2;
 
-    const orchGeo = new THREE.CylinderGeometry(radius * 0.3, radius * 0.3, 0.2, 32);
-    const orch = new THREE.Mesh(orchGeo, getMaterial('ground'));
-    orch.position.y = 0.1;
+    // 1. Orchestra (circular dancing floor)
+    const orchRadius = radius * 0.35;
+    const orchGeo = new THREE.CylinderGeometry(orchRadius, orchRadius, 0.3, 32);
+    const orch = new THREE.Mesh(orchGeo, getMaterial('marble'));
+    orch.position.y = 0.15;
+    orch.receiveShadow = true;
     group.add(orch);
+
+    // Thymele (central altar)
+    const thymele = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.8, 1.0, 1.0, 16),
+        getMaterial('limestone')
+    );
+    thymele.position.y = 0.5;
+    group.add(thymele);
+
+    // 2. Theatron cavea (tiered semi-circular stone seating rising up the hillside)
+    const tierCount = 7;
+    const stepH = 0.65;
+    const stepW = (radius - orchRadius) / tierCount;
+    for (let i = 0; i < tierCount; i++) {
+        const innerR = orchRadius + i * stepW;
+        const outerR = innerR + stepW;
+        const tierGeo = new THREE.RingGeometry(innerR, outerR, 32, 1, 0, Math.PI);
+        const tier = new THREE.Mesh(tierGeo, getMaterial('limestone'));
+        tier.rotation.x = -Math.PI / 2;
+        tier.position.y = 0.2 + (i + 1) * stepH;
+        tier.receiveShadow = true;
+        group.add(tier);
+
+        const riserGeo = new THREE.CylinderGeometry(innerR, innerR, stepH, 32, 1, true, 0, Math.PI);
+        const riser = new THREE.Mesh(riserGeo, getMaterial('limestone'));
+        riser.position.y = 0.2 + (i + 0.5) * stepH;
+        group.add(riser);
+    }
+
+    // 3. Skene (stage building behind the orchestra)
+    const skeneW = radius * 1.1;
+    const skeneD = 8;
+    const skeneH = 5;
+    const skene = new THREE.Mesh(
+        new THREE.BoxGeometry(skeneW, skeneH, skeneD),
+        getMaterial('limestone')
+    );
+    skene.position.set(0, skeneH / 2, -orchRadius - skeneD / 2);
+    skene.castShadow = true;
+    group.add(skene);
 
     return group;
 }
@@ -244,13 +372,45 @@ export function buildRound(b) {
     const group = new THREE.Group();
     group.userData.buildingId = b.id;
     const radius = (b.w || 15) / 2;
+    const marbleMat = getMaterial('marble');
+    const colHeight = 4.8;
 
+    // 1. Stepped limestone base
     const base = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, 1, 32), getMaterial('limestone'));
     base.position.y = 0.5;
+    base.receiveShadow = true;
     group.add(base);
 
-    const roof = new THREE.Mesh(new THREE.ConeGeometry(radius * 1.1, 5, 32), getMaterial('roofTile'));
-    roof.position.y = 6;
+    // 2. Peristyle of Doric marble columns physically supporting the roof
+    const colCount = 16;
+    const colRadius = 0.28;
+    const colGeo = new THREE.CylinderGeometry(colRadius * 0.85, colRadius, colHeight, 16);
+    const ringR = radius * 0.82;
+    for (let i = 0; i < colCount; i++) {
+        const theta = (i / colCount) * Math.PI * 2;
+        const col = new THREE.Mesh(colGeo, marbleMat);
+        col.position.set(Math.cos(theta) * ringR, 1 + colHeight / 2, Math.sin(theta) * ringR);
+        col.castShadow = true;
+        group.add(col);
+    }
+
+    // 3. Interior circular cella wall
+    const cellaGeo = new THREE.CylinderGeometry(radius * 0.65, radius * 0.65, colHeight, 32, 1, true);
+    const cella = new THREE.Mesh(cellaGeo, getMaterial('plaster'));
+    cella.position.y = 1 + colHeight / 2;
+    group.add(cella);
+
+    // 4. Circular marble entablature ring
+    const entGeo = new THREE.CylinderGeometry(radius * 0.95, radius * 0.95, 0.6, 32);
+    const ent = new THREE.Mesh(entGeo, marbleMat);
+    ent.position.y = 1 + colHeight + 0.3;
+    ent.castShadow = true;
+    group.add(ent);
+
+    // 5. Conical terracotta roof securely anchored to entablature
+    const roof = new THREE.Mesh(new THREE.ConeGeometry(radius * 1.05, 3.2, 32), getMaterial('roofTile'));
+    roof.position.y = 1 + colHeight + 0.6 + 1.6;
+    roof.castShadow = true;
     group.add(roof);
 
     return group;
