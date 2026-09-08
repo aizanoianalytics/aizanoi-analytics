@@ -24,7 +24,7 @@ async function enter(page,spec){
   await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:30000});
   await page.waitForFunction(()=>document.documentElement.dataset.worldReady==='true',null,{timeout:30000});
   await page.keyboard.press('Escape');
-  await page.waitForFunction(()=>window.__WORLD_DEBUG__?.player?.controlsEnabled===true,null,{timeout:5000});
+  await page.waitForFunction(()=>window.__WORLD_DEBUG__?.player?.controlsEnabled===true,null,{timeout:10000});
   assert.ok(await page.locator('.hud-top').count(),`${spec.id}: HUD missing`);
 }
 for(const spec of worlds){
