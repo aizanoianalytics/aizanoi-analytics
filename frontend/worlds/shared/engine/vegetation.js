@@ -21,17 +21,21 @@ export class VegetationSystem {
     this.oliveTrunkMesh = null;
     this.oliveLeavesMesh = null;
     this.cypressMesh = null;
+    this.cypressTrunkMesh = null;
     this.figMesh = null;
+    this.figTrunkMesh = null;
     this.shrubMesh = null;
   }
 
   init() {
+    const trunkMat = getMaterial('trunk') || new THREE.MeshStandardMaterial({ color: 0x5a4530, roughness: 0.9 });
+
     // 1. Olive Trees (split trunk & leaves)
     const trunkGeo = new THREE.CylinderGeometry(0.35, 0.65, 3.2, 7);
     trunkGeo.translate(0, 1.6, 0);
     this.oliveTrunkMesh = new THREE.InstancedMesh(
       trunkGeo,
-      getMaterial('trunk') || new THREE.MeshStandardMaterial({ color: 0x5a4530, roughness: 0.9 }),
+      trunkMat,
       this.maxInstances,
     );
     this.oliveTrunkMesh.castShadow = true;
@@ -49,9 +53,20 @@ export class VegetationSystem {
     this.oliveLeavesMesh.receiveShadow = true;
     this.oliveLeavesMesh.count = 0;
 
-    // 2. Mediterranean Cypress (slender column-like)
-    const cypressGeo = new THREE.ConeGeometry(1.2, 13, 8);
-    cypressGeo.translate(0, 6.5, 0);
+    // 2. Mediterranean Cypress (grounded trunk & slender columnar foliage)
+    const cypressTrunkGeo = new THREE.CylinderGeometry(0.22, 0.38, 2.0, 6);
+    cypressTrunkGeo.translate(0, 1.0, 0);
+    this.cypressTrunkMesh = new THREE.InstancedMesh(
+      cypressTrunkGeo,
+      trunkMat,
+      this.maxInstances,
+    );
+    this.cypressTrunkMesh.castShadow = true;
+    this.cypressTrunkMesh.receiveShadow = true;
+    this.cypressTrunkMesh.count = 0;
+
+    const cypressGeo = new THREE.ConeGeometry(1.2, 12, 8);
+    cypressGeo.translate(0, 7.5, 0);
     this.cypressMesh = new THREE.InstancedMesh(
       cypressGeo,
       getMaterial('foliageDark') || new THREE.MeshStandardMaterial({ color: 0x2a4a28, roughness: 0.85 }),
@@ -61,10 +76,21 @@ export class VegetationSystem {
     this.cypressMesh.receiveShadow = true;
     this.cypressMesh.count = 0;
 
-    // 3. Fig Trees (broad spreading canopy)
+    // 3. Fig Trees (grounded gnarled trunk & broad spreading canopy)
+    const figTrunkGeo = new THREE.CylinderGeometry(0.35, 0.6, 2.6, 7);
+    figTrunkGeo.translate(0, 1.3, 0);
+    this.figTrunkMesh = new THREE.InstancedMesh(
+      figTrunkGeo,
+      trunkMat,
+      this.maxInstances,
+    );
+    this.figTrunkMesh.castShadow = true;
+    this.figTrunkMesh.receiveShadow = true;
+    this.figTrunkMesh.count = 0;
+
     const figGeo = new THREE.SphereGeometry(3.6, 8, 7);
     figGeo.scale(1.2, 0.7, 1.2);
-    figGeo.translate(0, 3.2, 0);
+    figGeo.translate(0, 3.4, 0);
     this.figMesh = new THREE.InstancedMesh(
       figGeo,
       new THREE.MeshStandardMaterial({ color: 0x6e8e48, roughness: 0.75 }),
@@ -89,7 +115,9 @@ export class VegetationSystem {
 
     this.scene.add(this.oliveTrunkMesh);
     this.scene.add(this.oliveLeavesMesh);
+    this.scene.add(this.cypressTrunkMesh);
     this.scene.add(this.cypressMesh);
+    this.scene.add(this.figTrunkMesh);
     this.scene.add(this.figMesh);
     this.scene.add(this.shrubMesh);
   }
@@ -118,7 +146,9 @@ export class VegetationSystem {
     this.dummy.rotation.set(0, Math.random() * Math.PI * 2, 0);
     this.dummy.updateMatrix();
 
+    this.cypressTrunkMesh.setMatrixAt(count, this.dummy.matrix);
     this.cypressMesh.setMatrixAt(count, this.dummy.matrix);
+    this.cypressTrunkMesh.count++;
     this.cypressMesh.count++;
   }
 
@@ -131,7 +161,9 @@ export class VegetationSystem {
     this.dummy.rotation.set(0, Math.random() * Math.PI * 2, 0);
     this.dummy.updateMatrix();
 
+    this.figTrunkMesh.setMatrixAt(count, this.dummy.matrix);
     this.figMesh.setMatrixAt(count, this.dummy.matrix);
+    this.figTrunkMesh.count++;
     this.figMesh.count++;
   }
 
@@ -219,7 +251,9 @@ export class VegetationSystem {
     // Notify Three.js to upload instance matrices to GPU
     if (this.oliveTrunkMesh) this.oliveTrunkMesh.instanceMatrix.needsUpdate = true;
     if (this.oliveLeavesMesh) this.oliveLeavesMesh.instanceMatrix.needsUpdate = true;
+    if (this.cypressTrunkMesh) this.cypressTrunkMesh.instanceMatrix.needsUpdate = true;
     if (this.cypressMesh) this.cypressMesh.instanceMatrix.needsUpdate = true;
+    if (this.figTrunkMesh) this.figTrunkMesh.instanceMatrix.needsUpdate = true;
     if (this.figMesh) this.figMesh.instanceMatrix.needsUpdate = true;
     if (this.shrubMesh) this.shrubMesh.instanceMatrix.needsUpdate = true;
   }
