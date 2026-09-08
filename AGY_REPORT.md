@@ -262,3 +262,30 @@ Chromium headless ve SwiftShader software rendering ortamında tüm dünyaların
    - Bakımsız taş döşemelerin arasından çıkan yabani otlar/çimler, yıkılmış sütun tamburları ve kırık steller, yanmış/çatısız insula kalıntıları, moloz yığınları, çökmüş kemerler ve bronz heykeller üzerindeki oksit/verdigris patinası eksiktir.
 4. **Varlık Envanteri Eksikleri:**
    - Nehir kıyı sazlıkları, ahşap yaya köprüleri, yük sandalları, moloz ve yıkıntı yığınları, kırık mermer steller ve nehir/şehir üzerinde süzülen kuşlar henüz mevcut değildir.
+
+---
+
+## 2. Canlı Su Uygulaması (Living Water Implementation)
+
+Üç antik dünyadaki nehirler (Aizanoi: Penkalas; Atina: Ilissos ve Eridanos; Roma: Tiber) ve kaynaklar (Kallirrhoe) yaşayan su sistemine dönüştürülmüştür.
+
+### Yapılan Teknik İyileştirmeler:
+1. **Kıyıya Paralel Akıntı ve Yüzey Sürüklenmesi (Bank-Parallel Flow & Surface Drift):**
+   - `WaterBody` poligon yapısı güncellenerek UV $u$ koordinatı nehrin kümülatif uzunluğuna (metre cinsinden `distAlongStream`), $v$ koordinatı ise sol kıyıdan (0.0) sağ kıyıya (1.0) normalize edilmiştir.
+   - Tepe gölgelendiricide (`WATER_VERTEX`) `vBankDamp = sin(clamp(uv.y, 0.0, 1.0) * π)` sönümleme katsayısı eklenmiştir. Bu sayede dalgalar nehir ortasında maksimum yüksekliğe ulaşırken, kıyı rıhtım taşlarında ve köprü ayaklarında sıfırlanarak taş kesişme/taşma artefaktları tamamen önlenmiştir.
+   - Parça gölgelendiricide (`WATER_FRAGMENT`) akıntı yönünde ters fazlı çift katmanlı yüzey sürüklenmesi (`streamU1`, `streamU2`) ve akıntıya bağlı mikro-normal pertürbasyonu uygulanmıştır.
+2. **Güneş Işıltısı ve Fresnel Parlaması (Subtle Shimmer & Specular Highlights):**
+   - Akıntıyla birlikte hareket eden yüksek üslü (`pow(..., 110.0)`) güneş ışıltı pırıltıları ve geniş ikincil yüzey parıltısı eklenmiştir.
+   - Nehir derinlik gradyanı (kanal ortasında derin renk, kıyılarda berrak/açık ton) ve kıyı köpüğü (`edgeFoam`) entegre edilmiştir.
+3. **Dairesel Kaynak ve Havuzlar (`WaterPool` / Kallirrhoe):**
+   - Dairesel kaynaklar için merkezden dışa doğru yayılan eşmerkezli dalga gölgelendiricileri (`POOL_VERTEX`, `POOL_FRAGMENT`) geliştirilmiştir.
+4. **Kesintisiz Nehir Ambiyans Sesi (`audio.js` & `buildWaterSamplePoints`):**
+   - `buildWaterSamplePoints(waters, 25)` algoritması ile Penkalas, Tiber ve Ilissos/Eridanos nehir poligonları $\le 25$ metre aralıklarla yoğun örnekleme noktalarına ayrılmıştır.
+   - `AudioSystem` içine derin nehir gövde rezonansı sağlayan 340 Hz alçak geçiren filtre katmanı (`waterLowFilter`, `waterLowGain`) eklenmiştir. Oyuncu nehir boyunca yürürken veya köprülerden geçerken su sesi kesilmeden pürüzsüzce takip etmektedir.
+5. **Yazılımsal Render Performansı:**
+   - Sıfır JavaScript döngüsü; kare başına maliyet yalnızca uniform zaman artışından (`uTime.value += dt`) ibarettir. SwiftShader ortamında kare hızı korunmuştur.
+
+Kanıt ekran görüntüleri:
+- `artifacts/water/aizanoi-penkalas-living-water.png`
+- `artifacts/water/athens-eridanos-living-water.png`
+- `artifacts/water/rome-tiber-living-water.png`

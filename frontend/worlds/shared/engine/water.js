@@ -1,16 +1,108 @@
 /**
- * water.js — Animated Water System
- * Aizanoi Analytics unified worlds runtime (originally Athens 450-430 BCE reference implementation)
+ * water.js — Living Water System
+ * Aizanoi Analytics unified worlds runtime
  *
- * Renders the Eridanos stream, Ilissos river, and Kallirrhoe spring
- * with animated vertex displacement and Fresnel reflective shading.
+ * Renders the Penkalas river (Aizanoi), Ilissos & Eridanos (Athens),
+ * Tiber river (Rome), and freshwater springs/pools with bank-parallel
+ * current animation, surface drift, solar shimmer, and proximity audio sampling.
  */
 
 import * as THREE from '../vendor/three.module.js';
 
-/* ── Water surface shader ─────────────────────────────────── */
+/* ── River surface shaders (bank-parallel flow & shimmer) ─── */
 
 const WATER_VERTEX = /* glsl */`
+  uniform float uTime;
+  uniform float uAmplitude;
+  uniform float uFlowSpeed;
+  varying vec2 vUv;
+  varying vec3 vWorldPos;
+  varying vec3 vNormal;
+  varying float vBankDamp;
+
+  void main() {
+    vUv = uv;
+    vec3 pos = position;
+
+    // Bank damping: exactly 0 at bank edges (uv.y == 0 or 1), 1 in mid-channel
+    float bankDamp = sin(clamp(uv.y, 0.0, 1.0) * 3.14159265);
+    vBankDamp = bankDamp;
+
+    // Waves travel downstream along uv.x (bank-parallel current)
+    float flowPhase = uv.x * 0.16 - uTime * (uFlowSpeed * 1.5);
+    float wave1 = sin(flowPhase) * (uAmplitude * 0.55);
+    float wave2 = sin(flowPhase * 2.1 + uv.y * 3.14159) * (uAmplitude * 0.3);
+    float wave3 = cos(flowPhase * 0.8 - uv.y * 1.5) * (uAmplitude * 0.15);
+    pos.y += (wave1 + wave2 + wave3) * bankDamp;
+
+    // Perturbed surface normal matching wave slope
+    float df = (cos(flowPhase) * 0.55 * 0.16 + cos(flowPhase * 2.1 + uv.y * 3.14159) * 0.3 * 0.336) * uAmplitude;
+    float dw = (cos(flowPhase * 2.1 + uv.y * 3.14159) * 3.14159 * 0.3 - sin(flowPhase * 0.8 - uv.y * 1.5) * 1.5 * 0.15) * uAmplitude;
+    vNormal = normalize(vec3(-df * bankDamp, 1.0, -dw * bankDamp));
+
+    vec4 worldPos = modelMatrix * vec4(pos, 1.0);
+    vWorldPos = worldPos.xyz;
+    gl_Position = projectionMatrix * viewMatrix * worldPos;
+  }
+`;
+
+const WATER_FRAGMENT = /* glsl */`
+  uniform vec3 uWaterColor;
+  uniform vec3 uSkyColor;
+  uniform vec3 uSunDir;
+  uniform float uOpacity;
+  uniform float uTime;
+  uniform float uFlowSpeed;
+
+  varying vec2 vUv;
+  varying vec3 vWorldPos;
+  varying vec3 vNormal;
+  varying float vBankDamp;
+
+  void main() {
+    vec3 viewDir = normalize(cameraPosition - vWorldPos);
+    vec3 normal = normalize(vNormal);
+
+    // Dual-layer bank-parallel surface drift & current ripples
+    float streamU1 = vUv.x * 0.35 - uTime * uFlowSpeed;
+    float streamU2 = vUv.x * 0.70 - uTime * (uFlowSpeed * 1.4) + sin(vUv.y * 4.0) * 0.35;
+    float rip1 = sin(streamU1 + vUv.y * 3.5);
+    float rip2 = cos(streamU2 - vUv.y * 4.2);
+    float currentTexture = (rip1 + rip2) * 0.5;
+
+    // Micro-normal perturbation for sun shimmer/sparkle drifting with current
+    vec3 microNormal = normalize(normal + vec3(rip1 * 0.08, 0.0, rip2 * 0.08));
+
+    // Fresnel reflection — grazing angles are more reflective
+    float fresnel = pow(1.0 - max(0.0, dot(viewDir, microNormal)), 3.0);
+    fresnel = mix(0.08, 0.88, fresnel);
+
+    // Solar specular glint (subtle shimmer moving with waves)
+    vec3 halfDir = normalize(viewDir + normalize(uSunDir));
+    float spec = pow(max(0.0, dot(microNormal, halfDir)), 110.0);
+    float sheen = pow(max(0.0, dot(microNormal, halfDir)), 22.0) * 0.22;
+
+    // River depth color gradient: deeper in mid-channel, lighter near banks
+    vec3 deepCol = uWaterColor * 0.8;
+    vec3 shallowCol = uWaterColor * 1.18 + vec3(0.015, 0.035, 0.025);
+    vec3 waterBase = mix(deepCol, shallowCol, 1.0 - vBankDamp * 0.5);
+    waterBase += currentTexture * 0.035;
+
+    vec3 reflection = uSkyColor * 0.75;
+    vec3 color = mix(waterBase, reflection, fresnel);
+    color += vec3(1.0, 0.96, 0.88) * (spec * 0.75 + sheen);
+
+    // Gentle edge foam along the banks
+    float edgeFoam = smoothstep(0.18, 0.02, vBankDamp) * 0.12 * (0.7 + 0.3 * sin(vUv.x * 0.8 + uTime * 1.8));
+    color += vec3(edgeFoam);
+
+    gl_FragColor = vec4(color, uOpacity * (0.65 + vBankDamp * 0.35));
+  }
+`;
+
+/* ── Spring / Pool circular water shaders ─────────────────── */
+
+const POOL_VERTEX = /* glsl */`
   uniform float uTime;
   uniform float uAmplitude;
   varying vec2 vUv;
@@ -21,18 +113,15 @@ const WATER_VERTEX = /* glsl */`
     vUv = uv;
     vec3 pos = position;
 
-    // Multi-frequency wave displacement
-    float wave1 = sin(pos.x * 0.8 + uTime * 1.2) * uAmplitude;
-    float wave2 = sin(pos.z * 1.1 + uTime * 0.9) * uAmplitude * 0.7;
-    float wave3 = sin((pos.x + pos.z) * 0.5 + uTime * 1.5) * uAmplitude * 0.4;
-    pos.y += wave1 + wave2 + wave3;
+    // Concentric ripples expanding outward from pool center
+    vec2 fromCenter = (uv - vec2(0.5)) * 2.0;
+    float dist = length(fromCenter);
+    float ripple = sin(dist * 16.0 - uTime * 2.2) * uAmplitude * (1.0 - smoothstep(0.65, 1.0, dist));
+    pos.y += ripple;
 
-    // Compute perturbed normal
-    float dx = cos(pos.x * 0.8 + uTime * 1.2) * uAmplitude * 0.8
-             + cos((pos.x + pos.z) * 0.5 + uTime * 1.5) * uAmplitude * 0.2;
-    float dz = cos(pos.z * 1.1 + uTime * 0.9) * uAmplitude * 0.77
-             + cos((pos.x + pos.z) * 0.5 + uTime * 1.5) * uAmplitude * 0.2;
-    vNormal = normalize(vec3(-dx, 1.0, -dz));
+    float dr = cos(dist * 16.0 - uTime * 2.2) * uAmplitude * 16.0 * (1.0 - smoothstep(0.65, 1.0, dist));
+    vec2 dir = dist > 0.001 ? fromCenter / dist : vec2(0.0);
+    vNormal = normalize(vec3(-dir.x * dr, 1.0, -dir.y * dr));
 
     vec4 worldPos = modelMatrix * vec4(pos, 1.0);
     vWorldPos = worldPos.xyz;
@@ -40,7 +129,7 @@ const WATER_VERTEX = /* glsl */`
   }
 `;
 
-const WATER_FRAGMENT = /* glsl */`
+const POOL_FRAGMENT = /* glsl */`
   uniform vec3 uWaterColor;
   uniform vec3 uSkyColor;
   uniform vec3 uSunDir;
@@ -55,36 +144,29 @@ const WATER_FRAGMENT = /* glsl */`
     vec3 viewDir = normalize(cameraPosition - vWorldPos);
     vec3 normal = normalize(vNormal);
 
-    // Fresnel effect — more reflective at grazing angles
-    float fresnel = pow(1.0 - max(0.0, dot(viewDir, normal)), 3.0);
-    fresnel = mix(0.05, 0.85, fresnel);
+    vec2 fromCenter = (vUv - vec2(0.5)) * 2.0;
+    float dist = length(fromCenter);
 
-    // Sun specular highlight
+    float fresnel = pow(1.0 - max(0.0, dot(viewDir, normal)), 3.0);
+    fresnel = mix(0.06, 0.85, fresnel);
+
     vec3 halfDir = normalize(viewDir + normalize(uSunDir));
     float spec = pow(max(0.0, dot(normal, halfDir)), 96.0);
 
-    // Caustic-like pattern (animated noise)
-    float caustic = sin(vWorldPos.x * 3.0 + uTime * 2.0)
-                  * sin(vWorldPos.z * 3.0 + uTime * 1.7) * 0.08;
+    float ripple = sin(dist * 18.0 - uTime * 2.2) * 0.04;
+    float shimmer = sin(vWorldPos.x * 2.5 + uTime * 1.8) * cos(vWorldPos.z * 2.5 + uTime * 1.5) * 0.035;
 
-    // Depth fade at edges (simple y-based)
-    float depth = smoothstep(-0.1, 0.6, vWorldPos.y + 0.3);
-
-    // Final color blend
-    vec3 waterBase = uWaterColor + caustic;
-    vec3 reflection = uSkyColor * 0.7;
+    vec3 waterBase = uWaterColor + ripple + shimmer;
+    vec3 reflection = uSkyColor * 0.75;
     vec3 color = mix(waterBase, reflection, fresnel);
-    color += vec3(1.0, 0.95, 0.85) * spec * 0.6;
+    color += vec3(1.0, 0.96, 0.88) * spec * 0.7;
 
-    // Slight foam at edges (bright rim)
-    float foam = smoothstep(0.92, 1.0, sin(vUv.x * 20.0 + uTime) * 0.5 + 0.5) * 0.15;
-    color += foam;
-
-    gl_FragColor = vec4(color, uOpacity * (0.6 + depth * 0.4));
+    float rim = smoothstep(0.98, 0.75, dist);
+    gl_FragColor = vec4(color, uOpacity * rim);
   }
 `;
 
-/* ── Water body class ─────────────────────────────────────── */
+/* ── Water body class (River / Stream) ────────────────────── */
 
 class WaterBody {
   constructor(scene, points, width, options = {}) {
@@ -92,7 +174,8 @@ class WaterBody {
     this.points = points;
     this.width = width;
     this.yLevel = options.yLevel ?? 0.05;
-    this.amplitude = options.amplitude ?? 0.08;
+    this.amplitude = options.amplitude ?? (width > 20 ? 0.11 : 0.06);
+    this.flowSpeed = options.flowSpeed ?? (width > 20 ? 0.52 : 0.40);
     this.color = options.color ?? new THREE.Color(0x3a6a7a);
     this.mesh = null;
     this.material = null;
@@ -100,11 +183,7 @@ class WaterBody {
   }
 
   _build() {
-    // Create a strip mesh along the polyline
-    const shape = new THREE.Shape();
     const halfW = this.width / 2;
-
-    // Build path segments
     const verts = [];
     const indices = [];
     const uvs = [];
@@ -115,41 +194,38 @@ class WaterBody {
     for (let i = 1; i < this.points.length; i++) {
       const dx = this.points[i].x - this.points[i - 1].x;
       const dz = this.points[i].z - this.points[i - 1].z;
-      totalLength += Math.sqrt(dx * dx + dz * dz);
+      totalLength += Math.hypot(dx, dz);
       segLengths.push(totalLength);
     }
 
-    // Subdivide each segment for wave detail
     const SUBDIVS = 8;
-    let vertIndex = 0;
 
     for (let i = 0; i < this.points.length - 1; i++) {
       const p0 = this.points[i];
       const p1 = this.points[i + 1];
       const dx = p1.x - p0.x;
       const dz = p1.z - p0.z;
-      const len = Math.sqrt(dx * dx + dz * dz);
-      // Perpendicular direction
+      const len = Math.hypot(dx, dz);
       const nx = -dz / len;
       const nz = dx / len;
 
       for (let s = 0; s <= SUBDIVS; s++) {
-        if (i > 0 && s === 0) continue; // avoid duplicate vertices at joints
+        if (i > 0 && s === 0) continue;
         const t = s / SUBDIVS;
         const x = p0.x + dx * t;
         const z = p0.z + dz * t;
-        const u = (segLengths[i] + len * t) / totalLength;
+        const distAlongStream = segLengths[i] + len * t;
 
-        // Left edge
+        // Left edge (uv.y = 0)
         verts.push(x + nx * halfW, this.yLevel, z + nz * halfW);
-        uvs.push(u, 0);
-        // Right edge
+        uvs.push(distAlongStream, 0.0);
+
+        // Right edge (uv.y = 1)
         verts.push(x - nx * halfW, this.yLevel, z - nz * halfW);
-        uvs.push(u, 1);
+        uvs.push(distAlongStream, 1.0);
       }
     }
 
-    // Build triangle indices
     const vertsPerCross = 2;
     const totalCross = verts.length / 3 / vertsPerCross;
     for (let i = 0; i < totalCross - 1; i++) {
@@ -173,6 +249,7 @@ class WaterBody {
       uniforms: {
         uTime:       { value: 0 },
         uAmplitude:  { value: this.amplitude },
+        uFlowSpeed:  { value: this.flowSpeed },
         uWaterColor: { value: this.color },
         uSkyColor:   { value: new THREE.Color(0.55, 0.72, 0.92) },
         uSunDir:     { value: new THREE.Vector3(0.4, 0.8, -0.3) },
@@ -214,11 +291,11 @@ class WaterPool {
     geo.translate(center.x, options.yLevel ?? 0.05, center.z);
 
     this.material = new THREE.ShaderMaterial({
-      vertexShader: WATER_VERTEX,
-      fragmentShader: WATER_FRAGMENT,
+      vertexShader: POOL_VERTEX,
+      fragmentShader: POOL_FRAGMENT,
       uniforms: {
         uTime:       { value: 0 },
-        uAmplitude:  { value: options.amplitude ?? 0.04 },
+        uAmplitude:  { value: options.amplitude ?? 0.035 },
         uWaterColor: { value: options.color ?? new THREE.Color(0x3a7a6a) },
         uSkyColor:   { value: new THREE.Color(0.55, 0.72, 0.92) },
         uSunDir:     { value: new THREE.Vector3(0.4, 0.8, -0.3) },
@@ -247,6 +324,40 @@ class WaterPool {
   }
 }
 
+/* ── Dense Water Sample Points Generator for Audio Ambience ── */
+
+/**
+ * Computes dense sample points along all river polylines and pools
+ * for smooth proximity-based water ambience audio without dropouts.
+ * @param {Array} waters - WATERS array from city-data.js
+ * @param {number} step - maximum spacing between sample points in world units (default 25)
+ * @returns {Array<{x: number, z: number}>}
+ */
+export function buildWaterSamplePoints(waters, step = 25) {
+  const pts = [];
+  for (const w of (waters || [])) {
+    if (Array.isArray(w.points) && w.points.length > 1) {
+      for (let i = 0; i < w.points.length - 1; i++) {
+        const p0 = w.points[i];
+        const p1 = w.points[i + 1];
+        const dx = p1.x - p0.x;
+        const dz = p1.z - p0.z;
+        const len = Math.hypot(dx, dz);
+        const count = Math.max(1, Math.ceil(len / step));
+        for (let s = 0; s < count; s++) {
+          const t = s / count;
+          pts.push({ x: p0.x + dx * t, z: p0.z + dz * t });
+        }
+      }
+      const last = w.points[w.points.length - 1];
+      pts.push({ x: last.x, z: last.z });
+    } else if (typeof w.x === 'number' && typeof w.z === 'number') {
+      pts.push({ x: w.x, z: w.z });
+    }
+  }
+  return pts;
+}
+
 /* ── Water system manager ─────────────────────────────────── */
 
 export class WaterSystem {
@@ -258,12 +369,13 @@ export class WaterSystem {
 
   /**
    * Add a river/stream from WATERS data.
-   * @param {{ points: {x,z}[], width: number }} waterData
+   * @param {{ points: {x,z}[], width: number, flowSpeed?: number, color?: number }} waterData
    */
   addStream(waterData) {
     const points = waterData.points.map(p => ({ x: p.x, z: p.z }));
     const body = new WaterBody(this.scene, points, waterData.width, {
-      amplitude: waterData.width > 10 ? 0.12 : 0.06,
+      amplitude: waterData.width > 20 ? 0.11 : 0.06,
+      flowSpeed: waterData.flowSpeed ?? (waterData.width > 20 ? 0.52 : 0.40),
       color: new THREE.Color(waterData.color || 0x3a6a7a),
     });
     this.bodies.push(body);
@@ -272,10 +384,12 @@ export class WaterSystem {
 
   /**
    * Add a spring/pool.
-   * @param {{ x: number, z: number, radius: number }} poolData
+   * @param {{ x: number, z: number, radius: number, color?: number }} poolData
    */
   addPool(poolData) {
-    const pool = new WaterPool(this.scene, { x: poolData.x, z: poolData.z }, poolData.radius);
+    const pool = new WaterPool(this.scene, { x: poolData.x, z: poolData.z }, poolData.radius, {
+      color: poolData.color ? new THREE.Color(poolData.color) : undefined,
+    });
     this.pools.push(pool);
     return pool;
   }

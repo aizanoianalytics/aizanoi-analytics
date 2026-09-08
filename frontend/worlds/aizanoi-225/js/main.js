@@ -13,7 +13,7 @@ import {
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
 import { buildStructure } from './builders.js';
 import { Environment } from '../../shared/engine/environment.js';
-import { WaterSystem } from '../../shared/engine/water.js';
+import { WaterSystem, buildWaterSamplePoints } from '../../shared/engine/water.js';
 import { VegetationSystem } from '../../shared/engine/vegetation.js';
 import { ParticleSystem } from '../../shared/engine/particles.js';
 import { CollisionSystem, PLAYER_HEIGHT } from '../../shared/engine/collision.js';
@@ -38,22 +38,7 @@ import {
 
 
   // Dense sample points along rivers + springs — feeds proximity-based water ambience
-  const WATER_POINTS = (() => {
-    const pts = [];
-    for (const w of (WATERS || [])) {
-      if (Array.isArray(w.points)) {
-        for (const p of w.points) pts.push({ x: p.x, z: p.z });
-        // densify segments (two-corner rivers are coarse; midpoint raises resolution)
-        for (let i = 0; i < w.points.length - 1; i++) {
-          const a = w.points[i], b = w.points[i + 1];
-          pts.push({ x: (a.x + b.x) / 2, z: (a.z + b.z) / 2 });
-        }
-      } else if (typeof w.x === 'number' && typeof w.z === 'number') {
-        pts.push({ x: w.x, z: w.z });
-      }
-    }
-    return pts;
-  })();
+  const WATER_POINTS = buildWaterSamplePoints(WATERS, 25);
 let renderer, scene, camera, clock;
 let environment, waterSystem, vegetation, particles;
 let collision, controls, audio, ui, tour, intro;
