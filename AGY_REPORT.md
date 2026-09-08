@@ -331,3 +331,35 @@ Kanıt ekran görüntüleri:
 - `artifacts/aircraft/iga-taxiing-airliner.png`
 - `artifacts/aircraft/iga-takeoff-climbout.png`
 - `artifacts/after/airliner-nav-lights.png`
+
+---
+
+## 4. Roma'nın Çöküş Dönemi Katmanı (Rome in Decay — AD 410–476 Implementation)
+
+MS 410 (Alaric / Vizigotlar) ve MS 455 (Gaiseric / Vandallar) yağmaları ile MS 476'da Romulus Augustulus'un tahttan indirilmesi arasındaki Geç Antik Roma kenti, tertemiz bir klasik kartpostal değildir. Belgelenmiş anıtsal geometri bozulmadan (`Colosseum`, `Pantheon`, `Basilica` vb.), kentin üzerine dürüst bir atmosferik çöküş ve ihmal katmanı eklenmiştir (`frontend/worlds/rome-410-476/js/`).
+
+### Yapılan Teknik ve Tarihsel İyileştirmeler:
+1. **Bazalt Cadde Döşemelerinden Fışkıran Yabani Otlar (`buildPavingWeeds`):**
+   - Via Sacra, Clivus Capitolinus, Forum Romanum ve Subura sokak aralarında bakımsız taş derzlerinden çıkan yabani ot ve çim kümeleri (`overgrownGrass`, `0x4c6b32`) yerleştirilmiştir.
+2. **İmparatorluk Forumlarında Yıkılmış Sütun Tamburları & Kırık Steller:**
+   - `buildFallenColumnDrums`: Forum Romanum, Augustus Forumu ve Boarium'da devrilmiş, yan yatmış yivli mermer sütun tamburları ve etrafa saçılmış kırık taş parçaları (`rubbleStone`, `0x9a8f82`).
+   - `buildShatteredStele`: İkiye bölünmüş, kırık üçgen alınlıklı mermer steller.
+3. **Yanmış ve Çatısız İnsula Varyantları (`createCharredInsula`):**
+   - Yangınlardan etkilenen Subura ve Forum Boarium bölgelerinde prosedürel insulaların yaklaşık %14'ü yanmış/çatısız konut olarak üretilmektedir.
+   - İsli, yanık tuğla duvarlar (`scorchedBrick`, `0x4a342e`), açık üst kat, kiremit çatının tamamen yok olması ve açıkta kalan kömürleşmiş ahşap tavan kirişleri (`charredWood`, `0x221f1c`).
+   - Zemin katında moloz döküntüsü ve yangın hasarlı açıklıklar.
+4. **Traverten ve Tuğla Moloz Yığınları (`buildDebrisPile`):**
+   - Bakımsız sokak köşelerinde ve çöken yapıların dibinde konik tufa kaideli, üzeri traverten ve Roma tuğlası kırıklarıyla kaplı moloz höyükleri eklenmiştir.
+5. **Kısmen Çökmüş Kemer ve Revaklar (`buildCollapsedArcade`):**
+   - Ayakta duran sağlam bir kemer, kırılmış ayak kütüğü, askıda kalmış kemer başlangıç taşı (spring stub) ve yerdeki kilit taşı moloz yığınından oluşan çökmüş revak mimarisi modellenmiştir.
+6. **Forum Romanum Bronz Heykellerinde Verdigris Patinası:**
+   - Forum ve Capitolium'daki imparatorluk bronz heykelleri, yüzyılların oksidasyonunu yansıtan otantik antik verdigris patinasına (`verdigrisBronze`, `0x42735d`) dönüştürülmüştür. Kaideler aşınmış travertenle güncellenmiştir.
+7. **Epistemik Dürüstlük ve Kanıt Seviyesi (Evidence Standards):**
+   - Belgelenmiş anıt geometrileri (`documented` / `archaeological`) hiçbir şekilde değiştirilmemiştir.
+   - Tüm çöküş unsurları, yanmış insulalar ve moloz yığınları `atmospheric/inferred` (renk kodu: `0xc98778`) olarak etiketlenmiş ve epistemik kesinlik sınırları titizlikle korunmuştur.
+
+Kanıt ekran görüntüleri:
+- `artifacts/decay/rome-forum-fallen-columns-weeds.png`
+- `artifacts/decay/rome-charred-insula-debris.png`
+- `artifacts/decay/rome-collapsed-arcade.png`
+- `artifacts/after/rome-forum-decay-paving.png`

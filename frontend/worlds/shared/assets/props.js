@@ -160,14 +160,14 @@ export function buildBrazier(x, z, height = 1.4) {
 
 /* ── 4. Classical Statues & Monuments ─────────────────────── */
 
-export function buildStatueMonument(x, z, rot = 0, isAthena = false) {
+export function buildStatueMonument(x, z, rot = 0, isAthena = false, isDecayed = false) {
   const group = new THREE.Group();
   group.position.set(x, 0, z);
   group.rotation.y = rot;
 
-  const marbleMat = getMaterial('marble');
-  const bronzeMat = getMaterial('bronze');
-  const goldMat = getMaterial('goldLeaf');
+  const marbleMat = isDecayed ? getMaterial('travertine') : getMaterial('marble');
+  const bronzeMat = isDecayed ? getMaterial('verdigrisBronze') : getMaterial('bronze');
+  const goldMat = isDecayed ? getMaterial('verdigrisBronze') : getMaterial('goldLeaf');
 
   // Stepped marble pedestal (3 tiers)
   const base1 = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.4, 2.4), marbleMat);
@@ -875,6 +875,123 @@ export function buildSundialMonument(x, z) {
   gnomon.position.set(0, 1.4, 0);
   gnomon.rotation.x = 0.45;
   group.add(gnomon);
+
+  return group;
+}
+
+/* ── 17. Overgrown Street Paving Weeds ──────────────────────── */
+
+export function buildPavingWeeds(x, z, rot = 0, scale = 1.0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0.02, z);
+  group.rotation.y = rot;
+  group.name = 'paving-weeds';
+
+  const weedMat = getMaterial('overgrownGrass');
+  const bladeGeo = new THREE.PlaneGeometry(0.55 * scale, 0.42 * scale);
+  bladeGeo.translate(0, (0.42 * scale) / 2, 0);
+
+  for (let i = 0; i < 3; i++) {
+    const blade = new THREE.Mesh(bladeGeo, weedMat);
+    blade.rotation.y = (i * Math.PI) / 3;
+    blade.rotation.x = ((i * 0.13) % 0.2) - 0.1;
+    group.add(blade);
+  }
+  return group;
+}
+
+/* ── 18. Fallen Column Drums & Shattered Stelae ────────────── */
+
+export function buildFallenColumnDrums(x, z, rot = 0, count = 3) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+  group.name = 'fallen-column-drums';
+
+  const stoneMat = getMaterial('marble');
+  const drumR = 0.65;
+  const drumH = 1.25;
+
+  for (let i = 0; i < count; i++) {
+    const drumGeo = new THREE.CylinderGeometry(drumR, drumR, drumH, 12);
+    drumGeo.rotateZ(Math.PI / 2);
+    const drum = new THREE.Mesh(drumGeo, stoneMat);
+    drum.position.set(i * 1.35, drumR * 0.85, (i % 2 === 0 ? 0.2 : -0.2));
+    drum.rotation.y = (i * 0.15);
+    drum.castShadow = true;
+    drum.receiveShadow = true;
+    group.add(drum);
+  }
+
+  const chunkMat = getMaterial('rubbleStone');
+  for (let j = 0; j < 5; j++) {
+    const chunk = new THREE.Mesh(
+      new THREE.BoxGeometry(0.35 + (j % 3) * 0.15, 0.25, 0.4),
+      chunkMat
+    );
+    chunk.position.set((j - 2) * 0.9, 0.12, (j % 2 === 0 ? 1.0 : -0.9));
+    chunk.rotation.set(0.2 * j, 0.5 * j, 0.1 * j);
+    group.add(chunk);
+  }
+
+  return group;
+}
+
+export function buildShatteredStele(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+  group.name = 'shattered-stele';
+
+  const stoneMat = getMaterial('travertine');
+  const lower = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.2, 1.1), stoneMat);
+  lower.position.set(0, 0.1, 0);
+  lower.castShadow = true;
+  group.add(lower);
+
+  const upper = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.2, 0.9), stoneMat);
+  upper.position.set(0.4, 0.12, 1.15);
+  upper.rotation.y = 0.35;
+  upper.rotation.z = 0.08;
+  upper.castShadow = true;
+  group.add(upper);
+
+  return group;
+}
+
+/* ── 19. Travertine & Brick Debris / Rubble Piles ───────────── */
+
+export function buildDebrisPile(x, z, radius = 3.0, height = 1.2) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.name = 'debris-pile';
+
+  const moundGeo = new THREE.ConeGeometry(radius, height, 9);
+  const mound = new THREE.Mesh(moundGeo, getMaterial('tufa'));
+  mound.position.y = height / 2;
+  mound.scale.set(1.0, 1.0, 0.85);
+  mound.receiveShadow = true;
+  group.add(mound);
+
+  const brickMat = getMaterial('romanBrick');
+  const travMat = getMaterial('travertine');
+  for (let i = 0; i < 8; i++) {
+    const angle = (i / 8) * Math.PI * 2 + 0.3;
+    const dist = (radius * 0.35) + (i % 3) * (radius * 0.22);
+    const px = Math.cos(angle) * dist;
+    const pz = Math.sin(angle) * dist;
+    const py = Math.max(0.15, height * (1 - dist / radius) * 0.7);
+
+    const isBrick = i % 2 === 0;
+    const chunk = new THREE.Mesh(
+      new THREE.BoxGeometry(0.55 + (i % 2) * 0.25, 0.3, 0.45),
+      isBrick ? brickMat : travMat
+    );
+    chunk.position.set(px, py, pz);
+    chunk.rotation.set((i * 0.4) % 1, (i * 0.7) % 2, (i * 0.3) % 1);
+    chunk.castShadow = true;
+    group.add(chunk);
+  }
 
   return group;
 }

@@ -34,7 +34,11 @@ import {
   buildUmbrellaPine,
   buildSacrificialAltar,
   buildMerchantVessel,
-  buildSundialMonument
+  buildSundialMonument,
+  buildPavingWeeds,
+  buildFallenColumnDrums,
+  buildShatteredStele,
+  buildDebrisPile
 } from '../../shared/assets/props.js';
 
 
@@ -276,11 +280,14 @@ function buildUrbanInsulae() {
         const d = 10 + hash(`${seed}:d`) * 8;
         const h = style.heightRange[0] + hash(`${seed}:h`) * (style.heightRange[1] - style.heightRange[0]);
 
+        const isCharred = hash(`${seed}:charred`) < 0.14;
         const insula = {
           id: `insula-${placed}`,
-          type: 'insula',
+          type: isCharred ? 'charred-insula' : 'insula',
           x, z, w, d, h,
-          evidence: { level: 'plausible' }
+          evidence: isCharred
+            ? { level: 'atmospheric/inferred', note: 'Charred, roofless insula reflecting post-sack (AD 410/455) urban fire damage.' }
+            : { level: 'plausible' }
         };
 
         try {
@@ -340,10 +347,10 @@ function populateRomeDressing() {
     dressingGroup.add(buildBrazier(b.x, b.z, 1.4));
   }
 
-  // 5. Imperial Statues on plinths in the Forum & Capitolium
-  dressingGroup.add(buildStatueMonument(-80, 20, 0, false));
-  dressingGroup.add(buildStatueMonument(-50, 60, Math.PI * 0.5, false));
-  dressingGroup.add(buildStatueMonument(5, -35, -Math.PI * 0.25, false));
+  // 5. Imperial Statues on plinths in the Forum & Capitolium (weathered verdigris patina 0x42735d)
+  dressingGroup.add(buildStatueMonument(-80, 20, 0, false, true));
+  dressingGroup.add(buildStatueMonument(-50, 60, Math.PI * 0.5, false, true));
+  dressingGroup.add(buildStatueMonument(5, -35, -Math.PI * 0.25, false, true));
 
   // 6. Marble Inscribed Columns & Milestones
   dressingGroup.add(buildInscribedStele(-85, 35, 0.2, 'Miliarium Aureum'));
@@ -380,6 +387,43 @@ function populateRomeDressing() {
   // 12. Roman Merchant Vessels (Navis Oneraria) on the Tiber River
   dressingGroup.add(buildMerchantVessel(-205, -240, 0.22));
   dressingGroup.add(buildMerchantVessel(-170, -185, -0.18));
+
+  // 13. Late Antique Decay Layer (AD 410–476 Post-Sack Neglect & Ruin)
+  // Broken / fallen column drums in Imperial Fora & Forum Romanum
+  dressingGroup.add(buildFallenColumnDrums(-70, 30, 0.4, 4));
+  dressingGroup.add(buildFallenColumnDrums(-90, 10, -0.6, 3));
+  dressingGroup.add(buildFallenColumnDrums(-45, 15, 0.8, 3));
+  dressingGroup.add(buildFallenColumnDrums(-60, 105, 0.2, 3));
+
+  // Shattered stelae in Forum Romanum
+  dressingGroup.add(buildShatteredStele(-75, 40, 0.5));
+  dressingGroup.add(buildShatteredStele(-55, 18, -0.3));
+
+  // Travertine & brick debris mounds
+  dressingGroup.add(buildDebrisPile(-68, 52, 2.8, 1.2));
+  dressingGroup.add(buildDebrisPile(-82, -5, 3.2, 1.4));
+  dressingGroup.add(buildDebrisPile(25, 60, 2.5, 1.0));
+  dressingGroup.add(buildDebrisPile(110, 85, 3.4, 1.5));
+  dressingGroup.add(buildDebrisPile(-160, -90, 3.0, 1.3));
+
+  // Partially collapsed arcade on secondary aqueduct / portico spur
+  const arcade1 = buildStructure({ type: 'collapsed-arcade', w: 26, h: 11, d: 5 });
+  arcade1.position.set(130, 0, 70);
+  arcade1.rotation.y = 0.4;
+  dressingGroup.add(arcade1);
+  collision.grid.insert({ type: 'rect', id: 'collapsed-arcade-1', x: 130, z: 70, w: 26, d: 5, h: 11 });
+
+  // Overgrown street paving weeds along Roman basalt roads
+  const weedCoords = [
+    [-68, 28], [-72, 36], [-80, 15], [-50, 48], [-40, 22],
+    [-20, -5], [-10, -18], [5, -30], [20, -45], [35, -58],
+    [50, 75], [60, 85], [30, 100], [-135, -100], [-145, -120],
+    [-85, 40], [-60, 20], [-45, 10], [120, 75], [125, 65]
+  ];
+  for (let i = 0; i < weedCoords.length; i++) {
+    const [wx, wz] = weedCoords[i];
+    dressingGroup.add(buildPavingWeeds(wx, wz, (i * 0.7) % Math.PI, 0.9 + (i % 3) * 0.2));
+  }
 
   scene.add(dressingGroup);
 }
@@ -480,6 +524,8 @@ function installWorldDebugHandle() {
   window.__WORLD_DEBUG__ = {
     id: 'rome',
     get ready() { return Boolean(renderer && camera && controls && collision && ui); },
+    get camera() { return camera; },
+    get controls() { return controls; },
     get player() {
       if (!camera) return null;
       return { x: camera.position.x, y: camera.position.y, z: camera.position.z, controlsEnabled: Boolean(controls?.enabled) };

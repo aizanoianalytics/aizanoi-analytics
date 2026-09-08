@@ -89,3 +89,64 @@ test('Aircraft movement: AirportTrafficSystem advances pushback, taxi, takeoff a
   // Verify soft player clearance check was invoked to keep runway walk-safe
   assert.ok(collisionChecked > 0, 'Should check static collision to avoid pushing player through geometry');
 });
+
+test('Rome decay: verdigris bronze statuary, charred insulae, collapsed arcade and rubble props', async () => {
+  const {
+    buildStatueMonument,
+    buildFallenColumnDrums,
+    buildShatteredStele,
+    buildDebrisPile,
+    buildPavingWeeds,
+  } = await import('../frontend/worlds/shared/assets/props.js');
+  const { createCharredInsula, buildCollapsedArcade } = await import('../frontend/worlds/rome-410-476/js/builders.js');
+  const { getEvidenceMaterial, getMaterial } = await import('../frontend/worlds/shared/assets/materials.js');
+
+  // 1. Verdigris statue
+  const freshStatue = buildStatueMonument(0, 0, 0, false, false);
+  const decayedStatue = buildStatueMonument(0, 0, 0, false, true);
+  assert.ok(decayedStatue, 'Decayed statue group created');
+  const verdigrisMat = getMaterial('verdigrisBronze');
+  assert.equal(verdigrisMat.color.getHex(), 0x42735d, 'Verdigris bronze color must be 0x42735d');
+
+  // 2. Charred roofless insula
+  const charred = createCharredInsula(22, 16, 3);
+  assert.equal(charred.name, 'charred-roofless-insula', 'Must identify as charred-roofless-insula');
+  let hasBurnedJoists = false;
+  let hasInteriorDebris = false;
+  charred.traverse(child => {
+    if (child.name === 'debris-pile') hasInteriorDebris = true;
+    if (child.isMesh && child.material?.color?.getHex() === 0x221f1c) hasBurnedJoists = true;
+  });
+  assert.ok(hasBurnedJoists, 'Charred insula must contain charred wood joists');
+  assert.ok(hasInteriorDebris, 'Charred insula must contain interior debris rubble pile');
+
+  // 3. Collapsed arcade
+  const arcade = buildCollapsedArcade(26, 12, 5);
+  assert.equal(arcade.name, 'collapsed-arcade', 'Must identify as collapsed-arcade');
+  let hasFallenDebris = false;
+  arcade.traverse(child => {
+    if (child.name === 'debris-pile') hasFallenDebris = true;
+  });
+  assert.ok(hasFallenDebris, 'Collapsed arcade must have fallen keystone debris pile');
+
+  // 4. Props: fallen column drums, shattered stele, debris pile, paving weeds
+  const drums = buildFallenColumnDrums(0, 0, 0, 3);
+  assert.equal(drums.name, 'fallen-column-drums');
+  assert.ok(drums.children.length >= 4, 'Must have drums and stone chunks');
+
+  const stele = buildShatteredStele(0, 0);
+  assert.equal(stele.name, 'shattered-stele');
+  assert.equal(stele.children.length, 2, 'Must have broken lower and upper fragments');
+
+  const debris = buildDebrisPile(0, 0, 3, 1.2);
+  assert.equal(debris.name, 'debris-pile');
+
+  const weeds = buildPavingWeeds(0, 0);
+  assert.equal(weeds.name, 'paving-weeds');
+  assert.ok(weeds.children.length >= 3, 'Must have crossed grass blades');
+
+  // 5. Evidence classification
+  const evidenceMat = getEvidenceMaterial('atmospheric/inferred');
+  assert.ok(evidenceMat, 'Evidence material for atmospheric/inferred must resolve');
+  assert.equal(evidenceMat.color.getHex(), 0xc98778, 'Evidence color must match atmospheric tint 0xc98778');
+});
