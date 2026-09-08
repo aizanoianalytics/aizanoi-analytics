@@ -34,7 +34,7 @@ export async function mountRecycleBin({ container, capabilities }) {
           <button class="az-button" type="button" data-bin-restore="${esc(node.id)}">Restore</button>
           <button class="az-button" type="button" data-bin-delete="${esc(node.id)}">Delete</button>
         </div>`).join('')
-      : '<div class="az-empty-state"><div><h3>Recycle Bin is empty</h3><p>Items deleted from Workspace files land here first.</p></div></div>';
+      : '<div class="az-empty-state" role="listitem"><div><h3>Recycle Bin is empty</h3><p>Items deleted from Workspace files land here first.</p></div></div>';
   }
 
   async function handleAction(event) {

@@ -61,7 +61,7 @@ test("Reset Filters does not erase Settings exclusions", () => {
 });
 
 test("Recruitment Settings and header remain usable on narrow screens", () => {
-  assert.match(html, /@media \(max-width: 820px\)[\s\S]*?\.nav-tabs \{ width: 100%; max-width: 100%; overflow-x: auto;/);
+  assert.match(html, /@media \(max-width: 820px\)[\s\S]*?\.nav-tabs-container \{ width: 100%; max-width: 100%; overflow-x: auto;/);
   assert.match(html, /\.header-top \{ flex-direction: column; align-items: stretch; \}/);
   assert.match(html, /\.brand-group, \.header-meta, \.header-actions \{ width: 100%; min-width: 0; \}/);
   assert.match(html, /\.status-pill \{ max-width: 100%; min-width: 0; flex-wrap: wrap; \}/);

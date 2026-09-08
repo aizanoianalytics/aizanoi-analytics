@@ -30,7 +30,7 @@ if (oracle.schemaVersion !== 1 || overrides.schemaVersion !== 1 || presentation.
 }
 
 const TR_CHARS = /[çğıöşüÇĞİÖŞÜ]/u;
-const TR_WORDS = /\b(?:acik|açık|aktif|aksiyon|alt|ana|anket|ara|arasi|arası|ay|aylik|aylık|ayril|ayrıl|baslangic|başlangıç|bazi|bazı|bazli|bazlı|bitis|bitiş|bolge|bölge|bolum|bölüm|brut|brüt|bu|calisan|çalışan|calisma|çalışma|ceza|cikis|çıkış|cinsiyet|dagilim|dağılım|daha|deger|değer|departman|detay|diger|diğer|donem|dönem|dusuk|düşük|egitim|eğitim|eksik|erken|esik|eşik|evden|fazla|fiili|filtre|gelen|genel|gerceklesen|gerçekleşen|giris|giriş|gore|göre|gorev|görev|goster|göster|gun|gün|hedef|hesap|icin|için|izin|kayit|kayıt|kidem|kıdem|kisi|kişi|kirilim|kırılım|kritik|kullan|kapsam|kaynak|hesaplama|maksimum|lokasyon|magaza|mağaza|maas|maaş|merkez|mesai|metrik|mudur|müdür|onceki|önceki|ortalama|ozet|özet|personel|puan|riskli|saat|satis|satış|sayfa|sayisi|sayısı|sebep|secili|seçili|seciniz|seçiniz|sicil|son|sozlesme|sözleşme|sure|süre|surekli|sürekli|tahmin|tamam|toplam|tum|tüm|tur|tür|unvan|ust|üst|uyari|uyarı|uygun|uzman|ucret|ücret|veri|ve|veya|yil|yıl|yonet|yönet|yuksek|yüksek|zorunlu)\b/iu;
+const TR_WORDS = /\b(?:acik|açık|aktif|aksiyon|alt|ana|anket|ara|arasi|arası|ay|aylik|aylık|ayril|ayrıl|baslangic|başlangıç|bazi|bazı|bazli|bazlı|bitis|bitiş|bolge|bölge|bolum|bölüm|brut|brüt|bu|calisan|çalışan|calisma|çalışma|ceza|cikis|çıkış|cinsiyet|dagilim|dağılım|daha|deger|değer|departman|detay|diger|diğer|donem|dönem|dusuk|düşük|egitim|eğitim|eksik|erken|esik|eşik|evden|fazla|fiili|filtre|filtreler|filtreleri|gelen|genel|gerceklesen|gerçekleşen|giris|giriş|gore|göre|gorev|görev|goster|göster|gun|gün|hedef|hesap|icin|için|izin|kayit|kayıt|kayitlari|kayıtları|kidem|kıdem|kisi|kişi|kirilim|kırılım|kritik|kullan|kapsam|kaynak|hesaplama|maksimum|lokasyon|magaza|mağaza|maas|maaş|medyan|merkez|mesai|metrik|mudur|müdür|onceki|önceki|ortalama|ozet|özet|personel|puan|riskli|saat|satis|satış|sayfa|sayisi|sayısı|sebep|secili|seçili|seciniz|seçiniz|sicil|son|sozlesme|sözleşme|sure|süre|surekli|sürekli|tahmin|tamam|toplam|tum|tüm|tur|tür|unvan|ust|üst|uyari|uyarı|uygun|uzman|ucret|ücret|veri|ve|veya|yil|yıl|yonet|yönet|yuksek|yüksek|zorunlu)\b/iu;
 const suspiciousTurkish = (value) => {
   const normalized = String(value ?? '').replace(/\\[nrt]/g, ' ').replace(/\s+/g, ' ').trim();
   return Boolean(normalized && (TR_CHARS.test(normalized) || TR_WORDS.test(normalized)));
@@ -138,6 +138,7 @@ function publicEnglishRuntime(exactInput) {
     match = value.match(/^(\d+)\s+dönem$/iu); if (match) return `${match[1]} periods`;
     match = value.match(/^(\d+)\s+çıkış$/iu); if (match) return `${match[1]} exits`;
     match = value.match(/^(\d+)\s+çalışan$/iu); if (match) return `${match[1]} employees`;
+    match = value.match(/^(\d+)\s+filtreli kay\u0131t$/iu); if (match) return `${match[1]} filtered records`;
     match = value.match(/^(\d+)\s+kişi$/iu); if (match) return `${match[1]} people`;
     match = value.match(/^(\d+)\s*\/\s*(\d+)\s+kayıt$/iu); if (match) return `${match[1]} / ${match[2]} records`;
     match = value.match(/^(\d+)\s*\/\s*(\d+)\s+kayıt gösteriliyor\.$/iu); if (match) return `${match[1]} / ${match[2]} records shown.`;

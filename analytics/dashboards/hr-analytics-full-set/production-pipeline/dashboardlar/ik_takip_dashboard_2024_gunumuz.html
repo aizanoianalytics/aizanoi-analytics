@@ -4990,7 +4990,7 @@
               <div class="muted">Seçili ay içinde çıkışı gerçekleşen çalışan listesi</div>
             </div>
             <div class="section-controls">
-              <select id="p030-loc-select" class="select" lang="tr"></select>
+              <select id="p030-loc-select" class="select"></select>
             </div>
           </div>
           <div id="p030-departed"></div>
@@ -6791,7 +6791,6 @@
       const input = document.getElementById("nav-search-input");
 
       if (!input) return;
-      input.setAttribute("lang", "tr");
 
       input.addEventListener("input", () => {
 
@@ -6848,7 +6847,6 @@
       if (!sel) return;
       const optionItems = Array.isArray(opts) ? opts : [];
       sel.innerHTML = "";
-      sel.setAttribute("lang", "tr");
       if (!sel.getAttribute("aria-label")) {
         const idLabel = String(sel.id || "").replace(/^p\d+-/, "").replace(/-/g, " ").trim();
         if (idLabel) sel.setAttribute("aria-label", humanize(idLabel));
@@ -16849,7 +16847,7 @@
 
       const sel = document.getElementById("month-select"); const ms = DATA.meta?.available_months || [];
 
-      if (!sel || !ms.length) return; sel.innerHTML = ""; sel.setAttribute("lang", "tr");
+      if (!sel || !ms.length) return; sel.innerHTML = "";
       readStateFromUrl();
       if (!ms.includes(STATE.month)) STATE.month = DATA.meta?.default_month || ms[ms.length - 1] || null;
 

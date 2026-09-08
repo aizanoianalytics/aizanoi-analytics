@@ -44,7 +44,7 @@ body{margin:0;font-family:"Aptos","Segoe UI",sans-serif;
 .toolbar{display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px; padding:14px;
   border:1px solid var(--line); background:rgba(255,255,255,.92); border-radius:14px; margin-bottom:16px;}
 .toolbar .field{flex:1 1 190px; min-width:170px;}
-.toolbar .fill-mode{flex:0 0 auto; width:330px; min-width:320px; max-width:100%;}
+.toolbar .fill-mode{flex:0 0 auto; width:330px; min-width:0; max-width:100%;}
 .toolbar .button{flex:0 0 auto; height:38px; margin-left:auto;}
 .field{display:grid; gap:5px; min-width:0}
 .field label{font-size:10px; color:var(--muted); font-weight:800;  letter-spacing:0}
@@ -251,8 +251,8 @@ tbody tr.weekend-worked td{background:#dbeafe !important; color:#172554; font-we
 <!-- VIEW 1: OVERVIEW (MATRIX) -->
 <section class="view" id="dashboardView">
   <div class="toolbar">
-    <div class="field"><label>Organization</label><select id="orgFilter"></select></div>
-    <div class="field"><label>Search Name or Emp. ID</label><input id="searchFilter" type="search" placeholder="e.g. Whitfield or 1001"></div>
+    <div class="field"><label for="orgFilter">Organization</label><select id="orgFilter"></select></div>
+    <div class="field"><label for="searchFilter">Search Name or Emp. ID</label><input id="searchFilter" type="search" placeholder="e.g. Whitfield or 1001"></div>
     <div class="fill-mode js-fill-mode" aria-label="Missing Time Imputation Method">
       <button type="button" data-fill-mode="normal">Norm-based (08:00 / 17:30)</button>
       <button type="button" data-fill-mode="estimate">Estimated (Monthly Average)</button>
@@ -280,8 +280,8 @@ tbody tr.weekend-worked td{background:#dbeafe !important; color:#172554; font-we
 <!-- VIEW 2: PERSON DETAIL -->
 <section class="view hidden" id="personView">
   <div class="toolbar">
-    <div class="field"><label>Search Employee</label><input id="personSearch" type="search" placeholder="Name, Emp. ID, organization"></div>
-    <div class="field"><label>Employee</label><select id="personSelect"></select></div>
+    <div class="field"><label for="personSearch">Search Employee</label><input id="personSearch" type="search" placeholder="Name, Emp. ID, organization"></div>
+    <div class="field"><label for="personSelect">Employee</label><select id="personSelect"></select></div>
     <div class="fill-mode js-fill-mode" aria-label="Missing Time Imputation Method">
       <button type="button" data-fill-mode="normal">Norm-based (08:00 / 17:30)</button>
       <button type="button" data-fill-mode="estimate">Estimated (Monthly Average)</button>
@@ -394,9 +394,9 @@ tbody tr.weekend-worked td{background:#dbeafe !important; color:#172554; font-we
 <!-- VIEW: ORGANIZATION DETAIL -->
 <section class="view hidden" id="organizationView">
   <div class="toolbar">
-    <div class="field"><label>Search Organization</label><input id="orgSearchInput" type="search" placeholder="Search organization..."></div>
-    <div class="field"><label>Organization</label><select id="orgSelectDetail"></select></div>
-    <div class="field"><label>Filter Staff in Org</label><select id="orgStaffSelect"></select></div>
+    <div class="field"><label for="orgSearchInput">Search Organization</label><input id="orgSearchInput" type="search" placeholder="Search organization..."></div>
+    <div class="field"><label for="orgSelectDetail">Organization</label><select id="orgSelectDetail"></select></div>
+    <div class="field"><label for="orgStaffSelect">Filter Staff in Org</label><select id="orgStaffSelect"></select></div>
     <div class="fill-mode js-fill-mode" aria-label="Missing Time Imputation Method">
       <button type="button" data-fill-mode="normal">Norm-based (08:00 / 17:30)</button>
       <button type="button" data-fill-mode="estimate">Estimated (Monthly Average)</button>
