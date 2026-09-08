@@ -101,6 +101,7 @@ export class TourSystem {
     this.badgeEl.textContent = `GUIDED TOUR · STOP ${index + 1} / ${this.tourStops.length}`;
     this.titleEl.textContent = stop.title;
     this.descEl.textContent = stop.description;
+    if (this.timerEl) this.timerEl.textContent = `Auto-advance: ${this._stopDuration}s`;
 
     // Find landmark coords
     const building = this.uiSystem.cityData.BUILDINGS.find((b) => b.id === stop.id);

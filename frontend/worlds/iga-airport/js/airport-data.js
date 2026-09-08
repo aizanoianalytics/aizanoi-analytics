@@ -50,7 +50,7 @@ export const BUILDINGS = [
   },
   {
     id: 'tower', name: 'Tulip-Inspired Air Traffic Control Tower', type: 'tower',
-    x: -250, z: 1030, w: 35, d: 35, h: 90, region: 'airfield', source: 'aecom-atc', evidence: E_DOC,
+    x: -250, z: 1030, w: 70, d: 70, h: 90, region: 'airfield', source: 'aecom-atc', evidence: E_DOC,
     detail: 'Iconic 90-meter control tower designed by Pininfarina and AECOM, inspired by the tulip flower—a historic symbol of Istanbul.'
   },
   {
