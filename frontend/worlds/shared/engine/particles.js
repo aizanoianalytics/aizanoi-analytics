@@ -27,7 +27,8 @@ export class ParticleSystem {
 
         for(let i=0; i<count; i++) {
             positions[i*3] = (Math.random() - 0.5) * 40;
-            positions[i*3+1] = Math.random() * 20;
+            // Keep dust motes near the ground band — high-floating motes read as daytime stars.
+            positions[i*3+1] = Math.random() * 6;
             positions[i*3+2] = (Math.random() - 0.5) * 40;
 
             velocities[i*3] = (Math.random() - 0.5) * 0.5;
@@ -39,11 +40,10 @@ export class ParticleSystem {
         geometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
 
         const material = new THREE.PointsMaterial({
-            color: 0xfffdd0,
-            size: 0.1,
+            color: 0xe8dcc0,
+            size: 0.08,
             transparent: true,
-            opacity: 0.6,
-            blending: THREE.AdditiveBlending,
+            opacity: 0.35,
             depthWrite: false
         });
 
@@ -146,8 +146,8 @@ export class ParticleSystem {
                 // Wrap around camera
                 if(positions[i] - cameraPos.x > 20) positions[i] -= 40;
                 if(positions[i] - cameraPos.x < -20) positions[i] += 40;
-                if(positions[i+1] > 20) positions[i+1] -= 20;
-                if(positions[i+1] < 0) positions[i+1] += 20;
+                if(positions[i+1] > 6) positions[i+1] -= 6;
+                if(positions[i+1] < 0) positions[i+1] += 6;
                 if(positions[i+2] - cameraPos.z > 20) positions[i+2] -= 40;
                 if(positions[i+2] - cameraPos.z < -20) positions[i+2] += 40;
             }

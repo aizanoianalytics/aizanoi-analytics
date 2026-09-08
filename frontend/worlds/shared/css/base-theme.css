@@ -158,6 +158,9 @@ body {
   color: var(--text);
   font-size: 1.2rem;
   cursor: pointer;
+  /* Monochrome-tone the emoji glyphs so the HUD matches the antique palette
+     instead of flashing candy-colored system emoji. */
+  filter: grayscale(1) brightness(1.15) sepia(0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -700,6 +703,13 @@ body.mobile #mobile-controls {
   .hud-btn { width: 36px; height: 36px; font-size: 1rem; }
   .location-info h2 { font-size: 1.5rem; }
   .floating-card { width: 90%; left: 5%; transform: translateY(-50%); }
+
+  /* Keep the bottom-right corner usable on phones: stack the action rail ABOVE the
+     minimap instead of colliding with it, and shrink the minimap dial. */
+  #minimap-wrapper { width: 88px; height: 88px; bottom: 8px; right: 8px; }
+  .action-rail { bottom: 108px; right: 10px; gap: 10px; }
+  .mobile-btn { width: 52px; height: 52px; }
+  .joystick-pad { width: 110px; height: 110px; }
 }
 
 

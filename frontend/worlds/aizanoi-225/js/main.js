@@ -509,7 +509,11 @@ function bindEvents() {
   ui.onTeleport = (teleportId) => {
     const building = BUILDINGS.find(b => b.id === teleportId);
     if (!building) return;
-    const safe = collision.findSafeSpawn(building.x, building.z);
+    // Stand far enough back that the landmark fills the arrival view instead of a wall:
+    // standoff = 1.4 × half-diagonal of the footprint + 8m framing margin.
+    const standoff = Math.hypot(building.w || 20, building.d || 20) * 0.7 + 8;
+    const safe = collision.findSafeSpawn(building.x, building.z, 160, standoff);
+    window.__WORLD_LAST_TELEPORT__ = building.id;
     // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
@@ -580,10 +584,30 @@ function inspectLookedAt() {
   const dir = new THREE.Vector3();
   camera.getWorldDirection(dir);
   const hit = collision.raycast(camera.position, dir, 60);
+  let b = null;
   if (hit) {
-    const b = BUILDINGS.find(item => item.id === hit.id);
-    if (b) ui.showInfoCard(b, SOURCES);
+    // Colliders use suffixed ids (temple-cella, theatre-scaena, gate-left/right, ...) —
+    // match the parent building by prefix so Inspect works on every monument.
+    b = BUILDINGS.find(item => item.id === hit.id || hit.id.startsWith(`${item.id}-`));
   }
+  if (!b) {
+    // Fallback: rays can slip through gate tunnels and colonnades. Prefer the landmark the
+    // player just teleported to, then the nearest one.
+    const lastId = window.__WORLD_LAST_TELEPORT__;
+    if (lastId) b = BUILDINGS.find(item => item.id === lastId);
+    if (!b) {
+      let best = null;
+      let bestD = 90 * 90;
+      for (const item of BUILDINGS) {
+        const dx = item.x - camera.position.x;
+        const dz = item.z - camera.position.z;
+        const d2 = dx * dx + dz * dz;
+        if (d2 < bestD) { bestD = d2; best = item; }
+      }
+      b = best;
+    }
+  }
+  if (b) ui.showInfoCard(b, SOURCES);
 }
 
 function render() {
