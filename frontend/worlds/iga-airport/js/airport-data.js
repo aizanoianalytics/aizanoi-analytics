@@ -45,7 +45,7 @@ const E_MODEL = { level: 'plausible', note: 'Schematic spatial interpretation in
 export const BUILDINGS = [
   {
     id: 'terminal', name: 'Grand Terminal Hall', type: 'terminal',
-    x: 0, z: 0, w: 860, d: 410, h: 38, region: 'processor', source: 'nordic', evidence: E_MODEL,
+    x: 0, z: 0, w: 860, d: 410, h: 44, region: 'processor', source: 'nordic', evidence: E_MODEL,
     detail: 'A 1.4 million m² terminal under one roof, with a daylight-led vaulted ceiling and modular roof geometry developed for the airport complex.'
   },
   {
