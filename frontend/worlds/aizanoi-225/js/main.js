@@ -471,7 +471,29 @@ function bindEvents() {
     applyEvidenceMode(ui.evidenceActive);
   });
   bind('btn-sources', () => ui.showSourcesModal());
-  bind('btn-daynight', () => environment.toggleCycle());
+  bind('btn-daynight', () => {
+    // Real day/night toggle: jump to night (and hold it) / back to noon.
+    // toggleCycle() only pauses the cycle — kept available for future controls.
+    const goingNight = !environment.isNight;
+    if (goingNight) {
+      environment.jumpToNight();
+      if (environment.cycleSpeed > 0) {
+        environment._savedCycleSpeed = environment.cycleSpeed;
+        environment.cycleSpeed = 0;
+      }
+    } else {
+      environment.jumpToNoon();
+      if (!environment.cycleSpeed) {
+        environment.cycleSpeed = environment._savedCycleSpeed || 0.008;
+      }
+    }
+    const b = document.getElementById('btn-daynight');
+    if (b) {
+      b.textContent = goingNight ? '☀️' : '🌙';
+      b.title = goingNight ? 'Switch to day' : 'Switch to night';
+      b.setAttribute('aria-pressed', String(goingNight));
+    }
+  });
   bind('btn-tour', () => {
     if (tour.isActive) tour.stop();
     else tour.start();

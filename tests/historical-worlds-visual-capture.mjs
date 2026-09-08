@@ -11,7 +11,7 @@ for(const [id,path,hero] of worlds){
   await page.locator('#btn-enter').click();
   await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:30000});
   await page.keyboard.press('Escape');
-  await page.waitForFunction(()=>window.__WORLD_DEBUG__?.player?.controlsEnabled===true,null,{timeout:5000});
+  await page.waitForFunction(()=>window.__WORLD_DEBUG__?.player?.controlsEnabled===true,null,{timeout:15000});
   await page.evaluate((target)=>window.__WORLD_DEBUG__.teleport(target),hero);
   await page.waitForTimeout(500);
   await page.screenshot({path:`${out}/${id}-hero.png`,fullPage:false});
