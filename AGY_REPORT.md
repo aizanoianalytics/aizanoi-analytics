@@ -1,7 +1,7 @@
 # AGY RAPORU: Dört Blok Dünyada AAA Kalite ve Gerçekçilik Geçişi
-**Tarih:** 8 Eylül 2026  
-**Çalışma Ağacı:** `/tmp/aizanoi-aga-aaa`  
-**Dal:** `feat/worlds-aga-aaa`  
+**Tarih:** 8 Eylül 2026
+**Çalışma Ağacı:** `/tmp/aizanoi-aga-aaa`
+**Dal:** `feat/worlds-aga-aaa`
 **Kapsam:** Aizanoi (MS 225), Atina (MÖ 450–430), Roma (MS 410–476), İGA İstanbul Havalimanı ve Paylaşılan Motor (`frontend/worlds/shared/`)
 
 ---
@@ -231,5 +231,3 @@ Headless Chromium ile SwiftShader ortamında tüm anıtlar için 1280x720 çöz�
    - Prosedürel üretilen Roma ve Atina evleri için 4 farklı çatı ve cephe stili tanımlanmıştır; ancak gerçek Roma Subura'sındaki çok katlı ahşap cumbalar gibi uç mimari detaylar performans amacıyla sade tutulmuştur.
 3. **Pist ve Taksiyolu Çizgileri:**
    - İGA pist çizgileri ve apron park noktaları procedürel düzlem geometrisi ile çizilmiştir; dinamik uçak yanaşma rehber sistemi (VDGS) dijital tabelası statik göstergedir.
-
-

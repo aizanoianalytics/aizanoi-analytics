@@ -117,4 +117,3 @@ test('Athens Parthenon cella core collides and stepped stylobate is walkable', (
   const groundY = col.getGroundLevel(parthenon.x, parthenon.z);
   assert.ok(groundY >= 1.2, 'Parthenon platform must provide walkable height >= 1.2');
 });
-
