@@ -1,0 +1,28 @@
+{
+  "id": "2026-09-08-apple-folds-tuesday-into-event",
+  "title": "Apple confirms foldable iPhone Ultra for Wednesday's 'Surprise and Shine' event",
+  "summary": "Apple's September 9 event will stage the long-rumored iPhone Ultra as its first foldable, joining the iPhone 18 Pro and iPhone 18 Pro Max on a fall lineup that withholds the standard iPhone 18 until spring 2027. Reporting points to a 5.5-inch cover display opening to a roughly 7.8-inch inner screen, a Touch ID power button replacing Face ID, dual rear cameras and a price expected to clear $2,000. The keynote will mark the first major launch under new CEO John Ternus, with Tim Cook shifted to executive chairman and not appearing in the event video.",
+  "category": "technology",
+  "priority": 90,
+  "publishedAt": "2026-09-08T07:50:00Z",
+  "updatedAt": "2026-09-08T07:50:00Z",
+  "retrievedAt": "2026-09-08T07:42:11Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iPhone Ultra", "foldable iPhone", "iPhone 18 Pro", "Ternus", "Tim Cook"],
+  "sources": [{
+    "publisher": "GCN",
+    "url": "https://gcn.com/apple-first-foldable-iphone-joins-iphone/21363",
+    "publishedAt": "2026-09-08T00:00:00Z"
+  }, {
+    "publisher": "TechCrunch",
+    "url": "https://techcrunch.com/2026/09/07/what-we-expect-from-the-upcoming-apple-launch/",
+    "publishedAt": "2026-09-07T15:58:00Z"
+  }, {
+    "publisher": "MacRumors",
+    "url": "https://www.macrumors.com/2026/09/07/tim-cook-wont-appear-apple-sept-9-event-video/",
+    "publishedAt": "2026-09-07T00:00:00Z"
+  }]
+}

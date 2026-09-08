@@ -1,0 +1,24 @@
+{
+  "id": "2026-09-08-fed-sept-hike-odds-firm",
+  "title": "Fed Sept 16 hike odds firm near 50% as Warsh's Jackson Hole echoes stick",
+  "summary": "Prediction markets and CME fed funds futures continue to price a near-coin-flip chance of a 25-basis-point Federal Reserve hike at the September 15-16 meeting, with Kalshi at 50.0% and CME implied at 57.9% on the latest cross-venue capture. The shift from a 26% Kalshi print two weeks ago traces to Chair Kevin Warsh's Jackson Hole emphasis on prices, a 3.7% July PCE print and a 9-3 July hold with three dissents. The implied path points to two hikes by year-end as the base case, with a 39% chance the policy rate ends December a half-point above today's range.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-09-08T11:25:00Z",
+  "updatedAt": "2026-09-08T11:25:00Z",
+  "retrievedAt": "2026-09-08T11:17:30Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Federal Reserve", "FOMC", "Kevin Warsh", "Jackson Hole", "PCE", "prediction markets"],
+  "sources": [{
+    "publisher": "PredictionMarketsPicks",
+    "url": "https://predictionmarketspicks.com/tools/fed-rate-tracker/september-2026",
+    "publishedAt": "2026-09-07T00:00:00Z"
+  }, {
+    "publisher": "Reuters",
+    "url": "https://www.reuters.com/business/wall-st-futures-kick-off-september-under-pressure-yields-oil-prices-rise-2026-09-01",
+    "publishedAt": "2026-09-01T00:00:00Z"
+  }]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-08-microsoft-copilot-anthropic-default",
+  "title": "Microsoft turns Anthropic models on by default in commercial Copilot",
+  "summary": "Microsoft is enabling Anthropic models by default for most commercial cloud customers of Microsoft Copilot, excluding EU/EFTA and UK, after onboarding Anthropic as a Microsoft Online Services subprocessor. The change sits inside the broader 'Frontier' Copilot direction that mixes OpenAI and Anthropic models across Word, Excel and PowerPoint experiences, with Anthropic's Claude available in mainline chat via the Frontier program. Microsoft says the Microsoft Customer Copyright Commitment and Enterprise Data Protection apply to Anthropic use through its enterprise Online Services.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-09-08T09:05:00Z",
+  "updatedAt": "2026-09-08T09:05:00Z",
+  "retrievedAt": "2026-09-08T08:56:23Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Microsoft", "Copilot", "Anthropic", "Claude", "Frontier program", "enterprise AI"],
+  "sources": [{
+    "publisher": "Microsoft Learn",
+    "url": "https://learn.microsoft.com/en-us/microsoft-365/copilot/connect-to-ai-subprocessor",
+    "publishedAt": "2026-09-08T00:00:00Z"
+  }]
+}

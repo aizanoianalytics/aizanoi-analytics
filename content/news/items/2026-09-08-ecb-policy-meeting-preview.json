@@ -1,0 +1,24 @@
+{
+  "id": "2026-09-08-ecb-policy-meeting-preview",
+  "title": "ECB set to keep rates at 2.25% in Thursday's Berlin meeting preview",
+  "summary": "The European Central Bank's Governing Council meets September 9-10 in Berlin, hosted by the Deutsche Bundesbank, with the rate decision and Christine Lagarde's press conference scheduled for the second day. The deposit facility rate has been held at 2.25% since the June 11 hike from 2.00%, and the July 23 meeting kept the three key rates unchanged. Market pricing is split on whether the September decision marks the end of the post-energy-shock tightening or the start of a more sustained pause, with new staff macroeconomic projections adding the usual projection-meeting weight.",
+  "category": "economy-markets",
+  "priority": 65,
+  "publishedAt": "2026-09-08T11:00:00Z",
+  "updatedAt": "2026-09-08T11:00:00Z",
+  "retrievedAt": "2026-09-08T10:52:54Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ECB", "deposit facility rate", "Berlin", "Lagarde", "euro area inflation", "monetary policy"],
+  "sources": [{
+    "publisher": "Wall Street Economicists",
+    "url": "https://wallstreeteconomicists.com/articles/ecb-september-2026-rate-decision",
+    "publishedAt": "2026-09-06T00:00:00Z"
+  }, {
+    "publisher": "Finance Calendar",
+    "url": "https://www.financecalendar.com/event/ecb-rate-decision-september-2026",
+    "publishedAt": "2026-09-08T00:00:00Z"
+  }]
+}
