@@ -153,6 +153,11 @@ async function init() {
 
   buildAllStructures();
 
+  /* ── 5b. Collision System (initialized before urban fabric) */
+
+  collision = new CollisionSystem();
+  collision.buildFromData(BUILDINGS, STREETS, BOUNDS);
+
   setProgress(50, 'Generating urban fabric...');
 
   /* ── 6. Urban fabric (procedural infill) ──────────────── */
@@ -184,13 +189,6 @@ async function init() {
   /* ── 10. Particles ────────────────────────────────────── */
 
   particles = new ParticleSystem(scene);
-
-  setProgress(80, 'Preparing collision and traversal...');
-
-  /* ── 11. Collision ────────────────────────────────────── */
-
-  collision = new CollisionSystem();
-  collision.buildFromData(BUILDINGS, STREETS, BOUNDS);
 
   setProgress(82, 'Adding markets, amphorae and civic details...');
 
@@ -573,7 +571,8 @@ function bindEvents() {
     const safe = collision.findSafeSpawn(building.x, building.z);
     // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
-    controls.teleportTo(safe.x, safe.z, angle);
+    const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
+    controls.teleportTo(safe.x, safe.z, angle, targetY);
     ui.hideTeleportMenu();
   };
 

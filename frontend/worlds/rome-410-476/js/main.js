@@ -130,9 +130,13 @@ async function init() {
   waterSystem = new WaterSystem(scene);
   waterSystem.buildFromData(WATERS);
 
+  // 6b. Physics & Collision (initialized before insulae so they are inserted into grid)
+  collision = new CollisionSystem();
+  collision.buildFromData(BUILDINGS, STREETS, BOUNDS);
+
   setProgress(75, 'Building the Aurelian Walls and Subura fabric...');
 
-  // 7. Urban Insulae Fabric
+  // 7. Urban Insulae Fabric (inserts insulae into collision grid)
   buildUrbanInsulae();
 
   setProgress(85, 'Planting Mediterranean vegetation and umbrella pines...');
@@ -147,10 +151,6 @@ async function init() {
   // 10. Particles & Audio
   particles = new ParticleSystem(scene);
   audio = new AudioSystem();
-
-  // 11. Physics & Collision
-  collision = new CollisionSystem();
-  collision.buildFromData(BUILDINGS, STREETS, BOUNDS);
 
   setProgress(88, 'Adding fountains, market stalls and amphorae...');
 
@@ -485,7 +485,8 @@ function bindEvents() {
     const safe = collision.findSafeSpawn(building.x, building.z);
     // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
-    controls.teleportTo(safe.x, safe.z, angle);
+    const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
+    controls.teleportTo(safe.x, safe.z, angle, targetY);
     ui.hideTeleportMenu();
   };
 }

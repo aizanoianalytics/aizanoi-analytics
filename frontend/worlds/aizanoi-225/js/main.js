@@ -129,9 +129,13 @@ async function init() {
   waterSystem = new WaterSystem(scene);
   waterSystem.buildFromData(WATERS);
 
+  // 6b. Collision System (initialized before urban fabric so insulae are inserted)
+  collision = new CollisionSystem();
+  collision.buildFromData(BUILDINGS, STREETS, BOUNDS);
+
   setProgress(75, 'Generating residential fabric and Phrygian streets...');
 
-  // 7. Urban Infill
+  // 7. Urban Infill (inserts insulae into collision grid)
   buildUrbanFabric();
 
   setProgress(85, 'Planting olive groves and river vegetation...');
@@ -146,10 +150,6 @@ async function init() {
   // 10. Particles & Audio
   particles = new ParticleSystem(scene);
   audio = new AudioSystem();
-
-  // 11. Collision
-  collision = new CollisionSystem();
-  collision.buildFromData(BUILDINGS, STREETS, BOUNDS);
 
   // 12. Street Dressing & Cultural Props
   populateAizanoiDressing();
@@ -505,7 +505,8 @@ function bindEvents() {
     const safe = collision.findSafeSpawn(building.x, building.z);
     // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
-    controls.teleportTo(safe.x, safe.z, angle);
+    const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
+    controls.teleportTo(safe.x, safe.z, angle, targetY);
     ui.hideTeleportMenu();
   };
 }

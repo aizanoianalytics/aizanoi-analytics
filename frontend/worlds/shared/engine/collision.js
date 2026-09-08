@@ -287,6 +287,160 @@ export class CollisionSystem {
         continue;
       }
 
+      // 6. Roman Amphitheatres (Colosseum, Ludus Magnus):
+      // Hollow perimeter with monumental arched entrances; central arena floor is open!
+      if (b.type === 'amphitheatre') {
+        const wallThick = 7.0;
+        const halfW = b.w / 2;
+        const halfD = b.d / 2;
+        const gateW = 18.0; // Monumental four-cardinal entrance arches
+
+        // North wall (left & right wings)
+        const nWingW = (b.w - gateW) / 2;
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-n-l`,
+          x: b.x - gateW / 2 - nWingW / 2, z: b.z + halfD - wallThick / 2,
+          w: nWingW, d: wallThick, h: b.h, y: b.y || 0
+        });
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-n-r`,
+          x: b.x + gateW / 2 + nWingW / 2, z: b.z + halfD - wallThick / 2,
+          w: nWingW, d: wallThick, h: b.h, y: b.y || 0
+        });
+
+        // South wall (left & right wings)
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-s-l`,
+          x: b.x - gateW / 2 - nWingW / 2, z: b.z - halfD + wallThick / 2,
+          w: nWingW, d: wallThick, h: b.h, y: b.y || 0
+        });
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-s-r`,
+          x: b.x + gateW / 2 + nWingW / 2, z: b.z - halfD + wallThick / 2,
+          w: nWingW, d: wallThick, h: b.h, y: b.y || 0
+        });
+
+        // West wall (top & bottom wings)
+        const wWingD = (b.d - gateW) / 2;
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-w-t`,
+          x: b.x - halfW + wallThick / 2, z: b.z + gateW / 2 + wWingD / 2,
+          w: wallThick, d: wWingD, h: b.h, y: b.y || 0
+        });
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-w-b`,
+          x: b.x - halfW + wallThick / 2, z: b.z - gateW / 2 - wWingD / 2,
+          w: wallThick, d: wWingD, h: b.h, y: b.y || 0
+        });
+
+        // East wall (top & bottom wings)
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-e-t`,
+          x: b.x + halfW - wallThick / 2, z: b.z + gateW / 2 + wWingD / 2,
+          w: wallThick, d: wWingD, h: b.h, y: b.y || 0
+        });
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-e-b`,
+          x: b.x + halfW - wallThick / 2, z: b.z - gateW / 2 - wWingD / 2,
+          w: wallThick, d: wWingD, h: b.h, y: b.y || 0
+        });
+
+        // Central arena floor is open (walkable surface at ground)
+        this.walkSurfaces.push({
+          type: 'walkRect',
+          x: b.x, z: b.z,
+          w: b.w * 0.52, d: b.d * 0.52,
+          y: 0
+        });
+        continue;
+      }
+
+      // 7. Roman Rotundas & Domes (Pantheon):
+      // Hollow circular drum with open interior rotunda beneath the dome,
+      // front portico entrance is open!
+      if (b.type === 'dome' || b.id === 'pantheon') {
+        const r = (b.w || 64) / 2;
+        const wallThick = 4.5;
+        const segments = 8;
+        const doorArc = (Math.PI * 2) / segments; // leave north entrance open
+
+        for (let i = 0; i < segments; i++) {
+          const angle = (i / segments) * Math.PI * 2;
+          // Skip entrance facing North (+Z or -Z depending on portico)
+          // In Rome builders.js: portico is at radius + porticoD / 2 (South/East facade)
+          // Leave angle near Math.PI / 2 or 0 open
+          const cos = Math.cos(angle);
+          const sin = Math.sin(angle);
+          if (sin > 0.85) continue; // Open grand entrance door
+
+          const segX = b.x + cos * (r - wallThick / 2);
+          const segZ = b.z + sin * (r - wallThick / 2);
+          const segW = (Math.PI * 2 * r) / segments;
+          this.grid.insert({
+            type: 'rect', id: `${b.id}-drum-${i}`,
+            x: segX, z: segZ,
+            w: segW, d: wallThick, h: b.h, y: b.y || 0,
+            rot: -angle
+          });
+        }
+
+        // Stepped portico walk surface
+        this.walkSurfaces.push({
+          type: 'walkRect',
+          x: b.x, z: b.z,
+          w: b.w * 0.85, d: b.d * 0.85,
+          y: 0
+        });
+        continue;
+      }
+
+      // 8. Airport Concourse Piers (İGA Pier A-B, C-F, Domestic Wing):
+      // Hollow passenger concourse corridor; side glass curtain walls collide,
+      // central spine is open and walkable!
+      if (b.type === 'pier') {
+        const wallThick = 3.0;
+        const halfW = b.w / 2;
+        const halfD = b.d / 2;
+
+        // West glass ribbon wall
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-w`,
+          x: b.x - halfW + wallThick / 2, z: b.z,
+          w: wallThick, d: b.d, h: b.h, y: b.y || 0
+        });
+        // East glass ribbon wall
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-e`,
+          x: b.x + halfW - wallThick / 2, z: b.z,
+          w: wallThick, d: b.d, h: b.h, y: b.y || 0
+        });
+        // Far end wall (North)
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-n`,
+          x: b.x, z: b.z + halfD - wallThick / 2,
+          w: b.w, d: wallThick, h: b.h, y: b.y || 0
+        });
+        continue;
+      }
+
+      // 9. Central Security & Passport Control Filter:
+      // Electronic gates and screening banks with designated walkthrough lanes
+      if (b.id === 'security' || (b.type === 'gateway' && b.id.includes('security'))) {
+        const banks = 5;
+        const bankW = (b.w * 0.75) / banks;
+        const aisleW = (b.w * 0.25) / (banks + 1);
+
+        for (let k = 0; k < banks; k++) {
+          const bankX = -b.w / 2 + aisleW + k * (bankW + aisleW) + bankW / 2;
+          this.grid.insert({
+            type: 'rect', id: `${b.id}-bank-${k}`,
+            x: b.x + bankX, z: b.z,
+            w: bankW, d: b.d * 0.65, h: b.h, y: b.y || 0
+          });
+        }
+        continue;
+      }
+
       // 6. Standard solid buildings (houses, insulae, warehouses, solid monuments)
       this.grid.insert({
         type: 'rect',
@@ -473,6 +627,16 @@ export class CollisionSystem {
     return maxY;
   }
 
+  /**
+   * Get walkable ground or platform height at coordinates.
+   * @param {number} x
+   * @param {number} z
+   * @returns {number}
+   */
+  getGroundLevel(x, z) {
+    return this._getGroundLevel(x, z);
+  }
+
   /* ── Raycast for inspection ───────────────────────────── */
 
   /**
@@ -516,17 +680,21 @@ export class CollisionSystem {
   /**
    * Find a collision-free position near a target.
    */
-  findSafeSpawn(targetX, targetZ) {
-    for (let radius = 0; radius < 48; radius += 3) {
-      for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 6) {
+  findSafeSpawn(targetX, targetZ, maxRadius = 160) {
+    if (!this._checkCollision(targetX, targetZ, GROUND_Y)) {
+      return { x: targetX, z: targetZ, y: this._getGroundLevel(targetX, targetZ) };
+    }
+
+    for (let radius = 6; radius < maxRadius; radius += 4) {
+      for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 8) {
         const x = targetX + Math.cos(angle) * radius;
         const z = targetZ + Math.sin(angle) * radius;
         if (!this._checkCollision(x, z, GROUND_Y)) {
-          return { x, z };
+          return { x, z, y: this._getGroundLevel(x, z) };
         }
       }
     }
-    return { x: targetX, z: targetZ };
+    return { x: targetX, z: targetZ, y: this._getGroundLevel(targetX, targetZ) };
   }
 
   /* ── Dispose ──────────────────────────────────────────── */

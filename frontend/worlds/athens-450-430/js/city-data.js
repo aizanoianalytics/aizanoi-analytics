@@ -86,7 +86,7 @@ const E_PLAUS = { level: 'plausible', note: 'Scholarly consensus placement; no s
 export const BUILDINGS = [
   // ──── AKROPOLIS ────
   { id: 'parthenon', name: 'Parthenon', type: 'temple',
-    x: -50, z: -330, w: 46, d: 22, h: 16, state: 'new', region: 'acropolis', source: 'parthenon', evidence: E_ARCH,
+    x: -50, z: -330, w: 30.9, d: 69.5, h: 16, state: 'new', region: 'acropolis', source: 'parthenon', evidence: E_ARCH,
     detail: 'Octastyle peripteral Doric temple, ~69.5 × 30.9 m, Pentelic marble; built 447–432 BCE under Iktinos and Kallikrates.' },
   { id: 'propylaea', name: 'Propylaea', type: 'gateway',
     x: -115, z: -300, w: 30, d: 16, h: 12, state: 'new', region: 'acropolis', source: 'propylaea', evidence: E_ARCH,
@@ -132,7 +132,7 @@ export const BUILDINGS = [
 
   // ──── AGORA ────
   { id: 'hephaisteion', name: 'Hephaisteion', type: 'temple',
-    x: 60, z: 140, w: 32, d: 14, h: 8, state: 'working', region: 'agora', source: 'hephaisteion', evidence: E_ARCH,
+    x: 60, z: 140, w: 14, d: 32, h: 8, state: 'working', region: 'agora', source: 'hephaisteion', evidence: E_ARCH,
     detail: 'Doric peripteral temple on Agoraios Kolonos hill; construction 460–420 BCE.' },
   { id: 'stoa-poikile', name: 'Stoa Poikile', type: 'stoa',
     x: 50, z: 40, w: 40, d: 12, h: 5, state: 'standing', region: 'agora', source: 'stoa-poikile', evidence: E_ARCH,
