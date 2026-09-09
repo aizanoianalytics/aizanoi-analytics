@@ -54,6 +54,12 @@ export class UISystem {
 
     this.infoCard = document.getElementById('info-card');
     this.infoCardTimer = null;
+
+    // HUD DOM writes are throttled: text nodes and canvas repaints cost more
+    // than they look at 120 Hz, and compass/place text changing 120×/s is
+    // unreadable anyway. Fresh player data still arrives every frame; we just
+    // flush it to the DOM at HUD_HZ.
+    this._hudAccumulator = 0;
   }
 
   _bindDOMEvents() {
@@ -459,6 +465,22 @@ export class UISystem {
     if (this.placeDetailEl && nearest) {
       const distM = Math.round(minDist * 0.7); // 1 unit ≈ 0.7m
       this.placeDetailEl.textContent = `Near ${nearest.name} (${distM}m)`;
+    }
+  }
+
+  /* ── Per-frame HUD update (throttled DOM flush) ──────────── */
+
+  updateHud(dt, playerX, playerZ, playerAngle) {
+    // Flush player-driven HUD elements at ~12.5 Hz instead of every animation
+    // frame. Accumulator-based so the throttle is frame-rate independent; the
+    // minimap still redraws (canvas is cheap) but text stays off the hot path.
+    this._hudAccumulator += dt;
+    const flush = this._hudAccumulator >= 0.08;
+    if (flush) this._hudAccumulator = 0;
+    this.updateMinimap(playerX, playerZ, playerAngle);
+    if (flush) {
+      this.updatePlaceName(playerX, playerZ);
+      this.updateCompass(playerAngle);
     }
   }
 
