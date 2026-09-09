@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-09-apple-event-iphone-ultra-foldable",
+  "title": "Apple opens the Ternus era with the iPhone Ultra, the company's first foldable, on a $2,000 starting line",
+  "summary": "Apple's 'Surprise and Shine' event at 10am Pacific on September 9 opens the John Ternus era with the iPhone Ultra, Apple's first foldable, alongside the iPhone 18 Pro and Pro Max. Reporting puts the Ultra at a 5.5-inch outer display opening to a 7.8-inch inner panel, 4.5mm thin unfolded, Touch ID in the side button, dual 48MP rear cameras, an A20 Pro chip, 12GB of RAM and a starting price around $2,199 that Bloomberg's Gurman expects to push past $2,500 on higher storage. Pre-orders are likely on Saturday September 12 with retail availability on Friday September 18.",
+  "category": "technology",
+  "priority": 95,
+  "publishedAt": "2026-09-09T05:10:00Z",
+  "updatedAt": "2026-09-09T05:10:00Z",
+  "retrievedAt": "2026-09-09T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iPhone Ultra", "foldable", "John Ternus", "Tim Cook", "iPhone 18 Pro"],
+  "sources": [
+    {
+      "publisher": "MacRumors",
+      "url": "https://www.macrumors.com/2026/09/08/apple-event-week-iphone-18-pro-cheat-sheet/",
+      "publishedAt": "2026-09-08T12:00:00Z"
+    },
+    {
+      "publisher": "Tom's Guide",
+      "url": "https://www.tomsguide.com/phones/iphones/iphone-ultra-exclusive-gurman-on-price-release-date-and-secret-weapon-versus-android",
+      "publishedAt": "2026-09-01T13:00:00Z"
+    },
+    {
+      "publisher": "Macworld",
+      "url": "https://www.macworld.com/article/3228054/surprise-and-shine-apple-iphone-event-live-blog-begins-now.html",
+      "publishedAt": "2026-09-09T03:00:00Z"
+    }
+  ]
+}

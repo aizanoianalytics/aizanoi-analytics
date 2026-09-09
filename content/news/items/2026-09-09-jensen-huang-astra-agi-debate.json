@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-09-jensen-huang-astra-agi-debate",
+  "title": "Huang's 'AGI has arrived' post sets off a five-day fight over what GPT-6 Astra actually proves",
+  "summary": "Five days after OpenAI shipped GPT-6 Astra, Nvidia's Jensen Huang wrote on X that 'AGI has arrived,' congratulating OpenAI and pointing to Astra's training on Nvidia chips. OpenAI scientist Jakub Pachocki has separately asked for caution, ARC Prize published two Astra scores that differ by 37 points depending on scaffolding, and Gary Marcus attached a ten-point definition of AGI arguing Astra only meets one or two. The dispute is now over whether Astra's benchmark claims are a new model class or a corporate declaration that did not run the gauntlet of independent tests.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-09T04:50:00Z",
+  "updatedAt": "2026-09-09T04:50:00Z",
+  "retrievedAt": "2026-09-09T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "GPT-6 Astra", "Nvidia", "Jensen Huang", "AGI", "Preparedness"],
+  "sources": [
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/jensen-huang-agi-has-arrived-gpt-6-astra",
+      "publishedAt": "2026-09-08T00:00:00Z"
+    }
+  ]
+}

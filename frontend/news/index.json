@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-08T12:48:18.000Z",
+  "generatedAt": "2026-09-09T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-09",
+      "path": "/news/2026-09-09/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-08",
       "path": "/news/2026-09-08/",
@@ -104,6 +109,526 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-09-apple-event-iphone-ultra-foldable",
+      "kind": "daily",
+      "title": "Apple opens the Ternus era with the iPhone Ultra, the company's first foldable, on a $2,000 starting line",
+      "summary": "Apple's 'Surprise and Shine' event at 10am Pacific on September 9 opens the John Ternus era with the iPhone Ultra, Apple's first foldable, alongside the iPhone 18 Pro and Pro Max. Reporting puts the Ultra at a 5.5-inch outer display opening to a 7.8-inch inner panel, 4.5mm thin unfolded, Touch ID in the side button, dual 48MP rear cameras, an A20 Pro chip, 12GB of RAM and a starting price around $2,199 that Bloomberg's Gurman expects to push past $2,500 on higher storage. Pre-orders are likely on Saturday September 12 with retail availability on Friday September 18.",
+      "category": "technology",
+      "priority": 95,
+      "publishedAt": "2026-09-09T05:10:00.000Z",
+      "updatedAt": "2026-09-09T05:10:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "iPhone Ultra",
+        "foldable",
+        "John Ternus",
+        "Tim Cook",
+        "iPhone 18 Pro"
+      ],
+      "sources": [
+        {
+          "publisher": "MacRumors",
+          "url": "https://www.macrumors.com/2026/09/08/apple-event-week-iphone-18-pro-cheat-sheet/",
+          "publishedAt": "2026-09-08T12:00:00.000Z"
+        },
+        {
+          "publisher": "Tom's Guide",
+          "url": "https://www.tomsguide.com/phones/iphones/iphone-ultra-exclusive-gurman-on-price-release-date-and-secret-weapon-versus-android",
+          "publishedAt": "2026-09-01T13:00:00.000Z"
+        },
+        {
+          "publisher": "Macworld",
+          "url": "https://www.macworld.com/article/3228054/surprise-and-shine-apple-iphone-event-live-blog-begins-now.html",
+          "publishedAt": "2026-09-09T03:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-mistral-3b-samsung-series-d",
+      "kind": "daily",
+      "title": "Mistral closes €3 billion Samsung-led Series D as Europe's largest tech round ever",
+      "summary": "French AI lab Mistral closed a €3 billion Series D led by Samsung Electronics, with co-leads EQT's Scaleup Europe Fund and PSG Equity, lifting its valuation above €21 billion as Europe's largest-ever private tech round. The same day in Paris, Samsung chairman Jay Y. Lee and Mistral CEO Arthur Mensch signed a parallel strategic partnership covering joint manufacturing AI and R&D cooperation, extending Samsung's reach into the European open-weight ecosystem while ASML and a16z also backed the round.",
+      "category": "ai",
+      "priority": 90,
+      "publishedAt": "2026-09-09T05:05:00.000Z",
+      "updatedAt": "2026-09-09T05:05:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Mistral",
+        "Samsung",
+        "Series D",
+        "Europe",
+        "open-weight",
+        "sovereign AI"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/09/08/mistral-ai-funding-valuation-samsung.html",
+          "publishedAt": "2026-09-08T05:00:00.000Z"
+        },
+        {
+          "publisher": "Seoul Economic Daily (Pulse by Maeil Business)",
+          "url": "https://en.sedaily.com/finance/2026/09/09/samsung-partners-with-mistral-ai-on-chip-manufacturing",
+          "publishedAt": "2026-09-09T01:01:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-apple-intelligence-ios-27-rollout",
+      "kind": "daily",
+      "title": "Apple Intelligence takes the keynote stage as iOS 27 release candidate ships after Wednesday's event",
+      "summary": "Apple's 'Surprise and Shine' keynote will frame the iPhone Ultra and iPhone 18 Pro as the first devices purpose-built around iOS 27, with Apple Intelligence features relying on the A20 Pro's expanded neural engine and 12GB of LPDDR5X. MacRumors expects release-candidate seeds of iOS 27, iPadOS 27, macOS Golden Gate, tvOS 27, watchOS 27 and visionOS 27 to ship after the event, with the public release timed to September 12 pre-orders. Apple Intelligence is the throughline of every product on stage, from the AirPods 5's H3 chip to the Apple Watch Ultra 4's hypertension notifications.",
+      "category": "ai",
+      "priority": 65,
+      "publishedAt": "2026-09-09T05:00:00.000Z",
+      "updatedAt": "2026-09-09T05:00:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple Intelligence",
+        "iOS 27",
+        "Apple Watch",
+        "Siri",
+        "on-device AI"
+      ],
+      "sources": [
+        {
+          "publisher": "MacRumors",
+          "url": "https://www.macrumors.com/2026/09/08/apple-event-week-iphone-18-pro-cheat-sheet/",
+          "publishedAt": "2026-09-08T12:00:00.000Z"
+        },
+        {
+          "publisher": "MacRumors",
+          "url": "https://www.macrumors.com/2026/08/30/apple-watch-series-12-ultra-4-features/",
+          "publishedAt": "2026-08-30T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-jensen-huang-astra-agi-debate",
+      "kind": "daily",
+      "title": "Huang's 'AGI has arrived' post sets off a five-day fight over what GPT-6 Astra actually proves",
+      "summary": "Five days after OpenAI shipped GPT-6 Astra, Nvidia's Jensen Huang wrote on X that 'AGI has arrived,' congratulating OpenAI and pointing to Astra's training on Nvidia chips. OpenAI scientist Jakub Pachocki has separately asked for caution, ARC Prize published two Astra scores that differ by 37 points depending on scaffolding, and Gary Marcus attached a ten-point definition of AGI arguing Astra only meets one or two. The dispute is now over whether Astra's benchmark claims are a new model class or a corporate declaration that did not run the gauntlet of independent tests.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-09T04:50:00.000Z",
+      "updatedAt": "2026-09-09T04:50:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "GPT-6 Astra",
+        "Nvidia",
+        "Jensen Huang",
+        "AGI",
+        "Preparedness"
+      ],
+      "sources": [
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/jensen-huang-agi-has-arrived-gpt-6-astra",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-amd-hugging-face-data-plane",
+      "kind": "daily",
+      "title": "AMD-Cisco-HUMAIN push adds Saudi Instinct racks as Hugging Face routes to Nvidia-owned data plane",
+      "summary": "AMD, Cisco and HUMAIN have gone live with the first AMD Instinct systems inside Saudi Arabia's expanded AI infrastructure, five days after Nvidia's $12.9 billion agreement to buy Hugging Face was confirmed. The pairing matters because the leading open-model hub now routes the bulk of its 18 million developers' inference workloads onto a data plane Nvidia controls, while AMD and Cisco position themselves as the alternate hardware track in regions like the Gulf. Delangue, Chaumond and Wolf will join Nvidia when the deal closes.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-09T04:35:00.000Z",
+      "updatedAt": "2026-09-09T04:35:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "AMD",
+        "Cisco",
+        "HUMAIN",
+        "Hugging Face",
+        "Nvidia",
+        "sovereign compute"
+      ],
+      "sources": [
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/jensen-huang-agi-has-arrived-gpt-6-astra",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-a20-pro-2nm-dram-bottleneck",
+      "kind": "daily",
+      "title": "Apple's A20 Pro pairs TSMC's 2nm with WMCM packaging as a DRAM bottleneck reshapes the iPhone 18 launch curve",
+      "summary": "Apple's A20 Pro, the first phone chip on TSMC's 2nm N2 node, moves from a 6-core to a 7-core GPU and lifts the efficiency-core L2 cache to 8MB, paired with 12GB of LPDDR5X via TSMC's WMCM packaging. Die-shot leaks put performance at roughly 18% faster than the A19 Pro with around 30% better power efficiency, but packaging is now the rate-limiter: a tight LPDDR market has reportedly left around a billion dollars' worth of N2 wafers waiting at TSMC for memory, and Ming-Chi Kuo has rebutted the headline while agreeing the shortage is real.",
+      "category": "technology",
+      "priority": 75,
+      "publishedAt": "2026-09-09T04:25:00.000Z",
+      "updatedAt": "2026-09-09T04:25:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "A20 Pro",
+        "TSMC",
+        "2nm",
+        "N2",
+        "WMCM",
+        "LPDDR5X",
+        "iPhone 18 Pro"
+      ],
+      "sources": [
+        {
+          "publisher": "Beebom",
+          "url": "https://gadgets.beebom.com/news/apple-iphone-18-pro-a20-pro-chip-detailed-in-new-die-shot-leak",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-arm-ai-portal-sme2-developers",
+      "kind": "daily",
+      "title": "Arm's AI Portal widens as 22 million developers land on Execuite, LiteRT and ONNX-RT day-one paths",
+      "summary": "Arm's newly launched AI Portal is exposing pre-optimised models from Alibaba's Qwen, Google's Gemma and Ultralytics' YOLO across ExecuTorch, LiteRT and ONNX Runtime, the first three runtimes shipping on day one alongside the CSS for Mobile 2 platform. CSS for Mobile 2 is the first wired-up hardware tier, with the Mali G2-Ultra NX GPU and its dedicated neural accelerators feeding the agentic AI and neural-graphics workloads Arm expects to dominate the next device cycle. The portal also lets developers bring proprietary models for target-specific optimisations.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-09-09T04:15:00.000Z",
+      "updatedAt": "2026-09-09T04:15:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Arm",
+        "AI Portal",
+        "Mali",
+        "ExecuTorch",
+        "LiteRT",
+        "ONNX Runtime"
+      ],
+      "sources": [
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/jensen-huang-agi-has-arrived-gpt-6-astra",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-apple-watch-s12-ultra4-features",
+      "kind": "daily",
+      "title": "Apple Watch Series 12 and Ultra 4 add hypertension detection and a returning ceramic case",
+      "summary": "Apple is expected to use the September 9 keynote to refresh the Apple Watch Series 12 and Ultra 4, with the S-class chip upgraded for the first time in years and a blood-pressure feature that detects trends rather than exact readings. Bloomberg's Mark Gurman says Apple has tested white and dark gray ceramic case options for the Series 12, reviving a finish last offered on the Series 3 in 2017, and that the heart-rate sensor will collect data continuously. The Ultra 4 is positioned with deeper sensor upgrades, while the lack of an SE 4 keeps the lineup at three variants.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-09T04:05:00.000Z",
+      "updatedAt": "2026-09-09T04:05:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple Watch Series 12",
+        "Apple Watch Ultra 4",
+        "ceramic",
+        "blood pressure"
+      ],
+      "sources": [
+        {
+          "publisher": "MacRumors",
+          "url": "https://www.macrumors.com/2026/08/30/apple-watch-series-12-ultra-4-features/",
+          "publishedAt": "2026-08-30T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-ecb-berlin-meeting-deposit-2-25",
+      "kind": "daily",
+      "title": "ECB's Berlin meeting opens with markets split on whether Lagarde holds or hikes the deposit rate to 2.50%",
+      "summary": "The European Central Bank's Governing Council meets September 9-10 in Berlin, hosted by the Deutsche Bundesbank, with the rate decision and Christine Lagarde's press conference scheduled for the second day. The deposit facility rate has been held at 2.25% since the June 11 hike from 2.00%, and the July 23 meeting kept the three key rates unchanged while flagging oil prices and Middle East tensions as the dominant input. ING's Carsten Brzeski has read Lagarde's July tone as pointing to an almost-done-deal September move, with markets split between a hold and a hike.",
+      "category": "economy-markets",
+      "priority": 85,
+      "publishedAt": "2026-09-09T04:00:00.000Z",
+      "updatedAt": "2026-09-09T04:00:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ECB",
+        "deposit facility rate",
+        "Berlin",
+        "Lagarde",
+        "euro area inflation"
+      ],
+      "sources": [
+        {
+          "publisher": "Euronext (live)",
+          "url": "https://www.euronext.com/en/financial-news/ecb-keeps-rates-unchanged-september-hike-firmly-play",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-snapdragon-summit-gen6-2nm",
+      "kind": "daily",
+      "title": "Qualcomm's Snapdragon Summit set for September 22-24 in Maui with a 2nm Gen 6 flagship leading the agenda",
+      "summary": "Qualcomm's ninth annual Snapdragon Summit runs September 22-24 in Maui, where the company is expected to unveil the Snapdragon 8 Elite Gen 6 as the first 2nm mobile flagship silicon to reach scale in the Android tier. The Gen 6 is positioned as the chip behind next year's premium Android lineup, including the Galaxy S27 and Xiaomi 18, and the keynote also frames Qualcomm's annual pivot beyond the smartphone into PC, automotive and XR reference designs. Apple's earlier A20 Pro launch on September 9 sets up a back-to-back 2nm mobile comparison that is the throughline of the fall hardware season.",
+      "category": "technology",
+      "priority": 65,
+      "publishedAt": "2026-09-09T03:45:00.000Z",
+      "updatedAt": "2026-09-09T03:45:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Qualcomm",
+        "Snapdragon Summit 2026",
+        "Snapdragon 8 Elite Gen 6",
+        "2nm",
+        "Maui"
+      ],
+      "sources": [
+        {
+          "publisher": "Qualcomm",
+          "url": "https://www.qualcomm.com/company/events/snapdragon-summit",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-oil-99-strait-of-hormuz-jazan",
+      "kind": "daily",
+      "title": "Brent pushes back toward $100 as US-Iran tanker strikes and a Houthi attack on Jazan reflate supply risk",
+      "summary": "Brent crude pushed back to the $99 handle in early Asian trading on September 9, with WTI near $94.60 and an intraday Brent high of $99.67, after the US struck several Iranian tankers near Kharg Island and Iran retaliated with ballistic missiles toward Jordan. Iran-backed Houthi militants hit the 400,000-barrel-a-day Jazan refinery, and Iran declared a new shipping corridor with Oman requiring coordination with Tehran around the Strait of Hormuz. Chinese refiners drew on African, Canadian and Latin American barrels as Gulf loads were disrupted.",
+      "category": "economy-markets",
+      "priority": 75,
+      "publishedAt": "2026-09-09T03:30:00.000Z",
+      "updatedAt": "2026-09-09T03:30:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil prices",
+        "Brent",
+        "WTI",
+        "Strait of Hormuz",
+        "Kharg Island",
+        "Jazan"
+      ],
+      "sources": [
+        {
+          "publisher": "Trading Economics",
+          "url": "https://tradingeconomics.com/commodity/crude-oil",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/energy/why-isnt-oil-above-100-despite-supply-disruptions-2026-09-08/",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-august-cpi-thursday-preview",
+      "kind": "daily",
+      "title": "August CPI lands Thursday with consensus at 3.4% as tariff and energy pressures test the Fed's patient stance",
+      "summary": "The BLS releases the August consumer-price index on Thursday, September 11 at 8:30am Eastern, with consensus calling for a 0.2% monthly rise in headline CPI and an annual rate around 3.4%, little changed from July's 3.36%. Morningstar and RBC flag energy re-acceleration, with RBC looking for a 0.4% monthly headline increase and a 0.24% core reading, while Fed rhetoric has hardened into a more hawkish reaction function as Kevin Warsh's Jackson Hole emphasis carries into the September 15-16 FOMC. The August print is the last major inflation input before the Fed's decision week.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-09-09T03:00:00.000Z",
+      "updatedAt": "2026-09-09T03:00:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "US CPI",
+        "August 2026",
+        "inflation",
+        "Fed",
+        "tariffs",
+        "Warsh"
+      ],
+      "sources": [
+        {
+          "publisher": "Morningstar",
+          "url": "https://www.morningstar.com/economy/august-cpi-report-forecasts-point-sticky-inflation-tariff-pressures",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-aubameyang-deportivo-37-record",
+      "kind": "daily",
+      "title": "Aubameyang at 37 becomes the oldest 21st-century player to score in each of his first four La Liga matches",
+      "summary": "Pierre-Emerick Aubameyang scored the winner at the Estadio de la Cerámica after a goal and two assists against Villarreal, taking his Deportivo La Coruña tally to four goals in four La Liga appearances since joining from Olympique Marseille for €1.6 million. At 37 years and 79 days, the Gabon striker became the oldest player since 2000 to register a goal contribution in each of his first four Spanish top-flight appearances for a new club, surpassing Fernando Morientes' 30-year-old mark from 2006-07 at Valencia. Deportivo's 'Super Dépor' sit fourth on eight points and unbeaten.",
+      "category": "football",
+      "priority": 80,
+      "publishedAt": "2026-09-09T02:30:00.000Z",
+      "updatedAt": "2026-09-09T02:30:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Aubameyang",
+        "Deportivo La Coruña",
+        "La Liga",
+        "Morientes",
+        "record"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/sep/07/pierre-emerick-aubameyang-deportivo-a-coruna-la-liga",
+          "publishedAt": "2026-09-07T19:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-champions-league-md1-day2-anfield",
+      "kind": "daily",
+      "title": "Liverpool-Atletico leads Matchday 1's second night with Arsenal at Napoli and PSG at home to Bratislava",
+      "summary": "Champions League Matchday 1's second slate on Wednesday September 9 begins with Barcelona hosting Feyenoord and VfB Stuttgart welcoming Viking FK, before the evening session sends Liverpool to Anfield against Atletico Madrid, PSG to the Parc des Princes against Slovan Bratislava, Sporting CP against Galatasaray, and Napoli against Arsenal in a rematch of last season's run to the final. The Opta supercomputer tips Liverpool at 53% pre-match. Five Premier League clubs entered the draw, with Arsenal drawing Real Madrid and Bayern, City drawing PSG and Barcelona, and United facing Bayern.",
+      "category": "football",
+      "priority": 75,
+      "publishedAt": "2026-09-09T02:00:00.000Z",
+      "updatedAt": "2026-09-09T02:00:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Champions League",
+        "Liverpool",
+        "Atletico Madrid",
+        "Arsenal",
+        "Napoli",
+        "PSG",
+        "Premier League"
+      ],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/news/4698697/champions-league-draw-five-premier-league-clubs-learn-their-fate",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/story/_/id/49857948/liverpool-vs-atletico-madrid-2026-27-uefa-champions-leaguetv-channel-how-watch-kick-live-stream-referee-injury-predicted-lineups",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-09-mbappe-70-real-madrid-record",
+      "kind": "daily",
+      "title": "Mbappé enters the new Champions League campaign one goal shy of Raúl on Real Madrid's all-time list",
+      "summary": "Kylian Mbappé opened his 2026-27 Champions League account in Real Madrid's 2-1 win over Inter Milan at the Bernabéu on Tuesday, scoring in the 14th minute to pull level with Raúl at 71 Champions League goals. The opener set the tone for a Madrid victory built on a Federico Valverde strike in the 23rd minute, with Inter's late response unable to overturn the early two-goal cushion. The result leaves Real Madrid among the early pacesetters and gives Xabi Alonso's side a Mbappé-in-form platform as the competition shifts to Matchday 1's second night.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-09-09T01:30:00.000Z",
+      "updatedAt": "2026-09-09T01:30:00.000Z",
+      "retrievedAt": "2026-09-09T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Kylian Mbappe",
+        "Real Madrid",
+        "Inter Milan",
+        "Champions League",
+        "Raul"
+      ],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/news/4698697/champions-league-draw-five-premier-league-clubs-learn-their-fate",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-08-ballon-d-or-nominees-revealed",
       "kind": "daily",

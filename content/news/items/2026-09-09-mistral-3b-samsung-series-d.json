@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-09-mistral-3b-samsung-series-d",
+  "title": "Mistral closes €3 billion Samsung-led Series D as Europe's largest tech round ever",
+  "summary": "French AI lab Mistral closed a €3 billion Series D led by Samsung Electronics, with co-leads EQT's Scaleup Europe Fund and PSG Equity, lifting its valuation above €21 billion as Europe's largest-ever private tech round. The same day in Paris, Samsung chairman Jay Y. Lee and Mistral CEO Arthur Mensch signed a parallel strategic partnership covering joint manufacturing AI and R&D cooperation, extending Samsung's reach into the European open-weight ecosystem while ASML and a16z also backed the round.",
+  "category": "ai",
+  "priority": 90,
+  "publishedAt": "2026-09-09T05:05:00Z",
+  "updatedAt": "2026-09-09T05:05:00Z",
+  "retrievedAt": "2026-09-09T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Mistral", "Samsung", "Series D", "Europe", "open-weight", "sovereign AI"],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/08/mistral-ai-funding-valuation-samsung.html",
+      "publishedAt": "2026-09-08T05:00:00Z"
+    },
+    {
+      "publisher": "Seoul Economic Daily (Pulse by Maeil Business)",
+      "url": "https://en.sedaily.com/finance/2026/09/09/samsung-partners-with-mistral-ai-on-chip-manufacturing",
+      "publishedAt": "2026-09-09T01:01:00Z"
+    }
+  ]
+}
