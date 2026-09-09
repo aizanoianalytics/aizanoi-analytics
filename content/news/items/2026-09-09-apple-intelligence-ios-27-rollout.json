@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-09-apple-intelligence-ios-27-rollout",
+  "title": "Apple Intelligence takes the keynote stage as iOS 27 release candidate ships after Wednesday's event",
+  "summary": "Apple's 'Surprise and Shine' keynote will frame the iPhone Ultra and iPhone 18 Pro as the first devices purpose-built around iOS 27, with Apple Intelligence features relying on the A20 Pro's expanded neural engine and 12GB of LPDDR5X. MacRumors expects release-candidate seeds of iOS 27, iPadOS 27, macOS Golden Gate, tvOS 27, watchOS 27 and visionOS 27 to ship after the event, with the public release timed to September 12 pre-orders. Apple Intelligence is the throughline of every product on stage, from the AirPods 5's H3 chip to the Apple Watch Ultra 4's hypertension notifications.",
+  "category": "ai",
+  "priority": 65,
+  "publishedAt": "2026-09-09T05:00:00Z",
+  "updatedAt": "2026-09-09T05:00:00Z",
+  "retrievedAt": "2026-09-09T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple Intelligence", "iOS 27", "Apple Watch", "Siri", "on-device AI"],
+  "sources": [
+    {
+      "publisher": "MacRumors",
+      "url": "https://www.macrumors.com/2026/09/08/apple-event-week-iphone-18-pro-cheat-sheet/",
+      "publishedAt": "2026-09-08T12:00:00Z"
+    },
+    {
+      "publisher": "MacRumors",
+      "url": "https://www.macrumors.com/2026/08/30/apple-watch-series-12-ultra-4-features/",
+      "publishedAt": "2026-08-30T16:00:00Z"
+    }
+  ]
+}
