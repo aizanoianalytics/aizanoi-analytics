@@ -13,7 +13,7 @@ import * as THREE from '../vendor/three.module.js';
 
 const textureCache = new Map();
 
-function createProceduralTexture(name, drawFn, size = 256) {
+function createProceduralTexture(name, drawFn, size = 512) {
   if (textureCache.has(name)) return textureCache.get(name);
   if (typeof document === 'undefined') return null;
 
@@ -29,6 +29,29 @@ function createProceduralTexture(name, drawFn, size = 256) {
   texture.wrapT = THREE.RepeatWrapping;
   texture.generateMipmaps = true;
   texture.minFilter = THREE.LinearMipmapLinearFilter;
+  texture.anisotropy = 4; // grazing-angle sharpness on monuments — biggest single visual win
+  texture.colorSpace = THREE.SRGBColorSpace;
+  textureCache.set(name, texture);
+  return texture;
+}
+
+function createBumpTexture(name, drawFn, size = 512) {
+  if (textureCache.has(name)) return textureCache.get(name);
+  if (typeof document === 'undefined') return null;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  drawFn(ctx, size);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.generateMipmaps = true;
+  texture.minFilter = THREE.LinearMipmapLinearFilter;
+  // Bump maps encode height, not color — never treat them as sRGB.
+  texture.colorSpace = THREE.NoColorSpace;
   textureCache.set(name, texture);
   return texture;
 }
@@ -58,7 +81,7 @@ function getMarbleTexture() {
 }
 
 function getMarbleBump() {
-  return createProceduralTexture('marble_bump', (ctx, s) => {
+  return createBumpTexture('marble_bump', (ctx, s) => {
     ctx.fillStyle = '#808080';
     ctx.fillRect(0, 0, s, s);
     const imgData = ctx.getImageData(0, 0, s, s);
@@ -101,7 +124,7 @@ function getTravertineTexture() {
 }
 
 function getTravertineBump() {
-  return createProceduralTexture('travertine_bump', (ctx, s) => {
+  return createBumpTexture('travertine_bump', (ctx, s) => {
     ctx.fillStyle = '#808080';
     ctx.fillRect(0, 0, s, s);
     ctx.fillStyle = '#505050';
@@ -142,7 +165,7 @@ function getRomanBrickTexture() {
 }
 
 function getRomanBrickBump() {
-  return createProceduralTexture('roman_brick_bump', (ctx, s) => {
+  return createBumpTexture('roman_brick_bump', (ctx, s) => {
     ctx.fillStyle = '#404040'; // Low mortar
     ctx.fillRect(0, 0, s, s);
 
@@ -178,6 +201,25 @@ function getRoofTileTexture() {
   });
 }
 
+// Cobblestone height field — deep joints between stones, gentle per-stone dome.
+// Gives roads real depth under raking light; the color map alone read flat.
+function getRoadBump() {
+  return createBumpTexture('road_bump', (ctx, s) => {
+    ctx.fillStyle = '#404040'; // deep mortar
+    ctx.fillRect(0, 0, s, s);
+    const blockSize = 32;
+    for (let y = 0; y < s; y += blockSize) {
+      for (let x = 0; x < s; x += blockSize) {
+        const tone = 140 + (Math.random() * 50 - 10);
+        ctx.fillStyle = `rgb(${tone},${tone},${tone})`;
+        ctx.beginPath();
+        ctx.ellipse(x + blockSize / 2, y + blockSize / 2, blockSize * 0.42, blockSize * 0.38, Math.random() * 0.6 - 0.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  });
+}
+
 // 5. Cobblestone / Roman Road Paving
 function getRoadTexture() {
   return createProceduralTexture('road_stone', (ctx, s) => {
@@ -187,7 +229,7 @@ function getRoadTexture() {
     const blockSize = 32;
     for (let y = 0; y < s; y += blockSize) {
       for (let x = 0; x < s; x += blockSize) {
-        const tone = Math.random() * 20 - 10;
+        const tone = Math.random() * 24 - 12;
         const gray = Math.min(240, Math.max(120, 185 + tone));
         ctx.fillStyle = `rgb(${gray},${gray - 10},${gray - 20})`;
         ctx.beginPath();
@@ -325,6 +367,7 @@ export function getMaterial(name, overrides = {}) {
     mat.bumpScale = def.bumpScale || 0.05;
   } else if (name === 'road') {
     mat.map = getRoadTexture();
+    mat.bumpMap = getRoadBump();
     mat.bumpScale = def.bumpScale || 0.06;
   } else if (name === 'wood' || name === 'woodPlanks') {
     mat.map = getWoodTexture();

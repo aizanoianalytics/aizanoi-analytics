@@ -53,8 +53,20 @@ export class AudioSystem {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         this.ctx = new AudioContext();
 
+        // Master chain: dynamics → master gain → destination. The compressor
+        // glues ambience + footsteps + UI onto tiny phone speakers (phones clip
+        // long before desktop speakers; without this the mix sounds thin and
+        // quiet steps vanish under wind). The makeup gain restores loudness.
+        this.compressor = this.ctx.createDynamicsCompressor();
+        this.compressor.threshold.value = -18;
+        this.compressor.knee.value = 12;
+        this.compressor.ratio.value = 4;
+        this.compressor.attack.value = 0.004;
+        this.compressor.release.value = 0.18;
+
         this.masterGain = this.ctx.createGain();
         this.masterGain.gain.value = 1.0;
+        this.compressor.connect(this.masterGain);
         this.masterGain.connect(this.ctx.destination);
 
         this._setupWind();
@@ -106,7 +118,7 @@ export class AudioSystem {
 
         noise.connect(filter);
         filter.connect(this.windGain);
-        this.windGain.connect(this.masterGain);
+        this.windGain.connect(this.compressor);
 
         noise.start();
         lfo.start();
@@ -133,7 +145,7 @@ export class AudioSystem {
 
         this.cicadaOsc1.connect(this.cicadaGain);
         this.cicadaOsc2.connect(this.cicadaGain);
-        this.cicadaGain.connect(this.masterGain);
+        this.cicadaGain.connect(this.compressor);
 
         this.cicadaOsc1.start();
         this.cicadaOsc2.start();
@@ -154,7 +166,7 @@ export class AudioSystem {
 
         noise.connect(this.crowdFilter);
         this.crowdFilter.connect(this.crowdGain);
-        this.crowdGain.connect(this.masterGain);
+        this.crowdGain.connect(this.compressor);
 
         noise.start();
     }
@@ -181,11 +193,11 @@ export class AudioSystem {
 
         noise.connect(this.waterFilter);
         this.waterFilter.connect(this.waterGain);
-        this.waterGain.connect(this.masterGain);
+        this.waterGain.connect(this.compressor);
 
         noise.connect(this.waterLowFilter);
         this.waterLowFilter.connect(this.waterLowGain);
-        this.waterLowGain.connect(this.masterGain);
+        this.waterLowGain.connect(this.compressor);
 
         noise.start();
     }
@@ -197,7 +209,7 @@ export class AudioSystem {
         const gain = this.ctx.createGain();
 
         osc.connect(gain);
-        gain.connect(this.masterGain);
+        gain.connect(this.compressor);
 
         const now = this.ctx.currentTime;
         const duration = 0.1 + Math.random() * 0.2;
@@ -229,7 +241,7 @@ export class AudioSystem {
             gain.gain.exponentialRampToValueAtTime(0.05, now + delay + 0.012);
             gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.09);
             osc.connect(gain);
-            gain.connect(this.masterGain);
+            gain.connect(this.compressor);
             osc.start(now + delay);
             osc.stop(now + delay + 0.1);
         });
@@ -254,7 +266,7 @@ export class AudioSystem {
         gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
         noise.connect(filter);
         filter.connect(gain);
-        gain.connect(this.masterGain);
+        gain.connect(this.compressor);
         noise.start(now);
         noise.stop(now + 0.3);
     }
@@ -276,7 +288,7 @@ export class AudioSystem {
         gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
         noise.connect(filter);
         filter.connect(gain);
-        gain.connect(this.masterGain);
+        gain.connect(this.compressor);
         noise.start(now);
         noise.stop(now + 0.2);
     }
@@ -315,7 +327,7 @@ export class AudioSystem {
         noise.connect(filter);
         filter.connect(panner);
         panner.connect(gain);
-        gain.connect(this.masterGain);
+        gain.connect(this.compressor);
 
         const now = this.ctx.currentTime;
         const peak = surface === 'water' ? 0.16 : 0.1;
@@ -415,7 +427,7 @@ export class AudioSystem {
             osc.type = 'sine';
             osc.frequency.value = freq;
             osc.connect(gain);
-            gain.connect(this.masterGain);
+            gain.connect(this.compressor);
             gain.gain.setValueAtTime(0, now + delay);
             gain.gain.linearRampToValueAtTime(0.05, now + delay + 0.04);
             gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.9);

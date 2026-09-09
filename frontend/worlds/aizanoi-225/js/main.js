@@ -23,6 +23,7 @@ import { UISystem } from '../../shared/engine/ui.js';
 import { TourSystem } from '../../shared/engine/tour.js';
 import { IntroSequence } from '../../shared/engine/intro.js';
 import { GameLoop, PoseBlender, FrameMetrics, SIM_DT } from '../../shared/engine/loop.js';
+import { DeviceProfile, AdaptiveResolution } from '../../shared/engine/quality.js';
 import {
   buildMarketStall,
   buildAmphoraCluster,
@@ -54,7 +55,7 @@ let isRunning = false;
 // NOT in camera.position. The renderer blends between the previous and current
 // sim state each display frame (PoseBlender); writing a blended position back
 // into the sim would make the player drift at fractional speed.
-let simPos, pose, frameMetrics, gameLoop;
+let simPos, pose, frameMetrics, gameLoop, resolutionGovernor;
 
 async function init() {
   const loadingEl = document.getElementById('loading-screen');
@@ -85,6 +86,13 @@ async function init() {
   renderer.toneMappingExposure = 1.1;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
+  // Device tier: low-end phones boot lighter (fewer shadow texels, DPR cap)
+  // instead of fighting through a 2048px PCFSoft pass at 6 fps.
+  const profile = DeviceProfile();
+  renderer.shadowMap.type = profile.tier === 'low' ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
+  renderer.setPixelRatio(profile.startPixelRatio);
+  const lowTier = profile.tier === 'low';
+
   // 2. Scene & Camera
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.3, 3000);
@@ -95,6 +103,12 @@ async function init() {
   simPos = new THREE.Vector3(SPAWN.x, PLAYER_HEIGHT, SPAWN.z);
   pose = new PoseBlender(simPos);
   frameMetrics = new FrameMetrics();
+  // Adaptive resolution: walk DPR down when p95 blows the budget (thermal
+  // throttling, SwiftShader), recover when there is sustained headroom.
+  resolutionGovernor = new AdaptiveResolution(renderer, frameMetrics, {
+    minRatio: profile.tier === 'low' ? 0.6 : 0.75,
+    maxRatio: profile.startPixelRatio,
+  });
 
   setProgress(20, 'Shaping the Penkalas valley...');
 
@@ -146,7 +160,7 @@ async function init() {
   vegetation.populateCity(REGIONS, BUILDINGS, STREETS);
 
   // 9. Environment
-  environment = new Environment(scene, renderer, { startTime: 0.45, cycleSpeed: 0.005 });
+  environment = new Environment(scene, renderer, { startTime: 0.45, cycleSpeed: 0.005, mood: 'aizanoi' });
 
   // 10. Particles & Audio
   particles = new ParticleSystem(scene);
@@ -743,6 +757,7 @@ function render(now) {
     });
   }
   gameLoop.frame(now);
+  if (resolutionGovernor) resolutionGovernor.update();
 }
 
 init().catch(err => console.error('Aizanoi init failed:', err));

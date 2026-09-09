@@ -20,6 +20,7 @@ import { AudioSystem } from '../../shared/engine/audio.js';
 import { UISystem } from '../../shared/engine/ui.js';
 import { TourSystem } from '../../shared/engine/tour.js';
 import { IntroSequence } from '../../shared/engine/intro.js';
+import { GameLoop, PoseBlender, FrameMetrics, SIM_DT } from '../../shared/engine/loop.js';
 import {
   buildModernAirliner,
   buildBaggageTug,
@@ -46,10 +47,16 @@ import { AirportTrafficSystem } from './aircraft.js';
     }
     return pts;
   })();
-let renderer, scene, camera, clock;
+let renderer, scene, camera;
 let environment, particles, collision, controls, audio, ui, tour, intro, traffic;
 let buildingGroups = new Map();
 let isRunning = false;
+
+// Fixed-step simulation state. The authoritative player position lives here —
+// NOT in camera.position. The renderer blends between the previous and current
+// sim state each display frame (PoseBlender); writing a blended position back
+// into the sim would make the player drift at fractional speed.
+let simPos, pose, frameMetrics, gameLoop;
 
 async function init() {
   const loadingEl = document.getElementById('loading-screen');
@@ -84,7 +91,11 @@ async function init() {
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.3, 4000);
   camera.position.set(SPAWN.x, PLAYER_HEIGHT, SPAWN.z);
-  clock = new THREE.Clock();
+
+  // Fixed-timestep loop state: sim runs at 60 Hz regardless of display rate.
+  simPos = new THREE.Vector3(SPAWN.x, PLAYER_HEIGHT, SPAWN.z);
+  pose = new PoseBlender(simPos);
+  frameMetrics = new FrameMetrics();
 
   setProgress(25, 'Laying apron and airfield surfaces...');
 
@@ -117,7 +128,7 @@ async function init() {
   setProgress(80, 'Setting lighting and atmosphere...');
 
   // 6. Environment (Clear day, noon sunlight)
-  environment = new Environment(scene, renderer, { startTime: 0.48, cycleSpeed: 0.0 });
+  environment = new Environment(scene, renderer, { startTime: 0.48, cycleSpeed: 0.0, mood: 'iga' });
 
   // 7. Particles & Audio
   particles = new ParticleSystem(scene);
@@ -399,6 +410,13 @@ function bindEvents() {
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
     controls.teleportTo(safe.x, safe.z, angle, targetY);
+    // Hand the new position to the fixed-step sim so the pose blender doesn't
+    // glide across the teleport jump.
+    if (simPos) {
+      camera.position.y = targetY;
+      simPos.copy(camera.position);
+      pose.snap();
+    }
     ui.hideTeleportMenu();
   };
 }
@@ -423,13 +441,21 @@ function installWorldDebugHandle() {
       isRunning = true;
       return true;
     },
-    step(dt = 1 / 60) {
+    step(dt = SIM_DT) {
       if (!controls?.enabled || !collision) return false;
       const delta = Math.max(0, Math.min(Number(dt) || 0, 0.5));
-      controls.update(delta);
+      controls.update(delta, false);
       const moveVec = controls.getMovementVector(delta);
-      collision.moveAndSlide(camera.position, moveVec, delta);
+      const target = simPos || camera.position;
+      collision.moveAndSlide(target, moveVec, delta);
+      if (simPos) {
+        camera.position.copy(simPos);
+        pose?.snap();
+      }
       return true;
+    },
+    metrics() {
+      return frameMetrics ? frameMetrics.summary() : null;
     },
     teleport(id) {
       if (!ui?.onTeleport || !BUILDINGS.some((building) => building.id === id)) return false;
@@ -494,46 +520,67 @@ function inspectLookedAt() {
   if (b) ui.showInfoCard(b, SOURCES);
 }
 
-function render() {
-  const dt = Math.min(clock.getDelta(), 0.05);
+/* ── Fixed-step simulation (60 Hz, dt is always SIM_DT) ─────────────── */
 
+function stepSimulation(dt) {
+  // Physics-only step: player movement + collision + jump state.
+  // Look stays display-rate (drawFrame → controls.applyLook) for latency.
+  if (!controls?.enabled || tour._isFlying) return;
+
+  controls.update(dt, false);
+  const moveVec = controls.getMovementVector(dt);
+  const wasAirborne = !collision.onGround;
+  const velBefore = collision.playerVelocityY;
+  collision.moveAndSlide(simPos, moveVec, dt);
+  const jump = controls.getJumpImpulse();
+  if (jump > 0) {
+    collision.jump(jump);
+    audio.jump();
+  }
+  // Landing thud: airborne -> grounded transition this step
+  if (wasAirborne && collision.onGround && velBefore < -3) {
+    audio.land(-velBefore);
+  }
+}
+
+/* ── Display frame (every animation frame, variable rate) ───────────── */
+
+function drawFrame(frameDt, alpha) {
   if (traffic) {
-    traffic.update(dt, environment?.isNight ?? false, camera.position);
+    traffic.update(frameDt, environment?.isNight ?? false, camera.position);
   }
 
+  // Intro still owns the camera entirely — no fixed-step movement yet.
   if (intro && !intro.isComplete) {
-    intro.update(dt);
-    environment.update(dt, camera.position);
-    particles.update(dt, camera.position, environment.isNight);
+    intro.update(frameDt);
+    environment.update(frameDt, camera.position);
+    particles.update(frameDt, camera.position, environment.isNight);
     renderer.render(scene, camera);
     return;
   }
 
-  controls.update(dt);
+  // Camera look (mouse/touch) stays display-rate for zero input latency.
+  controls.applyLook();
 
-  if (tour.isActive) tour.update(dt);
+  if (tour.isActive) tour.update(frameDt);
 
-  if (controls.enabled && !tour._isFlying) {
-    const moveVec = controls.getMovementVector(dt);
-    const wasAirborne = !collision.onGround;
-    const velBefore = collision.playerVelocityY;
-    collision.moveAndSlide(camera.position, moveVec, dt);
-    const jump = controls.getJumpImpulse();
-    if (jump > 0) {
-      collision.jump(jump);
-      audio.jump();
-    }
-    // Landing thud: airborne -> grounded transition this frame
-    if (wasAirborne && collision.onGround && velBefore < -3) {
-      audio.land(-velBefore);
-    }
+  // Tour flights and the cinematic intro move the camera directly; during a
+  // flight the sim position must follow so the next handoff doesn't glide.
+  if (tour._isFlying || (tour.isActive && tour._activeFlight)) {
+    simPos.copy(camera.position);
+    pose.snap();
+  } else {
+    // Show the simulation one step behind, blended by the fractional remainder.
+    camera.position.copy(pose.sample(alpha));
   }
 
-  environment.update(dt, camera.position);
-  particles.update(dt, camera.position, environment.isNight);
+  // Ecosystems & audio keep their own integration (display-rate is fine —
+  // purely cosmetic layers with no collision coupling).
+  environment.update(frameDt, camera.position);
+  particles.update(frameDt, camera.position, environment.isNight);
 
   const isMoving = Math.abs(inputState.forward) > 0.1 || Math.abs(inputState.strafe) > 0.1;
-  audio.update(dt, camera.position, environment.isNight, isMoving, inputState.run, {
+  audio.update(frameDt, camera.position, environment.isNight, isMoving, inputState.run, {
     waters: WATER_POINTS,
   });
 
@@ -548,6 +595,18 @@ function render() {
   }
 
   renderer.render(scene, camera);
+}
+
+function render(now) {
+  if (!gameLoop) {
+    gameLoop = new GameLoop({
+      step: stepSimulation,
+      render: drawFrame,
+      beforeSteps: () => pose.capture(),
+      metrics: frameMetrics,
+    });
+  }
+  gameLoop.frame(now);
 }
 
 init().catch(err => console.error('Istanbul Airport init failed:', err));
