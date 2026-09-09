@@ -315,12 +315,16 @@ function bindEvents() {
     enterBtn.addEventListener('click', () => {
       const introModal = document.getElementById('intro-modal');
       if (introModal) {
-        introModal.classList.add('fade-out');
-        setTimeout(() => { introModal.style.display = 'none'; }, 600);
+        introModal.style.display = 'none';
       }
-      intro.start();
-      audio.init();
-      audio.setSoundset('airport');
+      try {
+        intro.start();
+        audio.init();
+        audio.setSoundset('airport');
+      } catch (err) {
+        console.warn('enter sequence: non-fatal', err);
+        intro.start();
+      }
     });
   }
 
@@ -403,6 +407,7 @@ function installWorldDebugHandle() {
   window.__WORLD_DEBUG__ = {
     id: 'iga',
     get ready() { return Boolean(renderer && camera && controls && collision && ui); },
+    audio,
     get camera() { return camera; },
     get controls() { return controls; },
     get traffic() { return traffic; },
@@ -510,9 +515,18 @@ function render() {
 
   if (controls.enabled && !tour._isFlying) {
     const moveVec = controls.getMovementVector(dt);
+    const wasAirborne = !collision.onGround;
+    const velBefore = collision.playerVelocityY;
     collision.moveAndSlide(camera.position, moveVec, dt);
     const jump = controls.getJumpImpulse();
-    if (jump > 0) collision.jump(jump);
+    if (jump > 0) {
+      collision.jump(jump);
+      audio.jump();
+    }
+    // Landing thud: airborne -> grounded transition this frame
+    if (wasAirborne && collision.onGround && velBefore < -3) {
+      audio.land(-velBefore);
+    }
   }
 
   environment.update(dt, camera.position);

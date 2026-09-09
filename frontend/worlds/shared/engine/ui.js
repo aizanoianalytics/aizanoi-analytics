@@ -82,6 +82,16 @@ export class UISystem {
       this.btnCloseModal.addEventListener('click', () => this.hideSourcesModal());
     }
 
+    // UI feedback blip on any HUD control press (delegated, capture-phase so it
+    // fires even when a handler later opens/closes something). Audio lives on
+    // the world debug handle; uiClick() is a no-op before audio init/unmute.
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('button, .hud-btn, .teleport-item, [role="button"]');
+      if (!btn) return;
+      const audio = window.__WORLD_DEBUG__?.audio;
+      if (audio && typeof audio.uiClick === 'function') audio.uiClick();
+    }, true);
+
     // Close overlays with Escape
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Escape') {

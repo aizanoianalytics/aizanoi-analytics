@@ -51,13 +51,16 @@ export class IntroSequence {
       <div class="cinematic-title__skip">[Press ESC or tap to skip intro]</div>
     `;
     // Touch devices have no Escape key — tap anywhere skips the intro.
-    this.overlay.addEventListener('pointerdown', () => this.skipIntro());
+    // The overlay itself is pointer-events:none (it must never block the HUD),
+    // so listen on window instead: any tap/press during the flyover skips it.
+    window.addEventListener('pointerdown', this._skipHandler = () => this.skipIntro());
     document.body.appendChild(this.overlay);
   }
 
   start() {
     this.isComplete = false;
     this.progress = 0;
+    this._startWallTime = performance.now();
     this.controls.disable();
 
     const onUserAction = () => {
@@ -79,6 +82,15 @@ export class IntroSequence {
       this.overlay.style.display = 'block';
       setTimeout(() => { if (this.overlay) this.overlay.style.opacity = '1'; }, 200);
     }
+
+    // Hard fallback: if the render loop's rAF is throttled/paused (headless
+    // captures, background tabs, aggressive mobile power saving), update() never
+    // reaches 1.0 and the player stays stranded mid-flight with controls locked.
+    // A wall-clock timer guarantees the flyover ends no matter what.
+    if (this._fallbackTimer) clearTimeout(this._fallbackTimer);
+    this._fallbackTimer = setTimeout(() => {
+      if (!this.isComplete) this.skipIntro();
+    }, (this.duration * 1.2 + 2.0) * 1000);
   }
 
   skipIntro() {
@@ -90,7 +102,19 @@ export class IntroSequence {
   update(dt) {
     if (this.isComplete) return;
 
-    this.progress += dt / this.duration;
+    // Frame-rate independence: advance by wall-clock time, not raw frame delta.
+    // On slow renderers (software GL, throttled Safari tabs) clamped per-frame dt
+    // made the flyover crawl along at 2-3 fps and left players stuck mid-air on
+    // the curve for 30+ seconds — the "can't get into the game" symptom.
+    if (this._startWallTime !== undefined) {
+      const elapsed = (performance.now() - this._startWallTime) / 1000;
+      const wallProgress = elapsed / this.duration;
+      // Take the larger of delta-accumulated and wall-clock progress so fast
+      // renderers keep the smooth eased path, but slow ones still finish on time.
+      this.progress = Math.max(this.progress + dt / this.duration, wallProgress);
+    } else {
+      this.progress += dt / this.duration;
+    }
 
     // Fade out title halfway through
     if (this.progress > 0.45 && this.overlay && this.overlay.style.opacity === '1') {
@@ -116,6 +140,15 @@ export class IntroSequence {
   finish() {
     if (this.isComplete) return;
     this.isComplete = true;
+
+    if (this._skipHandler) {
+      window.removeEventListener('pointerdown', this._skipHandler);
+      this._skipHandler = null;
+    }
+    if (this._fallbackTimer) {
+      clearTimeout(this._fallbackTimer);
+      this._fallbackTimer = null;
+    }
 
     if (this.overlay) {
       this.overlay.style.opacity = '0';

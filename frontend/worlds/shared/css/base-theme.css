@@ -745,6 +745,21 @@ body.mobile #mobile-controls {
 
 /* Unified Worlds CSP-safe component styling */
 #viewport { touch-action: none; }
+
+/* Mobile browser chrome guards: prevent accidental pull-to-refresh, double-tap
+   zoom and text selection during gameplay. HTML viewport meta already covers
+   pinch zoom via user-scalable; these cover the gesture layers CSS can reach. */
+html, body {
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+#viewport {
+  -webkit-touch-callout: none;
+}
+button, .hud-btn {
+  touch-action: manipulation; /* kills 300ms double-tap-zoom delay on iOS */
+}
 .hidden { display: none !important; }
 
 .monument-item { padding: 8px 0; border-bottom: 1px solid rgba(235, 197, 125, 0.15); }
