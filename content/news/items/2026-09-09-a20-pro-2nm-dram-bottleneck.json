@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-09-a20-pro-2nm-dram-bottleneck",
+  "title": "Apple's A20 Pro pairs TSMC's 2nm with WMCM packaging as a DRAM bottleneck reshapes the iPhone 18 launch curve",
+  "summary": "Apple's A20 Pro, the first phone chip on TSMC's 2nm N2 node, moves from a 6-core to a 7-core GPU and lifts the efficiency-core L2 cache to 8MB, paired with 12GB of LPDDR5X via TSMC's WMCM packaging. Die-shot leaks put performance at roughly 18% faster than the A19 Pro with around 30% better power efficiency, but packaging is now the rate-limiter: a tight LPDDR market has reportedly left around a billion dollars' worth of N2 wafers waiting at TSMC for memory, and Ming-Chi Kuo has rebutted the headline while agreeing the shortage is real.",
+  "category": "technology",
+  "priority": 75,
+  "publishedAt": "2026-09-09T04:25:00Z",
+  "updatedAt": "2026-09-09T04:25:00Z",
+  "retrievedAt": "2026-09-09T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["A20 Pro", "TSMC", "2nm", "N2", "WMCM", "LPDDR5X", "iPhone 18 Pro"],
+  "sources": [
+    {
+      "publisher": "Beebom",
+      "url": "https://gadgets.beebom.com/news/apple-iphone-18-pro-a20-pro-chip-detailed-in-new-die-shot-leak",
+      "publishedAt": "2026-09-08T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-09-amd-hugging-face-data-plane",
+  "title": "AMD-Cisco-HUMAIN push adds Saudi Instinct racks as Hugging Face routes to Nvidia-owned data plane",
+  "summary": "AMD, Cisco and HUMAIN have gone live with the first AMD Instinct systems inside Saudi Arabia's expanded AI infrastructure, five days after Nvidia's $12.9 billion agreement to buy Hugging Face was confirmed. The pairing matters because the leading open-model hub now routes the bulk of its 18 million developers' inference workloads onto a data plane Nvidia controls, while AMD and Cisco position themselves as the alternate hardware track in regions like the Gulf. Delangue, Chaumond and Wolf will join Nvidia when the deal closes.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-09T04:35:00Z",
+  "updatedAt": "2026-09-09T04:35:00Z",
+  "retrievedAt": "2026-09-09T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["AMD", "Cisco", "HUMAIN", "Hugging Face", "Nvidia", "sovereign compute"],
+  "sources": [
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/jensen-huang-agi-has-arrived-gpt-6-astra",
+      "publishedAt": "2026-09-08T00:00:00Z"
+    }
+  ]
+}
