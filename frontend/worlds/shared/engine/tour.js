@@ -6,11 +6,21 @@
  * and description for each stop are owned by the world's TOUR_STOPS array.
  */
 
+import * as THREE from '../vendor/three.module.js';
+
 export class TourSystem {
-  constructor(tourStops, controls, uiSystem) {
+  /**
+   * @param {Array} tourStops - world-owned stop definitions
+   * @param {Controls} controls
+   * @param {UISystem} uiSystem
+   * @param {THREE.Scene} [scene] - when provided, the stop beacon is added to
+   *        the world automatically; otherwise set `tour.beaconVisible` hosts.
+   */
+  constructor(tourStops, controls, uiSystem, scene = null) {
     this.tourStops = tourStops || [];
     this.controls = controls;
     this.uiSystem = uiSystem;
+    this._scene = scene;
 
     this.isActive = false;
     this.currentStop = 0;
@@ -20,6 +30,65 @@ export class TourSystem {
     this._stopDuration = 30;
 
     this._createTourUI();
+    this._createStopBeacon();
+  }
+
+  /**
+   * World-space marker for the current tour stop so visitors can see WHERE
+   * the flight is heading and how far away it is — the panel text alone gives
+   * no orientation. A flat pulsing ring on the ground plus a faint vertical
+   * light shaft (depthWrite off so it never occludes the monument).
+   */
+  _createStopBeacon() {
+    this.beacon = new THREE.Group();
+
+    const ring = new THREE.Mesh(
+      new THREE.RingGeometry(7.2, 8.4, 64),
+      new THREE.MeshBasicMaterial({
+        color: 0xe8b45a,
+        transparent: true,
+        opacity: 1.0,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+        toneMapped: false,
+      })
+    );
+    ring.rotation.x = -Math.PI / 2;
+
+    const shaft = new THREE.Mesh(
+      new THREE.CylinderGeometry(4.2, 5.4, 30, 24, 1, true),
+      new THREE.MeshBasicMaterial({
+        color: 0xe8b45a,
+        transparent: true,
+        opacity: 0.16,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+        toneMapped: false,
+      })
+    );
+    shaft.position.y = 15;
+
+    this.beacon.add(ring, shaft);
+    this._beaconRing = ring;
+    this.beacon.visible = false;
+    if (this._scene) this._scene.add(this.beacon);
+  }
+
+  start() {
+    if (!this.tourStops.length) return;
+    this.isActive = true;
+    this.currentStop = 0;
+    this.panel.style.display = 'flex';
+    this.goToStop(this.currentStop);
+  }
+
+  stop() {
+    this.isActive = false;
+    this._isFlying = false;
+    this._activeFlight = null;
+    this.panel.style.display = 'none';
+    this.beacon.visible = false;
+    this.controls.enable();
   }
 
   _createTourUI() {
@@ -71,6 +140,7 @@ export class TourSystem {
     this._isFlying = false;
     this._activeFlight = null;
     this.panel.style.display = 'none';
+    if (this.beacon) this.beacon.visible = false;
     this.controls.enable();
   }
 
@@ -113,6 +183,19 @@ export class TourSystem {
     const targetZ = building.z + viewDist * 0.7;
     const angle = Math.atan2(building.x - targetX, building.z - targetZ);
 
+    // Park the marker on the view line between the scenic viewpoint and the
+    // monument, ~35% of the way in from the viewpoint — close enough to read
+    // clearly on screen, never inside the monument's own footprint where its
+    // floor geometry would bury the ring.
+    if (this.beacon) {
+      this.beacon.position.set(
+        building.x + (targetX - building.x) * 0.35,
+        (building.y || 0) + 0.15,
+        building.z + (targetZ - building.z) * 0.35
+      );
+      this.beacon.visible = true;
+    }
+
     this._isFlying = true;
     this._activeFlight = this.controls.smoothMoveTo(targetX, targetZ, angle, 2.0);
 
@@ -130,6 +213,12 @@ export class TourSystem {
         this._isFlying = false;
         this._activeFlight = null;
       }
+    }
+
+    // Gentle pulse so the marker reads as "the place we're going", not static clutter
+    if (this.beacon?.visible) {
+      const s = 1 + Math.sin(performance.now() * 0.003) * 0.06;
+      this.beacon.scale.set(s, 1, s);
     }
 
     // Auto-advance countdown

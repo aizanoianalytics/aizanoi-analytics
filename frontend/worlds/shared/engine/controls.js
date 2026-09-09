@@ -129,6 +129,13 @@ export class Controls {
 
     // Keyboard handling — always active!
     window.addEventListener('keydown', (e) => {
+      // Ignore keystrokes aimed at form fields — typing in the teleport search
+      // or AizanoiOS inputs must never drive the player or fire interactions.
+      const target = e.target;
+      if (target && (target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement || target.isContentEditable)) {
+        return;
+      }
+
       const code = e.code;
       const key = e.key ? e.key.toLowerCase() : '';
 
@@ -145,7 +152,13 @@ export class Controls {
         inputState.jump = true;
       }
       if (code === 'KeyE' || code === 'KeyF' || key === 'e' || key === 'f') {
-        inputState.interact = true;
+        // Edge-triggered intent: fire once per physical press instead of
+        // repeating while held. The main loop consumes this flag; keyup does
+        // NOT clear it, so a quick tap inside one frame is never lost.
+        if (!this._keys.has('__interactLatched')) {
+          this._keys.add('__interactLatched');
+          inputState.interact = true;
+        }
       }
     });
 
@@ -156,7 +169,19 @@ export class Controls {
       if (key) this._keys.delete(key);
 
       if (code === 'Space') inputState.jump = false;
-      if (code === 'KeyE' || code === 'KeyF' || key === 'e' || key === 'f') inputState.interact = false;
+      if (code === 'KeyE' || code === 'KeyF' || key === 'e' || key === 'f') this._keys.delete('__interactLatched');
+    });
+
+    // A window losing focus (alt-tab, notification click, OS overlay) leaves
+    // keydown state orphaned — the matching keyup never arrives and the player
+    // keeps walking after refocus. Drop everything on blur.
+    window.addEventListener('blur', () => {
+      this._keys.clear();
+      inputState.forward = 0;
+      inputState.strafe = 0;
+      inputState.jump = false;
+      inputState.run = false;
+      // interact intentionally survives: it is an unconsumed press, not a held key
     });
   }
 
@@ -322,7 +347,33 @@ export class Controls {
      UPDATE — Called every frame to sync input state
      ═══════════════════════════════════════════════════════ */
 
-  update(dt) {
+  /* ── Camera look (display-rate) ─────────────────────── */
+
+  /**
+   * Apply pending look deltas to the camera orientation. Split from update()
+   * so render loops can run look at display rate (zero latency) while the
+   * movement simulation runs at a fixed rate. Safe to call alongside update().
+   */
+  applyLook() {
+    this.euler.setFromQuaternion(this.camera.quaternion);
+    this.euler.y += inputState.yawDelta;
+    this.euler.x += inputState.pitchDelta;
+    this.euler.x = Math.max(PITCH_MIN, Math.min(PITCH_MAX, this.euler.x));
+    this.camera.quaternion.setFromEuler(this.euler);
+
+    // Reset deltas after consumption
+    inputState.yawDelta = 0;
+    inputState.pitchDelta = 0;
+  }
+
+  /**
+   * Read input state and (optionally) apply pending camera look.
+   * @param {number} dt
+   * @param {boolean} applyLookNow - keep true for legacy single-loop callers.
+   *        Fixed-step worlds pass false here and call applyLook() at display
+   *        rate from the render path instead (lower look latency).
+   */
+  update(dt, applyLookNow = true) {
     if (!this.enabled) {
       inputState.forward = 0;
       inputState.strafe = 0;
@@ -358,15 +409,7 @@ export class Controls {
     }
 
     /* ── Apply camera rotation ────────────────────────── */
-    this.euler.setFromQuaternion(this.camera.quaternion);
-    this.euler.y += inputState.yawDelta;
-    this.euler.x += inputState.pitchDelta;
-    this.euler.x = Math.max(PITCH_MIN, Math.min(PITCH_MAX, this.euler.x));
-    this.camera.quaternion.setFromEuler(this.euler);
-
-    // Reset deltas after consumption
-    inputState.yawDelta = 0;
-    inputState.pitchDelta = 0;
+    if (applyLookNow) this.applyLook();
   }
 
   /* ── Movement vector (world-space) ──────────────────── */
