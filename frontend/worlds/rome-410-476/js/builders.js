@@ -630,7 +630,7 @@ export function buildStructure(building) {
     case 'bridge': return createStoneArchBridge(building.w || 100, building.d || 15, building.h || 10, 5, 'travertine');
     case 'wall': return createCurtainWall(building.w || 200, building.h || 16, building.d || 4, 'romanBrick');
     case 'gate': return createFortifiedGate(building.w || 38, building.h || 22, building.d || 18, 12, 'travertine');
-    case 'insula': return createRomanInsula(building.w || 24, building.d || 18, Math.max(2, Math.round((building.h || 15) / 3.4)), 'romanBrick');
+    case 'insula': return createRomanInsula(building.w || 24, building.d || 18, Math.max(2, Math.round((building.h || 15) / 3.4)), 'romanBrickWeathered');
     case 'charred-insula': return createCharredInsula(building.w || 22, building.d || 16, Math.max(2, Math.round((building.h || 12) / 3.4)));
     case 'collapsed-arcade': return buildCollapsedArcade(building.w || 24, building.h || 12, building.d || 5);
     case 'forum':

@@ -234,8 +234,8 @@ export class Environment {
     this.sunLight.shadow.camera.right = 90;
     this.sunLight.shadow.camera.top = 90;
     this.sunLight.shadow.camera.bottom = -90;
-    this.sunLight.shadow.bias = -0.00008;
-    this.sunLight.shadow.normalBias = 0.04;
+    this.sunLight.shadow.bias = -0.0004;
+    this.sunLight.shadow.normalBias = 0.6;
     this.scene.add(this.sunLight);
 
     // Shadow camera follows the player for quality

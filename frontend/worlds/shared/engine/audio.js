@@ -85,6 +85,21 @@ export class AudioSystem {
         }
     }
 
+    /**
+     * iOS Safari survival: returning from a lock screen / app switch / silent-mode
+     * flip leaves the AudioContext suspended AND some paths never get another user
+     * gesture on the canvas. Re-resume on visibility return, and refresh the
+     * state on the next touch as a belt-and-braces second chance.
+     */
+    installLifecycleResume(documentRef = document) {
+        if (this._lifecycleInstalled || !this.ctx) return;
+        this._lifecycleInstalled = true;
+        documentRef.addEventListener('visibilitychange', () => {
+            if (documentRef.visibilityState === 'visible') this.resume();
+        });
+        documentRef.addEventListener('pointerdown', () => this.resume(), { passive: true });
+    }
+
     _createNoiseBuffer(duration) {
         const bufferSize = this.ctx.sampleRate * duration;
         const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
@@ -305,18 +320,22 @@ export class AudioSystem {
     _playFootstep(surface = 'stone') {
         if (!this.isInitialized) return;
 
+        // Grass is softer and duller than stone paving; water splashes brighter.
+        // (Pre-variants every step sounded identical on grass and marble.)
+        const profiles = {
+            stone: { type: 'lowpass', freq: 1000, peak: 0.10 },
+            grass: { type: 'lowpass', freq: 480, peak: 0.055 },
+            water: { type: 'bandpass', freq: 1400, peak: 0.16 },
+        };
+        const p = profiles[surface] || profiles.stone;
+
         const noise = this.ctx.createBufferSource();
         noise.buffer = this._createNoiseBuffer(0.1);
 
         const filter = this.ctx.createBiquadFilter();
-        if (surface === 'water') {
-            filter.type = 'bandpass';
-            filter.frequency.value = 1400;
-            filter.Q.value = 0.8;
-        } else {
-            filter.type = 'lowpass';
-            filter.frequency.value = 1000;
-        }
+        filter.type = p.type;
+        filter.frequency.value = p.freq;
+        filter.Q.value = surface === 'water' ? 0.8 : 0.5;
 
         const panner = this.ctx.createStereoPanner();
         panner.pan.value = this.footstepLeft ? -0.3 : 0.3;
@@ -330,8 +349,7 @@ export class AudioSystem {
         gain.connect(this.compressor);
 
         const now = this.ctx.currentTime;
-        const peak = surface === 'water' ? 0.16 : 0.1;
-        gain.gain.setValueAtTime(peak, now);
+        gain.gain.setValueAtTime(p.peak, now);
         gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
 
         noise.start(now);
