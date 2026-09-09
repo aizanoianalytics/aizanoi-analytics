@@ -499,14 +499,18 @@ function bindEvents() {
     enterBtn.addEventListener('click', () => {
       const introModal = document.getElementById('intro-modal');
       if (introModal) {
-        introModal.classList.add('fade-out');
-        setTimeout(() => { introModal.style.display = 'none'; }, 600);
+        introModal.style.display = 'none';
       }
-      // Start cinematic intro
-      intro.start();
-      // Initialize audio on user gesture
-      audio.init();
-      audio.setSoundset('mediterranean');
+      try {
+        // Start cinematic intro
+        intro.start();
+        // Initialize audio on user gesture
+        audio.init();
+        audio.setSoundset('mediterranean');
+      } catch (err) {
+        console.warn('enter sequence: non-fatal', err);
+        intro.start();
+      }
     });
   }
 
@@ -606,6 +610,7 @@ function installWorldDebugHandle() {
   window.__WORLD_DEBUG__ = {
     id: 'athens',
     get ready() { return Boolean(renderer && camera && controls && collision && ui); },
+    audio,
     get player() {
       if (!camera) return null;
       return { x: camera.position.x, y: camera.position.y, z: camera.position.z, controlsEnabled: Boolean(controls?.enabled) };
@@ -723,12 +728,19 @@ function render() {
   /* ── Movement & Collision ───────────────────────────── */
   if (controls.enabled && !tour._isFlying) {
     const moveVec = controls.getMovementVector(dt);
+    const wasAirborne = !collision.onGround;
+    const velBefore = collision.playerVelocityY;
     collision.moveAndSlide(camera.position, moveVec, dt);
 
     // Jump
     const jumpImpulse = controls.getJumpImpulse();
     if (jumpImpulse > 0) {
       collision.jump(jumpImpulse);
+      audio.jump();
+    }
+    // Landing thud: airborne -> grounded transition this frame
+    if (wasAirborne && collision.onGround && velBefore < -3) {
+      audio.land(-velBefore);
     }
   }
 

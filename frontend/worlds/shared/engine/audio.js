@@ -213,6 +213,83 @@ export class AudioSystem {
         osc.stop(now + duration);
     }
 
+    /**
+     * UI feedback blip — soft two-tone tick for HUD button presses.
+     * Deliberately quiet (0.05 peak) so it never competes with ambience.
+     */
+    uiClick() {
+        if (!this.isInitialized || this.muted) return;
+        const now = this.ctx.currentTime;
+        [[880.0, 0.0], [1320.0, 0.045]].forEach(([freq, delay]) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.0001, now + delay);
+            gain.gain.exponentialRampToValueAtTime(0.05, now + delay + 0.012);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.09);
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+            osc.start(now + delay);
+            osc.stop(now + delay + 0.1);
+        });
+    }
+
+    /**
+     * Jump whoosh — filtered noise swell on take-off.
+     */
+    jump() {
+        if (!this.isInitialized || this.muted) return;
+        const now = this.ctx.currentTime;
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = this._getNoiseBuffer();
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(300, now);
+        filter.frequency.exponentialRampToValueAtTime(1400, now + 0.22);
+        filter.Q.value = 1.2;
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.07, now + 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.masterGain);
+        noise.start(now);
+        noise.stop(now + 0.3);
+    }
+
+    /**
+     * Landing thud — low filtered noise burst, intensity scales with fall speed.
+     */
+    land(fallSpeed = 6) {
+        if (!this.isInitialized || this.muted) return;
+        const now = this.ctx.currentTime;
+        const intensity = Math.min(1, Math.max(0.25, fallSpeed / 14));
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = this._getNoiseBuffer();
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 200 + intensity * 260;
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.14 * intensity, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.masterGain);
+        noise.start(now);
+        noise.stop(now + 0.2);
+    }
+
+    _getNoiseBuffer() {
+        if (this._noiseBuffer) return this._noiseBuffer;
+        const len = this.ctx.sampleRate * 0.5;
+        this._noiseBuffer = this.ctx.createBuffer(1, len, this.ctx.sampleRate);
+        const data = this._noiseBuffer.getChannelData(0);
+        for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+        return this._noiseBuffer;
+    }
+
     _playFootstep(surface = 'stone') {
         if (!this.isInitialized) return;
 
