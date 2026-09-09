@@ -26,6 +26,7 @@ import { AudioSystem } from '../../shared/engine/audio.js';
 import { UISystem } from '../../shared/engine/ui.js';
 import { TourSystem } from '../../shared/engine/tour.js';
 import { IntroSequence } from '../../shared/engine/intro.js';
+import { GameLoop, PoseBlender, FrameMetrics, SIM_DT } from '../../shared/engine/loop.js';
 import {
   buildAmphoraCluster,
   buildMarketStall,
@@ -48,13 +49,19 @@ import {
 
   // Dense sample points along rivers + springs — feeds proximity-based water ambience
   const WATER_POINTS = buildWaterSamplePoints(WATERS, 25);
-let renderer, scene, camera, clock;
+let renderer, scene, camera;
 let environment, waterSystem, vegetation, particles;
 let collision, controls, audio, ui, tour, intro, birdFlock;
 let buildingGroups = new Map();    // id → THREE.Group
 let urbanFabricGroup;
 let groundMesh;
 let isRunning = false;
+
+// Fixed-step simulation state. The authoritative player position lives here —
+// NOT in camera.position. The renderer blends between the previous and current
+// sim state each display frame (PoseBlender); writing a blended position back
+// into the sim would make the player drift at fractional speed.
+let simPos, pose, frameMetrics, gameLoop;
 
 /* ── Initialization ───────────────────────────────────────── */
 
@@ -97,7 +104,10 @@ async function init() {
   );
   camera.position.set(SPAWN.x, PLAYER_HEIGHT, SPAWN.z);
 
-  clock = new THREE.Clock();
+  // Fixed-timestep loop state: sim runs at 60 Hz regardless of display rate.
+  simPos = new THREE.Vector3(SPAWN.x, PLAYER_HEIGHT, SPAWN.z);
+  pose = new PoseBlender(simPos);
+  frameMetrics = new FrameMetrics();
 
   setProgress(10, 'Shaping the Attic terrain...');
 
@@ -157,7 +167,7 @@ async function init() {
 
   /* ── 7. Environment (sky, lighting, fog) ──────────────── */
 
-  environment = new Environment(scene, renderer, { startTime: 0.42 });
+  environment = new Environment(scene, renderer, { startTime: 0.42, mood: 'athens' });
 
   setProgress(65, 'Adding water features...');
 
@@ -215,6 +225,8 @@ async function init() {
   intro = new IntroSequence(camera, scene, controls);
   intro.onComplete = () => {
     controls.enable();
+    simPos.copy(camera.position);
+    pose.snap();
     audio.init();
     audio.setSoundset('mediterranean');
     isRunning = true;
@@ -588,6 +600,10 @@ function bindEvents() {
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
     controls.teleportTo(safe.x, safe.z, angle, targetY);
+    // Teleport is a discrete jump: the sim state must land exactly there so
+    // the pose blender doesn't glide across the map on the next frames.
+    simPos.copy(camera.position);
+    pose.snap();
     ui.hideTeleportMenu();
   };
 
@@ -623,13 +639,21 @@ function installWorldDebugHandle() {
       isRunning = true;
       return true;
     },
-    step(dt = 1 / 60) {
+    step(dt = SIM_DT) {
       if (!controls?.enabled || !collision) return false;
       const delta = Math.max(0, Math.min(Number(dt) || 0, 0.5));
-      controls.update(delta);
+      controls.update(delta, false);
       const moveVec = controls.getMovementVector(delta);
-      collision.moveAndSlide(camera.position, moveVec, delta);
+      const target = simPos || camera.position;
+      collision.moveAndSlide(target, moveVec, delta);
+      if (simPos) {
+        camera.position.copy(simPos);
+        pose?.snap();
+      }
       return true;
+    },
+    metrics() {
+      return frameMetrics ? frameMetrics.summary() : null;
     },
     teleport(id) {
       if (!ui?.onTeleport || !BUILDINGS.some((building) => building.id === id)) return false;
@@ -698,85 +722,101 @@ function inspectLookedAt() {
   }
 }
 
-/* ── Render loop ──────────────────────────────────────────── */
+/* ── Fixed-step simulation (60 Hz, dt is always SIM_DT) ─────────────── */
 
-function render() {
-  const dt = Math.min(clock.getDelta(), 0.05); // Cap at 50ms
+function stepSimulation(dt) {
+  // Physics-only step: player movement + collision + jump state.
+  // Look stays display-rate (drawFrame → controls.applyLook) for latency.
+  if (!controls?.enabled || tour._isFlying) return;
 
-  if (birdFlock?.userData?.update) {
-    birdFlock.userData.update(dt);
+  controls.update(dt, false);
+  const moveVec = controls.getMovementVector(dt);
+  const wasAirborne = !collision.onGround;
+  const velBefore = collision.playerVelocityY;
+  collision.moveAndSlide(simPos, moveVec, dt);
+  const jump = controls.getJumpImpulse();
+  if (jump > 0) {
+    collision.jump(jump);
+    audio.jump();
   }
+  // Landing thud: airborne -> grounded transition this step
+  if (wasAirborne && collision.onGround && velBefore < -3) {
+    audio.land(-velBefore);
+  }
+}
 
-  /* ── Intro sequence ─────────────────────────────────── */
+/* ── Display frame (every animation frame, variable rate) ───────────── */
+
+function drawFrame(frameDt, alpha) {
+  // Intro still owns the camera entirely — no fixed-step movement yet.
   if (intro && !intro.isComplete) {
-    intro.update(dt);
-    environment.update(dt, camera.position);
-    waterSystem.update(dt);
-    particles.update(dt, camera.position, environment.isNight);
+    intro.update(frameDt);
+    environment.update(frameDt, camera.position);
+    waterSystem.update(frameDt);
+    particles.update(frameDt, camera.position, environment.isNight);
     renderer.render(scene, camera);
     return;
   }
 
-  /* ── Controls ───────────────────────────────────────── */
-  controls.update(dt);
+  // Camera look (mouse/touch) stays display-rate for zero input latency.
+  controls.applyLook();
 
-  /* ── Tour ───────────────────────────────────────────── */
   if (tour.isActive) {
-    tour.update(dt);
+    tour.update(frameDt);
   }
 
-  /* ── Movement & Collision ───────────────────────────── */
-  if (controls.enabled && !tour._isFlying) {
-    const moveVec = controls.getMovementVector(dt);
-    const wasAirborne = !collision.onGround;
-    const velBefore = collision.playerVelocityY;
-    collision.moveAndSlide(camera.position, moveVec, dt);
-
-    // Jump
-    const jumpImpulse = controls.getJumpImpulse();
-    if (jumpImpulse > 0) {
-      collision.jump(jumpImpulse);
-      audio.jump();
-    }
-    // Landing thud: airborne -> grounded transition this frame
-    if (wasAirborne && collision.onGround && velBefore < -3) {
-      audio.land(-velBefore);
-    }
+  // Tour flights and the cinematic intro move the camera directly; during a
+  // flight the sim position must follow so the next handoff doesn't glide.
+  if (tour._isFlying || (tour.isActive && tour._activeFlight)) {
+    simPos.copy(camera.position);
+    pose.snap();
+  } else {
+    // Show the simulation one step behind, blended by the fractional remainder.
+    camera.position.copy(pose.sample(alpha));
   }
 
-  /* ── Environment ────────────────────────────────────── */
-  environment.update(dt, camera.position);
+  if (birdFlock?.userData?.update) {
+    birdFlock.userData.update(frameDt);
+  }
 
-  /* ── Water ──────────────────────────────────────────── */
+  // Ecosystems & audio keep their own integration (display-rate is fine —
+  // purely cosmetic layers with no collision coupling).
+  environment.update(frameDt, camera.position);
   waterSystem.update(
-    dt,
+    frameDt,
     environment.skyUniforms.uSunDir.value,
     environment.skyUniforms.uSkyTop.value,
   );
+  particles.update(frameDt, camera.position, environment.isNight);
 
-  /* ── Particles ──────────────────────────────────────── */
-  particles.update(dt, camera.position, environment.isNight);
-
-  /* ── Audio ──────────────────────────────────────────── */
   const isMoving = Math.abs(inputState.forward) > 0.1 || Math.abs(inputState.strafe) > 0.1;
-  audio.update(dt, camera.position, environment.isNight, isMoving, inputState.run, {
+  audio.update(frameDt, camera.position, environment.isNight, isMoving, inputState.run, {
     waters: WATER_POINTS,
   });
 
-  /* ── UI ─────────────────────────────────────────────── */
   const euler = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ');
   ui.updateMinimap(camera.position.x, camera.position.z, euler.y);
   ui.updatePlaceName(camera.position.x, camera.position.z);
   ui.updateCompass(euler.y);
 
-  /* ── Inspect on E/F key ─────────────────────────────── */
   if (inputState.interact) {
     inputState.interact = false;
     inspectLookedAt();
   }
 
-  /* ── Render ─────────────────────────────────────────── */
   renderer.render(scene, camera);
+}
+
+function render(now) {
+  if (!gameLoop) {
+    gameLoop = new GameLoop({
+      step: stepSimulation,
+      render: drawFrame,
+      beforeSteps: () => pose.capture(),
+      metrics: frameMetrics,
+    });
+  }
+  gameLoop.frame(now);
 }
 
 /* ── Bootstrap ────────────────────────────────────────────── */

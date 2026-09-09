@@ -19,8 +19,9 @@ export function createDoricColumn(height, radius, material = 'marble') {
   const group = new THREE.Group();
   const mat = getMaterial(material);
 
-  // Fluted shaft (tapered)
-  const shaftGeo = new THREE.CylinderGeometry(radius * 0.82, radius, height * 0.90, 16);
+  // Fluted shaft (tapered). 24 radial segments = the real 20-flute Doric drum
+  // read at silhouette distance; the old 16-segment tube looked like a pipe.
+  const shaftGeo = new THREE.CylinderGeometry(radius * 0.82, radius, height * 0.90, 24, 3);
   const shaft = new THREE.Mesh(shaftGeo, mat);
   shaft.position.y = height * 0.45;
   shaft.castShadow = true;
@@ -28,7 +29,7 @@ export function createDoricColumn(height, radius, material = 'marble') {
   group.add(shaft);
 
   // Capital (echinus + abacus)
-  const echinusGeo = new THREE.ConeGeometry(radius * 1.25, height * 0.05, 16);
+  const echinusGeo = new THREE.ConeGeometry(radius * 1.25, height * 0.05, 24);
   const echinus = new THREE.Mesh(echinusGeo, mat);
   echinus.position.y = height * 0.925;
   group.add(echinus);
@@ -49,13 +50,13 @@ export function createIonicColumn(height, radius, material = 'marble') {
   const mat = getMaterial(material);
 
   // Base
-  const baseGeo = new THREE.CylinderGeometry(radius * 1.3, radius * 1.4, height * 0.05, 16);
+  const baseGeo = new THREE.CylinderGeometry(radius * 1.3, radius * 1.4, height * 0.05, 24);
   const base = new THREE.Mesh(baseGeo, mat);
   base.position.y = height * 0.025;
   group.add(base);
 
   // Shaft
-  const shaftGeo = new THREE.CylinderGeometry(radius * 0.85, radius, height * 0.88, 16);
+  const shaftGeo = new THREE.CylinderGeometry(radius * 0.85, radius, height * 0.88, 24, 3);
   const shaft = new THREE.Mesh(shaftGeo, mat);
   shaft.position.y = height * 0.05 + height * 0.44;
   shaft.castShadow = true;
@@ -78,20 +79,20 @@ export function createCorinthianColumn(height, radius, material = 'marble') {
   const mat = getMaterial(material);
 
   // Moulded base
-  const baseGeo = new THREE.CylinderGeometry(radius * 1.35, radius * 1.45, height * 0.06, 16);
+  const baseGeo = new THREE.CylinderGeometry(radius * 1.35, radius * 1.45, height * 0.06, 24);
   const base = new THREE.Mesh(baseGeo, mat);
   base.position.y = height * 0.03;
   group.add(base);
 
   // Slender shaft
-  const shaftGeo = new THREE.CylinderGeometry(radius * 0.86, radius, height * 0.84, 16);
+  const shaftGeo = new THREE.CylinderGeometry(radius * 0.86, radius, height * 0.84, 24, 3);
   const shaft = new THREE.Mesh(shaftGeo, mat);
   shaft.position.y = height * 0.06 + height * 0.42;
   shaft.castShadow = true;
   group.add(shaft);
 
   // Ornate bell capital (double cylinder flare)
-  const bellGeo = new THREE.CylinderGeometry(radius * 1.4, radius * 0.9, height * 0.10, 16);
+  const bellGeo = new THREE.CylinderGeometry(radius * 1.4, radius * 0.9, height * 0.10, 24);
   const bell = new THREE.Mesh(bellGeo, mat);
   bell.position.y = height * 0.95;
   group.add(bell);

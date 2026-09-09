@@ -24,6 +24,58 @@ const PALETTES = {
   night:   { sky: [0.06, 0.09, 0.18], ambient: [0.22, 0.24, 0.35], sun: [0.30, 0.38, 0.55], fog: [0.06, 0.08, 0.15], intensity: 0.35 },
 };
 
+/*
+ * Per-world art direction. Each Historical World gets its own tonal identity
+ * instead of one shared "generic Mediterranean noon". A profile is merged over
+ * PALETTES as multipliers, so the shared day/night cycle logic stays intact:
+ *   - hue shift  : multiply-modifies sky/sun/fog colors (warm gold, cold marble…)
+ *   - fogDensity : base + night fog density overrides
+ *   - exposure   : renderer tone-mapping exposure bias for the world's mood
+ */
+const WORLD_MOODS = {
+  // Warm Anatolian gold — dry plateau light, honeyed stone, long amber shadows.
+  aizanoi: {
+    skyTint: [1.06, 0.98, 0.86],
+    sunTint: [1.10, 1.00, 0.82],
+    fogTint: [1.08, 1.00, 0.88],
+    fogDensityDay: 0.0014,
+    fogDensityNight: 0.0026,
+    exposure: 1.12,
+    ambientBoost: 1.0,
+  },
+  // White marble + Aegean blue — crisp, high-key, strong blue sky bounce.
+  athens: {
+    skyTint: [0.92, 1.02, 1.12],
+    sunTint: [1.04, 1.00, 0.94],
+    fogTint: [0.96, 1.02, 1.10],
+    fogDensityDay: 0.0012,
+    fogDensityNight: 0.0024,
+    exposure: 1.16,
+    ambientBoost: 1.15,
+  },
+  // Decayed grandeur — bruised amber light, smokier air, heavier contrast.
+  rome: {
+    skyTint: [1.04, 0.94, 0.84],
+    sunTint: [1.08, 0.92, 0.76],
+    fogTint: [1.02, 0.92, 0.82],
+    fogDensityDay: 0.0022,
+    fogDensityNight: 0.0034,
+    exposure: 1.06,
+    ambientBoost: 0.88,
+  },
+  // Modern cold metal — desaturated steel-blue, glassy clean air, neutral sun.
+  iga: {
+    skyTint: [0.94, 0.98, 1.06],
+    sunTint: [1.00, 1.00, 1.02],
+    fogTint: [0.95, 0.97, 1.02],
+    fogDensityDay: 0.0009,
+    fogDensityNight: 0.0018,
+    exposure: 1.10,
+    ambientBoost: 1.05,
+  },
+};
+
+
 const PHASE_TIMES = [
   { phase: 'dawn',      start: 0.20, end: 0.28 },
   { phase: 'morning',   start: 0.28, end: 0.40 },
@@ -124,10 +176,20 @@ export class Environment {
     this.timeOfDay = options.startTime ?? 0.42; // default: late morning
     this.cycleSpeed = options.cycleSpeed ?? 0.0; // 0 = static, 0.01 = slow cycle
     this.paused = false;
+    // Per-world tonal identity (falls back to neutral multipliers).
+    this.mood = WORLD_MOODS[options.mood] || {
+      skyTint: [1, 1, 1], sunTint: [1, 1, 1], fogTint: [1, 1, 1],
+      fogDensityDay: 0.0018, fogDensityNight: 0.003, exposure: 1.1, ambientBoost: 1,
+    };
 
     this._setupSky();
     this._setupLighting();
     this._setupFog();
+
+    // Mood owns the tone-mapping exposure so a world's look is declared once.
+    if (renderer && this.mood.exposure) {
+      renderer.toneMappingExposure = this.mood.exposure;
+    }
 
     this.torchLights = [];
     this.update(0);
@@ -165,10 +227,13 @@ export class Environment {
     this.sunLight.shadow.mapSize.set(2048, 2048);
     this.sunLight.shadow.camera.near = 1;
     this.sunLight.shadow.camera.far = 800;
-    this.sunLight.shadow.camera.left = -300;
-    this.sunLight.shadow.camera.right = 300;
-    this.sunLight.shadow.camera.top = 300;
-    this.sunLight.shadow.camera.bottom = -300;
+    // Tight ortho volume around the player: a 300m frustum over 2048px maps
+    // ~7cm/texel (parcel-y shadows + heavy acne). 90m ≈ 4.4cm/texel — monuments
+    // cast clean shadows; farther scenery fades gracefully instead of strobing.
+    this.sunLight.shadow.camera.left = -90;
+    this.sunLight.shadow.camera.right = 90;
+    this.sunLight.shadow.camera.top = 90;
+    this.sunLight.shadow.camera.bottom = -90;
     this.sunLight.shadow.bias = -0.00008;
     this.sunLight.shadow.normalBias = 0.04;
     this.scene.add(this.sunLight);
@@ -304,34 +369,40 @@ export class Environment {
       );
     }
 
-    // Apply palette
+    // Apply palette through the world's tonal identity (mood tints multiply
+    // the shared day/night palette, keeping the cycle logic in one place).
+    const m = this.mood;
     const [sr, sg, sb] = palette.sky;
     const [ar, ag, ab] = palette.ambient;
     const [lr, lg, lb] = palette.sun;
     const [fr, fg, fb] = palette.fog;
 
-    this.skyUniforms.uSkyTop.value.setRGB(sr, sg, sb);
+    this.skyUniforms.uSkyTop.value.setRGB(sr * m.skyTint[0], sg * m.skyTint[1], sb * m.skyTint[2]);
     this.skyUniforms.uSkyHorizon.value.setRGB(
-      sr * 0.7 + fr * 0.3,
-      sg * 0.7 + fg * 0.3,
-      sb * 0.7 + fb * 0.3,
+      (sr * 0.7 + fr * 0.3) * m.fogTint[0],
+      (sg * 0.7 + fg * 0.3) * m.fogTint[1],
+      (sb * 0.7 + fb * 0.3) * m.fogTint[2],
     );
-    this.skyUniforms.uSunColor.value.setRGB(lr, lg, lb);
+    this.skyUniforms.uSunColor.value.setRGB(lr * m.sunTint[0], lg * m.sunTint[1], lb * m.sunTint[2]);
     this.skyUniforms.uTime.value += dt;
 
     // Lighting
-    this.sunLight.color.setRGB(lr, lg, lb);
+    this.sunLight.color.setRGB(lr * m.sunTint[0], lg * m.sunTint[1], lb * m.sunTint[2]);
     this.sunLight.intensity = palette.intensity * 1.8;
-    this.hemiLight.color.setRGB(sr * 0.8, sg * 0.8, sb * 0.8);
+    this.hemiLight.color.setRGB(sr * 0.8 * m.skyTint[0], sg * 0.8 * m.skyTint[1], sb * 0.8 * m.skyTint[2]);
     this.hemiLight.groundColor.setRGB(ar * 0.6, ag * 0.5, ab * 0.4);
-    this.hemiLight.intensity = palette.intensity * 0.5;
+    this.hemiLight.intensity = palette.intensity * 0.5 * m.ambientBoost;
     this.ambientLight.color.setRGB(ar, ag, ab);
-    this.ambientLight.intensity = palette.intensity * 0.35;
+    this.ambientLight.intensity = palette.intensity * 0.35 * m.ambientBoost;
 
     // Fog
-    this.scene.fog.color.setRGB(fr, fg, fb);
+    this.scene.fog.color.setRGB(
+      Math.min(1, fr * m.fogTint[0]),
+      Math.min(1, fg * m.fogTint[1]),
+      Math.min(1, fb * m.fogTint[2]),
+    );
     const isNight = t > 0.78 || t < 0.22;
-    this.scene.fog.density = isNight ? 0.003 : 0.0018;
+    this.scene.fog.density = isNight ? m.fogDensityNight : m.fogDensityDay;
 
     // Torches
     const torchFactor = isNight ? 1.0 : (t > 0.7 || t < 0.25) ? 0.4 : 0.0;
