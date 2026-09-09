@@ -23,6 +23,8 @@ import { UISystem } from '../../shared/engine/ui.js';
 import { TourSystem } from '../../shared/engine/tour.js';
 import { IntroSequence } from '../../shared/engine/intro.js';
 import { GameLoop, PoseBlender, FrameMetrics, SIM_DT } from '../../shared/engine/loop.js';
+import { showFatalInitError, installLoadingWatchdog } from '../../shared/engine/loading-safety.js';
+import { installContextLossGuard } from '../../shared/engine/gl-recovery.js';
 import { DeviceProfile, AdaptiveResolution } from '../../shared/engine/quality.js';
 import {
   buildMarketStall,
@@ -225,6 +227,11 @@ async function init() {
       setTimeout(() => { loadingEl.style.display = 'none'; }, 600);
     }, 300);
   }
+
+  // Loading watchdog: if init stalls (throttled phone), surface a Try Again
+  // escape hatch instead of an eternal spinner.
+  installLoadingWatchdog({ ready: () => window.__WORLD_DEBUG__?.ready === true, worldName: 'Aizanoi' });
+  installContextLossGuard(renderer);
 
   renderer.setAnimationLoop(render);
 }
@@ -473,6 +480,7 @@ function bindEvents() {
       try {
         intro.start();
         audio.init();
+        audio.installLifecycleResume();
         audio.setSoundset('mediterranean');
       } catch (err) {
         console.warn('enter sequence: non-fatal', err);
@@ -564,6 +572,7 @@ function bindEvents() {
 function installWorldDebugHandle() {
   window.__WORLD_DEBUG__ = {
     id: 'aizanoi',
+    get scene() { return scene; },
     get ready() { return Boolean(renderer && camera && controls && collision && ui); },
     audio,
     get player() {
@@ -760,4 +769,4 @@ function render(now) {
   if (resolutionGovernor) resolutionGovernor.update();
 }
 
-init().catch(err => console.error('Aizanoi init failed:', err));
+init().catch(err => { console.error('Aizanoi init failed:', err); showFatalInitError(err, 'Aizanoi'); });

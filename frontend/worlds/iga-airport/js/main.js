@@ -21,6 +21,8 @@ import { UISystem } from '../../shared/engine/ui.js';
 import { TourSystem } from '../../shared/engine/tour.js';
 import { IntroSequence } from '../../shared/engine/intro.js';
 import { GameLoop, PoseBlender, FrameMetrics, SIM_DT } from '../../shared/engine/loop.js';
+import { showFatalInitError, installLoadingWatchdog } from '../../shared/engine/loading-safety.js';
+import { installContextLossGuard } from '../../shared/engine/gl-recovery.js';
 import {
   buildModernAirliner,
   buildBaggageTug,
@@ -178,6 +180,10 @@ async function init() {
 
   intro.onComplete = () => {
     controls.enable();
+    // Intro flew the camera to its landing point; sync the fixed-step sim to it
+    // (skip-path lands mid-curve if ESC/tap fired, so never assume SPAWN here).
+    simPos.copy(camera.position);
+    pose.snap();
     audio.init();
     audio.setSoundset('airport');
     isRunning = true;
@@ -195,6 +201,11 @@ async function init() {
       setTimeout(() => { loadingEl.style.display = 'none'; }, 600);
     }, 300);
   }
+
+  // Loading watchdog: if init stalls (throttled phone), surface a Try Again
+  // escape hatch instead of an eternal spinner.
+  installLoadingWatchdog({ ready: () => window.__WORLD_DEBUG__?.ready === true, worldName: 'İstanbul Airport' });
+  installContextLossGuard(renderer);
 
   renderer.setAnimationLoop(render);
 }
@@ -331,6 +342,7 @@ function bindEvents() {
       try {
         intro.start();
         audio.init();
+        audio.installLifecycleResume();
         audio.setSoundset('airport');
       } catch (err) {
         console.warn('enter sequence: non-fatal', err);
@@ -424,6 +436,7 @@ function bindEvents() {
 function installWorldDebugHandle() {
   window.__WORLD_DEBUG__ = {
     id: 'iga',
+    get scene() { return scene; },
     get ready() { return Boolean(renderer && camera && controls && collision && ui); },
     audio,
     get camera() { return camera; },
@@ -609,4 +622,4 @@ function render(now) {
   gameLoop.frame(now);
 }
 
-init().catch(err => console.error('Istanbul Airport init failed:', err));
+init().catch(err => { console.error('İstanbul Airport init failed:', err); showFatalInitError(err, 'İstanbul Airport'); });

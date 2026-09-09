@@ -182,10 +182,10 @@ function getRomanBrickBump() {
   });
 }
 
-// 4. Terracotta Roof Tiles (Imbrex & Tegula)
+// 4. Terracotta Roof Tiles (Imbrex & Tegula) — dust-worn clay, not neon brick
 function getRoofTileTexture() {
   return createProceduralTexture('roof_tile', (ctx, s) => {
-    ctx.fillStyle = '#b86038';
+    ctx.fillStyle = '#a06048';
     ctx.fillRect(0, 0, s, s);
 
     const tileW = 20;
@@ -278,6 +278,57 @@ function getWoodTexture() {
   });
 }
 
+// 8. Classical Column Fluting Bump Map
+export function getColumnFlutingBump(flutes = 20) {
+  const name = flutes === 20 ? 'column_fluting_bump' : `column_fluting_bump_${flutes}`;
+  const texture = createBumpTexture(name, (ctx, s) => {
+    ctx.fillStyle = '#808080';
+    ctx.fillRect(0, 0, s, s);
+
+    // Vertical stripes: each flute is a smooth sine-valley
+    for (let x = 0; x < s; x++) {
+      const angle = (x / s) * flutes * Math.PI * 2;
+      // High (ridge / arris) at edges, low (trough / valley) at center of flute
+      const val = Math.round(128 + 120 * Math.cos(angle));
+      ctx.fillStyle = `rgb(${val},${val},${val})`;
+      ctx.fillRect(x, 0, 1, s);
+    }
+  });
+  if (texture) {
+    texture.repeat.set(2, 1);
+  }
+  return texture;
+}
+
+/**
+ * Applies column fluting bump map to a column shaft mesh.
+ * Clones the material so fluting applies strictly to the shaft and does not mutate shared capitals/bases.
+ * @param {THREE.Mesh} mesh - Column shaft mesh
+ * @param {object} [options]
+ * @param {number} [options.flutes=20] - Number of flutes across circumference
+ */
+export function applyColumnFluting(mesh, { flutes = 20 } = {}) {
+  if (!mesh || !mesh.material) return;
+  const bump = getColumnFlutingBump(flutes);
+  if (Array.isArray(mesh.material)) {
+    mesh.material = mesh.material.map(m => m.clone());
+    for (const m of mesh.material) {
+      m.bumpMap = bump;
+      m.bumpScale = 0.05;
+      m.needsUpdate = true;
+    }
+  } else {
+    mesh.material = mesh.material.clone();
+    mesh.material.bumpMap = bump;
+    mesh.material.bumpScale = 0.05;
+    mesh.material.needsUpdate = true;
+  }
+  if (bump) {
+    // One full wrap of the shaft = exactly `flutes` grooves.
+    bump.repeat.set(1, 1);
+  }
+}
+
 /* ── Universal Material Definitions ──────────────────────── */
 
 export const MATERIAL_DEFINITIONS = {
@@ -288,16 +339,17 @@ export const MATERIAL_DEFINITIONS = {
   plaster:         { roughness: 0.70, metalness: 0.00, color: 0xe8e0d4 },
   plasterAged:     { roughness: 0.82, metalness: 0.00, color: 0xc8bca6 },
   terracotta:      { roughness: 0.74, metalness: 0.00, color: 0xba663e },
-  roofTile:        { roughness: 0.68, metalness: 0.00, color: 0xc46e42, bumpScale: 0.05 },
+  roofTile:        { roughness: 0.68, metalness: 0.00, color: 0xb08a70, bumpScale: 0.05 },
   bronze:          { roughness: 0.26, metalness: 0.88, color: 0xb58234 },
   bronzePatina:    { roughness: 0.52, metalness: 0.58, color: 0x628268 },
   verdigrisBronze: { roughness: 0.65, metalness: 0.38, color: 0x42735d },
   goldLeaf:        { roughness: 0.16, metalness: 0.94, color: 0xd8aa38 },
 
   // ──── Roman Imperial Palette ────
-  travertine:      { roughness: 0.58, metalness: 0.02, color: 0xdfd6c2, bumpScale: 0.04 },
-  romanBrick:      { roughness: 0.78, metalness: 0.00, color: 0xb55c3c, bumpScale: 0.06 },
-  scorchedBrick:   { roughness: 0.88, metalness: 0.00, color: 0x4a342e, bumpScale: 0.08 },
+  travertine:          { roughness: 0.58, metalness: 0.02, color: 0xdfd6c2, bumpScale: 0.04 },
+  romanBrick:          { roughness: 0.78, metalness: 0.00, color: 0xb55c3c, bumpScale: 0.06 },
+  romanBrickWeathered: { roughness: 0.86, metalness: 0.00, color: 0x8a5a44, bumpScale: 0.06 },
+  scorchedBrick:       { roughness: 0.88, metalness: 0.00, color: 0x4a342e, bumpScale: 0.08 },
   charredWood:     { roughness: 0.95, metalness: 0.00, color: 0x221f1c },
   rubbleStone:     { roughness: 0.92, metalness: 0.00, color: 0x9a8f82, bumpScale: 0.06 },
   overgrownGrass:  { roughness: 0.85, metalness: 0.00, color: 0x4c6b32 },
@@ -358,7 +410,7 @@ export function getMaterial(name, overrides = {}) {
     mat.map = getTravertineTexture();
     mat.bumpMap = getTravertineBump();
     mat.bumpScale = def.bumpScale || 0.04;
-  } else if (name === 'romanBrick') {
+  } else if (name === 'romanBrick' || name === 'romanBrickWeathered') {
     mat.map = getRomanBrickTexture();
     mat.bumpMap = getRomanBrickBump();
     mat.bumpScale = def.bumpScale || 0.05;
@@ -378,7 +430,10 @@ export function getMaterial(name, overrides = {}) {
   }
 
   if (mat.map) {
-    mat.map.repeat.set(4, 4);
+    // Large-ground planes strobe/moire at grazing angles when the texture
+    // repeats too densely. Roads/ground get a wider, calmer tile.
+    const repeat = (name === 'road' || name === 'ground') ? 2 : 4;
+    mat.map.repeat.set(repeat, repeat);
   }
 
   cache.set(cacheKey, mat);

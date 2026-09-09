@@ -124,8 +124,19 @@ jobs:
           cat /tmp/aizanoi-http.log; exit 1
       - name: Install production Nginx
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends nginx
+          # apt mirrors (dl.google.com et al.) intermittently serve stale index
+          # hashes on shared runners; a short retry clears transient Hash Sum
+          # mismatches without masking real failures.
+          for attempt in 1 2 3; do
+            if sudo apt-get update -qq; then break; fi
+            [ "$attempt" = 3 ] && exit 1
+            echo "apt-get update failed (attempt $attempt), retrying..."; sleep 15
+          done
+          for attempt in 1 2 3; do
+            if sudo apt-get install -y --no-install-recommends nginx; then break; fi
+            [ "$attempt" = 3 ] && exit 1
+            echo "apt-get install failed (attempt $attempt), retrying..."; sleep 15
+          done
       - name: Production-like Nginx policy gate
         env: { AIZANOI_NGINX_BASE_URL: 'http://127.0.0.1:4174' }
         run: |
@@ -193,8 +204,17 @@ jobs:
         run: node scripts/news/build-news.mjs
       - name: Install production Nginx
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends nginx
+          # Same transient-mirror retry as the validate job's Nginx install.
+          for attempt in 1 2 3; do
+            if sudo apt-get update -qq; then break; fi
+            [ "$attempt" = 3 ] && exit 1
+            echo "apt-get update failed (attempt $attempt), retrying..."; sleep 15
+          done
+          for attempt in 1 2 3; do
+            if sudo apt-get install -y --no-install-recommends nginx; then break; fi
+            [ "$attempt" = 3 ] && exit 1
+            echo "apt-get install failed (attempt $attempt), retrying..."; sleep 15
+          done
       - name: Enforce representative Lighthouse budgets
         env:
           AIZANOI_LIGHTHOUSE_DIR: 'artifacts/diagnostics/representative-lighthouse'

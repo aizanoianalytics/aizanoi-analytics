@@ -27,6 +27,8 @@ import { UISystem } from '../../shared/engine/ui.js';
 import { TourSystem } from '../../shared/engine/tour.js';
 import { IntroSequence } from '../../shared/engine/intro.js';
 import { GameLoop, PoseBlender, FrameMetrics, SIM_DT } from '../../shared/engine/loop.js';
+import { showFatalInitError, installLoadingWatchdog } from '../../shared/engine/loading-safety.js';
+import { installContextLossGuard } from '../../shared/engine/gl-recovery.js';
 import {
   buildAmphoraCluster,
   buildMarketStall,
@@ -254,6 +256,11 @@ async function init() {
   }
 
   // Start render loop
+  // Loading watchdog: if init stalls (throttled phone), surface a Try Again
+  // escape hatch instead of an eternal spinner.
+  installLoadingWatchdog({ ready: () => window.__WORLD_DEBUG__?.ready === true, worldName: 'Athens' });
+  installContextLossGuard(renderer);
+
   renderer.setAnimationLoop(render);
 }
 
@@ -518,6 +525,7 @@ function bindEvents() {
         intro.start();
         // Initialize audio on user gesture
         audio.init();
+        audio.installLifecycleResume();
         audio.setSoundset('mediterranean');
       } catch (err) {
         console.warn('enter sequence: non-fatal', err);
@@ -838,15 +846,7 @@ if (!gl) {
 } else {
   init().catch(err => {
     console.error('Athens initialization failed:', err);
-    const el = document.getElementById('loading-screen');
-    if (el) {
-      el.innerHTML = `
-        <div class="runtime-error">
-          <h2>Athens Initialization Error</h2>
-          <pre>${err.stack || err.message || err}</pre>
-        </div>
-      `;
-    }
+    showFatalInitError(err, 'Athens');
   });
 }
 

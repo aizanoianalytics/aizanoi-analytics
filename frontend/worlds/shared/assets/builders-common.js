@@ -8,21 +8,52 @@
  */
 
 import * as THREE from '../vendor/three.module.js';
-import { getMaterial } from './materials.js';
+import { getMaterial, applyColumnFluting } from './materials.js';
 
 /* ── 1. Classical Columns & Capitals ──────────────────────── */
 
 /**
  * Creates a Doric column (no base, fluted shaft with entasis, echinus & abacus capital).
  */
+
+/**
+ * Displaces a cylinder shaft's vertices into true flutes (radial ripple).
+ * Geometry-level fluting renders identically on every GPU — bump maps were
+ * invisible at SwiftShader/mobile precision. flutes=20 Doric, 24 Ionic/Corinthian.
+ * @param {THREE.CylinderGeometry} geo - shaft geometry (mutated in place)
+ * @param {number} flutes
+ */
+function fluteShaftGeometry(geo, flutes) {
+  const pos = geo.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i);
+    const z = pos.getZ(i);
+    const r = Math.sqrt(x * x + z * z);
+    if (r < 1e-4) continue;
+    const theta = Math.atan2(z, x);
+    // Flute profile: semicircular valleys meeting in sharp arrises (the real
+    // Doric section). Power curve steepens the valley walls so raking light
+    // reads the grooves even in flat/software-lit renderers.
+    const phase = (theta * flutes) % (Math.PI * 2);
+    const valley = Math.pow(Math.abs(Math.sin(phase / 2)), 1.4);
+    const ripple = 1 - 0.09 * valley;
+    pos.setX(i, x * ripple);
+    pos.setZ(i, z * ripple);
+  }
+  pos.needsUpdate = true;
+  geo.computeVertexNormals();
+}
+
 export function createDoricColumn(height, radius, material = 'marble') {
   const group = new THREE.Group();
   const mat = getMaterial(material);
 
   // Fluted shaft (tapered). 24 radial segments = the real 20-flute Doric drum
   // read at silhouette distance; the old 16-segment tube looked like a pipe.
-  const shaftGeo = new THREE.CylinderGeometry(radius * 0.82, radius, height * 0.90, 24, 3);
+  const shaftGeo = new THREE.CylinderGeometry(radius * 0.82, radius, height * 0.90, 56, 3);
+  fluteShaftGeometry(shaftGeo, 20);
   const shaft = new THREE.Mesh(shaftGeo, mat);
+  applyColumnFluting(shaft, { flutes: 20 });
   shaft.position.y = height * 0.45;
   shaft.castShadow = true;
   shaft.receiveShadow = true;
@@ -56,8 +87,10 @@ export function createIonicColumn(height, radius, material = 'marble') {
   group.add(base);
 
   // Shaft
-  const shaftGeo = new THREE.CylinderGeometry(radius * 0.85, radius, height * 0.88, 24, 3);
+  const shaftGeo = new THREE.CylinderGeometry(radius * 0.85, radius, height * 0.88, 56, 3);
+  fluteShaftGeometry(shaftGeo, 24);
   const shaft = new THREE.Mesh(shaftGeo, mat);
+  applyColumnFluting(shaft, { flutes: 24 });
   shaft.position.y = height * 0.05 + height * 0.44;
   shaft.castShadow = true;
   group.add(shaft);
@@ -85,8 +118,10 @@ export function createCorinthianColumn(height, radius, material = 'marble') {
   group.add(base);
 
   // Slender shaft
-  const shaftGeo = new THREE.CylinderGeometry(radius * 0.86, radius, height * 0.84, 24, 3);
+  const shaftGeo = new THREE.CylinderGeometry(radius * 0.86, radius, height * 0.84, 56, 3);
+  fluteShaftGeometry(shaftGeo, 24);
   const shaft = new THREE.Mesh(shaftGeo, mat);
+  applyColumnFluting(shaft, { flutes: 24 });
   shaft.position.y = height * 0.06 + height * 0.42;
   shaft.castShadow = true;
   group.add(shaft);
