@@ -13,7 +13,6 @@ Start at the repository root:
 - [`CONTENT_POLICY.md`](../CONTENT_POLICY.md) — source, attribution and publishing rules;
 - [`SECURITY.md`](../SECURITY.md) — security model and vulnerability reporting;
 - [`CONTRIBUTING.md`](../CONTRIBUTING.md) — contribution and historical-methodology rules;
-- [`ROADMAP.md`](../ROADMAP.md) — product direction;
 - [`CHANGELOG.md`](../CHANGELOG.md) — major public milestones.
 
 ## Supporting documentation
@@ -22,17 +21,6 @@ Start at the repository root:
 - [`ACCESSIBILITY.md`](ACCESSIBILITY.md) — automated and manual accessibility release checks;
 - [`HERMES_OPERATIONS.md`](HERMES_OPERATIONS.md) — private operator/deployment contract for Hermes;
 - [`OPERATIONS.md`](OPERATIONS.md) — provider/server follow-up that cannot be truthfully completed by source changes alone.
-
-## Historical research
-
-Research material lives under [`../research/`](../research/) so evidence work remains separate from product documentation and close to the Historical World implementations.
-
-Current research areas include:
-
-- [`../research/rome_410_476/`](../research/rome_410_476/) — Late Antique Rome research and maintained research brief;
-- [`../research/athens_450_430/`](../research/athens_450_430/) — Classical Athens research and verified source material.
-
-World-facing runtime and evidence data live under [`../frontend/worlds/`](../frontend/worlds/); Rome and Athens research briefs remain under `../research/` as independent evidence material.
 
 ## Documentation rule
 

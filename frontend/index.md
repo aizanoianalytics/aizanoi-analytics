@@ -31,7 +31,7 @@ Historical Worlds now has one canonical static runtime family:
 - `worlds/athens-450-430/` — Athens · 450–430 BCE;
 - `worlds/iga-airport/` — Istanbul Airport / İGA present-day spatial study.
 
-`historic-world/`, `ancient-cities/` and `iga/` are compatibility redirects only. The retired `ancient-world/` shared runtime is not a production owner. Research and source methodology remain under `../research/`, separate from browser runtime code.
+`historic-world/`, `ancient-cities/` and `iga/` are compatibility redirects only. The retired `ancient-world/` shared runtime is not a production owner.
 
 ## Boundary
 

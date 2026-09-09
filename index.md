@@ -17,7 +17,6 @@ This file is the shortest path into the repository. It is a **router, not a full
 - Analytics source/data work outside the production frontend → [`analytics/index.md`](analytics/index.md)
 - Build/publishing/maintenance scripts → [`scripts/index.md`](scripts/index.md)
 - Automated regression, browser, security or visual validation → [`tests/index.md`](tests/index.md)
-- Historical/source research → [`research/index.md`](research/index.md)
 - Deployment and sanitized infrastructure references → [`infra/index.md`](infra/index.md)
 - Maintained documentation and operator runbooks → [`docs/index.md`](docs/index.md)
 - GitHub Actions and repository automation → `.github/workflows/`
@@ -33,7 +32,6 @@ Read these only when relevant to the change:
 - UI/interaction rules → [`DESIGN.md`](DESIGN.md)
 - Publishing/source rules → [`CONTENT_POLICY.md`](CONTENT_POLICY.md)
 - Security boundary → [`SECURITY.md`](SECURITY.md)
-- Product direction → [`ROADMAP.md`](ROADMAP.md)
 
 ## Navigation principle
 

@@ -49,7 +49,6 @@ Nginx serves static HTML/CSS/JavaScript/JSON/assets. There is no visitor-facing 
 │   └── iga/                   # legacy redirect only
 ├── content/news/              # Git-tracked News source records/templates
 ├── scripts/                   # deterministic generators and deployment helpers
-├── research/                  # Historical research/source material
 ├── tests/                     # regression/browser/security/visual QA
 ├── docs/                      # maintained documentation/runbooks
 └── infra/                     # sanitized deployment references
