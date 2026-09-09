@@ -4,7 +4,7 @@ Aizanoi Analytics combines media products, software, historical research, an ada
 
 ## Before you start
 
-Read [README.md](README.md), [PRODUCT.md](PRODUCT.md), [ARCHITECTURE.md](ARCHITECTURE.md), [SECURITY.md](SECURITY.md) and [ROADMAP.md](ROADMAP.md). Historical-world changes must also inspect the relevant city research and methodology material.
+Read [README.md](README.md), [PRODUCT.md](PRODUCT.md), [ARCHITECTURE.md](ARCHITECTURE.md) and [SECURITY.md](SECURITY.md).
 
 ## Project principles
 
@@ -22,7 +22,7 @@ AizanoiOS has one public catalog. Test desktop windows, tablet focus behavior, m
 
 ### Extend shared world systems
 
-Reusable movement, collision, input, evidence UI, environment and procedural asset behavior belongs in `frontend/worlds/shared/`. World-local data and research stay with the world package and under `research/` where maintained.
+Reusable movement, collision, input, evidence UI, environment and procedural asset behavior belongs in `frontend/worlds/shared/`. World-local data stays with the world package.
 
 ### Keep retired scope retired
 

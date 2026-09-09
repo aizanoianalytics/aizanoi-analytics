@@ -21,7 +21,7 @@ function assertLocalLinksResolve(file){
 
 test('root index routes every canonical top-level work area',()=>{
   const source=read('index.md');
-  for(const area of ['frontend','content','analytics','scripts','tests','research','infra','docs']){
+  for(const area of ['frontend','content','analytics','scripts','tests','infra','docs']){
     assert.ok(source.includes(`](${area}/index.md)`),`root index must route ${area}`);
   }
   assert.ok(source.includes('.github/workflows/'),'root index must route repository automation');
@@ -39,8 +39,6 @@ test('major routers expose current independently maintained subsystems',()=>{
   assert.ok(read('frontend/index.md').includes('web-editor-preview/'));
   assert.ok(read('frontend/index.md').includes('Historical Worlds naming map'));
   assert.ok(read('analytics/index.md').includes('dashboards/hr-analytics-full-set/index.md'));
-  assert.ok(read('research/index.md').includes('athens_450_430/'));
-  assert.ok(read('research/index.md').includes('rome_410_476/'));
   assert.ok(read('infra/index.md').includes('nginx/'));
   const docs=read('docs/index.md');
   for(const doc of ['README.md','HERMES_OPERATIONS.md','OPERATIONS.md','ACCESSIBILITY.md','FIELD_SYSTEM.md']){
@@ -58,7 +56,6 @@ test('canonical navigation indexes contain no broken relative Markdown links',as
     'analytics/index.md',
     'analytics/dashboards/hr-analytics-full-set/index.md',
     'content/index.md',
-    'research/index.md',
     'scripts/index.md',
     'scripts/modules/index.md',
     'tests/index.md',

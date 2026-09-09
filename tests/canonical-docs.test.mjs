@@ -13,7 +13,6 @@ const docs = {
   design: read('DESIGN.md'),
   architecture: read('ARCHITECTURE.md'),
   content: read('CONTENT_POLICY.md'),
-  roadmap: read('ROADMAP.md'),
   changelog: read('CHANGELOG.md'),
   docsReadme: read('docs/README.md'),
   operations: read('docs/OPERATIONS.md'),
@@ -22,7 +21,7 @@ const docs = {
 
 const currentBrandDocs = [
   docs.product, docs.agents, docs.readme, docs.design, docs.architecture, docs.content,
-  docs.roadmap, docs.field, docs.contributing, docs.security, docs.hermes
+  docs.field, docs.contributing, docs.security, docs.hermes
 ];
 
 test('current AizanoiOS docs describe the eight-app public platform without retired Workbench surfaces', () => {
