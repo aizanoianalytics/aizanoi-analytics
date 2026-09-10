@@ -19,3 +19,7 @@ The private writer is `scripts/markets/update_markets.py`. This directory owns n
 
 - `tests/aizanoi-markets.test.mjs`
 - `tests/markets-pipeline.test.mjs`
+
+## AizanoiOS app
+
+`js/v3/apps/markets/` is the AizanoiOS desktop module for this product. It renders its own market view from the same public data URLs and links back to this standalone page; it never imports this directory's scripts and this page never imports the module.
