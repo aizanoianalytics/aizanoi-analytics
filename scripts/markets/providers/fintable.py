@@ -97,6 +97,14 @@ def _parse_iso_to_unix(iso_str: str) -> int:
     return int(parsed.timestamp())
 
 
+class FintableNotFound(Exception):
+    """Fintable returned the documented not_found error for a window.
+
+    This is an authoritative "no data existed for the ticker in this range"
+    answer (pre-IPO periods, post-spinoff gaps), not a transport failure.
+    """
+
+
 class FintableProvider(BaseProvider):
     """Fintable public market data adapter for US equities."""
 
@@ -136,6 +144,18 @@ class FintableProvider(BaseProvider):
                     except (TypeError, ValueError):
                         retry_after = 5.0
                     time.sleep(retry_after)
+                if exc.code == 404:
+                    # The documented not_found envelope rides on HTTP 404.
+                    # Surface it as the typed authoritative-empty error so the
+                    # window loop can skip pre-IPO/range gaps without failing
+                    # the whole history request.
+                    try:
+                        body = exc.read().decode("utf-8", errors="replace")
+                        parsed = json.loads(body)
+                        err_type = (parsed.get("error") or {}).get("type") if isinstance(parsed, dict) else None
+                    except Exception:
+                        err_type = "not_found"
+                    raise FintableNotFound(f"Fintable HTTP 404: {err_type or 'not_found'}") from exc
                 raise
             except urllib.error.URLError as exc:
                 raise ConnectionError(f"Fintable network error: {exc.reason}") from exc
@@ -206,6 +226,14 @@ class FintableProvider(BaseProvider):
             attempted += 1
             try:
                 window_bars = self._fetch_window(symbol, timeframe, cursor, window_end_date)
+            except FintableNotFound as not_found:
+                # Authoritative empty window: no data existed in this range.
+                # Not a failure — the bootstrap continues into later windows
+                # where the instrument starts trading.
+                completed += 1
+                last_success_at = dt.datetime.now(dt.timezone.utc)
+                cursor = window_end_date + dt.timedelta(days=1)
+                continue
             except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError, ConnectionError) as exc:
                 msg = f"Fintable window {cursor.isoformat()}..{window_end_date.isoformat()} failed: {exc}"
                 errors.append(msg)
@@ -342,10 +370,11 @@ class FintableProvider(BaseProvider):
         if isinstance(err, dict):
             err_type = err.get("type") or "error"
             err_msg = err.get("message") or "unknown error"
-            # 404-style not_found surfaces as an explicit failure; callers
-            # who want to treat "no history" as success-empty should check
-            # the status code separately. We still raise so the window is
-            # not silently treated as success-with-empty-bars.
+            if err_type == "not_found":
+                # Documented "no price history for that ticker and range" —
+                # the instrument simply had no listed data in this window
+                # (pre-IPO, later spinoff, etc.). Empty window, not an error.
+                raise FintableNotFound(f"Fintable not_found: {err_msg}")
             raise ValueError(f"Fintable {err_type}: {err_msg}")
 
         data_block = payload.get("data")

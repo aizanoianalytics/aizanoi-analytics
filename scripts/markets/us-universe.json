@@ -844,7 +844,7 @@
     "name": "Brown Forman Inc Class B Common Stock",
     "exchange": "NYSE",
     "slug": "bf-b",
-    "providerSymbol": "BF-B",
+    "providerSymbol": "BF.B",
     "yahooSymbol": "BF-B",
     "memberships": [
       "sp500"
@@ -980,7 +980,7 @@
     "name": "Berkshire Hathaway Inc. New Common Stock",
     "exchange": "NYSE",
     "slug": "brk-b",
-    "providerSymbol": "BRK-B",
+    "providerSymbol": "BRK.B",
     "yahooSymbol": "BRK-B",
     "memberships": [
       "sp500"

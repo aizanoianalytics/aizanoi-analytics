@@ -1,13 +1,10 @@
 {
   "_meta": {
     "excludes": 0,
-    "overrides": 2,
-    "note": "Focused-universe-scoped symbol corrections; flat yahoo-era format retained pending schema-v3 provider-aware conversion",
+    "overrides": 0,
+    "note": "Fintable accepts Nasdaq Trader dot form (BRK.B) directly; dash-form overrides no longer needed",
     "lastReviewed": "2026-09-10"
   },
   "excludes": [],
-  "overrides": {
-    "BF.B": "BF-B",
-    "BRK.B": "BRK-B"
-  }
+  "overrides": {}
 }

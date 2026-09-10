@@ -262,29 +262,24 @@ class FintableProviderContractTests(unittest.TestCase):
         self.assertEqual(result.completed_windows, call_count["n"])
 
     # ------------------------------------------------------------------ 3
-    def test_history_not_found_returns_failure(self) -> None:
-        """HTTP 404 with documented error body yields FAILURE — no silent partial."""
-        self._raise_http_error(
-            code=404,
-            body={
-                "error": {
-                    "type": "not_found",
-                    "message": "No price history for that ticker and range.",
-                }
-            },
-        )
+    def test_history_not_found_all_windows_yields_empty_valid(self):
+        """A fully not_found range is an authoritative empty result.
 
-        start = int(dt.datetime(2024, 1, 1, tzinfo=dt.timezone.utc).timestamp())
-        end = int(dt.datetime(2024, 1, 31, tzinfo=dt.timezone.utc).timestamp())
-        result = self.provider.fetch_history("ZZZZ", start, end)
-
-        self.assertEqual(result.status, "FAILURE")
+        The provider cannot distinguish "bogus symbol" from "pre-IPO range"
+        through the 404 envelope alone; the pipeline treats an all-empty
+        result as a failed instrument (no shard published) via update_rows,
+        while a partially-empty range (pre-IPO gap) legitimately succeeds.
+        """
+        self._raise_http_error(404, {"error": {"type": "not_found", "message": "No price history for that ticker and range."}})
+        import time as _time
+        now = int(_time.time())
+        result = self.provider.fetch_history("AAPL", now - 86400 * 5, now, "1d")
+        self.assertEqual(result.status, "SUCCESS_EMPTY_VALID")
         self.assertEqual(result.bars, [])
-        self.assertIsNotNone(result.error)
-        self.assertTrue("404" in result.error or "not_found" in result.error)
-        self.assertEqual(result.provider_symbol, "ZZZZ")
+        # All attempted windows completed (skipped), none failed.
+        self.assertEqual(result.attempted_windows, result.completed_windows)
+        self.assertGreaterEqual(result.attempted_windows, 1)
 
-    # ------------------------------------------------------------------ 4
     def test_history_success_empty_valid(self) -> None:
         """Empty bars list with no error yields SUCCESS_EMPTY_VALID."""
         self._respond_with(self._window_payload("AAPL", []))

@@ -572,7 +572,7 @@ def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], compl
     def _market_health(m: str, m_failed: list[str]) -> dict[str, Any]:
         rows = markets.get(m, [])
         expected = len(rows) + len(m_failed)
-        stale_threshold = 7 * 86400 if m == "us" else 36 * 3600  # us: 7d; crypto: 36h
+        stale_threshold = 7 * 86400 if m == "us" else 49 * 3600  # us: 7d; crypto: 49h (closed daily bar may legitimately be ~48h old)
         now_ts = time.time()
         published = len(rows)
         stale = 0
@@ -940,7 +940,7 @@ def health_check(root: Path, completed_at: str) -> int:
         return 2
     now_ts = time.time()
     unhealthy: list[str] = []
-    for market, threshold in (("us", 7 * 86400), ("crypto", 36 * 3600)):
+    for market, threshold in (("us", 7 * 86400), ("crypto", 49 * 3600)):
         rows = [row for row in instruments if row.get("market") == market]
         for row in rows:
             shard = read_json(root / "history" / market / f"{row.get('slug')}.json", None)
