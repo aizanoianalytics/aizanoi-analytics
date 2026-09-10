@@ -60,7 +60,7 @@ export function DeviceProfile(navigatorRef = typeof navigator !== 'undefined' ? 
 export class AdaptiveResolution {
   /**
    * @param {object} renderer - duck-typed { setPixelRatio(ratio) }
-   * @param {object} metrics  - FrameMetrics instance (summary() → {p95Ms,...})
+   * @param {object} metrics  - FrameMetrics instance (summary() → {p95,...})
    * @param {object} [opts]
    * @param {number} [opts.budgetMs]      - target p95 frame time (16.7 = 60fps)
    * @param {number} [opts.cooldownMs]    - minimum interval between adjustments
@@ -72,9 +72,11 @@ export class AdaptiveResolution {
     this.metrics = metrics;
     this.budgetMs = opts.budgetMs ?? 22;      // ~45fps budget; mobile-first
     this.cooldownMs = opts.cooldownMs ?? 2500;
+    this.sampleIntervalMs = opts.sampleIntervalMs ?? 500;
     this.minRatio = opts.minRatio ?? 0.6;
     this.maxRatio = opts.maxRatio ?? Math.max(1, renderer.getPixelRatio?.() ?? 1);
     this._lastChange = -Infinity;
+    this._lastPoll = -Infinity;
     this._overBudgetStreak = 0;
     this._underBudgetStreak = 0;
     this.adjustments = 0;
@@ -86,19 +88,21 @@ export class AdaptiveResolution {
   }
 
   /**
-   * Poll once per display frame (cheap); the governor itself only acts on the
-   * cooldown and only after seeing the budget breached/held for consecutive
-   * polls, so a single GC pause or a tab-switch spike does not pump resolution.
+   * Poll once per display frame (constant-time); metrics are only summarized on a
+   * bounded sampling interval, and resolution only changes after consecutive
+   * sampled breaches plus the cooldown. A GC pause cannot pump resolution, and
+   * sorting the metrics ring never becomes per-frame work.
    */
-  update() {
+  update(now = typeof performance !== 'undefined' ? performance.now() : Date.now()) {
+    if (now - this._lastPoll < this.sampleIntervalMs) return;
+    this._lastPoll = now;
     const summary = this.metrics?.summary?.();
-    if (!summary || !(summary.p95Ms > 0)) return;
-    const now = typeof performance !== 'undefined' ? performance.now() : Date.now();
+    if (!summary || !(summary.p95 > 0)) return;
 
-    if (summary.p95Ms > this.budgetMs) {
+    if (summary.p95 > this.budgetMs) {
       this._overBudgetStreak += 1;
       this._underBudgetStreak = 0;
-    } else if (summary.p95Ms < this.budgetMs * 0.55) {
+    } else if (summary.p95 < this.budgetMs * 0.55) {
       this._underBudgetStreak += 1;
       this._overBudgetStreak = 0;
     } else {

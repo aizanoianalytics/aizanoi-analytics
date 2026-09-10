@@ -28,10 +28,16 @@ async function naturalEntry(browser, ctxOpts, spec, label, { enterTimes = 1, cdp
     out.bootMs = Date.now() - t0;
     await page.waitForSelector('#btn-enter', { state: 'visible', timeout: 30000 });
     for (let i = 0; i < enterTimes; i++) {
-      await page.locator('#btn-enter').click({ force: false, timeout: 10000 }).catch(async (e) => {
-        out.clickFallback = String(e).split('\n')[0].slice(0, 120);
-        await page.locator('#btn-enter').click({ force: true, timeout: 10000 });
-      });
+      if (i === 0) {
+        await page.locator('#btn-enter').click({ force: false, timeout: 10000 }).catch(async (e) => {
+          out.clickFallback = String(e).split('\n')[0].slice(0, 120);
+          await page.locator('#btn-enter').click({ force: true, timeout: 10000 });
+        });
+      } else {
+        // Model impatient repeated activation without asking Playwright to click
+        // a button that the first activation intentionally hid.
+        await page.evaluate(() => document.getElementById('btn-enter')?.click());
+      }
       await page.waitForTimeout(i === 0 ? 250 : 60);
     }
     await page.waitForFunction(() => document.documentElement.dataset.worldReady === 'true', null, { timeout: 30000 });
@@ -87,4 +93,6 @@ const results = [];
   await browser.close();
 }
 for (const r of results) console.log(JSON.stringify(r));
-console.log('battery v2 done');
+const failures = results.filter((result) => !result.passed);
+console.log(`battery v2 done: ${results.length - failures.length}/${results.length} passed`);
+if (failures.length) process.exitCode = 1;

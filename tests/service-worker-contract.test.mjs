@@ -34,12 +34,13 @@ test('service worker upgrades wait rather than forcing new code over open Aizano
   assert.match(sw, /self\.clients\.claim\(\)/);
 });
 
-test('service worker caches offline navigations and bounds runtime entries', () => {
+test('service worker caches complete world graphs and keeps a world-safe offline fallback', () => {
   assert.match(sw, /async function cacheNavigation\(request,\s*response\)/);
-  assert.match(sw, /MAX_RUNTIME_ENTRIES\s*=\s*24/);
+  assert.match(sw, /MAX_RUNTIME_ENTRIES\s*=\s*128/);
   assert.match(sw, /async function pruneRuntimeCache/);
   assert.match(sw, /await\s+cache\.delete\(key\)/);
-  assert.match(sw, /cached\s*\|\|\s*caches\.match\('\/'\)/);
+  assert.match(sw, /url\.pathname\.startsWith\('\/worlds\/'\)/);
+  assert.match(sw, /caches\.match\('\/worlds\/'\)/);
 });
 
 test('CI runs real Chromium service-worker lifecycle coverage', () => {

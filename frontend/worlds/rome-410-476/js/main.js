@@ -25,6 +25,7 @@ import { IntroSequence } from '../../shared/engine/intro.js';
 import { GameLoop, PoseBlender, FrameMetrics, SIM_DT } from '../../shared/engine/loop.js';
 import { showFatalInitError, installLoadingWatchdog } from '../../shared/engine/loading-safety.js';
 import { installContextLossGuard } from '../../shared/engine/gl-recovery.js';
+import { DeviceProfile, AdaptiveResolution } from '../../shared/engine/quality.js';
 import {
   buildAmphoraCluster,
   buildMarketStall,
@@ -60,7 +61,7 @@ let isRunning = false;
 // NOT in camera.position. The renderer blends between the previous and current
 // sim state each display frame (PoseBlender); writing a blended position back
 // into the sim would make the player drift at fractional speed.
-let simPos, pose, frameMetrics, gameLoop;
+let simPos, pose, frameMetrics, gameLoop, resolutionGovernor;
 
 async function init() {
   const loadingEl = document.getElementById('loading-screen');
@@ -76,17 +77,18 @@ async function init() {
 
   // 1. Renderer
   const canvas = document.getElementById('viewport');
+  const profile = DeviceProfile();
   renderer = new THREE.WebGLRenderer({
     canvas,
-    antialias: true,
+    antialias: profile.antialias,
     alpha: false,
     logarithmicDepthBuffer: true,
     powerPreference: 'high-performance',
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(profile.startPixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = profile.tier === 'low' ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -100,6 +102,10 @@ async function init() {
   simPos = new THREE.Vector3(SPAWN.x, PLAYER_HEIGHT, SPAWN.z);
   pose = new PoseBlender(simPos);
   frameMetrics = new FrameMetrics();
+  resolutionGovernor = new AdaptiveResolution(renderer, frameMetrics, {
+    minRatio: profile.tier === 'low' ? 0.6 : 0.75,
+    maxRatio: profile.startPixelRatio,
+  });
 
   setProgress(20, 'Shaping the Tiber valley and terrain...');
 
@@ -151,7 +157,10 @@ async function init() {
   vegetation.populateCity(REGIONS, BUILDINGS, STREETS);
 
   // 9. Environment (Sky, Dusk Atmosphere, Torches)
-  environment = new Environment(scene, renderer, { startTime: 0.68, cycleSpeed: 0.005, mood: 'rome' }); // Late afternoon Roman golden hour
+  environment = new Environment(scene, renderer, {
+    startTime: 0.68, cycleSpeed: 0.005, mood: 'rome',
+    shadowMapSize: profile.shadowMapSize, shadowRadius: profile.shadowRadius,
+  }); // Late afternoon Roman golden hour
 
   // 10. Particles & Audio
   particles = new ParticleSystem(scene);
@@ -764,6 +773,7 @@ function render(now) {
     });
   }
   gameLoop.frame(now);
+  if (resolutionGovernor) resolutionGovernor.update();
 }
 
 init().catch(err => { console.error('Rome init failed:', err); showFatalInitError(err, 'Rome'); });

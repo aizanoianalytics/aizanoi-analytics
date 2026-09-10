@@ -175,6 +175,8 @@ export class Environment {
     this.renderer = renderer;
     this.timeOfDay = options.startTime ?? 0.42; // default: late morning
     this.cycleSpeed = options.cycleSpeed ?? 0.0; // 0 = static, 0.01 = slow cycle
+    this.shadowMapSize = options.shadowMapSize ?? 2048;
+    this.shadowRadius = options.shadowRadius ?? 2;
     this.paused = false;
     // Per-world tonal identity (falls back to neutral multipliers).
     this.mood = WORLD_MOODS[options.mood] || {
@@ -224,7 +226,8 @@ export class Environment {
     // Directional sunlight with shadow map
     this.sunLight = new THREE.DirectionalLight(0xffffff, 1.0);
     this.sunLight.castShadow = true;
-    this.sunLight.shadow.mapSize.set(2048, 2048);
+    this.sunLight.shadow.mapSize.set(this.shadowMapSize, this.shadowMapSize);
+    this.sunLight.shadow.radius = this.shadowRadius;
     this.sunLight.shadow.camera.near = 1;
     this.sunLight.shadow.camera.far = 800;
     // Tight ortho volume around the player: a 300m frustum over 2048px maps

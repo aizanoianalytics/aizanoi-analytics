@@ -29,6 +29,7 @@ import { IntroSequence } from '../../shared/engine/intro.js';
 import { GameLoop, PoseBlender, FrameMetrics, SIM_DT } from '../../shared/engine/loop.js';
 import { showFatalInitError, installLoadingWatchdog } from '../../shared/engine/loading-safety.js';
 import { installContextLossGuard } from '../../shared/engine/gl-recovery.js';
+import { DeviceProfile, AdaptiveResolution } from '../../shared/engine/quality.js';
 import {
   buildAmphoraCluster,
   buildMarketStall,
@@ -63,7 +64,7 @@ let isRunning = false;
 // NOT in camera.position. The renderer blends between the previous and current
 // sim state each display frame (PoseBlender); writing a blended position back
 // into the sim would make the player drift at fractional speed.
-let simPos, pose, frameMetrics, gameLoop;
+let simPos, pose, frameMetrics, gameLoop, resolutionGovernor;
 
 /* ── Initialization ───────────────────────────────────────── */
 
@@ -83,17 +84,18 @@ async function init() {
   /* ── 1. Renderer ──────────────────────────────────────── */
 
   const canvas = document.getElementById('viewport');
+  const profile = DeviceProfile();
   renderer = new THREE.WebGLRenderer({
     canvas,
-    antialias: true,
+    antialias: profile.antialias,
     alpha: false,
     logarithmicDepthBuffer: true,
     powerPreference: 'high-performance',
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(profile.startPixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = profile.tier === 'low' ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -110,6 +112,10 @@ async function init() {
   simPos = new THREE.Vector3(SPAWN.x, PLAYER_HEIGHT, SPAWN.z);
   pose = new PoseBlender(simPos);
   frameMetrics = new FrameMetrics();
+  resolutionGovernor = new AdaptiveResolution(renderer, frameMetrics, {
+    minRatio: profile.tier === 'low' ? 0.6 : 0.75,
+    maxRatio: profile.startPixelRatio,
+  });
 
   setProgress(10, 'Shaping the Attic terrain...');
 
@@ -169,7 +175,10 @@ async function init() {
 
   /* ── 7. Environment (sky, lighting, fog) ──────────────── */
 
-  environment = new Environment(scene, renderer, { startTime: 0.42, mood: 'athens' });
+  environment = new Environment(scene, renderer, {
+    startTime: 0.42, mood: 'athens',
+    shadowMapSize: profile.shadowMapSize, shadowRadius: profile.shadowRadius,
+  });
 
   setProgress(65, 'Adding water features...');
 
@@ -825,6 +834,7 @@ function render(now) {
     });
   }
   gameLoop.frame(now);
+  if (resolutionGovernor) resolutionGovernor.update();
 }
 
 /* ── Bootstrap ────────────────────────────────────────────── */

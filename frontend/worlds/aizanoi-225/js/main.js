@@ -73,27 +73,21 @@ async function init() {
 
   // 1. Renderer
   const canvas = document.getElementById('viewport');
+  const profile = DeviceProfile();
   renderer = new THREE.WebGLRenderer({
     canvas,
-    antialias: true,
+    antialias: profile.antialias,
     alpha: false,
     logarithmicDepthBuffer: true,
     powerPreference: 'high-performance',
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(profile.startPixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = profile.tier === 'low' ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.1;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-  // Device tier: low-end phones boot lighter (fewer shadow texels, DPR cap)
-  // instead of fighting through a 2048px PCFSoft pass at 6 fps.
-  const profile = DeviceProfile();
-  renderer.shadowMap.type = profile.tier === 'low' ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap;
-  renderer.setPixelRatio(profile.startPixelRatio);
-  const lowTier = profile.tier === 'low';
 
   // 2. Scene & Camera
   scene = new THREE.Scene();
@@ -162,7 +156,10 @@ async function init() {
   vegetation.populateCity(REGIONS, BUILDINGS, STREETS);
 
   // 9. Environment
-  environment = new Environment(scene, renderer, { startTime: 0.45, cycleSpeed: 0.005, mood: 'aizanoi' });
+  environment = new Environment(scene, renderer, {
+    startTime: 0.45, cycleSpeed: 0.005, mood: 'aizanoi',
+    shadowMapSize: profile.shadowMapSize, shadowRadius: profile.shadowRadius,
+  });
 
   // 10. Particles & Audio
   particles = new ParticleSystem(scene);

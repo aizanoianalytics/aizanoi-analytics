@@ -72,9 +72,13 @@ export class Controls {
   /* ── Device detection ─────────────────────────────────── */
 
   _detectMobile() {
-    const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const ua = navigator.userAgent || '';
+    const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+    // iPadOS 13+ identifies as Macintosh in desktop-class Safari. Width-based
+    // detection misses landscape iPads, so use Apple's multi-touch signature.
+    const isIPadOS = /Macintosh/i.test(ua) && navigator.maxTouchPoints > 1;
     const isSmallTouch = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0)) && window.innerWidth < 768;
-    return isMobileUA || isSmallTouch;
+    return isMobileUA || isIPadOS || isSmallTouch;
   }
 
   /* ═══════════════════════════════════════════════════════
@@ -267,8 +271,10 @@ export class Controls {
     this._joystickCurrent.y = touch.clientY;
 
     if (this._movePad) {
-      this._movePad.style.left = `${touch.clientX}px`;
-      this._movePad.style.top = `${touch.clientY}px`;
+      const halfWidth = (this._movePad.offsetWidth || 120) / 2;
+      const halfHeight = (this._movePad.offsetHeight || 120) / 2;
+      this._movePad.style.left = `${touch.clientX - halfWidth}px`;
+      this._movePad.style.top = `${touch.clientY - halfHeight}px`;
       this._movePad.classList.add('active');
     }
   }
@@ -292,7 +298,7 @@ export class Controls {
       const knobY = Math.sin(angle) * clampDist;
 
       if (this._moveKnob) {
-        this._moveKnob.style.transform = `translate(${knobX}px, ${knobY}px)`;
+        this._moveKnob.style.transform = `translate(calc(-50% + ${knobX}px), calc(-50% + ${knobY}px))`;
       }
     }
   }
@@ -301,8 +307,12 @@ export class Controls {
     for (const touch of e.changedTouches) {
       if (touch.identifier !== this._moveTouchId) continue;
       this._moveTouchId = null;
-      if (this._moveKnob) this._moveKnob.style.transform = 'translate(0, 0)';
-      if (this._movePad) this._movePad.classList.remove('active');
+      if (this._moveKnob) this._moveKnob.style.transform = '';
+      if (this._movePad) {
+        this._movePad.style.left = '';
+        this._movePad.style.top = '';
+        this._movePad.classList.remove('active');
+      }
     }
   }
 
