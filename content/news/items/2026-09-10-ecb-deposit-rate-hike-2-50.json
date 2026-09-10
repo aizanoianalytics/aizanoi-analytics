@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-10-ecb-deposit-rate-hike-2-50",
+  "title": "ECB poised to lift deposit rate to 2.50% in Berlin as Iran-driven energy shock keeps inflation above target",
+  "summary": "The European Central Bank's Governing Council is expected to raise its three key policy rates by 25 basis points at its Berlin meeting on Thursday, lifting the deposit facility rate from 2.25% to 2.50% as eurozone inflation stays anchored above target by an Iran-driven energy shock. The decision, the bank's second hike since the conflict began, will be accompanied by updated staff macroeconomic projections that have lifted headline inflation forecasts higher for 2026 and 2027.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-09-10T05:30:00+03:00",
+  "updatedAt": "2026-09-10T05:30:00+03:00",
+  "retrievedAt": "2026-09-10T05:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ecb", "rate-decision", "eurozone", "inflation"],
+  "sources": [
+    {
+      "publisher": "BusinessWorld",
+      "url": "https://bworldonline.com/world/2026/09/10/775947/ecb-set-to-hike-as-iran-war-fuels-fresh-inflation-fears/",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    },
+    {
+      "publisher": "Euronews",
+      "url": "https://www.euronews.com/business/2026/09/09/a-european-central-bank-rate-hike-is-all-but-certain-the-reasoning-less-so",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    },
+    {
+      "publisher": "RTE News / Reuters",
+      "url": "https://www.rte.ie/news/business/2026/0903/1590203-ecb-to-raise-rates-a-second-time-this-month-economists/",
+      "publishedAt": "2026-09-03T12:31:00Z"
+    }
+  ]
+}

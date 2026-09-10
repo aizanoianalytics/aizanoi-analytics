@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-10-iphone-duo-ships-october-23-preorders",
+  "title": "Apple confirms iPhone Duo ships October 23 as Pro lineup opens pre-orders September 12",
+  "summary": "Apple has confirmed that its iPhone Duo foldable and iPhone 18 Pro lineup, unveiled at Wednesday's 'Surprise and Shine' keynote, will begin arriving at customers in waves from September 18 (Pro) and October 23 (Duo), with pre-orders opening September 12 for the Pro tier and October 16 for the Duo. Pricing for the book-style foldable starts at $1,999 for 256GB and tops out at $3,199 for the 2TB configuration, with iPhone 18 Pro starting at $1,199 and the Pro Max at $1,299.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-09-10T05:30:00+03:00",
+  "updatedAt": "2026-09-10T05:30:00+03:00",
+  "retrievedAt": "2026-09-10T05:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["apple", "iphone", "foldable", "hardware"],
+  "sources": [
+    {
+      "publisher": "Apple (press release)",
+      "url": "https://apple.com/sg/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    },
+    {
+      "publisher": "Macworld",
+      "url": "https://www.macworld.com/article/2629813/iphone-ultra-folding-design-price-specs-release-date.html",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/technology/foldable-iphone-pricier-18-pro-unveiled-apples-first-event-under-ternus-2026-09-09/",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    }
+  ]
+}

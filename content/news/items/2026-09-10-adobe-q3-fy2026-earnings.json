@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-10-adobe-q3-fy2026-earnings",
+  "title": "Adobe reports Q3 FY2026 earnings after the bell with analysts watching AI ARR and guidance",
+  "summary": "Adobe releases its third quarter fiscal year 2026 results after market close on Thursday, September 10, followed by a 2:00-3:00 p.m. Pacific conference call streamed on its Investor Relations site. Prior guidance calls for quarterly revenue of $6.67 billion to $6.72 billion, with analysts focused on Creative Cloud and Document Cloud AI ARR growth and any commentary on Firefly's competitive position against Anthropic and OpenAI's expanding enterprise offerings.",
+  "category": "technology",
+  "priority": 65,
+  "publishedAt": "2026-09-10T05:30:00+03:00",
+  "updatedAt": "2026-09-10T05:30:00+03:00",
+  "retrievedAt": "2026-09-10T05:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["adobe", "earnings", "creative-cloud", "ai"],
+  "sources": [
+    {
+      "publisher": "Business Wire / Adobe",
+      "url": "https://www.businesswire.com/news/home/20260831054310/en/Adobe-to-Announce-Q3-FY2026-Earnings-Results-on-Sept.-10-2026",
+      "publishedAt": "2026-08-31T13:00:00Z"
+    },
+    {
+      "publisher": "Nasdaq",
+      "url": "https://www.nasdaq.com/press-release/adobe-announce-q3-fy2026-earnings-results-sept-10-2026-2026-08-31",
+      "publishedAt": "2026-08-31T13:00:00Z"
+    }
+  ]
+}

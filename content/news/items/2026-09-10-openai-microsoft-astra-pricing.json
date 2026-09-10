@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-10-openai-microsoft-astra-pricing",
+  "title": "OpenAI pegs Astra pricing to Anthropic as it pushes 'price per task' over raw benchmarks",
+  "summary": "OpenAI launched GPT-6 Astra on September 2 and has set the model's token pricing at parity with Anthropic's leading model, betting that enterprise buyers will compare on price-per-task rather than benchmark scores. Greg Brockman said on launch day that the company would compete on 'whether you can get the thing done at an appropriate price and appropriate speed,' with Anthropic's revenue lead now plateauing as users migrate to cheaper open-weight alternatives.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-10T05:30:00+03:00",
+  "updatedAt": "2026-09-10T05:30:00+03:00",
+  "retrievedAt": "2026-09-10T05:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["openai", "anthropic", "astra", "pricing"],
+  "sources": [
+    {
+      "publisher": "Financial Post / Financial Times",
+      "url": "https://financialpost.com/financial-times/openai-overtaken-anthropic-latest-ai-model",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    },
+    {
+      "publisher": "CryptoBriefing",
+      "url": "https://cryptobriefing.com/openai-claims-overtaken-anthropic-latest-model",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}

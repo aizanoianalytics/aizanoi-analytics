@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-10-claude-fable-mythos-25-percent-cut",
+  "title": "Anthropic slashes Claude Fable 5.1 and Mythos 5.1 prices by ~25% to defend enterprise share",
+  "summary": "Anthropic has cut pricing for its new Claude Fable 5.1 and Mythos 5.1 models by roughly 25% on standard workloads, framing the move as a response to OpenAI's GPT-6 Astra launch and the rise of cheaper open-weight alternatives. The new pricing arrived alongside Claude Fable 5.1's release on September 1 and OpenAI's response launch on September 2, intensifying a frontier-AI price war that has now produced three major enterprise tier resets in 30 days.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-10T05:30:00+03:00",
+  "updatedAt": "2026-09-10T05:30:00+03:00",
+  "retrievedAt": "2026-09-10T05:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "claude", "pricing", "enterprise"],
+  "sources": [
+    {
+      "publisher": "Chosun Biz",
+      "url": "https://www.chosun.com/english/industry-en/2026/09/02/M5ODUUUEZFEKTKMF7I5AK7RBOA/",
+      "publishedAt": "2026-09-02T13:56:00Z"
+    },
+    {
+      "publisher": "CryptoBriefing",
+      "url": "https://cryptobriefing.com/openai-claims-overtaken-anthropic-latest-model",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    }
+  ]
+}
