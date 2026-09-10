@@ -1,0 +1,13 @@
+[Unit]
+Description=Aizanoi Markets crypto hourly refresh (Binance)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/aizanoi-analytics-public
+ExecStart=/usr/bin/python3 /opt/aizanoi-analytics-public/scripts/markets/update_markets.py --mode crypto-hourly --data-root /var/lib/aizanoi-markets/public --allow-partial
+TimeoutStartSec=1800
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aizanoi-markets-crypto

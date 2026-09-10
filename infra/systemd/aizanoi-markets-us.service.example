@@ -1,0 +1,20 @@
+[Unit]
+Description=Aizanoi Markets US daily refresh (Fintable)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+# Real working directory on the production host
+WorkingDirectory=/opt/aizanoi-analytics-public
+# Explicit interpreter; no venv activation required
+ExecStart=/usr/bin/python3 /opt/aizanoi-analytics-public/scripts/markets/update_markets.py --mode us-daily --data-root /var/lib/aizanoi-markets/public --allow-partial
+# Sane timeout: full focused US universe should finish well below this
+TimeoutStartSec=3600
+# Journal logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aizanoi-markets-us
+# No secrets needed for the public provider endpoints
+# Non-overlap protection: systemd refuses to start a second instance while
+# the first is running (Type=oneshot semantics)

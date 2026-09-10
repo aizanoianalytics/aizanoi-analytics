@@ -1,0 +1,13 @@
+[Unit]
+Description=Aizanoi Markets US daily refresh timer (America/New_York aware)
+
+[Timer]
+# Runs at 20:30 US Eastern time every day (after NYSE 16:00 close plus provider
+# cache settle window; DST handled by America/New_York).
+# systemd-analyze calendar 'Mon..Fri *-*-* 20:30:00 America/New_York'
+OnCalendar=Mon..Fri *-*-* 20:30:00 America/New_York
+Persistent=true
+RandomizedDelaySec=600
+
+[Install]
+WantedBy=timers.target

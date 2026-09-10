@@ -1,37 +1,317 @@
 [
-  {"label":"Aave","ticker":"AAVE","yahooSymbol":"AAVE-USD","binanceSymbol":"AAVEUSDT"},
-  {"label":"Cardano","ticker":"ADA","yahooSymbol":"ADA-USD","binanceSymbol":"ADAUSDT"},
-  {"label":"Aptos","ticker":"APT","yahooSymbol":"APT21794-USD","binanceSymbol":"APTUSDT"},
-  {"label":"Arbitrum","ticker":"ARB","yahooSymbol":"ARB11841-USD","binanceSymbol":"ARBUSDT"},
-  {"label":"Cosmos","ticker":"ATOM","yahooSymbol":"ATOM-USD","binanceSymbol":"ATOMUSDT"},
-  {"label":"Avalanche","ticker":"AVAX","yahooSymbol":"AVAX-USD","binanceSymbol":"AVAXUSDT"},
-  {"label":"Bitcoin Cash","ticker":"BCH","yahooSymbol":"BCH-USD","binanceSymbol":"BCHUSDT"},
-  {"label":"Bitcoin","ticker":"BTC","yahooSymbol":"BTC-USD","binanceSymbol":"BTCUSDT"},
-  {"label":"Dogecoin","ticker":"DOGE","yahooSymbol":"DOGE-USD","binanceSymbol":"DOGEUSDT"},
-  {"label":"Polkadot","ticker":"DOT","yahooSymbol":"DOT-USD","binanceSymbol":"DOTUSDT"},
-  {"label":"Ethereum Classic","ticker":"ETC","yahooSymbol":"ETC-USD","binanceSymbol":"ETCUSDT"},
-  {"label":"Ethereum","ticker":"ETH","yahooSymbol":"ETH-USD","binanceSymbol":"ETHUSDT"},
-  {"label":"Filecoin","ticker":"FIL","yahooSymbol":"FIL-USD","binanceSymbol":"FILUSDT"},
-  {"label":"Gram","ticker":"GRAM","yahooSymbol":"GRAM-USD","binanceSymbol":"GRAMUSDT"},
-  {"label":"Hedera","ticker":"HBAR","yahooSymbol":"HBAR-USD","binanceSymbol":"HBARUSDT"},
-  {"label":"Injective","ticker":"INJ","yahooSymbol":"INJ-USD","binanceSymbol":"INJUSDT"},
-  {"label":"Chainlink","ticker":"LINK","yahooSymbol":"LINK-USD","binanceSymbol":"LINKUSDT"},
-  {"label":"Litecoin","ticker":"LTC","yahooSymbol":"LTC-USD","binanceSymbol":"LTCUSDT"},
-  {"label":"NEAR Protocol","ticker":"NEAR","yahooSymbol":"NEAR-USD","binanceSymbol":"NEARUSDT"},
-  {"label":"Ondo","ticker":"ONDO","yahooSymbol":"ONDO-USD","binanceSymbol":"ONDOUSDT"},
-  {"label":"Optimism","ticker":"OP","yahooSymbol":"OP-USD","binanceSymbol":"OPUSDT"},
-  {"label":"Polygon","ticker":"POL","yahooSymbol":"POL28321-USD","binanceSymbol":"POLUSDT"},
-  {"label":"Render","ticker":"RENDER","yahooSymbol":"RENDER-USD","binanceSymbol":"RENDERUSDT"},
-  {"label":"THORChain","ticker":"RUNE","yahooSymbol":"RUNE-USD","binanceSymbol":"RUNEUSDT"},
-  {"label":"Sonic","ticker":"S","yahooSymbol":"S32684-USD","binanceSymbol":"SUSDT"},
-  {"label":"The Sandbox","ticker":"SAND","yahooSymbol":"SAND-USD","binanceSymbol":"SANDUSDT"},
-  {"label":"Solana","ticker":"SOL","yahooSymbol":"SOL-USD","binanceSymbol":"SOLUSDT"},
-  {"label":"Sui","ticker":"SUI","yahooSymbol":"SUI20947-USD","binanceSymbol":"SUIUSDT"},
-  {"label":"Bittensor","ticker":"TAO","yahooSymbol":"TAO22974-USD","binanceSymbol":"TAOUSDT"},
-  {"label":"Theta Network","ticker":"THETA","yahooSymbol":"THETA-USD","binanceSymbol":"THETAUSDT"},
-  {"label":"Uniswap","ticker":"UNI","yahooSymbol":"UNI7083-USD","binanceSymbol":"UNIUSDT"},
-  {"label":"Virtuals Protocol","ticker":"VIRTUAL","yahooSymbol":"VIRTUAL-USD","binanceSymbol":"VIRTUALUSDT"},
-  {"label":"Stellar","ticker":"XLM","yahooSymbol":"XLM-USD","binanceSymbol":"XLMUSDT"},
-  {"label":"XRP","ticker":"XRP","yahooSymbol":"XRP-USD","binanceSymbol":"XRPUSDT"},
-  {"label":"Zcash","ticker":"ZEC","yahooSymbol":"ZEC-USD","binanceSymbol":"ZECUSDT"}
+  {
+    "ticker": "AAVE",
+    "label": "Aave",
+    "provider": "binance",
+    "providerSymbol": "AAVEUSDT",
+    "market": "crypto",
+    "slug": "aave",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "ADA",
+    "label": "Cardano",
+    "provider": "binance",
+    "providerSymbol": "ADAUSDT",
+    "market": "crypto",
+    "slug": "ada",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "APT",
+    "label": "Aptos",
+    "provider": "binance",
+    "providerSymbol": "APTUSDT",
+    "market": "crypto",
+    "slug": "apt",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "ARB",
+    "label": "Arbitrum",
+    "provider": "binance",
+    "providerSymbol": "ARBUSDT",
+    "market": "crypto",
+    "slug": "arb",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "ATOM",
+    "label": "Cosmos",
+    "provider": "binance",
+    "providerSymbol": "ATOMUSDT",
+    "market": "crypto",
+    "slug": "atom",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "AVAX",
+    "label": "Avalanche",
+    "provider": "binance",
+    "providerSymbol": "AVAXUSDT",
+    "market": "crypto",
+    "slug": "avax",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "BCH",
+    "label": "Bitcoin Cash",
+    "provider": "binance",
+    "providerSymbol": "BCHUSDT",
+    "market": "crypto",
+    "slug": "bch",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "BTC",
+    "label": "Bitcoin",
+    "provider": "binance",
+    "providerSymbol": "BTCUSDT",
+    "market": "crypto",
+    "slug": "btc",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "DOGE",
+    "label": "Dogecoin",
+    "provider": "binance",
+    "providerSymbol": "DOGEUSDT",
+    "market": "crypto",
+    "slug": "doge",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "DOT",
+    "label": "Polkadot",
+    "provider": "binance",
+    "providerSymbol": "DOTUSDT",
+    "market": "crypto",
+    "slug": "dot",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "ETC",
+    "label": "Ethereum Classic",
+    "provider": "binance",
+    "providerSymbol": "ETCUSDT",
+    "market": "crypto",
+    "slug": "etc",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "ETH",
+    "label": "Ethereum",
+    "provider": "binance",
+    "providerSymbol": "ETHUSDT",
+    "market": "crypto",
+    "slug": "eth",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "FIL",
+    "label": "Filecoin",
+    "provider": "binance",
+    "providerSymbol": "FILUSDT",
+    "market": "crypto",
+    "slug": "fil",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "GRAM",
+    "label": "Gram",
+    "provider": "binance",
+    "providerSymbol": "GRAMUSDT",
+    "market": "crypto",
+    "slug": "gram",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "HBAR",
+    "label": "Hedera",
+    "provider": "binance",
+    "providerSymbol": "HBARUSDT",
+    "market": "crypto",
+    "slug": "hbar",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "INJ",
+    "label": "Injective",
+    "provider": "binance",
+    "providerSymbol": "INJUSDT",
+    "market": "crypto",
+    "slug": "inj",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "LINK",
+    "label": "Chainlink",
+    "provider": "binance",
+    "providerSymbol": "LINKUSDT",
+    "market": "crypto",
+    "slug": "link",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "LTC",
+    "label": "Litecoin",
+    "provider": "binance",
+    "providerSymbol": "LTCUSDT",
+    "market": "crypto",
+    "slug": "ltc",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "NEAR",
+    "label": "NEAR Protocol",
+    "provider": "binance",
+    "providerSymbol": "NEARUSDT",
+    "market": "crypto",
+    "slug": "near",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "ONDO",
+    "label": "Ondo",
+    "provider": "binance",
+    "providerSymbol": "ONDOUSDT",
+    "market": "crypto",
+    "slug": "ondo",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "OP",
+    "label": "Optimism",
+    "provider": "binance",
+    "providerSymbol": "OPUSDT",
+    "market": "crypto",
+    "slug": "op",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "POL",
+    "label": "Polygon",
+    "provider": "binance",
+    "providerSymbol": "POLUSDT",
+    "market": "crypto",
+    "slug": "pol",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "RENDER",
+    "label": "Render",
+    "provider": "binance",
+    "providerSymbol": "RENDERUSDT",
+    "market": "crypto",
+    "slug": "render",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "RUNE",
+    "label": "THORChain",
+    "provider": "binance",
+    "providerSymbol": "RUNEUSDT",
+    "market": "crypto",
+    "slug": "rune",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "S",
+    "label": "Sonic",
+    "provider": "binance",
+    "providerSymbol": "SUSDT",
+    "market": "crypto",
+    "slug": "s",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "SAND",
+    "label": "The Sandbox",
+    "provider": "binance",
+    "providerSymbol": "SANDUSDT",
+    "market": "crypto",
+    "slug": "sand",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "SOL",
+    "label": "Solana",
+    "provider": "binance",
+    "providerSymbol": "SOLUSDT",
+    "market": "crypto",
+    "slug": "sol",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "SUI",
+    "label": "Sui",
+    "provider": "binance",
+    "providerSymbol": "SUIUSDT",
+    "market": "crypto",
+    "slug": "sui",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "TAO",
+    "label": "Bittensor",
+    "provider": "binance",
+    "providerSymbol": "TAOUSDT",
+    "market": "crypto",
+    "slug": "tao",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "THETA",
+    "label": "Theta Network",
+    "provider": "binance",
+    "providerSymbol": "THETAUSDT",
+    "market": "crypto",
+    "slug": "theta",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "UNI",
+    "label": "Uniswap",
+    "provider": "binance",
+    "providerSymbol": "UNIUSDT",
+    "market": "crypto",
+    "slug": "uni",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "VIRTUAL",
+    "label": "Virtuals Protocol",
+    "provider": "binance",
+    "providerSymbol": "VIRTUALUSDT",
+    "market": "crypto",
+    "slug": "virtual",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "XLM",
+    "label": "Stellar",
+    "provider": "binance",
+    "providerSymbol": "XLMUSDT",
+    "market": "crypto",
+    "slug": "xlm",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "XRP",
+    "label": "XRP",
+    "provider": "binance",
+    "providerSymbol": "XRPUSDT",
+    "market": "crypto",
+    "slug": "xrp",
+    "exchange": "Crypto \u00b7 USD"
+  },
+  {
+    "ticker": "ZEC",
+    "label": "Zcash",
+    "provider": "binance",
+    "providerSymbol": "ZECUSDT",
+    "market": "crypto",
+    "slug": "zec",
+    "exchange": "Crypto \u00b7 USD"
+  }
 ]

@@ -42,10 +42,19 @@ test('browser loads static shards and never calls upstream providers directly', 
 
 test('crypto universe maps ambiguous names to the intended instruments', () => {
   const config = JSON.parse(read('scripts/markets/crypto-universe.json'));
-  assert.deepEqual(config.map((entry) => entry.yahooSymbol), requestedCrypto);
-  assert.equal(config.find((entry) => entry.label === 'Sonic').yahooSymbol, 'S32684-USD');
-  assert.equal(config.find((entry) => entry.label === 'Aptos').yahooSymbol, 'APT21794-USD');
-  assert.equal(config.find((entry) => entry.label === 'Sui').yahooSymbol, 'SUI20947-USD');
+  // Schema v3: active contract is providerSymbol (Binance USDT pair).
+  const expectedSymbols = [
+    'AAVEUSDT','ADAUSDT','APTUSDT','ARBUSDT','ATOMUSDT','AVAXUSDT',
+    'BCHUSDT','BTCUSDT','DOGEUSDT','DOTUSDT','ETCUSDT','ETHUSDT','FILUSDT',
+    'GRAMUSDT','HBARUSDT','INJUSDT','LINKUSDT','LTCUSDT','NEARUSDT','ONDOUSDT',
+    'OPUSDT','POLUSDT','RENDERUSDT','RUNEUSDT','SUSDT','SANDUSDT',
+    'SOLUSDT','SUIUSDT','TAOUSDT','THETAUSDT','UNIUSDT',
+    'VIRTUALUSDT','XLMUSDT','XRPUSDT','ZECUSDT',
+  ];
+  assert.deepEqual(config.map((entry) => entry.providerSymbol), expectedSymbols);
+  assert.equal(config.find((entry) => entry.label === 'Sonic').providerSymbol, 'SUSDT');
+  assert.equal(config.find((entry) => entry.label === 'Aptos').providerSymbol, 'APTUSDT');
+  assert.equal(config.find((entry) => entry.label === 'Sui').providerSymbol, 'SUIUSDT');
 });
 
 test('Markets is included in canonical sitemap generation', () => {

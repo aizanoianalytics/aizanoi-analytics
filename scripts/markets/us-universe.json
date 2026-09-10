@@ -2,31 +2,33 @@
   {
     "market": "us",
     "ticker": "A",
-    "name": "A Inc.",
-    "exchange": "NASDAQ",
+    "name": "Agilent Technologies, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "a",
     "providerSymbol": "A",
     "yahooSymbol": "A",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AAL",
-    "name": "AAL Inc.",
+    "name": "American Airlines Group, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "aal",
     "providerSymbol": "AAL",
     "yahooSymbol": "AAL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AAPL",
-    "name": "Apple Inc.",
+    "name": "Apple Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "aapl",
     "providerSymbol": "AAPL",
@@ -35,12 +37,13 @@
       "sp500",
       "nasdaq100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ABBV",
-    "name": "AbbVie Inc.",
+    "name": "AbbVie Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "abbv",
     "providerSymbol": "ABBV",
@@ -48,12 +51,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ABNB",
-    "name": "ABNB Inc.",
+    "name": "Airbnb, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "abnb",
     "providerSymbol": "ABNB",
@@ -61,12 +65,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ABT",
-    "name": "ABT Inc.",
+    "name": "Abbott Laboratories Common Stock",
     "exchange": "NYSE",
     "slug": "abt",
     "providerSymbol": "ABT",
@@ -74,24 +79,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ACGL",
-    "name": "ACGL Inc.",
+    "name": "Arch Capital Group Ltd. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "acgl",
     "providerSymbol": "ACGL",
     "yahooSymbol": "ACGL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ACN",
-    "name": "ACN Inc.",
+    "name": "Accenture plc Class A Ordinary Shares (Ireland)",
     "exchange": "NYSE",
     "slug": "acn",
     "providerSymbol": "ACN",
@@ -99,12 +106,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ADBE",
-    "name": "ADBE Inc.",
+    "name": "Adobe Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "adbe",
     "providerSymbol": "ADBE",
@@ -112,12 +120,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ADI",
-    "name": "ADI Inc.",
+    "name": "Analog Devices, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "adi",
     "providerSymbol": "ADI",
@@ -125,24 +134,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ADM",
-    "name": "ADM Inc.",
-    "exchange": "NASDAQ",
+    "name": "Archer-Daniels-Midland Company Common Stock",
+    "exchange": "NYSE",
     "slug": "adm",
     "providerSymbol": "ADM",
     "yahooSymbol": "ADM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ADP",
-    "name": "ADP Inc.",
+    "name": "Automatic Data Processing, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "adp",
     "providerSymbol": "ADP",
@@ -150,12 +161,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ADSK",
-    "name": "ADSK Inc.",
+    "name": "Autodesk, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "adsk",
     "providerSymbol": "ADSK",
@@ -163,24 +175,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AEE",
-    "name": "AEE Inc.",
-    "exchange": "NASDAQ",
+    "name": "Ameren Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "aee",
     "providerSymbol": "AEE",
     "yahooSymbol": "AEE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AEP",
-    "name": "AEP Inc.",
+    "name": "American Electric Power Company, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "aep",
     "providerSymbol": "AEP",
@@ -188,36 +202,39 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AES",
-    "name": "AES Inc.",
-    "exchange": "NASDAQ",
+    "name": "The AES Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "aes",
     "providerSymbol": "AES",
     "yahooSymbol": "AES",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AFL",
-    "name": "AFL Inc.",
-    "exchange": "NASDAQ",
+    "name": "AFLAC Incorporated Common Stock",
+    "exchange": "NYSE",
     "slug": "afl",
     "providerSymbol": "AFL",
     "yahooSymbol": "AFL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AIG",
-    "name": "AIG Inc.",
+    "name": "American International Group, Inc. New Common Stock",
     "exchange": "NYSE",
     "slug": "aig",
     "providerSymbol": "AIG",
@@ -225,72 +242,78 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AIZ",
-    "name": "AIZ Inc.",
-    "exchange": "NASDAQ",
+    "name": "Assurant, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "aiz",
     "providerSymbol": "AIZ",
     "yahooSymbol": "AIZ",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AJG",
-    "name": "AJG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Arthur J. Gallagher & Co. Common Stock",
+    "exchange": "NYSE",
     "slug": "ajg",
     "providerSymbol": "AJG",
     "yahooSymbol": "AJG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AKAM",
-    "name": "AKAM Inc.",
+    "name": "Akamai Technologies, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "akam",
     "providerSymbol": "AKAM",
     "yahooSymbol": "AKAM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ALB",
-    "name": "ALB Inc.",
-    "exchange": "NASDAQ",
+    "name": "Albemarle Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "alb",
     "providerSymbol": "ALB",
     "yahooSymbol": "ALB",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ALGN",
-    "name": "ALGN Inc.",
+    "name": "Align Technology, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "algn",
     "providerSymbol": "ALGN",
     "yahooSymbol": "ALGN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ALL",
-    "name": "ALL Inc.",
+    "name": "Allstate Corporation (The) Common Stock",
     "exchange": "NYSE",
     "slug": "all",
     "providerSymbol": "ALL",
@@ -298,24 +321,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ALLE",
-    "name": "ALLE Inc.",
-    "exchange": "NASDAQ",
+    "name": "Allegion plc Ordinary Shares",
+    "exchange": "NYSE",
     "slug": "alle",
     "providerSymbol": "ALLE",
     "yahooSymbol": "ALLE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AMAT",
-    "name": "AMAT Inc.",
+    "name": "Applied Materials, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "amat",
     "providerSymbol": "AMAT",
@@ -323,24 +348,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AMCR",
-    "name": "AMCR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Amcor plc Ordinary Shares",
+    "exchange": "NYSE",
     "slug": "amcr",
     "providerSymbol": "AMCR",
     "yahooSymbol": "AMCR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AMD",
-    "name": "Advanced Micro Devices, Inc.",
+    "name": "Advanced Micro Devices, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "amd",
     "providerSymbol": "AMD",
@@ -348,24 +375,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AME",
-    "name": "AME Inc.",
-    "exchange": "NASDAQ",
+    "name": "AMETEK, Inc.",
+    "exchange": "NYSE",
     "slug": "ame",
     "providerSymbol": "AME",
     "yahooSymbol": "AME",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AMGN",
-    "name": "AMGN Inc.",
+    "name": "Amgen Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "amgn",
     "providerSymbol": "AMGN",
@@ -374,24 +403,26 @@
       "sp500",
       "nasdaq100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AMH",
-    "name": "AMH Inc.",
+    "name": "American Homes 4 Rent Common Shares of Beneficial Interest",
     "exchange": "NYSE",
     "slug": "amh",
     "providerSymbol": "AMH",
     "yahooSymbol": "AMH",
     "memberships": [
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AMP",
-    "name": "AMP Inc.",
+    "name": "Ameriprise Financial, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "amp",
     "providerSymbol": "AMP",
@@ -399,24 +430,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AMT",
-    "name": "AMT Inc.",
-    "exchange": "NASDAQ",
+    "name": "American Tower Corporation (REIT) Common Stock",
+    "exchange": "NYSE",
     "slug": "amt",
     "providerSymbol": "AMT",
     "yahooSymbol": "AMT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AMZN",
-    "name": "Amazon.com, Inc.",
+    "name": "Amazon.com, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "amzn",
     "providerSymbol": "AMZN",
@@ -425,37 +458,26 @@
       "sp500",
       "nasdaq100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ANET",
-    "name": "ANET Inc.",
-    "exchange": "NASDAQ",
+    "name": "Arista Networks, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "anet",
     "providerSymbol": "ANET",
     "yahooSymbol": "ANET",
     "memberships": [
       "sp500"
-    ]
-  },
-  {
-    "market": "us",
-    "ticker": "ANSS",
-    "name": "ANSS Inc.",
-    "exchange": "NASDAQ",
-    "slug": "anss",
-    "providerSymbol": "ANSS",
-    "yahooSymbol": "ANSS",
-    "memberships": [
-      "sp500",
-      "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AON",
-    "name": "AON Inc.",
+    "name": "Aon plc Class A Ordinary Shares (Ireland)",
     "exchange": "NYSE",
     "slug": "aon",
     "providerSymbol": "AON",
@@ -463,36 +485,39 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AOS",
-    "name": "AOS Inc.",
-    "exchange": "NASDAQ",
+    "name": "A.O. Smith Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "aos",
     "providerSymbol": "AOS",
     "yahooSymbol": "AOS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "APA",
-    "name": "APA Inc.",
+    "name": "APA Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "apa",
     "providerSymbol": "APA",
     "yahooSymbol": "APA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "APD",
-    "name": "APD Inc.",
+    "name": "Air Products and Chemicals, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "apd",
     "providerSymbol": "APD",
@@ -500,12 +525,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "APH",
-    "name": "APH Inc.",
+    "name": "Amphenol Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "aph",
     "providerSymbol": "APH",
@@ -513,12 +539,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "APP",
-    "name": "AppLovin Corporation",
+    "name": "Applovin Corporation - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "app",
     "providerSymbol": "APP",
@@ -526,36 +553,39 @@
     "memberships": [
       "nasdaq100",
       "extra"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "APTV",
-    "name": "APTV Inc.",
-    "exchange": "NASDAQ",
+    "name": "Aptiv PLC Ordinary Shares",
+    "exchange": "NYSE",
     "slug": "aptv",
     "providerSymbol": "APTV",
     "yahooSymbol": "APTV",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ARE",
-    "name": "ARE Inc.",
-    "exchange": "NASDAQ",
+    "name": "Alexandria Real Estate Equities, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "are",
     "providerSymbol": "ARE",
     "yahooSymbol": "ARE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ARM",
-    "name": "Arm Holdings plc",
+    "name": "Arm Holdings plc - American Depositary Shares",
     "exchange": "NASDAQ",
     "slug": "arm",
     "providerSymbol": "ARM",
@@ -563,60 +593,65 @@
     "memberships": [
       "nasdaq100",
       "extra"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ASML",
-    "name": "ASML Inc.",
+    "name": "ASML Holding N.V. - New York Registry Shares",
     "exchange": "NASDAQ",
     "slug": "asml",
     "providerSymbol": "ASML",
     "yahooSymbol": "ASML",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ASTS",
-    "name": "AST SpaceMobile, Inc.",
+    "name": "AST SpaceMobile, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "asts",
     "providerSymbol": "ASTS",
     "yahooSymbol": "ASTS",
     "memberships": [
       "extra"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ATO",
-    "name": "ATO Inc.",
-    "exchange": "NASDAQ",
+    "name": "Atmos Energy Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "ato",
     "providerSymbol": "ATO",
     "yahooSymbol": "ATO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AVB",
-    "name": "AVB Inc.",
-    "exchange": "NASDAQ",
+    "name": "AvalonBay Communities, Inc.",
+    "exchange": "NYSE",
     "slug": "avb",
     "providerSymbol": "AVB",
     "yahooSymbol": "AVB",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AVGO",
-    "name": "Broadcom Inc.",
+    "name": "Broadcom Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "avgo",
     "providerSymbol": "AVGO",
@@ -624,36 +659,39 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AVY",
-    "name": "AVY Inc.",
-    "exchange": "NASDAQ",
+    "name": "Avery Dennison Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "avy",
     "providerSymbol": "AVY",
     "yahooSymbol": "AVY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AWK",
-    "name": "AWK Inc.",
-    "exchange": "NASDAQ",
+    "name": "American Water Works Company, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "awk",
     "providerSymbol": "AWK",
     "yahooSymbol": "AWK",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AXON",
-    "name": "AXON Inc.",
+    "name": "Axon Enterprise, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "axon",
     "providerSymbol": "AXON",
@@ -661,12 +699,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AXP",
-    "name": "AXP Inc.",
+    "name": "American Express Company Common Stock",
     "exchange": "NYSE",
     "slug": "axp",
     "providerSymbol": "AXP",
@@ -675,24 +714,26 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "AZO",
-    "name": "AZO Inc.",
-    "exchange": "NASDAQ",
+    "name": "AutoZone, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "azo",
     "providerSymbol": "AZO",
     "yahooSymbol": "AZO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BA",
-    "name": "BA Inc.",
+    "name": "Boeing Company (The) Common Stock",
     "exchange": "NYSE",
     "slug": "ba",
     "providerSymbol": "BA",
@@ -701,12 +742,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BAC",
-    "name": "Bank of America Corporation",
+    "name": "Bank of America Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "bac",
     "providerSymbol": "BAC",
@@ -714,60 +756,65 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BALL",
-    "name": "BALL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Ball Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "ball",
     "providerSymbol": "BALL",
     "yahooSymbol": "BALL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BAX",
-    "name": "BAX Inc.",
-    "exchange": "NASDAQ",
+    "name": "Baxter International Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "bax",
     "providerSymbol": "BAX",
     "yahooSymbol": "BAX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BBWI",
-    "name": "BBWI Inc.",
-    "exchange": "NASDAQ",
+    "name": "Bath & Body Works, Inc.",
+    "exchange": "NYSE",
     "slug": "bbwi",
     "providerSymbol": "BBWI",
     "yahooSymbol": "BBWI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BBY",
-    "name": "BBY Inc.",
-    "exchange": "NASDAQ",
+    "name": "Best Buy Co., Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "bby",
     "providerSymbol": "BBY",
     "yahooSymbol": "BBY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BDX",
-    "name": "BDX Inc.",
+    "name": "Becton, Dickinson and Company Common Stock",
     "exchange": "NYSE",
     "slug": "bdx",
     "providerSymbol": "BDX",
@@ -775,48 +822,52 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BEN",
-    "name": "BEN Inc.",
-    "exchange": "NASDAQ",
+    "name": "Franklin Templeton, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "ben",
     "providerSymbol": "BEN",
     "yahooSymbol": "BEN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BF.B",
-    "name": "BF.B Inc.",
-    "exchange": "NASDAQ",
+    "name": "Brown Forman Inc Class B Common Stock",
+    "exchange": "NYSE",
     "slug": "bf-b",
     "providerSymbol": "BF-B",
     "yahooSymbol": "BF-B",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BG",
-    "name": "BG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Bunge Limited Common Shares",
+    "exchange": "NYSE",
     "slug": "bg",
     "providerSymbol": "BG",
     "yahooSymbol": "BG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BIIB",
-    "name": "BIIB Inc.",
+    "name": "Biogen Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "biib",
     "providerSymbol": "BIIB",
@@ -824,12 +875,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BK",
-    "name": "BK Inc.",
+    "name": "The Bank of New York Mellon Corporation",
     "exchange": "NYSE",
     "slug": "bk",
     "providerSymbol": "BK",
@@ -837,12 +889,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BKNG",
-    "name": "BKNG Inc.",
+    "name": "Booking Holdings Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "bkng",
     "providerSymbol": "BKNG",
@@ -850,12 +903,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BKR",
-    "name": "BKR Inc.",
+    "name": "Baker Hughes Company - Common Stock",
     "exchange": "NASDAQ",
     "slug": "bkr",
     "providerSymbol": "BKR",
@@ -863,24 +917,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BLDR",
-    "name": "BLDR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Builders FirstSource, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "bldr",
     "providerSymbol": "BLDR",
     "yahooSymbol": "BLDR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BLK",
-    "name": "BLK Inc.",
+    "name": "BlackRock, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "blk",
     "providerSymbol": "BLK",
@@ -888,12 +944,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BMY",
-    "name": "BMY Inc.",
+    "name": "Bristol-Myers Squibb Company Common Stock",
     "exchange": "NYSE",
     "slug": "bmy",
     "providerSymbol": "BMY",
@@ -901,48 +958,52 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BR",
-    "name": "BR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Broadridge Financial Solutions, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "br",
     "providerSymbol": "BR",
     "yahooSymbol": "BR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BRK.B",
-    "name": "Berkshire Hathaway Inc.",
+    "name": "Berkshire Hathaway Inc. New Common Stock",
     "exchange": "NYSE",
     "slug": "brk-b",
     "providerSymbol": "BRK-B",
     "yahooSymbol": "BRK-B",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BRO",
-    "name": "BRO Inc.",
-    "exchange": "NASDAQ",
+    "name": "Brown & Brown, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "bro",
     "providerSymbol": "BRO",
     "yahooSymbol": "BRO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BSX",
-    "name": "BSX Inc.",
+    "name": "Boston Scientific Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "bsx",
     "providerSymbol": "BSX",
@@ -950,48 +1011,52 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BWA",
-    "name": "BWA Inc.",
-    "exchange": "NASDAQ",
+    "name": "BorgWarner Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "bwa",
     "providerSymbol": "BWA",
     "yahooSymbol": "BWA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BX",
-    "name": "BX Inc.",
-    "exchange": "NASDAQ",
+    "name": "Blackstone Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "bx",
     "providerSymbol": "BX",
     "yahooSymbol": "BX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "BXP",
-    "name": "BXP Inc.",
-    "exchange": "NASDAQ",
+    "name": "BXP, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "bxp",
     "providerSymbol": "BXP",
     "yahooSymbol": "BXP",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "C",
-    "name": "C Inc.",
+    "name": "Citigroup, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "c",
     "providerSymbol": "C",
@@ -999,48 +1064,52 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CAG",
-    "name": "CAG Inc.",
-    "exchange": "NASDAQ",
+    "name": "ConAgra Brands, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "cag",
     "providerSymbol": "CAG",
     "yahooSymbol": "CAG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CAH",
-    "name": "CAH Inc.",
-    "exchange": "NASDAQ",
+    "name": "Cardinal Health, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "cah",
     "providerSymbol": "CAH",
     "yahooSymbol": "CAH",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CARR",
-    "name": "CARR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Carrier Global Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "carr",
     "providerSymbol": "CARR",
     "yahooSymbol": "CARR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CAT",
-    "name": "CAT Inc.",
+    "name": "Caterpillar, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "cat",
     "providerSymbol": "CAT",
@@ -1049,12 +1118,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CB",
-    "name": "CB Inc.",
+    "name": "Chubb Limited  Common Stock",
     "exchange": "NYSE",
     "slug": "cb",
     "providerSymbol": "CB",
@@ -1062,72 +1132,78 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CBOE",
-    "name": "CBOE Inc.",
-    "exchange": "NASDAQ",
+    "name": "Cboe Global Markets, Inc. Common Stock",
+    "exchange": "CBOE BZX",
     "slug": "cboe",
     "providerSymbol": "CBOE",
     "yahooSymbol": "CBOE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CBRE",
-    "name": "CBRE Inc.",
-    "exchange": "NASDAQ",
+    "name": "CBRE Group Inc Common Stock Class A",
+    "exchange": "NYSE",
     "slug": "cbre",
     "providerSymbol": "CBRE",
     "yahooSymbol": "CBRE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CCEP",
-    "name": "CCEP Inc.",
+    "name": "Coca-Cola Europacific Partners plc - Ordinary Shares",
     "exchange": "NASDAQ",
     "slug": "ccep",
     "providerSymbol": "CCEP",
     "yahooSymbol": "CCEP",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CCI",
-    "name": "CCI Inc.",
-    "exchange": "NASDAQ",
+    "name": "Crown Castle Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "cci",
     "providerSymbol": "CCI",
     "yahooSymbol": "CCI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CCL",
-    "name": "CCL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Carnival Corporation Ltd. Common Shares",
+    "exchange": "NYSE",
     "slug": "ccl",
     "providerSymbol": "CCL",
     "yahooSymbol": "CCL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CDNS",
-    "name": "CDNS Inc.",
+    "name": "Cadence Design Systems, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "cdns",
     "providerSymbol": "CDNS",
@@ -1135,12 +1211,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CDW",
-    "name": "CDW Inc.",
+    "name": "CDW Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "cdw",
     "providerSymbol": "CDW",
@@ -1148,24 +1225,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CE",
-    "name": "CE Inc.",
-    "exchange": "NASDAQ",
+    "name": "Celanese Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "ce",
     "providerSymbol": "CE",
     "yahooSymbol": "CE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CEG",
-    "name": "CEG Inc.",
+    "name": "Constellation Energy Corporation - Common Stock When-Issued",
     "exchange": "NASDAQ",
     "slug": "ceg",
     "providerSymbol": "CEG",
@@ -1173,60 +1252,65 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CF",
-    "name": "CF Inc.",
-    "exchange": "NASDAQ",
+    "name": "CF Industries Holdings, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "cf",
     "providerSymbol": "CF",
     "yahooSymbol": "CF",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CFG",
-    "name": "CFG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Citizens Financial Group, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "cfg",
     "providerSymbol": "CFG",
     "yahooSymbol": "CFG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CHD",
-    "name": "CHD Inc.",
-    "exchange": "NASDAQ",
+    "name": "Church & Dwight Company, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "chd",
     "providerSymbol": "CHD",
     "yahooSymbol": "CHD",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CHRW",
-    "name": "CHRW Inc.",
+    "name": "C.H. Robinson Worldwide, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "chrw",
     "providerSymbol": "CHRW",
     "yahooSymbol": "CHRW",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CHTR",
-    "name": "CHTR Inc.",
+    "name": "Charter Communications, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "chtr",
     "providerSymbol": "CHTR",
@@ -1234,12 +1318,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CI",
-    "name": "CI Inc.",
+    "name": "The Cigna Group Common Stock",
     "exchange": "NYSE",
     "slug": "ci",
     "providerSymbol": "CI",
@@ -1247,24 +1332,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CINF",
-    "name": "CINF Inc.",
+    "name": "Cincinnati Financial Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "cinf",
     "providerSymbol": "CINF",
     "yahooSymbol": "CINF",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CL",
-    "name": "CL Inc.",
+    "name": "Colgate-Palmolive Company Common Stock",
     "exchange": "NYSE",
     "slug": "cl",
     "providerSymbol": "CL",
@@ -1272,36 +1359,39 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CLX",
-    "name": "CLX Inc.",
-    "exchange": "NASDAQ",
+    "name": "Clorox Company (The) Common Stock",
+    "exchange": "NYSE",
     "slug": "clx",
     "providerSymbol": "CLX",
     "yahooSymbol": "CLX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CMA",
-    "name": "CMA Inc.",
-    "exchange": "NASDAQ",
+    "name": "Comerica Incorporated",
+    "exchange": "NYSE",
     "slug": "cma",
     "providerSymbol": "CMA",
     "yahooSymbol": "CMA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CMCSA",
-    "name": "CMCSA Inc.",
+    "name": "Comcast Corporation - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "cmcsa",
     "providerSymbol": "CMCSA",
@@ -1309,85 +1399,92 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CME",
-    "name": "CME Inc.",
-    "exchange": "NYSE",
+    "name": "CME Group Inc. - Class A Common Stock",
+    "exchange": "NASDAQ",
     "slug": "cme",
     "providerSymbol": "CME",
     "yahooSymbol": "CME",
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CMG",
-    "name": "CMG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Chipotle Mexican Grill, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "cmg",
     "providerSymbol": "CMG",
     "yahooSymbol": "CMG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CMI",
-    "name": "CMI Inc.",
-    "exchange": "NASDAQ",
+    "name": "Cummins Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "cmi",
     "providerSymbol": "CMI",
     "yahooSymbol": "CMI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CMS",
-    "name": "CMS Inc.",
-    "exchange": "NASDAQ",
+    "name": "CMS Energy Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "cms",
     "providerSymbol": "CMS",
     "yahooSymbol": "CMS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CNC",
-    "name": "CNC Inc.",
-    "exchange": "NASDAQ",
+    "name": "Centene Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "cnc",
     "providerSymbol": "CNC",
     "yahooSymbol": "CNC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CNP",
-    "name": "CNP Inc.",
-    "exchange": "NASDAQ",
+    "name": "CenterPoint Energy, Inc (Holding Co) Common Stock",
+    "exchange": "NYSE",
     "slug": "cnp",
     "providerSymbol": "CNP",
     "yahooSymbol": "CNP",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "COF",
-    "name": "COF Inc.",
+    "name": "Capital One Financial Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "cof",
     "providerSymbol": "COF",
@@ -1395,36 +1492,39 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "COIN",
-    "name": "Coinbase Global, Inc.",
+    "name": "Coinbase Global, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "coin",
     "providerSymbol": "COIN",
     "yahooSymbol": "COIN",
     "memberships": [
       "extra"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "COO",
-    "name": "COO Inc.",
+    "name": "The Cooper Companies, Inc.  - Common Stock",
     "exchange": "NASDAQ",
     "slug": "coo",
     "providerSymbol": "COO",
     "yahooSymbol": "COO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "COP",
-    "name": "COP Inc.",
+    "name": "ConocoPhillips Common Stock",
     "exchange": "NYSE",
     "slug": "cop",
     "providerSymbol": "COP",
@@ -1432,24 +1532,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "COR",
-    "name": "COR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Cencora, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "cor",
     "providerSymbol": "COR",
     "yahooSymbol": "COR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "COST",
-    "name": "Costco Wholesale Corporation",
+    "name": "Costco Wholesale Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "cost",
     "providerSymbol": "COST",
@@ -1457,36 +1559,39 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CPAY",
-    "name": "CPAY Inc.",
-    "exchange": "NASDAQ",
+    "name": "Corpay, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "cpay",
     "providerSymbol": "CPAY",
     "yahooSymbol": "CPAY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CPB",
-    "name": "CPB Inc.",
+    "name": "The Campbell's Company - Common Stock",
     "exchange": "NASDAQ",
     "slug": "cpb",
     "providerSymbol": "CPB",
     "yahooSymbol": "CPB",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CPRT",
-    "name": "CPRT Inc.",
+    "name": "Copart, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "cprt",
     "providerSymbol": "CPRT",
@@ -1494,36 +1599,39 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CPT",
-    "name": "CPT Inc.",
-    "exchange": "NASDAQ",
+    "name": "Camden Property Trust Common Stock",
+    "exchange": "NYSE",
     "slug": "cpt",
     "providerSymbol": "CPT",
     "yahooSymbol": "CPT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CRL",
-    "name": "CRL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Charles River Laboratories International, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "crl",
     "providerSymbol": "CRL",
     "yahooSymbol": "CRL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CRM",
-    "name": "Salesforce, Inc.",
+    "name": "Salesforce, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "crm",
     "providerSymbol": "CRM",
@@ -1532,12 +1640,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CRWD",
-    "name": "CRWD Inc.",
+    "name": "CrowdStrike Holdings, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "crwd",
     "providerSymbol": "CRWD",
@@ -1545,12 +1654,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CSCO",
-    "name": "CSCO Inc.",
+    "name": "Cisco Systems, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "csco",
     "providerSymbol": "CSCO",
@@ -1559,24 +1669,26 @@
       "sp500",
       "nasdaq100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CSGP",
-    "name": "CSGP Inc.",
+    "name": "CoStar Group, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "csgp",
     "providerSymbol": "CSGP",
     "yahooSymbol": "CSGP",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CSX",
-    "name": "CSX Inc.",
+    "name": "CSX Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "csx",
     "providerSymbol": "CSX",
@@ -1584,12 +1696,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CTAS",
-    "name": "CTAS Inc.",
+    "name": "Cintas Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ctas",
     "providerSymbol": "CTAS",
@@ -1597,36 +1710,39 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CTLT",
-    "name": "CTLT Inc.",
-    "exchange": "NASDAQ",
+    "name": "Catalent, Inc.",
+    "exchange": "NYSE",
     "slug": "ctlt",
     "providerSymbol": "CTLT",
     "yahooSymbol": "CTLT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CTRA",
-    "name": "CTRA Inc.",
-    "exchange": "NASDAQ",
+    "name": "Coterra Energy Inc.",
+    "exchange": "NYSE",
     "slug": "ctra",
     "providerSymbol": "CTRA",
     "yahooSymbol": "CTRA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CTSH",
-    "name": "CTSH Inc.",
+    "name": "Cognizant Technology Solutions Corporation - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "ctsh",
     "providerSymbol": "CTSH",
@@ -1634,24 +1750,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CTVA",
-    "name": "CTVA Inc.",
-    "exchange": "NASDAQ",
+    "name": "Corteva, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "ctva",
     "providerSymbol": "CTVA",
     "yahooSymbol": "CTVA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CVS",
-    "name": "CVS Inc.",
+    "name": "CVS Health Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "cvs",
     "providerSymbol": "CVS",
@@ -1659,12 +1777,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CVX",
-    "name": "Chevron Corporation",
+    "name": "Chevron Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "cvx",
     "providerSymbol": "CVX",
@@ -1673,24 +1792,26 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "CZR",
-    "name": "CZR Inc.",
+    "name": "Caesars Entertainment, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "czr",
     "providerSymbol": "CZR",
     "yahooSymbol": "CZR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "D",
-    "name": "D Inc.",
+    "name": "Dominion Energy, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "d",
     "providerSymbol": "D",
@@ -1698,72 +1819,78 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DAL",
-    "name": "DAL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Delta Air Lines, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "dal",
     "providerSymbol": "DAL",
     "yahooSymbol": "DAL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DASH",
-    "name": "DASH Inc.",
+    "name": "DoorDash, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "dash",
     "providerSymbol": "DASH",
     "yahooSymbol": "DASH",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DAY",
-    "name": "DAY Inc.",
-    "exchange": "NASDAQ",
+    "name": "Dayforce, Inc.",
+    "exchange": "NYSE",
     "slug": "day",
     "providerSymbol": "DAY",
     "yahooSymbol": "DAY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DD",
-    "name": "DD Inc.",
-    "exchange": "NASDAQ",
+    "name": "DuPont de Nemours, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "dd",
     "providerSymbol": "DD",
     "yahooSymbol": "DD",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DDOG",
-    "name": "DDOG Inc.",
+    "name": "Datadog, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "ddog",
     "providerSymbol": "DDOG",
     "yahooSymbol": "DDOG",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DE",
-    "name": "DE Inc.",
+    "name": "Deere & Company Common Stock",
     "exchange": "NYSE",
     "slug": "de",
     "providerSymbol": "DE",
@@ -1771,84 +1898,78 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DECK",
-    "name": "DECK Inc.",
-    "exchange": "NASDAQ",
+    "name": "Deckers Outdoor Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "deck",
     "providerSymbol": "DECK",
     "yahooSymbol": "DECK",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DELL",
-    "name": "DELL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Dell Technologies Inc. Class C Common Stock",
+    "exchange": "NYSE",
     "slug": "dell",
     "providerSymbol": "DELL",
     "yahooSymbol": "DELL",
     "memberships": [
       "sp500"
-    ]
-  },
-  {
-    "market": "us",
-    "ticker": "DFS",
-    "name": "DFS Inc.",
-    "exchange": "NASDAQ",
-    "slug": "dfs",
-    "providerSymbol": "DFS",
-    "yahooSymbol": "DFS",
-    "memberships": [
-      "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DG",
-    "name": "DG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Dollar General Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "dg",
     "providerSymbol": "DG",
     "yahooSymbol": "DG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DGX",
-    "name": "DGX Inc.",
-    "exchange": "NASDAQ",
+    "name": "Quest Diagnostics Incorporated Common Stock",
+    "exchange": "NYSE",
     "slug": "dgx",
     "providerSymbol": "DGX",
     "yahooSymbol": "DGX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DHI",
-    "name": "DHI Inc.",
-    "exchange": "NASDAQ",
+    "name": "D.R. Horton, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "dhi",
     "providerSymbol": "DHI",
     "yahooSymbol": "DHI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DHR",
-    "name": "DHR Inc.",
+    "name": "Danaher Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "dhr",
     "providerSymbol": "DHR",
@@ -1856,12 +1977,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DIS",
-    "name": "DIS Inc.",
+    "name": "Walt Disney Company (The) Common Stock",
     "exchange": "NYSE",
     "slug": "dis",
     "providerSymbol": "DIS",
@@ -1870,24 +1992,26 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DLR",
-    "name": "DLR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Digital Realty Trust, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "dlr",
     "providerSymbol": "DLR",
     "yahooSymbol": "DLR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DLTR",
-    "name": "DLTR Inc.",
+    "name": "Dollar Tree, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "dltr",
     "providerSymbol": "DLTR",
@@ -1895,84 +2019,91 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DOC",
-    "name": "DOC Inc.",
-    "exchange": "NASDAQ",
+    "name": "Healthpeak Properties, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "doc",
     "providerSymbol": "DOC",
     "yahooSymbol": "DOC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DOV",
-    "name": "DOV Inc.",
-    "exchange": "NASDAQ",
+    "name": "Dover Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "dov",
     "providerSymbol": "DOV",
     "yahooSymbol": "DOV",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DOW",
-    "name": "DOW Inc.",
-    "exchange": "NASDAQ",
+    "name": "Dow Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "dow",
     "providerSymbol": "DOW",
     "yahooSymbol": "DOW",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DPZ",
-    "name": "DPZ Inc.",
+    "name": "Domino's Pizza Inc - Common Stock",
     "exchange": "NASDAQ",
     "slug": "dpz",
     "providerSymbol": "DPZ",
     "yahooSymbol": "DPZ",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DRI",
-    "name": "DRI Inc.",
-    "exchange": "NASDAQ",
+    "name": "Darden Restaurants, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "dri",
     "providerSymbol": "DRI",
     "yahooSymbol": "DRI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DTE",
-    "name": "DTE Inc.",
-    "exchange": "NASDAQ",
+    "name": "DTE Energy Company Common Stock",
+    "exchange": "NYSE",
     "slug": "dte",
     "providerSymbol": "DTE",
     "yahooSymbol": "DTE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DUK",
-    "name": "DUK Inc.",
+    "name": "Duke Energy Corporation (Holding Company) Common Stock",
     "exchange": "NYSE",
     "slug": "duk",
     "providerSymbol": "DUK",
@@ -1980,36 +2111,39 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DVA",
-    "name": "DVA Inc.",
-    "exchange": "NASDAQ",
+    "name": "DaVita Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "dva",
     "providerSymbol": "DVA",
     "yahooSymbol": "DVA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DVN",
-    "name": "DVN Inc.",
-    "exchange": "NASDAQ",
+    "name": "Devon Energy Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "dvn",
     "providerSymbol": "DVN",
     "yahooSymbol": "DVN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "DXCM",
-    "name": "DXCM Inc.",
+    "name": "DexCom, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "dxcm",
     "providerSymbol": "DXCM",
@@ -2017,12 +2151,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EA",
-    "name": "EA Inc.",
+    "name": "Electronic Arts Inc.",
     "exchange": "NASDAQ",
     "slug": "ea",
     "providerSymbol": "EA",
@@ -2030,24 +2165,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EBAY",
-    "name": "EBAY Inc.",
+    "name": "eBay Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ebay",
     "providerSymbol": "EBAY",
     "yahooSymbol": "EBAY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ECL",
-    "name": "ECL Inc.",
+    "name": "Ecolab Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "ecl",
     "providerSymbol": "ECL",
@@ -2055,72 +2192,78 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ED",
-    "name": "ED Inc.",
-    "exchange": "NASDAQ",
+    "name": "Consolidated Edison, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "ed",
     "providerSymbol": "ED",
     "yahooSymbol": "ED",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EFX",
-    "name": "EFX Inc.",
-    "exchange": "NASDAQ",
+    "name": "Equifax, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "efx",
     "providerSymbol": "EFX",
     "yahooSymbol": "EFX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EG",
-    "name": "EG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Everest Group, Ltd. Common Stock",
+    "exchange": "NYSE",
     "slug": "eg",
     "providerSymbol": "EG",
     "yahooSymbol": "EG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EIX",
-    "name": "EIX Inc.",
-    "exchange": "NASDAQ",
+    "name": "Edison International Common Stock",
+    "exchange": "NYSE",
     "slug": "eix",
     "providerSymbol": "EIX",
     "yahooSymbol": "EIX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EL",
-    "name": "EL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Estee Lauder Companies, Inc. (The) Common Stock",
+    "exchange": "NYSE",
     "slug": "el",
     "providerSymbol": "EL",
     "yahooSymbol": "EL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ELV",
-    "name": "ELV Inc.",
+    "name": "Elevance Health, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "elv",
     "providerSymbol": "ELV",
@@ -2128,24 +2271,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EMN",
-    "name": "EMN Inc.",
-    "exchange": "NASDAQ",
+    "name": "Eastman Chemical Company Common Stock",
+    "exchange": "NYSE",
     "slug": "emn",
     "providerSymbol": "EMN",
     "yahooSymbol": "EMN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EMR",
-    "name": "EMR Inc.",
+    "name": "Emerson Electric Company Common Stock",
     "exchange": "NYSE",
     "slug": "emr",
     "providerSymbol": "EMR",
@@ -2153,24 +2298,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ENPH",
-    "name": "ENPH Inc.",
+    "name": "Enphase Energy, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "enph",
     "providerSymbol": "ENPH",
     "yahooSymbol": "ENPH",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EOG",
-    "name": "EOG Inc.",
+    "name": "EOG Resources, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "eog",
     "providerSymbol": "EOG",
@@ -2178,96 +2325,104 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EPAM",
-    "name": "EPAM Inc.",
-    "exchange": "NASDAQ",
+    "name": "EPAM Systems, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "epam",
     "providerSymbol": "EPAM",
     "yahooSymbol": "EPAM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EQIX",
-    "name": "EQIX Inc.",
+    "name": "Equinix, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "eqix",
     "providerSymbol": "EQIX",
     "yahooSymbol": "EQIX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EQR",
-    "name": "EQR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Equity Residential",
+    "exchange": "NYSE",
     "slug": "eqr",
     "providerSymbol": "EQR",
     "yahooSymbol": "EQR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EQT",
-    "name": "EQT Inc.",
-    "exchange": "NASDAQ",
+    "name": "EQT Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "eqt",
     "providerSymbol": "EQT",
     "yahooSymbol": "EQT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ERIE",
-    "name": "ERIE Inc.",
+    "name": "Erie Indemnity Company - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "erie",
     "providerSymbol": "ERIE",
     "yahooSymbol": "ERIE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ES",
-    "name": "ES Inc.",
-    "exchange": "NASDAQ",
+    "name": "Eversource Energy (D/B/A) Common Stock",
+    "exchange": "NYSE",
     "slug": "es",
     "providerSymbol": "ES",
     "yahooSymbol": "ES",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ESS",
-    "name": "ESS Inc.",
-    "exchange": "NASDAQ",
+    "name": "Essex Property Trust, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "ess",
     "providerSymbol": "ESS",
     "yahooSymbol": "ESS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ETN",
-    "name": "ETN Inc.",
+    "name": "Eaton Corporation, PLC Ordinary Shares",
     "exchange": "NYSE",
     "slug": "etn",
     "providerSymbol": "ETN",
@@ -2275,48 +2430,52 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ETR",
-    "name": "ETR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Entergy Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "etr",
     "providerSymbol": "ETR",
     "yahooSymbol": "ETR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EVRG",
-    "name": "EVRG Inc.",
+    "name": "Evergy, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "evrg",
     "providerSymbol": "EVRG",
     "yahooSymbol": "EVRG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EW",
-    "name": "EW Inc.",
-    "exchange": "NASDAQ",
+    "name": "Edwards Lifesciences Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "ew",
     "providerSymbol": "EW",
     "yahooSymbol": "EW",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EXC",
-    "name": "EXC Inc.",
+    "name": "Exelon Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "exc",
     "providerSymbol": "EXC",
@@ -2324,60 +2483,65 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EXPD",
-    "name": "EXPD Inc.",
-    "exchange": "NASDAQ",
+    "name": "Expeditors International of Washington, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "expd",
     "providerSymbol": "EXPD",
     "yahooSymbol": "EXPD",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EXPE",
-    "name": "EXPE Inc.",
+    "name": "Expedia Group, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "expe",
     "providerSymbol": "EXPE",
     "yahooSymbol": "EXPE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "EXR",
-    "name": "EXR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Extra Space Storage Inc Common Stock",
+    "exchange": "NYSE",
     "slug": "exr",
     "providerSymbol": "EXR",
     "yahooSymbol": "EXR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "F",
-    "name": "F Inc.",
-    "exchange": "NASDAQ",
+    "name": "Ford Motor Company Common Stock",
+    "exchange": "NYSE",
     "slug": "f",
     "providerSymbol": "F",
     "yahooSymbol": "F",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FANG",
-    "name": "FANG Inc.",
+    "name": "Diamondback Energy, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "fang",
     "providerSymbol": "FANG",
@@ -2385,12 +2549,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FAST",
-    "name": "FAST Inc.",
+    "name": "Fastenal Company - Common Stock",
     "exchange": "NASDAQ",
     "slug": "fast",
     "providerSymbol": "FAST",
@@ -2398,12 +2563,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FCX",
-    "name": "FCX Inc.",
+    "name": "Freeport-McMoRan, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "fcx",
     "providerSymbol": "FCX",
@@ -2411,24 +2577,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FDS",
-    "name": "FDS Inc.",
-    "exchange": "NASDAQ",
+    "name": "FactSet Research Systems Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "fds",
     "providerSymbol": "FDS",
     "yahooSymbol": "FDS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FDX",
-    "name": "FDX Inc.",
+    "name": "FedEx Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "fdx",
     "providerSymbol": "FDX",
@@ -2436,96 +2604,91 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FE",
-    "name": "FE Inc.",
-    "exchange": "NASDAQ",
+    "name": "FirstEnergy Corp. Common Stock",
+    "exchange": "NYSE",
     "slug": "fe",
     "providerSymbol": "FE",
     "yahooSymbol": "FE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FFIV",
-    "name": "FFIV Inc.",
+    "name": "F5, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ffiv",
     "providerSymbol": "FFIV",
     "yahooSymbol": "FFIV",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FI",
-    "name": "FI Inc.",
-    "exchange": "NASDAQ",
+    "name": "Fiserv, Inc.",
+    "exchange": "NYSE",
     "slug": "fi",
     "providerSymbol": "FI",
     "yahooSymbol": "FI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FICO",
-    "name": "FICO Inc.",
-    "exchange": "NASDAQ",
+    "name": "Fair Isaac Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "fico",
     "providerSymbol": "FICO",
     "yahooSymbol": "FICO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FIS",
-    "name": "FIS Inc.",
-    "exchange": "NASDAQ",
+    "name": "Fidelity National Information Services, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "fis",
     "providerSymbol": "FIS",
     "yahooSymbol": "FIS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FITB",
-    "name": "FITB Inc.",
-    "exchange": "NASDAQ",
+    "name": "Fifth Third Bancorp Common Stock",
+    "exchange": "NYSE",
     "slug": "fitb",
     "providerSymbol": "FITB",
     "yahooSymbol": "FITB",
     "memberships": [
       "sp500"
-    ]
-  },
-  {
-    "market": "us",
-    "ticker": "FLT",
-    "name": "FLT Inc.",
-    "exchange": "NASDAQ",
-    "slug": "flt",
-    "providerSymbol": "FLT",
-    "yahooSymbol": "FLT",
-    "memberships": [
-      "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FMC",
-    "name": "FMC Inc.",
+    "name": "FMC Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "fmc",
     "providerSymbol": "FMC",
@@ -2533,60 +2696,65 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FOX",
-    "name": "FOX Inc.",
+    "name": "Fox Corporation - Class B Common Stock",
     "exchange": "NASDAQ",
     "slug": "fox",
     "providerSymbol": "FOX",
     "yahooSymbol": "FOX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FOXA",
-    "name": "FOXA Inc.",
+    "name": "Fox Corporation - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "foxa",
     "providerSymbol": "FOXA",
     "yahooSymbol": "FOXA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FRT",
-    "name": "FRT Inc.",
-    "exchange": "NASDAQ",
+    "name": "Federal Realty Investment Trust Common Stock",
+    "exchange": "NYSE",
     "slug": "frt",
     "providerSymbol": "FRT",
     "yahooSymbol": "FRT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FSLR",
-    "name": "FSLR Inc.",
+    "name": "First Solar, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "fslr",
     "providerSymbol": "FSLR",
     "yahooSymbol": "FSLR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FTNT",
-    "name": "FTNT Inc.",
+    "name": "Fortinet, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ftnt",
     "providerSymbol": "FTNT",
@@ -2594,24 +2762,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "FTV",
-    "name": "FTV Inc.",
-    "exchange": "NASDAQ",
+    "name": "Fortive Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "ftv",
     "providerSymbol": "FTV",
     "yahooSymbol": "FTV",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GD",
-    "name": "GD Inc.",
+    "name": "General Dynamics Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "gd",
     "providerSymbol": "GD",
@@ -2619,24 +2789,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GDDY",
-    "name": "GDDY Inc.",
-    "exchange": "NASDAQ",
+    "name": "GoDaddy Inc. Class A Common Stock",
+    "exchange": "NYSE",
     "slug": "gddy",
     "providerSymbol": "GDDY",
     "yahooSymbol": "GDDY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GE",
-    "name": "GE Inc.",
+    "name": "GE Aerospace Common Stock",
     "exchange": "NYSE",
     "slug": "ge",
     "providerSymbol": "GE",
@@ -2644,12 +2816,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GEHC",
-    "name": "GEHC Inc.",
+    "name": "GE HealthCare Technologies Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "gehc",
     "providerSymbol": "GEHC",
@@ -2657,48 +2830,52 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GEN",
-    "name": "GEN Inc.",
+    "name": "Gen Digital Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "gen",
     "providerSymbol": "GEN",
     "yahooSymbol": "GEN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GEV",
-    "name": "GEV Inc.",
-    "exchange": "NASDAQ",
+    "name": "GE Vernova Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "gev",
     "providerSymbol": "GEV",
     "yahooSymbol": "GEV",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GFS",
-    "name": "GFS Inc.",
+    "name": "GlobalFoundries Inc. - Ordinary Share",
     "exchange": "NASDAQ",
     "slug": "gfs",
     "providerSymbol": "GFS",
     "yahooSymbol": "GFS",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GILD",
-    "name": "GILD Inc.",
+    "name": "Gilead Sciences, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "gild",
     "providerSymbol": "GILD",
@@ -2706,48 +2883,52 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GIS",
-    "name": "GIS Inc.",
-    "exchange": "NASDAQ",
+    "name": "General Mills, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "gis",
     "providerSymbol": "GIS",
     "yahooSymbol": "GIS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GL",
-    "name": "GL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Globe Life Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "gl",
     "providerSymbol": "GL",
     "yahooSymbol": "GL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GLW",
-    "name": "GLW Inc.",
-    "exchange": "NASDAQ",
+    "name": "Corning Incorporated Common Stock",
+    "exchange": "NYSE",
     "slug": "glw",
     "providerSymbol": "GLW",
     "yahooSymbol": "GLW",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GM",
-    "name": "GM Inc.",
+    "name": "General Motors Company Common Stock",
     "exchange": "NYSE",
     "slug": "gm",
     "providerSymbol": "GM",
@@ -2755,24 +2936,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GNRC",
-    "name": "GNRC Inc.",
-    "exchange": "NASDAQ",
+    "name": "Generac Holdlings Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "gnrc",
     "providerSymbol": "GNRC",
     "yahooSymbol": "GNRC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GOOG",
-    "name": "Alphabet Inc. (Class C)",
+    "name": "Alphabet Inc. - Class C Capital Stock",
     "exchange": "NASDAQ",
     "slug": "goog",
     "providerSymbol": "GOOG",
@@ -2780,12 +2963,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GOOGL",
-    "name": "Alphabet Inc. (Class A)",
+    "name": "Alphabet Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "googl",
     "providerSymbol": "GOOGL",
@@ -2793,48 +2977,52 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GPC",
-    "name": "GPC Inc.",
-    "exchange": "NASDAQ",
+    "name": "Genuine Parts Company Common Stock",
+    "exchange": "NYSE",
     "slug": "gpc",
     "providerSymbol": "GPC",
     "yahooSymbol": "GPC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GPN",
-    "name": "GPN Inc.",
-    "exchange": "NASDAQ",
+    "name": "Global Payments Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "gpn",
     "providerSymbol": "GPN",
     "yahooSymbol": "GPN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GRMN",
-    "name": "GRMN Inc.",
-    "exchange": "NASDAQ",
+    "name": "Garmin Ltd. Common Stock (Switzerland)",
+    "exchange": "NYSE",
     "slug": "grmn",
     "providerSymbol": "GRMN",
     "yahooSymbol": "GRMN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GS",
-    "name": "GS Inc.",
+    "name": "Goldman Sachs Group, Inc. (The) Common Stock",
     "exchange": "NYSE",
     "slug": "gs",
     "providerSymbol": "GS",
@@ -2843,60 +3031,65 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "GWW",
-    "name": "GWW Inc.",
-    "exchange": "NASDAQ",
+    "name": "W.W. Grainger, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "gww",
     "providerSymbol": "GWW",
     "yahooSymbol": "GWW",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HAL",
-    "name": "HAL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Halliburton Company Common Stock",
+    "exchange": "NYSE",
     "slug": "hal",
     "providerSymbol": "HAL",
     "yahooSymbol": "HAL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HAS",
-    "name": "HAS Inc.",
+    "name": "Hasbro, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "has",
     "providerSymbol": "HAS",
     "yahooSymbol": "HAS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HBAN",
-    "name": "HBAN Inc.",
+    "name": "Huntington Bancshares Incorporated - Common Stock",
     "exchange": "NASDAQ",
     "slug": "hban",
     "providerSymbol": "HBAN",
     "yahooSymbol": "HBAN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HCA",
-    "name": "HCA Inc.",
+    "name": "HCA Healthcare, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "hca",
     "providerSymbol": "HCA",
@@ -2904,12 +3097,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HD",
-    "name": "The Home Depot, Inc.",
+    "name": "Home Depot, Inc. (The) Common Stock",
     "exchange": "NYSE",
     "slug": "hd",
     "providerSymbol": "HD",
@@ -2918,49 +3112,39 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
-  },
-  {
-    "market": "us",
-    "ticker": "HES",
-    "name": "HES Inc.",
-    "exchange": "NYSE",
-    "slug": "hes",
-    "providerSymbol": "HES",
-    "yahooSymbol": "HES",
-    "memberships": [
-      "sp500",
-      "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HIG",
-    "name": "HIG Inc.",
-    "exchange": "NASDAQ",
+    "name": "The Hartford Insurance Group, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "hig",
     "providerSymbol": "HIG",
     "yahooSymbol": "HIG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HII",
-    "name": "HII Inc.",
-    "exchange": "NASDAQ",
+    "name": "Huntington Ingalls Industries, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "hii",
     "providerSymbol": "HII",
     "yahooSymbol": "HII",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HLT",
-    "name": "HLT Inc.",
+    "name": "Hilton Worldwide Holdings Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "hlt",
     "providerSymbol": "HLT",
@@ -2968,24 +3152,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HOLX",
-    "name": "HOLX Inc.",
+    "name": "Hologic, Inc.",
     "exchange": "NASDAQ",
     "slug": "holx",
     "providerSymbol": "HOLX",
     "yahooSymbol": "HOLX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HON",
-    "name": "HON Inc.",
+    "name": "Honeywell International Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "hon",
     "providerSymbol": "HON",
@@ -2994,108 +3180,117 @@
       "sp500",
       "nasdaq100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HOOD",
-    "name": "Robinhood Markets, Inc.",
+    "name": "Robinhood Markets, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "hood",
     "providerSymbol": "HOOD",
     "yahooSymbol": "HOOD",
     "memberships": [
       "extra"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HPE",
-    "name": "HPE Inc.",
-    "exchange": "NASDAQ",
+    "name": "Hewlett Packard Enterprise Company Common Stock",
+    "exchange": "NYSE",
     "slug": "hpe",
     "providerSymbol": "HPE",
     "yahooSymbol": "HPE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HPQ",
-    "name": "HPQ Inc.",
-    "exchange": "NASDAQ",
+    "name": "HP Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "hpq",
     "providerSymbol": "HPQ",
     "yahooSymbol": "HPQ",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HRL",
-    "name": "HRL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Hormel Foods Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "hrl",
     "providerSymbol": "HRL",
     "yahooSymbol": "HRL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HSIC",
-    "name": "HSIC Inc.",
+    "name": "Henry Schein, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "hsic",
     "providerSymbol": "HSIC",
     "yahooSymbol": "HSIC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HST",
-    "name": "HST Inc.",
+    "name": "Host Hotels & Resorts, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "hst",
     "providerSymbol": "HST",
     "yahooSymbol": "HST",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HSY",
-    "name": "HSY Inc.",
-    "exchange": "NASDAQ",
+    "name": "The Hershey Company Common Stock",
+    "exchange": "NYSE",
     "slug": "hsy",
     "providerSymbol": "HSY",
     "yahooSymbol": "HSY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HUBB",
-    "name": "HUBB Inc.",
-    "exchange": "NASDAQ",
+    "name": "Hubbell Inc Common Stock",
+    "exchange": "NYSE",
     "slug": "hubb",
     "providerSymbol": "HUBB",
     "yahooSymbol": "HUBB",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HUM",
-    "name": "HUM Inc.",
+    "name": "Humana Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "hum",
     "providerSymbol": "HUM",
@@ -3103,24 +3298,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "HWM",
-    "name": "HWM Inc.",
-    "exchange": "NASDAQ",
+    "name": "Howmet Aerospace Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "hwm",
     "providerSymbol": "HWM",
     "yahooSymbol": "HWM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IBM",
-    "name": "IBM Inc.",
+    "name": "International Business Machines Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "ibm",
     "providerSymbol": "IBM",
@@ -3129,12 +3326,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ICE",
-    "name": "ICE Inc.",
+    "name": "Intercontinental Exchange Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "ice",
     "providerSymbol": "ICE",
@@ -3142,12 +3340,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IDXX",
-    "name": "IDXX Inc.",
+    "name": "IDEXX Laboratories, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "idxx",
     "providerSymbol": "IDXX",
@@ -3155,48 +3354,52 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IEX",
-    "name": "IEX Inc.",
-    "exchange": "NASDAQ",
+    "name": "IDEX Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "iex",
     "providerSymbol": "IEX",
     "yahooSymbol": "IEX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IFF",
-    "name": "IFF Inc.",
-    "exchange": "NASDAQ",
+    "name": "International Flavors & Fragrances, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "iff",
     "providerSymbol": "IFF",
     "yahooSymbol": "IFF",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "INCY",
-    "name": "INCY Inc.",
+    "name": "Incyte Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "incy",
     "providerSymbol": "INCY",
     "yahooSymbol": "INCY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "INTC",
-    "name": "INTC Inc.",
+    "name": "Intel Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "intc",
     "providerSymbol": "INTC",
@@ -3204,12 +3407,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "INTU",
-    "name": "INTU Inc.",
+    "name": "Intuit Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "intu",
     "providerSymbol": "INTU",
@@ -3217,84 +3421,91 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "INVH",
-    "name": "INVH Inc.",
-    "exchange": "NASDAQ",
+    "name": "Invitation Homes Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "invh",
     "providerSymbol": "INVH",
     "yahooSymbol": "INVH",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IP",
-    "name": "IP Inc.",
-    "exchange": "NASDAQ",
+    "name": "International Paper Company Common Stock",
+    "exchange": "NYSE",
     "slug": "ip",
     "providerSymbol": "IP",
     "yahooSymbol": "IP",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IPG",
-    "name": "IPG Inc.",
-    "exchange": "NASDAQ",
+    "name": "The Interpublic Group of Companies, Inc.",
+    "exchange": "NYSE",
     "slug": "ipg",
     "providerSymbol": "IPG",
     "yahooSymbol": "IPG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IQV",
-    "name": "IQV Inc.",
-    "exchange": "NASDAQ",
+    "name": "IQVIA Holdings, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "iqv",
     "providerSymbol": "IQV",
     "yahooSymbol": "IQV",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IR",
-    "name": "IR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Ingersoll Rand Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "ir",
     "providerSymbol": "IR",
     "yahooSymbol": "IR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IRM",
-    "name": "IRM Inc.",
-    "exchange": "NASDAQ",
+    "name": "Iron Mountain Incorporated (Delaware)Common Stock REIT",
+    "exchange": "NYSE",
     "slug": "irm",
     "providerSymbol": "IRM",
     "yahooSymbol": "IRM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ISRG",
-    "name": "ISRG Inc.",
+    "name": "Intuitive Surgical, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "isrg",
     "providerSymbol": "ISRG",
@@ -3302,24 +3513,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IT",
-    "name": "IT Inc.",
-    "exchange": "NASDAQ",
+    "name": "Gartner, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "it",
     "providerSymbol": "IT",
     "yahooSymbol": "IT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ITW",
-    "name": "ITW Inc.",
+    "name": "Illinois Tool Works Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "itw",
     "providerSymbol": "ITW",
@@ -3327,84 +3540,91 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "IVZ",
-    "name": "IVZ Inc.",
-    "exchange": "NASDAQ",
+    "name": "Invesco Ltd Common Stock",
+    "exchange": "NYSE",
     "slug": "ivz",
     "providerSymbol": "IVZ",
     "yahooSymbol": "IVZ",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "J",
-    "name": "J Inc.",
-    "exchange": "NASDAQ",
+    "name": "Jacobs Solutions Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "j",
     "providerSymbol": "J",
     "yahooSymbol": "J",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "JBHT",
-    "name": "JBHT Inc.",
+    "name": "J.B. Hunt Transport Services, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "jbht",
     "providerSymbol": "JBHT",
     "yahooSymbol": "JBHT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "JBL",
-    "name": "JBL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Jabil Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "jbl",
     "providerSymbol": "JBL",
     "yahooSymbol": "JBL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "JCI",
-    "name": "JCI Inc.",
-    "exchange": "NASDAQ",
+    "name": "Johnson Controls International plc Ordinary Share",
+    "exchange": "NYSE",
     "slug": "jci",
     "providerSymbol": "JCI",
     "yahooSymbol": "JCI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "JKHY",
-    "name": "JKHY Inc.",
+    "name": "Jack Henry & Associates, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "jkhy",
     "providerSymbol": "JKHY",
     "yahooSymbol": "JKHY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "JNJ",
-    "name": "Johnson & Johnson",
+    "name": "Johnson & Johnson Common Stock",
     "exchange": "NYSE",
     "slug": "jnj",
     "providerSymbol": "JNJ",
@@ -3413,24 +3633,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
-  },
-  {
-    "market": "us",
-    "ticker": "JNPR",
-    "name": "JNPR Inc.",
-    "exchange": "NASDAQ",
-    "slug": "jnpr",
-    "providerSymbol": "JNPR",
-    "yahooSymbol": "JNPR",
-    "memberships": [
-      "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "JPM",
-    "name": "JPMorgan Chase & Co.",
+    "name": "JP Morgan Chase & Co. Common Stock",
     "exchange": "NYSE",
     "slug": "jpm",
     "providerSymbol": "JPM",
@@ -3439,24 +3648,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
-  },
-  {
-    "market": "us",
-    "ticker": "K",
-    "name": "K Inc.",
-    "exchange": "NASDAQ",
-    "slug": "k",
-    "providerSymbol": "K",
-    "yahooSymbol": "K",
-    "memberships": [
-      "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KDP",
-    "name": "KDP Inc.",
+    "name": "Keurig Dr Pepper Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "kdp",
     "providerSymbol": "KDP",
@@ -3464,36 +3662,39 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KEY",
-    "name": "KEY Inc.",
-    "exchange": "NASDAQ",
+    "name": "KeyCorp Common Stock",
+    "exchange": "NYSE",
     "slug": "key",
     "providerSymbol": "KEY",
     "yahooSymbol": "KEY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KEYS",
-    "name": "KEYS Inc.",
-    "exchange": "NASDAQ",
+    "name": "Keysight Technologies Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "keys",
     "providerSymbol": "KEYS",
     "yahooSymbol": "KEYS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KHC",
-    "name": "KHC Inc.",
+    "name": "The Kraft Heinz Company - Common Stock",
     "exchange": "NASDAQ",
     "slug": "khc",
     "providerSymbol": "KHC",
@@ -3501,24 +3702,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KIM",
-    "name": "KIM Inc.",
-    "exchange": "NASDAQ",
+    "name": "Kimco Realty Corporation (HC) Common Stock",
+    "exchange": "NYSE",
     "slug": "kim",
     "providerSymbol": "KIM",
     "yahooSymbol": "KIM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KLAC",
-    "name": "KLAC Inc.",
+    "name": "KLA Corporation  - Common Stock",
     "exchange": "NASDAQ",
     "slug": "klac",
     "providerSymbol": "KLAC",
@@ -3526,48 +3729,52 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KMB",
-    "name": "KMB Inc.",
+    "name": "Kimberly-Clark Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "kmb",
     "providerSymbol": "KMB",
     "yahooSymbol": "KMB",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KMI",
-    "name": "KMI Inc.",
-    "exchange": "NASDAQ",
+    "name": "Kinder Morgan, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "kmi",
     "providerSymbol": "KMI",
     "yahooSymbol": "KMI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KMX",
-    "name": "KMX Inc.",
-    "exchange": "NASDAQ",
+    "name": "CarMax Inc",
+    "exchange": "NYSE",
     "slug": "kmx",
     "providerSymbol": "KMX",
     "yahooSymbol": "KMX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KO",
-    "name": "The Coca-Cola Company",
+    "name": "Coca-Cola Company (The) Common Stock",
     "exchange": "NYSE",
     "slug": "ko",
     "providerSymbol": "KO",
@@ -3576,12 +3783,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KR",
-    "name": "KR Inc.",
+    "name": "Kroger Company (The) Common Stock",
     "exchange": "NYSE",
     "slug": "kr",
     "providerSymbol": "KR",
@@ -3589,85 +3797,92 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "KVUE",
-    "name": "KVUE Inc.",
-    "exchange": "NASDAQ",
+    "name": "Kenvue Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "kvue",
     "providerSymbol": "KVUE",
     "yahooSymbol": "KVUE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "L",
-    "name": "L Inc.",
-    "exchange": "NASDAQ",
+    "name": "Loews Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "l",
     "providerSymbol": "L",
     "yahooSymbol": "L",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LDOS",
-    "name": "LDOS Inc.",
-    "exchange": "NASDAQ",
+    "name": "Leidos Holdings, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "ldos",
     "providerSymbol": "LDOS",
     "yahooSymbol": "LDOS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LEN",
-    "name": "LEN Inc.",
-    "exchange": "NASDAQ",
+    "name": "Lennar Corporation Class A Common Stock",
+    "exchange": "NYSE",
     "slug": "len",
     "providerSymbol": "LEN",
     "yahooSymbol": "LEN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LH",
-    "name": "LH Inc.",
-    "exchange": "NASDAQ",
+    "name": "Labcorp Holdings Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "lh",
     "providerSymbol": "LH",
     "yahooSymbol": "LH",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LHX",
-    "name": "LHX Inc.",
-    "exchange": "NASDAQ",
+    "name": "L3Harris Technologies, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "lhx",
     "providerSymbol": "LHX",
     "yahooSymbol": "LHX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LIN",
-    "name": "LIN Inc.",
-    "exchange": "NYSE",
+    "name": "Linde plc - Ordinary Shares",
+    "exchange": "NASDAQ",
     "slug": "lin",
     "providerSymbol": "LIN",
     "yahooSymbol": "LIN",
@@ -3675,24 +3890,26 @@
       "sp500",
       "nasdaq100",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LKQ",
-    "name": "LKQ Inc.",
+    "name": "LKQ Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "lkq",
     "providerSymbol": "LKQ",
     "yahooSymbol": "LKQ",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LLY",
-    "name": "Eli Lilly and Company",
+    "name": "Eli Lilly and Company Common Stock",
     "exchange": "NYSE",
     "slug": "lly",
     "providerSymbol": "LLY",
@@ -3700,12 +3917,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LMT",
-    "name": "LMT Inc.",
+    "name": "Lockheed Martin Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "lmt",
     "providerSymbol": "LMT",
@@ -3713,24 +3931,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LNT",
-    "name": "LNT Inc.",
+    "name": "Alliant Energy Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "lnt",
     "providerSymbol": "LNT",
     "yahooSymbol": "LNT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LOW",
-    "name": "LOW Inc.",
+    "name": "Lowe's Companies, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "low",
     "providerSymbol": "LOW",
@@ -3738,12 +3958,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LRCX",
-    "name": "LRCX Inc.",
+    "name": "Lam Research Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "lrcx",
     "providerSymbol": "LRCX",
@@ -3751,12 +3972,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LULU",
-    "name": "LULU Inc.",
+    "name": "lululemon athletica inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "lulu",
     "providerSymbol": "LULU",
@@ -3764,72 +3986,78 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LUV",
-    "name": "LUV Inc.",
-    "exchange": "NASDAQ",
+    "name": "Southwest Airlines Company Common Stock",
+    "exchange": "NYSE",
     "slug": "luv",
     "providerSymbol": "LUV",
     "yahooSymbol": "LUV",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LVS",
-    "name": "LVS Inc.",
-    "exchange": "NASDAQ",
+    "name": "Las Vegas Sands Corp. Common Stock",
+    "exchange": "NYSE",
     "slug": "lvs",
     "providerSymbol": "LVS",
     "yahooSymbol": "LVS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LW",
-    "name": "LW Inc.",
-    "exchange": "NASDAQ",
+    "name": "Lamb Weston Holdings, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "lw",
     "providerSymbol": "LW",
     "yahooSymbol": "LW",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LYB",
-    "name": "LYB Inc.",
-    "exchange": "NASDAQ",
+    "name": "LyondellBasell Industries NV Ordinary Shares Class A (Netherlands)",
+    "exchange": "NYSE",
     "slug": "lyb",
     "providerSymbol": "LYB",
     "yahooSymbol": "LYB",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "LYV",
-    "name": "LYV Inc.",
-    "exchange": "NASDAQ",
+    "name": "Live Nation Entertainment, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "lyv",
     "providerSymbol": "LYV",
     "yahooSymbol": "LYV",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MA",
-    "name": "Mastercard Incorporated",
+    "name": "Mastercard Incorporated Common Stock",
     "exchange": "NYSE",
     "slug": "ma",
     "providerSymbol": "MA",
@@ -3837,24 +4065,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MAA",
-    "name": "MAA Inc.",
-    "exchange": "NASDAQ",
+    "name": "Mid-America Apartment Communities, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "maa",
     "providerSymbol": "MAA",
     "yahooSymbol": "MAA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MAR",
-    "name": "MAR Inc.",
+    "name": "Marriott International - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "mar",
     "providerSymbol": "MAR",
@@ -3862,24 +4092,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MAS",
-    "name": "MAS Inc.",
-    "exchange": "NASDAQ",
+    "name": "Masco Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "mas",
     "providerSymbol": "MAS",
     "yahooSymbol": "MAS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MCD",
-    "name": "MCD Inc.",
+    "name": "McDonald's Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "mcd",
     "providerSymbol": "MCD",
@@ -3888,12 +4120,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MCHP",
-    "name": "MCHP Inc.",
+    "name": "Microchip Technology Incorporated - Common Stock",
     "exchange": "NASDAQ",
     "slug": "mchp",
     "providerSymbol": "MCHP",
@@ -3901,12 +4134,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MCK",
-    "name": "MCK Inc.",
+    "name": "McKesson Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "mck",
     "providerSymbol": "MCK",
@@ -3914,25 +4148,27 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MCO",
-    "name": "MCO Inc.",
-    "exchange": "NASDAQ",
+    "name": "Moody's Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "mco",
     "providerSymbol": "MCO",
     "yahooSymbol": "MCO",
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MDLZ",
-    "name": "MDLZ Inc.",
+    "name": "Mondelez International, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "mdlz",
     "providerSymbol": "MDLZ",
@@ -3940,12 +4176,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MDT",
-    "name": "MDT Inc.",
+    "name": "Medtronic plc. Ordinary Shares",
     "exchange": "NYSE",
     "slug": "mdt",
     "providerSymbol": "MDT",
@@ -3953,24 +4190,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MELI",
-    "name": "MELI Inc.",
+    "name": "MercadoLibre, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "meli",
     "providerSymbol": "MELI",
     "yahooSymbol": "MELI",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MET",
-    "name": "MET Inc.",
+    "name": "MetLife, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "met",
     "providerSymbol": "MET",
@@ -3978,12 +4217,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "META",
-    "name": "Meta Platforms, Inc.",
+    "name": "Meta Platforms, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "meta",
     "providerSymbol": "META",
@@ -3991,72 +4231,78 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MGM",
-    "name": "MGM Inc.",
-    "exchange": "NASDAQ",
+    "name": "MGM Resorts International Common Stock",
+    "exchange": "NYSE",
     "slug": "mgm",
     "providerSymbol": "MGM",
     "yahooSymbol": "MGM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MHK",
-    "name": "MHK Inc.",
-    "exchange": "NASDAQ",
+    "name": "Mohawk Industries, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "mhk",
     "providerSymbol": "MHK",
     "yahooSymbol": "MHK",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MKC",
-    "name": "MKC Inc.",
-    "exchange": "NASDAQ",
+    "name": "McCormick & Company, Incorporated Common Stock",
+    "exchange": "NYSE",
     "slug": "mkc",
     "providerSymbol": "MKC",
     "yahooSymbol": "MKC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MKTX",
-    "name": "MKTX Inc.",
+    "name": "MarketAxess Holdings, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "mktx",
     "providerSymbol": "MKTX",
     "yahooSymbol": "MKTX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MLM",
-    "name": "MLM Inc.",
-    "exchange": "NASDAQ",
+    "name": "Martin Marietta Materials, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "mlm",
     "providerSymbol": "MLM",
     "yahooSymbol": "MLM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MMC",
-    "name": "MMC Inc.",
+    "name": "Marsh & McLennan Companies, Inc.",
     "exchange": "NYSE",
     "slug": "mmc",
     "providerSymbol": "MMC",
@@ -4064,12 +4310,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MMM",
-    "name": "MMM Inc.",
+    "name": "3M Company Common Stock",
     "exchange": "NYSE",
     "slug": "mmm",
     "providerSymbol": "MMM",
@@ -4078,12 +4325,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MNST",
-    "name": "MNST Inc.",
+    "name": "Monster Beverage Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "mnst",
     "providerSymbol": "MNST",
@@ -4091,12 +4339,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MO",
-    "name": "MO Inc.",
+    "name": "Altria Group, Inc.",
     "exchange": "NYSE",
     "slug": "mo",
     "providerSymbol": "MO",
@@ -4104,60 +4353,65 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MOH",
-    "name": "MOH Inc.",
-    "exchange": "NASDAQ",
+    "name": "Molina Healthcare Inc Common Stock",
+    "exchange": "NYSE",
     "slug": "moh",
     "providerSymbol": "MOH",
     "yahooSymbol": "MOH",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MOS",
-    "name": "MOS Inc.",
-    "exchange": "NASDAQ",
+    "name": "Mosaic Company (The) Common Stock",
+    "exchange": "NYSE",
     "slug": "mos",
     "providerSymbol": "MOS",
     "yahooSymbol": "MOS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MPC",
-    "name": "MPC Inc.",
-    "exchange": "NASDAQ",
+    "name": "Marathon Petroleum Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "mpc",
     "providerSymbol": "MPC",
     "yahooSymbol": "MPC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MPWR",
-    "name": "MPWR Inc.",
+    "name": "Monolithic Power Systems, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "mpwr",
     "providerSymbol": "MPWR",
     "yahooSymbol": "MPWR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MRK",
-    "name": "Merck & Co., Inc.",
+    "name": "Merck & Company, Inc. Common Stock (new)",
     "exchange": "NYSE",
     "slug": "mrk",
     "providerSymbol": "MRK",
@@ -4166,12 +4420,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MRNA",
-    "name": "MRNA Inc.",
+    "name": "Moderna, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "mrna",
     "providerSymbol": "MRNA",
@@ -4179,24 +4434,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MRVL",
-    "name": "MRVL Inc.",
+    "name": "Marvell Technology, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "mrvl",
     "providerSymbol": "MRVL",
     "yahooSymbol": "MRVL",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MS",
-    "name": "MS Inc.",
+    "name": "Morgan Stanley Common Stock",
     "exchange": "NYSE",
     "slug": "ms",
     "providerSymbol": "MS",
@@ -4204,24 +4461,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MSCI",
-    "name": "MSCI Inc.",
-    "exchange": "NASDAQ",
+    "name": "MSCI Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "msci",
     "providerSymbol": "MSCI",
     "yahooSymbol": "MSCI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MSFT",
-    "name": "Microsoft Corporation",
+    "name": "Microsoft Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "msft",
     "providerSymbol": "MSFT",
@@ -4230,24 +4489,26 @@
       "sp500",
       "nasdaq100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MSI",
-    "name": "MSI Inc.",
-    "exchange": "NASDAQ",
+    "name": "Motorola Solutions, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "msi",
     "providerSymbol": "MSI",
     "yahooSymbol": "MSI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MSTR",
-    "name": "MicroStrategy Incorporated",
+    "name": "Strategy Inc - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "mstr",
     "providerSymbol": "MSTR",
@@ -4255,48 +4516,52 @@
     "memberships": [
       "nasdaq100",
       "extra"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MTB",
-    "name": "MTB Inc.",
-    "exchange": "NASDAQ",
+    "name": "M&T Bank Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "mtb",
     "providerSymbol": "MTB",
     "yahooSymbol": "MTB",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MTCH",
-    "name": "MTCH Inc.",
+    "name": "Match Group, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "mtch",
     "providerSymbol": "MTCH",
     "yahooSymbol": "MTCH",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MTD",
-    "name": "MTD Inc.",
-    "exchange": "NASDAQ",
+    "name": "Mettler-Toledo International, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "mtd",
     "providerSymbol": "MTD",
     "yahooSymbol": "MTD",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "MU",
-    "name": "MU Inc.",
+    "name": "Micron Technology, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "mu",
     "providerSymbol": "MU",
@@ -4304,48 +4569,52 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NCLH",
-    "name": "NCLH Inc.",
-    "exchange": "NASDAQ",
+    "name": "Norwegian Cruise Line Holdings Ltd. Ordinary Shares",
+    "exchange": "NYSE",
     "slug": "nclh",
     "providerSymbol": "NCLH",
     "yahooSymbol": "NCLH",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NDAQ",
-    "name": "NDAQ Inc.",
+    "name": "Nasdaq, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ndaq",
     "providerSymbol": "NDAQ",
     "yahooSymbol": "NDAQ",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NDSN",
-    "name": "NDSN Inc.",
+    "name": "Nordson Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ndsn",
     "providerSymbol": "NDSN",
     "yahooSymbol": "NDSN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NEE",
-    "name": "NEE Inc.",
+    "name": "NextEra Energy, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "nee",
     "providerSymbol": "NEE",
@@ -4353,12 +4622,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NEM",
-    "name": "NEM Inc.",
+    "name": "Newmont Corporation",
     "exchange": "NYSE",
     "slug": "nem",
     "providerSymbol": "NEM",
@@ -4366,12 +4636,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NFLX",
-    "name": "Netflix, Inc.",
+    "name": "Netflix, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "nflx",
     "providerSymbol": "NFLX",
@@ -4379,24 +4650,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NI",
-    "name": "NI Inc.",
-    "exchange": "NASDAQ",
+    "name": "NiSource Inc Common Stock",
+    "exchange": "NYSE",
     "slug": "ni",
     "providerSymbol": "NI",
     "yahooSymbol": "NI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NKE",
-    "name": "NKE Inc.",
+    "name": "Nike, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "nke",
     "providerSymbol": "NKE",
@@ -4405,12 +4678,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NOC",
-    "name": "NOC Inc.",
+    "name": "Northrop Grumman Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "noc",
     "providerSymbol": "NOC",
@@ -4418,84 +4692,91 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NOW",
-    "name": "NOW Inc.",
-    "exchange": "NASDAQ",
+    "name": "ServiceNow, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "now",
     "providerSymbol": "NOW",
     "yahooSymbol": "NOW",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NRG",
-    "name": "NRG Inc.",
-    "exchange": "NASDAQ",
+    "name": "NRG Energy, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "nrg",
     "providerSymbol": "NRG",
     "yahooSymbol": "NRG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NSC",
-    "name": "NSC Inc.",
-    "exchange": "NASDAQ",
+    "name": "Norfolk Southern Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "nsc",
     "providerSymbol": "NSC",
     "yahooSymbol": "NSC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NTAP",
-    "name": "NTAP Inc.",
+    "name": "NetApp, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ntap",
     "providerSymbol": "NTAP",
     "yahooSymbol": "NTAP",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NTRS",
-    "name": "NTRS Inc.",
+    "name": "Northern Trust Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ntrs",
     "providerSymbol": "NTRS",
     "yahooSymbol": "NTRS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NUE",
-    "name": "NUE Inc.",
-    "exchange": "NASDAQ",
+    "name": "Nucor Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "nue",
     "providerSymbol": "NUE",
     "yahooSymbol": "NUE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NVDA",
-    "name": "NVIDIA Corporation",
+    "name": "NVIDIA Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "nvda",
     "providerSymbol": "NVDA",
@@ -4504,48 +4785,52 @@
       "sp500",
       "nasdaq100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NVR",
-    "name": "NVR Inc.",
-    "exchange": "NASDAQ",
+    "name": "NVR, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "nvr",
     "providerSymbol": "NVR",
     "yahooSymbol": "NVR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NWS",
-    "name": "NWS Inc.",
+    "name": "News Corporation - Class B Common Stock",
     "exchange": "NASDAQ",
     "slug": "nws",
     "providerSymbol": "NWS",
     "yahooSymbol": "NWS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NWSA",
-    "name": "NWSA Inc.",
+    "name": "News Corporation - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "nwsa",
     "providerSymbol": "NWSA",
     "yahooSymbol": "NWSA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "NXPI",
-    "name": "NXPI Inc.",
+    "name": "NXP Semiconductors N.V. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "nxpi",
     "providerSymbol": "NXPI",
@@ -4553,24 +4838,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "O",
-    "name": "O Inc.",
-    "exchange": "NASDAQ",
+    "name": "Realty Income Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "o",
     "providerSymbol": "O",
     "yahooSymbol": "O",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ODFL",
-    "name": "ODFL Inc.",
+    "name": "Old Dominion Freight Line, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "odfl",
     "providerSymbol": "ODFL",
@@ -4578,36 +4865,39 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "OKE",
-    "name": "OKE Inc.",
-    "exchange": "NASDAQ",
+    "name": "ONEOK, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "oke",
     "providerSymbol": "OKE",
     "yahooSymbol": "OKE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "OMC",
-    "name": "OMC Inc.",
-    "exchange": "NASDAQ",
+    "name": "Omnicom Group Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "omc",
     "providerSymbol": "OMC",
     "yahooSymbol": "OMC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ON",
-    "name": "ON Inc.",
+    "name": "ON Semiconductor Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "on",
     "providerSymbol": "ON",
@@ -4615,12 +4905,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ORCL",
-    "name": "ORCL Inc.",
+    "name": "Oracle Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "orcl",
     "providerSymbol": "ORCL",
@@ -4628,12 +4919,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ORLY",
-    "name": "ORLY Inc.",
+    "name": "O'Reilly Automotive, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "orly",
     "providerSymbol": "ORLY",
@@ -4641,36 +4933,39 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "OTIS",
-    "name": "OTIS Inc.",
-    "exchange": "NASDAQ",
+    "name": "Otis Worldwide Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "otis",
     "providerSymbol": "OTIS",
     "yahooSymbol": "OTIS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "OXY",
-    "name": "OXY Inc.",
-    "exchange": "NASDAQ",
+    "name": "Occidental Petroleum Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "oxy",
     "providerSymbol": "OXY",
     "yahooSymbol": "OXY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PANW",
-    "name": "PANW Inc.",
+    "name": "Palo Alto Networks, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "panw",
     "providerSymbol": "PANW",
@@ -4678,36 +4973,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
-  },
-  {
-    "market": "us",
-    "ticker": "PARA",
-    "name": "PARA Inc.",
-    "exchange": "NASDAQ",
-    "slug": "para",
-    "providerSymbol": "PARA",
-    "yahooSymbol": "PARA",
-    "memberships": [
-      "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PAYC",
-    "name": "PAYC Inc.",
-    "exchange": "NASDAQ",
+    "name": "Paycom Software, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "payc",
     "providerSymbol": "PAYC",
     "yahooSymbol": "PAYC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PAYX",
-    "name": "PAYX Inc.",
+    "name": "Paychex, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "payx",
     "providerSymbol": "PAYX",
@@ -4715,12 +5000,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PCAR",
-    "name": "PCAR Inc.",
+    "name": "PACCAR Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "pcar",
     "providerSymbol": "PCAR",
@@ -4728,48 +5014,52 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PCG",
-    "name": "PCG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Pacific Gas & Electric Co. Common Stock",
+    "exchange": "NYSE",
     "slug": "pcg",
     "providerSymbol": "PCG",
     "yahooSymbol": "PCG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PDD",
-    "name": "PDD Inc.",
+    "name": "PDD Holdings Inc. - American Depositary Shares",
     "exchange": "NASDAQ",
     "slug": "pdd",
     "providerSymbol": "PDD",
     "yahooSymbol": "PDD",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PEG",
-    "name": "PEG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Public Service Enterprise Group Incorporated Common Stock",
+    "exchange": "NYSE",
     "slug": "peg",
     "providerSymbol": "PEG",
     "yahooSymbol": "PEG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PEP",
-    "name": "PepsiCo, Inc.",
+    "name": "PepsiCo, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "pep",
     "providerSymbol": "PEP",
@@ -4777,12 +5067,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PFE",
-    "name": "PFE Inc.",
+    "name": "Pfizer, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "pfe",
     "providerSymbol": "PFE",
@@ -4790,24 +5081,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PFG",
-    "name": "PFG Inc.",
+    "name": "Principal Financial Group Inc - Common Stock",
     "exchange": "NASDAQ",
     "slug": "pfg",
     "providerSymbol": "PFG",
     "yahooSymbol": "PFG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PG",
-    "name": "The Procter & Gamble Company",
+    "name": "Procter & Gamble Company (The) Common Stock",
     "exchange": "NYSE",
     "slug": "pg",
     "providerSymbol": "PG",
@@ -4816,12 +5109,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PGR",
-    "name": "PGR Inc.",
+    "name": "Progressive Corporation (The) Common Stock",
     "exchange": "NYSE",
     "slug": "pgr",
     "providerSymbol": "PGR",
@@ -4829,12 +5123,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PH",
-    "name": "PH Inc.",
+    "name": "Parker-Hannifin Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "ph",
     "providerSymbol": "PH",
@@ -4842,36 +5137,39 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PHM",
-    "name": "PHM Inc.",
-    "exchange": "NASDAQ",
+    "name": "PulteGroup, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "phm",
     "providerSymbol": "PHM",
     "yahooSymbol": "PHM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PKG",
-    "name": "PKG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Packaging Corporation of America Common Stock",
+    "exchange": "NYSE",
     "slug": "pkg",
     "providerSymbol": "PKG",
     "yahooSymbol": "PKG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PLD",
-    "name": "PLD Inc.",
+    "name": "Prologis, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "pld",
     "providerSymbol": "PLD",
@@ -4879,13 +5177,14 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PLTR",
-    "name": "Palantir Technologies Inc.",
-    "exchange": "NYSE",
+    "name": "Palantir Technologies Inc. - Class A Common Stock",
+    "exchange": "NASDAQ",
     "slug": "pltr",
     "providerSymbol": "PLTR",
     "yahooSymbol": "PLTR",
@@ -4893,12 +5192,13 @@
       "sp500",
       "nasdaq100",
       "extra"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PM",
-    "name": "PM Inc.",
+    "name": "Philip Morris International Inc Common Stock",
     "exchange": "NYSE",
     "slug": "pm",
     "providerSymbol": "PM",
@@ -4906,12 +5206,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PNC",
-    "name": "PNC Inc.",
+    "name": "PNC Financial Services Group, Inc. (The) Common Stock",
     "exchange": "NYSE",
     "slug": "pnc",
     "providerSymbol": "PNC",
@@ -4919,84 +5220,91 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PNR",
-    "name": "PNR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Pentair plc. Ordinary Share",
+    "exchange": "NYSE",
     "slug": "pnr",
     "providerSymbol": "PNR",
     "yahooSymbol": "PNR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PNW",
-    "name": "PNW Inc.",
-    "exchange": "NASDAQ",
+    "name": "Pinnacle West Capital Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "pnw",
     "providerSymbol": "PNW",
     "yahooSymbol": "PNW",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PODD",
-    "name": "PODD Inc.",
+    "name": "Insulet Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "podd",
     "providerSymbol": "PODD",
     "yahooSymbol": "PODD",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "POOL",
-    "name": "POOL Inc.",
+    "name": "Pool Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "pool",
     "providerSymbol": "POOL",
     "yahooSymbol": "POOL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PPG",
-    "name": "PPG Inc.",
-    "exchange": "NASDAQ",
+    "name": "PPG Industries, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "ppg",
     "providerSymbol": "PPG",
     "yahooSymbol": "PPG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PPL",
-    "name": "PPL Inc.",
-    "exchange": "NASDAQ",
+    "name": "PPL Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "ppl",
     "providerSymbol": "PPL",
     "yahooSymbol": "PPL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PRU",
-    "name": "PRU Inc.",
+    "name": "Prudential Financial, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "pru",
     "providerSymbol": "PRU",
@@ -5004,60 +5312,65 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PSA",
-    "name": "PSA Inc.",
-    "exchange": "NASDAQ",
+    "name": "Public Storage Common Stock",
+    "exchange": "NYSE",
     "slug": "psa",
     "providerSymbol": "PSA",
     "yahooSymbol": "PSA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PSX",
-    "name": "PSX Inc.",
-    "exchange": "NASDAQ",
+    "name": "Phillips 66 Common Stock",
+    "exchange": "NYSE",
     "slug": "psx",
     "providerSymbol": "PSX",
     "yahooSymbol": "PSX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PTC",
-    "name": "PTC Inc.",
+    "name": "PTC Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ptc",
     "providerSymbol": "PTC",
     "yahooSymbol": "PTC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PWR",
-    "name": "PWR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Quanta Services, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "pwr",
     "providerSymbol": "PWR",
     "yahooSymbol": "PWR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "PYPL",
-    "name": "PYPL Inc.",
+    "name": "PayPal Holdings, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "pypl",
     "providerSymbol": "PYPL",
@@ -5065,12 +5378,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "QCOM",
-    "name": "QCOM Inc.",
+    "name": "QUALCOMM Incorporated - Common Stock",
     "exchange": "NASDAQ",
     "slug": "qcom",
     "providerSymbol": "QCOM",
@@ -5078,60 +5392,65 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "QRVO",
-    "name": "QRVO Inc.",
+    "name": "Qorvo, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "qrvo",
     "providerSymbol": "QRVO",
     "yahooSymbol": "QRVO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RCL",
-    "name": "RCL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Royal Caribbean Cruises Ltd. Common Stock",
+    "exchange": "NYSE",
     "slug": "rcl",
     "providerSymbol": "RCL",
     "yahooSymbol": "RCL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RDDT",
-    "name": "Reddit, Inc.",
+    "name": "Reddit, Inc. Class A Common Stock",
     "exchange": "NYSE",
     "slug": "rddt",
     "providerSymbol": "RDDT",
     "yahooSymbol": "RDDT",
     "memberships": [
       "extra"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "REG",
-    "name": "REG Inc.",
+    "name": "Regency Centers Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "reg",
     "providerSymbol": "REG",
     "yahooSymbol": "REG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "REGN",
-    "name": "REGN Inc.",
+    "name": "Regeneron Pharmaceuticals, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "regn",
     "providerSymbol": "REGN",
@@ -5139,120 +5458,130 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RF",
-    "name": "RF Inc.",
-    "exchange": "NASDAQ",
+    "name": "Regions Financial Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "rf",
     "providerSymbol": "RF",
     "yahooSymbol": "RF",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RHI",
-    "name": "RHI Inc.",
-    "exchange": "NASDAQ",
+    "name": "Robert Half Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "rhi",
     "providerSymbol": "RHI",
     "yahooSymbol": "RHI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RIVN",
-    "name": "Rivian Automotive, Inc.",
+    "name": "Rivian Automotive, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "rivn",
     "providerSymbol": "RIVN",
     "yahooSymbol": "RIVN",
     "memberships": [
       "extra"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RJF",
-    "name": "RJF Inc.",
-    "exchange": "NASDAQ",
+    "name": "Raymond James Financial, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "rjf",
     "providerSymbol": "RJF",
     "yahooSymbol": "RJF",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RL",
-    "name": "RL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Ralph Lauren Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "rl",
     "providerSymbol": "RL",
     "yahooSymbol": "RL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RMD",
-    "name": "RMD Inc.",
-    "exchange": "NASDAQ",
+    "name": "ResMed Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "rmd",
     "providerSymbol": "RMD",
     "yahooSymbol": "RMD",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ROK",
-    "name": "ROK Inc.",
-    "exchange": "NASDAQ",
+    "name": "Rockwell Automation, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "rok",
     "providerSymbol": "ROK",
     "yahooSymbol": "ROK",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ROL",
-    "name": "ROL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Rollins, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "rol",
     "providerSymbol": "ROL",
     "yahooSymbol": "ROL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ROP",
-    "name": "ROP Inc.",
+    "name": "Roper Technologies, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "rop",
     "providerSymbol": "ROP",
     "yahooSymbol": "ROP",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ROST",
-    "name": "ROST Inc.",
+    "name": "Ross Stores, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "rost",
     "providerSymbol": "ROST",
@@ -5260,24 +5589,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RSG",
-    "name": "RSG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Republic Services, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "rsg",
     "providerSymbol": "RSG",
     "yahooSymbol": "RSG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RTX",
-    "name": "RTX Inc.",
+    "name": "RTX Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "rtx",
     "providerSymbol": "RTX",
@@ -5285,36 +5616,39 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "RVTY",
-    "name": "RVTY Inc.",
-    "exchange": "NASDAQ",
+    "name": "Revvity, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "rvty",
     "providerSymbol": "RVTY",
     "yahooSymbol": "RVTY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SBAC",
-    "name": "SBAC Inc.",
+    "name": "SBA Communications Corporation - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "sbac",
     "providerSymbol": "SBAC",
     "yahooSymbol": "SBAC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SBUX",
-    "name": "SBUX Inc.",
+    "name": "Starbucks Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "sbux",
     "providerSymbol": "SBUX",
@@ -5322,12 +5656,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SCHW",
-    "name": "SCHW Inc.",
+    "name": "Charles Schwab Corporation (The) Common Stock",
     "exchange": "NYSE",
     "slug": "schw",
     "providerSymbol": "SCHW",
@@ -5335,12 +5670,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SHW",
-    "name": "SHW Inc.",
+    "name": "Sherwin-Williams Company (The) Common Stock",
     "exchange": "NYSE",
     "slug": "shw",
     "providerSymbol": "SHW",
@@ -5349,24 +5685,26 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SJM",
-    "name": "SJM Inc.",
-    "exchange": "NASDAQ",
+    "name": "The J.M. Smucker Company Common Stock",
+    "exchange": "NYSE",
     "slug": "sjm",
     "providerSymbol": "SJM",
     "yahooSymbol": "SJM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SLB",
-    "name": "SLB Inc.",
+    "name": "SLB Limited Common Shares",
     "exchange": "NYSE",
     "slug": "slb",
     "providerSymbol": "SLB",
@@ -5374,36 +5712,39 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SMCI",
-    "name": "SMCI Inc.",
+    "name": "Super Micro Computer, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "smci",
     "providerSymbol": "SMCI",
     "yahooSymbol": "SMCI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SNA",
-    "name": "SNA Inc.",
-    "exchange": "NASDAQ",
+    "name": "Snap-On Incorporated Common Stock",
+    "exchange": "NYSE",
     "slug": "sna",
     "providerSymbol": "SNA",
     "yahooSymbol": "SNA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SNPS",
-    "name": "SNPS Inc.",
+    "name": "Synopsys, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "snps",
     "providerSymbol": "SNPS",
@@ -5411,12 +5752,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SO",
-    "name": "SO Inc.",
+    "name": "Southern Company (The) Common Stock",
     "exchange": "NYSE",
     "slug": "so",
     "providerSymbol": "SO",
@@ -5424,24 +5766,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SOFI",
-    "name": "SoFi Technologies, Inc.",
+    "name": "SoFi Technologies, Inc.  - Common Stock",
     "exchange": "NASDAQ",
     "slug": "sofi",
     "providerSymbol": "SOFI",
     "yahooSymbol": "SOFI",
     "memberships": [
       "extra"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SPG",
-    "name": "SPG Inc.",
+    "name": "Simon Property Group, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "spg",
     "providerSymbol": "SPG",
@@ -5449,12 +5793,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SPGI",
-    "name": "SPGI Inc.",
+    "name": "S&P Global Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "spgi",
     "providerSymbol": "SPGI",
@@ -5462,120 +5807,130 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SRE",
-    "name": "SRE Inc.",
-    "exchange": "NASDAQ",
+    "name": "DBA Sempra Common Stock",
+    "exchange": "NYSE",
     "slug": "sre",
     "providerSymbol": "SRE",
     "yahooSymbol": "SRE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "STE",
-    "name": "STE Inc.",
-    "exchange": "NASDAQ",
+    "name": "STERIS plc (Ireland) Ordinary Shares",
+    "exchange": "NYSE",
     "slug": "ste",
     "providerSymbol": "STE",
     "yahooSymbol": "STE",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "STLD",
-    "name": "STLD Inc.",
+    "name": "Steel Dynamics, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "stld",
     "providerSymbol": "STLD",
     "yahooSymbol": "STLD",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "STT",
-    "name": "STT Inc.",
-    "exchange": "NASDAQ",
+    "name": "State Street Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "stt",
     "providerSymbol": "STT",
     "yahooSymbol": "STT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "STX",
-    "name": "STX Inc.",
+    "name": "Seagate Technology Holdings PLC - Ordinary Shares (Ireland)",
     "exchange": "NASDAQ",
     "slug": "stx",
     "providerSymbol": "STX",
     "yahooSymbol": "STX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "STZ",
-    "name": "STZ Inc.",
-    "exchange": "NASDAQ",
+    "name": "Constellation Brands, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "stz",
     "providerSymbol": "STZ",
     "yahooSymbol": "STZ",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SWK",
-    "name": "SWK Inc.",
-    "exchange": "NASDAQ",
+    "name": "Stanley Black & Decker, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "swk",
     "providerSymbol": "SWK",
     "yahooSymbol": "SWK",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SWKS",
-    "name": "SWKS Inc.",
+    "name": "Skyworks Solutions, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "swks",
     "providerSymbol": "SWKS",
     "yahooSymbol": "SWKS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SYF",
-    "name": "SYF Inc.",
-    "exchange": "NASDAQ",
+    "name": "Synchrony Financial Common Stock",
+    "exchange": "NYSE",
     "slug": "syf",
     "providerSymbol": "SYF",
     "yahooSymbol": "SYF",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SYK",
-    "name": "SYK Inc.",
+    "name": "Stryker Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "syk",
     "providerSymbol": "SYK",
@@ -5583,24 +5938,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "SYY",
-    "name": "SYY Inc.",
-    "exchange": "NASDAQ",
+    "name": "Sysco Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "syy",
     "providerSymbol": "SYY",
     "yahooSymbol": "SYY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "T",
-    "name": "T Inc.",
+    "name": "AT&T Inc.",
     "exchange": "NYSE",
     "slug": "t",
     "providerSymbol": "T",
@@ -5608,132 +5965,143 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TAP",
-    "name": "TAP Inc.",
-    "exchange": "NASDAQ",
+    "name": "Molson Coors Beverage Company Class B Common Stock",
+    "exchange": "NYSE",
     "slug": "tap",
     "providerSymbol": "TAP",
     "yahooSymbol": "TAP",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TDG",
-    "name": "TDG Inc.",
-    "exchange": "NASDAQ",
+    "name": "Transdigm Group Incorporated Common Stock",
+    "exchange": "NYSE",
     "slug": "tdg",
     "providerSymbol": "TDG",
     "yahooSymbol": "TDG",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TDY",
-    "name": "TDY Inc.",
-    "exchange": "NASDAQ",
+    "name": "Teledyne Technologies Incorporated Common Stock",
+    "exchange": "NYSE",
     "slug": "tdy",
     "providerSymbol": "TDY",
     "yahooSymbol": "TDY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TEAM",
-    "name": "TEAM Inc.",
+    "name": "Atlassian Corporation  - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "team",
     "providerSymbol": "TEAM",
     "yahooSymbol": "TEAM",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TECH",
-    "name": "TECH Inc.",
+    "name": "Bio-Techne Corp - Common Stock",
     "exchange": "NASDAQ",
     "slug": "tech",
     "providerSymbol": "TECH",
     "yahooSymbol": "TECH",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TEL",
-    "name": "TEL Inc.",
-    "exchange": "NASDAQ",
+    "name": "TE Connectivity plc Ordinary Shares",
+    "exchange": "NYSE",
     "slug": "tel",
     "providerSymbol": "TEL",
     "yahooSymbol": "TEL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TER",
-    "name": "TER Inc.",
+    "name": "Teradyne, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ter",
     "providerSymbol": "TER",
     "yahooSymbol": "TER",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TFC",
-    "name": "TFC Inc.",
-    "exchange": "NASDAQ",
+    "name": "Truist Financial Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "tfc",
     "providerSymbol": "TFC",
     "yahooSymbol": "TFC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TFX",
-    "name": "TFX Inc.",
-    "exchange": "NASDAQ",
+    "name": "Teleflex Incorporated Common Stock",
+    "exchange": "NYSE",
     "slug": "tfx",
     "providerSymbol": "TFX",
     "yahooSymbol": "TFX",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TGT",
-    "name": "TGT Inc.",
-    "exchange": "NASDAQ",
+    "name": "Target Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "tgt",
     "providerSymbol": "TGT",
     "yahooSymbol": "TGT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TJX",
-    "name": "TJX Inc.",
+    "name": "TJX Companies, Inc. (The) Common Stock",
     "exchange": "NYSE",
     "slug": "tjx",
     "providerSymbol": "TJX",
@@ -5741,12 +6109,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TMO",
-    "name": "TMO Inc.",
+    "name": "Thermo Fisher Scientific Inc Common Stock",
     "exchange": "NYSE",
     "slug": "tmo",
     "providerSymbol": "TMO",
@@ -5754,12 +6123,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TMUS",
-    "name": "TMUS Inc.",
+    "name": "T-Mobile US, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "tmus",
     "providerSymbol": "TMUS",
@@ -5767,60 +6137,65 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TPR",
-    "name": "TPR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Tapestry, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "tpr",
     "providerSymbol": "TPR",
     "yahooSymbol": "TPR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TRGP",
-    "name": "TRGP Inc.",
-    "exchange": "NASDAQ",
+    "name": "Targa Resources, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "trgp",
     "providerSymbol": "TRGP",
     "yahooSymbol": "TRGP",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TRMB",
-    "name": "TRMB Inc.",
+    "name": "Trimble Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "trmb",
     "providerSymbol": "TRMB",
     "yahooSymbol": "TRMB",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TROW",
-    "name": "TROW Inc.",
+    "name": "T. Rowe Price Group, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "trow",
     "providerSymbol": "TROW",
     "yahooSymbol": "TROW",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TRV",
-    "name": "TRV Inc.",
+    "name": "The Travelers Companies, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "trv",
     "providerSymbol": "TRV",
@@ -5829,24 +6204,26 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TSCO",
-    "name": "TSCO Inc.",
+    "name": "Tractor Supply Company - Common Stock",
     "exchange": "NASDAQ",
     "slug": "tsco",
     "providerSymbol": "TSCO",
     "yahooSymbol": "TSCO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TSLA",
-    "name": "Tesla, Inc.",
+    "name": "Tesla, Inc.  - Common Stock",
     "exchange": "NASDAQ",
     "slug": "tsla",
     "providerSymbol": "TSLA",
@@ -5854,60 +6231,65 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TSN",
-    "name": "TSN Inc.",
-    "exchange": "NASDAQ",
+    "name": "Tyson Foods, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "tsn",
     "providerSymbol": "TSN",
     "yahooSymbol": "TSN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TT",
-    "name": "TT Inc.",
-    "exchange": "NASDAQ",
+    "name": "Trane Technologies plc",
+    "exchange": "NYSE",
     "slug": "tt",
     "providerSymbol": "TT",
     "yahooSymbol": "TT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TTD",
-    "name": "TTD Inc.",
+    "name": "The Trade Desk, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "ttd",
     "providerSymbol": "TTD",
     "yahooSymbol": "TTD",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TTWO",
-    "name": "TTWO Inc.",
+    "name": "Take-Two Interactive Software, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ttwo",
     "providerSymbol": "TTWO",
     "yahooSymbol": "TTWO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TXN",
-    "name": "TXN Inc.",
+    "name": "Texas Instruments Incorporated - Common Stock",
     "exchange": "NASDAQ",
     "slug": "txn",
     "providerSymbol": "TXN",
@@ -5915,96 +6297,104 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TXT",
-    "name": "TXT Inc.",
-    "exchange": "NASDAQ",
+    "name": "Textron Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "txt",
     "providerSymbol": "TXT",
     "yahooSymbol": "TXT",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "TYL",
-    "name": "TYL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Tyler Technologies, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "tyl",
     "providerSymbol": "TYL",
     "yahooSymbol": "TYL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "UAL",
-    "name": "UAL Inc.",
+    "name": "United Airlines Holdings, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ual",
     "providerSymbol": "UAL",
     "yahooSymbol": "UAL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "UBER",
-    "name": "UBER Inc.",
-    "exchange": "NASDAQ",
+    "name": "Uber Technologies, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "uber",
     "providerSymbol": "UBER",
     "yahooSymbol": "UBER",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "UDR",
-    "name": "UDR Inc.",
-    "exchange": "NASDAQ",
+    "name": "UDR, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "udr",
     "providerSymbol": "UDR",
     "yahooSymbol": "UDR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "UHS",
-    "name": "UHS Inc.",
-    "exchange": "NASDAQ",
+    "name": "Universal Health Services, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "uhs",
     "providerSymbol": "UHS",
     "yahooSymbol": "UHS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ULTA",
-    "name": "ULTA Inc.",
+    "name": "Ulta Beauty, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "ulta",
     "providerSymbol": "ULTA",
     "yahooSymbol": "ULTA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "UNH",
-    "name": "UnitedHealth Group Incorporated",
+    "name": "UnitedHealth Group Incorporated Common Stock (DE)",
     "exchange": "NYSE",
     "slug": "unh",
     "providerSymbol": "UNH",
@@ -6013,12 +6403,13 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "UNP",
-    "name": "UNP Inc.",
+    "name": "Union Pacific Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "unp",
     "providerSymbol": "UNP",
@@ -6026,12 +6417,13 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "UPS",
-    "name": "UPS Inc.",
+    "name": "United Parcel Service, Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "ups",
     "providerSymbol": "UPS",
@@ -6039,24 +6431,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "URI",
-    "name": "URI Inc.",
-    "exchange": "NASDAQ",
+    "name": "United Rentals, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "uri",
     "providerSymbol": "URI",
     "yahooSymbol": "URI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "USB",
-    "name": "USB Inc.",
+    "name": "U.S. Bancorp Common Stock",
     "exchange": "NYSE",
     "slug": "usb",
     "providerSymbol": "USB",
@@ -6064,7 +6458,8 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
@@ -6078,72 +6473,78 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VICI",
-    "name": "VICI Inc.",
-    "exchange": "NASDAQ",
+    "name": "VICI Properties Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "vici",
     "providerSymbol": "VICI",
     "yahooSymbol": "VICI",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VLO",
-    "name": "VLO Inc.",
-    "exchange": "NASDAQ",
+    "name": "Valero Energy Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "vlo",
     "providerSymbol": "VLO",
     "yahooSymbol": "VLO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VLTO",
-    "name": "VLTO Inc.",
-    "exchange": "NASDAQ",
+    "name": "Veralto Corp Common Stock",
+    "exchange": "NYSE",
     "slug": "vlto",
     "providerSymbol": "VLTO",
     "yahooSymbol": "VLTO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VMC",
-    "name": "VMC Inc.",
-    "exchange": "NASDAQ",
+    "name": "Vulcan Materials Company (Holding Company) Common Stock",
+    "exchange": "NYSE",
     "slug": "vmc",
     "providerSymbol": "VMC",
     "yahooSymbol": "VMC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VNO",
-    "name": "VNO Inc.",
-    "exchange": "NASDAQ",
+    "name": "Vornado Realty Trust Common Stock",
+    "exchange": "NYSE",
     "slug": "vno",
     "providerSymbol": "VNO",
     "yahooSymbol": "VNO",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VRSK",
-    "name": "VRSK Inc.",
+    "name": "Verisk Analytics, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "vrsk",
     "providerSymbol": "VRSK",
@@ -6151,24 +6552,26 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VRSN",
-    "name": "VRSN Inc.",
+    "name": "VeriSign, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "vrsn",
     "providerSymbol": "VRSN",
     "yahooSymbol": "VRSN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VRTX",
-    "name": "VRTX Inc.",
+    "name": "Vertex Pharmaceuticals Incorporated - Common Stock",
     "exchange": "NASDAQ",
     "slug": "vrtx",
     "providerSymbol": "VRTX",
@@ -6176,48 +6579,52 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VST",
-    "name": "VST Inc.",
-    "exchange": "NASDAQ",
+    "name": "Vistra Corp. Common Stock",
+    "exchange": "NYSE",
     "slug": "vst",
     "providerSymbol": "VST",
     "yahooSymbol": "VST",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VTR",
-    "name": "VTR Inc.",
-    "exchange": "NASDAQ",
+    "name": "Ventas, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "vtr",
     "providerSymbol": "VTR",
     "yahooSymbol": "VTR",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VTRS",
-    "name": "VTRS Inc.",
+    "name": "Viatris Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "vtrs",
     "providerSymbol": "VTRS",
     "yahooSymbol": "VTRS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "VZ",
-    "name": "VZ Inc.",
+    "name": "Verizon Communications Inc. Common Stock",
     "exchange": "NYSE",
     "slug": "vz",
     "providerSymbol": "VZ",
@@ -6226,48 +6633,39 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WAB",
-    "name": "WAB Inc.",
-    "exchange": "NASDAQ",
+    "name": "Westinghouse Air Brake Technologies Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "wab",
     "providerSymbol": "WAB",
     "yahooSymbol": "WAB",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WAT",
-    "name": "WAT Inc.",
-    "exchange": "NASDAQ",
+    "name": "Waters Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "wat",
     "providerSymbol": "WAT",
     "yahooSymbol": "WAT",
     "memberships": [
       "sp500"
-    ]
-  },
-  {
-    "market": "us",
-    "ticker": "WBA",
-    "name": "WBA Inc.",
-    "exchange": "NASDAQ",
-    "slug": "wba",
-    "providerSymbol": "WBA",
-    "yahooSymbol": "WBA",
-    "memberships": [
-      "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WBD",
-    "name": "WBD Inc.",
+    "name": "Warner Bros. Discovery, Inc. - Series A Common Stock",
     "exchange": "NASDAQ",
     "slug": "wbd",
     "providerSymbol": "WBD",
@@ -6275,60 +6673,65 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WDAY",
-    "name": "WDAY Inc.",
+    "name": "Workday, Inc. - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "wday",
     "providerSymbol": "WDAY",
     "yahooSymbol": "WDAY",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WDC",
-    "name": "WDC Inc.",
+    "name": "Western Digital Corporation - Common Stock",
     "exchange": "NASDAQ",
     "slug": "wdc",
     "providerSymbol": "WDC",
     "yahooSymbol": "WDC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WEC",
-    "name": "WEC Inc.",
-    "exchange": "NASDAQ",
+    "name": "WEC Energy Group, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "wec",
     "providerSymbol": "WEC",
     "yahooSymbol": "WEC",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WELL",
-    "name": "WELL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Welltower Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "well",
     "providerSymbol": "WELL",
     "yahooSymbol": "WELL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WFC",
-    "name": "WFC Inc.",
+    "name": "Wells Fargo & Company Common Stock",
     "exchange": "NYSE",
     "slug": "wfc",
     "providerSymbol": "WFC",
@@ -6336,24 +6739,26 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WM",
-    "name": "WM Inc.",
-    "exchange": "NASDAQ",
+    "name": "Waste Management, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "wm",
     "providerSymbol": "WM",
     "yahooSymbol": "WM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WMB",
-    "name": "WMB Inc.",
+    "name": "Williams Companies, Inc. (The) Common Stock",
     "exchange": "NYSE",
     "slug": "wmb",
     "providerSymbol": "WMB",
@@ -6361,13 +6766,14 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WMT",
-    "name": "Walmart Inc.",
-    "exchange": "NYSE",
+    "name": "Walmart Inc. - Common Stock",
+    "exchange": "NASDAQ",
     "slug": "wmt",
     "providerSymbol": "WMT",
     "yahooSymbol": "WMT",
@@ -6375,72 +6781,78 @@
       "sp500",
       "nyse_us100",
       "djia"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WRB",
-    "name": "WRB Inc.",
-    "exchange": "NASDAQ",
+    "name": "W.R. Berkley Corporation Common Stock",
+    "exchange": "NYSE",
     "slug": "wrb",
     "providerSymbol": "WRB",
     "yahooSymbol": "WRB",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WST",
-    "name": "WST Inc.",
-    "exchange": "NASDAQ",
+    "name": "West Pharmaceutical Services, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "wst",
     "providerSymbol": "WST",
     "yahooSymbol": "WST",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WTW",
-    "name": "WTW Inc.",
+    "name": "Willis Towers Watson Public Limited Company - Ordinary Shares",
     "exchange": "NASDAQ",
     "slug": "wtw",
     "providerSymbol": "WTW",
     "yahooSymbol": "WTW",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WY",
-    "name": "WY Inc.",
-    "exchange": "NASDAQ",
+    "name": "Weyerhaeuser Company Common Stock",
+    "exchange": "NYSE",
     "slug": "wy",
     "providerSymbol": "WY",
     "yahooSymbol": "WY",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "WYNN",
-    "name": "WYNN Inc.",
+    "name": "Wynn Resorts, Limited - Common Stock",
     "exchange": "NASDAQ",
     "slug": "wynn",
     "providerSymbol": "WYNN",
     "yahooSymbol": "WYNN",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "XEL",
-    "name": "XEL Inc.",
+    "name": "Xcel Energy Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "xel",
     "providerSymbol": "XEL",
@@ -6448,12 +6860,13 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "XOM",
-    "name": "Exxon Mobil Corporation",
+    "name": "ExxonMobil Holdings Corporation Common Stock",
     "exchange": "NYSE",
     "slug": "xom",
     "providerSymbol": "XOM",
@@ -6461,78 +6874,85 @@
     "memberships": [
       "sp500",
       "nyse_us100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "XYL",
-    "name": "XYL Inc.",
-    "exchange": "NASDAQ",
+    "name": "Xylem Inc. Common Stock New",
+    "exchange": "NYSE",
     "slug": "xyl",
     "providerSymbol": "XYL",
     "yahooSymbol": "XYL",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "YUM",
-    "name": "YUM Inc.",
-    "exchange": "NASDAQ",
+    "name": "Yum! Brands, Inc.",
+    "exchange": "NYSE",
     "slug": "yum",
     "providerSymbol": "YUM",
     "yahooSymbol": "YUM",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ZBH",
-    "name": "ZBH Inc.",
-    "exchange": "NASDAQ",
+    "name": "Zimmer Biomet Holdings, Inc. Common Stock",
+    "exchange": "NYSE",
     "slug": "zbh",
     "providerSymbol": "ZBH",
     "yahooSymbol": "ZBH",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ZBRA",
-    "name": "ZBRA Inc.",
+    "name": "Zebra Technologies Corporation - Class A Common Stock",
     "exchange": "NASDAQ",
     "slug": "zbra",
     "providerSymbol": "ZBRA",
     "yahooSymbol": "ZBRA",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ZS",
-    "name": "ZS Inc.",
+    "name": "Zscaler, Inc. - Common Stock",
     "exchange": "NASDAQ",
     "slug": "zs",
     "providerSymbol": "ZS",
     "yahooSymbol": "ZS",
     "memberships": [
       "nasdaq100"
-    ]
+    ],
+    "provider": "fintable"
   },
   {
     "market": "us",
     "ticker": "ZTS",
-    "name": "ZTS Inc.",
-    "exchange": "NASDAQ",
+    "name": "Zoetis Inc. Class A Common Stock",
+    "exchange": "NYSE",
     "slug": "zts",
     "providerSymbol": "ZTS",
     "yahooSymbol": "ZTS",
     "memberships": [
       "sp500"
-    ]
+    ],
+    "provider": "fintable"
   }
 ]
