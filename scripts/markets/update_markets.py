@@ -186,7 +186,6 @@ def parse_spark(payload: dict[str, Any], *, interval: str, since: int = SINCE_TS
         response = (result.get("response") or [{}])[0]
         timestamps = response.get("timestamp") or []
         quote = ((response.get("indicators") or {}).get("quote") or [{}])[0]
-        adjusted = ((response.get("indicators") or {}).get("adjclose") or [{}])[0].get("adjclose") or []
         candles: list[dict[str, Any]] = []
         for index, timestamp in enumerate(timestamps):
             if not isinstance(timestamp, int) or timestamp < since:
@@ -194,16 +193,7 @@ def parse_spark(payload: dict[str, Any], *, interval: str, since: int = SINCE_TS
             close = (quote.get("close") or [])[index] if index < len(quote.get("close") or []) else None
             if not isinstance(close, (int, float)) or not math.isfinite(close):
                 continue
-            candle = {
-                "t": timestamp,
-                "o": _compact_number((quote.get("open") or [None] * len(timestamps))[index]),
-                "h": _compact_number((quote.get("high") or [None] * len(timestamps))[index]),
-                "l": _compact_number((quote.get("low") or [None] * len(timestamps))[index]),
-                "c": _compact_number(close),
-                "a": _compact_number(adjusted[index] if index < len(adjusted) else close),
-                "v": _compact_number((quote.get("volume") or [None] * len(timestamps))[index]),
-            }
-            candles.append(candle)
+            candles.append({"t": timestamp, "c": _compact_number(close)})
         if symbol:
             parsed[symbol] = candles
     return parsed
@@ -228,12 +218,25 @@ def _rsi(closes: list[float], sessions: int = 14) -> float | None:
     return 100 - (100 / (1 + gains / losses))
 
 
-def compute_metrics(candles: list[dict[str, Any]], *, annualization: int) -> dict[str, Any]:
+def _trend_age(closes: list[float], sessions: int) -> int | None:
+    if len(closes) < sessions:
+        return None
+    age = 0
+    for end in range(len(closes), sessions - 1, -1):
+        window = closes[end - sessions:end]
+        if closes[end - 1] <= statistics.fmean(window):
+            break
+        age += 1
+    return age
+
+
+def compute_metrics(candles: list[dict[str, Any]], *, annualization: int, four_hour: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     valid = [row for row in candles if isinstance(row.get("c"), (int, float)) and row["c"] > 0]
     closes = [float(row["c"]) for row in valid]
-    volumes = [float(row.get("v") or 0) for row in valid]
     if not closes:
-        return {"latest": None}
+        return {"latest": None, "historySessions": 0, "dataQuality": {
+            "dailyClose": "unavailable", "fourHour": "unavailable", "ohlcv": "unavailable", "history": "unavailable",
+        }}
     log_returns = [math.log(right / left) for left, right in zip(closes[:-1], closes[1:]) if left > 0 and right > 0]
     vol_window = log_returns[-20:]
     volatility = statistics.stdev(vol_window) * math.sqrt(annualization) if len(vol_window) > 1 else None
@@ -243,30 +246,66 @@ def compute_metrics(candles: list[dict[str, Any]], *, annualization: int) -> dic
     for close in recent_year:
         peak = max(peak, close)
         drawdown = min(drawdown, close / peak - 1)
-    prior_volumes = volumes[-21:-1]
-    volume_z = None
-    if prior_volumes:
-        average = statistics.fmean(prior_volumes)
-        deviation = statistics.stdev(prior_volumes) if len(prior_volumes) > 1 else 0
-        volume_z = (volumes[-1] - average) / deviation if deviation > 0 else (99.0 if volumes[-1] > average else 0.0)
     latest = closes[-1]
     sma20, sma50, sma200 = (_sma(closes, size) for size in (20, 50, 200))
-    high = max(recent_year)
+    sma50_prev = _sma(closes[:-1], 50)
+    sma200_prev = _sma(closes[:-1], 200)
+    cross = "none"
+    if None not in (sma50, sma200, sma50_prev, sma200_prev):
+        previous_gap = float(sma50_prev) - float(sma200_prev)
+        current_gap = float(sma50) - float(sma200)
+        if previous_gap <= 0 < current_gap:
+            cross = "golden"
+        elif previous_gap >= 0 > current_gap:
+            cross = "death"
+    regime = "insufficient-history"
+    if None not in (sma20, sma50, sma200):
+        previous_close = closes[-2] if len(closes) > 1 else latest
+        if previous_close <= float(sma50_prev or sma50) and latest > float(sma50):
+            regime = "recovery"
+        elif previous_close >= float(sma200_prev or sma200) and latest < float(sma200):
+            regime = "breakdown"
+        elif latest > float(sma20) > float(sma50) > float(sma200):
+            regime = "strong-uptrend"
+        elif latest < float(sma20) < float(sma50) < float(sma200):
+            regime = "downtrend"
+        elif latest < float(sma20) and latest > float(sma50) > float(sma200):
+            regime = "uptrend-weakening"
+        elif abs(float(sma50) - float(sma200)) / float(sma200) <= 0.02:
+            regime = "transition"
+        else:
+            regime = "mixed"
+    low, high = min(recent_year), max(recent_year)
+    range_position = (latest - low) / (high - low) if high > low else 0.5
+    four_hour_rows = four_hour or []
     return {
         "latest": round(latest, 8), "return1d": _returns(closes, 1), "return7d": _returns(closes, 5),
         "return30d": _returns(closes, 21), "return90d": _returns(closes, 63), "return1y": _returns(closes, 252),
-        "volatility20": volatility, "volumeZ20": volume_z, "rsi14": _rsi(closes),
-        "drawdown1y": drawdown, "distanceFrom52wHigh": latest / high - 1,
-        "sma20": sma20, "sma50": sma50, "sma200": sma200,
+        "volatility20": volatility, "rsi14": _rsi(closes), "drawdown1y": drawdown,
+        "distanceFrom52wHigh": latest / high - 1, "rangePosition52w": range_position,
+        "sma20": sma20, "sma50": sma50, "sma200": sma200, "sma50Prev": sma50_prev, "sma200Prev": sma200_prev,
+        "smaCross": cross, "trendRegime": regime, "trendAge50": _trend_age(closes, 50), "historySessions": len(closes),
+        "spark30": [round(value, 8) for value in closes[-30:]],
         "aboveSma20": latest > sma20 if sma20 is not None else None,
         "aboveSma50": latest > sma50 if sma50 is not None else None,
         "aboveSma200": latest > sma200 if sma200 is not None else None,
+        "dataQuality": {
+            "dailyClose": "complete", "fourHour": "complete" if four_hour_rows else "unavailable",
+            "ohlcv": "unavailable", "history": "complete" if len(closes) >= 252 else "limited",
+        },
     }
 
 
 def merge_candles(existing: list[dict[str, Any]], incoming: list[dict[str, Any]], *, keep_since: int = SINCE_TS) -> list[dict[str, Any]]:
-    merged = {row["t"]: row for row in existing if row.get("t", 0) >= keep_since}
-    merged.update({row["t"]: row for row in incoming if row.get("t", 0) >= keep_since})
+    def close_only(rows: list[dict[str, Any]]) -> dict[int, dict[str, Any]]:
+        return {
+            int(row["t"]): {"t": int(row["t"]), "c": _compact_number(row.get("c"))}
+            for row in rows
+            if isinstance(row.get("t"), (int, float)) and row.get("t", 0) >= keep_since
+            and isinstance(row.get("c"), (int, float)) and math.isfinite(row["c"])
+        }
+    merged = close_only(existing)
+    merged.update(close_only(incoming))
     return [merged[key] for key in sorted(merged)]
 
 
@@ -286,9 +325,154 @@ def write_json_atomic(path: Path, value: Any) -> None:
             os.unlink(temporary)
 
 
-def summary_row(instrument: dict[str, str], daily: list[dict[str, Any]], updated_at: str) -> dict[str, Any]:
+def summary_row(instrument: dict[str, str], daily: list[dict[str, Any]], updated_at: str, *, four_hour: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     annualization = 365 if instrument["market"] == "crypto" else 252
-    return {**instrument, **compute_metrics(daily, annualization=annualization), "updatedAt": updated_at}
+    return {**instrument, **compute_metrics(daily, annualization=annualization, four_hour=four_hour), "updatedAt": updated_at}
+
+
+def _median(values: list[float]) -> float | None:
+    return statistics.median(values) if values else None
+
+
+def _percentile(values: list[float], value: float) -> float:
+    if len(values) <= 1:
+        return 100.0
+    below = sum(candidate < value for candidate in values)
+    equal = sum(candidate == value for candidate in values)
+    return round(100 * (below + 0.5 * (equal - 1)) / (len(values) - 1), 2)
+
+
+def enrich_market_rows(rows: list[dict[str, Any]], *, market: str) -> dict[str, Any]:
+    benchmarks: dict[str, float | None] = {}
+    for key in ("return1d", "return7d", "return30d", "return90d"):
+        values = [float(row[key]) for row in rows if isinstance(row.get(key), (int, float)) and math.isfinite(row[key])]
+        benchmarks[key] = statistics.fmean(values) if values else None
+        for row in rows:
+            value = row.get(key)
+            if isinstance(value, (int, float)) and math.isfinite(value):
+                suffix = key.removeprefix("return")
+                row[f"percentile{suffix}"] = _percentile(values, float(value))
+                row[f"relativeStrength{suffix}"] = float(value) - float(benchmarks[key]) if benchmarks[key] is not None else None
+            else:
+                suffix = key.removeprefix("return")
+                row[f"percentile{suffix}"] = None
+                row[f"relativeStrength{suffix}"] = None
+    volatility_values = [float(row["volatility20"]) for row in rows if isinstance(row.get("volatility20"), (int, float)) and math.isfinite(row["volatility20"])]
+    for row in rows:
+        volatility = row.get("volatility20")
+        row["volatilityPercentile"] = _percentile(volatility_values, float(volatility)) if isinstance(volatility, (int, float)) and volatility_values else None
+        percentile30 = float(row.get("percentile30d") or 0)
+        percentile90 = float(row.get("percentile90d") or 0)
+        range_score = 100 * float(row.get("rangePosition52w") or 0)
+        trend_score = 100 if row.get("trendRegime") == "strong-uptrend" else 70 if row.get("aboveSma200") is True else 25
+        age_score = min(100.0, 2 * float(row.get("trendAge50") or 0))
+        risk_penalty = 0.15 * float(row.get("volatilityPercentile") or 0)
+        row["momentumQuality"] = round(max(0.0, min(100.0, 0.30 * percentile30 + 0.25 * percentile90 + 0.20 * trend_score + 0.15 * range_score + 0.10 * age_score - risk_penalty)), 2)
+        rsi_score = max(0.0, min(100.0, 100 - float(row.get("rsi14") if isinstance(row.get("rsi14"), (int, float)) else 50)))
+        return_score = 100 - float(row.get("percentile7d") or 50)
+        structural_penalty = 20 if row.get("aboveSma200") is False else 0
+        row["meanReversionScore"] = round(max(0.0, min(100.0, 0.35 * rsi_score + 0.25 * return_score + 0.25 * (100 - range_score) + 0.15 * float(row.get("volatilityPercentile") or 0) - structural_penalty)), 2)
+    observed = [row for row in rows if isinstance(row.get("return1d"), (int, float))]
+    above = lambda key: sum(row.get(key) is True for row in rows)
+    returns30 = [float(row["return30d"]) for row in rows if isinstance(row.get("return30d"), (int, float))]
+    pulse = {
+        "market": market, "instruments": len(rows), "observed1d": len(observed),
+        "advancing": sum(row["return1d"] > 0 for row in observed),
+        "declining": sum(row["return1d"] < 0 for row in observed),
+        "unchanged": sum(row["return1d"] == 0 for row in observed),
+        "aboveSma20": above("aboveSma20"), "aboveSma50": above("aboveSma50"), "aboveSma200": above("aboveSma200"),
+        "rsiOverbought": sum(isinstance(row.get("rsi14"), (int, float)) and row["rsi14"] > 70 for row in rows),
+        "rsiOversold": sum(isinstance(row.get("rsi14"), (int, float)) and row["rsi14"] < 30 for row in rows),
+        "newHighs52w": sum(isinstance(row.get("rangePosition52w"), (int, float)) and row["rangePosition52w"] >= 0.995 for row in rows),
+        "newLows52w": sum(isinstance(row.get("rangePosition52w"), (int, float)) and row["rangePosition52w"] <= 0.005 for row in rows),
+        "medianReturn1d": _median([float(row["return1d"]) for row in observed]),
+        "medianReturn30d": _median(returns30),
+        "returnSpread30d": max(returns30) - min(returns30) if returns30 else None,
+        "benchmark": benchmarks,
+    }
+    return pulse
+
+
+def _pearson(left: list[float], right: list[float]) -> float | None:
+    size = min(len(left), len(right))
+    if size < 3:
+        return None
+    a, b = left[-size:], right[-size:]
+    mean_a, mean_b = statistics.fmean(a), statistics.fmean(b)
+    numerator = sum((x - mean_a) * (y - mean_b) for x, y in zip(a, b))
+    denominator = math.sqrt(sum((x - mean_a) ** 2 for x in a) * sum((y - mean_b) ** 2 for y in b))
+    return numerator / denominator if denominator else None
+
+
+def crypto_correlations(price_series: dict[str, list[float]]) -> dict[str, Any]:
+    symbols = sorted(price_series)
+    returns = {
+        symbol: [math.log(right / left) for left, right in zip(values[:-1], values[1:]) if left > 0 and right > 0][-200:]
+        for symbol, values in price_series.items()
+    }
+    matrix = [[_pearson(returns[left], returns[right]) for right in symbols] for left in symbols]
+    pairs = [value for index, row in enumerate(matrix) for value in row[index + 1:] if value is not None]
+    btc_index = symbols.index("BTC") if "BTC" in symbols else None
+    btc = {symbol: matrix[btc_index][index] for index, symbol in enumerate(symbols)} if btc_index is not None else {}
+    return {"symbols": symbols, "matrix": matrix, "averageCorrelation": statistics.fmean(pairs) if pairs else None, "btcCorrelation": btc}
+
+
+def _append_pulse_snapshots(root: Path, completed_at: str, pulses: dict[str, dict[str, Any]]) -> None:
+    path = root / "snapshots" / "pulse.json"
+    current = read_json(path, {"snapshots": []})
+    snapshots = current.get("snapshots", [])
+    hour = completed_at[:13]
+    snapshots = [row for row in snapshots if not (row.get("completedAt", "").startswith(hour) and row.get("market") in pulses)]
+    for market, pulse in pulses.items():
+        snapshots.append({"completedAt": completed_at, **{key: value for key, value in pulse.items() if key != "benchmark"}})
+    snapshots.sort(key=lambda row: (row.get("completedAt", ""), row.get("market", "")))
+    write_json_atomic(path, {"snapshots": snapshots[-720:]})
+
+
+def _write_summary_chunks(root: Path, market: str, rows: list[dict[str, Any]], completed_at: str) -> None:
+    chunk_count = 16 if market == "us" else 1
+    buckets: list[list[dict[str, Any]]] = [[] for _ in range(chunk_count)]
+    for row in rows:
+        bucket = sum(row["slug"].encode("utf-8")) % chunk_count
+        buckets[bucket].append(row)
+    chunks = []
+    for index, bucket_rows in enumerate(buckets):
+        name = f"{index:02d}.json"
+        write_json_atomic(root / "summary" / market / name, {"market": market, "chunk": index, "rows": bucket_rows})
+        chunks.append({"path": name, "count": len(bucket_rows)})
+    write_json_atomic(root / "summary" / market / "index.json", {
+        "market": market, "completedAt": completed_at, "count": len(rows), "chunks": chunks,
+    })
+
+
+def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], completed_at: str, failed: list[str]) -> dict[str, dict[str, Any]]:
+    pulses: dict[str, dict[str, Any]] = {}
+    for market, rows in markets.items():
+        pulse = enrich_market_rows(rows, market=market)
+        pulse["completedAt"] = completed_at
+        pulses[market] = pulse
+        for row in rows:
+            write_json_atomic(root / "summary-items" / market / f"{row['slug']}.json", row)
+        write_json_atomic(root / "summary" / f"{market}.json", {"market": market, "completedAt": completed_at, "rows": rows})
+        _write_summary_chunks(root, market, rows, completed_at)
+        write_json_atomic(root / "pulse" / f"{market}.json", pulse)
+    crypto_series: dict[str, list[float]] = {}
+    for row in markets["crypto"]:
+        shard = read_json(root / "history" / "crypto" / f"{row['slug']}.json", {})
+        crypto_series[row["ticker"]] = [float(item["c"]) for item in shard.get("daily", []) if isinstance(item.get("c"), (int, float))]
+    write_json_atomic(root / "pulse" / "crypto-correlations.json", crypto_correlations(crypto_series))
+    health = {
+        "completedAt": completed_at, "counts": {key: len(value) for key, value in markets.items()},
+        "failedSymbols": failed, "status": "complete" if not failed else "partial",
+        "quality": {
+            "closeOnly": True, "ohlcv": "unavailable",
+            "fourHourUnavailable": sum(row.get("dataQuality", {}).get("fourHour") != "complete" for rows in markets.values() for row in rows),
+            "limitedHistory": sum(row.get("dataQuality", {}).get("history") == "limited" for rows in markets.values() for row in rows),
+        },
+    }
+    write_json_atomic(root / "health.json", health)
+    _append_pulse_snapshots(root, completed_at, pulses)
+    return pulses
 
 
 def publish_snapshot(root: Path, instruments: list[dict[str, str]], histories: dict[str, dict[str, list[dict[str, Any]]]], *, completed_at: str) -> None:
@@ -296,16 +480,24 @@ def publish_snapshot(root: Path, instruments: list[dict[str, str]], histories: d
     for instrument in instruments:
         history = histories.get(instrument["yahooSymbol"], {"daily": [], "fourHour": []})
         daily = history.get("daily", [])
+        four_hour = history.get("fourHour", [])
         shard = {**instrument, "startDate": dt.datetime.fromtimestamp(daily[0]["t"], dt.timezone.utc).date().isoformat() if daily else None,
-                 "updatedAt": completed_at, "daily": daily, "fourHour": history.get("fourHour", [])}
+                 "updatedAt": completed_at, "dataQuality": compute_metrics(daily, annualization=365 if instrument["market"] == "crypto" else 252, four_hour=four_hour).get("dataQuality", {}),
+                 "daily": merge_candles([], daily), "fourHour": merge_candles([], four_hour, keep_since=0)}
         write_json_atomic(root / "history" / instrument["market"] / f"{instrument['slug']}.json", shard)
-        summaries[instrument["market"]].append(summary_row(instrument, daily, completed_at))
+        item = summary_row(instrument, daily, completed_at, four_hour=four_hour)
+        write_json_atomic(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json", item)
+        summaries[instrument["market"]].append(item)
+    for rows in summaries.values():
+        rows.sort(key=lambda row: row["ticker"])
+    _publish_derived(root, summaries, completed_at, [])
     write_json_atomic(root / "instruments.json", instruments)
     write_json_atomic(root / "summary.json", {"markets": summaries})
     write_json_atomic(root / "manifest.json", {
-        "schemaVersion": 1, "source": "Yahoo Finance", "completedAt": completed_at,
+        "schemaVersion": 2, "source": "Yahoo Finance", "completedAt": completed_at,
         "coverageStart": "2019-01-01", "dailyInterval": "1d", "recentInterval": "4h",
-        "counts": {key: len(value) for key, value in summaries.items()}, "status": "complete",
+        "dataModel": "close-only", "counts": {key: len(value) for key, value in summaries.items()}, "status": "complete",
+        "files": {"summary": {"us": "summary/us/index.json", "crypto": "summary/crypto/index.json"}, "health": "health.json", "snapshots": "snapshots/pulse.json"},
     })
 
 
@@ -369,10 +561,11 @@ def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, dela
             if not merged_daily:
                 failed.append(instrument["yahooSymbol"])
                 continue
+            quality = compute_metrics(merged_daily, annualization=365 if instrument["market"] == "crypto" else 252, four_hour=merged_four).get("dataQuality", {})
             shard = {**instrument, "startDate": dt.datetime.fromtimestamp(merged_daily[0]["t"], dt.timezone.utc).date().isoformat(),
-                     "updatedAt": now, "daily": merged_daily, "fourHour": merged_four}
+                     "updatedAt": now, "dataQuality": quality, "daily": merged_daily, "fourHour": merged_four}
             write_json_atomic(path, shard)
-            write_json_atomic(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json", summary_row(instrument, merged_daily, now))
+            write_json_atomic(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json", summary_row(instrument, merged_daily, now, four_hour=merged_four))
             updated += 1
             if instrument["yahooSymbol"] in unavailable:
                 failed.append(instrument["yahooSymbol"])
@@ -383,6 +576,27 @@ def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, dela
     return updated, sorted(set(failed))
 
 
+def rebuild_derived(root: Path, instruments: list[dict[str, str]], *, completed_at: str) -> int:
+    rebuilt = 0
+    for instrument in instruments:
+        path = root / "history" / instrument["market"] / f"{instrument['slug']}.json"
+        shard = read_json(path, None)
+        if not shard:
+            continue
+        daily = merge_candles([], shard.get("daily", []))
+        four_hour = merge_candles([], shard.get("fourHour", []), keep_since=0)
+        if not daily:
+            continue
+        quality = compute_metrics(daily, annualization=365 if instrument["market"] == "crypto" else 252, four_hour=four_hour).get("dataQuality", {})
+        clean = {**instrument, "startDate": dt.datetime.fromtimestamp(daily[0]["t"], dt.timezone.utc).date().isoformat(),
+                 "updatedAt": shard.get("updatedAt", completed_at), "dataQuality": quality, "daily": daily, "fourHour": four_hour}
+        write_json_atomic(path, clean)
+        write_json_atomic(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json",
+                          summary_row(instrument, daily, clean["updatedAt"], four_hour=four_hour))
+        rebuilt += 1
+    return rebuilt
+
+
 def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, failed: list[str], *, slice_index: int | None = None, slice_count: int | None = None) -> None:
     markets: dict[str, list[dict[str, Any]]] = {"us": [], "crypto": []}
     for instrument in instruments:
@@ -391,13 +605,16 @@ def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, 
             markets[instrument["market"]].append(item)
     for key in markets:
         markets[key].sort(key=lambda row: row["ticker"])
+    _publish_derived(root, markets, completed_at, failed)
     write_json_atomic(root / "instruments.json", instruments)
+    # Compatibility payload for older clients; current frontends load one market shard only.
     write_json_atomic(root / "summary.json", {"markets": markets})
     manifest = {
-        "schemaVersion": 1, "source": "Yahoo Finance", "universeSource": "Nasdaq Trader symbol directory",
+        "schemaVersion": 2, "source": "Yahoo Finance", "universeSource": "Nasdaq Trader symbol directory",
         "completedAt": completed_at, "coverageStart": "2019-01-01", "dailyInterval": "1d", "recentInterval": "4h",
-        "counts": {key: len(value) for key, value in markets.items()}, "failedSymbols": failed,
+        "dataModel": "close-only", "counts": {key: len(value) for key, value in markets.items()}, "failedSymbols": failed,
         "status": "complete" if not failed else "partial", "usRefreshWindowHours": slice_count or 1,
+        "files": {"summary": {"us": "summary/us/index.json", "crypto": "summary/crypto/index.json"}, "pulse": {"us": "pulse/us.json", "crypto": "pulse/crypto.json"}, "health": "health.json", "snapshots": "snapshots/pulse.json"},
     }
     if slice_index is not None:
         manifest["usSlice"] = {"index": slice_index, "count": slice_count}
@@ -420,6 +637,12 @@ def run(args: argparse.Namespace) -> int:
             write_json_atomic(root / "instruments.json", instruments)
         else:
             instruments = read_json(root / "instruments.json", [])
+        if args.mode == "rebuild":
+            completed = utc_now()
+            rebuilt = rebuild_derived(root, instruments, completed_at=completed)
+            aggregate(root, instruments, completed, [])
+            print(f"[markets] rebuilt={rebuilt} failed=0 completedAt={completed}")
+            return 0
         if args.max_symbols:
             us = [row for row in instruments if row["market"] == "us"][:args.max_symbols]
             crypto = [row for row in instruments if row["market"] == "crypto"]
@@ -442,7 +665,7 @@ def run(args: argparse.Namespace) -> int:
 
 def parser() -> argparse.ArgumentParser:
     value = argparse.ArgumentParser(description=__doc__)
-    value.add_argument("--mode", choices=("bootstrap", "hourly"), default="hourly")
+    value.add_argument("--mode", choices=("bootstrap", "hourly", "rebuild"), default="hourly")
     value.add_argument("--data-root", default="/var/lib/aizanoi-markets/public")
     value.add_argument("--delay", type=float, default=2.5, help="Polite delay after each <=20-symbol Yahoo batch")
     value.add_argument("--slice-count", type=int, default=8, help="Hourly US slices; every stock refreshes within this many hours")
