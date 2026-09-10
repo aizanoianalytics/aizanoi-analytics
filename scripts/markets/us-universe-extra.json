@@ -1,12 +1,92 @@
 [
-  {"ticker":"PLTR","name":"Palantir Technologies Inc.","exchange":"NYSE"},
-  {"ticker":"ARM","name":"Arm Holdings plc","exchange":"NASDAQ"},
-  {"ticker":"COIN","name":"Coinbase Global, Inc.","exchange":"NASDAQ"},
-  {"ticker":"HOOD","name":"Robinhood Markets, Inc.","exchange":"NASDAQ"},
-  {"ticker":"RDDT","name":"Reddit, Inc.","exchange":"NYSE"},
-  {"ticker":"MSTR","name":"MicroStrategy Incorporated","exchange":"NASDAQ"},
-  {"ticker":"APP","name":"AppLovin Corporation","exchange":"NASDAQ"},
-  {"ticker":"ASTS","name":"AST SpaceMobile, Inc.","exchange":"NASDAQ"},
-  {"ticker":"RIVN","name":"Rivian Automotive, Inc.","exchange":"NASDAQ"},
-  {"ticker":"SOFI","name":"SoFi Technologies, Inc.","exchange":"NASDAQ"}
+  {
+    "ticker": "PLTR",
+    "name": "Palantir Technologies Inc.",
+    "exchange": "NYSE",
+    "provider": "fintable",
+    "providerSymbol": "PLTR",
+    "market": "us",
+    "slug": "pltr"
+  },
+  {
+    "ticker": "ARM",
+    "name": "Arm Holdings plc",
+    "exchange": "NASDAQ",
+    "provider": "fintable",
+    "providerSymbol": "ARM",
+    "market": "us",
+    "slug": "arm"
+  },
+  {
+    "ticker": "COIN",
+    "name": "Coinbase Global, Inc.",
+    "exchange": "NASDAQ",
+    "provider": "fintable",
+    "providerSymbol": "COIN",
+    "market": "us",
+    "slug": "coin"
+  },
+  {
+    "ticker": "HOOD",
+    "name": "Robinhood Markets, Inc.",
+    "exchange": "NASDAQ",
+    "provider": "fintable",
+    "providerSymbol": "HOOD",
+    "market": "us",
+    "slug": "hood"
+  },
+  {
+    "ticker": "RDDT",
+    "name": "Reddit, Inc.",
+    "exchange": "NYSE",
+    "provider": "fintable",
+    "providerSymbol": "RDDT",
+    "market": "us",
+    "slug": "rddt"
+  },
+  {
+    "ticker": "MSTR",
+    "name": "MicroStrategy Incorporated",
+    "exchange": "NASDAQ",
+    "provider": "fintable",
+    "providerSymbol": "MSTR",
+    "market": "us",
+    "slug": "mstr"
+  },
+  {
+    "ticker": "APP",
+    "name": "AppLovin Corporation",
+    "exchange": "NASDAQ",
+    "provider": "fintable",
+    "providerSymbol": "APP",
+    "market": "us",
+    "slug": "app"
+  },
+  {
+    "ticker": "ASTS",
+    "name": "AST SpaceMobile, Inc.",
+    "exchange": "NASDAQ",
+    "provider": "fintable",
+    "providerSymbol": "ASTS",
+    "market": "us",
+    "slug": "asts"
+  },
+  {
+    "ticker": "RIVN",
+    "name": "Rivian Automotive, Inc.",
+    "exchange": "NASDAQ",
+    "provider": "fintable",
+    "providerSymbol": "RIVN",
+    "market": "us",
+    "slug": "rivn"
+  },
+  {
+    "ticker": "SOFI",
+    "name": "SoFi Technologies, Inc.",
+    "exchange": "NASDAQ",
+    "provider": "fintable",
+    "providerSymbol": "SOFI",
+    "market": "us",
+    "slug": "sofi"
+  }
 ]

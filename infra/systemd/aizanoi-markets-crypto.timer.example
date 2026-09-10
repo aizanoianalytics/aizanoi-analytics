@@ -1,0 +1,11 @@
+[Unit]
+Description=Aizanoi Markets crypto hourly refresh timer
+
+[Timer]
+# Every hour at minute 5 — keeps outside other cron boundaries
+OnCalendar=hourly
+Persistent=true
+RandomizedDelaySec=120
+
+[Install]
+WantedBy=timers.target

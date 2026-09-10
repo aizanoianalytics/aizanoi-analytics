@@ -31,11 +31,11 @@ from pathlib import Path
 from typing import Any, Iterable
 
 try:
-    from .providers import BinanceProvider, FintableProvider
+    from .providers import BinanceProvider, FetchResult, FintableProvider
 except ImportError:
     import sys as _sys
     _sys.path.insert(0, str(Path(__file__).parent))
-    from providers import BinanceProvider, FintableProvider  # type: ignore[no-redef]
+    from providers import BinanceProvider, FetchResult, FintableProvider  # type: ignore[no-redef]
 
 NASDAQ_URL = "https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt"
 OTHER_URL = "https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt"
@@ -116,14 +116,19 @@ def load_universe_corrections(path: Path) -> tuple[dict[str, str], set[str]]:
 
 
 def apply_universe_corrections(rows: list[dict[str, str]], *, overrides: dict[str, str], excludes: set[str]) -> list[dict[str, str]]:
+    """Apply symbol overrides/excludes against providerSymbol (schema v3) with
+    graceful fallback to legacy yahooSymbol for pre-migration fixtures."""
     corrected: list[dict[str, str]] = []
     for row in rows:
-        if row["yahooSymbol"] in excludes:
+        symbol = row.get("providerSymbol") or row.get("yahooSymbol")
+        if symbol in excludes:
             continue
         item = dict(row)
-        mapped = overrides.get(item["yahooSymbol"])
+        mapped = overrides.get(symbol)
         if mapped:
-            item["yahooSymbol"] = mapped
+            item["providerSymbol"] = mapped
+            if "yahooSymbol" in item:
+                item["yahooSymbol"] = mapped
             item["slug"] = slugify(mapped)
         corrected.append(item)
     return corrected
@@ -540,7 +545,8 @@ def _write_summary_chunks(root: Path, market: str, rows: list[dict[str, Any]], c
     })
 
 
-def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], completed_at: str, failed: list[str]) -> dict[str, dict[str, Any]]:
+def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], completed_at: str, failed: list[str], *, fetch_meta: dict[str, dict[str, Any]] | None = None) -> dict[str, dict[str, Any]]:
+    fetch_meta = fetch_meta or {}
     pulses: dict[str, dict[str, Any]] = {}
     for market, rows in markets.items():
         pulse = enrich_market_rows(rows, market=market)
@@ -560,22 +566,64 @@ def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], compl
     us_failed = [s for s in failed if not s.endswith("-USD")]
     crypto_failed = [s for s in failed if s.endswith("-USD")]
 
+    # Health semantics per spec: use truthful lastObservationAt from the actual
+    # shard, not summary updatedAt. "stale" is calculated from real observation
+    # ages, not hard-coded to zero.
     def _market_health(m: str, m_failed: list[str]) -> dict[str, Any]:
         rows = markets.get(m, [])
-        timestamps = [r.get("updatedAt") for r in rows if r.get("updatedAt")]
+        expected = len(rows) + len(m_failed)
+        stale_threshold = 7 * 86400 if m == "us" else 36 * 3600  # us: 7d; crypto: 36h
+        now_ts = time.time()
+        published = len(rows)
+        stale = 0
+        missing_history: list[str] = []
+        oldest_observation: str | None = None
+        newest_observation: str | None = None
+        last_fetches: list[str] = []
+        for row in rows:
+            slug = row.get("slug")
+            shard = read_json(root / "history" / m / f"{slug}.json", None) if slug else None
+            if not shard or not shard.get("daily"):
+                missing_history.append(row.get("ticker") or row.get("slug") or "?")
+                continue
+            obs = shard.get("lastObservationAt")
+            if obs:
+                if oldest_observation is None or obs < oldest_observation:
+                    oldest_observation = obs
+                if newest_observation is None or obs > newest_observation:
+                    newest_observation = obs
+                try:
+                    obs_ts = dt.datetime.fromisoformat(obs.replace("Z", "+00:00")).timestamp()
+                    if now_ts - obs_ts > stale_threshold:
+                        stale += 1
+                except ValueError:
+                    pass
+            fetched = shard.get("lastSuccessfulFetchAt")
+            if fetched:
+                last_fetches.append(fetched)
+        # Symbols in expected but not in rows at all are outright missing
+        rows_tickers = {row.get("ticker") for row in rows}
+        absent = [t for t in m_failed if t not in rows_tickers]
+        provider = "fintable" if m == "us" else "binance"
+        # Dedupe missing (absent from publication) with missing-history (shard empty)
+        missing_union = sorted(set(absent) | set(missing_history))
+        latest_fetch = max(last_fetches) if last_fetches else None
         return {
             "status": "complete" if not m_failed else "partial",
-            "provider": "fintable" if (m == "us" and os.getenv("FINTABLE_API_KEY")) else ("unavailable" if m == "us" else "binance"),
+            "provider": provider,
             "priceBasis": "Adjusted close" if m == "us" else "Exchange close",
-            "expected": len(rows) + len(m_failed),
-            "published": len(rows),
-            "missing": m_failed,
-            "stale": 0,
-            "oldestObservationAt": min(timestamps) if timestamps else completed_at,
-            "newestObservationAt": max(timestamps) if timestamps else completed_at,
+            "expected": expected,
+            "published": published,
+            "missingHistory": missing_union,
+            "failedCurrentRefresh": sorted(set(m_failed)),
+            "stale": stale,
+            "latestObservationAt": newest_observation,
+            "oldestObservationAt": oldest_observation,
+            "latestSuccessfulFetchAt": latest_fetch,
         }
 
     health = {
+        "schemaVersion": 3,
         "completedAt": completed_at, "counts": {key: len(value) for key, value in markets.items()},
         "failedSymbols": failed, "status": "complete" if not failed else "partial",
         "quality": {
@@ -629,8 +677,16 @@ def download_history(
     *,
     bootstrap: bool,
     interval: str,
-) -> list[dict[str, Any]]:
-    """Fetch history for a single instrument via the configured provider chain."""
+) -> FetchResult:
+    """Fetch history for a single instrument via the configured provider.
+
+    Returns the provider's typed ``FetchResult``. Callers MUST inspect
+    ``result.status`` instead of testing for an empty list — an empty list
+    may legitimately mean SUCCESS_EMPTY_VALID (provider succeeded with no
+    bars for the range). A FAILURE means the provider could not satisfy the
+    request; the result carries an explicit error message and should be
+    treated as a fetch failure, not a missing-data condition.
+    """
     end_ts = int(time.time())
     if interval == "1d":
         start_ts = SINCE_TS if bootstrap else end_ts - 14 * 86400
@@ -639,14 +695,12 @@ def download_history(
         start_ts = SINCE_TS if bootstrap else end_ts - 5 * 86400
     if instrument["market"] == "us":
         provider: Any = FintableProvider()
-        provider_symbol = instrument["yahooSymbol"]
+        provider_symbol = instrument["providerSymbol"]
     else:
         provider = BinanceProvider()
-        # Crypto universe rows expose a dedicated ``binanceSymbol`` (e.g. BTCUSDT);
-        # fall back to the yahooSymbol suffix when absent for backwards compatibility.
-        provider_symbol = instrument.get("binanceSymbol") or instrument["yahooSymbol"].replace("-USD", "USDT")
-    candles = provider.fetch_history(provider_symbol, start_ts, end_ts, interval=interval)
-    return [candle for candle in candles if isinstance(candle.get("t"), (int, float)) and candle["t"] >= SINCE_TS]
+        # Crypto universe rows expose ``providerSymbol`` in Binance USDT-pair format.
+        provider_symbol = instrument["providerSymbol"]
+    return provider.fetch_history(provider_symbol, start_ts, end_ts, interval=interval)
 
 
 def resilient_download(rows: list[dict[str, str]], fetcher: Any) -> tuple[dict[str, list[dict[str, Any]]], list[str]]:
@@ -687,43 +741,229 @@ def build_universe(config_path: Path) -> list[dict[str, str]]:
     return apply_universe_corrections(rows, overrides=overrides, excludes=excludes)
 
 
-def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, delay: float, skip_four_hour: bool) -> tuple[int, list[str]]:
+def _staging_path(root: Path) -> Path:
+    """Bootstrap staging state lives outside the public webroot."""
+    staging_dir = root.parent / "staging"
+    staging_dir.mkdir(parents=True, exist_ok=True)
+    return staging_dir / "bootstrap-state.json"
+
+
+def _load_staging_state(root: Path) -> dict[str, dict[str, Any]]:
+    return read_json(_staging_path(root), {})
+
+
+def _save_staging_state(root: Path, state: dict[str, dict[str, Any]]) -> None:
+    write_json_atomic(_staging_path(root), state)
+
+
+def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, delay: float, skip_four_hour: bool) -> tuple[int, list[str], dict[str, dict[str, Any]]]:
+    """Fetch and publish per-instrument history shards.
+
+    Returns:
+        updated: count of shards published.
+        failed: list of provider_symbol strings whose fetch returned FAILURE.
+        fetch_meta: dict mapping provider_symbol to its FetchResult metadata
+                    (lastSuccessfulFetchAt, status, error, attempted/completed windows)
+                    so the caller can write the new health.json with truthful
+                    provenance.
+
+    In bootstrap mode, staging state is persisted between runs so an interrupted
+    bootstrap resumes without redownloading validated 2019→current histories.
+    """
     updated = 0
     failed: list[str] = []
+    fetch_meta: dict[str, dict[str, Any]] = {}
     now = utc_now()
     recent_cutoff = int(time.time()) - 730 * 86400
+    staging: dict[str, dict[str, Any]] = _load_staging_state(root) if bootstrap else {}
+    staging_dirty = False
     for index, instrument in enumerate(rows):
-        symbol = instrument["yahooSymbol"]
+        symbol = instrument["providerSymbol"]
+        slug = instrument["slug"]
+        market = instrument["market"]
+        state_key = f"{market}/{slug}"
+        prev_state = staging.get(state_key, {})
+        # Skip already-validated staging entries in bootstrap mode
+        if bootstrap and prev_state.get("status") == "complete":
+            # Skip but preserve metadata for health
+            fetch_meta[symbol] = prev_state.get("meta", {"status": "SUCCESS_COMPLETE", "cachedFromStaging": True})
+            # Still need the shard for publication; loading from staging snapshot
+            staged_shard = read_json(root.parent / "staging" / "shards" / market / f"{slug}.json", None)
+            if staged_shard:
+                # Copy staged shard into production path (atomic)
+                write_json_atomic(root / "history" / market / f"{slug}.json", staged_shard)
+                write_json_atomic(
+                    root / "summary-items" / market / f"{slug}.json",
+                    summary_row(instrument, staged_shard.get("daily", []), utc_now(), four_hour=staged_shard.get("fourHour", []) if staged_shard.get("fourHour") else None),
+                )
+                updated += 1
+            continue
+
+        # Daily fetch
         try:
-            daily = download_history(instrument, bootstrap=bootstrap, interval="1d")
-        except Exception as error:  # noqa: BLE001 - we log and continue per-symbol
+            daily_result: FetchResult = download_history(instrument, bootstrap=bootstrap, interval="1d")
+        except Exception as error:  # noqa: BLE001 - per-symbol failure isolation
             print(f"[markets] daily fetch failed for {symbol}: {error}", file=sys.stderr)
             failed.append(symbol)
+            fetch_meta[symbol] = {"status": "FAILURE", "error": str(error)}
             continue
+
+        if daily_result.status == "FAILURE":
+            print(f"[markets] daily FAILURE for {symbol}: {daily_result.error}", file=sys.stderr)
+            failed.append(symbol)
+            fetch_meta[symbol] = {
+                "status": "FAILURE",
+                "error": daily_result.error,
+                "attemptedWindows": daily_result.attempted_windows,
+                "completedWindows": daily_result.completed_windows,
+            }
+            continue
+        if daily_result.status == "SUCCESS_EMPTY_VALID":
+            print(f"[markets] daily SUCCESS_EMPTY_VALID for {symbol} (no bars in range)", file=sys.stderr)
+
+        daily = [b for b in daily_result.bars if isinstance(b.get("t"), (int, float)) and b["t"] >= SINCE_TS]
+        fetch_meta[symbol] = {
+            "status": daily_result.status,
+            "error": daily_result.error,
+            "attemptedWindows": daily_result.attempted_windows,
+            "completedWindows": daily_result.completed_windows,
+            "lastSuccessfulFetchAt": (
+                daily_result.last_successful_fetch_at.isoformat().replace("+00:00", "Z")
+                if daily_result.last_successful_fetch_at else None
+            ),
+            "priceBasis": daily_result.price_basis,
+            "provider": daily_result.provider,
+        }
+
+        # Four-hour fetch (skip for US per Fintable contract; Binance supports 4h)
         four_hour: list[dict[str, Any]] = []
         if not skip_four_hour:
             try:
-                four_hour = download_history(instrument, bootstrap=bootstrap, interval="4h")
+                four_hour_result = download_history(instrument, bootstrap=bootstrap, interval="4h")
+                if four_hour_result.status == "SUCCESS_COMPLETE" or four_hour_result.status == "SUCCESS_EMPTY_VALID":
+                    four_hour = [b for b in four_hour_result.bars if isinstance(b.get("t"), (int, float)) and b["t"] >= SINCE_TS]
+                else:
+                    print(f"[markets] 4h FAILURE for {symbol}: {four_hour_result.error}", file=sys.stderr)
+            except NotImplementedError:
+                # Fintable does not document 4h timeframe; this is expected for US.
+                pass
             except Exception as error:  # noqa: BLE001
                 print(f"[markets] 4h fetch failed for {symbol}: {error}", file=sys.stderr)
-        path = root / "history" / instrument["market"] / f"{instrument['slug']}.json"
+
+        path = root / "history" / market / f"{slug}.json"
         old = read_json(path, {})
         old_daily = old.get("daily", [])
         old_four = old.get("fourHour", [])
-        merged_daily = merge_candles(old_daily, daily)
-        merged_four = merge_candles(old_four, four_hour, keep_since=recent_cutoff)
+        # Bootstrap mode: NO SPlicing with legacy Yahoo history. The Fintable
+        # series stands alone from first real provider availability.
+        if bootstrap:
+            merged_daily = merge_candles([], daily)
+            merged_four = merge_candles([], four_hour, keep_since=0)
+        else:
+            merged_daily = merge_candles(old_daily, daily)
+            merged_four = merge_candles(old_four, four_hour, keep_since=recent_cutoff)
+
         if not merged_daily:
             failed.append(symbol)
+            fetch_meta[symbol]["status"] = "FAILURE"
+            fetch_meta[symbol]["error"] = (fetch_meta[symbol].get("error") or "") + " [merged empty]"
             continue
-        quality = compute_metrics(merged_daily, annualization=365 if instrument["market"] == "crypto" else 252, four_hour=merged_four).get("dataQuality", {})
-        shard = {**instrument, "startDate": dt.datetime.fromtimestamp(merged_daily[0]["t"], dt.timezone.utc).date().isoformat(),
-                 "updatedAt": now, "dataQuality": quality, "daily": merged_daily, "fourHour": merged_four}
+
+        # Provenance fields (schema v3 contract)
+        last_observation_ts = merged_daily[-1]["t"]
+        last_observation_iso = dt.datetime.fromtimestamp(last_observation_ts, dt.timezone.utc).isoformat().replace("+00:00", "Z")
+        first_observation_iso = dt.datetime.fromtimestamp(merged_daily[0]["t"], dt.timezone.utc).date().isoformat()
+
+        quality = compute_metrics(
+            merged_daily,
+            annualization=365 if market == "crypto" else 252,
+            four_hour=merged_four if merged_four else None,
+        ).get("dataQuality", {})
+
+        # Schema v3 active shard fields
+        shard = {
+            **instrument,
+            "schemaVersion": 3,
+            "publishedAt": now,
+            "lastSuccessfulFetchAt": fetch_meta[symbol]["lastSuccessfulFetchAt"],
+            "lastObservationAt": last_observation_iso,
+            "actualCoverageStart": first_observation_iso,
+            "requestedCoverageStart": "2019-01-01" if bootstrap else first_observation_iso,
+            "provider": daily_result.provider,
+            "providerSymbol": daily_result.provider_symbol,
+            "priceBasis": daily_result.price_basis,
+            "dataQuality": quality,
+            "fourHourAvailable": bool(four_hour) or (daily_result.provider == "binance"),
+            "daily": merged_daily,
+            "fourHour": merged_four,
+        }
         write_json_atomic(path, shard)
-        write_json_atomic(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json", summary_row(instrument, merged_daily, now, four_hour=merged_four))
+
+        # In bootstrap mode persist staging copy so an interrupted run resumes
+        if bootstrap:
+            staging_shards = root.parent / "staging" / "shards"
+            (staging_shards / market).mkdir(parents=True, exist_ok=True)
+            write_json_atomic(staging_shards / market / f"{slug}.json", shard)
+            staging[state_key] = {
+                "status": "complete",
+                "meta": fetch_meta[symbol],
+                "actualCoverageStart": first_observation_iso,
+                "lastObservationAt": last_observation_iso,
+            }
+            staging_dirty = True
+
+        write_json_atomic(
+            root / "summary-items" / market / f"{slug}.json",
+            summary_row(instrument, merged_daily, now, four_hour=merged_four),
+        )
         updated += 1
+        # Persist staging state every 50 instruments for resumability
+        if bootstrap and staging_dirty and (updated % 50 == 0):
+            _save_staging_state(root, staging)
+            staging_dirty = False
         if delay and index < len(rows) - 1:
             time.sleep(delay + random.uniform(0, min(delay * 0.2, 1.0)))
-    return updated, sorted(set(failed))
+    if bootstrap and staging_dirty:
+        _save_staging_state(root, staging)
+    return updated, sorted(set(failed)), fetch_meta
+
+
+def health_check(root: Path, completed_at: str) -> int:
+    """Read-only local staleness audit.
+
+    No provider call. Returns non-zero when the published dataset is clearly
+    unhealthy for monitoring purposes.
+    """
+    instruments = read_json(root / "instruments.json", [])
+    if not instruments:
+        print("[markets-health] instruments.json missing or empty", file=sys.stderr)
+        return 2
+    now_ts = time.time()
+    unhealthy: list[str] = []
+    for market, threshold in (("us", 7 * 86400), ("crypto", 36 * 3600)):
+        rows = [row for row in instruments if row.get("market") == market]
+        for row in rows:
+            shard = read_json(root / "history" / market / f"{row.get('slug')}.json", None)
+            if not shard or not shard.get("daily"):
+                unhealthy.append(f"{market}/{row.get('slug')} missing-history")
+                continue
+            obs = shard.get("lastObservationAt")
+            if not obs:
+                unhealthy.append(f"{market}/{row.get('slug')} missing-observation")
+                continue
+            try:
+                obs_ts = dt.datetime.fromisoformat(obs.replace("Z", "+00:00")).timestamp()
+            except ValueError:
+                unhealthy.append(f"{market}/{row.get('slug')} malformed-observation")
+                continue
+            if now_ts - obs_ts > threshold:
+                unhealthy.append(f"{market}/{row.get('slug')} stale age={(int(now_ts - obs_ts))}s")
+    print(f"[markets-health] completedAt={completed_at} unhealthy={len(unhealthy)}")
+    for entry in unhealthy[:20]:
+        print(f"  {entry}")
+    if len(unhealthy) > 20:
+        print(f"  ...and {len(unhealthy) - 20} more")
+    return 1 if unhealthy else 0
 
 
 def rebuild_derived(root: Path, instruments: list[dict[str, str]], *, completed_at: str) -> int:
@@ -747,7 +987,7 @@ def rebuild_derived(root: Path, instruments: list[dict[str, str]], *, completed_
     return rebuilt
 
 
-def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, failed: list[str], *, slice_index: int | None = None, slice_count: int | None = None) -> None:
+def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, failed: list[str], *, slice_index: int | None = None, slice_count: int | None = None, fetch_meta: dict[str, dict[str, Any]] | None = None) -> None:
     keep: dict[str, set[str]] = {}
     for row in instruments:
         m = row.get("market", "")
@@ -761,15 +1001,15 @@ def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, 
             markets[instrument["market"]].append(item)
     for key in markets:
         markets[key].sort(key=lambda row: row["ticker"])
-    _publish_derived(root, markets, completed_at, failed)
+    _publish_derived(root, markets, completed_at, failed, fetch_meta=fetch_meta)
     write_json_atomic(root / "instruments.json", instruments)
     # Compatibility payload for older clients; current frontends load one market shard only.
     write_json_atomic(root / "summary.json", {"markets": markets})
     manifest = {
-        "schemaVersion": 2, "source": "Multi-provider close data", "universeSource": "Nasdaq Trader symbol directory",
-        "completedAt": completed_at, "coverageStart": "2019-01-01", "dailyInterval": "1d", "recentInterval": "4h",
+        "schemaVersion": 3, "source": "Multi-provider close data", "universeSource": "Focused index union (S&P 500 ∪ Nasdaq-100 ∪ NYSE U.S. 100 ∪ DJIA ∪ Aizanoi Extra)",
+        "completedAt": completed_at, "coverageStart": "2019-01-01", "dailyInterval": "1d", "recentInterval": "1d|4h",
         "dataModel": "close-only", "counts": {key: len(value) for key, value in markets.items()}, "failedSymbols": failed,
-        "status": "complete" if not failed else "partial", "usRefreshWindowHours": slice_count or 1,
+        "status": "complete" if not failed else "partial",
         "files": {"summary": {"us": "summary/us/index.json", "crypto": "summary/crypto/index.json"}, "pulse": {"us": "pulse/us.json", "crypto": "pulse/crypto.json"}, "health": "health.json", "snapshots": "snapshots/pulse.json"},
     }
     if slice_index is not None:
@@ -787,7 +1027,10 @@ def run(args: argparse.Namespace) -> int:
 
     root = Path(args.data_root).resolve()
     root.mkdir(parents=True, exist_ok=True)
-    lock_path = root / ".update.lock"
+    # Lock must NOT live under the publicly served root (see spec: state/ is
+    # outside the webroot). The lock directory is created lazily.
+    lock_path = root.parent / "state" / "update.lock"
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
     with lock_path.open("w") as lock:
         if fcntl is not None:
             try:
@@ -819,22 +1062,36 @@ def run(args: argparse.Namespace) -> int:
         if args.mode == "bootstrap":
             selected = selected_universe
             slice_index = None
-        else:
+        elif args.mode == "us-daily":
+            # All focused US securities; no 4h (Fintable does not document 4h)
+            selected = [row for row in selected_universe if row["market"] == "us"]
+            slice_index = None
+            args.skip_four_hour = True
+        elif args.mode == "crypto-hourly":
+            # All crypto (Binance) — small enough for hourly refresh
+            selected = [row for row in selected_universe if row["market"] == "crypto"]
+            slice_index = None
+        elif args.mode == "health-check":
+            # Local-only staleness check; no provider call
+            completed = utc_now()
+            health_check(root, completed)
+            return 0
+        else:  # legacy "hourly" mode retained for compatibility
             us = [row for row in selected_universe if row["market"] == "us"]
             crypto = [row for row in selected_universe if row["market"] == "crypto"]
             slice_index = args.slice_index if args.slice_index is not None else int(time.time() // 3600) % args.slice_count
             selected = [row for index, row in enumerate(us) if index % args.slice_count == slice_index] + crypto
         print(f"[markets] mode={args.mode} universe={len(all_instruments)} selected={len(selected)}")
-        updated, failed = update_rows(root, selected, bootstrap=args.mode == "bootstrap", delay=args.delay, skip_four_hour=args.skip_four_hour)
+        updated, failed, fetch_meta = update_rows(root, selected, bootstrap=args.mode == "bootstrap", delay=args.delay, skip_four_hour=args.skip_four_hour)
         completed = utc_now()
-        aggregate(root, all_instruments, completed, failed, slice_index=slice_index, slice_count=args.slice_count if slice_index is not None else None)
+        aggregate(root, all_instruments, completed, failed, slice_index=slice_index, slice_count=args.slice_count if slice_index is not None else None, fetch_meta=fetch_meta)
         print(f"[markets] updated={updated} failed={len(failed)} completedAt={completed}")
         return 0 if not failed or args.allow_partial else 1
 
 
 def parser() -> argparse.ArgumentParser:
     value = argparse.ArgumentParser(description=__doc__)
-    value.add_argument("--mode", choices=("bootstrap", "hourly", "rebuild"), default="hourly")
+    value.add_argument("--mode", choices=("bootstrap", "us-daily", "crypto-hourly", "hourly", "rebuild", "health-check"), default="us-daily")
     value.add_argument("--data-root", default="/var/lib/aizanoi-markets/public")
     value.add_argument("--delay", type=float, default=2.5, help="Polite delay after each per-symbol provider call")
     value.add_argument("--slice-count", type=int, default=8, help="Hourly US slices; every stock refreshes within this many hours")
