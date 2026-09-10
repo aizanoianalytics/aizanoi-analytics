@@ -50,8 +50,7 @@ test('service worker core precache includes the adaptive shell and remains compl
   assert.match(sw, /const CACHE\s*=\s*self\.AIZANOI_RELEASE\.CACHE/);
   assert.match(sw, /cache:'reload'/);
   assert.match(sw, /if\s*\(!response\.ok\)\s*throw new Error/);
-  assert.match(sw, /self\.addEventListener\('install',\s*\(event\)\s*=>\s*event\.waitUntil\(precacheShell\(\)\)\)/);
-  assert.doesNotMatch(sw, /skipWaiting/);
+  assert.match(sw, /self\.addEventListener\('install',\s*\(event\)\s*=>\s*event\.waitUntil\(precacheShell\(\)\.then\(\(\)\s*=>\s*self\.skipWaiting\(\)\)\)\)/);
   const precache = sw.match(/const PRECACHE\s*=\s*\[([\s\S]*?)\];/)?.[1] || '';
   assert.match(precache, /\/js\/v3\/shell\.js/);
   assert.match(precache, /\/js\/v3\/aizanoi-os\.js/);

@@ -7,18 +7,41 @@
  *    OOM on a low device), the loading screen used to stay on its last
  *    "Entering <city>..." message forever with zero feedback — the exact
  *    "stuck at Entering city" report. showFatalInitError replaces the loading
- *    content with an honest error and a Try Again (reload) button.
+ *    content with an honest error and a Try Again button that refreshes the
+ *    service worker and cache-busts the navigation.
  *
  * 2. Very slow init. Nothing throws, but on a throttled phone the spinner can
  *    legitimately run 30s+. After the grace period the watchdog surfaces a
- *    "still working" note with a Try Again button (reload) so the player is
- *    never imprisoned behind a spinner. It never hides the loading screen or
- *    touches world state — worst case it adds an escape hatch.
+ *    "still working" note with a Try Again button so the player can refresh
+ *    the SW and bypass a stale navigation cache instead of staying imprisoned
+ *    behind a spinner. It never hides the loading screen or touches world
+ *    state — worst case it adds an escape hatch.
  *
  * Dependency-free (DOM only), like the rest of the runtime.
  */
 
 const WATCHDOG_POLL_MS = 1000;
+
+export async function retryWorldEntry(button) {
+  if (button) {
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    button.textContent = 'Refreshing…';
+  }
+  try {
+    if ('serviceWorker' in navigator) {
+      const registration = await navigator.serviceWorker.getRegistration('/');
+      if (registration) await registration.update();
+    }
+  } catch (error) {
+    // Recovery navigation must still happen if Safari rejects an SW update.
+    console.warn('World entry service-worker refresh failed:', error);
+  } finally {
+    const url = new URL(window.location.href);
+    url.searchParams.set('entryRetry', Date.now().toString(36));
+    window.location.replace(url.href);
+  }
+}
 
 export function showFatalInitError(err, worldName = 'this world') {
   const el = document.getElementById('loading-screen');
@@ -38,7 +61,7 @@ export function showFatalInitError(err, worldName = 'this world') {
       </details>
     </div>`;
   const btn = document.getElementById('btn-retry-entry');
-  if (btn) btn.addEventListener('click', () => window.location.reload());
+  if (btn) btn.addEventListener('click', () => retryWorldEntry(btn));
 }
 
 export function installLoadingWatchdog({ ready, worldName = 'This world', graceMs = 30000 } = {}) {
@@ -64,7 +87,7 @@ export function installLoadingWatchdog({ ready, worldName = 'This world', graceM
         <p style="color:#c8b894;font-size:0.9rem;margin:0 0 10px;">Still loading — this device is slower than expected.</p>
         <button type="button" id="btn-retry-entry" class="btn-primary" style="padding:10px 26px;font-size:1rem;">Try Again</button>`;
       el.appendChild(note);
-      document.getElementById('btn-retry-entry')?.addEventListener('click', () => window.location.reload());
+      document.getElementById('btn-retry-entry')?.addEventListener('click', (event) => retryWorldEntry(event.currentTarget));
     }
   }, WATCHDOG_POLL_MS);
   return { cancel() { clearInterval(timer); } };

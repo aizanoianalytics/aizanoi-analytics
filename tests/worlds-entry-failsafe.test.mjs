@@ -10,9 +10,14 @@ test('loading-safety exports fatal-error surface and watchdog, DOM-only (no thre
   assert.match(safety, /export function showFatalInitError/);
   assert.match(safety, /export function installLoadingWatchdog/);
   assert.doesNotMatch(safety, /^import /m);
-  // Try Again is a real reload button
+  // Try Again actively updates the SW and cache-busts navigation instead of
+  // reloading into the same stale device shell.
   assert.match(safety, /Try Again/);
-  assert.match(safety, /window\.location\.reload/);
+  assert.match(safety, /export async function retryWorldEntry/);
+  assert.match(safety, /registration\.update\(\)/);
+  assert.match(safety, /entryRetry/);
+  assert.match(safety, /window\.location\.replace/);
+  assert.doesNotMatch(safety, /window\.location\.reload/);
 });
 
 test('watchdog has a grace period and never mutates world state', () => {
