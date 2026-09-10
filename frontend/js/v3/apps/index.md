@@ -5,6 +5,7 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 ## Current app entries
 
 - [`analytics/index.md`](analytics/index.md) — Analytics launcher surface
+- [`markets/index.md`](markets/index.md) — Aizanoi Markets market-intelligence surface
 - [`browser/index.md`](browser/index.md) — sandboxed HTTPS browser surface
 - [`calculator/index.md`](calculator/index.md) — Calculator
 - [`camera/index.md`](camera/index.md) — local Camera with explicit media capability

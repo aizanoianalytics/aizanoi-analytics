@@ -168,6 +168,7 @@ jobs:
           node --test tests/browser/arcade-module.test.mjs tests/browser/arcade-legacy-lifecycle.test.mjs 2>&1 | tee artifacts/diagnostics/arcade-browser.log || status=1
           node --test tests/browser/mobile-home.test.mjs 2>&1 | tee artifacts/diagnostics/mobile-home.log || status=1
           node --test tests/browser/aizanoi-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-markets-browser.log || status=1
+          node --test tests/browser/aizanoi-os-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-markets-browser.log || status=1
           exit $status
       - name: Capture final product visuals
         if: success()
