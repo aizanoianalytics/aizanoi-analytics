@@ -51,6 +51,14 @@ server {
     location ^~ /js/ { try_files $uri =404; expires -1; }
     location ^~ /assets/ { try_files $uri =404; expires 7d; }
 
+    # Mutable market snapshots stay outside immutable application releases.
+    # The private updater publishes compact static JSON shards atomically.
+    location ^~ /analytics/markets/data/ {
+        alias /var/lib/aizanoi-markets/public/;
+        default_type application/json;
+        expires -1;
+    }
+
     location ^~ /analytics/dashboards/hr-analytics-full-set/ { include snippets/aizanoi-hr-analytics-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
 
     # New HR Collection: standalone self-contained HR dashboards (PACS +
