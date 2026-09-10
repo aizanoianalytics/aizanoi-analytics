@@ -7,7 +7,18 @@ export const detailUrl = (market, slug) => `/analytics/markets/instrument/?marke
 
 export function sliceTimeframe(candles, timeframe) {
   const sizes = { '1M': 30, '3M': 90, '6M': 180, '1Y': 252, '5Y': 1260 };
-  return timeframe === 'ALL' || !sizes[timeframe] ? [...candles] : candles.slice(-sizes[timeframe]);
+  if (!candles || !candles.length || timeframe === 'ALL' || !sizes[timeframe]) return [...(candles || [])];
+  const lastTs = Number(candles[candles.length - 1]?.t);
+  if (Number.isFinite(lastTs) && candles.length > 1) {
+    const stepSeconds = (candles[candles.length - 1].t - candles[0].t) / (candles.length - 1);
+    if (stepSeconds < 43200) {
+      const days = sizes[timeframe];
+      const cutoff = lastTs - (days * 86400);
+      const filtered = candles.filter(row => row.t >= cutoff);
+      if (filtered.length > 0) return filtered;
+    }
+  }
+  return candles.slice(-sizes[timeframe]);
 }
 
 function rolling(values, size, calculate) {
@@ -30,16 +41,29 @@ function ema(values, size) {
     return previous;
   });
 }
-function rsi(values, size = 14) {
-  return values.map((_, index) => {
-    if (index < size) return null;
-    const window = values.slice(index - size, index + 1);
-    const changes = window.slice(1).map((value, offset) => value - window[offset]);
-    const gains = mean(changes.map(value => Math.max(value, 0)));
-    const losses = mean(changes.map(value => Math.max(-value, 0)));
-    if (losses === 0) return gains > 0 ? 100 : 50;
-    return 100 - (100 / (1 + gains / losses));
-  });
+
+export function wilderRsi(values, size = 14) {
+  if (!Array.isArray(values) || values.length <= size) return (values || []).map(() => null);
+  const result = new Array(values.length).fill(null);
+  let gainSum = 0;
+  let lossSum = 0;
+  for (let i = 1; i <= size; i++) {
+    const diff = values[i] - values[i - 1];
+    if (diff > 0) gainSum += diff;
+    else lossSum -= diff;
+  }
+  let avgGain = gainSum / size;
+  let avgLoss = lossSum / size;
+  result[size] = avgLoss === 0 ? (avgGain > 0 ? 100 : 50) : 100 - (100 / (1 + avgGain / avgLoss));
+  for (let i = size + 1; i < values.length; i++) {
+    const diff = values[i] - values[i - 1];
+    const gain = diff > 0 ? diff : 0;
+    const loss = diff < 0 ? -diff : 0;
+    avgGain = (avgGain * (size - 1) + gain) / size;
+    avgLoss = (avgLoss * (size - 1) + loss) / size;
+    result[i] = avgLoss === 0 ? (avgGain > 0 ? 100 : 50) : 100 - (100 / (1 + avgGain / avgLoss));
+  }
+  return result;
 }
 
 export function indicatorSeries(candles) {
@@ -62,7 +86,7 @@ export function indicatorSeries(candles) {
     ema26,
     bollingerUpper: sma20.map((value, index) => finite(value) ? value + 2 * deviation20[index] : null),
     bollingerLower: sma20.map((value, index) => finite(value) ? value - 2 * deviation20[index] : null),
-    rsi14: rsi(values),
+    rsi14: wilderRsi(values),
     macd,
     macdSignal,
     roc20: values.map((value, index) => index < 20 || values[index - 20] === 0 ? null : value / values[index - 20] - 1),
@@ -84,11 +108,43 @@ export function createWatchlist(storage = globalThis.localStorage) {
   const key = 'aizanoi.markets.watchlist.v1';
   let values;
   try { values = new Set(JSON.parse(storage?.getItem(key) || '[]')); } catch { values = new Set(); }
-  const persist = () => storage?.setItem(key, JSON.stringify([...values].sort()));
+  const persist = () => {
+    try { storage?.setItem(key, JSON.stringify([...values].sort())); } catch {}
+  };
   return {
     has: value => values.has(value),
     values: () => [...values],
     toggle(value) { values.has(value) ? values.delete(value) : values.add(value); persist(); return values.has(value); },
+  };
+}
+
+export const DEFAULT_PRESETS = [
+  { id: 'momentum-leaders', name: 'Momentum Leaders', desc: 'Highest momentum quality in strong uptrend', config: { sort: 'momentumQuality', regime: 'strong-uptrend' } },
+  { id: 'oversold-trend', name: 'Oversold Above Long Trend', desc: 'RSI under 35 holding above 200-session average', config: { rsiMax: 35, regime: 'above200' } },
+  { id: 'fresh-breakouts', name: 'Fresh Breakouts', desc: 'Top 5% 52-week range with golden cross', config: { rangeMin: 95, regime: 'golden' } },
+  { id: 'deep-drawdown', name: 'Deep Drawdown', desc: 'Largest drawdown from 52-week peak', config: { sort: 'drawdown1y' } },
+  { id: 'high-volatility', name: 'High Volatility Watch', desc: 'Top annualized 20-day realized volatility', config: { sort: 'volatility20' } },
+];
+
+export function createSavedScreens(storage = globalThis.localStorage) {
+  const key = 'aizanoi.markets.savedScreens.v1';
+  let screens = [];
+  try { screens = JSON.parse(storage?.getItem(key) || '[]'); } catch { screens = []; }
+  const persist = () => {
+    try { storage?.setItem(key, JSON.stringify(screens)); } catch {}
+  };
+  return {
+    presets: () => DEFAULT_PRESETS,
+    custom: () => [...screens],
+    save(name, config) {
+      screens = screens.filter(s => s.name !== name);
+      screens.push({ id: `screen-${Date.now()}`, name, config });
+      persist();
+    },
+    remove(id) {
+      screens = screens.filter(s => s.id !== id);
+      persist();
+    },
   };
 }
 
@@ -115,7 +171,13 @@ export function filterRows(rows, { query = '', watchlistOnly = false, watchlist,
 
 const labels = { ticker:'Ticker', name:'Name', exchange:'Exchange', latest:'Price', return1d:'1D', return30d:'30D', volatility20:'Volatility', rangePosition52w:'52W Range', percentile30d:'30D Percentile', relativeStrength30d:'30D Relative Strength', rsi14:'RSI 14', trendAge50:'Days Above SMA50' };
 export function rowsToCsv(rows, columns) {
-  const escape = value => { const text = String(value ?? ''); return /[",\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text; };
+  const escape = value => {
+    let text = String(value ?? '');
+    if (/^[=+\-@]/.test(text) && !Number.isFinite(Number(text))) {
+      text = `'${text}`;
+    }
+    return /[",\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+  };
   return [columns.map(column => labels[column] || column).join(','), ...rows.map(row => columns.map(column => escape(row[column])).join(','))].join('\n');
 }
 
@@ -125,5 +187,5 @@ export function marketSessionState(market, date = new Date()) {
   const minutes = Number(parts.hour) * 60 + Number(parts.minute);
   const weekday = !['Sat', 'Sun'].includes(parts.weekday);
   const open = weekday && minutes >= 570 && minutes < 960;
-  return { open, label: open ? 'US market is open' : 'US market is closed' };
+  return { open, label: open ? 'Within regular US session hours' : 'Outside regular US session hours' };
 }

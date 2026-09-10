@@ -1,0 +1,6538 @@
+[
+  {
+    "market": "us",
+    "ticker": "A",
+    "name": "A Inc.",
+    "exchange": "NASDAQ",
+    "slug": "a",
+    "providerSymbol": "A",
+    "yahooSymbol": "A",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AAL",
+    "name": "AAL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "aal",
+    "providerSymbol": "AAL",
+    "yahooSymbol": "AAL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AAPL",
+    "name": "Apple Inc.",
+    "exchange": "NASDAQ",
+    "slug": "aapl",
+    "providerSymbol": "AAPL",
+    "yahooSymbol": "AAPL",
+    "memberships": [
+      "sp500",
+      "nasdaq100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ABBV",
+    "name": "AbbVie Inc.",
+    "exchange": "NYSE",
+    "slug": "abbv",
+    "providerSymbol": "ABBV",
+    "yahooSymbol": "ABBV",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ABNB",
+    "name": "ABNB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "abnb",
+    "providerSymbol": "ABNB",
+    "yahooSymbol": "ABNB",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ABT",
+    "name": "ABT Inc.",
+    "exchange": "NYSE",
+    "slug": "abt",
+    "providerSymbol": "ABT",
+    "yahooSymbol": "ABT",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ACGL",
+    "name": "ACGL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "acgl",
+    "providerSymbol": "ACGL",
+    "yahooSymbol": "ACGL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ACN",
+    "name": "ACN Inc.",
+    "exchange": "NYSE",
+    "slug": "acn",
+    "providerSymbol": "ACN",
+    "yahooSymbol": "ACN",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ADBE",
+    "name": "ADBE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "adbe",
+    "providerSymbol": "ADBE",
+    "yahooSymbol": "ADBE",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ADI",
+    "name": "ADI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "adi",
+    "providerSymbol": "ADI",
+    "yahooSymbol": "ADI",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ADM",
+    "name": "ADM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "adm",
+    "providerSymbol": "ADM",
+    "yahooSymbol": "ADM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ADP",
+    "name": "ADP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "adp",
+    "providerSymbol": "ADP",
+    "yahooSymbol": "ADP",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ADSK",
+    "name": "ADSK Inc.",
+    "exchange": "NASDAQ",
+    "slug": "adsk",
+    "providerSymbol": "ADSK",
+    "yahooSymbol": "ADSK",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AEE",
+    "name": "AEE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "aee",
+    "providerSymbol": "AEE",
+    "yahooSymbol": "AEE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AEP",
+    "name": "AEP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "aep",
+    "providerSymbol": "AEP",
+    "yahooSymbol": "AEP",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AES",
+    "name": "AES Inc.",
+    "exchange": "NASDAQ",
+    "slug": "aes",
+    "providerSymbol": "AES",
+    "yahooSymbol": "AES",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AFL",
+    "name": "AFL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "afl",
+    "providerSymbol": "AFL",
+    "yahooSymbol": "AFL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AIG",
+    "name": "AIG Inc.",
+    "exchange": "NYSE",
+    "slug": "aig",
+    "providerSymbol": "AIG",
+    "yahooSymbol": "AIG",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AIZ",
+    "name": "AIZ Inc.",
+    "exchange": "NASDAQ",
+    "slug": "aiz",
+    "providerSymbol": "AIZ",
+    "yahooSymbol": "AIZ",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AJG",
+    "name": "AJG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ajg",
+    "providerSymbol": "AJG",
+    "yahooSymbol": "AJG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AKAM",
+    "name": "AKAM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "akam",
+    "providerSymbol": "AKAM",
+    "yahooSymbol": "AKAM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ALB",
+    "name": "ALB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "alb",
+    "providerSymbol": "ALB",
+    "yahooSymbol": "ALB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ALGN",
+    "name": "ALGN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "algn",
+    "providerSymbol": "ALGN",
+    "yahooSymbol": "ALGN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ALL",
+    "name": "ALL Inc.",
+    "exchange": "NYSE",
+    "slug": "all",
+    "providerSymbol": "ALL",
+    "yahooSymbol": "ALL",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ALLE",
+    "name": "ALLE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "alle",
+    "providerSymbol": "ALLE",
+    "yahooSymbol": "ALLE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AMAT",
+    "name": "AMAT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "amat",
+    "providerSymbol": "AMAT",
+    "yahooSymbol": "AMAT",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AMCR",
+    "name": "AMCR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "amcr",
+    "providerSymbol": "AMCR",
+    "yahooSymbol": "AMCR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AMD",
+    "name": "Advanced Micro Devices, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "amd",
+    "providerSymbol": "AMD",
+    "yahooSymbol": "AMD",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AME",
+    "name": "AME Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ame",
+    "providerSymbol": "AME",
+    "yahooSymbol": "AME",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AMGN",
+    "name": "AMGN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "amgn",
+    "providerSymbol": "AMGN",
+    "yahooSymbol": "AMGN",
+    "memberships": [
+      "sp500",
+      "nasdaq100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AMH",
+    "name": "AMH Inc.",
+    "exchange": "NYSE",
+    "slug": "amh",
+    "providerSymbol": "AMH",
+    "yahooSymbol": "AMH",
+    "memberships": [
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AMP",
+    "name": "AMP Inc.",
+    "exchange": "NYSE",
+    "slug": "amp",
+    "providerSymbol": "AMP",
+    "yahooSymbol": "AMP",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AMT",
+    "name": "AMT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "amt",
+    "providerSymbol": "AMT",
+    "yahooSymbol": "AMT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AMZN",
+    "name": "Amazon.com, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "amzn",
+    "providerSymbol": "AMZN",
+    "yahooSymbol": "AMZN",
+    "memberships": [
+      "sp500",
+      "nasdaq100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ANET",
+    "name": "ANET Inc.",
+    "exchange": "NASDAQ",
+    "slug": "anet",
+    "providerSymbol": "ANET",
+    "yahooSymbol": "ANET",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ANSS",
+    "name": "ANSS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "anss",
+    "providerSymbol": "ANSS",
+    "yahooSymbol": "ANSS",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AON",
+    "name": "AON Inc.",
+    "exchange": "NYSE",
+    "slug": "aon",
+    "providerSymbol": "AON",
+    "yahooSymbol": "AON",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AOS",
+    "name": "AOS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "aos",
+    "providerSymbol": "AOS",
+    "yahooSymbol": "AOS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "APA",
+    "name": "APA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "apa",
+    "providerSymbol": "APA",
+    "yahooSymbol": "APA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "APD",
+    "name": "APD Inc.",
+    "exchange": "NYSE",
+    "slug": "apd",
+    "providerSymbol": "APD",
+    "yahooSymbol": "APD",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "APH",
+    "name": "APH Inc.",
+    "exchange": "NYSE",
+    "slug": "aph",
+    "providerSymbol": "APH",
+    "yahooSymbol": "APH",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "APP",
+    "name": "AppLovin Corporation",
+    "exchange": "NASDAQ",
+    "slug": "app",
+    "providerSymbol": "APP",
+    "yahooSymbol": "APP",
+    "memberships": [
+      "nasdaq100",
+      "extra"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "APTV",
+    "name": "APTV Inc.",
+    "exchange": "NASDAQ",
+    "slug": "aptv",
+    "providerSymbol": "APTV",
+    "yahooSymbol": "APTV",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ARE",
+    "name": "ARE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "are",
+    "providerSymbol": "ARE",
+    "yahooSymbol": "ARE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ARM",
+    "name": "Arm Holdings plc",
+    "exchange": "NASDAQ",
+    "slug": "arm",
+    "providerSymbol": "ARM",
+    "yahooSymbol": "ARM",
+    "memberships": [
+      "nasdaq100",
+      "extra"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ASML",
+    "name": "ASML Inc.",
+    "exchange": "NASDAQ",
+    "slug": "asml",
+    "providerSymbol": "ASML",
+    "yahooSymbol": "ASML",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ASTS",
+    "name": "AST SpaceMobile, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "asts",
+    "providerSymbol": "ASTS",
+    "yahooSymbol": "ASTS",
+    "memberships": [
+      "extra"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ATO",
+    "name": "ATO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ato",
+    "providerSymbol": "ATO",
+    "yahooSymbol": "ATO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AVB",
+    "name": "AVB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "avb",
+    "providerSymbol": "AVB",
+    "yahooSymbol": "AVB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AVGO",
+    "name": "Broadcom Inc.",
+    "exchange": "NASDAQ",
+    "slug": "avgo",
+    "providerSymbol": "AVGO",
+    "yahooSymbol": "AVGO",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AVY",
+    "name": "AVY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "avy",
+    "providerSymbol": "AVY",
+    "yahooSymbol": "AVY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AWK",
+    "name": "AWK Inc.",
+    "exchange": "NASDAQ",
+    "slug": "awk",
+    "providerSymbol": "AWK",
+    "yahooSymbol": "AWK",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AXON",
+    "name": "AXON Inc.",
+    "exchange": "NASDAQ",
+    "slug": "axon",
+    "providerSymbol": "AXON",
+    "yahooSymbol": "AXON",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AXP",
+    "name": "AXP Inc.",
+    "exchange": "NYSE",
+    "slug": "axp",
+    "providerSymbol": "AXP",
+    "yahooSymbol": "AXP",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "AZO",
+    "name": "AZO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "azo",
+    "providerSymbol": "AZO",
+    "yahooSymbol": "AZO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BA",
+    "name": "BA Inc.",
+    "exchange": "NYSE",
+    "slug": "ba",
+    "providerSymbol": "BA",
+    "yahooSymbol": "BA",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BAC",
+    "name": "Bank of America Corporation",
+    "exchange": "NYSE",
+    "slug": "bac",
+    "providerSymbol": "BAC",
+    "yahooSymbol": "BAC",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BALL",
+    "name": "BALL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ball",
+    "providerSymbol": "BALL",
+    "yahooSymbol": "BALL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BAX",
+    "name": "BAX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bax",
+    "providerSymbol": "BAX",
+    "yahooSymbol": "BAX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BBWI",
+    "name": "BBWI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bbwi",
+    "providerSymbol": "BBWI",
+    "yahooSymbol": "BBWI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BBY",
+    "name": "BBY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bby",
+    "providerSymbol": "BBY",
+    "yahooSymbol": "BBY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BDX",
+    "name": "BDX Inc.",
+    "exchange": "NYSE",
+    "slug": "bdx",
+    "providerSymbol": "BDX",
+    "yahooSymbol": "BDX",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BEN",
+    "name": "BEN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ben",
+    "providerSymbol": "BEN",
+    "yahooSymbol": "BEN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BF.B",
+    "name": "BF.B Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bf-b",
+    "providerSymbol": "BF-B",
+    "yahooSymbol": "BF-B",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BG",
+    "name": "BG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bg",
+    "providerSymbol": "BG",
+    "yahooSymbol": "BG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BIIB",
+    "name": "BIIB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "biib",
+    "providerSymbol": "BIIB",
+    "yahooSymbol": "BIIB",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BK",
+    "name": "BK Inc.",
+    "exchange": "NYSE",
+    "slug": "bk",
+    "providerSymbol": "BK",
+    "yahooSymbol": "BK",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BKNG",
+    "name": "BKNG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bkng",
+    "providerSymbol": "BKNG",
+    "yahooSymbol": "BKNG",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BKR",
+    "name": "BKR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bkr",
+    "providerSymbol": "BKR",
+    "yahooSymbol": "BKR",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BLDR",
+    "name": "BLDR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bldr",
+    "providerSymbol": "BLDR",
+    "yahooSymbol": "BLDR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BLK",
+    "name": "BLK Inc.",
+    "exchange": "NYSE",
+    "slug": "blk",
+    "providerSymbol": "BLK",
+    "yahooSymbol": "BLK",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BMY",
+    "name": "BMY Inc.",
+    "exchange": "NYSE",
+    "slug": "bmy",
+    "providerSymbol": "BMY",
+    "yahooSymbol": "BMY",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BR",
+    "name": "BR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "br",
+    "providerSymbol": "BR",
+    "yahooSymbol": "BR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BRK.B",
+    "name": "Berkshire Hathaway Inc.",
+    "exchange": "NYSE",
+    "slug": "brk-b",
+    "providerSymbol": "BRK-B",
+    "yahooSymbol": "BRK-B",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BRO",
+    "name": "BRO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bro",
+    "providerSymbol": "BRO",
+    "yahooSymbol": "BRO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BSX",
+    "name": "BSX Inc.",
+    "exchange": "NYSE",
+    "slug": "bsx",
+    "providerSymbol": "BSX",
+    "yahooSymbol": "BSX",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BWA",
+    "name": "BWA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bwa",
+    "providerSymbol": "BWA",
+    "yahooSymbol": "BWA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BX",
+    "name": "BX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bx",
+    "providerSymbol": "BX",
+    "yahooSymbol": "BX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "BXP",
+    "name": "BXP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "bxp",
+    "providerSymbol": "BXP",
+    "yahooSymbol": "BXP",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "C",
+    "name": "C Inc.",
+    "exchange": "NYSE",
+    "slug": "c",
+    "providerSymbol": "C",
+    "yahooSymbol": "C",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CAG",
+    "name": "CAG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cag",
+    "providerSymbol": "CAG",
+    "yahooSymbol": "CAG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CAH",
+    "name": "CAH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cah",
+    "providerSymbol": "CAH",
+    "yahooSymbol": "CAH",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CARR",
+    "name": "CARR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "carr",
+    "providerSymbol": "CARR",
+    "yahooSymbol": "CARR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CAT",
+    "name": "CAT Inc.",
+    "exchange": "NYSE",
+    "slug": "cat",
+    "providerSymbol": "CAT",
+    "yahooSymbol": "CAT",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CB",
+    "name": "CB Inc.",
+    "exchange": "NYSE",
+    "slug": "cb",
+    "providerSymbol": "CB",
+    "yahooSymbol": "CB",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CBOE",
+    "name": "CBOE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cboe",
+    "providerSymbol": "CBOE",
+    "yahooSymbol": "CBOE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CBRE",
+    "name": "CBRE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cbre",
+    "providerSymbol": "CBRE",
+    "yahooSymbol": "CBRE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CCEP",
+    "name": "CCEP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ccep",
+    "providerSymbol": "CCEP",
+    "yahooSymbol": "CCEP",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CCI",
+    "name": "CCI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cci",
+    "providerSymbol": "CCI",
+    "yahooSymbol": "CCI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CCL",
+    "name": "CCL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ccl",
+    "providerSymbol": "CCL",
+    "yahooSymbol": "CCL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CDNS",
+    "name": "CDNS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cdns",
+    "providerSymbol": "CDNS",
+    "yahooSymbol": "CDNS",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CDW",
+    "name": "CDW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cdw",
+    "providerSymbol": "CDW",
+    "yahooSymbol": "CDW",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CE",
+    "name": "CE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ce",
+    "providerSymbol": "CE",
+    "yahooSymbol": "CE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CEG",
+    "name": "CEG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ceg",
+    "providerSymbol": "CEG",
+    "yahooSymbol": "CEG",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CF",
+    "name": "CF Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cf",
+    "providerSymbol": "CF",
+    "yahooSymbol": "CF",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CFG",
+    "name": "CFG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cfg",
+    "providerSymbol": "CFG",
+    "yahooSymbol": "CFG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CHD",
+    "name": "CHD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "chd",
+    "providerSymbol": "CHD",
+    "yahooSymbol": "CHD",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CHRW",
+    "name": "CHRW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "chrw",
+    "providerSymbol": "CHRW",
+    "yahooSymbol": "CHRW",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CHTR",
+    "name": "CHTR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "chtr",
+    "providerSymbol": "CHTR",
+    "yahooSymbol": "CHTR",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CI",
+    "name": "CI Inc.",
+    "exchange": "NYSE",
+    "slug": "ci",
+    "providerSymbol": "CI",
+    "yahooSymbol": "CI",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CINF",
+    "name": "CINF Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cinf",
+    "providerSymbol": "CINF",
+    "yahooSymbol": "CINF",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CL",
+    "name": "CL Inc.",
+    "exchange": "NYSE",
+    "slug": "cl",
+    "providerSymbol": "CL",
+    "yahooSymbol": "CL",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CLX",
+    "name": "CLX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "clx",
+    "providerSymbol": "CLX",
+    "yahooSymbol": "CLX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CMA",
+    "name": "CMA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cma",
+    "providerSymbol": "CMA",
+    "yahooSymbol": "CMA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CMCSA",
+    "name": "CMCSA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cmcsa",
+    "providerSymbol": "CMCSA",
+    "yahooSymbol": "CMCSA",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CME",
+    "name": "CME Inc.",
+    "exchange": "NYSE",
+    "slug": "cme",
+    "providerSymbol": "CME",
+    "yahooSymbol": "CME",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CMG",
+    "name": "CMG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cmg",
+    "providerSymbol": "CMG",
+    "yahooSymbol": "CMG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CMI",
+    "name": "CMI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cmi",
+    "providerSymbol": "CMI",
+    "yahooSymbol": "CMI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CMS",
+    "name": "CMS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cms",
+    "providerSymbol": "CMS",
+    "yahooSymbol": "CMS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CNC",
+    "name": "CNC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cnc",
+    "providerSymbol": "CNC",
+    "yahooSymbol": "CNC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CNP",
+    "name": "CNP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cnp",
+    "providerSymbol": "CNP",
+    "yahooSymbol": "CNP",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "COF",
+    "name": "COF Inc.",
+    "exchange": "NYSE",
+    "slug": "cof",
+    "providerSymbol": "COF",
+    "yahooSymbol": "COF",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "COIN",
+    "name": "Coinbase Global, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "coin",
+    "providerSymbol": "COIN",
+    "yahooSymbol": "COIN",
+    "memberships": [
+      "extra"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "COO",
+    "name": "COO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "coo",
+    "providerSymbol": "COO",
+    "yahooSymbol": "COO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "COP",
+    "name": "COP Inc.",
+    "exchange": "NYSE",
+    "slug": "cop",
+    "providerSymbol": "COP",
+    "yahooSymbol": "COP",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "COR",
+    "name": "COR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cor",
+    "providerSymbol": "COR",
+    "yahooSymbol": "COR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "COST",
+    "name": "Costco Wholesale Corporation",
+    "exchange": "NASDAQ",
+    "slug": "cost",
+    "providerSymbol": "COST",
+    "yahooSymbol": "COST",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CPAY",
+    "name": "CPAY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cpay",
+    "providerSymbol": "CPAY",
+    "yahooSymbol": "CPAY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CPB",
+    "name": "CPB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cpb",
+    "providerSymbol": "CPB",
+    "yahooSymbol": "CPB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CPRT",
+    "name": "CPRT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cprt",
+    "providerSymbol": "CPRT",
+    "yahooSymbol": "CPRT",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CPT",
+    "name": "CPT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "cpt",
+    "providerSymbol": "CPT",
+    "yahooSymbol": "CPT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CRL",
+    "name": "CRL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "crl",
+    "providerSymbol": "CRL",
+    "yahooSymbol": "CRL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CRM",
+    "name": "Salesforce, Inc.",
+    "exchange": "NYSE",
+    "slug": "crm",
+    "providerSymbol": "CRM",
+    "yahooSymbol": "CRM",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CRWD",
+    "name": "CRWD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "crwd",
+    "providerSymbol": "CRWD",
+    "yahooSymbol": "CRWD",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CSCO",
+    "name": "CSCO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "csco",
+    "providerSymbol": "CSCO",
+    "yahooSymbol": "CSCO",
+    "memberships": [
+      "sp500",
+      "nasdaq100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CSGP",
+    "name": "CSGP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "csgp",
+    "providerSymbol": "CSGP",
+    "yahooSymbol": "CSGP",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CSX",
+    "name": "CSX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "csx",
+    "providerSymbol": "CSX",
+    "yahooSymbol": "CSX",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CTAS",
+    "name": "CTAS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ctas",
+    "providerSymbol": "CTAS",
+    "yahooSymbol": "CTAS",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CTLT",
+    "name": "CTLT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ctlt",
+    "providerSymbol": "CTLT",
+    "yahooSymbol": "CTLT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CTRA",
+    "name": "CTRA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ctra",
+    "providerSymbol": "CTRA",
+    "yahooSymbol": "CTRA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CTSH",
+    "name": "CTSH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ctsh",
+    "providerSymbol": "CTSH",
+    "yahooSymbol": "CTSH",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CTVA",
+    "name": "CTVA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ctva",
+    "providerSymbol": "CTVA",
+    "yahooSymbol": "CTVA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CVS",
+    "name": "CVS Inc.",
+    "exchange": "NYSE",
+    "slug": "cvs",
+    "providerSymbol": "CVS",
+    "yahooSymbol": "CVS",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CVX",
+    "name": "Chevron Corporation",
+    "exchange": "NYSE",
+    "slug": "cvx",
+    "providerSymbol": "CVX",
+    "yahooSymbol": "CVX",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "CZR",
+    "name": "CZR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "czr",
+    "providerSymbol": "CZR",
+    "yahooSymbol": "CZR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "D",
+    "name": "D Inc.",
+    "exchange": "NYSE",
+    "slug": "d",
+    "providerSymbol": "D",
+    "yahooSymbol": "D",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DAL",
+    "name": "DAL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dal",
+    "providerSymbol": "DAL",
+    "yahooSymbol": "DAL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DASH",
+    "name": "DASH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dash",
+    "providerSymbol": "DASH",
+    "yahooSymbol": "DASH",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DAY",
+    "name": "DAY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "day",
+    "providerSymbol": "DAY",
+    "yahooSymbol": "DAY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DD",
+    "name": "DD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dd",
+    "providerSymbol": "DD",
+    "yahooSymbol": "DD",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DDOG",
+    "name": "DDOG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ddog",
+    "providerSymbol": "DDOG",
+    "yahooSymbol": "DDOG",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DE",
+    "name": "DE Inc.",
+    "exchange": "NYSE",
+    "slug": "de",
+    "providerSymbol": "DE",
+    "yahooSymbol": "DE",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DECK",
+    "name": "DECK Inc.",
+    "exchange": "NASDAQ",
+    "slug": "deck",
+    "providerSymbol": "DECK",
+    "yahooSymbol": "DECK",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DELL",
+    "name": "DELL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dell",
+    "providerSymbol": "DELL",
+    "yahooSymbol": "DELL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DFS",
+    "name": "DFS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dfs",
+    "providerSymbol": "DFS",
+    "yahooSymbol": "DFS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DG",
+    "name": "DG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dg",
+    "providerSymbol": "DG",
+    "yahooSymbol": "DG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DGX",
+    "name": "DGX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dgx",
+    "providerSymbol": "DGX",
+    "yahooSymbol": "DGX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DHI",
+    "name": "DHI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dhi",
+    "providerSymbol": "DHI",
+    "yahooSymbol": "DHI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DHR",
+    "name": "DHR Inc.",
+    "exchange": "NYSE",
+    "slug": "dhr",
+    "providerSymbol": "DHR",
+    "yahooSymbol": "DHR",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DIS",
+    "name": "DIS Inc.",
+    "exchange": "NYSE",
+    "slug": "dis",
+    "providerSymbol": "DIS",
+    "yahooSymbol": "DIS",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DLR",
+    "name": "DLR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dlr",
+    "providerSymbol": "DLR",
+    "yahooSymbol": "DLR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DLTR",
+    "name": "DLTR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dltr",
+    "providerSymbol": "DLTR",
+    "yahooSymbol": "DLTR",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DOC",
+    "name": "DOC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "doc",
+    "providerSymbol": "DOC",
+    "yahooSymbol": "DOC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DOV",
+    "name": "DOV Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dov",
+    "providerSymbol": "DOV",
+    "yahooSymbol": "DOV",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DOW",
+    "name": "DOW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dow",
+    "providerSymbol": "DOW",
+    "yahooSymbol": "DOW",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DPZ",
+    "name": "DPZ Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dpz",
+    "providerSymbol": "DPZ",
+    "yahooSymbol": "DPZ",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DRI",
+    "name": "DRI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dri",
+    "providerSymbol": "DRI",
+    "yahooSymbol": "DRI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DTE",
+    "name": "DTE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dte",
+    "providerSymbol": "DTE",
+    "yahooSymbol": "DTE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DUK",
+    "name": "DUK Inc.",
+    "exchange": "NYSE",
+    "slug": "duk",
+    "providerSymbol": "DUK",
+    "yahooSymbol": "DUK",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DVA",
+    "name": "DVA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dva",
+    "providerSymbol": "DVA",
+    "yahooSymbol": "DVA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DVN",
+    "name": "DVN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dvn",
+    "providerSymbol": "DVN",
+    "yahooSymbol": "DVN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "DXCM",
+    "name": "DXCM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "dxcm",
+    "providerSymbol": "DXCM",
+    "yahooSymbol": "DXCM",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EA",
+    "name": "EA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ea",
+    "providerSymbol": "EA",
+    "yahooSymbol": "EA",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EBAY",
+    "name": "EBAY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ebay",
+    "providerSymbol": "EBAY",
+    "yahooSymbol": "EBAY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ECL",
+    "name": "ECL Inc.",
+    "exchange": "NYSE",
+    "slug": "ecl",
+    "providerSymbol": "ECL",
+    "yahooSymbol": "ECL",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ED",
+    "name": "ED Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ed",
+    "providerSymbol": "ED",
+    "yahooSymbol": "ED",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EFX",
+    "name": "EFX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "efx",
+    "providerSymbol": "EFX",
+    "yahooSymbol": "EFX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EG",
+    "name": "EG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "eg",
+    "providerSymbol": "EG",
+    "yahooSymbol": "EG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EIX",
+    "name": "EIX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "eix",
+    "providerSymbol": "EIX",
+    "yahooSymbol": "EIX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EL",
+    "name": "EL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "el",
+    "providerSymbol": "EL",
+    "yahooSymbol": "EL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ELV",
+    "name": "ELV Inc.",
+    "exchange": "NYSE",
+    "slug": "elv",
+    "providerSymbol": "ELV",
+    "yahooSymbol": "ELV",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EMN",
+    "name": "EMN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "emn",
+    "providerSymbol": "EMN",
+    "yahooSymbol": "EMN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EMR",
+    "name": "EMR Inc.",
+    "exchange": "NYSE",
+    "slug": "emr",
+    "providerSymbol": "EMR",
+    "yahooSymbol": "EMR",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ENPH",
+    "name": "ENPH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "enph",
+    "providerSymbol": "ENPH",
+    "yahooSymbol": "ENPH",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EOG",
+    "name": "EOG Inc.",
+    "exchange": "NYSE",
+    "slug": "eog",
+    "providerSymbol": "EOG",
+    "yahooSymbol": "EOG",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EPAM",
+    "name": "EPAM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "epam",
+    "providerSymbol": "EPAM",
+    "yahooSymbol": "EPAM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EQIX",
+    "name": "EQIX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "eqix",
+    "providerSymbol": "EQIX",
+    "yahooSymbol": "EQIX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EQR",
+    "name": "EQR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "eqr",
+    "providerSymbol": "EQR",
+    "yahooSymbol": "EQR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EQT",
+    "name": "EQT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "eqt",
+    "providerSymbol": "EQT",
+    "yahooSymbol": "EQT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ERIE",
+    "name": "ERIE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "erie",
+    "providerSymbol": "ERIE",
+    "yahooSymbol": "ERIE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ES",
+    "name": "ES Inc.",
+    "exchange": "NASDAQ",
+    "slug": "es",
+    "providerSymbol": "ES",
+    "yahooSymbol": "ES",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ESS",
+    "name": "ESS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ess",
+    "providerSymbol": "ESS",
+    "yahooSymbol": "ESS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ETN",
+    "name": "ETN Inc.",
+    "exchange": "NYSE",
+    "slug": "etn",
+    "providerSymbol": "ETN",
+    "yahooSymbol": "ETN",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ETR",
+    "name": "ETR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "etr",
+    "providerSymbol": "ETR",
+    "yahooSymbol": "ETR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EVRG",
+    "name": "EVRG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "evrg",
+    "providerSymbol": "EVRG",
+    "yahooSymbol": "EVRG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EW",
+    "name": "EW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ew",
+    "providerSymbol": "EW",
+    "yahooSymbol": "EW",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EXC",
+    "name": "EXC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "exc",
+    "providerSymbol": "EXC",
+    "yahooSymbol": "EXC",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EXPD",
+    "name": "EXPD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "expd",
+    "providerSymbol": "EXPD",
+    "yahooSymbol": "EXPD",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EXPE",
+    "name": "EXPE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "expe",
+    "providerSymbol": "EXPE",
+    "yahooSymbol": "EXPE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "EXR",
+    "name": "EXR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "exr",
+    "providerSymbol": "EXR",
+    "yahooSymbol": "EXR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "F",
+    "name": "F Inc.",
+    "exchange": "NASDAQ",
+    "slug": "f",
+    "providerSymbol": "F",
+    "yahooSymbol": "F",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FANG",
+    "name": "FANG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "fang",
+    "providerSymbol": "FANG",
+    "yahooSymbol": "FANG",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FAST",
+    "name": "FAST Inc.",
+    "exchange": "NASDAQ",
+    "slug": "fast",
+    "providerSymbol": "FAST",
+    "yahooSymbol": "FAST",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FCX",
+    "name": "FCX Inc.",
+    "exchange": "NYSE",
+    "slug": "fcx",
+    "providerSymbol": "FCX",
+    "yahooSymbol": "FCX",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FDS",
+    "name": "FDS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "fds",
+    "providerSymbol": "FDS",
+    "yahooSymbol": "FDS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FDX",
+    "name": "FDX Inc.",
+    "exchange": "NYSE",
+    "slug": "fdx",
+    "providerSymbol": "FDX",
+    "yahooSymbol": "FDX",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FE",
+    "name": "FE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "fe",
+    "providerSymbol": "FE",
+    "yahooSymbol": "FE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FFIV",
+    "name": "FFIV Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ffiv",
+    "providerSymbol": "FFIV",
+    "yahooSymbol": "FFIV",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FI",
+    "name": "FI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "fi",
+    "providerSymbol": "FI",
+    "yahooSymbol": "FI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FICO",
+    "name": "FICO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "fico",
+    "providerSymbol": "FICO",
+    "yahooSymbol": "FICO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FIS",
+    "name": "FIS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "fis",
+    "providerSymbol": "FIS",
+    "yahooSymbol": "FIS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FITB",
+    "name": "FITB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "fitb",
+    "providerSymbol": "FITB",
+    "yahooSymbol": "FITB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FLT",
+    "name": "FLT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "flt",
+    "providerSymbol": "FLT",
+    "yahooSymbol": "FLT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FMC",
+    "name": "FMC Inc.",
+    "exchange": "NYSE",
+    "slug": "fmc",
+    "providerSymbol": "FMC",
+    "yahooSymbol": "FMC",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FOX",
+    "name": "FOX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "fox",
+    "providerSymbol": "FOX",
+    "yahooSymbol": "FOX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FOXA",
+    "name": "FOXA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "foxa",
+    "providerSymbol": "FOXA",
+    "yahooSymbol": "FOXA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FRT",
+    "name": "FRT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "frt",
+    "providerSymbol": "FRT",
+    "yahooSymbol": "FRT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FSLR",
+    "name": "FSLR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "fslr",
+    "providerSymbol": "FSLR",
+    "yahooSymbol": "FSLR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FTNT",
+    "name": "FTNT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ftnt",
+    "providerSymbol": "FTNT",
+    "yahooSymbol": "FTNT",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "FTV",
+    "name": "FTV Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ftv",
+    "providerSymbol": "FTV",
+    "yahooSymbol": "FTV",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GD",
+    "name": "GD Inc.",
+    "exchange": "NYSE",
+    "slug": "gd",
+    "providerSymbol": "GD",
+    "yahooSymbol": "GD",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GDDY",
+    "name": "GDDY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gddy",
+    "providerSymbol": "GDDY",
+    "yahooSymbol": "GDDY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GE",
+    "name": "GE Inc.",
+    "exchange": "NYSE",
+    "slug": "ge",
+    "providerSymbol": "GE",
+    "yahooSymbol": "GE",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GEHC",
+    "name": "GEHC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gehc",
+    "providerSymbol": "GEHC",
+    "yahooSymbol": "GEHC",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GEN",
+    "name": "GEN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gen",
+    "providerSymbol": "GEN",
+    "yahooSymbol": "GEN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GEV",
+    "name": "GEV Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gev",
+    "providerSymbol": "GEV",
+    "yahooSymbol": "GEV",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GFS",
+    "name": "GFS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gfs",
+    "providerSymbol": "GFS",
+    "yahooSymbol": "GFS",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GILD",
+    "name": "GILD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gild",
+    "providerSymbol": "GILD",
+    "yahooSymbol": "GILD",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GIS",
+    "name": "GIS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gis",
+    "providerSymbol": "GIS",
+    "yahooSymbol": "GIS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GL",
+    "name": "GL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gl",
+    "providerSymbol": "GL",
+    "yahooSymbol": "GL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GLW",
+    "name": "GLW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "glw",
+    "providerSymbol": "GLW",
+    "yahooSymbol": "GLW",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GM",
+    "name": "GM Inc.",
+    "exchange": "NYSE",
+    "slug": "gm",
+    "providerSymbol": "GM",
+    "yahooSymbol": "GM",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GNRC",
+    "name": "GNRC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gnrc",
+    "providerSymbol": "GNRC",
+    "yahooSymbol": "GNRC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GOOG",
+    "name": "Alphabet Inc. (Class C)",
+    "exchange": "NASDAQ",
+    "slug": "goog",
+    "providerSymbol": "GOOG",
+    "yahooSymbol": "GOOG",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GOOGL",
+    "name": "Alphabet Inc. (Class A)",
+    "exchange": "NASDAQ",
+    "slug": "googl",
+    "providerSymbol": "GOOGL",
+    "yahooSymbol": "GOOGL",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GPC",
+    "name": "GPC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gpc",
+    "providerSymbol": "GPC",
+    "yahooSymbol": "GPC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GPN",
+    "name": "GPN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gpn",
+    "providerSymbol": "GPN",
+    "yahooSymbol": "GPN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GRMN",
+    "name": "GRMN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "grmn",
+    "providerSymbol": "GRMN",
+    "yahooSymbol": "GRMN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GS",
+    "name": "GS Inc.",
+    "exchange": "NYSE",
+    "slug": "gs",
+    "providerSymbol": "GS",
+    "yahooSymbol": "GS",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "GWW",
+    "name": "GWW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "gww",
+    "providerSymbol": "GWW",
+    "yahooSymbol": "GWW",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HAL",
+    "name": "HAL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hal",
+    "providerSymbol": "HAL",
+    "yahooSymbol": "HAL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HAS",
+    "name": "HAS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "has",
+    "providerSymbol": "HAS",
+    "yahooSymbol": "HAS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HBAN",
+    "name": "HBAN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hban",
+    "providerSymbol": "HBAN",
+    "yahooSymbol": "HBAN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HCA",
+    "name": "HCA Inc.",
+    "exchange": "NYSE",
+    "slug": "hca",
+    "providerSymbol": "HCA",
+    "yahooSymbol": "HCA",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HD",
+    "name": "The Home Depot, Inc.",
+    "exchange": "NYSE",
+    "slug": "hd",
+    "providerSymbol": "HD",
+    "yahooSymbol": "HD",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HES",
+    "name": "HES Inc.",
+    "exchange": "NYSE",
+    "slug": "hes",
+    "providerSymbol": "HES",
+    "yahooSymbol": "HES",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HIG",
+    "name": "HIG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hig",
+    "providerSymbol": "HIG",
+    "yahooSymbol": "HIG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HII",
+    "name": "HII Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hii",
+    "providerSymbol": "HII",
+    "yahooSymbol": "HII",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HLT",
+    "name": "HLT Inc.",
+    "exchange": "NYSE",
+    "slug": "hlt",
+    "providerSymbol": "HLT",
+    "yahooSymbol": "HLT",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HOLX",
+    "name": "HOLX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "holx",
+    "providerSymbol": "HOLX",
+    "yahooSymbol": "HOLX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HON",
+    "name": "HON Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hon",
+    "providerSymbol": "HON",
+    "yahooSymbol": "HON",
+    "memberships": [
+      "sp500",
+      "nasdaq100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HOOD",
+    "name": "Robinhood Markets, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hood",
+    "providerSymbol": "HOOD",
+    "yahooSymbol": "HOOD",
+    "memberships": [
+      "extra"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HPE",
+    "name": "HPE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hpe",
+    "providerSymbol": "HPE",
+    "yahooSymbol": "HPE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HPQ",
+    "name": "HPQ Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hpq",
+    "providerSymbol": "HPQ",
+    "yahooSymbol": "HPQ",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HRL",
+    "name": "HRL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hrl",
+    "providerSymbol": "HRL",
+    "yahooSymbol": "HRL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HSIC",
+    "name": "HSIC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hsic",
+    "providerSymbol": "HSIC",
+    "yahooSymbol": "HSIC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HST",
+    "name": "HST Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hst",
+    "providerSymbol": "HST",
+    "yahooSymbol": "HST",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HSY",
+    "name": "HSY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hsy",
+    "providerSymbol": "HSY",
+    "yahooSymbol": "HSY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HUBB",
+    "name": "HUBB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hubb",
+    "providerSymbol": "HUBB",
+    "yahooSymbol": "HUBB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HUM",
+    "name": "HUM Inc.",
+    "exchange": "NYSE",
+    "slug": "hum",
+    "providerSymbol": "HUM",
+    "yahooSymbol": "HUM",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "HWM",
+    "name": "HWM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "hwm",
+    "providerSymbol": "HWM",
+    "yahooSymbol": "HWM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IBM",
+    "name": "IBM Inc.",
+    "exchange": "NYSE",
+    "slug": "ibm",
+    "providerSymbol": "IBM",
+    "yahooSymbol": "IBM",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ICE",
+    "name": "ICE Inc.",
+    "exchange": "NYSE",
+    "slug": "ice",
+    "providerSymbol": "ICE",
+    "yahooSymbol": "ICE",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IDXX",
+    "name": "IDXX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "idxx",
+    "providerSymbol": "IDXX",
+    "yahooSymbol": "IDXX",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IEX",
+    "name": "IEX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "iex",
+    "providerSymbol": "IEX",
+    "yahooSymbol": "IEX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IFF",
+    "name": "IFF Inc.",
+    "exchange": "NASDAQ",
+    "slug": "iff",
+    "providerSymbol": "IFF",
+    "yahooSymbol": "IFF",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "INCY",
+    "name": "INCY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "incy",
+    "providerSymbol": "INCY",
+    "yahooSymbol": "INCY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "INTC",
+    "name": "INTC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "intc",
+    "providerSymbol": "INTC",
+    "yahooSymbol": "INTC",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "INTU",
+    "name": "INTU Inc.",
+    "exchange": "NASDAQ",
+    "slug": "intu",
+    "providerSymbol": "INTU",
+    "yahooSymbol": "INTU",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "INVH",
+    "name": "INVH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "invh",
+    "providerSymbol": "INVH",
+    "yahooSymbol": "INVH",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IP",
+    "name": "IP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ip",
+    "providerSymbol": "IP",
+    "yahooSymbol": "IP",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IPG",
+    "name": "IPG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ipg",
+    "providerSymbol": "IPG",
+    "yahooSymbol": "IPG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IQV",
+    "name": "IQV Inc.",
+    "exchange": "NASDAQ",
+    "slug": "iqv",
+    "providerSymbol": "IQV",
+    "yahooSymbol": "IQV",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IR",
+    "name": "IR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ir",
+    "providerSymbol": "IR",
+    "yahooSymbol": "IR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IRM",
+    "name": "IRM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "irm",
+    "providerSymbol": "IRM",
+    "yahooSymbol": "IRM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ISRG",
+    "name": "ISRG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "isrg",
+    "providerSymbol": "ISRG",
+    "yahooSymbol": "ISRG",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IT",
+    "name": "IT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "it",
+    "providerSymbol": "IT",
+    "yahooSymbol": "IT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ITW",
+    "name": "ITW Inc.",
+    "exchange": "NYSE",
+    "slug": "itw",
+    "providerSymbol": "ITW",
+    "yahooSymbol": "ITW",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "IVZ",
+    "name": "IVZ Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ivz",
+    "providerSymbol": "IVZ",
+    "yahooSymbol": "IVZ",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "J",
+    "name": "J Inc.",
+    "exchange": "NASDAQ",
+    "slug": "j",
+    "providerSymbol": "J",
+    "yahooSymbol": "J",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "JBHT",
+    "name": "JBHT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "jbht",
+    "providerSymbol": "JBHT",
+    "yahooSymbol": "JBHT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "JBL",
+    "name": "JBL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "jbl",
+    "providerSymbol": "JBL",
+    "yahooSymbol": "JBL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "JCI",
+    "name": "JCI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "jci",
+    "providerSymbol": "JCI",
+    "yahooSymbol": "JCI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "JKHY",
+    "name": "JKHY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "jkhy",
+    "providerSymbol": "JKHY",
+    "yahooSymbol": "JKHY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "JNJ",
+    "name": "Johnson & Johnson",
+    "exchange": "NYSE",
+    "slug": "jnj",
+    "providerSymbol": "JNJ",
+    "yahooSymbol": "JNJ",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "JNPR",
+    "name": "JNPR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "jnpr",
+    "providerSymbol": "JNPR",
+    "yahooSymbol": "JNPR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "JPM",
+    "name": "JPMorgan Chase & Co.",
+    "exchange": "NYSE",
+    "slug": "jpm",
+    "providerSymbol": "JPM",
+    "yahooSymbol": "JPM",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "K",
+    "name": "K Inc.",
+    "exchange": "NASDAQ",
+    "slug": "k",
+    "providerSymbol": "K",
+    "yahooSymbol": "K",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KDP",
+    "name": "KDP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "kdp",
+    "providerSymbol": "KDP",
+    "yahooSymbol": "KDP",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KEY",
+    "name": "KEY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "key",
+    "providerSymbol": "KEY",
+    "yahooSymbol": "KEY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KEYS",
+    "name": "KEYS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "keys",
+    "providerSymbol": "KEYS",
+    "yahooSymbol": "KEYS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KHC",
+    "name": "KHC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "khc",
+    "providerSymbol": "KHC",
+    "yahooSymbol": "KHC",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KIM",
+    "name": "KIM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "kim",
+    "providerSymbol": "KIM",
+    "yahooSymbol": "KIM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KLAC",
+    "name": "KLAC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "klac",
+    "providerSymbol": "KLAC",
+    "yahooSymbol": "KLAC",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KMB",
+    "name": "KMB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "kmb",
+    "providerSymbol": "KMB",
+    "yahooSymbol": "KMB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KMI",
+    "name": "KMI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "kmi",
+    "providerSymbol": "KMI",
+    "yahooSymbol": "KMI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KMX",
+    "name": "KMX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "kmx",
+    "providerSymbol": "KMX",
+    "yahooSymbol": "KMX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KO",
+    "name": "The Coca-Cola Company",
+    "exchange": "NYSE",
+    "slug": "ko",
+    "providerSymbol": "KO",
+    "yahooSymbol": "KO",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KR",
+    "name": "KR Inc.",
+    "exchange": "NYSE",
+    "slug": "kr",
+    "providerSymbol": "KR",
+    "yahooSymbol": "KR",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "KVUE",
+    "name": "KVUE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "kvue",
+    "providerSymbol": "KVUE",
+    "yahooSymbol": "KVUE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "L",
+    "name": "L Inc.",
+    "exchange": "NASDAQ",
+    "slug": "l",
+    "providerSymbol": "L",
+    "yahooSymbol": "L",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LDOS",
+    "name": "LDOS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ldos",
+    "providerSymbol": "LDOS",
+    "yahooSymbol": "LDOS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LEN",
+    "name": "LEN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "len",
+    "providerSymbol": "LEN",
+    "yahooSymbol": "LEN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LH",
+    "name": "LH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "lh",
+    "providerSymbol": "LH",
+    "yahooSymbol": "LH",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LHX",
+    "name": "LHX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "lhx",
+    "providerSymbol": "LHX",
+    "yahooSymbol": "LHX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LIN",
+    "name": "LIN Inc.",
+    "exchange": "NYSE",
+    "slug": "lin",
+    "providerSymbol": "LIN",
+    "yahooSymbol": "LIN",
+    "memberships": [
+      "sp500",
+      "nasdaq100",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LKQ",
+    "name": "LKQ Inc.",
+    "exchange": "NASDAQ",
+    "slug": "lkq",
+    "providerSymbol": "LKQ",
+    "yahooSymbol": "LKQ",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LLY",
+    "name": "Eli Lilly and Company",
+    "exchange": "NYSE",
+    "slug": "lly",
+    "providerSymbol": "LLY",
+    "yahooSymbol": "LLY",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LMT",
+    "name": "LMT Inc.",
+    "exchange": "NYSE",
+    "slug": "lmt",
+    "providerSymbol": "LMT",
+    "yahooSymbol": "LMT",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LNT",
+    "name": "LNT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "lnt",
+    "providerSymbol": "LNT",
+    "yahooSymbol": "LNT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LOW",
+    "name": "LOW Inc.",
+    "exchange": "NYSE",
+    "slug": "low",
+    "providerSymbol": "LOW",
+    "yahooSymbol": "LOW",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LRCX",
+    "name": "LRCX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "lrcx",
+    "providerSymbol": "LRCX",
+    "yahooSymbol": "LRCX",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LULU",
+    "name": "LULU Inc.",
+    "exchange": "NASDAQ",
+    "slug": "lulu",
+    "providerSymbol": "LULU",
+    "yahooSymbol": "LULU",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LUV",
+    "name": "LUV Inc.",
+    "exchange": "NASDAQ",
+    "slug": "luv",
+    "providerSymbol": "LUV",
+    "yahooSymbol": "LUV",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LVS",
+    "name": "LVS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "lvs",
+    "providerSymbol": "LVS",
+    "yahooSymbol": "LVS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LW",
+    "name": "LW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "lw",
+    "providerSymbol": "LW",
+    "yahooSymbol": "LW",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LYB",
+    "name": "LYB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "lyb",
+    "providerSymbol": "LYB",
+    "yahooSymbol": "LYB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "LYV",
+    "name": "LYV Inc.",
+    "exchange": "NASDAQ",
+    "slug": "lyv",
+    "providerSymbol": "LYV",
+    "yahooSymbol": "LYV",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MA",
+    "name": "Mastercard Incorporated",
+    "exchange": "NYSE",
+    "slug": "ma",
+    "providerSymbol": "MA",
+    "yahooSymbol": "MA",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MAA",
+    "name": "MAA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "maa",
+    "providerSymbol": "MAA",
+    "yahooSymbol": "MAA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MAR",
+    "name": "MAR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mar",
+    "providerSymbol": "MAR",
+    "yahooSymbol": "MAR",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MAS",
+    "name": "MAS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mas",
+    "providerSymbol": "MAS",
+    "yahooSymbol": "MAS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MCD",
+    "name": "MCD Inc.",
+    "exchange": "NYSE",
+    "slug": "mcd",
+    "providerSymbol": "MCD",
+    "yahooSymbol": "MCD",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MCHP",
+    "name": "MCHP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mchp",
+    "providerSymbol": "MCHP",
+    "yahooSymbol": "MCHP",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MCK",
+    "name": "MCK Inc.",
+    "exchange": "NYSE",
+    "slug": "mck",
+    "providerSymbol": "MCK",
+    "yahooSymbol": "MCK",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MCO",
+    "name": "MCO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mco",
+    "providerSymbol": "MCO",
+    "yahooSymbol": "MCO",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MDLZ",
+    "name": "MDLZ Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mdlz",
+    "providerSymbol": "MDLZ",
+    "yahooSymbol": "MDLZ",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MDT",
+    "name": "MDT Inc.",
+    "exchange": "NYSE",
+    "slug": "mdt",
+    "providerSymbol": "MDT",
+    "yahooSymbol": "MDT",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MELI",
+    "name": "MELI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "meli",
+    "providerSymbol": "MELI",
+    "yahooSymbol": "MELI",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MET",
+    "name": "MET Inc.",
+    "exchange": "NYSE",
+    "slug": "met",
+    "providerSymbol": "MET",
+    "yahooSymbol": "MET",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "META",
+    "name": "Meta Platforms, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "meta",
+    "providerSymbol": "META",
+    "yahooSymbol": "META",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MGM",
+    "name": "MGM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mgm",
+    "providerSymbol": "MGM",
+    "yahooSymbol": "MGM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MHK",
+    "name": "MHK Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mhk",
+    "providerSymbol": "MHK",
+    "yahooSymbol": "MHK",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MKC",
+    "name": "MKC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mkc",
+    "providerSymbol": "MKC",
+    "yahooSymbol": "MKC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MKTX",
+    "name": "MKTX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mktx",
+    "providerSymbol": "MKTX",
+    "yahooSymbol": "MKTX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MLM",
+    "name": "MLM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mlm",
+    "providerSymbol": "MLM",
+    "yahooSymbol": "MLM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MMC",
+    "name": "MMC Inc.",
+    "exchange": "NYSE",
+    "slug": "mmc",
+    "providerSymbol": "MMC",
+    "yahooSymbol": "MMC",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MMM",
+    "name": "MMM Inc.",
+    "exchange": "NYSE",
+    "slug": "mmm",
+    "providerSymbol": "MMM",
+    "yahooSymbol": "MMM",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MNST",
+    "name": "MNST Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mnst",
+    "providerSymbol": "MNST",
+    "yahooSymbol": "MNST",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MO",
+    "name": "MO Inc.",
+    "exchange": "NYSE",
+    "slug": "mo",
+    "providerSymbol": "MO",
+    "yahooSymbol": "MO",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MOH",
+    "name": "MOH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "moh",
+    "providerSymbol": "MOH",
+    "yahooSymbol": "MOH",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MOS",
+    "name": "MOS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mos",
+    "providerSymbol": "MOS",
+    "yahooSymbol": "MOS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MPC",
+    "name": "MPC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mpc",
+    "providerSymbol": "MPC",
+    "yahooSymbol": "MPC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MPWR",
+    "name": "MPWR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mpwr",
+    "providerSymbol": "MPWR",
+    "yahooSymbol": "MPWR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MRK",
+    "name": "Merck & Co., Inc.",
+    "exchange": "NYSE",
+    "slug": "mrk",
+    "providerSymbol": "MRK",
+    "yahooSymbol": "MRK",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MRNA",
+    "name": "MRNA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mrna",
+    "providerSymbol": "MRNA",
+    "yahooSymbol": "MRNA",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MRVL",
+    "name": "MRVL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mrvl",
+    "providerSymbol": "MRVL",
+    "yahooSymbol": "MRVL",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MS",
+    "name": "MS Inc.",
+    "exchange": "NYSE",
+    "slug": "ms",
+    "providerSymbol": "MS",
+    "yahooSymbol": "MS",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MSCI",
+    "name": "MSCI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "msci",
+    "providerSymbol": "MSCI",
+    "yahooSymbol": "MSCI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MSFT",
+    "name": "Microsoft Corporation",
+    "exchange": "NASDAQ",
+    "slug": "msft",
+    "providerSymbol": "MSFT",
+    "yahooSymbol": "MSFT",
+    "memberships": [
+      "sp500",
+      "nasdaq100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MSI",
+    "name": "MSI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "msi",
+    "providerSymbol": "MSI",
+    "yahooSymbol": "MSI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MSTR",
+    "name": "MicroStrategy Incorporated",
+    "exchange": "NASDAQ",
+    "slug": "mstr",
+    "providerSymbol": "MSTR",
+    "yahooSymbol": "MSTR",
+    "memberships": [
+      "nasdaq100",
+      "extra"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MTB",
+    "name": "MTB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mtb",
+    "providerSymbol": "MTB",
+    "yahooSymbol": "MTB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MTCH",
+    "name": "MTCH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mtch",
+    "providerSymbol": "MTCH",
+    "yahooSymbol": "MTCH",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MTD",
+    "name": "MTD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mtd",
+    "providerSymbol": "MTD",
+    "yahooSymbol": "MTD",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "MU",
+    "name": "MU Inc.",
+    "exchange": "NASDAQ",
+    "slug": "mu",
+    "providerSymbol": "MU",
+    "yahooSymbol": "MU",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NCLH",
+    "name": "NCLH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "nclh",
+    "providerSymbol": "NCLH",
+    "yahooSymbol": "NCLH",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NDAQ",
+    "name": "NDAQ Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ndaq",
+    "providerSymbol": "NDAQ",
+    "yahooSymbol": "NDAQ",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NDSN",
+    "name": "NDSN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ndsn",
+    "providerSymbol": "NDSN",
+    "yahooSymbol": "NDSN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NEE",
+    "name": "NEE Inc.",
+    "exchange": "NYSE",
+    "slug": "nee",
+    "providerSymbol": "NEE",
+    "yahooSymbol": "NEE",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NEM",
+    "name": "NEM Inc.",
+    "exchange": "NYSE",
+    "slug": "nem",
+    "providerSymbol": "NEM",
+    "yahooSymbol": "NEM",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NFLX",
+    "name": "Netflix, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "nflx",
+    "providerSymbol": "NFLX",
+    "yahooSymbol": "NFLX",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NI",
+    "name": "NI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ni",
+    "providerSymbol": "NI",
+    "yahooSymbol": "NI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NKE",
+    "name": "NKE Inc.",
+    "exchange": "NYSE",
+    "slug": "nke",
+    "providerSymbol": "NKE",
+    "yahooSymbol": "NKE",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NOC",
+    "name": "NOC Inc.",
+    "exchange": "NYSE",
+    "slug": "noc",
+    "providerSymbol": "NOC",
+    "yahooSymbol": "NOC",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NOW",
+    "name": "NOW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "now",
+    "providerSymbol": "NOW",
+    "yahooSymbol": "NOW",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NRG",
+    "name": "NRG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "nrg",
+    "providerSymbol": "NRG",
+    "yahooSymbol": "NRG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NSC",
+    "name": "NSC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "nsc",
+    "providerSymbol": "NSC",
+    "yahooSymbol": "NSC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NTAP",
+    "name": "NTAP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ntap",
+    "providerSymbol": "NTAP",
+    "yahooSymbol": "NTAP",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NTRS",
+    "name": "NTRS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ntrs",
+    "providerSymbol": "NTRS",
+    "yahooSymbol": "NTRS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NUE",
+    "name": "NUE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "nue",
+    "providerSymbol": "NUE",
+    "yahooSymbol": "NUE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NVDA",
+    "name": "NVIDIA Corporation",
+    "exchange": "NASDAQ",
+    "slug": "nvda",
+    "providerSymbol": "NVDA",
+    "yahooSymbol": "NVDA",
+    "memberships": [
+      "sp500",
+      "nasdaq100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NVR",
+    "name": "NVR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "nvr",
+    "providerSymbol": "NVR",
+    "yahooSymbol": "NVR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NWS",
+    "name": "NWS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "nws",
+    "providerSymbol": "NWS",
+    "yahooSymbol": "NWS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NWSA",
+    "name": "NWSA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "nwsa",
+    "providerSymbol": "NWSA",
+    "yahooSymbol": "NWSA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "NXPI",
+    "name": "NXPI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "nxpi",
+    "providerSymbol": "NXPI",
+    "yahooSymbol": "NXPI",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "O",
+    "name": "O Inc.",
+    "exchange": "NASDAQ",
+    "slug": "o",
+    "providerSymbol": "O",
+    "yahooSymbol": "O",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ODFL",
+    "name": "ODFL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "odfl",
+    "providerSymbol": "ODFL",
+    "yahooSymbol": "ODFL",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "OKE",
+    "name": "OKE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "oke",
+    "providerSymbol": "OKE",
+    "yahooSymbol": "OKE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "OMC",
+    "name": "OMC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "omc",
+    "providerSymbol": "OMC",
+    "yahooSymbol": "OMC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ON",
+    "name": "ON Inc.",
+    "exchange": "NASDAQ",
+    "slug": "on",
+    "providerSymbol": "ON",
+    "yahooSymbol": "ON",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ORCL",
+    "name": "ORCL Inc.",
+    "exchange": "NYSE",
+    "slug": "orcl",
+    "providerSymbol": "ORCL",
+    "yahooSymbol": "ORCL",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ORLY",
+    "name": "ORLY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "orly",
+    "providerSymbol": "ORLY",
+    "yahooSymbol": "ORLY",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "OTIS",
+    "name": "OTIS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "otis",
+    "providerSymbol": "OTIS",
+    "yahooSymbol": "OTIS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "OXY",
+    "name": "OXY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "oxy",
+    "providerSymbol": "OXY",
+    "yahooSymbol": "OXY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PANW",
+    "name": "PANW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "panw",
+    "providerSymbol": "PANW",
+    "yahooSymbol": "PANW",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PARA",
+    "name": "PARA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "para",
+    "providerSymbol": "PARA",
+    "yahooSymbol": "PARA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PAYC",
+    "name": "PAYC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "payc",
+    "providerSymbol": "PAYC",
+    "yahooSymbol": "PAYC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PAYX",
+    "name": "PAYX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "payx",
+    "providerSymbol": "PAYX",
+    "yahooSymbol": "PAYX",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PCAR",
+    "name": "PCAR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pcar",
+    "providerSymbol": "PCAR",
+    "yahooSymbol": "PCAR",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PCG",
+    "name": "PCG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pcg",
+    "providerSymbol": "PCG",
+    "yahooSymbol": "PCG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PDD",
+    "name": "PDD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pdd",
+    "providerSymbol": "PDD",
+    "yahooSymbol": "PDD",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PEG",
+    "name": "PEG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "peg",
+    "providerSymbol": "PEG",
+    "yahooSymbol": "PEG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PEP",
+    "name": "PepsiCo, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pep",
+    "providerSymbol": "PEP",
+    "yahooSymbol": "PEP",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PFE",
+    "name": "PFE Inc.",
+    "exchange": "NYSE",
+    "slug": "pfe",
+    "providerSymbol": "PFE",
+    "yahooSymbol": "PFE",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PFG",
+    "name": "PFG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pfg",
+    "providerSymbol": "PFG",
+    "yahooSymbol": "PFG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PG",
+    "name": "The Procter & Gamble Company",
+    "exchange": "NYSE",
+    "slug": "pg",
+    "providerSymbol": "PG",
+    "yahooSymbol": "PG",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PGR",
+    "name": "PGR Inc.",
+    "exchange": "NYSE",
+    "slug": "pgr",
+    "providerSymbol": "PGR",
+    "yahooSymbol": "PGR",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PH",
+    "name": "PH Inc.",
+    "exchange": "NYSE",
+    "slug": "ph",
+    "providerSymbol": "PH",
+    "yahooSymbol": "PH",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PHM",
+    "name": "PHM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "phm",
+    "providerSymbol": "PHM",
+    "yahooSymbol": "PHM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PKG",
+    "name": "PKG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pkg",
+    "providerSymbol": "PKG",
+    "yahooSymbol": "PKG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PLD",
+    "name": "PLD Inc.",
+    "exchange": "NYSE",
+    "slug": "pld",
+    "providerSymbol": "PLD",
+    "yahooSymbol": "PLD",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PLTR",
+    "name": "Palantir Technologies Inc.",
+    "exchange": "NYSE",
+    "slug": "pltr",
+    "providerSymbol": "PLTR",
+    "yahooSymbol": "PLTR",
+    "memberships": [
+      "sp500",
+      "nasdaq100",
+      "extra"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PM",
+    "name": "PM Inc.",
+    "exchange": "NYSE",
+    "slug": "pm",
+    "providerSymbol": "PM",
+    "yahooSymbol": "PM",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PNC",
+    "name": "PNC Inc.",
+    "exchange": "NYSE",
+    "slug": "pnc",
+    "providerSymbol": "PNC",
+    "yahooSymbol": "PNC",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PNR",
+    "name": "PNR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pnr",
+    "providerSymbol": "PNR",
+    "yahooSymbol": "PNR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PNW",
+    "name": "PNW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pnw",
+    "providerSymbol": "PNW",
+    "yahooSymbol": "PNW",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PODD",
+    "name": "PODD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "podd",
+    "providerSymbol": "PODD",
+    "yahooSymbol": "PODD",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "POOL",
+    "name": "POOL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pool",
+    "providerSymbol": "POOL",
+    "yahooSymbol": "POOL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PPG",
+    "name": "PPG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ppg",
+    "providerSymbol": "PPG",
+    "yahooSymbol": "PPG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PPL",
+    "name": "PPL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ppl",
+    "providerSymbol": "PPL",
+    "yahooSymbol": "PPL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PRU",
+    "name": "PRU Inc.",
+    "exchange": "NYSE",
+    "slug": "pru",
+    "providerSymbol": "PRU",
+    "yahooSymbol": "PRU",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PSA",
+    "name": "PSA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "psa",
+    "providerSymbol": "PSA",
+    "yahooSymbol": "PSA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PSX",
+    "name": "PSX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "psx",
+    "providerSymbol": "PSX",
+    "yahooSymbol": "PSX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PTC",
+    "name": "PTC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ptc",
+    "providerSymbol": "PTC",
+    "yahooSymbol": "PTC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PWR",
+    "name": "PWR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pwr",
+    "providerSymbol": "PWR",
+    "yahooSymbol": "PWR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "PYPL",
+    "name": "PYPL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "pypl",
+    "providerSymbol": "PYPL",
+    "yahooSymbol": "PYPL",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "QCOM",
+    "name": "QCOM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "qcom",
+    "providerSymbol": "QCOM",
+    "yahooSymbol": "QCOM",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "QRVO",
+    "name": "QRVO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "qrvo",
+    "providerSymbol": "QRVO",
+    "yahooSymbol": "QRVO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RCL",
+    "name": "RCL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rcl",
+    "providerSymbol": "RCL",
+    "yahooSymbol": "RCL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RDDT",
+    "name": "Reddit, Inc.",
+    "exchange": "NYSE",
+    "slug": "rddt",
+    "providerSymbol": "RDDT",
+    "yahooSymbol": "RDDT",
+    "memberships": [
+      "extra"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "REG",
+    "name": "REG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "reg",
+    "providerSymbol": "REG",
+    "yahooSymbol": "REG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "REGN",
+    "name": "REGN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "regn",
+    "providerSymbol": "REGN",
+    "yahooSymbol": "REGN",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RF",
+    "name": "RF Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rf",
+    "providerSymbol": "RF",
+    "yahooSymbol": "RF",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RHI",
+    "name": "RHI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rhi",
+    "providerSymbol": "RHI",
+    "yahooSymbol": "RHI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RIVN",
+    "name": "Rivian Automotive, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rivn",
+    "providerSymbol": "RIVN",
+    "yahooSymbol": "RIVN",
+    "memberships": [
+      "extra"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RJF",
+    "name": "RJF Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rjf",
+    "providerSymbol": "RJF",
+    "yahooSymbol": "RJF",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RL",
+    "name": "RL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rl",
+    "providerSymbol": "RL",
+    "yahooSymbol": "RL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RMD",
+    "name": "RMD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rmd",
+    "providerSymbol": "RMD",
+    "yahooSymbol": "RMD",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ROK",
+    "name": "ROK Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rok",
+    "providerSymbol": "ROK",
+    "yahooSymbol": "ROK",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ROL",
+    "name": "ROL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rol",
+    "providerSymbol": "ROL",
+    "yahooSymbol": "ROL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ROP",
+    "name": "ROP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rop",
+    "providerSymbol": "ROP",
+    "yahooSymbol": "ROP",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ROST",
+    "name": "ROST Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rost",
+    "providerSymbol": "ROST",
+    "yahooSymbol": "ROST",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RSG",
+    "name": "RSG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rsg",
+    "providerSymbol": "RSG",
+    "yahooSymbol": "RSG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RTX",
+    "name": "RTX Inc.",
+    "exchange": "NYSE",
+    "slug": "rtx",
+    "providerSymbol": "RTX",
+    "yahooSymbol": "RTX",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "RVTY",
+    "name": "RVTY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "rvty",
+    "providerSymbol": "RVTY",
+    "yahooSymbol": "RVTY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SBAC",
+    "name": "SBAC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "sbac",
+    "providerSymbol": "SBAC",
+    "yahooSymbol": "SBAC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SBUX",
+    "name": "SBUX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "sbux",
+    "providerSymbol": "SBUX",
+    "yahooSymbol": "SBUX",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SCHW",
+    "name": "SCHW Inc.",
+    "exchange": "NYSE",
+    "slug": "schw",
+    "providerSymbol": "SCHW",
+    "yahooSymbol": "SCHW",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SHW",
+    "name": "SHW Inc.",
+    "exchange": "NYSE",
+    "slug": "shw",
+    "providerSymbol": "SHW",
+    "yahooSymbol": "SHW",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SJM",
+    "name": "SJM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "sjm",
+    "providerSymbol": "SJM",
+    "yahooSymbol": "SJM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SLB",
+    "name": "SLB Inc.",
+    "exchange": "NYSE",
+    "slug": "slb",
+    "providerSymbol": "SLB",
+    "yahooSymbol": "SLB",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SMCI",
+    "name": "SMCI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "smci",
+    "providerSymbol": "SMCI",
+    "yahooSymbol": "SMCI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SNA",
+    "name": "SNA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "sna",
+    "providerSymbol": "SNA",
+    "yahooSymbol": "SNA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SNPS",
+    "name": "SNPS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "snps",
+    "providerSymbol": "SNPS",
+    "yahooSymbol": "SNPS",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SO",
+    "name": "SO Inc.",
+    "exchange": "NYSE",
+    "slug": "so",
+    "providerSymbol": "SO",
+    "yahooSymbol": "SO",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SOFI",
+    "name": "SoFi Technologies, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "sofi",
+    "providerSymbol": "SOFI",
+    "yahooSymbol": "SOFI",
+    "memberships": [
+      "extra"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SPG",
+    "name": "SPG Inc.",
+    "exchange": "NYSE",
+    "slug": "spg",
+    "providerSymbol": "SPG",
+    "yahooSymbol": "SPG",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SPGI",
+    "name": "SPGI Inc.",
+    "exchange": "NYSE",
+    "slug": "spgi",
+    "providerSymbol": "SPGI",
+    "yahooSymbol": "SPGI",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SRE",
+    "name": "SRE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "sre",
+    "providerSymbol": "SRE",
+    "yahooSymbol": "SRE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "STE",
+    "name": "STE Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ste",
+    "providerSymbol": "STE",
+    "yahooSymbol": "STE",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "STLD",
+    "name": "STLD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "stld",
+    "providerSymbol": "STLD",
+    "yahooSymbol": "STLD",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "STT",
+    "name": "STT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "stt",
+    "providerSymbol": "STT",
+    "yahooSymbol": "STT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "STX",
+    "name": "STX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "stx",
+    "providerSymbol": "STX",
+    "yahooSymbol": "STX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "STZ",
+    "name": "STZ Inc.",
+    "exchange": "NASDAQ",
+    "slug": "stz",
+    "providerSymbol": "STZ",
+    "yahooSymbol": "STZ",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SWK",
+    "name": "SWK Inc.",
+    "exchange": "NASDAQ",
+    "slug": "swk",
+    "providerSymbol": "SWK",
+    "yahooSymbol": "SWK",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SWKS",
+    "name": "SWKS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "swks",
+    "providerSymbol": "SWKS",
+    "yahooSymbol": "SWKS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SYF",
+    "name": "SYF Inc.",
+    "exchange": "NASDAQ",
+    "slug": "syf",
+    "providerSymbol": "SYF",
+    "yahooSymbol": "SYF",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SYK",
+    "name": "SYK Inc.",
+    "exchange": "NYSE",
+    "slug": "syk",
+    "providerSymbol": "SYK",
+    "yahooSymbol": "SYK",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "SYY",
+    "name": "SYY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "syy",
+    "providerSymbol": "SYY",
+    "yahooSymbol": "SYY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "T",
+    "name": "T Inc.",
+    "exchange": "NYSE",
+    "slug": "t",
+    "providerSymbol": "T",
+    "yahooSymbol": "T",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TAP",
+    "name": "TAP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tap",
+    "providerSymbol": "TAP",
+    "yahooSymbol": "TAP",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TDG",
+    "name": "TDG Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tdg",
+    "providerSymbol": "TDG",
+    "yahooSymbol": "TDG",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TDY",
+    "name": "TDY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tdy",
+    "providerSymbol": "TDY",
+    "yahooSymbol": "TDY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TEAM",
+    "name": "TEAM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "team",
+    "providerSymbol": "TEAM",
+    "yahooSymbol": "TEAM",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TECH",
+    "name": "TECH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tech",
+    "providerSymbol": "TECH",
+    "yahooSymbol": "TECH",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TEL",
+    "name": "TEL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tel",
+    "providerSymbol": "TEL",
+    "yahooSymbol": "TEL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TER",
+    "name": "TER Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ter",
+    "providerSymbol": "TER",
+    "yahooSymbol": "TER",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TFC",
+    "name": "TFC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tfc",
+    "providerSymbol": "TFC",
+    "yahooSymbol": "TFC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TFX",
+    "name": "TFX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tfx",
+    "providerSymbol": "TFX",
+    "yahooSymbol": "TFX",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TGT",
+    "name": "TGT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tgt",
+    "providerSymbol": "TGT",
+    "yahooSymbol": "TGT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TJX",
+    "name": "TJX Inc.",
+    "exchange": "NYSE",
+    "slug": "tjx",
+    "providerSymbol": "TJX",
+    "yahooSymbol": "TJX",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TMO",
+    "name": "TMO Inc.",
+    "exchange": "NYSE",
+    "slug": "tmo",
+    "providerSymbol": "TMO",
+    "yahooSymbol": "TMO",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TMUS",
+    "name": "TMUS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tmus",
+    "providerSymbol": "TMUS",
+    "yahooSymbol": "TMUS",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TPR",
+    "name": "TPR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tpr",
+    "providerSymbol": "TPR",
+    "yahooSymbol": "TPR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TRGP",
+    "name": "TRGP Inc.",
+    "exchange": "NASDAQ",
+    "slug": "trgp",
+    "providerSymbol": "TRGP",
+    "yahooSymbol": "TRGP",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TRMB",
+    "name": "TRMB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "trmb",
+    "providerSymbol": "TRMB",
+    "yahooSymbol": "TRMB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TROW",
+    "name": "TROW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "trow",
+    "providerSymbol": "TROW",
+    "yahooSymbol": "TROW",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TRV",
+    "name": "TRV Inc.",
+    "exchange": "NYSE",
+    "slug": "trv",
+    "providerSymbol": "TRV",
+    "yahooSymbol": "TRV",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TSCO",
+    "name": "TSCO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tsco",
+    "providerSymbol": "TSCO",
+    "yahooSymbol": "TSCO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TSLA",
+    "name": "Tesla, Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tsla",
+    "providerSymbol": "TSLA",
+    "yahooSymbol": "TSLA",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TSN",
+    "name": "TSN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tsn",
+    "providerSymbol": "TSN",
+    "yahooSymbol": "TSN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TT",
+    "name": "TT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tt",
+    "providerSymbol": "TT",
+    "yahooSymbol": "TT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TTD",
+    "name": "TTD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ttd",
+    "providerSymbol": "TTD",
+    "yahooSymbol": "TTD",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TTWO",
+    "name": "TTWO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ttwo",
+    "providerSymbol": "TTWO",
+    "yahooSymbol": "TTWO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TXN",
+    "name": "TXN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "txn",
+    "providerSymbol": "TXN",
+    "yahooSymbol": "TXN",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TXT",
+    "name": "TXT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "txt",
+    "providerSymbol": "TXT",
+    "yahooSymbol": "TXT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "TYL",
+    "name": "TYL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "tyl",
+    "providerSymbol": "TYL",
+    "yahooSymbol": "TYL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "UAL",
+    "name": "UAL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ual",
+    "providerSymbol": "UAL",
+    "yahooSymbol": "UAL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "UBER",
+    "name": "UBER Inc.",
+    "exchange": "NASDAQ",
+    "slug": "uber",
+    "providerSymbol": "UBER",
+    "yahooSymbol": "UBER",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "UDR",
+    "name": "UDR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "udr",
+    "providerSymbol": "UDR",
+    "yahooSymbol": "UDR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "UHS",
+    "name": "UHS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "uhs",
+    "providerSymbol": "UHS",
+    "yahooSymbol": "UHS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ULTA",
+    "name": "ULTA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "ulta",
+    "providerSymbol": "ULTA",
+    "yahooSymbol": "ULTA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "UNH",
+    "name": "UnitedHealth Group Incorporated",
+    "exchange": "NYSE",
+    "slug": "unh",
+    "providerSymbol": "UNH",
+    "yahooSymbol": "UNH",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "UNP",
+    "name": "UNP Inc.",
+    "exchange": "NYSE",
+    "slug": "unp",
+    "providerSymbol": "UNP",
+    "yahooSymbol": "UNP",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "UPS",
+    "name": "UPS Inc.",
+    "exchange": "NYSE",
+    "slug": "ups",
+    "providerSymbol": "UPS",
+    "yahooSymbol": "UPS",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "URI",
+    "name": "URI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "uri",
+    "providerSymbol": "URI",
+    "yahooSymbol": "URI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "USB",
+    "name": "USB Inc.",
+    "exchange": "NYSE",
+    "slug": "usb",
+    "providerSymbol": "USB",
+    "yahooSymbol": "USB",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "V",
+    "name": "Visa Inc.",
+    "exchange": "NYSE",
+    "slug": "v",
+    "providerSymbol": "V",
+    "yahooSymbol": "V",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VICI",
+    "name": "VICI Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vici",
+    "providerSymbol": "VICI",
+    "yahooSymbol": "VICI",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VLO",
+    "name": "VLO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vlo",
+    "providerSymbol": "VLO",
+    "yahooSymbol": "VLO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VLTO",
+    "name": "VLTO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vlto",
+    "providerSymbol": "VLTO",
+    "yahooSymbol": "VLTO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VMC",
+    "name": "VMC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vmc",
+    "providerSymbol": "VMC",
+    "yahooSymbol": "VMC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VNO",
+    "name": "VNO Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vno",
+    "providerSymbol": "VNO",
+    "yahooSymbol": "VNO",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VRSK",
+    "name": "VRSK Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vrsk",
+    "providerSymbol": "VRSK",
+    "yahooSymbol": "VRSK",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VRSN",
+    "name": "VRSN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vrsn",
+    "providerSymbol": "VRSN",
+    "yahooSymbol": "VRSN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VRTX",
+    "name": "VRTX Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vrtx",
+    "providerSymbol": "VRTX",
+    "yahooSymbol": "VRTX",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VST",
+    "name": "VST Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vst",
+    "providerSymbol": "VST",
+    "yahooSymbol": "VST",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VTR",
+    "name": "VTR Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vtr",
+    "providerSymbol": "VTR",
+    "yahooSymbol": "VTR",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VTRS",
+    "name": "VTRS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "vtrs",
+    "providerSymbol": "VTRS",
+    "yahooSymbol": "VTRS",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "VZ",
+    "name": "VZ Inc.",
+    "exchange": "NYSE",
+    "slug": "vz",
+    "providerSymbol": "VZ",
+    "yahooSymbol": "VZ",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WAB",
+    "name": "WAB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wab",
+    "providerSymbol": "WAB",
+    "yahooSymbol": "WAB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WAT",
+    "name": "WAT Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wat",
+    "providerSymbol": "WAT",
+    "yahooSymbol": "WAT",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WBA",
+    "name": "WBA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wba",
+    "providerSymbol": "WBA",
+    "yahooSymbol": "WBA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WBD",
+    "name": "WBD Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wbd",
+    "providerSymbol": "WBD",
+    "yahooSymbol": "WBD",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WDAY",
+    "name": "WDAY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wday",
+    "providerSymbol": "WDAY",
+    "yahooSymbol": "WDAY",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WDC",
+    "name": "WDC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wdc",
+    "providerSymbol": "WDC",
+    "yahooSymbol": "WDC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WEC",
+    "name": "WEC Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wec",
+    "providerSymbol": "WEC",
+    "yahooSymbol": "WEC",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WELL",
+    "name": "WELL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "well",
+    "providerSymbol": "WELL",
+    "yahooSymbol": "WELL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WFC",
+    "name": "WFC Inc.",
+    "exchange": "NYSE",
+    "slug": "wfc",
+    "providerSymbol": "WFC",
+    "yahooSymbol": "WFC",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WM",
+    "name": "WM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wm",
+    "providerSymbol": "WM",
+    "yahooSymbol": "WM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WMB",
+    "name": "WMB Inc.",
+    "exchange": "NYSE",
+    "slug": "wmb",
+    "providerSymbol": "WMB",
+    "yahooSymbol": "WMB",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WMT",
+    "name": "Walmart Inc.",
+    "exchange": "NYSE",
+    "slug": "wmt",
+    "providerSymbol": "WMT",
+    "yahooSymbol": "WMT",
+    "memberships": [
+      "sp500",
+      "nyse_us100",
+      "djia"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WRB",
+    "name": "WRB Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wrb",
+    "providerSymbol": "WRB",
+    "yahooSymbol": "WRB",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WST",
+    "name": "WST Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wst",
+    "providerSymbol": "WST",
+    "yahooSymbol": "WST",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WTW",
+    "name": "WTW Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wtw",
+    "providerSymbol": "WTW",
+    "yahooSymbol": "WTW",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WY",
+    "name": "WY Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wy",
+    "providerSymbol": "WY",
+    "yahooSymbol": "WY",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "WYNN",
+    "name": "WYNN Inc.",
+    "exchange": "NASDAQ",
+    "slug": "wynn",
+    "providerSymbol": "WYNN",
+    "yahooSymbol": "WYNN",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "XEL",
+    "name": "XEL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "xel",
+    "providerSymbol": "XEL",
+    "yahooSymbol": "XEL",
+    "memberships": [
+      "sp500",
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "XOM",
+    "name": "Exxon Mobil Corporation",
+    "exchange": "NYSE",
+    "slug": "xom",
+    "providerSymbol": "XOM",
+    "yahooSymbol": "XOM",
+    "memberships": [
+      "sp500",
+      "nyse_us100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "XYL",
+    "name": "XYL Inc.",
+    "exchange": "NASDAQ",
+    "slug": "xyl",
+    "providerSymbol": "XYL",
+    "yahooSymbol": "XYL",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "YUM",
+    "name": "YUM Inc.",
+    "exchange": "NASDAQ",
+    "slug": "yum",
+    "providerSymbol": "YUM",
+    "yahooSymbol": "YUM",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ZBH",
+    "name": "ZBH Inc.",
+    "exchange": "NASDAQ",
+    "slug": "zbh",
+    "providerSymbol": "ZBH",
+    "yahooSymbol": "ZBH",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ZBRA",
+    "name": "ZBRA Inc.",
+    "exchange": "NASDAQ",
+    "slug": "zbra",
+    "providerSymbol": "ZBRA",
+    "yahooSymbol": "ZBRA",
+    "memberships": [
+      "sp500"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ZS",
+    "name": "ZS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "zs",
+    "providerSymbol": "ZS",
+    "yahooSymbol": "ZS",
+    "memberships": [
+      "nasdaq100"
+    ]
+  },
+  {
+    "market": "us",
+    "ticker": "ZTS",
+    "name": "ZTS Inc.",
+    "exchange": "NASDAQ",
+    "slug": "zts",
+    "providerSymbol": "ZTS",
+    "yahooSymbol": "ZTS",
+    "memberships": [
+      "sp500"
+    ]
+  }
+]

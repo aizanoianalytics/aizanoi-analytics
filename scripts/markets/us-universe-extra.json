@@ -1,0 +1,12 @@
+[
+  {"ticker":"PLTR","name":"Palantir Technologies Inc.","exchange":"NYSE"},
+  {"ticker":"ARM","name":"Arm Holdings plc","exchange":"NASDAQ"},
+  {"ticker":"COIN","name":"Coinbase Global, Inc.","exchange":"NASDAQ"},
+  {"ticker":"HOOD","name":"Robinhood Markets, Inc.","exchange":"NASDAQ"},
+  {"ticker":"RDDT","name":"Reddit, Inc.","exchange":"NYSE"},
+  {"ticker":"MSTR","name":"MicroStrategy Incorporated","exchange":"NASDAQ"},
+  {"ticker":"APP","name":"AppLovin Corporation","exchange":"NASDAQ"},
+  {"ticker":"ASTS","name":"AST SpaceMobile, Inc.","exchange":"NASDAQ"},
+  {"ticker":"RIVN","name":"Rivian Automotive, Inc.","exchange":"NASDAQ"},
+  {"ticker":"SOFI","name":"SoFi Technologies, Inc.","exchange":"NASDAQ"}
+]

@@ -10,7 +10,10 @@ from __future__ import annotations
 import argparse
 import csv
 import datetime as dt
-import fcntl
+try:
+    import fcntl
+except ImportError:
+    fcntl = None
 import io
 import json
 import math
@@ -127,9 +130,10 @@ def load_symbols_file(path: Path) -> list[str]:
             if line.strip() and not line.strip().startswith("#")]
 
 
-def prune_orphans(root: Path, keep: dict[str, set[str]]) -> int:
-    """Delete history/summary shards for instruments no longer in the universe."""
+def prune_orphans(root: Path, keep: dict[str, set[str]], archive: bool = True) -> int:
+    """Safely archive and delete history/summary shards for instruments no longer in the universe."""
     removed = 0
+    archive_base = root / "archive" / "legacy-yahoo"
     for market, filenames in keep.items():
         for folder in ("history", "summary-items"):
             directory = root / folder / market
@@ -137,6 +141,10 @@ def prune_orphans(root: Path, keep: dict[str, set[str]]) -> int:
                 continue
             for path in sorted(directory.iterdir()):
                 if path.name.endswith(".json") and path.name not in filenames:
+                    if archive and folder == "history":
+                        target_archive = archive_base / market / path.name
+                        target_archive.parent.mkdir(parents=True, exist_ok=True)
+                        target_archive.write_bytes(path.read_bytes())
                     path.unlink()
                     removed += 1
     return removed
@@ -203,19 +211,66 @@ def _returns(closes: list[float], sessions: int) -> float | None:
     return (closes[-1] / closes[-sessions - 1]) - 1 if len(closes) > sessions and closes[-sessions - 1] else None
 
 
+def _returns_by_timestamp(valid: list[dict[str, Any]], days: int, annualization: int = 252) -> float | None:
+    if len(valid) < 2:
+        return None
+    latest = valid[-1]
+    latest_t = latest.get("t")
+    if not isinstance(latest_t, (int, float)):
+        sessions_map = {1: 1, 7: 5 if annualization == 252 else 7, 30: 21 if annualization == 252 else 30, 90: 63 if annualization == 252 else 90, 365: 252 if annualization == 252 else 365}
+        closes = [float(row["c"]) for row in valid]
+        return _returns(closes, sessions_map.get(days, days))
+    target_ts = latest_t - (days * 86400)
+    if target_ts < valid[0]["t"]:
+        return None
+    if days == 1:
+        prev = valid[-2]
+        if latest_t - prev.get("t", 0) <= 4 * 86400 and prev.get("c"):
+            return (float(latest["c"]) / float(prev["c"])) - 1
+        return None
+    best_candle = None
+    for row in reversed(valid[:-1]):
+        if row.get("t", 0) <= target_ts:
+            best_candle = row
+            break
+    if best_candle is not None and best_candle.get("c"):
+        gap = target_ts - best_candle["t"]
+        max_tolerance = max(4 * 86400, int(days * 0.15 * 86400))
+        if gap <= max_tolerance and float(best_candle["c"]) > 0:
+            return (float(latest["c"]) / float(best_candle["c"])) - 1
+    return None
+
+
 def _sma(closes: list[float], sessions: int) -> float | None:
     return statistics.fmean(closes[-sessions:]) if len(closes) >= sessions else None
 
 
-def _rsi(closes: list[float], sessions: int = 14) -> float | None:
-    if len(closes) <= sessions:
+def _wilder_rsi(closes: list[float], period: int = 14) -> float | None:
+    if len(closes) <= period:
         return None
-    changes = [right - left for left, right in zip(closes[-sessions - 1:-1], closes[-sessions:])]
-    gains = statistics.fmean(max(change, 0) for change in changes)
-    losses = statistics.fmean(max(-change, 0) for change in changes)
-    if losses == 0:
-        return 100.0 if gains > 0 else 50.0
-    return 100 - (100 / (1 + gains / losses))
+    gain_sum = 0.0
+    loss_sum = 0.0
+    for i in range(1, period + 1):
+        diff = closes[i] - closes[i - 1]
+        if diff > 0:
+            gain_sum += diff
+        else:
+            loss_sum -= diff
+    avg_gain = gain_sum / period
+    avg_loss = loss_sum / period
+    for i in range(period + 1, len(closes)):
+        diff = closes[i] - closes[i - 1]
+        gain = diff if diff > 0 else 0.0
+        loss = -diff if diff < 0 else 0.0
+        avg_gain = (avg_gain * (period - 1) + gain) / period
+        avg_loss = (avg_loss * (period - 1) + loss) / period
+    if avg_loss == 0.0:
+        return 100.0 if avg_gain > 0 else 50.0
+    rs = avg_gain / avg_loss
+    return 100.0 - (100.0 / (1.0 + rs))
+
+
+_rsi = _wilder_rsi
 
 
 def _trend_age(closes: list[float], sessions: int) -> int | None:
@@ -240,7 +295,16 @@ def compute_metrics(candles: list[dict[str, Any]], *, annualization: int, four_h
     log_returns = [math.log(right / left) for left, right in zip(closes[:-1], closes[1:]) if left > 0 and right > 0]
     vol_window = log_returns[-20:]
     volatility = statistics.stdev(vol_window) * math.sqrt(annualization) if len(vol_window) > 1 else None
-    recent_year = closes[-min(252, len(closes)):]
+
+    if valid and isinstance(valid[-1].get("t"), (int, float)):
+        cutoff_52w = valid[-1]["t"] - (365 * 86400)
+        recent_52w_candles = [row for row in valid if row.get("t", 0) >= cutoff_52w]
+        if not recent_52w_candles:
+            recent_52w_candles = valid[-min(252, len(valid)):]
+        recent_year = [float(row["c"]) for row in recent_52w_candles]
+    else:
+        recent_year = closes[-min(252, len(closes)):]
+
     peak = -math.inf
     drawdown = 0.0
     for close in recent_year:
@@ -278,11 +342,20 @@ def compute_metrics(candles: list[dict[str, Any]], *, annualization: int, four_h
     low, high = min(recent_year), max(recent_year)
     range_position = (latest - low) / (high - low) if high > low else 0.5
     four_hour_rows = four_hour or []
+
+    ret_1d = _returns_by_timestamp(valid, 1, annualization)
+    ret_7d = _returns_by_timestamp(valid, 7, annualization)
+    ret_30d = _returns_by_timestamp(valid, 30, annualization)
+    ret_90d = _returns_by_timestamp(valid, 90, annualization)
+    ret_1y = _returns_by_timestamp(valid, 365, annualization)
+    if ret_1y is None and annualization == 252 and len(closes) > 252:
+        ret_1y = _returns(closes, 252)
+
     return {
-        "latest": round(latest, 8), "return1d": _returns(closes, 1), "return7d": _returns(closes, 5),
-        "return30d": _returns(closes, 21), "return90d": _returns(closes, 63), "return1y": _returns(closes, 252),
-        "volatility20": volatility, "rsi14": _rsi(closes), "drawdown1y": drawdown,
-        "distanceFrom52wHigh": latest / high - 1, "rangePosition52w": range_position,
+        "latest": round(latest, 8), "return1d": ret_1d, "return7d": ret_7d,
+        "return30d": ret_30d, "return90d": ret_90d, "return1y": ret_1y,
+        "volatility20": volatility, "rsi14": _wilder_rsi(closes), "drawdown1y": drawdown,
+        "distanceFrom52wHigh": latest / high - 1 if high > 0 else 0.0, "rangePosition52w": range_position,
         "sma20": sma20, "sma50": sma50, "sma200": sma200, "sma50Prev": sma50_prev, "sma200Prev": sma200_prev,
         "smaCross": cross, "trendRegime": regime, "trendAge50": _trend_age(closes, 50), "historySessions": len(closes),
         "spark30": [round(value, 8) for value in closes[-30:]],
@@ -404,13 +477,73 @@ def _pearson(left: list[float], right: list[float]) -> float | None:
     return numerator / denominator if denominator else None
 
 
-def crypto_correlations(price_series: dict[str, list[float]]) -> dict[str, Any]:
+def crypto_correlations(price_series: dict[str, Any]) -> dict[str, Any]:
     symbols = sorted(price_series)
-    returns = {
-        symbol: [math.log(right / left) for left, right in zip(values[:-1], values[1:]) if left > 0 and right > 0][-200:]
-        for symbol, values in price_series.items()
-    }
-    matrix = [[_pearson(returns[left], returns[right]) for right in symbols] for left in symbols]
+    has_timestamps = any(
+        isinstance(vals, list) and vals and isinstance(vals[0], dict) and "t" in vals[0]
+        for vals in price_series.values()
+    )
+
+    if not has_timestamps:
+        matrix: list[list[float | None]] = []
+        for left in symbols:
+            row: list[float | None] = []
+            for right in symbols:
+                if left == right:
+                    row.append(1.0)
+                    continue
+                v_left = price_series.get(left, [])
+                v_right = price_series.get(right, [])
+                min_len = min(len(v_left), len(v_right))
+                if min_len < 4:
+                    row.append(None)
+                    continue
+                sub_l = v_left[-min_len:]
+                sub_r = v_right[-min_len:]
+                r_left_l: list[float] = []
+                r_right_l: list[float] = []
+                for i in range(1, min_len):
+                    l0, l1 = sub_l[i - 1], sub_l[i]
+                    r0, r1 = sub_r[i - 1], sub_r[i]
+                    if l0 > 0 and l1 > 0 and r0 > 0 and r1 > 0:
+                        r_left_l.append(math.log(l1 / l0))
+                        r_right_l.append(math.log(r1 / r0))
+                row.append(_pearson(r_left_l, r_right_l) if len(r_left_l) >= 3 else None)
+            matrix.append(row)
+    else:
+        time_maps: dict[str, dict[int, float]] = {}
+        for sym, items in price_series.items():
+            time_maps[sym] = {
+                int(item["t"]): float(item["c"])
+                for item in items
+                if isinstance(item, dict) and "t" in item and isinstance(item.get("c"), (int, float)) and item["c"] > 0
+            }
+
+        matrix = []
+        for left in symbols:
+            row = []
+            for right in symbols:
+                if left == right:
+                    row.append(1.0)
+                    continue
+                common_ts = sorted(set(time_maps.get(left, {}).keys()) & set(time_maps.get(right, {}).keys()))
+                if len(common_ts) < 4:
+                    row.append(None)
+                    continue
+                eval_ts = common_ts[-201:]
+                p_left = [time_maps[left][t] for t in eval_ts]
+                p_right = [time_maps[right][t] for t in eval_ts]
+                r_left = []
+                r_right = []
+                for i in range(1, len(eval_ts)):
+                    pl0, pl1 = p_left[i - 1], p_left[i]
+                    pr0, pr1 = p_right[i - 1], p_right[i]
+                    if pl0 > 0 and pl1 > 0 and pr0 > 0 and pr1 > 0:
+                        r_left.append(math.log(pl1 / pl0))
+                        r_right.append(math.log(pr1 / pr0))
+                row.append(_pearson(r_left, r_right) if len(r_left) >= 3 else None)
+            matrix.append(row)
+
     pairs = [value for index, row in enumerate(matrix) for value in row[index + 1:] if value is not None]
     btc_index = symbols.index("BTC") if "BTC" in symbols else None
     btc = {symbol: matrix[btc_index][index] for index, symbol in enumerate(symbols)} if btc_index is not None else {}
@@ -456,11 +589,30 @@ def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], compl
         write_json_atomic(root / "summary" / f"{market}.json", {"market": market, "completedAt": completed_at, "rows": rows})
         _write_summary_chunks(root, market, rows, completed_at)
         write_json_atomic(root / "pulse" / f"{market}.json", pulse)
-    crypto_series: dict[str, list[float]] = {}
-    for row in markets["crypto"]:
+    crypto_series: dict[str, list[dict[str, Any]]] = {}
+    for row in markets.get("crypto", []):
         shard = read_json(root / "history" / "crypto" / f"{row['slug']}.json", {})
-        crypto_series[row["ticker"]] = [float(item["c"]) for item in shard.get("daily", []) if isinstance(item.get("c"), (int, float))]
+        crypto_series[row["ticker"]] = shard.get("daily", [])
     write_json_atomic(root / "pulse" / "crypto-correlations.json", crypto_correlations(crypto_series))
+
+    us_failed = [s for s in failed if not s.endswith("-USD")]
+    crypto_failed = [s for s in failed if s.endswith("-USD")]
+
+    def _market_health(m: str, m_failed: list[str]) -> dict[str, Any]:
+        rows = markets.get(m, [])
+        timestamps = [r.get("updatedAt") for r in rows if r.get("updatedAt")]
+        return {
+            "status": "complete" if not m_failed else "partial",
+            "provider": "fintable" if (m == "us" and os.getenv("FINTABLE_API_KEY")) else ("yahoo" if m == "us" else "binance"),
+            "priceBasis": "Adjusted close" if m == "us" else "Exchange close",
+            "expected": len(rows) + len(m_failed),
+            "published": len(rows),
+            "missing": m_failed,
+            "stale": 0,
+            "oldestObservationAt": min(timestamps) if timestamps else completed_at,
+            "newestObservationAt": max(timestamps) if timestamps else completed_at,
+        }
+
     health = {
         "completedAt": completed_at, "counts": {key: len(value) for key, value in markets.items()},
         "failedSymbols": failed, "status": "complete" if not failed else "partial",
@@ -469,6 +621,8 @@ def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], compl
             "fourHourUnavailable": sum(row.get("dataQuality", {}).get("fourHour") != "complete" for rows in markets.values() for row in rows),
             "limitedHistory": sum(row.get("dataQuality", {}).get("history") == "limited" for rows in markets.values() for row in rows),
         },
+        "us": _market_health("us", us_failed),
+        "crypto": _market_health("crypto", crypto_failed),
     }
     write_json_atomic(root / "health.json", health)
     _append_pulse_snapshots(root, completed_at, pulses)
@@ -530,7 +684,19 @@ def resilient_download(rows: list[dict[str, str]], fetcher: Any) -> tuple[dict[s
 
 
 def build_universe(config_path: Path) -> list[dict[str, str]]:
-    rows = parse_universe(fetch_text(NASDAQ_URL), fetch_text(OTHER_URL)) + crypto_universe(config_path)
+    us_json = Path(__file__).with_name("us-universe.json")
+    if us_json.exists():
+        us_rows = json.loads(us_json.read_text(encoding="utf-8"))
+    else:
+        try:
+            from .universe_builder import build_focused_us_universe
+        except ImportError:
+            import sys
+            sys.path.insert(0, str(Path(__file__).parent))
+            from universe_builder import build_focused_us_universe
+        extra_path = Path(__file__).with_name("us-universe-extra.json")
+        us_rows = build_focused_us_universe(extra_path)
+    rows = us_rows + crypto_universe(config_path)
     overrides, excludes = load_universe_corrections(Path(__file__).with_name("universe-corrections.json"))
     return apply_universe_corrections(rows, overrides=overrides, excludes=excludes)
 
@@ -598,6 +764,12 @@ def rebuild_derived(root: Path, instruments: list[dict[str, str]], *, completed_
 
 
 def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, failed: list[str], *, slice_index: int | None = None, slice_count: int | None = None) -> None:
+    keep: dict[str, set[str]] = {}
+    for row in instruments:
+        m = row.get("market", "")
+        if m:
+            keep.setdefault(m, set()).add(f"{row['slug']}.json")
+    prune_orphans(root, keep, archive=True)
     markets: dict[str, list[dict[str, Any]]] = {"us": [], "crypto": []}
     for instrument in instruments:
         item = read_json(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json", None)
@@ -622,15 +794,23 @@ def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, 
 
 
 def run(args: argparse.Namespace) -> int:
+    if args.slice_count <= 0:
+        raise ValueError("--slice-count must be positive")
+    if args.slice_index is not None and not (0 <= args.slice_index < args.slice_count):
+        raise ValueError(f"--slice-index must be between 0 and {args.slice_count - 1}")
+    if args.delay < 0:
+        raise ValueError("--delay must be non-negative")
+
     root = Path(args.data_root).resolve()
     root.mkdir(parents=True, exist_ok=True)
     lock_path = root / ".update.lock"
     with lock_path.open("w") as lock:
-        try:
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            print("[markets] another update is already running; skipped")
-            return 0
+        if fcntl is not None:
+            try:
+                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                print("[markets] another update is already running; skipped")
+                return 0
         config = Path(__file__).with_name("crypto-universe.json")
         if args.mode == "bootstrap" or not (root / "instruments.json").exists() or args.refresh_universe:
             instruments = build_universe(config)
@@ -643,22 +823,27 @@ def run(args: argparse.Namespace) -> int:
             aggregate(root, instruments, completed, [])
             print(f"[markets] rebuilt={rebuilt} failed=0 completedAt={completed}")
             return 0
+
+        all_instruments = list(instruments)
         if args.max_symbols:
-            us = [row for row in instruments if row["market"] == "us"][:args.max_symbols]
-            crypto = [row for row in instruments if row["market"] == "crypto"]
-            instruments = us + crypto
+            us_pool = [row for row in instruments if row["market"] == "us"][:args.max_symbols]
+            crypto_pool = [row for row in instruments if row["market"] == "crypto"]
+            selected_universe = us_pool + crypto_pool
+        else:
+            selected_universe = instruments
+
         if args.mode == "bootstrap":
-            selected = instruments
+            selected = selected_universe
             slice_index = None
         else:
-            us = [row for row in instruments if row["market"] == "us"]
-            crypto = [row for row in instruments if row["market"] == "crypto"]
+            us = [row for row in selected_universe if row["market"] == "us"]
+            crypto = [row for row in selected_universe if row["market"] == "crypto"]
             slice_index = args.slice_index if args.slice_index is not None else int(time.time() // 3600) % args.slice_count
             selected = [row for index, row in enumerate(us) if index % args.slice_count == slice_index] + crypto
-        print(f"[markets] mode={args.mode} universe={len(instruments)} selected={len(selected)}")
+        print(f"[markets] mode={args.mode} universe={len(all_instruments)} selected={len(selected)}")
         updated, failed = update_rows(root, selected, bootstrap=args.mode == "bootstrap", delay=args.delay, skip_four_hour=args.skip_four_hour)
         completed = utc_now()
-        aggregate(root, instruments, completed, failed, slice_index=slice_index, slice_count=args.slice_count if slice_index is not None else None)
+        aggregate(root, all_instruments, completed, failed, slice_index=slice_index, slice_count=args.slice_count if slice_index is not None else None)
         print(f"[markets] updated={updated} failed={len(failed)} completedAt={completed}")
         return 0 if not failed or args.allow_partial else 1
 
