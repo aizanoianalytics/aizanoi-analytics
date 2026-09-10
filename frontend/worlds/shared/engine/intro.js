@@ -16,6 +16,7 @@ export class IntroSequence {
     this.subtitle = opts.subtitle || '450–430 BCE · THE PERICLEAN GOLDEN AGE';
 
     this.isComplete = false;
+    this.isRunning = false;
     this.onComplete = null;
     this.progress = 0;
     this.duration = 7.5; // 7.5 second cinematic flyover
@@ -50,18 +51,27 @@ export class IntroSequence {
       <p class="cinematic-title__subtitle"></p>
       <div class="cinematic-title__skip">[Press ESC or tap to skip intro]</div>
     `;
-    // Touch devices have no Escape key — tap anywhere skips the intro.
-    // The overlay itself is pointer-events:none (it must never block the HUD),
-    // so listen on window instead: any tap/press during the flyover skips it.
-    window.addEventListener('pointerdown', this._skipHandler = () => this.skipIntro());
+    // The overlay itself is pointer-events:none (it must never block the HUD).
+    // The skip listener is installed by start(), after the Enter button's own
+    // pointerdown has completed, so that opening tap cannot consume it.
+    this._skipHandler = null;
     document.body.appendChild(this.overlay);
   }
 
   start() {
+    if (this.isRunning) return false;
     this.isComplete = false;
+    this.isRunning = true;
     this.progress = 0;
     this._startWallTime = performance.now();
     this.controls.disable();
+
+    // Touch devices have no Escape key. Arm this only after start() is called:
+    // the pointerdown that produced the Enter click has already bubbled away.
+    if (!this._skipHandler) {
+      this._skipHandler = () => this.skipIntro();
+      window.addEventListener('pointerdown', this._skipHandler);
+    }
 
     const onUserAction = () => {
       this.skipIntro();
@@ -91,12 +101,14 @@ export class IntroSequence {
     this._fallbackTimer = setTimeout(() => {
       if (!this.isComplete) this.skipIntro();
     }, (this.duration * 1.2 + 2.0) * 1000);
+    return true;
   }
 
   skipIntro() {
-    if (this.isComplete) return;
+    if (!this.isRunning || this.isComplete) return false;
     this.progress = 1.0;
     this.finish();
+    return true;
   }
 
   update(dt) {
@@ -140,6 +152,7 @@ export class IntroSequence {
   finish() {
     if (this.isComplete) return;
     this.isComplete = true;
+    this.isRunning = false;
 
     if (this._skipHandler) {
       window.removeEventListener('pointerdown', this._skipHandler);

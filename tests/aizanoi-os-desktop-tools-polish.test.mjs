@@ -58,8 +58,8 @@ test('mobile Snake and Blockfall use playfield taps instead of direction-button 
   assert.match(blockfall, /double tap/i);
 });
 
-test('4.5.1 release cache includes the canonical shell stylesheet', () => {
-  assert.match(release, /VERSION: '4\.5\.1'/);
-  assert.match(release, /CACHE: 'aizanoi-os-shell-v4\.5\.1'/);
+test('4.5.2 release cache includes the canonical shell stylesheet', () => {
+  assert.match(release, /VERSION: '4\.5\.2'/);
+  assert.match(release, /CACHE: 'aizanoi-os-shell-v4\.5\.2'/);
   assert.match(serviceWorker, /'\/styles\/shell\.css'/);
 });

@@ -34,6 +34,23 @@ for(const spec of worlds){
   assert.equal(await page.evaluate((id)=>window.__WORLD_DEBUG__.teleport(id),spec.hero),true,`${spec.id}: hero teleport failed`);
   assert.equal(await page.evaluate(()=>window.__WORLD_DEBUG__.toggleEvidence()),true,`${spec.id}: evidence did not enable`);assert.equal(await page.evaluate(()=>window.__WORLD_DEBUG__.toggleEvidence()),false,`${spec.id}: evidence did not disable`);
   assert.deepEqual(opened.errors,[],`${spec.id}: browser errors: ${opened.errors.join(' | ')}`);await context.close();
-  const mobile=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:2,serviceWorkers:'block'});const mo=await open(mobile,spec);const mp=mo.page;await enter(mp,spec);await mp.waitForFunction(()=>getComputedStyle(document.querySelector('#mobile-controls')).display!=='none');const pad=await mp.locator('#movePad').boundingBox();assert.ok(pad,`${spec.id}: mobile joystick missing`);const box=await mp.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth}));assert.ok(box.sw<=box.cw+2,`${spec.id}: mobile horizontal overflow`);assert.deepEqual(mo.errors,[],`${spec.id}: mobile errors: ${mo.errors.join(' | ')}`);await mobile.close();
+  const mobile=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:2,serviceWorkers:'block'});
+  const mo=await open(mobile,spec);
+  const mp=mo.page;
+  await mp.locator('#btn-enter').tap();
+  await mp.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:30000});
+  await mp.waitForFunction(()=>document.documentElement.dataset.worldReady==='true',null,{timeout:30000});
+  await mp.waitForFunction(()=>getComputedStyle(document.querySelector('#loading-screen')).display==='none',null,{timeout:30000});
+  await mp.touchscreen.tap(300,400);
+  await mp.waitForFunction(()=>window.__WORLD_DEBUG__?.player?.controlsEnabled===true,null,{timeout:10000});
+  const rightTarget=await mp.evaluate(()=>{const el=document.elementFromPoint(innerWidth*0.75,innerHeight*0.5);return {tag:el?.tagName||'',id:el?.id||'',className:typeof el?.className==='string'?el.className:''};});
+  assert.deepEqual(rightTarget,{tag:'CANVAS',id:'viewport',className:''},`${spec.id}: look surface is covered after entry (${JSON.stringify(rightTarget)})`);
+  await mp.waitForFunction(()=>getComputedStyle(document.querySelector('#mobile-controls')).display!=='none');
+  const pad=await mp.locator('#movePad').boundingBox();
+  assert.ok(pad,`${spec.id}: mobile joystick missing`);
+  const box=await mp.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth}));
+  assert.ok(box.sw<=box.cw+2,`${spec.id}: mobile horizontal overflow`);
+  assert.deepEqual(mo.errors,[],`${spec.id}: mobile errors: ${mo.errors.join(' | ')}`);
+  await mobile.close();
 }
 await browser.close();console.log('Unified Worlds desktop/mobile WebGL smoke passed');

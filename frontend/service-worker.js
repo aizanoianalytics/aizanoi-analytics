@@ -1,9 +1,9 @@
 'use strict';
 importScripts('/release.js');
 const CACHE=self.AIZANOI_RELEASE.CACHE;
-const MAX_RUNTIME_ENTRIES=24;
-/* Offline SLA: the shell/home is guaranteed after install. Lazy product/app modules and standalone products become offline-capable after first successful use through runtime caching. */
-const PRECACHE=['/','/release.js','/manifest.webmanifest','/assets/branding/aizanoi-logo-mark.svg','/assets/branding/aizanoi-pwa-192.png','/assets/branding/aizanoi-pwa-512.png','/assets/branding/aizanoi-pwa-maskable-512.png','/assets/wallpapers/aizanoi-os-sunrise.svg','/styles/tokens.css','/styles/base.css','/styles/shell.css','/styles/components.css','/styles/device-shell.css','/js/v3/main.js','/js/v3/aizanoi-os.js','/js/v3/brand-platform.js','/js/v3/registry.js','/js/v3/module-registry.generated.js','/js/v3/store.js','/js/v3/shell.js','/news/index.json'];
+const MAX_RUNTIME_ENTRIES=128;
+/* Offline SLA: the shell/home and Worlds portal are guaranteed after install. Lazy product/app modules and standalone products become offline-capable after first successful use through runtime caching. */
+const PRECACHE=['/','/worlds/','/release.js','/manifest.webmanifest','/assets/branding/aizanoi-logo-mark.svg','/assets/branding/aizanoi-pwa-192.png','/assets/branding/aizanoi-pwa-512.png','/assets/branding/aizanoi-pwa-maskable-512.png','/assets/wallpapers/aizanoi-os-sunrise.svg','/styles/tokens.css','/styles/base.css','/styles/shell.css','/styles/components.css','/styles/device-shell.css','/js/v3/main.js','/js/v3/aizanoi-os.js','/js/v3/brand-platform.js','/js/v3/registry.js','/js/v3/module-registry.generated.js','/js/v3/store.js','/js/v3/shell.js','/news/index.json'];
 const PRECACHE_KEYS=new Set(PRECACHE);let pruneQueue=Promise.resolve();
 async function precacheShell(){const cache=await caches.open(CACHE),responses=await Promise.all(PRECACHE.map(async(url)=>{const response=await fetch(new Request(url,{cache:'reload'}));if(!response.ok)throw new Error(`Precache failed for ${url}: ${response.status}`);return[url,response];}));await Promise.all(responses.map(([url,response])=>cache.put(url,response)));}
 self.addEventListener('install',(event)=>event.waitUntil(precacheShell()));
@@ -14,5 +14,5 @@ async function pruneRuntimeCache(){const cache=await caches.open(CACHE),keys=awa
 function schedulePrune(){pruneQueue=pruneQueue.then(pruneRuntimeCache,pruneRuntimeCache);return pruneQueue;}
 async function cacheNavigation(request,response){if(!response.ok)return;const cache=await caches.open(CACHE);await cache.put(request,response.clone());await schedulePrune();}
 async function networkFirstStatic(request){const cache=await caches.open(CACHE);try{const response=await fetch(request);if(response.ok)await cache.put(request,response.clone());if(response.ok)await schedulePrune();return response;}catch(error){const cached=await cache.match(request);if(cached)return cached;throw error;}}
-async function networkFirstNavigation(request){try{const response=await fetch(request);await cacheNavigation(request,response);return response;}catch(error){const cached=await caches.match(request);return cached||caches.match('/');}}
+async function networkFirstNavigation(request){const url=new URL(request.url);try{const response=await fetch(request);await cacheNavigation(request,response);return response;}catch(error){const cached=await caches.match(request);return cached||(url.pathname.startsWith('/worlds/')?caches.match('/worlds/'):caches.match('/'));}}
 self.addEventListener('fetch',(event)=>{const request=event.request,url=new URL(request.url);if(request.method!=='GET'||url.pathname.startsWith('/api/'))return;if(request.mode==='navigate'){event.respondWith(networkFirstNavigation(request));return;}if(sameOriginStatic(request))event.respondWith(networkFirstStatic(request));});
