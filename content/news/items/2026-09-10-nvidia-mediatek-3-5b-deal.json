@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-10-nvidia-mediatek-3-5b-deal",
+  "title": "Nvidia's $3.5B MediaTek convertible bond pushes NVLink into edge and mobile",
+  "summary": "Nvidia has deepened its longstanding partnership with MediaTek by investing $3.5 billion in convertible bonds issued by the Taiwanese chip designer, with MediaTek set to integrate Nvidia's NVLink interconnect into its edge and mobile platforms. The deal lifts MediaTek shares by roughly 10% and signals Nvidia's intent to push its data-center fabric into phones, cars and IoT, complementing the Vera CPU programme announced earlier this year.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-10T05:30:00+03:00",
+  "updatedAt": "2026-09-10T05:30:00+03:00",
+  "retrievedAt": "2026-09-10T05:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["nvidia", "mediatek", "nvlink", "semiconductors"],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/01/nvidia-deal-mediatek-shares.html",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    },
+    {
+      "publisher": "Nvidia (press release)",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-and-mediatek-deepen-long-standing-partnership-to-build-ai-edge-to-cloud-computing-platforms",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

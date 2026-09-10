@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-10-anthropic-fable-mythos-1-trillion",
+  "title": "Anthropic's $965B valuation and 2028 revenue projections become the IPO reference frame",
+  "summary": "Wall Street banks preparing Anthropic's late-September or October listing are anchoring valuation discussions to a $190-200 billion 2028 revenue projection rather than its current $47 billion run rate, two people familiar with the company's financials told Reuters. The May Series H priced Anthropic at $965 billion post-money, with total private funding now past $130 billion, and the IPO is being positioned to clear close to $2 trillion in a tight-float offering.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-10T05:30:00+03:00",
+  "updatedAt": "2026-09-10T05:30:00+03:00",
+  "retrievedAt": "2026-09-10T05:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "ipo", "valuation", "ai-listing"],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance / TechCrunch",
+      "url": "https://finance.yahoo.com/sectors/technology/articles/anthropic-raises-65-billion-nears-185251986.html",
+      "publishedAt": "2026-05-28T00:00:00Z"
+    },
+    {
+      "publisher": "The Motley Fool",
+      "url": "https://www.fool.com/investing/2026/09/04/anthropic-has-already-raised-130-billion-ahead-of/",
+      "publishedAt": "2026-09-04T09:33:00Z"
+    }
+  ]
+}

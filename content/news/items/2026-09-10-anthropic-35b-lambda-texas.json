@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-10-anthropic-35b-lambda-texas",
+  "title": "Anthropic locks in $35B Lambda compute deal as IPO window narrows",
+  "summary": "Anthropic has signed a long-term cloud computing agreement worth $35 billion with Nvidia-backed Lambda, anchoring up to 700 megawatts of capacity at a Hut 8-built Texas data center to train and serve Claude models. The structure has Nvidia hold the facility's leasing rights while Lambda operates the GPU cloud, smoothing the credit risk that would otherwise have sat on Anthropic's balance sheet ahead of its planned late-2026 listing.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-10T05:30:00+03:00",
+  "updatedAt": "2026-09-10T05:30:00+03:00",
+  "retrievedAt": "2026-09-10T05:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "nvidia", "lambda", "compute"],
+  "sources": [
+    {
+      "publisher": "Seoul Economic Daily",
+      "url": "https://en.sedaily.com/international/2026/09/01/anthropic-secures-35-billion-in-ai-computing-backed-by",
+      "publishedAt": "2026-09-01T17:43:29Z"
+    },
+    {
+      "publisher": "Pitchbook",
+      "url": "https://www.pitchbook.com/news/articles/anthropic-nets-15b-from-nvidia-and-microsoft-as-ai-bets-overlap",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-10-us-ppi-august-preview-fed-cut",
+  "title": "US August PPI prints Thursday with market split on whether a softer print unlocks a Fed cut",
+  "summary": "The Bureau of Labor Statistics releases the August Producer Price Index at 8:30 a.m. Eastern on Thursday, with consensus expecting a 0.3% monthly rise before Wednesday's Fed September meeting on September 16-17. A softer-than-expected print would reinforce Federal Reserve doves' case for a 25 basis point cut next week, while a hot reading would complicate Chair Jerome Powell's task as President Donald Trump continues to demand immediate easing in public.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-09-10T05:30:00+03:00",
+  "updatedAt": "2026-09-10T05:30:00+03:00",
+  "retrievedAt": "2026-09-10T05:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ppi", "us-economy", "fed", "inflation"],
+  "sources": [
+    {
+      "publisher": "WEEX",
+      "url": "https://www.weex.com/news/detail/the-us-august-ppi-unexpectedly-decreases-reinforcing-the-feds-justification-for-rate-cuts-164320",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    },
+    {
+      "publisher": "Sigmanomics",
+      "url": "https://sigmanomics.com/stocks-hit-record-highs",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    }
+  ]
+}
