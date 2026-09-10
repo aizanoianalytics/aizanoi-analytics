@@ -24,9 +24,9 @@ test('Markets landing exposes accessible US and Crypto dashboard tabs', () => {
   assert.equal(existsSync('frontend/analytics/markets/index.html'), true);
   const html = read('frontend/analytics/markets/index.html');
   assert.match(html, /<title>Aizanoi Markets — Aizanoi Analytics<\/title>/);
-  assert.match(html, /role="tablist"/);
-  assert.match(html, /data-market="us"/);
-  assert.match(html, /data-market="crypto"/);
+  assert.match(html, /data-markets-root/);
+  assert.match(html, /data-view="overview"/);
+  assert.match(html, /data-view="crypto-risk"/);
   assert.match(html, /Data source: Yahoo Finance/);
   assert.match(html, /name="twitter:site" content="@AizanoiHQ"/);
   assert.match(html, /application\/ld\+json/);
@@ -34,9 +34,9 @@ test('Markets landing exposes accessible US and Crypto dashboard tabs', () => {
 });
 
 test('browser loads static shards and never calls Yahoo directly', () => {
-  const app = read('frontend/analytics/markets/app.js');
-  assert.match(app, /\/analytics\/markets\/data\/manifest\.json/);
-  assert.match(app, /\/analytics\/markets\/data\/summary\.json/);
+  const app = read('frontend/analytics/markets/dashboard.js');
+  assert.match(app, /\/analytics\/markets\/data/);
+  assert.match(app, /summary\/\$\{market\}\/index\.json/);
   assert.doesNotMatch(app, /query[12]\.finance\.yahoo\.com/);
 });
 
@@ -75,20 +75,15 @@ test('Nginx keeps mutable market data outside immutable release trees', () => {
   assert.match(nginx, /expires -1/);
 });
 
-test('market metric engine identifies momentum, drawdown and unusual volume', async () => {
+test('market metric engine identifies momentum, drawdown and 52-week position', async () => {
   const { computeMetrics } = await import('../frontend/analytics/markets/metrics.js');
   const candles = Array.from({ length: 220 }, (_, index) => ({
     t: 1_700_000_000 + index * 86_400,
-    o: 100 + index,
-    h: 102 + index,
-    l: 99 + index,
     c: 101 + index,
-    v: index === 219 ? 10_000 : 1_000,
   }));
   const metrics = computeMetrics(candles, { annualization: 252 });
   assert.ok(metrics.return30d > 0);
-  assert.ok(metrics.volumeZ20 > 3);
+  assert.ok(metrics.rangePosition52w > 0.99);
   assert.ok(metrics.drawdown1y <= 0);
   assert.equal(metrics.aboveSma200, true);
-  assert.ok(metrics.rsi14 > 50);
 });

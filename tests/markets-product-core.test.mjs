@@ -1,0 +1,55 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+
+const coreUrl = new URL('../frontend/analytics/markets/core.js', import.meta.url);
+
+function candles(count = 260) {
+  return Array.from({ length: count }, (_, index) => ({ t: 1_700_000_000 + index * 86_400, c: 100 + index + Math.sin(index / 4) * 3 }));
+}
+
+test('market core exposes close-only indicators and timeframe slicing', async () => {
+  const { indicatorSeries, sliceTimeframe } = await import(coreUrl);
+  const rows = candles();
+  assert.equal(sliceTimeframe(rows, '1M').length, 30);
+  assert.equal(sliceTimeframe(rows, '3M').length, 90);
+  assert.equal(sliceTimeframe(rows, '1Y').length, 252);
+  assert.equal(sliceTimeframe(rows, 'ALL').length, 260);
+  const indicators = indicatorSeries(rows);
+  for (const key of ['sma20', 'sma50', 'sma200', 'ema12', 'ema26', 'bollingerUpper', 'bollingerLower', 'rsi14', 'macd', 'macdSignal', 'roc20']) {
+    assert.equal(indicators[key].length, rows.length, key);
+  }
+  assert.equal(indicators.sma20[0], null);
+  assert.ok(Number.isFinite(indicators.rsi14.at(-1)));
+  assert.ok(Number.isFinite(indicators.macd.at(-1)));
+});
+
+test('market core sorts deepest drawdown first and formats volatility without a plus sign', async () => {
+  const { sortRows, formatPercent, formatLevelPercent } = await import(coreUrl);
+  const rows = sortRows([{ ticker:'A', drawdown1y:-0.1 }, { ticker:'B', drawdown1y:-0.8 }], 'drawdown1y');
+  assert.equal(rows[0].ticker, 'B');
+  assert.equal(formatPercent(0.2), '+20%');
+  assert.equal(formatLevelPercent(0.2), '20%');
+});
+
+test('watchlist storage, filters and CSV export are deterministic', async () => {
+  const { createWatchlist, filterRows, rowsToCsv, detailUrl } = await import(coreUrl);
+  const memory = new Map();
+  const storage = { getItem:key => memory.get(key) ?? null, setItem:(key, value) => memory.set(key, value) };
+  const watchlist = createWatchlist(storage);
+  watchlist.toggle('us:aapl');
+  assert.equal(watchlist.has('us:aapl'), true);
+  const rows = [{ market:'us', ticker:'AAPL', name:'Apple', slug:'aapl', latest:10 }, { market:'us', ticker:'MSFT', name:'Microsoft', slug:'msft', latest:20 }];
+  assert.deepEqual(filterRows(rows, { query:'apple', watchlistOnly:false, watchlist }).map(row => row.ticker), ['AAPL']);
+  assert.deepEqual(filterRows(rows, { query:'', watchlistOnly:true, watchlist }).map(row => row.ticker), ['AAPL']);
+  const metricRows = [{market:'us',slug:'a',latest:5,historySessions:40,rsi14:25,rangePosition52w:.1},{market:'us',slug:'b',latest:50,historySessions:300,rsi14:75,rangePosition52w:.9}];
+  assert.deepEqual(filterRows(metricRows, { minPrice:10,minSessions:200,rsiMax:80,rangeMin:.5 }).map(row => row.slug), ['b']);
+  assert.match(rowsToCsv(rows, ['ticker', 'latest']), /^Ticker,Price\nAAPL,10/m);
+  assert.equal(detailUrl('us', 'aapl'), '/analytics/markets/instrument/?market=us&symbol=aapl');
+});
+
+test('US market session state and crypto state are explicit', async () => {
+  const { marketSessionState } = await import(coreUrl);
+  assert.equal(marketSessionState('crypto', new Date('2026-09-10T20:00:00Z')).label, 'Crypto trades continuously');
+  assert.equal(marketSessionState('us', new Date('2026-09-10T15:00:00Z')).open, true);
+  assert.equal(marketSessionState('us', new Date('2026-09-12T15:00:00Z')).open, false);
+});

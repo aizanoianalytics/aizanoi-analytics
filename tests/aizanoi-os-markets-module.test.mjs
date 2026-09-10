@@ -38,16 +38,19 @@ test('Markets app mounts a real market surface driven by the static market shard
   const entry = await import('../frontend/js/v3/apps/markets/src/index.js');
   assert.equal(typeof entry.mount, 'function');
   const source = read(`${moduleRoot}/src/app.js`);
-  assert.match(source, /\/analytics\/markets\/data\/manifest\.json/);
-  assert.match(source, /\/analytics\/markets\/data\/summary\.json/);
-  assert.match(source, /us|crypto|market/);
-  assert.doesNotMatch(source, /\bapi\./, 'zero-capability module must not use api capabilities');
+  assert.match(source, /analytics\/markets\/dashboard\.js/);
+  const shared = read('frontend/analytics/markets/dashboard.js');
+  assert.match(shared, /\/analytics\/markets\/data/);
+  assert.match(shared, /summary\/\$\{market\}\/index\.json/);
+  assert.match(shared, /us|crypto|market/);
+  assert.doesNotMatch(source + shared, /\bapi\./, 'zero-capability module must not use api capabilities');
   assert.doesNotMatch(source, /workspace\//);
 });
 
 test('Markets app reaches the standalone page without a private cross-module import', () => {
   const source = read(`${moduleRoot}/src/app.js`);
-  assert.match(source, /\/analytics\/markets\/\?market=/);
+  assert.match(source, /analytics\/markets\/dashboard\.js/);
+  assert.match(read('frontend/analytics/markets/dashboard.js'), /detailUrl/);
   const analyticsApp = read('frontend/js/v3/apps/analytics/src/app.js');
   assert.doesNotMatch(analyticsApp, /apps\/markets/);
   const boundary = read('tests/aizanoi-os-markets-module.test.mjs');

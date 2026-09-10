@@ -50,7 +50,7 @@ export const ANALYTICS_SETS = Object.freeze([
     interfaceLanguage:'English',
     interfaceLanguageCode:'en',
     summary:'A static-first market intelligence surface covering active US-listed equities outside OTC venues and a focused 35-asset crypto universe, with daily history from 2019 and recent four-hour observations where Yahoo Finance makes them available.',
-    description:'Search, rank and inspect market breadth, momentum, volatility, drawdown, trend and unusual-volume signals. Static data shards are refreshed by private automation and loaded on demand.',
+    description:'Search, rank and inspect market breadth, momentum, volatility, drawdown and trend signals. Static data shards are refreshed by private automation and loaded on demand.',
     landing:'/analytics/markets/',
     source:'https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/scripts/markets',
     sourceLabel:'Source & methodology',

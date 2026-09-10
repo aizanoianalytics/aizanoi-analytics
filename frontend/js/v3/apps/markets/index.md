@@ -1,6 +1,6 @@
 # Aizanoi Markets Module
 
-Purpose: self-contained AizanoiOS surface for the Aizanoi Markets market-intelligence product. The desktop app renders the same live snapshot the standalone `/analytics/markets/` page serves, without wrapping another module's code.
+Purpose: AizanoiOS surface for the Aizanoi Markets market-intelligence product. It mounts the same shared dashboard runtime used by the standalone `/analytics/markets/` page.
 
 ## Stable identity
 
@@ -10,14 +10,15 @@ Purpose: self-contained AizanoiOS surface for the Aizanoi Markets market-intelli
 
 ## Declared capabilities
 
-None. Markets is a zero-capability module. It uses browser-local DOM and `fetch` against the public static market shards under `/analytics/markets/data/` (the same nginx-served snapshots the standalone page reads).
+None. Markets is a zero-capability module. It uses browser-local DOM and `fetch` against public static market shards under `/analytics/markets/data/`.
 
 ## Owned implementation
 
-- `src/app.js` — market dashboard UI: US/Crypto tabs, search, ranking, standout signals and a per-instrument detail view with a sparkline and recent observations.
+- `src/app.js` — lifecycle adapter that mounts and cleans up the shared public Markets dashboard.
 - `manifest.json` — installation identity.
 
 ## Boundary
 
-- Reads only public market data URLs; it never imports the standalone page's scripts (`/analytics/markets/app.js`) or another module's private files.
-- The canonical market catalog stays in `frontend/analytics/catalog.js`; this module renders its own market view and links out to the full standalone page for the deep experience.
+- The module may import the public product runtime at `/analytics/markets/dashboard.js`; it does not import another AizanoiOS module's private files.
+- Data stays static-first. The browser never contacts the upstream provider.
+- The canonical market catalog stays in `frontend/analytics/catalog.js`; this module does not redefine product identity.
