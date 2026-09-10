@@ -839,23 +839,16 @@ function render(now) {
 
 /* ── Bootstrap ────────────────────────────────────────────── */
 
-// Check WebGL support
-const testCanvas = document.createElement('canvas');
-const gl = testCanvas.getContext('webgl2') || testCanvas.getContext('webgl');
-
-if (!gl) {
-  const el = document.getElementById('loading-screen');
-  if (el) {
-    el.innerHTML = `
-      <div class="runtime-message">
-        <h2>WebGL is unavailable</h2>
-        <p>This experience requires a browser with WebGL support.</p>
-      </div>
-    `;
-  }
+// Check WebGL support. three.js r174 renders through WebGL 2 only — a WebGL 1
+// context passes the old webgl2||webgl probe and then crashes init on devices
+// that lack WebGL 2. requireWebGL2() is the honest gate and renders a repair
+// message (with the detected iOS version) instead of a fatal-stack card.
+if (!window.__WORLDS_ENTRY_NET__.requireWebGL2('Athens')) {
+  console.warn('Athens: WebGL 2 unavailable; entry blocked by worlds-entry-net.');
 } else {
   init().catch(err => {
     console.error('Athens initialization failed:', err);
+    window.__WORLDS_ENTRY_NET__.recordInitCatch('Athens', err);
     showFatalInitError(err, 'Athens');
   });
 }

@@ -632,4 +632,14 @@ function render(now) {
   if (resolutionGovernor) resolutionGovernor.update();
 }
 
-init().catch(err => { console.error('İstanbul Airport init failed:', err); showFatalInitError(err, 'İstanbul Airport'); });
+// three.js r174 renders through WebGL 2 only; gate the boot on it so devices
+// without WebGL 2 get a repair message instead of a fatal crash card.
+if (!window.__WORLDS_ENTRY_NET__.requireWebGL2('İstanbul Airport')) {
+  console.warn('İstanbul Airport: WebGL 2 unavailable; entry blocked by worlds-entry-net.');
+} else {
+  init().catch(err => {
+    console.error('İstanbul Airport init failed:', err);
+    window.__WORLDS_ENTRY_NET__.recordInitCatch('İstanbul Airport', err);
+    showFatalInitError(err, 'İstanbul Airport');
+  });
+}

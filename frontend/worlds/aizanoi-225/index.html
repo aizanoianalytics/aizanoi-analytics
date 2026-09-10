@@ -24,6 +24,9 @@
   <link rel="stylesheet" href="../shared/css/base-theme.css" />
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml" />
+  <!-- Entry safety net: records errors / WebGL2 support / SW state BEFORE the
+       module graph so device-reported entry failures are never silent. -->
+  <script src="/js/worlds-entry-net.js"></script>
 </head>
 <body class="pre-entry">
   <!-- 3D Viewport -->

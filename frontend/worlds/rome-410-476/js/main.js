@@ -776,4 +776,14 @@ function render(now) {
   if (resolutionGovernor) resolutionGovernor.update();
 }
 
-init().catch(err => { console.error('Rome init failed:', err); showFatalInitError(err, 'Rome'); });
+// three.js r174 renders through WebGL 2 only; gate the boot on it so devices
+// without WebGL 2 get a repair message instead of a fatal crash card.
+if (!window.__WORLDS_ENTRY_NET__.requireWebGL2('Rome')) {
+  console.warn('Rome: WebGL 2 unavailable; entry blocked by worlds-entry-net.');
+} else {
+  init().catch(err => {
+    console.error('Rome init failed:', err);
+    window.__WORLDS_ENTRY_NET__.recordInitCatch('Rome', err);
+    showFatalInitError(err, 'Rome');
+  });
+}

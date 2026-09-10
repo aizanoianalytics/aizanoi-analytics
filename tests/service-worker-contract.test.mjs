@@ -28,10 +28,9 @@ test('service worker precaches safe independent requests in parallel and fails a
   assert.match(sw, /\/js\/v3\/module-registry\.generated\.js/);
 });
 
-test('service worker upgrades wait rather than forcing new code over open AizanoiOS clients', () => {
-  assert.match(sw, /self\.addEventListener\('install',\s*\(event\)\s*=>\s*event\.waitUntil\(precacheShell\(\)\)\)/);
-  assert.doesNotMatch(sw, /skipWaiting/);
-  assert.match(sw, /self\.clients\.claim\(\)/);
+test('service worker force-activates new releases so stale shells cannot serve broken builds', () => {
+  assert.match(sw, /self\.addEventListener\('install',\s*\(event\)\s*=>\s*event\.waitUntil\(precacheShell\(\)\.then\(\(\)\s*=>\s*self\.skipWaiting\(\)\)\)\)/);
+  assert.match(sw, /self\.addEventListener\('activate',[\s\S]*self\.clients\.claim\(\)/);
 });
 
 test('service worker caches complete world graphs and keeps a world-safe offline fallback', () => {
