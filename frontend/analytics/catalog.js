@@ -44,7 +44,7 @@ export const ANALYTICS_SETS = Object.freeze([
   }),
   Object.freeze({
     id:'aizanoi-markets',
-    eyebrow:'LIVE MARKET INTELLIGENCE · MULTI-PROVIDER CLOSE DATA',
+    eyebrow:'MARKET INTELLIGENCE · MULTI-PROVIDER DAILY CLOSE DATA',
     title:'Aizanoi Markets',
     accent:'US + Crypto',
     interfaceLanguage:'English',
