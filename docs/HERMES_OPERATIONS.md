@@ -49,6 +49,28 @@ Hermes may also implement engineering changes when asked, but must obey the same
 12. Commit with a meaningful message such as `content: publish 2026-08-21 news briefing`.
 13. Push to GitHub before production deployment.
 
+## Aizanoi Markets refresh loop
+
+Aizanoi Markets keeps code in Git-tracked static releases while mutable market snapshots live at `/var/lib/aizanoi-markets/public/` and are exposed read-only through the Nginx alias at `/analytics/markets/data/`. The visitor browser never contacts Yahoo Finance directly.
+
+Run the initial backfill only after the focused pipeline tests pass:
+
+```bash
+python3 scripts/markets/update_markets.py --mode bootstrap --data-root /var/lib/aizanoi-markets/public --allow-partial
+```
+
+The bootstrap discovers active non-OTC US listings from Nasdaq Trader, filters test issues, ETFs and non-stock instruments, then records daily Yahoo Finance OHLCV from 2019 or first availability plus Yahoo's recent four-hour window. It also validates the owner-selected 35-asset crypto mapping. Inspect `manifest.json` counts and `failedSymbols` before exposing the alias.
+
+The recurring command is:
+
+```bash
+python3 scripts/markets/update_markets.py --mode hourly --data-root /var/lib/aizanoi-markets/public --allow-partial
+```
+
+Hourly mode updates all selected crypto assets and one of eight deterministic US symbol slices. Every US stock therefore refreshes within an eight-hour window instead of sending a full-universe burst each hour. A non-blocking lock suppresses overlap; atomic per-file replacement preserves last-known-good shards when Yahoo rejects a symbol or batch. Do not replace partial failures with empty files. The public freshness label comes from the last completed manifest, and each summary row carries its own `updatedAt` timestamp.
+
+After installing or changing the Nginx alias, run `nginx -t` before reload, then verify HTTP 200 plus JSON content types for `manifest.json`, `summary.json` and one US and Crypto history shard. Yahoo Finance endpoints used here are unofficial and have no availability or rate-limit SLA; keep exponential backoff, bounded batches and the eight-slice cadence unless measured production behavior justifies a slower schedule.
+
 ## Deployment loop
 
 Do not treat a merge as a deployment.

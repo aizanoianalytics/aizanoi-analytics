@@ -36,3 +36,6 @@ research/**/wikipedia_snapshots/
 # Local HR regeneration environment and diagnostics
 .venv-hr/
 artifacts/
+
+# Runtime market snapshots are served from /var/lib, never committed
+frontend/analytics/markets/data/

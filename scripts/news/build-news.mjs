@@ -23,6 +23,7 @@ const staticSitemapEntries = Object.freeze([
   ['/privacy/', '2026-09-02'],
   ['/tv/', '2026-08-24'],
   ['/analytics/', '2026-08-25'],
+  ['/analytics/markets/', '2026-09-10'],
   ['/analytics/dashboards/hr-analytics-full-set/', '2026-08-26'],
   ['/analytics/dashboards/hr-analytics-full-set/hr-executive-board-full-history/', '2026-08-26'],
   ['/analytics/dashboards/hr-analytics-full-set/hr-executive-board-current/', '2026-08-26'],

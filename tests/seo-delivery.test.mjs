@@ -13,7 +13,7 @@ const itemDate = (item) => item.publishedAt.slice(0, 10);
 const storySlug = (item) => item.id.startsWith(`${itemDate(item)}-`) ? item.id.slice(11) : item.id;
 const storyPath = (item) => `/news/${item.kind === 'weekly' ? 'weekly/' : ''}${itemDate(item)}/${storySlug(item)}/`;
 const canonicalBase = [
-  '/', '/news/', '/news/about/', '/privacy/', '/tv/', '/analytics/', '/analytics/dashboards/hr-analytics-full-set/',
+  '/', '/news/', '/news/about/', '/privacy/', '/tv/', '/analytics/', '/analytics/markets/', '/analytics/dashboards/hr-analytics-full-set/',
   '/analytics/dashboards/hr-analytics-full-set/hr-executive-board-full-history/',
   '/analytics/dashboards/hr-analytics-full-set/hr-executive-board-current/',
   '/analytics/dashboards/hr-analytics-full-set/hr-administration-deep-dive/',
