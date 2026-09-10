@@ -1,18 +1,86 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Aizanoi">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Aizanoi Luminous Orb Mark">
   <defs>
-    <linearGradient id="azm-bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1a5fd6"/>
-      <stop offset="100%" stop-color="#0d3fb0"/>
+    <!-- Background Squircle Gradient -->
+    <linearGradient id="orbSqBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1f26"/>
+      <stop offset="50%" stop-color="#121419"/>
+      <stop offset="100%" stop-color="#090a0d"/>
     </linearGradient>
+
+    <!-- Glass Rim Sheen -->
+    <linearGradient id="glassRim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.04"/>
+    </linearGradient>
+
+    <!-- Swirl Cyan Gradient -->
+    <linearGradient id="swirlCyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7bf7ee"/>
+      <stop offset="50%" stop-color="#18b0d4"/>
+      <stop offset="100%" stop-color="#0b589c"/>
+    </linearGradient>
+
+    <!-- Swirl Champagne Bronze Gradient -->
+    <linearGradient id="swirlBronze" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff2d6"/>
+      <stop offset="45%" stop-color="#e2b97c"/>
+      <stop offset="100%" stop-color="#9a6e35"/>
+    </linearGradient>
+
+    <!-- Deep Center Void -->
+    <radialGradient id="deepVoid" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#091830"/>
+      <stop offset="70%" stop-color="#0f2b4f"/>
+      <stop offset="100%" stop-color="#08101e"/>
+    </radialGradient>
+
+    <!-- Outer Ambient Glow -->
+    <filter id="ambientOrbGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="22" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="sphereShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000000" flood-opacity="0.75"/>
+    </filter>
   </defs>
-  <rect x="0" y="0" width="48" height="48" rx="6" fill="url(#azm-bg)"/>
-  <rect x="8" y="34" width="32" height="8" fill="#d6a75a" opacity="0.9"/>
-  <rect x="11" y="20" width="3" height="14" fill="#d6a75a"/>
-  <rect x="18" y="20" width="3" height="14" fill="#d6a75a"/>
-  <rect x="25" y="20" width="3" height="14" fill="#d6a75a"/>
-  <rect x="32" y="20" width="3" height="14" fill="#d6a75a"/>
-  <polygon points="8,20 24,8 40,20" fill="#d6a75a"/>
-  <circle cx="14" cy="6" r="1.5" fill="#9bc4ff"/>
-  <circle cx="24" cy="3" r="1.5" fill="#9bc4ff"/>
-  <circle cx="34" cy="6" r="1.5" fill="#9bc4ff"/>
+
+  <!-- Squircle Base Icon Container -->
+  <rect x="24" y="24" width="464" height="464" rx="108" fill="url(#orbSqBg)"/>
+  <rect x="25" y="25" width="462" height="462" rx="107" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.8"/>
+
+  <!-- Subtle Ambient Glow under the Orb -->
+  <circle cx="256" cy="256" r="150" fill="#18b0d4" opacity="0.12" filter="url(#ambientOrbGlow)"/>
+  <circle cx="240" cy="245" r="120" fill="#e2b97c" opacity="0.10" filter="url(#ambientOrbGlow)"/>
+
+  <!-- Central Luminous Sphere -->
+  <g filter="url(#sphereShadow)">
+    <!-- Base Sphere Circle -->
+    <circle cx="256" cy="256" r="148" fill="url(#deepVoid)"/>
+
+    <!-- Swirling Liquid Glass Flow 1: Cyan/Sapphire Stream -->
+    <path d="M 256 112 C 340 112 396 172 396 256 C 396 332 336 386 264 386 C 200 386 160 340 160 285 C 160 230 205 195 248 195 C 285 195 308 220 308 248 C 308 275 285 292 260 292 C 240 292 228 280 228 265 C 228 252 238 244 248 244"
+          fill="none" stroke="url(#swirlCyan)" stroke-width="26" stroke-linecap="round" opacity="0.92"/>
+
+    <!-- Swirling Liquid Glass Flow 2: Champagne Bronze Stream -->
+    <path d="M 256 400 C 172 400 116 340 116 256 C 116 180 176 126 248 126 C 312 126 352 172 352 227 C 352 282 307 317 264 317 C 227 317 204 292 204 264 C 204 237 227 220 252 220 C 272 220 284 232 284 247"
+          fill="none" stroke="url(#swirlBronze)" stroke-width="24" stroke-linecap="round" opacity="0.95"/>
+
+    <!-- Central Singularity Core -->
+    <circle cx="256" cy="256" r="16" fill="#ffffff" opacity="0.85" filter="url(#ambientOrbGlow)"/>
+
+    <!-- Outer Glass Shell Rim Highlight -->
+    <circle cx="256" cy="256" r="147" fill="none" stroke="url(#glassRim)" stroke-width="3"/>
+
+    <!-- Spherical Curvature Reflection (Specular Top Arc) -->
+    <path d="M 155 185 A 148 148 0 0 1 357 185 A 136 120 0 0 0 155 185 Z"
+          fill="#ffffff" opacity="0.22"/>
+    <!-- Bottom Rim Counter-Reflection -->
+    <path d="M 180 340 A 148 148 0 0 0 332 340 A 140 120 0 0 1 180 340 Z"
+          fill="#ffffff" opacity="0.12"/>
+  </g>
 </svg>

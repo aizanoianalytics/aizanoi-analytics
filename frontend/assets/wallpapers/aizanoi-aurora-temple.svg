@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Aizanoi Aurora Temple Wallpaper">
+  <defs>
+    <!-- Sky Twilight Gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a1324"/>
+      <stop offset="42%" stop-color="#0e1d38"/>
+      <stop offset="70%" stop-color="#142c4b"/>
+      <stop offset="100%" stop-color="#183c5a"/>
+    </linearGradient>
+
+    <!-- River Penkalas Flow Gradient -->
+    <linearGradient id="riverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#46e3d3" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#24a8af" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#13607a" stop-opacity="0.85"/>
+    </linearGradient>
+
+    <!-- Temple Glow -->
+    <radialGradient id="templeGlow" cx="28%" cy="48%" r="35%">
+      <stop offset="0%" stop-color="#67e5df" stop-opacity="0.32"/>
+      <stop offset="40%" stop-color="#3fa5bb" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0a1324" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Dawn Horizon Rim Glow -->
+    <radialGradient id="dawnGlow" cx="80%" cy="58%" r="45%">
+      <stop offset="0%" stop-color="#f5c27d" stop-opacity="0.22"/>
+      <stop offset="50%" stop-color="#c47a4d" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#0a1324" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Hill Gradients -->
+    <linearGradient id="hillFar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#162e49"/>
+      <stop offset="100%" stop-color="#0a1727"/>
+    </linearGradient>
+    <linearGradient id="hillMid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#12253c"/>
+      <stop offset="100%" stop-color="#07101c"/>
+    </linearGradient>
+
+    <filter id="softGlow"><feGaussianBlur stdDeviation="16"/></filter>
+    <filter id="waterGlow"><feGaussianBlur stdDeviation="8"/></filter>
+  </defs>
+
+  <!-- Background Sky -->
+  <rect width="1920" height="1080" fill="url(#skyGrad)"/>
+
+  <!-- Celestial Glows -->
+  <rect width="1920" height="1080" fill="url(#templeGlow)"/>
+  <rect width="1920" height="1080" fill="url(#dawnGlow)"/>
+
+  <!-- Stars & Celestial Constellations -->
+  <g opacity="0.65" fill="#ffffff">
+    <circle cx="180" cy="120" r="1.5" opacity="0.8"/>
+    <circle cx="290" cy="85" r="1.2" opacity="0.5"/>
+    <circle cx="430" cy="160" r="1.8" opacity="0.9"/>
+    <circle cx="560" cy="110" r="1.2" opacity="0.4"/>
+    <circle cx="720" cy="190" r="1.5" opacity="0.7"/>
+    <circle cx="950" cy="90" r="2.0" opacity="0.85"/>
+    <circle cx="1120" cy="140" r="1.2" opacity="0.6"/>
+    <circle cx="1380" cy="100" r="1.6" opacity="0.75"/>
+    <circle cx="1520" cy="170" r="1.2" opacity="0.5"/>
+    <circle cx="1680" cy="95" r="2.2" opacity="0.9"/>
+    <circle cx="1810" cy="150" r="1.4" opacity="0.65"/>
+    <!-- Crescent Moon Accent -->
+    <path d="M1660 130 A24 24 0 1 0 1684 154 A20 20 0 1 1 1660 130 Z" fill="#fff5da" opacity="0.88"/>
+  </g>
+
+  <!-- Far Distant Anatolian Mountain Ridge -->
+  <path d="M0 610 Q320 540 680 580 T1380 550 T1920 600 L1920 1080 L0 1080 Z" fill="url(#hillFar)" opacity="0.75"/>
+
+  <!-- Midground Hills with Archaeological Elevation Contours -->
+  <path d="M0 680 C360 620 620 690 940 650 C1280 610 1560 670 1920 630 L1920 1080 L0 1080 Z" fill="url(#hillMid)" opacity="0.9"/>
+
+  <!-- Topographic Contour Lines (Laser / Archaeological Mapping Style) -->
+  <g fill="none" stroke-linecap="round">
+    <path d="M-40 690 C280 630 580 710 920 660 S1460 630 1960 670" stroke="#5eead4" stroke-width="1.2" stroke-opacity="0.32"/>
+    <path d="M-40 730 C310 670 610 740 960 700 S1490 670 1960 710" stroke="#5eead4" stroke-width="1.1" stroke-opacity="0.24"/>
+    <path d="M-40 770 C340 710 640 780 1000 740 S1520 710 1960 750" stroke="#dfb461" stroke-width="1.0" stroke-opacity="0.22"/>
+    <path d="M-40 810 C370 760 680 820 1040 780 S1560 750 1960 800" stroke="#dfb461" stroke-width="0.9" stroke-opacity="0.18"/>
+    <path d="M-40 855 C400 810 720 865 1090 825 S1600 800 1960 850" stroke="#5eead4" stroke-width="0.8" stroke-opacity="0.15"/>
+  </g>
+
+  <!-- Penkalas River (Bedir Stream) Meandering into Foreground -->
+  <!-- River Glow Reflection Underlayer -->
+  <path d="M1420 650 C1300 720 1080 760 920 820 C710 900 580 950 420 1080 L1180 1080 C1120 980 1190 920 1280 850 C1390 770 1520 730 1540 650 Z"
+        fill="url(#riverGrad)" filter="url(#waterGlow)" opacity="0.35"/>
+  <!-- River Main Body -->
+  <path d="M1440 650 C1320 715 1100 755 940 815 C730 895 600 945 440 1080 L1120 1080 C1080 990 1160 930 1250 860 C1370 775 1480 730 1500 650 Z"
+        fill="url(#riverGrad)" opacity="0.85"/>
+  <!-- River Water Highlight Ribbons -->
+  <path d="M1470 656 C1340 720 1120 760 950 820 C750 900 620 950 490 1080" fill="none" stroke="#d5fcf8" stroke-width="2.5" stroke-opacity="0.6"/>
+  <path d="M1485 660 C1360 725 1140 768 980 830 C800 910 680 970 560 1080" fill="none" stroke="#67e5df" stroke-width="1.8" stroke-opacity="0.45"/>
+
+  <!-- The Temple of Zeus (Aizanoi Monumental Elevation Silhouette) -->
+  <g transform="translate(420, 360)">
+    <!-- Ambient Temple Illumination Radiance -->
+    <ellipse cx="190" cy="110" rx="260" ry="160" fill="#67e5df" opacity="0.16" filter="url(#softGlow)"/>
+    <ellipse cx="190" cy="110" rx="180" ry="100" fill="#fbd38d" opacity="0.14" filter="url(#softGlow)"/>
+
+    <!-- Temple Foundation Platform (Crepidoma) -->
+    <polygon points="40,210 340,210 330,225 50,225" fill="#2d3748"/>
+    <polygon points="30,225 350,225 340,240 40,240" fill="#1a202c"/>
+
+    <!-- 8 Monumental Pseudodipteral Columns -->
+    <g fill="#e8edf2">
+      <!-- Col 1 -->
+      <rect x="52" y="80" width="12" height="130" rx="2" opacity="0.95"/>
+      <!-- Col 2 -->
+      <rect x="88" y="80" width="12" height="130" rx="2" opacity="0.95"/>
+      <!-- Col 3 -->
+      <rect x="124" y="80" width="12" height="130" rx="2" opacity="0.95"/>
+      <!-- Col 4 -->
+      <rect x="160" y="80" width="12" height="130" rx="2" opacity="0.95"/>
+      <!-- Col 5 -->
+      <rect x="196" y="80" width="12" height="130" rx="2" opacity="0.95"/>
+      <!-- Col 6 -->
+      <rect x="232" y="80" width="12" height="130" rx="2" opacity="0.95"/>
+      <!-- Col 7 -->
+      <rect x="268" y="80" width="12" height="130" rx="2" opacity="0.95"/>
+      <!-- Col 8 -->
+      <rect x="304" y="80" width="12" height="130" rx="2" opacity="0.95"/>
+    </g>
+
+    <!-- Lit Column Highlights (Luminescent Cyan-Gold Sheen) -->
+    <g stroke="#67e5df" stroke-width="1.8" opacity="0.8">
+      <line x1="56" y1="82" x2="56" y2="208"/>
+      <line x1="92" y1="82" x2="92" y2="208"/>
+      <line x1="128" y1="82" x2="128" y2="208"/>
+      <line x1="164" y1="82" x2="164" y2="208"/>
+      <line x1="200" y1="82" x2="200" y2="208"/>
+      <line x1="236" y1="82" x2="236" y2="208"/>
+      <line x1="272" y1="82" x2="272" y2="208"/>
+      <line x1="308" y1="82" x2="308" y2="208"/>
+    </g>
+
+    <!-- Entablature & Architrave -->
+    <rect x="44" y="66" width="280" height="14" rx="2" fill="#d8e2ec"/>
+    <line x1="44" y1="78" x2="324" y2="78" stroke="#f6ad55" stroke-width="2" opacity="0.8"/>
+
+    <!-- Triangular Pediment -->
+    <polygon points="184,8 332,66 36,66" fill="#cbd5e0"/>
+    <polyline points="32,67 184,6 336,67" fill="none" stroke="#fff5da" stroke-width="3.5" stroke-linecap="round"/>
+
+    <!-- Pediment Apex Acroterion & Data Beam -->
+    <circle cx="184" cy="6" r="4" fill="#67e5df"/>
+    <!-- Vertical Data Beams Rising to Heavens -->
+    <line x1="184" y1="4" x2="184" y2="-240" stroke="#67e5df" stroke-width="1.5" stroke-dasharray="6 6" stroke-opacity="0.45"/>
+    <line x1="124" y1="78" x2="124" y2="-180" stroke="#f6ad55" stroke-width="1.2" stroke-dasharray="4 8" stroke-opacity="0.35"/>
+    <line x1="244" y1="78" x2="244" y2="-180" stroke="#f6ad55" stroke-width="1.2" stroke-dasharray="4 8" stroke-opacity="0.35"/>
+  </g>
+
+  <!-- Technical Telemetry & Cartographic Metadata (Scientific / OS Touch) -->
+  <g fill="#94a3b8" opacity="0.4" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11">
+    <!-- Top Left -->
+    <text x="64" y="80" letter-spacing="3" font-weight="700">AIZANOI OS · FIELD SYSTEM // SYSTEM CANVAS</text>
+    <text x="64" y="100" letter-spacing="2" font-size="9">GRID 39°12′04″N 29°37′02″E · PENKALAS ZEUS MONUMENT</text>
+    <!-- Top Right -->
+    <text x="1856" y="80" text-anchor="end" letter-spacing="2">SURFACE REF: ZEUS-TEMPLE-AURORA-V1</text>
+    <!-- Bottom Left -->
+    <text x="64" y="1020" letter-spacing="2" font-size="9">EVIDENCE-AWARE HISTORICAL WORLDS · INDEPENDENT DIGITAL STUDIO</text>
+    <!-- Viewport Reticles -->
+    <path d="M50 60 H70 M50 60 V80" stroke="#94a3b8" stroke-width="1.2" fill="none"/>
+    <path d="M1870 60 H1850 M1870 60 V80" stroke="#94a3b8" stroke-width="1.2" fill="none"/>
+    <path d="M50 1040 H70 M50 1040 V1020" stroke="#94a3b8" stroke-width="1.2" fill="none"/>
+    <path d="M1870 1040 H1850 M1870 1040 V1020" stroke="#94a3b8" stroke-width="1.2" fill="none"/>
+  </g>
+</svg>

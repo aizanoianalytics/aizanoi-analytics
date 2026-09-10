@@ -27,7 +27,7 @@ test('Markets landing exposes accessible US and Crypto dashboard tabs', () => {
   assert.match(html, /data-markets-root/);
   assert.match(html, /data-view="overview"/);
   assert.match(html, /data-view="crypto-risk"/);
-  assert.match(html, /Data source: Yahoo Finance/);
+  assert.match(html, /Close-price intelligence/);
   assert.match(html, /name="twitter:site" content="@AizanoiHQ"/);
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /not investment advice/i);
