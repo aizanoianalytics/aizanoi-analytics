@@ -1,7 +1,7 @@
 {
  "_meta": {
   "excludes": 7,
-  "note": "probe-derived; targets verified via Yahoo chart meta 2026-09-10 (name+price cross-checked)",
+  "note": "probe-derived; targets verified via Fintable price probe 2026-09-10 (name+price cross-checked)",
   "overrides": 56
  },
  "excludes": [

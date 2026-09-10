@@ -51,7 +51,7 @@ Hermes may also implement engineering changes when asked, but must obey the same
 
 ## Aizanoi Markets refresh loop
 
-Aizanoi Markets keeps code in Git-tracked static releases while mutable market snapshots live at `/var/lib/aizanoi-markets/public/` and are exposed read-only through the Nginx alias at `/analytics/markets/data/`. The visitor browser never contacts Yahoo Finance directly.
+Aizanoi Markets keeps code in Git-tracked static releases while mutable market snapshots live at `/var/lib/aizanoi-markets/public/` and are exposed read-only through the Nginx alias at `/analytics/markets/data/`. The visitor browser never contacts upstream providers directly.
 
 Run the initial backfill only after the focused pipeline tests pass:
 
@@ -59,7 +59,7 @@ Run the initial backfill only after the focused pipeline tests pass:
 python3 scripts/markets/update_markets.py --mode bootstrap --data-root /var/lib/aizanoi-markets/public --allow-partial
 ```
 
-The bootstrap discovers active non-OTC US listings from Nasdaq Trader, filters test issues, ETFs and non-stock instruments, then records daily Yahoo Finance close-price history from 2019 or first availability plus Yahoo's recent four-hour close window. It also validates the owner-selected 35-asset crypto mapping. Inspect `manifest.json` counts and `failedSymbols` before exposing the alias.
+The bootstrap discovers active non-OTC US listings from Nasdaq Trader, filters test issues, ETFs and non-stock instruments, then records daily close-price history from 2019 or first availability via Fintable plus Binance's recent four-hour close window for the 35-asset crypto universe. It also validates the owner-selected crypto symbol mapping. Inspect `manifest.json` counts and `failedSymbols` before exposing the alias.
 
 The recurring command is:
 
@@ -67,9 +67,9 @@ The recurring command is:
 python3 scripts/markets/update_markets.py --mode hourly --data-root /var/lib/aizanoi-markets/public --allow-partial
 ```
 
-Hourly mode updates all selected crypto assets and one of eight deterministic US symbol slices. Every US stock therefore refreshes within an eight-hour window instead of sending a full-universe burst each hour. A non-blocking lock suppresses overlap; atomic per-file replacement preserves last-known-good shards when Yahoo rejects a symbol or batch. Do not replace partial failures with empty files. The public freshness label comes from the last completed manifest, and each summary row carries its own `updatedAt` timestamp.
+Hourly mode updates all selected crypto assets and one of eight deterministic US symbol slices. Every US stock therefore refreshes within an eight-hour window instead of sending a full-universe burst each hour. A non-blocking lock suppresses overlap; atomic per-file replacement preserves last-known-good shards when a provider rejects a symbol or batch. Do not replace partial failures with empty files. The public freshness label comes from the last completed manifest, and each summary row carries its own `updatedAt` timestamp.
 
-After deploying a schema or metric change, rebuild derived data without contacting Yahoo:
+After deploying a schema or metric change, rebuild derived data without contacting any upstream provider:
 
 ```bash
 python3 scripts/markets/update_markets.py --mode rebuild --data-root /var/lib/aizanoi-markets/public
@@ -77,7 +77,7 @@ python3 scripts/markets/update_markets.py --mode rebuild --data-root /var/lib/ai
 
 Rebuild mode sanitizes existing history to the published close-only schema, regenerates per-market summary chunks, summary items, pulse/leader payloads, data health, crypto correlations and compact breadth snapshots. Verify `schemaVersion: 2`, `dataModel: close-only`, counts, and zero failed symbols before considering the migration complete.
 
-After installing or changing the Nginx alias, run `nginx -t` before reload, then verify HTTP 200 plus JSON content types for `manifest.json`, `summary.json` and one US and Crypto history shard. Yahoo Finance endpoints used here are unofficial and have no availability or rate-limit SLA; keep exponential backoff, bounded batches and the eight-slice cadence unless measured production behavior justifies a slower schedule.
+After installing or changing the Nginx alias, run `nginx -t` before reload, then verify HTTP 200 plus JSON content types for `manifest.json`, `summary.json` and one US and Crypto history shard. Fintable and Binance are third-party APIs with no availability or rate-limit SLA; keep exponential backoff, bounded per-symbol pacing and the eight-slice cadence unless measured production behavior justifies a slower schedule.
 
 ## Deployment loop
 

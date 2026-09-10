@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Build static Aizanoi Markets data shards from Yahoo Finance.
+"""Build static Aizanoi Markets data shards from multi-provider close data.
 
-The browser never contacts Yahoo. This private updater discovers active US
-listings from Nasdaq Trader, downloads Yahoo spark batches, writes one compact
-JSON shard per instrument and publishes manifest/summary last.
+The browser never contacts upstream providers. This private updater discovers
+active US listings from Nasdaq Trader, downloads close-price history per
+symbol from the configured provider chain (Fintable for US equities,
+Binance for crypto), writes one compact JSON shard per instrument and
+publishes manifest/summary last.
 """
 from __future__ import annotations
 
@@ -24,15 +26,19 @@ import statistics
 import sys
 import tempfile
 import time
-import urllib.error
-import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any, Iterable
 
+try:
+    from .providers import BinanceProvider, FintableProvider
+except ImportError:
+    import sys as _sys
+    _sys.path.insert(0, str(Path(__file__).parent))
+    from providers import BinanceProvider, FintableProvider  # type: ignore[no-redef]
+
 NASDAQ_URL = "https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt"
 OTHER_URL = "https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt"
-SPARK_URL = "https://query1.finance.yahoo.com/v7/finance/spark"
 SINCE_TS = 1546300800  # 2019-01-01T00:00:00Z
 EXCHANGES = {"N": "NYSE", "A": "NYSE American", "P": "NYSE Arca", "Z": "CBOE BZX"}
 NON_STOCK = re.compile(r"\b(warrants?|units?|rights?|preferred|notes?|bonds?|debentures?|fund|etf|etn|index)\b", re.I)
@@ -71,10 +77,10 @@ def parse_universe(nasdaq_text: str, other_text: str) -> list[dict[str, str]]:
         if exchange_code not in EXCHANGES or row.get("Test Issue") != "N" or row.get("ETF") != "N" or not _is_stock(row.get("Security Name", "")):
             continue
         ticker = row["ACT Symbol"].strip()
-        yahoo_symbol = (row.get("NASDAQ Symbol") or ticker.replace(".", "-")).strip()
+        provider_symbol = (row.get("NASDAQ Symbol") or ticker.replace(".", "-")).strip()
         instruments.append({
             "market": "us", "ticker": ticker, "name": row["Security Name"].strip(),
-            "exchange": EXCHANGES[exchange_code], "yahooSymbol": yahoo_symbol, "slug": slugify(ticker),
+            "exchange": EXCHANGES[exchange_code], "yahooSymbol": provider_symbol, "slug": slugify(ticker),
         })
     return sorted({row["yahooSymbol"]: row for row in instruments}.values(), key=lambda row: (row["ticker"], row["exchange"]))
 
@@ -84,12 +90,13 @@ def crypto_universe(path: Path) -> list[dict[str, str]]:
     return [{**row, "market": "crypto", "exchange": "Crypto · USD", "slug": slugify(row["ticker"])} for row in rows]
 
 
-def yahoo_variants(symbol: str) -> Iterable[str]:
-    """Yield candidate Yahoo spellings for a Nasdaq Trader symbol.
+def nasdaq_symbol_variants(symbol: str) -> Iterable[str]:
+    """Yield candidate spellings for a Nasdaq Trader symbol across providers.
 
-    Dotted class shares (AKO.A) exist on Yahoo as dash form (AKO-A). Preferred
-    and depositary series that Nasdaq encodes as root-series (AHL-D, ATH-A,
-    TRTN-B) are served under the -P<letter> spelling (AHL-PD, ATH-PA, TRTN-PB).
+    Dotted class shares (AKO.A) are served under dash form (AKO-A) by
+    multiple upstream providers. Preferred and depositary series that
+    Nasdaq encodes as root-series (AHL-D, ATH-A, TRTN-B) are served
+    under the -P<letter> spelling (AHL-PD, ATH-PA, TRTN-PB).
     """
     seen: set[str] = set()
     candidates = [symbol]
@@ -123,7 +130,7 @@ def apply_universe_corrections(rows: list[dict[str, str]], *, overrides: dict[st
 
 
 def load_symbols_file(path: Path) -> list[str]:
-    """Read one Yahoo symbol per line; blank lines and # comments ignored."""
+    """Read one provider symbol per line; blank lines and # comments ignored."""
     if not path.exists():
         return []
     return [line.strip() for line in path.read_text(encoding="utf-8").splitlines()
@@ -156,55 +163,10 @@ def fetch_text(url: str, timeout: int = 45) -> str:
         return response.read().decode("utf-8")
 
 
-def request_json(url: str, attempts: int = 5, timeout: int = 90) -> dict[str, Any]:
-    last_error: Exception | None = None
-    for attempt in range(attempts):
-        try:
-            request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
-            with urllib.request.urlopen(request, timeout=timeout) as response:
-                return json.loads(response.read())
-        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as error:
-            last_error = error
-            if isinstance(error, urllib.error.HTTPError) and error.code not in {429, 500, 502, 503, 504}:
-                raise
-            time.sleep(min(30, (2 ** attempt) + random.random()))
-    raise RuntimeError(f"Yahoo request failed after {attempts} attempts: {last_error}")
-
-
-def batches(values: list[Any], size: int = 20) -> Iterable[list[Any]]:
-    for index in range(0, len(values), size):
-        yield values[index:index + size]
-
-
-def spark_url(symbols: list[str], *, range_: str, interval: str) -> str:
-    query = urllib.parse.urlencode({"symbols": ",".join(symbols), "range": range_, "interval": interval})
-    return f"{SPARK_URL}?{query}"
-
-
 def _compact_number(value: Any) -> int | float | None:
     if not isinstance(value, (int, float)) or not math.isfinite(value):
         return None
     return round(value, 8)
-
-
-def parse_spark(payload: dict[str, Any], *, interval: str, since: int = SINCE_TS) -> dict[str, list[dict[str, Any]]]:
-    parsed: dict[str, list[dict[str, Any]]] = {}
-    for result in payload.get("spark", {}).get("result") or []:
-        symbol = result.get("symbol")
-        response = (result.get("response") or [{}])[0]
-        timestamps = response.get("timestamp") or []
-        quote = ((response.get("indicators") or {}).get("quote") or [{}])[0]
-        candles: list[dict[str, Any]] = []
-        for index, timestamp in enumerate(timestamps):
-            if not isinstance(timestamp, int) or timestamp < since:
-                continue
-            close = (quote.get("close") or [])[index] if index < len(quote.get("close") or []) else None
-            if not isinstance(close, (int, float)) or not math.isfinite(close):
-                continue
-            candles.append({"t": timestamp, "c": _compact_number(close)})
-        if symbol:
-            parsed[symbol] = candles
-    return parsed
 
 
 def _returns(closes: list[float], sessions: int) -> float | None:
@@ -603,7 +565,7 @@ def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], compl
         timestamps = [r.get("updatedAt") for r in rows if r.get("updatedAt")]
         return {
             "status": "complete" if not m_failed else "partial",
-            "provider": "fintable" if (m == "us" and os.getenv("FINTABLE_API_KEY")) else ("yahoo" if m == "us" else "binance"),
+            "provider": "fintable" if (m == "us" and os.getenv("FINTABLE_API_KEY")) else ("unavailable" if m == "us" else "binance"),
             "priceBasis": "Adjusted close" if m == "us" else "Exchange close",
             "expected": len(rows) + len(m_failed),
             "published": len(rows),
@@ -648,7 +610,7 @@ def publish_snapshot(root: Path, instruments: list[dict[str, str]], histories: d
     write_json_atomic(root / "instruments.json", instruments)
     write_json_atomic(root / "summary.json", {"markets": summaries})
     write_json_atomic(root / "manifest.json", {
-        "schemaVersion": 2, "source": "Yahoo Finance", "completedAt": completed_at,
+        "schemaVersion": 2, "source": "Multi-provider close data", "completedAt": completed_at,
         "coverageStart": "2019-01-01", "dailyInterval": "1d", "recentInterval": "4h",
         "dataModel": "close-only", "counts": {key: len(value) for key, value in summaries.items()}, "status": "complete",
         "files": {"summary": {"us": "summary/us/index.json", "crypto": "summary/crypto/index.json"}, "health": "health.json", "snapshots": "snapshots/pulse.json"},
@@ -662,14 +624,38 @@ def read_json(path: Path, default: Any) -> Any:
         return default
 
 
-def download_batch(rows: list[dict[str, str]], *, range_: str, interval: str) -> dict[str, list[dict[str, Any]]]:
-    payload = request_json(spark_url([row["yahooSymbol"] for row in rows], range_=range_, interval=interval))
-    since = SINCE_TS if interval == "1d" else int(time.time()) - 730 * 86400
-    return parse_spark(payload, interval=interval, since=since)
+def download_history(
+    instrument: dict[str, str],
+    *,
+    bootstrap: bool,
+    interval: str,
+) -> list[dict[str, Any]]:
+    """Fetch history for a single instrument via the configured provider chain."""
+    end_ts = int(time.time())
+    if interval == "1d":
+        start_ts = SINCE_TS if bootstrap else end_ts - 14 * 86400
+    else:
+        # 4h window: bootstrap ~2 years for chart continuity, hourly ~5 days
+        start_ts = SINCE_TS if bootstrap else end_ts - 5 * 86400
+    if instrument["market"] == "us":
+        provider: Any = FintableProvider()
+        provider_symbol = instrument["yahooSymbol"]
+    else:
+        provider = BinanceProvider()
+        # Crypto universe rows expose a dedicated ``binanceSymbol`` (e.g. BTCUSDT);
+        # fall back to the yahooSymbol suffix when absent for backwards compatibility.
+        provider_symbol = instrument.get("binanceSymbol") or instrument["yahooSymbol"].replace("-USD", "USDT")
+    candles = provider.fetch_history(provider_symbol, start_ts, end_ts, interval=interval)
+    return [candle for candle in candles if isinstance(candle.get("t"), (int, float)) and candle["t"] >= SINCE_TS]
 
 
 def resilient_download(rows: list[dict[str, str]], fetcher: Any) -> tuple[dict[str, list[dict[str, Any]]], list[str]]:
-    """Bisect a rejected batch so one stale symbol cannot block valid peers."""
+    """Bisect a rejected batch so one stale symbol cannot block valid peers.
+
+    Kept as a generic helper so the pipeline's batched fetchers can isolate
+    individual failures; ``update_rows`` no longer relies on it because it
+    fetches per-symbol directly through ``download_history``.
+    """
     if not rows:
         return {}, []
     try:
@@ -704,40 +690,38 @@ def build_universe(config_path: Path) -> list[dict[str, str]]:
 def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, delay: float, skip_four_hour: bool) -> tuple[int, list[str]]:
     updated = 0
     failed: list[str] = []
-    for batch_index, group in enumerate(batches(rows)):
-        daily, daily_failed = resilient_download(
-            group, lambda subset: download_batch(subset, range_="10y" if bootstrap else "10d", interval="1d")
-        )
-        if skip_four_hour:
-            four_hour, four_hour_failed = {}, []
-        else:
-            four_hour, four_hour_failed = resilient_download(
-                group, lambda subset: download_batch(subset, range_="730d" if bootstrap else "5d", interval="4h")
-            )
-        unavailable = set(daily_failed) | set(four_hour_failed)
-        now = utc_now()
-        for instrument in group:
-            path = root / "history" / instrument["market"] / f"{instrument['slug']}.json"
-            old = read_json(path, {})
-            old_daily = old.get("daily", [])
-            old_four = old.get("fourHour", [])
-            merged_daily = merge_candles(old_daily, daily.get(instrument["yahooSymbol"], []))
-            recent_cutoff = int(time.time()) - 730 * 86400
-            merged_four = merge_candles(old_four, four_hour.get(instrument["yahooSymbol"], []), keep_since=recent_cutoff)
-            if not merged_daily:
-                failed.append(instrument["yahooSymbol"])
-                continue
-            quality = compute_metrics(merged_daily, annualization=365 if instrument["market"] == "crypto" else 252, four_hour=merged_four).get("dataQuality", {})
-            shard = {**instrument, "startDate": dt.datetime.fromtimestamp(merged_daily[0]["t"], dt.timezone.utc).date().isoformat(),
-                     "updatedAt": now, "dataQuality": quality, "daily": merged_daily, "fourHour": merged_four}
-            write_json_atomic(path, shard)
-            write_json_atomic(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json", summary_row(instrument, merged_daily, now, four_hour=merged_four))
-            updated += 1
-            if instrument["yahooSymbol"] in unavailable:
-                failed.append(instrument["yahooSymbol"])
-        if unavailable:
-            print(f"[markets] batch {batch_index + 1} unavailable symbols: {','.join(sorted(unavailable))}", file=sys.stderr)
-        if delay:
+    now = utc_now()
+    recent_cutoff = int(time.time()) - 730 * 86400
+    for index, instrument in enumerate(rows):
+        symbol = instrument["yahooSymbol"]
+        try:
+            daily = download_history(instrument, bootstrap=bootstrap, interval="1d")
+        except Exception as error:  # noqa: BLE001 - we log and continue per-symbol
+            print(f"[markets] daily fetch failed for {symbol}: {error}", file=sys.stderr)
+            failed.append(symbol)
+            continue
+        four_hour: list[dict[str, Any]] = []
+        if not skip_four_hour:
+            try:
+                four_hour = download_history(instrument, bootstrap=bootstrap, interval="4h")
+            except Exception as error:  # noqa: BLE001
+                print(f"[markets] 4h fetch failed for {symbol}: {error}", file=sys.stderr)
+        path = root / "history" / instrument["market"] / f"{instrument['slug']}.json"
+        old = read_json(path, {})
+        old_daily = old.get("daily", [])
+        old_four = old.get("fourHour", [])
+        merged_daily = merge_candles(old_daily, daily)
+        merged_four = merge_candles(old_four, four_hour, keep_since=recent_cutoff)
+        if not merged_daily:
+            failed.append(symbol)
+            continue
+        quality = compute_metrics(merged_daily, annualization=365 if instrument["market"] == "crypto" else 252, four_hour=merged_four).get("dataQuality", {})
+        shard = {**instrument, "startDate": dt.datetime.fromtimestamp(merged_daily[0]["t"], dt.timezone.utc).date().isoformat(),
+                 "updatedAt": now, "dataQuality": quality, "daily": merged_daily, "fourHour": merged_four}
+        write_json_atomic(path, shard)
+        write_json_atomic(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json", summary_row(instrument, merged_daily, now, four_hour=merged_four))
+        updated += 1
+        if delay and index < len(rows) - 1:
             time.sleep(delay + random.uniform(0, min(delay * 0.2, 1.0)))
     return updated, sorted(set(failed))
 
@@ -782,7 +766,7 @@ def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, 
     # Compatibility payload for older clients; current frontends load one market shard only.
     write_json_atomic(root / "summary.json", {"markets": markets})
     manifest = {
-        "schemaVersion": 2, "source": "Yahoo Finance", "universeSource": "Nasdaq Trader symbol directory",
+        "schemaVersion": 2, "source": "Multi-provider close data", "universeSource": "Nasdaq Trader symbol directory",
         "completedAt": completed_at, "coverageStart": "2019-01-01", "dailyInterval": "1d", "recentInterval": "4h",
         "dataModel": "close-only", "counts": {key: len(value) for key, value in markets.items()}, "failedSymbols": failed,
         "status": "complete" if not failed else "partial", "usRefreshWindowHours": slice_count or 1,
@@ -852,7 +836,7 @@ def parser() -> argparse.ArgumentParser:
     value = argparse.ArgumentParser(description=__doc__)
     value.add_argument("--mode", choices=("bootstrap", "hourly", "rebuild"), default="hourly")
     value.add_argument("--data-root", default="/var/lib/aizanoi-markets/public")
-    value.add_argument("--delay", type=float, default=2.5, help="Polite delay after each <=20-symbol Yahoo batch")
+    value.add_argument("--delay", type=float, default=2.5, help="Polite delay after each per-symbol provider call")
     value.add_argument("--slice-count", type=int, default=8, help="Hourly US slices; every stock refreshes within this many hours")
     value.add_argument("--slice-index", type=int)
     value.add_argument("--max-symbols", type=int)

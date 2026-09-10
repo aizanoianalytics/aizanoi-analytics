@@ -14,7 +14,7 @@ Scope: the static visitor product at `/analytics/markets/` and its shared Aizano
 
 ## Data boundary
 
-The browser reads versioned static files below `/analytics/markets/data/`: manifest, compact pulse/health snapshots, lazy market summary chunks, per-symbol summary items and close-price history shards. Production Nginx aliases that URL to `/var/lib/aizanoi-markets/public/`; runtime snapshots are not committed and the browser never contacts Yahoo Finance directly.
+The browser reads versioned static files below `/analytics/markets/data/`: manifest, compact pulse/health snapshots, lazy market summary chunks, per-symbol summary items and close-price history shards. Production Nginx aliases that URL to `/var/lib/aizanoi-markets/public/`; runtime snapshots are not committed and the browser never contacts upstream providers directly.
 
 The private writer is `scripts/markets/update_markets.py`. This directory owns no credentials, server process or upstream ingestion logic.
 

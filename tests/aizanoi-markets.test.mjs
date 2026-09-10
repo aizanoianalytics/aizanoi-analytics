@@ -33,14 +33,14 @@ test('Markets landing exposes accessible US and Crypto dashboard tabs', () => {
   assert.match(html, /not investment advice/i);
 });
 
-test('browser loads static shards and never calls Yahoo directly', () => {
+test('browser loads static shards and never calls upstream providers directly', () => {
   const app = read('frontend/analytics/markets/dashboard.js');
   assert.match(app, /\/analytics\/markets\/data/);
   assert.match(app, /summary\/\$\{market\}\/index\.json/);
-  assert.doesNotMatch(app, /query[12]\.finance\.yahoo\.com/);
+  assert.doesNotMatch(app, /finance\.yahoo\.com/);
 });
 
-test('crypto universe maps ambiguous names to the intended Yahoo instruments', () => {
+test('crypto universe maps ambiguous names to the intended instruments', () => {
   const config = JSON.parse(read('scripts/markets/crypto-universe.json'));
   assert.deepEqual(config.map((entry) => entry.yahooSymbol), requestedCrypto);
   assert.equal(config.find((entry) => entry.label === 'Sonic').yahooSymbol, 'S32684-USD');

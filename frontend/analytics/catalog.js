@@ -44,12 +44,12 @@ export const ANALYTICS_SETS = Object.freeze([
   }),
   Object.freeze({
     id:'aizanoi-markets',
-    eyebrow:'LIVE MARKET INTELLIGENCE · YAHOO FINANCE DATA',
+    eyebrow:'LIVE MARKET INTELLIGENCE · MULTI-PROVIDER CLOSE DATA',
     title:'Aizanoi Markets',
     accent:'US + Crypto',
     interfaceLanguage:'English',
     interfaceLanguageCode:'en',
-    summary:'A static-first market intelligence surface covering active US-listed equities outside OTC venues and a focused 35-asset crypto universe, with daily history from 2019 and recent four-hour observations where Yahoo Finance makes them available.',
+    summary:'A static-first market intelligence surface covering active US-listed equities outside OTC venues and a focused 35-asset crypto universe, with daily history from 2019 and recent four-hour observations where upstream providers make them available.',
     description:'Search, rank and inspect market breadth, momentum, volatility, drawdown and trend signals. Static data shards are refreshed by private automation and loaded on demand.',
     landing:'/analytics/markets/',
     source:'https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/scripts/markets',
@@ -62,7 +62,7 @@ export const ANALYTICS_SETS = Object.freeze([
     ]),
     dashboards:Object.freeze([
       Object.freeze({ title:'US Markets', summary:'Active equities across Nasdaq, NYSE, NYSE American, NYSE Arca and Cboe BZX, excluding OTC venues, ETFs and test listings.', href:'/analytics/markets/?market=us' }),
-      Object.freeze({ title:'Crypto', summary:'The selected 35-asset crypto universe with corrected Yahoo Finance instrument identifiers and the same analytical lens.', href:'/analytics/markets/?market=crypto' }),
+      Object.freeze({ title:'Crypto', summary:'The selected 35-asset crypto universe with corrected upstream instrument identifiers and the same analytical lens.', href:'/analytics/markets/?market=crypto' }),
     ]),
   }),
   Object.freeze({

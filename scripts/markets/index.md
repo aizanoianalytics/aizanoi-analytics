@@ -5,8 +5,8 @@ Scope: private ingestion and static publication for `/analytics/markets/`.
 ## Inputs
 
 - Nasdaq Trader `nasdaqlisted.txt` and `otherlisted.txt` for active US exchange listings.
-- `crypto-universe.json` for the owner-selected 35 crypto assets and verified Yahoo symbols.
-- Yahoo Finance spark responses for daily and recent four-hour close-price history.
+- `crypto-universe.json` for the owner-selected 35 crypto assets and verified Binance trading pairs.
+- Fintable public API responses for daily US close-price history; Binance public klines for daily and recent four-hour crypto close-price history.
 
 ## Output
 

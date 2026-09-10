@@ -11,13 +11,13 @@ spec.loader.exec_module(mod)
 
 
 class UpdateMarketsTests(unittest.TestCase):
-    def test_yahoo_variants_generate_candidate_spellings_for_failed_symbols(self):
+    def test_nasdaq_symbol_variants_generate_candidate_spellings_for_failed_symbols(self):
         # Dotted class shares (AKO.A) map to dash form; preferred series (AHL-D)
-        # maps to the -P<letter> spelling Yahoo actually serves (AHL-PD).
-        self.assertEqual(list(mod.yahoo_variants("AKO.A")), ["AKO.A", "AKO-A"])
-        self.assertEqual(list(mod.yahoo_variants("ATH-A")), ["ATH-A", "ATH-PA"])
-        self.assertEqual(list(mod.yahoo_variants("AHL-D")), ["AHL-D", "AHL-PD"])
-        self.assertEqual(list(mod.yahoo_variants("AAPL")), ["AAPL"])
+        # maps to the -P<letter> spelling upstream providers serve (AHL-PD).
+        self.assertEqual(list(mod.nasdaq_symbol_variants("AKO.A")), ["AKO.A", "AKO-A"])
+        self.assertEqual(list(mod.nasdaq_symbol_variants("ATH-A")), ["ATH-A", "ATH-PA"])
+        self.assertEqual(list(mod.nasdaq_symbol_variants("AHL-D")), ["AHL-D", "AHL-PD"])
+        self.assertEqual(list(mod.nasdaq_symbol_variants("AAPL")), ["AAPL"])
 
     def test_universe_filter_removes_dead_symbols_and_applies_mapping_overrides(self):
         rows = [
@@ -58,7 +58,7 @@ class UpdateMarketsTests(unittest.TestCase):
         def fetch(subset):
             symbols = [row["yahooSymbol"] for row in subset]
             if "BAD" in symbols:
-                raise RuntimeError(f"yahoo rejected batch containing {symbols}")
+                raise RuntimeError(f"provider rejected batch containing {symbols}")
             return {row["yahooSymbol"]: [{"t": 1, "c": 2.0}] for row in subset}
         data, failed = mod.resilient_download(rows, fetch)
         self.assertEqual(sorted(data), ["GOOD1", "GOOD2"])
