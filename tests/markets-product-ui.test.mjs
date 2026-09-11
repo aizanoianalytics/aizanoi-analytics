@@ -73,10 +73,10 @@ test('generic instrument page supports all required timeframes and ROC 12 label'
   assert.match(app, /history\/\$\{market\}\/\$\{encodeURIComponent\(symbol\)\}\.json/);
 });
 
-test('instrument page defaults frequency to Daily and never auto-selects 4H', () => {
+test('instrument page defaults frequency to Daily and only restores requested crypto 4H', () => {
   const app = read('frontend/analytics/markets/instrument/app.js');
-  assert.match(app, /state\.frequency = '1d';/);
-  assert.doesNotMatch(app, /state\.frequency = '4h';/);
+  assert.match(app, /frequency: '1d'/);
+  assert.match(app, /market === 'crypto' && requestedFrequency === '4h' && has4H/);
   assert.doesNotMatch(app, /payload\.fourHour\?\.length \? '4h'/);
 });
 

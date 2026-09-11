@@ -266,6 +266,6 @@ test('Audit — empty export writes a visible status message', () => {
 
 test('Audit — instrument resets 4h frequency on the US market', () => {
   assert.match(instrumentApp, /requestedFrequency = params\.get\('frequency'\)/);
-  assert.match(instrumentApp, /market === 'us'.*\?.*?'1d'.*?:.*?'4h'|\(market === 'us' \|\| event\.target\.value !== '4h'\) \? '1d' : '4h'/);
-  assert.match(instrumentApp, /cleaned\.delete\('frequency'\)/);
+  assert.match(instrumentApp, /market === 'crypto' && requestedFrequency === '4h' && has4H \? '4h' : '1d'/);
+  assert.match(instrumentApp, /else next\.delete\('frequency'\)/);
 });

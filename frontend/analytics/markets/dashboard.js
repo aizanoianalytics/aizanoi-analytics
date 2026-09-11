@@ -291,22 +291,35 @@ export function createMarketsDashboard(container, options = {}) {
 
   const params = readUrl ? new URLSearchParams(location.search) : new URLSearchParams();
   const state = defaultState();
-  state.market = ['us', 'crypto'].includes(params.get('market')) ? params.get('market') : 'us';
-  state.view = ['main', 'picks'].includes(params.get('view')) ? params.get('view') : 'main';
-  state.query = params.get('q') || '';
-  if (params.get('sort')) {
-    const [key, direction] = params.get('sort').split(':');
-    state.sort = { key, direction: direction === 'asc' ? 'asc' : 'desc' };
+  const validSortKeys = new Set(['ticker', ...PRICE_COLUMNS.map(column => column.key), ...CHANGE_COLUMNS.map(column => column.key)]);
+
+  function restoreUrlState(rawParams) {
+    state.market = ['us', 'crypto'].includes(rawParams.get('market')) ? rawParams.get('market') : 'us';
+    state.view = ['main', 'picks'].includes(rawParams.get('view')) ? rawParams.get('view') : 'main';
+    state.query = rawParams.get('q') || '';
+    const [sortKey, sortDirection] = (rawParams.get('sort') || '').split(':');
+    state.sort = validSortKeys.has(sortKey) ? { key:sortKey, direction:sortDirection === 'asc' ? 'asc' : 'desc' } : defaultState().sort;
+    state.exchange = state.market === 'us' ? (rawParams.get('exchange') || '') : '';
+    state.membership = state.market === 'us' ? (rawParams.get('membership') || '') : '';
+    state.priceMode = rawParams.get('mode') === 'change' ? 'change' : 'price';
+    const parseNumber = key => {
+      const value = rawParams.get(key);
+      return value !== null && value !== '' && Number.isFinite(Number(value)) ? Number(value) : null;
+    };
+    state.minPrice = parseNumber('minPrice');
+    state.maxPrice = parseNumber('maxPrice');
+    const horizon = rawParams.get('perfHorizon');
+    const op = rawParams.get('perfOp');
+    const min = parseNumber('perfMin');
+    const max = parseNumber('perfMax');
+    state.performance = PICK_HORIZONS.includes(horizon) && ['gt', 'lt', 'between'].includes(op) && Number.isFinite(min) && (op !== 'between' || Number.isFinite(max))
+      ? { horizon, op, min:min / 100, max:op === 'between' ? max / 100 : null }
+      : { horizon:'', op:'gt', min:null, max:null };
+    const page = parseNumber('page');
+    state.page = Number.isInteger(page) && page > 1 ? page : 1;
   }
-  state.exchange = params.get('exchange') || '';
-  state.membership = params.get('membership') || '';
-  state.priceMode = params.get('mode') === 'change' ? 'change' : 'price';
-  const initialMinPrice = params.get('minPrice');
-  if (initialMinPrice !== null && initialMinPrice !== '' && Number.isFinite(Number(initialMinPrice))) state.minPrice = Number(initialMinPrice);
-  const initialMaxPrice = params.get('maxPrice');
-  if (initialMaxPrice !== null && initialMaxPrice !== '' && Number.isFinite(Number(initialMaxPrice))) state.maxPrice = Number(initialMaxPrice);
-  const initialPage = Number(params.get('page'));
-  if (Number.isInteger(initialPage) && initialPage > 1) state.page = initialPage;
+
+  restoreUrlState(params);
 
   const controller = new AbortController();
   const context = {
@@ -369,20 +382,28 @@ export function createMarketsDashboard(container, options = {}) {
     updateLocation();
   }
 
-  function updateLocation() {
+  function updateLocation({ push = false } = {}) {
     if (!updateUrl) return;
     const next = new URLSearchParams();
     next.set('market', state.market);
     if (state.view !== 'main') next.set('view', state.view);
     if (state.query) next.set('q', state.query);
     if (state.sort?.key) next.set('sort', `${state.sort.key}:${state.sort.direction}`);
-    if (state.exchange) next.set('exchange', state.exchange);
-    if (state.membership) next.set('membership', state.membership);
+    if (state.market === 'us' && state.exchange) next.set('exchange', state.exchange);
+    if (state.market === 'us' && state.membership) next.set('membership', state.membership);
     if (state.priceMode === 'change') next.set('mode', 'change');
     if (state.minPrice != null) next.set('minPrice', String(state.minPrice));
     if (state.maxPrice != null) next.set('maxPrice', String(state.maxPrice));
+    if (state.performance?.horizon) {
+      next.set('perfHorizon', state.performance.horizon);
+      next.set('perfOp', state.performance.op);
+      next.set('perfMin', String(state.performance.min * 100));
+      if (state.performance.op === 'between') next.set('perfMax', String(state.performance.max * 100));
+    }
     if (state.page > 1) next.set('page', String(state.page));
-    history.replaceState(null, '', `${location.pathname}?${next}`);
+    const url = `${location.pathname}?${next}`;
+    if (push) history.pushState(null, '', url);
+    else history.replaceState(null, '', url);
   }
 
   function exportTableCsv() {
@@ -443,22 +464,10 @@ export function createMarketsDashboard(container, options = {}) {
 
   function selectRow(symbol) {
     state.selectedSymbol = symbol;
-    const total = filterRows(context.currentRows(), state).length;
-    if (state.pageSize && total) {
-      const index = filterRows(context.currentRows(), state)
-        .sort(state.sort ? (a, b) => {
-          const aV = a[state.sort.key];
-          const bV = b[state.sort.key];
-          if (!Number.isFinite(aV) && !Number.isFinite(bV)) return 0;
-          if (!Number.isFinite(aV)) return 1;
-          if (!Number.isFinite(bV)) return -1;
-          return state.sort.direction === 'asc' ? aV - bV : bV - aV;
-        } : (a, b) => 0)
-        .findIndex(row => row.slug === symbol);
-      if (index >= 0) {
-        state.page = Math.floor(index / state.pageSize) + 1;
-      }
-    }
+    const filtered = filterRows(context.currentRows(), state);
+    const ordered = state.sort?.key ? sortRows(filtered, state.sort.key, state.sort.direction) : filtered;
+    const index = ordered.findIndex(row => row.slug === symbol);
+    if (index >= 0 && state.pageSize) state.page = Math.floor(index / state.pageSize) + 1;
     renderView();
     const row = query(`tr[data-symbol="${CSS.escape(symbol)}"]`);
     if (row && typeof row.scrollIntoView === 'function') {
@@ -496,6 +505,8 @@ export function createMarketsDashboard(container, options = {}) {
     const marketTarget = event.target.closest('[data-market]');
     if (marketTarget && marketTarget.tagName === 'BUTTON') {
       state.market = marketTarget.dataset.market;
+      state.exchange = '';
+      state.membership = '';
       state.page = 1;
       state.selectedSymbol = null;
       loadMarket(state.market).catch(showError);
@@ -529,6 +540,7 @@ export function createMarketsDashboard(container, options = {}) {
       const action = pagerTarget.dataset.pageAction;
       state.page = action === 'next' ? state.page + 1 : Math.max(1, state.page - 1);
       renderView();
+      updateLocation({ push:true });
       return;
     }
     const chipTarget = event.target.closest('[data-chip-key]');
@@ -649,23 +661,7 @@ export function createMarketsDashboard(container, options = {}) {
   }).catch(showError);
 
   window.addEventListener('popstate', () => {
-    const restored = new URLSearchParams(location.search);
-    state.market = ['us', 'crypto'].includes(restored.get('market')) ? restored.get('market') : 'us';
-    state.view = ['main', 'picks'].includes(restored.get('view')) ? restored.get('view') : 'main';
-    state.query = restored.get('q') || '';
-    if (restored.get('sort')) {
-      const [key, direction] = restored.get('sort').split(':');
-      state.sort = { key, direction: direction === 'asc' ? 'asc' : 'desc' };
-    }
-    state.exchange = restored.get('exchange') || '';
-    state.membership = restored.get('membership') || '';
-    state.priceMode = restored.get('mode') === 'change' ? 'change' : 'price';
-    const restoredMinPrice = restored.get('minPrice');
-    state.minPrice = restoredMinPrice !== null && restoredMinPrice !== '' && Number.isFinite(Number(restoredMinPrice)) ? Number(restoredMinPrice) : null;
-    const restoredMaxPrice = restored.get('maxPrice');
-    state.maxPrice = restoredMaxPrice !== null && restoredMaxPrice !== '' && Number.isFinite(Number(restoredMaxPrice)) ? Number(restoredMaxPrice) : null;
-    const restoredPage = Number(restored.get('page'));
-    state.page = Number.isInteger(restoredPage) && restoredPage > 1 ? restoredPage : 1;
+    restoreUrlState(new URLSearchParams(location.search));
     loadMarket(state.market).catch(showError);
   }, { signal: controller.signal });
 
