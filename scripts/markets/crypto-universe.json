@@ -1,317 +1,422 @@
 [
   {
     "ticker": "AAVE",
-    "label": "Aave",
     "provider": "binance",
     "providerSymbol": "AAVEUSDT",
     "market": "crypto",
     "slug": "aave",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Aave",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "ADA",
-    "label": "Cardano",
     "provider": "binance",
     "providerSymbol": "ADAUSDT",
     "market": "crypto",
     "slug": "ada",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Cardano",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "APT",
-    "label": "Aptos",
     "provider": "binance",
     "providerSymbol": "APTUSDT",
     "market": "crypto",
     "slug": "apt",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Aptos",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "ARB",
-    "label": "Arbitrum",
     "provider": "binance",
     "providerSymbol": "ARBUSDT",
     "market": "crypto",
     "slug": "arb",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Arbitrum",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "ATOM",
-    "label": "Cosmos",
     "provider": "binance",
     "providerSymbol": "ATOMUSDT",
     "market": "crypto",
     "slug": "atom",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Cosmos",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "AVAX",
-    "label": "Avalanche",
     "provider": "binance",
     "providerSymbol": "AVAXUSDT",
     "market": "crypto",
     "slug": "avax",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Avalanche",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "BCH",
-    "label": "Bitcoin Cash",
     "provider": "binance",
     "providerSymbol": "BCHUSDT",
     "market": "crypto",
     "slug": "bch",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Bitcoin Cash",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "BTC",
-    "label": "Bitcoin",
     "provider": "binance",
     "providerSymbol": "BTCUSDT",
     "market": "crypto",
     "slug": "btc",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Bitcoin",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "DOGE",
-    "label": "Dogecoin",
     "provider": "binance",
     "providerSymbol": "DOGEUSDT",
     "market": "crypto",
     "slug": "doge",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Dogecoin",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "DOT",
-    "label": "Polkadot",
     "provider": "binance",
     "providerSymbol": "DOTUSDT",
     "market": "crypto",
     "slug": "dot",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Polkadot",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "ETC",
-    "label": "Ethereum Classic",
     "provider": "binance",
     "providerSymbol": "ETCUSDT",
     "market": "crypto",
     "slug": "etc",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Ethereum Classic",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "ETH",
-    "label": "Ethereum",
     "provider": "binance",
     "providerSymbol": "ETHUSDT",
     "market": "crypto",
     "slug": "eth",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Ethereum",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "FIL",
-    "label": "Filecoin",
     "provider": "binance",
     "providerSymbol": "FILUSDT",
     "market": "crypto",
     "slug": "fil",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Filecoin",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "GRAM",
-    "label": "Gram",
     "provider": "binance",
     "providerSymbol": "GRAMUSDT",
     "market": "crypto",
     "slug": "gram",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Gram",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "HBAR",
-    "label": "Hedera",
     "provider": "binance",
     "providerSymbol": "HBARUSDT",
     "market": "crypto",
     "slug": "hbar",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Hedera",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "INJ",
-    "label": "Injective",
     "provider": "binance",
     "providerSymbol": "INJUSDT",
     "market": "crypto",
     "slug": "inj",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Injective",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "LINK",
-    "label": "Chainlink",
     "provider": "binance",
     "providerSymbol": "LINKUSDT",
     "market": "crypto",
     "slug": "link",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Chainlink",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "LTC",
-    "label": "Litecoin",
     "provider": "binance",
     "providerSymbol": "LTCUSDT",
     "market": "crypto",
     "slug": "ltc",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Litecoin",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "NEAR",
-    "label": "NEAR Protocol",
     "provider": "binance",
     "providerSymbol": "NEARUSDT",
     "market": "crypto",
     "slug": "near",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "NEAR Protocol",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "ONDO",
-    "label": "Ondo",
     "provider": "binance",
     "providerSymbol": "ONDOUSDT",
     "market": "crypto",
     "slug": "ondo",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Ondo",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "OP",
-    "label": "Optimism",
     "provider": "binance",
     "providerSymbol": "OPUSDT",
     "market": "crypto",
     "slug": "op",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Optimism",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "POL",
-    "label": "Polygon",
     "provider": "binance",
     "providerSymbol": "POLUSDT",
     "market": "crypto",
     "slug": "pol",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Polygon",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "RENDER",
-    "label": "Render",
     "provider": "binance",
     "providerSymbol": "RENDERUSDT",
     "market": "crypto",
     "slug": "render",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Render",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "RUNE",
-    "label": "THORChain",
     "provider": "binance",
     "providerSymbol": "RUNEUSDT",
     "market": "crypto",
     "slug": "rune",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "THORChain",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "S",
-    "label": "Sonic",
     "provider": "binance",
     "providerSymbol": "SUSDT",
     "market": "crypto",
     "slug": "s",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Sonic",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "SAND",
-    "label": "The Sandbox",
     "provider": "binance",
     "providerSymbol": "SANDUSDT",
     "market": "crypto",
     "slug": "sand",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "The Sandbox",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "SOL",
-    "label": "Solana",
     "provider": "binance",
     "providerSymbol": "SOLUSDT",
     "market": "crypto",
     "slug": "sol",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Solana",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "SUI",
-    "label": "Sui",
     "provider": "binance",
     "providerSymbol": "SUIUSDT",
     "market": "crypto",
     "slug": "sui",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Sui",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "TAO",
-    "label": "Bittensor",
     "provider": "binance",
     "providerSymbol": "TAOUSDT",
     "market": "crypto",
     "slug": "tao",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Bittensor",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "THETA",
-    "label": "Theta Network",
     "provider": "binance",
     "providerSymbol": "THETAUSDT",
     "market": "crypto",
     "slug": "theta",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Theta Network",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "UNI",
-    "label": "Uniswap",
     "provider": "binance",
     "providerSymbol": "UNIUSDT",
     "market": "crypto",
     "slug": "uni",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Uniswap",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "VIRTUAL",
-    "label": "Virtuals Protocol",
     "provider": "binance",
     "providerSymbol": "VIRTUALUSDT",
     "market": "crypto",
     "slug": "virtual",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Virtuals Protocol",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "XLM",
-    "label": "Stellar",
     "provider": "binance",
     "providerSymbol": "XLMUSDT",
     "market": "crypto",
     "slug": "xlm",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Stellar",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "XRP",
-    "label": "XRP",
     "provider": "binance",
     "providerSymbol": "XRPUSDT",
     "market": "crypto",
     "slug": "xrp",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "XRP",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   },
   {
     "ticker": "ZEC",
-    "label": "Zcash",
     "provider": "binance",
     "providerSymbol": "ZECUSDT",
     "market": "crypto",
     "slug": "zec",
-    "exchange": "Crypto \u00b7 USD"
+    "exchange": "Crypto \u00b7 USD",
+    "name": "Zcash",
+    "memberships": [
+      "Crypto Focused 35"
+    ]
   }
 ]

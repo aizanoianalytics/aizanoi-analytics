@@ -52,9 +52,9 @@ test('crypto universe maps ambiguous names to the intended instruments', () => {
     'VIRTUALUSDT','XLMUSDT','XRPUSDT','ZECUSDT',
   ];
   assert.deepEqual(config.map((entry) => entry.providerSymbol), expectedSymbols);
-  assert.equal(config.find((entry) => entry.label === 'Sonic').providerSymbol, 'SUSDT');
-  assert.equal(config.find((entry) => entry.label === 'Aptos').providerSymbol, 'APTUSDT');
-  assert.equal(config.find((entry) => entry.label === 'Sui').providerSymbol, 'SUIUSDT');
+  assert.equal(config.find((entry) => entry.name === 'Sonic').providerSymbol, 'SUSDT');
+  assert.equal(config.find((entry) => entry.name === 'Aptos').providerSymbol, 'APTUSDT');
+  assert.equal(config.find((entry) => entry.name === 'Sui').providerSymbol, 'SUIUSDT');
 });
 
 test('Markets is included in canonical sitemap generation', () => {
