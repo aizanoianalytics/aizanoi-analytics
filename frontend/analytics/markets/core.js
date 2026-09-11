@@ -167,13 +167,29 @@ export function createSavedScreens(storage = globalThis.localStorage) {
   };
 }
 
-export function filterRows(rows, { query = '', watchlistOnly = false, watchlist, exchange = '', regime = '', minPrice = null, minSessions = null, rsiMin = null, rsiMax = null, rangeMin = null, rangeMax = null } = {}) {
+export function filterRows(rows, { query = '', watchlistOnly = false, watchlist, exchange = '', membership = '', memberships = [], regime = '', minPrice = null, maxPrice = null, priceMin = null, priceMax = null, priceBetween = null, performance = null, minSessions = null, rsiMin = null, rsiMax = null, rangeMin = null, rangeMax = null } = {}) {
   const needle = query.trim().toLowerCase();
+  const lowerPrice = Number.isFinite(priceMin) ? priceMin : minPrice;
+  const upperPrice = Number.isFinite(priceMax) ? priceMax : maxPrice;
   return rows.filter(row => {
     if (needle && !`${row.ticker} ${row.name}`.toLowerCase().includes(needle)) return false;
     if (watchlistOnly && !watchlist?.has(`${row.market}:${row.slug}`)) return false;
     if (exchange && row.exchange !== exchange) return false;
-    if (Number.isFinite(minPrice) && (!finite(row.latest) || row.latest < minPrice)) return false;
+    const rowMemberships = Array.isArray(row.memberships) ? row.memberships : [];
+    const wantedMemberships = memberships.length ? memberships : (membership ? [membership] : []);
+    if (wantedMemberships.length && !wantedMemberships.some(value => rowMemberships.includes(value))) return false;
+    const low = Array.isArray(priceBetween) ? priceBetween[0] : lowerPrice;
+    const high = Array.isArray(priceBetween) ? priceBetween[1] : upperPrice;
+    if (Number.isFinite(low) && (!finite(row.latest) || row.latest < low)) return false;
+    if (Number.isFinite(high) && (!finite(row.latest) || row.latest > high)) return false;
+    if (performance?.horizon) {
+      const value = row[performance.horizon];
+      if (!finite(value)) return false;
+      const min = performance.min; const max = performance.max;
+      if (performance.op === 'gt' && (!finite(min) || value <= min)) return false;
+      if (performance.op === 'lt' && (!finite(min) || value >= min)) return false;
+      if (performance.op === 'between' && (!finite(min) || !finite(max) || value < min || value > max)) return false;
+    }
     if (Number.isFinite(minSessions) && (!finite(row.historySessions) || row.historySessions < minSessions)) return false;
     if (Number.isFinite(rsiMin) && (!finite(row.rsi14) || row.rsi14 < rsiMin)) return false;
     if (Number.isFinite(rsiMax) && (!finite(row.rsi14) || row.rsi14 > rsiMax)) return false;

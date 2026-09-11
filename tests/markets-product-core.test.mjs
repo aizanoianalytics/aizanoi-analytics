@@ -49,6 +49,13 @@ test('watchlist storage, filters and CSV export are deterministic', async () => 
   assert.deepEqual(filterRows(metricRows, { minPrice:10,minSessions:200,rsiMax:80,rangeMin:.5 }).map(row => row.slug), ['b']);
   assert.match(rowsToCsv(rows, ['ticker', 'latest']), /^Ticker,Price\nAAPL,10/m);
   assert.equal(detailUrl('us', 'aapl'), '/analytics/markets/instrument/?market=us&symbol=aapl');
+  const filtered = filterRows([
+    { ticker:'A', name:'Alpha', latest:25, return1y:.3 },
+    { ticker:'B', name:'Beta', latest:75, return1y:.1 },
+    { ticker:'C', name:'Gamma', latest:null, return1y:null },
+  ], { priceMin:20, priceMax:50, performance:{ horizon:'return1y', op:'gt', min:.2 } });
+  assert.deepEqual(filtered.map(row => row.ticker), ['A']);
+  assert.deepEqual(filterRows([{ticker:'A',name:'Alpha',latest:25},{ticker:'B',name:'Beta',latest:75}], { priceMin:20, priceMax:80 }).map(row => row.ticker), ['A','B']);
 });
 
 test('Aizanoi Picks uses exactly nine return horizons and requires exactly 8 same-sign valid values', async () => {
