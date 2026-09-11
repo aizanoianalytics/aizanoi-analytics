@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-10T02:30:00.000Z",
+  "generatedAt": "2026-09-11T05:25:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-11",
+      "path": "/news/2026-09-11/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-10",
       "path": "/news/2026-09-10/",
@@ -114,6 +119,484 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-11-premier-league-matchday-3-fixtures",
+      "kind": "daily",
+      "title": "Premier League Matchweek 3 kicks off Saturday with Liverpool-Fulham and Manchester derby on Sunday",
+      "summary": "The Premier League returns on Saturday with Matchweek 3 headlined by Liverpool v Fulham at Anfield and Aston Villa v Nottingham Forest, before Sunday's Manchester derby at Old Trafford and Manchester United v Manchester City at the same ground. The midweek follows with Coventry City v Brighton on Sunday and Leeds United v Newcastle on Monday, with all 380 fixtures of the 2026/27 season already published by the Premier League.",
+      "category": "football",
+      "priority": 45,
+      "publishedAt": "2026-09-11T05:25:00.000Z",
+      "updatedAt": "2026-09-11T05:25:00.000Z",
+      "retrievedAt": "2026-09-11T05:25:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "liverpool",
+        "fulham",
+        "manchester-united",
+        "manchester-city"
+      ],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/news/4675097",
+          "publishedAt": "2026-06-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-fenerbahce-roma-1-1-istanbul",
+      "kind": "daily",
+      "title": "Fenerbahce and Roma share 1-1 draw on Champions League return in Istanbul",
+      "summary": "Fenerbahce and Roma played out a 1-1 draw at Ulker Stadyumu on Thursday, with Bryan Cristante's first-half strike for Roma cancelled out three minutes into the second half by Archie Brown after a Mason Greenwood through ball. The match was Fenerbahce's first Champions League appearance in 18 years and Roma's first since 2019, with Nathan Ake heading a late Fenerbahce effort against the crossbar in an evenly contested game.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-09-11T05:20:00.000Z",
+      "updatedAt": "2026-09-11T05:20:00.000Z",
+      "retrievedAt": "2026-09-11T05:20:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "fenerbahce",
+        "roma",
+        "champions-league",
+        "archie-brown",
+        "bryan-cristante"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/europe/fenerbahce-roma-draw-1-1-champions-league-istanbul-2026-09-10/",
+          "publishedAt": "2026-09-10T22:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-champions-league-md1-thursday-roundup",
+      "kind": "daily",
+      "title": "Champions League Matchday 1 Thursday: Bayern, Man Utd and Como cruise, Fenerbahce-Roma ends level",
+      "summary": "Bayern Munich opened the new Champions League league phase with a 5-0 home win over Bodo/Glimt after the break, while Manchester United marked their return to the competition with a 4-0 victory over Sabah at Old Trafford and Como debuted with a 4-1 home win over RB Leipzig. In Istanbul, Fenerbahce and Roma shared a 1-1 draw in their first Champions League matches in 18 and seven years respectively, with Archie Brown cancelling out Bryan Cristante's opener.",
+      "category": "football",
+      "priority": 65,
+      "publishedAt": "2026-09-11T05:15:00.000Z",
+      "updatedAt": "2026-09-11T05:15:00.000Z",
+      "retrievedAt": "2026-09-11T05:15:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "bayern-munich",
+        "manchester-united",
+        "como",
+        "fenerbahce",
+        "roma"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://uefa.com/uefachampionsleague/news/02a9-218f92165095-9612a9de92d3-1000--champions-league-matchday-1-thursday-highlights-and-round-u",
+          "publishedAt": "2026-09-10T22:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-oil-100-hormuz-red-sea",
+      "kind": "daily",
+      "title": "Brent above $108 as Red Sea and Hormuz disruptions keep oil on track for first $100 week since May",
+      "summary": "Oil prices are set to end the week above $100 a barrel for the first time in nearly four months, with Brent up about 1 percent at $108.68 and WTI near $103.45 in early Asian trade on Friday. The rally follows Houthi seizures of Yemen's Mocha port, sustained tanker attacks in the Strait of Hormuz, and the largest US-Iran strikes on shipping since their conflict began, keeping global energy supply risk firmly in focus.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-09-11T05:10:00.000Z",
+      "updatedAt": "2026-09-11T05:10:00.000Z",
+      "retrievedAt": "2026-09-11T05:10:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "brent",
+        "wti",
+        "iran",
+        "hormuz",
+        "red-sea"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/energy/oil-prices-set-end-week-over-100-first-time-nearly-4-months-2026-09-11/",
+          "publishedAt": "2026-09-11T01:13:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-ecb-deposit-rate-hike-october",
+      "kind": "daily",
+      "title": "ECB lifts deposit rate to 2.5% with October tightening on the table",
+      "summary": "The European Central Bank raised its deposit facility rate by 25 basis points to 2.50 percent on Thursday, the second hike since the Iran war pushed energy prices higher, and lifted both its growth and inflation projections. ECB officials told Bloomberg they expect further tightening, with another increase possible as soon as October, while President Christine Lagarde called the move 'a no brainer' and said the decision was unanimous.",
+      "category": "economy-markets",
+      "priority": 75,
+      "publishedAt": "2026-09-11T05:05:00.000Z",
+      "updatedAt": "2026-09-11T05:05:00.000Z",
+      "retrievedAt": "2026-09-11T05:05:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ecb",
+        "interest-rates",
+        "lagarde",
+        "eurozone",
+        "inflation"
+      ],
+      "sources": [
+        {
+          "publisher": "European Central Bank",
+          "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260910~314e508016.en.html",
+          "publishedAt": "2026-09-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-us-cpi-august-release-friday",
+      "kind": "daily",
+      "title": "US August CPI release on Friday set to test Fed rate-cut bets after ECB hike",
+      "summary": "The US Bureau of Labor Statistics will publish the August 2026 Consumer Price Index at 8:30 a.m. ET on Friday, the final major inflation print before the Federal Reserve's September 16 FOMC decision. Consensus looks for headline CPI of +0.4 percent month-on-month and +3.4 percent year-on-year, with core CPI expected at +0.2 percent m/m and +2.4 percent y/y, against a backdrop of fresh Brent oil above $100 and yesterday's ECB rate increase.",
+      "category": "economy-markets",
+      "priority": 85,
+      "publishedAt": "2026-09-11T05:00:00.000Z",
+      "updatedAt": "2026-09-11T05:00:00.000Z",
+      "retrievedAt": "2026-09-11T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-cpi",
+        "inflation",
+        "federal-reserve",
+        "fomc"
+      ],
+      "sources": [
+        {
+          "publisher": "U.S. Bureau of Labor Statistics",
+          "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+          "publishedAt": "2026-09-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-modi-india-space-station-2035",
+      "kind": "daily",
+      "title": "Modi sets 2035 target for India's first space station as BRICS summit opens in New Delhi",
+      "summary": "Indian Prime Minister Narendra Modi used a national address on Friday to commit to putting India's first space station in orbit by 2035, ahead of Chinese President Xi Jinping's first visit to India in seven years for the 18th BRICS Summit at Bharat Mandapam on September 12-13. The announcement sits alongside India's hosting of more than 20 partner countries at the two-day leaders' meeting.",
+      "category": "technology",
+      "priority": 45,
+      "publishedAt": "2026-09-11T04:55:00.000Z",
+      "updatedAt": "2026-09-11T04:55:00.000Z",
+      "retrievedAt": "2026-09-11T04:55:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "india",
+        "isro",
+        "space-station",
+        "brics",
+        "modi"
+      ],
+      "sources": [
+        {
+          "publisher": "Indian Express",
+          "url": "https://indianexpress.com/article/education/today-news-headlines-for-school-assembly-september-11-2026-india-to-get-its-space-station-by-2035-says-pm-modi-apple-increases-prices-of-iphone-17-series-10871320",
+          "publishedAt": "2026-09-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-apple-raises-older-iphone-prices",
+      "kind": "daily",
+      "title": "Apple raises prices across older iPhone models by $100 after foldable launch",
+      "summary": "Apple has raised US prices of several older iPhone models still in its lineup by $100 following the September 9 'Surprise and Shine' event, breaking from its usual pattern of cutting prices on previous-generation devices. The iPhone 16 now starts at $799 (up from $699), the iPhone 17e is $699 (up from $599), and the standard iPhone 17 starts at $899, while the iPhone 17 Pro and iPhone 17 Pro Max have been discontinued.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-09-11T04:50:00.000Z",
+      "updatedAt": "2026-09-11T04:50:00.000Z",
+      "retrievedAt": "2026-09-11T04:50:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "iphone",
+        "pricing",
+        "iphone-duo"
+      ],
+      "sources": [
+        {
+          "publisher": "Daily Times",
+          "url": "https://dailytimes.com.pk/1551068/apple-raises-prices-across-older-iphone-models",
+          "publishedAt": "2026-09-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-qualcomm-snapdragon-8-elite-gen-6-npu",
+      "kind": "daily",
+      "title": "Qualcomm previews Snapdragon 8 Elite Gen 6 NPU for 30B-parameter on-device AI agents",
+      "summary": "Ahead of its September 22 Snapdragon Summit, Qualcomm has detailed the redesigned Hexagon NPU that will headline the Snapdragon 8 Elite Gen 6 platform. The new NPU adds an 'Element Accelerator' and substantially larger shared memory, enabling phones to run roughly 30B-parameter mixture-of-experts models locally with about 3B active parameters per token, while the Oryon CPU retains a 2+3+3 layout on TSMC's 2nm process.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-11T04:45:00.000Z",
+      "updatedAt": "2026-09-11T04:45:00.000Z",
+      "retrievedAt": "2026-09-11T04:45:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "qualcomm",
+        "snapdragon",
+        "npu",
+        "on-device-ai",
+        "tsmc-2nm"
+      ],
+      "sources": [
+        {
+          "publisher": "ServeTheHome",
+          "url": "https://www.servethehome.com/qualcomm-details-next-gen-oryon-cpu-adreno-gpu-and-hexagon-npu/",
+          "publishedAt": "2026-09-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-samsung-mocks-iphone-duo-foldable",
+      "kind": "daily",
+      "title": "Samsung taunts Apple over foldable iPhone Duo launch with 'reheating our leftovers' campaign",
+      "summary": "Samsung Mobile US has responded to Apple's $1,999 iPhone Duo launch with sarcastic social posts including 'Let us know when you're done reheating our leftovers' and 'So far, so same,' running alongside billboards in Seoul, Tokyo and London that highlight the Galaxy Z Fold 8's thin-and-light design. Counterpoint Research projects Apple could capture about 25 percent of the foldable market, with Samsung holding roughly 32 percent, framing the next phase of the premium phone battle.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-09-11T04:40:00.000Z",
+      "updatedAt": "2026-09-11T04:40:00.000Z",
+      "retrievedAt": "2026-09-11T04:40:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "samsung",
+        "apple",
+        "iphone-duo",
+        "foldable",
+        "galaxy-z-fold"
+      ],
+      "sources": [
+        {
+          "publisher": "Daily Times",
+          "url": "https://dailytimes.com.pk/1551023/samsung-mocks-apple-after-iphone-duo-launch/",
+          "publishedAt": "2026-09-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-suno-v6-warner-bmg-believe",
+      "kind": "daily",
+      "title": "Suno launches v6 music models trained on licensed Warner, BMG and Believe catalogs",
+      "summary": "Suno has rolled out its v6 generation of AI music models, built in partnership with Warner Music Group, BMG and Believe, with revenue-sharing arrangements for participating rightsholders. The release introduces a flagship v6 model, a 'less predictable' v6-wild, and a free v6-mini tier, alongside new editing, isolation and mashup features aimed at professional music workflows. Suno says it will retire its previous models as v6 deploys.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-09-11T04:35:00.000Z",
+      "updatedAt": "2026-09-11T04:35:00.000Z",
+      "retrievedAt": "2026-09-11T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "suno",
+        "ai-music",
+        "warner-music",
+        "bmg",
+        "believe"
+      ],
+      "sources": [
+        {
+          "publisher": "Suno",
+          "url": "https://suno.com/blog/introducing-v6",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-nvidia-rubin-cpx-revived",
+      "kind": "daily",
+      "title": "Nvidia revives Rubin CPX accelerator with HBM4 and standalone rack design",
+      "summary": "TF International analyst Ming-Chi Kuo says Nvidia has revived its Rubin CPX inference accelerator with a major redesign, including 168 GB of HBM4 memory per GPU and a move to a standalone MGX ETL rack. Production is now slated to begin in Q1 2027, with CPX handling the prefill stage of inference alongside Vera Rubin NVL72 systems via Ethernet RDMA at a recommended 1:1 ratio.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-09-11T04:30:00.000Z",
+      "updatedAt": "2026-09-11T04:30:00.000Z",
+      "retrievedAt": "2026-09-11T04:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "rubin-cpx",
+        "hbm4",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "Benzinga",
+          "url": "https://www.benzinga.com/markets/tech/26/09/61539040/nvidia-rubin-cpx-revived-ming-chi-kuo-major-redesign",
+          "publishedAt": "2026-09-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-anthropic-coxon-resigns-warning",
+      "kind": "daily",
+      "title": "Former Anthropic researcher Jacob Coxon resigns, warns AI labs are 'gambling with our lives'",
+      "summary": "Jacob Coxon, a former Anthropic researcher focused on AI safety, publicly resigned this week and accused both Anthropic and OpenAI of 'gambling with our lives' by racing to deploy more capable models. His departure follows Anthropic's own report that it had blocked scientists who used Claude models in ways that could support biological weapons development, and lands as the EU's Enisa is being granted access to Anthropic's Mythos 5 system.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-09-11T04:25:00.000Z",
+      "updatedAt": "2026-09-11T04:25:00.000Z",
+      "retrievedAt": "2026-09-11T04:25:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ai-safety",
+        "openai",
+        "claude"
+      ],
+      "sources": [
+        {
+          "publisher": "CBS News",
+          "url": "https://www.cbsnews.com/news/anthropic-researcher-jacob-coxon-ai-warning/",
+          "publishedAt": "2026-09-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-deepseek-v41-flash-released",
+      "kind": "daily",
+      "title": "DeepSeek releases V4.1-Flash, a 552B-parameter open model activating 8B per token",
+      "summary": "DeepSeek has officially released DeepSeek-V4.1-Flash, an MIT-licensed multimodal mixture-of-experts model with 552B total parameters, a one-million-token context, and roughly 8B activated per input token. New pricing for the Flash line took effect at 04:00 UTC on September 10, with OpenCode adding support from 04:00 UTC on September 14, expanding the field of frontier-class open-weight models available to developers.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-11T04:20:00.000Z",
+      "updatedAt": "2026-09-11T04:20:00.000Z",
+      "retrievedAt": "2026-09-11T04:20:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "deepseek",
+        "open-source",
+        "moe",
+        "llm"
+      ],
+      "sources": [
+        {
+          "publisher": "DeepSeek",
+          "url": "https://api-docs.deepseek.com/news/news260910/",
+          "publishedAt": "2026-09-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-11-anthropic-enisa-mythos-5-access",
+      "kind": "daily",
+      "title": "Anthropic grants EU cybersecurity agency Enisa access to Mythos 5 model",
+      "summary": "Anthropic has given the European Union's cybersecurity agency Enisa access to its Mythos 5 AI model after months of talks, European Commission spokesperson Thomas Regnier confirmed on Thursday. The deal, which the WSJ reports will appear in its September 11 print edition, also gives Enisa access to OpenAI's GPT-5.6 Cyber and GPT-6-Astra, and follows a brief US ban on foreign use of Anthropic's flagship models that has since been relaxed for a limited set of partners.",
+      "category": "ai",
+      "priority": 65,
+      "publishedAt": "2026-09-11T04:15:00.000Z",
+      "updatedAt": "2026-09-11T04:15:00.000Z",
+      "retrievedAt": "2026-09-11T04:15:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "openai",
+        "eu",
+        "cybersecurity",
+        "enisa",
+        "mythos"
+      ],
+      "sources": [
+        {
+          "publisher": "Wall Street Journal",
+          "url": "https://www.wsj.com/tech/anthropic-gives-eus-cybersecurity-agency-access-to-mythos-5-ai-model-33e3a3ef",
+          "publishedAt": "2026-09-10T07:59:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-10-ecb-deposit-rate-hike-2-50",
       "kind": "daily",

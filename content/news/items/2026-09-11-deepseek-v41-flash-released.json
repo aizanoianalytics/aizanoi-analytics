@@ -1,0 +1,31 @@
+{
+    "id": "2026-09-11-deepseek-v41-flash-released",
+    "title": "DeepSeek releases V4.1-Flash, a 552B-parameter open model activating 8B per token",
+    "summary": "DeepSeek has officially released DeepSeek-V4.1-Flash, an MIT-licensed multimodal mixture-of-experts model with 552B total parameters, a one-million-token context, and roughly 8B activated per input token. New pricing for the Flash line took effect at 04:00 UTC on September 10, with OpenCode adding support from 04:00 UTC on September 14, expanding the field of frontier-class open-weight models available to developers.",
+    "category": "ai",
+    "priority": 60,
+    "publishedAt": "2026-09-11T07:20:00+03:00",
+    "updatedAt": "2026-09-11T07:20:00+03:00",
+    "retrievedAt": "2026-09-11T07:20:00+03:00",
+    "author": {
+        "name": "Aizanoi News Desk"
+    },
+    "editor": {
+        "name": "Editorial Desk"
+    },
+    "image": null,
+    "corrections": [],
+    "tags": [
+        "deepseek",
+        "open-source",
+        "moe",
+        "llm"
+    ],
+    "sources": [
+        {
+            "publisher": "DeepSeek",
+            "url": "https://api-docs.deepseek.com/news/news260910/",
+            "publishedAt": "2026-09-10T00:00:00Z"
+        }
+    ]
+}

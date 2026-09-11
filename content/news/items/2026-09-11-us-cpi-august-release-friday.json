@@ -1,0 +1,31 @@
+{
+    "id": "2026-09-11-us-cpi-august-release-friday",
+    "title": "US August CPI release on Friday set to test Fed rate-cut bets after ECB hike",
+    "summary": "The US Bureau of Labor Statistics will publish the August 2026 Consumer Price Index at 8:30 a.m. ET on Friday, the final major inflation print before the Federal Reserve's September 16 FOMC decision. Consensus looks for headline CPI of +0.4 percent month-on-month and +3.4 percent year-on-year, with core CPI expected at +0.2 percent m/m and +2.4 percent y/y, against a backdrop of fresh Brent oil above $100 and yesterday's ECB rate increase.",
+    "category": "economy-markets",
+    "priority": 85,
+    "publishedAt": "2026-09-11T08:00:00+03:00",
+    "updatedAt": "2026-09-11T08:00:00+03:00",
+    "retrievedAt": "2026-09-11T08:00:00+03:00",
+    "author": {
+        "name": "Aizanoi News Desk"
+    },
+    "editor": {
+        "name": "Editorial Desk"
+    },
+    "image": null,
+    "corrections": [],
+    "tags": [
+        "us-cpi",
+        "inflation",
+        "federal-reserve",
+        "fomc"
+    ],
+    "sources": [
+        {
+            "publisher": "U.S. Bureau of Labor Statistics",
+            "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+            "publishedAt": "2026-09-02T00:00:00Z"
+        }
+    ]
+}

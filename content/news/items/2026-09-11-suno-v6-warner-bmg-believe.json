@@ -1,0 +1,32 @@
+{
+    "id": "2026-09-11-suno-v6-warner-bmg-believe",
+    "title": "Suno launches v6 music models trained on licensed Warner, BMG and Believe catalogs",
+    "summary": "Suno has rolled out its v6 generation of AI music models, built in partnership with Warner Music Group, BMG and Believe, with revenue-sharing arrangements for participating rightsholders. The release introduces a flagship v6 model, a 'less predictable' v6-wild, and a free v6-mini tier, alongside new editing, isolation and mashup features aimed at professional music workflows. Suno says it will retire its previous models as v6 deploys.",
+    "category": "ai",
+    "priority": 50,
+    "publishedAt": "2026-09-11T07:35:00+03:00",
+    "updatedAt": "2026-09-11T07:35:00+03:00",
+    "retrievedAt": "2026-09-11T07:35:00+03:00",
+    "author": {
+        "name": "Aizanoi News Desk"
+    },
+    "editor": {
+        "name": "Editorial Desk"
+    },
+    "image": null,
+    "corrections": [],
+    "tags": [
+        "suno",
+        "ai-music",
+        "warner-music",
+        "bmg",
+        "believe"
+    ],
+    "sources": [
+        {
+            "publisher": "Suno",
+            "url": "https://suno.com/blog/introducing-v6",
+            "publishedAt": "2026-09-09T00:00:00Z"
+        }
+    ]
+}

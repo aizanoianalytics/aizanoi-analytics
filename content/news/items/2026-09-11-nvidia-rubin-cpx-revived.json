@@ -1,0 +1,31 @@
+{
+    "id": "2026-09-11-nvidia-rubin-cpx-revived",
+    "title": "Nvidia revives Rubin CPX accelerator with HBM4 and standalone rack design",
+    "summary": "TF International analyst Ming-Chi Kuo says Nvidia has revived its Rubin CPX inference accelerator with a major redesign, including 168 GB of HBM4 memory per GPU and a move to a standalone MGX ETL rack. Production is now slated to begin in Q1 2027, with CPX handling the prefill stage of inference alongside Vera Rubin NVL72 systems via Ethernet RDMA at a recommended 1:1 ratio.",
+    "category": "ai",
+    "priority": 55,
+    "publishedAt": "2026-09-11T07:30:00+03:00",
+    "updatedAt": "2026-09-11T07:30:00+03:00",
+    "retrievedAt": "2026-09-11T07:30:00+03:00",
+    "author": {
+        "name": "Aizanoi News Desk"
+    },
+    "editor": {
+        "name": "Editorial Desk"
+    },
+    "image": null,
+    "corrections": [],
+    "tags": [
+        "nvidia",
+        "rubin-cpx",
+        "hbm4",
+        "ai-infrastructure"
+    ],
+    "sources": [
+        {
+            "publisher": "Benzinga",
+            "url": "https://www.benzinga.com/markets/tech/26/09/61539040/nvidia-rubin-cpx-revived-ming-chi-kuo-major-redesign",
+            "publishedAt": "2026-09-01T00:00:00Z"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "id": "2026-09-11-anthropic-coxon-resigns-warning",
+    "title": "Former Anthropic researcher Jacob Coxon resigns, warns AI labs are 'gambling with our lives'",
+    "summary": "Jacob Coxon, a former Anthropic researcher focused on AI safety, publicly resigned this week and accused both Anthropic and OpenAI of 'gambling with our lives' by racing to deploy more capable models. His departure follows Anthropic's own report that it had blocked scientists who used Claude models in ways that could support biological weapons development, and lands as the EU's Enisa is being granted access to Anthropic's Mythos 5 system.",
+    "category": "ai",
+    "priority": 55,
+    "publishedAt": "2026-09-11T07:25:00+03:00",
+    "updatedAt": "2026-09-11T07:25:00+03:00",
+    "retrievedAt": "2026-09-11T07:25:00+03:00",
+    "author": {
+        "name": "Aizanoi News Desk"
+    },
+    "editor": {
+        "name": "Editorial Desk"
+    },
+    "image": null,
+    "corrections": [],
+    "tags": [
+        "anthropic",
+        "ai-safety",
+        "openai",
+        "claude"
+    ],
+    "sources": [
+        {
+            "publisher": "CBS News",
+            "url": "https://www.cbsnews.com/news/anthropic-researcher-jacob-coxon-ai-warning/",
+            "publishedAt": "2026-09-10T00:00:00Z"
+        }
+    ]
+}
