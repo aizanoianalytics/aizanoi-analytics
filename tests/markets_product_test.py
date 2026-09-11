@@ -147,6 +147,30 @@ class MarketsProductTests(unittest.TestCase):
         self.assertAlmostEqual(metrics["rangePosition52w"], 1.0)
         self.assertAlmostEqual(metrics["distanceFrom52wHigh"], 0.0)
 
+    def test_calendar_reference_prices_use_target_timestamp_and_tolerance(self):
+        candles = [
+            {"t": 1_700_000_000, "c": 100.0},
+            {"t": 1_700_086_400, "c": 101.0},
+            {"t": 1_700_345_600, "c": 110.0},
+        ]
+        self.assertEqual(mod.reference_close(candles, 1_700_345_600, 4 * 86400), 110.0)
+        self.assertEqual(mod.reference_close(candles, 1_700_259_200, 4 * 86400), 101.0)
+        self.assertIsNone(mod.reference_close(candles, 1_701_000_000, 4 * 86400))
+        self.assertIsNone(mod.reference_close([{"t": 1_700_000_000, "c": 100.0}], 1_700_259_200, 2 * 86400))
+
+    def test_summary_row_contains_calendar_price_references_and_returns(self):
+        base = 1_577_836_800
+        daily = [{"t": base + i * 86400, "c": 100.0 + i} for i in range(400)]
+        instrument = {"market":"us", "ticker":"AAA", "name":"Alpha", "exchange":"NASDAQ", "provider":"fintable", "providerSymbol":"AAA", "slug":"aaa"}
+        row = mod.summary_row(instrument, daily, "2026-09-10T00:00:00Z")
+        for key in ("latestPrice", "latestPriceAt", "previousPrice", "previousPriceAt", "price1w", "price1wAt", "price1m", "price1mAt", "price1y", "price1yAt", "price2y", "price2yAt", "price3y", "price3yAt", "price2019", "price2019At", "return1d", "return1w", "return1m", "return1y", "returnSince2019"):
+            self.assertIn(key, row)
+        self.assertEqual(row["latestPrice"], daily[-1]["c"])
+        self.assertEqual(row["latestPriceAt"], daily[-1]["t"])
+        self.assertAlmostEqual(row["return1d"], daily[-1]["c"] / daily[-2]["c"] - 1)
+        self.assertIsNone(row["price2y"])
+        self.assertIsNone(row["price2019"])
+
     def test_timestamp_returns_with_weekend_gaps(self):
         base = 1_700_000_000
         candles = [

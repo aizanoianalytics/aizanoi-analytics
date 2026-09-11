@@ -318,9 +318,55 @@ def write_json_atomic(path: Path, value: Any) -> None:
             os.unlink(temporary)
 
 
+def reference_close(candles: list[dict[str, Any]], target_ts: int | float, tolerance_seconds: int) -> float | None:
+    """Return the nearest valid completed close at or before a calendar target."""
+    candidates = [row for row in candles if isinstance(row.get("t"), (int, float))
+                  and row["t"] <= target_ts and isinstance(row.get("c"), (int, float))
+                  and math.isfinite(row["c"]) and row["c"] > 0]
+    if not candidates:
+        return None
+    row = max(candidates, key=lambda item: item["t"])
+    if target_ts - row["t"] > tolerance_seconds:
+        return None
+    return float(row["c"])
+
+
+def _reference_prices(daily: list[dict[str, Any]], *, annualization: int) -> dict[str, tuple[float | None, int | None]]:
+    valid = [row for row in daily if isinstance(row.get("t"), (int, float))
+             and isinstance(row.get("c"), (int, float)) and math.isfinite(row["c"]) and row["c"] > 0]
+    if not valid:
+        return {key: (None, None) for key in ("latest", "previous", "1w", "1m", "3m", "6m", "1y", "2y", "3y", "2019")}
+    tolerance = (2 if annualization == 365 else 4) * 86400
+    latest = valid[-1]
+    result: dict[str, tuple[float | None, int | None]] = {
+        "latest": (float(latest["c"]), int(latest["t"])),
+        "previous": (float(valid[-2]["c"]), int(valid[-2]["t"])) if len(valid) > 1 else (None, None),
+    }
+    for key, days in (("1w", 7), ("1m", 30), ("3m", 90), ("6m", 180), ("1y", 365), ("2y", 730), ("3y", 1095)):
+        target = int(latest["t"] - days * 86400)
+        value = reference_close(valid, target, tolerance)
+        matching = next((row for row in reversed(valid) if row["t"] <= target and row["c"] == value), None) if value is not None else None
+        result[key] = (value, int(matching["t"]) if matching else None)
+    first_2019 = next((row for row in valid if dt.datetime.fromtimestamp(row["t"], dt.timezone.utc).year == 2019), None)
+    result["2019"] = (float(first_2019["c"]), int(first_2019["t"])) if first_2019 else (None, None)
+    return result
+
+
 def summary_row(instrument: dict[str, str], daily: list[dict[str, Any]], updated_at: str, *, four_hour: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     annualization = 365 if instrument["market"] == "crypto" else 252
-    return {**instrument, **compute_metrics(daily, annualization=annualization, four_hour=four_hour), "updatedAt": updated_at}
+    metrics = compute_metrics(daily, annualization=annualization, four_hour=four_hour)
+    refs = _reference_prices(daily, annualization=annualization)
+    latest = refs["latest"][0]
+    fields: dict[str, Any] = {}
+    for name, (price, timestamp) in refs.items():
+        prefix = "latestPrice" if name == "latest" else "previousPrice" if name == "previous" else f"price{name}"
+        fields[prefix] = price
+        fields[f"{prefix}At"] = timestamp
+    horizons = (("1d", "previous"), ("1w", "1w"), ("1m", "1m"), ("3m", "3m"), ("6m", "6m"), ("1y", "1y"), ("2y", "2y"), ("3y", "3y"), ("Since2019", "2019"))
+    for suffix, ref_name in horizons:
+        reference = refs[ref_name][0]
+        fields[f"return{suffix}"] = ((latest / reference) - 1) if latest is not None and reference and reference > 0 else None
+    return {**instrument, **metrics, **fields, "updatedAt": updated_at}
 
 
 def _median(values: list[float]) -> float | None:
@@ -376,6 +422,7 @@ def enrich_market_rows(rows: list[dict[str, Any]], *, market: str) -> dict[str, 
     observed = [row for row in rows if isinstance(row.get("return1d"), (int, float))]
     above = lambda key: sum(row.get(key) is True for row in rows)
     returns30 = [float(row["return30d"]) for row in rows if isinstance(row.get("return30d"), (int, float))]
+    returns1y = [float(row["return1y"]) for row in rows if isinstance(row.get("return1y"), (int, float)) and math.isfinite(row["return1y"])]
     pulse = {
         "market": market, "instruments": len(rows), "observed1d": len(observed),
         "advancing": sum(row["return1d"] > 0 for row in observed),
@@ -387,7 +434,7 @@ def enrich_market_rows(rows: list[dict[str, Any]], *, market: str) -> dict[str, 
         "newHighs52w": sum(isinstance(row.get("rangePosition52w"), (int, float)) and row["rangePosition52w"] >= 0.995 for row in rows),
         "newLows52w": sum(isinstance(row.get("rangePosition52w"), (int, float)) and row["rangePosition52w"] <= 0.005 for row in rows),
         "medianReturn1d": _median([float(row["return1d"]) for row in observed]),
-        "medianReturn30d": _median(returns30),
+        "medianReturn30d": _median(returns30), "medianReturn1y": _median(returns1y),
         "returnSpread30d": max(returns30) - min(returns30) if returns30 else None,
         "benchmark": benchmarks,
     }
