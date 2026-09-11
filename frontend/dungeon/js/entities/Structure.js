@@ -37,7 +37,13 @@ export class Structure extends Phaser.Physics.Arcade.Sprite {
     this.scene.time.delayedCall(100, () => this.clearTint());
 
     if (this.hp <= 0) {
-      this.scene.dropLoot(this.x, this.y, 40, 30);
+      const isConqueror = this.scene.progression?.unlockedSkills?.has('sanctuary_conqueror');
+      const gold = isConqueror ? 90 : 40;
+      const xp = isConqueror ? 75 : 30;
+      this.scene.dropLoot(this.x, this.y, gold, xp);
+      if (isConqueror) {
+        this.scene.createFloatingText(this.x, this.y - 20, 'Kutsal Yıkım (+50🪙 +75⚡)!', '#f1c40f');
+      }
       this.destroy();
     }
   }

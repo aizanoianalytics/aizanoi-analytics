@@ -13,6 +13,14 @@
 set -euo pipefail
 umask 022
 
+# Exclusive process lock to serialize concurrent releases (R05)
+DEPLOY_LOCK="/tmp/aizanoi-deploy.lock"
+exec 200>"${DEPLOY_LOCK}"
+if ! flock -n 200; then
+  echo "FATAL: another deployment is currently in progress; refusing concurrent release" >&2
+  exit 1
+fi
+
 REPO="/opt/aizanoi-analytics-public"
 WEBROOT="/var/www/aizanoianalytics.com"
 RELEASE_ROOT="/var/www/aizanoianalytics.com-releases"
@@ -221,6 +229,25 @@ if [[ ! -s "${WEBROOT}/index.html" || ! -s "${WEBROOT}/release.js" || ! -s "${WE
 fi
 
 PROMOTED=1
+
+# Post-promotion HTTP health smoke check (R04)
+if command -v curl >/dev/null 2>&1; then
+  for base in "http://127.0.0.1" "http://localhost"; do
+    if curl -sfI "${base}/" >/dev/null 2>&1; then
+      echo "[deploy] running post-promotion HTTP health smoke against ${base}"
+      for path in "/" "/index.html" "/release.js" "/service-worker.js"; do
+        status=$(curl -s -o /dev/null -w "%{http_code}" "${base}${path}" || true)
+        if [[ "${status}" != "200" ]]; then
+          echo "FATAL: post-promotion HTTP health check failed for ${path} (status ${status})" >&2
+          exit 8
+        fi
+      done
+      echo "[deploy] HTTP health smoke passed"
+      break
+    fi
+  done
+fi
+
 printf '[deploy] deployed commit: %s\n' "${CURRENT_SHA}"
 printf '[deploy] active release: %s\n' "${FINAL}"
 printf '[deploy] rollback target: %s\n' "${ROLLBACK_TARGET}"

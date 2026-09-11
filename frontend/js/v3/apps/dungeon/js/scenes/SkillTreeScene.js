@@ -22,6 +22,7 @@ export class SkillTreeScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     createGlassButton(this, width / 2 + 250, height / 2 - 190, 60, 28, '✕ Kapat', () => {
+      if (this.gameScene) this.gameScene.scene.resume();
       this.scene.stop();
     });
 
@@ -40,7 +41,8 @@ export class SkillTreeScene extends Phaser.Scene {
       branch.skills.forEach((skill, sIdx) => {
         const sy = height / 2 - 100 + sIdx * 54;
         const isUnlocked = this.gameScene.progression.unlockedSkills.has(skill.id);
-        const canUnlock = this.gameScene.progression.level >= skill.requiredLevel;
+        const prereqMet = !skill.prerequisite || this.gameScene.progression.unlockedSkills.has(skill.prerequisite);
+        const canUnlock = (this.gameScene.progression.level >= skill.requiredLevel) && prereqMet;
 
         const box = this.add.rectangle(bx, sy, 175, 46, isUnlocked ? 0xdcfce7 : (canUnlock ? 0xfef9c3 : 0xf1f5f9), 0.9)
           .setStrokeStyle(1.5, isUnlocked ? 0x22c55e : (canUnlock ? 0xd4ac0d : 0x94a3b8));

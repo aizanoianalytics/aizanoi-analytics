@@ -14,6 +14,7 @@ export class ShopScene extends Phaser.Scene {
   create() {
     const { width, height } = this.cameras.main;
     this.gameScene = this.scene.get('GameScene');
+    if (this.gameScene) this.gameScene.scene.pause();
 
     // Panel
     const panel = this.add.rectangle(width / 2, height / 2, 560, 440, 0xffffff, 0.94)
@@ -26,6 +27,7 @@ export class ShopScene extends Phaser.Scene {
     // Kapat Butonu
     createGlassButton(this, width / 2 + 230, height / 2 - 190, 60, 28, '✕ Kapat', () => {
       audioManager.playClick();
+      if (this.gameScene) this.gameScene.scene.resume();
       this.scene.stop();
     });
 
@@ -56,8 +58,25 @@ export class ShopScene extends Phaser.Scene {
         fontSize: '10px', color: '#64748b',
       });
 
+      // Kuşanılma durumu ve Takas Fiyatı Kontrolü
+      const isEquipped = (
+        (item.type === 'weapon' && this.gameScene.inventory.equipped.weapon === item.id) ||
+        (item.type === 'armor' && this.gameScene.inventory.equipped.armor === item.id) ||
+        (item.type === 'accessory' && this.gameScene.inventory.equipped.accessories.includes(item.id))
+      );
+
+      let btnLabel = `${item.price} 🪙 Al`;
+      if (isEquipped) {
+        btnLabel = '✓ Kuşandı';
+      }
+
       // Satın Al Butonu
-      createGlassButton(this, width / 2 + 200, y, 90, 26, `${item.price} 🪙 Al`, () => {
+      createGlassButton(this, width / 2 + 200, y, 95, 26, btnLabel, () => {
+        if (isEquipped) {
+          this.gameScene.createFloatingText(this.gameScene.player.x, this.gameScene.player.y - 40, 'Bu eşya zaten kuşanılı!', '#f39c12');
+          return;
+        }
+
         if (this.gameScene.progression.spendGold(item.price)) {
           audioManager.playCoin();
           if (item.type === 'consumable') {
@@ -65,9 +84,12 @@ export class ShopScene extends Phaser.Scene {
             this.gameScene.createFloatingText(this.gameScene.player.x, this.gameScene.player.y - 40, `+${item.xpReward} Kıvılcım!`, '#a569bd');
             if (res.leveledUp) audioManager.playLevelUp();
           } else {
-            this.gameScene.inventory.equip(item);
-            this.gameScene.createFloatingText(this.gameScene.player.x, this.gameScene.player.y - 40, `${item.name} Kuşanıldı!`, '#27ae60');
+            const refund = this.gameScene.inventory.equip(item);
+            let msg = `${item.name} Kuşanıldı!`;
+            if (refund > 0) msg += ` (+${refund} 🪙 İade)`;
+            this.gameScene.createFloatingText(this.gameScene.player.x, this.gameScene.player.y - 40, msg, '#27ae60');
           }
+          if (this.gameScene) this.gameScene.scene.resume();
           this.scene.stop();
         } else {
           this.gameScene.createFloatingText(this.gameScene.player.x, this.gameScene.player.y - 40, 'Yetersiz Denarii!', '#e74c3c');

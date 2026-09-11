@@ -415,23 +415,27 @@ export class AirportTrafficSystem {
 
   /* ── 6. Master Update Loop ──────────────────────────────── */
   update(dt, isNight = false, playerPos = null) {
-    this.time += dt;
+    try {
+      this.time += dt;
 
-    this._updatePushback(this.time);
-    this._updateTaxiing(dt);
-    this._updateTakeoff(this.time);
-    this._updateLanding(this.time);
+      this._updatePushback(this.time);
+      this._updateTaxiing(dt);
+      this._updateTakeoff(this.time);
+      this._updateLanding(this.time);
 
-    // Update aviation navigation and strobe lights on all traffic entities
-    for (const e of this.entities) {
-      if (typeof e.group?.userData?.updateLights === 'function') {
-        e.group.userData.updateLights(this.time, isNight);
+      // Update aviation navigation and strobe lights on all traffic entities
+      for (const e of this.entities) {
+        if (typeof e.group?.userData?.updateLights === 'function') {
+          e.group.userData.updateLights(this.time, isNight);
+        }
       }
-    }
 
-    // Protect player collision boundaries
-    if (playerPos) {
-      this._handlePlayerClearance(playerPos);
+      // Protect player collision boundaries
+      if (playerPos) {
+        this._handlePlayerClearance(playerPos);
+      }
+    } catch (err) {
+      console.warn('[AircraftSystem] Non-fatal traffic update glitch:', err);
     }
   }
 

@@ -180,11 +180,11 @@ export class VegetationSystem {
     this.shrubMesh.count++;
   }
 
-  populateCity(regions, buildings, streets) {
+  populateCity(regions = [], buildings = [], streets = []) {
     this.init();
 
     const isNearBuilding = (x, z, pad = 8) => {
-      for (const b of buildings) {
+      for (const b of (buildings || [])) {
         const halfW = (b.w || 12) / 2 + pad;
         const halfD = (b.d || 12) / 2 + pad;
         if (x >= b.x - halfW && x <= b.x + halfW && z >= b.z - halfD && z <= b.z + halfD) {
@@ -194,57 +194,91 @@ export class VegetationSystem {
       return false;
     };
 
-    // 1. Academy Grove (Dense ancient olive orchard)
-    for (let i = 0; i < (this.isMobile ? 40 : 85); i++) {
-      const gx = 500 + (Math.random() - 0.5) * 110;
-      const gz = 600 + (Math.random() - 0.5) * 75;
-      if (!isNearBuilding(gx, gz, 4)) {
-        this.addOlive(gx, gz, 0.9 + Math.random() * 0.4);
-      }
-    }
+    if (regions && regions.length > 0) {
+      // 1. Procedurally distribute vegetation within defined city regions
+      for (const reg of regions) {
+        const rw = reg.w || 200;
+        const rd = reg.d || 200;
+        const area = rw * rd;
+        const baseBudget = Math.max(6, Math.min(55, Math.round(area / 3800)));
+        const count = this.isMobile ? Math.max(3, Math.round(baseBudget * 0.5)) : baseBudget;
 
-    // 2. Kerameikos Cemetery (Cypress trees guarding tombs)
-    for (let i = 0; i < (this.isMobile ? 25 : 55); i++) {
-      const cx = 430 + (Math.random() - 0.5) * 90;
-      const cz = 210 + (Math.random() - 0.5) * 120;
-      if (!isNearBuilding(cx, cz, 4)) {
-        this.addCypress(cx, cz, 0.85 + Math.random() * 0.4);
-      }
-    }
+        const tag = `${reg.id || ''} ${reg.name || ''} ${reg.note || ''}`.toLowerCase();
+        const isWater = tag.includes('river') || tag.includes('quay') || tag.includes('spring') || tag.includes('bath');
+        const isSacred = tag.includes('sanctuary') || tag.includes('temple') || tag.includes('cemetery');
 
-    // 3. Ilissos River Banks & Kallirrhoe Spring (Figs, shrubs & plane trees)
-    for (let i = 0; i < (this.isMobile ? 35 : 70); i++) {
-      const t = Math.random();
-      const rx = -380 + t * 280 + (Math.random() - 0.5) * 30;
-      const rz = 140 + t * 60 + (Math.random() - 0.5) * 30;
-      if (!isNearBuilding(rx, rz, 4)) {
-        if (Math.random() > 0.4) {
-          this.addFig(rx, rz, 0.8 + Math.random() * 0.4);
-        } else {
-          this.addShrub(rx, rz, 0.7 + Math.random() * 0.6);
+        for (let i = 0; i < count; i++) {
+          const gx = reg.x + (Math.random() - 0.5) * (rw * 0.85);
+          const gz = reg.z + (Math.random() - 0.5) * (rd * 0.85);
+
+          if (!isNearBuilding(gx, gz, 6)) {
+            if (isWater) {
+              if (Math.random() > 0.45) {
+                this.addFig(gx, gz, 0.8 + Math.random() * 0.4);
+              } else {
+                this.addShrub(gx, gz, 0.7 + Math.random() * 0.5);
+              }
+            } else if (isSacred) {
+              if (Math.random() > 0.35) {
+                this.addCypress(gx, gz, 0.85 + Math.random() * 0.4);
+              } else {
+                this.addOlive(gx, gz, 0.8 + Math.random() * 0.35);
+              }
+            } else {
+              const roll = Math.random();
+              if (roll < 0.55) {
+                this.addOlive(gx, gz, 0.75 + Math.random() * 0.4);
+              } else if (roll < 0.75) {
+                this.addShrub(gx, gz, 0.65 + Math.random() * 0.6);
+              } else if (roll < 0.90) {
+                this.addCypress(gx, gz, 0.8 + Math.random() * 0.35);
+              } else {
+                this.addFig(gx, gz, 0.75 + Math.random() * 0.35);
+              }
+            }
+          }
         }
       }
-    }
 
-    // 4. Pnyx & Areopagus slopes (Dry shrubs & rocky olive trees)
-    for (let i = 0; i < (this.isMobile ? 30 : 65); i++) {
-      const px = -260 + (Math.random() - 0.5) * 140;
-      const pz = -120 + (Math.random() - 0.5) * 160;
-      if (!isNearBuilding(px, pz, 6)) {
-        if (Math.random() > 0.5) {
-          this.addOlive(px, pz, 0.75 + Math.random() * 0.3);
-        } else {
-          this.addShrub(px, pz, 0.6 + Math.random() * 0.7);
+      // 2. Add trees along major streets
+      if (streets && streets.length > 0) {
+        for (const street of streets) {
+          if (!street.points || street.points.length < 2) continue;
+          const sWidth = street.width || 10;
+          for (let p = 0; p < street.points.length - 1; p++) {
+            const p1 = street.points[p];
+            const p2 = street.points[p + 1];
+            const mx = (p1[0] + p2[0]) / 2;
+            const mz = (p1[1] + p2[1]) / 2;
+            const dx = p2[0] - p1[0];
+            const dz = p2[1] - p1[1];
+            const len = Math.hypot(dx, dz) || 1;
+            const nx = -dz / len;
+            const nz = dx / len;
+            const offsetDist = sWidth / 2 + 3.0 + Math.random() * 2.0;
+
+            for (const side of [-1, 1]) {
+              const tx = mx + nx * offsetDist * side + (Math.random() - 0.5) * 4;
+              const tz = mz + nz * offsetDist * side + (Math.random() - 0.5) * 4;
+              if (!isNearBuilding(tx, tz, 5)) {
+                if (Math.random() > 0.4) {
+                  this.addOlive(tx, tz, 0.8 + Math.random() * 0.3);
+                } else {
+                  this.addCypress(tx, tz, 0.85 + Math.random() * 0.3);
+                }
+              }
+            }
+          }
         }
       }
-    }
-
-    // 5. Civic-core borders and street corners
-    for (let i = 0; i < (this.isMobile ? 20 : 45); i++) {
-      const ax = 110 + (Math.random() - 0.5) * 260;
-      const az = 10 + (Math.random() - 0.5) * 220;
-      if (!isNearBuilding(ax, az, 10)) {
-        this.addOlive(ax, az, 0.8 + Math.random() * 0.35);
+    } else {
+      // General fallback if no regions provided
+      for (let i = 0; i < (this.isMobile ? 50 : 120); i++) {
+        const x = (Math.random() - 0.5) * 600;
+        const z = (Math.random() - 0.5) * 600;
+        if (!isNearBuilding(x, z, 6)) {
+          this.addOlive(x, z, 0.8 + Math.random() * 0.4);
+        }
       }
     }
 

@@ -21,7 +21,9 @@ export class InventoryScene extends Phaser.Scene {
       fontSize: '18px', color: '#1e293b', fontStyle: 'bold',
     }).setOrigin(0.5);
 
+    if (this.gameScene) this.gameScene.scene.pause();
     createGlassButton(this, width / 2 + 230, height / 2 - 180, 60, 28, '✕ Kapat', () => {
+      if (this.gameScene) this.gameScene.scene.resume();
       this.scene.stop();
     });
 

@@ -106,7 +106,7 @@ export function wilderRsi(values, size = 14) {
 }
 
 export function indicatorSeries(candles) {
-  const values = candles.map(row => Number(row.c));
+  const values = candles.map(row => Number.isFinite(row?.c) ? Number(row.c) : (row?.c != null && row.c !== '' && !isNaN(Number(row.c)) ? Number(row.c) : null));
   const sma = (size) => rolling(values, size, mean);
   const sma20 = sma(20);
   const deviation20 = rolling(values, 20, standardDeviation);
@@ -163,8 +163,8 @@ export function pickMomentumRows(rows) {
         : b.eligibility.negativeCount - a.eligibility.negativeCount;
       if (countDelta) return countDelta;
       const yDelta = a.eligibility.eligibility === 'strong'
-        ? (b.row.return1y || -Infinity) - (a.row.return1y || -Infinity)
-        : (a.row.return1y || Infinity) - (b.row.return1y || Infinity);
+        ? (Number.isFinite(b.row.return1y) ? b.row.return1y : -Infinity) - (Number.isFinite(a.row.return1y) ? a.row.return1y : -Infinity)
+        : (Number.isFinite(a.row.return1y) ? a.row.return1y : Infinity) - (Number.isFinite(b.row.return1y) ? b.row.return1y : Infinity);
       if (yDelta) return yDelta;
       return String(a.row.ticker).localeCompare(String(b.row.ticker));
     })

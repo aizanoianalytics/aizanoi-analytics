@@ -435,18 +435,76 @@ export function buildBuilding(b) {
 export function buildWall(b) {
     const group = new THREE.Group();
     group.userData.buildingId = b.id;
-    const box = new THREE.Mesh(new THREE.BoxGeometry(b.w || 10, 8, b.d || 4), getMaterial('limestone'));
-    box.position.y = 4;
-    group.add(box);
+    const w = b.w || 10;
+    const h = b.h || 8;
+    const d = b.d || 4;
+
+    // Heavy ashlar stone curtain wall
+    const wallMesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), getMaterial('limestone'));
+    wallMesh.position.y = h / 2;
+    wallMesh.castShadow = true;
+    wallMesh.receiveShadow = true;
+    group.add(wallMesh);
+
+    // Parapet Walkway with Crenellations (merlons) along outer edge
+    const merlonWidth = 1.2;
+    const merlonHeight = 1.4;
+    const merlonCount = Math.max(2, Math.floor(w / 3.0));
+    for (let i = 0; i < merlonCount; i++) {
+        const mx = -w / 2 + (i + 0.5) * (w / merlonCount);
+        const merlon = new THREE.Mesh(new THREE.BoxGeometry(merlonWidth, merlonHeight, 0.6), getMaterial('limestone'));
+        merlon.position.set(mx, h + merlonHeight / 2, -d / 2 + 0.3);
+        merlon.castShadow = true;
+        group.add(merlon);
+    }
+
     return group;
 }
 
 export function buildGate(b) {
     const group = new THREE.Group();
     group.userData.buildingId = b.id;
-    const box = new THREE.Mesh(new THREE.BoxGeometry(b.w || 15, 12, b.d || 8), getMaterial('limestone'));
-    box.position.y = 6;
-    group.add(box);
+    const w = b.w || 25;
+    const h = b.h || 12;
+    const d = b.d || 16;
+
+    // Monumental Dipylon Gateway with Twin Defensive Towers
+    const towerW = w * 0.32;
+    const towerD = d;
+    const towerH = h + 3.0;
+
+    // Left Tower
+    const leftTower = new THREE.Mesh(new THREE.BoxGeometry(towerW, towerH, towerD), getMaterial('limestone'));
+    leftTower.position.set(-w / 2 + towerW / 2, towerH / 2, 0);
+    leftTower.castShadow = true;
+    leftTower.receiveShadow = true;
+    group.add(leftTower);
+
+    // Right Tower
+    const rightTower = new THREE.Mesh(new THREE.BoxGeometry(towerW, towerH, towerD), getMaterial('limestone'));
+    rightTower.position.set(w / 2 - towerW / 2, towerH / 2, 0);
+    rightTower.castShadow = true;
+    rightTower.receiveShadow = true;
+    group.add(rightTower);
+
+    // Central Arched Passage Lintel & Portal Wall
+    const portalW = w - (towerW * 2);
+    const portalH = h * 0.85;
+    const portalWall = new THREE.Mesh(new THREE.BoxGeometry(portalW, h - portalH, d * 0.8), getMaterial('limestone'));
+    portalWall.position.set(0, portalH + (h - portalH) / 2, 0);
+    portalWall.castShadow = true;
+    group.add(portalWall);
+
+    // Tower Battlements (Merlons atop both towers)
+    for (const tx of [-w / 2 + towerW / 2, w / 2 - towerW / 2]) {
+        for (let mz = -towerD / 2 + 1; mz <= towerD / 2 - 1; mz += 2.5) {
+            const merlon = new THREE.Mesh(new THREE.BoxGeometry(0.8, 1.2, 1.2), getMaterial('limestone'));
+            merlon.position.set(tx, towerH + 0.6, mz);
+            merlon.castShadow = true;
+            group.add(merlon);
+        }
+    }
+
     return group;
 }
 

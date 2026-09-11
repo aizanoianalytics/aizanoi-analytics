@@ -23,29 +23,6 @@
     </div>
   </div>
 
-  <script type="module">
-    import { launchDungeonGame } from './js/main.js';
-
-    const container = document.getElementById('game-container');
-    launchDungeonGame(container).then(() => {
-      console.log('[Aizanoi Dungeon] Standalone başlatıldı.');
-    }).catch(err => {
-      console.error('[Aizanoi Dungeon] Başlatma hatası:', err);
-    });
-
-    // Orientation checker for mobile
-    function checkOrientation() {
-      const warning = document.getElementById('orientation-warning');
-      const isMobile = /Android|iPhone|iPad|iPod|touch/i.test(navigator.userAgent) || (window.innerWidth < 840 && 'ontouchstart' in window);
-      if (isMobile && window.innerHeight > window.innerWidth) {
-        warning.hidden = false;
-      } else {
-        warning.hidden = true;
-      }
-    }
-    window.addEventListener('resize', checkOrientation);
-    window.addEventListener('orientationchange', checkOrientation);
-    checkOrientation();
-  </script>
+  <script type="module" src="js/standalone.js"></script>
 </body>
 </html>

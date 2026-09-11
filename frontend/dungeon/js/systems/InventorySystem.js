@@ -125,7 +125,30 @@ export class InventorySystem {
   load() {
     try {
       const raw = localStorage.getItem('aizanoi_inventory_v1');
-      if (raw) this.equipped = Object.assign(this.equipped, JSON.parse(raw));
-    } catch (e) {}
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') {
+          if (parsed.weapon && typeof parsed.weapon === 'string') this.equipped.weapon = parsed.weapon;
+          if (parsed.armor && typeof parsed.armor === 'string') this.equipped.armor = parsed.armor;
+          if (Array.isArray(parsed.accessories)) {
+            this.equipped.accessories = [parsed.accessories[0] || null, parsed.accessories[1] || null];
+          } else {
+            this.equipped.accessories = [null, null];
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('[InventorySystem] Kayit yukleme hatasi, varsayilana donuldu:', e);
+      this.equipped = { weapon: 'chiseled_marble', armor: 'linen_tunic', accessories: [null, null] };
+    }
+  }
+
+  reset() {
+    this.equipped = {
+      weapon: 'chiseled_marble',
+      armor: 'linen_tunic',
+      accessories: [null, null],
+    };
+    this.save();
   }
 }

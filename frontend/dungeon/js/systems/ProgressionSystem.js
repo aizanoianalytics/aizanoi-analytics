@@ -90,16 +90,35 @@ export class ProgressionSystem {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
       const data = JSON.parse(raw);
-      this.level = data.level || 1;
-      this.currentXp = data.currentXp || 0;
-      this.nextXp = xpForLevel(this.level);
-      this.gold = data.gold || 0;
-      this.unlockedSkills = new Set(data.unlockedSkills || []);
-      this.highestWave = data.highestWave || 1;
-      this.currentChapter = data.currentChapter || 1;
-      this.stats = Object.assign(this.stats, data.stats || {});
+      if (data && typeof data === 'object') {
+        this.level = Math.max(1, Math.min(100, Number(data.level) || 1));
+        this.currentXp = Math.max(0, Number(data.currentXp) || 0);
+        this.nextXp = xpForLevel(this.level);
+        this.gold = Math.max(0, Number(data.gold) || 0);
+        this.unlockedSkills = new Set(Array.isArray(data.unlockedSkills) ? data.unlockedSkills : []);
+        this.highestWave = Math.max(1, Number(data.highestWave) || 1);
+        this.currentChapter = Math.max(1, Math.min(10, Number(data.currentChapter) || 1));
+        this.stats = Object.assign(this.stats, (data.stats && typeof data.stats === 'object') ? data.stats : {});
+      }
     } catch (e) {
-      console.warn('[ProgressionSystem] LocalStorage okuma hatası:', e);
+      console.warn('[ProgressionSystem] LocalStorage okuma hatası, varsayilana donuldu:', e);
+      this.reset();
     }
+  }
+
+  reset() {
+    this.level = 1;
+    this.currentXp = 0;
+    this.nextXp = xpForLevel(1);
+    this.gold = 0;
+    this.unlockedSkills = new Set();
+    this.highestWave = 1;
+    this.currentChapter = 1;
+    this.stats = {
+      enemiesKilled: 0,
+      bossesDefeated: 0,
+      totalGoldCollected: 0,
+    };
+    this.save();
   }
 }

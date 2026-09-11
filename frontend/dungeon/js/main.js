@@ -1,21 +1,63 @@
 // js/main.js
 // Aizanoi Dungeon — Phaser 3 Konfigürasyonu ve Çift-Çalışma Başlatıcısı
 
-import { BootScene } from './scenes/BootScene.js';
-import { MenuScene } from './scenes/MenuScene.js';
-import { GameScene } from './scenes/GameScene.js';
-import { UIScene } from './scenes/UIScene.js';
-import { ShopScene } from './scenes/ShopScene.js';
-import { SkillTreeScene } from './scenes/SkillTreeScene.js';
-import { InventoryScene } from './scenes/InventoryScene.js';
-import { GameOverScene } from './scenes/GameOverScene.js';
-import { VictoryScene } from './scenes/VictoryScene.js';
+async function ensurePhaser() {
+  if (typeof Phaser !== 'undefined') return window.Phaser;
+
+  return new Promise((resolve, reject) => {
+    let script = document.querySelector('script[data-phaser]');
+    if (!script) {
+      script = document.createElement('script');
+      script.dataset.phaser = 'true';
+      script.src = '/vendor/phaser.min.js';
+      document.head.appendChild(script);
+    }
+    if (typeof Phaser !== 'undefined') {
+      resolve(window.Phaser); return;
+    }
+    script.addEventListener('load', () => resolve(window.Phaser));
+    script.addEventListener('error', () => {
+      // Fallback relative vendor path
+      const fallback = document.createElement('script');
+      fallback.src = new URL('../../../../../vendor/phaser.min.js', import.meta.url).href;
+      fallback.onload = () => resolve(window.Phaser);
+      fallback.onerror = (err) => reject(new Error('Phaser runtime could not be loaded from local vendor.'));
+      document.head.appendChild(fallback);
+    });
+  });
+}
 
 /**
- * Phaser 3 Oyun Kurulum Konfigürasyonu
+ * Oyunu başlatan fonksiyon (Hem standalone hem AizanoiOS mount contract)
+ * @param {HTMLElement} container - Canvas'ın bağlanacağı DOM elemanı
+ * @returns {Promise<Phaser.Game>}
  */
-export function createGameConfig(container) {
-  return {
+export async function launchDungeonGame(container) {
+  await ensurePhaser();
+
+  const [
+    { BootScene },
+    { MenuScene },
+    { GameScene },
+    { UIScene },
+    { ShopScene },
+    { SkillTreeScene },
+    { InventoryScene },
+    { GameOverScene },
+    { VictoryScene }
+  ] = await Promise.all([
+    import('./scenes/BootScene.js'),
+    import('./scenes/MenuScene.js'),
+    import('./scenes/GameScene.js'),
+    import('./scenes/UIScene.js'),
+    import('./scenes/ShopScene.js'),
+    import('./scenes/SkillTreeScene.js'),
+    import('./scenes/InventoryScene.js'),
+    import('./scenes/GameOverScene.js'),
+    import('./scenes/VictoryScene.js'),
+  ]);
+
+  const config = {
     type: Phaser.AUTO,
     width: 960,
     height: 640,
@@ -35,7 +77,7 @@ export function createGameConfig(container) {
       },
     },
     input: {
-      activePointers: 3, // Çoklu dokunmatik (joystick + saldırı + menü)
+      activePointers: 3,
     },
     scene: [
       BootScene,
@@ -49,37 +91,21 @@ export function createGameConfig(container) {
       VictoryScene,
     ],
   };
-}
 
-/**
- * Oyunu başlatan fonksiyon (Hem standalone hem AizanoiOS mount contract)
- * @param {HTMLElement} container - Canvas'ın bağlanacağı DOM elemanı
- * @returns {Promise<Phaser.Game>}
- */
-export async function launchDungeonGame(container) {
-  // Phaser global yüklenmiş mi kontrolü
-  if (typeof Phaser === 'undefined') {
-    await new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js';
-      script.onload = resolve;
-      script.onerror = () => reject(new Error('Phaser CDN yüklenemedi.'));
-      document.head.appendChild(script);
-    });
-  }
-
-  const config = createGameConfig(container);
   const game = new Phaser.Game(config);
   return game;
 }
 
 /**
- * Pencere kapatıldığında çağrılan temizlik fonksiyonu (Teardown)
+ * Oyunu güvenli bir şekilde kapatıp kaynakları serbest bırakan fonksiyon
  * @param {Phaser.Game} gameInstance
  */
 export function stopDungeonGame(gameInstance) {
   if (gameInstance) {
-    gameInstance.destroy(true);
-    console.log('[Aizanoi Dungeon] Phaser instance başarıyla imha edildi.');
+    try {
+      gameInstance.destroy(true);
+    } catch (err) {
+      console.warn('[Aizanoi Dungeon] Error destroying game instance:', err);
+    }
   }
 }

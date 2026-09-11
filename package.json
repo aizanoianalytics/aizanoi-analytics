@@ -4,5 +4,6 @@
   "type":"module",
   "version":"0.0.0",
   "engines":{"node":">=22"},
+  "scripts":{"test":"node --test tests/*.test.mjs","qa:fast":"node --test tests/*.test.mjs","qa:browser":"node tests/cross-browser-critical.mjs","preflight":"node --version && python --version"},
   "devDependencies":{"axe-core":"4.13.0","lighthouse":"13.4.1","playwright":"1.62.1"}
 }

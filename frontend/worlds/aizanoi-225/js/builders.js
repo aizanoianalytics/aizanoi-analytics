@@ -89,12 +89,15 @@ export function buildTempleOfZeus(b) {
   group.add(entablature);
 
   const pedH = d * 0.22;
-  const pediment = createPediment(w, d, pedH, 'marble');
+  // Aizanoi Temple of Zeus: 8x15 pseudodipteral entrance facade is on the short (d) side
+  const pediment = createPediment(d, w, pedH, 'marble');
+  pediment.rotation.y = Math.PI / 2;
   pediment.position.set(0, entY + colH * 0.15, 0);
   group.add(pediment);
 
   // Roof
-  const roof = createPediment(w + 1, d + 1, pedH + 0.3, 'roofTile');
+  const roof = createPediment(d + 1, w + 1, pedH + 0.3, 'roofTile');
+  roof.rotation.y = Math.PI / 2;
   roof.position.set(0, entY + colH * 0.15 - 0.1, 0);
   group.add(roof);
 
@@ -310,10 +313,246 @@ export function buildColonnadedStreet(b) {
 
 /* ── Master Dispatcher for Aizanoi ────────────────────────── */
 
+/* ── 6. Agora & Propylon (Monumental Civic Market & Gateway) ── */
+
+export function buildAgoraPropylon(b) {
+  const group = new THREE.Group();
+  group.userData.buildingId = b.id;
+
+  const w = b.w || 98;
+  const d = b.d || 82;
+  const h = b.h || 8;
+
+  // Central Open Peristyle Paved Plaza
+  const floorGeo = new THREE.BoxGeometry(w, 0.4, d);
+  const floorMesh = new THREE.Mesh(floorGeo, getMaterial('travertine'));
+  floorMesh.position.y = 0.2;
+  floorMesh.receiveShadow = true;
+  group.add(floorMesh);
+
+  // Outer Stoa Porticos (North, East, South walls)
+  const wallThick = 1.2;
+  const porticoDepth = 8.0;
+
+  // North Stoa Back Wall
+  const nWall = new THREE.Mesh(new THREE.BoxGeometry(w, h, wallThick), getMaterial('limestone'));
+  nWall.position.set(0, h / 2, -d / 2 + wallThick / 2);
+  nWall.castShadow = true;
+  group.add(nWall);
+
+  // South Stoa Back Wall
+  const sWall = new THREE.Mesh(new THREE.BoxGeometry(w, h, wallThick), getMaterial('limestone'));
+  sWall.position.set(0, h / 2, d / 2 - wallThick / 2);
+  sWall.castShadow = true;
+  group.add(sWall);
+
+  // East Stoa Back Wall
+  const eWall = new THREE.Mesh(new THREE.BoxGeometry(wallThick, h, d), getMaterial('limestone'));
+  eWall.position.set(w / 2 - wallThick / 2, h / 2, 0);
+  eWall.castShadow = true;
+  group.add(eWall);
+
+  // Stoa Roofs (pitched terracotta)
+  const roofMat = getMaterial('roofTile');
+  const nRoof = new THREE.Mesh(new THREE.BoxGeometry(w, 0.4, porticoDepth), roofMat);
+  nRoof.position.set(0, h + 0.2, -d / 2 + porticoDepth / 2);
+  nRoof.castShadow = true;
+  group.add(nRoof);
+
+  const sRoof = new THREE.Mesh(new THREE.BoxGeometry(w, 0.4, porticoDepth), roofMat);
+  sRoof.position.set(0, h + 0.2, d / 2 - porticoDepth / 2);
+  sRoof.castShadow = true;
+  group.add(sRoof);
+
+  // Colonnade columns facing inner courtyard
+  const colCountX = 8;
+  for (let i = 0; i < colCountX; i++) {
+    const colX = -w / 2 + 10 + (i * (w - 20)) / (colCountX - 1);
+    const colN = createCorinthianColumn(h, 0.45, 'marble');
+    colN.position.set(colX, 0, -d / 2 + porticoDepth);
+    group.add(colN);
+
+    const colS = createCorinthianColumn(h, 0.45, 'marble');
+    colS.position.set(colX, 0, d / 2 - porticoDepth);
+    group.add(colS);
+  }
+
+  // Monumental Propylon Gateway (Western Entrance Approach)
+  const propylonW = 20.0;
+  const propylonD = 10.0;
+  const propylonH = h + 2.0;
+
+  // Propylon Stepped Approach
+  const steps = createSteps(propylonW + 4, propylonD + 4, 5, 0.3);
+  steps.position.set(-w / 2, 0, 0);
+  group.add(steps);
+
+  // 4 Monumental Corinthian Columns at West Facade
+  for (let c = 0; c < 4; c++) {
+    const colZ = -propylonD / 2 + 2.0 + (c * (propylonD - 4.0)) / 3;
+    const col = createCorinthianColumn(propylonH, 0.55, 'marble');
+    col.position.set(-w / 2 - 2, 1.5, colZ);
+    group.add(col);
+  }
+
+  // Propylon Entablature & Pediment
+  const ped = createPediment(propylonD + 2, 2.0, 3.2, 'marble');
+  ped.position.set(-w / 2 - 2, propylonH + 1.5, 0);
+  ped.rotation.y = Math.PI / 2;
+  group.add(ped);
+
+  return group;
+}
+
+/* ── 7. Great Bath–Palaestra (Imperial Thermae & Gymnasium) ── */
+
+export function buildGreatBath(b) {
+  const group = new THREE.Group();
+  group.userData.buildingId = b.id;
+
+  const w = b.w || 110;
+  const d = b.d || 145;
+  const h = b.h || 18;
+
+  // Main Caldarium & Tepidarium Vaulted Thermal Halls (Northern half)
+  const hallW = w * 0.85;
+  const hallD = d * 0.5;
+  const hallH = h;
+
+  const hallBody = new THREE.Mesh(
+    new THREE.BoxGeometry(hallW, hallH, hallD),
+    getMaterial('travertine')
+  );
+  hallBody.position.set(0, hallH / 2, -d * 0.22);
+  hallBody.castShadow = true;
+  hallBody.receiveShadow = true;
+  group.add(hallBody);
+
+  // Barrel Vaulted Roofs over Thermal Halls
+  const vaultRadius = hallW * 0.25;
+  for (let v = -1; v <= 1; v++) {
+    const vaultGeo = new THREE.CylinderGeometry(vaultRadius, vaultRadius, hallD, 32, 1, false, 0, Math.PI);
+    const vaultMesh = new THREE.Mesh(vaultGeo, getMaterial('roofTile'));
+    vaultMesh.rotation.z = Math.PI / 2;
+    vaultMesh.rotation.y = Math.PI / 2;
+    vaultMesh.position.set(v * vaultRadius * 1.5, hallH, -d * 0.22);
+    vaultMesh.castShadow = true;
+    group.add(vaultMesh);
+  }
+
+  // Southern Open Palaestra (Athletic Peristyle Court)
+  const palaestraW = w * 0.9;
+  const palaestraD = d * 0.42;
+  const palaestraFloor = new THREE.Mesh(
+    new THREE.BoxGeometry(palaestraW, 0.3, palaestraD),
+    getMaterial('ground')
+  );
+  palaestraFloor.position.set(0, 0.15, d * 0.26);
+  palaestraFloor.receiveShadow = true;
+  group.add(palaestraFloor);
+
+  // Palaestra Surrounding Colonnade
+  const pCols = 10;
+  for (let i = 0; i < pCols; i++) {
+    const cx = -palaestraW / 2 + 5 + (i * (palaestraW - 10)) / (pCols - 1);
+    const colS = createCorinthianColumn(8, 0.4, 'marble');
+    colS.position.set(cx, 0, d * 0.26 + palaestraD / 2 - 2);
+    group.add(colS);
+
+    const colW = createCorinthianColumn(8, 0.4, 'marble');
+    colW.position.set(-palaestraW / 2 + 2, 0, d * 0.26 - palaestraD / 2 + 4 + (i * (palaestraD - 8)) / (pCols - 1));
+    group.add(colW);
+
+    const colE = createCorinthianColumn(8, 0.4, 'marble');
+    colE.position.set(palaestraW / 2 - 2, 0, d * 0.26 - palaestraD / 2 + 4 + (i * (palaestraD - 8)) / (pCols - 1));
+    group.add(colE);
+  }
+
+  return group;
+}
+
+/* ── 8. Mosaic Bath (Thermae with Decorated Satyr Mosaics) ──── */
+
+export function buildMosaicBath(b) {
+  const group = new THREE.Group();
+  group.userData.buildingId = b.id;
+
+  const w = b.w || 50;
+  const d = b.d || 44;
+  const h = b.h || 12;
+
+  // Hypocaust Raised Foundation Base
+  const hypoH = 1.5;
+  const hypoMesh = new THREE.Mesh(new THREE.BoxGeometry(w, hypoH, d), getMaterial('romanBrick'));
+  hypoMesh.position.y = hypoH / 2;
+  hypoMesh.receiveShadow = true;
+  group.add(hypoMesh);
+
+  // Mosaic Terrace Floor
+  const mosaicFloor = new THREE.Mesh(new THREE.BoxGeometry(w - 2, 0.2, d - 2), getMaterial('travertine'));
+  mosaicFloor.position.y = hypoH + 0.1;
+  mosaicFloor.receiveShadow = true;
+  group.add(mosaicFloor);
+
+  // Main Bath Enclosure
+  const bathH = h - hypoH;
+  const mainHall = new THREE.Mesh(new THREE.BoxGeometry(w * 0.7, bathH, d * 0.7), getMaterial('travertine'));
+  mainHall.position.set(0, hypoH + bathH / 2, 0);
+  mainHall.castShadow = true;
+  group.add(mainHall);
+
+  // Pitched Terracotta Roof
+  const roof = new THREE.Mesh(new THREE.BoxGeometry(w * 0.75, 0.5, d * 0.75), getMaterial('roofTile'));
+  roof.position.set(0, h + 0.25, 0);
+  roof.castShadow = true;
+  group.add(roof);
+
+  return group;
+}
+
+/* ── 9. Bouleuterion / Odeon (Covered Semicircular Chamber) ──── */
+
+export function buildOdeon(b) {
+  const group = new THREE.Group();
+  group.userData.buildingId = b.id;
+
+  const w = b.w || 48;
+  const d = b.d || 45;
+  const h = b.h || 9;
+
+  // Outer Rectangular Enclosure Wall
+  const wallMesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), getMaterial('limestone'));
+  wallMesh.position.y = h / 2;
+  wallMesh.castShadow = true;
+  group.add(wallMesh);
+
+  // Interior Tiered Semicircular Council Seating
+  const seatingRadius = Math.min(w, d) * 0.4;
+  const seating = createCaveaSeating(seatingRadius, 6, Math.PI, 'limestone');
+  seating.position.set(0, 0.2, 0);
+  seating.rotation.y = Math.PI;
+  group.add(seating);
+
+  // Covered Timber Truss Hipped Roof
+  const roof = new THREE.Mesh(new THREE.ConeGeometry(Math.max(w, d) * 0.6, 4.0, 4), getMaterial('roofTile'));
+  roof.position.y = h + 2.0;
+  roof.rotation.y = Math.PI / 4;
+  roof.castShadow = true;
+  group.add(roof);
+
+  return group;
+}
+
+/* ── Master Dispatcher for Aizanoi ────────────────────────── */
+
 export function buildStructure(building) {
   if (building.id === 'temple') return buildTempleOfZeus(building);
   if (building.id === 'macellum') return buildMacellum(building);
   if (building.id === 'colonnaded-street') return buildColonnadedStreet(building);
+  if (building.id === 'agora' || building.type === 'forum') return buildAgoraPropylon(building);
+  if (building.id === 'greatbath') return buildGreatBath(building);
+  if (building.id === 'mosaicbath') return buildMosaicBath(building);
+  if (building.id === 'odeon') return buildOdeon(building);
   if (building.type === 'theatre' || building.type === 'stadium') return buildTheatreStadium(building);
   if (building.type === 'bridge') return buildPenkalasBridge(building);
   if (building.type === 'insula') return createRomanInsula(building.w || 16, building.d || 14, 2, 'romanBrick');
