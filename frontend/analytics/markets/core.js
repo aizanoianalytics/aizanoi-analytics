@@ -66,6 +66,7 @@ export function indicatorSeries(candles) {
   const deviation20 = rolling(values, 20, standardDeviation);
   const ema12 = ema(values, 12);
   const ema26 = ema(values, 26);
+  const ema50 = ema(values, 50);
   const macd = values.map((_, index) => finite(ema12[index]) && finite(ema26[index]) ? ema12[index] - ema26[index] : null);
   const compactMacd = macd.filter(finite);
   const signalCompact = ema(compactMacd, 9);
@@ -77,13 +78,38 @@ export function indicatorSeries(candles) {
     sma200: sma(200),
     ema12,
     ema26,
+    ema50,
     bollingerUpper: sma20.map((value, index) => finite(value) ? value + 2 * deviation20[index] : null),
     bollingerLower: sma20.map((value, index) => finite(value) ? value - 2 * deviation20[index] : null),
     rsi14: wilderRsi(values),
     macd,
     macdSignal,
-    roc20: values.map((value, index) => index < 20 || values[index - 20] === 0 ? null : value / values[index - 20] - 1),
+    roc12: values.map((value, index) => index < 12 || values[index - 12] === 0 ? null : value / values[index - 12] - 1),
   };
+}
+
+export const PICK_HORIZONS = ['return1d','return1w','return1m','return3m','return6m','return1y','return2y','return3y','returnSince2019'];
+
+export function evaluateMomentumEligibility(row) {
+  const statuses = Object.fromEntries(PICK_HORIZONS.map(key => {
+    const value = row?.[key];
+    return [key, Number.isFinite(value) ? (value > 0 ? 'positive' : value < 0 ? 'negative' : 'flat') : 'missing'];
+  }));
+  const positiveCount = Object.values(statuses).filter(status => status === 'positive').length;
+  const negativeCount = Object.values(statuses).filter(status => status === 'negative').length;
+  const strong = positiveCount >= 8;
+  const weak = negativeCount >= 8;
+  return { eligibility: strong ? 'strong' : weak ? 'weak' : 'ineligible', positiveCount, negativeCount, statuses };
+}
+
+export function pickMomentumRows(rows) {
+  return rows.filter(row => evaluateMomentumEligibility(row).eligibility !== 'ineligible')
+    .sort((a, b) => {
+      const left = evaluateMomentumEligibility(a); const right = evaluateMomentumEligibility(b);
+      if (left.eligibility !== right.eligibility) return left.eligibility === 'strong' ? -1 : 1;
+      const countDelta = left.eligibility === 'strong' ? right.positiveCount - left.positiveCount : right.negativeCount - left.negativeCount;
+      return countDelta || (left.eligibility === 'strong' ? (b.return1y || -Infinity) - (a.return1y || -Infinity) : (a.return1y || Infinity) - (b.return1y || Infinity)) || String(a.ticker).localeCompare(String(b.ticker));
+    });
 }
 
 export function sortRows(rows, key, direction = 'auto') {
