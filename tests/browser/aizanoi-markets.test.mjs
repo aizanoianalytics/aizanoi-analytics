@@ -116,9 +116,9 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 768, height: 1024
     await installFixtures(page);
     try {
       await page.goto(`${base}/analytics/markets/?market=us`, { waitUntil: 'networkidle' });
-      await page.waitForSelector('[data-breadth] article', { timeout: 15000 });
-      const breadth = await page.locator('[data-breadth] article').count();
-      assert.equal(breadth, 4);
+      await page.waitForSelector('tbody[data-raw-table-body] tr[data-symbol]', { timeout: 15000 });
+      assert.equal(await page.locator('[data-breadth]').count(), 0, 'unreliable advancing/declining breadth cards are removed');
+      assert.equal(await page.locator('[data-table-filter-toggle]').count(), 1, 'Raw Data owns its table filters');
       const rankings = await page.locator('[data-ranking]').count();
       assert.equal(rankings, 6);
       const titles = await page.locator('[data-ranking] h3').allTextContents();
@@ -215,7 +215,7 @@ test('Sorted column header exposes aria-sort state', async () => {
   }
 });
 
-test('Filters and chips work for search, exchange and performance horizon', async () => {
+test('Excel-style Raw Data filters and chips work for search, exchange and performance horizon', async () => {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   const errors = [];
@@ -225,6 +225,8 @@ test('Filters and chips work for search, exchange and performance horizon', asyn
   try {
     await page.goto(`${base}/analytics/markets/?market=us`, { waitUntil: 'networkidle' });
     await page.waitForSelector('tbody[data-raw-table-body] tr[data-symbol]');
+    await page.click('[data-table-filter-toggle]');
+    await page.waitForSelector('[data-table-filter-row]:not([hidden])');
     await page.fill('[data-search]', 'Apple');
     await page.locator('[data-search]').press('Tab');
     await page.waitForTimeout(200);
@@ -303,6 +305,7 @@ test('Price filter survives the Price/Change display mode toggle', async () => {
   try {
     await page.goto(`${base}/analytics/markets/?market=us`, { waitUntil: 'networkidle' });
     await page.waitForSelector('tbody[data-raw-table-body] tr[data-symbol]');
+    await page.click('[data-table-filter-toggle]');
     await page.fill('[data-min-price]', '150');
     await page.fill('[data-max-price]', '450');
     await page.locator('[data-max-price]').press('Tab');
@@ -321,7 +324,7 @@ test('Price filter survives the Price/Change display mode toggle', async () => {
 });
 
 for (const width of [390, 320]) {
-  test(`Mobile Filters button opens real filter controls at ${width}px`, async () => {
+  test(`Mobile Raw Data filter row opens without overflow at ${width}px`, async () => {
     const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage({ viewport: { width, height: 844 } });
     const errors = [];
@@ -333,12 +336,12 @@ for (const width of [390, 320]) {
       await page.waitForSelector('tbody[data-raw-table-body] tr[data-symbol]');
       const before = await page.locator('tbody[data-raw-table-body] tr[data-symbol]').count();
       assert.equal(before, 12);
-      assert.equal(await page.locator('[data-filter-drawer-trigger]').isVisible(), true);
-      assert.equal(await page.locator('[data-exchange]').isVisible(), false);
-      assert.equal(await page.locator('[data-filter-drawer-trigger]').getAttribute('aria-expanded'), 'false');
-      await page.click('[data-filter-drawer-trigger]');
-      assert.equal(await page.locator('[data-filter-drawer-trigger]').getAttribute('aria-expanded'), 'true');
-      assert.equal(await page.locator('#filter-drawer.is-open').count(), 1);
+      const filter = page.locator('[data-table-filter-toggle]');
+      assert.equal(await filter.isVisible(), true);
+      assert.equal(await filter.getAttribute('aria-expanded'), 'false');
+      await filter.click();
+      assert.equal(await filter.getAttribute('aria-expanded'), 'true');
+      assert.equal(await page.locator('[data-table-filter-row]:not([hidden])').count(), 1);
       assert.equal(await page.locator('[data-exchange]').isVisible(), true);
       assert.equal(await page.locator('[data-min-price]').isVisible(), true);
       assert.equal(await page.locator('[data-performance-horizon]').isVisible(), true);
@@ -346,10 +349,9 @@ for (const width of [390, 320]) {
       await page.waitForFunction(() => document.querySelectorAll('tbody[data-raw-table-body] tr[data-symbol]').length === 6);
       const after = await page.locator('tbody[data-raw-table-body] tr[data-symbol]').count();
       assert.equal(after, 6);
-      await page.click('[data-filter-drawer-trigger]');
-      assert.equal(await page.locator('[data-filter-drawer-trigger]').getAttribute('aria-expanded'), 'false');
-      assert.equal(await page.locator('#filter-drawer.is-open').count(), 0);
-      assert.equal(await page.locator('[data-exchange]').isVisible(), false);
+      await filter.click();
+      assert.equal(await filter.getAttribute('aria-expanded'), 'false');
+      assert.equal(await page.locator('[data-table-filter-row]:not([hidden])').count(), 0);
       const overflow = await page.evaluate(() => document.body.scrollWidth - document.documentElement.clientWidth);
       assert.ok(overflow <= 1, `mobile filters overflow ${overflow}`);
       assert.deepEqual(errors, []);
@@ -407,6 +409,7 @@ test('Dashboard search keeps focus while typing character by character', async (
   await installFixtures(page);
   try {
     await page.goto(`${base}/analytics/markets/?market=us`, { waitUntil: 'networkidle' });
+    await page.click('[data-table-filter-toggle]');
     await page.waitForSelector('[data-search]');
     await page.click('[data-search]');
     // Character-by-character keystrokes (not fill): CDP dispatches each key to
@@ -591,6 +594,7 @@ test('Dashboard URL state clears US filters for crypto, persists pager and perfo
     assert.doesNotMatch(page.url(), /exchange=|membership=/);
     assert.match(page.url(), /perfHorizon=return1m/);
     await page.reload({ waitUntil: 'networkidle' });
+    await page.click('[data-table-filter-toggle]');
     await page.waitForSelector('[data-performance-horizon]');
     assert.equal(await page.locator('[data-performance-horizon]').inputValue(), 'return1m');
     assert.equal(await page.locator('[data-performance-op]').inputValue(), 'between');

@@ -31,16 +31,29 @@ test('standalone Markets exposes only Markets and Aizanoi Picks navigation, no l
   assert.match(html, /Markets/);
 });
 
-test('main dashboard surfaces status strip, four breadth cards, six rankings and raw data', () => {
+test('main dashboard keeps only reliable market context and puts filters inside Raw Data', () => {
   const dashboard = read('frontend/analytics/markets/dashboard.js');
   assert.match(dashboard, /data-status-strip/);
-  assert.match(dashboard, /data-breadth/);
+  assert.doesNotMatch(dashboard, /data-breadth|Advancing|Declining/);
   assert.match(dashboard, /data-rankings-block/);
   assert.match(dashboard, /data-raw-section/);
+  assert.match(dashboard, /data-table-filter-toggle/);
+  assert.match(dashboard, /data-table-filter-row/);
   assert.match(dashboard, /data-price-mode="price"/);
   assert.match(dashboard, /data-price-mode="change"/);
   assert.match(dashboard, /market-filter-chips/);
   assert.match(dashboard, /data-pager/);
+});
+
+test('instrument controls are one grouped workspace toolbar, not two detached cards', () => {
+  const app = read('frontend/analytics/markets/instrument/app.js');
+  const css = read('frontend/analytics/markets/markets.css');
+  assert.match(app, /data-chart-control-bar/);
+  assert.match(app, /data-indicator-groups/);
+  assert.match(app, /data-control-group="range"/);
+  assert.match(app, /data-control-group="studies"/);
+  assert.match(css, /\.instrument-control-bar/);
+  assert.match(css, /\.instrument-control-group/);
 });
 
 test('frontends use market-scoped summaries and shared dashboard code', () => {
