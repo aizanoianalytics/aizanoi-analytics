@@ -2,6 +2,23 @@ const finite = Number.isFinite;
 const intFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
 const usdFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
 
+const usdtFractionDigits = (value) => {
+  if (!Number.isFinite(value)) return 2;
+  const abs = Math.abs(value);
+  if (abs === 0) return 2;
+  if (abs < 0.0001) return 8;
+  if (abs < 0.01) return 6;
+  if (abs < 1) return 4;
+  return 2;
+};
+
+const formatUSDT = (value) => {
+  if (!Number.isFinite(value)) return '—';
+  const fractionDigits = usdtFractionDigits(value);
+  const numberPart = new Intl.NumberFormat('en-US', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits }).format(value);
+  return `${numberPart} USDT`;
+};
+
 export const formatPercent = (value) => {
   if (!finite(value)) return '—';
   const sign = value > 0 ? '+' : value < 0 ? '\u2212' : '';
@@ -19,7 +36,11 @@ export const formatSignedReturn = (value) => {
   return `${sign}${intFormat.format(Math.abs(value) * 100)}%`;
 };
 
-export const formatPrice = (value) => finite(value) ? usdFormat.format(value) : '—';
+export const formatPrice = (value, market = 'us') => {
+  if (!finite(value)) return '—';
+  if (market === 'crypto') return formatUSDT(value);
+  return usdFormat.format(value);
+};
 
 export const formatNumber = (value) => finite(value) ? intFormat.format(value) : '—';
 

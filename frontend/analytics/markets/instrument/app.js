@@ -54,8 +54,10 @@ const state = {
   summary: null,
   frequency: '1d',
   timeframe: '1Y',
-  dateFrom: '',
-  dateTo: '',
+  chartDateFrom: '',
+  chartDateTo: '',
+  historyDateFrom: '',
+  historyDateTo: '',
   selectedDate: '',
   historyPage: 1,
   historyPageSize: 100,
@@ -64,6 +66,9 @@ const state = {
   oscillators: new Set(['rsi14']),
   universe: [],
   selectedPoint: null,
+  cachedIndicatorKey: null,
+  cachedIndicators: null,
+  cachedSourceOffset: 0,
 };
 
 async function json(path) {
@@ -115,17 +120,18 @@ function histoBars(values, width, height, mid) {
 function renderChart() {
   const source = state.frequency === '4h' ? state.payload.fourHour : state.payload.daily;
   if (!source) return '<p class="market-no-data">This timeframe is not available from the source.</p>';
-  if (state.timeframe === 'CUSTOM' && state.dateFrom && state.dateTo && state.dateFrom > state.dateTo) {
+  if (state.timeframe === 'CUSTOM' && state.chartDateFrom && state.chartDateTo && state.chartDateFrom > state.chartDateTo) {
     return '<p class="market-no-data market-validation-error">Invalid date range: "From" date must be earlier than "To" date.</p>';
   }
   const selected = state.timeframe === 'CUSTOM'
-    ? source.filter(row => (!state.dateFrom || row.t * 1000 >= Date.parse(`${state.dateFrom}T00:00:00Z`)) && (!state.dateTo || row.t * 1000 <= Date.parse(`${state.dateTo}T23:59:59Z`)))
+    ? source.filter(row => (!state.chartDateFrom || row.t * 1000 >= Date.parse(`${state.chartDateFrom}T00:00:00Z`)) && (!state.chartDateTo || row.t * 1000 <= Date.parse(`${state.chartDateTo}T23:59:59Z`)))
     : sliceTimeframe(source, state.timeframe);
   if (selected.length < 2) return '<p class="market-no-data">This timeframe is not available from the source.</p>';
 
   const allIndicators = indicatorSeries(source);
   const offset = source.findIndex(row => row.t === selected[0].t);
   const sliced = Object.fromEntries(Object.entries(allIndicators).map(([key, values]) => [key, values.slice(offset, offset + selected.length)]));
+  state.cachedSourceOffset = offset;
 
   const closes = selected.map(row => row.c);
   const overlayKeys = [...state.indicators].flatMap(key => key === 'bollinger' ? ['bollingerUpper', 'bollingerLower'] : [key]);
@@ -137,7 +143,7 @@ function renderChart() {
 
   const start = new Date(selected[0].t * 1000).toLocaleDateString();
   const end = new Date(selected.at(-1).t * 1000).toLocaleDateString();
-  const ticks = [low, low + spread * 0.5, high].map(value => formatPrice(value));
+  const ticks = [low, low + spread * 0.5, high].map(value => formatPrice(value, market));
 
   const selectedIndex = state.selectedDate
     ? selected.findIndex(row => new Date(row.t * 1000).toISOString().slice(0, 10) === state.selectedDate)
@@ -157,7 +163,7 @@ function renderChart() {
   } : null;
 
   const svg = `<figure class="instrument-chart" data-chart>
-    <figcaption data-chart-summary>Close-price history for ${esc(state.payload.name)} from ${esc(start)} to ${esc(end)}. Range ${esc(ticks[0])} – ${esc(ticks[2])}. Selected value: ${tooltipPoint ? `${esc(tooltipPoint.date)} · Close ${formatPrice(tooltipPoint.close)}` : 'move pointer or tap to inspect'}.</figcaption>
+    <figcaption data-chart-summary>Close-price history for ${esc(state.payload.name)} from ${esc(start)} to ${esc(end)}. Range ${esc(ticks[0])} – ${esc(ticks[2])}. Selected value: ${tooltipPoint ? `${esc(tooltipPoint.date)} · Close ${formatPrice(tooltipPoint.close, market)}` : 'move pointer or tap to inspect'}.</figcaption>
     <svg class="price-chart" viewBox="0 0 900 360" role="img" aria-label="Close-price chart with selected overlays" data-chart-svg>
       <g transform="translate(0 10)">${polyline(closes, 'i-price', 900, 340, low, spread)}${overlayLines}${marker}${markerDot}</g>
       <rect class="chart-hit-area" x="0" y="0" width="900" height="340" fill="transparent" data-chart-hit/>
@@ -198,28 +204,34 @@ function renderChart() {
     return '';
   }).filter(Boolean).join('');
 
+  const indicatorKey = `${state.frequency}:${source.length}:${source[0]?.t || ''}:${source.at(-1)?.t || ''}`;
+  state.cachedIndicatorKey = indicatorKey;
+  state.cachedIndicators = allIndicators;
+
   return `${svg}${oscillators}`;
 }
 
-function updateChartTooltip(index, source) {
+function updateChartTooltip(visibleIndex, visibleSource) {
   const tooltip = document.querySelector('[data-chart-tooltip]');
   if (!tooltip) return;
-  if (index == null || index < 0 || index >= source.length) {
+  if (visibleIndex == null || visibleIndex < 0 || visibleIndex >= visibleSource.length) {
     tooltip.hidden = true;
     tooltip.removeAttribute('data-active');
     return;
   }
-  const point = source[index];
+  const point = visibleSource[visibleIndex];
   if (!point || !Number.isFinite(point.c)) {
     tooltip.hidden = true;
+    tooltip.removeAttribute('data-active');
     return;
   }
   const overlayKeys = [...state.indicators].flatMap(key => key === 'bollinger' ? ['bollingerUpper', 'bollingerLower'] : [key]);
-  const indicators = indicatorSeries(source);
-  const overlayRows = overlayKeys.map(key => [key, indicators[key]?.[index]]).filter(([, v]) => Number.isFinite(v));
-  const overlays = overlayRows.map(([key, value]) => `${key.toUpperCase()}: ${formatPrice(value)}`).join(' · ');
+  const indicators = state.cachedIndicators || indicatorSeries(state.frequency === '4h' ? state.payload.fourHour : state.payload.daily);
+  const fullIndex = (state.cachedSourceOffset || 0) + visibleIndex;
+  const overlayRows = overlayKeys.map(key => [key, indicators[key]?.[fullIndex]]).filter(([, v]) => Number.isFinite(v));
+  const overlays = overlayRows.map(([key, value]) => `${key.toUpperCase()}: ${formatPrice(value, market)}`).join(' · ');
   const date = new Date(point.t * 1000).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
-  tooltip.innerHTML = `<strong>${date}</strong><span>Close ${formatPrice(point.c)}</span>${overlays ? `<span>${esc(overlays)}</span>` : ''}`;
+  tooltip.innerHTML = `<strong>${date}</strong><span>Close ${formatPrice(point.c, market)}</span>${overlays ? `<span>${esc(overlays)}</span>` : ''}`;
   tooltip.hidden = false;
   tooltip.setAttribute('data-active', '');
 }
@@ -231,24 +243,24 @@ function renderHorizonCards(row) {
 function renderHistory(state) {
   const rows = (state.frequency === '4h' ? state.payload.fourHour : state.payload.daily) || [];
   if (!rows.length) return '<p class="market-no-data">No historical observations yet.</p>';
-  const rangeInvalid = Boolean(state.dateFrom && state.dateTo && state.dateFrom > state.dateTo);
+  const rangeInvalid = Boolean(state.historyDateFrom && state.historyDateTo && state.historyDateFrom > state.historyDateTo);
   const filtered = rangeInvalid
     ? []
-    : filterHistoryRows(rows, { dateFrom: state.dateFrom, dateTo: state.dateTo, search: state.historySearch });
+    : filterHistoryRows(rows, { dateFrom: state.historyDateFrom, dateTo: state.historyDateTo, search: state.historySearch });
   const indexByRow = new Map(rows.map((row, index) => [row, index]));
   const page = paginateFiltered(filtered, state.historyPage, state.historyPageSize);
   const tableRows = page.rows.map((row) => {
     const date = toISODate(row.t);
     const change = historyDailyChange(row, rows, indexByRow.get(row));
-    return `<tr class="${state.selectedDate === date ? 'is-selected' : ''}" data-history-symbol="${esc(date)}" tabindex="0"><td>${esc(date)}</td><td>${formatPrice(row.c)}</td><td class="${Number.isFinite(change) ? (change >= 0 ? 'is-positive' : 'is-negative') : ''}">${formatSignedReturn(change)}</td></tr>`;
+    return `<tr class="${state.selectedDate === date ? 'is-selected' : ''}" data-history-symbol="${esc(date)}" tabindex="0"><td>${esc(date)}</td><td>${formatPrice(row.c, market)}</td><td class="${Number.isFinite(change) ? (change >= 0 ? 'is-positive' : 'is-negative') : ''}">${formatSignedReturn(change)}</td></tr>`;
   }).join('');
   const emptyMessage = rangeInvalid
     ? 'Invalid date range: “From” date must be earlier than “To” date.'
     : 'No matching history rows.';
   return `<section class="instrument-history" data-history><header><h2>Historical prices (${state.frequency === '4h' ? '4 hour' : 'Daily'})</h2>
     <form data-history-filter><label>Search date<input type="search" data-history-search placeholder="YYYY-MM-DD" value="${esc(state.historySearch)}"></label>
-    <label>From<input type="date" data-history-from value="${esc(state.dateFrom)}"></label>
-    <label>To<input type="date" data-history-to value="${esc(state.dateTo)}"></label>
+    <label>From<input type="date" data-history-from value="${esc(state.historyDateFrom)}"></label>
+    <label>To<input type="date" data-history-to value="${esc(state.historyDateTo)}"></label>
     <button type="submit">Apply</button></form></header>
     <div class="market-table-wrap"><table class="market-table" data-history-table><thead><tr><th>Date</th><th>Close</th><th>Daily Change %</th></tr></thead><tbody>${tableRows || `<tr><td colspan="3" class="market-table-empty">${emptyMessage}</td></tr>`}</tbody></table></div>
     <div class="market-pager" data-history-pager>
@@ -276,7 +288,7 @@ function renderHeader() {
     <div>
       <p class="eyebrow">INSTRUMENT WORKSPACE</p>
       <h1>${esc(state.payload.ticker)} · ${esc(state.payload.name)}</h1>
-      <p class="instrument-meta">${esc(exchangeLabel)} · ${esc(basisText)} · Latest ${formatPrice(state.summary?.latestPrice ?? state.summary?.latest)} · As of ${esc(new Date((state.payload.daily?.at(-1)?.t || 0) * 1000).toLocaleDateString())}</p>
+      <p class="instrument-meta">${esc(exchangeLabel)} · ${esc(basisText)} · Latest ${formatPrice(state.summary?.latestPrice ?? state.summary?.latest, market)} · As of ${esc(new Date((state.payload.daily?.at(-1)?.t || 0) * 1000).toLocaleDateString())}</p>
     </div>
     <form data-instrument-search><label>Find another instrument<input type="search" data-symbol-search placeholder="Ticker or company" autocomplete="off"></label><div data-search-results></div></form>
   </header>`;
@@ -286,8 +298,8 @@ function renderToolbar() {
   const has4H = Array.isArray(state.payload?.fourHour) && state.payload.fourHour.length > 1;
   return `<div class="chart-toolbar"><label>Frequency<select data-frequency><option value="1d"${state.frequency === '1d' ? ' selected' : ''}>Daily</option>${has4H ? `<option value="4h"${state.frequency === '4h' ? ' selected' : ''}>4 hour</option>` : ''}</select></label>
     <label>Timeframe<select data-timeframe>${TIMEFRAMES.map(tf => `<option value="${esc(tf.key)}"${state.timeframe === tf.key ? ' selected' : ''}>${esc(tf.label)}</option>`).join('')}</select></label>
-    <label>From<input type="date" data-date-from value="${esc(state.dateFrom)}"></label>
-    <label>To<input type="date" data-date-to value="${esc(state.dateTo)}"></label>
+    <label>From<input type="date" data-date-from value="${esc(state.chartDateFrom)}"></label>
+    <label>To<input type="date" data-date-to value="${esc(state.chartDateTo)}"></label>
     <label>Selected date<input type="date" data-selected-date value="${esc(state.selectedDate)}"></label>
   </div>`;
 }
@@ -317,7 +329,7 @@ function bindChartInteractivity() {
   if (!svg || !tooltip) return;
   const source = state.frequency === '4h' ? state.payload.fourHour : state.payload.daily;
   const visibleSource = state.timeframe === 'CUSTOM'
-    ? source.filter(row => (!state.dateFrom || row.t * 1000 >= Date.parse(`${state.dateFrom}T00:00:00Z`)) && (!state.dateTo || row.t * 1000 <= Date.parse(`${state.dateTo}T23:59:59Z`)))
+    ? source.filter(row => (!state.chartDateFrom || row.t * 1000 >= Date.parse(`${state.chartDateFrom}T00:00:00Z`)) && (!state.chartDateTo || row.t * 1000 <= Date.parse(`${state.chartDateTo}T23:59:59Z`)))
     : sliceTimeframe(source, state.timeframe);
   if (visibleSource.length < 2) return;
   function handleMove(event) {
@@ -372,27 +384,27 @@ document.addEventListener('change', event => {
   if (event.target.matches('[data-timeframe]')) {
     state.timeframe = event.target.value;
     if (state.timeframe !== 'CUSTOM') {
-      state.dateFrom = ''; state.dateTo = '';
+      state.chartDateFrom = ''; state.chartDateTo = '';
       const fromIn = document.querySelector('[data-date-from]'); if (fromIn) fromIn.value = '';
       const toIn = document.querySelector('[data-date-to]'); if (toIn) toIn.value = '';
     }
     render();
     return;
   }
-  if (event.target.matches('[data-date-from]')) { state.dateFrom = event.target.value; state.timeframe = 'CUSTOM'; render(); return; }
-  if (event.target.matches('[data-date-to]')) { state.dateTo = event.target.value; state.timeframe = 'CUSTOM'; render(); return; }
+  if (event.target.matches('[data-date-from]')) { state.chartDateFrom = event.target.value; state.timeframe = 'CUSTOM'; render(); return; }
+  if (event.target.matches('[data-date-to]')) { state.chartDateTo = event.target.value; state.timeframe = 'CUSTOM'; render(); return; }
   if (event.target.matches('[data-selected-date]')) { state.selectedDate = event.target.value; render(); return; }
   if (event.target.matches('[data-indicator]')) { event.target.checked ? state.indicators.add(event.target.value) : state.indicators.delete(event.target.value); render(); return; }
   if (event.target.matches('[data-oscillator]')) { event.target.checked ? state.oscillators.add(event.target.value) : state.oscillators.delete(event.target.value); render(); return; }
-  if (event.target.matches('[data-history-from]')) { state.dateFrom = event.target.value; state.historyPage = 1; render(); return; }
-  if (event.target.matches('[data-history-to]')) { state.dateTo = event.target.value; state.historyPage = 1; render(); return; }
+  if (event.target.matches('[data-history-from]')) { state.historyDateFrom = event.target.value; state.historyPage = 1; render(); return; }
+  if (event.target.matches('[data-history-to]')) { state.historyDateTo = event.target.value; state.historyPage = 1; render(); return; }
 });
 
 function chartVisibleSource() {
   const source = state.frequency === '4h' ? state.payload.fourHour : state.payload.daily;
   if (!source) return [];
   return state.timeframe === 'CUSTOM'
-    ? source.filter(row => (!state.dateFrom || row.t * 1000 >= Date.parse(`${state.dateFrom}T00:00:00Z`)) && (!state.dateTo || row.t * 1000 <= Date.parse(`${state.dateTo}T23:59:59Z`)))
+    ? source.filter(row => (!state.chartDateFrom || row.t * 1000 >= Date.parse(`${state.chartDateFrom}T00:00:00Z`)) && (!state.chartDateTo || row.t * 1000 <= Date.parse(`${state.chartDateTo}T23:59:59Z`)))
     : sliceTimeframe(source, state.timeframe);
 }
 
@@ -467,8 +479,8 @@ document.addEventListener('submit', event => {
     event.preventDefault();
     const form = event.target;
     state.historySearch = (form.querySelector('[data-history-search]')?.value || '').trim();
-    state.dateFrom = form.querySelector('[data-history-from]')?.value || '';
-    state.dateTo = form.querySelector('[data-history-to]')?.value || '';
+    state.historyDateFrom = form.querySelector('[data-history-from]')?.value || '';
+    state.historyDateTo = form.querySelector('[data-history-to]')?.value || '';
     state.historyPage = 1;
     render();
     const apply = document.querySelector('[data-history] [data-history-filter] button[type="submit"]');

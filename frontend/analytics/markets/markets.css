@@ -388,6 +388,8 @@ button, input, select { font: inherit; }
   z-index: 5;
   min-width: 140px;
 }
+.chart-tooltip[hidden] { display: none !important; }
+.chart-tooltip[data-active] { display: grid; }
 .chart-hit-area { cursor: crosshair; }
 .selected-date-marker { pointer-events: none; }
 .selected-date-dot { pointer-events: none; }

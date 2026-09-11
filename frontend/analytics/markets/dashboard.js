@@ -60,7 +60,7 @@ function renderRankingCard(title, key, descending) {
     <li>
       <button type="button" class="market-ranking-row" data-ranking-symbol="${esc(row.slug)}">
         <span class="market-ranking-text"><strong>${esc(row.ticker)}</strong><span class="market-ranking-name">${esc(row.name)}</span></span>
-        <span class="market-ranking-numbers"><span class="market-ranking-price">${formatPrice(row.latestPrice ?? row.latest)}</span><span class="market-ranking-change market-ranking-change--${horizonSign(row[key]).modifier}">${formatPercent(row[key])}</span></span>
+        <span class="market-ranking-numbers"><span class="market-ranking-price">${formatPrice(row.latestPrice ?? row.latest, this.market)}</span><span class="market-ranking-change market-ranking-change--${horizonSign(row[key]).modifier}">${formatPercent(row[key])}</span></span>
       </button>
     </li>`).join('')}</ol></article>`;
 }
@@ -105,7 +105,7 @@ function renderRankingBlock(market) {
   return `<section class="market-rankings" data-rankings-block>
     <h2>Market rankings</h2>
     <div class="market-rankings-grid">
-      ${cards.map(([title, key, descending]) => renderRankingCard.call(this, title, key, descending)).join('')}
+      ${cards.map(([title, key, descending]) => renderRankingCard.call({ ...this, market }, title, key, descending)).join('')}
     </div>
   </section>`;
 }
@@ -131,7 +131,7 @@ function renderTableHead(state, columns) {
 
 function renderTableRow(row, columns, state) {
   const isSelected = state.selectedSymbol === row.slug;
-  const cells = columns.map(col => `<td data-col="${esc(col.key)}">${formatCell(col, row)}</td>`).join('');
+  const cells = columns.map(col => `<td data-col="${esc(col.key)}">${formatCell(col, row, state.market)}</td>`).join('');
   return `<tr class="market-table-row${isSelected ? ' is-selected' : ''}" data-symbol="${esc(row.slug)}" data-open-instrument="${esc(row.slug)}" tabindex="0">
     <td data-col="stock"><strong>${esc(row.ticker)}</strong><span class="market-table-name">${esc(row.name)}</span></td>
     ${cells}
@@ -139,11 +139,11 @@ function renderTableRow(row, columns, state) {
   </tr>`;
 }
 
-function formatCell(column, row) {
+function formatCell(column, row, market) {
   const value = row[column.key];
-  if (column.key === 'latestPrice') return formatPrice(value);
-  if (column.key === 'previousPrice') return formatPrice(value);
-  if (column.key.startsWith('price')) return formatPrice(value);
+  if (column.key === 'latestPrice') return formatPrice(value, market);
+  if (column.key === 'previousPrice') return formatPrice(value, market);
+  if (column.key.startsWith('price')) return formatPrice(value, market);
   return formatPercent(value);
 }
 
@@ -213,7 +213,7 @@ function renderPicks(state) {
           return `<li class="market-picks-row">
             <a class="market-picks-link" href="${detailUrl(state.market, row.slug)}">
               <span class="market-picks-text"><strong>${esc(row.ticker)}</strong><span class="market-picks-name">${esc(row.name)}</span></span>
-              <span class="market-picks-price">${formatPrice(row.latestPrice ?? row.latest)}</span>
+              <span class="market-picks-price">${formatPrice(row.latestPrice ?? row.latest, state.market)}</span>
               <span class="market-picks-count">${sign === 'positive' ? eligibility.positiveCount : eligibility.negativeCount} / 9 ${sign}</span>
               <ul class="market-picks-horizons">${signs}</ul>
             </a>
