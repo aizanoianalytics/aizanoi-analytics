@@ -116,6 +116,35 @@ class MarketsHardeningTests(unittest.TestCase):
             failures = mod.validate_crypto_pairs([btc])
         self.assertEqual(failures, [{"market":"crypto", "ticker":"BTC", "provider":"binance", "providerSymbol":"BTCUSDT", "error":"Binance pair missing or not TRADING"}])
 
+    def test_atomic_cutover_exchanges_only_validated_complete_staging(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp); public = base / "public"; stage = base / "staging" / "bootstrap"
+            public.mkdir(parents=True); stage.mkdir(parents=True)
+            old = {"schemaVersion": 3, "provider": "fintable", "providerSymbol": "OLD", "daily": []}
+            new = {"schemaVersion": 3, "provider": "fintable", "providerSymbol": "AAPL", "daily": [{"t": 1, "c": 1}]}
+            mod.write_json_atomic(public / "marker.json", {"old": True})
+            instrument = self.instrument("us", "AAPL")
+            mod.write_json_atomic(stage / "instruments.json", [instrument])
+            mod.write_json_atomic(stage / "manifest.json", {"schemaVersion": 3, "status": "complete", "counts": {"us": 1, "crypto": 0}})
+            mod.write_json_atomic(stage / "history" / "us" / "aapl.json", new)
+            result = mod.atomic_cutover(public)
+            self.assertIn("cutover instruments=1", result)
+            self.assertTrue((public / "history" / "us" / "aapl.json").exists())
+            archive = Path(result.split("rollbackArchive=", 1)[1])
+            self.assertTrue((archive / "marker.json").exists())
+
+    def test_cutover_rejects_yahoo_symbol_and_leaves_public_untouched(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp); public = base / "public"; stage = base / "staging" / "bootstrap"
+            public.mkdir(parents=True); stage.mkdir(parents=True)
+            mod.write_json_atomic(public / "marker.json", {"old": True})
+            instrument = self.instrument("us", "AAPL", "aapl"); instrument["yahooSymbol"] = "AAPL"
+            mod.write_json_atomic(stage / "instruments.json", [instrument])
+            mod.write_json_atomic(stage / "manifest.json", {"schemaVersion": 3, "status": "complete", "counts": {"us": 1, "crypto": 0}})
+            mod.write_json_atomic(stage / "history" / "us" / "aapl.json", {"schemaVersion": 3, "provider": "fintable", "providerSymbol": "AAPL"})
+            with self.assertRaises(ValueError): mod.atomic_cutover(public)
+            self.assertTrue((public / "marker.json").exists())
+
     def test_calendar_returns_do_not_accept_long_crypto_gap(self):
         latest = 2_000_000_000
         candles = [{"t": latest - 365 * 86400 - 10 * 86400, "c": 100.0}, {"t": latest, "c": 110.0}]

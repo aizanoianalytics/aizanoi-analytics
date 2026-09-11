@@ -10,6 +10,9 @@ publishes manifest/summary last.
 from __future__ import annotations
 
 import argparse
+import ctypes
+import hashlib
+import os
 import datetime as dt
 import hashlib
 try:
@@ -965,6 +968,53 @@ def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, 
     write_json_atomic(root / "manifest.json", manifest)
 
 
+def validate_staged_cutover(stage: Path) -> tuple[list[dict[str, Any]], str]:
+    """Fail closed unless a staged tree is a complete provider-neutral v3 dataset."""
+    manifest = read_json(stage / "manifest.json", {})
+    instruments = read_json(stage / "instruments.json", [])
+    if manifest.get("schemaVersion") != 3 or manifest.get("status") != "complete":
+        raise ValueError("staged manifest is not complete schema v3")
+    if not isinstance(instruments, list) or not instruments:
+        raise ValueError("staged canonical universe is missing")
+    digest = hashlib.sha256()
+    for item in instruments:
+        if not item.get("provider") or not item.get("providerSymbol") or item.get("yahooSymbol"):
+            raise ValueError(f"invalid provider-neutral staged instrument: {item.get('ticker')}")
+        history_path = stage / "history" / item["market"] / f"{item['slug']}.json"
+        history = read_json(history_path, {})
+        if history.get("schemaVersion") != 3 or history.get("provider") != item["provider"] or history.get("providerSymbol") != item["providerSymbol"]:
+            raise ValueError(f"invalid staged provenance: {item.get('ticker')}")
+        payload = history_path.read_bytes()
+        if not payload:
+            raise ValueError(f"empty staged shard: {item.get('ticker')}")
+        digest.update(hashlib.sha256(payload).digest())
+    counts = manifest.get("counts", {})
+    for market in ("us", "crypto"):
+        if counts.get(market) != sum(item.get("market") == market for item in instruments):
+            raise ValueError(f"staged manifest count mismatch: {market}")
+    return instruments, digest.hexdigest()
+
+
+def atomic_cutover(public_root: Path) -> str:
+    """Atomically exchange validated staging with public data; retain old data privately."""
+    stage = _bootstrap_root(public_root)
+    if not stage.is_dir() or not public_root.is_dir():
+        raise ValueError("both active public root and bootstrap staging tree must exist")
+    if stage.parent.stat().st_dev != public_root.parent.stat().st_dev:
+        raise ValueError("staging and public roots must share a filesystem for atomic exchange")
+    instruments, checksum = validate_staged_cutover(stage)
+    # Linux renameat2(RENAME_EXCHANGE): one atomic directory swap; fail closed if unavailable.
+    libc = ctypes.CDLL(None, use_errno=True)
+    result = libc.renameat2(-100, os.fsencode(stage), -100, os.fsencode(public_root), 0x2)
+    if result:
+        error = ctypes.get_errno()
+        raise OSError(error, f"atomic staged cutover failed: {os.strerror(error)}")
+    archived = public_root.parent / "archive" / f"cutover-{utc_now().replace(':', '').replace('.', '')}"
+    archived.parent.mkdir(parents=True, exist_ok=True)
+    os.replace(stage, archived)
+    return f"cutover instruments={len(instruments)} shardChecksum={checksum} rollbackArchive={archived}"
+
+
 def run(args: argparse.Namespace) -> int:
     if args.slice_count <= 0:
         raise ValueError("--slice-count must be positive")
@@ -987,6 +1037,9 @@ def run(args: argparse.Namespace) -> int:
             except BlockingIOError:
                 print("[markets] another update is already running; skipped")
                 return 0
+        if args.mode == "cutover":
+            print(f"[markets] {atomic_cutover(public_root)}")
+            return 0
         config = Path(__file__).with_name("crypto-universe.json")
         if args.mode == "bootstrap" or not (root / "instruments.json").exists() or args.refresh_universe:
             instruments = build_universe(config)
@@ -1049,7 +1102,7 @@ def run(args: argparse.Namespace) -> int:
 
 def parser() -> argparse.ArgumentParser:
     value = argparse.ArgumentParser(description=__doc__)
-    value.add_argument("--mode", choices=("bootstrap", "us-daily", "crypto-hourly", "hourly", "rebuild", "health-check"), default="us-daily")
+    value.add_argument("--mode", choices=("bootstrap", "cutover", "us-daily", "crypto-hourly", "hourly", "rebuild", "health-check"), default="us-daily")
     value.add_argument("--data-root", default="/var/lib/aizanoi-markets/public")
     value.add_argument("--delay", type=float, default=2.5, help="Polite delay after each per-symbol provider call")
     value.add_argument("--slice-count", type=int, default=8, help="Hourly US slices; every stock refreshes within this many hours")
