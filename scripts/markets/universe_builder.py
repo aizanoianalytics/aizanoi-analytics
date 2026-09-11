@@ -669,7 +669,7 @@ def build_focused_us_universe(
             exchange = extra_map[ticker].get("exchange", exchange)
 
         # Fintable consumes the verified ACT symbol verbatim; dot-class shares
-        # such as BRK.B/BF.B must never be converted to Yahoo-era dash forms.
+        # such as BRK.B/BF.B must never be converted to dash forms.
         provider_symbol = ticker
         universe.append({
             "market": "us",

@@ -66,15 +66,15 @@ def load_universe_corrections(path: Path) -> tuple[dict[str, str], set[str]]:
 
 
 def apply_universe_corrections(rows: list[dict[str, str]], *, overrides: dict[str, str], excludes: set[str]) -> list[dict[str, str]]:
-    """Apply provider-neutral mappings; accept legacy input but never emit it."""
+    """Apply only the canonical provider mapping and explicit exclusions."""
+    allowed = {"market", "ticker", "name", "exchange", "slug", "provider", "providerSymbol", "memberships"}
     corrected: list[dict[str, str]] = []
     for row in rows:
-        item = {key: value for key, value in row.items() if key != "yahooSymbol"}
-        symbol = item.get("providerSymbol") or row.get("yahooSymbol")
-        if not symbol or symbol in excludes:
+        item = {key: value for key, value in row.items() if key in allowed}
+        symbol = item.get("providerSymbol")
+        if not symbol or symbol in excludes or not item.get("provider"):
             continue
-        mapped = overrides.get(symbol, symbol)
-        item["providerSymbol"] = mapped
+        item["providerSymbol"] = overrides.get(symbol, symbol)
         item["slug"] = item.get("slug") or slugify(item["ticker"])
         corrected.append(item)
     return corrected
@@ -653,6 +653,9 @@ def build_universe(config_path: Path) -> list[dict[str, str]]:
         us_rows = build_focused_us_universe(extra_path)
     rows = us_rows + crypto_universe(config_path)
     overrides, excludes = load_universe_corrections(Path(__file__).with_name("universe-corrections.json"))
+    excludes_path = Path(__file__).with_name("us-universe-excludes.json")
+    if excludes_path.exists():
+        excludes.update(json.loads(excludes_path.read_text(encoding="utf-8")).get("excludes", {}).keys())
     return apply_universe_corrections(rows, overrides=overrides, excludes=excludes)
 
 
@@ -788,7 +791,7 @@ def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, dela
         old = read_json(path, {})
         old_daily = old.get("daily", [])
         old_four = old.get("fourHour", [])
-        # Bootstrap mode: NO SPlicing with legacy Yahoo history. The Fintable
+        # Bootstrap mode: NO SPlicing with prior-provider history. The Fintable
         # series stands alone from first real provider availability.
         if bootstrap:
             merged_daily = merge_candles([], daily)
@@ -978,7 +981,7 @@ def validate_staged_cutover(stage: Path) -> tuple[list[dict[str, Any]], str]:
         raise ValueError("staged canonical universe is missing")
     digest = hashlib.sha256()
     for item in instruments:
-        if not item.get("provider") or not item.get("providerSymbol") or item.get("yahooSymbol"):
+        if not item.get("provider") or not item.get("providerSymbol") or set(item) - {"market", "ticker", "name", "exchange", "slug", "provider", "providerSymbol", "memberships"}:
             raise ValueError(f"invalid provider-neutral staged instrument: {item.get('ticker')}")
         history_path = stage / "history" / item["market"] / f"{item['slug']}.json"
         history = read_json(history_path, {})

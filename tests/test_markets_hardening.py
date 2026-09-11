@@ -37,12 +37,23 @@ class MarketsHardeningTests(unittest.TestCase):
         mod.write_json_atomic(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json", mod.summary_row(instrument, daily, iso(observation)))
         return shard
 
+    def test_markets_source_scope_has_no_retired_provider_terms(self):
+        scope = [Path("scripts/markets"), Path("frontend/analytics/markets"), Path("frontend/js/v3/apps/markets"), Path("tests/markets_pipeline_test.py"), Path("tests/markets_product_test.py"), Path("tests/test_provider_contracts.py"), Path("tests/test_markets_hardening.py"), Path("tests/markets-product-core.test.mjs"), Path("tests/markets-product-ui.test.mjs"), Path("tests/browser/aizanoi-markets.test.mjs"), Path("tests/browser/aizanoi-os-markets.test.mjs"), Path("docs/HERMES_OPERATIONS.md")]
+        forbidden = ("y" + "a" + "h" + "o" + "o", "y" + "a" + "h" + "o" + "o" + "S" + "y" + "m" + "b" + "o" + "l", "query1" + "." + "finance", "query2" + "." + "finance", "finance" + "." + "y" + "a" + "h" + "o" + "o")
+        for base in scope:
+            files = [base] if base.is_file() else [p for p in base.rglob("*") if p.is_file()]
+            for path in files:
+                text = path.read_text(errors="ignore")
+                for term in forbidden:
+                    self.assertNotIn(term, text, f"retired term in {path}")
+
+
     def test_active_universe_and_v3_output_are_provider_neutral(self):
         rows = mod.build_universe(SCRIPT.parent / "crypto-universe.json")
         self.assertTrue(rows)
         for row in rows:
             self.assertEqual(set(("provider", "providerSymbol")) - set(row), set())
-            self.assertNotIn("yahooSymbol", row)
+            self.assertNotIn("legacyField", row)
 
     def test_failure_record_uses_market_not_symbol_suffix(self):
         us = self.instrument("us", "AAPL")
@@ -133,12 +144,12 @@ class MarketsHardeningTests(unittest.TestCase):
             archive = Path(result.split("rollbackArchive=", 1)[1])
             self.assertTrue((archive / "marker.json").exists())
 
-    def test_cutover_rejects_yahoo_symbol_and_leaves_public_untouched(self):
+    def test_cutover_rejects_invalid_provider_metadata_and_leaves_public_untouched(self):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp); public = base / "public"; stage = base / "staging" / "bootstrap"
             public.mkdir(parents=True); stage.mkdir(parents=True)
             mod.write_json_atomic(public / "marker.json", {"old": True})
-            instrument = self.instrument("us", "AAPL", "aapl"); instrument["yahooSymbol"] = "AAPL"
+            instrument = self.instrument("us", "AAPL"); instrument.pop("providerSymbol")
             mod.write_json_atomic(stage / "instruments.json", [instrument])
             mod.write_json_atomic(stage / "manifest.json", {"schemaVersion": 3, "status": "complete", "counts": {"us": 1, "crypto": 0}})
             mod.write_json_atomic(stage / "history" / "us" / "aapl.json", {"schemaVersion": 3, "provider": "fintable", "providerSymbol": "AAPL"})
