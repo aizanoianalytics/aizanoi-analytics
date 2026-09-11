@@ -20,17 +20,21 @@ test('Aizanoi Markets is registered as an Analytics set', () => {
   assert.match(catalog, /title:'Aizanoi Markets'/);
 });
 
-test('Markets landing exposes accessible US and Crypto dashboard tabs', () => {
+test('Markets landing exposes simplified Markets and Aizanoi Picks navigation', () => {
   assert.equal(existsSync('frontend/analytics/markets/index.html'), true);
   const html = read('frontend/analytics/markets/index.html');
+  const dashboard = read('frontend/analytics/markets/dashboard.js');
   assert.match(html, /<title>Aizanoi Markets — Aizanoi Analytics<\/title>/);
   assert.match(html, /data-markets-root/);
-  assert.match(html, /data-view="overview"/);
-  assert.match(html, /data-view="crypto-risk"/);
+  assert.match(html + dashboard, /data-nav="main"/);
+  assert.match(html + dashboard, /data-nav="picks"/);
   assert.match(html, /Close-price intelligence/);
   assert.match(html, /name="twitter:site" content="@AizanoiHQ"/);
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /not investment advice/i);
+  for (const legacy of ['Signals', 'Explorer', 'Crypto risk', 'Data health', 'Rate of change 20']) {
+    assert.doesNotMatch(html + dashboard, new RegExp(legacy, 'i'), legacy);
+  }
 });
 
 test('browser loads static shards and never calls upstream providers directly', () => {
@@ -57,10 +61,12 @@ test('crypto universe maps ambiguous names to the intended instruments', () => {
   assert.equal(config.find((entry) => entry.name === 'Sui').providerSymbol, 'SUIUSDT');
 });
 
-test('dashboard labels publication separately from the latest market observation', () => {
+test('dashboard labels publication and observation separately in the status strip', () => {
   const dashboard = read('frontend/analytics/markets/dashboard.js');
-  assert.match(dashboard, /Published \$\{new Date\(manifest\.completedAt\)\.toLocaleString\(\)\}/);
-  assert.match(dashboard, /Latest market observation/);
+  assert.match(dashboard, /market-status-strip/);
+  assert.match(dashboard, /Latest observation/);
+  assert.match(dashboard, /Published/);
+  assert.match(dashboard, /Source/);
 });
 
 test('Markets is included in canonical sitemap generation', () => {

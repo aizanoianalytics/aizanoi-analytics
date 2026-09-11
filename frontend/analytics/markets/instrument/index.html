@@ -1,16 +1,25 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Instrument workspace — Aizanoi Markets</title><meta name="description" content="Explore a market instrument across selectable timeframes with configurable technical indicators and oscillators."><meta name="robots" content="noindex,follow"><meta name="theme-color" content="#eef4ff">
-<link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml"><link rel="stylesheet" href="/analytics/markets/markets.css">
-</head><body>
-<header class="market-head"><a class="market-brand" href="/analytics/markets/"><img src="/assets/branding/aizanoi-logo-mark.svg" alt=""><span>Aizanoi Markets</span></a><a href="/analytics/markets/">Market overview</a></header>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Instrument workspace — Aizanoi Markets</title>
+<meta name="description" content="Explore a market instrument across selectable timeframes with configurable technical indicators and oscillators.">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#eef4ff">
+<link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/analytics/markets/markets.css">
+</head>
+<body>
+<header class="market-head">
+  <a class="market-brand" href="/analytics/markets/"><img src="/assets/branding/aizanoi-logo-mark.svg" alt=""><span>Aizanoi Markets</span></a>
+  <a href="/analytics/markets/">Market overview</a>
+</header>
 <main class="instrument-main">
-<section class="instrument-heading"><div><p class="eyebrow">INSTRUMENT WORKSPACE</p><h1 data-instrument-title>Loading…</h1><p data-instrument-meta>Reading static close-price history.</p></div><form data-instrument-search><label>Find another instrument<input type="search" data-symbol-search placeholder="Ticker or company" autocomplete="off"></label><div data-search-results></div></form></section>
-<section class="market-panel chart-workbench" aria-label="Interactive technical chart">
-<div class="chart-toolbar"><label>Frequency<select data-frequency><option value="1d">Daily</option><option value="4h">4 hour</option></select></label><label>Timeframe<select data-timeframe><option value="1M">1M</option><option value="3M">3M</option><option value="6M">6M</option><option value="1Y" selected>1Y</option><option value="5Y">5Y</option><option value="ALL">ALL</option><option value="CUSTOM">Custom</option></select></label><label>From<input type="date" data-date-from></label><label>To<input type="date" data-date-to></label><label>Selected date<input type="date" data-selected-date></label></div>
-<fieldset class="indicator-picker"><legend>Price overlays</legend><label><input type="checkbox" value="sma20" data-indicator checked> SMA 20</label><label><input type="checkbox" value="sma50" data-indicator> SMA 50</label><label><input type="checkbox" value="sma200" data-indicator> SMA 200</label><label><input type="checkbox" value="ema12" data-indicator> EMA 12</label><label><input type="checkbox" value="ema26" data-indicator> EMA 26</label><label><input type="checkbox" value="ema50" data-indicator> EMA 50</label><label><input type="checkbox" value="bollinger" data-indicator> Bollinger Bands 20 / 2</label></fieldset>
-<fieldset class="indicator-picker"><legend>Oscillators</legend><label><input type="checkbox" value="rsi14" data-oscillator checked> RSI 14</label><label><input type="checkbox" value="macd" data-oscillator> MACD</label><label><input type="checkbox" value="roc12" data-oscillator> ROC 12</label></fieldset>
-<div class="chart-stage" data-chart-stage aria-live="polite">Loading chart…</div><div data-history-table aria-label="Historical prices"></div>
-</section>
-<section class="market-panel"><h2>Instrument metrics</h2><div class="market-cards" data-instrument-metrics></div><div class="quality-callout" data-instrument-quality></div></section>
-</main><script type="module" src="/analytics/markets/instrument/app.js"></script></body></html>
+<div data-instrument-root>
+  <p class="market-loading">Loading the static instrument snapshot…</p>
+</div>
+</main>
+<script type="module" src="/analytics/markets/instrument/app.js"></script>
+</body>
+</html>

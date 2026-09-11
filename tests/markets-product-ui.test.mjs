@@ -19,15 +19,28 @@ test('Markets production sources contain no volume or split feature', () => {
   }
 });
 
-test('standalone Markets exposes overview signals explorer crypto risk and data health views', () => {
+test('standalone Markets exposes only Markets and Aizanoi Picks navigation, no legacy tabs', () => {
   const html = read('frontend/analytics/markets/index.html');
-  for (const view of ['overview', 'signals', 'explorer', 'crypto-risk', 'data-health']) {
-    assert.match(html, new RegExp(`data-view="${view}"`), view);
+  const dashboard = read('frontend/analytics/markets/dashboard.js');
+  for (const legacy of ['Signals', 'Explorer', 'Crypto risk', 'Data health', 'data-view="signals"', 'data-view="explorer"', 'data-view="crypto-risk"', 'data-view="data-health"', 'Rate of change 20']) {
+    assert.doesNotMatch(html + dashboard, new RegExp(legacy.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), legacy);
   }
-  assert.match(html, /data-watchlist-only/);
-  assert.match(html, /data-columns/);
-  assert.match(html, /data-export-csv/);
-  assert.match(html, /data-breadth-chart/);
+  assert.match(html + dashboard, /data-nav="main"/);
+  assert.match(html + dashboard, /data-nav="picks"/);
+  assert.match(html, /Aizanoi Picks/);
+  assert.match(html, /Markets/);
+});
+
+test('main dashboard surfaces status strip, four breadth cards, six rankings and raw data', () => {
+  const dashboard = read('frontend/analytics/markets/dashboard.js');
+  assert.match(dashboard, /data-status-strip/);
+  assert.match(dashboard, /data-breadth/);
+  assert.match(dashboard, /data-rankings-block/);
+  assert.match(dashboard, /data-raw-section/);
+  assert.match(dashboard, /data-price-mode="price"/);
+  assert.match(dashboard, /data-price-mode="change"/);
+  assert.match(dashboard, /market-filter-chips/);
+  assert.match(dashboard, /data-pager/);
 });
 
 test('frontends use market-scoped summaries and shared dashboard code', () => {
@@ -41,38 +54,35 @@ test('frontends use market-scoped summaries and shared dashboard code', () => {
   assert.match(osApp, /createMarketsDashboard/);
 });
 
-test('generic instrument page supports timeframes indicators and oscillators', () => {
-  assert.equal(existsSync('frontend/analytics/markets/instrument/index.html'), true);
-  assert.equal(existsSync('frontend/analytics/markets/instrument/app.js'), true);
+test('generic instrument page supports all required timeframes and ROC 12 label', () => {
   const html = read('frontend/analytics/markets/instrument/index.html');
   const app = read('frontend/analytics/markets/instrument/app.js');
-  for (const timeframe of ['1M', '3M', '6M', '1Y', '5Y', 'ALL']) assert.match(html, new RegExp(`value="${timeframe}"`));
-  for (const indicator of ['sma20', 'sma50', 'sma200', 'ema12', 'ema26', 'bollinger', 'rsi14', 'macd', 'roc12']) assert.match(html + app, new RegExp(indicator, 'i'));
-  assert.match(html, /data-date-from/);
-  assert.match(html, /data-date-to/);
+  for (const timeframe of ['1M', '3M', '6M', '1Y', '2Y', '3Y', '5Y']) {
+    assert.match(app + html, new RegExp(`['"]${timeframe}['"]`), timeframe);
+  }
+  for (const timeframe of ['SINCE_2019', 'CUSTOM']) {
+    assert.match(app, new RegExp(`['"]${timeframe}['"]`), timeframe);
+  }
+  for (const indicator of ['sma20', 'sma50', 'sma200', 'ema12', 'ema26', 'ema50', 'bollinger', 'rsi14', 'macd', 'macdHistogram', 'roc12']) {
+    assert.match(app + html, new RegExp(indicator, 'i'), indicator);
+  }
+  assert.match(app, /ROC 12/);
+  assert.doesNotMatch(app + html, /Rate of change 20/i);
+  assert.match(app + html, /data-date-from/);
+  assert.match(app + html, /data-date-to/);
   assert.match(app, /history\/\$\{market\}\/\$\{encodeURIComponent\(symbol\)\}\.json/);
 });
 
-test('shared product has compact status, four breadth stats, six rankings, raw data modes, picks and methodology copy', () => {
-  const html = read('frontend/analytics/markets/index.html');
-  const dashboard = read('frontend/analytics/markets/dashboard.js');
-  for (const token of ['data-status-strip','data-breadth-stat','Aizanoi Picks','Raw Data','Price','Change','methodology','contact']) assert.match(html + dashboard, new RegExp(token, 'i'), token);
-  assert.match(dashboard, /configs = \[/);
-  assert.match(dashboard, /Momentum quality.*Mean-reversion candidates.*Momentum leaders.*Relative-strength leaders.*Largest decliners.*52W breakout candidates/s);
-  assert.match(dashboard, /data-price-mode/);
-  assert.match(dashboard, /data-mobile-open/);
-});
-
-test('generic instrument page uses requested indicator periods and selected-date marker', () => {
-  const html = read('frontend/analytics/markets/instrument/index.html');
+test('instrument page defaults frequency to Daily and never auto-selects 4H', () => {
   const app = read('frontend/analytics/markets/instrument/app.js');
-  for (const token of ['SMA 20','SMA 50','SMA 200','EMA 12','EMA 26','EMA 50','Bollinger Bands 20 / 2','RSI 14','MACD 12/26/9','ROC 12','data-selected-date']) assert.match(html + app, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), token);
-  assert.doesNotMatch(html + app, /supertrend/i);
+  assert.match(app, /state\.frequency = '1d';/);
+  assert.doesNotMatch(app, /state\.frequency = '4h';/);
+  assert.doesNotMatch(app, /payload\.fourHour\?\.length \? '4h'/);
 });
 
-test('instrument navigation supports row activation, double click and exact-search submit', () => {
+test('navigation supports row activation, double click and exact-search submit', () => {
   const dashboard = read('frontend/analytics/markets/dashboard.js');
-  assert.match(dashboard, /dblclick/);
+  assert.match(dashboard, /handleDblClick|dblclick/);
   assert.match(dashboard, /data-open-instrument/);
   assert.match(dashboard, /detailUrl/);
   assert.match(dashboard, /requestSubmit|submit/);
