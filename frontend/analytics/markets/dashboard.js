@@ -65,16 +65,6 @@ function renderRankingCard(title, key, descending) {
     </li>`).join('')}</ol></article>`;
 }
 
-function renderBreadth(pulse) {
-  const items = [
-    { label:'Advancing', value: formatPercent(pulse?.advancingShare ?? null) },
-    { label:'Declining', value: formatPercent(pulse?.decliningShare ?? null) },
-    { label:'Median 1D', value: formatPercent(pulse?.medianReturn1d) },
-    { label:'Median 1Y', value: formatPercent(pulse?.medianReturn1y) },
-  ];
-  return `<div class="market-breadth" data-breadth>${items.map(item => `<article class="market-breadth-card"><span>${esc(item.label)}</span><strong>${esc(item.value)}</strong></article>`).join('')}</div>`;
-}
-
 function renderStatusStrip({ manifest, health, market }) {
   const marketHealth = health?.[market] || {};
   const observations = manifest?.counts?.[market] ?? marketHealth.published ?? null;
@@ -159,6 +149,24 @@ function renderPager(page, pageSize, total) {
   </div>`;
 }
 
+function renderTableFilters(state, rows, columnCount) {
+  const exchanges = [...new Set(rows.map(row => row.exchange).filter(Boolean))].sort();
+  const memberships = [...new Set(rows.flatMap(row => Array.isArray(row.memberships) ? row.memberships : []))].sort();
+  const isCrypto = state.market === 'crypto';
+  return `<tr id="raw-data-filters" class="market-table-filter-row" data-table-filter-row${state.filtersOpen ? '' : ' hidden'}>
+    <th colspan="${columnCount + 2}">
+      <form class="market-table-filter-form" data-filter-form role="search" aria-label="Filter raw data">
+        <label class="market-table-filter-search"><span>Search</span><input data-search type="search" placeholder="Ticker or company" value="${esc(state.query)}" autocomplete="off"></label>
+        ${isCrypto ? '' : `<label><span>Exchange</span><select data-exchange><option value="">All exchanges</option>${exchanges.map(value => `<option value="${esc(value)}"${state.exchange === value ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label>`}
+        ${isCrypto ? '' : `<label><span>Membership</span><select data-membership><option value="">All memberships</option>${memberships.map(value => `<option value="${esc(value)}"${state.membership === value ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label>`}
+        <label><span>Price range</span><span class="market-table-filter-pair"><input type="number" inputmode="decimal" data-min-price min="0" placeholder="Min" value="${Number.isFinite(state.minPrice) ? esc(state.minPrice) : ''}"><input type="number" inputmode="decimal" data-max-price min="0" placeholder="Max" value="${Number.isFinite(state.maxPrice) ? esc(state.maxPrice) : ''}"></span></label>
+        <fieldset class="market-table-filter-performance"><legend>Performance</legend><span class="market-table-filter-performance-row"><select data-performance-horizon><option value="">Any period</option>${PICK_HORIZONS.map(key => `<option value="${esc(key)}"${state.performance?.horizon === key ? ' selected' : ''}>${esc(PICK_HORIZON_LABELS[key])}</option>`).join('')}</select><select data-performance-op><option value="gt"${state.performance?.op === 'gt' ? ' selected' : ''}>&gt;</option><option value="lt"${state.performance?.op === 'lt' ? ' selected' : ''}>&lt;</option><option value="between"${state.performance?.op === 'between' ? ' selected' : ''}>between</option></select><input type="number" inputmode="decimal" step="1" data-performance-min placeholder="%" value="${Number.isFinite(state.performance?.min) ? esc(state.performance.min * 100) : ''}">${state.performance?.op === 'between' ? `<input type="number" inputmode="decimal" step="1" data-performance-max placeholder="%" value="${Number.isFinite(state.performance?.max) ? esc(state.performance.max * 100) : ''}">` : ''}</span></fieldset>
+        <button type="button" class="market-table-filter-reset" data-filter-reset>Clear filters</button>
+      </form>
+    </th>
+  </tr>`;
+}
+
 function renderRawData(state) {
   const columns = state.priceMode === 'price' ? PRICE_COLUMNS : CHANGE_COLUMNS;
   const filtered = filterRows(this.currentRows(), state);
@@ -167,7 +175,7 @@ function renderRawData(state) {
   const chips = renderFilterChips(activeFilterChips(state));
   const table = `<div class="market-table-wrap" data-raw-table-wrap>
     <table class="market-table" data-raw-table>
-      <thead>${renderTableHead(state, columns)}</thead>
+      <thead>${renderTableHead(state, columns)}${renderTableFilters(state, this.currentRows(), columns.length)}</thead>
       <tbody data-raw-table-body>
         ${pageState.rows.length
           ? pageState.rows.map(row => renderTableRow(row, columns, state)).join('')
@@ -177,16 +185,8 @@ function renderRawData(state) {
   </div>`;
   return `<section class="market-raw" data-raw-section>
     <header class="market-raw-header">
-      <div>
-        <span class="eyebrow">RAW DATA</span>
-        <h2>Raw Data</h2>
-      </div>
-      <div class="market-raw-mode" role="group" aria-label="Raw data mode">
-        <button type="button" class="market-raw-mode-button${state.priceMode === 'price' ? ' is-active' : ''}" data-price-mode="price" aria-pressed="${state.priceMode === 'price'}">Price</button>
-        <button type="button" class="market-raw-mode-button${state.priceMode === 'change' ? ' is-active' : ''}" data-price-mode="change" aria-pressed="${state.priceMode === 'change'}">Change</button>
-        <button type="button" class="market-raw-mode-button" data-export-csv>Export CSV</button>
-        <span class="market-export-status" data-export-status role="status"></span>
-      </div>
+      <div><span class="eyebrow">RAW DATA</span><h2>Raw Data</h2></div>
+      <div class="market-raw-actions"><button type="button" class="market-table-filter-toggle" data-table-filter-toggle aria-expanded="${state.filtersOpen}" aria-controls="raw-data-filters"><span aria-hidden="true">≡</span> Filters</button><div class="market-raw-mode" role="group" aria-label="Raw data mode"><button type="button" class="market-raw-mode-button${state.priceMode === 'price' ? ' is-active' : ''}" data-price-mode="price" aria-pressed="${state.priceMode === 'price'}">Price</button><button type="button" class="market-raw-mode-button${state.priceMode === 'change' ? ' is-active' : ''}" data-price-mode="change" aria-pressed="${state.priceMode === 'change'}">Change</button><button type="button" class="market-raw-mode-button" data-export-csv>Export CSV</button><span class="market-export-status" data-export-status role="status"></span></div></div>
     </header>
     ${chips}
     ${table}
@@ -234,43 +234,10 @@ function renderPicks(state) {
   </section>`;
 }
 
-function renderFilters(state) {
-  const rows = this.currentRows();
-  const exchanges = [...new Set(rows.map(row => row.exchange).filter(Boolean))].sort();
-  const memberships = [...new Set(rows.flatMap(row => Array.isArray(row.memberships) ? row.memberships : [])).values()].sort();
-  const isCrypto = state.market === 'crypto';
-  return `<form class="market-filters${state.filtersOpen ? ' is-open' : ''}" data-filter-form id="filter-drawer" role="search" aria-label="Filter raw data">
-    <label class="market-filter-search"><span class="visually-hidden">Search</span><input data-search type="search" placeholder="Search ticker or company" value="${esc(state.query)}" autocomplete="off"></label>
-    ${isCrypto ? '' : `<label class="market-filter-control"><span>Exchange</span><select data-exchange><option value="">All</option>${exchanges.map(value => `<option value="${esc(value)}"${state.exchange === value ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label>`}
-    ${isCrypto ? '' : `<label class="market-filter-control"><span>Membership</span><select data-membership><option value="">All</option>${memberships.map(value => `<option value="${esc(value)}"${state.membership === value ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label>`}
-    <label class="market-filter-control"><span>Price</span><span class="market-filter-price"><input type="number" inputmode="decimal" data-min-price min="0" placeholder="Min" value="${Number.isFinite(state.minPrice) ? esc(state.minPrice) : ''}"><input type="number" inputmode="decimal" data-max-price min="0" placeholder="Max" value="${Number.isFinite(state.maxPrice) ? esc(state.maxPrice) : ''}"></span></label>
-    <fieldset class="market-filter-performance">
-      <legend>Performance</legend>
-      <span class="market-filter-performance-row">
-        <select data-performance-horizon>
-          <option value="">Any</option>
-          ${PICK_HORIZONS.map(key => `<option value="${esc(key)}"${state.performance?.horizon === key ? ' selected' : ''}>${esc(PICK_HORIZON_LABELS[key])}</option>`).join('')}
-        </select>
-        <select data-performance-op>
-          <option value="gt"${state.performance?.op === 'gt' ? ' selected' : ''}>&gt;</option>
-          <option value="lt"${state.performance?.op === 'lt' ? ' selected' : ''}>&lt;</option>
-          <option value="between"${state.performance?.op === 'between' ? ' selected' : ''}>between</option>
-        </select>
-        <input type="number" inputmode="decimal" step="1" data-performance-min placeholder="%" value="${Number.isFinite(state.performance?.min) ? esc(state.performance.min * 100) : ''}">
-        <span class="market-filter-performance-max" data-performance-max-wrap${state.performance?.op === 'between' ? '' : ' hidden'}><input type="number" inputmode="decimal" step="1" data-performance-max placeholder="%" value="${Number.isFinite(state.performance?.max) ? esc(state.performance.max * 100) : ''}"></span>
-      </span>
-    </fieldset>
-    <button type="button" class="market-filter-reset" data-filter-reset>Reset</button>
-    <button type="button" class="market-filter-drawer-trigger" data-filter-drawer-trigger aria-expanded="${state.filtersOpen ? 'true' : 'false'}" aria-controls="filter-drawer">Filters</button>
-  </form>`;
-}
-
 function renderMain(state, context) {
   return `<section class="market-main" data-panel="main">
     ${renderStatusStrip({ manifest:context.manifest, health:context.health, market:state.market })}
-    ${renderBreadth(context.pulse[state.market])}
     ${renderRankingBlock.call(context, state.market)}
-    ${renderFilters.call(context, state)}
     ${renderRawData.call(context, state)}
   </section>`;
 }
@@ -562,15 +529,9 @@ export function createMarketsDashboard(container, options = {}) {
       updateLocation();
       return;
     }
-    if (event.target.closest('[data-filter-drawer-trigger]')) {
-      const button = event.target.closest('[data-filter-drawer-trigger]');
-      const drawer = document.getElementById('filter-drawer');
-      if (drawer) {
-        const open = !drawer.classList.contains('is-open');
-        state.filtersOpen = open;
-        drawer.classList.toggle('is-open', open);
-        button.setAttribute('aria-expanded', String(open));
-      }
+    if (event.target.closest('[data-table-filter-toggle]')) {
+      state.filtersOpen = !state.filtersOpen;
+      renderView();
       return;
     }
     const rowTarget = event.target.closest('tr[data-open-instrument]');

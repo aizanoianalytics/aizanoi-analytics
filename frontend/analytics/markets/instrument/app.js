@@ -323,23 +323,30 @@ function renderHeader() {
   </header>`;
 }
 
-function renderToolbar() {
+function renderChartControls() {
   const has4H = Array.isArray(state.payload?.fourHour) && state.payload.fourHour.length > 1;
-  return `<div class="chart-toolbar"><label>Frequency<select data-frequency><option value="1d"${state.frequency === '1d' ? ' selected' : ''}>Daily</option>${has4H ? `<option value="4h"${state.frequency === '4h' ? ' selected' : ''}>4 hour</option>` : ''}</select></label>
-    <label>Timeframe<select data-timeframe>${TIMEFRAMES.map(tf => `<option value="${esc(tf.key)}"${state.timeframe === tf.key ? ' selected' : ''}>${esc(tf.label)}</option>`).join('')}</select></label>
-    <label>From<input type="date" data-date-from value="${esc(state.chartDateFrom)}"></label>
-    <label>To<input type="date" data-date-to value="${esc(state.chartDateTo)}"></label>
-    <label>Selected date<input type="date" data-selected-date value="${esc(state.selectedDate)}"></label>
-  </div>`;
-}
-
-function renderIndicators() {
-  const overlayLabels = { sma20:'SMA 20', sma50:'SMA 50', sma200:'SMA 200', ema12:'EMA 12', ema26:'EMA 26', ema50:'EMA 50', bollinger:'Bollinger Bands 20 / 2' };
+  const overlayLabels = { sma20:'SMA 20', sma50:'SMA 50', sma200:'SMA 200', ema12:'EMA 12', ema26:'EMA 26', ema50:'EMA 50', bollinger:'Bollinger Bands' };
   const oscillatorLabels = { rsi14:'RSI 14', macd:'MACD 12/26/9', roc12:'ROC 12' };
-  return `<div class="indicator-toolbar">
-    <fieldset class="indicator-picker"><legend>Price overlays</legend>${Object.entries(overlayLabels).map(([key, label]) => `<label><input type="checkbox" value="${esc(key)}" data-indicator${state.indicators.has(key) ? ' checked' : ''}> ${esc(label)}</label>`).join('')}</fieldset>
-    <fieldset class="indicator-picker"><legend>Oscillators</legend>${Object.entries(oscillatorLabels).map(([key, label]) => `<label><input type="checkbox" value="${esc(key)}" data-oscillator${state.oscillators.has(key) ? ' checked' : ''}> ${esc(label)}</label>`).join('')}</fieldset>
-  </div>`;
+  const option = (key, label) => `<option value="${esc(key)}"${state.timeframe === key ? ' selected' : ''}>${esc(label)}</option>`;
+  return `<section class="instrument-control-bar" data-chart-control-bar aria-label="Chart controls">
+    <div class="instrument-control-group" data-control-group="range">
+      <div class="instrument-control-heading"><span class="eyebrow">CHART RANGE</span><span>Choose the data interval</span></div>
+      <div class="instrument-control-fields">
+        <label>Frequency<select data-frequency><option value="1d"${state.frequency === '1d' ? ' selected' : ''}>Daily</option>${has4H ? `<option value="4h"${state.frequency === '4h' ? ' selected' : ''}>4 hour</option>` : ''}</select></label>
+        <label>Timeframe<select data-timeframe>${TIMEFRAMES.map(tf => option(tf.key, tf.label)).join('')}</select></label>
+        <label class="instrument-control-date">From<input type="date" data-date-from value="${esc(state.chartDateFrom)}"></label>
+        <label class="instrument-control-date">To<input type="date" data-date-to value="${esc(state.chartDateTo)}"></label>
+        <label class="instrument-control-date">Selected date<input type="date" data-selected-date value="${esc(state.selectedDate)}"></label>
+      </div>
+    </div>
+    <div class="instrument-control-group" data-control-group="studies" data-indicator-groups>
+      <div class="instrument-control-heading"><span class="eyebrow">STUDIES</span><span>Layer indicators only when needed</span></div>
+      <div class="instrument-study-groups">
+        <fieldset class="instrument-study-picker"><legend>Price overlays</legend>${Object.entries(overlayLabels).map(([key, label]) => `<label><input type="checkbox" value="${esc(key)}" data-indicator${state.indicators.has(key) ? ' checked' : ''}><span>${esc(label)}</span></label>`).join('')}</fieldset>
+        <fieldset class="instrument-study-picker"><legend>Oscillators</legend>${Object.entries(oscillatorLabels).map(([key, label]) => `<label><input type="checkbox" value="${esc(key)}" data-oscillator${state.oscillators.has(key) ? ' checked' : ''}><span>${esc(label)}</span></label>`).join('')}</fieldset>
+      </div>
+    </div>
+  </section>`;
 }
 
 function render() {
@@ -348,7 +355,7 @@ function render() {
   document.title = `${state.payload.ticker} — Aizanoi Markets`;
   const main = document.querySelector('[data-instrument-root]');
   if (!main) return;
-  main.innerHTML = `${renderHeader()}${renderHorizonCards(summary)}${renderToolbar()}${renderIndicators()}<div class="chart-stage" data-chart-stage aria-live="polite">${renderChart()}</div>${renderHistory(state)}`;
+  main.innerHTML = `${renderHeader()}${renderHorizonCards(summary)}${renderChartControls()}<div class="chart-stage" data-chart-stage aria-live="polite">${renderChart()}</div>${renderHistory(state)}`;
   bindChartInteractivity();
 }
 

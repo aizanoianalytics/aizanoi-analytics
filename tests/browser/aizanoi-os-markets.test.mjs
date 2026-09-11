@@ -59,7 +59,8 @@ test('AizanoiOS Markets mounts shared full-product dashboard with simplified nav
     const shortcut = page.locator('[data-app="markets"]:visible').first();
     await shortcut.waitFor({ state: 'visible', timeout: 15000 });
     await shortcut.click();
-    await page.waitForSelector('[data-app-body] [data-breadth] article', { timeout: 15000 });
+    await page.waitForSelector('[data-app-body] [data-raw-table] tbody tr[data-symbol]', { timeout: 15000 });
+    assert.equal(await page.locator('[data-app-body] [data-breadth]').count(), 0);
     const navText = await page.locator('[data-app-body] .market-nav').innerText();
     assert.ok(!/signals/i.test(navText));
     assert.ok(!/explorer/i.test(navText));
