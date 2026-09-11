@@ -636,6 +636,10 @@ test('Instrument URL restores crypto 4h and timeframe while US rejects 4h', asyn
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await installFixtures(page, 'crypto', 'btc');
+  // The same scenario then navigates to US/AAPL; route both instrument payloads
+  // rather than relying on the static fixture server to contain mutable data.
+  await page.route('**/analytics/markets/data/history/us/aapl.json', route => route.fulfill({ json: instrumentHistory('us', 'aapl', 'AAPL') }));
+  await page.route('**/analytics/markets/data/summary-items/us/aapl.json', route => route.fulfill({ json: usRows.find(row => row.slug === 'aapl') }));
   try {
     await page.goto(`${base}/analytics/markets/instrument/?market=crypto&symbol=btc&frequency=4h&timeframe=3M`, { waitUntil: 'networkidle' });
     await page.waitForSelector('[data-frequency]');
