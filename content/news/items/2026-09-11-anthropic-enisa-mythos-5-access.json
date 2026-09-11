@@ -1,0 +1,33 @@
+{
+    "id": "2026-09-11-anthropic-enisa-mythos-5-access",
+    "title": "Anthropic grants EU cybersecurity agency Enisa access to Mythos 5 model",
+    "summary": "Anthropic has given the European Union's cybersecurity agency Enisa access to its Mythos 5 AI model after months of talks, European Commission spokesperson Thomas Regnier confirmed on Thursday. The deal, which the WSJ reports will appear in its September 11 print edition, also gives Enisa access to OpenAI's GPT-5.6 Cyber and GPT-6-Astra, and follows a brief US ban on foreign use of Anthropic's flagship models that has since been relaxed for a limited set of partners.",
+    "category": "ai",
+    "priority": 65,
+    "publishedAt": "2026-09-11T07:15:00+03:00",
+    "updatedAt": "2026-09-11T07:15:00+03:00",
+    "retrievedAt": "2026-09-11T07:15:00+03:00",
+    "author": {
+        "name": "Aizanoi News Desk"
+    },
+    "editor": {
+        "name": "Editorial Desk"
+    },
+    "image": null,
+    "corrections": [],
+    "tags": [
+        "anthropic",
+        "openai",
+        "eu",
+        "cybersecurity",
+        "enisa",
+        "mythos"
+    ],
+    "sources": [
+        {
+            "publisher": "Wall Street Journal",
+            "url": "https://www.wsj.com/tech/anthropic-gives-eus-cybersecurity-agency-access-to-mythos-5-ai-model-33e3a3ef",
+            "publishedAt": "2026-09-10T07:59:00Z"
+        }
+    ]
+}

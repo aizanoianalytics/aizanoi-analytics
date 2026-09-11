@@ -1,0 +1,32 @@
+{
+    "id": "2026-09-11-qualcomm-snapdragon-8-elite-gen-6-npu",
+    "title": "Qualcomm previews Snapdragon 8 Elite Gen 6 NPU for 30B-parameter on-device AI agents",
+    "summary": "Ahead of its September 22 Snapdragon Summit, Qualcomm has detailed the redesigned Hexagon NPU that will headline the Snapdragon 8 Elite Gen 6 platform. The new NPU adds an 'Element Accelerator' and substantially larger shared memory, enabling phones to run roughly 30B-parameter mixture-of-experts models locally with about 3B active parameters per token, while the Oryon CPU retains a 2+3+3 layout on TSMC's 2nm process.",
+    "category": "technology",
+    "priority": 60,
+    "publishedAt": "2026-09-11T07:45:00+03:00",
+    "updatedAt": "2026-09-11T07:45:00+03:00",
+    "retrievedAt": "2026-09-11T07:45:00+03:00",
+    "author": {
+        "name": "Aizanoi News Desk"
+    },
+    "editor": {
+        "name": "Editorial Desk"
+    },
+    "image": null,
+    "corrections": [],
+    "tags": [
+        "qualcomm",
+        "snapdragon",
+        "npu",
+        "on-device-ai",
+        "tsmc-2nm"
+    ],
+    "sources": [
+        {
+            "publisher": "ServeTheHome",
+            "url": "https://www.servethehome.com/qualcomm-details-next-gen-oryon-cpu-adreno-gpu-and-hexagon-npu/",
+            "publishedAt": "2026-09-10T00:00:00Z"
+        }
+    ]
+}
