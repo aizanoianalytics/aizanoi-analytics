@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="screen-orientation" content="landscape">
+  <title>Aizanoi Dungeon — Aizo'nun Uyanışı</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/aizanoi-dungeon.svg">
+  <link rel="stylesheet" href="css/game.css">
+  <script src="/vendor/phaser.min.js"></script>
+</head>
+<body class="aizanoi-standalone-body">
+  <div id="game-container" class="aizanoi-dungeon-app-root"></div>
+
+  <!-- Mobil Portrait Döndürme Uyarısı -->
+  <div id="orientation-warning" class="orientation-overlay" hidden>
+    <div class="orientation-card">
+      <div class="rotate-icon">📱 ➔ 🔄</div>
+      <h2>Lütfen Cihazınızı Yatay Çevirin</h2>
+      <p>Aizanoi Dungeon en iyi yatay (landscape) modda oynanır.</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { launchDungeonGame } from './js/main.js';
+
+    const container = document.getElementById('game-container');
+    launchDungeonGame(container).then(() => {
+      console.log('[Aizanoi Dungeon] Standalone başlatıldı.');
+    }).catch(err => {
+      console.error('[Aizanoi Dungeon] Başlatma hatası:', err);
+    });
+
+    // Orientation checker for mobile
+    function checkOrientation() {
+      const warning = document.getElementById('orientation-warning');
+      const isMobile = /Android|iPhone|iPad|iPod|touch/i.test(navigator.userAgent) || (window.innerWidth < 840 && 'ontouchstart' in window);
+      if (isMobile && window.innerHeight > window.innerWidth) {
+        warning.hidden = false;
+      } else {
+        warning.hidden = true;
+      }
+    }
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+    checkOrientation();
+  </script>
+</body>
+</html>

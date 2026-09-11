@@ -42,6 +42,9 @@ import {
   buildCargoSkiff,
   buildWoodenFootbridge,
   buildBirdFlock,
+  buildRomanSarcophagus,
+  buildPenkalasWaterMill,
+  buildRiverQuayCrane,
 } from '../../shared/assets/props.js';
 
 
@@ -429,6 +432,18 @@ function populateAizanoiDressing() {
   dressingGroup.add(buildAmphoraCluster(126, -145, 6, -0.3));
   dressingGroup.add(buildAmphoraCluster(118, 85, 8, 0.1));
   dressingGroup.add(buildWoodenCart(95, -170, 0.3));
+
+  // Roman treadwheel quay crane for unloading river barges
+  dressingGroup.add(buildRiverQuayCrane(104, -160, 0.15));
+
+  // Penkalas river grain water mill with turning paddle wheel
+  const penkalasMill = buildPenkalasWaterMill(138, -130, -0.2);
+  dressingGroup.add(penkalasMill);
+
+  // Roman marble sarcophagi along the northern sanctuary approach
+  dressingGroup.add(buildRomanSarcophagus(-195, 70, 0.2));
+  dressingGroup.add(buildRomanSarcophagus(-185, 95, -0.15));
+  dressingGroup.add(buildRomanSarcophagus(-135, 95, 0.1));
 
   // 5. Colonnaded Street Furnishings
   dressingGroup.add(buildInscribedStele(-65, -380, 0, 'Miliarium Aizanorum'));
