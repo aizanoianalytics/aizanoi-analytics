@@ -48,7 +48,13 @@ def slugify(symbol: str) -> str:
 
 def crypto_universe(path: Path) -> list[dict[str, str]]:
     rows = json.loads(path.read_text(encoding="utf-8"))
-    return [{**row, "market": "crypto", "exchange": "Crypto · USD", "slug": slugify(row["ticker"])} for row in rows]
+    for row in rows:
+        row["market"] = "crypto"
+        row["name"] = row.pop("label", row.get("name", row["ticker"]))
+        row.setdefault("memberships", ["Crypto Focused 35"])
+        row.setdefault("exchange", "Crypto · USD")
+        row["slug"] = slugify(row["ticker"])
+    return rows
 
 
 def load_universe_corrections(path: Path) -> tuple[dict[str, str], set[str]]:
