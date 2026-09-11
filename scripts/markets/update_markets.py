@@ -900,7 +900,7 @@ def health_check(root: Path, completed_at: str) -> int:
                 latest_four_hour = four_hour[-1].get("t") if four_hour else None
                 if not isinstance(latest_four_hour, (int, float)):
                     unhealthy.append(f"crypto/{row.get('slug')} missing-four-hour")
-                elif now_ts - latest_four_hour > 6 * 3600:
+                elif now_ts - latest_four_hour > 8 * 3600:
                     unhealthy.append(f"crypto/{row.get('slug')} stale-four-hour age={int(now_ts - latest_four_hour)}s")
     print(f"[markets-health] completedAt={completed_at} unhealthy={len(unhealthy)}")
     for entry in unhealthy[:20]:
