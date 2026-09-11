@@ -88,12 +88,13 @@ usRows[8].return1d = 0.04; usRows[8].return1m = 0.1; usRows[8].return3m = 0.1; u
 cryptoRows[0].ticker = 'BTC'; cryptoRows[0].name = 'Bitcoin'; cryptoRows[0].slug = 'btc';
 cryptoRows[0].return1y = 1.5; cryptoRows[0].return1d = -0.03;
 
-async function installFixtures(page, market = 'us', symbol = 'aapl') {
-  await page.route('**/analytics/markets/data/manifest.json', route => route.fulfill({ json: { schemaVersion: 3, completedAt: '2026-09-11T07:00:00Z', status: 'complete', counts: { us: usRows.length, crypto: cryptoRows.length } } }));
+async function installFixtures(page, market = 'us', symbol = 'aapl', fixtureRows = { us: usRows, crypto: cryptoRows }) {
+  const rowsFor = value => fixtureRows[value] || (value === 'us' ? usRows : cryptoRows);
+  await page.route('**/analytics/markets/data/manifest.json', route => route.fulfill({ json: { schemaVersion: 3, completedAt: '2026-09-11T07:00:00Z', status: 'complete', counts: { us: rowsFor('us').length, crypto: rowsFor('crypto').length } } }));
   await page.route('**/analytics/markets/data/health.json', route => route.fulfill({ json: { schemaVersion: 3, status: 'complete', us: { expected: usRows.length, published: usRows.length, missingHistory: [], failedCurrentRefresh: [], stale: 0, status: 'complete', latestObservationAt: '2026-09-10T04:00:00Z', priceBasis: 'Adjusted close', provider: 'fintable' }, crypto: { expected: cryptoRows.length, published: cryptoRows.length, missingHistory: [], failedCurrentRefresh: [], stale: 0, status: 'complete', latestObservationAt: '2026-09-10T00:00:00Z', priceBasis: 'Exchange close', provider: 'binance' }, failedSymbols: [], quality: { fourHourUnavailable: 0, limitedHistory: 0 } } }));
   await page.route('**/analytics/markets/data/snapshots/pulse.json', route => route.fulfill({ json: { snapshots: [] } }));
   for (const m of ['us', 'crypto']) {
-    const rows = m === 'us' ? usRows : cryptoRows;
+    const rows = rowsFor(m);
     await page.route(`**/analytics/markets/data/summary/${m}/index.json`, route => route.fulfill({ json: { market: m, chunks: [{ path: '00.json', count: rows.length }] } }));
     await page.route(`**/analytics/markets/data/summary/${m}/00.json`, route => route.fulfill({ json: { market: m, rows } }));
     await page.route(`**/analytics/markets/data/pulse/${m}.json`, route => route.fulfill({ json: pulse(m, rows) }));
@@ -570,3 +571,87 @@ for (const width of [390, 320]) {
     }
   });
 }
+
+test('Dashboard URL state clears US filters for crypto, persists pager and performance state, and restores safely', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const manyUs = buildMarketUniverse('us', 120);
+  await installFixtures(page, 'us', 'aapl', { us: manyUs, crypto: cryptoRows });
+  try {
+    await page.goto(`${base}/analytics/markets/?market=us&exchange=NASDAQ&membership=Nasdaq-100&page=2&perfHorizon=return1m&perfOp=between&perfMin=-2&perfMax=2`, { waitUntil: 'networkidle' });
+    await page.waitForSelector('[data-pager]');
+    assert.match(page.url(), /page=2/);
+    assert.match(await page.locator('[data-filter-chips]').innerText(), /1M between -2% and 2%/);
+    await page.click('[data-market="crypto"]');
+    await page.waitForFunction(() => new URLSearchParams(location.search).get('market') === 'crypto');
+    await page.waitForSelector('tbody[data-raw-table-body] tr[data-symbol]');
+    assert.ok(await page.locator('tbody[data-raw-table-body] tr[data-symbol]').count() > 0, 'crypto rows remain visible');
+    assert.equal(await page.locator('[data-exchange]').count(), 0);
+    assert.equal(await page.locator('[data-membership]').count(), 0);
+    assert.doesNotMatch(page.url(), /exchange=|membership=/);
+    assert.match(page.url(), /perfHorizon=return1m/);
+    await page.reload({ waitUntil: 'networkidle' });
+    await page.waitForSelector('[data-performance-horizon]');
+    assert.equal(await page.locator('[data-performance-horizon]').inputValue(), 'return1m');
+    assert.equal(await page.locator('[data-performance-op]').inputValue(), 'between');
+    assert.equal(await page.locator('[data-performance-min]').inputValue(), '-2');
+    assert.equal(await page.locator('[data-performance-max]').inputValue(), '2');
+    await page.goto(`${base}/analytics/markets/?market=us&bogus=x&sort=nonsense:up&page=bad&minPrice=oops&perfHorizon=nope&perfOp=wat&perfMin=NaN`, { waitUntil: 'networkidle' });
+    await page.waitForSelector('tbody[data-raw-table-body] tr[data-symbol]');
+    assert.equal(await page.locator('[data-search]').inputValue(), '');
+    assert.doesNotMatch(page.url(), /bogus|nonsense|perfHorizon/);
+    await page.goto(`${base}/analytics/markets/?market=us`, { waitUntil: 'networkidle' });
+    await page.click('[data-page-action="next"]');
+    assert.match(page.url(), /page=2/);
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.match(await page.locator('[data-pager]').innerText(), /Page 2 of 2/);
+    await page.goBack({ waitUntil: 'networkidle' });
+    assert.doesNotMatch(page.url(), /page=2/);
+    await page.goForward({ waitUntil: 'networkidle' });
+    await page.waitForFunction(() => location.search.includes('page=2'));
+    assert.match(page.url(), /page=2/);
+  } finally { await browser.close(); }
+});
+
+test('Dashboard ranking selection uses the rendered sort order for ticker and numeric pages', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const manyUs = buildMarketUniverse('us', 120);
+  await installFixtures(page, 'us', 'aapl', { us: manyUs, crypto: cryptoRows });
+  try {
+    await page.goto(`${base}/analytics/markets/?market=us`, { waitUntil: 'networkidle' });
+    await page.waitForSelector('[data-ranking-symbol]');
+    for (const key of ['ticker', 'latestPrice']) {
+      if (key === 'latestPrice') await page.click('[data-price-mode="price"]');
+      await page.click(`[data-sort-key="${key}"]`);
+      const selected = await page.locator('[data-ranking-symbol]').first().getAttribute('data-ranking-symbol');
+      await page.click('[data-ranking-symbol]');
+      await page.waitForSelector(`tr[data-symbol="${selected}"].is-selected`);
+      assert.match(await page.locator('[data-pager]').innerText(), /Page [12] of 2/);
+    }
+  } finally { await browser.close(); }
+});
+
+test('Instrument URL restores crypto 4h and timeframe while US rejects 4h', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await installFixtures(page, 'crypto', 'btc');
+  // The same scenario then navigates to US/AAPL; route both instrument payloads
+  // rather than relying on the static fixture server to contain mutable data.
+  await page.route('**/analytics/markets/data/history/us/aapl.json', route => route.fulfill({ json: instrumentHistory('us', 'aapl', 'AAPL') }));
+  await page.route('**/analytics/markets/data/summary-items/us/aapl.json', route => route.fulfill({ json: usRows.find(row => row.slug === 'aapl') }));
+  try {
+    await page.goto(`${base}/analytics/markets/instrument/?market=crypto&symbol=btc&frequency=4h&timeframe=3M`, { waitUntil: 'networkidle' });
+    await page.waitForSelector('[data-frequency]');
+    assert.equal(await page.locator('[data-frequency]').inputValue(), '4h');
+    assert.equal(await page.locator('[data-timeframe]').inputValue(), '3M');
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.locator('[data-frequency]').inputValue(), '4h');
+    assert.equal(await page.locator('[data-timeframe]').inputValue(), '3M');
+    await page.goto(`${base}/analytics/markets/instrument/?market=us&symbol=aapl&frequency=4h&timeframe=3M`, { waitUntil: 'networkidle' });
+    await page.waitForSelector('[data-frequency]');
+    assert.equal(await page.locator('[data-frequency]').inputValue(), '1d');
+    assert.doesNotMatch(page.url(), /frequency=4h/);
+    assert.equal(await page.locator('[data-timeframe]').inputValue(), '3M');
+  } finally { await browser.close(); }
+});

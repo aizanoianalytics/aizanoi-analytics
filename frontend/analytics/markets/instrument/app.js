@@ -16,6 +16,7 @@ const params = new URLSearchParams(location.search);
 const market = ['us', 'crypto'].includes(params.get('market')) ? params.get('market') : 'us';
 const symbol = slugFromParam(params.get('symbol'));
 const requestedFrequency = params.get('frequency');
+const requestedTimeframe = params.get('timeframe');
 
 function esc(value) {
   return String(value ?? '').replace(/[&<>"']/g, character => ({
@@ -50,6 +51,18 @@ const TIMEFRAMES = [
   { key:'SINCE_2019', label:'Since 2019' },
   { key:'CUSTOM', label:'Custom' },
 ];
+const TIMEFRAME_KEYS = new Set(TIMEFRAMES.map(item => item.key));
+
+function syncUrl() {
+  const next = new URLSearchParams(location.search);
+  next.set('market', market);
+  next.set('symbol', symbol);
+  if (state.frequency === '4h') next.set('frequency', '4h');
+  else next.delete('frequency');
+  if (state.timeframe !== '1Y') next.set('timeframe', state.timeframe);
+  else next.delete('timeframe');
+  history.replaceState(null, '', `${location.pathname}?${next}`);
+}
 
 const state = {
   payload: null,
@@ -232,8 +245,10 @@ function updateChartTooltip(visibleIndex, visibleSource) {
     tooltip.removeAttribute('data-active');
     return;
   }
+  const source = state.frequency === '4h' ? state.payload.fourHour : state.payload.daily;
   const overlayKeys = [...state.indicators].flatMap(key => key === 'bollinger' ? ['bollingerUpper', 'bollingerLower'] : [key]);
-  const indicators = state.cachedIndicators || indicatorSeries(state.frequency === '4h' ? state.payload.fourHour : state.payload.daily);
+  const cacheKey = `${state.frequency}:${source.length}:${source[0]?.t || ''}:${source.at(-1)?.t || ''}`;
+  const indicators = state.cachedIndicatorKey === cacheKey ? state.cachedIndicators : indicatorSeries(source);
   const fullIndex = (state.cachedSourceOffset || 0) + visibleIndex;
   const overlayRows = overlayKeys.map(key => [key, indicators[key]?.[fullIndex]]).filter(([, v]) => Number.isFinite(v));
   const overlays = overlayRows.map(([key, value]) => `${key.toUpperCase()}: ${formatPrice(value, market)}`).join(' · ');
@@ -400,6 +415,7 @@ document.addEventListener('change', event => {
   if (event.target.matches('[data-frequency]')) {
     // US instruments publish daily bars only; never retain a 4h frequency there.
     state.frequency = (market === 'us' || event.target.value !== '4h') ? '1d' : '4h';
+    syncUrl();
     render();
     return;
   }
@@ -410,6 +426,7 @@ document.addEventListener('change', event => {
       const fromIn = document.querySelector('[data-date-from]'); if (fromIn) fromIn.value = '';
       const toIn = document.querySelector('[data-date-to]'); if (toIn) toIn.value = '';
     }
+    syncUrl();
     render();
     return;
   }
@@ -549,17 +566,11 @@ if (!symbol) {
     state.payload = payload;
     state.summary = summary;
     state.universe = [summary];
-    // Honor ?frequency=4h only for crypto with 4h bars; US instruments are
-    // daily-only, so a stale 4h state is reset and stripped from the URL.
+    // Honor URL state only when the requested values are supported by this payload.
     const has4H = Array.isArray(payload?.fourHour) && payload.fourHour.length > 1;
-    state.frequency = '1d';
-    if (market === 'crypto' && requestedFrequency === '4h' && has4H) state.frequency = requestedFrequency;
-    if (market === 'us' && requestedFrequency) {
-      const cleaned = new URLSearchParams(location.search);
-      cleaned.delete('frequency');
-      history.replaceState(null, '', `${location.pathname}?${cleaned}`);
-    }
-    state.timeframe = '1Y';
+    state.frequency = market === 'crypto' && requestedFrequency === '4h' && has4H ? '4h' : '1d';
+    state.timeframe = TIMEFRAME_KEYS.has(requestedTimeframe) ? requestedTimeframe : '1Y';
+    syncUrl();
     render();
   }).catch(error => {
     const root = document.querySelector('[data-instrument-root]');
