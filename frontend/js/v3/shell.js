@@ -195,6 +195,7 @@ function shellTemplate() {
     <section class="az-stage">
       <div class="az-home-scroll"></div>
       <div class="az-window-layer" aria-live="polite"></div>
+      <div class="az-fullscreen-layer" aria-live="polite"></div>
     </section>
     <footer class="az-task-shelf-wrap"><nav class="az-task-shelf" aria-label="Open apps and navigation">${shelfMarkup()}</nav></footer>
     ${overlayMarkup()}
@@ -277,6 +278,25 @@ function resizeMarkup() {
   return ['n','s','e','w','ne','nw','se','sw'].map((edge) => `<span class="az-resize-handle" data-edge="${edge}" tabindex="-1" aria-hidden="true"></span>`).join('');
 }
 
+function createFullscreenSurface(app) {
+  let layer = document.querySelector('.az-fullscreen-layer');
+  if (!layer) {
+    layer = document.createElement('div');
+    layer.className = 'az-fullscreen-layer';
+    layer.setAttribute('aria-live', 'polite');
+    document.querySelector('.az-stage')?.appendChild(layer);
+  }
+  const el = document.createElement('section');
+  el.className = 'az-fullscreen-app';
+  el.dataset.appId = app.id;
+  el.setAttribute('role', 'region');
+  el.setAttribute('aria-label', app.label);
+  el.tabIndex = -1;
+  el.innerHTML = `<div class="az-fullscreen-body" data-app-body></div>`;
+  layer.appendChild(el);
+  return el;
+}
+
 function createWindow(app) {
   const layer = document.querySelector('.az-window-layer');
   const rect = defaultRect(app.id);
@@ -328,8 +348,8 @@ function setRoute(appId, mode='replace') {
 async function openAppInstance(appId, app, options, generation) {
   await ensureAppsStyle();
   if(appGenerations.get(appId)!==generation)return null;
-  const el = createWindow(app);
-  const item = { app, el, cleanup:null, minimized:false, maximized:false, previousRect:null, generation };
+  const el = app.fullscreen ? createFullscreenSurface(app) : createWindow(app);
+  const item = { app, el, cleanup:null, minimized:false, maximized:false, previousRect:null, generation, fullscreen: Boolean(app.fullscreen) };
   windows.set(appId, item);
   Store.markAppOpen(appId);
   renderShelf();

@@ -4,6 +4,9 @@
 async function ensurePhaser() {
   if (typeof Phaser !== 'undefined') return window.Phaser;
 
+  // Tek yukleme denemesi: vendored Phaser. Hata olursa reject — cagiran
+  // (mount/standalone) gorunur hata UI basar. Duplicate fallback yok:
+  // ayni URL'ye ikinci deneme anlamsizdi.
   return new Promise((resolve, reject) => {
     let script = document.querySelector('script[data-phaser]');
     if (!script) {
@@ -15,14 +18,12 @@ async function ensurePhaser() {
     if (typeof Phaser !== 'undefined') {
       resolve(window.Phaser); return;
     }
-    script.addEventListener('load', () => resolve(window.Phaser));
+    script.addEventListener('load', () => {
+      if (typeof Phaser !== 'undefined') resolve(window.Phaser);
+      else reject(new Error('Phaser runtime could not be loaded from local vendor.'));
+    });
     script.addEventListener('error', () => {
-      // Fallback absolute vendor path (same file the standalone page uses)
-      const fallback = document.createElement('script');
-      fallback.src = '/vendor/phaser.min.js';
-      fallback.onload = () => resolve(window.Phaser);
-      fallback.onerror = (err) => reject(new Error('Phaser runtime could not be loaded from local vendor.'));
-      document.head.appendChild(fallback);
+      reject(new Error('Phaser runtime could not be loaded from local vendor.'));
     });
   });
 }
@@ -108,4 +109,24 @@ export function stopDungeonGame(gameInstance) {
       console.warn('[Aizanoi Dungeon] Error destroying game instance:', err);
     }
   }
+  setDungeonExitHandler(null);
+}
+
+// AizanoiOS shell exit plumbing: the host sets a handler at mount so the
+// in-game Return control and the ESC exit menu can close the fullscreen
+// surface without a reload. Standalone has no handler.
+let dungeonExitHandler = null;
+
+export function setDungeonExitHandler(fn) {
+  dungeonExitHandler = typeof fn === 'function' ? fn : null;
+}
+
+export function hasDungeonExitHandler() {
+  return dungeonExitHandler !== null;
+}
+
+export function requestDungeonExit() {
+  try {
+    dungeonExitHandler?.();
+  } catch (_) {}
 }

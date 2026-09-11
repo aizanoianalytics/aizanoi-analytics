@@ -79,6 +79,11 @@
   .az-dock-tooltip { position:absolute; left:50%; bottom:calc(100% + 10px); max-width:180px; padding:6px 9px; border:1px solid rgba(255,255,255,.75); border-radius:9px; background:rgba(252,253,255,.84); box-shadow:0 7px 20px rgba(42,55,80,.18); color:#27344a; font-size:11px; font-weight:620; white-space:nowrap; opacity:0; pointer-events:none; transform:translate(-50%,4px); transition:opacity var(--az-motion-fast),transform var(--az-motion-fast); backdrop-filter:blur(16px); }
   .az-shelf-button:hover .az-dock-tooltip,.az-shelf-button:focus-visible .az-dock-tooltip { opacity:1; transform:translate(-50%,0); }
   .az-window-layer { position:absolute; inset:0; z-index:200; pointer-events:none; }
+  .az-fullscreen-layer { position:fixed; inset:0; z-index:1000; pointer-events:none; }
+  .az-fullscreen-layer:has(.az-fullscreen-app) { pointer-events:auto; }
+  .az-fullscreen-app { position:absolute; inset:0; display:flex; flex-direction:column; overflow:hidden; background:#0b0d13; color:#e8edf5; pointer-events:auto; }
+  .az-fullscreen-app:focus { outline:none; }
+  .az-fullscreen-body { position:relative; min-height:0; flex:1; overflow:hidden; }
   .az-window { position:absolute; min-width:420px; min-height:300px; overflow:hidden; display:flex; flex-direction:column; border:1px solid rgba(255,255,255,.88); border-radius:var(--az-radius-window); background:rgba(248,250,253,.92); box-shadow:var(--az-shadow-window); pointer-events:auto; opacity:.94; transform:scale(.995); transition:opacity var(--az-motion),transform var(--az-motion),box-shadow var(--az-motion),border-radius var(--az-motion); }
   .az-window.is-active { opacity:1; transform:none; box-shadow:0 34px 86px rgba(43,54,78,.27),0 7px 22px rgba(43,54,78,.12); }
   .az-window.is-minimized { display:none; }

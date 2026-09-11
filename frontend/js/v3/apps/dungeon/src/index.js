@@ -1,16 +1,17 @@
 // src/index.js
 // AizanoiOS Module Entry Contract
-import { launchDungeonGame, stopDungeonGame } from '../js/main.js';
+import { launchDungeonGame, stopDungeonGame, setDungeonExitHandler } from '../js/main.js';
 
 /**
  * Public AizanoiOS module entry point.
  * @param {object} context - Window and shell execution context
  * @param {HTMLElement} context.container - Host window DOM element
+ * @param {object} [context.api] - Host shell API (openApp/closeApp/announce)
  * @param {object} [context.shell] - Host shell interface
  * @param {object} [context.windowInstance] - Window instance reference
  * @returns {Promise<Function>} Teardown cleanup function
  */
-export async function mount({ container }) {
+export async function mount({ container, api }) {
   // The shell renders an `.az-empty-state` "Opening application…" placeholder
   // into the window body before mount. Other apps wipe it when they render;
   // dungeon must clear it too, otherwise the placeholder keeps filling the
@@ -28,13 +29,41 @@ export async function mount({ container }) {
 
   const wrapper = document.createElement('div');
   wrapper.className = 'aizanoi-dungeon-app-root';
+
+  // Sol kenar donus kontrolu: fullscreen oyun yuzeyinde her zaman erisilir.
+  // Wrapper icinde tutulur, teardown wrapper ile birlikte kaldirir.
+  const exitBtn = document.createElement('button');
+  exitBtn.type = 'button';
+  exitBtn.className = 'az-dungeon-exit';
+  exitBtn.setAttribute('aria-label', 'Return to AizanoiOS');
+  const exitArrow = document.createElement('span');
+  exitArrow.setAttribute('aria-hidden', 'true');
+  exitArrow.className = 'az-dungeon-exit-arrow';
+  exitArrow.textContent = '\u2190';
+  const exitLabel = document.createElement('span');
+  exitLabel.className = 'az-dungeon-exit-label';
+  exitLabel.textContent = 'AizanoiOS';
+  exitBtn.append(exitArrow, exitLabel);
+  exitBtn.addEventListener('click', () => {
+    try {
+      api?.closeApp?.('dungeon');
+    } catch (_) {}
+  });
+  wrapper.appendChild(exitBtn);
   container.appendChild(wrapper);
+
+  setDungeonExitHandler(() => {
+    try {
+      api?.closeApp?.('dungeon');
+    } catch (_) {}
+  });
 
   let gameInstance;
   try {
     gameInstance = await launchDungeonGame(wrapper);
   } catch (err) {
     console.error('[Aizanoi Dungeon] Baslatma hatasi:', err);
+    setDungeonExitHandler(null);
     container.replaceChildren();
     const errorBox = document.createElement('div');
     errorBox.className = 'aizanoi-dungeon-error';

@@ -14,6 +14,11 @@ import { CombatSystem } from '../systems/CombatSystem.js';
 import { audioManager } from '../systems/AudioManager.js';
 import { LEVELS } from '../data/levels.js';
 import { ENEMY_TYPES } from '../data/enemies.js';
+import { pickBlessings, createRunState } from '../data/blessings.js';
+import { chooseEliteAffix } from '../data/elite-affixes.js';
+import { WEAPONS } from '../data/items.js';
+import { createGlassButton } from '../utils/ui-helpers.js';
+import { hasDungeonExitHandler, requestDungeonExit } from '../main.js';
 
 export class GameScene extends Phaser.Scene {
   constructor() {
@@ -24,13 +29,16 @@ export class GameScene extends Phaser.Scene {
     this.chapterIndex = data.chapterIndex || 0;
     this.isEndless = data.isEndless || false;
     this.endlessWave = data.wave || 1;
-    this.isTransitioning = false;
+    this.runState = data.runState || createRunState();
+    this.blessingOverlay = null;
     this.isPaused = false;
     this.pauseOverlay = null;
+    this.exitMenu = null;
   }
 
   create() {
     this.isTransitioning = false;
+    if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = 'GameScene';
     // 1. Sistemleri başlat
     this.progression = new ProgressionSystem();
     this.inventory = new InventorySystem(this.progression);
@@ -60,7 +68,7 @@ export class GameScene extends Phaser.Scene {
     const altarY = this.mapData.baseArea.y * 32 + 16;
     const spawnX = altarX;
     const spawnY = altarY + 36;
-    this.player = new Aizo(this, spawnX, spawnY, this.inventory, this.progression);
+    this.player = new Aizo(this, spawnX, spawnY, this.inventory, this.progression, this.runState);
 
     // 6. Base Sunağı ve Portalı Yerleştir
     this.baseAltar = new Structure(this, altarX, altarY, 'zeus_altar');
@@ -181,6 +189,7 @@ export class GameScene extends Phaser.Scene {
       const pos = this.levelSystem.getRandomWalkablePosition(true);
       const typeKey = enemyTypes[i % enemyTypes.length];
       const typeConfig = { ...ENEMY_TYPES[typeKey] };
+      typeConfig.eliteAffix = chooseEliteAffix(typeConfig);
 
       if (this.isEndless) {
         // Dalga ölçeği 20. dalgada sabitlenir: can ~14.2x, hasar ~6.1x tavan.
@@ -235,8 +244,9 @@ export class GameScene extends Phaser.Scene {
       if (this.wasd) {
         if (Phaser.Input.Keyboard.JustDown(this.wasd.M)) audioManager.toggleMute();
         if (Phaser.Input.Keyboard.JustDown(this.wasd.P)) this.togglePause();
+        if (Phaser.Input.Keyboard.JustDown(this.wasd.ESC)) this.toggleExitMenu();
       }
-      if (this.isPaused) return;
+      if (this.isPaused || this.exitMenu) return;
       this.player.update(time, delta);
 
       // Base güvenli alan kontrolü
@@ -293,10 +303,32 @@ export class GameScene extends Phaser.Scene {
   handleProjectileHitEnemy(proj, enemy) {
     if (!proj.isPlayer || !enemy.active) return;
 
-    const targetArmor = enemy.stats?.armor ?? enemy.armor ?? 0;
-    const netDamage = CombatSystem.calculateDamage(proj.damage, targetArmor);
-    enemy.takeDamage(netDamage);
+    const damageType = proj.damageType || 'physical';
+    if (proj.attacker) {
+      CombatSystem.processAttack(proj.attacker, enemy, proj.damage, { damageType });
+    } else {
+      const targetArmor = enemy.stats?.armor ?? enemy.armor ?? 0;
+      const netDamage = CombatSystem.calculateDamage(proj.damage, targetArmor);
+      enemy.takeDamage(netDamage);
+    }
     this.createDamageSpark(enemy.x, enemy.y);
+
+    // Zeus Staff AoE: carpis noktasinda yariCap icindeki diger dusmanlara
+    // yari hasar. Birincil hedefe ikinci kez vurulmaz; yalnizca dusmanlar.
+    const weaponId = proj.attacker?.inventory?.equipped?.weapon;
+    if (weaponId === 'zeus_staff' && typeof WEAPONS !== 'undefined') {
+      const aoeRadius = WEAPONS.zeus_staff?.special?.aoeRadius || 0;
+      if (aoeRadius > 0 && this.enemies) {
+        for (const other of this.enemies.getChildren()) {
+          if (other === enemy || !other.active) continue;
+          const dist = Phaser.Math.Distance.Between(enemy.x, enemy.y, other.x, other.y);
+          if (dist <= aoeRadius) {
+            CombatSystem.processAttack(proj.attacker, other, Math.round(proj.damage * 0.5), { damageType });
+            this.createDamageSpark(other.x, other.y);
+          }
+        }
+      }
+    }
     proj.destroy();
   }
 
@@ -311,9 +343,13 @@ export class GameScene extends Phaser.Scene {
   handleProjectileHitPlayer(proj, player) {
     if (proj.isPlayer || !player.active) return;
 
-    const targetArmor = player.stats?.armor ?? player.armor ?? 0;
-    const netDamage = CombatSystem.calculateDamage(proj.damage, targetArmor);
-    player.takeDamage(netDamage);
+    if (proj.attacker) {
+      CombatSystem.processAttack(proj.attacker, player, proj.damage, { damageType: proj.damageType || 'physical' });
+    } else {
+      const targetArmor = player.stats?.armor ?? player.armor ?? 0;
+      const netDamage = CombatSystem.calculateDamage(proj.damage, targetArmor);
+      player.takeDamage(netDamage);
+    }
     this.createDamageSpark(player.x, player.y);
     proj.destroy();
   }
@@ -359,6 +395,47 @@ export class GameScene extends Phaser.Scene {
     this.isTransitioning = true;
     audioManager.playPortal();
 
+    this.showBlessingChoice(() => this.beginPortalTransition());
+  }
+
+  showBlessingChoice(onChosen) {
+    const choices = pickBlessings(3, Math.random, this.runState.blessingIds);
+    if (choices.length === 0) {
+      onChosen();
+      return;
+    }
+    this.physics.world.pause();
+    const { width, height } = this.cameras.main;
+    const overlay = this.add.container(width / 2, height / 2).setDepth(700).setScrollFactor(0);
+    const dim = this.add.rectangle(0, 0, width, height, 0x000000, 0.7).setInteractive();
+    const panel = this.add.rectangle(0, 0, 420, 270, 0x141822, 0.98).setStrokeStyle(2, 0xf5d77f);
+    const title = this.add.text(0, -100, 'ODA KUTSAMASI', { fontSize: '22px', color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
+    const hint = this.add.text(0, -70, 'Birini seç (1, 2 veya 3)', { fontSize: '14px', color: '#d1d5db' }).setOrigin(0.5);
+    overlay.add([dim, panel, title, hint]);
+    let selected = false;
+    const keyEvents = ['keydown-ONE', 'keydown-TWO', 'keydown-THREE'];
+    const choose = (index) => {
+      if (selected || !choices[index]) return;
+      selected = true;
+      keyEvents.forEach((event, i) => this.input.keyboard.off(event, keyHandlers[i]));
+      this.player.addBlessing(choices[index].id);
+      overlay.destroy(true);
+      this.blessingOverlay = null;
+      onChosen();
+    };
+    const keyHandlers = choices.map((choice, index) => () => choose(index));
+    choices.forEach((choice, index) => {
+      const y = -25 + index * 55;
+      const button = this.add.rectangle(0, y, 340, 42, 0x243047, 1).setStrokeStyle(1, 0x718096).setInteractive({ useHandCursor: true });
+      const label = this.add.text(0, y, `${index + 1}. ${choice.label}`, { fontSize: '16px', color: '#ffffff' }).setOrigin(0.5);
+      button.on('pointerdown', () => choose(index));
+      overlay.add([button, label]);
+      this.input.keyboard.on(keyEvents[index], keyHandlers[index]);
+    });
+    this.blessingOverlay = overlay;
+  }
+
+  beginPortalTransition() {
     // Seviye tamamlama bonusu
     this.progression.addGold(this.currentLevelConfig.goldBonus || 50);
 
@@ -367,7 +444,7 @@ export class GameScene extends Phaser.Scene {
       this.progression.recordWave(this.endlessWave);
       this.cameras.main.fade(300, 0, 0, 0, false, (cam, progress) => {
         if (progress === 1) {
-          this.scene.restart({ isEndless: true, wave: this.endlessWave });
+          this.scene.restart({ isEndless: true, wave: this.endlessWave, runState: this.runState });
         }
       });
     } else if (this.chapterIndex >= LEVELS.length - 2) {
@@ -383,7 +460,7 @@ export class GameScene extends Phaser.Scene {
       this.progression.save();
       this.cameras.main.fade(300, 0, 0, 0, false, (cam, progress) => {
         if (progress === 1) {
-          this.scene.restart({ chapterIndex: this.chapterIndex, isEndless: false });
+          this.scene.restart({ chapterIndex: this.chapterIndex, isEndless: false, runState: this.runState });
         }
       });
     }
@@ -405,6 +482,43 @@ export class GameScene extends Phaser.Scene {
         this.pauseOverlay = null;
       }
     }
+  }
+
+  // ESC cikis menusu: ilk ESC duraklatma + menu acar, dogrudan cikmaz.
+  // Fiziksel donus kontrolu (sol kenar) her zaman mevcuttur.
+  toggleExitMenu() {
+    if (this.exitMenu) {
+      this.closeExitMenu();
+    } else {
+      this.openExitMenu();
+    }
+  }
+
+  openExitMenu() {
+    if (this.exitMenu) return;
+    this.physics.world.pause();
+    const { width, height } = this.cameras.main;
+    const menu = this.add.container(width / 2, height / 2).setDepth(600).setScrollFactor(0);
+    const dim = this.add.rectangle(0, 0, width, height, 0x000000, 0.6);
+    const panel = this.add.rectangle(0, 0, 340, 210, 0x141822, 0.98);
+    panel.setStrokeStyle(2, 0xc5a059);
+    const title = this.add.text(0, -70, 'DURAKLATILDI', {
+      fontSize: '22px', color: '#f5d77f', fontStyle: 'bold',
+    }).setOrigin(0.5);
+    const resumeBtn = createGlassButton(this, 0, -10, 260, 38, 'Devam Et', () => this.closeExitMenu());
+    menu.add([dim, panel, title, resumeBtn]);
+    if (hasDungeonExitHandler()) {
+      const exitBtn = createGlassButton(this, 0, 42, 260, 38, 'AizanoiOS\u0027e D\u00f6n\u00fc\u015f', () => requestDungeonExit());
+      menu.add(exitBtn);
+    }
+    this.exitMenu = menu;
+  }
+
+  closeExitMenu() {
+    if (!this.exitMenu) return;
+    this.exitMenu.destroy(true);
+    this.exitMenu = null;
+    if (!this.isPaused) this.physics.world.resume();
   }
 
   dropLoot(x, y, goldAmount, xpAmount) {
@@ -429,7 +543,7 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  castZeusFissureBeam(x, y, direction, damage) {
+  castZeusFissureBeam(x, y, direction, damage, attacker = null) {
     let angle = 0;
     if (direction === 'down') angle = Math.PI / 2;
     if (direction === 'left') angle = Math.PI;
@@ -437,6 +551,8 @@ export class GameScene extends Phaser.Scene {
     if (direction === 'up') angle = -Math.PI / 2;
 
     const bolt = new Projectile(this, x, y, angle, 450, damage, true, 'projectiles', 4);
+    if (attacker) bolt.attacker = attacker;
+    bolt.damageType = 'lightning';
     this.projectiles.add(bolt);
   }
 
@@ -457,10 +573,21 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  fireEnemyProjectile(enemy, player, type, damage) {
+  triggerEliteExplosion(enemy) {
+    const radius = 72;
+    if (this.player?.active && Phaser.Math.Distance.Between(enemy.x, enemy.y, this.player.x, this.player.y) <= radius) {
+      this.player.takeDamage(enemy.volatileDamage, false, enemy);
+      this.createDamageSpark(this.player.x, this.player.y);
+    }
+    this.cameras.main.shake(100, 0.004);
+  }
+
+  fireEnemyProjectile(enemy, player, type, damage, damageType = 'physical') {
     const angle = Phaser.Math.Angle.Between(enemy.x, enemy.y, player.x, player.y);
     const frame = type === 'bone_arrow' ? 8 : 12;
     const bolt = new Projectile(this, enemy.x, enemy.y, angle, 220, damage, false, 'projectiles', frame);
+    bolt.attacker = enemy;
+    bolt.damageType = damageType;
     this.projectiles.add(bolt);
   }
 
@@ -469,9 +596,9 @@ export class GameScene extends Phaser.Scene {
     this.time.delayedCall(200, () => spark.destroy());
   }
 
-  createFloatingText(x, y, text, color = '#ffffff') {
+  createFloatingText(x, y, text, color = '#ffffff', size = 14) {
     const txt = this.add.text(x, y, text, {
-      fontSize: '14px',
+      fontSize: `${size}px`,
       color,
       fontStyle: 'bold',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',

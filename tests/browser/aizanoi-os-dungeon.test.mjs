@@ -4,7 +4,16 @@ import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
-test('AizanoiOS Dungeon opens from the desktop, clears the placeholder and renders a live canvas', async () => {
+async function menuButtonPoint(page) {
+  return page.evaluate(() => {
+    const c = document.querySelector('.az-fullscreen-app canvas');
+    if (!c) return null;
+    const r = c.getBoundingClientRect();
+    return { x: r.x + (480 / 960) * r.width, y: r.y + (360 / 640) * r.height };
+  });
+}
+
+test('AizanoiOS Dungeon desktop: icon click opens fullscreen, mouse starts game, exit button tears down', async () => {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, serviceWorkers: 'block' });
   const page = await context.newPage();
@@ -13,32 +22,74 @@ test('AizanoiOS Dungeon opens from the desktop, clears the placeholder and rende
   page.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
   try {
     await page.goto(`${base}/?dungeon-qa=${Date.now()}`, { waitUntil: 'networkidle' });
-    const shortcut = page.locator('.az-desktop-shortcut[data-app="dungeon"]');
+    const shortcut = page.locator('.az-desktop-shortcut[data-app="dungeon"]:visible');
     await shortcut.waitFor({ state: 'visible', timeout: 15000 });
-    assert.equal((await shortcut.innerText()).trim(), 'Dungeon');
-    assert.equal(await shortcut.getAttribute('aria-label'), 'Open Aizanoi Dungeon');
+    await shortcut.click();
+    const surface = page.locator('.az-fullscreen-app[data-app-id="dungeon"]:visible');
+    await surface.waitFor({ state: 'visible', timeout: 30000 });
+    const surfaceBox = await surface.boundingBox();
+    assert.ok(surfaceBox && surfaceBox.x === 0 && surfaceBox.y === 0 && surfaceBox.width === 1440 && surfaceBox.height === 900, `Dungeon must cover the desktop viewport, got ${JSON.stringify(surfaceBox)}`);
+    assert.equal(await page.locator('.az-window[data-app-id="dungeon"]').count(), 0, 'no normal window may open for dungeon');
+    await surface.locator('canvas').first().waitFor({ state: 'visible', timeout: 30000 });
+    await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'MenuScene', { timeout: 30000 });
+    const exitBtn = surface.locator('.az-dungeon-exit:visible');
+    await exitBtn.waitFor({ state: 'visible', timeout: 10000 });
+    assert.equal(await exitBtn.getAttribute('aria-label'), 'Return to AizanoiOS');
+    const pt = await menuButtonPoint(page);
+    assert.ok(pt, 'menu canvas must be measurable');
+    await page.mouse.click(pt.x, pt.y);
+    await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'GameScene', { timeout: 30000 });
+    // game receives keyboard controls without errors
+    await page.keyboard.press('KeyM');
+    await page.keyboard.press('KeyP');
+    await page.waitForTimeout(500);
+    await page.keyboard.press('KeyP');
+    await page.waitForTimeout(500);
+    assert.equal(await page.evaluate(() => window.__AIZANOI_DUNGEON_SCENE), 'GameScene');
+    // ESC opens the exit menu with a return path, ESC again resumes
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(500);
+    await exitBtn.click();
+    await page.waitForTimeout(800);
+    assert.equal(await page.locator('.az-fullscreen-app[data-app-id="dungeon"]').count(), 0, 'exit button must close the surface');
+    assert.equal(await page.locator('.az-fullscreen-app canvas').count(), 0, 'teardown must destroy the canvas');
+    assert.ok((await page.locator('.az-desktop-shortcut:visible').count()) >= 1, 'desktop must be back');
+    assert.deepEqual(errors, [], `page errors: ${JSON.stringify(errors)}`);
+  } finally {
+    await browser.close();
+  }
+});
+
+test('AizanoiOS Dungeon mobile: fullscreen tap-to-start, no overflow, exit control tappable', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true, serviceWorkers: 'block',
+  });
+  const page = await context.newPage();
+  const errors = [];
+  page.on('console', (message) => { if (message.type() === 'error') errors.push(`console: ${message.text()}`); });
+  page.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
+  try {
+    await page.goto(`${base}/?dungeon-qa=${Date.now()}`, { waitUntil: 'networkidle' });
     await page.evaluate(() => window.AIZANOI_OS?.openApp?.('dungeon'));
-    const window_ = page.locator('.az-window[data-app-id="dungeon"]');
-    await window_.waitFor({ state: 'visible', timeout: 15000 });
-    await window_.locator('canvas').first().waitFor({ state: 'visible', timeout: 30000 });
-    const state = await window_.evaluate((node) => {
-      const canvas = node.querySelector('canvas');
-      const rect = canvas ? canvas.getBoundingClientRect() : { width: 0, height: 0 };
-      return {
-        canvasCount: node.querySelectorAll('canvas').length,
-        placeholders: node.querySelectorAll('.az-empty-state').length,
-        loadErrors: node.querySelectorAll('.aizanoi-dungeon-error').length,
-        canvasWidth: rect.width,
-        canvasHeight: rect.height,
-      };
-    });
-    assert.ok(state.canvasCount >= 1, 'dungeon window must host the Phaser canvas');
-    assert.equal(state.placeholders, 0, 'Opening placeholder must be cleared by mount');
-    assert.equal(state.loadErrors, 0, 'no Phaser load error UI on the happy path');
-    assert.ok(state.canvasWidth > 0 && state.canvasHeight > 0, `canvas must have size, got ${state.canvasWidth}x${state.canvasHeight}`);
-    await page.evaluate(() => window.AIZANOI_OS?.closeApp?.('dungeon'));
-    await page.waitForTimeout(400);
-    assert.equal(await window_.locator('canvas').count(), 0, 'closing the window must tear down the game');
+    const surface = page.locator('.az-fullscreen-app[data-app-id="dungeon"]:visible');
+    await surface.waitFor({ state: 'visible', timeout: 30000 });
+    await surface.locator('canvas').first().waitFor({ state: 'visible', timeout: 30000 });
+    await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'MenuScene', { timeout: 30000 });
+    const pt = await menuButtonPoint(page);
+    assert.ok(pt, 'menu canvas must be measurable');
+    await page.touchscreen.tap(pt.x, pt.y);
+    await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'GameScene', { timeout: 30000 });
+    const overflow = await page.evaluate(() => ({
+      x: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      y: document.documentElement.scrollHeight - document.documentElement.clientHeight,
+    }));
+    assert.ok(overflow.x <= 1 && overflow.y <= 1, `no page overflow, got ${JSON.stringify(overflow)}`);
+    const box = await surface.locator('.az-dungeon-exit:visible').boundingBox();
+    assert.ok(box && box.width >= 40 && box.height >= 40, 'exit control must be tappable');
+    await surface.locator('.az-dungeon-exit:visible').tap();
+    await page.waitForTimeout(800);
+    assert.equal(await page.locator('.az-fullscreen-app[data-app-id="dungeon"]').count(), 0, 'tap on exit must close the surface');
     assert.deepEqual(errors, [], `page errors: ${JSON.stringify(errors)}`);
   } finally {
     await browser.close();

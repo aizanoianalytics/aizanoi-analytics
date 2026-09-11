@@ -16,13 +16,18 @@ export class CombatSystem {
   }
 
   /**
-   * Tam saldırı çözünürlüğü
+   * Tam saldiri cozunurlugu. baseDamageOverride verilirse (ranged projectile
+   * gibi) saldirganin ham attackDamage degeri yerine o kullanilir; tum diger
+   * kurallar (zirh delme, crit, yetenekler, lifesteal) aynidir. Boylece
+   * projectile collision yalnizca farkli bir delivery mechanism olur.
    */
-  static processAttack(attacker, target) {
+  static processAttack(attacker, target, baseDamageOverride = null, meta = {}) {
     const weaponData = attacker.inventory ? WEAPONS[attacker.inventory.equipped.weapon] : attacker.weapon;
     const armorPen = weaponData?.special?.armorPenetration || 0;
     const targetArmor = target.stats?.armor ?? target.armor ?? 0;
-    let baseDamage = this.calculateDamage(attacker.stats.attackDamage, targetArmor, armorPen);
+    const rawBase = baseDamageOverride ?? attacker.stats.attackDamage;
+    let baseDamage = this.calculateDamage(rawBase, targetArmor, armorPen);
+    const damageType = meta.damageType || 'physical';
 
     // Kritik kontrolü
     let isCritical = false;
@@ -54,7 +59,7 @@ export class CombatSystem {
     }
 
     // Hasarı hedefe ver
-    target.takeDamage(baseDamage, isCritical, attacker);
+    target.takeDamage(baseDamage, isCritical, attacker, damageType);
 
     // Can çalma (Lifesteal)
     // attacker.stats.lifesteal already includes weapon lifestealBonus via InventorySystem
@@ -62,6 +67,12 @@ export class CombatSystem {
     if (lifestealRate > 0 && attacker.heal) {
       const healAmount = Math.max(1, Math.round(baseDamage * lifestealRate));
       attacker.heal(healAmount);
+    }
+
+    // Elite: vampiric enemies recover from damage dealt; this stays separate
+    // from player lifesteal so no inventory or save state is affected.
+    if (attacker.vampiricRate > 0 && attacker.heal) {
+      attacker.heal(Math.max(1, Math.round(baseDamage * attacker.vampiricRate)));
     }
 
     // Taş Rezonansı Yansıtma (Savunma dalı yeteneği)

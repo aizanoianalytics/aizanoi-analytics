@@ -60,6 +60,63 @@
   image-rendering: crisp-edges;
 }
 
+/* Sol kenar donus kontrolu (yalnizca AizanoiOS mount) */
+.az-dungeon-exit {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 10px 12px 10px 8px;
+  border: 1px solid rgba(197, 160, 89, 0.55);
+  border-left: none;
+  border-radius: 0 12px 12px 0;
+  background: rgba(20, 24, 34, 0.88);
+  color: #f5d77f;
+  font-family: var(--az-font);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  touch-action: manipulation;
+}
+.az-dungeon-exit:hover {
+  background: rgba(38, 46, 64, 0.95);
+  border-color: #d4ac0d;
+}
+.az-dungeon-exit:focus-visible {
+  outline: 2px solid #d4ac0d;
+  outline-offset: 2px;
+}
+.az-dungeon-exit:active {
+  transform: translateY(-50%) scale(0.97);
+}
+.az-dungeon-exit-arrow {
+  font-size: 16px;
+  line-height: 1;
+}
+@media (max-width: 640px) {
+  .az-dungeon-exit-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .az-dungeon-exit {
+    padding: 10px;
+    min-width: 44px;
+    justify-content: center;
+    border-radius: 0 12px 12px 0;
+  }
+}
+
 /* Orientation Warning Overlay */
 .orientation-overlay {
   position: fixed;
