@@ -53,6 +53,7 @@ const ALLOWED_JSON = [
   /\/js\/v3\/apps\/browser\/manifest\.json$/,
   /\/js\/v3\/apps\/calculator\/manifest\.json$/,
   /\/js\/v3\/apps\/camera\/manifest\.json$/,
+  /\/js\/v3\/apps\/dungeon\/manifest\.json$/,
   /\/js\/v3\/apps\/forge\/manifest\.json$/,
   /\/js\/v3\/apps\/games\/manifest\.json$/,
   /\/js\/v3\/apps\/markets\/manifest\.json$/,
