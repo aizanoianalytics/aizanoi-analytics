@@ -47,10 +47,27 @@ test('generic instrument page supports timeframes indicators and oscillators', (
   const html = read('frontend/analytics/markets/instrument/index.html');
   const app = read('frontend/analytics/markets/instrument/app.js');
   for (const timeframe of ['1M', '3M', '6M', '1Y', '5Y', 'ALL']) assert.match(html, new RegExp(`value="${timeframe}"`));
-  for (const indicator of ['sma20', 'sma50', 'sma200', 'ema12', 'ema26', 'bollinger', 'rsi14', 'macd', 'roc20']) assert.match(html + app, new RegExp(indicator, 'i'));
+  for (const indicator of ['sma20', 'sma50', 'sma200', 'ema12', 'ema26', 'bollinger', 'rsi14', 'macd', 'roc12']) assert.match(html + app, new RegExp(indicator, 'i'));
   assert.match(html, /data-date-from/);
   assert.match(html, /data-date-to/);
   assert.match(app, /history\/\$\{market\}\/\$\{encodeURIComponent\(symbol\)\}\.json/);
+});
+
+test('shared product has compact status, four breadth stats, six rankings, raw data modes, picks and methodology copy', () => {
+  const html = read('frontend/analytics/markets/index.html');
+  const dashboard = read('frontend/analytics/markets/dashboard.js');
+  for (const token of ['data-status-strip','data-breadth-stat','Aizanoi Picks','Raw Data','Price','Change','methodology','contact']) assert.match(html + dashboard, new RegExp(token, 'i'), token);
+  assert.match(dashboard, /configs = \[/);
+  assert.match(dashboard, /Momentum quality.*Mean-reversion candidates.*Momentum leaders.*Relative-strength leaders.*Largest decliners.*52W breakout candidates/s);
+  assert.match(dashboard, /data-price-mode/);
+  assert.match(dashboard, /data-mobile-open/);
+});
+
+test('generic instrument page uses requested indicator periods and selected-date marker', () => {
+  const html = read('frontend/analytics/markets/instrument/index.html');
+  const app = read('frontend/analytics/markets/instrument/app.js');
+  for (const token of ['SMA 20','SMA 50','SMA 200','EMA 12','EMA 26','EMA 50','Bollinger Bands 20 / 2','RSI 14','MACD 12/26/9','ROC 12','data-selected-date']) assert.match(html + app, new RegExp(token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), token);
+  assert.doesNotMatch(html + app, /supertrend/i);
 });
 
 test('instrument navigation supports row activation, double click and exact-search submit', () => {

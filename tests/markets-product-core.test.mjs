@@ -19,7 +19,7 @@ test('calendar timeframe slicing preserves timestamp semantics for daily and int
   assert.equal(sliceTimeframe(cryptoFourHour, '3M').length, 541);
   assert.equal(sliceTimeframe(rows, 'ALL').length, 260);
   const indicators = indicatorSeries(rows);
-  for (const key of ['sma20', 'sma50', 'sma200', 'ema12', 'ema26', 'bollingerUpper', 'bollingerLower', 'rsi14', 'macd', 'macdSignal', 'roc20']) {
+  for (const key of ['sma20', 'sma50', 'sma200', 'ema12', 'ema26', 'bollingerUpper', 'bollingerLower', 'rsi14', 'macd', 'macdSignal', 'roc12']) {
     assert.equal(indicators[key].length, rows.length, key);
   }
   assert.equal(indicators.sma20[0], null);
@@ -49,6 +49,25 @@ test('watchlist storage, filters and CSV export are deterministic', async () => 
   assert.deepEqual(filterRows(metricRows, { minPrice:10,minSessions:200,rsiMax:80,rangeMin:.5 }).map(row => row.slug), ['b']);
   assert.match(rowsToCsv(rows, ['ticker', 'latest']), /^Ticker,Price\nAAPL,10/m);
   assert.equal(detailUrl('us', 'aapl'), '/analytics/markets/instrument/?market=us&symbol=aapl');
+});
+
+test('Aizanoi Picks uses exactly nine return horizons and requires exactly 8 same-sign valid values', async () => {
+  const { pickMomentumRows, PICK_HORIZONS, evaluateMomentumEligibility } = await import(coreUrl);
+  assert.deepEqual(PICK_HORIZONS, ['return1d','return1w','return1m','return3m','return6m','return1y','return2y','return3y','returnSince2019']);
+  const qualifying = Object.fromEntries(PICK_HORIZONS.map((key, index) => [key, index === 8 ? null : .1]));
+  qualifying.ticker = 'GOOD';
+  assert.deepEqual(evaluateMomentumEligibility(qualifying).eligibility, 'strong');
+  assert.deepEqual(evaluateMomentumEligibility(qualifying).positiveCount, 8);
+  assert.equal(pickMomentumRows([qualifying])[0].ticker, 'GOOD');
+  const positiveWithNegative = { ...qualifying, returnSince2019: -.1 };
+  assert.deepEqual(evaluateMomentumEligibility(positiveWithNegative).eligibility, 'strong');
+  const negative = Object.fromEntries(PICK_HORIZONS.map((key, index) => [key, index === 8 ? null : -.1]));
+  negative.ticker = 'WEAK'; negative.return1y = -.4;
+  assert.deepEqual(evaluateMomentumEligibility(negative).eligibility, 'weak');
+  const negativeWithPositive = { ...negative, returnSince2019: .1 };
+  assert.deepEqual(evaluateMomentumEligibility(negativeWithPositive).eligibility, 'weak');
+  const mixed = { ...qualifying, return1y: -.1 };
+  assert.equal(evaluateMomentumEligibility(mixed).eligibility, 'ineligible');
 });
 
 test('US market session state and crypto state are explicit', async () => {
