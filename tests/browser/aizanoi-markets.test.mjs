@@ -43,6 +43,8 @@ for (const viewport of [{ width:1440,height:900 },{ width:768,height:1024 },{ wi
       const dashboardOverflow = await page.evaluate(() => document.documentElement.scrollWidth-document.documentElement.clientWidth);
       assert.ok(dashboardOverflow<=1,`dashboard horizontal overflow ${dashboardOverflow}`);
       await page.click('tr[data-symbol="btc"]');
+      assert.match(page.url(), /\/analytics\/markets\/\?market=crypto/);
+      await page.click('tr[data-symbol="btc"] a[href*="instrument"]');
       await page.waitForURL(/\/analytics\/markets\/instrument\/\?market=crypto&symbol=btc/);
       await page.waitForSelector('.price-chart .i-price');
       await page.selectOption('[data-timeframe]','1M');
