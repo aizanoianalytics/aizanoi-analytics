@@ -25,6 +25,8 @@ export class GameScene extends Phaser.Scene {
     this.isEndless = data.isEndless || false;
     this.endlessWave = data.wave || 1;
     this.isTransitioning = false;
+    this.isPaused = false;
+    this.pauseOverlay = null;
   }
 
   create() {
@@ -35,7 +37,7 @@ export class GameScene extends Phaser.Scene {
 
     // Seviye Konfigürasyonu
     if (this.isEndless) {
-      this.currentLevelConfig = LEVELS[10]; // Endless config
+      this.currentLevelConfig = LEVELS[LEVELS.length - 1]; // Endless config
     } else {
       this.currentLevelConfig = LEVELS[this.chapterIndex] || LEVELS[0];
     }
@@ -93,10 +95,10 @@ export class GameScene extends Phaser.Scene {
 
     // 10. Girdi Kontrolleri (Masaüstü)
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.wasd = this.input.keyboard.addKeys('W,A,S,D,Q,R,E,I,TAB,SPACE');
+    this.wasd = this.input.keyboard.addKeys('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC');
 
     this.input.on('pointerdown', (pointer) => {
-      if (pointer.leftButtonDown() && pointer.x > 120 && pointer.x < this.scale.width - 120) {
+      if (pointer.leftButtonDown() && pointer.x > 48 && pointer.x < this.scale.width - 48) {
         this.player.attack();
       }
     });
@@ -170,7 +172,8 @@ export class GameScene extends Phaser.Scene {
 
     if (this.isEndless) {
       // D11: Bellek patlamasını ve aşırı düşman üretimini önleyen kesin tavan (Maksimum 32 aktif düşman)
-      const rawCount = Math.floor(15 * Math.pow(1.12, this.endlessWave - 1));
+      const cappedWave = Math.min(this.endlessWave, 20);
+      const rawCount = Math.floor(15 * Math.pow(1.12, cappedWave - 1));
       count = Math.min(32, rawCount);
     }
 
@@ -180,9 +183,11 @@ export class GameScene extends Phaser.Scene {
       const typeConfig = { ...ENEMY_TYPES[typeKey] };
 
       if (this.isEndless) {
-        const waveScale = Math.pow(1.15, this.endlessWave - 1);
+        // Dalga ölçeği 20. dalgada sabitlenir: can ~14.2x, hasar ~6.1x tavan.
+        const cappedWave = Math.min(this.endlessWave, 20);
+        const waveScale = Math.pow(1.15, cappedWave - 1);
         typeConfig.hp = Math.round(typeConfig.hp * waveScale);
-        typeConfig.attackDamage = Math.round(typeConfig.attackDamage * Math.pow(1.10, this.endlessWave - 1));
+        typeConfig.attackDamage = Math.round(typeConfig.attackDamage * Math.pow(1.10, cappedWave - 1));
       }
 
       const enemy = new Enemy(this, pos.x, pos.y, typeConfig);
@@ -226,6 +231,12 @@ export class GameScene extends Phaser.Scene {
 
   update(time, delta) {
     if (this.player && this.player.active) {
+      // M: sessiz, P: duraklat — duraklatma bayrağı oyuncu güncellemesinden önce işlenir
+      if (this.wasd) {
+        if (Phaser.Input.Keyboard.JustDown(this.wasd.M)) audioManager.toggleMute();
+        if (Phaser.Input.Keyboard.JustDown(this.wasd.P)) this.togglePause();
+      }
+      if (this.isPaused) return;
       this.player.update(time, delta);
 
       // Base güvenli alan kontrolü
@@ -359,9 +370,9 @@ export class GameScene extends Phaser.Scene {
           this.scene.restart({ isEndless: true, wave: this.endlessWave });
         }
       });
-    } else if (this.chapterIndex >= 9) {
-      // 10. Bölüm bitti -> Zafer Ekranı!
-      this.progression.currentChapter = 10;
+    } else if (this.chapterIndex >= LEVELS.length - 2) {
+      // Son bölüm bitti -> Zafer Ekranı!
+      this.progression.currentChapter = LEVELS.length - 1;
       this.progression.save();
       this.scene.stop('UIScene');
       this.scene.start('VictoryScene');
@@ -378,7 +389,32 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  togglePause() {
+    this.isPaused = !this.isPaused;
+    if (this.isPaused) {
+      this.physics.world.pause();
+      const { width, height } = this.cameras.main;
+      this.pauseOverlay = this.add.text(width / 2, height / 2, '⏸ DURAKLATILDI (P)', {
+        fontSize: '28px', color: '#f5d77f', fontStyle: 'bold',
+        backgroundColor: 'rgba(20,24,34,0.85)', padding: { x: 20, y: 12 },
+      }).setOrigin(0.5).setDepth(500).setScrollFactor(0);
+    } else {
+      this.physics.world.resume();
+      if (this.pauseOverlay) {
+        this.pauseOverlay.destroy();
+        this.pauseOverlay = null;
+      }
+    }
+  }
+
   dropLoot(x, y, goldAmount, xpAmount) {
+    if (this.isEndless) {
+      // Hafif dalga ödül ölçeği (tavanlı dalgayla): 20. dalgada ~1.76x.
+      const cappedWave = Math.min(this.endlessWave, 20);
+      const rewardMult = 1 + 0.04 * (cappedWave - 1);
+      goldAmount = Math.round(goldAmount * rewardMult);
+      xpAmount = Math.round(xpAmount * rewardMult);
+    }
     if (goldAmount > 0) {
       const gold = this.physics.add.sprite(x + 8, y, 'denarii-spark', 0);
       gold.lootType = 'gold';

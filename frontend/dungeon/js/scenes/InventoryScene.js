@@ -27,6 +27,12 @@ export class InventoryScene extends Phaser.Scene {
       this.scene.stop();
     });
 
+    // ESC ile kapatma (klavye)
+    this.input.keyboard.on('keydown-ESC', () => {
+      if (this.gameScene) this.gameScene.scene.resume();
+      this.scene.stop();
+    });
+
     const inv = this.gameScene.inventory;
     const stats = inv.getCalculatedStats();
 

@@ -104,7 +104,7 @@ export class TouchControls {
       .setScrollFactor(0).setDepth(200).setInteractive();
 
     this.btnInteract.on('pointerdown', () => {
-      if (this.scene.player && (this.scene.player.isInBase || this.scene.nearAltar)) {
+      if (this.scene.player && this.scene.player.isInBase) {
         this.scene.scene.launch('ShopScene');
       }
     });

@@ -3,6 +3,8 @@
 
 import { createGlassButton } from '../utils/ui-helpers.js';
 import { ProgressionSystem } from '../systems/ProgressionSystem.js';
+import { InventorySystem } from '../systems/InventorySystem.js';
+import { LEVELS } from '../data/levels.js';
 import { audioManager } from '../systems/AudioManager.js';
 
 export class MenuScene extends Phaser.Scene {
@@ -71,7 +73,7 @@ export class MenuScene extends Phaser.Scene {
         audioManager.playClick();
         if (window.confirm && window.confirm('Mevcut ilerlemeniz ve toplanan eşyalarınız sıfırlanacak. Onaylıyor musunuz?')) {
           tempProg.reset();
-          const tempInv = new (class { constructor() { try { localStorage.removeItem('aizanoi_inventory_v1'); } catch(_) {} } })();
+          InventorySystem.clear();
           this.scene.restart();
         }
       });
@@ -86,7 +88,7 @@ export class MenuScene extends Phaser.Scene {
 
     createGlassButton(this, width / 2, btnStartY, 260, 38, '⚡ Sonsuzluk Panteonu (Endless)', () => {
       audioManager.playClick();
-      this.scene.start('GameScene', { chapterIndex: 10, isEndless: true });
+      this.scene.start('GameScene', { chapterIndex: LEVELS.length - 1, isEndless: true });
     });
     btnStartY += btnSpacing;
 
@@ -118,7 +120,8 @@ export class MenuScene extends Phaser.Scene {
       '• SALDIRI: Boşluk veya Fare Sol Tık (Mobilde Büyük Kırmızı Buton)',
       '• Q TUŞU: Zeus Çatlağı Işını (Doğrusal delici yıldırım dalgası)',
       '• R TUŞU: Dorik Kalkan (Sanctuary Aegis — 3.5 sn dokunulmazlık)',
-      '• I / TAB: Envanter ve Antik Yadigarlar',
+      '• I / TAB: Envanter ve Antik Yadigarlar (Envanterde ESC kapatır)',
+      '• M: Sessiz / Sesli · P: Duraklat / Devam Et',
       '• MABED: Zeus Sunağı alanında can yenilenir ve alışveriş açılır.',
     ].join('\n\n');
 

@@ -2,6 +2,7 @@
 // Zeus Tapınağı Arındırıldı Zafer Sahnesi
 
 import { createGlassButton } from '../utils/ui-helpers.js';
+import { LEVELS } from '../data/levels.js';
 
 export class VictoryScene extends Phaser.Scene {
   constructor() {
@@ -34,7 +35,7 @@ export class VictoryScene extends Phaser.Scene {
 
     // Butonlar
     createGlassButton(this, width / 2, height / 2 + 100, 260, 40, '⚡ Sonsuzluk Panteonuna Gir', () => {
-      this.scene.start('GameScene', { chapterIndex: 10, isEndless: true });
+      this.scene.start('GameScene', { chapterIndex: LEVELS.length - 1, isEndless: true });
     });
 
     createGlassButton(this, width / 2, height / 2 + 150, 260, 40, '🏛️ Ana Menü', () => {

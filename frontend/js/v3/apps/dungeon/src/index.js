@@ -11,6 +11,11 @@ import { launchDungeonGame, stopDungeonGame } from '../js/main.js';
  * @returns {Promise<Function>} Teardown cleanup function
  */
 export async function mount({ container }) {
+  // The shell renders an `.az-empty-state` "Opening application…" placeholder
+  // into the window body before mount. Other apps wipe it when they render;
+  // dungeon must clear it too, otherwise the placeholder keeps filling the
+  // (small, mobile) window and squeezes the game canvas out of view.
+  container.replaceChildren();
   // Inject local stylesheet if not already present
   let styleLink = document.getElementById('aizanoi-dungeon-css');
   if (!styleLink) {
@@ -25,7 +30,23 @@ export async function mount({ container }) {
   wrapper.className = 'aizanoi-dungeon-app-root';
   container.appendChild(wrapper);
 
-  const gameInstance = await launchDungeonGame(wrapper);
+  let gameInstance;
+  try {
+    gameInstance = await launchDungeonGame(wrapper);
+  } catch (err) {
+    console.error('[Aizanoi Dungeon] Baslatma hatasi:', err);
+    container.replaceChildren();
+    const errorBox = document.createElement('div');
+    errorBox.className = 'aizanoi-dungeon-error';
+    errorBox.setAttribute('role', 'alert');
+    const title = document.createElement('strong');
+    title.textContent = 'Aizanoi Dungeon acilamadi';
+    const detail = document.createElement('p');
+    detail.textContent = 'Oyun motoru yuklenemedi (Phaser calistirilamadi). Baglantinizi kontrol edip pencereyi kapatip yeniden acmayi deneyin.';
+    errorBox.append(title, detail);
+    container.appendChild(errorBox);
+    throw err;
+  }
 
   // Pencere boyutu degistiginde otomatik canvas ve aspect ratio guncelleme
   let resizeObserver = null;

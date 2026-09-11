@@ -151,4 +151,10 @@ export class InventorySystem {
     };
     this.save();
   }
+
+  static clear() {
+    try {
+      localStorage.removeItem('aizanoi_inventory_v1');
+    } catch (_) {}
+  }
 }
