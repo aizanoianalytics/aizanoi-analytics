@@ -1,16 +1,39 @@
 const finite = Number.isFinite;
-const number = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
+const intFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
+const usdFormat = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 });
 
-export const formatPercent = (value) => finite(value) ? `${value >= 0 ? '+' : ''}${number.format(value * 100)}%` : '—';
-export const formatLevelPercent = (value) => finite(value) ? `${number.format(value * 100)}%` : '—';
+export const formatPercent = (value) => {
+  if (!finite(value)) return '—';
+  const sign = value > 0 ? '+' : value < 0 ? '\u2212' : '';
+  return `${sign}${intFormat.format(Math.abs(value) * 100)}%`;
+};
+
+export const formatLevelPercent = (value) => {
+  if (!finite(value)) return '—';
+  return `${intFormat.format(Math.abs(value) * 100)}%`;
+};
+
+export const formatSignedReturn = (value) => {
+  if (!finite(value)) return '—';
+  const sign = value > 0 ? '+' : value < 0 ? '\u2212' : '';
+  return `${sign}${intFormat.format(Math.abs(value) * 100)}%`;
+};
+
+export const formatPrice = (value) => finite(value) ? usdFormat.format(value) : '—';
+
+export const formatNumber = (value) => finite(value) ? intFormat.format(value) : '—';
+
 export const detailUrl = (market, slug) => `/analytics/markets/instrument/?market=${encodeURIComponent(market)}&symbol=${encodeURIComponent(slug)}`;
 
 export function sliceTimeframe(candles, timeframe) {
-  const calendarDays = { '1M': 30, '3M': 90, '6M': 180, '1Y': 365, '5Y': 365 * 5 };
-  if (!candles || !candles.length || timeframe === 'ALL' || !calendarDays[timeframe]) return [...(candles || [])];
+  const calendarDays = { '1M': 30, '3M': 90, '6M': 180, '1Y': 365, '2Y': 365 * 2, '3Y': 365 * 3, '5Y': 365 * 5 };
+  if (!candles || !candles.length) return [];
+  if (timeframe === 'ALL' || timeframe === 'SINCE_2019' || timeframe === 'CUSTOM') return [...candles];
+  const days = calendarDays[timeframe];
+  if (!days) return [...candles];
   const lastTs = Number(candles[candles.length - 1]?.t);
   if (!Number.isFinite(lastTs)) return [];
-  const cutoff = lastTs - (calendarDays[timeframe] * 86400);
+  const cutoff = lastTs - (days * 86400);
   return candles.filter(row => Number(row?.t) >= cutoff);
 }
 
@@ -19,11 +42,13 @@ function rolling(values, size, calculate) {
 }
 
 function mean(values) { return values.reduce((sum, value) => sum + value, 0) / values.length; }
+
 function standardDeviation(values) {
   if (values.length < 2) return 0;
   const average = mean(values);
   return Math.sqrt(values.reduce((sum, value) => sum + ((value - average) ** 2), 0) / (values.length - 1));
 }
+
 function ema(values, size) {
   const factor = 2 / (size + 1);
   let previous = null;
@@ -72,6 +97,7 @@ export function indicatorSeries(candles) {
   const signalCompact = ema(compactMacd, 9);
   let signalIndex = 0;
   const macdSignal = macd.map(value => finite(value) ? signalCompact[signalIndex++] : null);
+  const macdHistogram = macd.map((value, index) => finite(value) && finite(macdSignal[index]) ? value - macdSignal[index] : null);
   return {
     sma20,
     sma50: sma(50),
@@ -84,11 +110,13 @@ export function indicatorSeries(candles) {
     rsi14: wilderRsi(values),
     macd,
     macdSignal,
+    macdHistogram,
     roc12: values.map((value, index) => index < 12 || values[index - 12] === 0 ? null : value / values[index - 12] - 1),
   };
 }
 
-export const PICK_HORIZONS = ['return1d','return1w','return1m','return3m','return6m','return1y','return2y','return3y','returnSince2019'];
+export const PICK_HORIZONS = ['return1d', 'return1w', 'return1m', 'return3m', 'return6m', 'return1y', 'return2y', 'return3y', 'returnSince2019'];
+export const PICK_HORIZON_LABELS = { return1d:'1D', return1w:'1W', return1m:'1M', return3m:'3M', return6m:'6M', return1y:'1Y', return2y:'2Y', return3y:'3Y', returnSince2019:'Since 2019' };
 
 export function evaluateMomentumEligibility(row) {
   const statuses = Object.fromEntries(PICK_HORIZONS.map(key => {
@@ -97,23 +125,33 @@ export function evaluateMomentumEligibility(row) {
   }));
   const positiveCount = Object.values(statuses).filter(status => status === 'positive').length;
   const negativeCount = Object.values(statuses).filter(status => status === 'negative').length;
+  const validCount = PICK_HORIZONS.length;
   const strong = positiveCount >= 8;
   const weak = negativeCount >= 8;
-  return { eligibility: strong ? 'strong' : weak ? 'weak' : 'ineligible', positiveCount, negativeCount, statuses };
+  return { eligibility: strong ? 'strong' : weak ? 'weak' : 'ineligible', positiveCount, negativeCount, validCount, statuses };
 }
 
 export function pickMomentumRows(rows) {
-  return rows.filter(row => evaluateMomentumEligibility(row).eligibility !== 'ineligible')
+  return rows
+    .map(row => ({ row, eligibility: evaluateMomentumEligibility(row) }))
+    .filter(entry => entry.eligibility.eligibility !== 'ineligible')
     .sort((a, b) => {
-      const left = evaluateMomentumEligibility(a); const right = evaluateMomentumEligibility(b);
-      if (left.eligibility !== right.eligibility) return left.eligibility === 'strong' ? -1 : 1;
-      const countDelta = left.eligibility === 'strong' ? right.positiveCount - left.positiveCount : right.negativeCount - left.negativeCount;
-      return countDelta || (left.eligibility === 'strong' ? (b.return1y || -Infinity) - (a.return1y || -Infinity) : (a.return1y || Infinity) - (b.return1y || Infinity)) || String(a.ticker).localeCompare(String(b.ticker));
-    });
+      if (a.eligibility.eligibility !== b.eligibility.eligibility) return a.eligibility.eligibility === 'strong' ? -1 : 1;
+      const countDelta = a.eligibility.eligibility === 'strong'
+        ? b.eligibility.positiveCount - a.eligibility.positiveCount
+        : b.eligibility.negativeCount - a.eligibility.negativeCount;
+      if (countDelta) return countDelta;
+      const yDelta = a.eligibility.eligibility === 'strong'
+        ? (b.row.return1y || -Infinity) - (a.row.return1y || -Infinity)
+        : (a.row.return1y || Infinity) - (b.row.return1y || Infinity);
+      if (yDelta) return yDelta;
+      return String(a.row.ticker).localeCompare(String(b.row.ticker));
+    })
+    .map(entry => entry.row);
 }
 
-export function sortRows(rows, key, direction = 'auto') {
-  const ascending = direction === 'asc' || (direction === 'auto' && key === 'drawdown1y');
+export function sortRows(rows, key, direction = 'desc') {
+  const ascending = direction === 'asc';
   return [...rows].sort((left, right) => {
     const a = left[key]; const b = right[key];
     if (!finite(a) && !finite(b)) return 0;
@@ -123,65 +161,30 @@ export function sortRows(rows, key, direction = 'auto') {
   });
 }
 
-export function createWatchlist(storage = globalThis.localStorage) {
-  const key = 'aizanoi.markets.watchlist.v1';
-  let values;
-  try { values = new Set(JSON.parse(storage?.getItem(key) || '[]')); } catch { values = new Set(); }
-  const persist = () => {
-    try { storage?.setItem(key, JSON.stringify([...values].sort())); } catch {}
-  };
-  return {
-    has: value => values.has(value),
-    values: () => [...values],
-    toggle(value) { values.has(value) ? values.delete(value) : values.add(value); persist(); return values.has(value); },
-  };
-}
-
-export const DEFAULT_PRESETS = [
-  { id: 'momentum-leaders', name: 'Momentum Leaders', desc: 'Highest momentum quality in strong uptrend', config: { sort: 'momentumQuality', regime: 'strong-uptrend' } },
-  { id: 'oversold-trend', name: 'Oversold Above Long Trend', desc: 'RSI under 35 holding above 200-session average', config: { rsiMax: 35, regime: 'above200' } },
-  { id: 'fresh-breakouts', name: 'Fresh Breakouts', desc: 'Top 5% 52-week range with golden cross', config: { rangeMin: 95, regime: 'golden' } },
-  { id: 'deep-drawdown', name: 'Deep Drawdown', desc: 'Largest drawdown from 52-week peak', config: { sort: 'drawdown1y' } },
-  { id: 'high-volatility', name: 'High Volatility Watch', desc: 'Top annualized 20-day realized volatility', config: { sort: 'volatility20' } },
-];
-
-export function createSavedScreens(storage = globalThis.localStorage) {
-  const key = 'aizanoi.markets.savedScreens.v1';
-  let screens = [];
-  try { screens = JSON.parse(storage?.getItem(key) || '[]'); } catch { screens = []; }
-  const persist = () => {
-    try { storage?.setItem(key, JSON.stringify(screens)); } catch {}
-  };
-  return {
-    presets: () => DEFAULT_PRESETS,
-    custom: () => [...screens],
-    save(name, config) {
-      screens = screens.filter(s => s.name !== name);
-      screens.push({ id: `screen-${Date.now()}`, name, config });
-      persist();
-    },
-    remove(id) {
-      screens = screens.filter(s => s.id !== id);
-      persist();
-    },
-  };
-}
-
-export function filterRows(rows, { query = '', watchlistOnly = false, watchlist, exchange = '', membership = '', memberships = [], regime = '', minPrice = null, maxPrice = null, priceMin = null, priceMax = null, priceBetween = null, performance = null, minSessions = null, rsiMin = null, rsiMax = null, rangeMin = null, rangeMax = null } = {}) {
-  const needle = query.trim().toLowerCase();
-  const lowerPrice = Number.isFinite(priceMin) ? priceMin : minPrice;
-  const upperPrice = Number.isFinite(priceMax) ? priceMax : maxPrice;
+export function filterRows(rows, options = {}) {
+  const {
+    query = '',
+    exchange = '',
+    membership = '',
+    memberships = [],
+    minPrice = null,
+    maxPrice = null,
+    performance = null,
+    priceMode = 'price',
+  } = options;
+  const needle = String(query || '').trim().toLowerCase();
   return rows.filter(row => {
-    if (needle && !`${row.ticker} ${row.name}`.toLowerCase().includes(needle)) return false;
-    if (watchlistOnly && !watchlist?.has(`${row.market}:${row.slug}`)) return false;
+    if (needle) {
+      const haystack = `${row.ticker || ''} ${row.name || ''}`.toLowerCase();
+      if (!haystack.includes(needle)) return false;
+    }
     if (exchange && row.exchange !== exchange) return false;
     const rowMemberships = Array.isArray(row.memberships) ? row.memberships : [];
     const wantedMemberships = memberships.length ? memberships : (membership ? [membership] : []);
     if (wantedMemberships.length && !wantedMemberships.some(value => rowMemberships.includes(value))) return false;
-    const low = Array.isArray(priceBetween) ? priceBetween[0] : lowerPrice;
-    const high = Array.isArray(priceBetween) ? priceBetween[1] : upperPrice;
-    if (Number.isFinite(low) && (!finite(row.latest) || row.latest < low)) return false;
-    if (Number.isFinite(high) && (!finite(row.latest) || row.latest > high)) return false;
+    const priceField = priceMode === 'change' ? null : row.latest;
+    if (finite(minPrice) && (!finite(priceField) || priceField < minPrice)) return false;
+    if (finite(maxPrice) && (!finite(priceField) || priceField > maxPrice)) return false;
     if (performance?.horizon) {
       const value = row[performance.horizon];
       if (!finite(value)) return false;
@@ -190,37 +193,101 @@ export function filterRows(rows, { query = '', watchlistOnly = false, watchlist,
       if (performance.op === 'lt' && (!finite(min) || value >= min)) return false;
       if (performance.op === 'between' && (!finite(min) || !finite(max) || value < min || value > max)) return false;
     }
-    if (Number.isFinite(minSessions) && (!finite(row.historySessions) || row.historySessions < minSessions)) return false;
-    if (Number.isFinite(rsiMin) && (!finite(row.rsi14) || row.rsi14 < rsiMin)) return false;
-    if (Number.isFinite(rsiMax) && (!finite(row.rsi14) || row.rsi14 > rsiMax)) return false;
-    if (Number.isFinite(rangeMin) && (!finite(row.rangePosition52w) || row.rangePosition52w < rangeMin)) return false;
-    if (Number.isFinite(rangeMax) && (!finite(row.rangePosition52w) || row.rangePosition52w > rangeMax)) return false;
-    if (regime === 'above200' && row.aboveSma200 !== true) return false;
-    if (regime === 'below200' && row.aboveSma200 !== false) return false;
-    if (regime === 'golden' && row.smaCross !== 'golden') return false;
-    if (regime === 'death' && row.smaCross !== 'death') return false;
-    if (regime && !['above200','below200','golden','death'].includes(regime) && row.trendRegime !== regime) return false;
     return true;
   });
 }
 
-const labels = { ticker:'Ticker', name:'Name', exchange:'Exchange', latest:'Price', return1d:'1D', return30d:'30D', volatility20:'Volatility', rangePosition52w:'52W Range', percentile30d:'30D Percentile', relativeStrength30d:'30D Relative Strength', rsi14:'RSI 14', trendAge50:'Days Above SMA50' };
-export function rowsToCsv(rows, columns) {
-  const escape = value => {
-    let text = String(value ?? '');
-    if (/^[=+\-@]/.test(text) && !Number.isFinite(Number(text))) {
-      text = `'${text}`;
-    }
-    return /[",\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+export function paginate(rows, page, pageSize) {
+  const total = rows.length;
+  const safeSize = Math.max(1, pageSize);
+  const totalPages = Math.max(1, Math.ceil(total / safeSize));
+  const safePage = Math.min(Math.max(1, page), totalPages);
+  const start = (safePage - 1) * safeSize;
+  const end = Math.min(start + safeSize, total);
+  return { rows: rows.slice(start, end), page: safePage, pageSize: safeSize, total, totalPages, start, end };
+}
+
+export function activeFilterChips(state) {
+  const chips = [];
+  if (state.query) chips.push({ key:'q', label:`Search "${state.query}"`, value:state.query });
+  if (state.exchange) chips.push({ key:'exchange', label:`Exchange ${state.exchange}`, value:state.exchange });
+  if (state.membership) chips.push({ key:'membership', label:`Membership ${state.membership}`, value:state.membership });
+  if (finite(state.minPrice) || finite(state.maxPrice)) {
+    const lo = finite(state.minPrice) ? intFormat.format(state.minPrice) : '0';
+    const hi = finite(state.maxPrice) ? intFormat.format(state.maxPrice) : '∞';
+    chips.push({ key:'price', label:`Price ${lo}–${hi}`, value:'price' });
+  }
+  if (state.performance?.horizon) {
+    const horizonLabel = PICK_HORIZON_LABELS[state.performance.horizon] || state.performance.horizon;
+    const op = state.performance.op;
+    const min = finite(state.performance.min) ? `${intFormat.format(state.performance.min * 100)}%` : '';
+    const max = finite(state.performance.max) ? `${intFormat.format(state.performance.max * 100)}%` : '';
+    let label = `${horizonLabel} ${op === 'gt' ? '>' : op === 'lt' ? '<' : 'between'} ${min}${op === 'between' ? ` and ${max}` : ''}`;
+    chips.push({ key:'performance', label, value:'performance' });
+  }
+  return chips;
+}
+
+export function defaultState(overrides = {}) {
+  return {
+    market:'us',
+    view:'main',
+    query:'',
+    sort:{ key:'return1d', direction:'desc' },
+    exchange:'',
+    membership:'',
+    minPrice:null,
+    maxPrice:null,
+    performance:{ horizon:'', op:'gt', min:null, max:null },
+    priceMode:'price',
+    page:1,
+    pageSize:100,
+    ...overrides,
   };
-  return [columns.map(column => labels[column] || column).join(','), ...rows.map(row => columns.map(column => escape(row[column])).join(','))].join('\n');
 }
 
 export function marketSessionState(market, date = new Date()) {
   if (market === 'crypto') return { open:true, label:'Crypto trades continuously' };
   const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone:'America/New_York', weekday:'short', hour:'2-digit', minute:'2-digit', hourCycle:'h23' }).formatToParts(date).map(part => [part.type, part.value]));
   const minutes = Number(parts.hour) * 60 + Number(parts.minute);
-  const weekday = !['Sat', 'Sun'].includes(parts.weekday);
+  const weekday = !['Sat','Sun'].includes(parts.weekday);
   const open = weekday && minutes >= 570 && minutes < 960;
   return { open, label: open ? 'Within regular US session hours' : 'Outside regular US session hours' };
 }
+
+export const PRICE_COLUMNS = [
+  { key:'latestPrice', label:'Latest' },
+  { key:'previousPrice', label:'Previous' },
+  { key:'price1w', label:'1W' },
+  { key:'price1m', label:'1M' },
+  { key:'price3m', label:'3M' },
+  { key:'price6m', label:'6M' },
+  { key:'price1y', label:'1Y' },
+  { key:'price2y', label:'2Y' },
+  { key:'price3y', label:'3Y' },
+  { key:'price2019', label:'2019' },
+];
+
+export const CHANGE_COLUMNS = [
+  { key:'return1d', label:'1D' },
+  { key:'return1w', label:'1W' },
+  { key:'return1m', label:'1M' },
+  { key:'return3m', label:'3M' },
+  { key:'return6m', label:'6M' },
+  { key:'return1y', label:'1Y' },
+  { key:'return2y', label:'2Y' },
+  { key:'return3y', label:'3Y' },
+  { key:'returnSince2019', label:'Since 2019' },
+];
+
+export const HORIZON_CARDS = [
+  { key:'return1d', label:'1D' },
+  { key:'return1w', label:'1W' },
+  { key:'return1m', label:'1M' },
+  { key:'return3m', label:'3M' },
+  { key:'return6m', label:'6M' },
+  { key:'return1y', label:'1Y' },
+  { key:'return2y', label:'2Y' },
+  { key:'return3y', label:'3Y' },
+  { key:'returnSince2019', label:'Since 2019' },
+];

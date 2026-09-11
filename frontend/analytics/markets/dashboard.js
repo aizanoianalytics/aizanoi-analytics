@@ -1,299 +1,586 @@
-import { createSavedScreens, createWatchlist, DEFAULT_PRESETS, detailUrl, evaluateMomentumEligibility, filterRows, formatLevelPercent, formatPercent, marketSessionState, pickMomentumRows, rowsToCsv, sortRows } from './core.js';
+import {
+  CHANGE_COLUMNS,
+  HORIZON_CARDS,
+  PRICE_COLUMNS,
+  activeFilterChips,
+  defaultState,
+  detailUrl,
+  evaluateMomentumEligibility,
+  filterRows,
+  formatNumber,
+  formatPercent,
+  formatPrice,
+  formatSignedReturn,
+  marketSessionState,
+  paginate,
+  pickMomentumRows,
+  PICK_HORIZONS,
+  PICK_HORIZON_LABELS,
+  sortRows,
+} from './core.js';
 
 const DATA_ROOT = '/analytics/markets/data';
-const esc = value => String(value ?? '').replace(/[&<>"']/g, character => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[character]));
-const number = new Intl.NumberFormat('en-US', { maximumFractionDigits:2 });
-const money = new Intl.NumberFormat('en-US', { style:'currency', currency:'USD', maximumFractionDigits:2 });
-const columnDefinitions = {
-  latest:['Latest', value => Number.isFinite(value) ? money.format(value) : '—'],
-  previousPrice:['Previous', value => Number.isFinite(value) ? money.format(value) : '—'],
-  price1w:['1W', value => Number.isFinite(value) ? money.format(value) : '—'], price1m:['1M', value => Number.isFinite(value) ? money.format(value) : '—'], price3m:['3M', value => Number.isFinite(value) ? money.format(value) : '—'], price6m:['6M', value => Number.isFinite(value) ? money.format(value) : '—'], price1y:['1Y', value => Number.isFinite(value) ? money.format(value) : '—'], price2y:['2Y', value => Number.isFinite(value) ? money.format(value) : '—'], price3y:['3Y', value => Number.isFinite(value) ? money.format(value) : '—'], price2019:['2019', value => Number.isFinite(value) ? money.format(value) : '—'],
-  return1d:['1D', formatPercent], return1w:['1W', formatPercent], return1m:['1M', formatPercent], return3m:['3M', formatPercent], return6m:['6M', formatPercent], return1y:['1Y', formatPercent], return2y:['2Y', formatPercent], return3y:['3Y', formatPercent], returnSince2019:['Since 2019', formatPercent],
-  relativeStrength30d:['RS 30D', formatPercent], percentile30d:['Percentile', value => Number.isFinite(value) ? `${number.format(value)}th` : '—'],
-  rangePosition52w:['52W range', formatLevelPercent], volatility20:['Volatility', formatLevelPercent],
-  rsi14:['RSI', value => Number.isFinite(value) ? number.format(value) : '—'],
-  trendRegime:['Trend regime', value => value ? String(value).replaceAll('-', ' ') : '—'],
-  trendAge50:['Trend age', value => Number.isFinite(value) ? `${value} sessions` : '—'],
-  momentumQuality:['Momentum quality', value => Number.isFinite(value) ? `${number.format(value)}/100` : '—'],
-  meanReversionScore:['Mean reversion', value => Number.isFinite(value) ? `${number.format(value)}/100` : '—'],
-};
+
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[character]));
+}
+
+function horizonSign(value) {
+  if (!Number.isFinite(value)) return { char:'—', modifier:'missing' };
+  if (value > 0) return { char:'+', modifier:'positive' };
+  if (value < 0) return { char:'−', modifier:'negative' };
+  return { char:'0', modifier:'flat' };
+}
 
 async function getJson(path, signal) {
   const response = await fetch(path, { cache:'default', signal });
   if (!response.ok) throw new Error(`Market data unavailable (${response.status})`);
   return response.json();
 }
-function sparkPoints(values) {
-  const safe = Array.isArray(values) ? values.filter(Number.isFinite) : [];
-  if (safe.length < 2) return '';
-  let low = safe[0];
-  let high = safe[0];
-  for (let i = 1; i < safe.length; i++) {
-    const v = safe[i];
-    if (v < low) low = v;
-    if (v > high) high = v;
-  }
-  const spread = high - low || 1;
-  return safe.map((value, index) => `${index / (safe.length - 1) * 90},${28 - (value - low) / spread * 24}`).join(' ');
-}
-function breadthChart(snapshots, market) {
-  const rows = snapshots.filter(row => row.market === market).slice(-168);
-  if (rows.length < 2) return '<p class="market-no-data">Breadth history starts with the next refresh.</p>';
-  const values = rows.map(row => row.instruments ? row.aboveSma200 / row.instruments : 0);
-  const points = values.map((value, index) => `${index / (values.length - 1) * 600},${120 - value * 100}`).join(' ');
-  return `<svg viewBox="0 0 600 140" role="img" aria-label="Share of instruments above the 200-session average"><polyline points="${points}"/></svg>`;
-}
-function card(label, value, note = '') { return `<article><span>${esc(label)}</span><strong>${esc(value)}</strong>${note ? `<small>${esc(note)}</small>` : ''}</article>`; }
-function breadthCard(label, value, note = '') { return `<article data-breadth-stat><span>${esc(label)}</span><strong>${esc(value)}</strong>${note ? `<small>${esc(note)}</small>` : ''}</article>`; }
-function qualityLabel(row) {
-  const quality = row.dataQuality || {};
-  if (quality.dailyClose !== 'complete') return 'Unavailable';
-  if (quality.history === 'limited') return 'Limited history';
-  if (quality.fourHour !== 'complete') return 'Daily only';
-  return 'Daily + recent 4H';
+
+function pickRanking(rows, key, descending, limit = 5) {
+  return rows
+    .filter(row => Number.isFinite(row?.[key]))
+    .sort((a, b) => descending ? b[key] - a[key] : a[key] - b[key])
+    .slice(0, limit);
 }
 
-export function createMarketsDashboard(container, { compact = false, updateUrl = !compact, readUrl = !compact } = {}) {
+function renderRankingCard(title, key, descending) {
+  const rows = pickRanking(this.currentRows(), key, descending, 5);
+  if (!rows.length) {
+    return `<article class="market-ranking" data-ranking><h3>${esc(title)}</h3><p class="market-ranking-empty">Not enough observations yet.</p></article>`;
+  }
+  return `<article class="market-ranking" data-ranking><h3>${esc(title)}</h3><ol class="market-ranking-list">${rows.map(row => `
+    <li>
+      <button type="button" class="market-ranking-row" data-ranking-symbol="${esc(row.slug)}">
+        <span class="market-ranking-text"><strong>${esc(row.ticker)}</strong><span class="market-ranking-name">${esc(row.name)}</span></span>
+        <span class="market-ranking-numbers"><span class="market-ranking-price">${formatPrice(row.latestPrice ?? row.latest)}</span><span class="market-ranking-change market-ranking-change--${horizonSign(row[key]).modifier}">${formatPercent(row[key])}</span></span>
+      </button>
+    </li>`).join('')}</ol></article>`;
+}
+
+function renderBreadth(pulse) {
+  const items = [
+    { label:'Advancing', value: formatPercent(pulse?.advancingShare ?? null) },
+    { label:'Declining', value: formatPercent(pulse?.decliningShare ?? null) },
+    { label:'Median 1D', value: formatPercent(pulse?.medianReturn1d) },
+    { label:'Median 1Y', value: formatPercent(pulse?.medianReturn1y) },
+  ];
+  return `<div class="market-breadth" data-breadth>${items.map(item => `<article class="market-breadth-card"><span>${esc(item.label)}</span><strong>${esc(item.value)}</strong></article>`).join('')}</div>`;
+}
+
+function renderStatusStrip({ manifest, health, market }) {
+  const marketHealth = health?.[market] || {};
+  const observations = manifest?.counts?.[market] ?? marketHealth.published ?? null;
+  const observationLabel = marketHealth.latestObservationAt
+    ? new Date(marketHealth.latestObservationAt).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' })
+    : '—';
+  const publishedLabel = manifest?.completedAt ? new Date(manifest.completedAt).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' }) : '—';
+  const provider = market === 'crypto' ? 'Binance' : 'Fintable';
+  const degraded = health?.status && health.status !== 'complete';
+  return `<div class="market-status-strip" data-status-strip>
+    <span><strong>${formatNumber(observations)}</strong> instruments</span>
+    <span>Latest observation <strong>${esc(observationLabel)}</strong></span>
+    <span>Published <strong>${esc(publishedLabel)}</strong></span>
+    <span>Source <strong>${esc(provider)}</strong></span>
+    ${degraded ? '<span class="market-status-strip-warning">Pipeline degraded — last published run was not complete.</span>' : ''}
+  </div>`;
+}
+
+function renderRankingBlock(market) {
+  const cards = [
+    ['Today · Top 5', 'return1d', true],
+    ['Today · Bottom 5', 'return1d', false],
+    ['1 Week · Top 5', 'return1w', true],
+    ['52 Weeks · Top 5', 'return1y', true],
+    ['52 Weeks · Bottom 5', 'return1y', false],
+  ];
+  return `<section class="market-rankings" data-rankings-block>
+    <h2>Market rankings</h2>
+    <div class="market-rankings-grid">
+      ${cards.map(([title, key, descending]) => renderRankingCard.call(this, title, key, descending)).join('')}
+    </div>
+  </section>`;
+}
+
+function renderFilterChips(chips) {
+  if (!chips.length) return '<div class="market-filter-chips" data-filter-chips hidden></div>';
+  return `<div class="market-filter-chips" data-filter-chips>${chips.map(chip => `<button type="button" class="market-chip" data-chip-key="${esc(chip.key)}"><span>${esc(chip.label)}</span><span aria-hidden="true">×</span></button>`).join('')}</div>`;
+}
+
+function renderTableHead(state, columns) {
+  const indicator = state.sort?.key ? `<span class="market-sort-indicator" aria-hidden="true">${state.sort.direction === 'asc' ? '↑' : '↓'}</span>` : '';
+  return `<tr>
+    <th scope="col" class="market-table-stock"><button type="button" data-sort-key="ticker" class="market-sort-header">Stock${state.sort?.key === 'ticker' ? indicator : ''}</button></th>
+    ${columns.map(col => {
+      const active = state.sort?.key === col.key;
+      const next = active && state.sort.direction === 'desc' ? 'asc' : 'desc';
+      const ariaSort = active ? (state.sort.direction === 'asc' ? 'ascending' : 'descending') : 'none';
+      return `<th scope="col" aria-sort="${ariaSort}"><button type="button" class="market-sort-header" data-sort-key="${esc(col.key)}" data-sort-direction="${esc(next)}">${esc(col.label)}${active ? indicator : ''}</button></th>`;
+    }).join('')}
+    <th scope="col" class="market-table-open"><span class="visually-hidden">Open</span></th>
+  </tr>`;
+}
+
+function renderTableRow(row, columns, state) {
+  const isSelected = state.selectedSymbol === row.slug;
+  const cells = columns.map(col => `<td data-col="${esc(col.key)}">${formatCell(col, row)}</td>`).join('');
+  return `<tr class="market-table-row${isSelected ? ' is-selected' : ''}" data-symbol="${esc(row.slug)}" data-open-instrument="${esc(row.slug)}" tabindex="0">
+    <td data-col="stock"><strong>${esc(row.ticker)}</strong><span class="market-table-name">${esc(row.name)}</span></td>
+    ${cells}
+    <td class="market-table-open"><a class="market-table-open-link" href="${detailUrl(state.market, row.slug)}">Open →</a></td>
+  </tr>`;
+}
+
+function formatCell(column, row) {
+  const value = row[column.key];
+  if (column.key === 'latestPrice') return formatPrice(value);
+  if (column.key === 'previousPrice') return formatPrice(value);
+  if (column.key.startsWith('price')) return formatPrice(value);
+  return formatPercent(value);
+}
+
+function renderPager(page, pageSize, total) {
+  if (total === 0) {
+    return `<div class="market-pager" data-pager><span>0 results</span></div>`;
+  }
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  return `<div class="market-pager" data-pager>
+    <button type="button" class="market-pager-button" data-page-action="prev" ${page <= 1 ? 'disabled' : ''}>Previous</button>
+    <span class="market-pager-status">Page ${page} of ${totalPages} · Showing ${(page - 1) * pageSize + 1}–${Math.min(page * pageSize, total)} of ${total}</span>
+    <button type="button" class="market-pager-button" data-page-action="next" ${page >= totalPages ? 'disabled' : ''}>Next</button>
+  </div>`;
+}
+
+function renderRawData(state) {
+  const columns = state.priceMode === 'price' ? PRICE_COLUMNS : CHANGE_COLUMNS;
+  const filtered = filterRows(this.currentRows(), state);
+  const sorted = state.sort?.key ? sortRows(filtered, state.sort.key, state.sort.direction) : filtered;
+  const pageState = paginate(sorted, state.page, state.pageSize);
+  const chips = renderFilterChips(activeFilterChips(state));
+  const table = `<div class="market-table-wrap" data-raw-table-wrap>
+    <table class="market-table" data-raw-table>
+      <thead>${renderTableHead(state, columns)}</thead>
+      <tbody data-raw-table-body>
+        ${pageState.rows.length
+          ? pageState.rows.map(row => renderTableRow(row, columns, state)).join('')
+          : `<tr><td colspan="${columns.length + 2}" class="market-table-empty">No instruments match these filters.</td></tr>`}
+      </tbody>
+    </table>
+  </div>`;
+  return `<section class="market-raw" data-raw-section>
+    <header class="market-raw-header">
+      <div>
+        <span class="eyebrow">RAW DATA</span>
+        <h2>Raw Data</h2>
+      </div>
+      <div class="market-raw-mode" role="group" aria-label="Raw data mode">
+        <button type="button" class="market-raw-mode-button${state.priceMode === 'price' ? ' is-active' : ''}" data-price-mode="price" aria-pressed="${state.priceMode === 'price'}">Price</button>
+        <button type="button" class="market-raw-mode-button${state.priceMode === 'change' ? ' is-active' : ''}" data-price-mode="change" aria-pressed="${state.priceMode === 'change'}">Change</button>
+      </div>
+    </header>
+    ${chips}
+    ${table}
+    ${renderPager(pageState.page, pageState.pageSize, pageState.total)}
+  </section>`;
+}
+
+function renderPicks(state) {
+  const strong = pickMomentumRows(this.currentRows()).filter(row => evaluateMomentumEligibility(row).eligibility === 'strong');
+  const weak = pickMomentumRows(this.currentRows()).filter(row => evaluateMomentumEligibility(row).eligibility === 'weak');
+  const card = (title, rows, sign) => {
+    if (!rows.length) {
+      return `<article class="market-picks-card"><span class="eyebrow">AIZANOI PICKS</span><h3>${esc(title)}</h3><p class="market-picks-empty">No instruments currently meet the 8-of-9 ${sign === 'positive' ? 'Strong' : 'Weak'} Momentum rule.</p></article>`;
+    }
+    return `<article class="market-picks-card">
+      <span class="eyebrow">AIZANOI PICKS</span>
+      <h3>${esc(title)}</h3>
+      <p class="market-picks-rule">Eligible when at least 8 of 9 horizons are ${sign}.</p>
+      <ul class="market-picks-list">
+        ${rows.map(row => {
+          const eligibility = evaluateMomentumEligibility(row);
+          const signs = PICK_HORIZONS.map(key => {
+            const status = eligibility.statuses[key];
+            return `<li class="market-picks-horizon market-picks-horizon--${status}" title="${esc(PICK_HORIZON_LABELS[key])} ${status === 'positive' ? '+' : status === 'negative' ? '−' : status === 'flat' ? '0' : '—'}">${esc(PICK_HORIZON_LABELS[key])}<span aria-hidden="true">${status === 'positive' ? '+' : status === 'negative' ? '−' : status === 'flat' ? '0' : '—'}</span></li>`;
+          }).join('');
+          return `<li class="market-picks-row">
+            <a class="market-picks-link" href="${detailUrl(state.market, row.slug)}">
+              <span class="market-picks-text"><strong>${esc(row.ticker)}</strong><span class="market-picks-name">${esc(row.name)}</span></span>
+              <span class="market-picks-price">${formatPrice(row.latestPrice ?? row.latest)}</span>
+              <span class="market-picks-count">${sign === 'positive' ? eligibility.positiveCount : eligibility.negativeCount} / 9 ${sign}</span>
+              <ul class="market-picks-horizons">${signs}</ul>
+            </a>
+          </li>`;
+        }).join('')}
+      </ul>
+    </article>`;
+  };
+  return `<section class="market-picks" data-picks-section>
+    <header><span class="eyebrow">AIZANOI PICKS</span><h2>Aizanoi Picks</h2>
+    <p>Deterministic momentum shortlist built from the canonical nine-horizon return set.</p></header>
+    <div class="market-picks-grid">
+      ${card('Strong Momentum', strong, 'positive')}
+      ${card('Weak Momentum', weak, 'negative')}
+    </div>
+  </section>`;
+}
+
+function renderFilters(state) {
+  const rows = this.currentRows();
+  const exchanges = [...new Set(rows.map(row => row.exchange).filter(Boolean))].sort();
+  const memberships = [...new Set(rows.flatMap(row => Array.isArray(row.memberships) ? row.memberships : [])).values()].sort();
+  const isCrypto = state.market === 'crypto';
+  return `<form class="market-filters" data-filter-form role="search" aria-label="Filter raw data">
+    <label class="market-filter-search"><span class="visually-hidden">Search</span><input data-search type="search" placeholder="Search ticker or company" value="${esc(state.query)}" autocomplete="off"></label>
+    ${isCrypto ? '' : `<label class="market-filter-control"><span>Exchange</span><select data-exchange><option value="">All</option>${exchanges.map(value => `<option value="${esc(value)}"${state.exchange === value ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label>`}
+    ${isCrypto ? '' : `<label class="market-filter-control"><span>Membership</span><select data-membership><option value="">All</option>${memberships.map(value => `<option value="${esc(value)}"${state.membership === value ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label>`}
+    <label class="market-filter-control"><span>Price</span><span class="market-filter-price"><input type="number" inputmode="decimal" data-min-price min="0" placeholder="Min" value="${Number.isFinite(state.minPrice) ? esc(state.minPrice) : ''}"><input type="number" inputmode="decimal" data-max-price min="0" placeholder="Max" value="${Number.isFinite(state.maxPrice) ? esc(state.maxPrice) : ''}"></span></label>
+    <fieldset class="market-filter-performance">
+      <legend>Performance</legend>
+      <span class="market-filter-performance-row">
+        <select data-performance-horizon>
+          <option value="">Any</option>
+          ${PICK_HORIZONS.map(key => `<option value="${esc(key)}"${state.performance?.horizon === key ? ' selected' : ''}>${esc(PICK_HORIZON_LABELS[key])}</option>`).join('')}
+        </select>
+        <select data-performance-op>
+          <option value="gt"${state.performance?.op === 'gt' ? ' selected' : ''}>&gt;</option>
+          <option value="lt"${state.performance?.op === 'lt' ? ' selected' : ''}>&lt;</option>
+          <option value="between"${state.performance?.op === 'between' ? ' selected' : ''}>between</option>
+        </select>
+        <input type="number" inputmode="decimal" step="1" data-performance-min placeholder="%" value="${Number.isFinite(state.performance?.min) ? esc(state.performance.min * 100) : ''}">
+        <span class="market-filter-performance-max" data-performance-max-wrap${state.performance?.op === 'between' ? '' : ' hidden'}><input type="number" inputmode="decimal" step="1" data-performance-max placeholder="%" value="${Number.isFinite(state.performance?.max) ? esc(state.performance.max * 100) : ''}"></span>
+      </span>
+    </fieldset>
+    <button type="button" class="market-filter-reset" data-filter-reset>Reset</button>
+    <button type="button" class="market-filter-drawer-trigger" data-filter-drawer-trigger aria-expanded="false" aria-controls="filter-drawer">Filters</button>
+  </form>`;
+}
+
+function renderMain(state, context) {
+  return `<section class="market-main" data-panel="main">
+    ${renderStatusStrip({ manifest:context.manifest, health:context.health, market:state.market })}
+    ${renderBreadth(context.pulse[state.market])}
+    ${renderRankingBlock.call(context, state.market)}
+    ${renderFilters.call(context, state)}
+    ${renderRawData.call(context, state)}
+  </section>`;
+}
+
+function renderPicksView(state, context) {
+  return `<section class="market-picks-view" data-panel="picks">${renderPicks.call(context, state)}</section>`;
+}
+
+export function createMarketsDashboard(container, options = {}) {
+  const { compact = false, updateUrl = !compact, readUrl = !compact } = options;
   if (!document.querySelector('link[href="/analytics/markets/markets.css"],link[data-markets-styles]')) {
     const stylesheet = document.createElement('link');
-    stylesheet.rel = 'stylesheet'; stylesheet.href = '/analytics/markets/markets.css'; stylesheet.dataset.marketsStyles = '';
-    document.head.append(stylesheet);
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = '/analytics/markets/markets.css';
+    stylesheet.dataset.marketsStyles = '';
+    document.head.appendChild(stylesheet);
   }
+
   const params = readUrl ? new URLSearchParams(location.search) : new URLSearchParams();
-  const savedScreens = createSavedScreens();
-  const state = {
-    market: ['us','crypto'].includes(params.get('market')) ? params.get('market') : 'us', view: ['overview','signals','explorer','picks','crypto-risk','data-health'].includes(params.get('view')) ? params.get('view') : 'overview', rows:{ us:null, crypto:null },
-    pulse:{}, manifest:null, health:null, snapshots:[], correlations:null, query:params.get('q') || '', sort:params.get('sort') || 'return30d', priceMode:'price',
-    exchange:params.get('exchange') || '', regime:params.get('regime') || '', watchlistOnly:params.get('watchlist') === '1',
-    minPrice:null, maxPrice:null, membership:'', performance:{ horizon:'', op:'gt', min:null, max:null }, minSessions:null, rsiMin:null, rsiMax:null, rangeMin:null, rangeMax:null,
-    columns:new Set(['latest','return1d','return30d','relativeStrength30d','percentile30d','rangePosition52w','trendRegime','momentumQuality','meanReversionScore']),
-    watchlist:createWatchlist(), selected:null,
-  };
+  const state = defaultState();
+  state.market = ['us', 'crypto'].includes(params.get('market')) ? params.get('market') : 'us';
+  state.view = ['main', 'picks'].includes(params.get('view')) ? params.get('view') : 'main';
+  state.query = params.get('q') || '';
+  if (params.get('sort')) {
+    const [key, direction] = params.get('sort').split(':');
+    state.sort = { key, direction: direction === 'asc' ? 'asc' : 'desc' };
+  }
+  state.exchange = params.get('exchange') || '';
+  state.membership = params.get('membership') || '';
+  state.priceMode = params.get('mode') === 'change' ? 'change' : 'price';
+
   const controller = new AbortController();
-  container.innerHTML = `<div class="market-product${compact ? ' is-compact' : ''}">
-    <header class="market-product-bar"><div class="market-switch" role="tablist" aria-label="Market universe"><button type="button" data-market="us" role="tab">US Markets</button><button type="button" data-market="crypto" role="tab">Crypto</button></div><div class="market-status-strip" data-status-strip><span data-session-state></span><strong data-freshness>Loading…</strong></div></header>
-    <nav class="market-view-nav" aria-label="Market views"><button data-view="overview">Overview</button><button data-view="signals">Signals</button><button data-view="explorer">Explorer</button><button data-view="picks">Aizanoi Picks</button><button data-view="crypto-risk">Crypto risk</button><button data-view="data-health">Data health</button></nav>
+  const context = {
+    container,
+    controller,
+    manifest:null,
+    health:null,
+    rows:{ us:null, crypto:null },
+    pulse:{},
+  };
+
+  container.innerHTML = `<div class="market-product${compact ? ' is-compact' : ''}" data-markets-product>
+    <header class="market-product-bar">
+      <div class="market-brand-row"><span class="eyebrow">AIZANOI MARKETS</span><span class="market-brand-title">${esc(marketSessionState(state.market).label)}</span></div>
+      <div class="market-switch" role="tablist" aria-label="Market universe">
+        <button type="button" data-market="us" role="tab" aria-selected="${state.market === 'us'}">US</button>
+        <button type="button" data-market="crypto" role="tab" aria-selected="${state.market === 'crypto'}">Crypto</button>
+      </div>
+      <nav class="market-nav" aria-label="Markets views">
+        <a href="${esc(location.pathname)}?market=${esc(state.market)}" data-nav="main" aria-current="${state.view === 'main' ? 'page' : 'false'}">Markets</a>
+        <a href="${esc(location.pathname)}?market=${esc(state.market)}&view=picks" data-nav="picks" aria-current="${state.view === 'picks' ? 'page' : 'false'}">Aizanoi Picks</a>
+      </nav>
+    </header>
     <p class="market-error" data-error hidden></p>
-    <section data-panel="overview"><div class="market-cards" data-pulse></div><article class="market-panel"><span class="eyebrow">RANKINGS</span><h2>Market rankings</h2><div class="market-signal-grid" data-dashboard-rankings></div></article><article class="market-panel"><header><div><span class="eyebrow">BREADTH HISTORY</span><h2>Participation above the 200-session trend</h2></div></header><div data-breadth-chart></div></article></section>
-    <section data-panel="signals" hidden><div class="market-signal-grid" data-signals></div></section>
-    <section data-panel="explorer"><header class="market-panel raw-data-heading"><span class="eyebrow">RAW DATA</span><h2>Raw Data</h2><div class="price-mode" role="group" aria-label="Raw data mode"><button type="button" data-price-mode="price" aria-pressed="true">Price</button><button type="button" data-price-mode="change" aria-pressed="false">Change</button></div></header><form class="market-controls" data-search-form><label>Search<input data-search type="search" value="${esc(state.query)}" placeholder="Ticker or company"></label><label>Preset screen<select data-saved-screen><option value="">Custom screen…</option>${DEFAULT_PRESETS.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join('')}</select></label><label>Rank by<select data-sort><option value="return30d">30-day return</option><option value="momentumQuality">Momentum quality</option><option value="meanReversionScore">Mean reversion</option><option value="relativeStrength30d">Relative strength</option><option value="percentile30d">Percentile rank</option><option value="rangePosition52w">52-week range</option><option value="volatility20">20-day volatility</option><option value="drawdown1y">Deepest drawdown</option><option value="rsi14">RSI</option><option value="trendAge50">Trend age</option></select></label><label>Exchange<select data-exchange><option value="">All</option></select></label><label>Membership<select data-membership><option value="">All</option></select></label><label>Performance<select data-performance-horizon><option value="">Any performance</option><option value="return1d">1D</option><option value="return1w">1W</option><option value="return1m">1M</option><option value="return3m">3M</option><option value="return6m">6M</option><option value="return1y">1Y</option><option value="return2y">2Y</option><option value="return3y">3Y</option><option value="returnSince2019">Since 2019</option></select></label><label>Condition<select data-performance-op><option value="gt">Greater than</option><option value="lt">Less than</option><option value="between">Between</option></select></label><label>Performance %<input type="number" step="0.1" data-performance-min placeholder="0"></label><label data-performance-max-wrap hidden>And %<input type="number" step="0.1" data-performance-max placeholder="0"></label><label>Trend<select data-regime><option value="">All</option><option value="strong-uptrend">Strong uptrend</option><option value="uptrend-weakening">Uptrend weakening</option><option value="transition">Transition</option><option value="downtrend">Downtrend</option><option value="recovery">Recovery</option><option value="breakdown">Breakdown</option><option value="golden">Golden cross</option><option value="death">Death cross</option></select></label><label>Min price<input type="number" min="0" step="1" data-min-price placeholder="0"></label><label>Max price<input type="number" min="0" step="1" data-max-price placeholder="∞"></label><label>Min sessions<input type="number" min="0" step="1" data-min-sessions placeholder="0"></label><label>RSI min<input type="number" min="0" max="100" data-rsi-min placeholder="0"></label><label>RSI max<input type="number" min="0" max="100" data-rsi-max placeholder="100"></label><label>52W min %<input type="number" min="0" max="100" data-range-min placeholder="0"></label><label>52W max %<input type="number" min="0" max="100" data-range-max placeholder="100"></label><label class="market-check"><input data-watchlist-only type="checkbox"> Watchlist only</label><button type="button" data-columns>Columns</button><button type="button" data-export-csv>Export CSV</button></form><div class="market-column-picker" data-column-picker hidden></div><p class="market-table-note" data-row-cap-note hidden>Showing top matches</p><div class="market-table-wrap"><table class="market-table"><caption class="sr-only">Market instruments explorer</caption><thead data-table-head></thead><tbody data-market-rows></tbody></table></div><aside data-preview hidden></aside></section>
-    <section data-panel="picks" hidden><div class="market-signal-grid" data-picks></div></section>
-    <section data-panel="crypto-risk" hidden><div data-crypto-risk></div></section>
-    <section data-panel="data-health" hidden><div class="market-cards" data-health></div></section>
+    <div data-views></div>
   </div>`;
 
   const query = selector => container.querySelector(selector);
   const all = selector => [...container.querySelectorAll(selector)];
+  context.currentRows = () => context.rows[state.market] || [];
+  context.renderPicks = renderPicks;
+  context.renderRankingCard = renderRankingCard;
+
   function syncControls() {
-    all('[data-market]').forEach(button => button.setAttribute('aria-selected', String(button.dataset.market === state.market)));
-    all('[data-view]').forEach(button => button.setAttribute('aria-current', button.dataset.view === state.view ? 'page' : 'false'));
-    all('[data-panel]').forEach(panel => { panel.hidden = panel.dataset.panel !== state.view; });
-    query('[data-sort]').value = state.sort; query('[data-regime]').value = state.regime; query('[data-watchlist-only]').checked = state.watchlistOnly;
-    query('[data-session-state]').textContent = marketSessionState(state.market).label;
+    all('[data-market]').forEach(button => {
+      const active = button.dataset.market === state.market;
+      button.setAttribute('aria-selected', String(active));
+    });
+    all('[data-nav]').forEach(link => {
+      link.setAttribute('aria-current', link.dataset.nav === state.view ? 'page' : 'false');
+    });
   }
-  function syncExplorerChrome() {
-    const note = query('[data-row-cap-note]');
-    if (!note) return;
-    const filtered = visibleRows();
-    const count = filtered.length;
-    if (count > 250) {
-      note.hidden = false;
-      note.textContent = `Showing the top 250 of ${number.format(count)} matches — refine filters or search to narrow further.`;
-    } else if (count > 0) {
-      note.hidden = false;
-      note.textContent = `${number.format(count)} matching instruments`;
-    } else {
-      note.hidden = true;
-    }
+
+  function renderView() {
+    const target = query('[data-views]');
+    if (!target) return;
+    if (state.view === 'picks') target.innerHTML = renderPicksView(state, context);
+    else target.innerHTML = renderMain(state, context);
   }
+
+  function renderAll() {
+    syncControls();
+    renderView();
+    updateLocation();
+  }
+
   function updateLocation() {
     if (!updateUrl) return;
-    const next = new URLSearchParams(); next.set('market', state.market); if (state.view !== 'overview') next.set('view', state.view);
-    if (state.query) next.set('q', state.query); if (state.sort !== 'return30d') next.set('sort', state.sort);
-    if (state.exchange) next.set('exchange', state.exchange); if (state.regime) next.set('regime', state.regime); if (state.watchlistOnly) next.set('watchlist', '1');
+    const next = new URLSearchParams();
+    next.set('market', state.market);
+    if (state.view !== 'main') next.set('view', state.view);
+    if (state.query) next.set('q', state.query);
+    if (state.sort?.key) next.set('sort', `${state.sort.key}:${state.sort.direction}`);
+    if (state.exchange) next.set('exchange', state.exchange);
+    if (state.membership) next.set('membership', state.membership);
+    if (state.priceMode === 'change') next.set('mode', 'change');
     history.replaceState(null, '', `${location.pathname}?${next}`);
   }
-  function currentRows() { return state.rows[state.market] || []; }
-  function visibleRows() { return sortRows(filterRows(currentRows(), { ...state, watchlist:state.watchlist }), state.sort); }
-  function renderPulse() {
-    const pulse = state.pulse[state.market] || {}; const total = pulse.instruments || currentRows().length || 0;
-    query('[data-pulse]').innerHTML = [
-      breadthCard('Advancing', total ? formatLevelPercent((pulse.advancing || 0) / Math.max(pulse.observed1d || total, 1)) : '—'),
-      breadthCard('Declining', total ? formatLevelPercent((pulse.declining || 0) / Math.max(pulse.observed1d || total, 1)) : '—'),
-      breadthCard('Median 1D', formatPercent(pulse.medianReturn1d)),
-      breadthCard('Median 1Y', formatPercent(pulse.medianReturn1y)),
-      card('Instruments', number.format(total)),
-      card('New 52W highs', number.format(pulse.newHighs52w || 0)), card('New 52W lows', number.format(pulse.newLows52w || 0)),
-      card('RSI > 70', number.format(pulse.rsiOverbought || 0)), card('RSI < 30', number.format(pulse.rsiOversold || 0)),
-      card('30D spread', formatLevelPercent(pulse.returnSpread30d)),
-    ].join('');
-    query('[data-breadth-chart]').innerHTML = breadthChart(state.snapshots, state.market);
-  }
-  function renderDashboardRankings() {
-    const rows = currentRows();
-    const configs = [['Today · top','return1d',true],['Today · bottom','return1d',false],['1 Week · top','return1w',true],['1 Week · bottom','return1w',false],['52 Weeks · top','return1y',true],['52 Weeks · bottom','return1y',false]];
-    query('[data-dashboard-rankings]').innerHTML = configs.map(([title,key,descending]) => {
-      const picks = rows.filter(row => Number.isFinite(row[key])).sort((a,b) => descending ? b[key] - a[key] : a[key] - b[key]).slice(0,5);
-      return `<article class="market-panel" data-ranking><h3>${title}</h3><div class="market-rank-list">${picks.map(row => `<a href="${detailUrl(state.market,row.slug)}"><strong>${esc(row.ticker)}</strong><span>${formatPercent(row[key])}</span></a>`).join('') || '<p>Not enough observations yet.</p>'}</div></article>`;
-    }).join('');
-  }
 
-  function renderSignals() {
-    const rows = currentRows().filter(row => row.historySessions >= 30);
-    const configs = [
-      ['Momentum quality','momentumQuality',true], ['Mean-reversion candidates','meanReversionScore',true],
-      ['Momentum leaders','return30d',true], ['Relative-strength leaders','relativeStrength30d',true], ['Largest decliners','return30d',false],
-      ['52W breakout candidates','rangePosition52w',true],
-      ['RSI oversold','rsi14',false], ['High-volatility watch','volatility20',true],
-    ];
-    const rankedPanels = configs.map(([title,key,reverse]) => {
-      const picks = [...rows].filter(row => Number.isFinite(row[key])).sort((a,b) => reverse ? b[key]-a[key] : a[key]-b[key]).slice(0,8);
-      return `<article class="market-panel" data-ranking><h2>${esc(title)}</h2><div class="market-rank-list">${picks.map(row => `<a href="${detailUrl(state.market,row.slug)}"><strong>${esc(row.ticker)}</strong><span>${['rsi14','trendAge50','momentumQuality','meanReversionScore'].includes(key) ? number.format(row[key]) : formatPercent(row[key])}</span></a>`).join('') || '<p>Not enough observations yet.</p>'}</div></article>`;
-    });
-    const crossPanels = [['Golden crosses','smaCross','golden'],['Death crosses','smaCross','death'],['SMA recoveries','trendRegime','recovery'],['SMA200 breakdowns','trendRegime','breakdown']].map(([title,key,direction]) => {
-      const picks = rows.filter(row => row[key] === direction).slice(0,8);
-      return `<article class="market-panel"><h2>${title}</h2><div class="market-rank-list">${picks.map(row => `<a href="${detailUrl(state.market,row.slug)}"><strong>${esc(row.ticker)}</strong><span>${esc(row.trendRegime || direction)}</span></a>`).join('') || '<p>No fresh crosses in this snapshot.</p>'}</div></article>`;
-    });
-    const picksPanel = `<article class="market-panel" data-ranking><span class="eyebrow">AIZANOI PICKS</span><h2>Aizanoi Picks</h2><p>Deterministic momentum shortlist: instruments meeting at least 8 of 9 published rules.</p><div class="market-rank-list">${pickMomentumRows(rows).slice(0,8).map(row => `<a href="${detailUrl(state.market,row.slug)}"><strong>${esc(row.ticker)}</strong><span>${number.format(row.momentumQuality)}/100</span></a>`).join('') || '<p>No instruments meet the 8-of-9 threshold.</p>'}</div></article>`;
-    query('[data-signals]').innerHTML = [picksPanel,...rankedPanels,...crossPanels].join('');
-  }
-  function renderPicks() {
-    const strong = pickMomentumRows(currentRows()).filter(row => evaluateMomentumEligibility(row).eligibility === 'strong');
-    const weak = pickMomentumRows(currentRows()).filter(row => evaluateMomentumEligibility(row).eligibility === 'weak');
-    const panel = (title, rows, sign, countKey) => `<article class="market-panel"><span class="eyebrow">AIZANOI PICKS</span><h2>${title}</h2><p>Eligible when at least 8 of 9 horizons are ${sign}; one exception may be negative, flat or unavailable.</p><div class="market-rank-list">${rows.map(row => { const result = evaluateMomentumEligibility(row); return `<a href="${detailUrl(state.market,row.slug)}"><strong>${esc(row.ticker)} · ${esc(row.name)}</strong><span>${result[countKey]} / 9 ${sign}</span></a>`; }).join('') || '<p>No eligible instruments in this market.</p>'}</div></article>`;
-    query('[data-picks]').innerHTML = panel('Strong Momentum', strong, 'positive', 'positiveCount') + panel('Weak Momentum', weak, 'negative', 'negativeCount');
-  }
-
-  function renderExplorer() {
-    const rows = visibleRows();
-    const exchanges = [...new Set(currentRows().map(row => row.exchange).filter(Boolean))].sort();
-    query('[data-exchange]').innerHTML = '<option value="">All</option>' + exchanges.map(value => `<option value="${esc(value)}">${esc(value)}</option>`).join(''); query('[data-exchange]').value = state.exchange;
-    const memberships = [...new Set(currentRows().flatMap(row => Array.isArray(row.memberships) ? row.memberships : []))].sort();
-    query('[data-membership]').innerHTML = '<option value="">All</option>' + memberships.map(value => `<option value="${esc(value)}">${esc(value)}</option>`).join(''); query('[data-membership]').value = state.membership;
-    const columns = state.priceMode === 'price' ? ['latest','previousPrice','price1w','price1m','price3m','price6m','price1y','price2y','price3y','price2019'] : ['return1d','return1w','return1m','return3m','return6m','return1y','return2y','return3y','returnSince2019'];
-    query('[data-table-head]').innerHTML = `<tr><th aria-label="Watchlist"></th><th>Stock</th>${columns.map(column => `<th>${esc(columnDefinitions[column][0])}</th>`).join('')}<th></th></tr>`;
-    query('[data-market-rows]').innerHTML = rows.slice(0,250).map((row,index) => `<tr class="${state.selected === row.slug ? 'is-selected' : ''}" tabindex="0" data-symbol="${esc(row.slug)}" data-open-instrument="${esc(row.slug)}" aria-label="Open ${esc(row.ticker)}"><td><button class="market-star" data-watch="${esc(row.slug)}" aria-label="${state.watchlist.has(`${state.market}:${row.slug}`) ? 'Remove from' : 'Add to'} watchlist">${state.watchlist.has(`${state.market}:${row.slug}`) ? '★' : '☆'}</button></td><td><strong>${esc(row.ticker)}</strong><span>${esc(row.name)}</span><small>${esc(qualityLabel(row))}</small></td>${columns.map(column => `<td>${columnDefinitions[column][1](column === 'latest' ? row.latestPrice ?? row.latest : row[column])}</td>`).join('')}<td><a href="${detailUrl(state.market,row.slug)}">Open</a><a class="market-mobile-open" data-mobile-open href="${detailUrl(state.market,row.slug)}">Open</a></td></tr>`).join('') || `<tr><td colspan="${columns.length + 3}">No instruments match these filters.</td></tr>`;
-    query('[data-column-picker]').innerHTML = Object.entries(columnDefinitions).map(([key,[label]]) => `<label><input type="checkbox" data-column="${key}" ${state.columns.has(key) ? 'checked' : ''}> ${esc(label)}</label>`).join('');
-    syncExplorerChrome();
-  }
-  function renderPreview(row) {
-    const preview = query('[data-preview]'); state.selected = row; preview.hidden = false;
-    preview.innerHTML = `<button type="button" data-close-preview aria-label="Close preview">×</button><span class="eyebrow">INSTRUMENT PREVIEW</span><h2>${esc(row.ticker)} · ${esc(row.name)}</h2><div class="market-cards">${card('Price', Number.isFinite(row.latest) ? money.format(row.latest) : '—')}${card('52W range', formatLevelPercent(row.rangePosition52w))}${card('RS percentile', Number.isFinite(row.percentile30d) ? `${number.format(row.percentile30d)}th` : '—')}${card('Trend age', Number.isFinite(row.trendAge50) ? `${row.trendAge50} sessions` : '—')}</div><p>Data quality: ${esc(qualityLabel(row))}</p><a class="market-primary" href="${detailUrl(state.market,row.slug)}">Open chart workspace</a>`;
-  }
-  function renderHealth() {
-    const health = state.health || {}; const quality = health.quality || {};
-    const usH = health.us || {}; const cryptoH = health.crypto || {};
-    const marketHealth = state.market === 'crypto' ? cryptoH : usH;
-    const cardsHtml = card('Pipeline', health.status || state.manifest?.status || '—') +
-      card('US instruments', number.format(usH.published || health.counts?.us || 0), `Basis: ${usH.priceBasis || 'Adjusted close'}`) +
-      card('Crypto assets', number.format(cryptoH.published || health.counts?.crypto || 0), `Basis: ${cryptoH.priceBasis || 'Exchange close'}`) +
-      card('Failed symbols', number.format(health.failedSymbols?.length || 0)) +
-      card('Daily-only instruments', number.format(quality.fourHourUnavailable || 0)) +
-      card('Limited history', number.format(quality.limitedHistory || 0)) +
-      card('Published model', 'Close-only') +
-      card('Published', health.completedAt ? new Date(health.completedAt).toLocaleString() : '—') +
-      card('Latest market observation', marketHealth.latestObservationAt ? new Date(marketHealth.latestObservationAt).toLocaleString() : '—');
-
-    const trustPanelHtml = `<article class="market-panel trust-panel"><header><div><span class="eyebrow">DATA HEALTH &amp; TRUST</span><h2>Data Pipeline Trust Architecture</h2></div></header><div class="market-rank-list trust-grid"><div class="trust-card"><h3>US Equities (Focused Universe)</h3><p><strong>Provider:</strong> ${esc(usH.provider || 'Fintable API')}</p><p><strong>Price Basis:</strong> ${esc(usH.priceBasis || 'Adjusted close')}</p><p><strong>Constituents:</strong> Focused S&amp;P 500 ∪ Nasdaq-100 ∪ NYSE U.S. 100 ∪ DJIA</p><p><strong>Published:</strong> ${number.format(usH.published || health.counts?.us || 0)}</p><p><strong>Status:</strong> ${esc(usH.status || 'complete')}</p></div><div class="trust-card"><h3>Crypto Assets</h3><p><strong>Provider:</strong> ${esc(cryptoH.provider || 'Binance Public Data API')}</p><p><strong>Price Basis:</strong> ${esc(cryptoH.priceBasis || 'Exchange close')}</p><p><strong>Assets:</strong> 35 Curated Cryptocurrencies</p><p><strong>Published:</strong> ${number.format(cryptoH.published || health.counts?.crypto || 0)}</p><p><strong>Status:</strong> ${esc(cryptoH.status || 'complete')}</p></div></div></article>`;
-
-    query('[data-health]').innerHTML = cardsHtml + trustPanelHtml;
-  }
-  function renderCryptoRisk() {
-    const data = state.correlations;
-    if (!data?.symbols?.length) { query('[data-crypto-risk]').innerHTML = '<p>Crypto correlation data is not available yet.</p>'; return; }
-    const symbols = data.symbols; const table = `<div class="market-table-wrap market-correlation"><table><thead><tr><th></th>${symbols.map(symbol => `<th>${esc(symbol)}</th>`).join('')}</tr></thead><tbody>${symbols.map((symbol,row) => `<tr><th>${esc(symbol)}</th>${data.matrix[row].map(value => `<td>${Number.isFinite(value) ? number.format(value) : '—'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
-    query('[data-crypto-risk]').innerHTML = `<div class="market-cards">${card('Average correlation', Number.isFinite(data.averageCorrelation) ? number.format(data.averageCorrelation) : '—')}${card('BTC-linked assets', number.format(Object.values(data.btcCorrelation || {}).filter(value => value > .7).length))}</div><article class="market-panel"><h2>200-session return correlation</h2>${table}</article>`;
-  }
-  function render() { syncControls(); renderPulse(); renderDashboardRankings(); renderSignals(); renderPicks(); renderExplorer(); renderHealth(); renderCryptoRisk(); updateLocation(); }
   async function loadRows(market) {
-    if (state.rows[market]) return;
+    if (context.rows[market]) return context.rows[market];
     const index = await getJson(`${DATA_ROOT}/summary/${market}/index.json`, controller.signal);
     const chunks = await Promise.all((index.chunks || []).map(chunk => getJson(`${DATA_ROOT}/summary/${market}/${chunk.path}`, controller.signal)));
-    state.rows[market] = chunks.flatMap(chunk => chunk.rows || []);
+    context.rows[market] = chunks.flatMap(chunk => chunk.rows || []);
+    return context.rows[market];
   }
+
   async function loadMarket(market) {
-    if (!state.pulse[market]) state.pulse[market] = await getJson(`${DATA_ROOT}/pulse/${market}.json`, controller.signal);
-    if (market === 'crypto' && !state.correlations) state.correlations = await getJson(`${DATA_ROOT}/pulse/crypto-correlations.json`, controller.signal).catch(() => null);
-    if (['signals','explorer','overview','picks'].includes(state.view)) await loadRows(market);
-    syncExplorerChrome();
-    render();
+    if (!context.pulse[market]) {
+      context.pulse[market] = await getJson(`${DATA_ROOT}/pulse/${market}.json`, controller.signal).catch(() => null);
+    }
+    await loadRows(market);
+    renderAll();
   }
-  function openRow(slug) { const row = currentRows().find(item => item.slug === slug); if (row) location.href = detailUrl(state.market, slug); }
-  let searchTimer = null;
-  const submit = event => {
-    if (!event.target.matches('[data-search-form]')) return;
-    event.preventDefault();
-    clearTimeout(searchTimer);
-    state.query = (query('[data-search]')?.value || '').trim().toLowerCase();
-    renderExplorer();
+
+  function showError(error) {
+    const target = query('[data-error]');
+    if (!target) return;
+    target.hidden = false;
+    target.textContent = error.message;
+  }
+
+  function selectRow(symbol) {
+    state.selectedSymbol = symbol;
+    const total = filterRows(context.currentRows(), state).length;
+    if (state.pageSize && total) {
+      const index = filterRows(context.currentRows(), state)
+        .sort(state.sort ? (a, b) => {
+          const aV = a[state.sort.key];
+          const bV = b[state.sort.key];
+          if (!Number.isFinite(aV) && !Number.isFinite(bV)) return 0;
+          if (!Number.isFinite(aV)) return 1;
+          if (!Number.isFinite(bV)) return -1;
+          return state.sort.direction === 'asc' ? aV - bV : bV - aV;
+        } : (a, b) => 0)
+        .findIndex(row => row.slug === symbol);
+      if (index >= 0) {
+        state.page = Math.floor(index / state.pageSize) + 1;
+      }
+    }
+    renderView();
+    const row = query(`tr[data-symbol="${CSS.escape(symbol)}"]`);
+    if (row && typeof row.scrollIntoView === 'function') {
+      row.scrollIntoView({ behavior:'smooth', block:'center' });
+    }
+  }
+
+  function openRow(symbol) {
+    location.href = detailUrl(state.market, symbol);
+  }
+
+  function resetFilters() {
+    state.query = '';
+    state.exchange = '';
+    state.membership = '';
+    state.minPrice = null;
+    state.maxPrice = null;
+    state.performance = { horizon:'', op:'gt', min:null, max:null };
+    state.page = 1;
+  }
+
+  function handleClick(event) {
+    const modeTarget = event.target.closest('[data-price-mode]');
+    if (modeTarget) {
+      state.priceMode = modeTarget.dataset.priceMode;
+      renderView();
+      updateLocation();
+      return;
+    }
+    const marketTarget = event.target.closest('[data-market]');
+    if (marketTarget && marketTarget.tagName === 'BUTTON') {
+      state.market = marketTarget.dataset.market;
+      state.page = 1;
+      state.selectedSymbol = null;
+      loadMarket(state.market).catch(showError);
+      return;
+    }
+    const navTarget = event.target.closest('[data-nav]');
+    if (navTarget) {
+      event.preventDefault();
+      state.view = navTarget.dataset.nav;
+      renderView();
+      updateLocation();
+      return;
+    }
+    const rankTarget = event.target.closest('[data-ranking-symbol]');
+    if (rankTarget) {
+      selectRow(rankTarget.dataset.rankingSymbol);
+      return;
+    }
+    const sortTarget = event.target.closest('[data-sort-key]');
+    if (sortTarget) {
+      const key = sortTarget.dataset.sortKey;
+      const direction = (state.sort.key === key && state.sort.direction === 'desc') ? 'asc' : 'desc';
+      state.sort = { key, direction };
+      state.page = 1;
+      renderView();
+      updateLocation();
+      return;
+    }
+    const pagerTarget = event.target.closest('[data-page-action]');
+    if (pagerTarget) {
+      const action = pagerTarget.dataset.pageAction;
+      state.page = action === 'next' ? state.page + 1 : Math.max(1, state.page - 1);
+      renderView();
+      return;
+    }
+    const chipTarget = event.target.closest('[data-chip-key]');
+    if (chipTarget) {
+      const key = chipTarget.dataset.chipKey;
+      if (key === 'q') state.query = '';
+      if (key === 'exchange') state.exchange = '';
+      if (key === 'membership') state.membership = '';
+      if (key === 'price') { state.minPrice = null; state.maxPrice = null; }
+      if (key === 'performance') state.performance = { horizon:'', op:'gt', min:null, max:null };
+      state.page = 1;
+      renderView();
+      updateLocation();
+      return;
+    }
+    if (event.target.closest('[data-filter-reset]')) {
+      resetFilters();
+      renderView();
+      updateLocation();
+      return;
+    }
+    if (event.target.closest('[data-filter-drawer-trigger]')) {
+      const button = event.target.closest('[data-filter-drawer-trigger]');
+      const drawer = document.getElementById('filter-drawer');
+      if (drawer) {
+        const open = drawer.hasAttribute('hidden');
+        if (open) drawer.removeAttribute('hidden');
+        else drawer.setAttribute('hidden', '');
+        button.setAttribute('aria-expanded', String(open));
+      }
+      return;
+    }
+    const rowTarget = event.target.closest('tr[data-open-instrument]');
+    if (rowTarget && !event.target.closest('a,button')) {
+      selectRow(rowTarget.dataset.openInstrument);
+    }
+  }
+
+  function handleDblClick(event) {
+    const rowTarget = event.target.closest('tr[data-open-instrument]');
+    if (rowTarget) openRow(rowTarget.dataset.openInstrument);
+  }
+
+  function handleChange(event) {
+    if (event.target.matches('[data-exchange]')) { state.exchange = event.target.value; state.page = 1; }
+    if (event.target.matches('[data-membership]')) { state.membership = event.target.value; state.page = 1; }
+    if (event.target.matches('[data-min-price]')) { state.minPrice = event.target.value === '' ? null : Number(event.target.value); state.page = 1; }
+    if (event.target.matches('[data-max-price]')) { state.maxPrice = event.target.value === '' ? null : Number(event.target.value); state.page = 1; }
+    if (event.target.matches('[data-performance-horizon]')) { state.performance.horizon = event.target.value; state.page = 1; }
+    if (event.target.matches('[data-performance-op]')) { state.performance.op = event.target.value; state.page = 1; }
+    if (event.target.matches('[data-performance-min]')) { state.performance.min = event.target.value === '' ? null : Number(event.target.value) / 100; state.page = 1; }
+    if (event.target.matches('[data-performance-max]')) { state.performance.max = event.target.value === '' ? null : Number(event.target.value) / 100; state.page = 1; }
+    renderView();
     updateLocation();
-    const exact = currentRows().find(row => row.ticker.toLowerCase() === state.query) || currentRows().find(row => row.slug === state.query);
-    if (exact) openRow(exact.slug);
-  };
-  const click = event => {
-    const mode = event.target.closest('[data-price-mode]')?.dataset.priceMode; if (mode) { state.priceMode = mode; all('[data-price-mode]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.priceMode === mode))); renderExplorer(); return; }
-    const market = event.target.closest('[data-market]')?.dataset.market; if (market) { state.market = market; state.selected = null; loadMarket(market).catch(showError); return; }
-    const view = event.target.closest('[data-view]')?.dataset.view; if (view) { state.view = view; if (view === 'crypto-risk' && state.market !== 'crypto') state.market = 'crypto'; loadMarket(state.market).catch(showError); return; }
-    const watch = event.target.closest('[data-watch]')?.dataset.watch; if (watch) { event.preventDefault(); event.stopPropagation(); state.watchlist.toggle(`${state.market}:${watch}`); renderExplorer(); return; }
-    if (event.target.closest('[data-columns]')) { query('[data-column-picker]').hidden = !query('[data-column-picker]').hidden; return; }
-    if (event.target.closest('[data-export-csv]')) { const csv = rowsToCsv(visibleRows(), ['ticker','name','exchange',...state.columns]); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([csv], { type:'text/csv' })); link.download = `aizanoi-markets-${state.market}.csv`; link.click(); URL.revokeObjectURL(link.href); return; }
-    if (event.target.closest('[data-close-preview]')) { query('[data-preview]').hidden = true; return; }
-    const row = event.target.closest('tr[data-open-instrument]'); if (row && !event.target.closest('a,button')) { state.selected = row.dataset.openInstrument; all('tr[data-open-instrument]').forEach(item => item.classList.toggle('is-selected', item === row)); }
-  };
-  const change = event => {
-    if (event.target.matches('[data-saved-screen]')) {
-      const preset = DEFAULT_PRESETS.find(p => p.id === event.target.value);
-      if (preset?.config) {
-        if (preset.config.sort) state.sort = preset.config.sort;
-        if (preset.config.regime) state.regime = preset.config.regime;
-        state.rsiMin = preset.config.rsiMin ?? null;
-        state.rsiMax = preset.config.rsiMax ?? null;
-        state.rangeMin = preset.config.rangeMin ? preset.config.rangeMin / 100 : null;
-        state.rangeMax = preset.config.rangeMax ? preset.config.rangeMax / 100 : null;
-        query('[data-sort]').value = state.sort;
-        query('[data-regime]').value = state.regime;
-        query('[data-rsi-min]').value = state.rsiMin ?? '';
-        query('[data-rsi-max]').value = state.rsiMax ?? '';
-        query('[data-range-min]').value = state.rangeMin ? Math.round(state.rangeMin * 100) : '';
-        query('[data-range-max]').value = state.rangeMax ? Math.round(state.rangeMax * 100) : '';
-        renderExplorer(); updateLocation(); return;
-      }
-    }
-    if (event.target.matches('[data-sort]')) state.sort = event.target.value;
-    if (event.target.matches('[data-exchange]')) state.exchange = event.target.value;
-    if (event.target.matches('[data-membership]')) state.membership = event.target.value;
-    if (event.target.matches('[data-regime]')) state.regime = event.target.value;
-    if (event.target.matches('[data-performance-horizon]')) state.performance.horizon = event.target.value;
-    if (event.target.matches('[data-performance-op]')) state.performance.op = event.target.value;
-    if (event.target.matches('[data-performance-min]')) state.performance.min = event.target.value === '' ? null : Number(event.target.value) / 100;
-    if (event.target.matches('[data-performance-max]')) state.performance.max = event.target.value === '' ? null : Number(event.target.value) / 100;
-    const maxWrap = query('[data-performance-max-wrap]'); if (maxWrap) maxWrap.hidden = state.performance.op !== 'between';
-    if (event.target.matches('[data-watchlist-only]')) state.watchlistOnly = event.target.checked;
-    const numericFilters = { minPrice:'[data-min-price]', maxPrice:'[data-max-price]', minSessions:'[data-min-sessions]', rsiMin:'[data-rsi-min]', rsiMax:'[data-rsi-max]', rangeMin:'[data-range-min]', rangeMax:'[data-range-max]' };
-    for (const [key,selector] of Object.entries(numericFilters)) {
-      if (event.target.matches(selector)) {
-        const value = Number(event.target.value);
-        state[key] = event.target.value === '' ? null : (key.startsWith('range') ? value / 100 : value);
-      }
-    }
-    if (event.target.matches('[data-column]')) event.target.checked ? state.columns.add(event.target.dataset.column) : state.columns.delete(event.target.dataset.column);
-    renderExplorer(); updateLocation();
-  };
-  const input = event => {
+  }
+
+  let searchTimer = null;
+  function handleInput(event) {
     if (event.target.matches('[data-search]')) {
       clearTimeout(searchTimer);
+      const value = event.target.value.trim();
       searchTimer = setTimeout(() => {
-        state.query = event.target.value.trim().toLowerCase();
-        renderExplorer();
+        state.query = value;
+        state.page = 1;
+        renderView();
         updateLocation();
-      }, 150);
+      }, 120);
     }
-  };
-  const dblclick = event => { const row = event.target.closest('tr[data-open-instrument]'); if (row) openRow(row.dataset.openInstrument); };
-  const keydown = event => { if (event.target.matches?.('[data-search]') && event.key === 'Enter') { event.preventDefault(); query('[data-search-form]').requestSubmit(); return; } const row = event.target.closest?.('tr[data-open-instrument]'); if (row && event.key === 'Enter') openRow(row.dataset.openInstrument); };
-  function showError(error) { query('[data-error]').hidden = false; query('[data-error]').textContent = error.message; }
-  container.addEventListener('click', click); container.addEventListener('change', change); container.addEventListener('input', input); container.addEventListener('submit', submit); container.addEventListener('dblclick', dblclick); container.addEventListener('keydown', keydown);
-  Promise.all([getJson(`${DATA_ROOT}/manifest.json`, controller.signal), getJson(`${DATA_ROOT}/health.json`, controller.signal).catch(() => null), getJson(`${DATA_ROOT}/snapshots/pulse.json`, controller.signal).catch(() => ({ snapshots:[] }))]).then(([manifest,health,snapshots]) => { state.manifest = manifest; state.health = health; state.snapshots = snapshots.snapshots || []; const marketHealth = health?.[state.market] || {}; const observation = marketHealth.latestObservationAt ? ` · Latest market observation ${new Date(marketHealth.latestObservationAt).toLocaleString()}` : ''; query('[data-freshness]').textContent = `Published ${new Date(manifest.completedAt).toLocaleString()}${observation}`; return loadMarket(state.market); }).catch(showError);
+  }
+
+  function handleKey(event) {
+    if (event.target.matches?.('tr[data-open-instrument]') && event.key === 'Enter') {
+      event.preventDefault();
+      openRow(event.target.dataset.openInstrument);
+    }
+  }
+
+  function handleSubmit(event) {
+    if (!event.target.matches('form[data-filter-form]')) return;
+    event.preventDefault();
+    state.query = (query('[data-search]')?.value || '').trim();
+    state.page = 1;
+    renderView();
+    updateLocation();
+  }
+
+  container.addEventListener('click', handleClick);
+  container.addEventListener('dblclick', handleDblClick);
+  container.addEventListener('change', handleChange);
+  container.addEventListener('input', handleInput);
+  container.addEventListener('submit', handleSubmit);
+  container.addEventListener('keydown', handleKey);
+
+  Promise.all([
+    getJson(`${DATA_ROOT}/manifest.json`, controller.signal),
+    getJson(`${DATA_ROOT}/health.json`, controller.signal).catch(() => null),
+  ]).then(([manifest, health]) => {
+    context.manifest = manifest;
+    context.health = health;
+    return loadMarket(state.market);
+  }).catch(showError);
+
   syncControls();
-  return () => { clearTimeout(searchTimer); controller.abort(); container.replaceChildren(); };
+
+  return () => {
+    controller.abort();
+    container.replaceChildren();
+  };
 }
+
+export { renderRankingCard };
