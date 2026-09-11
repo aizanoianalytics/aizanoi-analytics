@@ -57,6 +57,12 @@ test('crypto universe maps ambiguous names to the intended instruments', () => {
   assert.equal(config.find((entry) => entry.name === 'Sui').providerSymbol, 'SUIUSDT');
 });
 
+test('dashboard labels publication separately from the latest market observation', () => {
+  const dashboard = read('frontend/analytics/markets/dashboard.js');
+  assert.match(dashboard, /Published \$\{new Date\(manifest\.completedAt\)\.toLocaleString\(\)\}/);
+  assert.match(dashboard, /Latest market observation/);
+});
+
 test('Markets is included in canonical sitemap generation', () => {
   const builder = read('scripts/news/build-news.mjs');
   assert.match(builder, /\['\/analytics\/markets\/', '2026-09-10'\]/);
