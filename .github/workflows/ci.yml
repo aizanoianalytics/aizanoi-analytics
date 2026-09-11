@@ -178,6 +178,7 @@ jobs:
           status=0
           node tests/historical-worlds-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/historical-worlds-visual-capture.log || status=1
           node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-visual-capture.log || status=1
+          node tests/markets-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/markets-visual-capture.log || status=1
           exit $status
       - name: Upload visual regression review
         if: success()

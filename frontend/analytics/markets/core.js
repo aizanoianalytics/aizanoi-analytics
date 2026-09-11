@@ -125,7 +125,7 @@ export function evaluateMomentumEligibility(row) {
   }));
   const positiveCount = Object.values(statuses).filter(status => status === 'positive').length;
   const negativeCount = Object.values(statuses).filter(status => status === 'negative').length;
-  const validCount = PICK_HORIZONS.length;
+  const validCount = Object.values(statuses).filter(status => status !== 'missing').length;
   const strong = positiveCount >= 8;
   const weak = negativeCount >= 8;
   return { eligibility: strong ? 'strong' : weak ? 'weak' : 'ineligible', positiveCount, negativeCount, validCount, statuses };
@@ -154,9 +154,15 @@ export function sortRows(rows, key, direction = 'desc') {
   const ascending = direction === 'asc';
   return [...rows].sort((left, right) => {
     const a = left[key]; const b = right[key];
-    if (!finite(a) && !finite(b)) return 0;
-    if (!finite(a)) return 1;
-    if (!finite(b)) return -1;
+    const aMissing = a == null || (typeof a === 'number' && !finite(a));
+    const bMissing = b == null || (typeof b === 'number' && !finite(b));
+    if (aMissing && bMissing) return 0;
+    if (aMissing) return 1;
+    if (bMissing) return -1;
+    if (typeof a === 'string' || typeof b === 'string') {
+      const cmp = String(a).localeCompare(String(b));
+      return ascending ? cmp : -cmp;
+    }
     return ascending ? a - b : b - a;
   });
 }
@@ -182,7 +188,7 @@ export function filterRows(rows, options = {}) {
     const rowMemberships = Array.isArray(row.memberships) ? row.memberships : [];
     const wantedMemberships = memberships.length ? memberships : (membership ? [membership] : []);
     if (wantedMemberships.length && !wantedMemberships.some(value => rowMemberships.includes(value))) return false;
-    const priceField = priceMode === 'change' ? null : row.latest;
+    const priceField = row.latestPrice ?? row.latest;
     if (finite(minPrice) && (!finite(priceField) || priceField < minPrice)) return false;
     if (finite(maxPrice) && (!finite(priceField) || priceField > maxPrice)) return false;
     if (performance?.horizon) {
@@ -205,6 +211,29 @@ export function paginate(rows, page, pageSize) {
   const start = (safePage - 1) * safeSize;
   const end = Math.min(start + safeSize, total);
   return { rows: rows.slice(start, end), page: safePage, pageSize: safeSize, total, totalPages, start, end };
+}
+
+export function toISODate(seconds) {
+  return new Date(seconds * 1000).toISOString().slice(0, 10);
+}
+
+export function filterHistoryRows(rows, { dateFrom = '', dateTo = '', search = '' } = {}) {
+  const fromMs = dateFrom ? Date.parse(`${dateFrom}T00:00:00Z`) : null;
+  const toMs = dateTo ? Date.parse(`${dateTo}T23:59:59Z`) : null;
+  const term = String(search || '').trim();
+  return (rows || []).filter(row => {
+    const ms = row.t * 1000;
+    if (fromMs != null && Number.isFinite(fromMs) && ms < fromMs) return false;
+    if (toMs != null && Number.isFinite(toMs) && ms > toMs) return false;
+    if (term && !toISODate(row.t).includes(term)) return false;
+    return true;
+  });
+}
+
+export function historyDailyChange(row, rows, index) {
+  const previous = rows[index - 1];
+  if (!previous || !Number.isFinite(previous.c) || !Number.isFinite(row.c)) return null;
+  return row.c / previous.c - 1;
 }
 
 export function activeFilterChips(state) {
@@ -240,6 +269,7 @@ export function defaultState(overrides = {}) {
     maxPrice:null,
     performance:{ horizon:'', op:'gt', min:null, max:null },
     priceMode:'price',
+    filtersOpen:false,
     page:1,
     pageSize:100,
     ...overrides,
