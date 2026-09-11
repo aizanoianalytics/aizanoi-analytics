@@ -55,7 +55,7 @@ def crypto_universe(path: Path) -> list[dict[str, str]]:
         row["market"] = "crypto"
         row["name"] = row.pop("label", row.get("name", row["ticker"]))
         row.setdefault("memberships", ["Crypto Focused 35"])
-        row.setdefault("exchange", "Crypto · USD")
+        row.setdefault("exchange", "Crypto · USDT")
         row["slug"] = slugify(row["ticker"])
     return rows
 
@@ -988,7 +988,47 @@ def rebuild_derived(root: Path, instruments: list[dict[str, str]], *, completed_
     return rebuilt
 
 
-def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, failed: list[dict[str, str]], *, slice_index: int | None = None, slice_count: int | None = None, fetch_meta: dict[str, dict[str, Any]] | None = None) -> None:
+def coverage_start(root: Path, instruments: list[dict[str, str]]) -> str:
+    """Derive manifest coverageStart from the earliest shard actualCoverageStart.
+
+    Falls back to the first daily candle date when a shard lacks the field,
+    and to 2019-01-01 only when no shard yields a date at all.
+    """
+    starts: list[str] = []
+    for instrument in instruments:
+        shard = read_json(root / "history" / instrument["market"] / f"{instrument['slug']}.json", None)
+        if not shard:
+            continue
+        value = shard.get("actualCoverageStart")
+        if isinstance(value, str) and re.match(r"^\d{4}-\d{2}-\d{2}$", value):
+            starts.append(value)
+            continue
+        daily = shard.get("daily") or []
+        first = daily[0].get("t") if daily else None
+        if isinstance(first, (int, float)):
+            starts.append(dt.datetime.fromtimestamp(first, dt.timezone.utc).date().isoformat())
+    return min(starts) if starts else "2019-01-01"
+
+
+def manifest_counts(root: Path, markets: dict[str, list[dict[str, Any]]], refreshed: Any = None) -> dict[str, int]:
+    """Per-market instrument counts for the manifest.
+
+    Each refresh mode writes only its own markets; any other market keeps
+    its last published count from the previous manifest instead of being
+    recomputed from possibly-stale summary items.
+    """
+    counts = {key: len(value) for key, value in markets.items()}
+    if refreshed is None:
+        return counts
+    prior = read_json(root / "manifest.json", {})
+    prior_counts = prior.get("counts", {}) if isinstance(prior, dict) else {}
+    for key in counts:
+        if key not in refreshed and isinstance(prior_counts.get(key), int):
+            counts[key] = prior_counts[key]
+    return counts
+
+
+def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, failed: list[dict[str, str]], *, slice_index: int | None = None, slice_count: int | None = None, fetch_meta: dict[str, dict[str, Any]] | None = None, refreshed: Any = None) -> None:
     keep: dict[str, set[str]] = {}
     for row in instruments:
         m = row.get("market", "")
@@ -1008,8 +1048,8 @@ def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, 
     write_json_atomic(root / "summary.json", {"markets": markets})
     manifest = {
         "schemaVersion": 3, "source": "Multi-provider close data", "universeSource": "Focused index union (S&P 500 ∪ Nasdaq-100 ∪ NYSE U.S. 100 ∪ DJIA ∪ Aizanoi Extra)",
-        "completedAt": completed_at, "coverageStart": "2019-01-01", "dailyInterval": "1d", "recentInterval": "1d|4h",
-        "dataModel": "close-only", "counts": {key: len(value) for key, value in markets.items()}, "failedSymbols": failed,
+        "completedAt": completed_at, "coverageStart": coverage_start(root, instruments), "dailyInterval": "1d", "recentInterval": "1d|4h",
+        "dataModel": "close-only", "counts": manifest_counts(root, markets, refreshed), "failedSymbols": failed,
         "status": "complete" if not failed else "partial",
         "files": {"summary": {"us": "summary/us/index.json", "crypto": "summary/crypto/index.json"}, "pulse": {"us": "pulse/us.json", "crypto": "pulse/crypto.json"}, "health": "health.json", "snapshots": "snapshots/pulse.json"},
     }
@@ -1145,7 +1185,8 @@ def run(args: argparse.Namespace) -> int:
         updated, failed, fetch_meta = update_rows(root, valid_selected, bootstrap=args.mode == "bootstrap", delay=args.delay, skip_four_hour=args.skip_four_hour)
         failed = pair_failures + failed
         completed = utc_now()
-        aggregate(root, all_instruments, completed, failed, slice_index=slice_index, slice_count=args.slice_count if slice_index is not None else None, fetch_meta=fetch_meta)
+        refreshed = {"us"} if args.mode == "us-daily" else ({"crypto"} if args.mode == "crypto-hourly" else None)
+        aggregate(root, all_instruments, completed, failed, slice_index=slice_index, slice_count=args.slice_count if slice_index is not None else None, fetch_meta=fetch_meta, refreshed=refreshed)
         print(f"[markets] updated={updated} failed={len(failed)} completedAt={completed}")
         return 0 if not failed or args.allow_partial else 1
 

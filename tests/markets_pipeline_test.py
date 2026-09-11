@@ -62,6 +62,33 @@ class UpdateMarketsTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 mod.run(parser.parse_args(args))
 
+    def test_crypto_universe_defaults_to_usdt_exchange(self):
+        rows = mod.crypto_universe(SCRIPT.parent / "crypto-universe.json")
+        self.assertTrue(rows)
+        for row in rows:
+            self.assertEqual(row["exchange"], "Crypto · USDT")
+
+    def test_coverage_start_derives_from_earliest_shard(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "public"
+            for market, slug, start in (("us", "aaa", "2019-01-03"), ("crypto", "btc", "2019-01-01")):
+                shard_dir = root / "history" / market
+                shard_dir.mkdir(parents=True)
+                (shard_dir / f"{slug}.json").write_text(json.dumps({"actualCoverageStart": start, "daily": []}), encoding="utf-8")
+            instruments = [{"market": m, "slug": s} for m, s, _ in (("us", "aaa", "2019-01-03"), ("crypto", "btc", "2019-01-01"))]
+            self.assertEqual(mod.coverage_start(root, instruments), "2019-01-01")
+            (root / "history" / "crypto" / "btc.json").write_text(json.dumps({"daily": [{"t": 1546300800, "c": 1}]}), encoding="utf-8")
+            self.assertEqual(mod.coverage_start(root, instruments), "2019-01-01")
+
+    def test_manifest_counts_preserve_unrefreshed_market(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "public"
+            root.mkdir(parents=True)
+            (root / "manifest.json").write_text(json.dumps({"counts": {"us": 506, "crypto": 35}}), encoding="utf-8")
+            markets = {"us": [{"slug": "a"}], "crypto": []}
+            self.assertEqual(mod.manifest_counts(root, markets, {"us"}), {"us": 1, "crypto": 35})
+            self.assertEqual(mod.manifest_counts(root, markets, None), {"us": 1, "crypto": 0})
+
 
 if __name__ == "__main__":
     unittest.main()

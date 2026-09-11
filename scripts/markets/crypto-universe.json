@@ -5,7 +5,7 @@
     "providerSymbol": "AAVEUSDT",
     "market": "crypto",
     "slug": "aave",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Aave",
     "memberships": [
       "Crypto Focused 35"
@@ -17,7 +17,7 @@
     "providerSymbol": "ADAUSDT",
     "market": "crypto",
     "slug": "ada",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Cardano",
     "memberships": [
       "Crypto Focused 35"
@@ -29,7 +29,7 @@
     "providerSymbol": "APTUSDT",
     "market": "crypto",
     "slug": "apt",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Aptos",
     "memberships": [
       "Crypto Focused 35"
@@ -41,7 +41,7 @@
     "providerSymbol": "ARBUSDT",
     "market": "crypto",
     "slug": "arb",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Arbitrum",
     "memberships": [
       "Crypto Focused 35"
@@ -53,7 +53,7 @@
     "providerSymbol": "ATOMUSDT",
     "market": "crypto",
     "slug": "atom",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Cosmos",
     "memberships": [
       "Crypto Focused 35"
@@ -65,7 +65,7 @@
     "providerSymbol": "AVAXUSDT",
     "market": "crypto",
     "slug": "avax",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Avalanche",
     "memberships": [
       "Crypto Focused 35"
@@ -77,7 +77,7 @@
     "providerSymbol": "BCHUSDT",
     "market": "crypto",
     "slug": "bch",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Bitcoin Cash",
     "memberships": [
       "Crypto Focused 35"
@@ -89,7 +89,7 @@
     "providerSymbol": "BTCUSDT",
     "market": "crypto",
     "slug": "btc",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Bitcoin",
     "memberships": [
       "Crypto Focused 35"
@@ -101,7 +101,7 @@
     "providerSymbol": "DOGEUSDT",
     "market": "crypto",
     "slug": "doge",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Dogecoin",
     "memberships": [
       "Crypto Focused 35"
@@ -113,7 +113,7 @@
     "providerSymbol": "DOTUSDT",
     "market": "crypto",
     "slug": "dot",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Polkadot",
     "memberships": [
       "Crypto Focused 35"
@@ -125,7 +125,7 @@
     "providerSymbol": "ETCUSDT",
     "market": "crypto",
     "slug": "etc",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Ethereum Classic",
     "memberships": [
       "Crypto Focused 35"
@@ -137,7 +137,7 @@
     "providerSymbol": "ETHUSDT",
     "market": "crypto",
     "slug": "eth",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Ethereum",
     "memberships": [
       "Crypto Focused 35"
@@ -149,7 +149,7 @@
     "providerSymbol": "FILUSDT",
     "market": "crypto",
     "slug": "fil",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Filecoin",
     "memberships": [
       "Crypto Focused 35"
@@ -161,7 +161,7 @@
     "providerSymbol": "GRAMUSDT",
     "market": "crypto",
     "slug": "gram",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Gram",
     "memberships": [
       "Crypto Focused 35"
@@ -173,7 +173,7 @@
     "providerSymbol": "HBARUSDT",
     "market": "crypto",
     "slug": "hbar",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Hedera",
     "memberships": [
       "Crypto Focused 35"
@@ -185,7 +185,7 @@
     "providerSymbol": "INJUSDT",
     "market": "crypto",
     "slug": "inj",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Injective",
     "memberships": [
       "Crypto Focused 35"
@@ -197,7 +197,7 @@
     "providerSymbol": "LINKUSDT",
     "market": "crypto",
     "slug": "link",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Chainlink",
     "memberships": [
       "Crypto Focused 35"
@@ -209,7 +209,7 @@
     "providerSymbol": "LTCUSDT",
     "market": "crypto",
     "slug": "ltc",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Litecoin",
     "memberships": [
       "Crypto Focused 35"
@@ -221,7 +221,7 @@
     "providerSymbol": "NEARUSDT",
     "market": "crypto",
     "slug": "near",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "NEAR Protocol",
     "memberships": [
       "Crypto Focused 35"
@@ -233,7 +233,7 @@
     "providerSymbol": "ONDOUSDT",
     "market": "crypto",
     "slug": "ondo",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Ondo",
     "memberships": [
       "Crypto Focused 35"
@@ -245,7 +245,7 @@
     "providerSymbol": "OPUSDT",
     "market": "crypto",
     "slug": "op",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Optimism",
     "memberships": [
       "Crypto Focused 35"
@@ -257,7 +257,7 @@
     "providerSymbol": "POLUSDT",
     "market": "crypto",
     "slug": "pol",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Polygon",
     "memberships": [
       "Crypto Focused 35"
@@ -269,7 +269,7 @@
     "providerSymbol": "RENDERUSDT",
     "market": "crypto",
     "slug": "render",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Render",
     "memberships": [
       "Crypto Focused 35"
@@ -281,7 +281,7 @@
     "providerSymbol": "RUNEUSDT",
     "market": "crypto",
     "slug": "rune",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "THORChain",
     "memberships": [
       "Crypto Focused 35"
@@ -293,7 +293,7 @@
     "providerSymbol": "SUSDT",
     "market": "crypto",
     "slug": "s",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Sonic",
     "memberships": [
       "Crypto Focused 35"
@@ -305,7 +305,7 @@
     "providerSymbol": "SANDUSDT",
     "market": "crypto",
     "slug": "sand",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "The Sandbox",
     "memberships": [
       "Crypto Focused 35"
@@ -317,7 +317,7 @@
     "providerSymbol": "SOLUSDT",
     "market": "crypto",
     "slug": "sol",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Solana",
     "memberships": [
       "Crypto Focused 35"
@@ -329,7 +329,7 @@
     "providerSymbol": "SUIUSDT",
     "market": "crypto",
     "slug": "sui",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Sui",
     "memberships": [
       "Crypto Focused 35"
@@ -341,7 +341,7 @@
     "providerSymbol": "TAOUSDT",
     "market": "crypto",
     "slug": "tao",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Bittensor",
     "memberships": [
       "Crypto Focused 35"
@@ -353,7 +353,7 @@
     "providerSymbol": "THETAUSDT",
     "market": "crypto",
     "slug": "theta",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Theta Network",
     "memberships": [
       "Crypto Focused 35"
@@ -365,7 +365,7 @@
     "providerSymbol": "UNIUSDT",
     "market": "crypto",
     "slug": "uni",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Uniswap",
     "memberships": [
       "Crypto Focused 35"
@@ -377,7 +377,7 @@
     "providerSymbol": "VIRTUALUSDT",
     "market": "crypto",
     "slug": "virtual",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Virtuals Protocol",
     "memberships": [
       "Crypto Focused 35"
@@ -389,7 +389,7 @@
     "providerSymbol": "XLMUSDT",
     "market": "crypto",
     "slug": "xlm",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Stellar",
     "memberships": [
       "Crypto Focused 35"
@@ -401,7 +401,7 @@
     "providerSymbol": "XRPUSDT",
     "market": "crypto",
     "slug": "xrp",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "XRP",
     "memberships": [
       "Crypto Focused 35"
@@ -413,7 +413,7 @@
     "providerSymbol": "ZECUSDT",
     "market": "crypto",
     "slug": "zec",
-    "exchange": "Crypto \u00b7 USD",
+    "exchange": "Crypto \u00b7 USDT",
     "name": "Zcash",
     "memberships": [
       "Crypto Focused 35"

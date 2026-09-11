@@ -46,6 +46,8 @@ export const formatNumber = (value) => finite(value) ? intFormat.format(value) :
 
 export const detailUrl = (market, slug) => `/analytics/markets/instrument/?market=${encodeURIComponent(market)}&symbol=${encodeURIComponent(slug)}`;
 
+export const slugFromParam = (value) => String(value ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
 export function sliceTimeframe(candles, timeframe) {
   const calendarDays = { '1M': 30, '3M': 90, '6M': 180, '1Y': 365, '2Y': 365 * 2, '3Y': 365 * 3, '5Y': 365 * 5 };
   if (!candles || !candles.length) return [];
