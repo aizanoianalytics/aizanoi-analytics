@@ -45,6 +45,9 @@ import {
   buildCargoSkiff,
   buildWoodenFootbridge,
   buildBirdFlock,
+  buildClassicalHerm,
+  buildVotiveTripodPillar,
+  buildAtticHydriaFountain,
 } from '../../shared/assets/props.js';
 
 /* ── Global state ─────────────────────────────────────────── */
@@ -460,6 +463,19 @@ function populateStreetDressing() {
   // 5. Inscribed Stelae near Tholos and Bouleuterion
   dressingGroup.add(buildInscribedStele(72, -30, 0.2));
   dressingGroup.add(buildInscribedStele(75, -15, -0.1));
+
+  // Classical Herms along the Panathenaic Way and Agora boundary
+  dressingGroup.add(buildClassicalHerm(75, -2, 0.15));
+  dressingGroup.add(buildClassicalHerm(125, -28, -0.3));
+  dressingGroup.add(buildClassicalHerm(245, 120, 0.4));
+
+  // Votive Tripod Monuments (Street of the Tripods)
+  dressingGroup.add(buildVotiveTripodPillar(-35, -170, 0.25));
+  dressingGroup.add(buildVotiveTripodPillar(-10, -195, -0.2));
+
+  // Attic Hydria Fountain House (Agora Public Water Basin)
+  dressingGroup.add(buildAtticHydriaFountain(135, -45, 0.1));
+  collision.grid.insert({ type: 'rect', id: 'enneakrounos-fountain', x: 135, z: -45, w: 3.8, d: 2.2, h: 2.6 });
 
   // 6. Stone Benches along Panathenaic Way
   const benches = [

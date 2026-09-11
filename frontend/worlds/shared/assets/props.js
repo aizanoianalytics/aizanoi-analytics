@@ -1200,3 +1200,594 @@ export function buildBirdFlock(x, y, z, count = 8, radius = 24) {
 
   return group;
 }
+
+/* ── 24. Roman Sarcophagus (Aizanoi Necropolis) ────────── */
+
+export function buildRomanSarcophagus(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const marbleMat = getMaterial('marble');
+  const base = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.35, 1.2), marbleMat);
+  base.position.y = 0.175;
+  base.receiveShadow = true;
+  group.add(base);
+
+  const chest = new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.95, 0.95), marbleMat);
+  chest.position.y = 0.35 + 0.475;
+  chest.castShadow = true;
+  group.add(chest);
+
+  const garlandFrieze = new THREE.Mesh(new THREE.BoxGeometry(2.14, 0.22, 0.99), marbleMat);
+  garlandFrieze.position.y = 0.35 + 0.65;
+  group.add(garlandFrieze);
+
+  const lidBase = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.14, 1.05), marbleMat);
+  lidBase.position.y = 0.35 + 0.95 + 0.07;
+  group.add(lidBase);
+
+  const gabledRoof = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 2.18, 3, 1, false, Math.PI / 2, Math.PI), marbleMat);
+  gabledRoof.position.set(0, 0.35 + 0.95 + 0.14 + 0.18, 0);
+  gabledRoof.rotation.z = Math.PI / 2;
+  gabledRoof.castShadow = true;
+  group.add(gabledRoof);
+
+  for (const sx of [-1.02, 1.02]) {
+    for (const sz of [-0.48, 0.48]) {
+      const acroterion = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.22, 4), marbleMat);
+      acroterion.position.set(sx, 0.35 + 0.95 + 0.22, sz);
+      acroterion.rotation.y = Math.PI / 4;
+      group.add(acroterion);
+    }
+  }
+
+  return group;
+}
+
+/* ── 25. Penkalas Water Mill (Aizanoi River Channel) ─────── */
+
+export function buildPenkalasWaterMill(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const stoneMat = getMaterial('limestone');
+  const roofMat = getMaterial('roofTile');
+  const woodMat = getMaterial('wood');
+  const ironMat = getMaterial('structuralSteel');
+
+  const house = new THREE.Mesh(new THREE.BoxGeometry(5.4, 3.8, 4.4), stoneMat);
+  house.position.set(0, 1.9, 0);
+  house.castShadow = true;
+  house.receiveShadow = true;
+  group.add(house);
+
+  const roof = new THREE.Mesh(new THREE.ConeGeometry(4.2, 1.8, 4), roofMat);
+  roof.position.set(0, 3.8 + 0.9, 0);
+  roof.rotation.y = Math.PI / 4;
+  roof.scale.set(1.1, 1.0, 0.9);
+  roof.castShadow = true;
+  group.add(roof);
+
+  const wheelGroup = new THREE.Group();
+  wheelGroup.position.set(2.8, 1.8, 0);
+
+  const axle = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 1.4, 8), ironMat);
+  axle.rotation.z = Math.PI / 2;
+  wheelGroup.add(axle);
+
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(1.9, 0.1, 8, 20), woodMat);
+  rim.rotation.y = Math.PI / 2;
+  wheelGroup.add(rim);
+
+  const innerRim = new THREE.Mesh(new THREE.TorusGeometry(1.2, 0.08, 8, 20), woodMat);
+  innerRim.rotation.y = Math.PI / 2;
+  wheelGroup.add(innerRim);
+
+  for (let i = 0; i < 8; i++) {
+    const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.08, 3.7, 0.08), woodMat);
+    spoke.rotation.x = (i * Math.PI) / 8;
+    wheelGroup.add(spoke);
+  }
+
+  for (let i = 0; i < 16; i++) {
+    const angle = (i * Math.PI * 2) / 16;
+    const paddle = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.05, 0.42), woodMat);
+    paddle.position.set(0, Math.sin(angle) * 1.9, Math.cos(angle) * 1.9);
+    paddle.rotation.x = angle;
+    wheelGroup.add(paddle);
+  }
+
+  wheelGroup.userData.update = function(dt) {
+    wheelGroup.rotation.x += dt * 1.2;
+  };
+  group.add(wheelGroup);
+
+  const flume = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.35, 5.2), getMaterial('woodPlanks'));
+  flume.position.set(2.8, 3.5, -1.2);
+  flume.rotation.x = 0.08;
+  group.add(flume);
+
+  return group;
+}
+
+/* ── 26. Roman Treadwheel Quay Crane (Aizanoi Harbor) ────── */
+
+export function buildRiverQuayCrane(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const woodMat = getMaterial('wood');
+  const ropeMat = getMaterial('plasterAged');
+
+  const baseBeam1 = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.25, 0.25), woodMat);
+  baseBeam1.position.y = 0.125;
+  group.add(baseBeam1);
+  const baseBeam2 = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.25, 3.2), woodMat);
+  baseBeam2.position.y = 0.125;
+  group.add(baseBeam2);
+
+  const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.18, 6.2, 8), woodMat);
+  mast.position.set(0, 3.1, 0);
+  mast.castShadow = true;
+  group.add(mast);
+
+  const jib = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 5.8, 8), woodMat);
+  jib.position.set(1.8, 4.2, 0);
+  jib.rotation.z = -Math.PI / 4;
+  jib.castShadow = true;
+  group.add(jib);
+
+  const stay = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 4.8, 6), ropeMat);
+  stay.position.set(-1.2, 3.8, 0);
+  stay.rotation.z = Math.PI / 5;
+  group.add(stay);
+
+  const wheel = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.12, 8, 18), woodMat);
+  wheel.position.set(0, 2.0, 0.85);
+  wheel.rotation.y = Math.PI / 2;
+  group.add(wheel);
+
+  const rope = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 3.5, 6), ropeMat);
+  rope.position.set(3.8, 4.5, 0);
+  group.add(rope);
+
+  const cargoStone = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.6, 0.7), getMaterial('marble'));
+  cargoStone.position.set(3.8, 2.5, 0);
+  cargoStone.castShadow = true;
+  group.add(cargoStone);
+
+  return group;
+}
+
+/* ── 27. Ruined Triumphal Archway (Late Rome AD 410-476) ─── */
+
+export function buildRuinedTriumphalArch(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const stoneMat = getMaterial('travertine');
+  const brickMat = getMaterial('romanBrickWeathered');
+
+  const pierLeft = new THREE.Mesh(new THREE.BoxGeometry(2.8, 7.8, 3.2), stoneMat);
+  pierLeft.position.set(-3.2, 3.9, 0);
+  pierLeft.castShadow = true;
+  group.add(pierLeft);
+
+  const pierRight = new THREE.Mesh(new THREE.BoxGeometry(2.8, 5.2, 3.2), brickMat);
+  pierRight.position.set(3.2, 2.6, 0);
+  pierRight.castShadow = true;
+  group.add(pierRight);
+
+  const archSegment = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.2, 3.0), stoneMat);
+  archSegment.position.set(-1.8, 7.6, 0);
+  archSegment.rotation.z = 0.22;
+  group.add(archSegment);
+
+  for (let i = 0; i < 5; i++) {
+    const block = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.6, 0.8), stoneMat);
+    block.position.set(1.5 + (i % 3) * 0.9, 0.3, -1.0 + (i % 2) * 1.2);
+    block.rotation.y = i * 0.4;
+    block.rotation.z = (i % 2) * 0.15;
+    block.castShadow = true;
+    group.add(block);
+  }
+
+  return group;
+}
+
+/* ── 28. Late Roman Street Barricade (Rome Defense) ──────── */
+
+export function buildLateRomanBarricade(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const charredMat = getMaterial('charredWood');
+  const woodMat = getMaterial('wood');
+  const stoneMat = getMaterial('rubbleStone');
+
+  const wagonBed = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.14, 1.4), woodMat);
+  wagonBed.position.set(0, 0.8, 0);
+  wagonBed.rotation.z = 0.55;
+  wagonBed.castShadow = true;
+  group.add(wagonBed);
+
+  for (let i = 0; i < 4; i++) {
+    const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.14, 3.4, 6), charredMat);
+    beam.position.set(-0.8 + i * 0.55, 0.7, (i % 2) * 0.4 - 0.2);
+    beam.rotation.z = -0.4 + (i % 3) * 0.3;
+    beam.rotation.y = (i * 0.5);
+    beam.castShadow = true;
+    group.add(beam);
+  }
+
+  for (let i = 0; i < 6; i++) {
+    const stake = new THREE.Mesh(new THREE.ConeGeometry(0.08, 1.6, 5), woodMat);
+    stake.position.set(-1.2 + i * 0.5, 0.45, 0.9);
+    stake.rotation.x = Math.PI / 3;
+    group.add(stake);
+  }
+
+  const rubble = new THREE.Mesh(new THREE.DodecahedronGeometry(0.65), stoneMat);
+  rubble.position.set(-1.1, 0.45, -0.2);
+  group.add(rubble);
+
+  return group;
+}
+
+/* ── 29. Forum Night Watch Fire Basket (Rome) ────────────── */
+
+export function buildForumWatchBrazier(x, z) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+
+  const stoneMat = getMaterial('travertine');
+  const ironMat = getMaterial('structuralSteel');
+
+  const base = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.6, 1.3), stoneMat);
+  base.position.y = 0.8;
+  base.castShadow = true;
+  group.add(base);
+
+  const basketRing = new THREE.Mesh(new THREE.TorusGeometry(0.55, 0.04, 6, 16), ironMat);
+  basketRing.position.y = 1.7;
+  basketRing.rotation.x = Math.PI / 2;
+  group.add(basketRing);
+
+  for (let i = 0; i < 10; i++) {
+    const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.75, 4), ironMat);
+    const angle = (i * Math.PI * 2) / 10;
+    bar.position.set(Math.cos(angle) * 0.55, 1.95, Math.sin(angle) * 0.55);
+    group.add(bar);
+  }
+
+  const coals = new THREE.Mesh(new THREE.DodecahedronGeometry(0.5), new THREE.MeshStandardMaterial({
+    color: 0xff3300,
+    emissive: 0xff4400,
+    emissiveIntensity: 1.2,
+    roughness: 0.9,
+  }));
+  coals.position.y = 1.95;
+  group.add(coals);
+
+  const light = new THREE.PointLight(0xff6622, 2.2, 18);
+  light.position.y = 2.4;
+  group.add(light);
+
+  return group;
+}
+
+/* ── 30. Classical Herm Boundary Landmark (Athens Agora) ─── */
+
+export function buildClassicalHerm(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const marbleMat = getMaterial('marble');
+
+  const plinth = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.25, 0.8), marbleMat);
+  plinth.position.y = 0.125;
+  group.add(plinth);
+
+  const shaft = new THREE.Mesh(new THREE.BoxGeometry(0.44, 2.1, 0.44), marbleMat);
+  shaft.position.y = 0.25 + 1.05;
+  shaft.castShadow = true;
+  group.add(shaft);
+
+  const shoulderBoss = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.14, 0.18), marbleMat);
+  shoulderBoss.position.y = 0.25 + 1.85;
+  group.add(shoulderBoss);
+
+  const head = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.2, 0.42, 8), marbleMat);
+  head.position.y = 0.25 + 2.31;
+  head.castShadow = true;
+  group.add(head);
+
+  const beard = new THREE.Mesh(new THREE.ConeGeometry(0.14, 0.28, 6), marbleMat);
+  beard.position.set(0, 0.25 + 2.18, 0.14);
+  beard.rotation.x = Math.PI / 6;
+  group.add(beard);
+
+  return group;
+}
+
+/* ── 31. Street of Tripods Monument Pillar (Athens) ───────── */
+
+export function buildVotiveTripodPillar(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const marbleMat = getMaterial('marble');
+  const bronzeMat = getMaterial('bronze');
+  const goldMat = getMaterial('goldLeaf');
+
+  const base = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.5, 1.6), marbleMat);
+  base.position.y = 0.25;
+  group.add(base);
+
+  const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.6, 4.4, 6), marbleMat);
+  pillar.position.y = 0.5 + 2.2;
+  pillar.castShadow = true;
+  group.add(pillar);
+
+  const capital = new THREE.Mesh(new THREE.CylinderGeometry(0.75, 0.5, 0.4, 6), marbleMat);
+  capital.position.y = 0.5 + 4.4 + 0.2;
+  group.add(capital);
+
+  const tripodY = 0.5 + 4.4 + 0.4;
+  for (let i = 0; i < 3; i++) {
+    const angle = (i * Math.PI * 2) / 3;
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.03, 1.1, 6), bronzeMat);
+    leg.position.set(Math.cos(angle) * 0.35, tripodY + 0.55, Math.sin(angle) * 0.35);
+    leg.rotation.z = Math.cos(angle) * 0.18;
+    leg.rotation.x = -Math.sin(angle) * 0.18;
+    group.add(leg);
+  }
+
+  const cauldron = new THREE.Mesh(
+    new THREE.SphereGeometry(0.42, 12, 8, 0, Math.PI * 2, Math.PI * 0.35, Math.PI * 0.65),
+    goldMat
+  );
+  cauldron.position.y = tripodY + 1.05;
+  cauldron.rotation.x = Math.PI;
+  group.add(cauldron);
+
+  return group;
+}
+
+/* ── 32. Attic Hydria Fountain House (Athens Public Water) ── */
+
+export function buildAtticHydriaFountain(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const stoneMat = getMaterial('poros');
+  const waterMat = getMaterial('waterSurface');
+  const bronzeMat = getMaterial('bronze');
+  const terraMat = getMaterial('terracotta');
+
+  const backWall = new THREE.Mesh(new THREE.BoxGeometry(3.6, 2.4, 0.5), stoneMat);
+  backWall.position.set(0, 1.2, -0.6);
+  backWall.castShadow = true;
+  group.add(backWall);
+
+  const basin = new THREE.Mesh(new THREE.BoxGeometry(3.6, 0.8, 1.4), stoneMat);
+  basin.position.set(0, 0.4, 0.35);
+  basin.receiveShadow = true;
+  group.add(basin);
+
+  const water = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 1.1), waterMat);
+  water.position.set(0, 0.76, 0.35);
+  water.rotation.x = -Math.PI / 2;
+  group.add(water);
+
+  for (const sx of [-0.9, 0.9]) {
+    const spout = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.25, 8), bronzeMat);
+    spout.position.set(sx, 1.25, -0.32);
+    spout.rotation.x = Math.PI / 2;
+    group.add(spout);
+  }
+
+  for (const sx of [-1.4, 1.4]) {
+    const hydria = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.16, 0.48, 8), terraMat);
+    hydria.position.set(sx, 0.8 + 0.24, 0.35);
+    group.add(hydria);
+  }
+
+  return group;
+}
+
+/* ── 33. Airport GSE Baggage Train (İGA Airport) ──────────── */
+
+export function buildBaggageCartTrain(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const vehMat = getMaterial('serviceVehicle');
+  const steelMat = getMaterial('structuralSteel');
+  const aluMat = getMaterial('aluminumAnodized');
+
+  const tug = new THREE.Group();
+  const tugBody = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.1, 2.8), vehMat);
+  tugBody.position.y = 0.85;
+  tugBody.castShadow = true;
+  tug.add(tugBody);
+
+  const tugCab = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.85, 1.2), vehMat);
+  tugCab.position.set(0, 1.7, -0.3);
+  tug.add(tugCab);
+
+  const beacon = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.15, 8), new THREE.MeshStandardMaterial({
+    color: 0xffaa00,
+    emissive: 0xff8800,
+    emissiveIntensity: 1.0,
+  }));
+  beacon.position.set(0, 2.2, -0.3);
+  tug.add(beacon);
+
+  for (const [wx, wz] of [[-0.85, -0.8], [0.85, -0.8], [-0.85, 0.8], [0.85, 0.8]]) {
+    const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.35, 0.25, 12), steelMat);
+    wheel.position.set(wx, 0.35, wz);
+    wheel.rotation.z = Math.PI / 2;
+    tug.add(wheel);
+  }
+  group.add(tug);
+
+  for (let c = 0; c < 3; c++) {
+    const cart = new THREE.Group();
+    const cartZ = 2.4 + (c + 1) * 3.2;
+    cart.position.set(0, 0, cartZ);
+
+    const hitch = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.8, 6), steelMat);
+    hitch.position.set(0, 0.35, -1.6);
+    hitch.rotation.x = Math.PI / 2;
+    cart.add(hitch);
+
+    const cartBed = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.2, 2.4), steelMat);
+    cartBed.position.y = 0.45;
+    cart.add(cartBed);
+
+    const container = new THREE.Mesh(new THREE.BoxGeometry(1.4, 1.2, 2.2), aluMat);
+    container.position.y = 1.15;
+    container.castShadow = true;
+    cart.add(container);
+
+    for (const [wx, wz] of [[-0.8, -0.7], [0.8, -0.7], [-0.8, 0.7], [0.8, 0.7]]) {
+      const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 0.15, 10), steelMat);
+      wheel.position.set(wx, 0.24, wz);
+      wheel.rotation.z = Math.PI / 2;
+      cart.add(wheel);
+    }
+    group.add(cart);
+  }
+
+  return group;
+}
+
+/* ── 34. Passenger Boarding Stairs Vehicle (İGA Airport) ─── */
+
+export function buildBoardingStairsTruck(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const vehMat = getMaterial('serviceVehicle');
+  const aluMat = getMaterial('aluminumAnodized');
+  const steelMat = getMaterial('structuralSteel');
+
+  const chassis = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.6, 7.2), vehMat);
+  chassis.position.y = 0.65;
+  chassis.castShadow = true;
+  group.add(chassis);
+
+  const cab = new THREE.Mesh(new THREE.BoxGeometry(2.2, 1.6, 1.8), vehMat);
+  cab.position.set(0, 1.7, -2.4);
+  cab.castShadow = true;
+  group.add(cab);
+
+  const stairsAngle = 0.58;
+  const numSteps = 14;
+  for (let i = 0; i < numSteps; i++) {
+    const step = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.08, 0.38), aluMat);
+    const sy = 0.8 + i * 0.28;
+    const sz = -1.2 + i * 0.42;
+    step.position.set(0, sy, sz);
+    group.add(step);
+  }
+
+  for (const sx of [-0.85, 0.85]) {
+    const rail = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 6.2, 6), steelMat);
+    rail.position.set(sx, 2.9, 1.5);
+    rail.rotation.x = -stairsAngle;
+    group.add(rail);
+  }
+
+  const topPlatform = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.15, 1.6), aluMat);
+  topPlatform.position.set(0, 0.8 + numSteps * 0.28, -1.2 + numSteps * 0.42 + 0.6);
+  group.add(topPlatform);
+
+  return group;
+}
+
+/* ── 35. Illuminated Airport Windsock (İGA Runway) ────────── */
+
+export function buildAirportWindsock(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const steelMat = getMaterial('structuralSteel');
+  const redMat = getMaterial('jetLivery');
+  const whiteMat = getMaterial('runwayMarking');
+
+  const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 6.8, 8), steelMat);
+  mast.position.y = 3.4;
+  mast.castShadow = true;
+  group.add(mast);
+
+  const arm = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.08, 0.9), steelMat);
+  arm.position.set(0, 6.6, 0.45);
+  group.add(arm);
+
+  const sockRing = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.03, 6, 16), steelMat);
+  sockRing.position.set(0, 6.6, 0.9);
+  group.add(sockRing);
+
+  for (let s = 0; s < 5; s++) {
+    const r1 = 0.42 - s * 0.055;
+    const r2 = 0.42 - (s + 1) * 0.055;
+    const band = new THREE.Mesh(new THREE.CylinderGeometry(r2, r1, 0.5, 12, 1, true), s % 2 === 0 ? redMat : whiteMat);
+    band.position.set(0, 6.6 - (s * 0.04), 0.9 + 0.25 + s * 0.5);
+    band.rotation.x = Math.PI / 2;
+    group.add(band);
+  }
+
+  const light = new THREE.PointLight(0xffeedd, 1.2, 14);
+  light.position.set(0, 7.0, 0.9);
+  group.add(light);
+
+  return group;
+}
+
+/* ── 36. Terminal Gate Guidance Sign (İGA VDGS) ───────────── */
+
+export function buildGateMarshallerSign(x, z, rot = 0, gateText = 'B7') {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+
+  const panelMat = new THREE.MeshStandardMaterial({
+    color: 0x11161d,
+    roughness: 0.6,
+    metalness: 0.8,
+  });
+  const textMat = new THREE.MeshStandardMaterial({
+    color: 0xffaa00,
+    emissive: 0xff8800,
+    emissiveIntensity: 0.9,
+    roughness: 0.4,
+  });
+
+  const board = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.4, 0.18), panelMat);
+  board.position.y = 8.2;
+  board.castShadow = true;
+  group.add(board);
+
+  const display = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 1.1), textMat);
+  display.position.set(0, 8.2, 0.1);
+  group.add(display);
+
+  const bracket = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.12, 1.2), getMaterial('structuralSteel'));
+  bracket.position.set(0, 8.2, -0.6);
+  group.add(bracket);
+
+  return group;
+}

@@ -46,6 +46,9 @@ import {
   buildRiverReeds,
   buildCargoSkiff,
   buildBirdFlock,
+  buildRuinedTriumphalArch,
+  buildLateRomanBarricade,
+  buildForumWatchBrazier,
 } from '../../shared/assets/props.js';
 
 
@@ -444,6 +447,19 @@ function populateRomeDressing() {
   arcade1.rotation.y = 0.4;
   dressingGroup.add(arcade1);
   collision.grid.insert({ type: 'rect', id: 'collapsed-arcade-1', x: 130, z: 70, w: 26, d: 5, h: 11 });
+
+  // Fractured Late-Antique Ruined Triumphal Archway (Post-Sack)
+  dressingGroup.add(buildRuinedTriumphalArch(-105, 55, 0.35));
+  collision.grid.insert({ type: 'rect', id: 'ruined-arch-1', x: -105, z: 55, w: 7.2, d: 3.6, h: 7.8 });
+
+  // Late Roman Street Defense Barricades
+  dressingGroup.add(buildLateRomanBarricade(-65, -15, 0.28));
+  collision.grid.insert({ type: 'rect', id: 'barricade-sacra-1', x: -65, z: -15, w: 3.2, d: 2.2, h: 1.8 });
+  dressingGroup.add(buildLateRomanBarricade(-280, 420, -0.4));
+
+  // Forum Night Watch Fire Baskets
+  dressingGroup.add(buildForumWatchBrazier(-95, 45));
+  dressingGroup.add(buildForumWatchBrazier(-48, -5));
 
   // Overgrown street paving weeds along Roman basalt roads
   const weedCoords = [

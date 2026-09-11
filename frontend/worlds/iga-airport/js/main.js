@@ -29,6 +29,10 @@ import {
   buildBaggageTug,
   buildFuelTruck,
   buildRunwayApproachLights,
+  buildBaggageCartTrain,
+  buildBoardingStairsTruck,
+  buildAirportWindsock,
+  buildGateMarshallerSign,
 } from '../../shared/assets/props.js';
 import { AirportTrafficSystem } from './aircraft.js';
 
@@ -330,6 +334,25 @@ function populateAirportApron() {
   for (const lb of lightBars) {
     apronGroup.add(buildRunwayApproachLights(lb.x, lb.z, 0, lb.color));
   }
+
+  // 3. Runway Wind Direction Indicators (Windsocks)
+  apronGroup.add(buildAirportWindsock(-710, 1180, 0.2));
+  apronGroup.add(buildAirportWindsock(710, 1180, -0.2));
+
+  // 4. Mobile Passenger Air Stairs Vehicles (Remote Stands)
+  apronGroup.add(buildBoardingStairsTruck(-455, 1075, Math.PI * 0.4));
+  apronGroup.add(buildBoardingStairsTruck(455, 1075, -Math.PI * 0.4));
+
+  // 5. Container Baggage Cart Trains traversing apron service lanes
+  apronGroup.add(buildBaggageCartTrain(-480, 720, -Math.PI / 2));
+  apronGroup.add(buildBaggageCartTrain(480, 720, Math.PI / 2));
+  apronGroup.add(buildBaggageCartTrain(0, 920, 0));
+
+  // 6. Terminal Pier Visual Docking Guidance System (VDGS) Signs
+  apronGroup.add(buildGateMarshallerSign(-540, 420, Math.PI / 2, 'Gate A1'));
+  apronGroup.add(buildGateMarshallerSign(-540, 600, Math.PI / 2, 'Gate A3'));
+  apronGroup.add(buildGateMarshallerSign(540, 420, -Math.PI / 2, 'Gate B1'));
+  apronGroup.add(buildGateMarshallerSign(540, 600, -Math.PI / 2, 'Gate B3'));
 
   scene.add(apronGroup);
 }
