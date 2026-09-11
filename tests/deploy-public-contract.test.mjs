@@ -125,3 +125,17 @@ test('HERMES_OPERATIONS.md documents the exact-SHA invocation form', () => {
   const ops = readFileSync(`${repoRoot}/docs/HERMES_OPERATIONS.md`, 'utf8');
   assert.match(ops, /AIZANOI_DEPLOY_SHA="\$TARGET_SHA" bash scripts\/deploy-public\.sh/);
 });
+
+test('deploy carries the self-hosted Dungeon route and Phaser vendor bundle', () => {
+  const page = readFileSync(`${repoRoot}/frontend/dungeon/index.html`, 'utf8');
+  assert.match(page, /<script src="\/vendor\/phaser\.min\.js"><\/script>/);
+  const vendor = statSync(`${repoRoot}/frontend/vendor/phaser.min.js`);
+  assert.ok(vendor.size > 1000000, `phaser vendor bundle must ship, got ${vendor.size} bytes`);
+  const script = readFileSync(scriptPath, 'utf8');
+  assert.match(script, /"\$\{SOURCE\}\/"\s+"\$\{STAGING\}\/"/, 'deploy stages the whole frontend tree (dungeon + vendor included)');
+});
+
+test('service worker keeps the 1.18MB Phaser bundle out of precache (mobile data)', () => {
+  const sw = readFileSync(`${repoRoot}/frontend/service-worker.js`, 'utf8');
+  assert.doesNotMatch(sw, /phaser/, 'phaser must load on demand, never precache');
+});

@@ -6,6 +6,16 @@ if (container) {
     console.log('[Aizanoi Dungeon] Standalone baslatildi.');
   }).catch(err => {
     console.error('[Aizanoi Dungeon] Baslatma hatasi:', err);
+    container.replaceChildren();
+    const errorBox = document.createElement('div');
+    errorBox.className = 'aizanoi-dungeon-error';
+    errorBox.setAttribute('role', 'alert');
+    const title = document.createElement('strong');
+    title.textContent = 'Aizanoi Dungeon baslatilamadi';
+    const detail = document.createElement('p');
+    detail.textContent = 'Oyun motoru yuklenemedi (Phaser calistirilamadi). Sayfayi yenilemeyi deneyin.';
+    errorBox.append(title, detail);
+    container.appendChild(errorBox);
   });
 }
 

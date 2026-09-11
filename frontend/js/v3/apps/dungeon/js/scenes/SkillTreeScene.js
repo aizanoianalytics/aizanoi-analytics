@@ -12,6 +12,7 @@ export class SkillTreeScene extends Phaser.Scene {
   create() {
     const { width, height } = this.cameras.main;
     this.gameScene = this.scene.get('GameScene');
+    if (this.gameScene) this.gameScene.scene.pause();
 
     // Panel
     const panel = this.add.rectangle(width / 2, height / 2, 620, 440, 0xffffff, 0.94)

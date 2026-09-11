@@ -2,8 +2,24 @@
 // Zeus Kıvılcımı (XP), Seviye, Denarii ve Sonsuzluk Dalga Skoru
 
 import { xpForLevel, LEVEL_UP_BONUS } from '../constants.js';
+import { SKILL_TREE } from '../data/skills.js';
 
-const STORAGE_KEY = 'aizanoi_dungeon_save_v1';
+const STORAGE_KEY = 'aizanoi_dungeon_save_v2';
+const LEGACY_STORAGE_KEY = 'aizanoi_dungeon_save_v1';
+
+const KNOWN_SKILL_IDS = new Set(
+  [SKILL_TREE.offense, SKILL_TREE.defense, SKILL_TREE.utility]
+    .flatMap((branch) => branch.skills.map((skill) => skill.id))
+);
+
+const MAX_STAT_VALUE = 1000000000;
+const MAX_WAVE_VALUE = 9999;
+
+function toClampedInt(value, fallback, min, max) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return fallback;
+  return Math.max(min, Math.min(max, Math.floor(num)));
+}
 
 export class ProgressionSystem {
   constructor() {
@@ -87,23 +103,54 @@ export class ProgressionSystem {
 
   load() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
-      const data = JSON.parse(raw);
-      if (data && typeof data === 'object') {
-        this.level = Math.max(1, Math.min(100, Number(data.level) || 1));
-        this.currentXp = Math.max(0, Number(data.currentXp) || 0);
-        this.nextXp = xpForLevel(this.level);
-        this.gold = Math.max(0, Number(data.gold) || 0);
-        this.unlockedSkills = new Set(Array.isArray(data.unlockedSkills) ? data.unlockedSkills : []);
-        this.highestWave = Math.max(1, Number(data.highestWave) || 1);
-        this.currentChapter = Math.max(1, Math.min(10, Number(data.currentChapter) || 1));
-        this.stats = Object.assign(this.stats, (data.stats && typeof data.stats === 'object') ? data.stats : {});
+      let raw = null;
+      try {
+        raw = localStorage.getItem(STORAGE_KEY);
+      } catch (_) {
+        raw = null;
       }
+      if (!raw) {
+        // Lossless v1 → v2 migration: adopt the legacy save once, then move it.
+        let legacyRaw = null;
+        try {
+          legacyRaw = localStorage.getItem(LEGACY_STORAGE_KEY);
+        } catch (_) {
+          legacyRaw = null;
+        }
+        if (!legacyRaw) return;
+        raw = legacyRaw;
+        this.applySaveData(JSON.parse(raw));
+        this.save();
+        try {
+          localStorage.removeItem(LEGACY_STORAGE_KEY);
+        } catch (_) {}
+        return;
+      }
+      const data = JSON.parse(raw);
+      this.applySaveData(data);
     } catch (e) {
       console.warn('[ProgressionSystem] LocalStorage okuma hatası, varsayilana donuldu:', e);
       this.reset();
     }
+  }
+
+  applySaveData(data) {
+    if (!data || typeof data !== 'object') return;
+    this.level = Math.max(1, Math.min(100, Number(data.level) || 1));
+    this.currentXp = Math.max(0, Number(data.currentXp) || 0);
+    this.nextXp = xpForLevel(this.level);
+    if (this.currentXp >= this.nextXp) this.currentXp = 0;
+    this.gold = Math.max(0, Number(data.gold) || 0);
+    const ids = Array.isArray(data.unlockedSkills) ? data.unlockedSkills : [];
+    this.unlockedSkills = new Set(ids.filter((id) => KNOWN_SKILL_IDS.has(id)));
+    this.highestWave = toClampedInt(data.highestWave, 1, 1, MAX_WAVE_VALUE);
+    this.currentChapter = toClampedInt(data.currentChapter, 1, 1, 10);
+    const rawStats = (data.stats && typeof data.stats === 'object') ? data.stats : {};
+    this.stats = {
+      enemiesKilled: toClampedInt(rawStats.enemiesKilled, 0, 0, MAX_STAT_VALUE),
+      bossesDefeated: toClampedInt(rawStats.bossesDefeated, 0, 0, MAX_STAT_VALUE),
+      totalGoldCollected: toClampedInt(rawStats.totalGoldCollected, 0, 0, MAX_STAT_VALUE),
+    };
   }
 
   reset() {

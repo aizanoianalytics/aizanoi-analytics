@@ -17,9 +17,9 @@ async function ensurePhaser() {
     }
     script.addEventListener('load', () => resolve(window.Phaser));
     script.addEventListener('error', () => {
-      // Fallback relative vendor path
+      // Fallback absolute vendor path (same file the standalone page uses)
       const fallback = document.createElement('script');
-      fallback.src = new URL('../../../../../vendor/phaser.min.js', import.meta.url).href;
+      fallback.src = '/vendor/phaser.min.js';
       fallback.onload = () => resolve(window.Phaser);
       fallback.onerror = (err) => reject(new Error('Phaser runtime could not be loaded from local vendor.'));
       document.head.appendChild(fallback);
