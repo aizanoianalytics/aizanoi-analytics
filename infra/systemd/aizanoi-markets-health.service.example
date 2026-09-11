@@ -1,0 +1,12 @@
+[Unit]
+Description=Aizanoi Markets local data-health audit
+After=aizanoi-markets-us.service aizanoi-markets-crypto.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/aizanoi-analytics-public
+ExecStart=/usr/bin/python3 /opt/aizanoi-analytics-public/scripts/markets/update_markets.py --mode health-check --data-root /var/lib/aizanoi-markets/public
+TimeoutStartSec=120
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aizanoi-markets-health

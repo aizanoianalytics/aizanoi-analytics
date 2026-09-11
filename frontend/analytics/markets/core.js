@@ -6,19 +6,12 @@ export const formatLevelPercent = (value) => finite(value) ? `${number.format(va
 export const detailUrl = (market, slug) => `/analytics/markets/instrument/?market=${encodeURIComponent(market)}&symbol=${encodeURIComponent(slug)}`;
 
 export function sliceTimeframe(candles, timeframe) {
-  const sizes = { '1M': 30, '3M': 90, '6M': 180, '1Y': 252, '5Y': 1260 };
-  if (!candles || !candles.length || timeframe === 'ALL' || !sizes[timeframe]) return [...(candles || [])];
+  const calendarDays = { '1M': 30, '3M': 90, '6M': 180, '1Y': 365, '5Y': 365 * 5 };
+  if (!candles || !candles.length || timeframe === 'ALL' || !calendarDays[timeframe]) return [...(candles || [])];
   const lastTs = Number(candles[candles.length - 1]?.t);
-  if (Number.isFinite(lastTs) && candles.length > 1) {
-    const stepSeconds = (candles[candles.length - 1].t - candles[0].t) / (candles.length - 1);
-    if (stepSeconds < 43200) {
-      const days = sizes[timeframe];
-      const cutoff = lastTs - (days * 86400);
-      const filtered = candles.filter(row => row.t >= cutoff);
-      if (filtered.length > 0) return filtered;
-    }
-  }
-  return candles.slice(-sizes[timeframe]);
+  if (!Number.isFinite(lastTs)) return [];
+  const cutoff = lastTs - (calendarDays[timeframe] * 86400);
+  return candles.filter(row => Number(row?.t) >= cutoff);
 }
 
 function rolling(values, size, calculate) {

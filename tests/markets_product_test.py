@@ -31,9 +31,9 @@ class MarketsProductTests(unittest.TestCase):
 
     def test_market_enrichment_adds_benchmark_relative_strength_and_percentiles(self):
         rows = [
-            {"ticker": "A", "return1d": 0.01, "return30d": 0.30, "return90d": 0.20, "rsi14": 72, "rangePosition52w": 1.0, "aboveSma200": True},
-            {"ticker": "B", "return1d": -0.01, "return30d": 0.10, "return90d": 0.00, "rsi14": 28, "rangePosition52w": 0.0, "aboveSma200": False},
-            {"ticker": "C", "return1d": 0.00, "return30d": 0.20, "return90d": 0.10, "rsi14": 50, "rangePosition52w": 0.5, "aboveSma200": None},
+            {"ticker": "A", "return1d": 0.01, "return7d": 0.08, "return30d": 0.30, "return90d": 0.20, "rsi14": 72, "rangePosition52w": 1.0, "aboveSma200": True, "trendAge50": 40, "trendRegime":"strong-uptrend", "volatility20": 0.2},
+            {"ticker": "B", "return1d": -0.01, "return7d": -0.08, "return30d": 0.10, "return90d": 0.00, "rsi14": 28, "rangePosition52w": 0.0, "aboveSma200": False, "trendAge50": 4, "trendRegime":"downtrend", "volatility20": 0.4},
+            {"ticker": "C", "return1d": 0.00, "return7d": 0.0, "return30d": 0.20, "return90d": 0.10, "rsi14": 50, "rangePosition52w": 0.5, "aboveSma200": True, "trendAge50": 15, "trendRegime":"mixed", "volatility20": 0.3},
         ]
         pulse = mod.enrich_market_rows(rows, market="us")
         self.assertAlmostEqual(rows[0]["relativeStrength30d"], 0.10)
@@ -55,8 +55,8 @@ class MarketsProductTests(unittest.TestCase):
 
     def test_aggregate_publishes_market_shards_pulse_health_and_bounded_snapshots(self):
         instruments = [
-            {"market": "us", "ticker": "AAA", "name": "Alpha", "exchange": "NASDAQ", "yahooSymbol": "AAA", "slug": "aaa"},
-            {"market": "crypto", "ticker": "BTC", "name": "Bitcoin", "exchange": "Crypto · USD", "yahooSymbol": "BTC-USD", "slug": "btc"},
+            {"market": "us", "ticker": "AAA", "name": "Alpha", "exchange": "NASDAQ", "provider": "fintable", "providerSymbol": "AAA", "slug": "aaa"},
+            {"market": "crypto", "ticker": "BTC", "name": "Bitcoin", "exchange": "Crypto · USD", "provider": "binance", "providerSymbol": "BTCUSDT", "slug": "btc"},
         ]
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -81,7 +81,7 @@ class MarketsProductTests(unittest.TestCase):
             self.assertIn("spark30", us_rows[0])
 
     def test_rebuild_derived_sanitizes_legacy_history_and_recomputes_summary(self):
-        instrument = {"market": "us", "ticker": "AAA", "name": "Alpha", "exchange": "NASDAQ", "yahooSymbol": "AAA", "slug": "aaa"}
+        instrument = {"market": "us", "ticker": "AAA", "name": "Alpha", "exchange": "NASDAQ", "provider": "fintable", "providerSymbol": "AAA", "slug": "aaa"}
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             legacy = [{"t": 1_700_000_000 + index * 86_400, "c": 100 + index, "v": 1000, "a": 100 + index} for index in range(260)]
@@ -223,8 +223,8 @@ class MarketsProductTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             instruments = [
-                {"market": "us", "ticker": "AAA", "name": "Alpha", "exchange": "NASDAQ", "yahooSymbol": "AAA", "slug": "aaa"},
-                {"market": "crypto", "ticker": "BTC", "name": "Bitcoin", "exchange": "Crypto · USD", "yahooSymbol": "BTC-USD", "slug": "btc"},
+                {"market": "us", "ticker": "AAA", "name": "Alpha", "exchange": "NASDAQ", "provider": "fintable", "providerSymbol": "AAA", "slug": "aaa"},
+                {"market": "crypto", "ticker": "BTC", "name": "Bitcoin", "exchange": "Crypto · USD", "provider": "binance", "providerSymbol": "BTCUSDT", "slug": "btc"},
             ]
             for inst in instruments:
                 c = candles(50, start=100)

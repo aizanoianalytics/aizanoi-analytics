@@ -668,15 +668,17 @@ def build_focused_us_universe(
             name = extra_map[ticker].get("name", name)
             exchange = extra_map[ticker].get("exchange", exchange)
 
-        provider_symbol = ticker.replace(".", "-")
+        # Fintable consumes the verified ACT symbol verbatim; dot-class shares
+        # such as BRK.B/BF.B must never be converted to Yahoo-era dash forms.
+        provider_symbol = ticker
         universe.append({
             "market": "us",
             "ticker": ticker,
             "name": name,
             "exchange": exchange,
             "slug": slugify(ticker),
+            "provider": "fintable",
             "providerSymbol": provider_symbol,
-            "yahooSymbol": provider_symbol,
             "memberships": memberships,
         })
 
@@ -689,13 +691,19 @@ def validate_universe_transition(
     min_count: int = 400,
     max_count: int = 800,
 ) -> bool:
-    """Validate that universe size is healthy and not an accidental shrink or explosion."""
+    """Reject malformed or suspicious canonical-universe replacements."""
     count = len(new_universe)
     if count < min_count or count > max_count:
         return False
+    required = ("market", "ticker", "name", "exchange", "slug", "provider", "providerSymbol", "memberships")
+    if any(any(not row.get(field) for field in required) for row in new_universe):
+        return False
+    for field in ("ticker", "slug", "providerSymbol"):
+        values = [row[field] for row in new_universe]
+        if len(values) != len(set(values)):
+            return False
     if old_universe:
         old_count = len(old_universe)
-        # Check for suspicious shrink (> 35% drop) or suspicious expansion (> 50% jump)
         if count < old_count * 0.65 or count > old_count * 1.50:
             return False
     return True

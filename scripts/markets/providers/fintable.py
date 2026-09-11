@@ -150,12 +150,17 @@ class FintableProvider(BaseProvider):
                     # window loop can skip pre-IPO/range gaps without failing
                     # the whole history request.
                     try:
-                        body = exc.read().decode("utf-8", errors="replace")
-                        parsed = json.loads(body)
-                        err_type = (parsed.get("error") or {}).get("type") if isinstance(parsed, dict) else None
-                    except Exception:
-                        err_type = "not_found"
-                    raise FintableNotFound(f"Fintable HTTP 404: {err_type or 'not_found'}") from exc
+                        err_type = getattr(exc, "_aizanoi_error_type", None)
+                        if err_type is None:
+                            body = exc.read().decode("utf-8", errors="replace")
+                            parsed = json.loads(body)
+                            err_type = (parsed.get("error") or {}).get("type") if isinstance(parsed, dict) else None
+                            setattr(exc, "_aizanoi_error_type", err_type)
+                    except (UnicodeDecodeError, json.JSONDecodeError, AttributeError):
+                        err_type = None
+                    if err_type == "not_found":
+                        raise FintableNotFound("Fintable HTTP 404: not_found") from exc
+                    raise ValueError(f"Fintable HTTP 404 without documented not_found envelope ({err_type!r})") from exc
                 raise
             except urllib.error.URLError as exc:
                 raise ConnectionError(f"Fintable network error: {exc.reason}") from exc
