@@ -89,7 +89,27 @@ export class TouchControls {
       if (this.scene.player) this.scene.player.castSkill2();
     });
 
-    // 4. Menü Butonu (Sağ Üst)
+    // 4. Utility Yetenek Butonu (Gölge Karışımı / Space Tuşu Alternatifi)
+    this.btnUtility = this.scene.add.image(atkX - 110, atkY - 45, 'touch-btn-utility')
+      .setScrollFactor(0).setDepth(200).setInteractive();
+
+    this.btnUtility.on('pointerdown', () => {
+      if (this.scene.player && typeof this.scene.player.castUtilitySkill === 'function') {
+        this.scene.player.castUtilitySkill();
+      }
+    });
+
+    // 5. Etkileşim Butonu (Sunak / Altar / Macellum E Tuşu)
+    this.btnInteract = this.scene.add.image(atkX - 80, atkY - 80, 'touch-btn-interact')
+      .setScrollFactor(0).setDepth(200).setInteractive();
+
+    this.btnInteract.on('pointerdown', () => {
+      if (this.scene.player && (this.scene.player.isInBase || this.scene.nearAltar)) {
+        this.scene.scene.launch('ShopScene');
+      }
+    });
+
+    // 6. Menü Butonu (Sağ Üst)
     this.btnMenu = this.scene.add.image(this.scene.scale.width - 35, 35, 'touch-btn-menu')
       .setScrollFactor(0).setDepth(200).setInteractive();
 
@@ -131,6 +151,8 @@ export class TouchControls {
     if (this.btnAttack) this.btnAttack.destroy();
     if (this.btnSkill1) this.btnSkill1.destroy();
     if (this.btnSkill2) this.btnSkill2.destroy();
+    if (this.btnUtility) this.btnUtility.destroy();
+    if (this.btnInteract) this.btnInteract.destroy();
     if (this.btnMenu) this.btnMenu.destroy();
   }
 }

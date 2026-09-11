@@ -59,6 +59,7 @@ const state = {
   historyDateFrom: '',
   historyDateTo: '',
   selectedDate: '',
+  selectedTimestamp: null,
   historyPage: 1,
   historyPageSize: 100,
   historySearch: '',
@@ -104,15 +105,19 @@ function polyline(values, className, width, height, min, spread) {
   return points ? `<polyline class="${className}" points="${points}"/>` : '';
 }
 
-function histoBars(values, width, height, mid) {
+function histoBars(values, width, height, vMin, range) {
   if (!values.length) return '';
   const bars = [];
+  const zeroY = height - (0 - vMin) / range * height;
+  const n = Math.max(values.length - 1, 1);
   for (let i = 0; i < values.length; i++) {
-    if (!Number.isFinite(values[i])) continue;
-    const x = i / Math.max(values.length - 1, 1) * width;
-    const y = values[i] >= 0 ? mid - (values[i] / Math.max(...values.filter(Number.isFinite), 1)) * (mid - 4) : mid;
-    const h = values[i] >= 0 ? (mid - y) : Math.min((height - mid), Math.abs(values[i] / Math.min(...values.filter(Number.isFinite), 1)) * (mid - 4));
-    bars.push(`<rect class="macd-histogram macd-histogram--${values[i] >= 0 ? 'positive' : 'negative'}" x="${x - 1.5}" y="${values[i] >= 0 ? y : mid}" width="3" height="${Math.max(1, Math.abs(h))}"/>`);
+    const val = values[i];
+    if (!Number.isFinite(val)) continue;
+    const x = (i / n) * width;
+    const yVal = height - (val - vMin) / range * height;
+    const yTop = Math.min(yVal, zeroY);
+    const barHeight = Math.max(1, Math.abs(yVal - zeroY));
+    bars.push(`<rect class="macd-histogram macd-histogram--${val >= 0 ? 'positive' : 'negative'}" x="${x - 1.5}" y="${yTop}" width="3" height="${barHeight}"/>`);
   }
   return bars.join('');
 }
@@ -146,7 +151,7 @@ function renderChart() {
   const ticks = [low, low + spread * 0.5, high].map(value => formatPrice(value, market));
 
   const selectedIndex = state.selectedDate
-    ? selected.findIndex(row => new Date(row.t * 1000).toISOString().slice(0, 10) === state.selectedDate)
+    ? selected.findIndex(row => (state.frequency === '4h' ? String(row.t) : new Date(row.t * 1000).toISOString().slice(0, 10)) === state.selectedDate)
     : (state.selectedPoint ?? -1);
   const markerIndex = selectedIndex;
   const markerX = markerIndex >= 0 ? markerIndex / Math.max(selected.length - 1, 1) * 900 : null;
@@ -164,7 +169,7 @@ function renderChart() {
 
   const svg = `<figure class="instrument-chart" data-chart>
     <figcaption data-chart-summary>Close-price history for ${esc(state.payload.name)} from ${esc(start)} to ${esc(end)}. Range ${esc(ticks[0])} – ${esc(ticks[2])}. Selected value: ${tooltipPoint ? `${esc(tooltipPoint.date)} · Close ${formatPrice(tooltipPoint.close, market)}` : 'move pointer or tap to inspect'}.</figcaption>
-    <svg class="price-chart" viewBox="0 0 900 360" role="img" aria-label="Close-price chart with selected overlays" data-chart-svg>
+    <svg class="price-chart" viewBox="0 0 900 360" role="img" aria-label="Close-price chart with selected overlays" tabindex="0" data-chart-svg>
       <g transform="translate(0 10)">${polyline(closes, 'i-price', 900, 340, low, spread)}${overlayLines}${marker}${markerDot}</g>
       <rect class="chart-hit-area" x="0" y="0" width="900" height="340" fill="transparent" data-chart-hit/>
     </svg>
@@ -180,10 +185,10 @@ function renderChart() {
       if (!visible.length) return '';
       const [vMin, vMax] = findExtremes(visible);
       const range = (vMax - vMin) || 1;
-      const mid = 130 - (0 - vMin) / range * 130;
+      const zeroY = 130 - (0 - vMin) / range * 130;
       const lines = `${polyline(macdValues, 'i-macd', 900, 130, vMin, range)}${polyline(signalValues, 'i-macd-signal', 900, 130, vMin, range)}`;
-      const histogramBars = histoBars(histogram, 900, 130, mid);
-      const zeroLine = `<line class="macd-zero" x1="0" y1="${mid}" x2="900" y2="${mid}"/>`;
+      const histogramBars = histoBars(histogram, 900, 130, vMin, range);
+      const zeroLine = `<line class="macd-zero" x1="0" y1="${zeroY}" x2="900" y2="${zeroY}"/>`;
       return `<figure class="instrument-oscillator"><figcaption>MACD 12/26/9 · signal EMA 9 · histogram</figcaption><svg class="oscillator-chart" viewBox="0 0 900 150" role="img" aria-label="MACD oscillator"><g transform="translate(0 10)">${zeroLine}${lines}${histogramBars}</g></svg></figure>`;
     }
     if (key === 'rsi14') {
@@ -249,10 +254,17 @@ function renderHistory(state) {
     : filterHistoryRows(rows, { dateFrom: state.historyDateFrom, dateTo: state.historyDateTo, search: state.historySearch });
   const indexByRow = new Map(rows.map((row, index) => [row, index]));
   const page = paginateFiltered(filtered, state.historyPage, state.historyPageSize);
+  const is4h = state.frequency === '4h';
   const tableRows = page.rows.map((row) => {
-    const date = toISODate(row.t);
+    const dateStr = is4h
+      ? new Date(row.t * 1000).toISOString().replace('T', ' ').slice(0, 16) + ' UTC'
+      : toISODate(row.t);
+    const rowId = is4h ? String(row.t) : toISODate(row.t);
     const change = historyDailyChange(row, rows, indexByRow.get(row));
-    return `<tr class="${state.selectedDate === date ? 'is-selected' : ''}" data-history-symbol="${esc(date)}" tabindex="0"><td>${esc(date)}</td><td>${formatPrice(row.c, market)}</td><td class="${Number.isFinite(change) ? (change >= 0 ? 'is-positive' : 'is-negative') : ''}">${formatSignedReturn(change)}</td></tr>`;
+    const isSelected = state.selectedTimestamp
+      ? state.selectedTimestamp === row.t
+      : state.selectedDate === (is4h ? dateStr : toISODate(row.t));
+    return `<tr class="${isSelected ? 'is-selected' : ''}" data-history-symbol="${esc(rowId)}" data-timestamp="${row.t}" tabindex="0"><td>${esc(dateStr)}</td><td>${formatPrice(row.c, market)}</td><td class="${Number.isFinite(change) ? (change >= 0 ? 'is-positive' : 'is-negative') : ''}">${formatSignedReturn(change)}</td></tr>`;
   }).join('');
   const emptyMessage = rangeInvalid
     ? 'Invalid date range: “From” date must be earlier than “To” date.'
@@ -262,7 +274,7 @@ function renderHistory(state) {
     <label>From<input type="date" data-history-from value="${esc(state.historyDateFrom)}"></label>
     <label>To<input type="date" data-history-to value="${esc(state.historyDateTo)}"></label>
     <button type="submit">Apply</button></form></header>
-    <div class="market-table-wrap"><table class="market-table" data-history-table><thead><tr><th>Date</th><th>Close</th><th>Daily Change %</th></tr></thead><tbody>${tableRows || `<tr><td colspan="3" class="market-table-empty">${emptyMessage}</td></tr>`}</tbody></table></div>
+    <div class="market-table-wrap"><table class="market-table" data-history-table><thead><tr><th>Date</th><th>Close</th><th>${state.frequency === '4h' ? 'Period Change %' : 'Daily Change %'}</th></tr></thead><tbody>${tableRows || `<tr><td colspan="3" class="market-table-empty">${emptyMessage}</td></tr>`}</tbody></table></div>
     <div class="market-pager" data-history-pager>
       <button type="button" data-history-page="prev" ${page.page <= 1 ? 'disabled' : ''}>Previous</button>
       <span>Page ${page.page} of ${page.totalPages} · ${formatNumber(page.start + 1)}–${formatNumber(page.end)} of ${formatNumber(page.total)}</span>
@@ -351,10 +363,13 @@ function bindChartInteractivity() {
     const rect = svg.getBoundingClientRect();
     const ratio = Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width));
     const index = Math.round(ratio * (visibleSource.length - 1));
-    const date = new Date(visibleSource[index].t * 1000).toISOString().slice(0, 10);
+    const point = visibleSource[index];
+    if (!point) return;
+    const date = state.frequency === '4h' ? String(point.t) : new Date(point.t * 1000).toISOString().slice(0, 10);
     state.selectedDate = date;
+    state.selectedTimestamp = state.frequency === '4h' ? point.t : null;
     const dateInput = document.querySelector('[data-selected-date]');
-    if (dateInput) dateInput.value = date;
+    if (dateInput) dateInput.value = new Date(point.t * 1000).toISOString().slice(0, 10);
     render();
   }
   svg.addEventListener('mousemove', handleMove);
@@ -410,12 +425,13 @@ function chartVisibleSource() {
 
 function selectHistoryDate(date) {
   state.selectedDate = date;
+  state.selectedTimestamp = /^\d+$/.test(String(date)) ? Number(date) : null;
   const visible = chartVisibleSource();
-  const inRange = visible.some(row => toISODate(row.t) === date);
+  const inRange = visible.some(row => toISODate(row.t) === date || String(row.t) === String(date));
   if (!inRange) state.timeframe = 'SINCE_2019';
   render();
   const selectedInput = document.querySelector('[data-selected-date]');
-  if (selectedInput) selectedInput.value = date;
+  if (selectedInput) selectedInput.value = state.selectedTimestamp ? toISODate(state.selectedTimestamp) : date;
 }
 
 document.addEventListener('click', event => {
@@ -433,6 +449,27 @@ document.addEventListener('click', event => {
 });
 
 document.addEventListener('keydown', event => {
+  // Chart keyboard navigation (ArrowLeft, ArrowRight, Home, End)
+  const chartSvg = event.target.closest?.('[data-chart-svg], [data-chart]');
+  if (chartSvg && ['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
+    event.preventDefault();
+    const visible = chartVisibleSource();
+    if (visible && visible.length) {
+      const is4h = state.frequency === '4h';
+      let idx = visible.findIndex(r => (is4h ? String(r.t) : toISODate(r.t)) === state.selectedDate);
+      if (idx === -1) idx = visible.length - 1;
+      if (event.key === 'ArrowLeft') idx = Math.max(0, idx - 1);
+      if (event.key === 'ArrowRight') idx = Math.min(visible.length - 1, idx + 1);
+      if (event.key === 'Home') idx = 0;
+      if (event.key === 'End') idx = visible.length - 1;
+      const target = visible[idx];
+      if (target) {
+        selectHistoryDate(is4h ? String(target.t) : toISODate(target.t));
+      }
+    }
+    return;
+  }
+
   const row = event.target.closest?.('tr[data-history-symbol]');
   if (row && (event.key === 'Enter' || event.key === ' ')) {
     event.preventDefault();

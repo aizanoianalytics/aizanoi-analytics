@@ -613,8 +613,160 @@ export function buildCollapsedArcade(width = 24, height = 12, depth = 5) {
 
 /* ── Master Dispatcher ────────────────────────────────────── */
 
+/* ── 15. Classical Roman Temples (Podium, Portico & Pediment) ── */
+
+export function buildRomanTemple(b) {
+  const group = new THREE.Group();
+  group.userData.buildingId = b.id;
+
+  const w = b.w || 30;
+  const d = b.d || 22;
+  const h = b.h || 17;
+  const podiumH = 2.4;
+  const marbleMat = getMaterial('marble');
+
+  // 1. High Roman podium with frontal steps
+  const podiumGeo = new THREE.BoxGeometry(w, podiumH, d);
+  const podiumMesh = new THREE.Mesh(podiumGeo, getMaterial('travertine'));
+  podiumMesh.position.y = podiumH / 2;
+  podiumMesh.castShadow = true;
+  podiumMesh.receiveShadow = true;
+  group.add(podiumMesh);
+
+  const steps = createSteps(w * 0.7, 4.0, 6, podiumH / 6, 'travertine');
+  steps.position.set(0, 0, d / 2 + 2.0);
+  group.add(steps);
+
+  // 2. Peristyle / Portico Columns
+  const colH = (h - podiumH) * 0.65;
+  const colR = colH / 11;
+  const colCountW = Math.max(4, Math.round(w / 4.5));
+  const colCountD = Math.max(5, Math.round(d / 4.0));
+  const stepW = (w - colR * 4) / Math.max(1, colCountW - 1);
+  const stepD = (d - colR * 4) / Math.max(1, colCountD - 1);
+  const startX = -w / 2 + colR * 2;
+  const startZ = -d / 2 + colR * 2;
+
+  for (let x = 0; x < colCountW; x++) {
+    for (let z = 0; z < colCountD; z++) {
+      const isFront = z === colCountD - 1;
+      const isPerimeter = x === 0 || x === colCountW - 1 || z === 0 || isFront;
+      if (isPerimeter) {
+        const col = createCorinthianColumn(colH, colR, 'marble');
+        col.position.set(startX + x * stepW, podiumH, startZ + z * stepD);
+        group.add(col);
+      }
+    }
+  }
+
+  // 3. Cella inner sanctum
+  const cellaW = w * 0.72;
+  const cellaD = d * 0.62;
+  const cellaGeo = new THREE.BoxGeometry(cellaW, colH, cellaD);
+  const cella = new THREE.Mesh(cellaGeo, marbleMat);
+  cella.position.set(0, podiumH + colH / 2, -d * 0.12);
+  cella.castShadow = true;
+  cella.receiveShadow = true;
+  group.add(cella);
+
+  // 4. Entablature & Pediment
+  const entY = podiumH + colH;
+  const entH = colH * 0.15;
+  const entablature = new THREE.Mesh(new THREE.BoxGeometry(w, entH, d), marbleMat);
+  entablature.position.set(0, entY + entH / 2, 0);
+  entablature.castShadow = true;
+  group.add(entablature);
+
+  const pedH = Math.min(w, d) * 0.24;
+  const pediment = createPediment(w, d, pedH, 'marble');
+  pediment.position.set(0, entY + entH, 0);
+  group.add(pediment);
+
+  const roof = createPediment(w + 0.8, d + 0.8, pedH + 0.25, 'roofTile');
+  roof.position.set(0, entY + entH - 0.05, 0);
+  group.add(roof);
+
+  return group;
+}
+
+/* ── 16. Circular Monopteros & Tholos Temples (Vesta / Hercules) ── */
+
+export function buildCircularTemple(b) {
+  const group = new THREE.Group();
+  group.userData.buildingId = b.id;
+
+  const radius = (b.w || 24) / 2;
+  const h = b.h || 17;
+  const podiumH = 1.6;
+  const marbleMat = getMaterial('marble');
+
+  // 1. Circular stepped podium
+  const baseSteps = 4;
+  for (let s = 0; s < baseSteps; s++) {
+    const r = radius + (baseSteps - s) * 0.6;
+    const stepMesh = new THREE.Mesh(
+      new THREE.CylinderGeometry(r, r, podiumH / baseSteps, 32),
+      getMaterial('travertine')
+    );
+    stepMesh.position.y = (s + 0.5) * (podiumH / baseSteps);
+    stepMesh.receiveShadow = true;
+    group.add(stepMesh);
+  }
+
+  // 2. Circular colonnade ring
+  const colCount = 18;
+  const colH = (h - podiumH) * 0.6;
+  const colR = colH / 12;
+  const ringR = radius - colR * 2;
+
+  for (let i = 0; i < colCount; i++) {
+    const angle = (i / colCount) * Math.PI * 2;
+    const cx = Math.cos(angle) * ringR;
+    const cz = Math.sin(angle) * ringR;
+    const col = createCorinthianColumn(colH, colR, 'marble');
+    col.position.set(cx, podiumH, cz);
+    group.add(col);
+  }
+
+  // 3. Cylindrical inner cella
+  const cellaR = radius * 0.55;
+  const cellaMesh = new THREE.Mesh(
+    new THREE.CylinderGeometry(cellaR, cellaR, colH, 32),
+    marbleMat
+  );
+  cellaMesh.position.y = podiumH + colH / 2;
+  cellaMesh.castShadow = true;
+  cellaMesh.receiveShadow = true;
+  group.add(cellaMesh);
+
+  // 4. Circular Entablature & Conical Tholos Roof
+  const entY = podiumH + colH;
+  const entH = colH * 0.14;
+  const entRing = new THREE.Mesh(
+    new THREE.CylinderGeometry(radius + 0.2, radius + 0.2, entH, 32),
+    marbleMat
+  );
+  entRing.position.y = entY + entH / 2;
+  entRing.castShadow = true;
+  group.add(entRing);
+
+  const roofH = (h - entY);
+  const roof = new THREE.Mesh(
+    new THREE.ConeGeometry(radius + 0.6, roofH, 32),
+    getMaterial('roofTile')
+  );
+  roof.position.y = entY + entH + roofH / 2;
+  roof.castShadow = true;
+  roof.receiveShadow = true;
+  group.add(roof);
+
+  return group;
+}
+
 export function buildStructure(building) {
   switch (building.type) {
+    case 'temple': return buildRomanTemple(building);
+    case 'round': return buildCircularTemple(building);
     case 'amphitheatre': return buildColosseum(building);
     case 'dome': return buildPantheon(building);
     case 'basilica': return buildBasilica(building);

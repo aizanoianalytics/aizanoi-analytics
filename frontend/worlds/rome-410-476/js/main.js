@@ -520,6 +520,23 @@ function bindEvents() {
   document.addEventListener('keydown', (e) => {
     if (e.code === 'Escape' && intro && !intro.isComplete) {
       intro.skipIntro();
+      return;
+    }
+    if (!isRunning) return;
+    switch (e.code) {
+      case 'KeyM': ui.toggleMinimap(); break;
+      case 'KeyV': ui.toggleEvidence(); applyEvidenceMode(ui.evidenceActive); break;
+      case 'KeyT': ui.toggleTeleportMenu(); break;
+      case 'KeyG': if (tour.isActive) tour.stop(); else tour.start(); break;
+      case 'KeyN': environment.toggleCycle(); break;
+      case 'Digit1': case 'Digit2': case 'Digit3': case 'Digit4': case 'Digit5':
+      case 'Digit6': case 'Digit7': case 'Digit8': case 'Digit9': {
+        const num = parseInt(e.code.replace('Digit', ''), 10);
+        if (num >= 1 && num <= BUILDINGS.length && typeof ui.onTeleport === 'function') {
+          ui.onTeleport(BUILDINGS[num - 1].id);
+        }
+        break;
+      }
     }
   });
 
@@ -767,9 +784,7 @@ function drawFrame(frameDt, alpha) {
   });
 
   const euler = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ');
-  ui.updateMinimap(camera.position.x, camera.position.z, euler.y);
-  ui.updatePlaceName(camera.position.x, camera.position.z);
-  ui.updateCompass(euler.y);
+  ui.updateHud(frameDt, camera.position.x, camera.position.z, euler.y);
 
   if (inputState.interact) {
     inputState.interact = false;

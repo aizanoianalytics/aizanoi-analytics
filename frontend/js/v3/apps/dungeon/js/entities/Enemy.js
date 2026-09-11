@@ -51,11 +51,20 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     // Sağlık barı grafiği
     this.hpBar = scene.add.graphics();
     this.hpBar.setDepth(15);
+    this.stats = { attackDamage: this.attackDamage, critChance: 0 };
+    this.isAmbushing = false;
   }
 
   update(time, delta, player) {
     if (this.isDead || !this.active || !player || player.isDead) {
       this.hpBar.clear();
+      return;
+    }
+
+    // Aizo gölgede gizlenmişse (Shadow Melding), aggro kesilir
+    if (player.isStealthed) {
+      this.setVelocity(0, 0);
+      this.drawHealthBar();
       return;
     }
 
@@ -67,8 +76,32 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     const dist = Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y);
 
+    // 1. Telegraph Warning for Boss Slam
+    if (this.isBoss || this.typeConfig.isMiniBoss) {
+      if (this.attackCooldown > 0 && this.attackCooldown <= 400) {
+        this.setTint(0xff4444);
+      } else {
+        this.clearTint();
+      }
+    }
+
+    // 2. Stealth Ambush behavior
+    if (this.behavior === 'stealth_ambush') {
+      if (dist > 80 && !this.isAmbushing) {
+        this.setAlpha(0.25);
+      } else {
+        this.setAlpha(1.0);
+        this.isAmbushing = true;
+      }
+    }
+
+    // 3. Distance and Movement logic
     if (dist <= this.aggroRange) {
-      if (dist <= this.attackRange) {
+      // Ranged Kiter: Oyuncu çok yaklaşırsa (120px) geri çekil
+      if (this.behavior === 'ranged_kite' && dist < 120) {
+        const angle = Phaser.Math.Angle.Between(player.x, player.y, this.x, this.y);
+        this.setVelocity(Math.cos(angle) * this.moveSpeed * 0.9, Math.sin(angle) * this.moveSpeed * 0.9);
+      } else if (dist <= this.attackRange) {
         this.setVelocity(0, 0);
         if (this.attackCooldown <= 0) {
           this.executeAttack(player);
@@ -88,7 +121,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.type.projectileType) {
       this.scene.fireEnemyProjectile(this, player, this.type.projectileType, this.attackDamage);
     } else {
-      CombatSystem.processAttack({ stats: { attackDamage: this.attackDamage, critChance: 0 } }, player);
+      this.stats.attackDamage = this.attackDamage;
+      CombatSystem.processAttack(this, player);
       this.scene.createDamageSpark(player.x, player.y);
     }
   }

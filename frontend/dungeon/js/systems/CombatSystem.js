@@ -21,7 +21,8 @@ export class CombatSystem {
   static processAttack(attacker, target) {
     const weaponData = attacker.inventory ? WEAPONS[attacker.inventory.equipped.weapon] : attacker.weapon;
     const armorPen = weaponData?.special?.armorPenetration || 0;
-    let baseDamage = this.calculateDamage(attacker.stats.attackDamage, target.armor || 0, armorPen);
+    const targetArmor = target.stats?.armor ?? target.armor ?? 0;
+    let baseDamage = this.calculateDamage(attacker.stats.attackDamage, targetArmor, armorPen);
 
     // Kritik kontrolü
     let isCritical = false;
@@ -56,7 +57,8 @@ export class CombatSystem {
     target.takeDamage(baseDamage, isCritical, attacker);
 
     // Can çalma (Lifesteal)
-    const lifestealRate = (attacker.stats.lifesteal || 0) + (weaponData?.special?.lifestealBonus || 0);
+    // attacker.stats.lifesteal already includes weapon lifestealBonus via InventorySystem
+    const lifestealRate = attacker.stats.lifesteal || 0;
     if (lifestealRate > 0 && attacker.heal) {
       const healAmount = Math.max(1, Math.round(baseDamage * lifestealRate));
       attacker.heal(healAmount);

@@ -146,6 +146,16 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
       const projFrame = weaponData?.projectileType === 'zeus_bolt' ? 4 : 0;
       const bolt = new Projectile(this.scene, this.x, this.y, angle, 420, this.stats.attackDamage, true, 'projectiles', projFrame);
       this.scene.projectiles.add(bolt);
+
+      // Yetenek: Çift Kıvılcım (Twin Sparks - %22 ikincil ark)
+      if (this.progression?.unlockedSkills?.has('twin_sparks') && Math.random() < 0.22) {
+        this.scene.time.delayedCall(120, () => {
+          if (!this.active || this.isDead) return;
+          const sparkAngle = angle + (Math.random() - 0.5) * 0.35;
+          const spark = new Projectile(this.scene, this.x, this.y, sparkAngle, 400, Math.round(this.stats.attackDamage * 0.65), true, 'projectiles', 4);
+          this.scene.projectiles.add(spark);
+        });
+      }
     } else {
       audioManager.playSwing();
       if (nearest) {
@@ -162,7 +172,8 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
   }
 
   castSkill1() {
-    // Zeus Çatlağı (Işın)
+    // Zeus Çatlağı (Işın) - Kilit kontrolü
+    if (!this.progression?.unlockedSkills?.has('zeus_fissure_beam')) return false;
     if (this.skill1Cooldown > 0 || this.isDead) return false;
     this.skill1Cooldown = 25000;
 
@@ -173,7 +184,8 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
   }
 
   castSkill2() {
-    // Dorik Kalkan (Sanctuary Aegis)
+    // Dorik Kalkan (Sanctuary Aegis) - Kilit kontrolü
+    if (!this.progression?.unlockedSkills?.has('sanctuary_aegis')) return false;
     if (this.skill2Cooldown > 0 || this.isDead) return false;
     this.skill2Cooldown = 38000;
     this.isInvulnerable = true;
@@ -182,6 +194,23 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.scene.activateSanctuaryAegis(this);
     this.scene.time.delayedCall(3500, () => {
       this.isInvulnerable = false;
+    });
+    return true;
+  }
+
+  castUtilitySkill() {
+    // Gölge Kamuflajı (Shadow Melding)
+    if (!this.progression?.unlockedSkills?.has('shadow_melding')) return false;
+    if (this.utilityCooldown > 0 || this.isDead) return false;
+    this.utilityCooldown = 32000;
+    this.isStealthed = true;
+    this.setAlpha(0.35);
+
+    audioManager.playShield();
+    this.scene.createFloatingText(this.x, this.y - 30, 'GÖLGE KAMUFLAJI!', '#27ae60');
+    this.scene.time.delayedCall(2500, () => {
+      this.isStealthed = false;
+      this.setAlpha(1.0);
     });
     return true;
   }
@@ -208,6 +237,21 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
 
   die() {
     if (this.isDead) return;
+
+    // Yetenek: Kadim Diriliş (Ancient Rebirth - Bölüm başına 1 kez %40 canla kalkış)
+    if (this.progression?.unlockedSkills?.has('ancient_rebirth') && !this.rebirthUsed) {
+      this.rebirthUsed = true;
+      this.hp = Math.round(this.maxHp * 0.40);
+      this.isInvulnerable = true;
+      audioManager.playShield();
+      this.scene.activateSanctuaryAegis(this);
+      this.scene.createFloatingText(this.x, this.y - 40, 'KADİM DİRİLİŞ!', '#f1c40f');
+      this.scene.time.delayedCall(3000, () => {
+        this.isInvulnerable = false;
+      });
+      return;
+    }
+
     this.isDead = true;
     this.setVelocity(0, 0);
     this.play('aizo-death');

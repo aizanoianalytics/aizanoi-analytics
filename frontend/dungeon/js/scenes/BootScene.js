@@ -84,8 +84,16 @@ export class BootScene extends Phaser.Scene {
     this.load.image('touch-btn-attack', `${ASSET_BASE}ui/touch-btn-attack.png`);
     this.load.image('touch-btn-skill1', `${ASSET_BASE}ui/touch-btn-skill1.png`);
     this.load.image('touch-btn-skill2', `${ASSET_BASE}ui/touch-btn-skill2.png`);
+    this.load.image('touch-btn-utility', `${ASSET_BASE}ui/touch-btn-utility.png`);
     this.load.image('touch-btn-interact', `${ASSET_BASE}ui/touch-btn-interact.png`);
     this.load.image('touch-btn-menu', `${ASSET_BASE}ui/touch-btn-menu.png`);
+
+    // 5. Ses Varliklari (Audio Assets)
+    this.load.audio('ambient-cave', `${ASSET_BASE}audio/ambient_cave_loop.wav`);
+    this.load.audio('sfx-shadow-dash', `${ASSET_BASE}audio/shadow_dash.wav`);
+    this.load.audio('sfx-boss-warning', `${ASSET_BASE}audio/boss_slam_warning.wav`);
+    this.load.audio('sfx-ancient-chime', `${ASSET_BASE}audio/ancient_chime.wav`);
+    this.load.audio('sfx-gold-spark', `${ASSET_BASE}audio/gold_spark.wav`);
   }
 
   create() {

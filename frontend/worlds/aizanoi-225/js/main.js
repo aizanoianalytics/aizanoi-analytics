@@ -55,6 +55,7 @@ let environment, waterSystem, vegetation, particles;
 let collision, controls, audio, ui, tour, intro, birdFlock;
 let buildingGroups = new Map();
 let isRunning = false;
+let penkalasMillWheel = null; // Penkalas water mill paddle wheel (animated in drawFrame)
 
 // Fixed-step simulation state. The authoritative player position lives here —
 // NOT in camera.position. The renderer blends between the previous and current
@@ -438,6 +439,8 @@ function populateAizanoiDressing() {
 
   // Penkalas river grain water mill with turning paddle wheel
   const penkalasMill = buildPenkalasWaterMill(138, -130, -0.2);
+  penkalasMill.userData.isPenkalasMill = true;
+  penkalasMillWheel = penkalasMill.children.find((c) => typeof c.userData?.update === 'function') || null;
   dressingGroup.add(penkalasMill);
 
   // Roman marble sarcophagi along the northern sanctuary approach
@@ -719,9 +722,14 @@ function drawFrame(frameDt, alpha) {
     environment.update(frameDt, camera.position);
     waterSystem.update(frameDt);
     particles.update(frameDt, camera.position, environment.isNight);
+    // Animate Penkalas water mill paddle wheel (display-rate; runs during intro too)
+    if (penkalasMillWheel) penkalasMillWheel.userData.update(frameDt);
     renderer.render(scene, camera);
     return;
   }
+
+  // Animate Penkalas water mill paddle wheel
+  if (penkalasMillWheel) penkalasMillWheel.userData.update(frameDt);
 
   // Camera look (mouse/touch) stays display-rate for zero input latency.
   controls.applyLook();

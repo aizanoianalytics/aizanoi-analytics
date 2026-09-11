@@ -32,8 +32,8 @@ CI verifies applicable surfaces for:
 
 1. Enter Aizanoi, Rome and Athens from AizanoiOS.
 2. Open the shared Explore drawer. Movement keys must not move the player while secondary UI is open.
-3. Escape closes the drawer.
-4. Use landmark jump/teleport, then move normally; automated traversal checks cover all maintained landmark targets.
+3. Escape closes open dialogs, HUD modals, and releases pointer lock.
+4. Use landmark jump/teleport (shortcuts 1-9, HUD buttons or Teleport dialog), then move normally; automated traversal checks cover all maintained landmark targets.
 5. Use **AizanoiOS** from Explore and confirm the OS offers a resumable local Historical World session.
 6. Pointer-lock experiences must retain an Escape path. Any drag-look fallback shown in visitor copy must be verified in a real browser before release.
 

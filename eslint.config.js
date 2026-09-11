@@ -3,6 +3,8 @@ export default [
     ignores:[
       '**/*.generated.js',
       'frontend/analytics/dashboards/**',
+      'frontend/vendor/**',
+      '**/vendor/**',
       'analytics/**',
       'artifacts/**',
     ],
@@ -12,6 +14,9 @@ export default [
     files:[
       'frontend/js/v3/**/*.js',
       'frontend/analytics/*.js',
+      'frontend/analytics/**/*.js',
+      'frontend/dungeon/**/*.js',
+      'frontend/worlds/**/*.js',
       'frontend/service-worker.js',
       'frontend/web-editor-preview/runner.js',
       'scripts/**/*.mjs',

@@ -61,9 +61,19 @@ export class MenuScene extends Phaser.Scene {
       });
       btnStartY += btnSpacing;
 
-      createGlassButton(this, width / 2, btnStartY, 260, 38, '⚔️ Yeni Hikaye (Bölüm 1)', () => {
+      createGlassButton(this, width / 2, btnStartY, 260, 38, '⚔️ Bölüm 1\'e Dön (Karakteri Koru)', () => {
         audioManager.playClick();
         this.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
+      });
+      btnStartY += btnSpacing;
+
+      createGlassButton(this, width / 2, btnStartY, 260, 38, '🔄 Sıfırdan Başla (Yeni Kayıt)', () => {
+        audioManager.playClick();
+        if (window.confirm && window.confirm('Mevcut ilerlemeniz ve toplanan eşyalarınız sıfırlanacak. Onaylıyor musunuz?')) {
+          tempProg.reset();
+          const tempInv = new (class { constructor() { try { localStorage.removeItem('aizanoi_inventory_v1'); } catch(_) {} } })();
+          this.scene.restart();
+        }
       });
       btnStartY += btnSpacing;
     } else {

@@ -184,6 +184,7 @@ function renderRawData(state) {
       <div class="market-raw-mode" role="group" aria-label="Raw data mode">
         <button type="button" class="market-raw-mode-button${state.priceMode === 'price' ? ' is-active' : ''}" data-price-mode="price" aria-pressed="${state.priceMode === 'price'}">Price</button>
         <button type="button" class="market-raw-mode-button${state.priceMode === 'change' ? ' is-active' : ''}" data-price-mode="change" aria-pressed="${state.priceMode === 'change'}">Change</button>
+        <button type="button" class="market-raw-mode-button" data-export-csv>Export CSV</button>
       </div>
     </header>
     ${chips}
@@ -299,6 +300,12 @@ export function createMarketsDashboard(container, options = {}) {
   state.exchange = params.get('exchange') || '';
   state.membership = params.get('membership') || '';
   state.priceMode = params.get('mode') === 'change' ? 'change' : 'price';
+  const initialMinPrice = params.get('minPrice');
+  if (initialMinPrice !== null && initialMinPrice !== '' && Number.isFinite(Number(initialMinPrice))) state.minPrice = Number(initialMinPrice);
+  const initialMaxPrice = params.get('maxPrice');
+  if (initialMaxPrice !== null && initialMaxPrice !== '' && Number.isFinite(Number(initialMaxPrice))) state.maxPrice = Number(initialMaxPrice);
+  const initialPage = Number(params.get('page'));
+  if (Number.isInteger(initialPage) && initialPage > 1) state.page = initialPage;
 
   const controller = new AbortController();
   const context = {
@@ -337,8 +344,14 @@ export function createMarketsDashboard(container, options = {}) {
       const active = button.dataset.market === state.market;
       button.setAttribute('aria-selected', String(active));
     });
+    const brandTitle = query('.market-brand-title');
+    if (brandTitle) {
+      brandTitle.textContent = marketSessionState(state.market).label;
+    }
     all('[data-nav]').forEach(link => {
       link.setAttribute('aria-current', link.dataset.nav === state.view ? 'page' : 'false');
+      const viewParam = link.dataset.nav === 'picks' ? '&view=picks' : '';
+      link.setAttribute('href', `${location.pathname}?market=${encodeURIComponent(state.market)}${viewParam}`);
     });
   }
 
@@ -365,7 +378,36 @@ export function createMarketsDashboard(container, options = {}) {
     if (state.exchange) next.set('exchange', state.exchange);
     if (state.membership) next.set('membership', state.membership);
     if (state.priceMode === 'change') next.set('mode', 'change');
+    if (state.minPrice != null) next.set('minPrice', String(state.minPrice));
+    if (state.maxPrice != null) next.set('maxPrice', String(state.maxPrice));
+    if (state.page > 1) next.set('page', String(state.page));
     history.replaceState(null, '', `${location.pathname}?${next}`);
+  }
+
+  function exportTableCsv() {
+    const rows = filterRows(context.currentRows(), state);
+    if (!rows.length) return;
+    const headers = ['Ticker', 'Name', 'Exchange', 'Price', '1D%', '1W%', '1M%', '1Y%'];
+    const lines = [headers.join(',')];
+    for (const r of rows) {
+      lines.push([
+        `"${r.ticker || ''}"`,
+        `"${(r.name || '').replace(/"/g, '""')}"`,
+        `"${r.exchange || ''}"`,
+        r.latestPrice ?? r.latest ?? '',
+        r.return1d != null ? (r.return1d * 100).toFixed(2) : '',
+        r.return1w != null ? (r.return1w * 100).toFixed(2) : '',
+        r.return1m != null ? (r.return1m * 100).toFixed(2) : '',
+        r.return1y != null ? (r.return1y * 100).toFixed(2) : ''
+      ].join(','));
+    }
+    const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `aizanoi-markets-${state.market}-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
   async function loadRows(market) {
@@ -431,6 +473,11 @@ export function createMarketsDashboard(container, options = {}) {
   }
 
   function handleClick(event) {
+    const exportTarget = event.target.closest('[data-export-csv]');
+    if (exportTarget) {
+      exportTableCsv();
+      return;
+    }
     const modeTarget = event.target.closest('[data-price-mode]');
     if (modeTarget) {
       state.priceMode = modeTarget.dataset.priceMode;
@@ -577,12 +624,12 @@ export function createMarketsDashboard(container, options = {}) {
     updateLocation();
   }
 
-  container.addEventListener('click', handleClick);
-  container.addEventListener('dblclick', handleDblClick);
-  container.addEventListener('change', handleChange);
-  container.addEventListener('input', handleInput);
-  container.addEventListener('submit', handleSubmit);
-  container.addEventListener('keydown', handleKey);
+  container.addEventListener('click', handleClick, { signal: controller.signal });
+  container.addEventListener('dblclick', handleDblClick, { signal: controller.signal });
+  container.addEventListener('change', handleChange, { signal: controller.signal });
+  container.addEventListener('input', handleInput, { signal: controller.signal });
+  container.addEventListener('submit', handleSubmit, { signal: controller.signal });
+  container.addEventListener('keydown', handleKey, { signal: controller.signal });
 
   Promise.all([
     getJson(`${DATA_ROOT}/manifest.json`, controller.signal),
@@ -593,9 +640,31 @@ export function createMarketsDashboard(container, options = {}) {
     return loadMarket(state.market);
   }).catch(showError);
 
+  window.addEventListener('popstate', () => {
+    const restored = new URLSearchParams(location.search);
+    state.market = ['us', 'crypto'].includes(restored.get('market')) ? restored.get('market') : 'us';
+    state.view = ['main', 'picks'].includes(restored.get('view')) ? restored.get('view') : 'main';
+    state.query = restored.get('q') || '';
+    if (restored.get('sort')) {
+      const [key, direction] = restored.get('sort').split(':');
+      state.sort = { key, direction: direction === 'asc' ? 'asc' : 'desc' };
+    }
+    state.exchange = restored.get('exchange') || '';
+    state.membership = restored.get('membership') || '';
+    state.priceMode = restored.get('mode') === 'change' ? 'change' : 'price';
+    const restoredMinPrice = restored.get('minPrice');
+    state.minPrice = restoredMinPrice !== null && restoredMinPrice !== '' && Number.isFinite(Number(restoredMinPrice)) ? Number(restoredMinPrice) : null;
+    const restoredMaxPrice = restored.get('maxPrice');
+    state.maxPrice = restoredMaxPrice !== null && restoredMaxPrice !== '' && Number.isFinite(Number(restoredMaxPrice)) ? Number(restoredMaxPrice) : null;
+    const restoredPage = Number(restored.get('page'));
+    state.page = Number.isInteger(restoredPage) && restoredPage > 1 ? restoredPage : 1;
+    loadMarket(state.market).catch(showError);
+  }, { signal: controller.signal });
+
   syncControls();
 
   return () => {
+    clearTimeout(searchTimer);
     controller.abort();
     container.replaceChildren();
   };

@@ -10,6 +10,7 @@ import { LevelSystem } from '../systems/LevelSystem.js';
 import { TouchControls } from '../systems/TouchControls.js';
 import { ProgressionSystem } from '../systems/ProgressionSystem.js';
 import { InventorySystem } from '../systems/InventorySystem.js';
+import { CombatSystem } from '../systems/CombatSystem.js';
 import { audioManager } from '../systems/AudioManager.js';
 import { LEVELS } from '../data/levels.js';
 import { ENEMY_TYPES } from '../data/enemies.js';
@@ -23,9 +24,11 @@ export class GameScene extends Phaser.Scene {
     this.chapterIndex = data.chapterIndex || 0;
     this.isEndless = data.isEndless || false;
     this.endlessWave = data.wave || 1;
+    this.isTransitioning = false;
   }
 
   create() {
+    this.isTransitioning = false;
     // 1. Sistemleri başlat
     this.progression = new ProgressionSystem();
     this.inventory = new InventorySystem(this.progression);
@@ -50,13 +53,15 @@ export class GameScene extends Phaser.Scene {
     this.structures = this.physics.add.group();
     this.lootGroup = this.physics.add.group();
 
-    // 5. Aizo'yu Base Alanında Doğur
-    const spawnX = this.mapData.baseArea.x * 32 + 16;
-    const spawnY = this.mapData.baseArea.y * 32 + 16;
+    // 5. Aizo'yu Base Alanında Doğur (Sunak ile çakışmayacak şekilde 36px önde)
+    const altarX = this.mapData.baseArea.x * 32 + 16;
+    const altarY = this.mapData.baseArea.y * 32 + 16;
+    const spawnX = altarX;
+    const spawnY = altarY + 36;
     this.player = new Aizo(this, spawnX, spawnY, this.inventory, this.progression);
 
     // 6. Base Sunağı ve Portalı Yerleştir
-    this.baseAltar = new Structure(this, spawnX, spawnY, 'zeus_altar');
+    this.baseAltar = new Structure(this, altarX, altarY, 'zeus_altar');
     this.structures.add(this.baseAltar);
 
     const portalX = this.mapData.portalPos.x * 32 + 16;
@@ -88,7 +93,7 @@ export class GameScene extends Phaser.Scene {
 
     // 10. Girdi Kontrolleri (Masaüstü)
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.wasd = this.input.keyboard.addKeys('W,A,S,D,Q,R,E,I,TAB');
+    this.wasd = this.input.keyboard.addKeys('W,A,S,D,Q,R,E,I,TAB,SPACE');
 
     this.input.on('pointerdown', (pointer) => {
       if (pointer.leftButtonDown() && pointer.x > 120 && pointer.x < this.scale.width - 120) {
@@ -99,8 +104,9 @@ export class GameScene extends Phaser.Scene {
     // 11. Dokunmatik Kontroller
     this.touchControls = new TouchControls(this);
 
-    // 12. Paralel HUD Sahnesini Başlat
+    // 12. Paralel HUD Sahnesini ve Ortam Müziğini Başlat
     this.scene.launch('UIScene', { gameScene: this });
+    audioManager.startAmbientDrone();
 
     // 13. Temizlik (Memory Leak Önleme)
     this.events.once('shutdown', () => {
@@ -108,6 +114,7 @@ export class GameScene extends Phaser.Scene {
         this.touchControls.destroy();
         this.touchControls = null;
       }
+      audioManager.stopAmbientDrone();
       this.input.removeAllListeners();
     });
   }
@@ -162,7 +169,9 @@ export class GameScene extends Phaser.Scene {
     if (config.enemies?.density === 'very_high') count = 36;
 
     if (this.isEndless) {
-      count = Math.floor(15 * Math.pow(1.12, this.endlessWave - 1));
+      // D11: Bellek patlamasını ve aşırı düşman üretimini önleyen kesin tavan (Maksimum 32 aktif düşman)
+      const rawCount = Math.floor(15 * Math.pow(1.12, this.endlessWave - 1));
+      count = Math.min(32, rawCount);
     }
 
     for (let i = 0; i < count; i++) {
@@ -226,9 +235,13 @@ export class GameScene extends Phaser.Scene {
       );
       this.player.isInBase = distToBase < 80;
 
-      // Space ile saldırı
+      // Space ile utility skill (Gölge Karışımı) veya saldırı
       if (this.cursors && Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
-        this.player.attack();
+        if (this.progression && this.progression.unlockedSkills.has('shadow_melding') && typeof this.player.castUtilitySkill === 'function') {
+          this.player.castUtilitySkill();
+        } else {
+          this.player.attack();
+        }
       }
 
       // Klavye yetenek kısayolları
@@ -269,7 +282,9 @@ export class GameScene extends Phaser.Scene {
   handleProjectileHitEnemy(proj, enemy) {
     if (!proj.isPlayer || !enemy.active) return;
 
-    enemy.takeDamage(proj.damage);
+    const targetArmor = enemy.stats?.armor ?? enemy.armor ?? 0;
+    const netDamage = CombatSystem.calculateDamage(proj.damage, targetArmor);
+    enemy.takeDamage(netDamage);
     this.createDamageSpark(enemy.x, enemy.y);
     proj.destroy();
   }
@@ -285,7 +300,9 @@ export class GameScene extends Phaser.Scene {
   handleProjectileHitPlayer(proj, player) {
     if (proj.isPlayer || !player.active) return;
 
-    player.takeDamage(proj.damage);
+    const targetArmor = player.stats?.armor ?? player.armor ?? 0;
+    const netDamage = CombatSystem.calculateDamage(proj.damage, targetArmor);
+    player.takeDamage(netDamage);
     this.createDamageSpark(player.x, player.y);
     proj.destroy();
   }
@@ -313,8 +330,21 @@ export class GameScene extends Phaser.Scene {
     loot.destroy();
   }
 
+  canCompleteLevel() {
+    if (!this.player || !this.player.active || this.player.hp <= 0) return false;
+    const activeEnemies = this.enemies ? this.enemies.getChildren().filter(e => e.active && e.hp > 0) : [];
+    const activeBosses = activeEnemies.filter(e => e.isBoss);
+    if (activeBosses.length > 0) return false;
+    return activeEnemies.length === 0;
+  }
+
   handleEnterPortal() {
     if (this.isTransitioning) return;
+    if (!this.canCompleteLevel()) {
+      const remaining = this.enemies ? this.enemies.getChildren().filter(e => e.active && e.hp > 0).length : 0;
+      this.createFloatingText(this.player.x, this.player.y - 35, `Zindan temizlenmeli! (${remaining} düşman kaldı)`, '#e74c3c');
+      return;
+    }
     this.isTransitioning = true;
     audioManager.playPortal();
 

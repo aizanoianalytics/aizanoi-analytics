@@ -256,7 +256,7 @@ export class CollisionSystem {
 
       // 4. Temples: stepped stylobate is walkable, interior cella core has collision
       if (b.type === 'temple') {
-        const stylobateHeight = 1.2;
+        const stylobateHeight = b.podiumHeight || b.stylobateHeight || (b.id === 'temple' ? 2.4 : 1.2);
         this.walkSurfaces.push({
           type: 'walkRect',
           x: b.x, z: b.z,
@@ -275,14 +275,70 @@ export class CollisionSystem {
         continue;
       }
 
-      // 5. Theatres & Stadia: stage building / scaena collides, orchestra/track is walkable
-      if (b.type === 'theatre' || b.type === 'stadium') {
+      // 5. Theatres & Stadia
+      if (b.type === 'theatre') {
         const rot = b.rot || 0;
         this.grid.insert({
           type: 'rect', id: `${b.id}-scaena`,
           x: b.x, z: b.z - b.d * 0.35,
           w: b.w * 0.85, d: b.d * 0.28,
           h: b.h, y: b.y || 0, rot
+        });
+        continue;
+      }
+      if (b.type === 'stadium') {
+        // Athletic track is walkable; perimeter spectator banks collide
+        const rot = b.rot || 0;
+        const bankThick = Math.max(3.0, b.d * 0.15);
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-bank-n`,
+          x: b.x, z: b.z - b.d * 0.42,
+          w: b.w, d: bankThick, h: b.h, y: b.y || 0, rot
+        });
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-bank-s`,
+          x: b.x, z: b.z + b.d * 0.42,
+          w: b.w, d: bankThick, h: b.h, y: b.y || 0, rot
+        });
+        continue;
+      }
+
+      // Circular structures (Macellum, Tholos shrines, Rotundas)
+      // Hollow outer perimeter with 4 open entrance portals; central interior is walkable
+      if (b.type === 'round') {
+        const radius = (b.w || 24) / 2;
+        const wallThick = 2.5;
+        const rot = b.rot || 0;
+        const portalGap = 8.0;
+        const offset = radius - wallThick / 2;
+        const segLen = Math.max(4, radius * 1.2 - portalGap);
+
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-n`,
+          x: b.x, z: b.z - offset,
+          w: segLen, d: wallThick, h: b.h, y: b.y || 0, rot
+        });
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-s`,
+          x: b.x, z: b.z + offset,
+          w: segLen, d: wallThick, h: b.h, y: b.y || 0, rot
+        });
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-e`,
+          x: b.x + offset, z: b.z,
+          w: wallThick, d: segLen, h: b.h, y: b.y || 0, rot
+        });
+        this.grid.insert({
+          type: 'rect', id: `${b.id}-wall-w`,
+          x: b.x - offset, z: b.z,
+          w: wallThick, d: segLen, h: b.h, y: b.y || 0, rot
+        });
+
+        this.walkSurfaces.push({
+          type: 'walkRect',
+          x: b.x, z: b.z,
+          w: (radius - wallThick) * 2, d: (radius - wallThick) * 2,
+          y: b.y || 0
         });
         continue;
       }

@@ -29,6 +29,47 @@ export class AudioManager {
     }
   }
 
+  startAmbientDrone() {
+    this.ensureContext();
+    if (!this.ctx || this.ambientNodes) return;
+    try {
+      const osc1 = this.ctx.createOscillator();
+      const osc2 = this.ctx.createOscillator();
+      const filter = this.ctx.createBiquadFilter();
+      const gain = this.ctx.createGain();
+
+      osc1.type = 'sawtooth';
+      osc1.frequency.setValueAtTime(55, this.ctx.currentTime); // A1 note
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(110, this.ctx.currentTime); // A2 note
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(160, this.ctx.currentTime);
+
+      gain.gain.setValueAtTime(this.isMuted ? 0 : 0.12, this.ctx.currentTime);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.masterGain);
+
+      osc1.start();
+      osc2.start();
+
+      this.ambientNodes = { osc1, osc2, gain, filter };
+    } catch (_) {}
+  }
+
+  stopAmbientDrone() {
+    if (this.ambientNodes) {
+      try {
+        this.ambientNodes.osc1.stop();
+        this.ambientNodes.osc2.stop();
+      } catch (_) {}
+      this.ambientNodes = null;
+    }
+  }
+
   toggleMute() {
     this.ensureContext();
     this.isMuted = !this.isMuted;
@@ -38,6 +79,9 @@ export class AudioManager {
 
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.sfxVolume, this.ctx.currentTime);
+    }
+    if (this.ambientNodes && this.ctx) {
+      this.ambientNodes.gain.gain.setValueAtTime(this.isMuted ? 0 : 0.12, this.ctx.currentTime);
     }
     return this.isMuted;
   }

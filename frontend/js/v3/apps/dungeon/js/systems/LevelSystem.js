@@ -118,7 +118,7 @@ export class LevelSystem {
     }
   }
 
-  getRandomWalkablePosition(excludeBase = true) {
+  getRandomWalkablePosition(excludeBase = true, requiredClearance = 1) {
     let attempts = 0;
     while (attempts < 1000) {
       attempts++;
@@ -132,9 +132,35 @@ export class LevelSystem {
           const dy = r - this.baseArea.y;
           if (Math.sqrt(dx * dx + dy * dy) < 8) continue;
         }
+
+        // Genis varliklar (orn. Boss) icin clearance kontrolu
+        if (requiredClearance > 1) {
+          let clear = true;
+          for (let dr = -1; dr <= requiredClearance - 1; dr++) {
+            for (let dc = -1; dc <= requiredClearance - 1; dc++) {
+              const nr = r + dr;
+              const nc = c + dc;
+              if (nr < 0 || nr >= this.height || nc < 0 || nc >= this.width || this.grid[nr][nc] === 2) {
+                clear = false;
+                break;
+              }
+            }
+            if (!clear) break;
+          }
+          if (!clear) continue;
+        }
+
         return { x: c * this.tileSize + 16, y: r * this.tileSize + 16 };
       }
     }
-    return { x: this.width * 16, y: this.height * 16 };
+
+    // Guvenli Fallback: Harita ortasina veya rastgele duvar icine degil, garantili bir odaya yerlestir
+    const fallbackRoom = this.rooms.length > 1 ? this.rooms[this.rooms.length - 1] : this.rooms[0];
+    if (fallbackRoom) {
+      const safeX = Math.floor(fallbackRoom.x + fallbackRoom.w / 2);
+      const safeY = Math.floor(fallbackRoom.y + fallbackRoom.h / 2);
+      return { x: safeX * this.tileSize + 16, y: safeY * this.tileSize + 16 };
+    }
+    return { x: 3 * this.tileSize + 16, y: 3 * this.tileSize + 16 };
   }
 }

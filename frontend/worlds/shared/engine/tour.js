@@ -74,23 +74,6 @@ export class TourSystem {
     if (this._scene) this._scene.add(this.beacon);
   }
 
-  start() {
-    if (!this.tourStops.length) return;
-    this.isActive = true;
-    this.currentStop = 0;
-    this.panel.style.display = 'flex';
-    this.goToStop(this.currentStop);
-  }
-
-  stop() {
-    this.isActive = false;
-    this._isFlying = false;
-    this._activeFlight = null;
-    this.panel.style.display = 'none';
-    this.beacon.visible = false;
-    this.controls.enable();
-  }
-
   _createTourUI() {
     this.panel = document.createElement('div');
     this.panel.id = 'tour-bar';
