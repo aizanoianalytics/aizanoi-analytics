@@ -1,10 +1,13 @@
 import {
   detailUrl,
+  filterHistoryRows,
   formatNumber,
   formatPrice,
   formatSignedReturn,
+  historyDailyChange,
   indicatorSeries,
   sliceTimeframe,
+  toISODate,
 } from '../core.js';
 
 const DATA_ROOT = '/analytics/markets/data';
@@ -228,42 +231,52 @@ function renderHorizonCards(row) {
 function renderHistory(state) {
   const rows = (state.frequency === '4h' ? state.payload.fourHour : state.payload.daily) || [];
   if (!rows.length) return '<p class="market-no-data">No historical observations yet.</p>';
-  const total = rows.length;
-  const totalPages = Math.max(1, Math.ceil(total / state.historyPageSize));
-  const safePage = Math.min(Math.max(1, state.historyPage), totalPages);
-  const start = (safePage - 1) * state.historyPageSize;
-  const end = Math.min(start + state.historyPageSize, total);
-  const pageRows = rows.slice(start, end);
-  const term = state.historySearch.trim();
-  const matches = !term ? pageRows : pageRows.filter(row => new Date(row.t * 1000).toISOString().slice(0, 10).includes(term));
-  const tableRows = matches.map((row, idx) => {
-    const date = new Date(row.t * 1000).toISOString().slice(0, 10);
-    const previous = idx === 0 ? rows[start + idx - 1] : pageRows[idx - 1];
-    const change = previous && Number.isFinite(previous.c) ? row.c / previous.c - 1 : null;
+  const rangeInvalid = Boolean(state.dateFrom && state.dateTo && state.dateFrom > state.dateTo);
+  const filtered = rangeInvalid
+    ? []
+    : filterHistoryRows(rows, { dateFrom: state.dateFrom, dateTo: state.dateTo, search: state.historySearch });
+  const indexByRow = new Map(rows.map((row, index) => [row, index]));
+  const page = paginateFiltered(filtered, state.historyPage, state.historyPageSize);
+  const tableRows = page.rows.map((row) => {
+    const date = toISODate(row.t);
+    const change = historyDailyChange(row, rows, indexByRow.get(row));
     return `<tr class="${state.selectedDate === date ? 'is-selected' : ''}" data-history-symbol="${esc(date)}" tabindex="0"><td>${esc(date)}</td><td>${formatPrice(row.c)}</td><td class="${Number.isFinite(change) ? (change >= 0 ? 'is-positive' : 'is-negative') : ''}">${formatSignedReturn(change)}</td></tr>`;
   }).join('');
-  const dateFilterFrom = state.dateFrom && Date.parse(`${state.dateFrom}T00:00:00Z`) >= rows[0].t * 1000;
+  const emptyMessage = rangeInvalid
+    ? 'Invalid date range: “From” date must be earlier than “To” date.'
+    : 'No matching history rows.';
   return `<section class="instrument-history" data-history><header><h2>Historical prices (${state.frequency === '4h' ? '4 hour' : 'Daily'})</h2>
     <form data-history-filter><label>Search date<input type="search" data-history-search placeholder="YYYY-MM-DD" value="${esc(state.historySearch)}"></label>
     <label>From<input type="date" data-history-from value="${esc(state.dateFrom)}"></label>
     <label>To<input type="date" data-history-to value="${esc(state.dateTo)}"></label>
     <button type="submit">Apply</button></form></header>
-    <div class="market-table-wrap"><table class="market-table" data-history-table><thead><tr><th>Date</th><th>Close</th><th>Daily Change %</th></tr></thead><tbody>${tableRows || `<tr><td colspan="3" class="market-table-empty">No matching history rows.</td></tr>`}</tbody></table></div>
+    <div class="market-table-wrap"><table class="market-table" data-history-table><thead><tr><th>Date</th><th>Close</th><th>Daily Change %</th></tr></thead><tbody>${tableRows || `<tr><td colspan="3" class="market-table-empty">${emptyMessage}</td></tr>`}</tbody></table></div>
     <div class="market-pager" data-history-pager>
-      <button type="button" data-history-page="prev" ${safePage <= 1 ? 'disabled' : ''}>Previous</button>
-      <span>Page ${safePage} of ${totalPages} · ${formatNumber(start + 1)}–${formatNumber(end)} of ${formatNumber(total)}</span>
-      <button type="button" data-history-page="next" ${safePage >= totalPages ? 'disabled' : ''}>Next</button>
+      <button type="button" data-history-page="prev" ${page.page <= 1 ? 'disabled' : ''}>Previous</button>
+      <span>Page ${page.page} of ${page.totalPages} · ${formatNumber(page.start + 1)}–${formatNumber(page.end)} of ${formatNumber(page.total)}</span>
+      <button type="button" data-history-page="next" ${page.page >= page.totalPages ? 'disabled' : ''}>Next</button>
     </div>
   </section>`;
 }
 
+function paginateFiltered(filtered, page, pageSize) {
+  const total = filtered.length;
+  const safeSize = Math.max(1, pageSize);
+  const totalPages = Math.max(1, Math.ceil(total / safeSize));
+  const safePage = Math.min(Math.max(1, page), totalPages);
+  const start = (safePage - 1) * safeSize;
+  const end = Math.min(start + safeSize, total);
+  return { rows: filtered.slice(start, end), page: safePage, pageSize: safeSize, total, totalPages, start, end };
+}
+
 function renderHeader() {
   const basisText = market === 'crypto' ? 'Exchange close' : 'Adjusted close';
+  const exchangeLabel = market === 'crypto' ? 'Crypto · USDT' : state.payload.exchange;
   return `<header class="instrument-header">
     <div>
       <p class="eyebrow">INSTRUMENT WORKSPACE</p>
       <h1>${esc(state.payload.ticker)} · ${esc(state.payload.name)}</h1>
-      <p class="instrument-meta">${esc(state.payload.exchange)} · ${esc(basisText)} · Latest ${formatPrice(state.summary?.latestPrice ?? state.summary?.latest)} · As of ${esc(new Date((state.payload.daily?.at(-1)?.t || 0) * 1000).toLocaleDateString())}</p>
+      <p class="instrument-meta">${esc(exchangeLabel)} · ${esc(basisText)} · Latest ${formatPrice(state.summary?.latestPrice ?? state.summary?.latest)} · As of ${esc(new Date((state.payload.daily?.at(-1)?.t || 0) * 1000).toLocaleDateString())}</p>
     </div>
     <form data-instrument-search><label>Find another instrument<input type="search" data-symbol-search placeholder="Ticker or company" autocomplete="off"></label><div data-search-results></div></form>
   </header>`;
@@ -371,10 +384,27 @@ document.addEventListener('change', event => {
   if (event.target.matches('[data-selected-date]')) { state.selectedDate = event.target.value; render(); return; }
   if (event.target.matches('[data-indicator]')) { event.target.checked ? state.indicators.add(event.target.value) : state.indicators.delete(event.target.value); render(); return; }
   if (event.target.matches('[data-oscillator]')) { event.target.checked ? state.oscillators.add(event.target.value) : state.oscillators.delete(event.target.value); render(); return; }
-  if (event.target.matches('[data-history-search]')) { state.historySearch = event.target.value; render(); return; }
-  if (event.target.matches('[data-history-from]')) { state.dateFrom = event.target.value; render(); return; }
-  if (event.target.matches('[data-history-to]')) { state.dateTo = event.target.value; render(); return; }
+  if (event.target.matches('[data-history-from]')) { state.dateFrom = event.target.value; state.historyPage = 1; render(); return; }
+  if (event.target.matches('[data-history-to]')) { state.dateTo = event.target.value; state.historyPage = 1; render(); return; }
 });
+
+function chartVisibleSource() {
+  const source = state.frequency === '4h' ? state.payload.fourHour : state.payload.daily;
+  if (!source) return [];
+  return state.timeframe === 'CUSTOM'
+    ? source.filter(row => (!state.dateFrom || row.t * 1000 >= Date.parse(`${state.dateFrom}T00:00:00Z`)) && (!state.dateTo || row.t * 1000 <= Date.parse(`${state.dateTo}T23:59:59Z`)))
+    : sliceTimeframe(source, state.timeframe);
+}
+
+function selectHistoryDate(date) {
+  state.selectedDate = date;
+  const visible = chartVisibleSource();
+  const inRange = visible.some(row => toISODate(row.t) === date);
+  if (!inRange) state.timeframe = 'SINCE_2019';
+  render();
+  const selectedInput = document.querySelector('[data-selected-date]');
+  if (selectedInput) selectedInput.value = date;
+}
 
 document.addEventListener('click', event => {
   if (event.target.closest('[data-history-page]')) {
@@ -386,9 +416,44 @@ document.addEventListener('click', event => {
   if (event.target.closest('[data-symbol-search]')) return;
   const row = event.target.closest('tr[data-history-symbol]');
   if (row && !event.target.closest('a,button')) {
-    state.selectedDate = row.dataset.historySymbol;
-    render();
+    selectHistoryDate(row.dataset.historySymbol);
   }
+});
+
+document.addEventListener('keydown', event => {
+  const row = event.target.closest?.('tr[data-history-symbol]');
+  if (row && (event.key === 'Enter' || event.key === ' ')) {
+    event.preventDefault();
+    selectHistoryDate(row.dataset.historySymbol);
+  }
+});
+
+let historySearchTimer = null;
+document.addEventListener('input', event => {
+  if (!event.target.matches('[data-history-search]')) return;
+  if (event.isComposing) return;
+  clearTimeout(historySearchTimer);
+  const value = event.target.value;
+  historySearchTimer = setTimeout(() => {
+    state.historySearch = value.trim();
+    state.historyPage = 1;
+    const active = document.activeElement;
+    const hadFocus = Boolean(active?.matches?.('[data-history-search]') && document.querySelector('[data-history]')?.contains(active));
+    const selStart = hadFocus ? active.selectionStart : null;
+    const selEnd = hadFocus ? active.selectionEnd : null;
+    if (hadFocus) active.blur();
+    render();
+    if (hadFocus) {
+      const input = document.querySelector('[data-history-search]');
+      if (input) {
+        input.focus({ preventScroll: true });
+        const length = input.value.length;
+        const start = Math.min(selStart ?? length, length);
+        const end = Math.min(selEnd ?? length, length);
+        try { input.setSelectionRange(start, end); } catch { /* non-text input */ }
+      }
+    }
+  }, 150);
 });
 
 document.addEventListener('input', async event => {
@@ -398,6 +463,18 @@ document.addEventListener('input', async event => {
 });
 
 document.addEventListener('submit', event => {
+  if (event.target.matches('[data-history-filter]')) {
+    event.preventDefault();
+    const form = event.target;
+    state.historySearch = (form.querySelector('[data-history-search]')?.value || '').trim();
+    state.dateFrom = form.querySelector('[data-history-from]')?.value || '';
+    state.dateTo = form.querySelector('[data-history-to]')?.value || '';
+    state.historyPage = 1;
+    render();
+    const apply = document.querySelector('[data-history] [data-history-filter] button[type="submit"]');
+    if (apply) apply.focus({ preventScroll: true });
+    return;
+  }
   if (!event.target.matches('[data-instrument-search]')) return;
   event.preventDefault();
   const needle = document.querySelector('[data-symbol-search]')?.value.trim().toLowerCase() || '';

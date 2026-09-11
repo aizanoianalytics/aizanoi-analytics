@@ -98,6 +98,7 @@ function renderRankingBlock(market) {
     ['Today · Top 5', 'return1d', true],
     ['Today · Bottom 5', 'return1d', false],
     ['1 Week · Top 5', 'return1w', true],
+    ['1 Week · Bottom 5', 'return1w', false],
     ['52 Weeks · Top 5', 'return1y', true],
     ['52 Weeks · Bottom 5', 'return1y', false],
   ];
@@ -236,7 +237,7 @@ function renderFilters(state) {
   const exchanges = [...new Set(rows.map(row => row.exchange).filter(Boolean))].sort();
   const memberships = [...new Set(rows.flatMap(row => Array.isArray(row.memberships) ? row.memberships : [])).values()].sort();
   const isCrypto = state.market === 'crypto';
-  return `<form class="market-filters" data-filter-form role="search" aria-label="Filter raw data">
+  return `<form class="market-filters${state.filtersOpen ? ' is-open' : ''}" data-filter-form id="filter-drawer" role="search" aria-label="Filter raw data">
     <label class="market-filter-search"><span class="visually-hidden">Search</span><input data-search type="search" placeholder="Search ticker or company" value="${esc(state.query)}" autocomplete="off"></label>
     ${isCrypto ? '' : `<label class="market-filter-control"><span>Exchange</span><select data-exchange><option value="">All</option>${exchanges.map(value => `<option value="${esc(value)}"${state.exchange === value ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label>`}
     ${isCrypto ? '' : `<label class="market-filter-control"><span>Membership</span><select data-membership><option value="">All</option>${memberships.map(value => `<option value="${esc(value)}"${state.membership === value ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label>`}
@@ -258,7 +259,7 @@ function renderFilters(state) {
       </span>
     </fieldset>
     <button type="button" class="market-filter-reset" data-filter-reset>Reset</button>
-    <button type="button" class="market-filter-drawer-trigger" data-filter-drawer-trigger aria-expanded="false" aria-controls="filter-drawer">Filters</button>
+    <button type="button" class="market-filter-drawer-trigger" data-filter-drawer-trigger aria-expanded="${state.filtersOpen ? 'true' : 'false'}" aria-controls="filter-drawer">Filters</button>
   </form>`;
 }
 
@@ -498,9 +499,9 @@ export function createMarketsDashboard(container, options = {}) {
       const button = event.target.closest('[data-filter-drawer-trigger]');
       const drawer = document.getElementById('filter-drawer');
       if (drawer) {
-        const open = drawer.hasAttribute('hidden');
-        if (open) drawer.removeAttribute('hidden');
-        else drawer.setAttribute('hidden', '');
+        const open = !drawer.classList.contains('is-open');
+        state.filtersOpen = open;
+        drawer.classList.toggle('is-open', open);
         button.setAttribute('aria-expanded', String(open));
       }
       return;
@@ -532,13 +533,30 @@ export function createMarketsDashboard(container, options = {}) {
   let searchTimer = null;
   function handleInput(event) {
     if (event.target.matches('[data-search]')) {
+      if (event.isComposing) return;
       clearTimeout(searchTimer);
       const value = event.target.value.trim();
       searchTimer = setTimeout(() => {
         state.query = value;
         state.page = 1;
+        const views = query('[data-views]');
+        const active = document.activeElement;
+        const hadFocus = Boolean(active?.matches?.('[data-search]') && views?.contains(active));
+        const selStart = hadFocus ? active.selectionStart : null;
+        const selEnd = hadFocus ? active.selectionEnd : null;
+        if (hadFocus) active.blur();
         renderView();
         updateLocation();
+        if (hadFocus) {
+          const input = query('[data-search]');
+          if (input) {
+            input.focus({ preventScroll: true });
+            const length = input.value.length;
+            const start = Math.min(selStart ?? length, length);
+            const end = Math.min(selEnd ?? length, length);
+            try { input.setSelectionRange(start, end); } catch { /* non-text input */ }
+          }
+        }
       }, 120);
     }
   }
