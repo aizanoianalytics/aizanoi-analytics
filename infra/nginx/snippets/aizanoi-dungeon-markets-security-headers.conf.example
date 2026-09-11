@@ -1,0 +1,14 @@
+# Route-scoped headers for the Dungeon game and Markets dashboards.
+# Install as /etc/nginx/snippets/aizanoi-dungeon-markets-security-headers.conf.
+# Both surfaces are fully static (external scripts/styles only, no inline
+# code, no eval): the Dungeon game runs vendored Phaser from /vendor/ and the
+# Markets dashboards load same-origin JSON shards, so the strict site-wide
+# policy applies unchanged. The include is repeated per location because any
+# add_header at location level would otherwise suppress the inherited set.
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Permissions-Policy "geolocation=(), microphone=(self), camera=(self)" always;
+add_header Cross-Origin-Opener-Policy "same-origin" always;
+add_header Cross-Origin-Resource-Policy "same-origin" always;
+add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self'; media-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self' https:; frame-ancestors 'self'; worker-src 'self' blob:" always;

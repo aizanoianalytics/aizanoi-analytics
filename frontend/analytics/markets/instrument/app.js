@@ -7,13 +7,15 @@ import {
   historyDailyChange,
   indicatorSeries,
   sliceTimeframe,
+  slugFromParam,
   toISODate,
 } from '../core.js';
 
 const DATA_ROOT = '/analytics/markets/data';
 const params = new URLSearchParams(location.search);
 const market = ['us', 'crypto'].includes(params.get('market')) ? params.get('market') : 'us';
-const symbol = (params.get('symbol') || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+const symbol = slugFromParam(params.get('symbol'));
+const requestedFrequency = params.get('frequency');
 
 function esc(value) {
   return String(value ?? '').replace(/[&<>"']/g, character => ({
@@ -395,7 +397,12 @@ function searchResults(value) {
 }
 
 document.addEventListener('change', event => {
-  if (event.target.matches('[data-frequency]')) { state.frequency = event.target.value; render(); return; }
+  if (event.target.matches('[data-frequency]')) {
+    // US instruments publish daily bars only; never retain a 4h frequency there.
+    state.frequency = (market === 'us' || event.target.value !== '4h') ? '1d' : '4h';
+    render();
+    return;
+  }
   if (event.target.matches('[data-timeframe]')) {
     state.timeframe = event.target.value;
     if (state.timeframe !== 'CUSTOM') {
@@ -542,7 +549,16 @@ if (!symbol) {
     state.payload = payload;
     state.summary = summary;
     state.universe = [summary];
+    // Honor ?frequency=4h only for crypto with 4h bars; US instruments are
+    // daily-only, so a stale 4h state is reset and stripped from the URL.
+    const has4H = Array.isArray(payload?.fourHour) && payload.fourHour.length > 1;
     state.frequency = '1d';
+    if (market === 'crypto' && requestedFrequency === '4h' && has4H) state.frequency = requestedFrequency;
+    if (market === 'us' && requestedFrequency) {
+      const cleaned = new URLSearchParams(location.search);
+      cleaned.delete('frequency');
+      history.replaceState(null, '', `${location.pathname}?${cleaned}`);
+    }
     state.timeframe = '1Y';
     render();
   }).catch(error => {

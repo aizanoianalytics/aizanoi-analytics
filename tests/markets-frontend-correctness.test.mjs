@@ -207,3 +207,65 @@ test('CSS still applies the chart-tooltip visual style', () => {
 test('CSS still pins the body to no horizontal overflow', () => {
   assert.match(css, /html,\s*body\s*\{\s*overflow-x:\s*hidden[^}]*\}/);
 });
+
+// ---------------------------------------------------------------------------
+// Audit — dotted tickers resolve to real slugs (BRK.B -> brk-b, not brkb)
+// ---------------------------------------------------------------------------
+
+test('Audit — slugFromParam maps dotted tickers to dashed slugs', () => {
+  assert.equal(core.slugFromParam('BRK.B'), 'brk-b');
+  assert.equal(core.slugFromParam('BF.B'), 'bf-b');
+  assert.equal(core.slugFromParam('AAPL'), 'aapl');
+  assert.equal(core.slugFromParam('brk-b'), 'brk-b');
+  assert.equal(core.slugFromParam(''), '');
+  assert.equal(core.slugFromParam(null), '');
+});
+
+test('Audit — instrument/app.js resolves ?symbol= through slugFromParam', () => {
+  assert.match(instrumentApp, /slugFromParam/);
+  assert.match(instrumentApp, /const symbol = slugFromParam\(params\.get\('symbol'\)\)/);
+  assert.doesNotMatch(instrumentApp, /replace\(\/\(\[^a-z0-9-\]\)\/g, ''\)/);
+});
+
+// ---------------------------------------------------------------------------
+// Audit — getJson rejects on HTTP errors and load failures surface via showError
+// ---------------------------------------------------------------------------
+
+test('Audit — getJson throws on non-OK responses and resolves JSON on OK', async () => {
+  const dashboardModule = await import(toUrl('frontend/analytics/markets/dashboard.js'));
+  const realFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = async () => ({ ok: false, status: 404, json: async () => ({}) });
+    await assert.rejects(() => dashboardModule.getJson('/analytics/markets/data/manifest.json'), /Market data unavailable \(404\)/);
+    globalThis.fetch = async () => ({ ok: true, status: 200, json: async () => ({ hello: 'world' }) });
+    assert.deepEqual(await dashboardModule.getJson('/analytics/markets/data/manifest.json'), { hello: 'world' });
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+});
+
+test('Audit — dashboard load failures route to showError', () => {
+  assert.match(dashboard, /if \(!response\.ok\) throw new Error\(`Market data unavailable/);
+  assert.match(dashboard, /loadMarket\(state\.market\)\.catch\(showError\)/);
+  assert.match(dashboard, /\}\)\.catch\(showError\)/);
+});
+
+// ---------------------------------------------------------------------------
+// Audit — empty CSV export shows visible feedback instead of silent return
+// ---------------------------------------------------------------------------
+
+test('Audit — empty export writes a visible status message', () => {
+  assert.match(dashboard, /\[data-export-status\]/);
+  assert.match(dashboard, /No instruments match the current filters — nothing to export/);
+  assert.match(dashboard, /role="status"/);
+});
+
+// ---------------------------------------------------------------------------
+// Audit — US market never retains a ?frequency=4h state
+// ---------------------------------------------------------------------------
+
+test('Audit — instrument resets 4h frequency on the US market', () => {
+  assert.match(instrumentApp, /requestedFrequency = params\.get\('frequency'\)/);
+  assert.match(instrumentApp, /market === 'us'.*\?.*?'1d'.*?:.*?'4h'|\(market === 'us' \|\| event\.target\.value !== '4h'\) \? '1d' : '4h'/);
+  assert.match(instrumentApp, /cleaned\.delete\('frequency'\)/);
+});

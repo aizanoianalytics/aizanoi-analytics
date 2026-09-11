@@ -47,6 +47,15 @@ http {
       try_files \$uri \$uri/ =404;
     }
 
+    location ^~ /dungeon/ {
+      include ${root}/infra/nginx/snippets/aizanoi-dungeon-markets-security-headers.conf.example;
+      try_files \$uri \$uri/ =404;
+    }
+    location ^~ /analytics/markets/ {
+      include ${root}/infra/nginx/snippets/aizanoi-dungeon-markets-security-headers.conf.example;
+      try_files \$uri \$uri/ =404;
+    }
+
     location = /worlds/ { try_files /worlds/index.html =404; }
     location ^~ /worlds/shared/ {
       include ${root}/infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example;

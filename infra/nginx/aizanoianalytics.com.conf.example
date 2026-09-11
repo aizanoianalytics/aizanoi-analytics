@@ -53,6 +53,10 @@ server {
 
     # Mutable market snapshots stay outside immutable application releases.
     # The private updater publishes compact static JSON shards atomically.
+    # Dungeon game and Markets dashboards: fully static, no inline code.
+    # Pin the strict policy explicitly so generic-location changes cannot relax it.
+    location ^~ /dungeon/ { include snippets/aizanoi-dungeon-markets-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
+    location ^~ /analytics/markets/ { include snippets/aizanoi-dungeon-markets-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
     location ^~ /analytics/markets/data/ {
         alias /var/lib/aizanoi-markets/public/;
         default_type application/json;

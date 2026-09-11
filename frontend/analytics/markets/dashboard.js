@@ -38,7 +38,7 @@ function horizonSign(value) {
   return { char:'0', modifier:'flat' };
 }
 
-async function getJson(path, signal) {
+export async function getJson(path, signal) {
   const response = await fetch(path, { cache:'default', signal });
   if (!response.ok) throw new Error(`Market data unavailable (${response.status})`);
   return response.json();
@@ -185,6 +185,7 @@ function renderRawData(state) {
         <button type="button" class="market-raw-mode-button${state.priceMode === 'price' ? ' is-active' : ''}" data-price-mode="price" aria-pressed="${state.priceMode === 'price'}">Price</button>
         <button type="button" class="market-raw-mode-button${state.priceMode === 'change' ? ' is-active' : ''}" data-price-mode="change" aria-pressed="${state.priceMode === 'change'}">Change</button>
         <button type="button" class="market-raw-mode-button" data-export-csv>Export CSV</button>
+        <span class="market-export-status" data-export-status role="status"></span>
       </div>
     </header>
     ${chips}
@@ -386,7 +387,13 @@ export function createMarketsDashboard(container, options = {}) {
 
   function exportTableCsv() {
     const rows = filterRows(context.currentRows(), state);
-    if (!rows.length) return;
+    const status = query('[data-export-status]');
+    if (!rows.length) {
+      const message = 'No instruments match the current filters — nothing to export.';
+      if (status) status.textContent = message;
+      else showError(new Error(message));
+      return;
+    }
     const headers = ['Ticker', 'Name', 'Exchange', 'Price', '1D%', '1W%', '1M%', '1Y%'];
     const lines = [headers.join(',')];
     for (const r of rows) {
@@ -408,6 +415,7 @@ export function createMarketsDashboard(container, options = {}) {
     a.download = `aizanoi-markets-${state.market}-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
+    if (status) status.textContent = '';
   }
 
   async function loadRows(market) {

@@ -187,6 +187,33 @@ test('Raw Data sorts via column headers and shows pager metadata', async () => {
   }
 });
 
+test('Sorted column header exposes aria-sort state', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const errors = [];
+  page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+  page.on('pageerror', err => errors.push(String(err)));
+  await installFixtures(page);
+  try {
+    await page.goto(`${base}/analytics/markets/?market=us`, { waitUntil: 'networkidle' });
+    await page.waitForSelector('tbody[data-raw-table-body] tr[data-symbol]');
+    await page.click('[data-price-mode="change"]');
+    await page.waitForSelector('th button[data-sort-key="return1y"]');
+    await page.click('th button[data-sort-key="return1y"]');
+    const sortedTh = page.locator('th[aria-sort="descending"]');
+    assert.equal(await sortedTh.count(), 1);
+    assert.equal(await sortedTh.locator('button[data-sort-key="return1y"]').count(), 1);
+    await page.click('th button[data-sort-key="return1y"]');
+    assert.equal(await page.locator('th[aria-sort="ascending"]').count(), 1);
+    assert.equal(await page.locator('th[aria-sort="descending"]').count(), 0);
+    const unsorted = await page.locator('th[aria-sort="none"]').count();
+    assert.ok(unsorted > 0, 'inactive headers keep aria-sort none');
+    assert.deepEqual(errors, []);
+  } finally {
+    await browser.close();
+  }
+});
+
 test('Filters and chips work for search, exchange and performance horizon', async () => {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
@@ -310,6 +337,7 @@ for (const width of [390, 320]) {
       assert.equal(await page.locator('[data-filter-drawer-trigger]').getAttribute('aria-expanded'), 'false');
       await page.click('[data-filter-drawer-trigger]');
       assert.equal(await page.locator('[data-filter-drawer-trigger]').getAttribute('aria-expanded'), 'true');
+      assert.equal(await page.locator('#filter-drawer.is-open').count(), 1);
       assert.equal(await page.locator('[data-exchange]').isVisible(), true);
       assert.equal(await page.locator('[data-min-price]').isVisible(), true);
       assert.equal(await page.locator('[data-performance-horizon]').isVisible(), true);
@@ -319,6 +347,7 @@ for (const width of [390, 320]) {
       assert.equal(after, 6);
       await page.click('[data-filter-drawer-trigger]');
       assert.equal(await page.locator('[data-filter-drawer-trigger]').getAttribute('aria-expanded'), 'false');
+      assert.equal(await page.locator('#filter-drawer.is-open').count(), 0);
       assert.equal(await page.locator('[data-exchange]').isVisible(), false);
       const overflow = await page.evaluate(() => document.body.scrollWidth - document.documentElement.clientWidth);
       assert.ok(overflow <= 1, `mobile filters overflow ${overflow}`);
