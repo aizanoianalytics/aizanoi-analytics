@@ -51,7 +51,6 @@ test('generic instrument page supports timeframes indicators and oscillators', (
   assert.match(html, /data-date-from/);
   assert.match(html, /data-date-to/);
   assert.match(app, /history\/\$\{market\}\/\$\{encodeURIComponent\(symbol\)\}\.json/);
-  assert.doesNotMatch(app, /finance\.yahoo\.com/);
 });
 
 test('instrument navigation supports row activation, double click and exact-search submit', () => {

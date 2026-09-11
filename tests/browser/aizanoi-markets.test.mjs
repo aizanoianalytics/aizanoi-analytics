@@ -9,7 +9,7 @@ const rows = {
   crypto:[{ market:'crypto',ticker:'BTC',name:'Bitcoin',exchange:'Crypto · USD',slug:'btc',latest:77965.96,return1d:-.02,return30d:.12,relativeStrength30d:.04,percentile30d:88,rangePosition52w:.72,volatility20:.48,rsi14:58,trendAge50:40,drawdown1y:-.17,aboveSma200:true,historySessions:260,spark30:Array.from({length:30},(_,i)=>70000+i*200),dataQuality:quality }],
 };
 const pulses = Object.fromEntries(Object.entries(rows).map(([market,items]) => [market,{ market,instruments:items.length,observed1d:items.length,advancing:items.filter(row=>row.return1d>0).length,declining:items.filter(row=>row.return1d<0).length,aboveSma200:1,rsiOverbought:0,rsiOversold:0,newHighs52w:0,newLows52w:0,medianReturn30d:items[0].return30d,returnSpread30d:0 }]));
-const history = { market:'crypto',ticker:'BTC',name:'Bitcoin',yahooSymbol:'BTC-USD',exchange:'Crypto · USD',slug:'btc',startDate:'2019-01-01',dataQuality:quality,daily:Array.from({length:260},(_,i)=>({t:1546300800+i*86400,c:4000+i*290+Math.sin(i/5)*500})),fourHour:Array.from({length:120},(_,i)=>({t:1787000000+i*14400,c:72000+i*40+Math.sin(i/4)*200})) };
+const history = { market:'crypto',ticker:'BTC',name:'Bitcoin',provider:'binance',providerSymbol:'BTCUSDT',exchange:'Crypto · USD',slug:'btc',startDate:'2019-01-01',dataQuality:quality,daily:Array.from({length:260},(_,i)=>({t:1546300800+i*86400,c:4000+i*290+Math.sin(i/5)*500})),fourHour:Array.from({length:120},(_,i)=>({t:1787000000+i*14400,c:72000+i*40+Math.sin(i/4)*200})) };
 
 async function fixtures(page) {
   await page.route('**/analytics/markets/data/manifest.json', route => route.fulfill({ json:{ schemaVersion:2,completedAt:'2026-09-10T07:00:00Z',status:'complete',counts:{us:1,crypto:1} } }));

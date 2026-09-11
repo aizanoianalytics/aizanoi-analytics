@@ -1,0 +1,18 @@
+{
+  "reviewedAt": "2026-09-11",
+  "policy": "owner-denied; never re-add automatically",
+  "excludes": {
+    "AVB": "provider history stale; no recent Fintable observation",
+    "BK": "provider history stale; no recent Fintable observation",
+    "CMA": "acquired by Fifth Third; delisted February 2026",
+    "CTLT": "acquired by Novo Holdings; delisted December 2024",
+    "CTRA": "provider history stale; no recent Fintable observation",
+    "DAY": "acquired by Thoma Bravo; became private",
+    "EA": "taken private and delisted August 2026",
+    "EQR": "provider history stale; no recent Fintable observation",
+    "FI": "renamed/relisted as FISV November 2025",
+    "HOLX": "provider history stale; no recent Fintable observation",
+    "IPG": "acquired by Omnicom; delisted November 2025",
+    "MMC": "provider history stale; no recent Fintable observation"
+  }
+}

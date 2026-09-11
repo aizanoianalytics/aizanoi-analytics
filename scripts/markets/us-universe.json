@@ -590,18 +590,6 @@
   },
   {
     "market": "us",
-    "ticker": "AVB",
-    "name": "AvalonBay Communities, Inc.",
-    "exchange": "NYSE",
-    "slug": "avb",
-    "providerSymbol": "AVB",
-    "memberships": [
-      "sp500"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
     "ticker": "AVGO",
     "name": "Broadcom Inc. - Common Stock",
     "exchange": "NASDAQ",
@@ -810,19 +798,6 @@
     "memberships": [
       "sp500",
       "nasdaq100"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
-    "ticker": "BK",
-    "name": "The Bank of New York Mellon Corporation",
-    "exchange": "NYSE",
-    "slug": "bk",
-    "providerSymbol": "BK",
-    "memberships": [
-      "sp500",
-      "nyse_us100"
     ],
     "provider": "fintable"
   },
@@ -1275,18 +1250,6 @@
   },
   {
     "market": "us",
-    "ticker": "CMA",
-    "name": "Comerica Incorporated",
-    "exchange": "NYSE",
-    "slug": "cma",
-    "providerSymbol": "CMA",
-    "memberships": [
-      "sp500"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
     "ticker": "CMCSA",
     "name": "Comcast Corporation - Class A Common Stock",
     "exchange": "NASDAQ",
@@ -1588,30 +1551,6 @@
   },
   {
     "market": "us",
-    "ticker": "CTLT",
-    "name": "Catalent, Inc.",
-    "exchange": "NYSE",
-    "slug": "ctlt",
-    "providerSymbol": "CTLT",
-    "memberships": [
-      "sp500"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
-    "ticker": "CTRA",
-    "name": "Coterra Energy Inc.",
-    "exchange": "NYSE",
-    "slug": "ctra",
-    "providerSymbol": "CTRA",
-    "memberships": [
-      "sp500"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
     "ticker": "CTSH",
     "name": "Cognizant Technology Solutions Corporation - Class A Common Stock",
     "exchange": "NASDAQ",
@@ -1708,18 +1647,6 @@
     "providerSymbol": "DASH",
     "memberships": [
       "nasdaq100"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
-    "ticker": "DAY",
-    "name": "Dayforce, Inc.",
-    "exchange": "NYSE",
-    "slug": "day",
-    "providerSymbol": "DAY",
-    "memberships": [
-      "sp500"
     ],
     "provider": "fintable"
   },
@@ -1996,19 +1923,6 @@
   },
   {
     "market": "us",
-    "ticker": "EA",
-    "name": "Electronic Arts Inc.",
-    "exchange": "NASDAQ",
-    "slug": "ea",
-    "providerSymbol": "EA",
-    "memberships": [
-      "sp500",
-      "nasdaq100"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
     "ticker": "EBAY",
     "name": "eBay Inc. - Common Stock",
     "exchange": "NASDAQ",
@@ -2174,18 +2088,6 @@
     "exchange": "NASDAQ",
     "slug": "eqix",
     "providerSymbol": "EQIX",
-    "memberships": [
-      "sp500"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
-    "ticker": "EQR",
-    "name": "Equity Residential",
-    "exchange": "NYSE",
-    "slug": "eqr",
-    "providerSymbol": "EQR",
     "memberships": [
       "sp500"
     ],
@@ -2432,18 +2334,6 @@
     "exchange": "NASDAQ",
     "slug": "ffiv",
     "providerSymbol": "FFIV",
-    "memberships": [
-      "sp500"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
-    "ticker": "FI",
-    "name": "Fiserv, Inc.",
-    "exchange": "NYSE",
-    "slug": "fi",
-    "providerSymbol": "FI",
     "memberships": [
       "sp500"
     ],
@@ -2922,18 +2812,6 @@
   },
   {
     "market": "us",
-    "ticker": "HOLX",
-    "name": "Hologic, Inc.",
-    "exchange": "NASDAQ",
-    "slug": "holx",
-    "providerSymbol": "HOLX",
-    "memberships": [
-      "sp500"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
     "ticker": "HON",
     "name": "Honeywell International Inc. - Common Stock",
     "exchange": "NASDAQ",
@@ -3188,18 +3066,6 @@
     "exchange": "NYSE",
     "slug": "ip",
     "providerSymbol": "IP",
-    "memberships": [
-      "sp500"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
-    "ticker": "IPG",
-    "name": "The Interpublic Group of Companies, Inc.",
-    "exchange": "NYSE",
-    "slug": "ipg",
-    "providerSymbol": "IPG",
     "memberships": [
       "sp500"
     ],
@@ -3976,19 +3842,6 @@
     "providerSymbol": "MLM",
     "memberships": [
       "sp500"
-    ],
-    "provider": "fintable"
-  },
-  {
-    "market": "us",
-    "ticker": "MMC",
-    "name": "Marsh & McLennan Companies, Inc.",
-    "exchange": "NYSE",
-    "slug": "mmc",
-    "providerSymbol": "MMC",
-    "memberships": [
-      "sp500",
-      "nyse_us100"
     ],
     "provider": "fintable"
   },

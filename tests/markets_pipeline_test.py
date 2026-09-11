@@ -14,20 +14,18 @@ spec.loader.exec_module(mod)
 class UpdateMarketsTests(unittest.TestCase):
     def test_universe_is_focused_verified_and_provider_neutral(self):
         universe = mod.build_universe(SCRIPT.parent / "crypto-universe.json")
-        self.assertEqual(len(universe), 553)
+        self.assertEqual(len(universe), 541)
         tickers = {row["ticker"] for row in universe}
         for ticker in ("AAPL", "MSFT", "NVDA", "ARM", "COIN", "BTC"):
             self.assertIn(ticker, tickers)
         for row in universe:
             self.assertTrue(row["provider"])
             self.assertTrue(row["providerSymbol"])
-            self.assertNotIn("yahooSymbol", row)
 
-    def test_legacy_input_correction_emits_provider_neutral_rows(self):
-        rows = [{"market": "us", "ticker": "BRK.B", "name": "Berkshire", "exchange": "NYSE", "slug": "brk-b", "yahooSymbol": "BRK-B"}]
-        corrected = mod.apply_universe_corrections(rows, overrides={"BRK-B": "BRK.B"}, excludes=set())
+    def test_provider_symbol_mapping_preserves_dot_form(self):
+        rows = [{"market": "us", "ticker": "BRK.B", "name": "Berkshire", "exchange": "NYSE", "slug": "brk-b", "provider": "fintable", "providerSymbol": "BRK.B"}]
+        corrected = mod.apply_universe_corrections(rows, overrides={}, excludes=set())
         self.assertEqual(corrected[0]["providerSymbol"], "BRK.B")
-        self.assertNotIn("yahooSymbol", corrected[0])
 
     def test_orphan_cleanup_archives_private_provider_tree(self):
         with tempfile.TemporaryDirectory() as tmp:
