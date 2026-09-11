@@ -77,3 +77,4 @@ test('instrument navigation supports row activation, double click and exact-sear
   assert.match(dashboard, /detailUrl/);
   assert.match(dashboard, /requestSubmit|submit/);
 });
+
