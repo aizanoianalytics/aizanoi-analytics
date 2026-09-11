@@ -49,8 +49,11 @@ test('Dungeon manifest is pinned in the publish JSON allow-list', () => {
   assert.ok(boundary.includes('apps\\/dungeon\\/manifest\\.json'));
 });
 
-test('Dungeon window opens at the 960x640 game size', () => {
-  assert.match(shellMain, /dungeon:Object\.freeze\(\{width:960,height:640,migrateWidth:1080,migrateHeight:740\}\)/);
+test('Dungeon is a fullscreen app, not a windowed one', () => {
+  const shell = read('frontend/js/v3/shell.js');
+  assert.match(registry, /id:'dungeon'[^}]*fullscreen:true/, 'registry must flag dungeon fullscreen');
+  assert.match(shell, /app\.fullscreen \? createFullscreenSurface\(app\) : createWindow\(app\)/, 'shell must mount dungeon on the fullscreen layer');
+  assert.match(shell, /az-fullscreen-app/, 'shell must define the fullscreen surface');
 });
 
 test('Dungeon mount clears the shell placeholder and reports load failure visibly', async () => {
@@ -72,9 +75,10 @@ test('Dungeon standalone entry shows a visible error when Phaser fails', () => {
   assert.match(standaloneSource, /role.*alert/);
 });
 
-test('Dungeon loads Phaser from the self-hosted vendor bundle only', () => {
+test('Dungeon loads Phaser from one self-hosted vendor attempt only', () => {
   assert.match(mainSource, /script\.src = '\/vendor\/phaser\.min\.js'/);
-  assert.match(mainSource, /fallback\.src = '\/vendor\/phaser\.min\.js'/);
+  assert.doesNotMatch(mainSource, /fallback\.src|fallback = document\.createElement/, 'a retry to the same local URL is not a real fallback');
+  assert.match(mainSource, /reject\(new Error\('Phaser runtime could not be loaded from local vendor\.'/);
   assert.doesNotMatch(mainSource, /cdn\.jsdelivr|unpkg\.com|cdnjs/, 'CSP script-src self forbids CDN loads');
   const page = read('frontend/dungeon/index.html');
   assert.match(page, /<script src="\/vendor\/phaser\.min\.js"><\/script>/);

@@ -9,6 +9,7 @@ export class Projectile extends Phaser.Physics.Arcade.Sprite {
 
     this.damage = damage;
     this.isPlayer = isPlayer;
+    this.damageType = 'physical';
 
     this.setRotation(angle);
     this.setVelocity(Math.cos(angle) * speed, Math.sin(angle) * speed);

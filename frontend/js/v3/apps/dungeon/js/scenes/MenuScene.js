@@ -14,11 +14,18 @@ export class MenuScene extends Phaser.Scene {
 
   create() {
     const { width, height } = this.cameras.main;
+    if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = 'MenuScene';
 
     // Web Audio ilk dokunusta acilmasi icin dinleyici
     this.input.once('pointerdown', () => {
       audioManager.ensureContext();
     });
+
+    // Klavye ile baslatma (Enter/Space birincil aksiyonu tetikler)
+    this._starting = false;
+    this._primaryAction = null;
+    this.input.keyboard?.on('keydown-ENTER', () => this._primaryAction?.());
+    this.input.keyboard?.on('keydown-SPACE', () => this._primaryAction?.());
 
     // Kayitli ilerlemeyi kontrol et
     const tempProg = new ProgressionSystem();
@@ -57,16 +64,16 @@ export class MenuScene extends Phaser.Scene {
     const btnSpacing = 48;
 
     if (savedChapter > 1 && savedChapter <= 10) {
-      createGlassButton(this, width / 2, btnStartY, 260, 38, `🏛️ Devam Et (Bölüm ${savedChapter})`, () => {
-        audioManager.playClick();
+      const continueAction = () => {
         this.scene.start('GameScene', { chapterIndex: savedChapter - 1, isEndless: false });
-      });
+      };
+      this._primaryAction = () => this._startOnce(continueAction);
+      createGlassButton(this, width / 2, btnStartY, 260, 38, `🏛️ Devam Et (Bölüm ${savedChapter})`, () => this._startOnce(continueAction));
       btnStartY += btnSpacing;
 
-      createGlassButton(this, width / 2, btnStartY, 260, 38, '⚔️ Bölüm 1\'e Dön (Karakteri Koru)', () => {
-        audioManager.playClick();
+      createGlassButton(this, width / 2, btnStartY, 260, 38, '⚔️ Bölüm 1\u0027e Dön (Karakteri Koru)', () => this._startOnce(() => {
         this.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
-      });
+      }));
       btnStartY += btnSpacing;
 
       createGlassButton(this, width / 2, btnStartY, 260, 38, '🔄 Sıfırdan Başla (Yeni Kayıt)', () => {
@@ -79,17 +86,17 @@ export class MenuScene extends Phaser.Scene {
       });
       btnStartY += btnSpacing;
     } else {
-      createGlassButton(this, width / 2, btnStartY, 260, 40, '🏛️ 10 Kutsal Bölüm (Hikaye)', () => {
-        audioManager.playClick();
+      const storyAction = () => {
         this.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
-      });
+      };
+      this._primaryAction = () => this._startOnce(storyAction);
+      createGlassButton(this, width / 2, btnStartY, 260, 40, '🏛️ 10 Kutsal Bölüm (Hikaye)', () => this._startOnce(storyAction));
       btnStartY += btnSpacing;
     }
 
-    createGlassButton(this, width / 2, btnStartY, 260, 38, '⚡ Sonsuzluk Panteonu (Endless)', () => {
-      audioManager.playClick();
+    createGlassButton(this, width / 2, btnStartY, 260, 38, '⚡ Sonsuzluk Panteonu (Endless)', () => this._startOnce(() => {
       this.scene.start('GameScene', { chapterIndex: LEVELS.length - 1, isEndless: true });
-    });
+    }));
     btnStartY += btnSpacing;
 
     createGlassButton(this, width / 2, btnStartY, 260, 38, '📜 Kontroller & Yadigarlar', () => {
@@ -102,6 +109,14 @@ export class MenuScene extends Phaser.Scene {
       fontSize: '11px',
       color: '#64748b',
     }).setOrigin(0.5);
+  }
+
+  // Cift baslatma korumasi: ilk start eventinden sonra tekrarlari yoksay
+  _startOnce(action) {
+    if (this._starting) return;
+    this._starting = true;
+    audioManager.playClick();
+    action();
   }
 
   showGuideModal() {

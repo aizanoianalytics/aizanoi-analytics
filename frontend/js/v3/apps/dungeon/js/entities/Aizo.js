@@ -3,11 +3,12 @@
 
 import { CombatSystem } from '../systems/CombatSystem.js';
 import { WEAPONS } from '../data/items.js';
+import { BLESSINGS, selectBlessing } from '../data/blessings.js';
 import { Projectile } from './Projectile.js';
 import { audioManager } from '../systems/AudioManager.js';
 
 export class Aizo extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, inventorySystem, progressionSystem) {
+  constructor(scene, x, y, inventorySystem, progressionSystem, runState = null) {
     super(scene, x, y, 'aizo', 0);
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -29,6 +30,21 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     // Cooldown timers
     this.skill1Cooldown = 0; // Zeus Çatlağı (Q)
     this.skill2Cooldown = 0; // Dorik Kalkan (R)
+    this.utilityCooldown = 0; // Golge Karisimi (Space)
+
+    // Scarab Amulet kalkani: transient run state (save'e yazilmaz, sahne
+    // restartinda sifirlanir). Timer yalnizca accessory takiliyken ilerler.
+    this.shield = 0;
+    this.scarabTimer = 0;
+
+    // Oda kutsamalari: run-gecici buff modlari (JSON-safe, save disi).
+    this.runState = runState || { blessingIds: [] };
+    this.runState.blessingIds ||= [];
+    this.runBlessings = {};
+    this.runState.blessingIds.forEach((blessingId) => {
+      const def = BLESSINGS.find((blessing) => blessing.id === blessingId);
+      if (def) def.apply(this.runBlessings);
+    });
 
     this.setCollideWorldBounds(true);
     this.body.setSize(22, 22);
@@ -40,16 +56,54 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     return this.progression.unlockedSkills.has(skillId);
   }
 
+  // Kutsama uygula: BLESSINGS havuzundan id ile, modlari biriktirir.
+  addBlessing(blessingId) {
+    if (!selectBlessing(this.runState, blessingId)) return null;
+    const def = BLESSINGS.find((b) => b.id === blessingId);
+    def.apply(this.runBlessings);
+    return def.label;
+  }
+
+  applyBlessingMods() {
+    const m = this.runBlessings;
+    if (!m) return;
+    this.stats = { ...this.stats };
+    if (m.maxHpBonus) this.stats.hp += m.maxHpBonus;
+    if (m.moveSpeedMult) this.stats.moveSpeed *= m.moveSpeedMult;
+    if (m.attackSpeedMult) this.stats.attackSpeed *= m.attackSpeedMult;
+    if (m.attackDmgMult) this.stats.attackDamage = Math.round(this.stats.attackDamage * m.attackDmgMult);
+    if (m.critDmgMult) this.stats.critMultiplier = (this.stats.critMultiplier || 1.5) * m.critDmgMult;
+    if (m.regenBonus) {
+      this.stats.hpRegen = (this.stats.hpRegen || 0) + m.regenBonus;
+      this.stats.hpRegenBase = (this.stats.hpRegenBase || 0) + m.regenBonus;
+    }
+  }
+
   update(time, delta) {
     if (this.isDead) return;
 
-    // Update stats from inventory
+    // Update stats from inventory, then run-gecici kutsama modlari
     this.stats = this.inventory.getCalculatedStats();
+    this.applyBlessingMods();
     this.maxHp = this.stats.hp;
 
     // Cooldowns
-    if (this.skill1Cooldown > 0) this.skill1Cooldown -= delta;
-    if (this.skill2Cooldown > 0) this.skill2Cooldown -= delta;
+    if (this.skill1Cooldown > 0) this.skill1Cooldown = Math.max(0, this.skill1Cooldown - delta);
+    if (this.skill2Cooldown > 0) this.skill2Cooldown = Math.max(0, this.skill2Cooldown - delta);
+    if (this.utilityCooldown > 0) this.utilityCooldown = Math.max(0, this.utilityCooldown - delta);
+
+    // Scarab Amulet: takiliyken her 50 sn'de 60 HP kalkan tazeler (stacklenmez).
+    // Cikarilinca timer sifirlanir, mevcut kalkan emilene kadar kalir.
+    if (this.inventory?.equipped?.accessories?.includes('scarab_amulet')) {
+      this.scarabTimer += delta;
+      if (this.scarabTimer >= 50000) {
+        this.scarabTimer = 0;
+        this.shield = 60;
+        this.scene.createFloatingText(this.x, this.y - 30, '+60 kalkan', '#7dd3fc');
+      }
+    } else {
+      this.scarabTimer = 0;
+    }
 
     // Health Regeneration
     const regenRate = this.isInBase ? this.stats.hpRegenBase : this.stats.hpRegen;
@@ -145,6 +199,8 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
       }
       const projFrame = weaponData?.projectileType === 'zeus_bolt' ? 4 : 0;
       const bolt = new Projectile(this.scene, this.x, this.y, angle, 420, this.stats.attackDamage, true, 'projectiles', projFrame);
+      bolt.attacker = this;
+      bolt.damageType = weaponData?.projectileType === 'zeus_bolt' ? 'lightning' : 'physical';
       this.scene.projectiles.add(bolt);
 
       // Yetenek: Çift Kıvılcım (Twin Sparks - %22 ikincil ark)
@@ -153,6 +209,8 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
           if (!this.active || this.isDead) return;
           const sparkAngle = angle + (Math.random() - 0.5) * 0.35;
           const spark = new Projectile(this.scene, this.x, this.y, sparkAngle, 400, Math.round(this.stats.attackDamage * 0.65), true, 'projectiles', 4);
+          spark.attacker = this;
+          spark.damageType = 'lightning';
           this.scene.projectiles.add(spark);
         });
       }
@@ -179,7 +237,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
 
     audioManager.playZeusBeam();
     this.scene.cameras.main.shake(180, 0.008);
-    this.scene.castZeusFissureBeam(this.x, this.y, this.lastDirection, this.stats.attackDamage * 3.2);
+    this.scene.castZeusFissureBeam(this.x, this.y, this.lastDirection, this.stats.attackDamage * 3.2, this);
     return true;
   }
 
@@ -215,8 +273,21 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     return true;
   }
 
-  takeDamage(amount, isCritical = false, attacker = null) {
+  takeDamage(amount, isCritical = false, attacker = null, damageType = 'physical') {
     if (this.isDead || this.isInvulnerable) return;
+
+    // Sacred Aegis: yildirim hasarini %35 emer (yalnizca lightning turu)
+    if (damageType === 'lightning' && this.inventory?.equipped?.armor === 'sacred_aegis') {
+      amount = Math.max(1, Math.round(amount * (1 - 0.35)));
+    }
+
+    // Scarab kalkani HP'den once absorbe eder
+    if (this.shield > 0 && amount > 0) {
+      const absorbed = Math.min(this.shield, amount);
+      this.shield -= absorbed;
+      amount -= absorbed;
+      this.scene.createFloatingText(this.x, this.y - 34, `-${absorbed} kalkan`, '#7dd3fc');
+    }
 
     this.hp -= amount;
     this.scene.createFloatingText(this.x, this.y - 20, `-${amount}`, isCritical ? '#f1c40f' : '#e74c3c');
