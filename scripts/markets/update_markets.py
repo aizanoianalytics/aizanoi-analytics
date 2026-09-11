@@ -10,13 +10,12 @@ publishes manifest/summary last.
 from __future__ import annotations
 
 import argparse
-import csv
 import datetime as dt
+import hashlib
 try:
     import fcntl
 except ImportError:
     fcntl = None
-import io
 import json
 import math
 import os
@@ -26,9 +25,8 @@ import statistics
 import sys
 import tempfile
 import time
-import urllib.request
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 try:
     from .providers import BinanceProvider, FetchResult, FintableProvider
@@ -37,12 +35,7 @@ except ImportError:
     _sys.path.insert(0, str(Path(__file__).parent))
     from providers import BinanceProvider, FetchResult, FintableProvider  # type: ignore[no-redef]
 
-NASDAQ_URL = "https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt"
-OTHER_URL = "https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt"
 SINCE_TS = 1546300800  # 2019-01-01T00:00:00Z
-EXCHANGES = {"N": "NYSE", "A": "NYSE American", "P": "NYSE Arca", "Z": "CBOE BZX"}
-NON_STOCK = re.compile(r"\b(warrants?|units?|rights?|preferred|notes?|bonds?|debentures?|fund|etf|etn|index)\b", re.I)
-USER_AGENT = "Mozilla/5.0 (compatible; AizanoiMarkets/1.0; +https://aizanoianalytics.com/analytics/markets/)"
 
 
 def utc_now() -> str:
@@ -53,61 +46,9 @@ def slugify(symbol: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", symbol.lower()).strip("-")
 
 
-def _directory_rows(text: str) -> list[dict[str, str]]:
-    rows = list(csv.DictReader(io.StringIO(text), delimiter="|"))
-    return [row for row in rows if row and not next(iter(row.values()), "").startswith("File Creation Time")]
-
-
-def _is_stock(name: str) -> bool:
-    return bool(name) and not NON_STOCK.search(name)
-
-
-def parse_universe(nasdaq_text: str, other_text: str) -> list[dict[str, str]]:
-    instruments: list[dict[str, str]] = []
-    for row in _directory_rows(nasdaq_text):
-        if row.get("Test Issue") != "N" or row.get("ETF") != "N" or not _is_stock(row.get("Security Name", "")):
-            continue
-        ticker = row["Symbol"].strip()
-        instruments.append({
-            "market": "us", "ticker": ticker, "name": row["Security Name"].strip(),
-            "exchange": "NASDAQ", "yahooSymbol": ticker.replace(".", "-"), "slug": slugify(ticker),
-        })
-    for row in _directory_rows(other_text):
-        exchange_code = row.get("Exchange", "")
-        if exchange_code not in EXCHANGES or row.get("Test Issue") != "N" or row.get("ETF") != "N" or not _is_stock(row.get("Security Name", "")):
-            continue
-        ticker = row["ACT Symbol"].strip()
-        provider_symbol = (row.get("NASDAQ Symbol") or ticker.replace(".", "-")).strip()
-        instruments.append({
-            "market": "us", "ticker": ticker, "name": row["Security Name"].strip(),
-            "exchange": EXCHANGES[exchange_code], "yahooSymbol": provider_symbol, "slug": slugify(ticker),
-        })
-    return sorted({row["yahooSymbol"]: row for row in instruments}.values(), key=lambda row: (row["ticker"], row["exchange"]))
-
-
 def crypto_universe(path: Path) -> list[dict[str, str]]:
     rows = json.loads(path.read_text(encoding="utf-8"))
     return [{**row, "market": "crypto", "exchange": "Crypto · USD", "slug": slugify(row["ticker"])} for row in rows]
-
-
-def nasdaq_symbol_variants(symbol: str) -> Iterable[str]:
-    """Yield candidate spellings for a Nasdaq Trader symbol across providers.
-
-    Dotted class shares (AKO.A) are served under dash form (AKO-A) by
-    multiple upstream providers. Preferred and depositary series that
-    Nasdaq encodes as root-series (AHL-D, ATH-A, TRTN-B) are served
-    under the -P<letter> spelling (AHL-PD, ATH-PA, TRTN-PB).
-    """
-    seen: set[str] = set()
-    candidates = [symbol]
-    if "." in symbol:
-        candidates.append(symbol.replace(".", "-"))
-    if "-" in symbol and len(symbol.split("-", maxsplit=1)[1]) == 1:
-        candidates.append(symbol.replace("-", "-P"))
-    for candidate in candidates:
-        if candidate and candidate not in seen:
-            seen.add(candidate)
-            yield candidate
 
 
 def load_universe_corrections(path: Path) -> tuple[dict[str, str], set[str]]:
@@ -116,23 +57,18 @@ def load_universe_corrections(path: Path) -> tuple[dict[str, str], set[str]]:
 
 
 def apply_universe_corrections(rows: list[dict[str, str]], *, overrides: dict[str, str], excludes: set[str]) -> list[dict[str, str]]:
-    """Apply symbol overrides/excludes against providerSymbol (schema v3) with
-    graceful fallback to legacy yahooSymbol for pre-migration fixtures."""
+    """Apply provider-neutral mappings; accept legacy input but never emit it."""
     corrected: list[dict[str, str]] = []
     for row in rows:
-        symbol = row.get("providerSymbol") or row.get("yahooSymbol")
-        if symbol in excludes:
+        item = {key: value for key, value in row.items() if key != "yahooSymbol"}
+        symbol = item.get("providerSymbol") or row.get("yahooSymbol")
+        if not symbol or symbol in excludes:
             continue
-        item = dict(row)
-        mapped = overrides.get(symbol)
-        if mapped:
-            item["providerSymbol"] = mapped
-            if "yahooSymbol" in item:
-                item["yahooSymbol"] = mapped
-            item["slug"] = slugify(mapped)
+        mapped = overrides.get(symbol, symbol)
+        item["providerSymbol"] = mapped
+        item["slug"] = item.get("slug") or slugify(item["ticker"])
         corrected.append(item)
     return corrected
-
 
 def load_symbols_file(path: Path) -> list[str]:
     """Read one provider symbol per line; blank lines and # comments ignored."""
@@ -143,30 +79,40 @@ def load_symbols_file(path: Path) -> list[str]:
 
 
 def prune_orphans(root: Path, keep: dict[str, set[str]], archive: bool = True) -> int:
-    """Safely archive and delete history/summary shards for instruments no longer in the universe."""
+    """Archive orphan history outside webroot and checksum it before unlinking."""
     removed = 0
-    archive_base = root / "archive" / "legacy-yahoo"
+    archive_base = root.parent / "archive"
     for market, filenames in keep.items():
         for folder in ("history", "summary-items"):
             directory = root / folder / market
             if not directory.is_dir():
                 continue
-            for path in sorted(directory.iterdir()):
-                if path.name.endswith(".json") and path.name not in filenames:
-                    if archive and folder == "history":
-                        target_archive = archive_base / market / path.name
-                        target_archive.parent.mkdir(parents=True, exist_ok=True)
-                        target_archive.write_bytes(path.read_bytes())
-                    path.unlink()
-                    removed += 1
+            for path in sorted(directory.glob("*.json")):
+                if path.name in filenames:
+                    continue
+                if archive and folder == "history":
+                    payload = path.read_bytes()
+                    try:
+                        provider = json.loads(payload).get("provider") or "unknown"
+                    except json.JSONDecodeError:
+                        provider = "unknown"
+                    target = archive_base / str(provider) / market / path.name
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    fd, temporary = tempfile.mkstemp(prefix=f".{target.name}.", dir=target.parent)
+                    try:
+                        with os.fdopen(fd, "wb") as handle:
+                            handle.write(payload)
+                            handle.flush()
+                            os.fsync(handle.fileno())
+                        os.replace(temporary, target)
+                    finally:
+                        if os.path.exists(temporary):
+                            os.unlink(temporary)
+                    if hashlib.sha256(target.read_bytes()).digest() != hashlib.sha256(payload).digest():
+                        raise RuntimeError(f"archive checksum mismatch for {path}")
+                path.unlink()
+                removed += 1
     return removed
-
-
-def fetch_text(url: str, timeout: int = 45) -> str:
-    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "text/plain,*/*"})
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        return response.read().decode("utf-8")
-
 
 def _compact_number(value: Any) -> int | float | None:
     if not isinstance(value, (int, float)) or not math.isfinite(value):
@@ -202,7 +148,7 @@ def _returns_by_timestamp(valid: list[dict[str, Any]], days: int, annualization:
             break
     if best_candle is not None and best_candle.get("c"):
         gap = target_ts - best_candle["t"]
-        max_tolerance = max(4 * 86400, int(days * 0.15 * 86400))
+        max_tolerance = (2 if annualization == 365 else 4) * 86400
         if gap <= max_tolerance and float(best_candle["c"]) > 0:
             return (float(latest["c"]) / float(best_candle["c"])) - 1
     return None
@@ -315,8 +261,6 @@ def compute_metrics(candles: list[dict[str, Any]], *, annualization: int, four_h
     ret_30d = _returns_by_timestamp(valid, 30, annualization)
     ret_90d = _returns_by_timestamp(valid, 90, annualization)
     ret_1y = _returns_by_timestamp(valid, 365, annualization)
-    if ret_1y is None and annualization == 252 and len(closes) > 252:
-        ret_1y = _returns(closes, 252)
 
     return {
         "latest": round(latest, 8), "return1d": ret_1d, "return7d": ret_7d,
@@ -401,17 +345,25 @@ def enrich_market_rows(rows: list[dict[str, Any]], *, market: str) -> dict[str, 
     for row in rows:
         volatility = row.get("volatility20")
         row["volatilityPercentile"] = _percentile(volatility_values, float(volatility)) if isinstance(volatility, (int, float)) and volatility_values else None
-        percentile30 = float(row.get("percentile30d") or 0)
-        percentile90 = float(row.get("percentile90d") or 0)
-        range_score = 100 * float(row.get("rangePosition52w") or 0)
-        trend_score = 100 if row.get("trendRegime") == "strong-uptrend" else 70 if row.get("aboveSma200") is True else 25
-        age_score = min(100.0, 2 * float(row.get("trendAge50") or 0))
-        risk_penalty = 0.15 * float(row.get("volatilityPercentile") or 0)
-        row["momentumQuality"] = round(max(0.0, min(100.0, 0.30 * percentile30 + 0.25 * percentile90 + 0.20 * trend_score + 0.15 * range_score + 0.10 * age_score - risk_penalty)), 2)
-        rsi_score = max(0.0, min(100.0, 100 - float(row.get("rsi14") if isinstance(row.get("rsi14"), (int, float)) else 50)))
-        return_score = 100 - float(row.get("percentile7d") or 50)
-        structural_penalty = 20 if row.get("aboveSma200") is False else 0
-        row["meanReversionScore"] = round(max(0.0, min(100.0, 0.35 * rsi_score + 0.25 * return_score + 0.25 * (100 - range_score) + 0.15 * float(row.get("volatilityPercentile") or 0) - structural_penalty)), 2)
+        momentum_inputs = (row.get("percentile30d"), row.get("percentile90d"), row.get("rangePosition52w"), row.get("trendAge50"), row.get("volatilityPercentile"), row.get("aboveSma200"))
+        if all(value is not None for value in momentum_inputs):
+            percentile30, percentile90 = float(row["percentile30d"]), float(row["percentile90d"])
+            range_score = 100 * float(row["rangePosition52w"])
+            trend_score = 100 if row.get("trendRegime") == "strong-uptrend" else 70 if row["aboveSma200"] is True else 25
+            age_score = min(100.0, 2 * float(row["trendAge50"]))
+            risk_penalty = 0.15 * float(row["volatilityPercentile"])
+            row["momentumQuality"] = round(max(0.0, min(100.0, 0.30 * percentile30 + 0.25 * percentile90 + 0.20 * trend_score + 0.15 * range_score + 0.10 * age_score - risk_penalty)), 2)
+        else:
+            row["momentumQuality"] = None
+        mean_reversion_inputs = (row.get("rsi14"), row.get("percentile7d"), row.get("rangePosition52w"), row.get("volatilityPercentile"), row.get("aboveSma200"))
+        if all(value is not None for value in mean_reversion_inputs):
+            range_score = 100 * float(row["rangePosition52w"])
+            rsi_score = max(0.0, min(100.0, 100 - float(row["rsi14"])))
+            return_score = 100 - float(row["percentile7d"])
+            structural_penalty = 20 if row["aboveSma200"] is False else 0
+            row["meanReversionScore"] = round(max(0.0, min(100.0, 0.35 * rsi_score + 0.25 * return_score + 0.25 * (100 - range_score) + 0.15 * float(row["volatilityPercentile"]) - structural_penalty)), 2)
+        else:
+            row["meanReversionScore"] = None
     observed = [row for row in rows if isinstance(row.get("return1d"), (int, float))]
     above = lambda key: sum(row.get(key) is True for row in rows)
     returns30 = [float(row["return30d"]) for row in rows if isinstance(row.get("return30d"), (int, float))]
@@ -545,7 +497,7 @@ def _write_summary_chunks(root: Path, market: str, rows: list[dict[str, Any]], c
     })
 
 
-def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], completed_at: str, failed: list[str], *, fetch_meta: dict[str, dict[str, Any]] | None = None) -> dict[str, dict[str, Any]]:
+def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], completed_at: str, failed: list[dict[str, str]], *, fetch_meta: dict[str, dict[str, Any]] | None = None) -> dict[str, dict[str, Any]]:
     fetch_meta = fetch_meta or {}
     pulses: dict[str, dict[str, Any]] = {}
     for market, rows in markets.items():
@@ -563,15 +515,15 @@ def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], compl
         crypto_series[row["ticker"]] = shard.get("daily", [])
     write_json_atomic(root / "pulse" / "crypto-correlations.json", crypto_correlations(crypto_series))
 
-    us_failed = [s for s in failed if not s.endswith("-USD")]
-    crypto_failed = [s for s in failed if s.endswith("-USD")]
+    us_failed = [record for record in failed if record.get("market") == "us"]
+    crypto_failed = [record for record in failed if record.get("market") == "crypto"]
 
     # Health semantics per spec: use truthful lastObservationAt from the actual
     # shard, not summary updatedAt. "stale" is calculated from real observation
     # ages, not hard-coded to zero.
     def _market_health(m: str, m_failed: list[str]) -> dict[str, Any]:
         rows = markets.get(m, [])
-        expected = len(rows) + len(m_failed)
+        expected = len([row for row in read_json(root / "instruments.json", []) if row.get("market") == m]) or len(rows)
         stale_threshold = 7 * 86400 if m == "us" else 49 * 3600  # us: 7d; crypto: 49h (closed daily bar may legitimately be ~48h old)
         now_ts = time.time()
         published = len(rows)
@@ -603,7 +555,7 @@ def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], compl
                 last_fetches.append(fetched)
         # Symbols in expected but not in rows at all are outright missing
         rows_tickers = {row.get("ticker") for row in rows}
-        absent = [t for t in m_failed if t not in rows_tickers]
+        absent = [record.get("ticker", "?") for record in m_failed if record.get("ticker") not in rows_tickers]
         provider = "fintable" if m == "us" else "binance"
         # Dedupe missing (absent from publication) with missing-history (shard empty)
         missing_union = sorted(set(absent) | set(missing_history))
@@ -615,7 +567,7 @@ def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], compl
             "expected": expected,
             "published": published,
             "missingHistory": missing_union,
-            "failedCurrentRefresh": sorted(set(m_failed)),
+            "failedCurrentRefresh": sorted({record.get("ticker", "?") for record in m_failed}),
             "stale": stale,
             "latestObservationAt": newest_observation,
             "oldestObservationAt": oldest_observation,
@@ -637,32 +589,6 @@ def _publish_derived(root: Path, markets: dict[str, list[dict[str, Any]]], compl
     write_json_atomic(root / "health.json", health)
     _append_pulse_snapshots(root, completed_at, pulses)
     return pulses
-
-
-def publish_snapshot(root: Path, instruments: list[dict[str, str]], histories: dict[str, dict[str, list[dict[str, Any]]]], *, completed_at: str) -> None:
-    summaries: dict[str, list[dict[str, Any]]] = {"us": [], "crypto": []}
-    for instrument in instruments:
-        history = histories.get(instrument["yahooSymbol"], {"daily": [], "fourHour": []})
-        daily = history.get("daily", [])
-        four_hour = history.get("fourHour", [])
-        shard = {**instrument, "startDate": dt.datetime.fromtimestamp(daily[0]["t"], dt.timezone.utc).date().isoformat() if daily else None,
-                 "updatedAt": completed_at, "dataQuality": compute_metrics(daily, annualization=365 if instrument["market"] == "crypto" else 252, four_hour=four_hour).get("dataQuality", {}),
-                 "daily": merge_candles([], daily), "fourHour": merge_candles([], four_hour, keep_since=0)}
-        write_json_atomic(root / "history" / instrument["market"] / f"{instrument['slug']}.json", shard)
-        item = summary_row(instrument, daily, completed_at, four_hour=four_hour)
-        write_json_atomic(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json", item)
-        summaries[instrument["market"]].append(item)
-    for rows in summaries.values():
-        rows.sort(key=lambda row: row["ticker"])
-    _publish_derived(root, summaries, completed_at, [])
-    write_json_atomic(root / "instruments.json", instruments)
-    write_json_atomic(root / "summary.json", {"markets": summaries})
-    write_json_atomic(root / "manifest.json", {
-        "schemaVersion": 2, "source": "Multi-provider close data", "completedAt": completed_at,
-        "coverageStart": "2019-01-01", "dailyInterval": "1d", "recentInterval": "4h",
-        "dataModel": "close-only", "counts": {key: len(value) for key, value in summaries.items()}, "status": "complete",
-        "files": {"summary": {"us": "summary/us/index.json", "crypto": "summary/crypto/index.json"}, "health": "health.json", "snapshots": "snapshots/pulse.json"},
-    })
 
 
 def read_json(path: Path, default: Any) -> Any:
@@ -703,26 +629,6 @@ def download_history(
     return provider.fetch_history(provider_symbol, start_ts, end_ts, interval=interval)
 
 
-def resilient_download(rows: list[dict[str, str]], fetcher: Any) -> tuple[dict[str, list[dict[str, Any]]], list[str]]:
-    """Bisect a rejected batch so one stale symbol cannot block valid peers.
-
-    Kept as a generic helper so the pipeline's batched fetchers can isolate
-    individual failures; ``update_rows`` no longer relies on it because it
-    fetches per-symbol directly through ``download_history``.
-    """
-    if not rows:
-        return {}, []
-    try:
-        return fetcher(rows), []
-    except Exception:
-        if len(rows) == 1:
-            return {}, [rows[0]["yahooSymbol"]]
-        middle = len(rows) // 2
-        left_data, left_failed = resilient_download(rows[:middle], fetcher)
-        right_data, right_failed = resilient_download(rows[middle:], fetcher)
-        return {**left_data, **right_data}, left_failed + right_failed
-
-
 def build_universe(config_path: Path) -> list[dict[str, str]]:
     us_json = Path(__file__).with_name("us-universe.json")
     if us_json.exists():
@@ -741,9 +647,26 @@ def build_universe(config_path: Path) -> list[dict[str, str]]:
     return apply_universe_corrections(rows, overrides=overrides, excludes=excludes)
 
 
+def validate_crypto_pairs(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    """Return typed failures for non-trading Binance pairs before publication."""
+    provider = BinanceProvider()
+    failures: list[dict[str, str]] = []
+    for row in rows:
+        if row.get("market") != "crypto":
+            continue
+        if not provider.validate_pair(row["providerSymbol"]):
+            failures.append({"market": "crypto", "ticker": row["ticker"], "provider": "binance", "providerSymbol": row["providerSymbol"], "error": "Binance pair missing or not TRADING"})
+    return failures
+
+
+def _bootstrap_root(public_root: Path) -> Path:
+    """Bootstrap never writes the active public tree; cutover is explicit."""
+    return public_root.parent / "staging" / "bootstrap"
+
+
 def _staging_path(root: Path) -> Path:
     """Bootstrap staging state lives outside the public webroot."""
-    staging_dir = root.parent / "staging"
+    staging_dir = root.parent
     staging_dir.mkdir(parents=True, exist_ok=True)
     return staging_dir / "bootstrap-state.json"
 
@@ -756,7 +679,7 @@ def _save_staging_state(root: Path, state: dict[str, dict[str, Any]]) -> None:
     write_json_atomic(_staging_path(root), state)
 
 
-def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, delay: float, skip_four_hour: bool) -> tuple[int, list[str], dict[str, dict[str, Any]]]:
+def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, delay: float, skip_four_hour: bool) -> tuple[int, list[dict[str, str]], dict[str, dict[str, Any]]]:
     """Fetch and publish per-instrument history shards.
 
     Returns:
@@ -771,7 +694,9 @@ def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, dela
     bootstrap resumes without redownloading validated 2019→current histories.
     """
     updated = 0
-    failed: list[str] = []
+    failed: list[dict[str, str]] = []
+    def failure(instrument: dict[str, str], error: str) -> dict[str, str]:
+        return {"market": instrument["market"], "ticker": instrument["ticker"], "provider": instrument["provider"], "providerSymbol": instrument["providerSymbol"], "error": error}
     fetch_meta: dict[str, dict[str, Any]] = {}
     now = utc_now()
     recent_cutoff = int(time.time()) - 730 * 86400
@@ -788,7 +713,7 @@ def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, dela
             # Skip but preserve metadata for health
             fetch_meta[symbol] = prev_state.get("meta", {"status": "SUCCESS_COMPLETE", "cachedFromStaging": True})
             # Still need the shard for publication; loading from staging snapshot
-            staged_shard = read_json(root.parent / "staging" / "shards" / market / f"{slug}.json", None)
+            staged_shard = read_json(root.parent / "shards" / market / f"{slug}.json", None)
             if staged_shard:
                 # Copy staged shard into production path (atomic)
                 write_json_atomic(root / "history" / market / f"{slug}.json", staged_shard)
@@ -804,13 +729,13 @@ def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, dela
             daily_result: FetchResult = download_history(instrument, bootstrap=bootstrap, interval="1d")
         except Exception as error:  # noqa: BLE001 - per-symbol failure isolation
             print(f"[markets] daily fetch failed for {symbol}: {error}", file=sys.stderr)
-            failed.append(symbol)
+            failed.append(failure(instrument, str(error)))
             fetch_meta[symbol] = {"status": "FAILURE", "error": str(error)}
             continue
 
         if daily_result.status == "FAILURE":
             print(f"[markets] daily FAILURE for {symbol}: {daily_result.error}", file=sys.stderr)
-            failed.append(symbol)
+            failed.append(failure(instrument, daily_result.error or "provider failure"))
             fetch_meta[symbol] = {
                 "status": "FAILURE",
                 "error": daily_result.error,
@@ -864,7 +789,7 @@ def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, dela
             merged_four = merge_candles(old_four, four_hour, keep_since=recent_cutoff)
 
         if not merged_daily:
-            failed.append(symbol)
+            failed.append(failure(instrument, str(fetch_meta[symbol].get("error") or "merged empty")))
             fetch_meta[symbol]["status"] = "FAILURE"
             fetch_meta[symbol]["error"] = (fetch_meta[symbol].get("error") or "") + " [merged empty]"
             continue
@@ -901,7 +826,7 @@ def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, dela
 
         # In bootstrap mode persist staging copy so an interrupted run resumes
         if bootstrap:
-            staging_shards = root.parent / "staging" / "shards"
+            staging_shards = root.parent / "shards"
             (staging_shards / market).mkdir(parents=True, exist_ok=True)
             write_json_atomic(staging_shards / market / f"{slug}.json", shard)
             staging[state_key] = {
@@ -925,7 +850,7 @@ def update_rows(root: Path, rows: list[dict[str, str]], *, bootstrap: bool, dela
             time.sleep(delay + random.uniform(0, min(delay * 0.2, 1.0)))
     if bootstrap and staging_dirty:
         _save_staging_state(root, staging)
-    return updated, sorted(set(failed)), fetch_meta
+    return updated, sorted(failed, key=lambda record: (record["market"], record["ticker"])), fetch_meta
 
 
 def health_check(root: Path, completed_at: str) -> int:
@@ -958,6 +883,13 @@ def health_check(root: Path, completed_at: str) -> int:
                 continue
             if now_ts - obs_ts > threshold:
                 unhealthy.append(f"{market}/{row.get('slug')} stale age={(int(now_ts - obs_ts))}s")
+            if market == "crypto":
+                four_hour = shard.get("fourHour") or []
+                latest_four_hour = four_hour[-1].get("t") if four_hour else None
+                if not isinstance(latest_four_hour, (int, float)):
+                    unhealthy.append(f"crypto/{row.get('slug')} missing-four-hour")
+                elif now_ts - latest_four_hour > 6 * 3600:
+                    unhealthy.append(f"crypto/{row.get('slug')} stale-four-hour age={int(now_ts - latest_four_hour)}s")
     print(f"[markets-health] completedAt={completed_at} unhealthy={len(unhealthy)}")
     for entry in unhealthy[:20]:
         print(f"  {entry}")
@@ -978,16 +910,26 @@ def rebuild_derived(root: Path, instruments: list[dict[str, str]], *, completed_
         if not daily:
             continue
         quality = compute_metrics(daily, annualization=365 if instrument["market"] == "crypto" else 252, four_hour=four_hour).get("dataQuality", {})
-        clean = {**instrument, "startDate": dt.datetime.fromtimestamp(daily[0]["t"], dt.timezone.utc).date().isoformat(),
-                 "updatedAt": shard.get("updatedAt", completed_at), "dataQuality": quality, "daily": daily, "fourHour": four_hour}
+        first_iso = dt.datetime.fromtimestamp(daily[0]["t"], dt.timezone.utc).date().isoformat()
+        last_iso = dt.datetime.fromtimestamp(daily[-1]["t"], dt.timezone.utc).isoformat().replace("+00:00", "Z")
+        defaults = {"schemaVersion": 3, "provider": instrument["provider"], "providerSymbol": instrument["providerSymbol"],
+                    "priceBasis": "adjusted-close" if instrument["market"] == "us" else "exchange-close",
+                    "publishedAt": shard.get("publishedAt") or completed_at,
+                    "lastSuccessfulFetchAt": shard.get("lastSuccessfulFetchAt") or None,
+                    "lastObservationAt": shard.get("lastObservationAt") or last_iso,
+                    "actualCoverageStart": shard.get("actualCoverageStart") or first_iso,
+                    "requestedCoverageStart": shard.get("requestedCoverageStart") or first_iso}
+        provenance = {key: shard.get(key, defaults[key]) for key in defaults}
+        clean = {**instrument, **provenance, "schemaVersion": 3, "dataQuality": quality,
+                 "fourHourAvailable": bool(four_hour) or instrument.get("market") == "crypto", "daily": daily, "fourHour": four_hour}
         write_json_atomic(path, clean)
         write_json_atomic(root / "summary-items" / instrument["market"] / f"{instrument['slug']}.json",
-                          summary_row(instrument, daily, clean["updatedAt"], four_hour=four_hour))
+                          summary_row(instrument, daily, clean["publishedAt"], four_hour=four_hour))
         rebuilt += 1
     return rebuilt
 
 
-def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, failed: list[str], *, slice_index: int | None = None, slice_count: int | None = None, fetch_meta: dict[str, dict[str, Any]] | None = None) -> None:
+def aggregate(root: Path, instruments: list[dict[str, str]], completed_at: str, failed: list[dict[str, str]], *, slice_index: int | None = None, slice_count: int | None = None, fetch_meta: dict[str, dict[str, Any]] | None = None) -> None:
     keep: dict[str, set[str]] = {}
     for row in instruments:
         m = row.get("market", "")
@@ -1025,11 +967,12 @@ def run(args: argparse.Namespace) -> int:
     if args.delay < 0:
         raise ValueError("--delay must be non-negative")
 
-    root = Path(args.data_root).resolve()
+    public_root = Path(args.data_root).resolve()
+    root = _bootstrap_root(public_root) if args.mode == "bootstrap" else public_root
     root.mkdir(parents=True, exist_ok=True)
     # Lock must NOT live under the publicly served root (see spec: state/ is
     # outside the webroot). The lock directory is created lazily.
-    lock_path = root.parent / "state" / "update.lock"
+    lock_path = public_root.parent / "state" / "update.lock"
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     with lock_path.open("w") as lock:
         if fcntl is not None:
@@ -1041,6 +984,13 @@ def run(args: argparse.Namespace) -> int:
         config = Path(__file__).with_name("crypto-universe.json")
         if args.mode == "bootstrap" or not (root / "instruments.json").exists() or args.refresh_universe:
             instruments = build_universe(config)
+            prior = read_json(public_root / "instruments.json", []) if args.refresh_universe else []
+            try:
+                from universe_builder import validate_universe_transition
+            except ImportError:
+                from .universe_builder import validate_universe_transition
+            if not validate_universe_transition(prior, instruments):
+                raise ValueError("canonical universe transition failed validation; refusing publication")
             write_json_atomic(root / "instruments.json", instruments)
         else:
             instruments = read_json(root / "instruments.json", [])
@@ -1074,15 +1024,17 @@ def run(args: argparse.Namespace) -> int:
         elif args.mode == "health-check":
             # Local-only staleness check; no provider call
             completed = utc_now()
-            health_check(root, completed)
-            return 0
+            return health_check(root, completed)
         else:  # legacy "hourly" mode retained for compatibility
             us = [row for row in selected_universe if row["market"] == "us"]
             crypto = [row for row in selected_universe if row["market"] == "crypto"]
             slice_index = args.slice_index if args.slice_index is not None else int(time.time() // 3600) % args.slice_count
             selected = [row for index, row in enumerate(us) if index % args.slice_count == slice_index] + crypto
         print(f"[markets] mode={args.mode} universe={len(all_instruments)} selected={len(selected)}")
-        updated, failed, fetch_meta = update_rows(root, selected, bootstrap=args.mode == "bootstrap", delay=args.delay, skip_four_hour=args.skip_four_hour)
+        pair_failures = validate_crypto_pairs(selected) if args.mode in ("bootstrap", "crypto-hourly", "hourly") else []
+        valid_selected = [row for row in selected if not any(failure["providerSymbol"] == row["providerSymbol"] for failure in pair_failures)]
+        updated, failed, fetch_meta = update_rows(root, valid_selected, bootstrap=args.mode == "bootstrap", delay=args.delay, skip_four_hour=args.skip_four_hour)
+        failed = pair_failures + failed
         completed = utc_now()
         aggregate(root, all_instruments, completed, failed, slice_index=slice_index, slice_count=args.slice_count if slice_index is not None else None, fetch_meta=fetch_meta)
         print(f"[markets] updated={updated} failed={len(failed)} completedAt={completed}")

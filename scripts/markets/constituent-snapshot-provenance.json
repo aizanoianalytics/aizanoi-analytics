@@ -1,0 +1,10 @@
+{
+  "reviewedAt": "2026-09-10",
+  "families": {
+    "sp500": {"source": "S&P Dow Jones Indices constituent snapshot", "asOf": "2026-09-10"},
+    "nasdaq100": {"source": "Nasdaq-100 constituent snapshot", "asOf": "2026-09-10"},
+    "nyse_us100": {"source": "NYSE U.S. 100 curated constituent snapshot", "asOf": "2026-09-10"},
+    "djia": {"source": "S&P Dow Jones Indices DJIA constituent snapshot", "asOf": "2026-09-10"},
+    "extra": {"source": "Aizanoi owner-curated verified additions", "asOf": "2026-09-10"}
+  }
+}

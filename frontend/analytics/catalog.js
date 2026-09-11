@@ -49,7 +49,7 @@ export const ANALYTICS_SETS = Object.freeze([
     accent:'US + Crypto',
     interfaceLanguage:'English',
     interfaceLanguageCode:'en',
-    summary:'A static-first market intelligence surface covering active US-listed equities outside OTC venues and a focused 35-asset crypto universe, with daily history from 2019 and recent four-hour observations where upstream providers make them available.',
+    summary:'A static-first market intelligence surface covering a focused union of major US equity indexes and a selected 35-asset crypto universe, with daily history from 2019 or the provider’s first availability and recent four-hour observations where available.',
     description:'Search, rank and inspect market breadth, momentum, volatility, drawdown and trend signals. Static data shards are refreshed by private automation and loaded on demand.',
     landing:'/analytics/markets/',
     source:'https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/scripts/markets',

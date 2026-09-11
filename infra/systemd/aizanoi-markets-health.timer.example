@@ -1,0 +1,11 @@
+[Unit]
+Description=Aizanoi Markets data-health audit timer
+
+[Timer]
+# Audit local shards after the minute-five crypto refresh window; no upstream calls.
+OnCalendar=*-*-* *:20:00
+Persistent=true
+RandomizedDelaySec=60
+
+[Install]
+WantedBy=timers.target

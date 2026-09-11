@@ -280,6 +280,13 @@ class FintableProviderContractTests(unittest.TestCase):
         self.assertEqual(result.attempted_windows, result.completed_windows)
         self.assertGreaterEqual(result.attempted_windows, 1)
 
+    def test_malformed_404_is_a_failure_not_authoritative_empty(self):
+        self._raise_http_error(404, {"error": {"type": "routing_error"}})
+        now = int(dt.datetime.now(dt.timezone.utc).timestamp())
+        result = self.provider.fetch_history("AAPL", now - 86400, now, "1d")
+        self.assertEqual(result.status, "FAILURE")
+        self.assertIn("without documented not_found", result.error)
+
     def test_history_success_empty_valid(self) -> None:
         """Empty bars list with no error yields SUCCESS_EMPTY_VALID."""
         self._respond_with(self._window_payload("AAPL", []))

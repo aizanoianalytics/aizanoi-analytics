@@ -10,15 +10,17 @@ Scope: private ingestion and static publication for `/analytics/markets/`.
 
 ## Output
 
-`update_markets.py` atomically writes runtime JSON under `/var/lib/aizanoi-markets/public/`: manifest, health, compact breadth snapshots, market summary indexes and chunks, leader payloads, per-symbol summary items and lazy close-history shards. A compatibility `summary.json` remains for older clients, but current frontends do not fetch it. The directory stays outside Git and immutable application releases.
+`update_markets.py` writes active runtime JSON under `/var/lib/aizanoi-markets/public/`: manifest, health, compact breadth snapshots, market summary indexes and chunks, leader payloads, per-symbol summary items and lazy close-history shards. Bootstrap is fail-closed in `/var/lib/aizanoi-markets/staging/bootstrap/`; an explicit validated atomic cutover is required before it can replace `public/`. A compatibility `summary.json` remains for older clients, but current frontends do not fetch it. The directory stays outside Git and immutable application releases.
 
 ## Modes
 
-- Initial/full download: `python3 scripts/markets/update_markets.py --mode bootstrap --allow-partial`
-- Hourly slice: `python3 scripts/markets/update_markets.py --mode hourly --allow-partial`
+- Initial/full download (staged only): `python3 scripts/markets/update_markets.py --mode bootstrap --data-root /var/lib/aizanoi-markets/public --allow-partial`
+- US close refresh: `python3 scripts/markets/update_markets.py --mode us-daily --allow-partial`
+- Crypto refresh: `python3 scripts/markets/update_markets.py --mode crypto-hourly --allow-partial`
 - Offline schema/metric migration: `python3 scripts/markets/update_markets.py --mode rebuild`
+- Local operational audit: `python3 scripts/markets/update_markets.py --mode health-check`
 
-The default hourly mode refreshes one eighth of US symbols plus all selected crypto assets. Every US symbol rotates through within eight hours. A non-blocking lock suppresses overlap; failed batches preserve last-known-good shards and are reported in the manifest. Rebuild mode performs no upstream requests: it removes legacy non-close candle fields, recomputes derived metrics, and publishes schema-v2 indexes from existing history.
+US and crypto schedules are intentionally separate: US runs after the New York close; crypto refreshes hourly. A non-blocking lock suppresses overlap; failed batches preserve last-known-good shards and are typed in health output. Rebuild performs no upstream requests and preserves schema-v3 provider provenance while recomputing derived data.
 
 ## Tests
 

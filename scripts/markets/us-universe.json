@@ -6,7 +6,6 @@
     "exchange": "NYSE",
     "slug": "a",
     "providerSymbol": "A",
-    "yahooSymbol": "A",
     "memberships": [
       "sp500"
     ],
@@ -19,7 +18,6 @@
     "exchange": "NASDAQ",
     "slug": "aal",
     "providerSymbol": "AAL",
-    "yahooSymbol": "AAL",
     "memberships": [
       "sp500"
     ],
@@ -32,7 +30,6 @@
     "exchange": "NASDAQ",
     "slug": "aapl",
     "providerSymbol": "AAPL",
-    "yahooSymbol": "AAPL",
     "memberships": [
       "sp500",
       "nasdaq100",
@@ -47,7 +44,6 @@
     "exchange": "NYSE",
     "slug": "abbv",
     "providerSymbol": "ABBV",
-    "yahooSymbol": "ABBV",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -61,7 +57,6 @@
     "exchange": "NASDAQ",
     "slug": "abnb",
     "providerSymbol": "ABNB",
-    "yahooSymbol": "ABNB",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -75,7 +70,6 @@
     "exchange": "NYSE",
     "slug": "abt",
     "providerSymbol": "ABT",
-    "yahooSymbol": "ABT",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -89,7 +83,6 @@
     "exchange": "NASDAQ",
     "slug": "acgl",
     "providerSymbol": "ACGL",
-    "yahooSymbol": "ACGL",
     "memberships": [
       "sp500"
     ],
@@ -102,7 +95,6 @@
     "exchange": "NYSE",
     "slug": "acn",
     "providerSymbol": "ACN",
-    "yahooSymbol": "ACN",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -116,7 +108,6 @@
     "exchange": "NASDAQ",
     "slug": "adbe",
     "providerSymbol": "ADBE",
-    "yahooSymbol": "ADBE",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -130,7 +121,6 @@
     "exchange": "NASDAQ",
     "slug": "adi",
     "providerSymbol": "ADI",
-    "yahooSymbol": "ADI",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -144,7 +134,6 @@
     "exchange": "NYSE",
     "slug": "adm",
     "providerSymbol": "ADM",
-    "yahooSymbol": "ADM",
     "memberships": [
       "sp500"
     ],
@@ -157,7 +146,6 @@
     "exchange": "NASDAQ",
     "slug": "adp",
     "providerSymbol": "ADP",
-    "yahooSymbol": "ADP",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -171,7 +159,6 @@
     "exchange": "NASDAQ",
     "slug": "adsk",
     "providerSymbol": "ADSK",
-    "yahooSymbol": "ADSK",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -185,7 +172,6 @@
     "exchange": "NYSE",
     "slug": "aee",
     "providerSymbol": "AEE",
-    "yahooSymbol": "AEE",
     "memberships": [
       "sp500"
     ],
@@ -198,7 +184,6 @@
     "exchange": "NASDAQ",
     "slug": "aep",
     "providerSymbol": "AEP",
-    "yahooSymbol": "AEP",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -212,7 +197,6 @@
     "exchange": "NYSE",
     "slug": "aes",
     "providerSymbol": "AES",
-    "yahooSymbol": "AES",
     "memberships": [
       "sp500"
     ],
@@ -225,7 +209,6 @@
     "exchange": "NYSE",
     "slug": "afl",
     "providerSymbol": "AFL",
-    "yahooSymbol": "AFL",
     "memberships": [
       "sp500"
     ],
@@ -238,7 +221,6 @@
     "exchange": "NYSE",
     "slug": "aig",
     "providerSymbol": "AIG",
-    "yahooSymbol": "AIG",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -252,7 +234,6 @@
     "exchange": "NYSE",
     "slug": "aiz",
     "providerSymbol": "AIZ",
-    "yahooSymbol": "AIZ",
     "memberships": [
       "sp500"
     ],
@@ -265,7 +246,6 @@
     "exchange": "NYSE",
     "slug": "ajg",
     "providerSymbol": "AJG",
-    "yahooSymbol": "AJG",
     "memberships": [
       "sp500"
     ],
@@ -278,7 +258,6 @@
     "exchange": "NASDAQ",
     "slug": "akam",
     "providerSymbol": "AKAM",
-    "yahooSymbol": "AKAM",
     "memberships": [
       "sp500"
     ],
@@ -291,7 +270,6 @@
     "exchange": "NYSE",
     "slug": "alb",
     "providerSymbol": "ALB",
-    "yahooSymbol": "ALB",
     "memberships": [
       "sp500"
     ],
@@ -304,7 +282,6 @@
     "exchange": "NASDAQ",
     "slug": "algn",
     "providerSymbol": "ALGN",
-    "yahooSymbol": "ALGN",
     "memberships": [
       "sp500"
     ],
@@ -317,7 +294,6 @@
     "exchange": "NYSE",
     "slug": "all",
     "providerSymbol": "ALL",
-    "yahooSymbol": "ALL",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -331,7 +307,6 @@
     "exchange": "NYSE",
     "slug": "alle",
     "providerSymbol": "ALLE",
-    "yahooSymbol": "ALLE",
     "memberships": [
       "sp500"
     ],
@@ -344,7 +319,6 @@
     "exchange": "NASDAQ",
     "slug": "amat",
     "providerSymbol": "AMAT",
-    "yahooSymbol": "AMAT",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -358,7 +332,6 @@
     "exchange": "NYSE",
     "slug": "amcr",
     "providerSymbol": "AMCR",
-    "yahooSymbol": "AMCR",
     "memberships": [
       "sp500"
     ],
@@ -371,7 +344,6 @@
     "exchange": "NASDAQ",
     "slug": "amd",
     "providerSymbol": "AMD",
-    "yahooSymbol": "AMD",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -385,7 +357,6 @@
     "exchange": "NYSE",
     "slug": "ame",
     "providerSymbol": "AME",
-    "yahooSymbol": "AME",
     "memberships": [
       "sp500"
     ],
@@ -398,7 +369,6 @@
     "exchange": "NASDAQ",
     "slug": "amgn",
     "providerSymbol": "AMGN",
-    "yahooSymbol": "AMGN",
     "memberships": [
       "sp500",
       "nasdaq100",
@@ -413,7 +383,6 @@
     "exchange": "NYSE",
     "slug": "amh",
     "providerSymbol": "AMH",
-    "yahooSymbol": "AMH",
     "memberships": [
       "nyse_us100"
     ],
@@ -426,7 +395,6 @@
     "exchange": "NYSE",
     "slug": "amp",
     "providerSymbol": "AMP",
-    "yahooSymbol": "AMP",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -440,7 +408,6 @@
     "exchange": "NYSE",
     "slug": "amt",
     "providerSymbol": "AMT",
-    "yahooSymbol": "AMT",
     "memberships": [
       "sp500"
     ],
@@ -453,7 +420,6 @@
     "exchange": "NASDAQ",
     "slug": "amzn",
     "providerSymbol": "AMZN",
-    "yahooSymbol": "AMZN",
     "memberships": [
       "sp500",
       "nasdaq100",
@@ -468,7 +434,6 @@
     "exchange": "NYSE",
     "slug": "anet",
     "providerSymbol": "ANET",
-    "yahooSymbol": "ANET",
     "memberships": [
       "sp500"
     ],
@@ -481,7 +446,6 @@
     "exchange": "NYSE",
     "slug": "aon",
     "providerSymbol": "AON",
-    "yahooSymbol": "AON",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -495,7 +459,6 @@
     "exchange": "NYSE",
     "slug": "aos",
     "providerSymbol": "AOS",
-    "yahooSymbol": "AOS",
     "memberships": [
       "sp500"
     ],
@@ -508,7 +471,6 @@
     "exchange": "NASDAQ",
     "slug": "apa",
     "providerSymbol": "APA",
-    "yahooSymbol": "APA",
     "memberships": [
       "sp500"
     ],
@@ -521,7 +483,6 @@
     "exchange": "NYSE",
     "slug": "apd",
     "providerSymbol": "APD",
-    "yahooSymbol": "APD",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -535,7 +496,6 @@
     "exchange": "NYSE",
     "slug": "aph",
     "providerSymbol": "APH",
-    "yahooSymbol": "APH",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -549,7 +509,6 @@
     "exchange": "NASDAQ",
     "slug": "app",
     "providerSymbol": "APP",
-    "yahooSymbol": "APP",
     "memberships": [
       "nasdaq100",
       "extra"
@@ -563,7 +522,6 @@
     "exchange": "NYSE",
     "slug": "aptv",
     "providerSymbol": "APTV",
-    "yahooSymbol": "APTV",
     "memberships": [
       "sp500"
     ],
@@ -576,7 +534,6 @@
     "exchange": "NYSE",
     "slug": "are",
     "providerSymbol": "ARE",
-    "yahooSymbol": "ARE",
     "memberships": [
       "sp500"
     ],
@@ -589,7 +546,6 @@
     "exchange": "NASDAQ",
     "slug": "arm",
     "providerSymbol": "ARM",
-    "yahooSymbol": "ARM",
     "memberships": [
       "nasdaq100",
       "extra"
@@ -603,7 +559,6 @@
     "exchange": "NASDAQ",
     "slug": "asml",
     "providerSymbol": "ASML",
-    "yahooSymbol": "ASML",
     "memberships": [
       "nasdaq100"
     ],
@@ -616,7 +571,6 @@
     "exchange": "NASDAQ",
     "slug": "asts",
     "providerSymbol": "ASTS",
-    "yahooSymbol": "ASTS",
     "memberships": [
       "extra"
     ],
@@ -629,7 +583,6 @@
     "exchange": "NYSE",
     "slug": "ato",
     "providerSymbol": "ATO",
-    "yahooSymbol": "ATO",
     "memberships": [
       "sp500"
     ],
@@ -642,7 +595,6 @@
     "exchange": "NYSE",
     "slug": "avb",
     "providerSymbol": "AVB",
-    "yahooSymbol": "AVB",
     "memberships": [
       "sp500"
     ],
@@ -655,7 +607,6 @@
     "exchange": "NASDAQ",
     "slug": "avgo",
     "providerSymbol": "AVGO",
-    "yahooSymbol": "AVGO",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -669,7 +620,6 @@
     "exchange": "NYSE",
     "slug": "avy",
     "providerSymbol": "AVY",
-    "yahooSymbol": "AVY",
     "memberships": [
       "sp500"
     ],
@@ -682,7 +632,6 @@
     "exchange": "NYSE",
     "slug": "awk",
     "providerSymbol": "AWK",
-    "yahooSymbol": "AWK",
     "memberships": [
       "sp500"
     ],
@@ -695,7 +644,6 @@
     "exchange": "NASDAQ",
     "slug": "axon",
     "providerSymbol": "AXON",
-    "yahooSymbol": "AXON",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -709,7 +657,6 @@
     "exchange": "NYSE",
     "slug": "axp",
     "providerSymbol": "AXP",
-    "yahooSymbol": "AXP",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -724,7 +671,6 @@
     "exchange": "NYSE",
     "slug": "azo",
     "providerSymbol": "AZO",
-    "yahooSymbol": "AZO",
     "memberships": [
       "sp500"
     ],
@@ -737,7 +683,6 @@
     "exchange": "NYSE",
     "slug": "ba",
     "providerSymbol": "BA",
-    "yahooSymbol": "BA",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -752,7 +697,6 @@
     "exchange": "NYSE",
     "slug": "bac",
     "providerSymbol": "BAC",
-    "yahooSymbol": "BAC",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -766,7 +710,6 @@
     "exchange": "NYSE",
     "slug": "ball",
     "providerSymbol": "BALL",
-    "yahooSymbol": "BALL",
     "memberships": [
       "sp500"
     ],
@@ -779,7 +722,6 @@
     "exchange": "NYSE",
     "slug": "bax",
     "providerSymbol": "BAX",
-    "yahooSymbol": "BAX",
     "memberships": [
       "sp500"
     ],
@@ -792,7 +734,6 @@
     "exchange": "NYSE",
     "slug": "bbwi",
     "providerSymbol": "BBWI",
-    "yahooSymbol": "BBWI",
     "memberships": [
       "sp500"
     ],
@@ -805,7 +746,6 @@
     "exchange": "NYSE",
     "slug": "bby",
     "providerSymbol": "BBY",
-    "yahooSymbol": "BBY",
     "memberships": [
       "sp500"
     ],
@@ -818,7 +758,6 @@
     "exchange": "NYSE",
     "slug": "bdx",
     "providerSymbol": "BDX",
-    "yahooSymbol": "BDX",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -832,7 +771,6 @@
     "exchange": "NYSE",
     "slug": "ben",
     "providerSymbol": "BEN",
-    "yahooSymbol": "BEN",
     "memberships": [
       "sp500"
     ],
@@ -845,7 +783,6 @@
     "exchange": "NYSE",
     "slug": "bf-b",
     "providerSymbol": "BF.B",
-    "yahooSymbol": "BF-B",
     "memberships": [
       "sp500"
     ],
@@ -858,7 +795,6 @@
     "exchange": "NYSE",
     "slug": "bg",
     "providerSymbol": "BG",
-    "yahooSymbol": "BG",
     "memberships": [
       "sp500"
     ],
@@ -871,7 +807,6 @@
     "exchange": "NASDAQ",
     "slug": "biib",
     "providerSymbol": "BIIB",
-    "yahooSymbol": "BIIB",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -885,7 +820,6 @@
     "exchange": "NYSE",
     "slug": "bk",
     "providerSymbol": "BK",
-    "yahooSymbol": "BK",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -899,7 +833,6 @@
     "exchange": "NASDAQ",
     "slug": "bkng",
     "providerSymbol": "BKNG",
-    "yahooSymbol": "BKNG",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -913,7 +846,6 @@
     "exchange": "NASDAQ",
     "slug": "bkr",
     "providerSymbol": "BKR",
-    "yahooSymbol": "BKR",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -927,7 +859,6 @@
     "exchange": "NYSE",
     "slug": "bldr",
     "providerSymbol": "BLDR",
-    "yahooSymbol": "BLDR",
     "memberships": [
       "sp500"
     ],
@@ -940,7 +871,6 @@
     "exchange": "NYSE",
     "slug": "blk",
     "providerSymbol": "BLK",
-    "yahooSymbol": "BLK",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -954,7 +884,6 @@
     "exchange": "NYSE",
     "slug": "bmy",
     "providerSymbol": "BMY",
-    "yahooSymbol": "BMY",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -968,7 +897,6 @@
     "exchange": "NYSE",
     "slug": "br",
     "providerSymbol": "BR",
-    "yahooSymbol": "BR",
     "memberships": [
       "sp500"
     ],
@@ -981,7 +909,6 @@
     "exchange": "NYSE",
     "slug": "brk-b",
     "providerSymbol": "BRK.B",
-    "yahooSymbol": "BRK-B",
     "memberships": [
       "sp500"
     ],
@@ -994,7 +921,6 @@
     "exchange": "NYSE",
     "slug": "bro",
     "providerSymbol": "BRO",
-    "yahooSymbol": "BRO",
     "memberships": [
       "sp500"
     ],
@@ -1007,7 +933,6 @@
     "exchange": "NYSE",
     "slug": "bsx",
     "providerSymbol": "BSX",
-    "yahooSymbol": "BSX",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1021,7 +946,6 @@
     "exchange": "NYSE",
     "slug": "bwa",
     "providerSymbol": "BWA",
-    "yahooSymbol": "BWA",
     "memberships": [
       "sp500"
     ],
@@ -1034,7 +958,6 @@
     "exchange": "NYSE",
     "slug": "bx",
     "providerSymbol": "BX",
-    "yahooSymbol": "BX",
     "memberships": [
       "sp500"
     ],
@@ -1047,7 +970,6 @@
     "exchange": "NYSE",
     "slug": "bxp",
     "providerSymbol": "BXP",
-    "yahooSymbol": "BXP",
     "memberships": [
       "sp500"
     ],
@@ -1060,7 +982,6 @@
     "exchange": "NYSE",
     "slug": "c",
     "providerSymbol": "C",
-    "yahooSymbol": "C",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1074,7 +995,6 @@
     "exchange": "NYSE",
     "slug": "cag",
     "providerSymbol": "CAG",
-    "yahooSymbol": "CAG",
     "memberships": [
       "sp500"
     ],
@@ -1087,7 +1007,6 @@
     "exchange": "NYSE",
     "slug": "cah",
     "providerSymbol": "CAH",
-    "yahooSymbol": "CAH",
     "memberships": [
       "sp500"
     ],
@@ -1100,7 +1019,6 @@
     "exchange": "NYSE",
     "slug": "carr",
     "providerSymbol": "CARR",
-    "yahooSymbol": "CARR",
     "memberships": [
       "sp500"
     ],
@@ -1113,7 +1031,6 @@
     "exchange": "NYSE",
     "slug": "cat",
     "providerSymbol": "CAT",
-    "yahooSymbol": "CAT",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -1128,7 +1045,6 @@
     "exchange": "NYSE",
     "slug": "cb",
     "providerSymbol": "CB",
-    "yahooSymbol": "CB",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1142,7 +1058,6 @@
     "exchange": "CBOE BZX",
     "slug": "cboe",
     "providerSymbol": "CBOE",
-    "yahooSymbol": "CBOE",
     "memberships": [
       "sp500"
     ],
@@ -1155,7 +1070,6 @@
     "exchange": "NYSE",
     "slug": "cbre",
     "providerSymbol": "CBRE",
-    "yahooSymbol": "CBRE",
     "memberships": [
       "sp500"
     ],
@@ -1168,7 +1082,6 @@
     "exchange": "NASDAQ",
     "slug": "ccep",
     "providerSymbol": "CCEP",
-    "yahooSymbol": "CCEP",
     "memberships": [
       "nasdaq100"
     ],
@@ -1181,7 +1094,6 @@
     "exchange": "NYSE",
     "slug": "cci",
     "providerSymbol": "CCI",
-    "yahooSymbol": "CCI",
     "memberships": [
       "sp500"
     ],
@@ -1194,7 +1106,6 @@
     "exchange": "NYSE",
     "slug": "ccl",
     "providerSymbol": "CCL",
-    "yahooSymbol": "CCL",
     "memberships": [
       "sp500"
     ],
@@ -1207,7 +1118,6 @@
     "exchange": "NASDAQ",
     "slug": "cdns",
     "providerSymbol": "CDNS",
-    "yahooSymbol": "CDNS",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1221,7 +1131,6 @@
     "exchange": "NASDAQ",
     "slug": "cdw",
     "providerSymbol": "CDW",
-    "yahooSymbol": "CDW",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1235,7 +1144,6 @@
     "exchange": "NYSE",
     "slug": "ce",
     "providerSymbol": "CE",
-    "yahooSymbol": "CE",
     "memberships": [
       "sp500"
     ],
@@ -1248,7 +1156,6 @@
     "exchange": "NASDAQ",
     "slug": "ceg",
     "providerSymbol": "CEG",
-    "yahooSymbol": "CEG",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1262,7 +1169,6 @@
     "exchange": "NYSE",
     "slug": "cf",
     "providerSymbol": "CF",
-    "yahooSymbol": "CF",
     "memberships": [
       "sp500"
     ],
@@ -1275,7 +1181,6 @@
     "exchange": "NYSE",
     "slug": "cfg",
     "providerSymbol": "CFG",
-    "yahooSymbol": "CFG",
     "memberships": [
       "sp500"
     ],
@@ -1288,7 +1193,6 @@
     "exchange": "NYSE",
     "slug": "chd",
     "providerSymbol": "CHD",
-    "yahooSymbol": "CHD",
     "memberships": [
       "sp500"
     ],
@@ -1301,7 +1205,6 @@
     "exchange": "NASDAQ",
     "slug": "chrw",
     "providerSymbol": "CHRW",
-    "yahooSymbol": "CHRW",
     "memberships": [
       "sp500"
     ],
@@ -1314,7 +1217,6 @@
     "exchange": "NASDAQ",
     "slug": "chtr",
     "providerSymbol": "CHTR",
-    "yahooSymbol": "CHTR",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1328,7 +1230,6 @@
     "exchange": "NYSE",
     "slug": "ci",
     "providerSymbol": "CI",
-    "yahooSymbol": "CI",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1342,7 +1243,6 @@
     "exchange": "NASDAQ",
     "slug": "cinf",
     "providerSymbol": "CINF",
-    "yahooSymbol": "CINF",
     "memberships": [
       "sp500"
     ],
@@ -1355,7 +1255,6 @@
     "exchange": "NYSE",
     "slug": "cl",
     "providerSymbol": "CL",
-    "yahooSymbol": "CL",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1369,7 +1268,6 @@
     "exchange": "NYSE",
     "slug": "clx",
     "providerSymbol": "CLX",
-    "yahooSymbol": "CLX",
     "memberships": [
       "sp500"
     ],
@@ -1382,7 +1280,6 @@
     "exchange": "NYSE",
     "slug": "cma",
     "providerSymbol": "CMA",
-    "yahooSymbol": "CMA",
     "memberships": [
       "sp500"
     ],
@@ -1395,7 +1292,6 @@
     "exchange": "NASDAQ",
     "slug": "cmcsa",
     "providerSymbol": "CMCSA",
-    "yahooSymbol": "CMCSA",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1409,7 +1305,6 @@
     "exchange": "NASDAQ",
     "slug": "cme",
     "providerSymbol": "CME",
-    "yahooSymbol": "CME",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1423,7 +1318,6 @@
     "exchange": "NYSE",
     "slug": "cmg",
     "providerSymbol": "CMG",
-    "yahooSymbol": "CMG",
     "memberships": [
       "sp500"
     ],
@@ -1436,7 +1330,6 @@
     "exchange": "NYSE",
     "slug": "cmi",
     "providerSymbol": "CMI",
-    "yahooSymbol": "CMI",
     "memberships": [
       "sp500"
     ],
@@ -1449,7 +1342,6 @@
     "exchange": "NYSE",
     "slug": "cms",
     "providerSymbol": "CMS",
-    "yahooSymbol": "CMS",
     "memberships": [
       "sp500"
     ],
@@ -1462,7 +1354,6 @@
     "exchange": "NYSE",
     "slug": "cnc",
     "providerSymbol": "CNC",
-    "yahooSymbol": "CNC",
     "memberships": [
       "sp500"
     ],
@@ -1475,7 +1366,6 @@
     "exchange": "NYSE",
     "slug": "cnp",
     "providerSymbol": "CNP",
-    "yahooSymbol": "CNP",
     "memberships": [
       "sp500"
     ],
@@ -1488,7 +1378,6 @@
     "exchange": "NYSE",
     "slug": "cof",
     "providerSymbol": "COF",
-    "yahooSymbol": "COF",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1502,7 +1391,6 @@
     "exchange": "NASDAQ",
     "slug": "coin",
     "providerSymbol": "COIN",
-    "yahooSymbol": "COIN",
     "memberships": [
       "extra"
     ],
@@ -1515,7 +1403,6 @@
     "exchange": "NASDAQ",
     "slug": "coo",
     "providerSymbol": "COO",
-    "yahooSymbol": "COO",
     "memberships": [
       "sp500"
     ],
@@ -1528,7 +1415,6 @@
     "exchange": "NYSE",
     "slug": "cop",
     "providerSymbol": "COP",
-    "yahooSymbol": "COP",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1542,7 +1428,6 @@
     "exchange": "NYSE",
     "slug": "cor",
     "providerSymbol": "COR",
-    "yahooSymbol": "COR",
     "memberships": [
       "sp500"
     ],
@@ -1555,7 +1440,6 @@
     "exchange": "NASDAQ",
     "slug": "cost",
     "providerSymbol": "COST",
-    "yahooSymbol": "COST",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1569,7 +1453,6 @@
     "exchange": "NYSE",
     "slug": "cpay",
     "providerSymbol": "CPAY",
-    "yahooSymbol": "CPAY",
     "memberships": [
       "sp500"
     ],
@@ -1582,7 +1465,6 @@
     "exchange": "NASDAQ",
     "slug": "cpb",
     "providerSymbol": "CPB",
-    "yahooSymbol": "CPB",
     "memberships": [
       "sp500"
     ],
@@ -1595,7 +1477,6 @@
     "exchange": "NASDAQ",
     "slug": "cprt",
     "providerSymbol": "CPRT",
-    "yahooSymbol": "CPRT",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1609,7 +1490,6 @@
     "exchange": "NYSE",
     "slug": "cpt",
     "providerSymbol": "CPT",
-    "yahooSymbol": "CPT",
     "memberships": [
       "sp500"
     ],
@@ -1622,7 +1502,6 @@
     "exchange": "NYSE",
     "slug": "crl",
     "providerSymbol": "CRL",
-    "yahooSymbol": "CRL",
     "memberships": [
       "sp500"
     ],
@@ -1635,7 +1514,6 @@
     "exchange": "NYSE",
     "slug": "crm",
     "providerSymbol": "CRM",
-    "yahooSymbol": "CRM",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -1650,7 +1528,6 @@
     "exchange": "NASDAQ",
     "slug": "crwd",
     "providerSymbol": "CRWD",
-    "yahooSymbol": "CRWD",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1664,7 +1541,6 @@
     "exchange": "NASDAQ",
     "slug": "csco",
     "providerSymbol": "CSCO",
-    "yahooSymbol": "CSCO",
     "memberships": [
       "sp500",
       "nasdaq100",
@@ -1679,7 +1555,6 @@
     "exchange": "NASDAQ",
     "slug": "csgp",
     "providerSymbol": "CSGP",
-    "yahooSymbol": "CSGP",
     "memberships": [
       "sp500"
     ],
@@ -1692,7 +1567,6 @@
     "exchange": "NASDAQ",
     "slug": "csx",
     "providerSymbol": "CSX",
-    "yahooSymbol": "CSX",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1706,7 +1580,6 @@
     "exchange": "NASDAQ",
     "slug": "ctas",
     "providerSymbol": "CTAS",
-    "yahooSymbol": "CTAS",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1720,7 +1593,6 @@
     "exchange": "NYSE",
     "slug": "ctlt",
     "providerSymbol": "CTLT",
-    "yahooSymbol": "CTLT",
     "memberships": [
       "sp500"
     ],
@@ -1733,7 +1605,6 @@
     "exchange": "NYSE",
     "slug": "ctra",
     "providerSymbol": "CTRA",
-    "yahooSymbol": "CTRA",
     "memberships": [
       "sp500"
     ],
@@ -1746,7 +1617,6 @@
     "exchange": "NASDAQ",
     "slug": "ctsh",
     "providerSymbol": "CTSH",
-    "yahooSymbol": "CTSH",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -1760,7 +1630,6 @@
     "exchange": "NYSE",
     "slug": "ctva",
     "providerSymbol": "CTVA",
-    "yahooSymbol": "CTVA",
     "memberships": [
       "sp500"
     ],
@@ -1773,7 +1642,6 @@
     "exchange": "NYSE",
     "slug": "cvs",
     "providerSymbol": "CVS",
-    "yahooSymbol": "CVS",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1787,7 +1655,6 @@
     "exchange": "NYSE",
     "slug": "cvx",
     "providerSymbol": "CVX",
-    "yahooSymbol": "CVX",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -1802,7 +1669,6 @@
     "exchange": "NASDAQ",
     "slug": "czr",
     "providerSymbol": "CZR",
-    "yahooSymbol": "CZR",
     "memberships": [
       "sp500"
     ],
@@ -1815,7 +1681,6 @@
     "exchange": "NYSE",
     "slug": "d",
     "providerSymbol": "D",
-    "yahooSymbol": "D",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1829,7 +1694,6 @@
     "exchange": "NYSE",
     "slug": "dal",
     "providerSymbol": "DAL",
-    "yahooSymbol": "DAL",
     "memberships": [
       "sp500"
     ],
@@ -1842,7 +1706,6 @@
     "exchange": "NASDAQ",
     "slug": "dash",
     "providerSymbol": "DASH",
-    "yahooSymbol": "DASH",
     "memberships": [
       "nasdaq100"
     ],
@@ -1855,7 +1718,6 @@
     "exchange": "NYSE",
     "slug": "day",
     "providerSymbol": "DAY",
-    "yahooSymbol": "DAY",
     "memberships": [
       "sp500"
     ],
@@ -1868,7 +1730,6 @@
     "exchange": "NYSE",
     "slug": "dd",
     "providerSymbol": "DD",
-    "yahooSymbol": "DD",
     "memberships": [
       "sp500"
     ],
@@ -1881,7 +1742,6 @@
     "exchange": "NASDAQ",
     "slug": "ddog",
     "providerSymbol": "DDOG",
-    "yahooSymbol": "DDOG",
     "memberships": [
       "nasdaq100"
     ],
@@ -1894,7 +1754,6 @@
     "exchange": "NYSE",
     "slug": "de",
     "providerSymbol": "DE",
-    "yahooSymbol": "DE",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1908,7 +1767,6 @@
     "exchange": "NYSE",
     "slug": "deck",
     "providerSymbol": "DECK",
-    "yahooSymbol": "DECK",
     "memberships": [
       "sp500"
     ],
@@ -1921,7 +1779,6 @@
     "exchange": "NYSE",
     "slug": "dell",
     "providerSymbol": "DELL",
-    "yahooSymbol": "DELL",
     "memberships": [
       "sp500"
     ],
@@ -1934,7 +1791,6 @@
     "exchange": "NYSE",
     "slug": "dg",
     "providerSymbol": "DG",
-    "yahooSymbol": "DG",
     "memberships": [
       "sp500"
     ],
@@ -1947,7 +1803,6 @@
     "exchange": "NYSE",
     "slug": "dgx",
     "providerSymbol": "DGX",
-    "yahooSymbol": "DGX",
     "memberships": [
       "sp500"
     ],
@@ -1960,7 +1815,6 @@
     "exchange": "NYSE",
     "slug": "dhi",
     "providerSymbol": "DHI",
-    "yahooSymbol": "DHI",
     "memberships": [
       "sp500"
     ],
@@ -1973,7 +1827,6 @@
     "exchange": "NYSE",
     "slug": "dhr",
     "providerSymbol": "DHR",
-    "yahooSymbol": "DHR",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -1987,7 +1840,6 @@
     "exchange": "NYSE",
     "slug": "dis",
     "providerSymbol": "DIS",
-    "yahooSymbol": "DIS",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -2002,7 +1854,6 @@
     "exchange": "NYSE",
     "slug": "dlr",
     "providerSymbol": "DLR",
-    "yahooSymbol": "DLR",
     "memberships": [
       "sp500"
     ],
@@ -2015,7 +1866,6 @@
     "exchange": "NASDAQ",
     "slug": "dltr",
     "providerSymbol": "DLTR",
-    "yahooSymbol": "DLTR",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2029,7 +1879,6 @@
     "exchange": "NYSE",
     "slug": "doc",
     "providerSymbol": "DOC",
-    "yahooSymbol": "DOC",
     "memberships": [
       "sp500"
     ],
@@ -2042,7 +1891,6 @@
     "exchange": "NYSE",
     "slug": "dov",
     "providerSymbol": "DOV",
-    "yahooSymbol": "DOV",
     "memberships": [
       "sp500"
     ],
@@ -2055,7 +1903,6 @@
     "exchange": "NYSE",
     "slug": "dow",
     "providerSymbol": "DOW",
-    "yahooSymbol": "DOW",
     "memberships": [
       "sp500"
     ],
@@ -2068,7 +1915,6 @@
     "exchange": "NASDAQ",
     "slug": "dpz",
     "providerSymbol": "DPZ",
-    "yahooSymbol": "DPZ",
     "memberships": [
       "sp500"
     ],
@@ -2081,7 +1927,6 @@
     "exchange": "NYSE",
     "slug": "dri",
     "providerSymbol": "DRI",
-    "yahooSymbol": "DRI",
     "memberships": [
       "sp500"
     ],
@@ -2094,7 +1939,6 @@
     "exchange": "NYSE",
     "slug": "dte",
     "providerSymbol": "DTE",
-    "yahooSymbol": "DTE",
     "memberships": [
       "sp500"
     ],
@@ -2107,7 +1951,6 @@
     "exchange": "NYSE",
     "slug": "duk",
     "providerSymbol": "DUK",
-    "yahooSymbol": "DUK",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2121,7 +1964,6 @@
     "exchange": "NYSE",
     "slug": "dva",
     "providerSymbol": "DVA",
-    "yahooSymbol": "DVA",
     "memberships": [
       "sp500"
     ],
@@ -2134,7 +1976,6 @@
     "exchange": "NYSE",
     "slug": "dvn",
     "providerSymbol": "DVN",
-    "yahooSymbol": "DVN",
     "memberships": [
       "sp500"
     ],
@@ -2147,7 +1988,6 @@
     "exchange": "NASDAQ",
     "slug": "dxcm",
     "providerSymbol": "DXCM",
-    "yahooSymbol": "DXCM",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2161,7 +2001,6 @@
     "exchange": "NASDAQ",
     "slug": "ea",
     "providerSymbol": "EA",
-    "yahooSymbol": "EA",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2175,7 +2014,6 @@
     "exchange": "NASDAQ",
     "slug": "ebay",
     "providerSymbol": "EBAY",
-    "yahooSymbol": "EBAY",
     "memberships": [
       "sp500"
     ],
@@ -2188,7 +2026,6 @@
     "exchange": "NYSE",
     "slug": "ecl",
     "providerSymbol": "ECL",
-    "yahooSymbol": "ECL",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2202,7 +2039,6 @@
     "exchange": "NYSE",
     "slug": "ed",
     "providerSymbol": "ED",
-    "yahooSymbol": "ED",
     "memberships": [
       "sp500"
     ],
@@ -2215,7 +2051,6 @@
     "exchange": "NYSE",
     "slug": "efx",
     "providerSymbol": "EFX",
-    "yahooSymbol": "EFX",
     "memberships": [
       "sp500"
     ],
@@ -2228,7 +2063,6 @@
     "exchange": "NYSE",
     "slug": "eg",
     "providerSymbol": "EG",
-    "yahooSymbol": "EG",
     "memberships": [
       "sp500"
     ],
@@ -2241,7 +2075,6 @@
     "exchange": "NYSE",
     "slug": "eix",
     "providerSymbol": "EIX",
-    "yahooSymbol": "EIX",
     "memberships": [
       "sp500"
     ],
@@ -2254,7 +2087,6 @@
     "exchange": "NYSE",
     "slug": "el",
     "providerSymbol": "EL",
-    "yahooSymbol": "EL",
     "memberships": [
       "sp500"
     ],
@@ -2267,7 +2099,6 @@
     "exchange": "NYSE",
     "slug": "elv",
     "providerSymbol": "ELV",
-    "yahooSymbol": "ELV",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2281,7 +2112,6 @@
     "exchange": "NYSE",
     "slug": "emn",
     "providerSymbol": "EMN",
-    "yahooSymbol": "EMN",
     "memberships": [
       "sp500"
     ],
@@ -2294,7 +2124,6 @@
     "exchange": "NYSE",
     "slug": "emr",
     "providerSymbol": "EMR",
-    "yahooSymbol": "EMR",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2308,7 +2137,6 @@
     "exchange": "NASDAQ",
     "slug": "enph",
     "providerSymbol": "ENPH",
-    "yahooSymbol": "ENPH",
     "memberships": [
       "sp500"
     ],
@@ -2321,7 +2149,6 @@
     "exchange": "NYSE",
     "slug": "eog",
     "providerSymbol": "EOG",
-    "yahooSymbol": "EOG",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2335,7 +2162,6 @@
     "exchange": "NYSE",
     "slug": "epam",
     "providerSymbol": "EPAM",
-    "yahooSymbol": "EPAM",
     "memberships": [
       "sp500"
     ],
@@ -2348,7 +2174,6 @@
     "exchange": "NASDAQ",
     "slug": "eqix",
     "providerSymbol": "EQIX",
-    "yahooSymbol": "EQIX",
     "memberships": [
       "sp500"
     ],
@@ -2361,7 +2186,6 @@
     "exchange": "NYSE",
     "slug": "eqr",
     "providerSymbol": "EQR",
-    "yahooSymbol": "EQR",
     "memberships": [
       "sp500"
     ],
@@ -2374,7 +2198,6 @@
     "exchange": "NYSE",
     "slug": "eqt",
     "providerSymbol": "EQT",
-    "yahooSymbol": "EQT",
     "memberships": [
       "sp500"
     ],
@@ -2387,7 +2210,6 @@
     "exchange": "NASDAQ",
     "slug": "erie",
     "providerSymbol": "ERIE",
-    "yahooSymbol": "ERIE",
     "memberships": [
       "sp500"
     ],
@@ -2400,7 +2222,6 @@
     "exchange": "NYSE",
     "slug": "es",
     "providerSymbol": "ES",
-    "yahooSymbol": "ES",
     "memberships": [
       "sp500"
     ],
@@ -2413,7 +2234,6 @@
     "exchange": "NYSE",
     "slug": "ess",
     "providerSymbol": "ESS",
-    "yahooSymbol": "ESS",
     "memberships": [
       "sp500"
     ],
@@ -2426,7 +2246,6 @@
     "exchange": "NYSE",
     "slug": "etn",
     "providerSymbol": "ETN",
-    "yahooSymbol": "ETN",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2440,7 +2259,6 @@
     "exchange": "NYSE",
     "slug": "etr",
     "providerSymbol": "ETR",
-    "yahooSymbol": "ETR",
     "memberships": [
       "sp500"
     ],
@@ -2453,7 +2271,6 @@
     "exchange": "NASDAQ",
     "slug": "evrg",
     "providerSymbol": "EVRG",
-    "yahooSymbol": "EVRG",
     "memberships": [
       "sp500"
     ],
@@ -2466,7 +2283,6 @@
     "exchange": "NYSE",
     "slug": "ew",
     "providerSymbol": "EW",
-    "yahooSymbol": "EW",
     "memberships": [
       "sp500"
     ],
@@ -2479,7 +2295,6 @@
     "exchange": "NASDAQ",
     "slug": "exc",
     "providerSymbol": "EXC",
-    "yahooSymbol": "EXC",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2493,7 +2308,6 @@
     "exchange": "NYSE",
     "slug": "expd",
     "providerSymbol": "EXPD",
-    "yahooSymbol": "EXPD",
     "memberships": [
       "sp500"
     ],
@@ -2506,7 +2320,6 @@
     "exchange": "NASDAQ",
     "slug": "expe",
     "providerSymbol": "EXPE",
-    "yahooSymbol": "EXPE",
     "memberships": [
       "sp500"
     ],
@@ -2519,7 +2332,6 @@
     "exchange": "NYSE",
     "slug": "exr",
     "providerSymbol": "EXR",
-    "yahooSymbol": "EXR",
     "memberships": [
       "sp500"
     ],
@@ -2532,7 +2344,6 @@
     "exchange": "NYSE",
     "slug": "f",
     "providerSymbol": "F",
-    "yahooSymbol": "F",
     "memberships": [
       "sp500"
     ],
@@ -2545,7 +2356,6 @@
     "exchange": "NASDAQ",
     "slug": "fang",
     "providerSymbol": "FANG",
-    "yahooSymbol": "FANG",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2559,7 +2369,6 @@
     "exchange": "NASDAQ",
     "slug": "fast",
     "providerSymbol": "FAST",
-    "yahooSymbol": "FAST",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2573,7 +2382,6 @@
     "exchange": "NYSE",
     "slug": "fcx",
     "providerSymbol": "FCX",
-    "yahooSymbol": "FCX",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2587,7 +2395,6 @@
     "exchange": "NYSE",
     "slug": "fds",
     "providerSymbol": "FDS",
-    "yahooSymbol": "FDS",
     "memberships": [
       "sp500"
     ],
@@ -2600,7 +2407,6 @@
     "exchange": "NYSE",
     "slug": "fdx",
     "providerSymbol": "FDX",
-    "yahooSymbol": "FDX",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2614,7 +2420,6 @@
     "exchange": "NYSE",
     "slug": "fe",
     "providerSymbol": "FE",
-    "yahooSymbol": "FE",
     "memberships": [
       "sp500"
     ],
@@ -2627,7 +2432,6 @@
     "exchange": "NASDAQ",
     "slug": "ffiv",
     "providerSymbol": "FFIV",
-    "yahooSymbol": "FFIV",
     "memberships": [
       "sp500"
     ],
@@ -2640,7 +2444,6 @@
     "exchange": "NYSE",
     "slug": "fi",
     "providerSymbol": "FI",
-    "yahooSymbol": "FI",
     "memberships": [
       "sp500"
     ],
@@ -2653,7 +2456,6 @@
     "exchange": "NYSE",
     "slug": "fico",
     "providerSymbol": "FICO",
-    "yahooSymbol": "FICO",
     "memberships": [
       "sp500"
     ],
@@ -2666,7 +2468,6 @@
     "exchange": "NYSE",
     "slug": "fis",
     "providerSymbol": "FIS",
-    "yahooSymbol": "FIS",
     "memberships": [
       "sp500"
     ],
@@ -2679,7 +2480,6 @@
     "exchange": "NYSE",
     "slug": "fitb",
     "providerSymbol": "FITB",
-    "yahooSymbol": "FITB",
     "memberships": [
       "sp500"
     ],
@@ -2692,7 +2492,6 @@
     "exchange": "NYSE",
     "slug": "fmc",
     "providerSymbol": "FMC",
-    "yahooSymbol": "FMC",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2706,7 +2505,6 @@
     "exchange": "NASDAQ",
     "slug": "fox",
     "providerSymbol": "FOX",
-    "yahooSymbol": "FOX",
     "memberships": [
       "sp500"
     ],
@@ -2719,7 +2517,6 @@
     "exchange": "NASDAQ",
     "slug": "foxa",
     "providerSymbol": "FOXA",
-    "yahooSymbol": "FOXA",
     "memberships": [
       "sp500"
     ],
@@ -2732,7 +2529,6 @@
     "exchange": "NYSE",
     "slug": "frt",
     "providerSymbol": "FRT",
-    "yahooSymbol": "FRT",
     "memberships": [
       "sp500"
     ],
@@ -2745,7 +2541,6 @@
     "exchange": "NASDAQ",
     "slug": "fslr",
     "providerSymbol": "FSLR",
-    "yahooSymbol": "FSLR",
     "memberships": [
       "sp500"
     ],
@@ -2758,7 +2553,6 @@
     "exchange": "NASDAQ",
     "slug": "ftnt",
     "providerSymbol": "FTNT",
-    "yahooSymbol": "FTNT",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2772,7 +2566,6 @@
     "exchange": "NYSE",
     "slug": "ftv",
     "providerSymbol": "FTV",
-    "yahooSymbol": "FTV",
     "memberships": [
       "sp500"
     ],
@@ -2785,7 +2578,6 @@
     "exchange": "NYSE",
     "slug": "gd",
     "providerSymbol": "GD",
-    "yahooSymbol": "GD",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2799,7 +2591,6 @@
     "exchange": "NYSE",
     "slug": "gddy",
     "providerSymbol": "GDDY",
-    "yahooSymbol": "GDDY",
     "memberships": [
       "sp500"
     ],
@@ -2812,7 +2603,6 @@
     "exchange": "NYSE",
     "slug": "ge",
     "providerSymbol": "GE",
-    "yahooSymbol": "GE",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2826,7 +2616,6 @@
     "exchange": "NASDAQ",
     "slug": "gehc",
     "providerSymbol": "GEHC",
-    "yahooSymbol": "GEHC",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2840,7 +2629,6 @@
     "exchange": "NASDAQ",
     "slug": "gen",
     "providerSymbol": "GEN",
-    "yahooSymbol": "GEN",
     "memberships": [
       "sp500"
     ],
@@ -2853,7 +2641,6 @@
     "exchange": "NYSE",
     "slug": "gev",
     "providerSymbol": "GEV",
-    "yahooSymbol": "GEV",
     "memberships": [
       "sp500"
     ],
@@ -2866,7 +2653,6 @@
     "exchange": "NASDAQ",
     "slug": "gfs",
     "providerSymbol": "GFS",
-    "yahooSymbol": "GFS",
     "memberships": [
       "nasdaq100"
     ],
@@ -2879,7 +2665,6 @@
     "exchange": "NASDAQ",
     "slug": "gild",
     "providerSymbol": "GILD",
-    "yahooSymbol": "GILD",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2893,7 +2678,6 @@
     "exchange": "NYSE",
     "slug": "gis",
     "providerSymbol": "GIS",
-    "yahooSymbol": "GIS",
     "memberships": [
       "sp500"
     ],
@@ -2906,7 +2690,6 @@
     "exchange": "NYSE",
     "slug": "gl",
     "providerSymbol": "GL",
-    "yahooSymbol": "GL",
     "memberships": [
       "sp500"
     ],
@@ -2919,7 +2702,6 @@
     "exchange": "NYSE",
     "slug": "glw",
     "providerSymbol": "GLW",
-    "yahooSymbol": "GLW",
     "memberships": [
       "sp500"
     ],
@@ -2932,7 +2714,6 @@
     "exchange": "NYSE",
     "slug": "gm",
     "providerSymbol": "GM",
-    "yahooSymbol": "GM",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -2946,7 +2727,6 @@
     "exchange": "NYSE",
     "slug": "gnrc",
     "providerSymbol": "GNRC",
-    "yahooSymbol": "GNRC",
     "memberships": [
       "sp500"
     ],
@@ -2959,7 +2739,6 @@
     "exchange": "NASDAQ",
     "slug": "goog",
     "providerSymbol": "GOOG",
-    "yahooSymbol": "GOOG",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2973,7 +2752,6 @@
     "exchange": "NASDAQ",
     "slug": "googl",
     "providerSymbol": "GOOGL",
-    "yahooSymbol": "GOOGL",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -2987,7 +2765,6 @@
     "exchange": "NYSE",
     "slug": "gpc",
     "providerSymbol": "GPC",
-    "yahooSymbol": "GPC",
     "memberships": [
       "sp500"
     ],
@@ -3000,7 +2777,6 @@
     "exchange": "NYSE",
     "slug": "gpn",
     "providerSymbol": "GPN",
-    "yahooSymbol": "GPN",
     "memberships": [
       "sp500"
     ],
@@ -3013,7 +2789,6 @@
     "exchange": "NYSE",
     "slug": "grmn",
     "providerSymbol": "GRMN",
-    "yahooSymbol": "GRMN",
     "memberships": [
       "sp500"
     ],
@@ -3026,7 +2801,6 @@
     "exchange": "NYSE",
     "slug": "gs",
     "providerSymbol": "GS",
-    "yahooSymbol": "GS",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -3041,7 +2815,6 @@
     "exchange": "NYSE",
     "slug": "gww",
     "providerSymbol": "GWW",
-    "yahooSymbol": "GWW",
     "memberships": [
       "sp500"
     ],
@@ -3054,7 +2827,6 @@
     "exchange": "NYSE",
     "slug": "hal",
     "providerSymbol": "HAL",
-    "yahooSymbol": "HAL",
     "memberships": [
       "sp500"
     ],
@@ -3067,7 +2839,6 @@
     "exchange": "NASDAQ",
     "slug": "has",
     "providerSymbol": "HAS",
-    "yahooSymbol": "HAS",
     "memberships": [
       "sp500"
     ],
@@ -3080,7 +2851,6 @@
     "exchange": "NASDAQ",
     "slug": "hban",
     "providerSymbol": "HBAN",
-    "yahooSymbol": "HBAN",
     "memberships": [
       "sp500"
     ],
@@ -3093,7 +2863,6 @@
     "exchange": "NYSE",
     "slug": "hca",
     "providerSymbol": "HCA",
-    "yahooSymbol": "HCA",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -3107,7 +2876,6 @@
     "exchange": "NYSE",
     "slug": "hd",
     "providerSymbol": "HD",
-    "yahooSymbol": "HD",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -3122,7 +2890,6 @@
     "exchange": "NYSE",
     "slug": "hig",
     "providerSymbol": "HIG",
-    "yahooSymbol": "HIG",
     "memberships": [
       "sp500"
     ],
@@ -3135,7 +2902,6 @@
     "exchange": "NYSE",
     "slug": "hii",
     "providerSymbol": "HII",
-    "yahooSymbol": "HII",
     "memberships": [
       "sp500"
     ],
@@ -3148,7 +2914,6 @@
     "exchange": "NYSE",
     "slug": "hlt",
     "providerSymbol": "HLT",
-    "yahooSymbol": "HLT",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -3162,7 +2927,6 @@
     "exchange": "NASDAQ",
     "slug": "holx",
     "providerSymbol": "HOLX",
-    "yahooSymbol": "HOLX",
     "memberships": [
       "sp500"
     ],
@@ -3175,7 +2939,6 @@
     "exchange": "NASDAQ",
     "slug": "hon",
     "providerSymbol": "HON",
-    "yahooSymbol": "HON",
     "memberships": [
       "sp500",
       "nasdaq100",
@@ -3190,7 +2953,6 @@
     "exchange": "NASDAQ",
     "slug": "hood",
     "providerSymbol": "HOOD",
-    "yahooSymbol": "HOOD",
     "memberships": [
       "extra"
     ],
@@ -3203,7 +2965,6 @@
     "exchange": "NYSE",
     "slug": "hpe",
     "providerSymbol": "HPE",
-    "yahooSymbol": "HPE",
     "memberships": [
       "sp500"
     ],
@@ -3216,7 +2977,6 @@
     "exchange": "NYSE",
     "slug": "hpq",
     "providerSymbol": "HPQ",
-    "yahooSymbol": "HPQ",
     "memberships": [
       "sp500"
     ],
@@ -3229,7 +2989,6 @@
     "exchange": "NYSE",
     "slug": "hrl",
     "providerSymbol": "HRL",
-    "yahooSymbol": "HRL",
     "memberships": [
       "sp500"
     ],
@@ -3242,7 +3001,6 @@
     "exchange": "NASDAQ",
     "slug": "hsic",
     "providerSymbol": "HSIC",
-    "yahooSymbol": "HSIC",
     "memberships": [
       "sp500"
     ],
@@ -3255,7 +3013,6 @@
     "exchange": "NASDAQ",
     "slug": "hst",
     "providerSymbol": "HST",
-    "yahooSymbol": "HST",
     "memberships": [
       "sp500"
     ],
@@ -3268,7 +3025,6 @@
     "exchange": "NYSE",
     "slug": "hsy",
     "providerSymbol": "HSY",
-    "yahooSymbol": "HSY",
     "memberships": [
       "sp500"
     ],
@@ -3281,7 +3037,6 @@
     "exchange": "NYSE",
     "slug": "hubb",
     "providerSymbol": "HUBB",
-    "yahooSymbol": "HUBB",
     "memberships": [
       "sp500"
     ],
@@ -3294,7 +3049,6 @@
     "exchange": "NYSE",
     "slug": "hum",
     "providerSymbol": "HUM",
-    "yahooSymbol": "HUM",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -3308,7 +3062,6 @@
     "exchange": "NYSE",
     "slug": "hwm",
     "providerSymbol": "HWM",
-    "yahooSymbol": "HWM",
     "memberships": [
       "sp500"
     ],
@@ -3321,7 +3074,6 @@
     "exchange": "NYSE",
     "slug": "ibm",
     "providerSymbol": "IBM",
-    "yahooSymbol": "IBM",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -3336,7 +3088,6 @@
     "exchange": "NYSE",
     "slug": "ice",
     "providerSymbol": "ICE",
-    "yahooSymbol": "ICE",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -3350,7 +3101,6 @@
     "exchange": "NASDAQ",
     "slug": "idxx",
     "providerSymbol": "IDXX",
-    "yahooSymbol": "IDXX",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -3364,7 +3114,6 @@
     "exchange": "NYSE",
     "slug": "iex",
     "providerSymbol": "IEX",
-    "yahooSymbol": "IEX",
     "memberships": [
       "sp500"
     ],
@@ -3377,7 +3126,6 @@
     "exchange": "NYSE",
     "slug": "iff",
     "providerSymbol": "IFF",
-    "yahooSymbol": "IFF",
     "memberships": [
       "sp500"
     ],
@@ -3390,7 +3138,6 @@
     "exchange": "NASDAQ",
     "slug": "incy",
     "providerSymbol": "INCY",
-    "yahooSymbol": "INCY",
     "memberships": [
       "sp500"
     ],
@@ -3403,7 +3150,6 @@
     "exchange": "NASDAQ",
     "slug": "intc",
     "providerSymbol": "INTC",
-    "yahooSymbol": "INTC",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -3417,7 +3163,6 @@
     "exchange": "NASDAQ",
     "slug": "intu",
     "providerSymbol": "INTU",
-    "yahooSymbol": "INTU",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -3431,7 +3176,6 @@
     "exchange": "NYSE",
     "slug": "invh",
     "providerSymbol": "INVH",
-    "yahooSymbol": "INVH",
     "memberships": [
       "sp500"
     ],
@@ -3444,7 +3188,6 @@
     "exchange": "NYSE",
     "slug": "ip",
     "providerSymbol": "IP",
-    "yahooSymbol": "IP",
     "memberships": [
       "sp500"
     ],
@@ -3457,7 +3200,6 @@
     "exchange": "NYSE",
     "slug": "ipg",
     "providerSymbol": "IPG",
-    "yahooSymbol": "IPG",
     "memberships": [
       "sp500"
     ],
@@ -3470,7 +3212,6 @@
     "exchange": "NYSE",
     "slug": "iqv",
     "providerSymbol": "IQV",
-    "yahooSymbol": "IQV",
     "memberships": [
       "sp500"
     ],
@@ -3483,7 +3224,6 @@
     "exchange": "NYSE",
     "slug": "ir",
     "providerSymbol": "IR",
-    "yahooSymbol": "IR",
     "memberships": [
       "sp500"
     ],
@@ -3496,7 +3236,6 @@
     "exchange": "NYSE",
     "slug": "irm",
     "providerSymbol": "IRM",
-    "yahooSymbol": "IRM",
     "memberships": [
       "sp500"
     ],
@@ -3509,7 +3248,6 @@
     "exchange": "NASDAQ",
     "slug": "isrg",
     "providerSymbol": "ISRG",
-    "yahooSymbol": "ISRG",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -3523,7 +3261,6 @@
     "exchange": "NYSE",
     "slug": "it",
     "providerSymbol": "IT",
-    "yahooSymbol": "IT",
     "memberships": [
       "sp500"
     ],
@@ -3536,7 +3273,6 @@
     "exchange": "NYSE",
     "slug": "itw",
     "providerSymbol": "ITW",
-    "yahooSymbol": "ITW",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -3550,7 +3286,6 @@
     "exchange": "NYSE",
     "slug": "ivz",
     "providerSymbol": "IVZ",
-    "yahooSymbol": "IVZ",
     "memberships": [
       "sp500"
     ],
@@ -3563,7 +3298,6 @@
     "exchange": "NYSE",
     "slug": "j",
     "providerSymbol": "J",
-    "yahooSymbol": "J",
     "memberships": [
       "sp500"
     ],
@@ -3576,7 +3310,6 @@
     "exchange": "NASDAQ",
     "slug": "jbht",
     "providerSymbol": "JBHT",
-    "yahooSymbol": "JBHT",
     "memberships": [
       "sp500"
     ],
@@ -3589,7 +3322,6 @@
     "exchange": "NYSE",
     "slug": "jbl",
     "providerSymbol": "JBL",
-    "yahooSymbol": "JBL",
     "memberships": [
       "sp500"
     ],
@@ -3602,7 +3334,6 @@
     "exchange": "NYSE",
     "slug": "jci",
     "providerSymbol": "JCI",
-    "yahooSymbol": "JCI",
     "memberships": [
       "sp500"
     ],
@@ -3615,7 +3346,6 @@
     "exchange": "NASDAQ",
     "slug": "jkhy",
     "providerSymbol": "JKHY",
-    "yahooSymbol": "JKHY",
     "memberships": [
       "sp500"
     ],
@@ -3628,7 +3358,6 @@
     "exchange": "NYSE",
     "slug": "jnj",
     "providerSymbol": "JNJ",
-    "yahooSymbol": "JNJ",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -3643,7 +3372,6 @@
     "exchange": "NYSE",
     "slug": "jpm",
     "providerSymbol": "JPM",
-    "yahooSymbol": "JPM",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -3658,7 +3386,6 @@
     "exchange": "NASDAQ",
     "slug": "kdp",
     "providerSymbol": "KDP",
-    "yahooSymbol": "KDP",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -3672,7 +3399,6 @@
     "exchange": "NYSE",
     "slug": "key",
     "providerSymbol": "KEY",
-    "yahooSymbol": "KEY",
     "memberships": [
       "sp500"
     ],
@@ -3685,7 +3411,6 @@
     "exchange": "NYSE",
     "slug": "keys",
     "providerSymbol": "KEYS",
-    "yahooSymbol": "KEYS",
     "memberships": [
       "sp500"
     ],
@@ -3698,7 +3423,6 @@
     "exchange": "NASDAQ",
     "slug": "khc",
     "providerSymbol": "KHC",
-    "yahooSymbol": "KHC",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -3712,7 +3436,6 @@
     "exchange": "NYSE",
     "slug": "kim",
     "providerSymbol": "KIM",
-    "yahooSymbol": "KIM",
     "memberships": [
       "sp500"
     ],
@@ -3725,7 +3448,6 @@
     "exchange": "NASDAQ",
     "slug": "klac",
     "providerSymbol": "KLAC",
-    "yahooSymbol": "KLAC",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -3739,7 +3461,6 @@
     "exchange": "NASDAQ",
     "slug": "kmb",
     "providerSymbol": "KMB",
-    "yahooSymbol": "KMB",
     "memberships": [
       "sp500"
     ],
@@ -3752,7 +3473,6 @@
     "exchange": "NYSE",
     "slug": "kmi",
     "providerSymbol": "KMI",
-    "yahooSymbol": "KMI",
     "memberships": [
       "sp500"
     ],
@@ -3765,7 +3485,6 @@
     "exchange": "NYSE",
     "slug": "kmx",
     "providerSymbol": "KMX",
-    "yahooSymbol": "KMX",
     "memberships": [
       "sp500"
     ],
@@ -3778,7 +3497,6 @@
     "exchange": "NYSE",
     "slug": "ko",
     "providerSymbol": "KO",
-    "yahooSymbol": "KO",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -3793,7 +3511,6 @@
     "exchange": "NYSE",
     "slug": "kr",
     "providerSymbol": "KR",
-    "yahooSymbol": "KR",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -3807,7 +3524,6 @@
     "exchange": "NYSE",
     "slug": "kvue",
     "providerSymbol": "KVUE",
-    "yahooSymbol": "KVUE",
     "memberships": [
       "sp500"
     ],
@@ -3820,7 +3536,6 @@
     "exchange": "NYSE",
     "slug": "l",
     "providerSymbol": "L",
-    "yahooSymbol": "L",
     "memberships": [
       "sp500"
     ],
@@ -3833,7 +3548,6 @@
     "exchange": "NYSE",
     "slug": "ldos",
     "providerSymbol": "LDOS",
-    "yahooSymbol": "LDOS",
     "memberships": [
       "sp500"
     ],
@@ -3846,7 +3560,6 @@
     "exchange": "NYSE",
     "slug": "len",
     "providerSymbol": "LEN",
-    "yahooSymbol": "LEN",
     "memberships": [
       "sp500"
     ],
@@ -3859,7 +3572,6 @@
     "exchange": "NYSE",
     "slug": "lh",
     "providerSymbol": "LH",
-    "yahooSymbol": "LH",
     "memberships": [
       "sp500"
     ],
@@ -3872,7 +3584,6 @@
     "exchange": "NYSE",
     "slug": "lhx",
     "providerSymbol": "LHX",
-    "yahooSymbol": "LHX",
     "memberships": [
       "sp500"
     ],
@@ -3885,7 +3596,6 @@
     "exchange": "NASDAQ",
     "slug": "lin",
     "providerSymbol": "LIN",
-    "yahooSymbol": "LIN",
     "memberships": [
       "sp500",
       "nasdaq100",
@@ -3900,7 +3610,6 @@
     "exchange": "NASDAQ",
     "slug": "lkq",
     "providerSymbol": "LKQ",
-    "yahooSymbol": "LKQ",
     "memberships": [
       "sp500"
     ],
@@ -3913,7 +3622,6 @@
     "exchange": "NYSE",
     "slug": "lly",
     "providerSymbol": "LLY",
-    "yahooSymbol": "LLY",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -3927,7 +3635,6 @@
     "exchange": "NYSE",
     "slug": "lmt",
     "providerSymbol": "LMT",
-    "yahooSymbol": "LMT",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -3941,7 +3648,6 @@
     "exchange": "NASDAQ",
     "slug": "lnt",
     "providerSymbol": "LNT",
-    "yahooSymbol": "LNT",
     "memberships": [
       "sp500"
     ],
@@ -3954,7 +3660,6 @@
     "exchange": "NYSE",
     "slug": "low",
     "providerSymbol": "LOW",
-    "yahooSymbol": "LOW",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -3968,7 +3673,6 @@
     "exchange": "NASDAQ",
     "slug": "lrcx",
     "providerSymbol": "LRCX",
-    "yahooSymbol": "LRCX",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -3982,7 +3686,6 @@
     "exchange": "NASDAQ",
     "slug": "lulu",
     "providerSymbol": "LULU",
-    "yahooSymbol": "LULU",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -3996,7 +3699,6 @@
     "exchange": "NYSE",
     "slug": "luv",
     "providerSymbol": "LUV",
-    "yahooSymbol": "LUV",
     "memberships": [
       "sp500"
     ],
@@ -4009,7 +3711,6 @@
     "exchange": "NYSE",
     "slug": "lvs",
     "providerSymbol": "LVS",
-    "yahooSymbol": "LVS",
     "memberships": [
       "sp500"
     ],
@@ -4022,7 +3723,6 @@
     "exchange": "NYSE",
     "slug": "lw",
     "providerSymbol": "LW",
-    "yahooSymbol": "LW",
     "memberships": [
       "sp500"
     ],
@@ -4035,7 +3735,6 @@
     "exchange": "NYSE",
     "slug": "lyb",
     "providerSymbol": "LYB",
-    "yahooSymbol": "LYB",
     "memberships": [
       "sp500"
     ],
@@ -4048,7 +3747,6 @@
     "exchange": "NYSE",
     "slug": "lyv",
     "providerSymbol": "LYV",
-    "yahooSymbol": "LYV",
     "memberships": [
       "sp500"
     ],
@@ -4061,7 +3759,6 @@
     "exchange": "NYSE",
     "slug": "ma",
     "providerSymbol": "MA",
-    "yahooSymbol": "MA",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4075,7 +3772,6 @@
     "exchange": "NYSE",
     "slug": "maa",
     "providerSymbol": "MAA",
-    "yahooSymbol": "MAA",
     "memberships": [
       "sp500"
     ],
@@ -4088,7 +3784,6 @@
     "exchange": "NASDAQ",
     "slug": "mar",
     "providerSymbol": "MAR",
-    "yahooSymbol": "MAR",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4102,7 +3797,6 @@
     "exchange": "NYSE",
     "slug": "mas",
     "providerSymbol": "MAS",
-    "yahooSymbol": "MAS",
     "memberships": [
       "sp500"
     ],
@@ -4115,7 +3809,6 @@
     "exchange": "NYSE",
     "slug": "mcd",
     "providerSymbol": "MCD",
-    "yahooSymbol": "MCD",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -4130,7 +3823,6 @@
     "exchange": "NASDAQ",
     "slug": "mchp",
     "providerSymbol": "MCHP",
-    "yahooSymbol": "MCHP",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4144,7 +3836,6 @@
     "exchange": "NYSE",
     "slug": "mck",
     "providerSymbol": "MCK",
-    "yahooSymbol": "MCK",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4158,7 +3849,6 @@
     "exchange": "NYSE",
     "slug": "mco",
     "providerSymbol": "MCO",
-    "yahooSymbol": "MCO",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4172,7 +3862,6 @@
     "exchange": "NASDAQ",
     "slug": "mdlz",
     "providerSymbol": "MDLZ",
-    "yahooSymbol": "MDLZ",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4186,7 +3875,6 @@
     "exchange": "NYSE",
     "slug": "mdt",
     "providerSymbol": "MDT",
-    "yahooSymbol": "MDT",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4200,7 +3888,6 @@
     "exchange": "NASDAQ",
     "slug": "meli",
     "providerSymbol": "MELI",
-    "yahooSymbol": "MELI",
     "memberships": [
       "nasdaq100"
     ],
@@ -4213,7 +3900,6 @@
     "exchange": "NYSE",
     "slug": "met",
     "providerSymbol": "MET",
-    "yahooSymbol": "MET",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4227,7 +3913,6 @@
     "exchange": "NASDAQ",
     "slug": "meta",
     "providerSymbol": "META",
-    "yahooSymbol": "META",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4241,7 +3926,6 @@
     "exchange": "NYSE",
     "slug": "mgm",
     "providerSymbol": "MGM",
-    "yahooSymbol": "MGM",
     "memberships": [
       "sp500"
     ],
@@ -4254,7 +3938,6 @@
     "exchange": "NYSE",
     "slug": "mhk",
     "providerSymbol": "MHK",
-    "yahooSymbol": "MHK",
     "memberships": [
       "sp500"
     ],
@@ -4267,7 +3950,6 @@
     "exchange": "NYSE",
     "slug": "mkc",
     "providerSymbol": "MKC",
-    "yahooSymbol": "MKC",
     "memberships": [
       "sp500"
     ],
@@ -4280,7 +3962,6 @@
     "exchange": "NASDAQ",
     "slug": "mktx",
     "providerSymbol": "MKTX",
-    "yahooSymbol": "MKTX",
     "memberships": [
       "sp500"
     ],
@@ -4293,7 +3974,6 @@
     "exchange": "NYSE",
     "slug": "mlm",
     "providerSymbol": "MLM",
-    "yahooSymbol": "MLM",
     "memberships": [
       "sp500"
     ],
@@ -4306,7 +3986,6 @@
     "exchange": "NYSE",
     "slug": "mmc",
     "providerSymbol": "MMC",
-    "yahooSymbol": "MMC",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4320,7 +3999,6 @@
     "exchange": "NYSE",
     "slug": "mmm",
     "providerSymbol": "MMM",
-    "yahooSymbol": "MMM",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -4335,7 +4013,6 @@
     "exchange": "NASDAQ",
     "slug": "mnst",
     "providerSymbol": "MNST",
-    "yahooSymbol": "MNST",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4349,7 +4026,6 @@
     "exchange": "NYSE",
     "slug": "mo",
     "providerSymbol": "MO",
-    "yahooSymbol": "MO",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4363,7 +4039,6 @@
     "exchange": "NYSE",
     "slug": "moh",
     "providerSymbol": "MOH",
-    "yahooSymbol": "MOH",
     "memberships": [
       "sp500"
     ],
@@ -4376,7 +4051,6 @@
     "exchange": "NYSE",
     "slug": "mos",
     "providerSymbol": "MOS",
-    "yahooSymbol": "MOS",
     "memberships": [
       "sp500"
     ],
@@ -4389,7 +4063,6 @@
     "exchange": "NYSE",
     "slug": "mpc",
     "providerSymbol": "MPC",
-    "yahooSymbol": "MPC",
     "memberships": [
       "sp500"
     ],
@@ -4402,7 +4075,6 @@
     "exchange": "NASDAQ",
     "slug": "mpwr",
     "providerSymbol": "MPWR",
-    "yahooSymbol": "MPWR",
     "memberships": [
       "sp500"
     ],
@@ -4415,7 +4087,6 @@
     "exchange": "NYSE",
     "slug": "mrk",
     "providerSymbol": "MRK",
-    "yahooSymbol": "MRK",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -4430,7 +4101,6 @@
     "exchange": "NASDAQ",
     "slug": "mrna",
     "providerSymbol": "MRNA",
-    "yahooSymbol": "MRNA",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4444,7 +4114,6 @@
     "exchange": "NASDAQ",
     "slug": "mrvl",
     "providerSymbol": "MRVL",
-    "yahooSymbol": "MRVL",
     "memberships": [
       "nasdaq100"
     ],
@@ -4457,7 +4126,6 @@
     "exchange": "NYSE",
     "slug": "ms",
     "providerSymbol": "MS",
-    "yahooSymbol": "MS",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4471,7 +4139,6 @@
     "exchange": "NYSE",
     "slug": "msci",
     "providerSymbol": "MSCI",
-    "yahooSymbol": "MSCI",
     "memberships": [
       "sp500"
     ],
@@ -4484,7 +4151,6 @@
     "exchange": "NASDAQ",
     "slug": "msft",
     "providerSymbol": "MSFT",
-    "yahooSymbol": "MSFT",
     "memberships": [
       "sp500",
       "nasdaq100",
@@ -4499,7 +4165,6 @@
     "exchange": "NYSE",
     "slug": "msi",
     "providerSymbol": "MSI",
-    "yahooSymbol": "MSI",
     "memberships": [
       "sp500"
     ],
@@ -4512,7 +4177,6 @@
     "exchange": "NASDAQ",
     "slug": "mstr",
     "providerSymbol": "MSTR",
-    "yahooSymbol": "MSTR",
     "memberships": [
       "nasdaq100",
       "extra"
@@ -4526,7 +4190,6 @@
     "exchange": "NYSE",
     "slug": "mtb",
     "providerSymbol": "MTB",
-    "yahooSymbol": "MTB",
     "memberships": [
       "sp500"
     ],
@@ -4539,7 +4202,6 @@
     "exchange": "NASDAQ",
     "slug": "mtch",
     "providerSymbol": "MTCH",
-    "yahooSymbol": "MTCH",
     "memberships": [
       "sp500"
     ],
@@ -4552,7 +4214,6 @@
     "exchange": "NYSE",
     "slug": "mtd",
     "providerSymbol": "MTD",
-    "yahooSymbol": "MTD",
     "memberships": [
       "sp500"
     ],
@@ -4565,7 +4226,6 @@
     "exchange": "NASDAQ",
     "slug": "mu",
     "providerSymbol": "MU",
-    "yahooSymbol": "MU",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4579,7 +4239,6 @@
     "exchange": "NYSE",
     "slug": "nclh",
     "providerSymbol": "NCLH",
-    "yahooSymbol": "NCLH",
     "memberships": [
       "sp500"
     ],
@@ -4592,7 +4251,6 @@
     "exchange": "NASDAQ",
     "slug": "ndaq",
     "providerSymbol": "NDAQ",
-    "yahooSymbol": "NDAQ",
     "memberships": [
       "sp500"
     ],
@@ -4605,7 +4263,6 @@
     "exchange": "NASDAQ",
     "slug": "ndsn",
     "providerSymbol": "NDSN",
-    "yahooSymbol": "NDSN",
     "memberships": [
       "sp500"
     ],
@@ -4618,7 +4275,6 @@
     "exchange": "NYSE",
     "slug": "nee",
     "providerSymbol": "NEE",
-    "yahooSymbol": "NEE",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4632,7 +4288,6 @@
     "exchange": "NYSE",
     "slug": "nem",
     "providerSymbol": "NEM",
-    "yahooSymbol": "NEM",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4646,7 +4301,6 @@
     "exchange": "NASDAQ",
     "slug": "nflx",
     "providerSymbol": "NFLX",
-    "yahooSymbol": "NFLX",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4660,7 +4314,6 @@
     "exchange": "NYSE",
     "slug": "ni",
     "providerSymbol": "NI",
-    "yahooSymbol": "NI",
     "memberships": [
       "sp500"
     ],
@@ -4673,7 +4326,6 @@
     "exchange": "NYSE",
     "slug": "nke",
     "providerSymbol": "NKE",
-    "yahooSymbol": "NKE",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -4688,7 +4340,6 @@
     "exchange": "NYSE",
     "slug": "noc",
     "providerSymbol": "NOC",
-    "yahooSymbol": "NOC",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4702,7 +4353,6 @@
     "exchange": "NYSE",
     "slug": "now",
     "providerSymbol": "NOW",
-    "yahooSymbol": "NOW",
     "memberships": [
       "sp500"
     ],
@@ -4715,7 +4365,6 @@
     "exchange": "NYSE",
     "slug": "nrg",
     "providerSymbol": "NRG",
-    "yahooSymbol": "NRG",
     "memberships": [
       "sp500"
     ],
@@ -4728,7 +4377,6 @@
     "exchange": "NYSE",
     "slug": "nsc",
     "providerSymbol": "NSC",
-    "yahooSymbol": "NSC",
     "memberships": [
       "sp500"
     ],
@@ -4741,7 +4389,6 @@
     "exchange": "NASDAQ",
     "slug": "ntap",
     "providerSymbol": "NTAP",
-    "yahooSymbol": "NTAP",
     "memberships": [
       "sp500"
     ],
@@ -4754,7 +4401,6 @@
     "exchange": "NASDAQ",
     "slug": "ntrs",
     "providerSymbol": "NTRS",
-    "yahooSymbol": "NTRS",
     "memberships": [
       "sp500"
     ],
@@ -4767,7 +4413,6 @@
     "exchange": "NYSE",
     "slug": "nue",
     "providerSymbol": "NUE",
-    "yahooSymbol": "NUE",
     "memberships": [
       "sp500"
     ],
@@ -4780,7 +4425,6 @@
     "exchange": "NASDAQ",
     "slug": "nvda",
     "providerSymbol": "NVDA",
-    "yahooSymbol": "NVDA",
     "memberships": [
       "sp500",
       "nasdaq100",
@@ -4795,7 +4439,6 @@
     "exchange": "NYSE",
     "slug": "nvr",
     "providerSymbol": "NVR",
-    "yahooSymbol": "NVR",
     "memberships": [
       "sp500"
     ],
@@ -4808,7 +4451,6 @@
     "exchange": "NASDAQ",
     "slug": "nws",
     "providerSymbol": "NWS",
-    "yahooSymbol": "NWS",
     "memberships": [
       "sp500"
     ],
@@ -4821,7 +4463,6 @@
     "exchange": "NASDAQ",
     "slug": "nwsa",
     "providerSymbol": "NWSA",
-    "yahooSymbol": "NWSA",
     "memberships": [
       "sp500"
     ],
@@ -4834,7 +4475,6 @@
     "exchange": "NASDAQ",
     "slug": "nxpi",
     "providerSymbol": "NXPI",
-    "yahooSymbol": "NXPI",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4848,7 +4488,6 @@
     "exchange": "NYSE",
     "slug": "o",
     "providerSymbol": "O",
-    "yahooSymbol": "O",
     "memberships": [
       "sp500"
     ],
@@ -4861,7 +4500,6 @@
     "exchange": "NASDAQ",
     "slug": "odfl",
     "providerSymbol": "ODFL",
-    "yahooSymbol": "ODFL",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4875,7 +4513,6 @@
     "exchange": "NYSE",
     "slug": "oke",
     "providerSymbol": "OKE",
-    "yahooSymbol": "OKE",
     "memberships": [
       "sp500"
     ],
@@ -4888,7 +4525,6 @@
     "exchange": "NYSE",
     "slug": "omc",
     "providerSymbol": "OMC",
-    "yahooSymbol": "OMC",
     "memberships": [
       "sp500"
     ],
@@ -4901,7 +4537,6 @@
     "exchange": "NASDAQ",
     "slug": "on",
     "providerSymbol": "ON",
-    "yahooSymbol": "ON",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4915,7 +4550,6 @@
     "exchange": "NYSE",
     "slug": "orcl",
     "providerSymbol": "ORCL",
-    "yahooSymbol": "ORCL",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -4929,7 +4563,6 @@
     "exchange": "NASDAQ",
     "slug": "orly",
     "providerSymbol": "ORLY",
-    "yahooSymbol": "ORLY",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4943,7 +4576,6 @@
     "exchange": "NYSE",
     "slug": "otis",
     "providerSymbol": "OTIS",
-    "yahooSymbol": "OTIS",
     "memberships": [
       "sp500"
     ],
@@ -4956,7 +4588,6 @@
     "exchange": "NYSE",
     "slug": "oxy",
     "providerSymbol": "OXY",
-    "yahooSymbol": "OXY",
     "memberships": [
       "sp500"
     ],
@@ -4969,7 +4600,6 @@
     "exchange": "NASDAQ",
     "slug": "panw",
     "providerSymbol": "PANW",
-    "yahooSymbol": "PANW",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -4983,7 +4613,6 @@
     "exchange": "NYSE",
     "slug": "payc",
     "providerSymbol": "PAYC",
-    "yahooSymbol": "PAYC",
     "memberships": [
       "sp500"
     ],
@@ -4996,7 +4625,6 @@
     "exchange": "NASDAQ",
     "slug": "payx",
     "providerSymbol": "PAYX",
-    "yahooSymbol": "PAYX",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -5010,7 +4638,6 @@
     "exchange": "NASDAQ",
     "slug": "pcar",
     "providerSymbol": "PCAR",
-    "yahooSymbol": "PCAR",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -5024,7 +4651,6 @@
     "exchange": "NYSE",
     "slug": "pcg",
     "providerSymbol": "PCG",
-    "yahooSymbol": "PCG",
     "memberships": [
       "sp500"
     ],
@@ -5037,7 +4663,6 @@
     "exchange": "NASDAQ",
     "slug": "pdd",
     "providerSymbol": "PDD",
-    "yahooSymbol": "PDD",
     "memberships": [
       "nasdaq100"
     ],
@@ -5050,7 +4675,6 @@
     "exchange": "NYSE",
     "slug": "peg",
     "providerSymbol": "PEG",
-    "yahooSymbol": "PEG",
     "memberships": [
       "sp500"
     ],
@@ -5063,7 +4687,6 @@
     "exchange": "NASDAQ",
     "slug": "pep",
     "providerSymbol": "PEP",
-    "yahooSymbol": "PEP",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -5077,7 +4700,6 @@
     "exchange": "NYSE",
     "slug": "pfe",
     "providerSymbol": "PFE",
-    "yahooSymbol": "PFE",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5091,7 +4713,6 @@
     "exchange": "NASDAQ",
     "slug": "pfg",
     "providerSymbol": "PFG",
-    "yahooSymbol": "PFG",
     "memberships": [
       "sp500"
     ],
@@ -5104,7 +4725,6 @@
     "exchange": "NYSE",
     "slug": "pg",
     "providerSymbol": "PG",
-    "yahooSymbol": "PG",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -5119,7 +4739,6 @@
     "exchange": "NYSE",
     "slug": "pgr",
     "providerSymbol": "PGR",
-    "yahooSymbol": "PGR",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5133,7 +4752,6 @@
     "exchange": "NYSE",
     "slug": "ph",
     "providerSymbol": "PH",
-    "yahooSymbol": "PH",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5147,7 +4765,6 @@
     "exchange": "NYSE",
     "slug": "phm",
     "providerSymbol": "PHM",
-    "yahooSymbol": "PHM",
     "memberships": [
       "sp500"
     ],
@@ -5160,7 +4777,6 @@
     "exchange": "NYSE",
     "slug": "pkg",
     "providerSymbol": "PKG",
-    "yahooSymbol": "PKG",
     "memberships": [
       "sp500"
     ],
@@ -5173,7 +4789,6 @@
     "exchange": "NYSE",
     "slug": "pld",
     "providerSymbol": "PLD",
-    "yahooSymbol": "PLD",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5187,7 +4802,6 @@
     "exchange": "NASDAQ",
     "slug": "pltr",
     "providerSymbol": "PLTR",
-    "yahooSymbol": "PLTR",
     "memberships": [
       "sp500",
       "nasdaq100",
@@ -5202,7 +4816,6 @@
     "exchange": "NYSE",
     "slug": "pm",
     "providerSymbol": "PM",
-    "yahooSymbol": "PM",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5216,7 +4829,6 @@
     "exchange": "NYSE",
     "slug": "pnc",
     "providerSymbol": "PNC",
-    "yahooSymbol": "PNC",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5230,7 +4842,6 @@
     "exchange": "NYSE",
     "slug": "pnr",
     "providerSymbol": "PNR",
-    "yahooSymbol": "PNR",
     "memberships": [
       "sp500"
     ],
@@ -5243,7 +4854,6 @@
     "exchange": "NYSE",
     "slug": "pnw",
     "providerSymbol": "PNW",
-    "yahooSymbol": "PNW",
     "memberships": [
       "sp500"
     ],
@@ -5256,7 +4866,6 @@
     "exchange": "NASDAQ",
     "slug": "podd",
     "providerSymbol": "PODD",
-    "yahooSymbol": "PODD",
     "memberships": [
       "sp500"
     ],
@@ -5269,7 +4878,6 @@
     "exchange": "NASDAQ",
     "slug": "pool",
     "providerSymbol": "POOL",
-    "yahooSymbol": "POOL",
     "memberships": [
       "sp500"
     ],
@@ -5282,7 +4890,6 @@
     "exchange": "NYSE",
     "slug": "ppg",
     "providerSymbol": "PPG",
-    "yahooSymbol": "PPG",
     "memberships": [
       "sp500"
     ],
@@ -5295,7 +4902,6 @@
     "exchange": "NYSE",
     "slug": "ppl",
     "providerSymbol": "PPL",
-    "yahooSymbol": "PPL",
     "memberships": [
       "sp500"
     ],
@@ -5308,7 +4914,6 @@
     "exchange": "NYSE",
     "slug": "pru",
     "providerSymbol": "PRU",
-    "yahooSymbol": "PRU",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5322,7 +4927,6 @@
     "exchange": "NYSE",
     "slug": "psa",
     "providerSymbol": "PSA",
-    "yahooSymbol": "PSA",
     "memberships": [
       "sp500"
     ],
@@ -5335,7 +4939,6 @@
     "exchange": "NYSE",
     "slug": "psx",
     "providerSymbol": "PSX",
-    "yahooSymbol": "PSX",
     "memberships": [
       "sp500"
     ],
@@ -5348,7 +4951,6 @@
     "exchange": "NASDAQ",
     "slug": "ptc",
     "providerSymbol": "PTC",
-    "yahooSymbol": "PTC",
     "memberships": [
       "sp500"
     ],
@@ -5361,7 +4963,6 @@
     "exchange": "NYSE",
     "slug": "pwr",
     "providerSymbol": "PWR",
-    "yahooSymbol": "PWR",
     "memberships": [
       "sp500"
     ],
@@ -5374,7 +4975,6 @@
     "exchange": "NASDAQ",
     "slug": "pypl",
     "providerSymbol": "PYPL",
-    "yahooSymbol": "PYPL",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -5388,7 +4988,6 @@
     "exchange": "NASDAQ",
     "slug": "qcom",
     "providerSymbol": "QCOM",
-    "yahooSymbol": "QCOM",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -5402,7 +5001,6 @@
     "exchange": "NASDAQ",
     "slug": "qrvo",
     "providerSymbol": "QRVO",
-    "yahooSymbol": "QRVO",
     "memberships": [
       "sp500"
     ],
@@ -5415,7 +5013,6 @@
     "exchange": "NYSE",
     "slug": "rcl",
     "providerSymbol": "RCL",
-    "yahooSymbol": "RCL",
     "memberships": [
       "sp500"
     ],
@@ -5428,7 +5025,6 @@
     "exchange": "NYSE",
     "slug": "rddt",
     "providerSymbol": "RDDT",
-    "yahooSymbol": "RDDT",
     "memberships": [
       "extra"
     ],
@@ -5441,7 +5037,6 @@
     "exchange": "NASDAQ",
     "slug": "reg",
     "providerSymbol": "REG",
-    "yahooSymbol": "REG",
     "memberships": [
       "sp500"
     ],
@@ -5454,7 +5049,6 @@
     "exchange": "NASDAQ",
     "slug": "regn",
     "providerSymbol": "REGN",
-    "yahooSymbol": "REGN",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -5468,7 +5062,6 @@
     "exchange": "NYSE",
     "slug": "rf",
     "providerSymbol": "RF",
-    "yahooSymbol": "RF",
     "memberships": [
       "sp500"
     ],
@@ -5481,7 +5074,6 @@
     "exchange": "NYSE",
     "slug": "rhi",
     "providerSymbol": "RHI",
-    "yahooSymbol": "RHI",
     "memberships": [
       "sp500"
     ],
@@ -5494,7 +5086,6 @@
     "exchange": "NASDAQ",
     "slug": "rivn",
     "providerSymbol": "RIVN",
-    "yahooSymbol": "RIVN",
     "memberships": [
       "extra"
     ],
@@ -5507,7 +5098,6 @@
     "exchange": "NYSE",
     "slug": "rjf",
     "providerSymbol": "RJF",
-    "yahooSymbol": "RJF",
     "memberships": [
       "sp500"
     ],
@@ -5520,7 +5110,6 @@
     "exchange": "NYSE",
     "slug": "rl",
     "providerSymbol": "RL",
-    "yahooSymbol": "RL",
     "memberships": [
       "sp500"
     ],
@@ -5533,7 +5122,6 @@
     "exchange": "NYSE",
     "slug": "rmd",
     "providerSymbol": "RMD",
-    "yahooSymbol": "RMD",
     "memberships": [
       "sp500"
     ],
@@ -5546,7 +5134,6 @@
     "exchange": "NYSE",
     "slug": "rok",
     "providerSymbol": "ROK",
-    "yahooSymbol": "ROK",
     "memberships": [
       "sp500"
     ],
@@ -5559,7 +5146,6 @@
     "exchange": "NYSE",
     "slug": "rol",
     "providerSymbol": "ROL",
-    "yahooSymbol": "ROL",
     "memberships": [
       "sp500"
     ],
@@ -5572,7 +5158,6 @@
     "exchange": "NASDAQ",
     "slug": "rop",
     "providerSymbol": "ROP",
-    "yahooSymbol": "ROP",
     "memberships": [
       "sp500"
     ],
@@ -5585,7 +5170,6 @@
     "exchange": "NASDAQ",
     "slug": "rost",
     "providerSymbol": "ROST",
-    "yahooSymbol": "ROST",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -5599,7 +5183,6 @@
     "exchange": "NYSE",
     "slug": "rsg",
     "providerSymbol": "RSG",
-    "yahooSymbol": "RSG",
     "memberships": [
       "sp500"
     ],
@@ -5612,7 +5195,6 @@
     "exchange": "NYSE",
     "slug": "rtx",
     "providerSymbol": "RTX",
-    "yahooSymbol": "RTX",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5626,7 +5208,6 @@
     "exchange": "NYSE",
     "slug": "rvty",
     "providerSymbol": "RVTY",
-    "yahooSymbol": "RVTY",
     "memberships": [
       "sp500"
     ],
@@ -5639,7 +5220,6 @@
     "exchange": "NASDAQ",
     "slug": "sbac",
     "providerSymbol": "SBAC",
-    "yahooSymbol": "SBAC",
     "memberships": [
       "sp500"
     ],
@@ -5652,7 +5232,6 @@
     "exchange": "NASDAQ",
     "slug": "sbux",
     "providerSymbol": "SBUX",
-    "yahooSymbol": "SBUX",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -5666,7 +5245,6 @@
     "exchange": "NYSE",
     "slug": "schw",
     "providerSymbol": "SCHW",
-    "yahooSymbol": "SCHW",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5680,7 +5258,6 @@
     "exchange": "NYSE",
     "slug": "shw",
     "providerSymbol": "SHW",
-    "yahooSymbol": "SHW",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -5695,7 +5272,6 @@
     "exchange": "NYSE",
     "slug": "sjm",
     "providerSymbol": "SJM",
-    "yahooSymbol": "SJM",
     "memberships": [
       "sp500"
     ],
@@ -5708,7 +5284,6 @@
     "exchange": "NYSE",
     "slug": "slb",
     "providerSymbol": "SLB",
-    "yahooSymbol": "SLB",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5722,7 +5297,6 @@
     "exchange": "NASDAQ",
     "slug": "smci",
     "providerSymbol": "SMCI",
-    "yahooSymbol": "SMCI",
     "memberships": [
       "sp500"
     ],
@@ -5735,7 +5309,6 @@
     "exchange": "NYSE",
     "slug": "sna",
     "providerSymbol": "SNA",
-    "yahooSymbol": "SNA",
     "memberships": [
       "sp500"
     ],
@@ -5748,7 +5321,6 @@
     "exchange": "NASDAQ",
     "slug": "snps",
     "providerSymbol": "SNPS",
-    "yahooSymbol": "SNPS",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -5762,7 +5334,6 @@
     "exchange": "NYSE",
     "slug": "so",
     "providerSymbol": "SO",
-    "yahooSymbol": "SO",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5776,7 +5347,6 @@
     "exchange": "NASDAQ",
     "slug": "sofi",
     "providerSymbol": "SOFI",
-    "yahooSymbol": "SOFI",
     "memberships": [
       "extra"
     ],
@@ -5789,7 +5359,6 @@
     "exchange": "NYSE",
     "slug": "spg",
     "providerSymbol": "SPG",
-    "yahooSymbol": "SPG",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5803,7 +5372,6 @@
     "exchange": "NYSE",
     "slug": "spgi",
     "providerSymbol": "SPGI",
-    "yahooSymbol": "SPGI",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5817,7 +5385,6 @@
     "exchange": "NYSE",
     "slug": "sre",
     "providerSymbol": "SRE",
-    "yahooSymbol": "SRE",
     "memberships": [
       "sp500"
     ],
@@ -5830,7 +5397,6 @@
     "exchange": "NYSE",
     "slug": "ste",
     "providerSymbol": "STE",
-    "yahooSymbol": "STE",
     "memberships": [
       "sp500"
     ],
@@ -5843,7 +5409,6 @@
     "exchange": "NASDAQ",
     "slug": "stld",
     "providerSymbol": "STLD",
-    "yahooSymbol": "STLD",
     "memberships": [
       "sp500"
     ],
@@ -5856,7 +5421,6 @@
     "exchange": "NYSE",
     "slug": "stt",
     "providerSymbol": "STT",
-    "yahooSymbol": "STT",
     "memberships": [
       "sp500"
     ],
@@ -5869,7 +5433,6 @@
     "exchange": "NASDAQ",
     "slug": "stx",
     "providerSymbol": "STX",
-    "yahooSymbol": "STX",
     "memberships": [
       "sp500"
     ],
@@ -5882,7 +5445,6 @@
     "exchange": "NYSE",
     "slug": "stz",
     "providerSymbol": "STZ",
-    "yahooSymbol": "STZ",
     "memberships": [
       "sp500"
     ],
@@ -5895,7 +5457,6 @@
     "exchange": "NYSE",
     "slug": "swk",
     "providerSymbol": "SWK",
-    "yahooSymbol": "SWK",
     "memberships": [
       "sp500"
     ],
@@ -5908,7 +5469,6 @@
     "exchange": "NASDAQ",
     "slug": "swks",
     "providerSymbol": "SWKS",
-    "yahooSymbol": "SWKS",
     "memberships": [
       "sp500"
     ],
@@ -5921,7 +5481,6 @@
     "exchange": "NYSE",
     "slug": "syf",
     "providerSymbol": "SYF",
-    "yahooSymbol": "SYF",
     "memberships": [
       "sp500"
     ],
@@ -5934,7 +5493,6 @@
     "exchange": "NYSE",
     "slug": "syk",
     "providerSymbol": "SYK",
-    "yahooSymbol": "SYK",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5948,7 +5506,6 @@
     "exchange": "NYSE",
     "slug": "syy",
     "providerSymbol": "SYY",
-    "yahooSymbol": "SYY",
     "memberships": [
       "sp500"
     ],
@@ -5961,7 +5518,6 @@
     "exchange": "NYSE",
     "slug": "t",
     "providerSymbol": "T",
-    "yahooSymbol": "T",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -5975,7 +5531,6 @@
     "exchange": "NYSE",
     "slug": "tap",
     "providerSymbol": "TAP",
-    "yahooSymbol": "TAP",
     "memberships": [
       "sp500"
     ],
@@ -5988,7 +5543,6 @@
     "exchange": "NYSE",
     "slug": "tdg",
     "providerSymbol": "TDG",
-    "yahooSymbol": "TDG",
     "memberships": [
       "sp500"
     ],
@@ -6001,7 +5555,6 @@
     "exchange": "NYSE",
     "slug": "tdy",
     "providerSymbol": "TDY",
-    "yahooSymbol": "TDY",
     "memberships": [
       "sp500"
     ],
@@ -6014,7 +5567,6 @@
     "exchange": "NASDAQ",
     "slug": "team",
     "providerSymbol": "TEAM",
-    "yahooSymbol": "TEAM",
     "memberships": [
       "nasdaq100"
     ],
@@ -6027,7 +5579,6 @@
     "exchange": "NASDAQ",
     "slug": "tech",
     "providerSymbol": "TECH",
-    "yahooSymbol": "TECH",
     "memberships": [
       "sp500"
     ],
@@ -6040,7 +5591,6 @@
     "exchange": "NYSE",
     "slug": "tel",
     "providerSymbol": "TEL",
-    "yahooSymbol": "TEL",
     "memberships": [
       "sp500"
     ],
@@ -6053,7 +5603,6 @@
     "exchange": "NASDAQ",
     "slug": "ter",
     "providerSymbol": "TER",
-    "yahooSymbol": "TER",
     "memberships": [
       "sp500"
     ],
@@ -6066,7 +5615,6 @@
     "exchange": "NYSE",
     "slug": "tfc",
     "providerSymbol": "TFC",
-    "yahooSymbol": "TFC",
     "memberships": [
       "sp500"
     ],
@@ -6079,7 +5627,6 @@
     "exchange": "NYSE",
     "slug": "tfx",
     "providerSymbol": "TFX",
-    "yahooSymbol": "TFX",
     "memberships": [
       "sp500"
     ],
@@ -6092,7 +5639,6 @@
     "exchange": "NYSE",
     "slug": "tgt",
     "providerSymbol": "TGT",
-    "yahooSymbol": "TGT",
     "memberships": [
       "sp500"
     ],
@@ -6105,7 +5651,6 @@
     "exchange": "NYSE",
     "slug": "tjx",
     "providerSymbol": "TJX",
-    "yahooSymbol": "TJX",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -6119,7 +5664,6 @@
     "exchange": "NYSE",
     "slug": "tmo",
     "providerSymbol": "TMO",
-    "yahooSymbol": "TMO",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -6133,7 +5677,6 @@
     "exchange": "NASDAQ",
     "slug": "tmus",
     "providerSymbol": "TMUS",
-    "yahooSymbol": "TMUS",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -6147,7 +5690,6 @@
     "exchange": "NYSE",
     "slug": "tpr",
     "providerSymbol": "TPR",
-    "yahooSymbol": "TPR",
     "memberships": [
       "sp500"
     ],
@@ -6160,7 +5702,6 @@
     "exchange": "NYSE",
     "slug": "trgp",
     "providerSymbol": "TRGP",
-    "yahooSymbol": "TRGP",
     "memberships": [
       "sp500"
     ],
@@ -6173,7 +5714,6 @@
     "exchange": "NASDAQ",
     "slug": "trmb",
     "providerSymbol": "TRMB",
-    "yahooSymbol": "TRMB",
     "memberships": [
       "sp500"
     ],
@@ -6186,7 +5726,6 @@
     "exchange": "NASDAQ",
     "slug": "trow",
     "providerSymbol": "TROW",
-    "yahooSymbol": "TROW",
     "memberships": [
       "sp500"
     ],
@@ -6199,7 +5738,6 @@
     "exchange": "NYSE",
     "slug": "trv",
     "providerSymbol": "TRV",
-    "yahooSymbol": "TRV",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -6214,7 +5752,6 @@
     "exchange": "NASDAQ",
     "slug": "tsco",
     "providerSymbol": "TSCO",
-    "yahooSymbol": "TSCO",
     "memberships": [
       "sp500"
     ],
@@ -6227,7 +5764,6 @@
     "exchange": "NASDAQ",
     "slug": "tsla",
     "providerSymbol": "TSLA",
-    "yahooSymbol": "TSLA",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -6241,7 +5777,6 @@
     "exchange": "NYSE",
     "slug": "tsn",
     "providerSymbol": "TSN",
-    "yahooSymbol": "TSN",
     "memberships": [
       "sp500"
     ],
@@ -6254,7 +5789,6 @@
     "exchange": "NYSE",
     "slug": "tt",
     "providerSymbol": "TT",
-    "yahooSymbol": "TT",
     "memberships": [
       "sp500"
     ],
@@ -6267,7 +5801,6 @@
     "exchange": "NASDAQ",
     "slug": "ttd",
     "providerSymbol": "TTD",
-    "yahooSymbol": "TTD",
     "memberships": [
       "nasdaq100"
     ],
@@ -6280,7 +5813,6 @@
     "exchange": "NASDAQ",
     "slug": "ttwo",
     "providerSymbol": "TTWO",
-    "yahooSymbol": "TTWO",
     "memberships": [
       "sp500"
     ],
@@ -6293,7 +5825,6 @@
     "exchange": "NASDAQ",
     "slug": "txn",
     "providerSymbol": "TXN",
-    "yahooSymbol": "TXN",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -6307,7 +5838,6 @@
     "exchange": "NYSE",
     "slug": "txt",
     "providerSymbol": "TXT",
-    "yahooSymbol": "TXT",
     "memberships": [
       "sp500"
     ],
@@ -6320,7 +5850,6 @@
     "exchange": "NYSE",
     "slug": "tyl",
     "providerSymbol": "TYL",
-    "yahooSymbol": "TYL",
     "memberships": [
       "sp500"
     ],
@@ -6333,7 +5862,6 @@
     "exchange": "NASDAQ",
     "slug": "ual",
     "providerSymbol": "UAL",
-    "yahooSymbol": "UAL",
     "memberships": [
       "sp500"
     ],
@@ -6346,7 +5874,6 @@
     "exchange": "NYSE",
     "slug": "uber",
     "providerSymbol": "UBER",
-    "yahooSymbol": "UBER",
     "memberships": [
       "sp500"
     ],
@@ -6359,7 +5886,6 @@
     "exchange": "NYSE",
     "slug": "udr",
     "providerSymbol": "UDR",
-    "yahooSymbol": "UDR",
     "memberships": [
       "sp500"
     ],
@@ -6372,7 +5898,6 @@
     "exchange": "NYSE",
     "slug": "uhs",
     "providerSymbol": "UHS",
-    "yahooSymbol": "UHS",
     "memberships": [
       "sp500"
     ],
@@ -6385,7 +5910,6 @@
     "exchange": "NASDAQ",
     "slug": "ulta",
     "providerSymbol": "ULTA",
-    "yahooSymbol": "ULTA",
     "memberships": [
       "sp500"
     ],
@@ -6398,7 +5922,6 @@
     "exchange": "NYSE",
     "slug": "unh",
     "providerSymbol": "UNH",
-    "yahooSymbol": "UNH",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -6413,7 +5936,6 @@
     "exchange": "NYSE",
     "slug": "unp",
     "providerSymbol": "UNP",
-    "yahooSymbol": "UNP",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -6427,7 +5949,6 @@
     "exchange": "NYSE",
     "slug": "ups",
     "providerSymbol": "UPS",
-    "yahooSymbol": "UPS",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -6441,7 +5962,6 @@
     "exchange": "NYSE",
     "slug": "uri",
     "providerSymbol": "URI",
-    "yahooSymbol": "URI",
     "memberships": [
       "sp500"
     ],
@@ -6454,7 +5974,6 @@
     "exchange": "NYSE",
     "slug": "usb",
     "providerSymbol": "USB",
-    "yahooSymbol": "USB",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -6468,7 +5987,6 @@
     "exchange": "NYSE",
     "slug": "v",
     "providerSymbol": "V",
-    "yahooSymbol": "V",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -6483,7 +6001,6 @@
     "exchange": "NYSE",
     "slug": "vici",
     "providerSymbol": "VICI",
-    "yahooSymbol": "VICI",
     "memberships": [
       "sp500"
     ],
@@ -6496,7 +6013,6 @@
     "exchange": "NYSE",
     "slug": "vlo",
     "providerSymbol": "VLO",
-    "yahooSymbol": "VLO",
     "memberships": [
       "sp500"
     ],
@@ -6509,7 +6025,6 @@
     "exchange": "NYSE",
     "slug": "vlto",
     "providerSymbol": "VLTO",
-    "yahooSymbol": "VLTO",
     "memberships": [
       "sp500"
     ],
@@ -6522,7 +6037,6 @@
     "exchange": "NYSE",
     "slug": "vmc",
     "providerSymbol": "VMC",
-    "yahooSymbol": "VMC",
     "memberships": [
       "sp500"
     ],
@@ -6535,7 +6049,6 @@
     "exchange": "NYSE",
     "slug": "vno",
     "providerSymbol": "VNO",
-    "yahooSymbol": "VNO",
     "memberships": [
       "sp500"
     ],
@@ -6548,7 +6061,6 @@
     "exchange": "NASDAQ",
     "slug": "vrsk",
     "providerSymbol": "VRSK",
-    "yahooSymbol": "VRSK",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -6562,7 +6074,6 @@
     "exchange": "NASDAQ",
     "slug": "vrsn",
     "providerSymbol": "VRSN",
-    "yahooSymbol": "VRSN",
     "memberships": [
       "sp500"
     ],
@@ -6575,7 +6086,6 @@
     "exchange": "NASDAQ",
     "slug": "vrtx",
     "providerSymbol": "VRTX",
-    "yahooSymbol": "VRTX",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -6589,7 +6099,6 @@
     "exchange": "NYSE",
     "slug": "vst",
     "providerSymbol": "VST",
-    "yahooSymbol": "VST",
     "memberships": [
       "sp500"
     ],
@@ -6602,7 +6111,6 @@
     "exchange": "NYSE",
     "slug": "vtr",
     "providerSymbol": "VTR",
-    "yahooSymbol": "VTR",
     "memberships": [
       "sp500"
     ],
@@ -6615,7 +6123,6 @@
     "exchange": "NASDAQ",
     "slug": "vtrs",
     "providerSymbol": "VTRS",
-    "yahooSymbol": "VTRS",
     "memberships": [
       "sp500"
     ],
@@ -6628,7 +6135,6 @@
     "exchange": "NYSE",
     "slug": "vz",
     "providerSymbol": "VZ",
-    "yahooSymbol": "VZ",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -6643,7 +6149,6 @@
     "exchange": "NYSE",
     "slug": "wab",
     "providerSymbol": "WAB",
-    "yahooSymbol": "WAB",
     "memberships": [
       "sp500"
     ],
@@ -6656,7 +6161,6 @@
     "exchange": "NYSE",
     "slug": "wat",
     "providerSymbol": "WAT",
-    "yahooSymbol": "WAT",
     "memberships": [
       "sp500"
     ],
@@ -6669,7 +6173,6 @@
     "exchange": "NASDAQ",
     "slug": "wbd",
     "providerSymbol": "WBD",
-    "yahooSymbol": "WBD",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -6683,7 +6186,6 @@
     "exchange": "NASDAQ",
     "slug": "wday",
     "providerSymbol": "WDAY",
-    "yahooSymbol": "WDAY",
     "memberships": [
       "nasdaq100"
     ],
@@ -6696,7 +6198,6 @@
     "exchange": "NASDAQ",
     "slug": "wdc",
     "providerSymbol": "WDC",
-    "yahooSymbol": "WDC",
     "memberships": [
       "sp500"
     ],
@@ -6709,7 +6210,6 @@
     "exchange": "NYSE",
     "slug": "wec",
     "providerSymbol": "WEC",
-    "yahooSymbol": "WEC",
     "memberships": [
       "sp500"
     ],
@@ -6722,7 +6222,6 @@
     "exchange": "NYSE",
     "slug": "well",
     "providerSymbol": "WELL",
-    "yahooSymbol": "WELL",
     "memberships": [
       "sp500"
     ],
@@ -6735,7 +6234,6 @@
     "exchange": "NYSE",
     "slug": "wfc",
     "providerSymbol": "WFC",
-    "yahooSymbol": "WFC",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -6749,7 +6247,6 @@
     "exchange": "NYSE",
     "slug": "wm",
     "providerSymbol": "WM",
-    "yahooSymbol": "WM",
     "memberships": [
       "sp500"
     ],
@@ -6762,7 +6259,6 @@
     "exchange": "NYSE",
     "slug": "wmb",
     "providerSymbol": "WMB",
-    "yahooSymbol": "WMB",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -6776,7 +6272,6 @@
     "exchange": "NASDAQ",
     "slug": "wmt",
     "providerSymbol": "WMT",
-    "yahooSymbol": "WMT",
     "memberships": [
       "sp500",
       "nyse_us100",
@@ -6791,7 +6286,6 @@
     "exchange": "NYSE",
     "slug": "wrb",
     "providerSymbol": "WRB",
-    "yahooSymbol": "WRB",
     "memberships": [
       "sp500"
     ],
@@ -6804,7 +6298,6 @@
     "exchange": "NYSE",
     "slug": "wst",
     "providerSymbol": "WST",
-    "yahooSymbol": "WST",
     "memberships": [
       "sp500"
     ],
@@ -6817,7 +6310,6 @@
     "exchange": "NASDAQ",
     "slug": "wtw",
     "providerSymbol": "WTW",
-    "yahooSymbol": "WTW",
     "memberships": [
       "sp500"
     ],
@@ -6830,7 +6322,6 @@
     "exchange": "NYSE",
     "slug": "wy",
     "providerSymbol": "WY",
-    "yahooSymbol": "WY",
     "memberships": [
       "sp500"
     ],
@@ -6843,7 +6334,6 @@
     "exchange": "NASDAQ",
     "slug": "wynn",
     "providerSymbol": "WYNN",
-    "yahooSymbol": "WYNN",
     "memberships": [
       "sp500"
     ],
@@ -6856,7 +6346,6 @@
     "exchange": "NASDAQ",
     "slug": "xel",
     "providerSymbol": "XEL",
-    "yahooSymbol": "XEL",
     "memberships": [
       "sp500",
       "nasdaq100"
@@ -6870,7 +6359,6 @@
     "exchange": "NYSE",
     "slug": "xom",
     "providerSymbol": "XOM",
-    "yahooSymbol": "XOM",
     "memberships": [
       "sp500",
       "nyse_us100"
@@ -6884,7 +6372,6 @@
     "exchange": "NYSE",
     "slug": "xyl",
     "providerSymbol": "XYL",
-    "yahooSymbol": "XYL",
     "memberships": [
       "sp500"
     ],
@@ -6897,7 +6384,6 @@
     "exchange": "NYSE",
     "slug": "yum",
     "providerSymbol": "YUM",
-    "yahooSymbol": "YUM",
     "memberships": [
       "sp500"
     ],
@@ -6910,7 +6396,6 @@
     "exchange": "NYSE",
     "slug": "zbh",
     "providerSymbol": "ZBH",
-    "yahooSymbol": "ZBH",
     "memberships": [
       "sp500"
     ],
@@ -6923,7 +6408,6 @@
     "exchange": "NASDAQ",
     "slug": "zbra",
     "providerSymbol": "ZBRA",
-    "yahooSymbol": "ZBRA",
     "memberships": [
       "sp500"
     ],
@@ -6936,7 +6420,6 @@
     "exchange": "NASDAQ",
     "slug": "zs",
     "providerSymbol": "ZS",
-    "yahooSymbol": "ZS",
     "memberships": [
       "nasdaq100"
     ],
@@ -6949,7 +6432,6 @@
     "exchange": "NYSE",
     "slug": "zts",
     "providerSymbol": "ZTS",
-    "yahooSymbol": "ZTS",
     "memberships": [
       "sp500"
     ],

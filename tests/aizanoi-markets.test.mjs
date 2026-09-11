@@ -69,12 +69,14 @@ test('Markets pipeline and frontend each document their ownership boundary', () 
   assert.match(read('scripts/index.md'), /markets\/index\.md/);
 });
 
-test('operator runbook documents the Markets bootstrap and hourly commands', () => {
+test('operator runbook documents staged bootstrap, split refreshes and health checks', () => {
   const operations = read('docs/HERMES_OPERATIONS.md');
   assert.match(operations, /Aizanoi Markets refresh loop/);
-  assert.match(operations, /update_markets\.py --mode bootstrap/);
-  assert.match(operations, /update_markets\.py --mode hourly/);
-  assert.match(operations, /\/var\/lib\/aizanoi-markets\/public/);
+  assert.match(operations, /--mode bootstrap --data-root \/var\/lib\/aizanoi-markets\/public/);
+  assert.match(operations, /--mode us-daily/);
+  assert.match(operations, /--mode crypto-hourly/);
+  assert.match(operations, /--mode health-check/);
+  assert.match(operations, /schema v3/);
 });
 
 test('Nginx keeps mutable market data outside immutable release trees', () => {
@@ -84,15 +86,7 @@ test('Nginx keeps mutable market data outside immutable release trees', () => {
   assert.match(nginx, /expires -1/);
 });
 
-test('market metric engine identifies momentum, drawdown and 52-week position', async () => {
-  const { computeMetrics } = await import('../frontend/analytics/markets/metrics.js');
-  const candles = Array.from({ length: 220 }, (_, index) => ({
-    t: 1_700_000_000 + index * 86_400,
-    c: 101 + index,
-  }));
-  const metrics = computeMetrics(candles, { annualization: 252 });
-  assert.ok(metrics.return30d > 0);
-  assert.ok(metrics.rangePosition52w > 0.99);
-  assert.ok(metrics.drawdown1y <= 0);
-  assert.equal(metrics.aboveSma200, true);
+test('legacy metrics module is absent; shared core owns canonical indicators', () => {
+  assert.equal(existsSync('frontend/analytics/markets/metrics.js'), false);
+  assert.match(read('frontend/analytics/markets/core.js'), /wilderRsi/);
 });

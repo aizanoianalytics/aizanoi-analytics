@@ -10,7 +10,6 @@ Scope: the static visitor product at `/analytics/markets/` and its shared Aizano
 - `dashboard.js` — shared market overview, signals, explorer, crypto-risk and data-health views.
 - `core.js` — pure formatting, filtering, watchlist, CSV and technical-indicator helpers.
 - `instrument/` — generic per-instrument chart workspace with frequency, timeframe, overlays and oscillators.
-- `metrics.js` — backwards-compatible pure close-price metric helper used by tests.
 
 ## Data boundary
 

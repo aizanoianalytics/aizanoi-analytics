@@ -7,12 +7,16 @@ function candles(count = 260) {
   return Array.from({ length: count }, (_, index) => ({ t: 1_700_000_000 + index * 86_400, c: 100 + index + Math.sin(index / 4) * 3 }));
 }
 
-test('market core exposes close-only indicators and timeframe slicing', async () => {
+test('calendar timeframe slicing preserves timestamp semantics for daily and intraday data', async () => {
   const { indicatorSeries, sliceTimeframe } = await import(coreUrl);
   const rows = candles();
-  assert.equal(sliceTimeframe(rows, '1M').length, 30);
-  assert.equal(sliceTimeframe(rows, '3M').length, 90);
-  assert.equal(sliceTimeframe(rows, '1Y').length, 252);
+  assert.equal(sliceTimeframe(rows, '1M').length, 31); // cutoff is inclusive
+  assert.equal(sliceTimeframe(rows, '3M').length, 91);
+  assert.equal(sliceTimeframe(rows, '1Y').length, 260); // fixture is younger than one calendar year
+  const cryptoDaily = Array.from({ length: 400 }, (_, i) => ({ t: 1_700_000_000 + i * 86_400, c: i + 1 }));
+  assert.equal(sliceTimeframe(cryptoDaily, '1Y').length, 366);
+  const cryptoFourHour = Array.from({ length: 700 }, (_, i) => ({ t: 1_700_000_000 + i * 14_400, c: i + 1 }));
+  assert.equal(sliceTimeframe(cryptoFourHour, '3M').length, 541);
   assert.equal(sliceTimeframe(rows, 'ALL').length, 260);
   const indicators = indicatorSeries(rows);
   for (const key of ['sma20', 'sma50', 'sma200', 'ema12', 'ema26', 'bollingerUpper', 'bollingerLower', 'rsi14', 'macd', 'macdSignal', 'roc20']) {
