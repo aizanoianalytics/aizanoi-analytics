@@ -86,7 +86,7 @@ class MarketsHardeningTests(unittest.TestCase):
             item = self.instrument("crypto", "BTC", "BTCUSDT")
             mod.write_json_atomic(root / "instruments.json", [item])
             shard = self.write_shard(root, item)
-            shard["fourHour"] = [{"t": int(time.time()) - 7 * 3600, "c": 11.0}]
+            shard["fourHour"] = [{"t": int(time.time()) - 9 * 3600, "c": 11.0}]
             mod.write_json_atomic(root / "history/crypto/btc.json", shard)
             self.assertNotEqual(mod.health_check(root, iso(int(time.time()))), 0)
 
