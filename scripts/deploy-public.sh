@@ -21,9 +21,9 @@ if ! flock -n 200; then
   exit 1
 fi
 
-REPO="/opt/aizanoi-analytics-public"
-WEBROOT="/var/www/aizanoianalytics.com"
-RELEASE_ROOT="/var/www/aizanoianalytics.com-releases"
+REPO="${AIZANOI_DEPLOY_REPO:-/opt/aizanoi-analytics-public}"
+WEBROOT="${AIZANOI_DEPLOY_WEBROOT:-/var/www/aizanoianalytics.com}"
+RELEASE_ROOT="${AIZANOI_DEPLOY_RELEASE_ROOT:-/var/www/aizanoianalytics.com-releases}"
 SOURCE="${REPO}/frontend"
 PUBLIC_SYNTHETIC_XLSX="analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx"
 
@@ -63,7 +63,8 @@ NEXT_LINK="${WEBROOT}.next.$$"
 ROLLBACK_LINK="${WEBROOT}.rollback.$$"
 ROLLBACK_TARGET="none"
 LEGACY_ROLLBACK=""
-PROMOTED=0
+SYMLINK_PROMOTED=0
+HEALTH_OK=0
 
 cleanup() {
   local active=""
@@ -72,7 +73,7 @@ cleanup() {
 
   # If promotion happened but post-promotion verification failed, restore the
   # prior versioned/legacy release before exiting with the original failure.
-  if [[ "${PROMOTED}" -eq 0 && -L "${WEBROOT}" ]]; then
+  if [[ "${SYMLINK_PROMOTED}" -eq 1 && "${HEALTH_OK}" -eq 0 && -L "${WEBROOT}" ]]; then
     active="$(readlink -f "${WEBROOT}" 2>/dev/null || true)"
     if [[ "${active}" == "${FINAL}" ]]; then
       if [[ "${ROLLBACK_TARGET}" != "none" && -d "${ROLLBACK_TARGET}" ]]; then
@@ -81,12 +82,15 @@ cleanup() {
       else
         rm -f "${WEBROOT}" 2>/dev/null || true
       fi
+      if command -v nginx >/dev/null 2>&1; then
+        nginx -s reload >/dev/null 2>&1 || true
+      fi
     fi
   fi
 
   # A failure during the one-time legacy-directory transition before the new
   # symlink is installed must put the original directory back in place.
-  if [[ "${PROMOTED}" -eq 0 && -n "${LEGACY_ROLLBACK}" && ! -e "${WEBROOT}" && ! -L "${WEBROOT}" && -d "${LEGACY_ROLLBACK}" ]]; then
+  if [[ "${SYMLINK_PROMOTED}" -eq 0 && -n "${LEGACY_ROLLBACK}" && ! -e "${WEBROOT}" && ! -L "${WEBROOT}" && -d "${LEGACY_ROLLBACK}" ]]; then
     mv "${LEGACY_ROLLBACK}" "${WEBROOT}" 2>/dev/null || true
   fi
 }
@@ -207,6 +211,7 @@ else
   echo "FATAL: active webroot is neither a directory, symlink nor absent: ${WEBROOT}" >&2
   exit 6
 fi
+SYMLINK_PROMOTED=1
 
 # Verify the promoted pointer and minimum public payload before declaring the
 # release successful. cleanup() restores ROLLBACK_TARGET on any failure here.
@@ -228,30 +233,45 @@ if [[ ! -s "${WEBROOT}/index.html" || ! -s "${WEBROOT}/release.js" || ! -s "${WE
   exit 7
 fi
 
-PROMOTED=1
-
-# Post-promotion HTTP health smoke check (R04)
-if command -v curl >/dev/null 2>&1; then
-  for base in "http://127.0.0.1" "http://localhost"; do
-    if curl -sfI "${base}/" >/dev/null 2>&1; then
-      echo "[deploy] running post-promotion HTTP health smoke against ${base}"
-      for path in "/" "/index.html" "/release.js" "/service-worker.js"; do
-        status=$(curl -s -o /dev/null -w "%{http_code}" "${base}${path}" || true)
-        # NOTE: plain-HTTP probes behind the HTTPS redirect policy answer 301;
-        # either a direct 200 or a redirect is proof the promoted tree is served.
-        case "${status}" in
-          200|301|302|303|307|308) ;;
-          *)
-            echo "FATAL: post-promotion HTTP health check failed for ${path} (status ${status})" >&2
-            exit 8
-            ;;
-        esac
-      done
-      echo "[deploy] HTTP health smoke passed"
-      break
-    fi
-  done
+# Nginx must reload successfully after promotion, so it serves the exact
+# release that was just validated. Any failure still rolls the symlink back.
+if ! nginx -s reload; then
+  echo "FATAL: Nginx reload failed after promotion" >&2
+  exit 8
 fi
+
+# Post-promotion HTTP health smoke check (R04). curl is mandatory here: a
+# missing client or two unavailable loopback probes must never become success.
+if ! command -v curl >/dev/null 2>&1; then
+  echo "FATAL: curl executable not found; refusing to finalize deployment" >&2
+  exit 8
+fi
+HTTP_HEALTH_BASE=""
+for base in "http://127.0.0.1" "http://localhost"; do
+  if curl -sfI "${base}/" >/dev/null 2>&1; then
+    HTTP_HEALTH_BASE="${base}"
+    break
+  fi
+done
+if [[ -z "${HTTP_HEALTH_BASE}" ]]; then
+  echo "FATAL: post-promotion HTTP health check failed: both loopback probes unavailable" >&2
+  exit 8
+fi
+
+echo "[deploy] running post-promotion HTTP health smoke against ${HTTP_HEALTH_BASE}"
+for path in "/" "/index.html" "/release.js" "/service-worker.js"; do
+  status=$(curl -s -o /dev/null -w "%{http_code}" "${HTTP_HEALTH_BASE}${path}" || true)
+  # Plain HTTP may answer with the configured HTTPS redirect policy.
+  case "${status}" in
+    200|301|302|303|307|308) ;;
+    *)
+      echo "FATAL: post-promotion HTTP health check failed for ${path} (status ${status})" >&2
+      exit 8
+      ;;
+  esac
+done
+HEALTH_OK=1
+echo "[deploy] HTTP health smoke passed"
 
 printf '[deploy] deployed commit: %s\n' "${CURRENT_SHA}"
 printf '[deploy] active release: %s\n' "${FINAL}"
