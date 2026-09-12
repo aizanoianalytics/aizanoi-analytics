@@ -21,9 +21,14 @@ if ! flock -n 200; then
   exit 1
 fi
 
-REPO="${AIZANOI_DEPLOY_REPO:-/opt/aizanoi-analytics-public}"
-WEBROOT="${AIZANOI_DEPLOY_WEBROOT:-/var/www/aizanoianalytics.com}"
-RELEASE_ROOT="${AIZANOI_DEPLOY_RELEASE_ROOT:-/var/www/aizanoianalytics.com-releases}"
+REPO="/opt/aizanoi-analytics-public"
+WEBROOT="/var/www/aizanoianalytics.com"
+RELEASE_ROOT="/var/www/aizanoianalytics.com-releases"
+# Tests may point these names at an isolated fake installation; production
+# defaults above remain explicit for the publish-boundary contract.
+REPO="${AIZANOI_DEPLOY_REPO:-${REPO}}"
+WEBROOT="${AIZANOI_DEPLOY_WEBROOT:-${WEBROOT}}"
+RELEASE_ROOT="${AIZANOI_DEPLOY_RELEASE_ROOT:-${RELEASE_ROOT}}"
 SOURCE="${REPO}/frontend"
 PUBLIC_SYNTHETIC_XLSX="analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx"
 
