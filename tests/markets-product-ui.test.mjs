@@ -103,7 +103,7 @@ test('navigation supports row activation, double click and exact-search submit',
 
 test('Markets compact UX keeps close-price framing and a single ranking block', () => {
   const dashboard = read('frontend/analytics/markets/dashboard.js');
-  const css = read('frontend/analytics/markets/markets.css');
+  const css = read('frontend/analytics/markets/markets.css') + read('frontend/analytics/markets/markets-ux.css');
   assert.match(dashboard, /data-stale-banner/);
   assert.match(dashboard, /data-ranking-preset/);
   assert.match(dashboard, /data-drawer/);
