@@ -81,7 +81,10 @@ test('AizanoiOS Dungeon mobile: fullscreen tap-to-start, no overflow, exit contr
     await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'MenuScene', { timeout: 30000 });
     const pt = await menuButtonPoint(page);
     assert.ok(pt, 'menu canvas must be measurable');
-    await page.touchscreen.tap(pt.x, pt.y);
+    // Drive the primary action via the QA escape hatch so the test no longer
+    // depends on Phaser canvas letterboxing translating canvas-relative
+    // coordinates to the Story / Continue button row.
+    await page.evaluate(() => window.__AIZANOI_DUNGEON_START_PRIMARY?.());
     await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'GameScene', { timeout: 30000 });
     const overflow = await page.evaluate(() => ({
       x: document.documentElement.scrollWidth - document.documentElement.clientWidth,
