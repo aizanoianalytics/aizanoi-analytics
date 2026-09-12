@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-hubinger-ten-percent-warning",
+  "title": "Anthropic alignment lead Hubinger publicly backs Coxon's warning, puts extinction odds above 10 percent",
+  "summary": "Anthropic alignment science lead Evan Hubinger said on X that he personally estimates a greater than 10 percent chance AI could 'kill all humans' within the next decade, publicly endorsing researcher Jacob Coxon's Tuesday resignation post. Hubinger stressed that the risk from current models remains low and that Anthropic is 'trying its best', but argued the lab 'does not yet have a plan to solve alignment for superintelligence and are not clearly on track to.'",
+  "category": "ai",
+  "priority": 75,
+  "publishedAt": "2026-09-12T07:35:00+03:00",
+  "updatedAt": "2026-09-12T07:35:00+03:00",
+  "retrievedAt": "2026-09-12T07:35:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "ai-safety", "superintelligence"],
+  "sources": [{
+    "publisher": "CNBC",
+    "url": "https://www.cnbc.com/2026/09/09/anthropic-researcher-quits-ai-safety.html",
+    "publishedAt": "2026-09-09T07:06:00Z"
+  }]
+}

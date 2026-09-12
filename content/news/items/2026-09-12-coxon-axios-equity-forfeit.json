@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-coxon-axios-equity-forfeit",
+  "title": "Anthropic's Coxon walked away from unvested equity two months before it would have vested, Axios reports",
+  "summary": "In an interview with Axios, former Anthropic pretraining researcher Jacob Coxon said he resigned two months before his Anthropic equity would have vested, forfeiting the stake so he no longer had any incentive to 'juice up' the company's valuation. Coxon, who had been at Anthropic only four months after three years at OpenAI, told Axios his decision reflected concerns that competitive pressure would eventually push frontier labs to 'cut corners' in oversight.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-12T07:30:00+03:00",
+  "updatedAt": "2026-09-12T07:30:00+03:00",
+  "retrievedAt": "2026-09-12T07:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "openai", "ai-safety", "labor"],
+  "sources": [{
+    "publisher": "Axios",
+    "url": "https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview",
+    "publishedAt": "2026-09-09T13:00:00Z"
+  }]
+}

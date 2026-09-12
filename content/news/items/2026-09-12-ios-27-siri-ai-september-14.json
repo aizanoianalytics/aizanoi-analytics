@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-ios-27-siri-ai-september-14",
+  "title": "iOS 27 with Siri AI beta lands Monday September 14 for iPhone 11 and later",
+  "summary": "Apple confirmed iOS 27 will release as a free update on Monday September 14, with Siri AI launching as a beta in English first and five more languages in October. The update installs on every iPhone from the iPhone 11 onward, but Siri AI requires an Apple Intelligence device starting with the iPhone 15 Pro, with the most advanced on-device features limited to five iPhone models.",
+  "category": "technology",
+  "priority": 65,
+  "publishedAt": "2026-09-12T08:10:00+03:00",
+  "updatedAt": "2026-09-12T08:10:00+03:00",
+  "retrievedAt": "2026-09-12T08:10:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["apple", "ios-27", "siri-ai", "apple-intelligence"],
+  "sources": [{
+    "publisher": "MacObserver",
+    "url": "https://macobserver.com/tips/round-ups/ios-27-release-date-confirmed-september-14-siri-ai-beta-features",
+    "publishedAt": "2026-09-09T17:00:00Z"
+  }]
+}

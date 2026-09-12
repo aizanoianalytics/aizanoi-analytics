@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-champions-league-md1-tuesday-recap",
+  "title": "Champions League Matchday 1 Tuesday recap: Real Madrid, Man City, Dortmund and Aston Villa open with wins",
+  "summary": "The new Champions League league phase opened Tuesday with Kylian Mbappé and Federico Valverde steering Real Madrid to a 2-1 home win over Inter, Erling Haaland scoring twice in Manchester City's 2-0 win at Porto and Serhou Guirassy bagging a brace in Borussia Dortmund's 3-2 victory over Villarreal. Aston Villa began their return with a 3-2 win at Club Brugge featuring Nicolas Jackson's first Champions League goal, while AEK Athens beat LASK 1-0 and Lille lost 3-2 at home to Real Betis.",
+  "category": "football",
+  "priority": 70,
+  "publishedAt": "2026-09-12T08:35:00+03:00",
+  "updatedAt": "2026-09-12T08:35:00+03:00",
+  "retrievedAt": "2026-09-12T08:35:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["champions-league", "real-madrid", "manchester-city", "borussia-dortmund", "aston-villa"],
+  "sources": [{
+    "publisher": "UEFA",
+    "url": "https://uefa.com/uefachampionsleague/news/02a9-218b8c00ab1e-0e070e496ca8-1000--champions-league-matchday-1-highlights-and-round-up-real-mad",
+    "publishedAt": "2026-09-08T22:00:00Z"
+  }]
+}

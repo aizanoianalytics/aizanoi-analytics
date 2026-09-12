@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-keybanc-apple-event-warning",
+  "title": "KeyBanc warns Apple shares face negative catalyst at iPhone 18 Pro launch",
+  "summary": "KeyBanc Capital Markets warned Apple's September 9 iPhone event could become a negative catalyst for the stock, citing $150 to $200 price hikes across the iPhone 18 Pro line colliding with lower unit-volume expectations and historical announcement-day weakness. The note recommended investors weigh pricing decisions against the impact of higher costs on demand and margins.",
+  "category": "economy-markets",
+  "priority": 55,
+  "publishedAt": "2026-09-12T08:30:00+03:00",
+  "updatedAt": "2026-09-12T08:30:00+03:00",
+  "retrievedAt": "2026-09-12T08:30:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["apple", "aapl", "iphone-18-pro", "keybanc", "equities"],
+  "sources": [{
+    "publisher": "MacRumors",
+    "url": "https://www.macrumors.com/2026/09/07/iphone-18-pro-event-could-hit-apple-shares/",
+    "publishedAt": "2026-09-07T15:00:00Z"
+  }]
+}

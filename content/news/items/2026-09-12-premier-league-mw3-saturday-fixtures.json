@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-premier-league-mw3-saturday-fixtures",
+  "title": "Premier League Matchweek 3 kicks off Saturday with Chelsea-Hull, Liverpool-Fulham and Spurs-Everton",
+  "summary": "Premier League Matchweek 3 opens Saturday with seven fixtures across the 3 p.m. kick-off slot including Chelsea hosting Hull City at Stamford Bridge and Liverpool facing Fulham at Anfield, before Tottenham Hotspur host Everton at 17:30 on Sky Sports and Sunderland face Arsenal at 20:00 on TNT Sports. Aston Villa meet Nottingham Forest, Bournemouth host Brentford and Crystal Palace play Ipswich Town in the other Saturday matches.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-09-12T08:40:00+03:00",
+  "updatedAt": "2026-09-12T08:40:00+03:00",
+  "retrievedAt": "2026-09-12T08:40:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["premier-league", "chelsea", "liverpool", "tottenham", "sunderland"],
+  "sources": [{
+    "publisher": "Premier League",
+    "url": "https://www.premierleague.com/en/news/4675097/all-380-fixtu",
+    "publishedAt": "2026-08-15T00:00:00Z"
+  }]
+}
