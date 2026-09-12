@@ -266,7 +266,7 @@ export function activeFilterChips(state) {
   if (state.membership) chips.push({ key:'membership', label:`Membership ${state.membership}`, value:state.membership });
   if (finite(state.minPrice) || finite(state.maxPrice)) {
     const lo = finite(state.minPrice) ? intFormat.format(state.minPrice) : '0';
-    const hi = finite(state.maxPrice) ? intFormat.format(state.maxPrice) : '∞';
+    const hi = finite(state.maxPrice) ? intFormat.format(state.maxPrice) : '\u221e';
     chips.push({ key:'price', label:`Price ${lo}–${hi}`, value:'price' });
   }
   if (state.performance?.horizon) {
@@ -300,12 +300,64 @@ export function defaultState(overrides = {}) {
 }
 
 export function marketSessionState(market, date = new Date()) {
-  if (market === 'crypto') return { open:true, label:'Crypto trades continuously' };
+  if (market === 'crypto') {
+    return {
+      open:true,
+      live:false,
+      label:'Crypto \u00b7 last published close (not a live tape)',
+      session:'24h venue \u00b7 product shows published close / 4H bars',
+    };
+  }
   const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone:'America/New_York', weekday:'short', hour:'2-digit', minute:'2-digit', hourCycle:'h23' }).formatToParts(date).map(part => [part.type, part.value]));
   const minutes = Number(parts.hour) * 60 + Number(parts.minute);
   const weekday = !['Sat','Sun'].includes(parts.weekday);
   const open = weekday && minutes >= 570 && minutes < 960;
-  return { open, label: open ? 'Within regular US session hours' : 'Outside regular US session hours' };
+  return {
+    open,
+    live:false,
+    label: open
+      ? 'US regular hours \u00b7 showing last close, not live quotes'
+      : 'US closed \u00b7 showing last published close',
+    session: open ? 'Regular session 09:30\u201316:00 ET' : 'Outside 09:30\u201316:00 ET',
+  };
+}
+
+export const COMPACT_PRICE_COLUMNS = [
+  { key:'latestPrice', label:'Latest' },
+  { key:'price1w', label:'1W' },
+  { key:'price1y', label:'1Y' },
+];
+
+export const COMPACT_CHANGE_COLUMNS = [
+  { key:'return1d', label:'1D' },
+  { key:'return1w', label:'1W' },
+  { key:'return1y', label:'1Y' },
+];
+
+export const RANKING_PRESETS = [
+  { id:'1d-up', label:'Today \u00b7 Winners', key:'return1d', descending:true },
+  { id:'1d-down', label:'Today \u00b7 Losers', key:'return1d', descending:false },
+  { id:'1w-up', label:'1 Week \u00b7 Winners', key:'return1w', descending:true },
+  { id:'1w-down', label:'1 Week \u00b7 Losers', key:'return1w', descending:false },
+  { id:'1y-up', label:'52 Weeks \u00b7 Winners', key:'return1y', descending:true },
+  { id:'1y-down', label:'52 Weeks \u00b7 Losers', key:'return1y', descending:false },
+];
+
+export function formatShortDate(value) {
+  if (!value) return '\u2014';
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return '\u2014';
+  return date.toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
+}
+
+export function horizonSignLine(row, horizons = PICK_HORIZONS) {
+  return horizons.map(key => {
+    const value = row?.[key];
+    if (!Number.isFinite(value)) return '\u2014';
+    if (value > 0) return '+';
+    if (value < 0) return '\u2212';
+    return '0';
+  }).join('');
 }
 
 export const PRICE_COLUMNS = [
