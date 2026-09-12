@@ -35,6 +35,11 @@ export class GameScene extends Phaser.Scene {
     this.isPaused = false;
     this.pauseOverlay = null;
     this.exitMenu = null;
+    // Surface the scene transition as soon as init fires so headless QA can
+    // observe the menu→game handoff even when the Phaser update loop is
+    // throttled (e.g. mobile context with reduced motion). create() will
+    // re-assert the same value once the renderer reaches it.
+    if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = 'GameScene';
   }
 
   create() {
