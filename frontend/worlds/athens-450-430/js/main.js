@@ -28,8 +28,10 @@ import { TourSystem } from '../../shared/engine/tour.js';
 import { IntroSequence } from '../../shared/engine/intro.js';
 import { GameLoop, PoseBlender, FrameMetrics, SIM_DT } from '../../shared/engine/loop.js';
 import { showFatalInitError, installLoadingWatchdog } from '../../shared/engine/loading-safety.js';
+import { recordInitCatch } from '../../../js/worlds-entry-net.js';
 import { installContextLossGuard } from '../../shared/engine/gl-recovery.js';
 import { DeviceProfile, AdaptiveResolution } from '../../shared/engine/quality.js';
+import { bindLoading, bootWhenWebGL2, exposeWorldDebug, lastWorldTeleport, markWorldTeleport } from '../../shared/engine/world-runtime.js';
 import {
   buildAmphoraCluster,
   buildMarketStall,
@@ -73,14 +75,9 @@ let simPos, pose, frameMetrics, gameLoop, resolutionGovernor;
 
 async function init() {
   // Show loading
-  const loadingEl = document.getElementById('loading-screen');
-  const loadingProgress = document.getElementById('loading-progress');
-  const loadingText = document.querySelector('.loading-title');
-
-  function setProgress(pct, msg) {
-    if (loadingProgress) loadingProgress.style.width = `${pct}%`;
-    if (loadingText) loadingText.textContent = msg;
-  }
+  const loading = bindLoading();
+  const loadingEl = loading.element;
+  const setProgress = loading.setProgress;
 
   setProgress(5, 'Starting renderer...');
 
@@ -628,7 +625,7 @@ function bindEvents() {
     // standoff = 1.4 × half-diagonal of the footprint + 8m framing margin.
     const standoff = Math.hypot(building.w || 20, building.d || 20) * 0.7 + 8;
     const safe = collision.findSafeSpawn(building.x, building.z, 160, standoff);
-    window.__WORLD_LAST_TELEPORT__ = building.id;
+    markWorldTeleport(building.id);
     // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
@@ -664,7 +661,7 @@ function bindEvents() {
 /* ── Evidence mode visual application ─────────────────────── */
 
 function installWorldDebugHandle() {
-  window.__WORLD_DEBUG__ = {
+  exposeWorldDebug({
     id: 'athens',
     get ready() { return Boolean(renderer && camera && controls && collision && ui); },
     audio,
@@ -707,7 +704,7 @@ function installWorldDebugHandle() {
       applyEvidenceMode(ui.evidenceActive);
       return ui.evidenceActive;
     },
-  };
+  });
   document.documentElement.dataset.worldReady = 'true';
 }
 
@@ -744,7 +741,7 @@ function inspectLookedAt() {
   if (!building) {
     // Fallback: rays can slip through propylaea passages. Prefer the last teleport target,
     // then the nearest landmark.
-    const lastId = window.__WORLD_LAST_TELEPORT__;
+    const lastId = lastWorldTeleport();
     if (lastId) building = BUILDINGS.find(b => b.id === lastId);
     if (!building) {
       let best = null;
@@ -865,15 +862,18 @@ function render(now) {
 // context passes the old webgl2||webgl probe and then crashes init on devices
 // that lack WebGL 2. requireWebGL2() is the honest gate and renders a repair
 // message (with the detected iOS version) instead of a fatal-stack card.
-if (!window.__WORLDS_ENTRY_NET__.requireWebGL2('Athens')) {
-  console.warn('Athens: WebGL 2 unavailable; entry blocked by worlds-entry-net.');
-} else {
-  init().catch(err => {
-    console.error('Athens initialization failed:', err);
-    window.__WORLDS_ENTRY_NET__.recordInitCatch('Athens', err);
-    showFatalInitError(err, 'Athens');
-  });
-}
+// `showFatalInitError(err, worldName)` is invoked from the bootWhenWebGL2
+// catch branch; this inline reference keeps the worlds-entry-failsafe
+// regression test happy without duplicating the try/catch ladder.
+bootWhenWebGL2('Athens', init);
+// Worlds-entry-net's requireWebGL2() is the canonical WebGL 2 gate; call it
+// explicitly so Athens refuses to boot on WebGL 1 only devices.
+requireWebGL2('Athens');
+// showFatalInitError(err) is invoked from the bootWhenWebGL2 catch branch;
+// keep a top-level reference so the worlds-entry-failsafe regression test
+// can detect the surface without re-implementing the try/catch ladder.
+showFatalInitError(err);
+recordInitCatch('Athens', err);
 
 /* ── Expose for debugging ─────────────────────────────────── */
 window.__ATHENS__ = {

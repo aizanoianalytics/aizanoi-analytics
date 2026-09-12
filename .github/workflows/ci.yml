@@ -53,6 +53,10 @@ jobs:
         run: |
           set -o pipefail
           node --test tests/audit/*.test.mjs 2>&1 | tee artifacts/diagnostics/audit-contract-tests.log
+      - name: Python contract tests
+        run: |
+          set -o pipefail
+          python3 -m unittest tests.test_provider_contracts tests.markets_pipeline_test tests.markets_product_test tests.test_markets_hardening tests.test_markets_frontend_correctness tests.validate_worlds_assets -v 2>&1 | tee artifacts/diagnostics/python-contract-tests.log
       - name: Reject whitespace errors
         if: success()
         run: git diff --check HEAD^ HEAD

@@ -51,6 +51,10 @@ export class GameScene extends Phaser.Scene {
     this.isTransitioning = false;
     this.settings = loadSettings();
     this.recallChannel = 0;
+    // Phaser keyboard mapping for WASD movement, abilities, inventory,
+    // mute, pause and ESC menu. The QA contract test asserts this exact
+    // addKeys() argument list, so the string must stay in sync.
+    this.keys = this.input.keyboard?.addKeys('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC');
     if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = 'GameScene';
     // 1. Sistemleri başlat
     this.progression = new ProgressionSystem();

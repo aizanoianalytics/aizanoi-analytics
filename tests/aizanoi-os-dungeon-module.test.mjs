@@ -110,7 +110,7 @@ test('endless wave scaling is capped at wave 20 with light loot scaling', () => 
 
 test('keyboard: ESC closes inventory, M mutes, P pauses; mouse dead zones are 48px', () => {
   const game = read(`${moduleRoot}/js/scenes/GameScene.js`);
-  assert.match(game, /addKeys\('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC,F,B'\)/);
+  assert.match(game, /addKeys\('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC'\)/);
   assert.match(game, /JustDown\(this\.wasd\.M\)\) audioManager\.toggleMute\(\)/);
   assert.match(game, /JustDown\(this\.wasd\.P\)\) this\.togglePause\(\)/);
   assert.match(game, /togglePause\(\) \{/);
@@ -174,21 +174,41 @@ test('save migration: v1 moves to v2 lossless with unknown skills filtered and s
   }
 });
 
-test('standalone and module trees stay byte-identical for shared game code', async () => {
-  const { execFileSync } = await import('node:child_process');
-  let out = '';
-  try {
-    out = execFileSync('diff', ['-rq', 'frontend/dungeon', 'frontend/js/v3/apps/dungeon'], { encoding: 'utf8' });
-  } catch (err) {
-    out = err.stdout || '';
+test('standalone dungeon JavaScript re-exports the module tree as the single source', async () => {
+  const { readdirSync, readFileSync, statSync } = await import('node:fs');
+  const path = await import('node:path');
+  const moduleJs = 'frontend/js/v3/apps/dungeon/js';
+  const standaloneJs = 'frontend/dungeon/js';
+
+  function walk(dir, out = []) {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(full, out);
+      else if (entry.name.endsWith('.js')) out.push(full);
+    }
+    return out;
   }
-  const lines = out.trim().split('\n').filter(Boolean);
-  const allowed = new Set([
-    'Only in frontend/js/v3/apps/dungeon: DOCUMENTATION.md',
-    'Only in frontend/dungeon: index.html',
-    'Only in frontend/js/v3/apps/dungeon: index.md',
-    'Only in frontend/js/v3/apps/dungeon: manifest.json',
-    'Only in frontend/js/v3/apps/dungeon: src',
-  ]);
-  assert.deepEqual(lines.filter((line) => !allowed.has(line)), []);
+
+  const standaloneFiles = walk(standaloneJs);
+  assert.ok(standaloneFiles.length > 0, 'standalone dungeon JS tree is empty');
+  for (const file of standaloneFiles) {
+    const rel = path.relative(standaloneJs, file).replaceAll('\\', '/');
+    const source = readFileSync(file, 'utf8').trim();
+    assert.match(
+      source,
+      /^export \* from '[^']+';$/,
+      `${rel} must be a single re-export of the module implementation`
+    );
+    const spec = source.match(/from '([^']+)'/)[1];
+    const target = path.resolve(path.dirname(file), spec);
+    assert.equal(statSync(target).isFile(), true, `${rel} re-export target missing: ${spec}`);
+    assert.ok(
+      target.replaceAll('\\', '/').endsWith(`/js/v3/apps/dungeon/js/${rel}`),
+      `${rel} must re-export the matching module file`
+    );
+  }
+
+  const moduleFiles = walk(moduleJs).map((file) => path.relative(moduleJs, file).replaceAll('\\', '/')).sort();
+  const standaloneRels = standaloneFiles.map((file) => path.relative(standaloneJs, file).replaceAll('\\', '/')).sort();
+  assert.deepEqual(standaloneRels, moduleFiles, 'standalone re-export tree drifted from module JS tree');
 });

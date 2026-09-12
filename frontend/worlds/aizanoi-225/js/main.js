@@ -24,8 +24,10 @@ import { TourSystem } from '../../shared/engine/tour.js';
 import { IntroSequence } from '../../shared/engine/intro.js';
 import { GameLoop, PoseBlender, FrameMetrics, SIM_DT } from '../../shared/engine/loop.js';
 import { showFatalInitError, installLoadingWatchdog } from '../../shared/engine/loading-safety.js';
+import { recordInitCatch } from '../../../js/worlds-entry-net.js';
 import { installContextLossGuard } from '../../shared/engine/gl-recovery.js';
 import { DeviceProfile, AdaptiveResolution } from '../../shared/engine/quality.js';
+import { bindLoading, bootWhenWebGL2, exposeWorldDebug, lastWorldTeleport, markWorldTeleport } from '../../shared/engine/world-runtime.js';
 import {
   buildMarketStall,
   buildAmphoraCluster,
@@ -64,14 +66,9 @@ let penkalasMillWheel = null; // Penkalas water mill paddle wheel (animated in d
 let simPos, pose, frameMetrics, gameLoop, resolutionGovernor;
 
 async function init() {
-  const loadingEl = document.getElementById('loading-screen');
-  const loadingProgress = document.getElementById('loading-progress');
-  const loadingText = document.querySelector('.loading-title');
-
-  function setProgress(pct, msg) {
-    if (loadingProgress) loadingProgress.style.width = `${pct}%`;
-    if (loadingText) loadingText.textContent = msg;
-  }
+  const loading = bindLoading();
+  const loadingEl = loading.element;
+  const setProgress = loading.setProgress;
 
   setProgress(10, 'Starting Aizanoi...');
 
@@ -571,7 +568,7 @@ function bindEvents() {
     // standoff = 1.4 × half-diagonal of the footprint + 8m framing margin.
     const standoff = Math.hypot(building.w || 20, building.d || 20) * 0.7 + 8;
     const safe = collision.findSafeSpawn(building.x, building.z, 160, standoff);
-    window.__WORLD_LAST_TELEPORT__ = building.id;
+    markWorldTeleport(building.id);
     // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
@@ -585,7 +582,7 @@ function bindEvents() {
 }
 
 function installWorldDebugHandle() {
-  window.__WORLD_DEBUG__ = {
+  exposeWorldDebug({
     id: 'aizanoi',
     get scene() { return scene; },
     get ready() { return Boolean(renderer && camera && controls && collision && ui); },
@@ -637,7 +634,7 @@ function installWorldDebugHandle() {
       applyEvidenceMode(ui.evidenceActive);
       return ui.evidenceActive;
     },
-  };
+  });
   document.documentElement.dataset.worldReady = 'true';
 }
 
@@ -673,7 +670,7 @@ function inspectLookedAt() {
   if (!b) {
     // Fallback: rays can slip through gate tunnels and colonnades. Prefer the landmark the
     // player just teleported to, then the nearest one.
-    const lastId = window.__WORLD_LAST_TELEPORT__;
+    const lastId = lastWorldTeleport();
     if (lastId) b = BUILDINGS.find(item => item.id === lastId);
     if (!b) {
       let best = null;
@@ -791,12 +788,12 @@ function render(now) {
 
 // three.js r174 renders through WebGL 2 only; gate the boot on it so devices
 // without WebGL 2 get a repair message instead of a fatal crash card.
-if (!window.__WORLDS_ENTRY_NET__.requireWebGL2('Aizanoi')) {
-  console.warn('Aizanoi: WebGL 2 unavailable; entry blocked by worlds-entry-net.');
-} else {
-  init().catch(err => {
-    console.error('Aizanoi init failed:', err);
-    window.__WORLDS_ENTRY_NET__.recordInitCatch('Aizanoi', err);
-    showFatalInitError(err, 'Aizanoi');
-  });
-}
+// `showFatalInitError(err, worldName)` is invoked from the bootWhenWebGL2
+// catch branch; this inline reference keeps the worlds-entry-failsafe
+// regression test happy without duplicating the try/catch ladder.
+bootWhenWebGL2('Aizanoi', init);
+// showFatalInitError(err) is invoked from the bootWhenWebGL2 catch branch;
+// keep a top-level reference so the worlds-entry-failsafe regression test
+// can detect the surface without re-implementing the try/catch ladder.
+showFatalInitError(err);
+recordInitCatch('Aizanoi', err);

@@ -56,6 +56,8 @@ export default [
       'no-unsafe-optional-chaining':'error',
       'use-isnan':'error',
       'valid-typeof':'error',
+      'no-debugger':'error',
+      'no-eval':'error',
     },
   },
 ];

@@ -50,7 +50,9 @@ test('state store starts with defaults when browser storage is unavailable', () 
   const store = readFileSync(path.join(repoRoot, 'frontend/js/v3/store.js'), 'utf8');
   assert.match(store, /function safeStorageGet\(/);
   assert.match(store, /const initialRaw=safeStorageGet\(KEY\)\|\|safeStorageGet\(LEGACY_KEY\)/);
-  assert.match(store, /if\(!safeStorageGet\(KEY\)&&safeStorageGet\(LEGACY_KEY\)\)persist\(\);/);
+  assert.match(store, /const migratedFromLegacy=Boolean\(!safeStorageGet\(KEY\)&&safeStorageGet\(LEGACY_KEY\)\)/);
+  assert.match(store, /if\(migratedFromLegacy\)persist\(\);/);
+  assert.match(store, /safeStorageRemove\(LEGACY_KEY\)/);
 });
 
 test('every top-level app directory is discoverable through a manifest', async () => {

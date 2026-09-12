@@ -11,8 +11,6 @@ from __future__ import annotations
 
 import argparse
 import ctypes
-import hashlib
-import os
 import datetime as dt
 import hashlib
 try:
