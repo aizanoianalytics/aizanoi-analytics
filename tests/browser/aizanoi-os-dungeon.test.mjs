@@ -5,11 +5,14 @@ import { chromium } from 'playwright';
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
 async function menuButtonPoint(page) {
+  // MenuScene renders its primary action button below the centre title
+  // (btnStartY = height/2 + 40). Aim slightly below the canvas centre so the
+  // tap lands on the Story / Continue button instead of the portrait sprite.
   return page.evaluate(() => {
     const c = document.querySelector('.az-fullscreen-app canvas');
     if (!c) return null;
     const r = c.getBoundingClientRect();
-    return { x: r.x + (480 / 960) * r.width, y: r.y + (360 / 640) * r.height };
+    return { x: r.x + r.width * 0.5, y: r.y + r.height * 0.625 };
   });
 }
 
