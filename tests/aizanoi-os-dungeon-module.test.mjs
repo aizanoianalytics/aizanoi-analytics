@@ -12,7 +12,7 @@ const mainSource = read(`${moduleRoot}/js/main.js`);
 const standaloneSource = read(`${moduleRoot}/js/standalone.js`);
 const shellMain = read('frontend/js/v3/main.js');
 
-test('Aizanoi Dungeon is a zero-capability desktop-app module', () => {
+test('Aizanoi Dungeon exposes only the host closeApp lifecycle API', () => {
   assert.equal(manifest.manifestVersion, 1);
   assert.equal(manifest.id, 'dungeon');
   assert.equal(manifest.type, 'desktop-app');
@@ -65,7 +65,9 @@ test('Dungeon mount clears the shell placeholder and reports load failure visibl
   assert.match(entrySource, /stopDungeonGame\(gameInstance\)/);
   assert.match(entrySource, /wrapper\.remove\(\)/);
   assert.doesNotMatch(entrySource, /innerHTML/);
-  assert.doesNotMatch(entrySource, /\bapi\./, 'zero-capability module must not use api capabilities');
+  assert.match(entrySource, /api\?\.closeApp\?\.\('dungeon'\)/, 'closeApp is the declared host lifecycle API');
+  const withoutLifecycleCalls = entrySource.replaceAll("api?.closeApp?.('dungeon')", '');
+  assert.doesNotMatch(withoutLifecycleCalls, /\bapi\??\./, 'no capability API other than closeApp is allowed');
   assert.doesNotMatch(entrySource, /workspace\//);
 });
 
