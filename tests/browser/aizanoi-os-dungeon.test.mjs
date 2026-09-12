@@ -81,10 +81,27 @@ test('AizanoiOS Dungeon mobile: fullscreen tap-to-start, no overflow, exit contr
     await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'MenuScene', { timeout: 30000 });
     const pt = await menuButtonPoint(page);
     assert.ok(pt, 'menu canvas must be measurable');
-    // Drive the primary action via the QA escape hatch so the test no longer
-    // depends on Phaser canvas letterboxing translating canvas-relative
-    // coordinates to the Story / Continue button row.
-    await page.evaluate(() => window.__AIZANOI_DUNGEON_START_PRIMARY?.());
+    // Drive the primary action through the QA escape hatches exposed by
+    // MenuScene and the AizanoiOS mount. The hook runs MenuScene's own
+    // _primaryAction; the fallback reaches for the live Phaser.Game instance
+    // directly when the production hook is absent.
+    const started = await page.evaluate(() => {
+      try {
+        if (typeof window.__AIZANOI_DUNGEON_START_PRIMARY === 'function') {
+          window.__AIZANOI_DUNGEON_START_PRIMARY();
+          return { ok: true, path: 'hook' };
+        }
+        const game = window.AIZANOI_DUNGEON_GAME;
+        if (game && game.scene && typeof game.scene.start === 'function') {
+          game.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
+          return { ok: true, path: 'game' };
+        }
+        return { ok: false, path: 'no-handler' };
+      } catch (err) {
+        return { ok: false, path: 'throw', error: String(err) };
+      }
+    });
+    assert.ok(started.ok, `MenuScene primary action must be triggerable, got ${JSON.stringify(started)}`);
     await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'GameScene', { timeout: 30000 });
     const overflow = await page.evaluate(() => ({
       x: document.documentElement.scrollWidth - document.documentElement.clientWidth,

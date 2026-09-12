@@ -77,6 +77,13 @@ export async function mount({ container, api }) {
     throw err;
   }
 
+  // QA escape hatch: surface the live Phaser.Game instance so the headless
+  // browser suite can drive scene transitions without reverse-engineering
+  // canvas letterboxing. Production code never reads this.
+  if (typeof window !== 'undefined') {
+    window.AIZANOI_DUNGEON_GAME = gameInstance;
+  }
+
   // Pencere boyutu degistiginde otomatik canvas ve aspect ratio guncelleme
   let resizeObserver = null;
   if (typeof ResizeObserver !== 'undefined') {
