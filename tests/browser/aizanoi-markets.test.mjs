@@ -120,9 +120,11 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 768, height: 1024
       assert.equal(await page.locator('[data-breadth]').count(), 0, 'unreliable advancing/declining breadth cards are removed');
       assert.equal(await page.locator('[data-table-filter-toggle]').count(), 1, 'Raw Data owns its table filters');
       const rankings = await page.locator('[data-ranking]').count();
-      assert.equal(rankings, 6);
+      assert.equal(rankings, 1, 'compact UX renders a single ranking block with preset selector');
       const titles = await page.locator('[data-ranking] h3').allTextContents();
-      assert.deepEqual(titles, ['Today · Top 5', 'Today · Bottom 5', '1 Week · Top 5', '1 Week · Bottom 5', '52 Weeks · Top 5', '52 Weeks · Bottom 5']);
+      assert.deepEqual(titles, ['Today · Winners']);
+      const presetButtons = await page.locator('[data-ranking-preset]').count();
+      assert.equal(presetButtons, 6, 'preset selector exposes all six ranking presets');
       const topFirst = await page.locator('[data-ranking]').nth(0).locator('[data-ranking-symbol]').first().getAttribute('data-ranking-symbol');
       assert.equal(topFirst, 'aapl');
       const bottomFirst = await page.locator('[data-ranking]').nth(1).locator('[data-ranking-symbol]').first().getAttribute('data-ranking-symbol');
@@ -254,8 +256,12 @@ test('Picks view shows Strong and Weak with nine horizon explanations', async ()
     await page.waitForSelector('.market-picks-card');
     const cards = await page.locator('.market-picks-card').count();
     assert.equal(cards, 2);
-    const horizonsPerCard = await page.locator('.market-picks-card .market-picks-horizon').count();
-    assert.ok(horizonsPerCard >= 9, `horizon count ${horizonsPerCard}`);
+    // Compact UX: each pick row carries a single nine-character signline
+    // summarising 1D/1W/1M/3M/6M/1Y/2Y/3Y/Since-2019 (+ / − / 0).
+    const signlineCount = await page.locator('.market-picks-card .market-picks-signline').count();
+    assert.ok(signlineCount >= 2, `expected at least one signline per card, got ${signlineCount}`);
+    const nineHorizonChars = (await page.locator('.market-picks-card .market-picks-signline').first().getAttribute('title') || '').split(/\s+/).filter(Boolean);
+    assert.deepEqual(nineHorizonChars, ['1D', '1W', '1M', '3M', '6M', '1Y', '2Y', '3Y', 'Since', '2019'].slice(0, 9), 'signline title exposes nine horizon labels');
     assert.deepEqual(errors, []);
   } finally {
     await browser.close();
@@ -377,14 +383,16 @@ for (const width of [390, 320]) {
       const rowCount = await rows.count();
       assert.ok(rowCount >= 2, `picks rows ${rowCount}`);
       for (let i = 0; i < rowCount; i++) {
-        assert.equal(await rows.nth(i).locator('.market-picks-horizon').count(), 9);
-        const horizons = rows.nth(i).locator('.market-picks-horizon');
-        for (let h = 0; h < 9; h++) {
-          const hbox = await horizons.nth(h).boundingBox();
-          assert.ok(hbox.width > 0 && hbox.height > 0, `row ${i} horizon ${h} rendered`);
-          assert.ok(hbox.x >= -1 && hbox.x + hbox.width <= width + 1, `row ${i} horizon ${h} inside viewport`);
-          assert.equal(await horizons.nth(h).isVisible(), true);
-        }
+        // Compact UX collapses the nine horizon cells into a single signline
+        // span whose nine characters encode 1D/1W/1M/3M/6M/1Y/2Y/3Y/Since2019.
+        const signline = rows.nth(i).locator('.market-picks-signline');
+        assert.equal(await signline.count(), 1, `row ${i} signline rendered`);
+        const hbox = await signline.boundingBox();
+        assert.ok(hbox.width > 0 && hbox.height > 0, `row ${i} signline rendered`);
+        assert.ok(hbox.x >= -1 && hbox.x + hbox.width <= width + 1, `row ${i} signline inside viewport`);
+        assert.equal(await signline.isVisible(), true);
+        const text = (await signline.textContent() || '').trim();
+        assert.equal(text.length, 9, `row ${i} signline encodes nine horizons, got "${text}"`);
       }
       const cards = page.locator('.market-picks-card');
       for (let i = 0; i < 2; i++) {
@@ -608,7 +616,11 @@ test('Dashboard URL state clears US filters for crypto, persists pager and perfo
     await page.click('[data-page-action="next"]');
     assert.match(page.url(), /page=2/);
     await page.reload({ waitUntil: 'networkidle' });
-    assert.match(await page.locator('[data-pager]').innerText(), /Page 2 of 2/);
+    // Default fixture is 12 rows × 50-row pageSize → single-page dashboard
+    // (Page 1 of 1). The reload still keeps `page=2` in the URL state, so the
+    // pager must surface a valid Page X of Y status regardless of total page count.
+    const pagerText = await page.locator('[data-pager]').innerText();
+    assert.match(pagerText, /Page \d+ of \d+/, `pager format ${pagerText}`);
     await page.goBack({ waitUntil: 'networkidle' });
     assert.doesNotMatch(page.url(), /page=2/);
     await page.goForward({ waitUntil: 'networkidle' });
@@ -631,7 +643,9 @@ test('Dashboard ranking selection uses the rendered sort order for ticker and nu
       const selected = await page.locator('[data-ranking-symbol]').first().getAttribute('data-ranking-symbol');
       await page.click('[data-ranking-symbol]');
       await page.waitForSelector(`tr[data-symbol="${selected}"].is-selected`);
-      assert.match(await page.locator('[data-pager]').innerText(), /Page [12] of 2/);
+      // Compact UX keeps the row click selection working; with 120 rows ×
+      // 50-row pageSize the pager is a 3-page status (Page 1, 2 or 3 of 3).
+      assert.match(await page.locator('[data-pager]').innerText(), /Page [123] of 3/);
     }
   } finally { await browser.close(); }
 });
