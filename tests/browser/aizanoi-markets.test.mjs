@@ -127,7 +127,10 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 768, height: 1024
       assert.equal(presetButtons, 6, 'preset selector exposes all six ranking presets');
       const topFirst = await page.locator('[data-ranking]').nth(0).locator('[data-ranking-symbol]').first().getAttribute('data-ranking-symbol');
       assert.equal(topFirst, 'aapl');
-      const bottomFirst = await page.locator('[data-ranking]').nth(1).locator('[data-ranking-symbol]').first().getAttribute('data-ranking-symbol');
+      // Compact UX has a single ranking block; flipping the preset to the
+      // matching "Losers" preset must surface the bottom-ranked ticker.
+      await page.click('[data-ranking-preset="1d-down"]');
+      const bottomFirst = await page.locator('[data-ranking]').nth(0).locator('[data-ranking-symbol]').first().getAttribute('data-ranking-symbol');
       assert.equal(bottomFirst, 'us7');
       await page.waitForSelector('tbody[data-raw-table-body] tr[data-symbol]');
       const rows = await page.locator('tbody[data-raw-table-body] tr[data-symbol]').count();
@@ -260,8 +263,11 @@ test('Picks view shows Strong and Weak with nine horizon explanations', async ()
     // summarising 1D/1W/1M/3M/6M/1Y/2Y/3Y/Since-2019 (+ / − / 0).
     const signlineCount = await page.locator('.market-picks-card .market-picks-signline').count();
     assert.ok(signlineCount >= 2, `expected at least one signline per card, got ${signlineCount}`);
-    const nineHorizonChars = (await page.locator('.market-picks-card .market-picks-signline').first().getAttribute('title') || '').split(/\s+/).filter(Boolean);
-    assert.deepEqual(nineHorizonChars, ['1D', '1W', '1M', '3M', '6M', '1Y', '2Y', '3Y', 'Since', '2019'].slice(0, 9), 'signline title exposes nine horizon labels');
+    // Signline `title` is the human-readable horizon list:
+    //   "1D 1W 1M 3M 6M 1Y 2Y 3Y Since 2019" → 9 horizons (Since-2019 is one).
+    const titleText = await page.locator('.market-picks-card .market-picks-signline').first().getAttribute('title');
+    const horizonLabels = (titleText || '').replace(/\s*Since\s+2019\s*$/, ' Since2019').trim().split(/\s+/).filter(Boolean);
+    assert.deepEqual(horizonLabels, ['1D', '1W', '1M', '3M', '6M', '1Y', '2Y', '3Y', 'Since2019'], 'signline title exposes nine horizon labels');
     assert.deepEqual(errors, []);
   } finally {
     await browser.close();

@@ -64,8 +64,10 @@ test('crypto universe maps ambiguous names to the intended instruments', () => {
 test('dashboard labels publication and observation separately in the status strip', () => {
   const dashboard = read('frontend/analytics/markets/dashboard.js');
   assert.match(dashboard, /market-status-strip/);
-  assert.match(dashboard, /Latest observation/);
-  assert.match(dashboard, /Published/);
+  // Compact close-price framing labels observation as "As of close" alongside
+  // the published snapshot timestamp.
+  assert.match(dashboard, /As of close/);
+  assert.match(dashboard, /Snapshot published/);
   assert.match(dashboard, /Source/);
 });
 
