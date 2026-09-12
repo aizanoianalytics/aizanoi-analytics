@@ -25,6 +25,9 @@ jobs:
           node-version: '22'
           cache: npm
           cache-dependency-path: tools/eslint/package-lock.json
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.11'
       - name: JavaScript syntax checks
         run: |
           set -euo pipefail
@@ -40,7 +43,7 @@ jobs:
         run: |
           npm ci --prefix tools/eslint --ignore-scripts --no-fund
           node scripts/ci/npm-audit-gate.mjs --prefix tools/eslint
-          ./tools/eslint/node_modules/.bin/eslint -c eslint.config.js frontend/js/v3 frontend/analytics frontend/service-worker.js frontend/web-editor-preview/runner.js scripts tests
+          ./tools/eslint/node_modules/.bin/eslint -c eslint.config.js frontend/js/v3 frontend/analytics frontend/worlds frontend/dungeon frontend/service-worker.js frontend/web-editor-preview/runner.js scripts tests
       - name: Validate module manifests and generated wiring
         run: node scripts/modules/build-module-registry.mjs --check
       - name: Build generated News surfaces
@@ -53,6 +56,16 @@ jobs:
         run: |
           set -o pipefail
           node --test tests/audit/*.test.mjs 2>&1 | tee artifacts/diagnostics/audit-contract-tests.log
+      - name: Python Markets and Worlds contract tests
+        run: |
+          set -o pipefail
+          python -m unittest \
+            tests.test_provider_contracts \
+            tests.markets_pipeline_test \
+            tests.markets_product_test \
+            tests.test_markets_hardening \
+            tests.test_markets_frontend_correctness \
+            tests.validate_worlds_assets -v 2>&1 | tee artifacts/diagnostics/python-contract-tests.log
       - name: Reject whitespace errors
         if: success()
         run: git diff --check HEAD^ HEAD

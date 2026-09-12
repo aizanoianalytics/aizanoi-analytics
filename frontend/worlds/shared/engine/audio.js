@@ -397,15 +397,17 @@ export class AudioSystem {
         } else {
             // ---- Cicadas (day) / crickets (night)
             if (isNight) {
-                if (Math.random() < 0.02) {
+                const chance = Math.random();
+                if (chance < 0.02) {
                     this.cicadaGain.gain.setTargetAtTime(0.06, now, 0.5);
-                } else if (Math.random() < 0.02) {
+                } else if (chance < 0.04) {
                     this.cicadaGain.gain.setTargetAtTime(0, now, 1.0);
                 }
             } else {
-                if (Math.random() < 0.01) {
+                const chance = Math.random();
+                if (chance < 0.01) {
                     this.cicadaGain.gain.setTargetAtTime(0.1, now, 0.5);
-                } else if (Math.random() < 0.01) {
+                } else if (chance < 0.02) {
                     this.cicadaGain.gain.setTargetAtTime(0, now, 1.0);
                 }
             }

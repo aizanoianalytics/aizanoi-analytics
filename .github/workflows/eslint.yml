@@ -32,4 +32,4 @@ jobs:
           npm ci --prefix tools/eslint --ignore-scripts --no-fund
           node scripts/ci/npm-audit-gate.mjs --prefix tools/eslint
       - name: Enforce bug-class JavaScript rules
-        run: ./tools/eslint/node_modules/.bin/eslint -c eslint.config.js frontend/js/v3 frontend/analytics frontend/service-worker.js frontend/web-editor-preview/runner.js scripts tests
+        run: ./tools/eslint/node_modules/.bin/eslint -c eslint.config.js frontend/js/v3 frontend/analytics frontend/worlds frontend/dungeon frontend/service-worker.js frontend/web-editor-preview/runner.js scripts tests

@@ -13,7 +13,9 @@ async function waitForRuntime(timeoutMs = 30000) {
     if (performance.now() - startedAt > timeoutMs) {
       throw new Error('Aizanoi runtime did not become ready in time');
     }
-    await new Promise((resolve) => setTimeout(resolve, 16));
+    await new Promise((resolve) => {
+      setTimeout(resolve, 16);
+    });
   }
 }
 

@@ -288,7 +288,6 @@ export class Environment {
       let tNorm = t;
       if (end > 1.0) {
         if (t < start) tNorm = t + 1.0;
-        end = end; // keep as-is
       }
 
       if (tNorm >= start && tNorm < end) {

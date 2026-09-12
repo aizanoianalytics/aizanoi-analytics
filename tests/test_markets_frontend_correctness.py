@@ -130,8 +130,8 @@ class MarketsStaticRegressionTest(unittest.TestCase):
 
     def test_instrument_chart_tool_renders_chart_date_inputs(self):
         # Bug 2: chart toolbar From/To must bind to chartDateFrom/To.
-        chart_block = re.search(r'function renderToolbar\(\)[\s\S]+?\n\}', self.instrument)
-        self.assertIsNotNone(chart_block, 'renderToolbar not found in instrument/app.js')
+        chart_block = re.search(r'function renderChartControls\(\)[\s\S]+?\n\}', self.instrument)
+        self.assertIsNotNone(chart_block, 'renderChartControls not found in instrument/app.js')
         chart_source = chart_block.group() or ''
         self.assertIn('state.chartDateFrom', chart_source)
         self.assertIn('state.chartDateTo', chart_source)
