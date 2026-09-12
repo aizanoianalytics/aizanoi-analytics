@@ -5,32 +5,32 @@
 export const BLESSINGS = [
   {
     id: 'hizli_saldiri',
-    label: '+%10 sald\u0131r\u0131 h\u0131z\u0131',
+    label: '+10% attack speed',
     apply(mods) { mods.attackSpeedMult = (mods.attackSpeedMult || 1) * 1.1; },
   },
   {
     id: 'mermer_beden',
-    label: '+15 azami can',
+    label: '+15 max HP',
     apply(mods) { mods.maxHpBonus = (mods.maxHpBonus || 0) + 15; },
   },
   {
     id: 'ruzgar_adim',
-    label: '+%8 hareket h\u0131z\u0131',
+    label: '+8% move speed',
     apply(mods) { mods.moveSpeedMult = (mods.moveSpeedMult || 1) * 1.08; },
   },
   {
     id: 'kritik_ogreti',
-    label: '+%10 kritik hasar',
+    label: '+10% crit damage',
     apply(mods) { mods.critDmgMult = (mods.critDmgMult || 1) * 1.1; },
   },
   {
     id: 'penkalas_can',
-    label: '+1/sn can yenileme',
+    label: '+1 HP/s regen',
     apply(mods) { mods.regenBonus = (mods.regenBonus || 0) + 1; },
   },
   {
     id: 'savas_odagi',
-    label: '+%12 sald\u0131r\u0131 g\u00fcc\u00fc',
+    label: '+12% attack power',
     apply(mods) { mods.attackDmgMult = (mods.attackDmgMult || 1) * 1.12; },
   },
 ];

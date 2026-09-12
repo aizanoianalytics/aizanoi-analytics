@@ -1,5 +1,5 @@
 // js/scenes/UIScene.js
-// AizanoiOS Uyumlu HUD Overlay Sahnesi
+// Dark-glass HUD: HP, objective, LoL-style bar, live minimap
 
 import { drawStatBar } from '../utils/ui-helpers.js';
 import { audioManager } from '../systems/AudioManager.js';
@@ -14,126 +14,139 @@ export class UIScene extends Phaser.Scene {
   }
 
   create() {
-    const { width } = this.cameras.main;
+    const { width, height } = this.cameras.main;
+    const glass = 0x0f1624;
 
-    // 1. Üst Sol: Aizo Profil Kartı & Barlar
-    const hudBox = this.add.rectangle(125, 42, 230, 68, 0xffffff, 0.88)
-      .setStrokeStyle(2, 0xc5a059).setScrollFactor(0);
-
-    this.add.sprite(36, 42, 'aizo', 0).setScale(1.4);
-
+    this.add.rectangle(128, 44, 236, 72, glass, 0.82).setStrokeStyle(1, 0xc5a059);
+    this.add.sprite(36, 42, 'aizo', 0).setScale(1.35);
     this.levelBadge = this.add.text(36, 64, 'Lv.1', {
-      fontSize: '10px', color: '#1e293b', fontStyle: 'bold',
+      fontSize: '10px', color: '#f5d77f', fontStyle: 'bold',
     }).setOrigin(0.5);
 
-    // Can ve XP Bar Grafikleri
-    this.hpGraphics = this.add.graphics().setScrollFactor(0);
-    this.xpGraphics = this.add.graphics().setScrollFactor(0);
+    this.hpGraphics = this.add.graphics();
+    this.xpGraphics = this.add.graphics();
+    this.hpText = this.add.text(74, 22, 'HP: 120/120', { fontSize: '11px', color: '#e8eef8', fontStyle: 'bold' });
+    this.xpText = this.add.text(74, 46, 'SPARK: 0/50', { fontSize: '10px', color: '#b7c0d0', fontStyle: 'bold' });
 
-    this.hpText = this.add.text(75, 24, 'CAN: 120/120', {
-      fontSize: '10px', color: '#1e293b', fontStyle: 'bold',
-    });
-
-    this.xpText = this.add.text(75, 46, 'KIVILCIM: 0/50', {
-      fontSize: '10px', color: '#64748b', fontStyle: 'bold',
-    });
-
-    // 2. Üst Merkez: Bölüm / Dalga Bilgisi
-    const chapterName = this.gameScene.isEndless
-      ? `⚡ Sonsuzluk Panteonu (Dalga ${this.gameScene.endlessWave})`
-      : this.gameScene.currentLevelConfig.name;
-
-    this.chapterText = this.add.text(width / 2, 22, chapterName, {
-      fontSize: '13px',
-      color: '#c5a059',
-      fontStyle: 'bold',
-      backgroundColor: 'rgba(255,255,255,0.9)',
-      padding: { x: 12, y: 6 },
-    }).setOrigin(0.5).setStroke('#c5a059', 1);
-
-    // 3. Üst Sağ: Denarii Sayacı & Ses Butonu
-    const goldBox = this.add.rectangle(width - 110, 32, 130, 36, 0xffffff, 0.88)
-      .setStrokeStyle(2, 0xc5a059);
-
-    this.add.image(width - 160, 32, 'coin-icon').setScale(1.3);
-    this.goldText = this.add.text(width - 142, 25, '0', {
-      fontSize: '14px', color: '#1e293b', fontStyle: 'bold',
-    });
-
-    const soundBox = this.add.rectangle(width - 25, 32, 34, 34, 0xffffff, 0.88)
-      .setStrokeStyle(2, 0xc5a059).setInteractive({ useHandCursor: true });
-    this.soundIcon = this.add.text(width - 25, 32, audioManager.isMuted ? '🔇' : '🔊', {
-      fontSize: '15px',
+    this.chapterText = this.add.text(width / 2, 18, '', {
+      fontSize: '13px', color: '#f5d77f', fontStyle: 'bold',
+      backgroundColor: '#0f1624cc', padding: { x: 12, y: 5 },
     }).setOrigin(0.5);
 
+    this.objectiveText = this.add.text(width / 2, 42, '', {
+      fontSize: '11px', color: '#d1d5db',
+      backgroundColor: '#0f1624aa', padding: { x: 10, y: 3 },
+    }).setOrigin(0.5);
+
+    this.add.rectangle(width - 118, 28, 150, 36, glass, 0.82).setStrokeStyle(1, 0xc5a059);
+    this.add.image(width - 178, 28, 'coin-icon').setScale(1.2);
+    this.goldText = this.add.text(width - 160, 20, '0', { fontSize: '14px', color: '#f5d77f', fontStyle: 'bold' });
+
+    const soundBox = this.add.rectangle(width - 28, 28, 32, 32, glass, 0.82)
+      .setStrokeStyle(1, 0xc5a059).setInteractive({ useHandCursor: true });
+    this.soundIcon = this.add.text(width - 28, 28, audioManager.isMuted ? '🔇' : '🔊', { fontSize: '14px' }).setOrigin(0.5);
     soundBox.on('pointerdown', () => {
-      const isMuted = audioManager.toggleMute();
-      this.soundIcon.setText(isMuted ? '🔇' : '🔊');
+      this.soundIcon.setText(audioManager.toggleMute() ? '🔇' : '🔊');
     });
 
-    // 4. Alt Merkez: Yetenek Kısayolları (Q & R Cooldowns)
     this.createAbilityBar();
 
-    // 5. Mini-Harita Çerçevesi (Sağ Alt)
-    this.minimapBg = this.add.rectangle(width - 65, this.cameras.main.height - 65, 100, 100, 0x141822, 0.85)
+    this.minimapGfx = this.add.graphics();
+    this.minimapBg = this.add.rectangle(width - 68, height - 68, 112, 112, 0x0b1220, 0.88)
       .setStrokeStyle(1.5, 0xc5a059);
-    this.minimapPlayerDot = this.add.circle(width - 65, this.cameras.main.height - 65, 3, 0x00d2ff);
+    this.minimapHint = this.add.text(width - 68, height - 128, 'MAP', {
+      fontSize: '9px', color: '#9aa8be',
+    }).setOrigin(0.5);
+
+    this.hintText = this.add.text(width / 2, height - 78, '', {
+      fontSize: '11px', color: '#f8fafc',
+      backgroundColor: '#141822cc', padding: { x: 8, y: 3 },
+    }).setOrigin(0.5);
   }
 
   createAbilityBar() {
     const cx = this.cameras.main.width / 2;
-    const cy = this.cameras.main.height - 35;
+    const cy = this.cameras.main.height - 34;
+    this.abilitySlots = {};
+    const defs = [
+      { key: 'q', label: 'Q', x: cx - 78, name: 'Beam' },
+      { key: 'r', label: 'R', x: cx - 26, name: 'Aegis' },
+      { key: 'b', label: 'B', x: cx + 26, name: 'Recall' },
+      { key: 'e', label: 'E', x: cx + 78, name: 'Shop' },
+    ];
+    defs.forEach((def) => {
+      const box = this.add.rectangle(def.x, cy, 46, 46, 0x0f1624, 0.9).setStrokeStyle(2, 0xc5a059);
+      this.add.text(def.x, cy - 8, def.label, { fontSize: '13px', color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
+      const cd = this.add.text(def.x, cy + 10, 'RDY', { fontSize: '9px', color: '#3dcea8', fontStyle: 'bold' }).setOrigin(0.5);
+      this.abilitySlots[def.key] = { box, cd };
+    });
+  }
 
-    // Q Butonu Çerçevesi
-    this.qBox = this.add.rectangle(cx - 30, cy, 48, 48, 0xffffff, 0.85).setStrokeStyle(2, 0xc5a059);
-    this.add.text(cx - 30, cy - 8, 'Q', { fontSize: '13px', color: '#1e293b', fontStyle: 'bold' }).setOrigin(0.5);
-    this.qCdText = this.add.text(cx - 30, cy + 10, 'HAZIR', { fontSize: '9px', color: '#27ae60', fontStyle: 'bold' }).setOrigin(0.5);
-
-    // R Butonu Çerçevesi
-    this.rBox = this.add.rectangle(cx + 30, cy, 48, 48, 0xffffff, 0.85).setStrokeStyle(2, 0xc5a059);
-    this.add.text(cx + 30, cy - 8, 'R', { fontSize: '13px', color: '#1e293b', fontStyle: 'bold' }).setOrigin(0.5);
-    this.rCdText = this.add.text(cx + 30, cy + 10, 'HAZIR', { fontSize: '9px', color: '#27ae60', fontStyle: 'bold' }).setOrigin(0.5);
+  setSlot(key, ready, seconds) {
+    const slot = this.abilitySlots[key];
+    if (!slot) return;
+    if (ready) {
+      slot.cd.setText('RDY').setColor('#3dcea8');
+      slot.box.setStrokeStyle(2, 0xc5a059);
+    } else {
+      slot.cd.setText(`${seconds}s`).setColor('#f07186');
+      slot.box.setStrokeStyle(2, 0x5a3a48);
+    }
   }
 
   update() {
     if (!this.gameScene || !this.gameScene.player) return;
-    const player = this.gameScene.player;
-    const prog = this.gameScene.progression;
+    const gs = this.gameScene;
+    const player = gs.player;
+    const prog = gs.progression;
+    const { width, height } = this.cameras.main;
 
-    // Can Barı
-    drawStatBar(this.hpGraphics, 75, 35, 140, 9, player.hp, player.maxHp, 0x27ae60);
-    this.hpText.setText(`CAN: ${Math.max(0, Math.round(player.hp))}/${player.maxHp}`);
-
-    // XP Barı
-    drawStatBar(this.xpGraphics, 75, 57, 140, 6, prog.currentXp, prog.nextXp, 0xa569bd);
-    this.xpText.setText(`KIVILCIM: ${prog.currentXp}/${prog.nextXp}`);
+    const hpColor = player.hp / player.maxHp <= 0.25 ? 0xe74c3c : 0x27ae60;
+    drawStatBar(this.hpGraphics, 74, 34, 148, 9, player.hp, player.maxHp, hpColor);
+    drawStatBar(this.xpGraphics, 74, 56, 148, 6, prog.currentXp, prog.nextXp, 0xa569bd);
+    this.hpText.setText(`HP: ${Math.max(0, Math.round(player.hp))}/${player.maxHp}`);
+    this.xpText.setText(`SPARK: ${prog.currentXp}/${prog.nextXp}`);
     this.levelBadge.setText(`Lv.${prog.level}`);
-
-    // Denarii
     this.goldText.setText(`${prog.gold}`);
 
-    // Q & R Cooldowns
-    if (player.skill1Cooldown > 0) {
-      this.qCdText.setText(`${Math.ceil(player.skill1Cooldown / 1000)}s`).setColor('#e74c3c');
-    } else {
-      this.qCdText.setText('HAZIR').setColor('#27ae60');
-    }
+    const chapterName = gs.isEndless
+      ? `Endless Pantheon — Wave ${gs.endlessWave}`
+      : gs.currentLevelConfig.name;
+    this.chapterText.setText(chapterName);
 
-    if (player.skill2Cooldown > 0) {
-      this.rCdText.setText(`${Math.ceil(player.skill2Cooldown / 1000)}s`).setColor('#e74c3c');
-    } else {
-      this.rCdText.setText('HAZIR').setColor('#27ae60');
-    }
+    const remaining = gs.enemies
+      ? gs.enemies.getChildren().filter((e) => e.active && e.hp > 0).length
+      : 0;
+    const ready = remaining === 0;
+    this.objectiveText.setText(ready ? 'Portal open — walk in' : `Clear the floor · ${remaining} left`);
+    this.objectiveText.setColor(ready ? '#3dcea8' : '#d1d5db');
 
-    // Mini-harita oyuncu pozisyonu
-    if (this.gameScene.mapData) {
-      const mapW = this.gameScene.mapData.width * 32;
-      const mapH = this.gameScene.mapData.height * 32;
-      const nx = player.x / mapW;
-      const ny = player.y / mapH;
-      const mx = (this.cameras.main.width - 65) - 45 + (nx * 90);
-      const my = (this.cameras.main.height - 65) - 45 + (ny * 90);
-      this.minimapPlayerDot.setPosition(mx, my);
-    }
+    this.setSlot('q', player.skill1Cooldown <= 0, Math.ceil((player.skill1Cooldown || 0) / 1000));
+    this.setSlot('r', player.skill2Cooldown <= 0, Math.ceil((player.skill2Cooldown || 0) / 1000));
+    this.setSlot('b', !(gs.recallChannel > 0), Math.ceil((gs.recallChannel || 0) / 1000));
+    this.setSlot('e', Boolean(player.isInBase), player.isInBase ? 0 : 1);
+    if (player.isInBase) this.abilitySlots.e.cd.setText('OPEN').setColor('#3dcea8');
+    else this.abilitySlots.e.cd.setText('BASE').setColor('#9aa8be');
+
+    this.hintText.setText(player.isInBase ? 'E Shop   I Relics   P Pause' : '');
+
+    this.minimapGfx.clear();
+    if (!gs.mapData) return;
+    const mapW = gs.mapData.width * 32;
+    const mapH = gs.mapData.height * 32;
+    const ox = width - 68 - 50;
+    const oy = height - 68 - 50;
+    const scaleX = 100 / mapW;
+    const scaleY = 100 / mapH;
+    const plot = (x, y, color, r = 2) => {
+      this.minimapGfx.fillStyle(color, 1);
+      this.minimapGfx.fillCircle(ox + x * scaleX, oy + y * scaleY, r);
+    };
+    plot(gs.baseAltar?.x || 0, gs.baseAltar?.y || 0, 0xf5d77f, 3);
+    plot(gs.exitPortal?.x || 0, gs.exitPortal?.y || 0, ready ? 0x00d2ff : 0x64748b, 3);
+    gs.enemies?.getChildren().forEach((enemy) => {
+      if (enemy.active && enemy.hp > 0) plot(enemy.x, enemy.y, enemy.isBoss ? 0xf39c12 : 0xe74c3c, enemy.isBoss ? 3 : 1.6);
+    });
+    plot(player.x, player.y, 0x7ea0ff, 3);
   }
 }

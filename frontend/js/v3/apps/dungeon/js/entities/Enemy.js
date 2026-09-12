@@ -158,18 +158,19 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   drawHealthBar() {
     this.hpBar.clear();
-    if (this.hp >= this.maxHp) return;
+    const always = this.isBoss || Boolean(this.eliteAffix);
+    if (!always && this.hp >= this.maxHp) return;
 
-    const barW = this.isBoss ? 48 : 26;
-    const barH = 4;
+    const barW = this.isBoss ? 54 : 28;
+    const barH = this.isBoss ? 6 : 4;
     const x = this.x - barW / 2;
-    const y = this.y - (this.isBoss ? 55 : 22);
+    const y = this.y - (this.isBoss ? 58 : 24);
 
-    this.hpBar.fillStyle(0x1e293b, 0.8);
-    this.hpBar.fillRect(x, y, barW, barH);
-
+    this.hpBar.fillStyle(0x0b1220, 0.9);
+    this.hpBar.fillRect(x - 1, y - 1, barW + 2, barH + 2);
     const pct = Math.max(0, this.hp / this.maxHp);
-    this.hpBar.fillStyle(this.isBoss ? 0xf39c12 : 0xe74c3c, 1.0);
+    const color = this.isBoss ? 0xf39c12 : (this.eliteAffix ? 0xa569bd : 0xe74c3c);
+    this.hpBar.fillStyle(color, 1.0);
     this.hpBar.fillRect(x, y, barW * pct, barH);
   }
 

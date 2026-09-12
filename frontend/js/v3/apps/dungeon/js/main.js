@@ -64,11 +64,15 @@ export async function launchDungeonGame(container) {
     height: 640,
     parent: container,
     backgroundColor: '#0b0d13',
+    pixelArt: true,
+    antialias: false,
+    disableContextMenu: true,
     scale: {
-      mode: Phaser.Scale.FIT,
+      mode: (Phaser.Scale && Phaser.Scale.EXPAND) ? Phaser.Scale.EXPAND : Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,
-      min: { width: 480, height: 320 },
-      max: { width: 1920, height: 1280 },
+      fullscreenTarget: container,
+      min: { width: 320, height: 240 },
+      max: { width: 2560, height: 1600 },
     },
     physics: {
       default: 'arcade',

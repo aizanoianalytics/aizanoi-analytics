@@ -69,9 +69,9 @@ export async function mount({ container, api }) {
     errorBox.className = 'aizanoi-dungeon-error';
     errorBox.setAttribute('role', 'alert');
     const title = document.createElement('strong');
-    title.textContent = 'Aizanoi Dungeon acilamadi';
+    title.textContent = 'Aizanoi Dungeon could not open';
     const detail = document.createElement('p');
-    detail.textContent = 'Oyun motoru yuklenemedi (Phaser calistirilamadi). Baglantinizi kontrol edip pencereyi kapatip yeniden acmayi deneyin.';
+    detail.textContent = 'The game engine failed to load (Phaser). Close the window and try again.';
     errorBox.append(title, detail);
     container.appendChild(errorBox);
     throw err;

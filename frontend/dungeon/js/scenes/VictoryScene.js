@@ -18,15 +18,15 @@ export class VictoryScene extends Phaser.Scene {
     const aizoHero = this.add.sprite(width / 2, height / 2 - 110, 'aizo', 60).setScale(4);
     aizoHero.play('aizo-victory');
 
-    this.add.text(width / 2, height / 2 - 25, 'ZEUS TAPINAĞI ARINDIRILDI!', {
+    this.add.text(width / 2, height / 2 - 25, 'THE TEMPLE OF ZEUS IS CLEANSED', {
       fontSize: '26px', color: '#f5d77f', fontStyle: 'bold',
       shadow: { blur: 16, color: '#c5a059', fill: true },
     }).setOrigin(0.5);
 
     const story = [
-      'Bozulmuş Titan Colossus alt edildi!',
-      'Zeus\'un kadim mabedi ve Penkalas suları karanlık yozlaşmadan temizlendi.',
-      'Aizo, Aizanoi\'nin ebedi koruyucusu olarak tarihe altın harflerle yazıldı.',
+      'The Corrupted Titan Colossus is down.',
+      'The shrine and the Penkalas waters are clear.',
+      'Aizo stands as Aizanoi\'s keeper.',
     ].join('\n');
 
     this.add.text(width / 2, height / 2 + 30, story, {
@@ -34,11 +34,11 @@ export class VictoryScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     // Butonlar
-    createGlassButton(this, width / 2, height / 2 + 100, 260, 40, '⚡ Sonsuzluk Panteonuna Gir', () => {
+    createGlassButton(this, width / 2, height / 2 + 100, 260, 40, 'Enter the Endless Pantheon', () => {
       this.scene.start('GameScene', { chapterIndex: LEVELS.length - 1, isEndless: true });
     });
 
-    createGlassButton(this, width / 2, height / 2 + 150, 260, 40, '🏛️ Ana Menü', () => {
+    createGlassButton(this, width / 2, height / 2 + 150, 260, 40, 'Main menu', () => {
       this.scene.start('MenuScene');
     });
   }

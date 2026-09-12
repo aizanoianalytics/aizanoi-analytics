@@ -22,21 +22,21 @@ export class GameOverScene extends Phaser.Scene {
     // Uyuyan Taş Aizo
     const aizoStatue = this.add.sprite(width / 2, height / 2 - 100, 'aizo', 52).setScale(3.5);
 
-    this.add.text(width / 2, height / 2 - 20, 'MERMER HEYKEL UYKUSU', {
+    this.add.text(width / 2, height / 2 - 20, 'MARBLE SLUMBER', {
       fontSize: '24px', color: '#94a3b8', fontStyle: 'bold',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     }).setOrigin(0.5);
 
     const desc = this.isEndless
-      ? `Sonsuzluk Panteonu'nda ${this.wave}. dalgaya kadar direndin.`
-      : `Alnındaki Zeus kıvılcımı söndü, tapınak mahzeninde derin bir uykuya daldın.`;
+      ? `You held the Endless Pantheon to wave ${this.wave}.`
+      : `The spark on Aizo's brow went dark. Wake at the altar.`;
 
     this.add.text(width / 2, height / 2 + 15, desc, {
       fontSize: '13px', color: '#cbd5e1',
     }).setOrigin(0.5);
 
     // Butonlar
-    createGlassButton(this, width / 2, height / 2 + 75, 220, 38, '⚡ Sunağında Uyan (Devam)', () => {
+    createGlassButton(this, width / 2, height / 2 + 75, 220, 38, 'Wake at the altar', () => {
       this.scene.start('GameScene', {
         chapterIndex: this.chapterIndex,
         isEndless: this.isEndless,
@@ -44,7 +44,7 @@ export class GameOverScene extends Phaser.Scene {
       });
     });
 
-    createGlassButton(this, width / 2, height / 2 + 125, 220, 38, '🏛️ Ana Menüye Dön', () => {
+    createGlassButton(this, width / 2, height / 2 + 125, 220, 38, 'Main menu', () => {
       this.scene.start('MenuScene');
     });
   }

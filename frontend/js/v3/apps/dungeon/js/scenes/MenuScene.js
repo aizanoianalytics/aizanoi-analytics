@@ -53,7 +53,7 @@ export class MenuScene extends Phaser.Scene {
       shadow: { blur: 12, color: '#c5a059', fill: true },
     }).setOrigin(0.5);
 
-    this.add.text(width / 2, height / 2 - 10, 'Aizo\'nun Uyanışı: Zeus Tapınağı Mahzenleri', {
+    this.add.text(width / 2, height / 2 - 10, 'Aizo Awakens: Crypts of the Temple of Zeus', {
       fontSize: '14px',
       color: '#cbd5e1',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -68,17 +68,17 @@ export class MenuScene extends Phaser.Scene {
         this.scene.start('GameScene', { chapterIndex: savedChapter - 1, isEndless: false });
       };
       this._primaryAction = () => this._startOnce(continueAction);
-      createGlassButton(this, width / 2, btnStartY, 260, 38, `🏛️ Devam Et (Bölüm ${savedChapter})`, () => this._startOnce(continueAction));
+      createGlassButton(this, width / 2, btnStartY, 260, 38, `Continue (Chapter ${savedChapter})`, () => this._startOnce(continueAction));
       btnStartY += btnSpacing;
 
-      createGlassButton(this, width / 2, btnStartY, 260, 38, '⚔️ Bölüm 1\u0027e Dön (Karakteri Koru)', () => this._startOnce(() => {
+      createGlassButton(this, width / 2, btnStartY, 260, 38, 'Restart Chapter 1 (keep gear)', () => this._startOnce(() => {
         this.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
       }));
       btnStartY += btnSpacing;
 
-      createGlassButton(this, width / 2, btnStartY, 260, 38, '🔄 Sıfırdan Başla (Yeni Kayıt)', () => {
+      createGlassButton(this, width / 2, btnStartY, 260, 38, 'New run (wipe save)', () => {
         audioManager.playClick();
-        if (window.confirm && window.confirm('Mevcut ilerlemeniz ve toplanan eşyalarınız sıfırlanacak. Onaylıyor musunuz?')) {
+        if (window.confirm && window.confirm('This wipes progress and collected relics. Continue?')) {
           tempProg.reset();
           InventorySystem.clear();
           this.scene.restart();
@@ -90,16 +90,16 @@ export class MenuScene extends Phaser.Scene {
         this.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
       };
       this._primaryAction = () => this._startOnce(storyAction);
-      createGlassButton(this, width / 2, btnStartY, 260, 40, '🏛️ 10 Kutsal Bölüm (Hikaye)', () => this._startOnce(storyAction));
+      createGlassButton(this, width / 2, btnStartY, 260, 40, 'Story — 10 chapters', () => this._startOnce(storyAction));
       btnStartY += btnSpacing;
     }
 
-    createGlassButton(this, width / 2, btnStartY, 260, 38, '⚡ Sonsuzluk Panteonu (Endless)', () => this._startOnce(() => {
+    createGlassButton(this, width / 2, btnStartY, 260, 38, 'Endless Pantheon', () => this._startOnce(() => {
       this.scene.start('GameScene', { chapterIndex: LEVELS.length - 1, isEndless: true });
     }));
     btnStartY += btnSpacing;
 
-    createGlassButton(this, width / 2, btnStartY, 260, 38, '📜 Kontroller & Yadigarlar', () => {
+    createGlassButton(this, width / 2, btnStartY, 260, 38, 'Controls & relics', () => {
       audioManager.playClick();
       this.showGuideModal();
     });
@@ -126,25 +126,24 @@ export class MenuScene extends Phaser.Scene {
     const bg = this.add.rectangle(0, 0, 480, 320, 0xffffff, 0.94);
     bg.setStrokeStyle(3, 0xc5a059);
 
-    const title = this.add.text(0, -125, '📜 KONTROLLER VE OYUN KILAVUZU', {
+    const title = this.add.text(0, -125, 'CONTROLS', {
       fontSize: '16px', color: '#1e293b', fontStyle: 'bold',
     }).setOrigin(0.5);
 
     const bodyText = [
-      '• HAREKET: WASD veya Yön Tuşları (Mobilde Sol Sanal Joystick)',
-      '• SALDIRI: Boşluk veya Fare Sol Tık (Mobilde Büyük Kırmızı Buton)',
-      '• Q TUŞU: Zeus Çatlağı Işını (Doğrusal delici yıldırım dalgası)',
-      '• R TUŞU: Dorik Kalkan (Sanctuary Aegis — 3.5 sn dokunulmazlık)',
-      '• I / TAB: Envanter ve Antik Yadigarlar (Envanterde ESC kapatır)',
-      '• M: Sessiz / Sesli · P: Duraklat / Devam Et',
-      '• MABED: Zeus Sunağı alanında can yenilenir ve alışveriş açılır.',
+      '• MOVE: WASD or arrows (left stick on mobile)',
+      '• ATTACK: Space / left click (red button on mobile). Auto-aim is on by default.',
+      '• Q: Zeus Fissure Beam   R: Doric Aegis (3.5s immunity)',
+      '• B: Recall to the altar   F: Fullscreen   E: Shop while in base',
+      '• I / TAB: Inventory   M: Mute   P / ESC: Pause',
+      '• Clear the floor, pick a blessing, take the portal.',
     ].join('\n\n');
 
     const desc = this.add.text(0, -15, bodyText, {
       fontSize: '12px', color: '#334155', lineSpacing: 4,
     }).setOrigin(0.5);
 
-    const closeBtn = createGlassButton(this, 0, 125, 120, 32, 'Kapat', () => {
+    const closeBtn = createGlassButton(this, 0, 125, 120, 32, 'Close', () => {
       modal.destroy();
     });
 

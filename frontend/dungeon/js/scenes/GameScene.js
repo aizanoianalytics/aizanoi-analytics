@@ -19,6 +19,7 @@ import { chooseEliteAffix } from '../data/elite-affixes.js';
 import { WEAPONS } from '../data/items.js';
 import { createGlassButton } from '../utils/ui-helpers.js';
 import { hasDungeonExitHandler, requestDungeonExit } from '../main.js';
+import { loadSettings, saveSettings, toggleDungeonFullscreen } from '../systems/SettingsSystem.js';
 
 export class GameScene extends Phaser.Scene {
   constructor() {
@@ -38,6 +39,8 @@ export class GameScene extends Phaser.Scene {
 
   create() {
     this.isTransitioning = false;
+    this.settings = loadSettings();
+    this.recallChannel = 0;
     if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = 'GameScene';
     // 1. Sistemleri başlat
     this.progression = new ProgressionSystem();
@@ -103,7 +106,7 @@ export class GameScene extends Phaser.Scene {
 
     // 10. Girdi Kontrolleri (Masaüstü)
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.wasd = this.input.keyboard.addKeys('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC');
+    this.wasd = this.input.keyboard.addKeys('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC,F,B');
 
     this.input.on('pointerdown', (pointer) => {
       if (pointer.leftButtonDown() && pointer.x > 48 && pointer.x < this.scale.width - 48) {
@@ -166,6 +169,11 @@ export class GameScene extends Phaser.Scene {
     }
 
     this.wallLayer.setCollisionByExclusion([-1]);
+    // High-contrast read: warm floor vs cool brass-edged walls.
+    this.floorLayer.setTint(0xf6e7c4);
+    this.wallLayer.setTint(0x1b2744);
+    this.settings = loadSettings();
+    this.recallChannel = 0;
   }
 
   spawnLevelEntities() {
@@ -248,6 +256,12 @@ export class GameScene extends Phaser.Scene {
       }
       if (this.isPaused || this.exitMenu) return;
       this.player.update(time, delta);
+      if (this.wasd && Phaser.Input.Keyboard.JustDown(this.wasd.F)) {
+        toggleDungeonFullscreen(document.getElementById('game-container') || document.documentElement);
+      }
+      if (this.wasd && Phaser.Input.Keyboard.JustDown(this.wasd.B)) {
+        this.startRecall();
+      }
 
       // Base güvenli alan kontrolü
       const distToBase = Phaser.Math.Distance.Between(
@@ -276,6 +290,17 @@ export class GameScene extends Phaser.Scene {
           if (this.player.isInBase) this.scene.launch('ShopScene');
         }
       }
+      this.tickRecall(delta);
+      this.attractLoot();
+      if (this.settings?.autoAim) this.autoAimAttack(time);
+    }
+
+    if (this.exitPortal && typeof this.exitPortal.setLocked === 'function') {
+      this.exitPortal.setLocked(!this.canCompleteLevel());
+    }
+    if (this.player && this.player.maxHp) {
+      const danger = this.player.hp / this.player.maxHp <= 0.22;
+      this.cameras.main.setDeadzone(danger ? 24 : 0, danger ? 24 : 0);
     }
 
     // Düşman güncellemeleri
@@ -369,8 +394,9 @@ export class GameScene extends Phaser.Scene {
       this.createFloatingText(player.x, player.y - 30, `+${loot.amount} ⚡`, '#a569bd');
       if (res.leveledUp) {
         audioManager.playLevelUp();
-        this.createFloatingText(player.x, player.y - 50, `SEVİYE ${res.newLevel}!`, '#f1c40f');
+        this.createFloatingText(player.x, player.y - 50, `LEVEL ${res.newLevel}!`, '#f1c40f');
         this.player.play('aizo-victory');
+        this.showBlessingChoice(() => { this.physics.world.resume(); });
       }
     }
 
@@ -389,7 +415,7 @@ export class GameScene extends Phaser.Scene {
     if (this.isTransitioning) return;
     if (!this.canCompleteLevel()) {
       const remaining = this.enemies ? this.enemies.getChildren().filter(e => e.active && e.hp > 0).length : 0;
-      this.createFloatingText(this.player.x, this.player.y - 35, `Zindan temizlenmeli! (${remaining} düşman kaldı)`, '#e74c3c');
+      this.createFloatingText(this.player.x, this.player.y - 35, `Clear the floor first (${remaining} left)`, '#e74c3c');
       return;
     }
     this.isTransitioning = true;
@@ -409,8 +435,8 @@ export class GameScene extends Phaser.Scene {
     const overlay = this.add.container(width / 2, height / 2).setDepth(700).setScrollFactor(0);
     const dim = this.add.rectangle(0, 0, width, height, 0x000000, 0.7).setInteractive();
     const panel = this.add.rectangle(0, 0, 420, 270, 0x141822, 0.98).setStrokeStyle(2, 0xf5d77f);
-    const title = this.add.text(0, -100, 'ODA KUTSAMASI', { fontSize: '22px', color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
-    const hint = this.add.text(0, -70, 'Birini seç (1, 2 veya 3)', { fontSize: '14px', color: '#d1d5db' }).setOrigin(0.5);
+    const title = this.add.text(0, -100, 'ROOM BLESSING', { fontSize: '22px', color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
+    const hint = this.add.text(0, -70, 'Pick one (1 / 2 / 3)', { fontSize: '14px', color: '#d1d5db' }).setOrigin(0.5);
     overlay.add([dim, panel, title, hint]);
     let selected = false;
     const keyEvents = ['keydown-ONE', 'keydown-TWO', 'keydown-THREE'];
@@ -471,7 +497,7 @@ export class GameScene extends Phaser.Scene {
     if (this.isPaused) {
       this.physics.world.pause();
       const { width, height } = this.cameras.main;
-      this.pauseOverlay = this.add.text(width / 2, height / 2, '⏸ DURAKLATILDI (P)', {
+      this.pauseOverlay = this.add.text(width / 2, height / 2, 'PAUSED (P)', {
         fontSize: '28px', color: '#f5d77f', fontStyle: 'bold',
         backgroundColor: 'rgba(20,24,34,0.85)', padding: { x: 20, y: 12 },
       }).setOrigin(0.5).setDepth(500).setScrollFactor(0);
@@ -500,15 +526,24 @@ export class GameScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
     const menu = this.add.container(width / 2, height / 2).setDepth(600).setScrollFactor(0);
     const dim = this.add.rectangle(0, 0, width, height, 0x000000, 0.6);
-    const panel = this.add.rectangle(0, 0, 340, 210, 0x141822, 0.98);
+    const panel = this.add.rectangle(0, 0, 340, 260, 0x141822, 0.98);
     panel.setStrokeStyle(2, 0xc5a059);
-    const title = this.add.text(0, -70, 'DURAKLATILDI', {
+    const title = this.add.text(0, -96, 'PAUSED', {
       fontSize: '22px', color: '#f5d77f', fontStyle: 'bold',
     }).setOrigin(0.5);
-    const resumeBtn = createGlassButton(this, 0, -10, 260, 38, 'Devam Et', () => this.closeExitMenu());
-    menu.add([dim, panel, title, resumeBtn]);
+    const resumeBtn = createGlassButton(this, 0, -40, 260, 36, 'Resume', () => this.closeExitMenu());
+    const aimLabel = this.settings?.autoAim ? 'Auto-aim: ON' : 'Auto-aim: OFF';
+    const aimBtn = createGlassButton(this, 0, 4, 260, 36, aimLabel, () => {
+      this.settings = saveSettings({ autoAim: !this.settings.autoAim });
+      this.closeExitMenu();
+      this.openExitMenu();
+    });
+    const fsBtn = createGlassButton(this, 0, 48, 260, 36, 'Fullscreen (F)', () => {
+      toggleDungeonFullscreen(document.getElementById('game-container') || document.documentElement);
+    });
+    menu.add([dim, panel, title, resumeBtn, aimBtn, fsBtn]);
     if (hasDungeonExitHandler()) {
-      const exitBtn = createGlassButton(this, 0, 42, 260, 38, 'AizanoiOS\u0027e D\u00f6n\u00fc\u015f', () => requestDungeonExit());
+      const exitBtn = createGlassButton(this, 0, 92, 260, 36, 'Return to AizanoiOS', () => requestDungeonExit());
       menu.add(exitBtn);
     }
     this.exitMenu = menu;
@@ -611,6 +646,47 @@ export class GameScene extends Phaser.Scene {
       duration: 800,
       onComplete: () => txt.destroy(),
     });
+  }
+
+
+  startRecall() {
+    if (!this.player || this.player.isInBase || this.recallChannel > 0) return;
+    this.recallChannel = 2200;
+    this.createFloatingText(this.player.x, this.player.y - 28, 'Recalling…', '#7dd3fc');
+  }
+
+  tickRecall(delta) {
+    if (!this.recallChannel) return;
+    this.recallChannel = Math.max(0, this.recallChannel - delta);
+    if (this.recallChannel === 0 && this.player?.active) {
+      this.player.setPosition(this.baseAltar.x, this.baseAltar.y + 36);
+      this.createFloatingText(this.player.x, this.player.y - 28, 'Returned to altar', '#f5d77f');
+    }
+  }
+
+  attractLoot() {
+    if (!this.settings?.magnet || !this.lootGroup || !this.player) return;
+    this.lootGroup.getChildren().forEach((loot) => {
+      if (!loot.active) return;
+      const dist = Phaser.Math.Distance.Between(loot.x, loot.y, this.player.x, this.player.y);
+      if (dist < 110) this.physics.moveToObject(loot, this.player, 220);
+    });
+  }
+
+  autoAimAttack(time) {
+    if (!this.player || this.player.isAttacking || this.player.isDead) return;
+    if (this._nextAutoAim && time < this._nextAutoAim) return;
+    const range = this.player.stats?.attackRange || 48;
+    let near = false;
+    this.enemies?.getChildren().forEach((enemy) => {
+      if (!near && enemy.active && enemy.hp > 0 &&
+          Phaser.Math.Distance.Between(this.player.x, this.player.y, enemy.x, enemy.y) <= range) {
+        near = true;
+      }
+    });
+    if (!near) return;
+    this._nextAutoAim = time + 420;
+    this.player.attack();
   }
 
   onPlayerDied() {
