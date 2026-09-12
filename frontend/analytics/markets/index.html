@@ -10,6 +10,7 @@
 <link rel="canonical" href="https://aizanoianalytics.com/analytics/markets/">
 <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/analytics/markets/markets.css">
+<link rel="stylesheet" href="/analytics/markets/markets-ux.css">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Aizanoi Analytics">
 <meta property="og:title" content="Aizanoi Markets — Aizanoi Analytics">
@@ -21,7 +22,7 @@
 <meta name="twitter:title" content="Aizanoi Markets — Aizanoi Analytics">
 <meta name="twitter:description" content="Static market intelligence dashboards for US-listed equities and selected crypto assets.">
 <meta name="twitter:image" content="https://aizanoianalytics.com/assets/branding/aizanoi-og.png">
-<script type="application/ld+json">{"@context":"https://***@type":"Dataset","name":"Aizanoi Markets","description":"Close-price history and descriptive metrics for the focused US equity universe and selected crypto assets.","url":"https://aizanoianalytics.com/analytics/markets/","creator":{"@type":"Organization","name":"Aizanoi Analytics","url":"https://aizanoianalytics.com/"},"temporalCoverage":"2019-01-01/.."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Aizanoi Markets","description":"Close-price history and descriptive metrics for the focused US equity universe and selected crypto assets.","url":"https://aizanoianalytics.com/analytics/markets/","creator":{"@type":"Organization","name":"Aizanoi Analytics","url":"https://aizanoianalytics.com/"},"temporalCoverage":"2019-01-01/.."}</script>
 </head>
 <body>
 <header class="market-head">
@@ -33,15 +34,16 @@
   <div>
     <p class="eyebrow">AIZANOI ANALYTICS · MARKET INTELLIGENCE</p>
     <h1>Aizanoi <span>Markets</span></h1>
-    <p>Explore breadth, rankings, raw data and deterministic Picks across the canonical US equity universe and selected crypto assets.</p>
+    <p>Close-price intelligence for a focused US equity universe and selected crypto assets. Rankings, raw data and deterministic Aizanoi Picks — not live quotes, not advice.</p>
   </div>
-  <div class="freshness"><span>STATIC-FIRST</span><strong>Close-price intelligence</strong><small>The browser never contacts the upstream data source.</small></div>
+  <div class="freshness"><span>AS OF LAST CLOSE</span><strong>Published snapshot</strong><small>The browser never contacts the upstream data source. Figures are delayed descriptive analytics.</small></div>
 </section>
 <div data-markets-root aria-live="polite"><p class="market-loading">Loading the static market snapshot…</p></div>
 <section class="method" id="methodology">
-  <h2>Data Sources &amp; Methodology</h2>
-  <p>US equity price data: Fintable</p>
-  <p>Crypto market data: Binance (USDT spot pairs)</p>
+  <h2>How this is built</h2>
+  <p><strong>Sources.</strong> US equities: Fintable. Crypto: Binance USDT spot pairs.</p>
+  <p><strong>Freshness.</strong> A private updater publishes static JSON shards. The page shows the last complete close snapshot, not a live tape.</p>
+  <p><strong>Picks.</strong> Strong / Weak Momentum requires the same sign on at least 8 of 9 return horizons. The rule is deterministic and is not a recommendation.</p>
   <p>Market observations are sourced from third-party data providers and processed independently by Aizanoi Analytics.</p>
   <p>Returns, rankings, technical indicators and Aizanoi Picks are calculated independently by Aizanoi Analytics from source market observations.</p>
   <p>Market data may be delayed, incomplete, corrected or temporarily unavailable.</p>

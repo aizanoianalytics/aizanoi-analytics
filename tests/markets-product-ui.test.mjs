@@ -100,3 +100,15 @@ test('navigation supports row activation, double click and exact-search submit',
   assert.match(dashboard, /detailUrl/);
   assert.match(dashboard, /requestSubmit|submit/);
 });
+
+test('Markets compact UX keeps close-price framing and a single ranking block', () => {
+  const dashboard = read('frontend/analytics/markets/dashboard.js');
+  const css = read('frontend/analytics/markets/markets.css') + read('frontend/analytics/markets/markets-ux.css');
+  assert.match(dashboard, /data-stale-banner/);
+  assert.match(dashboard, /data-ranking-preset/);
+  assert.match(dashboard, /data-drawer/);
+  assert.match(dashboard, /More columns/);
+  assert.match(css, /\.market-product\.is-compact/);
+  assert.match(css, /prefers-color-scheme: dark/);
+  assert.doesNotMatch(dashboard, /Crypto trades continuously/);
+});

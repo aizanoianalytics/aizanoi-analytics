@@ -162,7 +162,7 @@ test('historyDailyChange uses the canonical previous candle, not the filtered ro
 });
 test('US market session state and crypto state are explicit', async () => {
   const { marketSessionState } = await import(coreUrl);
-  assert.equal(marketSessionState('crypto', new Date('2026-09-10T20:00:00Z')).label, 'Crypto trades continuously');
+  assert.equal(marketSessionState('crypto', new Date('2026-09-10T20:00:00Z')).label, 'Crypto · last published close (not a live tape)');
   assert.equal(marketSessionState('us', new Date('2026-09-10T15:00:00Z')).open, true);
   assert.equal(marketSessionState('us', new Date('2026-09-12T15:00:00Z')).open, false);
 });

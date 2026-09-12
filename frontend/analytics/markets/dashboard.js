@@ -1,7 +1,10 @@
 import {
   CHANGE_COLUMNS,
+  COMPACT_CHANGE_COLUMNS,
+  COMPACT_PRICE_COLUMNS,
   HORIZON_CARDS,
   PRICE_COLUMNS,
+  RANKING_PRESETS,
   activeFilterChips,
   defaultState,
   detailUrl,
@@ -10,7 +13,9 @@ import {
   formatNumber,
   formatPercent,
   formatPrice,
+  formatShortDate,
   formatSignedReturn,
+  horizonSignLine,
   marketSessionState,
   paginate,
   pickMomentumRows,
@@ -65,38 +70,40 @@ function renderRankingCard(title, key, descending) {
     </li>`).join('')}</ol></article>`;
 }
 
+function renderStaleBanner(health) {
+  const degraded = health?.status && health.status !== 'complete';
+  if (!degraded) return '';
+  const when = formatShortDate(health?.completedAt || health?.publishedAt);
+  return `<div class="market-stale-banner" data-stale-banner role="status">Pipeline degraded — showing the last published snapshot${when !== '—' ? ` (${esc(when)})` : ''}.</div>`;
+}
+
 function renderStatusStrip({ manifest, health, market }) {
   const marketHealth = health?.[market] || {};
   const observations = manifest?.counts?.[market] ?? marketHealth.published ?? null;
-  const observationLabel = marketHealth.latestObservationAt
-    ? new Date(marketHealth.latestObservationAt).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' })
-    : '—';
-  const publishedLabel = manifest?.completedAt ? new Date(manifest.completedAt).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' }) : '—';
+  const observationLabel = formatShortDate(marketHealth.latestObservationAt);
+  const publishedLabel = formatShortDate(manifest?.completedAt);
   const provider = market === 'crypto' ? 'Binance' : 'Fintable';
-  const degraded = health?.status && health.status !== 'complete';
+  const cadence = market === 'crypto' ? 'Daily close / 4H bars' : 'Daily close';
   return `<div class="market-status-strip" data-status-strip>
     <span><strong>${formatNumber(observations)}</strong> instruments</span>
-    <span>Latest observation <strong>${esc(observationLabel)}</strong></span>
-    <span>Published <strong>${esc(publishedLabel)}</strong></span>
+    <span>As of close <strong>${esc(observationLabel)}</strong></span>
+    <span>Snapshot published <strong>${esc(publishedLabel)}</strong></span>
     <span>Source <strong>${esc(provider)}</strong></span>
-    ${degraded ? '<span class="market-status-strip-warning">Pipeline degraded — last published run was not complete.</span>' : ''}
+    <span>${esc(cadence)}</span>
   </div>`;
 }
 
-function renderRankingBlock(market) {
-  const cards = [
-    ['Today · Top 5', 'return1d', true],
-    ['Today · Bottom 5', 'return1d', false],
-    ['1 Week · Top 5', 'return1w', true],
-    ['1 Week · Bottom 5', 'return1w', false],
-    ['52 Weeks · Top 5', 'return1y', true],
-    ['52 Weeks · Bottom 5', 'return1y', false],
-  ];
+function renderRankingBlock(state) {
+  const preset = RANKING_PRESETS.find(item => item.id === state.rankingPreset) || RANKING_PRESETS[0];
+  const card = renderRankingCard.call(this, preset.label, preset.key, preset.descending);
   return `<section class="market-rankings" data-rankings-block>
-    <h2>Market rankings</h2>
-    <div class="market-rankings-grid">
-      ${cards.map(([title, key, descending]) => renderRankingCard.call({ ...this, market }, title, key, descending)).join('')}
-    </div>
+    <header class="market-rankings-header">
+      <h2>Market rankings</h2>
+      <div class="market-ranking-switch" role="tablist" aria-label="Ranking horizon">
+        ${RANKING_PRESETS.map(item => `<button type="button" data-ranking-preset="${esc(item.id)}" aria-selected="${item.id === preset.id}">${esc(item.label)}</button>`).join('')}
+      </div>
+    </header>
+    <div class="market-rankings-grid market-rankings-grid--single">${card}</div>
   </section>`;
 }
 
@@ -160,15 +167,44 @@ function renderTableFilters(state, rows, columnCount) {
         ${isCrypto ? '' : `<label><span>Exchange</span><select data-exchange><option value="">All exchanges</option>${exchanges.map(value => `<option value="${esc(value)}"${state.exchange === value ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label>`}
         ${isCrypto ? '' : `<label><span>Membership</span><select data-membership><option value="">All memberships</option>${memberships.map(value => `<option value="${esc(value)}"${state.membership === value ? ' selected' : ''}>${esc(value)}</option>`).join('')}</select></label>`}
         <label><span>Price range</span><span class="market-table-filter-pair"><input type="number" inputmode="decimal" data-min-price min="0" placeholder="Min" value="${Number.isFinite(state.minPrice) ? esc(state.minPrice) : ''}"><input type="number" inputmode="decimal" data-max-price min="0" placeholder="Max" value="${Number.isFinite(state.maxPrice) ? esc(state.maxPrice) : ''}"></span></label>
-        <fieldset class="market-table-filter-performance"><legend>Performance</legend><span class="market-table-filter-performance-row"><select data-performance-horizon><option value="">Any period</option>${PICK_HORIZONS.map(key => `<option value="${esc(key)}"${state.performance?.horizon === key ? ' selected' : ''}>${esc(PICK_HORIZON_LABELS[key])}</option>`).join('')}</select><select data-performance-op><option value="gt"${state.performance?.op === 'gt' ? ' selected' : ''}>&gt;</option><option value="lt"${state.performance?.op === 'lt' ? ' selected' : ''}>&lt;</option><option value="between"${state.performance?.op === 'between' ? ' selected' : ''}>between</option></select><input type="number" inputmode="decimal" step="1" data-performance-min placeholder="%" value="${Number.isFinite(state.performance?.min) ? esc(state.performance.min * 100) : ''}">${state.performance?.op === 'between' ? `<input type="number" inputmode="decimal" step="1" data-performance-max placeholder="%" value="${Number.isFinite(state.performance?.max) ? esc(state.performance.max * 100) : ''}">` : ''}</span></fieldset>
+        <fieldset class="market-table-filter-performance"><legend>Performance</legend><span class="market-table-filter-performance-row"><select data-performance-horizon><option value="">Any period</option>${PICK_HORIZONS.map(key => `<option value="${esc(key)}"${state.performance?.horizon === key ? ' selected' : ''}>${esc(PICK_HORIZON_LABELS[key])}</option>`).join('')}</select><select data-performance-op><option value="gt"${state.performance?.op === 'gt' ? ' selected' : ''}>&gt;</option><option value="lt"${state.performance?.op === 'lt' ? ' selected' : ''}>&lt;</option><option value="between"${state.performance?.op === 'between' ? ' selected' : ''}>between</option></select><input type="number" inputmode="decimal" step="1" data-performance-min placeholder="e.g. 5 = +5%" value="${Number.isFinite(state.performance?.min) ? esc(state.performance.min * 100) : ''}"><input type="number" inputmode="decimal" step="1" data-performance-max placeholder="Max %" ${state.performance?.op === 'between' ? '' : 'disabled '}value="${Number.isFinite(state.performance?.max) ? esc(state.performance.max * 100) : ''}"></span></fieldset>
         <button type="button" class="market-table-filter-reset" data-filter-reset>Clear filters</button>
       </form>
     </th>
   </tr>`;
 }
 
+function visibleColumns(state, compact) {
+  if (state.columnsExpanded) return state.priceMode === 'price' ? PRICE_COLUMNS : CHANGE_COLUMNS;
+  if (compact) return state.priceMode === 'price' ? COMPACT_PRICE_COLUMNS : COMPACT_CHANGE_COLUMNS;
+  return state.priceMode === 'price'
+    ? PRICE_COLUMNS.filter(col => ['latestPrice', 'previousPrice', 'price1w', 'price1y'].includes(col.key))
+    : CHANGE_COLUMNS.filter(col => ['return1d', 'return1w', 'return1m', 'return1y'].includes(col.key));
+}
+
+function renderPreviewDrawer(state, rows) {
+  const row = rows.find(item => item.slug === state.selectedSymbol);
+  if (!row) return '';
+  const eligibility = evaluateMomentumEligibility(row);
+  return `<aside class="market-drawer" data-drawer>
+    <header class="market-drawer-head">
+      <div>
+        <span class="eyebrow">PREVIEW</span>
+        <h3>${esc(row.ticker)}</h3>
+        <p>${esc(row.name)}</p>
+      </div>
+      <button type="button" class="market-drawer-close" data-drawer-close aria-label="Close preview">×</button>
+    </header>
+    <p class="market-drawer-price">${formatPrice(row.latestPrice ?? row.latest, state.market)} <span class="market-ranking-change market-ranking-change--${horizonSign(row.return1d).modifier}">${formatPercent(row.return1d)}</span></p>
+    <p class="market-drawer-meta">1W ${formatPercent(row.return1w)} · 1Y ${formatPercent(row.return1y)} · ${esc(eligibility.eligibility === 'strong' ? `${eligibility.positiveCount}/9 strong` : eligibility.eligibility === 'weak' ? `${eligibility.negativeCount}/9 weak` : 'Picks ineligible')}</p>
+    <p class="market-picks-signline" aria-label="Nine-horizon signs">${esc(horizonSignLine(row))}</p>
+    <a class="market-table-open-link" href="${detailUrl(state.market, row.slug)}">Open workspace →</a>
+  </aside>`;
+}
+
 function renderRawData(state) {
-  const columns = state.priceMode === 'price' ? PRICE_COLUMNS : CHANGE_COLUMNS;
+  const compact = Boolean(this.compact);
+  const columns = visibleColumns(state, compact);
   const filtered = filterRows(this.currentRows(), state);
   const sorted = state.sort?.key ? sortRows(filtered, state.sort.key, state.sort.direction) : filtered;
   const pageState = paginate(sorted, state.page, state.pageSize);
@@ -179,18 +215,19 @@ function renderRawData(state) {
       <tbody data-raw-table-body>
         ${pageState.rows.length
           ? pageState.rows.map(row => renderTableRow(row, columns, state)).join('')
-          : `<tr><td colspan="${columns.length + 2}" class="market-table-empty">No instruments match these filters.</td></tr>`}
+          : `<tr><td colspan="${columns.length + 2}" class="market-table-empty">No instruments match these filters. <button type="button" class="market-table-filter-reset" data-filter-reset>Clear filters</button></td></tr>`}
       </tbody>
     </table>
   </div>`;
   return `<section class="market-raw" data-raw-section>
     <header class="market-raw-header">
       <div><span class="eyebrow">RAW DATA</span><h2>Raw Data</h2></div>
-      <div class="market-raw-actions"><button type="button" class="market-table-filter-toggle" data-table-filter-toggle aria-expanded="${state.filtersOpen}" aria-controls="raw-data-filters"><span aria-hidden="true">≡</span> Filters</button><div class="market-raw-mode" role="group" aria-label="Raw data mode"><button type="button" class="market-raw-mode-button${state.priceMode === 'price' ? ' is-active' : ''}" data-price-mode="price" aria-pressed="${state.priceMode === 'price'}">Price</button><button type="button" class="market-raw-mode-button${state.priceMode === 'change' ? ' is-active' : ''}" data-price-mode="change" aria-pressed="${state.priceMode === 'change'}">Change</button><button type="button" class="market-raw-mode-button" data-export-csv>Export CSV</button><span class="market-export-status" data-export-status role="status"></span></div></div>
+      <div class="market-raw-actions"><button type="button" class="market-table-filter-toggle" data-table-filter-toggle aria-expanded="${state.filtersOpen}" aria-controls="raw-data-filters"><span aria-hidden="true">≡</span> Filters${activeFilterChips(state).length ? ` (${activeFilterChips(state).length})` : ''}</button><div class="market-raw-mode" role="group" aria-label="Raw data mode"><button type="button" class="market-raw-mode-button${state.priceMode === 'price' ? ' is-active' : ''}" data-price-mode="price" aria-pressed="${state.priceMode === 'price'}">Price</button><button type="button" class="market-raw-mode-button${state.priceMode === 'change' ? ' is-active' : ''}" data-price-mode="change" aria-pressed="${state.priceMode === 'change'}">Change</button><button type="button" class="market-raw-mode-button${state.columnsExpanded ? ' is-active' : ''}" data-columns-expanded aria-pressed="${state.columnsExpanded}">More columns</button></div><button type="button" class="market-export-button" data-export-csv>Export CSV</button><span class="market-export-status" data-export-status role="status"></span></div>
     </header>
     ${chips}
     ${table}
     ${renderPager(pageState.page, pageState.pageSize, pageState.total)}
+    ${renderPreviewDrawer(state, this.currentRows())}
   </section>`;
 }
 
@@ -208,16 +245,13 @@ function renderPicks(state) {
       <ul class="market-picks-list">
         ${rows.map(row => {
           const eligibility = evaluateMomentumEligibility(row);
-          const signs = PICK_HORIZONS.map(key => {
-            const status = eligibility.statuses[key];
-            return `<li class="market-picks-horizon market-picks-horizon--${status}" title="${esc(PICK_HORIZON_LABELS[key])} ${status === 'positive' ? '+' : status === 'negative' ? '−' : status === 'flat' ? '0' : '—'}">${esc(PICK_HORIZON_LABELS[key])}<span aria-hidden="true">${status === 'positive' ? '+' : status === 'negative' ? '−' : status === 'flat' ? '0' : '—'}</span></li>`;
-          }).join('');
-          return `<li class="market-picks-row">
+          const line = horizonSignLine(row);
+          return `<li class="market-picks-row market-picks-row--${sign}">
             <a class="market-picks-link" href="${detailUrl(state.market, row.slug)}">
               <span class="market-picks-text"><strong>${esc(row.ticker)}</strong><span class="market-picks-name">${esc(row.name)}</span></span>
               <span class="market-picks-price">${formatPrice(row.latestPrice ?? row.latest, state.market)}</span>
-              <span class="market-picks-count">${sign === 'positive' ? eligibility.positiveCount : eligibility.negativeCount} / 9 ${sign}</span>
-              <ul class="market-picks-horizons">${signs}</ul>
+              <span class="market-picks-count">${sign === 'positive' ? eligibility.positiveCount : eligibility.negativeCount}/9 ${sign === 'positive' ? '+' : '−'}</span>
+              <span class="market-picks-signline" title="1D 1W 1M 3M 6M 1Y 2Y 3Y Since 2019">${esc(line)}</span>
             </a>
           </li>`;
         }).join('')}
@@ -236,8 +270,9 @@ function renderPicks(state) {
 
 function renderMain(state, context) {
   return `<section class="market-main" data-panel="main">
+    ${renderStaleBanner(context.health)}
     ${renderStatusStrip({ manifest:context.manifest, health:context.health, market:state.market })}
-    ${renderRankingBlock.call(context, state.market)}
+    ${renderRankingBlock.call(context, state)}
     ${renderRawData.call(context, state)}
   </section>`;
 }
@@ -254,6 +289,13 @@ export function createMarketsDashboard(container, options = {}) {
     stylesheet.href = '/analytics/markets/markets.css';
     stylesheet.dataset.marketsStyles = '';
     document.head.appendChild(stylesheet);
+  }
+  if (!document.querySelector('link[href="/analytics/markets/markets-ux.css"],link[data-markets-ux-styles]')) {
+    const ux = document.createElement('link');
+    ux.rel = 'stylesheet';
+    ux.href = '/analytics/markets/markets-ux.css';
+    ux.dataset.marketsUxStyles = '';
+    document.head.appendChild(ux);
   }
 
   const params = readUrl ? new URLSearchParams(location.search) : new URLSearchParams();
@@ -286,12 +328,17 @@ export function createMarketsDashboard(container, options = {}) {
     state.page = Number.isInteger(page) && page > 1 ? page : 1;
   }
 
+  state.rankingPreset = RANKING_PRESETS.some(item => item.id === params.get('rank')) ? params.get('rank') : '1d-up';
+  state.columnsExpanded = params.get('cols') === 'all';
+  state.pageSize = [25, 50, 100].includes(Number(params.get('pageSize'))) ? Number(params.get('pageSize')) : (compact ? 25 : 50);
+
   restoreUrlState(params);
 
   const controller = new AbortController();
   const context = {
     container,
     controller,
+    compact,
     manifest:null,
     health:null,
     rows:{ us:null, crypto:null },
@@ -299,6 +346,10 @@ export function createMarketsDashboard(container, options = {}) {
   };
 
   container.innerHTML = `<div class="market-product${compact ? ' is-compact' : ''}" data-markets-product>
+    <div class="market-skeleton" data-skeleton hidden>
+      <div class="market-skeleton-bar"></div>
+      <div class="market-skeleton-grid"><span></span><span></span><span></span></div>
+    </div>
     <header class="market-product-bar">
       <div class="market-brand-row"><span class="eyebrow">AIZANOI MARKETS</span><span class="market-brand-title">${esc(marketSessionState(state.market).label)}</span></div>
       <div class="market-switch" role="tablist" aria-label="Market universe">
@@ -368,6 +419,9 @@ export function createMarketsDashboard(container, options = {}) {
       if (state.performance.op === 'between') next.set('perfMax', String(state.performance.max * 100));
     }
     if (state.page > 1) next.set('page', String(state.page));
+    if (state.rankingPreset && state.rankingPreset !== '1d-up') next.set('rank', state.rankingPreset);
+    if (state.columnsExpanded) next.set('cols', 'all');
+    if (state.pageSize !== 50) next.set('pageSize', String(state.pageSize));
     const url = `${location.pathname}?${next}`;
     if (push) history.pushState(null, '', url);
     else history.replaceState(null, '', url);
@@ -487,9 +541,27 @@ export function createMarketsDashboard(container, options = {}) {
       updateLocation();
       return;
     }
+    const presetTarget = event.target.closest('[data-ranking-preset]');
+    if (presetTarget) {
+      state.rankingPreset = presetTarget.dataset.rankingPreset;
+      renderView();
+      updateLocation();
+      return;
+    }
     const rankTarget = event.target.closest('[data-ranking-symbol]');
     if (rankTarget) {
       selectRow(rankTarget.dataset.rankingSymbol);
+      return;
+    }
+    if (event.target.closest('[data-drawer-close]')) {
+      state.selectedSymbol = null;
+      renderView();
+      return;
+    }
+    if (event.target.closest('[data-columns-expanded]')) {
+      state.columnsExpanded = !state.columnsExpanded;
+      renderView();
+      updateLocation();
       return;
     }
     const sortTarget = event.target.closest('[data-sort-key]');
@@ -592,7 +664,7 @@ export function createMarketsDashboard(container, options = {}) {
   function handleKey(event) {
     if (event.target.matches?.('tr[data-open-instrument]') && event.key === 'Enter') {
       event.preventDefault();
-      openRow(event.target.dataset.openInstrument);
+      selectRow(event.target.dataset.openInstrument);
     }
   }
 
@@ -612,6 +684,8 @@ export function createMarketsDashboard(container, options = {}) {
   container.addEventListener('submit', handleSubmit, { signal: controller.signal });
   container.addEventListener('keydown', handleKey, { signal: controller.signal });
 
+  const skeleton = query('[data-skeleton]');
+  if (skeleton) skeleton.hidden = false;
   Promise.all([
     getJson(`${DATA_ROOT}/manifest.json`, controller.signal),
     getJson(`${DATA_ROOT}/health.json`, controller.signal).catch(() => null),
@@ -619,7 +693,12 @@ export function createMarketsDashboard(container, options = {}) {
     context.manifest = manifest;
     context.health = health;
     return loadMarket(state.market);
-  }).catch(showError);
+  }).then(() => {
+    if (skeleton) skeleton.hidden = true;
+  }).catch((error) => {
+    if (skeleton) skeleton.hidden = true;
+    showError(error);
+  });
 
   window.addEventListener('popstate', () => {
     restoreUrlState(new URLSearchParams(location.search));
