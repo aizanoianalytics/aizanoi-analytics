@@ -78,7 +78,7 @@ const state = {
   historyPage: 1,
   historyPageSize: 100,
   historySearch: '',
-  indicators: new Set(['sma20']),
+  indicators: new Set(['sma50', 'sma200']),
   oscillators: new Set(['rsi14']),
   universe: [],
   selectedPoint: null,
@@ -258,8 +258,13 @@ function updateChartTooltip(visibleIndex, visibleSource) {
   tooltip.setAttribute('data-active', '');
 }
 
+const HORIZON_TO_TIMEFRAME = {
+  return1d:'1M', return1w:'1M', return1m:'1M', return3m:'3M', return6m:'6M',
+  return1y:'1Y', return2y:'2Y', return3y:'3Y', returnSince2019:'SINCE_2019',
+};
+
 function renderHorizonCards(row) {
-  return `<section class="instrument-horizons" data-horizons><h2>Performance horizons</h2><div class="instrument-horizon-grid">${HORIZONS.map(horizon => `<article class="instrument-horizon-card"><span>${esc(horizon.label)}</span><strong class="${Number.isFinite(row?.[horizon.key]) ? (row[horizon.key] >= 0 ? 'is-positive' : 'is-negative') : ''}">${formatSignedReturn(row?.[horizon.key])}</strong></article>`).join('')}</div></section>`;
+  return `<section class="instrument-horizons" data-horizons><h2>Performance horizons</h2><div class="instrument-horizon-grid">${HORIZONS.map(horizon => `<button type="button" class="instrument-horizon-card" data-horizon-timeframe="${esc(HORIZON_TO_TIMEFRAME[horizon.key])}"><span>${esc(horizon.label)}</span><strong class="${Number.isFinite(row?.[horizon.key]) ? (row[horizon.key] >= 0 ? 'is-positive' : 'is-negative') : ''}">${formatSignedReturn(row?.[horizon.key])}</strong></button>`).join('')}</div></section>`;
 }
 
 function renderHistory(state) {
@@ -466,6 +471,18 @@ function selectHistoryDate(date) {
 }
 
 document.addEventListener('click', event => {
+  const horizon = event.target.closest('[data-horizon-timeframe]');
+  if (horizon) {
+    state.timeframe = horizon.dataset.horizonTimeframe;
+    syncUrl();
+    render();
+    return;
+  }
+  const suggestion = event.target.closest('[data-symbol-jump]');
+  if (suggestion) {
+    location.href = detailUrl(suggestion.dataset.market || market, suggestion.dataset.symbolJump);
+    return;
+  }
   if (event.target.closest('[data-history-page]')) {
     const action = event.target.closest('[data-history-page]').dataset.historyPage;
     state.historyPage = action === 'next' ? state.historyPage + 1 : Math.max(1, state.historyPage - 1);
@@ -573,6 +590,7 @@ if (!symbol) {
     state.payload = payload;
     state.summary = summary;
     state.universe = [summary];
+    document.title = `${payload.ticker || symbol} · ${payload.name || 'Instrument'} — Aizanoi Markets`;
     // Honor URL state only when the requested values are supported by this payload.
     const has4H = Array.isArray(payload?.fourHour) && payload.fourHour.length > 1;
     state.frequency = market === 'crypto' && requestedFrequency === '4h' && has4H ? '4h' : '1d';
