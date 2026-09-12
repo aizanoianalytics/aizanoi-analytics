@@ -139,3 +139,70 @@ test('service worker keeps the 1.18MB Phaser bundle out of precache (mobile data
   const sw = readFileSync(`${repoRoot}/frontend/service-worker.js`, 'utf8');
   assert.doesNotMatch(sw, /phaser/, 'phaser must load on demand, never precache');
 });
+
+test('post-promotion health failure rolls the active symlink back', async () => {
+  const fakeRepo = createFakeRepo();
+  const releaseRoot = join(fakeRepo, 'webroot-releases');
+  const webroot = join(fakeRepo, 'webroot');
+  const rollback = join(releaseRoot, 'release-A');
+  const bin = mkdtempSync(join(tmpdir(), 'aizanoi-deploy-bin-'));
+  let copy;
+  try {
+    writeFileSync(join(fakeRepo, '.git', 'info', 'exclude'), 'webroot\nwebroot-releases/\n');
+    mkdirSync(rollback, { recursive: true });
+    writeFileSync(join(rollback, 'index.html'), 'release A');
+    mkdirSync(releaseRoot, { recursive: true });
+    // This is the already-active release before B is staged and promoted.
+    execFileSync('ln', ['-s', rollback, webroot]);
+    writeFileSync(join(bin, 'nginx'), '#!/bin/sh\nexit 0\n');
+    // Root HEAD and every endpoint fail: the deploy must not finalize.
+    writeFileSync(join(bin, 'curl'), '#!/bin/sh\nexit 1\n');
+    execFileSync('chmod', ['+x', join(bin, 'nginx'), join(bin, 'curl')]);
+    copy = createDeployableCopy(fakeRepo, readFileSync(scriptPath, 'utf8'));
+    const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, AIZANOI_DEPLOY_SHA: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: fakeRepo, encoding: 'utf8' }).trim() };
+    let caught = null;
+    try {
+      await execFileAsync('bash', [copy.script], { env, timeout: 30000 });
+    } catch (err) {
+      caught = err;
+    }
+    assert.ok(caught, 'unavailable health endpoints must fail deployment');
+    assert.notEqual(caught.code, 0);
+    assert.equal(readFileSync(join(webroot, 'index.html'), 'utf8'), 'release A', 'active release must be restored');
+    assert.equal(readFileSync(join(webroot, 'index.html'), 'utf8'), readFileSync(join(rollback, 'index.html'), 'utf8'));
+  } finally {
+    if (copy) copy.cleanup();
+    rmSync(bin, { recursive: true, force: true });
+    rmSync(fakeRepo, { recursive: true, force: true });
+  }
+});
+
+test('successful post-promotion health keeps the new active release', async () => {
+  const fakeRepo = createFakeRepo();
+  const releaseRoot = join(fakeRepo, 'webroot-releases');
+  const webroot = join(fakeRepo, 'webroot');
+  const rollback = join(releaseRoot, 'release-A');
+  const bin = mkdtempSync(join(tmpdir(), 'aizanoi-deploy-bin-'));
+  let copy;
+  try {
+    writeFileSync(join(fakeRepo, '.git', 'info', 'exclude'), 'webroot\nwebroot-releases/\n');
+    mkdirSync(rollback, { recursive: true });
+    writeFileSync(join(rollback, 'index.html'), 'release A');
+    mkdirSync(releaseRoot, { recursive: true });
+    execFileSync('ln', ['-s', rollback, webroot]);
+    writeFileSync(join(bin, 'nginx'), '#!/bin/sh\nexit 0\n');
+    writeFileSync(join(bin, 'curl'), '#!/bin/sh\nif [ "$1" = "-sfI" ]; then exit 0; fi\nprintf "200"\n');
+    execFileSync('chmod', ['+x', join(bin, 'nginx'), join(bin, 'curl')]);
+    copy = createDeployableCopy(fakeRepo, readFileSync(scriptPath, 'utf8'));
+    const sha = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: fakeRepo, encoding: 'utf8' }).trim();
+    const env = { ...process.env, PATH: `${bin}:${process.env.PATH}`, AIZANOI_DEPLOY_SHA: sha };
+    await execFileAsync('bash', [copy.script], { env, timeout: 30000 });
+    const active = readFileSync(join(webroot, 'index.html'), 'utf8');
+    assert.equal(active, '<!doctype html>', 'new release must remain active after all health checks');
+    assert.notEqual(await import('node:fs/promises').then(({ realpath }) => realpath(webroot)), rollback);
+  } finally {
+    if (copy) copy.cleanup();
+    rmSync(bin, { recursive: true, force: true });
+    rmSync(fakeRepo, { recursive: true, force: true });
+  }
+});
