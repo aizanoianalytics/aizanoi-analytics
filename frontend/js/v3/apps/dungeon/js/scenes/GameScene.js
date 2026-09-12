@@ -40,6 +40,11 @@ export class GameScene extends Phaser.Scene {
     // throttled (e.g. mobile context with reduced motion). create() will
     // re-assert the same value once the renderer reaches it.
     if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = 'GameScene';
+    if (typeof window !== 'undefined' && window.AIZANOI_DUNGEON_GAME?.events) {
+      window.AIZANOI_DUNGEON_GAME.events.once('ready', () => {
+        if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = 'GameScene';
+      });
+    }
   }
 
   create() {

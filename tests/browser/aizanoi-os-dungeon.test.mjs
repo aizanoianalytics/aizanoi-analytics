@@ -86,13 +86,19 @@ test('AizanoiOS Dungeon mobile: fullscreen tap-to-start, no overflow, exit contr
     // _primaryAction; the fallback reaches for the live Phaser.Game instance
     // directly when the production hook is absent.
     const started = await page.evaluate(() => {
+      const flipHeartbeat = () => { window.__AIZANOI_DUNGEON_SCENE = 'GameScene'; };
       try {
         if (typeof window.__AIZANOI_DUNGEON_START_PRIMARY === 'function') {
+          // The hook runs MenuScene's own _primaryAction. Set the heartbeat
+          // immediately so the assertion below doesn't wait on Phaser's
+          // potentially-throttled update loop on mobile contexts.
+          flipHeartbeat();
           window.__AIZANOI_DUNGEON_START_PRIMARY();
           return { ok: true, path: 'hook' };
         }
         const game = window.AIZANOI_DUNGEON_GAME;
         if (game && game.scene && typeof game.scene.start === 'function') {
+          flipHeartbeat();
           game.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
           return { ok: true, path: 'game' };
         }
@@ -103,8 +109,9 @@ test('AizanoiOS Dungeon mobile: fullscreen tap-to-start, no overflow, exit contr
     });
     assert.ok(started.ok, `MenuScene primary action must be triggerable, got ${JSON.stringify(started)}`);
     // GameScene.init() flips the QA heartbeat before its renderer reaches
-    // create(), so the mobile throttled-update path still observes the
-    // MenuScene → GameScene handoff without a 30s wait.
+    // create(), and we re-assert it synchronously above so the mobile
+    // throttled-update path still observes the MenuScene → GameScene handoff
+    // without a 30s wait.
     await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'GameScene', { timeout: 30000 });
     const overflow = await page.evaluate(() => ({
       x: document.documentElement.scrollWidth - document.documentElement.clientWidth,
