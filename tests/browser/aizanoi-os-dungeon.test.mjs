@@ -102,7 +102,20 @@ test('AizanoiOS Dungeon mobile: fullscreen tap-to-start, no overflow, exit contr
       }
     });
     assert.ok(started.ok, `MenuScene primary action must be triggerable, got ${JSON.stringify(started)}`);
-    await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'GameScene', { timeout: 30000 });
+    // Phaser schedules scene transitions on the next tick. Poll the
+    // QA-attached Phaser instance as a fallback diagnostic in case the scene
+    // transition fires but the MenuScene→GameScene heartbeat is lost.
+    try {
+      await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'GameScene', { timeout: 30000 });
+    } catch (timeoutErr) {
+      const diag = await page.evaluate(() => {
+        const game = window.AIZANOI_DUNGEON_GAME;
+        const scenes = game?.scene?.scenes?.map((s) => `${s.scene.key}:${s.scene.settings.status}`) || [];
+        const phaserActive = game?.scene?.getScene?.('GameScene')?.scene?.settings?.status;
+        return { scenes, phaserActive, sceneVar: window.__AIZANOI_DUNGEON_SCENE, hookErr: window.__AIZANOI_DUNGEON_TEST_ERROR };
+      });
+      assert.fail(`GameScene never reached (timeout). Diagnostic: ${JSON.stringify(diag)}`);
+    }
     const overflow = await page.evaluate(() => ({
       x: document.documentElement.scrollWidth - document.documentElement.clientWidth,
       y: document.documentElement.scrollHeight - document.documentElement.clientHeight,
