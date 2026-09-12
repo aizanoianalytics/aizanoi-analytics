@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-openai-microsoft-500b-recap",
+  "title": "Microsoft-OpenAI recapitalization values ChatGPT maker at $500 billion, ends nonprofit control",
+  "summary": "Microsoft and OpenAI have completed a recapitalization that values the ChatGPT maker at $500 billion and transitions it into a public benefit corporation, ending governance by the original nonprofit board. Under the deal Microsoft holds an investment in OpenAI Group PBC valued at roughly $135 billion, with the nonprofit arm receiving more than $100 billion, about 20 percent of the $500 billion valuation.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-12T07:50:00+03:00",
+  "updatedAt": "2026-09-12T07:50:00+03:00",
+  "retrievedAt": "2026-09-12T07:50:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["openai", "microsoft", "valuation", "restructuring"],
+  "sources": [{
+    "publisher": "NBC News",
+    "url": "https://www.nbcnews.com/tech/tech-news/microsoft-openai-reach-new-deal-valuing-openai-500-billion-rcna240255",
+    "publishedAt": "2026-09-11T00:00:00Z"
+  }]
+}

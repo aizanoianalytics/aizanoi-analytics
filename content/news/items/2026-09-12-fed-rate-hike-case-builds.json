@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-fed-rate-hike-case-builds",
+  "title": "Reuters: Fed seen likely to hike rates next week after inflation print stays sticky",
+  "summary": "Reuters reported that Federal Reserve rate futures are pricing about an 85 percent chance of a quarter-point hike at the September 15-16 FOMC meeting following Friday's hotter-than-expected core CPI reading. Core CPI rose 0.3 percent month-over-month against a 0.2 percent consensus, while headline CPI matched the 0.4 percent forecast, keeping inflation above the Fed's 2 percent target.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-09-12T08:25:00+03:00",
+  "updatedAt": "2026-09-12T08:25:00+03:00",
+  "retrievedAt": "2026-09-12T08:25:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["fed", "fomc", "interest-rates", "inflation", "core-cpi"],
+  "sources": [{
+    "publisher": "Reuters",
+    "url": "https://www.reuters.com/business/fed-seen-likely-raise-rates-next-week-after-inflation-report-2026-09-11",
+    "publishedAt": "2026-09-11T15:00:00Z"
+  }]
+}

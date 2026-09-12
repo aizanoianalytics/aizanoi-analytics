@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-11T05:25:00.000Z",
+  "generatedAt": "2026-09-12T05:45:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-12",
+      "path": "/news/2026-09-12/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-11",
       "path": "/news/2026-09-11/",
@@ -119,6 +124,477 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-12-tagliafico-atletico-deadline-collapse",
+      "kind": "daily",
+      "title": "Tagliafico's deadline-day move to Atlético Madrid collapses over La Liga salary cap",
+      "summary": "Olympique Lyon's Nicolás Tagliafico saw his deadline-day transfer to Atlético Madrid collapse after the Spanish club failed to clear La Liga salary cap space, with the French window closing four hours earlier than the Spanish one leaving Lyon unable to register his replacement in time. The 34-year-old Argentina left-back will now remain at Lyon through the end of his 2027 contract despite agreement between the parties.",
+      "category": "football",
+      "priority": 55,
+      "publishedAt": "2026-09-12T05:45:00.000Z",
+      "updatedAt": "2026-09-12T05:45:00.000Z",
+      "retrievedAt": "2026-09-12T05:45:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "atletico-madrid",
+        "olympique-lyon",
+        "transfer-window",
+        "tagliafico"
+      ],
+      "sources": [
+        {
+          "publisher": "Time News",
+          "url": "https://time.news/nicolas-tagliafico-transfer-to-atletico-madrid-collapses-on-deadline-day",
+          "publishedAt": "2026-09-01T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-premier-league-mw3-saturday-fixtures",
+      "kind": "daily",
+      "title": "Premier League Matchweek 3 kicks off Saturday with Chelsea-Hull, Liverpool-Fulham and Spurs-Everton",
+      "summary": "Premier League Matchweek 3 opens Saturday with seven fixtures across the 3 p.m. kick-off slot including Chelsea hosting Hull City at Stamford Bridge and Liverpool facing Fulham at Anfield, before Tottenham Hotspur host Everton at 17:30 on Sky Sports and Sunderland face Arsenal at 20:00 on TNT Sports. Aston Villa meet Nottingham Forest, Bournemouth host Brentford and Crystal Palace play Ipswich Town in the other Saturday matches.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-09-12T05:40:00.000Z",
+      "updatedAt": "2026-09-12T05:40:00.000Z",
+      "retrievedAt": "2026-09-12T05:40:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "chelsea",
+        "liverpool",
+        "tottenham",
+        "sunderland"
+      ],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/news/4675097/all-380-fixtu",
+          "publishedAt": "2026-08-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-champions-league-md1-tuesday-recap",
+      "kind": "daily",
+      "title": "Champions League Matchday 1 Tuesday recap: Real Madrid, Man City, Dortmund and Aston Villa open with wins",
+      "summary": "The new Champions League league phase opened Tuesday with Kylian Mbappé and Federico Valverde steering Real Madrid to a 2-1 home win over Inter, Erling Haaland scoring twice in Manchester City's 2-0 win at Porto and Serhou Guirassy bagging a brace in Borussia Dortmund's 3-2 victory over Villarreal. Aston Villa began their return with a 3-2 win at Club Brugge featuring Nicolas Jackson's first Champions League goal, while AEK Athens beat LASK 1-0 and Lille lost 3-2 at home to Real Betis.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-09-12T05:35:00.000Z",
+      "updatedAt": "2026-09-12T05:35:00.000Z",
+      "retrievedAt": "2026-09-12T05:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "real-madrid",
+        "manchester-city",
+        "borussia-dortmund",
+        "aston-villa"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://uefa.com/uefachampionsleague/news/02a9-218b8c00ab1e-0e070e496ca8-1000--champions-league-matchday-1-highlights-and-round-up-real-mad",
+          "publishedAt": "2026-09-08T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-keybanc-apple-event-warning",
+      "kind": "daily",
+      "title": "KeyBanc warns Apple shares face negative catalyst at iPhone 18 Pro launch",
+      "summary": "KeyBanc Capital Markets warned Apple's September 9 iPhone event could become a negative catalyst for the stock, citing $150 to $200 price hikes across the iPhone 18 Pro line colliding with lower unit-volume expectations and historical announcement-day weakness. The note recommended investors weigh pricing decisions against the impact of higher costs on demand and margins.",
+      "category": "economy-markets",
+      "priority": 55,
+      "publishedAt": "2026-09-12T05:30:00.000Z",
+      "updatedAt": "2026-09-12T05:30:00.000Z",
+      "retrievedAt": "2026-09-12T05:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "aapl",
+        "iphone-18-pro",
+        "keybanc",
+        "equities"
+      ],
+      "sources": [
+        {
+          "publisher": "MacRumors",
+          "url": "https://www.macrumors.com/2026/09/07/iphone-18-pro-event-could-hit-apple-shares/",
+          "publishedAt": "2026-09-07T15:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-fed-rate-hike-case-builds",
+      "kind": "daily",
+      "title": "Reuters: Fed seen likely to hike rates next week after inflation print stays sticky",
+      "summary": "Reuters reported that Federal Reserve rate futures are pricing about an 85 percent chance of a quarter-point hike at the September 15-16 FOMC meeting following Friday's hotter-than-expected core CPI reading. Core CPI rose 0.3 percent month-over-month against a 0.2 percent consensus, while headline CPI matched the 0.4 percent forecast, keeping inflation above the Fed's 2 percent target.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-09-12T05:25:00.000Z",
+      "updatedAt": "2026-09-12T05:25:00.000Z",
+      "retrievedAt": "2026-09-12T05:25:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "fed",
+        "fomc",
+        "interest-rates",
+        "inflation",
+        "core-cpi"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/fed-seen-likely-raise-rates-next-week-after-inflation-report-2026-09-11",
+          "publishedAt": "2026-09-11T15:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-us-cpi-august-hot-core",
+      "kind": "daily",
+      "title": "US August CPI matches headline but core runs hotter, Fed rate-hike odds jump to 87 percent",
+      "summary": "The Bureau of Labor Statistics reported August consumer prices up 0.4 percent month-over-month and 3.4 percent year-over-year, matching consensus, while core CPI rose 0.3 percent against a 0.2 percent forecast. CME FedWatch showed the implied probability of a September Fed rate hike jumping to about 87 percent after the print, from 69 percent beforehand, with the 10-year Treasury yield above 4.97 percent.",
+      "category": "economy-markets",
+      "priority": 80,
+      "publishedAt": "2026-09-12T05:20:00.000Z",
+      "updatedAt": "2026-09-12T05:20:00.000Z",
+      "retrievedAt": "2026-09-12T05:20:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-cpi",
+        "inflation",
+        "fed",
+        "fomc",
+        "treasury"
+      ],
+      "sources": [
+        {
+          "publisher": "WSJ",
+          "url": "https://www.wsj.com/livecoverage/stock-market-cpi-inflation-09-11-2026",
+          "publishedAt": "2026-09-11T13:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-ifa-berlin-closes",
+      "kind": "daily",
+      "title": "IFA 2026 closes in Berlin with experimental phones, robot cleaners and AI-driven home devices",
+      "summary": "Europe's biggest consumer electronics exhibition, IFA 2026, closed at Messe Berlin after a five-day run that put AI-enabled home appliances, flexible laptops and experimental smartphones in the spotlight. Highlights included Tecno's bezel-less concept phone, Lenovo's ThinkBook Project Swan with an expanding 14- to 17-inch OLED, iRobot's two-piece Roomba Duo concept, and Oukitel's solar-lid laptop.",
+      "category": "technology",
+      "priority": 40,
+      "publishedAt": "2026-09-12T05:15:00.000Z",
+      "updatedAt": "2026-09-12T05:15:00.000Z",
+      "retrievedAt": "2026-09-12T05:15:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ifa-2026",
+        "consumer-electronics",
+        "berlin",
+        "lenovo",
+        "irobot"
+      ],
+      "sources": [
+        {
+          "publisher": "The Daily Star",
+          "url": "https://www.thedailystar.net/news/technology/news/ifa-2026-puts-smarter-and-stranger-consumer-tech-the-spotlight-4267066",
+          "publishedAt": "2026-09-07T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-ios-27-siri-ai-september-14",
+      "kind": "daily",
+      "title": "iOS 27 with Siri AI beta lands Monday September 14 for iPhone 11 and later",
+      "summary": "Apple confirmed iOS 27 will release as a free update on Monday September 14, with Siri AI launching as a beta in English first and five more languages in October. The update installs on every iPhone from the iPhone 11 onward, but Siri AI requires an Apple Intelligence device starting with the iPhone 15 Pro, with the most advanced on-device features limited to five iPhone models.",
+      "category": "technology",
+      "priority": 65,
+      "publishedAt": "2026-09-12T05:10:00.000Z",
+      "updatedAt": "2026-09-12T05:10:00.000Z",
+      "retrievedAt": "2026-09-12T05:10:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "ios-27",
+        "siri-ai",
+        "apple-intelligence"
+      ],
+      "sources": [
+        {
+          "publisher": "MacObserver",
+          "url": "https://macobserver.com/tips/round-ups/ios-27-release-date-confirmed-september-14-siri-ai-beta-features",
+          "publishedAt": "2026-09-09T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-iphone-18-pro-pre-orders",
+      "kind": "daily",
+      "title": "iPhone 18 Pro and Pro Max pre-orders open Saturday with deliveries from September 18",
+      "summary": "Apple confirmed in its September 9 press release that pre-orders for the iPhone 18 Pro and iPhone 18 Pro Max open at 5 a.m. PT on Saturday, with retail availability and first deliveries on Friday September 18. The iPhone 18 Pro starts at $1,199 for 256 GB, $100 more than the model it replaces, with the Pro Max starting at $1,299 and a 2 TB top configuration across both lines.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-12T05:05:00.000Z",
+      "updatedAt": "2026-09-12T05:05:00.000Z",
+      "retrievedAt": "2026-09-12T05:05:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "iphone-18-pro",
+        "preorder"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple Newsroom",
+          "url": "https://www.apple.com/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max",
+          "publishedAt": "2026-09-09T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-apple-discontinues-iphone-17-pro",
+      "kind": "daily",
+      "title": "Apple discontinues iPhone 17 Pro and Pro Max on iPhone 18 launch day, no refurbished stock listed",
+      "summary": "Apple removed the iPhone 17 Pro and iPhone 17 Pro Max from its online store on Wednesday after unveiling the iPhone 18 Pro line at its 'Surprise and Shine' event, ending direct sales of last year's premium models in line with its usual successor-cycle policy. As of Thursday the company's Certified Refurbished store had no iPhone 17 generation devices listed and no schedule for when they might appear.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-09-12T05:00:00.000Z",
+      "updatedAt": "2026-09-12T05:00:00.000Z",
+      "retrievedAt": "2026-09-12T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "iphone-17-pro",
+        "iphone-18-pro",
+        "discontinued"
+      ],
+      "sources": [
+        {
+          "publisher": "MacRumors",
+          "url": "https://www.macrumors.com/2026/09/09/apple-discontinues-iphone-17-pro-max",
+          "publishedAt": "2026-09-09T18:55:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-openai-microsoft-500b-recap",
+      "kind": "daily",
+      "title": "Microsoft-OpenAI recapitalization values ChatGPT maker at $500 billion, ends nonprofit control",
+      "summary": "Microsoft and OpenAI have completed a recapitalization that values the ChatGPT maker at $500 billion and transitions it into a public benefit corporation, ending governance by the original nonprofit board. Under the deal Microsoft holds an investment in OpenAI Group PBC valued at roughly $135 billion, with the nonprofit arm receiving more than $100 billion, about 20 percent of the $500 billion valuation.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-12T04:50:00.000Z",
+      "updatedAt": "2026-09-12T04:50:00.000Z",
+      "retrievedAt": "2026-09-12T04:50:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "microsoft",
+        "valuation",
+        "restructuring"
+      ],
+      "sources": [
+        {
+          "publisher": "NBC News",
+          "url": "https://www.nbcnews.com/tech/tech-news/microsoft-openai-reach-new-deal-valuing-openai-500-billion-rcna240255",
+          "publishedAt": "2026-09-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-us-china-ai-safety-talks",
+      "kind": "daily",
+      "title": "US and China schedule first dedicated AI safety dialogue for mid-September, Bessent to lead US side",
+      "summary": "The United States and China are preparing to hold their first official bilateral AI safety talks since President Trump's return to office in mid-September, Reuters reported, with Treasury Secretary Scott Bessent expected to lead the US delegation. The proposed agenda covers coordination on monitoring AI-directed cyberattacks and a 'self-policing' framework for US and Chinese labs, with the meeting positioned as a deliverable ahead of Trump's September 24 summit with Xi Jinping.",
+      "category": "ai",
+      "priority": 65,
+      "publishedAt": "2026-09-12T04:45:00.000Z",
+      "updatedAt": "2026-09-12T04:45:00.000Z",
+      "retrievedAt": "2026-09-12T04:45:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "usai",
+        "china",
+        "ai-policy",
+        "bessent"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC (Reuters reporting)",
+          "url": "https://cnbc.com/2026/09/05/us-china-gear-up-for-mid-september-ai-safety-talks-reuters.html",
+          "publishedAt": "2026-09-05T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-china-distillation-accusations",
+      "kind": "daily",
+      "title": "US names six Chinese AI firms, including DeepSeek and Moonshot, in 'industrial-scale' distillation accusation",
+      "summary": "US law enforcement and intelligence officials publicly accused six Chinese AI companies of copying US models through industrial-scale distillation 'likely with Chinese government awareness', targeting output from Anthropic, OpenAI, Google and xAI. The named firms include DeepSeek, Moonshot AI and Alibaba, with the allegations surfacing days before President Xi Jinping's late-September visit to Washington.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-09-12T04:40:00.000Z",
+      "updatedAt": "2026-09-12T04:40:00.000Z",
+      "retrievedAt": "2026-09-12T04:40:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "china",
+        "usai",
+        "deepseek",
+        "alibaba",
+        "moonshot",
+        "distillation"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via The Jakarta Post)",
+          "url": "https://www.thejakartapost.com/business/2026/09/09/us-accuses-chinese-ai-firms-of-malicious-copying-of-ai-technology",
+          "publishedAt": "2026-09-09T00:29:53.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-hubinger-ten-percent-warning",
+      "kind": "daily",
+      "title": "Anthropic alignment lead Hubinger publicly backs Coxon's warning, puts extinction odds above 10 percent",
+      "summary": "Anthropic alignment science lead Evan Hubinger said on X that he personally estimates a greater than 10 percent chance AI could 'kill all humans' within the next decade, publicly endorsing researcher Jacob Coxon's Tuesday resignation post. Hubinger stressed that the risk from current models remains low and that Anthropic is 'trying its best', but argued the lab 'does not yet have a plan to solve alignment for superintelligence and are not clearly on track to.'",
+      "category": "ai",
+      "priority": 75,
+      "publishedAt": "2026-09-12T04:35:00.000Z",
+      "updatedAt": "2026-09-12T04:35:00.000Z",
+      "retrievedAt": "2026-09-12T04:35:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ai-safety",
+        "superintelligence"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/09/09/anthropic-researcher-quits-ai-safety.html",
+          "publishedAt": "2026-09-09T07:06:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-12-coxon-axios-equity-forfeit",
+      "kind": "daily",
+      "title": "Anthropic's Coxon walked away from unvested equity two months before it would have vested, Axios reports",
+      "summary": "In an interview with Axios, former Anthropic pretraining researcher Jacob Coxon said he resigned two months before his Anthropic equity would have vested, forfeiting the stake so he no longer had any incentive to 'juice up' the company's valuation. Coxon, who had been at Anthropic only four months after three years at OpenAI, told Axios his decision reflected concerns that competitive pressure would eventually push frontier labs to 'cut corners' in oversight.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-12T04:30:00.000Z",
+      "updatedAt": "2026-09-12T04:30:00.000Z",
+      "retrievedAt": "2026-09-12T04:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "openai",
+        "ai-safety",
+        "labor"
+      ],
+      "sources": [
+        {
+          "publisher": "Axios",
+          "url": "https://www.axios.com/2026/09/09/anthropic-researcher-ai-warning-interview",
+          "publishedAt": "2026-09-09T13:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-11-premier-league-matchday-3-fixtures",
       "kind": "daily",

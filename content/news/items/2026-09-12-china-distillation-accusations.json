@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-china-distillation-accusations",
+  "title": "US names six Chinese AI firms, including DeepSeek and Moonshot, in 'industrial-scale' distillation accusation",
+  "summary": "US law enforcement and intelligence officials publicly accused six Chinese AI companies of copying US models through industrial-scale distillation 'likely with Chinese government awareness', targeting output from Anthropic, OpenAI, Google and xAI. The named firms include DeepSeek, Moonshot AI and Alibaba, with the allegations surfacing days before President Xi Jinping's late-September visit to Washington.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-09-12T07:40:00+03:00",
+  "updatedAt": "2026-09-12T07:40:00+03:00",
+  "retrievedAt": "2026-09-12T07:40:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["china", "usai", "deepseek", "alibaba", "moonshot", "distillation"],
+  "sources": [{
+    "publisher": "Reuters (via The Jakarta Post)",
+    "url": "https://www.thejakartapost.com/business/2026/09/09/us-accuses-chinese-ai-firms-of-malicious-copying-of-ai-technology",
+    "publishedAt": "2026-09-09T00:29:53Z"
+  }]
+}

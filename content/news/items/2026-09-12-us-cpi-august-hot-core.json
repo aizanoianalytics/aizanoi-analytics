@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-us-cpi-august-hot-core",
+  "title": "US August CPI matches headline but core runs hotter, Fed rate-hike odds jump to 87 percent",
+  "summary": "The Bureau of Labor Statistics reported August consumer prices up 0.4 percent month-over-month and 3.4 percent year-over-year, matching consensus, while core CPI rose 0.3 percent against a 0.2 percent forecast. CME FedWatch showed the implied probability of a September Fed rate hike jumping to about 87 percent after the print, from 69 percent beforehand, with the 10-year Treasury yield above 4.97 percent.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-09-12T08:20:00+03:00",
+  "updatedAt": "2026-09-12T08:20:00+03:00",
+  "retrievedAt": "2026-09-12T08:20:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["us-cpi", "inflation", "fed", "fomc", "treasury"],
+  "sources": [{
+    "publisher": "WSJ",
+    "url": "https://www.wsj.com/livecoverage/stock-market-cpi-inflation-09-11-2026",
+    "publishedAt": "2026-09-11T13:30:00Z"
+  }]
+}

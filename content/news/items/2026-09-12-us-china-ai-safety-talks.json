@@ -1,0 +1,20 @@
+{
+  "id": "2026-09-12-us-china-ai-safety-talks",
+  "title": "US and China schedule first dedicated AI safety dialogue for mid-September, Bessent to lead US side",
+  "summary": "The United States and China are preparing to hold their first official bilateral AI safety talks since President Trump's return to office in mid-September, Reuters reported, with Treasury Secretary Scott Bessent expected to lead the US delegation. The proposed agenda covers coordination on monitoring AI-directed cyberattacks and a 'self-policing' framework for US and Chinese labs, with the meeting positioned as a deliverable ahead of Trump's September 24 summit with Xi Jinping.",
+  "category": "ai",
+  "priority": 65,
+  "publishedAt": "2026-09-12T07:45:00+03:00",
+  "updatedAt": "2026-09-12T07:45:00+03:00",
+  "retrievedAt": "2026-09-12T07:45:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["usai", "china", "ai-policy", "bessent"],
+  "sources": [{
+    "publisher": "CNBC (Reuters reporting)",
+    "url": "https://cnbc.com/2026/09/05/us-china-gear-up-for-mid-september-ai-safety-talks-reuters.html",
+    "publishedAt": "2026-09-05T00:00:00Z"
+  }]
+}
