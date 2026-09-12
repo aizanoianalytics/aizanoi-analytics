@@ -4,10 +4,14 @@ export default [
       '**/*.generated.js',
       'frontend/analytics/dashboards/**',
       'frontend/vendor/**',
+      'frontend/worlds/shared/vendor/**',
+      'frontend/dungeon/vendor/**',
       '**/vendor/**',
       'analytics/**',
       'artifacts/**',
     ],
+  },
+  {
     linterOptions:{reportUnusedDisableDirectives:false},
   },
   {
@@ -27,6 +31,8 @@ export default [
       'constructor-super':'error',
       'for-direction':'error',
       'getter-return':'error',
+      'no-debugger':'error',
+      'no-eval':'error',
       'no-async-promise-executor':'error',
       'no-class-assign':'error',
       'no-compare-neg-zero':'error',
