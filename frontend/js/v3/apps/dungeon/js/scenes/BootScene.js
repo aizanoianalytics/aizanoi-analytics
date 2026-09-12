@@ -23,7 +23,7 @@ export class BootScene extends Phaser.Scene {
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     }).setOrigin(0.5);
 
-    const loadingText = this.add.text(width / 2, height / 2 + 35, 'Antik Mahzenler Yükleniyor...', {
+    const loadingText = this.add.text(width / 2, height / 2 + 35, 'Loading the temple crypts...', {
       fontSize: '13px',
       color: '#94a3b8',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',

@@ -25,9 +25,17 @@
   padding: 0;
 }
 
+html, body.aizanoi-standalone-body {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+}
+
 .aizanoi-standalone-body {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
   overflow: hidden;
   background: radial-gradient(circle at center, #1e2430 0%, #0d1017 100%);
   font-family: var(--az-font);
@@ -41,10 +49,19 @@
   padding: 0;
 }
 
+#game-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+}
+
 .aizanoi-dungeon-app-root {
   position: relative;
   width: 100%;
   height: 100%;
+  height: 100dvh;
+  min-height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,10 +71,40 @@
 
 .aizanoi-dungeon-app-root canvas {
   display: block;
+  max-width: 100%;
+  max-height: 100%;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(197, 160, 89, 0.35);
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
+  touch-action: none;
+}
+
+.az-play-anyway {
+  margin-top: 16px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #c5a059;
+  border-radius: 10px;
+  background: #141822;
+  color: #f5d77f;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.az-fs-fab {
+  position: absolute;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 40;
+  min-width: 44px;
+  min-height: 44px;
+  border: 1px solid rgba(197, 160, 89, 0.7);
+  border-radius: 12px;
+  background: rgba(20, 24, 34, 0.9);
+  color: #f5d77f;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 /* Sol kenar donus kontrolu (yalnizca AizanoiOS mount) */

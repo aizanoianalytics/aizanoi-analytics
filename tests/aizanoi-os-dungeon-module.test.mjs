@@ -110,7 +110,7 @@ test('endless wave scaling is capped at wave 20 with light loot scaling', () => 
 
 test('keyboard: ESC closes inventory, M mutes, P pauses; mouse dead zones are 48px', () => {
   const game = read(`${moduleRoot}/js/scenes/GameScene.js`);
-  assert.match(game, /addKeys\('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC'\)/);
+  assert.match(game, /addKeys\('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC,F,B'\)/);
   assert.match(game, /JustDown\(this\.wasd\.M\)\) audioManager\.toggleMute\(\)/);
   assert.match(game, /JustDown\(this\.wasd\.P\)\) this\.togglePause\(\)/);
   assert.match(game, /togglePause\(\) \{/);

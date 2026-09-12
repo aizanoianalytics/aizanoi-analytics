@@ -69,12 +69,19 @@ export async function mount({ container, api }) {
     errorBox.className = 'aizanoi-dungeon-error';
     errorBox.setAttribute('role', 'alert');
     const title = document.createElement('strong');
-    title.textContent = 'Aizanoi Dungeon acilamadi';
+    title.textContent = 'Aizanoi Dungeon could not open';
     const detail = document.createElement('p');
-    detail.textContent = 'Oyun motoru yuklenemedi (Phaser calistirilamadi). Baglantinizi kontrol edip pencereyi kapatip yeniden acmayi deneyin.';
+    detail.textContent = 'The game engine failed to load (Phaser). Close the window and try again.';
     errorBox.append(title, detail);
     container.appendChild(errorBox);
     throw err;
+  }
+
+  // QA escape hatch: surface the live Phaser.Game instance so the headless
+  // browser suite can drive scene transitions without reverse-engineering
+  // canvas letterboxing. Production code never reads this.
+  if (typeof window !== 'undefined') {
+    window.AIZANOI_DUNGEON_GAME = gameInstance;
   }
 
   // Pencere boyutu degistiginde otomatik canvas ve aspect ratio guncelleme

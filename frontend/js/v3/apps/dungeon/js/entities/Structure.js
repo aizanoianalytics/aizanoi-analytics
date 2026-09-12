@@ -42,7 +42,7 @@ export class Structure extends Phaser.Physics.Arcade.Sprite {
       const xp = isConqueror ? 75 : 30;
       this.scene.dropLoot(this.x, this.y, gold, xp);
       if (isConqueror) {
-        this.scene.createFloatingText(this.x, this.y - 20, 'Kutsal Yıkım (+50🪙 +75⚡)!', '#f1c40f');
+        this.scene.createFloatingText(this.x, this.y - 20, 'Structure down (+50 coin / +75 spark)', '#f1c40f');
       }
       this.destroy();
     }

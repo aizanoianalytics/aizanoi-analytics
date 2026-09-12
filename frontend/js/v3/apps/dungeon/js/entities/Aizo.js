@@ -99,7 +99,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
       if (this.scarabTimer >= 50000) {
         this.scarabTimer = 0;
         this.shield = 60;
-        this.scene.createFloatingText(this.x, this.y - 30, '+60 kalkan', '#7dd3fc');
+        this.scene.createFloatingText(this.x, this.y - 30, '+60 shield', '#7dd3fc');
       }
     } else {
       this.scarabTimer = 0;
@@ -265,7 +265,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.setAlpha(0.35);
 
     audioManager.playShield();
-    this.scene.createFloatingText(this.x, this.y - 30, 'GÖLGE KAMUFLAJI!', '#27ae60');
+    this.scene.createFloatingText(this.x, this.y - 30, 'SHADOW MELD', '#27ae60');
     this.scene.time.delayedCall(2500, () => {
       this.isStealthed = false;
       this.setAlpha(1.0);
@@ -275,6 +275,10 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
 
   takeDamage(amount, isCritical = false, attacker = null, damageType = 'physical') {
     if (this.isDead || this.isInvulnerable) return;
+    if (this.scene.recallChannel > 0) {
+      this.scene.recallChannel = 0;
+      this.scene.createFloatingText(this.x, this.y - 24, 'Recall interrupted', '#f07186');
+    }
 
     // Sacred Aegis: yildirim hasarini %35 emer (yalnizca lightning turu)
     if (damageType === 'lightning' && this.inventory?.equipped?.armor === 'sacred_aegis') {
@@ -316,7 +320,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
       this.isInvulnerable = true;
       audioManager.playShield();
       this.scene.activateSanctuaryAegis(this);
-      this.scene.createFloatingText(this.x, this.y - 40, 'KADİM DİRİLİŞ!', '#f1c40f');
+      this.scene.createFloatingText(this.x, this.y - 40, 'ANCIENT REBIRTH', '#f1c40f');
       this.scene.time.delayedCall(3000, () => {
         this.isInvulnerable = false;
       });

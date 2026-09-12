@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="screen-orientation" content="landscape">
-  <title>Aizanoi Dungeon — Aizo'nun Uyanışı</title>
+  <title>Aizanoi Dungeon — Aizo Awakens</title>
   <link rel="icon" type="image/svg+xml" href="assets/icons/aizanoi-dungeon.svg">
   <link rel="stylesheet" href="css/game.css">
   <script src="/vendor/phaser.min.js"></script>
 </head>
 <body class="aizanoi-standalone-body">
   <div id="game-container" class="aizanoi-dungeon-app-root"></div>
+  <button type="button" id="fullscreen-btn" class="az-fs-fab" aria-label="Fullscreen">FS</button>
 
-  <!-- Mobil Portrait Döndürme Uyarısı -->
   <div id="orientation-warning" class="orientation-overlay" hidden>
     <div class="orientation-card">
       <div class="rotate-icon">📱 ➔ 🔄</div>
-      <h2>Lütfen Cihazınızı Yatay Çevirin</h2>
-      <p>Aizanoi Dungeon en iyi yatay (landscape) modda oynanır.</p>
+      <h2>Rotate your device</h2>
+      <p>Aizanoi Dungeon plays best in landscape. You can still continue in portrait.</p>
+      <button type="button" id="play-anyway" class="az-play-anyway">Play anyway</button>
     </div>
   </div>
 

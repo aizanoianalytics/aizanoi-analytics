@@ -17,12 +17,12 @@ export class InventoryScene extends Phaser.Scene {
     const panel = this.add.rectangle(width / 2, height / 2, 560, 420, 0xffffff, 0.94)
       .setStrokeStyle(3, 0xc5a059);
 
-    this.add.text(width / 2, height / 2 - 180, '📦 AIZO\'NUN YADİGARLARI VE STATLARI', {
+    this.add.text(width / 2, height / 2 - 180, 'RELICS AND STATS', {
       fontSize: '18px', color: '#1e293b', fontStyle: 'bold',
     }).setOrigin(0.5);
 
     if (this.gameScene) this.gameScene.scene.pause();
-    createGlassButton(this, width / 2 + 230, height / 2 - 180, 60, 28, '✕ Kapat', () => {
+    createGlassButton(this, width / 2 + 230, height / 2 - 180, 60, 28, '✕ Close', () => {
       if (this.gameScene) this.gameScene.scene.resume();
       this.scene.stop();
     });
@@ -45,10 +45,10 @@ export class InventoryScene extends Phaser.Scene {
     const acc1 = ACCESSORIES[inv.equipped.accessories[0]];
     const acc2 = ACCESSORIES[inv.equipped.accessories[1]];
 
-    this.renderEquipSlot(leftX, startY, '🗡️ SİLAH', wItem ? wItem.name : 'Yok', wItem ? `+${wItem.stats.attackDamage} AD` : '');
-    this.renderEquipSlot(leftX, startY + 60, '🛡️ ZIRH', aItem ? aItem.name : 'Yok', aItem ? `+${aItem.stats.armor} Zırh` : '');
-    this.renderEquipSlot(leftX, startY + 120, '💍 TILSIM 1', acc1 ? acc1.name : 'Boş', acc1 ? acc1.description : '');
-    this.renderEquipSlot(leftX, startY + 180, '💍 TILSIM 2', acc2 ? acc2.name : 'Boş', acc2 ? acc2.description : '');
+    this.renderEquipSlot(leftX, startY, 'WEAPON', wItem ? wItem.name : 'Empty', wItem ? `+${wItem.stats.attackDamage} AD` : '');
+    this.renderEquipSlot(leftX, startY + 60, 'ARMOR', aItem ? aItem.name : 'Empty', aItem ? `+${aItem.stats.armor} Armor` : '');
+    this.renderEquipSlot(leftX, startY + 120, 'CHARM 1', acc1 ? acc1.name : 'Empty', acc1 ? acc1.description : '');
+    this.renderEquipSlot(leftX, startY + 180, 'CHARM 2', acc2 ? acc2.name : 'Empty', acc2 ? acc2.description : '');
 
     // 2. Sağ Taraf: Toplam İstatistikler
     const rightX = width / 2 + 130;
@@ -63,11 +63,11 @@ export class InventoryScene extends Phaser.Scene {
       `Seviye: ${this.gameScene.progression.level}`,
       `Azami Can: ${stats.hp}`,
       `Can Yenileme: ${stats.hpRegen.toFixed(1)}/sn`,
-      `Saldırı Gücü: ${stats.attackDamage}`,
-      `Saldırı Hızı: ${stats.attackSpeed.toFixed(1)}/sn`,
-      `Mermer Zırhı: ${stats.armor}`,
-      `Kritik Şansı: %${Math.round(stats.critChance * 100)}`,
-      `Hareket Hızı: ${Math.round(stats.moveSpeed)}`,
+      `Attack: ${stats.attackDamage}`,
+      `Attack speed: ${stats.attackSpeed.toFixed(1)}/s`,
+      `Armor: ${stats.armor}`,
+      `Crit chance: ${Math.round(stats.critChance * 100)}%`,
+      `Move speed: ${Math.round(stats.moveSpeed)}`,
     ];
 
     statRows.forEach((row, idx) => {

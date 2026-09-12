@@ -114,7 +114,11 @@ export class TouchControls {
       .setScrollFactor(0).setDepth(200).setInteractive();
 
     this.btnMenu.on('pointerdown', () => {
-      this.scene.scene.launch('InventoryScene');
+      if (typeof this.scene.toggleExitMenu === 'function') this.scene.toggleExitMenu();
+      else this.scene.scene.launch('InventoryScene');
+    });
+    [this.btnAttack, this.btnSkill1, this.btnSkill2, this.btnUtility, this.btnInteract].forEach((btn) => {
+      if (btn) btn.setScale(1.12).setAlpha(0.92);
     });
   }
 

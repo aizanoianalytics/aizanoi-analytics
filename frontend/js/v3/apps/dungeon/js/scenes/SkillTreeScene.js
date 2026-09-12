@@ -18,11 +18,11 @@ export class SkillTreeScene extends Phaser.Scene {
     const panel = this.add.rectangle(width / 2, height / 2, 620, 440, 0xffffff, 0.94)
       .setStrokeStyle(3, 0xc5a059);
 
-    this.add.text(width / 2, height / 2 - 190, '⚡ AIZO\'NUN KUTSAL YETENEK AĞACI', {
+    this.add.text(width / 2, height / 2 - 190, 'SACRED SKILL TREE', {
       fontSize: '18px', color: '#1e293b', fontStyle: 'bold',
     }).setOrigin(0.5);
 
-    createGlassButton(this, width / 2 + 250, height / 2 - 190, 60, 28, '✕ Kapat', () => {
+    createGlassButton(this, width / 2 + 250, height / 2 - 190, 60, 28, '✕ Close', () => {
       if (this.gameScene) this.gameScene.scene.resume();
       this.scene.stop();
     });
@@ -51,7 +51,7 @@ export class SkillTreeScene extends Phaser.Scene {
         this.add.text(bx - 75, sy - 12, `${skill.iconSymbol} ${skill.name}`, {
           fontSize: '11px', color: '#1e293b', fontStyle: 'bold',
         });
-        this.add.text(bx - 75, sy + 4, `Lv.${skill.requiredLevel} · ${isUnlocked ? 'AÇIK' : 'AÇ'}`, {
+        this.add.text(bx - 75, sy + 4, `Lv.${skill.requiredLevel} · ${isUnlocked ? 'OWNED' : 'LEARN'}`, {
           fontSize: '10px', color: isUnlocked ? '#15803d' : '#64748b',
         });
 
