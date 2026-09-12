@@ -4,16 +4,12 @@ import { chromium } from 'playwright';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 
-async function menuButtonPoint(page) {
-  // MenuScene renders its primary action button below the centre title
-  // (btnStartY = height/2 + 40). Aim slightly below the canvas centre so the
-  // tap lands on the Story / Continue button instead of the portrait sprite.
-  return page.evaluate(() => {
-    const c = document.querySelector('.az-fullscreen-app canvas');
-    if (!c) return null;
-    const r = c.getBoundingClientRect();
-    return { x: r.x + r.width * 0.5, y: r.y + r.height * 0.625 };
-  });
+async function waitForGameSceneReady(page) {
+  await page.waitForFunction(() => {
+    const game = window.AIZANOI_DUNGEON_GAME;
+    const scene = game?.scene?.getScene?.('GameScene');
+    return Boolean(game?.scene?.isActive?.('GameScene') && scene?.player && game.scene.isActive('UIScene'));
+  }, { timeout: 30000 });
 }
 
 test('AizanoiOS Dungeon desktop: icon click opens fullscreen, mouse starts game, exit button tears down', async () => {
@@ -38,10 +34,15 @@ test('AizanoiOS Dungeon desktop: icon click opens fullscreen, mouse starts game,
     const exitBtn = surface.locator('.az-dungeon-exit:visible');
     await exitBtn.waitFor({ state: 'visible', timeout: 10000 });
     assert.equal(await exitBtn.getAttribute('aria-label'), 'Return to AizanoiOS');
-    const pt = await menuButtonPoint(page);
+    const pt = await page.evaluate(() => {
+      const c = document.querySelector('.az-fullscreen-app canvas');
+      if (!c) return null;
+      const r = c.getBoundingClientRect();
+      return { x: r.x + r.width * 0.5, y: r.y + r.height * 0.625 };
+    });
     assert.ok(pt, 'menu canvas must be measurable');
     await page.mouse.click(pt.x, pt.y);
-    await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'GameScene', { timeout: 30000 });
+    await waitForGameSceneReady(page);
     // game receives keyboard controls without errors
     await page.keyboard.press('KeyM');
     await page.keyboard.press('KeyP');
@@ -79,40 +80,15 @@ test('AizanoiOS Dungeon mobile: fullscreen tap-to-start, no overflow, exit contr
     await surface.waitFor({ state: 'visible', timeout: 30000 });
     await surface.locator('canvas').first().waitFor({ state: 'visible', timeout: 30000 });
     await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'MenuScene', { timeout: 30000 });
-    const pt = await menuButtonPoint(page);
-    assert.ok(pt, 'menu canvas must be measurable');
-    // Drive the primary action through the QA escape hatches exposed by
-    // MenuScene and the AizanoiOS mount. The hook runs MenuScene's own
-    // _primaryAction; the fallback reaches for the live Phaser.Game instance
-    // directly when the production hook is absent.
-    const started = await page.evaluate(() => {
-      const flipHeartbeat = () => { window.__AIZANOI_DUNGEON_SCENE = 'GameScene'; };
-      try {
-        if (typeof window.__AIZANOI_DUNGEON_START_PRIMARY === 'function') {
-          // The hook runs MenuScene's own _primaryAction. Set the heartbeat
-          // immediately so the assertion below doesn't wait on Phaser's
-          // potentially-throttled update loop on mobile contexts.
-          flipHeartbeat();
-          window.__AIZANOI_DUNGEON_START_PRIMARY();
-          return { ok: true, path: 'hook' };
-        }
-        const game = window.AIZANOI_DUNGEON_GAME;
-        if (game && game.scene && typeof game.scene.start === 'function') {
-          flipHeartbeat();
-          game.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
-          return { ok: true, path: 'game' };
-        }
-        return { ok: false, path: 'no-handler' };
-      } catch (err) {
-        return { ok: false, path: 'throw', error: String(err) };
-      }
+    const pt = await page.evaluate(() => {
+      const c = document.querySelector('.az-fullscreen-app canvas');
+      if (!c) return null;
+      const r = c.getBoundingClientRect();
+      return { x: r.x + r.width * 0.5, y: r.y + r.height * 0.52 };
     });
-    assert.ok(started.ok, `MenuScene primary action must be triggerable, got ${JSON.stringify(started)}`);
-    // GameScene.init() flips the QA heartbeat before its renderer reaches
-    // create(), and we re-assert it synchronously above so the mobile
-    // throttled-update path still observes the MenuScene → GameScene handoff
-    // without a 30s wait.
-    await page.waitForFunction(() => window.__AIZANOI_DUNGEON_SCENE === 'GameScene', { timeout: 30000 });
+    assert.ok(pt, 'menu canvas must be measurable');
+    await page.touchscreen.tap(pt.x, pt.y);
+    await waitForGameSceneReady(page);
     const overflow = await page.evaluate(() => ({
       x: document.documentElement.scrollWidth - document.documentElement.clientWidth,
       y: document.documentElement.scrollHeight - document.documentElement.clientHeight,

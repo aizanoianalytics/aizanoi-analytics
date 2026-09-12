@@ -16,14 +16,6 @@ export class MenuScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
     if (typeof window !== 'undefined') {
       window.__AIZANOI_DUNGEON_SCENE = 'MenuScene';
-      // Test escape hatch: lets headless browser QA start the game without
-      // reverse-engineering canvas-relative button positions under the
-      // Phaser CENTER_BOTH / fullscreenTarget letterboxing. Production code
-      // never invokes this; it only fires when the QA harness asks for it.
-      window.__AIZANOI_DUNGEON_START_PRIMARY = () => {
-        const action = this._primaryAction || (() => this.scene.start('GameScene', { chapterIndex: 0, isEndless: false }));
-        this._startOnce(action);
-      };
     }
 
     // Web Audio ilk dokunusta acilmasi icin dinleyici
