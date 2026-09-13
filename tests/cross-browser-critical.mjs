@@ -40,6 +40,13 @@ try{
   await assertRoute(context,'/news/2026-09-02/aisi-cyber-eval-incident/',{selector:'main.article-page',label:'permanent News article'});
   await assertRoute(context,'/analytics/',{selector:'main',label:'Analytics catalog'});
   await assertRoute(context,'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',{selector:'body',label:'HR Turnover dashboard'});
+  // Markets data is published by the provider pipeline, not committed to the
+  // source tree. Verify the static shell/status surface without turning a
+  // missing build artifact into a false functional pass.
+  const marketsContext=await browser.newContext({viewport:{width:1280,height:800},serviceWorkers:'block',javaScriptEnabled:false});
+  await assertRoute(marketsContext,'/analytics/markets/',{selector:'[data-markets-root]',label:'Markets static shell'});
+  await marketsContext.close();
+  await assertRoute(context,'/dungeon/',{selector:'#game-container canvas',label:'standalone Dungeon menu'});
   await assertRoute(context,'/worlds/',{selector:'main',label:'Worlds index'});
   await assertRoute(context,'/privacy/',{selector:'main',label:'Privacy'});
 
