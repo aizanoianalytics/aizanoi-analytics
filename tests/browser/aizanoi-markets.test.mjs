@@ -123,13 +123,17 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 768, height: 1024
       assert.equal(rankings, 1, 'compact UX renders a single ranking block with preset selector');
       const titles = await page.locator('[data-ranking] h3').allTextContents();
       assert.deepEqual(titles, ['Today · Winners']);
-      const presetButtons = await page.locator('[data-ranking-preset]').count();
-      assert.equal(presetButtons, 6, 'preset selector exposes all six ranking presets');
+      assert.equal(await page.locator('[data-ranking-preset]').count(), 6, 'preset selector exposes all six ranking presets');
+      assert.equal(await page.locator('.market-ranking-switch[role="group"]').count(), 1);
+      assert.equal(await page.locator('[data-ranking-preset="1d-up"]').getAttribute('aria-pressed'), 'true');
+      assert.equal(await page.locator('[data-ranking-preset="1d-down"]').getAttribute('aria-pressed'), 'false');
       const topFirst = await page.locator('[data-ranking]').nth(0).locator('[data-ranking-symbol]').first().getAttribute('data-ranking-symbol');
       assert.equal(topFirst, 'aapl');
       // Compact UX has a single ranking block; flipping the preset to the
       // matching "Losers" preset must surface the bottom-ranked ticker.
       await page.click('[data-ranking-preset="1d-down"]');
+      assert.equal(await page.locator('[data-ranking-preset="1d-up"]').getAttribute('aria-pressed'), 'false');
+      assert.equal(await page.locator('[data-ranking-preset="1d-down"]').getAttribute('aria-pressed'), 'true');
       const bottomFirst = await page.locator('[data-ranking]').nth(0).locator('[data-ranking-symbol]').first().getAttribute('data-ranking-symbol');
       assert.equal(bottomFirst, 'us7');
       await page.waitForSelector('tbody[data-raw-table-body] tr[data-symbol]');
