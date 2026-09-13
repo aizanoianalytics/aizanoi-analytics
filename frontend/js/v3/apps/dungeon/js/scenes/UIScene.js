@@ -3,6 +3,7 @@
 
 import { drawStatBar } from '../utils/ui-helpers.js';
 import { audioManager } from '../systems/AudioManager.js';
+import { loadSettings } from '../systems/SettingsSystem.js';
 
 export class UIScene extends Phaser.Scene {
   constructor() {
@@ -51,12 +52,14 @@ export class UIScene extends Phaser.Scene {
 
     this.createAbilityBar();
 
+    this.minimapEnabled = loadSettings().showMinimap !== false;
+    this.minimapContainer = this.add.container(width - 68, height - 68).setVisible(this.minimapEnabled);
     this.minimapGfx = this.add.graphics();
-    this.minimapBg = this.add.rectangle(width - 68, height - 68, 112, 112, 0x0b1220, 0.88)
-      .setStrokeStyle(1.5, 0xc5a059);
-    this.minimapHint = this.add.text(width - 68, height - 128, 'MAP', {
+    this.minimapBg = this.add.rectangle(0, 0, 112, 112, 0x0b1220, 0.88).setStrokeStyle(1.5, 0xc5a059);
+    this.minimapHint = this.add.text(0, -60, 'MAP', {
       fontSize: '9px', color: '#9aa8be',
     }).setOrigin(0.5);
+    this.minimapContainer.add([this.minimapGfx, this.minimapBg, this.minimapHint]);
 
     this.hintText = this.add.text(width / 2, height - 78, '', {
       fontSize: '11px', color: '#f8fafc',
@@ -130,12 +133,13 @@ export class UIScene extends Phaser.Scene {
 
     this.hintText.setText(player.isInBase ? 'E Shop   I Relics   P Pause' : '');
 
+    if (!this.minimapEnabled) return;
     this.minimapGfx.clear();
     if (!gs.mapData) return;
     const mapW = gs.mapData.width * 32;
     const mapH = gs.mapData.height * 32;
-    const ox = width - 68 - 50;
-    const oy = height - 68 - 50;
+    const ox = -50;
+    const oy = -50;
     const scaleX = 100 / mapW;
     const scaleY = 100 / mapH;
     const plot = (x, y, color, r = 2) => {
