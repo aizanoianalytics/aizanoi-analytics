@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-13-south-korea-espionage-law-takes-effect",
+  "title": "South Korea's expanded espionage law takes effect Sunday to protect semiconductors and other strategic tech",
+  "summary": "South Korea's revised Criminal Act took effect Sunday September 13, creating a new espionage offence covering acts benefiting any foreign country or equivalent organization with a minimum three-year prison term, closing a loophole that had limited prosecution of industrial-espionage cases to North Korea. The National Intelligence Service said the amendment will help protect strategic technologies including semiconductors, displays, batteries and AI, and follows last year's indictment of five former Samsung Electronics employees accused of transferring DRAM technology to CXMT in China.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-09-13T09:25:00+03:00",
+  "updatedAt": "2026-09-13T09:25:00+03:00",
+  "retrievedAt": "2026-09-13T09:25:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["south-korea", "semiconductors", "policy", "industrial-espionage", "dram"],
+  "sources": [
+    {
+      "publisher": "Reuters (via Internazionale)",
+      "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/09/13/south-korea-s-expanded-espionage-law-takes-effect-amid-push-to-protect-chip-technology",
+      "publishedAt": "2026-09-13T00:00:00Z"
+    }
+  ]
+}

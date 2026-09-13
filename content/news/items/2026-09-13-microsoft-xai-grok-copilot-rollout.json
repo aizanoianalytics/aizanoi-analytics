@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-13-microsoft-xai-grok-copilot-rollout",
+  "title": "Microsoft adds xAI Grok models as a selectable option inside Copilot, Word, Excel and PowerPoint",
+  "summary": "Microsoft on Saturday began rolling out xAI's Grok models as a user-selectable option inside Copilot and dedicated add-ins for Word, Excel, and PowerPoint, with availability opening first to Microsoft Frontier program customers. The integration, announced by Satya Nadella, extends a multi-model strategy that already includes Anthropic's Claude and lets enterprise users pick the underlying engine for tasks such as financial modeling and pitch-deck creation. Existing Grok connectors for Outlook mail, Teams, SharePoint, and OneDrive had already been live by May.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-09-13T08:40:00+03:00",
+  "updatedAt": "2026-09-13T08:40:00+03:00",
+  "retrievedAt": "2026-09-13T08:40:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["microsoft", "xai", "grok", "copilot", "office-365", "satya-nadella"],
+  "sources": [
+    {
+      "publisher": "Firstpost",
+      "url": "https://firstpost.com/tech/satya-nadella-announces-grok-rollout-to-copilot-expanding-microsofts-ai-offering-14045382.html",
+      "publishedAt": "2026-09-13T01:32:56+05:30"
+    }
+  ]
+}
