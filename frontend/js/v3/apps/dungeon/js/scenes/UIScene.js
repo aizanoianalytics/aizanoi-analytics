@@ -54,12 +54,18 @@ export class UIScene extends Phaser.Scene {
 
     this.minimapEnabled = loadSettings().showMinimap !== false;
     this.minimapContainer = this.add.container(width - 68, height - 68).setVisible(this.minimapEnabled);
-    this.minimapGfx = this.add.graphics();
+    // Phaser display-list order: children added later are drawn ON TOP of
+    // earlier siblings. The dark rectangle background must be appended first
+    // so the dot graphics for player/enemies/portal/base render above it and
+    // remain visible; the MAP label goes last so it never gets occluded by a
+    // nearby dot. Earlier this was [gfx, bg, hint] which made the background
+    // cover every dot.
     this.minimapBg = this.add.rectangle(0, 0, 112, 112, 0x0b1220, 0.88).setStrokeStyle(1.5, 0xc5a059);
+    this.minimapGfx = this.add.graphics();
     this.minimapHint = this.add.text(0, -60, 'MAP', {
       fontSize: '9px', color: '#9aa8be',
     }).setOrigin(0.5);
-    this.minimapContainer.add([this.minimapGfx, this.minimapBg, this.minimapHint]);
+    this.minimapContainer.add([this.minimapBg, this.minimapGfx, this.minimapHint]);
 
     this.hintText = this.add.text(width / 2, height - 78, '', {
       fontSize: '11px', color: '#f8fafc',

@@ -28,7 +28,7 @@ export const WEAPONS = {
   },
   legion_gladius: {
     id: 'legion_gladius',
-    name: 'Lejyoner Gladius\'u',
+    name: 'Legionary Gladius',
     type: 'weapon',
     subtype: 'melee',
     price: 250,
@@ -106,7 +106,7 @@ export const WEAPONS = {
 export const ARMORS = {
   linen_tunic: {
     id: 'linen_tunic',
-    name: 'Keten Ayin Tunisi',
+    name: 'Linen Ritual Tunic',
     type: 'armor',
     price: 0,
     sellPrice: 0,
@@ -124,7 +124,7 @@ export const ARMORS = {
     stats: { armor: 10, hp: 25, hpRegen: 0 },
     special: null,
     spriteIndex: 1,
-    description: 'Hafif antik deri koruma.',
+    description: 'Light ancient leather armor.',
   },
   bronze_squamata: {
     id: 'bronze_squamata',

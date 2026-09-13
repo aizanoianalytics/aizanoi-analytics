@@ -28,9 +28,9 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.hitCounter = 0;
 
     // Cooldown timers
-    this.skill1Cooldown = 0; // Zeus Çatlağı (Q)
-    this.skill2Cooldown = 0; // Dorik Kalkan (R)
-    this.utilityCooldown = 0; // Golge Karisimi (Space)
+    this.skill1Cooldown = 0; // Zeus Fissure (Q)
+    this.skill2Cooldown = 0; // Doric Aegis (R)
+    this.utilityCooldown = 0; // Shadow Meld (Space)
 
     // Scarab Amulet kalkani: transient run state (save'e yazilmaz, sahne
     // restartinda sifirlanir). Timer yalnizca accessory takiliyken ilerler.
@@ -163,6 +163,24 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     const isRanged = weaponData && weaponData.subtype === 'ranged';
     const range = this.stats.attackRange;
 
+    // Optional explicit target: when the caller already chose a candidate
+    // (e.g. GameScene.autoAimAttack rotated the player toward the nearest
+    // enemy), reuse it so the player-facing arc actually hits that target.
+    // Manual/space/touch attacks still pass null and fall through to the
+    // nearest-in-range search below. The target must still be active, alive,
+    // not the player base, and inside the weapon's attack range — otherwise
+    // it is rejected and we fall back to the regular nearest search.
+    const explicitTarget = (() => {
+      if (!targetOrDirection) return null;
+      if (typeof targetOrDirection !== 'object') return null;
+      if (!targetOrDirection.active) return null;
+      const hp = targetOrDirection.hp;
+      if (hp === undefined || hp <= 0) return null;
+      if (targetOrDirection.isPlayerBase === true) return null;
+      const dist = Phaser.Math.Distance.Between(this.x, this.y, targetOrDirection.x, targetOrDirection.y);
+      return dist <= range ? targetOrDirection : null;
+    })();
+
     // Hedefler: Düşmanlar ve yıkılabilir yapılar
     const candidateTargets = [];
     if (this.scene.enemies) {
@@ -178,13 +196,22 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
 
     let nearest = null;
     let minDist = range;
-    candidateTargets.forEach((target) => {
-      const dist = Phaser.Math.Distance.Between(this.x, this.y, target.x, target.y);
-      if (dist <= minDist) {
-        minDist = dist;
-        nearest = target;
-      }
-    });
+    // Prefer the caller's explicit candidate if it survived validation and
+    // still exists in the live candidate pool; otherwise pick the nearest one
+    // in range. This preserves manual/touch attack semantics: the explicit
+    // target only short-circuits the search, it never widens the range or
+    // silently swaps the chosen enemy for a closer destructible.
+    if (explicitTarget && candidateTargets.includes(explicitTarget)) {
+      nearest = explicitTarget;
+    } else {
+      candidateTargets.forEach((target) => {
+        const dist = Phaser.Math.Distance.Between(this.x, this.y, target.x, target.y);
+        if (dist <= minDist) {
+          minDist = dist;
+          nearest = target;
+        }
+      });
+    }
 
     if (isRanged) {
       audioManager.playShoot();
@@ -290,7 +317,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
       const absorbed = Math.min(this.shield, amount);
       this.shield -= absorbed;
       amount -= absorbed;
-      this.scene.createFloatingText(this.x, this.y - 34, `-${absorbed} kalkan`, '#7dd3fc');
+      this.scene.createFloatingText(this.x, this.y - 34, `-${absorbed} shield`, '#7dd3fc');
     }
 
     this.hp -= amount;

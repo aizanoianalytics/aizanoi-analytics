@@ -97,7 +97,7 @@ export const SKILL_TREE = {
       },
       {
         id: 'sanctuary_aegis',
-        name: 'Dorik Kalkan (Aegis)',
+        name: 'Doric Aegis',
         requiredLevel: 7,
         prerequisite: 'stone_reflection',
         effect: {

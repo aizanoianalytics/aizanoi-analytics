@@ -4,7 +4,7 @@
 export const ENEMY_TYPES = {
   gargoyle: {
     id: 'gargoyle',
-    name: 'Mermer Gargoyle',
+    name: 'Marble Gargoyle',
     hp: 35,
     attackDamage: 6,
     attackSpeed: 1.3,
@@ -104,7 +104,7 @@ export const ENEMY_TYPES = {
   },
   marbleMinotaur: {
     id: 'marbleMinotaur',
-    name: 'Mermer Minotaur (Mini Boss)',
+    name: 'Marble Minotaur (Mini Boss)',
     hp: 380,
     attackDamage: 26,
     attackSpeed: 0.6,

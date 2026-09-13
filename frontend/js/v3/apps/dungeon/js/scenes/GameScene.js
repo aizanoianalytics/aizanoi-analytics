@@ -139,6 +139,9 @@ export class GameScene extends Phaser.Scene {
       }
       audioManager.stopAmbientDrone();
       this.input.removeAllListeners();
+      // Drop the scene sentinel so a fresh Phaser instance can claim it
+      // without a stale scene reference lingering after restart/teardown.
+      if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = undefined;
     });
   }
 
@@ -723,7 +726,12 @@ export class GameScene extends Phaser.Scene {
       this.player.lastDirection = dy >= 0 ? 'down' : 'up';
     }
     this._nextAutoAim = time + 420;
-    this.player.attack();
+    // Hand the chosen target to Aizo.attack so the player-facing arc and the
+    // projectile/melee hit actually agree on which enemy gets hit. Without
+    // this, Aizo.attack() would re-run its own nearest-in-range search and
+    // could swap the enemy for a closer destructible structure, breaking the
+    // visual rotation we just performed.
+    this.player.attack(nearest);
   }
 
   onPlayerDied() {
