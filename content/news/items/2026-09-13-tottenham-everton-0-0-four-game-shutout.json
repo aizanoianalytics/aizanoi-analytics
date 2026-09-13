@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-13-tottenham-everton-0-0-four-game-shutout",
+  "title": "Tottenham booed off after 0-0 with Everton extends historic four-game goalless Premier League start",
+  "summary": "Tottenham played out a 0-0 draw with Everton at the Tottenham Hotspur Stadium on Saturday — the first time in the club's history they have failed to score in any of their opening four Premier League matches, leaving them 17th with just two points. Roberto De Zerbi apologised to supporters and admitted the side is not yet at the right physical condition after a late pre-season disrupted by World Cup players and injuries, pointing to new signings Savio, Omar Marmoush and Dominic Solanke as players he has worked with for under two weeks. Spurs failed to score for a fourth straight league game.",
+  "category": "football",
+  "priority": 75,
+  "publishedAt": "2026-09-13T10:35:00+03:00",
+  "updatedAt": "2026-09-13T10:35:00+03:00",
+  "retrievedAt": "2026-09-13T10:35:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["premier-league", "tottenham", "everton", "match-report", "de-zerbi"],
+  "sources": [
+    {
+      "publisher": "Tottenham Hotspur (official)",
+      "url": "https://tottenhamhotspur.com/news/1089781/spurs-0-0-everton-every-word-of-roberto-de-zerbis-post-match-press-conference",
+      "publishedAt": "2026-09-12T22:35:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/sep/12/roberto-de-zerbi-tottenham-everton-premier-league",
+      "publishedAt": "2026-09-12T22:45:00Z"
+    }
+  ]
+}

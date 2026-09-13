@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-13-amodei-pace-the-frontier-essay",
+  "title": "Anthropic CEO Amodei publishes 'Pace the Frontier' essay urging AI labs to slow capability gains",
+  "summary": "Anthropic CEO Dario Amodei released a 3,800-word essay titled 'We Must Pace the Frontier' on Saturday calling on AI companies to deliberately moderate the pace of frontier model development and proposing a three-step framework: third-party evaluators with employee-level system access, common safety standards, and limits on unchecked progress. He said Anthropic is unilaterally committing to the first step, while Elon Musk publicly endorsed the call on X. The essay comes days after Anthropic researcher Jacob Coxon resigned accusing frontier labs of 'gambling with our lives.'",
+  "category": "ai",
+  "priority": 90,
+  "publishedAt": "2026-09-13T08:10:00+03:00",
+  "updatedAt": "2026-09-13T08:10:00+03:00",
+  "retrievedAt": "2026-09-13T08:10:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "amodei", "ai-safety", "frontier-ai", "regulation"],
+  "sources": [
+    {
+      "publisher": "Jerusalem Post (Reuters wire)",
+      "url": "https://www.jpost.com/business-and-innovation/article-908435",
+      "publishedAt": "2026-09-13T04:13:00Z"
+    }
+  ]
+}

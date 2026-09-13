@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/tottenham-everton-0-0-four-game-shutout/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T07:35:00.000Z</news:publication_date>
+      <news:title>Tottenham booed off after 0-0 with Everton extends historic four-game goalless Premier League start</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/arsenal-sunderland-2-0-pl-summit/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T07:25:00.000Z</news:publication_date>
+      <news:title>Arsenal go clear at the Premier League summit with 2-0 win at Sunderland, Arteta fumes at penalty award</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/lazio-ac-milan-2-2-moreira-brace/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T07:15:00.000Z</news:publication_date>
+      <news:title>Lazio 2-2 AC Milan: Diego Moreira&#39;s second-half brace rescues a point at the Stadio Olimpico</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/china-exports-canada-tariffs-trade/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T07:05:00.000Z</news:publication_date>
+      <news:title>China August exports rise 25% YoY and trade surplus widens to $119bn as Canada hits back with 50% US tariffs</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/iea-oil-demand-cut-biggest-since-covid/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T06:55:00.000Z</news:publication_date>
+      <news:title>Brent settles near $104 after IEA cuts 2026 oil demand forecast by 940,000 b/d — deepest since COVID</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/ust-30y-yield-2007-high-fomc-hike-priced/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T06:45:00.000Z</news:publication_date>
+      <news:title>30-year US Treasury yield closes above 5.32% — highest since 2007 — as FOMC Sept hike prices to ~90%</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/spacex-reworks-colossus-data-centers/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T06:35:00.000Z</news:publication_date>
+      <news:title>SpaceX redesigns Colossus data centers around power and cooling redundancy, The Information reports</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/south-korea-espionage-law-takes-effect/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T06:25:00.000Z</news:publication_date>
+      <news:title>South Korea&#39;s expanded espionage law takes effect Sunday to protect semiconductors and other strategic tech</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/openai-agents-attacked-rubygems/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T06:15:00.000Z</news:publication_date>
+      <news:title>Researchers say OpenAI agents uploaded malicious packages to RubyGems in May, two months before the Hugging Face incident</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/larry-ellison-cancels-oracle-stock-sale/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T06:05:00.000Z</news:publication_date>
+      <news:title>Larry Ellison cancels plan to sell 50 million Oracle shares a day after disclosing the 10b5-1 plan</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/openai-chatgpt-for-financial-services/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T05:50:00.000Z</news:publication_date>
+      <news:title>OpenAI launches ChatGPT for Financial Services with Morgan Stanley and Evercore as design partners</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/microsoft-xai-grok-copilot-rollout/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T05:40:00.000Z</news:publication_date>
+      <news:title>Microsoft adds xAI Grok models as a selectable option inside Copilot, Word, Excel and PowerPoint</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/openai-navier-stokes-singularity/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T05:30:00.000Z</news:publication_date>
+      <news:title>OpenAI says internal model produced a Lean-verified proof of a Navier–Stokes finite-time singularity</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/altman-openai-ipo-2026-off/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T05:20:00.000Z</news:publication_date>
+      <news:title>Altman tells Fortune OpenAI will not pursue an IPO in 2026, calls the moment &#39;ill-advised&#39; on AI safety</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-13/amodei-pace-the-frontier-essay/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-13T05:10:00.000Z</news:publication_date>
+      <news:title>Anthropic CEO Amodei publishes &#39;Pace the Frontier&#39; essay urging AI labs to slow capability gains</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-09-12/tagliafico-atletico-deadline-collapse/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -118,126 +238,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-09-12T04:30:00.000Z</news:publication_date>
       <news:title>Anthropic&#39;s Coxon walked away from unvested equity two months before it would have vested, Axios reports</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/premier-league-matchday-3-fixtures/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T05:25:00.000Z</news:publication_date>
-      <news:title>Premier League Matchweek 3 kicks off Saturday with Liverpool-Fulham and Manchester derby on Sunday</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/fenerbahce-roma-1-1-istanbul/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T05:20:00.000Z</news:publication_date>
-      <news:title>Fenerbahce and Roma share 1-1 draw on Champions League return in Istanbul</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/champions-league-md1-thursday-roundup/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T05:15:00.000Z</news:publication_date>
-      <news:title>Champions League Matchday 1 Thursday: Bayern, Man Utd and Como cruise, Fenerbahce-Roma ends level</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/oil-100-hormuz-red-sea/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T05:10:00.000Z</news:publication_date>
-      <news:title>Brent above $108 as Red Sea and Hormuz disruptions keep oil on track for first $100 week since May</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/ecb-deposit-rate-hike-october/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T05:05:00.000Z</news:publication_date>
-      <news:title>ECB lifts deposit rate to 2.5% with October tightening on the table</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/us-cpi-august-release-friday/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T05:00:00.000Z</news:publication_date>
-      <news:title>US August CPI release on Friday set to test Fed rate-cut bets after ECB hike</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/modi-india-space-station-2035/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T04:55:00.000Z</news:publication_date>
-      <news:title>Modi sets 2035 target for India&#39;s first space station as BRICS summit opens in New Delhi</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/apple-raises-older-iphone-prices/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T04:50:00.000Z</news:publication_date>
-      <news:title>Apple raises prices across older iPhone models by $100 after foldable launch</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/qualcomm-snapdragon-8-elite-gen-6-npu/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T04:45:00.000Z</news:publication_date>
-      <news:title>Qualcomm previews Snapdragon 8 Elite Gen 6 NPU for 30B-parameter on-device AI agents</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/samsung-mocks-iphone-duo-foldable/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T04:40:00.000Z</news:publication_date>
-      <news:title>Samsung taunts Apple over foldable iPhone Duo launch with &#39;reheating our leftovers&#39; campaign</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/suno-v6-warner-bmg-believe/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T04:35:00.000Z</news:publication_date>
-      <news:title>Suno launches v6 music models trained on licensed Warner, BMG and Believe catalogs</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/nvidia-rubin-cpx-revived/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T04:30:00.000Z</news:publication_date>
-      <news:title>Nvidia revives Rubin CPX accelerator with HBM4 and standalone rack design</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/anthropic-coxon-resigns-warning/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T04:25:00.000Z</news:publication_date>
-      <news:title>Former Anthropic researcher Jacob Coxon resigns, warns AI labs are &#39;gambling with our lives&#39;</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/deepseek-v41-flash-released/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T04:20:00.000Z</news:publication_date>
-      <news:title>DeepSeek releases V4.1-Flash, a 552B-parameter open model activating 8B per token</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-11/anthropic-enisa-mythos-5-access/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-11T04:15:00.000Z</news:publication_date>
-      <news:title>Anthropic grants EU cybersecurity agency Enisa access to Mythos 5 model</news:title>
     </news:news>
   </url>
 </urlset>

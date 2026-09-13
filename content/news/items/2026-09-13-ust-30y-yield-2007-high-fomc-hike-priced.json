@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-13-ust-30y-yield-2007-high-fomc-hike-priced",
+  "title": "30-year US Treasury yield closes above 5.32% — highest since 2007 — as FOMC Sept hike prices to ~90%",
+  "summary": "The 30-year US Treasury yield closed above 5.32% on Friday — its highest level since 2007 — after peaking at 5.37% intraday as markets priced a near-90% probability of a 25 bp Fed hike at the September 15-16 FOMC meeting, up from about 70% before Friday's hot August CPI print. The bear-flattening was led by the front end widening as much as 25 bp on the week, with the 10-year yield closing above 4.90%. The repricing came even as the Treasury's expanded long-end buyback program began operations, an early sign that official support is smoothing rather than stopping the term-premium adjustment.",
+  "category": "economy-markets",
+  "priority": 88,
+  "publishedAt": "2026-09-13T09:45:00+03:00",
+  "updatedAt": "2026-09-13T09:45:00+03:00",
+  "retrievedAt": "2026-09-13T09:45:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["us-treasury", "fomc", "fed", "yields", "inflation", "long-end"],
+  "sources": [
+    {
+      "publisher": "Gramercy EM Weekly",
+      "url": "https://www.gramercy.com/2026/09/em-weekly-september-12-2026/",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    }
+  ]
+}

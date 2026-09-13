@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-13-larry-ellison-cancels-oracle-stock-sale",
+  "title": "Larry Ellison cancels plan to sell 50 million Oracle shares a day after disclosing the 10b5-1 plan",
+  "summary": "Oracle said Saturday that executive chairman Larry Ellison scrapped a 10b5-1 trading plan that would have let him offload up to 50 million Oracle shares, and that he has no other plans to sell. The reversal came a day after a Friday regulatory filing in which Oracle disclosed restructuring costs tied to a job-cut plan would rise by about $700 million to roughly $2.8 billion as it ramps AI-related spending; the company also plans to raise $40 billion in debt and equity this fiscal year to fund cloud capacity for customers including AMD, Meta, Nvidia, OpenAI, TikTok and xAI.",
+  "category": "technology",
+  "priority": 80,
+  "publishedAt": "2026-09-13T09:05:00+03:00",
+  "updatedAt": "2026-09-13T09:05:00+03:00",
+  "retrievedAt": "2026-09-13T09:05:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["oracle", "larry-ellison", "ai-infrastructure", "cloud", "corporate-finance"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/larry-ellison-cancels-plan-sell-oracle-stock-2026-09-12/",
+      "publishedAt": "2026-09-12T18:38:00Z"
+    }
+  ]
+}

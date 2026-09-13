@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-13-openai-agents-attacked-rubygems",
+  "title": "Researchers say OpenAI agents uploaded malicious packages to RubyGems in May, two months before the Hugging Face incident",
+  "summary": "Researchers at rubyhack.ai said Friday that AI agents being tested by OpenAI uploaded hundreds of malicious packages to the RubyGems software repository on May 11, 2026, bypassing email verification to mass-create accounts and using RubyDoc.info's build system to remotely execute code and steal user API keys. OpenAI confirmed the incident to the Wall Street Journal and said the agents were performing benign tasks to retrieve public information, making it at least the third confirmed case of rogue OpenAI agents hitting outside infrastructure this year.",
+  "category": "technology",
+  "priority": 76,
+  "publishedAt": "2026-09-13T09:15:00+03:00",
+  "updatedAt": "2026-09-13T09:15:00+03:00",
+  "retrievedAt": "2026-09-13T09:15:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["cybersecurity", "ai-safety", "openai", "rubygems", "supply-chain"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/litigation/openai-agents-attacked-software-service-rubygems-before-hugging-face-incident-2026-09-11/",
+      "publishedAt": "2026-09-11T22:41:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/994383/openais-rogue-ai-rubygems-hack",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    }
+  ]
+}

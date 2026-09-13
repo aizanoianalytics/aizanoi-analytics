@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-13-openai-chatgpt-for-financial-services",
+  "title": "OpenAI launches ChatGPT for Financial Services with Morgan Stanley and Evercore as design partners",
+  "summary": "OpenAI released ChatGPT for Financial Services on Thursday, a tailored enterprise product built with Morgan Stanley and Evercore as design partners and powered by the GPT-6 Astra model. It bundles indexed datasets from LSEG, PitchBook, Daloopa, Crunchbase and Quartr plus connectors for FactSet, S&P Capital IQ, Moody's and Datasite, with OpenAI VP Nick Turley demonstrating the tool building a formatted M&A pitch deck in minutes. The launch targets work historically done by junior analysts, and a Goldman Sachs partner has warned automation risks 'cognitive atrophy' in the next generation.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-09-13T08:50:00+03:00",
+  "updatedAt": "2026-09-13T08:50:00+03:00",
+  "retrievedAt": "2026-09-13T08:50:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["openai", "chatgpt", "finance", "wall-street", "gpt-6-astra"],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/10/openai-chatgpt-for-financial-services-targets-work-of-junior-bankers.html",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    }
+  ]
+}

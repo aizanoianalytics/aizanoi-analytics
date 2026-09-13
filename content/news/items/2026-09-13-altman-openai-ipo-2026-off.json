@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-13-altman-openai-ipo-2026-off",
+  "title": "Altman tells Fortune OpenAI will not pursue an IPO in 2026, calls the moment 'ill-advised' on AI safety",
+  "summary": "OpenAI CEO Sam Altman told Fortune in an interview published Friday that the company will not go public this year, calling the current moment 'ill-advised' given the intensity of the AI safety debate. The decision pushes back what the New York Times had reported could have been a $1 trillion listing and comes a day after Anthropic CEO Dario Amodei's essay calling on AI labs to slow frontier development. OpenAI is instead continuing to push enterprise products such as ChatGPT for Financial Services while staff debate the appropriate pace of capability gains.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-09-13T08:20:00+03:00",
+  "updatedAt": "2026-09-13T08:20:00+03:00",
+  "retrievedAt": "2026-09-13T08:20:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["openai", "altman", "ipo", "ai-safety", "wall-street"],
+  "sources": [
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/09/12/sam-altman-openai-ipo-delay-ill-advised-moment-safety-concerns/",
+      "publishedAt": "2026-09-12T14:04:00-04:00"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-13-spacex-reworks-colossus-data-centers",
+  "title": "SpaceX redesigns Colossus data centers around power and cooling redundancy, The Information reports",
+  "summary": "SpaceX is shifting its data-center strategy to redesign existing Colossus facilities around power and cooling redundancy rather than keep adding floor space, potentially slowing new build-outs, The Information reported. The move follows the company's choice to lease Colossus 1 to Anthropic after internal latency problems rather than rely on it for Grok development, and pairs with SpaceXAI's July commitment to replace 69 mobile gas turbines at the Mississippi site with a 1.2 GW permanent natural-gas plant by July 2027 to firm up local generation.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-13T09:35:00+03:00",
+  "updatedAt": "2026-09-13T09:35:00+03:00",
+  "retrievedAt": "2026-09-13T09:35:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["spacex", "ai-infrastructure", "data-centers", "colossus", "anthropic"],
+  "sources": [
+    {
+      "publisher": "TEXXR (sourcing The Information)",
+      "url": "https://texxr.com/1286880/spacex-redesigns-data-center-strategy",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    }
+  ]
+}

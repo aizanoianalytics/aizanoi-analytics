@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-13-iea-oil-demand-cut-biggest-since-covid",
+  "title": "Brent settles near $104 after IEA cuts 2026 oil demand forecast by 940,000 b/d — deepest since COVID",
+  "summary": "Brent crude closed Friday at about $104 a barrel, down roughly 2.9% on the day after the International Energy Agency's September Oil Market Report cut its 2026 global oil demand forecast by 940,000 barrels per day, projecting a 2.5 million b/d annual decline — the deepest since 2020. Global observed oil inventories have drawn 507 million barrels since the Middle East war began, and IEA member-state strategic reserves are at their lowest since the 2011 Libya disruption. Goldman Sachs has warned Brent could exceed $120 if Gulf output stays 4 million b/d below pre-war levels.",
+  "category": "economy-markets",
+  "priority": 82,
+  "publishedAt": "2026-09-13T09:55:00+03:00",
+  "updatedAt": "2026-09-13T09:55:00+03:00",
+  "retrievedAt": "2026-09-13T09:55:00+03:00",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["oil", "brent", "iea", "commodities", "supply", "demand"],
+  "sources": [
+    {
+      "publisher": "International Energy Agency",
+      "url": "https://www.iea.org/reports/oil-market-report-september-2026",
+      "publishedAt": "2026-09-11T00:00:00Z"
+    },
+    {
+      "publisher": "Eastern Herald",
+      "url": "https://easternherald.com/market/brent-crude-oil-price-september-12-2026-iea-demand/",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    }
+  ]
+}
