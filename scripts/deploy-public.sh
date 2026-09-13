@@ -245,38 +245,90 @@ if ! nginx -s reload; then
   exit 8
 fi
 
-# Post-promotion HTTP health smoke check (R04). curl is mandatory here: a
-# missing client or two unavailable loopback probes must never become success.
+# Post-promotion health smoke check (R04).
+#
+# The deployment is finalised only after the promoted release is observed
+# serving real content from the canonical production host. Earlier versions
+# accepted any 2xx/3xx on plain HTTP, which let the HTTP→HTTPS redirect
+# itself count as "healthy" without ever proving the promoted release is
+# actually serving on the HTTPS terminal. That is fail-open: a deploy that
+# only broke the HTTPS path could still be marked successful.
+#
+# Contract:
+#   1. curl is mandatory; missing client fails closed.
+#   2. The probe MUST reach the canonical production host
+#      (aizanoianalytics.com by default) and MUST resolve through the
+#      server's own loopback so it never silently hits an external mirror.
+#   3. The probe MUST follow redirects (curl -L). The terminal response
+#      after redirect chain MUST be 2xx. A 3xx loop or a non-2xx terminal
+#      (404/500/502/...) fails the deployment.
+#   4. CI test runners that need to point the probe at a fake loopback
+#      install may opt in with AIZANOI_DEPLOY_HEALTH_INSECURE_HTTP=1 and
+#      override the host/port through AIZANOI_DEPLOY_HEALTH_HOST /
+#      AIZANOI_DEPLOY_HEALTH_PORT. The override keeps the same
+#      terminal-2xx-after-redirect contract and still fails closed on
+#      unreachable loopback. Production must never set these.
 if ! command -v curl >/dev/null 2>&1; then
   echo "FATAL: curl executable not found; refusing to finalize deployment" >&2
   exit 8
 fi
-HTTP_HEALTH_BASE=""
-for base in "http://127.0.0.1" "http://localhost"; do
-  if curl -sfI "${base}/" >/dev/null 2>&1; then
-    HTTP_HEALTH_BASE="${base}"
-    break
-  fi
-done
-if [[ -z "${HTTP_HEALTH_BASE}" ]]; then
-  echo "FATAL: post-promotion HTTP health check failed: both loopback probes unavailable" >&2
+
+HEALTH_HOST="${AIZANOI_DEPLOY_HEALTH_HOST:-aizanoianalytics.com}"
+HEALTH_PORT="${AIZANOI_DEPLOY_HEALTH_PORT:-443}"
+HEALTH_SCHEME="${AIZANOI_DEPLOY_HEALTH_SCHEME:-https}"
+if [[ "${AIZANOI_DEPLOY_HEALTH_INSECURE_HTTP:-0}" == "1" ]]; then
+  HEALTH_SCHEME="http"
+fi
+
+HEALTH_RESOLVE_FLAG=()
+if [[ "${HEALTH_SCHEME}" == "https" ]]; then
+  HEALTH_RESOLVE_FLAG=(--resolve "${HEALTH_HOST}:${HEALTH_PORT}:127.0.0.1")
+fi
+HEALTH_URL="${HEALTH_SCHEME}://${HEALTH_HOST}:${HEALTH_PORT}"
+
+# Pre-check: the host must answer on its loopback proxy. If it doesn't, the
+# promotion can never be verified and the deploy must fail closed.
+if ! curl -sfI -L "${HEALTH_RESOLVE_FLAG[@]}" --max-time 10 "${HEALTH_URL}/" >/dev/null 2>&1; then
+  echo "FATAL: post-promotion health pre-check failed: ${HEALTH_URL}/ unreachable through loopback" >&2
   exit 8
 fi
 
-echo "[deploy] running post-promotion HTTP health smoke against ${HTTP_HEALTH_BASE}"
+echo "[deploy] running post-promotion HTTPS health smoke against ${HEALTH_URL}"
+probe_failed=0
 for path in "/" "/index.html" "/release.js" "/service-worker.js"; do
-  status=$(curl -s -o /dev/null -w "%{http_code}" "${HTTP_HEALTH_BASE}${path}" || true)
-  # Plain HTTP may answer with the configured HTTPS redirect policy.
+  # -L follows redirects (HTTP→HTTPS, trailing-slash, etc.).
+  # --write-out '%{http_code}' captures the terminal status code after the
+  # full redirect chain. %{num_redirects} lets us detect a redirect loop.
+  # %{url_effective} tells us which URL finally answered.
+  out=$(curl -s -L "${HEALTH_RESOLVE_FLAG[@]}" --max-time 10 \
+    -o /dev/null \
+    -w '%{http_code} %{num_redirects} %{url_effective}' \
+    "${HEALTH_URL}${path}" || true)
+  status=$(printf '%s' "${out}" | awk '{print $1}')
+  redirects=$(printf '%s' "${out}" | awk '{print $2}')
+  effective=$(printf '%s' "${out}" | awk '{print $3}')
+  if (( redirects > 8 )); then
+    echo "FATAL: post-promotion health check redirect loop for ${path} (redirects=${redirects})" >&2
+    probe_failed=1
+    break
+  fi
   case "${status}" in
-    200|301|302|303|307|308) ;;
+    2??)
+      # Terminal 2xx is the only success contract. Anything else, including
+      # 3xx that survived -L (broken redirect chain) and 4xx/5xx, fails.
+      ;;
     *)
-      echo "FATAL: post-promotion HTTP health check failed for ${path} (status ${status})" >&2
-      exit 8
+      echo "FATAL: post-promotion health check failed for ${path}: terminal=${status} redirects=${redirects} effective=${effective}" >&2
+      probe_failed=1
+      break
       ;;
   esac
 done
+if [[ "${probe_failed}" -ne 0 ]]; then
+  exit 8
+fi
 HEALTH_OK=1
-echo "[deploy] HTTP health smoke passed"
+echo "[deploy] HTTPS health smoke passed (terminal 2xx confirmed for all probes)"
 
 printf '[deploy] deployed commit: %s\n' "${CURRENT_SHA}"
 printf '[deploy] active release: %s\n' "${FINAL}"
