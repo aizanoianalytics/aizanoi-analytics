@@ -55,14 +55,14 @@ export class InventoryScene extends Phaser.Scene {
     const statBox = this.add.rectangle(rightX, height / 2 - 30, 220, 240, 0xf8fafc, 0.9)
       .setStrokeStyle(1.5, 0xc5a059);
 
-    this.add.text(rightX, height / 2 - 130, '📊 AIZO STATLARI', {
+    this.add.text(rightX, height / 2 - 130, 'AIZO STATS', {
       fontSize: '13px', color: '#1e293b', fontStyle: 'bold',
     }).setOrigin(0.5);
 
     const statRows = [
-      `Seviye: ${this.gameScene.progression.level}`,
-      `Azami Can: ${stats.hp}`,
-      `Can Yenileme: ${stats.hpRegen.toFixed(1)}/sn`,
+      `Level: ${this.gameScene.progression.level}`,
+      `Max HP: ${stats.hp}`,
+      `HP Regen: ${stats.hpRegen.toFixed(1)}/s`,
       `Attack: ${stats.attackDamage}`,
       `Attack speed: ${stats.attackSpeed.toFixed(1)}/s`,
       `Armor: ${stats.armor}`,
@@ -77,12 +77,12 @@ export class InventoryScene extends Phaser.Scene {
     });
 
     // Hızlı Geçiş Butonları (Alt)
-    createGlassButton(this, width / 2 - 80, height / 2 + 175, 140, 32, '⚡ Yetenekler', () => {
+    createGlassButton(this, width / 2 - 80, height / 2 + 175, 140, 32, 'Skills', () => {
       this.scene.stop();
       this.scene.launch('SkillTreeScene');
     });
 
-    createGlassButton(this, width / 2 + 80, height / 2 + 175, 140, 32, '🏪 Macellum', () => {
+    createGlassButton(this, width / 2 + 80, height / 2 + 175, 140, 32, 'Shop', () => {
       this.scene.stop();
       this.scene.launch('ShopScene');
     });
