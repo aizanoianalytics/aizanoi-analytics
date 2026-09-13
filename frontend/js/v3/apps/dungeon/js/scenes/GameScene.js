@@ -182,8 +182,6 @@ export class GameScene extends Phaser.Scene {
     // High-contrast read: warm floor vs cool brass-edged walls.
     this.floorLayer.setTint(0xf6e7c4);
     this.wallLayer.setTint(0x1b2744);
-    this.settings = loadSettings();
-    this.recallChannel = 0;
   }
 
   spawnLevelEntities() {
@@ -536,24 +534,34 @@ export class GameScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
     const menu = this.add.container(width / 2, height / 2).setDepth(600).setScrollFactor(0);
     const dim = this.add.rectangle(0, 0, width, height, 0x000000, 0.6);
-    const panel = this.add.rectangle(0, 0, 340, 260, 0x141822, 0.98);
+    const panel = this.add.rectangle(0, 0, 340, 300, 0x141822, 0.98);
     panel.setStrokeStyle(2, 0xc5a059);
     const title = this.add.text(0, -96, 'PAUSED', {
       fontSize: '22px', color: '#f5d77f', fontStyle: 'bold',
     }).setOrigin(0.5);
-    const resumeBtn = createGlassButton(this, 0, -40, 260, 36, 'Resume', () => this.closeExitMenu());
+    const resumeBtn = createGlassButton(this, 0, -60, 260, 36, 'Resume', () => this.closeExitMenu());
     const aimLabel = this.settings?.autoAim ? 'Auto-aim: ON' : 'Auto-aim: OFF';
-    const aimBtn = createGlassButton(this, 0, 4, 260, 36, aimLabel, () => {
+    const aimBtn = createGlassButton(this, 0, -16, 260, 36, aimLabel, () => {
       this.settings = saveSettings({ autoAim: !this.settings.autoAim });
       this.closeExitMenu();
       this.openExitMenu();
     });
-    const fsBtn = createGlassButton(this, 0, 48, 260, 36, 'Fullscreen (F)', () => {
+    const miniLabel = this.settings?.showMinimap === false ? 'Minimap: OFF' : 'Minimap: ON';
+    const miniBtn = createGlassButton(this, 0, 28, 260, 36, miniLabel, () => {
+      const next = this.settings?.showMinimap === false ? true : false;
+      this.settings = saveSettings({ showMinimap: next });
+      this.scene.get('UIScene')?.minimapContainer?.setVisible(next);
+      const ui = this.scene.get('UIScene');
+      if (ui) ui.minimapEnabled = next;
+      this.closeExitMenu();
+      this.openExitMenu();
+    });
+    const fsBtn = createGlassButton(this, 0, 72, 260, 36, 'Fullscreen (F)', () => {
       toggleDungeonFullscreen(document.getElementById('game-container') || document.documentElement);
     });
-    menu.add([dim, panel, title, resumeBtn, aimBtn, fsBtn]);
+    menu.add([dim, panel, title, resumeBtn, aimBtn, miniBtn, fsBtn]);
     if (hasDungeonExitHandler()) {
-      const exitBtn = createGlassButton(this, 0, 92, 260, 36, 'Return to AizanoiOS', () => requestDungeonExit());
+      const exitBtn = createGlassButton(this, 0, 116, 260, 36, 'Return to AizanoiOS', () => requestDungeonExit());
       menu.add(exitBtn);
     }
     this.exitMenu = menu;
@@ -687,14 +695,33 @@ export class GameScene extends Phaser.Scene {
     if (!this.player || this.player.isAttacking || this.player.isDead) return;
     if (this._nextAutoAim && time < this._nextAutoAim) return;
     const range = this.player.stats?.attackRange || 48;
-    let near = false;
+    // Linear scan: only consider active enemies still alive. Aizo.attack itself
+    // already picks the nearest candidate inside the same range and aims the
+    // projectile/melee arc, so we just need to point the player at it and
+    // trigger the attack on the cooldown.
+    let nearest = null;
+    let minDistSq = range * range;
     this.enemies?.getChildren().forEach((enemy) => {
-      if (!near && enemy.active && enemy.hp > 0 &&
-          Phaser.Math.Distance.Between(this.player.x, this.player.y, enemy.x, enemy.y) <= range) {
-        near = true;
+      if (!enemy.active || enemy.hp <= 0) return;
+      const dx = enemy.x - this.player.x;
+      const dy = enemy.y - this.player.y;
+      const d2 = dx * dx + dy * dy;
+      if (d2 <= minDistSq) {
+        minDistSq = d2;
+        nearest = enemy;
       }
     });
-    if (!near) return;
+    if (!nearest) return;
+    // Rotate the player toward the nearest target so the attack arc, animation
+    // and facing all agree on the direction. Manual attacks still control the
+    // player when auto-aim is off.
+    const dx = nearest.x - this.player.x;
+    const dy = nearest.y - this.player.y;
+    if (Math.abs(dx) >= Math.abs(dy)) {
+      this.player.lastDirection = dx >= 0 ? 'right' : 'left';
+    } else {
+      this.player.lastDirection = dy >= 0 ? 'down' : 'up';
+    }
     this._nextAutoAim = time + 420;
     this.player.attack();
   }
