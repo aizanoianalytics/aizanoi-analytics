@@ -176,21 +176,37 @@ test('save migration: v1 moves to v2 lossless with unknown skills filtered and s
   }
 });
 
-test('standalone and module trees stay byte-identical for shared game code', async () => {
+test('standalone /dungeon/ is a thin facade over the canonical source', async () => {
   const { execFileSync } = await import('node:child_process');
-  let out = '';
+  const { readFileSync } = await import('node:fs');
+  const allowedOnlyStandalone = new Set(['Only in frontend/dungeon: index.html']);
+  let diffOut = '';
   try {
-    out = execFileSync('diff', ['-rq', 'frontend/dungeon', 'frontend/js/v3/apps/dungeon'], { encoding: 'utf8' });
+    diffOut = execFileSync('diff', ['-rq', 'frontend/dungeon', 'frontend/js/v3/apps/dungeon'], { encoding: 'utf8' });
   } catch (err) {
-    out = err.stdout || '';
+    diffOut = err.stdout || '';
   }
-  const lines = out.trim().split('\n').filter(Boolean);
-  const allowed = new Set([
-    'Only in frontend/js/v3/apps/dungeon: DOCUMENTATION.md',
-    'Only in frontend/dungeon: index.html',
-    'Only in frontend/js/v3/apps/dungeon: index.md',
-    'Only in frontend/js/v3/apps/dungeon: manifest.json',
-    'Only in frontend/js/v3/apps/dungeon: src',
-  ]);
-  assert.deepEqual(lines.filter((line) => !allowed.has(line)), []);
+  const diffLines = diffOut.trim().split('\n').filter(Boolean);
+  const unexpected = diffLines.filter(line => !allowedOnlyStandalone.has(line) && !line.startsWith('Files ') && !line.startsWith('Only in '));
+  assert.deepEqual(unexpected, [], `unexpected standalone tree differences: ${unexpected.join(' | ')}`);
+
+  const repoRoot = execFileSync('git', ['rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim();
+  const runInRepo = (cmd, args) => execFileSync(cmd, args, { cwd: repoRoot, encoding: 'utf8' });
+  const canonical = new Set(runInRepo('find', ['frontend/js/v3/apps/dungeon/js', '-type', 'f', '-name', '*.js']).trim().split('\n').filter(Boolean));
+  const standalone = runInRepo('find', ['frontend/dungeon/js', '-type', 'f', '-name', '*.js']).trim().split('\n').filter(Boolean);
+  assert.ok(standalone.length > 0, 'standalone dungeon should still expose its js tree');
+  for (const path of standalone) {
+    const source = readFileSync(path, 'utf8');
+    assert.match(source, /Facade:/, `${path} must be a facade, not duplicated code`);
+    const exportStar = source.match(/export \* from ['"]([^'"]+)['"]/);
+    assert.ok(exportStar, `${path} must re-export from the canonical source`);
+    const dir = path.replace(/\/[^/]+$/, '');
+    const cursor = dir.split('/');
+    for (const part of exportStar[1].split('/')) {
+      if (part === '..') cursor.pop();
+      else if (part !== '.' && part !== '') cursor.push(part);
+    }
+    const resolvedRel = cursor.join('/');
+    assert.ok(canonical.has(resolvedRel), `${path} facade must point at canonical file ${resolvedRel}`);
+  }
 });
