@@ -347,7 +347,7 @@ export function formatShortDate(value) {
   if (!value) return '\u2014';
   const date = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(date.getTime())) return '\u2014';
-  return date.toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
+  return date.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
 }
 
 export function horizonSignLine(row, horizons = PICK_HORIZONS) {

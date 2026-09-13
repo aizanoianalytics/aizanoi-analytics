@@ -99,8 +99,8 @@ function renderRankingBlock(state) {
   return `<section class="market-rankings" data-rankings-block>
     <header class="market-rankings-header">
       <h2>Market rankings</h2>
-      <div class="market-ranking-switch" role="tablist" aria-label="Ranking horizon">
-        ${RANKING_PRESETS.map(item => `<button type="button" data-ranking-preset="${esc(item.id)}" aria-selected="${item.id === preset.id}">${esc(item.label)}</button>`).join('')}
+      <div class="market-ranking-switch" role="group" aria-label="Ranking horizon">
+        ${RANKING_PRESETS.map(item => `<button type="button" data-ranking-preset="${esc(item.id)}" aria-pressed="${item.id === preset.id}">${esc(item.label)}</button>`).join('')}
       </div>
     </header>
     <div class="market-rankings-grid market-rankings-grid--single">${card}</div>
