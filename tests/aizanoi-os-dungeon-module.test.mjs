@@ -210,3 +210,36 @@ test('standalone /dungeon/ is a thin facade over the canonical source', async ()
     assert.ok(canonical.has(resolvedRel), `${path} facade must point at canonical file ${resolvedRel}`);
   }
 });
+
+test('Dungeon teardown clears the QA globals so reopens see a fresh Phaser instance', () => {
+  // The QA globals AIZANOI_DUNGEON_GAME and __AIZANOI_DUNGEON_SCENE exist
+  // exclusively so the headless browser suite can drive scene transitions.
+  // They must not survive a teardown: a stale Phaser reference on window
+  // would silently couple the next mount to the destroyed instance and
+  // turn reload-after-close into an exercise in undefined-property access.
+  const entrySource = read(`${moduleRoot}/src/index.js`);
+  const mainSource = read(`${moduleRoot}/js/main.js`);
+  const gameSource = read(`${moduleRoot}/js/scenes/GameScene.js`);
+
+  // mount teardown must drop both QA globals.
+  assert.match(entrySource, /AIZANOI_DUNGEON_GAME = undefined/,
+    'mount teardown must clear AIZANOI_DUNGEON_GAME');
+  assert.match(entrySource, /__AIZANOI_DUNGEON_SCENE = undefined/,
+    'mount teardown must clear __AIZANOI_DUNGEON_SCENE');
+  // stopDungeonGame is the authoritative reset for direct callers and the
+  // standalone route; it must also drop the QA globals without breaking
+  // the "do not touch a foreign instance" invariant.
+  assert.match(mainSource, /AIZANOI_DUNGEON_GAME = undefined/);
+  assert.match(mainSource, /__AIZANOI_DUNGEON_SCENE = undefined/);
+  // GameScene.shutdown must release the scene sentinel so a scene restart
+  // does not leak it across runs.
+  assert.match(gameSource, /window\.__AIZANOI_DUNGEON_SCENE = undefined/);
+  // Re-entrancy guard: the mount teardown must not double-fire.
+  assert.match(entrySource, /if \(tornDown\) return;\s*\n\s*tornDown = true;/,
+    'mount teardown must be idempotent against double-invoke');
+  // ResizeObserver contract: it must observe the wrapper on mount and be
+  // disconnected on teardown. Cleanup MUST happen before stopDungeonGame
+  // would otherwise implicitly null the wrapper element.
+  assert.match(entrySource, /resizeObserver\.observe\(wrapper\)/);
+  assert.match(entrySource, /resizeObserver\.disconnect\(\)/);
+});
