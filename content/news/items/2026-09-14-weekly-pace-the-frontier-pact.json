@@ -1,0 +1,44 @@
+{
+  "id": "2026-09-14-weekly-pace-the-frontier-pact",
+  "kind": "weekly",
+  "week": "2026-W38",
+  "title": "Weekly AI: the 'pace the frontier' pact — Anthropic, OpenAI and xAI agree to slow down, while IPOs and compute deals keep accelerating",
+  "summary": "Anthropic CEO Dario Amodei set out a three-step slowdown plan on 12 September, and within 48 hours OpenAI's Sam Altman and Elon Musk publicly endorsed it — a rare show of unity between rival labs. Amodei's first step, embedded third-party evaluators with employee-like access, is operational at Anthropic and being matched by OpenAI. Behind the unity, the commercial machine has not paused: Anthropic agreed a six-year $13.7 billion compute deal with RUM Group and is targeting a $2 trillion Nasdaq IPO; SoftBank's Tokyo shares fell about 13% as safety rhetoric collided with private capex.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-14T07:00:00Z",
+  "updatedAt": "2026-09-14T07:00:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "OpenAI", "xAI", "Amodei", "Altman", "Musk", "AI safety", "pace the frontier"],
+  "sources": [
+    {
+      "publisher": "Anthropic CEO blog",
+      "url": "https://darioamodei.com/post/we-must-pace-the-frontier",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    },
+    {
+      "publisher": "BBC News",
+      "url": "https://www.bbc.co.uk/news/articles/c14dpgm0rg4o",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters via The Nation (Pakistan)",
+      "url": "https://nation.com.pk/14-Sep-2026/openai-boss-elon-musk-back-calls-put-brakes-reckless-ai-development",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Bloomberg via Startup Fortune",
+      "url": "https://startupfortune.com/softbank-shares-sink-13-after-anthropic-and-openai-call-for-an-ai-slowdown",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "The Information via TradingKey",
+      "url": "https://tradingkey.com/analysis/stocks/us-stocks/262165356-stock-anthropic-trump-rum-group-ai-ipo-tradingkey",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}

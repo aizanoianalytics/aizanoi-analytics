@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-14-spacex-completes-ses-o3b-mpower-meo",
+  "title": "SpaceX closes out SES's O3b mPower medium-Earth-orbit constellation with final triple-satellite launch",
+  "summary": "A SpaceX Falcon 9 lifted off from Cape Canaveral on Sunday during an 87-minute window that opened at 2:49 p.m. Eastern, delivering the F11, F12 and F13 O3b mPower spacecraft to medium Earth orbit and completing SES's decade-long contract that began with Boeing and SES in 2013. The medium-altitude network — orbiting at roughly 5,000 miles, far above Starlink's 340-mile shells — sells enterprise-grade connectivity to cruise lines, airlines, telecoms backhaul and government customers. The mission also added a 29th flight to the specific Falcon 9 booster.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-09-14T05:40:00Z",
+  "updatedAt": "2026-09-14T05:40:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["SpaceX", "SES", "O3b mPower", "Falcon 9", "MEO"],
+  "sources": [
+    {
+      "publisher": "SpaceX (official mission page)",
+      "url": "https://www.spacex.com/launches/mpower-f",
+      "publishedAt": "2026-09-13T00:00:00Z"
+    },
+    {
+      "publisher": "Teslarati",
+      "url": "https://www.teslarati.com/spacex-ses-03b-network-vs-starlink/",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Space.com",
+      "url": "https://www.space.com/space-exploration/launches-spacecraft/spacex-launches-3-telecom-satellites-to-orbit-on-700th-falcon-mission-of-all-time-video",
+      "publishedAt": "2026-09-13T00:00:00Z"
+    }
+  ]
+}

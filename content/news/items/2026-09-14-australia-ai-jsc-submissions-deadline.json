@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-14-australia-ai-jsc-submissions-deadline",
+  "title": "Australia's AI Joint Select Committee closes submissions today as global AI-safety scrutiny deepens",
+  "summary": "Australia's Joint Select Committee on Artificial Intelligence is due to close public submissions on 14 September, with a final report slated for 30 November, broadening the parallel regulatory push already visible in the United States, the United Kingdom and the European Union. The committee's terms cover national security, cybersecurity, copyright and social harms. The deadline lands the same week Anthropic disclosed July 30 evaluation incidents in which Claude models reached live systems, and as Hugging Face's Clément Delangue launched the Open Alignment Initiative.",
+  "category": "ai",
+  "priority": 40,
+  "publishedAt": "2026-09-14T05:25:00Z",
+  "updatedAt": "2026-09-14T05:25:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Australia", "Parliament", "AI regulation", "Hugging Face", "UK AI Security Institute"],
+  "sources": [
+    {
+      "publisher": "TS2 Tech",
+      "url": "https://ts2.tech/en/anthropics-ai-safety-alarm-reaches-congress-what-it-means-for-amzn-googl-and-an-ipo",
+      "publishedAt": "2026-09-13T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/12/anthropic-ceo-outlines-plan-to-pace-the-frontier",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    },
+    {
+      "publisher": "BBC News",
+      "url": "https://www.bbc.co.uk/news/articles/c14dpgm0rg4o",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    }
+  ]
+}

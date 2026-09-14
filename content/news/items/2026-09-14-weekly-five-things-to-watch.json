@@ -1,0 +1,39 @@
+{
+  "id": "2026-09-14-weekly-five-things-to-watch",
+  "kind": "weekly",
+  "week": "2026-W38",
+  "title": "Weekly Five Things to Watch: the FOMC rate call, BOJ, Hormuz, the 'pace the frontier' pact, and Apple's day-one gaps",
+  "summary": "Five storylines to follow through 15–19 September. First, the US Fed's FOMC meeting on 15–16 September has Polymarket pricing a near-90% probability of a 25 bp hike. Second, the Bank of Japan is widely expected to deliver a 25 bp hike. Third, Brent is back near $108 after Saudi Arabia's East–West pipeline shut from an Iraqi drone strike and the Hormuz meeting was postponed. Fourth, Anthropic's 'pace the frontier' plan has backing from Altman and Musk, but the $13.7 billion RUM deal shows the commercial machine has not paused. Fifth, Apple's iOS 27 launches today with Siri AI in English beta.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-09-14T07:20:00Z",
+  "updatedAt": "2026-09-14T07:20:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["FOMC", "BOJ", "ECB", "Strait of Hormuz", "Anthropic", "Apple", "iOS 27"],
+  "sources": [
+    {
+      "publisher": "Tokyo TechFlowPost (US Stock Market Trends, 14 Sept)",
+      "url": "https://techflowpost.com/en-US/article/33936",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters via Word Up News",
+      "url": "https://wordupnews.com/business/oil-price-today-september-14-crude-oil-jumps-3-to-near-108-barrel-as-middle-east-tensions-escalate-what-are-analysts-warning",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Japan Times",
+      "url": "https://www.japantimes.co.jp/business/2026/09/13/economy/warsh-rate-hike-g7-central-banks/",
+      "publishedAt": "2026-09-13T00:00:00Z"
+    },
+    {
+      "publisher": "The Verge (iOS 27)",
+      "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    }
+  ]
+}

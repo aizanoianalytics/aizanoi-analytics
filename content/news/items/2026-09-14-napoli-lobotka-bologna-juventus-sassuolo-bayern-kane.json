@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-14-napoli-lobotka-bologna-juventus-sassuolo-bayern-kane",
+  "title": "Lobotka goal lifts Napoli past Bologna; Kane hits 99 in Bayern colours at Elversberg",
+  "summary": "Stanislav Lobotka scored the only goal as Napoli beat Bologna 1-0 at the Stadio Diego Armando Maradona on Sunday to end a three-match losing run and hand Massimiliano Allegri his second Serie A win. The result eases pressure on Allegri after Tuesday's 1-0 Champions League defeat by Arsenal. Saturday had already delivered talking points: Harry Kane struck his 99th Bayern Munich goal in a 2-1 win at promoted SV Elversberg, while Juventus lost 3-2 at home to Sassuolo before Thursday's Europa League visit of NEC.",
+  "category": "football",
+  "priority": 45,
+  "publishedAt": "2026-09-14T06:15:00Z",
+  "updatedAt": "2026-09-14T06:15:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Napoli", "Bologna", "Bayern Munich", "Harry Kane", "Elversberg", "Serie A", "Bundesliga"],
+  "sources": [
+    {
+      "publisher": "Tribal Football via 7M Sport (Napoli)",
+      "url": "https://news.7msport.com/news/newsdata/20260914/267847.shtml",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Goal via 7M Sport (Bayern win)",
+      "url": "https://news.7msport.com/news/newsdata/20260914/267783.shtml",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Goal via 7M Sport (Juventus loss)",
+      "url": "https://news.7msport.com/news/newsdata/20260914/267827.shtml",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-14-altman-openai-ipo-2026-off",
+  "title": "Altman tells Fortune OpenAI will not IPO in 2026, citing 'ill-advised moment' over AI safety",
+  "summary": "OpenAI chief executive Sam Altman said the company will not go public this year, telling Fortune that 'given everything happening with safety, right now would be an ill-advised moment to go public, and we don't feel pressure on that'. Altman confirmed his support for Anthropic's 'pace the frontier' framework and said OpenAI would embed third-party evaluators with employee-like access. Bloomberg reports SoftBank's OpenAI bet fell sharply in Tokyo over the weekend, with the conglomerate's shares down roughly 13%.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-14T05:10:00Z",
+  "updatedAt": "2026-09-14T05:10:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "Sam Altman", "IPO", "Fortune", "SoftBank", "AI safety"],
+  "sources": [
+    {
+      "publisher": "Reuters via The Nation (Pakistan)",
+      "url": "https://nation.com.pk/14-Sep-2026/openai-boss-elon-musk-back-calls-put-brakes-reckless-ai-development",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Bloomberg via Startup Fortune",
+      "url": "https://startupfortune.com/softbank-shares-sink-13-after-anthropic-and-openai-call-for-an-ai-slowdown",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "TechNode Global",
+      "url": "https://technode.global/2026/09/14/anthropic-ceo-amodei-calls-for-slowing-ai-development/",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}
