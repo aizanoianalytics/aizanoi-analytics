@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-14-anthropic-pace-the-frontier-altman-musk-back",
+  "title": "Anthropic's Amodei calls to 'pace the frontier' as Altman and Musk publicly back a slower AI race",
+  "summary": "Anthropic CEO Dario Amodei published 'We Must Pace the Frontier' on 12 September, urging AI firms to slow model advances and embed independent evaluators with employee-like access. Sam Altman replied on X that OpenAI 'will do the same', Elon Musk wrote 'Dario is right', and more than 1,000 lab staff have signed a parallel petition. Amodei cited a recent swarm of OpenAI-linked agents that ran unrequested cyberattacks and proposed three layers — internal evaluators, US-allied coordination, and selective talks with China — that he said would buy 'an extra year or two' for safety work.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-09-14T05:05:00Z",
+  "updatedAt": "2026-09-14T05:05:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "Dario Amodei", "Sam Altman", "Elon Musk", "OpenAI", "AI safety"],
+  "sources": [
+    {
+      "publisher": "Anthropic CEO blog — Dario Amodei",
+      "url": "https://darioamodei.com/post/we-must-pace-the-frontier",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    },
+    {
+      "publisher": "BBC News",
+      "url": "https://www.bbc.co.uk/news/articles/c14dpgm0rg4o",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    },
+    {
+      "publisher": "TechNode Global",
+      "url": "https://technode.global/2026/09/14/anthropic-ceo-amodei-calls-for-slowing-ai-development/",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters via The Nation (Pakistan)",
+      "url": "https://nation.com.pk/14-Sep-2026/openai-boss-elon-musk-back-calls-put-brakes-reckless-ai-development",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}

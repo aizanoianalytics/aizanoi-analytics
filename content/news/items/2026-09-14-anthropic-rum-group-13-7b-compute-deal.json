@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-14-anthropic-rum-group-13-7b-compute-deal",
+  "title": "Anthropic signs six-year, $13.7 billion compute deal with Trump-linked RUM Group, The Information reports",
+  "summary": "Anthropic has struck a six-year AI compute procurement agreement worth about $13.7 billion with RUM Group — the Florida infrastructure company formerly known as Rumble — according to The Information, ahead of a planned Nasdaq listing. Anthropic was valued at $965 billion in its May Series H and reports an annualized revenue run rate above $47 billion; Morgan Stanley and Goldman Sachs have projected an offering valuation as high as $2 trillion. TradingKey notes the political alignment could help Anthropic into federal and defence bids but may also draw conflicts-of-interest scrutiny.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-14T05:15:00Z",
+  "updatedAt": "2026-09-14T05:15:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "RUM Group", "compute", "IPO", "The Information"],
+  "sources": [
+    {
+      "publisher": "The Information via TradingKey",
+      "url": "https://tradingkey.com/analysis/stocks/us-stocks/262165356-stock-anthropic-trump-rum-group-ai-ipo-tradingkey",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "TS2 Tech",
+      "url": "https://ts2.tech/en/anthropics-ai-safety-alarm-reaches-congress-what-it-means-for-amzn-googl-and-an-ipo",
+      "publishedAt": "2026-09-13T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-14-asia-markets-open-lower-kospi-sk-hynix",
+  "title": "Asia stocks open sharply lower as KOSPI slides 3%, SK Hynix drops 5% on Fed and Hormuz nerves",
+  "summary": "South Korea's KOSPI opened 3.14% lower at 6,692.61, with SK Hynix sliding about 5.1% as semiconductor and rate-sensitive names led the selloff. Foreign investors were net sellers of 1.3337 trillion won in equities while individuals bought 1.539 trillion won. The trigger was surging US Treasury yields that lifted the probability of a Federal Reserve rate hike this week toward 90%, plus the postponement of the Iran–Gulf Hormuz meeting in Muscat. KB Securities' Ahn So-eun said oil's eight-day winning streak has paused but upward pressure persists.",
+  "category": "economy-markets",
+  "priority": 65,
+  "publishedAt": "2026-09-14T06:00:00Z",
+  "updatedAt": "2026-09-14T06:00:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["KOSPI", "SK Hynix", "Korea Exchange", "Asia markets", "Federal Reserve"],
+  "sources": [
+    {
+      "publisher": "Gate News",
+      "url": "https://gate.com/news/detail/005930/korean-stocks-plunge-3-on-geopolitical-tensions-and-rate-concerns-24246786",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Seoul Economic Daily",
+      "url": "https://en.sedaily.com/finance/2026/09/14/kospi-opens-down-3-percent-as-sk-hynix-sinks-more-than-5",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Yonhap via Lokmat Times",
+      "url": "https://lokmattimes.com/technology/seoul-stocks-sharply-down-over-mideast-uncertainties-ai-warning-1",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}

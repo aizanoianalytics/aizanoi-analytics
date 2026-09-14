@@ -1,0 +1,39 @@
+{
+  "id": "2026-09-14-weekly-september-platform-reset",
+  "kind": "weekly",
+  "week": "2026-W38",
+  "title": "Weekly Technology: Apple's iPhone 18 / iOS 27 week, ASML's 12-inch High-NA pact, and the platform-reset pattern",
+  "summary": "Apple's annual platform reset lands on 14 September with iOS 27, iPadOS 27, macOS 27, watchOS 27 and visionOS 27 all releasing the same day, anchored by the public debut of Siri AI in English beta on iPhone 15 Pro and newer, with five additional languages promised for October. Apple also disclosed two promised features — Messages Suggestions and Passwords security alerts — that will ship 'in a future software update' with no date attached. The week's other reset came from ASML, which secured commitments from TSMC, Samsung and Intel to move High-NA EUV lithography to 12-inch photomasks.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-14T07:05:00Z",
+  "updatedAt": "2026-09-14T07:05:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iOS 27", "Siri AI", "ASML", "TSMC", "Samsung", "Intel", "High-NA EUV"],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    },
+    {
+      "publisher": "Engadget",
+      "url": "https://www.engadget.com/2254005/ios-27-with-siri-ai-will-be-available-on-september-14",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    },
+    {
+      "publisher": "The Apple Post",
+      "url": "https://www.theapplepost.com/2026/09/12/72203/apple-delays-some-ios-27-features-ahead-of-mondays-release",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    },
+    {
+      "publisher": "Markets Insider (ASML)",
+      "url": "https://markets.businessinsider.com/news/stocks/asml-wins-tsmc-and-samsung-deals-as-400-million-new-euv-tools-drive-a-40-throughput-boost-1036528541",
+      "publishedAt": "2026-09-08T00:00:00Z"
+    }
+  ]
+}
