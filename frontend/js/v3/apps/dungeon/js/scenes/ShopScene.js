@@ -53,7 +53,7 @@ export class ShopScene extends Phaser.Scene {
       ...armorIds.map((id) => ARMORS[id]),
       ...accIds.slice(0, 1).map((id) => ACCESSORIES[id]),
       ...sparkIds.map((id) => CONSUMABLES[id]),
-    ].filter(Boolean).slice(0, 7);
+    ].filter(Boolean).slice(0, 8); // 8 satır panele sığar (son satır +168 < +220)
 
     let startY = height / 2 - 140;
     items.forEach((item, i) => {
