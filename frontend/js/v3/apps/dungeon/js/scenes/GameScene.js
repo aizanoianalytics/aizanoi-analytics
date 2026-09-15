@@ -225,20 +225,23 @@ export class GameScene extends Phaser.Scene {
       }
     } catch (_) {}
 
-    // Zemin decal'leri: tiles-decor'dan rastgele mozaik kırıntıları (%12 yoğunluk)
+    // Zemin decal'leri: tiles-decor'dan 2 güvenli frame, koyu tint yerine hafif parlak
+    // mozaik kırıntıları (%6 yoğunluk — harita okunabilirliğini boğmaz)
     try {
+      const safeFrames = [0, 1]; // renkli/gölgeli frame'lerden kaçınıyoruz
       for (const room of this.mapData.rooms || []) {
-        const decals = Math.floor((room.w * room.h) * 0.12);
+        const decals = Math.floor((room.w * room.h) * 0.06);
         for (let i = 0; i < decals; i++) {
           const dx = room.x + Math.floor(Math.random() * room.w);
           const dy = room.y + Math.floor(Math.random() * room.h);
           if (this.mapData.grid[dy] && this.mapData.grid[dy][dx] !== 2) {
-            const d = this.add.image(dx * 32 + 16, dy * 32 + 16, 'tiles-decor')
+            const d = this.add.image(dx * 32 + 16, dy * 32 + 16, 'tiles-decor', safeFrames[Math.floor(Math.random() * safeFrames.length)])
               .setDepth(1)
-              .setAlpha(0.35 + Math.random() * 0.35)
+              .setAlpha(0.55 + Math.random() * 0.3)
               .setRotation(Math.floor(Math.random() * 4) * Math.PI / 2)
-              .setScale(0.5 + Math.random() * 0.5);
-            d.setTint(0xbfae87);
+              .setScale(0.6 + Math.random() * 0.5);
+            // Krem zeminde leke gibi durmasın: hafif ışık tonu
+            d.setTint(0xddc995);
           }
         }
       }
