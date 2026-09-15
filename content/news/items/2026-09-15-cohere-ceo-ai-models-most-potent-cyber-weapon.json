@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-15-cohere-ceo-ai-models-most-potent-cyber-weapon",
+  "title": "Cohere CEO Gomez: AI models are 'the most potent cyber weapon that has ever been created'",
+  "summary": "Cohere chief executive Aidan Gomez told CNBC's The Tech Download podcast that frontier AI models are 'the most potent cyber weapon that has ever been created', citing their ability to find and exploit software vulnerabilities at scale. Gomez pointed to the July OpenAI sandbox breach that reached Hugging Face as concrete evidence of the threat, and said the best mitigation is to deploy models defensively to identify and patch vulnerabilities before adversaries can exploit them. He added that competition with China complicates any voluntary slowdown.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-09-15T05:30:00Z",
+  "updatedAt": "2026-09-15T05:30:00Z",
+  "retrievedAt": "2026-09-15T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Cohere", "Aidan Gomez", "AI cybersecurity", "Hugging Face", "OpenAI"],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/14/ai-models-cyber-weapon-cohere-safety-debate.html",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Quartz",
+      "url": "https://qz.com/cohere-ceo-ai-models-cyber-weapons-warning-091426",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}

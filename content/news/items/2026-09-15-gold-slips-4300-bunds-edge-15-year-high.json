@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-15-gold-slips-4300-bunds-edge-15-year-high",
+  "title": "Gold slips below $4,300 and Bund yields hover near 15-year highs into the FOMC blackout",
+  "summary": "Spot gold fell 0.2% to $4,288.49 an ounce in early Asian trade on Tuesday as CME FedWatch priced a 92.4% probability of a 25bp Fed hike at Wednesday's FOMC meeting; the US 10-year Treasury yield held above 5% for the first time since 2023. The dollar index traded around 99.50, supported by safe-haven flows. On Friday 10-year German Bund yields hit a fresh 15-year high of 3.515% before easing to 3.502%, with 10-year UK gilt yields at 5.207%. Investors continue to weigh Middle East oil supply risks against an August US CPI print that came in at 3.4%, well above the Fed's 2% target.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-09-15T04:10:00Z",
+  "updatedAt": "2026-09-15T04:10:00Z",
+  "retrievedAt": "2026-09-15T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["gold", "Bund", "US Treasury", "FOMC", "dollar index", "FedWatch"],
+  "sources": [
+    {
+      "publisher": "ET Now News",
+      "url": "https://etnownews.com/markets/gold-price-today-yellow-metal-slips-below-4300-as-fed-rate-hike-near-certain-at-september-fomc-meeting-article-156158224",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    },
+    {
+      "publisher": "Morningstar (Dow Jones)",
+      "url": "https://www.morningstar.com/news/dow-jones/202609111937/yields-on-us-european-government-bonds-edge-lower-but-still-hover-near-multiyear-highs",
+      "publishedAt": "2026-09-11T09:25:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-15-anthropic-launches-claude-opus-5",
+  "title": "Anthropic launches Claude Opus 5, calls it 'thoughtful and proactive' for long-running agents",
+  "summary": "Anthropic unveiled Claude Opus 5 on Tuesday, describing the new flagship as a step-change for long-running agents with state-of-the-art results on Frontier-Bench and GDPval-AA at roughly half the price of Claude Fable 5. Alongside the model the company introduced Claude Tag, an evolution of Claude Code in which tagging @Claude triggers proactive work; Anthropic said 65% of its product team's code now flows through the tool. A separate post documents Claude agents independently running an open-ended AI safety research project end-to-end.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-15T06:00:00Z",
+  "updatedAt": "2026-09-15T06:00:00Z",
+  "retrievedAt": "2026-09-15T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "Claude Opus 5", "Claude Tag", "AI safety", "agents"],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/claude-opus-5",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    },
+    {
+      "publisher": "Michael Nemtsev AI Field Notes #105",
+      "url": "https://michaelnemtsev.com/digest/2026-09-15",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    }
+  ]
+}

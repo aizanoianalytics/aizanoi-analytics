@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-15-bitcoin-holds-77k-as-fed-decision-nears",
+  "title": "Bitcoin holds near $77,600 as traders position into the September FOMC decision",
+  "summary": "Bitcoin traded around $77,593 on Tuesday, down 0.01% on the day, with 24-hour volume of $20.6bn on major spot exchanges and dominance at 58.15% as broader crypto slipped 2.31%. CoinStats' AI feed reported a one-day gain of 1.78% to roughly $78,187 with an intraday high near $79,451, leaving BTC still down 1.29% over seven days. Polymarket's 'Bitcoin price on September 15?' market has generated $70,700 in volume since launch on September 8. Traders are positioning into Wednesday's FOMC decision, where FedWatch now prices a 92.4% probability of a 25bp hike.",
+  "category": "economy-markets",
+  "priority": 50,
+  "publishedAt": "2026-09-15T04:20:00Z",
+  "updatedAt": "2026-09-15T04:20:00Z",
+  "retrievedAt": "2026-09-15T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Bitcoin", "BTC", "Polymarket", "FOMC", "crypto"],
+  "sources": [
+    {
+      "publisher": "Crypto Market Cap",
+      "url": "https://cryptomarketcap.com/coins/bitcoin",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    },
+    {
+      "publisher": "CoinStats",
+      "url": "https://coinstats.app/ai/a/latest-news-for-bitcoin",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    }
+  ]
+}

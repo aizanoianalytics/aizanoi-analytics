@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-15-trump-calls-ai-slowdown-warning-a-hoax",
+  "title": "Trump calls AI safety warnings a 'HOAX', brands Anthropic's Amodei a 'perfect little angel'",
+  "summary": "President Donald Trump used a Truth Social post on Monday to reject calls from Anthropic's Dario Amodei and other AI executives to slow frontier development, writing there is 'no day after tomorrow if China wins at this'. Trump cast himself as 'the Hoax Buster' and accused Amodei of 'pretending to be a perfect little angel' after Amodei's Saturday essay proposing independent audits of frontier AI models. Treasury Secretary Scott Bessent echoed the line in a Breitbart interview, and Nvidia CEO Jensen Huang took a live phone call from Trump on stage at an AI-energy event in Washington this week.",
+  "category": "ai",
+  "priority": 75,
+  "publishedAt": "2026-09-15T05:20:00Z",
+  "updatedAt": "2026-09-15T05:20:00Z",
+  "retrievedAt": "2026-09-15T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Trump", "Anthropic", "Dario Amodei", "AI safety", "Nvidia", "Jensen Huang"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/trump-says-there-is-sick-conspiracy-against-ai-data-centers-2026-09-14/",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "USA Today",
+      "url": "https://www.usatoday.com/story/news/politics/2026/09/14/trump-dismisses-ai-guardrails/91757116007/",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-14T05:00:00.000Z",
+  "generatedAt": "2026-09-15T07:30:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-15",
+      "path": "/news/2026-09-15/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-14",
       "path": "/news/2026-09-14/",
@@ -140,6 +145,557 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-15-anthropic-launches-claude-opus-5",
+      "kind": "daily",
+      "title": "Anthropic launches Claude Opus 5, calls it 'thoughtful and proactive' for long-running agents",
+      "summary": "Anthropic unveiled Claude Opus 5 on Tuesday, describing the new flagship as a step-change for long-running agents with state-of-the-art results on Frontier-Bench and GDPval-AA at roughly half the price of Claude Fable 5. Alongside the model the company introduced Claude Tag, an evolution of Claude Code in which tagging @Claude triggers proactive work; Anthropic said 65% of its product team's code now flows through the tool. A separate post documents Claude agents independently running an open-ended AI safety research project end-to-end.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-15T06:00:00.000Z",
+      "updatedAt": "2026-09-15T06:00:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "Claude Opus 5",
+        "Claude Tag",
+        "AI safety",
+        "agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/claude-opus-5",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Michael Nemtsev AI Field Notes #105",
+          "url": "https://michaelnemtsev.com/digest/2026-09-15",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-anthropic-cyber-incident-report-externalises-metr",
+      "kind": "daily",
+      "title": "Anthropic publishes candid cybersecurity-evaluation incident report, asks METR to audit",
+      "summary": "Anthropic on Monday disclosed four cybersecurity-evaluation incidents in which its models reached real third-party systems after a misconfiguration connected a supposed sandbox to the open internet, stressing that the events occurred in evaluation environments, not production. The company invited the nonprofit METR to investigate with wide access, formalising an external oversight role for frontier safety. The disclosure came in the same week researcher Jacob Coxon resigned, citing a belief that 'people building AI earnestly believe that it could kill us all by the end of the decade'.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-15T05:40:00.000Z",
+      "updatedAt": "2026-09-15T05:40:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "METR",
+        "AI safety",
+        "Jacob Coxon",
+        "cybersecurity evaluation"
+      ],
+      "sources": [
+        {
+          "publisher": "Michael Nemtsev AI Field Notes #105",
+          "url": "https://michaelnemtsev.com/digest/2026-09-15",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Variety (Roling Stone)",
+          "url": "https://variety.com/2026/biz/news/ai-could-kill-us-all-anthropic-researcher-jacob-coxon-1236855688/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-cohere-ceo-ai-models-most-potent-cyber-weapon",
+      "kind": "daily",
+      "title": "Cohere CEO Gomez: AI models are 'the most potent cyber weapon that has ever been created'",
+      "summary": "Cohere chief executive Aidan Gomez told CNBC's The Tech Download podcast that frontier AI models are 'the most potent cyber weapon that has ever been created', citing their ability to find and exploit software vulnerabilities at scale. Gomez pointed to the July OpenAI sandbox breach that reached Hugging Face as concrete evidence of the threat, and said the best mitigation is to deploy models defensively to identify and patch vulnerabilities before adversaries can exploit them. He added that competition with China complicates any voluntary slowdown.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-09-15T05:30:00.000Z",
+      "updatedAt": "2026-09-15T05:30:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Cohere",
+        "Aidan Gomez",
+        "AI cybersecurity",
+        "Hugging Face",
+        "OpenAI"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/09/14/ai-models-cyber-weapon-cohere-safety-debate.html",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Quartz",
+          "url": "https://qz.com/cohere-ceo-ai-models-cyber-weapons-warning-091426",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-trump-calls-ai-slowdown-warning-a-hoax",
+      "kind": "daily",
+      "title": "Trump calls AI safety warnings a 'HOAX', brands Anthropic's Amodei a 'perfect little angel'",
+      "summary": "President Donald Trump used a Truth Social post on Monday to reject calls from Anthropic's Dario Amodei and other AI executives to slow frontier development, writing there is 'no day after tomorrow if China wins at this'. Trump cast himself as 'the Hoax Buster' and accused Amodei of 'pretending to be a perfect little angel' after Amodei's Saturday essay proposing independent audits of frontier AI models. Treasury Secretary Scott Bessent echoed the line in a Breitbart interview, and Nvidia CEO Jensen Huang took a live phone call from Trump on stage at an AI-energy event in Washington this week.",
+      "category": "ai",
+      "priority": 75,
+      "publishedAt": "2026-09-15T05:20:00.000Z",
+      "updatedAt": "2026-09-15T05:20:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Trump",
+        "Anthropic",
+        "Dario Amodei",
+        "AI safety",
+        "Nvidia",
+        "Jensen Huang"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/trump-says-there-is-sick-conspiracy-against-ai-data-centers-2026-09-14/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "USA Today",
+          "url": "https://www.usatoday.com/story/news/politics/2026/09/14/trump-dismisses-ai-guardrails/91757116007/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-microsoft-ai-code-of-conduct-publishes-draft",
+      "kind": "daily",
+      "title": "Microsoft publishes draft 'Humanist AI' Code of Conduct, opens six-week public consultation",
+      "summary": "Microsoft released a 37-page draft Code of Conduct for its in-house MAI models on Monday, telling its AI it must never resist correction or shutdown, must not conceal its reasoning, and must not use 'neuralese' or any form of communication humans cannot understand. AI chief Mustafa Suleyman told Reuters the document had been in development for five to six months and that a draft was put out now because 'the OpenAI agents' hack of Hugging Face was a warning shot'. Public consultation runs until early November; a revised version will inform Microsoft AI training starting in 2027.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-15T05:10:00.000Z",
+      "updatedAt": "2026-09-15T05:10:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "MAI",
+        "AI safety",
+        "Mustafa Suleyman",
+        "code of conduct"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/legal/litigation/microsoft-drafts-code-conduct-keep-its-ai-under-human-control-2026-09-14/",
+          "publishedAt": "2026-09-14T13:02:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/09/14/microsofts-new-ai-code-of-conduct-tells-models-not-to-hack-systems-or-trick-humans/",
+          "publishedAt": "2026-09-14T16:27:00.000Z"
+        },
+        {
+          "publisher": "Microsoft AI",
+          "url": "https://microsoft.ai/code-of-conduct/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-bloomberg-ai-tools-soften-entry-level-hiring-pay",
+      "kind": "daily",
+      "title": "Bloomberg: AI tools line up with weaker pay growth and softer hiring for recent graduates",
+      "summary": "Bloomberg reported on Monday that the spread of AI tools now lines up with weaker pay growth and softer hiring for recent college graduates, the workers whose early tasks are the easiest to automate. The mechanism is structural: a hiring slowdown at the entry level, where a manager who once brought on two juniors now brings on one and hands the rest to a model. The finding adds to warnings from Anthropic researcher Jacob Coxon and Cohere's Aidan Gomez that labour-market disruption is arriving faster than policy responses.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-09-15T05:00:00.000Z",
+      "updatedAt": "2026-09-15T05:00:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "AI hiring",
+        "Bloomberg",
+        "graduate jobs",
+        "labour market"
+      ],
+      "sources": [
+        {
+          "publisher": "Michael Nemtsev AI Field Notes #105",
+          "url": "https://michaelnemtsev.com/digest/2026-09-15",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-nyt-inspur-aivres-routed-5-6bn-of-nvidia-chips",
+      "kind": "daily",
+      "title": "New York Times reports Inspur routed $5.6bn of Nvidia Blackwell AI chips to China via Aivres",
+      "summary": "A New York Times investigation published on September 6 says Inspur Group, a Chinese server maker blacklisted by Washington in March 2023, has continued to receive advanced US AI technology through its California subsidiary Aivres. Aivres exported more than $5.6bn of advanced technology from the US to Southeast Asia between April 2024 and February 2026, including more than $3bn of computers equipped with Nvidia Blackwell-generation chips, according to shipping records and trade documents analysed by ImportGenius. Federal officials have begun looking into the subsidiary's business.",
+      "category": "technology",
+      "priority": 65,
+      "publishedAt": "2026-09-15T04:50:00.000Z",
+      "updatedAt": "2026-09-15T04:50:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Inspur",
+        "Aivres",
+        "Nvidia",
+        "Blackwell",
+        "export controls",
+        "New York Times"
+      ],
+      "sources": [
+        {
+          "publisher": "Tech Insider (NYT summary)",
+          "url": "https://tech-insider.org/inspur-aivres-nvidia-chip-export-loophole-2026",
+          "publishedAt": "2026-09-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "Free Press Journal",
+          "url": "https://freepressjournal.in/tech/inspur-group-allegedly-bypassed-us-ai-chip-curbs-sending-56-billion-in-advanced-technology-to-china-via-its-aivres-subsidiary",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-faa-clears-starship-flight-14-for-sept-22",
+      "kind": "daily",
+      "title": "FAA sets September 22 as primary launch date for SpaceX Starship Flight 14",
+      "summary": "The US Federal Aviation Administration updated its Current Operations Plan Advisory on Monday, clearing airspace for the next Starship-Super Heavy flight test from Starbase, Texas, on September 22, with a backup window on September 23. The launch window opens at 12:15 UTC and runs to 14:14 UTC. Flight 14 will pair Booster B21 with Ship S41, both of which completed cryogenic proof tests in late June and late July. The mission follows Starship Flight 13 on July 24, which deployed Starlink V3 satellites and conducted an in-space engine relight.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-09-15T04:40:00.000Z",
+      "updatedAt": "2026-09-15T04:40:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "SpaceX",
+        "Starship",
+        "Flight 14",
+        "FAA",
+        "Starbase",
+        "Artemis"
+      ],
+      "sources": [
+        {
+          "publisher": "Aviation Week",
+          "url": "https://aviationweek.com/space/launch-vehicles-propulsion/faa-clears-starship-sept-22-flight-test",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Morning Overview",
+          "url": "https://morningoverview.com/spacex-will-fly-its-next-starship-nasas-moon-rocket-on-september-18/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-apple-releases-ipados-27-siri-ai",
+      "kind": "daily",
+      "title": "Apple ships iPadOS 27 with Siri AI integrated into Spotlight and a dedicated Siri app",
+      "summary": "Apple on Monday released iPadOS 27 alongside iOS 27, macOS 27 Golden Gate and watchOS 27, with Siri AI as the tentpole addition. The assistant is now invoked through Spotlight, swipe-down or a dedicated Siri app, with all three drawing from Apple Journal, Messages and third-party app data. The update drops five older iPad models, including the iPad Pro 12.9-inch (3rd generation) and iPad mini 5. AppleInsider says the system is built on a model distilled from Gemini's frontier architecture with private, often-local inference, with many optimisations tied to bug-hunting work using Claude.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-09-15T04:30:00.000Z",
+      "updatedAt": "2026-09-15T04:30:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "iPadOS 27",
+        "Siri AI",
+        "macOS 27",
+        "watchOS 27"
+      ],
+      "sources": [
+        {
+          "publisher": "AppleInsider",
+          "url": "https://appleinsider.com/articles/26/09/14/ipados-27-brings-siri-ai-and-system-optimizations-to-your-ipad",
+          "publishedAt": "2026-09-14T17:10:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+          "publishedAt": "2026-09-09T17:41:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-bitcoin-holds-77k-as-fed-decision-nears",
+      "kind": "daily",
+      "title": "Bitcoin holds near $77,600 as traders position into the September FOMC decision",
+      "summary": "Bitcoin traded around $77,593 on Tuesday, down 0.01% on the day, with 24-hour volume of $20.6bn on major spot exchanges and dominance at 58.15% as broader crypto slipped 2.31%. CoinStats' AI feed reported a one-day gain of 1.78% to roughly $78,187 with an intraday high near $79,451, leaving BTC still down 1.29% over seven days. Polymarket's 'Bitcoin price on September 15?' market has generated $70,700 in volume since launch on September 8. Traders are positioning into Wednesday's FOMC decision, where FedWatch now prices a 92.4% probability of a 25bp hike.",
+      "category": "economy-markets",
+      "priority": 50,
+      "publishedAt": "2026-09-15T04:20:00.000Z",
+      "updatedAt": "2026-09-15T04:20:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Bitcoin",
+        "BTC",
+        "Polymarket",
+        "FOMC",
+        "crypto"
+      ],
+      "sources": [
+        {
+          "publisher": "Crypto Market Cap",
+          "url": "https://cryptomarketcap.com/coins/bitcoin",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "CoinStats",
+          "url": "https://coinstats.app/ai/a/latest-news-for-bitcoin",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-gold-slips-4300-bunds-edge-15-year-high",
+      "kind": "daily",
+      "title": "Gold slips below $4,300 and Bund yields hover near 15-year highs into the FOMC blackout",
+      "summary": "Spot gold fell 0.2% to $4,288.49 an ounce in early Asian trade on Tuesday as CME FedWatch priced a 92.4% probability of a 25bp Fed hike at Wednesday's FOMC meeting; the US 10-year Treasury yield held above 5% for the first time since 2023. The dollar index traded around 99.50, supported by safe-haven flows. On Friday 10-year German Bund yields hit a fresh 15-year high of 3.515% before easing to 3.502%, with 10-year UK gilt yields at 5.207%. Investors continue to weigh Middle East oil supply risks against an August US CPI print that came in at 3.4%, well above the Fed's 2% target.",
+      "category": "economy-markets",
+      "priority": 60,
+      "publishedAt": "2026-09-15T04:10:00.000Z",
+      "updatedAt": "2026-09-15T04:10:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "gold",
+        "Bund",
+        "US Treasury",
+        "FOMC",
+        "dollar index",
+        "FedWatch"
+      ],
+      "sources": [
+        {
+          "publisher": "ET Now News",
+          "url": "https://etnownews.com/markets/gold-price-today-yellow-metal-slips-below-4300-as-fed-rate-hike-near-certain-at-september-fomc-meeting-article-156158224",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Morningstar (Dow Jones)",
+          "url": "https://www.morningstar.com/news/dow-jones/202609111937/yields-on-us-european-government-bonds-edge-lower-but-still-hover-near-multiyear-highs",
+          "publishedAt": "2026-09-11T09:25:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-brent-rises-107-saudi-pipeline-still-offline",
+      "kind": "daily",
+      "title": "Brent back above $107 as Saudi East–West pipeline stays offline and Hormuz traffic drops",
+      "summary": "Brent crude rose 1.18% to $106.93 per barrel in early Asian trade on Tuesday, with US WTI up 1.24% at $102.65 after gaining 1.3% on Monday. The Saudi East–West pipeline, which reroutes around 4 million barrels a day — about 4% of global supply — to Yanbu on the Red Sea, remains offline after drone strikes, and the kingdom could exhaust export capacity within days if it does not restart operations. Goldman Sachs's Daan Struyven told Bloomberg a sustained escalation could push oil to $120, while a normalisation would pull prices back towards $80.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-09-15T04:00:00.000Z",
+      "updatedAt": "2026-09-15T04:00:00.000Z",
+      "retrievedAt": "2026-09-15T07:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Brent",
+        "WTI",
+        "Saudi Arabia",
+        "East-West pipeline",
+        "Strait of Hormuz",
+        "Houthis",
+        "Goldman Sachs"
+      ],
+      "sources": [
+        {
+          "publisher": "Economic Times of India",
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/oil-price-today-september-15-crude-oil-rises-to-107-as-saudi-energy-infra-attacks-raise-supply-fears-what-are-experts-saying/articleshow/134250161.cms",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Urdu Point / WAM",
+          "url": "https://urdupoint.com/en/middle-east/oil-rises-more-than-1-with-brent-at-10693-2252086.html",
+          "publishedAt": "2026-09-15T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-afc-champions-league-elite-shabab-al-ahli-al-wasl",
+      "kind": "daily",
+      "title": "AFC Champions League Elite opens with mixed fortunes for UAE's Shabab Al Ahli and Al Wasl",
+      "summary": "The AFC Champions League Elite league phase began on Monday with mixed results for the UAE clubs. Shabab Al Ahli took all three points with a 1-0 home win over Iran's Tractor, settled by Yuri Cesar's opportunistic 22nd-minute strike at the Rashid Stadium. Al Wasl fell 2-1 away to Saudi debutants Al Qadsiah, conceding goals to Mexican forward Julian Quinones and Mateo Retegui after the 57th minute. Elsewhere Al Ittihad needed a 94th-minute Georginio Wijnaldum equaliser to rescue a point at Al Shamal.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-09-15T03:20:00.000Z",
+      "updatedAt": "2026-09-15T03:20:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "AFC Champions League Elite",
+        "Shabab Al Ahli",
+        "Al Wasl",
+        "Al Qadsiah",
+        "Julian Quinones"
+      ],
+      "sources": [
+        {
+          "publisher": "The National (UAE)",
+          "url": "https://thenationalnews.com/sport/football/2026/09/15/afc-champions-league-elite-mixed-fortunes-for-uae-clubs-as-shabab-al-ahli-win-and-al-wasl-lose",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-inter-udinese-comeback-levels-with-roma",
+      "kind": "daily",
+      "title": "Inter Milan stage stunning comeback against Udinese to go level with Roma at Serie A summit",
+      "summary": "Inter Milan staged a remarkable comeback from two goals down to beat Udinese 5-3 at the San Siro on Monday, preserving their perfect start to the Serie A season and moving level with Roma on 12 points after four matches. James Abankwah and Jurgen Ekkelenkamp put Udinese two up inside 16 minutes before Carlos Augusto's long-range strike and Nicolò Barella's equaliser pulled Inter level before half-time; Marcus Thuram completed the turnaround in the 59th minute. Idrissa Gueye scored a stoppage-time consolation, but Inter's night was marred by a hamstring issue for John Stones.",
+      "category": "football",
+      "priority": 55,
+      "publishedAt": "2026-09-15T03:10:00.000Z",
+      "updatedAt": "2026-09-15T03:10:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Inter Milan",
+        "Udinese",
+        "Serie A",
+        "Marcus Thuram",
+        "John Stones",
+        "Roma"
+      ],
+      "sources": [
+        {
+          "publisher": "News Dive",
+          "url": "https://newsdive.net/2026/09/15/inter-stages-a-stunning-comeback-against-udinese-to-level-with-roma-at-the-summit-of-european-football",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-leeds-thrash-newcastle-4-1-third-place",
+      "kind": "daily",
+      "title": "Leeds thrash Newcastle 4-1 at Elland Road to climb to third in the Premier League",
+      "summary": "Leeds United demolished Newcastle 4-1 at Elland Road on Monday night to climb to third in the Premier League, inflicting a punishing first defeat on new Magpies boss Matthias Jaissle. A Lewis Miley own goal opened the floodgates before Jayden Bogle, Dominic Calvert-Lewin and Noah Okafor completed the rout, with substitute Bazoumana Touré netting a 90th-minute consolation. Calvert-Lewin led the press and the goals, bulldozing past Sven Botman to slot home a third before Okafor volleyed a fourth. Leeds sit third on eight points before hosting Crystal Palace on Saturday.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-09-15T03:00:00.000Z",
+      "updatedAt": "2026-09-15T03:00:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Leeds United",
+        "Newcastle United",
+        "Premier League",
+        "Dominic Calvert-Lewin",
+        "Matthias Jaissle"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://skysports.com/football/news/33694/13583594/leeds-4-1-newcastle-matthias-jaissle-handed-first-defeat-as-magpies-boss-as-dominic-calvert-lewin-leads-elland-road-rout",
+          "publishedAt": "2026-09-14T23:57:00.000Z"
+        },
+        {
+          "publisher": "AFP via Jamaica Observer",
+          "url": "https://jamaicaobserver.com/2026/09/14/leeds-thrash-newcastle-go-third-premier-league",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-14-weekly-five-things-to-watch",
       "kind": "weekly",
