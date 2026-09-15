@@ -50,6 +50,28 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.body.setSize(22, 22);
     this.body.setOffset(5, 8);
     this.setDepth(10);
+
+    // Zemin gölgesi + taban ölçek (squash-stretch referansı)
+    this.baseScaleX = this.scaleX || 1;
+    this.baseScaleY = this.scaleY || 1;
+    this.shadow = scene.add.ellipse(x, y + 14, 26, 8, 0x000000, 0.35);
+    this.shadow.setDepth(9);
+    // Kutsal hale: Aizo'nun mor çatlağını vurgulayan additive parlama
+    try {
+      this.halo = scene.add.sprite(x, y, 'effects', 4).setDepth(9).setAlpha(0.35);
+      this.halo.setBlendMode(Phaser.BlendModes.ADD);
+      this.halo.setScale(1.6);
+      scene.tweens.add({
+        targets: this.halo,
+        alpha: 0.18,
+        scaleX: 1.9,
+        scaleY: 1.9,
+        duration: 900,
+        yoyo: true,
+        repeat: -1,
+        ease: 'Sine.easeInOut',
+      });
+    } catch (_) { this.halo = null; }
   }
 
   hasSkill(skillId) {
@@ -81,6 +103,10 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
 
   update(time, delta) {
     if (this.isDead) return;
+
+    // Gölge + hale takibi
+    if (this.shadow && this.shadow.active) this.shadow.setPosition(this.x, this.y + 14);
+    if (this.halo && this.halo.active) this.halo.setPosition(this.x, this.y);
 
     // Update stats from inventory, then run-gecici kutsama modlari
     this.stats = this.inventory.getCalculatedStats();
@@ -158,6 +184,19 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
 
     this.isAttacking = true;
     this.play(`aizo-attack-${this.lastDirection}`, true);
+
+    // Saldırı gerilmesi: vuruşta yaylan (Brotato jöle hissi)
+    try {
+      this.scene.tweens.add({
+        targets: this,
+        scaleX: this.baseScaleX * 1.15,
+        scaleY: this.baseScaleY * 0.87,
+        duration: 70,
+        yoyo: true,
+        ease: 'Quad.easeOut',
+        onComplete: () => { if (this.active) this.setScale(this.baseScaleX, this.baseScaleY); },
+      });
+    } catch (_) {}
 
     const weaponData = this.inventory ? WEAPONS[this.inventory.equipped.weapon] : null;
     const isRanged = weaponData && weaponData.subtype === 'ranged';
@@ -266,6 +305,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
 
     audioManager.playShield();
     this.scene.createFloatingText(this.x, this.y - 30, 'SHADOW MELD', '#27ae60');
+    if (typeof this.scene.playSfx === 'function') this.scene.playSfx('sfx-shadow-dash', 0.5);
     this.scene.time.delayedCall(2500, () => {
       this.isStealthed = false;
       this.setAlpha(1.0);
@@ -294,9 +334,21 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     }
 
     this.hp -= amount;
-    this.scene.createFloatingText(this.x, this.y - 20, `-${amount}`, isCritical ? '#f1c40f' : '#e74c3c');
+    this.scene.createFloatingText(this.x, this.y - 20, `-${amount}`, isCritical ? '#f1c40f' : '#e74c3c', isCritical ? 20 : 15);
     audioManager.playPlayerHurt();
     this.scene.cameras.main.shake(120, 0.005);
+    // Hasar ezilmesi
+    try {
+      this.scene.tweens.add({
+        targets: this,
+        scaleX: this.baseScaleX * 0.88,
+        scaleY: this.baseScaleY * 1.1,
+        duration: 80,
+        yoyo: true,
+        ease: 'Quad.easeOut',
+        onComplete: () => { if (this.active) this.setScale(this.baseScaleX, this.baseScaleY); },
+      });
+    } catch (_) {}
     this.play('aizo-hurt', true);
 
     if (this.hp <= 0) {

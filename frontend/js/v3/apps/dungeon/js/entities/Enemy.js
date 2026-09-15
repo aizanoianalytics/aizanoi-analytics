@@ -2,8 +2,10 @@
 // Antik Aizanoi Düşman Taban Sınıfı
 
 import { CombatSystem } from '../systems/CombatSystem.js';
-import { applyEliteAffix } from '../data/elite-affixes.js';
+import { applyEliteAffix, ELITE_AFFIXES } from '../data/elite-affixes.js';
 import { audioManager } from '../systems/AudioManager.js';
+
+const ELITE_COLORS = Object.fromEntries((ELITE_AFFIXES || []).map((a) => [a.id, a.color]));
 
 export class Enemy extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, typeConfig) {
@@ -54,6 +56,37 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     } else {
       this.body.setSize(24, 24);
       this.body.setOffset(20, 20);
+      // Siluet ayrışımı: her davranış 1 saniyede tanınsın
+      if (typeConfig.behavior === 'stealth_ambush') this.setScale(0.85, 1.18); // ince-uzun wraith
+      else if (typeConfig.behavior === 'melee_tank') this.setScale(1.18, 1.05); // iri centurion
+      else if (typeConfig.behavior === 'shield_bash_charge') this.setScale(1.24, 1.08); // geniş praetorian
+    }
+    this.baseScaleX = this.scaleX;
+    this.baseScaleY = this.scaleY;
+
+    // Zemin gölgesi: karakteri zeminden koparır, derinlik hissi
+    const shadowW = this.isBoss ? 64 : 26;
+    this.shadow = scene.add.ellipse(x, y + (this.isBoss ? 40 : 14), shadowW, shadowW * 0.32, 0x000000, 0.35);
+    this.shadow.setDepth(8);
+
+    // Elit aurası: affix renginde nabız gibi atan hale — neyle karşılaştığın belli olsun
+    this.eliteGlow = null;
+    if (this.eliteAffix && ELITE_COLORS[this.eliteAffix] !== undefined) {
+      try {
+        this.eliteGlow = scene.add.ellipse(x, y, 44, 44, ELITE_COLORS[this.eliteAffix], 0.28);
+        this.eliteGlow.setBlendMode(Phaser.BlendModes.ADD);
+        this.eliteGlow.setDepth(8);
+        scene.tweens.add({
+          targets: this.eliteGlow,
+          alpha: 0.12,
+          scaleX: 1.25,
+          scaleY: 1.25,
+          duration: 600,
+          yoyo: true,
+          repeat: -1,
+          ease: 'Sine.easeInOut',
+        });
+      } catch (_) { this.eliteGlow = null; }
     }
 
     this.setDepth(9);
@@ -69,6 +102,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.isDead || !this.active || !player || player.isDead) {
       this.hpBar.clear();
       return;
+    }
+
+    // Gölge takibi
+    if (this.shadow && this.shadow.active) {
+      this.shadow.setPosition(this.x, this.y + (this.isBoss ? 40 : 14));
+    }
+    if (this.eliteGlow && this.eliteGlow.active) {
+      this.eliteGlow.setPosition(this.x, this.y);
     }
 
     // Geri tepme: kisa sure hareket AI durur, itme velocity korunur
@@ -178,7 +219,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.isDead) return;
 
     this.hp -= amount;
-    this.scene.createFloatingText(this.x, this.y - 15, `-${amount}`, isCritical ? '#f1c40f' : '#ffffff', isCritical ? 19 : 14);
+    this.scene.createFloatingText(this.x, this.y - 15, `-${amount}`, isCritical ? '#f1c40f' : '#ffffff', isCritical ? 22 : 15);
     audioManager.playHit(isCritical);
 
     // Kucuk knockback (boss haric): saldirgandan uza it
@@ -188,9 +229,21 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.knockbackTimer = 120;
     }
 
-    // Hasar flaşı ve sarsıntı
-    this.setTint(0xff6666);
-    this.scene.time.delayedCall(120, () => {
+    // Hasar flaşı: önce beyaz parıltı (Brotato juice), sonra sön
+    this.setTintFill(0xffffff);
+    // Ezilme: vuruşta jöle gibi squash
+    try {
+      this.scene.tweens.add({
+        targets: this,
+        scaleX: this.baseScaleX * 1.12,
+        scaleY: this.baseScaleY * 0.88,
+        duration: 60,
+        yoyo: true,
+        ease: 'Quad.easeOut',
+        onComplete: () => { if (this.active) { this.setScale(this.baseScaleX, this.baseScaleY); } },
+      });
+    } catch (_) {}
+    this.scene.time.delayedCall(80, () => {
       if (this.active) this.clearTint();
     });
 
@@ -219,8 +272,21 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.scene.triggerEliteExplosion(this);
     }
 
+    // Ölüm patlaması: taş-kül parçacıkları
+    if (typeof this.scene.spawnDeathBurst === 'function') {
+      this.scene.spawnDeathBurst(this.x, this.y, this.isBoss);
+    }
+
     // Düşürme (Drop): Denarii ve Zeus Kıvılcımı
     this.scene.dropLoot(this.x, this.y, this.goldReward, this.xpReward);
+    // Elit kalbi: %10 şansla 25 HP (ölüm sarmalına panzehir)
+    if (this.eliteAffix && Math.random() < 0.1 && typeof this.scene.dropHeart === 'function') {
+      this.scene.dropHeart(this.x + 14, this.y + 6, 25);
+    }
+    // Kombo sayacı
+    if (typeof this.scene.registerKill === 'function') {
+      this.scene.registerKill(this.x, this.y);
+    }
     this.scene.progression.recordKill(this.isBoss);
 
     this.destroy();
@@ -230,6 +296,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.hpBar) {
       this.hpBar.destroy();
       this.hpBar = null;
+    }
+    if (this.shadow) {
+      this.shadow.destroy();
+      this.shadow = null;
+    }
+    if (this.eliteGlow) {
+      this.eliteGlow.destroy();
+      this.eliteGlow = null;
     }
     super.preDestroy();
   }

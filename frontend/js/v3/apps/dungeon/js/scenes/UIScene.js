@@ -105,8 +105,8 @@ export class UIScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
 
     const hpColor = player.hp / player.maxHp <= 0.25 ? 0xe74c3c : 0x27ae60;
-    drawStatBar(this.hpGraphics, 74, 34, 148, 9, player.hp, player.maxHp, hpColor);
-    drawStatBar(this.xpGraphics, 74, 56, 148, 6, prog.currentXp, prog.nextXp, 0xa569bd);
+    drawStatBar(this.hpGraphics, 74, 34, 158, 13, player.hp, player.maxHp, hpColor);
+    drawStatBar(this.xpGraphics, 74, 60, 158, 9, prog.currentXp, prog.nextXp, 0xa569bd);
     this.hpText.setText(`HP: ${Math.max(0, Math.round(player.hp))}/${player.maxHp}`);
     this.xpText.setText(`SPARK: ${prog.currentXp}/${prog.nextXp}`);
     this.levelBadge.setText(`Lv.${prog.level}`);

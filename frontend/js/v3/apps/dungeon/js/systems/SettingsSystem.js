@@ -4,6 +4,7 @@ const DEFAULTS = {
   autoAim: true,
   magnet: true,
   showMinimap: true,
+  effects: 'full', // 'full' | 'reduced' (düşük cihazlar için)
 };
 
 export function loadSettings() {

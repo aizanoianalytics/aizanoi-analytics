@@ -80,11 +80,11 @@ export class MenuScene extends Phaser.Scene {
 
       createGlassButton(this, width / 2, btnStartY, 260, 38, 'New run (wipe save)', () => {
         audioManager.playClick();
-        if (window.confirm && window.confirm('This wipes progress and collected relics. Continue?')) {
+        this.showWipeConfirm(() => {
           tempProg.reset();
           InventorySystem.clear();
           this.scene.restart();
-        }
+        });
       });
       btnStartY += btnSpacing;
     } else {
@@ -119,6 +119,25 @@ export class MenuScene extends Phaser.Scene {
     this._starting = true;
     audioManager.playClick();
     action();
+  }
+
+  showWipeConfirm(onConfirm) {
+    const { width, height } = this.cameras.main;
+    const modal = this.add.container(width / 2, height / 2).setDepth(100);
+    const bg = this.add.rectangle(0, 0, 360, 200, 0xffffff, 0.97);
+    bg.setStrokeStyle(3, 0xc5a059);
+    const title = this.add.text(0, -60, 'Wipe all progress?', {
+      fontSize: '17px', color: '#1e293b', fontStyle: 'bold',
+    }).setOrigin(0.5);
+    const desc = this.add.text(0, -25, 'Levels, Denarii and relics will be lost.', {
+      fontSize: '12px', color: '#64748b',
+    }).setOrigin(0.5);
+    const yesBtn = createGlassButton(this, -80, 45, 130, 36, 'Wipe', () => {
+      modal.destroy();
+      onConfirm();
+    });
+    const noBtn = createGlassButton(this, 80, 45, 130, 36, 'Cancel', () => modal.destroy());
+    modal.add([bg, title, desc, yesBtn, noBtn]);
   }
 
   showGuideModal() {

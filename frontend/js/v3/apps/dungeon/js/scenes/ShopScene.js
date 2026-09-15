@@ -3,7 +3,6 @@
 
 import { createGlassButton } from '../utils/ui-helpers.js';
 import { WEAPONS, ARMORS, ACCESSORIES, CONSUMABLES } from '../data/items.js';
-import { SHOP_CATALOG } from '../data/shop-catalog.js';
 import { audioManager } from '../systems/AudioManager.js';
 
 export class ShopScene extends Phaser.Scene {
@@ -31,18 +30,32 @@ export class ShopScene extends Phaser.Scene {
       this.scene.stop();
     });
 
-    // Satıştaki Eşyalar
-    let startY = height / 2 - 140;
+    // Kademeli katalog: bölüm ilerledikçe efsaneviler rafa çıkar
+    const ch = this.gameScene?.isEndless ? 10 : (this.gameScene?.chapterIndex || 0) + 1;
+    let weaponIds = ['legion_gladius', 'temple_hammer', 'phrygian_bow'];
+    let armorIds = ['bronze_squamata'];
+    let accIds = ['scarab_amulet'];
+    let sparkIds = ['apprentice_spark', 'asklepios_draught'];
+    if (ch >= 4) {
+      weaponIds = ['temple_hammer', 'penkalas_bow', 'phrygian_bow'];
+      armorIds = ['marble_plating', 'oracle_robe'];
+      accIds = ['obsidian_eye_ring', 'penkalas_tear'];
+      sparkIds = ['oracle_spark', 'asklepios_draught'];
+    }
+    if (ch >= 7) {
+      weaponIds = ['penkalas_bow', 'zeus_staff', 'zeus_splinter'];
+      armorIds = ['oracle_robe', 'sacred_aegis'];
+      accIds = ['zeus_spark_amulet', 'laurel_wreath'];
+      sparkIds = ['titan_spark', 'asklepios_draught'];
+    }
     const items = [
-      WEAPONS[SHOP_CATALOG.weapons[1]],      // Gladius
-      WEAPONS[SHOP_CATALOG.weapons[2]],      // Mabed Çekici
-      WEAPONS[SHOP_CATALOG.weapons[4]],      // Penkalas Yayı
-      ARMORS[SHOP_CATALOG.armors[1]],        // Bronz Squamata
-      ACCESSORIES[SHOP_CATALOG.accessories[1]], // Scarab Amulet
-      CONSUMABLES.apprentice_spark,          // Çırak Kıvılcımı (XP)
-      CONSUMABLES.oracle_spark,              // Kahin Kıvılcımı (XP)
-    ];
+      ...weaponIds.map((id) => WEAPONS[id]),
+      ...armorIds.map((id) => ARMORS[id]),
+      ...accIds.slice(0, 1).map((id) => ACCESSORIES[id]),
+      ...sparkIds.map((id) => CONSUMABLES[id]),
+    ].filter(Boolean).slice(0, 7);
 
+    let startY = height / 2 - 140;
     items.forEach((item, i) => {
       if (!item) return;
       const y = startY + i * 44;
@@ -80,9 +93,14 @@ export class ShopScene extends Phaser.Scene {
         if (this.gameScene.progression.spendGold(item.price)) {
           audioManager.playCoin();
           if (item.type === 'consumable') {
-            const res = this.gameScene.progression.addXp(item.xpReward);
-            this.gameScene.createFloatingText(this.gameScene.player.x, this.gameScene.player.y - 40, `+${item.xpReward} Sparks`, '#a569bd');
-            if (res.leveledUp) audioManager.playLevelUp();
+            if (item.healAmount) {
+              this.gameScene.player.heal(item.healAmount);
+              this.gameScene.createFloatingText(this.gameScene.player.x, this.gameScene.player.y - 40, `+${item.healAmount} HP`, '#27ae60');
+            } else {
+              const res = this.gameScene.progression.addXp(item.xpReward || 0);
+              this.gameScene.createFloatingText(this.gameScene.player.x, this.gameScene.player.y - 40, `+${item.xpReward} Sparks`, '#a569bd');
+              if (res.leveledUp) audioManager.playLevelUp();
+            }
           } else {
             const refund = this.gameScene.inventory.equip(item);
             let msg = `${item.name} equipped`;

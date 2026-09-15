@@ -267,5 +267,14 @@ export const CONSUMABLES = {
     xpReward: 450,
     description: 'Instantly grants 450 Zeus Sparks.',
   },
+  asklepios_draught: {
+    id: 'asklepios_draught',
+    name: 'Asklepios Draught',
+    type: 'consumable',
+    price: 150,
+    sellPrice: 0,
+    healAmount: 80,
+    description: 'Restores 80 HP instantly.',
+  },
 };
 

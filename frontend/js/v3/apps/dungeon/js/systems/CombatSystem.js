@@ -22,17 +22,18 @@ export class CombatSystem {
    * projectile collision yalnizca farkli bir delivery mechanism olur.
    */
   static processAttack(attacker, target, baseDamageOverride = null, meta = {}) {
+    const atkStats = attacker.stats || {};
     const weaponData = attacker.inventory ? WEAPONS[attacker.inventory.equipped.weapon] : attacker.weapon;
     const armorPen = weaponData?.special?.armorPenetration || 0;
     const targetArmor = target.stats?.armor ?? target.armor ?? 0;
-    const rawBase = baseDamageOverride ?? attacker.stats.attackDamage;
+    const rawBase = baseDamageOverride ?? atkStats.attackDamage ?? 1;
     let baseDamage = this.calculateDamage(rawBase, targetArmor, armorPen);
     const damageType = meta.damageType || 'physical';
 
     // Kritik kontrolü
     let isCritical = false;
-    if (Math.random() < (attacker.stats.critChance || 0)) {
-      baseDamage = Math.round(baseDamage * (attacker.stats.critMultiplier || 1.5));
+    if (Math.random() < (atkStats.critChance || 0)) {
+      baseDamage = Math.round(baseDamage * (atkStats.critMultiplier || 1.5));
       isCritical = true;
     }
 
@@ -63,7 +64,7 @@ export class CombatSystem {
 
     // Can çalma (Lifesteal)
     // attacker.stats.lifesteal already includes weapon lifestealBonus via InventorySystem
-    const lifestealRate = attacker.stats.lifesteal || 0;
+    const lifestealRate = atkStats.lifesteal || 0;
     if (lifestealRate > 0 && attacker.heal) {
       const healAmount = Math.max(1, Math.round(baseDamage * lifestealRate));
       attacker.heal(healAmount);

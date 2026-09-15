@@ -128,10 +128,14 @@ export class InventorySystem {
       if (raw) {
         const parsed = JSON.parse(raw);
         if (parsed && typeof parsed === 'object') {
-          if (parsed.weapon && typeof parsed.weapon === 'string') this.equipped.weapon = parsed.weapon;
-          if (parsed.armor && typeof parsed.armor === 'string') this.equipped.armor = parsed.armor;
+          // Bilinmeyen ID'ler (rebalance sonrası eski kayıt) varsayılana düşer
+          if (parsed.weapon && WEAPONS[parsed.weapon]) this.equipped.weapon = parsed.weapon;
+          if (parsed.armor && ARMORS[parsed.armor]) this.equipped.armor = parsed.armor;
           if (Array.isArray(parsed.accessories)) {
-            this.equipped.accessories = [parsed.accessories[0] || null, parsed.accessories[1] || null];
+            this.equipped.accessories = [
+              ACCESSORIES[parsed.accessories[0]] ? parsed.accessories[0] : null,
+              ACCESSORIES[parsed.accessories[1]] ? parsed.accessories[1] : null,
+            ];
           } else {
             this.equipped.accessories = [null, null];
           }

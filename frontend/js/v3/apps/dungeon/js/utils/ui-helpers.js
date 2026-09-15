@@ -27,6 +27,17 @@ export function createGlassButton(scene, x, y, width, height, text, onClick) {
 
   bg.on('pointerdown', () => {
     bg.setFillStyle(0xe2e8f0, 1.0);
+    // Brotato-tok his: basışta yaylanan bounce
+    try {
+      scene.tweens.add({
+        targets: container,
+        scaleX: 0.93,
+        scaleY: 0.93,
+        duration: 60,
+        yoyo: true,
+        ease: 'Quad.easeOut',
+      });
+    } catch (_) {}
     onClick();
   });
 
@@ -47,5 +58,8 @@ export function drawStatBar(graphics, x, y, width, height, current, max, fillCol
   if (percent > 0) {
     graphics.fillStyle(fillColor, 1.0);
     graphics.fillRoundedRect(x + 1, y + 1, (width - 2) * percent, height - 2, 2);
+    // Tok görünüm: üst yarıya beyaz iç parlama çizgisi
+    graphics.fillStyle(0xffffff, 0.35);
+    graphics.fillRect(x + 3, y + 2, Math.max(0, (width - 6) * percent), Math.max(1, height / 3));
   }
 }

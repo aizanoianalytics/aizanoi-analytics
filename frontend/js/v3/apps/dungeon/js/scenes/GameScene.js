@@ -35,6 +35,10 @@ export class GameScene extends Phaser.Scene {
     this.isPaused = false;
     this.pauseOverlay = null;
     this.exitMenu = null;
+    // Kombo + çatlak zamanlayıcıları
+    this.comboCount = 0;
+    this.comboTimer = 0;
+    this.fissureTimer = 0;
     // Surface the scene transition as soon as init fires so headless QA can
     // observe the menu→game handoff even when the Phaser update loop is
     // throttled (e.g. mobile context with reduced motion). create() will
@@ -131,6 +135,27 @@ export class GameScene extends Phaser.Scene {
     this.scene.launch('UIScene', { gameScene: this });
     audioManager.startAmbientDrone();
 
+    // 12b. Görsel katman: vignette + portal nabzı + bölüm kartı
+    if (this.settings?.effects !== 'reduced') this.addVignette();
+    this.showChapterCard();
+    try {
+      if (this.exitPortal) {
+        const pg = this.add.sprite(this.exitPortal.x, this.exitPortal.y, 'effects', 8)
+          .setDepth(6).setAlpha(0.5).setScale(2.2);
+        pg.setBlendMode(Phaser.BlendModes.ADD);
+        this.tweens.add({
+          targets: pg,
+          alpha: 0.22,
+          scaleX: 2.7,
+          scaleY: 2.7,
+          duration: 800,
+          yoyo: true,
+          repeat: -1,
+          ease: 'Sine.easeInOut',
+        });
+      }
+    } catch (_) {}
+
     // 13. Temizlik (Memory Leak Önleme)
     this.events.once('shutdown', () => {
       if (this.touchControls) {
@@ -179,9 +204,106 @@ export class GameScene extends Phaser.Scene {
     }
 
     this.wallLayer.setCollisionByExclusion([-1]);
-    // High-contrast read: warm floor vs cool brass-edged walls.
-    this.floorLayer.setTint(0xf6e7c4);
+    // High-contrast read: koyu mat zemin (düşmanlar öne çıkar) + soğuk duvar.
+    // Eskiden zemin 0xf6e7c4 idi — her yer krem olduğu için düşman kayboluyordu.
+    this.floorLayer.setTint(0xcdb488);
     this.wallLayer.setTint(0x1b2744);
+
+    // Duvar üst kenarına 2px pirinç highlight: derinlik hissi
+    try {
+      const hl = this.add.graphics().setDepth(4);
+      hl.lineStyle(2, 0xc5a059, 0.5);
+      for (let y = 1; y < this.mapData.height; y++) {
+        for (let x = 0; x < this.mapData.width; x++) {
+          if (this.mapData.grid[y][x] === 2 && this.mapData.grid[y - 1][x] !== 2) {
+            hl.lineBetween(x * 32, y * 32, x * 32 + 32, y * 32);
+          }
+        }
+      }
+    } catch (_) {}
+
+    // Zemin decal'leri: tiles-decor'dan rastgele mozaik kırıntıları (%12 yoğunluk)
+    try {
+      for (const room of this.mapData.rooms || []) {
+        const decals = Math.floor((room.w * room.h) * 0.12);
+        for (let i = 0; i < decals; i++) {
+          const dx = room.x + Math.floor(Math.random() * room.w);
+          const dy = room.y + Math.floor(Math.random() * room.h);
+          if (this.mapData.grid[dy] && this.mapData.grid[dy][dx] !== 2) {
+            const d = this.add.image(dx * 32 + 16, dy * 32 + 16, 'tiles-decor')
+              .setDepth(1)
+              .setAlpha(0.35 + Math.random() * 0.35)
+              .setRotation(Math.floor(Math.random() * 4) * Math.PI / 2)
+              .setScale(0.5 + Math.random() * 0.5);
+            d.setTint(0xbfae87);
+          }
+        }
+      }
+    } catch (_) {}
+  }
+
+  // Vignette: ekran kenarlarını karart, odağı ortaya topla (Brotato derinliği)
+  addVignette() {
+    try {
+      const { width, height } = this.cameras.main;
+      const v = this.add.container(0, 0).setDepth(5).setScrollFactor(0);
+      const t = 46;
+      const mk = (x, y, w, h) => this.add.rectangle(x, y, w, h, 0x000000, 0.28);
+      v.add([
+        mk(width / 2, t / 2, width, t),
+        mk(width / 2, height - t / 2, width, t),
+        mk(t / 2, height / 2, t, height),
+        mk(width - t / 2, height / 2, t, height),
+      ]);
+    } catch (_) {}
+  }
+
+  // Kısa hit-stop: kritik vuruşta dünyayı yavaşlat (reduced modda yarım)
+  juiceHitstop(ms = 55) {
+    try {
+      if (this.settings?.effects === 'reduced') ms = Math.round(ms / 2);
+      this.physics.world.pause();
+      this.time.delayedCall(ms, () => {
+        if (!this.isPaused && !this.exitMenu && !this.blessingOverlay) this.physics.world.resume();
+      });
+    } catch (_) {}
+  }
+
+  // Ölüm patlaması: taş-kül parçacıkları + şok halkası (reduced modda yarım)
+  spawnDeathBurst(x, y, isBoss = false) {
+    try {
+      const reduced = this.settings?.effects === 'reduced';
+      let count = isBoss ? 14 : 6 + Math.floor(Math.random() * 5);
+      if (reduced) count = Math.ceil(count / 2);
+      for (let i = 0; i < count; i++) {
+        const p = this.add.sprite(x, y, 'effects', 16 + (i % 4)).setDepth(20);
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 24 + Math.random() * (isBoss ? 90 : 48);
+        this.tweens.add({
+          targets: p,
+          x: x + Math.cos(angle) * dist,
+          y: y + Math.sin(angle) * dist,
+          alpha: 0,
+          scaleX: 0.2,
+          scaleY: 0.2,
+          duration: 320 + Math.random() * 200,
+          ease: 'Quad.easeOut',
+          onComplete: () => p.destroy(),
+        });
+      }
+      const ring = this.add.circle(x, y, 6, 0xffffff, 0.0).setDepth(20);
+      ring.setStrokeStyle(3, 0xf5d77f, 0.9);
+      this.tweens.add({
+        targets: ring,
+        radius: isBoss ? 64 : 30,
+        alpha: 0,
+        duration: 280,
+        ease: 'Quad.easeOut',
+        onUpdate: () => { try { ring.setStrokeStyle(3, 0xf5d77f, Math.max(0, ring.alpha)); } catch (_) {} },
+        onComplete: () => ring.destroy(),
+      });
+      if (isBoss) this.cameras.main.shake(200, 0.01);
+    } catch (_) {}
   }
 
   spawnLevelEntities() {
@@ -250,8 +372,74 @@ export class GameScene extends Phaser.Scene {
         const bossPos = this.levelSystem.getRandomWalkablePosition(true);
         const boss = new Enemy(this, bossPos.x, bossPos.y, bossConfig);
         this.enemies.add(boss);
+        // Boss uyarısı: wav + isim bandı
+        this.playSfx('sfx-boss-warning', 0.7);
+        this.createFloatingText(bossPos.x, bossPos.y - 60, `⚠ ${bossConfig.name} ⚠`, '#f39c12', 20);
       }
     }
+  }
+
+  // Kısa SFX çalıcı (BootScene'de yüklenen wav'ler için)
+  playSfx(key, volume = 0.5) {
+    try {
+      if (this.sound && this.cache.audio.exists(key)) this.sound.play(key, { volume });
+    } catch (_) {}
+  }
+
+  // Mezar Çatlakları: 12sn'de bir düşman doğurur (aktif < 40 ise)
+  tickFissures() {
+    try {
+      const fissures = this.structures ? this.structures.getChildren().filter((s) => s.active && s.structureType === 'spawn_fissure') : [];
+      if (fissures.length === 0) return;
+      const activeCount = this.enemies ? this.enemies.getChildren().filter((e) => e.active).length : 0;
+      if (activeCount >= 40) return;
+      const types = this.currentLevelConfig.enemies?.types || ['gargoyle'];
+      for (const f of fissures) {
+        if (this.enemies.getChildren().filter((e) => e.active).length >= 40) break;
+        if (Math.random() < 0.75) {
+          const typeKey = types[Math.floor(Math.random() * types.length)];
+          const cfg = { ...ENEMY_TYPES[typeKey] };
+          cfg.eliteAffix = chooseEliteAffix(cfg);
+          const enemy = new Enemy(this, f.x + 16, f.y + 10, cfg);
+          this.enemies.add(enemy);
+          this.spawnDeathBurst(f.x, f.y, false);
+        }
+      }
+    } catch (_) {}
+  }
+
+  // Kombo: 3sn penceresinde zincirleme öldürme
+  registerKill(x, y) {
+    this.comboCount = (this.comboCount || 0) + 1;
+    this.comboTimer = 3000;
+    if (this.comboCount > 0 && this.comboCount % 5 === 0) {
+      this.createFloatingText(x, y - 40, `x${this.comboCount} COMBO! +${this.comboCount} ⚡`, '#f39c12', 20);
+      this.progression.addXp(this.comboCount);
+    }
+  }
+
+  // Bölüm giriş kartı: isim + lore (2.4sn, oyunu bölmez)
+  showChapterCard() {
+    try {
+      const { width } = this.cameras.main;
+      const name = this.isEndless ? `Endless Pantheon — Wave ${this.endlessWave}` : (this.currentLevelConfig.name || '');
+      const lore = this.isEndless ? 'Endless waves. Highest wave is the score.' : (this.currentLevelConfig.lore || '');
+      const title = this.add.text(width / 2, 120, name, {
+        fontSize: '26px', color: '#f5d77f', fontStyle: 'bold',
+        stroke: '#0b1220', strokeThickness: 6,
+      }).setOrigin(0.5).setDepth(400).setScrollFactor(0);
+      const sub = this.add.text(width / 2, 152, lore, {
+        fontSize: '13px', color: '#d1d5db', fontStyle: 'italic',
+        stroke: '#0b1220', strokeThickness: 4,
+      }).setOrigin(0.5).setDepth(400).setScrollFactor(0);
+      this.tweens.add({
+        targets: [title, sub],
+        alpha: 0,
+        duration: 700,
+        delay: 1700,
+        onComplete: () => { title.destroy(); sub.destroy(); },
+      });
+    } catch (_) {}
   }
 
   update(time, delta) {
@@ -301,6 +489,22 @@ export class GameScene extends Phaser.Scene {
       this.tickRecall(delta);
       this.attractLoot();
       if (this.settings?.autoAim) this.autoAimAttack(time);
+
+      // Mezar Çatlakları doğurma sayacı
+      this.fissureTimer = (this.fissureTimer || 0) + delta;
+      if (this.fissureTimer > 12000) {
+        this.fissureTimer = 0;
+        this.tickFissures();
+      }
+
+      // Kombo zaman aşımı
+      if (this.comboTimer > 0) {
+        this.comboTimer -= delta;
+        if (this.comboTimer <= 0) {
+          this.comboTimer = 0;
+          this.comboCount = 0;
+        }
+      }
     }
 
     if (this.exitPortal && typeof this.exitPortal.setLocked === 'function') {
@@ -338,7 +542,12 @@ export class GameScene extends Phaser.Scene {
 
     const damageType = proj.damageType || 'physical';
     if (proj.attacker) {
-      CombatSystem.processAttack(proj.attacker, enemy, proj.damage, { damageType });
+      const res = CombatSystem.processAttack(proj.attacker, enemy, proj.damage, { damageType });
+      // Kritik senkronu: ses zaten pitch'li, görsel de aynı karede patlasın
+      if (res && res.isCritical) {
+        this.cameras.main.shake(110, 0.006);
+        this.juiceHitstop(55);
+      }
     } else {
       const targetArmor = enemy.stats?.armor ?? enemy.armor ?? 0;
       const netDamage = CombatSystem.calculateDamage(proj.damage, targetArmor);
@@ -395,13 +604,19 @@ export class GameScene extends Phaser.Scene {
       const total = Math.round(loot.amount * bonusMult);
       this.progression.addGold(total);
       audioManager.playCoin();
+      this.playSfx('sfx-gold-spark', 0.4);
       this.createFloatingText(player.x, player.y - 30, `+${total} 🪙`, '#d4ac0d');
+    } else if (loot.lootType === 'heart') {
+      player.heal(loot.amount || 25);
+      audioManager.playXp();
+      this.createFloatingText(player.x, player.y - 30, `+${loot.amount || 25} ❤`, '#e74c3c');
     } else if (loot.lootType === 'xp') {
       const res = this.progression.addXp(loot.amount);
       audioManager.playXp();
       this.createFloatingText(player.x, player.y - 30, `+${loot.amount} ⚡`, '#a569bd');
       if (res.leveledUp) {
         audioManager.playLevelUp();
+        this.playSfx('sfx-ancient-chime', 0.5);
         this.createFloatingText(player.x, player.y - 50, `LEVEL ${res.newLevel}!`, '#f1c40f');
         this.player.play('aizo-victory');
         this.showBlessingChoice(() => { this.physics.world.resume(); });
@@ -453,6 +668,7 @@ export class GameScene extends Phaser.Scene {
       selected = true;
       keyEvents.forEach((event, i) => this.input.keyboard.off(event, keyHandlers[i]));
       this.player.addBlessing(choices[index].id);
+      this.playSfx('sfx-ancient-chime', 0.5);
       overlay.destroy(true);
       this.blessingOverlay = null;
       onChosen();
@@ -534,20 +750,20 @@ export class GameScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
     const menu = this.add.container(width / 2, height / 2).setDepth(600).setScrollFactor(0);
     const dim = this.add.rectangle(0, 0, width, height, 0x000000, 0.6);
-    const panel = this.add.rectangle(0, 0, 340, 300, 0x141822, 0.98);
+    const panel = this.add.rectangle(0, 0, 340, 430, 0x141822, 0.98);
     panel.setStrokeStyle(2, 0xc5a059);
-    const title = this.add.text(0, -96, 'PAUSED', {
+    const title = this.add.text(0, -180, 'PAUSED', {
       fontSize: '22px', color: '#f5d77f', fontStyle: 'bold',
     }).setOrigin(0.5);
-    const resumeBtn = createGlassButton(this, 0, -60, 260, 36, 'Resume', () => this.closeExitMenu());
+    const resumeBtn = createGlassButton(this, 0, -134, 260, 36, 'Resume', () => this.closeExitMenu());
     const aimLabel = this.settings?.autoAim ? 'Auto-aim: ON' : 'Auto-aim: OFF';
-    const aimBtn = createGlassButton(this, 0, -16, 260, 36, aimLabel, () => {
+    const aimBtn = createGlassButton(this, 0, -90, 260, 36, aimLabel, () => {
       this.settings = saveSettings({ autoAim: !this.settings.autoAim });
       this.closeExitMenu();
       this.openExitMenu();
     });
     const miniLabel = this.settings?.showMinimap === false ? 'Minimap: OFF' : 'Minimap: ON';
-    const miniBtn = createGlassButton(this, 0, 28, 260, 36, miniLabel, () => {
+    const miniBtn = createGlassButton(this, 0, -46, 260, 36, miniLabel, () => {
       const next = this.settings?.showMinimap === false ? true : false;
       this.settings = saveSettings({ showMinimap: next });
       this.scene.get('UIScene')?.minimapContainer?.setVisible(next);
@@ -556,12 +772,19 @@ export class GameScene extends Phaser.Scene {
       this.closeExitMenu();
       this.openExitMenu();
     });
-    const fsBtn = createGlassButton(this, 0, 72, 260, 36, 'Fullscreen (F)', () => {
+    const fsBtn = createGlassButton(this, 0, -2, 260, 36, 'Fullscreen (F)', () => {
       toggleDungeonFullscreen(document.getElementById('game-container') || document.documentElement);
     });
-    menu.add([dim, panel, title, resumeBtn, aimBtn, miniBtn, fsBtn]);
+    const fxLabel = this.settings?.effects === 'reduced' ? 'Effects: Reduced' : 'Effects: Full';
+    const fxBtn = createGlassButton(this, 0, 42, 260, 36, fxLabel, () => {
+      const next = this.settings?.effects === 'reduced' ? 'full' : 'reduced';
+      this.settings = saveSettings({ effects: next });
+      this.closeExitMenu();
+      this.openExitMenu();
+    });
+    menu.add([dim, panel, title, resumeBtn, aimBtn, miniBtn, fsBtn, fxBtn]);
     if (hasDungeonExitHandler()) {
-      const exitBtn = createGlassButton(this, 0, 116, 260, 36, 'Return to AizanoiOS', () => requestDungeonExit());
+      const exitBtn = createGlassButton(this, 0, 86, 260, 36, 'Return to AizanoiOS', () => requestDungeonExit());
       menu.add(exitBtn);
     }
     this.exitMenu = menu;
@@ -586,14 +809,30 @@ export class GameScene extends Phaser.Scene {
       const gold = this.physics.add.sprite(x + 8, y, 'denarii-spark', 0);
       gold.lootType = 'gold';
       gold.amount = goldAmount;
+      gold.setScale(0.3);
+      this.tweens.add({ targets: gold, scaleX: 1, scaleY: 1, duration: 180, ease: 'Back.easeOut' });
       this.lootGroup.add(gold);
     }
     if (xpAmount > 0) {
       const xp = this.physics.add.sprite(x - 8, y, 'denarii-spark', 1);
       xp.lootType = 'xp';
       xp.amount = xpAmount;
+      xp.setScale(0.3);
+      this.tweens.add({ targets: xp, scaleX: 1, scaleY: 1, duration: 180, ease: 'Back.easeOut' });
       this.lootGroup.add(xp);
     }
+  }
+
+  dropHeart(x, y, amount) {
+    try {
+      const heart = this.physics.add.sprite(x, y, 'denarii-spark', 1);
+      heart.setTint(0xe74c3c);
+      heart.lootType = 'heart';
+      heart.amount = amount;
+      heart.setScale(0.3);
+      this.tweens.add({ targets: heart, scaleX: 1.1, scaleY: 1.1, duration: 180, ease: 'Back.easeOut' });
+      this.lootGroup.add(heart);
+    } catch (_) {}
   }
 
   castZeusFissureBeam(x, y, direction, damage, attacker = null) {
@@ -645,17 +884,43 @@ export class GameScene extends Phaser.Scene {
   }
 
   createDamageSpark(x, y) {
-    const spark = this.add.sprite(x, y, 'effects', 16).setDepth(20);
-    this.time.delayedCall(200, () => spark.destroy());
+    // Üçlü kıvılcım + hızlı şok halkası (tek sprite yerine tok patlama)
+    try {
+      for (let i = 0; i < 3; i++) {
+        const spark = this.add.sprite(x + (Math.random() - 0.5) * 14, y + (Math.random() - 0.5) * 14, 'effects', 16 + (i % 4)).setDepth(20);
+        spark.setScale(0.9 + Math.random() * 0.5);
+        spark.setBlendMode(Phaser.BlendModes.ADD);
+        this.tweens.add({
+          targets: spark,
+          alpha: 0,
+          scaleX: 0.3,
+          scaleY: 0.3,
+          duration: 160 + Math.random() * 80,
+          onComplete: () => spark.destroy(),
+        });
+      }
+    } catch (_) {
+      const spark = this.add.sprite(x, y, 'effects', 16).setDepth(20);
+      this.time.delayedCall(200, () => spark.destroy());
+    }
   }
 
   createFloatingText(x, y, text, color = '#ffffff', size = 14) {
+    const big = size >= 19;
     const txt = this.add.text(x, y, text, {
       fontSize: `${size}px`,
       color,
       fontStyle: 'bold',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      stroke: '#0b1220',
+      strokeThickness: big ? 5 : 3,
     }).setOrigin(0.5).setDepth(30);
+
+    // Büyük yazılar (crit/level) büyüyerek girer
+    if (big) {
+      txt.setScale(0.5);
+      this.tweens.add({ targets: txt, scaleX: 1.15, scaleY: 1.15, duration: 120, ease: 'Back.easeOut' });
+    }
 
     this.tweens.add({
       targets: txt,
