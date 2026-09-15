@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-15-microsoft-ai-code-of-conduct-publishes-draft",
+  "title": "Microsoft publishes draft 'Humanist AI' Code of Conduct, opens six-week public consultation",
+  "summary": "Microsoft released a 37-page draft Code of Conduct for its in-house MAI models on Monday, telling its AI it must never resist correction or shutdown, must not conceal its reasoning, and must not use 'neuralese' or any form of communication humans cannot understand. AI chief Mustafa Suleyman told Reuters the document had been in development for five to six months and that a draft was put out now because 'the OpenAI agents' hack of Hugging Face was a warning shot'. Public consultation runs until early November; a revised version will inform Microsoft AI training starting in 2027.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-15T05:10:00Z",
+  "updatedAt": "2026-09-15T05:10:00Z",
+  "retrievedAt": "2026-09-15T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Microsoft", "MAI", "AI safety", "Mustafa Suleyman", "code of conduct"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/litigation/microsoft-drafts-code-conduct-keep-its-ai-under-human-control-2026-09-14/",
+      "publishedAt": "2026-09-14T13:02:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/14/microsofts-new-ai-code-of-conduct-tells-models-not-to-hack-systems-or-trick-humans/",
+      "publishedAt": "2026-09-14T16:27:00Z"
+    },
+    {
+      "publisher": "Microsoft AI",
+      "url": "https://microsoft.ai/code-of-conduct/",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}

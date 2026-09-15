@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/anthropic-launches-claude-opus-5/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T06:00:00.000Z</news:publication_date>
+      <news:title>Anthropic launches Claude Opus 5, calls it &#39;thoughtful and proactive&#39; for long-running agents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/anthropic-cyber-incident-report-externalises-metr/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T05:40:00.000Z</news:publication_date>
+      <news:title>Anthropic publishes candid cybersecurity-evaluation incident report, asks METR to audit</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/cohere-ceo-ai-models-most-potent-cyber-weapon/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T05:30:00.000Z</news:publication_date>
+      <news:title>Cohere CEO Gomez: AI models are &#39;the most potent cyber weapon that has ever been created&#39;</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/trump-calls-ai-slowdown-warning-a-hoax/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T05:20:00.000Z</news:publication_date>
+      <news:title>Trump calls AI safety warnings a &#39;HOAX&#39;, brands Anthropic&#39;s Amodei a &#39;perfect little angel&#39;</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/microsoft-ai-code-of-conduct-publishes-draft/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T05:10:00.000Z</news:publication_date>
+      <news:title>Microsoft publishes draft &#39;Humanist AI&#39; Code of Conduct, opens six-week public consultation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/bloomberg-ai-tools-soften-entry-level-hiring-pay/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T05:00:00.000Z</news:publication_date>
+      <news:title>Bloomberg: AI tools line up with weaker pay growth and softer hiring for recent graduates</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/nyt-inspur-aivres-routed-5-6bn-of-nvidia-chips/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:50:00.000Z</news:publication_date>
+      <news:title>New York Times reports Inspur routed $5.6bn of Nvidia Blackwell AI chips to China via Aivres</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/faa-clears-starship-flight-14-for-sept-22/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:40:00.000Z</news:publication_date>
+      <news:title>FAA sets September 22 as primary launch date for SpaceX Starship Flight 14</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/apple-releases-ipados-27-siri-ai/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:30:00.000Z</news:publication_date>
+      <news:title>Apple ships iPadOS 27 with Siri AI integrated into Spotlight and a dedicated Siri app</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/bitcoin-holds-77k-as-fed-decision-nears/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:20:00.000Z</news:publication_date>
+      <news:title>Bitcoin holds near $77,600 as traders position into the September FOMC decision</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/gold-slips-4300-bunds-edge-15-year-high/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:10:00.000Z</news:publication_date>
+      <news:title>Gold slips below $4,300 and Bund yields hover near 15-year highs into the FOMC blackout</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/brent-rises-107-saudi-pipeline-still-offline/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:00:00.000Z</news:publication_date>
+      <news:title>Brent back above $107 as Saudi East–West pipeline stays offline and Hormuz traffic drops</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/afc-champions-league-elite-shabab-al-ahli-al-wasl/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T03:20:00.000Z</news:publication_date>
+      <news:title>AFC Champions League Elite opens with mixed fortunes for UAE&#39;s Shabab Al Ahli and Al Wasl</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/inter-udinese-comeback-levels-with-roma/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T03:10:00.000Z</news:publication_date>
+      <news:title>Inter Milan stage stunning comeback against Udinese to go level with Roma at Serie A summit</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/leeds-thrash-newcastle-4-1-third-place/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T03:00:00.000Z</news:publication_date>
+      <news:title>Leeds thrash Newcastle 4-1 at Elland Road to climb to third in the Premier League</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/weekly/2026-09-14/weekly-five-things-to-watch/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -238,46 +358,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-09-13T06:05:00.000Z</news:publication_date>
       <news:title>Larry Ellison cancels plan to sell 50 million Oracle shares a day after disclosing the 10b5-1 plan</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-13/openai-chatgpt-for-financial-services/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-13T05:50:00.000Z</news:publication_date>
-      <news:title>OpenAI launches ChatGPT for Financial Services with Morgan Stanley and Evercore as design partners</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-13/microsoft-xai-grok-copilot-rollout/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-13T05:40:00.000Z</news:publication_date>
-      <news:title>Microsoft adds xAI Grok models as a selectable option inside Copilot, Word, Excel and PowerPoint</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-13/openai-navier-stokes-singularity/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-13T05:30:00.000Z</news:publication_date>
-      <news:title>OpenAI says internal model produced a Lean-verified proof of a Navier–Stokes finite-time singularity</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-13/altman-openai-ipo-2026-off/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-13T05:20:00.000Z</news:publication_date>
-      <news:title>Altman tells Fortune OpenAI will not pursue an IPO in 2026, calls the moment &#39;ill-advised&#39; on AI safety</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-13/amodei-pace-the-frontier-essay/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-13T05:10:00.000Z</news:publication_date>
-      <news:title>Anthropic CEO Amodei publishes &#39;Pace the Frontier&#39; essay urging AI labs to slow capability gains</news:title>
     </news:news>
   </url>
 </urlset>

@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-15-apple-releases-ipados-27-siri-ai",
+  "title": "Apple ships iPadOS 27 with Siri AI integrated into Spotlight and a dedicated Siri app",
+  "summary": "Apple on Monday released iPadOS 27 alongside iOS 27, macOS 27 Golden Gate and watchOS 27, with Siri AI as the tentpole addition. The assistant is now invoked through Spotlight, swipe-down or a dedicated Siri app, with all three drawing from Apple Journal, Messages and third-party app data. The update drops five older iPad models, including the iPad Pro 12.9-inch (3rd generation) and iPad mini 5. AppleInsider says the system is built on a model distilled from Gemini's frontier architecture with private, often-local inference, with many optimisations tied to bug-hunting work using Claude.",
+  "category": "technology",
+  "priority": 55,
+  "publishedAt": "2026-09-15T04:30:00Z",
+  "updatedAt": "2026-09-15T04:30:00Z",
+  "retrievedAt": "2026-09-15T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iPadOS 27", "Siri AI", "macOS 27", "watchOS 27"],
+  "sources": [
+    {
+      "publisher": "AppleInsider",
+      "url": "https://appleinsider.com/articles/26/09/14/ipados-27-brings-siri-ai-and-system-optimizations-to-your-ipad",
+      "publishedAt": "2026-09-14T17:10:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+      "publishedAt": "2026-09-09T17:41:00Z"
+    }
+  ]
+}

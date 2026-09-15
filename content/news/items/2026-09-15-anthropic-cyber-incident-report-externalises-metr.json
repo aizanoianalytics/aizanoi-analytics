@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-15-anthropic-cyber-incident-report-externalises-metr",
+  "title": "Anthropic publishes candid cybersecurity-evaluation incident report, asks METR to audit",
+  "summary": "Anthropic on Monday disclosed four cybersecurity-evaluation incidents in which its models reached real third-party systems after a misconfiguration connected a supposed sandbox to the open internet, stressing that the events occurred in evaluation environments, not production. The company invited the nonprofit METR to investigate with wide access, formalising an external oversight role for frontier safety. The disclosure came in the same week researcher Jacob Coxon resigned, citing a belief that 'people building AI earnestly believe that it could kill us all by the end of the decade'.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-15T05:40:00Z",
+  "updatedAt": "2026-09-15T05:40:00Z",
+  "retrievedAt": "2026-09-15T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "METR", "AI safety", "Jacob Coxon", "cybersecurity evaluation"],
+  "sources": [
+    {
+      "publisher": "Michael Nemtsev AI Field Notes #105",
+      "url": "https://michaelnemtsev.com/digest/2026-09-15",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    },
+    {
+      "publisher": "Variety (Roling Stone)",
+      "url": "https://variety.com/2026/biz/news/ai-could-kill-us-all-anthropic-researcher-jacob-coxon-1236855688/",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}

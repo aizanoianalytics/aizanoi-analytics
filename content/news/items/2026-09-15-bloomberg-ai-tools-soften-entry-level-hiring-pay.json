@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-15-bloomberg-ai-tools-soften-entry-level-hiring-pay",
+  "title": "Bloomberg: AI tools line up with weaker pay growth and softer hiring for recent graduates",
+  "summary": "Bloomberg reported on Monday that the spread of AI tools now lines up with weaker pay growth and softer hiring for recent college graduates, the workers whose early tasks are the easiest to automate. The mechanism is structural: a hiring slowdown at the entry level, where a manager who once brought on two juniors now brings on one and hands the rest to a model. The finding adds to warnings from Anthropic researcher Jacob Coxon and Cohere's Aidan Gomez that labour-market disruption is arriving faster than policy responses.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-09-15T05:00:00Z",
+  "updatedAt": "2026-09-15T05:00:00Z",
+  "retrievedAt": "2026-09-15T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["AI hiring", "Bloomberg", "graduate jobs", "labour market"],
+  "sources": [
+    {
+      "publisher": "Michael Nemtsev AI Field Notes #105",
+      "url": "https://michaelnemtsev.com/digest/2026-09-15",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    }
+  ]
+}
