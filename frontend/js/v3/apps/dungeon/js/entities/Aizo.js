@@ -54,8 +54,13 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     // Zemin gölgesi + taban ölçek (squash-stretch referansı)
     this.baseScaleX = this.scaleX || 1;
     this.baseScaleY = this.scaleY || 1;
-    this.shadow = scene.add.ellipse(x, y + 14, 26, 8, 0x000000, 0.35);
-    this.shadow.setDepth(9);
+    this.shadow = null;
+    try {
+      if (typeof scene.add.ellipse === 'function') {
+        this.shadow = scene.add.ellipse(x, y + 14, 26, 8, 0x000000, 0.35);
+        this.shadow.setDepth(9);
+      }
+    } catch (_) { this.shadow = null; }
     // Kutsal hale: Aizo'nun mor çatlağını vurgulayan additive parlama
     try {
       this.halo = scene.add.sprite(x, y, 'effects', 4).setDepth(9).setAlpha(0.35);

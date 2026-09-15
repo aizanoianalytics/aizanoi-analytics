@@ -64,8 +64,9 @@ export class Structure extends Phaser.Physics.Arcade.Sprite {
     if (this.isPlayerBase) return;
     this.hp -= amount;
 
-    this.setTintFill(0xffffff);
-    this.scene.time.delayedCall(80, () => { if (this.active) this.clearTint(); });
+    if (typeof this.setTintFill === 'function') this.setTintFill(0xffffff);
+    else if (typeof this.setTint === 'function') this.setTint(0xff7777);
+    this.scene.time.delayedCall(80, () => { if (this.active && typeof this.clearTint === 'function') this.clearTint(); });
     this.drawHealthBar();
     if (typeof this.scene.createDamageSpark === 'function') {
       this.scene.createDamageSpark(this.x, this.y);

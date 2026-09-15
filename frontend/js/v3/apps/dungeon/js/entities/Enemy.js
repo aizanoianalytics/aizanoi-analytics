@@ -66,8 +66,13 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     // Zemin gölgesi: karakteri zeminden koparır, derinlik hissi
     const shadowW = this.isBoss ? 64 : 26;
-    this.shadow = scene.add.ellipse(x, y + (this.isBoss ? 40 : 14), shadowW, shadowW * 0.32, 0x000000, 0.35);
-    this.shadow.setDepth(8);
+    this.shadow = null;
+    try {
+      if (typeof scene.add.ellipse === 'function') {
+        this.shadow = scene.add.ellipse(x, y + (this.isBoss ? 40 : 14), shadowW, shadowW * 0.32, 0x000000, 0.35);
+        this.shadow.setDepth(8);
+      }
+    } catch (_) { this.shadow = null; }
 
     // Elit aurası: affix renginde nabız gibi atan hale — neyle karşılaştığın belli olsun
     this.eliteGlow = null;
@@ -230,7 +235,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     // Hasar flaşı: önce beyaz parıltı (Brotato juice), sonra sön
-    this.setTintFill(0xffffff);
+    if (typeof this.setTintFill === 'function') this.setTintFill(0xffffff);
+    else if (typeof this.setTint === 'function') this.setTint(0xff6666);
     // Ezilme: vuruşta jöle gibi squash
     try {
       this.scene.tweens.add({
