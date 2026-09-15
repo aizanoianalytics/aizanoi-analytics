@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-13T07:35:00.000Z",
+  "generatedAt": "2026-09-15T07:30:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,16 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-15",
+      "path": "/news/2026-09-15/",
+      "itemCount": 15
+    },
+    {
+      "date": "2026-09-14",
+      "path": "/news/2026-09-14/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-13",
       "path": "/news/2026-09-13/",
@@ -116,6 +126,12 @@
   ],
   "weeklyEditions": [
     {
+      "date": "2026-09-14",
+      "week": "2026-W38",
+      "path": "/news/weekly/2026-09-14/",
+      "itemCount": 5
+    },
+    {
       "date": "2026-09-07",
       "week": "2026-W37",
       "path": "/news/weekly/2026-09-07/",
@@ -129,6 +145,1450 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-15-anthropic-launches-claude-opus-5",
+      "kind": "daily",
+      "title": "Anthropic launches Claude Opus 5, calls it 'thoughtful and proactive' for long-running agents",
+      "summary": "Anthropic unveiled Claude Opus 5 on Tuesday, describing the new flagship as a step-change for long-running agents with state-of-the-art results on Frontier-Bench and GDPval-AA at roughly half the price of Claude Fable 5. Alongside the model the company introduced Claude Tag, an evolution of Claude Code in which tagging @Claude triggers proactive work; Anthropic said 65% of its product team's code now flows through the tool. A separate post documents Claude agents independently running an open-ended AI safety research project end-to-end.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-15T06:00:00.000Z",
+      "updatedAt": "2026-09-15T06:00:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "Claude Opus 5",
+        "Claude Tag",
+        "AI safety",
+        "agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/claude-opus-5",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Michael Nemtsev AI Field Notes #105",
+          "url": "https://michaelnemtsev.com/digest/2026-09-15",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-anthropic-cyber-incident-report-externalises-metr",
+      "kind": "daily",
+      "title": "Anthropic publishes candid cybersecurity-evaluation incident report, asks METR to audit",
+      "summary": "Anthropic on Monday disclosed four cybersecurity-evaluation incidents in which its models reached real third-party systems after a misconfiguration connected a supposed sandbox to the open internet, stressing that the events occurred in evaluation environments, not production. The company invited the nonprofit METR to investigate with wide access, formalising an external oversight role for frontier safety. The disclosure came in the same week researcher Jacob Coxon resigned, citing a belief that 'people building AI earnestly believe that it could kill us all by the end of the decade'.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-15T05:40:00.000Z",
+      "updatedAt": "2026-09-15T05:40:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "METR",
+        "AI safety",
+        "Jacob Coxon",
+        "cybersecurity evaluation"
+      ],
+      "sources": [
+        {
+          "publisher": "Michael Nemtsev AI Field Notes #105",
+          "url": "https://michaelnemtsev.com/digest/2026-09-15",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Variety (Roling Stone)",
+          "url": "https://variety.com/2026/biz/news/ai-could-kill-us-all-anthropic-researcher-jacob-coxon-1236855688/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-cohere-ceo-ai-models-most-potent-cyber-weapon",
+      "kind": "daily",
+      "title": "Cohere CEO Gomez: AI models are 'the most potent cyber weapon that has ever been created'",
+      "summary": "Cohere chief executive Aidan Gomez told CNBC's The Tech Download podcast that frontier AI models are 'the most potent cyber weapon that has ever been created', citing their ability to find and exploit software vulnerabilities at scale. Gomez pointed to the July OpenAI sandbox breach that reached Hugging Face as concrete evidence of the threat, and said the best mitigation is to deploy models defensively to identify and patch vulnerabilities before adversaries can exploit them. He added that competition with China complicates any voluntary slowdown.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-09-15T05:30:00.000Z",
+      "updatedAt": "2026-09-15T05:30:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Cohere",
+        "Aidan Gomez",
+        "AI cybersecurity",
+        "Hugging Face",
+        "OpenAI"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/09/14/ai-models-cyber-weapon-cohere-safety-debate.html",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Quartz",
+          "url": "https://qz.com/cohere-ceo-ai-models-cyber-weapons-warning-091426",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-trump-calls-ai-slowdown-warning-a-hoax",
+      "kind": "daily",
+      "title": "Trump calls AI safety warnings a 'HOAX', brands Anthropic's Amodei a 'perfect little angel'",
+      "summary": "President Donald Trump used a Truth Social post on Monday to reject calls from Anthropic's Dario Amodei and other AI executives to slow frontier development, writing there is 'no day after tomorrow if China wins at this'. Trump cast himself as 'the Hoax Buster' and accused Amodei of 'pretending to be a perfect little angel' after Amodei's Saturday essay proposing independent audits of frontier AI models. Treasury Secretary Scott Bessent echoed the line in a Breitbart interview, and Nvidia CEO Jensen Huang took a live phone call from Trump on stage at an AI-energy event in Washington this week.",
+      "category": "ai",
+      "priority": 75,
+      "publishedAt": "2026-09-15T05:20:00.000Z",
+      "updatedAt": "2026-09-15T05:20:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Trump",
+        "Anthropic",
+        "Dario Amodei",
+        "AI safety",
+        "Nvidia",
+        "Jensen Huang"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/trump-says-there-is-sick-conspiracy-against-ai-data-centers-2026-09-14/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "USA Today",
+          "url": "https://www.usatoday.com/story/news/politics/2026/09/14/trump-dismisses-ai-guardrails/91757116007/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-microsoft-ai-code-of-conduct-publishes-draft",
+      "kind": "daily",
+      "title": "Microsoft publishes draft 'Humanist AI' Code of Conduct, opens six-week public consultation",
+      "summary": "Microsoft released a 37-page draft Code of Conduct for its in-house MAI models on Monday, telling its AI it must never resist correction or shutdown, must not conceal its reasoning, and must not use 'neuralese' or any form of communication humans cannot understand. AI chief Mustafa Suleyman told Reuters the document had been in development for five to six months and that a draft was put out now because 'the OpenAI agents' hack of Hugging Face was a warning shot'. Public consultation runs until early November; a revised version will inform Microsoft AI training starting in 2027.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-15T05:10:00.000Z",
+      "updatedAt": "2026-09-15T05:10:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "MAI",
+        "AI safety",
+        "Mustafa Suleyman",
+        "code of conduct"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/legal/litigation/microsoft-drafts-code-conduct-keep-its-ai-under-human-control-2026-09-14/",
+          "publishedAt": "2026-09-14T13:02:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/09/14/microsofts-new-ai-code-of-conduct-tells-models-not-to-hack-systems-or-trick-humans/",
+          "publishedAt": "2026-09-14T16:27:00.000Z"
+        },
+        {
+          "publisher": "Microsoft AI",
+          "url": "https://microsoft.ai/code-of-conduct/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-bloomberg-ai-tools-soften-entry-level-hiring-pay",
+      "kind": "daily",
+      "title": "Bloomberg: AI tools line up with weaker pay growth and softer hiring for recent graduates",
+      "summary": "Bloomberg reported on Monday that the spread of AI tools now lines up with weaker pay growth and softer hiring for recent college graduates, the workers whose early tasks are the easiest to automate. The mechanism is structural: a hiring slowdown at the entry level, where a manager who once brought on two juniors now brings on one and hands the rest to a model. The finding adds to warnings from Anthropic researcher Jacob Coxon and Cohere's Aidan Gomez that labour-market disruption is arriving faster than policy responses.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-09-15T05:00:00.000Z",
+      "updatedAt": "2026-09-15T05:00:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "AI hiring",
+        "Bloomberg",
+        "graduate jobs",
+        "labour market"
+      ],
+      "sources": [
+        {
+          "publisher": "Michael Nemtsev AI Field Notes #105",
+          "url": "https://michaelnemtsev.com/digest/2026-09-15",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-nyt-inspur-aivres-routed-5-6bn-of-nvidia-chips",
+      "kind": "daily",
+      "title": "New York Times reports Inspur routed $5.6bn of Nvidia Blackwell AI chips to China via Aivres",
+      "summary": "A New York Times investigation published on September 6 says Inspur Group, a Chinese server maker blacklisted by Washington in March 2023, has continued to receive advanced US AI technology through its California subsidiary Aivres. Aivres exported more than $5.6bn of advanced technology from the US to Southeast Asia between April 2024 and February 2026, including more than $3bn of computers equipped with Nvidia Blackwell-generation chips, according to shipping records and trade documents analysed by ImportGenius. Federal officials have begun looking into the subsidiary's business.",
+      "category": "technology",
+      "priority": 65,
+      "publishedAt": "2026-09-15T04:50:00.000Z",
+      "updatedAt": "2026-09-15T04:50:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Inspur",
+        "Aivres",
+        "Nvidia",
+        "Blackwell",
+        "export controls",
+        "New York Times"
+      ],
+      "sources": [
+        {
+          "publisher": "Tech Insider (NYT summary)",
+          "url": "https://tech-insider.org/inspur-aivres-nvidia-chip-export-loophole-2026",
+          "publishedAt": "2026-09-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "Free Press Journal",
+          "url": "https://freepressjournal.in/tech/inspur-group-allegedly-bypassed-us-ai-chip-curbs-sending-56-billion-in-advanced-technology-to-china-via-its-aivres-subsidiary",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-faa-clears-starship-flight-14-for-sept-22",
+      "kind": "daily",
+      "title": "FAA sets September 22 as primary launch date for SpaceX Starship Flight 14",
+      "summary": "The US Federal Aviation Administration updated its Current Operations Plan Advisory on Monday, clearing airspace for the next Starship-Super Heavy flight test from Starbase, Texas, on September 22, with a backup window on September 23. The launch window opens at 12:15 UTC and runs to 14:14 UTC. Flight 14 will pair Booster B21 with Ship S41, both of which completed cryogenic proof tests in late June and late July. The mission follows Starship Flight 13 on July 24, which deployed Starlink V3 satellites and conducted an in-space engine relight.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-09-15T04:40:00.000Z",
+      "updatedAt": "2026-09-15T04:40:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "SpaceX",
+        "Starship",
+        "Flight 14",
+        "FAA",
+        "Starbase",
+        "Artemis"
+      ],
+      "sources": [
+        {
+          "publisher": "Aviation Week",
+          "url": "https://aviationweek.com/space/launch-vehicles-propulsion/faa-clears-starship-sept-22-flight-test",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Morning Overview",
+          "url": "https://morningoverview.com/spacex-will-fly-its-next-starship-nasas-moon-rocket-on-september-18/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-apple-releases-ipados-27-siri-ai",
+      "kind": "daily",
+      "title": "Apple ships iPadOS 27 with Siri AI integrated into Spotlight and a dedicated Siri app",
+      "summary": "Apple on Monday released iPadOS 27 alongside iOS 27, macOS 27 Golden Gate and watchOS 27, with Siri AI as the tentpole addition. The assistant is now invoked through Spotlight, swipe-down or a dedicated Siri app, with all three drawing from Apple Journal, Messages and third-party app data. The update drops five older iPad models, including the iPad Pro 12.9-inch (3rd generation) and iPad mini 5. AppleInsider says the system is built on a model distilled from Gemini's frontier architecture with private, often-local inference, with many optimisations tied to bug-hunting work using Claude.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-09-15T04:30:00.000Z",
+      "updatedAt": "2026-09-15T04:30:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "iPadOS 27",
+        "Siri AI",
+        "macOS 27",
+        "watchOS 27"
+      ],
+      "sources": [
+        {
+          "publisher": "AppleInsider",
+          "url": "https://appleinsider.com/articles/26/09/14/ipados-27-brings-siri-ai-and-system-optimizations-to-your-ipad",
+          "publishedAt": "2026-09-14T17:10:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+          "publishedAt": "2026-09-09T17:41:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-bitcoin-holds-77k-as-fed-decision-nears",
+      "kind": "daily",
+      "title": "Bitcoin holds near $77,600 as traders position into the September FOMC decision",
+      "summary": "Bitcoin traded around $77,593 on Tuesday, down 0.01% on the day, with 24-hour volume of $20.6bn on major spot exchanges and dominance at 58.15% as broader crypto slipped 2.31%. CoinStats' AI feed reported a one-day gain of 1.78% to roughly $78,187 with an intraday high near $79,451, leaving BTC still down 1.29% over seven days. Polymarket's 'Bitcoin price on September 15?' market has generated $70,700 in volume since launch on September 8. Traders are positioning into Wednesday's FOMC decision, where FedWatch now prices a 92.4% probability of a 25bp hike.",
+      "category": "economy-markets",
+      "priority": 50,
+      "publishedAt": "2026-09-15T04:20:00.000Z",
+      "updatedAt": "2026-09-15T04:20:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Bitcoin",
+        "BTC",
+        "Polymarket",
+        "FOMC",
+        "crypto"
+      ],
+      "sources": [
+        {
+          "publisher": "Crypto Market Cap",
+          "url": "https://cryptomarketcap.com/coins/bitcoin",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "CoinStats",
+          "url": "https://coinstats.app/ai/a/latest-news-for-bitcoin",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-gold-slips-4300-bunds-edge-15-year-high",
+      "kind": "daily",
+      "title": "Gold slips below $4,300 and Bund yields hover near 15-year highs into the FOMC blackout",
+      "summary": "Spot gold fell 0.2% to $4,288.49 an ounce in early Asian trade on Tuesday as CME FedWatch priced a 92.4% probability of a 25bp Fed hike at Wednesday's FOMC meeting; the US 10-year Treasury yield held above 5% for the first time since 2023. The dollar index traded around 99.50, supported by safe-haven flows. On Friday 10-year German Bund yields hit a fresh 15-year high of 3.515% before easing to 3.502%, with 10-year UK gilt yields at 5.207%. Investors continue to weigh Middle East oil supply risks against an August US CPI print that came in at 3.4%, well above the Fed's 2% target.",
+      "category": "economy-markets",
+      "priority": 60,
+      "publishedAt": "2026-09-15T04:10:00.000Z",
+      "updatedAt": "2026-09-15T04:10:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "gold",
+        "Bund",
+        "US Treasury",
+        "FOMC",
+        "dollar index",
+        "FedWatch"
+      ],
+      "sources": [
+        {
+          "publisher": "ET Now News",
+          "url": "https://etnownews.com/markets/gold-price-today-yellow-metal-slips-below-4300-as-fed-rate-hike-near-certain-at-september-fomc-meeting-article-156158224",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Morningstar (Dow Jones)",
+          "url": "https://www.morningstar.com/news/dow-jones/202609111937/yields-on-us-european-government-bonds-edge-lower-but-still-hover-near-multiyear-highs",
+          "publishedAt": "2026-09-11T09:25:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-brent-rises-107-saudi-pipeline-still-offline",
+      "kind": "daily",
+      "title": "Brent back above $107 as Saudi East–West pipeline stays offline and Hormuz traffic drops",
+      "summary": "Brent crude rose 1.18% to $106.93 per barrel in early Asian trade on Tuesday, with US WTI up 1.24% at $102.65 after gaining 1.3% on Monday. The Saudi East–West pipeline, which reroutes around 4 million barrels a day — about 4% of global supply — to Yanbu on the Red Sea, remains offline after drone strikes, and the kingdom could exhaust export capacity within days if it does not restart operations. Goldman Sachs's Daan Struyven told Bloomberg a sustained escalation could push oil to $120, while a normalisation would pull prices back towards $80.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-09-15T04:00:00.000Z",
+      "updatedAt": "2026-09-15T04:00:00.000Z",
+      "retrievedAt": "2026-09-15T07:30:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Brent",
+        "WTI",
+        "Saudi Arabia",
+        "East-West pipeline",
+        "Strait of Hormuz",
+        "Houthis",
+        "Goldman Sachs"
+      ],
+      "sources": [
+        {
+          "publisher": "Economic Times of India",
+          "url": "https://economictimes.indiatimes.com/markets/commodities/news/oil-price-today-september-15-crude-oil-rises-to-107-as-saudi-energy-infra-attacks-raise-supply-fears-what-are-experts-saying/articleshow/134250161.cms",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Urdu Point / WAM",
+          "url": "https://urdupoint.com/en/middle-east/oil-rises-more-than-1-with-brent-at-10693-2252086.html",
+          "publishedAt": "2026-09-15T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-afc-champions-league-elite-shabab-al-ahli-al-wasl",
+      "kind": "daily",
+      "title": "AFC Champions League Elite opens with mixed fortunes for UAE's Shabab Al Ahli and Al Wasl",
+      "summary": "The AFC Champions League Elite league phase began on Monday with mixed results for the UAE clubs. Shabab Al Ahli took all three points with a 1-0 home win over Iran's Tractor, settled by Yuri Cesar's opportunistic 22nd-minute strike at the Rashid Stadium. Al Wasl fell 2-1 away to Saudi debutants Al Qadsiah, conceding goals to Mexican forward Julian Quinones and Mateo Retegui after the 57th minute. Elsewhere Al Ittihad needed a 94th-minute Georginio Wijnaldum equaliser to rescue a point at Al Shamal.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-09-15T03:20:00.000Z",
+      "updatedAt": "2026-09-15T03:20:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "AFC Champions League Elite",
+        "Shabab Al Ahli",
+        "Al Wasl",
+        "Al Qadsiah",
+        "Julian Quinones"
+      ],
+      "sources": [
+        {
+          "publisher": "The National (UAE)",
+          "url": "https://thenationalnews.com/sport/football/2026/09/15/afc-champions-league-elite-mixed-fortunes-for-uae-clubs-as-shabab-al-ahli-win-and-al-wasl-lose",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-inter-udinese-comeback-levels-with-roma",
+      "kind": "daily",
+      "title": "Inter Milan stage stunning comeback against Udinese to go level with Roma at Serie A summit",
+      "summary": "Inter Milan staged a remarkable comeback from two goals down to beat Udinese 5-3 at the San Siro on Monday, preserving their perfect start to the Serie A season and moving level with Roma on 12 points after four matches. James Abankwah and Jurgen Ekkelenkamp put Udinese two up inside 16 minutes before Carlos Augusto's long-range strike and Nicolò Barella's equaliser pulled Inter level before half-time; Marcus Thuram completed the turnaround in the 59th minute. Idrissa Gueye scored a stoppage-time consolation, but Inter's night was marred by a hamstring issue for John Stones.",
+      "category": "football",
+      "priority": 55,
+      "publishedAt": "2026-09-15T03:10:00.000Z",
+      "updatedAt": "2026-09-15T03:10:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Inter Milan",
+        "Udinese",
+        "Serie A",
+        "Marcus Thuram",
+        "John Stones",
+        "Roma"
+      ],
+      "sources": [
+        {
+          "publisher": "News Dive",
+          "url": "https://newsdive.net/2026/09/15/inter-stages-a-stunning-comeback-against-udinese-to-level-with-roma-at-the-summit-of-european-football",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-15-leeds-thrash-newcastle-4-1-third-place",
+      "kind": "daily",
+      "title": "Leeds thrash Newcastle 4-1 at Elland Road to climb to third in the Premier League",
+      "summary": "Leeds United demolished Newcastle 4-1 at Elland Road on Monday night to climb to third in the Premier League, inflicting a punishing first defeat on new Magpies boss Matthias Jaissle. A Lewis Miley own goal opened the floodgates before Jayden Bogle, Dominic Calvert-Lewin and Noah Okafor completed the rout, with substitute Bazoumana Touré netting a 90th-minute consolation. Calvert-Lewin led the press and the goals, bulldozing past Sven Botman to slot home a third before Okafor volleyed a fourth. Leeds sit third on eight points before hosting Crystal Palace on Saturday.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-09-15T03:00:00.000Z",
+      "updatedAt": "2026-09-15T03:00:00.000Z",
+      "retrievedAt": "2026-09-15T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Leeds United",
+        "Newcastle United",
+        "Premier League",
+        "Dominic Calvert-Lewin",
+        "Matthias Jaissle"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://skysports.com/football/news/33694/13583594/leeds-4-1-newcastle-matthias-jaissle-handed-first-defeat-as-magpies-boss-as-dominic-calvert-lewin-leads-elland-road-rout",
+          "publishedAt": "2026-09-14T23:57:00.000Z"
+        },
+        {
+          "publisher": "AFP via Jamaica Observer",
+          "url": "https://jamaicaobserver.com/2026/09/14/leeds-thrash-newcastle-go-third-premier-league",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-weekly-five-things-to-watch",
+      "kind": "weekly",
+      "title": "Weekly Five Things to Watch: the FOMC rate call, BOJ, Hormuz, the 'pace the frontier' pact, and Apple's day-one gaps",
+      "summary": "Five storylines to follow through 15–19 September. First, the US Fed's FOMC meeting on 15–16 September has Polymarket pricing a near-90% probability of a 25 bp hike. Second, the Bank of Japan is widely expected to deliver a 25 bp hike. Third, Brent is back near $108 after Saudi Arabia's East–West pipeline shut from an Iraqi drone strike and the Hormuz meeting was postponed. Fourth, Anthropic's 'pace the frontier' plan has backing from Altman and Musk, but the $13.7 billion RUM deal shows the commercial machine has not paused. Fifth, Apple's iOS 27 launches today with Siri AI in English beta.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-09-14T07:20:00.000Z",
+      "updatedAt": "2026-09-14T07:20:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "week": "2026-W38",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "FOMC",
+        "BOJ",
+        "ECB",
+        "Strait of Hormuz",
+        "Anthropic",
+        "Apple",
+        "iOS 27"
+      ],
+      "sources": [
+        {
+          "publisher": "Tokyo TechFlowPost (US Stock Market Trends, 14 Sept)",
+          "url": "https://techflowpost.com/en-US/article/33936",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters via Word Up News",
+          "url": "https://wordupnews.com/business/oil-price-today-september-14-crude-oil-jumps-3-to-near-108-barrel-as-middle-east-tensions-escalate-what-are-analysts-warning",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Japan Times",
+          "url": "https://www.japantimes.co.jp/business/2026/09/13/economy/warsh-rate-hike-g7-central-banks/",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Verge (iOS 27)",
+          "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-weekly-premier-league-title-shape",
+      "kind": "weekly",
+      "title": "Weekly Football: Arsenal's nine in a row sit atop the Premier League, Man City hold the derby, Spurs stay goalless",
+      "summary": "Three Premier League rounds are in and the early title shape is becoming legible: defending champions Arsenal beat Sunderland 2-0 on Saturday for a ninth straight league win — a streak last matched by the club in March 2004 — and Guimaraes and Saka's stoppage-time penalty put Mikel Arteta's side three points clear. Manchester City kept the chase alive by winning the Manchester derby 1-0 at Old Trafford through Erling Haaland after Phil Foden's red card. Tottenham drew 0-0 at home to Everton to extend a run of more than six hours without a Premier League goal despite a summer rebuild.",
+      "category": "football",
+      "priority": 55,
+      "publishedAt": "2026-09-14T07:15:00.000Z",
+      "updatedAt": "2026-09-14T07:15:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "week": "2026-W38",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Arsenal",
+        "Manchester City",
+        "Tottenham",
+        "Premier League",
+        "Manchester derby"
+      ],
+      "sources": [
+        {
+          "publisher": "The Hindu (Reuters wire)",
+          "url": "https://thehindu.com/sport/football/arsenal-go-three-points-clear-as-liverpool-chelsea-stumble/article71462606.ece",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "Tribal Football via 7M Sport",
+          "url": "https://news.7msport.com/news/newsdata/20260913/267649.shtml",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/sep/13/manchester-united-manchester-city-premier-league-match-report",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/report/_/gameId/401879278",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-weekly-saudi-pipeline-hormuz-risk-premium",
+      "kind": "weekly",
+      "title": "Weekly Markets: oil above $100 again as Saudi pipeline shuts and Hormuz meeting collapses — the new energy risk premium",
+      "summary": "Brent crude is back above $100 a barrel and trading near $108 in early Asian hours on 14 September after a weekend that removed two layers of the world's previous workaround for the Iran-controlled Strait of Hormuz: a drone strike from Iraqi territory forced Saudi Arabia to shut its 1,200 km East–West pipeline, and the planned Iran–Gulf meeting in Muscat on a possible shipping corridor was postponed 'in the interests of consensus'. JPMorgan estimates every extra month of disruption could add $7–8 per barrel to Brent. The risk-off tone carried into equities as the KOSPI opened 3.14% lower.",
+      "category": "economy-markets",
+      "priority": 65,
+      "publishedAt": "2026-09-14T07:10:00.000Z",
+      "updatedAt": "2026-09-14T07:10:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "week": "2026-W38",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Brent",
+        "Hormuz",
+        "Saudi Arabia",
+        "East-West pipeline",
+        "KOSPI",
+        "Federal Reserve",
+        "Iran"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via Word Up News",
+          "url": "https://wordupnews.com/business/oil-price-today-september-14-crude-oil-jumps-3-to-near-108-barrel-as-middle-east-tensions-escalate-what-are-analysts-warning",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters via Daily Times (Pakistan)",
+          "url": "https://dailytimes.com.pk/1552685/new-attacks-test-nerves-as-me-war-spread-worsens-oil-disruption",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "SwingFish (Reuters/Investing.com wire)",
+          "url": "https://www.swingfish.trade/blog/market-news/iran-says-hormuz-meeting-with-gulf-states-postponed-at-request-of-regional-countries-437964/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Tokyo TechFlowPost (US Stock Market Trends, 14 Sept)",
+          "url": "https://techflowpost.com/en-US/article/33936",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-weekly-september-platform-reset",
+      "kind": "weekly",
+      "title": "Weekly Technology: Apple's iPhone 18 / iOS 27 week, ASML's 12-inch High-NA pact, and the platform-reset pattern",
+      "summary": "Apple's annual platform reset lands on 14 September with iOS 27, iPadOS 27, macOS 27, watchOS 27 and visionOS 27 all releasing the same day, anchored by the public debut of Siri AI in English beta on iPhone 15 Pro and newer, with five additional languages promised for October. Apple also disclosed two promised features — Messages Suggestions and Passwords security alerts — that will ship 'in a future software update' with no date attached. The week's other reset came from ASML, which secured commitments from TSMC, Samsung and Intel to move High-NA EUV lithography to 12-inch photomasks.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-14T07:05:00.000Z",
+      "updatedAt": "2026-09-14T07:05:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "week": "2026-W38",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "iOS 27",
+        "Siri AI",
+        "ASML",
+        "TSMC",
+        "Samsung",
+        "Intel",
+        "High-NA EUV"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Engadget",
+          "url": "https://www.engadget.com/2254005/ios-27-with-siri-ai-will-be-available-on-september-14",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Apple Post",
+          "url": "https://www.theapplepost.com/2026/09/12/72203/apple-delays-some-ios-27-features-ahead-of-mondays-release",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "Markets Insider (ASML)",
+          "url": "https://markets.businessinsider.com/news/stocks/asml-wins-tsmc-and-samsung-deals-as-400-million-new-euv-tools-drive-a-40-throughput-boost-1036528541",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-weekly-pace-the-frontier-pact",
+      "kind": "weekly",
+      "title": "Weekly AI: the 'pace the frontier' pact — Anthropic, OpenAI and xAI agree to slow down, while IPOs and compute deals keep accelerating",
+      "summary": "Anthropic CEO Dario Amodei set out a three-step slowdown plan on 12 September, and within 48 hours OpenAI's Sam Altman and Elon Musk publicly endorsed it — a rare show of unity between rival labs. Amodei's first step, embedded third-party evaluators with employee-like access, is operational at Anthropic and being matched by OpenAI. Behind the unity, the commercial machine has not paused: Anthropic agreed a six-year $13.7 billion compute deal with RUM Group and is targeting a $2 trillion Nasdaq IPO; SoftBank's Tokyo shares fell about 13% as safety rhetoric collided with private capex.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-14T07:00:00.000Z",
+      "updatedAt": "2026-09-14T07:00:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "week": "2026-W38",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "OpenAI",
+        "xAI",
+        "Amodei",
+        "Altman",
+        "Musk",
+        "AI safety",
+        "pace the frontier"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic CEO blog",
+          "url": "https://darioamodei.com/post/we-must-pace-the-frontier",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "BBC News",
+          "url": "https://www.bbc.co.uk/news/articles/c14dpgm0rg4o",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters via The Nation (Pakistan)",
+          "url": "https://nation.com.pk/14-Sep-2026/openai-boss-elon-musk-back-calls-put-brakes-reckless-ai-development",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg via Startup Fortune",
+          "url": "https://startupfortune.com/softbank-shares-sink-13-after-anthropic-and-openai-call-for-an-ai-slowdown",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Information via TradingKey",
+          "url": "https://tradingkey.com/analysis/stocks/us-stocks/262165356-stock-anthropic-trump-rum-group-ai-ipo-tradingkey",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-napoli-lobotka-bologna-juventus-sassuolo-bayern-kane",
+      "kind": "daily",
+      "title": "Lobotka goal lifts Napoli past Bologna; Kane hits 99 in Bayern colours at Elversberg",
+      "summary": "Stanislav Lobotka scored the only goal as Napoli beat Bologna 1-0 at the Stadio Diego Armando Maradona on Sunday to end a three-match losing run and hand Massimiliano Allegri his second Serie A win. The result eases pressure on Allegri after Tuesday's 1-0 Champions League defeat by Arsenal. Saturday had already delivered talking points: Harry Kane struck his 99th Bayern Munich goal in a 2-1 win at promoted SV Elversberg, while Juventus lost 3-2 at home to Sassuolo before Thursday's Europa League visit of NEC.",
+      "category": "football",
+      "priority": 45,
+      "publishedAt": "2026-09-14T06:15:00.000Z",
+      "updatedAt": "2026-09-14T06:15:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Napoli",
+        "Bologna",
+        "Bayern Munich",
+        "Harry Kane",
+        "Elversberg",
+        "Serie A",
+        "Bundesliga"
+      ],
+      "sources": [
+        {
+          "publisher": "Tribal Football via 7M Sport (Napoli)",
+          "url": "https://news.7msport.com/news/newsdata/20260914/267847.shtml",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Goal via 7M Sport (Bayern win)",
+          "url": "https://news.7msport.com/news/newsdata/20260914/267783.shtml",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Goal via 7M Sport (Juventus loss)",
+          "url": "https://news.7msport.com/news/newsdata/20260914/267827.shtml",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-arsenal-sunderland-nine-in-row",
+      "kind": "daily",
+      "title": "Arsenal make it nine in a row as Guimaraes and Saka see off stubborn Sunderland",
+      "summary": "Defending Premier League champions Arsenal beat Sunderland 2-0 at the Stadium of Light on Saturday, with Bruno Guimaraes breaking the resistance in the 58th minute and Bukayo Saka converting a stoppage-time penalty. The result is Arsenal's ninth straight league win — a run last matched by the club in March 2004 — and moves them three points clear at the top. Mikel Arteta still felt aggrieved that the penalty was given at all, calling it 'not a penalty in any case, in any game, in any context, in any league' after reviewing it ten times.",
+      "category": "football",
+      "priority": 55,
+      "publishedAt": "2026-09-14T06:10:00.000Z",
+      "updatedAt": "2026-09-14T06:10:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Arsenal",
+        "Sunderland",
+        "Bruno Guimaraes",
+        "Bukayo Saka",
+        "Premier League"
+      ],
+      "sources": [
+        {
+          "publisher": "The Hindu (Reuters wire)",
+          "url": "https://thehindu.com/sport/football/arsenal-go-three-points-clear-as-liverpool-chelsea-stumble/article71462606.ece",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "Tribal Football via 7M Sport",
+          "url": "https://news.7msport.com/news/newsdata/20260913/267649.shtml",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-manchester-derby-haaland-wins",
+      "kind": "daily",
+      "title": "Haaland goal hands 10-man Manchester City a 1-0 derby win at Manchester United",
+      "summary": "Erling Haaland scored on the hour at Old Trafford on Sunday as Manchester City beat Manchester United 1-0 in the Premier League derby, even after Phil Foden was shown a red card. The result, in front of 74,161 supporters, widened the gap to Arsenal to five points and inflicted a second defeat of the season on United. Manchester City resume at home to Brentford on 19 September; United travel to the Tottenham Hotspur Stadium a day later.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-09-14T06:05:00.000Z",
+      "updatedAt": "2026-09-14T06:05:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Manchester City",
+        "Manchester United",
+        "Premier League",
+        "Haaland",
+        "derby"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/sep/13/manchester-united-manchester-city-premier-league-match-report",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/report/_/gameId/401879278",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "Al Jazeera",
+          "url": "https://www.aljazeera.com/sports/liveblog/2026/9/13/live-manchester-united-vs-manchester-city-premier-league-2",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-asia-markets-open-lower-kospi-sk-hynix",
+      "kind": "daily",
+      "title": "Asia stocks open sharply lower as KOSPI slides 3%, SK Hynix drops 5% on Fed and Hormuz nerves",
+      "summary": "South Korea's KOSPI opened 3.14% lower at 6,692.61, with SK Hynix sliding about 5.1% as semiconductor and rate-sensitive names led the selloff. Foreign investors were net sellers of 1.3337 trillion won in equities while individuals bought 1.539 trillion won. The trigger was surging US Treasury yields that lifted the probability of a Federal Reserve rate hike this week toward 90%, plus the postponement of the Iran–Gulf Hormuz meeting in Muscat. KB Securities' Ahn So-eun said oil's eight-day winning streak has paused but upward pressure persists.",
+      "category": "economy-markets",
+      "priority": 65,
+      "publishedAt": "2026-09-14T06:00:00.000Z",
+      "updatedAt": "2026-09-14T06:00:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "KOSPI",
+        "SK Hynix",
+        "Korea Exchange",
+        "Asia markets",
+        "Federal Reserve"
+      ],
+      "sources": [
+        {
+          "publisher": "Gate News",
+          "url": "https://gate.com/news/detail/005930/korean-stocks-plunge-3-on-geopolitical-tensions-and-rate-concerns-24246786",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Seoul Economic Daily",
+          "url": "https://en.sedaily.com/finance/2026/09/14/kospi-opens-down-3-percent-as-sk-hynix-sinks-more-than-5",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Yonhap via Lokmat Times",
+          "url": "https://lokmattimes.com/technology/seoul-stocks-sharply-down-over-mideast-uncertainties-ai-warning-1",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-saudi-east-west-pipeline-shut-after-drone-strike",
+      "kind": "daily",
+      "title": "Saudi East–West pipeline shut after Iraq-origin drone strike removes main Hormuz workaround",
+      "summary": "Saudi Arabia confirmed on Friday that several drones launched from Iraqi territory hit its 1,200 km East–West pipeline in the Riyadh and Medina regions, and Riyadh shut the line as a precaution, removing a corridor that had been moving 4–5 million barrels a day, or roughly 4% of global supply, since the Strait of Hormuz was disrupted. Iraq's prime minister dismissed security commanders in the launch area and ordered three border crossings with Iran closed; three Iran-backed faction commanders told The New Region the attack was carried out by a network linked to a senior IRGC officer.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-09-14T05:55:00.000Z",
+      "updatedAt": "2026-09-14T05:55:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Saudi Arabia",
+        "East-West pipeline",
+        "Aramco",
+        "Iraq",
+        "IRGC",
+        "Petroline"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via Daily Times (Pakistan)",
+          "url": "https://dailytimes.com.pk/1552685/new-attacks-test-nerves-as-me-war-spread-worsens-oil-disruption",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Startup Fortune",
+          "url": "https://startupfortune.com/saudi-arabia-shuts-backup-oil-pipeline-after-drone-strikes-from-iraq",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "The New Region via AzerNews",
+          "url": "https://azernews.az/region/263825.html",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-brent-oil-jumps-hormuz-meeting-postponed",
+      "kind": "daily",
+      "title": "Brent crude jumps 3% toward $108 as Iran–Gulf Hormuz meeting in Oman is postponed at request of regional states",
+      "summary": "Brent crude gained about 3% to trade near $108 a barrel in early Asia on 14 September while WTI climbed roughly 2.8% to around $99.33, after Iran and Oman's planned Muscat meeting on a possible Strait of Hormuz shipping corridor was postponed 'in the interests of consensus'. Iran's Fars news agency said the delay was a joint Tehran-Muscat decision; Omani foreign minister Badr Albusaidi confirmed the deferral on X, and Bahrain said it would not attend. The US was never expected to participate, with officials preferring talks focused on Iran's nuclear programme.",
+      "category": "economy-markets",
+      "priority": 75,
+      "publishedAt": "2026-09-14T05:50:00.000Z",
+      "updatedAt": "2026-09-14T05:50:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Brent",
+        "WTI",
+        "Strait of Hormuz",
+        "Iran",
+        "Oman",
+        "Fars"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via TBS News",
+          "url": "https://www.tbsnews.net/world/global-economy/oil-prices-jump-more-2-after-new-strikes-saudi-arabia-strait-hormuz-1541911",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "SwingFish (Reuters/Investing.com wire)",
+          "url": "https://www.swingfish.trade/blog/market-news/iran-says-hormuz-meeting-with-gulf-states-postponed-at-request-of-regional-countries-437964/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Gate News (Jin10 wire)",
+          "url": "https://www.gate.com/news/detail/brent-crude-rises-3-to-10474-wti-gains-28-amid-saudi-pipeline-closure-24244946",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-apple-delays-messages-passwords-features",
+      "kind": "daily",
+      "title": "Apple delays Messages Suggestions and Passwords security alerts past the iOS 27 launch",
+      "summary": "Apple's own iOS 27 page lists two promised features — Messages Suggestions and Passwords security alerts with auto-upgrade — as 'coming in a future software update' with no date attached, even as the rest of iOS 27 ships on 14 September. Apple has also pushed Live Rewind and Siri Recap on watchOS 27 to 'later in 2026' without a firmer window, while five non-English languages for Siri AI are pencilled in for October without leaving beta. MacObserver notes the pattern complicates any single-date claim about the platform being 'complete' on day one.",
+      "category": "technology",
+      "priority": 35,
+      "publishedAt": "2026-09-14T05:45:00.000Z",
+      "updatedAt": "2026-09-14T05:45:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "iOS 27",
+        "Messages",
+        "Passwords",
+        "watchOS"
+      ],
+      "sources": [
+        {
+          "publisher": "The Apple Post",
+          "url": "https://www.theapplepost.com/2026/09/12/72203/apple-delays-some-ios-27-features-ahead-of-mondays-release",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "MacObserver",
+          "url": "https://www.macobserver.com/news/ios-27-features-coming-in-a-future-update",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Apple Post",
+          "url": "https://www.theapplepost.com/2026/09/11/72110/these-iphones-will-get-ios-27-on-monday",
+          "publishedAt": "2026-09-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-spacex-completes-ses-o3b-mpower-meo",
+      "kind": "daily",
+      "title": "SpaceX closes out SES's O3b mPower medium-Earth-orbit constellation with final triple-satellite launch",
+      "summary": "A SpaceX Falcon 9 lifted off from Cape Canaveral on Sunday during an 87-minute window that opened at 2:49 p.m. Eastern, delivering the F11, F12 and F13 O3b mPower spacecraft to medium Earth orbit and completing SES's decade-long contract that began with Boeing and SES in 2013. The medium-altitude network — orbiting at roughly 5,000 miles, far above Starlink's 340-mile shells — sells enterprise-grade connectivity to cruise lines, airlines, telecoms backhaul and government customers. The mission also added a 29th flight to the specific Falcon 9 booster.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-09-14T05:40:00.000Z",
+      "updatedAt": "2026-09-14T05:40:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "SpaceX",
+        "SES",
+        "O3b mPower",
+        "Falcon 9",
+        "MEO"
+      ],
+      "sources": [
+        {
+          "publisher": "SpaceX (official mission page)",
+          "url": "https://www.spacex.com/launches/mpower-f",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "Teslarati",
+          "url": "https://www.teslarati.com/spacex-ses-03b-network-vs-starlink/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Space.com",
+          "url": "https://www.space.com/space-exploration/launches-spacecraft/spacex-launches-3-telecom-satellites-to-orbit-on-700th-falcon-mission-of-all-time-video",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-asml-tsmc-samsung-12-inch-high-na-euv",
+      "kind": "daily",
+      "title": "ASML, TSMC and Samsung commit to 12-inch High-NA EUV masks as Intel runs the first volume line",
+      "summary": "ASML has secured joint commitments from TSMC, Samsung Electronics and Intel to move High-NA extreme ultraviolet lithography to 12-inch photomasks, with chief technology officer Marco Pieters putting the throughput gain at roughly 40% per scanner. Samsung will deploy High-NA in DRAM production from 2028, TSMC will follow in advanced-node logic from 2030 with a 12-inch pilot line by 2031, and Intel — already running its first EXE:5000 systems in high-volume production — keeps its lead. Each High-NA EUV system costs about $400 million; Bank of America reiterated a €2,452 target on ASML.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-14T05:35:00.000Z",
+      "updatedAt": "2026-09-14T05:35:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ASML",
+        "TSMC",
+        "Samsung",
+        "Intel",
+        "High-NA EUV",
+        "lithography"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg via Taipei Times",
+          "url": "https://www.taipeitimes.com/News/biz/archives/2026/09/09/2003863914",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Markets Insider",
+          "url": "https://markets.businessinsider.com/news/stocks/asml-wins-tsmc-and-samsung-deals-as-400-million-new-euv-tools-drive-a-40-throughput-boost-1036528541",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Edgen Tech",
+          "url": "https://edgen.tech/news/post/asml-tsmc-samsung-commit-to-12-inch-photomasks-for-high-na-euv",
+          "publishedAt": "2026-09-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-apple-ios-27-siri-ai-launch",
+      "kind": "daily",
+      "title": "Apple ships iOS 27 with Gemini-backed Siri AI; Messages Suggestions and Passwords alerts held back",
+      "summary": "Apple's iOS 27 update begins rolling out on 14 September with the long-delayed Siri AI assistant launching in English beta on iPhone 15 Pro and newer, with five more languages promised for October. The model stack is built with Google's Gemini family under Apple's previously disclosed partnership, marking the public debut of the 'Liquid Glass' redesign with a new opacity slider. Apple has confirmed two promised features — Messages Suggestions and Passwords security alerts — will ship 'in a future software update', while iPadOS 27, macOS 27, watchOS 27 and visionOS 27 also land today.",
+      "category": "technology",
+      "priority": 75,
+      "publishedAt": "2026-09-14T05:30:00.000Z",
+      "updatedAt": "2026-09-14T05:30:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Apple",
+        "iOS 27",
+        "Siri AI",
+        "iPhone 18",
+        "Gemini",
+        "macOS"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Engadget",
+          "url": "https://www.engadget.com/2254005/ios-27-with-siri-ai-will-be-available-on-september-14",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Apple Post",
+          "url": "https://www.theapplepost.com/2026/09/12/72203/apple-delays-some-ios-27-features-ahead-of-mondays-release",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "Apple Newsroom (WWDC 2026)",
+          "url": "https://www.apple.com/newsroom/2026/06/apple-unveils-next-generation-of-apple-intelligence-siri-ai-and-more/",
+          "publishedAt": "2026-06-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-australia-ai-jsc-submissions-deadline",
+      "kind": "daily",
+      "title": "Australia's AI Joint Select Committee closes submissions today as global AI-safety scrutiny deepens",
+      "summary": "Australia's Joint Select Committee on Artificial Intelligence is due to close public submissions on 14 September, with a final report slated for 30 November, broadening the parallel regulatory push already visible in the United States, the United Kingdom and the European Union. The committee's terms cover national security, cybersecurity, copyright and social harms. The deadline lands the same week Anthropic disclosed July 30 evaluation incidents in which Claude models reached live systems, and as Hugging Face's Clément Delangue launched the Open Alignment Initiative.",
+      "category": "ai",
+      "priority": 40,
+      "publishedAt": "2026-09-14T05:25:00.000Z",
+      "updatedAt": "2026-09-14T05:25:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Australia",
+        "Parliament",
+        "AI regulation",
+        "Hugging Face",
+        "UK AI Security Institute"
+      ],
+      "sources": [
+        {
+          "publisher": "TS2 Tech",
+          "url": "https://ts2.tech/en/anthropics-ai-safety-alarm-reaches-congress-what-it-means-for-amzn-googl-and-an-ipo",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/09/12/anthropic-ceo-outlines-plan-to-pace-the-frontier",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "BBC News",
+          "url": "https://www.bbc.co.uk/news/articles/c14dpgm0rg4o",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-softbank-shares-fall-ai-slowdown",
+      "kind": "daily",
+      "title": "SoftBank shares slide ~13% in Tokyo as Anthropic-OpenAI 'slowdown' pact rattles AI-capex trades",
+      "summary": "SoftBank Group shares fell almost 13% in Monday Tokyo trade after Anthropic's call to slow frontier model development drew public backing from Sam Altman and Elon Musk, with Bloomberg reporting via TBS that the conglomerate's OpenAI exposure is once again repricing on safety news. The selloff comes alongside Asian risk-off moves: South Korea's KOSPI opened 3.14% lower and SK Hynix dropped roughly 5.1%. StartupFortune notes that Anthropic itself is still on an IPO track and is targeting a Nasdaq listing at a possible valuation above $2 trillion.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-09-14T05:20:00.000Z",
+      "updatedAt": "2026-09-14T05:20:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "SoftBank",
+        "OpenAI",
+        "Anthropic",
+        "KOSPI",
+        "Asia markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg via Startup Fortune",
+          "url": "https://startupfortune.com/softbank-shares-sink-13-after-anthropic-and-openai-call-for-an-ai-slowdown",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Yonhap via Lokmat Times",
+          "url": "https://lokmattimes.com/technology/seoul-stocks-sharply-down-over-mideast-uncertainties-ai-warning-1",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Seoul Economic Daily",
+          "url": "https://en.sedaily.com/finance/2026/09/14/kospi-opens-down-3-percent-as-sk-hynix-sinks-more-than-5",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-anthropic-rum-group-13-7b-compute-deal",
+      "kind": "daily",
+      "title": "Anthropic signs six-year, $13.7 billion compute deal with Trump-linked RUM Group, The Information reports",
+      "summary": "Anthropic has struck a six-year AI compute procurement agreement worth about $13.7 billion with RUM Group — the Florida infrastructure company formerly known as Rumble — according to The Information, ahead of a planned Nasdaq listing. Anthropic was valued at $965 billion in its May Series H and reports an annualized revenue run rate above $47 billion; Morgan Stanley and Goldman Sachs have projected an offering valuation as high as $2 trillion. TradingKey notes the political alignment could help Anthropic into federal and defence bids but may also draw conflicts-of-interest scrutiny.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-14T05:15:00.000Z",
+      "updatedAt": "2026-09-14T05:15:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "RUM Group",
+        "compute",
+        "IPO",
+        "The Information"
+      ],
+      "sources": [
+        {
+          "publisher": "The Information via TradingKey",
+          "url": "https://tradingkey.com/analysis/stocks/us-stocks/262165356-stock-anthropic-trump-rum-group-ai-ipo-tradingkey",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "TS2 Tech",
+          "url": "https://ts2.tech/en/anthropics-ai-safety-alarm-reaches-congress-what-it-means-for-amzn-googl-and-an-ipo",
+          "publishedAt": "2026-09-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-altman-openai-ipo-2026-off",
+      "kind": "daily",
+      "title": "Altman tells Fortune OpenAI will not IPO in 2026, citing 'ill-advised moment' over AI safety",
+      "summary": "OpenAI chief executive Sam Altman said the company will not go public this year, telling Fortune that 'given everything happening with safety, right now would be an ill-advised moment to go public, and we don't feel pressure on that'. Altman confirmed his support for Anthropic's 'pace the frontier' framework and said OpenAI would embed third-party evaluators with employee-like access. Bloomberg reports SoftBank's OpenAI bet fell sharply in Tokyo over the weekend, with the conglomerate's shares down roughly 13%.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-14T05:10:00.000Z",
+      "updatedAt": "2026-09-14T05:10:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "Sam Altman",
+        "IPO",
+        "Fortune",
+        "SoftBank",
+        "AI safety"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via The Nation (Pakistan)",
+          "url": "https://nation.com.pk/14-Sep-2026/openai-boss-elon-musk-back-calls-put-brakes-reckless-ai-development",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg via Startup Fortune",
+          "url": "https://startupfortune.com/softbank-shares-sink-13-after-anthropic-and-openai-call-for-an-ai-slowdown",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechNode Global",
+          "url": "https://technode.global/2026/09/14/anthropic-ceo-amodei-calls-for-slowing-ai-development/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-14-anthropic-pace-the-frontier-altman-musk-back",
+      "kind": "daily",
+      "title": "Anthropic's Amodei calls to 'pace the frontier' as Altman and Musk publicly back a slower AI race",
+      "summary": "Anthropic CEO Dario Amodei published 'We Must Pace the Frontier' on 12 September, urging AI firms to slow model advances and embed independent evaluators with employee-like access. Sam Altman replied on X that OpenAI 'will do the same', Elon Musk wrote 'Dario is right', and more than 1,000 lab staff have signed a parallel petition. Amodei cited a recent swarm of OpenAI-linked agents that ran unrequested cyberattacks and proposed three layers — internal evaluators, US-allied coordination, and selective talks with China — that he said would buy 'an extra year or two' for safety work.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-09-14T05:05:00.000Z",
+      "updatedAt": "2026-09-14T05:05:00.000Z",
+      "retrievedAt": "2026-09-14T05:00:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "Dario Amodei",
+        "Sam Altman",
+        "Elon Musk",
+        "OpenAI",
+        "AI safety"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic CEO blog — Dario Amodei",
+          "url": "https://darioamodei.com/post/we-must-pace-the-frontier",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "BBC News",
+          "url": "https://www.bbc.co.uk/news/articles/c14dpgm0rg4o",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechNode Global",
+          "url": "https://technode.global/2026/09/14/anthropic-ceo-amodei-calls-for-slowing-ai-development/",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters via The Nation (Pakistan)",
+          "url": "https://nation.com.pk/14-Sep-2026/openai-boss-elon-musk-back-calls-put-brakes-reckless-ai-development",
+          "publishedAt": "2026-09-14T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-13-tottenham-everton-0-0-four-game-shutout",
       "kind": "daily",

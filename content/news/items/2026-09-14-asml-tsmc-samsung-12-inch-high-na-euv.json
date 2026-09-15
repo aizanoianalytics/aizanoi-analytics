@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-14-asml-tsmc-samsung-12-inch-high-na-euv",
+  "title": "ASML, TSMC and Samsung commit to 12-inch High-NA EUV masks as Intel runs the first volume line",
+  "summary": "ASML has secured joint commitments from TSMC, Samsung Electronics and Intel to move High-NA extreme ultraviolet lithography to 12-inch photomasks, with chief technology officer Marco Pieters putting the throughput gain at roughly 40% per scanner. Samsung will deploy High-NA in DRAM production from 2028, TSMC will follow in advanced-node logic from 2030 with a 12-inch pilot line by 2031, and Intel — already running its first EXE:5000 systems in high-volume production — keeps its lead. Each High-NA EUV system costs about $400 million; Bank of America reiterated a €2,452 target on ASML.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-14T05:35:00Z",
+  "updatedAt": "2026-09-14T05:35:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ASML", "TSMC", "Samsung", "Intel", "High-NA EUV", "lithography"],
+  "sources": [
+    {
+      "publisher": "Bloomberg via Taipei Times",
+      "url": "https://www.taipeitimes.com/News/biz/archives/2026/09/09/2003863914",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    },
+    {
+      "publisher": "Markets Insider",
+      "url": "https://markets.businessinsider.com/news/stocks/asml-wins-tsmc-and-samsung-deals-as-400-million-new-euv-tools-drive-a-40-throughput-boost-1036528541",
+      "publishedAt": "2026-09-08T00:00:00Z"
+    },
+    {
+      "publisher": "Edgen Tech",
+      "url": "https://edgen.tech/news/post/asml-tsmc-samsung-commit-to-12-inch-photomasks-for-high-na-euv",
+      "publishedAt": "2026-09-08T00:00:00Z"
+    }
+  ]
+}

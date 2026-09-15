@@ -1,6 +1,286 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/anthropic-launches-claude-opus-5/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T06:00:00.000Z</news:publication_date>
+      <news:title>Anthropic launches Claude Opus 5, calls it &#39;thoughtful and proactive&#39; for long-running agents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/anthropic-cyber-incident-report-externalises-metr/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T05:40:00.000Z</news:publication_date>
+      <news:title>Anthropic publishes candid cybersecurity-evaluation incident report, asks METR to audit</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/cohere-ceo-ai-models-most-potent-cyber-weapon/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T05:30:00.000Z</news:publication_date>
+      <news:title>Cohere CEO Gomez: AI models are &#39;the most potent cyber weapon that has ever been created&#39;</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/trump-calls-ai-slowdown-warning-a-hoax/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T05:20:00.000Z</news:publication_date>
+      <news:title>Trump calls AI safety warnings a &#39;HOAX&#39;, brands Anthropic&#39;s Amodei a &#39;perfect little angel&#39;</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/microsoft-ai-code-of-conduct-publishes-draft/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T05:10:00.000Z</news:publication_date>
+      <news:title>Microsoft publishes draft &#39;Humanist AI&#39; Code of Conduct, opens six-week public consultation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/bloomberg-ai-tools-soften-entry-level-hiring-pay/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T05:00:00.000Z</news:publication_date>
+      <news:title>Bloomberg: AI tools line up with weaker pay growth and softer hiring for recent graduates</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/nyt-inspur-aivres-routed-5-6bn-of-nvidia-chips/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:50:00.000Z</news:publication_date>
+      <news:title>New York Times reports Inspur routed $5.6bn of Nvidia Blackwell AI chips to China via Aivres</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/faa-clears-starship-flight-14-for-sept-22/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:40:00.000Z</news:publication_date>
+      <news:title>FAA sets September 22 as primary launch date for SpaceX Starship Flight 14</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/apple-releases-ipados-27-siri-ai/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:30:00.000Z</news:publication_date>
+      <news:title>Apple ships iPadOS 27 with Siri AI integrated into Spotlight and a dedicated Siri app</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/bitcoin-holds-77k-as-fed-decision-nears/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:20:00.000Z</news:publication_date>
+      <news:title>Bitcoin holds near $77,600 as traders position into the September FOMC decision</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/gold-slips-4300-bunds-edge-15-year-high/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:10:00.000Z</news:publication_date>
+      <news:title>Gold slips below $4,300 and Bund yields hover near 15-year highs into the FOMC blackout</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/brent-rises-107-saudi-pipeline-still-offline/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T04:00:00.000Z</news:publication_date>
+      <news:title>Brent back above $107 as Saudi East–West pipeline stays offline and Hormuz traffic drops</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/afc-champions-league-elite-shabab-al-ahli-al-wasl/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T03:20:00.000Z</news:publication_date>
+      <news:title>AFC Champions League Elite opens with mixed fortunes for UAE&#39;s Shabab Al Ahli and Al Wasl</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/inter-udinese-comeback-levels-with-roma/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T03:10:00.000Z</news:publication_date>
+      <news:title>Inter Milan stage stunning comeback against Udinese to go level with Roma at Serie A summit</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-15/leeds-thrash-newcastle-4-1-third-place/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-15T03:00:00.000Z</news:publication_date>
+      <news:title>Leeds thrash Newcastle 4-1 at Elland Road to climb to third in the Premier League</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-09-14/weekly-five-things-to-watch/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T07:20:00.000Z</news:publication_date>
+      <news:title>Weekly Five Things to Watch: the FOMC rate call, BOJ, Hormuz, the &#39;pace the frontier&#39; pact, and Apple&#39;s day-one gaps</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-09-14/weekly-premier-league-title-shape/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T07:15:00.000Z</news:publication_date>
+      <news:title>Weekly Football: Arsenal&#39;s nine in a row sit atop the Premier League, Man City hold the derby, Spurs stay goalless</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-09-14/weekly-saudi-pipeline-hormuz-risk-premium/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T07:10:00.000Z</news:publication_date>
+      <news:title>Weekly Markets: oil above $100 again as Saudi pipeline shuts and Hormuz meeting collapses — the new energy risk premium</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-09-14/weekly-september-platform-reset/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T07:05:00.000Z</news:publication_date>
+      <news:title>Weekly Technology: Apple&#39;s iPhone 18 / iOS 27 week, ASML&#39;s 12-inch High-NA pact, and the platform-reset pattern</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-09-14/weekly-pace-the-frontier-pact/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T07:00:00.000Z</news:publication_date>
+      <news:title>Weekly AI: the &#39;pace the frontier&#39; pact — Anthropic, OpenAI and xAI agree to slow down, while IPOs and compute deals keep accelerating</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/napoli-lobotka-bologna-juventus-sassuolo-bayern-kane/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T06:15:00.000Z</news:publication_date>
+      <news:title>Lobotka goal lifts Napoli past Bologna; Kane hits 99 in Bayern colours at Elversberg</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/arsenal-sunderland-nine-in-row/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T06:10:00.000Z</news:publication_date>
+      <news:title>Arsenal make it nine in a row as Guimaraes and Saka see off stubborn Sunderland</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/manchester-derby-haaland-wins/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T06:05:00.000Z</news:publication_date>
+      <news:title>Haaland goal hands 10-man Manchester City a 1-0 derby win at Manchester United</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/asia-markets-open-lower-kospi-sk-hynix/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T06:00:00.000Z</news:publication_date>
+      <news:title>Asia stocks open sharply lower as KOSPI slides 3%, SK Hynix drops 5% on Fed and Hormuz nerves</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/saudi-east-west-pipeline-shut-after-drone-strike/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:55:00.000Z</news:publication_date>
+      <news:title>Saudi East–West pipeline shut after Iraq-origin drone strike removes main Hormuz workaround</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/brent-oil-jumps-hormuz-meeting-postponed/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:50:00.000Z</news:publication_date>
+      <news:title>Brent crude jumps 3% toward $108 as Iran–Gulf Hormuz meeting in Oman is postponed at request of regional states</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/apple-delays-messages-passwords-features/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:45:00.000Z</news:publication_date>
+      <news:title>Apple delays Messages Suggestions and Passwords security alerts past the iOS 27 launch</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/spacex-completes-ses-o3b-mpower-meo/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:40:00.000Z</news:publication_date>
+      <news:title>SpaceX closes out SES&#39;s O3b mPower medium-Earth-orbit constellation with final triple-satellite launch</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/asml-tsmc-samsung-12-inch-high-na-euv/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:35:00.000Z</news:publication_date>
+      <news:title>ASML, TSMC and Samsung commit to 12-inch High-NA EUV masks as Intel runs the first volume line</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/apple-ios-27-siri-ai-launch/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:30:00.000Z</news:publication_date>
+      <news:title>Apple ships iOS 27 with Gemini-backed Siri AI; Messages Suggestions and Passwords alerts held back</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/australia-ai-jsc-submissions-deadline/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:25:00.000Z</news:publication_date>
+      <news:title>Australia&#39;s AI Joint Select Committee closes submissions today as global AI-safety scrutiny deepens</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/softbank-shares-fall-ai-slowdown/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:20:00.000Z</news:publication_date>
+      <news:title>SoftBank shares slide ~13% in Tokyo as Anthropic-OpenAI &#39;slowdown&#39; pact rattles AI-capex trades</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/anthropic-rum-group-13-7b-compute-deal/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:15:00.000Z</news:publication_date>
+      <news:title>Anthropic signs six-year, $13.7 billion compute deal with Trump-linked RUM Group, The Information reports</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/altman-openai-ipo-2026-off/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:10:00.000Z</news:publication_date>
+      <news:title>Altman tells Fortune OpenAI will not IPO in 2026, citing &#39;ill-advised moment&#39; over AI safety</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-14/anthropic-pace-the-frontier-altman-musk-back/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-14T05:05:00.000Z</news:publication_date>
+      <news:title>Anthropic&#39;s Amodei calls to &#39;pace the frontier&#39; as Altman and Musk publicly back a slower AI race</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-09-13/tottenham-everton-0-0-four-game-shutout/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -78,166 +358,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-09-13T06:05:00.000Z</news:publication_date>
       <news:title>Larry Ellison cancels plan to sell 50 million Oracle shares a day after disclosing the 10b5-1 plan</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-13/openai-chatgpt-for-financial-services/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-13T05:50:00.000Z</news:publication_date>
-      <news:title>OpenAI launches ChatGPT for Financial Services with Morgan Stanley and Evercore as design partners</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-13/microsoft-xai-grok-copilot-rollout/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-13T05:40:00.000Z</news:publication_date>
-      <news:title>Microsoft adds xAI Grok models as a selectable option inside Copilot, Word, Excel and PowerPoint</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-13/openai-navier-stokes-singularity/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-13T05:30:00.000Z</news:publication_date>
-      <news:title>OpenAI says internal model produced a Lean-verified proof of a Navier–Stokes finite-time singularity</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-13/altman-openai-ipo-2026-off/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-13T05:20:00.000Z</news:publication_date>
-      <news:title>Altman tells Fortune OpenAI will not pursue an IPO in 2026, calls the moment &#39;ill-advised&#39; on AI safety</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-13/amodei-pace-the-frontier-essay/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-13T05:10:00.000Z</news:publication_date>
-      <news:title>Anthropic CEO Amodei publishes &#39;Pace the Frontier&#39; essay urging AI labs to slow capability gains</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/tagliafico-atletico-deadline-collapse/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T05:45:00.000Z</news:publication_date>
-      <news:title>Tagliafico&#39;s deadline-day move to Atlético Madrid collapses over La Liga salary cap</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/premier-league-mw3-saturday-fixtures/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T05:40:00.000Z</news:publication_date>
-      <news:title>Premier League Matchweek 3 kicks off Saturday with Chelsea-Hull, Liverpool-Fulham and Spurs-Everton</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/champions-league-md1-tuesday-recap/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T05:35:00.000Z</news:publication_date>
-      <news:title>Champions League Matchday 1 Tuesday recap: Real Madrid, Man City, Dortmund and Aston Villa open with wins</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/keybanc-apple-event-warning/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T05:30:00.000Z</news:publication_date>
-      <news:title>KeyBanc warns Apple shares face negative catalyst at iPhone 18 Pro launch</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/fed-rate-hike-case-builds/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T05:25:00.000Z</news:publication_date>
-      <news:title>Reuters: Fed seen likely to hike rates next week after inflation print stays sticky</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/us-cpi-august-hot-core/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T05:20:00.000Z</news:publication_date>
-      <news:title>US August CPI matches headline but core runs hotter, Fed rate-hike odds jump to 87 percent</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/ifa-berlin-closes/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T05:15:00.000Z</news:publication_date>
-      <news:title>IFA 2026 closes in Berlin with experimental phones, robot cleaners and AI-driven home devices</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/ios-27-siri-ai-september-14/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T05:10:00.000Z</news:publication_date>
-      <news:title>iOS 27 with Siri AI beta lands Monday September 14 for iPhone 11 and later</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/iphone-18-pro-pre-orders/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T05:05:00.000Z</news:publication_date>
-      <news:title>iPhone 18 Pro and Pro Max pre-orders open Saturday with deliveries from September 18</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/apple-discontinues-iphone-17-pro/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T05:00:00.000Z</news:publication_date>
-      <news:title>Apple discontinues iPhone 17 Pro and Pro Max on iPhone 18 launch day, no refurbished stock listed</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/openai-microsoft-500b-recap/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T04:50:00.000Z</news:publication_date>
-      <news:title>Microsoft-OpenAI recapitalization values ChatGPT maker at $500 billion, ends nonprofit control</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/us-china-ai-safety-talks/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T04:45:00.000Z</news:publication_date>
-      <news:title>US and China schedule first dedicated AI safety dialogue for mid-September, Bessent to lead US side</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/china-distillation-accusations/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T04:40:00.000Z</news:publication_date>
-      <news:title>US names six Chinese AI firms, including DeepSeek and Moonshot, in &#39;industrial-scale&#39; distillation accusation</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/hubinger-ten-percent-warning/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T04:35:00.000Z</news:publication_date>
-      <news:title>Anthropic alignment lead Hubinger publicly backs Coxon&#39;s warning, puts extinction odds above 10 percent</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-12/coxon-axios-equity-forfeit/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-12T04:30:00.000Z</news:publication_date>
-      <news:title>Anthropic&#39;s Coxon walked away from unvested equity two months before it would have vested, Axios reports</news:title>
     </news:news>
   </url>
 </urlset>

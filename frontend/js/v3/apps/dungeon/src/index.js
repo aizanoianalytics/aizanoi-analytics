@@ -97,8 +97,29 @@ export async function mount({ container, api }) {
     resizeObserver.observe(wrapper);
   }
 
+  // Teardown clears the QA globals unconditionally so a stale Phaser.Game
+  // reference never survives a window close. Reopening Dungeon re-asserts
+  // these globals from a fresh Phaser instance (see GameScene.shutdown).
+  let tornDown = false;
+  const releaseQaGlobals = () => {
+    if (typeof window === 'undefined') return;
+    if (window.AIZANOI_DUNGEON_GAME === gameInstance) {
+      window.AIZANOI_DUNGEON_GAME = undefined;
+    }
+    if (window.__AIZANOI_DUNGEON_SCENE) {
+      window.__AIZANOI_DUNGEON_SCENE = undefined;
+    }
+  };
+  // If the GameScene already published its own shutdown handler we must let it
+  // clear the scene sentinel first, so we listen once for it and then clear.
+  if (gameInstance?.events) {
+    gameInstance.events.once('destroy', () => releaseQaGlobals());
+  }
+
   // Return teardown function called when the window is closed
   return () => {
+    if (tornDown) return;
+    tornDown = true;
     try {
       if (resizeObserver) {
         resizeObserver.disconnect();
@@ -108,6 +129,7 @@ export async function mount({ container, api }) {
     } catch (err) {
       console.warn('[Aizanoi Dungeon] Error during teardown:', err);
     }
+    releaseQaGlobals();
     wrapper.remove();
   };
 }

@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-14-softbank-shares-fall-ai-slowdown",
+  "title": "SoftBank shares slide ~13% in Tokyo as Anthropic-OpenAI 'slowdown' pact rattles AI-capex trades",
+  "summary": "SoftBank Group shares fell almost 13% in Monday Tokyo trade after Anthropic's call to slow frontier model development drew public backing from Sam Altman and Elon Musk, with Bloomberg reporting via TBS that the conglomerate's OpenAI exposure is once again repricing on safety news. The selloff comes alongside Asian risk-off moves: South Korea's KOSPI opened 3.14% lower and SK Hynix dropped roughly 5.1%. StartupFortune notes that Anthropic itself is still on an IPO track and is targeting a Nasdaq listing at a possible valuation above $2 trillion.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-09-14T05:20:00Z",
+  "updatedAt": "2026-09-14T05:20:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["SoftBank", "OpenAI", "Anthropic", "KOSPI", "Asia markets"],
+  "sources": [
+    {
+      "publisher": "Bloomberg via Startup Fortune",
+      "url": "https://startupfortune.com/softbank-shares-sink-13-after-anthropic-and-openai-call-for-an-ai-slowdown",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Yonhap via Lokmat Times",
+      "url": "https://lokmattimes.com/technology/seoul-stocks-sharply-down-over-mideast-uncertainties-ai-warning-1",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Seoul Economic Daily",
+      "url": "https://en.sedaily.com/finance/2026/09/14/kospi-opens-down-3-percent-as-sk-hynix-sinks-more-than-5",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}

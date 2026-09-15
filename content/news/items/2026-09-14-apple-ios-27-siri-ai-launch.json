@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-14-apple-ios-27-siri-ai-launch",
+  "title": "Apple ships iOS 27 with Gemini-backed Siri AI; Messages Suggestions and Passwords alerts held back",
+  "summary": "Apple's iOS 27 update begins rolling out on 14 September with the long-delayed Siri AI assistant launching in English beta on iPhone 15 Pro and newer, with five more languages promised for October. The model stack is built with Google's Gemini family under Apple's previously disclosed partnership, marking the public debut of the 'Liquid Glass' redesign with a new opacity slider. Apple has confirmed two promised features — Messages Suggestions and Passwords security alerts — will ship 'in a future software update', while iPadOS 27, macOS 27, watchOS 27 and visionOS 27 also land today.",
+  "category": "technology",
+  "priority": 75,
+  "publishedAt": "2026-09-14T05:30:00Z",
+  "updatedAt": "2026-09-14T05:30:00Z",
+  "retrievedAt": "2026-09-14T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iOS 27", "Siri AI", "iPhone 18", "Gemini", "macOS"],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/news/992408/ios-27-release-date-features",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    },
+    {
+      "publisher": "Engadget",
+      "url": "https://www.engadget.com/2254005/ios-27-with-siri-ai-will-be-available-on-september-14",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    },
+    {
+      "publisher": "The Apple Post",
+      "url": "https://www.theapplepost.com/2026/09/12/72203/apple-delays-some-ios-27-features-ahead-of-mondays-release",
+      "publishedAt": "2026-09-12T00:00:00Z"
+    },
+    {
+      "publisher": "Apple Newsroom (WWDC 2026)",
+      "url": "https://www.apple.com/newsroom/2026/06/apple-unveils-next-generation-of-apple-intelligence-siri-ai-and-more/",
+      "publishedAt": "2026-06-01T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-15-faa-clears-starship-flight-14-for-sept-22",
+  "title": "FAA sets September 22 as primary launch date for SpaceX Starship Flight 14",
+  "summary": "The US Federal Aviation Administration updated its Current Operations Plan Advisory on Monday, clearing airspace for the next Starship-Super Heavy flight test from Starbase, Texas, on September 22, with a backup window on September 23. The launch window opens at 12:15 UTC and runs to 14:14 UTC. Flight 14 will pair Booster B21 with Ship S41, both of which completed cryogenic proof tests in late June and late July. The mission follows Starship Flight 13 on July 24, which deployed Starlink V3 satellites and conducted an in-space engine relight.",
+  "category": "technology",
+  "priority": 55,
+  "publishedAt": "2026-09-15T04:40:00Z",
+  "updatedAt": "2026-09-15T04:40:00Z",
+  "retrievedAt": "2026-09-15T05:00:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["SpaceX", "Starship", "Flight 14", "FAA", "Starbase", "Artemis"],
+  "sources": [
+    {
+      "publisher": "Aviation Week",
+      "url": "https://aviationweek.com/space/launch-vehicles-propulsion/faa-clears-starship-sept-22-flight-test",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    },
+    {
+      "publisher": "Morning Overview",
+      "url": "https://morningoverview.com/spacex-will-fly-its-next-starship-nasas-moon-rocket-on-september-18/",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}

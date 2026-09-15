@@ -114,6 +114,15 @@ export function stopDungeonGame(gameInstance) {
     }
   }
   setDungeonExitHandler(null);
+  // Clear the QA globals regardless of which code path called stopDungeonGame.
+  // The host's mount teardown also clears them, but the standalone route and
+  // any direct caller can bypass that hook — this is the authoritative reset.
+  if (typeof window !== 'undefined') {
+    if (!gameInstance || window.AIZANOI_DUNGEON_GAME === gameInstance) {
+      window.AIZANOI_DUNGEON_GAME = undefined;
+    }
+    window.__AIZANOI_DUNGEON_SCENE = undefined;
+  }
 }
 
 // AizanoiOS shell exit plumbing: the host sets a handler at mount so the
