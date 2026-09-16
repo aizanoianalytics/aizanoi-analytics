@@ -33,6 +33,20 @@ export function buildTempleOfZeus(b) {
   podium.receiveShadow = true;
   group.add(podium);
 
+  // Krepidoma steps — 3 receding tiers on the entrance (short) faces
+  for (let s = 0; s < 3; s++) {
+    const stepW = 10 + (2 - s) * 1.6;
+    for (const ex of [-1, 1]) {
+      const step = new THREE.Mesh(
+        new THREE.BoxGeometry(1.6, 0.5, Math.min(stepW, d * 0.7)),
+        getMaterial('travertine')
+      );
+      step.position.set(ex * (w / 2 + 1.5 + 0.8 + (2 - s) * 0.8), 0.25 + s * 0.5, 0);
+      step.receiveShadow = true;
+      group.add(step);
+    }
+  }
+
   // Subterranean Vaulted Crypt Chamber (Meter Steunene / Cybele underground shrine)
   const cryptW = w * 0.45;
   const cryptD = d * 0.45;
@@ -88,6 +102,18 @@ export function buildTempleOfZeus(b) {
   entablature.position.set(0, entY + (colH * 0.15) / 2, 0);
   group.add(entablature);
 
+  // Mutule strip — dentil rhythm under the architrave (cheap boxes, strong shadow line)
+  const mutuleGeo = new THREE.BoxGeometry(0.7, 0.35, 0.7);
+  const mutuleMat = getMaterial('travertine');
+  const mutN = Math.floor(w / 1.6);
+  for (const fz of [-d / 2 + 0.2, d / 2 - 0.2]) {
+    for (let i = 0; i < mutN; i++) {
+      const m = new THREE.Mesh(mutuleGeo, mutuleMat);
+      m.position.set(-w / 2 + 0.8 + i * 1.6, entY - 0.18, fz);
+      group.add(m);
+    }
+  }
+
   const pedH = d * 0.22;
   // Aizanoi Temple of Zeus: 8x15 pseudodipteral entrance facade is on the short (d) side
   const pediment = createPediment(d, w, pedH, 'marble');
@@ -100,6 +126,31 @@ export function buildTempleOfZeus(b) {
   roof.rotation.y = Math.PI / 2;
   roof.position.set(0, entY + colH * 0.15 - 0.1, 0);
   group.add(roof);
+
+  // Pronaos door (dark recess on the cella short face) + antae pilasters
+  const doorDark = new THREE.Mesh(
+    new THREE.BoxGeometry(4.4, colH * 0.55, 0.6),
+    getMaterial('charredWood')
+  );
+  doorDark.position.set(0, podiumH + (colH * 0.55) / 2, d * 0.275 + 0.1);
+  group.add(doorDark);
+  for (const ax of [-3.4, 3.4]) {
+    const anta = new THREE.Mesh(new THREE.BoxGeometry(1.2, colH * 0.8, 1.2), getMaterial('marble'));
+    anta.position.set(ax, podiumH + (colH * 0.8) / 2, d * 0.275 + 0.1);
+    anta.castShadow = true;
+    group.add(anta);
+  }
+
+  // Akroteria pedestals — 3 per gable (center + corners), statues land here in Blender phase
+  const akroMat = getMaterial('marble');
+  for (const ex of [-1, 1]) {
+    for (const px of [-w * 0.42, 0, w * 0.42]) {
+      const akro = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.1, 1.3), akroMat);
+      akro.position.set(px, entY + colH * 0.15 + pedH + 0.35, ex * (d / 2 - 0.4));
+      akro.castShadow = true;
+      group.add(akro);
+    }
+  }
 
   return group;
 }

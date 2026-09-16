@@ -95,11 +95,21 @@ export function createIonicColumn(height, radius, material = 'marble') {
   shaft.castShadow = true;
   group.add(shaft);
 
-  // Volute capital
+  // Volute capital — abacus slab + paired scroll tori (the Ionic read at distance)
   const capGeo = new THREE.BoxGeometry(radius * 2.6, height * 0.07, radius * 1.8);
   const cap = new THREE.Mesh(capGeo, mat);
   cap.position.y = height * 0.965;
   group.add(cap);
+
+  // Paired volute scrolls on the facade faces
+  const voluteGeo = new THREE.TorusGeometry(radius * 0.32, radius * 0.13, 6, 12);
+  for (const sx of [-1, 1]) {
+    for (const sz of [-1, 1]) {
+      const volute = new THREE.Mesh(voluteGeo, mat);
+      volute.position.set(sx * radius * 0.95, height * 0.90, sz * radius * 0.55);
+      group.add(volute);
+    }
+  }
 
   return group;
 }
@@ -131,6 +141,22 @@ export function createCorinthianColumn(height, radius, material = 'marble') {
   const bell = new THREE.Mesh(bellGeo, mat);
   bell.position.y = height * 0.95;
   group.add(bell);
+
+  // Acanthus leaf hint — 8 low-poly cones ringing the bell (silhouette, not botany)
+  const leafGeo = new THREE.ConeGeometry(radius * 0.22, height * 0.07, 5);
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2;
+    const leaf = new THREE.Mesh(leafGeo, mat);
+    leaf.position.set(Math.cos(a) * radius * 1.15, height * 0.905, Math.sin(a) * radius * 1.15);
+    leaf.rotation.z = -Math.cos(a) * 0.35;
+    leaf.rotation.x = Math.sin(a) * 0.35;
+    group.add(leaf);
+  }
+
+  // Abacus slab caps the capital
+  const corAbacus = new THREE.Mesh(new THREE.BoxGeometry(radius * 2.5, height * 0.03, radius * 2.5), mat);
+  corAbacus.position.y = height * 0.995;
+  group.add(corAbacus);
 
   return group;
 }
@@ -198,6 +224,22 @@ export function createRomanArch(width, height, depth, openingWidth, openingHeigh
     topBlock.position.set(0, openingHeight + topH / 2, 0);
     group.add(topBlock);
   }
+
+  // Voussoir arch ring (half-torus framing the opening) + keystone
+  // Cheap geometry, huge Roman read: the flat lintel alone looked Greek.
+  const ringR = openingWidth / 2;
+  const ringGeo = new THREE.TorusGeometry(ringR, Math.min(0.45, ringR * 0.12), 6, 14, Math.PI);
+  const ring = new THREE.Mesh(ringGeo, mat);
+  ring.position.set(0, openingHeight - ringR * 0.15, depth / 2 + 0.05);
+  group.add(ring);
+  const ringBack = ring.clone();
+  ringBack.position.z = -depth / 2 - 0.05;
+  group.add(ringBack);
+  const keyGeo = new THREE.BoxGeometry(Math.max(0.5, openingWidth * 0.12), Math.max(0.6, topH * 0.7 || 0.8), depth + 0.3);
+  const keystone = new THREE.Mesh(keyGeo, mat);
+  keystone.position.set(0, openingHeight + (topH > 0 ? topH * 0.28 : 0.3), 0);
+  keystone.castShadow = true;
+  group.add(keystone);
 
   return group;
 }
@@ -355,7 +397,7 @@ export function createStoneArchBridge(length, width, height, spanCount = 3, mate
   parapetRight.position.set(0, height + 0.5, -width / 2 + 0.2);
   group.add(parapetRight);
 
-  // Piers & Arches
+  // Piers, arch spans & cutwaters
   const bayW = length / spanCount;
   for (let i = 0; i <= spanCount; i++) {
     const pierX = -length / 2 + i * bayW;
@@ -363,6 +405,26 @@ export function createStoneArchBridge(length, width, height, spanCount = 3, mate
     pier.position.set(pierX, height / 2, 0);
     pier.castShadow = true;
     group.add(pier);
+    // Upstream cutwater (pointed nose breaks the current + the silhouette)
+    const nose = new THREE.Mesh(new THREE.ConeGeometry(width * 0.42, bayW * 0.3, 4), mat);
+    nose.rotation.y = Math.PI / 4;
+    nose.position.set(pierX, height * 0.45, width * 0.72);
+    group.add(nose);
+  }
+  // Arch fascia rings spanning pier-to-pier under the deck (the Roman bridge read)
+  const spanR = bayW * 0.375;
+  const spanGeo = new THREE.TorusGeometry(spanR, 0.35, 6, 12, Math.PI);
+  for (let i = 0; i < spanCount; i++) {
+    const cx = -length / 2 + bayW * (i + 0.5);
+    for (const fz of [width / 2 - 0.1, -width / 2 + 0.1]) {
+      const span = new THREE.Mesh(spanGeo, mat);
+      span.position.set(cx, height - 0.8 - spanR * 0.2, fz);
+      group.add(span);
+    }
+    // Spandrel wall filling pier-top to deck between arches
+    const spandrel = new THREE.Mesh(new THREE.BoxGeometry(bayW * 0.72, 1.1, width * 0.9), mat);
+    spandrel.position.set(cx, height - 0.55, 0);
+    group.add(spandrel);
   }
 
   return group;
