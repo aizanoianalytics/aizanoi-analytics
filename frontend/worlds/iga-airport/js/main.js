@@ -127,7 +127,10 @@ async function init() {
     0,
     (BOUNDS.minZ + BOUNDS.maxZ) / 2
   );
-  const groundMesh = new THREE.Mesh(groundGeo, getMaterial('tarmac'));
+  const groundMesh = new THREE.Mesh(
+    groundGeo,
+    new THREE.MeshStandardMaterial({ color: 0x69777b, roughness: 0.82, metalness: 0.02, emissive: 0x10171a, emissiveIntensity: 0.12 })
+  );
   groundMesh.receiveShadow = true;
   scene.add(groundMesh);
 
@@ -325,8 +328,8 @@ function populateAirportApron() {
     const isEW = Math.abs(Math.sin(s.rot)) > 0.5;
     collision.grid.insert({
       type: 'rect', id: `airliner-${i}`,
-      x: s.x, z: s.z,
-      w: isEW ? 58 : 10, d: isEW ? 10 : 58, h: 8, y: 0
+      x: s.x * 0.78, z: s.z * 0.82,
+      w: (isEW ? 58 : 10) * 0.78, d: (isEW ? 10 : 58) * 0.82, h: 8, y: 0
     });
 
     // Ground Support Equipment (GSE)
@@ -474,9 +477,9 @@ function bindEvents() {
     const standoff = Math.hypot(building.w || 20, building.d || 20) * 0.7 + 8;
     const safe = collision.findSafeSpawn(building.x, building.z, 160, standoff);
     if (building.id === 'terminal') {
-      // Use the open central entrance instead of spawning behind a mullion.
+      // Place the player just inside the clear landside entry.
       safe.x = building.x;
-      safe.z = building.z - building.d / 2 - 18;
+      safe.z = building.z - building.d / 2 + 28;
       safe.y = 0;
     }
     window.__WORLD_LAST_TELEPORT__ = building.id;
@@ -486,7 +489,9 @@ function bindEvents() {
       : Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
     controls.teleportTo(safe.x, safe.z, angle, targetY);
-    // Hand the new position to the fixed-step sim so the pose blender doesn't
+    // The landmark is the framing owner: lookAt avoids the yaw-convention
+    // mismatch that previously placed arrivals beside or behind the asset.
+    camera.lookAt(building.x, (building.h || 12) * 0.38, building.z);
     // glide across the teleport jump.
     if (simPos) {
       camera.position.y = targetY;

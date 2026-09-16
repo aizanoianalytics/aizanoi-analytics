@@ -614,6 +614,9 @@ function bindEvents() {
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
     controls.teleportTo(safe.x, safe.z, angle, targetY);
+    // Landmark framing is authoritative; derive the view from the target rather
+    // than relying on the legacy yaw convention after a compact-layout warp.
+    camera.lookAt(building.x, (building.h || 10) * 0.42, building.z);
     // Teleport is a discrete jump: the sim state must land exactly there so
     // the pose blender doesn't glide across the map on the next frames.
     simPos.copy(camera.position);
