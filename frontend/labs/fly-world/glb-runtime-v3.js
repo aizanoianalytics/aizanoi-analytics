@@ -95,6 +95,12 @@ class Observer {
     this.pitch = -.05;
   }
 
+  frameCamera(x, y, z, yaw, pitch = -.04) {
+    camera.position.set(x, y, z);
+    this.yaw = yaw;
+    this.pitch = Math.max(-1.48, Math.min(1.48, pitch));
+  }
+
   blocked(position) {
     if (this.noClip) return false;
     if (position.z < zMin || position.z > zMax) return true;
@@ -189,6 +195,7 @@ async function boot() {
   const observer = new Observer();
   metrics.observer = observer;
   metrics.camera = camera;
+  metrics.frameCamera = (x, y, z, yaw, pitch = -.04) => observer.frameCamera(x, y, z, yaw, pitch);
   metrics.collisionAt = (x, y, z = 1.58) => observer.blocked(new THREE.Vector3(x, y, z));
   const clock = new THREE.Clock();
   let frames = 0;

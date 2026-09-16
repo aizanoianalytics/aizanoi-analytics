@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 const spec = JSON.parse(readFileSync('gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json', 'utf8'));
 const builder = readFileSync('scripts/fly-world/build_scene_v2.py', 'utf8');
 const detail = readFileSync('scripts/fly-world/detail_pass_v3.py', 'utf8');
+const runtime = readFileSync('frontend/labs/fly-world/glb-runtime-v3.js', 'utf8');
 
 test('Fly House keeps a larger shell while furniture stays inside coherent zones', () => {
   const main = spec.rooms.find((room) => room.id === 'main-room');
@@ -67,6 +68,11 @@ test('numeric doorway clearance leaves a traversable opening for the observer ra
   assert.ok(width - 2 * radius > 0.8, 'door opening leaves usable observer clearance');
   assert.ok(stoveEast < centerX - radius, 'stove does not intrude into the doorway approach');
   assert.ok(centerY - width / 2 >= 0.34 - 1e-9 && centerY + width / 2 <= 1.66 + 1e-9, 'spec opening matches wall gap');
+});
+
+test('runtime framing API owns the Z-up camera pose for doorway QA', () => {
+  assert.match(runtime, /frameCamera\(x, y, z, yaw, pitch = -\.04\)/);
+  assert.match(runtime, /metrics\.frameCamera = \(x, y, z, yaw, pitch = -\.04\) => observer\.frameCamera/);
 });
 
 test('doorway review camera is wide enough to show the transition, not a bed close-up', () => {
