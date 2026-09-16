@@ -425,6 +425,9 @@ function buildUrbanFabric() {
 function populateStreetDressing() {
   const dressingGroup = new THREE.Group();
   dressingGroup.name = 'street-dressing';
+  // Props follow the same compact survey transform as the monuments.
+  dressingGroup.scale.setScalar(0.76);
+  dressingGroup.userData.layoutScale = 0.76;
 
   // 1. Agora Market Stalls (vibrant marketplace)
   const stalls = [
@@ -699,6 +702,15 @@ function installWorldDebugHandle() {
     },
     metrics() {
       return frameMetrics ? frameMetrics.summary() : null;
+    },
+    assetBoxes(ids = []) {
+      const wanted = ids.length ? ids : [...buildingGroups.keys()];
+      return wanted.map((id) => {
+        const group = buildingGroups.get(id);
+        if (!group) return { id, missing: true };
+        const box = new THREE.Box3().setFromObject(group);
+        return { id, min: box.min.toArray(), max: box.max.toArray(), kitAssets: group.userData.kitAssets || [] };
+      });
     },
     teleport(id) {
       if (!ui?.onTeleport || !BUILDINGS.some((building) => building.id === id)) return false;

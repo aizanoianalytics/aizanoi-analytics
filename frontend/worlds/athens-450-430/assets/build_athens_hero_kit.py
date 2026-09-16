@@ -18,10 +18,10 @@ BLUE = mat('Aegean_Painted_Detail', (0.08, 0.22, 0.30), 0.62)
 
 
 def cube(name, loc, scale, material, bevel=0.0):
-    bpy.ops.mesh.primitive_cube_add(location=loc)
+    bpy.ops.mesh.primitive_cube_add(location=(loc[0], loc[2], loc[1]))
     o = bpy.context.object
     o.name = name
-    o.scale = (scale[0] / 2, scale[1] / 2, scale[2] / 2)
+    o.scale = (scale[0] / 2, scale[2] / 2, scale[1] / 2)
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
     o.data.materials.append(material)
     if bevel:
@@ -32,7 +32,7 @@ def cube(name, loc, scale, material, bevel=0.0):
 
 
 def cyl(name, loc, radius, depth, material, vertices=12):
-    bpy.ops.mesh.primitive_cylinder_add(vertices=vertices, radius=radius, depth=depth, location=loc)
+    bpy.ops.mesh.primitive_cylinder_add(vertices=vertices, radius=radius, depth=depth, location=(loc[0], loc[2], loc[1]))
     o = bpy.context.object
     o.name = name
     o.data.materials.append(material)
@@ -78,7 +78,7 @@ def propylaea():
 def theatre():
     for i in range(6):
         r = 10 + i * 5
-        bpy.ops.mesh.primitive_torus_add(major_radius=r, minor_radius=.75, major_segments=16, minor_segments=6, location=(0, .5 + i * .65, 0), rotation=(0, 0, 0))
+        bpy.ops.mesh.primitive_torus_add(major_radius=r, minor_radius=.75, major_segments=16, minor_segments=6, location=(0, 0, .5 + i * .65), rotation=(0, 0, 0))
         o = bpy.context.object
         o.name = 'limestone_cavea_tier'
         o.scale.y = .45

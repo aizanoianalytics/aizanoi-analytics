@@ -37,6 +37,7 @@ export const KIT_MANIFEST = [
   { id: 'bridge_seg', file: 'bridge_seg.glb' },
   { id: 'stoa_seg', file: 'stoa_seg.glb' },
   { id: 'shop_row', file: 'shop_row.glb' },
+  { id: 'forum-civic-hero', file: 'forum_civic_hero.glb' },
 ];
 
 let KIT = null;
@@ -129,6 +130,7 @@ function placeOne(group, b, piece) {
 
 const STATIC = {
   colosseum: [P('colosseum')],
+  forum: [P('forum-civic-hero')],
   pantheon: [P('pantheon')],
   ludus: [P('circus_stand', 0, -8, 0, 0.35), P('circus_stand', 0, 8, Math.PI, 0.35)],
   curia: [P('basilica', 0, 0, 0, 0.5)],
@@ -167,7 +169,7 @@ const STATIC = {
 };
 
 // Buildings whose visual is fully instanced (no static meshes).
-const INSTANCED_ONLY = new Set(['forum', 'trajan-forum', 'augustus-forum', 'circus', 'claudia', 'tiber', 'marcellus', 'pompey', 'stadium']);
+const INSTANCED_ONLY = new Set(['trajan-forum', 'trajan-forum', 'augustus-forum', 'circus', 'claudia', 'tiber', 'marcellus', 'pompey', 'stadium']);
 
 export function buildStaticStructure(building) {
   const group = new THREE.Group();

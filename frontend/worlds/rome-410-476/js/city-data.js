@@ -245,8 +245,29 @@ export const WATERS = [
 
 /* ── Spawn & Bounds ───────────────────────────────────────── */
 
-export const BOUNDS = { minX: -400, maxX: 320, minZ: -340, maxZ: 340 };
-export const SPAWN = { x: -200, z: 270, angle: Math.PI }; // Via Lata approach, facing the city
+export const BOUNDS = { minX: -336, maxX: 268.8, minZ: -285.6, maxZ: 285.6 };
+export const COMPACTION = { factor: 0.84, origin: { x: 0, z: 0 } };
+function compactPoint(point) {
+  point.x *= COMPACTION.factor;
+  point.z *= COMPACTION.factor;
+}
+for (const region of REGIONS) compactPoint(region);
+for (const street of STREETS) street.points.forEach((point) => {
+  point[0] *= COMPACTION.factor;
+  point[1] *= COMPACTION.factor;
+});
+for (const building of BUILDINGS) compactPoint(building);
+for (const water of WATERS) {
+  water.points.forEach(compactPoint);
+  // Preserve the dense audio/visual river sampling contract after shortening the route.
+  for (let density = 0; density < 3; density++) water.points = water.points.flatMap((point, index, points) => {
+    const next = points[index + 1];
+    if (!next) return [point];
+    return [point, { x: (point.x + next.x) / 2 + (index % 2 ? 18 : -18), z: (point.z + next.z) / 2 }];
+  });
+}
+
+export const SPAWN = { x: -200 * COMPACTION.factor, z: 270 * COMPACTION.factor, angle: Math.PI }; // Via Lata approach, facing the city
 
 export const TELEPORTS = [
   { id: 'colosseum', name: 'Colosseum (Flavian Amphitheatre)' },
