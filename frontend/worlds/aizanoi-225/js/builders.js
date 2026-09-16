@@ -10,6 +10,7 @@ import * as THREE from '../../shared/vendor/three.module.js';
 
 export const KIT_MANIFEST = [
   { id: 'temple_of_zeus', file: 'temple_of_zeus.glb' },
+  { id: 'temple_court', file: 'temple_court.glb' },
   { id: 'insula_a', file: 'insula_a.glb' },
   { id: 'insula_b', file: 'insula_b.glb' },
   { id: 'insula_c', file: 'insula_c.glb' },
@@ -76,7 +77,7 @@ function macellumRing() {
 }
 
 const PLACEMENTS = {
-  temple: [P('temple_of_zeus', 0, 0, 0, 1)],
+  temple: [P('temple_of_zeus', 0, 0, 0, 1), P('temple_court', 0, -19, 0, 0.22)],
   agora: [
     P('stoa_seg', 0, -20, Math.PI, 1),
     P('stoa_seg', 0, 20, 0, 1),

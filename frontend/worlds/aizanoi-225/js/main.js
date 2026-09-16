@@ -6,9 +6,12 @@
 import * as THREE from '../../shared/vendor/three.module.js';
 
 import {
-  CITY, SOURCES, REGIONS, STREETS, BUILDINGS, WATERS,
-  TELEPORTS, SPAWN, BOUNDS, TOUR_STOPS, DISTRICT_STYLES,
+  CITY, SOURCES, TELEPORTS, TOUR_STOPS, DISTRICT_STYLES,
+  compactAizanoiLayout,
 } from './city-data.js';
+
+const COMPACT = compactAizanoiLayout();
+const { REGIONS, STREETS, BUILDINGS, WATERS, BOUNDS, SPAWN } = COMPACT;
 
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
 import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
@@ -167,7 +170,9 @@ async function init() {
 
   // 8. Vegetation
   vegetation = new VegetationSystem(scene);
-  vegetation.populateCity(REGIONS, BUILDINGS, STREETS);
+  // Keep the sanctuary and spectacle axis open so the Temple and theatre
+  // silhouettes read from the arrival path instead of being hidden by trees.
+  vegetation.populateCity(REGIONS.filter((region) => !['sanctuary', 'spectacle'].includes(region.id)), BUILDINGS, STREETS);
 
   // 9. Environment
   environment = new Environment(scene, renderer, {
@@ -354,6 +359,9 @@ function buildUrbanFabric() {
 /* ── Street Dressing & Cultural Props for Aizanoi ─────────── */
 
 function populateAizanoiDressing() {
+  // Compact presentation transforms are applied after this routine's local
+  // props are authored, so preserve their world-space collision alignment too.
+  const preExistingColliders = new Set([...collision.grid.cells.values()].flat());
   const dressingGroup = new THREE.Group();
   dressingGroup.name = 'aizanoi-dressing';
 
@@ -491,6 +499,20 @@ function populateAizanoiDressing() {
   birdFlock = buildBirdFlock(-80, 42, 5, 10, 28);
   dressingGroup.add(birdFlock);
 
+  // Dressing coordinates are authored in the survey frame; keep them aligned
+  // with the compact monument/circulation frame without changing their IDs.
+  dressingGroup.scale.set(0.78, 1, 0.88);
+  const allColliders = new Set([...collision.grid.cells.values()].flat());
+  collision.grid.clear();
+  for (const collider of allColliders) {
+    if (!preExistingColliders.has(collider)) {
+      collider.x *= 0.78;
+      collider.z *= 0.88;
+      if (Number.isFinite(collider.w)) collider.w *= 0.78;
+      if (Number.isFinite(collider.d)) collider.d *= 0.88;
+    }
+    collision.grid.insert(collider);
+  }
   scene.add(dressingGroup);
 }
 
@@ -592,6 +614,9 @@ function bindEvents() {
     const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
     controls.teleportTo(safe.x, safe.z, angle, targetY);
+    // Landmark framing is authoritative; derive the view from the target rather
+    // than relying on the legacy yaw convention after a compact-layout warp.
+    camera.lookAt(building.x, (building.h || 10) * 0.42, building.z);
     // Teleport is a discrete jump: the sim state must land exactly there so
     // the pose blender doesn't glide across the map on the next frames.
     simPos.copy(camera.position);

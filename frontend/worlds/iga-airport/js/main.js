@@ -6,12 +6,16 @@
 import * as THREE from '../../shared/vendor/three.module.js';
 
 import {
-  CITY, SOURCES, REGIONS, STREETS, BUILDINGS, WATERS,
-  TELEPORTS, SPAWN, BOUNDS, TOUR_STOPS,
+  CITY, SOURCES, WATERS, TELEPORTS, TOUR_STOPS,
+  compactAirportLayout,
 } from './airport-data.js';
 
+const COMPACT = compactAirportLayout();
+const { BUILDINGS, REGIONS, STREETS, BOUNDS, SPAWN } = COMPACT;
+
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
-import { buildStructure } from './builders.js';
+import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
+import { loadAssetKit } from '../../shared/engine/asset-kit.js';
 import { Environment } from '../../shared/engine/environment.js';
 import { ParticleSystem } from '../../shared/engine/particles.js';
 import { CollisionSystem, PLAYER_HEIGHT } from '../../shared/engine/collision.js';
@@ -123,7 +127,10 @@ async function init() {
     0,
     (BOUNDS.minZ + BOUNDS.maxZ) / 2
   );
-  const groundMesh = new THREE.Mesh(groundGeo, getMaterial('tarmac'));
+  const groundMesh = new THREE.Mesh(
+    groundGeo,
+    new THREE.MeshStandardMaterial({ color: 0x69777b, roughness: 0.82, metalness: 0.02, emissive: 0x10171a, emissiveIntensity: 0.12 })
+  );
   groundMesh.receiveShadow = true;
   scene.add(groundMesh);
 
@@ -133,6 +140,12 @@ async function init() {
   buildAirportRoads();
 
   setProgress(60, 'Building the main terminal and tulip-inspired control tower...');
+
+  // Load the world-local focal kit through the single shared GLTFLoader path.
+  const kit = await loadAssetKit(new URL('../assets/', import.meta.url), KIT_MANIFEST, (frac) => {
+    setProgress(60 + Math.round(frac * 4), 'Loading terminal roof kit...');
+  });
+  setAssetKit(kit);
 
   // 5. Buildings
   buildAllBuildings();
@@ -144,6 +157,15 @@ async function init() {
     startTime: 0.48, cycleSpeed: 0.0, mood: 'iga',
     shadowMapSize: profile.shadowMapSize, shadowRadius: profile.shadowRadius,
   });
+  // The terminal is a deep glass-and-metal volume: high-key sky bounce and
+  // two soft interior fills keep the public concourse readable on mobile.
+  environment.hemiLight.intensity = 0.9;
+  environment.ambientLight.intensity = 0.7;
+  for (const z of [-120, 80]) {
+    const fill = new THREE.PointLight(0xdff2ff, 2.5, 300);
+    fill.position.set(0, 28, z);
+    scene.add(fill);
+  }
 
   // 7. Particles & Audio
   particles = new ParticleSystem(scene);
@@ -157,6 +179,9 @@ async function init() {
   populateAirportApron();
   traffic = new AirportTrafficSystem(scene, collision);
   traffic.init();
+  // Traffic retains its authored choreography; present it in the same compact
+  // coordinate frame as the terminal and collision map.
+  traffic.group.scale.set(0.78, 1, 0.82);
 
   // 10. Controls
   controls = new Controls(camera, canvas, document.body);
@@ -303,8 +328,8 @@ function populateAirportApron() {
     const isEW = Math.abs(Math.sin(s.rot)) > 0.5;
     collision.grid.insert({
       type: 'rect', id: `airliner-${i}`,
-      x: s.x, z: s.z,
-      w: isEW ? 58 : 10, d: isEW ? 10 : 58, h: 8, y: 0
+      x: s.x * 0.78, z: s.z * 0.82,
+      w: (isEW ? 58 : 10) * 0.78, d: (isEW ? 10 : 58) * 0.82, h: 8, y: 0
     });
 
     // Ground Support Equipment (GSE)
@@ -355,6 +380,8 @@ function populateAirportApron() {
   apronGroup.add(buildGateMarshallerSign(540, 600, -Math.PI / 2, 'Gate B3'));
 
   scene.add(apronGroup);
+  // Match aircraft, gate markers and service equipment to the compact map.
+  apronGroup.scale.set(0.78, 1, 0.82);
 }
 
 function bindEvents() {
@@ -449,12 +476,22 @@ function bindEvents() {
     // standoff = 1.4 × half-diagonal of the footprint + 8m framing margin.
     const standoff = Math.hypot(building.w || 20, building.d || 20) * 0.7 + 8;
     const safe = collision.findSafeSpawn(building.x, building.z, 160, standoff);
+    if (building.id === 'terminal') {
+      // Place the player just inside the clear landside entry.
+      safe.x = building.x;
+      safe.z = building.z - building.d / 2 + 28;
+      safe.y = 0;
+    }
     window.__WORLD_LAST_TELEPORT__ = building.id;
     // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
-    const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
+    const angle = building.id === 'terminal'
+      ? Math.PI
+      : Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
     controls.teleportTo(safe.x, safe.z, angle, targetY);
-    // Hand the new position to the fixed-step sim so the pose blender doesn't
+    // The landmark is the framing owner: lookAt avoids the yaw-convention
+    // mismatch that previously placed arrivals beside or behind the asset.
+    camera.lookAt(building.x, (building.h || 12) * 0.38, building.z);
     // glide across the teleport jump.
     if (simPos) {
       camera.position.y = targetY;

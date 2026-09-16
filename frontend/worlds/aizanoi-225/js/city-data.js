@@ -154,3 +154,16 @@ export const DISTRICT_STYLES = {
   'spectacle': { density: 0.28, heightRange: [4, 8], shopRatio: 0.10, materials: ['limestone', 'travertine'] },
   'south': { density: 0.55, heightRange: [5, 9], shopRatio: 0.50, materials: ['romanBrick', 'plaster'] },
 };
+
+// Compress empty travel corridors while preserving every documented footprint.
+export function compactAizanoiLayout({ xScale = 0.78, zScale = 0.88 } = {}) {
+  const buildings = BUILDINGS.map((b) => ({ ...b, x: b.x * xScale, z: b.z * zScale, w: b.w * xScale, d: b.d * zScale }));
+  const regions = REGIONS.map((r) => ({ ...r, x: r.x * xScale, z: r.z * zScale, w: r.w * xScale, d: r.d * zScale }));
+  const streets = STREETS.map((s) => ({ ...s, points: s.points.map(([x, z]) => [x * xScale, z * zScale]), width: s.width * Math.min(xScale, zScale) }));
+  const waters = WATERS.map((w) => ({ ...w, points: w.points.map((p) => ({ ...p, x: p.x * xScale, z: p.z * zScale })) }));
+  return {
+    BUILDINGS: buildings, REGIONS: regions, STREETS: streets, WATERS: waters,
+    BOUNDS: { minX: BOUNDS.minX * xScale, maxX: BOUNDS.maxX * xScale, minZ: BOUNDS.minZ * zScale, maxZ: BOUNDS.maxZ * zScale },
+    SPAWN: { ...SPAWN, x: SPAWN.x * xScale, z: SPAWN.z * zScale },
+  };
+}

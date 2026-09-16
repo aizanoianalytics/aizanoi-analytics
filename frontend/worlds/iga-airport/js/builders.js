@@ -9,6 +9,20 @@
 
 import * as THREE from '../../shared/vendor/three.module.js';
 import { getMaterial } from '../../shared/assets/materials.js';
+
+export const TERMINAL_ENTRY = { width: 128, height: 12, depth: 3 };
+
+function airportSurface(color, roughness = 0.7, emissive = 0x101820) {
+  return new THREE.MeshStandardMaterial({
+    color, roughness, metalness: 0.05, emissive, emissiveIntensity: 0.18,
+  });
+}
+
+export const KIT_MANIFEST = [
+  { id: 'terminal_roof', file: 'terminal_roof.glb' },
+];
+let KIT = null;
+export function setAssetKit(kit) { KIT = kit; }
 import {
   buildModernAirliner,
   buildBaggageTug,
@@ -28,7 +42,7 @@ export function buildGrandTerminal(b) {
   // 1. Polished Terrazzo Terminal Floor
   const floorGeo = new THREE.PlaneGeometry(w, d);
   floorGeo.rotateX(-Math.PI / 2);
-  const floor = new THREE.Mesh(floorGeo, getMaterial('apronConcrete', { roughness: 0.12, metalness: 0.08 }));
+  const floor = new THREE.Mesh(floorGeo, airportSurface(0xb7c5c9, 0.42, 0x24333b));
   floor.position.y = 0.05;
   floor.receiveShadow = true;
   group.add(floor);
@@ -36,7 +50,7 @@ export function buildGrandTerminal(b) {
   // Bosphorus Sinuous Ribbon Flooring Accent (curved central promenade in darker terrazzo)
   const ribbonGeo = new THREE.PlaneGeometry(w * 0.45, d * 0.95);
   ribbonGeo.rotateX(-Math.PI / 2);
-  const ribbonMat = getMaterial('structuralSteel', { color: 0x1e2836, roughness: 0.2, metalness: 0.1 });
+  const ribbonMat = airportSurface(0x587b8c, 0.32, 0x1b3341);
   const ribbonMesh = new THREE.Mesh(ribbonGeo, ribbonMat);
   ribbonMesh.position.set(0, 0.06, 0);
   ribbonMesh.receiveShadow = true;
@@ -46,20 +60,27 @@ export function buildGrandTerminal(b) {
   const glassMat = getMaterial('glassCurtain');
   const steelMat = getMaterial('structuralSteel');
 
-  // North & South glass walls
+  // North & South glass walls. The landside wall is split around the main
+  // entry so arrival is a real walk-through, not a blue opaque barrier.
   for (const zSide of [-d / 2, d / 2]) {
-    const wall = new THREE.Mesh(new THREE.BoxGeometry(w, h, 1.2), glassMat);
-    wall.position.set(0, h / 2, zSide);
-    group.add(wall);
+    const isEntryWall = zSide < 0;
+    const segments = isEntryWall
+      ? [[-w / 2, -TERMINAL_ENTRY.width / 2], [TERMINAL_ENTRY.width / 2, w / 2]]
+      : [[-w / 2, w / 2]];
+    for (const [x0, x1] of segments) {
+      const wallWidth = x1 - x0;
+      const wall = new THREE.Mesh(new THREE.BoxGeometry(wallWidth, h, 1.2), glassMat);
+      wall.position.set((x0 + x1) / 2, h / 2, zSide);
+      group.add(wall);
 
-    // Architectural mullion ribs
-    const numMullions = 24;
-    for (let m = 0; m <= numMullions; m++) {
-      const mx = -w / 2 + m * (w / numMullions);
-      const mullion = new THREE.Mesh(new THREE.BoxGeometry(0.8, h, 1.6), steelMat);
-      mullion.position.set(mx, h / 2, zSide);
-      mullion.castShadow = true;
-      group.add(mullion);
+      const numMullions = Math.max(1, Math.round(wallWidth / 36));
+      for (let m = 0; m <= numMullions; m++) {
+        const mx = x0 + m * (wallWidth / numMullions);
+        const mullion = new THREE.Mesh(new THREE.BoxGeometry(0.8, h, 1.6), steelMat);
+        mullion.position.set(mx, h / 2, zSide);
+        mullion.castShadow = true;
+        group.add(mullion);
+      }
     }
   }
 
@@ -145,6 +166,14 @@ export function buildGrandTerminal(b) {
       group.add(ring);
 
     }
+  }
+
+  // Blender-authored roof kit provides the legible terminal silhouette; the
+  // procedural columns remain as the low-cost structural rhythm underneath.
+  if (KIT) {
+    const roofKit = KIT.place('terminal_roof', { x: 0, y: 0, z: 0, scale: 1 });
+    roofKit.userData.role = 'focal-terminal-roof';
+    group.add(roofKit);
   }
 
   // Soft warm interior terminal fill lights (high efficiency, no per-pixel shader overload)
@@ -656,7 +685,7 @@ export function buildStructure(building) {
       // Paved forecourt drop-off roadway & pedestrian pavement
       const pave = new THREE.Mesh(
         new THREE.PlaneGeometry(building.w || 800, building.d || 240),
-        getMaterial('tarmac')
+        airportSurface(0xa9b5ba, 0.5, 0x1b252b)
       );
       pave.rotateX(-Math.PI / 2);
       pave.position.y = 0.05;
@@ -667,7 +696,7 @@ export function buildStructure(building) {
       const canopyW = (building.w || 800) * 0.75;
       const canopyD = 36;
       const canopyH = 11;
-      const canopyZ = 90;
+      const canopyZ = -(building.d || 240) / 2 + 24;
 
       const colMat = getMaterial('structuralSteel');
       const numCols = Math.floor(canopyW / 40);
