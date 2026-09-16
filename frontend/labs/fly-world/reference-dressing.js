@@ -188,6 +188,27 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
   addSphere(0.27, [2.78, -2.82, 0.28], orange, 'orange-floor-ball', 18);
   for (let i = 0; i < 5; i++) addTorus(0.05 + i * 0.015, 0.012, [2.78 + (i - 2) * 0.06, -2.58, 0.28 + (i % 2) * 0.06], M.woodDark, `ball-mark-${i}`, [Math.PI / 2, 0, 0]);
 
+  // Tiny identity details that are easy to miss in a blockout: the blue bag's
+  // sticker-covered face and double handles, flower/magnet marks on the cabinet end,
+  // the pale slippers beside the stove, and fringe on the runner.
+  const stickerMats = [orange, yellow, clothWhite, paleBlue, M.redTextile];
+  const stickers = [[0.40,0.00,0.36],[0.57,-0.005,0.30],[0.69,0.00,0.42],[0.48,-0.008,0.50]];
+  stickers.forEach(([x,y,z], i) => box([0.11 + (i%2)*0.03, 0.018, 0.09], [x,y,z], stickerMats[i%stickerMats.length], `blue-bag-sticker-${i}`, { rotationZ: (i-1.5)*0.22 }));
+  addLine([0.34,0.20,0.52],[0.39,0.20,0.78],M.blueTextile,'blue-bag-handle-a1',0.025);
+  addLine([0.39,0.20,0.78],[0.53,0.20,0.56],M.blueTextile,'blue-bag-handle-a2',0.025);
+  addLine([0.58,0.20,0.55],[0.66,0.20,0.80],M.blueTextile,'blue-bag-handle-b1',0.025);
+  addLine([0.66,0.20,0.80],[0.77,0.20,0.55],M.blueTextile,'blue-bag-handle-b2',0.025);
+
+  const magnetPositions = [[1.36,2.505,1.08],[1.52,2.505,1.24],[1.42,2.505,1.42],[1.61,2.505,1.56],[1.31,2.505,1.63]];
+  magnetPositions.forEach(([x,y,z], i) => addSphere(0.045 + (i%2)*0.012,[x,y,z],[M.flower,yellow,clothWhite,paleBlue][i%4],`cabinet-magnet-${i}`,10));
+
+  box([0.36,0.14,0.075],[2.97,1.55,0.09],clothWhite,'pale-slipper-a',{rotationZ:-0.30});
+  box([0.36,0.14,0.075],[3.22,1.40,0.09],clothWhite,'pale-slipper-b',{rotationZ:-0.12});
+  for (let i=0;i<12;i++) {
+    const x=-1.05+i*0.20;
+    addLine([x,-2.29,0.06],[x+(i%2?0.025:-0.025),-2.43,0.045],clothWhite,`runner-fringe-${i}`,0.008);
+  }
+
   // Rough plaster scars and hairline crack suggestions.  These are shallow so
   // they remain decorative and never become collision geometry.
   const patches = [
