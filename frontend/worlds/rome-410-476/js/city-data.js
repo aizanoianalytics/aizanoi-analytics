@@ -267,7 +267,7 @@ for (const water of WATERS) {
   });
 }
 
-export const SPAWN = { x: -200 * COMPACTION.factor, z: 270 * COMPACTION.factor, angle: Math.PI }; // Via Lata approach, facing the city
+export const SPAWN = { x: -200 * COMPACTION.factor, z: 314 * COMPACTION.factor, angle: Math.PI }; // Via Lata approach, outside the Aurelian circuit, facing the city
 
 export const TELEPORTS = [
   { id: 'colosseum', name: 'Colosseum (Flavian Amphitheatre)' },
