@@ -11,7 +11,8 @@ import {
 } from './city-data.js';
 
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
-import { buildStructure } from './builders.js';
+import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
+import { loadAssetKit } from '../../shared/engine/asset-kit.js';
 import { Environment } from '../../shared/engine/environment.js';
 import { WaterSystem, buildWaterSamplePoints } from '../../shared/engine/water.js';
 import { VegetationSystem } from '../../shared/engine/vegetation.js';
@@ -132,6 +133,15 @@ async function init() {
 
   // 4. Roads
   buildStreets();
+
+  setProgress(45, 'Loading Blender-crafted monuments...');
+
+  // 4b. Blender asset kit (monuments + houses resolve to local GLBs)
+  const kitBase = new URL('../assets/', import.meta.url);
+  const kit = await loadAssetKit(kitBase, KIT_MANIFEST, (frac) => {
+    setProgress(45 + Math.round(frac * 10), 'Loading Blender-crafted monuments...');
+  });
+  setAssetKit(kit);
 
   setProgress(50, 'Building the Temple of Zeus, Macellum and theatre–stadium...');
 
@@ -313,11 +323,15 @@ function buildUrbanFabric() {
         const d = 8 + hash(`${seed}:d`) * 8;
         const h = style.heightRange[0] + hash(`${seed}:h`) * (style.heightRange[1] - style.heightRange[0]);
 
+        const kitPick = hash(`${seed}:kit`);
+        const kitId = kitPick < 0.3 ? 'insula_a' : kitPick < 0.55 ? 'insula_b' : kitPick < 0.75 ? 'insula_c' : kitPick < 0.9 ? 'domus' : 'shop_row';
+        const kitYaw = [0, Math.PI / 2, Math.PI, -Math.PI / 2][Math.floor(hash(`${seed}:yaw`) * 4)];
         const fabric = {
           id: `fabric-${placed}`,
           type: 'insula',
           x, z, w, d, h,
-          material: style.materials?.[Math.floor(hash(`${seed}:mat`) * (style.materials.length || 1))] || 'romanBrick',
+          kit: kitId,
+          kitYaw,
           evidence: { level: 'plausible' }
         };
 
@@ -326,7 +340,8 @@ function buildUrbanFabric() {
           if (g) {
             g.position.set(x, 0, z);
             scene.add(g);
-            collision.grid.insert({ type: 'rect', id: fabric.id, x, z, w, d, h, y: 0 });
+            const rotated = Math.abs(Math.sin(kitYaw)) > 0.5;
+            collision.grid.insert({ type: 'rect', id: fabric.id, x, z, w: rotated ? d : w, d: rotated ? w : d, h, y: 0 });
           }
         } catch (e) {}
 
@@ -344,38 +359,38 @@ function populateAizanoiDressing() {
 
   // 1. Temple of Zeus Sanctuary Props
   // Monumental Sacrificial Altar directly in front of the temple
-  dressingGroup.add(buildSacrificialAltar(-160, 48, 0));
-  collision.grid.insert({ type: 'rect', id: 'zeus-altar', x: -160, z: 48, w: 3.6, d: 2.4, h: 2.2 });
+  dressingGroup.add(buildSacrificialAltar(-80, 30, 0));
+  collision.grid.insert({ type: 'rect', id: 'zeus-altar', x: -80, z: 30, w: 3.6, d: 2.4, h: 2.2 });
 
   // Bronze Tripod Braziers along the temple approach and podium corners
   const braziers = [
-    { x: -188, z: 20 },
-    { x: -132, z: 20 },
-    { x: -160, z: -3 },
-    { x: -175, z: 42 },
-    { x: -145, z: 42 },
-    { x: -65, z: 10 },  // Propylon
-    { x: 50, z: -270 }, // Macellum gate
-    { x: 70, z: -270 },
+    { x: -108, z: 5 },
+    { x: -52, z: 5 },
+    { x: -80, z: -18 },
+    { x: -95, z: 26 },
+    { x: -65, z: 26 },
+    { x: -49, z: -5 },  // Propylon
+    { x: 35, z: -131 }, // Macellum south gate
+    { x: 35, z: -79 },  // Macellum north gate
   ];
   for (const b of braziers) {
     dressingGroup.add(buildBrazier(b.x, b.z, 1.4));
   }
 
   // Statues of Zeus and Roman Emperors on marble pedestals
-  dressingGroup.add(buildStatueMonument(-160, 58, 0, false)); // Imperial statue facing entrance
-  dressingGroup.add(buildStatueMonument(-140, 20, Math.PI * 0.5, false));
-  dressingGroup.add(buildStatueMonument(-65, -10, 0, true)); // Cult statue near Propylon
+  dressingGroup.add(buildStatueMonument(-80, 38, 0, false)); // Imperial statue facing entrance
+  dressingGroup.add(buildStatueMonument(-60, 5, Math.PI * 0.5, false));
+  dressingGroup.add(buildStatueMonument(-49, -5, 0, true)); // Cult statue near Propylon
 
   // Carved marble sundial in the sanctuary temenos
-  dressingGroup.add(buildSundialMonument(-142, 38));
+  dressingGroup.add(buildSundialMonument(-62, 24));
 
   // Stone benches in the temenos courtyard
   const benches = [
-    { x: -180, z: 40, rot: 0 },
-    { x: -140, z: 40, rot: 0 },
-    { x: -80, z: -25, rot: 0.3 },
-    { x: -50, z: -25, rot: -0.3 },
+    { x: -100, z: 26, rot: 0 },
+    { x: -60, z: 26, rot: 0 },
+    { x: -30, z: -2, rot: 0.3 },
+    { x: 0, z: -2, rot: -0.3 },
   ];
   for (const b of benches) {
     dressingGroup.add(buildStoneBench(b.x, b.z, b.rot));
@@ -383,14 +398,14 @@ function populateAizanoiDressing() {
 
   // 2. Agora & Propylon Marketplace
   // Central Roman nymphaeum fountain
-  dressingGroup.add(buildRomanFountain(-65, -45, 4.2));
+  dressingGroup.add(buildRomanFountain(-15, -8, 4.2));
 
   // Agora Market Stalls
   const agoraStalls = [
-    { x: -85, z: -45, rot: 0.1, color: 0x9e3824 },
-    { x: -85, z: -35, rot: -0.05, color: 0xb8860b },
-    { x: -45, z: -45, rot: Math.PI + 0.1, color: 0x4a7c59 },
-    { x: -45, z: -35, rot: Math.PI - 0.05, color: 0x8b3a3a },
+    { x: -30, z: -12, rot: 0.1, color: 0x9e3824 },
+    { x: -30, z: -2, rot: -0.05, color: 0xb8860b },
+    { x: 0, z: -12, rot: Math.PI + 0.1, color: 0x4a7c59 },
+    { x: 0, z: -2, rot: Math.PI - 0.05, color: 0x8b3a3a },
   ];
   for (const s of agoraStalls) {
     dressingGroup.add(buildMarketStall(s.x, s.z, s.rot, s.color));
@@ -398,20 +413,20 @@ function populateAizanoiDressing() {
   }
 
   // Amphora clusters in Agora
-  dressingGroup.add(buildAmphoraCluster(-90, -55, 6, 0.3));
-  dressingGroup.add(buildAmphoraCluster(-40, -55, 5, -0.2));
+  dressingGroup.add(buildAmphoraCluster(-36, -14, 6, 0.3));
+  dressingGroup.add(buildAmphoraCluster(6, -14, 5, -0.2));
 
-  // 3. Macellum (World's Earliest Stock/Commodity Exchange)
+  // 3. Macellum Market & Price Edict
   // Diocletian Price Edict stelae in Greek & Latin
-  dressingGroup.add(buildInscribedStele(60, -272, 0, 'Edictum de Pretiis'));
-  dressingGroup.add(buildInscribedStele(48, -285, 0.4, 'Macellum Lex'));
+  dressingGroup.add(buildInscribedStele(30, -134, 0, 'Edictum de Pretiis'));
+  dressingGroup.add(buildInscribedStele(40, -134, 0.4, 'Macellum Lex'));
 
   // Market stalls inside and around the circular Macellum
   const macellumStalls = [
-    { x: 50, z: -315, rot: 0.3, color: 0xc45c38 },
-    { x: 70, z: -315, rot: -0.3, color: 0xd2a842 },
-    { x: 42, z: -300, rot: Math.PI * 0.5, color: 0x4a7c59 },
-    { x: 78, z: -300, rot: -Math.PI * 0.5, color: 0x2e6b9e },
+    { x: 25, z: -105, rot: 0.3, color: 0xc45c38 },
+    { x: 45, z: -105, rot: -0.3, color: 0xd2a842 },
+    { x: 35, z: -95, rot: Math.PI * 0.5, color: 0x4a7c59 },
+    { x: 35, z: -115, rot: -Math.PI * 0.5, color: 0x2e6b9e },
   ];
   for (const s of macellumStalls) {
     dressingGroup.add(buildMarketStall(s.x, s.z, s.rot, s.color));
@@ -419,61 +434,61 @@ function populateAizanoiDressing() {
   }
 
   // Food amphora clusters and merchant carts at Macellum
-  dressingGroup.add(buildAmphoraCluster(45, -310, 7, 0.5));
-  dressingGroup.add(buildAmphoraCluster(75, -310, 6, -0.4));
-  dressingGroup.add(buildWoodenCart(58, -255, 0.15));
-  dressingGroup.add(buildWoodenCart(35, -280, -0.4));
+  dressingGroup.add(buildAmphoraCluster(22, -112, 7, 0.5));
+  dressingGroup.add(buildAmphoraCluster(48, -98, 6, -0.4));
+  dressingGroup.add(buildWoodenCart(24, -80, 0.15));
+  dressingGroup.add(buildWoodenCart(46, -130, -0.4));
 
   // 4. Penkalas River Quays & Bridges
   // Classical Merchant Cargo Vessels moored along the Penkalas river
-  dressingGroup.add(buildMerchantVessel(112, -185, 0.08)); // Moored near Bridge II
-  dressingGroup.add(buildMerchantVessel(132, 45, -0.12));  // Moored near Bridge III
+  dressingGroup.add(buildMerchantVessel(66, -80, 0.08)); // Moored near Bridge II
+  dressingGroup.add(buildMerchantVessel(70, 80, -0.12));  // Moored near Bridge III
 
   // River cargo amphora clusters stacked along the quays
-  dressingGroup.add(buildAmphoraCluster(98, -145, 8, 0.2));
-  dressingGroup.add(buildAmphoraCluster(126, -145, 6, -0.3));
-  dressingGroup.add(buildAmphoraCluster(118, 85, 8, 0.1));
-  dressingGroup.add(buildWoodenCart(95, -170, 0.3));
+  dressingGroup.add(buildAmphoraCluster(50, -90, 8, 0.2));
+  dressingGroup.add(buildAmphoraCluster(52, 60, 6, -0.3));
+  dressingGroup.add(buildAmphoraCluster(54, 100, 8, 0.1));
+  dressingGroup.add(buildWoodenCart(48, -70, 0.3));
 
   // Roman treadwheel quay crane for unloading river barges
-  dressingGroup.add(buildRiverQuayCrane(104, -160, 0.15));
+  dressingGroup.add(buildRiverQuayCrane(56, -75, 0.15));
 
   // Penkalas river grain water mill with turning paddle wheel
-  const penkalasMill = buildPenkalasWaterMill(138, -130, -0.2);
+  const penkalasMill = buildPenkalasWaterMill(74, 20, -0.2);
   penkalasMill.userData.isPenkalasMill = true;
   penkalasMillWheel = penkalasMill.children.find((c) => typeof c.userData?.update === 'function') || null;
   dressingGroup.add(penkalasMill);
 
   // Roman marble sarcophagi along the northern sanctuary approach
-  dressingGroup.add(buildRomanSarcophagus(-195, 70, 0.2));
-  dressingGroup.add(buildRomanSarcophagus(-185, 95, -0.15));
-  dressingGroup.add(buildRomanSarcophagus(-135, 95, 0.1));
+  dressingGroup.add(buildRomanSarcophagus(-110, 40, 0.2));
+  dressingGroup.add(buildRomanSarcophagus(-100, 60, -0.15));
+  dressingGroup.add(buildRomanSarcophagus(-60, 60, 0.1));
 
   // 5. Colonnaded Street Furnishings
-  dressingGroup.add(buildInscribedStele(-65, -380, 0, 'Miliarium Aizanorum'));
-  dressingGroup.add(buildStatueMonument(-65, -450, 0, false));
-  dressingGroup.add(buildStatueMonument(-65, -620, Math.PI, false));
-  dressingGroup.add(buildStoneBench(-55, -420, 0));
-  dressingGroup.add(buildStoneBench(-75, -420, 0));
-  dressingGroup.add(buildStoneBench(-55, -580, 0));
-  dressingGroup.add(buildStoneBench(-75, -580, 0));
+  dressingGroup.add(buildInscribedStele(-10, -240, 0, 'Miliarium Aizanorum'));
+  dressingGroup.add(buildStatueMonument(-10, -120, 0, false));
+  dressingGroup.add(buildStatueMonument(-10, -200, Math.PI, false));
+  dressingGroup.add(buildStoneBench(-4, -140, 0));
+  dressingGroup.add(buildStoneBench(-16, -140, 0));
+  dressingGroup.add(buildStoneBench(-4, -190, 0));
+  dressingGroup.add(buildStoneBench(-16, -190, 0));
 
   // 6. Penkalas River Living Assets & Sanctuary Birds
   // Riverbank reeds along Penkalas shallows and quays
-  dressingGroup.add(buildRiverReeds(90, -220, 14, 3.2));
-  dressingGroup.add(buildRiverReeds(130, -20, 12, 3.0));
-  dressingGroup.add(buildRiverReeds(140, 110, 15, 3.5));
-  dressingGroup.add(buildRiverReeds(95, -70, 10, 2.5));
+  dressingGroup.add(buildRiverReeds(56, -140, 14, 3.2));
+  dressingGroup.add(buildRiverReeds(70, 0, 12, 3.0));
+  dressingGroup.add(buildRiverReeds(72, 120, 15, 3.5));
+  dressingGroup.add(buildRiverReeds(56, -40, 10, 2.5));
 
   // Ancient wooden cargo skiffs moored along Penkalas riverbank
-  dressingGroup.add(buildCargoSkiff(100, -115, 0.25));
-  dressingGroup.add(buildCargoSkiff(125, 10, -0.3));
+  dressingGroup.add(buildCargoSkiff(60, -100, 0.25));
+  dressingGroup.add(buildCargoSkiff(66, 110, -0.3));
 
   // Rustic wooden footbridge spanning upper Penkalas
-  dressingGroup.add(buildWoodenFootbridge(105, -290, 0.45, 16, 2.4));
+  dressingGroup.add(buildWoodenFootbridge(60, -250, 0.45, 16, 2.4));
 
   // Aerial bird flock circling over the Temple of Zeus sanctuary
-  birdFlock = buildBirdFlock(-150, 42, 25, 10, 28);
+  birdFlock = buildBirdFlock(-80, 42, 5, 10, 28);
   dressingGroup.add(birdFlock);
 
   scene.add(dressingGroup);
