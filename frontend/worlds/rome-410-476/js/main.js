@@ -618,9 +618,11 @@ function installWorldDebugHandle() {
     id: 'rome',
     get scene() { return scene; },
     get ready() { return Boolean(renderer && camera && controls && collision && ui); },
+    get drawCalls() { return renderer ? renderer.info.render.calls : 0; },
     audio,
     get camera() { return camera; },
     get controls() { return controls; },
+    get environment() { return environment; },
     get player() {
       if (!camera) return null;
       return { x: camera.position.x, y: camera.position.y, z: camera.position.z, controlsEnabled: Boolean(controls?.enabled) };
@@ -652,6 +654,18 @@ function installWorldDebugHandle() {
     teleport(id) {
       if (!ui?.onTeleport || !BUILDINGS.some((building) => building.id === id)) return false;
       ui.onTeleport(id);
+      return true;
+    },
+    frameCamera(px, py, pz, yaw, pitch) {
+      if (!controls || !collision) return false;
+      intro?.skipIntro();
+      controls.enable();
+      isRunning = true;
+      simPos.set(px, py, pz);
+      camera.position.set(px, py, pz);
+      pose?.snap();
+      controls.euler.set(pitch, yaw, 0, 'YXZ');
+      camera.quaternion.setFromEuler(controls.euler);
       return true;
     },
     toggleEvidence() {
