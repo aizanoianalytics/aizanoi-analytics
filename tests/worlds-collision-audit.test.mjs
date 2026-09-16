@@ -117,3 +117,25 @@ test('Athens Parthenon cella core collides and stepped stylobate is walkable', (
   const groundY = col.getGroundLevel(parthenon.x, parthenon.z);
   assert.ok(groundY >= 1.2, 'Parthenon platform must provide walkable height >= 1.2');
 });
+
+test('Aizanoi Temple of Zeus high podium flanks collide, stair gaps stay open', () => {
+  const col = new CollisionSystem();
+  col.buildFromData(AIZANOI_BUILDINGS, [], { minX: -1000, maxX: 1000, minZ: -1000, maxZ: 1000 });
+  const temple = AIZANOI_BUILDINGS.find(b => b.id === 'temple');
+  assert.ok(temple, 'Temple of Zeus found');
+
+  // Tall podium long flanks block ground-level walkers (no clip-and-pop through walls)
+  assert.equal(col._checkCollision(temple.x, temple.z + temple.d / 2 + 1.4, 0), true, 'Podium south flank must collide at ground');
+  assert.equal(col._checkCollision(temple.x, temple.z - temple.d / 2 - 1.4, 0), true, 'Podium north flank must collide at ground');
+
+  // End stair openings stay walkable
+  assert.equal(col._checkCollision(temple.x + temple.w / 2 + 3.9, temple.z, 0), false, 'East stair gap must stay open');
+  assert.equal(col._checkCollision(temple.x - temple.w / 2 - 3.9, temple.z, 0), false, 'West stair gap must stay open');
+
+  // Stair strips climb 0.5m per step onto the 2.4m stylobate
+  assert.ok(col.getGroundLevel(temple.x + temple.w / 2 + 3.9, temple.z) >= 0.5, 'First stair strip must lift the walker');
+  assert.equal(col.getGroundLevel(temple.x, temple.z), 2.4, 'Stylobate walk surface must sit at podium height');
+
+  // Cella core still blocks on the platform
+  assert.equal(col._checkCollision(temple.x, temple.z, 2.4), true, 'Cella core must block traversal on the stylobate');
+});
