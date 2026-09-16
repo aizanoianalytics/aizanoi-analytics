@@ -11,7 +11,8 @@ import {
 } from './city-data.js';
 
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
-import { buildStructure } from './builders.js';
+import { buildStructure, buildStaticStructure, buildInstancedLayer, queueFabric, KIT_MANIFEST, setAssetKit } from './builders.js';
+import { loadAssetKit } from '../../shared/engine/asset-kit.js';
 import { Environment } from '../../shared/engine/environment.js';
 import { WaterSystem, buildWaterSamplePoints } from '../../shared/engine/water.js';
 import { VegetationSystem } from '../../shared/engine/vegetation.js';
@@ -135,6 +136,13 @@ async function init() {
 
   setProgress(50, 'Building the Colosseum, Pantheon and basilicas...');
 
+  // 4b. Blender asset kit (heroes + instanced fabric resolve to local GLBs)
+  const kitBase = new URL('../assets/', import.meta.url);
+  const kit = await loadAssetKit(kitBase, KIT_MANIFEST, (frac) => {
+    setProgress(45 + Math.round(frac * 5), 'Loading Blender-crafted monuments...');
+  });
+  setAssetKit(kit);
+
   // 5. Named Monuments
   buildAllMonuments();
 
@@ -150,8 +158,9 @@ async function init() {
 
   setProgress(75, 'Building the Aurelian Walls and Subura fabric...');
 
-  // 7. Urban Insulae Fabric (inserts insulae into collision grid)
+  // 7. Urban Insulae Fabric (queued instances + collision grid)
   buildUrbanInsulae();
+  scene.add(buildInstancedLayer());
 
   setProgress(85, 'Planting Mediterranean vegetation and umbrella pines...');
 
@@ -263,7 +272,7 @@ function buildRomanStreets() {
 function buildAllMonuments() {
   for (const b of BUILDINGS) {
     try {
-      const group = buildStructure(b);
+      const group = buildStaticStructure(b);
       if (group) {
         group.position.set(b.x, b.y || 0, b.z);
         if (b.rot) group.rotation.y = b.rot;
@@ -316,23 +325,12 @@ function buildUrbanInsulae() {
         const h = style.heightRange[0] + hash(`${seed}:h`) * (style.heightRange[1] - style.heightRange[0]);
 
         const isCharred = hash(`${seed}:charred`) < 0.14;
-        const insula = {
-          id: `insula-${placed}`,
-          type: isCharred ? 'charred-insula' : 'insula',
-          x, z, w, d, h,
-          evidence: isCharred
-            ? { level: 'atmospheric/inferred', note: 'Charred, roofless insula reflecting post-sack (AD 410/455) urban fire damage.' }
-            : { level: 'plausible' }
-        };
-
-        try {
-          const g = buildStructure(insula);
-          if (g) {
-            g.position.set(x, 0, z);
-            scene.add(g);
-            collision.grid.insert({ type: 'rect', id: insula.id, x, z, w, d, h, y: 0 });
-          }
-        } catch (e) {}
+        const variantPick = hash(`${seed}:kit`);
+        const variant = variantPick < 0.4 ? 'fabric_a' : variantPick < 0.7 ? 'fabric_b' : 'fabric_c';
+        const kitYaw = [0, Math.PI / 2, Math.PI, -Math.PI / 2][Math.floor(hash(`${seed}:yaw`) * 4)];
+        const rotated = Math.abs(Math.sin(kitYaw)) > 0.5;
+        queueFabric(variant, { x, y: 0, z, yaw: kitYaw, scale: 0.9 + hash(`${seed}:s`) * 0.3 });
+        collision.grid.insert({ type: 'rect', id: `insula-${placed}`, x, z, w: rotated ? d : w, d: rotated ? w : d, h, y: 0 });
 
         placed++;
       }
@@ -347,17 +345,17 @@ function populateRomeDressing() {
   dressingGroup.name = 'rome-street-dressing';
 
   // 1. Roman Nymphaeum Stone Fountains in Public Plazas
-  dressingGroup.add(buildRomanFountain(-65, 45, 0));  // Forum Romanum center
-  dressingGroup.add(buildRomanFountain(-120, -180, Math.PI / 4)); // Campus Martius
-  dressingGroup.add(buildRomanFountain(-40, -85, 0));  // Near Pantheon
+  dressingGroup.add(buildRomanFountain(-60, -10, 0));  // Forum Romanum center
+  dressingGroup.add(buildRomanFountain(-220, 110, Math.PI / 4)); // Campus Martius
+  dressingGroup.add(buildRomanFountain(-170, 55, 0));  // Near Pantheon
 
   // 2. Market Stalls in Subura & Forum Boarium
   const stalls = [
-    { x: 45, z: 80, rot: 0.2, color: 0x9e3824 },
-    { x: 55, z: 80, rot: -0.1, color: 0xb8860b },
-    { x: 65, z: 80, rot: 0.15, color: 0x4a7c59 },
-    { x: -140, z: -110, rot: Math.PI + 0.1, color: 0x8b3a3a },
-    { x: -150, z: -110, rot: Math.PI - 0.05, color: 0x2e6b9e },
+    { x: -150, z: 80, rot: 0.2, color: 0x9e3824 },
+    { x: -140, z: 80, rot: -0.1, color: 0xb8860b },
+    { x: -130, z: 80, rot: 0.15, color: 0x4a7c59 },
+    { x: -200, z: -45, rot: Math.PI + 0.1, color: 0x8b3a3a },
+    { x: -190, z: -45, rot: Math.PI - 0.05, color: 0x2e6b9e },
   ];
   for (const s of stalls) {
     dressingGroup.add(buildMarketStall(s.x, s.z, s.rot, s.color));
@@ -365,101 +363,101 @@ function populateRomeDressing() {
   }
 
   // 3. Amphora Clusters along Tiber River wharves
-  dressingGroup.add(buildAmphoraCluster(-180, -220, 8, 0.4));
-  dressingGroup.add(buildAmphoraCluster(-210, -260, 6, -0.3));
-  dressingGroup.add(buildAmphoraCluster(-75, 60, 5, 0)); // Forum tabernae
+  dressingGroup.add(buildAmphoraCluster(-270, -40, 8, 0.4));
+  dressingGroup.add(buildAmphoraCluster(-265, -80, 6, -0.3));
+  dressingGroup.add(buildAmphoraCluster(-40, -30, 5, 0)); // Forum tabernae
 
   // 4. Braziers at Colosseum & Triumphal Arches
   const braziers = [
-    { x: 42, z: -55 },  // Colosseum north arch
-    { x: 62, z: -55 },
-    { x: 42, z: -75 },  // Colosseum south arch
-    { x: 62, z: -75 },
-    { x: 15, z: -40 },  // Arch of Constantine
-    { x: -80, z: 75 },  // Arch of Septimius Severus
+    { x: 70, z: -70 },  // Colosseum east gate
+    { x: 110, z: -70 },
+    { x: 70, z: -10 },  // Colosseum west gate
+    { x: 110, z: -10 },
+    { x: 30, z: -100 },  // Arch of Constantine
+    { x: -130, z: 10 },  // Arch of Septimius Severus
   ];
   for (const b of braziers) {
     dressingGroup.add(buildBrazier(b.x, b.z, 1.4));
   }
 
   // 5. Imperial Statues on plinths in the Forum & Capitolium (weathered verdigris patina 0x42735d)
-  dressingGroup.add(buildStatueMonument(-80, 20, 0, false, true));
-  dressingGroup.add(buildStatueMonument(-50, 60, Math.PI * 0.5, false, true));
-  dressingGroup.add(buildStatueMonument(5, -35, -Math.PI * 0.25, false, true));
+  dressingGroup.add(buildStatueMonument(-75, -5, 0, false, true));
+  dressingGroup.add(buildStatueMonument(-50, 15, Math.PI * 0.5, false, true));
+  dressingGroup.add(buildStatueMonument(-20, -30, -Math.PI * 0.25, false, true));
 
   // 6. Marble Inscribed Columns & Milestones
-  dressingGroup.add(buildInscribedStele(-85, 35, 0.2, 'Miliarium Aureum'));
-  dressingGroup.add(buildInscribedStele(-60, 25, -0.1, 'Lapis Niger'));
+  dressingGroup.add(buildInscribedStele(-70, 5, 0.2, 'Miliarium Aureum'));
+  dressingGroup.add(buildInscribedStele(-55, -2, -0.1, 'Lapis Niger'));
 
   // 7. Stone Benches along Via Sacra
   const benches = [
-    { x: -30, z: -10, rot: 0.3 },
-    { x: -10, z: -25, rot: 0.3 },
-    { x: 10, z: -40, rot: 0.3 },
-    { x: 30, z: -55, rot: 0.3 },
+    { x: -120, z: -28, rot: 0.3 },
+    { x: -90, z: -26, rot: 0.3 },
+    { x: -60, z: -30, rot: 0.3 },
+    { x: -30, z: -33, rot: 0.3 },
   ];
   for (const b of benches) {
     dressingGroup.add(buildStoneBench(b.x, b.z, b.rot));
   }
 
   // 8. Two-wheeled Merchant Carts along Via Flaminia
-  dressingGroup.add(buildWoodenCart(-340, 480, 0.2));
-  dressingGroup.add(buildWoodenCart(-360, 510, -0.4));
+  dressingGroup.add(buildWoodenCart(-205, 200, 0.2));
+  dressingGroup.add(buildWoodenCart(-200, 230, -0.4));
 
   // 9. Italian Stone Pines (Pinus Pinea)
-  dressingGroup.add(buildUmbrellaPine(-20, 110, 20));
-  dressingGroup.add(buildUmbrellaPine(20, 130, 22));
-  dressingGroup.add(buildUmbrellaPine(90, -40, 19));
-  dressingGroup.add(buildUmbrellaPine(-110, -60, 18));
+  dressingGroup.add(buildUmbrellaPine(-40, 90, 20));
+  dressingGroup.add(buildUmbrellaPine(0, 100, 22));
+  dressingGroup.add(buildUmbrellaPine(120, -20, 19));
+  dressingGroup.add(buildUmbrellaPine(-160, -20, 18));
 
   // 10. Great Altars in the Forum Romanum (Altar of Saturn & Temple of Concord)
-  dressingGroup.add(buildSacrificialAltar(-85, 18, 0.15));
-  collision.grid.insert({ type: 'rect', id: 'saturn-altar', x: -85, z: 18, w: 3.6, d: 2.4, h: 2.2 });
+  dressingGroup.add(buildSacrificialAltar(-80, -2, 0.15));
+  collision.grid.insert({ type: 'rect', id: 'saturn-altar', x: -80, z: -2, w: 3.6, d: 2.4, h: 2.2 });
 
   // 11. Solarium Augusti / Horologium Sundial in Campus Martius
-  dressingGroup.add(buildSundialMonument(-150, 140));
+  dressingGroup.add(buildSundialMonument(-225, 120));
 
   // 12. Roman Merchant Vessels (Navis Oneraria) on the Tiber River
-  dressingGroup.add(buildMerchantVessel(-205, -240, 0.22));
-  dressingGroup.add(buildMerchantVessel(-170, -185, -0.18));
+  dressingGroup.add(buildMerchantVessel(-285, -60, 0.22));
+  dressingGroup.add(buildMerchantVessel(-280, 0, -0.18));
 
   // 13. Late Antique Decay Layer (AD 410–476 Post-Sack Neglect & Ruin)
   // Broken / fallen column drums in Imperial Fora & Forum Romanum
-  dressingGroup.add(buildFallenColumnDrums(-70, 30, 0.4, 4));
-  dressingGroup.add(buildFallenColumnDrums(-90, 10, -0.6, 3));
-  dressingGroup.add(buildFallenColumnDrums(-45, 15, 0.8, 3));
-  dressingGroup.add(buildFallenColumnDrums(-60, 105, 0.2, 3));
+  dressingGroup.add(buildFallenColumnDrums(-70, -5, 0.4, 4));
+  dressingGroup.add(buildFallenColumnDrums(-55, -20, -0.6, 3));
+  dressingGroup.add(buildFallenColumnDrums(-40, 0, 0.8, 3));
+  dressingGroup.add(buildFallenColumnDrums(-60, 40, 0.2, 3));
 
   // Shattered stelae in Forum Romanum
-  dressingGroup.add(buildShatteredStele(-75, 40, 0.5));
-  dressingGroup.add(buildShatteredStele(-55, 18, -0.3));
+  dressingGroup.add(buildShatteredStele(-65, 5, 0.5));
+  dressingGroup.add(buildShatteredStele(-50, -8, -0.3));
 
   // Travertine & brick debris mounds
-  dressingGroup.add(buildDebrisPile(-68, 52, 2.8, 1.2));
-  dressingGroup.add(buildDebrisPile(-82, -5, 3.2, 1.4));
-  dressingGroup.add(buildDebrisPile(25, 60, 2.5, 1.0));
-  dressingGroup.add(buildDebrisPile(110, 85, 3.4, 1.5));
-  dressingGroup.add(buildDebrisPile(-160, -90, 3.0, 1.3));
+  dressingGroup.add(buildDebrisPile(-60, 20, 2.8, 1.2));
+  dressingGroup.add(buildDebrisPile(-70, -15, 3.2, 1.4));
+  dressingGroup.add(buildDebrisPile(40, 30, 2.5, 1.0));
+  dressingGroup.add(buildDebrisPile(120, 60, 3.4, 1.5));
+  dressingGroup.add(buildDebrisPile(-140, -50, 3.0, 1.3));
 
   // Partially collapsed arcade on secondary aqueduct / portico spur
   const arcade1 = buildStructure({ type: 'collapsed-arcade', w: 26, h: 11, d: 5 });
-  arcade1.position.set(130, 0, 70);
+  arcade1.position.set(150, 0, 40);
   arcade1.rotation.y = 0.4;
   dressingGroup.add(arcade1);
-  collision.grid.insert({ type: 'rect', id: 'collapsed-arcade-1', x: 130, z: 70, w: 26, d: 5, h: 11 });
+  collision.grid.insert({ type: 'rect', id: 'collapsed-arcade-1', x: 150, z: 40, w: 26, d: 5, h: 11 });
 
   // Fractured Late-Antique Ruined Triumphal Archway (Post-Sack)
-  dressingGroup.add(buildRuinedTriumphalArch(-105, 55, 0.35));
-  collision.grid.insert({ type: 'rect', id: 'ruined-arch-1', x: -105, z: 55, w: 7.2, d: 3.6, h: 7.8 });
+  dressingGroup.add(buildRuinedTriumphalArch(-75, 25, 0.35));
+  collision.grid.insert({ type: 'rect', id: 'ruined-arch-1', x: -75, z: 25, w: 7.2, d: 3.6, h: 7.8 });
 
   // Late Roman Street Defense Barricades
-  dressingGroup.add(buildLateRomanBarricade(-65, -15, 0.28));
-  collision.grid.insert({ type: 'rect', id: 'barricade-sacra-1', x: -65, z: -15, w: 3.2, d: 2.2, h: 1.8 });
-  dressingGroup.add(buildLateRomanBarricade(-280, 420, -0.4));
+  dressingGroup.add(buildLateRomanBarricade(-50, -18, 0.28));
+  collision.grid.insert({ type: 'rect', id: 'barricade-sacra-1', x: -50, z: -18, w: 3.2, d: 2.2, h: 1.8 });
+  dressingGroup.add(buildLateRomanBarricade(-210, 240, -0.4));
 
   // Forum Night Watch Fire Baskets
-  dressingGroup.add(buildForumWatchBrazier(-95, 45));
-  dressingGroup.add(buildForumWatchBrazier(-48, -5));
+  dressingGroup.add(buildForumWatchBrazier(-70, 15));
+  dressingGroup.add(buildForumWatchBrazier(-45, -12));
 
   // Overgrown street paving weeds along Roman basalt roads
   const weedCoords = [
@@ -475,17 +473,17 @@ function populateRomeDressing() {
 
   // 14. Living Water & Bird Life (Tiber Reeds, Moored Skiffs, Capitolium Flock)
   // Reeds along Tiber river banks near Forum Boarium & wharves
-  dressingGroup.add(buildRiverReeds(-195, -200, 18, 3.2));
-  dressingGroup.add(buildRiverReeds(-220, -250, 16, 3.0));
-  dressingGroup.add(buildRiverReeds(-175, -170, 14, 2.8));
-  dressingGroup.add(buildRiverReeds(-430, -370, 20, 3.5));
+  dressingGroup.add(buildRiverReeds(-275, -100, 18, 3.2));
+  dressingGroup.add(buildRiverReeds(-280, -160, 16, 3.0));
+  dressingGroup.add(buildRiverReeds(-270, -30, 14, 2.8));
+  dressingGroup.add(buildRiverReeds(-285, -250, 20, 3.5));
 
   // Small river cargo skiffs moored at Tiber wharves
-  dressingGroup.add(buildCargoSkiff(-190, -210, 0.18));
-  dressingGroup.add(buildCargoSkiff(-215, -265, -0.22));
+  dressingGroup.add(buildCargoSkiff(-278, -120, 0.18));
+  dressingGroup.add(buildCargoSkiff(-282, -180, -0.22));
 
   // Aerial bird flock circling over the Forum Romanum & Capitoline Hill
-  birdFlock = buildBirdFlock(-65, 46, 25, 14, 36);
+  birdFlock = buildBirdFlock(-60, 40, 25, 14, 36);
   dressingGroup.add(birdFlock);
 
   scene.add(dressingGroup);
