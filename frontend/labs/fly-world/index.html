@@ -4,25 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="dark">
-  <title>Fly House — Aizanoi Labs</title>
+  <title>Fly World — Aizanoi Labs</title>
   <meta name="robots" content="noindex">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <canvas id="world" aria-label="Fly House 3D prototype"></canvas>
+  <canvas id="world" aria-label="Fly World 3D house environment"></canvas>
   <header class="hud">
     <div>
-      <p class="eyebrow">Aizanoi Labs · Environment benchmark</p>
-      <h1>Fly House <span>BLOCKOUT</span></h1>
+      <p class="eyebrow">Aizanoi Labs · Fly World</p>
+      <h1>Fly House <span>HOUSE V0.2</span></h1>
     </div>
-    <div class="status"><i></i> Ghost observer · no fly loaded</div>
+    <div class="status"><i></i><span id="observer-status">Ghost observer · collision ON</span></div>
   </header>
   <aside class="help" id="help">
     <strong>Ghost observer</strong>
     <span>Click to capture mouse</span>
     <span>WASD move · Q/E down/up · Shift boost</span>
-    <span>R reset camera · Esc release mouse</span>
-    <small>This observer never enters future fly physics or sensory input.</small>
+    <span>R reset · Esc release mouse</span>
+    <span>N debug noclip toggle</span>
+    <small>The observer is invisible to future fly sensors, but collision is ON by default.</small>
   </aside>
   <div class="crosshair" aria-hidden="true"></div>
   <div id="fatal" class="fatal" hidden></div>
