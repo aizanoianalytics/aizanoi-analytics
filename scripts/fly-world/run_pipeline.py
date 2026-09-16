@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One-command operator wrapper for the Fly House v0.2 Blender pipeline."""
+"""One-command operator wrapper for the Fly House v0.3 Blender pipeline."""
 
 from __future__ import annotations
 
@@ -11,15 +11,27 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-BLENDER_SCRIPT = ROOT / "scripts" / "fly-world" / "build_scene_v2.py"
+BLENDER_SCRIPT = ROOT / "scripts" / "fly-world" / "build_scene_v3.py"
 VALIDATOR_SCRIPT = ROOT / "scripts" / "fly-world" / "validate_project.py"
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Validate, build, render and export Fly House v0.2")
-    parser.add_argument("--strict-assets", action="store_true", help="require every visual-approval asset before Blender starts")
-    parser.add_argument("--skip-preflight", action="store_true", help="skip manifest/spec validation (debugging only)")
-    parser.add_argument("--no-render", action="store_true", help="skip five review renders; browser GLB is still exported")
+    parser = argparse.ArgumentParser(description="Validate, build, render and export Fly House v0.3")
+    parser.add_argument(
+        "--strict-assets",
+        action="store_true",
+        help="require every visual-approval asset before Blender starts",
+    )
+    parser.add_argument(
+        "--skip-preflight",
+        action="store_true",
+        help="skip manifest/spec validation (debugging only; never use for review candidates)",
+    )
+    parser.add_argument(
+        "--no-render",
+        action="store_true",
+        help="skip five review renders; browser GLB is still exported",
+    )
     return parser.parse_args()
 
 
@@ -38,22 +50,31 @@ def run_preflight(strict_assets: bool) -> int:
     command = [sys.executable, str(VALIDATOR_SCRIPT)]
     if strict_assets:
         command.append("--strict-assets")
-    print("[fly-house-v2] preflight:", " ".join(command))
+    print("[fly-house-v3] preflight:", " ".join(command))
     return subprocess.run(command, cwd=ROOT, check=False).returncode
 
 
 def main() -> int:
-    a = parse_args()
-    if not a.skip_preflight:
-        code = run_preflight(a.strict_assets)
+    args = parse_args()
+    if not args.skip_preflight:
+        code = run_preflight(args.strict_assets)
         if code != 0:
-            print("[fly-house-v2] preflight failed; Blender was not started.", file=sys.stderr)
+            print("[fly-house-v3] preflight failed; Blender was not started.", file=sys.stderr)
             return code
 
-    command = [find_blender(), "--background", "--python", str(BLENDER_SCRIPT), "--", "--root", str(ROOT)]
-    if a.no_render:
+    command = [
+        find_blender(),
+        "--background",
+        "--python",
+        str(BLENDER_SCRIPT),
+        "--",
+        "--root",
+        str(ROOT),
+    ]
+    if args.no_render:
         command.append("--no-render")
-    print("[fly-house-v2] blender:", " ".join(command))
+
+    print("[fly-house-v3] blender:", " ".join(command))
     return subprocess.run(command, cwd=ROOT, check=False).returncode
 
 
