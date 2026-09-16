@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-15T07:30:00.000Z",
+  "generatedAt": "2026-09-16T08:25:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-16",
+      "path": "/news/2026-09-16/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-15",
       "path": "/news/2026-09-15/",
@@ -145,6 +150,524 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-16-real-madrid-elche-espi-winner",
+      "kind": "daily",
+      "title": "Espi stoppage-time winner lifts Real Madrid level with Barcelona",
+      "summary": "Carlos Espi scored a 91st-minute winner to give Real Madrid a 3-2 victory at Elche on Tuesday and move the reigning La Liga champions level on points with Barcelona at the top of the table. Elche goalkeeper Matías Dituro's own goal and a Kylian Mbappé strike put Madrid two up before Abiel Osorio and Fer Niño equalised, only for Espi to tap in from Mbappé's cross at the back post to extend José Mourinho's side's winning start to the league campaign.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-09-16T08:30:00.000Z",
+      "updatedAt": "2026-09-16T08:30:00.000Z",
+      "retrievedAt": "2026-09-16T08:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "football",
+        "la-liga",
+        "real-madrid",
+        "elche"
+      ],
+      "sources": [
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com.au/football/report/_/gameId/401882872",
+          "publishedAt": "2026-09-16T07:45:00.000Z"
+        },
+        {
+          "publisher": "Hindustan Times",
+          "url": "https://www.hindustantimes.com/sports/football/espi-saves-real-madrid-with-late-winner-at-elche-101789508781189.html",
+          "publishedAt": "2026-09-16T03:16:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-fed-expected-to-hike-rates",
+      "kind": "daily",
+      "title": "Federal Reserve expected to deliver first rate hike since 2023",
+      "summary": "The Federal Reserve is widely expected to raise its benchmark interest rate by 25 basis points on Wednesday, ending a near-three-year easing cycle and putting the central bank at odds with President Donald Trump's preference for a cut. The move follows stubborn August core inflation running above target and a Jackson Hole speech by chair Kevin Warsh warning that underlying trends have not improved, with the September meeting also bringing an updated dot plot.",
+      "category": "economy-markets",
+      "priority": 80,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "federal-reserve",
+        "monetary-policy",
+        "inflation"
+      ],
+      "sources": [
+        {
+          "publisher": "Associated Press",
+          "url": "https://abcnews.com/Business/wireStory/federal-reserve-expected-raise-benchmark-rate-defying-trumps-136452242",
+          "publishedAt": "2026-09-15T00:04:00.000Z"
+        },
+        {
+          "publisher": "Crypto Briefing",
+          "url": "https://cryptobriefing.com/fed-hikes-interest-rates-2026",
+          "publishedAt": "2026-09-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-openai-anthropic-google-ai-standards-body",
+      "kind": "daily",
+      "title": "OpenAI, Anthropic and Google move to set up shared AI standards body",
+      "summary": "Three of the largest AI labs said on Tuesday they are drafting plans for a self-regulatory standards body modelled on the Financial Industry Regulatory Authority that oversees US brokers. The proposal, originated by Google DeepMind's Demis Hassabis, would cover shared safety practices and coordination between frontier model developers, though smaller labs including Cohere have already pushed back against the framing.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai",
+        "regulation",
+        "openai",
+        "anthropic",
+        "google"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/technology/openai-anthropic-google-ai-standards-body-2026-09-15/",
+          "publishedAt": "2026-09-16T01:56:00.000Z"
+        },
+        {
+          "publisher": "The Straits Times",
+          "url": "https://www.straitstimes.com/world/united-states/openai-anthropic-and-google-are-working-to-create-an-ai-standards-body",
+          "publishedAt": "2026-09-16T01:56:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-brent-steadies-saudi-pipeline-outage",
+      "kind": "daily",
+      "title": "Brent steadies near $107 as Saudi East-West pipeline stays offline",
+      "summary": "Brent crude held above $106 a barrel in Asian trade on Wednesday, with analysts warning that Saudi Arabia's East-West pipeline remains shut after last week's drone strike from Iraq and Riyadh has not disclosed a repair timeline. Kpler estimates the market could lose around 120 million barrels if the pipeline stays closed for a month, while WTI also stayed elevated, keeping pressure on inflation expectations into the Federal Reserve's rate decision.",
+      "category": "economy-markets",
+      "priority": 60,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "commodities",
+        "saudi-arabia",
+        "iran"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/09/13/oil-price-iran-war-strait-hormuz-saudi-pipeline.html",
+          "publishedAt": "2026-09-13T18:08:00.000Z"
+        },
+        {
+          "publisher": "OilPrice.com",
+          "url": "https://oilprice.com/Energy/Crude-Oil/Hormuz-Risk-Opens-40-Plus-Price-Gap-Between-Crude-Grades.html",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-faa-lists-starship-flight-14-window",
+      "kind": "daily",
+      "title": "FAA lists Starship Flight 14 for September 22 primary window",
+      "summary": "The US Federal Aviation Administration's Current Operations Plan Advisory dated September 15 sets a primary launch window for SpaceX's Starship Flight 14 from Starbase, Texas on September 22, with September 23 reserved as backup. The mission is described as Starship's first revenue-generating flight and is expected to carry production Starlink V3 satellites, while chief executive Elon Musk said Flight 15 would attempt the first tower catch of the upper stage.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "spacex",
+        "starship",
+        "faa"
+      ],
+      "sources": [
+        {
+          "publisher": "Tesla North",
+          "url": "https://teslanorth.com/2026/09/15/faa-starship-flight-14-september-22",
+          "publishedAt": "2026-09-15T20:00:00.000Z"
+        },
+        {
+          "publisher": "Xinhua",
+          "url": "https://english.news.cn/20260915/90e19d5bd76e42b58f0ee95ba8299959/c.html",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-iphone-18-pro-retail-availability",
+      "kind": "daily",
+      "title": "iPhone 18 Pro and Pro Max reach stores worldwide on Friday",
+      "summary": "Apple's iPhone 18 Pro and iPhone 18 Pro Max, introduced a week ago by new chief executive John Ternus, go on sale worldwide on Friday with pre-orders having opened on September 12. The lineup brings a 48-megapixel Fusion camera with a physical variable aperture, the A20 Pro chip on a 2-nanometer process and a redesigned vapor chamber, with iPhone 18 Pro Max rated for up to 45 hours of video playback on the eSIM-only variant.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "iphone",
+        "consumer-electronics"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple Newsroom",
+          "url": "https://www.apple.com/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max/",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/technology/foldable-iphone-pricier-18-pro-unveiled-apples-first-event-under-ternus-2026-09-09/",
+          "publishedAt": "2026-09-09T20:24:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-james-rodriguez-colombia-retirement",
+      "kind": "daily",
+      "title": "James Rodriguez retires from Colombia after 15-year international career",
+      "summary": "James Rodriguez, the 35-year-old Colombian playmaker and 2014 World Cup Golden Boot winner, announced on Tuesday that he is stepping down from international duty after 131 caps and four World Cups. Rodriguez, who recently signed with Atlético Nacional after leaving Minnesota United, helped Colombia to the 2014 quarter-finals in Brazil, won the Puskas Award that year and captained the side at the most recent World Cup in North America.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "football",
+        "colombia",
+        "international-retirement"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via The Straits Times)",
+          "url": "https://www.straitstimes.com/sport/football/colombias-james-rodriguez-retires-from-international-football",
+          "publishedAt": "2026-09-16T03:37:00.000Z"
+        },
+        {
+          "publisher": "Sportstar (The Hindu)",
+          "url": "https://sportstar.thehindu.com/football/james-rodriguez-international-retirement-colombia-world-cup-news/article71470949.ece",
+          "publishedAt": "2026-09-16T03:03:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-liverpool-beat-tottenham-carabao-cup",
+      "kind": "daily",
+      "title": "Szoboszlai screamer sends Liverpool past Spurs in Carabao Cup",
+      "summary": "Liverpool advanced to the Carabao Cup fourth round with a 3-1 win over Tottenham at Anfield on Tuesday, with Alexis Mac Allister and Cody Gakpo putting the hosts in control before Conor Gallagher pulled one back for Spurs. Substitute Dominik Szoboszlai sealed the result in stoppage time with a long-range strike from 25 yards that arrowed past Martin Dubravka, while Spurs also lost Mohamed Kudus to a first-half injury in a difficult night for Roberto De Zerbi's side.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "football",
+        "carabao-cup",
+        "liverpool",
+        "tottenham"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/11095/13582687/liverpool-3-1-tottenham-dominik-szoboszlai-strike-seals-carabao-cup-win-as-spurs-at-least-end-goal-drought",
+          "publishedAt": "2026-09-15T22:32:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/sep/15/liverpool-tottenham-carabao-cup-third-round-match-report",
+          "publishedAt": "2026-09-15T17:12:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-spanish-watchdog-first-ai-agent-breach",
+      "kind": "daily",
+      "title": "Spain's data watchdog logs first AI agent-linked breach report",
+      "summary": "Spain's data protection agency AEPD said it received the first formal notification of a personal data breach it believes was carried out by an AI agent acting largely without human direction. The watchdog said the agent used a widely-known large language model to probe an organisation's systems, log in, locate application weaknesses and modify personal data and invoice records, while stressing that the model itself was not compromised and the report is still under review.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai",
+        "cybersecurity",
+        "regulation",
+        "spain"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/spanish-data-watchdog-publicises-first-ai-agent-linked-data-breach-report-2026-09-15/",
+          "publishedAt": "2026-09-15T20:00:00.000Z"
+        },
+        {
+          "publisher": "CyPro",
+          "url": "https://cypro.co.uk/insights/cyber-bulletins/ai-agent-data-breach-publicised-in-spain/",
+          "publishedAt": "2026-09-15T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-airpods-5-apple-watch-series-12-ship",
+      "kind": "daily",
+      "title": "AirPods 5 and Apple Watch Series 12 ship alongside iPhone 18 Pro",
+      "summary": "Apple confirmed that AirPods 5, Apple Watch Series 12 and Apple Watch Ultra 4 will reach stores worldwide on Friday alongside iPhone 18 Pro and Pro Max, with Mac mini and Mac Studio following on September 22. AirPods 5 use an open-ear design with multiport acoustics and adaptive equaliser, while Apple Watch Series 12 adds a Health Sensing System and S11 chip, plus a readiness score to help users plan their day.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "airpods",
+        "apple-watch",
+        "wearables"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple Newsroom",
+          "url": "https://www.apple.com/newsroom/2026/09/get-ready-to-experience-iphone-18-pro-the-new-apple-watch-lineup-and-airpods-5/",
+          "publishedAt": "2026-09-12T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-anthropic-australia-data-centre",
+      "kind": "daily",
+      "title": "Anthropic signs first Australian data centre lease",
+      "summary": "Anthropic signed its first data centre lease in Australia, securing capacity at a planned Zerra DC facility in a deal reported to be one of the largest AI compute commitments in the country to date. The Sydney-based agreement is said to source renewable power purchase agreements and pass through grid connection costs without burdening existing customers, with construction priced around $30 billion and operations targeted to begin next year subject to approvals.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai",
+        "anthropic",
+        "australia",
+        "data-centre"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/anthropic-signs-first-australia-data-centre-agreement-2026-09-16/",
+          "publishedAt": "2026-09-16T05:00:00.000Z"
+        },
+        {
+          "publisher": "Australian Financial Review",
+          "url": "https://www.afr.com/technology/anthropic-lands-its-first-lease-for-an-australian-data-centre-20260916-p60xtu",
+          "publishedAt": "2026-09-16T02:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-anthropic-threat-report-september",
+      "kind": "daily",
+      "title": "Anthropic details hacktivist campaigns using agentic AI tools",
+      "summary": "Anthropic's September threat intelligence report outlines how a hacktivist actor it labels GTG-50029 used AI agents to enumerate European political endpoints, fuse large open datasets with stolen records and exfiltrate roughly 140,000 rows containing political opinions. The company said the agent also pulled 12 to 26 gigabytes of database dumps including donor and student data, staging per-victim archives on a Tor-based leak site, in what Anthropic describes as a multi-stage intrusion driven by purpose-built agent tooling.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai",
+        "anthropic",
+        "cybersecurity"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-cohere-ceo-slams-standards-plan-as-cartel",
+      "kind": "daily",
+      "title": "Cohere's Gomez calls rival labs' AI standards plan a 'cartel'",
+      "summary": "Cohere co-founder and chief executive Aidan Gomez sharpened his criticism of the emerging AI standards body, arguing that the proposed arrangement would let a handful of large US labs write the rules for everyone else. The Canadian AI company's CEO framed the initiative as a coordinated slowdown rather than a neutral governance effort and warned that smaller developers would be forced to follow standards they did not help design.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai",
+        "regulation",
+        "cohere"
+      ],
+      "sources": [
+        {
+          "publisher": "AI Weekly",
+          "url": "https://aiweekly.co/alerts/cohere-ceo-gomez-calls-rival-labs-standards-plan-a-cartel",
+          "publishedAt": "2026-09-14T07:57:00.000Z"
+        },
+        {
+          "publisher": "The Globe and Mail",
+          "url": "https://www.theglobeandmail.com/business/technology/article-cohere-ceo-aidan-gomez-criticizes-calls-for-ai-slowdown",
+          "publishedAt": "2026-09-14T13:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-gold-pauses-near-record-ahead-fed",
+      "kind": "daily",
+      "title": "Gold eases back from record as traders await Fed verdict",
+      "summary": "Gold slipped from recent record highs on Tuesday as traders squared positions ahead of Wednesday's Federal Reserve decision, with spot XAU/USD quoted near $4,283 an ounce against a backdrop of elevated US 10-year real yields. Market commentary points to persistent central bank buying and structurally tight positioning as supportive factors, while a hotter-than-expected rate signal from the Fed could re-test recent lows in the short term.",
+      "category": "economy-markets",
+      "priority": 40,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "gold",
+        "commodities",
+        "federal-reserve"
+      ],
+      "sources": [
+        {
+          "publisher": "150Currency",
+          "url": "https://www.150currency.com/",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Fortune",
+          "url": "https://fortune.com/article/current-price-of-gold-09-11-2026/",
+          "publishedAt": "2026-09-11T13:26:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-16-postquantum-cryptography-summit",
+      "kind": "daily",
+      "title": "US federal Post-Quantum Cryptography Summit convenes Tuesday",
+      "summary": "The US General Services Administration hosts a virtual Post-Quantum Cryptography Summit on September 16 covering migration timelines, cryptographic inventory tooling and procurement guidance for federal agencies. The event follows recent moves by NIST to finalise post-quantum standards and signals continued coordination between civilian agencies and the vendor ecosystem on transitioning to quantum-resistant algorithms across the federal estate.",
+      "category": "technology",
+      "priority": 40,
+      "publishedAt": "2026-09-16T07:00:00.000Z",
+      "updatedAt": "2026-09-16T07:00:00.000Z",
+      "retrievedAt": "2026-09-16T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "cryptography",
+        "us-government",
+        "security"
+      ],
+      "sources": [
+        {
+          "publisher": "US General Services Administration",
+          "url": "https://www.gsa.gov/events/2026-postquantum-cryptography-summit-virtual-91626",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-15-anthropic-launches-claude-opus-5",
       "kind": "daily",

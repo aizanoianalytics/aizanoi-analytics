@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-real-madrid-elche-espi-winner",
+  "title": "Espi stoppage-time winner lifts Real Madrid level with Barcelona",
+  "summary": "Carlos Espi scored a 91st-minute winner to give Real Madrid a 3-2 victory at Elche on Tuesday and move the reigning La Liga champions level on points with Barcelona at the top of the table. Elche goalkeeper Matías Dituro's own goal and a Kylian Mbappé strike put Madrid two up before Abiel Osorio and Fer Niño equalised, only for Espi to tap in from Mbappé's cross at the back post to extend José Mourinho's side's winning start to the league campaign.",
+  "category": "football",
+  "priority": 50,
+  "publishedAt": "2026-09-16T08:30:00Z",
+  "updatedAt": "2026-09-16T08:30:00Z",
+  "retrievedAt": "2026-09-16T08:25:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["football", "la-liga", "real-madrid", "elche"],
+  "sources": [
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com.au/football/report/_/gameId/401882872",
+      "publishedAt": "2026-09-16T07:45:00Z"
+    },
+    {
+      "publisher": "Hindustan Times",
+      "url": "https://www.hindustantimes.com/sports/football/espi-saves-real-madrid-with-late-winner-at-elche-101789508781189.html",
+      "publishedAt": "2026-09-16T03:16:00Z"
+    }
+  ]
+}

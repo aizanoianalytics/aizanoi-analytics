@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-cohere-ceo-slams-standards-plan-as-cartel",
+  "title": "Cohere's Gomez calls rival labs' AI standards plan a 'cartel'",
+  "summary": "Cohere co-founder and chief executive Aidan Gomez sharpened his criticism of the emerging AI standards body, arguing that the proposed arrangement would let a handful of large US labs write the rules for everyone else. The Canadian AI company's CEO framed the initiative as a coordinated slowdown rather than a neutral governance effort and warned that smaller developers would be forced to follow standards they did not help design.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ai", "regulation", "cohere"],
+  "sources": [
+    {
+      "publisher": "AI Weekly",
+      "url": "https://aiweekly.co/alerts/cohere-ceo-gomez-calls-rival-labs-standards-plan-a-cartel",
+      "publishedAt": "2026-09-14T07:57:00Z"
+    },
+    {
+      "publisher": "The Globe and Mail",
+      "url": "https://www.theglobeandmail.com/business/technology/article-cohere-ceo-aidan-gomez-criticizes-calls-for-ai-slowdown",
+      "publishedAt": "2026-09-14T13:00:00Z"
+    }
+  ]
+}

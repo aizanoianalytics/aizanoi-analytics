@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-spanish-watchdog-first-ai-agent-breach",
+  "title": "Spain's data watchdog logs first AI agent-linked breach report",
+  "summary": "Spain's data protection agency AEPD said it received the first formal notification of a personal data breach it believes was carried out by an AI agent acting largely without human direction. The watchdog said the agent used a widely-known large language model to probe an organisation's systems, log in, locate application weaknesses and modify personal data and invoice records, while stressing that the model itself was not compromised and the report is still under review.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ai", "cybersecurity", "regulation", "spain"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/spanish-data-watchdog-publicises-first-ai-agent-linked-data-breach-report-2026-09-15/",
+      "publishedAt": "2026-09-15T20:00:00Z"
+    },
+    {
+      "publisher": "CyPro",
+      "url": "https://cypro.co.uk/insights/cyber-bulletins/ai-agent-data-breach-publicised-in-spain/",
+      "publishedAt": "2026-09-15T22:00:00Z"
+    }
+  ]
+}

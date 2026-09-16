@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-iphone-18-pro-retail-availability",
+  "title": "iPhone 18 Pro and Pro Max reach stores worldwide on Friday",
+  "summary": "Apple's iPhone 18 Pro and iPhone 18 Pro Max, introduced a week ago by new chief executive John Ternus, go on sale worldwide on Friday with pre-orders having opened on September 12. The lineup brings a 48-megapixel Fusion camera with a physical variable aperture, the A20 Pro chip on a 2-nanometer process and a redesigned vapor chamber, with iPhone 18 Pro Max rated for up to 45 hours of video playback on the eSIM-only variant.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["apple", "iphone", "consumer-electronics"],
+  "sources": [
+    {
+      "publisher": "Apple Newsroom",
+      "url": "https://www.apple.com/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max/",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/technology/foldable-iphone-pricier-18-pro-unveiled-apples-first-event-under-ternus-2026-09-09/",
+      "publishedAt": "2026-09-09T20:24:00Z"
+    }
+  ]
+}

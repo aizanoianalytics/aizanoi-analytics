@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-faa-lists-starship-flight-14-window",
+  "title": "FAA lists Starship Flight 14 for September 22 primary window",
+  "summary": "The US Federal Aviation Administration's Current Operations Plan Advisory dated September 15 sets a primary launch window for SpaceX's Starship Flight 14 from Starbase, Texas on September 22, with September 23 reserved as backup. The mission is described as Starship's first revenue-generating flight and is expected to carry production Starlink V3 satellites, while chief executive Elon Musk said Flight 15 would attempt the first tower catch of the upper stage.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["spacex", "starship", "faa"],
+  "sources": [
+    {
+      "publisher": "Tesla North",
+      "url": "https://teslanorth.com/2026/09/15/faa-starship-flight-14-september-22",
+      "publishedAt": "2026-09-15T20:00:00Z"
+    },
+    {
+      "publisher": "Xinhua",
+      "url": "https://english.news.cn/20260915/90e19d5bd76e42b58f0ee95ba8299959/c.html",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    }
+  ]
+}
