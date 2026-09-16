@@ -51,6 +51,35 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
   const paleBlue = new THREE.MeshStandardMaterial({ color: 0x7e9ead, roughness: 0.8 });
   const black = new THREE.MeshStandardMaterial({ color: 0x1d1b1a, roughness: 0.72, metalness: 0.15 });
 
+  // v0.2 carried several generic picture frames and placed the cage too high.
+  // The approved reference has a mostly bare cracked wall, one small portrait above
+  // the bedroom opening, and a cage sitting low beside the window. Correct those
+  // inherited shapes before adding the v0.3 dressing.
+  const removeFromScene = [];
+  scene.traverse((object) => {
+    if (/^(frame|picture)-\d+$/.test(object.name || '')) removeFromScene.push(object);
+  });
+  removeFromScene.forEach((object) => object.parent?.remove(object));
+  const inheritedCage = scene.getObjectByName('birdcage-detail');
+  if (inheritedCage) inheritedCage.position.set(-3.45, 1.72, 1.15);
+
+  // Reference-specific ornament in the barred window: the original grille is not
+  // a plain prison grid. A few diagonal flourishes give it the same decorative read
+  // without adding expensive bespoke curves to the fallback.
+  const grilleLines = [
+    [[-4.04,-1.42,.96],[-4.04,-1.08,1.34]],
+    [[-4.04,-1.08,1.34],[-4.04,-.76,.98]],
+    [[-4.04,-.48,1.60],[-4.04,-.16,1.98]],
+    [[-4.04,-.16,1.98],[-4.04,.10,1.62]],
+  ];
+  grilleLines.forEach(([a,b], i) => addLine(a,b,M.metal,`window-grille-flourish-${i}`,0.018));
+  cylinder(0.035, 0.30, [-3.40, 1.67, 1.12], paleBlue, 'birdcage-water-bottle');
+
+  // Single little portrait over the doorway, as in the reference, instead of a row
+  // of invented wall pictures.
+  box([0.035, 0.38, 0.46], [4.055, 1.03, 2.55], M.woodDark, 'doorway-portrait-frame');
+  box([0.025, 0.29, 0.37], [4.035, 1.03, 2.55], plasterPatchDark, 'doorway-portrait');
+
   // Large muted carpet under the seating/stove zone.  The reference has a broad
   // worn green carpet beneath the smaller runner and round rug, not bare floor.
   box([6.55, 4.35, 0.026], [-0.55, -0.05, 0.02], M.greenTextile, 'reference-main-carpet');
