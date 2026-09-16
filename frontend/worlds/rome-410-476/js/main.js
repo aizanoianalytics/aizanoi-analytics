@@ -343,6 +343,9 @@ function buildUrbanInsulae() {
 function populateRomeDressing() {
   const dressingGroup = new THREE.Group();
   dressingGroup.name = 'rome-street-dressing';
+  // Keep authored street furniture aligned with the compact survey coordinates.
+  dressingGroup.scale.setScalar(0.84);
+  dressingGroup.userData.layoutScale = 0.84;
 
   // 1. Roman Nymphaeum Stone Fountains in Public Plazas
   dressingGroup.add(buildRomanFountain(-60, -10, 0));  // Forum Romanum center
@@ -648,6 +651,15 @@ function installWorldDebugHandle() {
     },
     metrics() {
       return frameMetrics ? frameMetrics.summary() : null;
+    },
+    assetBoxes(ids = []) {
+      const wanted = ids.length ? ids : [...buildingGroups.keys()];
+      return wanted.map((id) => {
+        const group = buildingGroups.get(id);
+        if (!group) return { id, missing: true };
+        const box = new THREE.Box3().setFromObject(group);
+        return { id, min: box.min.toArray(), max: box.max.toArray(), kitAssets: group.userData.kitAssets || [] };
+      });
     },
     teleport(id) {
       if (!ui?.onTeleport || !BUILDINGS.some((building) => building.id === id)) return false;

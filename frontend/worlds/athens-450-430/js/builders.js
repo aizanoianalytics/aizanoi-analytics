@@ -6,6 +6,19 @@ import {
   createPediment,
 } from '../../shared/assets/builders-common.js';
 
+let ATHENS_KIT = null;
+export const KIT_MANIFEST = [
+  { id: 'parthenon-hero', file: 'parthenon_hero.glb' },
+  { id: 'propylaea-hero', file: 'propylaea_hero.glb' },
+  { id: 'dionysus-theatre-hero', file: 'dionysus_theatre_hero.glb' },
+];
+export function setAssetKit(kit) { ATHENS_KIT = kit; }
+const HERO_ASSETS = {
+  parthenon: 'parthenon-hero',
+  propylaea: 'propylaea-hero',
+  'theatre-dionysus': 'dionysus-theatre-hero',
+};
+
 // --- Shared builders (single source of truth; local dupes removed in visual uplift v1) ---
 
 // --- Builders ---
@@ -516,7 +529,14 @@ export function buildHero(b) {
 }
 
 export function buildStructure(building) {
-    switch(building.type) {
+    const heroAsset = HERO_ASSETS[building.id];
+    if (ATHENS_KIT && heroAsset) {
+        const hero = ATHENS_KIT.place(heroAsset);
+        hero.userData.buildingId = building.id;
+        hero.userData.kitAssets = [heroAsset];
+        return hero;
+    }
+    switch (building.type) {
         case 'temple': return buildTemple(building);
         case 'gateway': return buildGateway(building);
         case 'stoa': return buildStoa(building);
