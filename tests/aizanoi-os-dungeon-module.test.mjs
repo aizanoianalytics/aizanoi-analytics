@@ -39,7 +39,7 @@ test('canonical registry catalogs Dungeon and keeps the desktop contract', async
 });
 
 test('Dungeon stays on the hand-curated DESKTOP list with an accessible shortcut', () => {
-  assert.match(brandPlatform, /'games','dungeon','recycle-bin'/, 'DESKTOP literal must keep dungeon');
+  assert.match(brandPlatform, /'games','dungeon','fly-world','recycle-bin'/, 'DESKTOP literal must keep dungeon and Fly World');
   assert.match(brandPlatform, /aria-label="Open \$\{esc\(app\.label\)\}"/);
   assert.match(brandPlatform, /\$\{esc\(app\.short\|\|app\.label\)\}/);
 });
