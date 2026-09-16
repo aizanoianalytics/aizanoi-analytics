@@ -7,7 +7,7 @@
   "canonicalReference": "Approved people-free illustrated cottage interior: barred window and layered curtains on the left, carved divan/cabinet wall, CRT cabinet, central wood stove with long flue, dense floor clutter, and an open doorway into the connected bedroom.",
   "worldBounds": {
     "min": [-4.35, -3.35, 0.0],
-    "max": [8.55, 3.85, 3.0]
+    "max": [8.55, 4.05, 3.0]
   },
   "observer": {
     "mode": "ghost",
@@ -25,7 +25,7 @@
       "id": "main-room",
       "label": "Main living room",
       "origin": [0.0, 0.0, 0.0],
-      "size": [8.4, 6.4, 2.85],
+      "size": [8.4, 7.0, 2.85],
       "floorMaterial": "aged-green-floor",
       "wallMaterial": "warm-aged-plaster",
       "ceilingMaterial": "aged-white-plaster",
@@ -49,8 +49,8 @@
     {
       "id": "bedroom",
       "label": "Connected bedroom",
-      "origin": [6.3, 1.15, 0.0],
-      "size": [4.2, 5.0, 2.85],
+      "origin": [6.3, 1.3, 0.0],
+      "size": [4.2, 5.4, 2.85],
       "floorMaterial": "aged-green-floor",
       "wallMaterial": "warm-aged-plaster",
       "ceilingMaterial": "aged-white-plaster",
@@ -73,6 +73,11 @@
     }
   ],
   "zones": [
+    {
+      "id": "circulation-zone",
+      "bounds": [[-2.7, -3.35, 0.0], [3.8, 2.10, 2.0]],
+      "futureFlySemantics": ["clear-path", "observer-navigation"]
+    },
     {
       "id": "window-zone",
       "bounds": [[-4.3, -1.9, 0.0], [-2.8, 0.8, 2.85]],
@@ -109,7 +114,7 @@
       "id": "bench",
       "role": "bench-sofa",
       "room": "main-room",
-      "position": [-0.65, 2.34, 0.42],
+      "position": [-0.65, 2.72, 0.42],
       "rotationDeg": [0, 0, 0],
       "size": [3.95, 0.88, 0.82],
       "assetSlot": "bench-sofa"
@@ -118,7 +123,7 @@
       "id": "back-cabinet",
       "role": "carved-wood-cabinet",
       "room": "main-room",
-      "position": [-0.65, 2.73, 1.54],
+      "position": [-0.65, 3.11, 1.54],
       "rotationDeg": [0, 0, 0],
       "size": [4.05, 0.44, 1.55],
       "assetSlot": "carved-cabinet"
@@ -127,7 +132,7 @@
       "id": "wood-stove",
       "role": "wood-burning-stove",
       "room": "main-room",
-      "position": [2.05, 0.76, 0.59],
+      "position": [2.25, 0.35, 0.59],
       "rotationDeg": [0, 0, 0],
       "size": [1.02, 0.84, 1.18],
       "assetSlot": "wood-stove",
@@ -146,7 +151,7 @@
       "id": "old-tv-cabinet",
       "role": "old-television-cabinet",
       "room": "main-room",
-      "position": [-3.36, -2.05, 0.70],
+      "position": [-3.36, -2.62, 0.70],
       "rotationDeg": [0, 0, 0],
       "size": [1.18, 0.72, 1.44],
       "assetSlot": "old-tv"
@@ -191,7 +196,7 @@
       "id": "bed",
       "role": "wooden-bed",
       "room": "bedroom",
-      "position": [6.72, 1.82, 0.46],
+      "position": [6.72, 1.92, 0.46],
       "rotationDeg": [0, 0, 0],
       "size": [1.82, 2.20, 0.92],
       "assetSlot": "wooden-bed"
@@ -227,14 +232,23 @@
       "id": "bed-quilt-set",
       "role": "bed-quilt-and-pillows",
       "room": "bedroom",
-      "position": [6.72, 1.82, 0.88],
+      "position": [6.72, 1.92, 0.88],
       "rotationDeg": [0, 0, 0],
       "size": [1.72, 2.02, 0.60],
       "assetSlot": "bed-quilt"
     },
     {
+      "id": "work-desk",
+      "role": "compact writing desk",
+      "room": "bedroom",
+      "position": [5.05, 3.05, 0.38],
+      "rotationDeg": [0, 0, 0],
+      "size": [1.45, 0.52, 0.76],
+      "assetSlot": "work-desk",
+      "futureFlySemantics": ["work-surface", "quiet-zone"]
+    },
+    {
       "id": "floral-curtain",
-      "role": "floral-curtain-panel",
       "room": "main-room",
       "position": [-3.92, 0.56, 1.50],
       "rotationDeg": [0, 0, 0],
@@ -254,9 +268,9 @@
   "previewCameras": [
     {
       "id": "01-reference-wide",
-      "position": [-5.7, -5.9, 2.75],
-      "lookAt": [0.25, 0.65, 1.18],
-      "focalLengthMm": 47
+      "position": [-3.35, -2.65, 1.65],
+      "lookAt": [0.30, 0.65, 1.18],
+      "focalLengthMm": 45
     },
     {
       "id": "02-room-eye-level",
@@ -272,15 +286,29 @@
     },
     {
       "id": "04-doorway-bedroom",
-      "position": [3.05, 0.45, 1.62],
-      "lookAt": [6.45, 1.55, 1.05],
-      "focalLengthMm": 54
+      "position": [1.00, 1.00, 1.55],
+      "lookAt": [6.10, 1.00, 1.05],
+      "focalLengthMm": 35
     },
     {
       "id": "05-fly-scale",
       "position": [1.15, -0.75, 0.20],
       "lookAt": [2.05, 0.72, 0.65],
       "focalLengthMm": 58
+    }
+  ],
+  "supportSurfaces": [
+    {
+      "id": "cabinet-top-support-shelf",
+      "supports": ["cabinet-top-still-life"],
+      "bounds": [[-2.56, 2.85, 2.38], [1.26, 3.31, 2.38]],
+      "source": "detail_pass_v3.py"
+    },
+    {
+      "id": "floor-main",
+      "supports": ["floor-clutter", "stove-hearth"],
+      "bounds": [[-4.2, -3.5, 0.0], [4.2, 3.5, 0.0]],
+      "source": "build_scene_v2.py"
     }
   ],
   "qualityGates": {

@@ -36,8 +36,8 @@ function collectCollisionRoots(root) {
   root.updateMatrixWorld(true);
   root.traverse((object) => {
     if (object.isMesh) {
-      object.castShadow = true;
-      object.receiveShadow = true;
+      object.castShadow = !/^(plaster-wear|floor-marble|carpet-motif)/.test(object.name);
+      object.receiveShadow = !/^(WALL__|CEILING__)/.test(object.name);
     }
   });
 
@@ -95,6 +95,12 @@ class Observer {
     this.pitch = -.05;
   }
 
+  frameCamera(x, y, z, yaw, pitch = -.04) {
+    camera.position.set(x, y, z);
+    this.yaw = yaw;
+    this.pitch = Math.max(-1.48, Math.min(1.48, pitch));
+  }
+
   blocked(position) {
     if (this.noClip) return false;
     if (position.z < zMin || position.z > zMax) return true;
@@ -148,6 +154,8 @@ function lighting() {
   sun.shadow.camera.right = 10;
   sun.shadow.camera.top = 10;
   sun.shadow.camera.bottom = -10;
+  sun.shadow.bias = 0.0008;
+  sun.shadow.normalBias = 0.035;
   scene.add(sun);
 
   const windowFill = new THREE.PointLight(0xa8d5ff, 2.9, 7, 2);
@@ -155,7 +163,7 @@ function lighting() {
   scene.add(windowFill);
 
   const stove = new THREE.PointLight(0xff6525, 7.2, 4, 2);
-  stove.position.set(2.05, .28, .62);
+  stove.position.set(2.25, -.02, .62);
   stove.castShadow = true;
   scene.add(stove);
 
@@ -181,12 +189,13 @@ async function boot() {
     const index = object.geometry.index;
     triangleCount += index ? index.count / 3 : object.geometry.attributes.position.count / 3;
   });
-  const metrics = { mode: 'glb', meshCount, triangleCount, colliderRoots: colliders.length, loadMs: Math.round(performance.now() - loadStarted), fps: 0, drawCalls: 0 };
+  const metrics = { mode: 'glb', meshCount, triangleCount, colliderRoots: colliders.length, loadMs: Math.round(performance.now() - loadStarted), fps: 0, drawCalls: 0, animationTicks: 0 };
   window.__FLY_DEBUG__ = metrics;
 
   const observer = new Observer();
   metrics.observer = observer;
   metrics.camera = camera;
+  metrics.frameCamera = (x, y, z, yaw, pitch = -.04) => observer.frameCamera(x, y, z, yaw, pitch);
   metrics.collisionAt = (x, y, z = 1.58) => observer.blocked(new THREE.Vector3(x, y, z));
   const clock = new THREE.Clock();
   let frames = 0;
@@ -195,6 +204,7 @@ async function boot() {
     observer.update(Math.min(clock.getDelta(), .05));
     renderer.render(scene, camera);
     frames += 1;
+    metrics.animationTicks += 1;
     const now = performance.now();
     if (now - fpsAt >= 1000) {
       metrics.fps = Math.round(frames * 1000 / (now - fpsAt));

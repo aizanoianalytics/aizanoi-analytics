@@ -140,11 +140,11 @@ def wall_y(col, mats, y, x0, x1, z0, z1, name):
 
 def architecture(m):
     c = collection("ARCHITECTURE_V2")
-    # Main room 8.4 x 6.4 x 2.85m: roughly 15% more breathing room than v0.1.
-    box("FLOOR__main", (8.4,6.4,.10), (0,0,-.05), m["floor"], c, landing=True)
-    box("CEILING__main", (8.4,6.4,.08), (0,0,2.89), m["plaster2"], c, collision=True)
-    wall_y(c,m,3.2,-4.2,4.2,0,2.85,"WALL__main__north")
-    wall_y(c,m,-3.2,-4.2,4.2,0,2.85,"WALL__main__south")
+    # Main room 8.4 x 7.0 x 2.85m: a measured 0.3m circulation buffer on both long edges.
+    box("FLOOR__main", (8.4,7.0,.10), (0,0,-.05), m["floor"], c, landing=True)
+    box("CEILING__main", (8.4,7.0,.08), (0,0,2.89), m["plaster2"], c, collision=True)
+    wall_y(c,m,3.5,-4.2,4.2,0,2.85,"WALL__main__north")
+    wall_y(c,m,-3.5,-4.2,4.2,0,2.85,"WALL__main__south")
     # West barred window.
     wall_x(c,m,-4.2,-3.2,-1.72,0,2.85,"WALL__main__west_a")
     wall_x(c,m,-4.2,.28,3.2,0,2.85,"WALL__main__west_b")
@@ -154,18 +154,16 @@ def architecture(m):
     wall_x(c,m,4.2,-3.2,.34,0,2.85,"WALL__main__east_a")
     wall_x(c,m,4.2,1.66,3.2,0,2.85,"WALL__main__east_b")
     wall_x(c,m,4.2,.34,1.66,2.18,2.85,"WALL__main__east_head")
-    # Bedroom 4.2 x 5.0m.
-    box("FLOOR__bed", (4.2,5.0,.10), (6.3,1.15,-.05), m["floor"], c, landing=True)
-    box("CEILING__bed", (4.2,5.0,.08), (6.3,1.15,2.89), m["plaster2"], c, collision=True)
-    wall_x(c,m,8.4,-1.35,3.65,0,2.85,"WALL__bed__east")
-    wall_y(c,m,-1.35,4.2,8.4,0,2.85,"WALL__bed__south")
-    wall_y(c,m,3.65,4.2,4.92,0,2.85,"WALL__bed__north_a")
-    wall_y(c,m,3.65,6.30,8.4,0,2.85,"WALL__bed__north_b")
-    wall_y(c,m,3.65,4.92,6.30,0,.78,"WALL__bed__north_sill")
-    wall_y(c,m,3.65,4.92,6.30,2.20,2.85,"WALL__bed__north_head")
-    wall_x(c,m,4.2,-1.35,.34,0,2.85,"WALL__bed__west_a")
-    wall_x(c,m,4.2,1.66,3.65,0,2.85,"WALL__bed__west_b")
-    wall_x(c,m,4.2,.34,1.66,2.18,2.85,"WALL__bed__west_head")
+    # Bedroom 4.2 x 5.4m: extra breathing room around the bed without moving the doorway.
+    box("FLOOR__bed", (4.2,5.4,.10), (6.3,1.15,-.05), m["floor"], c, landing=True)
+    box("CEILING__bed", (4.2,5.4,.08), (6.3,1.15,2.89), m["plaster2"], c, collision=True)
+    wall_x(c,m,8.4,-1.55,3.85,0,2.85,"WALL__bed__east")
+    wall_y(c,m,-1.55,4.2,8.4,0,2.85,"WALL__bed__south")
+    wall_y(c,m,3.85,4.2,4.92,0,2.85,"WALL__bed__north_a")
+    wall_y(c,m,3.85,6.30,8.4,0,2.85,"WALL__bed__north_b")
+    wall_y(c,m,3.85,4.92,6.30,0,.78,"WALL__bed__north_sill")
+    wall_y(c,m,3.85,4.92,6.30,2.20,2.85,"WALL__bed__north_head")
+    # Shared room divider is owned by the main room; duplicate coplanar bedroom walls caused z-fighting.
     # Old-house beams/skirting.
     for i,y in enumerate((-2.35,-.8,.75,2.30)):
         box(f"beam-{i}",(8.12,.13,.16),(0,y,2.72),m["wood2"],c,landing=True)
@@ -199,19 +197,19 @@ def reference_dressing(root, manifest, m):
     slots = {x["id"]:x for x in manifest["slots"]}
     c = collection("REFERENCE_DRESSING_V2")
     # Hero anchors from the illustration.
-    import_slot(root,slots,"bench-sofa",(-.65,2.34,.42))
-    import_slot(root,slots,"carved-cabinet",(-.65,2.73,1.54))
-    import_slot(root,slots,"pillow-quilt-set",(-.48,2.08,.78),collision=False)
-    import_slot(root,slots,"wood-stove",(2.05,.76,.59))
-    import_slot(root,slots,"kettle",(2.03,.74,1.35),collision=False)
-    import_slot(root,slots,"old-tv",(-3.35,-2.05,.70))
-    import_slot(root,slots,"woven-basket",(-1.95,.58,.34))
+    import_slot(root,slots,"bench-sofa",(-.65,2.72,.42))
+    import_slot(root,slots,"carved-cabinet",(-.65,3.11,1.54))
+    import_slot(root,slots,"pillow-quilt-set",(-.48,2.46,.78),collision=False)
+    import_slot(root,slots,"wood-stove",(2.25,.35,.59))
+    import_slot(root,slots,"kettle",(2.23,.33,1.35),collision=False)
+    import_slot(root,slots,"old-tv",(-3.35,-2.62,.70))
+    import_slot(root,slots,"woven-basket",(-2.10,.85,.34))
     import_slot(root,slots,"main-rug",(1.10,-1.35,.025),rot=(0,0,-4),collision=False)
     import_slot(root,slots,"round-rug",(-.70,-2.25,.025),collision=False)
     import_slot(root,slots,"curtain-floral",(-3.92,.56,1.50),collision=False)
     import_slot(root,slots,"curtain-lace",(-3.94,-.82,1.51),collision=False)
-    import_slot(root,slots,"wooden-bed",(6.72,1.82,.46))
-    import_slot(root,slots,"bed-quilt",(6.72,1.82,.82),collision=False)
+    import_slot(root,slots,"wooden-bed",(6.72,1.92,.46))
+    import_slot(root,slots,"bed-quilt",(6.72,1.92,.82),collision=False)
     import_slot(root,slots,"bedside-table",(5.18,2.42,.42))
 
     # Window glass + ornate iron grille.
@@ -311,10 +309,10 @@ def render_reviews(root):
     s=bpy.context.scene
     cd=bpy.data.cameras.new("review-camera"); cam=bpy.data.objects.new("review-camera",cd); s.collection.objects.link(cam); s.camera=cam
     views=(
-        ("01-reference-wide",(-5.7,-5.9,2.75),(.25,.65,1.18),47),
+        ("01-reference-wide",(-3.35,-2.65,1.65),(.30,.65,1.18),45),
         ("02-room-eye-level",(-1.65,-2.55,1.60),(.45,1.05,1.15),50),
         ("03-window-to-stove",(-3.45,-.55,1.62),(1.85,.72,.85),52),
-        ("04-doorway-bedroom",(3.05,.45,1.62),(6.45,1.55,1.05),54),
+        ("04-doorway-bedroom",(1.00,1.00,1.55),(6.10,1.00,1.05),35),
         ("05-fly-scale",(1.15,-.75,.20),(2.05,.72,.65),58),
     )
     for name,pos,target,lens in views:
