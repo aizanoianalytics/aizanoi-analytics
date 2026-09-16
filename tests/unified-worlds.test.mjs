@@ -46,7 +46,13 @@ test('one local Three.js r174 vendor serves every world with no runtime CDN or m
   const files=walk('frontend/worlds');
   for(const file of files){
     const rel=path.relative(root,file).replaceAll('\\','/');
-    assert.doesNotMatch(rel,/\.(?:gltf|glb|bat|sh)$/i);
+    if(/\.(?:gltf|glb)$/i.test(rel)){
+      // Explicit architecture decision (2026-09-16): studio-authored CC0 kit
+      // GLBs may live only under a world's own assets/ folder.
+      assert.match(rel,/^frontend\/worlds\/[a-z0-9-]+\/assets\/[A-Za-z0-9_.-]+\.glb$/,`${rel} model file outside world asset kit`);
+      continue;
+    }
+    assert.doesNotMatch(rel,/\.(?:bat|sh)$/i);
     if(!/\.(?:js|html|css|md)$/.test(file))continue;
     const source=readFileSync(file,'utf8');
     assert.doesNotMatch(source,/\b(?:import|from)\s*\(?\s*['"]https?:\/\//,`${rel} has a runtime CDN import`);
