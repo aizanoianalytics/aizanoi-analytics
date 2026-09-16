@@ -36,8 +36,8 @@ function collectCollisionRoots(root) {
   root.updateMatrixWorld(true);
   root.traverse((object) => {
     if (object.isMesh) {
-      object.castShadow = true;
-      object.receiveShadow = true;
+      object.castShadow = !/^(plaster-wear|floor-marble|carpet-motif)/.test(object.name);
+      object.receiveShadow = !/^(WALL__|CEILING__)/.test(object.name);
     }
   });
 
@@ -155,7 +155,7 @@ function lighting() {
   scene.add(windowFill);
 
   const stove = new THREE.PointLight(0xff6525, 7.2, 4, 2);
-  stove.position.set(2.05, .28, .62);
+  stove.position.set(2.25, -.02, .62);
   stove.castShadow = true;
   scene.add(stove);
 

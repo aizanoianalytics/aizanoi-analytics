@@ -167,6 +167,14 @@
       "source": null
     },
     {
+      "id": "work-desk",
+      "category": "furniture",
+      "requiredForVisualApproval": false,
+      "searchBrief": "compact aged writing desk for a quiet bedroom work zone",
+      "localPath": null,
+      "source": null
+    },
+    {
       "id": "curtain-floral",
       "category": "textile",
       "requiredForVisualApproval": true,

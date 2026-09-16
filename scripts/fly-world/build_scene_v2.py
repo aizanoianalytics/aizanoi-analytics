@@ -163,9 +163,7 @@ def architecture(m):
     wall_y(c,m,3.85,6.30,8.4,0,2.85,"WALL__bed__north_b")
     wall_y(c,m,3.85,4.92,6.30,0,.78,"WALL__bed__north_sill")
     wall_y(c,m,3.85,4.92,6.30,2.20,2.85,"WALL__bed__north_head")
-    wall_x(c,m,4.2,-1.35,.34,0,2.85,"WALL__bed__west_a")
-    wall_x(c,m,4.2,1.66,3.65,0,2.85,"WALL__bed__west_b")
-    wall_x(c,m,4.2,.34,1.66,2.18,2.85,"WALL__bed__west_head")
+    # Shared room divider is owned by the main room; duplicate coplanar bedroom walls caused z-fighting.
     # Old-house beams/skirting.
     for i,y in enumerate((-2.35,-.8,.75,2.30)):
         box(f"beam-{i}",(8.12,.13,.16),(0,y,2.72),m["wood2"],c,landing=True)
@@ -199,19 +197,19 @@ def reference_dressing(root, manifest, m):
     slots = {x["id"]:x for x in manifest["slots"]}
     c = collection("REFERENCE_DRESSING_V2")
     # Hero anchors from the illustration.
-    import_slot(root,slots,"bench-sofa",(-.65,2.34,.42))
-    import_slot(root,slots,"carved-cabinet",(-.65,2.73,1.54))
-    import_slot(root,slots,"pillow-quilt-set",(-.48,2.08,.78),collision=False)
-    import_slot(root,slots,"wood-stove",(2.05,.76,.59))
-    import_slot(root,slots,"kettle",(2.03,.74,1.35),collision=False)
-    import_slot(root,slots,"old-tv",(-3.35,-2.05,.70))
-    import_slot(root,slots,"woven-basket",(-1.95,.58,.34))
+    import_slot(root,slots,"bench-sofa",(-.65,2.72,.42))
+    import_slot(root,slots,"carved-cabinet",(-.65,3.11,1.54))
+    import_slot(root,slots,"pillow-quilt-set",(-.48,2.46,.78),collision=False)
+    import_slot(root,slots,"wood-stove",(2.25,.35,.59))
+    import_slot(root,slots,"kettle",(2.23,.33,1.35),collision=False)
+    import_slot(root,slots,"old-tv",(-3.35,-2.62,.70))
+    import_slot(root,slots,"woven-basket",(-2.10,.85,.34))
     import_slot(root,slots,"main-rug",(1.10,-1.35,.025),rot=(0,0,-4),collision=False)
     import_slot(root,slots,"round-rug",(-.70,-2.25,.025),collision=False)
     import_slot(root,slots,"curtain-floral",(-3.92,.56,1.50),collision=False)
     import_slot(root,slots,"curtain-lace",(-3.94,-.82,1.51),collision=False)
-    import_slot(root,slots,"wooden-bed",(6.72,1.82,.46))
-    import_slot(root,slots,"bed-quilt",(6.72,1.82,.82),collision=False)
+    import_slot(root,slots,"wooden-bed",(6.72,1.92,.46))
+    import_slot(root,slots,"bed-quilt",(6.72,1.92,.82),collision=False)
     import_slot(root,slots,"bedside-table",(5.18,2.42,.42))
 
     # Window glass + ornate iron grille.

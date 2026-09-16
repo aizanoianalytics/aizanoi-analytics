@@ -114,7 +114,7 @@
       "id": "bench",
       "role": "bench-sofa",
       "room": "main-room",
-      "position": [-0.65, 2.34, 0.42],
+      "position": [-0.65, 2.72, 0.42],
       "rotationDeg": [0, 0, 0],
       "size": [3.95, 0.88, 0.82],
       "assetSlot": "bench-sofa"
@@ -123,7 +123,7 @@
       "id": "back-cabinet",
       "role": "carved-wood-cabinet",
       "room": "main-room",
-      "position": [-0.65, 2.73, 1.54],
+      "position": [-0.65, 3.11, 1.54],
       "rotationDeg": [0, 0, 0],
       "size": [4.05, 0.44, 1.55],
       "assetSlot": "carved-cabinet"
@@ -132,7 +132,7 @@
       "id": "wood-stove",
       "role": "wood-burning-stove",
       "room": "main-room",
-      "position": [2.05, 0.76, 0.59],
+      "position": [2.25, 0.35, 0.59],
       "rotationDeg": [0, 0, 0],
       "size": [1.02, 0.84, 1.18],
       "assetSlot": "wood-stove",
@@ -151,7 +151,7 @@
       "id": "old-tv-cabinet",
       "role": "old-television-cabinet",
       "room": "main-room",
-      "position": [-3.36, -2.05, 0.70],
+      "position": [-3.36, -2.62, 0.70],
       "rotationDeg": [0, 0, 0],
       "size": [1.18, 0.72, 1.44],
       "assetSlot": "old-tv"
@@ -196,7 +196,7 @@
       "id": "bed",
       "role": "wooden-bed",
       "room": "bedroom",
-      "position": [6.72, 1.82, 0.46],
+      "position": [6.72, 1.92, 0.46],
       "rotationDeg": [0, 0, 0],
       "size": [1.82, 2.20, 0.92],
       "assetSlot": "wooden-bed"
@@ -232,14 +232,23 @@
       "id": "bed-quilt-set",
       "role": "bed-quilt-and-pillows",
       "room": "bedroom",
-      "position": [6.72, 1.82, 0.88],
+      "position": [6.72, 1.92, 0.88],
       "rotationDeg": [0, 0, 0],
       "size": [1.72, 2.02, 0.60],
       "assetSlot": "bed-quilt"
     },
     {
+      "id": "work-desk",
+      "role": "compact writing desk",
+      "room": "bedroom",
+      "position": [5.05, 3.05, 0.38],
+      "rotationDeg": [0, 0, 0],
+      "size": [1.45, 0.52, 0.76],
+      "assetSlot": "work-desk",
+      "futureFlySemantics": ["work-surface", "quiet-zone"]
+    },
+    {
       "id": "floral-curtain",
-      "role": "floral-curtain-panel",
       "room": "main-room",
       "position": [-3.92, 0.56, 1.50],
       "rotationDeg": [0, 0, 0],

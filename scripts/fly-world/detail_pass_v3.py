@@ -358,6 +358,32 @@ def apply_reference_detail_pass(mats):
     for i in range(7):
         _sphere(f"bedroom-trailing-leaf-{i}", .055, (8.00-i*.035,3.03,2.20-i*.12), mats["leaf"], c, segments=10)
 
+    # A compact writing desk establishes a quiet work zone in the enlarged bedroom;
+    # its chair stays clear of the doorway and the bed-side circulation path.
+    _box("work-desk", (1.45, .52, .12), (5.05, 3.05, .76), mats["wood3"], c, bevel=.025, collision=True, landing=True, semantic="work-surface")
+    for x in (4.42, 5.68):
+        _box(f"work-desk-leg-{x}", (.10, .10, .72), (x, 3.05, .38), mats["wood2"], c, bevel=.015, collision=True)
+    _box("work-desk-chair-seat", (.52, .48, .12), (5.05, 2.35, .48), mats["green"], c, bevel=.04, collision=True)
+    _box("work-desk-chair-back", (.52, .10, .52), (5.05, 2.58, .76), mats["wood2"], c, bevel=.02, collision=True)
+    _box("work-desk-lamp", (.18, .18, .06), (5.05, 3.02, .87), mats["ceramic"], c, bevel=.015)
+
     # The browser fallback's final micro-details are owned by this reference pass.
     _micro.apply_micro_detail_pass(mats)
+
+    # Reposition dependent dressing with its parent furniture so the enlarged room reads
+    # as three intentional zones rather than a shifted hero surrounded by stale props.
+    def move_detail(prefixes, dx=0.0, dy=0.0):
+        collections = (c, bpy.data.collections.get("REFERENCE_MICRO_DETAIL_V3"))
+        for collection in collections:
+            if collection is None:
+                continue
+            for obj in collection.objects:
+                if obj.name.startswith(prefixes):
+                    obj.location.x += dx
+                    obj.location.y += dy
+
+    move_detail(("carved-", "cabinet-", "divan-"), dy=.38)
+    move_detail(("stove-", "hanging-"), dx=.20, dy=-.41)
+    move_detail(("tv-", "shelf-cup-"), dy=-.57)
+    move_detail(("bedroom-", "bedside-"), dy=.10)
     return c
