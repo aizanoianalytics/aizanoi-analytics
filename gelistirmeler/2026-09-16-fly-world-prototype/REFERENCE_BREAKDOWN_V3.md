@@ -10,20 +10,20 @@ The room is intentionally slightly larger than the drawing implies so the observ
 
 The following anchors should be recognizable immediately from a wide view:
 
-- left barred window with white lace curtain, heavy red/brown floral curtain, curtain rail, wall clock and hanging cage detail;
+- left barred window with decorative iron flourishes, white lace curtain, heavy red/brown floral curtain, curtain rail, wall clock and a low cage/water-bottle detail beside the window;
 - long reddish carved divan/cabinet wall with green/red/mixed pillows, patchwork textile and a busy cabinet-top still life;
 - old CRT/radiogram cabinet on the front-left edge, including a lower shelf/cabinet, cups, lace/doily and a small blue ornament;
 - central dark wood stove on a raised hearth, open fire window, kettle, long vertical-to-horizontal flue, tools, hanging laundry and a small suspended ornament;
 - layered floor textiles: broad worn green carpet, warm geometric runner and round multicolour rug;
 - dense but intentional floor clutter: basket/yarn, blue bag, notebook, small toys, loose yarn, marbles, slippers, orange ball and knitting bag;
-- thick dark wood casing around the open bedroom doorway;
+- thick dark wood casing around the open bedroom doorway with one small portrait above the opening;
 - bedroom visible through the doorway with a red/patchwork bed, pillows, bedside table/lamp, books, plants, rug, basket/folded bedding and continuing storage.
 
 ## Main-room object inventory
 
 ### Window / left wall
 
-Keep the window opening broad and vertically readable. The iron grille must remain a strong dark graphic layer. Use both curtain layers rather than a single flat panel. The old round wall clock sits between the curtain/window area and the long cabinet wall. The hanging cage detail lives above/near this transition.
+Keep the window opening broad and vertically readable. The iron grille must remain a strong dark graphic layer and should include the diagonal/decorative character visible in the reference rather than reading as a plain square security grid. Use both curtain layers rather than a single flat panel. The old round wall clock sits between the curtain/window area and the long cabinet wall. The cage is a low object beside the window, with a pale-blue water-bottle detail; it should not float high on the wall.
 
 ### Divan / carved cabinet wall
 
@@ -43,11 +43,11 @@ The reference is not a bare-floor room. A broad muted green carpet sits under mu
 
 ### Walls
 
-Use restrained plaster variation, shallow scars and stains. The walls should look old and lived-in, not ruined. Mismatched small pictures and a flower/tulip vase help reproduce the illustrated wall density. Avoid adding architecture that changes the identity of the room; the v0.2 heavy ceiling beams were removed because the reference reads as a plain low ceiling rather than a timber-hall interior.
+Use restrained plaster variation, shallow scars and stains. The walls should look old and lived-in, not ruined. The main wall above the long cabinet is mostly bare cracked plaster; do **not** invent a gallery row there. The visible wall art is sparse and specific: the round clock near the window, a small portrait above the bedroom opening, the tulip vase/switch at the right edge, plus bedroom art visible through the doorway. Avoid adding architecture that changes the identity of the room; the v0.2 heavy ceiling beams were removed because the reference reads as a plain low ceiling rather than a timber-hall interior.
 
 ## Bedroom continuation
 
-Only part of the adjacent room is visible in the source, so visible elements remain canonical and unseen portions are plausible continuation rather than asserted reconstruction. Keep the bed and warm patterned quilt dominant from the doorway. Use a bedside table with lamp/doily/mug/alarm clock, books/shelves, wardrobe/storage, rug, plant, wall picture, foot basket and folded bedding. The room must share the same worn wood/textile/plaster language as the living room.
+Only part of the adjacent room is visible in the original source, so visible elements remain canonical and unseen portions are plausible continuation rather than asserted reconstruction. Keep the bed and warm patterned quilt dominant from the doorway. The approved secondary extension reference adds a window/curtain, bedside table and warm lamp, clock/small objects, books/shelves, trailing plants, rug, basket with folded bedding and continued storage. The room must share the same worn wood/textile/plaster language as the living room.
 
 ## Scale and navigation
 
@@ -70,4 +70,4 @@ Fly World is a Z-up runtime. The v0.3 Blender builder exports with `export_yup=f
 
 ## Visual approval
 
-A code-valid or strict-validator-green build is not automatically visually approved. Run the Blender pipeline and review all five fixed cameras plus a live walkthrough. The reference-wide view should be compared against the approved illustration first. If the scene still reads as “a rustic room” rather than this particular illustrated house, continue iterating before adding the fly/connectome simulation.
+A code-valid or strict-validator-green build is not automatically visually approved. Run the Blender pipeline and review all five fixed cameras plus a live walkthrough. The reference-wide view should be compared against the approved illustration first. Specifically reject: a generic wall-gallery treatment, a high/floating cage, missing layered rugs, an empty cabinet top, a simplified TV cube, a stove without hearth/tools/laundry, or a sparse bedroom. If the scene still reads as “a rustic room” rather than this particular illustrated house, continue iterating before adding the fly/connectome simulation.
