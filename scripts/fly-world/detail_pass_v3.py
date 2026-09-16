@@ -1,7 +1,7 @@
 """Reference-driven detail pass for Fly House v0.3.
 
 This module adds the dense, lived-in secondary dressing visible in the approved
-people-free cottage reference. It intentionally avoids changing the room shell;
+people-free cottage reference.  It intentionally avoids changing the room shell;
 the production builder owns scale/topology while this pass owns small/medium props,
 visual anchors, wear, and the continuation of the bedroom beyond the doorway.
 """
@@ -101,6 +101,7 @@ def _rod(name, a, b, radius, material, col):
     bpy.ops.mesh.primitive_cylinder_add(vertices=10, radius=radius, depth=length, location=midpoint)
     o = bpy.context.object
     o.name = name
+    # primitive cylinder is aligned to Z; rotate Z to the requested segment.
     o.rotation_mode = "QUATERNION"
     o.rotation_quaternion = Vector((0, 0, 1)).rotation_difference(vec.normalized())
     if material:
@@ -123,11 +124,16 @@ def _simple_material(name, color, roughness=.85, metallic=0.0):
 
 
 def _add_surface_variation(material, *, scale=4.0, strength=.15, bump=.18):
+    """Add deterministic Blender procedural variation without replacing art textures."""
     if not material or not material.use_nodes:
         return
     nt = material.node_tree
     bsdf = nt.nodes.get("Principled BSDF")
-    if not bsdf or nt.nodes.get("FW_DETAIL_NOISE"):
+    if not bsdf:
+        return
+    # Idempotent: do not add a second pass when the builder is rerun in an existing file.
+    marker = nt.nodes.get("FW_DETAIL_NOISE")
+    if marker:
         return
     noise = nt.nodes.new("ShaderNodeTexNoise")
     noise.name = "FW_DETAIL_NOISE"
@@ -146,6 +152,7 @@ def _add_surface_variation(material, *, scale=4.0, strength=.15, bump=.18):
     nt.links.new(noise.outputs["Fac"], ramp.inputs["Fac"])
     nt.links.new(noise.outputs["Fac"], bump_node.inputs["Height"])
     nt.links.new(bump_node.outputs["Normal"], bsdf.inputs["Normal"])
+    # Mix only subtle color variation with the original base color.
     original = bsdf.inputs["Base Color"].default_value[:3]
     mix = nt.nodes.new("ShaderNodeMixRGB")
     mix.blend_type = "MULTIPLY"
@@ -158,6 +165,16 @@ def _add_surface_variation(material, *, scale=4.0, strength=.15, bump=.18):
 def apply_reference_detail_pass(mats):
     c = _collection("REFERENCE_DETAIL_V3")
 
+    # Correct two v0.2 interpretation errors before adding the reference pass.
+    # The approved illustration has no gallery row above the divan and its cage sits
+    # low beside the window rather than hanging at head height.
+    for obj in list(bpy.context.scene.objects):
+        name = obj.name
+        if name.startswith("frame-") or name.startswith("picture-") or name.startswith("cage-wire-") or name in {"cage-base", "cage-top"}:
+            bpy.data.objects.remove(obj, do_unlink=True)
+
+    # Give flat authored materials some age/texture in Blender.  Existing hero GLBs
+    # keep their own materials; this improves shell and authored detail geometry.
     _add_surface_variation(mats.get("plaster"), scale=5.2, strength=.12, bump=.20)
     _add_surface_variation(mats.get("floor"), scale=7.0, strength=.10, bump=.10)
     _add_surface_variation(mats.get("wood"), scale=3.0, strength=.12, bump=.10)
@@ -172,6 +189,37 @@ def apply_reference_detail_pass(mats):
     plaster_wear = _simple_material("detail-plaster-wear-v3", (.46, .39, .31), 1.0)
     plaster_wear_dark = _simple_material("detail-plaster-wear-dark-v3", (.34, .29, .24), 1.0)
 
+    # Lower bird cage beside the window, with the pale-blue water bottle visible in
+    # the reference. Keep it decorative/non-colliding for observer navigation.
+    cage_x, cage_y, cage_z = -3.46, 1.72, 1.15
+    for i in range(12):
+        a = i / 12 * math.tau
+        _rod(
+            f"cage-wire-v3-{i}",
+            (cage_x + math.cos(a)*.24, cage_y + math.sin(a)*.24, cage_z-.38),
+            (cage_x + math.cos(a)*.24, cage_y + math.sin(a)*.24, cage_z+.38),
+            .008, mats["metal"], c,
+        )
+    _cyl("cage-base-v3", .28, .06, (cage_x,cage_y,cage_z-.38), mats["wood2"], c)
+    _cyl("cage-top-v3", .28, .06, (cage_x,cage_y,cage_z+.38), mats["wood2"], c)
+    _cyl("birdcage-water-bottle", .035, .30, (-3.40,1.67,1.12), pale_blue, c)
+
+    # Ornate diagonal flourishes layered over the basic grille bars.
+    grille_lines = (
+        ((-4.04,-1.42,.96),(-4.04,-1.08,1.34)),
+        ((-4.04,-1.08,1.34),(-4.04,-.76,.98)),
+        ((-4.04,-.48,1.60),(-4.04,-.16,1.98)),
+        ((-4.04,-.16,1.98),(-4.04,.10,1.62)),
+    )
+    for i, (a, b) in enumerate(grille_lines):
+        _rod(f"window-grille-flourish-{i}", a, b, .018, mats["metal"], c)
+
+    # One small portrait above the doorway replaces the invented wall-gallery row.
+    _box("doorway-portrait-frame", (.035,.38,.46), (4.055,1.03,2.55), mats["wood2"], c, bevel=.012)
+    _box("doorway-portrait", (.025,.29,.37), (4.035,1.03,2.55), plaster_wear_dark, c)
+
+    # Large green carpet under the seating area.  Three nested thin rectangles
+    # approximate the ornate border seen in the illustration without overbuilding.
     _box("reference-main-carpet", (6.55, 4.35, .026), (-.55, -.05, .02), mats["green"], c, landing=True)
     for x in (-3.64, 2.54):
         _box(f"carpet-border-x-{x}", (.08, 4.18, .012), (x, -.05, .04), mats["wood3"], c)
@@ -182,16 +230,19 @@ def apply_reference_detail_pass(mats):
         y = -1.72 + (i // 6) * 1.52
         _box(f"carpet-motif-{i}", (.16, .08, .012), (x, y, .047), mats["red"] if i % 2 else mats["wood2"], c, rot=(0, 0, (i % 3 - 1) * .35))
 
+    # Heavy timber doorway surround into the bedroom.
     _box("door-frame-near", (.28, .30, 2.58), (4.05, .16, 1.29), mats["wood2"], c, collision=True, landing=True)
     _box("door-frame-far", (.28, .30, 2.58), (4.05, 1.84, 1.29), mats["wood2"], c, collision=True, landing=True)
     _box("door-frame-header", (.28, 1.98, .28), (4.05, 1.00, 2.48), mats["wood2"], c, collision=True, landing=True)
     _box("door-threshold", (.08, 1.68, .10), (3.91, 1.00, .05), mats["wood3"], c, collision=True, landing=True)
 
+    # Wall clock between the curtain and the long cabinet.
     _cyl("wall-clock-frame", .26, .055, (-3.72, 1.18, 2.22), mats["wood2"], c, rot=(0, math.radians(90), 0))
     _cyl("wall-clock-face", .215, .065, (-3.69, 1.18, 2.22), mats["ceramic"], c, rot=(0, math.radians(90), 0))
     _rod("clock-hand-minute", (-3.65, 1.18, 2.22), (-3.63, 1.18, 2.34), .009, black, c)
     _rod("clock-hand-hour", (-3.65, 1.18, 2.22), (-3.65, 1.27, 2.18), .011, black, c)
 
+    # Cabinet-top still life.
     _box("cabinet-top-book-red", (.52, .30, .06), (-2.10, 2.49, 2.42), mats["red"], c, rot=(0,0,-.09), bevel=.015)
     _box("cabinet-top-book-cream", (.46, .28, .045), (-2.05, 2.47, 2.49), mats["cream"], c, rot=(0,0,-.04), bevel=.012)
     _box("cabinet-top-lace-runner", (1.20, .44, .018), (-.92, 2.48, 2.39), white, c, rot=(0,0,.04))
@@ -204,11 +255,13 @@ def apply_reference_detail_pass(mats):
     _sphere("blue-ornamental-globe", .135, (-.05, 2.46, 2.45), pale_blue, c)
     _rod("globe-stand", (-.05, 2.46, 2.30), (-.05, 2.46, 2.42), .018, mats["metal2"], c)
 
+    # Carved panel overlays to strengthen the wall-unit identity.
     for i, x in enumerate((-2.18, -1.20, -.22, .76, 1.62)):
         _box(f"carved-panel-bg-{i}", (.66, .025, .72), (x, 2.555, 1.48), mats["wood2"], c, bevel=.012)
         _box(f"carved-panel-inner-{i}", (.52, .018, .58), (x, 2.535, 1.48), mats["wood3"], c, bevel=.01)
         _torus(f"carved-rosette-{i}", .16, .025, (x, 2.515, 1.48), mats["wood2"], c, rot=(math.radians(90), 0, 0))
 
+    # CRT/radiogram cabinet: louvers + lower open shelf + cups + doily/figurine.
     for i in range(6):
         _box(f"tv-louver-{i}", (.58, .035, .055), (-3.36, -2.425, 1.17 + i*.06), mats["wood2"], c)
     _box("tv-lower-cabinet", (.88, .50, .58), (-3.36, -2.04, .23), mats["wood2"], c, collision=True)
@@ -220,22 +273,26 @@ def apply_reference_detail_pass(mats):
     _box("tv-top-blue-figurine", (.26, .12, .16), (-3.54, -2.06, 1.53), pale_blue, c, rot=(0,0,.15), bevel=.035)
     _sphere("tv-top-figurine-head", .07, (-3.66, -2.06, 1.61), pale_blue, c)
 
+    # Stove hearth and tools.
     _box("stove-hearth", (1.58, 1.32, .10), (2.05, .75, .05), mats["ceramic"], c, collision=True, landing=True)
     _box("stove-ash-pan", (.50, .16, .18), (2.05, .26, .27), mats["metal"], c)
     _rod("stove-poker", (2.68,.24,.13), (2.78,.24,1.22), .018, mats["metal"], c)
     _rod("stove-tongs-a", (2.81,.28,.15), (2.64,.28,1.16), .015, mats["metal2"], c)
     _rod("stove-tongs-b", (2.88,.28,.15), (2.71,.28,1.16), .015, mats["metal2"], c)
 
+    # Laundry/cloth rail next to the flue.
     _rod("stove-laundry-rod", (2.45,.52,1.80), (3.55,.52,1.80), .018, mats["metal"], c)
     _box("hanging-cloth-white-a", (.36,.04,.58), (2.63,.50,1.52), white, c, rot=(0,0,.03), bevel=.02)
     _box("hanging-cloth-mustard", (.30,.04,.48), (3.08,.50,1.56), mustard, c, rot=(0,0,-.04), bevel=.02)
     _box("hanging-cloth-white-b", (.40,.04,.64), (3.44,.50,1.48), white, c, rot=(0,0,.02), bevel=.02)
 
+    # Small hanging cup/ornament from the ceiling above the cabinet.
     _rod("hanging-ornament-string-a", (.02,.74,2.80), (.02,.74,2.34), .008, mats["metal"], c)
     _rod("hanging-ornament-string-b", (.14,.74,2.80), (.14,.74,2.34), .008, mats["metal"], c)
     _cyl("hanging-ornament-body", .10, .16, (.08,.74,2.26), pale_blue, c)
     _torus("hanging-ornament-handle", .09, .015, (.16,.74,2.28), pale_blue, c, rot=(math.radians(90),0,0))
 
+    # Intentional floor clutter copied from the reference vocabulary.
     _box("floor-notebook", (.42,.32,.035), (-1.90,-1.43,.075), mats["ceramic"], c, rot=(0,0,-.28), bevel=.008)
     _box("yellow-toy-whistle", (.27,.05,.05), (-.18,-1.12,.085), yellow, c, rot=(0,0,-.55), bevel=.012)
     _cyl("yellow-toy-bell", .055, .18, (-.04,-1.18,.10), yellow, c, rot=(0,math.radians(90),0))
@@ -250,6 +307,7 @@ def apply_reference_detail_pass(mats):
     _box("orange-slipper-a", (.39,.15,.08), (1.45,-2.19,.095), orange, c, rot=(0,0,.35), bevel=.035)
     _box("orange-slipper-b", (.39,.15,.08), (1.78,-2.04,.095), orange, c, rot=(0,0,.16), bevel=.035)
 
+    # Right side of doorway: switch, tulips, knitting bag/needles and orange ball.
     _box("wall-light-switch", (.14,.035,.18), (3.94,2.36,1.20), mats["ceramic"], c, bevel=.01)
     _box("right-wall-vase", (.16,.18,.48), (3.92,2.86,1.62), mats["ceramic"], c, bevel=.025)
     for i in range(4):
@@ -260,6 +318,7 @@ def apply_reference_detail_pass(mats):
     _rod("knitting-needle-b", (3.52,-2.72,.45), (3.60,-2.72,1.00), .012, mats["wood3"], c)
     _sphere("orange-floor-ball", .27, (2.78,-2.82,.28), orange, c, segments=18)
 
+    # Rough plaster scars/patches.
     patches = (
         (-3.98,1.86,1.46,.015,.36,.22),
         (-3.98,2.54,.94,.015,.25,.12),
@@ -270,6 +329,7 @@ def apply_reference_detail_pass(mats):
     for i, (x,y,z,sx,sy,sz) in enumerate(patches):
         _box(f"plaster-wear-{i}", (sx,sy,sz), (x,y,z), plaster_wear if i%2 else plaster_wear_dark, c, rot=(0,0,(i-2)*.06))
 
+    # Bedroom continuation: bedside smalls, wall art, plant, basket and folded bedding.
     _box("bedside-lace-doily", (.54,.42,.035), (5.18,2.42,.86), white, c)
     _cyl("bedside-mug", .08, .10, (5.04,2.42,.96), mats["ceramic"], c)
     _torus("bedside-mug-handle", .06, .014, (5.11,2.43,.98), mats["ceramic"], c, rot=(math.radians(90),0,0))
