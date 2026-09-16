@@ -170,7 +170,9 @@ async function init() {
 
   // 8. Vegetation
   vegetation = new VegetationSystem(scene);
-  vegetation.populateCity(REGIONS, BUILDINGS, STREETS);
+  // Keep the sanctuary and spectacle axis open so the Temple and theatre
+  // silhouettes read from the arrival path instead of being hidden by trees.
+  vegetation.populateCity(REGIONS.filter((region) => !['sanctuary', 'spectacle'].includes(region.id)), BUILDINGS, STREETS);
 
   // 9. Environment
   environment = new Environment(scene, renderer, {
@@ -357,6 +359,9 @@ function buildUrbanFabric() {
 /* ── Street Dressing & Cultural Props for Aizanoi ─────────── */
 
 function populateAizanoiDressing() {
+  // Compact presentation transforms are applied after this routine's local
+  // props are authored, so preserve their world-space collision alignment too.
+  const preExistingColliders = new Set([...collision.grid.cells.values()].flat());
   const dressingGroup = new THREE.Group();
   dressingGroup.name = 'aizanoi-dressing';
 
@@ -497,6 +502,17 @@ function populateAizanoiDressing() {
   // Dressing coordinates are authored in the survey frame; keep them aligned
   // with the compact monument/circulation frame without changing their IDs.
   dressingGroup.scale.set(0.78, 1, 0.88);
+  const allColliders = new Set([...collision.grid.cells.values()].flat());
+  collision.grid.clear();
+  for (const collider of allColliders) {
+    if (!preExistingColliders.has(collider)) {
+      collider.x *= 0.78;
+      collider.z *= 0.88;
+      if (Number.isFinite(collider.w)) collider.w *= 0.78;
+      if (Number.isFinite(collider.d)) collider.d *= 0.88;
+    }
+    collision.grid.insert(collider);
+  }
   scene.add(dressingGroup);
 }
 

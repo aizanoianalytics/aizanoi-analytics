@@ -9,6 +9,12 @@
 
 import * as THREE from '../../shared/vendor/three.module.js';
 import { getMaterial } from '../../shared/assets/materials.js';
+
+export const KIT_MANIFEST = [
+  { id: 'terminal_roof', file: 'terminal_roof.glb' },
+];
+let KIT = null;
+export function setAssetKit(kit) { KIT = kit; }
 import {
   buildModernAirliner,
   buildBaggageTug,
@@ -28,7 +34,7 @@ export function buildGrandTerminal(b) {
   // 1. Polished Terrazzo Terminal Floor
   const floorGeo = new THREE.PlaneGeometry(w, d);
   floorGeo.rotateX(-Math.PI / 2);
-  const floor = new THREE.Mesh(floorGeo, getMaterial('apronConcrete', { roughness: 0.12, metalness: 0.08 }));
+  const floor = new THREE.Mesh(floorGeo, getMaterial('apronConcrete', { color: 0x8da0ad, roughness: 0.34, metalness: 0.02 }));
   floor.position.y = 0.05;
   floor.receiveShadow = true;
   group.add(floor);
@@ -145,6 +151,14 @@ export function buildGrandTerminal(b) {
       group.add(ring);
 
     }
+  }
+
+  // Blender-authored roof kit provides the legible terminal silhouette; the
+  // procedural columns remain as the low-cost structural rhythm underneath.
+  if (KIT) {
+    const roofKit = KIT.place('terminal_roof', { x: 0, y: 0, z: 0, scale: 1 });
+    roofKit.userData.role = 'focal-terminal-roof';
+    group.add(roofKit);
   }
 
   // Soft warm interior terminal fill lights (high efficiency, no per-pixel shader overload)

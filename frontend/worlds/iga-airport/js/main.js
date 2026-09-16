@@ -14,7 +14,8 @@ const COMPACT = compactAirportLayout();
 const { BUILDINGS, REGIONS, STREETS, BOUNDS, SPAWN } = COMPACT;
 
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
-import { buildStructure } from './builders.js';
+import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
+import { loadAssetKit } from '../../shared/engine/asset-kit.js';
 import { Environment } from '../../shared/engine/environment.js';
 import { ParticleSystem } from '../../shared/engine/particles.js';
 import { CollisionSystem, PLAYER_HEIGHT } from '../../shared/engine/collision.js';
@@ -137,6 +138,12 @@ async function init() {
 
   setProgress(60, 'Building the main terminal and tulip-inspired control tower...');
 
+  // Load the world-local focal kit through the single shared GLTFLoader path.
+  const kit = await loadAssetKit(new URL('../assets/', import.meta.url), KIT_MANIFEST, (frac) => {
+    setProgress(60 + Math.round(frac * 4), 'Loading terminal roof kit...');
+  });
+  setAssetKit(kit);
+
   // 5. Buildings
   buildAllBuildings();
 
@@ -147,6 +154,15 @@ async function init() {
     startTime: 0.48, cycleSpeed: 0.0, mood: 'iga',
     shadowMapSize: profile.shadowMapSize, shadowRadius: profile.shadowRadius,
   });
+  // The terminal is a deep glass-and-metal volume: high-key sky bounce and
+  // two soft interior fills keep the public concourse readable on mobile.
+  environment.hemiLight.intensity = 0.9;
+  environment.ambientLight.intensity = 0.7;
+  for (const z of [-120, 80]) {
+    const fill = new THREE.PointLight(0xdff2ff, 2.5, 300);
+    fill.position.set(0, 28, z);
+    scene.add(fill);
+  }
 
   // 7. Particles & Audio
   particles = new ParticleSystem(scene);
@@ -457,9 +473,17 @@ function bindEvents() {
     // standoff = 1.4 × half-diagonal of the footprint + 8m framing margin.
     const standoff = Math.hypot(building.w || 20, building.d || 20) * 0.7 + 8;
     const safe = collision.findSafeSpawn(building.x, building.z, 160, standoff);
+    if (building.id === 'terminal') {
+      // Use the open central entrance instead of spawning behind a mullion.
+      safe.x = building.x;
+      safe.z = building.z - building.d / 2 - 18;
+      safe.y = 0;
+    }
     window.__WORLD_LAST_TELEPORT__ = building.id;
     // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
-    const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
+    const angle = building.id === 'terminal'
+      ? Math.PI
+      : Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
     controls.teleportTo(safe.x, safe.z, angle, targetY);
     // Hand the new position to the fixed-step sim so the pose blender doesn't

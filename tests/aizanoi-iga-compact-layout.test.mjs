@@ -24,3 +24,17 @@ test('Aizanoi compact layout reduces survey whitespace and preserves evidence re
   assert.ok(compact.BUILDINGS.every((b) => b.evidence?.level));
   assert.equal(compact.WATERS[0].points[0].x, 58 * 0.78);
 });
+
+test('compact transforms keep focal footprints separated and bridge paths inside bounds', () => {
+  const a = compactAizanoiLayout();
+  const temple = a.BUILDINGS.find((b) => b.id === 'temple');
+  const macellum = a.BUILDINGS.find((b) => b.id === 'macellum');
+  const bridge = a.BUILDINGS.find((b) => b.id === 'bridge2');
+  assert.ok(Math.abs(temple.x - macellum.x) > (temple.w + macellum.w) / 2);
+  assert.ok(bridge.x - bridge.w / 2 > a.BOUNDS.minX);
+  assert.ok(bridge.x + bridge.w / 2 < a.BOUNDS.maxX);
+  const iga = compactAirportLayout();
+  const pier = iga.BUILDINGS.find((b) => b.id === 'pier-west');
+  assert.ok(pier.x - pier.w / 2 > iga.BOUNDS.minX);
+  assert.ok(pier.x + pier.w / 2 < iga.BOUNDS.maxX);
+});
