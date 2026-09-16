@@ -277,8 +277,8 @@ function buildAllMonuments() {
 
 function buildUrbanFabric() {
   const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const globalCap = isMobile ? 220 : 500;
-  const cell = isMobile ? 26 : 18;
+  const globalCap = isMobile ? 180 : 240;
+  const cell = isMobile ? 28 : 24;
   let placed = 0;
 
   function hash(str) {
@@ -317,6 +317,7 @@ function buildUrbanFabric() {
           id: `fabric-${placed}`,
           type: 'insula',
           x, z, w, d, h,
+          material: style.materials?.[Math.floor(hash(`${seed}:mat`) * (style.materials.length || 1))] || 'romanBrick',
           evidence: { level: 'plausible' }
         };
 
