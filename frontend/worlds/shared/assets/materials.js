@@ -29,7 +29,7 @@ function createProceduralTexture(name, drawFn, size = 512) {
   texture.wrapT = THREE.RepeatWrapping;
   texture.generateMipmaps = true;
   texture.minFilter = THREE.LinearMipmapLinearFilter;
-  texture.anisotropy = 4; // grazing-angle sharpness on monuments — biggest single visual win
+  texture.anisotropy = 8; // grazing-angle sharpness on monuments — biggest single visual win
   texture.colorSpace = THREE.SRGBColorSpace;
   textureCache.set(name, texture);
   return texture;
@@ -56,23 +56,48 @@ function createBumpTexture(name, drawFn, size = 512) {
   return texture;
 }
 
-// 1. Pentelic / Classical Marble
+// 1. Pentelic / Classical Marble — layered veins + warm patina blotches
 function getMarbleTexture() {
   return createProceduralTexture('marble', (ctx, s) => {
     ctx.fillStyle = '#f6f0e4';
     ctx.fillRect(0, 0, s, s);
 
-    // Subtle mineral veins
+    // Broad warm patina wash (sun-aged stone, breaks the flat CG white)
+    for (let i = 0; i < 26; i++) {
+      const x = Math.random() * s, y = Math.random() * s, r = 30 + Math.random() * 90;
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      const warm = Math.random() > 0.5;
+      g.addColorStop(0, warm ? 'rgba(214, 192, 158, 0.10)' : 'rgba(168, 178, 190, 0.08)');
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(x - r, y - r, r * 2, r * 2);
+    }
+
+    // Primary mineral veins
     ctx.lineWidth = 1.5;
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 9; i++) {
       ctx.beginPath();
-      ctx.strokeStyle = i % 2 === 0 ? 'rgba(180, 160, 135, 0.28)' : 'rgba(130, 120, 110, 0.18)';
+      ctx.strokeStyle = i % 2 === 0 ? 'rgba(180, 160, 135, 0.30)' : 'rgba(130, 120, 110, 0.20)';
       let x = (i * 45) % s;
       let y = 0;
       ctx.moveTo(x, y);
       while (y < s) {
         x += (Math.sin(y * 0.04 + i) * 6) + (Math.cos(y * 0.015) * 3);
         y += 6;
+        ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    // Fine secondary veins (close-up realism)
+    ctx.lineWidth = 0.7;
+    for (let i = 0; i < 14; i++) {
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(120, 110, 100, 0.12)';
+      let x = Math.random() * s, y = 0;
+      ctx.moveTo(x, y);
+      while (y < s) {
+        x += Math.sin(y * 0.09 + i * 2.1) * 3;
+        y += 8;
         ctx.lineTo(x, y);
       }
       ctx.stroke();
@@ -95,11 +120,20 @@ function getMarbleBump() {
   });
 }
 
-// 2. Travertine Stone Blocks
+// 2. Travertine Stone Blocks — banded sediment + per-block tone shift
 function getTravertineTexture() {
   return createProceduralTexture('travertine', (ctx, s) => {
     ctx.fillStyle = '#dfd5be';
     ctx.fillRect(0, 0, s, s);
+
+    // Per-block tonal shift (64px coursing) — kills the wallpaper repeat read
+    for (let by = 0; by < s; by += 64) {
+      for (let bx = 0; bx < s; bx += 64) {
+        const t = (Math.random() - 0.5) * 14;
+        ctx.fillStyle = `rgba(${118 + t},${104 + t},${86 + t},0.16)`;
+        ctx.fillRect(bx, by, 64, 64);
+      }
+    }
 
     // Horizontal porous lacunae bands
     for (let y = 0; y < s; y += 8) {
@@ -110,6 +144,11 @@ function getTravertineTexture() {
           ctx.fillRect(x, y + Math.random() * 3, w, 2);
         }
       }
+    }
+    // Sparse dark pits (travertine voids)
+    ctx.fillStyle = 'rgba(70, 60, 50, 0.35)';
+    for (let i = 0; i < 90; i++) {
+      ctx.fillRect(Math.random() * s, Math.random() * s, 1 + Math.random() * 2, 1 + Math.random() * 2);
     }
     // Block joints (every 64px)
     ctx.strokeStyle = 'rgba(90, 80, 70, 0.4)';
@@ -278,7 +317,37 @@ function getWoodTexture() {
   });
 }
 
-// 8. Classical Column Fluting Bump Map
+// 8. Aged Plaster / Mudbrick Wash (residential quarters)
+function getPlasterTexture() {
+  return createProceduralTexture('plaster', (ctx, s) => {
+    ctx.fillStyle = '#e2d8c6';
+    ctx.fillRect(0, 0, s, s);
+    // Trowel sweeps
+    for (let i = 0; i < 60; i++) {
+      ctx.strokeStyle = `rgba(150, 135, 115, ${0.05 + Math.random() * 0.06})`;
+      ctx.lineWidth = 2 + Math.random() * 5;
+      ctx.beginPath();
+      const y = Math.random() * s;
+      ctx.moveTo(-10, y);
+      ctx.bezierCurveTo(s * 0.3, y + (Math.random() - 0.5) * 30, s * 0.7, y + (Math.random() - 0.5) * 30, s + 10, y);
+      ctx.stroke();
+    }
+    // Weather streaks (rain wash under eaves)
+    for (let i = 0; i < 40; i++) {
+      const x = Math.random() * s;
+      ctx.fillStyle = `rgba(110, 95, 75, ${0.04 + Math.random() * 0.05})`;
+      ctx.fillRect(x, Math.random() * s * 0.4, 1 + Math.random() * 2, 20 + Math.random() * 60);
+    }
+    // Exposed brick patches where plaster failed
+    for (let i = 0; i < 7; i++) {
+      if (Math.random() > 0.5) continue;
+      ctx.fillStyle = 'rgba(160, 90, 60, 0.25)';
+      ctx.fillRect(Math.random() * s, Math.random() * s, 12 + Math.random() * 30, 8 + Math.random() * 18);
+    }
+  });
+}
+
+// 9. Classical Column Fluting Bump Map
 export function getColumnFlutingBump(flutes = 20) {
   const name = flutes === 20 ? 'column_fluting_bump' : `column_fluting_bump_${flutes}`;
   const texture = createBumpTexture(name, (ctx, s) => {
@@ -424,6 +493,9 @@ export function getMaterial(name, overrides = {}) {
   } else if (name === 'wood' || name === 'woodPlanks') {
     mat.map = getWoodTexture();
     mat.bumpScale = def.bumpScale || 0.04;
+  } else if (name === 'plaster' || name === 'plasterAged') {
+    mat.map = getPlasterTexture();
+    mat.bumpScale = 0.02;
   } else if (name === 'tarmac') {
     mat.map = getTarmacTexture();
     mat.bumpScale = def.bumpScale || 0.03;
