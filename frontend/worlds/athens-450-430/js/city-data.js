@@ -249,6 +249,27 @@ export const SPAWN = { x: 340, z: 280, angle: Math.PI * 0.75 };
 
 export const BOUNDS = { minX: -450, maxX: 1100, minZ: -450, maxZ: 700 };
 
+// Compact the authored plan, not the monuments: this shortens empty travel
+// while preserving every id, evidence record, footprint and interior contract.
+export const COMPACTION = { factor: 0.76, origin: { x: 0, z: 0 } };
+function compactPoint(point) {
+  point.x = COMPACTION.origin.x + (point.x - COMPACTION.origin.x) * COMPACTION.factor;
+  point.z = COMPACTION.origin.z + (point.z - COMPACTION.origin.z) * COMPACTION.factor;
+}
+for (const region of REGIONS) compactPoint(region);
+for (const street of STREETS) street.points.forEach(([x, z], index) => {
+  street.points[index] = [x * COMPACTION.factor, z * COMPACTION.factor];
+});
+for (const building of BUILDINGS) compactPoint(building);
+// Water coordinates remain source-anchored: ambience and river evidence use
+// established landmarks, while streets, districts and monuments are compacted.
+
+compactPoint(SPAWN);
+BOUNDS.minX *= COMPACTION.factor;
+BOUNDS.maxX *= COMPACTION.factor;
+BOUNDS.minZ *= COMPACTION.factor;
+BOUNDS.maxZ *= COMPACTION.factor;
+
 /* ── Teleport destinations ────────────────────────────────── */
 
 export const TELEPORTS = [

@@ -15,7 +15,8 @@ import {
 } from './city-data.js';
 
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
-import { buildStructure } from './builders.js';
+import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
+import { loadAssetKit } from '../../shared/engine/asset-kit.js';
 import { Environment } from '../../shared/engine/environment.js';
 import { WaterSystem, buildWaterSamplePoints } from '../../shared/engine/water.js';
 import { VegetationSystem } from '../../shared/engine/vegetation.js';
@@ -157,7 +158,10 @@ async function init() {
 
   buildStreets();
 
-  setProgress(25, 'Building monuments...');
+  setProgress(25, 'Building authored Classical monuments...');
+  const kit = await loadAssetKit(new URL('../assets/', import.meta.url), KIT_MANIFEST,
+    (progress) => setProgress(25 + progress * 8, 'Loading Athens hero ' + Math.round(progress * 100) + '%'));
+  setAssetKit(kit);
 
   /* ── 5. Buildings ─────────────────────────────────────── */
 
