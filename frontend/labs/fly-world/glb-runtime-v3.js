@@ -1,0 +1,196 @@
+import * as THREE from '../../worlds/shared/vendor/three.module.js';
+import { GLTFLoader } from '../../worlds/shared/vendor/GLTFLoader.js';
+
+const canvas = document.querySelector('#world');
+const fatal = document.querySelector('#fatal');
+const statusEl = document.querySelector('#observer-status');
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.08;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x272119);
+scene.fog = new THREE.Fog(0x272119, 15, 38);
+
+const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.015, 100);
+camera.up.set(0, 0, 1);
+
+const colliders = [];
+const observerRadius = 0.21;
+const zMin = 0.22;
+const zMax = 2.62;
+
+function addCollider(object) {
+  object.updateMatrixWorld(true);
+  const bounds = new THREE.Box3().setFromObject(object);
+  if (!bounds.isEmpty()) colliders.push({ bounds, name: object.name });
+}
+
+function collectCollisionRoots(root) {
+  root.updateMatrixWorld(true);
+  root.traverse((object) => {
+    if (object.isMesh) {
+      object.castShadow = true;
+      object.receiveShadow = true;
+    }
+  });
+
+  root.traverse((object) => {
+    const collision = object.userData?.collision;
+    if (collision === 'solid') {
+      addCollider(object);
+      return;
+    }
+    if (collision === 'none') return;
+    const byName = /^(WALL__|CEILING__|window-glass|bedroom-window|ASSET__)/.test(object.name || '');
+    if (byName) addCollider(object);
+  });
+}
+
+function sphereIntersectsBox(position, radius, box) {
+  const closest = position.clone().clamp(box.min, box.max);
+  return closest.distanceToSquared(position) < radius * radius;
+}
+
+class Observer {
+  constructor() {
+    this.keys = new Set();
+    this.speed = 2.35;
+    this.noClip = false;
+    this.reset();
+    canvas.addEventListener('click', () => canvas.requestPointerLock?.());
+    document.addEventListener('mousemove', (event) => {
+      if (document.pointerLockElement !== canvas) return;
+      this.yaw += event.movementX * .002;
+      this.pitch -= event.movementY * .002;
+      this.pitch = Math.max(-1.48, Math.min(1.48, this.pitch));
+    });
+    addEventListener('keydown', (event) => {
+      this.keys.add(event.code);
+      if (event.code === 'KeyR') this.reset();
+      if (event.code === 'KeyN' && !event.repeat) {
+        this.noClip = !this.noClip;
+        this.syncStatus();
+      }
+    });
+    addEventListener('keyup', (event) => this.keys.delete(event.code));
+    this.syncStatus();
+  }
+
+  syncStatus() {
+    if (statusEl) statusEl.textContent = this.noClip
+      ? 'Blender house v0.3 · DEBUG NOCLIP'
+      : `Blender house v0.3 · collision ON · ${colliders.length} collider roots`;
+  }
+
+  reset() {
+    camera.position.set(-1.85, -2.15, 1.58);
+    this.yaw = .74;
+    this.pitch = -.05;
+  }
+
+  blocked(position) {
+    if (this.noClip) return false;
+    if (position.z < zMin || position.z > zMax) return true;
+    return colliders.some(({ bounds }) => sphereIntersectsBox(position, observerRadius, bounds));
+  }
+
+  tryMove(delta) {
+    if (this.noClip) {
+      camera.position.add(delta);
+      return;
+    }
+    for (const axis of [
+      new THREE.Vector3(delta.x, 0, 0),
+      new THREE.Vector3(0, delta.y, 0),
+      new THREE.Vector3(0, 0, delta.z),
+    ]) {
+      const candidate = camera.position.clone().add(axis);
+      if (!this.blocked(candidate)) camera.position.copy(candidate);
+    }
+  }
+
+  update(dt) {
+    const horizontal = Math.cos(this.pitch);
+    const forward = new THREE.Vector3(
+      Math.sin(this.yaw) * horizontal,
+      Math.cos(this.yaw) * horizontal,
+      Math.sin(this.pitch),
+    ).normalize();
+    const flatForward = new THREE.Vector3(forward.x, forward.y, 0).normalize();
+    const right = new THREE.Vector3().crossVectors(flatForward, new THREE.Vector3(0, 0, 1)).normalize();
+    const step = this.speed * (this.keys.has('ShiftLeft') || this.keys.has('ShiftRight') ? 2.4 : 1) * dt;
+    const delta = new THREE.Vector3();
+    if (this.keys.has('KeyW')) delta.addScaledVector(flatForward, step);
+    if (this.keys.has('KeyS')) delta.addScaledVector(flatForward, -step);
+    if (this.keys.has('KeyA')) delta.addScaledVector(right, -step);
+    if (this.keys.has('KeyD')) delta.addScaledVector(right, step);
+    if (this.keys.has('KeyE')) delta.z += step;
+    if (this.keys.has('KeyQ')) delta.z -= step;
+    this.tryMove(delta);
+    camera.lookAt(camera.position.clone().add(forward));
+  }
+}
+
+function lighting() {
+  scene.add(new THREE.HemisphereLight(0xb9d2e1, 0x4a3426, 1.02));
+  const sun = new THREE.DirectionalLight(0xffdfba, 1.75);
+  sun.position.set(-6, -5, 8);
+  sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048);
+  sun.shadow.camera.left = -10;
+  sun.shadow.camera.right = 10;
+  sun.shadow.camera.top = 10;
+  sun.shadow.camera.bottom = -10;
+  scene.add(sun);
+
+  const windowFill = new THREE.PointLight(0xa8d5ff, 2.9, 7, 2);
+  windowFill.position.set(-3.6, -.7, 1.65);
+  scene.add(windowFill);
+
+  const stove = new THREE.PointLight(0xff6525, 7.2, 4, 2);
+  stove.position.set(2.05, .28, .62);
+  stove.castShadow = true;
+  scene.add(stove);
+
+  const bedroom = new THREE.PointLight(0xffb45a, 4.2, 4.2, 2);
+  bedroom.position.set(5.18, 2.35, 1.42);
+  scene.add(bedroom);
+}
+
+async function boot() {
+  lighting();
+  const loader = new GLTFLoader();
+  const gltf = await loader.loadAsync(new URL('./assets/fly-house.glb', import.meta.url).toString());
+  gltf.scene.name = 'FLY_HOUSE_BLENDER_ROOT';
+  scene.add(gltf.scene);
+  collectCollisionRoots(gltf.scene);
+
+  const observer = new Observer();
+  const clock = new THREE.Clock();
+  renderer.setAnimationLoop(() => {
+    observer.update(Math.min(clock.getDelta(), .05));
+    renderer.render(scene, camera);
+  });
+}
+
+boot().catch((error) => {
+  console.error(error);
+  if (fatal) {
+    fatal.hidden = false;
+    fatal.textContent = `Fly House GLB failed to initialize: ${error?.stack || error}`;
+  }
+});
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+});
