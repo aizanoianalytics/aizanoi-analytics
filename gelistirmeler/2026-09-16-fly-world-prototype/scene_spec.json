@@ -5,13 +5,29 @@
   "units": "meters",
   "coordinateSystem": "Blender Z-up; glTF exporter converts to Y-up for browser runtime",
   "worldBounds": {
-    "min": [-4.2, -3.2, 0.0],
-    "max": [7.5, 4.1, 3.0]
+    "min": [
+      -4.2,
+      -3.2,
+      0.0
+    ],
+    "max": [
+      7.5,
+      4.1,
+      3.0
+    ]
   },
   "observer": {
     "mode": "ghost",
-    "spawn": [-1.4, -1.6, 1.55],
-    "lookAt": [1.1, 0.8, 1.1],
+    "spawn": [
+      -1.4,
+      -1.6,
+      1.55
+    ],
+    "lookAt": [
+      1.1,
+      0.8,
+      1.1
+    ],
     "collides": false,
     "castsShadow": false,
     "visibleToFlySensors": false,
@@ -21,8 +37,16 @@
     {
       "id": "main-room",
       "label": "Main living room",
-      "origin": [0.0, 0.0, 0.0],
-      "size": [7.6, 5.6, 2.7],
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        7.6,
+        5.6,
+        2.7
+      ],
       "floorMaterial": "aged-green-floor",
       "wallMaterial": "warm-aged-plaster",
       "ceilingMaterial": "aged-white-plaster",
@@ -30,15 +54,31 @@
         {
           "id": "west-window",
           "wall": "west",
-          "center": [-3.8, -0.75, 1.45],
-          "size": [0.2, 1.75, 1.45],
+          "center": [
+            -3.8,
+            -0.75,
+            1.45
+          ],
+          "size": [
+            0.2,
+            1.75,
+            1.45
+          ],
           "sillHeight": 0.72
         },
         {
           "id": "bedroom-doorway",
           "wall": "east",
-          "center": [3.8, 0.95, 1.05],
-          "size": [0.2, 1.12, 2.1],
+          "center": [
+            3.8,
+            0.95,
+            1.05
+          ],
+          "size": [
+            0.2,
+            1.12,
+            2.1
+          ],
           "sillHeight": 0.0
         }
       ]
@@ -46,8 +86,16 @@
     {
       "id": "bedroom",
       "label": "Connected bedroom",
-      "origin": [5.55, 1.1, 0.0],
-      "size": [3.5, 4.6, 2.7],
+      "origin": [
+        5.55,
+        1.1,
+        0.0
+      ],
+      "size": [
+        3.5,
+        4.6,
+        2.7
+      ],
       "floorMaterial": "aged-green-floor",
       "wallMaterial": "warm-aged-plaster",
       "ceilingMaterial": "aged-white-plaster",
@@ -55,15 +103,31 @@
         {
           "id": "bedroom-return-doorway",
           "wall": "west",
-          "center": [3.8, 0.95, 1.05],
-          "size": [0.2, 1.12, 2.1],
+          "center": [
+            3.8,
+            0.95,
+            1.05
+          ],
+          "size": [
+            0.2,
+            1.12,
+            2.1
+          ],
           "sillHeight": 0.0
         },
         {
           "id": "bedroom-window",
           "wall": "north",
-          "center": [5.2, 3.4, 1.45],
-          "size": [1.25, 0.2, 1.35],
+          "center": [
+            5.2,
+            3.4,
+            1.45
+          ],
+          "size": [
+            1.25,
+            0.2,
+            1.35
+          ],
           "sillHeight": 0.78
         }
       ]
@@ -72,33 +136,122 @@
   "zones": [
     {
       "id": "window-zone",
-      "bounds": [[-4.1, -1.85, 0.0], [-2.75, 0.25, 2.7]],
-      "futureFlySemantics": ["bright", "airflow", "visual-landmark"]
+      "bounds": [
+        [
+          -4.1,
+          -1.85,
+          0.0
+        ],
+        [
+          -2.75,
+          0.25,
+          2.7
+        ]
+      ],
+      "futureFlySemantics": [
+        "bright",
+        "airflow",
+        "visual-landmark"
+      ]
     },
     {
       "id": "bench-cabinet-zone",
-      "bounds": [[-2.7, 1.35, 0.0], [1.35, 2.85, 2.65]],
-      "futureFlySemantics": ["landing-surfaces", "textile", "wood"]
+      "bounds": [
+        [
+          -2.7,
+          1.35,
+          0.0
+        ],
+        [
+          1.35,
+          2.85,
+          2.65
+        ]
+      ],
+      "futureFlySemantics": [
+        "landing-surfaces",
+        "textile",
+        "wood"
+      ]
     },
     {
       "id": "stove-zone",
-      "bounds": [[1.15, -0.05, 0.0], [3.05, 1.6, 2.7]],
-      "futureFlySemantics": ["heat", "vertical-landmarks", "landing-surfaces"]
+      "bounds": [
+        [
+          1.15,
+          -0.05,
+          0.0
+        ],
+        [
+          3.05,
+          1.6,
+          2.7
+        ]
+      ],
+      "futureFlySemantics": [
+        "heat",
+        "vertical-landmarks",
+        "landing-surfaces"
+      ]
     },
     {
       "id": "floor-clutter-zone",
-      "bounds": [[-2.5, -1.6, 0.0], [1.55, 1.15, 1.0]],
-      "futureFlySemantics": ["food-opportunities", "micro-obstacles", "textile"]
+      "bounds": [
+        [
+          -2.5,
+          -1.6,
+          0.0
+        ],
+        [
+          1.55,
+          1.15,
+          1.0
+        ]
+      ],
+      "futureFlySemantics": [
+        "food-opportunities",
+        "micro-obstacles",
+        "textile"
+      ]
     },
     {
       "id": "doorway-zone",
-      "bounds": [[3.25, 0.2, 0.0], [4.35, 1.75, 2.25]],
-      "futureFlySemantics": ["transition", "airflow"]
+      "bounds": [
+        [
+          3.25,
+          0.2,
+          0.0
+        ],
+        [
+          4.35,
+          1.75,
+          2.25
+        ]
+      ],
+      "futureFlySemantics": [
+        "transition",
+        "airflow"
+      ]
     },
     {
       "id": "bedroom-zone",
-      "bounds": [[3.8, -1.2, 0.0], [7.3, 3.4, 2.7]],
-      "futureFlySemantics": ["second-biome", "warm-light", "textile"]
+      "bounds": [
+        [
+          3.8,
+          -1.2,
+          0.0
+        ],
+        [
+          7.3,
+          3.4,
+          2.7
+        ]
+      ],
+      "futureFlySemantics": [
+        "second-biome",
+        "warm-light",
+        "textile"
+      ]
     }
   ],
   "heroObjects": [
@@ -106,9 +259,21 @@
       "id": "bench",
       "role": "bench-sofa",
       "room": "main-room",
-      "position": [-0.8, 2.05, 0.42],
-      "rotationDeg": [0, 0, 0],
-      "size": [3.55, 0.9, 0.82],
+      "position": [
+        -0.8,
+        2.05,
+        0.42
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        3.55,
+        0.9,
+        0.82
+      ],
       "proxy": "box",
       "assetSlot": "bench-sofa"
     },
@@ -116,9 +281,21 @@
       "id": "back-cabinet",
       "role": "carved-wood-cabinet",
       "room": "main-room",
-      "position": [-0.65, 2.52, 1.55],
-      "rotationDeg": [0, 0, 0],
-      "size": [4.05, 0.44, 1.55],
+      "position": [
+        -0.65,
+        2.52,
+        1.55
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        4.05,
+        0.44,
+        1.55
+      ],
       "proxy": "box",
       "assetSlot": "carved-cabinet"
     },
@@ -126,20 +303,47 @@
       "id": "wood-stove",
       "role": "wood-burning-stove",
       "room": "main-room",
-      "position": [1.95, 0.72, 0.58],
-      "rotationDeg": [0, 0, 0],
-      "size": [0.95, 0.82, 1.16],
+      "position": [
+        1.95,
+        0.72,
+        0.58
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        0.95,
+        0.82,
+        1.16
+      ],
       "proxy": "box",
       "assetSlot": "wood-stove",
-      "futureFlySemantics": ["heat-source", "landing-surface"]
+      "futureFlySemantics": [
+        "heat-source",
+        "landing-surface"
+      ]
     },
     {
       "id": "kettle",
       "role": "metal-kettle",
       "room": "main-room",
-      "position": [1.92, 0.74, 1.35],
-      "rotationDeg": [0, 0, 0],
-      "size": [0.44, 0.38, 0.42],
+      "position": [
+        1.92,
+        0.74,
+        1.35
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        0.44,
+        0.38,
+        0.42
+      ],
       "proxy": "cylinder",
       "assetSlot": "kettle"
     },
@@ -147,9 +351,21 @@
       "id": "old-tv-cabinet",
       "role": "old-television-cabinet",
       "room": "main-room",
-      "position": [-3.1, -1.75, 0.72],
-      "rotationDeg": [0, 0, 0],
-      "size": [1.15, 0.72, 1.42],
+      "position": [
+        -3.1,
+        -1.75,
+        0.72
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        1.15,
+        0.72,
+        1.42
+      ],
       "proxy": "box",
       "assetSlot": "old-tv"
     },
@@ -157,9 +373,21 @@
       "id": "yarn-basket",
       "role": "woven-basket",
       "room": "main-room",
-      "position": [-1.82, 0.72, 0.34],
-      "rotationDeg": [0, 0, 0],
-      "size": [0.72, 0.62, 0.68],
+      "position": [
+        -1.82,
+        0.72,
+        0.34
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        0.72,
+        0.62,
+        0.68
+      ],
       "proxy": "cylinder",
       "assetSlot": "woven-basket"
     },
@@ -167,9 +395,21 @@
       "id": "blue-bag",
       "role": "soft-bag",
       "room": "main-room",
-      "position": [0.65, 0.25, 0.34],
-      "rotationDeg": [0, 0, -10],
-      "size": [0.72, 0.32, 0.68],
+      "position": [
+        0.65,
+        0.25,
+        0.34
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        -10
+      ],
+      "size": [
+        0.72,
+        0.32,
+        0.68
+      ],
       "proxy": "box",
       "assetSlot": "blue-bag"
     },
@@ -177,9 +417,21 @@
       "id": "main-rug",
       "role": "patterned-rug",
       "room": "main-room",
-      "position": [1.15, -1.2, 0.018],
-      "rotationDeg": [0, 0, -5],
-      "size": [4.4, 1.65, 0.035],
+      "position": [
+        1.15,
+        -1.2,
+        0.018
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        -5
+      ],
+      "size": [
+        4.4,
+        1.65,
+        0.035
+      ],
       "proxy": "box",
       "assetSlot": "main-rug"
     },
@@ -187,9 +439,21 @@
       "id": "round-rug",
       "role": "round-textile-rug",
       "room": "main-room",
-      "position": [-0.45, -2.05, 0.02],
-      "rotationDeg": [0, 0, 0],
-      "size": [2.05, 2.05, 0.035],
+      "position": [
+        -0.45,
+        -2.05,
+        0.02
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        2.05,
+        2.05,
+        0.035
+      ],
       "proxy": "cylinder",
       "assetSlot": "round-rug"
     },
@@ -197,9 +461,21 @@
       "id": "bed",
       "role": "wooden-bed",
       "room": "bedroom",
-      "position": [5.95, 1.7, 0.46],
-      "rotationDeg": [0, 0, 0],
-      "size": [1.65, 2.05, 0.92],
+      "position": [
+        5.95,
+        1.7,
+        0.46
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        1.65,
+        2.05,
+        0.92
+      ],
       "proxy": "box",
       "assetSlot": "wooden-bed"
     },
@@ -207,9 +483,21 @@
       "id": "bedside-table",
       "role": "wooden-side-table",
       "room": "bedroom",
-      "position": [4.55, 2.25, 0.42],
-      "rotationDeg": [0, 0, 0],
-      "size": [0.58, 0.52, 0.84],
+      "position": [
+        4.55,
+        2.25,
+        0.42
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        0.58,
+        0.52,
+        0.84
+      ],
       "proxy": "box",
       "assetSlot": "bedside-table"
     },
@@ -217,21 +505,141 @@
       "id": "bedroom-bookshelf",
       "role": "small-bookshelf",
       "room": "bedroom",
-      "position": [6.75, 3.13, 1.15],
-      "rotationDeg": [0, 0, 0],
-      "size": [0.95, 0.32, 1.55],
+      "position": [
+        6.75,
+        3.13,
+        1.15
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        0.95,
+        0.32,
+        1.55
+      ],
       "proxy": "box",
       "assetSlot": "bookshelf"
+    },
+    {
+      "id": "bench-quilt-set",
+      "role": "quilt-and-pillow-set",
+      "room": "main-room",
+      "position": [
+        -0.45,
+        1.85,
+        0.72
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        2.5,
+        1.0,
+        0.7
+      ],
+      "proxy": "box",
+      "assetSlot": "pillow-quilt-set"
+    },
+    {
+      "id": "bed-quilt-set",
+      "role": "bed-quilt-and-pillows",
+      "room": "bedroom",
+      "position": [
+        5.95,
+        1.9,
+        0.72
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        1.6,
+        2.0,
+        0.6
+      ],
+      "proxy": "box",
+      "assetSlot": "bed-quilt"
+    },
+    {
+      "id": "floral-curtain",
+      "role": "floral-curtain-panel",
+      "room": "main-room",
+      "position": [
+        -3.53,
+        0.25,
+        1.5
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        0.15,
+        1.0,
+        2.3
+      ],
+      "proxy": "box",
+      "assetSlot": "curtain-floral"
+    },
+    {
+      "id": "lace-curtain",
+      "role": "lace-curtain-panel",
+      "room": "main-room",
+      "position": [
+        -3.5,
+        -0.75,
+        1.5
+      ],
+      "rotationDeg": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        0.1,
+        1.85,
+        2.15
+      ],
+      "proxy": "box",
+      "assetSlot": "curtain-lace"
     }
   ],
   "stovePipe": {
     "radius": 0.115,
     "points": [
-      [1.95, 0.72, 1.18],
-      [1.95, 0.72, 2.28],
-      [1.35, 0.72, 2.48],
-      [-2.15, 0.72, 2.48],
-      [-2.55, 0.72, 2.38]
+      [
+        1.95,
+        0.72,
+        1.18
+      ],
+      [
+        1.95,
+        0.72,
+        2.28
+      ],
+      [
+        1.35,
+        0.72,
+        2.48
+      ],
+      [
+        -2.15,
+        0.72,
+        2.48
+      ],
+      [
+        -2.55,
+        0.72,
+        2.38
+      ]
     ],
     "material": "aged-dark-metal"
   },
@@ -254,21 +662,36 @@
     "time": "late-afternoon-interior",
     "windowKey": {
       "type": "area",
-      "position": [-3.55, -0.8, 1.65],
+      "position": [
+        -3.55,
+        -0.8,
+        1.65
+      ],
       "energy": 650,
       "temperatureK": 6500,
-      "size": [1.4, 1.2]
+      "size": [
+        1.4,
+        1.2
+      ]
     },
     "stoveGlow": {
       "type": "point",
-      "position": [1.95, 0.25, 0.55],
+      "position": [
+        1.95,
+        0.25,
+        0.55
+      ],
       "energy": 170,
       "temperatureK": 1850,
       "radius": 0.55
     },
     "bedroomLamp": {
       "type": "point",
-      "position": [4.55, 2.18, 1.35],
+      "position": [
+        4.55,
+        2.18,
+        1.35
+      ],
       "energy": 120,
       "temperatureK": 2700,
       "radius": 0.8
@@ -277,32 +700,72 @@
   "previewCameras": [
     {
       "id": "reference-like-wide",
-      "position": [-4.8, -5.3, 3.25],
-      "lookAt": [0.65, 0.65, 1.05],
+      "position": [
+        -4.8,
+        -5.3,
+        3.25
+      ],
+      "lookAt": [
+        0.65,
+        0.65,
+        1.05
+      ],
       "focalLengthMm": 31
     },
     {
       "id": "stove-and-doorway",
-      "position": [-1.3, -2.9, 1.65],
-      "lookAt": [3.6, 1.0, 1.05],
+      "position": [
+        -1.3,
+        -2.9,
+        1.65
+      ],
+      "lookAt": [
+        3.6,
+        1.0,
+        1.05
+      ],
       "focalLengthMm": 34
     },
     {
       "id": "bench-window",
-      "position": [2.3, -1.6, 1.45],
-      "lookAt": [-2.4, 1.1, 1.25],
+      "position": [
+        2.3,
+        -1.6,
+        1.45
+      ],
+      "lookAt": [
+        -2.4,
+        1.1,
+        1.25
+      ],
       "focalLengthMm": 38
     },
     {
       "id": "bedroom-through-door",
-      "position": [2.3, 0.2, 1.45],
-      "lookAt": [5.75, 1.7, 1.1],
+      "position": [
+        2.3,
+        0.2,
+        1.45
+      ],
+      "lookAt": [
+        5.75,
+        1.7,
+        1.1
+      ],
       "focalLengthMm": 42
     },
     {
       "id": "fly-scale-floor",
-      "position": [0.0, -0.55, 0.08],
-      "lookAt": [1.6, 0.65, 0.32],
+      "position": [
+        0.0,
+        -0.55,
+        0.08
+      ],
+      "lookAt": [
+        1.6,
+        0.65,
+        0.32
+      ],
       "focalLengthMm": 24
     }
   ],

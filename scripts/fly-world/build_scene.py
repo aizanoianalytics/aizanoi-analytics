@@ -193,7 +193,7 @@ def build_room_shell(spec, mats):
     return collection
 
 
-def add_window_details(mats):
+def add_window_details(mats, configured=frozenset()):
     collection = bpy.data.collections.new("WINDOWS_AND_CURTAINS")
     bpy.context.scene.collection.children.link(collection)
     # West window lies in the X plane. Geometry intentionally follows the approved illustration.
@@ -202,9 +202,12 @@ def add_window_details(mats):
         add_box("window-bar-v", (0.05, 0.045, 1.44), (-3.67, y, 1.44), mats["metal"], collection=collection)
     for z in (0.82, 1.25, 1.68, 2.08):
         add_box("window-bar-h", (0.05, 1.70, 0.045), (-3.67, -0.75, z), mats["metal"], collection=collection)
-    # Two distinct curtain layers: floral outer and light lace inner.
-    add_box("PROXY__floral-curtain", (0.035, 0.62, 2.25), (-3.53, 0.25, 1.52), mats["curtain-red"], bevel=0.02, collection=collection)
-    add_box("PROXY__lace-curtain", (0.03, 0.50, 2.15), (-3.50, -0.18, 1.52), mats["curtain-white"], bevel=0.02, collection=collection)
+    # Two distinct curtain layers — omitted once the matching hero asset slot is
+    # configured (required PROXY__* must not survive into review candidates).
+    if "curtain-floral" not in configured:
+        add_box("PROXY__floral-curtain", (0.035, 0.62, 2.25), (-3.53, 0.25, 1.52), mats["curtain-red"], bevel=0.02, collection=collection)
+    if "curtain-lace" not in configured:
+        add_box("PROXY__lace-curtain", (0.03, 0.50, 2.15), (-3.50, -0.18, 1.52), mats["curtain-white"], bevel=0.02, collection=collection)
     # Bedroom north window and curtain indication.
     add_box("bedroom-window-glass", (1.22, 0.035, 1.32), (5.20, 3.33, 1.455), mats["glass"], collection=collection)
     add_box("PROXY__bedroom-curtain", (0.45, 0.03, 1.75), (4.52, 3.25, 1.55), mats["curtain-red"], bevel=0.015, collection=collection)
@@ -283,7 +286,7 @@ def proxy_for_target(target, mats, collection):
     return obj
 
 
-def build_hero_objects(root: Path, spec, manifest, mats):
+def build_hero_objects(root: Path, spec, manifest, mats, configured=frozenset()):
     collection = bpy.data.collections.new("HERO_OBJECTS")
     bpy.context.scene.collection.children.link(collection)
     slots = {slot["id"]: slot for slot in manifest["slots"]}
@@ -293,14 +296,17 @@ def build_hero_objects(root: Path, spec, manifest, mats):
         if imported is None:
             proxy_for_target(target, mats, collection)
 
-    # Reference-defining secondary forms are kept even before sourced assets arrive.
-    # Sofa quilt and pillows.
-    add_box("PROXY__bench-quilt", (2.35, 0.76, 0.15), (-0.45, 1.65, 0.86), mats["textile-green"], bevel=0.06, collection=collection)
-    for idx, (x, color_key) in enumerate(((-1.72,"textile-green"),(-0.95,"textile-red"),(-0.18,"textile-pink"))):
-        add_box(f"PROXY__pillow-{idx+1}", (0.66, 0.22, 0.52), (x, 2.00, 1.02), mats[color_key], bevel=0.08, collection=collection)
-    # Bed quilt and pillow cluster.
-    add_box("PROXY__bed-quilt", (1.52, 1.90, 0.20), (5.95, 1.70, 0.78), mats["textile-red"], bevel=0.05, collection=collection)
-    add_box("PROXY__bed-pillow", (1.05, 0.42, 0.26), (5.95, 2.48, 0.98), mats["textile-pink"], bevel=0.07, collection=collection)
+    # Reference-defining secondary forms — omitted once the matching hero asset
+    # slot is configured (required PROXY__* must not survive into review candidates).
+    if "pillow-quilt-set" not in configured:
+        # Sofa quilt and pillows.
+        add_box("PROXY__bench-quilt", (2.35, 0.76, 0.15), (-0.45, 1.65, 0.86), mats["textile-green"], bevel=0.06, collection=collection)
+        for idx, (x, color_key) in enumerate(((-1.72,"textile-green"),(-0.95,"textile-red"),(-0.18,"textile-pink"))):
+            add_box(f"PROXY__pillow-{idx+1}", (0.66, 0.22, 0.52), (x, 2.00, 1.02), mats[color_key], bevel=0.08, collection=collection)
+    if "bed-quilt" not in configured:
+        # Bed quilt and pillow cluster.
+        add_box("PROXY__bed-quilt", (1.52, 1.90, 0.20), (5.95, 1.70, 0.78), mats["textile-red"], bevel=0.05, collection=collection)
+        add_box("PROXY__bed-pillow", (1.05, 0.42, 0.26), (5.95, 2.48, 0.98), mats["textile-pink"], bevel=0.07, collection=collection)
     # Stove front fire window.
     fire = add_box("stove-fire-window", (0.52, 0.02, 0.30), (1.95, 0.30, 0.63), mats["fire"], bevel=0.02, collection=collection)
     fire.rotation_euler.x = math.radians(90)
@@ -457,9 +463,13 @@ def main():
     clear_scene()
     configure_render()
     mats = palette()
+    configured = frozenset(
+        slot["id"] for slot in manifest["slots"]
+        if slot.get("localPath") and isinstance(slot.get("source"), dict)
+    )
     build_room_shell(spec, mats)
-    add_window_details(mats)
-    build_hero_objects(root, spec, manifest, mats)
+    add_window_details(mats, configured)
+    build_hero_objects(root, spec, manifest, mats, configured)
     build_stove_pipe(spec, mats)
     build_clutter(spec, mats)
     add_lighting(spec, mats)

@@ -23,6 +23,21 @@ The required hero asset slots are intentionally not represented as fake "final" 
 
 Browser GLB integration should use the separately developed shared glTF infrastructure once that work lands; this branch should not create a competing loader stack.
 
+## Execution record (2026-09-16, Hermes)
+
+- All 14 required hero slots filled with studio-authored Blender assets
+  (`scripts/fly-world/author_heroes.py`, CC0-1.0), placed at spec anchors.
+- `validate_project.py --strict-assets` passes (14/14 required ready).
+- Full pipeline run: `build/fly-house.blend` (5.0M), `build/fly-house.glb`
+  (1.2M), five benchmark renders in `build/previews/`.
+- Zero required `PROXY__*` remain in the `.blend`; 21 optional proxies stay
+  (18 clutter, blue-bag, bookshelf, bedroom-curtain).
+- Browser GLB wiring intentionally deferred: shared glTF loader infrastructure
+  was not available on this branch; `frontend/labs/fly-world/` remains the
+  ghost-observer blockout. No fly/connectome code added.
+- AizanoiOS `Fly World` fullscreen app added (registry + `apps/fly-world/` +
+  desktop icon); verified headless from the desktop with zero console errors.
+
 ## Explicitly not started
 
 Fly/connectome runtime. The environment must receive user visual approval first.
