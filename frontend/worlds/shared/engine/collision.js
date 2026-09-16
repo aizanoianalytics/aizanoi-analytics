@@ -272,6 +272,48 @@ export class CollisionSystem {
           w: cellaW, d: cellaD,
           h: b.h, y: stylobateHeight, rot: b.rot || 0
         });
+        // High-podium flank walls + climbable stair strips.
+        // Without these the tall podium (Aizanoi 2.4m) has no side collider:
+        // walkers at ground level clip into the wall mesh and pop onto the
+        // roof — reads as "walking through the building". Low perimeter-step
+        // temples (Athens 1.2m, steps all around) keep the old behavior.
+        if (stylobateHeight >= 2.0) {
+          const wallT = 1.2;
+          const podW = b.w + 3;
+          const podD = b.d + 3;
+          const gapW = Math.min(13.2, b.d * 0.7) + 1; // central stair opening per end
+          // Long flank walls (±z faces, full length)
+          for (const sz of [-1, 1]) {
+            this.grid.insert({
+              type: 'rect', id: `${b.id}-podium-flank-${sz > 0 ? 'n' : 's'}`,
+              x: b.x, z: b.z + sz * (podD / 2 - wallT / 2),
+              w: podW, d: wallT, h: stylobateHeight, y: 0, rot: b.rot || 0
+            });
+          }
+          // End walls (±x faces) split around the stair gap
+          const segLen = Math.max(0.5, (podD - gapW) / 2);
+          for (const ex of [-1, 1]) {
+            for (const sz of [-1, 1]) {
+              this.grid.insert({
+                type: 'rect', id: `${b.id}-podium-end-${ex > 0 ? 'e' : 'w'}-${sz > 0 ? 'n' : 's'}`,
+                x: b.x + ex * (podW / 2 - wallT / 2),
+                z: b.z + sz * (gapW / 2 + segLen / 2),
+                w: wallT, d: segLen, h: stylobateHeight, y: 0, rot: b.rot || 0
+              });
+            }
+          }
+          // Stair walk strips (3 per end, rising 0.5m each onto the stylobate)
+          for (const ex of [-1, 1]) {
+            for (let s = 0; s < 3; s++) {
+              this.walkSurfaces.push({
+                type: 'walkRect',
+                x: b.x + ex * (b.w / 2 + 3.9 - s * 0.8), z: b.z,
+                w: 2.2, d: gapW - 1,
+                y: 0.5 + s * 0.5
+              });
+            }
+          }
+        }
         continue;
       }
 
