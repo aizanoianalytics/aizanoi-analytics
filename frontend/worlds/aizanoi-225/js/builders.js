@@ -12,8 +12,7 @@ import {
   createPediment,
   createRomanArch,
   createCaveaSeating,
-  createStoneArchBridge,
-  createRomanInsula
+  createStoneArchBridge
 } from '../../shared/assets/builders-common.js';
 
 /* ── 1. Temple of Zeus (Pseudodipteral Ionic Sanctuary) ────── */
@@ -543,7 +542,58 @@ export function buildOdeon(b) {
   return group;
 }
 
-/* ── Master Dispatcher for Aizanoi ────────────────────────── */
+/* ── Aizanoi-specific residential fabric ───────────────────── */
+
+export function buildAizanoiInsula(b) {
+  const group = new THREE.Group();
+  group.userData.buildingId = b.id;
+  const w = b.w || 14;
+  const d = b.d || 12;
+  const floors = Math.max(1, Math.min(3, Math.round((b.h || 7) / 3.4)));
+  const floorH = 3.25;
+  const totalH = floors * floorH;
+  const wall = getMaterial(b.material || 'romanBrick');
+  const plaster = getMaterial('plasterAged');
+  const dark = new THREE.MeshStandardMaterial({ color: 0x2b2521, roughness: 0.9 });
+  const tile = getMaterial('roofTile');
+  const detailed = Number.parseInt(String(b.id).replace(/\D/g, ''), 10) % 3 === 0;
+  const body = new THREE.Mesh(new THREE.BoxGeometry(w, totalH, d), wall);
+  body.position.y = totalH / 2;
+  body.castShadow = true;
+  body.receiveShadow = true;
+  group.add(body);
+
+  if (detailed) {
+    const bay = new THREE.Mesh(new THREE.BoxGeometry(w * 0.82, totalH * 0.72, 0.08), plaster);
+    bay.position.set(0, totalH * 0.57, d / 2 + 0.045);
+    group.add(bay);
+    const windowCount = 1;
+    for (let floor = 0; floor < floors; floor++) {
+      const y = floor * floorH + 1.85;
+      for (const side of [-1, 1]) {
+        const pane = new THREE.Mesh(new THREE.BoxGeometry(1.15, 1.35, 0.10), dark);
+        pane.position.set(0, y, side * (d / 2 + 0.08));
+        group.add(pane);
+      }
+    }
+    if (floors > 1) {
+      const balcony = new THREE.Mesh(new THREE.BoxGeometry(w * 0.72, 0.22, 1.05), tile);
+      balcony.position.set(0, floorH + 0.15, d / 2 + 0.52);
+      group.add(balcony);
+      for (let i = -2; i <= 2; i++) {
+        const post = new THREE.Mesh(new THREE.BoxGeometry(0.11, 1.0, 0.11), plaster);
+        post.position.set(i * (w * 0.72 / 4), floorH + 0.65, d / 2 + 0.95);
+        group.add(post);
+      }
+    }
+  }
+  const roof = new THREE.Mesh(new THREE.BoxGeometry(w + 1.0, 0.45, d + 1.0), tile);
+  roof.position.y = totalH + 0.22;
+  roof.rotation.z = 0.035;
+  roof.castShadow = true;
+  group.add(roof);
+  return group;
+}
 
 export function buildStructure(building) {
   if (building.id === 'temple') return buildTempleOfZeus(building);
@@ -555,7 +605,7 @@ export function buildStructure(building) {
   if (building.id === 'odeon') return buildOdeon(building);
   if (building.type === 'theatre' || building.type === 'stadium') return buildTheatreStadium(building);
   if (building.type === 'bridge') return buildPenkalasBridge(building);
-  if (building.type === 'insula') return createRomanInsula(building.w || 16, building.d || 14, 2, 'romanBrick');
+  if (building.type === 'insula') return buildAizanoiInsula(building);
 
   // Generic / Stoas / Baths
   const g = new THREE.Group();
