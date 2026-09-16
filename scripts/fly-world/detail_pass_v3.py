@@ -10,6 +10,14 @@ from __future__ import annotations
 import math
 import bpy
 from mathutils import Vector
+from pathlib import Path
+import importlib.util
+
+_MICRO_PATH = Path(__file__).resolve().with_name("micro_detail_pass_v3.py")
+_micro_spec = importlib.util.spec_from_file_location("fly_house_v3_micro_detail", _MICRO_PATH)
+_micro = importlib.util.module_from_spec(_micro_spec)
+assert _micro_spec.loader is not None
+_micro_spec.loader.exec_module(_micro)
 
 
 def _collection(name: str):
@@ -350,4 +358,6 @@ def apply_reference_detail_pass(mats):
     for i in range(7):
         _sphere(f"bedroom-trailing-leaf-{i}", .055, (8.00-i*.035,3.03,2.20-i*.12), mats["leaf"], c, segments=10)
 
+    # The browser fallback's final micro-details are owned by this reference pass.
+    _micro.apply_micro_detail_pass(mats)
     return c

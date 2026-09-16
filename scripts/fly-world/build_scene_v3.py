@@ -38,7 +38,6 @@ def _load_module(name: str, path: Path):
 
 base = _load_module("fly_house_v2_base", ROOT_SCRIPT_DIR / "build_scene_v2.py")
 detail = _load_module("fly_house_v3_detail", ROOT_SCRIPT_DIR / "detail_pass_v3.py")
-micro = _load_module("fly_house_v3_micro", ROOT_SCRIPT_DIR / "micro_detail_pass_v3.py")
 
 
 def parse_args():
@@ -94,7 +93,6 @@ def main():
     remove_non_reference_beams()
     base.reference_dressing(root, manifest, mats)
     detail.apply_reference_detail_pass(mats)
-    micro.apply_micro_detail_pass(mats)
     base.lighting(mats)
 
     meta = bpy.data.objects.new("FLY_HOUSE_META", None)

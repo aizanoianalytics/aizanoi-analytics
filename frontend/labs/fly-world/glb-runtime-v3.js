@@ -167,16 +167,41 @@ function lighting() {
 async function boot() {
   lighting();
   const loader = new GLTFLoader();
+  const loadStarted = performance.now();
   const gltf = await loader.loadAsync(new URL('./assets/fly-house.glb', import.meta.url).toString());
   gltf.scene.name = 'FLY_HOUSE_BLENDER_ROOT';
   scene.add(gltf.scene);
   collectCollisionRoots(gltf.scene);
 
+  let meshCount = 0;
+  let triangleCount = 0;
+  gltf.scene.traverse((object) => {
+    if (!object.isMesh) return;
+    meshCount += 1;
+    const index = object.geometry.index;
+    triangleCount += index ? index.count / 3 : object.geometry.attributes.position.count / 3;
+  });
+  const metrics = { mode: 'glb', meshCount, triangleCount, colliderRoots: colliders.length, loadMs: Math.round(performance.now() - loadStarted), fps: 0, drawCalls: 0 };
+  window.__FLY_DEBUG__ = metrics;
+
   const observer = new Observer();
+  metrics.observer = observer;
+  metrics.camera = camera;
+  metrics.collisionAt = (x, y, z = 1.58) => observer.blocked(new THREE.Vector3(x, y, z));
   const clock = new THREE.Clock();
+  let frames = 0;
+  let fpsAt = performance.now();
   renderer.setAnimationLoop(() => {
     observer.update(Math.min(clock.getDelta(), .05));
     renderer.render(scene, camera);
+    frames += 1;
+    const now = performance.now();
+    if (now - fpsAt >= 1000) {
+      metrics.fps = Math.round(frames * 1000 / (now - fpsAt));
+      metrics.drawCalls = renderer.info.render.calls;
+      frames = 0;
+      fpsAt = now;
+    }
   });
 }
 
