@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "project": "Fly House",
+  "licensePolicy": {
+    "preferred": ["CC0-1.0", "Public-Domain"],
+    "allowedWithAttribution": ["CC-BY-4.0"],
+    "disallowed": ["Editorial-only", "NC", "ND", "unknown", "proprietary-without-explicit-permission"],
+    "rule": "Every third-party asset must record source URL, author, license and retrieval date before it is accepted into the scene."
+  },
+  "assetRoot": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source",
+  "slots": [
+    {"id":"bench-sofa","category":"furniture","requiredForVisualApproval":true,"searchBrief":"aged low wooden divan/bench with thick textile cushions; Anatolian/rustic rather than modern sofa","localPath":null,"source":null},
+    {"id":"carved-cabinet","category":"furniture","requiredForVisualApproval":true,"searchBrief":"long carved reddish-brown wooden storage cabinet / wall-backed divan cabinet","localPath":null,"source":null},
+    {"id":"wood-stove","category":"furniture","requiredForVisualApproval":true,"searchBrief":"old cast-iron or sheet-metal wood burning stove with front fire door","localPath":null,"source":null},
+    {"id":"kettle","category":"prop","requiredForVisualApproval":true,"searchBrief":"aged metal kettle/teapot suitable for wood stove","localPath":null,"source":null},
+    {"id":"old-tv","category":"furniture","requiredForVisualApproval":true,"searchBrief":"small vintage CRT television in wooden cabinet","localPath":null,"source":null},
+    {"id":"woven-basket","category":"prop","requiredForVisualApproval":true,"searchBrief":"woven wicker basket, open top","localPath":null,"source":null},
+    {"id":"blue-bag","category":"prop","requiredForVisualApproval":false,"searchBrief":"soft fabric shopping/travel bag with handles","localPath":null,"source":null},
+    {"id":"main-rug","category":"textile","requiredForVisualApproval":true,"searchBrief":"aged Anatolian geometric runner rug, warm rust/orange/brown palette","localPath":null,"source":null},
+    {"id":"round-rug","category":"textile","requiredForVisualApproval":true,"searchBrief":"round patchwork/woven floor rug with muted green/pink/yellow radial pattern","localPath":null,"source":null},
+    {"id":"wooden-bed","category":"furniture","requiredForVisualApproval":true,"searchBrief":"simple old wooden bed frame suitable for rustic village house","localPath":null,"source":null},
+    {"id":"bedside-table","category":"furniture","requiredForVisualApproval":true,"searchBrief":"small aged wooden bedside table","localPath":null,"source":null},
+    {"id":"bookshelf","category":"furniture","requiredForVisualApproval":false,"searchBrief":"small rustic wall shelf/bookshelf","localPath":null,"source":null},
+    {"id":"curtain-floral","category":"textile","requiredForVisualApproval":true,"searchBrief":"heavy vintage floral curtain, red/brown ground with large flowers","localPath":null,"source":null},
+    {"id":"curtain-lace","category":"textile","requiredForVisualApproval":true,"searchBrief":"thin white lace curtain","localPath":null,"source":null},
+    {"id":"pillow-quilt-set","category":"textile","requiredForVisualApproval":true,"searchBrief":"mixed vintage patterned cushions and patchwork quilts","localPath":null,"source":null},
+    {"id":"bed-quilt","category":"textile","requiredForVisualApproval":true,"searchBrief":"warm patterned floral/patchwork bed quilt","localPath":null,"source":null},
+    {"id":"picture-frames","category":"prop-set","requiredForVisualApproval":false,"searchBrief":"small mismatched vintage wooden picture frames","localPath":null,"source":null},
+    {"id":"flower-vase","category":"prop","requiredForVisualApproval":false,"searchBrief":"simple wall vase with red flowers","localPath":null,"source":null},
+    {"id":"clutter-pack","category":"prop-set","requiredForVisualApproval":false,"searchBrief":"small books, yarn balls, slippers, wooden toys, bottles and folded cloths; realistic scale","localPath":null,"source":null}
+  ],
+  "textureSlots": [
+    {"id":"warm-aged-plaster","maps":["baseColor","normal","roughness"],"notes":"warm off-white old plaster with restrained stains, not ruined wall"},
+    {"id":"aged-green-floor","maps":["baseColor","normal","roughness"],"notes":"desaturated green/grey painted or worn hard floor"},
+    {"id":"aged-reddish-wood","maps":["baseColor","normal","roughness"],"notes":"worn reddish-brown cabinet wood"},
+    {"id":"aged-dark-metal","maps":["baseColor","normal","roughness","metallic"],"notes":"dark stove and pipe metal, soot and heat discoloration"}
+  ]
+}
