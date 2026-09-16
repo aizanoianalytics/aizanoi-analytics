@@ -36,6 +36,7 @@ export function buildColosseum(b) {
   const h = b.h || 48;
   const tiers = 4;
   const tierH = h / tiers;
+  const numColsPerTier = 32;
   const travMat = getMaterial('travertine');
   const marbleColMat = getMaterial('marbleColosseum');
 
@@ -53,7 +54,7 @@ export function buildColosseum(b) {
     group.add(mesh);
 
     // Exterior pilasters / half-columns along the perimeter
-    const numCols = 32;
+    const numCols = numColsPerTier;
     const colR = 0.55;
     const colGeo = new THREE.CylinderGeometry(colR * 0.9, colR, tierH * 0.9, 8);
     for (let i = 0; i < numCols; i++) {
@@ -77,6 +78,45 @@ export function buildColosseum(b) {
     const cornice = new THREE.Mesh(corniceGeo, travMat);
     cornice.position.y = (t + 1) * tierH;
     group.add(cornice);
+  }
+
+  // Arcade bay recesses — dark insets between pilasters give the flat tier
+  // shells real arched depth at ~1 mesh per bay (full arch builders here
+  // would 6x the mesh count for no distance-read gain).
+  const recessMat = getMaterial('charredWood');
+  for (let t = 0; t < 3; t++) {
+    const scaleR = 1.0 - t * 0.025;
+    const recessGeo = new THREE.BoxGeometry(2.4, tierH * 0.58, 0.6);
+    for (let i = 0; i < numColsPerTier; i++) {
+      const angle = ((i + 0.5) / numColsPerTier) * Math.PI * 2;
+      const isCardinal = Math.abs(Math.sin(angle)) < 0.1 || Math.abs(Math.cos(angle)) < 0.1;
+      if (t === 0 && isCardinal) continue;
+      const recess = new THREE.Mesh(recessGeo, recessMat);
+      recess.position.set(
+        Math.cos(angle) * (rx * scaleR - 0.15),
+        tierH / 2 + t * tierH,
+        Math.sin(angle) * (rz * scaleR - 0.15)
+      );
+      recess.rotation.y = -angle + Math.PI / 2;
+      group.add(recess);
+    }
+  }
+
+  // Velarium mast ring — the iconic Colosseum crown. Slender masts socketed
+  // in the attic corbels that once carried the great awning.
+  const topScale = 1.0 - 3 * 0.025;
+  const mastGeo = new THREE.CylinderGeometry(0.18, 0.28, 9, 6);
+  const mastMat = getMaterial('wood');
+  for (let i = 0; i < numColsPerTier; i++) {
+    const angle = (i / numColsPerTier) * Math.PI * 2;
+    const mast = new THREE.Mesh(mastGeo, mastMat);
+    mast.position.set(
+      Math.cos(angle) * (rx * topScale + 0.4),
+      h + 4.5,
+      Math.sin(angle) * (rz * topScale + 0.4)
+    );
+    mast.castShadow = true;
+    group.add(mast);
   }
 
   // 4 Cardinal Grand Entrance Portals (North, South, East, West Porta Sanivivaria & Triumphalis)
