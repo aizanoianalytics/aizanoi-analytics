@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>Fly House — Aizanoi Labs</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <canvas id="world" aria-label="Fly House 3D prototype"></canvas>
+  <header class="hud">
+    <div>
+      <p class="eyebrow">Aizanoi Labs · Environment benchmark</p>
+      <h1>Fly House <span>BLOCKOUT</span></h1>
+    </div>
+    <div class="status"><i></i> Ghost observer · no fly loaded</div>
+  </header>
+  <aside class="help" id="help">
+    <strong>Ghost observer</strong>
+    <span>Click to capture mouse</span>
+    <span>WASD move · Q/E down/up · Shift boost</span>
+    <span>R reset camera · Esc release mouse</span>
+    <small>This observer never enters future fly physics or sensory input.</small>
+  </aside>
+  <div class="crosshair" aria-hidden="true"></div>
+  <div id="fatal" class="fatal" hidden></div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

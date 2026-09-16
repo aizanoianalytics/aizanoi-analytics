@@ -39,3 +39,6 @@ artifacts/
 
 # Runtime market snapshots are served from /var/lib, never committed
 frontend/analytics/markets/data/
+
+# Fly House generated Blender outputs. Approved web assets are promoted separately.
+gelistirmeler/2026-09-16-fly-world-prototype/build/
