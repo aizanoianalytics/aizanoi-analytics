@@ -6,9 +6,12 @@
 import * as THREE from '../../shared/vendor/three.module.js';
 
 import {
-  CITY, SOURCES, REGIONS, STREETS, BUILDINGS, WATERS,
-  TELEPORTS, SPAWN, BOUNDS, TOUR_STOPS, DISTRICT_STYLES,
+  CITY, SOURCES, TELEPORTS, TOUR_STOPS, DISTRICT_STYLES,
+  compactAizanoiLayout,
 } from './city-data.js';
+
+const COMPACT = compactAizanoiLayout();
+const { REGIONS, STREETS, BUILDINGS, WATERS, BOUNDS, SPAWN } = COMPACT;
 
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
 import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
@@ -491,6 +494,9 @@ function populateAizanoiDressing() {
   birdFlock = buildBirdFlock(-80, 42, 5, 10, 28);
   dressingGroup.add(birdFlock);
 
+  // Dressing coordinates are authored in the survey frame; keep them aligned
+  // with the compact monument/circulation frame without changing their IDs.
+  dressingGroup.scale.set(0.78, 1, 0.88);
   scene.add(dressingGroup);
 }
 

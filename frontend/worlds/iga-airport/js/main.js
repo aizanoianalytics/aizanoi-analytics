@@ -6,9 +6,12 @@
 import * as THREE from '../../shared/vendor/three.module.js';
 
 import {
-  CITY, SOURCES, REGIONS, STREETS, BUILDINGS, WATERS,
-  TELEPORTS, SPAWN, BOUNDS, TOUR_STOPS,
+  CITY, SOURCES, WATERS, TELEPORTS, TOUR_STOPS,
+  compactAirportLayout,
 } from './airport-data.js';
+
+const COMPACT = compactAirportLayout();
+const { BUILDINGS, REGIONS, STREETS, BOUNDS, SPAWN } = COMPACT;
 
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
 import { buildStructure } from './builders.js';
@@ -157,6 +160,9 @@ async function init() {
   populateAirportApron();
   traffic = new AirportTrafficSystem(scene, collision);
   traffic.init();
+  // Traffic retains its authored choreography; present it in the same compact
+  // coordinate frame as the terminal and collision map.
+  traffic.group.scale.set(0.78, 1, 0.82);
 
   // 10. Controls
   controls = new Controls(camera, canvas, document.body);
@@ -355,6 +361,8 @@ function populateAirportApron() {
   apronGroup.add(buildGateMarshallerSign(540, 600, -Math.PI / 2, 'Gate B3'));
 
   scene.add(apronGroup);
+  // Match aircraft, gate markers and service equipment to the compact map.
+  apronGroup.scale.set(0.78, 1, 0.82);
 }
 
 function bindEvents() {

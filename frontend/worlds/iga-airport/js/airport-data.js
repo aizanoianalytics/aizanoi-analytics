@@ -130,3 +130,36 @@ export const TOUR_STOPS = [
 ];
 
 export const DISTRICT_STYLES = {};
+
+// The published interpretation keeps the terminal legible while removing the
+// empty lateral travel between the two piers. IDs, evidence and source links
+// remain those of the source ledger; only the spatial presentation changes.
+export function compactAirportLayout({ xScale = 0.78, zScale = 0.82 } = {}) {
+  const scalePoint = ([x, z]) => [x * xScale, z * zScale];
+  const buildings = BUILDINGS.map((building) => ({
+    ...building,
+    x: building.x * xScale,
+    z: building.z * zScale,
+    w: building.w * xScale,
+    d: building.d * zScale,
+  }));
+  const regions = REGIONS.map((region) => ({
+    ...region,
+    x: region.x * xScale,
+    z: region.z * zScale,
+    w: region.w * xScale,
+    d: region.d * zScale,
+  }));
+  const streets = STREETS.map((street) => ({
+    ...street,
+    points: street.points.map(scalePoint),
+    width: street.width * Math.min(xScale, zScale),
+  }));
+  return {
+    BUILDINGS: buildings,
+    REGIONS: regions,
+    STREETS: streets,
+    BOUNDS: { minX: BOUNDS.minX * xScale, maxX: BOUNDS.maxX * xScale, minZ: BOUNDS.minZ * zScale, maxZ: BOUNDS.maxZ * zScale },
+    SPAWN: { ...SPAWN, x: SPAWN.x * xScale, z: SPAWN.z * zScale },
+  };
+}
