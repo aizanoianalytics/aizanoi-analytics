@@ -148,6 +148,8 @@ function lighting() {
   sun.shadow.camera.right = 10;
   sun.shadow.camera.top = 10;
   sun.shadow.camera.bottom = -10;
+  sun.shadow.bias = 0.0008;
+  sun.shadow.normalBias = 0.035;
   scene.add(sun);
 
   const windowFill = new THREE.PointLight(0xa8d5ff, 2.9, 7, 2);
@@ -181,7 +183,7 @@ async function boot() {
     const index = object.geometry.index;
     triangleCount += index ? index.count / 3 : object.geometry.attributes.position.count / 3;
   });
-  const metrics = { mode: 'glb', meshCount, triangleCount, colliderRoots: colliders.length, loadMs: Math.round(performance.now() - loadStarted), fps: 0, drawCalls: 0 };
+  const metrics = { mode: 'glb', meshCount, triangleCount, colliderRoots: colliders.length, loadMs: Math.round(performance.now() - loadStarted), fps: 0, drawCalls: 0, animationTicks: 0 };
   window.__FLY_DEBUG__ = metrics;
 
   const observer = new Observer();
@@ -195,6 +197,7 @@ async function boot() {
     observer.update(Math.min(clock.getDelta(), .05));
     renderer.render(scene, camera);
     frames += 1;
+    metrics.animationTicks += 1;
     const now = performance.now();
     if (now - fpsAt >= 1000) {
       metrics.fps = Math.round(frames * 1000 / (now - fpsAt));

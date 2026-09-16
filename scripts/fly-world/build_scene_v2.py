@@ -309,10 +309,10 @@ def render_reviews(root):
     s=bpy.context.scene
     cd=bpy.data.cameras.new("review-camera"); cam=bpy.data.objects.new("review-camera",cd); s.collection.objects.link(cam); s.camera=cam
     views=(
-        ("01-reference-wide",(-5.7,-5.9,2.75),(.25,.65,1.18),47),
+        ("01-reference-wide",(-3.35,-2.65,1.65),(.30,.65,1.18),45),
         ("02-room-eye-level",(-1.65,-2.55,1.60),(.45,1.05,1.15),50),
         ("03-window-to-stove",(-3.45,-.55,1.62),(1.85,.72,.85),52),
-        ("04-doorway-bedroom",(3.05,.45,1.62),(6.45,1.55,1.05),54),
+        ("04-doorway-bedroom",(1.00,1.00,1.55),(6.10,1.00,1.05),35),
         ("05-fly-scale",(1.15,-.75,.20),(2.05,.72,.65),58),
     )
     for name,pos,target,lens in views:

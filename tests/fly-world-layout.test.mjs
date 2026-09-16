@@ -45,3 +45,33 @@ test('expanded room boundaries preserve the east doorway and its collision path'
   assert.match(builder, /wall_y\(c,m,3\.85,4\.2,4\.92/);
   assert.match(builder, /wall_y\(c,m,3\.85,6\.30,8\.4/);
 });
+
+test('numeric support contract keeps cabinet-top dressing on a real shelf and floor details grounded', () => {
+  const supports = Object.fromEntries(spec.supportSurfaces.map((surface) => [surface.id, surface]));
+  const shelf = supports['cabinet-top-support-shelf'].bounds;
+  const floor = supports['floor-main'].bounds;
+  assert.equal(shelf[0][2], shelf[1][2]);
+  assert.ok(shelf[0][2] > 0, 'cabinet still life has a raised support surface');
+  assert.equal(floor[0][2], 0, 'floor support is the ground plane');
+  assert.ok(shelf[0][0] < -2.1 && shelf[1][0] > 0.4, 'shelf spans the imported cabinet dressing');
+  assert.match(detail, /cabinet-top-support-shelf/);
+});
+
+test('numeric doorway clearance leaves a traversable opening for the observer radius', () => {
+  const doorway = spec.rooms.find((room) => room.id === 'main-room').openings.find((opening) => opening.id === 'bedroom-doorway');
+  const [centerX, centerY] = doorway.center;
+  const width = doorway.size[1];
+  const radius = 0.21;
+  const stove = Object.fromEntries(spec.heroObjects.map((item) => [item.id, item]))['wood-stove'];
+  const stoveEast = stove.position[0] + stove.size[0] / 2;
+  assert.ok(width - 2 * radius > 0.8, 'door opening leaves usable observer clearance');
+  assert.ok(stoveEast < centerX - radius, 'stove does not intrude into the doorway approach');
+  assert.ok(centerY - width / 2 >= 0.34 - 1e-9 && centerY + width / 2 <= 1.66 + 1e-9, 'spec opening matches wall gap');
+});
+
+test('doorway review camera is wide enough to show the transition, not a bed close-up', () => {
+  const camera = spec.previewCameras.find((view) => view.id === '04-doorway-bedroom');
+  assert.ok(camera.focalLengthMm <= 42);
+  assert.ok(camera.position[0] < 4.2 && camera.position[1] >= 0.34 && camera.position[1] <= 1.66, 'camera is inside the doorway approach');
+  assert.ok(camera.lookAt[0] > 5.5, 'camera targets the connected bedroom');
+});

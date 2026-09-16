@@ -268,9 +268,9 @@
   "previewCameras": [
     {
       "id": "01-reference-wide",
-      "position": [-5.7, -5.9, 2.75],
-      "lookAt": [0.25, 0.65, 1.18],
-      "focalLengthMm": 47
+      "position": [-3.35, -2.65, 1.65],
+      "lookAt": [0.30, 0.65, 1.18],
+      "focalLengthMm": 45
     },
     {
       "id": "02-room-eye-level",
@@ -286,15 +286,29 @@
     },
     {
       "id": "04-doorway-bedroom",
-      "position": [3.05, 0.45, 1.62],
-      "lookAt": [6.45, 1.55, 1.05],
-      "focalLengthMm": 54
+      "position": [1.00, 1.00, 1.55],
+      "lookAt": [6.10, 1.00, 1.05],
+      "focalLengthMm": 35
     },
     {
       "id": "05-fly-scale",
       "position": [1.15, -0.75, 0.20],
       "lookAt": [2.05, 0.72, 0.65],
       "focalLengthMm": 58
+    }
+  ],
+  "supportSurfaces": [
+    {
+      "id": "cabinet-top-support-shelf",
+      "supports": ["cabinet-top-still-life"],
+      "bounds": [[-2.56, 2.85, 2.38], [1.26, 3.31, 2.38]],
+      "source": "detail_pass_v3.py"
+    },
+    {
+      "id": "floor-main",
+      "supports": ["floor-clutter", "stove-hearth"],
+      "bounds": [[-4.2, -3.5, 0.0], [4.2, 3.5, 0.0]],
+      "source": "build_scene_v2.py"
     }
   ],
   "qualityGates": {

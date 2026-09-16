@@ -250,7 +250,10 @@ def apply_reference_detail_pass(mats):
     _rod("clock-hand-minute", (-3.65, 1.18, 2.22), (-3.63, 1.18, 2.34), .009, black, c)
     _rod("clock-hand-hour", (-3.65, 1.18, 2.22), (-3.65, 1.27, 2.18), .011, black, c)
 
-    # Cabinet-top still life.
+    # Cabinet-top still life.  Add an explicit shallow shelf: the imported hero's
+    # baked top ends at about z=2.315, so this support closes the small origin/mesh
+    # gap instead of leaving the books and bowl apparently floating in the browser.
+    _box("cabinet-top-support-shelf", (3.82, .46, .08), (-.65, 2.70, 2.34), mats["wood2"], c, bevel=.018, collision=True, landing=True, semantic="cabinet-top")
     _box("cabinet-top-book-red", (.52, .30, .06), (-2.10, 2.49, 2.42), mats["red"], c, rot=(0,0,-.09), bevel=.015)
     _box("cabinet-top-book-cream", (.46, .28, .045), (-2.05, 2.47, 2.49), mats["cream"], c, rot=(0,0,-.04), bevel=.012)
     _box("cabinet-top-lace-runner", (1.20, .44, .018), (-.92, 2.48, 2.39), white, c, rot=(0,0,.04))
