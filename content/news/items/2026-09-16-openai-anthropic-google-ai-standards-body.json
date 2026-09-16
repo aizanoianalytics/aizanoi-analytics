@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-openai-anthropic-google-ai-standards-body",
+  "title": "OpenAI, Anthropic and Google move to set up shared AI standards body",
+  "summary": "Three of the largest AI labs said on Tuesday they are drafting plans for a self-regulatory standards body modelled on the Financial Industry Regulatory Authority that oversees US brokers. The proposal, originated by Google DeepMind's Demis Hassabis, would cover shared safety practices and coordination between frontier model developers, though smaller labs including Cohere have already pushed back against the framing.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ai", "regulation", "openai", "anthropic", "google"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/technology/openai-anthropic-google-ai-standards-body-2026-09-15/",
+      "publishedAt": "2026-09-16T01:56:00Z"
+    },
+    {
+      "publisher": "The Straits Times",
+      "url": "https://www.straitstimes.com/world/united-states/openai-anthropic-and-google-are-working-to-create-an-ai-standards-body",
+      "publishedAt": "2026-09-16T01:56:00Z"
+    }
+  ]
+}

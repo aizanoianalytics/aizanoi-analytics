@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-james-rodriguez-colombia-retirement",
+  "title": "James Rodriguez retires from Colombia after 15-year international career",
+  "summary": "James Rodriguez, the 35-year-old Colombian playmaker and 2014 World Cup Golden Boot winner, announced on Tuesday that he is stepping down from international duty after 131 caps and four World Cups. Rodriguez, who recently signed with Atlético Nacional after leaving Minnesota United, helped Colombia to the 2014 quarter-finals in Brazil, won the Puskas Award that year and captained the side at the most recent World Cup in North America.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["football", "colombia", "international-retirement"],
+  "sources": [
+    {
+      "publisher": "Reuters (via The Straits Times)",
+      "url": "https://www.straitstimes.com/sport/football/colombias-james-rodriguez-retires-from-international-football",
+      "publishedAt": "2026-09-16T03:37:00Z"
+    },
+    {
+      "publisher": "Sportstar (The Hindu)",
+      "url": "https://sportstar.thehindu.com/football/james-rodriguez-international-retirement-colombia-world-cup-news/article71470949.ece",
+      "publishedAt": "2026-09-16T03:03:00Z"
+    }
+  ]
+}

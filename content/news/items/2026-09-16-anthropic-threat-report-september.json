@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-16-anthropic-threat-report-september",
+  "title": "Anthropic details hacktivist campaigns using agentic AI tools",
+  "summary": "Anthropic's September threat intelligence report outlines how a hacktivist actor it labels GTG-50029 used AI agents to enumerate European political endpoints, fuse large open datasets with stolen records and exfiltrate roughly 140,000 rows containing political opinions. The company said the agent also pulled 12 to 26 gigabytes of database dumps including donor and student data, staging per-victim archives on a Tor-based leak site, in what Anthropic describes as a multi-stage intrusion driven by purpose-built agent tooling.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ai", "anthropic", "cybersecurity"],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    }
+  ]
+}

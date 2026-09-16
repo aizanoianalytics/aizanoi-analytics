@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-fed-expected-to-hike-rates",
+  "title": "Federal Reserve expected to deliver first rate hike since 2023",
+  "summary": "The Federal Reserve is widely expected to raise its benchmark interest rate by 25 basis points on Wednesday, ending a near-three-year easing cycle and putting the central bank at odds with President Donald Trump's preference for a cut. The move follows stubborn August core inflation running above target and a Jackson Hole speech by chair Kevin Warsh warning that underlying trends have not improved, with the September meeting also bringing an updated dot plot.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["federal-reserve", "monetary-policy", "inflation"],
+  "sources": [
+    {
+      "publisher": "Associated Press",
+      "url": "https://abcnews.com/Business/wireStory/federal-reserve-expected-raise-benchmark-rate-defying-trumps-136452242",
+      "publishedAt": "2026-09-15T00:04:00Z"
+    },
+    {
+      "publisher": "Crypto Briefing",
+      "url": "https://cryptobriefing.com/fed-hikes-interest-rates-2026",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    }
+  ]
+}

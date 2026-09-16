@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-liverpool-beat-tottenham-carabao-cup",
+  "title": "Szoboszlai screamer sends Liverpool past Spurs in Carabao Cup",
+  "summary": "Liverpool advanced to the Carabao Cup fourth round with a 3-1 win over Tottenham at Anfield on Tuesday, with Alexis Mac Allister and Cody Gakpo putting the hosts in control before Conor Gallagher pulled one back for Spurs. Substitute Dominik Szoboszlai sealed the result in stoppage time with a long-range strike from 25 yards that arrowed past Martin Dubravka, while Spurs also lost Mohamed Kudus to a first-half injury in a difficult night for Roberto De Zerbi's side.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["football", "carabao-cup", "liverpool", "tottenham"],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/11095/13582687/liverpool-3-1-tottenham-dominik-szoboszlai-strike-seals-carabao-cup-win-as-spurs-at-least-end-goal-drought",
+      "publishedAt": "2026-09-15T22:32:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/sep/15/liverpool-tottenham-carabao-cup-third-round-match-report",
+      "publishedAt": "2026-09-15T17:12:00Z"
+    }
+  ]
+}

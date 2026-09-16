@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-16-postquantum-cryptography-summit",
+  "title": "US federal Post-Quantum Cryptography Summit convenes Tuesday",
+  "summary": "The US General Services Administration hosts a virtual Post-Quantum Cryptography Summit on September 16 covering migration timelines, cryptographic inventory tooling and procurement guidance for federal agencies. The event follows recent moves by NIST to finalise post-quantum standards and signals continued coordination between civilian agencies and the vendor ecosystem on transitioning to quantum-resistant algorithms across the federal estate.",
+  "category": "technology",
+  "priority": 40,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["cryptography", "us-government", "security"],
+  "sources": [
+    {
+      "publisher": "US General Services Administration",
+      "url": "https://www.gsa.gov/events/2026-postquantum-cryptography-summit-virtual-91626",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    }
+  ]
+}

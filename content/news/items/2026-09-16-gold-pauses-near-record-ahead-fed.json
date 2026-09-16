@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-gold-pauses-near-record-ahead-fed",
+  "title": "Gold eases back from record as traders await Fed verdict",
+  "summary": "Gold slipped from recent record highs on Tuesday as traders squared positions ahead of Wednesday's Federal Reserve decision, with spot XAU/USD quoted near $4,283 an ounce against a backdrop of elevated US 10-year real yields. Market commentary points to persistent central bank buying and structurally tight positioning as supportive factors, while a hotter-than-expected rate signal from the Fed could re-test recent lows in the short term.",
+  "category": "economy-markets",
+  "priority": 40,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["gold", "commodities", "federal-reserve"],
+  "sources": [
+    {
+      "publisher": "150Currency",
+      "url": "https://www.150currency.com/",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    },
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/article/current-price-of-gold-09-11-2026/",
+      "publishedAt": "2026-09-11T13:26:00Z"
+    }
+  ]
+}

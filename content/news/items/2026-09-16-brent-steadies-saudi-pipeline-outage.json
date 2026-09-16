@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-16-brent-steadies-saudi-pipeline-outage",
+  "title": "Brent steadies near $107 as Saudi East-West pipeline stays offline",
+  "summary": "Brent crude held above $106 a barrel in Asian trade on Wednesday, with analysts warning that Saudi Arabia's East-West pipeline remains shut after last week's drone strike from Iraq and Riyadh has not disclosed a repair timeline. Kpler estimates the market could lose around 120 million barrels if the pipeline stays closed for a month, while WTI also stayed elevated, keeping pressure on inflation expectations into the Federal Reserve's rate decision.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-09-16T07:00:00Z",
+  "updatedAt": "2026-09-16T07:00:00Z",
+  "retrievedAt": "2026-09-16T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["oil", "commodities", "saudi-arabia", "iran"],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/13/oil-price-iran-war-strait-hormuz-saudi-pipeline.html",
+      "publishedAt": "2026-09-13T18:08:00Z"
+    },
+    {
+      "publisher": "OilPrice.com",
+      "url": "https://oilprice.com/Energy/Crude-Oil/Hormuz-Risk-Opens-40-Plus-Price-Gap-Between-Crude-Grades.html",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    }
+  ]
+}
