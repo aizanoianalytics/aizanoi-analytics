@@ -343,7 +343,7 @@ export function buildWaterSamplePoints(waters, step = 25) {
         const dx = p1.x - p0.x;
         const dz = p1.z - p0.z;
         const len = Math.hypot(dx, dz);
-        const count = Math.max(1, Math.ceil(len / step));
+        const count = Math.max(1, Math.ceil(len / (step * 0.6)));
         for (let s = 0; s < count; s++) {
           const t = s / count;
           pts.push({ x: p0.x + dx * t, z: p0.z + dz * t });

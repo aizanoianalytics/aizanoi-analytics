@@ -45,6 +45,62 @@ export function setAssetKit(kit) {
   KIT = kit;
 }
 
+function decayMaterial(color) {
+  return new THREE.MeshStandardMaterial({ color, roughness: 0.94 });
+}
+
+export function createCharredInsula(width, depth, floors = 3) {
+  const group = new THREE.Group();
+  group.name = 'charred-roofless-insula';
+  const brick = decayMaterial(0x3f302b);
+  const charredWood = decayMaterial(0x221f1c);
+  const height = floors * 3.4;
+  for (const [size, position] of [
+    [[width, height * .82, .9], [0, height * .41, depth / 2 - .45]],
+    [[width, height, .9], [0, height / 2, -depth / 2 + .45]],
+    [[.9, height * .88, depth], [-width / 2 + .45, height * .44, 0]],
+    [[.9, height * .62, depth], [width / 2 - .45, height * .31, 0]],
+  ]) {
+    const wall = new THREE.Mesh(new THREE.BoxGeometry(...size), brick);
+    wall.position.set(...position);
+    wall.castShadow = true;
+    wall.receiveShadow = true;
+    group.add(wall);
+  }
+  const joistCount = Math.max(3, Math.floor(width / 2.2));
+  for (let i = 0; i < joistCount; i++) {
+    if (i % 4 === 1) continue;
+    const joist = new THREE.Mesh(new THREE.BoxGeometry(.22, .24, depth - 1.35), charredWood);
+    joist.position.set(-width / 2 + 1.2 + i * ((width - 2.4) / (joistCount - 1)), height * .72, 0);
+    group.add(joist);
+  }
+  const debris = new THREE.Group();
+  debris.name = 'debris-pile';
+  const rubble = new THREE.Mesh(new THREE.DodecahedronGeometry(Math.min(width, depth) * .16, 0), decayMaterial(0x5a463b));
+  rubble.position.y = .35;
+  debris.add(rubble);
+  group.add(debris);
+  return group;
+}
+
+export function buildCollapsedArcade(width = 24, height = 12, depth = 5) {
+  const group = new THREE.Group();
+  group.name = 'collapsed-arcade';
+  const stone = decayMaterial(0xb49a79);
+  const pier = new THREE.Mesh(new THREE.BoxGeometry(3, height, depth), stone);
+  pier.position.set(-width / 4 - 1.5, height / 2, 0);
+  group.add(pier);
+  const center = pier.clone();
+  center.position.set(0, height / 2, 0);
+  group.add(center);
+  const debris = new THREE.Group();
+  debris.name = 'debris-pile';
+  debris.add(new THREE.Mesh(new THREE.DodecahedronGeometry(1.2, 0), decayMaterial(0x6a5544)));
+  debris.position.set(width / 4, .6, 0);
+  group.add(debris);
+  return group;
+}
+
 function P(asset, dx = 0, dz = 0, yaw = 0, scale = 1) {
   return { asset, dx, dz, yaw, scale };
 }
