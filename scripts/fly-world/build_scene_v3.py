@@ -2,10 +2,14 @@
 """Fly House v0.3 production builder.
 
 v0.3 keeps the enlarged/collision-capable v0.2 shell, then applies a much more
-literal reference-dressing pass: the broad green carpet, doorway casing, wall clock,
+literal reference-dressing pass: the broad worn carpet, doorway casing, wall clock,
 carved cabinet overlays, cabinet-top still life, CRT lower shelf, stove hearth/tools,
 hanging laundry, floor toys, knitting bag, orange ball and a denser continuation of
 the bedroom.
+
+A final micro-detail parity pass mirrors the browser fallback details that are easy
+to lose in the Blender build: blue-bag stickers/handles, cabinet magnets, pale
+slippers, runner fringe, the worn under-rug field and the projecting divan chaise.
 
 The Fly World browser runtime is Z-up, so this builder exports the GLB without
 Blender's Y-up conversion. That keeps visual placement and collision coordinates
@@ -34,6 +38,7 @@ def _load_module(name: str, path: Path):
 
 base = _load_module("fly_house_v2_base", ROOT_SCRIPT_DIR / "build_scene_v2.py")
 detail = _load_module("fly_house_v3_detail", ROOT_SCRIPT_DIR / "detail_pass_v3.py")
+micro = _load_module("fly_house_v3_micro", ROOT_SCRIPT_DIR / "micro_detail_pass_v3.py")
 
 
 def parse_args():
@@ -89,13 +94,15 @@ def main():
     remove_non_reference_beams()
     base.reference_dressing(root, manifest, mats)
     detail.apply_reference_detail_pass(mats)
+    micro.apply_micro_detail_pass(mats)
     base.lighting(mats)
 
     meta = bpy.data.objects.new("FLY_HOUSE_META", None)
-    meta["fly_house_version"] = "0.3"
+    meta["fly_house_version"] = "0.3.1"
     meta["reference_driven"] = True
     meta["browser_axis"] = "Z-up"
     meta["n_fly_ready"] = True
+    meta["micro_detail_parity"] = True
     bpy.context.scene.collection.objects.link(meta)
 
     sensor = bpy.data.objects.get("FLY_SENSOR_WORLD_ROOT")
@@ -115,7 +122,7 @@ def main():
         bpy.ops.wm.save_as_mainfile(filepath=str(blend))
 
     export_glb(root)
-    print("[fly-house-v3] complete: reference density pass + collision metadata + Z-up browser GLB")
+    print("[fly-house-v3] complete: reference density + micro parity + collision metadata + Z-up browser GLB")
 
 
 if __name__ == "__main__":
