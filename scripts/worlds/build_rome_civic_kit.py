@@ -1,5 +1,5 @@
 import bpy, os
-OUT=os.path.dirname(__file__)
+OUT=os.path.abspath(os.path.join(os.path.dirname(__file__), '../../frontend/worlds/rome-410-476/assets'))
 def material(n,c,r):
  m=bpy.data.materials.new(n); m.diffuse_color=(*c,1); m.roughness=r; return m
 TRAV=material("weathered_travertine",(.42,.34,.25),.9); MAR=material("spolia_marble",(.7,.65,.52),.65); BRICK=material("late_roman_brick",(.28,.13,.09),.95); BRONZE=material("aged_bronze",(.22,.28,.2),.8)

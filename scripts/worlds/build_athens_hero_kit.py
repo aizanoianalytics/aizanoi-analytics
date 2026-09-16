@@ -2,7 +2,7 @@ import bpy
 import os
 from mathutils import Vector
 
-OUT = os.path.join(os.path.dirname(__file__))
+OUT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../frontend/worlds/athens-450-430/assets'))
 
 def mat(name, color, roughness=0.72, metallic=0.0):
     m = bpy.data.materials.new(name)
