@@ -1,128 +1,70 @@
-# Hermes handoff — Fly House environment
+# Hermes handoff — Fly House v0.3 operator run
 
 ## Mission
 
-Take the existing `fly-world-prototype` environment package from reference-locked technical blockout to a visual-review candidate. Do **not** redesign the environment and do **not** start the fly/connectome runtime yet.
+Run and inspect the already-authored Fly House v0.3 pipeline on a Blender-capable host. **Do not redesign the room, invent a new scene, replace the reference-dressing logic, or start the fly/connectome runtime.** The scene design and implementation are owned in this branch; Hermes is the render/build operator for this stage.
 
-The canonical target is the approved people-free rustic house illustration already selected by the user: dense old living room, barred window with layered curtains, long divan/cabinet wall, old CRT television, central wood stove with long pipe, layered rugs/clutter, and an open doorway into the connected bedroom.
+The canonical visual contract is `REFERENCE_BREAKDOWN_V3.md`, backed by `scene_spec.json`. The target is the approved people-free illustrated cottage, not a generic rustic room.
 
-This branch is intentionally isolated. Another Hermes task may be changing `main` and shared Blender/glTF infrastructure at the same time. Do not overwrite or "clean up" unrelated work. Resolve integration only after the environment work below is complete.
+## Current production files
 
-## What is already implemented
+- `gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json`
+- `gelistirmeler/2026-09-16-fly-world-prototype/asset_manifest.json`
+- `gelistirmeler/2026-09-16-fly-world-prototype/REFERENCE_BREAKDOWN_V3.md`
+- `scripts/fly-world/build_scene_v3.py`
+- `scripts/fly-world/detail_pass_v3.py`
+- `scripts/fly-world/run_pipeline.py`
+- `scripts/fly-world/validate_project.py`
+- `frontend/labs/fly-world/bootstrap.js`
+- `frontend/labs/fly-world/main-v3.js`
+- `frontend/labs/fly-world/reference-dressing.js`
+- `frontend/labs/fly-world/glb-runtime-v3.js`
 
-- Metric canonical composition: `scene_spec.json`
-- Asset slots and license policy: `asset_manifest.json`
-- Blender scene builder: `scripts/fly-world/build_scene.py`
-- One-command validate/build/render/export wrapper: `scripts/fly-world/run_pipeline.py`
-- Preflight validator: `scripts/fly-world/validate_project.py`
-- Five fixed benchmark cameras
-- Explicit `PROXY__*` blockout naming and visual-approval blocking
-- Browser ghost-observer blockout: `frontend/labs/fly-world/`
-- Observer/fly separation contract: observer is non-colliding, invisible to future fly sensors, casts no shadow, and never affects fly-world physics
-- N-fly-ready semantic root, while the first experiment remains one fly
+The browser fallback and Blender scene deliberately implement the same reference pass. Fly World is Z-up; v0.3 Blender export uses `export_yup=false` so browser camera/collision coordinates remain aligned.
 
-## Execute in this order
+## Execute
 
-### 1. Verify the package before editing
-
-From repository root:
-
-```bash
-python scripts/fly-world/validate_project.py
-```
-
-Fix schema/path/license errors first. Missing required hero assets are expected at the start and should appear as visual-approval blockers rather than structural errors.
-
-### 2. Replace required hero proxies
-
-Work through `asset_manifest.json`. Prefer, in order:
-
-1. authored Blender geometry when a reference-specific object matters;
-2. CC0 / public-domain source assets;
-3. CC-BY-4.0 only when attribution is preserved and the source is trustworthy.
-
-Do not use editorial-only, NC, ND, unknown-license, scraped, or unverified proprietary models.
-
-For every sourced asset, record:
-
-```json
-"source": {
-  "url": "original asset page",
-  "author": "author/studio",
-  "license": "CC0-1.0",
-  "retrievedAt": "YYYY-MM-DD"
-}
-```
-
-Place files under `gelistirmeler/2026-09-16-fly-world-prototype/assets/source/<slot-id>/` and set `localPath` in the manifest.
-
-The highest-priority required slots are the objects that establish the room identity: bench/divan, carved cabinet, stove, kettle, old TV, woven basket, main rug, round rug, wooden bed, bedside table, floral curtain, lace curtain, pillow/quilt set, and bed quilt.
-
-### 3. Preserve reference composition
-
-Use `scene_spec.json` anchors and dimensions as the baseline. Small adjustments are allowed to make real assets sit naturally, but do not move walls, doorway, window, stove, divan/cabinet mass, or bedroom composition just to accommodate a convenient downloaded model.
-
-Avoid the "asset-store showroom" look. Materials should be old, lived-in, coherent, slightly worn, and believable, not uniformly pristine. Clutter must feel accumulated rather than procedurally scattered. The room should remain readable at fly scale.
-
-### 4. Run the build repeatedly
+From repository root on the Blender-capable host:
 
 ```bash
-python scripts/fly-world/run_pipeline.py
+python scripts/fly-world/run_pipeline.py --strict-assets
 ```
 
-Expected outputs:
+If Blender is not on `PATH`, set `BLENDER_BIN` to the executable and rerun. Do not rewrite the pipeline merely because the executable lives at a different path.
+
+Expected v0.3 outputs:
 
 ```text
-gelistirmeler/2026-09-16-fly-world-prototype/build/fly-house.blend
-gelistirmeler/2026-09-16-fly-world-prototype/build/fly-house.glb
-gelistirmeler/2026-09-16-fly-world-prototype/build/previews/reference-like-wide.png
-gelistirmeler/2026-09-16-fly-world-prototype/build/previews/stove-and-doorway.png
-gelistirmeler/2026-09-16-fly-world-prototype/build/previews/bench-window.png
-gelistirmeler/2026-09-16-fly-world-prototype/build/previews/bedroom-through-door.png
-gelistirmeler/2026-09-16-fly-world-prototype/build/previews/fly-scale-floor.png
+gelistirmeler/2026-09-16-fly-world-prototype/build/fly-house-v3.blend
+gelistirmeler/2026-09-16-fly-world-prototype/build/fly-house-v3.glb
+frontend/labs/fly-world/assets/fly-house.glb
+gelistirmeler/2026-09-16-fly-world-prototype/review/01-reference-wide.png
+gelistirmeler/2026-09-16-fly-world-prototype/review/02-room-eye-level.png
+gelistirmeler/2026-09-16-fly-world-prototype/review/03-window-to-stove.png
+gelistirmeler/2026-09-16-fly-world-prototype/review/04-doorway-bedroom.png
+gelistirmeler/2026-09-16-fly-world-prototype/review/05-fly-scale.png
 ```
 
-Do not judge the room from one hero shot. Inspect all five fixed views after meaningful changes.
+## Required checks
 
-### 5. Pass the strict asset gate
+After the build:
 
-Before calling the environment a visual-review candidate:
+1. confirm `validate_project.py --strict-assets` exits successfully;
+2. confirm `frontend/labs/fly-world/assets/fly-house.glb` exists and is non-empty;
+3. open Fly World from the AizanoiOS desktop app and verify it loads the Blender GLB path rather than falling back because of a missing asset;
+4. verify collision is ON by default and walls/major furniture cannot be crossed during normal navigation;
+5. verify `N` is debug noclip only;
+6. inspect all five review renders for clipping, missing textures, floating props or broken scale;
+7. do **not** begin fly/connectome/body/neural work.
 
-```bash
-python scripts/fly-world/validate_project.py --strict-assets
-```
+The human observer may collide with the environment for navigation while still remaining invisible/non-physical to the future fly simulation. Do not revert observer collision to `false` in the scene contract.
 
-It must exit successfully. Also inspect the `.blend` for leftover required `PROXY__*` objects. Optional background proxies may remain only if they are visually acceptable and are clearly non-hero elements; do not hide required proxies merely by renaming them.
+## Visual review boundary
 
-### 6. Browser handoff
+The first review image, `01-reference-wide.png`, must be compared directly with the approved people-free cottage composition. Pay special attention to the left barred window/curtains, long carved divan/cabinet wall, CRT cabinet, stove/hearth/flue/laundry, layered floor textiles and clutter, thick bedroom doorway casing and the visible red/patchwork bed beyond it.
 
-The current browser page is a ghost-observer blockout and deliberately has no fly. Once the separately developed shared glTF/browser infrastructure is available, connect the approved `fly-house.glb` to `frontend/labs/fly-world/` using that shared loader instead of creating a second competing loader stack.
+A successful render command is not permission to redesign or declare visual approval. If a Blender/API compatibility error prevents the authored pipeline from running, fix only the smallest execution compatibility issue and report it precisely. Do not replace the reference-specific scene with a simpler improvised room.
 
-Preserve these runtime rules:
+## Report back
 
-- human observer state must remain outside future fly simulation state;
-- observer has no collision or physical influence;
-- observer never becomes visible, audible, shadow-casting, heat-emitting, or otherwise detectable to fly sensors;
-- mouse/WASD/Q/E ghost navigation remains available for inspection;
-- generated scene coordinates/scale stay metric and stable so future sensory and locomotion work can rely on them.
-
-### 7. Stop at environment approval
-
-Do not integrate the connectome, fly body, neural IO, food-seeking logic, reward model, reproduction, or multi-fly simulation in this task. The next stage starts only after the user approves the environment visually.
-
-## Visual acceptance criteria
-
-A candidate is ready to show the user only when all of the following are true:
-
-- the room immediately reads as the selected rustic Fly House, not a generic cabin;
-- main room + bedroom relationship is obvious through the open doorway;
-- window/curtain, divan/cabinet, stove/pipe, TV, rugs and bed are recognizable and correctly placed;
-- required hero assets are authored or correctly licensed and no longer crude primitives;
-- scale is believable at both human and fly-height benchmark views;
-- five benchmark renders exist and have no obvious clipping, floating furniture, blocked doorway, broken materials or missing textures;
-- strict preflight passes;
-- no fly/connectome code was added prematurely.
-
-## Deliver back to the user
-
-When finished, report only concrete evidence: branch/commit, strict-preflight result, which asset slots were filled (with licenses), paths to the five benchmark renders, remaining optional proxies if any, and whether the browser GLB integration was completed after the shared infrastructure became available. Do not claim visual approval yourself; the user gives that approval.
+Return concrete evidence only: exact branch/head SHA, strict-validator output, Blender version, generated `.blend`/`.glb` paths and sizes, the five review image paths, whether AizanoiOS loaded the GLB successfully, and any execution error that remains. Do not claim user visual approval.
