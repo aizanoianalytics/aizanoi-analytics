@@ -4,13 +4,14 @@ async function boot() {
   try {
     const response = await fetch(glbUrl, { method: 'HEAD', cache: 'no-store' });
     if (response.ok) {
-      await import('./glb-runtime.js');
+      await import('./glb-runtime-v3.js');
       return;
     }
   } catch (error) {
-    console.info('[fly-world] Blender GLB not published yet; using authored browser fallback.', error);
+    console.info('[fly-world] Blender v0.3 GLB not published yet; using the reference-detailed browser fallback.', error);
   }
-  await import('./main.js');
+
+  await import('./main-v3.js');
 }
 
 boot().catch((error) => {
