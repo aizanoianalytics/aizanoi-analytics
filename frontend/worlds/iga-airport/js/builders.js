@@ -87,8 +87,6 @@ export function buildGrandTerminal(b) {
     opacity: 0.92,
   });
 
-  const ceilingMat = getMaterial('aluminumAnodized', { color: 0xf0f3f6, roughness: 0.35 });
-
   // Grid of Vaulted Modular Bays with Skylight Oculus Windows & Tree Columns
   for (let r = 1; r <= colRows; r++) {
     for (let c = 1; c <= colCols; c++) {
@@ -122,10 +120,14 @@ export function buildGrandTerminal(b) {
         }
       }
 
-      // Vaulted Ceiling Arch Bay
-      const vaultGeo = new THREE.BoxGeometry(stepX * 0.94, 2.2, stepZ * 0.92);
-      const vault = new THREE.Mesh(vaultGeo, ceilingMat);
-      vault.position.set(colX, h + 1.1, colZ);
+      // Vaulted Ceiling Arch Bay — shallow barrel shell (the real vaulted-grid read;
+      // flat slabs made the 860m roof look like a warehouse deck)
+      const vaultR = stepX * 0.47;
+      const vaultGeo = new THREE.CylinderGeometry(vaultR, vaultR, stepZ * 0.92, 14, 1, true, 0, Math.PI);
+      vaultGeo.rotateX(Math.PI / 2); // axis along z, arch opening downward
+      const vaultMat = getMaterial('aluminumAnodized', { color: 0xf0f3f6, roughness: 0.35, side: THREE.DoubleSide });
+      const vault = new THREE.Mesh(vaultGeo, vaultMat);
+      vault.position.set(colX, h + 1.1 - vaultR * 0.35, colZ);
       vault.castShadow = true;
       group.add(vault);
 
@@ -406,6 +408,30 @@ export function buildTulipTower(b) {
   const cab = new THREE.Mesh(new THREE.CylinderGeometry(15.5, 13.5, cabH, 24), glassMat);
   cab.position.y = stemH + bulbH + cabH / 2;
   group.add(cab);
+
+  // Cab mullion fins — dark vertical ribs ringing the glass (the tower's signature read)
+  const mullMat = getMaterial('structuralSteel', { color: 0x232a33 });
+  const mullGeo = new THREE.BoxGeometry(0.5, cabH * 0.95, 0.7);
+  for (let i = 0; i < 24; i++) {
+    const a = (i / 24) * Math.PI * 2;
+    const mull = new THREE.Mesh(mullGeo, mullMat);
+    mull.position.set(Math.cos(a) * 14.6, stemH + bulbH + cabH / 2, Math.sin(a) * 14.6);
+    mull.rotation.y = -a;
+    group.add(mull);
+  }
+
+  // Tulip petal crown — 12 flared fins rising past the cab toward the roof
+  const petalGeo = new THREE.BoxGeometry(1.4, 7.5, 0.5);
+  for (let i = 0; i < 12; i++) {
+    const a = (i / 12) * Math.PI * 2;
+    const petal = new THREE.Mesh(petalGeo, shaftMat);
+    petal.position.set(Math.cos(a) * 13.2, stemH + bulbH + cabH + 2.2, Math.sin(a) * 13.2);
+    petal.rotation.y = -a;
+    petal.rotation.x = Math.sin(a) * 0.18;
+    petal.rotation.z = -Math.cos(a) * 0.18;
+    petal.castShadow = true;
+    group.add(petal);
+  }
 
   // Crown Roof & Radar / Antenna Mast
   const crownH = h * 0.04;
