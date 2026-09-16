@@ -1,106 +1,12 @@
 import * as THREE from '../../shared/vendor/three.module.js';
 import { getMaterial } from '../../shared/assets/materials.js';
+import {
+  createDoricColumn,
+  createSteps,
+  createPediment,
+} from '../../shared/assets/builders-common.js';
 
-// --- Helpers ---
-
-function createFlutedCylinder(height, radius, flutes, segments) {
-    const geometry = new THREE.CylinderGeometry(radius * 0.8, radius, height, segments, 1);
-    // Approximate flutes by using fewer segments or a custom shape. Here we use basic cylinder
-    // for performance but a real application might use a custom buffer geometry.
-    return geometry;
-}
-
-function createDoricColumn(height, radius) {
-    const group = new THREE.Group();
-    const shaftMat = getMaterial('marble');
-
-    // Shaft with entasis (approximated here by taper)
-    const shaftGeo = createFlutedCylinder(height * 0.9, radius, 20, 16);
-    const shaft = new THREE.Mesh(shaftGeo, shaftMat);
-    shaft.position.y = height * 0.45;
-    shaft.castShadow = true;
-    shaft.receiveShadow = true;
-    group.add(shaft);
-
-    // Capital
-    const echinusGeo = new THREE.ConeGeometry(radius * 1.2, height * 0.05, 16);
-    const echinus = new THREE.Mesh(echinusGeo, shaftMat);
-    echinus.position.y = height * 0.925;
-    echinus.castShadow = true;
-    echinus.receiveShadow = true;
-    group.add(echinus);
-
-    const abacusGeo = new THREE.BoxGeometry(radius * 2.5, height * 0.05, radius * 2.5);
-    const abacus = new THREE.Mesh(abacusGeo, shaftMat);
-    abacus.position.y = height * 0.975;
-    abacus.castShadow = true;
-    abacus.receiveShadow = true;
-    group.add(abacus);
-
-    return group;
-}
-
-function createIonicColumn(height, radius) {
-    const group = new THREE.Group();
-    const mat = getMaterial('marble');
-
-    // Base
-    const baseGeo = new THREE.TorusGeometry(radius * 1.1, radius * 0.3, 8, 16);
-    const base = new THREE.Mesh(baseGeo, mat);
-    base.rotation.x = Math.PI / 2;
-    base.position.y = radius * 0.3;
-    base.castShadow = true;
-    base.receiveShadow = true;
-    group.add(base);
-
-    // Shaft
-    const shaftGeo = createFlutedCylinder(height * 0.85, radius, 24, 16);
-    const shaft = new THREE.Mesh(shaftGeo, mat);
-    shaft.position.y = radius * 0.6 + height * 0.425;
-    shaft.castShadow = true;
-    shaft.receiveShadow = true;
-    group.add(shaft);
-
-    // Capital
-    const capGeo = new THREE.BoxGeometry(radius * 2.5, height * 0.05, radius * 2);
-    const cap = new THREE.Mesh(capGeo, mat);
-    cap.position.y = height - (height * 0.025);
-    cap.castShadow = true;
-    cap.receiveShadow = true;
-    group.add(cap);
-
-    return group;
-}
-
-function createSteps(width, depth, count, stepHeight) {
-    const group = new THREE.Group();
-    const mat = getMaterial('limestone');
-
-    for (let i = 0; i < count; i++) {
-        const w = width - (i * stepHeight * 2);
-        const d = depth - (i * stepHeight * 2);
-        const geo = new THREE.BoxGeometry(w, stepHeight, d);
-        const mesh = new THREE.Mesh(geo, mat);
-        mesh.position.y = stepHeight / 2 + (i * stepHeight);
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
-        group.add(mesh);
-    }
-    return group;
-}
-
-function createPediment(width, depth, height) {
-    const shape = new THREE.Shape();
-    shape.moveTo(-width/2, 0);
-    shape.lineTo(width/2, 0);
-    shape.lineTo(0, height);
-    shape.lineTo(-width/2, 0);
-
-    const extrudeSettings = { depth: depth, bevelEnabled: false };
-    const geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-    geo.translate(0, 0, -depth/2);
-    return geo;
-}
+// --- Shared builders (single source of truth; local dupes removed in visual uplift v1) ---
 
 // --- Builders ---
 
@@ -122,17 +28,8 @@ export function buildTemple(b) {
     group.add(steps);
     const platformY = 1.2;
 
-    // Peristyle Columns (InstancedMesh for performance)
-    const colGeo = new THREE.CylinderGeometry(colRadius*0.8, colRadius, colHeight, 16);
-    const colMat = getMaterial('marble');
-    const colCount = (colCountW * 2) + ((colCountD - 2) * 2);
-    const iMesh = new THREE.InstancedMesh(colGeo, colMat, colCount);
-    iMesh.castShadow = true;
-    iMesh.receiveShadow = true;
-
-    let idx = 0;
-    const dummy = new THREE.Object3D();
-
+    // Peristyle columns — shared fluted Doric order (capitals included;
+    // the old local InstancedMesh pipes had neither flutes nor capitals)
     const stepW = (wReal - colRadius * 4) / Math.max(1, colCountW - 1);
     const stepD = (dReal - colRadius * 4) / Math.max(1, colCountD - 1);
 
@@ -143,13 +40,12 @@ export function buildTemple(b) {
     for (let x = 0; x < colCountW; x++) {
         for (let z = 0; z < colCountD; z++) {
             if (x === 0 || x === colCountW - 1 || z === 0 || z === colCountD - 1) {
-                dummy.position.set(startX + x * stepW, platformY + colHeight/2, startZ + z * stepD);
-                dummy.updateMatrix();
-                iMesh.setMatrixAt(idx++, dummy.matrix);
+                const col = createDoricColumn(colHeight, colRadius, 'marble');
+                col.position.set(startX + x * stepW, platformY, startZ + z * stepD);
+                group.add(col);
             }
         }
     }
-    group.add(iMesh);
 
     // Architrave & Frieze
     const entablatureY = platformY + colHeight;
@@ -159,6 +55,19 @@ export function buildTemple(b) {
     arch.castShadow = true;
     arch.receiveShadow = true;
     group.add(arch);
+
+    // Triglyph frieze — the Doric signature: alternating blue-grooved blocks.
+    // Cheap instanced rhythm, unmistakable at any distance.
+    const triglyphMat = getMaterial('limestone');
+    const trigGeo = new THREE.BoxGeometry(0.7, colHeight * 0.11, 0.35);
+    const trigN = Math.max(8, Math.floor(wReal / 1.5));
+    for (const fz of [-dReal / 2 - 0.1, dReal / 2 + 0.1]) {
+        for (let i = 0; i < trigN; i++) {
+            const t = new THREE.Mesh(trigGeo, triglyphMat);
+            t.position.set(-wReal / 2 + 0.75 + i * ((wReal - 1.5) / Math.max(1, trigN - 1)), entablatureY + colHeight * 0.075, fz);
+            group.add(t);
+        }
+    }
 
     // Cella
     const cellaW = wReal - colRadius * 8;
@@ -172,23 +81,15 @@ export function buildTemple(b) {
         group.add(cella);
     }
 
-    // Roof & Pediment
+    // Roof & Pediment (shared builders return ready Meshes)
     const pedHeight = wReal * 0.15;
-    const pedGeo = createPediment(wReal, dReal, pedHeight);
-    const pedMat = getMaterial('marble');
-    const ped = new THREE.Mesh(pedGeo, pedMat);
+    const ped = createPediment(wReal, dReal, pedHeight, 'marble');
     ped.position.y = entablatureY + colHeight * 0.15;
-    ped.castShadow = true;
-    ped.receiveShadow = true;
     group.add(ped);
 
     // Roof tiles
-    const roofGeo = createPediment(wReal + 1, dReal + 1, pedHeight + 0.2);
-    const roofMat = getMaterial('roofTile');
-    const roof = new THREE.Mesh(roofGeo, roofMat);
+    const roof = createPediment(wReal + 1, dReal + 1, pedHeight + 0.2, 'roofTile');
     roof.position.y = entablatureY + colHeight * 0.15 - 0.1;
-    roof.castShadow = true;
-    roof.receiveShadow = true;
     group.add(roof);
 
     return group;
@@ -222,16 +123,14 @@ export function buildGateway(b) {
     rightWing.receiveShadow = true;
     group.add(rightWing);
 
-    // Doric columns flanking the open central passageway
+    // Doric columns flanking the open central passageway (shared fluted order)
     const colH = wingH;
     const colR = 0.45;
-    const colGeo = new THREE.CylinderGeometry(colR * 0.85, colR, colH, 16);
     const portalHalfW = (w - 2 * wingW) / 2;
     for (const zOff of [-d / 2 + 1.2, d / 2 - 1.2]) {
         for (const sign of [-1, 1]) {
-            const col = new THREE.Mesh(colGeo, marbleMat);
-            col.position.set(sign * Math.max(1.5, portalHalfW - 1.0), colH / 2, zOff);
-            col.castShadow = true;
+            const col = createDoricColumn(colH, colR, 'marble');
+            col.position.set(sign * Math.max(1.5, portalHalfW - 1.0), 0, zOff);
             group.add(col);
         }
     }
@@ -246,9 +145,8 @@ export function buildGateway(b) {
 
     // Classical pediment over the central gateway
     const pedHeight = Math.max(2, w * 0.12);
-    const ped = new THREE.Mesh(createPediment(w, d, pedHeight), marbleMat);
+    const ped = createPediment(w, d, pedHeight, 'marble');
     ped.position.y = h;
-    ped.castShadow = true;
     group.add(ped);
 
     return group;
@@ -289,12 +187,10 @@ export function buildStoa(b) {
     const numCols = Math.max(4, Math.floor((w - 4) / colSpacing));
     const colH = h - 0.6;
     const colR = 0.32;
-    const colGeo = new THREE.CylinderGeometry(colR * 0.85, colR, colH, 16);
     const actualSpacing = (w - 4) / (numCols - 1);
     for (let i = 0; i < numCols; i++) {
-        const col = new THREE.Mesh(colGeo, marbleMat);
-        col.position.set(-w / 2 + 2 + i * actualSpacing, 0.5 + colH / 2, d / 2 - 1);
-        col.castShadow = true;
+        const col = createDoricColumn(colH, colR, 'marble');
+        col.position.set(-w / 2 + 2 + i * actualSpacing, 0.5, d / 2 - 1);
         group.add(col);
     }
 
@@ -384,13 +280,11 @@ export function buildRound(b) {
     // 2. Peristyle of Doric marble columns physically supporting the roof
     const colCount = 16;
     const colRadius = 0.28;
-    const colGeo = new THREE.CylinderGeometry(colRadius * 0.85, colRadius, colHeight, 16);
     const ringR = radius * 0.82;
     for (let i = 0; i < colCount; i++) {
         const theta = (i / colCount) * Math.PI * 2;
-        const col = new THREE.Mesh(colGeo, marbleMat);
-        col.position.set(Math.cos(theta) * ringR, 1 + colHeight / 2, Math.sin(theta) * ringR);
-        col.castShadow = true;
+        const col = createDoricColumn(colHeight, colRadius, 'marble');
+        col.position.set(Math.cos(theta) * ringR, 1, Math.sin(theta) * ringR);
         group.add(col);
     }
 
