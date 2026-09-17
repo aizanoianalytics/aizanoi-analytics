@@ -176,18 +176,21 @@ def apply_micro_detail_pass(mats):
     # a single straight bench.  Add the projecting seat and its patchwork drape.
     _box("divan-chaise-base", (1.28,1.48,.34), (.62,1.48,.31), mats["wood2"], c, bevel=.035, collision=True, landing=True)
     _box("divan-chaise-cushion", (1.18,1.34,.22), (.62,1.42,.58), mats["green"], c, bevel=.08, collision=True, landing=True)
+    # One continuous blanket with a thin patchwork surface; previous independent
+    # thick tiles looked like children's building blocks rather than fabric.
+    _box("divan-chaise-blanket", (1.14,1.25,.045), (.62,1.40,.715), mats["cream"], c, bevel=.045, landing=True)
     patch_mats = (mats["green"], mats["red"], mats["pink"], mats["cream"], mats["wood3"])
     for row in range(3):
         for col in range(4):
             _box(
                 f"chaise-patch-{row}-{col}",
-                (.27,.37,.035),
-                (.20 + col*.28, .98 + row*.39, .72 + (row+col)%2*.012),
+                (.281,.408,.008),
+                (.198 + col*.281, .991 + row*.408, .742),
                 patch_mats[(row*4+col) % len(patch_mats)],
                 c,
-                rot=(0,0,((row+col)%3-1)*.025),
-                bevel=.015,
+                bevel=.004,
             )
+    _box("divan-chaise-front-drape", (1.12,.035,.34), (.62,.775,.55), mats["red"], c, bevel=.018)
 
     # A few hanging/loose threads at the chaise edge help the blanket read as fabric
     # rather than coloured blocks from a fly-height view.

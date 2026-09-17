@@ -111,7 +111,7 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
   box([0.52, 0.30, 0.06], [-2.10, 2.49, 2.42], M.redTextile, 'cabinet-top-book-red', { rotationZ: -0.09 });
   box([0.46, 0.28, 0.045], [-2.05, 2.47, 2.49], M.woodLight, 'cabinet-top-book-cream', { rotationZ: -0.04 });
   box([1.20, 0.44, 0.018], [-0.92, 2.48, 2.39], M.lace, 'cabinet-top-lace-runner', { rotationZ: 0.04 });
-  cylinder(0.27, 0.08, [-0.75, 2.47, 2.48], M.woodLight, 'fruit-bowl');
+  cylinder(0.20, 0.08, [-0.75, 2.47, 2.48], M.woodLight, 'fruit-bowl');
   for (let i = 0; i < 9; i++) {
     const a = i / 9 * Math.PI * 2;
     addSphere(0.075 + (i % 3) * 0.01, [-0.75 + Math.cos(a) * 0.17, 2.47 + Math.sin(a) * 0.11, 2.56 + (i % 2) * 0.03], i % 2 ? orange : yellow, `fruit-${i}`);
@@ -179,11 +179,11 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
 
   // Right side of doorway: light switch, tall tulip vase, green knitting bag and
   // orange ball/soft toy visible in the foreground of the illustration.
-  box([0.14, 0.035, 0.18], [3.94, 2.36, 1.20], M.ceramic, 'wall-light-switch');
-  box([0.16, 0.18, 0.48], [3.92, 2.86, 1.62], M.ceramic, 'right-wall-vase');
+  box([0.14, 0.035, 0.18], [4.72, 2.36, 1.20], M.ceramic, 'wall-light-switch');
+  box([0.16, 0.18, 0.48], [4.72, 2.86, 1.62], M.ceramic, 'right-wall-vase');
   for (let i = 0; i < 4; i++) {
-    addLine([3.92, 2.83, 1.80], [3.98 + i * 0.06, 2.82, 2.16 + (i % 2) * 0.08], M.leaf, `tulip-stem-${i}`, 0.012);
-    addSphere(0.065, [3.98 + i * 0.06, 2.82, 2.18 + (i % 2) * 0.08], M.flower, `tulip-${i}`, 12);
+    addLine([4.72, 2.83, 1.80], [4.78 + i * 0.06, 2.82, 2.16 + (i % 2) * 0.08], M.leaf, `tulip-stem-${i}`, 0.012);
+    addSphere(0.065, [4.78 + i * 0.06, 2.82, 2.18 + (i % 2) * 0.08], M.flower, `tulip-${i}`, 12);
   }
   box([0.54, 0.24, 0.48], [3.45, -2.72, 0.25], M.greenTextile, 'green-knitting-bag', { rotationZ: 0.05 });
   addLine([3.36, -2.72, 0.45], [3.30, -2.72, 1.02], M.woodLight, 'knitting-needle-a', 0.012);
@@ -195,12 +195,12 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
   // sticker-covered face and double handles, flower/magnet marks on the cabinet end,
   // the pale slippers beside the stove, and fringe on the runner.
   const stickerMats = [orange, yellow, clothWhite, paleBlue, M.redTextile];
-  const stickers = [[0.40,0.00,0.36],[0.57,-0.005,0.30],[0.69,0.00,0.42],[0.48,-0.008,0.50]];
+  const stickers = [[-1.65,-2.72,0.36],[-1.48,-2.73,0.30],[-1.36,-2.72,0.42],[-1.57,-2.74,0.50]];
   stickers.forEach(([x,y,z], i) => box([0.11 + (i%2)*0.03, 0.018, 0.09], [x,y,z], stickerMats[i%stickerMats.length], `blue-bag-sticker-${i}`, { rotationZ: (i-1.5)*0.22 }));
-  addLine([0.34,0.20,0.52],[0.39,0.20,0.78],M.blueTextile,'blue-bag-handle-a1',0.025);
-  addLine([0.39,0.20,0.78],[0.53,0.20,0.56],M.blueTextile,'blue-bag-handle-a2',0.025);
-  addLine([0.58,0.20,0.55],[0.66,0.20,0.80],M.blueTextile,'blue-bag-handle-b1',0.025);
-  addLine([0.66,0.20,0.80],[0.77,0.20,0.55],M.blueTextile,'blue-bag-handle-b2',0.025);
+  addLine([-1.70,-2.55,0.52],[-1.65,-2.55,0.78],M.blueTextile,'blue-bag-handle-a1',0.025);
+  addLine([-1.65,-2.55,0.78],[-1.51,-2.55,0.56],M.blueTextile,'blue-bag-handle-a2',0.025);
+  addLine([-1.46,-2.55,0.55],[-1.38,-2.55,0.80],M.blueTextile,'blue-bag-handle-b1',0.025);
+  addLine([-1.38,-2.55,0.80],[-1.27,-2.55,0.55],M.blueTextile,'blue-bag-handle-b2',0.025);
 
   const magnetPositions = [[1.36,2.505,1.08],[1.52,2.505,1.24],[1.42,2.505,1.42],[1.61,2.505,1.56],[1.31,2.505,1.63]];
   magnetPositions.forEach(([x,y,z], i) => addSphere(0.045 + (i%2)*0.012,[x,y,z],[M.flower,yellow,clothWhite,paleBlue][i%4],`cabinet-magnet-${i}`,10));
@@ -247,4 +247,31 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
   for (let i = 0; i < 5; i++) box([0.09 + (i % 2) * 0.03, 0.16, 0.28], [7.45 + i * 0.12, 3.05, 2.34], [M.redTextile, M.greenTextile, M.woodLight][i % 3], `bedroom-high-book-${i}`);
   addSphere(0.12, [7.98, 3.06, 2.33], M.leaf, 'bedroom-trailing-plant-root');
   for (let i = 0; i < 7; i++) addSphere(0.055, [8.00 - i * 0.035, 3.03, 2.20 - i * 0.12], M.leaf, `bedroom-trailing-leaf-${i}`, 10);
+
+  // Follow the same parent furniture/shell transforms as the Blender detail pass.
+  const move = (prefixes, dx = 0, dy = 0, dz = 0) => scene.children.forEach((object) => {
+    if (prefixes.some((prefix) => object.name.startsWith(prefix))) object.position.add(new THREE.Vector3(dx, dy, dz));
+  });
+  move(['divan-', 'bench-quilt', 'pillow-'], 0, .38);
+  move(['cabinet-', 'fruit-', 'blue-ornamental-', 'globe-'], 0, .38);
+  move(['cabinet-top-book-', 'cabinet-top-lace-', 'cabinet-photo', 'fruit-', 'blue-ornamental-', 'globe-'], 0, .21);
+  move(['cabinet-top-', 'cabinet-photo', 'fruit-', 'blue-ornamental-', 'globe-'], 0, .44, -.765);
+  const z = (name, value) => { scene.getObjectByName(name).position.z = value; };
+  z('fruit-bowl', 1.655);
+  move(['fruit-'], 0, 0, -.06);
+  z('fruit-bowl', 1.655);
+  z('cabinet-top-book-red', 1.645);
+  z('cabinet-top-book-cream', 1.6975);
+  z('cabinet-photo-frame', 1.81); z('cabinet-photo', 1.81);
+  z('blue-ornamental-globe', 1.87); move(['globe-stand'], 0, 0, .08);
+  // Replace the old suspended back panel with a grounded cabinet envelope.
+  const cabinet = scene.getObjectByName('cabinet-back');
+  cabinet.position.set(-.65, 3.55, .775);
+  cabinet.scale.set(4.05 / 3.90, .44 / .34, 1.55 / 1.20);
+  const remove = scene.children.filter((o) => /^(carved-|cabinet-magnet-|cabinet-post-|cabinet-panel-|cabinet-cornice)/.test(o.name));
+  remove.forEach((o) => scene.remove(o));
+  // Explicit fronts on the south face, rather than a bare backing panel.
+  for (const x of [-1.65,.35]) box([1.75,.04,1.0], [x,3.30,.755], M.woodLight, `cabinet-front-${x}`);
+  move(['bed-frame', 'bed-leg-', 'mattress', 'bed-quilt', 'headboard', 'bed-pillow-'], 0, .10);
+  move(['door-frame-', 'door-threshold', 'doorway-portrait'], .15);
 }

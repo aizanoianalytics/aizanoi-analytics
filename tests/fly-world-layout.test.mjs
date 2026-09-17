@@ -20,8 +20,8 @@ test('Fly House keeps a larger shell while furniture stays inside coherent zones
 test('Fly House furniture zones use deliberate transforms and preserve clear circulation', () => {
   const hero = Object.fromEntries(spec.heroObjects.map((item) => [item.id, item]));
   assert.deepEqual(hero.bench.position, [-0.65, 2.72, 0.42]);
-  assert.deepEqual(hero['wood-stove'].position, [2.25, 0.35, 0.59]);
-  assert.deepEqual(hero['old-tv-cabinet'].position, [-3.36, -2.62, 0.72]);
+  assert.deepEqual(hero['wood-stove'].position, [2.15, -1.1, 0.59]);
+  assert.deepEqual(hero['old-tv-cabinet'].position, [-3.2, -3.4, 0.7]);
   assert.deepEqual(hero.bed.position, [6.72, 1.92, 0.46]);
   assert.deepEqual(hero['work-desk'].position, [5.525, 3.05, 0.38]);
   const circulation = spec.zones.find((zone) => zone.id === 'circulation-zone');
@@ -30,12 +30,13 @@ test('Fly House furniture zones use deliberate transforms and preserve clear cir
   const stove = rect(hero['wood-stove']);
   const desk = rect(hero['work-desk']);
   assert.ok(stove.x1 < 3.1, 'stove leaves the east doorway approach open');
+  assert.ok(stove.y1 < 0.34, 'stove sits south of the bedroom doorway opening');
   assert.ok(desk.y0 > 1.66, 'desk stays north of the bedroom doorway opening');
   assert.ok(rect(hero.bench).y0 > 2.10, 'sofa remains outside the central circulation lane');
-  assert.ok(!builder.includes('WALL__bed__west_'), 'shared divider has one geometry owner');
-  assert.match(builder, /import_slot\(root,slots,"bench-sofa",\(-\.65,2\.72/);
-  assert.match(builder, /import_slot\(root,slots,"wood-stove",\(2\.25,\.35/);
-  assert.match(builder, /import_slot\(root,slots,"old-tv",\(-3\.35,-2\.62/);
+  assert.ok(!/WALL__bed__west_(?:a|b|head)"/.test(builder), 'shared divider has one geometry owner; only the exterior return is separate');
+  assert.ok(builder.includes('import_slot(root,slots,"bench-sofa",(-.65,2.72'));
+  assert.ok(builder.includes('import_slot(root,slots,"wood-stove",(2.15,-1.10'));
+  assert.ok(builder.includes('import_slot(root,slots,"old-tv",(-3.20,-3.40'));
   assert.match(builder, /Shared room divider is owned by the main room/);
   assert.match(detail, /work-desk/);
 });
