@@ -56,4 +56,6 @@ def prepare(root, manifest):
 
 def finish(root, report):
     report['glbSha256'] = sha256(root / ASSETS / 'fly-house.glb')
-    (root / ASSETS / 'build-provenance.json').write_text(json.dumps(report, indent=2) + '\n')
+    dest = root / WORKSPACE / 'build' / 'build-provenance.json'
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    dest.write_text(json.dumps(report, indent=2) + '\n')

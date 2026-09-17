@@ -67,7 +67,8 @@ const ALLOWED_JSON = [
   /\/js\/v3\/apps\/web-editor\/manifest\.json$/,
   /\/js\/v3\/apps\/workspace\/manifest\.json$/,
   /\/js\/v3\/apps\/worlds\/manifest\.json$/,
-  /\/js\/v3\/apps\/winamp\/manifest\.json$/
+  /\/js\/v3\/apps\/winamp\/manifest\.json$/,
+  /\/labs\/fly-world\/assets\/environment\.json$/
 ];
 
 test('denylist: no source or workbook files enter frontend except the declared synthetic output download', () => {

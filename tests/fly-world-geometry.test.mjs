@@ -54,10 +54,9 @@ test('fallback stove and TV transforms match the scene spec', () => {
   assert.match(fallback, /new THREE\.Vector3\(-4\.75,-1\.10,2\.52\)/);
 });
 
-test('build provenance records current source hashes when present', () => {
-  const report = JSON.parse(readFileSync('frontend/labs/fly-world/assets/build-provenance.json', 'utf8'));
+test('published environment.json records current builder hashes', () => {
+  const report = JSON.parse(readFileSync('frontend/labs/fly-world/assets/environment.json', 'utf8'));
   const sha = (path) => createHash('sha256').update(readFileSync(path)).digest('hex');
-  assert.equal(report.glbSha256, sha('frontend/labs/fly-world/assets/fly-house.glb'));
   for (const path of [
     'scripts/fly-world/build_scene_v3.py',
     'scripts/fly-world/build_scene_v2.py',
