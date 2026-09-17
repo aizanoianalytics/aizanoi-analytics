@@ -1,5 +1,6 @@
 import * as THREE from '../../worlds/shared/vendor/three.module.js';
 import { GLTFLoader } from '../../worlds/shared/vendor/GLTFLoader.js';
+import { createEnvironment } from './environment.js';
 import { AudioSystem } from '../../worlds/shared/engine/audio.js';
 
 const canvas = document.querySelector('#world');
@@ -23,6 +24,7 @@ const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.015, 
 camera.up.set(0, 0, 1);
 
 const colliders = [];
+let environment;
 const observerRadius = 0.21;
 const zMin = 0.22;
 const zMax = 2.62;
@@ -45,7 +47,7 @@ function collectCollisionRoots(root) {
   root.traverse((object) => {
     const collision = object.userData?.collision;
     if (collision === 'solid') {
-      addCollider(object);
+      if (object.name !== 'stove-pipe') addCollider(object);
       return;
     }
     if (collision === 'none') return;
@@ -105,7 +107,7 @@ class Observer {
   blocked(position) {
     if (this.noClip) return false;
     if (position.z < zMin || position.z > zMax) return true;
-    return colliders.some(({ bounds }) => sphereIntersectsBox(position, observerRadius, bounds));
+    return environment.collisionAt(position, observerRadius);
   }
 
   tryMove(delta) {
@@ -181,6 +183,10 @@ async function boot() {
   gltf.scene.name = 'FLY_HOUSE_BLENDER_ROOT';
   scene.add(gltf.scene);
   collectCollisionRoots(gltf.scene);
+  const response = await fetch(new URL('./assets/environment.json', import.meta.url));
+  if (!response.ok) throw new Error(`Environment metadata HTTP ${response.status}`);
+  environment = createEnvironment(gltf.scene, await response.json());
+  window.__FLY_ENVIRONMENT__ = environment;
 
   let meshCount = 0;
   let triangleCount = 0;
@@ -194,6 +200,7 @@ async function boot() {
   window.__FLY_DEBUG__ = metrics;
 
   const observer = new Observer();
+  metrics.environment = environment;
   metrics.observer = observer;
   metrics.camera = camera;
   metrics.frameCamera = (x, y, z, yaw, pitch = -.04) => observer.frameCamera(x, y, z, yaw, pitch);

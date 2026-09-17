@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "units": "meters",
+  "axis": "Z-up",
+  "observerExcluded": true,
+  "status": "authored environment cues; not calibrated physics or sensory simulation",
+  "flue": {
+    "points": [
+      [
+        2.15,
+        -1.1,
+        1.18
+      ],
+      [
+        2.15,
+        -1.1,
+        2.52
+      ],
+      [
+        -4.75,
+        -1.1,
+        2.52
+      ]
+    ],
+    "radius": 0.12
+  },
+  "transitions": [
+    {
+      "id": "bedroom-doorway",
+      "from": "main-room",
+      "to": "bedroom",
+      "bounds": [
+        [
+          4.66,
+          0.34,
+          0.1
+        ],
+        [
+          4.94,
+          1.66,
+          2.18
+        ]
+      ],
+      "open": true
+    }
+  ],
+  "windows": [
+    {
+      "id": "west-window",
+      "room": "main-room",
+      "geometryRefs": [
+        "window-glass"
+      ],
+      "center": [
+        -4.8,
+        -0.72,
+        1.49
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "closed": true,
+      "light": {
+        "kind": "daylight",
+        "relativeIntensity": 1
+      }
+    },
+    {
+      "id": "bedroom-window",
+      "room": "bedroom",
+      "geometryRefs": [
+        "bedroom-window"
+      ],
+      "center": [
+        5.61,
+        4.25,
+        1.48
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "closed": true,
+      "light": {
+        "kind": "daylight",
+        "relativeIntensity": 0.7
+      }
+    }
+  ],
+  "airflow": [
+    {
+      "id": "doorway-exchange",
+      "bounds": [
+        [
+          4.3,
+          0.34,
+          0.1
+        ],
+        [
+          5.3,
+          1.66,
+          2.18
+        ]
+      ],
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "speedMetersPerSecond": 0,
+      "active": false,
+      "reason": "reserved exchange zone; no measured flow"
+    },
+    {
+      "id": "stove-convection",
+      "bounds": [
+        [
+          1.55,
+          -1.7,
+          1.18
+        ],
+        [
+          2.75,
+          -0.5,
+          2.85
+        ]
+      ],
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "speedMetersPerSecond": 0,
+      "active": false,
+      "reason": "reserved buoyancy zone; solver not implemented"
+    }
+  ],
+  "heat": [
+    {
+      "id": "stove-heat",
+      "geometryRefs": [
+        "ASSET__wood-stove"
+      ],
+      "center": [
+        2.15,
+        -1.1,
+        0.59
+      ],
+      "radius": 1.2,
+      "kind": "warm-stove",
+      "temperatureCelsius": null,
+      "calibrated": false
+    }
+  ],
+  "food": [
+    {
+      "id": "fruit-attractor",
+      "geometryRefs": [
+        "fruit-bowl",
+        "fruit-0",
+        "fruit-1",
+        "fruit-2",
+        "fruit-3",
+        "fruit-4",
+        "fruit-5",
+        "fruit-6",
+        "fruit-7",
+        "fruit-8"
+      ],
+      "center": [
+        -0.75,
+        3.5,
+        1.735
+      ],
+      "radius": 0.5,
+      "kind": "fruit",
+      "strength": 1,
+      "units": "relative authored cue",
+      "active": false
+    }
+  ],
+  "rooms": [
+    {
+      "id": "main-room",
+      "label": "Main living room",
+      "origin": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        9.6,
+        8.0,
+        2.85
+      ],
+      "floorMaterial": "aged-green-floor",
+      "wallMaterial": "warm-aged-plaster",
+      "ceilingMaterial": "aged-white-plaster",
+      "openings": [
+        {
+          "id": "west-window",
+          "wall": "west",
+          "center": [
+            -4.8,
+            -0.72,
+            1.5
+          ],
+          "size": [
+            0.2,
+            2.0,
+            1.56
+          ],
+          "sillHeight": 0.72
+        },
+        {
+          "id": "bedroom-doorway",
+          "wall": "east",
+          "center": [
+            4.8,
+            1.0,
+            1.09
+          ],
+          "size": [
+            0.2,
+            1.32,
+            2.18
+          ],
+          "sillHeight": 0.0
+        }
+      ]
+    },
+    {
+      "id": "bedroom",
+      "label": "Connected bedroom",
+      "origin": [
+        7.3,
+        1.15,
+        0.0
+      ],
+      "size": [
+        5.0,
+        6.2,
+        2.85
+      ],
+      "floorMaterial": "aged-green-floor",
+      "wallMaterial": "warm-aged-plaster",
+      "ceilingMaterial": "aged-white-plaster",
+      "openings": [
+        {
+          "id": "bedroom-return-doorway",
+          "wall": "west",
+          "center": [
+            4.8,
+            1.0,
+            1.09
+          ],
+          "size": [
+            0.2,
+            1.32,
+            2.18
+          ],
+          "sillHeight": 0.0
+        },
+        {
+          "id": "bedroom-window",
+          "wall": "north",
+          "center": [
+            5.61,
+            4.25,
+            1.49
+          ],
+          "size": [
+            1.38,
+            0.2,
+            1.42
+          ],
+          "sillHeight": 0.78
+        }
+      ]
+    }
+  ],
+  "sourceHashes": {
+    "gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json": "296226a60d2f07e180407c69995d5abcbc3fe05c2bb16397c23a6ab8235b498b",
+    "gelistirmeler/2026-09-16-fly-world-prototype/asset_manifest.json": "bc3489bd8a761ede531fd62c9f0f4874152883e2d7fe04b49194e924399ffe07",
+    "scripts/fly-world/build_scene_v3.py": "f31492536565ee40fda0aaa0bfd017df5840dee17acbb0f480a8680ac2ab7ee0",
+    "scripts/fly-world/build_scene_v2.py": "1b48d9ae6ed75cd256a86ea3751a7679d1e50486cbc441099960acaf989d21b7",
+    "scripts/fly-world/detail_pass_v3.py": "9dc282fb4f367b60a78ae7936d96a04b3d268d4efd5e63efeee73571844bf945",
+    "scripts/fly-world/micro_detail_pass_v3.py": "8788785c5df9b560d3b5440c2139d6d49d72beb2f510a07aadfbb47d938cedf9",
+    "scripts/fly-world/environment_export.py": "b0b79aedde2881ecc93d714651dbd15ebe3b5a0ce11b369b5e6c3b1a37f67319",
+    "scripts/fly-world/author_heroes.py": "34c23d68ccf031c898e95ec4777a3c5dd371591d249047b1e5650a2b45689036",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bench-sofa/bench-sofa.glb": "8514b849dcff7613084cab2fa8d4d18d2e41e6abfb61a0b297dda5c72ef9d3b3",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/carved-cabinet/carved-cabinet.glb": "4232bfc687973418e446b1b9de1f74113817f98641142fae6613cc6edd08ebae",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/wood-stove/wood-stove.glb": "7ce8ddab5a1b734e040e253550f5d8b327b3d2f8928cc36c81b767e98c70e404",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/kettle/kettle.glb": "da10e7d26e7e470d0ef239067a39d6e18c9fe610b99c8cf029b7c0e45131d00b",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/old-tv/old-tv.glb": "22d5bd03df1ae5e39c91df94eccfbd45d3796c2e23638a5d5c9eb660fe0fb1e2",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/woven-basket/woven-basket.glb": "3934a46f5692861bb927da58c46ecd2166093c5292344319b0892c823a610150",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/main-rug/main-rug.glb": "5cc814a982ef10ccd032895cf53f03cf2885f895f4172e556acdddbcb581b3da",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/round-rug/round-rug.glb": "4790fc4a561feeb7c9b89b4f4762eab9281eb5f74cf98eadf058270b6b5f0660",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/wooden-bed/wooden-bed.glb": "2a0802b8c0a481d516c8a7dd3cf47a962281771d34de0a342cae995bb9a0ec72",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bedside-table/bedside-table.glb": "429d6679d3bb73898eae13ad48fbb2c87021ec0b693bd412f7234ab193fb0cf4",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/curtain-floral/curtain-floral.glb": "e73e8e3146dee58e4ba474b3701e1b8a808c72d7897f90278e60a855817fe890",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/curtain-lace/curtain-lace.glb": "6267c8c87751fb53b55aee49d103fd781bd24b44fdc30d0320581acca42afc85",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/pillow-quilt-set/pillow-quilt-set.glb": "350c30d3a3a5ecba276725bf2d14655a63e621b74b98b0dbfe93cc60a33050d3",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bed-quilt/bed-quilt.glb": "3715d160e457060b6e469e619ae4aa7ca401458eed29315809acd7c9b70b3868"
+  }
+}

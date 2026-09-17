@@ -38,6 +38,7 @@ def _load_module(name: str, path: Path):
 
 base = _load_module("fly_house_v2_base", ROOT_SCRIPT_DIR / "build_scene_v2.py")
 detail = _load_module("fly_house_v3_detail", ROOT_SCRIPT_DIR / "detail_pass_v3.py")
+environment_export = _load_module("fly_environment_export", ROOT_SCRIPT_DIR / "environment_export.py")
 
 
 def parse_args():
@@ -89,6 +90,11 @@ def main():
     base.clear_scene()
     base.render_setup()
     mats = base.palette()
+    # Window panes transmit daylight instead of reading as opaque blue wall slabs.
+    glass = mats["glass"]
+    glass.node_tree.nodes.get("Principled BSDF").inputs["Alpha"].default_value = .32
+    if hasattr(glass, "blend_method"):
+        glass.blend_method = "BLEND"
     base.architecture(mats)
     remove_non_reference_beams()
     base.reference_dressing(root, manifest, mats)
@@ -99,7 +105,7 @@ def main():
     meta["fly_house_version"] = "0.3.1"
     meta["reference_driven"] = True
     meta["browser_axis"] = "Z-up"
-    meta["n_fly_ready"] = True
+    meta["environment_only"] = True
     meta["micro_detail_parity"] = True
     bpy.context.scene.collection.objects.link(meta)
 
@@ -107,9 +113,10 @@ def main():
     if sensor is None:
         sensor = bpy.data.objects.new("FLY_SENSOR_WORLD_ROOT", None)
         sensor["observer_excluded"] = True
-        sensor["n_fly_ready"] = True
+        sensor["environment_only"] = True
         bpy.context.scene.collection.objects.link(sensor)
 
+    report = environment_export.prepare(root, manifest)
     build = root / base.BUILD_REL
     build.mkdir(parents=True, exist_ok=True)
     blend = build / "fly-house-v3.blend"
@@ -120,6 +127,7 @@ def main():
         bpy.ops.wm.save_as_mainfile(filepath=str(blend))
 
     export_glb(root)
+    environment_export.finish(root, report)
     print("[fly-house-v3] complete: reference density + micro parity + collision metadata + Z-up browser GLB")
 
 

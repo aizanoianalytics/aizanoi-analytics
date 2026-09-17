@@ -257,7 +257,7 @@ def apply_reference_detail_pass(mats):
     _box("cabinet-top-book-red", (.52, .30, .06), (-2.10, 2.49, 2.42), mats["red"], c, rot=(0,0,-.09), bevel=.015)
     _box("cabinet-top-book-cream", (.46, .28, .045), (-2.05, 2.47, 2.49), mats["cream"], c, rot=(0,0,-.04), bevel=.012)
     _box("cabinet-top-lace-runner", (1.20, .44, .018), (-.92, 2.48, 2.39), white, c, rot=(0,0,.04))
-    _cyl("fruit-bowl", .27, .08, (-.75, 2.47, 2.48), mats["wood3"], c)
+    _cyl("fruit-bowl", .20, .08, (-.75, 2.47, 2.48), mats["wood3"], c)
     for i in range(9):
         a = i / 9 * math.tau
         _sphere(f"fruit-{i}", .075 + (i % 3) * .01, (-.75 + math.cos(a)*.17, 2.47 + math.sin(a)*.11, 2.56 + (i%2)*.03), orange if i%2 else yellow, c)
@@ -367,8 +367,8 @@ def apply_reference_detail_pass(mats):
     _box("work-desk", (1.45, .52, .12), (5.525, 3.05, .76), mats["wood3"], c, bevel=.025, collision=True, landing=True, semantic="work-surface")
     for x in (4.895, 6.155):
         _box(f"work-desk-leg-{x}", (.10, .10, .72), (x, 3.05, .38), mats["wood2"], c, bevel=.015, collision=True)
-    _box("work-desk-chair-seat", (.52, .48, .12), (5.525, 2.35, .48), mats["green"], c, bevel=.04, collision=True)
-    _box("work-desk-chair-back", (.52, .10, .52), (5.525, 2.58, .76), mats["wood2"], c, bevel=.02, collision=True)
+    _box("work-desk-chair-seat", (.52, .48, .12), (5.525, 3.65, .48), mats["green"], c, bevel=.04, collision=True)
+    _box("work-desk-chair-back", (.52, .10, .52), (5.525, 3.88, .76), mats["wood2"], c, bevel=.02, collision=True)
     _box("work-desk-lamp", (.18, .18, .06), (5.525, 3.02, .87), mats["ceramic"], c, bevel=.015)
 
     # The browser fallback's final micro-details are owned by this reference pass.
@@ -386,8 +386,52 @@ def apply_reference_detail_pass(mats):
                     obj.location.x += dx
                     obj.location.y += dy
 
-    move_detail(("carved-", "cabinet-", "divan-"), dy=.38)
-    move_detail(("stove-", "hanging-"), dx=.20, dy=-.41)
-    move_detail(("tv-", "shelf-cup-"), dy=-.57)
-    move_detail(("bedroom-", "bedside-"), dy=.10)
+    move_detail(("carved-", "cabinet-", "divan-", "chaise-", "fruit-", "blue-ornamental-", "globe-"), dy=.38)
+    move_detail(("stove-", "hanging-"), dx=.10, dy=-1.85)
+    move_detail(("tv-", "shelf-cup-"), dx=.16, dy=-.975)
+    # Shell-mounted details follow the expanded walls, not furniture offsets.
+    move_detail(("door-frame-", "door-threshold", "doorway-portrait"), dx=.75)
+    move_detail(("window-grille-",), dx=-.68)
+    move_detail(("wall-clock-", "clock-hand-"), dx=-.98)
+    move_detail(("cage-", "birdcage-"), dx=-.59)
+    # Still life is supported by the shelf, not suspended in front of it.
+    move_detail(("cabinet-top-book-", "cabinet-top-lace-", "cabinet-photo", "fruit-", "blue-ornamental-", "globe-"), dy=.21)
+    bpy.data.objects["fruit-bowl"].location.z = 2.42
+    for obj in c.objects:
+        if obj.name.startswith("fruit-") and obj.name != "fruit-bowl":
+            obj.location.z -= .06
+    bpy.data.objects["cabinet-top-book-red"].location.z = 2.41
+    bpy.data.objects["cabinet-top-book-cream"].location.z = 2.4625
+    bpy.data.objects["cabinet-photo-frame"].location.z = 2.575
+    bpy.data.objects["cabinet-photo"].location.z = 2.575
+    bpy.data.objects["blue-ornamental-globe"].location.z = 2.635
+    bpy.data.objects["globe-stand"].location.z += .08
+    # Ground the centre-origin cabinet and keep its supported still life attached.
+    for obj in list(c.objects):
+        if obj.name.startswith(("cabinet-top-", "cabinet-photo", "fruit-", "blue-ornamental-", "globe-")):
+            obj.location.y += .44
+            obj.location.z -= .765
+        if obj.name.startswith("carved-"):
+            bpy.data.objects.remove(obj, do_unlink=True)
+    # Wall dressing must touch the expanded shell, not hover at pre-expansion planes.
+    move_detail(("bedroom-high-", "bedroom-trailing-"), dy=.90)
+    move_detail(("bedroom-wall-",), dy=.60)
+    move_detail(("bedroom-plant-",), dy=1.28)
+    for obj in c.objects:
+        if obj.name.startswith("bedroom-plant-"):
+            obj.location.z -= .21
+        if obj.name.startswith("plaster-wear-"):
+            if obj.location.x < -3:
+                obj.location.x = -4.72
+            else:
+                obj.location.y = 3.92
+            obj.rotation_euler.z = 0
+        if obj.name == "wall-light-switch":
+            obj.location.x = 4.71
+            obj.rotation_euler.z = math.pi / 2
+        if obj.name.startswith(("right-wall-vase", "tulip-")):
+            obj.location.x += .72
+    for obj in list(bpy.data.objects):
+        if obj.name.startswith(("cabinet-magnet-", "flower-stem-", "flower-", "plant-leaf-")) or obj.name in {"wall-vase", "plant-pot"}:
+            bpy.data.objects.remove(obj, do_unlink=True)
     return c
