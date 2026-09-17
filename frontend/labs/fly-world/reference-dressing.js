@@ -179,11 +179,11 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
 
   // Right side of doorway: light switch, tall tulip vase, green knitting bag and
   // orange ball/soft toy visible in the foreground of the illustration.
-  box([0.14, 0.035, 0.18], [3.94, 2.36, 1.20], M.ceramic, 'wall-light-switch');
-  box([0.16, 0.18, 0.48], [3.92, 2.86, 1.62], M.ceramic, 'right-wall-vase');
+  box([0.14, 0.035, 0.18], [4.72, 2.36, 1.20], M.ceramic, 'wall-light-switch');
+  box([0.16, 0.18, 0.48], [4.72, 2.86, 1.62], M.ceramic, 'right-wall-vase');
   for (let i = 0; i < 4; i++) {
-    addLine([3.92, 2.83, 1.80], [3.98 + i * 0.06, 2.82, 2.16 + (i % 2) * 0.08], M.leaf, `tulip-stem-${i}`, 0.012);
-    addSphere(0.065, [3.98 + i * 0.06, 2.82, 2.18 + (i % 2) * 0.08], M.flower, `tulip-${i}`, 12);
+    addLine([4.72, 2.83, 1.80], [4.78 + i * 0.06, 2.82, 2.16 + (i % 2) * 0.08], M.leaf, `tulip-stem-${i}`, 0.012);
+    addSphere(0.065, [4.78 + i * 0.06, 2.82, 2.18 + (i % 2) * 0.08], M.flower, `tulip-${i}`, 12);
   }
   box([0.54, 0.24, 0.48], [3.45, -2.72, 0.25], M.greenTextile, 'green-knitting-bag', { rotationZ: 0.05 });
   addLine([3.36, -2.72, 0.45], [3.30, -2.72, 1.02], M.woodLight, 'knitting-needle-a', 0.012);
@@ -195,12 +195,12 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
   // sticker-covered face and double handles, flower/magnet marks on the cabinet end,
   // the pale slippers beside the stove, and fringe on the runner.
   const stickerMats = [orange, yellow, clothWhite, paleBlue, M.redTextile];
-  const stickers = [[0.40,0.00,0.36],[0.57,-0.005,0.30],[0.69,0.00,0.42],[0.48,-0.008,0.50]];
+  const stickers = [[-1.65,-2.72,0.36],[-1.48,-2.73,0.30],[-1.36,-2.72,0.42],[-1.57,-2.74,0.50]];
   stickers.forEach(([x,y,z], i) => box([0.11 + (i%2)*0.03, 0.018, 0.09], [x,y,z], stickerMats[i%stickerMats.length], `blue-bag-sticker-${i}`, { rotationZ: (i-1.5)*0.22 }));
-  addLine([0.34,0.20,0.52],[0.39,0.20,0.78],M.blueTextile,'blue-bag-handle-a1',0.025);
-  addLine([0.39,0.20,0.78],[0.53,0.20,0.56],M.blueTextile,'blue-bag-handle-a2',0.025);
-  addLine([0.58,0.20,0.55],[0.66,0.20,0.80],M.blueTextile,'blue-bag-handle-b1',0.025);
-  addLine([0.66,0.20,0.80],[0.77,0.20,0.55],M.blueTextile,'blue-bag-handle-b2',0.025);
+  addLine([-1.70,-2.55,0.52],[-1.65,-2.55,0.78],M.blueTextile,'blue-bag-handle-a1',0.025);
+  addLine([-1.65,-2.55,0.78],[-1.51,-2.55,0.56],M.blueTextile,'blue-bag-handle-a2',0.025);
+  addLine([-1.46,-2.55,0.55],[-1.38,-2.55,0.80],M.blueTextile,'blue-bag-handle-b1',0.025);
+  addLine([-1.38,-2.55,0.80],[-1.27,-2.55,0.55],M.blueTextile,'blue-bag-handle-b2',0.025);
 
   const magnetPositions = [[1.36,2.505,1.08],[1.52,2.505,1.24],[1.42,2.505,1.42],[1.61,2.505,1.56],[1.31,2.505,1.63]];
   magnetPositions.forEach(([x,y,z], i) => addSphere(0.045 + (i%2)*0.012,[x,y,z],[M.flower,yellow,clothWhite,paleBlue][i%4],`cabinet-magnet-${i}`,10));

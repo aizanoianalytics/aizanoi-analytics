@@ -319,11 +319,11 @@ def apply_reference_detail_pass(mats):
     _box("orange-slipper-b", (.39,.15,.08), (1.78,-2.04,.095), orange, c, rot=(0,0,.16), bevel=.035)
 
     # Right side of doorway: switch, tulips, knitting bag/needles and orange ball.
-    _box("wall-light-switch", (.14,.035,.18), (3.94,2.36,1.20), mats["ceramic"], c, bevel=.01)
-    _box("right-wall-vase", (.16,.18,.48), (3.92,2.86,1.62), mats["ceramic"], c, bevel=.025)
+    _box("wall-light-switch", (.14, .035, .18), (4.72, 2.36, 1.20), mats["ceramic"], c, bevel=.01)
+    _box("right-wall-vase", (.16, .18, .48), (4.72, 2.86, 1.62), mats["ceramic"], c, bevel=.025)
     for i in range(4):
-        _rod(f"tulip-stem-{i}", (3.92,2.83,1.80), (3.98+i*.06,2.82,2.16+(i%2)*.08), .012, mats["leaf"], c)
-        _sphere(f"tulip-{i}", .065, (3.98+i*.06,2.82,2.18+(i%2)*.08), mats["flower"], c, segments=12)
+        _rod(f"tulip-stem-{i}", (4.72, 2.83, 1.80), (4.78 + i * .06, 2.82, 2.16 + (i % 2) * .08), .012, mats["leaf"], c)
+        _sphere(f"tulip-{i}", .065, (4.78 + i * .06, 2.82, 2.18 + (i % 2) * .08), mats["flower"], c, segments=12)
     _box("green-knitting-bag", (.54,.24,.48), (3.45,-2.72,.25), mats["green"], c, rot=(0,0,.05), bevel=.06)
     _rod("knitting-needle-a", (3.36,-2.72,.45), (3.30,-2.72,1.02), .012, mats["wood3"], c)
     _rod("knitting-needle-b", (3.52,-2.72,.45), (3.60,-2.72,1.00), .012, mats["wood3"], c)

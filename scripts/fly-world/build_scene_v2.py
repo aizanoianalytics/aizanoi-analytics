@@ -248,14 +248,14 @@ def reference_dressing(root, manifest, m):
 
     # Additional reference clutter: blue bag, books, slippers, folded cloth, toys.
     box("blue-bag",(.76,.36,.55),(-1.50,-2.55,.31),m["blue"],c,bevel=.07,collision=True,rot=(0,0,-.16))
-    for x in (.30,.80): box(f"bag-handle-{x}",(.05,.06,.43),(x,.18,.66),m["wood2"],c)
-    cluster=((-1.05,-.55,.30,.18,.18),(-.72,-.62,.26,.17,.10),(-.25,-.40,.20,.16,.16),(.18,-.28,.22,.12,.14),
-             (-2.62,-1.22,.34,.15,.12),(-2.23,-1.16,.34,.15,.12),(1.42,-.42,.32,.26,.15),(1.62,-.28,.28,.22,.12),(-1.52,-.14,.22,.20,.13))
+    for x in (-1.70,-1.30): box(f"bag-handle-{x}",(.05,.06,.43),(x,-2.55,.66),m["wood2"],c)
+    cluster=((-2.85,-3.05,.30,.18,.12),(-2.50,-2.88,.26,.17,.10),(-2.15,-3.12,.20,.16,.10),
+             (-2.70,-2.70,.22,.14,.11),(-1.95,-2.95,.24,.15,.10))
     for i,(x,y,w,d,h) in enumerate(cluster):
         box(f"clutter-{i}",(w,d,h),(x,y,h/2+.025),(m["wood3"],m["red"],m["green"],m["blue"])[i%4],c,bevel=min(w,d,h)*.15)
-    # Yarn visible in basket.
+    # Yarn visible in basket beside the divan.
     for i in range(8):
-        a=i/8*math.tau; sphere(f"yarn-{i}",.10+(i%2)*.02,(-1.95+math.cos(a)*.20,.58+math.sin(a)*.17,.58+(i%3)*.035),(m["red"],m["green"],m["pink"],m["blue"])[i%4],c)
+        a=i/8*math.tau; sphere(f"yarn-{i}",.10+(i%2)*.02,(-2.35+math.cos(a)*.20,2.05+math.sin(a)*.17,.58+(i%3)*.035),(m["red"],m["green"],m["pink"],m["blue"])[i%4],c)
 
     # Bedroom continuation: shelves/books, chest, wardrobe, second curtain and plant.
     box("bedroom-bookshelf",(1.10,.34,1.62),(7.65,4.03,.81),m["wood"],c,bevel=.025,collision=True)
