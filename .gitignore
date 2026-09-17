@@ -42,3 +42,11 @@ frontend/analytics/markets/data/
 
 # Fly House generated Blender outputs. Approved web assets are promoted separately.
 gelistirmeler/2026-09-16-fly-world-prototype/build/
+
+# YEREL (bu bilgisayar): guncelleyici/baslatici ve durum dosyalari asla commit edilmez
+gelistirmeler/yerel-kurulum/
+Guncelle.bat
+Baslat.bat
+Aizanoi-Guncelle.ps1
+README-GUNCELLEME.md
+.last-update.json

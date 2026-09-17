@@ -1791,3 +1791,122 @@ export function buildGateMarshallerSign(x, z, rot = 0, gateText = 'B7') {
 
   return group;
 }
+
+// Compact-world hero dressing helpers. These remain procedural so the shared
+// props module owns the authored landmarks used by all four world entrypoints.
+function _placedGroup(x, z, rot = 0) {
+  const group = new THREE.Group();
+  group.position.set(x, 0, z);
+  group.rotation.y = rot;
+  return group;
+}
+
+function _box(group, size, position, material) {
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(...size), material);
+  mesh.position.set(...position);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  group.add(mesh);
+  return mesh;
+}
+
+export function buildAizanoiMacellumFoodCounter(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  _box(group, [3.2, 0.9, 1.0], [0, 0.45, 0], getMaterial('limestone'));
+  _box(group, [3.5, 0.18, 1.2], [0, 1.0, 0], getMaterial('marble'));
+  return group;
+}
+
+export function buildTempleOfZeusBronzeTripod(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  const bronze = getMaterial('bronze');
+  for (const angle of [0, Math.PI * 2 / 3, Math.PI * 4 / 3]) {
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.1, 1.2, 8), bronze);
+    leg.position.set(Math.cos(angle) * 0.35, 0.6, Math.sin(angle) * 0.35);
+    leg.rotation.z = Math.cos(angle) * 0.25;
+    leg.rotation.x = Math.sin(angle) * 0.25;
+    group.add(leg);
+  }
+  const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.42, 0.14, 16), bronze);
+  bowl.position.y = 1.22;
+  group.add(bowl);
+  return group;
+}
+
+export function buildCatacombMemorialCross(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  const stone = getMaterial('limestone');
+  _box(group, [0.28, 2.5, 0.28], [0, 1.25, 0], stone);
+  _box(group, [1.1, 0.28, 0.28], [0, 1.8, 0], stone);
+  return group;
+}
+
+export function buildLateRomanSiegeTower(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  _box(group, [2.6, 5.0, 2.6], [0, 2.5, 0], getMaterial('wood'));
+  _box(group, [3.0, 0.25, 3.0], [0, 5.1, 0], getMaterial('wood'));
+  return group;
+}
+
+export function buildAirTrafficControlTower(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  _box(group, [3.0, 10.0, 3.0], [0, 5, 0], getMaterial('concrete'));
+  _box(group, [5.0, 1.2, 5.0], [0, 10.5, 0], getMaterial('glassCurtain'));
+  return group;
+}
+
+export function buildAirportPushbackTractor(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  _box(group, [2.8, 0.9, 1.8], [0, 0.45, 0], getMaterial('serviceVehicle'));
+  for (const xw of [-1, 1]) for (const zw of [-0.6, 0.6]) {
+    const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.28, 0.18, 12), getMaterial('structuralSteel'));
+    wheel.rotation.z = Math.PI / 2;
+    wheel.position.set(xw * 0.9, 0.28, zw);
+    group.add(wheel);
+  }
+  return group;
+}
+
+export function buildBoardingJetway(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  _box(group, [5.0, 2.8, 1.8], [0, 1.4, 0], getMaterial('glassCurtain'));
+  _box(group, [5.4, 0.18, 2.0], [0, 2.85, 0], getMaterial('structuralSteel'));
+  return group;
+}
+
+export function buildFlightInfoDisplayTotem(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  _box(group, [0.7, 3.2, 0.35], [0, 1.6, 0], getMaterial('structuralSteel'));
+  _box(group, [1.8, 1.0, 0.18], [0, 2.5, 0], getMaterial('glassCurtain'));
+  return group;
+}
+
+export function buildAthenaPromachosMonument(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  const bronze = getMaterial('bronze');
+  _box(group, [1.8, 0.8, 1.8], [0, 0.4, 0], getMaterial('marble'));
+  const body = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.7, 3.4, 12), bronze);
+  body.position.y = 2.5;
+  body.castShadow = true;
+  group.add(body);
+  const spear = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 5.5, 8), bronze);
+  spear.position.set(0.75, 4.8, 0);
+  spear.rotation.z = -0.08;
+  group.add(spear);
+  return group;
+}
+
+export function buildErechtheionCaryatidPorch(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  const stone = getMaterial('marble');
+  for (let i = -2; i <= 2; i++) _box(group, [0.45, 2.8, 0.45], [i * 0.8, 1.4, 0], stone);
+  _box(group, [4.4, 0.35, 1.0], [0, 3.0, 0], stone);
+  return group;
+}
+
+export function buildBouleuterionOratorBema(x, z, rot = 0) {
+  const group = _placedGroup(x, z, rot);
+  _box(group, [3.0, 0.6, 2.0], [0, 0.3, 0], getMaterial('marble'));
+  _box(group, [1.2, 1.4, 0.8], [0, 1.0, -0.2], getMaterial('limestone'));
+  return group;
+}

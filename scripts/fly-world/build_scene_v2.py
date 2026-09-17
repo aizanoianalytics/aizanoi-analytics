@@ -140,29 +140,29 @@ def wall_y(col, mats, y, x0, x1, z0, z1, name):
 
 def architecture(m):
     c = collection("ARCHITECTURE_V2")
-    # Main room 8.4 x 7.0 x 2.85m: a measured 0.3m circulation buffer on both long edges.
-    box("FLOOR__main", (8.4,7.0,.10), (0,0,-.05), m["floor"], c, landing=True)
-    box("CEILING__main", (8.4,7.0,.08), (0,0,2.89), m["plaster2"], c, collision=True)
-    wall_y(c,m,3.5,-4.2,4.2,0,2.85,"WALL__main__north")
-    wall_y(c,m,-3.5,-4.2,4.2,0,2.85,"WALL__main__south")
+    # Main room 9.6 x 8.0 x 2.85m: a measured 0.3m circulation buffer on both long edges.
+    box("FLOOR__main", (9.6,8.0,.10), (0,0,-.05), m["floor"], c, landing=True)
+    box("CEILING__main", (9.6,8.0,.08), (0,0,2.89), m["plaster2"], c, collision=True)
+    wall_y(c,m,4.0,-4.8,4.8,0,2.85,"WALL__main__north")
+    wall_y(c,m,-4.0,-4.8,4.8,0,2.85,"WALL__main__south")
     # West barred window.
-    wall_x(c,m,-4.2,-3.2,-1.72,0,2.85,"WALL__main__west_a")
-    wall_x(c,m,-4.2,.28,3.2,0,2.85,"WALL__main__west_b")
-    wall_x(c,m,-4.2,-1.72,.28,0,.72,"WALL__main__west_sill")
-    wall_x(c,m,-4.2,-1.72,.28,2.28,2.85,"WALL__main__west_head")
+    wall_x(c,m,-4.8,-4.0,-1.72,0,2.85,"WALL__main__west_a")
+    wall_x(c,m,-4.8,.28,4.0,0,2.85,"WALL__main__west_b")
+    wall_x(c,m,-4.8,-1.72,.28,0,.72,"WALL__main__west_sill")
+    wall_x(c,m,-4.8,-1.72,.28,2.28,2.85,"WALL__main__west_head")
     # East doorway to bedroom.
-    wall_x(c,m,4.2,-3.2,.34,0,2.85,"WALL__main__east_a")
-    wall_x(c,m,4.2,1.66,3.2,0,2.85,"WALL__main__east_b")
-    wall_x(c,m,4.2,.34,1.66,2.18,2.85,"WALL__main__east_head")
-    # Bedroom 4.2 x 5.4m: extra breathing room around the bed without moving the doorway.
-    box("FLOOR__bed", (4.2,5.4,.10), (6.3,1.15,-.05), m["floor"], c, landing=True)
-    box("CEILING__bed", (4.2,5.4,.08), (6.3,1.15,2.89), m["plaster2"], c, collision=True)
-    wall_x(c,m,8.4,-1.55,3.85,0,2.85,"WALL__bed__east")
-    wall_y(c,m,-1.55,4.2,8.4,0,2.85,"WALL__bed__south")
-    wall_y(c,m,3.85,4.2,4.92,0,2.85,"WALL__bed__north_a")
-    wall_y(c,m,3.85,6.30,8.4,0,2.85,"WALL__bed__north_b")
-    wall_y(c,m,3.85,4.92,6.30,0,.78,"WALL__bed__north_sill")
-    wall_y(c,m,3.85,4.92,6.30,2.20,2.85,"WALL__bed__north_head")
+    wall_x(c,m,4.8,-4.0,.34,0,2.85,"WALL__main__east_a")
+    wall_x(c,m,4.8,1.66,4.0,0,2.85,"WALL__main__east_b")
+    wall_x(c,m,4.8,.34,1.66,2.18,2.85,"WALL__main__east_head")
+    # Bedroom 5.0 x 6.2m: extra breathing room around the bed; doorway follows the shared wall.
+    box("FLOOR__bed", (5.0,6.2,.10), (7.3,1.15,-.05), m["floor"], c, landing=True)
+    box("CEILING__bed", (5.0,6.2,.08), (7.3,1.15,2.89), m["plaster2"], c, collision=True)
+    wall_x(c,m,9.8,-1.95,4.25,0,2.85,"WALL__bed__east")
+    wall_y(c,m,-1.95,4.8,9.8,0,2.85,"WALL__bed__south")
+    wall_y(c,m,4.25,4.8,4.92,0,2.85,"WALL__bed__north_a")
+    wall_y(c,m,4.25,6.30,9.8,0,2.85,"WALL__bed__north_b")
+    wall_y(c,m,4.25,4.92,6.30,0,.78,"WALL__bed__north_sill")
+    wall_y(c,m,4.25,4.92,6.30,2.20,2.85,"WALL__bed__north_head")
     # Shared room divider is owned by the main room; duplicate coplanar bedroom walls caused z-fighting.
     # Old-house beams/skirting.
     for i,y in enumerate((-2.35,-.8,.75,2.30)):

@@ -37,6 +37,10 @@ import {
   buildBoardingStairsTruck,
   buildAirportWindsock,
   buildGateMarshallerSign,
+  buildAirTrafficControlTower,
+  buildBoardingJetway,
+  buildAirportPushbackTractor,
+  buildFlightInfoDisplayTotem,
 } from '../../shared/assets/props.js';
 import { AirportTrafficSystem } from './aircraft.js';
 
@@ -181,7 +185,7 @@ async function init() {
   traffic.init();
   // Traffic retains its authored choreography; present it in the same compact
   // coordinate frame as the terminal and collision map.
-  traffic.group.scale.set(0.78, 1, 0.82);
+  traffic.group.scale.set(0.39, 1, 0.82);
 
   // 10. Controls
   controls = new Controls(camera, canvas, document.body);
@@ -202,7 +206,7 @@ async function init() {
     subtitle: 'Present-Day Global Aviation Gateway · Interactive Walkthrough',
   });
   intro.curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-250, 240, 1030), // High above Tulip Tower
+    new THREE.Vector3(-125, 240, 1030), // High above Tulip Tower
     new THREE.Vector3(0, 120, 500),      // Over Pier concourses
     new THREE.Vector3(0, 50, 100),      // Descending into Terminal volume
     new THREE.Vector3(0, 15, -150),     // Check-in hall avenue
@@ -295,7 +299,7 @@ function populateAirportApron() {
   // 1. Commercial Passenger Jets (Turkish Red Livery) at Pier Gates
   const aircraftStands = [
     // Pier West (International Pier A-B) Outer Gates
-    // Note: Gate 1 at (-555, 420) is managed dynamically by AirportTrafficSystem (pushback + tug sequence)
+    // Note: Gate 1 at (-277.5, 420) is managed dynamically by AirportTrafficSystem (pushback + tug sequence)
     { x: -555, z: 600, rot: -Math.PI / 2, tug: true, fuel: false },
     { x: -555, z: 780, rot: -Math.PI / 2, tug: false, fuel: true },
     // Pier West Inner Gates
@@ -328,8 +332,8 @@ function populateAirportApron() {
     const isEW = Math.abs(Math.sin(s.rot)) > 0.5;
     collision.grid.insert({
       type: 'rect', id: `airliner-${i}`,
-      x: s.x * 0.78, z: s.z * 0.82,
-      w: (isEW ? 58 : 10) * 0.78, d: (isEW ? 10 : 58) * 0.82, h: 8, y: 0
+      x: s.x * 0.39, z: s.z * 0.82,
+      w: (isEW ? 58 : 10) * 0.39, d: (isEW ? 10 : 58) * 0.82, h: 8, y: 0
     });
 
     // Ground Support Equipment (GSE)
@@ -379,9 +383,26 @@ function populateAirportApron() {
   apronGroup.add(buildGateMarshallerSign(540, 420, -Math.PI / 2, 'Gate B1'));
   apronGroup.add(buildGateMarshallerSign(540, 600, -Math.PI / 2, 'Gate B3'));
 
+  // 7. Pininfarina Tulip Air Traffic Control Tower Airfield Landmark
+  apronGroup.add(buildAirTrafficControlTower(-180, 1150, 0));
+  collision.grid.insert({ type: 'rect', id: 'atc-tower-prop', x: -180 * 0.39, z: 1150 * 0.82, w: 20 * 0.39, d: 20 * 0.82, h: 90 });
+
+  // 8. Telescopic Dual-Corridor Passenger Boarding Jetways
+  apronGroup.add(buildBoardingJetway(-530, 780, -Math.PI / 2));
+  apronGroup.add(buildBoardingJetway(530, 780, Math.PI / 2));
+
+  // 9. Heavy Aircraft Pushback Tractors & Tow Hitches
+  apronGroup.add(buildAirportPushbackTractor(-385, 470, Math.PI / 2));
+  apronGroup.add(buildAirportPushbackTractor(385, 470, -Math.PI / 2));
+
+  // 10. Digital Flight Information Display System (FIDS) Totems
+  apronGroup.add(buildFlightInfoDisplayTotem(-80, 60, 0));
+  apronGroup.add(buildFlightInfoDisplayTotem(80, 60, 0));
+  apronGroup.add(buildFlightInfoDisplayTotem(0, 140, Math.PI / 2));
+
   scene.add(apronGroup);
   // Match aircraft, gate markers and service equipment to the compact map.
-  apronGroup.scale.set(0.78, 1, 0.82);
+  apronGroup.scale.set(0.39, 1, 0.82);
 }
 
 function bindEvents() {

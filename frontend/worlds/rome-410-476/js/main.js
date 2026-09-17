@@ -50,6 +50,8 @@ import {
   buildRuinedTriumphalArch,
   buildLateRomanBarricade,
   buildForumWatchBrazier,
+  buildLateRomanSiegeTower,
+  buildCatacombMemorialCross,
 } from '../../shared/assets/props.js';
 
 
@@ -202,18 +204,18 @@ async function init() {
     subtitle: 'Late Antique Capital · Sack, Survival, Transformation',
   });
   intro.curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(52, 220, -65),    // Over Colosseum
-    new THREE.Vector3(-60, 110, 35),    // Over Basilica of Maxentius
-    new THREE.Vector3(-185, 45, -65),   // Forum Romanum
-    new THREE.Vector3(-365, 30, 120),   // Pantheon rotunda
+    new THREE.Vector3(26, 220, -65),    // Over Colosseum
+    new THREE.Vector3(-30, 110, 35),    // Over Basilica of Maxentius
+    new THREE.Vector3(-92.5, 45, -65),   // Forum Romanum
+    new THREE.Vector3(-182.5, 30, 120),   // Pantheon rotunda
     new THREE.Vector3(SPAWN.x, 1.7, SPAWN.z), // Touchdown at Via Flaminia
   ]);
   intro.lookAtCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(52, 20, -65),
-    new THREE.Vector3(-185, 10, -65),
-    new THREE.Vector3(-365, 20, 120),
-    new THREE.Vector3(-350, 5, 200),
-    new THREE.Vector3(-350, 1.7, 300),
+    new THREE.Vector3(26, 20, -65),
+    new THREE.Vector3(-92.5, 10, -65),
+    new THREE.Vector3(-182.5, 20, 120),
+    new THREE.Vector3(-175, 5, 200),
+    new THREE.Vector3(-175, 1.7, 300),
   ]);
 
   intro.onComplete = () => {
@@ -221,7 +223,7 @@ async function init() {
     simPos.copy(camera.position);
     pose.snap();
     audio.init();
-    audio.setSoundset('mediterranean');
+    audio.setSoundset('rome');
     isRunning = true;
   };
 
@@ -344,8 +346,10 @@ function populateRomeDressing() {
   const dressingGroup = new THREE.Group();
   dressingGroup.name = 'rome-street-dressing';
   // Keep authored street furniture aligned with the compact survey coordinates.
-  dressingGroup.scale.setScalar(0.84);
+  // X is halved vs the original survey (anisotropic compaction, 2026-09-16).
+  dressingGroup.scale.set(0.42, 0.84, 0.84);
   dressingGroup.userData.layoutScale = 0.84;
+  dressingGroup.userData.layoutScaleX = 0.42;
 
   // 1. Roman Nymphaeum Stone Fountains in Public Plazas
   dressingGroup.add(buildRomanFountain(-60, -10, 0));  // Forum Romanum center
@@ -362,7 +366,7 @@ function populateRomeDressing() {
   ];
   for (const s of stalls) {
     dressingGroup.add(buildMarketStall(s.x, s.z, s.rot, s.color));
-    collision.grid.insert({ type: 'rect', id: `rome-stall-${s.x}-${s.z}`, x: s.x, z: s.z, w: 2.8, d: 2.2, h: 2.6 });
+    collision.grid.insert({ type: 'rect', id: `rome-stall-${s.x}-${s.z}`, x: s.x * 0.42, z: s.z * 0.84, w: 2.8 * 0.42, d: 2.2, h: 2.6 });
   }
 
   // 3. Amphora Clusters along Tiber River wharves
@@ -415,7 +419,7 @@ function populateRomeDressing() {
 
   // 10. Great Altars in the Forum Romanum (Altar of Saturn & Temple of Concord)
   dressingGroup.add(buildSacrificialAltar(-80, -2, 0.15));
-  collision.grid.insert({ type: 'rect', id: 'saturn-altar', x: -80, z: -2, w: 3.6, d: 2.4, h: 2.2 });
+  collision.grid.insert({ type: 'rect', id: 'saturn-altar', x: -80 * 0.42, z: -2 * 0.84, w: 3.6 * 0.42, d: 2.4, h: 2.2 });
 
   // 11. Solarium Augusti / Horologium Sundial in Campus Martius
   dressingGroup.add(buildSundialMonument(-225, 120));
@@ -447,20 +451,29 @@ function populateRomeDressing() {
   arcade1.position.set(150, 0, 40);
   arcade1.rotation.y = 0.4;
   dressingGroup.add(arcade1);
-  collision.grid.insert({ type: 'rect', id: 'collapsed-arcade-1', x: 150, z: 40, w: 26, d: 5, h: 11 });
+  collision.grid.insert({ type: 'rect', id: 'collapsed-arcade-1', x: 150 * 0.42, z: 40 * 0.84, w: 26 * 0.42, d: 5, h: 11 });
 
   // Fractured Late-Antique Ruined Triumphal Archway (Post-Sack)
   dressingGroup.add(buildRuinedTriumphalArch(-75, 25, 0.35));
-  collision.grid.insert({ type: 'rect', id: 'ruined-arch-1', x: -75, z: 25, w: 7.2, d: 3.6, h: 7.8 });
+  collision.grid.insert({ type: 'rect', id: 'ruined-arch-1', x: -75 * 0.42, z: 25 * 0.84, w: 7.2 * 0.42, d: 3.6, h: 7.8 });
 
   // Late Roman Street Defense Barricades
   dressingGroup.add(buildLateRomanBarricade(-50, -18, 0.28));
-  collision.grid.insert({ type: 'rect', id: 'barricade-sacra-1', x: -50, z: -18, w: 3.2, d: 2.2, h: 1.8 });
+  collision.grid.insert({ type: 'rect', id: 'barricade-sacra-1', x: -50 * 0.42, z: -18 * 0.84, w: 3.2 * 0.42, d: 2.2, h: 1.8 });
   dressingGroup.add(buildLateRomanBarricade(-210, 240, -0.4));
 
   // Forum Night Watch Fire Baskets
   dressingGroup.add(buildForumWatchBrazier(-70, 15));
   dressingGroup.add(buildForumWatchBrazier(-45, -12));
+
+  // Late Roman Mobile Siege Tower (Gothic / Vandal sieges)
+  dressingGroup.add(buildLateRomanSiegeTower(160, 120, -0.4));
+  collision.grid.insert({ type: 'rect', id: 'rome-siege-tower-1', x: 160 * 0.42, z: 120 * 0.84, w: 5.6 * 0.42, d: 5.6 * 0.84, h: 11.5 });
+
+  // Early Christian Catacomb & Basilica Memorial Crosses
+  dressingGroup.add(buildCatacombMemorialCross(-85, 60, 0.15));
+  collision.grid.insert({ type: 'rect', id: 'catacomb-cross-1', x: -85 * 0.42, z: 60 * 0.84, w: 1.6 * 0.42, d: 1.6 * 0.84, h: 3.8 });
+  dressingGroup.add(buildCatacombMemorialCross(130, -35, -0.2));
 
   // Overgrown street paving weeds along Roman basalt roads
   const weedCoords = [
@@ -510,7 +523,7 @@ function bindEvents() {
         intro.start();
         audio.init();
         audio.installLifecycleResume();
-        audio.setSoundset('mediterranean');
+        audio.setSoundset('rome');
       } catch (err) {
         console.warn('enter sequence: non-fatal', err);
         intro.start();

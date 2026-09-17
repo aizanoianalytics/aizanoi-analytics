@@ -1,5 +1,6 @@
 import * as THREE from '../../worlds/shared/vendor/three.module.js';
 import { GLTFLoader } from '../../worlds/shared/vendor/GLTFLoader.js';
+import { AudioSystem } from '../../worlds/shared/engine/audio.js';
 
 const canvas = document.querySelector('#world');
 const fatal = document.querySelector('#fatal');
@@ -197,11 +198,29 @@ async function boot() {
   metrics.camera = camera;
   metrics.frameCamera = (x, y, z, yaw, pitch = -.04) => observer.frameCamera(x, y, z, yaw, pitch);
   metrics.collisionAt = (x, y, z = 1.58) => observer.blocked(new THREE.Vector3(x, y, z));
+
+  // Procedural room tone: same contract as the main-v3 fallback (flyworld
+  // soundset, wood footsteps). Inits on first click (user gesture).
+  const audio = new AudioSystem();
+  audio.setSoundset('flyworld');
+  window.__FLY_AUDIO__ = audio;
+  canvas.addEventListener('click', () => {
+    audio.init();
+    audio.resume();
+  }, { once: true });
+
   const clock = new THREE.Clock();
   let frames = 0;
   let fpsAt = performance.now();
   renderer.setAnimationLoop(() => {
-    observer.update(Math.min(clock.getDelta(), .05));
+    const dt = Math.min(clock.getDelta(), .05);
+    observer.update(dt);
+    if (window.__FLY_AUDIO__) {
+      const keys = observer.keys;
+      const isMoving = keys.has('KeyW') || keys.has('KeyS') || keys.has('KeyA') || keys.has('KeyD');
+      const isRunning = isMoving && (keys.has('ShiftLeft') || keys.has('ShiftRight'));
+      window.__FLY_AUDIO__.update(dt, camera.position, false, isMoving, isRunning, { surface: 'wood' });
+    }
     renderer.render(scene, camera);
     frames += 1;
     metrics.animationTicks += 1;

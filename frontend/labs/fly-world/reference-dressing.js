@@ -61,24 +61,24 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
   });
   removeFromScene.forEach((object) => object.parent?.remove(object));
   const inheritedCage = scene.getObjectByName('birdcage-detail');
-  if (inheritedCage) inheritedCage.position.set(-3.45, 1.72, 1.15);
+  if (inheritedCage) inheritedCage.position.set(-4.05, 1.72, 1.15);
 
   // Reference-specific ornament in the barred window: the original grille is not
   // a plain prison grid. A few diagonal flourishes give it the same decorative read
   // without adding expensive bespoke curves to the fallback.
   const grilleLines = [
-    [[-4.04,-1.42,.96],[-4.04,-1.08,1.34]],
-    [[-4.04,-1.08,1.34],[-4.04,-.76,.98]],
-    [[-4.04,-.48,1.60],[-4.04,-.16,1.98]],
-    [[-4.04,-.16,1.98],[-4.04,.10,1.62]],
+    [[-4.64,-1.42,.96],[-4.64,-1.08,1.34]],
+    [[-4.64,-1.08,1.34],[-4.64,-.76,.98]],
+    [[-4.64,-.48,1.60],[-4.64,-.16,1.98]],
+    [[-4.64,-.16,1.98],[-4.64,.10,1.62]],
   ];
   grilleLines.forEach(([a,b], i) => addLine(a,b,M.metal,`window-grille-flourish-${i}`,0.018));
-  cylinder(0.035, 0.30, [-3.40, 1.67, 1.12], paleBlue, 'birdcage-water-bottle');
+  cylinder(0.035, 0.30, [-4.00, 1.67, 1.12], paleBlue, 'birdcage-water-bottle');
 
   // Single little portrait over the doorway, as in the reference, instead of a row
   // of invented wall pictures.
-  box([0.035, 0.38, 0.46], [4.055, 1.03, 2.55], M.woodDark, 'doorway-portrait-frame');
-  box([0.025, 0.29, 0.37], [4.035, 1.03, 2.55], plasterPatchDark, 'doorway-portrait');
+  box([0.035, 0.38, 0.46], [4.655, 1.03, 2.55], M.woodDark, 'doorway-portrait-frame');
+  box([0.025, 0.29, 0.37], [4.635, 1.03, 2.55], plasterPatchDark, 'doorway-portrait');
 
   // Large muted carpet under the seating/stove zone.  The reference has a broad
   // worn green carpet beneath the smaller runner and round rug, not bare floor.
@@ -92,16 +92,19 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
   }
 
   // Thick doorway casing: an important silhouette in the approved reference.
-  box([0.28, 0.30, 2.58], [4.05, 0.16, 1.29], M.woodDark, 'door-frame-near', { solid: true });
-  box([0.28, 0.30, 2.58], [4.05, 1.84, 1.29], M.woodDark, 'door-frame-far', { solid: true });
-  box([0.28, 1.98, 0.28], [4.05, 1.00, 2.48], M.woodDark, 'door-frame-header', { solid: true });
-  box([0.08, 1.68, 0.10], [3.91, 1.00, 0.05], M.woodLight, 'door-threshold');
+  box([0.28, 0.30, 2.58], [4.65, 0.16, 1.29], M.woodDark, 'door-frame-near', { solid: true });
+  box([0.28, 0.30, 2.58], [4.65, 1.84, 1.29], M.woodDark, 'door-frame-far', { solid: true });
+  box([0.28, 1.98, 0.28], [4.65, 1.00, 2.48], M.woodDark, 'door-frame-header', { solid: true });
+  box([0.08, 1.68, 0.10], [4.51, 1.00, 0.05], M.woodLight, 'door-threshold');
 
-  // Old round wall clock between the curtains and the cabinet.
-  cylinder(0.26, 0.055, [-3.72, 1.18, 2.22], M.woodDark, 'wall-clock-frame', { axis: 'x' });
-  cylinder(0.215, 0.065, [-3.69, 1.18, 2.22], M.ceramic, 'wall-clock-face', { axis: 'x' });
-  addLine([-3.65, 1.18, 2.22], [-3.63, 1.18, 2.34], black, 'clock-hand-minute', 0.009);
-  addLine([-3.65, 1.18, 2.22], [-3.65, 1.27, 2.18], black, 'clock-hand-hour', 0.011);
+  // Old round wall clock between the curtains and the cabinet (mounted on west wall plane).
+  cylinder(0.26, 0.055, [-4.70, 1.18, 2.22], M.woodDark, 'wall-clock-frame', { axis: 'x' });
+  cylinder(0.215, 0.065, [-4.67, 1.18, 2.22], M.ceramic, 'wall-clock-face', { axis: 'x' });
+  addLine([-4.64, 1.18, 2.22], [-4.62, 1.18, 2.34], black, 'clock-hand-minute', 0.009);
+  addLine([-4.64, 1.18, 2.22], [-4.64, 1.27, 2.18], black, 'clock-hand-hour', 0.011);
+
+  // Cabinet-top support shelf (spec supportSurfaces contract: raises items onto solid top)
+  box([3.82, 0.46, 0.08], [-0.65, 2.70, 2.34], M.woodDark, 'cabinet-top-support-shelf', { solid: true });
 
   // Cabinet-top still life: red books, lace runner, fruit bowl, framed photo and
   // the small blue decorative globe/ball visible in the illustration.

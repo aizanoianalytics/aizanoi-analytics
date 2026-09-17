@@ -25,7 +25,7 @@ test('Living water: buildWaterSamplePoints generates dense river audio coverage 
   // Athens Ilissos, Eridanos, Kallirrhoe spring
   const athensPts = buildWaterSamplePoints(ATHENS_WATERS, 25);
   assert.ok(athensPts.length >= 25, `Athens water sample points too sparse: ${athensPts.length}`);
-  const springPt = athensPts.find(p => Math.hypot(p.x - (-260), p.z - 160) < 1.0);
+  const springPt = athensPts.find(p => Math.hypot(p.x - (-130), p.z - 160) < 1.0); // Kallirrhoe x yarisi: 2026-09-16
   assert.ok(springPt, 'Kallirrhoe spring must be included in Athens water sample points');
 });
 

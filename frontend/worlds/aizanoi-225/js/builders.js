@@ -52,15 +52,15 @@ function theatreFan(count, stepDeg, startDeg, scale) {
 }
 
 function bridgeDeck() {
-  return [-27.2, -13.6, 0, 13.6, 27.2].map((dx) => P('bridge_seg', dx, 0, 0, 1));
+  return [-13.6, -6.8, 0, 6.8, 13.6].map((dx) => P('bridge_seg', dx, 0, 0, 1));
 }
 
 function streetColonnades() {
   const list = [];
   for (let k = 0; k < 6; k++) {
     const dz = -62.5 + k * 25;
-    list.push(P('stoa_seg', -12, dz, Math.PI / 2, 1));
-    list.push(P('stoa_seg', 12, dz, -Math.PI / 2, 1));
+    list.push(P('stoa_seg', -6, dz, Math.PI / 2, 1));
+    list.push(P('stoa_seg', 6, dz, -Math.PI / 2, 1));
   }
   return list;
 }
@@ -81,19 +81,19 @@ const PLACEMENTS = {
   agora: [
     P('stoa_seg', 0, -20, Math.PI, 1),
     P('stoa_seg', 0, 20, 0, 1),
-    P('arch_gate', -34, 0, Math.PI / 2, 1),
+    P('arch_gate', -17, 0, Math.PI / 2, 1),
   ],
   macellum: macellumRing(),
   theatre: [...theatreFan(10, 18, -81, 1), P('scaenae', 0, -16, 0, 1)],
   stadium: [
-    P('stadium_stand', -22, -30, Math.PI / 2, 1),
-    P('stadium_stand', -22, 0, Math.PI / 2, 1),
-    P('stadium_stand', -22, 30, Math.PI / 2, 1),
-    P('stadium_stand', 22, -30, Math.PI / 2, 1),
-    P('stadium_stand', 22, 0, Math.PI / 2, 1),
-    P('stadium_stand', 22, 30, Math.PI / 2, 1),
+    P('stadium_stand', -11, -30, Math.PI / 2, 1),
+    P('stadium_stand', -11, 0, Math.PI / 2, 1),
+    P('stadium_stand', -11, 30, Math.PI / 2, 1),
+    P('stadium_stand', 11, -30, Math.PI / 2, 1),
+    P('stadium_stand', 11, 0, Math.PI / 2, 1),
+    P('stadium_stand', 11, 30, Math.PI / 2, 1),
   ],
-  greatbath: [P('bath_hall', -17.5, 0, 0, 1), P('bath_hall', 17.5, 0, 0, 1)],
+  greatbath: [P('bath_hall', -8.75, 0, 0, 1), P('bath_hall', 8.75, 0, 0, 1)],
   mosaicbath: [P('bath_hall', 0, 0, 0, 0.8)],
   odeon: [...theatreFan(5, 18, -36, 0.55), P('scaenae', 0, -9, 0, 0.35)],
   'colonnaded-street': streetColonnades(),

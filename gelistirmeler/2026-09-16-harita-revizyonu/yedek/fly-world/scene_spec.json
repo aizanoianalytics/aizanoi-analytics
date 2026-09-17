@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "project": "Fly House",
+  "stage": "reference-detail-v0.3",
+  "units": "meters",
+  "coordinateSystem": "Blender and browser runtime are Z-up; Fly House GLB is exported with export_yup=false",
+  "canonicalReference": "Approved people-free illustrated cottage interior: barred window and layered curtains on the left, carved divan/cabinet wall, CRT cabinet, central wood stove with long flue, dense floor clutter, and an open doorway into the connected bedroom.",
+  "worldBounds": {
+    "min": [-4.35, -3.35, 0.0],
+    "max": [8.55, 4.05, 3.0]
+  },
+  "observer": {
+    "mode": "ghost",
+    "spawn": [-1.85, -2.15, 1.58],
+    "lookAt": [0.55, 0.75, 1.1],
+    "collides": true,
+    "debugNoclipKey": "KeyN",
+    "castsShadow": false,
+    "visibleToFlySensors": false,
+    "affectsWorldPhysics": false,
+    "notes": "Ghost means invisible/non-physical to the future fly simulation, not noclip for the human visitor. Runtime wall/furniture collision is enabled by default."
+  },
+  "rooms": [
+    {
+      "id": "main-room",
+      "label": "Main living room",
+      "origin": [0.0, 0.0, 0.0],
+      "size": [8.4, 7.0, 2.85],
+      "floorMaterial": "aged-green-floor",
+      "wallMaterial": "warm-aged-plaster",
+      "ceilingMaterial": "aged-white-plaster",
+      "openings": [
+        {
+          "id": "west-window",
+          "wall": "west",
+          "center": [-4.2, -0.72, 1.50],
+          "size": [0.2, 2.0, 1.56],
+          "sillHeight": 0.72
+        },
+        {
+          "id": "bedroom-doorway",
+          "wall": "east",
+          "center": [4.2, 1.0, 1.09],
+          "size": [0.2, 1.32, 2.18],
+          "sillHeight": 0.0
+        }
+      ]
+    },
+    {
+      "id": "bedroom",
+      "label": "Connected bedroom",
+      "origin": [6.3, 1.3, 0.0],
+      "size": [4.2, 5.4, 2.85],
+      "floorMaterial": "aged-green-floor",
+      "wallMaterial": "warm-aged-plaster",
+      "ceilingMaterial": "aged-white-plaster",
+      "openings": [
+        {
+          "id": "bedroom-return-doorway",
+          "wall": "west",
+          "center": [4.2, 1.0, 1.09],
+          "size": [0.2, 1.32, 2.18],
+          "sillHeight": 0.0
+        },
+        {
+          "id": "bedroom-window",
+          "wall": "north",
+          "center": [5.61, 3.65, 1.49],
+          "size": [1.38, 0.2, 1.42],
+          "sillHeight": 0.78
+        }
+      ]
+    }
+  ],
+  "zones": [
+    {
+      "id": "circulation-zone",
+      "bounds": [[-2.7, -3.35, 0.0], [3.8, 2.10, 2.0]],
+      "futureFlySemantics": ["clear-path", "observer-navigation"]
+    },
+    {
+      "id": "window-zone",
+      "bounds": [[-4.3, -1.9, 0.0], [-2.8, 0.8, 2.85]],
+      "futureFlySemantics": ["bright", "airflow", "visual-landmark"]
+    },
+    {
+      "id": "divan-cabinet-zone",
+      "bounds": [[-2.8, 1.6, 0.0], [1.6, 3.1, 2.8]],
+      "futureFlySemantics": ["landing-surfaces", "textile", "wood", "food-opportunities"]
+    },
+    {
+      "id": "stove-zone",
+      "bounds": [[1.1, 0.0, 0.0], [3.2, 1.8, 2.85]],
+      "futureFlySemantics": ["heat", "vertical-landmarks", "landing-surfaces"]
+    },
+    {
+      "id": "floor-clutter-zone",
+      "bounds": [[-3.2, -3.0, 0.0], [3.8, 1.2, 1.1]],
+      "futureFlySemantics": ["micro-obstacles", "textile", "visual-landmarks"]
+    },
+    {
+      "id": "doorway-zone",
+      "bounds": [[3.7, 0.1, 0.0], [4.5, 1.9, 2.5]],
+      "futureFlySemantics": ["transition", "airflow"]
+    },
+    {
+      "id": "bedroom-zone",
+      "bounds": [[4.2, -1.35, 0.0], [8.4, 3.65, 2.85]],
+      "futureFlySemantics": ["second-biome", "warm-light", "textile", "landing-surfaces"]
+    }
+  ],
+  "heroObjects": [
+    {
+      "id": "bench",
+      "role": "bench-sofa",
+      "room": "main-room",
+      "position": [-0.65, 2.72, 0.42],
+      "rotationDeg": [0, 0, 0],
+      "size": [3.95, 0.88, 0.82],
+      "assetSlot": "bench-sofa"
+    },
+    {
+      "id": "back-cabinet",
+      "role": "carved-wood-cabinet",
+      "room": "main-room",
+      "position": [-0.65, 3.11, 1.54],
+      "rotationDeg": [0, 0, 0],
+      "size": [4.05, 0.44, 1.55],
+      "assetSlot": "carved-cabinet"
+    },
+    {
+      "id": "wood-stove",
+      "role": "wood-burning-stove",
+      "room": "main-room",
+      "position": [2.25, 0.35, 0.59],
+      "rotationDeg": [0, 0, 0],
+      "size": [1.02, 0.84, 1.18],
+      "assetSlot": "wood-stove",
+      "futureFlySemantics": ["heat-source", "landing-surface"]
+    },
+    {
+      "id": "kettle",
+      "role": "metal-kettle",
+      "room": "main-room",
+      "position": [2.03, 0.74, 1.35],
+      "rotationDeg": [0, 0, 0],
+      "size": [0.44, 0.38, 0.42],
+      "assetSlot": "kettle"
+    },
+    {
+      "id": "old-tv-cabinet",
+      "role": "old-television-cabinet",
+      "room": "main-room",
+      "position": [-3.36, -2.62, 0.70],
+      "rotationDeg": [0, 0, 0],
+      "size": [1.18, 0.72, 1.44],
+      "assetSlot": "old-tv"
+    },
+    {
+      "id": "yarn-basket",
+      "role": "woven-basket",
+      "room": "main-room",
+      "position": [-1.95, 0.58, 0.34],
+      "rotationDeg": [0, 0, 0],
+      "size": [0.74, 0.62, 0.68],
+      "assetSlot": "woven-basket"
+    },
+    {
+      "id": "blue-bag",
+      "role": "soft-bag",
+      "room": "main-room",
+      "position": [0.55, 0.18, 0.31],
+      "rotationDeg": [0, 0, -9],
+      "size": [0.76, 0.36, 0.55],
+      "assetSlot": "blue-bag"
+    },
+    {
+      "id": "main-rug",
+      "role": "patterned-rug",
+      "room": "main-room",
+      "position": [1.10, -1.35, 0.055],
+      "rotationDeg": [0, 0, -4],
+      "size": [4.85, 1.85, 0.035],
+      "assetSlot": "main-rug"
+    },
+    {
+      "id": "round-rug",
+      "role": "round-textile-rug",
+      "room": "main-room",
+      "position": [-0.70, -2.25, 0.055],
+      "rotationDeg": [0, 0, 0],
+      "size": [2.24, 2.24, 0.035],
+      "assetSlot": "round-rug"
+    },
+    {
+      "id": "bed",
+      "role": "wooden-bed",
+      "room": "bedroom",
+      "position": [6.72, 1.92, 0.46],
+      "rotationDeg": [0, 0, 0],
+      "size": [1.82, 2.20, 0.92],
+      "assetSlot": "wooden-bed"
+    },
+    {
+      "id": "bedside-table",
+      "role": "wooden-side-table",
+      "room": "bedroom",
+      "position": [5.18, 2.42, 0.42],
+      "rotationDeg": [0, 0, 0],
+      "size": [0.62, 0.56, 0.84],
+      "assetSlot": "bedside-table"
+    },
+    {
+      "id": "bedroom-bookshelf",
+      "role": "small-bookshelf",
+      "room": "bedroom",
+      "position": [7.65, 3.18, 0.81],
+      "rotationDeg": [0, 0, 0],
+      "size": [1.10, 0.34, 1.62],
+      "assetSlot": "bookshelf"
+    },
+    {
+      "id": "bench-quilt-set",
+      "role": "quilt-and-pillow-set",
+      "room": "main-room",
+      "position": [-0.48, 2.08, 0.78],
+      "rotationDeg": [0, 0, 0],
+      "size": [2.75, 0.85, 0.70],
+      "assetSlot": "pillow-quilt-set"
+    },
+    {
+      "id": "bed-quilt-set",
+      "role": "bed-quilt-and-pillows",
+      "room": "bedroom",
+      "position": [6.72, 1.92, 0.88],
+      "rotationDeg": [0, 0, 0],
+      "size": [1.72, 2.02, 0.60],
+      "assetSlot": "bed-quilt"
+    },
+    {
+      "id": "work-desk",
+      "role": "compact writing desk",
+      "room": "bedroom",
+      "position": [5.05, 3.05, 0.38],
+      "rotationDeg": [0, 0, 0],
+      "size": [1.45, 0.52, 0.76],
+      "assetSlot": "work-desk",
+      "futureFlySemantics": ["work-surface", "quiet-zone"]
+    },
+    {
+      "id": "floral-curtain",
+      "room": "main-room",
+      "position": [-3.92, 0.56, 1.50],
+      "rotationDeg": [0, 0, 0],
+      "size": [0.15, 1.30, 2.34],
+      "assetSlot": "curtain-floral"
+    },
+    {
+      "id": "lace-curtain",
+      "role": "lace-curtain-panel",
+      "room": "main-room",
+      "position": [-3.94, -0.82, 1.51],
+      "rotationDeg": [0, 0, 0],
+      "size": [0.10, 1.90, 2.18],
+      "assetSlot": "curtain-lace"
+    }
+  ],
+  "previewCameras": [
+    {
+      "id": "01-reference-wide",
+      "position": [-3.35, -2.65, 1.65],
+      "lookAt": [0.30, 0.65, 1.18],
+      "focalLengthMm": 45
+    },
+    {
+      "id": "02-room-eye-level",
+      "position": [-1.65, -2.55, 1.60],
+      "lookAt": [0.45, 1.05, 1.15],
+      "focalLengthMm": 50
+    },
+    {
+      "id": "03-window-to-stove",
+      "position": [-3.45, -0.55, 1.62],
+      "lookAt": [1.85, 0.72, 0.85],
+      "focalLengthMm": 52
+    },
+    {
+      "id": "04-doorway-bedroom",
+      "position": [1.00, 1.00, 1.55],
+      "lookAt": [6.10, 1.00, 1.05],
+      "focalLengthMm": 35
+    },
+    {
+      "id": "05-fly-scale",
+      "position": [1.15, -0.75, 0.20],
+      "lookAt": [2.05, 0.72, 0.65],
+      "focalLengthMm": 58
+    }
+  ],
+  "supportSurfaces": [
+    {
+      "id": "cabinet-top-support-shelf",
+      "supports": ["cabinet-top-still-life"],
+      "bounds": [[-2.56, 2.85, 2.38], [1.26, 3.31, 2.38]],
+      "source": "detail_pass_v3.py"
+    },
+    {
+      "id": "floor-main",
+      "supports": ["floor-clutter", "stove-hearth"],
+      "bounds": [[-4.2, -3.5, 0.0], [4.2, 3.5, 0.0]],
+      "source": "build_scene_v2.py"
+    }
+  ],
+  "qualityGates": {
+    "mustMatchReferenceComposition": true,
+    "mustUseAuthoredOrLicensedAssetsForHeroFurnitureBeforeVisualApproval": true,
+    "proceduralProxiesAreBlockoutOnly": true,
+    "mustRenderFiveBenchmarkViews": true,
+    "mustSupportGhostObserver": true,
+    "mustNotAddFlyUntilEnvironmentVisualApproval": true,
+    "mustKeepObserverCollisionEnabledByDefault": true,
+    "mustKeepObserverInvisibleToFlySensors": true,
+    "mustKeepBrowserAndBlenderCoordinateSystemsAligned": true
+  }
+}

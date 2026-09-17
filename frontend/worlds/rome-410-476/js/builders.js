@@ -145,15 +145,15 @@ const STATIC = {
   'titus-arch': [P('triumph_arch', 0, 0, 0, 0.9)],
   janus: [P('triumph_arch', 0, 0, 0, 0.75)],
   'trajan-column': [P('trajan_column')],
-  'trajan-market': [P('shop_row', -12, 0, 0, 1), P('shop_row', 12, 0, Math.PI, 1)],
-  palatine: [P('palace_block'), P('palace_block', 30, 12, 0.4, 0.7)],
+  'trajan-market': [P('shop_row', -6, 0, 0, 1), P('shop_row', 6, 0, Math.PI, 1)],
+  palatine: [P('palace_block'), P('palace_block', 15, 12, 0.4, 0.7)],
   'venus-roma': [P('roman_temple', 0, 0, 0, 1.9)],
-  caracalla: [P('bath_hall', -18, 0, 0, 1), P('bath_hall', 18, 0, 0, 1)],
-  diocletian: [P('bath_hall', -18, 0, 0, 1), P('bath_hall', 18, 0, 0, 1)],
-  boarium: [P('shop_row', -14, 0, 0, 1), P('shop_row', 14, 0, Math.PI, 1)],
+  caracalla: [P('bath_hall', -9, 0, 0, 1), P('bath_hall', 9, 0, 0, 1)],
+  diocletian: [P('bath_hall', -9, 0, 0, 1), P('bath_hall', 9, 0, 0, 1)],
+  boarium: [P('shop_row', -7, 0, 0, 1), P('shop_row', 7, 0, Math.PI, 1)],
   portunus: [P('roman_temple', 0, 0, 0, 0.75)],
   hercules: [P('vesta_tholos', 0, 0, 0, 1.3)],
-  'pons-aelius': [-27.2, -13.6, 0, 13.6, 27.2].map((dx) => P('bridge_seg', dx, 0, 0, 1)),
+  'pons-aelius': [-13.6, -6.8, 0, 6.8, 13.6].map((dx) => P('bridge_seg', dx, 0, 0, 1)),
   hadrian: [P('mausoleum')],
   peter: [P('church', 0, 0, 0, 1.5)],
   'maria-maggiore': [P('church', 0, 0, 0, 1.1)],
@@ -202,6 +202,7 @@ function byId(id) {
 
 function stoaEdges(b, out) {
   // Colonnaded plaza edges: stoas face the open center.
+  // b.w is already x-halved (anisotropic compaction); x-insets halve to 2, z-insets stay 4.
   const nx = Math.max(2, Math.round(b.w / 24));
   const nz = Math.max(1, Math.round(b.d / 24));
   for (let i = 0; i < nx; i++) {
@@ -211,8 +212,8 @@ function stoaEdges(b, out) {
   }
   for (let i = 0; i < nz; i++) {
     const z = -b.d / 2 + (i + 0.5) * (b.d / nz);
-    out.push({ x: b.x - b.w / 2 + 4, y: 0, z: b.z + z, yaw: Math.PI / 2, scale: 1 });
-    out.push({ x: b.x + b.w / 2 - 4, y: 0, z: b.z + z, yaw: -Math.PI / 2, scale: 1 });
+    out.push({ x: b.x - b.w / 2 + 2, y: 0, z: b.z + z, yaw: Math.PI / 2, scale: 1 });
+    out.push({ x: b.x + b.w / 2 - 2, y: 0, z: b.z + z, yaw: -Math.PI / 2, scale: 1 });
   }
 }
 
@@ -256,8 +257,8 @@ export function buildInstancedLayer() {
   const circus = byId('circus');
   if (circus) {
     for (const dz of [-15, 15]) {
-     
-      for (const dx of [-31, 31]) {
+
+      for (const dx of [-15.5, 15.5]) {
         stands.push({ x: circus.x + dx, y: 0, z: circus.z + dz, yaw: dz > 0 ? Math.PI : 0, scale: 1 });
       }
     }
@@ -273,7 +274,7 @@ export function buildInstancedLayer() {
   const stadiumStands = [];
   const stadium = byId('stadium');
   if (stadium) {
-    for (const dx of [-15, 15]) {
+    for (const dx of [-7.5, 7.5]) {
       for (const dz of [-8, 8]) {
         stadiumStands.push({ x: stadium.x + dx, y: 0, z: stadium.z + dz, yaw: Math.PI / 2, scale: 1 });
       }
@@ -286,7 +287,7 @@ export function buildInstancedLayer() {
   if (claudia) {
     const segs = [];
     for (let i = 0; i < 5; i++) {
-      segs.push({ x: claudia.x - 60 + i * 30, y: 0, z: claudia.z, yaw: 0, scale: 1 });
+      segs.push({ x: claudia.x - 30 + i * 15, y: 0, z: claudia.z, yaw: 0, scale: 1 });
     }
     group.add(buildInstancedMeshes(KIT, 'aqueduct_seg', segs));
   }
