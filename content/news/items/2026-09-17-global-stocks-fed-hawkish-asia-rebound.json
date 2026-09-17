@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-17-global-stocks-fed-hawkish-asia-rebound",
+  "title": "Asia rebounds, Dow futures edge up after Fed's first hike in three years",
+  "summary": "US stock futures turned positive in Asian hours on Thursday after the Dow fell 631 points, or 1.21 percent, to 51,461.90 on Wednesday and the S&P 500 slipped 0.45 percent to 7,551.81 following the Fed's hawkish hike. S&P 500 CFDs climbed back to 7,607.8, the Hang Seng and CSI 300 fell 1.42 and 0.17 percent, while Japan's Nikkei 225 and South Korea's Kospi added 0.33 and 0.27 percent. Bloomberg said shorter-dated Australian and New Zealand sovereign bonds fell tracking Treasuries, with the two-year US yield at 4.74 percent, its highest since 2024.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-09-17T06:30:00Z",
+  "updatedAt": "2026-09-17T06:30:00Z",
+  "retrievedAt": "2026-09-17T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["equities", "dow-jones", "sp-500", "asia-markets"],
+  "sources": [
+    {
+      "publisher": "Mitrade",
+      "url": "https://mitrade.com/insights/shares-analysis/us-stocks/dow-631-points-fed-hike-futures-rebound-20260917J1037",
+      "publishedAt": "2026-09-17T05:00:00Z"
+    },
+    {
+      "publisher": "Business Standard",
+      "url": "https://business-standard.com/markets/news/stock-market-live-september-17-nse-bse-sensex-today-nifty-gift-nifty-fed-rate-hike-nse-ipo-hero-motors-ipo-today-126091700079_1.html",
+      "publishedAt": "2026-09-17T03:00:00Z"
+    },
+    {
+      "publisher": "Bloomberg",
+      "url": "https://bloomberg.com/news/articles/2026-09-16/stock-market-today-dow-s-p-live-updates",
+      "publishedAt": "2026-09-17T00:30:00Z"
+    }
+  ]
+}

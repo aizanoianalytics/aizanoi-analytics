@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-17-frontier-labs-vet-cyber-models",
+  "title": "Google, Anthropic and OpenAI gate cyber models behind vetted access",
+  "summary": "Three frontier AI labs have moved their most cyber-capable systems off the open market, restricting access to vetted defenders and enterprise programmes, according to The Hacker News. Google released Gemini 3.8 Flash Cyber through the Fairwind Program for governments and critical infrastructure operators; Anthropic's Fable 5.1 can help locate software vulnerabilities but is barred from developing exploits; and OpenAI placed GPT-6 Astra at the top of its Critical Preparedness tier under the Daybreak Blue programme. Cybersecurity is the first rationed frontier domain.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-09-17T06:45:00Z",
+  "updatedAt": "2026-09-17T06:45:00Z",
+  "retrievedAt": "2026-09-17T05:25:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ai-security", "anthropic", "openai", "google"],
+  "sources": [
+    {
+      "publisher": "The Hacker News",
+      "url": "https://thehackernews.com/2026/09/google-anthropic-and-openai-unveil.html",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    }
+  ]
+}

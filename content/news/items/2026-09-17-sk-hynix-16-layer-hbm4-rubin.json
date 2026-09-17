@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-17-sk-hynix-16-layer-hbm4-rubin",
+  "title": "SK Hynix ships 16-layer HBM4 for Nvidia Vera Rubin platform",
+  "summary": "SK Hynix has begun mass-producing a 48-gigabyte, 16-layer HBM4 device for Nvidia's Vera Rubin platform, one step beyond the 12-layer part and ahead of Samsung and Micron. Silicon Analysts' tracker said the move is the sharpest signal of the week, with the 16-layer stack offering 33 percent more capacity per memory placement than the 12-layer version. Micron's HBM3E 12-layer product cleared Nvidia qualification during the week ended 14 September while its HBM4 12-layer stack is in final qualification, and TSMC's CoWoS lead times have stretched to 52 to 78 weeks.",
+  "category": "technology",
+  "priority": 55,
+  "publishedAt": "2026-09-17T08:15:00Z",
+  "updatedAt": "2026-09-17T08:15:00Z",
+  "retrievedAt": "2026-09-17T06:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["sk-hynix", "hbm4", "nvidia", "ai-memory"],
+  "sources": [
+    {
+      "publisher": "Benzinga",
+      "url": "https://benzinga.com/news/26/09/61800956/sk-hynix-16-layer-hbm4-nvidia-rubin-micron-samsung",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    }
+  ]
+}

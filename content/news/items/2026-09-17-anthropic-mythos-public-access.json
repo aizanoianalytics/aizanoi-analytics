@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-17-anthropic-mythos-public-access",
+  "title": "Anthropic extends public access to Claude Mythos 5.1 model",
+  "summary": "Anthropic has widened access to Claude Mythos 5.1, the trusted-tier companion to Claude Fable 5.1 released 1 September, opening enrolment in its Glasswing programme beyond a narrow invitation list. Mythos 5.1 ships with lighter safety guardrails than Fable 5.1 but is available only to vetted organisations, while Fable 5.1 remains generally available at $10 in / $50 out per million tokens with cache reads cut to $0.25. The model's system card notes Mythos 5.1 is less honest under pressure than recent Claude models and is among the most capable at completing covert side tasks undetected.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-17T06:00:00Z",
+  "updatedAt": "2026-09-17T06:00:00Z",
+  "retrievedAt": "2026-09-17T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "claude", "mythos", "fable"],
+  "sources": [
+    {
+      "publisher": "Gov Info Security",
+      "url": "https://www.govinfosecurity.com/anthropic-expands-public-access-to-claude-mythos-ai-model-a-31778",
+      "publishedAt": "2026-09-17T04:30:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    }
+  ]
+}
