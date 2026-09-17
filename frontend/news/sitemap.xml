@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/samsung-tesla-ai5-2nm-taylor/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T08:30:00.000Z</news:publication_date>
+      <news:title>Samsung begins 2nm trial output of Tesla AI5 at Taylor fab</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/sk-hynix-16-layer-hbm4-rubin/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T08:15:00.000Z</news:publication_date>
+      <news:title>SK Hynix ships 16-layer HBM4 for Nvidia Vera Rubin platform</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/samsung-zhbm-3d-stack-ai-infra/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T08:00:00.000Z</news:publication_date>
+      <news:title>Samsung unveils zHBM 3D-stacked memory for AI accelerators</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/iphone-18-pro-launch-friday/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T07:45:00.000Z</news:publication_date>
+      <news:title>iPhone 18 Pro and Pro Max reach stores Friday amid shipping slippage</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/anthropic-threat-report-september/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T07:30:00.000Z</news:publication_date>
+      <news:title>Anthropic September threat report details agent-driven intrusions</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/claude-in-chrome-ga-cowork-browser/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T07:00:00.000Z</news:publication_date>
+      <news:title>Anthropic ships Claude in Chrome to all paid plans, adds Cowork browser</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/frontier-labs-vet-cyber-models/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T06:45:00.000Z</news:publication_date>
+      <news:title>Google, Anthropic and OpenAI gate cyber models behind vetted access</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/global-stocks-fed-hawkish-asia-rebound/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T06:30:00.000Z</news:publication_date>
+      <news:title>Asia rebounds, Dow futures edge up after Fed&#39;s first hike in three years</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/openai-misalignment-reporting-framework/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T06:30:00.000Z</news:publication_date>
+      <news:title>OpenAI launches framework to report unexpected model behaviour</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/anthropic-mythos-public-access/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T06:00:00.000Z</news:publication_date>
+      <news:title>Anthropic extends public access to Claude Mythos 5.1 model</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/fed-raises-rates-by-25bp/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T05:30:00.000Z</news:publication_date>
+      <news:title>Federal Reserve raises rates 25bp, first hike since 2023</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/saudi-reroutes-crude-brent-falls/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T05:30:00.000Z</news:publication_date>
+      <news:title>Brent slides below $106 as Saudi Arabia reroutes crude via Oman</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/laliga-matchday-six-wrap/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T05:30:00.000Z</news:publication_date>
+      <news:title>La Liga round-six wrap as Real Madrid sit top with Barcelona</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/benfica-shock-milan-san-siro/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T05:15:00.000Z</news:publication_date>
+      <news:title>Benfica stun AC Milan 2-0 at San Siro in Europa League opener</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-17/sunderland-az-europa-league/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-17T05:00:00.000Z</news:publication_date>
+      <news:title>Le Fée penalty gives Sunderland first European win in 53 years</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-09-16/real-madrid-elche-espi-winner/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -118,126 +238,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
       <news:title>US federal Post-Quantum Cryptography Summit convenes Tuesday</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/anthropic-launches-claude-opus-5/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T06:00:00.000Z</news:publication_date>
-      <news:title>Anthropic launches Claude Opus 5, calls it &#39;thoughtful and proactive&#39; for long-running agents</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/anthropic-cyber-incident-report-externalises-metr/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T05:40:00.000Z</news:publication_date>
-      <news:title>Anthropic publishes candid cybersecurity-evaluation incident report, asks METR to audit</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/cohere-ceo-ai-models-most-potent-cyber-weapon/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T05:30:00.000Z</news:publication_date>
-      <news:title>Cohere CEO Gomez: AI models are &#39;the most potent cyber weapon that has ever been created&#39;</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/trump-calls-ai-slowdown-warning-a-hoax/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T05:20:00.000Z</news:publication_date>
-      <news:title>Trump calls AI safety warnings a &#39;HOAX&#39;, brands Anthropic&#39;s Amodei a &#39;perfect little angel&#39;</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/microsoft-ai-code-of-conduct-publishes-draft/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T05:10:00.000Z</news:publication_date>
-      <news:title>Microsoft publishes draft &#39;Humanist AI&#39; Code of Conduct, opens six-week public consultation</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/bloomberg-ai-tools-soften-entry-level-hiring-pay/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T05:00:00.000Z</news:publication_date>
-      <news:title>Bloomberg: AI tools line up with weaker pay growth and softer hiring for recent graduates</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/nyt-inspur-aivres-routed-5-6bn-of-nvidia-chips/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T04:50:00.000Z</news:publication_date>
-      <news:title>New York Times reports Inspur routed $5.6bn of Nvidia Blackwell AI chips to China via Aivres</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/faa-clears-starship-flight-14-for-sept-22/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T04:40:00.000Z</news:publication_date>
-      <news:title>FAA sets September 22 as primary launch date for SpaceX Starship Flight 14</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/apple-releases-ipados-27-siri-ai/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T04:30:00.000Z</news:publication_date>
-      <news:title>Apple ships iPadOS 27 with Siri AI integrated into Spotlight and a dedicated Siri app</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/bitcoin-holds-77k-as-fed-decision-nears/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T04:20:00.000Z</news:publication_date>
-      <news:title>Bitcoin holds near $77,600 as traders position into the September FOMC decision</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/gold-slips-4300-bunds-edge-15-year-high/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T04:10:00.000Z</news:publication_date>
-      <news:title>Gold slips below $4,300 and Bund yields hover near 15-year highs into the FOMC blackout</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/brent-rises-107-saudi-pipeline-still-offline/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T04:00:00.000Z</news:publication_date>
-      <news:title>Brent back above $107 as Saudi East–West pipeline stays offline and Hormuz traffic drops</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/afc-champions-league-elite-shabab-al-ahli-al-wasl/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T03:20:00.000Z</news:publication_date>
-      <news:title>AFC Champions League Elite opens with mixed fortunes for UAE&#39;s Shabab Al Ahli and Al Wasl</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/inter-udinese-comeback-levels-with-roma/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T03:10:00.000Z</news:publication_date>
-      <news:title>Inter Milan stage stunning comeback against Udinese to go level with Roma at Serie A summit</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-15/leeds-thrash-newcastle-4-1-third-place/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-15T03:00:00.000Z</news:publication_date>
-      <news:title>Leeds thrash Newcastle 4-1 at Elland Road to climb to third in the Premier League</news:title>
     </news:news>
   </url>
 </urlset>

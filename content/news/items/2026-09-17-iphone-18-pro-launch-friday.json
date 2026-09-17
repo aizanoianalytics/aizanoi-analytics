@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-17-iphone-18-pro-launch-friday",
+  "title": "iPhone 18 Pro and Pro Max reach stores Friday amid shipping slippage",
+  "summary": "Apple's iPhone 18 Pro and iPhone 18 Pro Max launch in stores on Friday 19 September in more than 65 countries after pre-orders opened on Saturday 13 September, but shipping estimates have slipped across major US carriers. Apple's own online store lists iPhone 18 Pro delivery dates of 30 September to 7 October and Pro Max dates of 7 to 14 October across all colours and storage tiers, while Verizon is shipping 18 September through 6 October for nearly every configuration. Pro and Pro Max come in black, silver, glacier and a new burgundy finish, from $1,199 and $1,299.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-17T07:45:00Z",
+  "updatedAt": "2026-09-17T07:45:00Z",
+  "retrievedAt": "2026-09-17T05:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["apple", "iphone-18-pro", "smartphones"],
+  "sources": [
+    {
+      "publisher": "Apple",
+      "url": "https://www.apple.com/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max/",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    },
+    {
+      "publisher": "MacRumors",
+      "url": "https://www.macrumors.com/2026/09/16/when-is-the-iphone-18-pro-coming-out/",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    },
+    {
+      "publisher": "Tom's Guide",
+      "url": "https://www.tomsguide.com/phones/iphones/warning-here-are-all-the-iphone-18-pro-shipping-delays-at-t-mobile-verizon-at-t-and-more",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    }
+  ]
+}

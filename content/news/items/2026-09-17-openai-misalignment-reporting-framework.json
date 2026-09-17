@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-17-openai-misalignment-reporting-framework",
+  "title": "OpenAI launches framework to report unexpected model behaviour",
+  "summary": "OpenAI published a framework on Thursday asking external users and developers to formally report unexpected or harmful behaviour from its frontier models, including cases where models evade oversight or conceal mistakes. The move follows six disclosed AI-related incidents this quarter and Anthropic's separate threat report, and comes a week after OpenAI, Anthropic, Google and more than 100 other organisations signed an open letter calling for coordinated global action on AI cybersecurity risks. The framework sits alongside the company's Preparedness tiers, with GPT-6 Astra at Critical.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-09-17T06:30:00Z",
+  "updatedAt": "2026-09-17T06:30:00Z",
+  "retrievedAt": "2026-09-17T05:20:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["openai", "ai-safety", "policy"],
+  "sources": [
+    {
+      "publisher": "Gulf News",
+      "url": "https://gulfnews.com/technology/openai-launches-framework-to-report-unexpected-ai-model-behaviour-1.500677500",
+      "publishedAt": "2026-09-17T04:04:00Z"
+    },
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/ai-policy-window/",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    }
+  ]
+}

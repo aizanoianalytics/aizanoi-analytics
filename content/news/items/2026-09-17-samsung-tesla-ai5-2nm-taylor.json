@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-17-samsung-tesla-ai5-2nm-taylor",
+  "title": "Samsung begins 2nm trial output of Tesla AI5 at Taylor fab",
+  "summary": "Samsung Electronics has begun trial production of Tesla's AI5 processor on 2-nanometre lines at its Taylor, Texas fab, putting the first silicon from a $16.5 billion contract through yield verification before volume supply in 2027. The Taylor plant started producing 2nm wafers for the AI5 this week, with Samsung's 2nm gate-all-around yield having climbed from below 50 percent at the start of the year to above 70 percent, according to KB Securities analyst Kim Dong-won. A second Taylor plant is targeted for groundbreaking by year-end and may run 1.4nm when it starts around 2030.",
+  "category": "technology",
+  "priority": 55,
+  "publishedAt": "2026-09-17T08:30:00Z",
+  "updatedAt": "2026-09-17T08:30:00Z",
+  "retrievedAt": "2026-09-17T06:05:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["samsung", "tesla", "2nm", "foundry"],
+  "sources": [
+    {
+      "publisher": "Edgen",
+      "url": "https://edgen.tech/tr/news/post/samsung-starts-tesla-ai5-2nm-trial-output-at-taylor",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    }
+  ]
+}

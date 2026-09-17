@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-17-fed-raises-rates-by-25bp",
+  "title": "Federal Reserve raises rates 25bp, first hike since 2023",
+  "summary": "The Federal Reserve raised its benchmark federal funds rate by 25 basis points to 3.75–4.00 percent on Wednesday, its first increase since 2023, with new Chair Kevin Warsh joining the unanimous vote. The decision came with an updated dot plot signalling further hikes ahead, while the Board separately raised interest on reserve balances to 3.90 percent and the primary credit rate to 4.0 percent effective September 17. Equities sold off, the two-year Treasury yield jumped seven basis points to 4.734 percent, and the dollar strengthened against major peers.",
+  "category": "economy-markets",
+  "priority": 90,
+  "publishedAt": "2026-09-17T05:30:00Z",
+  "updatedAt": "2026-09-17T05:30:00Z",
+  "retrievedAt": "2026-09-17T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["federal-reserve", "monetary-policy", "interest-rates"],
+  "sources": [
+    {
+      "publisher": "Federal Reserve Board",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a1.htm",
+      "publishedAt": "2026-09-16T22:00:00Z"
+    },
+    {
+      "publisher": "Moneycontrol",
+      "url": "https://moneycontrol.com/news/business/markets/stocks-fall-as-fed-delivers-hawkish-rate-hike-14031535.html",
+      "publishedAt": "2026-09-17T02:47:00Z"
+    },
+    {
+      "publisher": "CNBC TV18",
+      "url": "https://www.cnbctv18.com/market/federal-reserve-interest-rate-decision-live-updates-kevin-warsh-speech-fomc-trump-reaction-dow-jones-today-liveblog-19992019.htm",
+      "publishedAt": "2026-09-17T03:00:00Z"
+    }
+  ]
+}

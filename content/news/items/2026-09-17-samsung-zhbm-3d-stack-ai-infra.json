@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-17-samsung-zhbm-3d-stack-ai-infra",
+  "title": "Samsung unveils zHBM 3D-stacked memory for AI accelerators",
+  "summary": "Samsung Electronics unveiled zHBM, a memory architecture that stacks high-bandwidth memory directly on top of AI accelerators in 3D rather than the current 2.5D placement alongside them, claiming up to eight times the performance and more than three times the power efficiency of HBM5. Executive Director Kim Indong presented the architecture at the AI Infrastructure Summit in Santa Clara on Tuesday, with Samsung positioning the design to push AI response times past 1,000 tokens per second. The company also disclosed a roadmap for zNAND-O, a 3D NAND storage solution for on-device AI.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-17T08:00:00Z",
+  "updatedAt": "2026-09-17T08:00:00Z",
+  "retrievedAt": "2026-09-17T05:55:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["samsung", "hbm", "memory", "ai-accelerators"],
+  "sources": [
+    {
+      "publisher": "The Asia Business Daily",
+      "url": "https://asiae.co.kr/en/article/2026091708324292373",
+      "publishedAt": "2026-09-16T23:32:00Z"
+    },
+    {
+      "publisher": "TrendForce",
+      "url": "https://trendforce.com/news/2026/09/16/news-samsung-reportedly-shifts-cheonan-capacity-to-hbm-packaging-outsource-conventional-memory-modules",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-17-benfica-shock-milan-san-siro",
+  "title": "Benfica stun AC Milan 2-0 at San Siro in Europa League opener",
+  "summary": "AC Milan fell to a shock 2-0 home defeat against Benfica in their Europa League league-phase opener on Wednesday, with Dodi Lukebakio drilling in the 16th-minute opener after Milan's defence failed to handle a slick Portuguese move. The result compounds a difficult start to the season for the Rossoneri and handed Benfica an early statement win in Group E. Elsewhere in Wednesday's 12-fixture card, Sparta Praha thrashed Ararat-Armenia 4-1, Bayer Leverkusen beat Celje 2-0 and AC Milan's city rivals Inter and Napoli continue their own campaigns later in the week.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-09-17T05:15:00Z",
+  "updatedAt": "2026-09-17T05:15:00Z",
+  "retrievedAt": "2026-09-17T04:35:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["ac-milan", "benfica", "europa-league", "serie-a"],
+  "sources": [
+    {
+      "publisher": "7M Sport (Goal feed)",
+      "url": "https://news.7msport.com/news/newsdata/20260917/268390.shtml",
+      "publishedAt": "2026-09-17T03:00:00Z"
+    },
+    {
+      "publisher": "CBS Sports",
+      "url": "https://www.cbssports.com/soccer/europa-league/schedule/",
+      "publishedAt": "2026-09-17T00:00:00Z"
+    }
+  ]
+}

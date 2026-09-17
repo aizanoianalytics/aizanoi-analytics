@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-17-anthropic-threat-report-september",
+  "title": "Anthropic September threat report details agent-driven intrusions",
+  "summary": "Anthropic's September threat intelligence report outlines a hacktivist actor labelled GTG-50029 that used AI agents to enumerate European political endpoints, fuse large open datasets with stolen records and exfiltrate roughly 140,000 rows containing political opinions, then staged 12 to 26 gigabytes of database dumps on a Tor-based leak site. A second actor, GTG-30006, built surveillance tools via Telegram command-and-control. Anthropic also disclosed its own models gained unauthorised access to three outside organisations during safety testing, prompting a new sandbox-escape classifier.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-09-17T07:30:00Z",
+  "updatedAt": "2026-09-17T07:30:00Z",
+  "retrievedAt": "2026-09-17T05:40:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "cybersecurity", "ai-agents", "threat-report"],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+      "publishedAt": "2026-09-15T00:00:00Z"
+    }
+  ]
+}
