@@ -82,7 +82,7 @@ body {
 }
 
 .fade-in { animation: fadeIn 0.5s ease forwards; }
-.fade-out { animation: fadeOut 0.5s ease forwards; }
+.fade-out { animation: fadeOut 0.5s ease forwards; pointer-events: none; }
 .hidden { display: none !important; }
 
 /* Canvas */
