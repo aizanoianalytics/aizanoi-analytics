@@ -224,6 +224,160 @@ export function createEnvironment(root, spec) {
     return false;
   }
 
+  const surfaceByGeometry = new Map(surfaces.map((surface) => [surface.geometry, surface]));
+  const asVector3 = (value) => value?.isVector3
+    ? value.clone()
+    : Array.isArray(value)
+      ? new THREE.Vector3(...value)
+      : new THREE.Vector3(value?.x ?? 0, value?.y ?? 0, value?.z ?? 0);
+  const inBounds = (point, bounds) => {
+    const [min, max] = bounds;
+    return point.x >= min[0] && point.x <= max[0]
+      && point.y >= min[1] && point.y <= max[1]
+      && point.z >= min[2] && point.z <= max[2];
+  };
+  const roomAt = (value) => {
+    const point = asVector3(value);
+    return spec.rooms.find((room) => {
+      const [sx, sy, sz] = room.size;
+      const [ox, oy, oz] = room.origin;
+      return point.x >= ox - sx / 2 && point.x <= ox + sx / 2
+        && point.y >= oy - sy / 2 && point.y <= oy + sy / 2
+        && point.z >= oz && point.z <= oz + sz;
+    })?.id ?? null;
+  };
+  const zonesAt = (value) => {
+    const point = asVector3(value);
+    const ids = [];
+    for (const entry of spec.transitions) if (inBounds(point, entry.bounds)) ids.push(entry.id);
+    for (const entry of spec.airflow) if (inBounds(point, entry.bounds)) ids.push(entry.id);
+    for (const [kind, entries] of [['heat', spec.heat], ['food', spec.food]]) {
+      for (const entry of entries) {
+        if (!entry.center || !Number.isFinite(entry.radius)) continue;
+        if (point.distanceTo(asVector3(entry.center)) <= entry.radius) ids.push(`${kind}:${entry.id}`);
+      }
+    }
+    return Object.freeze(ids);
+  };
+  const raycast = (origin, direction, maxDistance = 100) => {
+    const raycaster = new THREE.Raycaster(asVector3(origin), asVector3(direction).normalize(), 0, maxDistance);
+    const hits = raycaster.intersectObjects(surfaces.map((surface) => surface.geometry), false);
+    const hit = hits[0];
+    if (!hit) return null;
+    const surface = surfaceByGeometry.get(hit.object);
+    const normal = hit.face?.normal?.clone() ?? new THREE.Vector3(0, 0, 1);
+    normal.transformDirection(hit.object.matrixWorld);
+    return Object.freeze({
+      surfaceId: surface?.id ?? null,
+      name: surface?.name ?? hit.object.name,
+      point: hit.point.clone(),
+      normal,
+      distance: hit.distance,
+      landing: surface?.landing === true,
+      room: roomAt(hit.point),
+      zones: zonesAt(hit.point),
+    });
+  };
+
+  // Adapter registry only: it owns no body, behaviour, physiology or autonomous
+  // simulation. A future runtime can bind entities without rewriting the house.
+  const entities = new Map();
+  const entitySnapshot = (entity) => Object.freeze({
+    id: entity.id,
+    position: entity.position.clone(),
+    rotation: entity.rotation.clone(),
+    radius: entity.radius,
+    tags: Object.freeze([...entity.tags]),
+    room: roomAt(entity.position),
+    zones: zonesAt(entity.position),
+  });
+  const entityLifecycle = Object.freeze({
+    add(id, state = {}) {
+      if (!id || entities.has(id)) throw new Error(`environment integration: duplicate or empty entity id "${id}"`);
+      const entity = {
+        id,
+        position: asVector3(state.position),
+        rotation: state.rotation?.isQuaternion
+          ? state.rotation.clone()
+          : new THREE.Quaternion().setFromEuler(new THREE.Euler(...(state.rotation ?? [0, 0, 0]), 'XYZ')),
+        radius: Number.isFinite(state.radius) ? state.radius : 0.01,
+        tags: new Set(state.tags ?? []),
+      };
+      entities.set(id, entity);
+      return entitySnapshot(entity);
+    },
+    update(id, patch = {}) {
+      const entity = entities.get(id);
+      if (!entity) throw new Error(`environment integration: unknown entity "${id}"`);
+      if (patch.position) entity.position.copy(asVector3(patch.position));
+      if (patch.rotation?.isQuaternion) entity.rotation.copy(patch.rotation);
+      else if (patch.rotation) entity.rotation.setFromEuler(new THREE.Euler(...patch.rotation, 'XYZ'));
+      if (Number.isFinite(patch.radius)) entity.radius = patch.radius;
+      if (patch.tags) entity.tags = new Set(patch.tags);
+      return entitySnapshot(entity);
+    },
+    remove(id) { return entities.delete(id); },
+    get(id) { return entities.has(id) ? entitySnapshot(entities.get(id)) : null; },
+    list() { return Object.freeze([...entities.values()].map(entitySnapshot)); },
+  });
+
+  const fixedDeltaSeconds = spec.integration?.fixedDeltaSeconds ?? 1 / 60;
+  const tickListeners = new Map();
+  let tickNumber = 0;
+  const tick = Object.freeze({
+    fixedDeltaSeconds,
+    subscribe(id, listener) {
+      if (!id || typeof listener !== 'function') throw new TypeError('environment integration: tick subscription requires id and function');
+      tickListeners.set(id, listener);
+      return () => tickListeners.delete(id);
+    },
+    step(count = 1) {
+      const steps = Math.max(0, Math.floor(count));
+      for (let i = 0; i < steps; i++) {
+        tickNumber += 1;
+        const frame = Object.freeze({ tick: tickNumber, deltaSeconds: fixedDeltaSeconds, timeSeconds: tickNumber * fixedDeltaSeconds });
+        for (const listener of tickListeners.values()) listener(frame);
+      }
+      return tickNumber;
+    },
+    get state() { return Object.freeze({ tick: tickNumber, timeSeconds: tickNumber * fixedDeltaSeconds }); },
+  });
+
+  const sensoryExtensions = new Map();
+  const sensory = Object.freeze({
+    available: Object.freeze({ light: spec.windows, heat: spec.heat, odor: spec.food, airflow: spec.airflow }),
+    register(channel, sampler) {
+      if (!spec.integration?.extensionChannels?.includes(channel) || typeof sampler !== 'function') {
+        throw new Error(`environment integration: unsupported sensory extension "${channel}"`);
+      }
+      sensoryExtensions.set(channel, sampler);
+      return () => sensoryExtensions.delete(channel);
+    },
+    sample(channel, position) {
+      const sampler = sensoryExtensions.get(channel);
+      return sampler ? sampler(asVector3(position), { roomAt, zonesAt, raycast }) : null;
+    },
+  });
+
+  const integration = Object.freeze({
+    contractVersion: spec.integration?.contractVersion ?? 1,
+    coordinateSystem: Object.freeze({ units: 'meters', axis: 'Z-up', scale: 1 }),
+    safeSpawnVolumes: Object.freeze(spec.integration?.safeSpawnVolumes ?? []),
+    roomAt,
+    zonesAt,
+    collisionAt,
+    raycast,
+    entities: entityLifecycle,
+    tick,
+    sensory,
+    telemetry: () => Object.freeze({
+      surfaceCount: surfaces.length,
+      colliderCount: collision.length,
+      entityCount: entities.size,
+      tick: tickNumber,
+    }),
+  });
+
   const withMesh = (kind, entry) => Object.freeze({
     ...entry,
     geometry: resolveGeometryRefs(root, kind, entry.id, entry.geometryRefs),
@@ -237,6 +391,7 @@ export function createEnvironment(root, spec) {
     surfaces,
     collision,
     collisionAt,
+    integration,
     flue: Object.freeze({
       radius: spec.flue.radius,
       segments: flueSegments,

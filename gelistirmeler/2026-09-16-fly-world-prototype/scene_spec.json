@@ -763,6 +763,21 @@
     "axis": "Z-up",
     "observerExcluded": true,
     "status": "authored environment cues; not calibrated physics or sensory simulation",
+    "integration": {
+      "contractVersion": 1,
+      "fixedDeltaSeconds": 0.016666666666666666,
+      "safeSpawnVolumes": [
+        {
+          "id": "main-room-agent-spawn",
+          "room": "main-room",
+          "bounds": [
+            [-2.05, -2.35, 0.3],
+            [-1.65, -1.95, 2.35]
+          ]
+        }
+      ],
+      "extensionChannels": ["light", "heat", "odor", "airflow"]
+    },
     "flue": {
       "points": [
         [
@@ -781,7 +796,7 @@
           2.52
         ]
       ],
-      "radius": 0.12
+      "radius": 0.09
     },
     "transitions": [
       {

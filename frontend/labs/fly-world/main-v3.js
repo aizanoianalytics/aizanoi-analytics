@@ -199,7 +199,7 @@ function buildBenchWall() {
 }
 
 function buildStove() {
-  box([1.02, 0.84, 1.18], [2.15, -1.10, 0.59], MATERIALS.metal, 'wood-stove', { solid: true });
+  box([1.02, 0.84, 1.18], [2.15, -1.10, 0.59], MATERIALS.metal, 'ASSET__wood-stove', { solid: true });
   box([0.56, 0.025, 0.43], [2.15, -1.52, 0.60], MATERIALS.woodDark, 'stove-door');
   box([0.40, 0.018, 0.24], [2.15, -1.54, 0.61], MATERIALS.fire, 'stove-fire-window');
   cylinder(0.045, 0.18, [2.44, -1.54, 0.61], MATERIALS.metalLight, 'stove-door-handle', { axis: 'y' });
@@ -209,7 +209,7 @@ function buildStove() {
   const points = [new THREE.Vector3(2.15,-1.10,1.18), new THREE.Vector3(2.15,-1.10,2.52), new THREE.Vector3(-4.75,-1.10,2.52)];
   const curve = new THREE.CurvePath();
   points.slice(1).forEach((p, i) => curve.add(new THREE.LineCurve3(points[i], p)));
-  const pipe = new THREE.Mesh(new THREE.TubeGeometry(curve, 48, .12, 12, false), MATERIALS.metal);
+  const pipe = new THREE.Mesh(new THREE.TubeGeometry(curve, 48, .09, 12, false), MATERIALS.metal);
   pipe.name = 'stove-pipe'; pipe.castShadow = true; scene.add(pipe); pipe.userData.collision = 'solid';
 }
 

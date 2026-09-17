@@ -4,6 +4,34 @@
   "axis": "Z-up",
   "observerExcluded": true,
   "status": "authored environment cues; not calibrated physics or sensory simulation",
+  "integration": {
+    "contractVersion": 1,
+    "fixedDeltaSeconds": 0.016666666666666666,
+    "safeSpawnVolumes": [
+      {
+        "id": "main-room-agent-spawn",
+        "room": "main-room",
+        "bounds": [
+          [
+            -2.05,
+            -2.35,
+            0.3
+          ],
+          [
+            -1.65,
+            -1.95,
+            2.35
+          ]
+        ]
+      }
+    ],
+    "extensionChannels": [
+      "light",
+      "heat",
+      "odor",
+      "airflow"
+    ]
+  },
   "flue": {
     "points": [
       [
@@ -22,7 +50,7 @@
         2.52
       ]
     ],
-    "radius": 0.12
+    "radius": 0.09
   },
   "transitions": [
     {
@@ -283,27 +311,27 @@
     }
   ],
   "sourceHashes": {
-    "gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json": "296226a60d2f07e180407c69995d5abcbc3fe05c2bb16397c23a6ab8235b498b",
+    "gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json": "55deb7160c61b115ad2001a94888b8bd12dee048d9d28550c894e91de70eb655",
     "gelistirmeler/2026-09-16-fly-world-prototype/asset_manifest.json": "bc3489bd8a761ede531fd62c9f0f4874152883e2d7fe04b49194e924399ffe07",
     "scripts/fly-world/build_scene_v3.py": "f31492536565ee40fda0aaa0bfd017df5840dee17acbb0f480a8680ac2ab7ee0",
-    "scripts/fly-world/build_scene_v2.py": "b6e2334d5b11e3e0a06a46ffdea956d6e6ce47f29f615c32045d6c68dba6e8cc",
+    "scripts/fly-world/build_scene_v2.py": "e381d9a631aa8b82930b39b5f03901a18f34041802e8d71812faf9f4255551d5",
     "scripts/fly-world/detail_pass_v3.py": "6c3d638acd39ebce7d258f889f60f6f79e7a712256e2cd682b02bd2102ee4270",
-    "scripts/fly-world/micro_detail_pass_v3.py": "8788785c5df9b560d3b5440c2139d6d49d72beb2f510a07aadfbb47d938cedf9",
+    "scripts/fly-world/micro_detail_pass_v3.py": "0d7da51b945c52ef0ff69e0a5cf2c2df4f4de9b965555a667214925c567d220e",
     "scripts/fly-world/environment_export.py": "facb76ac3499fd31a639604bc902884848603dd6ac28558ce0a4e8bc714cb747",
-    "scripts/fly-world/author_heroes.py": "34c23d68ccf031c898e95ec4777a3c5dd371591d249047b1e5650a2b45689036",
-    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bench-sofa/bench-sofa.glb": "8514b849dcff7613084cab2fa8d4d18d2e41e6abfb61a0b297dda5c72ef9d3b3",
-    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/carved-cabinet/carved-cabinet.glb": "4232bfc687973418e446b1b9de1f74113817f98641142fae6613cc6edd08ebae",
-    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/wood-stove/wood-stove.glb": "7ce8ddab5a1b734e040e253550f5d8b327b3d2f8928cc36c81b767e98c70e404",
+    "scripts/fly-world/author_heroes.py": "d67abb33d194a25892a4278b89556cee5c9200c0a7706d4668b1269a3c2d10f1",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bench-sofa/bench-sofa.glb": "5edd1596e88977784e1a505d15463b38d0e1dbf6b3c918069277a9f057341500",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/carved-cabinet/carved-cabinet.glb": "4b4d90ea781782996b77e6935615669cf1ab87f37cc39c9846ab996009adc37d",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/wood-stove/wood-stove.glb": "3120919f20d4ab8a826e33d0b582ae653a24c69533b2d9426ba736d59927ec8a",
     "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/kettle/kettle.glb": "da10e7d26e7e470d0ef239067a39d6e18c9fe610b99c8cf029b7c0e45131d00b",
-    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/old-tv/old-tv.glb": "22d5bd03df1ae5e39c91df94eccfbd45d3796c2e23638a5d5c9eb660fe0fb1e2",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/old-tv/old-tv.glb": "86f10410455a6ea78223b8c4ec6b48f5061561bb993fb7769a35d01b0c0ca67e",
     "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/woven-basket/woven-basket.glb": "3934a46f5692861bb927da58c46ecd2166093c5292344319b0892c823a610150",
     "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/main-rug/main-rug.glb": "5cc814a982ef10ccd032895cf53f03cf2885f895f4172e556acdddbcb581b3da",
     "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/round-rug/round-rug.glb": "4790fc4a561feeb7c9b89b4f4762eab9281eb5f74cf98eadf058270b6b5f0660",
-    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/wooden-bed/wooden-bed.glb": "2a0802b8c0a481d516c8a7dd3cf47a962281771d34de0a342cae995bb9a0ec72",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/wooden-bed/wooden-bed.glb": "21d796e12f816625ff0aa5e78ef31accf91799ec5caee2236aebd7bb78eae55f",
     "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bedside-table/bedside-table.glb": "429d6679d3bb73898eae13ad48fbb2c87021ec0b693bd412f7234ab193fb0cf4",
-    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/curtain-floral/curtain-floral.glb": "e73e8e3146dee58e4ba474b3701e1b8a808c72d7897f90278e60a855817fe890",
-    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/curtain-lace/curtain-lace.glb": "6267c8c87751fb53b55aee49d103fd781bd24b44fdc30d0320581acca42afc85",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/curtain-floral/curtain-floral.glb": "01cdada8cead32b55fae323c585049411385782610860b95c41160ad7b61d32b",
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/curtain-lace/curtain-lace.glb": "60d33709ccca10b58944adf8a724639d2daaaf79f5eacb712f11a5d8c45fdd02",
     "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/pillow-quilt-set/pillow-quilt-set.glb": "350c30d3a3a5ecba276725bf2d14655a63e621b74b98b0dbfe93cc60a33050d3",
-    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bed-quilt/bed-quilt.glb": "3715d160e457060b6e469e619ae4aa7ca401458eed29315809acd7c9b70b3868"
+    "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bed-quilt/bed-quilt.glb": "223f85998c21896888d66ba588f9d4c330871076813612cfba4f5a38ec9aab78"
   }
 }

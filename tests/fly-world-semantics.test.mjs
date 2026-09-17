@@ -245,3 +245,50 @@ test('createEnvironment returns a frozen object whose surface mesh refs are obse
     'second invocation produces identical id sequence',
   );
 });
+
+test('body integration contract exposes stable coordinates, spawn, rooms, zones and raycasts', () => {
+  const api = env.integration;
+  assert.deepEqual(api.coordinateSystem, { units: 'meters', axis: 'Z-up', scale: 1 });
+  assert.equal(api.safeSpawnVolumes.length, 1);
+  assert.equal(api.roomAt([-1.85, -2.15, 1]), 'main-room');
+  assert.equal(api.roomAt([7.3, 1.15, 1]), 'bedroom');
+  assert.ok(api.zonesAt([4.8, 1, 1]).includes('bedroom-doorway'));
+  const floorHit = api.raycast([-1.85, -2.15, 1], [0, 0, -1], 2);
+  assert.ok(floorHit, 'downward ray reaches authored floor geometry');
+  assert.equal(floorHit.room, 'main-room');
+  assert.ok(floorHit.distance > 0 && floorHit.distance < 2);
+});
+
+test('body integration entity lifecycle stores transforms without creating a body simulation', () => {
+  const api = env.integration.entities;
+  const added = api.add('contract-probe', { position: [-1.85, -2.15, 1], rotation: [0, 0, 0.25], radius: 0.01, tags: ['test'] });
+  assert.equal(added.room, 'main-room');
+  assert.equal(api.list().length, 1);
+  const moved = api.update('contract-probe', { position: [7.3, 1.15, 1] });
+  assert.equal(moved.room, 'bedroom');
+  assert.equal(api.get('contract-probe').position.x, 7.3);
+  assert.equal(api.remove('contract-probe'), true);
+  assert.equal(api.get('contract-probe'), null);
+});
+
+test('body integration tick hook is manual, fixed-step and deterministic', () => {
+  const frames = [];
+  const unsubscribe = env.integration.tick.subscribe('contract-test', (frame) => frames.push(frame));
+  const start = env.integration.tick.state.tick;
+  assert.equal(env.integration.tick.step(3), start + 3);
+  unsubscribe();
+  assert.deepEqual(frames.map((frame) => frame.tick), [start + 1, start + 2, start + 3]);
+  assert.ok(frames.every((frame) => frame.deltaSeconds === 1 / 60));
+});
+
+test('sensory extension points expose authored cues but do not invent calibrated samples', () => {
+  const sensory = env.integration.sensory;
+  assert.equal(sensory.available.light.length, rawSpec.windows.length);
+  assert.equal(sensory.available.heat.length, rawSpec.heat.length);
+  assert.equal(sensory.available.odor.length, rawSpec.food.length);
+  assert.equal(sensory.sample('heat', [2.15, -1.1, 1]), null, 'no implicit sensory simulation');
+  const unregister = sensory.register('heat', (position, query) => ({ room: query.roomAt(position), authored: true }));
+  assert.deepEqual(sensory.sample('heat', [2.15, -1.1, 1]), { room: 'main-room', authored: true });
+  unregister();
+  assert.equal(sensory.sample('heat', [2.15, -1.1, 1]), null);
+});

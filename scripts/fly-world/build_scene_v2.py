@@ -229,7 +229,7 @@ def reference_dressing(root, manifest, m):
     cyl("cage-top",.28,.06,(-3.46,1.72,2.19),m["wood2"],c)
 
     # Stove pipe is a major silhouette anchor in the reference.
-    data=bpy.data.curves.new("stove-pipe-v2","CURVE"); data.dimensions="3D"; data.bevel_depth=.12; data.bevel_resolution=3
+    data=bpy.data.curves.new("stove-pipe-v2","CURVE"); data.dimensions="3D"; data.bevel_depth=.09; data.bevel_resolution=3
     sp=data.splines.new("POLY"); pts=json.loads((root/WORKSPACE/"scene_spec.json").read_text())["environment"]["flue"]["points"]; sp.points.add(len(pts)-1)
     for p,co in zip(sp.points,pts): p.co=(*co, 1)
     o=bpy.data.objects.new("stove-pipe",data); c.objects.link(o); data.materials.append(m["metal"]); tag(o,True,True,"heat-adjacent")

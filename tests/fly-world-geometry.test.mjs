@@ -39,8 +39,11 @@ test('cabinet and seating keep separate north-wall footprints', () => {
 
 test('environment semantics bind real mesh names and keep the doorway open', () => {
   assert.deepEqual(envJson.heat[0].geometryRefs, ['ASSET__wood-stove']);
+  assert.match(fallback, /'ASSET__wood-stove'/, 'fallback uses the same heat geometry ref as the GLB');
   assert.equal(envJson.observerExcluded, true);
   assert.equal(envJson.rooms.length, 2);
+  assert.equal(envJson.integration.contractVersion, 1);
+  assert.equal(envJson.integration.safeSpawnVolumes[0].room, 'main-room');
   assert.equal(envJson.transitions[0].from, 'main-room');
   const flueY = envJson.flue.points[0][1];
   assert.ok(Math.abs(flueY - spec.environment.flue.points[0][1]) < 1e-6);
