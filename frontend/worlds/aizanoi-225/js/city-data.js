@@ -156,7 +156,7 @@ export const DISTRICT_STYLES = {
 };
 
 // Compress empty travel corridors while preserving every documented footprint.
-export function compactAizanoiLayout({ xScale = 0.78, zScale = 0.88 } = {}) {
+export function compactAizanoiLayout({ xScale = 0.39, zScale = 0.88 } = {}) {
   const buildings = BUILDINGS.map((b) => ({ ...b, x: b.x * xScale, z: b.z * zScale, w: b.w * xScale, d: b.d * zScale }));
   const regions = REGIONS.map((r) => ({ ...r, x: r.x * xScale, z: r.z * zScale, w: r.w * xScale, d: r.d * zScale }));
   const streets = STREETS.map((s) => ({ ...s, points: s.points.map(([x, z]) => [x * xScale, z * zScale]), width: s.width * Math.min(xScale, zScale) }));

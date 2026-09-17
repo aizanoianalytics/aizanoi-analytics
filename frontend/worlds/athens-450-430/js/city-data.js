@@ -232,15 +232,19 @@ export const BUILDINGS = [
 
 /* ── Water bodies ─────────────────────────────────────────── */
 
+// NOTE (2026-09-16 harita revizyonu): su koordinatları source-anchored idi
+// (aşağıdaki compaction'a sokulmuyordu). Harita genişliği yarıya indiği için
+// suların x'leri de ×0.5 yapıldı (anıtlarla hizalı kalsın diye); width/radius
+// ve renk/yerleşim mantığı aynı tutuldu.
 export const WATERS = [
   { id: 'eridanos', name: 'Eridanos Stream', type: 'river',
-    points: [{ x: 180, z: 200 }, { x: 280, z: 220 }, { x: 380, z: 230 }, { x: 450, z: 220 }],
+    points: [{ x: 90, z: 200 }, { x: 140, z: 220 }, { x: 190, z: 230 }, { x: 225, z: 220 }],
     width: 8, color: 0x4a7a6a },
   { id: 'ilissos', name: 'Ilissos River', type: 'river',
-    points: [{ x: -380, z: 140 }, { x: -300, z: 160 }, { x: -200, z: 180 }, { x: -100, z: 200 }],
+    points: [{ x: -190, z: 140 }, { x: -150, z: 160 }, { x: -100, z: 180 }, { x: -50, z: 200 }],
     width: 12, color: 0x3a6a7a },
   { id: 'kallirrhoe', name: 'Kallirrhoe Spring', type: 'spring',
-    x: -260, z: 160, radius: 6 },
+    x: -130, z: 160, radius: 6 },
 ];
 
 /* ── Spawn & Bounds ───────────────────────────────────────── */
@@ -251,24 +255,36 @@ export const BOUNDS = { minX: -450, maxX: 1100, minZ: -450, maxZ: 700 };
 
 // Compact the authored plan, not the monuments: this shortens empty travel
 // while preserving every id, evidence record, footprint and interior contract.
-export const COMPACTION = { factor: 0.76, origin: { x: 0, z: 0 } };
+// 2026-09-16 harita revizyonu: genişlik (x) yarıya indirildi — anizotropik
+// sıkıştırma. xFactor = 0.76 * 0.5 = 0.38, zFactor = 0.76 (aynı, Z değişmez).
+export const COMPACTION = { xFactor: 0.38, zFactor: 0.76, factor: 0.76, origin: { x: 0, z: 0 } };
 function compactPoint(point) {
-  point.x = COMPACTION.origin.x + (point.x - COMPACTION.origin.x) * COMPACTION.factor;
-  point.z = COMPACTION.origin.z + (point.z - COMPACTION.origin.z) * COMPACTION.factor;
+  point.x = COMPACTION.origin.x + (point.x - COMPACTION.origin.x) * COMPACTION.xFactor;
+  point.z = COMPACTION.origin.z + (point.z - COMPACTION.origin.z) * COMPACTION.zFactor;
 }
-for (const region of REGIONS) compactPoint(region);
+for (const region of REGIONS) {
+  compactPoint(region);
+  // x-genişliği yarıya: w x-boyutudur, d (z) aynı kalır.
+  if (typeof region.w === 'number') region.w *= 0.5;
+}
 for (const street of STREETS) street.points.forEach(([x, z], index) => {
-  street.points[index] = [x * COMPACTION.factor, z * COMPACTION.factor];
+  street.points[index] = [x * COMPACTION.xFactor, z * COMPACTION.zFactor];
 });
-for (const building of BUILDINGS) compactPoint(building);
+for (const building of BUILDINGS) {
+  compactPoint(building);
+  // x-boyutu yarıya: w x-boyutudur, d/h aynı kalır.
+  if (typeof building.w === 'number') building.w *= 0.5;
+}
 // Water coordinates remain source-anchored: ambience and river evidence use
 // established landmarks, while streets, districts and monuments are compacted.
+// (2026-09-16: sular yukarıda literal olarak ×0.5 yapıldı; burada compaction'a
+// sokulmuyor — width/radius mantığı korunuyor.)
 
 compactPoint(SPAWN);
-BOUNDS.minX *= COMPACTION.factor;
-BOUNDS.maxX *= COMPACTION.factor;
-BOUNDS.minZ *= COMPACTION.factor;
-BOUNDS.maxZ *= COMPACTION.factor;
+BOUNDS.minX *= COMPACTION.xFactor;
+BOUNDS.maxX *= COMPACTION.xFactor;
+BOUNDS.minZ *= COMPACTION.zFactor;
+BOUNDS.maxZ *= COMPACTION.zFactor;
 
 /* ── Teleport destinations ────────────────────────────────── */
 

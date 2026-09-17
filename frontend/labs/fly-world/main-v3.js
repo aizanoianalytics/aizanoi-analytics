@@ -1,5 +1,6 @@
 import * as THREE from '../../worlds/shared/vendor/three.module.js';
 import { applyReferenceDressing } from './reference-dressing.js';
+import { AudioSystem } from '../../worlds/shared/engine/audio.js';
 
 const canvas = document.querySelector('#world');
 const fatal = document.querySelector('#fatal');
@@ -135,49 +136,53 @@ function addWallY(y, x0, x1, z0, z1, material, name) {
 }
 
 function buildArchitecture() {
-  box([8.4, 6.4, 0.10], [0, 0, -0.05], MATERIALS.floor, 'main-floor');
-  box([8.4, 6.4, 0.08], [0, 0, 2.89], MATERIALS.plasterDark, 'main-ceiling');
-  addWallY(3.2, -4.2, 4.2, 0, 2.85, MATERIALS.plaster, 'main-north');
-  addWallY(-3.2, -4.2, 4.2, 0, 2.85, MATERIALS.plaster, 'main-south');
-  addWallX(-4.2, -3.2, -1.72, 0, 2.85, MATERIALS.plaster, 'west-a');
-  addWallX(-4.2, 0.28, 3.2, 0, 2.85, MATERIALS.plaster, 'west-b');
-  addWallX(-4.2, -1.72, 0.28, 0, 0.72, MATERIALS.plaster, 'west-sill');
-  addWallX(-4.2, -1.72, 0.28, 2.28, 2.85, MATERIALS.plaster, 'west-head');
-  addWallX(4.2, -3.2, 0.34, 0, 2.85, MATERIALS.plaster, 'east-a');
-  addWallX(4.2, 1.66, 3.2, 0, 2.85, MATERIALS.plaster, 'east-b');
-  addWallX(4.2, 0.34, 1.66, 2.18, 2.85, MATERIALS.plaster, 'east-head');
+  box([9.6, 8.0, 0.10], [0, 0, -0.05], MATERIALS.floor, 'main-floor');
+  box([9.6, 8.0, 0.08], [0, 0, 2.89], MATERIALS.plasterDark, 'main-ceiling');
+  addWallY(4.0, -4.8, 4.8, 0, 2.85, MATERIALS.plaster, 'main-north');
+  addWallY(-4.0, -4.8, 4.8, 0, 2.85, MATERIALS.plaster, 'main-south');
+  addWallX(-4.8, -4.0, -1.72, 0, 2.85, MATERIALS.plaster, 'west-a');
+  addWallX(-4.8, 0.28, 4.0, 0, 2.85, MATERIALS.plaster, 'west-b');
+  addWallX(-4.8, -1.72, 0.28, 0, 0.72, MATERIALS.plaster, 'west-sill');
+  addWallX(-4.8, -1.72, 0.28, 2.28, 2.85, MATERIALS.plaster, 'west-head');
+  addWallX(4.8, -4.0, 0.34, 0, 2.85, MATERIALS.plaster, 'east-a');
+  addWallX(4.8, 1.66, 4.0, 0, 2.85, MATERIALS.plaster, 'east-b');
+  addWallX(4.8, 0.34, 1.66, 2.18, 2.85, MATERIALS.plaster, 'east-head');
 
-  box([4.2, 5.0, 0.10], [6.3, 1.15, -0.05], MATERIALS.floor, 'bed-floor');
-  box([4.2, 5.0, 0.08], [6.3, 1.15, 2.89], MATERIALS.plasterDark, 'bed-ceiling');
-  addWallX(8.4, -1.35, 3.65, 0, 2.85, MATERIALS.plaster, 'bed-east');
-  addWallY(-1.35, 4.2, 8.4, 0, 2.85, MATERIALS.plaster, 'bed-south');
-  addWallY(3.65, 4.2, 4.92, 0, 2.85, MATERIALS.plaster, 'bed-north-a');
-  addWallY(3.65, 6.30, 8.4, 0, 2.85, MATERIALS.plaster, 'bed-north-b');
-  addWallY(3.65, 4.92, 6.30, 0, 0.78, MATERIALS.plaster, 'bed-window-sill');
-  addWallY(3.65, 4.92, 6.30, 2.20, 2.85, MATERIALS.plaster, 'bed-window-head');
-  addWallX(4.2, -1.35, 0.34, 0, 2.85, MATERIALS.plaster, 'bed-west-a');
-  addWallX(4.2, 1.66, 3.65, 0, 2.85, MATERIALS.plaster, 'bed-west-b');
-  addWallX(4.2, 0.34, 1.66, 2.18, 2.85, MATERIALS.plaster, 'bed-west-head');
+  box([5.0, 6.2, 0.10], [7.3, 1.15, -0.05], MATERIALS.floor, 'bed-floor');
+  box([5.0, 6.2, 0.08], [7.3, 1.15, 2.89], MATERIALS.plasterDark, 'bed-ceiling');
+  addWallX(9.8, -1.95, 4.25, 0, 2.85, MATERIALS.plaster, 'bed-east');
+  addWallY(-1.95, 4.8, 9.8, 0, 2.85, MATERIALS.plaster, 'bed-south');
+  addWallY(4.25, 4.8, 4.92, 0, 2.85, MATERIALS.plaster, 'bed-north-a');
+  addWallY(4.25, 6.30, 9.8, 0, 2.85, MATERIALS.plaster, 'bed-north-b');
+  addWallY(4.25, 4.92, 6.30, 0, 0.78, MATERIALS.plaster, 'bed-window-sill');
+  addWallY(4.25, 4.92, 6.30, 2.20, 2.85, MATERIALS.plaster, 'bed-window-head');
+  addWallX(4.8, -1.95, 0.34, 0, 2.85, MATERIALS.plaster, 'bed-west-a');
+  addWallX(4.8, 1.66, 4.25, 0, 2.85, MATERIALS.plaster, 'bed-west-b');
+  addWallX(4.8, 0.34, 1.66, 2.18, 2.85, MATERIALS.plaster, 'bed-west-head');
 
   // The reference ceiling is plain but low and aged; a few dark rails/skirting
   // provide depth without turning it into a different timber-beam house.
-  for (const y of [-3.08, 3.08]) box([8.05, 0.07, 0.16], [0, y, 0.12], MATERIALS.woodDark, `skirting-${y}`);
+  for (const y of [-3.88, 3.88]) box([9.25, 0.07, 0.16], [0, y, 0.12], MATERIALS.woodDark, `skirting-${y}`);
 }
 
 function buildWindowAndCurtains() {
-  box([0.035, 1.92, 1.50], [-4.12, -0.72, 1.49], MATERIALS.glass, 'window-glass', { solid: true });
-  for (const y of [-1.53, -1.15, -0.77, -0.39, -0.01]) box([0.055, 0.045, 1.50], [-4.05, y, 1.49], MATERIALS.metal, `window-bar-v-${y}`);
-  for (const z of [0.84, 1.28, 1.72, 2.14]) box([0.055, 1.92, 0.045], [-4.05, -0.72, z], MATERIALS.metal, `window-bar-h-${z}`);
-  for (let i = 0; i < 5; i++) box([0.08, 0.27, 2.34], [-3.91, 0.32 + i * 0.22, 1.48], MATERIALS.floral, `floral-curtain-${i}`, { rotationZ: (i - 2) * 0.015 });
-  for (let i = 0; i < 6; i++) box([0.055, 0.28, 2.18], [-3.94, -1.55 + i * 0.31, 1.52], MATERIALS.lace, `lace-curtain-${i}`);
-  box([0.12, 2.25, 0.10], [-3.87, -0.66, 2.67], MATERIALS.woodDark, 'curtain-rail');
-  const cage = new THREE.Group(); cage.position.set(-3.45, 1.72, 1.82); cage.name = 'birdcage-detail'; scene.add(cage);
+  box([0.035, 1.92, 1.50], [-4.72, -0.72, 1.49], MATERIALS.glass, 'window-glass', { solid: true });
+  for (const y of [-1.53, -1.15, -0.77, -0.39, -0.01]) box([0.055, 0.045, 1.50], [-4.65, y, 1.49], MATERIALS.metal, `window-bar-v-${y}`);
+  for (const z of [0.84, 1.28, 1.72, 2.14]) box([0.055, 1.92, 0.045], [-4.65, -0.72, z], MATERIALS.metal, `window-bar-h-${z}`);
+  for (let i = 0; i < 5; i++) box([0.08, 0.27, 2.34], [-4.51, 0.32 + i * 0.22, 1.48], MATERIALS.floral, `floral-curtain-${i}`, { rotationZ: (i - 2) * 0.015 });
+  for (let i = 0; i < 6; i++) box([0.055, 0.28, 2.18], [-4.54, -1.55 + i * 0.31, 1.52], MATERIALS.lace, `lace-curtain-${i}`);
+  box([0.12, 2.25, 0.10], [-4.47, -0.66, 2.67], MATERIALS.woodDark, 'curtain-rail');
+  const cage = new THREE.Group(); cage.position.set(-4.05, 1.72, 1.82); cage.name = 'birdcage-detail'; scene.add(cage);
   cylinder(0.27, 0.06, [0, 0, -0.38], MATERIALS.woodDark, 'cage-base', { parent: cage });
   cylinder(0.27, 0.06, [0, 0, 0.38], MATERIALS.woodDark, 'cage-top', { parent: cage });
   for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; box([0.018, 0.018, 0.76], [Math.cos(a) * 0.24, Math.sin(a) * 0.24, 0], MATERIALS.metal, `cage-wire-${i}`, { parent: cage }); }
 }
 
 function buildBenchWall() {
+  // Divan base plinth feet (grounded to floor z=0 to z=0.11)
+  for (const dx of [-1.5, -0.75, 0, 0.75, 1.5]) {
+    box([0.16, 0.84, 0.11], [-0.65 + dx, 2.34, 0.055], MATERIALS.woodDark, `divan-foot-${dx}`);
+  }
   box([3.95, 0.88, 0.46], [-0.65, 2.34, 0.34], MATERIALS.woodDark, 'divan-base', { solid: true });
   box([3.70, 0.76, 0.24], [-0.65, 2.22, 0.65], MATERIALS.greenTextile, 'divan-seat', { solid: true });
   box([3.90, 0.34, 1.20], [-0.65, 2.76, 1.55], MATERIALS.wood, 'cabinet-back', { solid: true });
@@ -221,12 +226,16 @@ function buildTVAndFloorBasics() {
 
 function buildWallDecor() {
   const frames = [[-2.9,1.55,.44,.60],[-2.28,1.62,.33,.45],[-1.68,1.50,.42,.52],[0.96,1.62,.38,.48],[1.48,1.66,.28,.38],[2.88,1.70,.42,.55]];
-  frames.forEach(([x,z,w,h], i) => { box([w,0.055,h],[x,3.07,z],MATERIALS.woodDark,`frame-${i}`); box([w-.07,0.045,h-.07],[x,3.035,z], i % 2 ? MATERIALS.plasterDark : MATERIALS.greenTextile,`picture-${i}`); });
-  cylinder(0.11,0.26,[3.50,1.88,1.32],MATERIALS.ceramic,'wall-vase',{axis:'y'});
-  for (let i=0;i<5;i++) { box([0.02,0.02,0.48],[3.50 + (i-2)*0.05,1.85,1.60],MATERIALS.leaf,`flower-stem-${i}`); const f=new THREE.Mesh(new THREE.SphereGeometry(.06,10,8),MATERIALS.flower); f.position.set(3.50+(i-2)*.07,1.83,1.85+(i%2)*.08); scene.add(f); }
+  frames.forEach(([x,z,w,h], i) => { box([w,0.055,h],[x,3.87,z],MATERIALS.woodDark,`frame-${i}`); box([w-.07,0.045,h-.07],[x,3.835,z], i % 2 ? MATERIALS.plasterDark : MATERIALS.greenTextile,`picture-${i}`); });
+  cylinder(0.11,0.26,[4.10,1.88,1.32],MATERIALS.ceramic,'wall-vase',{axis:'y'});
+  for (let i=0;i<5;i++) { box([0.02,0.02,0.48],[4.10 + (i-2)*0.05,1.85,1.60],MATERIALS.leaf,`flower-stem-${i}`); const f=new THREE.Mesh(new THREE.SphereGeometry(.06,10,8),MATERIALS.flower); f.position.set(4.10+(i-2)*.07,1.83,1.85+(i%2)*.08); scene.add(f); }
 }
 
 function buildBedroom() {
+  // Bed frame legs (grounded to floor z=0 to z=0.27)
+  for (const [lx, ly] of [[5.85, 0.75], [7.59, 0.75], [5.85, 2.89], [7.59, 2.89]]) {
+    box([0.12, 0.12, 0.27], [lx, ly, 0.135], MATERIALS.woodDark, `bed-leg-${lx}-${ly}`, { solid: true });
+  }
   box([1.82, 2.20, 0.30], [6.72, 1.82, 0.42], MATERIALS.woodDark, 'bed-frame', { solid: true });
   box([1.68, 2.02, 0.28], [6.72, 1.82, 0.68], MATERIALS.redTextile, 'mattress', { solid: true });
   box([1.72, 2.02, 0.14], [6.72, 1.78, 0.88], MATERIALS.patchwork, 'bed-quilt');
@@ -243,14 +252,23 @@ function buildBedroom() {
   box([1.25,.74,.09],[5.26,-.64,.69],MATERIALS.woodLight,'trunk-lid');
   box([1.18,.66,2.10],[7.58,-.78,1.05],MATERIALS.wood,'bedroom-wardrobe',{solid:true});
   box([1.45,1.95,.03],[6.05,.05,.055],MATERIALS.kilim,'bedroom-rug',{rotationZ:.06});
-  box([1.34,.035,1.40],[5.61,3.58,1.48],MATERIALS.glass,'bedroom-window',{solid:true});
-  for(let i=0;i<4;i++) box([.28,.055,1.78],[4.84+i*.25,3.48,1.55],MATERIALS.floral,`bedroom-curtain-${i}`);
+  box([1.34,.035,1.40],[5.61,4.18,1.48],MATERIALS.glass,'bedroom-window',{solid:true});
+  for(let i=0;i<4;i++) box([.28,.055,1.78],[4.84+i*.25,4.08,1.55],MATERIALS.floral,`bedroom-curtain-${i}`);
+
+  // Work desk and chair (spec heroObject aligned with detail pass)
+  box([1.45, 0.52, 0.12], [5.525, 3.05, 0.76], MATERIALS.woodLight, 'work-desk', { solid: true });
+  for (const x of [4.895, 6.155]) {
+    box([0.10, 0.10, 0.72], [x, 3.05, 0.38], MATERIALS.woodDark, `work-desk-leg-${x}`, { solid: true });
+  }
+  box([0.52, 0.48, 0.12], [5.525, 2.35, 0.48], MATERIALS.greenTextile, 'work-desk-chair-seat', { solid: true });
+  box([0.52, 0.10, 0.52], [5.525, 2.58, 0.76], MATERIALS.woodDark, 'work-desk-chair-back', { solid: true });
+  box([0.18, 0.18, 0.06], [5.525, 3.02, 0.85], MATERIALS.ceramic, 'work-desk-lamp');
 }
 
 function addLighting() {
   scene.add(new THREE.HemisphereLight(0xb9d2e1, 0x4a3426, 1.08));
   const sun = new THREE.DirectionalLight(0xffdfba, 2.05); sun.position.set(-6, -5, 8); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left=-10; sun.shadow.camera.right=10; sun.shadow.camera.top=10; sun.shadow.camera.bottom=-10; scene.add(sun);
-  const windowFill = new THREE.PointLight(0xa8d5ff, 3.6, 6.5, 2); windowFill.position.set(-3.6,-.7,1.65); scene.add(windowFill);
+  const windowFill = new THREE.PointLight(0xa8d5ff, 3.6, 6.5, 2); windowFill.position.set(-4.2,-.7,1.65); scene.add(windowFill);
   const stove = new THREE.PointLight(0xff6525, 8.0, 3.8, 2); stove.position.set(2.05,.28,.62); stove.castShadow = true; scene.add(stove);
   const bedroom = new THREE.PointLight(0xffb45a, 5.0, 4.0, 2); bedroom.position.set(5.18,2.35,1.42); bedroom.castShadow=true; scene.add(bedroom);
 }
@@ -323,6 +341,12 @@ class GhostObserver {
     if (this.keys.has('KeyQ')) delta.z -= step;
     this.tryMove(delta);
     this.camera.lookAt(this.camera.position.clone().add(forward));
+
+    if (window.__FLY_AUDIO__) {
+      const isMoving = this.keys.has('KeyW') || this.keys.has('KeyS') || this.keys.has('KeyA') || this.keys.has('KeyD');
+      const isRunning = isMoving && (this.keys.has('ShiftLeft') || this.keys.has('ShiftRight'));
+      window.__FLY_AUDIO__.update(dt, this.camera.position, false, isMoving, isRunning, { surface: 'wood' });
+    }
   }
 }
 
@@ -336,6 +360,14 @@ try {
   buildBedroom();
   applyReferenceDressing({ THREE, scene, materials: MATERIALS, box, cylinder, registerCollider });
   addLighting();
+
+  const audio = new AudioSystem();
+  audio.setSoundset('flyworld');
+  window.__FLY_AUDIO__ = audio;
+  canvas.addEventListener('click', () => {
+    audio.init();
+    audio.resume();
+  }, { once: true });
 
   const observer = new GhostObserver(camera, canvas);
   const clock = new THREE.Clock();

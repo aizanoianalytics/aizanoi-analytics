@@ -49,11 +49,12 @@ import {
   buildRomanSarcophagus,
   buildPenkalasWaterMill,
   buildRiverQuayCrane,
+  buildAizanoiMacellumFoodCounter,
+  buildTempleOfZeusBronzeTripod,
 } from '../../shared/assets/props.js';
 
-
-  // Dense sample points along rivers + springs — feeds proximity-based water ambience
-  const WATER_POINTS = buildWaterSamplePoints(WATERS, 25);
+// Dense sample points along rivers + springs — feeds proximity-based water ambience
+const WATER_POINTS = buildWaterSamplePoints(WATERS, 25);
 let renderer, scene, camera, clock;
 let environment, waterSystem, vegetation, particles;
 let collision, controls, audio, ui, tour, intro, birdFlock;
@@ -206,18 +207,18 @@ async function init() {
     subtitle: 'Phrygia Epiktetos · Temple of Zeus · Roman Imperial',
   });
   intro.curve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-160, 180, 20),   // High above Temple of Zeus
-    new THREE.Vector3(-65, 80, -35),    // Agora & Propylon
-    new THREE.Vector3(112, 35, -160),   // Hadrianic Bridge II over Penkalas
-    new THREE.Vector3(60, 20, -300),    // Over Macellum round market
+    new THREE.Vector3(-80, 180, 20),   // High above Temple of Zeus
+    new THREE.Vector3(-32.5, 80, -35),    // Agora & Propylon
+    new THREE.Vector3(56, 35, -160),   // Hadrianic Bridge II over Penkalas
+    new THREE.Vector3(30, 20, -300),    // Over Macellum round market
     new THREE.Vector3(SPAWN.x, 1.7, SPAWN.z), // Touchdown facing Zeus Temple
   ]);
   intro.lookAtCurve = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(-160, 10, 20),
-    new THREE.Vector3(-65, 5, -35),
-    new THREE.Vector3(125, 0, 0),
-    new THREE.Vector3(60, 5, -300),
-    new THREE.Vector3(-160, 10, 20),
+    new THREE.Vector3(-80, 10, 20),
+    new THREE.Vector3(-32.5, 5, -35),
+    new THREE.Vector3(62.5, 0, 0),
+    new THREE.Vector3(30, 5, -300),
+    new THREE.Vector3(-80, 10, 20),
   ]);
 
   intro.onComplete = () => {
@@ -227,7 +228,7 @@ async function init() {
     simPos.copy(camera.position);
     pose.snap();
     audio.init();
-    audio.setSoundset('mediterranean');
+    audio.setSoundset('aizanoi');
     isRunning = true;
   };
 
@@ -393,6 +394,10 @@ function populateAizanoiDressing() {
   // Carved marble sundial in the sanctuary temenos
   dressingGroup.add(buildSundialMonument(-62, 24));
 
+  // Sacred bronze sacrificial tripods dedicated to Zeus
+  dressingGroup.add(buildTempleOfZeusBronzeTripod(-88, 18, 1.2));
+  dressingGroup.add(buildTempleOfZeusBronzeTripod(-72, 18, 1.2));
+
   // Stone benches in the temenos courtyard
   const benches = [
     { x: -100, z: 26, rot: 0 },
@@ -446,6 +451,10 @@ function populateAizanoiDressing() {
   dressingGroup.add(buildAmphoraCluster(48, -98, 6, -0.4));
   dressingGroup.add(buildWoodenCart(24, -80, 0.15));
   dressingGroup.add(buildWoodenCart(46, -130, -0.4));
+
+  // Specialized Macellum curved food counters
+  dressingGroup.add(buildAizanoiMacellumFoodCounter(42, -18, 0.4));
+  dressingGroup.add(buildAizanoiMacellumFoodCounter(38, -26, -0.2));
 
   // 4. Penkalas River Quays & Bridges
   // Classical Merchant Cargo Vessels moored along the Penkalas river
@@ -501,14 +510,14 @@ function populateAizanoiDressing() {
 
   // Dressing coordinates are authored in the survey frame; keep them aligned
   // with the compact monument/circulation frame without changing their IDs.
-  dressingGroup.scale.set(0.78, 1, 0.88);
+  dressingGroup.scale.set(0.39, 1, 0.88);
   const allColliders = new Set([...collision.grid.cells.values()].flat());
   collision.grid.clear();
   for (const collider of allColliders) {
     if (!preExistingColliders.has(collider)) {
-      collider.x *= 0.78;
+      collider.x *= 0.39;
       collider.z *= 0.88;
-      if (Number.isFinite(collider.w)) collider.w *= 0.78;
+      if (Number.isFinite(collider.w)) collider.w *= 0.39;
       if (Number.isFinite(collider.d)) collider.d *= 0.88;
     }
     collision.grid.insert(collider);
@@ -534,7 +543,7 @@ function bindEvents() {
         intro.start();
         audio.init();
         audio.installLifecycleResume();
-        audio.setSoundset('mediterranean');
+        audio.setSoundset('aizanoi');
       } catch (err) {
         console.warn('enter sequence: non-fatal', err);
         // Never strand the player on the intro modal: force-start the intro.

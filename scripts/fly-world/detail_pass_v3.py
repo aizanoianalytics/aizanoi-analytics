@@ -363,12 +363,13 @@ def apply_reference_detail_pass(mats):
 
     # A compact writing desk establishes a quiet work zone in the enlarged bedroom;
     # its chair stays clear of the doorway and the bed-side circulation path.
-    _box("work-desk", (1.45, .52, .12), (5.05, 3.05, .76), mats["wood3"], c, bevel=.025, collision=True, landing=True, semantic="work-surface")
-    for x in (4.42, 5.68):
+    # 2026-09-16: shifted +0.475 x with the bedroom west wall (4.2 -> 4.8).
+    _box("work-desk", (1.45, .52, .12), (5.525, 3.05, .76), mats["wood3"], c, bevel=.025, collision=True, landing=True, semantic="work-surface")
+    for x in (4.895, 6.155):
         _box(f"work-desk-leg-{x}", (.10, .10, .72), (x, 3.05, .38), mats["wood2"], c, bevel=.015, collision=True)
-    _box("work-desk-chair-seat", (.52, .48, .12), (5.05, 2.35, .48), mats["green"], c, bevel=.04, collision=True)
-    _box("work-desk-chair-back", (.52, .10, .52), (5.05, 2.58, .76), mats["wood2"], c, bevel=.02, collision=True)
-    _box("work-desk-lamp", (.18, .18, .06), (5.05, 3.02, .87), mats["ceramic"], c, bevel=.015)
+    _box("work-desk-chair-seat", (.52, .48, .12), (5.525, 2.35, .48), mats["green"], c, bevel=.04, collision=True)
+    _box("work-desk-chair-back", (.52, .10, .52), (5.525, 2.58, .76), mats["wood2"], c, bevel=.02, collision=True)
+    _box("work-desk-lamp", (.18, .18, .06), (5.525, 3.02, .87), mats["ceramic"], c, bevel=.015)
 
     # The browser fallback's final micro-details are owned by this reference pass.
     _micro.apply_micro_detail_pass(mats)

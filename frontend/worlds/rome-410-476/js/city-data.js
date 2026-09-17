@@ -245,29 +245,30 @@ export const WATERS = [
 
 /* ── Spawn & Bounds ───────────────────────────────────────── */
 
-export const BOUNDS = { minX: -336, maxX: 268.8, minZ: -285.6, maxZ: 285.6 };
-export const COMPACTION = { factor: 0.84, origin: { x: 0, z: 0 } };
+export const BOUNDS = { minX: -168, maxX: 134.4, minZ: -285.6, maxZ: 285.6 };
+export const COMPACTION = { xFactor: 0.42, zFactor: 0.84, factor: 0.84, origin: { x: 0, z: 0 } };
 function compactPoint(point) {
-  point.x *= COMPACTION.factor;
-  point.z *= COMPACTION.factor;
+  point.x *= COMPACTION.xFactor;
+  point.z *= COMPACTION.zFactor;
 }
-for (const region of REGIONS) compactPoint(region);
+for (const region of REGIONS) { compactPoint(region); region.w *= 0.5; }
 for (const street of STREETS) street.points.forEach((point) => {
-  point[0] *= COMPACTION.factor;
-  point[1] *= COMPACTION.factor;
+  point[0] *= COMPACTION.xFactor;
+  point[1] *= COMPACTION.zFactor;
 });
-for (const building of BUILDINGS) compactPoint(building);
+for (const building of BUILDINGS) { compactPoint(building); building.w *= 0.5; }
 for (const water of WATERS) {
   water.points.forEach(compactPoint);
+  water.width *= 0.5;
   // Preserve the dense audio/visual river sampling contract after shortening the route.
   for (let density = 0; density < 3; density++) water.points = water.points.flatMap((point, index, points) => {
     const next = points[index + 1];
     if (!next) return [point];
-    return [point, { x: (point.x + next.x) / 2 + (index % 2 ? 18 : -18), z: (point.z + next.z) / 2 }];
+    return [point, { x: (point.x + next.x) / 2 + (index % 2 ? 9 : -9), z: (point.z + next.z) / 2 }];
   });
 }
 
-export const SPAWN = { x: -200 * COMPACTION.factor, z: 314 * COMPACTION.factor, angle: Math.PI }; // Via Lata approach, outside the Aurelian circuit, facing the city
+export const SPAWN = { x: -200 * COMPACTION.xFactor, z: 314 * COMPACTION.zFactor, angle: Math.PI }; // Via Lata approach, outside the Aurelian circuit, facing the city
 
 export const TELEPORTS = [
   { id: 'colosseum', name: 'Colosseum (Flavian Amphitheatre)' },

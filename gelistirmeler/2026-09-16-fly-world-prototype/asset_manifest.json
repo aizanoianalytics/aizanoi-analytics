@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 1,
+  "project": "Fly House",
+  "licensePolicy": {
+    "preferred": [
+      "CC0-1.0",
+      "Public-Domain"
+    ],
+    "allowedWithAttribution": [
+      "CC-BY-4.0"
+    ],
+    "disallowed": [
+      "Editorial-only",
+      "NC",
+      "ND",
+      "unknown",
+      "proprietary-without-explicit-permission"
+    ],
+    "rule": "Every third-party asset must record source URL, author, license and retrieval date before it is accepted into the scene."
+  },
+  "assetRoot": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source",
+  "slots": [
+    {
+      "id": "bench-sofa",
+      "category": "furniture",
+      "requiredForVisualApproval": true,
+      "searchBrief": "aged low wooden divan/bench with thick textile cushions; Anatolian/rustic rather than modern sofa",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bench-sofa/bench-sofa.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#bench-sofa",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "carved-cabinet",
+      "category": "furniture",
+      "requiredForVisualApproval": true,
+      "searchBrief": "long carved reddish-brown wooden storage cabinet / wall-backed divan cabinet",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/carved-cabinet/carved-cabinet.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#carved-cabinet",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "wood-stove",
+      "category": "furniture",
+      "requiredForVisualApproval": true,
+      "searchBrief": "old cast-iron or sheet-metal wood burning stove with front fire door",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/wood-stove/wood-stove.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#wood-stove",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "kettle",
+      "category": "prop",
+      "requiredForVisualApproval": true,
+      "searchBrief": "aged metal kettle/teapot suitable for wood stove",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/kettle/kettle.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#kettle",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "old-tv",
+      "category": "furniture",
+      "requiredForVisualApproval": true,
+      "searchBrief": "small vintage CRT television in wooden cabinet",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/old-tv/old-tv.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#old-tv",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "woven-basket",
+      "category": "prop",
+      "requiredForVisualApproval": true,
+      "searchBrief": "woven wicker basket, open top",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/woven-basket/woven-basket.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#woven-basket",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "blue-bag",
+      "category": "prop",
+      "requiredForVisualApproval": false,
+      "searchBrief": "soft fabric shopping/travel bag with handles",
+      "localPath": null,
+      "source": null
+    },
+    {
+      "id": "main-rug",
+      "category": "textile",
+      "requiredForVisualApproval": true,
+      "searchBrief": "aged Anatolian geometric runner rug, warm rust/orange/brown palette",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/main-rug/main-rug.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#main-rug",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "round-rug",
+      "category": "textile",
+      "requiredForVisualApproval": true,
+      "searchBrief": "round patchwork/woven floor rug with muted green/pink/yellow radial pattern",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/round-rug/round-rug.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#round-rug",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "wooden-bed",
+      "category": "furniture",
+      "requiredForVisualApproval": true,
+      "searchBrief": "simple old wooden bed frame suitable for rustic village house",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/wooden-bed/wooden-bed.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#wooden-bed",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "bedside-table",
+      "category": "furniture",
+      "requiredForVisualApproval": true,
+      "searchBrief": "small aged wooden bedside table",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bedside-table/bedside-table.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#bedside-table",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "bookshelf",
+      "category": "furniture",
+      "requiredForVisualApproval": false,
+      "searchBrief": "small rustic wall shelf/bookshelf",
+      "localPath": null,
+      "source": null
+    },
+    {
+      "id": "work-desk",
+      "category": "furniture",
+      "requiredForVisualApproval": false,
+      "searchBrief": "compact aged writing desk for a quiet bedroom work zone",
+      "localPath": null,
+      "source": null
+    },
+    {
+      "id": "curtain-floral",
+      "category": "textile",
+      "requiredForVisualApproval": true,
+      "searchBrief": "heavy vintage floral curtain, red/brown ground with large flowers",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/curtain-floral/curtain-floral.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#curtain-floral",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "curtain-lace",
+      "category": "textile",
+      "requiredForVisualApproval": true,
+      "searchBrief": "thin white lace curtain",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/curtain-lace/curtain-lace.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#curtain-lace",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "pillow-quilt-set",
+      "category": "textile",
+      "requiredForVisualApproval": true,
+      "searchBrief": "mixed vintage patterned cushions and patchwork quilts",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/pillow-quilt-set/pillow-quilt-set.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#pillow-quilt-set",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "bed-quilt",
+      "category": "textile",
+      "requiredForVisualApproval": true,
+      "searchBrief": "warm patterned floral/patchwork bed quilt",
+      "localPath": "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bed-quilt/bed-quilt.glb",
+      "source": {
+        "url": "https://github.com/aizanoianalytics/aizanoi-analytics/blob/fly-world-prototype/scripts/fly-world/author_heroes.py#bed-quilt",
+        "author": "Aizanoi Analytics (studio-authored)",
+        "license": "CC0-1.0",
+        "retrievedAt": "2026-09-16"
+      }
+    },
+    {
+      "id": "picture-frames",
+      "category": "prop-set",
+      "requiredForVisualApproval": false,
+      "searchBrief": "small mismatched vintage wooden picture frames",
+      "localPath": null,
+      "source": null
+    },
+    {
+      "id": "flower-vase",
+      "category": "prop",
+      "requiredForVisualApproval": false,
+      "searchBrief": "simple wall vase with red flowers",
+      "localPath": null,
+      "source": null
+    },
+    {
+      "id": "clutter-pack",
+      "category": "prop-set",
+      "requiredForVisualApproval": false,
+      "searchBrief": "small books, yarn balls, slippers, wooden toys, bottles and folded cloths; realistic scale",
+      "localPath": null,
+      "source": null
+    }
+  ],
+  "textureSlots": [
+    {
+      "id": "warm-aged-plaster",
+      "maps": [
+        "baseColor",
+        "normal",
+        "roughness"
+      ],
+      "notes": "warm off-white old plaster with restrained stains, not ruined wall"
+    },
+    {
+      "id": "aged-green-floor",
+      "maps": [
+        "baseColor",
+        "normal",
+        "roughness"
+      ],
+      "notes": "desaturated green/grey painted or worn hard floor"
+    },
+    {
+      "id": "aged-reddish-wood",
+      "maps": [
+        "baseColor",
+        "normal",
+        "roughness"
+      ],
+      "notes": "worn reddish-brown cabinet wood"
+    },
+    {
+      "id": "aged-dark-metal",
+      "maps": [
+        "baseColor",
+        "normal",
+        "roughness",
+        "metallic"
+      ],
+      "notes": "dark stove and pipe metal, soot and heat discoloration"
+    }
+  ]
+}

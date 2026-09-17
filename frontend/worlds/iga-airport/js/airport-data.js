@@ -134,7 +134,7 @@ export const DISTRICT_STYLES = {};
 // The published interpretation keeps the terminal legible while removing the
 // empty lateral travel between the two piers. IDs, evidence and source links
 // remain those of the source ledger; only the spatial presentation changes.
-export function compactAirportLayout({ xScale = 0.78, zScale = 0.82 } = {}) {
+export function compactAirportLayout({ xScale = 0.39, zScale = 0.82 } = {}) {
   const scalePoint = ([x, z]) => [x * xScale, z * zScale];
   const buildings = BUILDINGS.map((building) => ({
     ...building,

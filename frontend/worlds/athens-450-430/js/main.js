@@ -49,6 +49,9 @@ import {
   buildClassicalHerm,
   buildVotiveTripodPillar,
   buildAtticHydriaFountain,
+  buildAthenaPromachosMonument,
+  buildErechtheionCaryatidPorch,
+  buildBouleuterionOratorBema,
 } from '../../shared/assets/props.js';
 
 /* ── Global state ─────────────────────────────────────────── */
@@ -241,12 +244,24 @@ async function init() {
   /* ── 16. Intro sequence ───────────────────────────────── */
 
   intro = new IntroSequence(camera, scene, controls);
+  // 2026-09-16: shared intro curve is authored for the uncompacted plan;
+  // halve its x so the flyover tracks the narrowed (x0.38) world. y/z untouched.
+  intro.curve.points[0].x = -25;
+  intro.curve.points[1].x = 10;
+  intro.curve.points[2].x = 60;
+  intro.curve.points[3].x = 125;
+  intro.curve.points[4].x = 170;
+  intro.lookAtCurve.points[0].x = -25;
+  intro.lookAtCurve.points[1].x = 55;
+  intro.lookAtCurve.points[2].x = 30;
+  intro.lookAtCurve.points[3].x = 180;
+  intro.lookAtCurve.points[4].x = 120;
   intro.onComplete = () => {
     controls.enable();
     simPos.copy(camera.position);
     pose.snap();
     audio.init();
-    audio.setSoundset('mediterranean');
+    audio.setSoundset('athens');
     isRunning = true;
   };
 
@@ -426,8 +441,10 @@ function populateStreetDressing() {
   const dressingGroup = new THREE.Group();
   dressingGroup.name = 'street-dressing';
   // Props follow the same compact survey transform as the monuments.
-  dressingGroup.scale.setScalar(0.76);
+  // X is halved vs the original survey (anisotropic compaction, 2026-09-16).
+  dressingGroup.scale.set(0.38, 0.76, 0.76);
   dressingGroup.userData.layoutScale = 0.76;
+  dressingGroup.userData.layoutScaleX = 0.38;
 
   // 1. Agora Market Stalls (vibrant marketplace)
   const stalls = [
@@ -440,7 +457,7 @@ function populateStreetDressing() {
   ];
   for (const s of stalls) {
     dressingGroup.add(buildMarketStall(s.x, s.z, s.rot, s.color));
-    collision.grid.insert({ type: 'rect', id: `stall-${s.x}-${s.z}`, x: s.x, z: s.z, w: 2.8, d: 2.2, h: 2.6 });
+    collision.grid.insert({ type: 'rect', id: `stall-${s.x}-${s.z}`, x: s.x * 0.38, z: s.z * 0.76, w: 2.8 * 0.38, d: 2.2, h: 2.6 });
   }
 
   // 2. Amphorae clusters along Stoa and Kerameikos
@@ -482,7 +499,19 @@ function populateStreetDressing() {
 
   // Attic Hydria Fountain House (Agora Public Water Basin)
   dressingGroup.add(buildAtticHydriaFountain(135, -45, 0.1));
-  collision.grid.insert({ type: 'rect', id: 'enneakrounos-fountain', x: 135, z: -45, w: 3.8, d: 2.2, h: 2.6 });
+  collision.grid.insert({ type: 'rect', id: 'enneakrounos-fountain', x: 135 * 0.38, z: -45 * 0.76, w: 3.8 * 0.38, d: 2.2, h: 2.6 });
+
+  // Monumental Colossal Bronze Athena Promachos by Phidias (Acropolis Temenos)
+  dressingGroup.add(buildAthenaPromachosMonument(-28, -270, 0.25));
+  collision.grid.insert({ type: 'rect', id: 'athena-promachos', x: -28 * 0.38, z: -270 * 0.76, w: 3.2 * 0.38, d: 3.2 * 0.76, h: 10.5 });
+
+  // Erechtheion Porch of the Caryatids (Maidens of Karyai)
+  dressingGroup.add(buildErechtheionCaryatidPorch(-15, -288, 0));
+  collision.grid.insert({ type: 'rect', id: 'caryatid-porch', x: -15 * 0.38, z: -288 * 0.76, w: 6.8 * 0.38, d: 3.8 * 0.76, h: 4.8 });
+
+  // Bouleuterion Orator Speaker's Platform (Agora Bema)
+  dressingGroup.add(buildBouleuterionOratorBema(88, -25, 0.3));
+  collision.grid.insert({ type: 'rect', id: 'agora-orator-bema', x: 88 * 0.38, z: -25 * 0.76, w: 3.4 * 0.38, d: 2.8 * 0.76, h: 1.8 });
 
   // 6. Stone Benches along Panathenaic Way
   const benches = [
@@ -501,9 +530,9 @@ function populateStreetDressing() {
 
   // 8. Sacrificial Altars (Great Altar of Athena & Altar of Twelve Gods)
   dressingGroup.add(buildSacrificialAltar(10, -310, 0)); // In front of Parthenon
-  collision.grid.insert({ type: 'rect', id: 'athena-altar', x: 10, z: -310, w: 3.6, d: 2.4, h: 2.2 });
+  collision.grid.insert({ type: 'rect', id: 'athena-altar', x: 10 * 0.38, z: -310 * 0.76, w: 3.6 * 0.38, d: 2.4, h: 2.2 });
   dressingGroup.add(buildSacrificialAltar(110, -35, 0.2)); // Altar of Twelve Gods in Agora
-  collision.grid.insert({ type: 'rect', id: 'twelve-gods-altar', x: 110, z: -35, w: 3.6, d: 2.4, h: 2.2 });
+  collision.grid.insert({ type: 'rect', id: 'twelve-gods-altar', x: 110 * 0.38, z: -35 * 0.76, w: 3.6 * 0.38, d: 2.4, h: 2.2 });
 
   // 9. Classical Sundials
   dressingGroup.add(buildSundialMonument(-30, -320)); // Acropolis
@@ -558,7 +587,7 @@ function bindEvents() {
         // Initialize audio on user gesture
         audio.init();
         audio.installLifecycleResume();
-        audio.setSoundset('mediterranean');
+        audio.setSoundset('athens');
       } catch (err) {
         console.warn('enter sequence: non-fatal', err);
         intro.start();
