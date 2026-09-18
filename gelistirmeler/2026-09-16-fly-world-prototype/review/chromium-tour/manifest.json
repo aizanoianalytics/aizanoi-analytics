@@ -1,0 +1,151 @@
+{
+  "count": 24,
+  "renderer": "Chromium standalone GLB runtime",
+  "embeddedApp": "AizanoiOS fly-world app contract verified via same GLB runtime",
+  "views": [
+    {
+      "id": "01-01-wide",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/01-01-wide.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "02-02-eye",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/02-02-eye.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "03-03-window-stove",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/03-03-window-stove.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "04-04-doorway",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/04-04-doorway.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "05-05-fly-scale",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/05-05-fly-scale.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "06-06-window",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/06-06-window.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "07-07-cage",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/07-07-cage.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "08-08-divan",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/08-08-divan.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "09-09-cabinet",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/09-09-cabinet.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "10-10-crt",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/10-10-crt.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "11-11-stove",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/11-11-stove.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "12-12-tools",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/12-12-tools.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "13-13-clutter",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/13-13-clutter.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "14-14-laundry",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/14-14-laundry.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "15-15-door-wide",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/15-15-door-wide.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "16-16-bed-wide",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/16-16-bed-wide.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "17-17-quilt",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/17-17-quilt.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "18-18-bedside",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/18-18-bedside.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "19-19-books",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/19-19-books.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "20-20-bed-window",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/20-20-bed-window.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "21-21-storage",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/21-21-storage.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "22-22-basket",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/22-22-basket.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "23-23-desk",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/23-23-desk.png",
+      "mode": "glb",
+      "nonblank": true
+    },
+    {
+      "id": "24-24-low-circulation",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/24-24-low-circulation.png",
+      "mode": "glb",
+      "nonblank": true
+    }
+  ]
+}

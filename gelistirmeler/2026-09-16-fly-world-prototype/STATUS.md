@@ -1,6 +1,6 @@
 # Status
 
-Branch: `fix/fly-world-final-environment-closure` (current production source; historical prototype branch is not canonical)
+Branch: `fix/fly-world-final-environment-closure` (Stage A candidate only; current production source is the latest `origin/main` lineage; historical prototype folders are not canonical)
 
 Current environment: **Fly House v0.3 — reference detail pass**. The target remains the approved people-free illustrated cottage: cluttered living room, barred/layered-curtain window, carved divan/cabinet wall, CRT cabinet, central stove/flue, layered rugs and an open doorway into the connected bedroom.
 

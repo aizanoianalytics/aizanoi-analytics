@@ -76,6 +76,14 @@ test('runtime framing API owns the Z-up camera pose for doorway QA', () => {
   assert.match(runtime, /metrics\.frameCamera = \(x, y, z, yaw, pitch = -\.04\) => observer\.frameCamera/);
 });
 
+test('public browser diagnostics expose exact Stage A names while retaining aliases', () => {
+  assert.match(runtime, /window\.FLY_ENVIRONMENT = environment/);
+  assert.match(runtime, /window\.FLY_DEBUG = metrics/);
+  assert.match(runtime, /window\.__FLY_ENVIRONMENT__ = environment/);
+  assert.match(runtime, /window\.__FLY_DEBUG__ = metrics/);
+  assert.match(runtime, /mode: 'glb'/);
+});
+
 test('doorway review camera is wide enough to show the transition, not a bed close-up', () => {
   const camera = spec.previewCameras.find((view) => view.id === '04-doorway-bedroom');
   assert.ok(camera.focalLengthMm <= 42);

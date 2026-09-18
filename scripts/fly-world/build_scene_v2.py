@@ -308,13 +308,37 @@ def render_reviews(root):
     out=root/REVIEW_REL; out.mkdir(parents=True,exist_ok=True)
     s=bpy.context.scene
     cd=bpy.data.cameras.new("review-camera"); cam=bpy.data.objects.new("review-camera",cd); s.collection.objects.link(cam); s.camera=cam
+    # Evidence frames are deliberately composed from clear walkable space.  The
+    # former shots put the camera behind the west wall and inside the flue/ceiling.
     views=(
-        ("01-reference-wide",(-3.35,-2.65,1.65),(.30,.65,1.18),45),
-        ("02-room-eye-level",(-1.65,-2.55,1.60),(.45,1.05,1.15),50),
-        ("03-window-to-stove",(-3.45,-.55,1.62),(1.85,.72,.85),52),
-        ("04-doorway-bedroom",(1.00,1.00,1.55),(6.10,1.00,1.05),35),
-        ("05-fly-scale",(1.15,-.75,.20),(2.05,.72,.65),58),
+        ("01-reference-wide",(-2.85,-3.15,1.72),(.10,.55,1.20),45),
+        ("02-room-eye-level",(-1.40,-2.75,1.55),(.55,.75,1.18),48),
+        ("03-window-to-stove",(-1.00,-3.45,1.42),(.15,-.35,1.22),32),
+        ("04-doorway-bedroom",(.05,1.45,1.56),(6.15,1.08,1.18),30),
+        ("05-fly-scale",(-1.80,-3.20,.72),(-.35,-1.45,.78),58),
+        ("06-window-detail",(-3.15,-1.25,1.38),(-4.55,-.72,1.42),55),
+        ("07-curtains-cage",(-2.85,.15,1.35),(-3.55,.95,1.30),52),
+        ("08-divan-cabinet",(-2.30,1.55,1.35),(-.55,2.65,1.30),50),
+        ("09-cabinet-still-life",(-1.05,1.65,1.55),(-.55,2.65,2.12),58),
+        ("10-crt-cabinet",(-2.15,-2.45,1.25),(-3.25,-2.20,.78),52),
+        ("11-stove-hearth",(1.05,-2.25,1.18),(2.12,-1.10,.70),52),
+        ("12-stove-tools",(2.75,-1.65,1.18),(2.72,.05,.90),55),
+        ("13-floor-clutter",(-.35,-2.85,.62),(-1.10,-1.55,.18),58),
+        ("14-laundry-flue",(1.55,-.10,1.30),(2.95,.48,1.55),52),
+        ("15-doorway-wide",(1.15,1.72,1.50),(4.75,1.0,1.28),42),
+        ("16-bedroom-wide",(5.05,.62,1.48),(7.55,1.30,1.12),42),
+        ("17-bed-quilt",(5.15,.55,1.18),(6.72,1.92,.92),55),
+        ("18-bedside-table",(5.05,1.80,1.22),(5.18,2.42,1.05),58),
+        ("19-bedroom-books",(7.05,1.85,1.45),(7.65,3.80,1.22),55),
+        ("20-bedroom-window",(6.65,2.65,1.42),(5.60,4.12,1.48),50),
+        ("21-bedroom-storage",(8.45,-.35,1.30),(7.55,-.78,1.05),52),
+        ("22-bedroom-rug-basket",(7.10,-.55,.62),(7.48,.10,.34),55),
+        ("23-bedroom-desk",(5.35,2.65,1.18),(5.52,3.08,.82),55),
+        ("24-circulation-low",(3.15,.05,.55),(4.65,.95,.80),58),
     )
+    # The canonical pipeline owns five approval frames; the same authored view
+    # inventory is consumed by the Chromium tour recorder for the 24-tile sheet.
+    views = views[:5]
     for name,pos,target,lens in views:
         cam.location=pos; cd.lens=lens; aim(cam,target); s.render.filepath=str(out/f"{name}.png"); bpy.ops.render.render(write_still=True)
 
