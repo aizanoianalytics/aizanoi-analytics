@@ -186,6 +186,9 @@ async function boot() {
   const response = await fetch(new URL('./assets/environment.json', import.meta.url));
   if (!response.ok) throw new Error(`Environment metadata HTTP ${response.status}`);
   environment = createEnvironment(gltf.scene, await response.json());
+  // Public, read-only diagnostics for the Stage A browser contract; the
+  // underscored aliases remain for existing focused tests and tooling.
+  window.FLY_ENVIRONMENT = environment;
   window.__FLY_ENVIRONMENT__ = environment;
 
   let meshCount = 0;
@@ -197,6 +200,7 @@ async function boot() {
     triangleCount += index ? index.count / 3 : object.geometry.attributes.position.count / 3;
   });
   const metrics = { mode: 'glb', meshCount, triangleCount, colliderRoots: colliders.length, loadMs: Math.round(performance.now() - loadStarted), fps: 0, drawCalls: 0, animationTicks: 0 };
+  window.FLY_DEBUG = metrics;
   window.__FLY_DEBUG__ = metrics;
 
   const observer = new Observer();

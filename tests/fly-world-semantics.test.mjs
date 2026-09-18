@@ -19,10 +19,9 @@ scene.updateMatrixWorld(true);
 
 const rawSpec = JSON.parse(readFileSync('frontend/labs/fly-world/assets/environment.json', 'utf8'));
 
-// The authored spec contains a stale `wood-stove` ref whose mesh was renamed
-// to `ASSET__wood-stove`. Strip the missing name so the heat entry still
-// resolves while leaving the rest of the contract unchanged. We keep the raw
-// spec separate for the missing-refs test below.
+// The published spec retains a legacy `wood-stove` alias alongside the
+// canonical GLB mesh name `ASSET__wood-stove`. The runtime must reject missing
+// refs, so this test removes only that compatibility alias before resolving.
 const spec = JSON.parse(JSON.stringify(rawSpec));
 for (const entry of spec.heat) {
   entry.geometryRefs = entry.geometryRefs.filter((name) => name !== 'wood-stove');

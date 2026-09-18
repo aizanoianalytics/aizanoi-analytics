@@ -53,8 +53,8 @@ Only part of the adjacent room is visible in the original source, so visible ele
 
 The current target footprint is approximately:
 
-- main room: 8.4 m × 6.4 m × 2.85 m;
-- connected bedroom: 4.2 m × 5.0 m × 2.85 m.
+- main room: 9.6 m × 8.0 m × 2.85 m;
+- connected bedroom: 5.0 m × 6.2 m × 2.85 m.
 
 This is deliberately roomier than v0.1 while keeping the furniture density high. The observer uses collision by default. Walls, glass/window barriers, doorway casing, stove/hearth and major furniture should block the observer. `N` is a debug-only noclip toggle. “Ghost observer” means the human observer is invisible to future fly sensors and does not affect fly physics; it does **not** mean the visitor should pass through walls during normal use.
 

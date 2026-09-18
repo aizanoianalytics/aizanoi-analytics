@@ -2,11 +2,11 @@
 
 ## Mission
 
-Run and inspect the already-authored Fly House v0.3 pipeline on a Blender-capable host. **Do not redesign the room, invent a new scene, replace the reference-dressing logic, or start the fly/connectome runtime.** The scene design and implementation are owned in this branch; Hermes is the render/build operator for this stage.
+The canonical production path is now the current branch and committed `main` lineage. This document records the operator/build procedure; it is not an operator-only assumption or a claim of owner visual approval.
 
 The canonical visual contract is `REFERENCE_BREAKDOWN_V3.md`, backed by `scene_spec.json`. The target is the approved people-free illustrated cottage, not a generic rustic room.
 
-## Current production files
+- `fix/fly-world-final-environment-closure` / current `main` lineage (historical prototype branch is not a source of truth)
 
 - `gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json`
 - `gelistirmeler/2026-09-16-fly-world-prototype/asset_manifest.json`

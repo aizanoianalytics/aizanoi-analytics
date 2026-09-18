@@ -373,6 +373,7 @@ try {
     }
   });
   environment = createEnvironment(scene, environmentSpec);
+  window.FLY_ENVIRONMENT = environment;
   window.__FLY_ENVIRONMENT__ = environment;
 
   const audio = new AudioSystem();
