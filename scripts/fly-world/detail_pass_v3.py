@@ -149,25 +149,34 @@ def _add_surface_variation(material, *, scale=4.0, strength=.15, bump=.18):
     noise.inputs["Scale"].default_value = scale
     noise.inputs["Detail"].default_value = 3.0
     noise.inputs["Roughness"].default_value = .65
-    ramp = nt.nodes.new("ShaderNodeValToRGB")
-    ramp.color_ramp.elements[0].position = .28
-    ramp.color_ramp.elements[0].color = (0.18, 0.14, 0.10, 1)
-    ramp.color_ramp.elements[1].position = .78
-    ramp.color_ramp.elements[1].color = (0.82, 0.72, 0.58, 1)
+    # Keep the authored palette visible: noise is used for roughness and relief,
+    # not a high-contrast color ramp that washes the cottage to grey.
     bump_node = nt.nodes.new("ShaderNodeBump")
     bump_node.inputs["Strength"].default_value = bump
-    bump_node.inputs["Distance"].default_value = .08
-    nt.links.new(noise.outputs["Fac"], ramp.inputs["Fac"])
+    bump_node.inputs["Distance"].default_value = .045
     nt.links.new(noise.outputs["Fac"], bump_node.inputs["Height"])
     nt.links.new(bump_node.outputs["Normal"], bsdf.inputs["Normal"])
-    # Mix only subtle color variation with the original base color.
-    original = bsdf.inputs["Base Color"].default_value[:3]
+    rough = nt.nodes.new("ShaderNodeMapRange")
+    rough.inputs["From Min"].default_value = 0.15
+    rough.inputs["From Max"].default_value = 0.85
+    rough.inputs["To Min"].default_value = .72
+    rough.inputs["To Max"].default_value = .98
+    nt.links.new(noise.outputs["Fac"], rough.inputs["Value"])
+    nt.links.new(rough.outputs["Result"], bsdf.inputs["Roughness"])
+    # Add restrained mottling around the authored hue so plaster and wood do not
+    # render as featureless blocks while retaining their warm palette.
+    original = tuple(bsdf.inputs["Base Color"].default_value[:3])
+    ramp = nt.nodes.new("ShaderNodeValToRGB")
+    ramp.color_ramp.elements[0].color = (*tuple(v * .72 for v in original), 1)
+    ramp.color_ramp.elements[1].color = (*tuple(min(v * 1.18, 1.0) for v in original), 1)
+    nt.links.new(noise.outputs["Fac"], ramp.inputs["Fac"])
     mix = nt.nodes.new("ShaderNodeMixRGB")
-    mix.blend_type = "MULTIPLY"
-    mix.inputs["Fac"].default_value = strength
+    mix.blend_type = "MIX"
+    mix.inputs["Fac"].default_value = min(strength, .16)
     mix.inputs[1].default_value = (*original, 1)
     nt.links.new(ramp.outputs["Color"], mix.inputs[2])
     nt.links.new(mix.outputs["Color"], bsdf.inputs["Base Color"])
+    return
 
 
 def apply_reference_detail_pass(mats):
@@ -345,7 +354,10 @@ def apply_reference_detail_pass(mats):
     _cyl("bedside-mug", .08, .10, (5.04,2.42,.96), mats["ceramic"], c)
     _torus("bedside-mug-handle", .06, .014, (5.11,2.43,.98), mats["ceramic"], c, rot=(math.radians(90),0,0))
     _cyl("bedside-alarm-clock", .09, .06, (5.31,2.42,.96), pale_blue, c, rot=(math.radians(90),0,0))
-    _box("bedside-clock-face", (.08,.10,.20), (5.31,2.42,1.06), black, c)
+    _cyl("bedside-lamp-base", .10, .04, (5.30,2.42,1.00), mats["wood2"], c)
+    _rod("bedside-lamp-stem", (5.30,2.42,1.02), (5.30,2.42,1.28), .018, mats["metal2"], c)
+    _sphere("bedside-lamp-shade", .14, (5.30,2.42,1.36), mustard, c, segments=12)
+
     _box("bedroom-wall-frame", (.55,.05,.70), (7.10,3.56,1.72), mats["wood2"], c, bevel=.014)
     _box("bedroom-wall-picture", (.46,.035,.61), (7.10,3.53,1.72), mats["ceramic"], c)
     _cyl("bedroom-plant-pot", .18, .30, (7.82,2.75,1.98), mats["ceramic"], c)
@@ -391,6 +403,9 @@ def apply_reference_detail_pass(mats):
     move_detail(("tv-", "shelf-cup-"), dx=.16, dy=-.975)
     # Shell-mounted details follow the expanded walls, not furniture offsets.
     move_detail(("door-frame-", "door-threshold", "doorway-portrait"), dx=.75)
+    if bpy.data.objects.get("doorway-portrait-frame"):
+        bpy.data.objects["doorway-portrait-frame"].location.x = 4.66
+        bpy.data.objects["doorway-portrait"].location.x = 4.64
     move_detail(("window-grille-",), dx=-.68)
     move_detail(("wall-clock-", "clock-hand-"), dx=-.98)
     move_detail(("cage-", "birdcage-"), dx=-.59)
@@ -414,9 +429,9 @@ def apply_reference_detail_pass(mats):
         if obj.name.startswith("carved-"):
             bpy.data.objects.remove(obj, do_unlink=True)
     # Wall dressing must touch the expanded shell, not hover at pre-expansion planes.
-    move_detail(("bedroom-high-", "bedroom-trailing-"), dy=.90)
-    move_detail(("bedroom-wall-",), dy=.60)
-    move_detail(("bedroom-plant-",), dy=1.28)
+    move_detail(("bedroom-high-", "bedroom-trailing-"), dy=0.0)
+    move_detail(("bedroom-wall-",), dy=.20)
+    move_detail(("bedroom-plant-",), dy=0.0)
     for obj in c.objects:
         if obj.name.startswith("bedroom-plant-"):
             obj.location.z -= .21

@@ -59,12 +59,12 @@ def mat(name, color, rough=.8, metal=0.0, emission=None, strength=0.0):
 
 def palette():
     return {
-        "plaster": mat("warm-aged-plaster-v2", (.66,.58,.46), .96),
-        "plaster2": mat("aged-plaster-shadow-v2", (.52,.45,.36), .98),
-        "floor": mat("worn-green-floor-v2", (.27,.30,.24), .91),
-        "wood": mat("aged-reddish-wood-v2", (.34,.14,.08), .72),
-        "wood2": mat("dark-aged-wood-v2", (.17,.07,.04), .78),
-        "wood3": mat("worn-light-wood-v2", (.48,.28,.16), .76),
+        "plaster": mat("warm-aged-plaster-v2", (.58,.43,.29), .96),
+        "plaster2": mat("aged-plaster-shadow-v2", (.25,.17,.11), .98),
+        "floor": mat("worn-green-floor-v2", (.20,.24,.17), .91),
+        "wood": mat("aged-reddish-wood-v2", (.38,.13,.055), .72),
+        "wood2": mat("dark-aged-wood-v2", (.12,.035,.018), .78),
+        "wood3": mat("worn-light-wood-v2", (.55,.25,.09), .76),
         "metal": mat("aged-dark-metal-v2", (.08,.07,.065), .58, .62),
         "metal2": mat("aged-light-metal-v2", (.32,.29,.26), .45, .72),
         "green": mat("muted-green-textile-v2", (.28,.33,.18), .97),
@@ -207,8 +207,8 @@ def reference_dressing(root, manifest, m):
     import_slot(root,slots,"woven-basket",(-2.35,2.05,.34))
     import_slot(root,slots,"main-rug",(1.10,-1.35,.025),rot=(0,0,-4),collision=False)
     import_slot(root,slots,"round-rug",(-.70,-2.25,.025),collision=False)
-    import_slot(root,slots,"curtain-floral",(-4.60,.56,1.50),collision=False)
-    import_slot(root,slots,"curtain-lace",(-4.62,-.82,1.51),collision=False)
+    import_slot(root,slots,"curtain-floral",(-4.60,1.05,1.50),collision=False)
+    import_slot(root,slots,"curtain-lace",(-4.62,-1.48,1.51),collision=False)
     import_slot(root,slots,"wooden-bed",(6.72,1.92,.46))
     import_slot(root,slots,"bed-quilt",(6.72,1.92,.82),collision=False)
     import_slot(root,slots,"bedside-table",(5.18,2.42,.42))
@@ -278,9 +278,15 @@ def reference_dressing(root, manifest, m):
 def lighting(m):
     scene=bpy.context.scene
     world=scene.world or bpy.data.worlds.new("Fly House V2 World"); scene.world=world; world.use_nodes=True
-    bg=world.node_tree.nodes.get("Background"); bg.inputs["Color"].default_value=(.055,.044,.032,1); bg.inputs["Strength"].default_value=.28
-    # Large cool window key.
-    d=bpy.data.lights.new("window-key","AREA"); d.energy=650; d.color=(.62,.78,1.0); d.shape="RECTANGLE"; d.size=1.9; d.size_y=1.6
+    bg=world.node_tree.nodes.get("Background"); bg.inputs["Color"].default_value=(.07,.035,.018,1); bg.inputs["Strength"].default_value=.24
+    # Restrained amber fill preserves the wood/textile colors instead of flattening them.
+    def area(name, loc, energy, color, size, rotation=(0,0,0)):
+        ld=bpy.data.lights.new(name,"AREA"); ld.energy=energy; ld.color=color; ld.shape="DISK"; ld.size=size
+        lo=bpy.data.objects.new(name,ld); lo.location=loc; lo.rotation_euler=rotation; scene.collection.objects.link(lo)
+    area("warm-room-fill",(0,-.8,2.55),135,(1.0,.48,.22),5.5)
+    area("bedroom-fill",(6.8,2.0,2.35),115,(1.0,.38,.16),3.0)
+    # Large cool window key, balanced by the warm fill rather than bleaching the room.
+    d=bpy.data.lights.new("window-key","AREA"); d.energy=260; d.color=(.72,.82,1.0); d.shape="RECTANGLE"; d.size=1.9; d.size_y=1.6
     o=bpy.data.objects.new("window-key",d); o.location=(-3.65,-.72,1.62); o.rotation_euler=(0,math.radians(-90),0); scene.collection.objects.link(o)
     def point(name,loc,energy,color,radius):
         ld=bpy.data.lights.new(name,"POINT"); ld.energy=energy; ld.color=color; ld.shadow_soft_size=radius
@@ -311,11 +317,11 @@ def render_reviews(root):
     # Evidence frames are deliberately composed from clear walkable space.  The
     # former shots put the camera behind the west wall and inside the flue/ceiling.
     views=(
-        ("01-reference-wide",(-2.85,-3.15,1.72),(.10,.55,1.20),45),
+        ("01-reference-wide",(.05,-3.65,1.68),(-.10,.65,1.15),28),
         ("02-room-eye-level",(-1.40,-2.75,1.55),(.55,.75,1.18),48),
-        ("03-window-to-stove",(-1.00,-3.45,1.42),(.15,-.35,1.22),32),
-        ("04-doorway-bedroom",(.05,1.45,1.56),(6.15,1.08,1.18),30),
-        ("05-fly-scale",(-3.00,-3.00,.72),(-1.00,-1.50,.66),58),
+        ("03-window-to-stove",(0.00,-2.00,1.55),(0.00,.00,1.20),35),
+        ("04-doorway-bedroom",(2.60,.72,1.65),(6.70,2.05,1.45),26),
+        ("05-fly-scale",(.15,-2.60,1.02),(1.40,-.10,.22),52),
         ("06-window-detail",(-3.15,-1.25,1.38),(-4.55,-.72,1.42),55),
         ("07-curtains-cage",(-2.85,.15,1.35),(-3.55,.95,1.30),52),
         ("08-divan-cabinet",(-2.30,1.55,1.35),(-.55,2.65,1.30),50),
@@ -340,7 +346,15 @@ def render_reviews(root):
     # inventory is consumed by the Chromium tour recorder for the 24-tile sheet.
     views = views[:5]
     for name,pos,target,lens in views:
-        cam.location=pos; cd.lens=lens; aim(cam,target); s.render.filepath=str(out/f"{name}.png"); bpy.ops.render.render(write_still=True)
+        cam.location=pos; cd.lens=lens; aim(cam,target)
+        if name == "03-window-to-stove":
+            # A genuine room relationship needs both opposite anchors in one frame;
+            # use an equirectangular room survey rather than hiding either anchor.
+            cd.type = "PANO"; cd.panorama_type = "EQUIRECTANGULAR"
+        else:
+            cd.type = "PERSP"
+        s.render.filepath=str(out/f"{name}.png"); bpy.ops.render.render(write_still=True)
+    cd.type = "PERSP"
 
 
 def export_glb(root):
