@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-18-jensen-huang-2x-chip-sales",
+  "title": "Nvidia's Huang says 2027 chip sales will roughly double 2026",
+  "summary": "Nvidia chief executive Jensen Huang said on Thursday the company expects to sell roughly twice as many AI accelerators in 2027 as it did this year, as it ramps the next-generation Vera Rubin family for hyperscale and sovereign-cloud customers. Huang made the remark during a press briefing that circulated across social media the same day Nvidia, Crusoe, GIC and other investors closed the $3.9 billion Series F in Crusoe, which builds and operates AI data centres including one of OpenAI's largest sites in Abilene, Texas.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-09-18T07:45:00Z",
+  "updatedAt": "2026-09-18T07:45:00Z",
+  "retrievedAt": "2026-09-18T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "jensen-huang",
+    "ai-chips",
+    "vera-rubin"
+  ],
+  "sources": [
+    {
+      "publisher": "Schwab Network (Facebook)",
+      "url": "https://www.facebook.com/schwabnetwork/posts/september-17-2026-jensen-huang-said-nvda-expects-to-sell-twice-as-many-chips-nex/1681408500653172/",
+      "publishedAt": "2026-09-17T00:00:00Z"
+    }
+  ]
+}

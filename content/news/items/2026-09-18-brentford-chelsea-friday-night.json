@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-18-brentford-chelsea-friday-night",
+  "title": "Brentford host Chelsea in Friday-night Premier League opener",
+  "summary": "Brentford welcome Chelsea to the Gtech Community Stadium on Friday night at 20:00 local time (19:00 UTC) in the opening fixture of Premier League Matchweek 5, with both sides unbeaten in their last six and last five league meetings respectively against each other. Brentford have not won any of their five home Premier League games against Chelsea, drawing four of the last four, while Kevin Schade's two well-taken goals at Bournemouth last weekend underline the hosts' threat; Chelsea arrive with the league's highest-scoring defence so far (10 goals for, 9 against).",
+  "category": "football",
+  "priority": 55,
+  "publishedAt": "2026-09-18T09:15:00Z",
+  "updatedAt": "2026-09-18T09:15:00Z",
+  "retrievedAt": "2026-09-18T06:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "brentford",
+    "chelsea",
+    "matchweek-5"
+  ],
+  "sources": [
+    {
+      "publisher": "Brentford FC",
+      "url": "https://www.brentfordfc.com/en/match/brentford-vs-chelsea-english-premier-league-2026-09-18",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/live/cmrl69xy3lyyt",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    }
+  ]
+}

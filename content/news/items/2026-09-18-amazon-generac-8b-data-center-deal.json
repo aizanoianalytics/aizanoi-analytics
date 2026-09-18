@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-18-amazon-generac-8b-data-center-deal",
+  "title": "Amazon signs up to $8B Generac deal for data-centre backup power",
+  "summary": "Amazon and Generac unveiled a long-term supply agreement worth up to $8 billion on Thursday for backup power generators at Amazon data centres, with initial deliveries of $2.4 billion expected in 2027 and 2028 as the hyperscaler scales its AI build-out. Generac granted Amazon a warrant to acquire up to approximately 1.69 million shares at about $200.93, roughly 2.6 percent of Generac, with 307,954 shares vesting immediately and the remainder tied to purchase milestones. Generac shares jumped more than 40 percent on the news.",
+  "category": "technology",
+  "priority": 45,
+  "publishedAt": "2026-09-18T08:00:00Z",
+  "updatedAt": "2026-09-18T08:00:00Z",
+  "retrievedAt": "2026-09-18T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "amazon",
+    "generac",
+    "data-centers",
+    "backup-power"
+  ],
+  "sources": [
+    {
+      "publisher": "AI Weekly",
+      "url": "https://aiweekly.co/alerts/amazon-wins-warrant-for-3-generac-stake-in-8b-generator-pact",
+      "publishedAt": "2026-09-17T00:00:00Z"
+    }
+  ]
+}

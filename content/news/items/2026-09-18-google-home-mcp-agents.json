@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-18-google-home-mcp-agents",
+  "title": "Google opens Home MCP to Claude, ChatGPT and other AI agents",
+  "summary": "Google on Tuesday opened early access to a Model Context Protocol server for its Google Home ecosystem, allowing MCP-compatible agents including Anthropic's Claude, OpenAI's ChatGPT and Google's own Antigravity to read device state, review camera history and execute control actions across Nest-style smart-home devices. The server is hosted at home.googleapis.com/mcp with the OAuth scope home.platform.v2, and access is gated to Google Home Premium Advanced subscribers at US$20 per month, rolling out in English over the coming weeks in the United States.",
+  "category": "technology",
+  "priority": 45,
+  "publishedAt": "2026-09-18T07:15:00Z",
+  "updatedAt": "2026-09-18T07:15:00Z",
+  "retrievedAt": "2026-09-18T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google-home",
+    "mcp",
+    "ai-agents",
+    "smart-home"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/16/your-ai-agents-can-now-control-your-google-home-devices/",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    },
+    {
+      "publisher": "Google Home Developers",
+      "url": "https://developers.home.google.com/mcp/home",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    }
+  ]
+}

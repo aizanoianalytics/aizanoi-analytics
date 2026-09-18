@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-18-anthropic-claude-unified-interface",
+  "title": "Anthropic folds Claude Chat and Cowork into single unified interface",
+  "summary": "Anthropic is rolling Claude Cowork back into the regular Claude product, merging the chatbot and the autonomous task-execution tool into one interface alongside the new beta products Claude Docs and Claude Slides, with Claude Design now available inside every conversation rather than as a standalone. The change started rolling out on Wednesday to Pro and Max plans over the coming weeks, with Free, Team and Enterprise to follow with at least 30 days' notice, and is described by Anthropic as removing the upfront decision of whether a task belongs in Chat or Cowork.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-09-18T06:15:00Z",
+  "updatedAt": "2026-09-18T06:15:00Z",
+  "retrievedAt": "2026-09-18T05:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "claude",
+    "cowork",
+    "ai-superapps"
+  ],
+  "sources": [
+    {
+      "publisher": "ZDNET",
+      "url": "https://www.zdnet.com/innovation/claude-chat-absorbs-cowork-anthropic/",
+      "publishedAt": "2026-09-16T16:30:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/product/claude-cowork",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    }
+  ]
+}
