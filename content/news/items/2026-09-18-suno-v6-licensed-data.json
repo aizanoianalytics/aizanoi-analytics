@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-18-suno-v6-licensed-data",
+  "title": "Suno launches v6 AI music models trained on licensed Warner, BMG data",
+  "summary": "AI music platform Suno on Thursday officially launched its v6 family of models, developed in partnership with Warner Music Group, BMG and Believe to replace the company's earlier generation systems that had been the subject of copyright litigation. Chief product officer Jack Brody told Engadget that v6 was trained 'from the ground up with a new set of data that differs from the data that went into our previous models', with v6-wild pitched as the most creative variant for brainstorming partners.",
+  "category": "ai",
+  "priority": 45,
+  "publishedAt": "2026-09-18T06:45:00Z",
+  "updatedAt": "2026-09-18T06:45:00Z",
+  "retrievedAt": "2026-09-18T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "suno",
+    "ai-music",
+    "warner-music",
+    "bmg"
+  ],
+  "sources": [
+    {
+      "publisher": "Embers News",
+      "url": "https://embers.news/article/suno-launches-v6-ai-music-models-built-with-warner-and-bmg-59994",
+      "publishedAt": "2026-09-17T13:39:00Z"
+    }
+  ]
+}

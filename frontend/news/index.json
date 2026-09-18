@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-17T06:05:00.000Z",
+  "generatedAt": "2026-09-18T06:40:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-18",
+      "path": "/news/2026-09-18/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-17",
       "path": "/news/2026-09-17/",
@@ -155,6 +160,531 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-18-real-madrid-atletico-derbi-preview",
+      "kind": "daily",
+      "title": "Real Madrid visit Atletico in Sunday La Liga derbi preview",
+      "summary": "Real Madrid travel across the city to face Atletico Madrid at the Metropolitano on Sunday in a La Liga matchweek-six derbi that pits the second-placed side against their neighbours after Espi's stoppage-time winner at Elche moved Real level on points with Barcelona. Atletico drew 1-1 at home to Osasuna on Wednesday, while Hansi Flick's Barcelona lead the table by three points after Wednesday's 7-2 rout of Racing Santander.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-09-18T09:30:00.000Z",
+      "updatedAt": "2026-09-18T09:30:00.000Z",
+      "retrievedAt": "2026-09-18T06:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "la-liga",
+        "real-madrid",
+        "atletico-madrid",
+        "derbi"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/sep/18/premier-league-10-things-to-look-out-for-this-weekend",
+          "publishedAt": "2026-09-17T23:01:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-brentford-chelsea-friday-night",
+      "kind": "daily",
+      "title": "Brentford host Chelsea in Friday-night Premier League opener",
+      "summary": "Brentford welcome Chelsea to the Gtech Community Stadium on Friday night at 20:00 local time (19:00 UTC) in the opening fixture of Premier League Matchweek 5, with both sides unbeaten in their last six and last five league meetings respectively against each other. Brentford have not won any of their five home Premier League games against Chelsea, drawing four of the last four, while Kevin Schade's two well-taken goals at Bournemouth last weekend underline the hosts' threat; Chelsea arrive with the league's highest-scoring defence so far (10 goals for, 9 against).",
+      "category": "football",
+      "priority": 55,
+      "publishedAt": "2026-09-18T09:15:00.000Z",
+      "updatedAt": "2026-09-18T09:15:00.000Z",
+      "retrievedAt": "2026-09-18T06:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "brentford",
+        "chelsea",
+        "matchweek-5"
+      ],
+      "sources": [
+        {
+          "publisher": "Brentford FC",
+          "url": "https://www.brentfordfc.com/en/match/brentford-vs-chelsea-english-premier-league-2026-09-18",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cmrl69xy3lyyt",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-barcelona-racing-santander-7-2",
+      "kind": "daily",
+      "title": "Raphinha hat-trick powers Barcelona to 7-2 rout of Racing Santander",
+      "summary": "Barcelona extended their perfect La Liga start to six wins from six matches with a 7-2 victory over Racing Santander at the Spotify Camp Nou on Wednesday, opening up a three-point lead over Real Madrid at the top of the table. Raphinha scored a hat-trick, with Joao Cancelo adding a brace, an Asier Villalibre own goal and late strikes from Gabriel Jesus and Lamine Yamal completing the rout, while Maguette Gueye and Yassir Zabiri replied for the visitors.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-09-18T09:00:00.000Z",
+      "updatedAt": "2026-09-18T09:00:00.000Z",
+      "retrievedAt": "2026-09-18T06:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "la-liga",
+        "barcelona",
+        "raphinha",
+        "racing-santander"
+      ],
+      "sources": [
+        {
+          "publisher": "Tempo",
+          "url": "https://en.tempo.co/read/2119746/raphinha-hat-trick-helps-barcelona-thrash-racing-santander-7-2",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        },
+        {
+          "publisher": "7M Sport (Goal)",
+          "url": "https://news.7msport.com/news/newsdata/20260917/268417.shtml",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-european-stocks-mining-rally",
+      "kind": "daily",
+      "title": "European stocks rise as miners lead on softer oil, easing bond rout",
+      "summary": "European equities advanced on Thursday with the pan-European STOXX 600 up 0.9 percent to 642.6 points as falling oil prices and a halt to the global bond sell-off boosted risk appetite. Metal miners climbed 2.1 percent to lead gains, autos added 1.7 percent with BMW, Renault and Volkswagen each up roughly 2 percent, while Brent crude settled below $105 a barrel at about $104 and US crude fell for a third straight session to $101.15.",
+      "category": "economy-markets",
+      "priority": 55,
+      "publishedAt": "2026-09-18T08:30:00.000Z",
+      "updatedAt": "2026-09-18T08:30:00.000Z",
+      "retrievedAt": "2026-09-18T06:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "european-stocks",
+        "stoxx-600",
+        "miners",
+        "oil-prices"
+      ],
+      "sources": [
+        {
+          "publisher": "UrduPoint / WAM",
+          "url": "https://urdupoint.com/en/middle-east/european-stocks-rise-supported-by-mining-sec-2254488.html",
+          "publishedAt": "2026-09-18T04:45:00.000Z"
+        },
+        {
+          "publisher": "TradingView / CNBC TV18",
+          "url": "https://tradingview.com/news/cnbctv:5c0dc0609094b:0",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-us-stocks-fed-relief-rally",
+      "kind": "daily",
+      "title": "US stocks rebound as Fed-inflation read eases tech-led selloff",
+      "summary": "US equities snapped a three-session losing streak on Thursday, with the Dow up 0.61 percent to 51,778.18, the S&P 500 climbing 1.14 percent to 7,637.73 and the Nasdaq Composite advancing 1.69 percent to 26,418.30 as falling oil prices and softer Treasury yields offset the Federal Reserve's hawkish 25 basis point rate hike on Wednesday. The Philadelphia Semiconductor Index jumped 3.14 percent, SK hynix ADRs rose 4.64 percent and Micron gained 5.5 percent on the AI-hardware rebound; all of the Magnificent Seven closed higher.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-09-18T08:15:00.000Z",
+      "updatedAt": "2026-09-18T08:15:00.000Z",
+      "retrievedAt": "2026-09-18T06:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-stocks",
+        "nasdaq",
+        "semiconductors",
+        "fed"
+      ],
+      "sources": [
+        {
+          "publisher": "Seoul Economic Daily",
+          "url": "https://en.sedaily.com/international/2026/09/18/nasdaq-jumps-17-percent-on-relief-over-feds-inflation",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "Tech Flow Post",
+          "url": "https://techflowpost.com/en-US/article/34058",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-amazon-generac-8b-data-center-deal",
+      "kind": "daily",
+      "title": "Amazon signs up to $8B Generac deal for data-centre backup power",
+      "summary": "Amazon and Generac unveiled a long-term supply agreement worth up to $8 billion on Thursday for backup power generators at Amazon data centres, with initial deliveries of $2.4 billion expected in 2027 and 2028 as the hyperscaler scales its AI build-out. Generac granted Amazon a warrant to acquire up to approximately 1.69 million shares at about $200.93, roughly 2.6 percent of Generac, with 307,954 shares vesting immediately and the remainder tied to purchase milestones. Generac shares jumped more than 40 percent on the news.",
+      "category": "technology",
+      "priority": 45,
+      "publishedAt": "2026-09-18T08:00:00.000Z",
+      "updatedAt": "2026-09-18T08:00:00.000Z",
+      "retrievedAt": "2026-09-18T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "amazon",
+        "generac",
+        "data-centers",
+        "backup-power"
+      ],
+      "sources": [
+        {
+          "publisher": "AI Weekly",
+          "url": "https://aiweekly.co/alerts/amazon-wins-warrant-for-3-generac-stake-in-8b-generator-pact",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-jensen-huang-2x-chip-sales",
+      "kind": "daily",
+      "title": "Nvidia's Huang says 2027 chip sales will roughly double 2026",
+      "summary": "Nvidia chief executive Jensen Huang said on Thursday the company expects to sell roughly twice as many AI accelerators in 2027 as it did this year, as it ramps the next-generation Vera Rubin family for hyperscale and sovereign-cloud customers. Huang made the remark during a press briefing that circulated across social media the same day Nvidia, Crusoe, GIC and other investors closed the $3.9 billion Series F in Crusoe, which builds and operates AI data centres including one of OpenAI's largest sites in Abilene, Texas.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-09-18T07:45:00.000Z",
+      "updatedAt": "2026-09-18T07:45:00.000Z",
+      "retrievedAt": "2026-09-18T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "jensen-huang",
+        "ai-chips",
+        "vera-rubin"
+      ],
+      "sources": [
+        {
+          "publisher": "Schwab Network (Facebook)",
+          "url": "https://www.facebook.com/schwabnetwork/posts/september-17-2026-jensen-huang-said-nvda-expects-to-sell-twice-as-many-chips-nex/1681408500653172/",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-google-home-mcp-agents",
+      "kind": "daily",
+      "title": "Google opens Home MCP to Claude, ChatGPT and other AI agents",
+      "summary": "Google on Tuesday opened early access to a Model Context Protocol server for its Google Home ecosystem, allowing MCP-compatible agents including Anthropic's Claude, OpenAI's ChatGPT and Google's own Antigravity to read device state, review camera history and execute control actions across Nest-style smart-home devices. The server is hosted at home.googleapis.com/mcp with the OAuth scope home.platform.v2, and access is gated to Google Home Premium Advanced subscribers at US$20 per month, rolling out in English over the coming weeks in the United States.",
+      "category": "technology",
+      "priority": 45,
+      "publishedAt": "2026-09-18T07:15:00.000Z",
+      "updatedAt": "2026-09-18T07:15:00.000Z",
+      "retrievedAt": "2026-09-18T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google-home",
+        "mcp",
+        "ai-agents",
+        "smart-home"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/09/16/your-ai-agents-can-now-control-your-google-home-devices/",
+          "publishedAt": "2026-09-16T00:00:00.000Z"
+        },
+        {
+          "publisher": "Google Home Developers",
+          "url": "https://developers.home.google.com/mcp/home",
+          "publishedAt": "2026-09-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-boj-hikes-1-25-percent",
+      "kind": "daily",
+      "title": "Bank of Japan raises rate 25bp to 1.25%, highest since 1995",
+      "summary": "The Bank of Japan raised its policy rate by 25 basis points to 1.25 percent on Friday, the highest level in 31 years, in a 7-2 vote that delivered its second hike in three months and the sixth since exiting ultra-loose policy in 2024. The bank's statement cited 'moderately recovering' economic activity, producer prices rising at a high year-on-year clip on AI-related demand, elevated crude prices and a weak yen, with core consumer inflation 'approaching 2 percent'.",
+      "category": "economy-markets",
+      "priority": 80,
+      "publishedAt": "2026-09-18T07:00:00.000Z",
+      "updatedAt": "2026-09-18T07:00:00.000Z",
+      "retrievedAt": "2026-09-18T05:50:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bank-of-japan",
+        "interest-rates",
+        "yen",
+        "monetary-policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/boj-set-raise-interest-rates-31-year-high-inflation-risks-loom-2026-09-16/",
+          "publishedAt": "2026-09-16T00:00:00.000Z"
+        },
+        {
+          "publisher": "Alpha Pilot",
+          "url": "https://alphapilot.tech/discover/boj-hikes-25bp-to-1-25-highest-since-1995-as-yen-slips-bitcoin-gains",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-suno-v6-licensed-data",
+      "kind": "daily",
+      "title": "Suno launches v6 AI music models trained on licensed Warner, BMG data",
+      "summary": "AI music platform Suno on Thursday officially launched its v6 family of models, developed in partnership with Warner Music Group, BMG and Believe to replace the company's earlier generation systems that had been the subject of copyright litigation. Chief product officer Jack Brody told Engadget that v6 was trained 'from the ground up with a new set of data that differs from the data that went into our previous models', with v6-wild pitched as the most creative variant for brainstorming partners.",
+      "category": "ai",
+      "priority": 45,
+      "publishedAt": "2026-09-18T06:45:00.000Z",
+      "updatedAt": "2026-09-18T06:45:00.000Z",
+      "retrievedAt": "2026-09-18T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "suno",
+        "ai-music",
+        "warner-music",
+        "bmg"
+      ],
+      "sources": [
+        {
+          "publisher": "Embers News",
+          "url": "https://embers.news/article/suno-launches-v6-ai-music-models-built-with-warner-and-bmg-59994",
+          "publishedAt": "2026-09-17T13:39:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-insilico-longevitybench-cell",
+      "kind": "daily",
+      "title": "Insilico releases open LongevityBench toolkit and benchmark in Cell",
+      "summary": "Insilico Medicine on Thursday announced a study published in Cell introducing LongevityBench, an open benchmark of 17 tasks spanning clinical data, genetics, epigenetics, transcriptomics and proteomics, alongside a family of five compact Longevity-LLMs ranging from 0.6 to 9 billion parameters and the Longevity Claw agentic research platform.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-09-18T06:30:00.000Z",
+      "updatedAt": "2026-09-18T06:30:00.000Z",
+      "retrievedAt": "2026-09-18T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "insilico-medicine",
+        "cell-journal",
+        "ai-benchmark",
+        "longevity"
+      ],
+      "sources": [
+        {
+          "publisher": "DigestAI News",
+          "url": "https://digestai.news/story/insilico-medicine-releases-open-longevity-ai-toolkit-and-benchmark-in-cell-study",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        },
+        {
+          "publisher": "GitHub: ai-daily-digest",
+          "url": "https://github.com/diclogic/ai-daily-digest/issues/155",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-anthropic-claude-unified-interface",
+      "kind": "daily",
+      "title": "Anthropic folds Claude Chat and Cowork into single unified interface",
+      "summary": "Anthropic is rolling Claude Cowork back into the regular Claude product, merging the conversational assistant and the autonomous task-execution tool into one interface alongside the new beta products Claude Docs and Claude Slides, with Claude Design now available inside every conversation rather than as a standalone. The change started rolling out on Wednesday to Pro and Max plans over the coming weeks, with Free, Team and Enterprise to follow with at least 30 days' notice, and is described by Anthropic as removing the upfront decision of whether a task belongs in Chat or Cowork.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-09-18T06:15:00.000Z",
+      "updatedAt": "2026-09-18T06:15:00.000Z",
+      "retrievedAt": "2026-09-18T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "cowork",
+        "ai-superapps"
+      ],
+      "sources": [
+        {
+          "publisher": "ZDNET",
+          "url": "https://www.zdnet.com/innovation/claude-chat-absorbs-cowork-anthropic/",
+          "publishedAt": "2026-09-16T16:30:00.000Z"
+        },
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/product/claude-cowork",
+          "publishedAt": "2026-09-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-huawei-2027-ai-chips",
+      "kind": "daily",
+      "title": "Huawei pulls 2027 AI-chip launch forward to take on Nvidia",
+      "summary": "Huawei Technologies will release two new AI chips in 2027, rotating chairman David Wang said at the Huawei Connect conference in Shanghai on Thursday, accelerating the flagship Ascend 960DT to the first quarter of 2027 from a planned late-2027 debut and following with the 960PR variant in the third quarter. Wang framed the lineup as a domestic alternative to Nvidia and described 'supernodes' that link up to 1 million AI processors, with Huawei having shipped more than 1,000 smaller linked systems to over 370 customers.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-18T06:00:00.000Z",
+      "updatedAt": "2026-09-18T06:00:00.000Z",
+      "retrievedAt": "2026-09-18T04:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "huawei",
+        "ai-chips",
+        "nvidia",
+        "china"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/world/asia-pacific/chinas-huawei-launch-two-new-ai-chips-2027-2026-09-17/",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Straits Times",
+          "url": "https://www.straitstimes.com/business/huawei-speeds-up-launch-of-new-ai-chip-to-take-on-nvidia",
+          "publishedAt": "2026-09-17T16:19:00.000Z"
+        },
+        {
+          "publisher": "The Standard",
+          "url": "https://www.thestandard.com.hk/innovation/article/343117/Huaweis-Xu-says-Chinese-AI-not-powerful-enough-yet-to-see-frontier-risks",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-crusoe-3-9b-series-f",
+      "kind": "daily",
+      "title": "AI neocloud Crusoe raises $3.9B Series F at $30.9B post-money",
+      "summary": "Denver-based neocloud Crusoe closed a $3.9 billion Series F on Thursday at a $30.9 billion post-money valuation, with Atreides Management, Mubadala Capital and Valor Equity Partners co-leading and Founders Fund, GIC, Nvidia, the Qatar Investment Authority, Radical Ventures and TPG also participating. Crusoe, founded in 2018 as a cryptocurrency miner and now a build-to-suit AI data-centre operator that hosts one of OpenAI's largest sites in Abilene, Texas, says it holds more than $140 billion in contracted work and over 6 GW of contracted capacity with 1 GW already operating.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-18T05:30:00.000Z",
+      "updatedAt": "2026-09-18T05:30:00.000Z",
+      "retrievedAt": "2026-09-18T04:50:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "crusoe",
+        "ai-infrastructure",
+        "neocloud",
+        "funding"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/ai-infrastructure-provider-crusoe-valued-309-billion-latest-funding-round-2026-09-17/",
+          "publishedAt": "2026-09-17T19:25:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/09/17/crusoe-raises-3-9b-to-build-massive-data-centers-and-small-modular-ai-factories/",
+          "publishedAt": "2026-09-17T23:25:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-18-iphone-18-pro-india-launch",
+      "kind": "daily",
+      "title": "iPhone 18 Pro and Pro Max go on sale in India with early queues",
+      "summary": "Apple's iPhone 18 Pro and iPhone 18 Pro Max went on sale in India on Friday 18 September with customers queuing outside Apple stores in Delhi, Mumbai and Bengaluru, including at the Select Citywalk Mall in Saket and the Imagine Apple premium reseller at Mall of Asia in Bengaluru, before doors opened at 8 am IST.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-09-18T03:00:00.000Z",
+      "updatedAt": "2026-09-18T03:00:00.000Z",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "iphone-18-pro",
+        "india",
+        "smartphones"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC TV18",
+          "url": "https://www.cnbctv18.com/india/iphone-18-pro-18-pro-max-sale-delhi-mumbai-bengaluru-see-queues-outside-apple-stores-19993266.htm",
+          "publishedAt": "2026-09-18T02:17:00.000Z"
+        },
+        {
+          "publisher": "Apple Newsroom",
+          "url": "https://www.apple.com/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max/",
+          "publishedAt": "2026-09-09T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-17-samsung-tesla-ai5-2nm-taylor",
       "kind": "daily",

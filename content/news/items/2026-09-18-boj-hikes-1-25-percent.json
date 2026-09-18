@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-18-boj-hikes-1-25-percent",
+  "title": "Bank of Japan raises rate 25bp to 1.25%, highest since 1995",
+  "summary": "The Bank of Japan raised its policy rate by 25 basis points to 1.25 percent on Friday, the highest level in 31 years, in a 7-2 vote that delivered its second hike in three months and the sixth since exiting ultra-loose policy in 2024. The bank's statement cited 'moderately recovering' economic activity, producer prices rising at a high year-on-year clip on AI-related demand, elevated crude prices and a weak yen, with core consumer inflation 'approaching 2 percent'.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-09-18T07:00:00Z",
+  "updatedAt": "2026-09-18T07:00:00Z",
+  "retrievedAt": "2026-09-18T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bank-of-japan",
+    "interest-rates",
+    "yen",
+    "monetary-policy"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/boj-set-raise-interest-rates-31-year-high-inflation-risks-loom-2026-09-16/",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    },
+    {
+      "publisher": "Alpha Pilot",
+      "url": "https://alphapilot.tech/discover/boj-hikes-25bp-to-1-25-highest-since-1995-as-yen-slips-bitcoin-gains",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    }
+  ]
+}

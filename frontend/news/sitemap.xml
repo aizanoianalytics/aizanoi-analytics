@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/real-madrid-atletico-derbi-preview/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T09:30:00.000Z</news:publication_date>
+      <news:title>Real Madrid visit Atletico in Sunday La Liga derbi preview</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/brentford-chelsea-friday-night/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T09:15:00.000Z</news:publication_date>
+      <news:title>Brentford host Chelsea in Friday-night Premier League opener</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/barcelona-racing-santander-7-2/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T09:00:00.000Z</news:publication_date>
+      <news:title>Raphinha hat-trick powers Barcelona to 7-2 rout of Racing Santander</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/european-stocks-mining-rally/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T08:30:00.000Z</news:publication_date>
+      <news:title>European stocks rise as miners lead on softer oil, easing bond rout</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/us-stocks-fed-relief-rally/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T08:15:00.000Z</news:publication_date>
+      <news:title>US stocks rebound as Fed-inflation read eases tech-led selloff</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/amazon-generac-8b-data-center-deal/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T08:00:00.000Z</news:publication_date>
+      <news:title>Amazon signs up to $8B Generac deal for data-centre backup power</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/jensen-huang-2x-chip-sales/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T07:45:00.000Z</news:publication_date>
+      <news:title>Nvidia&#39;s Huang says 2027 chip sales will roughly double 2026</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/google-home-mcp-agents/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T07:15:00.000Z</news:publication_date>
+      <news:title>Google opens Home MCP to Claude, ChatGPT and other AI agents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/boj-hikes-1-25-percent/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T07:00:00.000Z</news:publication_date>
+      <news:title>Bank of Japan raises rate 25bp to 1.25%, highest since 1995</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/suno-v6-licensed-data/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T06:45:00.000Z</news:publication_date>
+      <news:title>Suno launches v6 AI music models trained on licensed Warner, BMG data</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/insilico-longevitybench-cell/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T06:30:00.000Z</news:publication_date>
+      <news:title>Insilico releases open LongevityBench toolkit and benchmark in Cell</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/anthropic-claude-unified-interface/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T06:15:00.000Z</news:publication_date>
+      <news:title>Anthropic folds Claude Chat and Cowork into single unified interface</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/huawei-2027-ai-chips/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T06:00:00.000Z</news:publication_date>
+      <news:title>Huawei pulls 2027 AI-chip launch forward to take on Nvidia</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/crusoe-3-9b-series-f/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T05:30:00.000Z</news:publication_date>
+      <news:title>AI neocloud Crusoe raises $3.9B Series F at $30.9B post-money</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-18/iphone-18-pro-india-launch/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-18T03:00:00.000Z</news:publication_date>
+      <news:title>iPhone 18 Pro and Pro Max go on sale in India with early queues</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-09-17/samsung-tesla-ai5-2nm-taylor/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -118,126 +238,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-09-17T05:00:00.000Z</news:publication_date>
       <news:title>Le Fée penalty gives Sunderland first European win in 53 years</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/real-madrid-elche-espi-winner/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T08:30:00.000Z</news:publication_date>
-      <news:title>Espi stoppage-time winner lifts Real Madrid level with Barcelona</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/fed-expected-to-hike-rates/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>Federal Reserve expected to deliver first rate hike since 2023</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/openai-anthropic-google-ai-standards-body/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>OpenAI, Anthropic and Google move to set up shared AI standards body</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/brent-steadies-saudi-pipeline-outage/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>Brent steadies near $107 as Saudi East-West pipeline stays offline</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/faa-lists-starship-flight-14-window/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>FAA lists Starship Flight 14 for September 22 primary window</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/iphone-18-pro-retail-availability/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>iPhone 18 Pro and Pro Max reach stores worldwide on Friday</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/james-rodriguez-colombia-retirement/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>James Rodriguez retires from Colombia after 15-year international career</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/liverpool-beat-tottenham-carabao-cup/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>Szoboszlai screamer sends Liverpool past Spurs in Carabao Cup</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/spanish-watchdog-first-ai-agent-breach/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>Spain&#39;s data watchdog logs first AI agent-linked breach report</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/airpods-5-apple-watch-series-12-ship/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>AirPods 5 and Apple Watch Series 12 ship alongside iPhone 18 Pro</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/anthropic-australia-data-centre/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>Anthropic signs first Australian data centre lease</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/anthropic-threat-report-september/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>Anthropic details hacktivist campaigns using agentic AI tools</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/cohere-ceo-slams-standards-plan-as-cartel/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>Cohere&#39;s Gomez calls rival labs&#39; AI standards plan a &#39;cartel&#39;</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/gold-pauses-near-record-ahead-fed/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>Gold eases back from record as traders await Fed verdict</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-16/postquantum-cryptography-summit/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-16T07:00:00.000Z</news:publication_date>
-      <news:title>US federal Post-Quantum Cryptography Summit convenes Tuesday</news:title>
     </news:news>
   </url>
 </urlset>

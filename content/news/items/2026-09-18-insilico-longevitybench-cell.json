@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-18-insilico-longevitybench-cell",
+  "title": "Insilico releases open LongevityBench toolkit and benchmark in Cell",
+  "summary": "Insilico Medicine on Thursday announced a study published in Cell introducing LongevityBench, an open benchmark of 17 tasks spanning clinical data, genetics, epigenetics, transcriptomics and proteomics, alongside a family of five compact Longevity-LLMs ranging from 0.6 to 9 billion parameters and the Longevity Claw agentic research platform.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-09-18T06:30:00Z",
+  "updatedAt": "2026-09-18T06:30:00Z",
+  "retrievedAt": "2026-09-18T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "insilico-medicine",
+    "cell-journal",
+    "ai-benchmark",
+    "longevity"
+  ],
+  "sources": [
+    {
+      "publisher": "DigestAI News",
+      "url": "https://digestai.news/story/insilico-medicine-releases-open-longevity-ai-toolkit-and-benchmark-in-cell-study",
+      "publishedAt": "2026-09-17T00:00:00Z"
+    },
+    {
+      "publisher": "GitHub: ai-daily-digest",
+      "url": "https://github.com/diclogic/ai-daily-digest/issues/155",
+      "publishedAt": "2026-09-17T00:00:00Z"
+    }
+  ]
+}

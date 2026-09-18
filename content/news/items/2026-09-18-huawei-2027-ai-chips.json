@@ -1,0 +1,41 @@
+{
+  "id": "2026-09-18-huawei-2027-ai-chips",
+  "title": "Huawei pulls 2027 AI-chip launch forward to take on Nvidia",
+  "summary": "Huawei Technologies will release two new AI chips in 2027, rotating chairman David Wang said at the Huawei Connect conference in Shanghai on Thursday, accelerating the flagship Ascend 960DT to the first quarter of 2027 from a planned late-2027 debut and following with the 960PR variant in the third quarter. Wang framed the lineup as a domestic alternative to Nvidia and described 'supernodes' that link up to 1 million AI processors, with Huawei having shipped more than 1,000 smaller linked systems to over 370 customers.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-18T06:00:00Z",
+  "updatedAt": "2026-09-18T06:00:00Z",
+  "retrievedAt": "2026-09-18T04:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "huawei",
+    "ai-chips",
+    "nvidia",
+    "china"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/asia-pacific/chinas-huawei-launch-two-new-ai-chips-2027-2026-09-17/",
+      "publishedAt": "2026-09-17T00:00:00Z"
+    },
+    {
+      "publisher": "The Straits Times",
+      "url": "https://www.straitstimes.com/business/huawei-speeds-up-launch-of-new-ai-chip-to-take-on-nvidia",
+      "publishedAt": "2026-09-17T16:19:00Z"
+    },
+    {
+      "publisher": "The Standard",
+      "url": "https://www.thestandard.com.hk/innovation/article/343117/Huaweis-Xu-says-Chinese-AI-not-powerful-enough-yet-to-see-frontier-risks",
+      "publishedAt": "2026-09-17T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-18-us-stocks-fed-relief-rally",
+  "title": "US stocks rebound as Fed-inflation read eases tech-led selloff",
+  "summary": "US equities snapped a three-session losing streak on Thursday, with the Dow up 0.61 percent to 51,778.18, the S&P 500 climbing 1.14 percent to 7,637.73 and the Nasdaq Composite advancing 1.69 percent to 26,418.30 as falling oil prices and softer Treasury yields offset the Federal Reserve's hawkish 25 basis point rate hike on Wednesday. The Philadelphia Semiconductor Index jumped 3.14 percent, SK hynix ADRs rose 4.64 percent and Micron gained 5.5 percent on the AI-hardware rebound; all of the Magnificent Seven closed higher.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-09-18T08:15:00Z",
+  "updatedAt": "2026-09-18T08:15:00Z",
+  "retrievedAt": "2026-09-18T06:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "us-stocks",
+    "nasdaq",
+    "semiconductors",
+    "fed"
+  ],
+  "sources": [
+    {
+      "publisher": "Seoul Economic Daily",
+      "url": "https://en.sedaily.com/international/2026/09/18/nasdaq-jumps-17-percent-on-relief-over-feds-inflation",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    },
+    {
+      "publisher": "Tech Flow Post",
+      "url": "https://techflowpost.com/en-US/article/34058",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    }
+  ]
+}
