@@ -45,7 +45,7 @@
         2.52
       ],
       [
-        -4.75,
+        4.55,
         -1.1,
         2.52
       ]
@@ -311,11 +311,11 @@
     }
   ],
   "sourceHashes": {
-    "gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json": "3c772a5af48838c9781b44f3b1d6df12ec47dc5914f18b7f282e96c69f38f3a9",
+    "gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json": "e8c64348883486af01b7b6f8893eb5edacc3c02729e99020ff59dc3763cc98de",
     "gelistirmeler/2026-09-16-fly-world-prototype/asset_manifest.json": "bc3489bd8a761ede531fd62c9f0f4874152883e2d7fe04b49194e924399ffe07",
-    "scripts/fly-world/build_scene_v3.py": "f31492536565ee40fda0aaa0bfd017df5840dee17acbb0f480a8680ac2ab7ee0",
-    "scripts/fly-world/build_scene_v2.py": "ccbfb54092b91d8e03be2effca6d38db217165e368b89f13652fd4cf9d02357c",
-    "scripts/fly-world/detail_pass_v3.py": "ce0bcbd1cfc8dc8d07154994946bc2313f1f113d324a0b1bcca6c766d7b89e9a",
+    "scripts/fly-world/build_scene_v3.py": "2feeb8dfa97015d8dee7443c6a706b3f5275f82d3ffb47551858fcdb71b617e9",
+    "scripts/fly-world/build_scene_v2.py": "d701232e35f7f5ddbc6cdf94aab940ffc61d1b358e344c4326e712799cb98b91",
+    "scripts/fly-world/detail_pass_v3.py": "db6db55fdbc31072ef11f133eac3b2f9e88934456f0581dd6d1eccc10a7496cf",
     "scripts/fly-world/micro_detail_pass_v3.py": "0d7da51b945c52ef0ff69e0a5cf2c2df4f4de9b965555a667214925c567d220e",
     "scripts/fly-world/environment_export.py": "facb76ac3499fd31a639604bc902884848603dd6ac28558ce0a4e8bc714cb747",
     "scripts/fly-world/author_heroes.py": "d67abb33d194a25892a4278b89556cee5c9200c0a7706d4668b1269a3c2d10f1",

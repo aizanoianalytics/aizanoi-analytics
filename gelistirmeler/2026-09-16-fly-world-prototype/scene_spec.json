@@ -372,14 +372,14 @@
       "role": "old-television-cabinet",
       "room": "main-room",
       "position": [
-        -3.2,
-        -3.4,
+        -3.30,
+        2.55,
         0.7
       ],
       "rotationDeg": [
         0,
         0,
-        0
+        180
       ],
       "size": [
         1.18,
@@ -498,8 +498,8 @@
       "role": "wooden-side-table",
       "room": "bedroom",
       "position": [
-        5.18,
-        2.42,
+        8.25,
+        1.55,
         0.42
       ],
       "rotationDeg": [
@@ -519,8 +519,8 @@
       "role": "small-bookshelf",
       "room": "bedroom",
       "position": [
-        7.65,
-        4.03,
+        7.40,
+        3.80,
         0.81
       ],
       "rotationDeg": [
@@ -529,7 +529,7 @@
         0
       ],
       "size": [
-        1.1,
+        1.10,
         0.34,
         1.62
       ],
@@ -648,23 +648,23 @@
     {
       "id": "01-reference-wide",
       "position": [
-        -3.35,
-        -2.65,
-        1.65
+        0.80,
+        -3.80,
+        1.55
       ],
       "lookAt": [
-        0.3,
-        0.65,
-        1.18
+        0.30,
+        0.45,
+        1.25
       ],
-      "focalLengthMm": 45
+      "focalLengthMm": 14
     },
     {
       "id": "02-room-eye-level",
       "position": [
-        -1.65,
-        -2.55,
-        1.6
+        -1.40,
+        -2.75,
+        1.60
       ],
       "lookAt": [
         0.45,
@@ -676,30 +676,30 @@
     {
       "id": "03-window-to-stove",
       "position": [
-        -1.00,
-        -3.45,
-        1.42
+        1.05,
+        -3.25,
+        1.50
       ],
       "lookAt": [
-        0.15,
-        -0.35,
-        1.22
+        0.40,
+        0.25,
+        1.20
       ],
-      "focalLengthMm": 32
+      "focalLengthMm": 16
     },
     {
       "id": "04-doorway-bedroom",
       "position": [
-        0.05,
-        1.45,
-        1.56
+        3.20,
+        0.00,
+        1.50
       ],
       "lookAt": [
-        6.15,
-        1.08,
-        1.18
+        7.20,
+        1.00,
+        1.20
       ],
-      "focalLengthMm": 30
+      "focalLengthMm": 16
     },
     {
       "id": "05-fly-scale",
@@ -791,7 +791,7 @@
           2.52
         ],
         [
-          -4.75,
+          4.55,
           -1.1,
           2.52
         ]

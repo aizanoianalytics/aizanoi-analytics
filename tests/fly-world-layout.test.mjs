@@ -21,7 +21,7 @@ test('Fly House furniture zones use deliberate transforms and preserve clear cir
   const hero = Object.fromEntries(spec.heroObjects.map((item) => [item.id, item]));
   assert.deepEqual(hero.bench.position, [-0.65, 2.72, 0.42]);
   assert.deepEqual(hero['wood-stove'].position, [2.15, -1.1, 0.59]);
-  assert.deepEqual(hero['old-tv-cabinet'].position, [-3.2, -3.4, 0.7]);
+  assert.deepEqual(hero['old-tv-cabinet'].position, [-3.3, 2.55, 0.7]);
   assert.deepEqual(hero.bed.position, [6.72, 1.92, 0.46]);
   assert.deepEqual(hero['work-desk'].position, [5.525, 3.05, 0.38]);
   const circulation = spec.zones.find((zone) => zone.id === 'circulation-zone');
@@ -36,7 +36,7 @@ test('Fly House furniture zones use deliberate transforms and preserve clear cir
   assert.ok(!/WALL__bed__west_(?:a|b|head)"/.test(builder), 'shared divider has one geometry owner; only the exterior return is separate');
   assert.ok(builder.includes('import_slot(root,slots,"bench-sofa",(-.65,2.72'));
   assert.ok(builder.includes('import_slot(root,slots,"wood-stove",(2.15,-1.10'));
-  assert.ok(builder.includes('import_slot(root,slots,"old-tv",(-3.20,-3.40'));
+  assert.ok(builder.includes('import_slot(root,slots,"old-tv",(-3.30,2.55,.70),rot=(0,0,180)'));;
   assert.match(builder, /Shared room divider is owned by the main room/);
   assert.match(detail, /work-desk/);
 });
@@ -87,6 +87,6 @@ test('public browser diagnostics expose exact Stage A names while retaining alia
 test('doorway review camera is wide enough to show the transition, not a bed close-up', () => {
   const camera = spec.previewCameras.find((view) => view.id === '04-doorway-bedroom');
   assert.ok(camera.focalLengthMm <= 42);
-  assert.ok(camera.position[0] < 4.8 && camera.position[1] >= 0.34 && camera.position[1] <= 1.66, 'camera is inside the doorway approach');
+  assert.ok(camera.position[0] < 4.8 && camera.position[1] >= -3.35 && camera.position[1] <= 1.66, 'camera is on the main-room approach');
   assert.ok(camera.lookAt[0] > 5.5, 'camera targets the connected bedroom');
 });

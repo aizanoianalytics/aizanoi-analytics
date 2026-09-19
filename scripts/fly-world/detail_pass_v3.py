@@ -234,7 +234,6 @@ def apply_reference_detail_pass(mats):
     # One small portrait above the doorway replaces the invented wall-gallery row.
     _box("doorway-portrait-frame", (.035,.38,.46), (4.055,1.03,2.55), mats["wood2"], c, bevel=.012)
     _box("doorway-portrait", (.025,.29,.37), (4.035,1.03,2.55), plaster_wear_dark, c)
-
     # Large green carpet under the seating area.  Three nested thin rectangles
     # approximate the ornate border seen in the illustration without overbuilding.
     _box("reference-main-carpet", (6.55, 4.35, .026), (-.55, -.05, .02), mats["green"], c, landing=True)
@@ -306,11 +305,10 @@ def apply_reference_detail_pass(mats):
     _box("hanging-cloth-mustard", (.30,.04,.48), (3.08,.50,1.56), mustard, c, rot=(0,0,-.04), bevel=.02)
     _box("hanging-cloth-white-b", (.40,.04,.64), (3.44,.50,1.48), white, c, rot=(0,0,.02), bevel=.02)
 
-    # Small hanging cup/ornament from the ceiling above the cabinet.
-    _rod("hanging-ornament-string-a", (.02,.74,2.80), (.02,.74,2.34), .008, mats["metal"], c)
-    _rod("hanging-ornament-string-b", (.14,.74,2.80), (.14,.74,2.34), .008, mats["metal"], c)
-    _cyl("hanging-ornament-body", .10, .16, (.08,.74,2.26), pale_blue, c)
-    _torus("hanging-ornament-handle", .09, .015, (.16,.74,2.28), pale_blue, c, rot=(math.radians(90),0,0))
+    # Hanging cabinet ornament removed in v0.3.1 — the previous dangling
+    # cylinder intersected the ceiling in wide shots and read as a mug-like
+    # object floating against the plaster.  The reference illustration has
+    # no such ornament; the cabinet crown is enough decoration.
 
     # Intentional floor clutter copied from the reference vocabulary.
     _box("floor-notebook", (.42,.32,.035), (-1.90,-1.43,.075), mats["ceramic"], c, rot=(0,0,-.28), bevel=.008)
@@ -350,19 +348,19 @@ def apply_reference_detail_pass(mats):
         _box(f"plaster-wear-{i}", (sx,sy,sz), (x,y,z), plaster_wear if i%2 else plaster_wear_dark, c, rot=(0,0,(i-2)*.06))
 
     # Bedroom continuation: bedside smalls, wall art, plant, basket and folded bedding.
-    _box("bedside-lace-doily", (.54,.42,.035), (5.18,2.42,.86), white, c)
-    _cyl("bedside-mug", .08, .10, (5.04,2.42,.96), mats["ceramic"], c)
-    _torus("bedside-mug-handle", .06, .014, (5.11,2.43,.98), mats["ceramic"], c, rot=(math.radians(90),0,0))
-    _cyl("bedside-alarm-clock", .09, .06, (5.31,2.42,.96), pale_blue, c, rot=(math.radians(90),0,0))
-    _cyl("bedside-lamp-base", .10, .04, (5.30,2.42,1.00), mats["wood2"], c)
-    _rod("bedside-lamp-stem", (5.30,2.42,1.02), (5.30,2.42,1.28), .018, mats["metal2"], c)
-    _sphere("bedside-lamp-shade", .14, (5.30,2.42,1.36), mustard, c, segments=12)
+    _box("bedside-lace-doily", (.54,.42,.035), (8.25,1.55,.86), white, c)
+    _cyl("bedside-mug", .08, .10, (8.11,1.55,.96), mats["ceramic"], c)
+    _torus("bedside-mug-handle", .06, .014, (8.18,1.56,.98), mats["ceramic"], c, rot=(math.radians(90),0,0))
+    _cyl("bedside-alarm-clock", .09, .06, (8.38,1.55,.96), pale_blue, c, rot=(math.radians(90),0,0))
+    _cyl("bedside-lamp-base", .10, .04, (8.37,1.55,1.00), mats["wood2"], c)
+    _rod("bedside-lamp-stem", (8.37,1.55,1.02), (8.37,1.55,1.28), .018, mats["metal2"], c)
+    _sphere("bedside-lamp-shade", .14, (8.37,1.55,1.36), mustard, c, segments=12)
 
-    _box("bedroom-wall-frame", (.55,.05,.70), (7.10,3.56,1.72), mats["wood2"], c, bevel=.014)
-    _box("bedroom-wall-picture", (.46,.035,.61), (7.10,3.53,1.72), mats["ceramic"], c)
-    _cyl("bedroom-plant-pot", .18, .30, (7.82,2.75,1.98), mats["ceramic"], c)
+    _box("bedroom-wall-frame", (.55,.05,.70), (7.10,2.80,1.72), mats["wood2"], c, bevel=.014)
+    _box("bedroom-wall-picture", (.46,.035,.61), (7.10,2.77,1.72), mats["ceramic"], c)
+    _cyl("bedroom-plant-pot", .18, .30, (8.20,3.35,1.98), mats["ceramic"], c)
     for i in range(6):
-        _rod(f"bedroom-plant-stem-{i}", (7.82,2.75,2.10), (7.58+i*.10,2.73,2.52-(i%2)*.08), .018, mats["leaf"], c)
+        _rod(f"bedroom-plant-stem-{i}", (8.20,3.35,2.10), (7.96+i*.10,3.33,2.52-(i%2)*.08), .018, mats["leaf"], c)
     _box("bedroom-foot-basket", (.78,.50,.42), (7.48,.10,.22), mats["wood3"], c, collision=True, bevel=.035)
     _box("bedroom-folded-blanket", (.68,.42,.12), (7.48,.10,.48), mats["red"], c, bevel=.025)
     _box("bedroom-folded-blanket-top", (.60,.38,.10), (7.48,.10,.58), mats["green"], c, bevel=.025)

@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 BLENDER_SCRIPT = ROOT / "scripts" / "fly-world" / "build_scene_v3.py"
 VALIDATOR_SCRIPT = ROOT / "scripts" / "fly-world" / "validate_project.py"
+CANONICALIZER = ROOT / "scripts" / "fly-world" / "canonicalize_glb.py"
 
 
 def parse_args() -> argparse.Namespace:
@@ -75,7 +76,22 @@ def main() -> int:
         command.append("--no-render")
 
     print("[fly-house-v3] blender:", " ".join(command))
-    return subprocess.run(command, cwd=ROOT, check=False).returncode
+    blender_rc = subprocess.run(command, cwd=ROOT, check=False).returncode
+    if blender_rc != 0:
+        return blender_rc
+
+    frontend = ROOT / "frontend" / "labs" / "fly-world" / "assets" / "fly-house.glb"
+    if frontend.exists():
+        print("[fly-house-v3] canonicalize:", frontend)
+        canonical_rc = subprocess.run(
+            [sys.executable, str(CANONICALIZER), str(frontend)],
+            cwd=ROOT,
+            check=False,
+        ).returncode
+        if canonical_rc != 0:
+            print("[fly-house-v3] canonicalizer failed.", file=sys.stderr)
+            return canonical_rc
+    return 0
 
 
 if __name__ == "__main__":
