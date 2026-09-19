@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import net from 'node:net';
 import crypto from 'node:crypto';
-import { BodyState, Vec3, createFlyWorldEnvironmentAdapter } from './index.mjs';
-import { createFlySimulationService } from './service.mjs';
+import { BodyState, Vec3, createFlyWorldEnvironmentAdapter } from '../frontend/labs/fly-simulation/index.js';
+import { createFlySimulationService } from '../frontend/labs/fly-simulation/service.js';
 
 const authoredPlane = createFlyWorldEnvironmentAdapter({
   environmentHash: 'authored-test-plane-v1',

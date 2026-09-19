@@ -8,7 +8,7 @@ import {
   checkpoint, restore, stateHash, replayHash, replay,
   createBrowserSimulation, createFlyWorldEnvironmentAdapter,
   SpectatorBridge, TelemetryLagError
-} from './index.mjs';
+} from '../frontend/labs/fly-simulation/index.js';
 
 const planeEnv = () => ({
   schemaVersion: 'fly-env-1', hash: 'env-plane-v1',
@@ -135,8 +135,8 @@ test('telemetry includes required metadata, rejects arbitrary keys, and reports 
 });
 
 test('Fly House integration surface stays authored and spectator-visible', () => {
-  const source = readFileSync(new URL('../fly-world/glb-runtime-v3.js', import.meta.url), 'utf8');
-  const html = readFileSync(new URL('../fly-world/index.html', import.meta.url), 'utf8');
+  const source = readFileSync(new URL('../frontend/labs/fly-world/glb-runtime-v3.js', import.meta.url), 'utf8');
+  const html = readFileSync(new URL('../frontend/labs/fly-world/index.html', import.meta.url), 'utf8');
   assert.match(source, /createEnvironment/); assert.match(source, /FLY_ENVIRONMENT/);
   assert.match(html, /HEURISTIC TEST CONTROLLER|fly-simulation/);
 });
@@ -177,7 +177,7 @@ test('adapter preserves exact environment and GLB identity in checkpoints', () =
 });
 
 test('Fly House browser wiring uses authored spawn, spectator telemetry, and RAF interpolation', () => {
-  const source = readFileSync(new URL('../fly-world/glb-runtime-v3.js', import.meta.url), 'utf8');
+  const source = readFileSync(new URL('../frontend/labs/fly-world/glb-runtime-v3.js', import.meta.url), 'utf8');
   assert.match(source, /safeSpawn/); assert.match(source, /simulation\.addFly/);
   assert.match(source, /HEURISTIC TEST CONTROLLER/); assert.match(source, /bridge\.ingest/);
   assert.match(source, /AUTHORITATIVE_FLY_MESH/); assert.match(source, /spectator\.bridge\.render/);

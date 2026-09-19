@@ -2,7 +2,7 @@ import * as THREE from '../../worlds/shared/vendor/three.module.js';
 import { GLTFLoader } from '../../worlds/shared/vendor/GLTFLoader.js';
 import { createEnvironment } from './environment.js';
 import { AudioSystem } from '../../worlds/shared/engine/audio.js';
-import { BodyState, FixedStepScheduler, HeuristicTestController, Vec3, createBrowserSimulation, createFlyWorldEnvironmentAdapter } from '../fly-simulation/index.mjs';
+import { BodyState, FixedStepScheduler, HeuristicTestController, Vec3, createBrowserSimulation, createFlyWorldEnvironmentAdapter } from '../fly-simulation/index.js';
 
 const canvas = document.querySelector('#world');
 const fatal = document.querySelector('#fatal');

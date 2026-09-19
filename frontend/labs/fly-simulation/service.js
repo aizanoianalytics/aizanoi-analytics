@@ -1,6 +1,6 @@
 import http from 'node:http';
 import crypto from 'node:crypto';
-import { FlySimulation, FixedStepScheduler } from './index.mjs';
+import { FlySimulation, FixedStepScheduler } from './index.js';
 
 const PATH = '/spectator/telemetry-1';
 const GUID = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';

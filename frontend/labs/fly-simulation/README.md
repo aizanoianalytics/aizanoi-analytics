@@ -29,7 +29,7 @@ Every scientific subsystem carries machine-readable `units`, `calibrated`, `assu
 Run focused tests:
 
 ```bash
-node --test frontend/labs/fly-simulation/fly-simulation.test.mjs
+node --test tests/fly-simulation.test.mjs tests/fly-simulation-service.test.mjs
 ```
 
 ## Narrow Fly World spectator service

@@ -5,7 +5,7 @@ Focused acceptance tests were extended test-first for machine-readable provenanc
 ## RED
 
 ```text
-$ node --test frontend/labs/fly-simulation/fly-simulation.test.mjs
+$ node --test tests/fly-simulation.test.mjs
 exit=1
 SyntaxError: The requested module './index.mjs' does not provide an export named 'SpectatorBridge'
 # tests 1
@@ -16,7 +16,7 @@ SyntaxError: The requested module './index.mjs' does not provide an export named
 The failure was the expected feature-missing module export after the new tests were written. The replay slice was then independently checked red before its export was implemented:
 
 ```text
-$ node --test frontend/labs/fly-simulation/fly-simulation.test.mjs
+$ node --test tests/fly-simulation.test.mjs
 exit=1
 SyntaxError: The requested module './index.mjs' does not provide an export named 'replay'
 # tests 1
@@ -27,7 +27,7 @@ SyntaxError: The requested module './index.mjs' does not provide an export named
 ## GREEN
 
 ```text
-$ node --test frontend/labs/fly-simulation/fly-simulation.test.mjs
+$ node --test tests/fly-simulation.test.mjs
 # tests 14
 # pass 14
 # fail 0
@@ -38,7 +38,7 @@ $ node --test frontend/labs/fly-simulation/fly-simulation.test.mjs
 ## Validation
 
 ```text
-$ node --check frontend/labs/fly-simulation/index.mjs && node --check frontend/labs/fly-simulation/fly-simulation.test.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js && git diff --check
+$ node --check frontend/labs/fly-simulation/index.js && node --check tests/fly-simulation.test.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js && git diff --check
 exit 0
 
 $ node --test tests/fly-world*.test.mjs
@@ -61,10 +61,10 @@ The focused tests cover exact provenance metadata and omission rejection, determ
 ## Acceptance-gap RED/GREEN
 
 ```text
-$ node --test frontend/labs/fly-simulation/fly-simulation.test.mjs
+$ node --test tests/fly-simulation.test.mjs
 RED: 14 passed, 4 failed (missing pause/stepOne, realtime start, telemetry snapshot, and exact adapter identity)
 
-$ node --test frontend/labs/fly-simulation/fly-simulation.test.mjs
+$ node --test tests/fly-simulation.test.mjs
 GREEN: 19 passed, 0 failed
 
 $ node --test tests/fly-world*.test.mjs
@@ -73,7 +73,7 @@ GREEN: 33 passed, 0 failed
 $ node --test tests/*.test.mjs
 GREEN: 516 passed, 0 failed
 
-$ node --check frontend/labs/fly-simulation/index.mjs && node --check frontend/labs/fly-simulation/fly-simulation.test.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js && git diff --check
+$ node --check frontend/labs/fly-simulation/index.js && node --check tests/fly-simulation.test.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js && git diff --check
 exit 0
 ```
 
@@ -85,8 +85,8 @@ The integration test was written before `service.mjs` existed and exercised a re
 ephemeral-port WebSocket connection using the authored test-plane adapter:
 
 ```text
-$ node --test frontend/labs/fly-simulation/service.test.mjs
-RED: ERR_MODULE_NOT_FOUND: frontend/labs/fly-simulation/service.mjs
+$ node --test tests/fly-simulation-service.test.mjs
+RED: ERR_MODULE_NOT_FOUND: frontend/labs/fly-simulation/service.js
 ```
 
 After implementing the loopback-only-by-default service, minimal RFC6455 framing,
@@ -94,7 +94,7 @@ versioned allowlisted telemetry, fixed scheduler instrumentation, and ignored in
 frames:
 
 ```text
-$ node --test frontend/labs/fly-simulation/service.test.mjs
+$ node --test tests/fly-simulation-service.test.mjs
 # tests 2
 # pass 2
 # fail 0
@@ -103,7 +103,7 @@ $ node --test frontend/labs/fly-simulation/service.test.mjs
 ## Final verification commands
 
 ```text
-$ node --test frontend/labs/fly-simulation/fly-simulation.test.mjs frontend/labs/fly-simulation/service.test.mjs
+$ node --test tests/fly-simulation.test.mjs tests/fly-simulation-service.test.mjs
 # tests 22
 # pass 22
 # fail 0
@@ -113,7 +113,7 @@ $ node --test tests/*.test.mjs
 # pass 516
 # fail 0
 
-$ node --check frontend/labs/fly-simulation/index.mjs && node --check frontend/labs/fly-simulation/service.mjs && node --check frontend/labs/fly-simulation/fly-simulation.test.mjs && node --check frontend/labs/fly-simulation/service.test.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js
+$ node --check frontend/labs/fly-simulation/index.js && node --check frontend/labs/fly-simulation/service.js && node --check tests/fly-simulation.test.mjs && node --check tests/fly-simulation-service.test.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js
 exit 0
 
 $ git diff --check
