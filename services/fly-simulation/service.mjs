@@ -164,6 +164,14 @@ export function createFlySimulationService({
 } = {}) {
   if (!simulation && !environment) throw new TypeError('authored Fly World environment required');
   const sim = simulation ?? new FlySimulation(environment);
+  if (!(sim instanceof FlySimulation)) throw new TypeError('server-authoritative FlySimulation required');
+  const authored = sim.environment?.meta?.artifactHashes;
+  if (!authored || authored.environmentSource !== sim.environment.hash || authored.flyHouseGlb !== sim.environment.glbHash) {
+    throw new TypeError('simulation authored artifact hashes required');
+  }
+  if (environment && (environment.hash !== sim.environment.hash || environment.glbHash !== sim.environment.glbHash)) {
+    throw new Error('simulation environment identity mismatch');
+  }
   const ownServer = injectedServer === null;
   const server = injectedServer ?? http.createServer();
   const clients = new Set();

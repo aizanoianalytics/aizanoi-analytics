@@ -16,6 +16,11 @@ test('node simulation service is outside publish tree', () => {
   assert.equal(existsSync(resolve(root,'frontend/labs/fly-simulation/service.js')), false);
   assert.equal(existsSync(resolve(root,'services/fly-simulation/service.mjs')), true);
 });
+test('service rejects injected simulations without authored identity', () => {
+  assert.throws(() => createFlySimulationService({
+    simulation: { environment: {}, listFlyIds: () => [], telemetrySnapshot: () => ({}) },
+  }), /server-authoritative FlySimulation/);
+});
 test('upgrade policy rejects arbitrary host and hostile origin', async () => {
   const service = createFlySimulationService({environment:env, port:0, allowedHosts:['127.0.0.1'], allowedOrigins:['http://127.0.0.1']});
   await service.start();
