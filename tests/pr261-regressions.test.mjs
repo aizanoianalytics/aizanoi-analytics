@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { EventEmitter } from 'node:events';
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
@@ -24,6 +25,59 @@ test('upgrade policy rejects arbitrary host and hostile origin', async () => {
 test('strict parser fails closed on unmasked control and oversize frames', () => {
   assert.throws(() => parseWebSocketFrames(Buffer.from([0x81,0x01,0x61])), /masked/);
   assert.throws(() => parseWebSocketFrames(Buffer.from([0x81,0xff,0,0,0,0,0,1,0,1,0,0,0,0])), /maximum|oversize/);
+});
+
+test('parser persists fragmented message state across split TCP chunks', () => {
+  const mask = Buffer.from([1, 2, 3, 4]);
+  const masked = (text) => { const payload = Buffer.from(text); return Buffer.concat([Buffer.from([0x01, 0x80 | payload.length]), mask, Buffer.from(payload.map((v, i) => v ^ mask[i % 4]))]); };
+  const first = masked('{"a":');
+  const secondPayload = Buffer.from('1}');
+  const secondMask = Buffer.from([5, 6, 7, 8]);
+  const second = Buffer.concat([Buffer.from([0x80, 0x80 | secondPayload.length]), secondMask, Buffer.from(secondPayload.map((v, i) => v ^ secondMask[i % 4]))]);
+  const a = parseWebSocketFrames(first.subarray(0, 4));
+  const b = parseWebSocketFrames(Buffer.concat([a.buffer, first.subarray(4)]), { fragmented: a.fragmented, fragmentedOpcode: a.fragmentedOpcode });
+  assert.equal(b.messages.length, 0);
+  const c = parseWebSocketFrames(second, { buffer: b.buffer, fragmented: b.fragmented, fragmentedOpcode: b.fragmentedOpcode });
+  assert.equal(c.messages[0].payload.toString(), '{"a":1}');
+});
+
+test('parser validates UTF-8 after fragmented text is reassembled', () => {
+  const mask = Buffer.from([1, 2, 3, 4]);
+  const frame = (first, payload) => Buffer.concat([
+    Buffer.from([first, 0x80 | payload.length]),
+    mask,
+    Buffer.from(payload.map((value, index) => value ^ mask[index % 4]))
+  ]);
+  const first = parseWebSocketFrames(frame(0x01, Buffer.from([0xc3])));
+  assert.throws(() => parseWebSocketFrames(frame(0x80, Buffer.from([0x28])), {
+    fragmented: first.fragmented,
+    fragmentedOpcode: first.fragmentedOpcode
+  }), /invalid utf8/);
+});
+
+test('service disconnects a backpressured client without telemetry accumulation', async () => {
+  const server = new EventEmitter();
+  server.listening = false;
+  const service = createFlySimulationService({ environment: env, server, intervalMs: 5 });
+  service.simulation.addFly({ flyId: 'backpressure-fly' });
+  await service.start();
+  const socket = new EventEmitter();
+  let writes = 0;
+  socket.write = () => { writes += 1; return writes === 1; };
+  socket.end = () => socket.emit('close');
+  socket.destroy = () => socket.emit('close');
+  server.emit('upgrade', {
+    url: '/spectator/telemetry-1',
+    headers: {
+      host: '127.0.0.1', upgrade: 'websocket', connection: 'Upgrade',
+      'sec-websocket-version': '13', 'sec-websocket-key': 'dGhlIHNhbXBsZSBub25jZQ=='
+    }
+  }, socket);
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(service.status().clients, 0);
+  assert.equal(service.status().metrics.backpressureDisconnects, 1);
+  assert.equal(service.status().metrics.lastDisconnectReason, 'telemetry_backpressure');
+  await service.stop();
 });
 test('quaternion integration rotates a non-identity orientation correctly', () => {
   const q = new Quat(0,0,Math.SQRT1_2,Math.SQRT1_2); const b = new BodyState({orientation:q, angularVelocity:new Vec3(0,0,2)});

@@ -1,27 +1,22 @@
-# PR 261 RED/GREEN evidence
+# PR 261 verification evidence
 
-All evidence below is from the current branch `feat/fly-simulation-foundation`.
+All reproducible evidence below is from the current branch `feat/fly-simulation-foundation`.
 
-RED
+## Historical RED status
 
-```text
-$ node --test tests/pr261-regressions.test.mjs
-ERR_MODULE_NOT_FOUND: Cannot find module services/fly-simulation/service.mjs
-```
+The original interactive RED runs were not retained at a reviewable commit. They are therefore not presented as reproducible evidence here. The committed regression tests preserve the failure contracts that drove the fixes: publish-boundary separation, hostile upgrade rejection, bounded RFC6455 parsing, fragmented UTF-8 handling across TCP chunks, backpressure disconnects, quaternion integration, body-volume collision, fixed-step replay, checkpoint isolation, and telemetry allowlisting.
 
-The regression file was written before the private service existed and failed on the expected missing implementation seam.
-
-GREEN
+## Current GREEN evidence
 
 ```text
 $ node --test tests/pr261-regressions.test.mjs
-# tests 7
-# pass 7
+# tests 10
+# pass 10
 # fail 0
 
 $ node --test tests/fly-simulation.test.mjs tests/fly-simulation-service.test.mjs tests/pr261-regressions.test.mjs
-# tests 29
-# pass 29
+# tests 32
+# pass 32
 # fail 0
 
 $ node --test tests/fly-simulation-browser.test.mjs
@@ -30,22 +25,23 @@ $ node --test tests/fly-simulation-browser.test.mjs
 # fail 0
 
 $ npm test
-# tests 546
-# pass 546
+# tests 549
+# pass 549
+# fail 0
+
+$ node --test tests/fly-world-*.test.mjs
+# tests 33
+# pass 33
 # fail 0
 
 $ node --check frontend/labs/fly-simulation/index.js && node --check services/fly-simulation/service.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js && git diff --check
 exit 0
 ```
 
-The Chromium test uses the installed headless Chromium, an ephemeral simulation WebSocket, an ephemeral HTTP page, keyboard input, and server-state assertions. It proves telemetry is received and browser input does not mutate authoritative state.
+The Chromium test loads the real Fly House, injects only the explicit spectator endpoint configuration, connects to an ephemeral authoritative simulation service, observes telemetry-created mesh movement, drives local camera input, and verifies that browser input cannot mutate server state. It also rejects malformed and out-of-order visualization frames and confirms that no browser-local simulation, controller, or scheduler exists.
 
-Publish-boundary audit:
+## Publish and transport boundaries
 
-```text
-frontend_node_backend_candidates ['frontend/service-worker.js']
-```
+The Node simulation service lives at `services/fly-simulation/service.mjs`; no Fly backend/service exists under `frontend/`. The service uses monotonic elapsed wall time, explicit Host/Origin allowlists, bounded RFC6455 parsing with per-connection fragmented-message state, TelemetryProtocol-only output, an explicit disconnect-on-backpressure policy, and deterministic cleanup. The public browser has no local FlySimulation/controller/scheduler/fly creation and reports telemetry inactive without explicit host configuration.
 
-The Node simulation service is `services/fly-simulation/service.mjs`; no Fly backend/service remains under `frontend/`. The service uses monotonic elapsed wall time, explicit Host/Origin allowlists, bounded RFC6455 parsing, TelemetryProtocol-only output, and deterministic cleanup. The browser has no local FlySimulation/controller/scheduler/fly creation and reports telemetry inactive without explicit host configuration.
-
-`npm run qa:browser` was attempted but is a repository smoke entrypoint that expects an already-running server at `http://127.0.0.1:4173/`; it failed with `ERR_CONNECTION_REFUSED`. The dedicated Chromium spectator test above passed independently against the ephemeral service/page.
+A clean `npm ci --ignore-scripts --no-fund` resolves `lighthouse-logger`, correcting the lockfile truncation that caused the prior Lighthouse runner launch failure. A local real Lighthouse run subsequently launched successfully for every representative surface; final acceptance remains the final-SHA CI gate.

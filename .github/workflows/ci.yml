@@ -168,6 +168,7 @@ jobs:
           node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-browser-smoke.log || status=1
           node tests/service-worker-browser.mjs 2>&1 | tee artifacts/diagnostics/service-worker-browser.log || status=1
           node tests/worlds-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/worlds-browser-smoke.log || status=1
+          node --test tests/fly-simulation-browser.test.mjs 2>&1 | tee artifacts/diagnostics/fly-simulation-browser.log || status=1
           node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
           exit $status
       - name: AizanoiOS utility browser gates

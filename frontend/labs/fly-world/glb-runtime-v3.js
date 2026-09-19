@@ -18,6 +18,7 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.08;
 
 const scene = new THREE.Scene();
+window.__FLY_SCENE__ = scene;
 scene.background = new THREE.Color(0x272119);
 scene.fog = new THREE.Fog(0x272119, 15, 38);
 
@@ -205,6 +206,7 @@ async function boot() {
     if (simulationStatus) simulationStatus.textContent = 'Telemetry inactive · no host-provided spectator service configured';
   } else {
     telemetrySocket = new WebSocket(config.url);
+    window.__FLY_TELEMETRY_SOCKET__ = telemetrySocket;
     telemetrySocket.addEventListener('message', (event) => {
       try {
         const frame = JSON.parse(event.data);
@@ -216,7 +218,12 @@ async function boot() {
         if (bridge.ingest(frame) && simulationStatus) simulationStatus.textContent = 'Telemetry active · read-only spectator';
       } catch (error) { console.warn('Ignoring malformed telemetry', error); }
     });
-    telemetrySocket.addEventListener('close', () => { if (simulationStatus) simulationStatus.textContent = 'Telemetry inactive · service disconnected'; });
+    const markTelemetryInactive = (message) => { if (simulationStatus) simulationStatus.textContent = message; };
+    telemetrySocket.addEventListener('error', () => markTelemetryInactive('Telemetry inactive · service error'));
+    telemetrySocket.addEventListener('close', () => { telemetrySocket = null; markTelemetryInactive('Telemetry inactive · service disconnected'); });
+    window.addEventListener('pagehide', () => {
+      if (telemetrySocket && telemetrySocket.readyState < WebSocket.CLOSING) telemetrySocket.close(1000, 'pagehide');
+    }, { once: true });
   }
 
   let meshCount = 0;

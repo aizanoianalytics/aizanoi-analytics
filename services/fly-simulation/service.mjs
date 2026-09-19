@@ -2,28 +2,283 @@ import http from 'node:http';
 import crypto from 'node:crypto';
 import { FlySimulation, FixedStepScheduler, TelemetryProtocol, WebSocketTelemetryAdapter } from '../../frontend/labs/fly-simulation/index.js';
 
-export const FLY_SPECTATOR_PATH='/spectator/telemetry-1';
-const GUID='258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
-const DEFAULT_MAX_FRAME=64*1024, DEFAULT_MAX_MESSAGE=256*1024, DEFAULT_MAX_BUFFER=512*1024;
-export function wsFrame(text){const p=Buffer.from(text);if(p.length>DEFAULT_MAX_MESSAGE)throw new RangeError('message oversize');let h;if(p.length<126)h=Buffer.from([0x81,p.length]);else{h=Buffer.alloc(4);h[0]=0x81;h[1]=126;h.writeUInt16BE(p.length,2)}return Buffer.concat([h,p])}
-export function parseWebSocketFrames(chunk,{buffer=Buffer.alloc(0),maxFrame=DEFAULT_MAX_FRAME,maxMessage=DEFAULT_MAX_MESSAGE,maxBuffer=DEFAULT_MAX_BUFFER}={}){
-  if(!Buffer.isBuffer(chunk))throw new TypeError('frame buffer'); buffer=Buffer.concat([buffer,chunk]); if(buffer.length>maxBuffer)throw new RangeError('connection buffer oversize'); const messages=[]; let fragmented=null;
-  while(buffer.length>=2){const first=buffer[0], second=buffer[1], fin=!!(first&0x80), rsv=first&0x70, opcode=first&15, masked=!!(second&0x80); if(rsv)throw new Error('RSV'); if(!masked)throw new Error('masked frame required'); let len=second&127, h=2;if(len===126){if(buffer.length<4)return {buffer,messages};len=buffer.readUInt16BE(2);h=4}else if(len===127){if(buffer.length<10)return {buffer,messages};const n=buffer.readBigUInt64BE(2);if(n>BigInt(maxFrame))throw new RangeError('frame oversize');len=Number(n);h=10}if(len>maxFrame)throw new RangeError('frame oversize');const control=opcode>=8;if(control&&( !fin||len>125))throw new Error('control constraint');if(![0,1,2,8,9,10].includes(opcode))throw new Error('opcode');const total=h+4+len;if(buffer.length<total)return {buffer,messages};const mask=buffer.subarray(h,h+4), payload=Buffer.allocUnsafe(len);for(let i=0;i<len;i++)payload[i]=buffer[h+4+i]^mask[i%4];buffer=buffer.subarray(total);
-    if(opcode===8){messages.push({opcode,payload});continue} if(opcode===9||opcode===10){messages.push({opcode,payload});continue}
-    if(opcode===0){if(!fragmented)throw new Error('unexpected continuation');fragmented=Buffer.concat([fragmented,payload]);if(fragmented.length>maxMessage)throw new RangeError('message oversize');if(fin){messages.push({opcode:1,payload:fragmented});fragmented=null}continue}
-    if(opcode===1||opcode===2){if(fragmented)throw new Error('fragmented frame');if(opcode===1)try{new TextDecoder('utf-8',{fatal:true}).decode(payload)}catch{throw new Error('invalid utf8')}if(fin){if(len>maxMessage)throw new RangeError('message oversize');messages.push({opcode,payload})}else fragmented=payload}
-  } return {buffer,messages};
+export const FLY_SPECTATOR_PATH = '/spectator/telemetry-1';
+const GUID = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
+const DEFAULT_MAX_FRAME = 64 * 1024;
+const DEFAULT_MAX_MESSAGE = 256 * 1024;
+const DEFAULT_MAX_BUFFER = 512 * 1024;
+
+export function wsFrame(text, maxMessage = DEFAULT_MAX_MESSAGE) {
+  const payload = Buffer.from(text);
+  if (payload.length > maxMessage) throw new RangeError('message oversize');
+  if (payload.length < 126) return Buffer.concat([Buffer.from([0x81, payload.length]), payload]);
+  if (payload.length <= 0xffff) {
+    const header = Buffer.alloc(4);
+    header[0] = 0x81;
+    header[1] = 126;
+    header.writeUInt16BE(payload.length, 2);
+    return Buffer.concat([header, payload]);
+  }
+  const header = Buffer.alloc(10);
+  header[0] = 0x81;
+  header[1] = 127;
+  header.writeBigUInt64BE(BigInt(payload.length), 2);
+  return Buffer.concat([header, payload]);
 }
-function validUpgrade(req,{allowedHosts,allowedOrigins}){const host=String(req.headers.host||'').toLowerCase();const origin=req.headers.origin==null?null:String(req.headers.origin);const hostOk=allowedHosts.some(x=>x instanceof RegExp?x.test(host):String(x).toLowerCase()===host||(String(x).toLowerCase()==='127.0.0.1'&&host.startsWith('127.0.0.1:'))||(String(x).toLowerCase()==='localhost'&&host.startsWith('localhost:')));const originOk=origin===null?true:allowedOrigins.some(x=>x instanceof RegExp?x.test(origin):String(x)===origin);return req.url===FLY_SPECTATOR_PATH&&String(req.headers.upgrade||'').toLowerCase()==='websocket'&&String(req.headers.connection||'').toLowerCase().split(',').map(x=>x.trim()).includes('upgrade')&&req.headers['sec-websocket-version']==='13'&&/^[+/0-9A-Za-z]{22}==$/.test(req.headers['sec-websocket-key']||'')&&hostOk&&originOk}
-export function createFlySimulationService({environment,simulation,server:injectedServer=null,host='127.0.0.1',port=0,intervalMs=20,controller='HEURISTIC TEST CONTROLLER',allowedHosts=[`127.0.0.1:${port}`,'127.0.0.1','localhost'],allowedOrigins=[],maxFrame=DEFAULT_MAX_FRAME,maxMessage=DEFAULT_MAX_MESSAGE,maxBuffer=DEFAULT_MAX_BUFFER}={}){
- if(!simulation&&!environment)throw new TypeError('authored Fly World environment required');const sim=simulation??new FlySimulation(environment), own=injectedServer===null, server=injectedServer??http.createServer(), clients=new Set(), scheduler=new FixedStepScheduler(sim), protocol=new TelemetryProtocol();let timer=null,started=false,listening=false,lastWall=process.hrtime.bigint();
- function frameFor(id){const s=sim.telemetrySnapshot(id,{lagSeconds:scheduler.lag,controller});return {flyId:id,sequence:sim.tick,state:{room:s.room,position:s.transform.position,orientation:s.transform.orientation,contact:s.contact},metadata:{controller,provenance:'MODELLED',units:'SI'},lag:scheduler.status()}}
- function send(c){for(const id of sim.listFlyIds())try{new WebSocketTelemetryAdapter({send:x=>c.socket.write(wsFrame(x))},protocol,{maxLag:Infinity}).send(frameFor(id))}catch{clients.delete(c);c.socket.destroy()}}
- function onUpgrade(req,socket){if(!validUpgrade(req,{allowedHosts,allowedOrigins})){socket.write('HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n');socket.destroy();return}const accept=crypto.createHash('sha1').update(req.headers['sec-websocket-key']+GUID).digest('base64');socket.write(`HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: ${accept}\r\n\r\n`);const c={socket,buffer:Buffer.alloc(0)};clients.add(c);socket.on('data',chunk=>{try{const out=parseWebSocketFrames(chunk,{buffer:c.buffer,maxFrame,maxMessage,maxBuffer});c.buffer=out.buffer;for(const m of out.messages){if(m.opcode===8){socket.write(Buffer.from([0x88,0]));socket.end()}else if(m.opcode===9)socket.write(Buffer.concat([Buffer.from([0x8a,m.payload.length]),m.payload]))}}catch{socket.end()}});socket.on('close',()=>clients.delete(c));socket.on('error',()=>clients.delete(c));setImmediate(()=>send(c))}
- server.on('upgrade',onUpgrade);
- function tick(){const now=process.hrtime.bigint();const elapsed=Number(now-lastWall)/1e9;lastWall=now;const startedAt=process.hrtime.bigint();scheduler.advanceWallClock(elapsed);const processingSeconds=Number(process.hrtime.bigint()-startedAt)/1e9;scheduler.recordProcessing?.(processingSeconds);for(const c of clients)send(c)}
- async function start(){if(started)return service;started=true;lastWall=process.hrtime.bigint();timer=setInterval(tick,intervalMs);timer.unref?.();if(injectedServer){listening=Boolean(server.listening);return service}await new Promise((resolve,reject)=>{server.once('error',reject);server.listen({host,port},()=>{listening=true;resolve()})});return service}
- async function stop(){if(!started)return;started=false;if(timer)clearInterval(timer);timer=null;for(const c of clients)c.socket.end();clients.clear();if(own&&server.listening)await new Promise(r=>server.close(r));listening=false}
-  async function probeUpgrade({host='127.0.0.1',origin=null}={}){return validUpgrade({url:FLY_SPECTATOR_PATH,headers:{host,origin,upgrade:'websocket',connection:'Upgrade','sec-websocket-version':'13','sec-websocket-key':crypto.randomBytes(16).toString('base64')}},{allowedHosts,allowedOrigins})}
- const service={simulation:sim,server,start,stop,address:()=>server.address(),probeUpgrade,status:()=>({running:started,listening,host,authority:'server-authoritative',protocol:'telemetry-1',scheduler:scheduler.status(),clients:clients.size})};return service;
+
+function parserResult(buffer, messages, fragmented, fragmentedOpcode) {
+  return { buffer, messages, fragmented, fragmentedOpcode };
+}
+
+function validateUtf8(payload) {
+  try { new TextDecoder('utf-8', { fatal: true }).decode(payload); }
+  catch { throw new Error('invalid utf8'); }
+}
+
+export function parseWebSocketFrames(chunk, {
+  buffer = Buffer.alloc(0),
+  fragmented = null,
+  fragmentedOpcode = null,
+  maxFrame = DEFAULT_MAX_FRAME,
+  maxMessage = DEFAULT_MAX_MESSAGE,
+  maxBuffer = DEFAULT_MAX_BUFFER
+} = {}) {
+  if (!Buffer.isBuffer(chunk)) throw new TypeError('frame buffer');
+  buffer = Buffer.concat([buffer, chunk]);
+  if (buffer.length > maxBuffer) throw new RangeError('connection buffer oversize');
+  const messages = [];
+
+  while (buffer.length >= 2) {
+    const first = buffer[0];
+    const second = buffer[1];
+    const fin = Boolean(first & 0x80);
+    const rsv = first & 0x70;
+    const opcode = first & 0x0f;
+    const masked = Boolean(second & 0x80);
+    if (rsv) throw new Error('RSV');
+    if (!masked) throw new Error('masked frame required');
+
+    let length = second & 0x7f;
+    let headerSize = 2;
+    if (length === 126) {
+      if (buffer.length < 4) return parserResult(buffer, messages, fragmented, fragmentedOpcode);
+      length = buffer.readUInt16BE(2);
+      headerSize = 4;
+    } else if (length === 127) {
+      if (buffer.length < 10) return parserResult(buffer, messages, fragmented, fragmentedOpcode);
+      const wideLength = buffer.readBigUInt64BE(2);
+      if (wideLength > BigInt(maxFrame)) throw new RangeError('frame oversize');
+      length = Number(wideLength);
+      headerSize = 10;
+    }
+    if (length > maxFrame) throw new RangeError('frame oversize');
+    const control = opcode >= 8;
+    if (control && (!fin || length > 125)) throw new Error('control constraint');
+    if (![0, 1, 2, 8, 9, 10].includes(opcode)) throw new Error('opcode');
+
+    const total = headerSize + 4 + length;
+    if (buffer.length < total) return parserResult(buffer, messages, fragmented, fragmentedOpcode);
+    const mask = buffer.subarray(headerSize, headerSize + 4);
+    const payload = Buffer.allocUnsafe(length);
+    for (let index = 0; index < length; index += 1) {
+      payload[index] = buffer[headerSize + 4 + index] ^ mask[index % 4];
+    }
+    buffer = buffer.subarray(total);
+
+    if (opcode === 8 || opcode === 9 || opcode === 10) {
+      messages.push({ opcode, payload });
+      continue;
+    }
+    if (opcode === 0) {
+      if (!fragmented) throw new Error('unexpected continuation');
+      fragmented = Buffer.concat([fragmented, payload]);
+      if (fragmented.length > maxMessage) throw new RangeError('message oversize');
+      if (fin) {
+        if (fragmentedOpcode === 1) validateUtf8(fragmented);
+        messages.push({ opcode: fragmentedOpcode, payload: fragmented });
+        fragmented = null;
+        fragmentedOpcode = null;
+      }
+      continue;
+    }
+    if (fragmented) throw new Error('fragmented frame');
+    if (opcode === 1 && fin) validateUtf8(payload);
+    if (length > maxMessage) throw new RangeError('message oversize');
+    if (fin) {
+      messages.push({ opcode, payload });
+    } else {
+      fragmented = payload;
+      fragmentedOpcode = opcode;
+    }
+  }
+  return parserResult(buffer, messages, fragmented, fragmentedOpcode);
+}
+
+function validUpgrade(req, { allowedHosts, allowedOrigins }) {
+  const host = String(req.headers.host || '').toLowerCase();
+  const origin = req.headers.origin == null ? null : String(req.headers.origin);
+  const hostOk = allowedHosts.some((value) => value instanceof RegExp
+    ? value.test(host)
+    : String(value).toLowerCase() === host
+      || (String(value).toLowerCase() === '127.0.0.1' && host.startsWith('127.0.0.1:'))
+      || (String(value).toLowerCase() === 'localhost' && host.startsWith('localhost:')));
+  const originOk = origin === null || allowedOrigins.some((value) => value instanceof RegExp ? value.test(origin) : String(value) === origin);
+  return req.url === FLY_SPECTATOR_PATH
+    && String(req.headers.upgrade || '').toLowerCase() === 'websocket'
+    && String(req.headers.connection || '').toLowerCase().split(',').map((value) => value.trim()).includes('upgrade')
+    && req.headers['sec-websocket-version'] === '13'
+    && /^[+/0-9A-Za-z]{22}==$/.test(req.headers['sec-websocket-key'] || '')
+    && hostOk && originOk;
+}
+
+export function createFlySimulationService({
+  environment,
+  simulation,
+  server: injectedServer = null,
+  host = '127.0.0.1',
+  port = 0,
+  intervalMs = 20,
+  controller = 'HEURISTIC TEST CONTROLLER',
+  allowedHosts = [`127.0.0.1:${port}`, '127.0.0.1', 'localhost'],
+  allowedOrigins = [],
+  maxFrame = DEFAULT_MAX_FRAME,
+  maxMessage = DEFAULT_MAX_MESSAGE,
+  maxBuffer = DEFAULT_MAX_BUFFER
+} = {}) {
+  if (!simulation && !environment) throw new TypeError('authored Fly World environment required');
+  const sim = simulation ?? new FlySimulation(environment);
+  const ownServer = injectedServer === null;
+  const server = injectedServer ?? http.createServer();
+  const clients = new Set();
+  const scheduler = new FixedStepScheduler(sim);
+  const protocol = new TelemetryProtocol();
+  const metrics = { backpressureDisconnects: 0, protocolDisconnects: 0, lastDisconnectReason: null };
+  let timer = null;
+  let started = false;
+  let listening = false;
+  let lastWall = process.hrtime.bigint();
+
+  function disconnect(client, reason) {
+    if (!clients.delete(client)) return;
+    metrics.lastDisconnectReason = reason;
+    if (reason === 'telemetry_backpressure') metrics.backpressureDisconnects += 1;
+    if (reason === 'protocol_error') metrics.protocolDisconnects += 1;
+    client.socket.end();
+  }
+
+  function frameFor(id) {
+    const snapshot = sim.telemetrySnapshot(id, { lagSeconds: scheduler.lag, controller });
+    return {
+      flyId: id,
+      sequence: sim.tick,
+      state: {
+        room: snapshot.room,
+        position: snapshot.transform.position,
+        orientation: snapshot.transform.orientation,
+        contact: snapshot.contact
+      },
+      metadata: { controller, provenance: 'MODELLED', units: 'SI' },
+      lag: scheduler.status()
+    };
+  }
+
+  function send(client) {
+    for (const id of sim.listFlyIds()) {
+      try {
+        const telemetry = new WebSocketTelemetryAdapter({
+          send: (encoded) => {
+            const accepted = client.socket.write(wsFrame(encoded, maxMessage));
+            if (!accepted) throw new Error('telemetry_backpressure');
+          }
+        }, protocol, { maxLag: Infinity });
+        telemetry.send(frameFor(id));
+      } catch (error) {
+        disconnect(client, error.message === 'telemetry_backpressure' ? 'telemetry_backpressure' : 'protocol_error');
+        return;
+      }
+    }
+  }
+
+  function onUpgrade(req, socket) {
+    if (!validUpgrade(req, { allowedHosts, allowedOrigins })) {
+      socket.end('HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n');
+      return;
+    }
+    const accept = crypto.createHash('sha1').update(req.headers['sec-websocket-key'] + GUID).digest('base64');
+    socket.write(`HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: ${accept}\r\n\r\n`);
+    const client = { socket, buffer: Buffer.alloc(0), fragmented: null, fragmentedOpcode: null };
+    clients.add(client);
+    socket.on('data', (chunk) => {
+      try {
+        const result = parseWebSocketFrames(chunk, { buffer: client.buffer, fragmented: client.fragmented, fragmentedOpcode: client.fragmentedOpcode, maxFrame, maxMessage, maxBuffer });
+        client.buffer = result.buffer;
+        client.fragmented = result.fragmented;
+        client.fragmentedOpcode = result.fragmentedOpcode;
+        for (const message of result.messages) {
+          if (message.opcode === 8) { socket.write(Buffer.from([0x88, 0])); socket.end(); }
+          else if (message.opcode === 9 && message.payload.length <= 125) socket.write(Buffer.concat([Buffer.from([0x8a, message.payload.length]), message.payload]));
+        }
+      } catch {
+        disconnect(client, 'protocol_error');
+      }
+    });
+    socket.on('close', () => clients.delete(client));
+    socket.on('error', () => clients.delete(client));
+    setImmediate(() => send(client));
+  }
+
+  server.on('upgrade', onUpgrade);
+
+  function tick() {
+    const now = process.hrtime.bigint();
+    const elapsed = Number(now - lastWall) / 1e9;
+    lastWall = now;
+    const startedAt = process.hrtime.bigint();
+    scheduler.advanceWallClock(elapsed);
+    scheduler.recordProcessing?.(Number(process.hrtime.bigint() - startedAt) / 1e9);
+    for (const client of clients) send(client);
+  }
+
+  async function start() {
+    if (started) return service;
+    started = true;
+    lastWall = process.hrtime.bigint();
+    timer = setInterval(tick, intervalMs);
+    timer.unref?.();
+    if (injectedServer) { listening = Boolean(server.listening); return service; }
+    await new Promise((resolve, reject) => {
+      server.once('error', reject);
+      server.listen({ host, port }, () => { listening = true; resolve(); });
+    });
+    return service;
+  }
+
+  async function stop() {
+    if (!started) return;
+    started = false;
+    if (timer) clearInterval(timer);
+    timer = null;
+    for (const client of clients) client.socket.end();
+    clients.clear();
+    if (ownServer && server.listening) await new Promise((resolve) => server.close(resolve));
+    listening = false;
+  }
+
+  async function probeUpgrade({ host: requestHost = '127.0.0.1', origin = null } = {}) {
+    return validUpgrade({ url: FLY_SPECTATOR_PATH, headers: {
+      host: requestHost, origin, upgrade: 'websocket', connection: 'Upgrade',
+      'sec-websocket-version': '13', 'sec-websocket-key': crypto.randomBytes(16).toString('base64')
+    } }, { allowedHosts, allowedOrigins });
+  }
+
+  const service = {
+    simulation: sim,
+    server,
+    start,
+    stop,
+    address: () => server.address(),
+    probeUpgrade,
+    status: () => ({ running: started, listening, host, authority: 'server-authoritative', protocol: 'telemetry-1', scheduler: scheduler.status(), clients: clients.size, metrics: { ...metrics } })
+  };
+  return service;
 }
