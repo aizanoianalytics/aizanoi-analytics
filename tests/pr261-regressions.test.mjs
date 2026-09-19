@@ -88,7 +88,7 @@ test('service disconnects a backpressured client without telemetry accumulation'
       'sec-websocket-version': '13', 'sec-websocket-key': 'dGhlIHNhbXBsZSBub25jZQ=='
     }
   }, socket);
-  await new Promise((resolve) => setImmediate(resolve));
+  await new Promise((resolve) => { setImmediate(resolve); });
   assert.equal(service.status().clients, 0);
   assert.equal(service.status().metrics.backpressureDisconnects, 1);
   assert.equal(service.status().metrics.lastDisconnectReason, 'telemetry_backpressure');

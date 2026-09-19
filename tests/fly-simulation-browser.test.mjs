@@ -52,9 +52,13 @@ test('real Fly House Chromium spectator renders authoritative telemetry read-onl
   service.simulation.addFly({ flyId: 'browser-fly', body: new BodyState({ position: new Vec3(0, 1, 0), velocity: new Vec3(0.5, 0, 0) }) });
   await service.start();
   const pageServer = staticWorldServer(`ws://127.0.0.1:${service.address().port}/spectator/telemetry-1`);
-  await new Promise((resolve) => pageServer.listen(0, '127.0.0.1', resolve));
+  await new Promise((resolve) => { pageServer.listen(0, '127.0.0.1', resolve); });
   const browser = await chromium.launch({ headless: true });
-  t.after(async () => { await browser.close(); await new Promise((resolve) => pageServer.close(resolve)); await service.stop(); });
+  t.after(async () => {
+    await browser.close();
+    await new Promise((resolve) => { pageServer.close(resolve); });
+    await service.stop();
+  });
   const page = await browser.newPage({ viewport: { width: 1024, height: 768 } });
   await page.addInitScript((url) => { window.__FLY_TELEMETRY_CONFIG__ = { url }; }, `ws://127.0.0.1:${service.address().port}/spectator/telemetry-1`);
   await page.goto(`http://127.0.0.1:${pageServer.address().port}/frontend/labs/fly-world/`, { waitUntil: 'networkidle' });
