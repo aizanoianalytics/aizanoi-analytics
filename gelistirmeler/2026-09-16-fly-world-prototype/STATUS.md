@@ -1,6 +1,6 @@
 # Status
 
-Branch: `fly-world-prototype`
+Branch: `fix/fly-world-final-environment-closure` (Stage A candidate only; current production source is the latest `origin/main` lineage; historical prototype folders are not canonical)
 
 Current environment: **Fly House v0.3 — reference detail pass**. The target remains the approved people-free illustrated cottage: cluttered living room, barred/layered-curtain window, carved divan/cabinet wall, CRT cabinet, central stove/flue, layered rugs and an open doorway into the connected bedroom.
 
@@ -8,7 +8,7 @@ Current environment: **Fly House v0.3 — reference detail pass**. The target re
 
 The branch now contains a reference-driven browser and Blender implementation rather than the original sparse blockout.
 
-- Main room enlarged to about **8.4 × 6.4 × 2.85 m**; bedroom about **4.2 × 5.0 × 2.85 m**.
+- Main room enlarged to about **9.6 × 8.0 × 2.85 m**; bedroom about **5.0 × 6.2 × 2.85 m**.
 - Human ghost observer has **collision ON by default**. `N` is debug noclip only. The observer still casts no shadow, is invisible to future fly sensors and does not affect fly physics.
 - `frontend/labs/fly-world/main-v3.js` is the detailed authored fallback.
 - `frontend/labs/fly-world/reference-dressing.js` adds the small/medium reference-specific props and dense lived-in dressing.
@@ -33,7 +33,7 @@ Fly World is Z-up in the browser. v0.3 exports the Fly House GLB with `export_yu
 
 The source code and scene contract are prepared for the v0.3 production run. The earlier 14 required hero assets remain governed by `asset_manifest.json` and the strict asset gate.
 
-The v0.3 Blender binary outputs and five new reference-review PNGs **have not been claimed as generated in this ChatGPT environment**, because Blender is not available here. They must be produced by running:
+The v0.3 Blender binary outputs and five reference-review PNGs are generated in this checkout by the canonical pipeline. They are review artifacts, not owner approval; rerun the command after any source change:
 
 ```bash
 python scripts/fly-world/run_pipeline.py --strict-assets

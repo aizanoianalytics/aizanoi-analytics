@@ -1,0 +1,132 @@
+{
+  "source": "frontend/labs/fly-world/assets/fly-house.glb",
+  "mode": "glb",
+  "fresh": true,
+  "count": 24,
+  "views": [
+    {
+      "id": "fresh-01",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-01.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-02",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-02.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-03",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-03.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-04",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-04.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-05",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-05.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-06",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-06.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-07",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-07.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-08",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-08.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-09",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-09.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-10",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-10.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-11",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-11.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-12",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-12.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-13",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-13.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-14",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-14.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-15",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-15.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-16",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-16.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-17",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-17.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-18",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-18.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-19",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-19.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-20",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-20.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-21",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-21.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-22",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-22.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-23",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-23.png",
+      "nonblank": true
+    },
+    {
+      "id": "fresh-24",
+      "path": "/opt/aizanoi-fly-stage-a/gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/fresh-24.png",
+      "nonblank": true
+    }
+  ],
+  "iframeEvidence": [
+    "iframe-aizanoios-fly-canvas.png",
+    "iframe-aizanoios-diagnostics.png"
+  ]
+}

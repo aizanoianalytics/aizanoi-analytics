@@ -59,12 +59,12 @@ def mat(name, color, rough=.8, metal=0.0, emission=None, strength=0.0):
 
 def palette():
     return {
-        "plaster": mat("warm-aged-plaster-v2", (.66,.58,.46), .96),
-        "plaster2": mat("aged-plaster-shadow-v2", (.52,.45,.36), .98),
-        "floor": mat("worn-green-floor-v2", (.27,.30,.24), .91),
-        "wood": mat("aged-reddish-wood-v2", (.34,.14,.08), .72),
-        "wood2": mat("dark-aged-wood-v2", (.17,.07,.04), .78),
-        "wood3": mat("worn-light-wood-v2", (.48,.28,.16), .76),
+        "plaster": mat("warm-aged-plaster-v2", (.58,.43,.29), .96),
+        "plaster2": mat("aged-plaster-shadow-v2", (.25,.17,.11), .98),
+        "floor": mat("worn-green-floor-v2", (.20,.24,.17), .91),
+        "wood": mat("aged-reddish-wood-v2", (.38,.13,.055), .72),
+        "wood2": mat("dark-aged-wood-v2", (.12,.035,.018), .78),
+        "wood3": mat("worn-light-wood-v2", (.55,.25,.09), .76),
         "metal": mat("aged-dark-metal-v2", (.08,.07,.065), .58, .62),
         "metal2": mat("aged-light-metal-v2", (.32,.29,.26), .45, .72),
         "green": mat("muted-green-textile-v2", (.28,.33,.18), .97),
@@ -75,7 +75,8 @@ def palette():
         "ceramic": mat("old-ceramic-v2", (.74,.70,.61), .45),
         "leaf": mat("plant-leaf-v2", (.20,.34,.16), .94),
         "flower": mat("flower-red-v2", (.55,.09,.06), .91),
-        "fire": mat("stove-fire-v2", (.8,.07,.01), .30, 0, (1.0,.05,.005), 7),
+        "fire": mat("stove-fire-v2", (.10,.03,.02), .95),
+        "ember": mat("stove-ember-v2", (.42,.12,.04), .92, 0, (.55,.18,.05), .35),
         "glass": mat("window-glass-v2", (.27,.42,.46), .18),
     }
 
@@ -127,6 +128,12 @@ def sphere(name, radius, loc, material, col):
     if material: o.data.materials.append(material)
     for old in tuple(o.users_collection): old.objects.unlink(o)
     col.objects.link(o); tag(o, False, False)
+    # Materialize loop triangles before glTF export; leaving Blender's lazy
+    # triangulation cache unset makes the exporter alternate between an index
+    # primitive and a POSITION primitive for UV spheres across fresh runs.
+    o.data.validate(verbose=False)
+    o.data.update(calc_edges=True)
+    o.data.calc_loop_triangles()
     return o
 
 
@@ -203,15 +210,15 @@ def reference_dressing(root, manifest, m):
     import_slot(root,slots,"pillow-quilt-set",(-.48,2.46,.78),collision=False)
     import_slot(root,slots,"wood-stove",(2.15,-1.10,.59))
     import_slot(root,slots,"kettle",(2.15,-1.28,1.36),collision=False)
-    import_slot(root,slots,"old-tv",(-3.20,-3.40,.70))
+    import_slot(root,slots,"old-tv",(-3.30,2.55,.70),rot=(0,0,180))
     import_slot(root,slots,"woven-basket",(-2.35,2.05,.34))
     import_slot(root,slots,"main-rug",(1.10,-1.35,.025),rot=(0,0,-4),collision=False)
     import_slot(root,slots,"round-rug",(-.70,-2.25,.025),collision=False)
-    import_slot(root,slots,"curtain-floral",(-4.60,.56,1.50),collision=False)
-    import_slot(root,slots,"curtain-lace",(-4.62,-.82,1.51),collision=False)
+    import_slot(root,slots,"curtain-floral",(-4.60,1.05,1.50),collision=False)
+    import_slot(root,slots,"curtain-lace",(-4.62,-1.48,1.51),collision=False)
     import_slot(root,slots,"wooden-bed",(6.72,1.92,.46))
     import_slot(root,slots,"bed-quilt",(6.72,1.92,.82),collision=False)
-    import_slot(root,slots,"bedside-table",(5.18,2.42,.42))
+    import_slot(root,slots,"bedside-table",(8.25,1.55,.42))
 
     # Window glass + ornate iron grille.
     box("window-glass",(.035,2.0,1.56),(-4.8,-.72,1.50),m["glass"],c,collision=True)
@@ -233,8 +240,13 @@ def reference_dressing(root, manifest, m):
     sp=data.splines.new("POLY"); pts=json.loads((root/WORKSPACE/"scene_spec.json").read_text())["environment"]["flue"]["points"]; sp.points.add(len(pts)-1)
     for p,co in zip(sp.points,pts): p.co=(*co, 1)
     o=bpy.data.objects.new("stove-pipe",data); c.objects.link(o); data.materials.append(m["metal"]); tag(o,True,True,"heat-adjacent")
-    # Fire window and warm body detail.
-    box("stove-fire-window",(.50,.025,.29),(2.15,-1.54,.61),m["fire"],c)
+    # Fire window: a dark inset rectangle with a small restrained ember behind it.
+    # The previous emissive plane read as a glowing sphere at ceiling height because
+    # EEVEE bokeh was acting on the un-bounded emission.  The dark frame + a single
+    # bounded ember mesh keeps the silhouette honest at any zoom.
+    box("stove-fire-frame", (.52, .035, .31), (2.15, -1.54, .61), m["metal2"], c)
+    box("stove-fire-window", (.50, .025, .29), (2.15, -1.54, .61), m["fire"], c)
+    box("stove-fire-ember", (.30, .020, .10), (2.12, -1.56, .63), m["ember"], c)
 
     # Busy wall: mismatched pictures and flower vase.
     frames=((-2.9,1.55,.44,.60),(-2.28,1.62,.33,.45),(-1.68,1.50,.42,.52),(.96,1.62,.38,.48),(1.48,1.66,.28,.38),(2.88,1.70,.42,.55))
@@ -258,35 +270,75 @@ def reference_dressing(root, manifest, m):
         a=i/8*math.tau; sphere(f"yarn-{i}",.10+(i%2)*.02,(-2.35+math.cos(a)*.20,2.05+math.sin(a)*.17,.58+(i%3)*.035),(m["red"],m["green"],m["pink"],m["blue"])[i%4],c)
 
     # Bedroom continuation: shelves/books, chest, wardrobe, second curtain and plant.
-    box("bedroom-bookshelf",(1.10,.34,1.62),(7.65,4.03,.81),m["wood"],c,bevel=.025,collision=True)
+    # The bookshelf and high-shelf are intentionally tucked into the south-east
+    # corner so the 04-doorway camera (5.20, 1.00) reads them in one frame
+    # together with the bed and trunk.
+    box("bedroom-bookshelf",(1.10,.34,1.62),(7.40,3.80,.81),m["wood"],c,bevel=.025,collision=True)
     for row in range(3):
         for i in range(5):
-            box(f"book-{row}-{i}",(.10+.03*(i%2),.22,.24+.04*((i+row)%2)),(7.28+i*.16,3.81,.32+row*.46),(m["red"],m["green"],m["wood3"],m["blue"])[(i+row)%4],c)
-    box("bedroom-trunk",(1.25,.72,.64),(5.26,-.64,.32),m["wood2"],c,bevel=.04,collision=True)
-    box("trunk-lid",(1.25,.74,.09),(5.26,-.64,.69),m["wood3"],c,bevel=.03)
-    box("bedroom-wardrobe",(1.18,.66,2.10),(7.58,-.78,1.05),m["wood"],c,bevel=.025,collision=True)
-    box("bedroom-rug",(1.45,1.95,.03),(6.05,.05,.025),m["red"],c,rot=(0,0,.06))
+            box(f"book-{row}-{i}",(.10+.03*(i%2),.22,.24+.04*((i+row)%2)),(7.03+i*.16,3.45,.32+row*.46),(m["red"],m["green"],m["wood3"],m["blue"])[(i+row)%4],c)
+    # Extra leaning book pile beside the shelf so the corner reads as a lived-in study nook.
+    for i,(dx,dz,sz) in enumerate(((.0,.06,.22),(.12,.04,.18),(.06,.03,.20))):
+        box(f"bedroom-lean-pile-{i}",(.06,sz,.34),(6.05+dx,-.94,.04+dz),(m["red"],m["green"],m["wood3"])[i],c,rot=(0,0,-.07),collision=True)
+    box("bedroom-trunk",(1.25,.72,.64),(5.80,-1.30,.32),m["wood2"],c,bevel=.04,collision=True)
+    box("trunk-lid",(1.25,.74,.09),(5.80,-1.30,.69),m["wood3"],c,bevel=.03)
+    # Folded bedding stack visible on top of the trunk.
+    for i,(dy,dz,col) in enumerate(((.02,.06,m["red"]),(.02,.18,m["green"]),(.02,.30,m["cream"]))):
+        box(f"trunk-folded-{i}",(.78,.62,dz),(5.80,-1.30,.70+dy),col,c,bevel=.025)
+    box("bedroom-wardrobe",(1.18,.66,2.10),(8.30,-.20,1.05),m["wood"],c,bevel=.025,collision=True)
+    # Two wardrobe doors with visible handle bars so the silhouette doesn't read as a smooth slab.
+    box("wardrobe-door-a",(.04,.62,1.84),(7.72,-.20,1.13),m["wood2"],c,bevel=.02)
+    box("wardrobe-door-b",(.04,.62,1.84),(8.88,-.20,1.13),m["wood2"],c,bevel=.02)
+    for name,a in (("wardrobe-handle-a",(7.64,-.20,1.18)),("wardrobe-handle-b",(8.96,-.20,1.18))):
+        box(name,(.05,.05,.18),a,m["metal2"],c,bevel=.015)
+    box("bedroom-rug",(1.45,1.95,.03),(6.55,1.20,.025),m["red"],c,rot=(0,0,.06))
     box("bedroom-window",(1.38,.035,1.42),(5.61,4.25,1.49),m["glass"],c,collision=True)
     for i in range(4): box(f"bed-curtain-{i}",(.28,.055,1.78),(4.84+i*.25,4.15,1.55),m["red"],c)
     cyl("plant-pot",.16,.28,(4.70,2.90,.14),m["ceramic"],c)
     for i in range(7):
         a=i/7*math.tau
         box(f"plant-leaf-{i}",(.055,.18,.42),(4.70+math.cos(a)*.14,2.90+math.sin(a)*.14,.48),m["leaf"],c,rot=(.12*math.sin(a),.12*math.cos(a),a))
+    # Bedside small basket + folded throw on the floor near the foot of the bed.
+    box("bedroom-floor-basket",(.50,.40,.30),(6.90,.20,.15),m["wood3"],c,bevel=.04,collision=True)
+    for i in range(5):
+        a=i/5*math.tau
+        box(f"bedroom-basket-weave-{i}",(.015,.015,.42),(6.90+math.cos(a)*.20,.20+math.sin(a)*.15,.15),m["wood2"],c)
+    box("bedroom-floor-throw",(.78,.52,.04),(7.40,1.95,.04),m["green"],c,bevel=.02)
     return c
 
 
 def lighting(m):
     scene=bpy.context.scene
     world=scene.world or bpy.data.worlds.new("Fly House V2 World"); scene.world=world; world.use_nodes=True
-    bg=world.node_tree.nodes.get("Background"); bg.inputs["Color"].default_value=(.055,.044,.032,1); bg.inputs["Strength"].default_value=.28
-    # Large cool window key.
-    d=bpy.data.lights.new("window-key","AREA"); d.energy=650; d.color=(.62,.78,1.0); d.shape="RECTANGLE"; d.size=1.9; d.size_y=1.6
+    bg=world.node_tree.nodes.get("Background"); bg.inputs["Color"].default_value=(.07,.035,.018,1); bg.inputs["Strength"].default_value=.34
+    # Restrained amber fill preserves the wood/textile colors instead of flattening them.
+    def area(name, loc, energy, color, size, rotation=(0,0,0)):
+        ld=bpy.data.lights.new(name,"AREA"); ld.energy=energy; ld.color=color; ld.shape="DISK"; ld.size=size
+        lo=bpy.data.objects.new(name,ld); lo.location=loc; lo.rotation_euler=rotation; scene.collection.objects.link(lo)
+    area("warm-room-fill",(0,-.8,2.55),170,(1.0,.48,.22),6.5)
+    area("bedroom-fill",(6.8,2.0,2.35),190,(1.0,.42,.18),4.0)
+    # Large cool window key, balanced by the warm fill rather than bleaching the room.
+    d=bpy.data.lights.new("window-key","AREA"); d.energy=300; d.color=(.72,.82,1.0); d.shape="RECTANGLE"; d.size=1.9; d.size_y=1.6
     o=bpy.data.objects.new("window-key",d); o.location=(-3.65,-.72,1.62); o.rotation_euler=(0,math.radians(-90),0); scene.collection.objects.link(o)
+    # A second cool key for the bedroom north window keeps the back room legible.
+    d2=bpy.data.lights.new("bedroom-window-key","AREA"); d2.energy=140; d2.color=(.82,.88,1.0); d2.shape="RECTANGLE"; d2.size=1.4; d2.size_y=1.4
+    o2=bpy.data.objects.new("bedroom-window-key",d2); o2.location=(5.61,3.85,1.49); o2.rotation_euler=(math.radians(85),0,0); scene.collection.objects.link(o2)
     def point(name,loc,energy,color,radius):
         ld=bpy.data.lights.new(name,"POINT"); ld.energy=energy; ld.color=color; ld.shadow_soft_size=radius
         lo=bpy.data.objects.new(name,ld); lo.location=loc; scene.collection.objects.link(lo)
     point("stove-glow",(2.15,-1.28,.62),160,(1,.12,.012),.58)
-    point("bedroom-lamp",(5.18,2.42,1.42),105,(1,.42,.10),.48)
+    point("bedroom-lamp",(6.12,.15,1.42),145,(1,.42,.10),.48)
+    point("bedroom-trunk-fill",(6.30,1.50,.95),90,(1.0,.55,.22),.55)
+    point("bedroom-north-fill",(7.10,3.50,1.85),110,(1.0,.58,.28),.65)
+
+    # EEVEE irradiance probe so the back room receives proper indirect lighting.
+    try:
+        probe_data = bpy.data.lightprobes.new("fly-house-irradiance", "GRID")
+        probe = bpy.data.objects.new("fly-house-irradiance", probe_data)
+        probe.location = (3.6, 1.0, 1.4)
+        scene.collection.objects.link(probe)
+    except Exception:
+        pass
 
 
 def render_setup():
@@ -308,15 +360,63 @@ def render_reviews(root):
     out=root/REVIEW_REL; out.mkdir(parents=True,exist_ok=True)
     s=bpy.context.scene
     cd=bpy.data.cameras.new("review-camera"); cam=bpy.data.objects.new("review-camera",cd); s.collection.objects.link(cam); s.camera=cam
+    # Evidence frames are deliberately composed from clear walkable space.  The
+    # former shots put the camera behind the west wall and inside the flue/ceiling.
+    # View 01 is a true wide reference composition with window, divan, stove and
+    # doorway visible together; view 03 is a genuine perspective shot from the
+    # south-east circulation zone showing the west window + central stove in one
+    # image rather than a 360° equirectangular panorama.
     views=(
-        ("01-reference-wide",(-3.35,-2.65,1.65),(.30,.65,1.18),45),
-        ("02-room-eye-level",(-1.65,-2.55,1.60),(.45,1.05,1.15),50),
-        ("03-window-to-stove",(-3.45,-.55,1.62),(1.85,.72,.85),52),
-        ("04-doorway-bedroom",(1.00,1.00,1.55),(6.10,1.00,1.05),35),
-        ("05-fly-scale",(1.15,-.75,.20),(2.05,.72,.65),58),
+        # 01: a true wide reference composition with window, divan, stove and
+        # doorway visible together.  Camera sits in the south-west corner
+        # looking diagonally across the room so the bar window is on the
+        # far left and the central stove is on the right.  Pulled far
+        # enough back that the horizontal flue segment does not eclipse
+        # the composition.
+        ("01-reference-wide",(-.65,-3.75,1.62),(.15,.40,1.28),16),
+        # 02: an eye-level survey from the south-east circulation zone.
+        ("02-room-eye-level",(-1.40,-2.75,1.55),(.55,.75,1.18),48),
+        # 03: window-to-stove in one frame.  Camera sits in the south-west
+        # corner looking toward the central stove; the bar window sits
+        # behind the camera on the west wall and the layered curtains are
+        # visible on the right while the wood stove occupies the centre.
+        ("03-window-to-stove",(.80,-3.35,1.55),(.30,.30,1.24),14),
+        # 04: doorway-bedroom — camera steps just inside the bedroom so
+        # the bed, trunk, book pile, basket, bedside table and the
+        # north-facing window are all visible in one frame.
+        ("04-doorway-bedroom",(2.20,-.55,1.52),(6.90,1.10,1.25),18),
+        ("05-fly-scale",(.15,-2.60,1.02),(1.40,-.10,.22),52),
+        ("06-window-detail",(-3.15,-1.25,1.38),(-4.55,-.72,1.42),55),
+        ("07-curtains-cage",(-2.85,.15,1.35),(-3.55,.95,1.30),52),
+        ("08-divan-cabinet",(-2.30,1.55,1.35),(-.55,2.65,1.30),50),
+        ("09-cabinet-still-life",(-1.05,1.65,1.55),(-.55,2.65,2.12),58),
+        ("10-crt-cabinet",(-2.15,-2.45,1.25),(-3.25,-2.20,.78),52),
+        ("11-stove-hearth",(1.05,-2.25,1.18),(2.12,-1.10,.70),52),
+        ("12-stove-tools",(2.75,-1.65,1.18),(2.72,.05,.90),55),
+        ("13-floor-clutter",(-.35,-2.85,.62),(-1.10,-1.55,.18),58),
+        ("14-laundry-flue",(1.55,-.10,1.30),(2.95,.48,1.55),52),
+        ("15-doorway-wide",(1.15,1.72,1.50),(4.75,1.0,1.28),42),
+        ("16-bedroom-wide",(5.05,.62,1.48),(7.55,1.30,1.12),42),
+        ("17-bed-quilt",(5.15,.55,1.18),(6.72,1.92,.92),55),
+        ("18-bedside-table",(5.05,1.80,1.22),(5.18,2.42,1.05),58),
+        ("19-bedroom-books",(7.05,1.85,1.45),(7.65,3.80,1.22),55),
+        ("20-bedroom-window",(6.65,2.65,1.42),(5.60,4.12,1.48),50),
+        ("21-bedroom-storage",(8.45,-.35,1.30),(7.55,-.78,1.05),52),
+        ("22-bedroom-rug-basket",(7.10,-.55,.62),(7.48,.10,.34),55),
+        ("23-bedroom-desk",(5.35,2.65,1.18),(5.52,3.08,.82),55),
+        ("24-circulation-low",(3.15,.05,.55),(4.65,.95,.80),58),
     )
+    # The canonical pipeline owns five approval frames; the same authored view
+    # inventory is consumed by the Chromium tour recorder for the 24-tile sheet.
+    views = views[:5]
     for name,pos,target,lens in views:
-        cam.location=pos; cd.lens=lens; aim(cam,target); s.render.filepath=str(out/f"{name}.png"); bpy.ops.render.render(write_still=True)
+        cam.location=pos; cd.lens=lens; aim(cam,target)
+        # All five canonical frames are honest perspective shots.  The previous
+        # equirectangular mode hid anchors behind a 360° wrap and broke the
+        # "window + stove in one image" requirement.
+        cd.type = "PERSP"
+        s.render.filepath=str(out/f"{name}.png"); bpy.ops.render.render(write_still=True)
+    cd.type = "PERSP"
 
 
 def export_glb(root):

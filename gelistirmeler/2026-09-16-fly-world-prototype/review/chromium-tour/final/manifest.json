@@ -1,0 +1,478 @@
+{
+  "source": "frontend/labs/fly-world/assets/fly-house.glb",
+  "url": "http://127.0.0.1:4173/labs/fly-world/?final-tour=2",
+  "mode": "glb",
+  "count": 24,
+  "capture": "Playwright Chromium CDP Page.captureScreenshot",
+  "views": [
+    {
+      "id": "01-reference-wide",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/01-reference-wide.png",
+      "position": [
+        0,
+        -3.55,
+        1.62
+      ],
+      "target": [
+        0,
+        0.8,
+        1.15
+      ],
+      "yaw": 0.0,
+      "pitch": -0.10762845708850195,
+      "bytes": 403309,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "02-window-whole",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/02-window-whole.png",
+      "position": [
+        -2.35,
+        -2.4,
+        1.55
+      ],
+      "target": [
+        -4.65,
+        -0.1,
+        1.35
+      ],
+      "yaw": -0.7853981633974484,
+      "pitch": -0.06141023246423891,
+      "bytes": 561287,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "03-curtains-cage",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/03-curtains-cage.png",
+      "position": [
+        -3.0,
+        -1.25,
+        1.35
+      ],
+      "target": [
+        -4.65,
+        0.15,
+        1.15
+      ],
+      "yaw": -0.8671825440154445,
+      "pitch": -0.0921635109861835,
+      "bytes": 498874,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "04-divan",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/04-divan.png",
+      "position": [
+        -0.5,
+        -1.35,
+        1.45
+      ],
+      "target": [
+        -0.65,
+        2.7,
+        0.9
+      ],
+      "yaw": -0.037020115873930025,
+      "pitch": -0.13488538638690592,
+      "bytes": 376249,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "05-carved-cabinet",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/05-carved-cabinet.png",
+      "position": [
+        1.05,
+        -0.25,
+        1.55
+      ],
+      "target": [
+        -0.65,
+        3.45,
+        1.25
+      ],
+      "yaw": -0.430692511386508,
+      "pitch": -0.0735436224523096,
+      "bytes": 337392,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "06-cabinet-still-life",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/06-cabinet-still-life.png",
+      "position": [
+        0.5,
+        0.2,
+        1.75
+      ],
+      "target": [
+        -0.65,
+        3.45,
+        1.55
+      ],
+      "yaw": -0.34009711950976246,
+      "pitch": -0.05794872609017481,
+      "bytes": 297296,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "07-crt-radiogram",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/07-crt-radiogram.png",
+      "position": [
+        -1.15,
+        -0.45,
+        1.4
+      ],
+      "target": [
+        -3.3,
+        2.55,
+        0.85
+      ],
+      "yaw": -0.6218242878305899,
+      "pitch": -0.14792792488649673,
+      "bytes": 316842,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "08-stove-front",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/08-stove-front.png",
+      "position": [
+        2.15,
+        -3.05,
+        1.3
+      ],
+      "target": [
+        2.15,
+        -1.1,
+        0.72
+      ],
+      "yaw": 0.0,
+      "pitch": -0.2891027498619915,
+      "bytes": 471012,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "09-kettle-hearth",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/09-kettle-hearth.png",
+      "position": [
+        3.25,
+        -2.15,
+        1.55
+      ],
+      "target": [
+        2.15,
+        -1.2,
+        1.05
+      ],
+      "yaw": -0.8584387287005677,
+      "pitch": -0.33132899173642333,
+      "bytes": 568368,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "10-full-flue",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/10-full-flue.png",
+      "position": [
+        0.45,
+        -2.65,
+        1.65
+      ],
+      "target": [
+        2.55,
+        -0.05,
+        1.7
+      ],
+      "yaw": 0.6794138054078483,
+      "pitch": 0.014959291346329121,
+      "bytes": 344923,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "11-tools-laundry",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/11-tools-laundry.png",
+      "position": [
+        0.35,
+        -1.75,
+        1.25
+      ],
+      "target": [
+        2.45,
+        -0.55,
+        0.85
+      ],
+      "yaw": 1.0516502125483738,
+      "pitch": -0.16389618045717355,
+      "bytes": 438919,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "12-rugs-clutter-high",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/12-rugs-clutter-high.png",
+      "position": [
+        0.15,
+        -3.15,
+        2.35
+      ],
+      "target": [
+        0,
+        -0.8,
+        0.2
+      ],
+      "yaw": -0.06374331253268709,
+      "pitch": -0.7399705568672845,
+      "bytes": 493745,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "13-yarn-basket",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/13-yarn-basket.png",
+      "position": [
+        -1.1,
+        -0.25,
+        1.15
+      ],
+      "target": [
+        -2.35,
+        2.05,
+        0.38
+      ],
+      "yaw": -0.49782233261700126,
+      "pitch": -0.2860795668172211,
+      "bytes": 298571,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "14-blue-bag-clutter",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/14-blue-bag-clutter.png",
+      "position": [
+        0.1,
+        -1.05,
+        1.1
+      ],
+      "target": [
+        -1.5,
+        -2.55,
+        0.35
+      ],
+      "yaw": -2.323947607757091,
+      "pitch": -0.32950381661417744,
+      "bytes": 336648,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "15-doorway-approach",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/15-doorway-approach.png",
+      "position": [
+        1.1,
+        -0.05,
+        1.55
+      ],
+      "target": [
+        4.8,
+        1.15,
+        1.3
+      ],
+      "yaw": 1.2571756745781983,
+      "pitch": -0.06418353138272075,
+      "bytes": 377497,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "16-doorway-threshold",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/16-doorway-threshold.png",
+      "position": [
+        4.05,
+        0.75,
+        1.45
+      ],
+      "target": [
+        6.7,
+        1.75,
+        1.05
+      ],
+      "yaw": 1.209959543761806,
+      "pitch": -0.1402951324183686,
+      "bytes": 338294,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "17-bedroom-wide",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/17-bedroom-wide.png",
+      "position": [
+        5.15,
+        -1.25,
+        1.55
+      ],
+      "target": [
+        7.1,
+        1.65,
+        1.0
+      ],
+      "yaw": 0.5919708366866008,
+      "pitch": -0.15610346141834183,
+      "bytes": 311852,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "18-bed-quilt",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/18-bed-quilt.png",
+      "position": [
+        5.25,
+        0.15,
+        1.35
+      ],
+      "target": [
+        6.72,
+        1.92,
+        0.85
+      ],
+      "yaw": 0.6930688286658492,
+      "pitch": -0.213986165915814,
+      "bytes": 386244,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "19-bedside-lamp",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/19-bedside-lamp.png",
+      "position": [
+        6.55,
+        -0.05,
+        1.45
+      ],
+      "target": [
+        8.25,
+        1.55,
+        0.85
+      ],
+      "yaw": 0.8156919233162234,
+      "pitch": -0.25156700355624484,
+      "bytes": 266811,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "20-books-plants",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/20-books-plants.png",
+      "position": [
+        5.75,
+        1.15,
+        1.55
+      ],
+      "target": [
+        7.4,
+        3.8,
+        1.0
+      ],
+      "yaw": 0.5569015241055861,
+      "pitch": -0.17439633865524054,
+      "bytes": 418317,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "21-writing-desk",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/21-writing-desk.png",
+      "position": [
+        7.5,
+        -0.85,
+        1.5
+      ],
+      "target": [
+        5.525,
+        3.05,
+        0.75
+      ],
+      "yaw": -0.4687626539049322,
+      "pitch": -0.16990893332243703,
+      "bytes": 425398,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "22-bedroom-storage",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/22-bedroom-storage.png",
+      "position": [
+        5.15,
+        3.65,
+        1.45
+      ],
+      "target": [
+        8.0,
+        1.55,
+        1.0
+      ],
+      "yaw": 2.2058230621852104,
+      "pitch": -0.1264360053554297,
+      "bytes": 307764,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "23-main-high-overview",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/23-main-high-overview.png",
+      "position": [
+        0,
+        -2.5,
+        2.45
+      ],
+      "target": [
+        0,
+        0.6,
+        0.45
+      ],
+      "yaw": 0.0,
+      "pitch": -0.5729661428887062,
+      "bytes": 543335,
+      "mode": "glb",
+      "environment": true
+    },
+    {
+      "id": "24-fly-scale",
+      "file": "gelistirmeler/2026-09-16-fly-world-prototype/review/chromium-tour/final/24-fly-scale.png",
+      "position": [
+        -2.6,
+        -2.0,
+        0.48
+      ],
+      "target": [
+        0.2,
+        -0.6,
+        0.58
+      ],
+      "yaw": 1.1071487177940906,
+      "pitch": 0.03193296964964069,
+      "bytes": 307358,
+      "mode": "glb",
+      "environment": true
+    }
+  ],
+  "requestFailures": [],
+  "embedded": {
+    "verified": true,
+    "iframeUrl": "http://127.0.0.1:4173/labs/fly-world/",
+    "mode": "glb",
+    "environment": true,
+    "meshCount": 434,
+    "colliderRoots": 61,
+    "files": [
+      "25-aizanoios-embedded-wide.png",
+      "26-aizanoios-embedded-bedroom.png"
+    ]
+  }
+}

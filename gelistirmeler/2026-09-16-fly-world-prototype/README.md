@@ -20,8 +20,8 @@ The branch contains:
 6. a collision-capable browser fallback at `frontend/labs/fly-world/main-v3.js`;
 7. Blender GLB loading at `frontend/labs/fly-world/glb-runtime-v3.js`;
 8. a preflight validator covering scale, observer semantics, quality gates and asset intake;
-9. AizanoiOS `Fly World` desktop integration;
-10. an operator-only Blender handoff in `HERMES_HANDOFF.md`.
+9. a current-branch AizanoiOS `Fly World` desktop integration;
+10. a build/review handoff for the current branch (not a private runtime bridge);
 
 ## Observer contract
 

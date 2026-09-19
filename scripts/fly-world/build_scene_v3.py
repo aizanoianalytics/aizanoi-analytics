@@ -65,10 +65,22 @@ def export_glb(root: Path):
     )
     (root / base.FRONTEND_ASSET_REL).parent.mkdir(parents=True, exist_ok=True)
 
+    # Do not rebuild or reorder mesh topology here.  Blender's bmesh
+    # sort_elements() is not stable for imported/generated UV spheres: it can
+    # change triangulation on consecutive exports (for example Sphere.012),
+    # changing both index counts and the BIN chunk.  Preserve authored mesh
+    # topology and make only exporter traversal deterministic below.
+    # Force the glTF exporter to traverse objects in deterministic name order
+    # by selecting them in sorted order before the operator runs.
     bpy.ops.object.select_all(action="DESELECT")
-    for obj in bpy.context.scene.objects:
-        if obj.type in {"MESH", "CURVE", "EMPTY"} and not obj.name.startswith("review-camera"):
-            obj.select_set(True)
+    candidate_objects = [
+        o for o in bpy.context.scene.objects
+        if o.type in {"MESH", "CURVE", "EMPTY"} and not o.name.startswith("review-camera")
+    ]
+    for obj in sorted(candidate_objects, key=lambda o: o.name):
+        obj.select_set(True)
+    if candidate_objects:
+        bpy.context.view_layer.objects.active = sorted(candidate_objects, key=lambda o: o.name)[0]
 
     for dest in destinations:
         bpy.ops.export_scene.gltf(
@@ -78,6 +90,9 @@ def export_glb(root: Path):
             export_yup=False,
             export_apply=True,
             export_extras=True,
+            # Blender's vertex merge/topology pass is nondeterministic for
+            # several authored meshes; preserve source topology byte-for-byte.
+            export_merge_vertices=False,
         )
         print(f"[fly-house-v3] GLB -> {dest}")
 

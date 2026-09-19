@@ -79,10 +79,24 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
   // of invented wall pictures.
   box([0.035, 0.38, 0.46], [4.655, 1.03, 2.55], M.woodDark, 'doorway-portrait-frame');
   box([0.025, 0.29, 0.37], [4.635, 1.03, 2.55], plasterPatchDark, 'doorway-portrait');
+  // A readable tiny painted portrait, not a blank rectangle.
+  const portraitSky = new THREE.MeshStandardMaterial({ color: 0x587b7b, roughness: .95 });
+  const portraitFace = new THREE.MeshStandardMaterial({ color: 0xb3744d, roughness: .92 });
+  const portraitHair = new THREE.MeshStandardMaterial({ color: 0x1d0d08, roughness: .9 });
+  const portraitCoat = new THREE.MeshStandardMaterial({ color: 0x542b38, roughness: .95 });
+  box([0.018, .22, .30], [4.615, 1.03, 2.55], portraitSky, 'portrait-painted-ground');
+  addSphere(.075, [4.595, 1.03, 2.62], portraitFace, 'portrait-head', 12);
+  addSphere(.09, [4.58, 1.03, 2.69], portraitHair, 'portrait-hair', 12);
+  box([.02, .20, .12], [4.59, 1.03, 2.43], portraitCoat, 'portrait-shoulders', { bevel: .018 });
 
   // Large muted carpet under the seating/stove zone.  The reference has a broad
   // worn green carpet beneath the smaller runner and round rug, not bare floor.
-  box([6.55, 4.35, 0.026], [-0.55, -0.05, 0.02], M.greenTextile, 'reference-main-carpet');
+  box([7.80, 5.55, 0.026], [-0.35, -0.05, 0.02], M.greenTextile, 'reference-main-carpet');
+  box([2.05, 4.05, .034], [.95, -.65, .052], M.redTextile, 'reference-patterned-runner');
+  for (let i=0;i<10;i++) box([.16,.28,.012],[.95+(i%2)*.34,-2.25+Math.floor(i/2)*.86,.078],i%2?clothWhite:M.woodLight,`runner-pattern-${i}`);
+  cylinder(.92,.035,[-1.85,-1.85,.055],M.blueTextile,'round-multicolour-rug-base');
+  cylinder(.66,.042,[-1.85,-1.85,.078],M.redTextile,'round-multicolour-rug-ring');
+  cylinder(.38,.046,[-1.85,-1.85,.101],yellow,'round-multicolour-rug-centre');
   for (const x of [-3.64, 2.54]) box([0.08, 4.18, 0.012], [x, -0.05, 0.04], M.woodLight, `carpet-border-x-${x}`);
   for (const y of [-2.10, 2.00]) box([6.15, 0.08, 0.012], [-0.55, y, 0.04], M.woodLight, `carpet-border-y-${y}`);
   for (let i = 0; i < 18; i++) {
@@ -268,7 +282,7 @@ export function applyReferenceDressing({ THREE, scene, materials: M, box, cylind
   const cabinet = scene.getObjectByName('cabinet-back');
   cabinet.position.set(-.65, 3.55, .775);
   cabinet.scale.set(4.05 / 3.90, .44 / .34, 1.55 / 1.20);
-  const remove = scene.children.filter((o) => /^(carved-|cabinet-magnet-|cabinet-post-|cabinet-panel-|cabinet-cornice)/.test(o.name));
+  const remove = scene.children.filter((o) => /^(cabinet-magnet-|cabinet-post-|cabinet-panel-|cabinet-cornice)/.test(o.name));
   remove.forEach((o) => scene.remove(o));
   // Explicit fronts on the south face, rather than a bare backing panel.
   for (const x of [-1.65,.35]) box([1.75,.04,1.0], [x,3.30,.755], M.woodLight, `cabinet-front-${x}`);

@@ -77,9 +77,12 @@ def _sphere(name, radius, loc, material, col, *, segments=18):
         old.objects.unlink(o)
     col.objects.link(o)
     _tag(o)
+    # Materialize generated sphere topology before export; Blender otherwise
+    # re-triangulates these meshes nondeterministically between fresh runs.
+    o.data.validate(verbose=False)
+    o.data.update(calc_edges=True)
+    o.data.calc_loop_triangles()
     return o
-
-
 def _torus(name, major_radius, minor_radius, loc, material, col, *, rot=(0.0, 0.0, 0.0)):
     bpy.ops.mesh.primitive_torus_add(
         major_radius=major_radius,
@@ -149,25 +152,34 @@ def _add_surface_variation(material, *, scale=4.0, strength=.15, bump=.18):
     noise.inputs["Scale"].default_value = scale
     noise.inputs["Detail"].default_value = 3.0
     noise.inputs["Roughness"].default_value = .65
-    ramp = nt.nodes.new("ShaderNodeValToRGB")
-    ramp.color_ramp.elements[0].position = .28
-    ramp.color_ramp.elements[0].color = (0.18, 0.14, 0.10, 1)
-    ramp.color_ramp.elements[1].position = .78
-    ramp.color_ramp.elements[1].color = (0.82, 0.72, 0.58, 1)
+    # Keep the authored palette visible: noise is used for roughness and relief,
+    # not a high-contrast color ramp that washes the cottage to grey.
     bump_node = nt.nodes.new("ShaderNodeBump")
     bump_node.inputs["Strength"].default_value = bump
-    bump_node.inputs["Distance"].default_value = .08
-    nt.links.new(noise.outputs["Fac"], ramp.inputs["Fac"])
+    bump_node.inputs["Distance"].default_value = .045
     nt.links.new(noise.outputs["Fac"], bump_node.inputs["Height"])
     nt.links.new(bump_node.outputs["Normal"], bsdf.inputs["Normal"])
-    # Mix only subtle color variation with the original base color.
-    original = bsdf.inputs["Base Color"].default_value[:3]
+    rough = nt.nodes.new("ShaderNodeMapRange")
+    rough.inputs["From Min"].default_value = 0.15
+    rough.inputs["From Max"].default_value = 0.85
+    rough.inputs["To Min"].default_value = .72
+    rough.inputs["To Max"].default_value = .98
+    nt.links.new(noise.outputs["Fac"], rough.inputs["Value"])
+    nt.links.new(rough.outputs["Result"], bsdf.inputs["Roughness"])
+    # Add restrained mottling around the authored hue so plaster and wood do not
+    # render as featureless blocks while retaining their warm palette.
+    original = tuple(bsdf.inputs["Base Color"].default_value[:3])
+    ramp = nt.nodes.new("ShaderNodeValToRGB")
+    ramp.color_ramp.elements[0].color = (*tuple(v * .72 for v in original), 1)
+    ramp.color_ramp.elements[1].color = (*tuple(min(v * 1.18, 1.0) for v in original), 1)
+    nt.links.new(noise.outputs["Fac"], ramp.inputs["Fac"])
     mix = nt.nodes.new("ShaderNodeMixRGB")
-    mix.blend_type = "MULTIPLY"
-    mix.inputs["Fac"].default_value = strength
+    mix.blend_type = "MIX"
+    mix.inputs["Fac"].default_value = min(strength, .16)
     mix.inputs[1].default_value = (*original, 1)
     nt.links.new(ramp.outputs["Color"], mix.inputs[2])
     nt.links.new(mix.outputs["Color"], bsdf.inputs["Base Color"])
+    return
 
 
 def apply_reference_detail_pass(mats):
@@ -225,14 +237,32 @@ def apply_reference_detail_pass(mats):
     # One small portrait above the doorway replaces the invented wall-gallery row.
     _box("doorway-portrait-frame", (.035,.38,.46), (4.055,1.03,2.55), mats["wood2"], c, bevel=.012)
     _box("doorway-portrait", (.025,.29,.37), (4.035,1.03,2.55), plaster_wear_dark, c)
-
+    # Image-like portrait: warm painted ground, dark hair silhouette, face and coat.
+    portrait_sky = _simple_material("portrait-sky-v3", (.34,.46,.48), .95)
+    portrait_face = _simple_material("portrait-face-v3", (.70,.45,.30), .92)
+    portrait_hair = _simple_material("portrait-hair-v3", (.08,.035,.022), .9)
+    portrait_coat = _simple_material("portrait-coat-v3", (.24,.12,.16), .95)
+    _box("portrait-painted-ground", (.018,.22,.30), (4.015,1.03,2.55), portrait_sky, c)
+    _sphere("portrait-head", .075, (3.995,1.03,2.62), portrait_face, c, segments=12)
+    _sphere("portrait-hair", .09, (3.98,1.03,2.69), portrait_hair, c, segments=12)
+    _box("portrait-shoulders", (.02,.20,.12), (3.99,1.03,2.43), portrait_coat, c, bevel=.018)
     # Large green carpet under the seating area.  Three nested thin rectangles
     # approximate the ornate border seen in the illustration without overbuilding.
-    _box("reference-main-carpet", (6.55, 4.35, .026), (-.55, -.05, .02), mats["green"], c, landing=True)
+    _box("reference-main-carpet", (7.80, 5.55, .026), (-.35, -.05, .02), mats["green"], c, landing=True)
+    # Distinct patterned runner and round multicolour rug sit above the broad green field.
+    _box("reference-patterned-runner", (2.05, 4.05, .034), (.95, -.65, .052), mats["red"], c, landing=True)
+    for i in range(10):
+        _box(f"runner-pattern-{i}", (.16, .28, .012), (.95 + (i%2)*.34, -2.25 + (i//2)*.86, .078), mats["cream"] if i%2 else mats["wood3"], c, rot=(0,0,(i%3-1)*.15))
+    _cyl("round-multicolour-rug-base", .92, .035, (-1.85,-1.85,.055), mats["blue"], c, vertices=32, landing=True)
+    _cyl("round-multicolour-rug-ring", .66, .042, (-1.85,-1.85,.078), mats["red"], c, vertices=32)
+    _cyl("round-multicolour-rug-centre", .38, .046, (-1.85,-1.85,.101), mats["wood3"], c, vertices=32)
+    for i in range(8):
+        a=i/8*math.tau
+        _box(f"round-rug-motif-{i}", (.10,.10,.012), (-1.85+math.cos(a)*.52,-1.85+math.sin(a)*.52,.125), (mats["green"],mats["pink"],mats["cream"],mats["wood2"])[i%4], c, rot=(0,0,a))
     for x in (-3.64, 2.54):
-        _box(f"carpet-border-x-{x}", (.08, 4.18, .012), (x, -.05, .04), mats["wood3"], c)
-    for y in (-2.10, 2.00):
-        _box(f"carpet-border-y-{y}", (6.15, .08, .012), (-.55, y, .04), mats["wood3"], c)
+        _box(f"carpet-border-x-{x}", (.08, 5.38, .012), (x, -.05, .04), mats["wood3"], c)
+    for y in (-2.72, 2.62):
+        _box(f"carpet-border-y-{y}", (7.45, .08, .012), (-.35, y, .04), mats["wood3"], c)
     for i in range(18):
         x = -3.25 + (i % 6) * 1.10
         y = -1.72 + (i // 6) * 1.52
@@ -297,11 +327,10 @@ def apply_reference_detail_pass(mats):
     _box("hanging-cloth-mustard", (.30,.04,.48), (3.08,.50,1.56), mustard, c, rot=(0,0,-.04), bevel=.02)
     _box("hanging-cloth-white-b", (.40,.04,.64), (3.44,.50,1.48), white, c, rot=(0,0,.02), bevel=.02)
 
-    # Small hanging cup/ornament from the ceiling above the cabinet.
-    _rod("hanging-ornament-string-a", (.02,.74,2.80), (.02,.74,2.34), .008, mats["metal"], c)
-    _rod("hanging-ornament-string-b", (.14,.74,2.80), (.14,.74,2.34), .008, mats["metal"], c)
-    _cyl("hanging-ornament-body", .10, .16, (.08,.74,2.26), pale_blue, c)
-    _torus("hanging-ornament-handle", .09, .015, (.16,.74,2.28), pale_blue, c, rot=(math.radians(90),0,0))
+    # Hanging cabinet ornament removed in v0.3.1 — the previous dangling
+    # cylinder intersected the ceiling in wide shots and read as a mug-like
+    # object floating against the plaster.  The reference illustration has
+    # no such ornament; the cabinet crown is enough decoration.
 
     # Intentional floor clutter copied from the reference vocabulary.
     _box("floor-notebook", (.42,.32,.035), (-1.90,-1.43,.075), mats["ceramic"], c, rot=(0,0,-.28), bevel=.008)
@@ -341,16 +370,19 @@ def apply_reference_detail_pass(mats):
         _box(f"plaster-wear-{i}", (sx,sy,sz), (x,y,z), plaster_wear if i%2 else plaster_wear_dark, c, rot=(0,0,(i-2)*.06))
 
     # Bedroom continuation: bedside smalls, wall art, plant, basket and folded bedding.
-    _box("bedside-lace-doily", (.54,.42,.035), (5.18,2.42,.86), white, c)
-    _cyl("bedside-mug", .08, .10, (5.04,2.42,.96), mats["ceramic"], c)
-    _torus("bedside-mug-handle", .06, .014, (5.11,2.43,.98), mats["ceramic"], c, rot=(math.radians(90),0,0))
-    _cyl("bedside-alarm-clock", .09, .06, (5.31,2.42,.96), pale_blue, c, rot=(math.radians(90),0,0))
-    _box("bedside-clock-face", (.08,.10,.20), (5.31,2.42,1.06), black, c)
-    _box("bedroom-wall-frame", (.55,.05,.70), (7.10,3.56,1.72), mats["wood2"], c, bevel=.014)
-    _box("bedroom-wall-picture", (.46,.035,.61), (7.10,3.53,1.72), mats["ceramic"], c)
-    _cyl("bedroom-plant-pot", .18, .30, (7.82,2.75,1.98), mats["ceramic"], c)
+    _box("bedside-lace-doily", (.54,.42,.035), (8.25,1.55,.86), white, c)
+    _cyl("bedside-mug", .08, .10, (8.11,1.55,.96), mats["ceramic"], c)
+    _torus("bedside-mug-handle", .06, .014, (8.18,1.56,.98), mats["ceramic"], c, rot=(math.radians(90),0,0))
+    _cyl("bedside-alarm-clock", .09, .06, (8.38,1.55,.96), pale_blue, c, rot=(math.radians(90),0,0))
+    _cyl("bedside-lamp-base", .10, .04, (8.37,1.55,1.00), mats["wood2"], c)
+    _rod("bedside-lamp-stem", (8.37,1.55,1.02), (8.37,1.55,1.28), .018, mats["metal2"], c)
+    _sphere("bedside-lamp-shade", .14, (8.37,1.55,1.36), mustard, c, segments=12)
+
+    _box("bedroom-wall-frame", (.55,.05,.70), (7.10,2.80,1.72), mats["wood2"], c, bevel=.014)
+    _box("bedroom-wall-picture", (.46,.035,.61), (7.10,2.77,1.72), mats["ceramic"], c)
+    _cyl("bedroom-plant-pot", .18, .30, (8.20,3.35,1.98), mats["ceramic"], c)
     for i in range(6):
-        _rod(f"bedroom-plant-stem-{i}", (7.82,2.75,2.10), (7.58+i*.10,2.73,2.52-(i%2)*.08), .018, mats["leaf"], c)
+        _rod(f"bedroom-plant-stem-{i}", (8.20,3.35,2.10), (7.96+i*.10,3.33,2.52-(i%2)*.08), .018, mats["leaf"], c)
     _box("bedroom-foot-basket", (.78,.50,.42), (7.48,.10,.22), mats["wood3"], c, collision=True, bevel=.035)
     _box("bedroom-folded-blanket", (.68,.42,.12), (7.48,.10,.48), mats["red"], c, bevel=.025)
     _box("bedroom-folded-blanket-top", (.60,.38,.10), (7.48,.10,.58), mats["green"], c, bevel=.025)
@@ -390,7 +422,13 @@ def apply_reference_detail_pass(mats):
     move_detail(("stove-", "hanging-"), dx=.10, dy=-1.85)
     move_detail(("tv-", "shelf-cup-"), dx=.16, dy=-.975)
     # Shell-mounted details follow the expanded walls, not furniture offsets.
-    move_detail(("door-frame-", "door-threshold", "doorway-portrait"), dx=.75)
+    move_detail(("door-frame-", "door-threshold", "doorway-portrait", "portrait-"), dx=.75)
+    if bpy.data.objects.get("doorway-portrait-frame"):
+        bpy.data.objects["doorway-portrait-frame"].location.x = 4.66
+        bpy.data.objects["doorway-portrait"].location.x = 4.64
+    for portrait_name in ("portrait-painted-ground", "portrait-head", "portrait-hair", "portrait-shoulders"):
+        if bpy.data.objects.get(portrait_name):
+            bpy.data.objects[portrait_name].location.x = 4.62
     move_detail(("window-grille-",), dx=-.68)
     move_detail(("wall-clock-", "clock-hand-"), dx=-.98)
     move_detail(("cage-", "birdcage-"), dx=-.59)
@@ -411,12 +449,11 @@ def apply_reference_detail_pass(mats):
         if obj.name.startswith(("cabinet-top-", "cabinet-photo", "fruit-", "blue-ornamental-", "globe-")):
             obj.location.y += .44
             obj.location.z -= .765
-        if obj.name.startswith("carved-"):
-            bpy.data.objects.remove(obj, do_unlink=True)
+    # Keep the carved overlays: their rosettes are a key identity cue, not disposable debug geometry.
     # Wall dressing must touch the expanded shell, not hover at pre-expansion planes.
-    move_detail(("bedroom-high-", "bedroom-trailing-"), dy=.90)
-    move_detail(("bedroom-wall-",), dy=.60)
-    move_detail(("bedroom-plant-",), dy=1.28)
+    move_detail(("bedroom-high-", "bedroom-trailing-"), dy=0.0)
+    move_detail(("bedroom-wall-",), dy=.20)
+    move_detail(("bedroom-plant-",), dy=0.0)
     for obj in c.objects:
         if obj.name.startswith("bedroom-plant-"):
             obj.location.z -= .21
