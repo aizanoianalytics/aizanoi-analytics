@@ -1,121 +1,51 @@
-# Stage B RED/GREEN evidence
+# PR 261 RED/GREEN evidence
 
-Focused acceptance tests were extended test-first for machine-readable provenance, checkpoint completeness, replay application, browser interpolation/non-authority, telemetry schema/lag, and Fly House integration.
+All evidence below is from the current branch `feat/fly-simulation-foundation`.
 
-## RED
+RED
 
 ```text
-$ node --test tests/fly-simulation.test.mjs
-exit=1
-SyntaxError: The requested module './index.mjs' does not provide an export named 'SpectatorBridge'
+$ node --test tests/pr261-regressions.test.mjs
+ERR_MODULE_NOT_FOUND: Cannot find module services/fly-simulation/service.mjs
+```
+
+The regression file was written before the private service existed and failed on the expected missing implementation seam.
+
+GREEN
+
+```text
+$ node --test tests/pr261-regressions.test.mjs
+# tests 7
+# pass 7
+# fail 0
+
+$ node --test tests/fly-simulation.test.mjs tests/fly-simulation-service.test.mjs tests/pr261-regressions.test.mjs
+# tests 29
+# pass 29
+# fail 0
+
+$ node --test tests/fly-simulation-browser.test.mjs
 # tests 1
-# pass 0
-# fail 1
-```
-
-The failure was the expected feature-missing module export after the new tests were written. The replay slice was then independently checked red before its export was implemented:
-
-```text
-$ node --test tests/fly-simulation.test.mjs
-exit=1
-SyntaxError: The requested module './index.mjs' does not provide an export named 'replay'
-# tests 1
-# pass 0
-# fail 1
-```
-
-## GREEN
-
-```text
-$ node --test tests/fly-simulation.test.mjs
-# tests 14
-# pass 14
+# pass 1
 # fail 0
-# cancelled 0
-# skipped 0
-```
 
-## Validation
-
-```text
-$ node --check frontend/labs/fly-simulation/index.js && node --check tests/fly-simulation.test.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js && git diff --check
-exit 0
-
-$ node --test tests/fly-world*.test.mjs
-# tests 33
-# pass 33
+$ npm test
+# tests 546
+# pass 546
 # fail 0
-# cancelled 0
-# skipped 0
 
-$ node --test tests/*.test.mjs
-# tests 516
-# pass 516
-# fail 0
-# cancelled 0
-# skipped 0
-```
-
-The focused tests cover exact provenance metadata and omission rejection, deterministic rigid-body integration including drag/orientation/contact normals, room/zones and stable rest, unavailable sensor channels, named controller mapping, complete checkpoint/restore hashes, applied replay, versioned allowlisted telemetry with lag accounting, browser interpolation and read-only authority, and the real Fly House authored-environment/status integration. No build script or lint command is defined specifically for this lab; touched module syntax and repository whitespace checks pass.
-
-## Acceptance-gap RED/GREEN
-
-```text
-$ node --test tests/fly-simulation.test.mjs
-RED: 14 passed, 4 failed (missing pause/stepOne, realtime start, telemetry snapshot, and exact adapter identity)
-
-$ node --test tests/fly-simulation.test.mjs
-GREEN: 19 passed, 0 failed
-
-$ node --test tests/fly-world*.test.mjs
-GREEN: 33 passed, 0 failed
-
-$ node --test tests/*.test.mjs
-GREEN: 516 passed, 0 failed
-
-$ node --check frontend/labs/fly-simulation/index.js && node --check tests/fly-simulation.test.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js && git diff --check
+$ node --check frontend/labs/fly-simulation/index.js && node --check services/fly-simulation/service.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js && git diff --check
 exit 0
 ```
 
-The acceptance slice adds explicit pause/resume and manual stepping, realtime scheduler lifecycle and lag accounting, deterministic telemetry snapshots, exact adapter/checkpoint identity preservation, and a GLB Fly House spectator demo with authored safe spawn, fixed Z-up simulation, named heuristic controller, read-only bridge, interpolated authoritative mesh, and live tick/room/provenance/lag status.
+The Chromium test uses the installed headless Chromium, an ephemeral simulation WebSocket, an ephemeral HTTP page, keyboard input, and server-state assertions. It proves telemetry is received and browser input does not mutate authoritative state.
 
-## Narrow service RED/GREEN
-
-The integration test was written before `service.mjs` existed and exercised a real
-ephemeral-port WebSocket connection using the authored test-plane adapter:
+Publish-boundary audit:
 
 ```text
-$ node --test tests/fly-simulation-service.test.mjs
-RED: ERR_MODULE_NOT_FOUND: frontend/labs/fly-simulation/service.js
+frontend_node_backend_candidates ['frontend/service-worker.js']
 ```
 
-After implementing the loopback-only-by-default service, minimal RFC6455 framing,
-versioned allowlisted telemetry, fixed scheduler instrumentation, and ignored input
-frames:
+The Node simulation service is `services/fly-simulation/service.mjs`; no Fly backend/service remains under `frontend/`. The service uses monotonic elapsed wall time, explicit Host/Origin allowlists, bounded RFC6455 parsing, TelemetryProtocol-only output, and deterministic cleanup. The browser has no local FlySimulation/controller/scheduler/fly creation and reports telemetry inactive without explicit host configuration.
 
-```text
-$ node --test tests/fly-simulation-service.test.mjs
-# tests 2
-# pass 2
-# fail 0
-```
-
-## Final verification commands
-
-```text
-$ node --test tests/fly-simulation.test.mjs tests/fly-simulation-service.test.mjs
-# tests 22
-# pass 22
-# fail 0
-
-$ node --test tests/*.test.mjs
-# tests 516
-# pass 516
-# fail 0
-
-$ node --check frontend/labs/fly-simulation/index.js && node --check frontend/labs/fly-simulation/service.js && node --check tests/fly-simulation.test.mjs && node --check tests/fly-simulation-service.test.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js
-exit 0
-
-$ git diff --check
-exit 0
-```
+`npm run qa:browser` was attempted but is a repository smoke entrypoint that expects an already-running server at `http://127.0.0.1:4173/`; it failed with `ERR_CONNECTION_REFUSED`. The dedicated Chromium spectator test above passed independently against the ephemeral service/page.

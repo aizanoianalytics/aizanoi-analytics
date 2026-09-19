@@ -6,9 +6,7 @@ A narrow, dependency-free deterministic core and browser spectator bridge. It ru
 
 `createBrowserSimulation(authoredEnvironment)` returns `{ simulation, bridge }`. The authored adapter is built from Fly World `createEnvironment()` and uses explicit `raycast`, `roomAt`, and `zonesAt` callbacks. It never calls observer `collisionAt`; body contact uses authored surfaces and contact normals.
 
-`SpectatorBridge` accepts only versioned `telemetry-1` frames, interpolates position/orientation for `requestAnimationFrame`, exposes lag/drop status, and is explicitly `spectator-read-only`. It has no command or authoritative pose mutation API.
-
-Fly House shows the visible status: **HEURISTIC TEST CONTROLLER**, MODELLED provenance, and read-only spectator mode. The integration is in the existing static page/app boundary; no iframe boundary is widened.
+`SpectatorBridge` accepts only versioned `telemetry-1` frames, interpolates position/orientation for `requestAnimationFrame`, exposes lag/drop status, and is explicitly `spectator-read-only`. It has no command or authoritative pose mutation API. The production browser runtime creates no local simulation; it connects only when `window.__FLY_TELEMETRY_CONFIG__.url` is explicitly supplied and otherwise displays telemetry inactive.
 
 ## Classification accounting
 
@@ -34,7 +32,7 @@ node --test tests/fly-simulation.test.mjs tests/fly-simulation-service.test.mjs
 
 ## Narrow Fly World spectator service
 
-`service.mjs` exports `createFlySimulationService({ environment, simulation, host, port, intervalMs, server })`.
+`services/fly-simulation/service.mjs` exports `createFlySimulationService({ environment, simulation, host, port, intervalMs, server })`.
 The service is deliberately not a general backend: it owns (or accepts an injected)
 `FlySimulation`, uses the authored Fly World environment adapter, and exposes only
 `GET /spectator/telemetry-1` over a minimal RFC6455 WebSocket handshake and frames.

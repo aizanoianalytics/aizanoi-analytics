@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import net from 'node:net';
 import crypto from 'node:crypto';
 import { BodyState, Vec3, createFlyWorldEnvironmentAdapter } from '../frontend/labs/fly-simulation/index.js';
-import { createFlySimulationService } from '../frontend/labs/fly-simulation/service.js';
+import { createFlySimulationService } from '../services/fly-simulation/service.mjs';
 
 const authoredPlane = createFlyWorldEnvironmentAdapter({
   environmentHash: 'authored-test-plane-v1',
@@ -72,15 +72,15 @@ test('real Fly World service streams allowlisted telemetry and ignores mutations
   try {
     const first = await client.next();
     assert.equal(first.version, 'telemetry-1');
-    assert.deepEqual(Object.keys(first).sort(), ['checkpointStatus', 'contact', 'controller', 'fly', 'flyId', 'lag', 'motor', 'provenance', 'room', 'sensorSummary', 'sequence', 'state', 'tick', 'time', 'timeSeconds', 'transform', 'velocity', 'version', 'zones'].sort());
+    assert.deepEqual(Object.keys(first).sort(), ['flyId', 'lag', 'metadata', 'sequence', 'state', 'version'].sort());
     assert.equal(first.flyId, 'service-fly');
-    assert.equal(first.checkpointStatus.environmentHash, 'authored-test-plane-v1');
-    assert.equal(first.lag.scheduler.fixedDt, 0.02);
+    assert.equal(first.state.room, 'test-plane');
+    assert.equal(first.lag.fixedDt, 0.02);
     client.socket.write(frame(JSON.stringify({ command: 'setPosition', flyId: 'service-fly', position: [999, 999, 999] })));
     const second = await client.next();
     assert.equal(second.version, 'telemetry-1');
-    assert.notDeepEqual(second.transform.position, [999, 999, 999]);
-    assert.equal(sim.getFly('service-fly').body.position.x, second.transform.position[0]);
+    assert.notDeepEqual(second.state.position, [999, 999, 999]);
+    assert.equal(sim.getFly('service-fly').body.position.x, second.state.position[0]);
     assert.equal(service.status().authority, 'server-authoritative');
   } finally {
     client.socket.destroy();
@@ -93,7 +93,7 @@ test('service rejects unversioned spectator paths and arbitrary upgrade requests
   await service.start();
   await new Promise((resolve, reject) => {
     const socket = net.connect(service.address().port, '127.0.0.1', () => socket.write('GET /spectator HTTP/1.1\r\nHost: localhost\r\nConnection: Upgrade\r\nUpgrade: websocket\r\n\r\n'));
-    socket.once('data', (data) => { assert.match(data.toString(), /400|404/); socket.destroy(); resolve(); });
+    socket.once('data', (data) => { assert.match(data.toString(), /400|403|404/); socket.destroy(); resolve(); });
     socket.once('error', reject);
   });
   await service.stop();

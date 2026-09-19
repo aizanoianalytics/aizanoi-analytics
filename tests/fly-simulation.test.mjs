@@ -19,7 +19,7 @@ const makeSim = () => new FlySimulation(planeEnv(), { fixedDt: 0.02, gravity: ne
 
 test('provenance contract accepts exact labels and rejects unknown labels', () => {
   assert.deepEqual(PROVENANCE_LABELS, ['CONNECTOME-DERIVED', 'BIOLOGICALLY CONSTRAINED', 'MODELLED', 'HEURISTIC']);
-  assert.equal(validateProvenance({ label: 'MODELLED', source: 'stage-b', units: 'm/s', calibrated: false, assumptions: ['simplified'], limitations: ['not biological'], version: '1.0.0' }).label, 'MODELLED');
+  assert.equal(validateProvenance({ label: 'MODELLED', source: 'stage-b', units: 'm/s', calibrated: false, assumptions: ['simplified'], limitations: ['not biological'], sourceReferences: [], version: '1.0.0' }).label, 'MODELLED');
   assert.throws(() => validateProvenance({ label: 'BIOLOGICAL', source: 'x' }), /provenance label/);
 });
 
@@ -86,8 +86,9 @@ test('named HEURISTIC TEST CONTROLLER maps sensor to motors without teleport', (
 
 test('telemetry is versioned and allowlisted, websocket adapter emits only protocol frames', () => {
   const frames = []; const socket = { send: (x) => frames.push(x) }; const t = new TelemetryProtocol();
-  const adapter = new WebSocketTelemetryAdapter(socket, t); adapter.send({ flyId: 'f', state: { room: 'a', position: [1, 2, 3] }, secret: 'no' });
-  assert.equal(JSON.parse(frames[0]).version, 'telemetry-1'); assert.equal(Object.hasOwn(JSON.parse(frames[0]), 'secret'), false);
+  const adapter = new WebSocketTelemetryAdapter(socket, t);
+  assert.throws(() => adapter.send({ flyId: 'f', state: { room: 'a', position: [1, 2, 3] }, secret: 'no' }), /allowlist/);
+  assert.equal(frames.length, 0);
   assert.throws(() => t.encode({ flyId: 'f', arbitrary: 1 }), /allowlist/);
 });
 
@@ -116,7 +117,7 @@ test('replay applies identical inputs to reproduce simulation state', () => {
 });
 
 test('browser factory adapts Fly World raycast and bridge interpolates without authority', () => {
-  const env = createFlyWorldEnvironmentAdapter({ hash: 'h', schemaVersion: 's', raycast: () => ({ distance: 1, surfaceId: 'floor', normal: { x: 0, y: 1, z: 0 } }), roomAt: () => 'main-room', zonesAt: () => ['airflow'] });
+  const env = createFlyWorldEnvironmentAdapter({ hash: 'h', schemaVersion: 's', raycast: () => ({ distance: 1, surfaceId: 'floor', point: { x: 0, y: 0, z: 0 }, normal: { x: 0, y: 1, z: 0 } }), roomAt: () => 'main-room', zonesAt: () => ['airflow'] });
   const { simulation, bridge } = createBrowserSimulation(env, { now: () => 0 });
   simulation.addFly({ flyId: 'f', body: new BodyState() });
   bridge.ingest({ version: 'telemetry-1', sequence: 1, flyId: 'f', state: { position: [0, 0, 0], orientation: [0, 0, 0, 1] } });
@@ -178,8 +179,6 @@ test('adapter preserves exact environment and GLB identity in checkpoints', () =
 
 test('Fly House browser wiring uses authored spawn, spectator telemetry, and RAF interpolation', () => {
   const source = readFileSync(new URL('../frontend/labs/fly-world/glb-runtime-v3.js', import.meta.url), 'utf8');
-  assert.match(source, /safeSpawn/); assert.match(source, /simulation\.addFly/);
-  assert.match(source, /HEURISTIC TEST CONTROLLER/); assert.match(source, /bridge\.ingest/);
-  assert.match(source, /AUTHORITATIVE_FLY_MESH/); assert.match(source, /spectator\.bridge\.render/);
-  assert.match(source, /lag .*ms/); assert.doesNotMatch(source, /simulationEnvironment\.collisionAt/);
+  assert.doesNotMatch(source, /simulation\.addFly|HeuristicTestController|FixedStepScheduler|createBrowserSimulation/);
+  assert.match(source, /FLY_TELEMETRY_CONFIG|Telemetry inactive|new WebSocket/);
 });

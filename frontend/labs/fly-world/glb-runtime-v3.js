@@ -2,7 +2,7 @@ import * as THREE from '../../worlds/shared/vendor/three.module.js';
 import { GLTFLoader } from '../../worlds/shared/vendor/GLTFLoader.js';
 import { createEnvironment } from './environment.js';
 import { AudioSystem } from '../../worlds/shared/engine/audio.js';
-import { BodyState, FixedStepScheduler, HeuristicTestController, Vec3, createBrowserSimulation, createFlyWorldEnvironmentAdapter } from '../fly-simulation/index.js';
+import { SpectatorBridge } from '../fly-simulation/index.js';
 
 const canvas = document.querySelector('#world');
 const fatal = document.querySelector('#fatal');
@@ -193,42 +193,31 @@ async function boot() {
   window.FLY_ENVIRONMENT = environment;
   window.__FLY_ENVIRONMENT__ = environment;
 
-  // Stage B is a read-only spectator bridge: it consumes authored environment
-  // raycasts and telemetry, but never owns camera controls or sends fly commands.
-  const safeSpawn = environment.integration.safeSpawnVolumes[0];
-  const spawn = safeSpawn.bounds[0].map((value, index) => (value + safeSpawn.bounds[1][index]) / 2);
-  const simulationEnvironment = createFlyWorldEnvironmentAdapter({
-    environmentHash: environmentSpec.artifactHashes?.environmentSource ?? environmentSpec.sourceHashes?.['gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json'],
-    glbHash: environmentSpec.artifactHashes?.flyHouseGlb,
-    schemaVersion: `fly-world-environment-${environment.schemaVersion}`,
-    downDirection: [0, 0, -1],
-    raycast: environment.integration.raycast,
-    roomAt: environment.integration.roomAt,
-    zonesAt: environment.integration.zonesAt,
-  });
-  const spectator = createBrowserSimulation(simulationEnvironment, { fixedDt: environment.integration.tick.fixedDeltaSeconds, gravity: new Vec3(0, 0, -9.81), downDirection: [0, 0, -1] });
-  const flyId = 'fly-house-demo';
-  spectator.simulation.addFly({ flyId, body: new BodyState({ position: { x: spawn[0], y: spawn[1], z: spawn[2] }, radius: .025 }) });
-  const controller = new HeuristicTestController();
-  const scheduler = new FixedStepScheduler(spectator.simulation, { onStep: (sim) => {
-    const live = sim.getFly(flyId);
-    sim.setMotors(flyId, controller.motorFromSensor(live.sensors));
-    const snapshot = sim.telemetrySnapshot(flyId, { lagSeconds: scheduler.lag, controller: controller.name });
-    spectator.bridge.ingest({ version: 'telemetry-1', sequence: snapshot.tick, flyId, state: { position: snapshot.transform.position, orientation: snapshot.transform.orientation, room: snapshot.room, contact: snapshot.contact }, metadata: { controller: controller.name, provenance: 'MODELLED' }, lag: scheduler.lag });
-  } });
-  const flyMesh = new THREE.Mesh(new THREE.SphereGeometry(.035, 12, 8), new THREE.MeshStandardMaterial({ color: 0xd9a441, emissive: 0x5c2800, emissiveIntensity: 1.2 }));
-  flyMesh.name = 'AUTHORITATIVE_FLY_MESH'; flyMesh.castShadow = true; scene.add(flyMesh);
-  window.__FLY_SPECTATOR_BRIDGE__ = spectator.bridge;
-  window.__FLY_SIMULATION__ = Object.freeze({ simulation: spectator.simulation, bridge: spectator.bridge, authority: spectator.bridge.authority });
+  // The browser is a spectator only. A host must explicitly provide a WebSocket
+  // URL; production has no default and reports telemetry as inactive.
+  const bridge = new SpectatorBridge();
+  window.__FLY_SPECTATOR_BRIDGE__ = bridge;
+  const config = window.__FLY_TELEMETRY_CONFIG__;
   const simulationStatus = document.querySelector('#simulation-status');
-  if (simulationStatus) simulationStatus.textContent = 'Simulation spectator · HEURISTIC TEST CONTROLLER · MODELLED · read-only';
-  // Authoritative ticks are wall-clock scheduled independently of render FPS.
-  const simulationTimer = setInterval(() => {
-    scheduler.advanceWallClock(spectator.simulation.fixedDt);
-    const status = scheduler.status();
-    const live = spectator.simulation.getFly(flyId);
-    if (simulationStatus) simulationStatus.textContent = `Fly ${spectator.simulation.tick} · ${live.room ?? 'no-room'} · ${controller.name} · lag ${(status.lagSeconds * 1000).toFixed(1)}ms`;
-  }, spectator.simulation.fixedDt * 1000);
+  let flyMesh = null;
+  let telemetrySocket = null;
+  if (!config?.url) {
+    if (simulationStatus) simulationStatus.textContent = 'Telemetry inactive · no host-provided spectator service configured';
+  } else {
+    telemetrySocket = new WebSocket(config.url);
+    telemetrySocket.addEventListener('message', (event) => {
+      try {
+        const frame = JSON.parse(event.data);
+        if (frame.version !== 'telemetry-1' || !frame.state?.position) return;
+        if (!flyMesh) {
+          flyMesh = new THREE.Mesh(new THREE.SphereGeometry(.035, 12, 8), new THREE.MeshStandardMaterial({ color: 0xd9a441, emissive: 0x5c2800, emissiveIntensity: 1.2 }));
+          flyMesh.name = 'TELEMETRY_SPECTATOR_FLY'; flyMesh.castShadow = true; scene.add(flyMesh);
+        }
+        if (bridge.ingest(frame) && simulationStatus) simulationStatus.textContent = 'Telemetry active · read-only spectator';
+      } catch (error) { console.warn('Ignoring malformed telemetry', error); }
+    });
+    telemetrySocket.addEventListener('close', () => { if (simulationStatus) simulationStatus.textContent = 'Telemetry inactive · service disconnected'; });
+  }
 
   let meshCount = 0;
   let triangleCount = 0;
@@ -265,9 +254,8 @@ async function boot() {
   renderer.setAnimationLoop(() => {
     const dt = Math.min(clock.getDelta(), .05);
     observer.update(dt);
-    spectator.bridge.render(flyMesh, .5);
-    const status = scheduler.status();
-    if (simulationStatus) simulationStatus.textContent = `Fly ${spectator.simulation.tick} · ${spectator.simulation.getFly(flyId).room ?? 'no-room'} · ${controller.name} · lag ${(status.lagSeconds * 1000).toFixed(1)}ms`;
+    if (flyMesh) bridge.render(flyMesh, .5);
+    if (simulationStatus && !config?.url) simulationStatus.textContent = 'Telemetry inactive · no host-provided spectator service configured';
     if (window.__FLY_AUDIO__) {
       const keys = observer.keys;
       const isMoving = keys.has('KeyW') || keys.has('KeyS') || keys.has('KeyA') || keys.has('KeyD');
