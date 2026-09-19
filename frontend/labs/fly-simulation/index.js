@@ -115,16 +115,30 @@ export function createFlyWorldEnvironmentAdapter(environment,identity={}){
   const integration=environment.integration??environment;
   const raycast=integration.raycast??environment.raycast;
   if(typeof raycast!=='function')throw new TypeError('authored environment raycast required');
-  const hash=identity.environmentHash??identity.hash??environment.environmentHash??environment.hash;
-  if(!hash)throw new TypeError('exact authored environment hash required');
-  const axis=identity.axis??environment.axis??integration.coordinateSystem?.axis??'Y-up';
-  const downDirection=identity.downDirection??environment.downDirection??(axis==='Z-up'?[0,0,-1]:[0,-1,0]);
-  const schemaVersion=identity.schemaVersion??environment.schemaVersion??environment.meta?.schemaVersion??environment.version;
+  const authoredHashes=environment.meta?.artifactHashes??environment.artifactHashes??{};
+  const authoredEnvironmentHash=authoredHashes.environmentSource??environment.environmentHash??environment.hash??null;
+  const authoredGlbHash=authoredHashes.flyHouseGlb??environment.glbHash??null;
+  const hash=identity.environmentHash??identity.hash??authoredEnvironmentHash;
+  const glbHash=identity.glbHash??authoredGlbHash;
+  if(!hash||!glbHash)throw new TypeError('exact authored environment and GLB hashes required');
+  if(authoredEnvironmentHash&&String(hash)!==String(authoredEnvironmentHash))throw new Error('authored environment hash mismatch');
+  if(authoredGlbHash&&String(glbHash)!==String(authoredGlbHash))throw new Error('authored GLB hash mismatch');
+  const authoredAxis=environment.axis??integration.coordinateSystem?.axis??null;
+  if(identity.axis&&authoredAxis&&identity.axis!==authoredAxis)throw new Error('authored coordinate axis mismatch');
+  const axis=authoredAxis??identity.axis??'Y-up';
+  const authoredDown=environment.downDirection??(axis==='Z-up'?[0,0,-1]:[0,-1,0]);
+  if(identity.downDirection){
+    const expected=asVec(authoredDown).normalize(), supplied=asVec(identity.downDirection).normalize();
+    if(expected.sub(supplied).length()>1e-12)throw new Error('authored down direction mismatch');
+  }
+  const downDirection=authoredDown;
+  const authoredSchemaVersion=environment.schemaVersion??environment.meta?.schemaVersion??environment.version??null;
+  if(identity.schemaVersion!=null&&authoredSchemaVersion!=null&&String(identity.schemaVersion)!==String(authoredSchemaVersion))throw new Error('authored environment schema mismatch');
+  const schemaVersion=authoredSchemaVersion??identity.schemaVersion;
   if(schemaVersion==null)throw new TypeError('authored environment schema required');
-  const glbHash=identity.glbHash??environment.glbHash??null;
   return Object.freeze({
     hash:String(hash),
-    glbHash:glbHash==null?null:String(glbHash),
+    glbHash:String(glbHash),
     schemaVersion:String(schemaVersion),
     downDirection:asVec(downDirection),
     surfaces:Object.freeze((identity.surfaces??environment.physicsSurfaces??[]).filter((surface)=>surface?.point&&surface?.normal)),

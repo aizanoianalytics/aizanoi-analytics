@@ -25,13 +25,13 @@ $ node --test tests/fly-simulation-browser.test.mjs
 # fail 0
 
 $ npm test
-# tests 551
-# pass 551
+# tests 552
+# pass 552
 # fail 0
 
 $ node --test tests/fly-world-*.test.mjs
-# tests 33
-# pass 33
+# tests 34
+# pass 34
 # fail 0
 
 $ node --check frontend/labs/fly-simulation/index.js && node --check services/fly-simulation/service.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js && git diff --check

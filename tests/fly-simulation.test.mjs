@@ -117,7 +117,7 @@ test('replay applies identical inputs to reproduce simulation state', () => {
 });
 
 test('browser factory adapts Fly World raycast and bridge interpolates without authority', () => {
-  const env = createFlyWorldEnvironmentAdapter({ hash: 'h', schemaVersion: 's', raycast: () => ({ distance: 1, surfaceId: 'floor', point: { x: 0, y: 0, z: 0 }, normal: { x: 0, y: 1, z: 0 } }), roomAt: () => 'main-room', zonesAt: () => ['airflow'] });
+  const env = createFlyWorldEnvironmentAdapter({ hash: 'h', glbHash: 'g', schemaVersion: 's', raycast: () => ({ distance: 1, surfaceId: 'floor', point: { x: 0, y: 0, z: 0 }, normal: { x: 0, y: 1, z: 0 } }), roomAt: () => 'main-room', zonesAt: () => ['airflow'] });
   const { simulation, bridge } = createBrowserSimulation(env, { now: () => 0 });
   simulation.addFly({ flyId: 'f', body: new BodyState() });
   bridge.ingest({ version: 'telemetry-1', sequence: 1, flyId: 'f', state: { position: [0, 0, 0], orientation: [0, 0, 0, 1] } });

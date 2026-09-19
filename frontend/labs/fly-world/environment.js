@@ -407,6 +407,10 @@ export function createEnvironment(root, spec) {
     meta: Object.freeze({
       schemaVersion: SCHEMA_VERSION,
       contract: 'environment-only; coarse observer-radius navigation in collisionAt',
+      artifactHashes: Object.freeze({
+        environmentSource: spec.artifactHashes?.environmentSource ?? null,
+        flyHouseGlb: spec.artifactHashes?.flyHouseGlb ?? null,
+      }),
     }),
   });
 }

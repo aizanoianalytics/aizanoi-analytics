@@ -127,6 +127,8 @@ test('real Fly House environment shape adapts Z-up gravity and swept raycast col
     version:2, axis:'Z-up', meta:{schemaVersion:2}, surfaces:[{representation:'mesh-triangles'}],
     integration:{coordinateSystem:{axis:'Z-up'},raycast,roomAt:()=> 'main-room',zonesAt:()=> []}
   };
+  assert.throws(() => createFlyWorldSimulationService({ authoredEnvironment:authored, identity:{ environmentHash:'environment-sha' } }), /environment and GLB hashes/);
+  assert.throws(() => createFlyWorldSimulationService({ authoredEnvironment:authored, identity:{ environmentHash:'environment-sha', glbHash:'glb-sha', axis:'Y-up' } }), /axis mismatch/);
   const service = createFlyWorldSimulationService({
     authoredEnvironment:authored,
     identity:{ environmentHash:'environment-sha', glbHash:'glb-sha' },

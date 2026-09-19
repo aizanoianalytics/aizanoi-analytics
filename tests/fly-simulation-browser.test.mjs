@@ -33,7 +33,7 @@ function statSafe(file) { try { return statSync(file).isFile(); } catch { return
 
 test('real Fly House Chromium spectator renders authoritative telemetry read-only', { skip: !chromium }, async (t) => {
   const environment = createFlyWorldEnvironmentAdapter({
-    hash: 'browser-env', schemaVersion: '1',
+    hash: 'browser-env', glbHash: 'browser-glb', schemaVersion: '1',
     raycast: (origin, direction, maxDistance=100) => {
       const dy = direction.y ?? direction[1];
       if (dy >= 0) return null;

@@ -234,6 +234,14 @@ test('room origin and size are preserved verbatim from the spec', () => {
   }
 });
 
+test('runtime preserves exact authored environment and GLB hashes', () => {
+  assert.deepEqual(env.meta.artifactHashes, rawSpec.artifactHashes ?? {
+    environmentSource: null,
+    flyHouseGlb: null,
+  });
+  assert.equal(Object.isFrozen(env.meta.artifactHashes), true);
+});
+
 test('createEnvironment returns a frozen object whose surface mesh refs are observable via stableId contract', () => {
   assert.equal(Object.isFrozen(env), true, 'env object is frozen');
   // Deterministic ID contract: same input -> same ordered IDs.
