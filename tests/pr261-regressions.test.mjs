@@ -8,7 +8,7 @@ import { BodyState, Vec3, Quat, FlySimulation, replay, TelemetryProtocol, create
 import { parseWebSocketFrames, createFlySimulationService, createFlyWorldSimulationService } from '../services/fly-simulation/service.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const env = { schemaVersion:'e1', hash:'e1', glbHash:'g1', surfaces:[
+const env = { schemaVersion:'e1', hash:'e1', glbHash:'g1', meta:{artifactHashes:{environmentSource:'e1',flyHouseGlb:'g1'}}, surfaces:[
   {id:'floor',point:[0,0,0],normal:[0,1,0]}, {id:'wall',point:[1,0,0],normal:[-1,0,0]}, {id:'ceiling',point:[0,0,2],normal:[0,0,-1]}
 ] };
 

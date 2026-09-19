@@ -12,6 +12,7 @@ import {
 
 const planeEnv = () => ({
   schemaVersion: 'fly-env-1', hash: 'env-plane-v1', glbHash: 'glb-plane-v1',
+  meta: { artifactHashes: { environmentSource: 'env-plane-v1', flyHouseGlb: 'glb-plane-v1' } },
   roomAt: (p) => p.x < 5 ? 'room-a' : 'room-b',
   surfaces: [{ id: 'floor', point: [0, 0, 0], normal: [0, 1, 0], room: 'room-a' }]
 });
@@ -69,6 +70,9 @@ test('manual fixed step and wall clock scheduler preserve lag without silently d
   assert.equal(scheduler.advanceWallClock(0.009), 1); assert.equal(scheduler.lag, 0);
 });
 
+test('generic simulation rejects environments without authored GLB identity', () => {
+  assert.throws(() => new FlySimulation({ hash:'env-only', schemaVersion:'1', surfaces:[] }), /authored artifact hashes/);
+});
 test('scheduler bounds multi-second catch-up and reports dropped wall time honestly', () => {
   const sim = makeSim(); const scheduler = new FixedStepScheduler(sim, { maxCatchUpSteps: 4 });
   assert.equal(scheduler.advanceWallClock(2), 4);
@@ -76,6 +80,9 @@ test('scheduler bounds multi-second catch-up and reports dropped wall time hones
   assert.equal(scheduler.status().cannotKeepPace, true);
   assert.ok(scheduler.status().droppedSeconds > 1.9);
   assert.equal(scheduler.status().owedLagSeconds, scheduler.status().lagSeconds);
+  const fractional = new FixedStepScheduler(makeSim(), { maxCatchUpSteps: 4 });
+  fractional.advanceWallClock(2.005);
+  assert.ok(Math.abs(fractional.status().droppedSeconds - 1.925) < 1e-12);
 });
 
 test('sensor frame implements proprioception contact coarse authored rays and explicit unavailable channels', () => {
