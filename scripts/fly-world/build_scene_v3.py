@@ -88,8 +88,7 @@ def export_glb(root: Path):
             export_format="GLB",
             use_selection=True,
             export_yup=False,
-            export_apply=False,
-            export_merge_vertices=False,
+            export_apply=True,
             export_extras=True,
         )
         print(f"[fly-house-v3] GLB -> {dest}")

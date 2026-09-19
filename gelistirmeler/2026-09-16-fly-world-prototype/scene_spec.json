@@ -648,16 +648,16 @@
     {
       "id": "01-reference-wide",
       "position": [
-        0.80,
-        -3.80,
-        1.55
+        -0.65,
+        -3.75,
+        1.62
       ],
       "lookAt": [
-        0.30,
-        0.45,
-        1.25
+        0.15,
+        0.40,
+        1.28
       ],
-      "focalLengthMm": 14
+      "focalLengthMm": 16
     },
     {
       "id": "02-room-eye-level",
@@ -676,30 +676,30 @@
     {
       "id": "03-window-to-stove",
       "position": [
-        1.05,
-        -3.25,
-        1.50
+        0.80,
+        -3.35,
+        1.55
       ],
       "lookAt": [
-        0.40,
-        0.25,
-        1.20
+        0.30,
+        0.30,
+        1.24
       ],
-      "focalLengthMm": 16
+      "focalLengthMm": 14
     },
     {
       "id": "04-doorway-bedroom",
       "position": [
-        3.20,
-        0.00,
-        1.50
+        2.20,
+        -0.55,
+        1.52
       ],
       "lookAt": [
-        7.20,
-        1.00,
-        1.20
+        6.90,
+        1.10,
+        1.25
       ],
-      "focalLengthMm": 16
+      "focalLengthMm": 18
     },
     {
       "id": "05-fly-scale",

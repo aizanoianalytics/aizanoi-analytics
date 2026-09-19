@@ -311,11 +311,11 @@
     }
   ],
   "sourceHashes": {
-    "gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json": "e8c64348883486af01b7b6f8893eb5edacc3c02729e99020ff59dc3763cc98de",
+    "gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json": "56dd975756fe1441eb6ac65930bad93c0bc177dd34e163e2fb16649f691587a8",
     "gelistirmeler/2026-09-16-fly-world-prototype/asset_manifest.json": "bc3489bd8a761ede531fd62c9f0f4874152883e2d7fe04b49194e924399ffe07",
-    "scripts/fly-world/build_scene_v3.py": "2feeb8dfa97015d8dee7443c6a706b3f5275f82d3ffb47551858fcdb71b617e9",
-    "scripts/fly-world/build_scene_v2.py": "d701232e35f7f5ddbc6cdf94aab940ffc61d1b358e344c4326e712799cb98b91",
-    "scripts/fly-world/detail_pass_v3.py": "db6db55fdbc31072ef11f133eac3b2f9e88934456f0581dd6d1eccc10a7496cf",
+    "scripts/fly-world/build_scene_v3.py": "1ed302aed4ce5d067423c021129546e49929bf68c3cf0eb35e5467b74f1a98fb",
+    "scripts/fly-world/build_scene_v2.py": "4404dd09da251178335dbf90a5ac302dfaedf3a8b268a4662f64459b0dd30bcd",
+    "scripts/fly-world/detail_pass_v3.py": "aa897a9730afa31abec4f5c86c4431bbfb207f551a1388464676353cae68e7fd",
     "scripts/fly-world/micro_detail_pass_v3.py": "0d7da51b945c52ef0ff69e0a5cf2c2df4f4de9b965555a667214925c567d220e",
     "scripts/fly-world/environment_export.py": "facb76ac3499fd31a639604bc902884848603dd6ac28558ce0a4e8bc714cb747",
     "scripts/fly-world/author_heroes.py": "d67abb33d194a25892a4278b89556cee5c9200c0a7706d4668b1269a3c2d10f1",

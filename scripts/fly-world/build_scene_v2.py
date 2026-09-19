@@ -373,18 +373,18 @@ def render_reviews(root):
         # far left and the central stove is on the right.  Pulled far
         # enough back that the horizontal flue segment does not eclipse
         # the composition.
-        ("01-reference-wide",(.80,-3.80,1.55),(.30,.45,1.25),14),
+        ("01-reference-wide",(-.65,-3.75,1.62),(.15,.40,1.28),16),
         # 02: an eye-level survey from the south-east circulation zone.
         ("02-room-eye-level",(-1.40,-2.75,1.55),(.55,.75,1.18),48),
         # 03: window-to-stove in one frame.  Camera sits in the south-west
         # corner looking toward the central stove; the bar window sits
         # behind the camera on the west wall and the layered curtains are
         # visible on the right while the wood stove occupies the centre.
-        ("03-window-to-stove",(1.05,-3.25,1.50),(.40,.25,1.20),16),
+        ("03-window-to-stove",(.80,-3.35,1.55),(.30,.30,1.24),14),
         # 04: doorway-bedroom — camera steps just inside the bedroom so
         # the bed, trunk, book pile, basket, bedside table and the
         # north-facing window are all visible in one frame.
-        ("04-doorway-bedroom",(3.20,.00,1.50),(7.20,1.00,1.20),16),
+        ("04-doorway-bedroom",(2.20,-.55,1.52),(6.90,1.10,1.25),18),
         ("05-fly-scale",(.15,-2.60,1.02),(1.40,-.10,.22),52),
         ("06-window-detail",(-3.15,-1.25,1.38),(-4.55,-.72,1.42),55),
         ("07-curtains-cage",(-2.85,.15,1.35),(-3.55,.95,1.30),52),
