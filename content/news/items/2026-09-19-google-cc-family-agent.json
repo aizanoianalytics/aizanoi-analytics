@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-19-google-cc-family-agent",
+  "title": "Google refocuses CC agent on household coordination for families",
+  "summary": "Google on Thursday pushed its experimental AI agent CC into family-coordination mode, letting up to six household members share selected emails, calendars and documents so the agent can fill in permission slips, plan meals and surface school updates. CC now gets its own Google account with isolated permissions and runs on its own cloud computer powered by Gemini and Google's agentic harness, Antigravity. The US-only experiment requires a personal Gmail and an age of 18 or older, and Google has opened a waitlist for new users.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-09-19T07:00:00Z",
+  "updatedAt": "2026-09-19T07:00:00Z",
+  "retrievedAt": "2026-09-19T05:15:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["google", "cc", "agentic-ai", "gemini", "antigravity"],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/18/googles-new-cc-is-an-ai-agent-that-helps-families-run-their-households/",
+      "publishedAt": "2026-09-18T17:33:00Z"
+    }
+  ]
+}

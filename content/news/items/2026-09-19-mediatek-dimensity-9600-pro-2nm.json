@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-19-mediatek-dimensity-9600-pro-2nm",
+  "title": "MediaTek launches Dimensity 9600 Pro on TSMC 2nm as Nvidia deepens XPUs partnership",
+  "summary": "MediaTek launched its Dimensity 9600 Pro flagship mobile chip on September 15 using Taiwan Semiconductor Manufacturing Company's 2-nanometer node, putting TSMC's newest process into a shipping handset silicon. The launch follows Nvidia's $3.5 billion investment in MediaTek convertible bonds on August 31 and an expanded partnership to connect MediaTek custom XPUs to Nvidia's NVLink Fusion rack-scale systems. TSMC has flagged that the 2nm ramp could dilute second-half gross margin by 3 to 4 percentage points even as customer demand remains strong.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-19T08:15:00Z",
+  "updatedAt": "2026-09-19T08:15:00Z",
+  "retrievedAt": "2026-09-19T05:35:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["mediatek", "tsmc", "2nm", "dimensity", "nvidia"],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/articles/tsmc-2nm-era-accelerating-mediatek-214827953.html",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    }
+  ]
+}

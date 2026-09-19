@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-19-jensen-huang-safety-debate",
+  "title": "Jensen Huang pushes back on AI slowdown push at UK frontier AI summit",
+  "summary": "Nvidia chief executive Jensen Huang, speaking on the sidelines of a King Charles III-convened frontier AI meeting at Dumfries House in Scotland on Thursday, said companies must take responsibility for the safety of their AI software and services but pushed back against slowing development or adding further regulation. The remarks came alongside Anthropic CEO Dario Amodei's call for a frontier-model slowdown, which OpenAI's Sam Altman and DeepMind's Demis Hassabis endorsed. Huang separately told reporters he expects Nvidia to roughly double chip sales in the coming year.",
+  "category": "ai",
+  "priority": 65,
+  "publishedAt": "2026-09-19T07:30:00Z",
+  "updatedAt": "2026-09-19T07:30:00Z",
+  "retrievedAt": "2026-09-19T05:25:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["nvidia", "jensen-huang", "ai-safety", "frontier-ai", "regulation"],
+  "sources": [
+    {
+      "publisher": "Taipei Times",
+      "url": "https://taipeitimes.com/News/biz/archives/2026/09/19/2003864506",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    }
+  ]
+}
