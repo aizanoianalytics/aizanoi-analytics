@@ -196,7 +196,7 @@ async function boot() {
 
   // The browser is a spectator only. A host must explicitly provide a WebSocket
   // URL; production has no default and reports telemetry as inactive.
-  const bridge = new SpectatorBridge();
+  const bridge = new SpectatorBridge({ environmentIdentity: { environmentHash: environment.meta.artifactHashes.environmentSource, glbHash: environment.meta.artifactHashes.flyHouseGlb } });
   window.__FLY_SPECTATOR_BRIDGE__ = bridge;
   const config = window.__FLY_TELEMETRY_CONFIG__;
   const simulationStatus = document.querySelector('#simulation-status');

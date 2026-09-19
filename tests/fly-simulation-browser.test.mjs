@@ -32,8 +32,9 @@ function staticWorldServer() {
 function statSafe(file) { try { return statSync(file).isFile(); } catch { return false; } }
 
 test('real Fly House Chromium spectator renders authoritative telemetry read-only', { skip: !chromium }, async (t) => {
+  const authoredIdentity = JSON.parse(readFileSync(join(repoRoot, 'frontend/labs/fly-world/assets/environment.json'), 'utf8')).artifactHashes;
   const environment = createFlyWorldEnvironmentAdapter({
-    hash: 'browser-env', glbHash: 'browser-glb', schemaVersion: '1',
+    meta: { artifactHashes: authoredIdentity }, schemaVersion: '1',
     raycast: (origin, direction, maxDistance=100) => {
       const dy = direction.y ?? direction[1];
       if (dy >= 0) return null;

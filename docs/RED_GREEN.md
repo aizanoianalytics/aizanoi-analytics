@@ -15,8 +15,8 @@ $ node --test tests/pr261-regressions.test.mjs
 # fail 0
 
 $ node --test tests/fly-simulation.test.mjs tests/fly-simulation-service.test.mjs tests/pr261-regressions.test.mjs
-# tests 34
-# pass 34
+# tests 36
+# pass 36
 # fail 0
 
 $ node --test tests/fly-simulation-browser.test.mjs
@@ -25,8 +25,8 @@ $ node --test tests/fly-simulation-browser.test.mjs
 # fail 0
 
 $ npm test
-# tests 552
-# pass 552
+# tests 554
+# pass 554
 # fail 0
 
 $ node --test tests/fly-world-*.test.mjs

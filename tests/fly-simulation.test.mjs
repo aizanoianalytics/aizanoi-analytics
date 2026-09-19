@@ -11,7 +11,7 @@ import {
 } from '../frontend/labs/fly-simulation/index.js';
 
 const planeEnv = () => ({
-  schemaVersion: 'fly-env-1', hash: 'env-plane-v1',
+  schemaVersion: 'fly-env-1', hash: 'env-plane-v1', glbHash: 'glb-plane-v1',
   roomAt: (p) => p.x < 5 ? 'room-a' : 'room-b',
   surfaces: [{ id: 'floor', point: [0, 0, 0], normal: [0, 1, 0], room: 'room-a' }]
 });
@@ -69,6 +69,15 @@ test('manual fixed step and wall clock scheduler preserve lag without silently d
   assert.equal(scheduler.advanceWallClock(0.009), 1); assert.equal(scheduler.lag, 0);
 });
 
+test('scheduler bounds multi-second catch-up and reports dropped wall time honestly', () => {
+  const sim = makeSim(); const scheduler = new FixedStepScheduler(sim, { maxCatchUpSteps: 4 });
+  assert.equal(scheduler.advanceWallClock(2), 4);
+  assert.equal(sim.tick, 4);
+  assert.equal(scheduler.status().cannotKeepPace, true);
+  assert.ok(scheduler.status().droppedSeconds > 1.9);
+  assert.equal(scheduler.status().owedLagSeconds, scheduler.status().lagSeconds);
+});
+
 test('sensor frame implements proprioception contact coarse authored rays and explicit unavailable channels', () => {
   const sim = makeSim(); sim.addFly({ flyId: 'f', body: new BodyState({ position: new Vec3(0, 1, 0) }) });
   sim.step(0.02); const s = sim.getFly('f').sensors;
@@ -117,22 +126,26 @@ test('replay applies identical inputs to reproduce simulation state', () => {
 });
 
 test('browser factory adapts Fly World raycast and bridge interpolates without authority', () => {
-  const env = createFlyWorldEnvironmentAdapter({ hash: 'h', glbHash: 'g', schemaVersion: 's', raycast: () => ({ distance: 1, surfaceId: 'floor', point: { x: 0, y: 0, z: 0 }, normal: { x: 0, y: 1, z: 0 } }), roomAt: () => 'main-room', zonesAt: () => ['airflow'] });
+  const env = createFlyWorldEnvironmentAdapter({ meta: { artifactHashes: { environmentSource: 'h', flyHouseGlb: 'g' } }, schemaVersion: 's', raycast: () => ({ distance: 1, surfaceId: 'floor', point: { x: 0, y: 0, z: 0 }, normal: { x: 0, y: 1, z: 0 } }), roomAt: () => 'main-room', zonesAt: () => ['airflow'] });
   const { simulation, bridge } = createBrowserSimulation(env, { now: () => 0 });
   simulation.addFly({ flyId: 'f', body: new BodyState() });
-  bridge.ingest({ version: 'telemetry-1', sequence: 1, flyId: 'f', state: { position: [0, 0, 0], orientation: [0, 0, 0, 1] } });
-  bridge.ingest({ version: 'telemetry-1', sequence: 2, flyId: 'f', state: { position: [2, 0, 0], orientation: [0, 0, 0, 1] } });
+  bridge.ingest({ version: 'telemetry-1', sequence: 1, flyId: 'f', identity: { environmentHash: 'h', glbHash: 'g' }, state: { position: [0, 0, 0], orientation: [0, 0, 0, 1] } });
+  bridge.ingest({ version: 'telemetry-1', sequence: 2, flyId: 'f', identity: { environmentHash: 'h', glbHash: 'g' }, state: { position: [2, 0, 0], orientation: [0, 0, 0, 1] } });
+  assert.equal(bridge.ingest({ version: 'telemetry-1', sequence: 3, flyId: 'f', identity: { environmentHash: 'other', glbHash: 'g' }, state: { position: [999, 0, 0], orientation: [0, 0, 0, 1] } }), false);
   const target = { position: { set: (...v) => { target.value = v; } }, quaternion: { set: () => { target.rotated = true; } } };
   bridge.render(target, .5); assert.deepEqual(target.value, [1, 0, 0]); assert.equal(target.rotated, true);
   assert.equal(bridge.authority, 'spectator-read-only'); assert.equal(bridge.sentCommands, 0);
 });
 
-test('telemetry includes required metadata, rejects arbitrary keys, and reports lag rather than dropping frames', () => {
+test('telemetry includes required metadata, identity, rejects arbitrary keys, and reports lag rather than dropping frames', () => {
   const t = new TelemetryProtocol();
-  const encoded = JSON.parse(t.encode({ flyId: 'f', sequence: 1, state: { room: 'a', position: [1, 2, 3], orientation: [0, 0, 0, 1] }, metadata: { controller: 'HEURISTIC TEST CONTROLLER', provenance: 'MODELLED' } }));
+  const identity = { environmentHash: 'env-plane-v1', glbHash: 'glb-plane-v1' };
+  const encoded = JSON.parse(t.encode({ flyId: 'f', sequence: 1, identity, state: { room: 'a', position: [1, 2, 3], orientation: [0, 0, 0, 1] }, metadata: { controller: 'HEURISTIC TEST CONTROLLER', provenance: 'MODELLED' } }));
+  assert.deepEqual(encoded.identity, identity);
   assert.equal(encoded.metadata.controller, 'HEURISTIC TEST CONTROLLER');
-  assert.throws(() => t.encode({ flyId: 'f', sequence: 1, state: {}, metadata: {}, arbitrary: 1 }), /allowlist/);
-  assert.throws(() => new WebSocketTelemetryAdapter({ send() {} }, t, { maxLag: 0 }).send({ flyId: 'f', sequence: 1, state: {} }), TelemetryLagError);
+  assert.throws(() => t.encode({ flyId: 'f', sequence: 1, identity, state: {}, metadata: {}, arbitrary: 1 }), /allowlist/);
+  assert.throws(() => t.encode({ flyId: 'f', sequence: 1, identity, state: { contact: { evil: 1 } }, metadata: {} }), /allowlist/);
+  assert.throws(() => new WebSocketTelemetryAdapter({ send() {} }, t, { maxLag: 0 }).send({ flyId: 'f', sequence: 1, identity, state: {} }), TelemetryLagError);
 });
 
 test('Fly House integration surface stays authored and spectator-visible', () => {
@@ -170,7 +183,7 @@ test('telemetry snapshot is deterministic, complete, and allowlisted', () => {
 });
 
 test('adapter preserves exact environment and GLB identity in checkpoints', () => {
-  const env = createFlyWorldEnvironmentAdapter({ environmentHash: 'environment-exact', glbHash: 'glb-exact', schemaVersion: 's', raycast: () => null });
+  const env = createFlyWorldEnvironmentAdapter({ meta: { artifactHashes: { environmentSource: 'environment-exact', flyHouseGlb: 'glb-exact' } }, schemaVersion: 's', raycast: () => null });
   const sim = new FlySimulation(env); sim.addFly({ flyId: 'f' });
   const cp = checkpoint(sim);
   assert.equal(env.hash, 'environment-exact'); assert.equal(env.glbHash, 'glb-exact');

@@ -6,8 +6,7 @@ import { BodyState, Vec3, createFlyWorldEnvironmentAdapter } from '../frontend/l
 import { createFlySimulationService } from '../services/fly-simulation/service.mjs';
 
 const authoredPlane = createFlyWorldEnvironmentAdapter({
-  environmentHash: 'authored-test-plane-v1',
-  glbHash: 'authored-test-plane.glb',
+  meta: { artifactHashes: { environmentSource: 'authored-test-plane-v1', flyHouseGlb: 'authored-test-plane.glb' } },
   schemaVersion: 'fly-world-test-plane-1',
   raycast(origin, direction) {
     if (direction[1] >= 0 && direction.y >= 0) return null;
@@ -72,8 +71,8 @@ test('real Fly World service streams allowlisted telemetry and ignores mutations
   try {
     const first = await client.next();
     assert.equal(first.version, 'telemetry-1');
-    assert.deepEqual(Object.keys(first).sort(), ['flyId', 'lag', 'metadata', 'sequence', 'state', 'version'].sort());
-    assert.equal(first.flyId, 'service-fly');
+    assert.deepEqual(Object.keys(first).sort(), ['flyId', 'identity', 'lag', 'metadata', 'sequence', 'state', 'version'].sort());
+    assert.deepEqual(first.identity, { environmentHash: 'authored-test-plane-v1', glbHash: 'authored-test-plane.glb' });
     assert.equal(first.state.room, 'test-plane');
     assert.equal(first.lag.fixedDt, 0.02);
     client.socket.write(frame(JSON.stringify({ command: 'setPosition', flyId: 'service-fly', position: [999, 999, 999] })));

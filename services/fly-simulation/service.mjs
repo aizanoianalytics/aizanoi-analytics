@@ -188,6 +188,7 @@ export function createFlySimulationService({
     return {
       flyId: id,
       sequence: sim.tick,
+      identity: { environmentHash: sim.environment.hash, glbHash: sim.environment.glbHash },
       state: {
         room: snapshot.room,
         position: snapshot.transform.position,

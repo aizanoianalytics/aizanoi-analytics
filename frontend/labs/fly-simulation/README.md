@@ -21,7 +21,7 @@ Every scientific subsystem carries machine-readable `units`, `calibrated`, `assu
 
 - Fixed-step updates, deterministic normalized quaternions, actual drag, stable landing/takeoff/rest phases, and checkpoint restore cover body state, motor state, sensor history, RNG state, and environment dynamic state.
 - `replay(sim, events)` applies identical timestamped motor inputs; `stateHash()` and `replayHash()` provide deterministic regression hashes.
-- Telemetry is an allowlisted WebSocket-shaped adapter with required version/sequence/state/metadata fields. Unknown keys are rejected; configured lag raises `TelemetryLagError`, and spectator sequence regressions are counted rather than silently dropped.
+- Telemetry is an allowlisted WebSocket-shaped adapter with required version/sequence/identity/state/metadata fields. Environment and GLB artifact hashes are immutable per frame and spectators reject mismatches. Unknown keys are rejected; configured lag raises `TelemetryLagError`, and bounded scheduler catch-up reports dropped wall time explicitly rather than silently simulating it.
 - The core is a reduced-order test model, not a calibrated insect model, connectome, brain, physiology, or production controller. Authored Fly World geometry is environmental evidence, not biological evidence. No network transport is required; a socket-shaped object is injected only by the host.
 
 Run focused tests:

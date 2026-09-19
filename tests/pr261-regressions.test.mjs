@@ -4,11 +4,11 @@ import { EventEmitter } from 'node:events';
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import { BodyState, Vec3, Quat, FlySimulation, replay, TelemetryProtocol } from '../frontend/labs/fly-simulation/index.js';
+import { BodyState, Vec3, Quat, FlySimulation, replay, TelemetryProtocol, createFlyWorldEnvironmentAdapter } from '../frontend/labs/fly-simulation/index.js';
 import { parseWebSocketFrames, createFlySimulationService, createFlyWorldSimulationService } from '../services/fly-simulation/service.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const env = { schemaVersion:'e1', hash:'e1', surfaces:[
+const env = { schemaVersion:'e1', hash:'e1', glbHash:'g1', surfaces:[
   {id:'floor',point:[0,0,0],normal:[0,1,0]}, {id:'wall',point:[1,0,0],normal:[-1,0,0]}, {id:'ceiling',point:[0,0,2],normal:[0,0,-1]}
 ] };
 
@@ -124,10 +124,10 @@ test('real Fly House environment shape adapts Z-up gravity and swept raycast col
     return nearest;
   };
   const authored = {
-    version:2, axis:'Z-up', meta:{schemaVersion:2}, surfaces:[{representation:'mesh-triangles'}],
+    version:2, axis:'Z-up', meta:{schemaVersion:2, artifactHashes:{environmentSource:'environment-sha',flyHouseGlb:'glb-sha'}}, surfaces:[{representation:'mesh-triangles'}],
     integration:{coordinateSystem:{axis:'Z-up'},raycast,roomAt:()=> 'main-room',zonesAt:()=> []}
   };
-  assert.throws(() => createFlyWorldSimulationService({ authoredEnvironment:authored, identity:{ environmentHash:'environment-sha' } }), /environment and GLB hashes/);
+  assert.throws(() => createFlyWorldSimulationService({ authoredEnvironment:authored, identity:{ environmentHash:'wrong-environment', glbHash:'glb-sha' } }), /environment hash mismatch/);
   assert.throws(() => createFlyWorldSimulationService({ authoredEnvironment:authored, identity:{ environmentHash:'environment-sha', glbHash:'glb-sha', axis:'Y-up' } }), /axis mismatch/);
   const service = createFlyWorldSimulationService({
     authoredEnvironment:authored,
@@ -152,6 +152,12 @@ test('replay rejects non-fixed dt and checkpoint data is isolated', () => {
   const sim=new FlySimulation(env); sim.addFly({flyId:'f'}); assert.throws(()=>replay(sim,[{dt:.01,inputs:{}}]),/fixed/);
   const cp=sim.checkpoint(); cp.flies[0].body.position[0]=99; assert.notEqual(sim.getFly('f').body.position.x,99);
 });
+test('authored adapter rejects caller-supplied identity when authored artifact hashes are absent', () => {
+  assert.throws(() => createFlyWorldEnvironmentAdapter({ schemaVersion:'1', raycast:()=>null }, { environmentHash:'caller-env', glbHash:'caller-glb' }), /exact authored environment and GLB hashes/);
+});
+
 test('telemetry rejects the retired secret key and unknown nested keys', () => {
-  const t=new TelemetryProtocol(); assert.throws(()=>t.encode({flyId:'f',state:{},secret:'x'}),/allowlist/); assert.throws(()=>t.encode({flyId:'f',state:{position:[],evil:1}}),/allowlist/);
+  const identity = { environmentHash:'e1', glbHash:'g1' };
+  assert.throws(() => new TelemetryProtocol().encode({ flyId:'f', sequence:0, identity, state:{}, secret:'x' }), /allowlist/);
+  assert.throws(() => new TelemetryProtocol().encode({ flyId:'f', sequence:0, identity, state:{position:[],evil:1} }), /allowlist/);
 });
