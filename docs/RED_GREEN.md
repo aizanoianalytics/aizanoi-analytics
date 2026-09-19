@@ -10,13 +10,13 @@ The original interactive RED runs were not retained at a reviewable commit. They
 
 ```text
 $ node --test tests/pr261-regressions.test.mjs
-# tests 10
-# pass 10
+# tests 12
+# pass 12
 # fail 0
 
 $ node --test tests/fly-simulation.test.mjs tests/fly-simulation-service.test.mjs tests/pr261-regressions.test.mjs
-# tests 32
-# pass 32
+# tests 34
+# pass 34
 # fail 0
 
 $ node --test tests/fly-simulation-browser.test.mjs
@@ -25,8 +25,8 @@ $ node --test tests/fly-simulation-browser.test.mjs
 # fail 0
 
 $ npm test
-# tests 549
-# pass 549
+# tests 551
+# pass 551
 # fail 0
 
 $ node --test tests/fly-world-*.test.mjs

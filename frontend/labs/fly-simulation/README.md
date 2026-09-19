@@ -32,7 +32,7 @@ node --test tests/fly-simulation.test.mjs tests/fly-simulation-service.test.mjs
 
 ## Narrow Fly World spectator service
 
-`services/fly-simulation/service.mjs` exports `createFlySimulationService({ environment, simulation, host, port, intervalMs, server })`.
+`services/fly-simulation/service.mjs` exports both the generic `createFlySimulationService({ environment, simulation, host, port, intervalMs, server })` and the Fly House seam `createFlyWorldSimulationService({ authoredEnvironment, identity, simulationOptions, ...serviceOptions })`. The latter accepts the real `createEnvironment()` shape, reads its nested `integration` contract, derives Z-up gravity/down direction, requires exact environment and GLB identity, and preserves authored mesh raycasts for swept body collision.
 The service is deliberately not a general backend: it owns (or accepts an injected)
 `FlySimulation`, uses the authored Fly World environment adapter, and exposes only
 `GET /spectator/telemetry-1` over a minimal RFC6455 WebSocket handshake and frames.

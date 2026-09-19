@@ -5,7 +5,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { BodyState, Vec3, Quat, FlySimulation, replay, TelemetryProtocol } from '../frontend/labs/fly-simulation/index.js';
-import { parseWebSocketFrames, createFlySimulationService } from '../services/fly-simulation/service.mjs';
+import { parseWebSocketFrames, createFlySimulationService, createFlyWorldSimulationService } from '../services/fly-simulation/service.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const env = { schemaVersion:'e1', hash:'e1', surfaces:[
@@ -25,6 +25,21 @@ test('upgrade policy rejects arbitrary host and hostile origin', async () => {
 test('strict parser fails closed on unmasked control and oversize frames', () => {
   assert.throws(() => parseWebSocketFrames(Buffer.from([0x81,0x01,0x61])), /masked/);
   assert.throws(() => parseWebSocketFrames(Buffer.from([0x81,0xff,0,0,0,0,0,1,0,1,0,0,0,0])), /maximum|oversize/);
+});
+
+test('strict parser rejects malformed RFC6455 close payloads', () => {
+  const maskedClose = (payload) => {
+    const mask = Buffer.from([1, 2, 3, 4]);
+    return Buffer.concat([
+      Buffer.from([0x88, 0x80 | payload.length]),
+      mask,
+      Buffer.from(payload.map((value, index) => value ^ mask[index % 4]))
+    ]);
+  };
+  assert.throws(() => parseWebSocketFrames(maskedClose(Buffer.from([0x03]))), /close payload/);
+  const reservedCode = Buffer.alloc(2); reservedCode.writeUInt16BE(1005);
+  assert.throws(() => parseWebSocketFrames(maskedClose(reservedCode)), /close code/);
+  assert.throws(() => parseWebSocketFrames(maskedClose(Buffer.from([0x03, 0xe8, 0xc3, 0x28]))), /invalid utf8/);
 });
 
 test('parser persists fragmented message state across split TCP chunks', () => {
@@ -88,6 +103,49 @@ test('body volume sweeps through wall and ceiling and reports contacts', () => {
   sim.step(); const f=sim.getFly('f'); assert.ok(f.body.position.x <= .8); assert.equal(f.contact.surfaceId,'wall');
   f.body.position=new Vec3(.5,.5,1.7); f.body.velocity=new Vec3(0,0,100); sim.step(); assert.ok(f.body.position.z<=1.8); assert.equal(f.contact.surfaceId,'ceiling');
 });
+
+test('real Fly House environment shape adapts Z-up gravity and swept raycast collision', () => {
+  const planes = [
+    { surfaceId:'floor', point:new Vec3(0,0,0), normal:new Vec3(0,0,1) },
+    { surfaceId:'wall', point:new Vec3(1,0,0), normal:new Vec3(-1,0,0) },
+    { surfaceId:'ceiling', point:new Vec3(0,0,2), normal:new Vec3(0,0,-1) }
+  ];
+  const raycast = (origin, direction, maxDistance=100) => {
+    const o = origin instanceof Vec3 ? origin : new Vec3(origin.x, origin.y, origin.z);
+    const d = direction instanceof Vec3 ? direction.normalize() : new Vec3(direction.x, direction.y, direction.z).normalize();
+    let nearest = null;
+    for (const plane of planes) {
+      const denominator = d.dot(plane.normal);
+      if (Math.abs(denominator) < 1e-9) continue;
+      const distance = plane.point.sub(o).dot(plane.normal) / denominator;
+      if (distance < 0 || distance > maxDistance || (nearest && distance >= nearest.distance)) continue;
+      nearest = { ...plane, distance, point:o.add(d.mul(distance)), room:'main-room', zones:[] };
+    }
+    return nearest;
+  };
+  const authored = {
+    version:2, axis:'Z-up', meta:{schemaVersion:2}, surfaces:[{representation:'mesh-triangles'}],
+    integration:{coordinateSystem:{axis:'Z-up'},raycast,roomAt:()=> 'main-room',zonesAt:()=> []}
+  };
+  const service = createFlyWorldSimulationService({
+    authoredEnvironment:authored,
+    identity:{ environmentHash:'environment-sha', glbHash:'glb-sha' },
+    simulationOptions:{ fixedDt:.02 },
+    port:0
+  });
+  const adapter = service.simulation.environment;
+  assert.deepEqual(adapter.downDirection.toJSON(), [0,0,-1]);
+  assert.equal(adapter.schemaVersion, '2');
+  const sim = service.simulation;
+  assert.deepEqual(sim.gravity.toJSON(), [0,0,-9.81]);
+  sim.addFly({flyId:'real-shape',body:new BodyState({position:[0,0,1],velocity:[100,0,0],radius:.2})});
+  sim.step();
+  const fly = sim.getFly('real-shape');
+  assert.ok(fly.body.position.x <= .8 + 1e-9);
+  assert.equal(fly.contact.surfaceId, 'wall');
+  assert.equal(fly.room, 'main-room');
+});
+
 test('replay rejects non-fixed dt and checkpoint data is isolated', () => {
   const sim=new FlySimulation(env); sim.addFly({flyId:'f'}); assert.throws(()=>replay(sim,[{dt:.01,inputs:{}}]),/fixed/);
   const cp=sim.checkpoint(); cp.flies[0].body.position[0]=99; assert.notEqual(sim.getFly('f').body.position.x,99);

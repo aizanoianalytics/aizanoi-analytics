@@ -37,13 +37,62 @@ export class SensorFrame {
   }
 }
 export class FlySimulation {
-  constructor(environment,{fixedDt=.02,gravity=new Vec3(0,-9.81,0),rngState=0,downDirection=environment?.downDirection??new Vec3(0,-1,0)}={}){if(!environment?.hash||!environment?.schemaVersion)throw new TypeError('environment hash and schema required');this.environment=environment;this.fixedDt=fixedDt;this.gravity=gravity;this.downDirection=asVec(downDirection).normalize();this.upDirection=this.downDirection.mul(-1);this.physicsCollisionAdapter=new AuthoredSurfaceAdapter(environment.surfaces??[],environment.raycast);this.registry=new Map();this.time=0;this.tick=0;this.paused=false;this.rngState={seed:rngState};this.environmentState=environment.dynamicState??{};this.provenance=Object.freeze({physics:MODELLED,collision:Object.freeze({...MODELLED,units:'authored surface/raycast'}),sensors:MODELLED})}
+  constructor(environment,{fixedDt=.02,gravity=null,rngState=0,downDirection=environment?.downDirection??new Vec3(0,-1,0)}={}){if(!environment?.hash||!environment?.schemaVersion)throw new TypeError('environment hash and schema required');this.environment=environment;this.fixedDt=fixedDt;this.downDirection=asVec(downDirection).normalize();this.upDirection=this.downDirection.mul(-1);this.gravity=gravity==null?this.downDirection.mul(9.81):asVec(gravity);this.physicsCollisionAdapter=new AuthoredSurfaceAdapter(environment.surfaces??[],environment.raycast);this.registry=new Map();this.time=0;this.tick=0;this.paused=false;this.rngState={seed:rngState};this.environmentState=environment.dynamicState??{};this.provenance=Object.freeze({physics:MODELLED,collision:Object.freeze({...MODELLED,units:'authored surface/raycast'}),sensors:MODELLED})}
   addFly({flyId,body=new BodyState(),provenance=MODELLED}){if(!flyId||this.registry.has(flyId))throw new Error('flyId must be unique');this.registry.set(flyId,{flyId,body:cloneBody(body),motors:{thrust:0,pitch:0,yaw:0,roll:0},room:null,zones:[],contact:{phase:'AIRBORNE',grounded:false,surfaceId:null,normal:null},sensors:null,sensorHistory:[],provenance:validateProvenance(provenance)});this.#sense(this.registry.get(flyId))}
   getFly(id){const f=this.registry.get(id);if(!f)throw new Error('unknown flyId');return f} listFlyIds(){return [...this.registry.keys()]}
   setMotors(id,motors){const f=this.getFly(id);f.motors={thrust:n(motors?.thrust),pitch:n(motors?.pitch),yaw:n(motors?.yaw),roll:n(motors?.roll)}}
   pause(){this.paused=true;return this} resume(){this.paused=false;return this}
   step(dt=this.fixedDt){if(this.paused)return this;return this.stepOne(dt)}
-  stepOne(dt=this.fixedDt){if(!(dt>=0))throw new RangeError('dt');for(const f of this.registry.values()){const start=f.body.position.clone();f.body.applyThrust(this.upDirection.mul(f.motors.thrust));f.body.applyTorque(new Vec3(f.motors.roll,f.motors.yaw,f.motors.pitch));f.body.integrate(dt,this.gravity);let contact=null;for(const s of this.physicsCollisionAdapter.surfaces){const n=s.normal, before=start.sub(s.point).dot(n), after=f.body.position.sub(s.point).dot(n), limit=f.body.radius;if(after<limit&&(before>=limit||f.body.velocity.dot(n)<0)){f.body.position=f.body.position.add(n.mul(limit-after));const inward=f.body.velocity.dot(n);if(inward<0)f.body.velocity=f.body.velocity.sub(n.mul(inward));contact={phase:(Math.abs(f.body.velocity.dot(n))<.02&&n.dot(this.upDirection)>.5)?'STABLE_REST':'LANDED',grounded:n.dot(this.upDirection)>.5,surfaceId:s.id,normal:n.toJSON()}}}const hit=this.physicsCollisionAdapter.raycast(f.body.position,this.downDirection,Math.max(1,f.body.radius*4));if(!contact&&hit){const height=f.body.position.sub(hit.point).dot(this.upDirection);if(height<=f.body.radius){f.body.position=hit.point.add(this.upDirection.mul(f.body.radius));const normalVelocity=f.body.velocity.dot(this.upDirection);if(normalVelocity<0)f.body.velocity=f.body.velocity.sub(this.upDirection.mul(normalVelocity));contact={phase:Math.abs(f.body.velocity.dot(this.upDirection))<.02?'STABLE_REST':'LANDED',grounded:true,surfaceId:hit.surfaceId,normal:hit.normal?.toJSON?.()??null}}}f.contact=contact??{phase:'AIRBORNE',grounded:false,surfaceId:null,normal:null};f.room=this.environment.roomAt?.(f.body.position)??hit?.room??null;f.zones=this.environment.zonesAt?.(f.body.position)??hit?.zones??[];this.#sense(f)}this.time+=dt;this.tick+=1;return this}
+  stepOne(dt=this.fixedDt){
+    if(!(dt>=0))throw new RangeError('dt');
+    for(const f of this.registry.values()){
+      const start=f.body.position.clone();
+      f.body.applyThrust(this.upDirection.mul(f.motors.thrust));
+      f.body.applyTorque(new Vec3(f.motors.roll,f.motors.yaw,f.motors.pitch));
+      f.body.integrate(dt,this.gravity);
+      let contact=null;
+      const displacement=f.body.position.sub(start);
+      const travel=displacement.length();
+      if(travel>1e-12){
+        const direction=displacement.mul(1/travel);
+        const swept=this.physicsCollisionAdapter.raycast(start,direction,travel+f.body.radius);
+        if(swept&&swept.distance<=travel+f.body.radius){
+          let normal=swept.normal;
+          if(normal.dot(direction)>0)normal=normal.mul(-1);
+          f.body.position=swept.point.add(normal.mul(f.body.radius));
+          const inward=f.body.velocity.dot(normal);
+          if(inward<0)f.body.velocity=f.body.velocity.sub(normal.mul(inward));
+          const grounded=normal.dot(this.upDirection)>.5;
+          contact={phase:grounded&&Math.abs(f.body.velocity.dot(normal))<.02?'STABLE_REST':'LANDED',grounded,surfaceId:swept.surfaceId,normal:normal.toJSON()};
+        }
+      }
+      for(const s of this.physicsCollisionAdapter.surfaces){
+        const normal=s.normal, before=start.sub(s.point).dot(normal), after=f.body.position.sub(s.point).dot(normal), limit=f.body.radius;
+        if(after<limit&&(before>=limit||f.body.velocity.dot(normal)<0)){
+          f.body.position=f.body.position.add(normal.mul(limit-after));
+          const inward=f.body.velocity.dot(normal);
+          if(inward<0)f.body.velocity=f.body.velocity.sub(normal.mul(inward));
+          const grounded=normal.dot(this.upDirection)>.5;
+          contact={phase:grounded&&Math.abs(f.body.velocity.dot(normal))<.02?'STABLE_REST':'LANDED',grounded,surfaceId:s.id,normal:normal.toJSON()};
+        }
+      }
+      const hit=this.physicsCollisionAdapter.raycast(f.body.position,this.downDirection,Math.max(1,f.body.radius*4));
+      if(!contact&&hit){
+        const height=f.body.position.sub(hit.point).dot(this.upDirection);
+        if(height<=f.body.radius){
+          f.body.position=hit.point.add(this.upDirection.mul(f.body.radius));
+          const normalVelocity=f.body.velocity.dot(this.upDirection);
+          if(normalVelocity<0)f.body.velocity=f.body.velocity.sub(this.upDirection.mul(normalVelocity));
+          contact={phase:Math.abs(f.body.velocity.dot(this.upDirection))<.02?'STABLE_REST':'LANDED',grounded:true,surfaceId:hit.surfaceId,normal:hit.normal?.toJSON?.()??null};
+        }
+      }
+      f.contact=contact??{phase:'AIRBORNE',grounded:false,surfaceId:null,normal:null};
+      f.room=this.environment.roomAt?.(f.body.position)??hit?.room??null;
+      f.zones=this.environment.zonesAt?.(f.body.position)??hit?.zones??[];
+      this.#sense(f);
+    }
+    this.time+=dt;this.tick+=1;return this;
+  }
   stepN(count){const steps=Math.max(0,Math.floor(count));for(let i=0;i<steps;i++)this.stepOne();return this}
   telemetrySnapshot(flyId,{lagSeconds=0,controller='HEURISTIC TEST CONTROLLER',checkpointStatus}={}){const f=this.getFly(flyId),b=f.body;return {tick:this.tick,time:this.time,timeSeconds:this.time,flyId:f.flyId,fly:{id:f.flyId},transform:{position:b.position.toJSON(),orientation:b.orientation.toJSON()},velocity:{linear:b.velocity.toJSON(),angular:b.angularVelocity.toJSON(),speed:b.velocity.length()},contact:{...f.contact},room:f.room,zones:[...f.zones],sensorSummary:{version:f.sensors?.version??null,proprioception:f.sensors?.proprioception??null,channels:Object.fromEntries(Object.entries(f.sensors?.channels??{}).map(([k,v])=>[k,{status:v.status}]))},controller:{name:controller},provenance:{fly:f.provenance,physics:this.provenance.physics,sensors:this.provenance.sensors},motor:{...f.motors},checkpointStatus:checkpointStatus??{version:'checkpoint-1',environmentHash:this.environment.hash,environmentSchema:this.environment.schemaVersion,glbHash:this.environment.glbHash??null,lagSeconds}}}
   #sense(f){const down=this.physicsCollisionAdapter.raycast(f.body.position,this.downDirection,100);f.sensors=new SensorFrame({body:f.body,contact:f.contact,room:f.room,zones:f.zones,down});f.sensorHistory.push(f.sensors);if(f.sensorHistory.length>32)f.sensorHistory.shift()}
@@ -61,6 +110,34 @@ export function checkpoint(sim){return cloneJson({version:'checkpoint-1',environ
 export function restore(sim,cp){if(cp.version!=='checkpoint-1')throw new Error('checkpoint version');if(cp.environmentHash!==sim.environment.hash)throw new Error('environment hash mismatch');if((cp.glbHash??null)!==(sim.environment.glbHash??null))throw new Error('GLB hash mismatch');if(cp.environmentSchema!==sim.environment.schemaVersion)throw new Error('environment schema mismatch');sim.registry.clear();for(const f of cp.flies)sim.addFly({flyId:f.flyId,body:new BodyState(f.body),provenance:f.provenance});for(const f of cp.flies){const live=sim.getFly(f.flyId);live.motors=f.motors;live.room=f.room;live.zones=f.zones;live.contact=f.contact;live.sensorHistory=cp.sensorHistory?.find(x=>x.flyId===f.flyId)?.history??[];live.sensors=live.sensorHistory.at(-1)??live.sensors}sim.time=cp.time;sim.tick=cp.tick??Math.round(sim.time/sim.fixedDt);sim.rngState=cp.rngState;sim.environmentState=cp.environmentState;return sim}
 export function replay(sim,events=[]){for(const event of events){if(event.dt!==undefined&&Math.abs(event.dt-sim.fixedDt)>1e-12)throw new RangeError('replay requires fixed dt');for(const [id,motors] of Object.entries(event.inputs??{}))sim.setMotors(id,motors);sim.step(sim.fixedDt)}return sim}
 export function stateHash(sim){return digest(checkpoint(sim))} export function replayHash(simOrEvents,maybeEvents){return digest({version:'replay-1',initial:simOrEvents instanceof FlySimulation?stateHash(simOrEvents):null,events:maybeEvents??simOrEvents})}
-export function createFlyWorldEnvironmentAdapter(environment){if(!environment||typeof environment.raycast!=='function')throw new TypeError('authored environment raycast required');const hash=String(environment.environmentHash??environment.hash??'fly-world-authored');return Object.freeze({hash,glbHash:environment.glbHash==null?null:String(environment.glbHash),schemaVersion:String(environment.schemaVersion??'fly-world-environment'),downDirection:asVec(environment.downDirection??[0,-1,0]),raycast:(o,d,m)=>{const hit=environment.raycast(o,d,m);if(hit==null)return null;if(!Number.isFinite(hit.distance)||!hit.point||!hit.normal)throw new TypeError('authored raycast hit requires distance, point, normal');return {...hit,point:asVec(hit.point),normal:asVec(hit.normal).normalize()};},roomAt:environment.roomAt,zonesAt:environment.zonesAt,dynamicState:environment.dynamicState??null})}
+export function createFlyWorldEnvironmentAdapter(environment,identity={}){
+  if(!environment)throw new TypeError('authored environment required');
+  const integration=environment.integration??environment;
+  const raycast=integration.raycast??environment.raycast;
+  if(typeof raycast!=='function')throw new TypeError('authored environment raycast required');
+  const hash=identity.environmentHash??identity.hash??environment.environmentHash??environment.hash;
+  if(!hash)throw new TypeError('exact authored environment hash required');
+  const axis=identity.axis??environment.axis??integration.coordinateSystem?.axis??'Y-up';
+  const downDirection=identity.downDirection??environment.downDirection??(axis==='Z-up'?[0,0,-1]:[0,-1,0]);
+  const schemaVersion=identity.schemaVersion??environment.schemaVersion??environment.meta?.schemaVersion??environment.version;
+  if(schemaVersion==null)throw new TypeError('authored environment schema required');
+  const glbHash=identity.glbHash??environment.glbHash??null;
+  return Object.freeze({
+    hash:String(hash),
+    glbHash:glbHash==null?null:String(glbHash),
+    schemaVersion:String(schemaVersion),
+    downDirection:asVec(downDirection),
+    surfaces:Object.freeze((identity.surfaces??environment.physicsSurfaces??[]).filter((surface)=>surface?.point&&surface?.normal)),
+    raycast:(origin,direction,maxDistance)=>{
+      const hit=raycast(origin,direction,maxDistance);
+      if(hit==null)return null;
+      if(!Number.isFinite(hit.distance)||!hit.point||!hit.normal)throw new TypeError('authored raycast hit requires distance, point, normal');
+      return {...hit,point:asVec(hit.point),normal:asVec(hit.normal).normalize()};
+    },
+    roomAt:integration.roomAt??environment.roomAt,
+    zonesAt:integration.zonesAt??environment.zonesAt,
+    dynamicState:identity.dynamicState??environment.dynamicState??null
+  });
+}
 export class SpectatorBridge {constructor({now=()=>Date.now()}={}){this.now=now;this.authority='spectator-read-only';this.sentCommands=0;this.frames=[];this.raf=null;this.lastSequence=-1;this.droppedFrames=0;this.lagStatus={lagSeconds:0,silentDrops:0}}ingest(frame){if(frame.version!=='telemetry-1'||!frame.state?.position)return false;if(Number.isInteger(frame.sequence)&&frame.sequence<=this.lastSequence){this.droppedFrames+=1;this.lagStatus={...this.lagStatus,silentDrops:this.droppedFrames};return false}this.lastSequence=frame.sequence??this.lastSequence;this.frames.push(frame);this.frames=this.frames.slice(-2);this.lagStatus={lagSeconds:frame.lag??0,silentDrops:this.droppedFrames};return true}render(target,alpha=.5){const [a,b]=this.frames;if(!b)return false;const t=Math.max(0,Math.min(1,alpha)),p=a.state.position.map((v,i)=>v+(b.state.position[i]-v)*t),qa=a.state.orientation??[0,0,0,1],qb=b.state.orientation??[0,0,0,1],q=qa.map((v,i)=>v+(qb[i]-v)*t),ql=Math.hypot(...q)||1;target.position?.set(...p);target.quaternion?.set?.(...q.map(v=>v/ql));return true}start(target,{requestFrame=globalThis.requestAnimationFrame}={}){if(typeof requestFrame!=='function')return;const tick=()=>{this.render(target,.5);this.raf=requestFrame(tick)};this.raf=requestFrame(tick)}stop(cancel=globalThis.cancelAnimationFrame){if(this.raf&&typeof cancel==='function')cancel(this.raf);this.raf=null}}
 export function createBrowserSimulation(environment,options={}){const simulation=new FlySimulation(environment,options);return {simulation,bridge:new SpectatorBridge(options)}}

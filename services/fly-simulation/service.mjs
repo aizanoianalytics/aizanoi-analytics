@@ -1,6 +1,6 @@
 import http from 'node:http';
 import crypto from 'node:crypto';
-import { FlySimulation, FixedStepScheduler, TelemetryProtocol, WebSocketTelemetryAdapter } from '../../frontend/labs/fly-simulation/index.js';
+import { FlySimulation, FixedStepScheduler, TelemetryProtocol, WebSocketTelemetryAdapter, createFlyWorldEnvironmentAdapter } from '../../frontend/labs/fly-simulation/index.js';
 
 export const FLY_SPECTATOR_PATH = '/spectator/telemetry-1';
 const GUID = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
@@ -33,6 +33,16 @@ function parserResult(buffer, messages, fragmented, fragmentedOpcode) {
 function validateUtf8(payload) {
   try { new TextDecoder('utf-8', { fatal: true }).decode(payload); }
   catch { throw new Error('invalid utf8'); }
+}
+
+function validateClosePayload(payload) {
+  if (payload.length === 1) throw new Error('invalid close payload');
+  if (payload.length === 0) return;
+  const code = payload.readUInt16BE(0);
+  const standard = code >= 1000 && code <= 1014 && ![1004, 1005, 1006].includes(code);
+  const application = code >= 3000 && code <= 4999;
+  if (!standard && !application) throw new Error('invalid close code');
+  validateUtf8(payload.subarray(2));
 }
 
 export function parseWebSocketFrames(chunk, {
@@ -86,6 +96,7 @@ export function parseWebSocketFrames(chunk, {
     buffer = buffer.subarray(total);
 
     if (opcode === 8 || opcode === 9 || opcode === 10) {
+      if (opcode === 8) validateClosePayload(payload);
       messages.push({ opcode, payload });
       continue;
     }
@@ -129,6 +140,12 @@ function validUpgrade(req, { allowedHosts, allowedOrigins }) {
     && req.headers['sec-websocket-version'] === '13'
     && /^[+/0-9A-Za-z]{22}==$/.test(req.headers['sec-websocket-key'] || '')
     && hostOk && originOk;
+}
+
+export function createFlyWorldSimulationService({ authoredEnvironment, identity, simulationOptions = {}, ...serviceOptions } = {}) {
+  const environment = createFlyWorldEnvironmentAdapter(authoredEnvironment, identity);
+  const simulation = new FlySimulation(environment, simulationOptions);
+  return createFlySimulationService({ ...serviceOptions, environment, simulation });
 }
 
 export function createFlySimulationService({

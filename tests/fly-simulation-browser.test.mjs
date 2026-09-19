@@ -34,10 +34,21 @@ function statSafe(file) { try { return statSync(file).isFile(); } catch { return
 test('real Fly House Chromium spectator renders authoritative telemetry read-only', { skip: !chromium }, async (t) => {
   const environment = createFlyWorldEnvironmentAdapter({
     hash: 'browser-env', schemaVersion: '1',
-    raycast: (origin, direction) => direction.y < 0 ? { distance: Math.max(origin.y, 0), point: [origin.x, 0, origin.z], normal: [0, 1, 0], surfaceId: 'floor' } : null,
+    raycast: (origin, direction, maxDistance=100) => {
+      const dy = direction.y ?? direction[1];
+      if (dy >= 0) return null;
+      const distance = (origin.y ?? origin[1]) / -dy;
+      if (distance > maxDistance) return null;
+      return {
+        distance,
+        point: [(origin.x ?? origin[0]) + (direction.x ?? direction[0]) * distance, 0, (origin.z ?? origin[2]) + (direction.z ?? direction[2]) * distance],
+        normal: [0, 1, 0],
+        surfaceId: 'floor'
+      };
+    },
     roomAt: () => 'fly-house'
   });
-  const service = createFlySimulationService({ environment, port: 0, intervalMs: 10, allowedOrigins: [/^http:\/\/127\.0\.0\.1:/] });
+  const service = createFlySimulationService({ environment, port: 0, intervalMs: 250, allowedOrigins: [/^http:\/\/127\.0\.0\.1:/] });
   service.simulation.addFly({ flyId: 'browser-fly', body: new BodyState({ position: new Vec3(0, 1, 0), velocity: new Vec3(0.5, 0, 0) }) });
   await service.start();
   const pageServer = staticWorldServer(`ws://127.0.0.1:${service.address().port}/spectator/telemetry-1`);
@@ -54,7 +65,12 @@ test('real Fly House Chromium spectator renders authoritative telemetry read-onl
     const mesh = window.__FLY_SCENE__.getObjectByName('TELEMETRY_SPECTATOR_FLY');
     return { mesh: mesh.position.toArray(), camera: window.FLY_DEBUG.camera.position.toArray(), frame: window.__FLY_SPECTATOR_BRIDGE__.frames.at(-1), globals: { simulation: typeof window.FlySimulation, scheduler: typeof window.FixedStepScheduler, controller: typeof window.HeuristicTestController } };
   });
-  await page.waitForTimeout(100);
+  await page.waitForFunction(({ position, sequence }) => {
+    const mesh = window.__FLY_SCENE__?.getObjectByName('TELEMETRY_SPECTATOR_FLY');
+    const latest = window.__FLY_SPECTATOR_BRIDGE__?.frames.at(-1);
+    if (!mesh || !latest || latest.sequence <= sequence) return false;
+    return mesh.position.toArray().some((value, index) => Math.abs(value - position[index]) > 1e-5);
+  }, { position:initial.mesh, sequence:initial.frame.sequence }, { timeout:10000 });
   const moved = await page.evaluate(() => window.__FLY_SCENE__.getObjectByName('TELEMETRY_SPECTATOR_FLY').position.toArray());
   assert.notDeepEqual(moved, initial.mesh, 'telemetry-rendered mesh should move from authoritative frames');
   assert.deepEqual(initial.globals, { simulation: 'undefined', scheduler: 'undefined', controller: 'undefined' });
