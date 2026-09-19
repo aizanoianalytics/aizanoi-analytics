@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-19-anthropic-accenture-ai-safety-partnership",
+  "title": "Anthropic picks Accenture as first embedded AI safety evaluator with $2 billion commitment",
+  "summary": "Anthropic named Accenture its first embedded AI safety evaluator on Friday, with each company pledging at least $1 billion over five years to build frontier-model evaluation capacity, led by Accenture's Faculty AI division. Anthropic said Accenture staff will work inside the company on alignment assessments and red-teaming, addressing a step in CEO Dario Amodei's three-part plan to slow frontier AI development. Accenture's shares jumped about 8 percent in after-hours trading on the announcement.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-09-19T06:30:00Z",
+  "updatedAt": "2026-09-19T06:30:00Z",
+  "retrievedAt": "2026-09-19T05:05:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "accenture", "ai-safety", "embedded-evaluator", "faculty"],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/18/anthropics-first-embedded-evaluator-is-accenture/",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.marketscreener.com/news/anthropic-accenture-to-invest-2-billion-in-ai-model-evaluation-as-safety-concerns-rise-ce785adadf8aff22",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    }
+  ]
+}

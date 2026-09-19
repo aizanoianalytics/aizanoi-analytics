@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-19-laliga-matchday-six-fixtures",
+  "title": "LaLiga matchday six headlined by Atletico-Real Madrid derby at Riyadh Air Metropolitano",
+  "summary": "LaLiga matchday six on Saturday features the Madrid derby between Atletico Madrid and Real Madrid at the Riyadh Air Metropolitano at 10:15 ET as the standout fixture, alongside Getafe vs Malaga, Deportivo vs Real Betis, Villarreal vs Levante, Valencia vs Real Sociedad and Espanyol vs Elche. Barcelona go into the round three points clear at the top after Wednesday's 7-2 rout of Racing Santander, while Real Madrid can close the gap with a win at Atletico. The matchday wraps up on Sunday with Mallorca vs Rayo Vallecano and Alaves vs Valencia on the fixture list.",
+  "category": "football",
+  "priority": 70,
+  "publishedAt": "2026-09-19T10:30:00Z",
+  "updatedAt": "2026-09-19T10:30:00Z",
+  "retrievedAt": "2026-09-19T06:30:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["laliga", "atletico-madrid", "real-madrid", "derby", "matchday-six"],
+  "sources": [
+    {
+      "publisher": "LaLiga",
+      "url": "https://www.laliga.com/en-GB",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/schedule/_/league/esp.1",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    }
+  ]
+}

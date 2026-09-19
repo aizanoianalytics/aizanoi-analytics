@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-18T06:40:00.000Z",
+  "generatedAt": "2026-09-19T06:30:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-19",
+      "path": "/news/2026-09-19/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-18",
       "path": "/news/2026-09-18/",
@@ -160,6 +165,505 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-19-laliga-matchday-six-fixtures",
+      "kind": "daily",
+      "title": "LaLiga matchday six headlined by Atletico-Real Madrid derby at Riyadh Air Metropolitano",
+      "summary": "LaLiga matchday six on Saturday features the Madrid derby between Atletico Madrid and Real Madrid at the Riyadh Air Metropolitano at 10:15 ET as the standout fixture, alongside Getafe vs Malaga, Deportivo vs Real Betis, Villarreal vs Levante, Valencia vs Real Sociedad and Espanyol vs Elche. Barcelona go into the round three points clear at the top after Wednesday's 7-2 rout of Racing Santander, while Real Madrid can close the gap with a win at Atletico. The matchday wraps up on Sunday with Mallorca vs Rayo Vallecano and Alaves vs Valencia on the fixture list.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-09-19T10:30:00.000Z",
+      "updatedAt": "2026-09-19T10:30:00.000Z",
+      "retrievedAt": "2026-09-19T06:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "laliga",
+        "atletico-madrid",
+        "real-madrid",
+        "derby",
+        "matchday-six"
+      ],
+      "sources": [
+        {
+          "publisher": "LaLiga",
+          "url": "https://www.laliga.com/en-GB",
+          "publishedAt": "2026-09-19T00:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/schedule/_/league/esp.1",
+          "publishedAt": "2026-09-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-tottenham-villa-matchweek-5",
+      "kind": "daily",
+      "title": "Tottenham and Aston Villa chase first Premier League wins of season in Saturday lunchtime kickoff",
+      "summary": "Tottenham host Aston Villa at Tottenham Hotspur Stadium at 12:30 BST on Saturday in a Premier League Matchweek 5 fixture between the only two sides still without a league win this season. Spurs sit 17th on two points from four matches with zero goals scored, while Villa are 19th on one point having shipped seven. Tottenham are without Dejan Kulusevski, Xavi Simons, Wilson Odobert and Mykhaylo Mudryk, with Pedro Porro and Sandro Tonali doubts, while Joao Gomes and Matty Cash are fitness concerns for the visitors.",
+      "category": "football",
+      "priority": 65,
+      "publishedAt": "2026-09-19T10:15:00.000Z",
+      "updatedAt": "2026-09-19T10:15:00.000Z",
+      "retrievedAt": "2026-09-19T06:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tottenham",
+        "aston-villa",
+        "premier-league",
+        "matchweek-5"
+      ],
+      "sources": [
+        {
+          "publisher": "Football Whispers",
+          "url": "https://footballwhispers.com/blog/tottenham-vs-aston-villa-prediction-preview-betting-tips-19-09-2026",
+          "publishedAt": "2026-09-19T00:00:00.000Z"
+        },
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/news/4675097/all-380-fixtures-for-202627-premier-league-season",
+          "publishedAt": "2026-08-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-brentford-beat-chelsea-3-0",
+      "kind": "daily",
+      "title": "Brentford thrash Chelsea 3-0 in west London derby to set club-record Premier League start",
+      "summary": "Brentford beat Chelsea 3-0 at Gtech Community Stadium on Friday night, with Jaidon Anthony heading in from a Damsgaard corner on 61 minutes, Igor Thiago converting a rebound on 80 minutes and substitute Fabio Carvalho completing the scoring in stoppage time. The result gave Brentford their best-ever five-game start to a Premier League season with nine points, surpassing the previous best of eight from 2021-22, and extended their unbeaten home league run to eight matches. Chelsea arrived as the league's highest-scoring side and conceded three times from open play in the second half.",
+      "category": "football",
+      "priority": 80,
+      "publishedAt": "2026-09-19T10:00:00.000Z",
+      "updatedAt": "2026-09-19T10:00:00.000Z",
+      "retrievedAt": "2026-09-19T06:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "brentford",
+        "chelsea",
+        "premier-league",
+        "london-derby",
+        "matchweek-5"
+      ],
+      "sources": [
+        {
+          "publisher": "Brentford FC",
+          "url": "https://www.brentfordfc.com/en/news/article/first-team-brentford-v-chelsea-premier-league",
+          "publishedAt": "2026-09-18T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-ecb-followup-rate-path",
+      "kind": "daily",
+      "title": "ECB's September rate hike to 2.50% leaves deposit rate at post-2022 high with no pre-commitment",
+      "summary": "The European Central Bank raised its three key interest rates by 25 basis points on 10 September, taking the deposit facility to 2.50 percent, the main refinancing operations rate to 2.65 percent and the marginal lending facility to 2.90 percent, effective 16 September. New staff projections see headline inflation averaging 3.0 percent in 2026, 2.5 percent in 2027 and 2.1 percent in 2028, with growth upgraded to 0.9 percent in 2026 and 1.4 percent in 2027. The Governing Council said it is not pre-committing to a particular rate path.",
+      "category": "economy-markets",
+      "priority": 55,
+      "publishedAt": "2026-09-19T09:30:00.000Z",
+      "updatedAt": "2026-09-19T09:30:00.000Z",
+      "retrievedAt": "2026-09-19T06:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ecb",
+        "interest-rates",
+        "eurozone",
+        "inflation",
+        "monetary-policy"
+      ],
+      "sources": [
+        {
+          "publisher": "European Central Bank",
+          "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260910~314e508016.en.html",
+          "publishedAt": "2026-09-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-boj-hike-yen-slides",
+      "kind": "daily",
+      "title": "BOJ lifts rate to 31-year high of 1.25% but split vote sends yen sliding to two-week low",
+      "summary": "The Bank of Japan raised its policy rate by 25 basis points to 1.25 percent on Friday in a 7-2 vote, the highest level since 1995, but the yen weakened as traders focused on dissenters Toichiro Asada and Ayano Sato who voted for a hold and a lack of hawkish forward guidance from Governor Kazuo Ueda. USD/JPY climbed into the 157.84-157.91 range for the dollar's largest single-day gain against the yen since December, and officials signalled readiness to intervene if moves become disorderly. Reuters polls expect a 1.5 percent rate by end-March 2027.",
+      "category": "economy-markets",
+      "priority": 75,
+      "publishedAt": "2026-09-19T09:15:00.000Z",
+      "updatedAt": "2026-09-19T09:15:00.000Z",
+      "retrievedAt": "2026-09-19T05:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "boj",
+        "yen",
+        "interest-rates",
+        "usdjpy",
+        "monetary-policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Business Times",
+          "url": "https://www.businesstimes.com.sg/companies-markets/banking-finance/bank-japan-raises-rate-31-year-high-1-25-two-board-members-dissent",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-us-stocks-semis-lead-narrow-rally",
+      "kind": "daily",
+      "title": "US stocks close mixed as semis lead narrow tech rally on September 18",
+      "summary": "US stocks closed mixed on Thursday with the Nasdaq 100 up 0.79 percent and the S&P 500 up 0.04 percent, while the S&P 500 Equal Weight fell 0.39 percent and the Russell 2000 lost 0.50 percent, underscoring narrow breadth led by mega-cap tech. The Technology ETF rose 0.89 percent against a 1.67 percent slide in Communication Services, while the Semiconductor ETF added 2.04 percent on a SanDisk surge of 10.99 percent, Micron up 3.92 percent and Lam Research up 6.98 percent. J.P. Morgan estimates the CoWoS shortfall has narrowed to about 10 percent.",
+      "category": "economy-markets",
+      "priority": 60,
+      "publishedAt": "2026-09-19T09:00:00.000Z",
+      "updatedAt": "2026-09-19T09:00:00.000Z",
+      "retrievedAt": "2026-09-19T05:50:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-stocks",
+        "nasdaq",
+        "semiconductors",
+        "tsmc",
+        "cowos"
+      ],
+      "sources": [
+        {
+          "publisher": "404K Semi-AI",
+          "url": "https://404kresearch.substack.com/p/404k-semi-ai-daily-september-19-2026",
+          "publishedAt": "2026-09-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-tsmc-dresden-topping-out",
+      "kind": "daily",
+      "title": "TSMC's Dresden fab hits topping-out milestone as ESMC confirms progress",
+      "summary": "The European Semiconductor Manufacturing Company (ESMC) joint venture marked a topping-out ceremony at TSMC's under-construction Dresden fab in Germany this week, the construction milestone for laying the final beam at the highest point of a building. ESMC president Christian Koitzsch said about 2,000 workers from 106 countries are working around the clock at the site and that the project is progressing as planned and within budget. The Dresden plant is one of several European TSMC sites aimed at widening the region's access to advanced nodes.",
+      "category": "technology",
+      "priority": 45,
+      "publishedAt": "2026-09-19T08:45:00.000Z",
+      "updatedAt": "2026-09-19T08:45:00.000Z",
+      "retrievedAt": "2026-09-19T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tsmc",
+        "dresden",
+        "esmc",
+        "european-semiconductors",
+        "fab"
+      ],
+      "sources": [
+        {
+          "publisher": "Taipei Times",
+          "url": "https://taipeitimes.com/News/biz/archives/2026/09/19/2003864506",
+          "publishedAt": "2026-09-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-samsung-galaxy-z-trifold-2-rush",
+      "kind": "daily",
+      "title": "Samsung fast-tracks Galaxy Z TriFold 2 after Apple's iPhone Duo debut",
+      "summary": "Samsung is pulling forward its next-generation Galaxy Z TriFold 2 launch after Apple entered the foldable market with the $1,999 iPhone Duo on September 9, with the new device reportedly thinner and lighter while retaining the same $2,899 price tag. Apple launched its first foldable at the Steve Jobs Theater on September 9, opening to a 7.6-inch screen, and Samsung publicly mocked the move on X with posts about reheating leftovers. Apple's first foldable goes on sale October 23, with the company planning a glass-heavy iPhone Pro redesign for 2027.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-09-19T08:30:00.000Z",
+      "updatedAt": "2026-09-19T08:30:00.000Z",
+      "retrievedAt": "2026-09-19T05:40:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "samsung",
+        "apple",
+        "foldable",
+        "galaxy-z-trifold",
+        "iphone-duo"
+      ],
+      "sources": [
+        {
+          "publisher": "New York Post",
+          "url": "https://nypost.com/2026/09/10/tech/samsung-trolls-apple-for-reheating-their-folding-phone",
+          "publishedAt": "2026-09-10T16:56:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-mediatek-dimensity-9600-pro-2nm",
+      "kind": "daily",
+      "title": "MediaTek launches Dimensity 9600 Pro on TSMC 2nm as Nvidia deepens XPUs partnership",
+      "summary": "MediaTek launched its Dimensity 9600 Pro flagship mobile chip on September 15 using Taiwan Semiconductor Manufacturing Company's 2-nanometer node, putting TSMC's newest process into a shipping handset silicon. The launch follows Nvidia's $3.5 billion investment in MediaTek convertible bonds on August 31 and an expanded partnership to connect MediaTek custom XPUs to Nvidia's NVLink Fusion rack-scale systems. TSMC has flagged that the 2nm ramp could dilute second-half gross margin by 3 to 4 percentage points even as customer demand remains strong.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-19T08:15:00.000Z",
+      "updatedAt": "2026-09-19T08:15:00.000Z",
+      "retrievedAt": "2026-09-19T05:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "mediatek",
+        "tsmc",
+        "2nm",
+        "dimensity",
+        "nvidia"
+      ],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/technology/articles/tsmc-2nm-era-accelerating-mediatek-214827953.html",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-huawei-atlas-960e-superpod",
+      "kind": "daily",
+      "title": "Huawei pulls Ascend 960 launch forward by three quarters, unveils NPO-based Atlas 960E SuperPoD",
+      "summary": "Huawei used its Huawei Connect 2026 event in Shanghai to unveil the Atlas 960E SuperPoD, the first SuperPoD built around near-packaged optics, scaling to 4,096 NPUs and 8 EFLOPS at FP8 with up to a petabyte of HBM per pod. The company also accelerated its Ascend roadmap: the Ascend 960DT now ships in Q1 2027, three quarters ahead of schedule, with the Ascend 960PR following in Q3 2027, and confirmed an Ascend 970 in 2028 and Ascend 980 in 2029. Rotating chairman Eric Xu said Huawei holds a bigger AI chip share inside China than Nvidia but cannot yet meet demand.",
+      "category": "technology",
+      "priority": 75,
+      "publishedAt": "2026-09-19T08:00:00.000Z",
+      "updatedAt": "2026-09-19T08:00:00.000Z",
+      "retrievedAt": "2026-09-19T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "huawei",
+        "ascend",
+        "atlas-960e",
+        "npu",
+        "superpod"
+      ],
+      "sources": [
+        {
+          "publisher": "Huawei",
+          "url": "https://www.huawei.com/en/news/2026/9/hc-ascend960-supernode",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        },
+        {
+          "publisher": "Tom's Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/huawei-details-ai-accelerator-roadmap-pulls-in-next-generation-ascend-npus-by-quarters-fp4-performance-of-the-ascend-960pr-doubles-expectations",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-jensen-huang-safety-debate",
+      "kind": "daily",
+      "title": "Jensen Huang pushes back on AI slowdown push at UK frontier AI summit",
+      "summary": "Nvidia chief executive Jensen Huang, speaking on the sidelines of a King Charles III-convened frontier AI meeting at Dumfries House in Scotland on Thursday, said companies must take responsibility for the safety of their AI software and services but pushed back against slowing development or adding further regulation. The remarks came alongside Anthropic CEO Dario Amodei's call for a frontier-model slowdown, which OpenAI's Sam Altman and DeepMind's Demis Hassabis endorsed. Huang separately told reporters he expects Nvidia to roughly double chip sales in the coming year.",
+      "category": "ai",
+      "priority": 65,
+      "publishedAt": "2026-09-19T07:30:00.000Z",
+      "updatedAt": "2026-09-19T07:30:00.000Z",
+      "retrievedAt": "2026-09-19T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "jensen-huang",
+        "ai-safety",
+        "frontier-ai",
+        "regulation"
+      ],
+      "sources": [
+        {
+          "publisher": "Taipei Times",
+          "url": "https://taipeitimes.com/News/biz/archives/2026/09/19/2003864506",
+          "publishedAt": "2026-09-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-deepmind-institute-launch",
+      "kind": "daily",
+      "title": "Google DeepMind launches institute with Hassabis proposing 30-day frontier AI review window",
+      "summary": "Google DeepMind on September 17 formally launched the DeepMind Institute, a research body led by Shane Legg, James Manyika and Demis Hassabis to publish competing AGI perspectives, with four opening essays covering AGI economics, model transparency, human flourishing and frontier evaluation. Hassabis proposes a US-led standards body that would review frontier models up to 30 days before release, eventually using undisclosed held-out tests and able to ratchet up to coordinated slowdowns. A companion essay argues regulators could cap opaque serial depth to keep reasoning models monitorable.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-19T07:15:00.000Z",
+      "updatedAt": "2026-09-19T07:15:00.000Z",
+      "retrievedAt": "2026-09-19T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "deepmind",
+        "hassabis",
+        "ai-policy",
+        "frontier-models",
+        "agi"
+      ],
+      "sources": [
+        {
+          "publisher": "Lumien AI",
+          "url": "https://lumienai.com/news/google-deepmind-institute-agi-debate-hassabis-frontier-ai-standards",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-google-cc-family-agent",
+      "kind": "daily",
+      "title": "Google refocuses CC agent on household coordination for families",
+      "summary": "Google on Thursday pushed its experimental AI agent CC into family-coordination mode, letting up to six household members share selected emails, calendars and documents so the agent can fill in permission slips, plan meals and surface school updates. CC now gets its own Google account with isolated permissions and runs on its own cloud computer powered by Gemini and Google's agentic harness, Antigravity. The US-only experiment requires a personal Gmail and an age of 18 or older, and Google has opened a waitlist for new users.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-09-19T07:00:00.000Z",
+      "updatedAt": "2026-09-19T07:00:00.000Z",
+      "retrievedAt": "2026-09-19T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "cc",
+        "agentic-ai",
+        "gemini",
+        "antigravity"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/09/18/googles-new-cc-is-an-ai-agent-that-helps-families-run-their-households/",
+          "publishedAt": "2026-09-18T17:33:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-anthropic-wet-lab-drug-program",
+      "kind": "daily",
+      "title": "Anthropic opens wet biology lab as it ramps Claude-powered drug discovery",
+      "summary": "Anthropic has built a physical wet laboratory in the San Francisco Bay Area to run bench experiments for its AI-driven life-sciences push, Reuters reported on Friday, citing two people familiar with the matter and head of life sciences Eric Kauderer-Abrams. Anthropic said the lab is not a drug-discovery facility but a place to test Claude's ability to direct robotic lab equipment with limited human intervention. The company targets conditions traditional pharma finds uneconomic and earlier added Novartis CEO Vas Narasimhan to its board.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-19T06:45:00.000Z",
+      "updatedAt": "2026-09-19T06:45:00.000Z",
+      "retrievedAt": "2026-09-19T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "biotech",
+        "drug-discovery",
+        "claude",
+        "automation"
+      ],
+      "sources": [
+        {
+          "publisher": "The Star / Reuters",
+          "url": "https://www.thestar.com.my/tech/tech-news/2026/09/18/exclusive-anthropic-quietly-sets-up-biology-lab-as-it-ramps-ai-drug-program",
+          "publishedAt": "2026-09-18T18:11:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-19-anthropic-accenture-ai-safety-partnership",
+      "kind": "daily",
+      "title": "Anthropic picks Accenture as first embedded AI safety evaluator with $2 billion commitment",
+      "summary": "Anthropic named Accenture its first embedded AI safety evaluator on Friday, with each company pledging at least $1 billion over five years to build frontier-model evaluation capacity, led by Accenture's Faculty AI division. Anthropic said Accenture staff will work inside the company on alignment assessments and red-teaming, addressing a step in CEO Dario Amodei's three-part plan to slow frontier AI development. Accenture's shares jumped about 8 percent in after-hours trading on the announcement.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-09-19T06:30:00.000Z",
+      "updatedAt": "2026-09-19T06:30:00.000Z",
+      "retrievedAt": "2026-09-19T05:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "accenture",
+        "ai-safety",
+        "embedded-evaluator",
+        "faculty"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/09/18/anthropics-first-embedded-evaluator-is-accenture/",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.marketscreener.com/news/anthropic-accenture-to-invest-2-billion-in-ai-model-evaluation-as-safety-concerns-rise-ce785adadf8aff22",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-18-real-madrid-atletico-derbi-preview",
       "kind": "daily",

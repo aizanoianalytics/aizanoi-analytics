@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-19-us-stocks-semis-lead-narrow-rally",
+  "title": "US stocks close mixed as semis lead narrow tech rally on September 18",
+  "summary": "US stocks closed mixed on Thursday with the Nasdaq 100 up 0.79 percent and the S&P 500 up 0.04 percent, while the S&P 500 Equal Weight fell 0.39 percent and the Russell 2000 lost 0.50 percent, underscoring narrow breadth led by mega-cap tech. The Technology ETF rose 0.89 percent against a 1.67 percent slide in Communication Services, while the Semiconductor ETF added 2.04 percent on a SanDisk surge of 10.99 percent, Micron up 3.92 percent and Lam Research up 6.98 percent. J.P. Morgan estimates the CoWoS shortfall has narrowed to about 10 percent.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-09-19T09:00:00Z",
+  "updatedAt": "2026-09-19T09:00:00Z",
+  "retrievedAt": "2026-09-19T05:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["us-stocks", "nasdaq", "semiconductors", "tsmc", "cowos"],
+  "sources": [
+    {
+      "publisher": "404K Semi-AI",
+      "url": "https://404kresearch.substack.com/p/404k-semi-ai-daily-september-19-2026",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    }
+  ]
+}

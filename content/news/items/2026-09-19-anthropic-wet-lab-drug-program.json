@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-19-anthropic-wet-lab-drug-program",
+  "title": "Anthropic opens wet biology lab as it ramps Claude-powered drug discovery",
+  "summary": "Anthropic has built a physical wet laboratory in the San Francisco Bay Area to run bench experiments for its AI-driven life-sciences push, Reuters reported on Friday, citing two people familiar with the matter and head of life sciences Eric Kauderer-Abrams. Anthropic said the lab is not a drug-discovery facility but a place to test Claude's ability to direct robotic lab equipment with limited human intervention. The company targets conditions traditional pharma finds uneconomic and earlier added Novartis CEO Vas Narasimhan to its board.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-19T06:45:00Z",
+  "updatedAt": "2026-09-19T06:45:00Z",
+  "retrievedAt": "2026-09-19T05:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "biotech", "drug-discovery", "claude", "automation"],
+  "sources": [
+    {
+      "publisher": "The Star / Reuters",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/09/18/exclusive-anthropic-quietly-sets-up-biology-lab-as-it-ramps-ai-drug-program",
+      "publishedAt": "2026-09-18T18:11:00Z"
+    }
+  ]
+}

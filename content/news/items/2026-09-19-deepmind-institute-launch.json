@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-19-deepmind-institute-launch",
+  "title": "Google DeepMind launches institute with Hassabis proposing 30-day frontier AI review window",
+  "summary": "Google DeepMind on September 17 formally launched the DeepMind Institute, a research body led by Shane Legg, James Manyika and Demis Hassabis to publish competing AGI perspectives, with four opening essays covering AGI economics, model transparency, human flourishing and frontier evaluation. Hassabis proposes a US-led standards body that would review frontier models up to 30 days before release, eventually using undisclosed held-out tests and able to ratchet up to coordinated slowdowns. A companion essay argues regulators could cap opaque serial depth to keep reasoning models monitorable.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-19T07:15:00Z",
+  "updatedAt": "2026-09-19T07:15:00Z",
+  "retrievedAt": "2026-09-19T05:20:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["deepmind", "hassabis", "ai-policy", "frontier-models", "agi"],
+  "sources": [
+    {
+      "publisher": "Lumien AI",
+      "url": "https://lumienai.com/news/google-deepmind-institute-agi-debate-hassabis-frontier-ai-standards",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    }
+  ]
+}
