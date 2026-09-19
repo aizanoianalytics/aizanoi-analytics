@@ -90,6 +90,9 @@ def export_glb(root: Path):
             export_yup=False,
             export_apply=True,
             export_extras=True,
+            # Blender's vertex merge/topology pass is nondeterministic for
+            # several authored meshes; preserve source topology byte-for-byte.
+            export_merge_vertices=False,
         )
         print(f"[fly-house-v3] GLB -> {dest}")
 

@@ -313,7 +313,7 @@
   "sourceHashes": {
     "gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json": "56dd975756fe1441eb6ac65930bad93c0bc177dd34e163e2fb16649f691587a8",
     "gelistirmeler/2026-09-16-fly-world-prototype/asset_manifest.json": "bc3489bd8a761ede531fd62c9f0f4874152883e2d7fe04b49194e924399ffe07",
-    "scripts/fly-world/build_scene_v3.py": "1ed302aed4ce5d067423c021129546e49929bf68c3cf0eb35e5467b74f1a98fb",
+    "scripts/fly-world/build_scene_v3.py": "e7ea67a25764cf0c00b12092c705184be87103c3a7034154a60b93fc2cb837bf",
     "scripts/fly-world/build_scene_v2.py": "4404dd09da251178335dbf90a5ac302dfaedf3a8b268a4662f64459b0dd30bcd",
     "scripts/fly-world/detail_pass_v3.py": "aa897a9730afa31abec4f5c86c4431bbfb207f551a1388464676353cae68e7fd",
     "scripts/fly-world/micro_detail_pass_v3.py": "0d7da51b945c52ef0ff69e0a5cf2c2df4f4de9b965555a667214925c567d220e",
