@@ -2,6 +2,7 @@ import * as THREE from '../../worlds/shared/vendor/three.module.js';
 import { GLTFLoader } from '../../worlds/shared/vendor/GLTFLoader.js';
 import { createEnvironment } from './environment.js';
 import { AudioSystem } from '../../worlds/shared/engine/audio.js';
+import { SpectatorBridge } from '../fly-simulation/index.js';
 
 const canvas = document.querySelector('#world');
 const fatal = document.querySelector('#fatal');
@@ -17,6 +18,7 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.08;
 
 const scene = new THREE.Scene();
+window.__FLY_SCENE__ = scene;
 scene.background = new THREE.Color(0x272119);
 scene.fog = new THREE.Fog(0x272119, 15, 38);
 
@@ -185,11 +187,44 @@ async function boot() {
   collectCollisionRoots(gltf.scene);
   const response = await fetch(new URL('./assets/environment.json', import.meta.url));
   if (!response.ok) throw new Error(`Environment metadata HTTP ${response.status}`);
-  environment = createEnvironment(gltf.scene, await response.json());
+  const environmentSpec = await response.json();
+  environment = createEnvironment(gltf.scene, environmentSpec);
   // Public, read-only diagnostics for the Stage A browser contract; the
   // underscored aliases remain for existing focused tests and tooling.
   window.FLY_ENVIRONMENT = environment;
   window.__FLY_ENVIRONMENT__ = environment;
+
+  // The browser is a spectator only. A host must explicitly provide a WebSocket
+  // URL; production has no default and reports telemetry as inactive.
+  const bridge = new SpectatorBridge({ environmentIdentity: { environmentHash: environment.meta.artifactHashes.environmentSource, glbHash: environment.meta.artifactHashes.flyHouseGlb } });
+  window.__FLY_SPECTATOR_BRIDGE__ = bridge;
+  const config = window.__FLY_TELEMETRY_CONFIG__;
+  const simulationStatus = document.querySelector('#simulation-status');
+  let flyMesh = null;
+  let telemetrySocket = null;
+  if (!config?.url) {
+    if (simulationStatus) simulationStatus.textContent = 'Telemetry inactive · no host-provided spectator service configured';
+  } else {
+    telemetrySocket = new WebSocket(config.url);
+    window.__FLY_TELEMETRY_SOCKET__ = telemetrySocket;
+    telemetrySocket.addEventListener('message', (event) => {
+      try {
+        const frame = JSON.parse(event.data);
+        if (frame.version !== 'telemetry-1' || !frame.state?.position) return;
+        if (!flyMesh) {
+          flyMesh = new THREE.Mesh(new THREE.SphereGeometry(.035, 12, 8), new THREE.MeshStandardMaterial({ color: 0xd9a441, emissive: 0x5c2800, emissiveIntensity: 1.2 }));
+          flyMesh.name = 'TELEMETRY_SPECTATOR_FLY'; flyMesh.castShadow = true; scene.add(flyMesh);
+        }
+        if (bridge.ingest(frame) && simulationStatus) simulationStatus.textContent = 'Telemetry active · read-only spectator';
+      } catch (error) { console.warn('Ignoring malformed telemetry', error); }
+    });
+    const markTelemetryInactive = (message) => { if (simulationStatus) simulationStatus.textContent = message; };
+    telemetrySocket.addEventListener('error', () => markTelemetryInactive('Telemetry inactive · service error'));
+    telemetrySocket.addEventListener('close', () => { telemetrySocket = null; markTelemetryInactive('Telemetry inactive · service disconnected'); });
+    window.addEventListener('pagehide', () => {
+      if (telemetrySocket && telemetrySocket.readyState < WebSocket.CLOSING) telemetrySocket.close(1000, 'pagehide');
+    }, { once: true });
+  }
 
   let meshCount = 0;
   let triangleCount = 0;
@@ -226,6 +261,8 @@ async function boot() {
   renderer.setAnimationLoop(() => {
     const dt = Math.min(clock.getDelta(), .05);
     observer.update(dt);
+    if (flyMesh) bridge.render(flyMesh, .5);
+    if (simulationStatus && !config?.url) simulationStatus.textContent = 'Telemetry inactive · no host-provided spectator service configured';
     if (window.__FLY_AUDIO__) {
       const keys = observer.keys;
       const isMoving = keys.has('KeyW') || keys.has('KeyS') || keys.has('KeyA') || keys.has('KeyD');
