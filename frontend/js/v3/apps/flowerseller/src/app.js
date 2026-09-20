@@ -35,6 +35,7 @@ export function createFlowersellerApp() {
   let selected = null;
   let clickHandler;
   let inputHandler;
+  let keyHandler;
 
   function renderStore() {
     const visible = PRODUCTS.filter((product) => (category === 'Tümü' || product.category === category) && `${product.name} ${product.note}`.toLocaleLowerCase('tr-TR').includes(query.toLocaleLowerCase('tr-TR')));
@@ -49,5 +50,65 @@ export function createFlowersellerApp() {
   function add(id) { const item = basket.find((entry) => entry.id === id); if (item) item.quantity += 1; else basket.push({ id, quantity: 1 }); render(container); }
 
   let container;
-  return { mount(root) { container = root; render(container); clickHandler = (event) => { const target = event.target.closest('[data-tab],[data-category],[data-add],[data-product],[data-close-detail],[data-scroll-products],[data-basket]'); if (!target) return; if (target.dataset.tab) { activeTab = target.dataset.tab; selected = null; render(container); } else if (target.dataset.category) { category = target.dataset.category; render(container); } else if (target.dataset.add) add(target.dataset.add); else if (target.dataset.product) { selected = PRODUCTS.find((product) => product.id === target.dataset.product) || null; render(container); } else if (target.dataset.closeDetail) { selected = null; render(container); } else if (target.dataset.scrollProducts) container.querySelector('#fs-products')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); else if (target.dataset.basket) { const count = basket.reduce((total, item) => total + item.quantity, 0); target.setAttribute('aria-label', `Sepet, ${count} ürün. POC sepeti`); } }; inputHandler = (event) => { if (!event.target.matches('[data-search]')) return; query = event.target.value; render(container); const input = container.querySelector('[data-search]'); input?.focus(); input?.setSelectionRange(query.length, query.length); }; container.addEventListener('click', clickHandler); container.addEventListener('input', inputHandler); return { cleanup() { container.removeEventListener('click', clickHandler); container.removeEventListener('input', inputHandler); container.replaceChildren(); } }; } };
+  return {
+    mount(root) {
+      container = root;
+      render(container);
+      clickHandler = (event) => {
+        const target = event.target.closest('[data-tab],[data-category],[data-add],[data-product],[data-close-detail],[data-scroll-products],[data-basket]');
+        if (!target) return;
+        if (target.dataset.tab) {
+          activeTab = target.dataset.tab;
+          selected = null;
+          render(container);
+        } else if (target.dataset.category) {
+          category = target.dataset.category;
+          render(container);
+        } else if (target.dataset.add) {
+          add(target.dataset.add);
+        } else if (target.dataset.product) {
+          selected = PRODUCTS.find((product) => product.id === target.dataset.product) || null;
+          render(container);
+          setTimeout(() => container.querySelector('[data-close-detail]')?.focus(), 0);
+        } else if (target.dataset.closeDetail) {
+          const closedId = selected?.id;
+          selected = null;
+          render(container);
+          if (closedId) setTimeout(() => container.querySelector(`[data-product="${closedId}"]`)?.focus(), 0);
+        } else if (target.dataset.scrollProducts) {
+          const reduceMotion = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+          container.querySelector('#fs-products')?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        } else if (target.dataset.basket) {
+          const count = basket.reduce((total, item) => total + item.quantity, 0);
+          target.setAttribute('aria-label', `Sepet, ${count} ürün. POC sepeti`);
+        }
+      };
+      inputHandler = (event) => {
+        if (!event.target.matches('[data-search]')) return;
+        query = event.target.value;
+        render(container);
+        const input = container.querySelector('[data-search]');
+        input?.focus();
+        input?.setSelectionRange(query.length, query.length);
+      };
+      keyHandler = (event) => {
+        if (event.key !== 'Escape' || !selected) return;
+        const closedId = selected.id;
+        selected = null;
+        render(container);
+        container.querySelector(`[data-product="${closedId}"]`)?.focus();
+      };
+      container.addEventListener('click', clickHandler);
+      container.addEventListener('input', inputHandler);
+      container.addEventListener('keydown', keyHandler);
+      return {
+        cleanup() {
+          container.removeEventListener('click', clickHandler);
+          container.removeEventListener('input', inputHandler);
+          container.removeEventListener('keydown', keyHandler);
+          container.replaceChildren();
+        }
+      };
+    }
+  };
 }

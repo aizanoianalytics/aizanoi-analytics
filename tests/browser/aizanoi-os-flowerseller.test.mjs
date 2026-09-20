@@ -25,6 +25,11 @@ test('Flowerseller desktop store, filters, detail, basket and README work', asyn
     assert.equal(await page.locator('.fs-product-card').count(), 1);
     await page.locator('[data-product="sessiz-bahce"]').click();
     await page.locator('.fs-detail').waitFor();
+    await page.waitForFunction(() => document.activeElement?.matches('[data-close-detail]'));
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('.fs-detail').count(), 0);
+    assert.equal(await page.locator('[data-product="sessiz-bahce"]').evaluate((node) => node === document.activeElement), true);
+    await page.locator('[data-product="sessiz-bahce"]').click();
     await page.locator('.fs-detail [data-add="sessiz-bahce"]').click();
     assert.equal(await page.locator('.fs-basket b').innerText(), '1');
     await page.locator('[data-tab="readme"]').click();
