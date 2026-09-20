@@ -111,12 +111,11 @@ export function flowersellerMinorToTL(minor) {
   return Number(minor || 0) / MINOR_UNIT;
 }
 
-// Deterministic key for cart line items: productId + variantId + sorted addons + message hash.
-// Two variants of the same product (e.g. small vs large) MUST yield different keys.
-export function flowersellerLineKey(productId, variantId, addons, message) {
-  const addonKey = [...(addons || [])].sort().join('+');
-  const msg = String(message || '').trim();
-  return `${productId}::${variantId || 'small'}::${addonKey}::${msg.length}:${msg}`;
+// Persistent cart identity is deliberately PII-free: product + variant + sorted addon ids.
+// Card messages remain ephemeral checkout state and are never part of a key or snapshot.
+export function flowersellerLineKey(productId, variantId, addons) {
+  const addonKey = Array.from(new Set(addons || [])).sort().join('+');
+  return `${productId}::${variantId || 'small'}::${addonKey}`;
 }
 
 export function flowersellerLineUnitMinor(product, variantId, addons) {

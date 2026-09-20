@@ -5,7 +5,7 @@ Flowerseller is a frontend-only Turkish boutique flower shop proof of concept fo
 - Public entry: `src/index.js`
 - Capabilities: none (`requires: []`)
 - Catalog: 25 products with sale pricing, ratings, reviews, stock, same-day metadata and 15 locally served WebP photographs
-- Variants: every product is configurable by size (`Küçük`/`Orta`/`Büyük`) and optional add-ons (`Çikolata`, `Premium hediye paketi`, `Cam vazo`); cart line identity is `productId::variantId::addons::message` so different variants of the same product stay separate line items
+- Variants: every product is configurable by size (`Küçük`/`Orta`/`Büyük`) and optional add-ons (`Çikolata`, `Premium hediye paketi`, `Cam vazo`); cart line identity is `productId::variantId::sortedAddonIds` and never contains message or recipient data
 - State: cart, favorites, completed demo orders and the optional `BAHAR10` coupon persist in `localStorage` under `aizanoi.flowerseller.v1.*` keys; PII (recipient name, phone, address, card message) is never persisted
 - Money: every total is computed in integer minor units (kuruş) to keep totals deterministic
 - Demo semantics: checkout is a 3-step frontend simulation (Teslimat → Alıcı → Ödeme); the payment form carries an explicit "Demo ödeme" notice, never collects or persists card data and never contacts a backend

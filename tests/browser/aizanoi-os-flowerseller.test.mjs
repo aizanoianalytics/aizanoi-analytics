@@ -170,6 +170,17 @@ test('checkout: empty cart blocks CTA, simulated order tracks across reload', as
 
     const paymentText = await page.locator('[data-step-form="payment"]').innerText();
     assert.match(paymentText, /Demo ödeme/);
+    await page.locator('[data-step-form="payment"] [data-checkout-back]').click();
+    assert.equal(await page.locator('[data-step-form="recipient"] input[name="recipient"]').inputValue(), HOSTILE);
+    await page.locator('[data-step-form="recipient"] [data-checkout-back]').click();
+    assert.equal(await page.locator('[data-step-form="delivery"] select[name="district"]').inputValue(), 'Kadıköy');
+    assert.equal(await page.locator('[data-step-form="delivery"] select[name="slot"]').inputValue(), '13-17');
+    await page.locator('[data-step-form="delivery"] button[type="submit"]').click();
+    await page.locator('[data-step-form="recipient"] button[type="submit"]').click();
+    const persistedBeforeOrder = await page.evaluate(() => Object.values(localStorage).join('\n'));
+    assert.equal(persistedBeforeOrder.includes(HOSTILE), false);
+    assert.equal(persistedBeforeOrder.includes('İyi günler'), false);
+    assert.equal(persistedBeforeOrder.includes('Moda Cad. 12'), false);
 
     await page.locator('[data-step-form="payment"] input[name="consent"]').check();
     const ctaSelector = '[data-step-form="payment"] button[type="submit"]';
@@ -241,6 +252,83 @@ test('320px mobile: catalog + cart + checkout usable without horizontal overflow
     await page.locator('[data-start-checkout]').click();
     await page.locator('[data-checkout]').waitFor();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1), true);
+    assert.deepEqual(errors, []);
+  } finally { await browser.close(); }
+});
+
+test('configured product keeps variant and multiple add-ons in one PII-free cart line', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, serviceWorkers: 'block' });
+  const page = await context.newPage();
+  const errors = captureRuntimeErrors(page);
+  try {
+    await openFlowerseller(page);
+    await page.locator('.fs-product-card [data-product]').first().click();
+    await page.locator('[data-product-dialog]').waitFor();
+    await page.locator('[data-size-option="large"]').check();
+    await page.locator('[data-addon="chocolate"]').check();
+    await page.locator('[data-addon="gift"]').check();
+    assert.match(await page.locator('[data-config-price-label]').innerText(), /1\.960 TL/);
+    await page.locator('[data-add-configured]').click();
+    assert.equal(await page.locator('[data-cart-line]').count(), 1);
+    assert.match(await page.locator('[data-cart-line]').innerText(), /Büyük/);
+    assert.match(await page.locator('[data-cart-line]').innerText(), /Çikolata kutusu ekle/);
+    assert.match(await page.locator('[data-cart-line]').innerText(), /Premium hediye paketi/);
+    const raw = await page.evaluate(() => Object.values(localStorage).join('\n'));
+    assert.equal(raw.includes('PRIVATE-FLOWER-MESSAGE-92381'), false);
+    assert.deepEqual(errors, []);
+  } finally { await browser.close(); }
+});
+
+test('same-day plus color/type/price filters compose and reset to all products', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({ viewport: { width: 1024, height: 768 }, serviceWorkers: 'block' });
+  const page = await context.newPage();
+  try {
+    await openFlowerseller(page);
+    await page.locator('[data-filter-trigger]').click();
+    await page.locator('[data-filter-sameday]').check();
+    await page.locator('[data-filter-color="Pembe"]').check();
+    await page.locator('[data-filter-type]').selectOption('gul');
+    await page.locator('[data-filter-min]').fill('1000');
+    await page.locator('[data-filter-max]').fill('1600');
+    await page.locator('[data-apply-filters]').click();
+    assert.ok(await page.locator('[data-product-card]').count() > 0);
+    await page.locator('[data-filter-trigger]').click();
+    await page.locator('[data-reset-filters]').click();
+    assert.equal(await page.locator('[data-product-card]').count(), 25);
+  } finally { await browser.close(); }
+});
+
+test('two Flowerseller instances keep overlays, events and cleanup isolated', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, serviceWorkers: 'block' });
+  const page = await context.newPage();
+  const errors = captureRuntimeErrors(page);
+  try {
+    await page.goto(`${base}/?fs-multi=${Date.now()}`, { waitUntil: 'networkidle' });
+    await page.evaluate(async () => {
+      localStorage.clear();
+      const { createFlowersellerApp } = await import('/js/v3/apps/flowerseller/src/app.js');
+      const a = document.createElement('div'); const b = document.createElement('div');
+      a.id = 'flowerseller-a'; b.id = 'flowerseller-b'; document.body.append(a, b);
+      window.__fsA = createFlowersellerApp(); window.__fsB = createFlowersellerApp();
+      window.__fsAHandle = window.__fsA.mount(a); window.__fsBHandle = window.__fsB.mount(b);
+    });
+    const a = page.locator('#flowerseller-a'); const b = page.locator('#flowerseller-b');
+    await a.locator('.fs-product-card').first().waitFor(); await b.locator('.fs-product-card').first().waitFor();
+    await a.locator('[data-favorite]').first().dispatchEvent('click');
+    assert.equal(await a.locator('[data-favorite]').first().getAttribute('aria-pressed'), 'true');
+    assert.equal(await b.locator('[data-favorite]').first().getAttribute('aria-pressed'), 'false');
+    const hostA = page.locator('.fs-overlay-host').nth(0);
+    const hostB = page.locator('.fs-overlay-host').nth(1);
+    await a.locator('[data-product]').first().dispatchEvent('click');
+    assert.equal(await hostA.locator('[data-product-dialog]').count(), 1);
+    assert.equal(await hostB.locator('[data-product-dialog]').count(), 0);
+    await page.evaluate(() => window.__fsAHandle.cleanup());
+    assert.equal(await a.locator('.fs-app').count(), 0);
+    await b.locator('[data-product]').first().dispatchEvent('click');
+    assert.equal(await page.locator('.fs-overlay-host').first().locator('[data-product-dialog]').count(), 1);
     assert.deepEqual(errors, []);
   } finally { await browser.close(); }
 });

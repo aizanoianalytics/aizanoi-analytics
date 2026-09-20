@@ -25,7 +25,24 @@ const SEARCH_DEBOUNCE_MS = 120;
 const FREE_DELIVERY_MINOR = 1500 * FLOWERSELLER_MINOR_UNIT;
 const STANDARD_DELIVERY_MINOR = 89 * FLOWERSELLER_MINOR_UNIT;
 
-const HOSTILE_INPUT = '<img src=x onerror=alert(1)>"><script>x</script>';
+// Module-wide lock state keeps two simultaneous Flowerseller instances from unlocking each other.
+let flowersellerScrollLocks = 0;
+let flowersellerPreviousOverflow = '';
+function lockFlowersellerScroll() {
+  if (typeof document === 'undefined' || !document.body) return;
+  if (flowersellerScrollLocks === 0) flowersellerPreviousOverflow = document.body.style.overflow;
+  flowersellerScrollLocks += 1;
+  document.body.dataset.fsScrollLocked = '1';
+  document.body.style.overflow = 'hidden';
+}
+function unlockFlowersellerScroll() {
+  if (flowersellerScrollLocks <= 0) return;
+  flowersellerScrollLocks -= 1;
+  if (flowersellerScrollLocks === 0 && typeof document !== 'undefined' && document.body) {
+    document.body.style.overflow = flowersellerPreviousOverflow;
+    delete document.body.dataset.fsScrollLocked;
+  }
+}
 
 function uniqueOrderId() {
   const seed = (typeof crypto !== 'undefined' && crypto.getRandomValues) ? crypto.getRandomValues(new Uint32Array(2)) : [Date.now() & 0xffff, Math.floor(Math.random() * 0xffff)];
@@ -87,6 +104,14 @@ export function createFlowersellerApp() {
   let unknownTrackingId = '';
   let filterState = { sameDay: false, colors: new Set(), minPrice: 0, maxPrice: 2000 };
 
+  // Checkout form data is intentionally ephemeral. It is copied between rerendered steps,
+  // then only non-sensitive delivery metadata is included in the demo order snapshot.
+  let checkoutDraft = {
+    delivery: { address: '', district: 'Kadıköy', slot: '09-13', date: 'Bugün' },
+    recipient: { recipient: '', phone: '', message: '', anonymous: false },
+    payment: { method: 'demo' },
+  };
+
   // Dialog contract bookkeeping.
   let activeDialog = null; // { kind, opener, prevFocus, prevOverflow }
   let scrollLockCount = 0;
@@ -118,7 +143,7 @@ export function createFlowersellerApp() {
     const product = findFlowersellerProduct(line.productId);
     if (!product) return null;
     const variant = findFlowersellerVariant(line.variantId) || FLOWERSELLER_VARIANTS[0];
-    return { ...product, variantLabel: variant.label, addons: line.addons.slice(), qty: line.qty, unitMinor: line.unitMinor, key: line.key };
+    return { ...product, variantLabel: variant.label, addons: line.addons.map((id) => findFlowersellerAddon(id)?.label || id), qty: line.qty, unitMinor: line.unitMinor, key: line.key };
   }
 
   function totalItems() { return cart.reduce((sum, line) => sum + line.qty, 0); }
@@ -151,7 +176,6 @@ export function createFlowersellerApp() {
     if (sort === 'price-asc') list = list.slice().sort((a, b) => a.baseMinor - b.baseMinor);
     else if (sort === 'price-desc') list = list.slice().sort((a, b) => b.baseMinor - a.baseMinor);
     else if (sort === 'rating') list = list.slice().sort((a, b) => b.rating - a.rating || b.reviews - a.reviews);
-    else if (sort === 'newest') list = list.slice().sort((a, b) => (a.id < b.id ? 1 : -1));
     else if (sort === 'name') list = list.slice().sort((a, b) => a.name.localeCompare(b.name, 'tr'));
     return list;
   }
@@ -159,16 +183,12 @@ export function createFlowersellerApp() {
   // ---- dialog / scroll-lock infrastructure ----
   function lockScroll() {
     scrollLockCount += 1;
-    if (scrollLockCount === 1 && typeof document !== 'undefined' && document.body) {
-      document.body.dataset.fsScrollLocked = '1';
-    }
+    lockFlowersellerScroll();
   }
   function unlockScroll() {
     if (scrollLockCount === 0) return;
     scrollLockCount -= 1;
-    if (scrollLockCount === 0 && typeof document !== 'undefined' && document.body) {
-      delete document.body.dataset.fsScrollLocked;
-    }
+    unlockFlowersellerScroll();
   }
   function setInert(open) {
     if (!container) return;
@@ -272,12 +292,14 @@ export function createFlowersellerApp() {
     const types = FLOWERSELLER_FLOWER_TYPES.map((t) => `<option value="${safeText(t)}" ${flowerType === t ? 'selected' : ''}>${safeText(t === 'Tümü' ? 'Tüm türler' : t)}</option>`).join('');
     return `<div class="fs-filter-panel" data-filter-panel role="region" aria-label="Gelişmiş filtreler">
   <fieldset><legend>Tür</legend><select data-filter-type id="${instanceId}-filter-type">${types}</select></fieldset>
+  <fieldset><legend>Teslimat</legend><label><input type="checkbox" data-filter-sameday ${filterState.sameDay ? 'checked' : ''}> Aynı gün teslimat</label></fieldset>
   <fieldset><legend>Renk</legend>${colors}</fieldset>
   <fieldset><legend>Fiyat</legend>
     <label>Min <input type="number" min="0" max="10000" step="50" data-filter-min id="${instanceId}-filter-min" value="${filterState.minPrice || 0}"></label>
     <label>Max <input type="number" min="0" max="10000" step="50" data-filter-max id="${instanceId}-filter-max" value="${filterState.maxPrice >= 100000 ? 10000 : filterState.maxPrice}"></label>
   </fieldset>
   <button type="button" data-apply-filters>Filtreleri uygula</button>
+  <button type="button" class="fs-link" data-reset-filters>Filtreleri temizle</button>
 </div>`;
   }
 
@@ -328,7 +350,6 @@ export function createFlowersellerApp() {
         <option value="price-asc" ${sort === 'price-asc' ? 'selected' : ''}>Fiyat artan</option>
         <option value="price-desc" ${sort === 'price-desc' ? 'selected' : ''}>Fiyat azalan</option>
         <option value="rating" ${sort === 'rating' ? 'selected' : ''}>En çok beğenilen</option>
-        <option value="newest" ${sort === 'newest' ? 'selected' : ''}>En yeni</option>
         <option value="name" ${sort === 'name' ? 'selected' : ''}>İsme göre</option>
       </select>
       <button type="button" class="fs-favorites-view ${favoritesOnly ? 'is-active' : ''}" data-favorites-view aria-pressed="${favoritesOnly}">${favoritesOnly ? 'Tümünü göster' : 'Sadece favoriler'}</button>
@@ -344,7 +365,7 @@ export function createFlowersellerApp() {
     if (!detailId) return '';
     const product = findFlowersellerProduct(detailId);
     if (!product) return '';
-    const variantOptions = FLOWERSELLER_VARIANTS.map((v) => `<label><input type="radio" name="${instanceId}-size" data-size-option="${v.id}" value="${v.id}" ${v.id === 'small' ? 'checked' : ''}> ${safeText(v.label)} <span>${v.deltaMinor === 0 ? 'Standa fiyat' : '+' + flowersellerMoney(v.deltaMinor)}</span></label>`).join('');
+    const variantOptions = FLOWERSELLER_VARIANTS.map((v) => `<label><input type="radio" name="${instanceId}-size" data-size-option="${v.id}" value="${v.id}" ${v.id === 'small' ? 'checked' : ''}> ${safeText(v.label)} <span>${v.deltaMinor === 0 ? 'Başlangıç fiyatı' : '+' + flowersellerMoney(v.deltaMinor)}</span></label>`).join('');
     const addonOptions = FLOWERSELLER_ADDONS.map((a) => `<label class="fs-addon"><input type="checkbox" data-addon="${a.id}"> ${safeText(a.label)} <span>+${flowersellerMoney(a.deltaMinor)}</span></label>`).join('');
     const dateOptions = ['Bugün', 'Yarın', '2 gün sonra'].map((d) => `<option>${safeText(d)}</option>`).join('');
     const slotOptions = FLOWERSELLER_DELIVERY_SLOTS.map((s) => `<option value="${safeText(s.id)}">${safeText(s.label)}</option>`).join('');
@@ -456,14 +477,13 @@ export function createFlowersellerApp() {
     const slotOptions = FLOWERSELLER_DELIVERY_SLOTS.map((s) => `<option value="${safeText(s.id)}">${safeText(s.label)}</option>`).join('');
     const panel = checkoutStep === 'delivery' ? `
       <form class="fs-checkout-form" data-step-form="delivery">
-        <label>Teslimat adresi<input name="address" required maxlength="160" autocomplete="street-address" id="${instanceId}-ck-address"></label>
+        <label>Teslimat adresi<input name="address" required maxlength="160" autocomplete="street-address" id="${instanceId}-ck-address" value="${safeText(checkoutDraft.delivery.address)}"></label>
         <div class="fs-checkout-row">
-          <label>İlçe<select name="district" required id="${instanceId}-ck-district">
-            <option>Kadıköy</option><option>Beşiktaş</option><option>Şişli</option><option>Beşiktaş</option><option>Ataşehir</option><option>Üsküdar</option>
+          <label>İlçe<select name="district" required id="${instanceId}-ck-district">${['Kadıköy','Beşiktaş','Şişli','Ataşehir','Üsküdar'].map((d) => `<option ${checkoutDraft.delivery.district === d ? 'selected' : ''}>${d}</option>`).join('')}
           </select></label>
-          <label>Saat<select name="slot" required id="${instanceId}-ck-slot">${slotOptions}</select></label>
+          <label>Saat<select name="slot" required id="${instanceId}-ck-slot">${slotOptions.replace(`value="${checkoutDraft.delivery.slot}"`, `value="${checkoutDraft.delivery.slot}" selected` )}</select></label>
         </div>
-        <label>Teslimat tarihi<select name="date" required id="${instanceId}-ck-date"><option>Bugün</option><option>Yarın</option><option>2 gün sonra</option></select></label>
+        <label>Teslimat tarihi<select name="date" required id="${instanceId}-ck-date">${['Bugün','Yarın','2 gün sonra'].map((d) => `<option ${checkoutDraft.delivery.date === d ? 'selected' : ''}>${d}</option>`).join('')}</select></label>
         <div class="fs-checkout-actions">
           <button type="button" class="fs-link" data-back-cart>← Sepete dön</button>
           <button type="submit" class="fs-checkout-cta" data-autofocus>Teslimat adımını onayla</button>
@@ -471,11 +491,11 @@ export function createFlowersellerApp() {
       </form>` : checkoutStep === 'recipient' ? `
       <form class="fs-checkout-form" data-step-form="recipient">
         <div class="fs-checkout-row">
-          <label>Alıcı adı<input name="recipient" required maxlength="80" autocomplete="name" id="${instanceId}-ck-recipient"></label>
-          <label>Telefon<input type="tel" name="phone" required maxlength="20" autocomplete="tel" inputmode="tel" id="${instanceId}-ck-phone"></label>
+          <label>Alıcı adı<input name="recipient" required maxlength="80" autocomplete="name" id="${instanceId}-ck-recipient" value="${safeText(checkoutDraft.recipient.recipient)}"></label>
+          <label>Telefon<input type="tel" name="phone" required maxlength="20" autocomplete="tel" inputmode="tel" id="${instanceId}-ck-phone" value="${safeText(checkoutDraft.recipient.phone)}"></label>
         </div>
-        <label>Kart mesajı (opsiyonel)<input name="message" maxlength="140" autocomplete="off" id="${instanceId}-ck-message"></label>
-        <label class="fs-anonymous"><input type="checkbox" name="anonymous"> Gönderici adımı kartta görünmesin</label>
+        <label>Kart mesajı (opsiyonel)<input name="message" maxlength="140" autocomplete="off" id="${instanceId}-ck-message" value="${safeText(checkoutDraft.recipient.message)}"></label>
+        <label class="fs-anonymous"><input type="checkbox" name="anonymous" ${checkoutDraft.recipient.anonymous ? 'checked' : ''}> Gönderici adımı kartta görünmesin</label>
         <div class="fs-checkout-actions">
           <button type="button" class="fs-link" data-checkout-back>← Teslimat</button>
           <button type="submit" class="fs-checkout-cta" data-autofocus>Alıcı bilgisini onayla</button>
@@ -483,11 +503,7 @@ export function createFlowersellerApp() {
       </form>` : `
       <form class="fs-checkout-form" data-step-form="payment">
         <p class="fs-payment-disclaimer"><b>Demo ödeme:</b> Flowerseller POC gerçek ödeme almaz. Aşağıdaki kart bilgileri <u>toplanmaz, gönderilmez, saklanmaz</u> — bu alan yalnızca akışı tamamlamak içindir. Gerçek bir satın alma için kart bilgilerini asla bu forma yazmayın.</p>
-        <label>Kart sahibi<input name="holder" maxlength="64" autocomplete="cc-name" placeholder="(opsiyonel)" id="${instanceId}-ck-holder"></label>
-        <div class="fs-checkout-row">
-          <label>Kart numarası<input name="card" maxlength="19" autocomplete="off" inputmode="numeric" placeholder="•••• •••• •••• ••••" id="${instanceId}-ck-card"></label>
-          <label>Son kullanma<input name="expiry" maxlength="5" autocomplete="off" placeholder="AA/YY" id="${instanceId}-ck-expiry"></label>
-        </div>
+        <label class="fs-payment-method"><input type="radio" name="demoMethod" value="demo" checked> Demo ödeme yöntemi <small>Visa •••• 4242 · yalnızca görsel önizleme</small></label>
         <label class="fs-consent"><input type="checkbox" name="consent" required id="${instanceId}-ck-consent"> Demo ödeme adımının POC olduğunu ve gerçek bir işlem yapılmayacağını anladım.</label>
         <div class="fs-checkout-actions">
           <button type="button" class="fs-link" data-checkout-back>← Alıcı</button>
@@ -570,7 +586,7 @@ export function createFlowersellerApp() {
     <div>
       <span class="fs-eyebrow">Demo sipariş · ${safeText(order.id)}</span>
       <h2>${safeText(new Date(order.createdAt).toLocaleString('tr-TR'))}</h2>
-      <p>${safeText(order.district || '—')} · ${safeText(order.slot || '—')} · ${order.lines.length} kalem</p>
+      <p>${safeText(order.district || '—')} · ${safeText(order.deliveryDate || '—')} · ${safeText(order.slot || '—')} · ${order.lines.length} kalem</p>
       <ul class="fs-order-lines">${linesHTML}</ul>
     </div>
     <div class="fs-tracker" aria-label="Simüle edilmiş durum">${stageHTML}</div>
@@ -709,7 +725,7 @@ export function createFlowersellerApp() {
     const product = findFlowersellerProduct(productId);
     if (!product) return;
     const variant = findFlowersellerVariant(variantId) || FLOWERSELLER_VARIANTS[0];
-    const key = flowersellerLineKey(productId, variant.id, addons, message || (anonymous ? '__anon__' : ''));
+    const key = flowersellerLineKey(productId, variant.id, addons);
     const unitMinor = Math.max(0, flowersellerLineUnitMinor(product, variant.id, addons));
     const existing = cart.find((line) => line.key === key);
     if (existing) {
@@ -788,8 +804,9 @@ export function createFlowersellerApp() {
   function finalizeCheckout() {
     if (checkoutSubmitted) return;
     if (cart.length === 0) return;
-    const district = findInOverlay('[name="district"]')?.value || '';
-    const slot = findInOverlay('[name="slot"]')?.value || '';
+    const district = checkoutDraft.delivery.district || '';
+    const slot = checkoutDraft.delivery.slot || '';
+    const deliveryDate = checkoutDraft.delivery.date || '';
     const subtotal = subtotalMinor();
     const delivery = deliveryMinor();
     const discount = discountMinor();
@@ -797,7 +814,7 @@ export function createFlowersellerApp() {
     const id = uniqueOrderId();
     const order = {
       id, lines: cart.map((line) => ({ ...line })), subtotalMinor: subtotal, deliveryMinor: delivery, discountMinor: discount, totalMinor: total,
-      status: 'Hazırlanıyor', createdAt: Date.now(), district, slot,
+      status: 'Hazırlanıyor', createdAt: Date.now(), district, slot, deliveryDate,
     };
     orders = [order, ...orders].slice(0, MAX_OPEN_ORDERS);
     checkoutSubmitted = true;
@@ -819,9 +836,19 @@ export function createFlowersellerApp() {
     render();
   }
 
+  function findInInstance(selector) {
+    return container?.querySelector(selector) || null;
+  }
+  function findAllInInstance(selector) {
+    return Array.from(container?.querySelectorAll(selector) || []);
+  }
   function findInOverlay(selector) {
-    if (typeof document === 'undefined') return null;
-    return document.querySelector(`.fs-overlay-host ${selector}`) || document.querySelector(selector);
+    const host = overlayHost && overlayHost.isConnected ? overlayHost : null;
+    return host?.querySelector(selector) || null;
+  }
+  function findAllInOverlay(selector) {
+    const host = overlayHost && overlayHost.isConnected ? overlayHost : null;
+    return Array.from(host?.querySelectorAll(selector) || []);
   }
 
   function dialogRoot() {
@@ -859,7 +886,7 @@ export function createFlowersellerApp() {
     if (target.dataset.addConfigured !== undefined) {
       if (!detailId) return;
       const variantId = findInOverlay('[data-size-option]:checked')?.value || 'small';
-      const addons = [...(findInOverlay('[data-addon]:checked') || [])].map((n) => n.dataset.addon);
+      const addons = findAllInOverlay('[data-addon]:checked').map((n) => n.dataset.addon);
       const message = findInOverlay('[data-card-message]')?.value || '';
       const anonymous = findInOverlay('[data-anonymous-sender]')?.checked || false;
       addToCart(detailId, variantId, addons, message, anonymous);
@@ -868,12 +895,17 @@ export function createFlowersellerApp() {
     if (target.dataset.favorite) { toggleFavorite(target.dataset.favorite); return; }
     if (target.dataset.favoritesView !== undefined) { favoritesOnly = !favoritesOnly; render(); return; }
     if (target.dataset.filterTrigger !== undefined) { filtersOpen = !filtersOpen; render(); return; }
+    if (target.dataset.resetFilters !== undefined) {
+      category = 'Tümü'; occasion = ''; flowerType = 'Tümü'; favoritesOnly = false; query = '';
+      filterState = { sameDay: false, colors: new Set(), minPrice: 0, maxPrice: 2000 };
+      filtersOpen = false; render(); return;
+    }
     if (target.dataset.applyFilters !== undefined) {
-      filterState.sameDay = !!findInOverlay('[data-filter-sameday]')?.checked;
-      filterState.colors = new Set([...(findInOverlay('[data-filter-color]:checked') || [])].map((x) => x.dataset.filterColor));
-      filterState.minPrice = Math.max(0, Number(findInOverlay(`#${instanceId}-filter-min`)?.value) || 0);
-      filterState.maxPrice = Math.max(filterState.minPrice, Math.min(10000, Number(findInOverlay(`#${instanceId}-filter-max`)?.value) || 10000));
-      flowerType = findInOverlay(`#${instanceId}-filter-type`)?.value || 'Tümü';
+      filterState.sameDay = !!findInInstance('[data-filter-sameday]')?.checked;
+      filterState.colors = new Set(findAllInInstance('[data-filter-color]:checked').map((x) => x.dataset.filterColor));
+      filterState.minPrice = Math.max(0, Number(findInInstance(`#${instanceId}-filter-min`)?.value) || 0);
+      filterState.maxPrice = Math.max(filterState.minPrice, Math.min(10000, Number(findInInstance(`#${instanceId}-filter-max`)?.value) || 10000));
+      flowerType = findInInstance(`#${instanceId}-filter-type`)?.value || 'Tümü';
       filtersOpen = false;
       render();
       return;
@@ -893,6 +925,8 @@ export function createFlowersellerApp() {
     }
     if (target.dataset.backCart !== undefined) { checkoutOpen = false; checkoutSubmitted = false; cartOpen = true; render(); return; }
     if (target.dataset.checkoutBack !== undefined) {
+      const currentForm = target.closest('form[data-step-form]');
+      captureCheckoutDraft(currentForm);
       const order = ['delivery', 'recipient', 'payment'];
       const idx = order.indexOf(checkoutStep);
       if (idx > 0) checkoutStep = order[idx - 1];
@@ -909,7 +943,7 @@ export function createFlowersellerApp() {
     if (target.dataset.successOrders !== undefined) { successId = null; tab = 'orders'; trackingId = orders[0]?.id || null; render(); return; }
     if (target.dataset.successClose !== undefined) { successId = null; tab = 'store'; render(); return; }
     if (target.dataset.trackingLookup !== undefined) {
-      const input = findInOverlay(`#${instanceId}-tracking-input`);
+      const input = findInInstance(`#${instanceId}-tracking-input`);
       lookupTracking(input?.value);
       return;
     }
@@ -927,7 +961,7 @@ export function createFlowersellerApp() {
       const product = findFlowersellerProduct(detailId);
       if (!product) return;
       const variantId = target.value;
-      const addons = [...(document.querySelectorAll('.fs-overlay-host [data-addon]:checked'))].map((n) => n.dataset.addon);
+      const addons = findAllInOverlay('[data-addon]:checked').map((n) => n.dataset.addon);
       const unitMinor = flowersellerLineUnitMinor(product, variantId, addons);
       const priceNode = findInOverlay(`#${instanceId}-detail-price`);
       const labelNode = findInOverlay('[data-config-price-label]');
@@ -938,8 +972,8 @@ export function createFlowersellerApp() {
     if (target.matches('[data-addon]')) {
       const product = findFlowersellerProduct(detailId);
       if (!product) return;
-      const variantId = document.querySelector('.fs-overlay-host [data-size-option]:checked')?.value || 'small';
-      const addons = [...document.querySelectorAll('.fs-overlay-host [data-addon]:checked')].map((n) => n.dataset.addon);
+      const variantId = findInOverlay('[data-size-option]:checked')?.value || 'small';
+      const addons = findAllInOverlay('[data-addon]:checked').map((n) => n.dataset.addon);
       const unitMinor = flowersellerLineUnitMinor(product, variantId, addons);
       const priceNode = findInOverlay(`#${instanceId}-detail-price`);
       const labelNode = findInOverlay('[data-config-price-label]');
@@ -963,12 +997,25 @@ export function createFlowersellerApp() {
     }
   }
 
+  function captureCheckoutDraft(form) {
+    if (!form) return;
+    const value = (name) => form.elements[name]?.value || '';
+    if (form.dataset.stepForm === 'delivery') {
+      checkoutDraft.delivery = { address: value('address'), district: value('district'), slot: value('slot'), date: value('date') };
+    } else if (form.dataset.stepForm === 'recipient') {
+      checkoutDraft.recipient = { recipient: value('recipient'), phone: value('phone'), message: value('message'), anonymous: Boolean(form.elements.anonymous?.checked) };
+    } else if (form.dataset.stepForm === 'payment') {
+      checkoutDraft.payment = { method: form.elements.demoMethod?.value || 'demo' };
+    }
+  }
+
   function handleSubmit(event) {
     if (!ownTarget(event.target)) return;
     const form = event.target.closest('form[data-step-form]');
     if (!form) return;
     event.preventDefault();
     const step = form.dataset.stepForm;
+    captureCheckoutDraft(form);
     if (step === 'delivery') {
       const ok = form.checkValidity();
       if (!ok) { form.reportValidity(); return; }
@@ -1019,10 +1066,8 @@ export function createFlowersellerApp() {
   function ownTarget(target) {
     if (!target || typeof target.closest !== 'function') return false;
     if (container && container.dataset.fsMounted === instanceId) {
-      if (container.contains(target)) return true;
-      if (target.closest('.fs-app')) return true;
-      // Overlay host may be detached from the mount root but still belongs to this instance.
-      const overlay = typeof document !== 'undefined' ? document.querySelector('.fs-overlay-host[data-fs-overlay-host="' + instanceId + '"]') : null;
+      if (container && container.contains(target)) return true;
+      const overlay = overlayHost && overlayHost.isConnected ? overlayHost : null;
       if (overlay && overlay.contains(target)) return true;
     }
     const overlayAny = typeof document !== 'undefined' ? target.closest('.fs-overlay-host') : null;

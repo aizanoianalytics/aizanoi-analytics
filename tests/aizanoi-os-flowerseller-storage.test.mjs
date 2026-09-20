@@ -10,12 +10,14 @@ test.beforeEach(() => {
   storage.flowersellerResetStorageForTest();
 });
 
+import { flowersellerLineKey } from '../frontend/js/v3/apps/flowerseller/src/catalog.js';
+
 const baseLine = (overrides = {}) => ({
-  key: 'p1::small::::0:', productId: 'p1', variantId: 'small', addons: [], qty: 1, unitMinor: 1000, ...overrides,
+  key: flowersellerLineKey('p1', 'small', []), productId: 'p1', variantId: 'small', addons: [], qty: 1, unitMinor: 1000, ...overrides,
 });
 
 test('saveCart + loadCart round-trip lines and reject malformed payloads', () => {
-  storage.saveCart([baseLine(), baseLine({ key: 'p1::medium::+::0:', variantId: 'medium', qty: 2 })]);
+  storage.saveCart([baseLine(), baseLine({ key: flowersellerLineKey('p1', 'medium', ['chocolate']), variantId: 'medium', addons: ['chocolate'], qty: 2 })]);
   const restored = storage.loadCart();
   assert.equal(restored.length, 2);
   assert.equal(restored[1].qty, 2);
@@ -52,12 +54,15 @@ test('saveCoupon toggles between applied and cleared', () => {
 
 test('PII fields never enter cart or order payloads', () => {
   // Simulate a malicious payload; the loader must keep only the schema it knows about.
-  storage.saveCart([{
-    key: 'k', productId: 'p', variantId: 'small', qty: 1, unitMinor: 1,
-    name: 'Real Name', phone: '0555', address: 'Ev adresi', card: '4242 4242 4242 4242', message: 'hi',
-  }]);
+  const secret = 'PRIVATE-FLOWER-MESSAGE-92381';
+  storage.saveCart([baseLine({ name: 'Real Name', phone: '0555', address: 'Ev adresi', card: '4242 4242 4242 4242', message: secret })]);
+  const rawCart = storage.flowersellerStorageForTest().getItem('aizanoi.flowerseller.v1.cart');
+  assert.equal(rawCart.includes(secret), false);
   const restored = storage.loadCart();
   assert.equal(restored.length, 1);
-  // No PII survives the sanitize step.
   assert.equal(Object.keys(restored[0]).sort().join(','), 'addons,key,productId,qty,unitMinor,variantId');
+
+  storage.saveOrders([{ id: 'FS-PII', lines: [baseLine({ message: secret })], subtotalMinor: 1000, deliveryMinor: 0, discountMinor: 0, totalMinor: 1000, status: 'Hazırlanıyor', createdAt: 1, district: 'Kadıköy', slot: '09-13', recipient: secret }]);
+  const rawOrders = storage.flowersellerStorageForTest().getItem('aizanoi.flowerseller.v1.orders');
+  assert.equal(rawOrders.includes(secret), false);
 });

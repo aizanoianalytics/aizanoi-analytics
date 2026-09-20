@@ -6,6 +6,8 @@
 // module can be exercised without a browser. The shim is only constructed when no real
 // storage is available.
 
+import { flowersellerLineKey } from './catalog.js';
+
 const NAMESPACE = 'aizanoi.flowerseller.v1';
 const KEY_CART = `${NAMESPACE}.cart`;
 const KEY_FAVORITES = `${NAMESPACE}.favorites`;
@@ -78,11 +80,12 @@ function sanitizeCartLine(raw) {
   const key = typeof raw.key === 'string' ? raw.key.slice(0, 200) : null;
   const productId = typeof raw.productId === 'string' ? raw.productId.slice(0, 64) : null;
   const variantId = typeof raw.variantId === 'string' && raw.variantId.length <= 24 ? raw.variantId : 'small';
-  const addons = Array.isArray(raw.addons) ? raw.addons.filter((a) => typeof a === 'string' && a.length <= 24) : [];
+  const addons = Array.isArray(raw.addons) ? Array.from(new Set(raw.addons.filter((a) => typeof a === 'string' && a.length <= 24))).sort() : [];
   const qty = Math.max(0, Math.min(MAX_LINE_QTY, Number(raw.qty) || 0));
   const unitMinor = Math.max(0, Number(raw.unitMinor) || 0);
-  if (!key || !productId || qty < 1 || unitMinor < 1) return null;
-  return { key, productId, variantId, addons, qty, unitMinor };
+  const expectedKey = flowersellerLineKey(productId, variantId, addons);
+  if (!key || key !== expectedKey || !productId || qty < 1 || unitMinor < 1) return null;
+  return { key: expectedKey, productId, variantId, addons, qty, unitMinor };
 }
 
 export function loadCart() {
@@ -148,7 +151,8 @@ function sanitizeOrder(raw) {
   const createdAt = Math.max(0, Number(raw.createdAt) || Date.now());
   const district = typeof raw.district === 'string' ? raw.district.slice(0, 40) : '';
   const slot = typeof raw.slot === 'string' ? raw.slot.slice(0, 24) : '';
-  return { id, lines, subtotalMinor, deliveryMinor, discountMinor, totalMinor, status, createdAt, district, slot };
+  const deliveryDate = typeof raw.deliveryDate === 'string' ? raw.deliveryDate.slice(0, 24) : '';
+  return { id, lines, subtotalMinor, deliveryMinor, discountMinor, totalMinor, status, createdAt, district, slot, deliveryDate };
 }
 
 export function loadOrders() {

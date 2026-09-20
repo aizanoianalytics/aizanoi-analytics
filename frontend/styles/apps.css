@@ -391,7 +391,7 @@
   .fs-readme-image-credits h3 { margin:0 0 10px; color:#293c33; font-size:14px; }
   .fs-readme-image-credits ul { margin:0; padding-left:18px; }
   .fs-readme-image-credits li { margin:3px 0; }
-  .fs-app[data-fs-scroll-locked] { overflow:hidden; }
+  body[data-fs-scroll-locked] { overflow:hidden; }
   .fs-app [inert] { pointer-events:none; user-select:none; }
   .fs-overlay-host { position:fixed; inset:0; z-index:9100; pointer-events:none; }
   .fs-overlay-host > * { pointer-events:auto; }
