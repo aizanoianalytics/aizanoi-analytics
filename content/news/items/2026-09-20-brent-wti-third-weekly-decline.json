@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-brent-wti-third-weekly-decline",
+  "title": "Brent settles at $103.87 and WTI at $100.30 as Saudi East-West pipeline restart eases supply fears",
+  "summary": "Brent crude settled at $103.87 a barrel on Friday, down 0.91 percent, and West Texas Intermediate closed at $100.30, down 1.58 percent, as traders priced in progress on restoring flows through Saudi Arabia's damaged East-West Pipeline. Brent touched an intraday low of $101.92 and WTI bottomed at $99.39 before recovering, with both staying above $100 and posting their first weekly decline in three weeks. Capital Economics warned oil could remain in triple digits well into 2027 if the Middle East conflict drags on.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-09-20T06:00:00Z",
+  "updatedAt": "2026-09-20T06:00:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["oil", "brent", "wti", "saudi-arabia", "commodities", "middle-east"],
+  "sources": [
+    {
+      "publisher": "Business News Report",
+      "url": "https://www.bnreport.com/en/oil-prices-drop-settlement/",
+      "publishedAt": "2026-09-19T21:04:00Z"
+    }
+  ]
+}

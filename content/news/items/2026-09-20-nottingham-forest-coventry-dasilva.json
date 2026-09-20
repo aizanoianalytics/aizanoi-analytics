@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-nottingham-forest-coventry-dasilva",
+  "title": "Coventry beat Nottingham Forest 1-0 at the City Ground to claim their first Premier League win in 25 years",
+  "summary": "Jay Dasilva scored the only goal in the 55th minute, assisted by goalkeeper Carl Rushworth, as Coventry City beat Nottingham Forest 1-0 at the City Ground on Saturday for a first Premier League victory since the 2000-01 season. Substitute Igor Jesus had an 86th-minute equaliser ruled out by VAR for offside, the second Forest goal chalked off at home this term after Neco Williams against Tottenham. Frank Lampard's side, promoted from the Championship, climbed off the bottom of the table with three points after four games.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-09-20T08:00:00Z",
+  "updatedAt": "2026-09-20T08:00:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["nottingham-forest", "coventry-city", "premier-league", "matchweek-5", "var", "jay-dasilva"],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://skysports.com/football/news/11095/13586071/nottingham-forest-0-1-coventry-jay-dasilvas-winner-gives-sky-blues-first-premier-league-win-in-25-years",
+      "publishedAt": "2026-09-19T22:08:00Z"
+    }
+  ]
+}

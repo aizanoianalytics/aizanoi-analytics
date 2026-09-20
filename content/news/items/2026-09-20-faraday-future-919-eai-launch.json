@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-faraday-future-919-eai-launch",
+  "title": "Faraday Future debuts nine EAI robots and four industry solutions at its 919 launch",
+  "summary": "Faraday Future used its 919 online launch on Friday to unveil nine new Embodied AI robot devices across humanoid, quadruped and mobile manipulator form factors, alongside four industry productivity packages for K-12 education, research, security and inspection. The Master Mini begins at $9,990 and stands about 95 centimetres tall with three configurations offering 48, 117 and 200 TOPS of compute, while the All-New Futurist went on sale the same day. Founder YT Jia framed the release as completing the One-Brain Multi-Form Multi-Capability framework.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-09-20T07:45:00Z",
+  "updatedAt": "2026-09-20T07:45:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["faraday-future", "embodied-ai", "humanoid-robots", "ffai", "robotics"],
+  "sources": [
+    {
+      "publisher": "TMCnet",
+      "url": "https://tmcnet.com/news/2026/09/19/10448465.htm",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    }
+  ]
+}

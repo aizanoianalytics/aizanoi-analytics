@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-anthropic-accenture-partnership-update",
+  "title": "Anthropic and Accenture scale enterprise Claude deployment ahead of new safety coordination",
+  "summary": "Anthropic and Accenture detailed the next phase of their AI safety partnership this week, with Accenture naming Claude its preferred frontier model for regulated-industry rollouts across financial services, public sector and healthcare. The expanded work adds red-teaming, model evaluation and frontier-risk review to Accenture's existing migration and fine-tuning practice, and tracks the cross-lab safety coordination OpenAI confirmed this month. OpenAI endorsed independent verification under the FRONTIER Act.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-09-20T08:00:00Z",
+  "updatedAt": "2026-09-20T08:00:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["anthropic", "accenture", "claude", "enterprise-ai", "ai-safety"],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/15/open-ai-google-anthropic-safety.html",
+      "publishedAt": "2026-09-15T18:31:00Z"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-apple-iphone-18-on-sale",
+  "title": "Apple's iPhone 18 Pro lineup goes on sale worldwide ten days after the foldable iPhone Duo debut",
+  "summary": "Apple's iPhone 18 Pro and iPhone 18 Pro Max went on sale in stores on Friday, ten days after the Steve Jobs Theater unveiling that introduced the $1,999 iPhone Duo foldable. The Pro lineup features a redesigned camera system with a DSLR-like variable aperture aimed at improving low-light performance and depth of field, alongside the company's new Siri AI assistant powered by Gemini rolling out in iOS 27 from September 14. Apple said Siri AI launches in English first, with French, Japanese, Korean, Portuguese and Spanish following in October, while the EU rollout remains delayed indefinitely.",
+  "category": "technology",
+  "priority": 75,
+  "publishedAt": "2026-09-20T08:15:00Z",
+  "updatedAt": "2026-09-20T08:15:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["apple", "iphone-18-pro", "foldable-iphone", "siri-ai", "gemini"],
+  "sources": [
+    {
+      "publisher": "The New York Ledger",
+      "url": "https://thenyledger.com/news/apples-iphone-18-goes-on-sale-as-customers-line-up-at-stores-worldwide",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    }
+  ]
+}
