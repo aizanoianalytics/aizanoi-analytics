@@ -42,7 +42,8 @@ const APP_DEFINITIONS = Object.freeze([
   { id:'browser', label:'Browser', short:'Browser', group:'studio', icon:'/assets/icons/browser.svg', moduleId:'browser', description:'Sandboxed web browser with address/search bar and an external-browser fallback', keywords:['browser','web','internet','search','website','url'] },
   { id:'camera', label:'Camera', short:'Camera', group:'media', icon:'/assets/icons/camera.svg', moduleId:'camera', description:'Local camera capture — photos stay on this device', keywords:['camera','photo','webcam','picture','capture'] },
   { id:'winamp', label:'Winamp', short:'Winamp', group:'media', icon:'/assets/icons/winamp.svg', moduleId:'winamp', description:'Playlist player for local and Workspace audio', keywords:['winamp','music','audio','player','playlist','mp3'] },
-  { id:'recycle-bin', label:'Recycle Bin', short:'Recycle Bin', group:'studio', icon:'/assets/icons/aizanoi-recycle-bin.svg', moduleId:'recycle-bin', description:'Restore or permanently delete trashed Workspace items', keywords:['recycle','bin','trash','delete','restore'] }
+  { id:'recycle-bin', label:'Recycle Bin', short:'Recycle Bin', group:'studio', icon:'/assets/icons/aizanoi-recycle-bin.svg', moduleId:'recycle-bin', description:'Restore or permanently delete trashed Workspace items', keywords:['recycle','bin','trash','delete','restore'] },
+  { id:'flowerseller', label:'Flowerseller', short:'Flowers', group:'explore', icon:'/assets/icons/aizanoi-flowerseller.svg', moduleId:'flowerseller', description:'A boutique flower shop proof of concept with original arrangements and a real-backend build guide', keywords:['flowers','flower shop','bouquet','gift','delivery','store','poc'] }
 ]);
 
 function resolveAppDefinition(definition) {

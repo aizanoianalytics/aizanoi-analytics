@@ -34,8 +34,8 @@ async function axe(page,label) {
 function appModuleRequests(requests){return requests.filter((path)=>path.includes('/js/v3/apps/'));}
 
 const retiredIds=['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor'];
-const publicAppIds=['news','videos','analytics','markets','worlds','forge','fly-world','journal','labs','games','dungeon','workspace','notepad','web-editor','calculator','browser','camera','winamp','recycle-bin'];
-const desktopAppIds=['news','videos','analytics','markets','worlds','forge','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','fly-world','recycle-bin','workspace'];
+const publicAppIds=['news','videos','analytics','markets','worlds','forge','fly-world','journal','labs','games','dungeon','workspace','notepad','web-editor','calculator','browser','camera','winamp','recycle-bin','flowerseller'];
+const desktopAppIds=['news','videos','analytics','markets','worlds','forge','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','fly-world','recycle-bin','workspace','flowerseller'];
 
 // Desktop: sparse wallpaper desktop, curated product + utility shortcuts, freeform window lifecycle.
 {

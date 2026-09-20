@@ -56,6 +56,7 @@ const ALLOWED_JSON = [
   /\/js\/v3\/apps\/dungeon\/manifest\.json$/,
   /\/js\/v3\/apps\/forge\/manifest\.json$/,
   /\/js\/v3\/apps\/fly-world\/manifest\.json$/,
+  /\/js\/v3\/apps\/flowerseller\/manifest\.json$/,
   /\/js\/v3\/apps\/games\/manifest\.json$/,
   /\/js\/v3\/apps\/markets\/manifest\.json$/,
   /\/js\/v3\/apps\/journal\/manifest\.json$/,
