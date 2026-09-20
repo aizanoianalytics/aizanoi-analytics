@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-openai-anthropic-deepmind-safety-talks",
+  "title": "OpenAI, Anthropic and Google DeepMind push for a US-led AI standards body as talks enter fifth week",
+  "summary": "OpenAI's global policy chief Chris Lehane confirmed on Tuesday that the three frontier-model labs have been meeting privately for several weeks on AI safety, with the talks originally prompted by Google DeepMind chair Demis Hassabis's July proposal for a US-led standards body modelled on the Financial Industry Regulatory Authority. Lehane said the companies do not need an antitrust waiver to coordinate on safety and that OpenAI supports a provision in the FRONTIER Act that would compel top labs to admit independent verification organisations.",
+  "category": "ai",
+  "priority": 85,
+  "publishedAt": "2026-09-20T05:30:00Z",
+  "updatedAt": "2026-09-20T05:30:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["openai", "anthropic", "google-deepmind", "ai-safety", "frontier-models"],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/15/open-ai-google-anthropic-safety.html",
+      "publishedAt": "2026-09-15T18:31:00Z"
+    }
+  ]
+}

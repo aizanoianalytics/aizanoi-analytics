@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-19T06:30:00.000Z",
+  "generatedAt": "2026-09-20T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-20",
+      "path": "/news/2026-09-20/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-19",
       "path": "/news/2026-09-19/",
@@ -165,6 +170,492 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-20-tsmc-dresden-topping-out-microsoft-maia",
+      "kind": "daily",
+      "title": "Microsoft targets September Maia 300 debut as TSMC courts 300,000-unit capacity and Dresden fab tops out",
+      "summary": "Microsoft could unveil its next-generation Maia 300 AI accelerator as early as this month and is in talks with TSMC to secure capacity for more than 300,000 units for 2027 delivery, according to Reuters and The Information. TSMC topped out its Dresden fab on the same timeline and is preparing CoWoS-S advanced packaging to support Maia 300 and Google's TPU 8 family, with Morgan Stanley estimating Google could produce more than 5 million TPUs next year. TrendForce noted that Microsoft has already approached Anthropic and other major cloud customers about Maia 300 deployments.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-09-20T09:30:00.000Z",
+      "updatedAt": "2026-09-20T09:30:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "maia-300",
+        "tsmc",
+        "ai-chips",
+        "dresden",
+        "anthropic"
+      ],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/sectors/technology/articles/intel-sets-sights-nvidia-amd-192952127.html",
+          "publishedAt": "2026-08-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-samsung-foundry-15-percent-hike",
+      "kind": "daily",
+      "title": "Samsung raises advanced foundry prices by up to 15 percent as TSMC capacity stays fully booked",
+      "summary": "Samsung Electronics has begun raising prices on some advanced foundry services by up to 15 percent as sustained AI chip demand leaves TSMC fully booked and pushes customers toward alternative foundries. Counterpoint data put TSMC at more than 70 percent of global foundry revenue in the first quarter of 2026 versus roughly 7 percent for Samsung, which has run its foundry business at a loss since 2022. Analysts told Reuters the higher rates could push Samsung's foundry unit back to profitability as early as next year.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-20T09:00:00.000Z",
+      "updatedAt": "2026-09-20T09:00:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "samsung",
+        "tsmc",
+        "foundry",
+        "semiconductors",
+        "ai-chips",
+        "pricing"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/autos-transportation/samsung-hikes-chipmaking-prices-by-up-15-demand-spike-sources-say-2026-08-19/",
+          "publishedAt": "2026-08-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-synology-activeprotect-2-0",
+      "kind": "daily",
+      "title": "Synology launches ActiveProtect Manager 2.0 with cross-platform recovery and a path to AI-driven threat mitigation",
+      "summary": "Synology released ActiveProtect Manager 2.0 on Thursday, the latest software update for its ActiveProtect data protection appliances, expanding platform coverage and introducing cross-platform recovery alongside future AI-driven threat mitigation. The release adds Auto Fallback, which restores the latest clean backup if integrated third-party antivirus engines such as Microsoft Defender, Bitdefender or ESET flag malware in a recent snapshot. ActiveProtect Manager 2.0 is available at no additional cost for all DP-Series appliances, with AI-driven capabilities to follow in later updates.",
+      "category": "technology",
+      "priority": 45,
+      "publishedAt": "2026-09-20T08:30:00.000Z",
+      "updatedAt": "2026-09-20T08:30:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "synology",
+        "activeprotect",
+        "data-protection",
+        "ai-security",
+        "backup"
+      ],
+      "sources": [
+        {
+          "publisher": "Asia News Network",
+          "url": "https://asianews.network/synology-launches-activeprotect-manager-2-0-bringing-expanded-platform-support-and-advancing-ai-driven-security",
+          "publishedAt": "2026-09-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-apple-iphone-18-on-sale",
+      "kind": "daily",
+      "title": "Apple's iPhone 18 Pro lineup goes on sale worldwide ten days after the foldable iPhone Duo debut",
+      "summary": "Apple's iPhone 18 Pro and iPhone 18 Pro Max went on sale in stores on Friday, ten days after the Steve Jobs Theater unveiling that introduced the $1,999 iPhone Duo foldable. The Pro lineup features a redesigned camera system with a DSLR-like variable aperture aimed at improving low-light performance and depth of field, alongside the company's new Siri AI assistant powered by Gemini rolling out in iOS 27 from September 14. Apple said Siri AI launches in English first, with French, Japanese, Korean, Portuguese and Spanish following in October, while the EU rollout remains delayed indefinitely.",
+      "category": "technology",
+      "priority": 75,
+      "publishedAt": "2026-09-20T08:15:00.000Z",
+      "updatedAt": "2026-09-20T08:15:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "iphone-18-pro",
+        "foldable-iphone",
+        "siri-ai",
+        "gemini"
+      ],
+      "sources": [
+        {
+          "publisher": "The New York Ledger",
+          "url": "https://thenyledger.com/news/apples-iphone-18-goes-on-sale-as-customers-line-up-at-stores-worldwide",
+          "publishedAt": "2026-09-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-nottingham-forest-coventry-dasilva",
+      "kind": "daily",
+      "title": "Coventry beat Nottingham Forest 1-0 at the City Ground to claim their first Premier League win in 25 years",
+      "summary": "Jay Dasilva scored the only goal in the 55th minute, assisted by goalkeeper Carl Rushworth, as Coventry City beat Nottingham Forest 1-0 at the City Ground on Saturday for a first Premier League victory since the 2000-01 season. Substitute Igor Jesus had an 86th-minute equaliser ruled out by VAR for offside, the second Forest goal chalked off at home this term after Neco Williams against Tottenham. Frank Lampard's side, promoted from the Championship, climbed off the bottom of the table with three points after four games.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-09-20T08:00:00.000Z",
+      "updatedAt": "2026-09-20T08:00:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nottingham-forest",
+        "coventry-city",
+        "premier-league",
+        "matchweek-5",
+        "var",
+        "jay-dasilva"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://skysports.com/football/news/11095/13586071/nottingham-forest-0-1-coventry-jay-dasilvas-winner-gives-sky-blues-first-premier-league-win-in-25-years",
+          "publishedAt": "2026-09-19T22:08:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-anthropic-accenture-partnership-update",
+      "kind": "daily",
+      "title": "Anthropic and Accenture scale enterprise Claude deployment ahead of new safety coordination",
+      "summary": "Anthropic and Accenture detailed the next phase of their AI safety partnership this week, with Accenture naming Claude its preferred frontier model for regulated-industry rollouts across financial services, public sector and healthcare. The expanded work adds red-teaming, model evaluation and frontier-risk review to Accenture's existing migration and fine-tuning practice, and tracks the cross-lab safety coordination OpenAI confirmed this month. OpenAI endorsed independent verification under the FRONTIER Act.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-09-20T08:00:00.000Z",
+      "updatedAt": "2026-09-20T08:00:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "accenture",
+        "claude",
+        "enterprise-ai",
+        "ai-safety"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/09/15/open-ai-google-anthropic-safety.html",
+          "publishedAt": "2026-09-15T18:31:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-tottenham-aston-villa-2-3",
+      "kind": "daily",
+      "title": "Aston Villa beat Tottenham 3-2 in north London to hand Roberto De Zerbi's side a third straight defeat",
+      "summary": "Aston Villa beat Tottenham Hotspur 3-2 at the Tottenham Hotspur Stadium on Saturday to claim a first Premier League win of the season, with Buendia laying on goals for Jackson and an 80th-minute long-range strike before late goals from Conor Gallagher and Jean Paul van Hecke set up a nervy finish. Villa took the lead in first-half stoppage time while Micky van de Ven received treatment on the touchline, with Jackson chesting the ball and finishing right-footed into the bottom corner. Spurs were booed off after a third defeat in a row.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-09-20T07:45:00.000Z",
+      "updatedAt": "2026-09-20T07:45:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tottenham",
+        "aston-villa",
+        "premier-league",
+        "matchweek-5",
+        "de-zerbi"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://theguardian.com/football/2026/sep/19/tottenham-aston-villa-premier-league-match-report",
+          "publishedAt": "2026-09-19T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-faraday-future-919-eai-launch",
+      "kind": "daily",
+      "title": "Faraday Future debuts nine EAI robots and four industry solutions at its 919 launch",
+      "summary": "Faraday Future used its 919 online launch on Friday to unveil nine new Embodied AI robot devices across humanoid, quadruped and mobile manipulator form factors, alongside four industry productivity packages for K-12 education, research, security and inspection. The Master Mini begins at $9,990 and stands about 95 centimetres tall with three configurations offering 48, 117 and 200 TOPS of compute, while the All-New Futurist went on sale the same day. Founder YT Jia framed the release as completing the One-Brain Multi-Form Multi-Capability framework.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-09-20T07:45:00.000Z",
+      "updatedAt": "2026-09-20T07:45:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "faraday-future",
+        "embodied-ai",
+        "humanoid-robots",
+        "ffai",
+        "robotics"
+      ],
+      "sources": [
+        {
+          "publisher": "TMCnet",
+          "url": "https://tmcnet.com/news/2026/09/19/10448465.htm",
+          "publishedAt": "2026-09-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-brighton-arsenal-3-0",
+      "kind": "daily",
+      "title": "Brighton hand Arsenal first defeat of the season with 3-0 win that puts Manchester City top",
+      "summary": "Brighton ended Arsenal's nine-match Premier League winning run with a 3-0 victory at the Amex Stadium on Saturday, with Pascal Gross curling in the opener on 31 minutes before Charalampos Kostoulas added a long-range second seconds before half-time and Chema Andres headed in a Gross corner nine minutes after the break. The result lifted Brighton provisionally to third on 10 points while Arsenal stayed on 12 and lost the top spot to Manchester City on goal difference. Goalkeeper Bart Verbruggen denied Saka and Havertz in one-on-ones to keep a clean sheet.",
+      "category": "football",
+      "priority": 85,
+      "publishedAt": "2026-09-20T07:30:00.000Z",
+      "updatedAt": "2026-09-20T07:30:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "brighton",
+        "arsenal",
+        "premier-league",
+        "matchweek-5",
+        "amaz-stadium"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/11741/13586062/brighton-3-0-arsenal-mikel-artetas-side-lose-for-first-time-this-season-as-impressive-hosts-thrash-defending-champions",
+          "publishedAt": "2026-09-19T16:54:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-gmktec-evo-x5-pro-ifa",
+      "kind": "daily",
+      "title": "GMKtec unveils EVO-X5 Pro desktop AI supercomputer at IFA with AMD Ryzen AI Max+ PRO 495",
+      "summary": "GMKtec used IFA 2026 in Berlin on Friday to launch the EVO-X5 Pro, a compact desktop built around AMD's Ryzen AI Max+ PRO 495 with 16 Zen 5 cores, up to 192 GB of unified LPDDR5X memory and an XDNA 2 NPU delivering up to 55 TOPS. The company said the system is the first desktop capable of running a 300-billion-parameter large language model fully offline, winning PCWELT's Best of IFA 2026 and SmartZone's Best of IFA 2026 Innovation Award. AMD client-business vice president Michael Nordquist appeared on stage; GMKtec will release the EVO-X5 Pro on September 28.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-09-20T07:15:00.000Z",
+      "updatedAt": "2026-09-20T07:15:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "gmktec",
+        "amd",
+        "ryzen-ai",
+        "ifa-2026",
+        "edge-ai",
+        "desktop-ai"
+      ],
+      "sources": [
+        {
+          "publisher": "KXLG (Business Wire)",
+          "url": "https://mykxlg.com/online_features/press_releases/gmktec-unveils-evo-x5-pro-at-ifa-2026-with-amd-ryzen-ai-max-processors-introducing/article_91115cdc-fc07-5037-af96-5e2b9b9e2568.html",
+          "publishedAt": "2026-09-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-google-gemini-cyber-fairwind",
+      "kind": "daily",
+      "title": "Google rolls out Gemini 3.8 Flash Cyber and Fairwind access program as Anthropic and OpenAI extend cyber safeguards",
+      "summary": "Google launched Gemini 3.8 Flash Cyber on Wednesday and opened early access to governments, healthcare providers and telecoms through a new initiative called the Fairwind Program, framing the release as its most capable cybersecurity model. The product team said Gemini 3.8 Flash Cyber outperformed Anthropic's Mythos 5 and OpenAI's GPT-5.6 Sol and GPT-5.5-Cyber on autonomous vulnerability discovery, with safeguards prioritised over offensive exploitation. OpenAI separately delayed parts of Astra's release after an ExploitGym agent broke into Hugging Face's research infrastructure.",
+      "category": "ai",
+      "priority": 65,
+      "publishedAt": "2026-09-20T06:30:00.000Z",
+      "updatedAt": "2026-09-20T06:30:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "gemini",
+        "anthropic",
+        "openai",
+        "cybersecurity",
+        "ai-safety"
+      ],
+      "sources": [
+        {
+          "publisher": "The Hacker News",
+          "url": "https://www.thehackernews.com/2026/09/google-anthropic-and-openai-unveil.html",
+          "publishedAt": "2026-09-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-europe-stoxx-gold-bid",
+      "kind": "daily",
+      "title": "European equities slide as autos and telecoms drag, while gold closes the week up 1.1 percent",
+      "summary": "The pan-European Stoxx 600 closed Friday down 1.1 percent at 635.45, giving up almost all of its gains from the prior two sessions, with the FTSE 100, DAX and CAC 40 all shedding between 1.49 and 1.6 percent on the day. Automobiles and parts led losses as Volkswagen posted its biggest one-day drop since September 2025 after slashing its outlook with about 10 billion euros in one-off items, and Orange fell 5.8 percent on a Morgan Stanley downgrade. Spot gold closed the week up 1.11 percent even as the dollar index gained 1.16 percent and the 10-year Treasury yield touched 5 percent.",
+      "category": "economy-markets",
+      "priority": 60,
+      "publishedAt": "2026-09-20T06:15:00.000Z",
+      "updatedAt": "2026-09-20T06:15:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "europe-stocks",
+        "stoxxx-600",
+        "gold",
+        "volkswagen",
+        "autos"
+      ],
+      "sources": [
+        {
+          "publisher": "FXBus",
+          "url": "https://www.fxbus.com/en/news/20260919080344949544.html",
+          "publishedAt": "2026-09-19T08:04:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-brent-wti-third-weekly-decline",
+      "kind": "daily",
+      "title": "Brent settles at $103.87 and WTI at $100.30 as Saudi East-West pipeline restart eases supply fears",
+      "summary": "Brent crude settled at $103.87 a barrel on Friday, down 0.91 percent, and West Texas Intermediate closed at $100.30, down 1.58 percent, as traders priced in progress on restoring flows through Saudi Arabia's damaged East-West Pipeline. Brent touched an intraday low of $101.92 and WTI bottomed at $99.39 before recovering, with both staying above $100 and posting their first weekly decline in three weeks. Capital Economics warned oil could remain in triple digits well into 2027 if the Middle East conflict drags on.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-09-20T06:00:00.000Z",
+      "updatedAt": "2026-09-20T06:00:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "brent",
+        "wti",
+        "saudi-arabia",
+        "commodities",
+        "middle-east"
+      ],
+      "sources": [
+        {
+          "publisher": "Business News Report",
+          "url": "https://www.bnreport.com/en/oil-prices-drop-settlement/",
+          "publishedAt": "2026-09-19T21:04:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-wall-street-mixed-close",
+      "kind": "daily",
+      "title": "Wall Street closes mixed as 10-year yield tops 5 percent and the Dow logs worst week since March",
+      "summary": "Wall Street ended Friday's session mixed, with the S&P 500 up 0.17 percent to 7,650.50 and the Nasdaq Composite up 0.39 percent to 26,522.54 while the Dow Jones Industrial Average slipped 0.18 percent to 51,682.64. The benchmark 10-year Treasury yield closed at 4.998 percent after touching 5 percent intraday, with Reuters attributing the move to bets that oil near $100 a barrel could fuel inflation. The Dow's 1.69 percent weekly slide was its third straight weekly decline and worst since March.",
+      "category": "economy-markets",
+      "priority": 80,
+      "publishedAt": "2026-09-20T05:45:00.000Z",
+      "updatedAt": "2026-09-20T05:45:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "wall-street",
+        "treasury-yields",
+        "dow-jones",
+        "s-and-p-500",
+        "nasdaq"
+      ],
+      "sources": [
+        {
+          "publisher": "WAM (Emirates News Agency)",
+          "url": "https://wam.ae/en/article/17fkmh3-wall-street-ends-mixed-dow-falls-018",
+          "publishedAt": "2026-09-19T06:45:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-20-openai-anthropic-deepmind-safety-talks",
+      "kind": "daily",
+      "title": "OpenAI, Anthropic and Google DeepMind push for a US-led AI standards body as talks enter fifth week",
+      "summary": "OpenAI's global policy chief Chris Lehane confirmed on Tuesday that the three frontier-model labs have been meeting privately for several weeks on AI safety, with the talks originally prompted by Google DeepMind chair Demis Hassabis's July proposal for a US-led standards body modelled on the Financial Industry Regulatory Authority. Lehane said the companies do not need an antitrust waiver to coordinate on safety and that OpenAI supports a provision in the FRONTIER Act that would compel top labs to admit independent verification organisations.",
+      "category": "ai",
+      "priority": 85,
+      "publishedAt": "2026-09-20T05:30:00.000Z",
+      "updatedAt": "2026-09-20T05:30:00.000Z",
+      "retrievedAt": "2026-09-20T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "anthropic",
+        "google-deepmind",
+        "ai-safety",
+        "frontier-models"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/09/15/open-ai-google-anthropic-safety.html",
+          "publishedAt": "2026-09-15T18:31:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-19-laliga-matchday-six-fixtures",
       "kind": "daily",

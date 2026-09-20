@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-gmktec-evo-x5-pro-ifa",
+  "title": "GMKtec unveils EVO-X5 Pro desktop AI supercomputer at IFA with AMD Ryzen AI Max+ PRO 495",
+  "summary": "GMKtec used IFA 2026 in Berlin on Friday to launch the EVO-X5 Pro, a compact desktop built around AMD's Ryzen AI Max+ PRO 495 with 16 Zen 5 cores, up to 192 GB of unified LPDDR5X memory and an XDNA 2 NPU delivering up to 55 TOPS. The company said the system is the first desktop capable of running a 300-billion-parameter large language model fully offline, winning PCWELT's Best of IFA 2026 and SmartZone's Best of IFA 2026 Innovation Award. AMD client-business vice president Michael Nordquist appeared on stage; GMKtec will release the EVO-X5 Pro on September 28.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-20T07:15:00Z",
+  "updatedAt": "2026-09-20T07:15:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["gmktec", "amd", "ryzen-ai", "ifa-2026", "edge-ai", "desktop-ai"],
+  "sources": [
+    {
+      "publisher": "KXLG (Business Wire)",
+      "url": "https://mykxlg.com/online_features/press_releases/gmktec-unveils-evo-x5-pro-at-ifa-2026-with-amd-ryzen-ai-max-processors-introducing/article_91115cdc-fc07-5037-af96-5e2b9b9e2568.html",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    }
+  ]
+}

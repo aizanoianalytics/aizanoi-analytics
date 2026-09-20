@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-synology-activeprotect-2-0",
+  "title": "Synology launches ActiveProtect Manager 2.0 with cross-platform recovery and a path to AI-driven threat mitigation",
+  "summary": "Synology released ActiveProtect Manager 2.0 on Thursday, the latest software update for its ActiveProtect data protection appliances, expanding platform coverage and introducing cross-platform recovery alongside future AI-driven threat mitigation. The release adds Auto Fallback, which restores the latest clean backup if integrated third-party antivirus engines such as Microsoft Defender, Bitdefender or ESET flag malware in a recent snapshot. ActiveProtect Manager 2.0 is available at no additional cost for all DP-Series appliances, with AI-driven capabilities to follow in later updates.",
+  "category": "technology",
+  "priority": 45,
+  "publishedAt": "2026-09-20T08:30:00Z",
+  "updatedAt": "2026-09-20T08:30:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["synology", "activeprotect", "data-protection", "ai-security", "backup"],
+  "sources": [
+    {
+      "publisher": "Asia News Network",
+      "url": "https://asianews.network/synology-launches-activeprotect-manager-2-0-bringing-expanded-platform-support-and-advancing-ai-driven-security",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    }
+  ]
+}

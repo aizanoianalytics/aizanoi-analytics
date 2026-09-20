@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-europe-stoxx-gold-bid",
+  "title": "European equities slide as autos and telecoms drag, while gold closes the week up 1.1 percent",
+  "summary": "The pan-European Stoxx 600 closed Friday down 1.1 percent at 635.45, giving up almost all of its gains from the prior two sessions, with the FTSE 100, DAX and CAC 40 all shedding between 1.49 and 1.6 percent on the day. Automobiles and parts led losses as Volkswagen posted its biggest one-day drop since September 2025 after slashing its outlook with about 10 billion euros in one-off items, and Orange fell 5.8 percent on a Morgan Stanley downgrade. Spot gold closed the week up 1.11 percent even as the dollar index gained 1.16 percent and the 10-year Treasury yield touched 5 percent.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-09-20T06:15:00Z",
+  "updatedAt": "2026-09-20T06:15:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["europe-stocks", "stoxxx-600", "gold", "volkswagen", "autos"],
+  "sources": [
+    {
+      "publisher": "FXBus",
+      "url": "https://www.fxbus.com/en/news/20260919080344949544.html",
+      "publishedAt": "2026-09-19T08:04:00Z"
+    }
+  ]
+}

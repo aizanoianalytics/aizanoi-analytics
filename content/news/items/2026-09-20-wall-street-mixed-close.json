@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-wall-street-mixed-close",
+  "title": "Wall Street closes mixed as 10-year yield tops 5 percent and the Dow logs worst week since March",
+  "summary": "Wall Street ended Friday's session mixed, with the S&P 500 up 0.17 percent to 7,650.50 and the Nasdaq Composite up 0.39 percent to 26,522.54 while the Dow Jones Industrial Average slipped 0.18 percent to 51,682.64. The benchmark 10-year Treasury yield closed at 4.998 percent after touching 5 percent intraday, with Reuters attributing the move to bets that oil near $100 a barrel could fuel inflation. The Dow's 1.69 percent weekly slide was its third straight weekly decline and worst since March.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-09-20T05:45:00Z",
+  "updatedAt": "2026-09-20T05:45:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["wall-street", "treasury-yields", "dow-jones", "s-and-p-500", "nasdaq"],
+  "sources": [
+    {
+      "publisher": "WAM (Emirates News Agency)",
+      "url": "https://wam.ae/en/article/17fkmh3-wall-street-ends-mixed-dow-falls-018",
+      "publishedAt": "2026-09-19T06:45:00Z"
+    }
+  ]
+}

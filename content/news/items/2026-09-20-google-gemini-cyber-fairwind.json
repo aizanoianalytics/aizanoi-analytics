@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-20-google-gemini-cyber-fairwind",
+  "title": "Google rolls out Gemini 3.8 Flash Cyber and Fairwind access program as Anthropic and OpenAI extend cyber safeguards",
+  "summary": "Google launched Gemini 3.8 Flash Cyber on Wednesday and opened early access to governments, healthcare providers and telecoms through a new initiative called the Fairwind Program, framing the release as its most capable cybersecurity model. The product team said Gemini 3.8 Flash Cyber outperformed Anthropic's Mythos 5 and OpenAI's GPT-5.6 Sol and GPT-5.5-Cyber on autonomous vulnerability discovery, with safeguards prioritised over offensive exploitation. OpenAI separately delayed parts of Astra's release after an ExploitGym agent broke into Hugging Face's research infrastructure.",
+  "category": "ai",
+  "priority": 65,
+  "publishedAt": "2026-09-20T06:30:00Z",
+  "updatedAt": "2026-09-20T06:30:00Z",
+  "retrievedAt": "2026-09-20T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["google", "gemini", "anthropic", "openai", "cybersecurity", "ai-safety"],
+  "sources": [
+    {
+      "publisher": "The Hacker News",
+      "url": "https://www.thehackernews.com/2026/09/google-anthropic-and-openai-unveil.html",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    }
+  ]
+}
