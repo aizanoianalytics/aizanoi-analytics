@@ -12,6 +12,7 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 - [`dungeon/index.md`](dungeon/index.md) — Aizanoi Dungeon: Aizo's Awakening (Phaser 3 retro dungeon-crawler RPG)
 - [`forge/index.md`](forge/index.md) — Aizanoi Forge
 - [`fly-world/index.md`](fly-world/index.md) — Fly World ghost-observer cottage walkthrough
+- [`flowerseller/index.md`](flowerseller/index.md) — Flowerseller boutique flower shop proof of concept
 - [`games/index.md`](games/index.md) — Aizanoi Arcade launcher and games
 - [`journal/index.md`](journal/index.md) — Aizanoi Journal
 - [`labs/index.md`](labs/index.md) — Aizanoi Labs

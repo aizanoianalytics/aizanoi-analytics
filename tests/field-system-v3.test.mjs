@@ -165,8 +165,8 @@ for (const [name, css] of Object.entries({shell,components,deviceShell,apps})) {
 }
 
 const registry = await import(pathToFileURL(path.join(frontend, 'js/v3/registry.js')).href + `?t=${Date.now()}`);
-assert.equal(registry.APPS.length, 19, 'public AizanoiOS catalog must contain the eight product families, market intelligence, plus the nine workspace utilities and Fly World');
-assert.equal(registry.ALL_APPS.length, 19, 'combined public app catalog must match the registry exactly');
+assert.equal(registry.APPS.length, 20, 'public AizanoiOS catalog must contain Flowerseller alongside the public product and utility set');
+assert.equal(registry.ALL_APPS.length, 20, 'combined public app catalog must match the registry exactly');
 assert.equal('WORKBENCH_APPS' in registry, false, 'retired Workbench catalog export returned');
 assert.deepEqual(registry.WORLDS.map((world) => world.id), ['aizanoi','rome','iga','athens']);
 for (const id of ['news','videos','analytics','worlds','forge','journal','labs','games']) {

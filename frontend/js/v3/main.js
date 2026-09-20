@@ -14,7 +14,8 @@ const UTILITY_WINDOW_PREFS=Object.freeze({
   games:Object.freeze({width:920,height:700,migrateWidth:1040,migrateHeight:800}),
   'recycle-bin':Object.freeze({width:860,height:560,migrateWidth:940,migrateHeight:660}),
   markets:Object.freeze({width:960,height:720,migrateWidth:1040,migrateHeight:800}),
-  dungeon:Object.freeze({width:960,height:640,migrateWidth:1080,migrateHeight:740})
+  dungeon:Object.freeze({width:960,height:640,migrateWidth:1080,migrateHeight:740}),
+  flowerseller:Object.freeze({width:1120,height:820,migrateWidth:1220,migrateHeight:900})
 });
 
 function finishBoot(){const boot=document.getElementById('az-boot');if(!boot)return;const delay=getState().reduceMotion?0:Math.min(460,performance.now()<900?340:90);setTimeout(()=>{boot.classList.add('is-done');setTimeout(()=>boot.remove(),280);},delay);}
