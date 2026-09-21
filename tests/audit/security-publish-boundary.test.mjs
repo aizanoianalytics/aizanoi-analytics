@@ -69,7 +69,9 @@ const ALLOWED_JSON = [
   /\/js\/v3\/apps\/workspace\/manifest\.json$/,
   /\/js\/v3\/apps\/worlds\/manifest\.json$/,
   /\/js\/v3\/apps\/winamp\/manifest\.json$/,
-  /\/labs\/fly-world\/assets\/environment\.json$/
+  /\/labs\/fly-world\/assets\/environment\.json$/,
+  /\/labs\/fly-world\/assets\/fly-physics\.json$/,
+  /\/labs\/fly-simulation\/assets\/flywire-fafb-v783-lc4-escape\.json$/
 ];
 
 test('denylist: no source or workbook files enter frontend except the declared synthetic output download', () => {
