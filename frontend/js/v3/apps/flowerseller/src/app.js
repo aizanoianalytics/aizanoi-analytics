@@ -241,14 +241,16 @@ export function createFlowersellerApp() {
     }
   }
 
-  function focusFirstInDialog(root) {
+  function focusFirstInDialog(root, expectedOrigin = null) {
     if (!root) return;
     const target = root.querySelector('[data-autofocus], button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
     if (!target) return;
     if (focusFrame && typeof cancelAnimationFrame === 'function') cancelAnimationFrame(focusFrame);
     focusFrame = requestAnimationFrame(() => {
       focusFrame = 0;
-      if (root.isConnected && dialogRoot() === root) {
+      const active = typeof document !== 'undefined' ? document.activeElement : null;
+      const focusStillBelongsToOpen = !active || active === document.body || active === expectedOrigin || root.contains(active);
+      if (root.isConnected && dialogRoot() === root && focusStillBelongsToOpen) {
         try { target.focus({ preventScroll: true }); } catch { /* ignore */ }
       }
     });
@@ -716,7 +718,8 @@ export function createFlowersellerApp() {
     activeDialog = { kind: dialog.getAttribute('data-product-dialog') ? 'detail' : (dialog.hasAttribute('data-cart-drawer') ? 'cart' : (dialog.hasAttribute('data-checkout') ? 'checkout' : (dialog.hasAttribute('data-success') ? 'success' : 'overlay'))), opener: opener instanceof Element ? opener : null, prevFocus: opener instanceof Element ? opener : null };
     setInert(true);
     lockScroll();
-    requestAnimationFrame(() => focusFirstInDialog(dialog));
+    const focusOrigin = typeof document !== 'undefined' ? document.activeElement : null;
+    requestAnimationFrame(() => focusFirstInDialog(dialog, focusOrigin));
   }
 
   // ---- handlers ----
@@ -1059,8 +1062,19 @@ export function createFlowersellerApp() {
     else if (!event.shiftKey && document.activeElement === last) { first.focus({ preventScroll: true }); event.preventDefault(); }
   }
 
+  function keyboardTargetBelongsToInstance(event) {
+    if (ownTarget(event.target)) return true;
+    const windowRoot = container?.closest?.('.az-window');
+    if (event.key === 'Escape' && activeDialog && windowRoot?.contains(event.target)) return true;
+    if (event.key !== 'Escape' || !activeDialog || !dialogRoot()) return false;
+    const body = typeof document !== 'undefined' ? document.body : null;
+    if (!body || (event.target !== body && event.target !== document.documentElement)) return false;
+    const hosts = [...body.children].filter((node) => node?.dataset?.fsOverlayHost);
+    return hosts.at(-1) === overlayHost;
+  }
+
   function handleKeydown(event) {
-    if (!ownTarget(event.target)) return;
+    if (!keyboardTargetBelongsToInstance(event)) return;
     if (event.key === 'Escape' && activeDialog) {
       if (successId) { successId = null; render(); return; }
       if (checkoutOpen) { checkoutOpen = false; checkoutSubmitted = false; render(); return; }
