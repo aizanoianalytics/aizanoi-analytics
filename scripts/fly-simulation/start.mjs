@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createFlyWorldSimulationService } from '../../services/fly-simulation/service.mjs';
 import { loadFlyHouseRuntime, initialFlyBody } from '../../services/fly-simulation/runtime.mjs';
-import { HeuristicBaselineController } from '../../frontend/labs/fly-simulation/index.js';
+import { HeuristicBaselineController, FlyWireLC4EscapeController } from '../../frontend/labs/fly-simulation/index.js';
 
 const rootDir = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const host = process.env.FLY_SIM_HOST ?? '127.0.0.1';
@@ -11,9 +11,10 @@ const port = Number(process.env.FLY_SIM_PORT ?? 8787);
 const intervalMs = Number(process.env.FLY_SIM_INTERVAL_MS ?? 20);
 const controller = process.env.FLY_SIM_CONTROLLER ?? 'HEURISTIC BASELINE CONTROLLER';
 const runtime = await loadFlyHouseRuntime({ rootDir });
+const activeController = controller === 'FLYWIRE FAFB V783 LC4 ESCAPE SUBGRAPH' ? new FlyWireLC4EscapeController(runtime.connectome) : new HeuristicBaselineController();
 const service = createFlyWorldSimulationService({
   authoredEnvironment: runtime.environment,
-  simulationOptions: { fixedDt: 1 / 60, gravity: [0, 0, -9.81], motorLimits: { thrust: 0.00005, pitch: 0.02, yaw: 0.02, roll: 0.02 }, controller: new HeuristicBaselineController() },
+  simulationOptions: { fixedDt: 1 / 60, gravity: [0, 0, -9.81], motorLimits: { thrust: 0.00005, pitch: 0.02, yaw: 0.02, roll: 0.02 }, controller: activeController },
   host,
   port,
   intervalMs,

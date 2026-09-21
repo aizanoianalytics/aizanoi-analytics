@@ -79,8 +79,9 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
   const environmentPath = `${rootDir}/frontend/labs/fly-world/assets/environment.json`;
   const glbPath = `${rootDir}/frontend/labs/fly-world/assets/fly-house.glb`;
   const physicsFile = artifactPath ?? `${rootDir}/frontend/labs/fly-world/assets/fly-physics.json`;
-  const [environmentBytes, glbBytes, physicsBytes] = await Promise.all([readFile(environmentPath), readFile(glbPath), readFile(physicsFile)]);
-  const spec = JSON.parse(environmentBytes); const physics = JSON.parse(physicsBytes);
+  const connectomePath = `${rootDir}/frontend/labs/fly-simulation/assets/flywire-fafb-v783-lc4-escape.json`;
+  const [environmentBytes, glbBytes, physicsBytes, connectomeBytes] = await Promise.all([readFile(environmentPath), readFile(glbPath), readFile(physicsFile), readFile(connectomePath)]);
+  const spec = JSON.parse(environmentBytes); const physics = JSON.parse(physicsBytes); const connectome = JSON.parse(connectomeBytes);
   const environmentSourceHash = sha256(environmentBytes); const glbHash = sha256(glbBytes);
   if (physics.source.environmentSourceHash !== environmentSourceHash) throw new Error('fly physics environment source hash mismatch');
   if (physics.source.environmentArtifactHash !== spec.artifactHashes?.environmentSource) throw new Error('fly physics environment artifact identity mismatch');
@@ -111,7 +112,7 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
     sampleSensor: (channel, point) => sensors[channel]?.(point) ?? { status: 'UNAVAILABLE', value: null, units: 'n/a' },
     dynamicState: { food: fields.food.map((entry) => ({ id: entry.id, active: entry.active })) }
   };
-  return Object.freeze({ environment, spec, physics, hashes: { environmentSourceHash, glbHash } });
+  return Object.freeze({ environment, spec, physics, connectome, hashes: { environmentSourceHash, glbHash } });
 }
 
 export function initialFlyBody({ spawn, profile = DROSOPHILA_MELANOGASTER_V1 } = {}) {
