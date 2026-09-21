@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
 import { loadFlyHouseRuntime, initialFlyBody } from '../services/fly-simulation/runtime.mjs';
-import { FlySimulation, HeuristicBaselineController, checkpoint, restore, stateHash } from '../frontend/labs/fly-simulation/index.js';
+import { FlySimulation, FlyWireLC4EscapeController, HeuristicBaselineController, checkpoint, restore, stateHash } from '../frontend/labs/fly-simulation/index.js';
 
 const rootDir = resolve(process.cwd());
 
@@ -10,9 +10,12 @@ test('real Fly House physics artifact validates against environment and GLB iden
   const runtime = await loadFlyHouseRuntime({ rootDir });
   assert.equal(runtime.environment.hash, '56dd975756fe1441eb6ac65930bad93c0bc177dd34e163e2fb16649f691587a8');
   assert.equal(runtime.environment.glbHash, '5b8168b415233ae119cc691d89c8d853b17274145ef0335aa8da7056996ee07a');
-  assert.equal(runtime.physics.schemaVersion, 'fly-physics-1');
-  assert.ok(runtime.physics.surfaces.length >= 10);
-  assert.ok(runtime.physics.fields.food[0].active);
+  assert.equal(runtime.physics.schemaVersion, 'fly-physics-2');
+  assert.equal(runtime.hashes.physicsArtifactHash, '7096e8dd435e717815cb29344d0aec968a4228b09fb7e8468ee098c1748eeffc');
+  assert.deepEqual(runtime.physics.colliders.map((collider) => collider.id), ['stove', 'tv-cabinet', 'divan', 'major-cabinet', 'food-support', 'bed-frame', 'bedside-table']);
+  assert.equal(runtime.environment.raycast([0, .6, 1], [1, 0, 0], 10).surfaceId, 'stove');
+  assert.equal(runtime.environment.raycast([-.5, 3, 1], [0, 1, 0], 10).surfaceId, 'major-cabinet');
+  assert.equal(runtime.environment.raycast([-.75, 3, 1.55], [0, 1, 0], 10).surfaceId, 'food-support');
 });
 
 test('real artifact executes sensor-controller-motor-body loop and exposes food field', async () => {
@@ -36,6 +39,19 @@ test('real artifact executes sensor-controller-motor-body loop and exposes food 
   assert.equal(foodSim.getFly('food-fly').sensors.channels.olfaction.value, 1);
   assert.equal(foodSim.getFly('food-fly').sensors.channels.taste.status, 'AVAILABLE');
 });
+
+test('FlyWire controller result keeps motors separate from controller state', async () => {
+  const runtime = await loadFlyHouseRuntime({ rootDir });
+  const controller = new FlyWireLC4EscapeController(runtime.connectome);
+  const sim = new FlySimulation(runtime.environment, { fixedDt: 1 / 60, gravity: [0, 0, -9.81], controller, motorLimits: { thrust: .00005, pitch: .02, yaw: .02, roll: .02 } });
+  const result = controller.step({ channels: { vision: { looming: .8 } }, contact: { grounded: false } }, {});
+  assert.equal(result.motors.pitch > 0, true);
+  assert.equal(result.state.edgeCount, 265);
+  assert.equal(result.state.totalSynapses, 1924);
+  assert.equal(result.state.transduction, 'MODELLED');
+  assert.notEqual(result.motors.edgeCount, 265);
+});
+
 
 test('controller state is included in checkpoint identity and restores deterministically', async () => {
   const runtime = await loadFlyHouseRuntime({ rootDir });

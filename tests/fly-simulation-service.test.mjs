@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import net from 'node:net';
 import crypto from 'node:crypto';
 import { BodyState, Vec3, createFlyWorldEnvironmentAdapter } from '../frontend/labs/fly-simulation/index.js';
-import { createFlySimulationService } from '../services/fly-simulation/service.mjs';
+import { createFlySimulationService, createFlyWorldSimulationService } from '../services/fly-simulation/service.mjs';
 
 const authoredPlane = createFlyWorldEnvironmentAdapter({
   meta: { artifactHashes: { environmentSource: 'authored-test-plane-v1', flyHouseGlb: 'authored-test-plane.glb' } },
@@ -86,6 +86,35 @@ test('real Fly World service streams allowlisted telemetry and ignores mutations
     await service.stop();
   }
 });
+
+test('actual Fly World service preserves runtime sensors through the environment boundary', async () => {
+  const runtimeEnvironment = {
+    meta: { artifactHashes: { environmentSource: 'runtime-sensor-plane-v1', flyHouseGlb: 'runtime-sensor-plane.glb' } },
+    schemaVersion: 'fly-world-runtime-sensor-plane-1',
+    raycast: authoredPlane.raycast,
+    roomAt: () => 'runtime-room',
+    zonesAt: () => ['runtime-zone'],
+    sampleSensor: (channel) => ({ light: { status: 'MODELLED', value: 0.8, units: 'relative intensity' }, olfaction: { status: 'MODELLED', value: 0.4, units: 'normalized concentration' }, taste: { status: 'AVAILABLE', value: 1, units: 'contact flag' }, airflow: { status: 'MODELLED', value: [0.1, 0, 0], units: 'm/s' }, temperature: { status: 'UNAVAILABLE', value: null, units: 'K' } }[channel])
+  };
+  const service = createFlyWorldSimulationService({ authoredEnvironment: runtimeEnvironment, port: 0, intervalMs: 5 });
+  service.simulation.addFly({ flyId: 'runtime-sensor-fly', body: new BodyState({ position: new Vec3(0, 1, 0) }) });
+  await service.start();
+  const client = await connect(service.address().port);
+  try {
+    const telemetry = await client.next();
+    const channels = telemetry.state.sensors.channels;
+    assert.equal(telemetry.state.room, 'runtime-room');
+    assert.equal(channels.light.status, 'MODELLED');
+    assert.equal(channels.olfaction.value, 0.4);
+    assert.equal(channels.taste.status, 'AVAILABLE');
+    assert.deepEqual(channels.airflow.value, [0.1, 0, 0]);
+    assert.equal(service.simulation.getFly('runtime-sensor-fly').sensors.channels.light.value, 0.8);
+  } finally {
+    client.socket.destroy();
+    await service.stop();
+  }
+});
+
 
 test('service rejects unversioned spectator paths and arbitrary upgrade requests', async () => {
   const service = createFlySimulationService({ environment: authoredPlane, port: 0 });

@@ -32,10 +32,10 @@ The browser loads the real Fly House GLB for presentation and accepts telemetry 
 | Airflow | explicit field, authored values currently zero | MODELLED |
 | Odor | implemented normalized food concentration | MODELLED |
 | Taste | food-contact signal | MODELLED |
-| Vision | not implemented; explicit UNAVAILABLE | UNAVAILABLE |
-| Baseline controller | implemented | HEURISTIC |
-| Connectome controller | not implemented | no claim made |
-| Checkpoint/replay | implemented for body, motors, controller state and sensor history | MODELLED |
+| Vision | implemented v1 | BIOLOGICALLY CONSTRAINED + MODELLED directional ray/looming samples |
+| Baseline controller | foundation only | HEURISTIC; not yet a food-seeking FSM |
+| Connectome controller | experimental LC4 escape subgraph | CONNECTOME-DERIVED topology; MODELLED transduction/dynamics/motor mapping |
+| Checkpoint/replay | implemented as checkpoint-2 | MODELLED; artifact/controller identity and state are validated |
 | Browser telemetry | implemented | read-only spectator |
 | Persistent deployment | not claimed | depends on a compatible service host |
 
@@ -61,9 +61,9 @@ Configuration is explicit through `FLY_SIM_HOST`, `FLY_SIM_PORT`, `FLY_SIM_INTER
 
 Every implemented subsystem carries one of the allowed labels:
 
-- `CONNECTOME-DERIVED` — none implemented yet.
-- `BIOLOGICALLY CONSTRAINED` — none implemented yet.
-- `MODELLED` — reduced-order physics, deterministic fields, contact and telemetry state.
-- `HEURISTIC` — `HEURISTIC BASELINE CONTROLLER` only.
+- `CONNECTOME-DERIVED` — the selected FlyWire FAFB v783 LC4→DNp02/DNp11 topology and its derived graph identity; this is not full-brain simulation.
+- `BIOLOGICALLY CONSTRAINED` — fly profile dimensions/mass provenance and the directional visual-sampling assumptions, combined with `MODELLED` where the implementation is reduced-order.
+- `MODELLED` — reduced-order body/physics, authored fields, raycast vision/looming, neural rate dynamics, motor mapping, contact and telemetry state.
+- `HEURISTIC` — the baseline controller foundation; it is not yet the required sensor-driven food-seeking FSM.
 
-The baseline controller is not a brain or connectome. Neural dynamics and connectome data remain explicit future work and must not be implied by the current implementation.
+The LC4 controller is explicitly an experimental escape-circuit model. FlyWire supplies connectivity, not neuronal dynamics, sensory transduction, or motor biomechanics. Owner visual approval is not durably recorded; this documentation does not claim it.

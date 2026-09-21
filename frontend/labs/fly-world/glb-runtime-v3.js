@@ -244,7 +244,7 @@ async function boot() {
   window.__FLY_SPECTATOR_BRIDGE__ = bridge;
   const config = window.__FLY_TELEMETRY_CONFIG__;
   const simulationStatus = document.querySelector('#simulation-status');
-  let flyMesh = null;
+  const flyMeshes = new Map();
   let telemetrySocket = null;
   if (!config?.url) {
     if (simulationStatus) simulationStatus.textContent = 'Telemetry inactive · no host-provided spectator service configured';
@@ -254,10 +254,10 @@ async function boot() {
     telemetrySocket.addEventListener('message', (event) => {
       try {
         const frame = JSON.parse(event.data);
-        if (frame.version !== 'telemetry-1' || !frame.state?.position) return;
+        if (frame.version !== 'telemetry-1' || typeof frame.flyId !== 'string' || !frame.state?.position) return;
+        let flyMesh = flyMeshes.get(frame.flyId);
         if (!flyMesh) {
-          flyMesh = createFlyVisual();
-          flyMesh.castShadow = true; scene.add(flyMesh);
+          flyMesh = createFlyVisual(); flyMesh.castShadow = true; scene.add(flyMesh); flyMeshes.set(frame.flyId, flyMesh);
         }
         if (bridge.ingest(frame) && simulationStatus) simulationStatus.textContent = 'Telemetry active · read-only spectator';
         if (bridge.frames.at(-1) === frame || bridge.frames.at(-1)?.sequence === frame.sequence) updateResearchTelemetry(frame);
@@ -306,7 +306,7 @@ async function boot() {
   renderer.setAnimationLoop(() => {
     const dt = Math.min(clock.getDelta(), .05);
     observer.update(dt);
-    if (flyMesh) bridge.render(flyMesh, .5);
+    for (const [flyId, flyMesh] of flyMeshes) bridge.render(flyMesh, .5, flyId);
     if (simulationStatus && !config?.url) simulationStatus.textContent = 'Telemetry inactive · no host-provided spectator service configured';
     if (window.__FLY_AUDIO__) {
       const keys = observer.keys;
