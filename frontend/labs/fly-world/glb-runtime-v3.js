@@ -7,6 +7,7 @@ import { SpectatorBridge } from '../fly-simulation/index.js';
 const canvas = document.querySelector('#world');
 const fatal = document.querySelector('#fatal');
 const statusEl = document.querySelector('#observer-status');
+const researchEl = document.querySelector('#research-telemetry');
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
@@ -177,6 +178,24 @@ function lighting() {
   scene.add(bedroom);
 }
 
+function updateResearchTelemetry(frame) {
+  if (!researchEl) return;
+  const sensors = frame.state?.sensors?.channels ?? {};
+  const sample = Object.fromEntries(Object.entries(sensors).map(([name, value]) => [name, { status: value.status, value: value.value, units: value.units }]));
+  researchEl.textContent = JSON.stringify({
+    flyId: frame.flyId,
+    tick: frame.sequence,
+    room: frame.state?.room ?? null,
+    controller: frame.metadata?.controller ?? 'unknown',
+    authority: 'server-authoritative',
+    positionMeters: frame.state?.position ?? null,
+    motor: frame.state?.motor ?? null,
+    sensors: sample,
+    provenance: frame.metadata?.provenance ?? 'MODELLED',
+    lagSeconds: frame.lag?.lagSeconds ?? null
+  }, null, 2);
+}
+
 function createFlyVisual() {
   const fly = new THREE.Group();
   fly.name = 'TELEMETRY_SPECTATOR_FLY';
@@ -241,6 +260,7 @@ async function boot() {
           flyMesh.castShadow = true; scene.add(flyMesh);
         }
         if (bridge.ingest(frame) && simulationStatus) simulationStatus.textContent = 'Telemetry active · read-only spectator';
+        if (bridge.frames.at(-1) === frame || bridge.frames.at(-1)?.sequence === frame.sequence) updateResearchTelemetry(frame);
       } catch (error) { console.warn('Ignoring malformed telemetry', error); }
     });
     const markTelemetryInactive = (message) => { if (simulationStatus) simulationStatus.textContent = message; };
