@@ -115,6 +115,7 @@ export function createFlowersellerApp() {
   // Dialog contract bookkeeping.
   let activeDialog = null; // { kind, opener, prevFocus, prevOverflow }
   let scrollLockCount = 0;
+  let focusFrame = 0;
 
   // Resource handles.
   let listeners = { click: null, input: null, change: null, keydown: null, submit: null };
@@ -215,18 +216,27 @@ export function createFlowersellerApp() {
     setInert(true);
     lockScroll();
   }
+  function resolveOpener(opener) {
+    if (opener instanceof Element && opener.isConnected && (container?.contains(opener) || (overlayHost?.isConnected && overlayHost.contains(opener)))) return opener;
+    if (!(opener instanceof Element)) return null;
+    const productId = opener.dataset.product;
+    if (productId) return findAllInInstance('[data-product]').find((node) => node.dataset.product === productId) || null;
+    if (opener.dataset.basket !== undefined) return findInInstance('[data-basket]');
+    return null;
+  }
+
   function openOverlay(kind, opener) {
     closeOverlay();
-    recordOpener(opener || (typeof document !== 'undefined' ? document.activeElement : null));
+    recordOpener(resolveOpener(opener) || (typeof document !== 'undefined' ? document.activeElement : null));
     activeDialog.kind = kind;
   }
-  function closeOverlay() {
+  function closeOverlay(restoreFocus = true) {
     if (!activeDialog) return;
     setInert(false);
     unlockScroll();
     const opener = activeDialog.opener;
     activeDialog = null;
-    if (opener && typeof opener.focus === 'function') {
+    if (restoreFocus && opener && typeof opener.focus === 'function') {
       try { opener.focus({ preventScroll: true }); } catch { /* ignore */ }
     }
   }
@@ -235,14 +245,13 @@ export function createFlowersellerApp() {
     if (!root) return;
     const target = root.querySelector('[data-autofocus], button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
     if (!target) return;
-    if (typeof target.focus === 'function') {
-      // Retry on the next frame because the dialog has just been inserted into the DOM.
-      const tryFocus = () => {
+    if (focusFrame && typeof cancelAnimationFrame === 'function') cancelAnimationFrame(focusFrame);
+    focusFrame = requestAnimationFrame(() => {
+      focusFrame = 0;
+      if (root.isConnected && dialogRoot() === root) {
         try { target.focus({ preventScroll: true }); } catch { /* ignore */ }
-        if (document.activeElement !== target) requestAnimationFrame(tryFocus);
-      };
-      requestAnimationFrame(tryFocus);
-    }
+      }
+    });
   }
 
   // ---- templates ----
@@ -672,7 +681,8 @@ export function createFlowersellerApp() {
 
   function render() {
     if (!container) return;
-    closeOverlay();
+    const previousOpener = activeDialog?.opener || null;
+    closeOverlay(false);
     let inner = '';
     let overlay = '';
     if (successId) overlay = successHTML();
@@ -692,6 +702,10 @@ export function createFlowersellerApp() {
       if (overlay) host.innerHTML = overlay;
     }
     attachDialogContract();
+    if (!dialogRoot() && previousOpener) {
+      const restoredOpener = resolveOpener(previousOpener);
+      if (restoredOpener) restoredOpener.focus({ preventScroll: true });
+    }
   }
 
   function attachDialogContract() {
@@ -852,9 +866,7 @@ export function createFlowersellerApp() {
   }
 
   function dialogRoot() {
-    if (typeof document === 'undefined') return null;
-    return container?.querySelector('[role="dialog"][aria-modal="true"]')
-      || document.querySelector('.fs-overlay-host [role="dialog"][aria-modal="true"]');
+    return findInOverlay('[role="dialog"][aria-modal="true"]');
   }
 
   function handleClick(event) {
@@ -1048,15 +1060,13 @@ export function createFlowersellerApp() {
   }
 
   function handleKeydown(event) {
-    // Escape must work even when focus is temporarily on body during a rerender.
-    // The active dialog is already instance-scoped, so this is safe for multiple mounts.
+    if (!ownTarget(event.target)) return;
     if (event.key === 'Escape' && activeDialog) {
       if (successId) { successId = null; render(); return; }
       if (checkoutOpen) { checkoutOpen = false; checkoutSubmitted = false; render(); return; }
       if (cartOpen) { cartOpen = false; render(); return; }
       if (detailId) { detailId = null; render(); return; }
     }
-    if (!ownTarget(event.target)) return;
     if (activeDialog) trapFocusInDialog(event);
   }
 
@@ -1070,8 +1080,6 @@ export function createFlowersellerApp() {
       const overlay = overlayHost && overlayHost.isConnected ? overlayHost : null;
       if (overlay && overlay.contains(target)) return true;
     }
-    const overlayAny = typeof document !== 'undefined' ? target.closest('.fs-overlay-host') : null;
-    if (overlayAny && overlayAny.dataset.fsOverlayHost === instanceId) return true;
     return false;
   }
 
@@ -1094,9 +1102,14 @@ export function createFlowersellerApp() {
       doc.body.addEventListener('submit', listeners.submit);
     }
     render();
+    const mountedOverlayHost = overlayHost;
+    mountedOverlayHost?.addEventListener('keydown', listeners.keydown);
     return {
       cleanup() {
         if (searchTimer) { clearTimeout(searchTimer); searchTimer = 0; }
+        if (focusFrame && typeof cancelAnimationFrame === 'function') cancelAnimationFrame(focusFrame);
+        focusFrame = 0;
+        overlayHost?.removeEventListener('keydown', listeners.keydown);
         const doc = (typeof document !== 'undefined') ? document : null;
         if (doc) {
           for (const [key, fn] of Object.entries(listeners)) {

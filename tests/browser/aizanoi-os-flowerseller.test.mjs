@@ -332,3 +332,55 @@ test('two Flowerseller instances keep overlays, events and cleanup isolated', as
     assert.deepEqual(errors, []);
   } finally { await browser.close(); }
 });
+
+test('two Flowerseller dialogs keep Tab, Escape and focus restore inside the owning instance', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, serviceWorkers: 'block' });
+  const page = await context.newPage();
+  const errors = captureRuntimeErrors(page);
+  try {
+    await page.goto(`${base}/?fs-dialog-multi=${Date.now()}`, { waitUntil: 'networkidle' });
+    await page.evaluate(async () => {
+      localStorage.clear();
+      const { createFlowersellerApp } = await import('/js/v3/apps/flowerseller/src/app.js');
+      const a = document.createElement('div'); const b = document.createElement('div');
+      a.id = 'flowerseller-dialog-a'; b.id = 'flowerseller-dialog-b';
+      for (const root of [a, b]) { root.style.position = 'relative'; root.style.zIndex = '9999'; }
+      document.body.append(a, b);
+      window.__fsDialogA = createFlowersellerApp(); window.__fsDialogB = createFlowersellerApp();
+      window.__fsDialogAHandle = window.__fsDialogA.mount(a); window.__fsDialogBHandle = window.__fsDialogB.mount(b);
+    });
+    const a = page.locator('#flowerseller-dialog-a');
+    const b = page.locator('#flowerseller-dialog-b');
+    await a.locator('[data-product]').first().waitFor();
+    await b.locator('[data-product]').first().waitFor();
+    const openerA = a.locator('[data-product]').first();
+    await openerA.click();
+    await b.locator('[data-product]').first().click();
+    const hostAId = await a.locator('.fs-app').getAttribute('data-fs-instance');
+    const hostBId = await b.locator('.fs-app').getAttribute('data-fs-instance');
+    const hostA = page.locator(`.fs-overlay-host[data-fs-overlay-host="${hostAId}"]`);
+    const hostB = page.locator(`.fs-overlay-host[data-fs-overlay-host="${hostBId}"]`);
+    assert.equal(await hostA.locator('[data-product-dialog]').count(), 1);
+    assert.equal(await hostB.locator('[data-product-dialog]').count(), 1);
+
+    const aFocusables = hostA.locator('[data-product-dialog] button:not([disabled]), [data-product-dialog] input:not([disabled]), [data-product-dialog] select:not([disabled])');
+    await aFocusables.last().focus();
+    await page.keyboard.press('Tab');
+    assert.equal(await page.evaluate(() => document.activeElement?.closest('.fs-overlay-host')?.dataset.fsOverlayHost, hostAId), hostAId);
+    await aFocusables.first().focus();
+    await page.keyboard.press('Shift+Tab');
+    assert.equal(await page.evaluate(() => document.activeElement?.closest('.fs-overlay-host')?.dataset.fsOverlayHost, hostAId), hostAId);
+
+    await hostA.locator('[data-close-detail]').focus();
+    await page.keyboard.press('Enter');
+    assert.equal(await openerA.evaluate((node) => node === document.activeElement), true);
+    assert.equal(await hostA.locator('[data-product-dialog]').count(), 0);
+    assert.equal(await hostB.locator('[data-product-dialog]').count(), 1);
+    await hostB.locator('[data-close-detail]').focus();
+    await page.keyboard.press('Escape');
+    assert.equal(await hostB.locator('[data-product-dialog]').count(), 0);
+    assert.equal(await hostA.locator('[data-product-dialog]').count(), 0);
+    assert.deepEqual(errors, []);
+  } finally { await browser.close(); }
+});
