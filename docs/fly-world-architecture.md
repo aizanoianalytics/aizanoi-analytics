@@ -32,7 +32,7 @@ The browser loads the real Fly House GLB for presentation and accepts telemetry 
 | Airflow | explicit field, authored values currently zero | MODELLED |
 | Odor | implemented normalized food concentration | MODELLED |
 | Taste | food-contact signal | MODELLED |
-| Vision | implemented v1 | BIOLOGICALLY CONSTRAINED + MODELLED directional ray/looming samples |
+| Vision | implemented v1 | MODELLED with BIOLOGICALLY CONSTRAINED directional ray/looming assumptions |
 | Baseline controller | foundation only | HEURISTIC; not yet a food-seeking FSM |
 | Connectome controller | experimental LC4 escape subgraph | CONNECTOME-DERIVED topology; MODELLED transduction/dynamics/motor mapping |
 | Checkpoint/replay | implemented as checkpoint-2 | MODELLED; artifact/controller identity and state are validated |

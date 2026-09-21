@@ -78,6 +78,12 @@ test('manual fixed step and wall clock scheduler preserve lag without silently d
   assert.equal(scheduler.advanceWallClock(0.009), 1); assert.equal(scheduler.lag, 0);
 });
 
+test('simulation rejects non-finite step durations and invalid fixed-step configuration', () => {
+  assert.throws(() => makeSim().step(Infinity), /finite|dt/i);
+  assert.throws(() => new FlySimulation(planeEnv(), { fixedDt: 0 }), /fixedDt/i);
+  assert.throws(() => new FlySimulation(planeEnv(), { fixedDt: Infinity }), /fixedDt/i);
+});
+
 test('generic simulation rejects environments without authored GLB identity', () => {
   assert.throws(() => new FlySimulation({ hash:'env-only', schemaVersion:'1', surfaces:[] }), /authored artifact hashes/);
 });
@@ -101,6 +107,50 @@ test('sensor frame implements proprioception contact coarse authored rays and ex
   assert.equal(s.environment.room, 'room-a'); assert.equal(s.channels.vision.status, 'MODELLED'); assert.equal(s.channels.vision.value.length, 8); assert.equal(s.channels.olfaction.status, 'UNAVAILABLE');
 });
 
+test('vision directions rotate with the authoritative body orientation', () => {
+  const seen = [];
+  const identity = { environmentSource: 'env-orientation-v1', flyHouseGlb: 'glb-orientation-v1' };
+  const env = {
+    schemaVersion: 'fly-env-1', hash: identity.environmentSource, glbHash: identity.flyHouseGlb,
+    meta: { artifactHashes: identity }, surfaces: [],
+    raycast: (_origin, direction) => { seen.push(direction); return null; },
+    roomAt: () => 'room-a'
+  };
+  const sim = new FlySimulation(env, { gravity: new Vec3(0, 0, 0) });
+  sim.addFly({ flyId: 'f', body: new BodyState({ position: new Vec3(0, 1, 0) }) });
+  seen.length = 0;
+  sim.getFly('f').body.orientation = new Quat(0, 0, Math.sin(Math.PI / 4), Math.cos(Math.PI / 4));
+  sim.step(0);
+  const firstVisionRay = seen[1];
+  assert.ok(Math.abs(firstVisionRay.x) < 1e-9);
+  assert.ok(Math.abs(firstVisionRay.y - 1) < 1e-9);
+});
+
+test('replay preserves recorded motor and controller state with an attached controller', () => {
+  class StatefulController {
+    constructor() { this.name = 'STATEFUL'; this.version = 'test-v1'; this.provenance = 'MODELLED'; }
+    step(_sensor, state = {}) {
+      const count = Number(state.count ?? 0) + 1;
+      return { motors: { thrust: count }, state: { count } };
+    }
+  }
+  const expected = makeSim(); expected.addFly({ flyId: 'f' });
+  const events = [1, 2, 3].map((count) => ({
+    dt: 0.02,
+    inputs: { f: { thrust: 9 + count } },
+    controllerState: { f: { count } }
+  }));
+  for (const event of events) {
+    expected.setMotors('f', event.inputs.f); expected.step(event.dt);
+    expected.getFly('f').controllerState = event.controllerState.f;
+  }
+  const replayed = makeSim(); replayed.addFly({ flyId: 'f', controller: new StatefulController() });
+  replay(replayed, events);
+  assert.equal(replayed.getFly('f').motors.thrust, 12);
+  assert.deepEqual(replayed.getFly('f').controllerState, { count: 3 });
+  assert.deepEqual(replayed.getFly('f').body.position.toJSON(), expected.getFly('f').body.position.toJSON());
+});
+
 test('named HEURISTIC TEST CONTROLLER maps sensor to motors without teleport', () => {
   const sim = makeSim(); sim.addFly({ flyId: 'f', body: new BodyState({ position: new Vec3(0, 1, 0) }) });
   const c = new HeuristicTestController(); const before = sim.getFly('f').body.position.clone();
@@ -122,6 +172,7 @@ test('provenance requires machine-readable scientific metadata and every sensor 
   for (const subsystem of Object.values(sim.getFly('f').sensors.provenance)) {
     assert.ok(subsystem.units && typeof subsystem.calibrated === 'boolean' && subsystem.version);
   }
+  for (const channel of Object.values(sim.getFly('f').sensors.channels)) validateProvenance(channel.provenance);
 });
 
 test('checkpoint carries sensor history, motor state and environment dynamic state', () => {

@@ -112,6 +112,13 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
   if (!physics.schemaVersion.startsWith('fly-physics-') || physics.axis !== 'Z-up') throw new Error('unsupported Fly House physics artifact');
   const fields = physics.fields;
   const sensors = fieldSampler(fields);
+  const dynamicState = { food: fields.food.map((entry) => ({ id: entry.id, active: Boolean(entry.active) })) };
+  const restoreDynamicState = (state = {}) => {
+    const foodState = new Map((state.food ?? []).map((entry) => [entry.id, Boolean(entry.active)]));
+    for (const food of fields.food) if (foodState.has(food.id)) food.active = foodState.get(food.id);
+    dynamicState.food = fields.food.map((entry) => ({ id: entry.id, active: Boolean(entry.active) }));
+  };
+  const snapshotDynamicState = () => ({ food: fields.food.map((entry) => ({ id: entry.id, active: Boolean(entry.active) })) });
   const environment = {
     hash: spec.artifactHashes.environmentSource,
     glbHash: spec.artifactHashes.flyHouseGlb,
@@ -133,7 +140,9 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
       return zones;
     },
     sampleSensor: (channel, point) => sensors[channel]?.(point) ?? { status: 'UNAVAILABLE', value: null, units: 'n/a' },
-    dynamicState: { food: fields.food.map((entry) => ({ id: entry.id, active: entry.active })) }
+    dynamicState,
+    snapshotDynamicState,
+    restoreDynamicState
   };
   return Object.freeze({ environment, spec, physics, connectome, hashes: { environmentSourceHash, glbHash, physicsArtifactHash, connectomeGraphHash } });
 }

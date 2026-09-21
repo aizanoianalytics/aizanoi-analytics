@@ -181,12 +181,16 @@ function lighting() {
 function updateResearchTelemetry(frame) {
   if (!researchEl) return;
   const sensors = frame.state?.sensors?.channels ?? {};
-  const sample = Object.fromEntries(Object.entries(sensors).map(([name, value]) => [name, { status: value.status, value: value.value, units: value.units }]));
+  const sample = Object.fromEntries(Object.entries(sensors).map(([name, value]) => [name, { status: value.status, value: value.value, units: value.units, provenance: value.provenance ?? null }]));
   researchEl.textContent = JSON.stringify({
     flyId: frame.flyId,
     tick: frame.sequence,
     room: frame.state?.room ?? null,
     controller: frame.metadata?.controller ?? 'unknown',
+    controllerVersion: frame.metadata?.version ?? 'unknown',
+    controllerProvenance: frame.metadata?.provenance ?? 'MODELLED',
+    controllerState: frame.state?.controllerState ?? null,
+    checkpoint: frame.state?.checkpointStatus ?? null,
     authority: 'server-authoritative',
     positionMeters: frame.state?.position ?? null,
     motor: frame.state?.motor ?? null,

@@ -65,3 +65,19 @@ test('controller state is included in checkpoint identity and restores determini
   restore(second, cp);
   assert.equal(stateHash(second), stateHash(first));
 });
+test('checkpoint restores dynamic food fields before the next sensor frame', async () => {
+  const firstRuntime = await loadFlyHouseRuntime({ rootDir });
+  const food = firstRuntime.physics.fields.food[0];
+  const options = { fixedDt: 1 / 60, gravity: [0, 0, -9.81], controller: new HeuristicBaselineController(), motorLimits: { thrust: .00005, pitch: .02, yaw: .02, roll: .02 } };
+  const first = new FlySimulation(firstRuntime.environment, options);
+  first.addFly({ flyId: 'dynamic-food-fly', body: initialFlyBody({ spawn: food.center }) });
+  firstRuntime.environment.restoreDynamicState({ food: [{ id: food.id, active: false }] });
+  first.step(0);
+  const cp = checkpoint(first);
+  const secondRuntime = await loadFlyHouseRuntime({ rootDir });
+  const second = new FlySimulation(secondRuntime.environment, options);
+  restore(second, cp);
+  assert.equal(second.getFly('dynamic-food-fly').sensors.channels.olfaction.value, 0);
+  assert.equal(second.getFly('dynamic-food-fly').sensors.channels.taste.status, 'UNAVAILABLE');
+  assert.equal(stateHash(second), stateHash(first));
+});

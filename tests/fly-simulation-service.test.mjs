@@ -108,6 +108,9 @@ test('actual Fly World service preserves runtime sensors through the environment
     assert.equal(channels.olfaction.value, 0.4);
     assert.equal(channels.taste.status, 'AVAILABLE');
     assert.deepEqual(channels.airflow.value, [0.1, 0, 0]);
+    assert.equal(channels.light.provenance.label, 'MODELLED');
+    assert.equal(telemetry.state.controllerState && typeof telemetry.state.controllerState, 'object');
+    assert.equal(telemetry.metadata.provenance, 'MODELLED');
     assert.equal(service.simulation.getFly('runtime-sensor-fly').sensors.channels.light.value, 0.8);
   } finally {
     client.socket.destroy();
