@@ -1,0 +1,44 @@
+{
+  "id": "2026-09-21-weekly-football-title-races-crystallise",
+  "title": "European title races crystallise after one weekend — Manchester City five-from-five, Barcelona pulling away, Milan and Juventus back on track",
+  "summary": "Three of Europe's biggest title races sharpened on a single weekend. In England, Manchester City's 5-3 win over Sunderland, completed by Erling Haaland's late fifth to silence Brian Brobbey's hat-trick for the promoted visitors, took Pep Guardiola's side five wins from five and three points clear of Arsenal after Brighton's 3-0 win at the Amex. In Spain, Raphinha's hat-trick at Sevilla and Atletico Madrid's 2-1 win over 10-man Real Madrid in the capital derby have left Barcelona six points clear of Madrid and five ahead of Atletico with a game in hand. In Italy, AC Milan's 3-0 win over Lecce.",
+  "category": "football",
+  "priority": 70,
+  "kind": "weekly",
+  "week": "2026-W39",
+  "publishedAt": "2026-09-21T06:35:00Z",
+  "updatedAt": "2026-09-21T06:35:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "la-liga",
+    "serie-a",
+    "manchester-city",
+    "barcelona"
+  ],
+  "sources": [
+    {
+      "publisher": "AFP",
+      "url": "https://www.afp.com/en/man-city-outgun-sunderland-despite-brobbey-hat-trick-man-utd-rescue-fulham-draw",
+      "publishedAt": "2026-09-20T19:38:00Z"
+    },
+    {
+      "publisher": "AP via Etv Bharat",
+      "url": "https://etvbharat.com/en/sports/atletico-madrid-beats-10-man-real-madrid-2-1-man-city-outlasts-sunderland-in-premier-league-enn26092100347",
+      "publishedAt": "2026-09-21T07:33:00Z"
+    },
+    {
+      "publisher": "AFP via Dawn",
+      "url": "https://www.dawn.com/news/2031479/ac-milan-and-juventus-end-blips-with-home-wins",
+      "publishedAt": "2026-09-21T03:23:00Z"
+    }
+  ]
+}

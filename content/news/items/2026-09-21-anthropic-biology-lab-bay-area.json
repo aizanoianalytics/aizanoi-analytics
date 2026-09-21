@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-21-anthropic-biology-lab-bay-area",
+  "title": "Anthropic quietly opens a Bay Area wet lab to direct Claude at robotic biology experiments",
+  "summary": "Anthropic has set up a physical biology laboratory in the San Francisco Bay Area to push its artificial-intelligence ambitions into drug discovery, two people familiar with the matter said. Head of life sciences Eric Kauderer-Abrams confirmed the wet lab in a Reuters interview, later clarifying that it is not focused on drug discovery specifically. Anthropic wants Claude to direct robotic units to carry out science experiments with limited human intervention, and last month launched the Model Hardware Standard to help AI operate laboratory equipment.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-21T05:10:00Z",
+  "updatedAt": "2026-09-21T05:10:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "claude",
+    "biology",
+    "wet-lab",
+    "drug-discovery"
+  ],
+  "sources": [
+    {
+      "publisher": "iTnews",
+      "url": "https://www.itnews.com.au/news/anthropic-quietly-sets-up-biology-lab-629046",
+      "publishedAt": "2026-09-21T06:45:00Z"
+    }
+  ]
+}

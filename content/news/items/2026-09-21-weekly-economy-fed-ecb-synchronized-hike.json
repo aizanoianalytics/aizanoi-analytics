@@ -1,0 +1,44 @@
+{
+  "id": "2026-09-21-weekly-economy-fed-ecb-synchronized-hike",
+  "title": "The Fed and ECB hike in the same week for the first time since 2023, putting real yields at the centre of every other trade",
+  "summary": "For the first time since July 2023 the Federal Reserve and the European Central Bank have moved in the same direction in the same week, with both raising their policy rates by 25 basis points and both pointing to additional tightening ahead. The Fed's move, Kevin Warsh's first as chair, took the federal funds rate to a range of 3.75 to 4.00 percent and signalled a median endpoint of 4 to 4.25 percent by year-end, with 16 of 18 officials projecting at least one more hike in 2026. The ECB cited continued pressure from the Middle East conflict on energy prices and inflation. The combined message.",
+  "category": "economy-markets",
+  "priority": 80,
+  "kind": "weekly",
+  "week": "2026-W39",
+  "publishedAt": "2026-09-21T06:30:00Z",
+  "updatedAt": "2026-09-21T06:30:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "federal-reserve",
+    "ecb",
+    "synchronized-tightening",
+    "real-yields",
+    "gold"
+  ],
+  "sources": [
+    {
+      "publisher": "Moneycontrol",
+      "url": "https://moneycontrol.com/news/business/markets/kevin-wash-s-first-rate-hike-us-fed-raises-interest-by-25-bps-signals-more-hikes-as-inflation-stays-elevated-14031523.html",
+      "publishedAt": "2026-09-17T00:20:00Z"
+    },
+    {
+      "publisher": "European Central Bank",
+      "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260910~314e508016.en.html",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    },
+    {
+      "publisher": "StoneX",
+      "url": "https://www.stonex.com/en/insights/gold-prices-fall-as-safe-haven-trade-starts-to-unwind/",
+      "publishedAt": "2026-09-20T00:00:00Z"
+    }
+  ]
+}

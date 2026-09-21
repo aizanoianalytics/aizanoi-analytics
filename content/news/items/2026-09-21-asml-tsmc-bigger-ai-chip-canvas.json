@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-21-asml-tsmc-bigger-ai-chip-canvas",
+  "title": "ASML and TSMC plot a bigger canvas for building AI chips together as advanced node demand stretches",
+  "summary": "ASML, TSMC and other chipmaking heavyweights are deepening collaboration on the lithography, packaging and reference design that will underpin the next generation of AI accelerators, according to a Sunday report. The work spans extreme ultraviolet scanner deployment, CoWoS-S advanced packaging capacity and high-bandwidth memory stacking, with both companies positioning themselves for sustained AI buildouts through 2027. Morgan Stanley has estimated Google could produce more than 5 million TPU chips next year on TSMC's N3P process, while Microsoft is negotiating for more than 300,000 Maia 300.",
+  "category": "technology",
+  "priority": 55,
+  "publishedAt": "2026-09-21T05:40:00Z",
+  "updatedAt": "2026-09-21T05:40:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "asml",
+    "tsmc",
+    "ai-chips",
+    "euv",
+    "cowos"
+  ],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/ai/articles/asml-asml-chip-giants-tsmc-214129428.html",
+      "publishedAt": "2026-09-20T17:41:00Z"
+    }
+  ]
+}

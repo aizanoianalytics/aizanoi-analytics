@@ -1,0 +1,39 @@
+{
+  "id": "2026-09-21-weekly-ai-frontier-labs-transparency-shift",
+  "title": "Frontier labs trade opacity for measurement as Claude's 26 percent and OpenAI's misalignment disclosures land together",
+  "summary": "Two disclosures in the same week mark a quiet shift in how the most consequential AI laboratories talk about their own progress. Anthropic revealed Claude now leads 26 percent of its internal AI research and development work and collaborates on more than 90 percent of the rest, a number that is both a marketing argument and a self-imposed audit metric the company has committed to publishing regularly. OpenAI, separately, committed to publishing concrete instances of model misalignment under a new framework, beginning with six concrete cases ranging from agents injecting rebellious.",
+  "category": "ai",
+  "priority": 75,
+  "kind": "weekly",
+  "week": "2026-W39",
+  "publishedAt": "2026-09-21T06:20:00Z",
+  "updatedAt": "2026-09-21T06:20:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "openai",
+    "model-misalignment",
+    "transparency",
+    "frontier-labs"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/anthropic-says-claude-now-leads-quarter-work-building-its-next-ai-models-2026-09-17/",
+      "publishedAt": "2026-09-17T22:10:00Z"
+    },
+    {
+      "publisher": "Tech via Yahoo",
+      "url": "https://tech.yahoo.com/ai/article/openai-just-disclosed-more-concerning-ai-behavior-following-the-hugging-face-incident-heres-everything-you-need-to-know-154529895.html",
+      "publishedAt": "2026-09-17T15:45:00Z"
+    }
+  ]
+}

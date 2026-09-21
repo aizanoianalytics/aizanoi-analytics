@@ -333,9 +333,5 @@
     "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/curtain-lace/curtain-lace.glb": "60d33709ccca10b58944adf8a724639d2daaaf79f5eacb712f11a5d8c45fdd02",
     "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/pillow-quilt-set/pillow-quilt-set.glb": "350c30d3a3a5ecba276725bf2d14655a63e621b74b98b0dbfe93cc60a33050d3",
     "gelistirmeler/2026-09-16-fly-world-prototype/assets/source/bed-quilt/bed-quilt.glb": "223f85998c21896888d66ba588f9d4c330871076813612cfba4f5a38ec9aab78"
-  },
-  "artifactHashes": {
-    "environmentSource": "56dd975756fe1441eb6ac65930bad93c0bc177dd34e163e2fb16649f691587a8",
-    "flyHouseGlb": "5b8168b415233ae119cc691d89c8d853b17274145ef0335aa8da7056996ee07a"
   }
 }

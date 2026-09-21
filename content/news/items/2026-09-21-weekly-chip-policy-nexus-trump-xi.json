@@ -1,0 +1,44 @@
+{
+  "id": "2026-09-21-weekly-chip-policy-nexus-trump-xi",
+  "title": "The chip-policy nexus: Trump's Thursday state dinner for Xi puts Nvidia, OpenAI and Anthropic in the same room as US-China AI rules",
+  "summary": "Three of the most consequential AI policy decisions of the year will collide on a single evening in Washington on Thursday when President Trump hosts Chinese President Xi Jinping at his first White House state dinner in more than a decade. Nvidia chief executive Jensen Huang, OpenAI chief executive Sam Altman, Apple chief executive Tim Cook and Alphabet chief executive Sundar Pichai are all on the confirmed guest list, alongside Amazon founder Jeff Bezos and SpaceX and Tesla chief Elon Musk, with the topic of advanced chip exports to China certain to dominate. The week has set the table:.",
+  "category": "ai",
+  "priority": 70,
+  "kind": "weekly",
+  "week": "2026-W39",
+  "publishedAt": "2026-09-21T06:40:00Z",
+  "updatedAt": "2026-09-21T06:40:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "trump",
+    "xi-jinping",
+    "state-dinner",
+    "ai-chips",
+    "us-china"
+  ],
+  "sources": [
+    {
+      "publisher": "Latin Times",
+      "url": "https://www.latintimes.com/chinas-xi-lands-dc-tech-titans-altman-huang-cook-tow-what-trump-wants-him-599391",
+      "publishedAt": "2026-09-20T10:48:00Z"
+    },
+    {
+      "publisher": "CBS News",
+      "url": "https://www.cbsnews.com/news/jensen-huang-nvidia-rejects-ai-extinction-warnings/",
+      "publishedAt": "2026-09-20T09:37:00Z"
+    },
+    {
+      "publisher": "iTnews",
+      "url": "https://www.itnews.com.au/news/anthropic-quietly-sets-up-biology-lab-629046",
+      "publishedAt": "2026-09-21T06:45:00Z"
+    }
+  ]
+}

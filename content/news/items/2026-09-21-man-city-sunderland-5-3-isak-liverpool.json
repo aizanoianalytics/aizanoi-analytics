@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-21-man-city-sunderland-5-3-isak-liverpool",
+  "title": "Manchester City go three clear as Haaland beats Brobbey hat-trick in 5-3 Sunderland thriller",
+  "summary": "Manchester City went top of the Premier League on Sunday with a 5-3 win over Sunderland that saw Erling Haaland score City's fifth to complete a perfect five-from-five start to the season and move clear at the summit after Arsenal's Saturday defeat at Brighton. Brian Brobbey scored a hat-trick for the promoted visitors, who led at one point before City's second-half response. Liverpool won 1-0 at Bournemouth through Alexander Isak's second-half strike on Andoni Iraola's return to the Vitality Stadium, Manchester United drew 1-1 at Fulham after Lisandro Martinez's own goal and Matheus Cunha's.",
+  "category": "football",
+  "priority": 85,
+  "publishedAt": "2026-09-21T06:05:00Z",
+  "updatedAt": "2026-09-21T06:05:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "manchester-city",
+    "sunderland",
+    "haaland",
+    "liverpool"
+  ],
+  "sources": [
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/news/4723441/sunday-wrap-man-city-stay-perfect-iraola-wins-on-bournemouth-return",
+      "publishedAt": "2026-09-20T00:00:00Z"
+    },
+    {
+      "publisher": "AFP",
+      "url": "https://www.afp.com/en/man-city-outgun-sunderland-despite-brobbey-hat-trick-man-utd-rescue-fulham-draw",
+      "publishedAt": "2026-09-20T19:38:00Z"
+    }
+  ]
+}
