@@ -97,6 +97,8 @@ test('scheduler bounds multi-second catch-up and reports dropped wall time hones
   const fractional = new FixedStepScheduler(makeSim(), { maxCatchUpSteps: 4 });
   fractional.advanceWallClock(2.005);
   assert.ok(Math.abs(fractional.status().droppedSeconds - 1.925) < 1e-12);
+  assert.equal(fractional.status().discontinuityCount, 1);
+  assert.equal(fractional.status().lastDiscontinuity.processedSteps, 4);
 });
 
 test('sensor frame implements proprioception contact coarse authored rays and explicit unavailable channels', () => {

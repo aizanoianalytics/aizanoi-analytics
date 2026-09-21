@@ -192,7 +192,8 @@ export function createFlySimulationService({
   }
 
   function frameFor(id) {
-    const snapshot = sim.telemetrySnapshot(id, { lagSeconds: scheduler.lag, controller });
+    const checkpointStatus={...sim.telemetrySnapshot(id,{controller}).checkpointStatus,scheduler:scheduler.status()};
+    const snapshot = sim.telemetrySnapshot(id, { lagSeconds: scheduler.lag, controller, checkpointStatus });
     return {
       flyId: id,
       sequence: sim.tick,
