@@ -18,6 +18,14 @@ const planeEnv = () => ({
 });
 const makeSim = () => new FlySimulation(planeEnv(), { fixedDt: 0.02, gravity: new Vec3(0, -9.81, 0) });
 
+test('plane surface conversion preserves authored world coordinates', () => {
+  const adapter = new AuthoredSurfaceAdapter([
+    { id: 'main-room:floor', axis: 'z', value: 0, normal: [0, 0, 1], bounds: [[-4.8, -4], [4.8, 4]] },
+    { id: 'main-room:west-wall', axis: 'x', value: -4.8, normal: [1, 0, 0], bounds: [[-4, 0], [4, 2.85]] },
+    { id: 'main-room:ceiling', axis: 'z', value: 2.85, normal: [0, 0, -1], bounds: [[-4.8, -4], [4.8, 4]] }
+  ]);
+  assert.deepEqual(adapter.surfaces.map((s) => s.point.toJSON()), [[0, 0, 0], [-4.8, 0, 0], [0, 0, 2.85]]);
+});
 test('provenance contract accepts exact labels and rejects unknown labels', () => {
   assert.deepEqual(PROVENANCE_LABELS, ['CONNECTOME-DERIVED', 'BIOLOGICALLY CONSTRAINED', 'MODELLED', 'HEURISTIC']);
   assert.equal(validateProvenance({ label: 'MODELLED', source: 'stage-b', units: 'm/s', calibrated: false, assumptions: ['simplified'], limitations: ['not biological'], sourceReferences: [], version: '1.0.0' }).label, 'MODELLED');
@@ -90,7 +98,7 @@ test('sensor frame implements proprioception contact coarse authored rays and ex
   sim.step(0.02); const s = sim.getFly('f').sensors;
   assert.equal(s.version, 'sensor-1'); assert.ok(Number.isFinite(s.proprioception.speed));
   assert.equal(s.contact.grounded, false); assert.ok(Math.abs(s.rays.down.distance - 1) < .01);
-  assert.equal(s.environment.room, 'room-a'); assert.equal(s.channels.vision.status, 'UNAVAILABLE'); assert.equal(s.channels.olfaction.status, 'UNAVAILABLE');
+  assert.equal(s.environment.room, 'room-a'); assert.equal(s.channels.vision.status, 'MODELLED'); assert.equal(s.channels.vision.value.length, 8); assert.equal(s.channels.olfaction.status, 'UNAVAILABLE');
 });
 
 test('named HEURISTIC TEST CONTROLLER maps sensor to motors without teleport', () => {

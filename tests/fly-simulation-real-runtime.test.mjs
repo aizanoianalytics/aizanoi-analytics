@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
 import { loadFlyHouseRuntime, initialFlyBody } from '../services/fly-simulation/runtime.mjs';
-import { FlySimulation, HeuristicBaselineController, checkpoint, restore, stateHash } from '../frontend/labs/fly-simulation/index.js';
+import { FlySimulation, FlyWireLC4EscapeController, HeuristicBaselineController, checkpoint, restore, stateHash } from '../frontend/labs/fly-simulation/index.js';
 
 const rootDir = resolve(process.cwd());
 
@@ -36,6 +36,19 @@ test('real artifact executes sensor-controller-motor-body loop and exposes food 
   assert.equal(foodSim.getFly('food-fly').sensors.channels.olfaction.value, 1);
   assert.equal(foodSim.getFly('food-fly').sensors.channels.taste.status, 'AVAILABLE');
 });
+
+test('FlyWire controller result keeps motors separate from controller state', async () => {
+  const runtime = await loadFlyHouseRuntime({ rootDir });
+  const controller = new FlyWireLC4EscapeController(runtime.connectome);
+  const sim = new FlySimulation(runtime.environment, { fixedDt: 1 / 60, gravity: [0, 0, -9.81], controller, motorLimits: { thrust: .00005, pitch: .02, yaw: .02, roll: .02 } });
+  const result = controller.step({ channels: { vision: { looming: .8 } }, contact: { grounded: false } }, {});
+  assert.equal(result.motors.pitch > 0, true);
+  assert.equal(result.state.edgeCount, 265);
+  assert.equal(result.state.totalSynapses, 1924);
+  assert.equal(result.state.transduction, 'MODELLED');
+  assert.notEqual(result.motors.edgeCount, 265);
+});
+
 
 test('controller state is included in checkpoint identity and restores deterministically', async () => {
   const runtime = await loadFlyHouseRuntime({ rootDir });

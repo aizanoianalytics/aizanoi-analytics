@@ -82,7 +82,7 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
   const connectomePath = `${rootDir}/frontend/labs/fly-simulation/assets/flywire-fafb-v783-lc4-escape.json`;
   const [environmentBytes, glbBytes, physicsBytes, connectomeBytes] = await Promise.all([readFile(environmentPath), readFile(glbPath), readFile(physicsFile), readFile(connectomePath)]);
   const spec = JSON.parse(environmentBytes); const physics = JSON.parse(physicsBytes); const connectome = JSON.parse(connectomeBytes);
-  const environmentSourceHash = sha256(environmentBytes); const glbHash = sha256(glbBytes);
+  const environmentSourceHash = sha256(environmentBytes); const glbHash = sha256(glbBytes); const physicsArtifactHash = sha256(physicsBytes); const connectomeGraphHash = sha256(connectomeBytes);
   if (physics.source.environmentSourceHash !== environmentSourceHash) throw new Error('fly physics environment source hash mismatch');
   if (physics.source.environmentArtifactHash !== spec.artifactHashes?.environmentSource) throw new Error('fly physics environment artifact identity mismatch');
   if (physics.source.glbArtifactHash !== spec.artifactHashes?.flyHouseGlb) throw new Error('fly physics GLB artifact identity mismatch');
@@ -94,7 +94,7 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
     hash: spec.artifactHashes.environmentSource,
     glbHash: spec.artifactHashes.flyHouseGlb,
     schemaVersion: physics.schemaVersion,
-    meta: { artifactHashes: { environmentSource: spec.artifactHashes.environmentSource, flyHouseGlb: spec.artifactHashes.flyHouseGlb } },
+    meta: { artifactHashes: { environmentSource: spec.artifactHashes.environmentSource, flyHouseGlb: spec.artifactHashes.flyHouseGlb, physicsArtifact: physicsArtifactHash, physicsSchema: physics.schemaVersion, connectomeGraph: connectomeGraphHash, connectomeDataset: connectome.release?.dataset ?? null, connectomeVersion: connectome.release?.version ?? null } },
     axis: physics.axis,
     downDirection: [0, 0, -1],
     surfaces: physics.surfaces,
@@ -112,7 +112,7 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
     sampleSensor: (channel, point) => sensors[channel]?.(point) ?? { status: 'UNAVAILABLE', value: null, units: 'n/a' },
     dynamicState: { food: fields.food.map((entry) => ({ id: entry.id, active: entry.active })) }
   };
-  return Object.freeze({ environment, spec, physics, connectome, hashes: { environmentSourceHash, glbHash } });
+  return Object.freeze({ environment, spec, physics, connectome, hashes: { environmentSourceHash, glbHash, physicsArtifactHash, connectomeGraphHash } });
 }
 
 export function initialFlyBody({ spawn, profile = DROSOPHILA_MELANOGASTER_V1 } = {}) {
