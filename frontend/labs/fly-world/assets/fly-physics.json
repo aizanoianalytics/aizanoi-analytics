@@ -1,0 +1,639 @@
+{
+  "schemaVersion": "fly-physics-1",
+  "units": "meters",
+  "axis": "Z-up",
+  "provenance": {
+    "label": "MODELLED",
+    "source": "scripts/fly-world/build_physics_artifact.mjs",
+    "units": "meters",
+    "calibrated": false,
+    "assumptions": [
+      "axis-aligned room boundary proxy derived from authored Fly House room and doorway metadata",
+      "furniture and mesh-level triangle collision are not represented"
+    ],
+    "limitations": [
+      "not a triangle mesh export",
+      "not calibrated biomechanics or CFD",
+      "fine furniture collision is unavailable until a mesh collision export is added"
+    ],
+    "version": "fly-physics-1",
+    "sourceReferences": [
+      "frontend/labs/fly-world/assets/environment.json",
+      "frontend/labs/fly-world/assets/fly-house.glb"
+    ]
+  },
+  "source": {
+    "environmentSourceHash": "03f1d3ff657caf6948c310ca6e0cc7f09221f460faeae43f5ddc7dc92a23bea9",
+    "flyHouseGlbHash": "5b8168b415233ae119cc691d89c8d853b17274145ef0335aa8da7056996ee07a",
+    "environmentArtifactHash": "56dd975756fe1441eb6ac65930bad93c0bc177dd34e163e2fb16649f691587a8",
+    "glbArtifactHash": "5b8168b415233ae119cc691d89c8d853b17274145ef0335aa8da7056996ee07a"
+  },
+  "rooms": [
+    {
+      "id": "main-room",
+      "origin": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        9.6,
+        8,
+        2.85
+      ]
+    },
+    {
+      "id": "bedroom",
+      "origin": [
+        7.3,
+        1.15,
+        0
+      ],
+      "size": [
+        5,
+        6.2,
+        2.85
+      ]
+    }
+  ],
+  "transitions": [
+    {
+      "id": "bedroom-doorway",
+      "from": "main-room",
+      "to": "bedroom",
+      "bounds": [
+        [
+          4.66,
+          0.34,
+          0.1
+        ],
+        [
+          4.94,
+          1.66,
+          2.18
+        ]
+      ],
+      "open": true
+    }
+  ],
+  "safeSpawnVolumes": [
+    {
+      "id": "main-room-agent-spawn",
+      "room": "main-room",
+      "bounds": [
+        [
+          -2.05,
+          -2.35,
+          0.3
+        ],
+        [
+          -1.65,
+          -1.95,
+          2.35
+        ]
+      ]
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "main-room:floor",
+      "kind": "plane",
+      "axis": "z",
+      "value": 0,
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "bounds": [
+        [
+          -4.8,
+          -4
+        ],
+        [
+          4.8,
+          4
+        ]
+      ],
+      "room": "main-room",
+      "landing": true,
+      "material": "aged-green-floor"
+    },
+    {
+      "id": "main-room:ceiling",
+      "kind": "plane",
+      "axis": "z",
+      "value": 2.85,
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "bounds": [
+        [
+          -4.8,
+          -4
+        ],
+        [
+          4.8,
+          4
+        ]
+      ],
+      "room": "main-room",
+      "landing": true,
+      "material": "aged-white-plaster"
+    },
+    {
+      "id": "main-room:west-wall",
+      "kind": "plane",
+      "axis": "x",
+      "value": -4.8,
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          -4,
+          0
+        ],
+        [
+          4,
+          2.85
+        ]
+      ],
+      "room": "main-room",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "main-room:east-wall:lower",
+      "kind": "plane",
+      "axis": "x",
+      "value": 4.8,
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          -4,
+          0
+        ],
+        [
+          0.34,
+          2.85
+        ]
+      ],
+      "room": "main-room",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "main-room:east-wall:upper",
+      "kind": "plane",
+      "axis": "x",
+      "value": 4.8,
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          1.66,
+          0
+        ],
+        [
+          4,
+          2.85
+        ]
+      ],
+      "room": "main-room",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "main-room:east-wall:below",
+      "kind": "plane",
+      "axis": "x",
+      "value": 4.8,
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          0.34,
+          0
+        ],
+        [
+          1.66,
+          0.1
+        ]
+      ],
+      "room": "main-room",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "main-room:east-wall:above",
+      "kind": "plane",
+      "axis": "x",
+      "value": 4.8,
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          0.34,
+          2.18
+        ],
+        [
+          1.66,
+          2.85
+        ]
+      ],
+      "room": "main-room",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "main-room:south-wall",
+      "kind": "plane",
+      "axis": "y",
+      "value": -4,
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "bounds": [
+        [
+          -4.8,
+          0
+        ],
+        [
+          4.8,
+          2.85
+        ]
+      ],
+      "room": "main-room",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "main-room:north-wall",
+      "kind": "plane",
+      "axis": "y",
+      "value": 4,
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "bounds": [
+        [
+          -4.8,
+          0
+        ],
+        [
+          4.8,
+          2.85
+        ]
+      ],
+      "room": "main-room",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "bedroom:floor",
+      "kind": "plane",
+      "axis": "z",
+      "value": 0,
+      "normal": [
+        0,
+        0,
+        1
+      ],
+      "bounds": [
+        [
+          4.8,
+          -1.9500000000000002
+        ],
+        [
+          9.8,
+          4.25
+        ]
+      ],
+      "room": "bedroom",
+      "landing": true,
+      "material": "aged-green-floor"
+    },
+    {
+      "id": "bedroom:ceiling",
+      "kind": "plane",
+      "axis": "z",
+      "value": 2.85,
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "bounds": [
+        [
+          4.8,
+          -1.9500000000000002
+        ],
+        [
+          9.8,
+          4.25
+        ]
+      ],
+      "room": "bedroom",
+      "landing": true,
+      "material": "aged-white-plaster"
+    },
+    {
+      "id": "bedroom:west-wall:lower",
+      "kind": "plane",
+      "axis": "x",
+      "value": 4.8,
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          -1.9500000000000002,
+          0
+        ],
+        [
+          0.34,
+          2.85
+        ]
+      ],
+      "room": "bedroom",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "bedroom:west-wall:upper",
+      "kind": "plane",
+      "axis": "x",
+      "value": 4.8,
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          1.66,
+          0
+        ],
+        [
+          4.25,
+          2.85
+        ]
+      ],
+      "room": "bedroom",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "bedroom:west-wall:below",
+      "kind": "plane",
+      "axis": "x",
+      "value": 4.8,
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          0.34,
+          0
+        ],
+        [
+          1.66,
+          0.1
+        ]
+      ],
+      "room": "bedroom",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "bedroom:west-wall:above",
+      "kind": "plane",
+      "axis": "x",
+      "value": 4.8,
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          0.34,
+          2.18
+        ],
+        [
+          1.66,
+          2.85
+        ]
+      ],
+      "room": "bedroom",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "bedroom:east-wall",
+      "kind": "plane",
+      "axis": "x",
+      "value": 9.8,
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "bounds": [
+        [
+          -1.9500000000000002,
+          0
+        ],
+        [
+          4.25,
+          2.85
+        ]
+      ],
+      "room": "bedroom",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "bedroom:south-wall",
+      "kind": "plane",
+      "axis": "y",
+      "value": -1.9500000000000002,
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "bounds": [
+        [
+          4.8,
+          0
+        ],
+        [
+          9.8,
+          2.85
+        ]
+      ],
+      "room": "bedroom",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    },
+    {
+      "id": "bedroom:north-wall",
+      "kind": "plane",
+      "axis": "y",
+      "value": 4.25,
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "bounds": [
+        [
+          4.8,
+          0
+        ],
+        [
+          9.8,
+          2.85
+        ]
+      ],
+      "room": "bedroom",
+      "landing": true,
+      "material": "warm-aged-plaster"
+    }
+  ],
+  "fields": {
+    "food": [
+      {
+        "id": "fruit-attractor",
+        "center": [
+          -0.75,
+          3.5,
+          1.735
+        ],
+        "radius": 0.5,
+        "strength": 1,
+        "kind": "fruit",
+        "active": true,
+        "activation": "Fly Simulation v1 food target"
+      }
+    ],
+    "heat": [
+      {
+        "id": "stove-heat",
+        "center": [
+          2.15,
+          -1.1,
+          0.59
+        ],
+        "radius": 1.2,
+        "temperatureCelsius": null,
+        "calibrated": false
+      }
+    ],
+    "light": [
+      {
+        "id": "west-window",
+        "center": [
+          -4.8,
+          -0.72,
+          1.49
+        ],
+        "normal": [
+          1,
+          0,
+          0
+        ],
+        "relativeIntensity": 1,
+        "kind": "daylight"
+      },
+      {
+        "id": "bedroom-window",
+        "center": [
+          5.61,
+          4.25,
+          1.48
+        ],
+        "normal": [
+          0,
+          -1,
+          0
+        ],
+        "relativeIntensity": 0.7,
+        "kind": "daylight"
+      }
+    ],
+    "airflow": [
+      {
+        "id": "doorway-exchange",
+        "bounds": [
+          [
+            4.3,
+            0.34,
+            0.1
+          ],
+          [
+            5.3,
+            1.66,
+            2.18
+          ]
+        ],
+        "direction": [
+          1,
+          0,
+          0
+        ],
+        "speedMetersPerSecond": 0,
+        "active": false
+      },
+      {
+        "id": "stove-convection",
+        "bounds": [
+          [
+            1.55,
+            -1.7,
+            1.18
+          ],
+          [
+            2.75,
+            -0.5,
+            2.85
+          ]
+        ],
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "speedMetersPerSecond": 0,
+        "active": false
+      }
+    ]
+  }
+}

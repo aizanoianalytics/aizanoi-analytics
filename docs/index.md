@@ -8,6 +8,7 @@ Scope: maintained documentation and operator runbooks.
 - Hermes / server / deployment operations → `HERMES_OPERATIONS.md`
 - Provider/server follow-up outside source-only changes → `OPERATIONS.md`
 - Accessibility release checks → `ACCESSIBILITY.md`
+- Fly World authoritative simulation architecture → [`fly-world-architecture.md`](fly-world-architecture.md)
 - AizanoiOS field/system behavior → `FIELD_SYSTEM.md`
 - Product, architecture, design, security and content constitutions → use `../index.md` to reach the canonical root documents.
 
