@@ -10,12 +10,12 @@ A dependency-free deterministic core and browser spectator bridge. The core can 
 
 ## Classification accounting
 
-- **CONNECTOME-DERIVED:** 0 implemented subsystems.
-- **BIOLOGICALLY CONSTRAINED:** 0 implemented subsystems.
-- **MODELLED:** rigid-body integration, gravity, damping/drag, deterministic orientation, authored collision/contact, room/zone lookup, sensor frame, checkpoint/replay state, and telemetry metadata.
-- **HEURISTIC:** the named `HEURISTIC TEST CONTROLLER` motor mapping only.
+- **CONNECTOME-DERIVED:** selected FlyWire FAFB v783 LC4→DNp02/DNp11 topology only; not a full-brain model.
+- **BIOLOGICALLY CONSTRAINED:** Drosophila profile provenance and visual-sampling assumptions; implementation remains reduced-order.
+- **MODELLED:** rigid-body integration, gravity, damping/drag, deterministic orientation, authored collision/contact, room/zone lookup, directional vision/looming, sensor fields, checkpoint/replay state, neural rate dynamics and telemetry metadata.
+- **HEURISTIC:** named baseline controller foundation; it is not yet a complete food-seeking FSM.
 
-Every scientific subsystem carries machine-readable `units`, `calibrated`, `assumptions`, `limitations`, and `version`. Missing provenance metadata is rejected. Vision, olfaction, and audition are explicit `UNAVAILABLE` channels with metadata; they are not simulated or implied.
+Every scientific subsystem carries machine-readable `units`, `calibrated`, `assumptions`, `limitations`, and `version`. Missing provenance metadata is rejected. Vision is a modest directional ray/looming model; olfaction and audition remain explicit `UNAVAILABLE` where no authoritative adapter exists.
 
 ## Determinism and limits
 
