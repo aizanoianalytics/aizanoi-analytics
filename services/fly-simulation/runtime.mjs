@@ -68,6 +68,35 @@ function makeRaycast(surfaces, rooms, fields, colliders = []) {
   };
 }
 
+function resolveAabbPenetration(positionValue, radius, colliders) {
+  let position = vector(positionValue);
+  let contact = null;
+  for (let iteration = 0; iteration < 8; iteration += 1) {
+    let best = null;
+    for (const collider of colliders) {
+      const min = collider.bounds[0].map((value) => value - radius);
+      const max = collider.bounds[1].map((value) => value + radius);
+      const coordinates = [position.x, position.y, position.z];
+      if (coordinates.some((value, index) => value < min[index] || value > max[index])) continue;
+      const candidates = [
+        { penetration: coordinates[0] - min[0], normal: [-1, 0, 0] },
+        { penetration: max[0] - coordinates[0], normal: [1, 0, 0] },
+        { penetration: coordinates[1] - min[1], normal: [0, -1, 0] },
+        { penetration: max[1] - coordinates[1], normal: [0, 1, 0] },
+        { penetration: coordinates[2] - min[2], normal: [0, 0, -1] },
+        { penetration: max[2] - coordinates[2], normal: [0, 0, 1] }
+      ];
+      const candidate = candidates.sort((a, b) => a.penetration - b.penetration)[0];
+      if (!best || candidate.penetration < best.penetration) best = { ...candidate, id: collider.id };
+    }
+    if (!best) break;
+    const normal = vector(best.normal);
+    position = position.add(normal.mul(best.penetration + 1e-9));
+    contact = { surfaceId: best.id, normal };
+  }
+  return contact ? { position, ...contact } : null;
+}
+
 function fieldSampler(fields) {
   const nearest = (entries, point) => entries
     .map((entry) => ({ entry, distance: vector(point).sub(vector(entry.center)).length() }))
@@ -132,6 +161,7 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
     fields,
     provenance: physics.provenance,
     raycast: makeRaycast(physics.surfaces, physics.rooms, fields, physics.colliders ?? []),
+    resolveCollision: (position, radius) => resolveAabbPenetration(position, radius, physics.colliders ?? []),
     roomAt: (point) => roomAt(physics.rooms, point),
     zonesAt: (point) => {
       const p = vector(point); const zones = [];

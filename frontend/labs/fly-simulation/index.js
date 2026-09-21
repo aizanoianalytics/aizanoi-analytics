@@ -87,7 +87,7 @@ const visionSample=(environment,position,orientation)=>{const maxRange=.5;const 
         f.motors=normalizeMotors(motors,this.motorLimits);
       }
       const start=f.body.position.clone();
-      f.body.applyThrust(this.upDirection.mul(f.motors.thrust));
+      f.body.applyThrust(rotateByQuat(this.upDirection,f.body.orientation).normalize().mul(f.motors.thrust));
       f.body.applyForce(new Vec3(f.motors.pitch,f.motors.yaw,0));
       f.body.applyTorque(new Vec3(f.motors.roll,f.motors.yaw,f.motors.pitch));
       f.body.integrate(dt,this.gravity);
@@ -125,6 +125,17 @@ const visionSample=(environment,position,orientation)=>{const maxRange=.5;const 
           const normalVelocity=f.body.velocity.dot(this.upDirection);
           if(normalVelocity<0)f.body.velocity=f.body.velocity.sub(this.upDirection.mul(normalVelocity));
           contact={phase:Math.abs(f.body.velocity.dot(this.upDirection))<.02?'STABLE_REST':'LANDED',grounded:true,surfaceId:hit.surfaceId,normal:hit.normal?.toJSON?.()??null};
+        }
+      }
+      if(this.environment.resolveCollision){
+        const resolved=this.environment.resolveCollision(f.body.position,f.body.radius);
+        if(resolved?.position){
+          f.body.position=asVec(resolved.position);
+          const normal=asVec(resolved.normal).normalize();
+          const inward=f.body.velocity.dot(normal);
+          if(inward<0)f.body.velocity=f.body.velocity.sub(normal.mul(inward));
+          const grounded=normal.dot(this.upDirection)>.5;
+          contact={phase:grounded&&Math.abs(f.body.velocity.dot(normal))<.02?'STABLE_REST':'LANDED',grounded,surfaceId:resolved.surfaceId??null,normal:normal.toJSON()};
         }
       }
       f.contact=contact??{phase:'AIRBORNE',grounded:false,surfaceId:null,normal:null};
@@ -199,6 +210,7 @@ export function createFlyWorldEnvironmentAdapter(environment,identity={}){
       if(!Number.isFinite(hit.distance)||!hit.point||!hit.normal)throw new TypeError('authored raycast hit requires distance, point, normal');
       return {...hit,point:asVec(hit.point),normal:asVec(hit.normal).normalize()};
     },
+    resolveCollision:integration.resolveCollision??environment.resolveCollision,
     roomAt:integration.roomAt??environment.roomAt,
     zonesAt:integration.zonesAt??environment.zonesAt,
     sampleSensor:integration.sampleSensor??environment.sampleSensor,

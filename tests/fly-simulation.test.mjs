@@ -151,6 +151,23 @@ test('replay preserves recorded motor and controller state with an attached cont
   assert.deepEqual(replayed.getFly('f').body.position.toJSON(), expected.getFly('f').body.position.toJSON());
 });
 
+test('thrust follows body orientation instead of a fixed world axis', () => {
+  const env = {
+    ...planeEnv(),
+    hash: 'env-body-frame-v1', glbHash: 'glb-body-frame-v1',
+    meta: { artifactHashes: { environmentSource: 'env-body-frame-v1', flyHouseGlb: 'glb-body-frame-v1' } },
+    downDirection: [0, 0, -1],
+    surfaces: [{ id: 'floor', point: [0, 0, 0], normal: [0, 0, 1], room: 'room-a' }]
+  };
+  const sim = new FlySimulation(env, { gravity: new Vec3(0, 0, 0), downDirection: new Vec3(0, 0, -1) });
+  sim.addFly({ flyId: 'f', body: new BodyState({ position: new Vec3(0, 0, 1), orientation: new Quat(0, Math.sin(Math.PI / 4), 0, Math.cos(Math.PI / 4)) }) });
+  sim.setMotors('f', { thrust: 1 });
+  sim.step(0.1);
+  const position = sim.getFly('f').body.position;
+  assert.ok(position.x > 0.004, 'rotated local thrust should move along world X');
+  assert.ok(Math.abs(position.z - 1) < 1e-9, 'rotated local thrust should not remain world-Z thrust');
+});
+
 test('named HEURISTIC TEST CONTROLLER maps sensor to motors without teleport', () => {
   const sim = makeSim(); sim.addFly({ flyId: 'f', body: new BodyState({ position: new Vec3(0, 1, 0) }) });
   const c = new HeuristicTestController(); const before = sim.getFly('f').body.position.clone();

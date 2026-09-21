@@ -53,6 +53,16 @@ test('FlyWire controller result keeps motors separate from controller state', as
 });
 
 
+test('real runtime depenetrates a fly that starts inside an authored furniture collider', async () => {
+  const runtime = await loadFlyHouseRuntime({ rootDir });
+  const sim = new FlySimulation(runtime.environment, { fixedDt: 1 / 60, gravity: [0, 0, 0] });
+  sim.addFly({ flyId: 'inside-stove', body: initialFlyBody({ spawn: [2.15, .6, .59] }) });
+  sim.step(0);
+  const position = sim.getFly('inside-stove').body.position;
+  const stove = runtime.physics.colliders.find((collider) => collider.id === 'stove');
+  const [min, max] = stove.bounds;
+  assert.equal(position.x < min[0] || position.x > max[0] || position.y < min[1] || position.y > max[1] || position.z < min[2] || position.z > max[2], true);
+});
 test('controller state is included in checkpoint identity and restores deterministically', async () => {
   const runtime = await loadFlyHouseRuntime({ rootDir });
   const options = { fixedDt: 1 / 60, gravity: [0, 0, -9.81], controller: new HeuristicBaselineController(), motorLimits: { thrust: .00005, pitch: .02, yaw: .02, roll: .02 } };
