@@ -19,7 +19,25 @@ function roomAt(rooms, point) {
   })?.id ?? null;
 }
 
-function makeRaycast(surfaces, rooms, fields) {
+function rayBox(origin, direction, box, maxDistance) {
+  let near = 0; let far = maxDistance; let nearNormal = null; let farNormal = null;
+  const axes = ['x', 'y', 'z'];
+  for (let i = 0; i < 3; i += 1) {
+    const axis = axes[i]; const o = origin[axis]; const d = direction[axis]; const min = box.bounds[0][i]; const max = box.bounds[1][i];
+    if (Math.abs(d) < 1e-12) { if (o < min || o > max) return null; continue; }
+    let t1 = (min - o) / d; let t2 = (max - o) / d;
+    let n1 = [0, 0, 0]; let n2 = [0, 0, 0]; n1[i] = -1; n2[i] = 1;
+    if (t1 > t2) { [t1, t2] = [t2, t1]; [n1, n2] = [n2, n1]; }
+    if (t1 > near) { near = t1; nearNormal = n1; }
+    if (t2 < far) { far = t2; farNormal = n2; }
+    if (near > far || far < 0) return null;
+  }
+  const distance = near >= 0 ? near : far; const normal = near >= 0 ? nearNormal : farNormal;
+  if (!(distance >= 0 && distance <= maxDistance)) return null;
+  return { distance, point: origin.add(direction.mul(distance)), normal: vector(normal) };
+}
+
+function makeRaycast(surfaces, rooms, fields, colliders = []) {
   return (originValue, directionValue, maxDistance = 100) => {
     const origin = vector(originValue); const direction = vector(directionValue).normalize();
     let best = null;
@@ -41,6 +59,10 @@ function makeRaycast(surfaces, rooms, fields) {
         room: surface.room ?? roomAt(rooms, hit),
         zones: []
       };
+    }
+    for (const collider of colliders) {
+      const hit = rayBox(origin, direction, collider, maxDistance);
+      if (hit && (!best || hit.distance < best.distance)) best = { ...hit, surfaceId: collider.id, room: roomAt(rooms, hit.point), zones: [] };
     }
     return best;
   };
@@ -87,7 +109,7 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
   if (physics.source.environmentArtifactHash !== spec.artifactHashes?.environmentSource) throw new Error('fly physics environment artifact identity mismatch');
   if (physics.source.glbArtifactHash !== spec.artifactHashes?.flyHouseGlb) throw new Error('fly physics GLB artifact identity mismatch');
   if (physics.source.flyHouseGlbHash !== glbHash) throw new Error('fly physics GLB hash mismatch');
-  if (physics.schemaVersion !== 'fly-physics-1' || physics.axis !== 'Z-up') throw new Error('unsupported Fly House physics artifact');
+  if (!physics.schemaVersion.startsWith('fly-physics-') || physics.axis !== 'Z-up') throw new Error('unsupported Fly House physics artifact');
   const fields = physics.fields;
   const sensors = fieldSampler(fields);
   const environment = {
@@ -98,10 +120,11 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
     axis: physics.axis,
     downDirection: [0, 0, -1],
     surfaces: physics.surfaces,
+    colliders: physics.colliders ?? [],
     rooms: physics.rooms,
     fields,
     provenance: physics.provenance,
-    raycast: makeRaycast(physics.surfaces, physics.rooms, fields),
+    raycast: makeRaycast(physics.surfaces, physics.rooms, fields, physics.colliders ?? []),
     roomAt: (point) => roomAt(physics.rooms, point),
     zonesAt: (point) => {
       const p = vector(point); const zones = [];

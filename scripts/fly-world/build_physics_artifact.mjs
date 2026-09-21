@@ -54,8 +54,18 @@ if (doorway) {
   }
 }
 
+const colliders = [
+  { id: 'stove', kind: 'box', bounds: [[1.20, -0.05, 0], [2.90, 1.40, 1.85]], landing: true },
+  { id: 'tv-cabinet', kind: 'box', bounds: [[-3.95, -2.65, 0], [-2.77, -1.45, 1.34]], landing: true },
+  { id: 'divan', kind: 'box', bounds: [[-2.625, 1.90, 0], [1.325, 2.78, 0.57]], landing: true },
+  { id: 'major-cabinet', kind: 'box', bounds: [[-2.675, 3.33, 0.0], [1.375, 3.77, 1.55]], landing: true },
+  { id: 'food-support', kind: 'box', bounds: [[-1.35, 3.25, 1.48], [-0.15, 3.80, 1.60]], landing: true },
+  { id: 'bed-frame', kind: 'box', bounds: [[5.81, 0.72, 0], [7.63, 2.92, 0.57]], landing: true },
+  { id: 'bedside-table', kind: 'box', bounds: [[4.87, 2.14, 0], [5.49, 2.70, 0.82]], landing: true }
+];
+
 const artifact = {
-  schemaVersion: 'fly-physics-1',
+  schemaVersion: 'fly-physics-2',
   units: 'meters',
   axis: 'Z-up',
   provenance: {
@@ -78,6 +88,7 @@ const artifact = {
   transitions: spec.transitions,
   safeSpawnVolumes: spec.integration?.safeSpawnVolumes ?? [],
   surfaces,
+  colliders,
   fields: {
     food: spec.food.map(({ id, center, radius, strength, kind }) => ({ id, center, radius, strength, kind, active: true, activation: 'Fly Simulation v1 food target' })),
     heat: spec.heat.map(({ id, center, radius, temperatureCelsius, calibrated }) => ({ id, center, radius, temperatureCelsius, calibrated })),

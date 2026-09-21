@@ -10,9 +10,12 @@ test('real Fly House physics artifact validates against environment and GLB iden
   const runtime = await loadFlyHouseRuntime({ rootDir });
   assert.equal(runtime.environment.hash, '56dd975756fe1441eb6ac65930bad93c0bc177dd34e163e2fb16649f691587a8');
   assert.equal(runtime.environment.glbHash, '5b8168b415233ae119cc691d89c8d853b17274145ef0335aa8da7056996ee07a');
-  assert.equal(runtime.physics.schemaVersion, 'fly-physics-1');
-  assert.ok(runtime.physics.surfaces.length >= 10);
-  assert.ok(runtime.physics.fields.food[0].active);
+  assert.equal(runtime.physics.schemaVersion, 'fly-physics-2');
+  assert.equal(runtime.hashes.physicsArtifactHash, '7096e8dd435e717815cb29344d0aec968a4228b09fb7e8468ee098c1748eeffc');
+  assert.deepEqual(runtime.physics.colliders.map((collider) => collider.id), ['stove', 'tv-cabinet', 'divan', 'major-cabinet', 'food-support', 'bed-frame', 'bedside-table']);
+  assert.equal(runtime.environment.raycast([0, .6, 1], [1, 0, 0], 10).surfaceId, 'stove');
+  assert.equal(runtime.environment.raycast([-.5, 3, 1], [0, 1, 0], 10).surfaceId, 'major-cabinet');
+  assert.equal(runtime.environment.raycast([-.75, 3, 1.55], [0, 1, 0], 10).surfaceId, 'food-support');
 });
 
 test('real artifact executes sensor-controller-motor-body loop and exposes food field', async () => {
