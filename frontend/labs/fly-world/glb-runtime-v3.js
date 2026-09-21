@@ -7,6 +7,7 @@ import { SpectatorBridge } from '../fly-simulation/index.js';
 const canvas = document.querySelector('#world');
 const fatal = document.querySelector('#fatal');
 const statusEl = document.querySelector('#observer-status');
+const researchEl = document.querySelector('#research-telemetry');
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
@@ -177,6 +178,49 @@ function lighting() {
   scene.add(bedroom);
 }
 
+function updateResearchTelemetry(frame) {
+  if (!researchEl) return;
+  const sensors = frame.state?.sensors?.channels ?? {};
+  const sample = Object.fromEntries(Object.entries(sensors).map(([name, value]) => [name, { status: value.status, value: value.value, units: value.units }]));
+  researchEl.textContent = JSON.stringify({
+    flyId: frame.flyId,
+    tick: frame.sequence,
+    room: frame.state?.room ?? null,
+    controller: frame.metadata?.controller ?? 'unknown',
+    authority: 'server-authoritative',
+    positionMeters: frame.state?.position ?? null,
+    motor: frame.state?.motor ?? null,
+    sensors: sample,
+    provenance: frame.metadata?.provenance ?? 'MODELLED',
+    lagSeconds: frame.lag?.lagSeconds ?? null
+  }, null, 2);
+}
+
+function createFlyVisual() {
+  const fly = new THREE.Group();
+  fly.name = 'TELEMETRY_SPECTATOR_FLY';
+  const dark = new THREE.MeshStandardMaterial({ color: 0x21160f, roughness: .82 });
+  const eye = new THREE.MeshStandardMaterial({ color: 0x321b48, roughness: .4, emissive: 0x160820, emissiveIntensity: .35 });
+  const wing = new THREE.MeshStandardMaterial({ color: 0xc9e6df, transparent: true, opacity: .42, side: THREE.DoubleSide });
+  const thorax = new THREE.Mesh(new THREE.SphereGeometry(.00105, 10, 8), dark);
+  thorax.name = 'fly-thorax'; fly.add(thorax);
+  const abdomen = new THREE.Mesh(new THREE.CapsuleGeometry(.00072, .0021, 4, 8), dark);
+  abdomen.name = 'fly-abdomen'; abdomen.rotation.y = Math.PI / 2; abdomen.position.y = -.00145; fly.add(abdomen);
+  const head = new THREE.Mesh(new THREE.SphereGeometry(.00078, 10, 8), dark);
+  head.name = 'fly-head'; head.position.y = .00115; fly.add(head);
+  for (const side of [-1, 1]) {
+    const eyeMesh = new THREE.Mesh(new THREE.SphereGeometry(.00043, 8, 6), eye);
+    eyeMesh.position.set(side * .00057, .00135, .00012); fly.add(eyeMesh);
+    for (const z of [-.00035, 0, .00035]) {
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(.000055, .000035, .0024, 5), dark);
+      leg.position.set(side * .00075, 0, z); leg.rotation.z = side * .95; leg.rotation.x = .35; fly.add(leg);
+    }
+    const wingMesh = new THREE.Mesh(new THREE.PlaneGeometry(.0028, .0011), wing);
+    wingMesh.position.set(side * .0007, .0001, .00042); wingMesh.rotation.set(.22, side * .28, side * .34); fly.add(wingMesh);
+  }
+  return fly;
+}
+
 async function boot() {
   lighting();
   const loader = new GLTFLoader();
@@ -212,10 +256,11 @@ async function boot() {
         const frame = JSON.parse(event.data);
         if (frame.version !== 'telemetry-1' || !frame.state?.position) return;
         if (!flyMesh) {
-          flyMesh = new THREE.Mesh(new THREE.SphereGeometry(.035, 12, 8), new THREE.MeshStandardMaterial({ color: 0xd9a441, emissive: 0x5c2800, emissiveIntensity: 1.2 }));
-          flyMesh.name = 'TELEMETRY_SPECTATOR_FLY'; flyMesh.castShadow = true; scene.add(flyMesh);
+          flyMesh = createFlyVisual();
+          flyMesh.castShadow = true; scene.add(flyMesh);
         }
         if (bridge.ingest(frame) && simulationStatus) simulationStatus.textContent = 'Telemetry active · read-only spectator';
+        if (bridge.frames.at(-1) === frame || bridge.frames.at(-1)?.sequence === frame.sequence) updateResearchTelemetry(frame);
       } catch (error) { console.warn('Ignoring malformed telemetry', error); }
     });
     const markTelemetryInactive = (message) => { if (simulationStatus) simulationStatus.textContent = message; };

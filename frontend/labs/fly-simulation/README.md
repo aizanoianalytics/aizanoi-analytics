@@ -1,6 +1,6 @@
 # Fly Simulation Foundation (Stage B)
 
-A narrow, dependency-free deterministic core and browser spectator bridge. It runs inside the static Fly House page without a backend, generic remote shell, Hermes bridge, secrets, or arbitrary execution.
+A dependency-free deterministic core and browser spectator bridge. The core can run in the browser-safe test seam, while the real Fly House host is `services/fly-simulation` plus `scripts/fly-simulation/start.mjs`. The browser remains a read-only spectator; the host owns simulation authority.
 
 ## Browser seam
 

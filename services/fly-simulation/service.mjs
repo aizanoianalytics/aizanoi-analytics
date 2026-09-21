@@ -201,7 +201,9 @@ export function createFlySimulationService({
         room: snapshot.room,
         position: snapshot.transform.position,
         orientation: snapshot.transform.orientation,
-        contact: snapshot.contact
+        contact: snapshot.contact,
+        sensors: snapshot.sensorSummary,
+        motor: snapshot.motor
       },
       metadata: { controller, provenance: 'MODELLED', units: 'SI' },
       lag: scheduler.status()
