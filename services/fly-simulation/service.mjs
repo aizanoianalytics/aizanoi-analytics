@@ -203,9 +203,11 @@ export function createFlySimulationService({
         orientation: snapshot.transform.orientation,
         contact: snapshot.contact,
         sensors: snapshot.sensorSummary,
-        motor: snapshot.motor
+        motor: snapshot.motor,
+        controllerState: snapshot.controller.state,
+        checkpointStatus: snapshot.checkpointStatus
       },
-      metadata: { controller, provenance: 'MODELLED', units: 'SI' },
+      metadata: { controller: snapshot.controller.name, version: snapshot.controller.version, provenance: snapshot.controller.provenance, units: 'SI' },
       lag: scheduler.status()
     };
   }

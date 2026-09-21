@@ -53,6 +53,16 @@ test('FlyWire controller result keeps motors separate from controller state', as
 });
 
 
+test('real runtime depenetrates a fly that starts inside an authored furniture collider', async () => {
+  const runtime = await loadFlyHouseRuntime({ rootDir });
+  const sim = new FlySimulation(runtime.environment, { fixedDt: 1 / 60, gravity: [0, 0, 0] });
+  sim.addFly({ flyId: 'inside-stove', body: initialFlyBody({ spawn: [2.15, .6, .59] }) });
+  sim.step(0);
+  const position = sim.getFly('inside-stove').body.position;
+  const stove = runtime.physics.colliders.find((collider) => collider.id === 'stove');
+  const [min, max] = stove.bounds;
+  assert.equal(position.x < min[0] || position.x > max[0] || position.y < min[1] || position.y > max[1] || position.z < min[2] || position.z > max[2], true);
+});
 test('controller state is included in checkpoint identity and restores deterministically', async () => {
   const runtime = await loadFlyHouseRuntime({ rootDir });
   const options = { fixedDt: 1 / 60, gravity: [0, 0, -9.81], controller: new HeuristicBaselineController(), motorLimits: { thrust: .00005, pitch: .02, yaw: .02, roll: .02 } };
@@ -63,5 +73,21 @@ test('controller state is included in checkpoint identity and restores determini
   assert.equal(cp.flies[0].controller, 'HEURISTIC BASELINE CONTROLLER');
   const second = new FlySimulation(runtime.environment, options);
   restore(second, cp);
+  assert.equal(stateHash(second), stateHash(first));
+});
+test('checkpoint restores dynamic food fields before the next sensor frame', async () => {
+  const firstRuntime = await loadFlyHouseRuntime({ rootDir });
+  const food = firstRuntime.physics.fields.food[0];
+  const options = { fixedDt: 1 / 60, gravity: [0, 0, -9.81], controller: new HeuristicBaselineController(), motorLimits: { thrust: .00005, pitch: .02, yaw: .02, roll: .02 } };
+  const first = new FlySimulation(firstRuntime.environment, options);
+  first.addFly({ flyId: 'dynamic-food-fly', body: initialFlyBody({ spawn: food.center }) });
+  firstRuntime.environment.restoreDynamicState({ food: [{ id: food.id, active: false }] });
+  first.step(0);
+  const cp = checkpoint(first);
+  const secondRuntime = await loadFlyHouseRuntime({ rootDir });
+  const second = new FlySimulation(secondRuntime.environment, options);
+  restore(second, cp);
+  assert.equal(second.getFly('dynamic-food-fly').sensors.channels.olfaction.value, 0);
+  assert.equal(second.getFly('dynamic-food-fly').sensors.channels.taste.status, 'UNAVAILABLE');
   assert.equal(stateHash(second), stateHash(first));
 });
