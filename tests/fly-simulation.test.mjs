@@ -152,6 +152,16 @@ test('browser factory adapts Fly World raycast and bridge interpolates without a
   assert.equal(bridge.authority, 'spectator-read-only'); assert.equal(bridge.sentCommands, 0);
 });
 
+test('spectator bridge keeps independent sequence and render buffers per fly', () => {
+  const bridge = new SpectatorBridge({ environmentHash: 'env', glbHash: 'glb' });
+  const frame = (flyId, sequence, x) => ({ version: 'telemetry-1', flyId, sequence, identity: { environmentHash: 'env', glbHash: 'glb' }, state: { position: [x, 0, 0], orientation: [0, 0, 0, 1] } });
+  assert.equal(bridge.ingest(frame('a', 1, 0)), true); assert.equal(bridge.ingest(frame('b', 1, 10)), true);
+  assert.equal(bridge.ingest(frame('a', 2, 2)), true); assert.equal(bridge.ingest(frame('b', 2, 12)), true);
+  const a = { position: { set: (...value) => { a.value = value; } }, quaternion: { set: () => {} } };
+  const b = { position: { set: (...value) => { b.value = value; } }, quaternion: { set: () => {} } };
+  assert.equal(bridge.render(a, .5, 'a'), true); assert.equal(bridge.render(b, .5, 'b'), true);
+  assert.deepEqual(a.value, [1, 0, 0]); assert.deepEqual(b.value, [11, 0, 0]); assert.equal(bridge.flyStates.size, 2);
+});
 test('telemetry includes required metadata, identity, rejects arbitrary keys, and reports lag rather than dropping frames', () => {
   const t = new TelemetryProtocol();
   const identity = { environmentHash: 'env-plane-v1', glbHash: 'glb-plane-v1' };

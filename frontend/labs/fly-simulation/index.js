@@ -202,5 +202,25 @@ export function createFlyWorldEnvironmentAdapter(environment,identity={}){
     dynamicState:identity.dynamicState??environment.dynamicState??null
   });
 }
-export class SpectatorBridge {constructor({now=()=>Date.now(),environmentHash,glbHash,environmentIdentity}={}){this.now=now;this.identity=Object.freeze({environmentHash:environmentIdentity?.environmentHash??environmentHash,glbHash:environmentIdentity?.glbHash??glbHash});if(typeof this.identity.environmentHash!=='string'||!this.identity.environmentHash||typeof this.identity.glbHash!=='string'||!this.identity.glbHash)throw new TypeError('spectator environment identity required');this.authority='spectator-read-only';this.sentCommands=0;this.frames=[];this.raf=null;this.lastSequence=-1;this.droppedFrames=0;this.lagStatus={lagSeconds:0,silentDrops:0}}ingest(frame){if(frame?.version!=='telemetry-1'||typeof frame.flyId!=='string'||!frame.flyId||!Number.isInteger(frame.sequence)||frame.sequence<0||frame.sequence<=this.lastSequence||!frame.identity||frame.identity.environmentHash!==this.identity.environmentHash||frame.identity.glbHash!==this.identity.glbHash||!frame.state?.position)return false;try{finiteArray(frame.state.position,3,'position');finiteArray(frame.state.orientation??[0,0,0,1],4,'orientation')}catch{return false}if(frame.sequence<=this.lastSequence){this.droppedFrames+=1;this.lagStatus={...this.lagStatus,silentDrops:this.droppedFrames};return false}this.lastSequence=frame.sequence;this.frames.push(frame);this.frames=this.frames.slice(-2);this.lagStatus={lagSeconds:frame.lag??0,silentDrops:this.droppedFrames};return true}render(target,alpha=.5){const [a,b]=this.frames;if(!b)return false;const t=Math.max(0,Math.min(1,alpha)),p=a.state.position.map((v,i)=>v+(b.state.position[i]-v)*t),qa=a.state.orientation??[0,0,0,1],qb=b.state.orientation??[0,0,0,1],q=qa.map((v,i)=>v+(qb[i]-v)*t),ql=Math.hypot(...q)||1;target.position?.set(...p);target.quaternion?.set?.(...q.map(v=>v/ql));return true}start(target,{requestFrame=globalThis.requestAnimationFrame}={}){if(typeof requestFrame!=='function')return;const tick=()=>{this.render(target,.5);this.raf=requestFrame(tick)};this.raf=requestFrame(tick)}stop(cancel=globalThis.cancelAnimationFrame){if(this.raf&&typeof cancel==='function')cancel(this.raf);this.raf=null}}
-export function createBrowserSimulation(environment,options={}){const simulation=new FlySimulation(environment,options);return {simulation,bridge:new SpectatorBridge({...options,environmentHash:environment.hash,glbHash:environment.glbHash})}}
+export class SpectatorBridge {
+  constructor({ now = () => Date.now(), environmentHash, glbHash, environmentIdentity } = {}) {
+    this.now = now; this.identity = Object.freeze({ environmentHash: environmentIdentity?.environmentHash ?? environmentHash, glbHash: environmentIdentity?.glbHash ?? glbHash });
+    if (typeof this.identity.environmentHash !== 'string' || !this.identity.environmentHash || typeof this.identity.glbHash !== 'string' || !this.identity.glbHash) throw new TypeError('spectator environment identity required');
+    this.authority = 'spectator-read-only'; this.sentCommands = 0; this.flyStates = new Map(); this.activeFlyId = null; this.raf = null; this.droppedFrames = 0; this.lagStatus = { lagSeconds: 0, silentDrops: 0 };
+  }
+  get frames() { return this.flyStates.get(this.activeFlyId)?.frames ?? []; }
+  get lastSequence() { return this.flyStates.get(this.activeFlyId)?.lastSequence ?? -1; }
+  ingest(frame) {
+    const state = this.flyStates.get(frame?.flyId) ?? { lastSequence: -1, frames: [] };
+    if (frame?.version !== 'telemetry-1' || typeof frame.flyId !== 'string' || !frame.flyId || !Number.isInteger(frame.sequence) || frame.sequence < 0 || frame.sequence <= state.lastSequence || !frame.identity || frame.identity.environmentHash !== this.identity.environmentHash || frame.identity.glbHash !== this.identity.glbHash || !frame.state?.position) return false;
+    try { finiteArray(frame.state.position, 3, 'position'); finiteArray(frame.state.orientation ?? [0, 0, 0, 1], 4, 'orientation'); } catch { return false; }
+    state.lastSequence = frame.sequence; state.frames.push(frame); state.frames = state.frames.slice(-2); this.flyStates.set(frame.flyId, state); this.activeFlyId = frame.flyId; this.lagStatus = { lagSeconds: frame.lag ?? 0, silentDrops: this.droppedFrames }; return true;
+  }
+  render(target, alpha = .5, flyId = this.activeFlyId) {
+    const frames = this.flyStates.get(flyId)?.frames ?? []; const [a, b] = frames; if (!b) return false;
+    const t = Math.max(0, Math.min(1, alpha)), p = a.state.position.map((v, i) => v + (b.state.position[i] - v) * t), qa = a.state.orientation ?? [0, 0, 0, 1], qb = b.state.orientation ?? [0, 0, 0, 1], q = qa.map((v, i) => v + (qb[i] - v) * t), ql = Math.hypot(...q) || 1;
+    target.position?.set(...p); target.quaternion?.set?.(...q.map((v) => v / ql)); return true;
+  }
+  start(target, { requestFrame = globalThis.requestAnimationFrame } = {}) { if (typeof requestFrame !== 'function') return; const tick = () => { this.render(target, .5); this.raf = requestFrame(tick); }; this.raf = requestFrame(tick); }
+  stop(cancel = globalThis.cancelAnimationFrame) { if (this.raf && typeof cancel === 'function') cancel(this.raf); this.raf = null; }
+}export function createBrowserSimulation(environment,options={}){const simulation=new FlySimulation(environment,options);return {simulation,bridge:new SpectatorBridge({...options,environmentHash:environment.hash,glbHash:environment.glbHash})}}
