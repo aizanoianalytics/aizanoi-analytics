@@ -208,7 +208,7 @@
   .fs-categories button { min-height:44px; padding:0 13px; border:1px solid #e7ddd3; border-radius:9px; background:transparent; color:#778078; font:700 12px var(--az-font-ui); cursor:pointer; }
   .fs-categories button.is-active { border-color:#2f6b59; color:#fff; background:#2f6b59; }
   .fs-products { display:grid; grid-template-columns:repeat(auto-fit,minmax(178px,1fr)); gap:13px; padding:0 clamp(20px,5vw,72px) 24px; }
-  .fs-product-card { display:flex; flex-direction:column; min-width:0; overflow:hidden; border:1px solid #eadfd4; border-radius:16px; background:#fff; box-shadow:0 8px 20px rgba(91,66,48,.04); }
+  .fs-product-card { position:relative; display:flex; flex-direction:column; min-width:0; overflow:hidden; border:1px solid #eadfd4; border-radius:16px; background:#fff; box-shadow:0 8px 20px rgba(91,66,48,.04); }
   .fs-product-open { display:block; padding:0; border:0; width:100%; color:inherit; text-align:left; background:transparent; cursor:pointer; }
   .fs-product-meta { display:flex; flex-direction:column; gap:4px; padding:12px 13px 8px; }
   .fs-product-meta small { color:#ad7464; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
