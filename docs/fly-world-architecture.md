@@ -25,7 +25,7 @@ The browser loads the real Fly House GLB for presentation and accepts telemetry 
 | Compact physics artifact | implemented | MODELLED from authored room/doorway metadata |
 | Artifact identity | implemented | exact environment source + GLB hashes |
 | Fixed-step body loop | implemented | MODELLED |
-| Body dimensions | provisional | MODELLED; not yet a sourced Drosophila profile |
+| Body dimensions | implemented profile | BIOLOGICALLY CONSTRAINED for length/mass; MODELLED collision radius |
 | Proprioception/contact | implemented | MODELLED |
 | Light field | implemented | MODELLED, relative intensity |
 | Temperature | explicit but absolute value unavailable near heat | MODELLED / UNAVAILABLE where uncalibrated |

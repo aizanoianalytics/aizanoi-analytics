@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
-import { BodyState, Vec3 } from '../../frontend/labs/fly-simulation/index.js';
+import { BodyState, Vec3, DROSOPHILA_MELANOGASTER_V1 } from '../../frontend/labs/fly-simulation/index.js';
 
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const vector = (value) => value instanceof Vec3 ? value : new Vec3(value?.x ?? value?.[0] ?? 0, value?.y ?? value?.[1] ?? 0, value?.z ?? value?.[2] ?? 0);
@@ -114,7 +114,7 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
   return Object.freeze({ environment, spec, physics, hashes: { environmentSourceHash, glbHash } });
 }
 
-export function initialFlyBody({ spawn, radius = 0.0015 } = {}) {
+export function initialFlyBody({ spawn, profile = DROSOPHILA_MELANOGASTER_V1 } = {}) {
   const position = vector(spawn ?? [-1.85, -2.15, 1]);
-  return new BodyState({ position, radius, mass: 0.001, damping: 0.15, drag: 0.2 });
+  return new BodyState({ position, radius: profile.collisionRadiusMeters, mass: profile.massKg, damping: 0.15, drag: 0.2 });
 }

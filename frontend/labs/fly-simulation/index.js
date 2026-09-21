@@ -10,6 +10,22 @@ export function validateProvenance(value) {
   return Object.freeze({ label: value.label, source: value.source, sourceReferences: Object.freeze([...value.sourceReferences]), units: String(value.units), calibrated: value.calibrated, assumptions: Object.freeze([...value.assumptions]), limitations: Object.freeze([...value.limitations]), version: String(value.version) });
 }
 const MODELLED = Object.freeze({ label: 'MODELLED', source: 'fly-simulation-stage-b', units: 'SI', calibrated: false, assumptions: ['deterministic reduced-order model'], limitations: ['not a biological or calibrated physiology model'], version: 'stage-b-1', sourceReferences: [] });
+export const DROSOPHILA_MELANOGASTER_V1 = Object.freeze({
+  id: 'drosophila-melanogaster-v1',
+  bodyLengthMeters: 0.0028,
+  massKg: 0.000001,
+  collisionRadiusMeters: 0.0006,
+  provenance: Object.freeze({
+    label: 'BIOLOGICALLY CONSTRAINED',
+    source: 'NeuroMechFly adult Drosophila model',
+    units: 'm, kg',
+    calibrated: false,
+    assumptions: ['adult female Drosophila reference values are used for scale and mass only', 'collision radius is a reduced-order approximation, not a measured body width'],
+    limitations: ['does not reproduce articulated exoskeleton, wing aerodynamics, or mass distribution'],
+    version: 'v1',
+    sourceReferences: ['https://doi.org/10.1038/s41592-022-01466-7']
+  })
+});
 const n = (v) => Number.isFinite(v) ? v : 0;
 export class Vec3 {
   constructor(x=0, y=0, z=0) { this.x=n(x); this.y=n(y); this.z=n(z); }
@@ -116,7 +132,7 @@ export class HeuristicBaselineController {
   step(sensor){
     const grounded=sensor.contact?.grounded;
     const odor=Number(sensor.channels?.olfaction?.value ?? 0);
-    return { thrust: grounded ? 0.018 : 0.012 + odor * 0.002, pitch: odor > 0 ? Math.min(0.02, odor * 0.006) : 0, yaw: 0, roll: 0 };
+    return { thrust: grounded ? 0.000018 : 0.000012 + odor * 0.000002, pitch: odor > 0 ? Math.min(0.02, odor * 0.006) : 0, yaw: 0, roll: 0 };
   }
 }
 const telemetryKeys=new Set(['flyId','sequence','identity','state','metadata','lag']);

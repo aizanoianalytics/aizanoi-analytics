@@ -13,7 +13,7 @@ const controller = process.env.FLY_SIM_CONTROLLER ?? 'HEURISTIC BASELINE CONTROL
 const runtime = await loadFlyHouseRuntime({ rootDir });
 const service = createFlyWorldSimulationService({
   authoredEnvironment: runtime.environment,
-  simulationOptions: { fixedDt: 1 / 60, gravity: [0, 0, -9.81], motorLimits: { thrust: 0.05, pitch: 0.02, yaw: 0.02, roll: 0.02 }, controller: new HeuristicBaselineController() },
+  simulationOptions: { fixedDt: 1 / 60, gravity: [0, 0, -9.81], motorLimits: { thrust: 0.00005, pitch: 0.02, yaw: 0.02, roll: 0.02 }, controller: new HeuristicBaselineController() },
   host,
   port,
   intervalMs,

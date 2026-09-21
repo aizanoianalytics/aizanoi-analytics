@@ -20,7 +20,7 @@ test('real artifact executes sensor-controller-motor-body loop and exposes food 
   const sim = new FlySimulation(runtime.environment, {
     fixedDt: 1 / 60,
     gravity: [0, 0, -9.81],
-    motorLimits: { thrust: .05, pitch: .02, yaw: .02, roll: .02 },
+    motorLimits: { thrust: .00005, pitch: .02, yaw: .02, roll: .02 },
     controller: new HeuristicBaselineController()
   });
   sim.addFly({ flyId: 'real-fly', body: initialFlyBody({ spawn: [-1.85, -2.15, 1] }) });
@@ -31,7 +31,7 @@ test('real artifact executes sensor-controller-motor-body loop and exposes food 
   assert.notEqual(fly.sensors.channels.olfaction.status, 'UNAVAILABLE');
   assert.notDeepEqual(fly.body.position.toJSON(), [-1.85, -2.15, 1]);
   const food = runtime.physics.fields.food[0].center;
-  const foodSim = new FlySimulation(runtime.environment, { fixedDt: 1 / 60, gravity: [0, 0, -9.81], controller: new HeuristicBaselineController(), motorLimits: { thrust: .05, pitch: .02, yaw: .02, roll: .02 } });
+  const foodSim = new FlySimulation(runtime.environment, { fixedDt: 1 / 60, gravity: [0, 0, -9.81], controller: new HeuristicBaselineController(), motorLimits: { thrust: .00005, pitch: .02, yaw: .02, roll: .02 } });
   foodSim.addFly({ flyId: 'food-fly', body: initialFlyBody({ spawn: food }) });
   assert.equal(foodSim.getFly('food-fly').sensors.channels.olfaction.value, 1);
   assert.equal(foodSim.getFly('food-fly').sensors.channels.taste.status, 'AVAILABLE');
@@ -39,7 +39,7 @@ test('real artifact executes sensor-controller-motor-body loop and exposes food 
 
 test('controller state is included in checkpoint identity and restores deterministically', async () => {
   const runtime = await loadFlyHouseRuntime({ rootDir });
-  const options = { fixedDt: 1 / 60, gravity: [0, 0, -9.81], controller: new HeuristicBaselineController(), motorLimits: { thrust: .05, pitch: .02, yaw: .02, roll: .02 } };
+  const options = { fixedDt: 1 / 60, gravity: [0, 0, -9.81], controller: new HeuristicBaselineController(), motorLimits: { thrust: .00005, pitch: .02, yaw: .02, roll: .02 } };
   const first = new FlySimulation(runtime.environment, options);
   first.addFly({ flyId: 'checkpoint-fly', body: initialFlyBody() });
   first.stepN(10);
