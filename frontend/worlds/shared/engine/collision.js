@@ -778,7 +778,7 @@ export class CollisionSystem {
   /**
    * Find a collision-free position near a target.
    */
-  findSafeSpawn(targetX, targetZ, maxRadius = 160, minDistance = 0) {
+  findSafeSpawn(targetX, targetZ, maxRadius = 160, minDistance = 0, preferredAngle = 0) {
     // Never demand a stand-off beyond the search ring — otherwise no candidate qualifies
     // and we fall back to the (indoor) center point.
     minDistance = Math.min(minDistance, maxRadius - 20);
@@ -788,7 +788,13 @@ export class CollisionSystem {
 
     for (let radius = 6; radius < maxRadius; radius += 4) {
       if (radius < minDistance) continue;
-      for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 8) {
+      // Try the authored approach first, then fan out symmetrically so a nearby
+      // collider does not throw the visitor onto the landmark's least readable side.
+      for (let step = 0; step < 16; step++) {
+        const ringStep = Math.ceil(step / 2);
+        const direction = step === 0 ? 0 : (step % 2 === 1 ? 1 : -1);
+        const angleOffset = ringStep * (Math.PI / 8) * direction;
+        const angle = preferredAngle + angleOffset;
         const x = targetX + Math.cos(angle) * radius;
         const z = targetZ + Math.sin(angle) * radius;
         if (!this._checkCollision(x, z, GROUND_Y)) {

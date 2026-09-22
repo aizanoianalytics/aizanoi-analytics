@@ -17,6 +17,7 @@ import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.
 import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
 import { loadAssetKit } from '../../shared/engine/asset-kit.js';
 import { Environment } from '../../shared/engine/environment.js';
+import { landmarkStandoff, landmarkTargetHeight } from '../../shared/engine/framing.js';
 import { WaterSystem, buildWaterSamplePoints } from '../../shared/engine/water.js';
 import { VegetationSystem } from '../../shared/engine/vegetation.js';
 import { ParticleSystem } from '../../shared/engine/particles.js';
@@ -613,18 +614,13 @@ function bindEvents() {
   ui.onTeleport = (teleportId) => {
     const building = BUILDINGS.find(b => b.id === teleportId);
     if (!building) return;
-    // Stand far enough back that the landmark fills the arrival view instead of a wall:
-    // standoff = 1.4 × half-diagonal of the footprint + 8m framing margin.
-    const standoff = Math.hypot(building.w || 20, building.d || 20) * 0.7 + 8;
-    const safe = collision.findSafeSpawn(building.x, building.z, 160, standoff);
+    // Size the view from both footprint and height so the landmark reads as a
+    // complete composition rather than a wall-sized crop.
+    const standoff = landmarkStandoff(building, { verticalFov: camera.fov });
+    const safe = collision.findSafeSpawn(building.x, building.z, Math.max(220, standoff + 80), standoff, building.viewAngle ?? 0);
     window.__WORLD_LAST_TELEPORT__ = building.id;
-    // Face the landmark: yaw convention — 0 = North (+Z reversed), atan2(dx, +dz) looks AWAY
-    const angle = Math.atan2(safe.x - building.x, safe.z - building.z);
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
-    controls.teleportTo(safe.x, safe.z, angle, targetY);
-    // Landmark framing is authoritative; derive the view from the target rather
-    // than relying on the legacy yaw convention after a compact-layout warp.
-    camera.lookAt(building.x, (building.h || 10) * 0.42, building.z);
+    controls.teleportFacing(safe.x, safe.z, building.x, landmarkTargetHeight(building), building.z, targetY);
     // Teleport is a discrete jump: the sim state must land exactly there so
     // the pose blender doesn't glide across the map on the next frames.
     simPos.copy(camera.position);

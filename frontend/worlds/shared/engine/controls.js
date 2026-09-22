@@ -489,6 +489,13 @@ export class Controls {
     this.camera.quaternion.setFromEuler(this.euler);
   }
 
+  /** Frame a target and keep the internal YXZ Euler in sync with the camera. */
+  teleportFacing(x, z, targetX, targetY, targetZ, y = 1.7) {
+    this.camera.position.set(x, y, z);
+    this.camera.lookAt(targetX, targetY, targetZ);
+    this.euler.setFromQuaternion(this.camera.quaternion, 'YXZ');
+  }
+
   /** Smooth camera transition (returns a tween-like updater) */
   smoothMoveTo(targetX, targetZ, targetAngle, duration = 1.5) {
     const startPos = this.camera.position.clone();

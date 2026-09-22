@@ -21,6 +21,16 @@ import { createGlassButton } from '../utils/ui-helpers.js';
 import { hasDungeonExitHandler, requestDungeonExit } from '../main.js';
 import { loadSettings, saveSettings, toggleDungeonFullscreen } from '../systems/SettingsSystem.js';
 
+// Stable per-tile noise keeps authored dressing identical across reloads and
+// prevents screenshot/replay drift without storing a second map artifact.
+function decorNoise(x, y, salt = 0) {
+  let n = (Math.imul((x | 0) + 374761393, 668265263)
+    ^ Math.imul((y | 0) + 1274126177, 2246822519)
+    ^ Math.imul((salt | 0) + 3266489917, 374761393)) >>> 0;
+  n = Math.imul(n ^ (n >>> 13), 1274126177) >>> 0;
+  return ((n ^ (n >>> 16)) >>> 0) / 4294967296;
+}
+
 export class GameScene extends Phaser.Scene {
   constructor() {
     super({ key: 'GameScene' });
@@ -100,6 +110,7 @@ export class GameScene extends Phaser.Scene {
 
     // 8. Kamera Takibi
     this.cameras.main.startFollow(this.player, true, 0.08, 0.08);
+    this.cameras.main.setZoom(this.scale.width >= 900 ? 1.16 : 1.0);
     this.cameras.main.setBounds(0, 0, this.mapData.width * 32, this.mapData.height * 32);
     this.physics.world.setBounds(0, 0, this.mapData.width * 32, this.mapData.height * 32);
 
@@ -225,23 +236,24 @@ export class GameScene extends Phaser.Scene {
       }
     } catch (_) {}
 
-    // Zemin decal'leri: tiles-decor'dan 2 güvenli frame, koyu tint yerine hafif parlak
-    // mozaik kırıntıları (%6 yoğunluk — harita okunabilirliğini boğmaz)
+    // Sparse, deterministic 32px mosaic fragments. The decor asset is a
+    // spritesheet: rendering the unsliced 160×96 atlas used to carpet rooms
+    // with giant inventory-board rectangles and destroy combat readability.
     try {
-      const safeFrames = [0, 1]; // renkli/gölgeli frame'lerden kaçınıyoruz
+      const safeFrames = [0, 1, 2, 5, 6, 7];
       for (const room of this.mapData.rooms || []) {
-        const decals = Math.floor((room.w * room.h) * 0.06);
+        const decals = Math.max(1, Math.floor((room.w * room.h) * 0.025));
         for (let i = 0; i < decals; i++) {
-          const dx = room.x + Math.floor(Math.random() * room.w);
-          const dy = room.y + Math.floor(Math.random() * room.h);
+          const dx = room.x + Math.floor(decorNoise(room.x, room.y, i * 5 + 1) * room.w);
+          const dy = room.y + Math.floor(decorNoise(room.x, room.y, i * 5 + 2) * room.h);
           if (this.mapData.grid[dy] && this.mapData.grid[dy][dx] !== 2) {
-            const d = this.add.image(dx * 32 + 16, dy * 32 + 16, 'tiles-decor', safeFrames[Math.floor(Math.random() * safeFrames.length)])
+            const frame = safeFrames[Math.floor(decorNoise(dx, dy, i * 5 + 3) * safeFrames.length)];
+            const d = this.add.image(dx * 32 + 16, dy * 32 + 16, 'tiles-decor', frame)
               .setDepth(1)
-              .setAlpha(0.55 + Math.random() * 0.3)
-              .setRotation(Math.floor(Math.random() * 4) * Math.PI / 2)
-              .setScale(0.6 + Math.random() * 0.5);
-            // Krem zeminde leke gibi durmasın: hafif ışık tonu
-            d.setTint(0xddc995);
+              .setAlpha(0.32 + decorNoise(dx, dy, i * 5 + 4) * 0.22)
+              .setRotation(Math.floor(decorNoise(dx, dy, i * 5 + 5) * 4) * Math.PI / 2)
+              .setScale(0.72 + decorNoise(dx, dy, i * 5 + 6) * 0.2);
+            d.setTint(0xd8c18d);
           }
         }
       }

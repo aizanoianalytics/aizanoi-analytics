@@ -72,7 +72,7 @@ const E_ARCH = { level: 'archaeological', note: 'Excavated standing monument.' }
 
 export const BUILDINGS = [
   { id: 'colosseum', name: 'Colosseum (Amphitheatrum Flavium)', type: 'amphitheatre',
-    x: 90, z: -40, w: 124, d: 100, h: 38, state: 'repaired', region: 'III', source: 'colosseum', evidence: E_ARCH,
+    x: 90, z: -40, w: 124, d: 100, h: 38, viewAngle: -Math.PI / 4, state: 'repaired', region: 'III', source: 'colosseum', evidence: E_ARCH,
     detail: 'The colossal amphitheatre, still hosting venationes (beast hunts). Features post-443 earthquake repairs.' },
   { id: 'pantheon', name: 'Pantheon', type: 'dome',
     x: -190, z: 60, w: 64, d: 76, h: 36, state: 'standing', region: 'IX', source: 'pantheon', evidence: E_ARCH,

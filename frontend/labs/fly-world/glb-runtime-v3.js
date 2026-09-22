@@ -16,7 +16,7 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.08;
+renderer.toneMappingExposure = 1.16;
 
 const scene = new THREE.Scene();
 window.__FLY_SCENE__ = scene;
@@ -177,12 +177,16 @@ function lighting() {
   windowFill.position.set(-3.6, -.7, 1.65);
   scene.add(windowFill);
 
-  const stove = new THREE.PointLight(0xff6525, 7.2, 4, 2);
+  const interiorFill = new THREE.PointLight(0xffe8cf, 1.35, 9, 2);
+  interiorFill.position.set(-0.2, 0.5, 2.25);
+  scene.add(interiorFill);
+
+  const stove = new THREE.PointLight(0xff7a3d, 3.2, 5.2, 2);
   stove.position.set(2.25, -.02, .62);
   stove.castShadow = true;
   scene.add(stove);
 
-  const bedroom = new THREE.PointLight(0xffb45a, 4.2, 4.2, 2);
+  const bedroom = new THREE.PointLight(0xffc27a, 2.6, 4.8, 2);
   bedroom.position.set(5.18, 2.35, 1.42);
   scene.add(bedroom);
 }
