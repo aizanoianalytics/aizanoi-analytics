@@ -24,6 +24,7 @@ const manifest = read('frontend/manifest.webmanifest');
 const sw = read('frontend/service-worker.js');
 const worldsIndex = read('frontend/worlds/index.html');
 const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
+const nginxProxyTargets = [...nginx.matchAll(/proxy_pass\s+([^;]+);/g)].map((match) => match[1]);
 const product = read('PRODUCT.md');
 const contentPolicy = read('CONTENT_POLICY.md');
 const newsBuild = read('scripts/news/build-news.mjs');
@@ -216,7 +217,8 @@ assert.doesNotMatch(sw, /os-(?:platform|unified|product-polish|v2)\.js/);
 for (const route of ['/worlds/aizanoi-225/','/worlds/rome-410-476/','/worlds/athens-450-430/','/worlds/iga-airport/']) assert.match(worldsIndex, new RegExp(route.replaceAll('/', '\/')));
 assert.match(nginx, /location = \/api\/chat[\s\S]*return 410;/);
 assert.match(nginx, /location \^~ \/api\/[\s\S]*return 404;/);
-assert.doesNotMatch(nginx, /proxy_pass|127\.0\.0\.1:3001/);
+assert.deepEqual(nginxProxyTargets, ['http://127.0.0.1:8787/spectator/telemetry-1']);
+assert.doesNotMatch(nginx, /127\.0\.0\.1:3001/);
 
 const canonicalFiles = walk(frontend).filter((file) => /\.(?:html|css|js|json|webmanifest|svg|xml|txt)$/i.test(file));
 const retired = [/Aizanoi AI/i,/HR AI/i,/Windows XP/i,/Luna theme/i,/chatbot/i];

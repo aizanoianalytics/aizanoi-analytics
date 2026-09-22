@@ -248,11 +248,16 @@ async function boot() {
   window.FLY_ENVIRONMENT = environment;
   window.__FLY_ENVIRONMENT__ = environment;
 
-  // The browser is a spectator only. A host must explicitly provide a WebSocket
-  // URL; production has no default and reports telemetry as inactive.
+  // The browser remains a read-only spectator. Tests/operators may inject an
+  // exact URL; the public canonical host uses only the same-origin, versioned
+  // Fly telemetry route backed by the narrow authoritative service.
   const bridge = new SpectatorBridge({ environmentIdentity: { environmentHash: environment.meta.artifactHashes.environmentSource, glbHash: environment.meta.artifactHashes.flyHouseGlb } });
   window.__FLY_SPECTATOR_BRIDGE__ = bridge;
-  const config = window.__FLY_TELEMETRY_CONFIG__;
+  const injectedConfig = window.__FLY_TELEMETRY_CONFIG__;
+  const productionTelemetryUrl = location.protocol === 'https:' && location.hostname === 'aizanoianalytics.com'
+    ? `wss://${location.host}/labs/fly-world/telemetry-1`
+    : null;
+  const config = injectedConfig?.url ? injectedConfig : productionTelemetryUrl ? { url: productionTelemetryUrl } : null;
   const simulationStatus = document.querySelector('#simulation-status');
   const cameraModeEl = document.querySelector('#fly-camera-mode');
   let cameraMode = cameraModeEl?.value ?? 'FREE OBSERVER';

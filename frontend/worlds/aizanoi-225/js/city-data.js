@@ -124,7 +124,12 @@ export const WATERS = [
 ];
 
 export const BOUNDS = { minX: -260, maxX: 260, minZ: -280, maxZ: 330 };
-export const SPAWN = { x: -30, z: 28, angle: -Math.PI / 2 }; // Facing West toward the Temple of Zeus
+const SPAWN_POSITION = { x: -30, z: 28 };
+const SPAWN_TARGET = BUILDINGS.find((building) => building.id === 'temple');
+export const SPAWN = {
+  ...SPAWN_POSITION,
+  angle: Math.atan2(SPAWN_TARGET.x - SPAWN_POSITION.x, SPAWN_TARGET.z - SPAWN_POSITION.z),
+}; // Facing the Temple of Zeus
 
 export const TELEPORTS = [
   { id: 'temple', name: 'Temple of Zeus' },
@@ -161,9 +166,12 @@ export function compactAizanoiLayout({ xScale = 0.39, zScale = 0.88 } = {}) {
   const regions = REGIONS.map((r) => ({ ...r, x: r.x * xScale, z: r.z * zScale, w: r.w * xScale, d: r.d * zScale }));
   const streets = STREETS.map((s) => ({ ...s, points: s.points.map(([x, z]) => [x * xScale, z * zScale]), width: s.width * Math.min(xScale, zScale) }));
   const waters = WATERS.map((w) => ({ ...w, points: w.points.map((p) => ({ ...p, x: p.x * xScale, z: p.z * zScale })) }));
+  const spawn = { ...SPAWN, x: SPAWN.x * xScale, z: SPAWN.z * zScale };
+  const spawnTarget = buildings.find((building) => building.id === 'temple');
+  spawn.angle = Math.atan2(spawnTarget.x - spawn.x, spawnTarget.z - spawn.z);
   return {
     BUILDINGS: buildings, REGIONS: regions, STREETS: streets, WATERS: waters,
     BOUNDS: { minX: BOUNDS.minX * xScale, maxX: BOUNDS.maxX * xScale, minZ: BOUNDS.minZ * zScale, maxZ: BOUNDS.maxZ * zScale },
-    SPAWN: { ...SPAWN, x: SPAWN.x * xScale, z: SPAWN.z * zScale },
+    SPAWN: spawn,
   };
 }

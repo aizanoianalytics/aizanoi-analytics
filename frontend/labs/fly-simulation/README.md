@@ -6,7 +6,7 @@ A dependency-free deterministic core and browser spectator bridge. The core can 
 
 `createBrowserSimulation(authoredEnvironment)` returns `{ simulation, bridge }`. The authored adapter is built from Fly World `createEnvironment()` and uses explicit `raycast`, `roomAt`, and `zonesAt` callbacks. It never calls observer `collisionAt`; body contact uses authored surfaces and contact normals.
 
-`SpectatorBridge` accepts only versioned `telemetry-1` frames, interpolates position/orientation for `requestAnimationFrame`, exposes lag/drop status, and is explicitly `spectator-read-only`. It has no command or authoritative pose mutation API: `ingest` only updates local visualization buffers and can never call or mutate the server simulation. The production browser runtime creates no local simulation; it connects only when `window.__FLY_TELEMETRY_CONFIG__.url` is explicitly supplied and otherwise displays telemetry inactive. The public bridge is therefore safe to expose for diagnostics, but must remain read-only.
+`SpectatorBridge` accepts only versioned `telemetry-1` frames, interpolates position/orientation for `requestAnimationFrame`, exposes lag/drop status, and is explicitly `spectator-read-only`. It has no command or authoritative pose mutation API: `ingest` only updates local visualization buffers and can never call or mutate the server simulation. The production browser runtime creates no local simulation. It connects to the exact same-origin `wss://aizanoianalytics.com/labs/fly-world/telemetry-1` route only on the canonical HTTPS host; local/test hosts remain inactive unless `window.__FLY_TELEMETRY_CONFIG__.url` is explicitly supplied.
 
 ## Classification accounting
 

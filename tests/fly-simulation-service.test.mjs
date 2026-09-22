@@ -117,7 +117,21 @@ test('actual Fly World service preserves runtime sensors through the environment
     await service.stop();
   }
 });
-
+test('production boundary requires an allowed Origin and a bounded client cap', async () => {
+  assert.throws(() => createFlySimulationService({ environment: authoredPlane, maxClients: 0 }), /maxClients/);
+  const service = createFlySimulationService({
+    environment: authoredPlane,
+    port: 8787,
+    allowedHosts: ['127.0.0.1:8787'],
+    allowedOrigins: ['https://aizanoianalytics.com'],
+    requireOrigin: true,
+    maxClients: 32,
+  });
+  assert.equal(await service.probeUpgrade({ host: '127.0.0.1:8787' }), false);
+  assert.equal(await service.probeUpgrade({ host: '127.0.0.1:8787', origin: 'https://evil.example' }), false);
+  assert.equal(await service.probeUpgrade({ host: '127.0.0.1:8787', origin: 'https://aizanoianalytics.com' }), true);
+  assert.equal(service.status().maxClients, 32);
+});
 
 test('service rejects unversioned spectator paths and arbitrary upgrade requests', async () => {
   const service = createFlySimulationService({ environment: authoredPlane, port: 0 });

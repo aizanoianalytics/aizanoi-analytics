@@ -51,6 +51,22 @@ server {
     location ^~ /js/ { try_files $uri =404; expires -1; }
     location ^~ /assets/ { try_files $uri =404; expires 7d; }
 
+    # Fly World is static except for one narrow, read-only telemetry stream.
+    # The loopback service owns simulation authority; browsers cannot submit
+    # commands or mutate state. No other application reverse proxy is allowed.
+    location = /labs/fly-world/telemetry-1 {
+        proxy_pass http://127.0.0.1:8787/spectator/telemetry-1;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host 127.0.0.1:8787;
+        proxy_set_header Origin $http_origin;
+        proxy_buffering off;
+        proxy_connect_timeout 3s;
+        proxy_read_timeout 30s;
+        proxy_send_timeout 10s;
+    }
+
     # Mutable market snapshots stay outside immutable application releases.
     # The private updater publishes compact static JSON shards atomically.
     # Dungeon game and Markets dashboards: fully static, no inline code.

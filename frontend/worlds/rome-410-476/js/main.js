@@ -219,6 +219,9 @@ async function init() {
   ]);
 
   intro.onComplete = () => {
+    // Skipped or finished intros land at the canonical SPAWN pose; otherwise
+    // the player spawns mid-curve facing away from the landmark.
+    controls.teleportTo(SPAWN.x, SPAWN.z, SPAWN.angle, PLAYER_HEIGHT);
     controls.enable();
     simPos.copy(camera.position);
     pose.snap();

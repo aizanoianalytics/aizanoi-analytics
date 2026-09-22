@@ -7,6 +7,7 @@ const sw = read('frontend/service-worker.js');
 const release = read('frontend/release.js');
 const index = read('frontend/index.html');
 const nginx = read('infra/nginx/aizanoianalytics.com.conf.example');
+const nginxProxyTargets = [...nginx.matchAll(/proxy_pass\s+([^;]+);/g)].map((match) => match[1]);
 const nginxStaticHeaders = read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const architecture = read('ARCHITECTURE.md');
 
@@ -27,12 +28,13 @@ function releaseMetadata() {
   return { version, cache };
 }
 
-test('Aizanoi public runtime remains static-only', () => {
+test('Aizanoi public runtime remains static-first with one narrow Fly service exception', () => {
   assert.equal(existsSync('backend'), false, 'backend directory must remain removed');
   assert.equal(existsSync('infra/systemd/aizanoi-backend.service.example'), false, 'obsolete backend systemd unit returned');
-  assert.doesNotMatch(nginx, /proxy_pass|127\.0\.0\.1:3001/);
+  assert.deepEqual(nginxProxyTargets, ['http://127.0.0.1:8787/spectator/telemetry-1']);
+  assert.doesNotMatch(nginx, /127\.0\.0\.1:3001/);
   assert.doesNotMatch(index, /\/api\/(?:chat|health|terminal)/);
-  assert.doesNotMatch(architecture, /Node backend/i);
+  assert.doesNotMatch(architecture, /generic Node backend/i);
 });
 
 test('retired Workbench runtime files remain removed', () => {
@@ -73,7 +75,8 @@ test('mutable static requests are network-first with cache fallback for offline 
 test('nginx fails closed for historical API paths', () => {
   assert.match(nginx, /location = \/api\/chat[\s\S]*return 410;/);
   assert.match(nginx, /location \^~ \/api\/[\s\S]*return 404;/);
-  assert.doesNotMatch(nginx, /proxy_pass|127\.0\.0\.1:3001/);
+  assert.deepEqual(nginxProxyTargets, ['http://127.0.0.1:8787/spectator/telemetry-1']);
+  assert.doesNotMatch(nginx, /127\.0\.0\.1:3001/);
 });
 
 test('static delivery baseline enables compression, manifest MIME and hardened script policy', () => {

@@ -1,6 +1,6 @@
 # Aizanoi Analytics Architecture
 
-The Aizanoi Analytics public visitor runtime is **static-first**. Nginx serves HTML, CSS, JavaScript, JSON and assets. Private automation such as Hermes may prepare content and deploy releases, but the browser does not receive a private-agent execution bridge.
+The Aizanoi Analytics public visitor runtime is **static-first**. Nginx serves HTML, CSS, JavaScript, JSON and assets. The sole narrow runtime exception is Fly World's loopback authoritative simulation service, exposed only as versioned read-only same-origin spectator telemetry. It is not a generic backend and has no command channel, accounts, database, shell, arbitrary execution or Hermes bridge. Private automation such as Hermes may prepare content and deploy releases, but the browser never receives a private-agent execution bridge.
 
 ## Runtime topology
 
@@ -23,11 +23,15 @@ Browser
   |     +-- /worlds/rome-410-476/    Rome
   |     +-- /worlds/athens-450-430/  Athens
   |     +-- /worlds/iga-airport/     Istanbul Airport
+  +-- Fly World
+  |     +-- static authored house + read-only spectator
+  |     +-- WSS /labs/fly-world/telemetry-1
+  |            -> loopback Fly Simulation authority
   |
-Nginx -> static files only
+Nginx -> static files by default; one exact Fly telemetry proxy
 ```
 
-Historical `/api/chat` remains failed closed. Other `/api/*` paths remain unavailable unless the owner deliberately changes the public architecture.
+Historical `/api/chat` remains failed closed. Other `/api/*` paths remain unavailable unless the owner deliberately changes the public architecture. The Fly route cannot accept commands or expose a general request API.
 
 ## AizanoiOS layers
 
