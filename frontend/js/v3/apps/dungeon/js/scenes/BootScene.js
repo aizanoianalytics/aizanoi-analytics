@@ -60,7 +60,7 @@ export class BootScene extends Phaser.Scene {
     // 2. Tilesets
     this.load.image('tiles-floor', `${ASSET_BASE}tilesets/aizanoi-floor.png`);
     this.load.image('tiles-walls', `${ASSET_BASE}tilesets/aizanoi-walls.png`);
-    this.load.image('tiles-decor', `${ASSET_BASE}tilesets/aizanoi-decor.png`);
+    this.load.spritesheet('tiles-decor', `${ASSET_BASE}tilesets/aizanoi-decor.png`, { frameWidth: 32, frameHeight: 32 });
 
     // 3. UI Assets
     this.load.image('panel-bg', `${ASSET_BASE}ui/panel-bg.png`);

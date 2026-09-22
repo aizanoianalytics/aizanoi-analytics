@@ -50,7 +50,7 @@ const E_DOC = { level: 'documented', note: 'Epigraphically / topographically att
 export const BUILDINGS = [
   {
     id: 'temple', name: 'Temple of Zeus', type: 'temple',
-    x: -80, z: 5, w: 58, d: 38, h: 18, podiumHeight: 2.4, state: 'standing', region: 'sanctuary', source: 'temple', evidence: E_ARCH,
+    x: -80, z: 5, w: 58, d: 38, h: 18, podiumHeight: 2.4, viewAngle: 0, state: 'standing', region: 'sanctuary', source: 'temple', evidence: E_ARCH,
     detail: 'Pseudodipteral Ionic temple (13x7 kit columns) with an intact vaulted subterranean crypt beneath the cella dedicated to Cybele/Meter Steunene.'
   },
   {

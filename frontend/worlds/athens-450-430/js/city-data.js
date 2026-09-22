@@ -86,7 +86,7 @@ const E_PLAUS = { level: 'plausible', note: 'Scholarly consensus placement; no s
 export const BUILDINGS = [
   // ──── AKROPOLIS ────
   { id: 'parthenon', name: 'Parthenon', type: 'temple',
-    x: -50, z: -330, w: 30.9, d: 69.5, h: 16, state: 'new', region: 'acropolis', source: 'parthenon', evidence: E_ARCH,
+    x: -50, z: -330, w: 30.9, d: 69.5, h: 16, viewAngle: 0, state: 'new', region: 'acropolis', source: 'parthenon', evidence: E_ARCH,
     detail: 'Octastyle peripteral Doric temple, ~69.5 × 30.9 m, Pentelic marble; built 447–432 BCE under Iktinos and Kallikrates.' },
   { id: 'propylaea', name: 'Propylaea', type: 'gateway',
     x: -115, z: -300, w: 30, d: 16, h: 12, state: 'new', region: 'acropolis', source: 'propylaea', evidence: E_ARCH,
