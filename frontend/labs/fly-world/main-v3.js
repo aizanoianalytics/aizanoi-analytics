@@ -289,7 +289,10 @@ class GhostObserver {
     this.speed = 2.35;
     this.noClip = false;
     this.reset();
-    domElement.addEventListener('click', () => domElement.requestPointerLock?.());
+    domElement.addEventListener('click', () => {
+      domElement.focus({ preventScroll: true });
+      domElement.requestPointerLock?.();
+    });
     document.addEventListener('mousemove', (event) => {
       if (document.pointerLockElement !== domElement) return;
       this.yaw += event.movementX * .002;
@@ -297,11 +300,17 @@ class GhostObserver {
       this.pitch = Math.max(-1.48, Math.min(1.48, this.pitch));
     });
     addEventListener('keydown', (event) => {
+      if (document.activeElement !== domElement && document.pointerLockElement !== domElement) return;
       this.keys.add(event.code);
+      if (/^(Key[WASDQERN]|ShiftLeft|ShiftRight)$/.test(event.code)) event.preventDefault();
       if (event.code === 'KeyR') this.reset();
       if (event.code === 'KeyN' && !event.repeat) { this.noClip = !this.noClip; this.syncStatus(); }
     });
     addEventListener('keyup', (event) => this.keys.delete(event.code));
+    addEventListener('blur', () => this.keys.clear());
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) this.keys.clear();
+    });
     this.syncStatus();
   }
 
@@ -387,6 +396,7 @@ try {
   const observer = new GhostObserver(camera, canvas);
   const clock = new THREE.Clock();
   renderer.setAnimationLoop(() => {
+    if (document.hidden) return;
     observer.update(Math.min(clock.getDelta(), .05));
     renderer.render(scene, camera);
   });

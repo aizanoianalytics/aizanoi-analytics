@@ -31,6 +31,17 @@ WEBROOT="${AIZANOI_DEPLOY_WEBROOT:-${WEBROOT}}"
 RELEASE_ROOT="${AIZANOI_DEPLOY_RELEASE_ROOT:-${RELEASE_ROOT}}"
 SOURCE="${REPO}/frontend"
 PUBLIC_SYNTHETIC_XLSX="analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx"
+RELEASE_RETENTION_DEFAULT=5
+RELEASE_RETENTION="${AIZANOI_DEPLOY_RELEASE_RETENTION:-${RELEASE_RETENTION_DEFAULT}}"
+
+if [[ ! "${RELEASE_RETENTION}" =~ ^[1-9][0-9]*$ ]]; then
+  echo "FATAL: AIZANOI_DEPLOY_RELEASE_RETENTION must be a positive integer" >&2
+  exit 2
+fi
+if (( RELEASE_RETENTION > 1000 )); then
+  echo "FATAL: AIZANOI_DEPLOY_RELEASE_RETENTION must be at most 1000" >&2
+  exit 2
+fi
 
 # Exact-SHA gate is mandatory per HERMES_OPERATIONS.md and runs before any
 # filesystem mutation so a missing/mismatched value fails closed immediately.
@@ -60,6 +71,30 @@ if [[ "${CURRENT_SHA}" != "${AIZANOI_DEPLOY_SHA}" ]]; then
   exit 2
 fi
 
+# Fail closed before staging if the target filesystem cannot hold a second
+# copy of the source tree. The 10% margin plus 64 MiB floor covers rsync
+# metadata and small concurrent growth; retention intentionally runs only
+# after health succeeds, so this preflight cannot depend on deleting releases.
+RELEASE_FS_PATH="${RELEASE_ROOT}"
+if [[ ! -e "${RELEASE_FS_PATH}" ]]; then
+  RELEASE_FS_PATH="$(dirname -- "${RELEASE_FS_PATH}")"
+fi
+SOURCE_KB="$(du -sk "${SOURCE}" | awk 'NR == 1 { print $1 }')"
+AVAILABLE_KB="$(df -Pk "${RELEASE_FS_PATH}" | awk 'NR == 2 { print $4 }')"
+if [[ ! "${SOURCE_KB}" =~ ^[0-9]+$ || ! "${AVAILABLE_KB}" =~ ^[0-9]+$ ]]; then
+  echo "FATAL: unable to verify free disk space for release staging" >&2
+  exit 2
+fi
+SOURCE_MARGIN_KB=$(( (SOURCE_KB + 9) / 10 ))
+REQUIRED_FREE_KB=$(( SOURCE_KB + SOURCE_MARGIN_KB ))
+if (( REQUIRED_FREE_KB < 65536 )); then
+  REQUIRED_FREE_KB=65536
+fi
+if (( AVAILABLE_KB < REQUIRED_FREE_KB )); then
+  echo "FATAL: insufficient free disk space for release staging: ${AVAILABLE_KB} KiB available, ${REQUIRED_FREE_KB} KiB required" >&2
+  exit 2
+fi
+
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 RELEASE_ID="${CURRENT_SHA}-${STAMP}"
 STAGING="${RELEASE_ROOT}/.staging-${RELEASE_ID}-$$"
@@ -70,6 +105,42 @@ ROLLBACK_TARGET="none"
 LEGACY_ROLLBACK=""
 SYMLINK_PROMOTED=0
 HEALTH_OK=0
+
+prune_old_releases() {
+  local candidate base kept=0
+  local -a releases=() sorted_releases=()
+
+  # Only direct child directories with the exact release naming contract are
+  # eligible. This deliberately excludes .staging-* entries, legacy-*
+  # snapshots, arbitrary directories and anything nested below RELEASE_ROOT.
+  while IFS= read -r -d '' candidate; do
+    base="${candidate##*/}"
+    if [[ "${base}" =~ ^[0-9a-f]{40}-[0-9]{8}T[0-9]{6}Z$ ]]; then
+      releases+=("${base}")
+    fi
+  done < <(find "${RELEASE_ROOT}" -mindepth 1 -maxdepth 1 -type d -print0)
+
+  if (( ${#releases[@]} == 0 )); then
+    return 0
+  fi
+
+  # The timestamp is the second hyphen-separated field, so this keeps the
+  # newest eligible releases independent of their SHA prefixes. FINAL and
+  # ROLLBACK_TARGET are always protected separately from this count.
+  mapfile -t sorted_releases < <(printf '%s\n' "${releases[@]}" | sort -t- -k2,2r -k1,1r)
+  for base in "${sorted_releases[@]}"; do
+    candidate="${RELEASE_ROOT}/${base}"
+    if [[ "${candidate}" == "${FINAL}" || "${candidate}" == "${ROLLBACK_TARGET}" ]]; then
+      continue
+    fi
+    if (( kept < RELEASE_RETENTION )); then
+      kept=$(( kept + 1 ))
+      continue
+    fi
+    echo "[deploy] pruning old release ${candidate}"
+    rm -rf -- "${candidate}"
+  done
+}
 
 cleanup() {
   local active=""
@@ -329,6 +400,13 @@ if [[ "${probe_failed}" -ne 0 ]]; then
 fi
 HEALTH_OK=1
 echo "[deploy] HTTPS health smoke passed (terminal 2xx confirmed for all probes)"
+
+# Retention is deliberately post-health: a failed or rolled-back deployment
+# never prunes the release store. A healthy deployment remains active if a
+# non-critical cleanup deletion is refused by the filesystem.
+if ! prune_old_releases; then
+  echo "WARNING: release retention could not complete; active release remains ${FINAL}" >&2
+fi
 
 printf '[deploy] deployed commit: %s\n' "${CURRENT_SHA}"
 printf '[deploy] active release: %s\n' "${FINAL}"

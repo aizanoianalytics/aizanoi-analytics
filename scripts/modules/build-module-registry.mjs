@@ -157,6 +157,10 @@ function js(value) {
   return JSON.stringify(value);
 }
 
+export function normalizeLineEndings(value) {
+  return value.replace(/\r\n?/g, '\n');
+}
+
 export function buildRegistrySource(modules) {
   const rows = modules.map((module) => `  Object.freeze({\n    manifestVersion: 1,\n    id: ${js(module.id)},\n    type: ${js(module.type)},\n    entry: ${js(module.entry)},\n    enabledByDefault: ${module.enabledByDefault},\n    requires: Object.freeze(${js([...module.requires])}),\n    provides: Object.freeze(${js([...module.provides])}),\n  })`).join(',\n');
 
@@ -181,7 +185,7 @@ export async function checkRegistry({ appsRoot = DEFAULT_APPS_ROOT, output = DEF
   } catch (error) {
     if (error?.code !== 'ENOENT') throw error;
   }
-  if (actual !== expected) {
+  if (normalizeLineEndings(actual) !== normalizeLineEndings(expected)) {
     throw new Error(`Generated module wiring is stale. Run: node scripts/modules/build-module-registry.mjs`);
   }
   return true;

@@ -5,28 +5,33 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="dark">
   <title>Fly World — Aizanoi Labs</title>
+  <meta name="description" content="An experimental, read-only Fly House observer and simulation telemetry experience from Aizanoi Labs.">
   <meta name="robots" content="noindex">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <canvas id="world" aria-label="Fly World 3D house environment"></canvas>
+  <canvas id="world" tabindex="0" aria-label="Fly World 3D house environment" aria-describedby="observer-controls"></canvas>
   <header class="hud">
     <div>
       <p class="eyebrow">Aizanoi Labs · Fly World</p>
       <h1>Fly House <span>HOUSE V0.3 · REFERENCE PASS</span></h1>
     </div>
-    <div class="status"><i></i><span id="observer-status">Ghost observer · collision ON</span></div>
-    <div id="simulation-status" class="status" aria-live="polite">Simulation spectator · HEURISTIC TEST CONTROLLER · initializing</div>
+    <div class="hud-statuses">
+      <div class="status"><i aria-hidden="true"></i><span id="observer-status">Ghost observer · collision ON</span></div>
+      <div id="simulation-status" class="status" aria-live="polite">Simulation spectator · HEURISTIC TEST CONTROLLER · initializing</div>
+    </div>
     <label class="camera-control" for="fly-camera-mode">Camera <select id="fly-camera-mode"><option>FREE OBSERVER</option><option>FOLLOW FLY</option><option>FLY-SCALE FOLLOW</option><option>OVERHEAD</option></select></label>
   </header>
-  <aside class="help" id="help">
-    <strong>Ghost observer</strong>
-    <span>Click to capture mouse</span>
-    <span>WASD move · Q/E down/up · Shift boost</span>
-    <span>R reset · Esc release mouse</span>
-    <span>N debug noclip toggle</span>
-    <small>Observer collision is ON by default, but the observer remains invisible to future fly sensors and does not affect fly physics.</small>
-  </aside>
+  <details class="help" id="help">
+    <summary>Observer controls</summary>
+    <div id="observer-controls" class="help-content">
+      <span>Click the scene to capture the mouse.</span>
+      <span>WASD move · Q/E down/up · Shift boost</span>
+      <span>R reset · Esc release mouse</span>
+      <span>N debug noclip toggle</span>
+      <small>Observer collision is ON by default. The observer remains invisible to fly sensors and does not affect fly physics.</small>
+    </div>
+  </details>
   <div class="crosshair" aria-hidden="true"></div>
   <details class="research-panel" id="research-panel">
     <summary>Research telemetry</summary>

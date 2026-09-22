@@ -53,14 +53,14 @@
     </div>
     <nav class="hud-controls">
       <a href="/worlds/" class="hud-btn world-exit" title="All Worlds" aria-label="Back to Historical Worlds">←</a>
-      <button type="button" id="btn-tour" aria-label="Start guided tour" class="hud-btn" title="Guided Tour">🏛️</button>
-      <button type="button" id="btn-teleport" aria-label="Open fast travel" class="hud-btn" title="Jump/Teleport">📍</button>
+      <button type="button" id="btn-tour" aria-label="Start guided tour" aria-pressed="false" class="hud-btn" title="Guided Tour">🏛️</button>
+      <button type="button" id="btn-teleport" aria-label="Open fast travel" aria-controls="teleport-menu" aria-expanded="false" class="hud-btn" title="Jump/Teleport">📍</button>
       <button type="button" id="btn-inspect" aria-label="Inspect nearby structure" class="hud-btn" title="Inspect Element">🔍</button>
-      <button type="button" id="btn-map" aria-label="Toggle minimap" class="hud-btn" title="Toggle Minimap">🗺️</button>
-      <button type="button" id="btn-audio" aria-label="Toggle ambient audio" class="hud-btn" title="Toggle Audio">🔊</button>
-      <button type="button" id="btn-evidence" aria-label="Toggle evidence colors" class="hud-btn" title="Toggle Evidence Colors">🎨</button>
+      <button type="button" id="btn-map" aria-label="Toggle minimap" aria-pressed="true" class="hud-btn" title="Toggle Minimap">🗺️</button>
+      <button type="button" id="btn-audio" aria-label="Toggle ambient audio" aria-pressed="false" class="hud-btn" title="Toggle Audio">🔊</button>
+      <button type="button" id="btn-evidence" aria-label="Toggle evidence colors" aria-pressed="false" class="hud-btn" title="Toggle Evidence Colors">🎨</button>
       <button type="button" id="btn-sources" aria-label="Open sources" class="hud-btn" title="Historical Sources">📚</button>
-      <button type="button" id="btn-daynight" aria-label="Toggle day and night" class="hud-btn" title="Toggle Day/Night">🌙</button>
+      <button type="button" id="btn-daynight" aria-label="Toggle day and night" aria-pressed="false" class="hud-btn" title="Toggle Day/Night">🌙</button>
     </nav>
   </header>
 
@@ -88,7 +88,7 @@
     <div class="action-rail">
       <button type="button" id="btn-mobile-run" aria-label="Run" class="mobile-btn">🏃</button>
       <button type="button" id="btn-mobile-inspect" aria-label="Inspect nearby structure" class="mobile-btn">🔍</button>
-      <button type="button" id="btn-mobile-map" aria-label="Toggle minimap" class="mobile-btn">🗺️</button>
+      <button type="button" id="btn-mobile-map" aria-label="Toggle minimap" aria-pressed="true" class="mobile-btn">🗺️</button>
     </div>
   </div>
 
@@ -96,9 +96,9 @@
   <div id="crosshair"></div>
 
   <!-- Intro/Splash Modal -->
-  <div id="intro-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div id="intro-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="intro-title">
     <div class="modal-content intro-content">
-      <h1 class="modal-title">AIZANOI · AD 225</h1>
+      <h1 id="intro-title" class="modal-title">AIZANOI · AD 225</h1>
       <h2 class="modal-subtitle">Phrygia Epiktetos · Penkalas Valley · Roman Imperial Aizanoi</h2>
       <p class="intro-text">
         Experience the city of Zeus in Roman Phrygia. Walk beneath the majestic pseudodipteral colonnade of the Temple of Zeus,
@@ -144,7 +144,8 @@
         <h3>Fast Travel</h3>
         <button type="button" class="btn-close" id="btn-close-teleport" aria-label="Close fast travel">✖</button>
       </div>
-      <input type="text" id="teleport-search" placeholder="Search landmarks..." />
+      <label class="sr-only" for="teleport-search">Search fast travel locations</label>
+      <input type="text" id="teleport-search" aria-label="Search fast travel locations" placeholder="Search landmarks..." />
       <ul class="teleport-list" id="teleport-list"></ul>
     </div>
   </div>

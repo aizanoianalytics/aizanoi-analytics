@@ -70,7 +70,10 @@ class Observer {
     this.speed = 2.35;
     this.noClip = false;
     this.reset();
-    canvas.addEventListener('click', () => canvas.requestPointerLock?.());
+    canvas.addEventListener('click', () => {
+      canvas.focus({ preventScroll: true });
+      canvas.requestPointerLock?.();
+    });
     document.addEventListener('mousemove', (event) => {
       if (document.pointerLockElement !== canvas) return;
       this.yaw += event.movementX * .002;
@@ -78,7 +81,9 @@ class Observer {
       this.pitch = Math.max(-1.48, Math.min(1.48, this.pitch));
     });
     addEventListener('keydown', (event) => {
+      if (document.activeElement !== canvas && document.pointerLockElement !== canvas) return;
       this.keys.add(event.code);
+      if (/^(Key[WASDQERN]|ShiftLeft|ShiftRight)$/.test(event.code)) event.preventDefault();
       if (event.code === 'KeyR') this.reset();
       if (event.code === 'KeyN' && !event.repeat) {
         this.noClip = !this.noClip;
@@ -86,6 +91,10 @@ class Observer {
       }
     });
     addEventListener('keyup', (event) => this.keys.delete(event.code));
+    addEventListener('blur', () => this.keys.clear());
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) this.keys.clear();
+    });
     this.syncStatus();
   }
 
@@ -321,11 +330,11 @@ async function boot() {
   let frames = 0;
   let fpsAt = performance.now();
   renderer.setAnimationLoop(() => {
+    if (document.hidden) return;
     const dt = Math.min(clock.getDelta(), .05);
     observer.update(dt);
     applyCameraMode();
     for (const [flyId, flyMesh] of flyMeshes) bridge.render(flyMesh, .5, flyId);
-    if (simulationStatus && !config?.url) simulationStatus.textContent = 'Telemetry inactive · no host-provided spectator service configured';
     if (window.__FLY_AUDIO__) {
       const keys = observer.keys;
       const isMoving = keys.has('KeyW') || keys.has('KeyS') || keys.has('KeyA') || keys.has('KeyD');

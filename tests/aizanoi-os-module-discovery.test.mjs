@@ -8,8 +8,14 @@ import {
   DEFAULT_OUTPUT,
   PLATFORM_CAPABILITIES,
   buildRegistrySource,
+  checkRegistry,
   discoverModules,
+  normalizeLineEndings,
 } from '../scripts/modules/build-module-registry.mjs';
+
+function toCrLf(source) {
+  return source.replace(/\n/g, '\r\n');
+}
 
 async function writeFixtureModule(appsRoot, id, overrides = {}) {
   const moduleDir = path.join(appsRoot, id);
@@ -41,7 +47,32 @@ test('actual module manifests generate the committed wiring exactly', async () =
   assert.equal(notepad.enabledByDefault, true);
 
   const committed = await readFile(DEFAULT_OUTPUT, 'utf8');
-  assert.equal(committed, buildRegistrySource(modules), 'generated module wiring is stale');
+  assert.equal(
+    normalizeLineEndings(committed),
+    normalizeLineEndings(buildRegistrySource(modules)),
+    'generated module wiring is stale'
+  );
+});
+
+test('module registry check accepts CRLF output but rejects changed generated content', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'aizanoi-module-check-'));
+  try {
+    const appsRoot = path.join(root, 'apps');
+    const output = path.join(root, 'module-registry.generated.js');
+    await writeFixtureModule(appsRoot, 'alpha');
+    const expected = buildRegistrySource(await discoverModules({ appsRoot }));
+
+    await writeFile(output, toCrLf(expected), 'utf8');
+    await assert.doesNotReject(() => checkRegistry({ appsRoot, output }));
+
+    await writeFile(output, toCrLf(expected.replace('id: "alpha"', 'id: "changed"')), 'utf8');
+    await assert.rejects(
+      () => checkRegistry({ appsRoot, output }),
+      /Generated module wiring is stale/
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });
 
 test('platform capability contract covers every currently injected shared/host surface', () => {

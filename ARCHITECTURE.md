@@ -108,9 +108,9 @@ Phone and tablet layouts must use real browser/device state only. Do not fabrica
 
 ## Service worker
 
-The service worker precaches the shell, brand/device adapter, generated module wiring, device stylesheet and News feed baseline with parallel independent fetches followed by a complete-or-fail cache write. Mutable same-origin assets and successful navigations use network-first behavior with cached offline fallback; non-core runtime entries are capped at 24. Activation removes superseded `aizanoi-field-shell-*` and `aizanoi-os-shell-*` caches. `/api/*` is never intercepted.
+The service worker precaches the shell, brand/device adapter, generated module wiring, device stylesheet and News feed baseline with parallel independent fetches followed by a complete-or-fail cache write. Precache requests use `cache: 'reload'` so a release check does not accept an HTTP-cached worker dependency. Mutable same-origin assets and successful navigations use network-first behavior with cached offline fallback; non-core runtime entries are capped at `128`. Activation removes superseded `aizanoi-field-shell-*` and `aizanoi-os-shell-*` caches. `/api/*` is never intercepted.
 
-AizanoiOS is a stateful shell, so **updates do not call `skipWaiting()` automatically**. A newly installed worker waits for clients using the previous worker to close/reload before activation. First-time installs activate normally. This avoids forcing a new cache/import graph over a document that booted with an older shell version. If an explicit in-app update flow is introduced later, it must coordinate activation with a deliberate reload and browser regression coverage.
+AizanoiOS is a stateful shell, but the canonical release contract **force-activates a fully precached worker**: install calls `skipWaiting()` only after the complete precache succeeds, and activate calls `clients.claim()`. The page registrations use `updateViaCache: 'none'` so browser update checks bypass the HTTP cache for the worker's update graph. Together these rules make an approved release take control as one complete shell/cache graph instead of leaving an older worker serving a partially updated build; the browser lifecycle regression suite covers this contract. Runtime fetch and cache behavior remains network-first with offline fallback as described above.
 
 ## Deployment boundary
 
