@@ -7,10 +7,14 @@ import { GLTFLoader } from '../frontend/worlds/shared/vendor/GLTFLoader.js';
 import * as THREE from '../frontend/worlds/shared/vendor/three.module.js';
 
 const FRONTEND_GLB = 'frontend/labs/fly-world/assets/fly-house.glb';
+const ENVIRONMENT_JSON = 'frontend/labs/fly-world/assets/environment.json';
+const ENVIRONMENT_BACKUP = '/tmp/diag/environment-before-canonicalizer.json';
 const CANONICALIZER = 'scripts/fly-world/canonicalize_glb.py';
 const HAVE_GLB_FIXTURE = existsSync(FRONTEND_GLB);
 const HAVE_BLENDER = Boolean(process.env.BLENDER_BIN) || spawnSync('which', ['blender']).status === 0;
 mkdirSync('/tmp/diag', { recursive: true });
+if (existsSync(ENVIRONMENT_JSON)) copyFileSync(ENVIRONMENT_JSON, ENVIRONMENT_BACKUP);
+test.after(() => { if (existsSync(ENVIRONMENT_BACKUP)) copyFileSync(ENVIRONMENT_BACKUP, ENVIRONMENT_JSON); });
 
 function sha256(path) {
   const bytes = readFileSync(path);

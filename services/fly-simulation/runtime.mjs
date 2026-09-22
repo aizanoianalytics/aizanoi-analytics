@@ -97,7 +97,24 @@ function resolveAabbPenetration(positionValue, radius, colliders) {
   return contact ? { position, ...contact } : null;
 }
 
-function fieldSampler(fields) {
+function foodContactFor(fields, colliders, pointValue) {
+  const point = vector(pointValue);
+  return fields.food
+    .filter((entry) => entry.active)
+    .map((entry) => {
+      const support = colliders.find((collider) => collider.id === 'food-support');
+      const supportWidth = support ? Math.min(support.bounds[1][0] - support.bounds[0][0], support.bounds[1][1] - support.bounds[0][1]) : 0.55;
+      const contactRadius = Number(entry.contactRadius ?? Math.min(0.05, Math.max(0.01, supportWidth * 0.05)));
+      const contactHeight = Number(entry.contactHeight ?? 0.15);
+      const distance = point.sub(vector(entry.center)).length();
+      const horizontalDistance = Math.hypot(point.x - entry.center[0], point.y - entry.center[1]);
+      return { entry, distance, contactRadius, contactHeight, eligible: horizontalDistance <= contactRadius && Math.abs(point.z - entry.center[2]) <= contactHeight };
+    })
+    .filter((hit) => hit.eligible)
+    .sort((a, b) => a.distance - b.distance)[0] ?? null;
+}
+
+function fieldSampler(fields, colliders) {
   const nearest = (entries, point) => entries
     .map((entry) => ({ entry, distance: vector(point).sub(vector(entry.center)).length() }))
     .filter(({ entry, distance }) => distance <= Number(entry.radius ?? 0))
@@ -116,8 +133,8 @@ function fieldSampler(fields) {
       return { status: 'MODELLED', value: hit ? hit.entry.strength * Math.max(0, 1 - hit.distance / hit.entry.radius) : 0, units: 'normalized concentration', source: hit?.entry.id ?? null };
     },
     taste(point) {
-      const hit = nearest(fields.food.filter((entry) => entry.active), point);
-      return { status: hit ? 'AVAILABLE' : 'UNAVAILABLE', value: hit ? 1 : 0, units: 'contact flag', source: hit?.entry.id ?? null };
+      const hit = foodContactFor(fields, colliders, point);
+      return { status: hit ? 'AVAILABLE' : 'UNAVAILABLE', value: hit ? 1 : 0, units: 'contact flag', source: hit?.entry.id ?? null, contactRadiusMeters: hit?.contactRadius ?? null, contactToleranceMeters: hit?.contactHeight ?? null, provenance: 'MODELLED' };
     },
     airflow(point) {
       const hit = fields.airflow.find((entry) => entry.active && in3(vector(point), entry.bounds));
@@ -140,7 +157,7 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
   if (physics.source.flyHouseGlbHash !== glbHash) throw new Error('fly physics GLB hash mismatch');
   if (!physics.schemaVersion.startsWith('fly-physics-') || physics.axis !== 'Z-up') throw new Error('unsupported Fly House physics artifact');
   const fields = physics.fields;
-  const sensors = fieldSampler(fields);
+  const sensors = fieldSampler(fields, physics.colliders ?? []);
   const dynamicState = { food: fields.food.map((entry) => ({ id: entry.id, active: Boolean(entry.active) })) };
   const restoreDynamicState = (state = {}) => {
     const foodState = new Map((state.food ?? []).map((entry) => [entry.id, Boolean(entry.active)]));
@@ -170,6 +187,7 @@ export async function loadFlyHouseRuntime({ rootDir, artifactPath }) {
       return zones;
     },
     sampleSensor: (channel, point) => sensors[channel]?.(point) ?? { status: 'UNAVAILABLE', value: null, units: 'n/a' },
+    foodContactAt: (point) => foodContactFor(fields, physics.colliders ?? [], point),
     dynamicState,
     snapshotDynamicState,
     restoreDynamicState

@@ -30,10 +30,10 @@ The browser loads the real Fly House GLB for presentation and accepts telemetry 
 | Light field | implemented | MODELLED, relative intensity |
 | Temperature | explicit but absolute value unavailable near heat | MODELLED / UNAVAILABLE where uncalibrated |
 | Airflow | explicit field, authored values currently zero | MODELLED |
-| Odor | implemented normalized food concentration | MODELLED |
-| Taste | food-contact signal | MODELLED |
+| Odor | directional paired-antenna field | MODELLED |
+| Taste / physical food contact | geometry-derived fly-scale contact contract | MODELLED |
+| Food controller | explicit sensor-driven FSM with feeding lifecycle | HEURISTIC |
 | Vision | implemented v1 | MODELLED with BIOLOGICALLY CONSTRAINED directional ray/looming assumptions |
-| Baseline controller | foundation only | HEURISTIC; not yet a food-seeking FSM |
 | Connectome controller | experimental LC4 escape subgraph | CONNECTOME-DERIVED topology; MODELLED transduction/dynamics/motor mapping |
 | Checkpoint/replay | implemented as checkpoint-2 | MODELLED; artifact/controller identity and state are validated |
 | Browser telemetry | implemented | read-only spectator |
@@ -56,6 +56,16 @@ node scripts/fly-simulation/start.mjs
 ```
 
 Configuration is explicit through `FLY_SIM_HOST`, `FLY_SIM_PORT`, `FLY_SIM_INTERVAL_MS`, `FLY_SIM_CONTROLLER`, and `FLY_SIM_FLY_ID`. The default binds to loopback and creates one fly in the authored safe-spawn volume.
+
+## Current milestone status (main)
+
+- Stage A Fly House artifact exists and is the authored visual source.
+- The authoritative reduced-order simulation exists with physics v2, directional vision/looming, environment sensor seam, checkpoint-2, controller state persistence, and scheduler discontinuity telemetry.
+- The experimental FlyWire FAFB v783 LC4→DNp02/DNp11 escape circuit is runnable; topology is `CONNECTOME-DERIVED`, while transduction, temporal dynamics, motor mapping, and body physics are `MODELLED`.
+- Food seeking is a deterministic `HEURISTIC` sensor-driven FSM with directional olfaction, geometry-derived physical contact, and modelled feeding lifecycle. Reproducible evidence is in `evidence/fly-world-final/`.
+- Production currently deploys the read-only static spectator. A persistent authoritative simulation service is **NOT DEPLOYED** because no approved service host is present.
+- Owner visual approval is **NOT RECORDED**; automated browser/CI smoke is not owner approval.
+- Airflow remains zero/inactive where authored and absolute temperature remains `UNAVAILABLE`; neither is invented to make telemetry appear complete.
 
 ## Scientific provenance
 

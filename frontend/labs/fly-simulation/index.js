@@ -69,8 +69,9 @@ const normalizeMotors = (motors = {}, limits = { thrust: 20, pitch: .02, yaw: .0
 
 const VISION_DIRECTIONS=Object.freeze([new Vec3(1,0,0),new Vec3(.707,.707,0),new Vec3(0,1,0),new Vec3(-.707,.707,0),new Vec3(-1,0,0),new Vec3(-.707,-.707,0),new Vec3(0,-1,0),new Vec3(.707,-.707,0)]);
 const visionSample=(environment,position,orientation)=>{const maxRange=.5;const distances=VISION_DIRECTIONS.map(direction=>{const worldDirection=rotateByQuat(direction,orientation).normalize();const hit=environment.raycast?.(position,worldDirection,maxRange);return hit?Math.max(0,Math.min(1,hit.distance/maxRange)):1});const minDistance=Math.min(...distances)*maxRange;return {status:'MODELLED',value:distances,looming:Math.max(0,Math.min(1,1-minDistance/.5)),units:'normalized distance',provenance:Object.freeze({label:'MODELLED',constraint:'BIOLOGICALLY CONSTRAINED',source:'authoritative directional ray sampling',units:'normalized distance',calibrated:false,assumptions:['eight horizontal directions','ray occupancy stands in for visual contrast and looming'],limitations:['not ommatidial retina','no image formation or optic-flow field'],version:'vision-v1',sourceReferences:['Drosophila visual field literature; authored Fly House collision artifact']})};};
- export class FlySimulation {
-  constructor(environment,{fixedDt=.02,gravity=null,rngState=0,downDirection=environment?.downDirection??new Vec3(0,-1,0),controller=null,controllerFactory=null,motorLimits={}}={}){const authored=environment?.meta?.artifactHashes;if(!environment?.hash||!environment?.glbHash||!environment?.schemaVersion||authored?.environmentSource!==environment.hash||authored?.flyHouseGlb!==environment.glbHash)throw new TypeError('environment authored artifact hashes and schema required');if(!Number.isFinite(fixedDt)||fixedDt<=0)throw new RangeError('fixedDt must be finite and positive');this.environment=environment;this.fixedDt=fixedDt;this.downDirection=asVec(downDirection).normalize();this.upDirection=this.downDirection.mul(-1);this.gravity=gravity==null?this.downDirection.mul(9.81):asVec(gravity);this.motorLimits={thrust:20,pitch:.02,yaw:.02,roll:.02,...motorLimits};this.physicsCollisionAdapter=new AuthoredSurfaceAdapter(environment.surfaces??[],environment.raycast);this.controller=controller;this.controllerFactory=controllerFactory;this.registry=new Map();this.time=0;this.tick=0;this.paused=false;this.rngState={seed:rngState};this.environmentState=environment.snapshotDynamicState?.()??environment.dynamicState??{};this.provenance=Object.freeze({physics:MODELLED,collision:Object.freeze({...MODELLED,units:'authored surface/raycast'}),sensors:MODELLED})}
+ const surfaceContains=(surface,pointValue)=>{const point=asVec(pointValue);const [u,v]=surface.axis==='x'?[point.y,point.z]:surface.axis==='y'?[point.x,point.z]:[point.x,point.y];return u>=surface.bounds?.[0]?.[0]&&u<=surface.bounds?.[0]?.[1]&&v>=surface.bounds?.[1]?.[0]&&v<=surface.bounds?.[1]?.[1]};
+export class FlySimulation {
+  constructor(environment,{fixedDt=.02,gravity=null,rngState=0,downDirection=environment?.downDirection??new Vec3(0,-1,0),controller=null,controllerFactory=null,motorLimits={}}={}){const authored=environment?.meta?.artifactHashes;if(!environment?.hash||!environment?.glbHash||!environment?.schemaVersion||authored?.environmentSource!==environment.hash||authored?.flyHouseGlb!==environment.glbHash)throw new TypeError('environment authored artifact hashes and schema required');if(!Number.isFinite(fixedDt)||fixedDt<=0)throw new RangeError('fixedDt must be finite and positive');this.environment=environment;this.fixedDt=fixedDt;this.downDirection=asVec(downDirection).normalize();this.upDirection=this.downDirection.mul(-1);this.gravity=gravity==null?this.downDirection.mul(9.81):asVec(gravity);this.motorLimits={thrust:20,pitch:.02,yaw:.02,roll:.02,...motorLimits};this.physicsCollisionAdapter=new AuthoredSurfaceAdapter(environment.surfaces??[],environment.raycast);this.controller=controller;this.controllerFactory=controllerFactory;this.registry=new Map();this.time=0;this.tick=0;this.paused=false;this.rngState={seed:rngState};this.environmentState=environment.snapshotDynamicState?.()??environment.dynamicState??{};this.provenance=Object.freeze({physics:MODELLED,collision:Object.freeze({...MODELLED,units:'authored surface/raycast'}),sensors:MODELLED});this.performance={samples:0,last:{sensingMs:0,controllerMs:0,physicsMs:0,telemetrySerializationMs:0,totalStepMs:0},rollingAverage:{sensingMs:0,controllerMs:0,physicsMs:0,telemetrySerializationMs:0,totalStepMs:0}}}
   addFly({flyId,body=new BodyState(),provenance=MODELLED,controller=this.controller}={}){if(!flyId||this.registry.has(flyId))throw new Error('flyId must be unique');const activeController=this.controllerFactory?.(flyId)??controller;const fly={flyId,body:cloneBody(body),motors:{thrust:0,pitch:0,yaw:0,roll:0},controller:activeController,controllerState:{},room:null,zones:[],contact:{phase:'AIRBORNE',grounded:false,surfaceId:null,normal:null},sensors:null,sensorHistory:[],provenance:validateProvenance(provenance)};fly.room=this.environment.roomAt?.(fly.body.position)??null;fly.zones=this.environment.zonesAt?.(fly.body.position)??[];this.registry.set(flyId,fly);this.#sense(fly)}
   getFly(id){const f=this.registry.get(id);if(!f)throw new Error('unknown flyId');return f} listFlyIds(){return [...this.registry.keys()]}
   setMotors(id,motors){const f=this.getFly(id);f.motors=normalizeMotors(motors,this.motorLimits)}
@@ -78,18 +79,21 @@ const visionSample=(environment,position,orientation)=>{const maxRange=.5;const 
   step(dt=this.fixedDt){if(this.paused)return this;return this.stepOne(dt)}
   stepOne(dt=this.fixedDt,{skipControllers=false}={}){
     if(!Number.isFinite(dt)||dt<0)throw new RangeError('finite dt required');
+    const clock=()=>globalThis.performance?.now?.()??Date.now();const totalStart=clock();const timings={sensingMs:0,controllerMs:0,physicsMs:0,telemetrySerializationMs:0};
     for(const f of this.registry.values()){
-      this.#sense(f);
+      let phaseStart=clock();this.#sense(f);timings.sensingMs+=clock()-phaseStart;
+      phaseStart=clock();
       if(!skipControllers&&f.controller&&typeof f.controller.step==='function'){
         const result=f.controller.step(f.sensors,f.controllerState,{dt,tick:this.tick,flyId:f.flyId});
         const motors=result?.motors??result;
         if(result&&result.state!==undefined)f.controllerState=cloneJson(result.state);
         f.motors=normalizeMotors(motors,this.motorLimits);
       }
+      timings.controllerMs+=clock()-phaseStart;phaseStart=clock();
       const start=f.body.position.clone();
       f.body.applyThrust(rotateByQuat(this.upDirection,f.body.orientation).normalize().mul(f.motors.thrust));
       f.body.applyForce(new Vec3(f.motors.pitch,f.motors.yaw,0));
-      f.body.applyTorque(new Vec3(f.motors.roll,f.motors.yaw,f.motors.pitch));
+      f.body.applyTorque(new Vec3(f.motors.roll,0,f.motors.yaw));
       f.body.integrate(dt,this.gravity);
       let contact=null;
       const displacement=f.body.position.sub(start);
@@ -108,6 +112,7 @@ const visionSample=(environment,position,orientation)=>{const maxRange=.5;const 
         }
       }
       for(const s of this.physicsCollisionAdapter.surfaces){
+        if(!surfaceContains(s,start)&&!surfaceContains(s,f.body.position))continue;
         const normal=s.normal, before=start.sub(s.point).dot(normal), after=f.body.position.sub(s.point).dot(normal), limit=f.body.radius;
         if(after<limit&&(before>=limit||f.body.velocity.dot(normal)<0)){
           f.body.position=f.body.position.add(normal.mul(limit-after));
@@ -141,18 +146,75 @@ const visionSample=(environment,position,orientation)=>{const maxRange=.5;const 
       f.contact=contact??{phase:'AIRBORNE',grounded:false,surfaceId:null,normal:null};
       f.room=this.environment.roomAt?.(f.body.position)??hit?.room??null;
       f.zones=this.environment.zonesAt?.(f.body.position)??hit?.zones??[];
-      this.#sense(f);
+      this.#sense(f);timings.physicsMs+=clock()-phaseStart;
     }
-    this.time+=dt;this.tick+=1;return this;
+    timings.totalStepMs=clock()-totalStart;this.#recordPerformance(timings);this.time+=dt;this.tick+=1;return this;
   }
   stepN(count){const steps=Math.max(0,Math.floor(count));for(let i=0;i<steps;i++)this.stepOne();return this}
-  telemetrySnapshot(flyId,{lagSeconds=0,controller='HEURISTIC TEST CONTROLLER',checkpointStatus}={}){const f=this.getFly(flyId),b=f.body;return {tick:this.tick,time:this.time,timeSeconds:this.time,flyId:f.flyId,fly:{id:f.flyId},transform:{position:b.position.toJSON(),orientation:b.orientation.toJSON()},velocity:{linear:b.velocity.toJSON(),angular:b.angularVelocity.toJSON(),speed:b.velocity.length()},contact:{...f.contact},room:f.room,zones:[...f.zones],sensorSummary:{version:f.sensors?.version??null,proprioception:f.sensors?.proprioception??null,channels:Object.fromEntries(Object.entries(f.sensors?.channels??{}).map(([k,v])=>[k,{status:v.status,value:v.value??null,looming:Number.isFinite(v.looming)?v.looming:null,units:v.provenance?.units??v.units??'n/a',provenance:v.provenance}]))},controller:{name:f.controller?.name??controller,version:f.controller?.version??'unversioned',provenance:f.controller?.provenance??f.provenance?.label??null,state:f.controllerState},provenance:{fly:f.provenance,physics:this.provenance.physics,sensors:this.provenance.sensors},motor:{...f.motors},checkpointStatus:checkpointStatus??{version:'checkpoint-2',environmentHash:this.environment.hash,environmentSchema:this.environment.schemaVersion,glbHash:this.environment.glbHash??null,lagSeconds}}}
-  #sense(f){const down=this.physicsCollisionAdapter.raycast(f.body.position,this.downDirection,100);const frame=new SensorFrame({body:f.body,contact:f.contact,room:f.room,zones:f.zones,down});if(typeof this.environment.sampleSensor==='function'){for(const channel of ['light','temperature','olfaction','taste','airflow']){const sampled=this.environment.sampleSensor(channel,f.body.position);if(sampled)frame.channels[channel]=Object.freeze({...frame.channels[channel],...sampled,provenance:Object.freeze({...MODELLED,units:sampled.units??frame.channels[channel].provenance.units,limitations:['authored deterministic field; not calibrated physiology'],sourceReferences:['fly-physics.json']})})}}frame.channels.vision=Object.freeze({...visionSample(this.environment,f.body.position,f.body.orientation)});f.sensors=frame;f.sensorHistory.push(f.sensors);if(f.sensorHistory.length>32)f.sensorHistory.shift()}
+  telemetrySnapshot(flyId,{lagSeconds=0,controller='HEURISTIC TEST CONTROLLER',checkpointStatus}={}){const f=this.getFly(flyId),b=f.body;return {tick:this.tick,time:this.time,timeSeconds:this.time,flyId:f.flyId,fly:{id:f.flyId},transform:{position:b.position.toJSON(),orientation:b.orientation.toJSON()},velocity:{linear:b.velocity.toJSON(),angular:b.angularVelocity.toJSON(),speed:b.velocity.length()},contact:{...f.contact},room:f.room,zones:[...f.zones],sensorSummary:{version:f.sensors?.version??null,proprioception:f.sensors?.proprioception??null,channels:Object.fromEntries(Object.entries(f.sensors?.channels??{}).map(([k,v])=>[k,{status:v.status,value:v.value??null,looming:Number.isFinite(v.looming)?v.looming:null,units:v.provenance?.units??v.units??'n/a',provenance:v.provenance}]))},controller:{name:f.controller?.name??controller,version:f.controller?.version??'unversioned',provenance:f.controller?.provenance??f.provenance?.label??null,state:f.controllerState},provenance:{fly:f.provenance,physics:this.provenance.physics,sensors:this.provenance.sensors},motor:{...f.motors},checkpointStatus:checkpointStatus??{version:'checkpoint-2',environmentHash:this.environment.hash,environmentSchema:this.environment.schemaVersion,glbHash:this.environment.glbHash??null,lagSeconds},performance:this.performanceSnapshot()}}
+  #recordPerformance(timings){this.performance.samples+=1;this.performance.last={...timings};for(const key of Object.keys(timings))this.performance.rollingAverage[key]+=((timings[key]-this.performance.rollingAverage[key])/this.performance.samples)}
+  performanceSnapshot(){return cloneJson(this.performance)}
+  #sense(f){
+    const down=this.physicsCollisionAdapter.raycast(f.body.position,this.downDirection,100);
+    const frame=new SensorFrame({body:f.body,contact:f.contact,room:f.room,zones:f.zones,down});
+    if(typeof this.environment.sampleSensor==='function'){
+      const sampledChannels=['light','temperature','taste','airflow'];
+      for(const channel of sampledChannels){const sampled=this.environment.sampleSensor(channel,f.body.position);if(sampled)frame.channels[channel]=Object.freeze({...frame.channels[channel],...sampled,provenance:Object.freeze({...MODELLED,units:sampled.units??frame.channels[channel].provenance.units,limitations:['authored deterministic field; not calibrated physiology'],sourceReferences:['fly-physics.json']})})}
+      const antennaOffset=rotateByQuat(new Vec3(0,.0008,0),f.body.orientation);
+      const center=this.environment.sampleSensor('olfaction',f.body.position)??{value:0,status:'MODELLED'};
+      const left=this.environment.sampleSensor('olfaction',f.body.position.sub(antennaOffset))??{value:0,status:'MODELLED'};
+      const right=this.environment.sampleSensor('olfaction',f.body.position.add(antennaOffset))??{value:0,status:'MODELLED'};
+      const forwardOffset=rotateByQuat(new Vec3(.0008,0,0),f.body.orientation);
+      const back=this.environment.sampleSensor('olfaction',f.body.position.sub(forwardOffset))??{value:0,status:'MODELLED'};
+      const front=this.environment.sampleSensor('olfaction',f.body.position.add(forwardOffset))??{value:0,status:'MODELLED'};
+      const centerConcentration=Number.isFinite(center.value)?center.value:0;
+      const leftConcentration=Number.isFinite(left.value)?left.value:0;
+      const rightConcentration=Number.isFinite(right.value)?right.value:0;
+      const backConcentration=Number.isFinite(back.value)?back.value:0;
+      const frontConcentration=Number.isFinite(front.value)?front.value:0;
+      const previous=Number.isFinite(f.sensors?.channels?.olfaction?.centerConcentration)?f.sensors.channels.olfaction.centerConcentration:centerConcentration;
+      frame.channels.olfaction=Object.freeze({...frame.channels.olfaction,...center,value:centerConcentration,centerConcentration,leftConcentration,rightConcentration,backConcentration,frontConcentration,lateralGradient:rightConcentration-leftConcentration,forwardGradient:frontConcentration-backConcentration,temporalGradient:centerConcentration-previous,sourceDetected:centerConcentration>0,status:center.status??'MODELLED',provenance:Object.freeze({...MODELLED,units:center.units??'normalized concentration',assumptions:['paired antenna samples use body-frame lateral offsets','front/back samples estimate forward gradient','temporal derivative uses fixed simulation ticks'],limitations:['not CFD','not calibrated receptor physiology'],sourceReferences:['fly-physics.json']})});
+    }
+    frame.channels.vision=Object.freeze({...visionSample(this.environment,f.body.position,f.body.orientation)});
+    f.sensors=frame;f.sensorHistory.push(f.sensors);if(f.sensorHistory.length>32)f.sensorHistory.shift();
+  }
   checkpoint(){return checkpoint(this)}
 }
 export class FixedStepScheduler {constructor(sim,{onStep=()=>{},maxCatchUpSteps=8}={}){if(!Number.isInteger(maxCatchUpSteps)||maxCatchUpSteps<1)throw new RangeError('maxCatchUpSteps');this.sim=sim;this.onStep=onStep;this.maxCatchUpSteps=maxCatchUpSteps;this.lag=0;this.droppedSeconds=0;this.discontinuityCount=0;this.lastDiscontinuity=null;this.running=false;this.frame=null;this.lastWallTime=null;this.requestFrame=null;this.cancelFrame=null;this.processingTimeSeconds=0;this.cannotKeepPace=false}recordProcessing(seconds){this.processingTimeSeconds=seconds;this.cannotKeepPace=seconds>this.sim.fixedDt}manualStep(count=1){for(let i=0;i<count;i++){this.sim.stepOne(this.sim.fixedDt);this.onStep(this.sim)}return count}advanceWallClock(seconds){if(!Number.isFinite(seconds)||seconds<0)throw new RangeError('wall clock seconds');this.lag+=seconds;const available=Math.floor((this.lag+1e-12)/this.sim.fixedDt);const count=Math.min(available,this.maxCatchUpSteps);for(let i=0;i<count;i++){this.sim.stepOne(this.sim.fixedDt);this.onStep(this.sim)}this.lag=Math.max(0,this.lag-count*this.sim.fixedDt);if(available>count){const dropped=this.lag;this.droppedSeconds+=dropped;this.discontinuityCount+=1;this.lastDiscontinuity={wallSeconds:seconds,droppedSeconds:dropped,availableSteps:available,processedSteps:count,tick:this.sim.tick};this.lag=0;this.cannotKeepPace=true}else if(this.processingTimeSeconds<=this.sim.fixedDt)this.cannotKeepPace=false;return count}start({now=()=>performance.now()/1000,requestFrame=globalThis.requestAnimationFrame,cancelFrame=globalThis.cancelAnimationFrame}={}){if(this.running)return this;this.running=true;this.requestFrame=requestFrame;this.cancelFrame=cancelFrame;this.lastWallTime=null;const frame=(timestamp)=>{if(!this.running)return;const current=Number.isFinite(timestamp)?timestamp/1000:now();if(this.lastWallTime!==null)this.advanceWallClock(current-this.lastWallTime);this.lastWallTime=current;this.frame=typeof this.requestFrame==='function'?this.requestFrame(frame):null};this.frame=typeof requestFrame==='function'?requestFrame(frame):null;return this}stop(){this.running=false;if(this.frame!=null&&typeof this.cancelFrame==='function')this.cancelFrame(this.frame);this.frame=null;return this}status(){return {running:this.running,fixedDt:this.sim.fixedDt,lagSeconds:this.lag,owedLagSeconds:this.lag,stepsBehind:Math.floor(this.lag/this.sim.fixedDt),cannotKeepPace:this.cannotKeepPace,processingTimeSeconds:this.processingTimeSeconds,maxCatchUpSteps:this.maxCatchUpSteps,droppedSeconds:this.droppedSeconds,droppedSteps:Math.floor(this.droppedSeconds/this.sim.fixedDt),discontinuityCount:this.discontinuityCount,lastDiscontinuity:this.lastDiscontinuity,silentDrops:0}}}
 export class HeuristicTestController {constructor(){this.name='HEURISTIC TEST CONTROLLER'}motorFromSensor(sensor){return {thrust:sensor.contact.grounded?12:0,pitch:0,yaw:0,roll:0}}}
-export class HeuristicBaselineController {constructor(){this.name='HEURISTIC BASELINE CONTROLLER';this.version='heuristic-food-v1';this.provenance='HEURISTIC'}step(sensor){const grounded=sensor.contact?.grounded;const odor=Number(sensor.channels?.olfaction?.value??0);return {thrust:grounded?0.000018:0.000012+odor*0.000002,pitch:odor>0?Math.min(0.02,odor*0.006):0,yaw:0,roll:0}}}
+export class HeuristicBaselineController {
+  constructor(){this.name='HEURISTIC BASELINE CONTROLLER';this.version='heuristic-food-fsm-v1';this.provenance='HEURISTIC';this.states=Object.freeze(['REST','TAKEOFF','EXPLORE','ODOR_SEARCH','ODOR_TRACK','APPROACH_FOOD','LAND','FOOD_CONTACT','FEEDING','DISENGAGE','RELAUNCH']);}
+  step(sensor,previousState={},context={}){
+    const state={fsmState:previousState.fsmState??'REST',foodTargetId:previousState.foodTargetId??null,feedingStartTick:previousState.feedingStartTick??null,feedingEndTick:previousState.feedingEndTick??null,feedingReason:previousState.feedingReason??null,stateEnteredTick:previousState.stateEnteredTick??context.tick??0};
+    const odor=sensor.channels?.olfaction??{};const taste=sensor.channels?.taste??{};const contact=Boolean(sensor.contact?.grounded);const detected=Boolean(odor.sourceDetected||Number(odor.centerConcentration??odor.value??0)>0);const gradient=Number(odor.lateralGradient??0);const tick=context.tick??0;
+    const enter=(next)=>{if(state.fsmState!==next){state.fsmState=next;state.stateEnteredTick=tick;}};
+    if(state.fsmState==='REST'&&(contact||tick>0))enter('TAKEOFF');
+    else if(state.fsmState==='TAKEOFF'&&!contact)enter('EXPLORE');
+    else if(state.fsmState==='EXPLORE'&&detected)enter('ODOR_SEARCH');
+    else if(state.fsmState==='ODOR_SEARCH'&&Math.abs(gradient)>1e-6)enter('ODOR_TRACK');
+    else if((state.fsmState==='ODOR_SEARCH'||state.fsmState==='ODOR_TRACK')&&contact)enter('LAND');
+    else if((state.fsmState==='LAND'||state.fsmState==='APPROACH_FOOD')&&taste.status==='AVAILABLE'&&Number(taste.value)>0){state.foodTargetId=taste.source??state.foodTargetId;enter('FOOD_CONTACT');}
+    else if(state.fsmState==='FOOD_CONTACT'){state.feedingStartTick=state.feedingStartTick??tick;enter('FEEDING');}
+    else if(state.fsmState==='FEEDING'&&tick-(state.feedingStartTick??tick)>=30){state.feedingEndTick=tick;state.feedingReason='feeding-duration-complete';enter('DISENGAGE');}
+    else if(state.fsmState==='DISENGAGE')enter('RELAUNCH');
+    else if(state.fsmState==='RELAUNCH'&&!contact)enter('EXPLORE');
+    const velocity=sensor.proprioception?.velocity??[0,0,0];
+    const height=Number((sensor.proprioception?.position??[0,0,1.7])[2])||1.7;
+    const heightTarget=sensor.channels?.olfaction?.sourceDetected?1.601:1.7;
+    const hoverThrust=Math.max(.000008,Math.min(.000011,.00000981+(heightTarget-height)*.0000006-(Number(velocity[2])||0)*.0000001));
+    const steer=(desired,current,gain=0.0000001)=>Math.max(-.0000003,Math.min(.0000003,(desired-current)*gain));
+    const gradientMotor=(value,gain=.01)=>Math.max(-.0000003,Math.min(.0000003,Number(value||0)*gain));
+    let motors={thrust:0,pitch:0,yaw:0,roll:0};
+    if(state.fsmState==='REST')motors={thrust:.000011,pitch:0,yaw:0,roll:0};
+    if(state.fsmState==='TAKEOFF'||state.fsmState==='RELAUNCH')motors={thrust:.000014,pitch:0,yaw:0,roll:0};
+    if(state.fsmState==='EXPLORE')motors={thrust:hoverThrust,pitch:steer(.08,Number(velocity[0])||0),yaw:steer(.3,Number(velocity[1])||0),roll:0};
+    if(state.fsmState==='ODOR_SEARCH')motors={thrust:hoverThrust,pitch:gradientMotor(odor.forwardGradient),yaw:gradientMotor(odor.lateralGradient),roll:0};
+    if(state.fsmState==='ODOR_TRACK'||state.fsmState==='APPROACH_FOOD')motors={thrust:hoverThrust,pitch:gradientMotor(odor.forwardGradient,.02),yaw:gradientMotor(odor.lateralGradient,.02),roll:0};
+    if(state.fsmState==='LAND')motors={thrust:.00000981,pitch:gradientMotor(odor.forwardGradient,.02),yaw:gradientMotor(odor.lateralGradient,.02),roll:0};
+    if(state.fsmState==='FOOD_CONTACT'||state.fsmState==='FEEDING'||state.fsmState==='DISENGAGE')motors={thrust:state.fsmState==='DISENGAGE'?.000011:0,pitch:0,yaw:0,roll:0};
+    return {motors,state:{...state,feedingStatus:state.fsmState==='FEEDING'?'ACTIVE':'INACTIVE',controllerVersion:this.version}};
+  }
+}
 export class FlyWireLC4EscapeController {
   constructor(graph){if(!graph?.provenance||graph.provenance.label!=='CONNECTOME-DERIVED'||!Array.isArray(graph.edges))throw new TypeError('FlyWire graph provenance required');this.graph=graph;this.name='FLYWIRE LC4 ESCAPE EXPERIMENTAL CONTROLLER';this.version='connectome-rate-v1';this.provenance='CONNECTOME-DERIVED';this.lc4ToDn=graph.edges.filter((edge)=>edge.pre_type==='LC4'&&['DNp02','DNp11'].includes(edge.post_type));this.totalSynapses=this.lc4ToDn.reduce((sum,edge)=>sum+edge.syn_count,0)}
   step(sensor,previousState={}){const looming=Number(sensor.channels?.vision?.looming??0);const inputDrive=Math.max(0,Math.min(1,looming));const lc4Activity=.8*Number(previousState.lc4Activity??0)+.2*inputDrive;const connectionInfluence=Math.min(1,this.totalSynapses/2000);const dnActivity=.85*Number(previousState.dnActivity??0)+.15*lc4Activity*connectionInfluence;return {motors:{thrust:sensor.contact?.grounded?0.000018:0.000012+dnActivity*0.00001,pitch:dnActivity*0.02,yaw:0,roll:0},state:{inputDrive,lc4Activity,connectionInfluence,dnActivity,edgeCount:this.lc4ToDn.length,totalSynapses:this.totalSynapses,transduction:'MODELLED',dynamics:'MODELLED'}}}
@@ -214,6 +276,7 @@ export function createFlyWorldEnvironmentAdapter(environment,identity={}){
     roomAt:integration.roomAt??environment.roomAt,
     zonesAt:integration.zonesAt??environment.zonesAt,
     sampleSensor:integration.sampleSensor??environment.sampleSensor,
+    foodContactAt:integration.foodContactAt??environment.foodContactAt,
     fields:integration.fields??environment.fields,
     rooms:integration.rooms??environment.rooms,
     provenance:integration.provenance??environment.provenance,

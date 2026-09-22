@@ -55,9 +55,9 @@ After the build:
 4. verify collision is ON by default and walls/major furniture cannot be crossed during normal navigation;
 5. verify `N` is debug noclip only;
 6. inspect all five review renders for clipping, missing textures, floating props or broken scale;
-7. do **not** begin fly/connectome/body/neural work.
+7. **Historical Stage A only:** do **not** use this handoff to start or stop current Stage B fly/connectome work. Current main already contains the authoritative reduced-order simulation and experimental LC4 escape path; follow `docs/fly-world-architecture.md` and `frontend/labs/fly-simulation/README.md` for current runtime work.
 
-The human observer may collide with the environment for navigation while still remaining invisible/non-physical to the future fly simulation. Do not revert observer collision to `false` in the scene contract.
+The human observer may collide with the environment for navigation while remaining invisible/non-physical to the current authoritative fly simulation. Do not revert observer collision to `false` in the scene contract.
 
 ## Visual review boundary
 
