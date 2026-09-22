@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
 import { loadFlyHouseRuntime, initialFlyBody } from '../services/fly-simulation/runtime.mjs';
 import { FlySimulation, FlyWireLC4EscapeController, HeuristicBaselineController, checkpoint, restore, stateHash } from '../frontend/labs/fly-simulation/index.js';
 
@@ -38,6 +39,55 @@ test('real artifact executes sensor-controller-motor-body loop and exposes food 
   foodSim.addFly({ flyId: 'food-fly', body: initialFlyBody({ spawn: food }) });
   assert.equal(foodSim.getFly('food-fly').sensors.channels.olfaction.value, 1);
   assert.equal(foodSim.getFly('food-fly').sensors.channels.taste.status, 'AVAILABLE');
+});
+
+test('food odor field is not physical taste contact and directional olfaction is available', async () => {
+  const runtime = await loadFlyHouseRuntime({ rootDir });
+  const food = runtime.physics.fields.food[0];
+  const odorOnlyPoint = [food.center[0] + .2, food.center[1], food.center[2]];
+  const odorOnly = runtime.environment.sampleSensor('olfaction', odorOnlyPoint);
+  const tasteOnly = runtime.environment.sampleSensor('taste', odorOnlyPoint);
+  assert.ok(odorOnly.value > 0, 'odor must extend beyond physical contact');
+  assert.equal(tasteOnly.status, 'UNAVAILABLE', 'taste must require physical contact');
+  const sim = new FlySimulation(runtime.environment, { fixedDt: 1 / 60, gravity: [0, 0, -9.81] });
+  sim.addFly({ flyId: 'directional-olfaction', body: initialFlyBody({ spawn: odorOnlyPoint }) });
+  const olfaction = sim.getFly('directional-olfaction').sensors.channels.olfaction;
+  assert.equal(typeof olfaction.centerConcentration, 'number');
+  assert.equal(typeof olfaction.leftConcentration, 'number');
+  assert.equal(typeof olfaction.rightConcentration, 'number');
+  assert.equal(typeof olfaction.lateralGradient, 'number');
+  assert.equal(typeof olfaction.temporalGradient, 'number');
+  assert.equal(olfaction.provenance.label, 'MODELLED');
+});
+
+test('heuristic baseline exposes explicit food FSM and feeding lifecycle without target coordinates', async () => {
+  const runtime = await loadFlyHouseRuntime({ rootDir });
+  const controller = new HeuristicBaselineController();
+  assert.deepEqual(controller.states, ['REST','TAKEOFF','EXPLORE','ODOR_SEARCH','ODOR_TRACK','APPROACH_FOOD','LAND','FOOD_CONTACT','FEEDING','DISENGAGE','RELAUNCH']);
+  const state = {};
+  const tick = (sensor, at) => controller.step(sensor, state, { tick: at });
+  const base = { contact: { grounded: true }, channels: { olfaction: { centerConcentration: 0, sourceDetected: false, lateralGradient: 0 }, taste: { status: 'UNAVAILABLE', value: 0 } } };
+  Object.assign(state, tick(base, 0).state);
+  assert.equal(state.fsmState, 'TAKEOFF');
+  Object.assign(state, tick({ ...base, contact: { grounded: false } }, 1).state);
+  assert.equal(state.fsmState, 'EXPLORE');
+  Object.assign(state, tick({ ...base, contact: { grounded: false }, channels: { ...base.channels, olfaction: { centerConcentration: .2, sourceDetected: true, lateralGradient: .01 } } }, 2).state);
+  assert.equal(state.fsmState, 'ODOR_SEARCH');
+  Object.assign(state, tick({ ...base, contact: { grounded: false }, channels: { ...base.channels, olfaction: { centerConcentration: .2, sourceDetected: true, lateralGradient: .01 } } }, 3).state);
+  assert.equal(state.fsmState, 'ODOR_TRACK');
+  Object.assign(state, tick({ ...base, contact: { grounded: true }, channels: { ...base.channels, olfaction: { centerConcentration: .2, sourceDetected: true, lateralGradient: .01 } } }, 4).state);
+  assert.equal(state.fsmState, 'LAND');
+  Object.assign(state, tick({ ...base, contact: { grounded: true }, channels: { ...base.channels, olfaction: { centerConcentration: .2, sourceDetected: true, lateralGradient: .01 }, taste: { status: 'AVAILABLE', value: 1, source: 'fruit-attractor' } } }, 5).state);
+  assert.equal(state.fsmState, 'FOOD_CONTACT');
+  Object.assign(state, tick({ ...base, channels: { ...base.channels, taste: { status: 'AVAILABLE', value: 1, source: 'fruit-attractor' } } }, 6).state);
+  assert.equal(state.fsmState, 'FEEDING');
+  assert.equal(state.foodTargetId, 'fruit-attractor');
+  Object.assign(state, tick({ ...base, channels: { ...base.channels, taste: { status: 'AVAILABLE', value: 1, source: 'fruit-attractor' } } }, 37).state);
+  assert.equal(state.fsmState, 'DISENGAGE');
+  assert.equal(state.feedingStartTick, 6);
+  assert.equal(state.feedingEndTick, 37);
+  const source = readFileSync(new URL('../frontend/labs/fly-simulation/index.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(source.slice(source.indexOf('export class HeuristicBaselineController'), source.indexOf('export class FlyWireLC4EscapeController')), /food\.center|fields\.food|targetPosition/);
 });
 
 test('FlyWire controller result keeps motors separate from controller state', async () => {

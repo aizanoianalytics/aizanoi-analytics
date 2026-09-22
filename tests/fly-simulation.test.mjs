@@ -271,7 +271,7 @@ test('realtime scheduler can start and stop while reporting accumulated lag', ()
 test('telemetry snapshot is deterministic, complete, and allowlisted', () => {
   const sim = makeSim(); sim.addFly({ flyId: 'f' }); sim.stepOne();
   const snapshot = sim.telemetrySnapshot('f', { lagSeconds: .01, controller: 'HEURISTIC TEST CONTROLLER' });
-  assert.deepEqual(Object.keys(snapshot).sort(), ['checkpointStatus','contact','controller','fly','flyId','motor','provenance','room','sensorSummary','tick','time','timeSeconds','transform','velocity','zones'].sort());
+  assert.deepEqual(Object.keys(snapshot).sort(), ['checkpointStatus','contact','controller','fly','flyId','motor','performance','provenance','room','sensorSummary','tick','time','timeSeconds','transform','velocity','zones'].sort());
   assert.equal(snapshot.tick, 1); assert.equal(snapshot.fly.id, 'f');
   assert.equal(snapshot.controller.name, 'HEURISTIC TEST CONTROLLER'); assert.equal(snapshot.checkpointStatus.environmentHash, 'env-plane-v1');
   assert.throws(() => new TelemetryProtocol().encode({ flyId: 'f', state: snapshot, unexpected: true }), /allowlist/);

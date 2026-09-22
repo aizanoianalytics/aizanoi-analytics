@@ -1,6 +1,6 @@
 # Fly World Modülü
 
-> **Amaç:** Fly House ghost-observer deneyiminin (`/labs/fly-world/`) AizanoiOS v3 masaüstünde fullscreen app olarak açılması. Gelecekteki sinek simülasyonunun kullanıcıya açılan ana yüzü olacak; bu modül yalnızca ortamı gösterir, fly/connectome runtime içermez.
+> **Amaç:** Fly House ghost-observer deneyinin (`/labs/fly-world/`) AizanoiOS v3 masaüstünde fullscreen app olarak açılması. Güncel modül, authoritative Fly Simulation telemetry’sini read-only olarak gösterebilir; simulation authority bu UI modülünde değildir.
 
 ---
 

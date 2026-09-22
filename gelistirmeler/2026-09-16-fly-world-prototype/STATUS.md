@@ -45,6 +45,6 @@ on the Blender-capable host. That command publishes `frontend/labs/fly-world/ass
 
 A passing validator or successful Blender command is not visual approval. Compare `01-reference-wide` against the approved people-free cottage first, then inspect eye-level, window-to-stove, doorway-bedroom and fly-scale views plus a live walkthrough. Continue environment iteration if the result still reads as a generic rustic house.
 
-## Explicitly not started
+## Historical Stage A boundary
 
-Fly/connectome runtime. Environment visual approval remains the gate before neural/body simulation work.
+The original Stage A handoff intentionally deferred fly/connectome work until visual review. That was a historical gate for the prototype branch, not current main status. Current main contains the Stage B authoritative reduced-order simulation, experimental LC4 escape controller, and read-only spectator service.

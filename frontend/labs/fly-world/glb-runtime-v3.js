@@ -181,23 +181,20 @@ function lighting() {
 function updateResearchTelemetry(frame) {
   if (!researchEl) return;
   const sensors = frame.state?.sensors?.channels ?? {};
-  const sample = Object.fromEntries(Object.entries(sensors).map(([name, value]) => [name, { status: value.status, value: value.value, units: value.units, provenance: value.provenance ?? null }]));
-  researchEl.textContent = JSON.stringify({
-    flyId: frame.flyId,
-    tick: frame.sequence,
-    room: frame.state?.room ?? null,
-    controller: frame.metadata?.controller ?? 'unknown',
-    controllerVersion: frame.metadata?.version ?? 'unknown',
-    controllerProvenance: frame.metadata?.provenance ?? 'MODELLED',
-    controllerState: frame.state?.controllerState ?? null,
-    checkpoint: frame.state?.checkpointStatus ?? null,
-    authority: 'server-authoritative',
-    positionMeters: frame.state?.position ?? null,
-    motor: frame.state?.motor ?? null,
-    sensors: sample,
-    provenance: frame.metadata?.provenance ?? 'MODELLED',
-    lagSeconds: frame.lag?.lagSeconds ?? null
-  }, null, 2);
+  const odor = sensors.olfaction ?? {};
+  const vision = sensors.vision ?? {};
+  const controllerState = frame.state?.controllerState ?? {};
+  const compact = {
+    flyId: frame.flyId, controller: frame.metadata?.controller ?? 'unknown', version: frame.metadata?.version ?? frame.metadata?.controllerVersion ?? 'unknown',
+    state: controllerState.fsmState ?? controllerState.state ?? 'n/a', tick: frame.sequence, simulationTime: frame.state?.time ?? frame.time ?? null,
+    room: frame.state?.room ?? null, bodyPhase: frame.state?.contact?.phase ?? null, speed: frame.state?.velocity?.speed ?? null,
+    contact: frame.state?.contact?.grounded ?? false, odor: { center: odor.centerConcentration ?? odor.value ?? null, left: odor.leftConcentration ?? null, right: odor.rightConcentration ?? null, gradient: odor.lateralGradient ?? null },
+    taste: sensors.taste?.value ?? null, looming: vision.looming ?? null, lc4: controllerState.lc4Activity ?? null, dn: controllerState.dnActivity ?? null,
+    motor: frame.state?.motor ?? null, checkpoint: frame.state?.checkpointStatus?.version ?? null, physicsHash: frame.state?.checkpointStatus?.physicsArtifactHash ?? null,
+    graphHash: frame.state?.checkpointStatus?.connectomeGraphHash ?? null, lag: frame.lag?.lagSeconds ?? frame.lag ?? null, discontinuities: frame.state?.checkpointStatus?.scheduler?.discontinuityCount ?? null,
+  };
+  window.__FLY_RAW_TELEMETRY__ = frame;
+  researchEl.textContent = Object.entries(compact).map(([key, value]) => `${key}: ${typeof value === 'object' ? JSON.stringify(value) : value ?? 'UNAVAILABLE'}`).join('\\n');
 }
 
 function createFlyVisual() {
@@ -248,8 +245,23 @@ async function boot() {
   window.__FLY_SPECTATOR_BRIDGE__ = bridge;
   const config = window.__FLY_TELEMETRY_CONFIG__;
   const simulationStatus = document.querySelector('#simulation-status');
+  const cameraModeEl = document.querySelector('#fly-camera-mode');
+  let cameraMode = cameraModeEl?.value ?? 'FREE OBSERVER';
+  const latestFrames = new Map();
   const flyMeshes = new Map();
   let telemetrySocket = null;
+  cameraModeEl?.addEventListener('change', () => { cameraMode = cameraModeEl.value; });
+  addEventListener('keydown', (event) => { if (event.code === 'Digit1') cameraMode = 'FREE OBSERVER'; if (event.code === 'Digit2') cameraMode = 'FOLLOW FLY'; if (event.code === 'Digit3') cameraMode = 'FLY-SCALE FOLLOW'; if (event.code === 'Digit4') cameraMode = 'OVERHEAD'; if (cameraModeEl) cameraModeEl.value = cameraMode; });
+  const applyCameraMode = () => {
+    if (cameraMode === 'FREE OBSERVER') return;
+    const frame = latestFrames.get(bridge.activeFlyId);
+    const position = frame?.state?.position;
+    if (!Array.isArray(position) || position.length !== 3) return;
+    const target = new THREE.Vector3(...position);
+    const offset = cameraMode === 'OVERHEAD' ? new THREE.Vector3(0, 0, 3.5) : cameraMode === 'FLY-SCALE FOLLOW' ? new THREE.Vector3(0, -.007, .003) : new THREE.Vector3(0, -.035, .02);
+    camera.position.copy(target).add(offset);
+    camera.lookAt(target);
+  };
   if (!config?.url) {
     if (simulationStatus) simulationStatus.textContent = 'Telemetry inactive · no host-provided spectator service configured';
   } else {
@@ -259,6 +271,7 @@ async function boot() {
       try {
         const frame = JSON.parse(event.data);
         if (frame.version !== 'telemetry-1' || typeof frame.flyId !== 'string' || !frame.state?.position) return;
+        latestFrames.set(frame.flyId, frame);
         let flyMesh = flyMeshes.get(frame.flyId);
         if (!flyMesh) {
           flyMesh = createFlyVisual(); flyMesh.castShadow = true; scene.add(flyMesh); flyMeshes.set(frame.flyId, flyMesh);
@@ -310,6 +323,7 @@ async function boot() {
   renderer.setAnimationLoop(() => {
     const dt = Math.min(clock.getDelta(), .05);
     observer.update(dt);
+    applyCameraMode();
     for (const [flyId, flyMesh] of flyMeshes) bridge.render(flyMesh, .5, flyId);
     if (simulationStatus && !config?.url) simulationStatus.textContent = 'Telemetry inactive · no host-provided spectator service configured';
     if (window.__FLY_AUDIO__) {

@@ -1,0 +1,2038 @@
+{
+  "experiment": "deterministic-lc4-escape-v1",
+  "runA": {
+    "seed": 424242,
+    "controller": "connectome-rate-v1",
+    "graphHash": "6a141227d8bd4d5f5432bdb7e2a038f81941b2ef5446b0904ee54d7782b649c6",
+    "connectomeDataset": "FAFB",
+    "graphIdentity": {
+      "label": "CONNECTOME-DERIVED",
+      "calibrated": false,
+      "units": {
+        "syn_count": "count",
+        "neurotransmitter_probability": "probability"
+      },
+      "assumptions": [
+        "The graph represents released proofread connectivity, not a complete dynamical neural model.",
+        "Only LC4 to DNp02/DNp11 edges are retained."
+      ],
+      "limitations": [
+        "Synaptic weights are not converted into membrane dynamics or motor commands.",
+        "Cell-type annotation and release licensing must be rechecked before commercial redistribution."
+      ],
+      "version": "FAFB-v783",
+      "sourceReferences": [
+        "https://zenodo.org/records/10676866",
+        "https://doi.org/10.1038/s41586-024-07558-y",
+        "https://doi.org/10.1038/s41586-024-07686-5",
+        "https://github.com/flyconnectome/flywire_annotations"
+      ],
+      "licenseNotice": "FlyWire official guidance says CC BY-NC 4.0; Zenodo API metadata reports CC BY 4.0. Conservative interpretation: CC BY-NC 4.0 pending clarification."
+    },
+    "edges": 265,
+    "synapses": 1924,
+    "initialPosition": [
+      4.2,
+      0,
+      1.5
+    ],
+    "initialVelocity": [
+      0.12,
+      0,
+      0
+    ],
+    "loomingStartTick": 60,
+    "peakLooming": 0.9987999999999992,
+    "peakLC4Activity": 0.9987999999999991,
+    "peakDNActivity": 0.9608455999999986,
+    "motorResponseTick": 61,
+    "initialMotor": 0.000012,
+    "peakMotor": 0.000021608455999999988,
+    "trajectoryDelta": [
+      0.5993999999999993,
+      0,
+      1.2504624845946033
+    ],
+    "trajectory": [
+      {
+        "tick": 1,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.201988350000001,
+          0,
+          1.5006047897916666
+        ]
+      },
+      {
+        "tick": 2,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.203965117861251,
+          0,
+          1.5018108464744635
+        ]
+      },
+      {
+        "tick": 3,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.205930371049709,
+          0,
+          1.5036146676687498
+        ]
+      },
+      {
+        "tick": 4,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.207884176638344,
+          0,
+          1.5060127713962461
+        ]
+      },
+      {
+        "tick": 5,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.209826601309426,
+          0,
+          1.5090016959611963
+        ]
+      },
+      {
+        "tick": 6,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.211757711356799,
+          0,
+          1.5125779998322224
+        ]
+      },
+      {
+        "tick": 7,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2136775726881455,
+          0,
+          1.5167382615248663
+        ]
+      },
+      {
+        "tick": 8,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.215586250827237,
+          0,
+          1.5214790794848174
+        ]
+      },
+      {
+        "tick": 9,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2174838109161685,
+          0,
+          1.5267970719718185
+        ]
+      },
+      {
+        "tick": 10,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.219370317717582,
+          0,
+          1.5326888769442493
+        ]
+      },
+      {
+        "tick": 11,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.221245835616877,
+          0,
+          1.5391511519443823
+        ]
+      },
+      {
+        "tick": 12,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.223110428624408,
+          0,
+          1.5461805739843064
+        ]
+      },
+      {
+        "tick": 13,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.224964160377671,
+          0,
+          1.5537738394325145
+        ]
+      },
+      {
+        "tick": 14,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.226807094143471,
+          0,
+          1.5619276639011535
+        ]
+      },
+      {
+        "tick": 15,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.228639292820085,
+          0,
+          1.5706387821339292
+        ]
+      },
+      {
+        "tick": 16,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.230460818939408,
+          0,
+          1.5799039478946657
+        ]
+      },
+      {
+        "tick": 17,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2322717346690855,
+          0,
+          1.5897199338565127
+        ]
+      },
+      {
+        "tick": 18,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.234072101814638,
+          0,
+          1.6000835314917985
+        ]
+      },
+      {
+        "tick": 19,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.235861981821568,
+          0,
+          1.6109915509625254
+        ]
+      },
+      {
+        "tick": 20,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.237641435777458,
+          0,
+          1.622440821011502
+        ]
+      },
+      {
+        "tick": 21,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.239410524414054,
+          0,
+          1.63442818885411
+        ]
+      },
+      {
+        "tick": 22,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.241169308109342,
+          0,
+          1.6469505200707013
+        ]
+      },
+      {
+        "tick": 23,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.242917846889605,
+          0,
+          1.6600046984996228
+        ]
+      },
+      {
+        "tick": 24,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.244656200431473,
+          0,
+          1.6735876261308626
+        ]
+      },
+      {
+        "tick": 25,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.24638442806396,
+          0,
+          1.687696223000317
+        ]
+      },
+      {
+        "tick": 26,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.248102588770488,
+          0,
+          1.7023274270846736
+        ]
+      },
+      {
+        "tick": 27,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2498107411909,
+          0,
+          1.7174781941969053
+        ]
+      },
+      {
+        "tick": 28,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.251508943623463,
+          0,
+          1.733145497882375
+        ]
+      },
+      {
+        "tick": 29,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2531972540268566,
+          0,
+          1.7493263293155437
+        ]
+      },
+      {
+        "tick": 30,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2548757300221505,
+          0,
+          1.7660176971972805
+        ]
+      },
+      {
+        "tick": 31,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.256544428894771,
+          0,
+          1.783216627652773
+        ]
+      },
+      {
+        "tick": 32,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.258203407596459,
+          0,
+          1.800920164130029
+        ]
+      },
+      {
+        "tick": 33,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.259852722747209,
+          0,
+          1.8191253672989716
+        ]
+      },
+      {
+        "tick": 34,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.261492430637206,
+          0,
+          1.8378293149511218
+        ]
+      },
+      {
+        "tick": 35,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.263122587228745,
+          0,
+          1.8570291018998648
+        ]
+      },
+      {
+        "tick": 36,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.264743248158138,
+          0,
+          1.8767218398812981
+        ]
+      },
+      {
+        "tick": 37,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2663544687376165,
+          0,
+          1.8969046574556563
+        ]
+      },
+      {
+        "tick": 38,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.26795630395722,
+          0,
+          1.9175746999093104
+        ]
+      },
+      {
+        "tick": 39,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.269548808486669,
+          0,
+          1.9387291291573387
+        ]
+      },
+      {
+        "tick": 40,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.271132036677234,
+          0,
+          1.960365123646664
+        ]
+      },
+      {
+        "tick": 41,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.272706042563589,
+          0,
+          1.9824798782597555
+        ]
+      },
+      {
+        "tick": 42,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.274270879865656,
+          0,
+          2.0050706042188926
+        ]
+      },
+      {
+        "tick": 43,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.275826601990439,
+          0,
+          2.0281345289909845
+        ]
+      },
+      {
+        "tick": 44,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.277373262033845,
+          0,
+          2.0516688961929455
+        ]
+      },
+      {
+        "tick": 45,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.278910912782498,
+          0,
+          2.0756709654976215
+        ]
+      },
+      {
+        "tick": 46,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.28043960671554,
+          0,
+          2.1001380125402647
+        ]
+      },
+      {
+        "tick": 47,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.281959396006422,
+          0,
+          2.125067328825551
+        ]
+      },
+      {
+        "tick": 48,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.283470332524685,
+          0,
+          2.150456221635142
+        ]
+      },
+      {
+        "tick": 49,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.284972467837728,
+          0,
+          2.176302013935784
+        ]
+      },
+      {
+        "tick": 50,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.286465853212573,
+          0,
+          2.202602044287941
+        ]
+      },
+      {
+        "tick": 51,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.28795053961761,
+          0,
+          2.229353666754964
+        ]
+      },
+      {
+        "tick": 52,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.289426577724337,
+          0,
+          2.256554250812783
+        ]
+      },
+      {
+        "tick": 53,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2908940179090935,
+          0,
+          2.2842011812601317
+        ]
+      },
+      {
+        "tick": 54,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.292352910254773,
+          0,
+          2.3122918581292917
+        ]
+      },
+      {
+        "tick": 55,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.293803304552539,
+          0,
+          2.3408236965973552
+        ]
+      },
+      {
+        "tick": 56,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.295245250303521,
+          0,
+          2.369794126898009
+        ]
+      },
+      {
+        "tick": 57,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.296678796720503,
+          0,
+          2.3992005942338284
+        ]
+      },
+      {
+        "tick": 58,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.298103992729606,
+          0,
+          2.429040558689083
+        ]
+      },
+      {
+        "tick": 59,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.299520886971957,
+          0,
+          2.4593114951430524
+        ]
+      },
+      {
+        "tick": 60,
+        "looming": 0.001859055610690774,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.300929527805345,
+          0,
+          2.490010893183844
+        ]
+      },
+      {
+        "tick": 61,
+        "looming": 0.005252591278596341,
+        "lc4Activity": 0.00037181112213815484,
+        "dnActivity": 0.00005365234492453574,
+        "motor": 0.000012000536523449246,
+        "position": [
+          4.302626295639298,
+          0,
+          2.521136405188882
+        ]
+      },
+      {
+        "tick": 62,
+        "looming": 0.01127877601048155,
+        "lc4Activity": 0.0013479671534297921,
+        "dnActivity": 0.00024011615342577438,
+        "motor": 0.000012002401161534258,
+        "position": [
+          4.305639388005241,
+          0,
+          2.552686063982259
+        ]
+      },
+      {
+        "tick": 63,
+        "looming": 0.024838993387739094,
+        "lc4Activity": 0.003334128924840144,
+        "dnActivity": 0.000685213534266341,
+        "motor": 0.000012006852135342664,
+        "position": [
+          4.312419496693869,
+          0,
+          2.5846586280886243
+        ]
+      },
+      {
+        "tick": 64,
+        "looming": 0.05692429324459347,
+        "lc4Activity": 0.007635101817419934,
+        "dnActivity": 0.0016841766963800863,
+        "motor": 0.0000120168417669638,
+        "position": [
+          4.328462146622297,
+          0,
+          2.617054392818423
+        ]
+      },
+      {
+        "tick": 65,
+        "looming": 0.13251979647229106,
+        "lc4Activity": 0.01749294010285464,
+        "dnActivity": 0.003955781448764998,
+        "motor": 0.00001203955781448765,
+        "position": [
+          4.366259898236145,
+          0,
+          2.6498771662853984
+        ]
+      },
+      {
+        "tick": 66,
+        "looming": 0.30937155306962083,
+        "lc4Activity": 0.040498311376741924,
+        "dnActivity": 0.009206320563114108,
+        "motor": 0.000012092063205631142,
+        "position": [
+          4.45468577653481,
+          0,
+          2.683138961037889
+        ]
+      },
+      {
+        "tick": 67,
+        "looming": 0.7219057800766926,
+        "lc4Activity": 0.09427295971531771,
+        "dnActivity": 0.021428960565567333,
+        "motor": 0.000012214289605655673,
+        "position": [
+          4.660952890038346,
+          0,
+          2.7168709737855856
+        ]
+      },
+      {
+        "tick": 68,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.2197995237875927,
+        "dnActivity": 0.04993168776328186,
+        "motor": 0.000012499316877632818,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7267832226270294
+        ]
+      },
+      {
+        "tick": 69,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.375599619030074,
+        "dnActivity": 0.09664095962482924,
+        "motor": 0.000012966409596248292,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7268225096790037
+        ]
+      },
+      {
+        "tick": 70,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.5002396952240591,
+        "dnActivity": 0.15432940370193657,
+        "motor": 0.000013543294037019366,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7268476936111017
+        ]
+      },
+      {
+        "tick": 71,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.5999517561792471,
+        "dnActivity": 0.21775303156331144,
+        "motor": 0.000014177530315633116,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7268660401183156
+        ]
+      },
+      {
+        "tick": 72,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.6797214049433976,
+        "dnActivity": 0.283173875562147,
+        "motor": 0.00001483173875562147,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7268805979188886
+        ]
+      },
+      {
+        "tick": 73,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.7435371239547179,
+        "dnActivity": 0.34799020121449076,
+        "motor": 0.000015479902012144907,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726892863991148
+        ]
+      },
+      {
+        "tick": 74,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.7945896991637742,
+        "dnActivity": 0.41045096462164976,
+        "motor": 0.0000161045096462165,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726903662953192
+        ]
+      },
+      {
+        "tick": 75,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.8354317593310192,
+        "dnActivity": 0.46943612279986835,
+        "motor": 0.000016694361227998685,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726913489969078
+        ]
+      },
+      {
+        "tick": 76,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.8681054074648152,
+        "dnActivity": 0.5242883146770609,
+        "motor": 0.00001724288314677061,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7269226629202215
+        ]
+      },
+      {
+        "tick": 77,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.8942443259718521,
+        "dnActivity": 0.5746845237132401,
+        "motor": 0.000017746845237132404,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726931397038231
+        ]
+      },
+      {
+        "tick": 78,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.9151554607774816,
+        "dnActivity": 0.6205387781464446,
+        "motor": 0.000018205387781464447,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726939844514006
+        ]
+      },
+      {
+        "tick": 79,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.9318843686219851,
+        "dnActivity": 0.6619288758166304,
+        "motor": 0.000018619288758166303,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726948116898832
+        ]
+      },
+      {
+        "tick": 80,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.945267494897588,
+        "dnActivity": 0.6990416439578577,
+        "motor": 0.000018990416439578577,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726956298452537
+        ]
+      }
+    ],
+    "finalStateHash": "4b923d20"
+  },
+  "runB": {
+    "seed": 424242,
+    "controller": "connectome-rate-v1",
+    "graphHash": "6a141227d8bd4d5f5432bdb7e2a038f81941b2ef5446b0904ee54d7782b649c6",
+    "connectomeDataset": "FAFB",
+    "graphIdentity": {
+      "label": "CONNECTOME-DERIVED",
+      "calibrated": false,
+      "units": {
+        "syn_count": "count",
+        "neurotransmitter_probability": "probability"
+      },
+      "assumptions": [
+        "The graph represents released proofread connectivity, not a complete dynamical neural model.",
+        "Only LC4 to DNp02/DNp11 edges are retained."
+      ],
+      "limitations": [
+        "Synaptic weights are not converted into membrane dynamics or motor commands.",
+        "Cell-type annotation and release licensing must be rechecked before commercial redistribution."
+      ],
+      "version": "FAFB-v783",
+      "sourceReferences": [
+        "https://zenodo.org/records/10676866",
+        "https://doi.org/10.1038/s41586-024-07558-y",
+        "https://doi.org/10.1038/s41586-024-07686-5",
+        "https://github.com/flyconnectome/flywire_annotations"
+      ],
+      "licenseNotice": "FlyWire official guidance says CC BY-NC 4.0; Zenodo API metadata reports CC BY 4.0. Conservative interpretation: CC BY-NC 4.0 pending clarification."
+    },
+    "edges": 265,
+    "synapses": 1924,
+    "initialPosition": [
+      4.2,
+      0,
+      1.5
+    ],
+    "initialVelocity": [
+      0.12,
+      0,
+      0
+    ],
+    "loomingStartTick": 60,
+    "peakLooming": 0.9987999999999992,
+    "peakLC4Activity": 0.9987999999999991,
+    "peakDNActivity": 0.9608455999999986,
+    "motorResponseTick": 61,
+    "initialMotor": 0.000012,
+    "peakMotor": 0.000021608455999999988,
+    "trajectoryDelta": [
+      0.5993999999999993,
+      0,
+      1.2504624845946033
+    ],
+    "trajectory": [
+      {
+        "tick": 1,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.201988350000001,
+          0,
+          1.5006047897916666
+        ]
+      },
+      {
+        "tick": 2,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.203965117861251,
+          0,
+          1.5018108464744635
+        ]
+      },
+      {
+        "tick": 3,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.205930371049709,
+          0,
+          1.5036146676687498
+        ]
+      },
+      {
+        "tick": 4,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.207884176638344,
+          0,
+          1.5060127713962461
+        ]
+      },
+      {
+        "tick": 5,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.209826601309426,
+          0,
+          1.5090016959611963
+        ]
+      },
+      {
+        "tick": 6,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.211757711356799,
+          0,
+          1.5125779998322224
+        ]
+      },
+      {
+        "tick": 7,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2136775726881455,
+          0,
+          1.5167382615248663
+        ]
+      },
+      {
+        "tick": 8,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.215586250827237,
+          0,
+          1.5214790794848174
+        ]
+      },
+      {
+        "tick": 9,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2174838109161685,
+          0,
+          1.5267970719718185
+        ]
+      },
+      {
+        "tick": 10,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.219370317717582,
+          0,
+          1.5326888769442493
+        ]
+      },
+      {
+        "tick": 11,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.221245835616877,
+          0,
+          1.5391511519443823
+        ]
+      },
+      {
+        "tick": 12,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.223110428624408,
+          0,
+          1.5461805739843064
+        ]
+      },
+      {
+        "tick": 13,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.224964160377671,
+          0,
+          1.5537738394325145
+        ]
+      },
+      {
+        "tick": 14,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.226807094143471,
+          0,
+          1.5619276639011535
+        ]
+      },
+      {
+        "tick": 15,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.228639292820085,
+          0,
+          1.5706387821339292
+        ]
+      },
+      {
+        "tick": 16,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.230460818939408,
+          0,
+          1.5799039478946657
+        ]
+      },
+      {
+        "tick": 17,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2322717346690855,
+          0,
+          1.5897199338565127
+        ]
+      },
+      {
+        "tick": 18,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.234072101814638,
+          0,
+          1.6000835314917985
+        ]
+      },
+      {
+        "tick": 19,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.235861981821568,
+          0,
+          1.6109915509625254
+        ]
+      },
+      {
+        "tick": 20,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.237641435777458,
+          0,
+          1.622440821011502
+        ]
+      },
+      {
+        "tick": 21,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.239410524414054,
+          0,
+          1.63442818885411
+        ]
+      },
+      {
+        "tick": 22,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.241169308109342,
+          0,
+          1.6469505200707013
+        ]
+      },
+      {
+        "tick": 23,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.242917846889605,
+          0,
+          1.6600046984996228
+        ]
+      },
+      {
+        "tick": 24,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.244656200431473,
+          0,
+          1.6735876261308626
+        ]
+      },
+      {
+        "tick": 25,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.24638442806396,
+          0,
+          1.687696223000317
+        ]
+      },
+      {
+        "tick": 26,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.248102588770488,
+          0,
+          1.7023274270846736
+        ]
+      },
+      {
+        "tick": 27,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2498107411909,
+          0,
+          1.7174781941969053
+        ]
+      },
+      {
+        "tick": 28,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.251508943623463,
+          0,
+          1.733145497882375
+        ]
+      },
+      {
+        "tick": 29,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2531972540268566,
+          0,
+          1.7493263293155437
+        ]
+      },
+      {
+        "tick": 30,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2548757300221505,
+          0,
+          1.7660176971972805
+        ]
+      },
+      {
+        "tick": 31,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.256544428894771,
+          0,
+          1.783216627652773
+        ]
+      },
+      {
+        "tick": 32,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.258203407596459,
+          0,
+          1.800920164130029
+        ]
+      },
+      {
+        "tick": 33,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.259852722747209,
+          0,
+          1.8191253672989716
+        ]
+      },
+      {
+        "tick": 34,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.261492430637206,
+          0,
+          1.8378293149511218
+        ]
+      },
+      {
+        "tick": 35,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.263122587228745,
+          0,
+          1.8570291018998648
+        ]
+      },
+      {
+        "tick": 36,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.264743248158138,
+          0,
+          1.8767218398812981
+        ]
+      },
+      {
+        "tick": 37,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2663544687376165,
+          0,
+          1.8969046574556563
+        ]
+      },
+      {
+        "tick": 38,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.26795630395722,
+          0,
+          1.9175746999093104
+        ]
+      },
+      {
+        "tick": 39,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.269548808486669,
+          0,
+          1.9387291291573387
+        ]
+      },
+      {
+        "tick": 40,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.271132036677234,
+          0,
+          1.960365123646664
+        ]
+      },
+      {
+        "tick": 41,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.272706042563589,
+          0,
+          1.9824798782597555
+        ]
+      },
+      {
+        "tick": 42,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.274270879865656,
+          0,
+          2.0050706042188926
+        ]
+      },
+      {
+        "tick": 43,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.275826601990439,
+          0,
+          2.0281345289909845
+        ]
+      },
+      {
+        "tick": 44,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.277373262033845,
+          0,
+          2.0516688961929455
+        ]
+      },
+      {
+        "tick": 45,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.278910912782498,
+          0,
+          2.0756709654976215
+        ]
+      },
+      {
+        "tick": 46,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.28043960671554,
+          0,
+          2.1001380125402647
+        ]
+      },
+      {
+        "tick": 47,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.281959396006422,
+          0,
+          2.125067328825551
+        ]
+      },
+      {
+        "tick": 48,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.283470332524685,
+          0,
+          2.150456221635142
+        ]
+      },
+      {
+        "tick": 49,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.284972467837728,
+          0,
+          2.176302013935784
+        ]
+      },
+      {
+        "tick": 50,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.286465853212573,
+          0,
+          2.202602044287941
+        ]
+      },
+      {
+        "tick": 51,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.28795053961761,
+          0,
+          2.229353666754964
+        ]
+      },
+      {
+        "tick": 52,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.289426577724337,
+          0,
+          2.256554250812783
+        ]
+      },
+      {
+        "tick": 53,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.2908940179090935,
+          0,
+          2.2842011812601317
+        ]
+      },
+      {
+        "tick": 54,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.292352910254773,
+          0,
+          2.3122918581292917
+        ]
+      },
+      {
+        "tick": 55,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.293803304552539,
+          0,
+          2.3408236965973552
+        ]
+      },
+      {
+        "tick": 56,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.295245250303521,
+          0,
+          2.369794126898009
+        ]
+      },
+      {
+        "tick": 57,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.296678796720503,
+          0,
+          2.3992005942338284
+        ]
+      },
+      {
+        "tick": 58,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.298103992729606,
+          0,
+          2.429040558689083
+        ]
+      },
+      {
+        "tick": 59,
+        "looming": 0,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.299520886971957,
+          0,
+          2.4593114951430524
+        ]
+      },
+      {
+        "tick": 60,
+        "looming": 0.001859055610690774,
+        "lc4Activity": 0,
+        "dnActivity": 0,
+        "motor": 0.000012,
+        "position": [
+          4.300929527805345,
+          0,
+          2.490010893183844
+        ]
+      },
+      {
+        "tick": 61,
+        "looming": 0.005252591278596341,
+        "lc4Activity": 0.00037181112213815484,
+        "dnActivity": 0.00005365234492453574,
+        "motor": 0.000012000536523449246,
+        "position": [
+          4.302626295639298,
+          0,
+          2.521136405188882
+        ]
+      },
+      {
+        "tick": 62,
+        "looming": 0.01127877601048155,
+        "lc4Activity": 0.0013479671534297921,
+        "dnActivity": 0.00024011615342577438,
+        "motor": 0.000012002401161534258,
+        "position": [
+          4.305639388005241,
+          0,
+          2.552686063982259
+        ]
+      },
+      {
+        "tick": 63,
+        "looming": 0.024838993387739094,
+        "lc4Activity": 0.003334128924840144,
+        "dnActivity": 0.000685213534266341,
+        "motor": 0.000012006852135342664,
+        "position": [
+          4.312419496693869,
+          0,
+          2.5846586280886243
+        ]
+      },
+      {
+        "tick": 64,
+        "looming": 0.05692429324459347,
+        "lc4Activity": 0.007635101817419934,
+        "dnActivity": 0.0016841766963800863,
+        "motor": 0.0000120168417669638,
+        "position": [
+          4.328462146622297,
+          0,
+          2.617054392818423
+        ]
+      },
+      {
+        "tick": 65,
+        "looming": 0.13251979647229106,
+        "lc4Activity": 0.01749294010285464,
+        "dnActivity": 0.003955781448764998,
+        "motor": 0.00001203955781448765,
+        "position": [
+          4.366259898236145,
+          0,
+          2.6498771662853984
+        ]
+      },
+      {
+        "tick": 66,
+        "looming": 0.30937155306962083,
+        "lc4Activity": 0.040498311376741924,
+        "dnActivity": 0.009206320563114108,
+        "motor": 0.000012092063205631142,
+        "position": [
+          4.45468577653481,
+          0,
+          2.683138961037889
+        ]
+      },
+      {
+        "tick": 67,
+        "looming": 0.7219057800766926,
+        "lc4Activity": 0.09427295971531771,
+        "dnActivity": 0.021428960565567333,
+        "motor": 0.000012214289605655673,
+        "position": [
+          4.660952890038346,
+          0,
+          2.7168709737855856
+        ]
+      },
+      {
+        "tick": 68,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.2197995237875927,
+        "dnActivity": 0.04993168776328186,
+        "motor": 0.000012499316877632818,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7267832226270294
+        ]
+      },
+      {
+        "tick": 69,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.375599619030074,
+        "dnActivity": 0.09664095962482924,
+        "motor": 0.000012966409596248292,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7268225096790037
+        ]
+      },
+      {
+        "tick": 70,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.5002396952240591,
+        "dnActivity": 0.15432940370193657,
+        "motor": 0.000013543294037019366,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7268476936111017
+        ]
+      },
+      {
+        "tick": 71,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.5999517561792471,
+        "dnActivity": 0.21775303156331144,
+        "motor": 0.000014177530315633116,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7268660401183156
+        ]
+      },
+      {
+        "tick": 72,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.6797214049433976,
+        "dnActivity": 0.283173875562147,
+        "motor": 0.00001483173875562147,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7268805979188886
+        ]
+      },
+      {
+        "tick": 73,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.7435371239547179,
+        "dnActivity": 0.34799020121449076,
+        "motor": 0.000015479902012144907,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726892863991148
+        ]
+      },
+      {
+        "tick": 74,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.7945896991637742,
+        "dnActivity": 0.41045096462164976,
+        "motor": 0.0000161045096462165,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726903662953192
+        ]
+      },
+      {
+        "tick": 75,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.8354317593310192,
+        "dnActivity": 0.46943612279986835,
+        "motor": 0.000016694361227998685,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726913489969078
+        ]
+      },
+      {
+        "tick": 76,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.8681054074648152,
+        "dnActivity": 0.5242883146770609,
+        "motor": 0.00001724288314677061,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.7269226629202215
+        ]
+      },
+      {
+        "tick": 77,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.8942443259718521,
+        "dnActivity": 0.5746845237132401,
+        "motor": 0.000017746845237132404,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726931397038231
+        ]
+      },
+      {
+        "tick": 78,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.9151554607774816,
+        "dnActivity": 0.6205387781464446,
+        "motor": 0.000018205387781464447,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726939844514006
+        ]
+      },
+      {
+        "tick": 79,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.9318843686219851,
+        "dnActivity": 0.6619288758166304,
+        "motor": 0.000018619288758166303,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726948116898832
+        ]
+      },
+      {
+        "tick": 80,
+        "looming": 0.9987999999999992,
+        "lc4Activity": 0.945267494897588,
+        "dnActivity": 0.6990416439578577,
+        "motor": 0.000018990416439578577,
+        "position": [
+          4.7993999999999994,
+          0,
+          2.726956298452537
+        ]
+      }
+    ],
+    "finalStateHash": "4b923d20"
+  },
+  "deterministic": true
+}

@@ -1,0 +1,264 @@
+{
+  "experiment": "deterministic-food-seeking-v1",
+  "runA": {
+    "seed": 271828,
+    "controller": {
+      "name": "HEURISTIC BASELINE CONTROLLER",
+      "version": "heuristic-food-fsm-v1",
+      "provenance": "HEURISTIC"
+    },
+    "initialPosition": [
+      -1.85,
+      -2.15,
+      1.5
+    ],
+    "initialVelocity": [
+      0,
+      0,
+      0
+    ],
+    "takeoffTick": 2,
+    "firstOdorDetectionTick": 4879,
+    "firstDirectionalGradientTick": 4880,
+    "approachTick": 4880,
+    "landingTick": 5031,
+    "foodContactTick": 5301,
+    "feedingStartTick": 5301,
+    "feedingEndTick": 5331,
+    "finalTick": 5332,
+    "finalPosition": [
+      -0.7385889663613937,
+      3.503541731619598,
+      1.6009286310694446
+    ],
+    "finalControllerState": {
+      "fsmState": "DISENGAGE",
+      "foodTargetId": "fruit-attractor",
+      "feedingStartTick": 5301,
+      "feedingEndTick": 5331,
+      "feedingReason": "feeding-duration-complete",
+      "stateEnteredTick": 5331,
+      "feedingStatus": "INACTIVE",
+      "controllerVersion": "heuristic-food-fsm-v1"
+    },
+    "finalBodyState": {
+      "position": [
+        -0.7385889663613937,
+        3.503541731619598,
+        1.6009286310694446
+      ],
+      "velocity": [
+        -0.009199318338661649,
+        -0.13377225222367337,
+        0.019717804166666658
+      ],
+      "orientation": [
+        0,
+        0,
+        0.10950193135990301,
+        0.993986582921747
+      ],
+      "angularVelocity": [
+        0,
+        0,
+        -0.08980146287661823
+      ],
+      "mass": 0.000001,
+      "radius": 0.0006,
+      "damping": 0.15,
+      "drag": 0.2
+    },
+    "trajectorySummary": {
+      "samples": 5332,
+      "bounds": [
+        {
+          "min": -1.85,
+          "max": -0.4490013946751032
+        },
+        {
+          "min": -2.15,
+          "max": 3.703620226147804
+        },
+        {
+          "min": 1.0003286300694445,
+          "max": 1.9725123816269685
+        }
+      ],
+      "displacement": [
+        1.1114110336386065,
+        5.6535417316195975,
+        0.6006000010000001
+      ]
+    },
+    "events": [
+      {
+        "state": "REST",
+        "tick": 1
+      },
+      {
+        "state": "TAKEOFF",
+        "tick": 2
+      },
+      {
+        "state": "EXPLORE",
+        "tick": 3
+      },
+      {
+        "state": "ODOR_SEARCH",
+        "tick": 4879
+      },
+      {
+        "state": "ODOR_TRACK",
+        "tick": 4880
+      },
+      {
+        "state": "LAND",
+        "tick": 5031
+      },
+      {
+        "state": "FOOD_CONTACT",
+        "tick": 5301
+      },
+      {
+        "state": "FEEDING",
+        "tick": 5302
+      },
+      {
+        "state": "DISENGAGE",
+        "tick": 5332
+      }
+    ],
+    "finalStateHash": "f78c502e"
+  },
+  "runB": {
+    "seed": 271828,
+    "controller": {
+      "name": "HEURISTIC BASELINE CONTROLLER",
+      "version": "heuristic-food-fsm-v1",
+      "provenance": "HEURISTIC"
+    },
+    "initialPosition": [
+      -1.85,
+      -2.15,
+      1.5
+    ],
+    "initialVelocity": [
+      0,
+      0,
+      0
+    ],
+    "takeoffTick": 2,
+    "firstOdorDetectionTick": 4879,
+    "firstDirectionalGradientTick": 4880,
+    "approachTick": 4880,
+    "landingTick": 5031,
+    "foodContactTick": 5301,
+    "feedingStartTick": 5301,
+    "feedingEndTick": 5331,
+    "finalTick": 5332,
+    "finalPosition": [
+      -0.7385889663613937,
+      3.503541731619598,
+      1.6009286310694446
+    ],
+    "finalControllerState": {
+      "fsmState": "DISENGAGE",
+      "foodTargetId": "fruit-attractor",
+      "feedingStartTick": 5301,
+      "feedingEndTick": 5331,
+      "feedingReason": "feeding-duration-complete",
+      "stateEnteredTick": 5331,
+      "feedingStatus": "INACTIVE",
+      "controllerVersion": "heuristic-food-fsm-v1"
+    },
+    "finalBodyState": {
+      "position": [
+        -0.7385889663613937,
+        3.503541731619598,
+        1.6009286310694446
+      ],
+      "velocity": [
+        -0.009199318338661649,
+        -0.13377225222367337,
+        0.019717804166666658
+      ],
+      "orientation": [
+        0,
+        0,
+        0.10950193135990301,
+        0.993986582921747
+      ],
+      "angularVelocity": [
+        0,
+        0,
+        -0.08980146287661823
+      ],
+      "mass": 0.000001,
+      "radius": 0.0006,
+      "damping": 0.15,
+      "drag": 0.2
+    },
+    "trajectorySummary": {
+      "samples": 5332,
+      "bounds": [
+        {
+          "min": -1.85,
+          "max": -0.4490013946751032
+        },
+        {
+          "min": -2.15,
+          "max": 3.703620226147804
+        },
+        {
+          "min": 1.0003286300694445,
+          "max": 1.9725123816269685
+        }
+      ],
+      "displacement": [
+        1.1114110336386065,
+        5.6535417316195975,
+        0.6006000010000001
+      ]
+    },
+    "events": [
+      {
+        "state": "REST",
+        "tick": 1
+      },
+      {
+        "state": "TAKEOFF",
+        "tick": 2
+      },
+      {
+        "state": "EXPLORE",
+        "tick": 3
+      },
+      {
+        "state": "ODOR_SEARCH",
+        "tick": 4879
+      },
+      {
+        "state": "ODOR_TRACK",
+        "tick": 4880
+      },
+      {
+        "state": "LAND",
+        "tick": 5031
+      },
+      {
+        "state": "FOOD_CONTACT",
+        "tick": 5301
+      },
+      {
+        "state": "FEEDING",
+        "tick": 5302
+      },
+      {
+        "state": "DISENGAGE",
+        "tick": 5332
+      }
+    ],
+    "finalStateHash": "f78c502e"
+  },
+  "deterministic": true
+}

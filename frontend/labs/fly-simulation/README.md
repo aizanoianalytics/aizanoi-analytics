@@ -13,9 +13,11 @@ A dependency-free deterministic core and browser spectator bridge. The core can 
 - **CONNECTOME-DERIVED:** selected FlyWire FAFB v783 LC4→DNp02/DNp11 topology only; not a full-brain model.
 - **BIOLOGICALLY CONSTRAINED:** Drosophila profile provenance and visual-sampling assumptions; implementation remains reduced-order.
 - **MODELLED:** rigid-body integration, gravity, damping/drag, deterministic orientation, authored collision/contact, room/zone lookup, directional vision/looming, sensor fields, checkpoint/replay state, neural rate dynamics and telemetry metadata.
-- **HEURISTIC:** named baseline controller foundation; it is not yet a complete food-seeking FSM.
+- **HEURISTIC:** deterministic sensor-driven baseline food-seeking FSM (`REST` → `TAKEOFF` → search/track/approach → contact/feed/disengage); it is not biological or oracle-guided.
 
-Every scientific subsystem carries machine-readable `units`, `calibrated`, `assumptions`, `limitations`, and `version`. Missing provenance metadata is rejected. Vision is a modest directional ray/looming model; olfaction and audition remain explicit `UNAVAILABLE` where no authoritative adapter exists.
+Every scientific subsystem carries machine-readable `units`, `calibrated`, `assumptions`, `limitations`, and `version`. Missing provenance metadata is rejected. Vision is a modest directional ray/looming model; olfaction is a directional paired-antenna field model; audition remains explicit `UNAVAILABLE` where no authoritative adapter exists.
+
+Food semantics are intentionally separated: the odor radius is a large modelled navigation field; taste and feeding require a geometry-derived physical contact envelope. The current authored target derives a `0.0275 m` horizontal contact radius from the food-support width and uses a `0.15 m` vertical fruit/support offset tolerance. These are `MODELLED` geometry tolerances, not calibrated receptor physiology. The FSM exposes feeding start/end ticks and target id in controller telemetry. Airflow remains zero/inactive where authored and absolute temperature remains `UNAVAILABLE`.
 
 ## Determinism and limits
 
