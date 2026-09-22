@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-22-notion-mail-agents",
+  "title": "Notion winds down its Notion Mail inbox as it concentrates engineering on agent-managed email workflows",
+  "summary": "Notion is shutting down the standalone Notion Mail product on Tuesday, roughly 14 months after launch, citing internal data showing that more than half of its users now let AI agents triage and reply on their behalf. The company said Gmail AI Connector, mail blocks and Gmail-based agent tools will remain available, while users with only Notion Mail-resident data have until end-of-day Monday to export. The closure continues the run-down of the Skiff encrypted-email assets Notion acquired in 2024.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Notion", "Notion Mail", "AI agents", "email", "product shutdown"],
+  "sources": [
+    {
+      "publisher": "ChatAI",
+      "url": "https://chatai.com/posts/notion-to-shut-down-notion-mail-inbox-as-it-shifts-to-ai-agents",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    },
+    {
+      "publisher": "Stack Futures",
+      "url": "https://stackfutures.com/page/32",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}

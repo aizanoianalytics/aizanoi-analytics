@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-22-openai-nvidia-deal-on-ice",
+  "title": "Nvidia's original $100 billion OpenAI commitment stalls as both sides keep the underlying partnership intact",
+  "summary": "More than four months after Nvidia and OpenAI signed a non-binding memorandum for up to $100 billion in chip funding tied to 10 gigawatts of new data-center capacity, the headline figure has effectively gone quiet, with the Wall Street Journal reporting that some Nvidia executives have privately played down the original envelope. The two companies continue to collaborate on systems deployment, and analysts note the September 2025 announcement was always framed as a letter of intent rather than a binding contract.",
+  "category": "ai",
+  "priority": 65,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Nvidia", "OpenAI", "data centers", "AI infrastructure", "investment"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/nvidias-plan-invest-up-100-billion-openai-has-stalled-wsj-reports-2026-01-31/",
+      "publishedAt": "2026-01-30T22:00:00Z"
+    }
+  ]
+}

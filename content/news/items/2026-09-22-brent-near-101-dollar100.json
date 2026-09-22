@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-22-brent-near-101-dollar100",
+  "title": "Brent crude holds near $101 as traders weigh Trump-Xi diplomacy against persistent Middle East shipping flows",
+  "summary": "Brent crude rose 0.84% on Tuesday to $101.18 a barrel after four straight sessions of declines, with the market balancing hopes of a Trump-Pezeshkian meeting at the United Nations against the fact that Saudi Arabia has continued moving roughly 2.9 million barrels per day through the Strait of Hormuz. Satellite imagery over the weekend showed supertankers with combined capacity of 14 million barrels at Saudi Gulf export terminals, the highest count observed since at least June, even as the kingdom's East-West pipeline remains offline after recent attacks.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Brent crude", "oil", "Saudi Arabia", "Strait of Hormuz", "Iran", "OPEC"],
+  "sources": [
+    {
+      "publisher": "Trading Economics",
+      "url": "https://tradingeconomics.com/commodity/brent-crude-oil",
+      "publishedAt": "2026-09-22T00:01:00Z"
+    }
+  ]
+}

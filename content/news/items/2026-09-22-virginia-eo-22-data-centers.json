@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-22-virginia-eo-22-data-centers",
+  "title": "Virginia Governor Spanberger signs Executive Order 22 to slow data-center approvals and convene an AI risk task force",
+  "summary": "Virginia Governor Abigail Spanberger signed Executive Order 22 on September 18, directing state agencies to slow approvals for new data centers, prohibiting executive-branch officials from signing non-disclosure agreements tied to those projects and standing up a dedicated task force on artificial-intelligence risks. The order also requires expedited noise regulations and a review of backup-power systems used by hyperscale sites, framing the move as part of a same-day wave that included a comparable California executive order on AI safety.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Virginia", "Spanberger", "data centers", "AI policy", "executive order"],
+  "sources": [
+    {
+      "publisher": "AI Chat Daily",
+      "url": "https://aichatdaily.com/ai-security/virginia-s-spanberger-signs-executive-order-22-curbing",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    }
+  ]
+}

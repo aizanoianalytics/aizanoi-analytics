@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-22-mac-studio-m5-ultra-stores",
+  "title": "Apple Mac Studio with M5 Max and M5 Ultra reaches retail as the 512GB unified-memory variant slips to late October",
+  "summary": "Apple's new Mac Studio, powered by the M5 Max and the all-new M5 Ultra, goes on sale in stores on Tuesday, with Apple quoting up to 4.3x the AI performance of the prior generation measured against an M3 Ultra machine. The configuration that draws the most attention from local-AI developers, 512GB of unified memory, is being held back from the launch wave, with Apple only committing to a late-October ship date for that SKU.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "Mac Studio", "M5 Max", "M5 Ultra", "Apple Silicon", "AI compute"],
+  "sources": [
+    {
+      "publisher": "WebAiRadar",
+      "url": "https://webairadar.com",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}

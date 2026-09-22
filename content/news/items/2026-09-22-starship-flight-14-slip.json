@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-22-starship-flight-14-slip",
+  "title": "SpaceX slips Starship Flight 14 from Tuesday to September 28 as the first orbital attempt with Starlink V3 awaits clearance",
+  "summary": "SpaceX has pushed the target for the 14th Starship-Super Heavy test flight from Starbase, Texas, from Tuesday September 22 to no earlier than Monday September 28, pending regulatory approval, with the FAA still showing the September 22 airspace window in its Current Operations Plan Advisory. Flight 14 is intended as Starship's first orbital-class test, with a roughly 10-hour mission profile, a Pacific splashdown and the first deployment of 26 production Starlink V3 satellites. Three of those satellites carry cameras to photograph the upper-stage heat shield during re-entry.",
+  "category": "technology",
+  "priority": 76,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["SpaceX", "Starship", "Flight 14", "Starlink V3", "Starbase", "FAA"],
+  "sources": [
+    {
+      "publisher": "TeslaNorth",
+      "url": "https://teslanorth.com/2026/09/17/spacex-starship-flight-14-september-28",
+      "publishedAt": "2026-09-17T00:00:00Z"
+    },
+    {
+      "publisher": "Advanced Television",
+      "url": "https://www.advanced-television.com/2026/09/18/spacex-delays-starship-14-again",
+      "publishedAt": "2026-09-18T00:00:00Z"
+    },
+    {
+      "publisher": "Aviation Week",
+      "url": "https://aviationweek.com/space/launch-vehicles-propulsion/faa-clears-starship-sept-22-flight-test",
+      "publishedAt": "2026-09-14T00:00:00Z"
+    }
+  ]
+}
