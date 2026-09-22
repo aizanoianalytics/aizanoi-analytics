@@ -107,7 +107,12 @@ export const BUILDINGS = [
 
 export const WATERS = []; // Landlocked airfield
 export const BOUNDS = { minX: -900, maxX: 900, minZ: -450, maxZ: 1300 };
-export const SPAWN = { x: 0, z: -270, angle: 0 }; // Facing North into the Grand Terminal Hall
+const SPAWN_POSITION = { x: 0, z: -270 };
+const SPAWN_TARGET = BUILDINGS.find((building) => building.id === 'terminal');
+export const SPAWN = {
+  ...SPAWN_POSITION,
+  angle: Math.atan2(SPAWN_TARGET.x - SPAWN_POSITION.x, SPAWN_TARGET.z - SPAWN_POSITION.z),
+}; // Facing the Grand Terminal Hall
 
 export const TELEPORTS = [
   { id: 'plaza', name: 'Departures Curbside Plaza' },
@@ -155,11 +160,14 @@ export function compactAirportLayout({ xScale = 0.39, zScale = 0.82 } = {}) {
     points: street.points.map(scalePoint),
     width: street.width * Math.min(xScale, zScale),
   }));
+  const spawn = { ...SPAWN, x: SPAWN.x * xScale, z: SPAWN.z * zScale };
+  const spawnTarget = buildings.find((building) => building.id === 'terminal');
+  spawn.angle = Math.atan2(spawnTarget.x - spawn.x, spawnTarget.z - spawn.z);
   return {
     BUILDINGS: buildings,
     REGIONS: regions,
     STREETS: streets,
     BOUNDS: { minX: BOUNDS.minX * xScale, maxX: BOUNDS.maxX * xScale, minZ: BOUNDS.minZ * zScale, maxZ: BOUNDS.maxZ * zScale },
-    SPAWN: { ...SPAWN, x: SPAWN.x * xScale, z: SPAWN.z * zScale },
+    SPAWN: spawn,
   };
 }

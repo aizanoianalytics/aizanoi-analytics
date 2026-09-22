@@ -249,7 +249,7 @@ export const WATERS = [
 
 /* ── Spawn & Bounds ───────────────────────────────────────── */
 
-export const SPAWN = { x: 340, z: 280, angle: Math.PI * 0.75 };
+export const SPAWN = { x: 340, z: 280, angle: 0 }; // Angle is derived after anisotropic compaction.
 
 export const BOUNDS = { minX: -450, maxX: 1100, minZ: -450, maxZ: 700 };
 
@@ -281,6 +281,8 @@ for (const building of BUILDINGS) {
 // sokulmuyor — width/radius mantığı korunuyor.)
 
 compactPoint(SPAWN);
+const SPAWN_TARGET = BUILDINGS.find((building) => building.id === 'parthenon');
+SPAWN.angle = Math.atan2(SPAWN_TARGET.x - SPAWN.x, SPAWN_TARGET.z - SPAWN.z);
 BOUNDS.minX *= COMPACTION.xFactor;
 BOUNDS.maxX *= COMPACTION.xFactor;
 BOUNDS.minZ *= COMPACTION.zFactor;

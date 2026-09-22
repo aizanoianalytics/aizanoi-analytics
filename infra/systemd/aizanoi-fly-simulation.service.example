@@ -1,0 +1,45 @@
+[Unit]
+Description=Aizanoi Fly World authoritative simulation (read-only telemetry)
+Documentation=https://github.com/aizanoianalytics/aizanoi-analytics/blob/main/docs/fly-world-architecture.md
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/aizanoi-analytics-public
+ExecStart=/usr/bin/env node scripts/fly-simulation/start.mjs
+Restart=on-failure
+RestartSec=3s
+TimeoutStopSec=15s
+Environment=NODE_ENV=production
+Environment=FLY_SIM_HOST=127.0.0.1
+Environment=FLY_SIM_PORT=8787
+Environment=FLY_SIM_INTERVAL_MS=20
+Environment=FLY_SIM_MAX_CLIENTS=64
+Environment=FLY_SIM_ALLOWED_ORIGIN=https://aizanoianalytics.com
+Environment="FLY_SIM_CONTROLLER=HEURISTIC BASELINE CONTROLLER"
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+DynamicUser=true
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+LockPersonality=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_INET AF_INET6
+MemoryDenyWriteExecute=false
+MemoryMax=256M
+TasksMax=64
+UMask=0077
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aizanoi-fly-simulation
+
+[Install]
+WantedBy=multi-user.target

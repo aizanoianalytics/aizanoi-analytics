@@ -125,7 +125,7 @@ export function parseWebSocketFrames(chunk, {
   return parserResult(buffer, messages, fragmented, fragmentedOpcode);
 }
 
-function validUpgrade(req, { allowedHosts, allowedOrigins }) {
+function validUpgrade(req, { allowedHosts, allowedOrigins, requireOrigin = false }) {
   const host = String(req.headers.host || '').toLowerCase();
   const origin = req.headers.origin == null ? null : String(req.headers.origin);
   const hostOk = allowedHosts.some((value) => value instanceof RegExp
@@ -133,7 +133,9 @@ function validUpgrade(req, { allowedHosts, allowedOrigins }) {
     : String(value).toLowerCase() === host
       || (String(value).toLowerCase() === '127.0.0.1' && host.startsWith('127.0.0.1:'))
       || (String(value).toLowerCase() === 'localhost' && host.startsWith('localhost:')));
-  const originOk = origin === null || allowedOrigins.some((value) => value instanceof RegExp ? value.test(origin) : String(value) === origin);
+  const originOk = origin === null
+    ? !requireOrigin
+    : allowedOrigins.some((value) => value instanceof RegExp ? value.test(origin) : String(value) === origin);
   return req.url === FLY_SPECTATOR_PATH
     && String(req.headers.upgrade || '').toLowerCase() === 'websocket'
     && String(req.headers.connection || '').toLowerCase().split(',').map((value) => value.trim()).includes('upgrade')
@@ -158,11 +160,14 @@ export function createFlySimulationService({
   controller = 'HEURISTIC TEST CONTROLLER',
   allowedHosts = [`127.0.0.1:${port}`, '127.0.0.1', 'localhost'],
   allowedOrigins = [],
+  requireOrigin = false,
+  maxClients = 64,
   maxFrame = DEFAULT_MAX_FRAME,
   maxMessage = DEFAULT_MAX_MESSAGE,
   maxBuffer = DEFAULT_MAX_BUFFER
 } = {}) {
   if (!simulation && !environment) throw new TypeError('authored Fly World environment required');
+  if (!Number.isInteger(maxClients) || maxClients < 1 || maxClients > 1024) throw new RangeError('maxClients must be an integer from 1 to 1024');
   const sim = simulation ?? new FlySimulation(environment);
   if (!(sim instanceof FlySimulation)) throw new TypeError('server-authoritative FlySimulation required');
   const authored = sim.environment?.meta?.artifactHashes;
@@ -231,8 +236,12 @@ export function createFlySimulationService({
   }
 
   function onUpgrade(req, socket) {
-    if (!validUpgrade(req, { allowedHosts, allowedOrigins })) {
+    if (!validUpgrade(req, { allowedHosts, allowedOrigins, requireOrigin })) {
       socket.end('HTTP/1.1 403 Forbidden\r\nConnection: close\r\n\r\n');
+      return;
+    }
+    if (clients.size >= maxClients) {
+      socket.end('HTTP/1.1 503 Service Unavailable\r\nConnection: close\r\nRetry-After: 5\r\n\r\n');
       return;
     }
     const accept = crypto.createHash('sha1').update(req.headers['sec-websocket-key'] + GUID).digest('base64');
@@ -299,7 +308,7 @@ export function createFlySimulationService({
     return validUpgrade({ url: FLY_SPECTATOR_PATH, headers: {
       host: requestHost, origin, upgrade: 'websocket', connection: 'Upgrade',
       'sec-websocket-version': '13', 'sec-websocket-key': crypto.randomBytes(16).toString('base64')
-    } }, { allowedHosts, allowedOrigins });
+    } }, { allowedHosts, allowedOrigins, requireOrigin });
   }
 
   const service = {
@@ -309,7 +318,7 @@ export function createFlySimulationService({
     stop,
     address: () => server.address(),
     probeUpgrade,
-    status: () => ({ running: started, listening, host, authority: 'server-authoritative', protocol: 'telemetry-1', scheduler: scheduler.status(), clients: clients.size, metrics: { ...metrics } })
+    status: () => ({ running: started, listening, host, authority: 'server-authoritative', protocol: 'telemetry-1', scheduler: scheduler.status(), clients: clients.size, maxClients, metrics: { ...metrics } })
   };
   return service;
 }

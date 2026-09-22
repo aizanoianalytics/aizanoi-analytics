@@ -8,7 +8,7 @@ These are sanitized reference configurations for deployment. **Production Nginx/
 - `nginx/snippets/aizanoi-hr-analytics-security-headers.conf.example` — complete route-scoped header set for the original self-contained HR dashboard exports;
 - `nginx/snippets/aizanoi-historical-world-security-headers.conf.example` — complete route-scoped header set for worlds that still require inline boot code.
 
-The public Aizanoi web runtime does not require a Node/Express backend or an `aizanoi-backend.service` systemd unit. Hermes Agent is a separate server service and is outside this visitor-facing deployment example.
+The public Aizanoi web runtime remains static-first and does not require a generic Node/Express backend or an `aizanoi-backend.service` unit. The sole server-side product exception is the loopback-only `aizanoi-fly-simulation` service: it owns the Fly World closed loop and publishes only versioned, read-only spectator telemetry through one exact same-origin WebSocket route. Hermes Agent remains a separate private server service and is never exposed to the visitor runtime.
 
 ## Nginx baseline decisions
 
@@ -18,7 +18,8 @@ The reference Nginx configuration intentionally documents the operational assump
 - `404.html`, `500.html` and `503.html` are the custom visitor-facing error documents;
 - Aizanoi, Rome and Athens Historical World routes are explicitly served;
 - `/api/chat` returns `410 Gone` for stale historical clients;
-- every other `/api/*` path returns 404; there is no application reverse proxy;
+- every other `/api/*` path returns 404; there is no generic application reverse proxy;
+- `/labs/fly-world/telemetry-1` is the sole narrow reverse-proxy exception, forwarding read-only versioned telemetry to the loopback authoritative Fly Simulation service;
 - the shell, product landings and shared assets use the strict shared CSP: neither `script-src` nor `style-src` permits `unsafe-inline`;
 - `/web-editor-preview/` is the sole route with the Web Editor preview policy; it permits authored script/style execution only because the parent embeds it with an opaque-origin iframe sandbox that omits same-origin, forms, popups, downloads and top navigation;
 - the HR Analytics Full Set keeps the original generator's self-contained HTML format, so only that exact route loads the HR-specific header snippet that permits embedded scripts and styles;
@@ -34,13 +35,14 @@ When the example changes in Git, apply the corresponding production change delib
 
 1. compare the server's active Nginx virtual host with the example;
 2. preserve the real domain, TLS certificate paths and server-specific settings;
-3. preserve the static-only boundary: no Aizanoi application reverse proxy or visitor-facing Node listener;
+3. preserve the static-first boundary: no generic Aizanoi application reverse proxy, account backend, shell or Hermes bridge; the exact Fly telemetry route is the only approved exception;
 4. install/update every route-scoped header snippet referenced by the virtual host, including the Web Editor preview snippet when that feature is released;
-5. run `nginx -t` before reload;
-6. reload rather than restart when possible;
-7. verify `/`, `/web-editor-preview/`, the HR Analytics Full Set and one interactive dashboard, `/historic-world/`, Rome, Athens, `/api/chat`, another missing `/api/...` path and the custom error documents;
-8. verify compression and cache headers from the public edge rather than assuming the example is active;
-9. keep credentials, production snapshots and off-site backups outside this repository.
+5. install or update `infra/systemd/aizanoi-fly-simulation.service.example` when Fly Simulation runtime/service code changes, restart it only at the approved Git SHA, and verify loopback binding plus read-only public telemetry;
+6. run `nginx -t` before reload;
+7. reload rather than restart when possible;
+8. verify `/`, `/web-editor-preview/`, the HR Analytics Full Set and one interactive dashboard, `/historic-world/`, Rome, Athens, `/labs/fly-world/`, the live Fly telemetry stream, `/api/chat`, another missing `/api/...` path and the custom error documents;
+9. verify compression and cache headers from the public edge rather than assuming the example is active;
+10. keep credentials, production snapshots and off-site backups outside this repository.
 
 ## Provider / server settings that Git cannot prove
 

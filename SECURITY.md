@@ -19,9 +19,11 @@ Internet
    +-- HTTPS / Nginx
            |
            +-- static HTML / CSS / JavaScript / JSON / assets
+           +-- exact /labs/fly-world/telemetry-1 WSS
+                   -> loopback authoritative Fly Simulation (read-only output)
 ```
 
-There is no public Aizanoi Analytics Node/Express backend, no public remote shell, no terminal WebSocket and no general visitor API. Historical `/api/chat` returns `410 Gone`; other `/api/*` paths return `404`.
+There is no public generic Aizanoi Analytics Node/Express backend, public remote shell, terminal WebSocket, account system or general visitor API. The sole backend exception is the exact versioned Fly World telemetry route: browsers may observe identity-bound simulation frames but cannot submit commands or mutate authority. The service binds loopback, requires the canonical Origin, caps spectators and exposes no arbitrary execution surface. Historical `/api/chat` returns `410 Gone`; other `/api/*` paths return `404`.
 
 The former browser research Workbench is retired. Its local archive, notes, data tools, source reader, artifact viewer, projects, virtual terminal and monitor are absent from the supported frontend. Reports should be evaluated against current reachable code, while any change that accidentally restores these removed surfaces is security-relevant.
 
@@ -35,7 +37,7 @@ Useful reports include:
 - path traversal or unintended file exposure;
 - secrets committed to the repository;
 - service worker behavior that escapes same-origin/static-delivery boundaries;
-- a frontend change that restores a public backend, remote shell or retired Workbench surface;
+- a frontend or infrastructure change that restores a generic public backend, writable Fly command path, remote shell or retired Workbench surface;
 - dependency or GitHub Actions compromise with practical impact;
 - deployment examples that encourage unsafe configuration.
 

@@ -18,6 +18,7 @@ const productModules=[
   'frontend/js/v3/apps/news/src/app.js'
 ].map(read).join('\n');
 const nginx=read('infra/nginx/aizanoianalytics.com.conf.example');
+const nginxProxyTargets=[...nginx.matchAll(/proxy_pass\s+([^;]+);/g)].map((match)=>match[1]);
 const staticHeaders=read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const webEditorPreviewHeaders=read('infra/nginx/snippets/aizanoi-web-editor-preview-headers.conf.example');
 const historicalHeaders=read('infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example');
@@ -55,10 +56,12 @@ test('shell escapes dynamic notification and command content',()=>{
   assert.match(shell,/escapeHtml\(row\.label\)/);
 });
 
-test('reverse proxy exposes no application backend',()=>{
+test('reverse proxy exposes only the narrow read-only Fly telemetry exception',()=>{
   assert.match(nginx,/location = \/api\/chat[\s\S]*return 410;/);
   assert.match(nginx,/location \^~ \/api\/[\s\S]*return 404;/);
-  assert.doesNotMatch(nginx,/proxy_pass|127\.0\.0\.1:3001/);
+  assert.deepEqual(nginxProxyTargets,['http://127.0.0.1:8787/spectator/telemetry-1']);
+  assert.match(nginx,/location = \/labs\/fly-world\/telemetry-1/);
+  assert.doesNotMatch(nginx,/127\.0\.0\.1:3001/);
   assert.doesNotMatch(browserApp,/proxy_pass|127\.0\.0\.1:3001/);
 });
 

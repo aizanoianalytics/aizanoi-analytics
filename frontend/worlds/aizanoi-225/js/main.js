@@ -222,9 +222,9 @@ async function init() {
   ]);
 
   intro.onComplete = () => {
+    // Complete and skipped intros share one deterministic, collision-safe arrival.
+    controls.teleportTo(SPAWN.x, SPAWN.z, SPAWN.angle, PLAYER_HEIGHT);
     controls.enable();
-    // Intro flew the camera to the spawn point; sync the fixed-step sim to it
-    // (skip-path lands mid-curve if ESC/tap fired, so never assume SPAWN here).
     simPos.copy(camera.position);
     pose.snap();
     audio.init();
