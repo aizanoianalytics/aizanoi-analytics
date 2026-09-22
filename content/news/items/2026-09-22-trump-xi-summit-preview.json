@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-22-trump-xi-summit-preview",
+  "title": "Trump and Xi prepare for a Thursday White House summit framed as a low-expectations truce-management exercise",
+  "summary": "President Donald Trump will personally greet President Xi Jinping at Joint Base Andrews on Tuesday evening ahead of Thursday's White House summit and a state dinner that Nvidia chief Jensen Huang is expected to attend. Officials and analysts are publicly framing the meeting as a high-stakes but low-deliverable encounter focused on extending the November 10 trade truce, easing AI and rare-earth tensions, and managing the war in Iran. CSIS will host a Friday morning State of Play webcast to assess the outcomes.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Trump", "Xi Jinping", "trade truce", "rare earths", "tariffs", "White House"],
+  "sources": [
+    {
+      "publisher": "Chosun",
+      "url": "https://www.chosun.com/english/world-en/2026/09/19/ZZC73OPISJBB7L4CDTO27ALNVU/",
+      "publishedAt": "2026-09-19T08:33:00Z"
+    },
+    {
+      "publisher": "CSIS",
+      "url": "https://www.csis.org/events/what-did-trump-and-xi-agree-white-house-state-play",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}

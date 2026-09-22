@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-22-bessent-he-ai-dialogue",
+  "title": "US and China open talks on a bilateral AI incident notification system ahead of the Trump-Xi summit",
+  "summary": "Treasury Secretary Scott Bessent said on Sunday that he and Chinese Vice Premier He Lifeng agreed in New York to study a US-China AI Dialogue, including a Washington-proposed mechanism for the two governments to notify each other about AI-related incidents that rise to a national-security level. The roughly eight-hour meeting at JPMorgan Chase headquarters also covered trade and critical minerals and was billed by Bessent as preparation for Thursday's White House summit between President Donald Trump and President Xi Jinping.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["US-China", "Bessent", "He Lifeng", "AI dialogue", "Trump-Xi summit", "AI safety"],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/20/bessent-he-lifeng-trump-xi-summit.html",
+      "publishedAt": "2026-09-20T22:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/finance/us-treasurys-bessent-chinas-he-launch-talks-ai-trade-critical-minerals-2026-09-20/",
+      "publishedAt": "2026-09-20T23:30:00Z"
+    },
+    {
+      "publisher": "France 24",
+      "url": "https://www.france24.com/en/americas/20260921-us-china-discuss-ai-safety-ahead-of-trump-xi-summit",
+      "publishedAt": "2026-09-21T08:07:00Z"
+    }
+  ]
+}

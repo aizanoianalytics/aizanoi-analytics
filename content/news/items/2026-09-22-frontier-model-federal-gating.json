@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-22-frontier-model-federal-gating",
+  "title": "Anthropic, OpenAI and Google deepen their federal-frontier-model gating regime as analysts watch open weights",
+  "summary": "Following the limited customer-by-customer release of OpenAI's GPT-5.6 to US-vetted partners and Anthropic's clearance of Claude Mythos 5 to roughly 100 trusted US organisations, analysts are now framing the two-tier release pattern as a de facto US frontier-model gate. The conversation has expanded to whether open-weight releases above a defined capability line will face the same preclearance regime, with a Stack Futures tracker counting two labs gated within a single seven-day window under voluntary White House review.",
+  "category": "technology",
+  "priority": 74,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "OpenAI", "Google", "frontier models", "AI policy", "federal review"],
+  "sources": [
+    {
+      "publisher": "Stack Futures",
+      "url": "https://stackfutures.com/page/32",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}

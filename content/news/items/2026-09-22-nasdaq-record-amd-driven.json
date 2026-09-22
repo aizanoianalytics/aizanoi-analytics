@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-22-nasdaq-record-amd-driven",
+  "title": "Nasdaq closes at a record as the AI trade re-ignites, with Meta's Muse assistant pulling megacaps higher",
+  "summary": "The Nasdaq Composite jumped 2.26% to 27,122.09 on Monday for its first closing high in nearly four months, while the S&P 500 advanced 1.49% to 7,764.70 and the Dow Jones Industrial Average rose 0.71% to 52,048.83. The Magnificent Seven all rallied, with Meta up 11.43% after Wells Fargo lifted its price target on the launch of the Muse AI assistant, and AMD's trillion-dollar moment added a fresh layer of optimism around AI infrastructure. The 10-year Treasury yield slipped below 5% and Brent crude held near $100 as traders repositioned for a diplomatic week in New York.",
+  "category": "economy-markets",
+  "priority": 85,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Nasdaq", "S&P 500", "Meta", "AMD", "AI trade", "Treasury yields"],
+  "sources": [
+    {
+      "publisher": "Seoul Economic Daily",
+      "url": "https://en.sedaily.com/international/2026/09/22/nasdaq-hits-record-high-as-ai-stocks-surge-amd-tops-1",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    },
+    {
+      "publisher": "Marketscreener",
+      "url": "https://ae.marketscreener.com/news/wall-street-ends-sharply-higher-as-ai-optimism-reignites-and-treasury-yields-retreat-ce785adbd18bf627",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}

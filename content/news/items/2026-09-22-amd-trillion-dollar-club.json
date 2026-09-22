@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-22-amd-trillion-dollar-club",
+  "title": "AMD closes in on $1 trillion valuation as AI chip rally lifts the broader semiconductor sector",
+  "summary": "Advanced Micro Devices briefly crossed a $1 trillion market capitalisation on Monday, with shares jumping roughly 9% to an intraday high of $613.92 after a five-session rally that added about 24%. The move leaves AMD in a small US semiconductor club that includes Nvidia, Broadcom and Micron and is being read as another signal that investor appetite for AI compute remains firmly intact despite recent safety warnings from frontier-model CEOs.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["AMD", "semiconductors", "AI chips", "stock market", "data center"],
+  "sources": [
+    {
+      "publisher": "QZ",
+      "url": "https://qz.com/amd-stock-1-trillion-market-cap-ai-chips-092126",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    },
+    {
+      "publisher": "Seoul Economic Daily",
+      "url": "https://en.sedaily.com/international/2026/09/22/nasdaq-hits-record-high-as-ai-stocks-surge-amd-tops-1",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}

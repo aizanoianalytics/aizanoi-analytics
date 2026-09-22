@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-22-iphone-18-second-wave-launch",
+  "title": "Apple extends iPhone 18 retail availability to a second wave of twenty countries as foldable Duo pre-orders remain an October story",
+  "summary": "Apple's iPhone 18 Pro and iPhone 18 Pro Max, launched at the September 9 Surprise and Shine event under incoming CEO John Ternus, opened pre-orders on September 12 and reached first-wave stores on September 18 at starting prices of $1,199 and $1,299. A second wave of 20 countries joins the rollout on September 25, while the foldable iPhone Duo is still being held for an October pre-order window at a starting price around $2,000. iOS 27 was released as a free update on September 14 to existing iPhones.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-09-22T05:05:00Z",
+  "updatedAt": "2026-09-22T05:05:00Z",
+  "retrievedAt": "2026-09-22T04:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "iPhone 18 Pro", "foldable iPhone", "iOS 27", "John Ternus"],
+  "sources": [
+    {
+      "publisher": "MacRumors",
+      "url": "https://www.macrumors.com/2026/09/09/iphone-18-pro-preorders-release-date-announced",
+      "publishedAt": "2026-09-09T18:06:00Z"
+    },
+    {
+      "publisher": "Mashable",
+      "url": "https://mashable.com/tech/iphone-18-pro-max-announcement-apple-event-2026",
+      "publishedAt": "2026-09-09T18:00:00Z"
+    }
+  ]
+}
