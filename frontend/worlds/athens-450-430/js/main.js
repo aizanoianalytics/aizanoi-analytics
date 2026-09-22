@@ -276,9 +276,7 @@ async function init() {
 
   /* ── 18. Start ────────────────────────────────────────── */
 
-  // Show intro modal
-  const introModal = document.getElementById('intro-modal');
-  if (introModal) introModal.classList.remove('hidden');
+  ui.openModal('intro-modal', null, document.getElementById('btn-enter'));
   if (loadingEl) {
     setTimeout(() => {
       loadingEl.classList.add('fade-out');
@@ -578,9 +576,7 @@ function bindEvents() {
   if (enterBtn) {
     enterBtn.addEventListener('click', () => {
       const introModal = document.getElementById('intro-modal');
-      if (introModal) {
-        introModal.style.display = 'none';
-      }
+      ui.closeModal(introModal);
       try {
         // Start cinematic intro
         intro.start();
@@ -598,6 +594,7 @@ function bindEvents() {
   // Skip intro
   document.addEventListener('keydown', (e) => {
     if (e.code === 'Escape' && intro && !intro.isComplete) {
+      if (!intro.isRunning) intro.start();
       intro.skipIntro();
     }
   });
@@ -608,7 +605,7 @@ function bindEvents() {
     if (el) el.addEventListener('click', fn);
   };
 
-  bind('btn-teleport', () => ui.toggleTeleportMenu());
+  bind('btn-teleport', (e) => ui.toggleTeleportMenu(e.currentTarget));
   bind('btn-inspect', () => inspectLookedAt());
   bind('btn-map', () => ui.toggleMinimap());
   bind('btn-mobile-map', () => ui.toggleMinimap());
@@ -627,7 +624,7 @@ function bindEvents() {
     ui.toggleEvidence();
     applyEvidenceMode(ui.evidenceActive);
   });
-  bind('btn-sources', () => ui.showSourcesModal());
+  bind('btn-sources', (e) => ui.showSourcesModal(e.currentTarget));
   bind('btn-daynight', () => {
     // Real day/night toggle: jump to night (and hold it) / back to noon.
     // toggleCycle() only pauses the cycle — kept available for future controls.
@@ -654,6 +651,7 @@ function bindEvents() {
   bind('btn-tour', () => {
     if (tour.isActive) tour.stop();
     else tour.start();
+    document.getElementById('btn-tour')?.setAttribute('aria-pressed', String(tour.isActive));
   });
 
   // Teleport callback
@@ -683,7 +681,10 @@ function bindEvents() {
       case 'KeyM': ui.toggleMinimap(); break;
       case 'KeyV': ui.toggleEvidence(); applyEvidenceMode(ui.evidenceActive); break;
       case 'KeyT': ui.toggleTeleportMenu(); break;
-      case 'KeyG': if (tour.isActive) tour.stop(); else tour.start(); break;
+      case 'KeyG':
+        if (tour.isActive) tour.stop(); else tour.start();
+        document.getElementById('btn-tour')?.setAttribute('aria-pressed', String(tour.isActive));
+        break;
       case 'KeyN': environment.toggleCycle(); break;
       case 'Digit1': case 'Digit2': case 'Digit3': case 'Digit4': case 'Digit5':
       case 'Digit6': case 'Digit7': case 'Digit8': case 'Digit9': {

@@ -12,6 +12,18 @@ export class UISystem {
     this.evidenceActive = false;
     this.minimapVisible = true;
     this.onTeleport = null; // callback set by main.js
+    this._modalFocusSelector = [
+      'a[href]',
+      'area[href]',
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      'iframe',
+      '[tabindex]:not([tabindex="-1"])',
+    ].join(',');
+    this._modalStates = new Map();
+    this._activeModal = null;
 
     this.evidenceColors = {
       archaeological: '#77b989',
@@ -25,6 +37,7 @@ export class UISystem {
     this._bindDOMEvents();
     this._populateEvidenceList();
     this._populateTeleportMenu();
+    this._setupModalAccessibility();
   }
 
   _cacheDOM() {
@@ -51,6 +64,7 @@ export class UISystem {
     this.researchModal = document.getElementById('research-modal');
     this.modalBody = document.getElementById('modal-body');
     this.btnCloseModal = document.getElementById('btn-close-modal');
+    this.introModal = document.getElementById('intro-modal');
 
     this.infoCard = document.getElementById('info-card');
     this.infoCardTimer = null;
@@ -98,12 +112,36 @@ export class UISystem {
       if (audio && typeof audio.uiClick === 'function') audio.uiClick();
     }, true);
 
-    // Close overlays with Escape
+    // Close the active modal with Escape. Non-modal HUD overlays retain their
+    // existing Escape behavior below when there is no active dialog.
     document.addEventListener('keydown', (e) => {
+      if (this._activeModal && e.key === 'Tab') {
+        const focusable = this._getFocusable(this._activeModal);
+        if (!focusable.length) {
+          e.preventDefault();
+          return;
+        }
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!this._activeModal.contains(document.activeElement)) {
+          e.preventDefault();
+          first.focus({ preventScroll: true });
+        } else if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus({ preventScroll: true });
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus({ preventScroll: true });
+        }
+        return;
+      }
       if (e.code === 'Escape') {
-        this.hideTeleportMenu();
+        if (this._activeModal) {
+          e.preventDefault();
+          this.closeModal(this._activeModal);
+          return;
+        }
         this.hideEvidencePanel();
-        this.hideSourcesModal();
         this.hideInfoCard();
       }
     });
@@ -118,11 +156,124 @@ export class UISystem {
     });
   }
 
+  _setupModalAccessibility() {
+    if (!document.querySelectorAll) return;
+    for (const modal of document.querySelectorAll('.modal-overlay[role="dialog"]')) {
+      this._modalStates.set(modal, { opener: null, inertNodes: [] });
+    }
+  }
+
+  _getModal(modalOrId) {
+    if (!modalOrId) return null;
+    if (typeof modalOrId === 'string') return document.getElementById(modalOrId);
+    return modalOrId;
+  }
+
+  _getFocusable(modal) {
+    if (!modal?.querySelectorAll) return [];
+    return Array.from(modal.querySelectorAll(this._modalFocusSelector)).filter((element) => (
+      !element.disabled &&
+      element.getAttribute('aria-hidden') !== 'true' &&
+      !element.closest('.hidden')
+    ));
+  }
+
+  _setBackgroundInert(modal, state) {
+    state.inertNodes = [];
+    if (!document.body?.children) return;
+
+    for (const node of Array.from(document.body.children)) {
+      if (node === modal) continue;
+      const wasInert = node.hasAttribute('inert') || node.inert === true;
+      state.inertNodes.push([node, wasInert]);
+      node.inert = true;
+      node.setAttribute('inert', '');
+    }
+  }
+
+  _restoreBackgroundInert(state) {
+    for (const [node, wasInert] of state.inertNodes) {
+      node.inert = wasInert;
+      if (wasInert) node.setAttribute('inert', '');
+      else node.removeAttribute('inert');
+    }
+    state.inertNodes = [];
+  }
+
+  _focusModal(modal, preferred = null) {
+    const focusable = this._getFocusable(modal);
+    const target = preferred && modal.contains(preferred) && !preferred.disabled
+      ? preferred
+      : focusable[0];
+    if (target?.focus) target.focus({ preventScroll: true });
+  }
+
+  _focusAfterModal(modal, opener) {
+    if (opener && !modal.contains(opener) && !opener.closest?.('.hidden') && !opener.closest?.('[inert]')) {
+      opener.focus?.({ preventScroll: true });
+      if (document.activeElement === opener) return;
+    }
+
+    const fallback = Array.from(document.querySelectorAll(this._modalFocusSelector)).find((element) => (
+      !modal.contains(element) &&
+      !element.closest('.hidden') &&
+      !element.closest('[inert]')
+    ));
+    fallback?.focus?.({ preventScroll: true });
+  }
+
+  openModal(modalOrId, opener = document.activeElement, initialFocus = null) {
+    const modal = this._getModal(modalOrId);
+    if (!modal) return false;
+
+    if (this._activeModal && this._activeModal !== modal) this.closeModal(this._activeModal);
+    const state = this._modalStates.get(modal) || { opener: null, inertNodes: [] };
+    this._modalStates.set(modal, state);
+    state.opener = opener && !modal.contains(opener) ? opener : null;
+
+    modal.classList.remove('hidden');
+    modal.style.display = '';
+    modal.setAttribute('aria-hidden', 'false');
+    this._activeModal = modal;
+    this._setBackgroundInert(modal, state);
+
+    if (modal === this.teleportMenu) {
+      document.getElementById('btn-teleport')?.setAttribute('aria-expanded', 'true');
+    }
+    this._focusModal(modal, initialFocus);
+    return true;
+  }
+
+  closeModal(modalOrId) {
+    const modal = this._getModal(modalOrId);
+    if (!modal) return false;
+    const state = this._modalStates.get(modal) || { opener: null, inertNodes: [] };
+    const wasOpen = this._activeModal === modal || !modal.classList.contains('hidden');
+
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+    this._restoreBackgroundInert(state);
+    if (this._activeModal === modal) this._activeModal = null;
+
+    if (wasOpen) this._focusAfterModal(modal, state.opener);
+    state.opener = null;
+    if (modal === this.teleportMenu) {
+      document.getElementById('btn-teleport')?.setAttribute('aria-expanded', 'false');
+    }
+    return true;
+  }
+
+  _setPressed(ids, pressed) {
+    for (const id of ids) document.getElementById(id)?.setAttribute('aria-pressed', String(Boolean(pressed)));
+  }
+
   /* ── Minimap ────────────────────────────────────────────── */
 
   initMinimap() {
     if (!this.minimapWrapper) return;
     this.minimapWrapper.style.display = 'block';
+    this._setPressed(['btn-map', 'btn-mobile-map'], this.minimapVisible);
   }
 
   toggleMinimap() {
@@ -130,6 +281,8 @@ export class UISystem {
     if (this.minimapWrapper) {
       this.minimapWrapper.style.display = this.minimapVisible ? 'block' : 'none';
     }
+    this._setPressed(['btn-map', 'btn-mobile-map'], this.minimapVisible);
+    return this.minimapVisible;
   }
 
   updateMinimap(playerX, playerZ, playerAngle) {
@@ -265,6 +418,7 @@ export class UISystem {
         this.evidencePanel.classList.add('hidden');
       }
     }
+    this._setPressed(['btn-evidence'], this.evidenceActive);
     return this.evidenceActive;
   }
 
@@ -296,21 +450,20 @@ export class UISystem {
 
   /* ── Teleport / Fast Travel ─────────────────────────────── */
 
-  toggleTeleportMenu() {
+  toggleTeleportMenu(opener = document.activeElement) {
     if (!this.teleportMenu) return;
     if (this.teleportMenu.classList.contains('hidden')) {
-      this.teleportMenu.classList.remove('hidden');
       if (this.teleportSearch) {
         this.teleportSearch.value = '';
-        this.teleportSearch.focus();
       }
+      return this.openModal(this.teleportMenu, opener, this.teleportSearch);
     } else {
-      this.hideTeleportMenu();
+      return this.hideTeleportMenu();
     }
   }
 
   hideTeleportMenu() {
-    if (this.teleportMenu) this.teleportMenu.classList.add('hidden');
+    return this.closeModal(this.teleportMenu);
   }
 
   _populateTeleportMenu() {
@@ -320,28 +473,36 @@ export class UISystem {
     const list = this.cityData.TELEPORTS || [];
     for (const item of list) {
       const li = document.createElement('li');
-      li.innerHTML = `
-        <span class="teleport-list__name">${item.name}</span>
-        <span class="teleport-list__action">Fast Travel ➔</span>
-      `;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'teleport-item';
+      button.setAttribute('aria-label', `Travel to ${item.name}`);
 
-      li.addEventListener('mouseenter', () => { li.style.background = 'rgba(211, 166, 90, 0.15)'; });
-      li.addEventListener('mouseleave', () => { li.style.background = 'transparent'; });
-      li.addEventListener('click', () => {
+      const name = document.createElement('span');
+      name.className = 'teleport-list__name';
+      name.textContent = item.name;
+      const action = document.createElement('span');
+      action.className = 'teleport-list__action';
+      action.textContent = 'Fast Travel ➔';
+      button.append(name, action);
+
+      button.addEventListener('mouseenter', () => { button.style.background = 'rgba(211, 166, 90, 0.15)'; });
+      button.addEventListener('mouseleave', () => { button.style.background = 'transparent'; });
+      button.addEventListener('click', () => {
         if (this.onTeleport) {
           this.onTeleport(item.id);
         }
       });
 
+      li.appendChild(button);
       this.teleportList.appendChild(li);
     }
   }
 
   /* ── Research / Sources Dialog ──────────────────────────── */
 
-  showSourcesModal() {
+  showSourcesModal(opener = document.activeElement) {
     if (!this.researchModal || !this.modalBody) return;
-    this.researchModal.classList.remove('hidden');
 
     let html = `
       <h2 class="sources-title">Sources & Reconstruction Notes</h2>
@@ -365,10 +526,11 @@ export class UISystem {
 
     html += `</div>`;
     this.modalBody.innerHTML = html;
+    return this.openModal(this.researchModal, opener, this.btnCloseModal);
   }
 
   hideSourcesModal() {
-    if (this.researchModal) this.researchModal.classList.add('hidden');
+    return this.closeModal(this.researchModal);
   }
 
   /* ── Info Card (Monument Inspection) ────────────────────── */

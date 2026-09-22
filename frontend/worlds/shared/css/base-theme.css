@@ -216,8 +216,8 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 200px;
-  height: 200px;
+  width: clamp(128px, 11vw, 156px);
+  height: clamp(128px, 11vw, 156px);
   border-radius: 50%;
   background: var(--panel);
   border: 2px solid var(--gold-dim);
@@ -529,17 +529,46 @@ body {
 }
 
 .teleport-list li {
-  padding: 12px 15px;
-  border-bottom: 1px solid var(--panel-light);
-  cursor: pointer;
-  transition: background 0.2s;
-  display: flex;
-  justify-content: space-between;
+  margin: 0;
 }
 
-.teleport-list li:hover {
+.teleport-item {
+  width: 100%;
+  padding: 12px 15px;
+  border: 0;
+  border-bottom: 1px solid var(--panel-light);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font: inherit;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.teleport-item:hover,
+.teleport-item:focus-visible {
   background: rgba(255,255,255,0.05);
   color: var(--gold);
+}
+
+.teleport-item:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Info Card */
@@ -701,7 +730,7 @@ body.mobile #mobile-controls {
   .key-facts { grid-template-columns: 1fr; }
   .modal-title { font-size: 2rem; }
 
-  #minimap-wrapper { width: 120px; height: 120px; bottom: 10px; right: 10px; }
+  #minimap-wrapper { width: 104px; height: 104px; bottom: 12px; right: 12px; }
 
   .side-panel { width: 100%; border-left: none; }
 }
@@ -713,8 +742,9 @@ body.mobile #mobile-controls {
 
   /* Keep the bottom-right corner usable on phones: stack the action rail ABOVE the
      minimap instead of colliding with it, and shrink the minimap dial. */
-  #minimap-wrapper { width: 88px; height: 88px; bottom: 8px; right: 8px; }
-  .action-rail { bottom: 108px; right: 10px; gap: 10px; }
+  #minimap-wrapper { width: 78px; height: 78px; bottom: max(10px, env(safe-area-inset-bottom)); right: max(10px, env(safe-area-inset-right)); }
+  .compass-badge { top: 5px; padding: 1px 6px; font-size: 0.62rem; }
+  .action-rail { bottom: max(100px, calc(env(safe-area-inset-bottom) + 90px)); right: max(10px, env(safe-area-inset-right)); gap: 10px; }
   .mobile-btn { width: 52px; height: 52px; }
   .joystick-pad { width: 110px; height: 110px; }
 }

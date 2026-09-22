@@ -236,8 +236,7 @@ async function init() {
   installWorldDebugHandle();
   setProgress(100, 'Aizanoi ready!');
 
-  const introModal = document.getElementById('intro-modal');
-  if (introModal) introModal.classList.remove('hidden');
+  ui.openModal('intro-modal', null, document.getElementById('btn-enter'));
   if (loadingEl) {
     setTimeout(() => {
       loadingEl.classList.add('fade-out');
@@ -536,9 +535,7 @@ function bindEvents() {
   if (enterBtn) {
     enterBtn.addEventListener('click', () => {
       const introModal = document.getElementById('intro-modal');
-      if (introModal) {
-        introModal.style.display = 'none';
-      }
+      ui.closeModal(introModal);
       try {
         intro.start();
         audio.init();
@@ -554,6 +551,7 @@ function bindEvents() {
 
   document.addEventListener('keydown', (e) => {
     if (e.code === 'Escape' && intro && !intro.isComplete) {
+      if (!intro.isRunning) intro.start();
       intro.skipIntro();
     }
   });
@@ -563,7 +561,7 @@ function bindEvents() {
     if (el) el.addEventListener('click', fn);
   };
 
-  bind('btn-teleport', () => ui.toggleTeleportMenu());
+  bind('btn-teleport', (e) => ui.toggleTeleportMenu(e.currentTarget));
   bind('btn-inspect', () => inspectLookedAt());
   bind('btn-map', () => ui.toggleMinimap());
   bind('btn-mobile-map', () => ui.toggleMinimap());
@@ -582,7 +580,7 @@ function bindEvents() {
     ui.toggleEvidence();
     applyEvidenceMode(ui.evidenceActive);
   });
-  bind('btn-sources', () => ui.showSourcesModal());
+  bind('btn-sources', (e) => ui.showSourcesModal(e.currentTarget));
   bind('btn-daynight', () => {
     // Real day/night toggle: jump to night (and hold it) / back to noon.
     // toggleCycle() only pauses the cycle — kept available for future controls.
@@ -609,6 +607,7 @@ function bindEvents() {
   bind('btn-tour', () => {
     if (tour.isActive) tour.stop();
     else tour.start();
+    document.getElementById('btn-tour')?.setAttribute('aria-pressed', String(tour.isActive));
   });
 
   ui.onTeleport = (teleportId) => {

@@ -47,6 +47,30 @@ test('New HR collection exposes parseable CollectionPage JSON-LD', () => {
   assert.equal(jsonLd['@type'], 'CollectionPage');
 });
 
+test('targeted public and internal pages expose the intended metadata boundary', () => {
+  const dungeon = read('frontend/dungeon/index.html');
+  const preview = read('frontend/web-editor-preview/index.html');
+  const pacs = read('frontend/analytics/dashboards/new-hr-collection/pacs/index.html');
+  const recruitment = read('frontend/analytics/dashboards/new-hr-collection/recruitment-analytics/index.html');
+
+  assert.match(dungeon, /<meta name="viewport" content="width=device-width, initial-scale=1\.0, viewport-fit=cover">/);
+  assert.doesNotMatch(dungeon, /(?:maximum-scale|user-scalable)\s*=/i);
+  assert.match(dungeon, /<meta name="description" content="[^"]+">/);
+  assert.match(dungeon, /<link rel="canonical" href="https:\/\/aizanoianalytics\.com\/dungeon\/">/);
+
+  assert.match(pacs, /<meta name="description" content="[^"]+">/);
+  assert.match(pacs, /<link rel="canonical" href="https:\/\/aizanoianalytics\.com\/analytics\/dashboards\/new-hr-collection\/pacs\/">/);
+  for (const property of ['og:type', 'og:site_name', 'og:title', 'og:description', 'og:url', 'og:image']) {
+    assert.match(pacs, new RegExp(`<meta property="${property}" content="[^"]+">`));
+  }
+
+  assert.match(recruitment, /<link rel="canonical" href="https:\/\/aizanoianalytics\.com\/analytics\/dashboards\/new-hr-collection\/recruitment-analytics\/">/);
+
+  assert.match(preview, /<meta name="robots" content="noindex,nofollow">/);
+  assert.doesNotMatch(preview, /<link rel="canonical"/i);
+  assert.doesNotMatch(preview, /<meta property="og:/i);
+});
+
 test('sitemap reflects canonical products, privacy, Historical Worlds and generated News discovery routes', () => {
   const urls = [...sitemap.matchAll(/<url>\s*<loc>https:\/\/aizanoianalytics\.com([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)]
     .map(([, path, lastmod]) => ({ path, lastmod }));

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFile, execFileSync } from 'node:child_process';
 import { promisify } from 'node:util';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, statSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, statSync, rmSync, existsSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -375,4 +375,86 @@ test('post-promotion health probe is forced through the canonical production hos
   assert.match(src, /-L /, 'probes must follow redirects to the terminal response');
   assert.match(src, /2\?\?/, 'only terminal 2xx is accepted as success');
   assert.doesNotMatch(src, /200\|301\|302\|303\|307\|308/, 'the old redirect-as-success gate must be gone');
+});
+
+test('release retention is validated, direct-child-only, and post-health', () => {
+  const src = readFileSync(scriptPath, 'utf8');
+  assert.match(src, /RELEASE_RETENTION_DEFAULT=5/);
+  assert.match(src, /AIZANOI_DEPLOY_RELEASE_RETENTION/);
+  assert.match(src, /positive integer/);
+  assert.match(src, /find "\$\{RELEASE_ROOT\}" -mindepth 1 -maxdepth 1 -type d -print0/);
+  assert.match(src, /\^\[0-9a-f\]\{40\}-\[0-9\]\{8\}T\[0-9\]\{6\}Z\$/);
+  assert.match(src, /candidate.*FINAL.*ROLLBACK_TARGET/s);
+  const healthIdx = src.indexOf('HEALTH_OK=1');
+  const pruneCallIdx = src.indexOf('if ! prune_old_releases; then');
+  assert.ok(healthIdx >= 0 && pruneCallIdx > healthIdx, 'retention must run only after HEALTH_OK=1');
+});
+
+test('successful health runs retention without deleting active, rollback, legacy, or nested entries', async () => {
+  const fakeRepo = createFakeRepo();
+  const releaseRoot = join(fakeRepo, 'webroot-releases');
+  const webroot = join(fakeRepo, 'webroot');
+  const bin = mkdtempSync(join(tmpdir(), 'aizanoi-deploy-bin-'));
+  let copy;
+  try {
+    writeFileSync(join(fakeRepo, '.git', 'info', 'exclude'), 'webroot\nwebroot-releases/\n');
+    mkdirSync(releaseRoot, { recursive: true });
+    const oldReleases = [
+      ['a', '20260101T000000Z'],
+      ['b', '20260102T000000Z'],
+      ['c', '20260103T000000Z'],
+      ['d', '20260104T000000Z'],
+      ['e', '20260105T000000Z'],
+    ].map(([prefix, timestamp]) => `${prefix.repeat(40)}-${timestamp}`);
+    for (const name of oldReleases) {
+      mkdirSync(join(releaseRoot, name), { recursive: true });
+      writeFileSync(join(releaseRoot, name, 'index.html'), name);
+    }
+    const legacy = join(releaseRoot, 'legacy-20260101T000000Z');
+    mkdirSync(legacy, { recursive: true });
+    writeFileSync(join(legacy, 'index.html'), 'legacy snapshot');
+    const nestedRelease = join(releaseRoot, 'nested', oldReleases[4]);
+    mkdirSync(nestedRelease, { recursive: true });
+    writeFileSync(join(nestedRelease, 'index.html'), 'nested release');
+    execFileSync('ln', ['-s', join(releaseRoot, oldReleases[0]), webroot]);
+
+    writeFileSync(join(bin, 'nginx'), '#!/bin/sh\nexit 0\n');
+    writeFileSync(join(bin, 'curl'), [
+      '#!/bin/sh',
+      'if echo "$*" | grep -q -- "-sfI"; then exit 0; fi',
+      'printf "200 0 http://example/\\n"',
+      'exit 0',
+      '',
+    ].join('\n'));
+    execFileSync('chmod', ['+x', join(bin, 'nginx'), join(bin, 'curl')]);
+    copy = createDeployableCopy(fakeRepo, readFileSync(scriptPath, 'utf8'));
+    const sha = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: fakeRepo, encoding: 'utf8' }).trim();
+    const env = {
+      ...process.env,
+      PATH: `${bin}:${process.env.PATH}`,
+      AIZANOI_DEPLOY_HEALTH_INSECURE_HTTP: '1',
+      AIZANOI_DEPLOY_HEALTH_HOST: '127.0.0.1',
+      AIZANOI_DEPLOY_HEALTH_PORT: '80',
+      AIZANOI_DEPLOY_RELEASE_RETENTION: '2',
+      AIZANOI_DEPLOY_SHA: sha,
+    };
+    await execFileAsync('bash', [copy.script], { env, timeout: 30000 });
+
+    const directDirs = readdirSync(releaseRoot, { withFileTypes: true })
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
+    const active = directDirs.find((name) => name.startsWith(`${sha}-`));
+    assert.ok(active, 'new active release must remain in the release store');
+    assert.ok(existsSync(join(releaseRoot, oldReleases[0])), 'rollback target must never be pruned');
+    assert.ok(existsSync(join(releaseRoot, oldReleases[3])), 'newest retained release must remain');
+    assert.ok(existsSync(join(releaseRoot, oldReleases[4])), 'second newest retained release must remain');
+    assert.ok(!existsSync(join(releaseRoot, oldReleases[1])), 'older eligible release should be pruned');
+    assert.ok(!existsSync(join(releaseRoot, oldReleases[2])), 'older eligible release should be pruned');
+    assert.ok(existsSync(legacy), 'legacy snapshots must remain untouched');
+    assert.ok(existsSync(nestedRelease), 'nested release-looking directories must remain untouched');
+  } finally {
+    if (copy) copy.cleanup();
+    rmSync(bin, { recursive: true, force: true });
+    rmSync(fakeRepo, { recursive: true, force: true });
+  }
 });
