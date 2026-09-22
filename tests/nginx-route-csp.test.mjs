@@ -4,9 +4,15 @@ import { readFileSync } from 'node:fs';
 
 const nginxExample = readFileSync('infra/nginx/aizanoianalytics.com.conf.example', 'utf8');
 const snippet = readFileSync('infra/nginx/snippets/aizanoi-dungeon-markets-security-headers.conf.example', 'utf8');
+const staticSnippet = readFileSync('infra/nginx/snippets/aizanoi-static-security-headers.conf.example', 'utf8');
 const fixture = readFileSync('scripts/ci/with-production-nginx.sh', 'utf8');
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+test('root static CSP permits same-origin GLB embedded texture blobs', () => {
+  assert.match(staticSnippet, /connect-src 'self' blob:/);
+  assert.doesNotMatch(staticSnippet, /unsafe-inline|unsafe-eval/);
+});
 
 test('dungeon/markets snippet pins a strict CSP without unsafe tokens', () => {
   assert.match(snippet, /Content-Security-Policy/);
