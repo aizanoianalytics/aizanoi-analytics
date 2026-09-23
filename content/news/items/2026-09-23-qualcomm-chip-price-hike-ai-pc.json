@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-23-qualcomm-chip-price-hike-ai-pc",
+  "title": "Qualcomm raises chip prices more than 10% and ships its AI PC silicon on schedule for 20 September",
+  "summary": "Qualcomm has begun shipping its next-generation AI PC processors and lifted contract prices by more than 10% across the lineup, with the increase effective 20 September 2026. The hike reflects rising wafer costs at TSMC and partner foundries, plus increased on-package HBM and AI accelerator integration in the Snapdragon X-Elite 2 family. The move comes as Qualcomm prepares for its annual Snapdragon Summit starting 22 September, where it is expected to detail enterprise availability of its 8-core and 12-core AI PC parts.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-09-23T03:45:00Z",
+  "updatedAt": "2026-09-23T03:45:00Z",
+  "retrievedAt": "2026-09-23T03:30:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Qualcomm", "AI PC", "Snapdragon", "chip pricing", "semiconductors"],
+  "sources": [
+    {
+      "publisher": "Shattered.io",
+      "url": "https://shattered.io/qualcomm-chip-price-hike-ai-pc-2026/",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}

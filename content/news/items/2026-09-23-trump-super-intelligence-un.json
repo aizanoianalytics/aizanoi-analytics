@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-23-trump-super-intelligence-un",
+  "title": "Trump tells the UN the US will drop 'artificial' for 'super' intelligence and rejects calls for global oversight",
+  "summary": "Speaking to the UN General Assembly in New York on Tuesday, US President Donald Trump said Washington would begin using 'super intelligence' in federal documents in place of 'artificial intelligence' and pressed other governments to follow. He dismissed AI-safety advocacy as analogous to climate-change warnings he calls a hoax and rejected international oversight of frontier AI as a 'globalist scheme'. The speech came a day after a group of more than twenty mostly European leaders urged binding safeguards, with a separate UN Security Council AI briefing due on Wednesday.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-09-23T03:05:00Z",
+  "updatedAt": "2026-09-23T03:05:00Z",
+  "retrievedAt": "2026-09-23T03:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Trump", "United Nations", "AI safety", "super intelligence", "regulation"],
+  "sources": [
+    {
+      "publisher": "Reuters via AFP",
+      "url": "https://www.afp.com/en/trump-renames-ai-super-intelligence-leaders-jostle-over-dangers",
+      "publishedAt": "2026-09-23T02:52:00Z"
+    },
+    {
+      "publisher": "Reuters/AFP via Express Tribune",
+      "url": "https://tribune.com.pk/story/2630843/trump-says-us-will-henceforth-call-ai-super-intelligence",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}

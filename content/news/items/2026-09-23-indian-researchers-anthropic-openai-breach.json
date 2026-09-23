@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-23-indian-researchers-anthropic-openai-breach",
+  "title": "Indian researchers used Anthropic's Claude Opus 5 to break into OpenAI's community forum, exposing cross-vendor AI risk",
+  "summary": "A three-person team from Indian cybersecurity firm Hacktron disclosed on Wednesday that in late July they used Anthropic's Claude Opus 5 model to access user accounts on OpenAI's community forum, demonstrating how one frontier AI tool can be weaponised against a rival's infrastructure. Researcher Mohan Pedhapati described the technique as a 'force multiplier'. The disclosure lands a day after Anthropic's launch of Claude Opus 5.5 and adds urgency to talks among OpenAI, Anthropic and Google DeepMind about coordinated safety red-teaming and a US-led frontier-model standards body.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-23T03:50:00Z",
+  "updatedAt": "2026-09-23T03:50:00Z",
+  "retrievedAt": "2026-09-23T03:35:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["cybersecurity", "Anthropic", "OpenAI", "Claude", "AI red teaming"],
+  "sources": [
+    {
+      "publisher": "Policy Wire",
+      "url": "https://policy-wire.com/indian-researchers-exploit-openai-via-anthropic-model-exposing-ai-security-gaps/",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}

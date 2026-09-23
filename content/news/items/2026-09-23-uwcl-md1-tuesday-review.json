@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-23-uwcl-md1-tuesday-review",
+  "title": "Wamser's 86th-minute equaliser earns Manchester City a 2-2 draw at Bayern as Arsenal rescue a stoppage-time win over HB Køge",
+  "summary": "The 2026/27 UEFA Women's Champions League league phase opened on Tuesday with five fixtures, producing one late English winner, one dramatic fightback and three debutant statements. Carlotta Wamser, signed from Bayer Leverkusen this summer, came off the bench to head Manchester City level at 2-2 at Bayern in the 86th minute after Beth Mead pulled one back on the stroke of half-time. Holders Arsenal needed a Mariona Caldentey penalty in the third added minute to beat HB Køge 1-0, Inter edged BK Häcken 1-0 on debut, Benfica won at Juventus, and Real Madrid drew with Paris Saint-Germain.",
+  "category": "football",
+  "priority": 70,
+  "publishedAt": "2026-09-23T04:15:00Z",
+  "updatedAt": "2026-09-23T04:15:00Z",
+  "retrievedAt": "2026-09-23T04:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["UEFA Women's Champions League", "Manchester City", "Bayern Munich", "Arsenal", "Inter Milan"],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://uefa.com/womenschampionsleague/news/02a9-21a7b7ddf6ed-95d5505fd788-1000--women-s-champions-league-matchday-1-tuesday-round-up-arse",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    },
+    {
+      "publisher": "AP via Canadian Press",
+      "url": "https://medicinehatnews.com/sports/national-sports/2026/09/22/man-city-salvages-draw-at-bayern-munich-in-return-to-the-womens-champions-league-arsenal-wins-late",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}

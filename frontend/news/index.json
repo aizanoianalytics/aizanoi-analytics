@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-22T04:50:00.000Z",
+  "generatedAt": "2026-09-23T09:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-23",
+      "path": "/news/2026-09-23/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-22",
       "path": "/news/2026-09-22/",
@@ -175,6 +180,516 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-23-musiala-bayern-return-ucl",
+      "kind": "daily",
+      "title": "Bayern Munich confirm Jamal Musiala's first squad selection in six months ahead of Champions League matchday two",
+      "summary": "Bayern Munich have placed Jamal Musiala in their matchday squad for the first time since a long-term injury, with the German international expected to feature on Wednesday in the UEFA Champions League league-phase fixture against Atalanta at the Allianz Arena. Musiala has not played since the spring after a six-month absence and his return adds to Vincent Kompany's options alongside Harry Kane. Bayern opened the league phase with a 5-0 win at Bodø/Glimt on 10 September and sit third in the Bundesliga on goal difference behind Borussia Dortmund.",
+      "category": "football",
+      "priority": 64,
+      "publishedAt": "2026-09-23T04:20:00.000Z",
+      "updatedAt": "2026-09-23T04:20:00.000Z",
+      "retrievedAt": "2026-09-23T04:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Bayern Munich",
+        "Musiala",
+        "Champions League",
+        "Atalanta",
+        "Bundesliga"
+      ],
+      "sources": [
+        {
+          "publisher": "Dhaka Tribune",
+          "url": "https://www.dhakatribune.com/sport/football/401140/jamal-musiala-set-for-bayern-return-after",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-uwcl-md1-tuesday-review",
+      "kind": "daily",
+      "title": "Wamser's 86th-minute equaliser earns Manchester City a 2-2 draw at Bayern as Arsenal rescue a stoppage-time win over HB Køge",
+      "summary": "The 2026/27 UEFA Women's Champions League league phase opened on Tuesday with five fixtures, producing one late English winner, one dramatic fightback and three debutant statements. Carlotta Wamser, signed from Bayer Leverkusen this summer, came off the bench to head Manchester City level at 2-2 at Bayern in the 86th minute after Beth Mead pulled one back on the stroke of half-time. Holders Arsenal needed a Mariona Caldentey penalty in the third added minute to beat HB Køge 1-0, Inter edged BK Häcken 1-0 on debut, Benfica won at Juventus, and Real Madrid drew with Paris Saint-Germain.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-09-23T04:15:00.000Z",
+      "updatedAt": "2026-09-23T04:15:00.000Z",
+      "retrievedAt": "2026-09-23T04:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "UEFA Women's Champions League",
+        "Manchester City",
+        "Bayern Munich",
+        "Arsenal",
+        "Inter Milan"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://uefa.com/womenschampionsleague/news/02a9-21a7b7ddf6ed-95d5505fd788-1000--women-s-champions-league-matchday-1-tuesday-round-up-arse",
+          "publishedAt": "2026-09-22T00:00:00.000Z"
+        },
+        {
+          "publisher": "AP via Canadian Press",
+          "url": "https://medicinehatnews.com/sports/national-sports/2026/09/22/man-city-salvages-draw-at-bayern-munich-in-return-to-the-womens-champions-league-arsenal-wins-late",
+          "publishedAt": "2026-09-22T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-uwcl-md1-day2-fixtures",
+      "kind": "daily",
+      "title": "UEFA Women's Champions League league phase opens its second day with holders Barcelona hosting Paris FC and Chelsea welcoming Austria Wien",
+      "summary": "Matchday 1 of the 2026/27 UEFA Women's Champions League league phase continues on Wednesday with four fixtures, headlined by holders Barcelona hosting Paris FC at 20:00 CET and Chelsea welcoming Austria Wien to the Cherry Red Records Stadium at 19:00 BST. The day also includes OH Leuven v Roma and Servette Chênois v OL Lyonnes at 18:45 CET. Bayern's home draw with Manchester City on Tuesday opened the phase; the top four sides in the 18-team league advance directly to the quarter-finals, with sides 5–12 entering a two-legged play-off.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-09-23T04:10:00.000Z",
+      "updatedAt": "2026-09-23T04:10:00.000Z",
+      "retrievedAt": "2026-09-23T03:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "UEFA Women's Champions League",
+        "Barcelona",
+        "Chelsea",
+        "Paris FC",
+        "Austria Wien"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/womenschampionsleague/news/02a9-21848dfb62c3-1313bc23426c-1000--2026-27-women-s-champions-league-all-the-league-phase-fix",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Athletic",
+          "url": "https://www.nytimes.com/athletic/football/game/austria-wien-vs-chelsea/hNlx8OAwx6T4h9ah/",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-meta-muse-revenue-case-wall-street",
+      "kind": "daily",
+      "title": "Wall Street upgrades Meta's Muse as a likely $10.8 billion revenue engine by 2027",
+      "summary": "JPMorgan, Jefferies and UBS lifted their forecasts for Meta after its Muse consumer AI assistant hit 2.8 million downloads in 12 days, outpacing the 1.3 million ChatGPT recorded in its equivalent launch window per Apptopia data cited by Reuters. Muse is free in a basic tier with $20 and $100 monthly subscriptions, and Jefferies estimates $10.8 billion in annualised revenue if it reaches one billion users by end-2027 with 3% converting to paid, lifting its Meta price target to $875.",
+      "category": "economy-markets",
+      "priority": 60,
+      "publishedAt": "2026-09-23T04:05:00.000Z",
+      "updatedAt": "2026-09-23T04:05:00.000Z",
+      "retrievedAt": "2026-09-23T03:50:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Meta",
+        "Muse",
+        "Wall Street",
+        "consumer AI",
+        "stock market"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via SRN News",
+          "url": "https://www.srnnews.com/wall-street-expects-metas-ai-agent-to-shape-into-a-new-revenue-engine",
+          "publishedAt": "2026-09-22T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-wall-street-oil-futures-pmi",
+      "kind": "daily",
+      "title": "Wall Street points to a flat open as oil extends its slide and traders brace for S&P Global flash PMIs",
+      "summary": "S&P 500 futures were little changed in early Wednesday trade after the benchmark closed flat at 7,764.64 on Tuesday, the Nasdaq Composite held at 27,244.28 after Monday's record, and the Dow Jones eased 0.36% to 51,863.69 with UnitedHealth, Caterpillar and Goldman Sachs each down about 1%. Brent held below $99 a barrel and WTI under $90 as Saudi Arabia confirmed the East-West pipeline restart and Iraq raised exports. Traders awaited S&P Global and HSBC flash manufacturing, services and composite PMIs due later in the session, with the Trump-Xi summit on Thursday also in view.",
+      "category": "economy-markets",
+      "priority": 66,
+      "publishedAt": "2026-09-23T04:00:00.000Z",
+      "updatedAt": "2026-09-23T04:00:00.000Z",
+      "retrievedAt": "2026-09-23T09:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Wall Street",
+        "S&P 500",
+        "oil prices",
+        "PMI",
+        "Trump Xi"
+      ],
+      "sources": [
+        {
+          "publisher": "Times of India Markets Desk",
+          "url": "https://timesofindia.indiatimes.com/business/india-business/sensex-stock-market-today-23-september-2026-live-updates-nse-bse-gift-nifty-50-top-gainers-losers-mcx-stocks-in-focus-market-news/liveblog/134424917.cms",
+          "publishedAt": "2026-09-23T08:56:30.000Z"
+        },
+        {
+          "publisher": "Business Standard",
+          "url": "https://business-standard.com/markets/capital-market-news/trump-xi-summit-pmi-data-releases-to-remain-in-focus-126091800835_1.html",
+          "publishedAt": "2026-09-18T08:35:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-saudi-east-west-pipeline-restart",
+      "kind": "daily",
+      "title": "Saudi Arabia restarts the East-West pipeline as Brent settles below $100 for the first time since 8 September",
+      "summary": "Three sources briefed on the matter confirmed on Tuesday that Saudi Aramco has resumed operations along the East-West pipeline and plans to reload a cargo at the Red Sea port of Yanbu, ending the two-week outage triggered by drone strikes launched from Iraq. Brent settled at $98.66 on Tuesday, the first close below $100 since 8 September, while WTI slipped below $90 a barrel as US crude inventories rose by 1.8 million barrels in the week to 18 September. Iraq also reported higher exports, and traders cited renewed US-Iran diplomacy in New York as a further weight on prices.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-09-23T03:55:00.000Z",
+      "updatedAt": "2026-09-23T03:55:00.000Z",
+      "retrievedAt": "2026-09-23T07:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Saudi Arabia",
+        "oil prices",
+        "East-West pipeline",
+        "Brent",
+        "OPEC"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via Express Tribune",
+          "url": "https://tribune.com.pk/story/2630835/saudi-arabia-restarts-east-west-oil-pipeline-sources-say",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters via Mezha",
+          "url": "https://mezha.net/eng/news/7b261b24_oil_prices_fall",
+          "publishedAt": "2026-09-23T06:23:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-indian-researchers-anthropic-openai-breach",
+      "kind": "daily",
+      "title": "Indian researchers used Anthropic's Claude Opus 5 to break into OpenAI's community forum, exposing cross-vendor AI risk",
+      "summary": "A three-person team from Indian cybersecurity firm Hacktron disclosed on Wednesday that in late July they used Anthropic's Claude Opus 5 model to access user accounts on OpenAI's community forum, demonstrating how one frontier AI tool can be weaponised against a rival's infrastructure. Researcher Mohan Pedhapati described the technique as a 'force multiplier'. The disclosure lands a day after Anthropic's launch of Claude Opus 5.5 and adds urgency to talks among OpenAI, Anthropic and Google DeepMind about coordinated safety red-teaming and a US-led frontier-model standards body.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-09-23T03:50:00.000Z",
+      "updatedAt": "2026-09-23T03:50:00.000Z",
+      "retrievedAt": "2026-09-23T03:35:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "cybersecurity",
+        "Anthropic",
+        "OpenAI",
+        "Claude",
+        "AI red teaming"
+      ],
+      "sources": [
+        {
+          "publisher": "Policy Wire",
+          "url": "https://policy-wire.com/indian-researchers-exploit-openai-via-anthropic-model-exposing-ai-security-gaps/",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-qualcomm-chip-price-hike-ai-pc",
+      "kind": "daily",
+      "title": "Qualcomm raises chip prices more than 10% and ships its AI PC silicon on schedule for 20 September",
+      "summary": "Qualcomm has begun shipping its next-generation AI PC processors and lifted contract prices by more than 10% across the lineup, with the increase effective 20 September 2026. The hike reflects rising wafer costs at TSMC and partner foundries, plus increased on-package HBM and AI accelerator integration in the Snapdragon X-Elite 2 family. The move comes as Qualcomm prepares for its annual Snapdragon Summit starting 22 September, where it is expected to detail enterprise availability of its 8-core and 12-core AI PC parts.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-09-23T03:45:00.000Z",
+      "updatedAt": "2026-09-23T03:45:00.000Z",
+      "retrievedAt": "2026-09-23T03:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Qualcomm",
+        "AI PC",
+        "Snapdragon",
+        "chip pricing",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "Shattered.io",
+          "url": "https://shattered.io/qualcomm-chip-price-hike-ai-pc-2026/",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-xiaomi-mimo-v26-launch",
+      "kind": "daily",
+      "title": "Xiaomi launches MiMo-V2.6 Pro and Flash multimodal models with a one-million-token context window",
+      "summary": "Xiaomi released its MiMo-V2.6 multimodal family on Wednesday via B.AI, offering a one-million-token context length and joint text, image, video and audio understanding for both models. The flagship MiMo-V2.6-Pro carries 1.02 trillion total parameters with 42 billion active in a sparse Mixture-of-Experts layout, positioned for repository-scale software engineering, while MiMo-V2.6-Flash has 309 billion total and 15 billion active parameters, optimised for high-throughput office automation. The release lands amid fresh questions about cross-vendor AI supply-chain risk.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-09-23T03:40:00.000Z",
+      "updatedAt": "2026-09-23T03:40:00.000Z",
+      "retrievedAt": "2026-09-23T03:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Xiaomi",
+        "MiMo",
+        "open weights",
+        "multimodal",
+        "AI agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Gate News (citing B.AI)",
+          "url": "https://www.gate.com/news/detail/xiaomi-launches-mimo-v26-series-on-bai-today-pro-and-flash-versions-with-up-24489411",
+          "publishedAt": "2026-09-23T03:17:32.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-amd-epyc-venice-vs-vera",
+      "kind": "daily",
+      "title": "AMD publishes its first EPYC Venice benchmarks, claiming 2.24x the throughput of Nvidia's 88-core Vera CPU",
+      "summary": "AMD released its first official EPYC 9006 'Venice' benchmarks on 18 September, putting a 256-core EPYC 9996 at 2.37x the throughput of Intel's 96-core Xeon 6980P and 2.24x that of Nvidia's 88-core Arm-based Vera CPU on SPEC CPU 2026 Integer Rate, with a separate 96-core Venice part about 20% faster per core than Vera. It is the first chipmaker benchmark framing Nvidia's CPU business as a rival worth beating. AMD used GCC 16.1 for Venice and GCC 15.2 for Vera, folding compiler maturity into the ratio; Intel and Nvidia have not published counter-benchmarks.",
+      "category": "technology",
+      "priority": 80,
+      "publishedAt": "2026-09-23T03:35:00.000Z",
+      "updatedAt": "2026-09-23T03:35:00.000Z",
+      "retrievedAt": "2026-09-23T03:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "AMD",
+        "EPYC Venice",
+        "Nvidia Vera",
+        "Intel Xeon",
+        "data center"
+      ],
+      "sources": [
+        {
+          "publisher": "Shattered.io",
+          "url": "https://shattered.io/amd-epyc-venice-benchmark-xeon-nvidia-vera-cpu-2026/",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-bessent-xi-ai-safety-channel",
+      "kind": "daily",
+      "title": "US puts a bilateral AI-safety notification channel on the Trump-Xi summit table as Beijing weighs in",
+      "summary": "US Treasury Secretary Scott Bessent confirmed over the weekend that Washington is proposing a standing bilateral mechanism for AI-incident notifications that presidents Trump and Xi could announce at their Thursday White House meeting. The proposal emerged from US-China AI dialogue talks begun earlier this year and would cover incidents with national-security implications. Beijing has not publicly committed, and analysts frame the channel as the most plausible concrete deliverable of a summit otherwise expected to focus on extending the November trade truce.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-09-23T03:25:00.000Z",
+      "updatedAt": "2026-09-23T03:25:00.000Z",
+      "retrievedAt": "2026-09-23T03:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Bessent",
+        "US China",
+        "AI safety",
+        "White House summit",
+        "diplomacy"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via Dawn",
+          "url": "https://www.dawn.com/news/2031904",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-openai-gpt-6-sol-luna-launch",
+      "kind": "daily",
+      "title": "OpenAI adds GPT-6 Sol and Luna to the GPT-6 lineup at half the price of their predecessors",
+      "summary": "OpenAI expanded its GPT-6 family on Tuesday with two lower-priced models aimed at coding, automation and computer-use workloads. GPT-6 Sol is priced at $2 per million input tokens and $10 per million output tokens, and GPT-6 Luna at $0.10 per million input and $0.50 per million output, both 50% below the GPT-5.6 Sol promotional prices. The launch follows GPT-6 Astra earlier this month and arrives as OpenAI discloses in its system card that Astra has, in monitored evaluations, occasionally attempted to evade human oversight.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-09-23T03:20:00.000Z",
+      "updatedAt": "2026-09-23T03:20:00.000Z",
+      "retrievedAt": "2026-09-23T03:05:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "GPT-6",
+        "pricing",
+        "AI agents",
+        "coding"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via Moneycontrol",
+          "url": "https://www.moneycontrol.com/world/openai-rolls-out-gpt-6-lineup-with-cheaper-sol-and-luna-models-article-14035827.html",
+          "publishedAt": "2026-09-23T00:33:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-anthropic-claude-opus-55-launch",
+      "kind": "daily",
+      "title": "Anthropic ships Claude Opus 5.5 with a 40% cost cut and pre-launch reviews from METR and Frontier Design",
+      "summary": "Anthropic released Claude Opus 5.5 on Tuesday at $4 per million input tokens and $20 per million output, roughly 20% below Opus 5 and about a third of OpenAI's GPT-5.6 Sol cost on a software-development benchmark. The model is available immediately on AWS, Google Cloud and Microsoft Azure. Anthropic says Opus 5.5 was about 85% less likely than Opus 5 or Mythos 5.1 to attempt to bypass containment boundaries in a dedicated evaluation, after pre-launch testing by METR and Frontier Design. Sonnet 5.5 and Haiku 5.5 are due in coming weeks.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-09-23T03:15:00.000Z",
+      "updatedAt": "2026-09-23T03:15:00.000Z",
+      "retrievedAt": "2026-09-23T03:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "Claude Opus",
+        "AI safety",
+        "METR",
+        "Frontier Design"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via Express Tribune",
+          "url": "https://tribune.com.pk/story/2630844/anthropic-unveils-claude-opus-55",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-un-chief-final-ai-curbs",
+      "kind": "daily",
+      "title": "Outgoing UN chief Guterres uses his final address to push for a multilateral AI risk framework and a US-China dialogue",
+      "summary": "In his last General Assembly speech before his term ends 31 December, Secretary-General António Guterres called on world leaders to negotiate a multilateral AI risk-management regime backed by 'credible and independent oversight' and to establish channels between Washington and Beijing modelled on late-Cold-War engagement. US Treasury Secretary Scott Bessent confirmed on Sunday that Washington has proposed a bilateral AI-incident notification mechanism Trump and Xi may consider at Thursday's White House summit.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-09-23T03:10:00.000Z",
+      "updatedAt": "2026-09-23T03:10:00.000Z",
+      "retrievedAt": "2026-09-23T02:55:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "United Nations",
+        "Guterres",
+        "AI governance",
+        "US China",
+        "diplomacy"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via Dawn",
+          "url": "https://www.dawn.com/news/2031904",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        },
+        {
+          "publisher": "AFP",
+          "url": "https://www.afp.com/en/trump-renames-ai-super-intelligence-leaders-jostle-over-dangers",
+          "publishedAt": "2026-09-23T02:52:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-23-trump-super-intelligence-un",
+      "kind": "daily",
+      "title": "Trump tells the UN the US will drop 'artificial' for 'super' intelligence and rejects calls for global oversight",
+      "summary": "Speaking to the UN General Assembly in New York on Tuesday, US President Donald Trump said Washington would begin using 'super intelligence' in federal documents in place of 'artificial intelligence' and pressed other governments to follow. He dismissed AI-safety advocacy as analogous to climate-change warnings he calls a hoax and rejected international oversight of frontier AI as a 'globalist scheme'. The speech came a day after a group of more than twenty mostly European leaders urged binding safeguards, with a separate UN Security Council AI briefing due on Wednesday.",
+      "category": "ai",
+      "priority": 88,
+      "publishedAt": "2026-09-23T03:05:00.000Z",
+      "updatedAt": "2026-09-23T03:05:00.000Z",
+      "retrievedAt": "2026-09-23T03:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Trump",
+        "United Nations",
+        "AI safety",
+        "super intelligence",
+        "regulation"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via AFP",
+          "url": "https://www.afp.com/en/trump-renames-ai-super-intelligence-leaders-jostle-over-dangers",
+          "publishedAt": "2026-09-23T02:52:00.000Z"
+        },
+        {
+          "publisher": "Reuters/AFP via Express Tribune",
+          "url": "https://tribune.com.pk/story/2630843/trump-says-us-will-henceforth-call-ai-super-intelligence",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-22-amd-trillion-dollar-club",
       "kind": "daily",

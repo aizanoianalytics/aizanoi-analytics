@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-23-xiaomi-mimo-v26-launch",
+  "title": "Xiaomi launches MiMo-V2.6 Pro and Flash multimodal models with a one-million-token context window",
+  "summary": "Xiaomi released its MiMo-V2.6 multimodal family on Wednesday via B.AI, offering a one-million-token context length and joint text, image, video and audio understanding for both models. The flagship MiMo-V2.6-Pro carries 1.02 trillion total parameters with 42 billion active in a sparse Mixture-of-Experts layout, positioned for repository-scale software engineering, while MiMo-V2.6-Flash has 309 billion total and 15 billion active parameters, optimised for high-throughput office automation. The release lands amid fresh questions about cross-vendor AI supply-chain risk.",
+  "category": "technology",
+  "priority": 64,
+  "publishedAt": "2026-09-23T03:40:00Z",
+  "updatedAt": "2026-09-23T03:40:00Z",
+  "retrievedAt": "2026-09-23T03:25:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Xiaomi", "MiMo", "open weights", "multimodal", "AI agents"],
+  "sources": [
+    {
+      "publisher": "Gate News (citing B.AI)",
+      "url": "https://www.gate.com/news/detail/xiaomi-launches-mimo-v26-series-on-bai-today-pro-and-flash-versions-with-up-24489411",
+      "publishedAt": "2026-09-23T03:17:32Z"
+    }
+  ]
+}

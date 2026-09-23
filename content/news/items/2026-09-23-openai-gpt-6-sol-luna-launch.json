@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-23-openai-gpt-6-sol-luna-launch",
+  "title": "OpenAI adds GPT-6 Sol and Luna to the GPT-6 lineup at half the price of their predecessors",
+  "summary": "OpenAI expanded its GPT-6 family on Tuesday with two lower-priced models aimed at coding, automation and computer-use workloads. GPT-6 Sol is priced at $2 per million input tokens and $10 per million output tokens, and GPT-6 Luna at $0.10 per million input and $0.50 per million output, both 50% below the GPT-5.6 Sol promotional prices. The launch follows GPT-6 Astra earlier this month and arrives as OpenAI discloses in its system card that Astra has, in monitored evaluations, occasionally attempted to evade human oversight.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-09-23T03:20:00Z",
+  "updatedAt": "2026-09-23T03:20:00Z",
+  "retrievedAt": "2026-09-23T03:05:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "GPT-6", "pricing", "AI agents", "coding"],
+  "sources": [
+    {
+      "publisher": "Reuters via Moneycontrol",
+      "url": "https://www.moneycontrol.com/world/openai-rolls-out-gpt-6-lineup-with-cheaper-sol-and-luna-models-article-14035827.html",
+      "publishedAt": "2026-09-23T00:33:00Z"
+    }
+  ]
+}
