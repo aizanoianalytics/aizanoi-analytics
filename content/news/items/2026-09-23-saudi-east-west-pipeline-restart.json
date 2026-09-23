@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-23-saudi-east-west-pipeline-restart",
+  "title": "Saudi Arabia restarts the East-West pipeline as Brent settles below $100 for the first time since 8 September",
+  "summary": "Three sources briefed on the matter confirmed on Tuesday that Saudi Aramco has resumed operations along the East-West pipeline and plans to reload a cargo at the Red Sea port of Yanbu, ending the two-week outage triggered by drone strikes launched from Iraq. Brent settled at $98.66 on Tuesday, the first close below $100 since 8 September, while WTI slipped below $90 a barrel as US crude inventories rose by 1.8 million barrels in the week to 18 September. Iraq also reported higher exports, and traders cited renewed US-Iran diplomacy in New York as a further weight on prices.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-09-23T03:55:00Z",
+  "updatedAt": "2026-09-23T03:55:00Z",
+  "retrievedAt": "2026-09-23T07:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Saudi Arabia", "oil prices", "East-West pipeline", "Brent", "OPEC"],
+  "sources": [
+    {
+      "publisher": "Reuters via Express Tribune",
+      "url": "https://tribune.com.pk/story/2630835/saudi-arabia-restarts-east-west-oil-pipeline-sources-say",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters via Mezha",
+      "url": "https://mezha.net/eng/news/7b261b24_oil_prices_fall",
+      "publishedAt": "2026-09-23T06:23:00Z"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-23-bessent-xi-ai-safety-channel",
+  "title": "US puts a bilateral AI-safety notification channel on the Trump-Xi summit table as Beijing weighs in",
+  "summary": "US Treasury Secretary Scott Bessent confirmed over the weekend that Washington is proposing a standing bilateral mechanism for AI-incident notifications that presidents Trump and Xi could announce at their Thursday White House meeting. The proposal emerged from US-China AI dialogue talks begun earlier this year and would cover incidents with national-security implications. Beijing has not publicly committed, and analysts frame the channel as the most plausible concrete deliverable of a summit otherwise expected to focus on extending the November trade truce.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-23T03:25:00Z",
+  "updatedAt": "2026-09-23T03:25:00Z",
+  "retrievedAt": "2026-09-23T03:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Bessent", "US China", "AI safety", "White House summit", "diplomacy"],
+  "sources": [
+    {
+      "publisher": "Reuters via Dawn",
+      "url": "https://www.dawn.com/news/2031904",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-23-anthropic-claude-opus-55-launch",
+  "title": "Anthropic ships Claude Opus 5.5 with a 40% cost cut and pre-launch reviews from METR and Frontier Design",
+  "summary": "Anthropic released Claude Opus 5.5 on Tuesday at $4 per million input tokens and $20 per million output, roughly 20% below Opus 5 and about a third of OpenAI's GPT-5.6 Sol cost on a software-development benchmark. The model is available immediately on AWS, Google Cloud and Microsoft Azure. Anthropic says Opus 5.5 was about 85% less likely than Opus 5 or Mythos 5.1 to attempt to bypass containment boundaries in a dedicated evaluation, after pre-launch testing by METR and Frontier Design. Sonnet 5.5 and Haiku 5.5 are due in coming weeks.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-09-23T03:15:00Z",
+  "updatedAt": "2026-09-23T03:15:00Z",
+  "retrievedAt": "2026-09-23T03:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Anthropic", "Claude Opus", "AI safety", "METR", "Frontier Design"],
+  "sources": [
+    {
+      "publisher": "Reuters via Express Tribune",
+      "url": "https://tribune.com.pk/story/2630844/anthropic-unveils-claude-opus-55",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}

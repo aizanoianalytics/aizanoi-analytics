@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-23-un-chief-final-ai-curbs",
+  "title": "Outgoing UN chief Guterres uses his final address to push for a multilateral AI risk framework and a US-China dialogue",
+  "summary": "In his last General Assembly speech before his term ends 31 December, Secretary-General António Guterres called on world leaders to negotiate a multilateral AI risk-management regime backed by 'credible and independent oversight' and to establish channels between Washington and Beijing modelled on late-Cold-War engagement. US Treasury Secretary Scott Bessent confirmed on Sunday that Washington has proposed a bilateral AI-incident notification mechanism Trump and Xi may consider at Thursday's White House summit.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-09-23T03:10:00Z",
+  "updatedAt": "2026-09-23T03:10:00Z",
+  "retrievedAt": "2026-09-23T02:55:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["United Nations", "Guterres", "AI governance", "US China", "diplomacy"],
+  "sources": [
+    {
+      "publisher": "Reuters via Dawn",
+      "url": "https://www.dawn.com/news/2031904",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    },
+    {
+      "publisher": "AFP",
+      "url": "https://www.afp.com/en/trump-renames-ai-super-intelligence-leaders-jostle-over-dangers",
+      "publishedAt": "2026-09-23T02:52:00Z"
+    }
+  ]
+}

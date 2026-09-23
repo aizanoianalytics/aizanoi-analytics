@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-23-meta-muse-revenue-case-wall-street",
+  "title": "Wall Street upgrades Meta's Muse as a likely $10.8 billion revenue engine by 2027",
+  "summary": "JPMorgan, Jefferies and UBS lifted their forecasts for Meta after its Muse consumer AI assistant hit 2.8 million downloads in 12 days, outpacing the 1.3 million ChatGPT recorded in its equivalent launch window per Apptopia data cited by Reuters. Muse is free in a basic tier with $20 and $100 monthly subscriptions, and Jefferies estimates $10.8 billion in annualised revenue if it reaches one billion users by end-2027 with 3% converting to paid, lifting its Meta price target to $875.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-09-23T04:05:00Z",
+  "updatedAt": "2026-09-23T04:05:00Z",
+  "retrievedAt": "2026-09-23T03:50:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Meta", "Muse", "Wall Street", "consumer AI", "stock market"],
+  "sources": [
+    {
+      "publisher": "Reuters via SRN News",
+      "url": "https://www.srnnews.com/wall-street-expects-metas-ai-agent-to-shape-into-a-new-revenue-engine",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}

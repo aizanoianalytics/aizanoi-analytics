@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-23-wall-street-oil-futures-pmi",
+  "title": "Wall Street points to a flat open as oil extends its slide and traders brace for S&P Global flash PMIs",
+  "summary": "S&P 500 futures were little changed in early Wednesday trade after the benchmark closed flat at 7,764.64 on Tuesday, the Nasdaq Composite held at 27,244.28 after Monday's record, and the Dow Jones eased 0.36% to 51,863.69 with UnitedHealth, Caterpillar and Goldman Sachs each down about 1%. Brent held below $99 a barrel and WTI under $90 as Saudi Arabia confirmed the East-West pipeline restart and Iraq raised exports. Traders awaited S&P Global and HSBC flash manufacturing, services and composite PMIs due later in the session, with the Trump-Xi summit on Thursday also in view.",
+  "category": "economy-markets",
+  "priority": 66,
+  "publishedAt": "2026-09-23T04:00:00Z",
+  "updatedAt": "2026-09-23T04:00:00Z",
+  "retrievedAt": "2026-09-23T09:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Wall Street", "S&P 500", "oil prices", "PMI", "Trump Xi"],
+  "sources": [
+    {
+      "publisher": "Times of India Markets Desk",
+      "url": "https://timesofindia.indiatimes.com/business/india-business/sensex-stock-market-today-23-september-2026-live-updates-nse-bse-gift-nifty-50-top-gainers-losers-mcx-stocks-in-focus-market-news/liveblog/134424917.cms",
+      "publishedAt": "2026-09-23T08:56:30Z"
+    },
+    {
+      "publisher": "Business Standard",
+      "url": "https://business-standard.com/markets/capital-market-news/trump-xi-summit-pmi-data-releases-to-remain-in-focus-126091800835_1.html",
+      "publishedAt": "2026-09-18T08:35:00Z"
+    }
+  ]
+}

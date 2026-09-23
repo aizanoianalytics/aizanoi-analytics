@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-23-uwcl-md1-day2-fixtures",
+  "title": "UEFA Women's Champions League league phase opens its second day with holders Barcelona hosting Paris FC and Chelsea welcoming Austria Wien",
+  "summary": "Matchday 1 of the 2026/27 UEFA Women's Champions League league phase continues on Wednesday with four fixtures, headlined by holders Barcelona hosting Paris FC at 20:00 CET and Chelsea welcoming Austria Wien to the Cherry Red Records Stadium at 19:00 BST. The day also includes OH Leuven v Roma and Servette Chênois v OL Lyonnes at 18:45 CET. Bayern's home draw with Manchester City on Tuesday opened the phase; the top four sides in the 18-team league advance directly to the quarter-finals, with sides 5–12 entering a two-legged play-off.",
+  "category": "football",
+  "priority": 72,
+  "publishedAt": "2026-09-23T04:10:00Z",
+  "updatedAt": "2026-09-23T04:10:00Z",
+  "retrievedAt": "2026-09-23T03:55:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["UEFA Women's Champions League", "Barcelona", "Chelsea", "Paris FC", "Austria Wien"],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/womenschampionsleague/news/02a9-21848dfb62c3-1313bc23426c-1000--2026-27-women-s-champions-league-all-the-league-phase-fix",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    },
+    {
+      "publisher": "The Athletic",
+      "url": "https://www.nytimes.com/athletic/football/game/austria-wien-vs-chelsea/hNlx8OAwx6T4h9ah/",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}
