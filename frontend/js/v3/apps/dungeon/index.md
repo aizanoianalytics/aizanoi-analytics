@@ -1,166 +1,126 @@
-# Aizanoi Dungeon Modülü (Aizo'nun Uyanışı)
+# Aizanoi Dungeon Module (Aizo's Awakening)
 
-> **Amaç:** Antik Kütahya/Çavdarhisar Aizanoi Zeus Tapınağı ve Penkalas Çayı yeraltı mahzenlerinde geçen; AizanoiOS v3 masaüstü pencereleme sistemiyle tam entegre, bağımsız (standalone) web olarak da çalışabilen, retro 2D Top-Down Dungeon-Crawler RPG oyunu ve varlık deposu.
-
----
-
-## 1. Kararlı Kimlik (Stable Identity)
-
-- **Ürün / Oyun Adı:** Aizanoi Dungeon: Aizo'nun Uyanışı
-- **Kararlı Modül Kimliği (App ID):** `dungeon`
-- **Genel Çalışma Girişi (Runtime Entry):** `src/index.js`
-- **Manifest Yolu:** `manifest.json` (`manifestVersion: 1`, `type: "desktop-app"`)
-- **Bağımsız (Standalone) Web Girişi:** `/dungeon/index.html`
-- **Masaüstü & Favicon İkonu:** `assets/icons/aizanoi-dungeon.svg`
+> **Purpose:** A 10-chapter retro 2D top-down dungeon-crawler RPG set in the Aizanoi Zeus Temple and Penkalas catacombs. Fully integrated with the AizanoiOS v3 desktop shell, and also playable as a standalone fullscreen web route.
 
 ---
 
-## 2. Bildirilen Yetenekler (Declared Capabilities)
+## 1. Stable identity
 
-- **Gereksinimler (`requires`):** `[]` (Sıfır dış yetenek bağımlılığı).
-- **Sağlanan (`provides`):** `["desktop-app"]`.
-- **Çalışma Modeli:** %100 istemci tarafı (client-side static execution). HTML5 Canvas, Phaser 3.80.1, Web Audio API ve yerel DOM kullanır; backend servisine veya harici veritabanına ihtiyaç duymaz.
+- **Product / game title:** Aizanoi Dungeon: Aizo's Awakening
+- **Stable module id:** `dungeon`
+- **Canonical runtime entry:** `src/index.js`
+- **Manifest path:** `manifest.json` (`manifestVersion: 1`, `type: "desktop-app"`)
+- **Standalone web entry:** `/dungeon/` (facade/compat route that imports the canonical module)
+- **Desktop & favicon icon:** `assets/icons/aizanoi-dungeon.svg`
+
+The historical `gelistirmeler/2026-09-11-dungeon-crawler-game/` archive is retired; the canonical owner is the `frontend/js/v3/apps/dungeon/` tree.
 
 ---
 
-## 3. Sahip Olunan Dosyalar ve Bileşen Haritası (Owned Implementation & Assets)
+## 2. Declared capabilities
+
+- **Requires (`requires`):** `[]` — zero external capability dependencies.
+- **Provides (`provides`):** `["desktop-app"]`.
+- **Execution model:** 100% client-side static execution. HTML5 Canvas, Phaser 3.80.1, the Web Audio API and local DOM; no backend service or external database is required.
+
+---
+
+## 3. Owned implementation & assets
 
 ```
-gelistirmeler/2026-09-11-dungeon-crawler-game/
-├── index.md                 # Bu mimari ve sahiplik belgesi
-├── DOCUMENTATION.md         # A'dan Z'ye derin teknik ve matematiksel sistem dokümantasyonu
-├── README.md                # Merge & Deploy entegrasyon kılavuzu
-├── manifest.json            # AizanoiOS v1 modül kayıt manifestosu
-├── index.html               # Bağımsız tam ekran oynanabilir HTML5 sayfası
+frontend/js/v3/apps/dungeon/
+├── index.md             # this file (architecture and ownership)
+├── DOCUMENTATION.md     # full technical and mathematical system reference
+├── README.md            # merge / deploy integration guide
+├── manifest.json        # AizanoiOS v3 module registration manifest
 │
 ├── src/
-│   └── index.js             # AizanoiOS pencere yaşam döngüsü: mount({ container }) & teardown
+│   └── index.js         # AizanoiOS window lifecycle: mount({ container }) & teardown
 │
 ├── css/
-│   └── game.css             # Yalıtılmış (scoped) AizanoiOS cam (glassmorphism) & antik pirinç teması
+│   └── game.css         # scoped AizanoiOS glassmorphism & antique-brass theme
 │
 ├── js/
-│   ├── main.js              # Phaser 3 konfigürasyonu, başlatıcı ve motor kontrolcüsü
-│   ├── constants.js         # Denge katsayıları, Aizo temel statları, renk paleti
-│   │
-│   ├── data/                # Oyun veritabanı (Modüler statik veri tabloları)
-│   │   ├── levels.js        # 10 Kutsal Bölüm + Sonsuzluk Panteonu harita konfigürasyonları
-│   │   ├── enemies.js       # 8 Düşman ve Boss türü (statlar, animasyon satırları, davranışlar)
-│   │   ├── items.js         # Silahlar, zırhlar, tılsımlar ve tüketilebilir XP paketleri
-│   │   ├── skills.js        # 3 Dallı (Saldırı, Savunma, Fayda) Kutsal Yetenek Ağacı
-│   │   └── shop-catalog.js  # Antik Macellum tüccarının dinamik satış kataloğu
-│   │
-│   ├── entities/            # Oyun Varlıkları (Phaser Physics Arcade Nesneleri)
-│   │   ├── Aizo.js          # Oyuncu karakteri (hareket, saldırı, menzilli atış, can yenileme)
-│   │   ├── Enemy.js         # Düşman yapay zekası (takip, saldırı menzili, can barı, ganimet)
-│   │   ├── Projectile.js    # Şimşek arkları, kemik okları ve büyü mermileri
-│   │   ├── Structure.js     # Zeus Sunağı, Savunma Kuleleri, Mezar Çatlakları, Yozlaşmış Mabedler
-│   │   └── Portal.js        # Seviye tamamlama ve sonraki bölüme geçiş kapısı
-│   │
-│   ├── scenes/              # Phaser 3 Sahne Yöneticisi (9 Ayrı Sahne)
-│   │   ├── BootScene.js     # Varlık ön-yükleyici (Asset Loader) ve animasyon kayıt defteri
-│   │   ├── MenuScene.js     # Ana Menü (Hikaye, Devam Et, Sonsuzluk, Kılavuz)
-│   │   ├── GameScene.js     # Ana oyun döngüsü (Fizik, harita render, çarpışma, kamera)
-│   │   ├── UIScene.js       # Paralel HUD (Can, XP, Bölüm, Denarii, Cooldownlar, Ses Butonu)
-│   │   ├── ShopScene.js     # Macellum tüccarı overlay arayüzü
-│   │   ├── SkillTreeScene.js# Yetenek ağacı açma overlay arayüzü
-│   │   ├── InventoryScene.js# Yadigarlar sandığı ve detaylı stat özeti overlay arayüzü
-│   │   ├── GameOverScene.js # Mermer heykel uykusu ve dirilme ekranı
-│   │   └── VictoryScene.js  # 10. Bölüm Titan Colossus zafer kutlama ekranı
-│   │
-│   ├── systems/             # Temel Oyun Motoru Sistemleri
-│   │   ├── CombatSystem.js  # Zırh absorbsiyonu, kritik hasar, can çalma ve infaz matematiği
-│   │   ├── ProgressionSystem.js # XP, Seviye atlama, Denarii, Bölüm kaydı ve kalıcılık
-│   │   ├── InventorySystem.js   # Kuşanılan eşyalar ve stat birleştirici (Stat Aggregator)
-│   │   ├── LevelSystem.js   # BSP (Binary Space Partitioning) prosedürel zindan üreticisi
-│   │   ├── TouchControls.js # Mobil sanal joystick, auto-target ve dokunmatik butonlar
-│   │   └── AudioManager.js  # Web Audio API ile sıfır harici dosya sentezli ses motoru
-│   │
-│   └── utils/               # Yardımcı Fonksiyonlar
-│       ├── math-helpers.js  # Açı, mesafe, clamp ve olasılık fonksiyonları
-│       └── ui-helpers.js    # Cam efektli butonlar ve prosedürel stat barları
+│   ├── main.js          # Phaser 3 configuration, bootstrap and engine controller
+│   ├── constants.js     # balance coefficients, Aizo base stats, palette
+│   ├── standalone.js    # standalone /dungeon/ bootstrap shim
+│   ├── data/            # game data (modular static data tables)
+│   ├── entities/        # Phaser physics arcade entities (player, enemies, projectiles, structures, portal)
+│   ├── scenes/          # 9 Phaser scenes (Boot, Menu, Game, UI, Shop, SkillTree, Inventory, GameOver, Victory)
+│   ├── systems/         # combat, progression, inventory, level (BSP), touch controls, audio
+│   └── utils/           # math + UI helpers
 │
-├── assets/                  # 100% Modüle Özel Üretilmiş Piksel Sanatı ve Grafikler
-│   ├── sprites/             # aizo.png, enemies.png, bosses.png, items-*.png, projectiles.png
-│   ├── tilesets/            # aizanoi-floor.png, aizanoi-walls.png, aizanoi-decor.png
-│   ├── ui/                  # Butonlar, paneller, barlar, joystick, skill node ikonları
-│   └── icons/               # aizanoi-dungeon.svg (Vektörel Aizo maskotu)
-│
-└── tools/                   # Doğrulama, Denetim ve Test Araçları
-    ├── deep_audit.py        # 78 dosyanın çapraz başvuru, casing ve katalog bütünlük denetimi
-    ├── validate_js.py       # 30 JS dosyasının sözdizimi ve import geçerlilik kontrolü
-    ├── validate_assets.py   # Disk üzerindeki asset varlık denetimi
-    └── test_http_server.py  # Yerel HTTP sunucusu üzerinden 200 OK duman testi
+└── assets/
+    ├── sprites/         # aizo.png, enemies.png, bosses.png, items-*.png, projectiles.png
+    ├── tilesets/        # aizanoi-floor.png, aizanoi-walls.png, aizanoi-decor.png
+    ├── ui/              # buttons, panels, bars, joystick, skill node icons
+    └── icons/           # aizanoi-dungeon.svg (vector mascot)
 ```
 
 ---
 
-## 4. Mimari ve Çalışma Prensipleri (How & Why It Works)
+## 4. Architecture and runtime principles
 
-### A. Çift-Çalışma Modeli (Dual Execution Mode)
-1. **AizanoiOS Entegrasyonu (`src/index.js`):**
-   - AizanoiOS masaüstü kabuğu modülü dinamik olarak içe aktarır (`import(...)`).
-   - `mount({ container })` çağrıldığında host pencereye yalıtılmış bir wrapper yerleştirir, Phaser motorunu başlatır ve pencere boyutu değişimlerini `ResizeObserver` ile takip eder.
-   - Pencere kapatıldığında `teardown()` tetiklenerek Phaser instance'ı `destroy(true)` ile tamamen imha edilir, bellek sızıntısı engellenir.
-2. **Bağımsız Web Sürümü (`index.html`):**
-   - Doğrudan `/dungeon/` URL'si üzerinden açılır.
-   - Cihaz mobil ise dikey ekran uyarısı (`orientation-overlay`) gösterir, landscape modda tam ekran oyun deneyimi sunar.
+### A. Dual execution mode
 
-### B. Prosedürel Web Audio Mimarisi (Neden Harici Ses Dosyası Yok?)
-- **Gerekçe:** Web oyunlarında harici MP3/OGG dosyaları; yavaş ağlarda gecikmeye, Linux/Nginx sunucularda MIME type uyumsuzluğuna veya 404 hatalarına yol açar.
-- **Çözüm (`AudioManager.js`):** HTML5 Web Audio API'nin dahili `OscillatorNode`, `GainNode` ve `BiquadFilterNode` birimleri kullanılarak kılıç savurmasından gök gürültüsüne, Roma parası tınlamasından kalkan ilahi akoruna kadar 12 ses matematiksel olarak sentezlenir. Boyut: **0 bayt ağ yükü**, %100 çevrimdışı çalışma.
+1. **AizanoiOS integration (`src/index.js`)**
+   - The AizanoiOS desktop shell dynamically imports the module.
+   - On `mount({ container })` the module inserts a scoped wrapper into the host window, boots the Phaser engine and tracks window resize via `ResizeObserver`.
+   - On window close `teardown()` runs and the Phaser instance is fully destroyed with `destroy(true)`, preventing memory leaks.
+2. **Standalone web route (`/dungeon/`)**
+   - `frontend/dungeon/index.html` directly opens the standalone fullscreen experience.
+   - When the device is mobile, a vertical-orientation hint is shown until landscape mode is reached.
 
-### C. Prosedürel BSP Harita Üretimi (`LevelSystem.js`)
-- Her bölüm başladığında zindan alanı `Binary Space Partitioning (BSP)` algoritması ile özyinelemeli olarak odalara bölünür.
-- Odalar 2 karo genişliğindeki koridorlarla bağlanır. İlk oda Aizo'nun kutsal güvenli üssü (Zeus Sunağı) ilan edilir, en uzak oda ise çıkış portalı yapılır.
-- Oyuncunun veya düşmanların duvar içinde doğması matematiksel olarak imkansızdır.
+### B. Procedural Web Audio (why no external sound files)
 
-### D. Dinamik Varlık Yolu Çözümleme (`import.meta.url`)
-- Standalone `/dungeon/` ile AizanoiOS `/js/v3/apps/dungeon/` farklı klasör derinliklerindedir.
-- `BootScene.js`, varlık taban yolunu `new URL('../../assets/', import.meta.url).href` ile çalışma anında belirler. Oyun ister alt klasörde ister ana dizinde olsun, varlıklar her zaman doğru URL'den çekilir.
+- **Why:** External MP3/OGG assets tend to add latency on slow networks, MIME-type mismatches on Linux/Nginx and avoidable 404 paths.
+- **How (`AudioManager.js`):** HTML5 Web Audio API nodes (`OscillatorNode`, `GainNode`, `BiquadFilterNode`) procedurally synthesise every sound — sword swings, thunder, coin clinks, shield chants. Result: **0 bytes of network audio**, 100% offline.
+
+### C. Procedural BSP dungeon generation (`LevelSystem.js`)
+
+- At chapter start the dungeon is recursively partitioned with a Binary Space Partitioning algorithm.
+- Rooms are connected by 2-tile corridors. The first room becomes Aizo's safe base (the Zeus Altar); the farthest becomes the exit portal.
+- Players and enemies can never spawn inside a wall by construction.
+
+### D. Dynamic asset-path resolution (`import.meta.url`)
+
+- The standalone `/dungeon/` route and the AizanoiOS `frontend/js/v3/apps/dungeon/` module live at different folder depths.
+- `BootScene.js` computes the asset base URL with `new URL('../../assets/', import.meta.url).href`, so assets always resolve regardless of where the game is loaded from.
 
 ---
 
-## 5. Depolama ve Kalıcılık (Storage & State Persistence)
+## 5. Storage and state persistence
 
-Modül, kullanıcı ilerlemesini tarayıcının `localStorage` alanında 3 anahtarla yönetir:
+The module persists the player's progress in the browser's `localStorage` namespace under three keys:
 
-| Depolama Anahtarı | Sahip Sistem | İçerik ve Amaç |
+| Storage key | Owned system | Contents and purpose |
 |---|---|---|
-| `aizanoi_dungeon_save_v1` | `ProgressionSystem` | Oyuncu seviyesi, mevcut XP, toplam Denarii, açılan yetenekler seti, en yüksek dalga, ulaşılan bölüm ve istatistikler. |
-| `aizanoi_inventory_v1` | `InventorySystem` | Kuşanılmış silah ID'si, zırh ID'si ve 2 adet aksesuar ID'si. |
-| `aizanoi_dungeon_muted` | `AudioManager` | Ses açık/kapalı kullanıcı tercihi (`true` / `false`). |
+| `aizanoi_dungeon_save_v1` | `ProgressionSystem` | Player level, current XP, total Denarii, unlocked skills, highest wave, current chapter and statistics. |
+| `aizanoi_inventory_v1`    | `InventorySystem`    | Equipped weapon id, armour id and 2 accessory ids. |
+| `aizanoi_dungeon_muted`   | `AudioManager`        | Sound on/off preference (`true` / `false`). |
 
-*Not: Özel tarayıcı modunda veya depolama kısıtlamasında sistem `try/catch` bloklarıyla sessizce belleğe (in-memory) düşer, oyunun çökmesine izin vermez.*
-
----
-
-## 6. Yaşam Döngüsü ve Bellek Temizliği (Cleanup Contract)
-
-- `GameScene` sahnesi her seviye geçişinde (`handleEnterPortal`) veya yeniden başlatmada `shutdown` olayı yayar.
-- Sanal Joystick (`TouchControls`) DOM ve canvas referanslarını serbest bırakır (`destroy()`).
-- Sahne seviyesindeki tüm klavye ve işaretçi dinleyicileri `removeAllListeners()` ile tahliye edilir.
-- Düşmanlar yok olduğunda üzerlerindeki grafik sağlık barları `preDestroy()` ile sahne ağacından temizlenir.
-- Pencere kapatıldığında `stopDungeonGame` çağrılarak Phaser döngüsü, requestAnimationFrame çağrıları ve Web Audio bağlamı güvenle sonlandırılır.
+*Note: in private browsing or when storage is restricted the system falls back to in-memory storage inside `try/catch`, so the game never crashes.*
 
 ---
 
-## 7. Doğrulama ve Testler (Verification Suite)
+## 6. Lifecycle and cleanup contract
 
-Proje kökünde yer alan 4 test betiği ile doğrulanır:
+- `GameScene` emits a `shutdown` event on each level transition (`handleEnterPortal`) and on restart.
+- The virtual joystick (`TouchControls`) releases its DOM and canvas handles (`destroy()`).
+- Scene-level keyboard and pointer listeners are evacuated with `removeAllListeners()`.
+- When enemies die, their graphic health bars are removed from the scene tree via `preDestroy()`.
+- On window close `stopDungeonGame` is called, terminating the Phaser loop, `requestAnimationFrame` calls and the Web Audio context.
 
-```powershell
-# 1. Çapraz başvuru, Linux casing, sahne ve eşya bütünlüğü kontrolü (0 hata)
-python tools/deep_audit.py
+---
 
-# 2. 30 JS dosyasının sözdizimi ve import geçerliliği kontrolü (0 hata)
-python tools/validate_js.py
+## 7. Verification and tests
 
-# 3. Disk üzerindeki 33 asset dosya yolunun varlık doğrulaması (%100 başarı)
-python tools/validate_assets.py
+Run the existing regression and contract suites from the repository root (see `tests/` and CI):
 
-# 4. Yerel HTTP sunucusunda tüm uç noktaların 200 OK yanıt kontrolü (15/15 OK)
-python tools/test_http_server.py
+```bash
+node --test tests/aizanoi-os-dungeon-module.test.mjs
+node --test tests/dungeon-real-touch-start.test.mjs
+node --test tests/aizanoi-os-capabilities.test.mjs
 ```
 
-Detaylı matematiksel formüller, seviye denge tabloları, yetenek ağacı mimarisi ve Nginx yapılandırma kılavuzu için lütfen **`DOCUMENTATION.md`** dosyasını inceleyin.
+For the full mathematical formulas, chapter balance tables, skill tree architecture and Nginx configuration guide, see `DOCUMENTATION.md` in this same directory.
