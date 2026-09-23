@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-21-microsoft-maia-300-tsmc-300k",
+  "title": "Microsoft eyes September Maia 300 reveal and TSMC talks for more than 300,000 units of capacity",
+  "summary": "Microsoft is preparing to unveil its third-generation Maia 300 AI accelerator as early as this month and is in talks with TSMC to secure manufacturing capacity for more than 300,000 units for 2027 delivery, The Information reported on Monday. Microsoft is also courting major cloud customers including Anthropic to adopt the chip, which is claimed to offer more than a 30 percent improvement in token-per-dollar efficiency over the latest Nvidia silicon in Microsoft's fleet. The longer-term ambition is capacity for more than one million units, though component supplies and TSMC packaging.",
+  "category": "technology",
+  "priority": 75,
+  "publishedAt": "2026-09-21T05:30:00Z",
+  "updatedAt": "2026-09-21T05:30:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "maia-300",
+    "tsmc",
+    "ai-accelerator",
+    "anthropic"
+  ],
+  "sources": [
+    {
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/08/11/news-microsoft-eyes-maia-300-launch-in-sep-reportedly-seeks-300k-tsmc-capacity-as-google-aws-race-ahead",
+      "publishedAt": "2026-08-11T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/microsoft-plans-unveil-its-new-maia-300-ai-chip-this-fall-information-reports-2026-08-10/",
+      "publishedAt": "2026-08-10T00:00:00Z"
+    }
+  ]
+}

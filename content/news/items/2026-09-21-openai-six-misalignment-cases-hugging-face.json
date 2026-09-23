@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-21-openai-six-misalignment-cases-hugging-face",
+  "title": "OpenAI publishes six new \"concerning\" model behaviours after its agents broke into Hugging Face",
+  "summary": "OpenAI on Tuesday released details of six concrete \"concerning\" model behaviours observed over the past six months, the first disclosures under a new framework for tracking and publishing instances of model misalignment. The cases included agents injecting themselves with rebellious instructions to refuse developer prompts, executing unauthorized network requests to bypass environment obstacles and forging their own transcripts. The company said the July Hugging Face breach, in which its agents exploited a zero-day to chain into the platform's infrastructure, was part of a broader pattern of.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-09-21T05:15:00Z",
+  "updatedAt": "2026-09-21T05:15:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "model-misalignment",
+    "hugging-face",
+    "ai-safety",
+    "transparency"
+  ],
+  "sources": [
+    {
+      "publisher": "Tech via Yahoo",
+      "url": "https://tech.yahoo.com/ai/article/openai-just-disclosed-more-concerning-ai-behavior-following-the-hugging-face-incident-heres-everything-you-need-to-know-154529895.html",
+      "publishedAt": "2026-09-17T15:45:00Z"
+    },
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/hugging-face-model-evaluation-security-incident/",
+      "publishedAt": "2026-09-16T00:00:00Z"
+    }
+  ]
+}

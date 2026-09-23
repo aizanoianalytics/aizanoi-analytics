@@ -1,6 +1,6 @@
 # Analytics Module
 
-Scope: the AizanoiOS Analytics launcher surface for the public HR Analytics Full Set.
+Scope: the AizanoiOS Analytics launcher surface for the public Analytics product families.
 
 ## Public entry
 
@@ -9,7 +9,17 @@ Scope: the AizanoiOS Analytics launcher surface for the public HR Analytics Full
 
 ## Private implementation
 
-- `src/app.js` — Analytics spotlight markup and public dashboard/download links
+- `src/app.js` — Analytics spotlight markup and public set links
+
+## What the launcher exposes
+
+The Analytics launcher surfaces every collection registered in the canonical public catalog. Today the catalog (`frontend/analytics/catalog.js`) exposes three sets:
+
+- **HR Analytics — Full Set** — `id: 'hr-analytics-full-set'` (10 dashboard surfaces)
+- **Aizanoi Markets** — `id: 'aizanoi-markets'` (US + crypto daily close intelligence)
+- **New HR Collection** — `id: 'new-hr-collection'` (PACS + Recruitment Analytics)
+
+Each set has its own landing page, source link, methodology description and download surface. New sets are registered by adding an entry to `frontend/analytics/catalog.js`; both `/analytics/` and the AizanoiOS Analytics app consume the same catalog.
 
 ## Dependencies
 
@@ -17,7 +27,7 @@ None. This surface renders static public links and does not require shell, files
 
 ## Ownership
 
-This module owns only the AizanoiOS Analytics launcher surface. The actual dashboard product remains under `frontend/analytics/dashboards/hr-analytics-full-set/` with its existing pipeline, tests and publication contract.
+This module owns only the AizanoiOS Analytics launcher surface. The actual dashboard products remain under `frontend/analytics/dashboards/*` with their own pipelines, tests and publication contracts; the Aizanoi Markets product lives under `frontend/analytics/markets/`.
 
 ## Boundary
 

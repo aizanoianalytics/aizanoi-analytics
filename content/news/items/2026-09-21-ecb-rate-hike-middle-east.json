@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-21-ecb-rate-hike-middle-east",
+  "title": "European Central Bank raises three key rates by 25 basis points citing Middle East energy pressure",
+  "summary": "The European Central Bank's Governing Council on Thursday raised its three key interest rates by 25 basis points, citing continued pressure on inflation from the Middle East conflict and energy markets. The move follows the ECB's previous decision to hold rates unchanged at its July meeting and comes ahead of the US Federal Reserve's first rate hike since 2023. ECB president Christine Lagarde told the press conference that the policy stance remains restrictive and that the council will continue to follow a data-dependent approach, with markets watching next month's flash CPI prints for.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-09-21T05:55:00Z",
+  "updatedAt": "2026-09-21T05:55:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ecb",
+    "rate-hike",
+    "european-central-bank",
+    "lagarde",
+    "middle-east"
+  ],
+  "sources": [
+    {
+      "publisher": "European Central Bank",
+      "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260910~314e508016.en.html",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    },
+    {
+      "publisher": "European Central Bank",
+      "url": "https://www.ecb.europa.eu/press/press_conference/monetary-policy-statement/2026/html/ecb.is260910~6a45359cfc.en.html",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-21-nvidia-tokens-per-megawatt-vera-rubin",
+  "title": "Nvidia puts tokens-per-megawatt at the centre of its AI factory pitch at the Santa Clara summit",
+  "summary": "Nvidia used its AI Infra Summit in Santa Clara to recast the economics of AI data centres around a single metric, tokens per megawatt, attaching hard multipliers to the Vera Rubin NVL72 rack-scale system. The company said the platform delivers up to 30 times higher throughput per megawatt and up to 35 times higher token throughput per megawatt on large models than earlier generations, with Vera Rubin in full production. Nvidia also announced its first DSX Flex commercial deployment at a facility in Manassas, Virginia, and an 800-volt DC power architecture for future reference designs.",
+  "category": "ai",
+  "priority": 65,
+  "publishedAt": "2026-09-21T05:20:00Z",
+  "updatedAt": "2026-09-21T05:20:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "vera-rubin",
+    "ai-factory",
+    "data-centres",
+    "tokens-per-megawatt"
+  ],
+  "sources": [
+    {
+      "publisher": "ByteVyte",
+      "url": "https://bytevyte.com/nvidia-puts-tokens-per-megawatt-at-the-centre-of-the-ai-factory-pitch/",
+      "publishedAt": "2026-09-20T00:00:00Z"
+    }
+  ]
+}
