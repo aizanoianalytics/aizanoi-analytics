@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-21-nvidia-local-ai-dgx-spark",
+  "title": "Nvidia says \"local AI is here\" as DGX Spark desktops and RTX Spark laptops prepare for the mainstream",
+  "summary": "Nvidia senior director of product management for AI Adel El Hallak told Tom's Guide that \"local AI is here,\" pointing to the company's DGX Spark desktop, which he runs at home overnight, and the imminent wave of RTX Spark laptops packing the same GB10 silicon into notebook form. Microsoft is building a Surface Laptop Ultra around the chip, with Dell, HP, Lenovo, Asus, MSI and Acer expected to ship this autumn. Perplexity's Portable Computer and other harness providers are building easier install flows around the 128 GB of unified memory, framing the price-per-year math against ChatGPT Plus.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-09-21T05:45:00Z",
+  "updatedAt": "2026-09-21T05:45:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "dgx-spark",
+    "rtx-spark",
+    "local-ai",
+    "edge-ai"
+  ],
+  "sources": [
+    {
+      "publisher": "Tom's Guide",
+      "url": "https://www.tomsguide.com/ai/nvidia-says-local-ai-is-here-and-it-could-change-how-you-use-ai-at-home",
+      "publishedAt": "2026-09-20T00:00:00Z"
+    }
+  ]
+}

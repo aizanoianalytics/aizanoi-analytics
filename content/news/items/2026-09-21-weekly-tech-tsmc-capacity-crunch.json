@@ -1,0 +1,40 @@
+{
+  "id": "2026-09-21-weekly-tech-tsmc-capacity-crunch",
+  "title": "TSMC's capacity crunch becomes the binding constraint as Microsoft, Google and AWS all push for more silicon",
+  "summary": "The thread that ties the week's biggest technology stories together is not a product launch but a foundry booking. Microsoft is reportedly negotiating with TSMC for more than 300,000 Maia 300 units of capacity for 2027, an order that dwarfs the tens of thousands of Maia 200 chips Microsoft has shipped. Morgan Stanley has estimated Google could produce more than 5 million TPU chips next year on TSMC's N3P process, while AWS's Trainium2 fleet, training and serving Claude through Project Rainier, is already approaching one million units and Trainium4 is slated to move to 2 nanometre by the end.",
+  "category": "technology",
+  "priority": 65,
+  "kind": "weekly",
+  "week": "2026-W39",
+  "publishedAt": "2026-09-21T06:25:00Z",
+  "updatedAt": "2026-09-21T06:25:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tsmc",
+    "samsung",
+    "maia-300",
+    "tpu",
+    "asml",
+    "capacity"
+  ],
+  "sources": [
+    {
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/08/11/news-microsoft-eyes-maia-300-launch-in-sep-reportedly-seeks-300k-tsmc-capacity-as-google-aws-race-ahead",
+      "publishedAt": "2026-08-11T00:00:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/ai/articles/asml-asml-chip-giants-tsmc-214129428.html",
+      "publishedAt": "2026-09-20T17:41:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-21-gold-price-outlook-22-percent-from-high",
+  "title": "Gold slips back toward a 22 percent drawdown from its record high as the safe-haven trade unwinds",
+  "summary": "Gold is on track to close September down roughly 22 percent from the $5,589.38 an ounce record reached earlier this year, with StoneX analysts describing the move as the safe-haven trade starting to unwind alongside shifting US rate expectations. The Federal Reserve's first rate hike since 2023 and the prospect of additional tightening have lifted real yields, reducing the appeal of non-yielding bullion, even as Middle East conflict keeps geopolitical risk premium elevated. Spot gold last traded near $4,530 an ounce after touching almost $5,100 in January and is up about 18 percent year to.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-09-21T06:00:00Z",
+  "updatedAt": "2026-09-21T06:00:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "gold",
+    "safe-haven",
+    "real-yields",
+    "fed-hike",
+    "commodities"
+  ],
+  "sources": [
+    {
+      "publisher": "StoneX",
+      "url": "https://www.stonex.com/en/insights/gold-prices-fall-as-safe-haven-trade-starts-to-unwind/",
+      "publishedAt": "2026-09-20T00:00:00Z"
+    },
+    {
+      "publisher": "Hindustan Times",
+      "url": "https://www.hindustantimes.com/world-news/us-news/gold-price-outlook-september-2026-could-gold-recover-after-falling-22-from-record-high-101788373946463.html",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    }
+  ]
+}

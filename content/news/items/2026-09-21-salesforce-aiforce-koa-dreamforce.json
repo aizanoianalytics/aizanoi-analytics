@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-21-salesforce-aiforce-koa-dreamforce",
+  "title": "Salesforce unveils AIforce and its first CRM reasoning model Koa at Dreamforce 2026",
+  "summary": "Salesforce used its Dreamforce keynote on Friday to outline AIforce, a platform that connects probabilistic AI models with deterministic enterprise data, workflows, permissions and business rules, alongside Koa, the company's first CRM reasoning model. AIforce will appear first in Claudeforce for Claude Co-Work users, Slackforce for Slack and Agentforce Coworker in Lightning, with an SDK planned so customers can build their own applications. Salesforce said Agentforce now has more than 30,000 customers and 7 billion agentic work units, and introduced Salesforce Guardian and an Agent Fabric.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-09-21T05:25:00Z",
+  "updatedAt": "2026-09-21T05:25:00Z",
+  "retrievedAt": "2026-09-21T07:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "salesforce",
+    "aiforce",
+    "koa",
+    "agentforce",
+    "dreamforce"
+  ],
+  "sources": [
+    {
+      "publisher": "The Markets Daily",
+      "url": "https://www.themarketsdaily.com/2026/09/19/salesforce-unveils-aiforce-expands-agentforce-at-dreamforce.html",
+      "publishedAt": "2026-09-19T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters via Newswav",
+      "url": "https://newswav.com/article/salesforce-puts-ai-at-center-of-software-push-A2609_Y4HxPQ",
+      "publishedAt": "2026-09-19T16:07:00Z"
+    }
+  ]
+}
