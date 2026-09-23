@@ -6,7 +6,7 @@ scikit-learn==1.7.2
 statsmodels==0.15.0
 scipy==1.16.2
 joblib==1.5.2
-threadpoolctl==3.6.0
+threadpoolctl==3.7.0
 patsy==1.0.2
 packaging==26.3
 python-dateutil==2.9.0.post0
