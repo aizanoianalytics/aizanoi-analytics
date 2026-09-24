@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-24-trump-rejects-un-ai-governance",
+  "title": "US tells UN Security Council it 'totally rejects' any international centralised control of AI",
+  "summary": "The Trump administration's representative at Wednesday's UN Security Council AI briefing, Michael Kratsios, told member states the United States 'totally rejects all efforts by international bodies to assert centralised control and global governance of AI.' The intervention sets Washington against OpenAI chief Sam Altman and Anthropic chief Dario Amodei. Trump rejected any attempt to 'construct a globalist scheme' to regulate AI at the UN General Assembly on Tuesday. Canadian PM Mark Carney signed a joint statement with 19 other countries calling for an international body to set AI standards.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-09-24T03:30:00Z",
+  "updatedAt": "2026-09-24T03:30:00Z",
+  "retrievedAt": "2026-09-24T03:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "United Nations",
+    "Trump administration",
+    "AI regulation",
+    "UNSC",
+    "geopolitics"
+  ],
+  "sources": [
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/9/24/ai-corporate-leaders-tell-un-the-industry-needs-global-regulation",
+      "publishedAt": "2026-09-24T00:00:00Z"
+    },
+    {
+      "publisher": "France 24",
+      "url": "https://www.france24.com/en/americas/20260923-ai-leaders-urge-caution-at-un-with-anthropic-chief-pledging-to-slow-down",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    },
+    {
+      "publisher": "The 1 News",
+      "url": "https://www.the1news.com/public/index.php/article/ais-dangers-real-and-imminent-canadian-ai-pioneer-yoshua-bengio-tells-un",
+      "publishedAt": "2026-09-24T03:00:00Z"
+    }
+  ]
+}

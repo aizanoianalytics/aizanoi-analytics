@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-24-google-eu-403m-gdpr-fine",
+  "title": "Ireland fines Google €403 million for GDPR breaches on location data, its fourth-largest EU privacy penalty",
+  "summary": "Ireland's Data Protection Commission fined Google €403 million ($463 million) on Monday for mishandling users' location data in breach of the EU's GDPR, ruling that processing through Web & App Activity, Location History and Android's Location Accuracy feature was not lawful, fair or transparent. The decision caps a six-year investigation covering May 2018 to February 2020 and orders Google to comply within six months. It is the DPC's fourth-largest fine ever and the first against Google at this scale, behind a €1.2 billion penalty issued to Meta in 2023.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-09-24T00:15:00Z",
+  "updatedAt": "2026-09-24T00:15:00Z",
+  "retrievedAt": "2026-09-24T00:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Google", "Ireland", "DPC", "GDPR", "privacy", "location data"],
+  "sources": [
+    {
+      "publisher": "Associated Press via ABC News",
+      "url": "https://www-cdn.abcnews.com/Technology/wireStory/google-hit-463-million-fine-eu-location-data-136616044",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    },
+    {
+      "publisher": "Associated Press via Atlanta Journal-Constitution",
+      "url": "https://ajc.com/news/2026/09/google-hit-with-463-million-fine-for-eu-location-data-rule-breach",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}

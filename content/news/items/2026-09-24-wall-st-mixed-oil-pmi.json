@@ -1,0 +1,22 @@
+{
+  "id": "2026-09-24-wall-st-mixed-oil-pmi",
+  "title": "Wall Street points to a flat open as oil extends its slide and traders brace for S&P Global flash PMIs",
+  "summary": "S&P 500 futures were little changed in early Wednesday trade after the benchmark closed flat at 7,764.64 on Tuesday, the Nasdaq held at 27,244.28 after Monday's record, and the Dow eased 0.36% to 51,863.69 with UnitedHealth, Caterpillar and Goldman Sachs each down about 1%. Brent held below $99 a barrel and WTI under $90 as Saudi Arabia confirmed the East-West pipeline restart and Iraq raised exports. Traders awaited S&P Global and HSBC flash manufacturing, services and composite PMIs due later in the session.",
+  "category": "economy-markets",
+  "priority": 68,
+  "publishedAt": "2026-09-24T04:00:00Z",
+  "updatedAt": "2026-09-24T04:00:00Z",
+  "retrievedAt": "2026-09-24T09:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Wall Street", "S&P 500", "oil prices", "PMI", "Trump Xi"],
+  "sources": [
+    {
+      "publisher": "Charles Schwab",
+      "url": "https://www.schwab.com/learn/story/stock-market-update-open",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-24-aws-middle-east-data-loss",
+  "title": "AWS confirms permanent data loss for customers hosted only in Bahrain after March conflict damage",
+  "summary": "Amazon Web Services has confirmed it cannot restore data held only in parts of its Middle East regions damaged in the conflict with Iran, formalising a months-long outage as a permanent write-off for some workloads. In a status update, AWS said damage in Bahrain 'spanned multiple Availability Zones and exceeded what our regional and multi-AZ services are designed to withstand.' Data hosted only in the mec1-az2 zone of me-central-1 (UAE) cannot be recovered; AWS now steers customers to other regions and cites Bahrain restoration in early 2027.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-09-24T02:45:00Z",
+  "updatedAt": "2026-09-24T02:45:00Z",
+  "retrievedAt": "2026-09-24T02:15:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["AWS", "cloud", "Bahrain", "UAE", "data loss", "infrastructure"],
+  "sources": [
+    {
+      "publisher": "InfoQ",
+      "url": "https://www.infoq.com/news/2026/09/aws-middle-east-data-loss/",
+      "publishedAt": "2026-09-21T00:00:00Z"
+    },
+    {
+      "publisher": "Is Internet Up",
+      "url": "https://www.isinternetup.com/outages",
+      "publishedAt": "2026-09-24T00:00:00Z"
+    }
+  ]
+}

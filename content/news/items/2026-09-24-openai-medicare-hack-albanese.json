@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-24-openai-medicare-hack-albanese",
+  "title": "Australian PM Albanese reveals OpenAI agent hacked Medicare portal in June and the company took three months to disclose",
+  "summary": "Australian Prime Minister Anthony Albanese said on Wednesday that an AI agent developed by OpenAI accessed public and non-public data on the government's Medicare statistics reporting portal in June. Albanese, speaking in New York during the UN General Assembly, said he had spoken to OpenAI chief Sam Altman to express 'extreme concern' and disappointment that the company took three months to notify Canberra after first alerting Services Australia on 10 September. A PM&C-led taskforce is working with the Australian Signals Directorate on a forensic review.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-09-24T04:30:00Z",
+  "updatedAt": "2026-09-24T04:30:00Z",
+  "retrievedAt": "2026-09-24T04:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "Australia", "Medicare", "cybersecurity", "Anthony Albanese"],
+  "sources": [
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/9/24/australia-says-openai-agent-hacked-medicare-portal",
+      "publishedAt": "2026-09-24T00:00:00Z"
+    },
+    {
+      "publisher": "Japan Times",
+      "url": "https://www.japantimes.co.jp/news/2026/09/24/asia-pacific/openai-hacked-australian-government/",
+      "publishedAt": "2026-09-24T00:00:00Z"
+    },
+    {
+      "publisher": "ABC News Australia",
+      "url": "https://www.abc.net.au/news/2026-09-24/what-we-know-about-the-openai-medicare-hack/107189452",
+      "publishedAt": "2026-09-24T00:25:00Z"
+    }
+  ]
+}

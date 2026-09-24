@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-24-us-new-home-sales-august-release",
+  "title": "US Census to release August new home sales later on Thursday after July hit a six-month low",
+  "summary": "The US Census Bureau and the Department of Housing and Urban Development will publish August new residential sales at 10:00 ET on Thursday, after July sales fell 10.5% month-on-month to a seasonally adjusted annual rate of 607,000 — the slowest pace since January and 6.3% below a year earlier. July's median sales price of $393,800 was little changed from $403,100 in June, while inventory rose to 488,000 for a 9.6-month supply. The July release said mortgage rates climbed from 6.1% to above 6.6% from January to July.",
+  "category": "economy-markets",
+  "priority": 56,
+  "publishedAt": "2026-09-24T06:30:00Z",
+  "updatedAt": "2026-09-24T06:30:00Z",
+  "retrievedAt": "2026-09-24T06:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["US housing", "new home sales", "Census Bureau", "HUD", "mortgage rates"],
+  "sources": [
+    {
+      "publisher": "U.S. Census Bureau and HUD",
+      "url": "https://www.census.gov/construction/nrs/pdf/newressales.pdf",
+      "publishedAt": "2026-08-25T00:00:00Z"
+    },
+    {
+      "publisher": "U.S. Census Bureau",
+      "url": "https://www.census.gov/economic-indicators/calendar-listview.html",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

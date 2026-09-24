@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-24-atletico-derby-real-madrid-mourinho",
+  "title": "Atlético Madrid beat ten-man Real Madrid 2-1 in the derby to climb above their rivals into second place",
+  "summary": "Atlético Madrid moved above Real Madrid into second place in LaLiga on Sunday with a 2-1 derby win at the Riyadh Air Metropolitano, where second-half goals from Alejandro Grimaldo and Jonathan David settled a feisty fixture against a Real side reduced to ten men. Barcelona stay top with 21 points from seven games, Atlético second on 16, Real third on 15 and Sevilla fifth on 13, with Real Betis also on 15. The defeat was Real's second in seven league games since José Mourinho's return, and Mourinho publicly congratulated the Refereeing Appointments Committee afterwards.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-09-24T00:00:00Z",
+  "updatedAt": "2026-09-24T00:00:00Z",
+  "retrievedAt": "2026-09-24T09:30:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Atlético Madrid", "Real Madrid", "LaLiga", "derby", "Mourinho"],
+  "sources": [
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401882865/real-madrid-atletico-madrid",
+      "publishedAt": "2026-09-20T09:15:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/live/c61mv7p2k4dlt",
+      "publishedAt": "2026-09-20T19:30:00Z"
+    },
+    {
+      "publisher": "LaLiga",
+      "url": "https://www.laliga.com/en-GB/laliga-easports/standing",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-24-saudi-east-west-pipeline-restart",
+  "title": "Saudi Arabia restarts East-West oil pipeline at low rate but full flows could take six to eight weeks",
+  "summary": "Saudi Arabia restarted operations at its East-West Pipeline on Tuesday and was loading its first cargo for China at the Red Sea port of Yanbu the same day, according to three sources, restoring part of its ability to export crude without going through the Strait of Hormuz. The pipeline, which can carry up to seven million barrels per day, was pumping at a low rate, with Aramco aiming to return flows to roughly four million bpd. A full restart could still take six to eight weeks after drone attacks blamed on Iraqi militia forced the line to shut on 11 September.",
+  "category": "economy-markets",
+  "priority": 66,
+  "publishedAt": "2026-09-24T01:45:00Z",
+  "updatedAt": "2026-09-24T01:45:00Z",
+  "retrievedAt": "2026-09-24T01:15:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Saudi Arabia", "Aramco", "East-West pipeline", "oil prices", "Yanbu"],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/energy/saudi-arabia-restarts-east-west-oil-pipeline-resume-exports-yanbu-sources-say-2026-09-22/",
+      "publishedAt": "2026-09-22T10:08:00Z"
+    },
+    {
+      "publisher": "Gulf News",
+      "url": "https://gulfnews.com/business/energy/saudi-oil-lifeline-reopens-aramco-restarts-east-west-pipeline-bypassing-hormuz-1.500684800",
+      "publishedAt": "2026-09-23T12:46:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/video/2026/09/23/saudi-east-west-pipeline-could-still-take-6-8-weeks-to-recover-fully.html",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}
