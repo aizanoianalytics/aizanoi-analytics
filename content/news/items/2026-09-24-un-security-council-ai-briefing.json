@@ -1,0 +1,44 @@
+{
+  "id": "2026-09-24-un-security-council-ai-briefing",
+  "title": "OpenAI and Anthropic CEOs plead with UN Security Council for global AI regulation as Trump administration rejects it",
+  "summary": "OpenAI chief Sam Altman and Anthropic chief Dario Amodei on Wednesday briefed the United Nations Security Council in New York alongside Canadian AI pioneer Yoshua Bengio, calling for coordinated global oversight of advanced AI. Bengio, co-chair of the UN's Independent International Scientific Panel on AI, said the dangers are 'real and imminent.' Amodei said 'even more stringent standards of safety will be required,' and Altman urged 'extreme care.' The French-convened meeting came the same day Canada and 19 other countries signed a joint statement demanding stronger frontier-AI oversight.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-09-24T03:00:00Z",
+  "updatedAt": "2026-09-24T03:00:00Z",
+  "retrievedAt": "2026-09-24T03:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "United Nations",
+    "OpenAI",
+    "Anthropic",
+    "Sam Altman",
+    "Dario Amodei",
+    "Yoshua Bengio",
+    "AI safety"
+  ],
+  "sources": [
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/9/24/ai-corporate-leaders-tell-un-the-industry-needs-global-regulation",
+      "publishedAt": "2026-09-24T00:00:00Z"
+    },
+    {
+      "publisher": "France 24",
+      "url": "https://www.france24.com/en/americas/20260923-ai-leaders-urge-caution-at-un-with-anthropic-chief-pledging-to-slow-down",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    },
+    {
+      "publisher": "The 1 News",
+      "url": "https://www.the1news.com/public/index.php/article/ais-dangers-real-and-imminent-canadian-ai-pioneer-yoshua-bengio-tells-un",
+      "publishedAt": "2026-09-24T03:00:00Z"
+    }
+  ]
+}

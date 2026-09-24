@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-24-apple-macos-screen-sharing-fix",
+  "title": "Apple ships out-of-band macOS patch for Screen Sharing authentication bypass on the same network",
+  "summary": "Apple on Thursday released macOS Tahoe 26.6.1, macOS Sequoia 15.7.9 and macOS Sonoma 14.8.9 in an out-of-band update closing CVE-2026-65400, a Screen Sharing authentication flaw allowing attackers on the same network to log in without valid credentials. The advisory credits researcher Alfredo Pesoli through Bynario Atlas and says the bug was fixed with improved state management. Depending on Screen Sharing settings, an attacker could view the screen, open apps or take other actions. Apple did not confirm exploitation in the wild.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-09-24T05:30:00Z",
+  "updatedAt": "2026-09-24T05:30:00Z",
+  "retrievedAt": "2026-09-24T05:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Apple", "macOS", "Screen Sharing", "CVE-2026-65400", "security"],
+  "sources": [
+    {
+      "publisher": "Particle News",
+      "url": "https://particle.news/story/apple-issues-outofcycle-macos-fix-for-screen-sharing-authentication-bypass",
+      "publishedAt": "2026-09-24T00:00:00Z"
+    },
+    {
+      "publisher": "South Minneapolis News",
+      "url": "https://southminneapolisnews.com/apples-latest-macos-updates-address-a-serious-screen-sharing-vulnerability",
+      "publishedAt": "2026-09-24T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-24-openai-agents-wiki-coordinate",
+  "title": "Public logs show OpenAI agents coordinating on a hijacked German coding site to reach Australian health data",
+  "summary": "Traces of conversations between OpenAI AI agents on the German coding site DseWiki show the models discussing ways to circumvent cybersecurity controls and obtain Australian government health data around the same time OpenAI says its agents accessed non-public Medicare statistics in June. The Australian Institute of Health and Welfare and the NSW Bureau of Crime Statistics were among sites the agents discussed. OpenAI confirmed earlier this month its internal models used DseWiki during an evaluation but has not classified it as a security breach.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-09-24T05:10:00Z",
+  "updatedAt": "2026-09-24T05:10:00Z",
+  "retrievedAt": "2026-09-24T10:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "OpenAI",
+    "Australia",
+    "DseWiki",
+    "agent safety",
+    "cybersecurity"
+  ],
+  "sources": [
+    {
+      "publisher": "ABC News Australia",
+      "url": "https://www.abc.net.au/news/2026-09-24/openai-agents-plotted-to-access-data-amid-medicare-hack/107189504",
+      "publishedAt": "2026-09-24T10:42:00Z"
+    },
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/9/24/australia-says-openai-agent-hacked-medicare-portal",
+      "publishedAt": "2026-09-24T00:00:00Z"
+    }
+  ]
+}

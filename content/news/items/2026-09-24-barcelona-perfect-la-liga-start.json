@@ -1,0 +1,27 @@
+{
+  "id": "2026-09-24-barcelona-perfect-la-liga-start",
+  "title": "Barcelona extend their perfect LaLiga start to seven wins from seven with Atlético and Real both dropping points",
+  "summary": "Barcelona remain six points clear at the top of LaLiga with a perfect 21 points from seven games, scoring 31 and conceding 7. Atlético Madrid and Real Madrid both dropped points last weekend, with Atlético leapfrogging Real into second on 16 points after Sunday's 2-1 derby win and Real falling to third on 15. Real Betis also sit on 15 with a game in hand, Sevilla are fifth on 13 and Deportivo Alavés sixth on 11. Lamine Yamal and Raphinha, with a hat-trick against Racing Santander in the 7-2 win at Camp Nou, have been central to Hansi Flick's free-running start.",
+  "category": "football",
+  "priority": 58,
+  "publishedAt": "2026-09-24T01:00:00Z",
+  "updatedAt": "2026-09-24T01:00:00Z",
+  "retrievedAt": "2026-09-24T09:00:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Barcelona", "LaLiga", "Atlético Madrid", "Real Madrid", "Hansi Flick", "Lamine Yamal"],
+  "sources": [
+    {
+      "publisher": "FC Barcelona",
+      "url": "https://www.fcbarcelona.com/en/football/first-team/standings",
+      "publishedAt": "2026-09-24T00:00:00Z"
+    },
+    {
+      "publisher": "LaLiga",
+      "url": "https://www.laliga.com/en-GB/laliga-easports/standing",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}

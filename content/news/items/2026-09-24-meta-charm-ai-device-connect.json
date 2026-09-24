@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-24-meta-charm-ai-device-connect",
+  "title": "Meta unveils a keychain-sized Muse Charm AI gadget and camera-free Ray-Ban Meta Audio glasses at Connect 2026",
+  "summary": "Meta chief executive Mark Zuckerberg used the company's annual Connect event on Wednesday to unveil Meta Charm, a keychain-sized device with a roughly two-inch touchscreen and built-in 5G that hosts the firm's Muse AI assistant and will ship in December. Meta also introduced Ray-Ban Meta Audio, its first camera-free AI glasses, retaining open-ear audio and assistant capability for up to 12 hours of battery life at 43 grams, and confirmed Muse will be integrated with the wider AI glasses lineup. Meta plans to offer more than 100 AI glasses across Ray-Ban, Oakley and Meta Glasses by year-end.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-09-24T01:00:00Z",
+  "updatedAt": "2026-09-24T01:00:00Z",
+  "retrievedAt": "2026-09-24T00:35:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Meta", "Connect 2026", "Muse", "AI glasses", "Charm", "Zuckerberg"],
+  "sources": [
+    {
+      "publisher": "Reuters via MarketScreener",
+      "url": "https://marketscreener.com/news/meta-launches-ai-gadget-charm-as-race-for-post-smartphone-hardware-heats-up-ce785aded881f227",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    },
+    {
+      "publisher": "Journos News",
+      "url": "https://journosnews.com/meta-muse-ai-glasses",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    },
+    {
+      "publisher": "Financial Express",
+      "url": "https://financialexpress.com/life/technology-meta-connect-2026-meta-unveils-new-ai-glasses-vr-glasses-and-muse-charm-4346067",
+      "publishedAt": "2026-09-23T00:00:00Z"
+    }
+  ]
+}

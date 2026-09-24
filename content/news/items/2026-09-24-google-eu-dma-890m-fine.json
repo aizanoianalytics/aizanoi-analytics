@@ -1,0 +1,32 @@
+{
+  "id": "2026-09-24-google-eu-dma-890m-fine",
+  "title": "Google revamps European search results under DMA compliance after €890 million EU antitrust fine",
+  "summary": "Google has warned users in the European Economic Area that it will modify its site reputation abuse policy for Search, months after the European Commission fined the company €890 million in July for Digital Markets Act breaches on Google Search self-preferencing and Play steering. The ITIF Foundation noted on 3 September that the change shows the recurring cost of DMA compliance for US platforms. The Commission has given Google 60 days to comply or face penalty payments of up to 5 percent of worldwide daily turnover; Google told users its EEA results would be 'lower quality' as a consequence.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-09-24T00:30:00Z",
+  "updatedAt": "2026-09-24T00:30:00Z",
+  "retrievedAt": "2026-09-24T00:10:00Z",
+  "author": { "name": "News Desk" },
+  "editor": { "name": "Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Google", "DMA", "European Commission", "search", "antitrust"],
+  "sources": [
+    {
+      "publisher": "European Commission",
+      "url": "https://digital-markets-act.ec.europa.eu/commission-fines-google-eur890-million-breaches-digital-markets-act-2026-07-23_en",
+      "publishedAt": "2026-07-23T00:00:00Z"
+    },
+    {
+      "publisher": "ITIF",
+      "url": "https://itif.org/publications/2026/09/03/googles-spam-policy-change-shows-the-costs-of-dma-compliance/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/google-warns-lower-quality-it-revamps-europe-search-results-avoid-eu-fines-2026-09-08/",
+      "publishedAt": "2026-09-08T00:00:00Z"
+    }
+  ]
+}
