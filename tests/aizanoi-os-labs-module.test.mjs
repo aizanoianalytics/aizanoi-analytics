@@ -32,6 +32,8 @@ test('Labs presents the Grok 4.6 Fast prompt-and-video workspace', () => {
   assert.match(privateApp, /data-labs-prompt/);
   assert.match(privateApp, /data-labs-video/);
   assert.match(privateApp, /data-video-slot/);
+  assert.match(privateApp, /roman-history\.mp4/);
+  assert.match(privateApp, /roman-history-prompt\.md/);
 });
 
 test('Labs keeps Arcade separate and navigates through the narrow app capability', () => {

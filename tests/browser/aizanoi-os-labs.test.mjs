@@ -17,9 +17,11 @@ test('Aizanoi Labs opens as a desktop shortcut with the Grok workspace', async (
     const app = page.locator('.az-window[data-app-id="labs"]');
     await app.locator('.az-labs-workspace').waitFor();
     assert.equal(await app.getByRole('heading', { name: 'Grok 4.6 Fast' }).count(), 1);
-    assert.equal(await app.locator('[data-labs-prompt]').count(), 1);
+    await app.locator('[data-labs-prompt]').waitFor();
+    await page.waitForFunction(() => document.querySelector('[data-labs-prompt]')?.value.length > 1000);
+    assert.ok((await app.locator('[data-labs-prompt]').inputValue()).includes('The Rise of Rome'));
     assert.equal(await app.locator('[data-video-slot]').count(), 1);
-    assert.equal(await app.locator('[data-labs-video]').count(), 1);
+    assert.match(await app.locator('[data-labs-video]').getAttribute('src'), /roman-history\.mp4$/);
     assert.equal(await app.locator('.az-empty-state').count(), 0);
     assert.deepEqual(errors, []);
   } finally {
