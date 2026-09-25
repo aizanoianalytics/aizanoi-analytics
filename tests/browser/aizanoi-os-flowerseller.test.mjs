@@ -13,6 +13,14 @@ async function openFlowerseller(page) {
   await page.locator('.fs-product-card').first().waitFor();
 }
 
+async function closeFlowerseller(page) {
+  const close = page.locator('.az-window[data-app-id="flowerseller"] [data-action="close"]');
+  if (await close.count()) {
+    await close.click();
+    await page.locator('.az-window[data-app-id="flowerseller"]').waitFor({ state: 'detached' });
+  }
+}
+
 function captureRuntimeErrors(page) {
   const errors = [];
   page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
@@ -83,7 +91,9 @@ test('search (Turkish locale), sort, favorites and persistence across reload', a
     await page.locator('[data-search]').fill('');
     await page.waitForFunction(() => document.querySelectorAll('.fs-product-card').length >= 24);
 
-    // Reload and verify favorite persisted.
+    // Reload from the desktop route so the persisted app state is restored by an explicit reopen.
+    await closeFlowerseller(page);
+    await page.evaluate(() => history.replaceState({}, '', '/?fs-qa=reload-favorite'));
     await page.reload({ waitUntil: 'networkidle' });
     await page.locator('.az-desktop-shortcut[data-app="flowerseller"]:visible, .az-phone-app[data-app="flowerseller"]:visible, .az-device-app[data-app="flowerseller"]:visible').first().click();
     await page.locator('.fs-app').waitFor({ state: 'visible' });
@@ -197,6 +207,8 @@ test('checkout: empty cart blocks CTA, simulated order tracks across reload', as
     assert.equal(await page.locator('[data-order-tracker]').first().getAttribute('data-order-id'), id);
     assert.match(await page.locator('[data-order-tracker]').first().innerText(), /Hazırlanıyor/);
 
+    await closeFlowerseller(page);
+    await page.evaluate(() => history.replaceState({}, '', '/?fs-qa=reload-order'));
     await page.reload({ waitUntil: 'networkidle' });
     await page.locator('.az-desktop-shortcut[data-app="flowerseller"]:visible, .az-phone-app[data-app="flowerseller"]:visible, .az-device-app[data-app="flowerseller"]:visible').first().click();
     await page.locator('.fs-app').waitFor({ state: 'visible' });
@@ -227,7 +239,9 @@ test('dialog contract: Escape closes, focus returns to opener, cleanup releases 
     await page.waitForFunction(() => !document.querySelector('[data-cart-drawer]'));
     assert.equal(await page.evaluate(() => document.body.hasAttribute('data-fs-scroll-locked')), false);
 
-    // Reload and confirm clean mount state.
+    // Reload from the desktop route to verify clean mount state.
+    await closeFlowerseller(page);
+    await page.evaluate(() => history.replaceState({}, '', '/?fs-qa=reload-dialog'));
     await page.reload({ waitUntil: 'networkidle' });
     await page.locator('.az-desktop-shortcut[data-app="flowerseller"]:visible, .az-phone-app[data-app="flowerseller"]:visible, .az-device-app[data-app="flowerseller"]:visible').first().click();
     await page.locator('.fs-app').waitFor({ state: 'visible' });
