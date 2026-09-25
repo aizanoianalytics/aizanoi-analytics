@@ -8,6 +8,7 @@ if(!RELEASE)throw new Error('AizanoiOS release metadata is missing.');
 const {VERSION,BUILD}=RELEASE;
 
 const UTILITY_WINDOW_PREFS=Object.freeze({
+  labs:Object.freeze({width:980,height:720,migrateWidth:1080,migrateHeight:800}),
   calculator:Object.freeze({width:470,height:640,migrateWidth:620,migrateHeight:700}),
   winamp:Object.freeze({width:620,height:520,migrateWidth:760,migrateHeight:650}),
   camera:Object.freeze({width:760,height:620,migrateWidth:900,migrateHeight:720}),

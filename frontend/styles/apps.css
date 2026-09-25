@@ -782,6 +782,31 @@
   .az-winamp-shell .az-winamp-playlist { flex:1;min-height:140px;max-height:none; }
   .az-winamp-shell .az-winamp-add { padding-top:2px; }
 
+  /* Labs: prepared Grok prompt and one explicit video attachment surface. */
+  .az-labs-shell { min-height:100%; background:linear-gradient(145deg,#f5f7ff,#edf3fb 58%,#f8f0ec); color:#1e2a42; }
+  .az-labs-workspace { padding:clamp(20px,3vw,34px); }
+  .az-labs-hero { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; padding-bottom:22px; border-bottom:1px solid rgba(58,76,119,.14); }
+  .az-labs-hero h1 { margin:5px 0 7px; font:760 clamp(28px,4vw,44px)/.98 var(--az-font-ui); letter-spacing:-.055em; }
+  .az-labs-subtitle { max-width:590px; margin:0; color:#64718a; font:12px/1.55 var(--az-font-ui); }
+  .az-labs-model-badge,.az-labs-status,.az-labs-file-state { display:inline-flex; align-items:center; min-height:28px; padding:0 9px; border:1px solid rgba(74,91,137,.15); border-radius:999px; background:rgba(255,255,255,.55); color:#5d6a82; font:750 9px var(--az-font-mono); letter-spacing:.08em; white-space:nowrap; }
+  .az-labs-grid { display:grid; grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr); gap:14px; margin-top:18px; }
+  .az-labs-panel { min-width:0; padding:18px; border:1px solid rgba(255,255,255,.85); border-radius:19px; background:rgba(255,255,255,.63); box-shadow:0 15px 35px rgba(61,77,111,.1),inset 0 1px rgba(255,255,255,.9); }
+  .az-labs-panel-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:15px; }
+  .az-labs-panel h2 { margin:3px 0 0; color:#24314b; font:720 19px/1.1 var(--az-font-ui); letter-spacing:-.025em; }
+  .az-labs-label { display:block; margin-bottom:7px; color:#586780; font:700 11px var(--az-font-ui); }
+  .az-labs-prompt-panel textarea { width:100%; min-height:250px; resize:vertical; padding:13px; border:1px solid rgba(75,94,139,.18); border-radius:12px; outline:0; background:rgba(250,252,255,.84); color:#293852; font:12px/1.55 var(--az-font-mono); }
+  .az-labs-prompt-panel textarea:focus { border-color:#7d8ee7; box-shadow:0 0 0 3px rgba(92,108,221,.12); }
+  .az-labs-hint { margin:9px 0 0; color:#7a879c; font:11px/1.45 var(--az-font-ui); }
+  .az-labs-video-slot { min-height:300px; display:grid; place-items:center; overflow:hidden; border:1px dashed rgba(72,92,142,.3); border-radius:14px; background:linear-gradient(145deg,rgba(229,237,249,.8),rgba(248,241,239,.8)); }
+  .az-labs-video-slot video { width:100%; height:100%; max-height:390px; object-fit:contain; background:#172238; }
+  .az-labs-video-empty { display:grid; justify-items:center; gap:8px; padding:30px 20px; color:#6e7c93; text-align:center; }
+  .az-labs-video-empty strong { color:#33425e; font:700 14px var(--az-font-ui); }
+  .az-labs-video-empty span:last-child { max-width:220px; font:11px/1.45 var(--az-font-ui); }
+  .az-labs-video-mark { display:grid; place-items:center; width:52px; height:52px; border-radius:17px; background:linear-gradient(145deg,#7381e6,#8db8d5); color:#fff; box-shadow:0 10px 22px rgba(85,105,195,.22); }
+  .az-labs-footer-cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; padding:0 clamp(20px,3vw,34px) 28px; }
+  .az-labs-footer-cards .az-simple-card { min-height:0; }
+  @media (max-width:760px) { .az-labs-hero { flex-direction:column; } .az-labs-grid,.az-labs-footer-cards { grid-template-columns:1fr; } .az-labs-video-slot { min-height:230px; } }
+
   /* Textareas need to own their pointer focus instead of yielding it to the draggable window. */
   .az-notepad-text { position:relative;z-index:1;pointer-events:auto;user-select:text;-webkit-user-select:text;cursor:text;caret-color:#25365c; }
   .az-notepad-text:focus { box-shadow:inset 0 0 0 2px rgba(82,101,219,.12); }

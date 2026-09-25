@@ -27,9 +27,18 @@ test('canonical registry loads Labs only through its public module entry', async
   assert.equal(typeof publicEntry.mount, 'function');
 });
 
+test('Labs presents the Grok 4.6 Fast prompt-and-video workspace', () => {
+  assert.match(privateApp, /Grok 4\.6 Fast/);
+  assert.match(privateApp, /data-labs-prompt/);
+  assert.match(privateApp, /data-labs-video/);
+  assert.match(privateApp, /data-video-slot/);
+  assert.match(privateApp, /roman-history\.mp4/);
+  assert.match(privateApp, /roman-history-prompt\.md/);
+});
+
 test('Labs keeps Arcade separate and navigates through the narrow app capability', () => {
-  assert.match(privateApp, /title:'Games live in Arcade'/);
-  assert.match(privateApp, /button:'games'/);
+  assert.match(privateApp, /Games live in Arcade/);
+  assert.match(privateApp, /data-open-app="games"/);
   assert.match(privateApp, /apps\.open\(appId\)/);
   assert.doesNotMatch(privateApp, /api\.openApp|AIZANOI_OS|from ['"].*games\.js|\/games\//);
   assert.doesNotMatch(adapter, /AIZANOI_OS|shell\.js|games\.js/);
