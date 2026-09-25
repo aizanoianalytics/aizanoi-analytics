@@ -21,7 +21,7 @@ const root = read('frontend/index.html');
 const serviceWorker = read('frontend/service-worker.js');
 
 test('desktop keeps the five core apps and promotes a curated utility set', () => {
-  assert.match(brandPlatform, /const DESKTOP=Object\.freeze\(\[\.\.\.PINNED,'markets','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','fly-world','recycle-bin','workspace','flowerseller'\]\)/);
+  assert.match(brandPlatform, /const DESKTOP=Object\.freeze\(\[\.\.\.PINNED,'labs','markets','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','fly-world','recycle-bin','workspace','flowerseller'\]\)/);
   assert.match(registry, /id:'recycle-bin'.*icon:'\/assets\/icons\/aizanoi-recycle-bin\.svg'/s);
   assert.match(registry, /id:'camera'.*icon:'\/assets\/icons\/camera\.svg'/s);
   assert.match(registry, /id:'winamp'.*icon:'\/assets\/icons\/winamp\.svg'/s);
