@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-25-fed-rate-hike",
+  "title": "Fed raises policy rate as inflation remains elevated",
+  "summary": "The Federal Reserve raised the federal funds target range by a quarter point to 3.75%–4.00% at its September meeting. The move ends a long stretch without a hike and keeps monetary policy focused on persistent inflation while officials weigh risks to employment and growth.",
+  "category": "economy-markets",
+  "priority": 79,
+  "publishedAt": "2026-09-25T05:00:00Z",
+  "updatedAt": "2026-09-25T05:00:00Z",
+  "retrievedAt": "2026-09-25T05:01:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Federal Reserve", "interest rates", "inflation", "United States"],
+  "sources": [{ "publisher": "Federal Reserve", "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm", "publishedAt": "2026-09-16T18:00:00Z" }]
+}

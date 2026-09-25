@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-24T10:45:00.000Z",
+  "generatedAt": "2026-09-25T05:01:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-25",
+      "path": "/news/2026-09-25/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-24",
       "path": "/news/2026-09-24/",
@@ -196,6 +201,472 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-25-openai-daybreak-ukraine",
+      "kind": "daily",
+      "title": "OpenAI extends Daybreak cyber access to Ukraine’s civilian defenders",
+      "summary": "OpenAI says it will give Ukraine’s civilian cyber-defence teams access to its Daybreak program, allowing authorised teams to review legacy software, investigate suspicious activity and test fixes. The company frames the offer as support for essential services facing persistent cyberattacks, rather than as a general-purpose offensive capability.",
+      "category": "ai",
+      "priority": 84,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "cybersecurity",
+        "Ukraine",
+        "Daybreak"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/openai-extends-cyber-access-to-ukraine-for-civilian-defense",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-portugal-wales",
+      "kind": "daily",
+      "title": "Portugal open Nations League defence with narrow Wales win",
+      "summary": "Portugal began the 2026/27 UEFA Nations League with a 1–0 home victory over Wales, João Félix scoring the decisive goal. UEFA’s match report says the holders created the clearer chances but had to withstand a stronger Welsh spell late in the game before protecting the lead.",
+      "category": "football",
+      "priority": 82,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Portugal",
+        "Wales",
+        "UEFA Nations League",
+        "João Félix"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefanationsleague/match/2048002--portugal-vs-wales/",
+          "publishedAt": "2026-09-24T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-fed-rate-hike",
+      "kind": "daily",
+      "title": "Fed raises policy rate as inflation remains elevated",
+      "summary": "The Federal Reserve raised the federal funds target range by a quarter point to 3.75%–4.00% at its September meeting. The move ends a long stretch without a hike and keeps monetary policy focused on persistent inflation while officials weigh risks to employment and growth.",
+      "category": "economy-markets",
+      "priority": 79,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Federal Reserve",
+        "interest rates",
+        "inflation",
+        "United States"
+      ],
+      "sources": [
+        {
+          "publisher": "Federal Reserve",
+          "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+          "publishedAt": "2026-09-16T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-gemini-live-avatar",
+      "kind": "daily",
+      "title": "Google adds a live visual persona to Gemini’s enterprise dialogue model",
+      "summary": "Google has introduced Gemini 3.8 Live with Live Avatar, pairing low-latency streaming video with the company’s real-time dialogue model. The feature is available in Gemini Enterprise and is designed to give enterprise conversations a visible, responsive persona rather than a voice-only interface.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Google",
+        "Gemini",
+        "voice AI",
+        "enterprise software"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-with-live-avatar/",
+          "publishedAt": "2026-09-24T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-microsoft-security-agents",
+      "kind": "daily",
+      "title": "Microsoft highlights new controls for AI agents in security stack",
+      "summary": "Microsoft’s September security update highlights changes across Defender, compliance and endpoint management as AI agents increasingly operate inside employee workflows. The company presents agent identity, oversight and data-protection controls as part of the security boundary rather than as a separate AI feature layer.",
+      "category": "technology",
+      "priority": 75,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "security",
+        "AI agents",
+        "Defender"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/09/24/whats-new-in-microsoft-security-september-2026",
+          "publishedAt": "2026-09-24T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-norway-denmark",
+      "kind": "daily",
+      "title": "Haaland-inspired Norway edge Denmark 3–2",
+      "summary": "Norway beat Denmark 3–2 in the opening round of the 2026/27 Nations League, with Erling Haaland scoring twice in a match that changed direction repeatedly. The result gives Norway an early advantage in League A Group A4 before Sunday’s meeting with Portugal.",
+      "category": "football",
+      "priority": 75,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Norway",
+        "Denmark",
+        "Erling Haaland",
+        "UEFA Nations League"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefanationsleague/news/02a9-21abb9d8b85c-0d9416d472ce-1000--uefa-nations-league-matchday-1-round-up-cody-gakpo-denie/",
+          "publishedAt": "2026-09-24T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-chatgpt-ads-asia",
+      "kind": "daily",
+      "title": "ChatGPT Ads expands into seven more Asian markets",
+      "summary": "OpenAI says ChatGPT Ads will begin rolling out in Indonesia, Malaysia, the Philippines, Singapore, Thailand, Vietnam and Taiwan. The expansion takes the advertising product beyond 60 countries, while OpenAI says paid Plus, Pro and Enterprise plans will remain ad-free and ads will be clearly separated from answers.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "OpenAI",
+        "ChatGPT",
+        "advertising",
+        "Asia"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/chatgpt-ads-expands-southeast-asia-taiwan",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-us-current-account",
+      "kind": "daily",
+      "title": "US current-account deficit widens to $246 billion in Q2",
+      "summary": "The U.S. current-account deficit widened to $246.0 billion in the second quarter from a revised $212.6 billion in the first, according to the Bureau of Economic Analysis. Exports and income receipts rose, but imports and income payments increased more quickly, leaving the deficit at 3.0% of current-dollar GDP.",
+      "category": "economy-markets",
+      "priority": 71,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "United States",
+        "current account",
+        "trade",
+        "BEA"
+      ],
+      "sources": [
+        {
+          "publisher": "U.S. Bureau of Economic Analysis",
+          "url": "https://www.bea.gov/news/2026/us-international-transactions-and-investment-position-2nd-quarter-2026",
+          "publishedAt": "2026-09-24T12:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-microsoft-365-g7",
+      "kind": "daily",
+      "title": "Microsoft brings its G7 frontier suite to government cloud environments",
+      "summary": "Microsoft has announced Microsoft 365 G7 for Government Community Cloud environments, combining productivity, AI, agents, security, identity, compliance and governance. The launch extends the company’s frontier-suite strategy into public-sector deployments with additional sovereignty and control requirements.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "Microsoft 365",
+        "government cloud",
+        "Copilot"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft",
+          "url": "https://www.microsoft.com/en-us/microsoft-cloud/blog/us-government/2026/09/15/introducing-microsoft-365-g7-intelligence-trust-for-the-mission-ahead/",
+          "publishedAt": "2026-09-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-nations-league-friday-slate",
+      "kind": "daily",
+      "title": "Italy–Belgium and Türkiye–France headline Friday’s Nations League slate",
+      "summary": "The UEFA Nations League’s first matchday continues Friday with Italy hosting Belgium and Türkiye hosting France among the League A fixtures. UEFA’s official schedule also lists Georgia–Northern Ireland, Hungary–Ukraine, Poland–Bosnia and Herzegovina, Sweden–Romania and Montenegro–Cyprus.",
+      "category": "football",
+      "priority": 69,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "UEFA Nations League",
+        "Italy",
+        "Belgium",
+        "Türkiye",
+        "France"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefanationsleague/fixtures-results/",
+          "publishedAt": "2026-09-24T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-airbnb-gpt6-astra",
+      "kind": "daily",
+      "title": "Airbnb widens internal access to OpenAI’s GPT-6 Astra",
+      "summary": "Airbnb is expanding access to OpenAI’s frontier models, including GPT-6 Astra, across engineering and product teams. OpenAI says the agreement builds on Airbnb’s use of Codex and extends model use beyond software work into search, fraud prevention, customer support and insurance-claim workflows.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Airbnb",
+        "OpenAI",
+        "GPT-6 Astra",
+        "enterprise AI"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/airbnb-gpt-6-astra",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-google-vids-free-hd",
+      "kind": "daily",
+      "title": "Google opens AI-generated HD video creation in Vids",
+      "summary": "Google says anyone with a Google or Google Workspace account can now use Google Vids to create HD videos with Gemini Omni. The expanded access includes scene extension and duration controls, while generated clips carry an imperceptible SynthID watermark intended to signal their AI provenance.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Google",
+        "Google Vids",
+        "Gemini",
+        "video generation"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/products-and-platforms/products/workspace/gemini-omni-in-google-vids/",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-gemini-tts",
+      "kind": "daily",
+      "title": "Google launches expressive Gemini text-to-speech models",
+      "summary": "Google is rolling out Gemini 3.8 Flash TTS and Flash-Lite TTS for more expressive speech generation. The company positions Flash for detailed character direction and Flash-Lite for higher-volume production, with access beginning in Google AI Studio and the Gemini API and extending to products such as Google Vids.",
+      "category": "ai",
+      "priority": 65,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Google",
+        "Gemini",
+        "text-to-speech",
+        "audio generation"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-text-to-speech/",
+          "publishedAt": "2026-09-23T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-ats-marvell-ai-infrastructure",
+      "kind": "daily",
+      "title": "AT&S and Marvell expand substrate capacity for AI infrastructure",
+      "summary": "AT&S and Marvell Technology have expanded their collaboration through a long-term agreement tied to advanced IC substrate capacity. The companies say the arrangement is intended to support growing demand for next-generation AI and cloud infrastructure, placing packaging capacity alongside accelerators as a strategic bottleneck.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "AT&S",
+        "Marvell",
+        "semiconductors",
+        "AI infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "AT&S",
+          "url": "https://ats.net/en/ir-news/ats-and-marvell-technology-expand-collaboration-to-support-next-generation-ai-infrastructure/",
+          "publishedAt": "2026-09-22T07:16:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-25-global-growth-outlook",
+      "kind": "daily",
+      "title": "IMF keeps 2026 global growth outlook in focus as inflation eases",
+      "summary": "The IMF’s World Economic Outlook page lists global growth projections of 3.3% for 2026 and 3.2% for 2027, alongside an expectation that global inflation will continue to fall. The baseline points to steady expansion rather than a boom, leaving trade, energy and financial conditions as key swing factors.",
+      "category": "economy-markets",
+      "priority": 62,
+      "publishedAt": "2026-09-25T05:00:00.000Z",
+      "updatedAt": "2026-09-25T05:00:00.000Z",
+      "retrievedAt": "2026-09-25T05:01:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "IMF",
+        "global growth",
+        "inflation",
+        "world economy"
+      ],
+      "sources": [
+        {
+          "publisher": "International Monetary Fund",
+          "url": "https://www.imf.org/en/publications/weo",
+          "publishedAt": "2026-04-14T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-24-us-new-home-sales-august-release",
       "kind": "daily",

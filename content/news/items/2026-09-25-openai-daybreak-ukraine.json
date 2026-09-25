@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-25-openai-daybreak-ukraine",
+  "title": "OpenAI extends Daybreak cyber access to Ukraine’s civilian defenders",
+  "summary": "OpenAI says it will give Ukraine’s civilian cyber-defence teams access to its Daybreak program, allowing authorised teams to review legacy software, investigate suspicious activity and test fixes. The company frames the offer as support for essential services facing persistent cyberattacks, rather than as a general-purpose offensive capability.",
+  "category": "ai",
+  "priority": 84,
+  "publishedAt": "2026-09-25T05:00:00Z",
+  "updatedAt": "2026-09-25T05:00:00Z",
+  "retrievedAt": "2026-09-25T05:01:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["OpenAI", "cybersecurity", "Ukraine", "Daybreak"],
+  "sources": [{ "publisher": "OpenAI", "url": "https://openai.com/index/openai-extends-cyber-access-to-ukraine-for-civilian-defense", "publishedAt": "2026-09-23T00:00:00Z" }]
+}

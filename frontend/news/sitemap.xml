@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/openai-daybreak-ukraine/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>OpenAI extends Daybreak cyber access to Ukraine’s civilian defenders</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/portugal-wales/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>Portugal open Nations League defence with narrow Wales win</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/fed-rate-hike/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>Fed raises policy rate as inflation remains elevated</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/gemini-live-avatar/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>Google adds a live visual persona to Gemini’s enterprise dialogue model</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/microsoft-security-agents/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>Microsoft highlights new controls for AI agents in security stack</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/norway-denmark/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>Haaland-inspired Norway edge Denmark 3–2</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/chatgpt-ads-asia/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>ChatGPT Ads expands into seven more Asian markets</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/us-current-account/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>US current-account deficit widens to $246 billion in Q2</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/microsoft-365-g7/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>Microsoft brings its G7 frontier suite to government cloud environments</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/nations-league-friday-slate/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>Italy–Belgium and Türkiye–France headline Friday’s Nations League slate</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/airbnb-gpt6-astra/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>Airbnb widens internal access to OpenAI’s GPT-6 Astra</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/google-vids-free-hd/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>Google opens AI-generated HD video creation in Vids</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/gemini-tts/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>Google launches expressive Gemini text-to-speech models</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/ats-marvell-ai-infrastructure/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>AT&amp;S and Marvell expand substrate capacity for AI infrastructure</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-25/global-growth-outlook/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-25T05:00:00.000Z</news:publication_date>
+      <news:title>IMF keeps 2026 global growth outlook in focus as inflation eases</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-09-24/us-new-home-sales-august-release/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -118,126 +238,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-09-24T00:00:00.000Z</news:publication_date>
       <news:title>Atlético Madrid beat ten-man Real Madrid 2-1 in the derby to climb above their rivals into second place</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/musiala-bayern-return-ucl/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T04:20:00.000Z</news:publication_date>
-      <news:title>Bayern Munich confirm Jamal Musiala&#39;s first squad selection in six months ahead of Champions League matchday two</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/uwcl-md1-tuesday-review/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T04:15:00.000Z</news:publication_date>
-      <news:title>Wamser&#39;s 86th-minute equaliser earns Manchester City a 2-2 draw at Bayern as Arsenal rescue a stoppage-time win over HB Køge</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/uwcl-md1-day2-fixtures/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T04:10:00.000Z</news:publication_date>
-      <news:title>UEFA Women&#39;s Champions League league phase opens its second day with holders Barcelona hosting Paris FC and Chelsea welcoming Austria Wien</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/meta-muse-revenue-case-wall-street/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T04:05:00.000Z</news:publication_date>
-      <news:title>Wall Street upgrades Meta&#39;s Muse as a likely $10.8 billion revenue engine by 2027</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/wall-street-oil-futures-pmi/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T04:00:00.000Z</news:publication_date>
-      <news:title>Wall Street points to a flat open as oil extends its slide and traders brace for S&amp;P Global flash PMIs</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/saudi-east-west-pipeline-restart/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T03:55:00.000Z</news:publication_date>
-      <news:title>Saudi Arabia restarts the East-West pipeline as Brent settles below $100 for the first time since 8 September</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/indian-researchers-anthropic-openai-breach/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T03:50:00.000Z</news:publication_date>
-      <news:title>Indian researchers used Anthropic&#39;s Claude Opus 5 to break into OpenAI&#39;s community forum, exposing cross-vendor AI risk</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/qualcomm-chip-price-hike-ai-pc/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T03:45:00.000Z</news:publication_date>
-      <news:title>Qualcomm raises chip prices more than 10% and ships its AI PC silicon on schedule for 20 September</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/xiaomi-mimo-v26-launch/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T03:40:00.000Z</news:publication_date>
-      <news:title>Xiaomi launches MiMo-V2.6 Pro and Flash multimodal models with a one-million-token context window</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/amd-epyc-venice-vs-vera/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T03:35:00.000Z</news:publication_date>
-      <news:title>AMD publishes its first EPYC Venice benchmarks, claiming 2.24x the throughput of Nvidia&#39;s 88-core Vera CPU</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/bessent-xi-ai-safety-channel/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T03:25:00.000Z</news:publication_date>
-      <news:title>US puts a bilateral AI-safety notification channel on the Trump-Xi summit table as Beijing weighs in</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/openai-gpt-6-sol-luna-launch/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T03:20:00.000Z</news:publication_date>
-      <news:title>OpenAI adds GPT-6 Sol and Luna to the GPT-6 lineup at half the price of their predecessors</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/anthropic-claude-opus-55-launch/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T03:15:00.000Z</news:publication_date>
-      <news:title>Anthropic ships Claude Opus 5.5 with a 40% cost cut and pre-launch reviews from METR and Frontier Design</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/un-chief-final-ai-curbs/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T03:10:00.000Z</news:publication_date>
-      <news:title>Outgoing UN chief Guterres uses his final address to push for a multilateral AI risk framework and a US-China dialogue</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-23/trump-super-intelligence-un/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-23T03:05:00.000Z</news:publication_date>
-      <news:title>Trump tells the UN the US will drop &#39;artificial&#39; for &#39;super&#39; intelligence and rejects calls for global oversight</news:title>
     </news:news>
   </url>
 </urlset>
