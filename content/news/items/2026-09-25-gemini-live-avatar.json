@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-25-gemini-live-avatar",
+  "title": "Google adds a live visual persona to Gemini’s enterprise dialogue model",
+  "summary": "Google has introduced Gemini 3.8 Live with Live Avatar, pairing low-latency streaming video with the company’s real-time dialogue model. The feature is available in Gemini Enterprise and is designed to give enterprise conversations a visible, responsive persona rather than a voice-only interface.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-09-25T05:00:00Z",
+  "updatedAt": "2026-09-25T05:00:00Z",
+  "retrievedAt": "2026-09-25T05:01:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Google", "Gemini", "voice AI", "enterprise software"],
+  "sources": [{ "publisher": "Google", "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-with-live-avatar/", "publishedAt": "2026-09-24T00:00:00Z" }]
+}

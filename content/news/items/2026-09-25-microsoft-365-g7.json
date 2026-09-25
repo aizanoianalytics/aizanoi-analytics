@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-25-microsoft-365-g7",
+  "title": "Microsoft brings its G7 frontier suite to government cloud environments",
+  "summary": "Microsoft has announced Microsoft 365 G7 for Government Community Cloud environments, combining productivity, AI, agents, security, identity, compliance and governance. The launch extends the company’s frontier-suite strategy into public-sector deployments with additional sovereignty and control requirements.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-09-25T05:00:00Z",
+  "updatedAt": "2026-09-25T05:00:00Z",
+  "retrievedAt": "2026-09-25T05:01:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Microsoft", "Microsoft 365", "government cloud", "Copilot"],
+  "sources": [{ "publisher": "Microsoft", "url": "https://www.microsoft.com/en-us/microsoft-cloud/blog/us-government/2026/09/15/introducing-microsoft-365-g7-intelligence-trust-for-the-mission-ahead/", "publishedAt": "2026-09-15T00:00:00Z" }]
+}

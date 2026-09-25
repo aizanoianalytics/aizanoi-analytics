@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-25-us-current-account",
+  "title": "US current-account deficit widens to $246 billion in Q2",
+  "summary": "The U.S. current-account deficit widened to $246.0 billion in the second quarter from a revised $212.6 billion in the first, according to the Bureau of Economic Analysis. Exports and income receipts rose, but imports and income payments increased more quickly, leaving the deficit at 3.0% of current-dollar GDP.",
+  "category": "economy-markets",
+  "priority": 71,
+  "publishedAt": "2026-09-25T05:00:00Z",
+  "updatedAt": "2026-09-25T05:00:00Z",
+  "retrievedAt": "2026-09-25T05:01:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["United States", "current account", "trade", "BEA"],
+  "sources": [{ "publisher": "U.S. Bureau of Economic Analysis", "url": "https://www.bea.gov/news/2026/us-international-transactions-and-investment-position-2nd-quarter-2026", "publishedAt": "2026-09-24T12:30:00Z" }]
+}

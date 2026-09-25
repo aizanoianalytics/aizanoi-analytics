@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-25-microsoft-security-agents",
+  "title": "Microsoft highlights new controls for AI agents in security stack",
+  "summary": "Microsoft’s September security update highlights changes across Defender, compliance and endpoint management as AI agents increasingly operate inside employee workflows. The company presents agent identity, oversight and data-protection controls as part of the security boundary rather than as a separate AI feature layer.",
+  "category": "technology",
+  "priority": 75,
+  "publishedAt": "2026-09-25T05:00:00Z",
+  "updatedAt": "2026-09-25T05:00:00Z",
+  "retrievedAt": "2026-09-25T05:01:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Microsoft", "security", "AI agents", "Defender"],
+  "sources": [{ "publisher": "Microsoft", "url": "https://www.microsoft.com/en-us/security/blog/2026/09/24/whats-new-in-microsoft-security-september-2026", "publishedAt": "2026-09-24T00:00:00Z" }]
+}

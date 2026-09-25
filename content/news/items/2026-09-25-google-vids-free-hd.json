@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-25-google-vids-free-hd",
+  "title": "Google opens AI-generated HD video creation in Vids",
+  "summary": "Google says anyone with a Google or Google Workspace account can now use Google Vids to create HD videos with Gemini Omni. The expanded access includes scene extension and duration controls, while generated clips carry an imperceptible SynthID watermark intended to signal their AI provenance.",
+  "category": "technology",
+  "priority": 66,
+  "publishedAt": "2026-09-25T05:00:00Z",
+  "updatedAt": "2026-09-25T05:00:00Z",
+  "retrievedAt": "2026-09-25T05:01:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Google", "Google Vids", "Gemini", "video generation"],
+  "sources": [{ "publisher": "Google", "url": "https://blog.google/products-and-platforms/products/workspace/gemini-omni-in-google-vids/", "publishedAt": "2026-09-23T00:00:00Z" }]
+}

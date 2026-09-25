@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-25-airbnb-gpt6-astra",
+  "title": "Airbnb widens internal access to OpenAI’s GPT-6 Astra",
+  "summary": "Airbnb is expanding access to OpenAI’s frontier models, including GPT-6 Astra, across engineering and product teams. OpenAI says the agreement builds on Airbnb’s use of Codex and extends model use beyond software work into search, fraud prevention, customer support and insurance-claim workflows.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-09-25T05:00:00Z",
+  "updatedAt": "2026-09-25T05:00:00Z",
+  "retrievedAt": "2026-09-25T05:01:00Z",
+  "author": { "name": "Aizanoi News Desk" },
+  "editor": { "name": "Aizanoi Editorial Desk" },
+  "image": null,
+  "corrections": [],
+  "tags": ["Airbnb", "OpenAI", "GPT-6 Astra", "enterprise AI"],
+  "sources": [{ "publisher": "OpenAI", "url": "https://openai.com/index/airbnb-gpt-6-astra", "publishedAt": "2026-09-23T00:00:00Z" }]
+}
