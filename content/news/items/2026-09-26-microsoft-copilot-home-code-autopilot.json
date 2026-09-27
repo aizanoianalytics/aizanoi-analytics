@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-26-microsoft-copilot-home-code-autopilot",
+  "title": "Microsoft redesigns Copilot around Home, Code and Autopilot",
+  "summary": "Microsoft is introducing a new Copilot experience with Home as a combined starting point for Chat and Cowork, Code for building solutions, and Autopilot for persistent proactive work. Home and Code enter the Frontier rollout in the coming weeks, while Autopilot expands to private preview at the end of September.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-09-26T05:00:00Z",
+  "updatedAt": "2026-09-26T05:00:00Z",
+  "retrievedAt": "2026-09-26T05:03:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Aizanoi Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "Microsoft",
+    "Copilot",
+    "agents",
+    "productivity"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft",
+      "url": "https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot",
+      "publishedAt": "2026-09-25T00:00:00Z"
+    }
+  ]
+}

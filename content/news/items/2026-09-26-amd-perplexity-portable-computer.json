@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-26-amd-perplexity-portable-computer",
+  "title": "AMD Ryzen AI Max systems can run Perplexity’s Portable Computer locally",
+  "summary": "AMD says systems powered by its Ryzen AI Max series processors, including the Ryzen AI Halo developer platform, can now run Portable Computer on Windows for Perplexity subscribers. The company is positioning the x86 line as a local platform for agentic workloads that today need a hosted service.",
+  "category": "ai",
+  "priority": 73,
+  "publishedAt": "2026-09-26T05:00:00Z",
+  "updatedAt": "2026-09-26T05:00:00Z",
+  "retrievedAt": "2026-09-26T05:03:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Aizanoi Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "AMD",
+    "Ryzen AI Max",
+    "Perplexity",
+    "on-device AI"
+  ],
+  "sources": [
+    {
+      "publisher": "AMD",
+      "url": "https://newsroom.amd.com/news/amd-perplexity-agentic-pcs/",
+      "publishedAt": "2026-09-24T00:00:00Z"
+    }
+  ]
+}

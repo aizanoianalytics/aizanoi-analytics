@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-26-england-spain-nations-league",
+  "title": "Spain come from behind to beat England 3-2 at Wembley",
+  "summary": "England lost 2-3 at Wembley in the Nations League after taking the lead through goals from Anthony Gordon and Harry Kane. Lamine Yamal opened the scoring for Spain, Mikel Oyarzabal came off the bench to complete the turnaround, and the result took Spain’s unbeaten run to 39 matches.",
+  "category": "football",
+  "priority": 79,
+  "publishedAt": "2026-09-26T05:00:00Z",
+  "updatedAt": "2026-09-26T05:00:00Z",
+  "retrievedAt": "2026-09-26T05:03:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Aizanoi Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "England",
+    "Spain",
+    "Wembley",
+    "Nations League"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/13591676/england-2-3-spain-world-champions-win-at-wembley-in",
+      "publishedAt": "2026-09-26T00:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-09-26",
+      "publishedAt": "2026-09-26T00:00:00Z"
+    }
+  ]
+}

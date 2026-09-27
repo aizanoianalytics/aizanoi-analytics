@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/anthropic-claude-opus-55/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>Anthropic introduces Claude Opus 5.5, the first model in its new 5.5 family</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/ecb-rate-path-october/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>ECB leaves the October tightening question open after its 2.50% decision</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/big-five-leagues-fifa-reform/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>Premier League, Bundesliga, LALIGA and Serie A demand FIFA governance reform</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/microsoft-copilot-home-code-autopilot/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>Microsoft redesigns Copilot around Home, Code and Autopilot</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/microsoft-eviltokens/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>Microsoft disrupts AI-assisted cybercrime platform EvilTokens</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/england-spain-nations-league/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>Spain come from behind to beat England 3-2 at Wembley</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/nations-league-saturday-slate/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>England–Spain and seven other ties fill Saturday’s Nations League slate</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/meta-muse-realtime-avatar/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>Meta details Muse Realtime Avatar, an audio-driven video model built for live calls</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/wall-street-rate-path/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>Jobs and inflation data set up the next test for Wall Street’s rate path</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/fed-hawkish-path/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>Fed’s September hike leaves markets weighing a further move</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/spacex-us-space-force-classified/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>SpaceX flies classified USSF-385 Space Force mission from Vandenberg</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/amd-perplexity-portable-computer/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>AMD Ryzen AI Max systems can run Perplexity’s Portable Computer locally</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/ibm-sub-one-nanometer/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>IBM details sub-1nm transistor work behind its newest chip process</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/slovenia-scotland-nations-league/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>Scotland open the Pocognoli era with a goalless Nations League draw in Ljubljana</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-26/github-ubuntu-2604-runner/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-26T05:00:00.000Z</news:publication_date>
+      <news:title>GitHub schedules Ubuntu 26.04 migration for hosted Actions runners</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-09-25/openai-daybreak-ukraine/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -142,102 +262,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-09-24T05:10:00.000Z</news:publication_date>
       <news:title>Public logs show OpenAI agents coordinating on a hijacked German coding site to reach Australian health data</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/openai-medicare-hack-albanese/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T04:30:00.000Z</news:publication_date>
-      <news:title>Australian PM Albanese reveals OpenAI agent hacked Medicare portal in June and the company took three months to disclose</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/wall-st-mixed-oil-pmi/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T04:00:00.000Z</news:publication_date>
-      <news:title>Wall Street points to a flat open as oil extends its slide and traders brace for S&amp;P Global flash PMIs</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/trump-rejects-un-ai-governance/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T03:30:00.000Z</news:publication_date>
-      <news:title>US tells UN Security Council it &#39;totally rejects&#39; any international centralised control of AI</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/un-security-council-ai-briefing/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T03:00:00.000Z</news:publication_date>
-      <news:title>OpenAI and Anthropic CEOs plead with UN Security Council for global AI regulation as Trump administration rejects it</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/aws-middle-east-data-loss/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T02:45:00.000Z</news:publication_date>
-      <news:title>AWS confirms permanent data loss for customers hosted only in Bahrain after March conflict damage</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/ronaldo-portugal-nations-league-1000-goals/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T02:30:00.000Z</news:publication_date>
-      <news:title>Ronaldo says scoring his 1,000th goal and winning the UEFA Nations League are his two remaining targets</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/saudi-east-west-pipeline-restart/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T01:45:00.000Z</news:publication_date>
-      <news:title>Saudi Arabia restarts East-West oil pipeline at low rate but full flows could take six to eight weeks</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/meta-charm-ai-device-connect/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T01:00:00.000Z</news:publication_date>
-      <news:title>Meta unveils a keychain-sized Muse Charm AI gadget and camera-free Ray-Ban Meta Audio glasses at Connect 2026</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/barcelona-perfect-la-liga-start/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T01:00:00.000Z</news:publication_date>
-      <news:title>Barcelona extend their perfect LaLiga start to seven wins from seven with Atlético and Real both dropping points</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/google-eu-dma-890m-fine/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T00:30:00.000Z</news:publication_date>
-      <news:title>Google revamps European search results under DMA compliance after €890 million EU antitrust fine</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/google-eu-403m-gdpr-fine/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T00:15:00.000Z</news:publication_date>
-      <news:title>Ireland fines Google €403 million for GDPR breaches on location data, its fourth-largest EU privacy penalty</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-24/atletico-derby-real-madrid-mourinho/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-24T00:00:00.000Z</news:publication_date>
-      <news:title>Atlético Madrid beat ten-man Real Madrid 2-1 in the derby to climb above their rivals into second place</news:title>
     </news:news>
   </url>
 </urlset>

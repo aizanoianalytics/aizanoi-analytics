@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-26-github-ubuntu-2604-runner",
+  "title": "GitHub schedules Ubuntu 26.04 migration for hosted Actions runners",
+  "summary": "GitHub’s changelog records the Ubuntu 26.04 hosted-runner image as production-supported on x64 and Arm64, with the ubuntu-latest label migrating gradually from Ubuntu 24.04 between 19 October and 19 November. Projects relying on preinstalled tools are advised to test the new image or pin a version in the meantime.",
+  "category": "technology",
+  "priority": 69,
+  "publishedAt": "2026-09-26T05:00:00Z",
+  "updatedAt": "2026-09-26T05:00:00Z",
+  "retrievedAt": "2026-09-26T05:03:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Aizanoi Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "GitHub Actions",
+    "Ubuntu",
+    "CI/CD",
+    "developers"
+  ],
+  "sources": [
+    {
+      "publisher": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-09-17-ubuntu-26-generally-available-and-latest-migration/",
+      "publishedAt": "2026-09-17T00:00:00Z"
+    }
+  ]
+}

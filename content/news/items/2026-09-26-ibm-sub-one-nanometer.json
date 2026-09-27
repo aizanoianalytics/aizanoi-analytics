@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-26-ibm-sub-one-nanometer",
+  "title": "IBM details sub-1nm transistor work behind its newest chip process",
+  "summary": "IBM’s newsroom item on its sub-one-nanometre chip technology sets out the seven-angstrom transistor work and the packaging and materials advances behind it. The release is the reference point for the industry push to raise density as AI training and inference drive demand for advanced logic.",
+  "category": "technology",
+  "priority": 73,
+  "publishedAt": "2026-09-26T05:00:00Z",
+  "updatedAt": "2026-09-26T05:00:00Z",
+  "retrievedAt": "2026-09-26T05:03:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Aizanoi Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "IBM",
+    "semiconductors",
+    "transistors",
+    "AI infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "IBM",
+      "url": "https://newsroom.ibm.com/2026-06-25-ibm-debuts-worlds-first-sub-1-nanometer-chip-technology",
+      "publishedAt": "2026-06-25T00:00:00Z"
+    }
+  ]
+}

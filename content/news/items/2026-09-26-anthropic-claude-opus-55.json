@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-26-anthropic-claude-opus-55",
+  "title": "Anthropic introduces Claude Opus 5.5, the first model in its new 5.5 family",
+  "summary": "Anthropic says Claude Opus 5.5 performs at the level of Claude Fable 5.1 on most work and costs 40% less to run than Opus 5. The company calls it its first release since it asked for the frontier to be paced, and says external evaluators including Frontier Design and METR tested the model before release.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-09-26T05:00:00Z",
+  "updatedAt": "2026-09-26T05:00:00Z",
+  "retrievedAt": "2026-09-26T05:03:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Aizanoi Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "Anthropic",
+    "Claude",
+    "Opus 5.5",
+    "model pricing"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/claude-opus-5-5",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    },
+    {
+      "publisher": "The New Stack",
+      "url": "https://thenewstack.io/claude-opus-5-5-release/",
+      "publishedAt": "2026-09-25T00:00:00Z"
+    }
+  ]
+}
