@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-27-google-vids-ai-video",
+  "title": "Google makes Gemini-powered HD video creation free in Vids",
+  "summary": "Google is expanding Gemini-powered video creation in Google Vids to anyone with a Google or Workspace account at no cost. The company says users can generate 1080p clips, extend scenes and set durations, while each AI-generated clip carries a SynthID watermark for provenance.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-09-27T05:00:00Z",
+  "updatedAt": "2026-09-27T05:00:00Z",
+  "retrievedAt": "2026-09-27T09:08:00Z",
+  "author": {"name": "Aizanoi News Desk"},
+  "editor": {"name": "Aizanoi Editorial Desk"},
+  "image": null,
+  "corrections": [],
+  "tags": ["Google", "Vids", "Gemini", "synthetic media"],
+  "sources": [{"publisher": "Google", "url": "https://blog.google/products-and-platforms/products/workspace/gemini-omni-in-google-vids/", "publishedAt": "2026-09-23T00:00:00Z"}]
+}

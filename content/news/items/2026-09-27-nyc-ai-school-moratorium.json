@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-27-nyc-ai-school-moratorium",
+  "title": "New York City announces broad student-facing generative AI moratorium",
+  "summary": "New York City officials announced a moratorium on student-facing generative AI use in public schools alongside a new screen-time policy. The mayor’s office says the decision affects nearly 600,000 students and will be paired with efforts to put classroom learning and student wellbeing first.",
+  "category": "technology",
+  "priority": 71,
+  "publishedAt": "2026-09-27T05:00:00Z",
+  "updatedAt": "2026-09-27T05:00:00Z",
+  "retrievedAt": "2026-09-27T09:08:00Z",
+  "author": {"name": "Aizanoi News Desk"},
+  "editor": {"name": "Aizanoi Editorial Desk"},
+  "image": null,
+  "corrections": [],
+  "tags": ["New York City", "schools", "generative AI", "education"],
+  "sources": [{"publisher": "New York City Mayor’s Office", "url": "https://www.nyc.gov/mayors-office/news/2026/09/mayor-mamdani-and-chancellor-samuels-put-students-first-with-nat", "publishedAt": "2026-09-27T00:00:00Z"}]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-27-spain-gdp-q2",
+  "title": "Spain’s economy expands 0.7% in the second quarter",
+  "summary": "Spain’s statistics institute reported that GDP increased 0.7% quarter on quarter in the second quarter of 2026, one tenth faster than in the first quarter. Annual growth held at 2.6%, with domestic demand contributing positively while external demand made a negative contribution.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-09-27T05:00:00Z",
+  "updatedAt": "2026-09-27T05:00:00Z",
+  "retrievedAt": "2026-09-27T09:08:00Z",
+  "author": {"name": "Aizanoi News Desk"},
+  "editor": {"name": "Aizanoi Editorial Desk"},
+  "image": null,
+  "corrections": [],
+  "tags": ["Spain", "GDP", "growth", "INE"],
+  "sources": [{"publisher": "National Statistics Institute of Spain", "url": "https://ine.es/dyngs/Prensa/en/CNTR2T26.htm", "publishedAt": "2026-09-25T00:00:00Z"}]
+}
