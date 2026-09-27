@@ -1,0 +1,16 @@
+{
+  "id": "2026-09-27-premier-league-table",
+  "title": "Manchester City lead Premier League after five matches",
+  "summary": "The Premier League’s official table shows Manchester City top after five matches with 15 points and a plus-eight goal difference. Arsenal sit second on 12 points, while Brighton are third on 10; the table also records early pressure at the bottom for Fulham and Tottenham.",
+  "category": "football",
+  "priority": 75,
+  "publishedAt": "2026-09-27T05:00:00Z",
+  "updatedAt": "2026-09-27T05:00:00Z",
+  "retrievedAt": "2026-09-27T09:08:00Z",
+  "author": {"name": "Aizanoi News Desk"},
+  "editor": {"name": "Aizanoi Editorial Desk"},
+  "image": null,
+  "corrections": [],
+  "tags": ["Premier League", "Manchester City", "Arsenal", "standings"],
+  "sources": [{"publisher": "Premier League", "url": "https://www.premierleague.com/", "publishedAt": "2026-09-27T00:00:00Z"}]
+}
