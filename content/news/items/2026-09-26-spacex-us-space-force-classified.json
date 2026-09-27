@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-26-spacex-us-space-force-classified",
+  "title": "SpaceX flies classified USSF-385 Space Force mission from Vandenberg",
+  "summary": "SpaceX launched the classified USSF-385 mission from Space Launch Complex 4E at Vandenberg at 7:00 a.m. PT on Saturday, and booster B1100 landed on the drone ship Of Course I Still Love You about eight and a half minutes later. It was the booster’s tenth flight and tenth successful landing, and USSF-385 is the fourth Space Force launch from the same pad in roughly six weeks.",
+  "category": "technology",
+  "priority": 74,
+  "publishedAt": "2026-09-26T05:00:00Z",
+  "updatedAt": "2026-09-26T05:00:00Z",
+  "retrievedAt": "2026-09-26T05:03:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Aizanoi Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "SpaceX",
+    "US Space Force",
+    "Vandenberg",
+    "Falcon 9"
+  ],
+  "sources": [
+    {
+      "publisher": "Teslarati",
+      "url": "https://teslarati.com/spacex-space-force-launch-starshiled-infrastructure",
+      "publishedAt": "2026-09-26T00:00:00Z"
+    },
+    {
+      "publisher": "Spaceflight Now",
+      "url": "https://spaceflightnow.com/2026/09/25/spacex-falcon-9-to-launch-classified-mission-for-u-s-space-force-fr",
+      "publishedAt": "2026-09-25T00:00:00Z"
+    }
+  ]
+}

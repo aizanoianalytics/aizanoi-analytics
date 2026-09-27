@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-26-microsoft-eviltokens",
+  "title": "Microsoft disrupts AI-assisted cybercrime platform EvilTokens",
+  "summary": "Microsoft says its Digital Crimes Unit and industry partners disrupted EvilTokens, a subscription-based phishing-as-a-service platform that used AI across the attack chain. The company linked the service to more than 12,000 compromised inboxes, and UK police arrested two suspects.",
+  "category": "technology",
+  "priority": 81,
+  "publishedAt": "2026-09-26T05:00:00Z",
+  "updatedAt": "2026-09-26T05:00:00Z",
+  "retrievedAt": "2026-09-26T05:03:00Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Aizanoi Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "Microsoft",
+    "cybercrime",
+    "EvilTokens",
+    "phishing"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft Security Blog",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/22/unmasking-eviltokens-getting-to-the-root-of-device-co",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    },
+    {
+      "publisher": "The Hacker News",
+      "url": "https://thehackernews.com/2026/09/microsoft-takes-down-eviltokens-device.html",
+      "publishedAt": "2026-09-22T00:00:00Z"
+    }
+  ]
+}

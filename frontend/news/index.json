@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-09-25T05:01:00.000Z",
+  "generatedAt": "2026-09-26T05:03:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-09-26",
+      "path": "/news/2026-09-26/",
+      "itemCount": 15
+    },
     {
       "date": "2026-09-25",
       "path": "/news/2026-09-25/",
@@ -201,6 +206,512 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-09-26-anthropic-claude-opus-55",
+      "kind": "daily",
+      "title": "Anthropic introduces Claude Opus 5.5, the first model in its new 5.5 family",
+      "summary": "Anthropic says Claude Opus 5.5 performs at the level of Claude Fable 5.1 on most work and costs 40% less to run than Opus 5. The company calls it its first release since it asked for the frontier to be paced, and says external evaluators including Frontier Design and METR tested the model before release.",
+      "category": "ai",
+      "priority": 88,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "Opus 5.5",
+        "model pricing"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "publishedAt": "2026-09-22T00:00:00.000Z"
+        },
+        {
+          "publisher": "The New Stack",
+          "url": "https://thenewstack.io/claude-opus-5-5-release/",
+          "publishedAt": "2026-09-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-ecb-rate-path-october",
+      "kind": "daily",
+      "title": "ECB leaves the October tightening question open after its 2.50% decision",
+      "summary": "With the deposit rate already lifted to 2.50% in September, the Governing Council’s guidance and the updated staff projections leave a further 25 basis point increase possible in October. Traders are now pricing that path against a euro-area inflation print that the energy shock has kept above the 2% target.",
+      "category": "economy-markets",
+      "priority": 84,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ECB",
+        "interest rates",
+        "inflation",
+        "euro area"
+      ],
+      "sources": [
+        {
+          "publisher": "European Central Bank",
+          "url": "https://www.ecb.europa.eu/press/pr/date/2026/html/ecb.mp260910~314e508016.en.html",
+          "publishedAt": "2026-09-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-big-five-leagues-fifa-reform",
+      "kind": "daily",
+      "title": "Premier League, Bundesliga, LALIGA and Serie A demand FIFA governance reform",
+      "summary": "The Premier League, Bundesliga, LALIGA and Lega Calcio Serie A issued a joint statement entitled “To Unify the Game, FIFA Must Reform” on 25 September. It says football’s foundations have been threatened by a fundamental governance problem, argues the organisation is not fit for purpose, and criticises the promotion of exploitative commercial ideas tied to the scrapped FIFA Forward Enterprise proposals.",
+      "category": "football",
+      "priority": 82,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "FIFA",
+        "Premier League",
+        "Bundesliga",
+        "LALIGA",
+        "Serie A"
+      ],
+      "sources": [
+        {
+          "publisher": "LALIGA",
+          "url": "https://www.laliga.com/en-GB/news/to-unify-the-game-fifa-must-reform",
+          "publishedAt": "2026-09-25T00:00:00.000Z"
+        },
+        {
+          "publisher": "LALIGA",
+          "url": "https://assets.laliga.com/assets/2026/09/25/originals/a961810fe0bd755330acbe215ce80b25.pdf",
+          "publishedAt": "2026-09-25T00:00:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/football/articles/cq62k9pzy21do",
+          "publishedAt": "2026-09-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-microsoft-copilot-home-code-autopilot",
+      "kind": "daily",
+      "title": "Microsoft redesigns Copilot around Home, Code and Autopilot",
+      "summary": "Microsoft is introducing a new Copilot experience with Home as a combined starting point for Chat and Cowork, Code for building solutions, and Autopilot for persistent proactive work. Home and Code enter the Frontier rollout in the coming weeks, while Autopilot expands to private preview at the end of September.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "Copilot",
+        "agents",
+        "productivity"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft",
+          "url": "https://blogs.microsoft.com/blog/2026/09/25/introducing-the-new-copilot-with-home-code-and-autopilot",
+          "publishedAt": "2026-09-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-microsoft-eviltokens",
+      "kind": "daily",
+      "title": "Microsoft disrupts AI-assisted cybercrime platform EvilTokens",
+      "summary": "Microsoft says its Digital Crimes Unit and industry partners disrupted EvilTokens, a subscription-based phishing-as-a-service platform that used AI across the attack chain. The company linked the service to more than 12,000 compromised inboxes, and UK police arrested two suspects.",
+      "category": "technology",
+      "priority": 81,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Microsoft",
+        "cybercrime",
+        "EvilTokens",
+        "phishing"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft Security Blog",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/09/22/unmasking-eviltokens-getting-to-the-root-of-device-co",
+          "publishedAt": "2026-09-22T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Hacker News",
+          "url": "https://thehackernews.com/2026/09/microsoft-takes-down-eviltokens-device.html",
+          "publishedAt": "2026-09-22T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-england-spain-nations-league",
+      "kind": "daily",
+      "title": "Spain come from behind to beat England 3-2 at Wembley",
+      "summary": "England lost 2-3 at Wembley in the Nations League after taking the lead through goals from Anthony Gordon and Harry Kane. Lamine Yamal opened the scoring for Spain, Mikel Oyarzabal came off the bench to complete the turnaround, and the result took Spain’s unbeaten run to 39 matches.",
+      "category": "football",
+      "priority": 79,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "England",
+        "Spain",
+        "Wembley",
+        "Nations League"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/13591676/england-2-3-spain-world-champions-win-at-wembley-in",
+          "publishedAt": "2026-09-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-09-26",
+          "publishedAt": "2026-09-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-nations-league-saturday-slate",
+      "kind": "daily",
+      "title": "England–Spain and seven other ties fill Saturday’s Nations League slate",
+      "summary": "Saturday’s 2026/27 Nations League programme is settled across the groups: San Marino 0-7 Finland, North Macedonia 0-3 Switzerland, Czech Republic 1-2 Croatia, Albania 2-0 Belarus, Faroe Islands 1-1 Kazakhstan, Slovakia 2-0 Moldova, Bulgaria 1-2 Luxembourg and Iceland 1-1 Estonia all finished, with Slovenia 0-0 Scotland and England 2-3 Spain deciding the remaining League A fixtures.",
+      "category": "football",
+      "priority": 78,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "UEFA Nations League",
+        "England",
+        "Spain",
+        "international football"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-09-26",
+          "publishedAt": "2026-09-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-meta-muse-realtime-avatar",
+      "kind": "daily",
+      "title": "Meta details Muse Realtime Avatar, an audio-driven video model built for live calls",
+      "summary": "Meta’s AI research blog describes Muse Realtime Avatar as an audio-driven Diffusion Transformer conditioned on a speech-token stream, reference media and a rolling window of recent video latents. It generates short causal chunks so the newest output becomes motion context for the next, keeping voice, lip motion and expression synchronised for the length of a conversation.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Meta",
+        "Muse",
+        "avatar",
+        "diffusion transformer"
+      ],
+      "sources": [
+        {
+          "publisher": "Meta AI Research",
+          "url": "https://research.meta.ai/blog/bringing-your-muse-to-life",
+          "publishedAt": "2026-09-25T00:00:00.000Z"
+        },
+        {
+          "publisher": "Meta",
+          "url": "https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/",
+          "publishedAt": "2026-09-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-wall-street-rate-path",
+      "kind": "daily",
+      "title": "Jobs and inflation data set up the next test for Wall Street’s rate path",
+      "summary": "Investors are heading into the next week focused on U.S. employment and inflation data as markets reassess the Federal Reserve’s tightening path. A Reuters report says the September rate increase and higher Treasury yields have left stocks near records but more exposed to a hotter payrolls or inflation reading.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "United States",
+        "Federal Reserve",
+        "Treasuries",
+        "equities"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters via Devdiscourse",
+          "url": "https://www.devdiscourse.com/article/international/3982748-wall-st-week-ahead-jobs-report-inflation-data-to-test-us-rate-path-economic-strength",
+          "publishedAt": "2026-09-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-fed-hawkish-path",
+      "kind": "daily",
+      "title": "Fed’s September hike leaves markets weighing a further move",
+      "summary": "BBVA Research says the Federal Reserve raised its policy rate by 25 basis points to 3.75–4.00% and signalled a hawkish bias as inflation stayed elevated. Its analysis expects one additional increase, while noting that market pricing for a longer tightening cycle may be too aggressive.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Federal Reserve",
+        "rates",
+        "inflation",
+        "BBVA Research"
+      ],
+      "sources": [
+        {
+          "publisher": "BBVA Research",
+          "url": "https://www.bbvaresearch.com/wp-content/uploads/2026/09/US_Post-Meeting_Fed_Watch_September_26_ENG.pdf",
+          "publishedAt": "2026-09-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-spacex-us-space-force-classified",
+      "kind": "daily",
+      "title": "SpaceX flies classified USSF-385 Space Force mission from Vandenberg",
+      "summary": "SpaceX launched the classified USSF-385 mission from Space Launch Complex 4E at Vandenberg at 7:00 a.m. PT on Saturday, and booster B1100 landed on the drone ship Of Course I Still Love You about eight and a half minutes later. It was the booster’s tenth flight and tenth successful landing, and USSF-385 is the fourth Space Force launch from the same pad in roughly six weeks.",
+      "category": "technology",
+      "priority": 74,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "SpaceX",
+        "US Space Force",
+        "Vandenberg",
+        "Falcon 9"
+      ],
+      "sources": [
+        {
+          "publisher": "Teslarati",
+          "url": "https://teslarati.com/spacex-space-force-launch-starshiled-infrastructure",
+          "publishedAt": "2026-09-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "Spaceflight Now",
+          "url": "https://spaceflightnow.com/2026/09/25/spacex-falcon-9-to-launch-classified-mission-for-u-s-space-force-fr",
+          "publishedAt": "2026-09-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-amd-perplexity-portable-computer",
+      "kind": "daily",
+      "title": "AMD Ryzen AI Max systems can run Perplexity’s Portable Computer locally",
+      "summary": "AMD says systems powered by its Ryzen AI Max series processors, including the Ryzen AI Halo developer platform, can now run Portable Computer on Windows for Perplexity subscribers. The company is positioning the x86 line as a local platform for agentic workloads that today need a hosted service.",
+      "category": "ai",
+      "priority": 73,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "AMD",
+        "Ryzen AI Max",
+        "Perplexity",
+        "on-device AI"
+      ],
+      "sources": [
+        {
+          "publisher": "AMD",
+          "url": "https://newsroom.amd.com/news/amd-perplexity-agentic-pcs/",
+          "publishedAt": "2026-09-24T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-ibm-sub-one-nanometer",
+      "kind": "daily",
+      "title": "IBM details sub-1nm transistor work behind its newest chip process",
+      "summary": "IBM’s newsroom item on its sub-one-nanometre chip technology sets out the seven-angstrom transistor work and the packaging and materials advances behind it. The release is the reference point for the industry push to raise density as AI training and inference drive demand for advanced logic.",
+      "category": "technology",
+      "priority": 73,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "IBM",
+        "semiconductors",
+        "transistors",
+        "AI infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "IBM",
+          "url": "https://newsroom.ibm.com/2026-06-25-ibm-debuts-worlds-first-sub-1-nanometer-chip-technology",
+          "publishedAt": "2026-06-25T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-slovenia-scotland-nations-league",
+      "kind": "daily",
+      "title": "Scotland open the Pocognoli era with a goalless Nations League draw in Ljubljana",
+      "summary": "Slovenia and Scotland finished 0-0 in Ljubljana on Saturday, handing Sébastien Pocognoli a point from his first match in charge. Sky Sports reported that Scotland were held to a goalless draw, with the visitors missing the chance to take all three in a physical League A meeting.",
+      "category": "football",
+      "priority": 71,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "Slovenia",
+        "Scotland",
+        "Ljubljana",
+        "Nations League"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/13591761/slovenia-0-0-scotland-scots-held-to-goalless-draw-in-sebastien-pocognolis-first",
+          "publishedAt": "2026-09-26T00:00:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-09-26",
+          "publishedAt": "2026-09-26T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-09-26-github-ubuntu-2604-runner",
+      "kind": "daily",
+      "title": "GitHub schedules Ubuntu 26.04 migration for hosted Actions runners",
+      "summary": "GitHub’s changelog records the Ubuntu 26.04 hosted-runner image as production-supported on x64 and Arm64, with the ubuntu-latest label migrating gradually from Ubuntu 24.04 between 19 October and 19 November. Projects relying on preinstalled tools are advised to test the new image or pin a version in the meantime.",
+      "category": "technology",
+      "priority": 69,
+      "publishedAt": "2026-09-26T05:00:00.000Z",
+      "updatedAt": "2026-09-26T05:00:00.000Z",
+      "retrievedAt": "2026-09-26T05:03:00.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Aizanoi Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "GitHub Actions",
+        "Ubuntu",
+        "CI/CD",
+        "developers"
+      ],
+      "sources": [
+        {
+          "publisher": "GitHub Changelog",
+          "url": "https://github.blog/changelog/2026-09-17-ubuntu-26-generally-available-and-latest-migration/",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-09-25-openai-daybreak-ukraine",
       "kind": "daily",
