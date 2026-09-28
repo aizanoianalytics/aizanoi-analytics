@@ -119,12 +119,15 @@ class TestHistoricalWorldsAssets(unittest.TestCase):
         files = [SHARED_PROPS] + list(WORLDS_MAIN.values())
         for path in files:
             content = path.read_text(encoding="utf-8")
-            # Strip comments and strings for accurate brace counting
+            # Strip comments and strings for accurate brace counting.
+            # Quote bodies use a possessive-free but non-overlapping character class
+            # (\\. is consumed by a single greedy repeat of [^q], never by two
+            # alternatives), which avoids the classic (?:\\.|[^q])* ReDoS shape.
             cleaned = re.sub(r"/\*.*?\*/", "", content, flags=re.DOTALL)
             cleaned = re.sub(r"//.*", "", cleaned)
-            cleaned = re.sub(r"'(?:\\.|[^'])*'", "''", cleaned)
-            cleaned = re.sub(r'"(?:\\.|[^"])*"', '""', cleaned)
-            cleaned = re.sub(r"`(?:\\.|[^`])*`", "``", cleaned)
+            cleaned = re.sub(r"'(?:[^'\\]|\\.)*'", "''", cleaned)
+            cleaned = re.sub(r'"(?:[^"\\]|\\.)*"', '""', cleaned)
+            cleaned = re.sub(r"`(?:[^`\\]|\\.)*`", "``", cleaned)
 
             curly = cleaned.count("{") - cleaned.count("}")
             paren = cleaned.count("(") - cleaned.count(")")
