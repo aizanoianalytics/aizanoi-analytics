@@ -17,7 +17,7 @@ import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.
 import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
 import { loadAssetKit } from '../../shared/engine/asset-kit.js';
 import { Environment } from '../../shared/engine/environment.js';
-import { landmarkStandoff, landmarkTargetHeight } from '../../shared/engine/framing.js';
+import { landmarkStandoff, landmarkTargetHeight, clearViewAzimuth } from '../../shared/engine/framing.js';
 import { WaterSystem, buildWaterSamplePoints } from '../../shared/engine/water.js';
 import { VegetationSystem } from '../../shared/engine/vegetation.js';
 import { ParticleSystem } from '../../shared/engine/particles.js';
@@ -617,7 +617,8 @@ function bindEvents() {
     // Size the view from both footprint and height so the landmark reads as a
     // complete composition rather than a wall-sized crop.
     const standoff = landmarkStandoff(building, { verticalFov: camera.fov });
-    const safe = collision.findSafeSpawn(building.x, building.z, Math.max(220, standoff + 80), standoff, building.viewAngle ?? 0);
+    const azimuth = clearViewAzimuth(building, BUILDINGS, { standoff, cameraY: 1.7, declaredAngle: building.viewAngle });
+    const safe = collision.findSafeSpawn(building.x, building.z, Math.max(220, standoff + 80), standoff, azimuth);
     window.__WORLD_LAST_TELEPORT__ = building.id;
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
     controls.teleportFacing(safe.x, safe.z, building.x, landmarkTargetHeight(building), building.z, targetY);
