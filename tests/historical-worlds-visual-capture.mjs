@@ -65,8 +65,13 @@ for(const [id,path,hero] of worlds){
   const page=await browser.newPage({viewport:{width:900,height:600}});
   await page.goto(`${base}${path}`,{waitUntil:'networkidle'});
   await page.waitForFunction(()=>window.__WORLD_BOOTSTRAP__?.ready===true||window.__WORLD_DEBUG__?.ready===true,null,{timeout:20000});
-  await page.evaluate(()=>document.getElementById('btn-enter').click());
-  await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:30000});
+  // The Enter button disables itself while the runtime module is imported, so
+  // a bare evaluate().click() is swallowed silently and the world never loads.
+  // Wait for it to be actionable, then click it as a real user would.
+  await page.waitForSelector('#btn-enter', { timeout: 20000 });
+  await page.waitForFunction(()=>{ const b=document.getElementById('btn-enter'); return b && !b.disabled; }, null, { timeout: 20000 });
+  await page.locator('#btn-enter').click({ timeout: 30000 });
+  await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:90000});
   await page.keyboard.press('Escape');
   await page.waitForFunction(()=>window.__WORLD_DEBUG__?.player?.controlsEnabled===true,null,{timeout:15000});
   // Settle past the 0.8s cinematic fade before judging pixels — mid-fade frames
