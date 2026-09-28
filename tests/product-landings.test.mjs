@@ -6,7 +6,7 @@ const read = (file) => readFileSync(file, 'utf8');
 const origin = 'https://aizanoianalytics.com';
 const landings = {
   tv: { app:'videos', title:'Aizanoi TV', phrase:'Coming Soon' },
-  analytics: { app:'analytics', title:'Analytics', phrase:'HR Analytics Full Set' },
+  analytics: { app:'analytics', title:'Analytics', phrase:'Aizanoi Markets' },
   worlds: { app:'worlds', title:'Historical Worlds', phrase:'Rome' },
   forge: { app:'forge', title:'Aizanoi Forge', phrase:'Source' },
   journal: { app:'journal', title:'Aizanoi Journal', phrase:'in development' },
@@ -81,7 +81,7 @@ test('secondary product placeholders state their current status honestly', () =>
   const analytics = read('frontend/analytics/index.html');
   assert.match(analytics, /data-analytics-catalog/);
   assert.match(analytics, /<script type="module" src="\/analytics\/app\.js"><\/script>/);
-  assert.match(analytics, /href="\/analytics\/dashboards\/hr-analytics-full-set\/"/);
+  assert.match(analytics, /href="\/analytics\/markets\/"/);
 });
 
 test('Arcade landing matches the four-game module catalog', () => {

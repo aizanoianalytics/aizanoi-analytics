@@ -25,10 +25,10 @@ import bpy
 from mathutils import Vector
 
 
-WORKSPACE = Path("gelistirmeler/2026-09-16-fly-world-prototype")
+WORKSPACE = Path("scripts/fly-world/source")
 SPEC_REL = WORKSPACE / "scene_spec.json"
 ASSETS_REL = WORKSPACE / "asset_manifest.json"
-BUILD_REL = WORKSPACE / "build"
+BUILD_REL = Path("artifacts/fly-world/build")
 
 
 def parse_args() -> argparse.Namespace:

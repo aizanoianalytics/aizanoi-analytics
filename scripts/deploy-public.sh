@@ -30,7 +30,6 @@ REPO="${AIZANOI_DEPLOY_REPO:-${REPO}}"
 WEBROOT="${AIZANOI_DEPLOY_WEBROOT:-${WEBROOT}}"
 RELEASE_ROOT="${AIZANOI_DEPLOY_RELEASE_ROOT:-${RELEASE_ROOT}}"
 SOURCE="${REPO}/frontend"
-PUBLIC_SYNTHETIC_XLSX="analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx"
 RELEASE_RETENTION_DEFAULT=5
 RELEASE_RETENTION="${AIZANOI_DEPLOY_RELEASE_RETENTION:-${RELEASE_RETENTION_DEFAULT}}"
 
@@ -54,10 +53,6 @@ if [[ -z "${AIZANOI_DEPLOY_SHA:-}" ]]; then
 fi
 if [[ ! -d "${SOURCE}" ]]; then
   echo "FATAL: source tree missing: ${SOURCE}" >&2
-  exit 2
-fi
-if [[ ! -s "${SOURCE}/${PUBLIC_SYNTHETIC_XLSX}" ]]; then
-  echo "FATAL: declared public synthetic workbook missing: ${SOURCE}/${PUBLIC_SYNTHETIC_XLSX}" >&2
   exit 2
 fi
 if [[ -n "$(git -C "${REPO}" status --porcelain)" ]]; then
@@ -208,7 +203,7 @@ echo "[deploy] scrubbing denylisted artifacts from staged release"
       -name '*~' -o \
       -name '*.swp' -o \
       -name '.DS_Store' -o \
-      \( -name '*.xlsx' ! -path "./${PUBLIC_SYNTHETIC_XLSX}" \) \
+      -name '*.xlsx' \
     \) -print -delete 2>/dev/null || true
 )
 
@@ -240,17 +235,13 @@ LEAKS=$(
     -name '*~' -o \
     -name '*.swp' -o \
     -name '.DS_Store' -o \
-    \( -name '*.xlsx' ! -path "./${PUBLIC_SYNTHETIC_XLSX}" \) \
+    -name '*.xlsx' \
   \) -print 2>/dev/null || true
 )
 if [[ -n "${LEAKS}" ]]; then
   echo "FATAL: denylisted artifacts remain in staged release:" >&2
   printf '%s\n' "${LEAKS}" >&2
   exit 3
-fi
-if [[ ! -s "${STAGING}/${PUBLIC_SYNTHETIC_XLSX}" ]]; then
-  echo "FATAL: public synthetic workbook is missing or empty after staging" >&2
-  exit 4
 fi
 if [[ ! -s "${STAGING}/index.html" || ! -s "${STAGING}/release.js" || ! -s "${STAGING}/service-worker.js" ]]; then
   echo "FATAL: staged core shell assets are missing" >&2
@@ -298,10 +289,6 @@ fi
 ACTIVE_TARGET="$(readlink -f "${WEBROOT}")"
 if [[ "${ACTIVE_TARGET}" != "${FINAL}" ]]; then
   echo "FATAL: active release target mismatch: ${ACTIVE_TARGET} != ${FINAL}" >&2
-  exit 7
-fi
-if [[ ! -s "${WEBROOT}/${PUBLIC_SYNTHETIC_XLSX}" ]]; then
-  echo "FATAL: promoted public synthetic workbook is missing or empty" >&2
   exit 7
 fi
 if [[ ! -s "${WEBROOT}/index.html" || ! -s "${WEBROOT}/release.js" || ! -s "${WEBROOT}/service-worker.js" ]]; then

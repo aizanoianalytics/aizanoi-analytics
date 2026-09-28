@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-WORKSPACE = ROOT / "gelistirmeler" / "2026-09-16-fly-world-prototype"
+WORKSPACE = ROOT / "scripts" / "fly-world" / "source"
 SPEC_PATH = WORKSPACE / "scene_spec.json"
 MANIFEST_PATH = WORKSPACE / "asset_manifest.json"
 SUPPORTED_ASSET_EXTENSIONS = {".glb", ".gltf", ".fbx", ".obj"}
@@ -172,7 +172,7 @@ def validate(strict_assets: bool) -> dict:
     asset_root_rel = manifest.get("assetRoot")
     if not asset_root_rel:
         errors.append("asset_manifest.json must define assetRoot")
-        asset_root = WORKSPACE / "assets" / "source"
+        asset_root = WORKSPACE / "assets"
     else:
         asset_root = (ROOT / asset_root_rel).resolve()
         if not under(asset_root, ROOT):

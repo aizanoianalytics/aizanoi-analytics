@@ -34,19 +34,21 @@ test('AizanoiOS keeps the stable analytics id while presenting a scalable Analyt
   assert.match(registry, /id:'analytics', label:'Analytics', short:'Analytics'/);
   assert.match(registry, /keywords:\['analytics','dashboard','dashboards'/);
   assert.match(analyticsCatalog, /export const ANALYTICS_SETS/);
-  assert.match(analyticsCatalog, /id:'hr-analytics-full-set'/);
+  assert.match(analyticsCatalog, /id:'aizanoi-markets'/);
+  assert.match(analyticsCatalog, /id:'new-hr-collection'/);
   assert.match(analyticsApp, /data-analytics-set=/);
   assert.match(platform, /data-context-action="analytics">Analytics</);
   assert.doesNotMatch(registry, /id:'analytics', label:'Aizanoi Analytics'/);
 });
 
-test('Analytics Sets launches HR today and remains ready for future collections', () => {
-  assert.match(analyticsCatalog, /HR Analytics[\s\S]*Full Set/);
-  assert.match(analyticsCatalog, /10[\s\S]*live dashboard surfaces/);
-  assert.match(analyticsCatalog, /27[\s\S]*synthetic source workbooks/);
+test('Analytics Sets exposes Markets and the current New HR collection', () => {
+  assert.match(analyticsCatalog, /Aizanoi Markets/);
+  assert.match(analyticsCatalog, /id:'new-hr-collection'/);
+  assert.match(analyticsCatalog, /Personnel Attendance Control System/);
+  assert.match(analyticsCatalog, /Recruitment Analytics Dashboard/);
   assert.match(analyticsApp, /More sets can land here/);
   assert.match(analyticsApp, /data-analytics-dashboard-inventory/);
-  assert.match(analyticsCatalog, /Workforce Turnover Analytics/);
+  assert.doesNotMatch(analyticsCatalog, /hr-analytics-full-set|HR Analytics Full Set/);
   assert.doesNotMatch(`${analyticsApp}\n${analyticsCatalog}`, /PRODUCT STANDARD|DATA SAFETY/);
 });
 
@@ -72,7 +74,7 @@ test('adaptive shell presents Aizanoi Analytics as the primary brand without ret
   assert.match(platform, /Aizanoi Analytics apps/);
   assert.match(platform, /AizanoiOS/);
   assert.doesNotMatch(platform, /TODAY AT AIZANOI ANALYTICS|az-session-widget|desktopWidget|sessionCard|getFieldSession|CONTINUE EXPLORING|data-home-action="continue-world"|az-device-session/);
-  assert.match(analyticsCatalog, /built by Aizanoi Analytics/);
+  assert.match(analyticsCatalog, /Aizanoi Markets/);
 });
 
 test('device dates stay English regardless of browser locale', () => {

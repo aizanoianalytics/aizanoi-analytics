@@ -83,38 +83,6 @@ test('Recruitment grid children and trend chart cannot force page-level overflow
   assert.match(trend[0], /overflow-x: auto/);
 });
 
-test('Executive board English runtime maps audited Turkish residuals to English', () => {
-  const overrides = JSON.parse(read('scripts/hr/hr-public-en-overrides.json'));
-  const values = overrides.values || {};
-  const expected = {
-    'Tüm Yıl': 'Full Year',
-    'Ort. Çalışan': 'Avg. Employees',
-    'Filtreleri Temizle': 'Clear Filters',
-    'Doldurma Grubu': 'Fill Bucket',
-    'Medyan': 'Median',
-    'filtreli kayıt': 'filtered records',
-    'filtreli tüm atamalar': 'filtered assignments',
-    'Düşük örneklem': 'Low sample',
-    'Ort. Gün': 'Avg. Days',
-  };
-  for (const [source, target] of Object.entries(expected)) {
-    assert.equal(values[source], target, `override missing: ${source} -> ${target}`);
-  }
-});
-
-test('English localizer translates numbered filtered-record captions', () => {
-  const src = read('scripts/hr/localize-public-dashboard-en.mjs');
-  assert.ok(src.includes('filtreli kay'), 'numbered filtreli-kayit pattern missing from localizer');
-  assert.ok(src.includes('filtered records'), 'English filtered-records rendering missing from localizer');
-});
-
-test('Generated executive boards carry no lang=tr attribute or setter', () => {
-  const template = read('analytics/dashboards/hr-analytics-full-set/production-pipeline/aylik_sunum.html');
-  assert.doesNotMatch(template, /lang="tr" at|select lang="tr"/);
-  assert.match(template, /<html lang="tr">/); // document root stays tr-TR in the parity-preserved source; the decorator rewrites it
-  assert.doesNotMatch(template, /select id="[a-z0-9-]+" class="select" lang="tr"/);
-  assert.doesNotMatch(template, /setAttribute\("lang", "tr"\)/);
-});
 
 test('Worlds browser smoke allows the observed slow controls-enable path', () => {
   const src = read('tests/worlds-browser-smoke.mjs');

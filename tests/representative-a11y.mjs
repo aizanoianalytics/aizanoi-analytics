@@ -10,7 +10,7 @@ const routes=[
   {id:'news',route:'/news/',settle:250},
   {id:'article',route:'/news/2026-09-02/aisi-cyber-eval-incident/',settle:250},
   {id:'analytics',route:'/analytics/',settle:250},
-  {id:'dashboard',route:'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',settle:600},
+  {id:'dashboard',route:'/analytics/dashboards/new-hr-collection/pacs/',settle:600},
   {id:'worlds',route:'/worlds/',settle:250},
   {id:'historic',route:'/worlds/aizanoi-225/',settle:500,world:true},
 ];

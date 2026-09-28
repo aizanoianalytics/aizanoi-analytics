@@ -31,11 +31,12 @@ test('Analytics launcher consumes the canonical public dashboard catalog', () =>
   assert.match(privateApp, /ANALYTICS_SETS/);
   assert.match(privateApp, /analyticsSetById/);
   assert.match(privateApp, /analytics\/catalog\.js/);
-  assert.match(catalog, /\/analytics\/dashboards\/hr-analytics-full-set\//);
-  assert.match(catalog, /hr-analytics-full-set-synthetic-output\.xlsx/);
+  assert.match(catalog, /\/analytics\/dashboards\/new-hr-collection\//);
+  assert.match(catalog, /\/analytics\/markets\//);
+  assert.doesNotMatch(catalog, /hr-analytics-full-set/);
   assert.doesNotMatch(privateApp, /\bapi\./);
   assert.doesNotMatch(privateApp, /workspace\//);
-  assert.ok(existsSync('frontend/analytics/dashboards/hr-analytics-full-set/index.html'));
+  assert.ok(existsSync('frontend/analytics/dashboards/new-hr-collection/index.html'));
 });
 
 test('retired shared brand hub cannot regain Analytics ownership', () => {

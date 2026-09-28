@@ -13,9 +13,8 @@ Scope: the AizanoiOS Analytics launcher surface for the public Analytics product
 
 ## What the launcher exposes
 
-The Analytics launcher surfaces every collection registered in the canonical public catalog. Today the catalog (`frontend/analytics/catalog.js`) exposes three sets:
+The Analytics launcher surfaces every collection registered in the canonical public catalog. Today the catalog (`frontend/analytics/catalog.js`) exposes two sets:
 
-- **HR Analytics — Full Set** — `id: 'hr-analytics-full-set'` (10 dashboard surfaces)
 - **Aizanoi Markets** — `id: 'aizanoi-markets'` (US + crypto daily close intelligence)
 - **New HR Collection** — `id: 'new-hr-collection'` (PACS + Recruitment Analytics)
 
