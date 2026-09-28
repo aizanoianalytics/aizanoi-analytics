@@ -122,16 +122,26 @@ try {
   // ---------------------------------------------------------------------------
   // 6. Current products keep the intended offline behaviour.
   // ---------------------------------------------------------------------------
+  // Visit online first so the worker caches the real Journal, then prove the
+  // cache actually holds it. Without this wait the offline reload races the
+  // cache write: the navigation is served from the network-side handler before
+  // the response is stored, the page comes back as the shell, and the assert
+  // fails with a bare "heading not visible" -- which is what happened on CI,
+  // where this passed locally and failed on the merge SHA.
   await page.goto(`${base}/journal/`, { waitUntil: 'networkidle' });
+  await page.waitForFunction(async (cacheName) => {
+    if (!navigator.serviceWorker?.controller) return false;
+    const cache = await caches.open(cacheName);
+    const hit = await cache.match(new Request('/journal/'));
+    return Boolean(hit);
+  }, CURRENT_CACHE, { timeout: 30000, polling: 250 });
   await context.setOffline(true);
   await page.reload({ waitUntil: 'domcontentloaded' });
   // Scope to the Journal surface. An unscoped locator('h1') is ambiguous as soon
-  // as the shell's mobile/tablet home headings are also present -- offline the
-  // reload can render the shell before the article, which made this assert fail
-  // with a strict-mode violation on 2 elements instead of reporting the real
-  // problem (the Journal heading was absent).
+  // as the shell's mobile/tablet home headings are also present, which would
+  // fail on a strict-mode violation instead of on the real regression.
   const journalHeading = page.getByRole('heading', { level: 1, name: 'Aizanoi Journal' });
-  await journalHeading.first().waitFor({ state: 'visible', timeout: 15000 });
+  await journalHeading.first().waitFor({ state: 'visible', timeout: 30000 });
   assert.equal((await journalHeading.first().textContent())?.trim(), 'Aizanoi Journal', 'Journal must still work offline');
   await context.setOffline(false);
 
