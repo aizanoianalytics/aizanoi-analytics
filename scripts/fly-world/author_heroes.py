@@ -5,7 +5,7 @@ Run: blender --background --python scripts/fly-world/author_heroes.py -- --root 
 
 Each hero is modeled around its local origin (x/y centered, z centered on its
 spec envelope height) at metric scale, then exported to
-gelistirmeler/2026-09-16-fly-world-prototype/assets/source/<slot>/<slot>.glb
+scripts/fly-world/source/assets/<slot>/<slot>.glb
 plus a <slot>.png pattern sheet where textiles use generated image textures.
 
 Design rule: old, lived-in, coherent. Bevels everywhere, multi-part construction,
@@ -22,8 +22,8 @@ from pathlib import Path
 import bpy
 
 
-WORKSPACE = Path("gelistirmeler/2026-09-16-fly-world-prototype")
-SOURCE_ROOT = WORKSPACE / "assets" / "source"
+WORKSPACE = Path("scripts/fly-world/source")
+SOURCE_ROOT = WORKSPACE / "assets"
 
 
 # ── basics ────────────────────────────────────────────────────────────────

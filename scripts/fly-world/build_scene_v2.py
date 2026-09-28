@@ -22,10 +22,10 @@ from pathlib import Path
 import bpy
 from mathutils import Vector
 
-WORKSPACE = Path("gelistirmeler/2026-09-16-fly-world-prototype")
+WORKSPACE = Path("scripts/fly-world/source")
 MANIFEST_REL = WORKSPACE / "asset_manifest.json"
-BUILD_REL = WORKSPACE / "build"
-REVIEW_REL = WORKSPACE / "review"
+BUILD_REL = Path("artifacts/fly-world/build")
+REVIEW_REL = Path("artifacts/fly-world/review")
 FRONTEND_ASSET_REL = Path("frontend/labs/fly-world/assets/fly-house.glb")
 
 
