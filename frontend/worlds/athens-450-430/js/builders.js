@@ -13,11 +13,18 @@ export const KIT_MANIFEST = [
   { id: 'dionysus-theatre-hero', file: 'dionysus_theatre_hero.glb' },
 ];
 export function setAssetKit(kit) { ATHENS_KIT = kit; }
-const HERO_ASSETS = {
-  parthenon: 'parthenon-hero',
-  propylaea: 'propylaea-hero',
-  'theatre-dionysus': 'dionysus-theatre-hero',
-};
+
+// The three "hero" GLBs in assets/ are single untextured primitives — the
+// parthenon one is literally a mesh named "Cube.001" with no columns, no
+// crepidoma and no pediment. Routing the three hero monuments through them made
+// the Acropolis read as blank tan boxes: the Parthenon arrived as a featureless
+// slab from every arrival angle, which is what the 2026-09-28 visual audit
+// reported as "greybox". The procedural builders below model the same
+// monuments properly — an octastyle peripteral Doric temple with 17 columns
+// along its flanks, a columned gateway, a theatron cavea — so the hero
+// monuments use those again. The GLBs stay in the manifest as kit assets for
+// any future re-export; nothing else in the world references them.
+const HERO_ASSETS = {};
 
 // --- Shared builders (single source of truth; local dupes removed in visual uplift v1) ---
 

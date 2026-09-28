@@ -260,7 +260,23 @@ async function init() {
   intro.onComplete = () => {
     // Skipped or finished intros land at the canonical SPAWN pose; otherwise
     // the player spawns mid-curve facing away from the landmark.
-    controls.teleportTo(SPAWN.x, SPAWN.z, SPAWN.angle, PLAYER_HEIGHT);
+    //
+    // The authored SPAWN coordinates are a plan-space intent, not a camera
+    // pose: the 2026-09-16 anisotropic compaction reshapes the map around them,
+    // and a raw position set can end up inside terrain, behind a structure or
+    // facing a blank flank. Teleport framing already solves all of that, so the
+    // arrival reuses it — same standoff, same safe-spawn search, same look-at —
+    // instead of a second, weaker code path that can disagree with the one every
+    // teleport in the world uses.
+    const arrival = BUILDINGS.find((b) => b.id === 'parthenon');
+    if (arrival && collision) {
+      const standoff = landmarkStandoff(arrival, { verticalFov: camera.fov });
+      const safe = collision.findSafeSpawn(arrival.x, arrival.z, Math.max(220, standoff + 80), standoff, arrival.viewAngle ?? 0);
+      const targetY = typeof safe.y === 'number' ? safe.y + PLAYER_HEIGHT : PLAYER_HEIGHT;
+      controls.teleportFacing(safe.x, safe.z, arrival.x, landmarkTargetHeight(arrival), arrival.z, targetY);
+    } else {
+      controls.teleportTo(SPAWN.x, SPAWN.z, SPAWN.angle, PLAYER_HEIGHT);
+    }
     controls.enable();
     simPos.copy(camera.position);
     pose.snap();

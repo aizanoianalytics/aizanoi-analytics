@@ -222,7 +222,20 @@ async function init() {
   intro.onComplete = () => {
     // Skipped or finished intros land at the canonical SPAWN pose; otherwise
     // the player spawns mid-curve facing away from the landmark.
-    controls.teleportTo(SPAWN.x, SPAWN.z, SPAWN.angle, PLAYER_HEIGHT);
+    // Reuse the teleport framing path for the arrival: same landmark standoff,
+    // same collision-safe spawn search, same look-at. The authored SPAWN
+    // coordinates are a plan-space intent, and a raw position set can land
+    // behind a structure or facing a blank flank after the anisotropic
+    // compaction reshapes the map around it.
+    const arrival = BUILDINGS.find((b) => b.id === 'colosseum');
+    if (arrival && collision) {
+      const standoff = landmarkStandoff(arrival, { verticalFov: camera.fov });
+      const safe = collision.findSafeSpawn(arrival.x, arrival.z, Math.max(220, standoff + 80), standoff, arrival.viewAngle ?? 0);
+      const targetY = typeof safe.y === 'number' ? safe.y + PLAYER_HEIGHT : PLAYER_HEIGHT;
+      controls.teleportFacing(safe.x, safe.z, arrival.x, landmarkTargetHeight(arrival), arrival.z, targetY);
+    } else {
+      controls.teleportTo(SPAWN.x, SPAWN.z, SPAWN.angle, PLAYER_HEIGHT);
+    }
     controls.enable();
     simPos.copy(camera.position);
     pose.snap();
