@@ -58,6 +58,8 @@ jobs:
         run: |
           set -o pipefail
           status=0
+          # Run the workspace suites as one Node run: the three files share the
+          # same browser-local storage and must not race each other.
           node --test tests/browser/workspace-apps.test.mjs tests/browser/workspace-atomic.test.mjs tests/browser/workspace-backup.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-browser.log || status=1
           node --test tests/browser/web-editor-layout.test.mjs 2>&1 | tee artifacts/diagnostics/web-editor-browser.log || status=1
           node --test tests/browser/public-social-identity.test.mjs 2>&1 | tee artifacts/diagnostics/public-social-identity.log || status=1
@@ -137,6 +139,9 @@ jobs:
         run: |
           set -o pipefail
           status=0
+          # These drive a full WebGL world each. Run them one at a time: the
+          # runner has limited CPU and parallel software-rendered worlds time
+          # out against each other.
           node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/field-system-browser-smoke.log || status=1
           node tests/worlds-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/worlds-browser-smoke.log || status=1
           exit $status
@@ -199,6 +204,8 @@ jobs:
         # Evidence capture, not pixel-perfect approval: the repository has no
         # deterministic image baselines, so a rendered PNG proves "it rendered",
         # not "it is visually correct". Review the uploaded artifacts.
+        # Each world suite drives a software-rendered WebGL scene, so they run
+        # sequentially rather than in parallel.
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
           set -o pipefail
