@@ -45,3 +45,58 @@ test('service worker caches complete world graphs and keeps a world-safe offline
 test('CI runs real Chromium service-worker lifecycle coverage', () => {
   assert.match(ci, /service-worker-browser\.mjs/);
 });
+
+// ---------------------------------------------------------------------------
+// Cache retirement: the retired HR Analytics Full Set must not survive a
+// release transition through a visitor's pre-cleanup runtime cache.
+// ---------------------------------------------------------------------------
+
+test('retired product surfaces are declared as an explicit, append-only denylist', () => {
+  const declared = sw.match(/const RETIRED_PATHS=\[([^\]]*)\]/)?.[1];
+  assert.ok(declared, 'service worker must declare RETIRED_PATHS');
+  const paths = declared.split(',').map((entry) => entry.trim().replace(/^'|'$/g, '')).filter(Boolean);
+  assert.ok(
+    paths.includes('/analytics/dashboards/hr-analytics-full-set'),
+    `RETIRED_PATHS must include the retired HR Full Set route, got ${JSON.stringify(paths)}`,
+  );
+  assert.match(sw, /function isRetiredPath\(pathname\)/);
+  // Prefix match must not swallow sibling routes such as new-hr-collection.
+  assert.match(
+    sw,
+    /pathname===prefix\|\|pathname\.startsWith\(prefix\+'\/'\)\|\|pathname\.startsWith\(prefix\+'\.'\)/,
+  );
+});
+
+test('activation retires superseded caches and purges retired entries from every cache', () => {
+  assert.match(sw, /async function retireSupersededCaches\(\)/);
+  assert.match(sw, /key\.startsWith\('aizanoi-field-shell-'\)[\s\S]*?key\.startsWith\('aizanoi-os-shell-'\)[\s\S]*?key!==CACHE/);
+  assert.match(sw, /async function purgeRetiredEntries\(\)/);
+  assert.match(sw, /for\(const key of await caches\.keys\(\)\)\{const cache=await caches\.open\(key\);for\(const request of await cache\.keys\(\)\)if\(isRetiredPath\(new URL\(request\.url\)\.pathname\)\)await cache\.delete\(request\);\}/);
+  assert.match(
+    sw,
+    /self\.addEventListener\('activate',[\s\S]*?retireSupersededCaches\(\)\.then\(\(\)=>purgeRetiredEntries\(\)\)\.then\(\(\)=>self\.clients\.claim\(\)\)/,
+    'activate must purge retired entries before claiming clients',
+  );
+});
+
+test('a retired route is never written into the runtime cache nor served as an offline fallback', () => {
+  assert.match(
+    sw,
+    /async function cacheNavigation\(request,response\)\{if\(!response\.ok\)return;if\(isRetiredPath\(new URL\(request\.url\)\.pathname\)\)return;/,
+    'cacheNavigation must refuse to cache a retired route',
+  );
+  assert.match(
+    sw,
+    /catch\(error\)\{if\(isRetiredPath\(url\.pathname\)\)throw error;const cached=await caches\.match\(request\);/,
+    'navigation fallback must not serve a cached retired route',
+  );
+});
+
+test('cache retirement preserves the bounded offline contract for current products', () => {
+  // The offline SLA for surviving products must remain intact.
+  assert.match(sw, /const PRECACHE=\[[\s\S]*?'\/[\s\S]*?'\/worlds\/[\s\S]*?\]/);
+  assert.match(sw, /const MAX_RUNTIME_ENTRIES\s*=\s*128/);
+  assert.match(sw, /caches\.match\('\/'\)/, 'root offline fallback must remain');
+  // The /api/* bypass is a security boundary and must not be weakened.
+  assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/);
+});
