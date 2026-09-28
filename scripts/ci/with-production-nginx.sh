@@ -42,7 +42,7 @@ http {
       try_files \$uri =404;
     }
 
-    location ^~ /analytics/dashboards/hr-analytics-full-set/ {
+    location ^~ /analytics/dashboards/new-hr-collection/ {
       include ${root}/infra/nginx/snippets/aizanoi-hr-analytics-security-headers.conf.example;
       try_files \$uri \$uri/ =404;
     }

@@ -5,7 +5,7 @@ These are sanitized reference configurations for deployment. **Production Nginx/
 - `nginx/aizanoianalytics.com.conf.example` — static frontend, canonical redirects, real 404/500/503 behavior, Historical World routes, compression/cache guidance and fail-closed historical API paths;
 - `nginx/snippets/aizanoi-static-security-headers.conf.example` — shared strict header/CSP baseline for the shell, landings and assets;
 - `nginx/snippets/aizanoi-web-editor-preview-headers.conf.example` — isolated CSP for the sandboxed Web Editor preview runner; this is the only AizanoiOS route allowed to evaluate visitor-authored browser code;
-- `nginx/snippets/aizanoi-hr-analytics-security-headers.conf.example` — complete route-scoped header set for the original self-contained HR dashboard exports;
+- `nginx/snippets/aizanoi-hr-analytics-security-headers.conf.example` — complete route-scoped header set for self-contained HR dashboard exports;
 - `nginx/snippets/aizanoi-historical-world-security-headers.conf.example` — complete route-scoped header set for worlds that still require inline boot code.
 
 The public Aizanoi web runtime remains static-first and does not require a generic Node/Express backend or an `aizanoi-backend.service` unit. The sole server-side product exception is the loopback-only `aizanoi-fly-simulation` service: it owns the Fly World closed loop and publishes only versioned, read-only spectator telemetry through one exact same-origin WebSocket route. Hermes Agent remains a separate private server service and is never exposed to the visitor runtime.
@@ -22,7 +22,7 @@ The reference Nginx configuration intentionally documents the operational assump
 - `/labs/fly-world/telemetry-1` is the sole narrow reverse-proxy exception, forwarding read-only versioned telemetry to the loopback authoritative Fly Simulation service;
 - the shell, product landings and shared assets use the strict shared CSP: neither `script-src` nor `style-src` permits `unsafe-inline`;
 - `/web-editor-preview/` is the sole route with the Web Editor preview policy; it permits authored script/style execution only because the parent embeds it with an opaque-origin iframe sandbox that omits same-origin, forms, popups, downloads and top navigation;
-- the HR Analytics Full Set keeps the original generator's self-contained HTML format, so only that exact route loads the HR-specific header snippet that permits embedded scripts and styles;
+- the New HR Collection uses self-contained HTML exports, so only that exact route loads the HR-specific header snippet that permits embedded scripts and styles;
 - Historical Worlds still contain city-local inline boot scripts and styles, so only their exact route locations load the historical-world header snippet that permits inline code;
 - legacy `/videos` → `/tv/`, `/games` → `/arcade/` and `/projects` → `/forge/` redirects preserve old bookmarks without keeping duplicate discovery URLs;
 - `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, COOP and CORP are emitted at the edge;
@@ -40,7 +40,7 @@ When the example changes in Git, apply the corresponding production change delib
 5. install or update `infra/systemd/aizanoi-fly-simulation.service.example` when Fly Simulation runtime/service code changes, restart it only at the approved Git SHA, and verify loopback binding plus read-only public telemetry;
 6. run `nginx -t` before reload;
 7. reload rather than restart when possible;
-8. verify `/`, `/web-editor-preview/`, the HR Analytics Full Set and one interactive dashboard, `/historic-world/`, Rome, Athens, `/labs/fly-world/`, the live Fly telemetry stream, `/api/chat`, another missing `/api/...` path and the custom error documents;
+8. verify `/`, `/web-editor-preview/`, the New HR Collection and one interactive dashboard, `/historic-world/`, Rome, Athens, `/labs/fly-world/`, the live Fly telemetry stream, `/api/chat`, another missing `/api/...` path and the custom error documents;
 9. verify compression and cache headers from the public edge rather than assuming the example is active;
 10. keep credentials, production snapshots and off-site backups outside this repository.
 

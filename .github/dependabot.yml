@@ -16,10 +16,3 @@ updates:
     labels:
       - dependencies
 
-  - package-ecosystem: pip
-    directory: /analytics/dashboards/hr-analytics-full-set/production-pipeline
-    schedule:
-      interval: weekly
-    open-pull-requests-limit: 5
-    labels:
-      - dependencies
