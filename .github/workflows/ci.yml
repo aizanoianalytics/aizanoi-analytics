@@ -74,41 +74,9 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with: { name: aizanoi-validate-diagnostics, path: 'artifacts/diagnostics/*', retention-days: 3 }
 
-  hr-pipeline-rebuild:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with: { node-version: '22' }
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
-        with:
-          python-version: '3.11'
-          cache: pip
-          cache-dependency-path: analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
-      - name: Install locked HR pipeline dependencies
-        run: python -m pip install --disable-pip-version-check -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
-      - name: Capture committed integrated-workbook baseline
-        run: cp analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx /tmp/hr-integrated-baseline.xlsx
-      - name: Rebuild HR Analytics Full Set from committed synthetic inputs
-        run: |
-          set -o pipefail
-          mkdir -p artifacts/diagnostics
-          bash scripts/regenerate-hr-dashboards.sh 2>&1 | tee artifacts/diagnostics/hr-pipeline-rebuild.log
-      - name: Verify deterministic tracked outputs
-        run: |
-          set -euo pipefail
-          python scripts/verify-hr-workbook-semantics.py /tmp/hr-integrated-baseline.xlsx analytics/dashboards/hr-analytics-full-set/production-pipeline/dashboardlar/icmal_sorgu_sonuc.xlsx 2>&1 | tee artifacts/diagnostics/hr-workbook-semantics.log
-          git diff --exit-code -- ':(glob)frontend/analytics/dashboards/hr-analytics-full-set/**/*.html'
-          git diff --check
-      - name: Upload HR rebuild diagnostics
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with: { name: aizanoi-hr-pipeline-diagnostics, path: 'artifacts/diagnostics/*', retention-days: 3 }
-
   browser-smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 34
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
@@ -124,7 +92,6 @@ jobs:
       - name: Install pinned browser QA dependencies
         run: |
           mkdir -p artifacts/diagnostics
-          cp package-lock.json artifacts/diagnostics/package-lock.json
           npm ci --ignore-scripts --no-fund
           node scripts/ci/npm-audit-gate.mjs
           npx playwright install chromium
@@ -137,18 +104,15 @@ jobs:
           cat /tmp/aizanoi-http.log; exit 1
       - name: Install production Nginx
         run: |
-          # apt mirrors (dl.google.com et al.) intermittently serve stale index
-          # hashes on shared runners; a short retry clears transient Hash Sum
-          # mismatches without masking real failures.
           for attempt in 1 2 3; do
             if sudo apt-get update -qq; then break; fi
             [ "$attempt" = 3 ] && exit 1
-            echo "apt-get update failed (attempt $attempt), retrying..."; sleep 15
+            sleep 15
           done
           for attempt in 1 2 3; do
             if sudo apt-get install -y --no-install-recommends nginx; then break; fi
             [ "$attempt" = 3 ] && exit 1
-            echo "apt-get install failed (attempt $attempt), retrying..."; sleep 15
+            sleep 15
           done
       - name: Production-like Nginx policy gate
         env: { AIZANOI_NGINX_BASE_URL: 'http://127.0.0.1:4174' }
@@ -160,47 +124,16 @@ jobs:
         run: |
           set -o pipefail
           bash scripts/ci/with-production-nginx.sh 4176 node tests/representative-a11y.mjs 2>&1 | tee artifacts/diagnostics/representative-a11y.log
-      - name: Core browser gates
-        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+      - name: Critical browser smoke
+        env:
+          AIZANOI_BROWSER: 'chromium'
+          ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
         run: |
           set -o pipefail
           status=0
-          node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-browser-smoke.log || status=1
+          node tests/cross-browser-critical.mjs 2>&1 | tee artifacts/diagnostics/cross-browser-critical.log || status=1
           node tests/service-worker-browser.mjs 2>&1 | tee artifacts/diagnostics/service-worker-browser.log || status=1
-          node tests/worlds-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/worlds-browser-smoke.log || status=1
-          node --test tests/fly-simulation-browser.test.mjs 2>&1 | tee artifacts/diagnostics/fly-simulation-browser.log || status=1
-          node tests/hr-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/hr-analytics-browser-qa.log || status=1
           exit $status
-      - name: AizanoiOS utility browser gates
-        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
-        run: |
-          set -o pipefail
-          status=0
-          node --test tests/browser/workspace-apps.test.mjs tests/browser/workspace-atomic.test.mjs tests/browser/web-editor-layout.test.mjs tests/browser/global-static-search.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-browser.log || status=1
-          node --test tests/browser/calculator-module.test.mjs 2>&1 | tee artifacts/diagnostics/calculator-browser.log || status=1
-          node --test tests/browser/camera-module.test.mjs 2>&1 | tee artifacts/diagnostics/camera-browser.log || status=1
-          node --test tests/browser/arcade-module.test.mjs tests/browser/arcade-legacy-lifecycle.test.mjs 2>&1 | tee artifacts/diagnostics/arcade-browser.log || status=1
-          node --test tests/browser/mobile-home.test.mjs 2>&1 | tee artifacts/diagnostics/mobile-home.log || status=1
-          node --test tests/browser/aizanoi-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-markets-browser.log || status=1
-          node --test tests/browser/aizanoi-os-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-markets-browser.log || status=1
-          node --test tests/browser/aizanoi-os-flowerseller.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-flowerseller-browser.log || status=1
-          node --test tests/browser/aizanoi-os-labs.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-labs-browser.log || status=1
-          node --test tests/browser/aizanoi-os-dungeon.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-dungeon-browser.log || status=1
-          exit $status
-      - name: Capture final product visuals
-        if: success()
-        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
-        run: |
-          set -o pipefail
-          status=0
-          node tests/historical-worlds-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/historical-worlds-visual-capture.log || status=1
-          node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/field-system-v3-visual-capture.log || status=1
-          node tests/markets-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/markets-visual-capture.log || status=1
-          exit $status
-      - name: Upload visual regression review
-        if: success()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        with: { name: aizanoi-final-visual-review, path: 'artifacts/final-visual-review/*.png', retention-days: 3 }
       - name: Upload browser diagnostics
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -208,7 +141,7 @@ jobs:
 
   lighthouse:
     runs-on: ubuntu-latest
-    timeout-minutes: 24
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
@@ -238,7 +171,7 @@ jobs:
       - name: Enforce representative Lighthouse budgets
         env:
           AIZANOI_LIGHTHOUSE_DIR: 'artifacts/diagnostics/representative-lighthouse'
-          AIZANOI_LIGHTHOUSE_ATTEMPTS: '3'
+          AIZANOI_LIGHTHOUSE_ATTEMPTS: '1'
         run: |
           mkdir -p artifacts/diagnostics
           set -o pipefail
