@@ -63,8 +63,11 @@ test('real Fly House Chromium spectator renders authoritative telemetry read-onl
   const page = await browser.newPage({ viewport: { width: 1024, height: 768 } });
   await page.addInitScript((url) => { window.__FLY_TELEMETRY_CONFIG__ = { url }; }, `ws://127.0.0.1:${service.address().port}/spectator/telemetry-1`);
   await page.goto(`http://127.0.0.1:${pageServer.address().port}/frontend/labs/fly-world/`, { waitUntil: 'networkidle' });
-  await page.waitForFunction(() => document.querySelector('#simulation-status')?.textContent.includes('Telemetry active'), null, { timeout: 30000 });
-  await page.waitForFunction(() => document.querySelector('#simulation-status')?.textContent && window.__FLY_SCENE__?.getObjectByName('TELEMETRY_SPECTATOR_FLY'), null, { timeout: 30000 });
+  // The spectator only starts after the 3D room GLB has loaded, which is fast
+  // on CI hardware and slow on a small/software-rendered host. Wait generously
+  // rather than encode this box's load into the assertion.
+  await page.waitForFunction(() => document.querySelector('#simulation-status')?.textContent.includes('Telemetry active'), null, { timeout: 60000 });
+  await page.waitForFunction(() => document.querySelector('#simulation-status')?.textContent && window.__FLY_SCENE__?.getObjectByName('TELEMETRY_SPECTATOR_FLY'), null, { timeout: 60000 });
 
   const initial = await page.evaluate(() => {
     const mesh = window.__FLY_SCENE__.getObjectByName('TELEMETRY_SPECTATOR_FLY');
@@ -75,7 +78,7 @@ test('real Fly House Chromium spectator renders authoritative telemetry read-onl
     const latest = window.__FLY_SPECTATOR_BRIDGE__?.frames.at(-1);
     if (!mesh || !latest || latest.sequence <= sequence) return false;
     return mesh.position.toArray().some((value, index) => Math.abs(value - position[index]) > 1e-5);
-  }, { position:initial.mesh, sequence:initial.frame.sequence }, { timeout:10000 });
+  }, { position: initial.mesh, sequence: initial.frame.sequence }, { timeout: 60000 });
   const moved = await page.evaluate(() => window.__FLY_SCENE__.getObjectByName('TELEMETRY_SPECTATOR_FLY').position.toArray());
   assert.notDeepEqual(moved, initial.mesh, 'telemetry-rendered mesh should move from authoritative frames');
   assert.deepEqual(initial.globals, { simulation: 'undefined', scheduler: 'undefined', controller: 'undefined' });

@@ -59,7 +59,10 @@ test('mobile Snake and Blockfall use playfield taps instead of direction-button 
 });
 
 test('release cache includes the canonical shell stylesheet', () => {
-  assert.match(release, /VERSION: '4\.5\.4'/);
-  assert.match(release, /CACHE: 'aizanoi-os-shell-v4\.5\.4'/);
+  // Assert the release/cache contract, not a frozen version string: a release
+  // bump must stay internally consistent without editing this test.
+  const version = release.match(/VERSION: '([^']+)'/)?.[1];
+  assert.ok(version, 'release.js must declare VERSION');
+  assert.match(release, new RegExp(`CACHE: 'aizanoi-os-shell-v${version.replace(/\./g, '\\.')}'`));
   assert.match(serviceWorker, /'\/styles\/shell\.css'/);
 });
