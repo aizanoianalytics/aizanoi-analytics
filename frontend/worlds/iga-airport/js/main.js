@@ -513,11 +513,15 @@ function bindEvents() {
       targetY,
     );
     // Teleport is a discrete jump: keep the fixed-step state on the same pose.
+    // isRunning is re-armed because the frame loop writes camera.position from
+    // pose.sample() every display frame; a paused loop would keep drawing the
+    // pre-teleport position and the frame renders black.
     if (simPos) {
       camera.position.y = targetY;
       simPos.copy(camera.position);
       pose.snap();
     }
+    isRunning = true;
     ui.hideTeleportMenu();
   };
 }

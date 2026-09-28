@@ -636,9 +636,13 @@ function bindEvents() {
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
     controls.teleportFacing(safe.x, safe.z, building.x, landmarkTargetHeight(building), building.z, targetY);
     // Teleport is a discrete jump: the sim state must land exactly there so
-    // the pose blender doesn't glide across the map on the next frames.
+    // the pose blender doesn't glide across the map on the next frames. The
+    // frame loop writes camera.position from pose.sample() every display frame,
+    // so a paused loop would keep drawing the pre-teleport position and the
+    // frame renders black. Re-arm the loop as part of the jump.
     simPos.copy(camera.position);
     pose.snap();
+    isRunning = true;
     ui.hideTeleportMenu();
   };
 }
