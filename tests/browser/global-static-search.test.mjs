@@ -21,18 +21,18 @@ test('Cmd/Ctrl+K lazy-loads static content and navigates to a canonical result',
     await page.keyboard.press('Control+K');
     const input=page.locator('#az-command-input');
     await input.waitFor({state:'visible'});
-    await input.fill('Workforce Turnover Analytics');
+    await input.fill('Personnel Attendance Control System (PACS)');
 
-    const result=page.locator('.az-command-row').filter({hasText:'Workforce Turnover Analytics'}).first();
+    const result=page.locator('.az-command-row').filter({hasText:'Personnel Attendance Control System (PACS)'}).first();
     await result.waitFor({state:'visible',timeout:5000});
     assert.ok(indexRequests.length>=1,'opening global search should lazy-load the static content index');
     assert.match(await result.innerText(),/Analytics/i,'content result should retain its Analytics kind');
 
     await Promise.all([
-      page.waitForURL(/\/analytics\/dashboards\/hr-analytics-full-set\/workforce-turnover\/$/,{timeout:10000}),
+      page.waitForURL(/\/analytics\/dashboards\/new-hr-collection\/pacs\/$/,{timeout:10000}),
       result.click(),
     ]);
-    assert.match(await page.title(),/Workforce Turnover Analytics/i);
+    assert.match(await page.title(),/PACS|Personnel Attendance/i);
   }finally{
     await browser.close();
   }

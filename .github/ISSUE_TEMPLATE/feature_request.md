@@ -23,7 +23,6 @@ Which project goal does this support?
 - [ ] Rome / Athens comparative world quality
 - [ ] News publishing pipeline
 - [ ] TV / Journal surface
-- [ ] Analytics — HR Analytics Full Set
 - [ ] Analytics — New HR Collection (PACS, Recruitment)
 - [ ] Forge / Labs / Arcade surface
 - [ ] Browser-local utility (Workspace, Notepad, Calculator, Camera, Winamp, Recycle Bin, Web Editor)

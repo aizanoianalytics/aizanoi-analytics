@@ -22,7 +22,7 @@ Delivery contract
 
 - Public copies live under `frontend/analytics/dashboards/new-hr-collection/`.
 - Route-scoped security headers reuse the narrow HR Analytics snippet
-  (`infra/nginx/snippets/aizanoi-hr-analytics-security-headers.conf.example`);
+  (`infra/nginx/snippets/aizanoi-self-contained-dashboard-security-headers.conf.example`);
   the rest of the site keeps the strict default CSP.
 - Registration points: `frontend/analytics/catalog.js` (`new-hr-collection`
   set), `frontend/sitemap.xml`, and `infra/nginx/aizanoianalytics.com.conf.example`.

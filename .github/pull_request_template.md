@@ -13,7 +13,6 @@ Affected areas:
 - [ ] TV (legacy `/tv/` route surface)
 - [ ] Journal (legacy `/journal/` route surface)
 - [ ] Analytics — landing + catalog
-- [ ] Analytics — HR Analytics Full Set (10 dashboards)
 - [ ] Analytics — New HR Collection (PACS, Recruitment)
 - [ ] Forge (legacy `/forge/` route surface)
 - [ ] Labs

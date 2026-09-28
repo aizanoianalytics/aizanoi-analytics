@@ -15,7 +15,7 @@ Describe the problem clearly.
 Route / application / module:
 
 ```text
-Example: /analytics/dashboards/hr-analytics-full-set/performance-hiring-turnover/
+Example: /analytics/dashboards/new-hr-collection/pacs/
 or ?app=workspace, ?app=camera, etc.
 ```
 

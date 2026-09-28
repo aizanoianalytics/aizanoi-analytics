@@ -18,10 +18,7 @@ function createFakeRepo() {
   const root = mkdtempSync(join(tmpdir(), 'aizanoi-deploy-test-'));
   const frontend = join(root, 'frontend');
   mkdirSync(frontend, { recursive: true });
-  // The synthetic workbook path must exist and be non-empty to clear the
   // source-tree assertion that runs after the env gate.
-  mkdirSync(join(frontend, 'analytics', 'dashboards', 'hr-analytics-full-set', 'downloads'), { recursive: true });
-  writeFileSync(join(frontend, 'analytics', 'dashboards', 'hr-analytics-full-set', 'downloads', 'hr-analytics-full-set-synthetic-output.xlsx'), 'synthetic');
   mkdirSync(join(frontend, 'js', 'v3'), { recursive: true });
   // The promoted-asset checks require index.html, release.js, service-worker.js.
   writeFileSync(join(frontend, 'index.html'), '<!doctype html>');
@@ -34,8 +31,6 @@ function createFakeRepo() {
   git(['config', 'user.email', 'aizanoi-deploy-test@example.invalid']);
   git(['config', 'user.name', 'aizanoi-deploy-test']);
   git(['config', 'commit.gpgsign', 'false']);
-  // Stage the synthetic workbook only so git status stays clean.
-  git(['add', join(frontend, 'analytics', 'dashboards', 'hr-analytics-full-set', 'downloads', 'hr-analytics-full-set-synthetic-output.xlsx')]);
   git(['add', join(frontend, 'index.html')]);
   git(['add', join(frontend, 'release.js')]);
   git(['add', join(frontend, 'service-worker.js')]);

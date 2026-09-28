@@ -32,11 +32,12 @@ test('desktop keeps the five core apps and promotes a curated utility set', () =
 
 test('Analytics has one canonical catalog consumed by both public surfaces', () => {
   assert.match(analyticsCatalog, /export const ANALYTICS_SETS/);
-  assert.match(analyticsCatalog, /hr-analytics-full-set-synthetic-output\.xlsx/);
+  assert.match(analyticsCatalog, /id:'aizanoi-markets'/);
+  assert.match(analyticsCatalog, /id:'new-hr-collection'/);
   assert.match(analytics, /from ['"][^'"]*analytics\/catalog\.js['"]/);
   assert.doesNotMatch(analytics, /const HR_DASHBOARDS/);
   assert.match(analyticsLanding, /\/analytics\/app\.js/);
-  assert.doesNotMatch(analyticsLanding, /Workforce Turnover Analytics/);
+  assert.doesNotMatch(analyticsCatalog, /id:'hr-analytics-full-set'/);
 });
 
 test('canonical shell layer never overrides window geometry with CSS importance', () => {
