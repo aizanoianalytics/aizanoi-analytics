@@ -70,3 +70,43 @@ test('product documentation keeps the approved News categories and current produ
     assert.match(docs.product, new RegExp(label));
   }
 });
+
+// ---------------------------------------------------------------------------
+// Post-cleanup documentation drift guards.
+// ---------------------------------------------------------------------------
+
+test('operations documentation lists the real required checks and does not resurrect the retired CI job', () => {
+  assert.match(docs.operations, /`validate`, `browser-smoke` and `lighthouse`/);
+  assert.doesNotMatch(docs.operations, /hr-pipeline-rebuild/);
+});
+
+test('operations documentation points contributors at the scheduled full QA owner', () => {
+  assert.match(docs.operations, /Aizanoi Full QA/);
+  assert.match(docs.operations, /Cross-browser critical smoke/);
+});
+
+test('contribution guidance separates routine CI from scheduled/manual full QA', () => {
+  assert.match(docs.contributing, /Test ownership/i);
+  assert.match(docs.contributing, /Aizanoi Full QA/);
+  assert.match(docs.contributing, /Cross-browser critical smoke/);
+  assert.match(docs.contributing, /Local \/ operator-only|Local \/ operator/);
+  // The retired job must not be described as part of CI.
+  assert.doesNotMatch(docs.contributing, /hr-pipeline-rebuild/);
+  // Historical World traversal and rendered captures are no longer routine.
+  assert.doesNotMatch(
+    docs.contributing,
+    /CI also runs desktop\/tablet\/mobile smoke tests, the real-browser service-worker lifecycle gate, Historical World traversal, rendered captures/i,
+  );
+});
+
+test('shell documentation describes the four public worlds, including the present-day companion', () => {
+  assert.match(docs.field, /Four public worlds/i);
+  for (const label of ['Aizanoi', 'Rome', 'Athens', 'İGA']) assert.match(docs.field, new RegExp(label));
+  assert.match(docs.field, /present-day companion/i);
+  assert.doesNotMatch(docs.field, /Three Historical Worlds|three worlds/i);
+  assert.doesNotMatch(docs.operations, /all three Historical Worlds/i);
+});
+
+test('shell documentation records the PWA cache-retirement contract', () => {
+  assert.match(docs.field, /retired product route/i);
+});

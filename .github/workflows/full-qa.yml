@@ -1,0 +1,223 @@
+name: Aizanoi Full QA
+
+# Owns the expensive real-browser, product-interaction and visual suites that
+# deliberately do not run on every pull request. Routine CI (Aizanoi CI) keeps
+# only the fast release gates: validate, browser-smoke, lighthouse.
+#
+# This workflow is NOT a required status check. Schedule is weekly; it can also
+# be dispatched manually before a release or after a risky change.
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Mondays at 03:17 UTC (06:17 Europe/Istanbul) — deliberately off the hour
+    # so it does not collide with the nightly News publish or other schedules.
+    - cron: '17 3 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aizanoi-full-qa
+  cancel-in-progress: true
+
+jobs:
+  browser-products:
+    name: Full QA · product browsers
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Restore Playwright browser cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-v1-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install pinned browser QA dependencies
+        run: |
+          mkdir -p artifacts/diagnostics
+          npm ci --ignore-scripts --no-fund
+          node scripts/ci/npm-audit-gate.mjs
+          npx playwright install chromium
+      - name: Build generated News surfaces
+        run: |
+          node scripts/news/build-news.mjs
+          node scripts/search/build-search-index.mjs
+      - name: Start static frontend server
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-full-qa-http.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
+          cat /tmp/aizanoi-full-qa-http.log; exit 1
+      - name: Workspace, editor and identity browser suites
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          status=0
+          # Run the workspace suites as one Node run: the three files share the
+          # same browser-local storage and must not race each other.
+          node --test tests/browser/workspace-apps.test.mjs tests/browser/workspace-atomic.test.mjs tests/browser/workspace-backup.test.mjs 2>&1 | tee artifacts/diagnostics/workspace-browser.log || status=1
+          node --test tests/browser/web-editor-layout.test.mjs 2>&1 | tee artifacts/diagnostics/web-editor-browser.log || status=1
+          node --test tests/browser/public-social-identity.test.mjs 2>&1 | tee artifacts/diagnostics/public-social-identity.log || status=1
+          exit $status
+      - name: App browser suites (calculator, camera, arcade, mobile home)
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          status=0
+          node --test tests/browser/calculator-module.test.mjs 2>&1 | tee artifacts/diagnostics/calculator-browser.log || status=1
+          node --test tests/browser/camera-module.test.mjs 2>&1 | tee artifacts/diagnostics/camera-browser.log || status=1
+          node --test tests/browser/arcade-module.test.mjs tests/browser/arcade-legacy-lifecycle.test.mjs 2>&1 | tee artifacts/diagnostics/arcade-browser.log || status=1
+          node --test tests/browser/mobile-home.test.mjs 2>&1 | tee artifacts/diagnostics/mobile-home.log || status=1
+          exit $status
+      - name: Aizanoi Markets browser suites
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          status=0
+          node --test tests/browser/aizanoi-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-markets-browser.log || status=1
+          node --test tests/browser/aizanoi-os-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-markets-browser.log || status=1
+          exit $status
+      - name: New HR Collection browser QA (PACS + Recruitment Analytics)
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          status=0
+          node --test tests/recruitment-analytics-multiselect-settings.test.mjs 2>&1 | tee artifacts/diagnostics/recruitment-multiselect.log || status=1
+          node --test tests/recruitment-dummy-data-parity.test.mjs 2>&1 | tee artifacts/diagnostics/recruitment-parity.log || status=1
+          node tests/recruitment-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/recruitment-browser-qa.log || status=1
+          exit $status
+      - name: Cross-device and static-search browser suites
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          status=0
+          node tests/cross-device-critical.mjs 2>&1 | tee artifacts/diagnostics/cross-device-critical.log || status=1
+          node --test tests/browser/global-static-search.test.mjs 2>&1 | tee artifacts/diagnostics/global-static-search-browser.log || status=1
+          exit $status
+      - name: Upload product browser diagnostics
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: aizanoi-full-qa-product-diagnostics
+          path: 'artifacts/diagnostics/*'
+          retention-days: 7
+
+  worlds-and-fly:
+    name: Full QA · worlds, fly and dungeon
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Restore Playwright browser cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-v1-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install pinned browser QA dependencies
+        run: |
+          mkdir -p artifacts/diagnostics
+          npm ci --ignore-scripts --no-fund
+          node scripts/ci/npm-audit-gate.mjs
+          npx playwright install chromium
+      - name: Start static frontend server
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-full-qa-worlds-http.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
+          cat /tmp/aizanoi-full-qa-worlds-http.log; exit 1
+      - name: Historical Worlds and AizanoiOS shell browser traversal
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          status=0
+          # These drive a full WebGL world each. Run them one at a time: the
+          # runner has limited CPU and parallel software-rendered worlds time
+          # out against each other.
+          node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/field-system-browser-smoke.log || status=1
+          node tests/worlds-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/worlds-browser-smoke.log || status=1
+          exit $status
+      - name: Fly World runtime browser validation
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          node --test tests/fly-simulation-browser.test.mjs 2>&1 | tee artifacts/diagnostics/fly-simulation-browser.log
+      - name: Dungeon browser flow
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          node --test tests/browser/aizanoi-os-dungeon.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-browser.log
+      - name: Flowerseller and Labs interaction
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          status=0
+          node --test tests/browser/aizanoi-os-flowerseller.test.mjs 2>&1 | tee artifacts/diagnostics/flowerseller-browser.log || status=1
+          node --test tests/browser/aizanoi-os-labs.test.mjs 2>&1 | tee artifacts/diagnostics/labs-browser.log || status=1
+          exit $status
+      - name: Upload worlds and fly diagnostics
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: aizanoi-full-qa-worlds-diagnostics
+          path: 'artifacts/diagnostics/*'
+          retention-days: 7
+
+  visual-captures:
+    name: Full QA · visual captures
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Restore Playwright browser cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-v1-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - name: Install pinned browser QA dependencies
+        run: |
+          mkdir -p artifacts/diagnostics
+          npm ci --ignore-scripts --no-fund
+          node scripts/ci/npm-audit-gate.mjs
+          npx playwright install chromium
+      - name: Build generated News surfaces
+        run: node scripts/news/build-news.mjs
+      - name: Start static frontend server
+        run: |
+          python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-full-qa-visual-http.log 2>&1 &
+          for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
+          cat /tmp/aizanoi-full-qa-visual-http.log; exit 1
+      - name: Capture visual review evidence
+        # Evidence capture, not pixel-perfect approval: the repository has no
+        # deterministic image baselines, so a rendered PNG proves "it rendered",
+        # not "it is visually correct". Review the uploaded artifacts.
+        # Each world suite drives a software-rendered WebGL scene, so they run
+        # sequentially rather than in parallel.
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          status=0
+          node tests/historical-worlds-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/historical-worlds-visual.log || status=1
+          node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/field-system-visual.log || status=1
+          node tests/markets-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/markets-visual.log || status=1
+          exit $status
+      - name: Upload visual review evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: aizanoi-full-qa-visual-review
+          path: 'artifacts/'
+          retention-days: 14
