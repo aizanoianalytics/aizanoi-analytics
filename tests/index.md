@@ -35,11 +35,13 @@ Every browser-driving suite has exactly one owner, so removing a suite from rout
 | Owner | Trigger | Suites |
 |---|---|---|
 | `Aizanoi CI` (required: `validate`, `browser-smoke`, `lighthouse`) | every PR and `main` push | `cross-browser-critical.mjs` (Chromium), `cross-device-critical.mjs` (desktop/tablet/mobile), `service-worker-browser.mjs`, `representative-a11y.mjs`, `browser/nginx-production-policy.test.mjs` |
-| `Aizanoi Full QA` (weekly + `workflow_dispatch`) | scheduled/manual | everything under `tests/browser/`, `field-system-v3-browser-smoke.mjs`, `worlds-browser-smoke.mjs`, `fly-simulation-browser.test.mjs`, the Recruitment Analytics and PACS New HR Collection browser QA, and the three `*-visual-capture.mjs` suites |
+| `Aizanoi Full QA` (weekly + `workflow_dispatch`) | scheduled/manual | everything under `tests/browser/`, `field-system-v3-browser-smoke.mjs`, `worlds-browser-smoke.mjs`, `fly-simulation-browser.test.mjs`, the New HR Collection browser QA for both **PACS** (`pacs-browser-qa.mjs`) and **Recruitment Analytics** (`recruitment-analytics-browser-qa.mjs`), and the three `*-visual-capture.mjs` suites |
 | `Cross-browser critical smoke` (weekly + manual) | scheduled/manual | `cross-browser-critical.mjs` under Firefox and WebKit |
 | Local / operator-only | ad hoc | `entry-battery.mjs` and `webkit-entry-probe.mjs` — operator **diagnostics**, not gates: they contain no assertions, and the first defaults to the live production host. Run them by hand to reproduce a reported device problem; never wire them into CI as pass/fail gates. |
 | Local / operator-only | ad hoc | Fly House `scripts/fly-world/build_scene*.py`, `author_heroes.py` and `environment_export.py` — require Blender (`bpy`) and cannot run in CI. The committed `environment.json`/`fly-physics.json` artifacts are what CI validates. |
 
 Software-rendered WebGL suites must run sequentially: parallel worlds time each other out on a small runner.
+
+Branch protection is **not** verified by CI. A repository cannot read its own protection rules without elevated credentials, so the deterministic contract is the workflow assertions in `tests/test-ownership.test.mjs`; the separate live check runs only where a `gh` CLI with admin scope happens to exist and otherwise reports itself as **skipped**, never as verified. The authoritative required routine checks are `validate`, `browser-smoke` and `lighthouse` — see `docs/HERMES_OPERATIONS.md`.
 
 Run the applicable validation commands from root `AGENTS.md`; do not weaken a failing safety or architecture test simply to make CI green. Narrow compatibility exceptions must remain explicit and exact.

@@ -91,6 +91,15 @@ jobs:
           node --test tests/recruitment-dummy-data-parity.test.mjs 2>&1 | tee artifacts/diagnostics/recruitment-parity.log || status=1
           node tests/recruitment-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/recruitment-browser-qa.log || status=1
           exit $status
+      - name: PACS browser QA
+        # PACS is a large interactive standalone dashboard; this drives the real
+        # visitor flows (period filter, organization/person selection, calendar
+        # rules, settings save+reset, import view, narrow viewport) in Chromium.
+        # The dashboard embeds a synthetic sample set only; nothing is uploaded.
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        run: |
+          set -o pipefail
+          node tests/pacs-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/pacs-browser-qa.log
       - name: Cross-device and static-search browser suites
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |

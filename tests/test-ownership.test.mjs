@@ -113,8 +113,15 @@ test('routine CI stays small and the expensive suites are not required', () => {
   assert.match(workflows.fullQa, /schedule:/);
 });
 
-test('required branch protection is exactly the three routine checks', async () => {
-  // Guarded by the ops runbook; asserted here so drift is visible in review.
+// Repositories cannot read their own branch protection without elevated
+// credentials, so the deterministic contract lives in the workflow assertions
+// above. This last check is a best-effort live confirmation: it runs only when
+// a `gh` CLI with admin scope happens to be available, and SKIPS (never fails,
+// never silently passes as verified) otherwise. Do not read a green run here as
+// "CI enforced branch protection" — see docs/HERMES_OPERATIONS.md.
+const AUTHORITATIVE_REQUIRED_CHECKS = ['browser-smoke', 'lighthouse', 'validate'];
+
+test('best-effort: live branch protection matches the documented required checks', async (t) => {
   const { execFileSync } = await import('node:child_process');
   let contexts;
   try {
@@ -131,7 +138,8 @@ test('required branch protection is exactly the three routine checks', async () 
       ),
     ).required_status_checks.contexts;
   } catch {
-    return; // no network or no token: nothing to assert
+    t.skip('gh unavailable or lacks admin scope — live branch protection not verified here');
+    return;
   }
-  assert.deepEqual([...contexts].sort(), ['browser-smoke', 'lighthouse', 'validate']);
+  assert.deepEqual([...contexts].sort(), AUTHORITATIVE_REQUIRED_CHECKS);
 });

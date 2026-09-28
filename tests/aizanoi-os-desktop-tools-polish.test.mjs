@@ -15,7 +15,13 @@ const serviceWorker = read('frontend/service-worker.js');
 
 test('adaptive home exposes curated apps without Historical Worlds return/continue cards', () => {
   for (const id of ['browser','notepad','calculator','camera','winamp','games','recycle-bin']) {
-    assert.match(brand, new RegExp(`['"]${id}['"]`), `${id} should be represented in the desktop shortcut contract`);
+    // Substring check, not a dynamically built pattern. Interpolating an
+    // identifier into a RegExp needs per-character escaping, which is the
+    // incomplete-escaping shape CodeQL flags (js/incomplete-sanitization).
+    assert.ok(
+      brand.includes(`'${id}'`) || brand.includes(`"${id}"`),
+      `${id} should be represented in the desktop shortcut contract`,
+    );
   }
   assert.doesNotMatch(brand, /sessionCard|getFieldSession|CONTINUE EXPLORING|data-home-action="continue-world"|az-device-session|az-session-widget|desktopWidget/);
   assert.match(brand, /\/styles\/shell\.css/);
@@ -61,8 +67,15 @@ test('mobile Snake and Blockfall use playfield taps instead of direction-button 
 test('release cache includes the canonical shell stylesheet', () => {
   // Assert the release/cache contract, not a frozen version string: a release
   // bump must stay internally consistent without editing this test.
-  const version = release.match(/VERSION: '([^']+)'/)?.[1];
+  //
+  // Compare the declared values directly instead of building a RegExp from a
+  // version string. Escaping a dotted version into a pattern is a
+  // string-escaping bug waiting to happen, and CodeQL correctly flagged it
+  // (js/incomplete-sanitization) even though this is test code.
+  const version = release.match(/VERSION: '([^']*)'/)?.[1];
+  const cache = release.match(/CACHE: '([^']*)'/)?.[1];
   assert.ok(version, 'release.js must declare VERSION');
-  assert.match(release, new RegExp(`CACHE: 'aizanoi-os-shell-v${version.replace(/\./g, '\\.')}'`));
+  assert.ok(cache, 'release.js must declare the shell cache name');
+  assert.equal(cache, `aizanoi-os-shell-v${version}`);
   assert.match(serviceWorker, /'\/styles\/shell\.css'/);
 });
