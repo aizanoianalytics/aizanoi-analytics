@@ -132,6 +132,7 @@ jobs:
           set -o pipefail
           status=0
           node tests/cross-browser-critical.mjs 2>&1 | tee artifacts/diagnostics/cross-browser-critical.log || status=1
+          node tests/cross-device-critical.mjs 2>&1 | tee artifacts/diagnostics/cross-device-critical.log || status=1
           node tests/service-worker-browser.mjs 2>&1 | tee artifacts/diagnostics/service-worker-browser.log || status=1
           exit $status
       - name: Upload browser diagnostics
