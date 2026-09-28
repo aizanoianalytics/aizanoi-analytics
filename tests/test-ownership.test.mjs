@@ -100,6 +100,34 @@ test('the only unowned browser scripts are the documented operator diagnostics',
   assert.doesNotMatch(workflows.fullQa, /entry-battery/, 'a production-hitting probe must stay out of CI');
 });
 
+test('tests/browser ownership is documented exactly as the workflows define it', () => {
+  const docs = read('tests/index.md');
+  // Full QA does NOT own everything under tests/browser/: the Nginx production
+  // policy gate is a required routine check on purpose. The table must say so,
+  // and the claim must stay true of the workflow.
+  assert.match(workflows.ci, /nginx-production-policy\.test\.mjs/, 'routine CI must still run the Nginx policy gate');
+  assert.doesNotMatch(
+    workflows.fullQa,
+    /nginx-production-policy\.test\.mjs/,
+    'a required policy gate must not be duplicated into the weekly Full QA run',
+  );
+  assert.doesNotMatch(
+    docs,
+    /everything under `tests\/browser\/`/,
+    'tests/index.md must not claim Full QA owns all of tests/browser/ while routine CI also runs nginx-production-policy.test.mjs',
+  );
+  // The routine row must name every suite CI actually runs.
+  for (const routine of [
+    'cross-browser-critical.mjs',
+    'cross-device-critical.mjs',
+    'service-worker-browser.mjs',
+    'representative-a11y.mjs',
+    'nginx-production-policy.test.mjs',
+  ]) {
+    assert.ok(docs.includes(routine), `tests/index.md must list ${routine} under its real owner`);
+  }
+});
+
 test('routine CI stays small and the expensive suites are not required', () => {
   // The cleanup contract: three required checks, no giant browser job.
   assert.match(workflows.ci, /^\s{2}validate:/m);
