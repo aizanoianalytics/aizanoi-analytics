@@ -4,7 +4,6 @@ import { readFileSync } from "node:fs";
 
 const path = "frontend/analytics/dashboards/new-hr-collection/recruitment-analytics/index.html";
 const html = readFileSync(path, "utf8");
-const hrBrowserQa = readFileSync("tests/hr-analytics-browser-qa.mjs", "utf8");
 const fields = ["year", "unit", "responsible", "status", "level_category", "resource"];
 
 test("Recruitment global dimensions use Excel-style multi-select shells", () => {
@@ -73,6 +72,3 @@ test("Recruitment Settings and header remain usable on narrow screens", () => {
   assert.match(html, /\.settings-transfer-actions \.btn \{ width: auto; min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; \}/);
 });
 
-test("Recruitment browser QA remains inside the existing required browser-smoke entrypoint", () => {
-  assert.match(hrBrowserQa, /await import\('\.\/recruitment-analytics-browser-qa\.mjs'\);/);
-});

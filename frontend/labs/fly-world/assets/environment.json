@@ -215,13 +215,13 @@
       "id": "main-room",
       "label": "Main living room",
       "origin": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "size": [
         9.6,
-        8.0,
+        8,
         2.85
       ],
       "floorMaterial": "aged-green-floor",
@@ -238,7 +238,7 @@
           ],
           "size": [
             0.2,
-            2.0,
+            2,
             1.56
           ],
           "sillHeight": 0.72
@@ -248,7 +248,7 @@
           "wall": "east",
           "center": [
             4.8,
-            1.0,
+            1,
             1.09
           ],
           "size": [
@@ -256,7 +256,7 @@
             1.32,
             2.18
           ],
-          "sillHeight": 0.0
+          "sillHeight": 0
         }
       ]
     },
@@ -266,10 +266,10 @@
       "origin": [
         7.3,
         1.15,
-        0.0
+        0
       ],
       "size": [
-        5.0,
+        5,
         6.2,
         2.85
       ],
@@ -282,7 +282,7 @@
           "wall": "west",
           "center": [
             4.8,
-            1.0,
+            1,
             1.09
           ],
           "size": [
@@ -290,7 +290,7 @@
             1.32,
             2.18
           ],
-          "sillHeight": 0.0
+          "sillHeight": 0
         },
         {
           "id": "bedroom-window",
@@ -314,7 +314,7 @@
     "gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json": "56dd975756fe1441eb6ac65930bad93c0bc177dd34e163e2fb16649f691587a8",
     "gelistirmeler/2026-09-16-fly-world-prototype/asset_manifest.json": "bc3489bd8a761ede531fd62c9f0f4874152883e2d7fe04b49194e924399ffe07",
     "scripts/fly-world/build_scene_v3.py": "e7ea67a25764cf0c00b12092c705184be87103c3a7034154a60b93fc2cb837bf",
-    "scripts/fly-world/build_scene_v2.py": "4404dd09da251178335dbf90a5ac302dfaedf3a8b268a4662f64459b0dd30bcd",
+    "scripts/fly-world/build_scene_v2.py": "6039529930972396b19ab4b532de02fc16175ca54f99dd722404f77bcc1d7d95",
     "scripts/fly-world/detail_pass_v3.py": "aa897a9730afa31abec4f5c86c4431bbfb207f551a1388464676353cae68e7fd",
     "scripts/fly-world/micro_detail_pass_v3.py": "0d7da51b945c52ef0ff69e0a5cf2c2df4f4de9b965555a667214925c567d220e",
     "scripts/fly-world/environment_export.py": "facb76ac3499fd31a639604bc902884848603dd6ac28558ce0a4e8bc714cb747",
