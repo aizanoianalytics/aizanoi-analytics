@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-28-deepmind-researcher-quits-over-pace",
+  "title": "Another Google DeepMind researcher resigns, saying the pace of AI change is far too high",
+  "summary": "Robert O'Callahan, a DeepMind technical expert based in New Zealand, says he left Google because he believes AI is advancing too quickly. He worked on chip design tooling that aims to make AI cheaper to run and faster to respond, and wrote that he no longer thinks that goal is good for people. He acknowledged his exit would have limited practical effect, and it adds to a run of safety-motivated departures from frontier labs.",
+  "category": "ai",
+  "priority": 56,
+  "publishedAt": "2026-09-28T05:58:00Z",
+  "updatedAt": "2026-09-28T05:58:00Z",
+  "retrievedAt": "2026-09-28T05:58:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google-deepmind",
+    "ai-safety",
+    "resignation",
+    "frontier-labs"
+  ],
+  "sources": [
+    {
+      "publisher": "The Herald Business (Korea Herald)",
+      "url": "https://biz.heraldcorp.com/article/10885032",
+      "publishedAt": "2026-09-26T23:14:24Z"
+    },
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/another-google-deepmind-researcher-quits-says-building-superintelligent-ai-soon-is-inherently-irresponsible/",
+      "publishedAt": "2026-09-25T17:55:51Z"
+    }
+  ]
+}

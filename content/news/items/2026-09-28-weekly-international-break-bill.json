@@ -1,0 +1,64 @@
+{
+  "id": "2026-09-28-weekly-international-break-bill",
+  "title": "The international break handed clubs the bill before it even finished",
+  "summary": "The September window cost clubs before it closed. Real Madrid confirmed Mbappe has a hyperextension of the posterior capsule in his left knee with no timetable; Hamburg said Gronbaek tore a muscle in his right thigh after coming on against Norway; and Liverpool confirmed Isak returned early from Sweden duty with a minor injury. Off the pitch Parma and Carlos Cuesta parted by mutual agreement, Liverpool named Julian Ward sporting director for a second stint, and Liverpool's women won a WSL Merseyside derby at Anfield for the first time.",
+  "category": "football",
+  "priority": 56,
+  "kind": "weekly",
+  "week": "2026-W40",
+  "publishedAt": "2026-09-28T06:05:00Z",
+  "updatedAt": "2026-09-28T06:05:00Z",
+  "retrievedAt": "2026-09-28T06:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "injuries",
+    "premier-league",
+    "bundesliga",
+    "serie-a",
+    "wsl"
+  ],
+  "sources": [
+    {
+      "publisher": "Real Madrid C.F.",
+      "url": "https://www.realmadrid.com/en-US/news/football/first-team/medical-reports/parte-medico-de-mbappe-26-09-2026",
+      "publishedAt": "2026-09-26T16:35:00Z"
+    },
+    {
+      "publisher": "Bundesliga.com",
+      "url": "https://www.bundesliga.com/en/bundesliga/news/albert-gronbaek-injury-lay-off-muscle-tear-hamburg-denmark-39362",
+      "publishedAt": "2026-09-26T14:06:39Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.co.uk/sport/football/articles/cxyvzryd6ne5o",
+      "publishedAt": "2026-09-27T11:26:42Z"
+    },
+    {
+      "publisher": "Parma Calcio 1913",
+      "url": "https://www.parmacalcio1913.com/en/main-news/nota-del-club-carlos-cuesta/",
+      "publishedAt": "2026-09-27T14:30:17Z"
+    },
+    {
+      "publisher": "Liverpool FC",
+      "url": "https://www.liverpoolfc.com/news/julian-ward-appointed-lfc-sporting-director",
+      "publishedAt": "2026-09-26T07:59:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/articles/c3x2zkvkez48o",
+      "publishedAt": "2026-09-26T09:08:17Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/12040/13591752/wsl-man-utd-earn-first-league-win-of-season-as-liverpool-beat-rivals-everton-while-tottenham-thrash-aston-villa",
+      "publishedAt": "2026-09-27T16:25:00Z"
+    }
+  ]
+}

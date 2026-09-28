@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-28-openai-retires-legacy-completions-models",
+  "title": "OpenAI retires four Completions-era models and points developers at gpt-5.6-terra",
+  "summary": "OpenAI's deprecations page lists 28 September 2026 as the shutdown date for four Completions-era models: gpt-3.5-turbo-instruct, babbage-002, davinci-002 and gpt-3.5-turbo-1106, all with gpt-5.6-terra as the recommended replacement. A larger wave covering gpt-4, gpt-3.5-turbo, gpt-4-turbo, o1 and o3-mini carries a 23 October 2026 date, and GPT-5 and o3 snapshots are set to retire on 11 December 2026.",
+  "category": "ai",
+  "priority": 48,
+  "publishedAt": "2026-09-28T05:58:00Z",
+  "updatedAt": "2026-09-28T05:58:00Z",
+  "retrievedAt": "2026-09-28T05:58:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "api",
+    "deprecation",
+    "developers"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/deprecations",
+      "publishedAt": "2025-09-26T00:00:00Z"
+    }
+  ]
+}

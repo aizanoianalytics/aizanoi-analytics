@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-28-github-copilot-unified-experience-date",
+  "title": "GitHub's unified Copilot experience and Balanced code-review default reach their 28 September date",
+  "summary": "GitHub's Copilot changes arrive on a 28 September date: Copilot Chat on the web and in the mobile app, together with the Copilot cloud agent, are to relaunch as one unified experience, enabled by default and replacing their separate policies. GitHub said chat data kept on github.com then becomes permanent for the life of the account rather than expiring after 28 days, and that the default Copilot code-review effort level moves from Lite to Balanced.",
+  "category": "technology",
+  "priority": 54,
+  "publishedAt": "2026-09-28T05:58:00Z",
+  "updatedAt": "2026-09-28T05:58:00Z",
+  "retrievedAt": "2026-09-28T05:58:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "github",
+    "copilot",
+    "developer-tools",
+    "data-retention"
+  ],
+  "sources": [
+    {
+      "publisher": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-08-28-upcoming-changes-to-github-copilot-policies-and-billing/",
+      "publishedAt": "2026-08-28T11:37:19Z"
+    }
+  ]
+}

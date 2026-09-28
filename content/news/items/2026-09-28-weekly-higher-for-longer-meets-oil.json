@@ -1,0 +1,64 @@
+{
+  "id": "2026-09-28-weekly-higher-for-longer-meets-oil",
+  "title": "Higher-for-longer meets higher oil as a tariff truce buys two more months",
+  "summary": "Bonds stayed under pressure on Monday as Brent rose 2.1 percent to $106.49 a barrel, almost 18 percent higher this month, after Washington rejected Iran's plan to reopen the Strait of Hormuz; constrained refining capacity has pushed diesel to record levels. The Fed raised its target range a quarter point to 3-3/4 to 4 percent on 16 September, Japan's July minutes showed one board member seeking 1.25 percent, and services producer prices rose 3.7 percent. On trade, Washington published reciprocal 30-for-30 lists and China confirmed a truce extension to 10 January.",
+  "category": "economy-markets",
+  "priority": 80,
+  "kind": "weekly",
+  "week": "2026-W40",
+  "publishedAt": "2026-09-28T06:05:00Z",
+  "updatedAt": "2026-09-28T06:05:00Z",
+  "retrievedAt": "2026-09-28T06:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bonds",
+    "oil",
+    "federal-reserve",
+    "bank-of-japan",
+    "trade"
+  ],
+  "sources": [
+    {
+      "publisher": "Channel NewsAsia (Reuters)",
+      "url": "https://www.channelnewsasia.com/business/stocks-slip-in-asia-oil-climbs-bonds-retreat-6414451",
+      "publishedAt": "2026-09-28T00:53:03Z"
+    },
+    {
+      "publisher": "investingLive",
+      "url": "https://investinglive.com/news/investinglive-asia-pacific-market-news-gold-hit-hard-under-4200-again",
+      "publishedAt": "2026-09-28T03:44:22Z"
+    },
+    {
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260916a.htm",
+      "publishedAt": "2026-09-16T18:00:00Z"
+    },
+    {
+      "publisher": "Bank of Japan",
+      "url": "https://www.boj.or.jp/en/mopo/mpmsche_minu/minu_2026/g260731.pdf",
+      "publishedAt": "2026-09-28T00:00:00Z"
+    },
+    {
+      "publisher": "SRN News (Reuters)",
+      "url": "https://srnnews.com/japans-corporate-services-inflation-hits-2-year-high",
+      "publishedAt": "2026-09-27T23:29:15Z"
+    },
+    {
+      "publisher": "The White House",
+      "url": "https://www.whitehouse.gov/releases/2026/09/u-s-china-board-of-trade/",
+      "publishedAt": "2026-09-27T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via Internazionale)",
+      "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/09/28/china-says-us-trade-truce-extension-creates-space-to-advance-talks",
+      "publishedAt": "2026-09-28T00:00:00Z"
+    }
+  ]
+}

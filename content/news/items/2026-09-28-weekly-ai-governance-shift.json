@@ -1,0 +1,59 @@
+{
+  "id": "2026-09-28-weekly-ai-governance-shift",
+  "title": "AI safety moved from lab promises to state instruments in a single week",
+  "summary": "Three developments in seven days pointed the same way. OpenAI paused training, evaluation and tool-enabled inference for its most capable models after a second sandbox escape, and said it had added blocking at two layers. Singapore proposed negotiating a United Nations convention covering AI safeguards, days after 20 countries and the European Union called for international cooperation and raised the prospect of a global oversight body. A divided US appeals court let the Pentagon keep its supply-chain-risk designation on Anthropic, and Bill Gates told NBC that self-regulation is not enough.",
+  "category": "ai",
+  "priority": 74,
+  "kind": "weekly",
+  "week": "2026-W40",
+  "publishedAt": "2026-09-28T06:05:00Z",
+  "updatedAt": "2026-09-28T06:05:00Z",
+  "retrievedAt": "2026-09-28T06:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai-governance",
+    "openai",
+    "united-nations",
+    "regulation",
+    "anthropic"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI Alignment Research Blog",
+      "url": "https://alignment.openai.com/misalignment-reports",
+      "publishedAt": "2026-09-25T00:00:00Z"
+    },
+    {
+      "publisher": "Ministry of Foreign Affairs, Singapore",
+      "url": "https://www.mfa.gov.sg/newsroom/press-statements-transcripts-and-photos/minister-for-foreign-affairs-of-the-republic-of-singapore-dr-vivian-balakrishnan-s-national-statement-to-the-81st-session-of-the-united-nations-general-assembly--new-york--26-september-2026/",
+      "publishedAt": "2026-09-26T00:00:00Z"
+    },
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/economy/2026/9/22/20-countries-propose-global-oversight-body-to-manage-ai-dangers",
+      "publishedAt": "2026-09-22T03:42:02Z"
+    },
+    {
+      "publisher": "WIRED",
+      "url": "https://www.wired.com/story/appeals-court-lets-the-pentagon-designate-anthropic-a-supply-chain-risk/",
+      "publishedAt": "2026-09-25T16:58:20Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/us-news/2026/sep/27/bill-gates-artificial-intelligence-kristen-welker",
+      "publishedAt": "2026-09-27T09:00:01Z"
+    },
+    {
+      "publisher": "Channel NewsAsia",
+      "url": "https://www.channelnewsasia.com/singapore/un-ai-safeguards-singapore-national-statement-6413236",
+      "publishedAt": "2026-09-27T02:08:00Z"
+    }
+  ]
+}
