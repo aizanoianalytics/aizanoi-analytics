@@ -1,0 +1,49 @@
+{
+  "id": "2026-09-28-weekly-security-and-liability-bill",
+  "title": "Zero-days, a verdict and a retention change: the bill arrived on three fronts",
+  "summary": "Citrix patched two NetScaler flaws rated 9.5 under CVSS v4 that had already been exploited against unmitigated deployments, a reminder that edge appliances carry the blast radius of the services behind them. In New Mexico a jury found Facebook liable for deceptive privacy claims, counting more than 43 million violations of state law before a 1 October penalty hearing. GitHub's Copilot consolidation carried a quieter term: chat data on github.com moves from 28-day retention to the life of the account, and opting out costs access to the product.",
+  "category": "technology",
+  "priority": 62,
+  "kind": "weekly",
+  "week": "2026-W40",
+  "publishedAt": "2026-09-28T06:05:00Z",
+  "updatedAt": "2026-09-28T06:05:00Z",
+  "retrievedAt": "2026-09-28T06:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "zero-day",
+    "litigation",
+    "copilot",
+    "data-retention"
+  ],
+  "sources": [
+    {
+      "publisher": "The Hacker News",
+      "url": "https://thehackernews.com/2026/09/warning-two-unpatched-citrix-netscaler.html",
+      "publishedAt": "2026-09-27T00:00:00Z"
+    },
+    {
+      "publisher": "watchTowr",
+      "url": "https://watchtowr.com/intelligence/citrix-netscaler-adc-citrix-netscaler-gateway-remote-code-execution-cve-2026-88771/",
+      "publishedAt": "2026-09-28T00:00:00Z"
+    },
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/09/26/facebook-liable-violations-new-mexico-consumer-protection-lawand-meta-200-billion-penalties/",
+      "publishedAt": "2026-09-26T14:25:57Z"
+    },
+    {
+      "publisher": "GitHub Changelog",
+      "url": "https://github.blog/changelog/2026-08-28-upcoming-changes-to-github-copilot-policies-and-billing/",
+      "publishedAt": "2026-08-28T11:37:19Z"
+    }
+  ]
+}

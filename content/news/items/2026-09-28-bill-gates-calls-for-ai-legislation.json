@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-28-bill-gates-calls-for-ai-legislation",
+  "title": "Bill Gates tells NBC that AI needs law and monitoring, not self-regulation",
+  "summary": "Bill Gates used an interview aired by NBC's Meet the Press on 27 September to call on US legislators and law enforcement to regulate AI development, saying no one thinks self-regulation is enough. He said safeguards and monitoring have to be a required thing, arguing the cost would be a little overhead for the industry rather than a dramatic slowdown, and warned that AI in the wrong hands could be powerful enough to cause a billion deaths.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-09-28T05:58:00Z",
+  "updatedAt": "2026-09-28T05:58:00Z",
+  "retrievedAt": "2026-09-28T05:58:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bill-gates",
+    "ai-regulation",
+    "united-states",
+    "policy"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/us-news/2026/sep/27/bill-gates-artificial-intelligence-kristen-welker",
+      "publishedAt": "2026-09-27T09:00:01Z"
+    },
+    {
+      "publisher": "NBC News (Meet the Press)",
+      "url": "https://www.nbcnews.com/meet-the-press/video/bill-gates-says-it-s-not-enough-to-have-a-kill-switch-for-ai-full-interview-270615621979",
+      "publishedAt": "2026-09-27T00:00:00Z"
+    }
+  ]
+}

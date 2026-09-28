@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-28-singapore-proposes-un-ai-safeguards-convention",
+  "title": "Singapore proposes a United Nations convention covering AI safeguards",
+  "summary": "Singapore used its national statement to the 81st UN General Assembly to propose negotiating a United Nations framework convention covering AI safeguards. Foreign minister Vivian Balakrishnan argued the UN is the only top-level institution with universal membership, and said safeguards must keep pace with capability: rigorous testing and evaluation before deployment, limits on what autonomous systems may do, and ways to step in when they act unexpectedly.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-09-28T05:58:00Z",
+  "updatedAt": "2026-09-28T05:58:00Z",
+  "retrievedAt": "2026-09-28T05:58:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "singapore",
+    "united-nations",
+    "ai-governance",
+    "regulation"
+  ],
+  "sources": [
+    {
+      "publisher": "Ministry of Foreign Affairs, Singapore",
+      "url": "https://www.mfa.gov.sg/newsroom/press-statements-transcripts-and-photos/minister-for-foreign-affairs-of-the-republic-of-singapore-dr-vivian-balakrishnan-s-national-statement-to-the-81st-session-of-the-united-nations-general-assembly--new-york--26-september-2026/",
+      "publishedAt": "2026-09-26T00:00:00Z"
+    },
+    {
+      "publisher": "Channel NewsAsia",
+      "url": "https://www.channelnewsasia.com/singapore/un-ai-safeguards-singapore-national-statement-6413236",
+      "publishedAt": "2026-09-27T02:08:00Z"
+    }
+  ]
+}

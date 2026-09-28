@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-28-lambda-oklahoma-data-centre",
+  "title": "Lambda picks Oklahoma for a data centre it says will pay $500m in tax over a decade",
+  "summary": "AI cloud provider Lambda says it will build a data centre at MidAmerica Industrial Park in Mayes County, Oklahoma, using closed-loop cooling that is designed to preserve and recycle water. The company projects tax payments of about $500 million over ten years, as many as 1,000 construction jobs and roughly 100 permanent roles, and says it will cover all of its energy costs under Oklahoma's ratepayer protection law.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-09-28T05:58:00Z",
+  "updatedAt": "2026-09-28T05:58:00Z",
+  "retrievedAt": "2026-09-28T05:58:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "lambda",
+    "data-centres",
+    "oklahoma",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Lambda",
+      "url": "https://lambda.ai/blog/new-lambda-data-center-in-oklahoma",
+      "publishedAt": "2026-09-27T14:01:36Z"
+    },
+    {
+      "publisher": "OKCFOX (KOKH)",
+      "url": "https://okcfox.com/news/local/ai-cloud-company-plans-data-center-in-mayes-county",
+      "publishedAt": "2026-09-28T00:35:51Z"
+    }
+  ]
+}

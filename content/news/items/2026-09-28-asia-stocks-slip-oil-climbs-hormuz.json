@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-28-asia-stocks-slip-oil-climbs-hormuz",
+  "title": "Asian shares slip and Brent tops $106 as doubts grow over a US-Iran truce",
+  "summary": "Asia-Pacific equities were mostly lower on Monday and bonds stayed under pressure after Washington rejected an Iranian plan to reopen the Strait of Hormuz. Brent crude rose 2.1 percent to $106.49 a barrel, taking this month's gain to almost 18 percent, while US crude added 1.5 percent to $93.84. Japan's Nikkei was flat, South Korea's market slid 2.4 percent, Chinese blue chips fell 1.4 percent and S&P 500 futures were down 0.3 percent.",
+  "category": "economy-markets",
+  "priority": 88,
+  "publishedAt": "2026-09-28T05:58:00Z",
+  "updatedAt": "2026-09-28T05:58:00Z",
+  "retrievedAt": "2026-09-28T05:58:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "oil",
+    "brent",
+    "strait-of-hormuz",
+    "asia"
+  ],
+  "sources": [
+    {
+      "publisher": "Channel NewsAsia (Reuters)",
+      "url": "https://www.channelnewsasia.com/business/stocks-slip-in-asia-oil-climbs-bonds-retreat-6414451",
+      "publishedAt": "2026-09-28T00:53:03Z"
+    },
+    {
+      "publisher": "investingLive",
+      "url": "https://investinglive.com/news/investinglive-asia-pacific-market-news-gold-hit-hard-under-4200-again",
+      "publishedAt": "2026-09-28T03:44:22Z"
+    },
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/9/26/trump-rejects-irans-seven-day-roadmap-to-reopen-strait-of-hormuz",
+      "publishedAt": "2026-09-26T14:46:53Z"
+    }
+  ]
+}

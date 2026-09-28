@@ -1,0 +1,39 @@
+{
+  "id": "2026-09-28-weekly-ai-capacity-geography",
+  "title": "AI capacity follows the incentives, and Europe is missing from the order book",
+  "summary": "ASML sold nothing in Europe this year: the region's share of revenue at Europe's largest listed company fell to zero percent, from one percent in FY2025 and five percent in 2024, and its public affairs chief called the situation genuinely worrying while urging the EU to help create demand. The counterweight is American. Lambda chose MidAmerica Industrial Park in Oklahoma for a data centre it says will pay about $500 million in taxes over ten years and cover 100 percent of its energy costs under the state's ratepayer protection law. Tax terms, power terms and demand are picking the sites.",
+  "category": "technology",
+  "priority": 68,
+  "kind": "weekly",
+  "week": "2026-W40",
+  "publishedAt": "2026-09-28T06:05:00Z",
+  "updatedAt": "2026-09-28T06:05:00Z",
+  "retrievedAt": "2026-09-28T06:05:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "asml",
+    "lambda",
+    "data-centres",
+    "semiconductors",
+    "europe"
+  ],
+  "sources": [
+    {
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/semiconductors/asml-says-its-sells-absolutely-nothing-in-europe-calls-on-eu-to-help-create-demand",
+      "publishedAt": "2026-09-24T12:10:00Z"
+    },
+    {
+      "publisher": "Lambda",
+      "url": "https://lambda.ai/blog/new-lambda-data-center-in-oklahoma",
+      "publishedAt": "2026-09-27T14:01:36Z"
+    }
+  ]
+}
