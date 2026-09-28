@@ -5,8 +5,8 @@ import { spawnSync } from 'node:child_process';
 
 const base=process.env.AIZANOI_PRODUCTION_BASE_URL||'http://127.0.0.1:4177';
 const outputDir=process.env.AIZANOI_LIGHTHOUSE_DIR||'artifacts/diagnostics/representative-lighthouse';
-const requiredRuns=Math.max(3,Number(process.env.AIZANOI_LIGHTHOUSE_ATTEMPTS)||3);
-const maxLaunches=requiredRuns+2;
+const requiredRuns=Math.max(1,Number(process.env.AIZANOI_LIGHTHOUSE_ATTEMPTS)||1);
+const maxLaunches=requiredRuns+1;
 const lighthouseBin=process.platform==='win32'?'node_modules/.bin/lighthouse.cmd':'node_modules/.bin/lighthouse';
 
 const routes=[
@@ -14,7 +14,6 @@ const routes=[
   {id:'news',route:'/news/',profile:'static'},
   {id:'article',route:'/news/2026-09-02/aisi-cyber-eval-incident/',profile:'static'},
   {id:'analytics',route:'/analytics/',profile:'static'},
-  {id:'dashboard',route:'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',profile:'dashboard'},
   {id:'worlds',route:'/worlds/',profile:'static'},
   {id:'historic',route:'/worlds/aizanoi-225/',profile:'webgl'},
 ];

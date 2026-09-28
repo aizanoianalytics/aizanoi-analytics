@@ -13,17 +13,7 @@ const itemDate = (item) => item.publishedAt.slice(0, 10);
 const storySlug = (item) => item.id.startsWith(`${itemDate(item)}-`) ? item.id.slice(11) : item.id;
 const storyPath = (item) => `/news/${item.kind === 'weekly' ? 'weekly/' : ''}${itemDate(item)}/${storySlug(item)}/`;
 const canonicalBase = [
-  '/', '/news/', '/news/about/', '/privacy/', '/tv/', '/analytics/', '/analytics/markets/', '/analytics/dashboards/hr-analytics-full-set/',
-  '/analytics/dashboards/hr-analytics-full-set/hr-executive-board-full-history/',
-  '/analytics/dashboards/hr-analytics-full-set/hr-executive-board-current/',
-  '/analytics/dashboards/hr-analytics-full-set/hr-administration-deep-dive/',
-  '/analytics/dashboards/hr-analytics-full-set/store-operations-tracking/',
-  '/analytics/dashboards/hr-analytics-full-set/store-learning-compliance/',
-  '/analytics/dashboards/hr-analytics-full-set/learning-academy-analytics/',
-  '/analytics/dashboards/hr-analytics-full-set/performance-hiring-turnover/',
-  '/analytics/dashboards/hr-analytics-full-set/corporate-goals/',
-  '/analytics/dashboards/hr-analytics-full-set/workforce-time-attendance/',
-  '/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',
+  '/', '/news/', '/news/about/', '/privacy/', '/tv/', '/analytics/', '/analytics/markets/',
   '/analytics/dashboards/new-hr-collection/',
   '/analytics/dashboards/new-hr-collection/pacs/',
   '/analytics/dashboards/new-hr-collection/recruitment-analytics/',

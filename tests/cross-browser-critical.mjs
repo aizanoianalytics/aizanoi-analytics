@@ -39,7 +39,7 @@ try{
   await assertRoute(context,'/news/',{selector:'main',label:'News'});
   await assertRoute(context,'/news/2026-09-02/aisi-cyber-eval-incident/',{selector:'main.article-page',label:'permanent News article'});
   await assertRoute(context,'/analytics/',{selector:'main',label:'Analytics catalog'});
-  await assertRoute(context,'/analytics/dashboards/hr-analytics-full-set/workforce-turnover/',{selector:'body',label:'HR Turnover dashboard'});
+  await assertRoute(context,'/analytics/dashboards/new-hr-collection/pacs/',{selector:'body',label:'PACS dashboard'});
   // Markets data is published by the provider pipeline, not committed to the
   // source tree. Verify the static shell/status surface without turning a
   // missing build artifact into a false functional pass.

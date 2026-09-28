@@ -34,7 +34,8 @@ test('AizanoiOS keeps the stable analytics id while presenting a scalable Analyt
   assert.match(registry, /id:'analytics', label:'Analytics', short:'Analytics'/);
   assert.match(registry, /keywords:\['analytics','dashboard','dashboards'/);
   assert.match(analyticsCatalog, /export const ANALYTICS_SETS/);
-  assert.match(analyticsCatalog, /id:'hr-analytics-full-set'/);
+  assert.match(analyticsCatalog, /id:'aizanoi-markets'/);
+  assert.match(analyticsCatalog, /id:'new-hr-collection'/);
   assert.match(analyticsApp, /data-analytics-set=/);
   assert.match(platform, /data-context-action="analytics">Analytics</);
   assert.doesNotMatch(registry, /id:'analytics', label:'Aizanoi Analytics'/);
@@ -46,7 +47,7 @@ test('Analytics Sets launches HR today and remains ready for future collections'
   assert.match(analyticsCatalog, /27[\s\S]*synthetic source workbooks/);
   assert.match(analyticsApp, /More sets can land here/);
   assert.match(analyticsApp, /data-analytics-dashboard-inventory/);
-  assert.match(analyticsCatalog, /Workforce Turnover Analytics/);
+  assert.match(analyticsCatalog, /Personnel Attendance Control System/);
   assert.doesNotMatch(`${analyticsApp}\n${analyticsCatalog}`, /PRODUCT STANDARD|DATA SAFETY/);
 });
 

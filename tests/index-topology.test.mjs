@@ -38,7 +38,7 @@ test('apps index stays synchronized with manifest discovery',async()=>{
 test('major routers expose current independently maintained subsystems',()=>{
   assert.ok(read('frontend/index.md').includes('web-editor-preview/'));
   assert.ok(read('frontend/index.md').includes('Historical Worlds naming map'));
-  assert.ok(read('analytics/index.md').includes('dashboards/hr-analytics-full-set/index.md'));
+  assert.ok(read('analytics/index.md').includes('dashboards/new-hr-collection/'));
   assert.ok(read('infra/index.md').includes('nginx/'));
   const docs=read('docs/index.md');
   for(const doc of ['README.md','HERMES_OPERATIONS.md','OPERATIONS.md','ACCESSIBILITY.md','FIELD_SYSTEM.md']){
@@ -54,7 +54,7 @@ test('canonical navigation indexes contain no broken relative Markdown links',as
     'frontend/js/v3/index.md',
     'frontend/js/v3/apps/index.md',
     'analytics/index.md',
-    'analytics/dashboards/hr-analytics-full-set/index.md',
+    'analytics/dashboards/new-hr-collection/index.md',
     'content/index.md',
     'scripts/index.md',
     'scripts/modules/index.md',

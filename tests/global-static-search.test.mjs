@@ -18,7 +18,7 @@ test('static search index is deterministic and covers News plus Analytics conten
   execFileSync(process.execPath,['scripts/search/build-search-index.mjs','--check'],{stdio:'pipe'});
   assert.ok(STATIC_SEARCH_ENTRIES.length>100,'generated index should include the current News archive and Analytics catalog');
   assert.ok(STATIC_SEARCH_ENTRIES.some((entry)=>entry.kind==='News'&&entry.href==='/news/2026-09-02/aisi-cyber-eval-incident/'),'known permanent News article must be searchable');
-  assert.ok(STATIC_SEARCH_ENTRIES.some((entry)=>entry.kind==='Analytics'&&entry.href==='/analytics/dashboards/hr-analytics-full-set/workforce-turnover/'),'HR Turnover dashboard must be searchable');
+  assert.ok(STATIC_SEARCH_ENTRIES.some((entry)=>entry.kind==='Analytics'&&entry.href==='/analytics/dashboards/new-hr-collection/pacs/'),'PACS dashboard must be searchable');
   assert.ok(STATIC_SEARCH_ENTRIES.every((entry)=>entry.type==='content'&&entry.id&&entry.label&&entry.description&&entry.href),'generated entries must expose the runtime search contract');
 });
 
