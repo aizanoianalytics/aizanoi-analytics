@@ -125,7 +125,14 @@ try {
   await page.goto(`${base}/journal/`, { waitUntil: 'networkidle' });
   await context.setOffline(true);
   await page.reload({ waitUntil: 'domcontentloaded' });
-  assert.equal((await page.locator('h1').textContent())?.trim(), 'Aizanoi Journal', 'Journal must still work offline');
+  // Scope to the Journal surface. An unscoped locator('h1') is ambiguous as soon
+  // as the shell's mobile/tablet home headings are also present -- offline the
+  // reload can render the shell before the article, which made this assert fail
+  // with a strict-mode violation on 2 elements instead of reporting the real
+  // problem (the Journal heading was absent).
+  const journalHeading = page.getByRole('heading', { level: 1, name: 'Aizanoi Journal' });
+  await journalHeading.first().waitFor({ state: 'visible', timeout: 15000 });
+  assert.equal((await journalHeading.first().textContent())?.trim(), 'Aizanoi Journal', 'Journal must still work offline');
   await context.setOffline(false);
 
   // ---------------------------------------------------------------------------
