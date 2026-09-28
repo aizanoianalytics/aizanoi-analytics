@@ -2,7 +2,7 @@
 
 This is build-time automation for the Fly World environment, not a visitor-facing backend.
 
-The current production path is **v0.3 reference detail**. `build_scene_v3.py` reuses the enlarged v0.2 architectural/hero-asset base and applies `detail_pass_v3.py`, which adds the smaller reference-specific household dressing and worn surface treatment documented in `gelistirmeler/2026-09-16-fly-world-prototype/REFERENCE_BREAKDOWN_V3.md`.
+The current production path is **v0.3 reference detail**. `build_scene_v3.py` reuses the enlarged v0.2 architectural/hero-asset base and applies `detail_pass_v3.py`, which adds the smaller reference-specific household dressing and worn surface treatment documented in `scripts/fly-world/source/REFERENCE_BREAKDOWN_V3.md`.
 
 ## Operator command
 
@@ -20,17 +20,21 @@ To regenerate the GLB without the five review renders:
 python scripts/fly-world/run_pipeline.py --strict-assets --no-render
 ```
 
+## Canonical inputs
+
+The repository-owned Fly House source package lives under `scripts/fly-world/source/`: scene specification, asset manifest, reference notes and the small authored hero-asset set. Local experiment/review workspaces such as `gelistirmeler/` are intentionally ignored and are not part of the product source of truth.
+
 ## Outputs
 
-The v0.3 pipeline writes:
+Generated Blender and review artifacts stay under ignored `artifacts/fly-world/`. The v0.3 pipeline writes:
 
-- `gelistirmeler/2026-09-16-fly-world-prototype/build/fly-house-v3.blend`
-- `gelistirmeler/2026-09-16-fly-world-prototype/build/fly-house-v3.glb`
-- `gelistirmeler/2026-09-16-fly-world-prototype/review/01-reference-wide.png`
-- `gelistirmeler/2026-09-16-fly-world-prototype/review/02-room-eye-level.png`
-- `gelistirmeler/2026-09-16-fly-world-prototype/review/03-window-to-stove.png`
-- `gelistirmeler/2026-09-16-fly-world-prototype/review/04-doorway-bedroom.png`
-- `gelistirmeler/2026-09-16-fly-world-prototype/review/05-fly-scale.png`
+- `artifacts/fly-world/build/fly-house-v3.blend`
+- `artifacts/fly-world/build/fly-house-v3.glb`
+- `artifacts/fly-world/review/01-reference-wide.png`
+- `artifacts/fly-world/review/02-room-eye-level.png`
+- `artifacts/fly-world/review/03-window-to-stove.png`
+- `artifacts/fly-world/review/04-doorway-bedroom.png`
+- `artifacts/fly-world/review/05-fly-scale.png`
 - `frontend/labs/fly-world/assets/fly-house.glb` — browser-ready production scene
 
 Fly World uses a **Z-up** runtime. v0.3 exports with `export_yup=false`; do not change this casually because camera and collision coordinates depend on the same axis convention.

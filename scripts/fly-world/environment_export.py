@@ -6,7 +6,7 @@ from pathlib import Path
 import bpy
 from mathutils import Vector
 
-WORKSPACE = Path('gelistirmeler/2026-09-16-fly-world-prototype')
+WORKSPACE = Path('scripts/fly-world/source')
 ASSETS = Path('frontend/labs/fly-world/assets')
 
 
@@ -56,6 +56,6 @@ def prepare(root, manifest):
 
 def finish(root, report):
     report['glbSha256'] = sha256(root / ASSETS / 'fly-house.glb')
-    dest = root / WORKSPACE / 'build' / 'build-provenance.json'
+    dest = root / 'artifacts/fly-world/build/build-provenance.json'
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(report, indent=2) + '\n')

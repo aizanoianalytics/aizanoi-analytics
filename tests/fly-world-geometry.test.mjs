@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 
-const spec = JSON.parse(readFileSync('gelistirmeler/2026-09-16-fly-world-prototype/scene_spec.json', 'utf8'));
+const spec = JSON.parse(readFileSync('scripts/fly-world/source/scene_spec.json', 'utf8'));
 const builder = readFileSync('scripts/fly-world/build_scene_v2.py', 'utf8');
 const fallback = readFileSync('frontend/labs/fly-world/main-v3.js', 'utf8');
 const envJson = JSON.parse(readFileSync('frontend/labs/fly-world/assets/environment.json', 'utf8'));

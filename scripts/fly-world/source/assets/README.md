@@ -4,10 +4,10 @@ This directory is the intake area for third-party or authored source assets used
 
 ## Directory convention
 
-Use one directory per `asset_manifest.json` slot:
+Use one directory per `scripts/fly-world/source/asset_manifest.json` slot:
 
 ```text
-assets/source/
+scripts/fly-world/source/assets/
   wood-stove/
     wood-stove.glb
   old-tv/
@@ -15,7 +15,7 @@ assets/source/
   ...
 ```
 
-Then point that manifest slot's `localPath` at the actual file.
+Then point that manifest slot's `localPath` at the actual repository-relative file.
 
 ## Required provenance
 
