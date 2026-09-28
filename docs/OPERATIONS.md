@@ -8,13 +8,15 @@ Recommended `main` policy:
 
 - require pull requests before merge;
 - block force-push and branch deletion;
-- require the Aizanoi CI `validate`, `browser-smoke`, `lighthouse` and `hr-pipeline-rebuild` jobs;
+- require the Aizanoi CI `validate`, `browser-smoke` and `lighthouse` jobs;
 - enable Dependabot alerts and security updates;
 - enable private vulnerability reporting;
 - keep secret scanning/push protection enabled;
 - use `.github/CODEOWNERS` for workflow, service-worker and security-sensitive source.
 
 These settings live in GitHub repository administration, not in the static web runtime. Verify them in GitHub after configuration rather than inferring them from this file.
+
+The expensive real-browser, per-product interaction and visual capture suites are **not** required checks. They are owned by the scheduled/manual `Aizanoi Full QA` workflow, and the Firefox/WebKit critical smoke by the weekly `Cross-browser critical smoke` workflow. See [CONTRIBUTING.md](../CONTRIBUTING.md) for the full test-ownership map.
 
 ## Production deployment
 
@@ -26,7 +28,8 @@ Before every production frontend rollout:
 4. deploy only the intended static runtime files;
 5. verify source ↔ production checksums for changed files;
 6. run `nginx -t` before reloading any production Nginx configuration;
-7. test `/`, core AizanoiOS apps and all three Historical Worlds;
+7. test `/`, core AizanoiOS apps, every public world (Aizanoi, Rome, Athens and the present-day
+   İGA companion) and the analytics products that are still published;
 8. verify historical API fail-closed behavior;
 9. verify security headers on both HTML and static-asset responses;
 10. verify mutable HTML/JS/CSS revalidate rather than remaining fresh under an old release;

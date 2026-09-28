@@ -21,7 +21,7 @@ The canonical AizanoiOS application registry also contains browser-local workspa
 
 `Analytics` is the visible analytical product; `/analytics/` and the internal app id `analytics` are stable contracts, and dashboards are a format within the product.
 
-Three Historical Worlds—Aizanoi, Rome and Athens—remain direct standalone experiences as well as catalog entries.
+Four public worlds remain direct standalone experiences as well as catalog entries: Aizanoi (Roman Phrygia, AD 225), Rome (Late Antiquity, AD 410–476), Athens (Classical period, c. 432–430 BCE) and İGA · Istanbul Airport. The first three are historical reconstructions; İGA is a present-day companion world and follows the same source/transparency discipline without claiming historical evidence.
 
 ## Canonical owners
 
@@ -61,14 +61,14 @@ The manifest and service worker improve installability and resilient static deli
 
 - never intercepts `/api/*`;
 - precaches the minimum adaptive shell as a complete-or-fail install;
-- removes superseded Aizanoi shell caches on activation;
-- caches successful same-origin navigations for offline revisit;
+- removes superseded Aizanoi shell caches on activation and purges any cached entry belonging to a retired product route;
+- caches successful same-origin navigations for offline revisit, but never caches or serves a retired product route;
 - bounds runtime cache growth;
 - does not synchronize user data.
 
 ## Quality contract
 
-A shell change should preserve the eight public product families plus the workspace utilities represented by the canonical app registry, three worlds, lazy app code/styles, canonical `--az-*` tokens, dialog focus/inert/restore behavior, mobile target/overflow checks, Historical World traversal regressions, real-browser service-worker coverage and rendered review.
+A shell change should preserve the eight public product families plus the workspace utilities represented by the canonical app registry, all four worlds, lazy app code/styles, canonical `--az-*` tokens, dialog focus/inert/restore behavior, mobile target/overflow checks, the desktop/tablet/mobile critical smoke in routine CI, the world-traversal and rendered-review suites in Full QA, and real-browser service-worker coverage.
 
 Aizanoi Analytics remains the company/umbrella brand unless the owner explicitly changes `PRODUCT.md`; agents must not restore the old hierarchy in which Aizanoi Analytics is presented as a subordinate app or product family.
 

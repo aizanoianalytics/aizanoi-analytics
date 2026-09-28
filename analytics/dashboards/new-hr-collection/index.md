@@ -13,16 +13,19 @@ Data boundary
 - Both dashboards embed only synthetic/fictional sample data generated for QA.
 - No real employer, employee or applicant records are published.
 - The workbook sources under `sources/` are versioned for provenance but are
-  scrubbed from the public release by `scripts/deploy-public.sh` (denylisted
-  `*.xlsx` except the declared HR Full Set synthetic output).
+  scrubbed from the public release by `scripts/deploy-public.sh`. Production
+  rejects **every** `.xlsx`; no public spreadsheet is published, so a
+  deliberate allow-list entry would have to be re-added rather than assumed.
 - The in-dashboard Excel loader parses visitor-provided files locally in the
   browser; nothing is uploaded to the server.
 
 Delivery contract
 
 - Public copies live under `frontend/analytics/dashboards/new-hr-collection/`.
-- Route-scoped security headers reuse the narrow HR Analytics snippet
-  (`infra/nginx/snippets/aizanoi-self-contained-dashboard-security-headers.conf.example`);
+- Route-scoped security headers use the narrow self-contained-dashboard
+  snippet
+  (`infra/nginx/snippets/aizanoi-self-contained-dashboard-security-headers.conf.example`),
+  which permits the embedded inline CSS/JS these self-contained exports need;
   the rest of the site keeps the strict default CSP.
 - Registration points: `frontend/analytics/catalog.js` (`new-hr-collection`
   set), `frontend/sitemap.xml`, and `infra/nginx/aizanoianalytics.com.conf.example`.
