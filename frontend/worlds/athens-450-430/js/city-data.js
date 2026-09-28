@@ -249,7 +249,18 @@ export const WATERS = [
 
 /* ── Spawn & Bounds ───────────────────────────────────────── */
 
-export const SPAWN = { x: 340, z: 280, angle: 0 }; // Angle is derived after anisotropic compaction.
+// 2026-09-28 arrival rework. The old 340/280 spawn sat ~487 units from the
+// Parthenon, so the first frame was an empty slope with the temple reduced to a
+// thin strip. Two further defects came out of real captures: a southern spawn
+// put the Old Temple of Athena Polia and the Hekatompedon footprint squarely on
+// the sight line, and a head-on arrival at the short end presented only the
+// 11.7 m flank — a featureless tan wall with no colonnade at all. The 2026-09-16
+// anisotropic compaction (xFactor 0.38 / zFactor 0.76) is what makes the short
+// end so dominant, so the arrival stands off along x to take in the full 52.8 m
+// colonnaded side, which fills ~96% of the frame width at 55 units, with the
+// Propylaea and Erechtheion reading in depth beyond it. Authored in
+// pre-compaction coordinates; compaction scales it like everything else.
+export const SPAWN = { x: -74 / 0.38, z: -251 / 0.76, angle: 0 }; // Angle is derived after anisotropic compaction.
 
 export const BOUNDS = { minX: -450, maxX: 1100, minZ: -450, maxZ: 700 };
 
@@ -272,8 +283,14 @@ for (const street of STREETS) street.points.forEach(([x, z], index) => {
 });
 for (const building of BUILDINGS) {
   compactPoint(building);
-  // x-boyutu yarıya: w x-boyutudur, d/h aynı kalır.
-  if (typeof building.w === 'number') building.w *= 0.5;
+  // Footprints must scale by the same factor as their own axis, or the plan
+  // shears and the monuments change shape. The old code halved w a second time
+  // on top of the 0.38 x-compaction and left d untouched, so the Parthenon's
+  // source-accurate 69.5 x 30.9 m plan arrived on screen as 69.5 x 11.7 m — a
+  // wall-like sliver that read as a greybox from every approach. Scale each
+  // footprint axis by its own factor; heights keep their real-world value.
+  if (typeof building.w === 'number') building.w *= COMPACTION.xFactor;
+  if (typeof building.d === 'number') building.d *= COMPACTION.zFactor;
 }
 // Water coordinates remain source-anchored: ambience and river evidence use
 // established landmarks, while streets, districts and monuments are compacted.
