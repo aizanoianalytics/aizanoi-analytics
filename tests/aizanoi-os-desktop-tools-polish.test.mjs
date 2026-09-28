@@ -15,7 +15,13 @@ const serviceWorker = read('frontend/service-worker.js');
 
 test('adaptive home exposes curated apps without Historical Worlds return/continue cards', () => {
   for (const id of ['browser','notepad','calculator','camera','winamp','games','recycle-bin']) {
-    assert.match(brand, new RegExp(`['"]${id}['"]`), `${id} should be represented in the desktop shortcut contract`);
+    // Substring check, not a dynamically built pattern. Interpolating an
+    // identifier into a RegExp needs per-character escaping, which is the
+    // incomplete-escaping shape CodeQL flags (js/incomplete-sanitization).
+    assert.ok(
+      brand.includes(`'${id}'`) || brand.includes(`"${id}"`),
+      `${id} should be represented in the desktop shortcut contract`,
+    );
   }
   assert.doesNotMatch(brand, /sessionCard|getFieldSession|CONTINUE EXPLORING|data-home-action="continue-world"|az-device-session|az-session-widget|desktopWidget/);
   assert.match(brand, /\/styles\/shell\.css/);
