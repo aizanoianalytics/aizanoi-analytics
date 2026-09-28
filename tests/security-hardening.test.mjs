@@ -22,7 +22,7 @@ const nginxProxyTargets=[...nginx.matchAll(/proxy_pass\s+([^;]+);/g)].map((match
 const staticHeaders=read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const webEditorPreviewHeaders=read('infra/nginx/snippets/aizanoi-web-editor-preview-headers.conf.example');
 const historicalHeaders=read('infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example');
-const hrAnalyticsHeaders=read('infra/nginx/snippets/aizanoi-hr-analytics-security-headers.conf.example');
+const hrAnalyticsHeaders=read('infra/nginx/snippets/aizanoi-self-contained-dashboard-security-headers.conf.example');
 
 const retired=/Aizanoi AI|HR AI|\/hr-analytics\/|api\.groq\.com|generativelanguage\.googleapis\.com/i;
 const retiredToolFiles=[
@@ -80,8 +80,8 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
   assert.doesNotMatch(historicalHeaders,/style-src[^;]*'unsafe-inline'/,'Historical Worlds CSP must not permit unsafe-inline styles');
   assert.match(historicalHeaders,/script-src 'self';/,'Historical Worlds CSP uses the strict script-src policy');
   assert.match(historicalHeaders,/style-src 'self';/,'Historical Worlds CSP uses the strict style-src policy');
-  assert.match(nginx,/location \^~ \/analytics\/dashboards\/hr-analytics-full-set\/[\s\S]*include snippets\/aizanoi-hr-analytics-security-headers\.conf;/);
-  assert.match(hrAnalyticsHeaders,/script-src 'self' 'unsafe-inline';/,'Original self-contained HR exports retain their route-scoped inline policy');
+  assert.match(nginx,/location \^~ \/analytics\/dashboards\/new-hr-collection\/[\s\S]*include snippets\/aizanoi-self-contained-dashboard-security-headers\.conf;/);
+  assert.match(hrAnalyticsHeaders,/script-src 'self' 'unsafe-inline';/,'Self-contained New HR exports retain their route-scoped inline policy');
   assert.match(hrAnalyticsHeaders,/style-src 'self' 'unsafe-inline';/);
 });
 
