@@ -28,7 +28,9 @@ function walk(dir, out = []) {
 const worldSources = [
   ...walk(join(ROOT, 'frontend/worlds/aizanoi-225/js')),
   ...walk(join(ROOT, 'frontend/js/v3/apps/aizanoi')),
-  ...walk(join(ROOT, 'frontend/dungeon/js'))
+  // The Dungeon is reached through its canonical module from both execution
+  // modes; frontend/dungeon/ is only the route's HTML.
+  ...walk(join(ROOT, 'frontend/js/v3/apps/dungeon/js'))
 ].filter((f) => ['.js', '.mjs'].includes(extname(f))
   // Vendored libraries are not ours to judge.
   && !f.includes(`${ROOT}frontend/worlds/shared/vendor`)

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-const { CombatSystem } = await import('../frontend/dungeon/js/systems/CombatSystem.js');
+const { CombatSystem } = await import('../frontend/js/v3/apps/dungeon/js/systems/CombatSystem.js');
 
 function attackerWith(weapon, stats) {
   const heals = [];

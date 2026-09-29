@@ -6,12 +6,12 @@ const {
   createRunState,
   pickBlessings,
   selectBlessing,
-} = await import('../frontend/dungeon/js/data/blessings.js');
+} = await import('../frontend/js/v3/apps/dungeon/js/data/blessings.js');
 const {
   ELITE_AFFIXES,
   applyEliteAffix,
   chooseEliteAffix,
-} = await import('../frontend/dungeon/js/data/elite-affixes.js');
+} = await import('../frontend/js/v3/apps/dungeon/js/data/elite-affixes.js');
 
 test('blessing offers contain three deterministic unique choices', () => {
   const picks = pickBlessings(3, () => 0);

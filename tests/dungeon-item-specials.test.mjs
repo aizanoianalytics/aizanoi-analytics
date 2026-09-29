@@ -39,8 +39,8 @@ function mockInventory(equipped = {}) {
   };
 }
 
-const { Aizo } = await import('../frontend/dungeon/js/entities/Aizo.js');
-const { GameScene } = await import('../frontend/dungeon/js/scenes/GameScene.js');
+const { Aizo } = await import('../frontend/js/v3/apps/dungeon/js/entities/Aizo.js');
+const { GameScene } = await import('../frontend/js/v3/apps/dungeon/js/scenes/GameScene.js');
 
 function makePlayer(equipped) {
   const p = new Aizo(mockScene(), 100, 100, mockInventory(equipped), { unlockedSkills: new Set() });
@@ -137,7 +137,7 @@ test('non-staff weapons deal no splash', () => {
   assert.equal(e2.dmg.length, 0);
 });
 
-const { Enemy } = await import('../frontend/dungeon/js/entities/Enemy.js');
+const { Enemy } = await import('../frontend/js/v3/apps/dungeon/js/entities/Enemy.js');
 
 function makeEnemy(typeConfig, x = 10) {
   const scene = mockScene();

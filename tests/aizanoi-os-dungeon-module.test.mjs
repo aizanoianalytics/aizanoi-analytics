@@ -176,40 +176,45 @@ test('save migration: v1 moves to v2 lossless with unknown skills filtered and s
   }
 });
 
-test('standalone /dungeon/ is a thin facade over the canonical source', async () => {
+test('standalone /dungeon/ carries no duplicated or proxied implementation', async () => {
   const { execFileSync } = await import('node:child_process');
-  const { readFileSync } = await import('node:fs');
-  const allowedOnlyStandalone = new Set(['Only in frontend/dungeon: index.html']);
-  let diffOut = '';
-  try {
-    diffOut = execFileSync('diff', ['-rq', 'frontend/dungeon', 'frontend/js/v3/apps/dungeon'], { encoding: 'utf8' });
-  } catch (err) {
-    diffOut = err.stdout || '';
-  }
-  const diffLines = diffOut.trim().split('\n').filter(Boolean);
-  const unexpected = diffLines.filter(line => !allowedOnlyStandalone.has(line) && !line.startsWith('Files ') && !line.startsWith('Only in '));
-  assert.deepEqual(unexpected, [], `unexpected standalone tree differences: ${unexpected.join(' | ')}`);
-
+  const { join } = await import('node:path');
   const repoRoot = execFileSync('git', ['rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim();
-  const runInRepo = (cmd, args) => execFileSync(cmd, args, { cwd: repoRoot, encoding: 'utf8' });
-  const canonical = new Set(runInRepo('find', ['frontend/js/v3/apps/dungeon/js', '-type', 'f', '-name', '*.js']).trim().split('\n').filter(Boolean));
-  const standalone = runInRepo('find', ['frontend/dungeon/js', '-type', 'f', '-name', '*.js']).trim().split('\n').filter(Boolean);
-  assert.ok(standalone.length > 0, 'standalone dungeon should still expose its js tree');
-  for (const path of standalone) {
-    const source = readFileSync(path, 'utf8');
-    assert.match(source, /Facade:/, `${path} must be a facade, not duplicated code`);
-    const exportStar = source.match(/export \* from ['"]([^'"]+)['"]/);
-    assert.ok(exportStar, `${path} must re-export from the canonical source`);
-    const dir = path.replace(/\/[^/]+$/, '');
-    const cursor = dir.split('/');
-    for (const part of exportStar[1].split('/')) {
-      if (part === '..') cursor.pop();
-      else if (part !== '.' && part !== '') cursor.push(part);
+  const run = (cmd, args) => execFileSync(cmd, args, { cwd: repoRoot, encoding: 'utf8' });
+
+  // The standalone route is one HTML and nothing else. The 33 four-line
+  // re-export proxies that used to live here existed only so tests could import
+  // through a second path; they provided no isolation and are gone.
+  const standaloneFiles = run('find', ['frontend/dungeon', '-type', 'f']).trim().split('\n').filter(Boolean);
+  assert.deepEqual(standaloneFiles, ['frontend/dungeon/index.html'],
+    `the standalone route must be exactly one HTML, found: ${standaloneFiles.join(', ')}`);
+
+  // The HTML must load the canonical bootstrap, not a local shim.
+  const html = run('cat', ['frontend/dungeon/index.html']);
+  const moduleSrc = html.match(/<script type="module" src="([^"]+)"/)?.[1];
+  assert.equal(moduleSrc, '../js/v3/apps/dungeon/js/standalone.js',
+    'the standalone route must load the canonical bootstrap directly');
+
+  // And nothing anywhere in the tree may re-export the canonical module under a
+  // second path, which is what the proxies did. Read the files in-process: one
+  // `cat` per file over the whole frontend tree overflows the spawn buffer.
+  const { readdirSync, readFileSync, statSync } = await import('node:fs');
+  const proxies = [];
+  const scan = (dir) => {
+    for (const entry of readdirSync(join(repoRoot, dir))) {
+      const rel = `${dir}/${entry}`;
+      if (statSync(join(repoRoot, rel)).isDirectory()) { scan(rel); continue; }
+      if (!rel.endsWith('.js')) continue;
+      if (/export \* from ['"][^'"]*apps\/dungeon\//.test(readFileSync(join(repoRoot, rel), 'utf8'))) {
+        proxies.push(rel);
+      }
     }
-    const resolvedRel = cursor.join('/');
-    assert.ok(canonical.has(resolvedRel), `${path} facade must point at canonical file ${resolvedRel}`);
-  }
+  };
+  scan('frontend');
+  assert.deepEqual(proxies, [],
+    `these files proxy the canonical Dungeon module and must be deleted: ${proxies.join(', ')}`);
 });
+
 
 test('Dungeon teardown clears the QA globals so reopens see a fresh Phaser instance', () => {
   // The QA globals AIZANOI_DUNGEON_GAME and __AIZANOI_DUNGEON_SCENE exist
