@@ -16,6 +16,17 @@ await page.locator('#btn-enter').click();
 await page.waitForFunction(() => window.__WORLD_DEBUG__?.ready === true, { timeout: 60000 });
 console.log('runtime ready');
 
+// Measure the same state the routine gate measures: after the intro lands and
+// the player has control. Sampling mid-cinematic measures the camera in flight,
+// which is a different question than "does the world draw".
+await page.keyboard.press('Escape');
+await page.waitForFunction(
+  () => window.__WORLD_DEBUG__?.player?.controlsEnabled === true,
+  null,
+  { timeout: 20000 }
+);
+console.log('arrival complete, controls enabled');
+
 // What does the debug surface actually expose?
 console.log('\n=== debug API surface ===');
 console.log(JSON.stringify(await page.evaluate(() => {
@@ -31,28 +42,21 @@ console.log(JSON.stringify(await page.evaluate(() => {
   };
 }), null, 2));
 
-// Drive the real start sequence, then count actual animation frames.
-console.log('\n=== start() + animation frame count ===');
-console.log(JSON.stringify(await page.evaluate(async () => {
-  const d = window.__WORLD_DEBUG__;
-  let started = null;
-  try { started = d.start ? d.start() : 'no start()'; } catch (e) { started = `threw: ${e.message}`; }
-  // Count real rAF ticks: 0 ticks means nothing is driving the render loop.
-  const ticks = await new Promise((resolve) => {
-    let n = 0;
-    const t0 = performance.now();
-    const tick = () => {
-      n += 1;
-      if (performance.now() - t0 < 2000) {
-        requestAnimationFrame(tick);
-      } else {
-        resolve(n);
-      }
-    };
-    requestAnimationFrame(tick);
-  });
-  return { startReturned: started, rafTicksIn2s: ticks, metricsAfter: d.metrics ?? null };
-}), null, 2));
+// Count real animation frames: near-zero ticks mean nothing is driving the loop.
+console.log('\n=== animation frame delivery ===');
+console.log(JSON.stringify(await page.evaluate(() => new Promise((resolve) => {
+  let n = 0;
+  const t0 = performance.now();
+  const tick = () => {
+    n += 1;
+    if (performance.now() - t0 < 2000) {
+      requestAnimationFrame(tick);
+    } else {
+      resolve({ rafTicksIn2s: n, metrics: window.__WORLD_DEBUG__.metrics ?? null });
+    }
+  };
+  requestAnimationFrame(tick);
+})), null, 2));
 
 // Canvas reality: real backing-store size vs CSS size.
 console.log('\n=== canvas sizing ===');
@@ -70,40 +74,35 @@ console.log(JSON.stringify(await page.evaluate(() => {
   };
 }), null, 2));
 
-// Sample the framebuffer two independent ways after real frames have run.
-console.log('\n=== framebuffer sample (two independent methods) ===');
-const sample = await page.evaluate(async () => {
-  // let the loop actually draw
-  await new Promise((r) => {
-    setTimeout(r, 1200);
-  });
-  const c = document.querySelector('canvas');
-  const out = {};
-  // 1) drawImage into a 2D canvas
-  const off = document.createElement('canvas');
-  off.width = 200; off.height = 125;
-  const c2 = off.getContext('2d');
-  c2.drawImage(c, 0, 0, off.width, off.height);
-  const d2 = c2.getImageData(0, 0, off.width, off.height).data;
-  let s = 0, mx = 0;
-  for (let i = 0; i < d2.length; i += 4) { const v = d2[i] * .2126 + d2[i + 1] * .7152 + d2[i + 2] * .0722; s += v; if (v > mx) mx = v; }
-  out.drawImageMean = +(s / (d2.length / 4)).toFixed(2);
-  out.drawImageMax = +mx.toFixed(1);
-  // 2) readPixels straight out of the GL context
-  const gl = c.getContext('webgl2') || c.getContext('webgl');
-  if (gl) {
-    const w = gl.drawingBufferWidth, h = gl.drawingBufferHeight;
+// Sample the drawing buffer directly, inside a rAF callback so the buffer is
+// still the frame that was just drawn. A drawImage copy after presentation
+// samples a cleared buffer (the renderer does not preserve it) and reports a
+// false black frame -- which is exactly the misdiagnosis this script exists to
+// rule out.
+console.log('\n=== framebuffer sample (readPixels inside rAF) ===');
+const sample = await page.evaluate(() => new Promise((resolve) => {
+  requestAnimationFrame(() => {
+    const c = document.querySelector('canvas');
+    const gl = c.getContext('webgl2') || c.getContext('webgl');
+    const w = gl.drawingBufferWidth;
+    const h = gl.drawingBufferHeight;
     const px = new Uint8Array(w * h * 4);
     gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, px);
-    let s2 = 0, mx2 = 0;
-    for (let i = 0; i < px.length; i += 4) { const v = px[i] * .2126 + px[i + 1] * .7152 + px[i + 2] * .0722; s2 += v; if (v > mx2) mx2 = v; }
-    out.readPixelsMean = +(s2 / (px.length / 4)).toFixed(2);
-    out.readPixelsMax = +mx2.toFixed(1);
-    out.drawingBuffer = { w, h };
-    out.glError = gl.getError();
-  }
-  return out;
-});
+    let sum = 0, max = 0, lit = 0;
+    for (let i = 0; i < px.length; i += 4) {
+      const v = px[i] * 0.2126 + px[i + 1] * 0.7152 + px[i + 2] * 0.0722;
+      sum += v; if (v > max) max = v; if (v > 3) lit += 1;
+    }
+    const total = px.length / 4;
+    resolve({
+      mean: +(sum / total).toFixed(2),
+      max: +max.toFixed(1),
+      litPct: +((lit / total) * 100).toFixed(1),
+      drawingBuffer: { w, h },
+      glError: gl.getError()
+    });
+  });
+}));
 console.log(JSON.stringify(sample, null, 2));
 
 // Scene content: is there anything in the scene graph at all?

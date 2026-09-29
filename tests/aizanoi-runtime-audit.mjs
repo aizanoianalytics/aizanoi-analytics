@@ -107,23 +107,34 @@ for (const vp of VIEWPORTS) {
   }
 
   // Luma proof: is anything actually rendered, or a black frame?
-  const luma = await page.evaluate(() => {
-    const c = document.querySelector('canvas');
-    if (!c) return { ok: false, reason: 'no canvas' };
-    const off = document.createElement('canvas');
-    off.width = 160; off.height = 100;
-    const ctx = off.getContext('2d');
-    ctx.drawImage(c, 0, 0, off.width, off.height);
-    const { data } = ctx.getImageData(0, 0, off.width, off.height);
-    let sum = 0, min = 255, max = 0, nonBlack = 0;
-    for (let i = 0; i < data.length; i += 4) {
-      const v = (data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722);
-      sum += v; if (v < min) min = v; if (v > max) max = v;
-      if (v > 4) nonBlack++;
-    }
-    const px = data.length / 4;
-    return { ok: true, mean: +(sum / px).toFixed(2), min: +min.toFixed(1), max: +max.toFixed(1), nonBlackPct: +((nonBlack / px) * 100).toFixed(1) };
-  });
+  // Read the drawing buffer inside a rAF callback. The renderer does not
+  // preserve its drawing buffer, so a drawImage copy taken after the frame is
+  // presented samples a cleared buffer and reports a false black frame.
+  const luma = await page.evaluate(() => new Promise((resolve) => {
+    requestAnimationFrame(() => {
+      const canvas = document.querySelector('canvas');
+      if (!canvas) { resolve({ ok: false, reason: 'no canvas' }); return; }
+      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      if (!gl) { resolve({ ok: false, reason: 'no webgl context' }); return; }
+      const w = gl.drawingBufferWidth;
+      const h = gl.drawingBufferHeight;
+      const pixels = new Uint8Array(w * h * 4);
+      gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      let sum = 0, max = 0, lit = 0;
+      for (let i = 0; i < pixels.length; i += 4) {
+        const v = pixels[i] * 0.2126 + pixels[i + 1] * 0.7152 + pixels[i + 2] * 0.0722;
+        sum += v; if (v > max) max = v; if (v > 3) lit += 1;
+      }
+      const total = pixels.length / 4;
+      resolve({
+        ok: true,
+        mean: +(sum / total).toFixed(2),
+        max: +max.toFixed(1),
+        litPct: +((lit / total) * 100).toFixed(1),
+        glError: gl.getError()
+      });
+    });
+  }));
   note(vp.name, 'first-frame-luma', JSON.stringify(luma));
 
   await page.screenshot({ path: `${OUT}/${vp.name}-entry.png` });
