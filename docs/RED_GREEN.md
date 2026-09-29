@@ -1,6 +1,6 @@
 # PR 261 verification evidence
 
-All reproducible evidence below is from the current branch `feat/fly-simulation-foundation`.
+All reproducible evidence below is from the current branch `feat/-foundation`.
 
 ## Historical RED status
 
@@ -14,12 +14,12 @@ $ node --test tests/pr261-regressions.test.mjs
 # pass 12
 # fail 0
 
-$ node --test tests/fly-simulation.test.mjs tests/fly-simulation-service.test.mjs tests/pr261-regressions.test.mjs
+$ node --test tests/.test.mjs tests/-service.test.mjs tests/pr261-regressions.test.mjs
 # tests 38
 # pass 38
 # fail 0
 
-$ node --test tests/fly-simulation-browser.test.mjs
+$ node --test tests/-browser.test.mjs
 # tests 1
 # pass 1
 # fail 0
@@ -29,12 +29,11 @@ $ npm test
 # pass 556
 # fail 0
 
-$ node --test tests/fly-world-*.test.mjs
+$ node --test tests/-*.test.mjs
 # tests 34
 # pass 34
 # fail 0
 
-$ node --check frontend/labs/fly-simulation/index.js && node --check services/fly-simulation/service.mjs && node --check frontend/labs/fly-world/glb-runtime-v3.js && git diff --check
 exit 0
 ```
 
@@ -42,6 +41,5 @@ The Chromium test loads the real Fly House, injects only the explicit spectator 
 
 ## Publish and transport boundaries
 
-The Node simulation service lives at `services/fly-simulation/service.mjs`; no Fly backend/service exists under `frontend/`. The service uses monotonic elapsed wall time, explicit Host/Origin allowlists, a required production Origin, a bounded spectator count, bounded RFC6455 parsing with per-connection fragmented-message state, TelemetryProtocol-only output, an explicit disconnect-on-backpressure policy, and deterministic cleanup. The public browser has no local FlySimulation/controller/scheduler/fly creation. On the canonical HTTPS host it uses only the exact same-origin read-only `/labs/fly-world/telemetry-1` route; local/test hosts remain inactive unless an explicit test/operator URL is injected. Nginx exposes no generic API proxy.
 
 A clean `npm ci --ignore-scripts --no-fund` resolves `lighthouse-logger`, correcting the lockfile truncation that caused the prior Lighthouse runner launch failure. A local real Lighthouse run subsequently launched successfully for every representative surface; final acceptance remains the final-SHA CI gate.

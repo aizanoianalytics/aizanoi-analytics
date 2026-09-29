@@ -1,12 +1,12 @@
 <p align="center"><img src="https://raw.githubusercontent.com/aizanoianalytics/aizanoi-analytics/main/frontend/assets/branding/aizanoi-og.png" alt="Aizanoi Analytics" width="100%"></p>
 <h1 align="center">Aizanoi Analytics</h1>
 <p align="center"><strong>Media, data, software, research and interactive worlds.</strong></p>
-<p align="center"><a href="https://aizanoianalytics.com"><strong>Live site</strong></a> · <a href="https://aizanoianalytics.com/news/"><strong>News</strong></a> · <a href="https://aizanoianalytics.com/tv/"><strong>TV</strong></a> · <a href="https://aizanoianalytics.com/analytics/"><strong>Analytics</strong></a> · <a href="https://aizanoianalytics.com/worlds/"><strong>Historical Worlds</strong></a></p>
+<p align="center"><a href="https://aizanoianalytics.com"><strong>Live site</strong></a> · <a href="https://aizanoianalytics.com/news/"><strong>News</strong></a> · <a href="https://aizanoianalytics.com/tv/"><strong>TV</strong></a> · <a href="https://aizanoianalytics.com/analytics/"><strong>Analytics</strong></a> · <a href="https://aizanoianalytics.com/worlds/"><strong>Aizanoi</strong></a></p>
 
 ## What is Aizanoi Analytics?
 **Aizanoi Analytics** is the company and umbrella digital studio behind the public products in this repository. **AizanoiOS** is its adaptive browser-native operating-system-style shell.
 
-Public product families: **Aizanoi News**, **Aizanoi TV**, **Aizanoi Journal**, **Analytics**, **Aizanoi Forge**, **Historical Worlds**, **Aizanoi Labs** and **Aizanoi Arcade**. See [`PRODUCT.md`](PRODUCT.md) for the canonical contract.
+Public product families: **Aizanoi News**, **Aizanoi TV**, **Aizanoi Journal**, **Analytics**, **Aizanoi Forge**, **Aizanoi**, **Aizanoi Labs** and **Aizanoi Arcade**. See [`PRODUCT.md`](PRODUCT.md) for the canonical contract.
 
 ## AizanoiOS
 - **Desktop:** wallpaper-first home, seven focused shortcuts, freeform windows and centered dock.
@@ -16,12 +16,12 @@ Public product families: **Aizanoi News**, **Aizanoi TV**, **Aizanoi Journal**, 
 Workspace documents, Camera photos and Winamp imports stay local in IndexedDB. The state store migrates from the former `aizanoi-field-system-v3` namespace to `aizanoi-os-state-v1`; v4 dual-writes the old key for one release window, and the deprecated `AIZANOI_FIELD_SYSTEM` runtime alias is scheduled for removal with v5.
 
 ### Offline contract
-After the service worker installs successfully, the **AizanoiOS shell/home is guaranteed offline**. Lazy app modules and standalone product pages are network-first and become available offline after they have been successfully used/cached. Historical Worlds and large Analytics exports are not promised as cold-install offline payloads. This bounded contract keeps first install small and avoids silently caching large experiences.
+After the service worker installs successfully, the **AizanoiOS shell/home is guaranteed offline**. Lazy app modules and standalone product pages are network-first and become available offline after they have been successfully used/cached. Aizanoi and large Analytics exports are not promised as cold-install offline payloads. This bounded contract keeps first install small and avoids silently caching large experiences.
 
 ## Aizanoi News
 News is static-first and source-led: sources → Hermes → `content/news/items/*.json` → `scripts/news/build-news.mjs` → generated public editions/RSS/sitemap → AizanoiOS. Every publishable item requires original Aizanoi News summary text and source attribution. See [`CONTENT_POLICY.md`](CONTENT_POLICY.md) and [`docs/HERMES_OPERATIONS.md`](docs/HERMES_OPERATIONS.md).
 
-## Historical Worlds
+## Aizanoi
 | World | Period / focus |
 |---|---|
 | **Aizanoi** | Roman Phrygia · c. AD 2nd–3rd century |
@@ -37,21 +37,21 @@ Nginx serves static HTML/CSS/JavaScript/JSON/assets. There is no visitor-facing 
 ## Repository map
 ```text
 .
-├── frontend/                  # production static application
-│   ├── news/                  # generated News feed, editions, category archives and RSS
-│   ├── analytics/             # public Analytics landing + canonical catalog + dashboard outputs
-│   ├── js/v3/                 # AizanoiOS + product platform + apps
-│   │   └── apps/games/        # Aizanoi Arcade module and its owned game assets
-│   ├── styles/                # desktop + adaptive device shell
-│   ├── worlds/                # portal + Aizanoi/Rome/Athens/İGA + shared local Three.js runtime
-│   ├── historic-world/        # legacy redirect only
-│   ├── ancient-cities/        # legacy redirects only
-│   └── iga/                   # legacy redirect only
-├── content/news/              # Git-tracked News source records/templates
-├── scripts/                   # deterministic generators and deployment helpers
-├── tests/                     # regression/browser/security/visual QA
-├── docs/                      # maintained documentation/runbooks
-└── infra/                     # sanitized deployment references
+├── frontend/ # production static application
+│ ├── news/ # generated News feed, editions, category archives and RSS
+│ ├── analytics/ # public Analytics landing + canonical catalog + dashboard outputs
+│ ├── js/v3/ # AizanoiOS + product platform + apps
+│ │ └── apps/games/ # Aizanoi Arcade module and its owned game assets
+│ ├── styles/ # desktop + adaptive device shell
+│ ├── worlds/ # portal + Aizanoi/Rome/Athens/İGA + shared local Three.js runtime
+│ ├── historic-world/ # legacy redirect only
+│ ├── ancient-cities/ # legacy redirects only
+│ └── iga/ # legacy redirect only
+├── content/news/ # Git-tracked News source records/templates
+├── scripts/ # deterministic generators and deployment helpers
+├── tests/ # regression/browser/security/visual QA
+├── docs/ # maintained documentation/runbooks
+└── infra/ # sanitized deployment references
 ```
 
 ## Development

@@ -1,37 +1,30 @@
 # Aizanoi Analytics Architecture
 
-The Aizanoi Analytics public visitor runtime is **static-first**. Nginx serves HTML, CSS, JavaScript, JSON and assets. The sole narrow runtime exception is Fly World's loopback authoritative simulation service, exposed only as versioned read-only same-origin spectator telemetry. It is not a generic backend and has no command channel, accounts, database, shell, arbitrary execution or Hermes bridge. Private automation such as Hermes may prepare content and deploy releases, but the browser never receives a private-agent execution bridge.
+The Aizanoi Analytics public visitor runtime is **static-first**. Nginx serves HTML, CSS, JavaScript, JSON and assets. There is no runtime backend exception. There is no generic backend and no command channel, accounts, database, shell, arbitrary execution or Hermes bridge. Private automation such as Hermes may prepare content and deploy releases, but the browser never receives a private-agent execution bridge.
 
 ## Runtime topology
 
 ```text
 Browser
-  |
-  +-- AizanoiOS (/)
-  |     +-- brand-platform.js             Aizanoi Analytics + device composition
-  |     +-- registry.js                   canonical public app + world catalog
-  |     +-- module-registry.generated.js  installed/enabled module wiring
-  |     +-- capabilities.js               declared host capability bridge
-  |     +-- store.js                      shell + field-session state
-  |     +-- shell.js                      canonical window/router/lifecycle host
-  |     +-- device-shell.css              tablet/mobile presentation
-  |     +-- apps/<id>/                    lazy manifest-driven public applications
-  |     +-- /news/index.json              static News feed
-  |
-  +-- Historical Worlds
-  |     +-- /worlds/aizanoi-225/       Aizanoi
-  |     +-- /worlds/rome-410-476/    Rome
-  |     +-- /worlds/athens-450-430/  Athens
-  |     +-- /worlds/iga-airport/     Istanbul Airport
-  +-- Fly World
-  |     +-- static authored house + read-only spectator
-  |     +-- WSS /labs/fly-world/telemetry-1
-  |            -> loopback Fly Simulation authority
-  |
-Nginx -> static files by default; one exact Fly telemetry proxy
+ |
+ +-- AizanoiOS (/)
+ | +-- brand-platform.js Aizanoi Analytics + device composition
+ | +-- registry.js canonical public app + world catalog
+ | +-- module-registry.generated.js installed/enabled module wiring
+ | +-- capabilities.js declared host capability bridge
+ | +-- store.js shell + field-session state
+ | +-- shell.js canonical window/router/lifecycle host
+ | +-- device-shell.css tablet/mobile presentation
+ | +-- apps/<id>/ lazy manifest-driven public applications
+ | +-- /news/index.json static News feed
+ |
+ +-- Aizanoi
+ | +-- /worlds/aizanoi-225/ Aizanoi
+ |
+Nginx -> static files by default; no application reverse proxy
 ```
 
-Historical `/api/chat` remains failed closed. Other `/api/*` paths remain unavailable unless the owner deliberately changes the public architecture. The Fly route cannot accept commands or expose a general request API.
+Historical `/api/chat` remains failed closed. Other `/api/*` paths remain unavailable unless the owner deliberately changes the public architecture. No route can accept commands or expose a general request API.
 
 ## AizanoiOS layers
 
@@ -78,13 +71,13 @@ Public application modules load only when opened. `apps.css` remains lazy. Modul
 
 ```text
 Hermes / operator research
-        ↓
+ ↓
 content/news/items/*.json
-        ↓
+ ↓
 scripts/news/build-news.mjs
-        ↓
+ ↓
 frontend/news/* + frontend/sitemap.xml
-        ↓
+ ↓
 Aizanoi News app / public discovery
 ```
 
@@ -96,7 +89,7 @@ It deterministically generates the current landing, daily edition paths, **perma
 
 `CONTENT_POLICY.md` is the publication contract.
 
-## Historical Worlds
+## Aizanoi
 
 `frontend/worlds/shared/` owns shared traversal, collision, input, evidence UI, environment and procedural asset behavior. World-specific archaeology, source data and hero decisions stay world-local.
 
@@ -142,7 +135,7 @@ See `docs/HERMES_OPERATIONS.md`.
 8. Aizanoi Analytics remains the company/umbrella brand unless `PRODUCT.md` is explicitly changed by the owner.
 9. Retired power tools stay out of the public catalog unless the owner explicitly reverses the decision.
 10. No server-backed public terminal or private-agent bridge.
-11. No certainty inflation in Historical Worlds.
+11. No certainty inflation in Aizanoi.
 12. News requires structured source provenance.
 13. Preserve public destination parity while giving desktop, tablet and mobile device-appropriate UX.
 14. Interactive changes require regression coverage.

@@ -170,7 +170,7 @@
 
 
 
-  /* Flowerseller */
+  /*  */
   .fs-app { background:#fffaf4; color:#27362f; font-family:var(--az-font-ui); overflow:hidden; display:flex; flex-direction:column; min-height:100%; }
   .fs-app *,.fs-app *::before,.fs-app *::after { box-sizing:border-box; }
   .fs-topbar { min-height:54px; display:flex; align-items:center; gap:9px; padding:8px 18px; border-bottom:1px solid #eadfd4; background:rgba(255,252,247,.88); }

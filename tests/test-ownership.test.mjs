@@ -41,6 +41,9 @@ test('every browser-driving suite has an automation owner', () => {
   const shared = new Map([
     ['cross-browser-critical.mjs', ['ci', 'crossBrowser']],
     ['cross-device-critical.mjs', ['ci', 'fullQa']],
+    // The Aizanoi WebGL smoke was promoted into routine CI (text #25) and is
+    // still repeated by Full QA as the deep single-world Aizanoi traversal.
+    ['aizanoi-browser-smoke.mjs', ['ci', 'fullQa']],
   ]);
 
   for (const suite of browserSuites()) {

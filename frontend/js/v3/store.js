@@ -1,4 +1,4 @@
-import { appById, worldById } from './registry.js';
+import { appById } from './registry.js';
 const KEY='aizanoi-os-state-v1',LEGACY_KEY='aizanoi-field-system-v3',WORLD_SESSION_KEY='aizanoi-world-session-v1',LEGACY_SESSION_KEY='aizanoi-field-session-v1';
 const defaults=()=>({version:3,theme:'aizanoi',reduceMotion:matchMedia('(prefers-reduced-motion: reduce)').matches,openApps:[],activeApp:null,windowRects:{},recents:[],activity:[],missionDismissed:false,lastUpdated:Date.now()});
 function safeParse(raw,fallback){try{return raw?JSON.parse(raw):fallback;}catch(_){return fallback;}}
@@ -20,8 +20,27 @@ export function markRecent(entry){if(!entry?.type||!entry?.id)return;const key=`
 export function recordActivity(title,detail='',kind='system'){const item={id:`${Date.now()}-${Math.random().toString(36).slice(2,7)}`,title:String(title),detail:String(detail||''),kind,at:Date.now()};state={...state,activity:[item,...state.activity].slice(0,30)};persist();emit('activity',item);return item;}
 export function setPreference(name,value){if(!['theme','reduceMotion','missionDismissed'].includes(name))return false;state={...state,[name]:value};persist();emit('preference',{name,value});return true;}
 export function resetWorkspace(){const keep={theme:state.theme,reduceMotion:state.reduceMotion};state={...defaults(),...keep};persist();emit('reset');}
-function readWorldSession(){const current=safeStorageGet(WORLD_SESSION_KEY),legacy=safeStorageGet(LEGACY_SESSION_KEY),value=safeParse(current||legacy,null);if(value&&worldById(value.worldId)&&!current&&legacy){try{localStorage.setItem(WORLD_SESSION_KEY,JSON.stringify(value));}catch(_){}}return value&&worldById(value.worldId)?value:null;}
+function readWorldSession(){
+ const current=safeStorageGet(WORLD_SESSION_KEY),legacy=safeStorageGet(LEGACY_SESSION_KEY);
+ const value=safeParse(current||legacy,null);
+ if(value&&value.worldId==='aizanoi'&&!current&&legacy){
+ try{localStorage.setItem(WORLD_SESSION_KEY,JSON.stringify(value));}catch(_){}
+ }
+ return value&&value.worldId==='aizanoi'?value:null;
+}
 export function getFieldSession(){return readWorldSession();}
-export function updateFieldSession(patch={}){const current=getFieldSession()||{},next={...current,...patch,updatedAt:Date.now()};if(!worldById(next.worldId))return null;try{const value=JSON.stringify(next);localStorage.setItem(WORLD_SESSION_KEY,value);localStorage.setItem(LEGACY_SESSION_KEY,value);}catch(_){}markRecent({type:'world',id:next.worldId,label:worldById(next.worldId).label,landmark:next.landmark||null});emit('field-session',next);return next;}
+export function updateFieldSession(patch={}){
+ const current=getFieldSession()||{};
+ const next={...current,...patch,updatedAt:Date.now()};
+ if(next.worldId!=='aizanoi')return null;
+ try{
+ const value=JSON.stringify(next);
+ localStorage.setItem(WORLD_SESSION_KEY,value);
+ localStorage.setItem(LEGACY_SESSION_KEY,value);
+ }catch(_){}
+ markRecent({type:'world',id:next.worldId,label:'Aizanoi',landmark:next.landmark||null});
+ emit('field-session',next);
+ return next;
+}
 export function clearFieldSession(){try{localStorage.removeItem(WORLD_SESSION_KEY);localStorage.removeItem(LEGACY_SESSION_KEY);}catch(_){}emit('field-session-clear');}
 export const workspaceStore=Object.freeze({getState,subscribe,setOpenApps,markAppOpen,markAppClosed,setActiveApp,saveWindowRect,windowRect,markRecent,recordActivity,setPreference,resetWorkspace,getFieldSession,updateFieldSession,clearFieldSession});

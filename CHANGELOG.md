@@ -24,7 +24,7 @@ Aizanoi Analytics is developed as a continuous open-source project. This file re
 ## 2026-08-23 — AizanoiOS umbrella platform baseline
 
 - established AizanoiOS as the adaptive browser-native shell across desktop, tablet and mobile;
-- introduced the current eight-app public catalog: News, TV, analytical products, Historical Worlds, Forge, Journal, Labs and Arcade;
+- introduced the current eight-app public catalog: News, TV, analytical products, Aizanoi, Forge, Journal, Labs and Arcade;
 - retired the visitor-facing Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Workspace Monitor bundle;
 - added static product landing pages, source-led News publishing, responsive device presentations and product-level SEO metadata;
 - preserved a static-first visitor runtime behind Nginx.
@@ -33,7 +33,7 @@ Aizanoi Analytics is developed as a continuous open-source project. This file re
 
 > Historical note: the Field System/Research Workspace described in this milestone is **not the current public product contract**. Its visitor-facing Workbench applications were subsequently retired. Current architecture and product truth live in `PRODUCT.md`, `AGENTS.md`, `DESIGN.md` and `ARCHITECTURE.md`.
 
-This milestone consolidated an earlier archaeological research-workspace iteration. It introduced the canonical v3 shell foundations, accessibility improvements, browser-local research tools and a shared Historical Worlds bridge. Those experiments informed the current AizanoiOS architecture, but Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Workspace Monitor are no longer public applications.
+This milestone consolidated an earlier archaeological research-workspace iteration. It introduced the canonical v3 shell foundations, accessibility improvements, browser-local research tools and a shared Aizanoi bridge. Those experiments informed the current AizanoiOS architecture, but Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Workspace Monitor are no longer public applications.
 
 ## 2026-08-19 — Static public-launch baseline
 
@@ -41,7 +41,7 @@ This milestone consolidated an earlier archaeological research-workspace iterati
 - retired the visitor-facing Node/Express backend and external AI-provider runtime path;
 - made historical `/api/chat` fail closed with `410 Gone` and other unknown `/api/*` paths fail closed;
 - expanded desktop/tablet/mobile browser QA, accessibility checks, security policy and deployment documentation;
-- established Historical Worlds and local browser games as production-tested public surfaces.
+- established Aizanoi and local browser games as production-tested public surfaces.
 
 ## 2026-08-17 — Ancient World shared-engine expansion
 

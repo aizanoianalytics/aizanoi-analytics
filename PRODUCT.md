@@ -21,7 +21,8 @@
 - **Aizanoi Labs** — prototypes, interaction experiments and unfinished ideas with explicit Experimental / Prototype / Archived status.
 
 ### Explore
-- **Historical Worlds** — evidence-aware walkable reconstructions. Aizanoi remains the reference world; Rome and Athens are comparative worlds.
+- **Aizanoi** — the flagship evidence-aware interactive historical reconstruction. Roman Phrygia, c. AD 225. The primary interactive world of the Aizanoi Analytics brand.
+- **Aizanoi Dungeon: Aizo's Awakening** — the flagship browser game within the Aizanoi universe.
 - **Aizanoi Arcade** — playable browser games. Games are separate from Labs.
 
 The former visitor-facing research/power-tool bundle (Archive, Notes, Data Lab, Source Reader, Artifact Viewer, Projects, Terminal and Workspace Monitor) is retired from the public product. Do not reintroduce it without an explicit owner decision.

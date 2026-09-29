@@ -48,12 +48,12 @@ const ALLOWED_JSON = [
   /\/news\/.+\/index\.json$/,
   /\/analytics\/.+\/data\.json$/,
   /\/js\/v3\/apps\/analytics\/manifest\.json$/,
+  /\/js\/v3\/apps\/aizanoi\/manifest\.json$/,
   /\/js\/v3\/apps\/browser\/manifest\.json$/,
   /\/js\/v3\/apps\/calculator\/manifest\.json$/,
   /\/js\/v3\/apps\/camera\/manifest\.json$/,
   /\/js\/v3\/apps\/dungeon\/manifest\.json$/,
   /\/js\/v3\/apps\/forge\/manifest\.json$/,
-  /\/js\/v3\/apps\/fly-world\/manifest\.json$/,
   /\/js\/v3\/apps\/flowerseller\/manifest\.json$/,
   /\/js\/v3\/apps\/games\/manifest\.json$/,
   /\/js\/v3\/apps\/markets\/manifest\.json$/,
@@ -65,11 +65,7 @@ const ALLOWED_JSON = [
   /\/js\/v3\/apps\/videos\/manifest\.json$/,
   /\/js\/v3\/apps\/web-editor\/manifest\.json$/,
   /\/js\/v3\/apps\/workspace\/manifest\.json$/,
-  /\/js\/v3\/apps\/worlds\/manifest\.json$/,
   /\/js\/v3\/apps\/winamp\/manifest\.json$/,
-  /\/labs\/fly-world\/assets\/environment\.json$/,
-  /\/labs\/fly-world\/assets\/fly-physics\.json$/,
-  /\/labs\/fly-simulation\/assets\/flywire-fafb-v783-lc4-escape\.json$/
 ];
 
 test('denylist: no source or workbook files enter frontend', () => {

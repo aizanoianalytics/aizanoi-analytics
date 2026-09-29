@@ -7,7 +7,6 @@ Scope: build-time, publishing and repository automation. These scripts are not a
 - Aizanoi News validation/build/publishing helpers → `news/`
 - AizanoiOS manifest validation and generated module wiring → [`modules/index.md`](modules/index.md)
 - Aizanoi Markets universe discovery, multi-provider ingestion and static shards → [`markets/index.md`](markets/index.md)
-- Fly House / Fly World Blender scene build, benchmark render and GLB export → [`fly-world/README.md`](fly-world/README.md)
 - Public deployment → `deploy-public.sh`
 - Other maintenance automation → inspect the specific script named by the task; do not load unrelated automation by default.
 

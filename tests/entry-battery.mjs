@@ -6,9 +6,6 @@ import { chromium, webkit, devices } from 'playwright';
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'https://aizanoianalytics.com';
 const worlds = [
   { id: 'aizanoi', path: '/worlds/aizanoi-225/' },
-  { id: 'athens', path: '/worlds/athens-450-430/' },
-  { id: 'rome', path: '/worlds/rome-410-476/' },
-  { id: 'iga', path: '/worlds/iga-airport/' },
 ];
 
 async function naturalEntry(browser, ctxOpts, spec, label, { enterTimes = 1, cdpThrottle = 0 } = {}) {

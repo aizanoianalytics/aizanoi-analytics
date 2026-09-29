@@ -1,9 +1,9 @@
 import { APPS, appById } from './registry.js';
 
-const PINNED=Object.freeze(['news','videos','analytics','worlds','forge']);
-const DESKTOP=Object.freeze([...PINNED,'labs','markets','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','fly-world','recycle-bin','workspace','flowerseller']);
+const PINNED=Object.freeze(['news','videos','analytics','aizanoi','forge']);
+const DESKTOP=Object.freeze([...PINNED,'labs','markets','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','flowerseller','recycle-bin','workspace']);
 const PUBLIC_APPS=Object.freeze(APPS.map((app)=>app.id));
-const PHONE_DOCK=Object.freeze(['news','videos','analytics','worlds']);
+const PHONE_DOCK=Object.freeze(['news','videos','analytics','aizanoi']);
 const PLATFORM_STYLE_HREF='/styles/shell.css';
 const AIZO_X_URL='https://x.com/AizanoiHQ';
 const PUBLIC_EMAIL='aizanoianalytics@protonmail.com';

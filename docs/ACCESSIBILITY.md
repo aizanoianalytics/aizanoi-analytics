@@ -28,7 +28,7 @@ CI verifies applicable surfaces for:
 6. Open Settings or Applications; Tab must remain inside until the dialog closes.
 7. Use browser Back/Forward with multiple apps open and confirm it changes active intent rather than silently destroying unrelated windows.
 
-## Historical Worlds keyboard/input smoke
+## Aizanoi keyboard/input smoke
 
 1. Enter Aizanoi, Rome and Athens from AizanoiOS.
 2. Open the shared Explore drawer. Movement keys must not move the player while secondary UI is open.
@@ -40,7 +40,7 @@ CI verifies applicable surfaces for:
 ## Manual NVDA smoke (Windows)
 
 1. Open `/` with NVDA.
-2. Confirm the Aizanoi Analytics brand/Home, Search, Settings, Historical Worlds and current public app cards have concise names.
+2. Confirm the Aizanoi Analytics brand/Home, Search, Settings, Aizanoi and current public app cards have concise names.
 3. Open Applications and the command palette; confirm each is announced as a modal dialog and Tab does not escape behind it.
 4. Close each dialog and verify focus returns to the invoking control or a deterministic fallback.
 5. Open Aizanoi News and verify edition navigation, headlines, bylines, corrections and source links are announced coherently.

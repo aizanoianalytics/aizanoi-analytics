@@ -11,7 +11,7 @@ The eight public product families are:
 1. Aizanoi News
 2. Aizanoi TV
 3. Analytics
-4. Historical Worlds
+4. Aizanoi
 5. Aizanoi Forge
 6. Aizanoi Journal
 7. Aizanoi Labs
@@ -53,7 +53,7 @@ Legacy `/videos`, `/games` and `/projects` URLs redirect to `/tv/`, `/arcade/` a
 
 ## Historical World bridge
 
-Historical Worlds may write the small `aizanoi-field-session-v1` browser record containing world, optional landmark, route and timestamp. It is navigation context, not a general local workspace or synchronization layer.
+Aizanoi may write the small `aizanoi-field-session-v1` browser record containing world, optional landmark, route and timestamp. It is navigation context, not a general local workspace or synchronization layer.
 
 ## PWA contract
 

@@ -28,11 +28,13 @@ function releaseMetadata() {
   return { version, cache };
 }
 
-test('Aizanoi public runtime remains static-first with one narrow Fly service exception', () => {
+test('Aizanoi public runtime is static-first and static-only', () => {
   assert.equal(existsSync('backend'), false, 'backend directory must remain removed');
   assert.equal(existsSync('infra/systemd/aizanoi-backend.service.example'), false, 'obsolete backend systemd unit returned');
-  assert.deepEqual(nginxProxyTargets, ['http://127.0.0.1:8787/spectator/telemetry-1']);
+  assert.deepEqual(nginxProxyTargets, [], 'the retired Fly service was the only proxy exception; none may remain');
   assert.doesNotMatch(nginx, /127\.0\.0\.1:3001/);
+  assert.doesNotMatch(nginx, /127\.0\.0\.1:8787/);
+  assert.doesNotMatch(nginx, /telemetry-1/);
   assert.doesNotMatch(index, /\/api\/(?:chat|health|terminal)/);
   assert.doesNotMatch(architecture, /generic Node backend/i);
 });
@@ -75,7 +77,7 @@ test('mutable static requests are network-first with cache fallback for offline 
 test('nginx fails closed for historical API paths', () => {
   assert.match(nginx, /location = \/api\/chat[\s\S]*return 410;/);
   assert.match(nginx, /location \^~ \/api\/[\s\S]*return 404;/);
-  assert.deepEqual(nginxProxyTargets, ['http://127.0.0.1:8787/spectator/telemetry-1']);
+  assert.deepEqual(nginxProxyTargets, []);
   assert.doesNotMatch(nginx, /127\.0\.0\.1:3001/);
 });
 

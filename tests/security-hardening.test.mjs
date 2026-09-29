@@ -56,12 +56,12 @@ test('shell escapes dynamic notification and command content',()=>{
   assert.match(shell,/escapeHtml\(row\.label\)/);
 });
 
-test('reverse proxy exposes only the narrow read-only Fly telemetry exception',()=>{
+test('public runtime is fully static-first with no application reverse proxy',()=>{
   assert.match(nginx,/location = \/api\/chat[\s\S]*return 410;/);
   assert.match(nginx,/location \^~ \/api\/[\s\S]*return 404;/);
-  assert.deepEqual(nginxProxyTargets,['http://127.0.0.1:8787/spectator/telemetry-1']);
-  assert.match(nginx,/location = \/labs\/fly-world\/telemetry-1/);
+  assert.deepEqual(nginxProxyTargets,[],'no application reverse proxy may exist after the Fly retirement');
   assert.doesNotMatch(nginx,/127\.0\.0\.1:3001/);
+  assert.doesNotMatch(nginx,/127\.0\.0\.1:8787/);
   assert.doesNotMatch(browserApp,/proxy_pass|127\.0\.0\.1:3001/);
 });
 
@@ -110,7 +110,6 @@ test('cache locations preserve security headers and revalidate mutable unversion
   assert.match(nginx,/location \^~ \/js\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/web-editor-preview\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/worlds\/aizanoi-225\/[\s\S]*expires -1;/);
-  assert.match(nginx,/location \^~ \/worlds\/rome-410-476\/[\s\S]*expires -1;/);
   assert.match(nginx,/location \^~ \/assets\/[\s\S]*expires 7d;/);
   assert.match(staticHeaders,/X-Content-Type-Options/);
   assert.match(staticHeaders,/Content-Security-Policy/);

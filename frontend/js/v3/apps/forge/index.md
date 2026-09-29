@@ -8,7 +8,7 @@ Purpose: AizanoiOS launcher surface for source, builds and open projects.
 
 ## Declared capabilities
 
-- `apps` — narrow application navigation used only to open Historical Worlds.
+- `apps` — narrow application navigation used only to open Aizanoi.
 
 The module does not receive the full shell API and does not own repository source, deployment or build infrastructure.
 

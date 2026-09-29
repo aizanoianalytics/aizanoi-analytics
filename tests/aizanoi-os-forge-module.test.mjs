@@ -29,7 +29,7 @@ test('canonical registry loads Forge only through its public module entry', asyn
 
 test('Forge private code owns source/project content and uses narrow app navigation', () => {
   assert.match(privateApp, /https:\/\/github\.com\/aizanoianalytics\/aizanoi-analytics/);
-  assert.match(privateApp, /title:'Historical Worlds'/);
+  assert.match(privateApp, /title:'Aizanoi'/);
   assert.match(privateApp, /title:'Aizanoi Arcade'/);
   assert.match(privateApp, /frontend\/js\/v3\/apps\/games/);
   assert.match(privateApp, /apps\.open\(appId\)/);

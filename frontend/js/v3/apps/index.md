@@ -4,18 +4,18 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 
 ## Current app entries
 
+- [`aizanoi/index.md`](aizanoi/index.md) — Aizanoi flagship interactive world
 - [`analytics/index.md`](analytics/index.md) — Analytics launcher surface
-- [`markets/index.md`](markets/index.md) — Aizanoi Markets market-intelligence surface
 - [`browser/index.md`](browser/index.md) — sandboxed HTTPS browser surface
 - [`calculator/index.md`](calculator/index.md) — Calculator
 - [`camera/index.md`](camera/index.md) — local Camera with explicit media capability
 - [`dungeon/index.md`](dungeon/index.md) — Aizanoi Dungeon: Aizo's Awakening (Phaser 3 retro dungeon-crawler RPG)
+- [`flowerseller/index.md`](flowerseller/index.md) — Flowerseller flower shop proof of concept
 - [`forge/index.md`](forge/index.md) — Aizanoi Forge
-- [`fly-world/index.md`](fly-world/index.md) — Fly World ghost-observer cottage walkthrough
-- [`flowerseller/index.md`](flowerseller/index.md) — Flowerseller boutique flower shop proof of concept
 - [`games/index.md`](games/index.md) — Aizanoi Arcade launcher and games
 - [`journal/index.md`](journal/index.md) — Aizanoi Journal
 - [`labs/index.md`](labs/index.md) — Aizanoi Labs
+- [`markets/index.md`](markets/index.md) — Aizanoi Markets market-intelligence surface
 - [`news/index.md`](news/index.md) — Aizanoi News
 - [`notepad/index.md`](notepad/index.md) — Notepad
 - [`recycle-bin/index.md`](recycle-bin/index.md) — Recycle Bin
@@ -23,7 +23,6 @@ Scope: lazy public application modules used by the canonical AizanoiOS registry.
 - [`web-editor/index.md`](web-editor/index.md) — single-file browser-local Web Editor with isolated preview runner
 - [`winamp/index.md`](winamp/index.md) — local audio player
 - [`workspace/index.md`](workspace/index.md) — Workspace UI over the shared filesystem core
-- [`worlds/index.md`](worlds/index.md) — Historical Worlds launcher
 
 ## Before changing an app
 

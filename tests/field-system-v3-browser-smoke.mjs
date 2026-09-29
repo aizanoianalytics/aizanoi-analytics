@@ -34,8 +34,8 @@ async function axe(page,label) {
 function appModuleRequests(requests){return requests.filter((path)=>path.includes('/js/v3/apps/'));}
 
 const retiredIds=['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor'];
-const publicAppIds=['news','videos','analytics','markets','worlds','forge','fly-world','journal','labs','games','dungeon','workspace','notepad','web-editor','calculator','browser','camera','winamp','recycle-bin','flowerseller'];
-const desktopAppIds=['news','videos','analytics','worlds','forge','labs','markets','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','fly-world','recycle-bin','workspace','flowerseller'];
+const publicAppIds=['news','videos','analytics','markets','aizanoi','forge','journal','labs','games','dungeon','workspace','notepad','web-editor','calculator','browser','camera','winamp','recycle-bin','flowerseller'];
+const desktopAppIds=['news','videos','analytics','aizanoi','forge','labs','markets','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','recycle-bin','workspace','flowerseller'];
 
 // Desktop: sparse wallpaper desktop, curated product + utility shortcuts, freeform window lifecycle.
 {
@@ -107,7 +107,7 @@ const desktopAppIds=['news','videos','analytics','worlds','forge','labs','market
   const searchButton=page.locator('.az-task-shelf [data-shell-action="search"]');
   await searchButton.focus(); await searchButton.click();
   await page.waitForSelector('#az-command-overlay.is-open');
-  assert.equal(await page.locator('#az-command-input').getAttribute('aria-label'),'Search Aizanoi apps, worlds and commands','desktop: global search input has an ambiguous accessible name');
+  assert.equal(await page.locator('#az-command-input').getAttribute('aria-label'),'Search Aizanoi apps and commands','desktop: global search input has an ambiguous accessible name');
   assert.equal(await page.locator('.az-command-results').getAttribute('aria-label'),'Search results','desktop: global search results lack an accessible name');
   assert.equal(await page.locator('.az-stage').evaluate((el)=>el.inert),true,'desktop: command dialog did not inert app stage');
   await page.waitForFunction(()=>document.activeElement?.id==='az-command-input');

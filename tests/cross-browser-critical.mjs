@@ -47,8 +47,35 @@ try{
   await assertRoute(marketsContext,'/analytics/markets/',{selector:'[data-markets-root]',label:'Markets static shell'});
   await marketsContext.close();
   await assertRoute(context,'/dungeon/',{selector:'#game-container canvas',label:'standalone Dungeon menu'});
-  await assertRoute(context,'/worlds/',{selector:'main',label:'Worlds index'});
+  await assertRoute(context,'/worlds/',{selector:'main',label:'Aizanoi product landing'});
   await assertRoute(context,'/privacy/',{selector:'main',label:'Privacy'});
+
+  // Aizanoi: actually boot the WebGL world under this engine rather than only
+  // loading the landing page. Pointer-lock and controls are Chromium/GTK
+  // dependent, so canvas boot + a fatal-error check is the honest floor.
+  {
+    const page=await context.newPage();
+    const worldErrors=[];
+    page.on('pageerror',(error)=>worldErrors.push(`pageerror: ${error.message}`));
+    page.on('console',(message)=>{if(message.type()==='error')worldErrors.push(`console: ${message.text()}`);});
+    const world=await page.goto(`${base}/worlds/aizanoi-225/`,{waitUntil:'domcontentloaded',timeout:60000});
+    assert.ok(world?.ok(),`${engine} Aizanoi: HTTP ${world?.status()}`);
+    await page.waitForFunction(
+      ()=>window.__WORLD_BOOTSTRAP__?.ready===true||window.__WORLD_DEBUG__?.ready===true,
+      null,{timeout:60000},
+    );
+    await page.locator('canvas#viewport').first().waitFor({state:'visible',timeout:30000});
+    // Enter, then require the world to actually report a ready player. Pointer
+    // lock is not available in every engine, so the HUD/ready signal is the
+    // contract rather than controlsEnabled.
+    await page.waitForSelector('#btn-enter',{timeout:30000});
+    await page.waitForFunction(()=>{const b=document.getElementById('btn-enter');return b&&!b.disabled;},null,{timeout:30000});
+    await page.locator('#btn-enter').click();
+    await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:90000});
+    assert.ok(await page.locator('.hud-top').count(),`${engine} Aizanoi: HUD missing after Enter`);
+    assert.deepEqual(worldErrors,[],`${engine} Aizanoi: ${worldErrors.join(' | ')}`);
+    await page.close();
+  }
 
   await context.close();
   console.log(`${engine}: critical cross-browser smoke passed`);

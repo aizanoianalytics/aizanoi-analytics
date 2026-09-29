@@ -70,7 +70,7 @@ for (const relative of legacyPaths) assert.equal(existsSync(path.join(root, rela
 
 assert.ok(statSync(path.join(frontend, 'index.html')).size < 12_000, 'canonical shell HTML regressed into an oversized document');
 assert.match(index, /AizanoiOS/);
-assert.match(index, /Media, Data, Software & Historical Worlds/);
+assert.match(index, /Media, Data, Software/);
 assert.match(index, /\/styles\/tokens\.css/);
 assert.match(index, /\/styles\/base\.css/);
 assert.match(index, /\/styles\/shell\.css/);
@@ -92,7 +92,7 @@ assert.match(main, /window\.AIZANOI_OS/);
 assert.match(osJs, /wireDockMagnification/);
 assert.match(osJs, /az-launchpad-search/);
 assert.match(osJs, /contextmenu/);
-assert.match(brandJs, /\['news','videos','analytics','worlds','forge'\]/);
+assert.match(brandJs, /\['news','videos','analytics','aizanoi','forge'\]/);
 assert.match(brandJs, /az-phone-home/);
 assert.match(brandJs, /az-tablet-home/);
 assert.match(brandJs, /data-az-product|azProduct/);
@@ -166,11 +166,11 @@ for (const [name, css] of Object.entries({shell,components,deviceShell,apps})) {
 }
 
 const registry = await import(pathToFileURL(path.join(frontend, 'js/v3/registry.js')).href + `?t=${Date.now()}`);
-assert.equal(registry.APPS.length, 20, 'public AizanoiOS catalog must contain Flowerseller alongside the public product and utility set');
-assert.equal(registry.ALL_APPS.length, 20, 'combined public app catalog must match the registry exactly');
+assert.equal(registry.APPS.length, 19, 'public AizanoiOS catalog must contain the Aizanoi world and Flowerseller alongside the public product and utility set');
+assert.equal(registry.ALL_APPS.length, 19, 'combined public app catalog must match the registry exactly');
 assert.equal('WORKBENCH_APPS' in registry, false, 'retired Workbench catalog export returned');
-assert.deepEqual(registry.WORLDS.map((world) => world.id), ['aizanoi','rome','iga','athens']);
-for (const id of ['news','videos','analytics','worlds','forge','journal','labs','games']) {
+assert.deepEqual(registry.WORLDS.map((world) => world.id), ['aizanoi']);
+for (const id of ['news','videos','analytics','aizanoi','forge','journal','labs','games']) {
   assert.ok(registry.APPS.some((app)=>app.id===id),`missing public Aizanoi platform app ${id}`);
 }
 for (const id of ['workspace','notepad','web-editor','calculator','browser','camera','winamp','recycle-bin']) {
@@ -179,7 +179,9 @@ for (const id of ['workspace','notepad','web-editor','calculator','browser','cam
 for (const id of ['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor']) {
   assert.equal(registry.appById(id),null,`${id} must remain retired from public routing`);
 }
-assert.equal(registry.ALL_APPS.some((app) => /Aizanoi AI|HR AI|chatbot/i.test(`${app.id} ${app.label}`)), false, 'retired AI app returned to registry');
+// Word-boundary match: the flagship app is literally named 'Aizanoi', so an
+// unbounded 'Aizanoi AI' pattern false-positives on `${id} ${label}`.
+assert.equal(registry.ALL_APPS.some((app) => /(^|[^A-Za-z])Aizanoi AI([^A-Za-z]|$)|HR AI|chatbot/i.test(`${app.id} ${app.label}`)), false, 'retired AI app returned to registry');
 assert.equal(new Set(registry.ALL_APPS.map((app) => app.id)).size, registry.ALL_APPS.length, 'public app ids must be unique');
 
 assert.match(product, /independent digital studio/i);
@@ -199,7 +201,7 @@ assert.ok(existsSync(path.join(root,'frontend/news/index.json')),'generated News
 
 assert.match(manifest, /"name"\s*:\s*"AizanoiOS"/);
 assert.match(manifest, /"name"\s*:\s*"Aizanoi News"/);
-assert.match(manifest, /"name"\s*:\s*"Historical Worlds"/);
+assert.match(manifest, /"name"\s*:\s*"Aizanoi"/);
 assert.doesNotMatch(manifest, /hr-analytics|Aizanoi AI|HR AI/i);
 assert.match(sw, /importScripts\('\/release\.js'\)/);
 assert.match(sw, /const CACHE\s*=\s*self\.AIZANOI_RELEASE\.CACHE/);
@@ -214,10 +216,10 @@ assert.match(sw, /networkFirstStatic/, 'mutable static assets must prefer the re
 assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/, 'service worker must explicitly ignore API routes');
 assert.doesNotMatch(sw, /os-(?:platform|unified|product-polish|v2)\.js/);
 
-for (const route of ['/worlds/aizanoi-225/','/worlds/rome-410-476/','/worlds/athens-450-430/','/worlds/iga-airport/']) assert.match(worldsIndex, new RegExp(route.replaceAll('/', '\/')));
+assert.match(worldsIndex, /\/worlds\/aizanoi-225\//);
 assert.match(nginx, /location = \/api\/chat[\s\S]*return 410;/);
 assert.match(nginx, /location \^~ \/api\/[\s\S]*return 404;/);
-assert.deepEqual(nginxProxyTargets, ['http://127.0.0.1:8787/spectator/telemetry-1']);
+assert.deepEqual(nginxProxyTargets, [], 'the retired Fly telemetry proxy must not remain in the nginx topology');
 assert.doesNotMatch(nginx, /127\.0\.0\.1:3001/);
 
 const canonicalFiles = walk(frontend).filter((file) => /\.(?:html|css|js|json|webmanifest|svg|xml|txt)$/i.test(file));

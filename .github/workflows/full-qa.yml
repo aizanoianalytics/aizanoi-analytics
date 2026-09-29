@@ -116,8 +116,8 @@ jobs:
           path: 'artifacts/diagnostics/*'
           retention-days: 7
 
-  worlds-and-fly:
-    name: Full QA · worlds, fly and dungeon
+  worlds-and-dungeon:
+    name: Full QA · Aizanoi and Dungeon
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -143,22 +143,17 @@ jobs:
           python3 -m http.server 4173 --directory frontend >/tmp/aizanoi-full-qa-worlds-http.log 2>&1 &
           for i in {1..20}; do curl -fsS http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 0.5; done
           cat /tmp/aizanoi-full-qa-worlds-http.log; exit 1
-      - name: Historical Worlds and AizanoiOS shell browser traversal
+      - name: Aizanoi world and AizanoiOS shell browser traversal
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
           set -o pipefail
           status=0
-          # These drive a full WebGL world each. Run them one at a time: the
-          # runner has limited CPU and parallel software-rendered worlds time
-          # out against each other.
+          # These drive the full WebGL world. Run them one at a time: the runner
+          # has limited CPU and parallel software-rendered runs time out against
+          # each other.
           node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/field-system-browser-smoke.log || status=1
-          node tests/worlds-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/worlds-browser-smoke.log || status=1
+          node tests/aizanoi-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-browser-smoke.log || status=1
           exit $status
-      - name: Fly World runtime browser validation
-        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
-        run: |
-          set -o pipefail
-          node --test tests/fly-simulation-browser.test.mjs 2>&1 | tee artifacts/diagnostics/fly-simulation-browser.log
       - name: Dungeon browser flow
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
@@ -172,11 +167,11 @@ jobs:
           node --test tests/browser/aizanoi-os-flowerseller.test.mjs 2>&1 | tee artifacts/diagnostics/flowerseller-browser.log || status=1
           node --test tests/browser/aizanoi-os-labs.test.mjs 2>&1 | tee artifacts/diagnostics/labs-browser.log || status=1
           exit $status
-      - name: Upload worlds and fly diagnostics
+      - name: Upload Aizanoi and Dungeon diagnostics
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: aizanoi-full-qa-worlds-diagnostics
+          name: aizanoi-full-qa-world-diagnostics
           path: 'artifacts/diagnostics/*'
           retention-days: 7
 
@@ -219,7 +214,7 @@ jobs:
         run: |
           set -o pipefail
           status=0
-          node tests/historical-worlds-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/historical-worlds-visual.log || status=1
+          node tests/aizanoi-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-visual.log || status=1
           node tests/field-system-v3-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/field-system-visual.log || status=1
           node tests/markets-visual-capture.mjs 2>&1 | tee artifacts/diagnostics/markets-visual.log || status=1
           exit $status

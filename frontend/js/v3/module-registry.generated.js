@@ -2,6 +2,15 @@
 export const INSTALLED_MODULES = Object.freeze([
   Object.freeze({
     manifestVersion: 1,
+    id: "aizanoi",
+    type: "desktop-app",
+    entry: "/js/v3/apps/aizanoi/src/index.js",
+    enabledByDefault: true,
+    requires: Object.freeze([]),
+    provides: Object.freeze(["desktop-app"]),
+  }),
+  Object.freeze({
+    manifestVersion: 1,
     id: "analytics",
     type: "desktop-app",
     entry: "/js/v3/apps/analytics/src/index.js",
@@ -50,15 +59,6 @@ export const INSTALLED_MODULES = Object.freeze([
     id: "flowerseller",
     type: "desktop-app",
     entry: "/js/v3/apps/flowerseller/src/index.js",
-    enabledByDefault: true,
-    requires: Object.freeze([]),
-    provides: Object.freeze(["desktop-app"]),
-  }),
-  Object.freeze({
-    manifestVersion: 1,
-    id: "fly-world",
-    type: "desktop-app",
-    entry: "/js/v3/apps/fly-world/src/index.js",
     enabledByDefault: true,
     requires: Object.freeze([]),
     provides: Object.freeze(["desktop-app"]),
@@ -169,15 +169,6 @@ export const INSTALLED_MODULES = Object.freeze([
     entry: "/js/v3/apps/workspace/src/index.js",
     enabledByDefault: true,
     requires: Object.freeze(["apps","dialog","filesystem","notifications","sound"]),
-    provides: Object.freeze(["desktop-app"]),
-  }),
-  Object.freeze({
-    manifestVersion: 1,
-    id: "worlds",
-    type: "desktop-app",
-    entry: "/js/v3/apps/worlds/src/index.js",
-    enabledByDefault: true,
-    requires: Object.freeze(["worlds"]),
     provides: Object.freeze(["desktop-app"]),
   })
 ]);

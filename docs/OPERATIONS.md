@@ -29,7 +29,7 @@ Before every production frontend rollout:
 5. verify source ↔ production checksums for changed files;
 6. run `nginx -t` before reloading any production Nginx configuration;
 7. test `/`, core AizanoiOS apps, every public world (Aizanoi, Rome, Athens and the present-day
-   İGA companion) and the analytics products that are still published;
+ İGA companion) and the analytics products that are still published;
 8. verify historical API fail-closed behavior;
 9. verify security headers on both HTML and static-asset responses;
 10. verify mutable HTML/JS/CSS revalidate rather than remaining fresh under an old release;
@@ -54,7 +54,7 @@ Production Nginx should be verified for:
 
 The reference config intentionally uses Nginx `expires` inside cache-specific locations rather than location-level `add_header Cache-Control`; on common Nginx versions, a location-level `add_header` would otherwise stop inheritance of the server-level security headers.
 
-The AizanoiOS service worker precaches only the small core shell with `cache: reload` and must fail installation rather than activate a partial precache. Product modules and Historical Worlds intentionally remain network-lazy. Once requested, same-origin static assets use network-first delivery so mutable files can revalidate immediately after a release; a successful response refreshes the runtime cache and that cache is used only as the offline/network-failure fallback. When the core precache or delivery contract changes in a future release, bump the `aizanoi-os-shell-*` cache version so activation can retire the previous shell cache cleanly.
+The AizanoiOS service worker precaches only the small core shell with `cache: reload` and must fail installation rather than activate a partial precache. Product modules and Aizanoi intentionally remain network-lazy. Once requested, same-origin static assets use network-first delivery so mutable files can revalidate immediately after a release; a successful response refreshes the runtime cache and that cache is used only as the offline/network-failure fallback. When the core precache or delivery contract changes in a future release, bump the `aizanoi-os-shell-*` cache version so activation can retire the previous shell cache cleanly.
 
 Do not use long-lived `immutable` caching until asset filenames are content-hashed.
 
@@ -104,7 +104,7 @@ AIZANOIOS DESKTOP
 AIZANOIOS TABLET
 AIZANOIOS MOBILE
 NEWS / DASHBOARDS / CORE APPS
-HISTORICAL WORLDS
+Aizanoi
 STATIC SECURITY
 DELIVERY HEADERS
 ERROR / REGRESSION CHECK
