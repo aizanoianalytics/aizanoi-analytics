@@ -39,7 +39,14 @@ async function assertRenderedFrame(page, label) {
     // Let the render loop actually produce frames before judging the buffer.
     await new Promise((resolve) => {
       let ticks = 0;
-      const tick = () => { ticks += 1; if (ticks < 12) requestAnimationFrame(tick); else resolve(); };
+      const tick = () => {
+        ticks += 1;
+        if (ticks < 12) {
+          requestAnimationFrame(tick);
+        } else {
+          resolve();
+        }
+      };
       requestAnimationFrame(tick);
     });
     const canvas = document.querySelector('canvas#viewport');

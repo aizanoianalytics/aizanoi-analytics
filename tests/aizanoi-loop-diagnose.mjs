@@ -46,7 +46,11 @@ const probe = await page.evaluate(async () => {
     const tick = () => {
       const now = performance.now();
       samples.push({ t: Math.round(now - t0), m: d.metrics ? { ...d.metrics } : null });
-      if (now - t0 < 5000) setTimeout(tick, 500); else resolve({ samples, finalMetrics: d.metrics ? { ...d.metrics } : null });
+      if (now - t0 < 5000) {
+        setTimeout(tick, 500);
+      } else {
+        resolve({ samples, finalMetrics: d.metrics ? { ...d.metrics } : null });
+      }
     };
     tick();
   });

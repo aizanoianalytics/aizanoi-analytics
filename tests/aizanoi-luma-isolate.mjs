@@ -41,7 +41,14 @@ console.log(JSON.stringify(await page.evaluate(async () => {
   const ticks = await new Promise((resolve) => {
     let n = 0;
     const t0 = performance.now();
-    const tick = () => { n += 1; if (performance.now() - t0 < 2000) requestAnimationFrame(tick); else resolve(n); };
+    const tick = () => {
+      n += 1;
+      if (performance.now() - t0 < 2000) {
+        requestAnimationFrame(tick);
+      } else {
+        resolve(n);
+      }
+    };
     requestAnimationFrame(tick);
   });
   return { startReturned: started, rafTicksIn2s: ticks, metricsAfter: d.metrics ?? null };
@@ -67,7 +74,9 @@ console.log(JSON.stringify(await page.evaluate(() => {
 console.log('\n=== framebuffer sample (two independent methods) ===');
 const sample = await page.evaluate(async () => {
   // let the loop actually draw
-  await new Promise((r) => setTimeout(r, 1200));
+  await new Promise((r) => {
+    setTimeout(r, 1200);
+  });
   const c = document.querySelector('canvas');
   const out = {};
   // 1) drawImage into a 2D canvas
