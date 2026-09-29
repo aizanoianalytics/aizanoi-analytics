@@ -5,6 +5,8 @@ export const LEVELS = [
   {
     id: 1,
     name: 'Chapter 1: Pronaos Crypts',
+    rooms: { combat: 5, elite: 1, shrine: 1, treasure: 2, event: 1 },
+    palette: { floor: 0x2b2723, wall: 0x3a352f, accent: 0x8a7a5c, fog: 0x1a1714, name: 'crypt' },
     gridWidth: 32,
     gridHeight: 32,
     structures: { spawnPoints: 2, towers: 1, enemyBases: 0 },
@@ -16,6 +18,8 @@ export const LEVELS = [
   {
     id: 2,
     name: 'Chapter 2: Penkalas Aqueducts',
+    rooms: { combat: 4, elite: 2, shrine: 1, merchant: 1, treasure: 1, event: 2 },
+    palette: { floor: 0x2f3336, wall: 0x3c4245, accent: 0x6d8a8f, fog: 0x181c1e, name: 'aqueduct' },
     gridWidth: 36,
     gridHeight: 36,
     structures: { spawnPoints: 3, towers: 2, enemyBases: 0 },
@@ -27,6 +31,8 @@ export const LEVELS = [
   {
     id: 3,
     name: 'Chapter 3: Macellum Trade Vaults',
+    rooms: { combat: 3, elite: 1, shrine: 1, merchant: 2, treasure: 3, event: 1 },
+    palette: { floor: 0x33291f, wall: 0x41352a, accent: 0xb08a3e, fog: 0x1c1712, name: 'vaults' },
     gridWidth: 40,
     gridHeight: 40,
     structures: { spawnPoints: 3, towers: 2, enemyBases: 1 },
@@ -38,6 +44,8 @@ export const LEVELS = [
   {
     id: 4,
     name: 'Chapter 4: Theatre Catacombs',
+    rooms: { combat: 4, elite: 2, shrine: 1, event: 2, treasure: 1 },
+    palette: { floor: 0x241f26, wall: 0x2f2830, accent: 0x7a4a6b, fog: 0x141117, name: 'catacombs' },
     gridWidth: 44,
     gridHeight: 44,
     structures: { spawnPoints: 4, towers: 3, enemyBases: 1 },
@@ -49,6 +57,8 @@ export const LEVELS = [
   {
     id: 5,
     name: 'Chapter 5: Necropolis Labyrinth',
+    rooms: { combat: 5, elite: 3, event: 2, treasure: 1 },
+    palette: { floor: 0x22262b, wall: 0x2c3138, accent: 0x54606b, fog: 0x121417, name: 'labyrinth' },
     gridWidth: 48,
     gridHeight: 48,
     structures: { spawnPoints: 4, towers: 3, enemyBases: 1 },
@@ -60,6 +70,8 @@ export const LEVELS = [
   {
     id: 6,
     name: 'Chapter 6: Sanctuary of Cybele',
+    rooms: { combat: 3, elite: 2, shrine: 3, merchant: 1, event: 1, treasure: 1 },
+    palette: { floor: 0x2e2a33, wall: 0x3a3542, accent: 0x9a6fa8, fog: 0x191620, name: 'sanctuary' },
     gridWidth: 50,
     gridHeight: 50,
     structures: { spawnPoints: 5, towers: 4, enemyBases: 1 },
@@ -71,6 +83,8 @@ export const LEVELS = [
   {
     id: 7,
     name: 'Chapter 7: Colonnaded Street',
+    rooms: { combat: 4, elite: 2, merchant: 2, event: 2, shrine: 1, treasure: 1 },
+    palette: { floor: 0x33322c, wall: 0x413f37, accent: 0xa89a6a, fog: 0x1c1b17, name: 'street' },
     gridWidth: 52,
     gridHeight: 52,
     structures: { spawnPoints: 5, towers: 4, enemyBases: 2 },
@@ -82,6 +96,8 @@ export const LEVELS = [
   {
     id: 8,
     name: 'Chapter 8: Temple Archives',
+    rooms: { combat: 3, elite: 2, shrine: 2, treasure: 3, event: 1, merchant: 1 },
+    palette: { floor: 0x2a2b26, wall: 0x363830, accent: 0x7f8a5c, fog: 0x161713, name: 'archives' },
     gridWidth: 54,
     gridHeight: 54,
     structures: { spawnPoints: 6, towers: 4, enemyBases: 2 },
@@ -93,6 +109,8 @@ export const LEVELS = [
   {
     id: 9,
     name: 'Chapter 9: Subterranean Adyton',
+    rooms: { combat: 4, elite: 3, shrine: 2, event: 2, treasure: 1 },
+    palette: { floor: 0x1e1c22, wall: 0x282530, accent: 0x8a3f4a, fog: 0x100e12, name: 'adyton' },
     gridWidth: 56,
     gridHeight: 56,
     structures: { spawnPoints: 6, towers: 5, enemyBases: 2 },
@@ -104,6 +122,8 @@ export const LEVELS = [
   {
     id: 10,
     name: 'Chapter 10: Throne of Storms',
+    rooms: { combat: 5, elite: 3, shrine: 1, event: 2, treasure: 1 },
+    palette: { floor: 0x1c1e26, wall: 0x252833, accent: 0x3f6b8a, fog: 0x0e1014, name: 'storms' },
     gridWidth: 64,
     gridHeight: 64,
     structures: { spawnPoints: 6, towers: 6, enemyBases: 3 },
@@ -120,6 +140,12 @@ export const LEVELS = [
     gridWidth: 50,
     gridHeight: 50,
     scalingPerWave: { hp: 1.15, damage: 1.10, enemyCount: 1.12 },
+    // The endless mode is a pantheon, not a chapter: it is built as an arena
+    // loop. Combat and elite halls dominate because that is what a wave is, and
+    // the single shrine is the one breather between waves. It gets its own
+    // identity rather than borrowing a chapter's, so the two never drift apart.
+    rooms: { combat: 6, elite: 3, shrine: 1 },
+    palette: { floor: 0x24222c, wall: 0x2f2c39, accent: 0x7a5fa8, fog: 0x14121a, name: 'pantheon' },
     lore: 'Endless waves. Highest wave is the score.',
   },
 ];

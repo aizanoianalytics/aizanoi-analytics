@@ -350,11 +350,40 @@ export class GameScene extends Phaser.Scene {
       count = Math.min(32, rawCount);
     }
 
+    // Section 19: encounters are placed by room role, not scattered at random.
+    // A shrine or a merchant camp stays safe, an elite chamber holds a few
+    // stronger enemies instead of a crowd, and the boss arena is reserved for
+    // the boss. The spawn still comes from the generator's proven-reachable
+    // set, so nothing can appear inside a wall.
+    const spawnRoles = ['combat', 'elite', 'treasure', 'event', 'transition'];
+    let eliteSpawned = 0;
     for (let i = 0; i < count; i++) {
-      const pos = this.levelSystem.getRandomWalkablePosition(true);
+      // Bias towards the role this chapter actually has most of, so an
+      // Aqueducts chapter fills its combat halls and a Necropolis chapter fills
+      // its elite chambers.
+      const role = spawnRoles[i % spawnRoles.length];
+      let pos = this.levelSystem.getSpawnPositionForRole(role);
+      if (!pos) pos = this.levelSystem.getRandomWalkablePosition(true);
+
       const typeKey = enemyTypes[i % enemyTypes.length];
       const typeConfig = { ...ENEMY_TYPES[typeKey] };
-      typeConfig.eliteAffix = chooseEliteAffix(typeConfig);
+      const isEliteRoom = pos.role === 'elite';
+      if (isEliteRoom) {
+        // An elite chamber is a smaller fight with a stronger one, which is what
+        // makes it a different encounter rather than a relabelled corridor.
+        eliteSpawned++;
+        typeConfig.eliteAffix = chooseEliteAffix({ ...typeConfig, isElite: true });
+        typeConfig.maxHpMultiplier = 1.5;
+        typeConfig.hp = Math.round(typeConfig.hp * 1.5);
+        typeConfig.attackDamage = Math.round(typeConfig.attackDamage * 1.2);
+      } else {
+        typeConfig.eliteAffix = chooseEliteAffix(typeConfig);
+      }
+      if (isEliteRoom && eliteSpawned > 2) {
+        // Never let an elite chamber become an ambush: two elites is the cap.
+        typeConfig.hp = Math.round(typeConfig.hp / (1.5 * (eliteSpawned - 2)));
+        typeConfig.attackDamage = Math.round(typeConfig.attackDamage / (1.2 * (eliteSpawned - 2)));
+      }
 
       if (this.isEndless) {
         // Dalga ölçeği 20. dalgada sabitlenir: can ~14.2x, hasar ~6.1x tavan.
@@ -365,6 +394,7 @@ export class GameScene extends Phaser.Scene {
       }
 
       const enemy = new Enemy(this, pos.x, pos.y, typeConfig);
+      enemy.setData('spawnRole', pos.role);
       this.enemies.add(enemy);
     }
 
@@ -372,22 +402,36 @@ export class GameScene extends Phaser.Scene {
     if (config.structures) {
       const { spawnPoints = 0, towers = 0, enemyBases = 0 } = config.structures;
 
+      // Structures belong to rooms too: a fissure or a tower is a hazard, so it
+      // goes in a room the player has to fight through, not in a safe camp or a
+      // shrine. Falling back to anywhere keeps an over-sparse chapter playable.
+      const hazardRoles = ['combat', 'event', 'treasure'];
+
       for (let s = 0; s < spawnPoints; s++) {
-        const pos = this.levelSystem.getRandomWalkablePosition(true);
+        const pos =
+          this.levelSystem.getSpawnPositionForRole(hazardRoles[s % hazardRoles.length]) ||
+          this.levelSystem.getRandomWalkablePosition(true);
         const fissure = new Structure(this, pos.x, pos.y, 'spawn_fissure');
+        fissure.setData('spawnRole', pos.role);
         this.structures.add(fissure);
       }
 
       for (let t = 0; t < towers; t++) {
-        const pos = this.levelSystem.getRandomWalkablePosition(true);
+        const pos =
+          this.levelSystem.getSpawnPositionForRole(hazardRoles[t % hazardRoles.length]) ||
+          this.levelSystem.getRandomWalkablePosition(true);
         const tower = new Structure(this, pos.x, pos.y, 'defense_tower');
+        tower.setData('spawnRole', pos.role);
         tower.lastFire = 0;
         this.structures.add(tower);
       }
 
       for (let b = 0; b < enemyBases; b++) {
-        const pos = this.levelSystem.getRandomWalkablePosition(true);
+        const pos =
+          this.levelSystem.getSpawnPositionForRole(hazardRoles[b % hazardRoles.length]) ||
+          this.levelSystem.getRandomWalkablePosition(true);
         const shrine = new Structure(this, pos.x, pos.y, 'corrupted_shrine');
+        shrine.setData('spawnRole', pos.role);
         this.structures.add(shrine);
       }
     }
@@ -396,8 +440,13 @@ export class GameScene extends Phaser.Scene {
     if (config.boss) {
       const bossConfig = ENEMY_TYPES[config.boss];
       if (bossConfig) {
-        const bossPos = this.levelSystem.getRandomWalkablePosition(true);
+        // The boss belongs in the boss arena, which is the one room the audit
+        // guarantees has the clearance a large fight needs.
+        const bossPos =
+          this.levelSystem.getSpawnPositionForRole('boss', { requiredClearance: 3 }) ||
+          this.levelSystem.getRandomWalkablePosition(true, 3);
         const boss = new Enemy(this, bossPos.x, bossPos.y, bossConfig);
+        boss.setData('spawnRole', 'boss');
         this.enemies.add(boss);
         // Boss uyarısı: wav + isim bandı
         this.playSfx('sfx-boss-warning', 0.7);
