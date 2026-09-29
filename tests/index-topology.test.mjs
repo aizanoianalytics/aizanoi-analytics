@@ -37,7 +37,7 @@ test('apps index stays synchronized with manifest discovery',async()=>{
 
 test('major routers expose current independently maintained subsystems',()=>{
   assert.ok(read('frontend/index.md').includes('web-editor-preview/'));
-  assert.ok(read('frontend/index.md').includes('Historical Worlds naming map'));
+  assert.ok(read('frontend/index.md').includes('worlds/'));
   assert.ok(read('analytics/index.md').includes('dashboards/new-hr-collection/'));
   assert.ok(read('infra/index.md').includes('nginx/'));
   const docs=read('docs/index.md');

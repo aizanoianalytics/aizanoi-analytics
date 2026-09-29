@@ -33,7 +33,7 @@ Core public destinations:
 1. **Aizanoi News**
 2. **Aizanoi TV**
 3. **Analytics**
-4. **Historical Worlds**
+4. **Aizanoi**
 5. **Aizanoi Forge**
 
 Secondary public families:
@@ -168,7 +168,7 @@ Data products should prioritize information hierarchy, clarity and usable contro
 ### Forge
 Project/source cards should make Launch / Source / Documentation / Version states obvious where applicable.
 
-### Historical Worlds
+### Aizanoi
 Cinematic/fullscreen and city-specific visual language remains appropriate.
 
 ### Labs

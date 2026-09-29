@@ -43,7 +43,7 @@ Hermes may also implement engineering changes when asked, but must obey the same
 7. Add `image` only when provenance/rights satisfy `CONTENT_POLICY.md`. No image is preferable to invented or unclear rights metadata.
 8. For daily editions, target at least 15 original items across AI, Technology, Economy / Markets and Football, balanced roughly AI 5, Technology 4, Economy / Markets 3, Football 3. Do not manufacture quantity when source quality is weak. For weekly analysis (Mondays) target 4–6 longer pieces (≥ 240 characters each) with `"kind": "weekly"` and a matching `"week": "YYYY-Www"` label.
 9. Run `node scripts/news/build-news.mjs`.
-   The compiler must acquire its exclusive lock and complete staged validation; never copy a partially generated tree into production. The same build refreshes the News feed, daily edition/weekly edition/category pages, permanent article pages, `/news/about/`, RSS, `/news/sitemap.xml` and the root discovery sitemap.
+ The compiler must acquire its exclusive lock and complete staged validation; never copy a partially generated tree into production. The same build refreshes the News feed, daily edition/weekly edition/category pages, permanent article pages, `/news/about/`, RSS, `/news/sitemap.xml` and the root discovery sitemap.
 10. Run `node --test tests/*.test.mjs` or the repository's current release gate.
 11. Inspect the generated `frontend/news/index.json`, permanent article/edition/category tree, RSS and sitemap diffs.
 12. Commit with a meaningful message such as `content: publish 2026-08-21 news briefing`.
@@ -71,20 +71,19 @@ Do not treat a merge as a deployment.
 4. Run `node scripts/modules/build-module-registry.mjs --check` for every AizanoiOS/static-shell release so manifests and committed generated wiring cannot drift. Then run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed. Do not regenerate News unnecessarily when the approved diff does not touch News inputs or generated outputs.
 5. Deploy the public static tree with the exact-SHA invocation:
 
-   ```bash
-   AIZANOI_DEPLOY_SHA="$TARGET_SHA" bash scripts/deploy-public.sh
-   ```
+ ```bash
+ AIZANOI_DEPLOY_SHA="$TARGET_SHA" bash scripts/deploy-public.sh
+ ```
 
-   The script is fail-closed: a missing or mismatched `AIZANOI_DEPLOY_SHA`
-   aborts with exit code 2 before any staging work. This is the canonical
-   allowlist boundary; do not replace it with a repo-root copy or ad-hoc
-   rsync, and do not bypass the gate with an empty/unset env var.
+ The script is fail-closed: a missing or mismatched `AIZANOI_DEPLOY_SHA`
+ aborts with exit code 2 before any staging work. This is the canonical
+ allowlist boundary; do not replace it with a repo-root copy or ad-hoc
+ rsync, and do not bypass the gate with an empty/unset env var.
 6. Confirm source-to-production checksum/SHA parity where the deployment tooling supports it.
-7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, `/analytics/`, `/news/about/`, one current permanent News article, `/news/sitemap.xml`, all four Historical Worlds: Aizanoi, Rome, Athens, İGA Airport and representative static assets. `/analytics/`, app id `analytics` and visible label **Analytics** remain aligned.
-    - When an AizanoiOS utility changed, also smoke-check the affected app route(s), including `/?app=browser`, `/?app=camera`, `/?app=calculator`, `/?app=notepad`, `/?app=workspace`, `/?app=recycle-bin`, `/?app=winamp`, `/?app=dungeon` and `/?app=games` as applicable. For Browser changes, verify direct HTTPS navigation, the sandbox boundary and the **Open external** fallback; destination sites may independently refuse iframe embedding. For Camera changes, verify the start/permission flow and effective production `Permissions-Policy`; do not claim real camera/microphone capture unless it was actually observed on a capable client.
+7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, `/analytics/`, `/news/about/`, one current permanent News article, `/news/sitemap.xml`, all four Aizanoi: Aizanoi, Rome, Athens, İGA Airport and representative static assets. `/analytics/`, app id `analytics` and visible label **Analytics** remain aligned.
+ - When an AizanoiOS utility changed, also smoke-check the affected app route(s), including `/?app=browser`, `/?app=camera`, `/?app=calculator`, `/?app=notepad`, `/?app=workspace`, `/?app=recycle-bin`, `/?app=winamp`, `/?app=dungeon` and `/?app=games` as applicable. For Browser changes, verify direct HTTPS navigation, the sandbox boundary and the **Open external** fallback; destination sites may independently refuse iframe embedding. For Camera changes, verify the start/permission flow and effective production `Permissions-Policy`; do not claim real camera/microphone capture unless it was actually observed on a capable client.
 8. Verify the effective production security headers on both HTML and static-asset responses. For the current Browser/Camera contract, the installed Nginx policy must retain `frame-src 'self' https:`, `media-src 'self' blob:` and `Permissions-Policy: geolocation=(), microphone=(self), camera=(self)` unless a later approved security contract explicitly changes them.
 9. If a regression appears, roll back to the recorded known-good SHA/snapshot instead of hot-fixing production only.
-
 
 ## Safety boundaries
 

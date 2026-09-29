@@ -66,7 +66,7 @@ test('contribution guidance points developers toward current canonical owners', 
 
 test('product documentation keeps the approved News categories and current product families visible', () => {
   for (const label of ['AI', 'Technology', 'Economy / Markets', 'Football']) assert.match(docs.product, new RegExp(label.replace('/', '\\/')));
-  for (const label of ['Aizanoi News', 'Aizanoi TV', 'Analytics', 'Aizanoi Forge', 'Historical Worlds', 'Aizanoi Labs', 'Aizanoi Arcade']) {
+  for (const label of ['Aizanoi News', 'Aizanoi TV', 'Analytics', 'Aizanoi Forge', 'Aizanoi Labs', 'Aizanoi Arcade', 'Aizanoi Dungeon']) {
     assert.match(docs.product, new RegExp(label));
   }
 });

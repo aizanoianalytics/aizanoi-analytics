@@ -95,8 +95,8 @@ test('worlds capability narrows catalog, current session and launch through the 
     assert.notEqual(current, session);
     assert.deepEqual(current, session);
     assert.equal(Object.isFrozen(current), true);
-    assert.equal(worlds.launch('rome', 'Forum'), 'world:rome');
-    assert.deepEqual(calls, [{ worldId: 'rome', landmark: 'Forum' }]);
+    assert.equal(worlds.launch('aizanoi', 'Macellum'), 'world:aizanoi');
+    assert.deepEqual(calls, [{ worldId: 'aizanoi', landmark: 'Macellum' }]);
   } finally {
     if (previous === undefined) delete globalThis.AIZANOI_OS;
     else globalThis.AIZANOI_OS = previous;

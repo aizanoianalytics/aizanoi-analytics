@@ -59,7 +59,7 @@ Tests are split by cost, so routine CI stays fast without leaving anything unown
 | Owner | Runs | Covers |
 |---|---|---|
 | **Aizanoi CI** (required on every PR/main push) | `validate`, `browser-smoke`, `lighthouse` | JavaScript syntax, ESLint, module-registry integrity, News build, Node regression + audit contract tests, Python Markets/Worlds contracts, whitespace, the desktop/tablet/mobile critical shell smoke, the production-Nginx policy gate, representative accessibility, Lighthouse budgets, and the real-browser service-worker lifecycle gate |
-| **Aizanoi Full QA** (weekly schedule + manual dispatch) | `browser-products`, `worlds-and-fly`, `visual-captures` | The expensive per-app browser suites, Markets/Recruitment Analytics/PACS real-browser QA, Historical World traversal, Fly World runtime validation, Dungeon/Flowerseller/Labs interaction, and the visual capture suites |
+| **Aizanoi Full QA** (weekly schedule + manual dispatch) | `browser-products`, `worlds-and-fly`, `visual-captures` | The expensive per-app browser suites, Markets/Recruitment Analytics/PACS real-browser QA, Historical World traversal, Fly World runtime validation, Dungeon//Labs interaction, and the visual capture suites |
 | **Cross-browser critical smoke** (weekly + manual) | Firefox/WebKit | The critical cross-engine smoke |
 | **Local / operator-only** | manual | Anything needing Blender, a GPU, the private Fly Simulation service or production credentials — for example the Fly House `build_scene*.py` / `environment_export.py` pipeline, which requires Blender and cannot run in CI |
 
@@ -67,7 +67,7 @@ Full QA is deliberately **not** a required status check, so a routine change is 
 
 ## Historical-world contributions
 
-Start from the contracts in `frontend/worlds/README.md` and the nearest `frontend/worlds/AGENTS.md`. Keep source data, inferred fabric and runtime implementation distinguishable; never copy the shared engine into a world-local folder.
+Start from the router in `frontend/worlds/index.md` and the nearest `frontend/worlds/AGENTS.md`. Keep source data, inferred fabric and runtime implementation distinguishable; never copy the shared engine into a world-local folder.
 
 ## AizanoiOS contributions
 

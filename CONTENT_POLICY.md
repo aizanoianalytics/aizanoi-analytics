@@ -72,6 +72,6 @@ Aizanoi News publicly discloses that AI-assisted tools may support source discov
 
 Video companion pages and Journal articles should list meaningful research sources when factual claims depend on external material. Opinion does not require a citation merely for being opinion, but the facts it relies on should be sourced.
 
-## Historical Worlds
+## Aizanoi
 
 The existing evidence taxonomy remains mandatory: documented/source-supported, archaeological/material, inferred, atmospheric and disputed where applicable. Plausible reconstruction is never promoted to verified fact by visual polish.

@@ -18,7 +18,7 @@ const canonicalBase = [
   '/analytics/dashboards/new-hr-collection/pacs/',
   '/analytics/dashboards/new-hr-collection/recruitment-analytics/',
   '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
-  '/worlds/aizanoi-225/', '/worlds/rome-410-476/', '/worlds/athens-450-430/', '/worlds/iga-airport/'
+  '/worlds/aizanoi-225/'
 ];
 const canonical = [
   ...canonicalBase,
@@ -61,7 +61,7 @@ test('targeted public and internal pages expose the intended metadata boundary',
   assert.doesNotMatch(preview, /<meta property="og:/i);
 });
 
-test('sitemap reflects canonical products, privacy, Historical Worlds and generated News discovery routes', () => {
+test('sitemap reflects canonical products, privacy, the Aizanoi world and generated News discovery routes', () => {
   const urls = [...sitemap.matchAll(/<url>\s*<loc>https:\/\/aizanoianalytics\.com([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>/g)]
     .map(([, path, lastmod]) => ({ path, lastmod }));
   assert.deepEqual(urls.map(({ path }) => path), canonical);

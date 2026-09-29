@@ -50,3 +50,18 @@ test('canonical product landings expose shared X, GitHub and email destinations 
     assert.doesNotMatch(html, /Aizo is on X\. Unfortunately\./, `${route} must not repeat the Aizo joke`);
   }
 });
+
+test('every product landing carries the product nav exactly once, inside the header', () => {
+  // A duplicated bare `body > nav` product list (for example a second copy in
+  // the footer) is not a landmark, inherits the small footer link metrics and
+  // fails the WCAG 2.2 target-size gate. The header nav is the single owner.
+  for (const landing of productLandings) {
+    const html = read(`frontend/${landing}/index.html`);
+    const navs = [...html.matchAll(/<nav aria-label="Products">/g)];
+    assert.equal(navs.length, 1, `${landing}: expected exactly one product nav, found ${navs.length}`);
+    const headerEnd = html.indexOf('</header>');
+    const navAt = html.indexOf('<nav aria-label="Products">');
+    assert.ok(headerEnd !== -1 && navAt !== -1 && navAt < headerEnd,
+      `${landing}: product nav must live inside the shared header, not in a footer landmark`);
+  }
+});

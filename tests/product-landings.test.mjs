@@ -7,7 +7,7 @@ const origin = 'https://aizanoianalytics.com';
 const landings = {
   tv: { app:'videos', title:'Aizanoi TV', phrase:'Coming Soon' },
   analytics: { app:'analytics', title:'Analytics', phrase:'Aizanoi Markets' },
-  worlds: { app:'worlds', title:'Historical Worlds', phrase:'Rome' },
+  worlds: { app:'aizanoi', title:'Aizanoi', phrase:'Temple of Zeus' },
   forge: { app:'forge', title:'Aizanoi Forge', phrase:'Source' },
   journal: { app:'journal', title:'Aizanoi Journal', phrase:'in development' },
   labs: { app:'labs', title:'Aizanoi Labs', phrase:'Experimental' },
@@ -77,10 +77,11 @@ test('secondary product placeholders state their current status honestly', () =>
   const journal = read('frontend/journal/index.html');
   assert.match(journal, /Status:\s*In development/i);
   assert.doesNotMatch(journal, /customer|subscriber|latest release|available now/i);
-  // Labs has real experiments (Fly World) — it must list them with accurate status.
+  // Labs keeps its real Grok / Roman History experiment — it must list it with accurate status.
   const labs = read('frontend/labs/index.html');
-  assert.match(labs, /Fly World/i);
-  assert.match(labs, /Experimental/i);
+  assert.match(labs, /Roman History/i);
+  assert.match(labs, /Prototype|Experimental/i);
+  assert.doesNotMatch(labs, /Fly World/i);
   assert.doesNotMatch(labs, /Status:\s*In development/i);
   const analytics = read('frontend/analytics/index.html');
   assert.match(analytics, /data-analytics-catalog/);
@@ -100,7 +101,7 @@ test('Forge exposes repository-backed project status, version, demo and source m
   for (const field of ['Status', 'Version', 'Demo', 'Source']) assert.match(html, new RegExp(`<dt>${field}<\\/dt>`));
   assert.match(html, /aizanoianalytics\/aizanoi-analytics/);
   assert.match(html, /AizanoiOS/);
-  assert.match(html, /Historical Worlds/);
+  assert.match(html, /Aizanoi/);
   assert.match(html, /Aizanoi Arcade/);
   assert.match(html, /frontend\/js\/v3\/apps\/games/);
   assert.match(html, /Four-game repository build/);
@@ -117,8 +118,8 @@ test('PWA and repository discovery point to canonical static product routes', ()
   assert.match(manifest, /"name":"Analytics"/);
 });
 
-test('all four Worlds publish canonical and social discovery metadata', () => {
-  for (const [slug, name] of [['aizanoi-225','Aizanoi'],['rome-410-476','Rome'],['athens-450-430','Athens'],['iga-airport','Istanbul']]) {
+test('the Aizanoi world publishes canonical and social discovery metadata', () => {
+  for (const [slug, name] of [['aizanoi-225','Aizanoi']]) {
     const html = read(`frontend/worlds/${slug}/index.html`);
     const url = `${origin}/worlds/${slug}/`;
     assert.match(html, new RegExp(`<link rel="canonical" href="${url}">`));

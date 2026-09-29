@@ -1,4 +1,4 @@
-// iPhone 13 (WebKit) entry + audio + performance probe for the four worlds.
+// iPhone 13 (WebKit) entry + audio + performance probe for the Aizanoi world.
 // Diagnoses the user-reported "won't open / audio weak / mobile unusable" on the
 // device class they actually browse with. Run against a local static server.
 import { webkit, devices } from 'playwright';
@@ -6,9 +6,6 @@ import { webkit, devices } from 'playwright';
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4199';
 const worlds = [
   { id: 'aizanoi', path: '/worlds/aizanoi-225/' },
-  { id: 'athens', path: '/worlds/athens-450-430/' },
-  { id: 'rome', path: '/worlds/rome-410-476/' },
-  { id: 'iga', path: '/worlds/iga-airport/' },
 ];
 
 const browser = await webkit.launch({ headless: true });

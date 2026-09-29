@@ -84,8 +84,8 @@ test('Recruitment grid children and trend chart cannot force page-level overflow
 });
 
 
-test('Worlds browser smoke allows the observed slow controls-enable path', () => {
-  const src = read('tests/worlds-browser-smoke.mjs');
+test('Aizanoi browser smoke allows the observed slow controls-enable path', () => {
+  const src = read('tests/aizanoi-browser-smoke.mjs');
   assert.match(src, /controlsEnabled===true,null,\{timeout:10000\}\)/);
   assert.doesNotMatch(src, /controlsEnabled===true,null,\{timeout:5000\}\)/);
 });

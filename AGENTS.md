@@ -18,9 +18,12 @@ Current public families are:
 - Aizanoi Journal;
 - Analytics;
 - Aizanoi Forge;
-- Historical Worlds;
 - Aizanoi Labs;
 - Aizanoi Arcade.
+
+**Aizanoi** is the flagship interactive historical reconstruction and the primary interactive world of the Aizanoi Analytics brand. It is not one world in a catalog — it is the singular flagship experience.
+
+**Aizanoi Dungeon: Aizo's Awakening** is the flagship browser game within the Aizanoi universe.
 
 **Analytics** is the user-facing data-product area. Its stable route is `/analytics/` and its internal AizanoiOS app id is `analytics`; dashboards are one format within this product family.
 
@@ -28,7 +31,7 @@ The former Workbench/power-tool product is retired from the visitor-facing catal
 
 ## Public architecture
 
-The visitor-facing runtime remains static-first behind Nginx:
+The visitor-facing runtime is static-first behind Nginx:
 
 ```text
 Browser
@@ -38,14 +41,16 @@ Browser
    |     +-- static News feed
    |     +-- adaptive desktop/tablet/mobile shell
    |
-   +-- Historical Worlds
-   |     +-- Aizanoi · AD 225
-   |     +-- Rome · AD 410–476
-   |     +-- Athens · 450–430 BCE
-   |     +-- İGA · Istanbul Airport
+   +-- Aizanoi (flagship interactive world)
+   |     +-- /worlds/aizanoi-225/
+   |
+   +-- Aizanoi Dungeon (flagship game)
+   |     +-- /dungeon/
    |
 Nginx -> static HTML/CSS/JS/JSON/assets
 ```
+
+There is no visitor-facing backend. The former Fly telemetry service has been removed.
 
 Do not introduce a visitor-facing Node/Express app, remote shell, secret-bearing browser code or general public backend merely because Aizanoi Analytics covers multiple subjects. Build-time/private automation may exist outside the visitor runtime.
 
@@ -70,7 +75,7 @@ Permanent shortcuts/dock priorities:
 1. Aizanoi News
 2. Aizanoi TV
 3. Analytics
-4. Historical Worlds
+4. Aizanoi
 5. Aizanoi Forge
 
 Journal, Labs and Arcade remain discoverable through Applications/Search.
@@ -95,9 +100,13 @@ Aizanoi News must publish original summaries with source links. Never copy full 
 
 Primary public language is English.
 
-## Historical Worlds
+## Aizanoi
 
-Historical evidence rules are unchanged. `frontend/worlds/shared/` owns shared behavior; world-local data and evidence claims stay world-local.
+Aizanoi is the flagship interactive historical reconstruction. `frontend/worlds/aizanoi-225/` is the canonical scene/data/assets/builders. `frontend/worlds/shared/` owns shared Three.js/runtime infrastructure. Evidence/source ownership remains strict: documented, inferred, and reconstructed elements must remain visually and structurally distinct.
+
+## Aizanoi Dungeon
+
+Aizanoi Dungeon: Aizo's Awakening is the flagship browser game. The canonical module is `frontend/js/v3/apps/dungeon/`. The standalone route `/dungeon/` must remain a first-class fullscreen experience.
 
 Never present plausible, inferred or atmospheric reconstruction as verified fact.
 
