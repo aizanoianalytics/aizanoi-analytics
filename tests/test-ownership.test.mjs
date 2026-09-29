@@ -31,7 +31,8 @@ const DIAGNOSTICS = new Set([
   'aizanoi-loop-diagnose.mjs',
   'aizanoi-black-frame-diagnose.mjs',
   'dungeon-runtime-audit.mjs',
-  'dungeon-play-audit.mjs'
+  'dungeon-play-audit.mjs',
+  'aizanoi-performance-audit.mjs'
 ]);
 
 function browserSuites(dir = 'tests') {
