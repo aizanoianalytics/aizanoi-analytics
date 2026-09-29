@@ -101,6 +101,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.hpBar.setDepth(15);
     this.stats = { attackDamage: this.attackDamage, critChance: 0, armor: this.armor };
     this.isAmbushing = false;
+    // Shield-bash charge state: windup -> charge -> recovery. Kept in one
+    // object so the phase is readable in the update loop below.
+    this.charge = { phase: 'idle', timer: 0, angle: 0, hit: false };
   }
 
   update(time, delta, player) {
@@ -164,7 +167,15 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
     }
 
-    // 3. Distance and Movement logic
+    // 3. Shield-bash charge: a committed, telegraphed rush. Unlike the plain
+    // chasers, this one locks its heading during the windup, so sidestepping
+    // it actually works and running in a straight line does not.
+    if (this.behavior === 'shield_bash_charge' && this.updateCharge(time, delta, dist, player)) {
+      this.drawHealthBar();
+      return;
+    }
+
+    // 4. Distance and Movement logic
     if (dist <= this.aggroRange) {
       // Ranged Kiter: Oyuncu çok yaklaşırsa (120px) geri çekil
       if (this.behavior === 'ranged_kite' && dist < 120) {
@@ -186,9 +197,95 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  // Returns true while this enemy is locked into a charge phase, so the caller
+  // skips the ordinary chase logic. Phases:
+  //   windup    - stops, tints red, locks a heading (the player's dodge window)
+  //   charging  - runs at a fixed heading, damages on contact, ends on a wall
+  //   recovery  - stands still and takes extra damage (the punish window)
+  updateCharge(time, delta, dist, player) {
+    const c = this.charge;
+    const WINDUP = 520;
+    const RECOVERY = 700;
+    const CHARGE_SPEED = 420;
+    const RANGE = 260;
+
+    if (c.phase === 'idle') {
+      if (dist > RANGE || dist <= this.attackRange * 1.4) return false;
+      // Only start from a standstill, so a knockback cannot chain charges.
+      if (this.body?.velocity && Math.hypot(this.body.velocity.x, this.body.velocity.y) > 20) return false;
+      c.phase = 'windup';
+      c.timer = WINDUP;
+      c.angle = Phaser.Math.Angle.Between(this.x, this.y, player.x, player.y);
+      c.hit = false;
+      this.setTint(0xff8844);
+      this.setVelocity(0, 0);
+      return true;
+    }
+
+    if (c.phase === 'windup') {
+      c.timer -= delta;
+      // Keep telegraphing: a steady red pulse and a slow turn toward the target
+      // would be readable, but the heading must NOT track the player or the
+      // dodge window disappears.
+      const pulse = Math.sin(time / 90) > 0 ? 0xffcc44 : 0xff4411;
+      this.setTint(pulse);
+      this.setVelocity(0, 0);
+      if (c.timer <= 0) {
+        c.phase = 'charging';
+        c.timer = 900;
+        this.clearTint();
+      }
+      return true;
+    }
+
+    if (c.phase === 'charging') {
+      c.timer -= delta;
+      this.setVelocity(Math.cos(c.angle) * CHARGE_SPEED, Math.sin(c.angle) * CHARGE_SPEED);
+      // Contact damage, once per charge.
+      if (!c.hit && dist <= this.attackRange + 10) {
+        c.hit = true;
+        CombatSystem.processAttack(this, player);
+        this.scene.createDamageSpark(player.x, player.y);
+        this.scene.createFloatingText(player.x, player.y - 24, 'CHARGED', '#ff8844');
+      }
+      // Slamming into geometry ends the rush: this is what makes wall-bashing
+      // a real tactic rather than decoration.
+      if (c.timer <= 0 || this.body?.blocked?.left || this.body?.blocked?.right ||
+          this.body?.blocked?.up || this.body?.blocked?.down) {
+        c.phase = 'recovery';
+        c.timer = RECOVERY;
+        this.setVelocity(0, 0);
+        // Impact feedback at the point of contact.
+        this.scene.createDamageSpark(this.x, this.y);
+        this.scene.cameras?.main?.shake?.(140, 0.006);
+      }
+      return true;
+    }
+
+    // recovery: the punish window. Stands still, visibly exhausted.
+    c.timer -= delta;
+    this.setAlpha(0.7);
+    this.setVelocity(0, 0);
+    if (c.timer <= 0) {
+      c.phase = 'idle';
+      this.clearAlpha();
+    }
+    return true;
+  }
+
   executeAttack(player) {
     if (this.type.projectileType) {
       this.scene.fireEnemyProjectile(this, player, this.type.projectileType, this.attackDamage);
+      // Ground denial: leave the lingering zone that makes this a
+      // "ranged_aoe" archetype rather than a plain ranged one.
+      if (this.behavior === 'ranged_aoe' && this.type.volatileDamage) {
+        this.scene.spawnVolatileZone(
+          player.x, player.y,
+          this.type.volatileRadius ?? 56,
+          this.type.volatileDamage,
+          this.type.volatileDuration ?? 3000
+        );
+      }
     } else {
       this.stats.attackDamage = this.attackDamage;
       CombatSystem.processAttack(this, player);
