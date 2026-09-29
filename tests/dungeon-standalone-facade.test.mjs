@@ -97,3 +97,34 @@ test('the canonical launcher publishes the game for both modes', () => {
   assert.match(main, /export async function launchDungeonGame/,
     'launchDungeonGame must remain the single entry point');
 });
+
+test('no CI lint path can be left pointing at a directory that no longer exists', () => {
+  // ESLint exits 2 with "all-matched-files-ignored" when a path in the CI path
+  // set matches no lintable file, which fails the whole validate job with a
+  // cryptic error. Collapsing the standalone route to one HTML made
+  // `frontend/dungeon` such a path, so the guard has to catch it.
+  const lintLine = read('.github/workflows/ci.yml')
+    .split('\n')
+    .find((l) => l.includes('eslint') && l.includes('-c eslint.config.js'));
+  assert.ok(lintLine, 'the CI ESLint invocation must exist');
+
+  // Token-based slicing, not character offsets: indexOf on the raw line returns
+  // a character position, which silently drops most of the path list.
+  const tokens = lintLine.trim().split(/\s+/);
+  const paths = tokens.slice(tokens.indexOf('eslint.config.js') + 1);
+  const lintable = (p) => {
+    const full = join(ROOT, p);
+    if (!existsSync(full)) return false;
+    if (statSync(full).isDirectory()) {
+      for (const entry of readdirSync(full)) {
+        if (lintable(`${p}/${entry}`)) return true;
+      }
+      return false;
+    }
+    return /\.(js|mjs|cjs)$/.test(p);
+  };
+
+  const empty = paths.filter((p) => !lintable(p));
+  assert.deepEqual(empty, [],
+    `these CI lint paths match no lintable file, which makes ESLint exit 2: ${empty.join(', ')}`);
+});
