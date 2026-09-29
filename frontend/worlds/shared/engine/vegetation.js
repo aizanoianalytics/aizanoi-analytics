@@ -15,7 +15,16 @@ export class VegetationSystem {
     this.scene = scene;
     this.isMobile = isMobile;
     this.maxInstances = this.isMobile ? 350 : 800;
-
+    // Deterministic layout: every page load must grow the same forest, or no
+    // arrival framing can ever be verified — a tree that blocks the Temple of
+    // Zeus on one load is gone on the next, and screenshots stop being
+    // evidence. A fixed-seed PRNG sequences every placement decision below.
+    this._seed = 0xA17A001;
+    // Compacted worlds shrink their monuments (Aizanoi renders at 0.39) while
+    // full-size trees would tower over them and swallow arrival sightlines.
+    // Worlds pass their kit factor so flora keeps its real proportion to the
+    // monuments; worlds that do not pass one render exactly as before.
+    this.layoutScale = 1;
     this.dummy = new THREE.Object3D();
 
     this.oliveTrunkMesh = null;
@@ -25,6 +34,12 @@ export class VegetationSystem {
     this.figMesh = null;
     this.figTrunkMesh = null;
     this.shrubMesh = null;
+  }
+
+  /** Deterministic [0, 1) stream replacing Math.random for layout. */
+  rand() {
+    this._seed = (this._seed * 1664525 + 1013904223) >>> 0;
+    return this._seed / 4294967296;
   }
 
   init() {
@@ -123,12 +138,13 @@ export class VegetationSystem {
   }
 
   addOlive(x, z, scale = 1) {
+    scale *= this.layoutScale;
     if (this.oliveTrunkMesh.count >= this.maxInstances) return;
     const count = this.oliveTrunkMesh.count;
 
     this.dummy.position.set(x, 0, z);
     this.dummy.scale.set(scale, scale, scale);
-    this.dummy.rotation.set(0, Math.random() * Math.PI * 2, 0);
+    this.dummy.rotation.set(0, this.rand() * Math.PI * 2, 0);
     this.dummy.updateMatrix();
 
     this.oliveTrunkMesh.setMatrixAt(count, this.dummy.matrix);
@@ -138,12 +154,13 @@ export class VegetationSystem {
   }
 
   addCypress(x, z, scale = 1) {
+    scale *= this.layoutScale;
     if (this.cypressMesh.count >= this.maxInstances) return;
     const count = this.cypressMesh.count;
 
     this.dummy.position.set(x, 0, z);
-    this.dummy.scale.set(scale, scale * (0.9 + Math.random() * 0.3), scale);
-    this.dummy.rotation.set(0, Math.random() * Math.PI * 2, 0);
+    this.dummy.scale.set(scale, scale * (0.9 + this.rand() * 0.3), scale);
+    this.dummy.rotation.set(0, this.rand() * Math.PI * 2, 0);
     this.dummy.updateMatrix();
 
     this.cypressTrunkMesh.setMatrixAt(count, this.dummy.matrix);
@@ -153,12 +170,13 @@ export class VegetationSystem {
   }
 
   addFig(x, z, scale = 1) {
+    scale *= this.layoutScale;
     if (this.figMesh.count >= this.maxInstances) return;
     const count = this.figMesh.count;
 
     this.dummy.position.set(x, 0, z);
     this.dummy.scale.set(scale, scale, scale);
-    this.dummy.rotation.set(0, Math.random() * Math.PI * 2, 0);
+    this.dummy.rotation.set(0, this.rand() * Math.PI * 2, 0);
     this.dummy.updateMatrix();
 
     this.figTrunkMesh.setMatrixAt(count, this.dummy.matrix);
@@ -168,19 +186,21 @@ export class VegetationSystem {
   }
 
   addShrub(x, z, scale = 1) {
+    scale *= this.layoutScale;
     if (this.shrubMesh.count >= this.maxInstances) return;
     const count = this.shrubMesh.count;
 
     this.dummy.position.set(x, 0, z);
     this.dummy.scale.set(scale, scale, scale);
-    this.dummy.rotation.set(0, Math.random() * Math.PI * 2, 0);
+    this.dummy.rotation.set(0, this.rand() * Math.PI * 2, 0);
     this.dummy.updateMatrix();
 
     this.shrubMesh.setMatrixAt(count, this.dummy.matrix);
     this.shrubMesh.count++;
   }
 
-  populateCity(regions = [], buildings = [], streets = []) {
+  populateCity(regions = [], buildings = [], streets = [], scale = 1) {
+    if (Number.isFinite(scale) && scale > 0) this.layoutScale = scale;
     this.init();
 
     const isNearBuilding = (x, z, pad = 8) => {
@@ -208,32 +228,32 @@ export class VegetationSystem {
         const isSacred = tag.includes('sanctuary') || tag.includes('temple') || tag.includes('cemetery');
 
         for (let i = 0; i < count; i++) {
-          const gx = reg.x + (Math.random() - 0.5) * (rw * 0.85);
-          const gz = reg.z + (Math.random() - 0.5) * (rd * 0.85);
+          const gx = reg.x + (this.rand() - 0.5) * (rw * 0.85);
+          const gz = reg.z + (this.rand() - 0.5) * (rd * 0.85);
 
           if (!isNearBuilding(gx, gz, 6)) {
             if (isWater) {
-              if (Math.random() > 0.45) {
-                this.addFig(gx, gz, 0.8 + Math.random() * 0.4);
+              if (this.rand() > 0.45) {
+                this.addFig(gx, gz, 0.8 + this.rand() * 0.4);
               } else {
-                this.addShrub(gx, gz, 0.7 + Math.random() * 0.5);
+                this.addShrub(gx, gz, 0.7 + this.rand() * 0.5);
               }
             } else if (isSacred) {
-              if (Math.random() > 0.35) {
-                this.addCypress(gx, gz, 0.85 + Math.random() * 0.4);
+              if (this.rand() > 0.35) {
+                this.addCypress(gx, gz, 0.85 + this.rand() * 0.4);
               } else {
-                this.addOlive(gx, gz, 0.8 + Math.random() * 0.35);
+                this.addOlive(gx, gz, 0.8 + this.rand() * 0.35);
               }
             } else {
-              const roll = Math.random();
+              const roll = this.rand();
               if (roll < 0.55) {
-                this.addOlive(gx, gz, 0.75 + Math.random() * 0.4);
+                this.addOlive(gx, gz, 0.75 + this.rand() * 0.4);
               } else if (roll < 0.75) {
-                this.addShrub(gx, gz, 0.65 + Math.random() * 0.6);
+                this.addShrub(gx, gz, 0.65 + this.rand() * 0.6);
               } else if (roll < 0.90) {
-                this.addCypress(gx, gz, 0.8 + Math.random() * 0.35);
+                this.addCypress(gx, gz, 0.8 + this.rand() * 0.35);
               } else {
-                this.addFig(gx, gz, 0.75 + Math.random() * 0.35);
+                this.addFig(gx, gz, 0.75 + this.rand() * 0.35);
               }
             }
           }
@@ -255,16 +275,16 @@ export class VegetationSystem {
             const len = Math.hypot(dx, dz) || 1;
             const nx = -dz / len;
             const nz = dx / len;
-            const offsetDist = sWidth / 2 + 3.0 + Math.random() * 2.0;
+            const offsetDist = sWidth / 2 + 3.0 + this.rand() * 2.0;
 
             for (const side of [-1, 1]) {
-              const tx = mx + nx * offsetDist * side + (Math.random() - 0.5) * 4;
-              const tz = mz + nz * offsetDist * side + (Math.random() - 0.5) * 4;
+              const tx = mx + nx * offsetDist * side + (this.rand() - 0.5) * 4;
+              const tz = mz + nz * offsetDist * side + (this.rand() - 0.5) * 4;
               if (!isNearBuilding(tx, tz, 5)) {
-                if (Math.random() > 0.4) {
-                  this.addOlive(tx, tz, 0.8 + Math.random() * 0.3);
+                if (this.rand() > 0.4) {
+                  this.addOlive(tx, tz, 0.8 + this.rand() * 0.3);
                 } else {
-                  this.addCypress(tx, tz, 0.85 + Math.random() * 0.3);
+                  this.addCypress(tx, tz, 0.85 + this.rand() * 0.3);
                 }
               }
             }
@@ -274,10 +294,10 @@ export class VegetationSystem {
     } else {
       // General fallback if no regions provided
       for (let i = 0; i < (this.isMobile ? 50 : 120); i++) {
-        const x = (Math.random() - 0.5) * 600;
-        const z = (Math.random() - 0.5) * 600;
+        const x = (this.rand() - 0.5) * 600;
+        const z = (this.rand() - 0.5) * 600;
         if (!isNearBuilding(x, z, 6)) {
-          this.addOlive(x, z, 0.8 + Math.random() * 0.4);
+          this.addOlive(x, z, 0.8 + this.rand() * 0.4);
         }
       }
     }

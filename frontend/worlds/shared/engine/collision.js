@@ -790,13 +790,18 @@ export class CollisionSystem {
       if (radius < minDistance) continue;
       // Try the authored approach first, then fan out symmetrically so a nearby
       // collider does not throw the visitor onto the landmark's least readable side.
+      // Angles share the engine's yaw convention with clearViewAzimuth and
+      // landmarkYaw (atan2(x, z): 0 faces +z, PI/2 faces +x). A cos/sin mix-up
+      // here once rotated every teleport arrival 90 degrees from the
+      // occlusion-tested azimuth, landing Aizanoi's temple arrival on the
+      // temple's blank short end instead of its colonnaded side.
       for (let step = 0; step < 16; step++) {
         const ringStep = Math.ceil(step / 2);
         const direction = step === 0 ? 0 : (step % 2 === 1 ? 1 : -1);
         const angleOffset = ringStep * (Math.PI / 8) * direction;
         const angle = preferredAngle + angleOffset;
-        const x = targetX + Math.cos(angle) * radius;
-        const z = targetZ + Math.sin(angle) * radius;
+        const x = targetX + Math.sin(angle) * radius;
+        const z = targetZ + Math.cos(angle) * radius;
         if (!this._checkCollision(x, z, GROUND_Y)) {
           return { x, z, y: this._getGroundLevel(x, z) };
         }

@@ -50,8 +50,9 @@ const E_DOC = { level: 'documented', note: 'Epigraphically / topographically att
 export const BUILDINGS = [
   {
     id: 'temple', name: 'Temple of Zeus', type: 'temple',
-    x: -80, z: 5, w: 58, d: 38, h: 18, podiumHeight: 2.4, viewAngle: 0, state: 'standing', region: 'sanctuary', source: 'temple', evidence: E_ARCH,
-    detail: 'Pseudodipteral Ionic temple (13x7 kit columns) with an intact vaulted subterranean crypt beneath the cella dedicated to Cybele/Meter Steunene.'
+    x: -80, z: 5, w: 58, d: 38, h: 18, podiumHeight: 2.4, viewAngle: 0, // south: faces the long colonnaded side; east would present the blank short end
+    state: 'standing', region: 'sanctuary', source: 'temple', evidence: E_ARCH,
+    detail: 'Pseudodipteral Ionic temple (procedural 8x15 colonnade around the kit podium and cella) with an intact vaulted subterranean crypt beneath the cella dedicated to Cybele/Meter Steunene.'
   },
   {
     id: 'agora', name: 'Agora & Propylon', type: 'forum',

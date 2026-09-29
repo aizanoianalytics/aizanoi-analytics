@@ -739,6 +739,9 @@ body.mobile #mobile-controls {
   .hud-btn { width: 36px; height: 36px; font-size: 1rem; }
   .location-info h2 { font-size: 1.5rem; }
   .floating-card { width: 90%; left: 5%; transform: translateY(-50%); }
+  /* Lift the centered title above the joystick/action-rail row so narrow
+     portrait screens do not stack the controls on top of the location text. */
+  .hud-bottom { bottom: 150px; max-width: 92vw; }
 
   /* Keep the bottom-right corner usable on phones: stack the action rail ABOVE the
      minimap instead of colliding with it, and shrink the minimap dial. */

@@ -179,7 +179,7 @@ async function init() {
   vegetation = new VegetationSystem(scene);
   // Keep the sanctuary and spectacle axis open so the Temple and theatre
   // silhouettes read from the arrival path instead of being hidden by trees.
-  vegetation.populateCity(REGIONS.filter((region) => !['sanctuary', 'spectacle'].includes(region.id)), BUILDINGS, STREETS);
+  vegetation.populateCity(REGIONS.filter((region) => !['sanctuary', 'spectacle'].includes(region.id)), BUILDINGS, STREETS, LAYOUT.fit);
 
   // 9. Environment
   environment = new Environment(scene, renderer, {
@@ -292,7 +292,7 @@ function stabilizeMonumentMaterials(group) {
       // shading; this fixes readability without turning monuments into glow.
       material.side = THREE.DoubleSide;
       material.emissive.copy(material.color);
-      material.emissiveIntensity = Math.max(material.emissiveIntensity || 0, 0.08);
+      material.emissiveIntensity = Math.max(material.emissiveIntensity || 0, 0.03);
       material.needsUpdate = true;
     }
   });

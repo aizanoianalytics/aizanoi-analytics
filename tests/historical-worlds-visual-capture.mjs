@@ -60,8 +60,13 @@ function meanLuma(file) {
 const base=process.env.ANCIENT_WORLD_BASE_URL||'http://127.0.0.1:4173';
 const out='artifacts/final-visual-review';mkdirSync(out,{recursive:true});
 const worlds=[['aizanoi','/worlds/aizanoi-225/','temple'],['rome','/worlds/rome-410-476/','colosseum'],['athens','/worlds/athens-450-430/','parthenon'],['iga','/worlds/iga-airport/','tower']];
-const browser=await chromium.launch({headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-gpu-sandbox']});
+const browserArgs=['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-gpu-sandbox'];
 for(const [id,path,hero] of worlds){
+  // Fresh browser per world: SwiftShader accumulates GPU resources across the
+  // heavy WebGL contexts and the fourth world (İGA) died with "target closed".
+  // One browser per world costs seconds and removes the flake.
+  const browser=await chromium.launch({headless:true,args:browserArgs});
+  try{
   const page=await browser.newPage({viewport:{width:900,height:600}});
   await page.goto(`${base}${path}`,{waitUntil:'networkidle'});
   await page.waitForFunction(()=>window.__WORLD_BOOTSTRAP__?.ready===true||window.__WORLD_DEBUG__?.ready===true,null,{timeout:20000});
@@ -88,6 +93,10 @@ for(const [id,path,hero] of worlds){
     const last=window.__WORLD_LAST_TELEPORT__;
     return last===target && window.__WORLD_DEBUG__.player?.controlsEnabled===true;
   },hero,{timeout:15000,polling:50});
+  // Let the pose blender finish settling: an immediate screenshot can catch a
+  // mid-blend frame (proven on İGA tower: instant capture read black, the same
+  // pose 1.5s later rendered luma 121).
+  await page.waitForTimeout(1500);
   // Re-frame once the loop has drawn, and keep re-framing while the frame is
   // still black. The pose blender and the first post-jump frame can settle in
   // either order, so the only honest signal is the pixel measurement itself.
@@ -107,5 +116,6 @@ for(const [id,path,hero] of worlds){
   }
   console.log(`${id} hero captured (mean luma ${luma.toFixed(1)})`);
   await page.close();
+  }finally{await browser.close();}
 }
-await browser.close();console.log('Unified Worlds visual captures written');
+console.log('Unified Worlds visual captures written');
