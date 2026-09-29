@@ -52,7 +52,12 @@
  <h1>AIZANOI · AD 225</h1>
  </div>
  <nav class="hud-controls">
- <a href="/worlds/" class="hud-btn world-exit" title="All Worlds" aria-label="Back to Aizanoi">←</a>
+ <!-- Exit returns to wherever the visitor actually came from: the AizanoiOS
+     window when the world was launched from the shell, and the public landing
+     page when it was opened directly. A single hard-coded href meant a visitor
+     who launched the world from their desktop was dropped onto a marketing
+     page instead of back into the shell they started from. -->
+    <button type="button" id="btn-world-exit" class="hud-btn world-exit" title="Leave Aizanoi" aria-label="Leave Aizanoi and return">←</button>
  <button type="button" id="btn-tour" aria-label="Start guided tour" aria-pressed="false" class="hud-btn" title="Guided Tour">🏛️</button>
  <button type="button" id="btn-teleport" aria-label="Open fast travel" aria-controls="teleport-menu" aria-expanded="false" class="hud-btn" title="Jump/Teleport">📍</button>
  <button type="button" id="btn-inspect" aria-label="Inspect nearby structure" class="hud-btn" title="Inspect Element">🔍</button>
