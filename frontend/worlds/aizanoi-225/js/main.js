@@ -6,12 +6,17 @@
 import * as THREE from '../../shared/vendor/three.module.js';
 
 import {
-  CITY, SOURCES, TELEPORTS, TOUR_STOPS, DISTRICT_STYLES,
+  CITY, SOURCES, TELEPORTS, TOUR_STOPS, DISTRICT_STYLES, HERO_LANDMARK_ID,
   compactAizanoiLayout,
 } from './city-data.js';
 
 const COMPACT = compactAizanoiLayout();
 const { REGIONS, STREETS, BUILDINGS, WATERS, BOUNDS, SPAWN, LAYOUT } = COMPACT;
+
+// The hero monument. Entry and the opening arrival both frame this one object,
+// so the product's first impression is the Temple of Zeus rather than a
+// leftover layout constant.
+const HERO_LANDMARK = BUILDINGS.find((building) => building.id === HERO_LANDMARK_ID);
 // Distance kept clear between a monument and the houses around it, measured in
 // the layout's own units. The compaction shrinks footprints, so a clearance
 // tuned against the uncompressed plan would pinch shut -- authored 8 units were
@@ -107,6 +112,8 @@ async function init() {
   // 2. Scene & Camera
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.3, 3000);
+  // Pre-intro pose only. The first frame a visitor actually sees is composed by
+  // composeArrivalAt() when the cinematic lands, not by this placeholder.
   camera.position.set(SPAWN.x, PLAYER_HEIGHT, SPAWN.z);
   clock = new THREE.Clock();
 
@@ -228,8 +235,11 @@ async function init() {
   ]);
 
   intro.onComplete = () => {
-    // Complete and skipped intros share one deterministic, collision-safe arrival.
-    controls.teleportTo(SPAWN.x, SPAWN.z, SPAWN.angle, PLAYER_HEIGHT);
+    // Complete and skipped intros share one deterministic, collision-safe
+    // arrival -- the same composer fast travel uses, aimed at the Temple of
+    // Zeus so the first frame after Enter is deliberately composed rather than
+    // whatever the compact SPAWN constant happened to point at.
+    composeArrivalAt(HERO_LANDMARK);
     controls.enable();
     simPos.copy(camera.position);
     pose.snap();
@@ -646,14 +656,8 @@ function bindEvents() {
   ui.onTeleport = (teleportId) => {
     const building = BUILDINGS.find(b => b.id === teleportId);
     if (!building) return;
-    // Size the view from both footprint and height so the landmark reads as a
-    // complete composition rather than a wall-sized crop.
-    const standoff = landmarkStandoff(building, { verticalFov: camera.fov });
-    const azimuth = clearViewAzimuth(building, BUILDINGS, { standoff, cameraY: 1.7, declaredAngle: building.viewAngle });
-    const safe = collision.findSafeSpawn(building.x, building.z, landmarkArrivalDistance(building, { verticalFov: camera.fov }), standoff, azimuth);
+    composeArrivalAt(building);
     window.__WORLD_LAST_TELEPORT__ = building.id;
-    const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
-    controls.teleportFacing(safe.x, safe.z, building.x, landmarkTargetHeight(building), building.z, targetY);
     // Teleport is a discrete jump: the sim state must land exactly there so
     // the pose blender doesn't glide across the map on the next frames. The
     // frame loop writes camera.position from pose.sample() every display frame,
@@ -721,6 +725,46 @@ function installWorldDebugHandle() {
     },
   };
   document.documentElement.dataset.worldReady = 'true';
+}
+
+/**
+ * Compose a deliberate, collision-safe arrival camera for a landmark.
+ *
+ * This is the single owner of arrival framing. Fast travel and the opening
+ * arrival both call it, so they can never disagree: previously the entry used
+ * the raw compact `SPAWN` constant while teleport ran this full pipeline, which
+ * meant the first frame the visitor ever saw was not the framing the product
+ * had already been tuned to produce.
+ *
+ * Steps, in order:
+ *  1. size the standoff from the monument's own footprint and height;
+ *  2. pick an azimuth that is not occluded (authored angle wins when clear);
+ *  3. resolve that pose against the collision system;
+ *  4. place the camera and aim it at the landmark's upper body;
+ *  5. snap the sim pose so the loop cannot glide across the map.
+ *
+ * @param {object} building the landmark to arrive at
+ * @returns {{x:number,y:number,z:number,azimuth:number,standoff:number}|null}
+ */
+function composeArrivalAt(building) {
+  if (!building || !camera || !collision || !controls) return null;
+  const verticalFov = camera.fov;
+  // Size the view from both footprint and height so the landmark reads as a
+  // complete composition rather than a wall-sized crop.
+  const standoff = landmarkStandoff(building, { verticalFov });
+  const azimuth = clearViewAzimuth(building, BUILDINGS, { standoff, cameraY: 1.7, declaredAngle: building.viewAngle });
+  const safe = collision.findSafeSpawn(building.x, building.z, landmarkArrivalDistance(building, { verticalFov }), standoff, azimuth);
+  const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
+  controls.teleportFacing(safe.x, safe.z, building.x, landmarkTargetHeight(building), building.z, targetY);
+  // Teleport is a discrete jump: the sim state must land exactly there so the
+  // pose blender doesn't glide across the map on the next frames. The frame
+  // loop writes camera.position from pose.sample() every display frame, so a
+  // paused loop would keep drawing the pre-arrival position and the frame
+  // renders black. Re-arm the loop as part of the jump.
+  if (simPos) simPos.copy(camera.position);
+  if (pose) pose.snap();
+  isRunning = true;
+  return { x: safe.x, y: safe.y, z: safe.z, azimuth, standoff };
 }
 
 function applyEvidenceMode(active) {

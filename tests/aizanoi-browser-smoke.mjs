@@ -31,6 +31,38 @@ async function open(context, spec) {
 
 const position = (page) => page.evaluate(() => window.__WORLD_DEBUG__.player);
 
+// A canvas that exists is not proof that anything was drawn. Sample the real
+// framebuffer after real animation frames have run and require actual content,
+// so a black frame fails the routine gate instead of passing it.
+async function assertRenderedFrame(page, label) {
+  const stats = await page.evaluate(async () => {
+    // Let the render loop actually produce frames before judging the buffer.
+    await new Promise((resolve) => {
+      let ticks = 0;
+      const tick = () => { ticks += 1; if (ticks < 12) requestAnimationFrame(tick); else resolve(); };
+      requestAnimationFrame(tick);
+    });
+    const canvas = document.querySelector('canvas#viewport');
+    if (!canvas) return { error: 'no canvas' };
+    const off = document.createElement('canvas');
+    off.width = 160; off.height = 100;
+    const ctx = off.getContext('2d');
+    ctx.drawImage(canvas, 0, 0, off.width, off.height);
+    const { data } = ctx.getImageData(0, 0, off.width, off.height);
+    let sum = 0, max = 0, lit = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      const v = data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722;
+      sum += v; if (v > max) max = v; if (v > 3) lit += 1;
+    }
+    const px = data.length / 4;
+    return { mean: +(sum / px).toFixed(2), max: +max.toFixed(1), litPct: +((lit / px) * 100).toFixed(1) };
+  });
+  assert.ok(!stats.error, `${label}: ${stats.error}`);
+  assert.ok(stats.max > 8, `${label}: frame is black (max luma ${stats.max}, mean ${stats.mean})`);
+  assert.ok(stats.litPct > 1, `${label}: frame has almost no lit pixels (${stats.litPct}%)`);
+  return stats;
+}
+
 async function enter(page, spec) {
   await page.locator('#btn-enter').click();
   await page.waitForFunction(() => window.__WORLD_DEBUG__?.ready === true, null, { timeout: 30000 });
@@ -38,6 +70,8 @@ async function enter(page, spec) {
   await page.keyboard.press('Escape');
   await page.waitForFunction(() => window.__WORLD_DEBUG__?.player?.controlsEnabled===true,null,{timeout:10000});
   assert.ok(await page.locator('.hud-top').count(), `${spec.id}: HUD missing`);
+  const luma = await assertRenderedFrame(page, `${spec.id} first frame`);
+  console.log(`  ${spec.id} rendered frame: mean=${luma.mean} max=${luma.max} lit=${luma.litPct}%`);
 }
 
 {
