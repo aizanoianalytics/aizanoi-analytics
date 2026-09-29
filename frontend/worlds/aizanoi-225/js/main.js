@@ -280,11 +280,30 @@ function buildStreets() {
   }
 }
 
+function stabilizeMonumentMaterials(group) {
+  group.traverse((object) => {
+    if (!object.isMesh) return;
+    const materials = Array.isArray(object.material) ? object.material : [object.material];
+    for (const material of materials) {
+      if (!material || !material.color || !material.emissive) continue;
+      // GLB kit roofs/backwalls can become a featureless black silhouette when
+      // their authored normals face away from the arrival sun. Preserve the
+      // source palette while adding a restrained ambient lift and two-sided
+      // shading; this fixes readability without turning monuments into glow.
+      material.side = THREE.DoubleSide;
+      material.emissive.copy(material.color);
+      material.emissiveIntensity = Math.max(material.emissiveIntensity || 0, 0.08);
+      material.needsUpdate = true;
+    }
+  });
+}
+
 function buildAllMonuments() {
   for (const b of BUILDINGS) {
     try {
       const group = buildStructure(b);
       if (group) {
+        stabilizeMonumentMaterials(group);
         group.position.set(b.x, b.y || 0, b.z);
         if (b.rot) group.rotation.y = b.rot;
         scene.add(group);
