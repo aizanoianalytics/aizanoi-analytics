@@ -24,6 +24,13 @@ const HERO_LANDMARK = BUILDINGS.find((building) => building.id === HERO_LANDMARK
 const MONUMENT_CLEARANCE = 20.5;
 
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
+import {
+  buildGroundRelief,
+  buildRiverbank,
+  buildCourtyards,
+  buildStreetFurniture,
+  buildDistrictPaving
+} from '../../shared/engine/fabric.js';
 import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
 import { loadAssetKit } from '../../shared/engine/asset-kit.js';
 import { Environment } from '../../shared/engine/environment.js';
@@ -130,26 +137,33 @@ async function init() {
 
   setProgress(20, 'Shaping the Penkalas valley...');
 
-  // 3. Ground plane
-  const groundGeo = new THREE.PlaneGeometry(
-    BOUNDS.maxX - BOUNDS.minX + 200,
-    BOUNDS.maxZ - BOUNDS.minZ + 200,
-    64, 64
-  );
-  groundGeo.rotateX(-Math.PI / 2);
-  groundGeo.translate(
-    (BOUNDS.minX + BOUNDS.maxX) / 2,
-    0,
-    (BOUNDS.minZ + BOUNDS.maxZ) / 2
-  );
+  // 3. Ground: a terraced valley, not a flat plane. Aizanoi sat on a shelf
+  // above the Penkalas, and a dead-level floor is why the world read as
+  // "monuments on a table" rather than as a city in a landscape.
+  const groundGeo = buildGroundRelief(BOUNDS, WATERS[0]?.points || []);
   const groundMesh = new THREE.Mesh(groundGeo, getMaterial('ground'));
+  groundMesh.name = 'ground-terrain';
   groundMesh.receiveShadow = true;
   scene.add(groundMesh);
 
-  setProgress(35, 'Laying Roman roads and riverfront paths...');
+  setProgress(32, 'Grading the sanctuary terrace and riverfront...');
 
-  // 4. Roads
+  // 4. Streets, then the fabric that makes them read as a city: the riverbank
+  // embankment and its steps, monument courtyards, kerbside furniture and the
+  // district paving that gives each quarter its own surface.
   buildStreets();
+  const fabricMaterials = {
+    road: getMaterial('road'),
+    bank: getMaterial('travertine'),
+    courtyard: getMaterial('limestone'),
+    furniture: getMaterial('travertine'),
+    lamp: getMaterial('poros')
+  };
+  const quayStreet = STREETS.find((s) => s.id === 'quay');
+  buildRiverbank(scene, quayStreet, WATERS[0]?.points || [], fabricMaterials);
+  buildCourtyards(scene, BUILDINGS, fabricMaterials);
+  buildStreetFurniture(scene, STREETS, WATERS[0]?.points || [], fabricMaterials);
+  buildDistrictPaving(scene, REGIONS, BOUNDS, fabricMaterials);
 
   setProgress(45, 'Loading Blender-crafted monuments...');
 
