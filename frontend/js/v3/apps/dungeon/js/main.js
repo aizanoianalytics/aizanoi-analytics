@@ -98,6 +98,12 @@ export async function launchDungeonGame(container) {
   };
 
   const game = new Phaser.Game(config);
+  // Publish the live instance on both launch paths. The AizanoiOS mount already
+  // did this in src/index.js, but the standalone /dungeon/ route did not, while
+  // GameScene and stopDungeonGame both read this global. Without it the game is
+  // unreachable from a test or an operator tool on the standalone route, and
+  // ten chapters cannot be traversed efficiently.
+  if (typeof window !== 'undefined') window.AIZANOI_DUNGEON_GAME = game;
   return game;
 }
 
