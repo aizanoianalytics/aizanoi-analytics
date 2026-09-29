@@ -126,7 +126,10 @@ export const WATERS = [
 
 export const BOUNDS = { minX: -260, maxX: 260, minZ: -280, maxZ: 330 };
 const SPAWN_POSITION = { x: -30, z: 28 };
-const SPAWN_TARGET = BUILDINGS.find((building) => building.id === 'temple');
+// The monument the entry camera frames. Exported so the runtime composes the
+// opening arrival for this exact building instead of reading a raw position.
+export const HERO_LANDMARK_ID = 'temple';
+const SPAWN_TARGET = BUILDINGS.find((building) => building.id === HERO_LANDMARK_ID);
 export const SPAWN = {
   ...SPAWN_POSITION,
   angle: Math.atan2(SPAWN_TARGET.x - SPAWN_POSITION.x, SPAWN_TARGET.z - SPAWN_POSITION.z),

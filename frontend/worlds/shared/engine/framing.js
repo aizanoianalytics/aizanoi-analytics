@@ -57,6 +57,16 @@ export function landmarkYaw(from, target) {
  * block the view. Nearest-to-declared wins, so a correct authored angle is
  * never overridden.
  *
+ * Occlusion test: `n` is the unit vector from the camera position `c` toward the
+ * landmark, so a building centre `q` is on the camera→landmark ray when
+ * `along = q·n` is positive, and it is only actually occluding while it is
+ * still closer than the landmark itself, i.e. `along < |landmark - c|`. An
+ * earlier version rejected `along >= 0` and therefore treated every real
+ * occluder as "at or behind the landmark", which meant nothing between the
+ * camera and the target was ever detected. See
+ * `tests/worlds-clear-view-azimuth.test.mjs` for independently derived
+ * geometry rather than a copy of this implementation.
+ *
  * @param {object} landmark      the building being framed
  * @param {Array}  buildings     every building, used as occluders
  * @param {number} standoff      camera distance from the landmark
@@ -80,12 +90,18 @@ export function clearViewAzimuth(landmark, buildings, { standoff, cameraY = 1.7,
       if (!b || b === landmark || b.id === landmark.id) continue;
       const qx = b.x - cx, qz = b.z - cz;
       const along = qx * nx + qz * nz;
-      if (along >= 0) continue;                 // at or behind the landmark
+      // `along` is the signed distance from the camera toward the landmark.
+      // A real occluder sits on that ray and is still closer than the target.
+      if (along <= 0) continue;                // behind the camera
+      if (along >= distance) continue;         // at or behind the landmark
       const perp = Math.abs(qx * nz - qz * nx);
       const half = Math.max(1, Math.max(Number(b.w) || 10, Number(b.d) || 10) / 2);
       if (perp >= half) continue;                // off the sight line
       if ((Number(b.h) || 10) <= eye) continue;  // too low to block the view
-      if (Math.atan2(half, Math.abs(along)) < own * 0.35) continue; // too small to matter
+      const apparent = Math.atan2(half, along);
+      // It must cover a real share of the landmark's own angular size to count
+      // as blocking; a distant sliver in front of the target is not an occluder.
+      if (apparent < own * 0.35) continue;
       return true;
     }
     return false;

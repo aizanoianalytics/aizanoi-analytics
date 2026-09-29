@@ -31,6 +31,61 @@ async function open(context, spec) {
 
 const position = (page) => page.evaluate(() => window.__WORLD_DEBUG__.player);
 
+// A canvas that exists is not proof that anything was drawn. Sample the real
+// framebuffer and require actual content, so a black frame fails the routine
+// gate instead of passing it.
+//
+// The framebuffer must be read with readPixels rather than by drawing the
+// WebGL canvas into a 2D canvas: the renderer runs without
+// preserveDrawingBuffer, so by the time a drawImage copy happens the drawing
+// buffer has already been cleared and the copy comes back black. Reading the
+// pixels directly, inside a rAF callback and before the frame is presented,
+// measures the frame that was actually drawn -- which is how the black-frame
+// investigation distinguished a healthy render from a broken one.
+async function assertRenderedFrame(page, label) {
+  const stats = await page.evaluate(() => new Promise((resolve) => {
+    // Run this inside the same animation frame as the world's own draw, so the
+    // drawing buffer still holds the frame that was just rendered.
+    requestAnimationFrame(() => {
+      const canvas = document.querySelector('canvas#viewport');
+      if (!canvas) {
+        resolve({ error: 'no canvas' });
+        return;
+      }
+      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+      if (!gl) {
+        resolve({ error: 'no webgl context' });
+        return;
+      }
+      const w = gl.drawingBufferWidth;
+      const h = gl.drawingBufferHeight;
+      const pixels = new Uint8Array(w * h * 4);
+      gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      let sum = 0;
+      let max = 0;
+      let lit = 0;
+      for (let i = 0; i < pixels.length; i += 4) {
+        const v = pixels[i] * 0.2126 + pixels[i + 1] * 0.7152 + pixels[i + 2] * 0.0722;
+        sum += v;
+        if (v > max) max = v;
+        if (v > 3) lit += 1;
+      }
+      const total = pixels.length / 4;
+      resolve({
+        mean: +(sum / total).toFixed(2),
+        max: +max.toFixed(1),
+        litPct: +((lit / total) * 100).toFixed(1),
+        glError: gl.getError()
+      });
+    });
+  }));
+  assert.ok(!stats.error, `${label}: ${stats.error}`);
+  assert.equal(stats.glError, 0, `${label}: WebGL reported error ${stats.glError}`);
+  assert.ok(stats.max > 8, `${label}: frame is black (max luma ${stats.max}, mean ${stats.mean})`);
+  assert.ok(stats.litPct > 5, `${label}: frame has almost no lit pixels (${stats.litPct}%)`);
+  return stats;
+}
+
 async function enter(page, spec) {
   await page.locator('#btn-enter').click();
   await page.waitForFunction(() => window.__WORLD_DEBUG__?.ready === true, null, { timeout: 30000 });
@@ -38,6 +93,8 @@ async function enter(page, spec) {
   await page.keyboard.press('Escape');
   await page.waitForFunction(() => window.__WORLD_DEBUG__?.player?.controlsEnabled===true,null,{timeout:10000});
   assert.ok(await page.locator('.hud-top').count(), `${spec.id}: HUD missing`);
+  const luma = await assertRenderedFrame(page, `${spec.id} first frame`);
+  console.log(`  ${spec.id} rendered frame: mean=${luma.mean} max=${luma.max} lit=${luma.litPct}%`);
 }
 
 {

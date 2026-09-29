@@ -16,7 +16,21 @@ const workflows = {
 };
 
 // Operator-only diagnostics: real browser tools, but not pass/fail gates.
-const DIAGNOSTICS = new Set(['entry-battery.mjs', 'webkit-entry-probe.mjs']);
+// These exist to answer "what is actually happening in the browser right now"
+// during an investigation; the pass/fail contracts live in the owned suites
+// below. The Aizanoi runtime audit and the two isolation probes were added for
+// the section-9 runtime investigation: they drive the real world across the
+// full device matrix and record raw evidence to artifacts/ instead of
+// asserting a threshold, so making them CI gates would be a fabricated
+// pass/fail rather than a real contract.
+const DIAGNOSTICS = new Set([
+  'entry-battery.mjs',
+  'webkit-entry-probe.mjs',
+  'aizanoi-runtime-audit.mjs',
+  'aizanoi-luma-isolate.mjs',
+  'aizanoi-loop-diagnose.mjs',
+  'aizanoi-black-frame-diagnose.mjs'
+]);
 
 function browserSuites(dir = 'tests') {
   const out = [];
