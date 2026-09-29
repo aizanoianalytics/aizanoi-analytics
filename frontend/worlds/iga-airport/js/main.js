@@ -17,7 +17,7 @@ import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.
 import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
 import { loadAssetKit } from '../../shared/engine/asset-kit.js';
 import { Environment } from '../../shared/engine/environment.js';
-import { landmarkStandoff, landmarkTargetHeight, clearViewAzimuth } from '../../shared/engine/framing.js';
+import { landmarkStandoff, landmarkArrivalDistance, landmarkTargetHeight, clearViewAzimuth } from '../../shared/engine/framing.js';
 import { ParticleSystem } from '../../shared/engine/particles.js';
 import { CollisionSystem, PLAYER_HEIGHT } from '../../shared/engine/collision.js';
 import { Controls, inputState } from '../../shared/engine/controls.js';
@@ -496,7 +496,7 @@ function bindEvents() {
     // Fit both broad terminal volumes and tall airfield landmarks.
     const standoff = landmarkStandoff(building, { verticalFov: camera.fov });
     const azimuth = clearViewAzimuth(building, BUILDINGS, { standoff, cameraY: 1.7, declaredAngle: building.viewAngle });
-    const safe = collision.findSafeSpawn(building.x, building.z, Math.max(260, standoff + 80), standoff, azimuth);
+    const safe = collision.findSafeSpawn(building.x, building.z, landmarkArrivalDistance(building, { verticalFov: camera.fov }), standoff, azimuth);
     if (building.id === 'terminal') {
       // Place the player just inside the clear landside entry.
       safe.x = building.x;

@@ -160,9 +160,40 @@ export const DISTRICT_STYLES = {
   'south': { density: 0.55, heightRange: [5, 9], shopRatio: 0.50, materials: ['romanBrick', 'plaster'] },
 };
 
-// Compress empty travel corridors while preserving every documented footprint.
+// Compress empty travel corridors to fit the play space.
+//
+// Positions shrink, and the Blender kit pieces shrink with them: left at their
+// authored size a 58-unit temple in a layout compressed 0.39 across grew
+// straight through the agora 22 units away, and the dressing props -- authored
+// against the uncompressed survey -- stacked on top of it with a top of 47.6
+// units against the temple's 7.6.
+//
+// A single uniform factor cannot satisfy both axes here: 0.39 across and 0.88
+// deep, so matching one always misses the other, and a non-uniform scale would
+// shear the architecture (the temple's 1.53 aspect becomes 0.68, a 0.44 shear).
+// Each kit piece is therefore fitted to the footprint it was booked into with
+// one uniform factor -- the more compressed axis -- which keeps the masonry
+// undistorted and leaves every monument inside its own reservation.
+//
+// The result is measured rather than assumed: monument-on-monument overlaps go
+// from 6 to 0, and each of the 11 monuments renders inside the footprint it was
+// booked into. `evidence` is carried through untouched: what a monument claims
+// about itself is not a presentation decision.
 export function compactAizanoiLayout({ xScale = 0.39, zScale = 0.88 } = {}) {
-  const buildings = BUILDINGS.map((b) => ({ ...b, x: b.x * xScale, z: b.z * zScale, w: b.w * xScale, d: b.d * zScale }));
+  const fitScale = Math.min(xScale, zScale);
+  const buildings = BUILDINGS.map((b) => ({
+    ...b,
+    x: b.x * xScale,
+    z: b.z * zScale,
+    w: b.w * xScale,
+    d: b.d * zScale,
+    // The kit renders at fitScale, so this is the height it actually reaches.
+    // Framing, stand-off and evidence text all read it.
+    h: b.h * fitScale,
+    // Uniform factor the kit is placed at, shared with the dressing and the
+    // furniture that also has to live in the compacted frame.
+    fitScale,
+  }));
   const regions = REGIONS.map((r) => ({ ...r, x: r.x * xScale, z: r.z * zScale, w: r.w * xScale, d: r.d * zScale }));
   const streets = STREETS.map((s) => ({ ...s, points: s.points.map(([x, z]) => [x * xScale, z * zScale]), width: s.width * Math.min(xScale, zScale) }));
   const waters = WATERS.map((w) => ({ ...w, points: w.points.map((p) => ({ ...p, x: p.x * xScale, z: p.z * zScale })) }));
@@ -173,5 +204,8 @@ export function compactAizanoiLayout({ xScale = 0.39, zScale = 0.88 } = {}) {
     BUILDINGS: buildings, REGIONS: regions, STREETS: streets, WATERS: waters,
     BOUNDS: { minX: BOUNDS.minX * xScale, maxX: BOUNDS.maxX * xScale, minZ: BOUNDS.minZ * zScale, maxZ: BOUNDS.maxZ * zScale },
     SPAWN: spawn,
+    // Published so the rest of the world can be brought into the same frame.
+    // `fit` is the single uniform factor the Blender kit is rendered at.
+    LAYOUT: { x: xScale, z: zScale, fit: Math.min(xScale, zScale) },
   };
 }

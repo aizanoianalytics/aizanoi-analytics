@@ -108,10 +108,20 @@ export function buildStructure(building) {
   const list = PLACEMENTS[building.id]
     || (building.kit ? [P(building.kit, 0, 0, building.kitYaw || 0, 1)] : null);
   if (!list) return group;
+  // The compact layout shrinks footprints, so the kit pieces placed at a
+  // monument shrink with them. Their authored offsets shrink too: temple_court
+  // sits 19 units south of the temple in uncompacted space, and leaving that at
+  // 19 while the pieces shrink to 0.39 pushes the court back out through the
+  // precinct wall.
+  const fitScale = building.fitScale ?? 1;
   for (const piece of list) {
     try {
       group.add(KIT.place(piece.asset, {
-        x: piece.dx, y: 0, z: piece.dz, yaw: piece.yaw, scale: piece.scale,
+        x: piece.dx * fitScale,
+        y: 0,
+        z: piece.dz * fitScale,
+        yaw: piece.yaw,
+        scale: piece.scale * fitScale,
       }));
     } catch (e) {
       // Never fail the whole monument for one missing piece.
