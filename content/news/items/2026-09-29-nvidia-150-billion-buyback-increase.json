@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-29-nvidia-150-billion-buyback-increase",
+  "title": "Nvidia adds $150 billion to its buyback authorisation",
+  "summary": "Nvidia's board of directors authorised an additional $150 billion under the company's existing share repurchase programme, lifting the total remaining authorisation to $235 billion. The company framed the increase as a statement of confidence in the cash its AI business generates, at a moment when rising memory costs and growing customer interest in custom silicon are pressing on gross margins.",
+  "category": "economy-markets",
+  "priority": 64,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "buyback",
+    "markets",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-announces-a-150-billion-share-repurchase-authorization-increase",
+      "publishedAt": "2026-09-28T13:05:00Z"
+    }
+  ]
+}

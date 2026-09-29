@@ -1,0 +1,31 @@
+{
+  "id": "2026-09-29-microsoft-data-center-cost-standoff",
+  "title": "Microsoft stays quiet as church groups ask for 1 percent of data centre costs",
+  "summary": "Church groups and community organisations are pressing Microsoft to contribute one percent of its data centre costs to the towns and regions that host the facilities, and the company has not answered publicly. The exchange captures a widening argument over who carries the power, water and land burden of AI infrastructure, and how much of the industry's expansion local ratepayers should be expected to absorb.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "data-centres",
+    "energy",
+    "communities"
+  ],
+  "sources": [
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/tech-policy/2026/09/microsoft-goes-quiet-after-church-groups-ask-for-1-of-data-center-costs/",
+      "publishedAt": "2026-09-28T18:00:00Z"
+    }
+  ]
+}

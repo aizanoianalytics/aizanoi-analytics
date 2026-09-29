@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-29-anthropic-ipo-prospectus-costs",
+  "title": "Anthropic's IPO prospectus pairs trillion-dollar ambition with steep losses",
+  "summary": "Anthropic's IPO prospectus, reported by Reuters, sets sweeping AI ambitions against the cost of pursuing them: revenue of $4.59 billion alongside a heavy operating loss, and long-term cloud, compute and infrastructure commitments of roughly $518 billion. The filing is also unusual for what it tells prospective investors about risk, warning that the company's technology could pose existential risks to humanity. A successful listing at the valuations under discussion would test how much public-market appetite remains for the spending underpinning the AI build-out.",
+  "category": "economy-markets",
+  "priority": 76,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ipo",
+    "markets",
+    "risk"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/finance/anthropics-ipo-prospectus-shows-sweeping-ai-vision-surging-costs-2026-09-28",
+      "publishedAt": "2026-09-28T16:17:00Z"
+    },
+    {
+      "publisher": "Financial Times (via Gate News)",
+      "url": "https://www.gate.com/news/detail/GOOGL/anthropic-discloses-existential-ai-risks-in-1-trillion-ipo-prospectus-24622962",
+      "publishedAt": "2026-09-29T02:26:00Z"
+    }
+  ]
+}

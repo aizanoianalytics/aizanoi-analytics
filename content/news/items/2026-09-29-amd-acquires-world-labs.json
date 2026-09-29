@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-29-amd-acquires-world-labs",
+  "title": "AMD agrees an $8.2 billion deal for Fei-Fei Li's World Labs",
+  "summary": "AMD will acquire World Labs, the spatial-intelligence company co-founded by Fei-Fei Li, in a transaction valued at more than eight billion dollars. Li becomes AMD's chief scientist as part of the deal. The purchase takes the chipmaker past accelerators into the model and software layers that increasingly shape which silicon enterprise buyers choose.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "amd",
+    "acquisition",
+    "semiconductors",
+    "world-labs"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/28/amd-will-acquire-fei-fei-lis-world-labs-for-8-2-billion/",
+      "publishedAt": "2026-09-28T17:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/tech/1001749/amd-world-labs-ai-acquisition-deal",
+      "publishedAt": "2026-09-28T18:00:00Z"
+    }
+  ]
+}

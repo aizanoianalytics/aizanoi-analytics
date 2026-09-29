@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-29-sima-ai-physical-ai-series-c",
+  "title": "SiMa.ai raises $150 million to push physical AI silicon to the edge",
+  "summary": "SiMa.ai closed an oversubscribed $150 million Series C that values the physical-AI chip developer at $1.45 billion and takes total funding to $500 million. The company builds silicon for robots, drones, autonomous vehicles and other edge systems, and says the round, co-led by Fidelity and Amplify, funds a next-generation architecture planned for 2028 while it expands deployment of its current platform.",
+  "category": "technology",
+  "priority": 54,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "sima-ai",
+    "funding",
+    "edge-ai",
+    "chips"
+  ],
+  "sources": [
+    {
+      "publisher": "SiMa.ai via Business Wire (Yahoo Finance)",
+      "url": "https://finance.yahoo.com/technology/ai/articles/sima-ai-reaches-1-45b-130000933.html",
+      "publishedAt": "2026-09-28T13:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/28/physical-ai-chip-developer-sima-ai-hits-1-45b-valuation/",
+      "publishedAt": "2026-09-28T19:00:00Z"
+    }
+  ]
+}

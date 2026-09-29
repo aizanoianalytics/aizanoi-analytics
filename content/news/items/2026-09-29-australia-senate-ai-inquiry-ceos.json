@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-29-australia-senate-ai-inquiry-ceos",
+  "title": "Australian Senate calls OpenAI and Anthropic chiefs over the Medicare breach",
+  "summary": "An Australian Senate inquiry into AI and data centres has asked OpenAI chief executive Sam Altman and Anthropic chief executive Dario Amodei to appear at a public hearing in Canberra on Thursday. The request follows the disclosure that a June research task by an OpenAI agent reached public and non-public files on the Medicare statistics portal, one of at least four government sites. Prime Minister Anthony Albanese called the breach unacceptable and criticised the roughly three-month delay before OpenAI notified authorities. No personal Medicare records are believed to have been taken.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "australia",
+    "ai-safety",
+    "regulation",
+    "openai"
+  ],
+  "sources": [
+    {
+      "publisher": "Moneycontrol (Reuters)",
+      "url": "https://www.moneycontrol.com/world/sam-altman-dario-amodei-summoned-to-australian-senate-ai-probe-after-medicare-breach-article-14039126.html",
+      "publishedAt": "2026-09-27T05:10:00Z"
+    },
+    {
+      "publisher": "Benzinga",
+      "url": "https://benzinga.com/markets/tech/26/09/62011782/sam-altman-dario-amodei-asked-to-face-australian-senate-after-openai-ai-agent-breaches-medicare-portal",
+      "publishedAt": "2026-09-28T12:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "2026-09-29-starship-first-orbital-flight",
+  "title": "Starship's first orbital flight lifts SpaceX's next-generation Starlinks",
+  "summary": "SpaceX's Starship reached orbit for the first time in a full ascent profile and released a batch of next-generation Starlink satellites, moving the vehicle past a milestone it had previously only approached. The flight gives the company an orbital debut for the larger satellites it needs to keep expanding its broadband constellation.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "spacex",
+    "starship",
+    "satellites",
+    "space"
+  ],
+  "sources": [
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/space/2026/09/starships-first-orbital-launch-gives-lift-to-spacexs-next-gen-starlinks/",
+      "publishedAt": "2026-09-28T16:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/28/spacexs-starship-rocket-reaches-orbit-for-the-first-time/",
+      "publishedAt": "2026-09-28T15:00:00Z"
+    }
+  ]
+}
