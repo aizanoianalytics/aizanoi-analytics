@@ -901,6 +901,47 @@ export class GameScene extends Phaser.Scene {
     this.projectiles.add(bolt);
   }
 
+  // Area denial: a lingering ground zone that damages the player on a tick
+  // while they stand in it, then cleans itself up. This is what makes the cult
+  // sorcerer an area-denial threat rather than a plain ranged one.
+  spawnVolatileZone(x, y, radius, damage, duration) {
+    const zone = this.add.circle(x, y, radius, 0x7b1fa2, 0.28).setDepth(6);
+    // A brighter rim so the safe ground outside it is legible at a glance.
+    const rim = this.add.circle(x, y, radius).setDepth(7).setStrokeStyle(2, 0xba68c8, 0.75);
+    const state = { zone, rim, tick: 0 };
+
+    const cleanUp = () => {
+      if (state.zone.active) state.zone.destroy();
+      if (state.rim.active) state.rim.destroy();
+    };
+
+    this.tweens.add({
+      targets: zone,
+      alpha: 0.42,
+      duration: 520,
+      yoyo: true,
+      repeat: Math.max(1, Math.floor(duration / 520))
+    });
+
+    // Damage on a 500ms tick rather than every frame, so standing in the zone
+    // is punishing but survivable and the number stays readable.
+    this.time.addEvent({
+      delay: 500,
+      loop: true,
+      callback: () => {
+        if (!state.zone.active) return;
+        if (!this.player?.active || this.player.isDead || this.player.isInBase) return;
+        if (Phaser.Math.Distance.Between(this.player.x, this.player.y, x, y) > radius) return;
+        this.player.takeDamage(damage, false, null);
+        this.createDamageSpark(this.player.x, this.player.y);
+        this.createFloatingText(this.player.x, this.player.y - 26, `${damage}`, '#ba68c8', 13);
+      }
+    });
+
+    this.time.delayedCall(duration, cleanUp);
+    return state;
+  }
+
   createDamageSpark(x, y) {
     // Üçlü kıvılcım + hızlı şok halkası (tek sprite yerine tok patlama)
     try {

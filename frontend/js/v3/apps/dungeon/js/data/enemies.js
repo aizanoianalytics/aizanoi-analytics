@@ -84,7 +84,12 @@ export const ENEMY_TYPES = {
     projectileType: 'curse_orb',
     behavior: 'ranged_aoe',
     aggroRange: 256,
-    description: 'Grave priest. Shadow magic in an area.',
+    // Area denial: the curse leaves a lingering zone that burns anyone who
+    // walks into it. Without this the "ranged_aoe" label only shot a projectile.
+    volatileDamage: 7,
+    volatileRadius: 58,
+    volatileDuration: 3200,
+    description: 'Grave priest. Shadow magic that poisons the ground.',
   },
   praetorian: {
     id: 'praetorian',
