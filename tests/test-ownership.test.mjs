@@ -29,7 +29,9 @@ const DIAGNOSTICS = new Set([
   'aizanoi-runtime-audit.mjs',
   'aizanoi-luma-isolate.mjs',
   'aizanoi-loop-diagnose.mjs',
-  'aizanoi-black-frame-diagnose.mjs'
+  'aizanoi-black-frame-diagnose.mjs',
+  'dungeon-runtime-audit.mjs',
+  'dungeon-play-audit.mjs'
 ]);
 
 function browserSuites(dir = 'tests') {
