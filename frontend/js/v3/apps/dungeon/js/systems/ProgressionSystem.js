@@ -40,6 +40,7 @@ export class ProgressionSystem {
   }
 
   addXp(amount) {
+    this.recordRunXp(amount);
     this.currentXp += amount;
     let leveledUp = false;
 
@@ -56,6 +57,7 @@ export class ProgressionSystem {
 
   addGold(amount) {
     const total = Math.max(0, Math.round(amount));
+    this.recordRunGold(total);
     this.gold += total;
     this.stats.totalGoldCollected += total;
     this.save();
@@ -72,9 +74,75 @@ export class ProgressionSystem {
   }
 
   recordKill(isBoss = false) {
+    this.recordRunKill(isBoss);
     this.stats.enemiesKilled++;
     if (isBoss) this.stats.bossesDefeated++;
     this.save();
+  }
+
+  /**
+   * Per-run tracking. The brief asks for a useful run/chapter summary, and the
+   * statistics were already being recorded — they were simply never surfaced.
+   * A run starts when a chapter sequence begins and ends at victory or death, so
+   * the summary answers "how did this run go", not "how does my save look".
+   */
+  startRun() {
+    this.run = {
+      startedAtChapter: this.currentChapter,
+      chaptersCleared: 0,
+      enemiesKilled: 0,
+      bossesDefeated: 0,
+      denariiEarned: 0,
+      xpEarned: 0,
+      levelAtStart: this.level,
+      deepestChapter: this.currentChapter
+    };
+    return this.run;
+  }
+
+  /** Fold a kill into the run, so the summary matches the run not the save. */
+  recordRunKill(isBoss = false) {
+    if (!this.run) this.startRun();
+    this.run.enemiesKilled++;
+    if (isBoss) this.run.bossesDefeated++;
+  }
+
+  recordRunXp(amount) {
+    if (!this.run) this.startRun();
+    this.run.xpEarned += Math.max(0, Math.round(amount));
+  }
+
+  recordRunGold(amount) {
+    if (!this.run) this.startRun();
+    this.run.denariiEarned += Math.max(0, Math.round(amount));
+  }
+
+  recordChapterCleared(chapterNumber) {
+    if (!this.run) this.startRun();
+    this.run.chaptersCleared = Math.max(this.run.chaptersCleared, chapterNumber);
+    this.run.deepestChapter = Math.max(this.run.deepestChapter, chapterNumber + 1);
+  }
+
+  /**
+   * The summary, shaped for display. Every number comes from a tracked field, so
+   * a figure on this screen can always be traced back to something that happened.
+   */
+  runSummary() {
+    const run = this.run || { chaptersCleared: 0, enemiesKilled: 0, bossesDefeated: 0, denariiEarned: 0, xpEarned: 0, levelAtStart: this.level, deepestChapter: this.currentChapter };
+    const levelsGained = this.level - (run.levelAtStart ?? this.level);
+    return {
+      deepestChapter: run.deepestChapter,
+      chaptersCleared: run.chaptersCleared,
+      enemiesKilled: run.enemiesKilled,
+      bossesDefeated: run.bossesDefeated,
+      denariiEarned: run.denariiEarned,
+      xpEarned: run.xpEarned,
+      levelNow: this.level,
+      levelsGained: Math.max(0, levelsGained),
+      denariiLeft: this.gold,
+      lifetimeKills: this.stats.enemiesKilled,
+      lifetimeBosses: this.stats.bossesDefeated
+    };
   }
 
   recordWave(waveNumber) {

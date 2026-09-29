@@ -123,8 +123,12 @@ export class UIScene extends Phaser.Scene {
       : gs.currentLevelConfig.name;
     this.chapterText.setText(chapterName);
 
-    const remaining = gs.enemies
-      ? gs.enemies.getChildren().filter((e) => e.active && e.hp > 0).length
+    // getChildren() is only available once Phaser has populated the group's
+    // internal list. During a scene transition the group exists but that list is
+    // still undefined, and calling it threw every frame.
+    const list = gs.enemies?.children?.list;
+    const remaining = Array.isArray(list)
+      ? list.filter((e) => e.active && e.hp > 0).length
       : 0;
     const ready = remaining === 0;
     this.objectiveText.setText(ready ? 'Portal open — walk in' : `Clear the floor · ${remaining} left`);
@@ -154,9 +158,16 @@ export class UIScene extends Phaser.Scene {
     };
     plot(gs.baseAltar?.x || 0, gs.baseAltar?.y || 0, 0xf5d77f, 3);
     plot(gs.exitPortal?.x || 0, gs.exitPortal?.y || 0, ready ? 0x00d2ff : 0x64748b, 3);
-    gs.enemies?.getChildren().forEach((enemy) => {
-      if (enemy.active && enemy.hp > 0) plot(enemy.x, enemy.y, enemy.isBoss ? 0xf39c12 : 0xe74c3c, enemy.isBoss ? 3 : 1.6);
-    });
+    // Same hazard as the objective counter above: `?.` guards the group but not
+    // the call on it, and the group's internal list is undefined mid-transition.
+    const enemyList = gs.enemies?.children?.list;
+    if (Array.isArray(enemyList)) {
+      for (const enemy of enemyList) {
+        if (enemy.active && enemy.hp > 0) {
+          plot(enemy.x, enemy.y, enemy.isBoss ? 0xf39c12 : 0xe74c3c, enemy.isBoss ? 3 : 1.6);
+        }
+      }
+    }
     plot(player.x, player.y, 0x7ea0ff, 3);
   }
 }

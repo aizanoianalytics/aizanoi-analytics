@@ -38,6 +38,7 @@ const DIAGNOSTICS = new Set([
   'aizanoi-tour-audit.mjs',
   'aizanoi-city-fabric-audit.mjs',
   'dungeon-level-design-audit.mjs',
+  'dungeon-run-summary-audit.mjs',
   'aizanoi-performance-audit.mjs'
 ]);
 
