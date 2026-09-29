@@ -10,7 +10,7 @@ const landings = {
   worlds: { app:'worlds', title:'Historical Worlds', phrase:'Rome' },
   forge: { app:'forge', title:'Aizanoi Forge', phrase:'Source' },
   journal: { app:'journal', title:'Aizanoi Journal', phrase:'in development' },
-  labs: { app:'labs', title:'Aizanoi Labs', phrase:'in development' },
+  labs: { app:'labs', title:'Aizanoi Labs', phrase:'Experimental' },
   arcade: { app:'games', title:'Aizanoi Arcade', phrase:'Blockfall' }
 };
 const productRoutes = ['news', ...Object.keys(landings)];
@@ -73,11 +73,15 @@ test('TV truthfully advertises a future companion without fabricated videos', ()
 });
 
 test('secondary product placeholders state their current status honestly', () => {
-  for (const route of ['journal', 'labs']) {
-    const html = read(`frontend/${route}/index.html`);
-    assert.match(html, /Status:\s*In development/i);
-    assert.doesNotMatch(html, /customer|subscriber|latest release|available now/i);
-  }
+  // Journal has no real content yet — it must remain truthful about that.
+  const journal = read('frontend/journal/index.html');
+  assert.match(journal, /Status:\s*In development/i);
+  assert.doesNotMatch(journal, /customer|subscriber|latest release|available now/i);
+  // Labs has real experiments (Fly World) — it must list them with accurate status.
+  const labs = read('frontend/labs/index.html');
+  assert.match(labs, /Fly World/i);
+  assert.match(labs, /Experimental/i);
+  assert.doesNotMatch(labs, /Status:\s*In development/i);
   const analytics = read('frontend/analytics/index.html');
   assert.match(analytics, /data-analytics-catalog/);
   assert.match(analytics, /<script type="module" src="\/analytics\/app\.js"><\/script>/);

@@ -38,7 +38,7 @@ function renderWorkspace() {
 
 function renderCards() {
   return `<section class="az-labs-footer-cards" aria-label="Aizanoi Labs notes">
-    <article class="az-simple-card"><p class="az-kicker">EXPERIMENTAL</p><h3>Prototype shelf</h3><p>Small WebGL, WebGPU, UI, audio, physics and generative experiments belong here even when they are intentionally unfinished.</p></article>
+    <article class="az-simple-card"><p class="az-kicker">EXPERIMENTAL</p><h3>Fly World</h3><p>A 3D fly simulation with physics, telemetry, and connectome data. Includes a deterministic simulation core and a WebGL observer.</p><a class="az-button" href="/labs/fly-world/" target="_blank" rel="noopener noreferrer">Open Fly World</a></article>
     <article class="az-simple-card"><p class="az-kicker">SEPARATION</p><h3>Games live in Arcade</h3><p>Playable games are promoted to Aizanoi Arcade; Labs remains the place for prototypes and technical experiments.</p><button class="az-button" type="button" data-open-app="games">Open Arcade</button></article>
   </section>`;
 }
