@@ -7,9 +7,9 @@
  * translations are near zero -- the signature of a Blender export that merged
  * a second, displaced copy of the colonnade into the file. Because the offset is
  * baked into the accessor, no node transform can hide it, and the asset's bounds
- * come out as 58 x 20 x 1020 instead of 58 x 20 x 38. `temple_court.glb` names
- * the same columns `ionic_column` at a correct z = -9, which is why the name
- * alone is not evidence of a foreign object.
+ * come out as 58 x 20 x 1020 instead of 58 x 20 z = 38. The dropped court kit
+ * named the same columns `ionic_column` at a correct z = -9, which is why the
+ * name alone is not evidence of a foreign object.
  *
  * The repair removes those nodes and the meshes they reach. Meshes are left in
  * `meshes[]` and accessors/bufferViews in place: they are shared, so renumbering
