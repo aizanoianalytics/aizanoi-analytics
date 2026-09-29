@@ -864,3 +864,37 @@ button, .hud-btn {
   text-align: center; color: #f0e6d2; pointer-events: none; z-index: 150; opacity: 0;
   transition: opacity 1.2s ease; font-family: Georgia, serif;
 }
+
+/* Guided tour: progress, evidence context, and readable disabled states. */
+.tour-bar__progress {
+  height: 3px;
+  margin: 8px 0 10px;
+  background: rgba(235, 197, 125, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.tour-bar__progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #d3a65a, #ebc57d);
+  border-radius: 2px;
+  transition: width 320ms ease;
+}
+.tour-bar__evidence {
+  margin: 8px 0 0;
+  font-size: 0.78rem;
+  color: #a99a80;
+  line-height: 1.35;
+  border-left: 2px solid rgba(235, 197, 125, 0.35);
+  padding-left: 8px;
+}
+.tour-bar__evidence[hidden] { display: none; }
+/* Evidence classes get a distinct edge, and the class name is always present as
+   text too, so the distinction is never carried by colour alone. */
+.tour-bar__evidence[data-evidence-class="reconstructed"] { border-left-color: #7fb3d5; }
+.tour-bar__evidence[data-evidence-class="documented"] { border-left-color: #82c785; }
+.tour-bar__evidence[data-evidence-class="inferred"] { border-left-color: #d3a65a; }
+.tour-bar__evidence[data-evidence-class="speculative"] { border-left-color: #b98cc4; }
+.tour-bar__button:disabled { opacity: 0.4; cursor: not-allowed; }
+.tour-bar__button:focus-visible,
+.tour-bar__close:focus-visible { outline: 2px solid #ebc57d; outline-offset: 2px; }
