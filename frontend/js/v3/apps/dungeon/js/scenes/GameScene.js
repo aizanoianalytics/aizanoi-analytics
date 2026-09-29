@@ -31,6 +31,9 @@ function decorNoise(x, y, salt = 0) {
   return ((n ^ (n >>> 16)) >>> 0) / 4294967296;
 }
 
+// Hitstop slows scene time to 2% -- enough to read as a freeze, not a stall.
+const HITSTOP_TIMESCALE = 0.02;
+
 export class GameScene extends Phaser.Scene {
   constructor() {
     super({ key: 'GameScene' });
@@ -173,6 +176,12 @@ export class GameScene extends Phaser.Scene {
         this.touchControls.destroy();
         this.touchControls = null;
       }
+      // Never leave the scene clock frozen across a shutdown: a hitstop that
+      // outlives the scene would hand the next run a 2% time scale.
+      if (this.hitstopRelease) clearTimeout(this.hitstopRelease);
+      this.hitstopRelease = null;
+      this.hitstopUntil = 0;
+      this.time.timeScale = 1;
       audioManager.stopAmbientDrone();
       this.input.removeAllListeners();
       // Drop the scene sentinel so a fresh Phaser instance can claim it
@@ -899,6 +908,45 @@ export class GameScene extends Phaser.Scene {
     bolt.attacker = enemy;
     bolt.damageType = damageType;
     this.projectiles.add(bolt);
+  }
+
+  // Hitstop: a few frozen milliseconds on a landed hit. This is the single
+  // most important piece of impact feel -- the frame where the world stops
+  // selling the blow. It scales with the blow: a crit and a kill freeze longer
+  // than a normal hit, and a boss hit more than a trash mob, but it is always
+  // short enough that the player never feels the controls lock up.
+  //
+  // Driven from the real combat call sites rather than guessed, and it
+  // restores the previous time scale itself so a pause or a scene change can
+  // never leave the game running in slow motion.
+  applyHitstop(ms, intensity = 0.004) {
+    if (!Number.isFinite(ms) || ms <= 0) return;
+    const cam = this.cameras?.main;
+    const max = ms / 1000;
+    // Never stack: a second hit inside the window tops it up to the remaining
+    // time instead of restarting a longer freeze.
+    if (this.hitstopUntil && this.time.now < this.hitstopUntil) {
+      const remaining = (this.hitstopUntil - this.time.now) / 1000;
+      if (remaining >= max) return;
+      this.time.timeScale = 1;
+    }
+    this.hitstopUntil = this.time.now + max * 1000;
+    this.time.timeScale = HITSTOP_TIMESCALE;
+    // A tiny shake sells the impact without being its own effect.
+    if (cam) cam.shake(Math.round(max * 260), intensity);
+
+    // CRITICAL: the release must NOT be scheduled on scene time.
+    // `time.delayedCall` runs on the clock the hitstop itself just slowed to
+    // 2%, so a 120ms freeze would take 6 seconds to lift and the game would
+    // never recover. A real timer is immune to timeScale, and it is cleared
+    // first so a rapid second hit replaces the pending release rather than
+    // leaving an orphaned one behind.
+    if (this.hitstopRelease) clearTimeout(this.hitstopRelease);
+    this.hitstopRelease = setTimeout(() => {
+      this.time.timeScale = 1;
+      this.hitstopUntil = 0;
+      this.hitstopRelease = null;
+    }, Math.round(max * 1000));
   }
 
   // Area denial: a lingering ground zone that damages the player on a tick

@@ -287,9 +287,22 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
       }
     } else {
       audioManager.playSwing();
+      // Attack anticipation: the swing is committed now, the damage lands a
+      // moment later. The target is re-validated at the moment of impact, so
+      // an enemy that dies or walks out of reach during the windup cannot be
+      // hit by a stale reference -- and the windup is short enough that the
+      // player never loses the click.
       if (nearest) {
-        CombatSystem.processAttack(this, nearest);
-        this.scene.createDamageSpark(nearest.x, nearest.y);
+        const target = nearest;
+        const windup = Math.round(70 / Math.max(0.6, this.stats.attackSpeed));
+        this.showAttackTell(target, windup);
+        this.scene.time.delayedCall(windup, () => {
+          if (!this.active || this.isDead) return;
+          if (!target.active || target.hp <= 0) return;
+          if (Phaser.Math.Distance.Between(this.x, this.y, target.x, target.y) > this.stats.attackRange + 8) return;
+          CombatSystem.processAttack(this, target);
+          this.scene.createDamageSpark(target.x, target.y);
+        });
       }
     }
 
@@ -298,6 +311,36 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.scene.time.delayedCall(delay, () => {
       this.isAttacking = false;
     });
+  }
+
+  // A short forward lean and a glint toward the target: readable at a glance
+  // without being its own effect. Purely visual, so it can never desync from
+  // the damage.
+  showAttackTell(target, windup) {
+    try {
+      const angle = Phaser.Math.Angle.Between(this.x, this.y, target.x, target.y);
+      this.scene.tweens.add({
+        targets: this,
+        scaleX: this.baseScaleX * (this.scaleX > this.baseScaleX ? 1.04 : 1.04),
+        duration: windup,
+        ease: 'Quad.easeIn',
+      });
+      // A small spark just off the weapon side sells the windup direction.
+      const spark = this.scene.add.circle(
+        this.x + Math.cos(angle) * 18, this.y + Math.sin(angle) * 18,
+        5, 0xfff3c4, 0.85
+      ).setDepth(18);
+      this.scene.tweens.add({
+        targets: spark,
+        alpha: 0,
+        scaleX: 2.2,
+        scaleY: 2.2,
+        duration: windup,
+        onComplete: () => spark.destroy(),
+      });
+    } catch (_) {
+      // A missing display object must never break the attack.
+    }
   }
 
   castSkill1() {
@@ -369,6 +412,12 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.scene.createFloatingText(this.x, this.y - 20, `-${amount}`, isCritical ? '#f1c40f' : '#e74c3c', isCritical ? 20 : 15);
     audioManager.playPlayerHurt();
     this.scene.cameras.main.shake(120, 0.005);
+    // A shorter freeze than a landed attack, and none at all for chip damage:
+    // the brief asks for restrained feedback, and being hit must never read as
+    // the game lagging.
+    if (this.scene?.applyHitstop && amount > 0) {
+      this.scene.applyHitstop(Math.min(70, 34 + amount), 0.003);
+    }
     // Hasar ezilmesi
     try {
       this.scene.tweens.add({

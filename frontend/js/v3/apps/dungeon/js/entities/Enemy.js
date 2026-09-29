@@ -557,9 +557,20 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   takeDamage(amount, isCritical = false, attacker = null) {
     if (this.isDead) return;
 
+    const hpBefore = this.hp;
     this.hp -= amount;
     this.scene.createFloatingText(this.x, this.y - 15, `-${amount}`, isCritical ? '#f1c40f' : '#ffffff', isCritical ? 22 : 15);
     audioManager.playHit(isCritical);
+
+    // Impact feel: freeze the world briefly on a landed hit. A crit, a kill or
+    // a boss hit all land heavier than a routine jab, and none of them is
+    // long enough to cost the player a decision.
+    if (this.scene?.applyHitstop) {
+      const killed = this.hp <= 0 && hpBefore > 0;
+      const weight = this.isBoss ? 2 : (this.type?.isMiniBoss ? 1.5 : 1);
+      const ms = Math.round((killed ? 105 : isCritical ? 80 : 55) * weight);
+      this.scene.applyHitstop(ms, isCritical ? 0.006 : 0.004);
+    }
 
     // Kucuk knockback (boss haric): saldirgandan uza it
     if (attacker && typeof attacker.x === 'number' && !this.isBoss) {

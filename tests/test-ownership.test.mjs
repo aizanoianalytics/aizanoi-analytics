@@ -34,6 +34,7 @@ const DIAGNOSTICS = new Set([
   'dungeon-play-audit.mjs',
   'dungeon-enemy-behaviour-audit.mjs',
   'dungeon-boss-encounter-audit.mjs',
+  'dungeon-combat-feel-audit.mjs',
   'aizanoi-performance-audit.mjs'
 ]);
 
