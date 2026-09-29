@@ -450,7 +450,7 @@ export const MATERIAL_DEFINITIONS = {
   wood:            { roughness: 0.75, metalness: 0.00, color: 0x624630, bumpScale: 0.04 },
   woodPlanks:      { roughness: 0.72, metalness: 0.00, color: 0x6e5238, bumpScale: 0.05 },
   foliage:         { roughness: 0.80, metalness: 0.00, color: 0x587844 },
-  foliageDark:     { roughness: 0.82, metalness: 0.00, color: 0x244222 },
+  foliageDark:     { roughness: 0.82, metalness: 0.00, color: 0x2e5330, emissive: 0x2e5330, emissiveIntensity: 0.30 },
   trunk:           { roughness: 0.92, metalness: 0.00, color: 0x54402c, bumpScale: 0.06 },
   waterSurface:    { roughness: 0.08, metalness: 0.20, color: 0x3a6a7a, transparent: true, opacity: 0.75 },
 };

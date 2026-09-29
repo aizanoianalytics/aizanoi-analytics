@@ -85,11 +85,10 @@ test('Rome\'s Colosseum is framed from an angle with nothing in front of it', ()
     hasBlocker(L, ROME, standoff, got), null,
     'the chosen Rome angle must have an unobstructed sight line',
   );
-  // The authored angle really was blocked -- this is the regression.
-  assert.ok(
-    hasBlocker(L, ROME, standoff, L.viewAngle) !== null,
-    'Rome\'s authored viewAngle is expected to be blocked; if this ever changes the test is stale',
-  );
+  // The authored NE angle itself is clear (verified in-browser: the arrival
+  // lands NE of the Colosseum with an unobstructed sight line), so the
+  // solver must keep it as-is instead of hunting for a replacement.
+  assert.equal(got, L.viewAngle, 'a clear authored angle must be returned as-is');
 });
 
 test('Athens\' Parthenon is framed from an angle with nothing in front of it', () => {

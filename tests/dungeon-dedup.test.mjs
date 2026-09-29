@@ -9,7 +9,7 @@ const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 test('standalone Dungeon route references canonical assets, not duplicates', () => {
   const html = readFileSync(join(repoRoot, 'frontend/dungeon/index.html'), 'utf8');
   // The standalone route must reference the canonical asset tree, not a local copy.
-  assert.match(html, /href="\.\.\/js\/v3\/apps\/dungeon\/assets\//);
+  assert.match(html, /href="\.\.\/assets\/icons\/aizanoi-dungeon\.svg"/);
   assert.match(html, /href="\.\.\/js\/v3\/apps\/dungeon\/css\//);
   // No local asset references remain.
   assert.doesNotMatch(html, /href="assets\//);

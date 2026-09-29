@@ -189,6 +189,35 @@ function lighting() {
   const bedroom = new THREE.PointLight(0xffc27a, 2.6, 4.8, 2);
   bedroom.position.set(5.18, 2.35, 1.42);
   scene.add(bedroom);
+
+  // Dim cool fill from the south so camera-facing (sun-shadowed) faces keep
+  // a readable floor instead of crushing to black. No shadow casting: it
+  // only lifts the hemisphere floor on the observer side.
+  const southFill = new THREE.PointLight(0xdfe8ff, 0.85, 14, 2);
+  southFill.position.set(0, -3.4, 2.1);
+  scene.add(southFill);
+}
+
+// Cast iron with no environment map renders as a void: metalness kills the
+// diffuse term and there is nothing specular to reflect. Drop dark metals to
+// a cast-iron response (mostly diffuse) with a faint warm lift so the stove
+// body, pipe and kettle read as objects from the shadow side. This only
+// touches rendering; simulation, collision and evidence are unaffected.
+function stabilizeDarkMetals(root) {
+  root.traverse((object) => {
+    if (!object.isMesh) return;
+    const materials = Array.isArray(object.material) ? object.material : [object.material];
+    for (const material of materials) {
+      if (!material?.isMeshStandardMaterial) continue;
+      if (material.metalness < 0.5 || !material.color) continue;
+      const luminance = 0.299 * material.color.r + 0.587 * material.color.g + 0.114 * material.color.b;
+      if (luminance > 0.28) continue;
+      material.metalness = 0.32;
+      material.emissive.copy(material.color);
+      material.emissiveIntensity = Math.max(material.emissiveIntensity || 0, 0.22);
+      material.needsUpdate = true;
+    }
+  });
 }
 
 function updateResearchTelemetry(frame) {
@@ -242,6 +271,7 @@ async function boot() {
   const gltf = await loader.loadAsync(new URL('./assets/fly-house.glb', import.meta.url).toString());
   gltf.scene.name = 'FLY_HOUSE_BLENDER_ROOT';
   scene.add(gltf.scene);
+  stabilizeDarkMetals(gltf.scene);
   collectCollisionRoots(gltf.scene);
   const response = await fetch(new URL('./assets/environment.json', import.meta.url));
   if (!response.ok) throw new Error(`Environment metadata HTTP ${response.status}`);

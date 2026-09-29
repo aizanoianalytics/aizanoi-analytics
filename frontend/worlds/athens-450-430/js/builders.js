@@ -335,13 +335,20 @@ export function buildBuilding(b) {
     group.userData.buildingId = b.id;
     const w = b.w || 10;
     const d = b.d || 15;
-    const h = 5;
+    const h = b.h || 5;
 
     const box = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), getMaterial('plaster'));
     box.position.y = h/2;
     box.castShadow = true;
     box.receiveShadow = true;
     group.add(box);
+
+    // Flat roof slab so generic blocks read as finished buildings with a
+    // crisp cornice line instead of open-topped boxes.
+    const roof = new THREE.Mesh(new THREE.BoxGeometry(w + 0.4, 0.3, d + 0.4), getMaterial('roofTile'));
+    roof.position.y = h + 0.15;
+    roof.castShadow = true;
+    group.add(roof);
 
     return group;
 }

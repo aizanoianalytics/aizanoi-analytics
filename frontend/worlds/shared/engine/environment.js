@@ -40,7 +40,7 @@ const WORLD_MOODS = {
     fogTint: [1.08, 1.00, 0.88],
     fogDensityDay: 0.0014,
     fogDensityNight: 0.0026,
-    exposure: 1.12,
+    exposure: 1.04,
     ambientBoost: 1.0,
   },
   // White marble + Aegean blue — crisp, high-key, strong blue sky bounce.
