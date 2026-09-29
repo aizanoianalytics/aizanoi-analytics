@@ -18,6 +18,25 @@ export function landmarkTargetHeight(building) {
   return Math.max(2.5, Math.min(38, height * 0.4));
 }
 
+/**
+ * Distance to stand back from a landmark so it fills a set share of the frame.
+ *
+ * `landmarkStandoff` sizes the view from the monument itself, but callers also
+ * wanted room for the approach and the foreground. That extra room used to be a
+ * hard 220-unit floor, which silently overrode the geometry: Aizanoi's temple is
+ * the smallest landmark at 22.6 units across, so the floor pushed the camera far
+ * enough back that it covered only 8.7 degrees of a 55-degree frame, while the
+ * Colosseum at 62 units covered 25.6. The landmark read as a distant smudge
+ * rather than a building.
+ *
+ * The extra is now expressed as a multiple of the monument's own standoff, so a
+ * small temple and a large one are framed comparably and the geometry, not a
+ * constant chosen for one world's largest landmark, decides the distance.
+ */
+export function landmarkArrivalDistance(building, { verticalFov = 65, approach = 1.6 } = {}) {
+  return Math.ceil(landmarkStandoff(building, { verticalFov }) * approach);
+}
+
 export function landmarkYaw(from, target) {
   return Math.atan2(target.x - from.x, target.z - from.z);
 }

@@ -11,13 +11,18 @@ import {
 } from './city-data.js';
 
 const COMPACT = compactAizanoiLayout();
-const { REGIONS, STREETS, BUILDINGS, WATERS, BOUNDS, SPAWN } = COMPACT;
+const { REGIONS, STREETS, BUILDINGS, WATERS, BOUNDS, SPAWN, LAYOUT } = COMPACT;
+// Distance kept clear between a monument and the houses around it, measured in
+// the layout's own units. The compaction shrinks footprints, so a clearance
+// tuned against the uncompressed plan would pinch shut -- authored 8 units were
+// 20.5 there and are 3.1 here, which is what let houses crowd the temple.
+const MONUMENT_CLEARANCE = 20.5;
 
 import { getMaterial, getEvidenceMaterial } from '../../shared/assets/materials.js';
 import { buildStructure, KIT_MANIFEST, setAssetKit } from './builders.js';
 import { loadAssetKit } from '../../shared/engine/asset-kit.js';
 import { Environment } from '../../shared/engine/environment.js';
-import { landmarkStandoff, landmarkTargetHeight, clearViewAzimuth } from '../../shared/engine/framing.js';
+import { landmarkStandoff, landmarkArrivalDistance, landmarkTargetHeight, clearViewAzimuth } from '../../shared/engine/framing.js';
 import { WaterSystem, buildWaterSamplePoints } from '../../shared/engine/water.js';
 import { VegetationSystem } from '../../shared/engine/vegetation.js';
 import { ParticleSystem } from '../../shared/engine/particles.js';
@@ -318,10 +323,14 @@ function buildUrbanFabric() {
         const seed = `aizanoi:${r.id}:${Math.round(x)}:${Math.round(z)}`;
         if (hash(seed) > style.density) continue;
 
+        // Keep houses out of the monuments' precincts. The clearance has to
+        // follow the compaction: a fixed 8 units was authored against the
+        // uncompressed plan and is really 20.5 units there, so in a layout
+        // compressed 0.39 across it let houses sit almost against the temple.
         const overlaps = BUILDINGS.some(b => {
           const dx = Math.abs(x - b.x);
           const dz = Math.abs(z - b.z);
-          return dx < (b.w / 2 + 8) && dz < (b.d / 2 + 8);
+          return dx < (b.w / 2 + MONUMENT_CLEARANCE) && dz < (b.d / 2 + MONUMENT_CLEARANCE);
         });
         if (overlaps) continue;
 
@@ -510,15 +519,19 @@ function populateAizanoiDressing() {
 
   // Dressing coordinates are authored in the survey frame; keep them aligned
   // with the compact monument/circulation frame without changing their IDs.
-  dressingGroup.scale.set(0.39, 1, 0.88);
+  // The height axis takes the same uniform factor as the Blender kit so a
+  // statue stays proportionate to the monument it stands beside; leaving it at
+  // 1.0 is what made the prop cluster top out at 47.6 units against the
+  // temple's 7.6 and read as a grey mass in front of the arrival view.
+  dressingGroup.scale.set(LAYOUT.x, LAYOUT.z, LAYOUT.fit);
   const allColliders = new Set([...collision.grid.cells.values()].flat());
   collision.grid.clear();
   for (const collider of allColliders) {
     if (!preExistingColliders.has(collider)) {
-      collider.x *= 0.39;
-      collider.z *= 0.88;
-      if (Number.isFinite(collider.w)) collider.w *= 0.39;
-      if (Number.isFinite(collider.d)) collider.d *= 0.88;
+      collider.x *= LAYOUT.x;
+      collider.z *= LAYOUT.z;
+      if (Number.isFinite(collider.w)) collider.w *= LAYOUT.x;
+      if (Number.isFinite(collider.d)) collider.d *= LAYOUT.z;
     }
     collision.grid.insert(collider);
   }
@@ -618,7 +631,7 @@ function bindEvents() {
     // complete composition rather than a wall-sized crop.
     const standoff = landmarkStandoff(building, { verticalFov: camera.fov });
     const azimuth = clearViewAzimuth(building, BUILDINGS, { standoff, cameraY: 1.7, declaredAngle: building.viewAngle });
-    const safe = collision.findSafeSpawn(building.x, building.z, Math.max(220, standoff + 80), standoff, azimuth);
+    const safe = collision.findSafeSpawn(building.x, building.z, landmarkArrivalDistance(building, { verticalFov: camera.fov }), standoff, azimuth);
     window.__WORLD_LAST_TELEPORT__ = building.id;
     const targetY = typeof safe.y === 'number' ? safe.y + 1.7 : 1.7;
     controls.teleportFacing(safe.x, safe.z, building.x, landmarkTargetHeight(building), building.z, targetY);
