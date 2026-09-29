@@ -104,6 +104,21 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     // Shield-bash charge state: windup -> charge -> recovery. Kept in one
     // object so the phase is readable in the update loop below.
     this.charge = { phase: 'idle', timer: 0, angle: 0, hit: false };
+    // Boss encounter state. The brief is explicit that a boss must not be "a
+    // large stat block": it needs readable phases, telegraphed attacks, arena
+    // progression and an escalation. Phases advance on health thresholds and
+    // are the single source of truth for what the boss does next.
+    this.encounter = {
+      boss: isBoss,
+      phase: 0,
+      enraged: false,
+      move: { phase: 'idle', timer: 0, angle: 0, hit: false },
+      stormCooldown: 0,
+      hazardCooldown: 0,
+      // One-shot flags, so an intro or a threshold only fires once.
+      announced: false,
+      phaseFlash: 0
+    };
   }
 
   update(time, delta, player) {
@@ -167,7 +182,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
     }
 
-    // 3. Shield-bash charge: a committed, telegraphed rush. Unlike the plain
+    // 3. Boss encounter phases run before the ordinary movement block, so a
+    // boss never falls back to "walk at the player" during its own mechanics.
+    if (this.updateEncounter(time, delta, dist, player)) {
+      this.drawHealthBar();
+      return;
+    }
+
+    // 4. Shield-bash charge: a committed, telegraphed rush. Unlike the plain
     // chasers, this one locks its heading during the windup, so sidestepping
     // it actually works and running in a straight line does not.
     if (this.behavior === 'shield_bash_charge' && this.updateCharge(time, delta, dist, player)) {
@@ -175,7 +197,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    // 4. Distance and Movement logic
+    // 5. Distance and Movement logic
     if (dist <= this.aggroRange) {
       // Ranged Kiter: Oyuncu çok yaklaşırsa (120px) geri çekil
       if (this.behavior === 'ranged_kite' && dist < 120) {
@@ -194,6 +216,221 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
     } else {
       this.setVelocity(0, 0);
+    }
+  }
+
+  // ---- Boss encounters -------------------------------------------------
+  // Section 18: a boss needs readable phases and mechanics, not a bigger hp
+  // pool. Phases are health-gated so the escalation is visible: each one
+  // changes what the boss does, and the transition is telegraphed.
+  updateEncounter(time, delta, dist, player) {
+    const e = this.encounter;
+    if (!e.boss) return false;
+
+    // Health-gated phases. The final boss has three, the mini boss two.
+    const maxPhases = this.type.isFinalBoss ? 3 : 2;
+    const thresholds = this.type.isFinalBoss ? [0.66, 0.33] : [0.5];
+    let wanted = 0;
+    for (const t of thresholds) {
+      if (this.hp / this.maxHp <= t) wanted += 1;
+    }
+    if (wanted > e.phase && wanted < maxPhases) {
+      e.phase = wanted;
+      e.phaseFlash = 900;
+      this.announcePhase(player);
+    }
+
+    if (this.type.isFinalBoss) {
+      // Enrage: the last third is faster and hits harder, and it is announced
+      // rather than silently changing the rules.
+      const enragedNow = this.hp / this.maxHp <= 0.22;
+      if (enragedNow && !e.enraged) {
+        e.enraged = true;
+        this.moveSpeed = Math.round(this.moveSpeed * 1.35);
+        this.attackSpeed = Math.round(this.attackSpeed * 1.3 * 100) / 100;
+        this.scene.createFloatingText(this.x, this.y - 74, 'ENRAGED', '#e74c3c', 26);
+        this.scene.cameras?.main?.shake?.(260, 0.009);
+        this.scene.playSfx?.('sfx-boss-warning', 0.85);
+      }
+    }
+
+    if (e.phaseFlash > 0) e.phaseFlash -= delta;
+
+    if (this.type.isFinalBoss) {
+      this.runFinalBossMoves(time, delta, dist, player);
+    } else {
+      this.runMiniBossMoves(time, delta, dist, player);
+    }
+
+    // A phase transition or an enrage is a free punish window: the boss stands
+    // still so the escalation is an opportunity, not a difficulty spike the
+    // player cannot answer.
+    if (e.phaseFlash > 0) {
+      this.setVelocity(0, 0);
+      return true;
+    }
+    // CRITICAL: while a committed move is running, this method owns the boss's
+    // velocity. Returning false here let the generic walk-towards-player block
+    // overwrite it every single frame, so the charge was measured at walking
+    // speed and never actually happened.
+    return e.move.phase !== 'idle';
+  }
+
+  announcePhase(player) {
+    const names = this.type.isFinalBoss
+      ? ['The colossus wakes', 'The storm breaks', 'Final form']
+      : ['The minotaur roars'];
+    const label = names[Math.min(this.encounter.phase - 1, names.length - 1)];
+    this.scene.createFloatingText(this.x, this.y - 70, label, '#f39c12', 22);
+    this.scene.cameras?.main?.shake?.(200, 0.006);
+    this.scene.playSfx?.('sfx-boss-warning', 0.7);
+  }
+
+  // Marble Minotaur: a telegraphed charge plus a ground slam that hurts in a
+  // radius, so the fight rewards spacing rather than trading hits.
+  runMiniBossMoves(time, delta, dist, player) {
+    const e = this.encounter;
+    const m = e.move;
+
+    if (m.phase === 'idle') {
+      if (dist > 200 || dist <= this.attackRange * 1.3) return;
+      m.phase = 'windup';
+      m.timer = 700;
+      m.angle = Phaser.Math.Angle.Between(this.x, this.y, player.x, player.y);
+      m.hit = false;
+      this.setTint(0xff8844);
+      this.setVelocity(0, 0);
+      return;
+    }
+
+    if (m.phase === 'windup') {
+      m.timer -= delta;
+      this.setTint(Math.sin(time / 80) > 0 ? 0xffcc44 : 0xff4411);
+      this.setVelocity(0, 0);
+      if (m.timer <= 0) {
+        m.phase = 'charging';
+        m.timer = 1100;
+        this.clearTint();
+      }
+      return;
+    }
+
+    if (m.phase === 'charging') {
+      m.timer -= delta;
+      const speed = 380;
+      this.setVelocity(Math.cos(m.angle) * speed, Math.sin(m.angle) * speed);
+      if (!m.hit && dist <= this.attackRange + 14) {
+        m.hit = true;
+        CombatSystem.processAttack(this, player);
+        this.scene.createDamageSpark(player.x, player.y);
+      }
+      if (m.timer <= 0 || this.body?.blocked?.left || this.body?.blocked?.right ||
+          this.body?.blocked?.up || this.body?.blocked?.down) {
+        m.phase = 'slam';
+        m.timer = 0;
+        this.setVelocity(0, 0);
+        this.scene.spawnVolatileZone(this.x, this.y, 96, 12, 1600);
+        this.scene.cameras?.main?.shake?.(220, 0.012);
+      }
+      return;
+    }
+
+    if (m.phase === 'slam') {
+      m.timer -= delta;
+      if (m.timer <= 0) { m.phase = 'recovery'; m.timer = 800; }
+      return;
+    }
+
+    m.timer -= delta;
+    this.setAlpha(0.7);
+    this.setVelocity(0, 0);
+    if (m.timer <= 0) { m.phase = 'idle'; this.clearAlpha(); }
+  }
+
+  // Titan Colossus: a storm identity. It seeds lightning orbs around the
+  // arena, keeps a permanent storm interval that intensifies with the phase,
+  // and gains its heaviest attack in the final phase. It also commits to a
+  // telegraphed ground pound, so the final boss closes distance instead of
+  // being a stationary turret.
+  runFinalBossMoves(time, delta, dist, player) {
+    const e = this.encounter;
+    const m = e.move;
+
+    // Committed telegraphed rush, shared shape with the mini boss but slower
+    // and heavier. Uses the same move object so the phase is observable.
+    if (m.phase !== 'idle') {
+      if (m.phase === 'windup') {
+        m.timer -= delta;
+        this.setTint(Math.sin(time / 90) > 0 ? 0xffe082 : 0x7c4dff);
+        this.setVelocity(0, 0);
+        if (m.timer <= 0) { m.phase = 'charging'; m.timer = 1300; this.clearTint(); }
+        return;
+      }
+      if (m.phase === 'charging') {
+        m.timer -= delta;
+        const speed = e.enraged ? 460 : 340;
+        this.setVelocity(Math.cos(m.angle) * speed, Math.sin(m.angle) * speed);
+        if (!m.hit && dist <= this.attackRange + 18) {
+          m.hit = true;
+          CombatSystem.processAttack(this, player);
+          this.scene.createDamageSpark(player.x, player.y);
+          this.scene.createFloatingText(player.x, player.y - 30, 'CRUSHED', '#ba68c8', 20);
+        }
+        if (m.timer <= 0 || this.body?.blocked?.left || this.body?.blocked?.right ||
+            this.body?.blocked?.up || this.body?.blocked?.down) {
+          m.phase = 'recovery';
+          m.timer = 750;
+          this.setVelocity(0, 0);
+          this.scene.spawnVolatileZone(this.x, this.y, 110, 14, 1800);
+          this.scene.cameras?.main?.shake?.(260, 0.014);
+        }
+        return;
+      }
+      m.timer -= delta;
+      this.setAlpha(0.7);
+      this.setVelocity(0, 0);
+      if (m.timer <= 0) { m.phase = 'idle'; this.clearAlpha(); }
+      return;
+    }
+
+    // Start the rush from a standstill at mid range.
+    if (dist > 170 && dist <= 330 && (!this.body?.velocity ||
+        Math.hypot(this.body.velocity.x, this.body.velocity.y) <= 20)) {
+      m.phase = 'windup';
+      m.timer = 820;
+      m.angle = Phaser.Math.Angle.Between(this.x, this.y, player.x, player.y);
+      m.hit = false;
+      this.setVelocity(0, 0);
+      return;
+    }
+
+    // Storm cadence tightens each phase: 2600 -> 1800 -> 1100ms.
+    const cadence = e.enraged ? 1100 : (e.phase >= 2 ? 1800 : 2600);
+    e.stormCooldown -= delta;
+    if (e.stormCooldown <= 0 && dist <= this.aggroRange) {
+      e.stormCooldown = cadence;
+      const bolts = e.phase >= 2 ? 3 : 2;
+      for (let i = 0; i < bolts; i++) {
+        const angle = Phaser.Math.Angle.Between(this.x, this.y, player.x, player.y) +
+          (i - (bolts - 1) / 2) * 0.5;
+        const target = this.scene.getRandomWalkablePosition?.() ?? player;
+        this.scene.fireEnemyProjectile(
+          this, { x: target.x, y: target.y }, 'curse_orb',
+          Math.max(1, Math.round(this.attackDamage * 0.55)), 'lightning'
+        );
+        void angle;
+      }
+      this.scene.createDamageSpark(this.x, this.y);
+    }
+
+    // Phase 2+ leaves a denial zone under the player, so standing still is
+    // not a safe default.
+    if (e.phase >= 1) {
+      e.hazardCooldown -= delta;
+      if (e.hazardCooldown <= 0) {
+        e.hazardCooldown = e.phase >= 2 ? 2200 : 3400;
+        this.scene.spawnVolatileZone(player.x, player.y, 70, 9, 2200);
+      }
     }
   }
 
