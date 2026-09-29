@@ -72,6 +72,14 @@ export class GameScene extends Phaser.Scene {
     // 1. Sistemleri başlat
     this.progression = new ProgressionSystem();
     this.inventory = new InventorySystem(this.progression);
+    // A run is a chapter sequence, not a save. Starting at the first chapter
+    // begins a fresh ledger; returning to a later chapter resumes the same one,
+    // so the victory screen reports the run the player actually played.
+    if (!this.isEndless && (!this.progression.run || this.chapterIndex <= (this.progression.run.startedAtChapter ?? 0))) {
+      this.progression.startRun();
+    } else if (!this.progression.run) {
+      this.progression.startRun();
+    }
 
     // Seviye Konfigürasyonu
     if (this.isEndless) {
@@ -764,6 +772,9 @@ export class GameScene extends Phaser.Scene {
   beginPortalTransition() {
     // Seviye tamamlama bonusu
     this.progression.addGold(this.currentLevelConfig.goldBonus || 50);
+    // Record the clear before any transition, so the run ledger is complete
+    // whichever screen the player lands on.
+    this.progression.recordChapterCleared(this.chapterIndex + 1);
 
     if (this.isEndless) {
       this.endlessWave++;
