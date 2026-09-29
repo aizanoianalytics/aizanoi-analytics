@@ -81,9 +81,9 @@ const PLACEMENTS = {
   // temple_of_zeus.glb carries podium, cella, door, architrave and pediment
   // but no peristasis, so the colonnade is built procedurally below from the
   // shared Ionic order (the documented order is Ionic, pseudodipteral 8x15).
-  // temple_court.glb is not placed: at its authored scale it renders as a
+  // The separate court kit was dropped: at its authored scale it rendered as a
   // 4-metre dollhouse with half its columns buried, contributing nothing
-  // visible at any readable distance.
+  // visible at any readable distance. The ring is the colonnade.
   temple: [P('temple_of_zeus', 0, 0, 0, 1)],
   agora: [
     P('stoa_seg', 0, -20, Math.PI, 1),
