@@ -1,0 +1,41 @@
+{
+  "id": "2026-09-29-nvidia-open-agent-safety-platform",
+  "title": "Nvidia ships an open agent safety stack with more than 100 partners",
+  "summary": "Nvidia released the Open Agent Safety Platform, pairing two components with different jobs. OpenShell is an Apache 2.0 runtime that sandboxes agent fleets with kernel-level isolation and enforces a declarative policy over the files, networks, tools and credentials each may reach. Sentry is a monitoring design that runs on BlueField-4 data processing units off the agent's own compute, so it can quarantine a runaway workload in milliseconds. Nvidia says the stack, built with more than 100 organisations including Anthropic and Microsoft, could have stopped this summer's Hugging Face breach.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "ai-safety",
+    "agents",
+    "infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/open-agent-safety-platform",
+      "publishedAt": "2026-09-28T13:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/28/nvidia-launches-new-platform-for-reining-in-rogue-ai-agents/",
+      "publishedAt": "2026-09-28T14:00:00Z"
+    },
+    {
+      "publisher": "CyberScoop",
+      "url": "https://cyberscoop.com/nvidia-open-agent-safety-platform/",
+      "publishedAt": "2026-09-28T15:00:00Z"
+    }
+  ]
+}

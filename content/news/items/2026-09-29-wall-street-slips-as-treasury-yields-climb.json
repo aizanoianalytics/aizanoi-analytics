@@ -1,0 +1,41 @@
+{
+  "id": "2026-09-29-wall-street-slips-as-treasury-yields-climb",
+  "title": "Wall Street slips as long-dated Treasury yields reach two-decade highs",
+  "summary": "US equities started the week lower after a jump in long-dated bond yields pulled indexes further from record levels. The S&P 500 fell 0.8 percent, the Dow Jones Industrial Average 0.7 percent and the Nasdaq Composite 0.9 percent. Gold futures slid about 3.2 percent to roughly $4,184 an ounce as rising oil prices fed inflation worries and bets that the Federal Reserve will tighten again, keeping pressure on rate-sensitive technology shares.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "bonds",
+    "gold",
+    "federal-reserve"
+  ],
+  "sources": [
+    {
+      "publisher": "Associated Press",
+      "url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-095baa4855b9363bd7c4539ff65a6f13",
+      "publishedAt": "2026-09-28T20:30:00Z"
+    },
+    {
+      "publisher": "Investopedia",
+      "url": "https://www.investopedia.com/stock-market-today-dow-jones-s-and-p-500-09282026-12144759",
+      "publishedAt": "2026-09-28T20:15:00Z"
+    },
+    {
+      "publisher": "TheStreet",
+      "url": "https://www.thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-sept-28-2026",
+      "publishedAt": "2026-09-28T14:00:00Z"
+    }
+  ]
+}

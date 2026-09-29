@@ -1,0 +1,40 @@
+{
+  "id": "2026-09-29-anthropic-claude-sonnet-5-5",
+  "title": "Anthropic adds a cheaper, faster Sonnet 5.5 to its Claude 5.5 family",
+  "summary": "Anthropic launched Claude Sonnet 5.5, the second model in its Claude 5.5 family, describing it as a faster and lower-cost complement to the flagship Opus 5.5 rather than a capability step. The company says it runs about 30 percent faster than Sonnet 5 and cuts cost per task by up to 30 percent for typical use. The launch lands while Anthropic is preparing a public listing and a week after it released Opus 5.5.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "claude",
+    "model-release"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic - Claude release notes",
+      "url": "https://support.claude.com/en/articles/12138966-release-notes",
+      "publishedAt": "2026-09-28T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/technology/anthropic-rolls-out-second-claude-55-model-it-builds-toward-ipo-2026-09-28",
+      "publishedAt": "2026-09-28T18:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/28/anthropic-releases-sonnet-5-5-which-it-calls-a-significantly-cheaper-faster-work-partner/",
+      "publishedAt": "2026-09-28T16:00:00Z"
+    }
+  ]
+}

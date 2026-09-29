@@ -1,0 +1,41 @@
+{
+  "id": "2026-09-29-england-czechia-nations-league-matchday-two",
+  "title": "England travel to Czechia with their Nations League group already slipping",
+  "summary": "Matchday two closes on Tuesday with England away to Czechia and Spain hosting Croatia in League A Group 3, after England lost 2-3 to Spain at Wembley and Czechia went down 1-2 to Croatia in their opener. Ten matches across the four leagues are scheduled, including Scotland against Switzerland and Slovenia against North Macedonia. Czechia and England kick off at 20:45 local time in Prague.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "england",
+    "czechia",
+    "spain"
+  ],
+  "sources": [
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/scores-fixtures/2026-09-29",
+      "publishedAt": "2026-09-29T05:00:00Z"
+    },
+    {
+      "publisher": "Goal.com",
+      "url": "https://www.goal.com/en-om/tickets-travel/match/czechia-england-tickets/A~blt8e1deb3e5a8a7836",
+      "publishedAt": "2026-09-29T02:00:00Z"
+    },
+    {
+      "publisher": "England Football (The FA)",
+      "url": "https://www.englandfootball.com/articles/2026/Sep/28/app-england-czechia-five-classic-meetings-20262809",
+      "publishedAt": "2026-09-28T12:00:00Z"
+    }
+  ]
+}

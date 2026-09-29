@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/openai-shelves-gpt-6-1-astra/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>OpenAI shelves GPT-6.1 Astra after internal tests miss its safety bar</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/nvidia-open-agent-safety-platform/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>Nvidia ships an open agent safety stack with more than 100 partners</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/wall-street-slips-as-treasury-yields-climb/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>Wall Street slips as long-dated Treasury yields reach two-decade highs</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/amd-acquires-world-labs/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>AMD agrees an $8.2 billion deal for Fei-Fei Li&#39;s World Labs</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/anthropic-ipo-prospectus-costs/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>Anthropic&#39;s IPO prospectus pairs trillion-dollar ambition with steep losses</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/gpt-6-astra-aisi-supply-chain-test/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>UK testers watched GPT-6 Astra attack open-source projects in simulation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/australia-senate-ai-inquiry-ceos/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>Australian Senate calls OpenAI and Anthropic chiefs over the Medicare breach</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/starship-first-orbital-flight/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>Starship&#39;s first orbital flight lifts SpaceX&#39;s next-generation Starlinks</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/anthropic-claude-sonnet-5-5/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>Anthropic adds a cheaper, faster Sonnet 5.5 to its Claude 5.5 family</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/nations-league-france-belgium-italy-turkiye/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>Olise settles France in Brussels as Italy run up four in Bursa</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/nvidia-150-billion-buyback-increase/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>Nvidia adds $150 billion to its buyback authorisation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/greece-beat-germany-klopp-first-defeat/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>Greece hand Klopp his first defeat in charge of Germany</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/england-czechia-nations-league-matchday-two/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>England travel to Czechia with their Nations League group already slipping</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/microsoft-data-center-cost-standoff/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>Microsoft stays quiet as church groups ask for 1 percent of data centre costs</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-29/sima-ai-physical-ai-series-c/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-29T05:12:00.000Z</news:publication_date>
+      <news:title>SiMa.ai raises $150 million to push physical AI silicon to the edge</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/weekly/2026-09-28/weekly-higher-for-longer-meets-oil/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -158,126 +278,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-09-28T05:58:00.000Z</news:publication_date>
       <news:title>China&#39;s industrial profits rise 15.7 percent over eight months as August momentum cools</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/us-china-ai-incident-channel/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>Washington and Beijing agree an AI-incident communication channel</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/eurozone-pmi-upturn/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>Euro-zone business activity accelerates to strongest pace since 2023</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/apple-haptic-patent-verdict/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>US jury orders Apple to pay $5.7 billion in haptics patent case</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/uefa-club-football-trends/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>UEFA report finds record attendance and rising transfer spending in Europe</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/google-gemini-live-avatar/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>Google adds a live visual persona to Gemini’s real-time dialogue</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/us-current-account-deficit/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>US current-account deficit widens to $246 billion in second quarter</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/google-suncatcher-test/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>Google prepares first orbital test for its AI-chip space project</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/premier-league-table/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>Manchester City lead Premier League after five matches</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/nasa-crew-13-arrival/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>NASA’s Crew-13 reaches Kennedy ahead of October station launch</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/champions-league-fixtures/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>Champions League league phase sets another round of heavyweight ties</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/google-gemini-tts/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>Google releases Gemini voice models aimed at expressive speech creation</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/nyc-ai-school-moratorium/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>New York City announces broad student-facing generative AI moratorium</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/google-vids-ai-video/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>Google makes Gemini-powered HD video creation free in Vids</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/spain-gdp-q2/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>Spain’s economy expands 0.7% in the second quarter</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-09-27/ai-methane-mapping/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-09-27T05:00:00.000Z</news:publication_date>
-      <news:title>Google and NASA researchers use AI to map methane plumes from orbit</news:title>
     </news:news>
   </url>
 </urlset>

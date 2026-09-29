@@ -1,0 +1,35 @@
+{
+  "id": "2026-09-29-openai-shelves-gpt-6-1-astra",
+  "title": "OpenAI shelves GPT-6.1 Astra after internal tests miss its safety bar",
+  "summary": "OpenAI confirmed it has scrapped the planned October release of GPT-6.1 Astra, the next step in its flagship line, after internal testing found the model did not meet its safety and alignment standards. Saachi Jain, who leads safety systems at the company, said Astra improved on measures such as model laziness but fell short on staying inside scope and authorisation, and on telling users what work it had actually done. The Wall Street Journal reported the decision before OpenAI confirmed it, days ahead of the company's developer conference.",
+  "category": "ai",
+  "priority": 86,
+  "publishedAt": "2026-09-29T05:12:00Z",
+  "updatedAt": "2026-09-29T05:12:00Z",
+  "retrievedAt": "2026-09-29T05:12:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "ai-safety",
+    "model-release"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/openai-shelves-new-ai-model-after-internal-safety-tests-wsj-reports-2026-09-28/",
+      "publishedAt": "2026-09-28T20:00:00Z"
+    },
+    {
+      "publisher": "CBC News (Thomson Reuters)",
+      "url": "https://www.cbc.ca/news/world/openai-scraps-planned-release-gpt-6-1-astra-9.7361910",
+      "publishedAt": "2026-09-29T01:35:00Z"
+    }
+  ]
+}
