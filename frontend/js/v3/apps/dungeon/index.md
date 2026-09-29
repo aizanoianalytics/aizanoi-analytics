@@ -71,10 +71,28 @@ frontend/js/v3/apps/dungeon/
    - `frontend/dungeon/index.html` directly opens the standalone fullscreen experience.
    - When the device is mobile, a vertical-orientation hint is shown until landscape mode is reached.
 
-### B. Procedural Web Audio (why no external sound files)
+### B. Audio — a hybrid of sampled and synthesised sound
 
-- **Why:** External MP3/OGG assets tend to add latency on slow networks, MIME-type mismatches on Linux/Nginx and avoidable 404 paths.
-- **How (`AudioManager.js`):** HTML5 Web Audio API nodes (`OscillatorNode`, `GainNode`, `BiquadFilterNode`) procedurally synthesise every sound — sword swings, thunder, coin clinks, shield chants. Result: **0 bytes of network audio**, 100% offline.
+The game is **not** purely procedural, and does not pretend to be. Both paths are
+real and both are used:
+
+- **Sampled (`BootScene.js`):** five WAV assets are preloaded at boot —
+  `ambient_cave_loop.wav` (258 KB), `ancient_chime.wav` (121 KB),
+  `boss_slam_warning.wav` (69 KB), `shadow_dash.wav` (39 KB) and
+  `gold_spark.wav` (22 KB), **520,598 bytes in total**. The cave ambience, the
+  boss slam warning, the dash, the shrine chime and the coin pickup are these
+  recordings. They are resolved through the same dynamic asset base as the
+  sprites, so the standalone route and the AizanoiOS module load them
+  identically.
+- **Synthesised (`AudioManager.js`):** the high-frequency combat sounds — sword
+  swings, hits, thunder, shield chants and UI blips — are Web Audio nodes
+  (`OscillatorNode`, `GainNode`, `BiquadFilterNode`) built at runtime. This is
+  why there are no hundreds of one-shot swing recordings: a swing that has to
+  fire several times a second is cheaper and more controllable as synthesis.
+
+The split is deliberate. Sustained, character-defining sound is sampled so it
+sounds authored; per-hit and per-frame sound is synthesised so it is responsive
+and costs nothing to download.
 
 ### C. Procedural BSP dungeon generation (`LevelSystem.js`)
 
