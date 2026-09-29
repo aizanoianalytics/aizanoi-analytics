@@ -34,7 +34,7 @@ function mockProgression(skills = ['shadow_melding']) {
   return { unlockedSkills: new Set(skills) };
 }
 
-const { Aizo } = await import('../frontend/dungeon/js/entities/Aizo.js');
+const { Aizo } = await import('../frontend/js/v3/apps/dungeon/js/entities/Aizo.js');
 
 function makePlayer(skills) {
   return new Aizo(mockScene(), 0, 0, mockInventory(), mockProgression(skills));
