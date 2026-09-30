@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-30-asia-stocks-ahead-of-pce",
+  "kind": "daily",
+  "title": "Asian shares edge up as investors wait on the US inflation print",
+  "summary": "Asian equity markets traded mostly higher on Wednesday while investors waited for the US personal consumption expenditure reading, the Federal Reserve's preferred inflation gauge. Japan's Nikkei 225 led the region, up about 1.2% to 66,271.28 by midday, while South Korea's KOSPI added 0.1% and Hong Kong's Hang Seng slipped 0.25%. Global bonds remained on course for their worst month in years after the September selloff, and elevated crude prices kept inflation concerns alive. US futures pointed to a firmer open.",
+  "category": "economy-markets",
+  "priority": 40,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "asia",
+    "nikkei",
+    "bonds",
+    "inflation"
+  ],
+  "sources": [
+    {
+      "publisher": "HDFC Sky",
+      "url": "https://hdfcsky.com/news/global-markets-today-september-30-2026-asia-mostly-higher-wall-street-lower-oil-elevated-india-may-open-higher",
+      "publishedAt": "2026-09-30T03:00:00Z"
+    },
+    {
+      "publisher": "Vantage Markets",
+      "url": "https://www.vantagemarkets.com/market-news/asian-stocks-nikkei-bonds-pce-september-30-2026",
+      "publishedAt": "2026-09-30T02:30:00Z"
+    },
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-09-29/stock-market-today-dow-s-p-live-updates",
+      "publishedAt": "2026-09-29T23:00:00Z"
+    }
+  ]
+}

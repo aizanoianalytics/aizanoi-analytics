@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-30-jadepuffer-storm-3168-azure",
+  "kind": "daily",
+  "title": "Microsoft links agentic ransomware crew to a destructive Azure campaign",
+  "summary": "Microsoft Security Research tied the JADEPUFFER crew, tracked as Storm-3168, to about 18 hours of activity in early June in which two compromised Azure service principals belonging to the same tenant performed over 300 reads for reconnaissance and then more than 150 destructive or credential-collection operations in 35 minutes. Most of over 100 targeted Azure Storage accounts were deleted, along with a Key Vault, Function App and App Service plan; resource locks blocked some attempts. No ransom note or confirmed exfiltration was seen.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "azure",
+    "ransomware",
+    "cloud"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft Security Blog",
+      "url": "https://www.microsoft.com/en-us/security/blog/2026/09/25/storm-3168-agentic-driven-cloud-attacks-using-compromised-service-principals",
+      "publishedAt": "2026-09-25T21:00:00Z"
+    },
+    {
+      "publisher": "The Register",
+      "url": "https://www.theregister.com/security/2026/09/28/jadepuffer-crims-hijacked-azure-identities-and-used-them-to-blow-up-cloud-resources/5299591",
+      "publishedAt": "2026-09-28T21:30:00Z"
+    },
+    {
+      "publisher": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/jadepuffer-agentic-ai-attacks-target-azure-destroy-cloud-resources",
+      "publishedAt": "2026-09-28T15:00:00Z"
+    }
+  ]
+}

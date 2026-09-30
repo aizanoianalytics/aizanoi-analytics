@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-30-pfa-calendar-workload-warning",
+  "kind": "daily",
+  "title": "PFA chief says England's five withdrawals expose a workload crisis",
+  "summary": "Professional Footballers' Association chief executive Maheta Molango said Cole Palmer's withdrawal from England's Nations League squad is evidence that an overloaded calendar is driving elite players past their limits. Palmer, Marcus Rashford, Declan Rice, Kobbie Mainoo and Tino Livramento all pulled out before the international window. Molango said five withdrawals from one squad should sound alarm bells, with the PFA and the global players' union pressing for calendar reform as injuries mount.",
+  "category": "football",
+  "priority": 42,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "pfa",
+    "player-welfare",
+    "england",
+    "calendar"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/sports/soccer/englands-nations-league-withdrawals-expose-workload-crisis-says-pfa-chief-2026-09-29",
+      "publishedAt": "2026-09-29T13:47:00Z"
+    },
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefanationsleague/news/0298-1d6ef1acfaef-b54fcf1da859-1000--2026-27-uefa-nations-league-all-you-need-to-know",
+      "publishedAt": "2026-09-24T10:00:00Z"
+    }
+  ]
+}

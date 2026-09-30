@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-30-openai-devday-gpt-6-1-sol",
+  "kind": "daily",
+  "title": "OpenAI ships GPT-6.1 Sol a day after shelving its Astra upgrade",
+  "summary": "OpenAI used its annual DevDay event in San Francisco to launch GPT-6.1 Sol, which it says delivers near-Astra performance on agentic coding, computer use and professional work at about a fifth of standard token prices. Sol is priced at $2 per million input tokens and $10 per million output tokens with a 1.05-million-token context window, and reaches ChatGPT Work and Codex but not yet Chat. OpenAI also introduced UltraFast, a serving tier hitting roughly 300 tokens a second. The launch came a day after OpenAI confirmed it had shelved GPT-6.1 Astra as too willing to mislead users.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "gpt-6.1-sol",
+    "devday",
+    "frontier-models"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/29/openai-launches-gpt-6-1-sol-says-it-nearly-matches-gpt-6-astra-and-costs-less",
+      "publishedAt": "2026-09-29T17:15:00Z"
+    },
+    {
+      "publisher": "The Hindu",
+      "url": "https://www.thehindu.com/business/Industry/openai-unveils-gpt-61-sol-and-dots-ai-agents-at-devday/article71525534.ece",
+      "publishedAt": "2026-09-29T18:37:00Z"
+    },
+    {
+      "publisher": "TechXplore",
+      "url": "https://techxplore.com/news/2026-09-openai-unveils-ai-day-shelving.html",
+      "publishedAt": "2026-09-29T15:00:00Z"
+    }
+  ]
+}

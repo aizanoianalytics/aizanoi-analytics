@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-30-wall-street-yields-24-year-high",
+  "kind": "daily",
+  "title": "Wall Street slips as the 30-year Treasury yield hits a 24-year high",
+  "summary": "US equities closed slightly lower on Tuesday as another jump in long-term Treasury yields weighed on valuations. The S&P 500 fell 0.17% to 7,670.84, the Dow Jones Industrial Average lost 0.26% to 51,349.92 and the Nasdaq Composite slipped 0.09% to 26,797.54. The 30-year Treasury yield reached its highest intraday level since 2002. Breadth stayed thin: only about 41% of S&P 500 members traded above their 200-day moving averages. Chip and optical names bucked the decline while oil swung on the continuing US-Iran conflict.",
+  "category": "economy-markets",
+  "priority": 62,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "treasuries",
+    "yields",
+    "wall-street"
+  ],
+  "sources": [
+    {
+      "publisher": "Los Angeles Times",
+      "url": "https://latimes.com/business/story/2026-09-29/stocks-slip-on-wall-street-as-rising-treasury-yields-pressure-market",
+      "publishedAt": "2026-09-29T21:30:00Z"
+    },
+    {
+      "publisher": "The Asia Business Daily",
+      "url": "https://asiae.co.kr/en/article/2026093005004380013",
+      "publishedAt": "2026-09-29T20:05:00Z"
+    },
+    {
+      "publisher": "StreetSignal",
+      "url": "https://streetsignal.substack.com/p/streetsignal-after-the-close-fb0",
+      "publishedAt": "2026-09-29T22:30:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-30-anthropic-prospectus-agent-liability",
+  "kind": "daily",
+  "title": "Anthropic's IPO filing flags unsettled liability for rogue agents",
+  "summary": "Anthropic's draft IPO prospectus, seen by Reuters, warns that contractual liability limits may not be 'enforceable or adequate' against claims arising from autonomous agents, and that how existing law applies to AI agents is unsettled. The filing also shows how concentrated the business is: 47% of 2025 sales ran through Amazon and Google cloud marketplaces, about $2.16 billion of nearly $4.6 billion in revenue, with roughly $351 million paid back in partner fees. Long-term hosting and computing commitments exceeded $417 billion by early 2026.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ipo",
+    "liability",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "The Star (Reuters)",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/09/30/exclusive-anthropic-says-rogue-ai-agents-pose-uncertain-legal-risk-for-the-company",
+      "publishedAt": "2026-09-29T16:31:00Z"
+    },
+    {
+      "publisher": "DevDiscourse (Reuters)",
+      "url": "https://www.devdiscourse.com/article/international/3984151-exclusive-anthropic-ipo-prospectus-lays-bare-deep-dependence-on-big-tech-partners",
+      "publishedAt": "2026-09-29T20:50:00Z"
+    }
+  ]
+}

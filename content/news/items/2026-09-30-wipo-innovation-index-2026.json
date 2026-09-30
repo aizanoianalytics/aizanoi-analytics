@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-30-wipo-innovation-index-2026",
+  "kind": "daily",
+  "title": "WIPO's 2026 innovation index puts Switzerland first for a 16th year",
+  "summary": "The World Intellectual Property Organization's Global Innovation Index 2026, released on 29 September, ranks Switzerland first for the 16th consecutive year, ahead of Sweden and the United States, with South Korea fourth, Singapore fifth and the United Kingdom sixth among 139 economies. WIPO highlighted artificial intelligence as a driver of renewed venture-capital activity and shifting corporate research priorities. Shenzhen-Hong Kong-Guangzhou again led the innovation-cluster ranking, with China 10th and India 38th overall.",
+  "category": "technology",
+  "priority": 44,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wipo",
+    "innovation",
+    "research",
+    "switzerland"
+  ],
+  "sources": [
+    {
+      "publisher": "Xinhua",
+      "url": "https://english.news.cn/20260929/a4f8d8c89c8640d8b891944eb1b9b17a/c.html",
+      "publishedAt": "2026-09-29T12:00:00Z"
+    },
+    {
+      "publisher": "TechXplore (AFP)",
+      "url": "https://techxplore.com/news/2026-09-ai-investment.html",
+      "publishedAt": "2026-09-29T09:00:00Z"
+    },
+    {
+      "publisher": "ChosunBiz",
+      "url": "https://biz.chosun.com/en/en-science/2026/09/30/SQ7PTZCWOBDQPNNQ4UZ7A3ZNDM",
+      "publishedAt": "2026-09-30T01:00:00Z"
+    }
+  ]
+}

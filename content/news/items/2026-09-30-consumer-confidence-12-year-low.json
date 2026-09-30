@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-30-consumer-confidence-12-year-low",
+  "kind": "daily",
+  "title": "US consumer confidence falls to its weakest reading since 2014",
+  "summary": "The Conference Board's consumer confidence index fell 6.7 points to 81.9 in September, far below the 89.2 economists expected and the weakest reading in more than twelve years. The present-situation measure dropped 7.9 points to 109.3 and the expectations index fell to 63.6, its third straight monthly decline, while twelve-month inflation expectations rose to 6.1%. Separately, Labor Department data showed job openings falling 256,000 in August to 7.079 million, leaving 1.01 vacancies per unemployed person.",
+  "category": "economy-markets",
+  "priority": 64,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "consumer-confidence",
+    "jolts",
+    "labour-market",
+    "inflation"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/us-consumer-confidence-dives-more-than-12-year-low-september-2026-09-29",
+      "publishedAt": "2026-09-29T14:30:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/29/consumer-optimism-slides-sharply-as-fears-escalate-over-rising-prices-and-jobs.html",
+      "publishedAt": "2026-09-29T14:20:00Z"
+    },
+    {
+      "publisher": "The Conference Board (PR Newswire)",
+      "url": "https://www.prnewswire.com/news-releases/us-consumer-confidence-fell-in-september-302892867.html",
+      "publishedAt": "2026-09-29T14:00:00Z"
+    }
+  ]
+}
