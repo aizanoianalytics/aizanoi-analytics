@@ -1,4 +1,4 @@
-/* shared/engine/audio.js — Procedural WebAudio ambience & SFX for Historical Worlds & Labs.
+/* shared/engine/audio.js — Procedural WebAudio ambience & SFX for Aizanoi & Labs.
  *
  * Architecture contract:
  *  - 100% synthesized procedural audio using Web Audio API (Oscillators, BiquadFilters,
