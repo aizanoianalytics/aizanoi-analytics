@@ -159,7 +159,7 @@
     <!-- Top Right -->
     <text x="1856" y="80" text-anchor="end" letter-spacing="2">SURFACE REF: ZEUS-TEMPLE-AURORA-V1</text>
     <!-- Bottom Left -->
-    <text x="64" y="1020" letter-spacing="2" font-size="9">EVIDENCE-AWARE HISTORICAL WORLDS · INDEPENDENT DIGITAL STUDIO</text>
+    <text x="64" y="1020" letter-spacing="2" font-size="9">EVIDENCE-AWARE AIZANOI · INDEPENDENT DIGITAL STUDIO</text>
     <!-- Viewport Reticles -->
     <path d="M50 60 H70 M50 60 V80" stroke="#94a3b8" stroke-width="1.2" fill="none"/>
     <path d="M1870 60 H1850 M1870 60 V80" stroke="#94a3b8" stroke-width="1.2" fill="none"/>

@@ -17,9 +17,8 @@ Affected areas:
 - [ ] Forge (legacy `/forge/` route surface)
 - [ ] Labs
 - [ ] Arcade
-- [ ] Historical Worlds — index + Aizanoi
-- [ ] Historical Worlds — Rome / Athens
-- [ ] Shared Ancient World engine
+- [ ] Aizanoi — index + reconstruction
+- [ ] Shared Aizanoi engine
 - [ ] Browser-local utilities (Workspace, Notepad, Calculator, Camera, Winamp, Recycle Bin, Web Editor)
 - [ ] Browser / iframe sandbox
 - [ ] Security / runtime headers

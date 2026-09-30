@@ -74,7 +74,7 @@ const CAPTURES = [
   { name: 'macellum', target: 'macellum', viewport: { width: 1280, height: 800 } },
   { name: 'theatre-stadium', target: 'stadium', viewport: { width: 1280, height: 800 } },
   { name: 'penkalas-bridge', target: 'bridge3', viewport: { width: 1280, height: 800 } },
-  { name: 'great-bath', target: 'bath', viewport: { width: 1280, height: 800 } },
+  { name: 'great-bath', target: 'greatbath', viewport: { width: 1280, height: 800 } },
   { name: 'mobile', target: 'temple', viewport: { width: 390, height: 844 }, mobile: true },
 ];
 
@@ -82,7 +82,10 @@ const browserArgs = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsa
 
 async function settleAfterTeleport(page, target) {
   if (!target) return;
-  await page.evaluate((id) => window.__WORLD_DEBUG__.teleport(id), target);
+  const result = await page.evaluate((id) => window.__WORLD_DEBUG__.teleport(id), target);
+  if (result !== true) {
+    throw new Error(`teleport('${target}') returned ${JSON.stringify(result)} — expected true. Invalid landmark ID?`);
+  }
   await page.waitForFunction((id) => {
     const last = window.__WORLD_LAST_TELEPORT__;
     return last === id && window.__WORLD_DEBUG__.player?.controlsEnabled === true;
