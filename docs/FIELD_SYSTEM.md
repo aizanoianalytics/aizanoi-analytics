@@ -51,7 +51,7 @@ Interactive app intent is represented by `?app=<id>`. In addition, static produc
 
 Legacy `/videos`, `/games` and `/projects` URLs redirect to `/tv/`, `/arcade/` and `/forge/`. They are not canonical discovery surfaces.
 
-## Historical World bridge
+## Aizanoi session bridge
 
 Aizanoi may write the small `aizanoi-field-session-v1` browser record containing world, optional landmark, route and timestamp. It is navigation context, not a general local workspace or synchronization layer.
 

@@ -16,7 +16,7 @@ CI verifies applicable surfaces for:
 - fullscreen-equivalent mobile app surfaces;
 - reduced-motion support;
 - no fatal browser/page errors in the tested desktop/tablet/mobile routes;
-- Historical World browser/traversal regression.
+- Aizanoi browser/traversal regression.
 
 ## Keyboard-only AizanoiOS smoke
 
@@ -34,7 +34,7 @@ CI verifies applicable surfaces for:
 2. Open the shared Explore drawer. Movement keys must not move the player while secondary UI is open.
 3. Escape closes open dialogs, HUD modals, and releases pointer lock.
 4. Use landmark jump/teleport (shortcuts 1-9, HUD buttons or Teleport dialog), then move normally; automated traversal checks cover all maintained landmark targets.
-5. Use **AizanoiOS** from Explore and confirm the OS offers a resumable local Historical World session.
+5. Use **AizanoiOS** from Explore and confirm the OS offers a resumable local Aizanoi session.
 6. Pointer-lock experiences must retain an Escape path. Any drag-look fallback shown in visitor copy must be verified in a real browser before release.
 
 ## Manual NVDA smoke (Windows)
@@ -52,7 +52,7 @@ CI verifies applicable surfaces for:
 1. At 390 CSS px or a real phone, confirm Home can be traversed without horizontal scrolling.
 2. Verify Home/Search/Applications actions, app icons and app chrome are individually announced.
 3. Open News and a second public app surface; confirm fullscreen-equivalent mobile presentation keeps navigation reachable.
-4. Enter a Historical World and confirm Explore and AizanoiOS return actions are reachable.
+4. Enter Aizanoi and confirm Explore and AizanoiOS return actions are reachable.
 5. Verify touch movement/inspect/map controls have usable targets and accessible names.
 6. Rotate portrait/landscape and confirm critical world controls remain usable.
 
@@ -66,7 +66,7 @@ Before accessibility-sensitive releases:
 - keep functional text at least 11–12 px and reading surfaces around 16 px;
 - keep required text pairs at WCAG AA contrast;
 - never use color alone for evidence/state;
-- check that fixed docks, overlays and Historical World controls do not obscure focused elements.
+- check that fixed docks, overlays and Aizanoi controls do not obscure focused elements.
 
 ## Localization readiness
 
