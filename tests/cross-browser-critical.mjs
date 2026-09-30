@@ -71,16 +71,40 @@ try{
     await page.waitForSelector('#btn-enter',{timeout:30000});
     await page.waitForFunction(()=>{const b=document.getElementById('btn-enter');return b&&!b.disabled;},null,{timeout:30000});
     await page.locator('#btn-enter').click();
-    // Wait for bootstrap to complete (success or failure)
-    await page.waitForFunction(() => {
-      const b = window.__WORLD_BOOTSTRAP__;
-      return b && (b.loading === false || b.started === false);
-    }, null, { timeout: 30000 });
+    // Wait for bootstrap to complete (success or failure). Budget covers the
+    // dynamic import plus bootstrap's own 30 s runtime wait; on timeout dump
+    // every available signal (bootstrap state, entry-net report with init
+    // catches + WebGL2 probe, captured page errors, fatal card text) so the
+    // CI log names the real cause instead of a bare TimeoutError.
+    let bootstrapDiag=null;
+    try{
+      await page.waitForFunction(() => {
+        const b = window.__WORLD_BOOTSTRAP__;
+        return b && (b.loading === false || b.started === false);
+      }, null, { timeout: 75000 });
+    }catch(waitError){
+      bootstrapDiag = await page.evaluate(() => ({
+        bootstrap: window.__WORLD_BOOTSTRAP__ ? {
+          started: window.__WORLD_BOOTSTRAP__.started,
+          loading: window.__WORLD_BOOTSTRAP__.loading,
+          lastError: window.__WORLD_BOOTSTRAP__.lastError ?? null,
+        } : null,
+        entryNet: window.__WORLDS_ENTRY_NET__?.report?.() ?? null,
+        btnEnterText: document.getElementById('btn-enter')?.textContent,
+        btnEnterDisabled: document.getElementById('btn-enter')?.disabled,
+        fatalCard: document.querySelector('.runtime-message, .fatal-error, [data-fatal]')?.textContent?.slice(0,500) ?? null,
+      }));
+      console.log(`${engine} BOOTSTRAP TIMEOUT diagnostics:`, JSON.stringify(bootstrapDiag));
+      console.log(`${engine} worldErrors so far:`, JSON.stringify(worldErrors));
+      throw waitError;
+    }
     const diag = await page.evaluate(() => ({
       hasDebug: !!window.__WORLD_DEBUG__,
       debugReady: window.__WORLD_DEBUG__?.ready,
       bootstrapStarted: window.__WORLD_BOOTSTRAP__?.started,
       bootstrapLoading: window.__WORLD_BOOTSTRAP__?.loading,
+      bootstrapLastError: window.__WORLD_BOOTSTRAP__?.lastError ?? null,
+      entryNet: window.__WORLDS_ENTRY_NET__?.report?.() ?? null,
       btnEnterText: document.getElementById('btn-enter')?.textContent,
       btnEnterDisabled: document.getElementById('btn-enter')?.disabled,
     }));

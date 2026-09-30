@@ -1119,5 +1119,3 @@ export function buildCatacombMemorialCross(x, z, rot = 0) {
   _box(group, [1.1, 0.28, 0.28], [0, 1.8, 0], stone);
   return group;
 }
-
-
