@@ -100,7 +100,7 @@ Widgets must be glanceable and useful:
 - no fake dynamic data;
 - no dashboard density.
 
-Useful initial widget subjects are News and a Historical World resume/explore action.
+Useful initial widget subjects are News and an Aizanoi resume/explore action.
 
 ## Dock
 
@@ -114,7 +114,7 @@ Tablet:
 - no pointer-only magnification requirement.
 
 Mobile:
-- Home + News + TV + Analytics + Worlds + Applications;
+- Home + News + TV + Analytics + Aizanoi + Applications;
 - Forge remains available in the app grid/launcher but is not forced into the compact dock;
 - running non-pinned apps do not expand the dock.
 

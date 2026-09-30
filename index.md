@@ -12,7 +12,7 @@ This file is the shortest path into the repository. It is a **router, not a full
 
 ## I need to work on...
 
-- Public website, AizanoiOS, apps, device UI, Historical Worlds or browser games → [`frontend/index.md`](frontend/index.md)
+- Public website, AizanoiOS, apps, device UI, Aizanoi or browser games → [`frontend/index.md`](frontend/index.md)
 - News source records and publishable content → [`content/index.md`](content/index.md)
 - Analytics source/data work outside the production frontend → [`analytics/index.md`](analytics/index.md)
 - Build/publishing/maintenance scripts → [`scripts/index.md`](scripts/index.md)

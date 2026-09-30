@@ -1,13 +1,5 @@
 import { enabledModuleById } from './module-registry.generated.js';
 
-export const WORLDS = Object.freeze([
-  {
-    id:'aizanoi', label:'Aizanoi', era:'Roman Phrygia · AD 225', route:'/worlds/aizanoi-225/',
-    summary:'Temple of Zeus, theatre–stadium, Penkalas riverfront and a source-led reconstruction of the ancient city.',
-    duration:'10 min guided survey', evidence:'Documented + archaeological + inferred', accent:'brass'
-  }
-]);
-
 const APP_DEFINITIONS = Object.freeze([
   { id:'news', label:'Aizanoi News', short:'News', group:'media', icon:'/assets/icons/aizanoi-news.svg', moduleId:'news', description:'Original source-linked daily briefings across AI, Technology, Economy / Markets and Football', keywords:['news','daily','ai','technology','markets','economy','football','sources'] },
   { id:'videos', label:'Aizanoi TV', short:'TV', group:'media', icon:'/assets/icons/aizanoi-tv.svg', moduleId:'videos', description:'The English-language Aizanoi channel for AI, technology, markets, cinema, football and conversations', keywords:['video','youtube','ai','technology','markets','cinema','football','conversation'] },
@@ -52,7 +44,6 @@ export function canonicalAppId(id) {
 export function appsByGroup(group) { return ALL_APPS.filter((app) => app.group === group); }
 export function searchableEntries(extraEntries=[]) {
   return [
-    ...WORLDS.map((world) => ({ type:'world', id:world.id, label:world.label, description:world.era, keywords:[world.label,world.era,world.summary] })),
     ...APPS.map((app) => ({ type:'app', id:app.id, label:app.label, description:app.description, keywords:[app.label,app.short,app.description,...app.keywords] })),
     ...extraEntries
   ];

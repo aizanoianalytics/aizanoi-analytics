@@ -95,7 +95,7 @@ It deterministically generates the current landing, daily edition paths, **perma
 
 The evidence boundary remains unchanged: documented/source-supported, archaeological/material, inferred, atmospheric and disputed where applicable. Inferred/schematic massing must never become `documented` merely because its contextual source record exists.
 
-Historical World UI must advertise only behaviors the shared runtime actually owns. Dormant legacy controls are hidden rather than shown as false affordances until they have canonical implementation and browser regression coverage.
+Aizanoi UI must advertise only behaviors the shared runtime actually owns. Dormant legacy controls are hidden rather than shown as false affordances until they have canonical implementation and browser regression coverage.
 
 ## Responsive contract
 

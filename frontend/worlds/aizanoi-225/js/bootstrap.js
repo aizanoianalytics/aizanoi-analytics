@@ -4,6 +4,7 @@ const bootstrapState = {
   ready: true,
   started: false,
   loading: false,
+  lastError: null,
 };
 window.__WORLD_BOOTSTRAP__ = bootstrapState;
 
@@ -42,6 +43,7 @@ async function enterWorld(event) {
     enterButton.click();
   } catch (error) {
     console.error('Aizanoi runtime bootstrap failed:', error);
+    bootstrapState.lastError = error?.message ? String(error.message).slice(0, 500) : String(error).slice(0, 500);
     bootstrapState.started = false;
     bootstrapState.loading = false;
     document.body.classList.add('pre-entry');

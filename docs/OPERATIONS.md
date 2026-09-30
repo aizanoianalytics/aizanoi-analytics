@@ -44,7 +44,7 @@ Production Nginx should be verified for:
 
 - gzip (and optionally Brotli if the installed module supports it);
 - `application/manifest+json` for `.webmanifest`;
-- revalidation/no-cache behavior for root HTML, manifest, `service-worker.js`, unhashed JS/CSS and Historical World code;
+- revalidation/no-cache behavior for root HTML, manifest, `service-worker.js`, unhashed JS/CSS and Aizanoi code;
 - longer caching only for relatively stable image/icon/media assets;
 - `/.well-known/security.txt`;
 - CSP matching the actual active browser runtime without permissions retained solely for retired Workbench tools;

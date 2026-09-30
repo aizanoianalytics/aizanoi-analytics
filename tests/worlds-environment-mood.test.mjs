@@ -5,11 +5,9 @@ import { readFileSync } from 'node:fs';
 const read = (file) => readFileSync(file, 'utf8');
 const env = read('frontend/worlds/shared/engine/environment.js');
 
-test('environment.js carries per-world mood profiles for all four worlds', () => {
+test('environment.js carries the aizanoi mood profile', () => {
   assert.match(env, /WORLD_MOODS/);
-  for (const id of ['aizanoi:', 'athens:', 'rome:', 'iga:']) {
-    assert.match(env, new RegExp(id.replace(':', '\\s*:')));
-  }
+  assert.match(env, /aizanoi\s*:/);
   // moods are tint multipliers over the shared palette, not separate palettes
   assert.match(env, /skyTint/);
   assert.match(env, /fogDensityDay/);

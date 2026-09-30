@@ -171,47 +171,6 @@ export class CollisionSystem {
         continue;
       }
 
-      // 4. Airport Grand Terminal: hollow perimeter with central curbside entrance opening
-      if (b.type === 'terminal') {
-        const wallThick = 2.5;
-        const halfW = b.w / 2;
-        const halfD = b.d / 2;
-        const doorW = 50; // Central curbside passenger entrance
-
-        // North wall (apron side)
-        this.grid.insert({
-          type: 'rect', id: `${b.id}-wall-n`,
-          x: b.x, z: b.z + halfD,
-          w: b.w, d: wallThick, h: b.h, y: b.y || 0
-        });
-        // South wall left wing
-        const southWingW = (b.w - doorW) / 2;
-        this.grid.insert({
-          type: 'rect', id: `${b.id}-wall-s-l`,
-          x: b.x - doorW / 2 - southWingW / 2, z: b.z - halfD,
-          w: southWingW, d: wallThick, h: b.h, y: b.y || 0
-        });
-        // South wall right wing
-        this.grid.insert({
-          type: 'rect', id: `${b.id}-wall-s-r`,
-          x: b.x + doorW / 2 + southWingW / 2, z: b.z - halfD,
-          w: southWingW, d: wallThick, h: b.h, y: b.y || 0
-        });
-        // West wall
-        this.grid.insert({
-          type: 'rect', id: `${b.id}-wall-w`,
-          x: b.x - halfW, z: b.z,
-          w: wallThick, d: b.d, h: b.h, y: b.y || 0
-        });
-        // East wall
-        this.grid.insert({
-          type: 'rect', id: `${b.id}-wall-e`,
-          x: b.x + halfW, z: b.z,
-          w: wallThick, d: b.d, h: b.h, y: b.y || 0
-        });
-        continue;
-      }
-
       // 5. Check-in Islands: individual counter colliders leaving aisles free
       if (b.type === 'checkin') {
         const numRows = 4;
@@ -488,35 +447,6 @@ export class CollisionSystem {
           x: b.x, z: b.z,
           w: b.w * 0.85, d: b.d * 0.85,
           y: 0
-        });
-        continue;
-      }
-
-      // 8. Airport Concourse Piers (İGA Pier A-B, C-F, Domestic Wing):
-      // Hollow passenger concourse corridor; side glass curtain walls collide,
-      // central spine is open and walkable!
-      if (b.type === 'pier') {
-        const wallThick = 3.0;
-        const halfW = b.w / 2;
-        const halfD = b.d / 2;
-
-        // West glass ribbon wall
-        this.grid.insert({
-          type: 'rect', id: `${b.id}-wall-w`,
-          x: b.x - halfW + wallThick / 2, z: b.z,
-          w: wallThick, d: b.d, h: b.h, y: b.y || 0
-        });
-        // East glass ribbon wall
-        this.grid.insert({
-          type: 'rect', id: `${b.id}-wall-e`,
-          x: b.x + halfW - wallThick / 2, z: b.z,
-          w: wallThick, d: b.d, h: b.h, y: b.y || 0
-        });
-        // Far end wall (North)
-        this.grid.insert({
-          type: 'rect', id: `${b.id}-wall-n`,
-          x: b.x, z: b.z + halfD - wallThick / 2,
-          w: b.w, d: wallThick, h: b.h, y: b.y || 0
         });
         continue;
       }

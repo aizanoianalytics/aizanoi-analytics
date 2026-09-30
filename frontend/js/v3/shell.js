@@ -81,15 +81,6 @@ export function notify(title, body = '', kind = 'system') {
  setTimeout(() => toast.remove(), 4200);
 }
 
-function renderWorldCards() {
- return [].map((world) => `
- <button class="az-world-card" type="button" data-world="${escapeHtml(world.id)}" aria-label="Open ${escapeHtml(world.label)} historical world">
- <span class="az-world-era">${escapeHtml(world.era)}</span>
- <strong>${escapeHtml(world.label)}</strong>
- <small>${escapeHtml(world.summary)}</small>
- </button>`).join('');
-}
-
 function renderAppCards() {
  return APPS.map((app) => `
  <button class="az-app-card" type="button" data-app="${escapeHtml(app.id)}">
@@ -99,24 +90,23 @@ function renderAppCards() {
 }
 
 function recentMission() {
- const session = Store.getFieldSession();
- if (session) {
- const world = 'aizanoi';
- return {
- label:'Continue journey',
- title:`Return to ${world?.label || 'Historical World'}`,
- body:session.landmark ? `Resume near ${session.landmark}.` : `Resume your most recent ${world?.label || 'world'} exploration.`,
- action:'continue-world',
- button:'Continue'
- };
- }
- return {
- label:'Suggested journey',
- title:'Walk Aizanoi',
- body:'Begin with the reconstructed city and explore the rest of Aizanoi from one home screen.',
- action:'walk-aizanoi',
- button:'Explore Aizanoi'
- };
+  const session = Store.getFieldSession();
+  if (session) {
+return {
+label:'Continue journey',
+title:'Return to Aizanoi',
+body:session.landmark ? `Resume near ${session.landmark}.` : 'Resume your Aizanoi exploration.',
+action:'continue-world',
+button:'Continue'
+};
+  }
+  return {
+label:'Suggested journey',
+title:'Walk Aizanoi',
+body:'Begin with the reconstructed city and explore the rest of Aizanoi from one home screen.',
+action:'walk-aizanoi',
+button:'Explore Aizanoi'
+};
 }
 
 function renderHome() {
@@ -137,7 +127,6 @@ function renderHome() {
  </section>
  <section class="az-home-section" aria-labelledby="az-aizanoi-title">
  <div class="az-section-head"><div><h2 id="az-aizanoi-title">Aizanoi</h2><p>Roman Phrygia · c. AD 225</p></div><div class="az-system-spacer"></div><button class="az-button" type="button" data-app="aizanoi">Enter Aizanoi</button></div>
- <div class="az-world-grid">${renderWorldCards()}</div>
  </section>
  <section class="az-home-section" aria-labelledby="az-apps-title">
  <div class="az-section-head"><div><h2 id="az-apps-title">Applications</h2><p>Public Aizanoi products and local workspace utilities.</p></div></div>
@@ -474,13 +463,6 @@ function showHome({ push=true } = {}) {
  document.querySelector('.az-home-scroll')?.scrollTo({ top:0, behavior:Store.getState().reduceMotion ? 'auto' : 'smooth' });
 }
 
-export function launchWorld(worldId, landmark=null) {
- if (worldId !== 'aizanoi') return false;
- const url = landmark ? `/worlds/aizanoi-225/?jump=${encodeURIComponent(landmark)}&from=field-system` : '/worlds/aizanoi-225/?from=field-system';
- location.href = url;
- return true;
-}
-
 function pointerDrag(event, appId, edge=null) {
  if (layoutMode() !== 'large') return;
  const item = windows.get(appId); if (!item || item.maximized || event.button !== 0) return;
@@ -580,7 +562,7 @@ function renderSwitcher() {
  host.innerHTML=state.openApps.length ? state.openApps.map((id)=>{
  const app=appById(id); if(!app)return '';
  return `<button class="az-switcher-item" type="button" data-switch-app="${escapeHtml(id)}"><img src="${escapeHtml(app.icon)}" alt=""><span><strong>${escapeHtml(app.label)}</strong><small>${state.activeApp===id?'Active application':'Open'}</small></span></button>`;
- }).join('') : '<div class="az-empty-state"><div><h3>No apps open</h3><p>Open an Aizanoi application or Historical World from Home.</p></div></div>';
+ }).join('') : '<div class="az-empty-state"><div><h3>No apps open</h3><p>Open an Aizanoi application from Home.</p></div></div>';
 }
 
 function renderSettings() {
@@ -607,7 +589,7 @@ function commandRows(query='') {
  const entries=searchableEntries(staticSearchEntries).filter((entry)=>!q || [entry.label,entry.description,...entry.keywords].join(' ').toLowerCase().includes(q));
  const commands=[
  {type:'action',id:'home',label:'Go Home',description:'Return to the AizanoiOS home screen',keywords:['home','desktop']},
- {type:'action',id:'continue',label:'Continue Historical World',description:'Return to your most recent historical journey',keywords:['continue','resume','world','session']}
+ {type:'action',id:'continue',label:'Continue Aizanoi',description:'Return to your most recent Aizanoi exploration',keywords:['continue','resume','aizanoi','session']}
  ].filter((entry)=>!q || [entry.label,entry.description,...entry.keywords].join(' ').toLowerCase().includes(q));
  return [...commands,...entries].slice(0,18);
 }
@@ -616,16 +598,16 @@ function renderCommands(query='') {
  const host=document.querySelector('.az-command-results'); if(!host)return;
  const rows=commandRows(query);
  commandSelection=Math.min(commandSelection,Math.max(0,rows.length-1));
- if(!rows.length){host.innerHTML='<div class="az-command-empty">No direct match. Try an app, Historical World or action.</div>';return;}
+ if(!rows.length){host.innerHTML='<div class="az-command-empty">No direct match. Try an app or action.</div>';return;}
  const groups=[];
- for(const type of ['action','world','app','content']){
+ for(const type of ['action','app','content']){
  const subset=rows.filter((row)=>row.type===type);
  if(subset.length)groups.push({type,subset});
  }
  let index=0;
- host.innerHTML=groups.map(({type,subset})=>`<div class="az-command-group">${type==='action'?'Actions':type==='world'?'Aizanoi':type==='content'?'Content':'Apps'}</div>${subset.map((row)=>{
+ host.innerHTML=groups.map(({type,subset})=>`<div class="az-command-group">${type==='action'?'Actions':type==='content'?'Content':'Apps'}</div>${subset.map((row)=>{
  const current=index++;
- const image=row.type==='app'?appById(row.id)?.icon:row.type==='world'?'/assets/icons/ancient-world.svg':row.type==='content'?row.icon:'/assets/branding/aizanoi-logo-mark.svg';
+ const image=row.type==='app'?appById(row.id)?.icon:row.type==='content'?row.icon:'/assets/branding/aizanoi-logo-mark.svg';
  return `<button class="az-command-row${current===commandSelection?' is-selected':''}" type="button" role="option" aria-selected="${current===commandSelection}" data-command-index="${current}"><img src="${escapeHtml(image)}" alt=""><span><strong>${escapeHtml(row.label)}</strong><small>${escapeHtml(row.description)}</small></span><span class="az-command-kind">${escapeHtml(row.kind||row.type)}</span></button>`;
  }).join('')}`).join('');
 }
@@ -636,7 +618,7 @@ function executeCommand(index) {
  const row=rows[index]; if(!row)return;
  closeOverlay(false);
  if(row.type==='app')openApp(row.id);
- else if(row.type==='world')window.location.href='/worlds/aizanoi-225/';
+
  else if(row.type==='content')location.href=row.href;
  else if(row.id==='home')showHome();
  else if(row.id==='continue'){
@@ -660,8 +642,7 @@ function openCommand(opener) {
 function handleRootClick(event) {
  const app=event.target.closest('[data-app]')?.dataset.app;
  if(app){openApp(app);return;}
- const world=event.target.closest('[data-world]')?.dataset.world;
- if(world){window.location.href='/worlds/aizanoi-225/';return;}
+
  const homeAction=event.target.closest('[data-home-action]')?.dataset.homeAction;
  if(homeAction==='walk-aizanoi'){window.location.href='/worlds/aizanoi-225/';return;}
  if(homeAction==='continue-world'){
@@ -777,7 +758,6 @@ function resizeAll() {
 const appApi=Object.freeze({
  openApp,
  closeApp,
- launchWorld,
  notify,
  announce,
  store:Store,

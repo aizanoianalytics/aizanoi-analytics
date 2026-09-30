@@ -1,5 +1,5 @@
 /**
- * Shared landmark framing math for Historical Worlds.
+ * Shared landmark framing math for Aizanoi.
  * Keeps teleport views readable across low/wide ruins and tall modern assets.
  */
 

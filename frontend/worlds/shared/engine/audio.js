@@ -1,11 +1,11 @@
-/* shared/engine/audio.js — Procedural WebAudio ambience & SFX for Historical Worlds & Labs.
+/* shared/engine/audio.js — Procedural WebAudio ambience & SFX for Aizanoi & Labs.
  *
  * Architecture contract:
  *  - 100% synthesized procedural audio using Web Audio API (Oscillators, BiquadFilters,
  *    Pink/Brown/White noise buffers, custom envelopes, and algorithmic impulse responses).
  *  - Zero external media file dependencies — zero bandwidth overhead, instantly cached.
  *  - Safe fallbacks: every public method safely no-ops if WebAudio is blocked/unavailable.
- *  - Supports soundsets: 'mediterranean', 'aizanoi', 'rome', 'athens', 'airport', 'flyworld'.
+ *  - Supports soundsets: 'mediterranean' (default), 'aizanoi'.
  */
 
 export class AudioSystem {
@@ -39,28 +39,11 @@ export class AudioSystem {
 
         this.fireGain = null;
 
-        // Airport-specific beds
-        this.humGain = null;
-        this.jetGain = null;
-        this.jetFilter = null;
-        this.conveyorGain = null; // İGA baggage-hall conveyor rumble
-
-        // Specialized world beds (continuous layers; one-shot events live below)
-        this.ruinGain = null;       // Rome late antiquity wind howl
-
-        // Fly buzz oscillator (for Fly World)
-        this.flyBuzzGain = null;
-        this.flyBuzzOsc = null;
-
         // Scheduling and timers
         this.nextBirdTime = 0;
         this.nextFootstepTime = 0;
         this.nextCrackleTime = 0;
-        this.nextJetTime = 0;
-        this.nextChimeTime = 0;
         this.nextMillCreakTime = 0;
-        this.nextClockTickTime = 0;
-        this.clockTickTock = false;
         this.footstepLeft = true;
 
         this.muted = false;
@@ -82,14 +65,10 @@ export class AudioSystem {
      * Per-world ambience profile:
      *  - 'mediterranean' (default): wind + cicadas/crickets + birds + crowd + water + fire
      *  - 'aizanoi': mediterranean + Penkalas river rush + wooden water mill creak
-     *  - 'rome': late antiquity wind howl + ruin hollow resonance + night owl + torches
-     *  - 'athens': Acropolis high breeze + Agora murmur + bronze votive chimes + cicadas
-     *  - 'airport' (İGA): vaulted hall hum + HVAC rumble + PA chimes + jet takeoffs
-     *  - 'flyworld': domestic room tone + hearth fire + wall clock tick-tock + fly wing buzz
      */
     setSoundset(name) {
         try {
-            const valid = ['airport', 'aizanoi', 'rome', 'athens', 'flyworld', 'mediterranean'];
+            const valid = ['aizanoi', 'mediterranean'];
             this.soundset = valid.includes(name) ? name : 'mediterranean';
             if (this.isInitialized) this._applySoundsetGains();
         } catch { /* never throw across the world boundary */ }
@@ -99,52 +78,24 @@ export class AudioSystem {
         if (!this.isInitialized || !this.ctx) return;
         try {
             const now = this._now();
-            const s = this.soundset;
-            const isAirport = s === 'airport';
-            const isFly = s === 'flyworld';
-            const isRome = s === 'rome';
-            const isAthens = s === 'athens';
-            const isAizanoi = s === 'aizanoi';
 
             // Wind & Airflow
-            const windTarget = isAirport ? 0.04 : (isFly ? 0.015 : (isRome ? 0.20 : 0.14));
-            this._setTarget(this.windGain, windTarget, now, 0.6);
+            this._setTarget(this.windGain, 0.14, now, 0.6);
 
             // Crowd wash
-            const crowdTarget = isAirport ? 0.015 : (isFly ? 0.0 : (isAthens ? 0.05 : 0.035));
-            this._setTarget(this.crowdGain, crowdTarget, now, 0.6);
+            this._setTarget(this.crowdGain, 0.035, now, 0.6);
 
             // Hearth / Fire crackle
-            const fireTarget = isAirport ? 0.0 : (isFly ? 0.04 : (isRome ? 0.035 : 0.025));
-            this._setTarget(this.fireGain, fireTarget, now, 0.6);
-
-            // Terminal hum, jet bed & conveyor
-            this._setTarget(this.humGain, isAirport ? 0.022 : 0.0, now, 0.6);
-            this._setTarget(this.jetGain, isAirport ? 0.016 : 0.0, now, 0.8);
-            if (this.conveyorGain) this._setTarget(this.conveyorGain, isAirport ? 0.012 : 0.0, now, 0.8);
-
-            // Rome ruin howl (continuous); silent elsewhere
-            if (this.ruinGain) this._setTarget(this.ruinGain, isRome ? 0.02 : 0.0, now, 0.8);
-
-            // Fly buzz is proximity/event driven in update(); park it when leaving
-            if (this.flyBuzzGain && !isFly) this._setTarget(this.flyBuzzGain, 0.0, now, 0.5);
+            this._setTarget(this.fireGain, 0.025, now, 0.6);
 
             // Insects (day cicadas, night crickets)
             if (this.cicadaGain) {
-                const cicadaAllowed = !isAirport && !isFly;
-                this._setTarget(this.cicadaGain, cicadaAllowed ? 0.05 : 0.0, now, 0.6);
-            }
-
-            // Water (proximity-driven by update; park if leaving water-capable world)
-            if (isAirport || isFly) {
-                this._setTarget(this.waterGain, 0.0, now, 0.8);
-                this._setTarget(this.waterLowGain, 0.0, now, 0.8);
+                this._setTarget(this.cicadaGain, 0.05, now, 0.6);
             }
 
             // Room / Hall Reverb wet level
             if (this.reverbGain) {
-                const revTarget = isAirport ? 0.28 : (isRome ? 0.22 : (isFly ? 0.06 : 0.12));
-                this._setTarget(this.reverbGain, revTarget, now, 0.5);
+                this._setTarget(this.reverbGain, 0.12, now, 0.5);
             }
         } catch { /* gain automation must never break the frame loop */ }
     }
@@ -191,8 +142,7 @@ export class AudioSystem {
             // Build all ambient sound generators
             const builders = [
                 '_setupWind', '_setupCicadas', '_setupCrowd', '_setupWater',
-                '_setupFire', '_setupHum', '_setupJet', '_setupConveyor',
-                '_setupRuin', '_setupFlyBuzz'
+                '_setupFire'
             ];
             for (const b of builders) {
                 try { this[b](); } catch { /* keep remaining mix alive */ }
@@ -431,142 +381,6 @@ export class AudioSystem {
         this.fireNoise = noise;
     }
 
-    _setupHum() {
-        // Airport 50 Hz mains electrical hum
-        const osc1 = this.ctx.createOscillator();
-        osc1.type = 'sine';
-        osc1.frequency.value = 50;
-        const osc2 = this.ctx.createOscillator();
-        osc2.type = 'sine';
-        osc2.frequency.value = 100;
-
-        const mix2 = this.ctx.createGain();
-        mix2.gain.value = 0.35;
-
-        this.humGain = this.ctx.createGain();
-        this.humGain.gain.value = 0.0;
-
-        osc1.connect(this.humGain);
-        osc2.connect(mix2);
-        mix2.connect(this.humGain);
-        this.humGain.connect(this._bus());
-
-        osc1.start();
-        osc2.start();
-    }
-
-    _setupJet() {
-        // Deep apron rumble
-        const noise = this.ctx.createBufferSource();
-        noise.buffer = this._getBrownNoiseBuffer();
-        noise.loop = true;
-
-        this.jetFilter = this.ctx.createBiquadFilter();
-        this.jetFilter.type = 'lowpass';
-        this.jetFilter.frequency.value = 110;
-
-        this.jetGain = this.ctx.createGain();
-        this.jetGain.gain.value = 0.0;
-
-        const breathe = this.ctx.createOscillator();
-        breathe.frequency.value = 0.045;
-        const breatheGain = this.ctx.createGain();
-        breatheGain.gain.value = 0.006;
-        breathe.connect(breatheGain);
-        breatheGain.connect(this.jetGain.gain);
-
-        noise.connect(this.jetFilter);
-        this.jetFilter.connect(this.jetGain);
-        this.jetGain.connect(this._bus());
-
-        noise.start();
-        breathe.start();
-        this.jetNoise = noise;
-    }
-
-    _setupConveyor() {
-        // İGA baggage-hall conveyor rumble: looped brown noise, lowpassed
-        const noise = this.ctx.createBufferSource();
-        noise.buffer = this._getBrownNoiseBuffer();
-        noise.loop = true;
-
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = 220;
-
-        this.conveyorGain = this.ctx.createGain();
-        this.conveyorGain.gain.value = 0.0;
-
-        const wobble = this.ctx.createOscillator();
-        wobble.frequency.value = 0.07;
-        const wobbleGain = this.ctx.createGain();
-        wobbleGain.gain.value = 0.003;
-        wobble.connect(wobbleGain);
-        wobbleGain.connect(this.conveyorGain.gain);
-
-        noise.connect(filter);
-        filter.connect(this.conveyorGain);
-        this.conveyorGain.connect(this._bus());
-
-        noise.start();
-        wobble.start();
-    }
-
-    _setupRuin() {
-        // Rome hollow ruin howl: slow beating low sines through a narrow band
-        const osc1 = this.ctx.createOscillator();
-        osc1.type = 'sine';
-        osc1.frequency.value = 68;
-        const osc2 = this.ctx.createOscillator();
-        osc2.type = 'sine';
-        osc2.frequency.value = 102.5;
-
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'bandpass';
-        filter.frequency.value = 300;
-        filter.Q.value = 4.0;
-
-        this.ruinGain = this.ctx.createGain();
-        this.ruinGain.gain.value = 0.0;
-
-        const drift = this.ctx.createOscillator();
-        drift.frequency.value = 0.05;
-        const driftGain = this.ctx.createGain();
-        driftGain.gain.value = 0.006;
-        drift.connect(driftGain);
-        driftGain.connect(this.ruinGain.gain);
-
-        osc1.connect(filter);
-        osc2.connect(filter);
-        filter.connect(this.ruinGain);
-        this.ruinGain.connect(this._bus());
-
-        osc1.start();
-        osc2.start();
-        drift.start();
-    }
-
-    _setupFlyBuzz() {
-        // Fly World ~220 Hz micro-buzz
-        const osc = this.ctx.createOscillator();
-        osc.type = 'sawtooth';
-        osc.frequency.value = 218;
-
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = 650;
-
-        this.flyBuzzGain = this.ctx.createGain();
-        this.flyBuzzGain.gain.value = 0.0;
-
-        osc.connect(filter);
-        filter.connect(this.flyBuzzGain);
-        this.flyBuzzGain.connect(this._bus());
-
-        osc.start();
-        this.flyBuzzOsc = osc;
-    }
-
     // ------------------------------------------------------------- One-shots
 
     /**
@@ -765,89 +579,6 @@ export class AudioSystem {
         } catch { /* no-op */ }
     }
 
-    _playPAChime() {
-        try {
-            if (!this.isInitialized || !this.ctx || this.muted) return;
-            const now = this._now();
-            // Pristine modern airport 3-tone chime (F5 -> A5 -> C6)
-            [[698.46, 0.0], [880.00, 0.32], [1046.50, 0.64]].forEach(([freq, delay]) => {
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0.0001, now + delay);
-                gain.gain.linearRampToValueAtTime(0.065, now + delay + 0.035);
-                gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 1.2);
-
-                osc.connect(gain);
-                gain.connect(this._bus());
-                if (this.reverbNode) gain.connect(this.reverbNode);
-
-                osc.start(now + delay);
-                osc.stop(now + delay + 1.3);
-            });
-        } catch { /* no-op */ }
-    }
-
-    _playJetSwell() {
-        try {
-            if (!this.isInitialized || !this.ctx || this.muted) return;
-            if (!this.jetGain) return;
-            const now = this._now();
-            const g = this.jetGain.gain;
-            g.cancelScheduledValues(now);
-            g.setValueAtTime(Math.max(0.0001, g.value || 0.015), now);
-            g.linearRampToValueAtTime(0.075, now + 3.5);   // jet approach
-            g.linearRampToValueAtTime(0.015, now + 9.0);   // fly away
-        } catch { /* no-op */ }
-    }
-
-    _playClockTick() {
-        try {
-            if (!this.isInitialized || !this.ctx || this.muted) return;
-            const now = this._now();
-            const freq = this.clockTickTock ? 1200 : 960;
-            this.clockTickTock = !this.clockTickTock;
-
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, now);
-            osc.frequency.exponentialRampToValueAtTime(200, now + 0.03);
-
-            gain.gain.setValueAtTime(0.02, now);
-            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035);
-
-            osc.connect(gain);
-            gain.connect(this._bus());
-            osc.start(now);
-            osc.stop(now + 0.04);
-        } catch { /* no-op */ }
-    }
-
-    _playBronzeChime() {
-        try {
-            if (!this.isInitialized || !this.ctx || this.muted) return;
-            const now = this._now();
-            // Harmonically rich metallic shimmer (Classical Athens votive bell)
-            [1420, 2130, 2840].forEach((freq, idx) => {
-                const osc = this.ctx.createOscillator();
-                const gain = this.ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0.0001, now);
-                gain.gain.linearRampToValueAtTime(0.025 / (idx + 1), now + 0.015);
-                gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.4);
-
-                osc.connect(gain);
-                gain.connect(this._bus());
-                if (this.reverbNode) gain.connect(this.reverbNode);
-                osc.start(now);
-                osc.stop(now + 1.5);
-            });
-        } catch { /* no-op */ }
-    }
-
     _playWaterMillCreak() {
         try {
             if (!this.isInitialized || !this.ctx || this.muted) return;
@@ -890,8 +621,7 @@ export class AudioSystem {
                 }
                 const radius = 95;
                 const t = best === Infinity ? 0 : Math.max(0, 1 - best / radius);
-                let target = t * t * 0.42;
-                if (s === 'airport') target *= 0.25;
+                const target = t * t * 0.42;
                 this._setTarget(this.waterGain, target, now, 0.4);
                 if (this.waterFilter) {
                     try { this.waterFilter.frequency.setTargetAtTime(550 + t * 520, now, 0.4); } catch { /* no-op */ }
@@ -903,72 +633,30 @@ export class AudioSystem {
             }
 
             // Soundset-specific timers & scheduler
-            if (s === 'airport') {
-                this._setTarget(this.windGain, 0.04, now, 1.0);
-                this._setTarget(this.cicadaGain, 0.0, now, 1.0);
-                this._setTarget(this.fireGain, 0.0, now, 1.0);
-                if (now > this.nextBirdTime) {
-                    this._playPAChime();
-                    this.nextBirdTime = now + 40 + Math.random() * 45;
-                }
-                if (now > this.nextJetTime) {
-                    this._playJetSwell();
-                    this.nextJetTime = now + 20 + Math.random() * 30;
-                }
-            } else if (s === 'flyworld') {
-                this._setTarget(this.windGain, 0.015, now, 1.0);
-                this._setTarget(this.cicadaGain, 0.0, now, 1.0);
-                this._setTarget(this.humGain, 0.0, now, 1.0);
-                this._setTarget(this.jetGain, 0.0, now, 1.0);
-                // Domestic micro-buzz bed (the future fly); parked by
-                // _applySoundsetGains when leaving the room
-                if (this.flyBuzzGain) this._setTarget(this.flyBuzzGain, 0.012, now, 1.0);
-                // Hearth crackle
-                if (now > this.nextCrackleTime) {
-                    this._playFireCrackle();
-                    this.nextCrackleTime = now + 0.2 + Math.random() * 0.8;
-                }
-                // Wall clock tick-tock
-                if (now > this.nextClockTickTime) {
-                    this._playClockTick();
-                    this.nextClockTickTime = now + 1.0;
-                }
+            if (isNight) {
+                const chance = Math.random();
+                if (chance < 0.025) this._setTarget(this.cicadaGain, 0.065, now, 0.5);
+                else if (chance < 0.05) this._setTarget(this.cicadaGain, 0.0, now, 1.0);
             } else {
-                // Mediterranean antiquities (Aizanoi, Rome, Athens)
-                if (isNight) {
-                    const chance = Math.random();
-                    if (chance < 0.025) this._setTarget(this.cicadaGain, 0.065, now, 0.5);
-                    else if (chance < 0.05) this._setTarget(this.cicadaGain, 0.0, now, 1.0);
-                } else {
-                    const chance = Math.random();
-                    if (chance < 0.015) this._setTarget(this.cicadaGain, 0.11, now, 0.5);
-                    else if (chance < 0.03) this._setTarget(this.cicadaGain, 0.0, now, 1.0);
-                }
+                const chance = Math.random();
+                if (chance < 0.015) this._setTarget(this.cicadaGain, 0.11, now, 0.5);
+                else if (chance < 0.03) this._setTarget(this.cicadaGain, 0.0, now, 1.0);
+            }
 
-                if (!isNight && now > this.nextBirdTime) {
-                    this._playBirdChirp();
-                    this.nextBirdTime = now + 4 + Math.random() * 12;
-                }
+            if (!isNight && now > this.nextBirdTime) {
+                this._playBirdChirp();
+                this.nextBirdTime = now + 4 + Math.random() * 12;
+            }
 
-                if (now > this.nextCrackleTime) {
-                    this._playFireCrackle();
-                    this.nextCrackleTime = now + 0.2 + Math.random() * 1.0;
-                }
+            if (now > this.nextCrackleTime) {
+                this._playFireCrackle();
+                this.nextCrackleTime = now + 0.2 + Math.random() * 1.0;
+            }
 
-                // Athens bronze votive chimes
-                if (s === 'athens' && now > this.nextChimeTime) {
-                    this._playBronzeChime();
-                    this.nextChimeTime = now + 15 + Math.random() * 25;
-                }
-
-                // Aizanoi Penkalas water mill creak
-                if (s === 'aizanoi' && now > this.nextMillCreakTime) {
-                    this._playWaterMillCreak();
-                    this.nextMillCreakTime = now + 8 + Math.random() * 12;
-                }
-
-                this._setTarget(this.humGain, 0.0, now, 1.0);
-                this._setTarget(this.jetGain, 0.0, now, 1.0);
+            // Aizanoi Penkalas water mill creak
+            if (s === 'aizanoi' && now > this.nextMillCreakTime) {
+                this._playWaterMillCreak();
+                this.nextMillCreakTime = now + 8 + Math.random() * 12;
             }
 
             // Surface-aware footsteps
@@ -977,10 +665,6 @@ export class AudioSystem {
                 if (!surface) {
                     if (Array.isArray(o.waters) && o.waters.length && this._nearWater(playerPos, o.waters)) {
                         surface = 'water';
-                    } else if (s === 'airport') {
-                        surface = 'tile';
-                    } else if (s === 'flyworld') {
-                        surface = 'wood';
                     } else {
                         surface = 'stone';
                     }
@@ -1077,9 +761,6 @@ export class AudioSystem {
         this.waterGain = null;
         this.waterLowGain = null;
         this.fireGain = null;
-        this.humGain = null;
-        this.jetGain = null;
-        this.flyBuzzGain = null;
     }
 
     // ---------------------------------------------------------------- Helpers

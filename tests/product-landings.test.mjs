@@ -15,7 +15,7 @@ const landings = {
 };
 const productRoutes = ['news', ...Object.keys(landings)];
 const sharedNav = [
-  ['/news/', 'News'], ['/tv/', 'TV'], ['/analytics/', 'Analytics'], ['/worlds/', 'Worlds'],
+  ['/news/', 'News'], ['/tv/', 'TV'], ['/analytics/', 'Analytics'], ['/worlds/', 'Aizanoi'],
   ['/forge/', 'Forge'], ['/journal/', 'Journal'], ['/labs/', 'Labs'], ['/arcade/', 'Arcade']
 ];
 

@@ -11,8 +11,8 @@ export class IntroSequence {
     this.scene = scene;
     this.controls = controls;
 
-    // Per-world overlay text (defaults preserve Athens legacy copy).
-    this.heading  = opts.heading  || 'ATHENS';
+    // Per-world overlay text (defaults to Aizanoi, the only product using this shared runtime).
+    this.heading  = opts.heading  || 'AIZANOI';
     this.subtitle = opts.subtitle || '450–430 BCE · THE PERICLEAN GOLDEN AGE';
 
     this.isComplete = false;
