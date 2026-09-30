@@ -2,8 +2,7 @@
  * materials.js — Universal PBR Material Library with Procedural Canvas Textures
  * Shared Asset Engine · Aizanoi Analytics unified worlds runtime
  *
- * Supports Classical Greek, Imperial Roman, Aizanoi Phrygian,
- * and Contemporary Architectural (İGA) materials.
+ * Supports Classical Greek, Imperial Roman, and Aizanoi Phrygian materials.
  * Generates zero-dependency procedural textures and bump maps on CanvasTexture.
  */
 
@@ -281,22 +280,7 @@ function getRoadTexture() {
   });
 }
 
-// 6. Airport Asphalt Tarmac
-function getTarmacTexture() {
-  return createProceduralTexture('tarmac', (ctx, s) => {
-    ctx.fillStyle = '#222528';
-    ctx.fillRect(0, 0, s, s);
-
-    // Fine mineral bitumen speckles
-    for (let i = 0; i < 600; i++) {
-      const g = 60 + Math.random() * 80;
-      ctx.fillStyle = `rgba(${g},${g},${g},0.35)`;
-      ctx.fillRect(Math.random() * s, Math.random() * s, 1.5, 1.5);
-    }
-  });
-}
-
-// 7. Wood Planks
+// 6. Wood Planks
 function getWoodTexture() {
   return createProceduralTexture('wood', (ctx, s) => {
     ctx.fillStyle = '#654830';
@@ -429,18 +413,10 @@ export const MATERIAL_DEFINITIONS = {
   frescoRed:       { roughness: 0.65, metalness: 0.00, color: 0x8c2824 },
   frescoYellow:    { roughness: 0.65, metalness: 0.00, color: 0xd2a842 },
 
-  // ──── Contemporary Architectural / Aviation (İGA) ────
+  // ──── Contemporary Architectural ────
   glassCurtain:    { roughness: 0.08, metalness: 0.15, color: 0x82c6de, transparent: true, opacity: 0.45 },
   structuralSteel: { roughness: 0.32, metalness: 0.86, color: 0x4a5460 },
   aluminumAnodized:{ roughness: 0.22, metalness: 0.72, color: 0xc8d0d8 },
-  tarmac:          { roughness: 0.90, metalness: 0.05, color: 0x24282c, bumpScale: 0.03 },
-  apronConcrete:   { roughness: 0.76, metalness: 0.02, color: 0x7c8288, bumpScale: 0.02 },
-  runwayMarking:   { roughness: 0.55, metalness: 0.00, color: 0xfcfcfc },
-  runwayYellow:    { roughness: 0.55, metalness: 0.00, color: 0xf2b705 },
-  jetFuselage:     { roughness: 0.18, metalness: 0.32, color: 0xffffff },
-  jetLivery:       { roughness: 0.18, metalness: 0.32, color: 0xc8102e },
-  atcShaft:        { roughness: 0.38, metalness: 0.40, color: 0xe2e2e2 },
-  serviceVehicle:  { roughness: 0.35, metalness: 0.25, color: 0xf39c12 },
   sailFabric:      { roughness: 0.88, metalness: 0.00, color: 0xeae2cf },
   altarStone:      { roughness: 0.50, metalness: 0.02, color: 0xd6cbb8, bumpScale: 0.04 },
 
@@ -496,9 +472,6 @@ export function getMaterial(name, overrides = {}) {
   } else if (name === 'plaster' || name === 'plasterAged') {
     mat.map = getPlasterTexture();
     mat.bumpScale = 0.02;
-  } else if (name === 'tarmac') {
-    mat.map = getTarmacTexture();
-    mat.bumpScale = def.bumpScale || 0.03;
   }
 
   if (mat.map) {

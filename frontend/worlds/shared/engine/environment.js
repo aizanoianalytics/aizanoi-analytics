@@ -25,10 +25,10 @@ const PALETTES = {
 };
 
 /*
- * Per-world art direction. Each Historical World gets its own tonal identity
- * instead of one shared "generic Mediterranean noon". A profile is merged over
+ * Per-world art direction. Aizanoi gets its own tonal identity
+ * instead of a shared "generic Mediterranean noon". The profile is merged over
  * PALETTES as multipliers, so the shared day/night cycle logic stays intact:
- *   - hue shift  : multiply-modifies sky/sun/fog colors (warm gold, cold marble…)
+ *   - hue shift  : multiply-modifies sky/sun/fog colors (warm gold…)
  *   - fogDensity : base + night fog density overrides
  *   - exposure   : renderer tone-mapping exposure bias for the world's mood
  */
@@ -42,36 +42,6 @@ const WORLD_MOODS = {
     fogDensityNight: 0.0026,
     exposure: 1.04,
     ambientBoost: 1.0,
-  },
-  // White marble + Aegean blue — crisp, high-key, strong blue sky bounce.
-  athens: {
-    skyTint: [0.92, 1.02, 1.12],
-    sunTint: [1.04, 1.00, 0.94],
-    fogTint: [0.96, 1.02, 1.10],
-    fogDensityDay: 0.0012,
-    fogDensityNight: 0.0024,
-    exposure: 1.16,
-    ambientBoost: 1.15,
-  },
-  // Decayed grandeur — bruised amber light, smokier air, heavier contrast.
-  rome: {
-    skyTint: [1.04, 0.94, 0.84],
-    sunTint: [1.08, 0.92, 0.76],
-    fogTint: [1.02, 0.92, 0.82],
-    fogDensityDay: 0.0022,
-    fogDensityNight: 0.0034,
-    exposure: 1.06,
-    ambientBoost: 0.88,
-  },
-  // Modern cold metal — desaturated steel-blue, glassy clean air, neutral sun.
-  iga: {
-    skyTint: [0.94, 0.98, 1.06],
-    sunTint: [1.00, 1.00, 1.02],
-    fogTint: [0.95, 0.97, 1.02],
-    fogDensityDay: 0.0009,
-    fogDensityNight: 0.0018,
-    exposure: 1.10,
-    ambientBoost: 1.05,
   },
 };
 
