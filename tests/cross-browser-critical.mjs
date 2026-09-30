@@ -110,13 +110,29 @@ try{
     }));
     console.log(`${engine} bootstrap diagnostics:`, JSON.stringify(diag));
     if (!diag.hasDebug) {
-      console.log(`${engine} worldErrors so far:`, JSON.stringify(worldErrors));
-      throw new Error(`${engine}: __WORLD_DEBUG__ undefined after bootstrap. Diagnostics: ${JSON.stringify(diag)}`);
-    }
+      // No-WebGL2 engines (CI headless Firefox) intentionally never boot the
+      // world: main.js gates init on requireWebGL2 and the entry net renders a
+      // repair card instead. That graceful degradation IS the contract there —
+      // assert it explicitly rather than demanding a boot the app correctly
+      // refuses.
+      if (diag.entryNet?.webgl2 === false) {
+        const repairText = await page.evaluate(() => document.querySelector('.runtime-message')?.textContent ?? '');
+        console.log(`${engine} no-WebGL2 repair card:`, JSON.stringify(repairText.slice(0, 200)));
+        assert.ok(
+          repairText.includes('needs WebGL 2'),
+          `${engine} Aizanoi: WebGL2 absent but no repair message shown (btn: ${diag.btnEnterText})`,
+        );
+        await page.close();
+      } else {
+        console.log(`${engine} worldErrors so far:`, JSON.stringify(worldErrors));
+        throw new Error(`${engine}: __WORLD_DEBUG__ undefined after bootstrap. Diagnostics: ${JSON.stringify(diag)}`);
+      }
+    } else {
     await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:90000});
     assert.ok(await page.locator('.hud-top').count(),`${engine} Aizanoi: HUD missing after Enter`);
     assert.deepEqual(worldErrors,[],`${engine} Aizanoi: ${worldErrors.join(' | ')}`);
     await page.close();
+    }
   }
 
   await context.close();
