@@ -39,6 +39,7 @@ export async function launchDungeonGame(container) {
   const [
     { BootScene },
     { MenuScene },
+    { OptionsScene },
     { GameScene },
     { UIScene },
     { ShopScene },
@@ -49,6 +50,7 @@ export async function launchDungeonGame(container) {
   ] = await Promise.all([
     import('./scenes/BootScene.js'),
     import('./scenes/MenuScene.js'),
+    import('./scenes/OptionsScene.js'),
     import('./scenes/GameScene.js'),
     import('./scenes/UIScene.js'),
     import('./scenes/ShopScene.js'),
@@ -87,6 +89,7 @@ export async function launchDungeonGame(container) {
     scene: [
       BootScene,
       MenuScene,
+      OptionsScene,
       GameScene,
       UIScene,
       ShopScene,

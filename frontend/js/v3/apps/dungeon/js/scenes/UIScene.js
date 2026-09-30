@@ -4,6 +4,7 @@
 import { drawStatBar } from '../utils/ui-helpers.js';
 import { audioManager } from '../systems/AudioManager.js';
 import { loadSettings } from '../systems/SettingsSystem.js';
+import { uiScale, contrastBoost } from '../systems/AccessibilitySystem.js';
 
 export class UIScene extends Phaser.Scene {
   constructor() {
@@ -14,38 +15,63 @@ export class UIScene extends Phaser.Scene {
     this.gameScene = data.gameScene;
   }
 
+  /**
+   * The text helpers, on the instance rather than inside create().
+   *
+   * The HUD is built by more than one method, and scoping these to create()
+   * meant createAbilityBar() drew its labels with a bare number and threw
+   * "px is not defined" the moment the scene came up.
+   */
+  textStyle() {
+    const scale = uiScale();
+    const hi = contrastBoost();
+    // A 9px label in a 640px-tall canvas is not readable, and section 22 asks
+    // for no tiny text on mobile. The floor is 11px always, and 13px with the
+    // contrast option on: a HUD you have to squint at is not a HUD.
+    // Phaser renders text at whatever size it is handed, so every label has to
+    // go through this rather than carrying a fixed pixel size of its own.
+    return {
+      px: (n) => `${Math.round(n * scale)}px`,
+      readable: (n) => Math.max(n, hi ? 13 : 11),
+      // The contrast option lifts the dimmest label colours to one that reads on
+      // a dim screen, so the option changes actual pixels.
+      ink: (normal) => (hi ? '#f8fafc' : normal)
+    };
+  }
+
   create() {
+    const { px, readable, ink } = this.textStyle();
     const { width, height } = this.cameras.main;
     const glass = 0x0f1624;
 
     this.add.rectangle(128, 44, 236, 72, glass, 0.82).setStrokeStyle(1, 0xc5a059);
     this.add.sprite(36, 42, 'aizo', 0).setScale(1.35);
     this.levelBadge = this.add.text(36, 64, 'Lv.1', {
-      fontSize: '10px', color: '#f5d77f', fontStyle: 'bold',
+      fontSize: px(readable(10)), color: '#f5d77f', fontStyle: 'bold',
     }).setOrigin(0.5);
 
     this.hpGraphics = this.add.graphics();
     this.xpGraphics = this.add.graphics();
-    this.hpText = this.add.text(74, 22, 'HP: 120/120', { fontSize: '11px', color: '#e8eef8', fontStyle: 'bold' });
-    this.xpText = this.add.text(74, 46, 'SPARK: 0/50', { fontSize: '10px', color: '#b7c0d0', fontStyle: 'bold' });
+    this.hpText = this.add.text(74, 22, 'HP: 120/120', { fontSize: px(readable(11)), color: '#e8eef8', fontStyle: 'bold' });
+    this.xpText = this.add.text(74, 46, 'SPARK: 0/50', { fontSize: px(readable(10)), color: '#b7c0d0', fontStyle: 'bold' });
 
     this.chapterText = this.add.text(width / 2, 18, '', {
-      fontSize: '13px', color: '#f5d77f', fontStyle: 'bold',
+      fontSize: px(readable(13)), color: '#f5d77f', fontStyle: 'bold',
       backgroundColor: '#0f1624cc', padding: { x: 12, y: 5 },
     }).setOrigin(0.5);
 
     this.objectiveText = this.add.text(width / 2, 42, '', {
-      fontSize: '11px', color: '#d1d5db',
+      fontSize: px(readable(11)), color: ink('#d1d5db'),
       backgroundColor: '#0f1624aa', padding: { x: 10, y: 3 },
     }).setOrigin(0.5);
 
     this.add.rectangle(width - 118, 28, 150, 36, glass, 0.82).setStrokeStyle(1, 0xc5a059);
     this.add.image(width - 178, 28, 'coin-icon').setScale(1.2);
-    this.goldText = this.add.text(width - 160, 20, '0', { fontSize: '14px', color: '#f5d77f', fontStyle: 'bold' });
+    this.goldText = this.add.text(width - 160, 20, '0', { fontSize: px(readable(14)), color: '#f5d77f', fontStyle: 'bold' });
 
     const soundBox = this.add.rectangle(width - 28, 28, 32, 32, glass, 0.82)
       .setStrokeStyle(1, 0xc5a059).setInteractive({ useHandCursor: true });
-    this.soundIcon = this.add.text(width - 28, 28, audioManager.isMuted ? '🔇' : '🔊', { fontSize: '14px' }).setOrigin(0.5);
+    this.soundIcon = this.add.text(width - 28, 28, audioManager.isMuted ? '🔇' : '🔊', { fontSize: px(readable(14)) }).setOrigin(0.5);
     soundBox.on('pointerdown', () => {
       this.soundIcon.setText(audioManager.toggleMute() ? '🔇' : '🔊');
     });
@@ -63,17 +89,18 @@ export class UIScene extends Phaser.Scene {
     this.minimapBg = this.add.rectangle(0, 0, 112, 112, 0x0b1220, 0.88).setStrokeStyle(1.5, 0xc5a059);
     this.minimapGfx = this.add.graphics();
     this.minimapHint = this.add.text(0, -60, 'MAP', {
-      fontSize: '9px', color: '#9aa8be',
+      fontSize: px(readable(9)), color: ink('#9aa8be'),
     }).setOrigin(0.5);
     this.minimapContainer.add([this.minimapBg, this.minimapGfx, this.minimapHint]);
 
     this.hintText = this.add.text(width / 2, height - 78, '', {
-      fontSize: '11px', color: '#f8fafc',
+      fontSize: px(readable(11)), color: '#f8fafc',
       backgroundColor: '#141822cc', padding: { x: 8, y: 3 },
     }).setOrigin(0.5);
   }
 
   createAbilityBar() {
+    const { px, readable, ink } = this.textStyle();
     const cx = this.cameras.main.width / 2;
     const cy = this.cameras.main.height - 34;
     this.abilitySlots = {};
@@ -85,8 +112,8 @@ export class UIScene extends Phaser.Scene {
     ];
     defs.forEach((def) => {
       const box = this.add.rectangle(def.x, cy, 46, 46, 0x0f1624, 0.9).setStrokeStyle(2, 0xc5a059);
-      this.add.text(def.x, cy - 8, def.label, { fontSize: '13px', color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
-      const cd = this.add.text(def.x, cy + 10, 'RDY', { fontSize: '9px', color: '#3dcea8', fontStyle: 'bold' }).setOrigin(0.5);
+      this.add.text(def.x, cy - 8, def.label, { fontSize: px(readable(13)), color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
+      const cd = this.add.text(def.x, cy + 10, 'RDY', { fontSize: px(readable(9)), color: '#3dcea8', fontStyle: 'bold' }).setOrigin(0.5);
       this.abilitySlots[def.key] = { box, cd };
     });
   }
@@ -123,13 +150,12 @@ export class UIScene extends Phaser.Scene {
       : gs.currentLevelConfig.name;
     this.chapterText.setText(chapterName);
 
-    // getChildren() is only available once Phaser has populated the group's
-    // internal list. During a scene transition the group exists but that list is
-    // still undefined, and calling it threw every frame.
-    const list = gs.enemies?.children?.list;
-    const remaining = Array.isArray(list)
-      ? list.filter((e) => e.active && e.hp > 0).length
-      : 0;
+    // A Phaser Group stores its members in a Set, not an array. Array.isArray on
+    // it was never true, so `remaining` was always 0 and the objective line read
+    // "portal open" from the first frame of every floor -- including a floor with
+    // enemies still standing on it.
+    const list = gs.enemies?.getChildren?.() || [];
+    const remaining = list.filter((e) => e.active && e.hp > 0).length;
     const ready = remaining === 0;
     this.objectiveText.setText(ready ? 'Portal open — walk in' : `Clear the floor · ${remaining} left`);
     this.objectiveText.setColor(ready ? '#3dcea8' : '#d1d5db');
@@ -158,14 +184,9 @@ export class UIScene extends Phaser.Scene {
     };
     plot(gs.baseAltar?.x || 0, gs.baseAltar?.y || 0, 0xf5d77f, 3);
     plot(gs.exitPortal?.x || 0, gs.exitPortal?.y || 0, ready ? 0x00d2ff : 0x64748b, 3);
-    // Same hazard as the objective counter above: `?.` guards the group but not
-    // the call on it, and the group's internal list is undefined mid-transition.
-    const enemyList = gs.enemies?.children?.list;
-    if (Array.isArray(enemyList)) {
-      for (const enemy of enemyList) {
-        if (enemy.active && enemy.hp > 0) {
-          plot(enemy.x, enemy.y, enemy.isBoss ? 0xf39c12 : 0xe74c3c, enemy.isBoss ? 3 : 1.6);
-        }
+    for (const enemy of gs.enemies?.getChildren?.() || []) {
+      if (enemy.active && enemy.hp > 0) {
+        plot(enemy.x, enemy.y, enemy.isBoss ? 0xf39c12 : 0xe74c3c, enemy.isBoss ? 3 : 1.6);
       }
     }
     plot(player.x, player.y, 0x7ea0ff, 3);

@@ -166,13 +166,19 @@ test('the progression curve is a curve, not a flat rate', () => {
 test('the HUD survives a scene transition', () => {
   // Found by the audit: `?.` guarded the enemy group but not the getChildren()
   // call on it, so every frame of a transition threw and killed the HUD update.
+  //
+  // The group is a Set, not an array: `Array.isArray(group.children.list)` was
+  // never true, so the remaining-enemy count was always 0 and the objective line
+  // read "portal open" from the first frame of every floor. The defensive read
+  // has to survive the transition AND actually reach the members.
   assert.doesNotMatch(uiScene, /\?\.\s*getChildren\(\)/,
     'an optional chain must not guard a method call on a not-yet-built group');
-  assert.match(uiScene, /const list = gs\.enemies\?\.children\?\.list/);
-  assert.match(uiScene, /Array\.isArray\(list\)/,
-    'the list must be checked before it is read');
-  assert.match(uiScene, /const enemyList = gs\.enemies\?\.children\?\.list/,
+  assert.match(uiScene, /const list = gs\.enemies\?\.getChildren\?\.\(\) \|\| \[\]/,
+    'the count must read the group through getChildren() with a fallback');
+  assert.match(uiScene, /gs\.enemies\?\.getChildren\?\.\(\) \|\| \[\]/,
     'the minimap must read the list the same defensive way');
+  assert.doesNotMatch(uiScene, /children\?\.list/,
+    'Phaser groups store members in a Set; the old array check never passed');
 });
 
 test('the run summary audit is registered as an operator diagnostic', () => {

@@ -131,14 +131,79 @@ The module persists the player's progress in the browser's `localStorage` namesp
 
 ---
 
-## 7. Verification and tests
+## 7. Accessibility and controls
+
+### Controls
+
+| Input | Move | Attack | Skills | Utility | Menu |
+| --- | --- | --- | --- | --- | --- |
+| Keyboard / arrows | WASD or arrows | Space | Q, R | E, B | Esc, P, M |
+| Gamepad | left stick or d-pad | A | A, X | B | Start, Select |
+| Touch | virtual joystick | on-screen button | on-screen | on-screen | on-screen |
+
+A controller and a keyboard are both live at the same time: the pad is OR-ed
+with the keyboard rather than replacing it, so neither has to be unplugged.
+
+### Preferences
+
+**Options & accessibility** in the main menu. Fully keyboard operable: arrow keys
+move, Space or Enter changes, Esc goes back. Every control is a stepper rather
+than a drag target, because a drag target cannot be used without a mouse.
+
+| Preference | Effect |
+| --- | --- |
+| Reduced screen shake | Suppresses every camera shake. Also honours the OS `prefers-reduced-motion`. |
+| Non-audio telegraphs | Draws a pulsing mark above a boss that is winding up or charging. |
+| Readable contrast | Raises the HUD's smallest text to 13px and lifts the dimmest label colours. |
+| Text size | 85% to 200%, applied to every HUD label. |
+| Volume | 0 to 100% on the master gain. Mute is `M`, and shares the same gain. |
+
+### A note on the camera shake
+
+The shake is written by the game, not by Phaser. `Camera.shake()` in the
+Phaser build this project ships (3.80.1) routes through a camera FX pipeline
+(`addPrePipeline` + `Phaser.FX.Shake`) that the build does not have: `shake()`
+is present as a function and returns without moving anything. All of the
+game's shake calls were therefore inert before section 22 — the option was
+honoured, and no camera moved either way.
+
+`AccessibilitySystem.shakeCamera()` now applies the offset itself, through a
+small Phaser-timed tween that `GameScene` writes to the camera's scroll every
+frame. Measured in the audit: 16 moving frames and up to 15.1px of offset with
+the preference off, 0 moving frames with it on.
+
+### What is deliberately absent
+
+There is **no "reduced flash" option, because the game has no screen flash.** The
+Dungeon uses tinted sprites, floating text and camera shake; it never calls
+`Camera.flash()` and there is no white-flash hit effect to suppress. Adding a
+preference that toggles nothing would be a checkbox that lies, so there is not
+one. If a flash is ever added, the preference has to come with it in the same
+change.
+
+## 8. Verification and tests
 
 Run the existing regression and contract suites from the repository root (see `tests/` and CI):
 
 ```bash
-node --test tests/aizanoi-os-dungeon-module.test.mjs
-node --test tests/dungeon-real-touch-start.test.mjs
-node --test tests/aizanoi-os-capabilities.test.mjs
+node --test tests/*.test.mjs
+```
+
+The browser audits drive the real game through Playwright and are not part of
+`node --test`. Each needs a served `frontend/` on port 4173 and a `CHROME_PATH`:
+
+```bash
+python3 -m http.server 4173 --directory frontend &
+export CHROME_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())")
+node tests/dungeon-accessibility-audit.mjs
+node tests/dungeon-visual-identity-audit.mjs
+node tests/dungeon-level-design-audit.mjs
+node tests/dungeon-run-summary-audit.mjs
+node tests/dungeon-boss-encounter-audit.mjs
+node tests/dungeon-combat-feel-audit.mjs
+node tests/dungeon-enemy-behaviour-audit.mjs
+node tests/dungeon-play-audit.mjs
+node tests/dungeon-runtime-audit.mjs
 ```
 
 For the full mathematical formulas, chapter balance tables, skill tree architecture and Nginx configuration guide, see `DOCUMENTATION.md` in this same directory.
