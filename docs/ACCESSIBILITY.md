@@ -44,7 +44,7 @@ CI verifies applicable surfaces for:
 3. Open Applications and the command palette; confirm each is announced as a modal dialog and Tab does not escape behind it.
 4. Close each dialog and verify focus returns to the invoking control or a deterministic fallback.
 5. Open Aizanoi News and verify edition navigation, headlines, bylines, corrections and source links are announced coherently.
-6. Enter a Historical World and confirm persistent AizanoiOS navigation and the Explore drawer do not create a focus trap.
+6. Enter Aizanoi and confirm persistent AizanoiOS navigation and the Explore drawer do not create a focus trap.
 7. Use a landmark selector and confirm the resulting place/evidence information remains discoverable without pointer-only interaction.
 
 ## Manual VoiceOver / TalkBack smoke
