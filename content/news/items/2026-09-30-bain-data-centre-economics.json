@@ -1,0 +1,37 @@
+{
+  "id": "2026-09-30-bain-data-centre-economics",
+  "kind": "daily",
+  "title": "Bain puts the AI buildout's revenue test at $6 trillion a year",
+  "summary": "Bain & Company's annual technology report argues the AI industry must generate about $6 trillion in annual revenue by 2031 for data-centre capital spending to be economically coherent. Existing consumer and enterprise AI services might supply as much as $1.8 trillion, leaving some $4.2 trillion to come from categories that barely exist today. Bain projects infrastructure spending could reach $1.5 trillion a year by 2031, and says $5 trillion to $6.5 trillion of outlays by 2030 would add at least 150 gigawatts of load.",
+  "category": "technology",
+  "priority": 48,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bain",
+    "data-centres",
+    "capex",
+    "infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Bain & Company",
+      "url": "https://www.bain.com/insights/ai-data-center-boom-can-we-build-it-if-they-come-technology-report-2026",
+      "publishedAt": "2026-09-29T06:00:00Z"
+    },
+    {
+      "publisher": "TechStartups",
+      "url": "https://techstartups.com/2026/09/29/top-tech-news-today-september-29-2026-anthropic-bytedance-google-meta-openai-samsung-more",
+      "publishedAt": "2026-09-29T18:30:00Z"
+    }
+  ]
+}

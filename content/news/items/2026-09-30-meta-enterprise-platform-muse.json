@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-30-meta-enterprise-platform-muse",
+  "kind": "daily",
+  "title": "Meta builds a corporate AI business around its Muse assistant",
+  "summary": "Meta is creating Meta Enterprise Platform, a division that will sell AI products and services directly to companies under Chirantan 'CJ' Desai, the former MongoDB chief executive. The unit is expected to pull together Meta's Muse assistant and its developer tools, giving the company a commercial channel beyond advertising for a capital programme it expects to cost as much as $145 billion this year. It puts Meta into direct competition with Microsoft, Google, Amazon, OpenAI and Anthropic for corporate AI workloads.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "meta",
+    "enterprise",
+    "muse",
+    "desai"
+  ],
+  "sources": [
+    {
+      "publisher": "Financial Times",
+      "url": "https://www.ft.com/content/fbe0a48f-4d33-42eb-8d2c-79f662c88678",
+      "publishedAt": "2026-09-29T04:00:00Z"
+    },
+    {
+      "publisher": "TechStartups",
+      "url": "https://techstartups.com/2026/09/29/top-tech-news-today-september-29-2026-anthropic-bytedance-google-meta-openai-samsung-more",
+      "publishedAt": "2026-09-29T18:30:00Z"
+    },
+    {
+      "publisher": "The Information",
+      "url": "https://www.theinformation.com/newsletters/the-briefing/metas-mongodb-ceo-poach",
+      "publishedAt": "2026-09-29T16:38:00Z"
+    }
+  ]
+}

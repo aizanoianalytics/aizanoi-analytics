@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/white-house-ai-accord/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>Trump and six AI chief executives sign a voluntary safety accord</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/openai-devday-gpt-6-1-sol/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>OpenAI ships GPT-6.1 Sol a day after shelving its Astra upgrade</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/openai-dots-always-on-agents/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>OpenAI opens its always-on agent Dots to paid ChatGPT users</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/consumer-confidence-12-year-low/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>US consumer confidence falls to its weakest reading since 2014</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/wall-street-yields-24-year-high/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>Wall Street slips as the 30-year Treasury yield hits a 24-year high</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/anthropic-prospectus-agent-liability/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>Anthropic&#39;s IPO filing flags unsettled liability for rogue agents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/microsoft-copilot-enterprise-reboot/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>Microsoft merges Copilot into one business-facing product</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/spain-croatia-yamal-brace/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>Yamal&#39;s brace carries Spain past Croatia and extends a 40-match run</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/meta-enterprise-platform-muse/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>Meta builds a corporate AI business around its Muse assistant</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/jadepuffer-storm-3168-azure/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>Microsoft links agentic ransomware crew to a destructive Azure campaign</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/bain-data-centre-economics/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>Bain puts the AI buildout&#39;s revenue test at $6 trillion a year</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/england-czechia-gordon-kane/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>Gordon and Kane see off ten-man Czechia as England find a clean sheet</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/wipo-innovation-index-2026/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>WIPO&#39;s 2026 innovation index puts Switzerland first for a 16th year</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/pfa-calendar-workload-warning/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>PFA chief says England&#39;s five withdrawals expose a workload crisis</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-09-30/asia-stocks-ahead-of-pce/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-09-30T05:20:00.000Z</news:publication_date>
+      <news:title>Asian shares edge up as investors wait on the US inflation print</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-09-29/openai-shelves-gpt-6-1-astra/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>

@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-30-white-house-ai-accord",
+  "kind": "daily",
+  "title": "Trump and six AI chief executives sign a voluntary safety accord",
+  "summary": "President Donald Trump said he and the heads of Google, Anthropic, Meta, Nvidia, OpenAI and X signed a voluntary accord at the White House covering four commitments: internal cybersecurity controls, an internal team verifying that monitoring works, an independent external assessor, and a board committee to receive the reports. Trump called the document 'morally binding' and said he is weighing a ten-person committee to oversee the sector, while repeating that his administration would not slow AI development. Reuters reported that bipartisan Senate AI legislation has stalled.",
+  "category": "ai",
+  "priority": 84,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "policy",
+    "regulation",
+    "white-house",
+    "ai-safety"
+  ],
+  "sources": [
+    {
+      "publisher": "Nikkei Asia (Reuters)",
+      "url": "https://asia.nikkei.com/business/technology/artificial-intelligence/trump-considers-creating-ai-oversight-committee-after-meeting-with-tech-chiefs",
+      "publishedAt": "2026-09-29T21:08:00Z"
+    },
+    {
+      "publisher": "India Today",
+      "url": "https://www.indiatoday.in/world/story/donald-trump-ai-accord-white-house-self-regulation-us-ai-growth-ptag-3006145-2026-09-30",
+      "publishedAt": "2026-09-29T20:30:00Z"
+    },
+    {
+      "publisher": "CNN via webn.tv",
+      "url": "https://webn.tv/2026/09/29/top-ai-executives-sign-commitment-to-self-police-after-meeting-at-white-house",
+      "publishedAt": "2026-09-29T21:41:00Z"
+    }
+  ]
+}

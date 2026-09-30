@@ -1,0 +1,42 @@
+{
+  "id": "2026-09-30-england-czechia-gordon-kane",
+  "kind": "daily",
+  "title": "Gordon and Kane see off ten-man Czechia as England find a clean sheet",
+  "summary": "England won 2-0 in Prague to get their Nations League campaign back on track after a first-match defeat by Spain. Anthony Gordon headed in Trent Alexander-Arnold's cross two minutes after half-time for his third goal in as many internationals, and Harry Kane made it safe on 69 minutes with his 87th England goal in his 123rd appearance, extending his own record. Czechia played most of the match a man down after a first-half red card. It was England's first clean sheet in seven games.",
+  "category": "football",
+  "priority": 48,
+  "publishedAt": "2026-09-30T05:20:00Z",
+  "updatedAt": "2026-09-30T05:20:00Z",
+  "retrievedAt": "2026-09-30T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "england",
+    "czechia",
+    "kane"
+  ],
+  "sources": [
+    {
+      "publisher": "Goal.com",
+      "url": "https://www.goal.com/en/lists/-england-anthony-gordon-harry-kane-fire-three-lions-czechia-/bltc9190835909c94ef",
+      "publishedAt": "2026-09-29T21:05:00Z"
+    },
+    {
+      "publisher": "The Irish Times",
+      "url": "https://www.irishtimes.com/sport/soccer/2026/09/29/gordon-and-kane-fire-england-to-nations-league-victory-against-10-man-czech-republic",
+      "publishedAt": "2026-09-29T21:30:00Z"
+    },
+    {
+      "publisher": "WION",
+      "url": "https://www.wionews.com/sports/nations-league-yamal-brace-powers-spain-to-win-over-croatia-kane-guides-england-to-win-against-czech-republic-1790735538747",
+      "publishedAt": "2026-09-29T21:20:00Z"
+    }
+  ]
+}
