@@ -71,23 +71,24 @@ try{
     await page.waitForSelector('#btn-enter',{timeout:30000});
     await page.waitForFunction(()=>{const b=document.getElementById('btn-enter');return b&&!b.disabled;},null,{timeout:30000});
     await page.locator('#btn-enter').click();
-    // Diagnostics: capture what happens after Enter in Firefox
-    const enterResult = await page.evaluate(() => {
-      const debug = window.__WORLD_DEBUG__;
-      const bootstrap = window.__WORLD_BOOTSTRAP__;
-      return {
-        hasDebug: !!debug,
-        debugReady: debug?.ready,
-        debugKeys: debug ? Object.keys(debug) : [],
-        hasBootstrap: !!bootstrap,
-        bootstrapReady: bootstrap?.ready,
-        bootstrapKeys: bootstrap ? Object.keys(bootstrap) : [],
-        hasPlayer: !!debug?.player,
-        controlsEnabled: debug?.player?.controlsEnabled,
-        lastTeleport: window.__WORLD_LAST_TELEPORT__,
-      };
-    });
-    console.log(`${engine} post-enter diagnostics:`, JSON.stringify(enterResult));
+    // Wait for bootstrap to complete (success or failure)
+    await page.waitForFunction(() => {
+      const b = window.__WORLD_BOOTSTRAP__;
+      return b && (b.loading === false || b.started === false);
+    }, null, { timeout: 30000 });
+    const diag = await page.evaluate(() => ({
+      hasDebug: !!window.__WORLD_DEBUG__,
+      debugReady: window.__WORLD_DEBUG__?.ready,
+      bootstrapStarted: window.__WORLD_BOOTSTRAP__?.started,
+      bootstrapLoading: window.__WORLD_BOOTSTRAP__?.loading,
+      btnEnterText: document.getElementById('btn-enter')?.textContent,
+      btnEnterDisabled: document.getElementById('btn-enter')?.disabled,
+    }));
+    console.log(`${engine} bootstrap diagnostics:`, JSON.stringify(diag));
+    if (!diag.hasDebug) {
+      console.log(`${engine} worldErrors so far:`, JSON.stringify(worldErrors));
+      throw new Error(`${engine}: __WORLD_DEBUG__ undefined after bootstrap. Diagnostics: ${JSON.stringify(diag)}`);
+    }
     await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:90000});
     assert.ok(await page.locator('.hud-top').count(),`${engine} Aizanoi: HUD missing after Enter`);
     assert.deepEqual(worldErrors,[],`${engine} Aizanoi: ${worldErrors.join(' | ')}`);
