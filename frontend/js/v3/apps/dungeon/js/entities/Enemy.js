@@ -4,6 +4,7 @@
 import { CombatSystem } from '../systems/CombatSystem.js';
 import { applyEliteAffix, ELITE_AFFIXES } from '../data/elite-affixes.js';
 import { audioManager } from '../systems/AudioManager.js';
+import { shakeCamera, nonAudioTelegraphsActive } from '../systems/AccessibilitySystem.js';
 
 const ELITE_COLORS = Object.fromEntries((ELITE_AFFIXES || []).map((a) => [a.id, a.color]));
 
@@ -249,12 +250,42 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.moveSpeed = Math.round(this.moveSpeed * 1.35);
         this.attackSpeed = Math.round(this.attackSpeed * 1.3 * 100) / 100;
         this.scene.createFloatingText(this.x, this.y - 74, 'ENRAGED', '#e74c3c', 26);
-        this.scene.cameras?.main?.shake?.(260, 0.009);
+        shakeCamera(this.scene, 260, 0.009);
         this.scene.playSfx?.('sfx-boss-warning', 0.85);
       }
     }
 
     if (e.phaseFlash > 0) e.phaseFlash -= delta;
+
+    // Section 22: non-audio telegraphs for critical cues. A player who is deaf,
+    // in a noisy room, or playing with the sound off still has to be able to see
+    // that the Colossus is winding up. The audio cue already existed; this is
+    // the visual channel, and it is a shape above the boss rather than text
+    // scrolled across it, so it stays readable at any UI scale.
+    // The teardown has to be outside the preference check. Inside it, turning the
+    // preference off meant this block was skipped entirely: the mark that was
+    // already on screen stayed there, because nothing looked at it again. A
+    // player who switches the setting off still saw the cue.
+    const telegraphsWanted = nonAudioTelegraphsActive();
+    const committed = e.move.phase === 'windup' || e.move.phase === 'charge';
+    const want = telegraphsWanted && (committed || e.phaseFlash > 0 || e.enraged);
+    if (want && !this.telegraphMark) {
+      this.telegraphMark = this.scene.add
+        .triangle(0, 0, 0, 22, 20, 0, 40, 22, 0xf39c12, 0.95)
+        .setOrigin(0.5, 1)
+        .setDepth((this.depth ?? 5) + 1)
+        .setScrollFactor(0.35);
+    } else if (!want && this.telegraphMark) {
+      this.telegraphMark.destroy();
+      this.telegraphMark = null;
+    }
+    if (this.telegraphMark) {
+      this.telegraphMark.setPosition(this.x, this.y - 92);
+      this.telegraphMark.setFillStyle(e.enraged ? 0xe74c3c : 0xf39c12, 0.95);
+      // Pulse so the mark reads as urgency rather than decoration.
+      const pulse = 0.75 + Math.sin(time / 120) * 0.25;
+      this.telegraphMark.setScale(pulse, pulse);
+    }
 
     if (this.type.isFinalBoss) {
       this.runFinalBossMoves(time, delta, dist, player);
@@ -282,7 +313,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       : ['The minotaur roars'];
     const label = names[Math.min(this.encounter.phase - 1, names.length - 1)];
     this.scene.createFloatingText(this.x, this.y - 70, label, '#f39c12', 22);
-    this.scene.cameras?.main?.shake?.(200, 0.006);
+    shakeCamera(this.scene, 200, 0.006);
     this.scene.playSfx?.('sfx-boss-warning', 0.7);
   }
 
@@ -330,7 +361,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         m.timer = 0;
         this.setVelocity(0, 0);
         this.scene.spawnVolatileZone(this.x, this.y, 96, 12, 1600);
-        this.scene.cameras?.main?.shake?.(220, 0.012);
+        shakeCamera(this.scene, 220, 0.012);
       }
       return;
     }
@@ -382,7 +413,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
           m.timer = 750;
           this.setVelocity(0, 0);
           this.scene.spawnVolatileZone(this.x, this.y, 110, 14, 1800);
-          this.scene.cameras?.main?.shake?.(260, 0.014);
+          shakeCamera(this.scene, 260, 0.014);
         }
         return;
       }
@@ -494,7 +525,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setVelocity(0, 0);
         // Impact feedback at the point of contact.
         this.scene.createDamageSpark(this.x, this.y);
-        this.scene.cameras?.main?.shake?.(140, 0.006);
+        shakeCamera(this.scene, 140, 0.006);
       }
       return true;
     }
@@ -600,7 +631,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     // Boss isabeti: hafif ekran sarsintisi (olumdeki buyuk sarsintidan ayri)
     if (this.isBoss) {
-      this.scene.cameras.main.shake(140, 0.006);
+      shakeCamera(this.scene, 140, 0.006);
     }
 
     if (this.hp <= 0) {
@@ -613,10 +644,17 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.isDead = true;
     this.setVelocity(0, 0);
 
+    // The telegraph mark belongs to the scene, not to this sprite, so it would
+    // survive the enemy and hang in the next chapter's room.
+    if (this.telegraphMark) {
+      this.telegraphMark.destroy();
+      this.telegraphMark = null;
+    }
+
     audioManager.playEnemyDeath(this.isBoss);
 
     if (this.isBoss) {
-      this.scene.cameras.main.shake(350, 0.015);
+      shakeCamera(this.scene, 350, 0.015);
     }
 
     if (this.volatileDamage && this.scene.triggerEliteExplosion) {

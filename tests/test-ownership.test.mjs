@@ -39,6 +39,8 @@ const DIAGNOSTICS = new Set([
   'aizanoi-city-fabric-audit.mjs',
   'dungeon-level-design-audit.mjs',
   'dungeon-run-summary-audit.mjs',
+  'dungeon-visual-identity-audit.mjs',
+  'dungeon-accessibility-audit.mjs',
   'aizanoi-performance-audit.mjs'
 ]);
 

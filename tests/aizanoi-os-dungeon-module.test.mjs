@@ -113,8 +113,11 @@ test('endless wave scaling is capped at wave 20 with light loot scaling', () => 
 test('keyboard: ESC closes inventory, M mutes, P pauses; mouse dead zones are 48px', () => {
   const game = read(`${moduleRoot}/js/scenes/GameScene.js`);
   assert.match(game, /addKeys\('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC,F,B'\)/);
-  assert.match(game, /JustDown\(this\.wasd\.M\)\) audioManager\.toggleMute\(\)/);
-  assert.match(game, /JustDown\(this\.wasd\.P\)\) this\.togglePause\(\)/);
+  // The keyboard binding has to survive the gamepad being OR-ed in: the pad is
+  // added alongside, never in place of, the key. Anchored on the key so a
+  // binding that only a gamepad can reach still fails here.
+  assert.match(game, /JustDown\(this\.wasd\.M\)[^\n]*audioManager\.toggleMute\(\)/);
+  assert.match(game, /JustDown\(this\.wasd\.P\)[^\n]*this\.togglePause\(\)/);
   assert.match(game, /togglePause\(\) \{/);
   assert.match(game, /pointer\.x > 48 && pointer\.x < this\.scale\.width - 48/);
   const inventory = read(`${moduleRoot}/js/scenes/InventoryScene.js`);

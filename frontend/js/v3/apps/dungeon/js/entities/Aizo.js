@@ -6,6 +6,7 @@ import { WEAPONS } from '../data/items.js';
 import { BLESSINGS, selectBlessing } from '../data/blessings.js';
 import { Projectile } from './Projectile.js';
 import { audioManager } from '../systems/AudioManager.js';
+import { shakeCamera } from '../systems/AccessibilitySystem.js';
 
 export class Aizo extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, inventorySystem, progressionSystem, runState = null) {
@@ -147,8 +148,16 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     let vy = 0;
     const speed = this.stats.moveSpeed;
 
-    // Mobil Sanal Joystick veya Klavye
-    if (this.scene.touchControls && this.scene.touchControls.isActive()) {
+    // Gamepad, then the mobile joystick, then the keyboard. The gamepad comes
+    // first because it is the only one of the three that is an analogue vector
+    // and the only one that can be silent: a player holding a stick forward and
+    // pressing no key at all should move, and with the keyboard last in the
+    // chain that works.
+    const padIntent = this.scene.gamepadInput?.sample();
+    if (padIntent && (padIntent.move.x !== 0 || padIntent.move.y !== 0)) {
+      vx = padIntent.move.x * speed;
+      vy = padIntent.move.y * speed;
+    } else if (this.scene.touchControls && this.scene.touchControls.isActive()) {
       const joyVec = this.scene.touchControls.getVector();
       vx = joyVec.x * speed;
       vy = joyVec.y * speed;
@@ -350,7 +359,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.skill1Cooldown = 25000;
 
     audioManager.playZeusBeam();
-    this.scene.cameras.main.shake(180, 0.008);
+    shakeCamera(this.scene, 180, 0.008);
     this.scene.castZeusFissureBeam(this.x, this.y, this.lastDirection, this.stats.attackDamage * 3.2, this);
     return true;
   }
@@ -411,7 +420,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.hp -= amount;
     this.scene.createFloatingText(this.x, this.y - 20, `-${amount}`, isCritical ? '#f1c40f' : '#e74c3c', isCritical ? 20 : 15);
     audioManager.playPlayerHurt();
-    this.scene.cameras.main.shake(120, 0.005);
+    shakeCamera(this.scene, 120, 0.005);
     // A shorter freeze than a landed attack, and none at all for chip damage:
     // the brief asks for restrained feedback, and being hit must never read as
     // the game lagging.
@@ -465,7 +474,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.play('aizo-death');
     audioManager.playEnemyDeath(true);
 
-    this.scene.cameras.main.shake(300, 0.01);
+    shakeCamera(this.scene, 300, 0.01);
 
     // Heykel uykusu sahnesi
     this.scene.time.delayedCall(1500, () => {

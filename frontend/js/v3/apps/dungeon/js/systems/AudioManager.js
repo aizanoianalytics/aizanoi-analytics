@@ -1,3 +1,5 @@
+import { loadSettings, saveSettings } from './SettingsSystem.js';
+
 // js/systems/AudioManager.js
 // Web Audio API Tabanli Sentezlenmis Ses ve Efekt Motoru (Sifir Harici Dosya Bagimliligi)
 
@@ -5,13 +7,53 @@ export class AudioManager {
   constructor() {
     this.ctx = null;
     this.isMuted = false;
-    this.sfxVolume = 0.6;
+    // Matches SettingsSystem's masterVolume default. It used to be 0.6 here and
+    // 1 there, so a player with no stored preference heard the dungeon at 60%
+    // while the settings screen said 100% -- and the mismatch only surfaced as
+    // a failing test.
+    this.sfxVolume = 1;
     this.masterGain = null;
     this.ambientNodes = null;
 
     try {
       this.isMuted = localStorage.getItem('aizanoi_dungeon_muted') === 'true';
     } catch (_) {}
+
+    // Section 22 asks for a volume control. There was a mute and a hardcoded 0.6,
+    // which is not a volume control: a player who wants the dungeon quieter than
+    // a gunshot could only turn it off completely. The preference lives with the
+    // rest of the settings, and is applied to the master gain on every change.
+    const stored = loadSettings().masterVolume;
+    if (typeof stored === 'number' && Number.isFinite(stored)) {
+      this.sfxVolume = Math.min(1, Math.max(0, stored));
+    }
+  }
+
+  /** Set the master volume, 0 to 1, and apply it immediately. */
+  setVolume(v) {
+    const next = Math.min(1, Math.max(0, Number(v)));
+    if (!Number.isFinite(next)) return this.sfxVolume;
+    this.sfxVolume = next;
+    saveSettings({ masterVolume: next });
+    this.applyVolume();
+    return this.sfxVolume;
+  }
+
+  getVolume() {
+    return this.sfxVolume;
+  }
+
+  /** Push the current volume and mute state into the audio graph. */
+  applyVolume() {
+    if (!this.masterGain || !this.ctx) return;
+    this.masterGain.gain.setValueAtTime(
+      this.isMuted ? 0 : this.sfxVolume, this.ctx.currentTime
+    );
+    if (this.ambientNodes && this.ctx) {
+      this.ambientNodes.gain.gain.setValueAtTime(
+        this.isMuted ? 0 : 0.12 * this.sfxVolume, this.ctx.currentTime
+      );
+    }
   }
 
   ensureContext() {
@@ -77,12 +119,7 @@ export class AudioManager {
       localStorage.setItem('aizanoi_dungeon_muted', String(this.isMuted));
     } catch (_) {}
 
-    if (this.masterGain && this.ctx) {
-      this.masterGain.gain.setValueAtTime(this.isMuted ? 0 : this.sfxVolume, this.ctx.currentTime);
-    }
-    if (this.ambientNodes && this.ctx) {
-      this.ambientNodes.gain.gain.setValueAtTime(this.isMuted ? 0 : 0.12, this.ctx.currentTime);
-    }
+    this.applyVolume();
     return this.isMuted;
   }
 

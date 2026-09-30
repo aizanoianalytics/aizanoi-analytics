@@ -105,6 +105,15 @@ export class MenuScene extends Phaser.Scene {
       audioManager.playClick();
       this.showGuideModal();
     });
+    btnStartY += btnSpacing;
+
+    // Section 22 asked for a volume control and keyboard-accessible menus. The
+    // settings were readable but there was no way to reach them, so the options
+    // scene had to be reachable from the menu to count as either.
+    createGlassButton(this, width / 2, btnStartY, 260, 38, 'Options & accessibility', () => {
+      audioManager.playClick();
+      this.scene.start('OptionsScene', { from: 'MenuScene' });
+    });
 
     // Alt Sürüm Bilgisi
     this.add.text(width / 2, height - 16, 'Aizanoi Analytics · v2.0 AAA Edition', {

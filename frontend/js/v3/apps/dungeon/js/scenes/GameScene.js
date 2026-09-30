@@ -20,6 +20,8 @@ import { WEAPONS } from '../data/items.js';
 import { createGlassButton } from '../utils/ui-helpers.js';
 import { hasDungeonExitHandler, requestDungeonExit } from '../main.js';
 import { loadSettings, saveSettings, toggleDungeonFullscreen } from '../systems/SettingsSystem.js';
+import { shakeCamera, updateCameraShake } from '../systems/AccessibilitySystem.js';
+import { GamepadInput } from '../systems/GamepadSystem.js';
 
 // Stable per-tile noise keeps authored dressing identical across reloads and
 // prevents screenshot/replay drift without storing a second map artifact.
@@ -142,6 +144,10 @@ export class GameScene extends Phaser.Scene {
 
     // 10. Girdi Kontrolleri (Masaüstü)
     this.cursors = this.input.keyboard.createCursorKeys();
+    // Section 22: the gamepad reader. Created once and sampled per frame; it
+    // holds no state beyond the previous button values it needs for edge
+    // detection.
+    this.gamepadInput = new GamepadInput();
     this.wasd = this.input.keyboard.addKeys('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC,F,B');
 
     this.input.on('pointerdown', (pointer) => {
@@ -164,6 +170,12 @@ export class GameScene extends Phaser.Scene {
       if (this.exitPortal) {
         const pg = this.add.sprite(this.exitPortal.x, this.exitPortal.y, 'effects', 8)
           .setDepth(6).setAlpha(0.5).setScale(2.2);
+        // The portal is the one thing a player must always find, so it carries
+        // the chapter's accent rather than a fixed colour: each chapter's way
+        // out looks like it belongs to that chapter.
+        if (this.chapterPalette?.accent) pg.setTint(this.chapterPalette.accent);
+        // Kept as a handle so QA can read the applied tint instead of assuming it.
+        this.portalGlow = pg;
         pg.setBlendMode(Phaser.BlendModes.ADD);
         this.tweens.add({
           targets: pg,
@@ -196,6 +208,81 @@ export class GameScene extends Phaser.Scene {
       // without a stale scene reference lingering after restart/teardown.
       if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = undefined;
     });
+  }
+
+  /**
+   * Section 21 asks for chapter palettes and for the game to look intentionally
+   * authored rather than generic. Every chapter declares a palette, but until now
+   * nothing read it: the floor, the walls, the light and the fog were identical
+   * in all ten chapters, so "Necropolis Labyrinth" and "Throne of Storms" were
+   * the same room with different enemies.
+   *
+   * Tinting the tilemap layers is what makes the difference read at a glance, and
+   * the camera fog is what carries the chapter's colour into the distance. The
+   * accents are deliberately low-saturation: this is a marble temple, not a neon
+   * arcade, and a player still has to see a teleporting enemy against it.
+   */
+  applyChapterPalette() {
+    const pal = this.mapData?.palette || this.currentLevelConfig?.palette;
+    if (!pal) return null;
+
+    // Phaser 3.80 removed Camera.setFog, so the depth cue is two static
+    // rectangles instead: a chapter-coloured wash over the whole map, and a
+    // warmer accent lift. Both are deliberately strong enough to be seen --
+    // an earlier version used 0.22 and 0.07 alpha, and measuring the rendered
+    // frames showed a mean colour shift of 0 to 1 out of 255, which is not a
+    // palette, it is a rounding error.
+    const w = this.mapData.width * 32;
+    const h = this.mapData.height * 32;
+
+    if (this.chapterHaze) this.chapterHaze.destroy();
+    if (this.chapterLightOverlay) this.chapterLightOverlay.destroy();
+
+    // The wash sits BETWEEN the floor and the walls, not over the whole scene.
+    // The tilemap layers default to depth 0, so the wash goes just above them
+    // and just below everything that matters: placing it above the actors puts a
+    // 55% fog rectangle over the player, the enemies and every effect, which is
+    // not a chapter palette, it is a broken game.
+    //
+    // The floor and wall tints are what the player actually reads, so they carry
+    // the chapter. Phaser multiplies a tint into the tile texture, so a strongly
+    // tinted floor turns the same marble tileset into ten different stones
+    // without touching a single asset.
+    this.floorLayer?.setDepth(0);
+    this.wallLayer?.setDepth(0);
+    this.chapterHaze = this.add
+      .rectangle(0, 0, w, h, pal.fog, 0.55)
+      .setOrigin(0)
+      .setDepth(0.5);
+
+    // The accent lift, in front of the wash, tying the marble to the chapter.
+    this.chapterLightOverlay = this.add
+      .rectangle(0, 0, w, h, pal.accent, 0.16)
+      .setOrigin(0)
+      .setDepth(0.6);
+
+    // The floor and wall tints are pushed toward the chapter colour so the
+    // difference survives even where the wash is behind the actors.
+    this.appliedFloorTint = this.mixToward(pal.floor, pal.accent, 0.18);
+    this.appliedWallTint = this.mixToward(pal.wall, pal.fog, 0.25);
+    this.floorLayer?.setTint(this.appliedFloorTint);
+    this.wallLayer?.setTint(this.appliedWallTint);
+
+    this.cameras.main?.setBackgroundColor?.(pal.fog);
+    this.chapterPalette = pal;
+    this.chapterWashAlpha = 0.55;
+    this.chapterAccentAlpha = 0.16;
+    return pal;
+  }
+
+  /** Blend two packed RGB colours; t of 0 returns a, 1 returns b. */
+  mixToward(a, b, t) {
+    const ar = (a >> 16) & 0xff; const ag = (a >> 8) & 0xff; const ab = a & 0xff;
+    const br = (b >> 16) & 0xff; const bg = (b >> 8) & 0xff; const bb = b & 0xff;
+    const r = Math.round(ar + (br - ar) * t);
+    const g = Math.round(ag + (bg - ag) * t);
+    const bl = Math.round(ab + (bb - ab) * t);
+    return (r << 16) | (g << 8) | bl;
   }
 
   renderMap() {
@@ -234,6 +321,8 @@ export class GameScene extends Phaser.Scene {
       }
     }
 
+    this.applyChapterPalette();
+
     this.wallLayer.setCollisionByExclusion([-1]);
     // High-contrast read: koyu mat zemin (düşmanlar öne çıkar) + soğuk duvar.
     // Eskiden zemin 0xf6e7c4 idi — her yer krem olduğu için düşman kayboluyordu.
@@ -270,7 +359,9 @@ export class GameScene extends Phaser.Scene {
               .setAlpha(0.32 + decorNoise(dx, dy, i * 5 + 4) * 0.22)
               .setRotation(Math.floor(decorNoise(dx, dy, i * 5 + 5) * 4) * Math.PI / 2)
               .setScale(0.72 + decorNoise(dx, dy, i * 5 + 6) * 0.2);
-            d.setTint(0xd8c18d);
+            // Mosaic fragments take the chapter's accent, so the decoration is
+            // part of the chapter's colour scheme rather than a constant.
+            d.setTint(this.chapterPalette?.accent ?? 0xd8c18d);
           }
         }
       }
@@ -337,7 +428,7 @@ export class GameScene extends Phaser.Scene {
         onUpdate: () => { try { ring.setStrokeStyle(3, 0xf5d77f, Math.max(0, ring.alpha)); } catch (_) {} },
         onComplete: () => ring.destroy(),
       });
-      if (isBoss) this.cameras.main.shake(200, 0.01);
+      if (isBoss) shakeCamera(this, 200, 0.01);
     } catch (_) {}
   }
 
@@ -528,14 +619,26 @@ export class GameScene extends Phaser.Scene {
 
   update(time, delta) {
     if (this.player && this.player.active) {
+      // The gamepad is sampled once per frame and the button presses are OR-ed
+      // with the keyboard rather than replacing it: a controller and a keyboard
+      // are both live at the same time when both are plugged in, and neither
+      // should have to be unplugged for the other to work.
+      const pad = this.gamepadInput?.sample();
+      const padDown = (n) => Boolean(pad?.pressed?.[n]);
+
       // M: sessiz, P: duraklat — duraklatma bayrağı oyuncu güncellemesinden önce işlenir
       if (this.wasd) {
-        if (Phaser.Input.Keyboard.JustDown(this.wasd.M)) audioManager.toggleMute();
-        if (Phaser.Input.Keyboard.JustDown(this.wasd.P)) this.togglePause();
+        if (Phaser.Input.Keyboard.JustDown(this.wasd.M) || padDown('confirm')) audioManager.toggleMute();
+        if (Phaser.Input.Keyboard.JustDown(this.wasd.P) || padDown('pause')) this.togglePause();
         if (Phaser.Input.Keyboard.JustDown(this.wasd.ESC)) this.toggleExitMenu();
       }
       if (this.isPaused || this.exitMenu) return;
       this.player.update(time, delta);
+      // The shake is a displacement applied on top of the camera's own follow,
+      // so it has to run after the player has moved and the camera has caught
+      // up. Advancing it before that would offset the scroll the follow is
+      // about to overwrite.
+      updateCameraShake(this, delta);
       if (this.wasd && Phaser.Input.Keyboard.JustDown(this.wasd.F)) {
         toggleDungeonFullscreen(document.getElementById('game-container') || document.documentElement);
       }
@@ -551,8 +654,8 @@ export class GameScene extends Phaser.Scene {
       this.player.isInBase = distToBase < 80;
 
       // Space ile utility skill (Gölge Karışımı) veya saldırı
-      if (this.cursors && Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
-        if (this.progression && this.progression.unlockedSkills.has('shadow_melding') && typeof this.player.castUtilitySkill === 'function') {
+      if ((this.cursors && Phaser.Input.Keyboard.JustDown(this.cursors.space)) || padDown('attack')) {
+        if (this.progression && this.progression.unlockedSkills.has('shadow_melding') && typeof this.player.castUtilitySkill === 'function' && padDown('secondary')) {
           this.player.castUtilitySkill();
         } else {
           this.player.attack();
@@ -561,9 +664,9 @@ export class GameScene extends Phaser.Scene {
 
       // Klavye yetenek kısayolları
       if (this.wasd) {
-        if (Phaser.Input.Keyboard.JustDown(this.wasd.Q)) this.player.castSkill1();
-        if (Phaser.Input.Keyboard.JustDown(this.wasd.R)) this.player.castSkill2();
-        if (Phaser.Input.Keyboard.JustDown(this.wasd.I) || Phaser.Input.Keyboard.JustDown(this.wasd.TAB)) {
+        if (Phaser.Input.Keyboard.JustDown(this.wasd.Q) || padDown('attack')) this.player.castSkill1();
+        if (Phaser.Input.Keyboard.JustDown(this.wasd.R) || padDown('secondary')) this.player.castSkill2();
+        if (Phaser.Input.Keyboard.JustDown(this.wasd.I) || Phaser.Input.Keyboard.JustDown(this.wasd.TAB) || padDown('pause')) {
           this.scene.launch('InventoryScene');
         }
         if (Phaser.Input.Keyboard.JustDown(this.wasd.E)) {
@@ -629,7 +732,7 @@ export class GameScene extends Phaser.Scene {
       const res = CombatSystem.processAttack(proj.attacker, enemy, proj.damage, { damageType });
       // Kritik senkronu: ses zaten pitch'li, görsel de aynı karede patlasın
       if (res && res.isCritical) {
-        this.cameras.main.shake(110, 0.006);
+        shakeCamera(this, 110, 0.006);
         this.juiceHitstop(55);
       }
     } else {
@@ -958,7 +1061,7 @@ export class GameScene extends Phaser.Scene {
       this.player.takeDamage(enemy.volatileDamage, false, enemy);
       this.createDamageSpark(this.player.x, this.player.y);
     }
-    this.cameras.main.shake(100, 0.004);
+    shakeCamera(this, 100, 0.004);
   }
 
   fireEnemyProjectile(enemy, player, type, damage, damageType = 'physical') {
@@ -993,7 +1096,7 @@ export class GameScene extends Phaser.Scene {
     this.hitstopUntil = this.time.now + max * 1000;
     this.time.timeScale = HITSTOP_TIMESCALE;
     // A tiny shake sells the impact without being its own effect.
-    if (cam) cam.shake(Math.round(max * 260), intensity);
+    if (cam) shakeCamera(this, Math.round(max * 260), intensity);
 
     // CRITICAL: the release must NOT be scheduled on scene time.
     // `time.delayedCall` runs on the clock the hitstop itself just slowed to

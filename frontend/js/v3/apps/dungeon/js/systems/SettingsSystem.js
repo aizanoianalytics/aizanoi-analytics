@@ -5,6 +5,14 @@ const DEFAULTS = {
   magnet: true,
   showMinimap: true,
   effects: 'full', // 'full' | 'reduced' (düşük cihazlar için)
+  // Section 22 accessibility. These are real preferences with a real effect,
+  // not decoration: reducedShake is honoured by AccessibilitySystem, which every
+  // camera shake in the game now goes through.
+  reducedShake: false,
+  nonAudioTelegraphs: false,
+  highContrast: false,
+  uiScale: 1,
+  masterVolume: 1,
 };
 
 export function loadSettings() {
