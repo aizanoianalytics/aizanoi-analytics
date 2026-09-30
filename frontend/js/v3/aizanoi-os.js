@@ -126,7 +126,7 @@ function renderLauncher() {
  const host=document.querySelector('[data-switcher-list]'); if(!host)return;
 
  const apps=APPS.map((app)=>`<button class="az-launchpad-item" type="button" data-app="${escapeHtml(app.id)}" data-launch-label="${escapeHtml(`${app.label} ${app.description}`.toLowerCase())}"><span class="az-launchpad-icon"><img src="${escapeHtml(app.icon)}" alt=""></span><strong>${escapeHtml(app.label)}</strong><small>${escapeHtml(app.description)}</small></button>`).join('');
- host.innerHTML=`<div class="az-launchpad-search"><span aria-hidden="true">${icons.search}</span><input type="search" data-launcher-search autocomplete="off" spellcheck="false" placeholder="Search applications" aria-label="Search applications"></div><div class="az-command-empty az-launchpad-empty" data-launcher-empty role="status" aria-live="polite" hidden>No applications match your search.</div><section class="az-launchpad-group"><h3>Aizanoi</h3><div class="az-launchpad-grid az-launchpad-worlds"><button class="az-launchpad-item az-launchpad-world" type="button" data-world="aizanoi" data-launch-label="aizanoi roman phrygia ad 225"><span class="az-launchpad-icon" data-accent="brass"><img src="/assets/icons/ancient-world.svg" alt=""></span><strong>Aizanoi</strong><small>Roman Phrygia · AD 225</small></button></div></section><section class="az-launchpad-group"><h3>Applications</h3><div class="az-launchpad-grid">${apps}</div></section>`;
+ host.innerHTML=`<div class="az-launchpad-search"><span aria-hidden="true">${icons.search}</span><input type="search" data-launcher-search autocomplete="off" spellcheck="false" placeholder="Search applications" aria-label="Search applications"></div><div class="az-command-empty az-launchpad-empty" data-launcher-empty role="status" aria-live="polite" hidden>No applications match your search.</div><section class="az-launchpad-group"><h3>Applications</h3><div class="az-launchpad-grid">${apps}</div></section>`;
  const input=host.querySelector('[data-launcher-search]');
  const empty=host.querySelector('[data-launcher-empty]');
  input?.addEventListener('input',()=>{
@@ -176,7 +176,6 @@ function installLauncherLifecycle(api) {
  event.stopPropagation();
  overlay.querySelector('[data-overlay-close]')?.click();
  if(item.dataset.app)api.openApp(item.dataset.app);
- else if(item.dataset.world)api.window.location.href='/worlds/aizanoi-225/';
  },true);
 }
 

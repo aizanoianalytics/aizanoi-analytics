@@ -2,7 +2,7 @@
 
 These are sanitized reference configurations for deployment. **Production Nginx/TLS files and credentials are maintained on the server and are not copied from this directory automatically.** A Git merge therefore does not, by itself, update the live Hetzner configuration.
 
-- `nginx/aizanoianalytics.com.conf.example` — static frontend, canonical redirects, real 404/500/503 behavior, Historical World routes, compression/cache guidance and fail-closed historical API paths;
+- `nginx/aizanoianalytics.com.conf.example` — static frontend, canonical redirects, real 404/500/503 behavior, Aizanoi routes, compression/cache guidance and fail-closed historical API paths;
 - `nginx/snippets/aizanoi-static-security-headers.conf.example` — shared strict header/CSP baseline for the shell, landings and assets;
 - `nginx/snippets/aizanoi-web-editor-preview-headers.conf.example` — isolated CSP for the sandboxed Web Editor preview runner; this is the only AizanoiOS route allowed to evaluate visitor-authored browser code;
 - `nginx/snippets/aizanoi-self-contained-dashboard-security-headers.conf.example` — complete route-scoped header set for self-contained HR dashboard exports;
@@ -22,7 +22,7 @@ The reference Nginx configuration intentionally documents the operational assump
 - the shell, product landings and shared assets use the strict shared CSP: neither `script-src` nor `style-src` permits `unsafe-inline`;
 - `/web-editor-preview/` is the sole route with the Web Editor preview policy; it permits authored script/style execution only because the parent embeds it with an opaque-origin iframe sandbox that omits same-origin, forms, popups, downloads and top navigation;
 - the New HR Collection uses self-contained HTML exports, so only that exact route loads the HR-specific header snippet that permits embedded scripts and styles;
-- Historical Worlds still contain city-local inline boot scripts and styles, so only their exact route locations load the historical-world header snippet that permits inline code;
+- Aizanoi still contains city-local inline boot scripts and styles, so only its exact route location loads the historical-world header snippet that permits inline code;
 - legacy `/videos` → `/tv/`, `/games` → `/arcade/` and `/projects` → `/forge/` redirects preserve old bookmarks without keeping duplicate discovery URLs;
 - `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, COOP and CORP are emitted at the edge;
 - root HTML, the manifest and service worker revalidate; unhashed application modules/styles use bounded caches; static assets use a longer cache;

@@ -99,12 +99,16 @@ test('contribution guidance separates routine CI from scheduled/manual full QA',
   );
 });
 
-test('shell documentation describes the four public worlds, including the present-day companion', () => {
-  assert.match(docs.field, /Four public worlds/i);
-  for (const label of ['Aizanoi', 'Rome', 'Athens', 'İGA']) assert.match(docs.field, new RegExp(label));
-  assert.match(docs.field, /present-day companion/i);
+test('shell documentation describes Aizanoi as the singular interactive world', () => {
+  assert.match(docs.field, /Aizanoi.*singular flagship interactive reconstruction/i);
+  assert.match(docs.field, /only current interactive world/i);
+  assert.doesNotMatch(docs.field, /Four public worlds|four worlds|all four worlds/i);
   assert.doesNotMatch(docs.field, /Three Historical Worlds|three worlds/i);
-  assert.doesNotMatch(docs.operations, /all three Historical Worlds/i);
+  assert.doesNotMatch(docs.field, /present-day companion/i);
+  assert.doesNotMatch(docs.operations, /all three Historical Worlds|all four worlds/i);
+  // Retired products must not be described as current
+  assert.doesNotMatch(docs.field, /Rome.*current|Athens.*current|İGA.*current/i);
+  assert.doesNotMatch(docs.field, /Fly.*current|Fly Simulation.*current/i);
 });
 
 test('shell documentation records the PWA cache-retirement contract', () => {

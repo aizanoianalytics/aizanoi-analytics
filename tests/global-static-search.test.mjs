@@ -41,7 +41,7 @@ test('existing Cmd/Ctrl+K palette consumes static content without introducing a 
   assert.match(registry,/\.\.\.extraEntries/);
   assert.match(shell,/import\('\.\/search-index\.generated\.js'\)/,'static content index should lazy-load when search opens');
   assert.match(shell,/searchableEntries\(staticSearchEntries\)/);
-  assert.match(shell,/\['action','world','app','content'\]/);
+  assert.match(shell,/\['action','app','content'\]/);
   assert.match(shell,/row\.type==='content'\)location\.href=row\.href/);
   assert.match(shell,/type==='content'\?'Content'/);
   assert.match(shell,/event\.ctrlKey\|\|event\.metaKey/);

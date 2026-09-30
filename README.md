@@ -22,12 +22,7 @@ After the service worker installs successfully, the **AizanoiOS shell/home is gu
 News is static-first and source-led: sources → Hermes → `content/news/items/*.json` → `scripts/news/build-news.mjs` → generated public editions/RSS/sitemap → AizanoiOS. Every publishable item requires original Aizanoi News summary text and source attribution. See [`CONTENT_POLICY.md`](CONTENT_POLICY.md) and [`docs/HERMES_OPERATIONS.md`](docs/HERMES_OPERATIONS.md).
 
 ## Aizanoi
-| World | Period / focus |
-|---|---|
-| **Aizanoi** | Roman Phrygia · c. AD 2nd–3rd century |
-| **Rome** | Late Antiquity · AD 410–476 |
-| **Athens** | Classical period · c. 432–430 BCE |
-| **İGA · Istanbul Airport** | Present-day source-led companion world |
+Aizanoi (Roman Phrygia · c. AD 2nd–3rd century) is the singular flagship interactive reconstruction.
 
 Documented/source-supported, archaeological, inferred, atmospheric and disputed information remain explicitly separated.
 
@@ -43,10 +38,9 @@ Nginx serves static HTML/CSS/JavaScript/JSON/assets. There is no visitor-facing 
 │ ├── js/v3/ # AizanoiOS + product platform + apps
 │ │ └── apps/games/ # Aizanoi Arcade module and its owned game assets
 │ ├── styles/ # desktop + adaptive device shell
-│ ├── worlds/ # portal + Aizanoi/Rome/Athens/İGA + shared local Three.js runtime
+│ ├── worlds/ # Aizanoi product landing + shared local Three.js runtime
 │ ├── historic-world/ # legacy redirect only
-│ ├── ancient-cities/ # legacy redirects only
-│ └── iga/ # legacy redirect only
+│ └── ancient-cities/ # legacy redirects only
 ├── content/news/ # Git-tracked News source records/templates
 ├── scripts/ # deterministic generators and deployment helpers
 ├── tests/ # regression/browser/security/visual QA

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 import {
   DEFAULT_APPS_ROOT,
@@ -43,6 +44,22 @@ test('every discovered public app module has the canonical navigation, manifest 
     for (const file of required) {
       assert.equal(existsSync(file), true, `${module.id} is missing canonical module file ${relative(file)}`);
     }
+  }
+});
+
+test('every discovered desktop-app module exports the required mount() public entry contract', async () => {
+  const modules = await discoverModules();
+  assert.ok(modules.length > 0, 'No AizanoiOS application modules were discovered');
+
+  for (const module of modules) {
+    if (module.type !== 'desktop-app') continue;
+    const entry = path.join(DEFAULT_APPS_ROOT, module.id, 'src', 'index.js');
+    const imported = await import(pathToFileURL(entry).href + `?t=${Date.now()}`);
+    assert.equal(
+      typeof imported.mount,
+      'function',
+      `${module.id} must export mount({ container }) as a function (got ${typeof imported.mount})`,
+    );
   }
 });
 

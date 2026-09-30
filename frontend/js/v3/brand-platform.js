@@ -62,7 +62,7 @@ function renderPhoneHome(){
       <div>
         <time class="az-device-date" datetime="${esc(date.iso)}">${esc(date.short)}</time>
         <h1>Aizanoi Analytics</h1>
-        <p>Media · analytics · software · worlds</p>
+        <p>Media · analytics · software · Aizanoi</p>
       </div>
       <button class="az-phone-search" type="button" data-shell-action="search" aria-label="Search Aizanoi Analytics">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" d="m20 20-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
@@ -121,7 +121,7 @@ function renderTabletHome(){
 
 function rewriteDesktop(){
   const desktop=document.querySelector('.az-desktop');if(!desktop)return;
-  desktop.innerHTML=`<div class="az-desktop-signature" aria-hidden="true"><strong>AizanoiOS</strong><span>Aizanoi Analytics · media · data · software · worlds</span></div>
+  desktop.innerHTML=`<div class="az-desktop-signature" aria-hidden="true"><strong>AizanoiOS</strong><span>Aizanoi Analytics · media · data · software · Aizanoi</span></div>
     <section class="az-desktop-shortcuts" aria-label="Aizanoi Analytics shortcuts">${DESKTOP.map((id)=>appButton(id)).join('')}</section>
     ${renderAizoCard('az-desktop-aizo-card')}
     ${renderPhoneHome()}
