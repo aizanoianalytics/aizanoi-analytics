@@ -71,6 +71,23 @@ try{
     await page.waitForSelector('#btn-enter',{timeout:30000});
     await page.waitForFunction(()=>{const b=document.getElementById('btn-enter');return b&&!b.disabled;},null,{timeout:30000});
     await page.locator('#btn-enter').click();
+    // Diagnostics: capture what happens after Enter in Firefox
+    const enterResult = await page.evaluate(() => {
+      const debug = window.__WORLD_DEBUG__;
+      const bootstrap = window.__WORLD_BOOTSTRAP__;
+      return {
+        hasDebug: !!debug,
+        debugReady: debug?.ready,
+        debugKeys: debug ? Object.keys(debug) : [],
+        hasBootstrap: !!bootstrap,
+        bootstrapReady: bootstrap?.ready,
+        bootstrapKeys: bootstrap ? Object.keys(bootstrap) : [],
+        hasPlayer: !!debug?.player,
+        controlsEnabled: debug?.player?.controlsEnabled,
+        lastTeleport: window.__WORLD_LAST_TELEPORT__,
+      };
+    });
+    console.log(`${engine} post-enter diagnostics:`, JSON.stringify(enterResult));
     await page.waitForFunction(()=>window.__WORLD_DEBUG__?.ready===true,null,{timeout:90000});
     assert.ok(await page.locator('.hud-top').count(),`${engine} Aizanoi: HUD missing after Enter`);
     assert.deepEqual(worldErrors,[],`${engine} Aizanoi: ${worldErrors.join(' | ')}`);
