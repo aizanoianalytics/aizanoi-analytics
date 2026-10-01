@@ -30,7 +30,7 @@ CI verifies applicable surfaces for:
 
 ## Aizanoi keyboard/input smoke
 
-1. Enter Aizanoi, Rome and Athens from AizanoiOS.
+1. Enter Aizanoi from AizanoiOS (app id `aizanoi`, or the `/worlds/aizanoi-225/` route). Aizanoi is the only maintained interactive world.
 2. Open the shared Explore drawer. Movement keys must not move the player while secondary UI is open.
 3. Escape closes open dialogs, HUD modals, and releases pointer lock.
 4. Use landmark jump/teleport (shortcuts 1-9, HUD buttons or Teleport dialog), then move normally; automated traversal checks cover all maintained landmark targets.

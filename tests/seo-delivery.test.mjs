@@ -90,7 +90,7 @@ test('legacy product paths permanently redirect to canonical landings', () => {
 test('static delivery shares hardened headers and compresses web asset MIME types', () => {
   assert.match(nginx, /include snippets\/aizanoi-static-security-headers\.conf;/);
   assert.match(nginx, /gzip_types[^;]*application\/javascript[^;]*text\/css[^;]*application\/json[^;]*image\/svg\+xml;/s);
-  assert.match(nginx, /location \^~ \/worlds\/aizanoi-225\/[\s\S]*include snippets\/aizanoi-historical-world-security-headers\.conf;/);
-  assert.match(nginx, /location \^~ \/worlds\/shared\/[\s\S]*include snippets\/aizanoi-historical-world-security-headers\.conf;/);
+  assert.match(nginx, /location \^~ \/worlds\/aizanoi-225\/[\s\S]*include snippets\/aizanoi-world-security-headers\.conf;/);
+  assert.match(nginx, /location \^~ \/worlds\/shared\/[\s\S]*include snippets\/aizanoi-world-security-headers\.conf;/);
   assert.doesNotMatch(nginx, /script-src[^;\n]*unsafe-inline/);
 });

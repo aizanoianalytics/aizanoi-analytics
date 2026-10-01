@@ -1,8 +1,8 @@
-# Historical Worlds load all CSS through same-origin stylesheet links; the
-# shared engine no longer injects inline `<style>` blocks or inline
-# `style="..."` attributes. This snippet therefore enables a strict
-# `script-src 'self'; style-src 'self'` policy.
-# Install as /etc/nginx/snippets/aizanoi-historical-world-security-headers.conf.
+# Aizanoi loads all CSS through same-origin stylesheet links; the shared
+# engine does not inject inline `<style>` blocks or inline `style="..."`
+# attributes. This snippet therefore enables a strict
+# `script-src 'self'; style-src 'self'` policy — do not relax it.
+# Install as /etc/nginx/snippets/aizanoi-world-security-headers.conf.
 # This intentionally repeats all headers because location-level add_header stops inheritance.
 add_header X-Content-Type-Options "nosniff" always;
 add_header X-Frame-Options "SAMEORIGIN" always;

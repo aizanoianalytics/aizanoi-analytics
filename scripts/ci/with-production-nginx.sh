@@ -58,11 +58,11 @@ http {
 
     location = /worlds/ { try_files /worlds/index.html =404; }
     location ^~ /worlds/shared/ {
-      include ${root}/infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example;
+      include ${root}/infra/nginx/snippets/aizanoi-world-security-headers.conf.example;
       try_files \$uri =404;
     }
     location ^~ /worlds/aizanoi-225/ {
-      include ${root}/infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example;
+      include ${root}/infra/nginx/snippets/aizanoi-world-security-headers.conf.example;
       try_files \$uri \$uri/ =404;
     }
     location = /historic-world { return 301 /worlds/aizanoi-225/; }

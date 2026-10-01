@@ -20,7 +20,8 @@ Which project goal does this support?
 
 - [ ] Aizanoi historical depth
 - [ ] Historical evidence / methodology clarity
-- [ ] Rome / Athens comparative world quality
+- [ ] Aizanoi reconstruction fidelity (architecture, layout, source records)
+- [ ] Aizanoi guided-tour / evidence UX
 - [ ] News publishing pipeline
 - [ ] TV / Journal surface
 - [ ] Analytics — New HR Collection (PACS, Recruitment)

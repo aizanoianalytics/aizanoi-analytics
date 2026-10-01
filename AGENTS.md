@@ -56,7 +56,7 @@ Do not introduce a visitor-facing Node/Express app, remote shell, secret-bearing
 
 ## AizanoiOS canonical owners
 
-- `frontend/js/v3/registry.js` — public app/world catalog;
+- `frontend/js/v3/registry.js` — public application catalog;
 - `frontend/js/v3/store.js` — browser-local shell state and field-session state;
 - `frontend/js/v3/shell.js` — canonical window/router/dialog lifecycle;
 - `frontend/js/v3/aizanoi-os.js` — base desktop interaction adapter;

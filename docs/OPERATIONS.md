@@ -28,8 +28,7 @@ Before every production frontend rollout:
 4. deploy only the intended static runtime files;
 5. verify source ↔ production checksums for changed files;
 6. run `nginx -t` before reloading any production Nginx configuration;
-7. test `/`, core AizanoiOS apps, every public world (Aizanoi, Rome, Athens and the present-day
- İGA companion) and the analytics products that are still published;
+7. test `/`, the core AizanoiOS apps, the Aizanoi product landing `/worlds/`, the Aizanoi runtime `/worlds/aizanoi-225/`, the Dungeon route `/dungeon/` and the analytics products that are still published;
 8. verify historical API fail-closed behavior;
 9. verify security headers on both HTML and static-asset responses;
 10. verify mutable HTML/JS/CSS revalidate rather than remaining fresh under an old release;

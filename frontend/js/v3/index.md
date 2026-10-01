@@ -5,7 +5,7 @@ Scope: canonical AizanoiOS browser runtime.
 ## Canonical owners
 
 - `main.js` — runtime bootstrap
-- `registry.js` — single human-authored public app/world catalog: labels, ordering, groups, icons and search metadata
+- `registry.js` — single human-authored public application catalog: labels, ordering, groups, icons and search metadata
 - `module-registry.generated.js` — generated installed-module wiring: enabled state, public entry and declared requirements; never a second public catalog and never hand-edited
 - `capabilities.js` — shared capability bridge; concrete shared implementations stay behind this boundary
 - `shell.js` — canonical window, router, lifecycle and capability-injection host

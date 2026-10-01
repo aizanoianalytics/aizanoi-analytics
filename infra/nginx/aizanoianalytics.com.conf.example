@@ -74,8 +74,8 @@ server {
 
     location = /worlds { return 301 /worlds/; }
     location = /worlds/ { try_files /worlds/index.html =404; expires -1; }
-    location ^~ /worlds/shared/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri =404; expires 7d; }
-    location ^~ /worlds/aizanoi-225/ { include snippets/aizanoi-historical-world-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
+    location ^~ /worlds/shared/ { include snippets/aizanoi-world-security-headers.conf; try_files $uri =404; expires 7d; }
+    location ^~ /worlds/aizanoi-225/ { include snippets/aizanoi-world-security-headers.conf; try_files $uri $uri/ =404; expires -1; }
 
     location = /historic-world { return 301 /worlds/aizanoi-225/; }
     location ^~ /historic-world/ { return 301 /worlds/aizanoi-225/; }

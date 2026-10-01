@@ -73,7 +73,7 @@ Start from the router in `frontend/worlds/index.md` and the nearest `frontend/wo
 
 Canonical owners are:
 
-- `frontend/js/v3/registry.js` — public app/world catalog;
+- `frontend/js/v3/registry.js` — public application catalog;
 - `frontend/js/v3/store.js` — local shell state;
 - `frontend/js/v3/shell.js` — window/router/dialog lifecycle;
 - `frontend/js/v3/aizanoi-os.js` — base desktop interactions;

@@ -21,7 +21,7 @@ const nginx=read('infra/nginx/aizanoianalytics.com.conf.example');
 const nginxProxyTargets=[...nginx.matchAll(/proxy_pass\s+([^;]+);/g)].map((match)=>match[1]);
 const staticHeaders=read('infra/nginx/snippets/aizanoi-static-security-headers.conf.example');
 const webEditorPreviewHeaders=read('infra/nginx/snippets/aizanoi-web-editor-preview-headers.conf.example');
-const historicalHeaders=read('infra/nginx/snippets/aizanoi-historical-world-security-headers.conf.example');
+const aizanoiWorldHeaders=read('infra/nginx/snippets/aizanoi-world-security-headers.conf.example');
 const hrAnalyticsHeaders=read('infra/nginx/snippets/aizanoi-self-contained-dashboard-security-headers.conf.example');
 
 const retired=/Aizanoi AI|HR AI|\/hr-analytics\/|api\.groq\.com|generativelanguage\.googleapis\.com/i;
@@ -76,10 +76,10 @@ test('new shell no longer requires inline JavaScript CSP permission',()=>{
   assert.match(browserApp,/sandbox="allow-downloads allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-scripts"/);
   assert.doesNotMatch(browserApp,/allow-same-origin|allow-top-navigation/);
   assert.match(browserApp,/noopener,noreferrer/);
-  assert.doesNotMatch(historicalHeaders,/script-src[^;]*'unsafe-inline'/,'Historical Worlds CSP must not permit unsafe-inline scripts');
-  assert.doesNotMatch(historicalHeaders,/style-src[^;]*'unsafe-inline'/,'Historical Worlds CSP must not permit unsafe-inline styles');
-  assert.match(historicalHeaders,/script-src 'self';/,'Historical Worlds CSP uses the strict script-src policy');
-  assert.match(historicalHeaders,/style-src 'self';/,'Historical Worlds CSP uses the strict style-src policy');
+  assert.doesNotMatch(aizanoiWorldHeaders,/script-src[^;]*'unsafe-inline'/,'Aizanoi world CSP must not permit unsafe-inline scripts');
+  assert.doesNotMatch(aizanoiWorldHeaders,/style-src[^;]*'unsafe-inline'/,'Aizanoi world CSP must not permit unsafe-inline styles');
+  assert.match(aizanoiWorldHeaders,/script-src 'self';/,'Aizanoi world CSP uses the strict script-src policy');
+  assert.match(aizanoiWorldHeaders,/style-src 'self';/,'Aizanoi world CSP uses the strict style-src policy');
   assert.match(nginx,/location \^~ \/analytics\/dashboards\/new-hr-collection\/[\s\S]*include snippets\/aizanoi-self-contained-dashboard-security-headers\.conf;/);
   assert.match(hrAnalyticsHeaders,/script-src 'self' 'unsafe-inline';/,'Self-contained New HR exports retain their route-scoped inline policy');
   assert.match(hrAnalyticsHeaders,/style-src 'self' 'unsafe-inline';/);
@@ -115,8 +115,8 @@ test('cache locations preserve security headers and revalidate mutable unversion
   assert.match(staticHeaders,/Content-Security-Policy/);
   assert.match(webEditorPreviewHeaders,/X-Content-Type-Options/);
   assert.match(webEditorPreviewHeaders,/Content-Security-Policy/);
-  assert.match(historicalHeaders,/X-Content-Type-Options/);
-  assert.match(historicalHeaders,/Content-Security-Policy/);
+  assert.match(aizanoiWorldHeaders,/X-Content-Type-Options/);
+  assert.match(aizanoiWorldHeaders,/Content-Security-Policy/);
   assert.match(hrAnalyticsHeaders,/X-Content-Type-Options/);
   assert.match(hrAnalyticsHeaders,/Content-Security-Policy/);
 });
