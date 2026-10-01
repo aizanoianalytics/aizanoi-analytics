@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-01-connecticut-ai-transparency-act-provisions-start",
+  "kind": "daily",
+  "title": "Connecticut's AI transparency law starts phasing in",
+  "summary": "Core provisions of Connecticut's Artificial Intelligence Responsibility and Transparency Act take effect on 1 October, three months after Governor Ned Lamont signed SB 5. From today, developers of systems that generate synthetic image, audio or video content must make outputs detectable as AI-generated, and businesses selling AI access by subscription must give written notice of key terms and obtain affirmative acceptance before charging. Employment notices and companion-safety duties for minors follow in 2027. The state attorney general enforces the act.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "regulation",
+    "connecticut",
+    "ai-policy",
+    "transparency"
+  ],
+  "sources": [
+    {
+      "publisher": "Connecticut General Assembly",
+      "url": "https://www.cga.ct.gov/asp/cgabillstatus/cgabillstatus.asp?bill_num=5&selBillType=Bill&which_year=2026",
+      "publishedAt": "2026-05-27T00:00:00Z"
+    },
+    {
+      "publisher": "Hinshaw & Culbertson LLP",
+      "url": "https://www.hinshawlaw.com/print/v2/content/44730/2026-ai-compliance-upcoming-laws-every-organization-needs-to-know.pdf",
+      "publishedAt": "2026-08-05T00:00:00Z"
+    }
+  ]
+}

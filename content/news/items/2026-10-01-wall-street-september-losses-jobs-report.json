@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-01-wall-street-september-losses-jobs-report",
+  "kind": "daily",
+  "title": "Wall Street closes September lower as attention turns to Friday's jobs report",
+  "summary": "US stocks ended September mixed: the Nasdaq Composite added 0.2%, the S&P 500 slipped 0.3% and the Dow Jones Industrial Average fell 0.9%, or more than 400 points. For the month the Dow lost 4.9% and the S&P 500 0.7%, while the Nasdaq gained 1.7%; the 10-year Treasury yield rose to 5.29% and Nvidia finished the quarter up about 17%. A softer-than-expected PCE inflation reading trimmed bets on another rate rise in October, and an ADP report showed private employers added 90,000 jobs in September. The September employment report is due on Friday.",
+  "category": "economy-markets",
+  "priority": 64,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wall-street",
+    "nasdaq",
+    "treasury-yields",
+    "jobs-report"
+  ],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/live/stock-market-today-wednesday-september-30-dow-sp-500-nasdaq-080339262.html",
+      "publishedAt": "2026-09-30T20:06:00Z"
+    },
+    {
+      "publisher": "Center for Economic and Policy Research",
+      "url": "https://cepr.net/publications/september-2026-preview/",
+      "publishedAt": "2026-09-29T00:00:00Z"
+    }
+  ]
+}

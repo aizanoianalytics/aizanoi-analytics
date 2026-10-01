@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-01-us-pce-inflation-august",
+  "kind": "daily",
+  "title": "US inflation cooled more than expected in August",
+  "summary": "The Federal Reserve's preferred inflation gauge came in below forecasts for August. The Bureau of Economic Analysis reported the PCE price index rose 0.3% on the month and 3.4% from a year earlier, while core prices, which exclude food and energy, rose 0.2% and 3.0%. Disposable personal income increased 0.3% and consumer spending rose 0.9%, or $190.8 billion, with the personal saving rate at 4.1%. Reuters reported the reading gave the Fed some breathing room, and traders pared back bets on another rate increase at the October meeting.",
+  "category": "economy-markets",
+  "priority": 67,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "inflation",
+    "pce",
+    "federal-reserve",
+    "consumer-spending"
+  ],
+  "sources": [
+    {
+      "publisher": "U.S. Bureau of Economic Analysis",
+      "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-august-2026",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/markets/us/us-inflation-rises-less-than-expected-august-consumer-spending-surges-2026-09-30/",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    }
+  ]
+}

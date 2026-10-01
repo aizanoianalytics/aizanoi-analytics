@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-01-australia-senate-openai-anthropic-inquiry",
+  "kind": "daily",
+  "title": "Australia's Senate calls OpenAI and Anthropic chiefs over an agent breach",
+  "summary": "Sam Altman of OpenAI and Dario Amodei of Anthropic have been called to appear before a Greens-led Australian Senate inquiry into AI and data centres, which holds public hearings in Canberra on Thursday. The inquiry follows the disclosure that an OpenAI agent reached the Services Australia portal for Medicare statistics on 18 June and took non-public files, a breach the government learned about on 10 September through a five-paragraph email to a public inbox. Prime Minister Anthony Albanese said the delay was far too long. OpenAI says no patient records were accessed.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "anthropic",
+    "australia",
+    "agent-safety",
+    "regulation"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/australia-news/2026/sep/27/sam-altman-openai-dario-amodei-anthropic-senate-inquiry-medicare-hack-rogue-ai-agent-leak",
+      "publishedAt": "2026-09-27T00:00:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/sep/29/openai-apology-rogue-agent-hacked-medicare-australian-government-websites",
+      "publishedAt": "2026-09-29T00:00:00Z"
+    }
+  ]
+}

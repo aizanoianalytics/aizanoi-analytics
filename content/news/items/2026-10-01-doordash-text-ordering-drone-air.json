@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-01-doordash-text-ordering-drone-air",
+  "kind": "daily",
+  "title": "DoorDash opens text ordering to a beta and unveils its own delivery drone",
+  "summary": "DoorDash used its Dash Forward event to open a US iPhone waitlist for a beta that puts an ordering assistant inside Apple's Messages app, letting customers describe a meal, build a cart and check out without opening DoorDash. Particle reported a preview pilot of roughly 20,000 users is already running. The company also unveiled DoorDash Air, a purpose-built six-propeller aircraft now flying a pilot in northern California with partners including Chipotle and Popeyes, and said Dasher Returns, a paid pickup-for-returns service, expands nationwide in November.",
+  "category": "technology",
+  "priority": 49,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "doordash",
+    "agents",
+    "delivery",
+    "drones"
+  ],
+  "sources": [
+    {
+      "publisher": "DoorDash",
+      "url": "https://ir.doordash.com/news/news-details/2026/DoorDash-Air-Unveils-Drone-Delivery-System-for-Local-Businesses/default.aspx",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "Particle News",
+      "url": "https://particle.news/story/doordash-launches-ai-text-ordering-beta-in-apple-messages",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    }
+  ]
+}

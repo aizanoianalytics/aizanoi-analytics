@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-01-germany-serbia-klopp-first-win",
+  "kind": "daily",
+  "title": "Klopp's Germany chase a first win against Serbia in Munich",
+  "summary": "Germany host Serbia at the Allianz Arena on Thursday still looking for a first win under Jurgen Klopp, who has one point from two Nations League matches after a 1-1 draw with the Netherlands in Amsterdam and a 1-0 home defeat by Greece. Serbia are bottom of Group A2 after four straight defeats and are without Aleksandar Mitrovic. Klopp named a 44-player squad for the extended international break and split it into two groups, with Florian Wirtz and Jonathan Burkardt joining after injuries to Jamal Musiala and Kai Havertz. Goalkeeper Jonas Urbig is set for a senior debut.",
+  "category": "football",
+  "priority": 47,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "germany",
+    "serbia",
+    "nations-league",
+    "jurgen-klopp"
+  ],
+  "sources": [
+    {
+      "publisher": "Bundesliga",
+      "url": "https://www.bundesliga.com/en/bundesliga/news/germany-serbia-live-blog-nations-league-klopp-woltemade-wirtz-39369",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.co.uk/sport/football/live/cmp8ddd2dgpwt",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    }
+  ]
+}

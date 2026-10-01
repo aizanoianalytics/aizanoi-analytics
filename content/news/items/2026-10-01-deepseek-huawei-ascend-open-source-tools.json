@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-01-deepseek-huawei-ascend-open-source-tools",
+  "kind": "daily",
+  "title": "DeepSeek open-sources a programming stack for Huawei's Ascend chips",
+  "summary": "DeepSeek released open-source software built with Huawei to program the company's Ascend AI accelerators, led by an Ascend version of TileLang, the programming language it has used for about a year. Six modules mirror the tooling DeepSeek already published for Nvidia hardware, including DeepGEMM for matrix mathematics and DeepEP for large-scale communication between chips, and the two companies also optimised a supernode of 128 Ascend 950 processors. Huawei said it fully supported the work, which aims at an independent software ecosystem beyond Nvidia's CUDA.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "deepseek",
+    "huawei",
+    "ascend",
+    "chips",
+    "open-source"
+  ],
+  "sources": [
+    {
+      "publisher": "South China Morning Post",
+      "url": "https://www.scmp.com/tech/tech-trends/article/3369301/chinas-deepseek-open-sources-tools-help-huawei-chips-supplant-nvidia-ai",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/chinas-ai-industry-closes-ranks-as-deepseek-ships-open-source-software-for-huaweis-ascend-chips/",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    }
+  ]
+}
