@@ -25,7 +25,7 @@ Aizanoi (Roman Phrygia, AD 225) is the singular flagship interactive reconstruct
 
 ## Canonical owners
 
-- `frontend/js/v3/registry.js` — single public app/world catalog;
+- `frontend/js/v3/registry.js` — single public application catalog;
 - `frontend/js/v3/store.js` — browser-local shell and open-window state;
 - `frontend/js/v3/shell.js` — window, router and dialog lifecycle;
 - `frontend/js/v3/aizanoi-os.js` — desktop interaction adapter;

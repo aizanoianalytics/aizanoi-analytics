@@ -81,12 +81,12 @@ Explain any intentionally changed security/runtime boundary:
 - [ ] Relevant browser smoke tests
 - [ ] Manual Firefox + WebKit critical smoke (for cross-browser visual surface)
 - [ ] Visual review / screenshots for presentation changes
-- [ ] Historical-world movement / landmark checks where relevant
+- [ ] Aizanoi movement / landmark checks where relevant
 - [ ] N/A — documentation-only change
 
 ## Visuals
 
-<!-- Add screenshots / video when the UI, historical world or visual reconstruction changed. -->
+<!-- Add screenshots / video when the UI, Aizanoi reconstruction or visual surface changed. -->
 
 ## Notes for review
 

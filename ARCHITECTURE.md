@@ -9,7 +9,7 @@ Browser
  |
  +-- AizanoiOS (/)
  | +-- brand-platform.js Aizanoi Analytics + device composition
- | +-- registry.js canonical public app + world catalog
+ | +-- registry.js canonical public application catalog
  | +-- module-registry.generated.js installed/enabled module wiring
  | +-- capabilities.js declared host capability bridge
  | +-- store.js shell + field-session state

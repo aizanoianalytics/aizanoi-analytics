@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 
 const css = readFileSync('frontend/worlds/shared/css/base-theme.css', 'utf8').replace(/\r\n/g, '\n');
 
-test('Historical Worlds minimap uses a compact responsive desktop footprint', () => {
+test('Aizanoi minimap uses a compact responsive desktop footprint', () => {
   assert.match(css, /#minimap-wrapper\s*\{[\s\S]*?width: clamp\(128px, 11vw, 156px\);[\s\S]*?height: clamp\(128px, 11vw, 156px\);/);
   assert.doesNotMatch(css, /#minimap-wrapper\s*\{[\s\S]*?width: 200px;[\s\S]*?height: 200px;/);
 });

@@ -1,8 +1,8 @@
 /**
  * asset-kit.js — Shared runtime loader for Blender-authored GLB asset kits.
  *
- * Architecture decision (2026-09-16, explicit): historical worlds may ship
- * low-poly studio-authored `.glb` kits under their own `assets/` folder,
+ * Architecture decision (2026-09-16, explicit): an interactive world may ship
+ * low-poly studio-authored `.glb` kits under its own `assets/` folder,
  * loaded here through the single vendored Three.js r174 + GLTFLoader stack.
  * No CDN, no second Three copy, no external model dependency: every GLB is
  * authored in-repo (Blender headless scripts) and served as a static file

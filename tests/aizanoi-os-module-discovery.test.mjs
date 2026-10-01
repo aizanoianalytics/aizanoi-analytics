@@ -76,7 +76,27 @@ test('module registry check accepts CRLF output but rejects changed generated co
 });
 
 test('platform capability contract covers every currently injected shared/host surface', () => {
-  assert.deepEqual([...PLATFORM_CAPABILITIES], ['apps', 'dialog', 'filesystem', 'media', 'notifications', 'sound', 'worlds']);
+  assert.deepEqual([...PLATFORM_CAPABILITIES], ['apps', 'dialog', 'filesystem', 'media', 'notifications', 'sound']);
+});
+
+test('retired worlds capability is not treated as a platform capability', () => {
+  // The runtime `capabilities.js` never resolves `worlds`; build-time validation
+  // accepting it let a manifest pass CI and then fail in the browser with
+  // "Application capability unavailable: worlds".
+  assert.equal(PLATFORM_CAPABILITIES.includes('worlds'), false, 'worlds must not be a platform capability');
+});
+
+test('module discovery rejects a retired worlds capability requirement', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'aizanoi-modules-'));
+  try {
+    await writeFixtureModule(root, 'retired-world-consumer', { requires: ['worlds'] });
+    await assert.rejects(
+      () => discoverModules({ appsRoot: root }),
+      /requires unavailable capability: worlds/
+    );
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
 });
 
 test('generated wiring contains runtime wiring, not duplicate public catalog metadata', async () => {

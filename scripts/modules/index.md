@@ -19,10 +19,11 @@ The generated file is committed so the static visitor runtime never needs filesy
 
 ## Capability and dependency contract
 
-`build-module-registry.mjs` owns the v1 platform-capability id list used by manifest validation. Current shared/host capability ids are `apps`, `dialog`, `filesystem`, `media`, `notifications`, `sound` and `worlds`.
+`build-module-registry.mjs` owns the v1 platform-capability id list used by manifest validation. Current shared/host capability ids are `apps`, `dialog`, `filesystem`, `media`, `notifications` and `sound`.
 
 - `apps` is the narrow application-navigation facade backed by canonical `AIZANOI_OS.openApp`; it is not the full shell `appApi` object.
-- `worlds` narrows the canonical world catalog, current field session and `AIZANOI_OS.` into `list()`, `currentSession()` and `launch()`.
+- `filesystem`, `dialog`, `sound` and `media` wrap the shared workspace implementation; `notifications` is injected by the shell host.
+- Aizanoi itself is reached through the canonical `/worlds/aizanoi-225/` route and is not a platform capability. The `worlds` capability id was retired with the multi-world architecture and no longer resolves at runtime, so a manifest declaring `requires: ["worlds"]` must now fail discovery rather than pass validation and fail later in the browser.
 - capability consumers receive only names declared in their manifest.
 
 Discovery fails before registry generation when a module:

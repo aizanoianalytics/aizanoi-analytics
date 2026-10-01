@@ -51,7 +51,7 @@ Paste only relevant browser-console output. **Remove tokens, credentials, IP-sen
 
 ## Screenshots / recording
 
-Attach visuals if they help reproduce a UI, layout, movement or historical-world issue.
+Attach visuals if they help reproduce a UI, layout, movement or Aizanoi reconstruction issue.
 
 ## Regression?
 

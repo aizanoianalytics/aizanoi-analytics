@@ -82,7 +82,7 @@ test('device dates stay English regardless of browser locale', () => {
   assert.doesNotMatch(platform, /toLocaleDateString\(\[\]/);
 });
 
-test('public error and Historical Worlds navigation copy no longer exposes the retired Field System name', () => {
+test('public error and Aizanoi navigation copy no longer exposes the retired Field System name', () => {
   const publicCopy = `${errorPages}\n${historicalExperience}`;
   assert.doesNotMatch(publicCopy, /Field System/);
   assert.match(errorPages, /Aizanoi Analytics/);
