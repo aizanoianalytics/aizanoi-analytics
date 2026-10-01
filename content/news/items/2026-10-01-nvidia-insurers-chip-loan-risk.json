@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-01-nvidia-insurers-chip-loan-risk",
+  "kind": "daily",
+  "title": "Nvidia courts insurers to spread the risk on AI chip lending",
+  "summary": "Nvidia is in early talks with insurers about cover that would protect lenders if smaller neocloud operators default on GPU-backed loans and the chips pledged as collateral cannot be resold for enough to clear the debt, the Financial Times reported. Broker Howden Re is working with Nvidia on the structure, and the company has shared data on chip depreciation and the expected future value of computing power with at least one insurer. The talks may not produce deals, and Nvidia has explored syndicating the risk to hedge funds and other alternative investors.",
+  "category": "ai",
+  "priority": 57,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "ai-infrastructure",
+    "financing",
+    "insurance"
+  ],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance (Financial Times)",
+      "url": "https://uk.finance.yahoo.com/news/nvidia-turns-insurers-spread-risk-052408466.html",
+      "publishedAt": "2026-09-29T05:24:00Z"
+    }
+  ]
+}

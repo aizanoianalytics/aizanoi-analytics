@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-01-apple-pay-launches-in-india",
+  "kind": "daily",
+  "title": "Apple Pay goes live in India with Axis Bank credit cards",
+  "summary": "Apple Pay launched in India on 30 September, more than a decade after the service went live in the United States, with support for iPhone, iPad and Apple Watch and Mac support to follow. Customers holding Axis Bank-issued Visa and Mastercard credit cards can add them to Wallet and pay by tapping, without a PIN or a one-time code. Apple says the service is accepted by millions of merchants, including Croma, Tata 1mg, Blinkit and Zomato, through payment providers such as Razorpay, Paytm, Cashfree and Pine Labs. TechCrunch reported other large Indian banks are holding off on support.",
+  "category": "technology",
+  "priority": 54,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "apple-pay",
+    "india",
+    "payments"
+  ],
+  "sources": [
+    {
+      "publisher": "Apple",
+      "url": "https://www.apple.com/in/newsroom/2026/09/apple-pay-launches-in-india/",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/29/apple-pay-set-to-launch-in-india-with-axis-bank-today-sources-say/",
+      "publishedAt": "2026-09-30T04:08:00Z"
+    }
+  ]
+}

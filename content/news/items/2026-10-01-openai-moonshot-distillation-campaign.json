@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-01-openai-moonshot-distillation-campaign",
+  "kind": "daily",
+  "title": "OpenAI says it broke up a reasoning-extraction campaign and points to Moonshot AI",
+  "summary": "OpenAI said it disrupted a coordinated campaign to pull protected reasoning out of its models, which it calls adversarial distillation. Low-level activity began on 1 July, then reached 16,000 extraction-pattern requests from more than 4,000 users on 24 and 25 July, and a related cluster of more than 15,000 users was fully disrupted by 28 July. OpenAI said the operators never broke its encryption or reached stored conversations, and attributed a core cluster to individuals associated with Moonshot AI, the developer of Kimi. CyberScoop noted the post offered no technical evidence.",
+  "category": "ai",
+  "priority": 71,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "moonshot-ai",
+    "distillation",
+    "model-security"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/disrupting-a-coordinated-model-distillation-campaign/",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "CyberScoop",
+      "url": "https://cyberscoop.com/openai-moonshot-ai-model-distillation-attack",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    }
+  ]
+}

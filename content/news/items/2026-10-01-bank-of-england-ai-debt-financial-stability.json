@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-01-bank-of-england-ai-debt-financial-stability",
+  "kind": "daily",
+  "title": "Bank of England flags AI debt and the 'right to intervene'",
+  "summary": "The Bank of England's Financial Policy Committee said the likelihood that interconnected vulnerabilities in the financial system crystallise has risen, citing the re-escalation of conflict in the Middle East, higher energy prices and government bond yields at their highest since 2008 in some markets. It warned that AI-related debt issuance reached about $450bn by early September, more than double all of 2025, and held the countercyclical capital buffer at 2%. Governor Andrew Bailey said society must keep the right to intervene.",
+  "category": "economy-markets",
+  "priority": 68,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bank-of-england",
+    "financial-stability",
+    "ai-debt",
+    "bond-yields"
+  ],
+  "sources": [
+    {
+      "publisher": "Bank of England",
+      "url": "https://www.bankofengland.co.uk/financial-policy-committee-record/2026/september-2026",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/sep/30/intervene-ai-growing-threat-bank-of-england-boss",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    }
+  ]
+}

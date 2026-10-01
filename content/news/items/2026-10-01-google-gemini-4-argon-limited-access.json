@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-01-google-gemini-4-argon-limited-access",
+  "kind": "daily",
+  "title": "Google opens Gemini 4 Argon to vetted cyber defenders only",
+  "summary": "Google unveiled Gemini 4 Argon, the first release in its Gemini 4 generation, but is withholding general access and rolling it out only to a set of trusted cyber defenders through its Fairwind Program. Chief AI architect Koray Kavukcuoglu said the company is taking part in the US government's voluntary pre-release review process before a wider launch. Google says Argon sets a state of the art on the DeepSWE v1.1 coding benchmark at 77.9% and raises output to 1 million tokens from 64,000, at an introductory $2 per million input tokens. It also confirmed dropping the planned Gemini 3.5 Pro.",
+  "category": "ai",
+  "priority": 79,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "gemini-4-argon",
+    "frontier-models",
+    "ai-safety"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/tech/1002980/google-gemini-4-argon",
+      "publishedAt": "2026-09-30T20:41:00Z"
+    },
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    }
+  ]
+}

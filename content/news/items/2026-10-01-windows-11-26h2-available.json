@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-01-windows-11-26h2-available",
+  "kind": "daily",
+  "title": "Microsoft ships the Windows 11 2026 Update as a small enablement package",
+  "summary": "Microsoft has released the Windows 11 2026 Update, version 26H2, to eligible devices running versions 24H2 or 25H2. Because the three releases share one servicing branch, 26H2 arrives as a lightweight enablement package that switches on features already delivered through monthly updates, needing a short download and a single restart. Microsoft says installing it resets the support lifecycle at 24 months for Home and Pro and 36 months for Enterprise and Education, and that devices on version 26H1 have no upgrade path to it.",
+  "category": "technology",
+  "priority": 61,
+  "publishedAt": "2026-10-01T05:30:00Z",
+  "updatedAt": "2026-10-01T05:30:00Z",
+  "retrievedAt": "2026-10-01T05:55:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "windows-11",
+    "26h2",
+    "operating-systems"
+  ],
+  "sources": [
+    {
+      "publisher": "Windows Experience Blog",
+      "url": "https://blogs.windows.com/windowsexperience/2026/09/29/how-to-get-windows-11-2026-update/",
+      "publishedAt": "2026-09-29T00:00:00Z"
+    },
+    {
+      "publisher": "Windows Central",
+      "url": "https://www.windowscentral.com/microsoft/windows-11/microsoft-releases-windows-11-version-26h2-calls-it-a-predictable-and-low-disruption-update-with-no-compatibility-concerns",
+      "publishedAt": "2026-09-29T00:00:00Z"
+    }
+  ]
+}
