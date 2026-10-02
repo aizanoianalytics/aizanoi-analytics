@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-02-man-city-appeal-deadline",
+  "kind": "daily",
+  "title": "Manchester City face a Friday deadline to appeal their guilty verdict",
+  "summary": "Manchester City have until Friday, 2 October, to tell the Premier League whether they will appeal the independent commission's finding that the club breached financial rules. Reports differ on whether 114 or all 115 charges were upheld, and the club, which has maintained its innocence, has indicated it will appeal. Sky Sports has reported that the full process, including any punishment hearing, must conclude before Christmas. Erling Haaland started for Norway in Cardiff on Thursday in his first match since the verdict.",
+  "category": "football",
+  "priority": 82,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "manchester-city",
+    "financial-rules",
+    "governance"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/sports/soccer/man-city-appeal-looms-game-grapples-with-fallout-guilty-verdict-2026-10-01/",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/13593377/man-city-premier-league-charges-appeal-process-punishment-hearing-and-what-happens-now-after-guilty-verdict",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://skysports.com/football/wales-vs-norway/report/554040",
+      "publishedAt": "2026-10-01T21:58:00Z"
+    }
+  ]
+}

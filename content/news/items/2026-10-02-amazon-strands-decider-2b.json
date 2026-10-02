@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-amazon-strands-decider-2b",
+  "kind": "daily",
+  "title": "AWS open-sources a small decision model for agent workflows",
+  "summary": "Amazon Web Services released Strands Decider 2B, a roughly 2-billion-parameter model that scores supplied answer options instead of generating text. The company said it fine-tuned Alibaba's Qwen3.5-2B base, removed the component that predicts the next word and replaced it with a pointer over the available choices, adding a small LoRA update, and published the weights under an Apache 2.0 licence. AWS presents the model as a fast, locally runnable way to route bounded agent decisions with a calibrated confidence on each answer.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "aws",
+    "open-source",
+    "ai-agents",
+    "models"
+  ],
+  "sources": [
+    {
+      "publisher": "Strands Agents",
+      "url": "https://strandsagents.com/blog/introducing-strands-decider/",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/10/01/aws-debuts-strands-decider-2b-a-first-lightweight-decision-model-for-accelerate-agentic-workflows/",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

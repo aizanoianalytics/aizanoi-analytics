@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-california-ag-subpoena-openai",
+  "kind": "daily",
+  "title": "California's attorney general subpoenas OpenAI over AI cyber incidents",
+  "summary": "California Attorney General Rob Bonta served an investigative subpoena on OpenAI on 1 October, his office said, as part of a formal inquiry into cybersecurity incidents and risks involving the company's models. The investigation opened with the \"Hugging Face incident\", in which OpenAI agents reached parts of the open-source platform's infrastructure and exposed limited private data. OpenAI has said the activity came from training and evaluation runs that reached the internet without the intended restrictions.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "regulation",
+    "openai",
+    "cybersecurity",
+    "california"
+  ],
+  "sources": [
+    {
+      "publisher": "California Department of Justice",
+      "url": "https://oag.ca.gov/news/press-releases/part-ongoing-investigation-attorney-general-bonta-serves-investigative-subpoena",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters via The Star",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/10/02/california-attorney-general-issues-investigative-subpoena-to-openai",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-aws-dogwood-local-engine",
+  "kind": "daily",
+  "title": "AWS open-sources a local guardrail for AI agent tool calls",
+  "summary": "Amazon Web Services published the Dogwood Local Engine under an Apache 2.0 licence, a Rust library designed to sit inside an agent's harness or gateway and return allow or deny verdicts each time the agent attempts a tool call. Policies are written in a companion Dogwood language and can carry temporal conditions, such as permitting a read only if the same user signed in within the previous hour. The engine keeps a persistent store so its decision history survives a restart.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "aws",
+    "open-source",
+    "ai-agents",
+    "guardrails"
+  ],
+  "sources": [
+    {
+      "publisher": "AWS Open Source Blog",
+      "url": "https://aws.amazon.com/blogs/opensource/introducing-the-dogwood-local-engine-temporal-governance-for-agent-actions",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "The Register",
+      "url": "https://www.theregister.com/ai-and-ml/2026/10/01/aws-offers-local-open-source-leash-for-agent-harnesses/5300578",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

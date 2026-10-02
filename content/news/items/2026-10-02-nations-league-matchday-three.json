@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-nations-league-matchday-three",
+  "kind": "daily",
+  "title": "Klopp's Germany break through as Portugal surge clear",
+  "summary": "Jürgen Klopp claimed his first win as Germany coach at the third attempt, a 2-0 Nations League victory over Serbia in Munich built on goals from Tom Bischof and Florian Wirtz. Portugal won 4-2 in Copenhagen to make it three wins from three and move six points clear at the top of their group, while Wales came from behind to beat ten-man Norway 2-1 in Cardiff for their first win in the top tier of the competition. Greece and the Netherlands drew 2-2 in the other League A fixture.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "germany",
+    "portugal",
+    "wales"
+  ],
+  "sources": [
+    {
+      "publisher": "Report.az",
+      "url": "https://report.az/en/football/uefa-nations-league-germany-beat-serbia-netherlands-held-by-greece",
+      "publishedAt": "2026-10-02T03:35:00Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://skysports.com/football/wales-vs-norway/report/554040",
+      "publishedAt": "2026-10-01T21:58:00Z"
+    }
+  ]
+}

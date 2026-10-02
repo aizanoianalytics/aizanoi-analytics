@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-consumer-ai-economics",
+  "kind": "daily",
+  "title": "Consumer AI still has few paying customers, and the maths is unforgiving",
+  "summary": "An analysis of Andreessen Horowitz and PNC data published by TechCrunch found that as of May only 2.2% of consumers were paying for AI services, spending an average of $31 a month. Taking Netflix as a benchmark for a saturated online service, the piece calculated that 325 million subscribers at about $34 each would yield roughly $11 billion a year, less than a third of OpenAI's operating costs. Major labs have pivoted toward enterprise contracts, and OpenAI's enterprise bookings have reportedly doubled since July.",
+  "category": "economy-markets",
+  "priority": 54,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "consumer-ai",
+    "monetisation",
+    "openai",
+    "subscriptions"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/30/the-ugly-economics-of-consumer-ai/",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/ai/articles/ugly-economics-consumer-ai-172445194.html",
+      "publishedAt": "2026-09-30T17:24:00Z"
+    }
+  ]
+}
