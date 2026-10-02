@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-02-micron-record-quarter-memory-outlook",
+  "kind": "daily",
+  "title": "Micron posts a record quarter as the memory squeeze tightens",
+  "summary": "Micron reported fiscal fourth-quarter revenue of $54.23 billion, up 379% from a year earlier, with non-GAAP earnings of $33.42 a diluted share. The company guided to $61.5 billion for the current quarter, above analyst estimates, and said DRAM revenue alone passed $100 billion for the full year. Chief executive Sanjay Mehrotra said he expects an even stronger fiscal 2027, while management and analysts expect memory supply to stay tight through 2028 as AI data centres absorb capacity.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "micron",
+    "semiconductors",
+    "memory",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "Micron Investor Relations",
+      "url": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/information-technology/2026/10/memory-supplies-are-only-getting-tighter-micron-ceo-says/",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "The Register",
+      "url": "https://www.theregister.com/systems/2026/10/01/ram-supply-set-to-worsen-says-micron-as-ceo-celebrates-much-higher-prices/5300346",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

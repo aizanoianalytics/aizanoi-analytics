@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-google-project-suncatcher-tpu-satellites",
+  "kind": "daily",
+  "title": "Google puts TPUs in orbit to test the case for space-based AI compute",
+  "summary": "Google has launched a prototype satellite carrying its Trillium TPUs, a first step in a research moonshot it calls Project Suncatcher. The company published a preprint describing solar-powered satellites in dawn-dusk sun-synchronous orbit, linked by free-space optical lasers, and reported proton-beam tests in which the chips withstood nearly three times the expected five-year radiation dose. Google says a panel in the right orbit can generate up to eight times more power than on Earth, and plans two prototype satellites with Planet by early 2027.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "tpu",
+    "data-centres",
+    "research"
+  ],
+  "sources": [
+    {
+      "publisher": "Google Research",
+      "url": "https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/01/spacex-to-launch-google-ai-chips-to-orbit-with-planet-labs-satellites.html",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

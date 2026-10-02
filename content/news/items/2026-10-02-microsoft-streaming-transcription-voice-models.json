@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-microsoft-streaming-transcription-voice-models",
+  "kind": "daily",
+  "title": "Microsoft ships a streaming transcription model and two multilingual voices",
+  "summary": "Microsoft AI released MAI-Transcribe-2-Streaming, which returns provisional transcripts while audio is still arriving and commits a stable version once a speaker pauses. The company says it covers 60 languages with automatic detection, produces its first hypotheses in the low hundreds of milliseconds, and costs $0.54 per audio hour on an introductory basis through the end of the year. It also launched MAI-Voice-2.1 and a faster Flash variant, both supporting 23 languages with one cross-language voice, priced at $22 and $15 per million characters.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "speech",
+    "transcription",
+    "voice-agents"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft AI",
+      "url": "https://microsoft.ai/news/our-first-streaming-transcription-model/",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/10/01/microsoft-targets-ultra-realistic-voice-agents-with-its-first-streaming-transcription-model",
+      "publishedAt": "2026-10-01T21:31:00Z"
+    }
+  ]
+}

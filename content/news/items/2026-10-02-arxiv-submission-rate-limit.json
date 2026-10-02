@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-02-arxiv-submission-rate-limit",
+  "kind": "daily",
+  "title": "arXiv caps monthly submissions as paper volumes keep climbing",
+  "summary": "arXiv introduced a rate limit effective 1 October that allows each submitter at most two submissions per calendar month and no more than three active submissions at any one time. The repository framed the change as a move toward fair moderation and equitable access, and described it as a stopgap while it develops longer-term practices for handling the volume of incoming papers. The limit applies to the submitting account rather than to every listed author on a paper.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "arxiv",
+    "research",
+    "publishing",
+    "moderation"
+  ],
+  "sources": [
+    {
+      "publisher": "arXiv blog",
+      "url": "https://blog.arxiv.org/2026/10/01/updated-rate-limit-policy/",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

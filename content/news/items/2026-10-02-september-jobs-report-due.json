@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-september-jobs-report-due",
+  "kind": "daily",
+  "title": "Wall Street waits on the September jobs report",
+  "summary": "The September employment report is due at 8:30 a.m. Eastern on Friday, and economists expect hiring to slow after August's upside surprise. FactSet's consensus points to roughly 95,000 new jobs with the unemployment rate holding at 4.1%, according to Morningstar, while published tracker estimates range from about 90,000 to 120,000. Payrolls rose 162,000 in August and average hourly earnings were up 3.1% year on year. The print is the last major labour-market release before the Federal Reserve's late-October decision.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "jobs-report",
+    "nonfarm-payrolls",
+    "federal-reserve",
+    "unemployment"
+  ],
+  "sources": [
+    {
+      "publisher": "Morningstar",
+      "url": "https://www.morningstar.com/economy/september-jobs-report-seen-showing-hiring-plateau-after-august-surge",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Mitrade Insights",
+      "url": "https://mitrade.com/insights/more/jobs/four-jobs-reports-october-fed-decision-20260928J1433",
+      "publishedAt": "2026-09-28T14:33:00Z"
+    }
+  ]
+}

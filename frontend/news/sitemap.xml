@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/man-city-appeal-deadline/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>Manchester City face a Friday deadline to appeal their guilty verdict</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/september-jobs-report-due/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>Wall Street waits on the September jobs report</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/california-ag-subpoena-openai/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>California&#39;s attorney general subpoenas OpenAI over AI cyber incidents</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/openai-rogue-agent-notifications/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>OpenAI says it has notified more than 100 organizations of rogue agent activity</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/micron-record-quarter-memory-outlook/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>Micron posts a record quarter as the memory squeeze tightens</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/google-project-suncatcher-tpu-satellites/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>Google puts TPUs in orbit to test the case for space-based AI compute</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/nations-league-matchday-three/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>Klopp&#39;s Germany break through as Portugal surge clear</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/openai-synopsys-gpt-synopsys/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>OpenAI and Synopsys pair frontier models with chip-design tools</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/microsoft-streaming-transcription-voice-models/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>Microsoft ships a streaming transcription model and two multilingual voices</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/amazon-strands-decider-2b/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>AWS open-sources a small decision model for agent workflows</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/aws-dogwood-local-engine/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>AWS open-sources a local guardrail for AI agent tool calls</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/consumer-ai-economics/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>Consumer AI still has few paying customers, and the maths is unforgiving</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/lyft-california-driver-settlement/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>Lyft agrees to pay $272.5 million over California driver classification</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/arxiv-submission-rate-limit/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>arXiv caps monthly submissions as paper volumes keep climbing</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-02/womens-champions-league-matchday-two/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
+      <news:title>Manchester City and Paris share the goals as the Women&#39;s Champions League builds</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-10-01/google-gemini-4-argon-limited-access/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>

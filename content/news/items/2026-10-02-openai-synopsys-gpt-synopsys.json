@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-openai-synopsys-gpt-synopsys",
+  "kind": "daily",
+  "title": "OpenAI and Synopsys pair frontier models with chip-design tools",
+  "summary": "Synopsys and OpenAI announced a multi-year partnership to build GPT-Synopsys, a specialised model trained to operate Synopsys electronic design automation tools directly. The companies said the model would reason about chip design and verification, run the tools, interpret their output and iterate toward results that engineers then review. OpenAI will host the model and license Synopsys software for development, with a shared revenue framework. Synopsys chief executive Sassine Ghazi said its sign-off tools would still verify whether a design works.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "synopsys",
+    "semiconductors",
+    "design-automation"
+  ],
+  "sources": [
+    {
+      "publisher": "PR Newswire",
+      "url": "https://www.prnewswire.com/news-releases/openai-and-synopsys-announce-gpt-synopsys-frontier-intelligence-to-revolutionize-chip-design-302894874.html",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "Unite.AI",
+      "url": "https://www.unite.ai/synopsys-openai-sign-multi-year-deal-to-develop-gpt-synopsys-model/",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    }
+  ]
+}

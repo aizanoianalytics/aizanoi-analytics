@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-womens-champions-league-matchday-two",
+  "kind": "daily",
+  "title": "Manchester City and Paris share the goals as the Women's Champions League builds",
+  "summary": "Manchester City drew 1-1 with Real Madrid at the Joie Stadium, Khadija Shaw equalising six minutes after half-time after Linda Caicedo had put the visitors ahead, with a late Real Madrid finish ruled out because the referee had stopped play. Paris Saint-Germain beat OH Leuven 5-0 at Campus PSG, Naomie Feller scoring twice and setting up two more, with Rasheedat Ajibade, Sakina Karchaoui and Vitória Yaya also on the scoresheet.",
+  "category": "football",
+  "priority": 48,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "womens-football",
+    "champions-league",
+    "manchester-city",
+    "psg"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/13594058/man-city-1-1-real-madrid-bunny-shaw-equaliser-after-linda-caicedo-opener-as-womens-champions-league-game-drawn-amid-late-drama",
+      "publishedAt": "2026-10-01T23:10:00Z"
+    },
+    {
+      "publisher": "Paris Saint-Germain",
+      "url": "https://www.psg.fr/en/content/feller-stars-as-paris-trounce-ohl-match-report-paris-saint-germain-oh-louvain-uefa-womens-champions-league-ligue-2026-2027",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

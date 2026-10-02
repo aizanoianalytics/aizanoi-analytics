@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-02-lyft-california-driver-settlement",
+  "kind": "daily",
+  "title": "Lyft agrees to pay $272.5 million over California driver classification",
+  "summary": "Lyft will pay $272.5 million to settle claims brought by California's labour commissioner, the state attorney general and the city attorneys of Los Angeles, San Diego and San Francisco that it misclassified drivers as independent contractors. The agreement covers alleged violations between April 2016 and December 2020 and still requires a judge's approval; about 87% of the money is set to go to drivers. Lyft said its drivers were always properly classified and that it was glad to put the case behind it. Uber still faces a similar suit.",
+  "category": "technology",
+  "priority": 52,
+  "publishedAt": "2026-10-02T05:20:00Z",
+  "updatedAt": "2026-10-02T05:20:00Z",
+  "retrievedAt": "2026-10-02T05:35:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "lyft",
+    "gig-economy",
+    "labour",
+    "legal"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/lyft-will-pay-2725-million-settle-california-driver-wage-theft-claims-2026-10-01/",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/01/lyft-is-paying-272-5m-to-settle-lawsuit-over-how-it-classified-drivers/",
+      "publishedAt": "2026-10-01T21:57:00Z"
+    }
+  ]
+}
