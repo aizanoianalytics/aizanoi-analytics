@@ -890,6 +890,9 @@ a { color: var(--blue-600); text-decoration: none; }
       <button type="button" class="nav-tab" data-view="import">
         <span>Excel Loader</span>
       </button>
+      <button type="button" class="nav-tab" data-view="intern-recruitment">
+        <span>intern recruitment</span>
+      </button>
     </nav>
   </header>
 
@@ -1526,6 +1529,34 @@ a { color: var(--blue-600); text-decoration: none; }
       </article>
     </div>
 
+    <!-- VIEW 9: INTERN RECRUITMENT RAW DATA -->
+    <div class="view-panel" data-view-panel="intern-recruitment">
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Intern Recruitment</h3>
+            <p class="card-subtitle">Open the approved internship workbook locally and display its worksheet as unmodified raw data.</p>
+          </div>
+          <span class="pill pill-blue" id="internRecruitmentRowCount">No file loaded</span>
+        </div>
+
+        <div class="dropzone" id="internRecruitmentDropzone">
+          <div class="drop-icon">📄</div>
+          <h4 class="drop-title">Select İGA Staj Başvuru Formu.xlsx</h4>
+          <p class="drop-sub">Only this named .xlsx workbook with its exact Sheet1 column layout is accepted. The data remains in this browser and is never uploaded.</p>
+          <input type="file" id="internRecruitmentFileInput" accept=".xlsx" style="display: none;">
+        </div>
+
+        <div id="internRecruitmentStatus" style="margin-top: 1.25rem;" role="status" aria-live="polite"></div>
+        <div id="internRecruitmentTableWrap" class="data-table-container" style="display: none; max-height: 70vh; margin-top: 1.25rem; overflow: auto;">
+          <table class="data-table" id="internRecruitmentTable">
+            <thead id="internRecruitmentTableHead"></thead>
+            <tbody id="internRecruitmentTableBody"></tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+
   </main>
 
   <!-- APP FOOTER -->
@@ -1564,6 +1595,12 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     "use strict";
 
     const SHEET_NAME = "db";
+    const INTERN_RECRUITMENT_FILE = "İGA Staj Başvuru Formu.xlsx";
+    const INTERN_RECRUITMENT_SHA256 = "99e53e58b5c63cb38e35b704311655d266651b129c7ebf6828f12033459f172f";
+    const INTERN_RECRUITMENT_SHEET = "Sheet1";
+    const INTERN_RECRUITMENT_HEADERS = Object.freeze([
+      "Id", "Başlangıç saati", "Tamamlama saati", "E-posta", "Ad", "Staj Durumunuz", "T.C. Kimlik Numarası", "Adı", "Soyadı", "Telefon numaranız", "E-posta adresiniz", "Doğum Tarihiniz", "İkametgah Adresi", "İlçe/İl", "Anne Adı", "Baba Adı", "Kan Grubunuz", "Staj Başlangıç Dönemi", "Kaç iş günü stajınızı gerçekleştireceksiniz?", "Staj Katılım Günleri", "Staj son günü", "Eğitim Durumunuz", "Üniversite", "Bölüm", "Sınıf", "1. Birim Tercihiniz", "2. Birim Tercihiniz", "3. Birim Tercihiniz", "Yukarıdaki KVKK Aydınlatma Metnini okudum, anladım ve onaylıyorum.", "Kesinleşen Birim", "sorumlu", "Şirket", "Güvenlik Bilinci Sınavı", "adli sicil", "Biyometrik Fotoğraf", "Nüfus Cüzdanı Belgesi", "İkametgah Belgesi", "Öğrenci Belgesi", "Staj Başvuru Formu", "SGK işe giriş belgesi"
+    ]);
     const FIELD_KEYS = [
       "ptf", "unit", "position_name", "status", "process_step",
       "hiring_manager", "responsible", "comment", "position_start_date",
@@ -2728,10 +2765,73 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }
     }
 
+    async function handleInternRecruitmentFile(file) {
+      if (!file) return;
+      const status = $("#internRecruitmentStatus");
+      const tableWrap = $("#internRecruitmentTableWrap");
+      tableWrap.style.display = "none";
+      $("#internRecruitmentTableHead").replaceChildren();
+      $("#internRecruitmentTableBody").replaceChildren();
+      $("#internRecruitmentRowCount").textContent = "No file loaded";
+
+      try {
+        if (!window.XLSX) throw new Error("Local SheetJS library not ready.");
+        if (file.name !== INTERN_RECRUITMENT_FILE) {
+          throw new Error(`Only ${INTERN_RECRUITMENT_FILE} is accepted.`);
+        }
+        if (!file.name.toLowerCase().endsWith(".xlsx")) {
+          throw new Error("Only the .xlsx workbook format is accepted.");
+        }
+
+        status.innerHTML = `<div style="padding: 1rem; background: var(--blue-100); border-radius: 8px; color: var(--blue-700);">Reading ${escapeHtml(file.name)} locally...</div>`;
+        const buffer = await file.arrayBuffer();
+        const digest = await crypto.subtle.digest("SHA-256", buffer);
+        const digestHex = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+        if (digestHex !== INTERN_RECRUITMENT_SHA256) {
+          throw new Error("Only the approved İGA internship workbook is accepted; this file's contents do not match.");
+        }
+        const workbook = XLSX.read(buffer, { type: "array", raw: true, cellDates: false, cellFormula: false });
+        if (workbook.SheetNames.length !== 1 || workbook.SheetNames[0] !== INTERN_RECRUITMENT_SHEET) {
+          throw new Error(`The workbook must contain only the ${INTERN_RECRUITMENT_SHEET} worksheet.`);
+        }
+
+        const sheet = workbook.Sheets[INTERN_RECRUITMENT_SHEET];
+        const matrix = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: "", blankrows: false });
+        if (!matrix.length) throw new Error("The worksheet is empty.");
+        const normalizeHeader = value => String(value ?? "").replace(/\s+/g, " ").trim();
+        const actualHeaders = matrix[0].map(normalizeHeader);
+        const headersMatch = actualHeaders.length === INTERN_RECRUITMENT_HEADERS.length &&
+          actualHeaders.every((header, index) => header === INTERN_RECRUITMENT_HEADERS[index]);
+        if (!headersMatch) {
+          throw new Error("This is not the approved internship workbook: the Sheet1 column layout does not match.");
+        }
+
+        renderInternRecruitmentRawData(matrix, file.name);
+      } catch (err) {
+        status.innerHTML = `<div style="padding: 1rem; background: var(--red-100); border: 1px solid var(--red-500); border-radius: 8px; color: var(--red-700);"><strong>File rejected:</strong> ${escapeHtml(err.message)}</div>`;
+      }
+    }
+
+    function renderInternRecruitmentRawData(matrix, fileName) {
+      const headers = matrix[0];
+      const rows = matrix.slice(1);
+      const rawText = value => {
+        if (value == null) return "";
+        if (typeof value === "object") return JSON.stringify(value);
+        return String(value);
+      };
+      $("#internRecruitmentTableHead").innerHTML = `<tr>${headers.map(header => `<th>${escapeHtml(rawText(header))}</th>`).join("")}</tr>`;
+      $("#internRecruitmentTableBody").innerHTML = rows.map(row => `<tr>${headers.map((_, index) => `<td>${escapeHtml(rawText(row[index]))}</td>`).join("")}</tr>`).join("");
+      $("#internRecruitmentRowCount").textContent = `${formatNumber(rows.length)} raw rows`;
+      $("#internRecruitmentTableWrap").style.display = "block";
+      $("#internRecruitmentStatus").innerHTML = `<div style="padding: 1rem; background: var(--green-100); border: 1px solid var(--green-500); border-radius: 8px; color: var(--green-700);"><strong>${escapeHtml(fileName)} loaded locally.</strong> Raw Sheet1 values are shown below; nothing was uploaded or added to the recruitment dashboard dataset.</div>`;
+    }
+
     // NAVIGATION
     function navigate(view) {
       $$("[data-view-panel]").forEach(p => p.classList.toggle("is-active", p.dataset.viewPanel === view));
       $$("[data-view]").forEach(b => b.classList.toggle("is-active", b.dataset.view === view));
+      $("#globalFilterBar").hidden = view === "intern-recruitment";
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -2890,6 +2990,23 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       ["dragleave", "drop"].forEach(evt => dz.addEventListener(evt, e => { e.preventDefault(); dz.classList.remove("is-dragging"); }));
       dz.addEventListener("drop", e => {
         if (e.dataTransfer.files.length) handleExcelFile(e.dataTransfer.files[0]);
+      });
+
+      // Isolated local-only internship workbook reader
+      const internDropzone = $("#internRecruitmentDropzone");
+      const internFileInput = $("#internRecruitmentFileInput");
+      internDropzone.addEventListener("click", () => internFileInput.click());
+      internFileInput.addEventListener("change", () => handleInternRecruitmentFile(internFileInput.files[0]));
+      ["dragenter", "dragover"].forEach(eventName => internDropzone.addEventListener(eventName, event => {
+        event.preventDefault();
+        internDropzone.classList.add("is-dragging");
+      }));
+      ["dragleave", "drop"].forEach(eventName => internDropzone.addEventListener(eventName, event => {
+        event.preventDefault();
+        internDropzone.classList.remove("is-dragging");
+      }));
+      internDropzone.addEventListener("drop", event => {
+        if (event.dataTransfer.files.length) handleInternRecruitmentFile(event.dataTransfer.files[0]);
       });
     }
 
