@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-casio-sapphire-g-shock-blue-rose",
+  "kind": "daily",
+  "title": "Casio unveils an $80,000 sapphire G-Shock",
+  "summary": "Casio launched the Blue Rose Project, a three-watch G-Shock collection built around blue sapphire crystal, led by the MRG-D5000, whose outer case and bezel are cut entirely from sapphire and priced at about $80,000, or roughly GBP 67,000. Only 20 will be made. Casio says a new Multi-Guard structure, inspired by Japanese timber framing, lets the brittle material survive its shock tests, and that only one person at its Yamagata factory can currently assemble the case. Two more affordable models extend the sapphire look.",
+  "category": "technology",
+  "priority": 42,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "casio",
+    "g-shock",
+    "watches",
+    "hardware"
+  ],
+  "sources": [
+    {
+      "publisher": "Wired",
+      "url": "https://www.wired.com/story/casio-crystal-g-shock-is-the-most-expensive-ever-made",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "GQ",
+      "url": "https://www.gq.com/story/g-shock-most-expensive-ever-sapphire-10-2-26",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    }
+  ]
+}

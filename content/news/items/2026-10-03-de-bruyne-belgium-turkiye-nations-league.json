@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-de-bruyne-belgium-turkiye-nations-league",
+  "kind": "daily",
+  "title": "De Bruyne double sends Belgium past Turkiye in the Nations League",
+  "summary": "Kevin De Bruyne scored twice as Belgium beat Turkiye 3-0 in Liege, moving to six points in UEFA Nations League Group A1 and leaving the visitors bottom of the group without a point after three matches. Belgium's win keeps them a point behind France ahead of the two neighbours' meeting in Paris on Monday. The result compounds a difficult window for Turkiye, who have now lost three group games in a row.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "belgium",
+    "turkiye",
+    "de-bruyne"
+  ],
+  "sources": [
+    {
+      "publisher": "Agence France-Presse",
+      "url": "https://www.afp.com/en/belgiums-de-bruyne-fires-double-sink-turkey-france-held-italy",
+      "publishedAt": "2026-10-02T22:30:00Z"
+    },
+    {
+      "publisher": "Anadolu Agency",
+      "url": "https://www.aa.com.tr/en/sports/de-bruyne-double-leads-belgium-past-turkiye-france-held-by-italy/4076664",
+      "publishedAt": "2026-10-02T22:00:00Z"
+    }
+  ]
+}

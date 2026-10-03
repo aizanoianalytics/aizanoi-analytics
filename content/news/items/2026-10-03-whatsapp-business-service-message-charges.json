@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-03-whatsapp-business-service-message-charges",
+  "kind": "daily",
+  "title": "WhatsApp tightens billing for business service messages",
+  "summary": "Meta said it will stop delivering service messages for WhatsApp Business accounts and solution providers that had no payment method on file by September 30, 2026, as part of its second-half pricing update. The change applies to non-template service replies sent inside the 24-hour customer service window. The move pushes businesses to register billing details for the paid customer-service messaging that Meta has been moving toward.",
+  "category": "technology",
+  "priority": 38,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "whatsapp",
+    "meta",
+    "business-messaging",
+    "pricing"
+  ],
+  "sources": [
+    {
+      "publisher": "The Times of India",
+      "url": "https://timesofindia.indiatimes.com/technology/tech-news/starting-october-1-whatsapp-to-stop-delivering-messages-from-these-whatsapp-business-accounts/articleshow/134606597.cms",
+      "publishedAt": "2026-10-01T02:40:00Z"
+    }
+  ]
+}

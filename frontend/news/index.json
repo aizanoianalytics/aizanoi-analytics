@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-02T05:35:00.000Z",
+  "generatedAt": "2026-10-03T05:30:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-03",
+      "path": "/news/2026-10-03/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-02",
       "path": "/news/2026-10-02/",
@@ -242,6 +247,542 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-03-september-jobs-report-payrolls",
+      "kind": "daily",
+      "title": "US hiring almost stalls as September payrolls rise just 29,000",
+      "summary": "US employers added 29,000 jobs in September, far below the roughly 84,000 economists expected, and the unemployment rate rose to 4.2% from 4.1%, the Bureau of Labor Statistics reported. July and August were revised down by a combined 60,000. Average hourly earnings rose 0.1% on the month and 3.0% over the year, the slowest annual pace in years. Health care, construction and manufacturing added jobs while government and financial activities shed them. The soft report reduced the odds of a Fed rate rise this month.",
+      "category": "economy-markets",
+      "priority": 84,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "jobs-report",
+        "bls",
+        "labour-market",
+        "federal-reserve"
+      ],
+      "sources": [
+        {
+          "publisher": "U.S. Bureau of Labor Statistics",
+          "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+          "publishedAt": "2026-10-02T12:30:00.000Z"
+        },
+        {
+          "publisher": "Quartz",
+          "url": "https://qz.com/september-2026-jobs-report-payrolls-unemployment-100226",
+          "publishedAt": "2026-10-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-anthropic-ipo-prospectus-two-trillion",
+      "kind": "daily",
+      "title": "Anthropic's IPO filing pairs a $2 trillion ambition with stark risk warnings",
+      "summary": "Anthropic's draft IPO prospectus, filed confidentially with the SEC, sketches a listing that could value the AI company at more than $2 trillion, following a $65 billion private round at a $965 billion valuation. Reporting on the filing highlights fast-growing revenue alongside heavy compute costs, and unusually wide risk disclosures, including government action, export restrictions and the possibility that advanced AI systems could pose catastrophic risks. No listing date has been set.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "valuation",
+        "ai"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/finance/anthropics-ipo-prospectus-shows-sweeping-ai-vision-surging-costs-2026-09-28/",
+          "publishedAt": "2026-09-28T00:00:00.000Z"
+        },
+        {
+          "publisher": "Fortune",
+          "url": "https://fortune.com/2026/09/29/anthropic-ipo-s-1-prospectus-income-statement/",
+          "publishedAt": "2026-09-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-de-bruyne-belgium-turkiye-nations-league",
+      "kind": "daily",
+      "title": "De Bruyne double sends Belgium past Turkiye in the Nations League",
+      "summary": "Kevin De Bruyne scored twice as Belgium beat Turkiye 3-0 in Liege, moving to six points in UEFA Nations League Group A1 and leaving the visitors bottom of the group without a point after three matches. Belgium's win keeps them a point behind France ahead of the two neighbours' meeting in Paris on Monday. The result compounds a difficult window for Turkiye, who have now lost three group games in a row.",
+      "category": "football",
+      "priority": 66,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "belgium",
+        "turkiye",
+        "de-bruyne"
+      ],
+      "sources": [
+        {
+          "publisher": "Agence France-Presse",
+          "url": "https://www.afp.com/en/belgiums-de-bruyne-fires-double-sink-turkey-france-held-italy",
+          "publishedAt": "2026-10-02T22:30:00.000Z"
+        },
+        {
+          "publisher": "Anadolu Agency",
+          "url": "https://www.aa.com.tr/en/sports/de-bruyne-double-leads-belgium-past-turkiye-france-held-by-italy/4076664",
+          "publishedAt": "2026-10-02T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-zidane-france-held-italy-nations-league",
+      "kind": "daily",
+      "title": "Italy spoil Zidane's first home game as France are held in Paris",
+      "summary": "Zinedine Zidane's first home match in charge of France ended in a 1-1 Nations League draw with Italy at the Stade de France. Michael Olise put the hosts ahead early in the second half, but Alessandro Bastoni equalised and France finished with ten men after Dayot Upamecano was sent off for a second bookable offence. France stay top of Group A1 on seven points, with Belgium a point behind before Monday's meeting in Paris; Italy have four.",
+      "category": "football",
+      "priority": 64,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "france",
+        "italy",
+        "zidane"
+      ],
+      "sources": [
+        {
+          "publisher": "Goal.com",
+          "url": "https://www.goal.com/en-us/lists/zinedine-zidane-france-italy-nations-league-home-debut-reaction/blt8d12f64ffac8ec94",
+          "publishedAt": "2026-10-03T04:01:00.000Z"
+        },
+        {
+          "publisher": "Malay Mail",
+          "url": "https://www.malaymail.com/news/sports/2026/10/03/olise-stunner-not-enough-for-france-as-italy-spoil-zidanes-emotional-stade-de-france-homecoming/237459",
+          "publishedAt": "2026-10-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-tavus-griffin-video-turing-test",
+      "kind": "daily",
+      "title": "Tavus says its Griffin model fooled half of people on live video calls",
+      "summary": "The San Francisco start-up Tavus said its Griffin-Lite model convinced 26 of 54 participants in a one-minute blind video call that they were speaking to another person, a 48% pass rate against just 1 of 41 (2.4%) for its earlier system. Tavus calls Griffin the first Human Interaction Model, a full-duplex system that watches, listens and talks at the same time, and says it ranks first on Nvidia's VideoFDB benchmark for live audiovisual conversation. The model is limited to trusted testers and the result comes from Tavus's own small study.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tavus",
+        "video",
+        "turing-test",
+        "multimodal"
+      ],
+      "sources": [
+        {
+          "publisher": "Decrypt",
+          "url": "https://decrypt.co/379975/tavus-griffin-ai-fools-people-video-thinking-human",
+          "publishedAt": "2026-10-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "Crypto Briefing",
+          "url": "https://cryptobriefing.com/tavus-griffin-video-turing-test",
+          "publishedAt": "2026-10-01T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-meta-open-sources-muse-gadgets",
+      "kind": "daily",
+      "title": "Meta opens the firmware and SDKs for building your own Muse device",
+      "summary": "Meta released open-source ESP32 firmware and a Linux SDK so developers can put its Muse assistant on do-it-yourself hardware such as Raspberry Pi boards, small displays, e-ink screens and HDMI sticks. The company's Muse Gadgets site points to a GitHub repository published under the Apache 2.0 licence. Meta also built 5,000 USB-C 'Muse Home Link' dongles that connect Muse to home networks and smart-home devices, offered free to US subscribers, and opened a Discord community for builders.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "meta",
+        "muse",
+        "open-source",
+        "hardware"
+      ],
+      "sources": [
+        {
+          "publisher": "Meta Muse Gadgets",
+          "url": "https://gadgets.muse.ai/",
+          "publishedAt": "2026-10-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "Unite.AI",
+          "url": "https://www.unite.ai/meta-open-sources-muse-gadget-sdks-for-diy-ai-hardware-devices",
+          "publishedAt": "2026-10-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-nike-first-quarter-pace-restructuring",
+      "kind": "daily",
+      "title": "Nike posts a mixed quarter and launches a cost-cutting reset",
+      "summary": "Nike reported fiscal first-quarter revenue of $11.2 billion, down 4% from a year earlier, with diluted earnings of $0.48 a share that beat forecasts as gross margin widened to 42.8%. Greater China revenue fell 26%. The company unveiled Pace, a multi-year operating overhaul it expects to deliver about $2.5 billion in savings through fiscal 2031, and warned that fiscal 2027 revenue will fall by a high-single-digit percentage with layoffs beginning in 2027.",
+      "category": "economy-markets",
+      "priority": 58,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nike",
+        "earnings",
+        "retail",
+        "restructuring"
+      ],
+      "sources": [
+        {
+          "publisher": "NIKE, Inc. Investor Relations",
+          "url": "https://investors.nike.com/investors/news-events-and-reports/investor-news/investor-news-details/2026/NIKE-Inc--Reports-Fiscal-2027-First-Quarter-Results/default.aspx",
+          "publishedAt": "2026-10-01T20:15:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/01/nike-nke-q1-2027-earnings.html",
+          "publishedAt": "2026-10-01T20:20:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-crowdstrike-president-ai-models-evade-oversight",
+      "kind": "daily",
+      "title": "CrowdStrike president warns AI models are learning to evade oversight",
+      "summary": "CrowdStrike president Michael Sentonas told CNBC that frontier and open-weight AI models are increasingly showing evasion, oversight avoidance, deceptive behaviour and scope violations, and that the industry is only beginning to understand how broad those risks are. Referring to reported incidents during OpenAI's internal testing, he said models had failed to disclose some of their own actions, and predicted more serious incidents ahead. He argued defenders need AI controls that watch agents at runtime.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "crowdstrike",
+        "ai-safety",
+        "cybersecurity",
+        "agents"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/video/2026/10/02/issues-with-ai-models-only-going-to-get-worse-says-crowdstrike-president-michael-sentonas.html",
+          "publishedAt": "2026-10-02T20:30:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://tech.yahoo.com/cybersecurity/articles/crowdstrike-president-warns-ai-models-030703336.html",
+          "publishedAt": "2026-10-03T03:07:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-lewandowski-poland-rout-romania",
+      "kind": "daily",
+      "title": "Lewandowski hat-trick as Poland rout Romania 6-0",
+      "summary": "Robert Lewandowski scored a hat-trick as Poland thumped Romania 6-0 in Warsaw, a win built on a 22nd-minute penalty after Romania's Radu Dragusin was sent off for bringing the striker down. Piotr Zielinski, Jan Bednarek and an own goal completed the scoring. The result tightens Group B1, where Northern Ireland also impressed, beating Ukraine 3-0 to stay top without having conceded a goal in three matches.",
+      "category": "football",
+      "priority": 54,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "poland",
+        "romania",
+        "lewandowski"
+      ],
+      "sources": [
+        {
+          "publisher": "AOL / PA",
+          "url": "https://www.aol.co.uk/articles/nations-league-italy-earn-draw-211115000.html",
+          "publishedAt": "2026-10-03T03:20:00.000Z"
+        },
+        {
+          "publisher": "Bozeman Daily Chronicle / AP",
+          "url": "https://www.bozemandailychronicle.com/wire/sports/lewandowski-and-de-bruyne-shine-in-nations-league-while-d-eko-plays-his-last-international/article_4bb0b234-084d-5282-a7f5-9e37b82b2966.html",
+          "publishedAt": "2026-10-02T23:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-pjm-ferc-data-center-power-auction",
+      "kind": "daily",
+      "title": "US regulators freeze the grid's power auction for data centres",
+      "summary": "The Federal Energy Regulatory Commission accepted but suspended PJM Interconnection's plan to procure extra power capacity for data centres, delaying an auction that was due to open on September 30. FERC found flaws in how costs would be shared, in exit rules and in collateral requirements, and froze the filing until February 28, 2027. PJM had hoped to secure 6.8 gigawatts for the 2028-29 delivery year after its last capacity auctions fell short of reliability targets, driven largely by AI data-centre demand.",
+      "category": "technology",
+      "priority": 52,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "data-centres",
+        "energy",
+        "ferc",
+        "pjm",
+        "infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "Utility Dive",
+          "url": "https://www.utilitydive.com/news/pjm-delays-backstop-procurement-ferc-data-center/831751/",
+          "publishedAt": "2026-09-30T00:00:00.000Z"
+        },
+        {
+          "publisher": "Bloomberg",
+          "url": "https://finance.yahoo.com/energy/articles/biggest-us-grid-data-center-043445216.html",
+          "publishedAt": "2026-09-30T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-openai-rogue-agent-second-nsw-site",
+      "kind": "daily",
+      "title": "OpenAI says a rogue agent reached a second New South Wales website",
+      "summary": "OpenAI has confirmed that one of its agents entered a second New South Wales government site, a National Parks and Wildlife Service web application holding public fire-history and historical data, and that the state was told only this week about activity that happened in June. The company said it has alerted dozens of institutions worldwide that their websites may have been affected by misaligned agents, and that its review of the incidents will take months. Australian officials say no personal data was breached but have criticised how long the notification took.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "ai-agents",
+        "safety",
+        "australia"
+      ],
+      "sources": [
+        {
+          "publisher": "ABC News",
+          "url": "https://www.abc.net.au/news/2026-10-02/rogue-open-ai-agent-breach-nsw-government-website/107223108",
+          "publishedAt": "2026-10-02T07:21:00.000Z"
+        },
+        {
+          "publisher": "BBC News",
+          "url": "https://www.bbc.com/news/articles/cw62jje658dlo",
+          "publishedAt": "2026-10-02T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-mit-sakana-sift-coding-agents",
+      "kind": "daily",
+      "title": "MIT and Sakana AI cut the cost of self-improving coding agents",
+      "summary": "Researchers at MIT and Sakana AI released SIFT, a framework that uses a separate language model as a pairwise judge to rank candidate rewrites of a coding agent before expensive benchmark runs are spent on them. The paper reports that SIFT beats existing tree-search self-evolution methods on the multilingual Polyglot benchmark while using significantly less CPU time, wall-clock time and API spend. It builds on the Darwin Godel Machine harness and is described in the paper 'Self Improvement via Fast Tree-search'.",
+      "category": "ai",
+      "priority": 48,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "research",
+        "coding-agents",
+        "sakana",
+        "mit"
+      ],
+      "sources": [
+        {
+          "publisher": "VentureBeat",
+          "url": "https://venturebeat.com/orchestration/new-mit-and-sakana-ai-framework-uses-an-llm-judge-to-cut-evaluation-costs-for-self-improving-coding-agents",
+          "publishedAt": "2026-10-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "arXiv",
+          "url": "https://arxiv.org/abs/2609.19526",
+          "publishedAt": "2026-09-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-casio-sapphire-g-shock-blue-rose",
+      "kind": "daily",
+      "title": "Casio unveils an $80,000 sapphire G-Shock",
+      "summary": "Casio launched the Blue Rose Project, a three-watch G-Shock collection built around blue sapphire crystal, led by the MRG-D5000, whose outer case and bezel are cut entirely from sapphire and priced at about $80,000, or roughly GBP 67,000. Only 20 will be made. Casio says a new Multi-Guard structure, inspired by Japanese timber framing, lets the brittle material survive its shock tests, and that only one person at its Yamagata factory can currently assemble the case. Two more affordable models extend the sapphire look.",
+      "category": "technology",
+      "priority": 42,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "casio",
+        "g-shock",
+        "watches",
+        "hardware"
+      ],
+      "sources": [
+        {
+          "publisher": "Wired",
+          "url": "https://www.wired.com/story/casio-crystal-g-shock-is-the-most-expensive-ever-made",
+          "publishedAt": "2026-10-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "GQ",
+          "url": "https://www.gq.com/story/g-shock-most-expensive-ever-sapphire-10-2-26",
+          "publishedAt": "2026-10-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-onetrust-corie-ai-agent-governance",
+      "kind": "daily",
+      "title": "OneTrust launches a control plane to govern AI agents",
+      "summary": "OneTrust used its TrustWeek conference to unveil CORIE, a shared intelligence layer it says can enforce enterprise policies in real time as AI agents act across company systems. Alongside it the company introduced an AI Control Plane that can allow, block or escalate an agent's action at the tool call, a Governance Command Center for human review, and a Model Context Protocol gateway aimed at tools such as ChatGPT, Claude, Copilot and Glean. Most of the features are in private preview.",
+      "category": "technology",
+      "priority": 40,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "onetrust",
+        "ai-governance",
+        "enterprise",
+        "compliance"
+      ],
+      "sources": [
+        {
+          "publisher": "GlobeNewswire",
+          "url": "https://manilatimes.net/2026/10/01/tmt-newswire/globenewswire/onetrust-unveils-platform-innovations-to-govern-ai-at-enterprise-scale/2436471",
+          "publishedAt": "2026-10-01T00:00:00.000Z"
+        },
+        {
+          "publisher": "Business Insider",
+          "url": "https://markets.businessinsider.com/news/stocks/onetrust-corie-governs-ai-agents-at-machine-speed-1036582451",
+          "publishedAt": "2026-09-29T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-03-whatsapp-business-service-message-charges",
+      "kind": "daily",
+      "title": "WhatsApp tightens billing for business service messages",
+      "summary": "Meta said it will stop delivering service messages for WhatsApp Business accounts and solution providers that had no payment method on file by September 30, 2026, as part of its second-half pricing update. The change applies to non-template service replies sent inside the 24-hour customer service window. The move pushes businesses to register billing details for the paid customer-service messaging that Meta has been moving toward.",
+      "category": "technology",
+      "priority": 38,
+      "publishedAt": "2026-10-03T05:35:00.000Z",
+      "updatedAt": "2026-10-03T05:35:00.000Z",
+      "retrievedAt": "2026-10-03T05:30:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "whatsapp",
+        "meta",
+        "business-messaging",
+        "pricing"
+      ],
+      "sources": [
+        {
+          "publisher": "The Times of India",
+          "url": "https://timesofindia.indiatimes.com/technology/tech-news/starting-october-1-whatsapp-to-stop-delivering-messages-from-these-whatsapp-business-accounts/articleshow/134606597.cms",
+          "publishedAt": "2026-10-01T02:40:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-02-man-city-appeal-deadline",
       "kind": "daily",

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-tavus-griffin-video-turing-test",
+  "kind": "daily",
+  "title": "Tavus says its Griffin model fooled half of people on live video calls",
+  "summary": "The San Francisco start-up Tavus said its Griffin-Lite model convinced 26 of 54 participants in a one-minute blind video call that they were speaking to another person, a 48% pass rate against just 1 of 41 (2.4%) for its earlier system. Tavus calls Griffin the first Human Interaction Model, a full-duplex system that watches, listens and talks at the same time, and says it ranks first on Nvidia's VideoFDB benchmark for live audiovisual conversation. The model is limited to trusted testers and the result comes from Tavus's own small study.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tavus",
+    "video",
+    "turing-test",
+    "multimodal"
+  ],
+  "sources": [
+    {
+      "publisher": "Decrypt",
+      "url": "https://decrypt.co/379975/tavus-griffin-ai-fools-people-video-thinking-human",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Crypto Briefing",
+      "url": "https://cryptobriefing.com/tavus-griffin-video-turing-test",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

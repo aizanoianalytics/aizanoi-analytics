@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-meta-open-sources-muse-gadgets",
+  "kind": "daily",
+  "title": "Meta opens the firmware and SDKs for building your own Muse device",
+  "summary": "Meta released open-source ESP32 firmware and a Linux SDK so developers can put its Muse assistant on do-it-yourself hardware such as Raspberry Pi boards, small displays, e-ink screens and HDMI sticks. The company's Muse Gadgets site points to a GitHub repository published under the Apache 2.0 licence. Meta also built 5,000 USB-C 'Muse Home Link' dongles that connect Muse to home networks and smart-home devices, offered free to US subscribers, and opened a Discord community for builders.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "meta",
+    "muse",
+    "open-source",
+    "hardware"
+  ],
+  "sources": [
+    {
+      "publisher": "Meta Muse Gadgets",
+      "url": "https://gadgets.muse.ai/",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    },
+    {
+      "publisher": "Unite.AI",
+      "url": "https://www.unite.ai/meta-open-sources-muse-gadget-sdks-for-diy-ai-hardware-devices",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-anthropic-ipo-prospectus-two-trillion",
+  "kind": "daily",
+  "title": "Anthropic's IPO filing pairs a $2 trillion ambition with stark risk warnings",
+  "summary": "Anthropic's draft IPO prospectus, filed confidentially with the SEC, sketches a listing that could value the AI company at more than $2 trillion, following a $65 billion private round at a $965 billion valuation. Reporting on the filing highlights fast-growing revenue alongside heavy compute costs, and unusually wide risk disclosures, including government action, export restrictions and the possibility that advanced AI systems could pose catastrophic risks. No listing date has been set.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ipo",
+    "valuation",
+    "ai"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/finance/anthropics-ipo-prospectus-shows-sweeping-ai-vision-surging-costs-2026-09-28/",
+      "publishedAt": "2026-09-28T00:00:00Z"
+    },
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/09/29/anthropic-ipo-s-1-prospectus-income-statement/",
+      "publishedAt": "2026-09-29T00:00:00Z"
+    }
+  ]
+}

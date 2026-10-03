@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-september-jobs-report-payrolls",
+  "kind": "daily",
+  "title": "US hiring almost stalls as September payrolls rise just 29,000",
+  "summary": "US employers added 29,000 jobs in September, far below the roughly 84,000 economists expected, and the unemployment rate rose to 4.2% from 4.1%, the Bureau of Labor Statistics reported. July and August were revised down by a combined 60,000. Average hourly earnings rose 0.1% on the month and 3.0% over the year, the slowest annual pace in years. Health care, construction and manufacturing added jobs while government and financial activities shed them. The soft report reduced the odds of a Fed rate rise this month.",
+  "category": "economy-markets",
+  "priority": 84,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "jobs-report",
+    "bls",
+    "labour-market",
+    "federal-reserve"
+  ],
+  "sources": [
+    {
+      "publisher": "U.S. Bureau of Labor Statistics",
+      "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+      "publishedAt": "2026-10-02T12:30:00Z"
+    },
+    {
+      "publisher": "Quartz",
+      "url": "https://qz.com/september-2026-jobs-report-payrolls-unemployment-100226",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    }
+  ]
+}
