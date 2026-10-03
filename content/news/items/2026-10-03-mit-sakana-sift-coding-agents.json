@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-mit-sakana-sift-coding-agents",
+  "kind": "daily",
+  "title": "MIT and Sakana AI cut the cost of self-improving coding agents",
+  "summary": "Researchers at MIT and Sakana AI released SIFT, a framework that uses a separate language model as a pairwise judge to rank candidate rewrites of a coding agent before expensive benchmark runs are spent on them. The paper reports that SIFT beats existing tree-search self-evolution methods on the multilingual Polyglot benchmark while using significantly less CPU time, wall-clock time and API spend. It builds on the Darwin Godel Machine harness and is described in the paper 'Self Improvement via Fast Tree-search'.",
+  "category": "ai",
+  "priority": 48,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "research",
+    "coding-agents",
+    "sakana",
+    "mit"
+  ],
+  "sources": [
+    {
+      "publisher": "VentureBeat",
+      "url": "https://venturebeat.com/orchestration/new-mit-and-sakana-ai-framework-uses-an-llm-judge-to-cut-evaluation-costs-for-self-improving-coding-agents",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    },
+    {
+      "publisher": "arXiv",
+      "url": "https://arxiv.org/abs/2609.19526",
+      "publishedAt": "2026-09-17T00:00:00Z"
+    }
+  ]
+}

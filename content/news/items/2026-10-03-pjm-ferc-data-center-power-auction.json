@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-03-pjm-ferc-data-center-power-auction",
+  "kind": "daily",
+  "title": "US regulators freeze the grid's power auction for data centres",
+  "summary": "The Federal Energy Regulatory Commission accepted but suspended PJM Interconnection's plan to procure extra power capacity for data centres, delaying an auction that was due to open on September 30. FERC found flaws in how costs would be shared, in exit rules and in collateral requirements, and froze the filing until February 28, 2027. PJM had hoped to secure 6.8 gigawatts for the 2028-29 delivery year after its last capacity auctions fell short of reliability targets, driven largely by AI data-centre demand.",
+  "category": "technology",
+  "priority": 52,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "data-centres",
+    "energy",
+    "ferc",
+    "pjm",
+    "infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Utility Dive",
+      "url": "https://www.utilitydive.com/news/pjm-delays-backstop-procurement-ferc-data-center/831751/",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "Bloomberg",
+      "url": "https://finance.yahoo.com/energy/articles/biggest-us-grid-data-center-043445216.html",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    }
+  ]
+}

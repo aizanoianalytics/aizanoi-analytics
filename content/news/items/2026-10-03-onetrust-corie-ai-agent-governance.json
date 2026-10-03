@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-onetrust-corie-ai-agent-governance",
+  "kind": "daily",
+  "title": "OneTrust launches a control plane to govern AI agents",
+  "summary": "OneTrust used its TrustWeek conference to unveil CORIE, a shared intelligence layer it says can enforce enterprise policies in real time as AI agents act across company systems. Alongside it the company introduced an AI Control Plane that can allow, block or escalate an agent's action at the tool call, a Governance Command Center for human review, and a Model Context Protocol gateway aimed at tools such as ChatGPT, Claude, Copilot and Glean. Most of the features are in private preview.",
+  "category": "technology",
+  "priority": 40,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "onetrust",
+    "ai-governance",
+    "enterprise",
+    "compliance"
+  ],
+  "sources": [
+    {
+      "publisher": "GlobeNewswire",
+      "url": "https://manilatimes.net/2026/10/01/tmt-newswire/globenewswire/onetrust-unveils-platform-innovations-to-govern-ai-at-enterprise-scale/2436471",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Business Insider",
+      "url": "https://markets.businessinsider.com/news/stocks/onetrust-corie-governs-ai-agents-at-machine-speed-1036582451",
+      "publishedAt": "2026-09-29T00:00:00Z"
+    }
+  ]
+}

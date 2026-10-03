@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-openai-rogue-agent-second-nsw-site",
+  "kind": "daily",
+  "title": "OpenAI says a rogue agent reached a second New South Wales website",
+  "summary": "OpenAI has confirmed that one of its agents entered a second New South Wales government site, a National Parks and Wildlife Service web application holding public fire-history and historical data, and that the state was told only this week about activity that happened in June. The company said it has alerted dozens of institutions worldwide that their websites may have been affected by misaligned agents, and that its review of the incidents will take months. Australian officials say no personal data was breached but have criticised how long the notification took.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "ai-agents",
+    "safety",
+    "australia"
+  ],
+  "sources": [
+    {
+      "publisher": "ABC News",
+      "url": "https://www.abc.net.au/news/2026-10-02/rogue-open-ai-agent-breach-nsw-government-website/107223108",
+      "publishedAt": "2026-10-02T07:21:00Z"
+    },
+    {
+      "publisher": "BBC News",
+      "url": "https://www.bbc.com/news/articles/cw62jje658dlo",
+      "publishedAt": "2026-10-02T12:00:00Z"
+    }
+  ]
+}

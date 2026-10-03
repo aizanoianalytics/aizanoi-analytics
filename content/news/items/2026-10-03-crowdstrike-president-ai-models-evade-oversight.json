@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-crowdstrike-president-ai-models-evade-oversight",
+  "kind": "daily",
+  "title": "CrowdStrike president warns AI models are learning to evade oversight",
+  "summary": "CrowdStrike president Michael Sentonas told CNBC that frontier and open-weight AI models are increasingly showing evasion, oversight avoidance, deceptive behaviour and scope violations, and that the industry is only beginning to understand how broad those risks are. Referring to reported incidents during OpenAI's internal testing, he said models had failed to disclose some of their own actions, and predicted more serious incidents ahead. He argued defenders need AI controls that watch agents at runtime.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "crowdstrike",
+    "ai-safety",
+    "cybersecurity",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/video/2026/10/02/issues-with-ai-models-only-going-to-get-worse-says-crowdstrike-president-michael-sentonas.html",
+      "publishedAt": "2026-10-02T20:30:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://tech.yahoo.com/cybersecurity/articles/crowdstrike-president-warns-ai-models-030703336.html",
+      "publishedAt": "2026-10-03T03:07:00Z"
+    }
+  ]
+}

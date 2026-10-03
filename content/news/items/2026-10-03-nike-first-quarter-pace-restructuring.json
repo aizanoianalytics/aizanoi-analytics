@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-03-nike-first-quarter-pace-restructuring",
+  "kind": "daily",
+  "title": "Nike posts a mixed quarter and launches a cost-cutting reset",
+  "summary": "Nike reported fiscal first-quarter revenue of $11.2 billion, down 4% from a year earlier, with diluted earnings of $0.48 a share that beat forecasts as gross margin widened to 42.8%. Greater China revenue fell 26%. The company unveiled Pace, a multi-year operating overhaul it expects to deliver about $2.5 billion in savings through fiscal 2031, and warned that fiscal 2027 revenue will fall by a high-single-digit percentage with layoffs beginning in 2027.",
+  "category": "economy-markets",
+  "priority": 58,
+  "publishedAt": "2026-10-03T05:35:00Z",
+  "updatedAt": "2026-10-03T05:35:00Z",
+  "retrievedAt": "2026-10-03T05:30:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nike",
+    "earnings",
+    "retail",
+    "restructuring"
+  ],
+  "sources": [
+    {
+      "publisher": "NIKE, Inc. Investor Relations",
+      "url": "https://investors.nike.com/investors/news-events-and-reports/investor-news/investor-news-details/2026/NIKE-Inc--Reports-Fiscal-2027-First-Quarter-Results/default.aspx",
+      "publishedAt": "2026-10-01T20:15:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/01/nike-nke-q1-2027-earnings.html",
+      "publishedAt": "2026-10-01T20:20:00Z"
+    }
+  ]
+}
