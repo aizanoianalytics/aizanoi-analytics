@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-04-microsoft-roslansky-exit",
+  "kind": "daily",
+  "title": "Microsoft's Office and Teams chief Roslansky to leave the company",
+  "summary": "Ryan Roslansky, who led LinkedIn for six years before taking charge of Microsoft's Office and Teams group, will leave Microsoft at the end of 2026 after nearly 18 years at the company. Chief executive Satya Nadella announced the departure in a memo, saying Roslansky leaves LinkedIn in a strong position as Microsoft reorganises its productivity business around Copilot. Dan Shapero continues as LinkedIn chief executive under the reshuffle.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "linkedin",
+    "copilot",
+    "leadership"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft (official blog)",
+      "url": "https://blogs.microsoft.com/blog/2026/10/01/microsoft-365-and-linkedin-leadership-update",
+      "publishedAt": "2026-10-01T20:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/01/linkedin-chief-roslansky-microsoft-exit.html",
+      "publishedAt": "2026-10-01T20:05:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/news/1003515/microsoft-ryan-roslansky-office-teams-linkedin-leaving",
+      "publishedAt": "2026-10-01T16:02:00Z"
+    }
+  ]
+}

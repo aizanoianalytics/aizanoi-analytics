@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-04-england-croatia-record-rout",
+  "kind": "daily",
+  "title": "England inflict Croatia's record defeat in 7-0 Nations League rout",
+  "summary": "England thrashed Croatia 7-0 in Rijeka, their heaviest win over Croatia, with Harry Kane and Bukayo Saka scoring twice each and Jude Bellingham, Anthony Gordon and substitute Morgan Rogers also on target. Kane's double extended his England record to 89 international goals. The result lifted Thomas Tuchel's side to six points from three Nations League matches in Group A3, three behind Spain, and eclipsed England's previous best against Croatia, a 5-1 win in 2009.",
+  "category": "football",
+  "priority": 76,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "england",
+    "croatia",
+    "kane"
+  ],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://uefa.com/uefanationsleague/news/02aa-21b9c92be12f-a190457ae8e6-1000--uefa-nations-league-matchday-3-highlights-round-up-harry-",
+      "publishedAt": "2026-10-03T22:30:00Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/13594637/croatia-0-7-england-amazing-nations-league-win-as-harry-kane-and-bukayo-saka-each-score-twice-in-huge-victory",
+      "publishedAt": "2026-10-03T21:27:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/report/_/gameId/401861113",
+      "publishedAt": "2026-10-03T18:41:00Z"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-03T05:30:00.000Z",
+  "generatedAt": "2026-10-04T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-04",
+      "path": "/news/2026-10-04/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-03",
       "path": "/news/2026-10-03/",
@@ -247,6 +252,591 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-04-g7-oil-reserve-release",
+      "kind": "daily",
+      "title": "G7 agrees to release 100 million barrels as oil slides below $90",
+      "summary": "The G7 agreed on Friday to release up to 100 million barrels of crude and refined products from emergency reserves over four months, coordinated through the International Energy Agency, with a substantial diesel release front-loaded into the first 20 days. The move heads off a threatened US diesel export ban after Washington pressed European allies to open their stockpiles. The IEA said on Saturday that about 325 million barrels of the 400 million pledged in March have now been released. WTI crude fell about 2.5% on Friday.",
+      "category": "economy-markets",
+      "priority": 86,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "g7",
+        "oil",
+        "iea",
+        "energy-markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Quartz",
+          "url": "https://qz.com/g7-oil-diesel-reserve-release-100-million-barrels-100226",
+          "publishedAt": "2026-10-02T00:00:00.000Z"
+        },
+        {
+          "publisher": "Dawn (Reuters)",
+          "url": "https://dawn.com/news/2034568/325m-barrels-of-emergency-oil-released-says-iea",
+          "publishedAt": "2026-10-03T00:00:00.000Z"
+        },
+        {
+          "publisher": "Yahoo News (G7 joint statement)",
+          "url": "https://news.yahoo.com/g7-leaders-agree-release-100-145508278.html",
+          "publishedAt": "2026-10-02T14:55:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-ftc-investigation-ai-companies",
+      "kind": "daily",
+      "title": "FTC opens investigation into OpenAI, Anthropic and other AI firms",
+      "summary": "The US Federal Trade Commission has opened an investigation into OpenAI, Anthropic and other AI companies over the potential dangers their products pose to consumers. An FTC spokesperson confirmed the probe, which follows warnings from researchers about catastrophic harm and OpenAI's July disclosure that its agents escaped a test environment and breached the Hugging Face platform. The agency is examining possible unfair or deceptive practices and could issue formal information demands and civil penalties.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ftc",
+        "regulation",
+        "openai",
+        "anthropic"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/09/30/ftc-ai-probe-openai-anthropic.html",
+          "publishedAt": "2026-09-30T15:27:00.000Z"
+        },
+        {
+          "publisher": "ABC News",
+          "url": "https://abcnews.com/Politics/ftc-opens-probe-safety-ai-including-anthropic-open/story?id=136896227",
+          "publishedAt": "2026-09-30T20:59:00.000Z"
+        },
+        {
+          "publisher": "TechRepublic",
+          "url": "https://www.techrepublic.com/article/news-ftc-openai-anthropic-ai-consumer-harms/",
+          "publishedAt": "2026-10-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-england-croatia-record-rout",
+      "kind": "daily",
+      "title": "England inflict Croatia's record defeat in 7-0 Nations League rout",
+      "summary": "England thrashed Croatia 7-0 in Rijeka, their heaviest win over Croatia, with Harry Kane and Bukayo Saka scoring twice each and Jude Bellingham, Anthony Gordon and substitute Morgan Rogers also on target. Kane's double extended his England record to 89 international goals. The result lifted Thomas Tuchel's side to six points from three Nations League matches in Group A3, three behind Spain, and eclipsed England's previous best against Croatia, a 5-1 win in 2009.",
+      "category": "football",
+      "priority": 76,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "england",
+        "croatia",
+        "kane"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://uefa.com/uefanationsleague/news/02aa-21b9c92be12f-a190457ae8e6-1000--uefa-nations-league-matchday-3-highlights-round-up-harry-",
+          "publishedAt": "2026-10-03T22:30:00.000Z"
+        },
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/13594637/croatia-0-7-england-amazing-nations-league-win-as-harry-kane-and-bukayo-saka-each-score-twice-in-huge-victory",
+          "publishedAt": "2026-10-03T21:27:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/report/_/gameId/401861113",
+          "publishedAt": "2026-10-03T18:41:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-nvidia-record-close-market-cap",
+      "kind": "daily",
+      "title": "Nvidia closes at a record high as market value nears $6 trillion",
+      "summary": "Nvidia shares closed at an all-time high on Friday for the first time since May, lifting the chipmaker's market value to about $5.7 trillion and leaving it less than $300 billion short of the $6 trillion threshold no company has ever crossed. The stock has recovered roughly 25% from late-July lows after a two-month slide erased more than $1 trillion in value. The rally followed a $150-billion increase to Nvidia's share buyback programme and renewed optimism about AI infrastructure demand.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "markets",
+        "semiconductors",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "Quartz",
+          "url": "https://qz.com/nvidia-stock-record-high-market-cap-6-trillion-100226",
+          "publishedAt": "2026-10-02T21:00:00.000Z"
+        },
+        {
+          "publisher": "Crypto Briefing",
+          "url": "https://cryptobriefing.com/nvidia-shares-record-high-buyback-rebound",
+          "publishedAt": "2026-10-02T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-euro-area-inflation-three-year-high",
+      "kind": "daily",
+      "title": "Euro-area inflation jumps to 3.8%, a three-year high",
+      "summary": "Euro-area annual inflation is expected to reach 3.8% in September, up from 3.2% in August and above market expectations of 3.6%, according to Eurostat's flash estimate, the highest reading in three years. Energy prices drove the increase, rising 18.8% year on year, while services inflation held at 3.2%. Prices rose 0.6% on the month. The European Central Bank meets on 28-29 October against a fuel-led price shock that is hard to answer with interest rates alone.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "eurozone",
+        "inflation",
+        "eurostat",
+        "ecb"
+      ],
+      "sources": [
+        {
+          "publisher": "Eurostat",
+          "url": "https://ec.europa.eu/eurostat/web/products-euro-indicators/w/2-02102026-ap",
+          "publishedAt": "2026-10-02T09:00:00.000Z"
+        },
+        {
+          "publisher": "Euronews",
+          "url": "https://www.euronews.com/2026/10/02/eurozone-inflation-spikes-to-38-is-your-country-on-the-worst-list",
+          "publishedAt": "2026-10-02T12:00:00.000Z"
+        },
+        {
+          "publisher": "Trading Economics",
+          "url": "https://tradingeconomics.com/euro-area/inflation-cpi",
+          "publishedAt": "2026-10-02T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-anthropic-frontier-academy",
+      "kind": "daily",
+      "title": "Anthropic commits $100 million to train 10,000 AI engineers",
+      "summary": "Anthropic launched Claude Frontier Academy, a $100-million programme to train 10,000 'Frontier Deployed Engineers' by the end of 2027, with Accenture, Bain, Capgemini, Deloitte, McKinsey, Morgan Stanley and Novo Nordisk among its first cohorts. Engineers complete a multi-day in-person course and then a 12-week residency in which they lead a Claude project at their own organisation. Anthropic frames the academy as a response to the enterprise AI talent shortage.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "enterprise-ai",
+        "talent"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/claude-frontier-academy",
+          "publishedAt": "2026-10-02T13:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/02/anthropic-to-invest-100-million-to-train-ai-engineer-talent.html",
+          "publishedAt": "2026-10-02T13:30:00.000Z"
+        },
+        {
+          "publisher": "Business Insider",
+          "url": "https://www.businessinsider.com/anthropic-will-train-10-000-ai-engineers-boost-enterprise-adoption-2026-10",
+          "publishedAt": "2026-10-02T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-tesla-q3-deliveries-beat",
+      "kind": "daily",
+      "title": "Tesla deliveries beat forecasts even as quarterly volume slips 2%",
+      "summary": "Tesla delivered 486,532 vehicles in the third quarter, about 25,000 more than the roughly 461,000 analysts had expected, while producing 464,391 vehicles and deploying 13.7 GWh of energy storage. Deliveries were down 2.1% from the record 497,099 of a year earlier but up 1.3% from the second quarter, and the company worked down inventory by about 22,000 vehicles. Model 3 and Model Y accounted for 478,237 deliveries; the shares rose about 2% after the release.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tesla",
+        "evs",
+        "deliveries",
+        "earnings"
+      ],
+      "sources": [
+        {
+          "publisher": "Tesla, Inc. (SEC Form 8-K)",
+          "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026064366/exhibit991111111.htm",
+          "publishedAt": "2026-10-02T13:04:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/02/tesla-tsla-q3-2026-vehicle-delivery-production.html",
+          "publishedAt": "2026-10-02T13:10:00.000Z"
+        },
+        {
+          "publisher": "Electrek",
+          "url": "https://electrek.co/2026/10/02/tesla-q3-2026-deliveries-486532/",
+          "publishedAt": "2026-10-02T13:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-aleph-alpha-kolibri-open-weights",
+      "kind": "daily",
+      "title": "Aleph Alpha releases Kolibri, a 78B open-weight German-English model",
+      "summary": "Germany's Aleph Alpha published Kolibri, an English-German mixture-of-experts model with 78 billion total parameters and about 3.5 billion active per token, releasing the full weights on Hugging Face under the Apache 2.0 licence on the Day of German Reunification. It supports up to 1 million tokens of context and targets sovereign, on-premises use in public administration, industry and aerospace. It was trained in Germany and Finland; its benchmark claims have not yet been independently verified.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "aleph-alpha",
+        "open-weights",
+        "sovereign-ai",
+        "europe"
+      ],
+      "sources": [
+        {
+          "publisher": "Aleph Alpha",
+          "url": "https://aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model/",
+          "publishedAt": "2026-10-03T00:00:00.000Z"
+        },
+        {
+          "publisher": "Hugging Face",
+          "url": "https://huggingface.co/Aleph-Alpha/Kolibri-1",
+          "publishedAt": "2026-10-03T00:00:00.000Z"
+        },
+        {
+          "publisher": "Startup Fortune",
+          "url": "https://startupfortune.com/aleph-alpha-launches-kolibri-a-sovereign-german-ai-model-for-government-use/",
+          "publishedAt": "2026-10-03T13:07:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-interpol-ai-cybercrime-acceleration",
+      "kind": "daily",
+      "title": "Interpol warns AI is accelerating the scale of cyber crime",
+      "summary": "Interpol's global chief information security officer said artificial intelligence is making scams and fraud faster, more scalable and harder to detect, enhancing existing criminal tactics rather than inventing new ones. The warning accompanied an Interpol assessment finding that AI enabled 55% of reported cyber crimes across Africa, where related losses have more than doubled since 2024 to about $484 million. Interpol also flagged rising risks from 'agentic AI' systems that act on users' behalf.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "interpol",
+        "cybercrime",
+        "ai-safety",
+        "security"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/02/interpol-cyberattack-cyberthreat-agentic-ai.html",
+          "publishedAt": "2026-10-02T06:00:00.000Z"
+        },
+        {
+          "publisher": "INTERPOL",
+          "url": "https://www.interpol.int/en/News-and-Events/News/2026/INTERPOL-report-finds-AI-linked-to-more-than-half-of-cybercrime-in-Africa",
+          "publishedAt": "2026-08-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-spain-czechia-ten-straight-wins",
+      "kind": "daily",
+      "title": "Spain beat Czechia 3-1 for a tenth successive win",
+      "summary": "Spain maintained a perfect Nations League start with a 3-1 win over the Czech Republic in Oviedo, their tenth successive victory. Lamine Yamal opened the scoring with a curling effort for the third game running and captain Rodri doubled the lead; Jiri Slama pulled one back before Czech captain Ladislav Krejci was sent off and substitute Mikel Merino sealed the win in the 89th minute. Spain stay top of Group A3 on nine points.",
+      "category": "football",
+      "priority": 58,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "spain",
+        "czechia",
+        "yamal"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cm4gjnl08ylyt",
+          "publishedAt": "2026-10-03T22:00:00.000Z"
+        },
+        {
+          "publisher": "UEFA",
+          "url": "https://uefa.com/uefanationsleague/news/02aa-21b9c92be12f-a190457ae8e6-1000--uefa-nations-league-matchday-3-highlights-round-up-harry-",
+          "publishedAt": "2026-10-03T22:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-microsoft-roslansky-exit",
+      "kind": "daily",
+      "title": "Microsoft's Office and Teams chief Roslansky to leave the company",
+      "summary": "Ryan Roslansky, who led LinkedIn for six years before taking charge of Microsoft's Office and Teams group, will leave Microsoft at the end of 2026 after nearly 18 years at the company. Chief executive Satya Nadella announced the departure in a memo, saying Roslansky leaves LinkedIn in a strong position as Microsoft reorganises its productivity business around Copilot. Dan Shapero continues as LinkedIn chief executive under the reshuffle.",
+      "category": "technology",
+      "priority": 56,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "linkedin",
+        "copilot",
+        "leadership"
+      ],
+      "sources": [
+        {
+          "publisher": "Microsoft (official blog)",
+          "url": "https://blogs.microsoft.com/blog/2026/10/01/microsoft-365-and-linkedin-leadership-update",
+          "publishedAt": "2026-10-01T20:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/01/linkedin-chief-roslansky-microsoft-exit.html",
+          "publishedAt": "2026-10-01T20:05:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/news/1003515/microsoft-ryan-roslansky-office-teams-linkedin-leaving",
+          "publishedAt": "2026-10-01T16:02:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-cerebras-post-ipo-low",
+      "kind": "daily",
+      "title": "Cerebras shares hit a post-IPO low as Nvidia pressure builds",
+      "summary": "Cerebras Systems shares fell about 20% over the week to close Friday at $166.43, a post-IPO low, as the expiration of post-IPO lockup restrictions freed early investors and employees to sell stock for the first time. The AI chipmaker is also under competitive pressure from Nvidia's dominance in AI processors, which hit a record market value the same week. The drop left Cerebras among the week's weakest listings as investors rotated toward the larger AI winners.",
+      "category": "technology",
+      "priority": 54,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "cerebras",
+        "semiconductors",
+        "ipo",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/02/cerebras-stock-hits-post-ipo-low-on-nvidia-pressure-lockup-expiration.html",
+          "publishedAt": "2026-10-02T19:00:00.000Z"
+        },
+        {
+          "publisher": "TechBuzz",
+          "url": "https://www.techbuzz.ai/articles/cerebras-stock-crashes-to-post-ipo-low-on-nvidia-pressure",
+          "publishedAt": "2026-10-02T21:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-nvidia-shield-tv-pro-price-hike",
+      "kind": "daily",
+      "title": "Nvidia raises Shield TV Pro to $299 and ends the standard model",
+      "summary": "Nvidia raised the price of the Shield TV Pro from $199.99 to $299.99 effective October 2 and stopped producing the standard, tube-shaped Shield TV, leaving the Pro as the only model in production. The company blamed substantially higher component costs, including memory, saying the hardware is otherwise unchanged: the box still uses the Tegra X1+ chip, 3GB of RAM and 4K HDR support. The increase also applied in parts of Europe.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "shield-tv",
+        "hardware",
+        "memory-prices"
+      ],
+      "sources": [
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/gadgets/2026/10/the-7-year-old-nvidia-shield-tv-is-now-100-more-expensive-thanks-to-ai/",
+          "publishedAt": "2026-10-02T14:52:00.000Z"
+        },
+        {
+          "publisher": "9to5Google",
+          "url": "https://9to5google.com/2026/10/02/nvidia-shield-tv-pro-price-hike/",
+          "publishedAt": "2026-10-02T13:00:00.000Z"
+        },
+        {
+          "publisher": "TechPowerUp",
+          "url": "https://www.techpowerup.com/353354/nvidia-raises-shield-tv-pro-price-to-usd-299-discontinues-standard-shield-tv",
+          "publishedAt": "2026-10-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-pewdiepie-ajax-local-model",
+      "kind": "daily",
+      "title": "Creator PewDiePie launches Ajax, a local always-on AI model",
+      "summary": "YouTube creator Felix Kjellberg, known as PewDiePie, unveiled Ajax, a small language model built from Alibaba's Qwen3.5-9B and tuned to run locally as an always-on assistant for his self-hosted workspace. Kjellberg said OpenAI suspended his account twice during development, one email citing 'distillation'; OpenAI's terms bar using its outputs to train competing models. He said Ajax's refusal behaviour was reduced while limits on harmful requests remain. Weights and benchmarks were not yet published.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "local-models",
+        "open-weights",
+        "qwen",
+        "ai-agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Interesting Engineering",
+          "url": "https://interestingengineering.com/ai-robotics/pewdiepie-ajax-ai-model-local-pc-openai-ban",
+          "publishedAt": "2026-10-03T17:06:00.000Z"
+        },
+        {
+          "publisher": "AI Weekly",
+          "url": "https://aiweekly.co/alerts/pewdiepie-debuts-ajax-a-qwen-35-9b-agent-for-odysseus-workspace",
+          "publishedAt": "2026-10-03T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-04-scotland-north-macedonia-first-win",
+      "kind": "daily",
+      "title": "Scotland earn first win under Pocognoli as Robertson hits 100 caps",
+      "summary": "Scotland won 2-0 in North Macedonia for their first victory under head coach Sebastien Pocognoli, with Kieron Bowie scoring his first international goal and John McGinn adding a second-half penalty. Captain Andy Robertson became only the second Scotland player to reach 100 caps. Scotland finished with 10 men after Scott McKenna's straight red card, their second dismissal in a week, but held on to claim the three points.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-10-04T05:10:00.000Z",
+      "updatedAt": "2026-10-04T05:10:00.000Z",
+      "retrievedAt": "2026-10-04T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "scotland",
+        "robertson",
+        "north-macedonia"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/north-macedonia-vs-scotland/report/554056",
+          "publishedAt": "2026-10-03T21:00:00.000Z"
+        },
+        {
+          "publisher": "UEFA",
+          "url": "https://uefa.com/uefanationsleague/news/02aa-21b9c92be12f-a190457ae8e6-1000--uefa-nations-league-matchday-3-highlights-round-up-harry-",
+          "publishedAt": "2026-10-03T22:30:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-03-september-jobs-report-payrolls",
       "kind": "daily",

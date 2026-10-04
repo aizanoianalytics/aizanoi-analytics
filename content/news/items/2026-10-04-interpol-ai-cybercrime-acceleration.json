@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-04-interpol-ai-cybercrime-acceleration",
+  "kind": "daily",
+  "title": "Interpol warns AI is accelerating the scale of cyber crime",
+  "summary": "Interpol's global chief information security officer said artificial intelligence is making scams and fraud faster, more scalable and harder to detect, enhancing existing criminal tactics rather than inventing new ones. The warning accompanied an Interpol assessment finding that AI enabled 55% of reported cyber crimes across Africa, where related losses have more than doubled since 2024 to about $484 million. Interpol also flagged rising risks from 'agentic AI' systems that act on users' behalf.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "interpol",
+    "cybercrime",
+    "ai-safety",
+    "security"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/02/interpol-cyberattack-cyberthreat-agentic-ai.html",
+      "publishedAt": "2026-10-02T06:00:00Z"
+    },
+    {
+      "publisher": "INTERPOL",
+      "url": "https://www.interpol.int/en/News-and-Events/News/2026/INTERPOL-report-finds-AI-linked-to-more-than-half-of-cybercrime-in-Africa",
+      "publishedAt": "2026-08-03T00:00:00Z"
+    }
+  ]
+}
