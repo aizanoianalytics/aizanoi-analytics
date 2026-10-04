@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-04-euro-area-inflation-three-year-high",
+  "kind": "daily",
+  "title": "Euro-area inflation jumps to 3.8%, a three-year high",
+  "summary": "Euro-area annual inflation is expected to reach 3.8% in September, up from 3.2% in August and above market expectations of 3.6%, according to Eurostat's flash estimate, the highest reading in three years. Energy prices drove the increase, rising 18.8% year on year, while services inflation held at 3.2%. Prices rose 0.6% on the month. The European Central Bank meets on 28-29 October against a fuel-led price shock that is hard to answer with interest rates alone.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "eurozone",
+    "inflation",
+    "eurostat",
+    "ecb"
+  ],
+  "sources": [
+    {
+      "publisher": "Eurostat",
+      "url": "https://ec.europa.eu/eurostat/web/products-euro-indicators/w/2-02102026-ap",
+      "publishedAt": "2026-10-02T09:00:00Z"
+    },
+    {
+      "publisher": "Euronews",
+      "url": "https://www.euronews.com/2026/10/02/eurozone-inflation-spikes-to-38-is-your-country-on-the-worst-list",
+      "publishedAt": "2026-10-02T12:00:00Z"
+    },
+    {
+      "publisher": "Trading Economics",
+      "url": "https://tradingeconomics.com/euro-area/inflation-cpi",
+      "publishedAt": "2026-10-02T10:00:00Z"
+    }
+  ]
+}

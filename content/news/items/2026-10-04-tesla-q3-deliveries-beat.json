@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-04-tesla-q3-deliveries-beat",
+  "kind": "daily",
+  "title": "Tesla deliveries beat forecasts even as quarterly volume slips 2%",
+  "summary": "Tesla delivered 486,532 vehicles in the third quarter, about 25,000 more than the roughly 461,000 analysts had expected, while producing 464,391 vehicles and deploying 13.7 GWh of energy storage. Deliveries were down 2.1% from the record 497,099 of a year earlier but up 1.3% from the second quarter, and the company worked down inventory by about 22,000 vehicles. Model 3 and Model Y accounted for 478,237 deliveries; the shares rose about 2% after the release.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tesla",
+    "evs",
+    "deliveries",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "Tesla, Inc. (SEC Form 8-K)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026064366/exhibit991111111.htm",
+      "publishedAt": "2026-10-02T13:04:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/02/tesla-tsla-q3-2026-vehicle-delivery-production.html",
+      "publishedAt": "2026-10-02T13:10:00Z"
+    },
+    {
+      "publisher": "Electrek",
+      "url": "https://electrek.co/2026/10/02/tesla-q3-2026-deliveries-486532/",
+      "publishedAt": "2026-10-02T13:30:00Z"
+    }
+  ]
+}

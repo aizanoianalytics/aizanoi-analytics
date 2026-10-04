@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-04-spain-czechia-ten-straight-wins",
+  "kind": "daily",
+  "title": "Spain beat Czechia 3-1 for a tenth successive win",
+  "summary": "Spain maintained a perfect Nations League start with a 3-1 win over the Czech Republic in Oviedo, their tenth successive victory. Lamine Yamal opened the scoring with a curling effort for the third game running and captain Rodri doubled the lead; Jiri Slama pulled one back before Czech captain Ladislav Krejci was sent off and substitute Mikel Merino sealed the win in the 89th minute. Spain stay top of Group A3 on nine points.",
+  "category": "football",
+  "priority": 58,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "spain",
+    "czechia",
+    "yamal"
+  ],
+  "sources": [
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/live/cm4gjnl08ylyt",
+      "publishedAt": "2026-10-03T22:00:00Z"
+    },
+    {
+      "publisher": "UEFA",
+      "url": "https://uefa.com/uefanationsleague/news/02aa-21b9c92be12f-a190457ae8e6-1000--uefa-nations-league-matchday-3-highlights-round-up-harry-",
+      "publishedAt": "2026-10-03T22:30:00Z"
+    }
+  ]
+}

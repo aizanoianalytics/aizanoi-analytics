@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-04-nvidia-shield-tv-pro-price-hike",
+  "kind": "daily",
+  "title": "Nvidia raises Shield TV Pro to $299 and ends the standard model",
+  "summary": "Nvidia raised the price of the Shield TV Pro from $199.99 to $299.99 effective October 2 and stopped producing the standard, tube-shaped Shield TV, leaving the Pro as the only model in production. The company blamed substantially higher component costs, including memory, saying the hardware is otherwise unchanged: the box still uses the Tegra X1+ chip, 3GB of RAM and 4K HDR support. The increase also applied in parts of Europe.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "shield-tv",
+    "hardware",
+    "memory-prices"
+  ],
+  "sources": [
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/gadgets/2026/10/the-7-year-old-nvidia-shield-tv-is-now-100-more-expensive-thanks-to-ai/",
+      "publishedAt": "2026-10-02T14:52:00Z"
+    },
+    {
+      "publisher": "9to5Google",
+      "url": "https://9to5google.com/2026/10/02/nvidia-shield-tv-pro-price-hike/",
+      "publishedAt": "2026-10-02T13:00:00Z"
+    },
+    {
+      "publisher": "TechPowerUp",
+      "url": "https://www.techpowerup.com/353354/nvidia-raises-shield-tv-pro-price-to-usd-299-discontinues-standard-shield-tv",
+      "publishedAt": "2026-10-03T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-04-pewdiepie-ajax-local-model",
+  "kind": "daily",
+  "title": "Creator PewDiePie launches Ajax, a local always-on AI model",
+  "summary": "YouTube creator Felix Kjellberg, known as PewDiePie, unveiled Ajax, a small language model built from Alibaba's Qwen3.5-9B and tuned to run locally as an always-on assistant for his self-hosted workspace. Kjellberg said OpenAI suspended his account twice during development, one email citing 'distillation'; OpenAI's terms bar using its outputs to train competing models. He said Ajax's refusal behaviour was reduced while limits on harmful requests remain. Weights and benchmarks were not yet published.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "local-models",
+    "open-weights",
+    "qwen",
+    "ai-agents"
+  ],
+  "sources": [
+    {
+      "publisher": "Interesting Engineering",
+      "url": "https://interestingengineering.com/ai-robotics/pewdiepie-ajax-ai-model-local-pc-openai-ban",
+      "publishedAt": "2026-10-03T17:06:00Z"
+    },
+    {
+      "publisher": "AI Weekly",
+      "url": "https://aiweekly.co/alerts/pewdiepie-debuts-ajax-a-qwen-35-9b-agent-for-odysseus-workspace",
+      "publishedAt": "2026-10-03T00:00:00Z"
+    }
+  ]
+}

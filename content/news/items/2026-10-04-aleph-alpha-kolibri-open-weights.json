@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-04-aleph-alpha-kolibri-open-weights",
+  "kind": "daily",
+  "title": "Aleph Alpha releases Kolibri, a 78B open-weight German-English model",
+  "summary": "Germany's Aleph Alpha published Kolibri, an English-German mixture-of-experts model with 78 billion total parameters and about 3.5 billion active per token, releasing the full weights on Hugging Face under the Apache 2.0 licence on the Day of German Reunification. It supports up to 1 million tokens of context and targets sovereign, on-premises use in public administration, industry and aerospace. It was trained in Germany and Finland; its benchmark claims have not yet been independently verified.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "aleph-alpha",
+    "open-weights",
+    "sovereign-ai",
+    "europe"
+  ],
+  "sources": [
+    {
+      "publisher": "Aleph Alpha",
+      "url": "https://aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model/",
+      "publishedAt": "2026-10-03T00:00:00Z"
+    },
+    {
+      "publisher": "Hugging Face",
+      "url": "https://huggingface.co/Aleph-Alpha/Kolibri-1",
+      "publishedAt": "2026-10-03T00:00:00Z"
+    },
+    {
+      "publisher": "Startup Fortune",
+      "url": "https://startupfortune.com/aleph-alpha-launches-kolibri-a-sovereign-german-ai-model-for-government-use/",
+      "publishedAt": "2026-10-03T13:07:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-04-cerebras-post-ipo-low",
+  "kind": "daily",
+  "title": "Cerebras shares hit a post-IPO low as Nvidia pressure builds",
+  "summary": "Cerebras Systems shares fell about 20% over the week to close Friday at $166.43, a post-IPO low, as the expiration of post-IPO lockup restrictions freed early investors and employees to sell stock for the first time. The AI chipmaker is also under competitive pressure from Nvidia's dominance in AI processors, which hit a record market value the same week. The drop left Cerebras among the week's weakest listings as investors rotated toward the larger AI winners.",
+  "category": "technology",
+  "priority": 54,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "cerebras",
+    "semiconductors",
+    "ipo",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/02/cerebras-stock-hits-post-ipo-low-on-nvidia-pressure-lockup-expiration.html",
+      "publishedAt": "2026-10-02T19:00:00Z"
+    },
+    {
+      "publisher": "TechBuzz",
+      "url": "https://www.techbuzz.ai/articles/cerebras-stock-crashes-to-post-ipo-low-on-nvidia-pressure",
+      "publishedAt": "2026-10-02T21:00:00Z"
+    }
+  ]
+}

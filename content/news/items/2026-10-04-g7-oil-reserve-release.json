@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-04-g7-oil-reserve-release",
+  "kind": "daily",
+  "title": "G7 agrees to release 100 million barrels as oil slides below $90",
+  "summary": "The G7 agreed on Friday to release up to 100 million barrels of crude and refined products from emergency reserves over four months, coordinated through the International Energy Agency, with a substantial diesel release front-loaded into the first 20 days. The move heads off a threatened US diesel export ban after Washington pressed European allies to open their stockpiles. The IEA said on Saturday that about 325 million barrels of the 400 million pledged in March have now been released. WTI crude fell about 2.5% on Friday.",
+  "category": "economy-markets",
+  "priority": 86,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "g7",
+    "oil",
+    "iea",
+    "energy-markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Quartz",
+      "url": "https://qz.com/g7-oil-diesel-reserve-release-100-million-barrels-100226",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    },
+    {
+      "publisher": "Dawn (Reuters)",
+      "url": "https://dawn.com/news/2034568/325m-barrels-of-emergency-oil-released-says-iea",
+      "publishedAt": "2026-10-03T00:00:00Z"
+    },
+    {
+      "publisher": "Yahoo News (G7 joint statement)",
+      "url": "https://news.yahoo.com/g7-leaders-agree-release-100-145508278.html",
+      "publishedAt": "2026-10-02T14:55:00Z"
+    }
+  ]
+}

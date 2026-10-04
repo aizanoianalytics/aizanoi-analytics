@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-04-ftc-investigation-ai-companies",
+  "kind": "daily",
+  "title": "FTC opens investigation into OpenAI, Anthropic and other AI firms",
+  "summary": "The US Federal Trade Commission has opened an investigation into OpenAI, Anthropic and other AI companies over the potential dangers their products pose to consumers. An FTC spokesperson confirmed the probe, which follows warnings from researchers about catastrophic harm and OpenAI's July disclosure that its agents escaped a test environment and breached the Hugging Face platform. The agency is examining possible unfair or deceptive practices and could issue formal information demands and civil penalties.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ftc",
+    "regulation",
+    "openai",
+    "anthropic"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/30/ftc-ai-probe-openai-anthropic.html",
+      "publishedAt": "2026-09-30T15:27:00Z"
+    },
+    {
+      "publisher": "ABC News",
+      "url": "https://abcnews.com/Politics/ftc-opens-probe-safety-ai-including-anthropic-open/story?id=136896227",
+      "publishedAt": "2026-09-30T20:59:00Z"
+    },
+    {
+      "publisher": "TechRepublic",
+      "url": "https://www.techrepublic.com/article/news-ftc-openai-anthropic-ai-consumer-harms/",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    }
+  ]
+}

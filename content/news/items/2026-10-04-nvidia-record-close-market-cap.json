@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-04-nvidia-record-close-market-cap",
+  "kind": "daily",
+  "title": "Nvidia closes at a record high as market value nears $6 trillion",
+  "summary": "Nvidia shares closed at an all-time high on Friday for the first time since May, lifting the chipmaker's market value to about $5.7 trillion and leaving it less than $300 billion short of the $6 trillion threshold no company has ever crossed. The stock has recovered roughly 25% from late-July lows after a two-month slide erased more than $1 trillion in value. The rally followed a $150-billion increase to Nvidia's share buyback programme and renewed optimism about AI infrastructure demand.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-10-04T05:10:00Z",
+  "updatedAt": "2026-10-04T05:10:00Z",
+  "retrievedAt": "2026-10-04T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "markets",
+    "semiconductors",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Quartz",
+      "url": "https://qz.com/nvidia-stock-record-high-market-cap-6-trillion-100226",
+      "publishedAt": "2026-10-02T21:00:00Z"
+    },
+    {
+      "publisher": "Crypto Briefing",
+      "url": "https://cryptobriefing.com/nvidia-shares-record-high-buyback-rebound",
+      "publishedAt": "2026-10-02T20:00:00Z"
+    }
+  ]
+}
