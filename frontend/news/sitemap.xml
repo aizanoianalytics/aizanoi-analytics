@@ -1,6 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-10-05/weekly-ai-accountability-reckoning/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:20:00.000Z</news:publication_date>
+      <news:title>The safety bill comes due: an insider&#39;s exit, a regulator&#39;s probe and a rigged election</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-10-05/weekly-energy-shock-wont-resolve/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:20:00.000Z</news:publication_date>
+      <news:title>An energy shock that refuses to resolve</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-10-05/weekly-compute-supply-squeeze/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:20:00.000Z</news:publication_date>
+      <news:title>Compute is the constraint: fabs, memory and a $7 billion chip lease</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-10-05/weekly-ai-capital-markets-test/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:20:00.000Z</news:publication_date>
+      <news:title>AI&#39;s capital-markets test: a $2 trillion debut and a chastened newcomer</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/weekly/2026-10-05/weekly-nations-league-window/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:20:00.000Z</news:publication_date>
+      <news:title>A Nations League window that redrew the international map</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/gulf-tankers-struck-hormuz-stays-shut/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>Tankers struck in the Gulf as Iran keeps the Strait of Hormuz shut</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/openai-safety-leader-resigns/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>OpenAI safety lead quits, warning the company&#39;s culture is &#39;broken&#39;</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/gulf-oil-exports-recover-prewar-levels/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>Gulf oil exports recover to near prewar levels as Iran loses leverage</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/synopsys-openai-gpt-synopsys/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>OpenAI and Synopsys unveil GPT-Synopsys to automate chip design</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/anthropic-malaysia-influence-operation/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>Anthropic says it disrupted an AI-built election influence network targeting Malaysia</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/portugal-beat-norway-nations-league/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>Portugal beat Norway 2-1 to become first Nations League quarter-finalists</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/tencent-oracle-ai-chip-lease/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>Tencent leases 100,000 AI chips from Oracle in a reported $7 billion deal</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/japan-population-immigration-tightening/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>Japan&#39;s population falls faster as Tokyo tightens rules on foreigners</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/tsmc-texas-campus-terafab-talks/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>TSMC weighs a Texas chip campus as Musk confirms Terafab talks</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/hpe-vultr-amd-helios-order/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>HPE lands $1.2 billion AMD Helios order from cloud provider Vultr</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/micron-memory-shortage-2028/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>Micron warns memory shortages will persist into 2028</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/netherlands-beat-serbia-top-group/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>Netherlands edge Serbia 2-1 to top their Nations League group</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/nvidia-rtx-spark-windows-pcs/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>Nvidia&#39;s RTX Spark Windows PCs begin shipping in October</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/spacex-crew-13-record-iss-docking/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>SpaceX Crew-13 reaches the ISS in a record 7 hours 55 minutes</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-05/wales-lose-denmark-hojlund-penalty/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-05T05:10:00.000Z</news:publication_date>
+      <news:title>Hojlund penalty sinks Wales as Denmark complete the double</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-10-04/g7-oil-reserve-release/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -238,126 +398,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
       <news:title>WhatsApp tightens billing for business service messages</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/man-city-appeal-deadline/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>Manchester City face a Friday deadline to appeal their guilty verdict</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/september-jobs-report-due/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>Wall Street waits on the September jobs report</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/california-ag-subpoena-openai/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>California&#39;s attorney general subpoenas OpenAI over AI cyber incidents</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/openai-rogue-agent-notifications/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>OpenAI says it has notified more than 100 organizations of rogue agent activity</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/micron-record-quarter-memory-outlook/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>Micron posts a record quarter as the memory squeeze tightens</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/google-project-suncatcher-tpu-satellites/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>Google puts TPUs in orbit to test the case for space-based AI compute</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/nations-league-matchday-three/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>Klopp&#39;s Germany break through as Portugal surge clear</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/openai-synopsys-gpt-synopsys/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>OpenAI and Synopsys pair frontier models with chip-design tools</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/microsoft-streaming-transcription-voice-models/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>Microsoft ships a streaming transcription model and two multilingual voices</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/amazon-strands-decider-2b/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>AWS open-sources a small decision model for agent workflows</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/aws-dogwood-local-engine/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>AWS open-sources a local guardrail for AI agent tool calls</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/consumer-ai-economics/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>Consumer AI still has few paying customers, and the maths is unforgiving</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/lyft-california-driver-settlement/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>Lyft agrees to pay $272.5 million over California driver classification</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/arxiv-submission-rate-limit/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>arXiv caps monthly submissions as paper volumes keep climbing</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-02/womens-champions-league-matchday-two/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-02T05:20:00.000Z</news:publication_date>
-      <news:title>Manchester City and Paris share the goals as the Women&#39;s Champions League builds</news:title>
     </news:news>
   </url>
 </urlset>

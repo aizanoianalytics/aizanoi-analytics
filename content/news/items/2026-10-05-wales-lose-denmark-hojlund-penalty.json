@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-05-wales-lose-denmark-hojlund-penalty",
+  "kind": "daily",
+  "title": "Hojlund penalty sinks Wales as Denmark complete the double",
+  "summary": "Rasmus Hojlund's 75th-minute penalty gave Denmark a 1-0 win in Cardiff and a second victory over Wales in eight days, leaving Craig Bellamy's side with three defeats in four Nations League games. The spot-kick followed a goalkeeping error by Wrexham's Danny Ward, who gave the ball away to Gustav Isaksen in his own area and then brought him down. Wales had beaten Norway on Thursday but looked short of the same energy, while Denmark lost captain Pierre-Emile Hojbjerg to injury inside 10 minutes.",
+  "category": "football",
+  "priority": 55,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "wales",
+    "denmark",
+    "hojlund",
+    "bellamy"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://skysports.com/football/wales-vs-denmark/report/554066",
+      "publishedAt": "2026-10-04T21:03:00Z"
+    },
+    {
+      "publisher": "The Herald (Scotland)",
+      "url": "https://heraldscotland.com/sport/uk-sport/26605989.rasmus-hojlund-penalty-sees-denmark-beat-wales-nations-league",
+      "publishedAt": "2026-10-04T00:00:00Z"
+    }
+  ]
+}

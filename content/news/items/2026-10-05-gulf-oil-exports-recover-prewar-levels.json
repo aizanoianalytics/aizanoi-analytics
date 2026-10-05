@@ -1,0 +1,33 @@
+{
+  "id": "2026-10-05-gulf-oil-exports-recover-prewar-levels",
+  "kind": "daily",
+  "title": "Gulf oil exports recover to near prewar levels as Iran loses leverage",
+  "summary": "Middle East crude exports have rebounded to roughly prewar volumes despite the U.S. naval blockade that has cut Iran's own exports to near zero, analysts say. JPMorgan put regional exports at about 17.5 million barrels a day, or 98% of prewar levels, and Kpler said the September figure was at least 16.5 million. Around 40% of crude now leaves without crossing the Strait of Hormuz as Saudi Arabia and the UAE lean on pipeline routes. Analysts warned Iran could still escalate, with attacks on shipping rising and war-risk insurance elevated.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "oil",
+    "saudi-arabia",
+    "uae",
+    "exports",
+    "hormuz"
+  ],
+  "sources": [
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/10/04/persian-gulf-oil-flows-prewar-levels-iran-scorched-earth-campaign-us-aircraft-carrier-marines/",
+      "publishedAt": "2026-10-04T20:03:00Z"
+    }
+  ]
+}

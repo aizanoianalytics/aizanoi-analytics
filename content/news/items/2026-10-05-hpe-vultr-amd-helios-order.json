@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-05-hpe-vultr-amd-helios-order",
+  "kind": "daily",
+  "title": "HPE lands $1.2 billion AMD Helios order from cloud provider Vultr",
+  "summary": "Hewlett Packard Enterprise raised its long-term networking growth outlook and announced a $1.2 billion order from cloud infrastructure company Vultr for its AMD Helios rack-scale AI systems, the first for the platform. Each rack bundles 72 AMD Instinct MI455X GPUs with AMD EPYC 'Venice' CPUs and six HPE Juniper QFX5252 scale-up switch trays that link the GPUs over Ethernet. HPE will deploy the systems in Vultr's U.S. data centres and now expects fiscal 2027 networking revenue to grow in the high teens to low 20s per cent.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "hpe",
+    "amd",
+    "vultr",
+    "data-centres",
+    "networking"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/hpe-boosts-networking-growth-outlook-gets-12-billion-ai-order-cloud-firm-vultr-2026-09-30/",
+      "publishedAt": "2026-09-30T13:17:00Z"
+    },
+    {
+      "publisher": "Fierce Network",
+      "url": "https://www.fierce-network.com/broadband/hpe-lands-first-amd-helios-order-12b-vultr-deal",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/10/01/hpe-1-2-billion-vultr-order-puts-ai-networking-strategy-test-cfo/",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

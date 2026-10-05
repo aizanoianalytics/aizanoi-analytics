@@ -1,0 +1,39 @@
+{
+  "id": "2026-10-05-weekly-energy-shock-wont-resolve",
+  "kind": "weekly",
+  "title": "An energy shock that refuses to resolve",
+  "summary": "Oil tells the story of the quarter in one number: Brent near $102 a barrel, some 40% above its prewar level, with the Strait of Hormuz disputed-closed for a seventh month. This week brought both a partial recovery — Gulf exports back near prewar volumes via pipelines — and fresh tanker strikes near Oman and inside the strait, while Iran restated seven conditions for reopening. The G7's 100-million-barrel reserve release is a buffer, not a fix, roughly one day of world consumption spread over four months. The risk is higher fuel costs feeding inflation and borrowing costs.",
+  "category": "economy-markets",
+  "priority": 76,
+  "publishedAt": "2026-10-05T05:20:00Z",
+  "updatedAt": "2026-10-05T05:20:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "analysis",
+    "oil",
+    "inflation",
+    "g7",
+    "hormuz"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/04/more-tankers-struck-in-gulf-waters-as-iran-reiterates-conditions.html",
+      "publishedAt": "2026-10-04T00:00:00Z"
+    },
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/10/04/persian-gulf-oil-flows-prewar-levels-iran-scorched-earth-campaign-us-aircraft-carrier-marines/",
+      "publishedAt": "2026-10-04T20:03:00Z"
+    }
+  ],
+  "week": "2026-W41"
+}

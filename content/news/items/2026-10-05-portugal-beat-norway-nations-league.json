@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-05-portugal-beat-norway-nations-league",
+  "kind": "daily",
+  "title": "Portugal beat Norway 2-1 to become first Nations League quarter-finalists",
+  "summary": "Holders Portugal became the first team to reach the 2026-27 Nations League quarter-finals, beating Norway 2-1 in Porto without the departed Cristiano Ronaldo. Goncalo Ramos scored the winner in the closing stages after Joao Cancelo cancelled out Kristoffer Ajer's superb opener. Portugal finished with 10 men after Francisco Conceicao was sent off for two yellow cards and hold a perfect four wins from four in Group A4. Ronaldo walked out of the squad last week after learning he would not start.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "portugal",
+    "norway",
+    "ronaldo",
+    "uefa"
+  ],
+  "sources": [
+    {
+      "publisher": "Al Jazeera (AFP)",
+      "url": "https://aljazeera.com/sports/2026/10/4/ronaldo-less-portugal-beat-norway-2-1-to-reach-nations-league-quarterfinals",
+      "publishedAt": "2026-10-04T00:00:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://theguardian.com/football/2026/oct/04/nations-league-roundup-haaland-limps-off-in-norways-loss-to-portugal",
+      "publishedAt": "2026-10-04T00:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://africa.espn.com/football/report/_/gameId/401861126",
+      "publishedAt": "2026-10-04T00:00:00Z"
+    }
+  ]
+}

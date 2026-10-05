@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-05-nvidia-rtx-spark-windows-pcs",
+  "kind": "daily",
+  "title": "Nvidia's RTX Spark Windows PCs begin shipping in October",
+  "summary": "Nvidia said the first Windows 11 laptops and compact desktops built on its RTX Spark superchip will start arriving in October, with Lenovo among the first to show designs. RTX Spark pairs a Blackwell RTX GPU with 6,144 CUDA cores and a 20-core Grace CPU over NVIDIA NVLink-C2C, offering up to one petaflop of FP4 AI compute and up to 128GB of unified memory aimed at running personal AI agents on-device. Nvidia and Microsoft are developing OS security primitives and the OpenShell runtime to support local agents.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "rtx-spark",
+    "windows",
+    "ai-pc",
+    "grace-cpu"
+  ],
+  "sources": [
+    {
+      "publisher": "NVIDIA (GeForce newsroom)",
+      "url": "https://www.nvidia.com/en-us/geforce/news/gfecnt/20266/computex-2026-nvidia-geforce-rtx-announcements",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Digital Citizen",
+      "url": "https://www.digitalcitizen.life/nvidia-rtx-spark-devices-start-shipping-in-october-2026-with-two-n1x-configurations",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

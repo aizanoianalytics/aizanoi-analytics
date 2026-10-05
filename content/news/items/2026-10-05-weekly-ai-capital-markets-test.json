@@ -1,0 +1,44 @@
+{
+  "id": "2026-10-05-weekly-ai-capital-markets-test",
+  "kind": "weekly",
+  "title": "AI's capital-markets test: a $2 trillion debut and a chastened newcomer",
+  "summary": "As Anthropic moves toward a listing that could value it above $2 trillion, its prospectus frames the boom's surging costs alongside its ambitions, and Reuters reported the filing casts an AI backlash as a risk. The market's appetite is not unconditional: Cerebras, which listed earlier this year, fell to a post-IPO low as lockups expired and Nvidia's dominance weighed. The contrast — record demand for the biggest private labs against a tougher reception for a smaller pure-play — suggests investors are pricing scale and revenue visibility, not the category. Q4 will test the window.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-10-05T05:20:00Z",
+  "updatedAt": "2026-10-05T05:20:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "analysis",
+    "anthropic",
+    "ipo",
+    "cerebras",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/finance/anthropics-ipo-prospectus-shows-sweeping-ai-vision-surging-costs-2026-09-28/",
+      "publishedAt": "2026-09-28T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/08/21/-anthropic-ipo-filing-will-show-ai-backlash-as-risk-sources-say.html",
+      "publishedAt": "2026-08-21T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/02/cerebras-stock-hits-post-ipo-low-on-nvidia-pressure-lockup-expiration.html",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    }
+  ],
+  "week": "2026-W41"
+}

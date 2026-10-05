@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-05-gulf-tankers-struck-hormuz-stays-shut",
+  "kind": "daily",
+  "title": "Tankers struck in the Gulf as Iran keeps the Strait of Hormuz shut",
+  "summary": "At least two vessels were hit over the weekend in waters near Oman and inside the Strait of Hormuz, Britain's maritime trade agency reported, as Tehran restated that the waterway will not reopen until seven conditions tied to a June memorandum are met. Iranian parliament speaker Mohammad Bagher Ghalibaf said Iran would not 'regulate its national security with tweets from American officials'. Brent crude closed Friday at $102.25 a barrel and West Texas Intermediate at $91.11 after the G7 announced a release of emergency fuel stocks.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "oil",
+    "iran",
+    "strait-of-hormuz",
+    "shipping",
+    "energy"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/04/more-tankers-struck-in-gulf-waters-as-iran-reiterates-conditions.html",
+      "publishedAt": "2026-10-04T00:00:00Z"
+    },
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/10/04/persian-gulf-oil-flows-prewar-levels-iran-scorched-earth-campaign-us-aircraft-carrier-marines/",
+      "publishedAt": "2026-10-04T20:03:00Z"
+    }
+  ]
+}

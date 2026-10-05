@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-05-japan-population-immigration-tightening",
+  "kind": "daily",
+  "title": "Japan's population falls faster as Tokyo tightens rules on foreigners",
+  "summary": "New five-year census data showed Japanese nationals fell 3.5% to 119.1 million since 2020, a steeper drop than the prior tally, while foreign residents rose 40% to a record 3.84 million. In the same week the government raised the fee for permanent residency to $1,271 from $64 — a rise of about 2,000% — tightened income requirements and added Japanese-language and conduct assessments, with permanent status now revocable for unpaid pensions, health insurance or taxes. Foreigners make up 3.4% of the population but face a growing political backlash.",
+  "category": "economy-markets",
+  "priority": 64,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "japan",
+    "demographics",
+    "immigration",
+    "takaichi"
+  ],
+  "sources": [
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/10/04/japan-population-decline-rate-2025-census-prime-minister-sanae-takaichi-foreigners-permanent-residency-immigration/",
+      "publishedAt": "2026-10-04T23:02:00Z"
+    }
+  ]
+}

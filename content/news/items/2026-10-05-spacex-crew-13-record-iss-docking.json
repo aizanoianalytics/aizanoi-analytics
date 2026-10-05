@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-05-spacex-crew-13-record-iss-docking",
+  "kind": "daily",
+  "title": "SpaceX Crew-13 reaches the ISS in a record 7 hours 55 minutes",
+  "summary": "A SpaceX Falcon 9 launched four astronauts from Cape Canaveral on 1 October and delivered them to the International Space Station in 7 hours and 55 minutes, the fastest trip by a U.S. spacecraft, NASA said. The Dragon capsule Grace, the last Crew Dragon SpaceX will build, docked autonomously at the station's Harmony module. The previous U.S. crewed record was 14 hours 43 minutes. NASA's Jessica Watkins and Luke Delaney, Canada's Joshua Kutryk and Russia's Sergey Teteryatnikov will spend about six months aboard.",
+  "category": "technology",
+  "priority": 55,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "spacex",
+    "nasa",
+    "iss",
+    "crew-dragon"
+  ],
+  "sources": [
+    {
+      "publisher": "Space.com",
+      "url": "https://space.com/space-exploration/launches-spacecraft/spacex-crew-13-astronaut-mission-docks-iss-fastest-trip-us-spacecraft",
+      "publishedAt": "2026-10-01T23:05:00Z"
+    }
+  ]
+}
