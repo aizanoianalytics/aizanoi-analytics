@@ -4,10 +4,10 @@ Scope: analytics source/data-product work stored outside the production static f
 
 ## Route by task
 
-- Public Analytics product UI/route → `../frontend/analytics/`
+- Public Analytics product UI/route → `../frontend/analytics/` (its canonical owner router: [`../frontend/analytics/markets/index.md`](../frontend/analytics/markets/index.md))
 - AizanoiOS Analytics catalog/routing → `../frontend/js/v3/registry.js`
-- Aizanoi Markets source/data pipeline → `../scripts/markets/`
-- New HR Collection source material → `dashboards/new-hr-collection/`
+- Aizanoi Markets source/data pipeline → [`../scripts/markets/index.md`](../scripts/markets/index.md)
+- New HR Collection source material → [`dashboards/new-hr-collection/index.md`](dashboards/new-hr-collection/index.md)
 - Other Analytics source assets, models or supporting material → remain within this area and follow the nearest local documentation.
 
 ## Boundary

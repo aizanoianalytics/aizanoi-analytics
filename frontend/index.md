@@ -1,6 +1,6 @@
 # Frontend
 
-The public product is **Aizanoi** (flagship interactive historical reconstruction) and **Aizanoi Dungeon** (flagship browser game). Index
+The public product is **Aizanoi** (flagship interactive historical reconstruction) and **Aizanoi Dungeon** (flagship browser game).
 
 Scope: production static application served to visitors.
 
@@ -11,7 +11,7 @@ Before changing frontend behavior, read root `AGENTS.md`, `ARCHITECTURE.md`, `DE
 - AizanoiOS shell, registry, device composition or public app runtime → [`js/v3/index.md`](js/v3/index.md)
 - Site-wide visual styles → `styles/` (read `DESIGN.md` first)
 - Analytics → `analytics/`; News → `news/`; TV → `tv/`; Journal → `journal/`; Forge → `forge/`; Labs → `labs/`; Arcade → `arcade/`
-- Aizanoi product landing and the flagship world runtime → [`worlds/`](worlds/)
+- Aizanoi product landing and the flagship world runtime → [`worlds/index.md`](worlds/index.md) (the world router: scene, engine, evidence and asset-kit ownership)
 - Web Editor isolated preview runner → `web-editor-preview/`
 - Static media/branding assets → `assets/`
 - Service worker / offline behavior → `service-worker.js`

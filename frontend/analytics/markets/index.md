@@ -6,6 +6,7 @@ Scope: the static visitor product at `/analytics/markets/` and its shared Aizano
 
 - `index.html` — metadata, product shell, methodology and non-advisory disclosure.
 - `markets.css` — responsive standalone and AizanoiOS presentation.
+- `markets-ux.css` — interaction and density refinements layered on `markets.css`; both are loaded by `index.html` and both are in scope for the CSS contract tests.
 - `app.js` — standalone mount entry.
 - `dashboard.js` — shared market overview, signals, explorer, crypto-risk and data-health views.
 - `core.js` — pure formatting, filtering, watchlist, CSV and technical-indicator helpers.

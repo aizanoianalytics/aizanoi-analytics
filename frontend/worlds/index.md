@@ -20,8 +20,10 @@ interactive world of Aizanoi Analytics, and the only one.
   of truth; the AizanoiOS app module under `js/v3/apps/aizanoi/` only opens it
   and must not duplicate it.
 
-`/historic-world/`, `/ancient-cities/*` and `/iga/` are compatibility redirects
-only. Do not add runtime code there.
+`/historic-world/` and `/ancient-cities/*` are compatibility redirects only. Do
+not add runtime code there. The former İGA companion route was removed
+entirely — it has no redirect document and resolves to 404, so do not
+reintroduce it as a route.
 
 ## Evidence and source ownership
 
@@ -48,6 +50,7 @@ world's own `assets/` folder, and are loaded exclusively through
 
 - Scene, monument, layout or evidence work → `aizanoi-225/js/`
 - Engine, controls, collision, framing or asset-kit work → `shared/engine/`
+- Blender asset-kit tooling and its licensing/sourcing rules → [`tools/blender/README.md`](tools/blender/README.md) and `tools/blender/ASSET_SOURCES.md`
 - AizanoiOS launcher behavior → `../js/v3/apps/aizanoi/index.md`
 - Aizanoi architecture and security policy → `../../ARCHITECTURE.md`, `../../SECURITY.md`
 - Validation and QA ownership → `../../../tests/index.md`

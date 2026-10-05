@@ -11,7 +11,7 @@
 - **Canonical runtime entry:** `src/index.js`
 - **Manifest path:** `manifest.json` (`manifestVersion: 1`, `type: "desktop-app"`)
 - **Standalone web entry:** `/dungeon/` (facade/compat route that imports the canonical module)
-- **Desktop & favicon icon:** `assets/icons/aizanoi-dungeon.svg`
+- **Desktop & favicon icon:** `/assets/icons/aizanoi-dungeon.svg` (shared brand icon set, not module-owned)
 
 The historical `gelistirmeler/2026-09-11-dungeon-crawler-game/` archive is retired; the canonical owner is the `frontend/js/v3/apps/dungeon/` tree.
 
@@ -31,7 +31,6 @@ The historical `gelistirmeler/2026-09-11-dungeon-crawler-game/` archive is retir
 frontend/js/v3/apps/dungeon/
 ├── index.md             # this file (architecture and ownership)
 ├── DOCUMENTATION.md     # full technical and mathematical system reference
-├── README.md            # merge / deploy integration guide
 ├── manifest.json        # AizanoiOS v3 module registration manifest
 │
 ├── src/
@@ -46,7 +45,7 @@ frontend/js/v3/apps/dungeon/
 │   ├── standalone.js    # standalone /dungeon/ bootstrap shim
 │   ├── data/            # game data (modular static data tables)
 │   ├── entities/        # Phaser physics arcade entities (player, enemies, projectiles, structures, portal)
-│   ├── scenes/          # 9 Phaser scenes (Boot, Menu, Game, UI, Shop, SkillTree, Inventory, GameOver, Victory)
+│   ├── scenes/          # 10 Phaser scenes (Boot, Menu, Options, Game, UI, Shop, SkillTree, Inventory, GameOver, Victory)
 │   ├── systems/         # combat, progression, inventory, level (BSP), touch controls, audio
 │   └── utils/           # math + UI helpers
 │
@@ -190,11 +189,10 @@ node --test tests/*.test.mjs
 ```
 
 The browser audits drive the real game through Playwright and are not part of
-`node --test`. Each needs a served `frontend/` on port 4173 and a `CHROME_PATH`:
+`node --test`. Each needs a served `frontend/` on port 4173:
 
 ```bash
 python3 -m http.server 4173 --directory frontend &
-export CHROME_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())")
 node tests/dungeon-accessibility-audit.mjs
 node tests/dungeon-visual-identity-audit.mjs
 node tests/dungeon-level-design-audit.mjs

@@ -17,6 +17,8 @@ Labs does not receive the full shell API and does not own Arcade game implementa
 - `src/app.js` — Labs cards and module-owned click listener.
 - `src/capabilities.js` — validates the declared `apps.open()` surface.
 - `manifest.json` — installation identity and capability declaration.
+- `assets/roman-history.mp4` — the shipped Roman History experiment output.
+- `assets/roman-history-prompt.md` — the prompt that generated it; kept as the provenance record for the shipped video.
 
 ## Ownership boundary
 
