@@ -25,5 +25,5 @@ US and crypto schedules are intentionally separate: US runs after the New York c
 ## Tests
 
 - `tests/markets_pipeline_test.py` — parsing, symbol filtering, metrics, batch isolation and atomic publication.
-- `tests/markets_product_test.py` — schema-v2 metrics, quality, snapshots, chunks, correlations and migration.
+- `tests/markets_product_test.py` — schema-v3 close-only metrics, quality, snapshots, chunks, correlations and migration.
 - `tests/markets-pipeline.test.mjs` — runs the Python contract from the repository’s Node test gate.
