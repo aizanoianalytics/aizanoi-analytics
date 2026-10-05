@@ -1,0 +1,49 @@
+{
+  "id": "2026-10-05-weekly-compute-supply-squeeze",
+  "kind": "weekly",
+  "title": "Compute is the constraint: fabs, memory and a $7 billion chip lease",
+  "summary": "This week's AI story was less about models than the machinery behind them. TSMC weighed a Texas campus and confirmed talks with Musk's Terafab; Micron said memory shortages will run into 2028 with no line of sight to balance; and Tencent reportedly agreed to lease 100,000 advanced chips from Oracle in south-east Asia for about $7 billion, using a gap between U.S. export rules and overseas cloud access. Nvidia began moving RTX Spark PCs that run agents locally. The common thread is scarcity: capacity, memory and access are the binding limits, and each deal buys certainty years ahead.",
+  "category": "technology",
+  "priority": 74,
+  "publishedAt": "2026-10-05T05:20:00Z",
+  "updatedAt": "2026-10-05T05:20:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "analysis",
+    "semiconductors",
+    "memory",
+    "capacity",
+    "supply-chain"
+  ],
+  "sources": [
+    {
+      "publisher": "Fort Worth Star-Telegram (Bloomberg)",
+      "url": "https://star-telegram.com/news/business/article317440539.html",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/pc-components/dram/micron-projects-tightening-ram-shortages-through-2028-as-it-generates-record-profit-record-86-25-percent-gross-margin-drives-over-usd53-billion-in-quarterly-profit",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/10/01/news-tencent-reportedly-signs-7b-deal-to-lease-100000-ai-chips-from-oracle-in-southeast-asia",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "NVIDIA (GeForce newsroom)",
+      "url": "https://www.nvidia.com/en-us/geforce/news/gfecnt/20266/computex-2026-nvidia-geforce-rtx-announcements",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    }
+  ],
+  "week": "2026-W41"
+}

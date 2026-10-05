@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-05-synopsys-openai-gpt-synopsys",
+  "kind": "daily",
+  "title": "OpenAI and Synopsys unveil GPT-Synopsys to automate chip design",
+  "summary": "Synopsys and OpenAI announced a multi-year partnership under which OpenAI will license Synopsys' chip-design software to build GPT-Synopsys, a specialised model trained to operate electronic design automation tools and weigh the trade-offs involved in semiconductor design. The companies plan to sell it as a service bundling computing, model access and software licences, and said early engagements with leading chip customers are underway. OpenAI co-founder Greg Brockman said the goal is to shave weeks or months from the design cycle.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "synopsys",
+    "chip-design",
+    "partnership"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/synopsys-openai-strike-deal-develop-ai-model-chip-design-work-2026-09-30/",
+      "publishedAt": "2026-09-30T13:17:00Z"
+    },
+    {
+      "publisher": "Synopsys (newsroom)",
+      "url": "https://news.synopsys.com/2026-09-30-OpenAI-and-Synopsys-Announce-GPT-Synopsys-Frontier-Intelligence-to-Revolutionize-Chip-Design",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    }
+  ]
+}

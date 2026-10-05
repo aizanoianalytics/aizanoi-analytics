@@ -1,0 +1,44 @@
+{
+  "id": "2026-10-05-weekly-ai-accountability-reckoning",
+  "kind": "weekly",
+  "title": "The safety bill comes due: an insider's exit, a regulator's probe and a rigged election",
+  "summary": "Three stories this week pointed the same way. David Robinson, who wrote OpenAI's launch safety reports, resigned and argued the company's culture cannot keep pace with its release schedule. The U.S. Federal Trade Commission opened a probe into OpenAI, Anthropic and others over potential consumer harms. And Anthropic disclosed an operation that used Claude to build fake voter profiles and a bogus outlet aimed at Malaysia. An insider's critique, a regulator's questions and a documented abuse: accountability for frontier AI is moving from voluntary statements to outside scrutiny.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-10-05T05:20:00Z",
+  "updatedAt": "2026-10-05T05:20:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "analysis",
+    "ai-safety",
+    "governance",
+    "ftc",
+    "anthropic"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/oct/03/openai-safety-leader-quits-warning-ai-companys-culture-is-broken",
+      "publishedAt": "2026-10-03T19:41:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/30/ftc-ai-probe-openai-anthropic.html",
+      "publishedAt": "2026-09-30T00:00:00Z"
+    },
+    {
+      "publisher": "Channel News Asia",
+      "url": "https://www.channelnewsasia.com/asia/anthropic-disrupt-malaysia-election-manipulation-operation-6377936",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    }
+  ],
+  "week": "2026-W41"
+}

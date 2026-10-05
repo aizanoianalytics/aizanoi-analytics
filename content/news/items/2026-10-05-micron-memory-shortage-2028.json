@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-05-micron-memory-shortage-2028",
+  "kind": "daily",
+  "title": "Micron warns memory shortages will persist into 2028",
+  "summary": "Micron told investors on its fiscal fourth-quarter earnings call that memory and storage supply will stay tighter in 2027 and 2028 than in 2026, with demand exceeding supply and 'no line of sight' to a balance. More than 75% of the chipmaker's planned 2027 output is already committed, and it reported record quarterly revenue of about $54 billion with an adjusted gross margin near 86%. New factories in Idaho, Japan, Singapore and New York will not begin to ease availability before 2028 at the earliest.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "micron",
+    "memory",
+    "dram",
+    "hbm",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/pc-components/dram/micron-projects-tightening-ram-shortages-through-2028-as-it-generates-record-profit-record-86-25-percent-gross-margin-drives-over-usd53-billion-in-quarterly-profit",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "TechRepublic",
+      "url": "https://www.techrepublic.com/article/news-micron-memory-shortage-2028-ai-demand/",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    }
+  ]
+}

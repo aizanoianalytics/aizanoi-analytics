@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-05-tsmc-texas-campus-terafab-talks",
+  "kind": "daily",
+  "title": "TSMC weighs a Texas chip campus as Musk confirms Terafab talks",
+  "summary": "TSMC is considering a new U.S. chipmaking campus in the Dallas area that would extend its manufacturing footprint beyond its $265 billion Arizona build-out, Bloomberg reported, with each fab costing at least $20 billion and an advanced-manufacturing tax-credit deadline looming. Elon Musk then confirmed on X that TSMC and Terafab, the chip venture backed by SpaceX and Tesla, are in talks, writing: 'Just discussions, but something may come of it.' Neither a TSMC Texas campus nor any Terafab agreement has been announced.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tsmc",
+    "terafab",
+    "semiconductors",
+    "texas",
+    "spacex"
+  ],
+  "sources": [
+    {
+      "publisher": "Fort Worth Star-Telegram (Bloomberg)",
+      "url": "https://star-telegram.com/news/business/article317440539.html",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Elon Musk (X)",
+      "url": "https://x.com/elonmusk",
+      "publishedAt": "2026-10-03T00:00:00Z"
+    }
+  ]
+}

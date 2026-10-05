@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-05-anthropic-malaysia-influence-operation",
+  "kind": "daily",
+  "title": "Anthropic says it disrupted an AI-built election influence network targeting Malaysia",
+  "summary": "Anthropic said it identified and shut down an influence operation that used Claude to build constituency-level voter profiles across Malaysia's 222 parliamentary seats, running about 1,000 fake X accounts, a bogus outlet called 'Malaysia Pulse' and fabricated intelligence dossiers. The company detailed the case in its September threat-intelligence report, covering activity disrupted between December 2025 and August 2026. Researchers warned the technique could be repeated as south-east Asian countries head to the polls, though the Malaysia effort proved ineffective once Anthropic intervened.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "claude",
+    "influence-operation",
+    "malaysia",
+    "elections"
+  ],
+  "sources": [
+    {
+      "publisher": "Channel News Asia",
+      "url": "https://www.channelnewsasia.com/asia/anthropic-disrupt-malaysia-election-manipulation-operation-6377936",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/oct/01/how-ai-could-supercharge-fake-news-elections-south-east-asia",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Anthropic (threat intelligence report)",
+      "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+      "publishedAt": "2026-09-10T00:00:00Z"
+    }
+  ]
+}

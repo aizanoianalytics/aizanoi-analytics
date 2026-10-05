@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-05-tencent-oracle-ai-chip-lease",
+  "kind": "daily",
+  "title": "Tencent leases 100,000 AI chips from Oracle in a reported $7 billion deal",
+  "summary": "Tencent has reportedly signed its largest overseas computing agreement, leasing about 100,000 advanced AI chips from Oracle across data centres in south-east Asia in a five-year deal worth roughly $7 billion, with about 30% paid upfront. The arrangement, first reported by the Financial Times, exploits a gap in U.S. export controls: Chinese firms are barred from buying the most advanced Nvidia chips but not from leasing overseas capacity that uses them. Tencent is expanding AI spending as it develops its Hunyuan models and weaves AI into WeChat.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tencent",
+    "oracle",
+    "ai-chips",
+    "export-controls",
+    "cloud"
+  ],
+  "sources": [
+    {
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/10/01/news-tencent-reportedly-signs-7b-deal-to-lease-100000-ai-chips-from-oracle-in-southeast-asia",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/china/chinas-tencent-leases-100000-chips-oracle-accelerate-ai-push-ft-reports-2026-10-01/",
+      "publishedAt": "2026-10-01T00:00:00Z"
+    },
+    {
+      "publisher": "TechRepublic",
+      "url": "https://www.techrepublic.com/article/news-tencent-oracle-ai-chip-deal-apac-southeast-asia/",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    }
+  ]
+}

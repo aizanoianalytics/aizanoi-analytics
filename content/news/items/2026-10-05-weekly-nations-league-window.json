@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-05-weekly-nations-league-window",
+  "kind": "weekly",
+  "title": "A Nations League window that redrew the international map",
+  "summary": "Four matchdays left the Nations League looking less like a friendly tournament than a form guide. Portugal became the first side to reach the quarter-finals, beating Norway 2-1 without the departed Cristiano Ronaldo. England produced the window's statement result, a 7-0 demolition of Croatia, while Spain extended a perfect run. Germany, under Jurgen Klopp, stalled with a goalless draw in Greece, and Wales slipped to a third defeat in four. With the window closed, the next fortnight's club fixtures will show which patterns were real.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-10-05T05:20:00Z",
+  "updatedAt": "2026-10-05T05:20:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "analysis",
+    "nations-league",
+    "uefa",
+    "international-break"
+  ],
+  "sources": [
+    {
+      "publisher": "Al Jazeera (AFP)",
+      "url": "https://aljazeera.com/sports/2026/10/4/ronaldo-less-portugal-beat-norway-2-1-to-reach-nations-league-quarterfinals",
+      "publishedAt": "2026-10-04T00:00:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://theguardian.com/football/2026/oct/04/nations-league-roundup-haaland-limps-off-in-norways-loss-to-portugal",
+      "publishedAt": "2026-10-04T00:00:00Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://skysports.com/football/wales-vs-denmark/report/554066",
+      "publishedAt": "2026-10-04T21:03:00Z"
+    }
+  ],
+  "week": "2026-W41"
+}

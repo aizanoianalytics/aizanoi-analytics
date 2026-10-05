@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-05-openai-safety-leader-resigns",
+  "kind": "daily",
+  "title": "OpenAI safety lead quits, warning the company's culture is 'broken'",
+  "summary": "David Robinson, who led the writing of the safety reports OpenAI publishes with each major model launch, resigned this week and argued in an essay for The Atlantic that the company's 'unimpeded optimism' has created a dangerous environment for powerful AI. He said frontier labs should run 'like nuclear power plants or busy airports', with layers of redundancy rather than a sprint from one launch to the next. OpenAI said it continues to strengthen safety and security practices and pauses training or holds back models when it needs to slow down.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-10-05T05:10:00Z",
+  "updatedAt": "2026-10-05T05:10:00Z",
+  "retrievedAt": "2026-10-05T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "ai-safety",
+    "resignation",
+    "governance"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/oct/03/openai-safety-leader-quits-warning-ai-companys-culture-is-broken",
+      "publishedAt": "2026-10-03T19:41:00Z"
+    },
+    {
+      "publisher": "The Atlantic (David Robinson)",
+      "url": "https://www.theatlantic.com/technology/2026/10/openai-safety-team-resignation/688881/",
+      "publishedAt": "2026-10-03T11:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/03/openai-safety-employee-resigns-claiming-the-companys-culture-is-broken",
+      "publishedAt": "2026-10-03T00:00:00Z"
+    }
+  ]
+}
