@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-06-nyc-council-ai-hearing",
+  "kind": "daily",
+  "title": "AI whistleblowers tell New York City Council the industry is 'extremely reckless'",
+  "summary": "Three former frontier-lab researchers told a rare New York City Council hearing that they doubt the industry can reliably detect when its safety work has failed. Jacob Coxon, who left Anthropic in September, said it is 'more likely than not' that humanity loses control of advanced AI on the current path; Daniel Kokotajlo and Alex Turner testified under subpoena. Executives from OpenAI, Anthropic, Google and Meta appeared only after the council threatened subpoenas, and Speaker Julie Menin said the companies could not quantify catastrophic risk. Elon Musk's SpaceXAI did not attend.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai-safety",
+    "regulation",
+    "new-york",
+    "governance"
+  ],
+  "sources": [
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/10/05/new-york-city-council-hearing-openai-anthropic-ai-safety-google-meta",
+      "publishedAt": "2026-10-05T19:55:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/05/anthropic-openai-google-meta-execs-testify-nyc-council-ai-hearing.html",
+      "publishedAt": "2026-10-05T21:00:00Z"
+    },
+    {
+      "publisher": "New York Daily News",
+      "url": "https://www.nydailynews.com/2026/10/05/ai-whistleblowers-encourage-nyc-council-to-enforce-more-regulation",
+      "publishedAt": "2026-10-05T22:00:00Z"
+    }
+  ]
+}

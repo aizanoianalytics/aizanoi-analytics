@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-06-nations-league-hungary-ukraine",
+  "kind": "daily",
+  "title": "Hungary edge Ukraine as Northern Ireland are held in Nations League",
+  "summary": "Matchday four of the 2026-27 UEFA Nations League closed with Hungary beating Ukraine 2-1 and Northern Ireland drawing 0-0 with Georgia at Windsor Park. Bosnia and Herzegovina beat Poland 1-0 and Sweden won 1-0 in Romania in the other League B fixtures. In League C, Cyprus beat Latvia 2-1 and Montenegro drew 0-0 with Armenia. The league phase resumes in November, with Nations League Finals places still to be settled.",
+  "category": "football",
+  "priority": 50,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "hungary",
+    "ukraine",
+    "northern-ireland"
+  ],
+  "sources": [
+    {
+      "publisher": "MatchCalendar.football",
+      "url": "https://matchcalendar.football/competition/uefa-nations-league/results/",
+      "publishedAt": "2026-10-06T00:00:00Z"
+    },
+    {
+      "publisher": "UEFA.com",
+      "url": "https://www.uefa.com/uefanationsleague/news/02a2-1fea18abbcbc-456e846509e7-1000--2026-27-uefa-nations-league-all-the-league-phase-fixtures/",
+      "publishedAt": "2026-10-05T10:00:00Z"
+    }
+  ]
+}

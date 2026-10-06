@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-06-visa-openai-agentic-commerce",
+  "kind": "daily",
+  "title": "Visa and OpenAI partner to put payments inside agentic commerce",
+  "summary": "Visa announced a strategic collaboration with OpenAI to enable Visa payments within AI-agent commerce experiences, unveiled at the Visa Payments Forum in San Francisco. Visa will supply its network, credentialing and risk infrastructure so that transactions initiated by agents can run through its Intelligent Commerce initiative. The two companies will also explore enterprise use cases, including developer experiences powered by Codex.",
+  "category": "economy-markets",
+  "priority": 66,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "visa",
+    "openai",
+    "payments",
+    "agentic-commerce"
+  ],
+  "sources": [
+    {
+      "publisher": "Visa",
+      "url": "https://corporate.visa.com/en/sites/visa-perspectives/newsroom/visa-openai-power-next-generation-commerce.html",
+      "publishedAt": "2026-10-06T03:00:00Z"
+    }
+  ]
+}

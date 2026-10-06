@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-06-openai-eu-text-watermarking",
+  "kind": "daily",
+  "title": "OpenAI opens opt-in text watermarking as EU AI Act provenance rules bite",
+  "summary": "OpenAI laid out how it will mark AI-generated text under the EU AI Act, letting API customers worldwide opt into watermarking for select models from October 5 while keeping it off by default. In the coming weeks it will add an invisible watermark to eligible ChatGPT and Codex output inside the European Union only, and it opened applications for a detector limited to vetted researchers and expert organisations. OpenAI said its textGrain method leaves output quality largely unchanged but warns detection weakens sharply after editing.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "eu-ai-act",
+    "watermarking",
+    "provenance"
+  ],
+  "sources": [
+    {
+      "publisher": "Unite.AI",
+      "url": "https://www.unite.ai/openai-begins-phased-text-watermarking-under-eu-ai-act-rules/",
+      "publishedAt": "2026-10-05T12:00:00Z"
+    },
+    {
+      "publisher": "9to5Mac",
+      "url": "https://9to5mac.com/2026/10/05/openai-details-new-text-watermarking-system-for-chatgpt-codex-and-the-api/",
+      "publishedAt": "2026-10-05T20:46:00Z"
+    }
+  ]
+}

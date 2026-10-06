@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-06-us-japan-technology-prosperity",
+  "kind": "daily",
+  "title": "US and Japan widen 'super intelligence' technology alliance",
+  "summary": "The United States and Japan set out fresh steps under their Technology Prosperity Deal, covering artificial intelligence, quantum technology, telecoms, biotechnology and space. A joint statement said the two sides will deepen dialogue on 'super intelligence', work toward shared industry standards and promote trusted AI adoption across the Indo-Pacific. They also signed a protocol on October 2 indefinitely extending a 1988 science and technology cooperation agreement with updated intellectual property protections.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "us-japan",
+    "ai-policy",
+    "standards",
+    "supply-chain"
+  ],
+  "sources": [
+    {
+      "publisher": "U.S. Department of State",
+      "url": "https://state.gov/releases/office-of-the-spokesman/2026/10/joint-statement-on-the-u-s-japan-technology-prosperity-deal",
+      "publishedAt": "2026-10-05T18:00:00Z"
+    },
+    {
+      "publisher": "IANS",
+      "url": "https://ianslive.in/us-japan-deepen-technology-partnership--20261006065102",
+      "publishedAt": "2026-10-06T01:46:00Z"
+    }
+  ]
+}

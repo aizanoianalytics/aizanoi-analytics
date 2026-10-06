@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-06-wall-street-yields-gold",
+  "kind": "daily",
+  "title": "Stocks hold near records as Treasury yields climb and gold stays high",
+  "summary": "Wall Street closed near its highs, with the S&P 500 at 7,773.95, up 0.66%, and the Nasdaq up 1.05% as technology led. The 10-year Treasury yield rose to 5.31%, close to its highest since 2002, and gold eased to about $4,134 an ounce. A firm US services prices reading kept the debate over a Federal Reserve rate move alive, while a federal government shutdown running into a second week has withheld key economic data from markets.",
+  "category": "economy-markets",
+  "priority": 68,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "treasuries",
+    "gold",
+    "federal-reserve"
+  ],
+  "sources": [
+    {
+      "publisher": "Rio Times",
+      "url": "https://riotimesonline.com/global-economy-briefing-october-6-2026",
+      "publishedAt": "2026-10-06T03:00:00Z"
+    },
+    {
+      "publisher": "Traders Union",
+      "url": "https://tradersunion.com/news/financial-news/show/616574-three-key-events-of-the-day",
+      "publishedAt": "2026-10-06T04:00:00Z"
+    }
+  ]
+}

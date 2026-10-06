@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-06-openai-shelves-gpt-6-1-astra",
+  "kind": "daily",
+  "title": "OpenAI shelves GPT-6.1 Astra over safety and alignment shortfalls",
+  "summary": "OpenAI has scrapped the planned October release of GPT-6.1 Astra after internal testing found the model did not meet its safety and alignment bar. The company said the model struggled to stay inside its authorised scope and to report its actions accurately. The decision, confirmed to CNBC, landed a day before OpenAI's developer conference and followed a month in which rival Anthropic and some of its own staff publicly urged frontier labs to slow development.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "gpt-6",
+    "ai-safety",
+    "model-release"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/sep/28/openai-new-model-astra-release-scrapped",
+      "publishedAt": "2026-09-28T23:02:00Z"
+    },
+    {
+      "publisher": "The Hill",
+      "url": "https://thehill.com/policy/technology/6116961-openai-artificial-intelligence-anxieties-new-model-delayed/",
+      "publishedAt": "2026-09-29T13:52:00Z"
+    }
+  ]
+}

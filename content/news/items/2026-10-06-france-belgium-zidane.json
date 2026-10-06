@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-06-france-belgium-zidane",
+  "kind": "daily",
+  "title": "France score four in 14 minutes to sink Belgium and hand Zidane a first home win",
+  "summary": "France trailed Belgium until the 77th minute at the Stade de France, then scored four times in 14 minutes through substitutes Desire Doue, Rayan Cherki and a Michael Olise double to win 4-1. Dodi Lukebakio had put Belgium ahead in the 35th minute against a debutant goalkeeper. The result gave Zinedine Zidane his first home victory as France coach and left his side top of Nations League Group A1, three points clear of Italy.",
+  "category": "football",
+  "priority": 82,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "france",
+    "belgium",
+    "zidane"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/oct/05/nations-league-roundup-olise-leads-late-charge-as-france-bowl-over-belgium",
+      "publishedAt": "2026-10-05T21:30:00Z"
+    },
+    {
+      "publisher": "AP via US News",
+      "url": "https://usnews.com/news/sports/articles/2026-10-05/zidane-and-mancini-get-first-home-wins-in-charge-of-france-and-italy-in-nations-league",
+      "publishedAt": "2026-10-05T22:00:00Z"
+    },
+    {
+      "publisher": "Reuters via The Star",
+      "url": "https://thestar.com.my/sport/football/2026/10/06/soccer-france-come-from-behind-to-thrash-belgium-4-1",
+      "publishedAt": "2026-10-05T22:30:00Z"
+    }
+  ]
+}

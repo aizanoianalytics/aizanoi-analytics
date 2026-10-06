@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-06-nobel-medicine-optogenetics",
+  "kind": "daily",
+  "title": "Nobel Prize in Medicine honours the pioneers of optogenetics",
+  "summary": "The 2026 Nobel Prize in Physiology or Medicine went to Karl Deisseroth, Peter Hegemann and Georg Nagel for discoveries concerning light-gated ion channels and optogenetics. Hegemann and Nagel identified channelrhodopsin in a single-celled alga; Deisseroth turned the protein into a light-controlled switch for nerve cells. The method lets researchers switch specific neurons on and off in living brains, and is being explored clinically to restore sight. The three share 12 million Swedish kronor.",
+  "category": "technology",
+  "priority": 76,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nobel-prize",
+    "neuroscience",
+    "optogenetics",
+    "research"
+  ],
+  "sources": [
+    {
+      "publisher": "NobelPrize.org",
+      "url": "https://www.nobelprize.org/prizes/medicine/2026/press-release",
+      "publishedAt": "2026-10-05T09:30:00Z"
+    },
+    {
+      "publisher": "Scientific American",
+      "url": "https://www.scientificamerican.com/article/2026-nobel-prize-in-physiology-or-medicine-awarded-to-karl-deisseroth-george-nagel-and-peter-hegemann-for-work-on-optogenetics/",
+      "publishedAt": "2026-10-05T14:00:00Z"
+    }
+  ]
+}
