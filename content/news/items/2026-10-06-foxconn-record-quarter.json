@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-06-foxconn-record-quarter",
+  "kind": "daily",
+  "title": "Foxconn posts a record quarter as AI server demand surges",
+  "summary": "Hon Hai Precision Industry, known globally as Foxconn, reported third-quarter revenue of NT$3.03 trillion, a record quarterly high and up 47.12% from a year earlier. September sales alone passed NT$1 trillion for the first time, up 38.42% year on year. The contract manufacturer credited robust demand in its cloud and networking division, which builds AI servers, alongside gains in consumer electronics such as iPhones.",
+  "category": "technology",
+  "priority": 65,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "foxconn",
+    "ai-servers",
+    "earnings",
+    "supply-chain"
+  ],
+  "sources": [
+    {
+      "publisher": "Focus Taiwan",
+      "url": "https://focustaiwan.tw/business/202610050019",
+      "publishedAt": "2026-10-05T09:00:00Z"
+    }
+  ]
+}

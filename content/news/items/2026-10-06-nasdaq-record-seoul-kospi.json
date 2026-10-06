@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-06-nasdaq-record-seoul-kospi",
+  "kind": "daily",
+  "title": "Nasdaq sets a record close but Seoul's Kospi stalls at 7,000",
+  "summary": "A record closing high on the Nasdaq failed to carry into Seoul, where the Kospi opened higher and then slipped to 7,000.99 in early trade on its first session after a long holiday. Foreign investors sold, and chipmaker SK hynix fell about 1.5% as it tracked weak US memory peers rather than Nvidia. Samsung Electronics edged up ahead of its third-quarter preliminary earnings, while the tech-heavy Kosdaq rose 2.4%.",
+  "category": "economy-markets",
+  "priority": 52,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "kospi",
+    "nasdaq",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "Aju Press",
+      "url": "https://m.ajupress.com/20261006092929791",
+      "publishedAt": "2026-10-06T00:38:00Z"
+    },
+    {
+      "publisher": "ChosunBiz",
+      "url": "https://biz.chosun.com/en/en-finance/2026/10/06/VM5K6ZHSKBBJFDWVRU6QU5Z7AQ",
+      "publishedAt": "2026-10-06T03:20:00Z"
+    }
+  ]
+}

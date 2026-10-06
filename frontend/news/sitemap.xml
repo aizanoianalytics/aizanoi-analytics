@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/france-belgium-zidane/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>France score four in 14 minutes to sink Belgium and hand Zidane a first home win</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/nyc-council-ai-hearing/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>AI whistleblowers tell New York City Council the industry is &#39;extremely reckless&#39;</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/nobel-medicine-optogenetics/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>Nobel Prize in Medicine honours the pioneers of optogenetics</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/openai-shelves-gpt-6-1-astra/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>OpenAI shelves GPT-6.1 Astra over safety and alignment shortfalls</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/openai-eu-text-watermarking/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>OpenAI opens opt-in text watermarking as EU AI Act provenance rules bite</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/italy-turkey-mancini/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>Italy beat Turkey 3-1 for Mancini&#39;s first home win since his return</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/wall-street-yields-gold/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>Stocks hold near records as Treasury yields climb and gold stays high</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/visa-openai-agentic-commerce/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>Visa and OpenAI partner to put payments inside agentic commerce</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/foxconn-record-quarter/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>Foxconn posts a record quarter as AI server demand surges</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/us-japan-technology-prosperity/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>US and Japan widen &#39;super intelligence&#39; technology alliance</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/china-ai-benchmark-gap/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>Chinese AI models close to within 3% of US leaders, Bloomberg Intelligence says</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/aws-gpu-capacity-pricing/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>Amazon raises reserved GPU rates and weighs an $8bn Nvidia chip vehicle</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/anthropic-frontier-academy/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>Anthropic commits $100m to train 10,000 enterprise AI engineers</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/nasdaq-record-seoul-kospi/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>Nasdaq sets a record close but Seoul&#39;s Kospi stalls at 7,000</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-06/nations-league-hungary-ukraine/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-06T05:10:00.000Z</news:publication_date>
+      <news:title>Hungary edge Ukraine as Northern Ireland are held in Nations League</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/weekly/2026-10-05/weekly-ai-accountability-reckoning/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -278,126 +398,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-10-04T05:10:00.000Z</news:publication_date>
       <news:title>Scotland earn first win under Pocognoli as Robertson hits 100 caps</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/september-jobs-report-payrolls/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>US hiring almost stalls as September payrolls rise just 29,000</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/anthropic-ipo-prospectus-two-trillion/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>Anthropic&#39;s IPO filing pairs a $2 trillion ambition with stark risk warnings</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/de-bruyne-belgium-turkiye-nations-league/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>De Bruyne double sends Belgium past Turkiye in the Nations League</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/zidane-france-held-italy-nations-league/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>Italy spoil Zidane&#39;s first home game as France are held in Paris</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/tavus-griffin-video-turing-test/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>Tavus says its Griffin model fooled half of people on live video calls</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/meta-open-sources-muse-gadgets/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>Meta opens the firmware and SDKs for building your own Muse device</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/nike-first-quarter-pace-restructuring/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>Nike posts a mixed quarter and launches a cost-cutting reset</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/crowdstrike-president-ai-models-evade-oversight/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>CrowdStrike president warns AI models are learning to evade oversight</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/lewandowski-poland-rout-romania/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>Lewandowski hat-trick as Poland rout Romania 6-0</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/pjm-ferc-data-center-power-auction/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>US regulators freeze the grid&#39;s power auction for data centres</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/openai-rogue-agent-second-nsw-site/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>OpenAI says a rogue agent reached a second New South Wales website</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/mit-sakana-sift-coding-agents/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>MIT and Sakana AI cut the cost of self-improving coding agents</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/casio-sapphire-g-shock-blue-rose/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>Casio unveils an $80,000 sapphire G-Shock</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/onetrust-corie-ai-agent-governance/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>OneTrust launches a control plane to govern AI agents</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-03/whatsapp-business-service-message-charges/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-03T05:35:00.000Z</news:publication_date>
-      <news:title>WhatsApp tightens billing for business service messages</news:title>
     </news:news>
   </url>
 </urlset>

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-06-aws-gpu-capacity-pricing",
+  "kind": "daily",
+  "title": "Amazon raises reserved GPU rates and weighs an $8bn Nvidia chip vehicle",
+  "summary": "Amazon Web Services published new hourly rates for EC2 Capacity Blocks for ML effective October 7, setting P6-B300 accelerators at $16.146 and P5en at $7.895 per accelerator-hour across regions. Separately, the Financial Times reported Amazon is in talks to move about $8 billion of Nvidia Grace Blackwell chips into a special-purpose vehicle funded by outside debt and then lease them back, keeping up to a 10% equity stake. Together the moves show how AI infrastructure is increasingly financed off balance sheet.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-06T05:10:00Z",
+  "updatedAt": "2026-10-06T05:10:00Z",
+  "retrievedAt": "2026-10-06T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "aws",
+    "nvidia",
+    "cloud",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Amazon Web Services",
+      "url": "https://aws.amazon.com/ec2/capacityblocks/pricing/",
+      "publishedAt": "2026-10-05T00:00:00Z"
+    },
+    {
+      "publisher": "Tech Startups",
+      "url": "https://techstartups.com/2026/10/02/amazon-seeks-to-offload-8-billion-in-nvidia-ai-chips-to-investors-as-big-tech-turns-to-wall-street-for-ai-compute-financing",
+      "publishedAt": "2026-10-02T14:00:00Z"
+    }
+  ]
+}

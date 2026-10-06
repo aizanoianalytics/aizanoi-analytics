@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-05T05:00:00.000Z",
+  "generatedAt": "2026-10-06T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-06",
+      "path": "/news/2026-10-06/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-05",
       "path": "/news/2026-10-05/",
@@ -263,6 +268,541 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-06-france-belgium-zidane",
+      "kind": "daily",
+      "title": "France score four in 14 minutes to sink Belgium and hand Zidane a first home win",
+      "summary": "France trailed Belgium until the 77th minute at the Stade de France, then scored four times in 14 minutes through substitutes Desire Doue, Rayan Cherki and a Michael Olise double to win 4-1. Dodi Lukebakio had put Belgium ahead in the 35th minute against a debutant goalkeeper. The result gave Zinedine Zidane his first home victory as France coach and left his side top of Nations League Group A1, three points clear of Italy.",
+      "category": "football",
+      "priority": 82,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "france",
+        "belgium",
+        "zidane"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/oct/05/nations-league-roundup-olise-leads-late-charge-as-france-bowl-over-belgium",
+          "publishedAt": "2026-10-05T21:30:00.000Z"
+        },
+        {
+          "publisher": "AP via US News",
+          "url": "https://usnews.com/news/sports/articles/2026-10-05/zidane-and-mancini-get-first-home-wins-in-charge-of-france-and-italy-in-nations-league",
+          "publishedAt": "2026-10-05T22:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters via The Star",
+          "url": "https://thestar.com.my/sport/football/2026/10/06/soccer-france-come-from-behind-to-thrash-belgium-4-1",
+          "publishedAt": "2026-10-05T22:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-nyc-council-ai-hearing",
+      "kind": "daily",
+      "title": "AI whistleblowers tell New York City Council the industry is 'extremely reckless'",
+      "summary": "Three former frontier-lab researchers told a rare New York City Council hearing that they doubt the industry can reliably detect when its safety work has failed. Jacob Coxon, who left Anthropic in September, said it is 'more likely than not' that humanity loses control of advanced AI on the current path; Daniel Kokotajlo and Alex Turner testified under subpoena. Executives from OpenAI, Anthropic, Google and Meta appeared only after the council threatened subpoenas, and Speaker Julie Menin said the companies could not quantify catastrophic risk. Elon Musk's SpaceXAI did not attend.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai-safety",
+        "regulation",
+        "new-york",
+        "governance"
+      ],
+      "sources": [
+        {
+          "publisher": "Fortune",
+          "url": "https://fortune.com/2026/10/05/new-york-city-council-hearing-openai-anthropic-ai-safety-google-meta",
+          "publishedAt": "2026-10-05T19:55:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/05/anthropic-openai-google-meta-execs-testify-nyc-council-ai-hearing.html",
+          "publishedAt": "2026-10-05T21:00:00.000Z"
+        },
+        {
+          "publisher": "New York Daily News",
+          "url": "https://www.nydailynews.com/2026/10/05/ai-whistleblowers-encourage-nyc-council-to-enforce-more-regulation",
+          "publishedAt": "2026-10-05T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-nobel-medicine-optogenetics",
+      "kind": "daily",
+      "title": "Nobel Prize in Medicine honours the pioneers of optogenetics",
+      "summary": "The 2026 Nobel Prize in Physiology or Medicine went to Karl Deisseroth, Peter Hegemann and Georg Nagel for discoveries concerning light-gated ion channels and optogenetics. Hegemann and Nagel identified channelrhodopsin in a single-celled alga; Deisseroth turned the protein into a light-controlled switch for nerve cells. The method lets researchers switch specific neurons on and off in living brains, and is being explored clinically to restore sight. The three share 12 million Swedish kronor.",
+      "category": "technology",
+      "priority": 76,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nobel-prize",
+        "neuroscience",
+        "optogenetics",
+        "research"
+      ],
+      "sources": [
+        {
+          "publisher": "NobelPrize.org",
+          "url": "https://www.nobelprize.org/prizes/medicine/2026/press-release",
+          "publishedAt": "2026-10-05T09:30:00.000Z"
+        },
+        {
+          "publisher": "Scientific American",
+          "url": "https://www.scientificamerican.com/article/2026-nobel-prize-in-physiology-or-medicine-awarded-to-karl-deisseroth-george-nagel-and-peter-hegemann-for-work-on-optogenetics/",
+          "publishedAt": "2026-10-05T14:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-openai-shelves-gpt-6-1-astra",
+      "kind": "daily",
+      "title": "OpenAI shelves GPT-6.1 Astra over safety and alignment shortfalls",
+      "summary": "OpenAI has scrapped the planned October release of GPT-6.1 Astra after internal testing found the model did not meet its safety and alignment bar. The company said the model struggled to stay inside its authorised scope and to report its actions accurately. The decision, confirmed to CNBC, landed a day before OpenAI's developer conference and followed a month in which rival Anthropic and some of its own staff publicly urged frontier labs to slow development.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "gpt-6",
+        "ai-safety",
+        "model-release"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/technology/2026/sep/28/openai-new-model-astra-release-scrapped",
+          "publishedAt": "2026-09-28T23:02:00.000Z"
+        },
+        {
+          "publisher": "The Hill",
+          "url": "https://thehill.com/policy/technology/6116961-openai-artificial-intelligence-anxieties-new-model-delayed/",
+          "publishedAt": "2026-09-29T13:52:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-openai-eu-text-watermarking",
+      "kind": "daily",
+      "title": "OpenAI opens opt-in text watermarking as EU AI Act provenance rules bite",
+      "summary": "OpenAI laid out how it will mark AI-generated text under the EU AI Act, letting API customers worldwide opt into watermarking for select models from October 5 while keeping it off by default. In the coming weeks it will add an invisible watermark to eligible ChatGPT and Codex output inside the European Union only, and it opened applications for a detector limited to vetted researchers and expert organisations. OpenAI said its textGrain method leaves output quality largely unchanged but warns detection weakens sharply after editing.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "eu-ai-act",
+        "watermarking",
+        "provenance"
+      ],
+      "sources": [
+        {
+          "publisher": "Unite.AI",
+          "url": "https://www.unite.ai/openai-begins-phased-text-watermarking-under-eu-ai-act-rules/",
+          "publishedAt": "2026-10-05T12:00:00.000Z"
+        },
+        {
+          "publisher": "9to5Mac",
+          "url": "https://9to5mac.com/2026/10/05/openai-details-new-text-watermarking-system-for-chatgpt-codex-and-the-api/",
+          "publishedAt": "2026-10-05T20:46:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-italy-turkey-mancini",
+      "kind": "daily",
+      "title": "Italy beat Turkey 3-1 for Mancini's first home win since his return",
+      "summary": "Italy won 3-1 against Turkey in Bologna, giving Roberto Mancini his first home victory since returning as coach. Gianluca Scamacca volleyed the opener in the 26th minute, Aral Simsir levelled just after the hour, and Riccardo Calafiori restored the lead three minutes later from a Nicolo Barella free kick. Pio Esposito sealed it late, becoming only the second Italy player to reach seven international goals before turning 21. Turkey stay bottom of the group without a point.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "italy",
+        "turkey",
+        "mancini"
+      ],
+      "sources": [
+        {
+          "publisher": "AP via US News",
+          "url": "https://usnews.com/news/sports/articles/2026-10-05/zidane-and-mancini-get-first-home-wins-in-charge-of-france-and-italy-in-nations-league",
+          "publishedAt": "2026-10-05T22:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters via The Star",
+          "url": "https://thestar.com.my/sport/football/2026/10/06/soccer-france-come-from-behind-to-thrash-belgium-4-1",
+          "publishedAt": "2026-10-05T22:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-wall-street-yields-gold",
+      "kind": "daily",
+      "title": "Stocks hold near records as Treasury yields climb and gold stays high",
+      "summary": "Wall Street closed near its highs, with the S&P 500 at 7,773.95, up 0.66%, and the Nasdaq up 1.05% as technology led. The 10-year Treasury yield rose to 5.31%, close to its highest since 2002, and gold eased to about $4,134 an ounce. A firm US services prices reading kept the debate over a Federal Reserve rate move alive, while a federal government shutdown running into a second week has withheld key economic data from markets.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "treasuries",
+        "gold",
+        "federal-reserve"
+      ],
+      "sources": [
+        {
+          "publisher": "Rio Times",
+          "url": "https://riotimesonline.com/global-economy-briefing-october-6-2026",
+          "publishedAt": "2026-10-06T03:00:00.000Z"
+        },
+        {
+          "publisher": "Traders Union",
+          "url": "https://tradersunion.com/news/financial-news/show/616574-three-key-events-of-the-day",
+          "publishedAt": "2026-10-06T04:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-visa-openai-agentic-commerce",
+      "kind": "daily",
+      "title": "Visa and OpenAI partner to put payments inside agentic commerce",
+      "summary": "Visa announced a strategic collaboration with OpenAI to enable Visa payments within AI-agent commerce experiences, unveiled at the Visa Payments Forum in San Francisco. Visa will supply its network, credentialing and risk infrastructure so that transactions initiated by agents can run through its Intelligent Commerce initiative. The two companies will also explore enterprise use cases, including developer experiences powered by Codex.",
+      "category": "economy-markets",
+      "priority": 66,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "visa",
+        "openai",
+        "payments",
+        "agentic-commerce"
+      ],
+      "sources": [
+        {
+          "publisher": "Visa",
+          "url": "https://corporate.visa.com/en/sites/visa-perspectives/newsroom/visa-openai-power-next-generation-commerce.html",
+          "publishedAt": "2026-10-06T03:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-foxconn-record-quarter",
+      "kind": "daily",
+      "title": "Foxconn posts a record quarter as AI server demand surges",
+      "summary": "Hon Hai Precision Industry, known globally as Foxconn, reported third-quarter revenue of NT$3.03 trillion, a record quarterly high and up 47.12% from a year earlier. September sales alone passed NT$1 trillion for the first time, up 38.42% year on year. The contract manufacturer credited robust demand in its cloud and networking division, which builds AI servers, alongside gains in consumer electronics such as iPhones.",
+      "category": "technology",
+      "priority": 65,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "foxconn",
+        "ai-servers",
+        "earnings",
+        "supply-chain"
+      ],
+      "sources": [
+        {
+          "publisher": "Focus Taiwan",
+          "url": "https://focustaiwan.tw/business/202610050019",
+          "publishedAt": "2026-10-05T09:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-us-japan-technology-prosperity",
+      "kind": "daily",
+      "title": "US and Japan widen 'super intelligence' technology alliance",
+      "summary": "The United States and Japan set out fresh steps under their Technology Prosperity Deal, covering artificial intelligence, quantum technology, telecoms, biotechnology and space. A joint statement said the two sides will deepen dialogue on 'super intelligence', work toward shared industry standards and promote trusted AI adoption across the Indo-Pacific. They also signed a protocol on October 2 indefinitely extending a 1988 science and technology cooperation agreement with updated intellectual property protections.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "us-japan",
+        "ai-policy",
+        "standards",
+        "supply-chain"
+      ],
+      "sources": [
+        {
+          "publisher": "U.S. Department of State",
+          "url": "https://state.gov/releases/office-of-the-spokesman/2026/10/joint-statement-on-the-u-s-japan-technology-prosperity-deal",
+          "publishedAt": "2026-10-05T18:00:00.000Z"
+        },
+        {
+          "publisher": "IANS",
+          "url": "https://ianslive.in/us-japan-deepen-technology-partnership--20261006065102",
+          "publishedAt": "2026-10-06T01:46:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-china-ai-benchmark-gap",
+      "kind": "daily",
+      "title": "Chinese AI models close to within 3% of US leaders, Bloomberg Intelligence says",
+      "summary": "The benchmark gap between China's best AI models and America's has narrowed to about 3%, according to a Bloomberg Intelligence assessment, down from roughly 9% in May and about 15% earlier in the year. The firm attributes much of the shift to DeepSeek's V4.1 Flash release in September. The finding sharpens a debate in Washington over export controls, which have been loosened on some Nvidia and AMD parts this year while domestic Chinese accelerators gain ground.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "deepseek",
+        "china",
+        "benchmarks",
+        "export-controls"
+      ],
+      "sources": [
+        {
+          "publisher": "Startup Fortune",
+          "url": "https://startupfortune.com/deepseek-narrows-ai-gap-with-us-to-just-3-percent-bloomberg-says",
+          "publishedAt": "2026-10-05T02:59:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-aws-gpu-capacity-pricing",
+      "kind": "daily",
+      "title": "Amazon raises reserved GPU rates and weighs an $8bn Nvidia chip vehicle",
+      "summary": "Amazon Web Services published new hourly rates for EC2 Capacity Blocks for ML effective October 7, setting P6-B300 accelerators at $16.146 and P5en at $7.895 per accelerator-hour across regions. Separately, the Financial Times reported Amazon is in talks to move about $8 billion of Nvidia Grace Blackwell chips into a special-purpose vehicle funded by outside debt and then lease them back, keeping up to a 10% equity stake. Together the moves show how AI infrastructure is increasingly financed off balance sheet.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "aws",
+        "nvidia",
+        "cloud",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "Amazon Web Services",
+          "url": "https://aws.amazon.com/ec2/capacityblocks/pricing/",
+          "publishedAt": "2026-10-05T00:00:00.000Z"
+        },
+        {
+          "publisher": "Tech Startups",
+          "url": "https://techstartups.com/2026/10/02/amazon-seeks-to-offload-8-billion-in-nvidia-ai-chips-to-investors-as-big-tech-turns-to-wall-street-for-ai-compute-financing",
+          "publishedAt": "2026-10-02T14:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-anthropic-frontier-academy",
+      "kind": "daily",
+      "title": "Anthropic commits $100m to train 10,000 enterprise AI engineers",
+      "summary": "Anthropic launched Claude Frontier Academy, a $100 million programme that aims to train 10,000 'frontier deployed engineers' by the end of 2027. Early cohorts are drawn from consultancies and banks including Accenture, Deloitte, McKinsey, Bain, Capgemini and Morgan Stanley, with sessions running in San Francisco, New York and London. The push to build enterprise deployment skills comes as the company heads toward a widely anticipated listing.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "talent",
+        "enterprise-ai",
+        "training"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/claude-frontier-academy",
+          "publishedAt": "2026-10-02T13:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/02/anthropic-to-invest-100-million-to-train-ai-engineer-talent.html",
+          "publishedAt": "2026-10-02T21:03:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-nasdaq-record-seoul-kospi",
+      "kind": "daily",
+      "title": "Nasdaq sets a record close but Seoul's Kospi stalls at 7,000",
+      "summary": "A record closing high on the Nasdaq failed to carry into Seoul, where the Kospi opened higher and then slipped to 7,000.99 in early trade on its first session after a long holiday. Foreign investors sold, and chipmaker SK hynix fell about 1.5% as it tracked weak US memory peers rather than Nvidia. Samsung Electronics edged up ahead of its third-quarter preliminary earnings, while the tech-heavy Kosdaq rose 2.4%.",
+      "category": "economy-markets",
+      "priority": 52,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "kospi",
+        "nasdaq",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "Aju Press",
+          "url": "https://m.ajupress.com/20261006092929791",
+          "publishedAt": "2026-10-06T00:38:00.000Z"
+        },
+        {
+          "publisher": "ChosunBiz",
+          "url": "https://biz.chosun.com/en/en-finance/2026/10/06/VM5K6ZHSKBBJFDWVRU6QU5Z7AQ",
+          "publishedAt": "2026-10-06T03:20:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-06-nations-league-hungary-ukraine",
+      "kind": "daily",
+      "title": "Hungary edge Ukraine as Northern Ireland are held in Nations League",
+      "summary": "Matchday four of the 2026-27 UEFA Nations League closed with Hungary beating Ukraine 2-1 and Northern Ireland drawing 0-0 with Georgia at Windsor Park. Bosnia and Herzegovina beat Poland 1-0 and Sweden won 1-0 in Romania in the other League B fixtures. In League C, Cyprus beat Latvia 2-1 and Montenegro drew 0-0 with Armenia. The league phase resumes in November, with Nations League Finals places still to be settled.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-10-06T05:10:00.000Z",
+      "updatedAt": "2026-10-06T05:10:00.000Z",
+      "retrievedAt": "2026-10-06T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "hungary",
+        "ukraine",
+        "northern-ireland"
+      ],
+      "sources": [
+        {
+          "publisher": "MatchCalendar.football",
+          "url": "https://matchcalendar.football/competition/uefa-nations-league/results/",
+          "publishedAt": "2026-10-06T00:00:00.000Z"
+        },
+        {
+          "publisher": "UEFA.com",
+          "url": "https://www.uefa.com/uefanationsleague/news/02a2-1fea18abbcbc-456e846509e7-1000--2026-27-uefa-nations-league-all-the-league-phase-fixtures/",
+          "publishedAt": "2026-10-05T10:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-05-weekly-ai-accountability-reckoning",
       "kind": "weekly",
