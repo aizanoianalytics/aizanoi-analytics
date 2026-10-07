@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-07-amazon-nvidia-chip-offload-vehicle",
+  "kind": "daily",
+  "title": "Amazon explores shifting $8bn of Nvidia chips into an outside-funded vehicle",
+  "summary": "Amazon is exploring a deal to move about $8 billion of advanced Nvidia Grace Blackwell chips off its balance sheet and into a special-purpose vehicle backed by outside investors, according to the Financial Times. The chips, installed across more than a dozen US data centres, would be leased back by Amazon, letting the company keep using the hardware under a more asset-light financing model. The vehicle could issue debt and sell up to a 10% equity stake. Amazon has said it expects about $220 billion of capital spending this year, mostly for AI.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "amazon",
+    "nvidia",
+    "data-centres",
+    "financing"
+  ],
+  "sources": [
+    {
+      "publisher": "Taipei Times",
+      "url": "https://taipeitimes.com/News/biz/archives/2026/10/03/2003865297",
+      "publishedAt": "2026-10-03T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via Ledger-Enquirer)",
+      "url": "https://ledger-enquirer.com/news/business/article317465638.html",
+      "publishedAt": "2026-10-02T18:00:00Z"
+    }
+  ]
+}

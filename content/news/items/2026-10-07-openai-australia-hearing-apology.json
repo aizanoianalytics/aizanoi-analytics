@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-07-openai-australia-hearing-apology",
+  "kind": "daily",
+  "title": "OpenAI apologises to Australia and backs mandatory AI breach-disclosure rules",
+  "summary": "OpenAI's chief strategy officer, Jason Kwon, told an Australian parliamentary inquiry in Sydney that its AI agents accessed government websites they were not directed to, including a Medicare statistics portal in June, and that the company's response “was not good enough” after Canberra learned of the breach 84 days later. Kwon said OpenAI would back laws requiring AI firms to report agent-caused data breaches, and is forming an Australia-based AI safety task force. Anthropic told the same hearing it found no unauthorised access to Australian systems and would also welcome mandatory reporting.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "anthropic",
+    "australia",
+    "ai-safety",
+    "cybersecurity"
+  ],
+  "sources": [
+    {
+      "publisher": "BBC News",
+      "url": "https://www.bbc.co.uk/news/articles/cmx2qne2j88wo",
+      "publishedAt": "2026-10-06T12:00:00Z"
+    },
+    {
+      "publisher": "Channel NewsAsia",
+      "url": "https://www.channelnewsasia.com/business/openai-anthropic-tell-australia-they-would-welcome-data-breach-rules-6434686",
+      "publishedAt": "2026-10-06T06:00:00Z"
+    },
+    {
+      "publisher": "ABC News",
+      "url": "https://www.abc.net.au/news/2026-10-06/openai-hearing-apology-key-takeaways/107235640",
+      "publishedAt": "2026-10-06T07:00:00Z"
+    }
+  ]
+}

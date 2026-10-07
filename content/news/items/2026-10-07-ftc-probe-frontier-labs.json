@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-07-ftc-probe-frontier-labs",
+  "kind": "daily",
+  "title": "FTC opens sweeping probe into OpenAI, Anthropic and frontier AI labs",
+  "summary": "The US Federal Trade Commission opened an investigation into OpenAI, Anthropic, other frontier AI developers and the nonprofit evaluator METR over potential consumer-protection issues, an agency spokesperson confirmed. The probe followed a White House roundtable at which six AI companies signed a voluntary safety accord the same week. Officials declined to detail the specific concerns and the companies have not commented publicly. The investigation lands as both OpenAI and Anthropic prepare for large public listings amid mounting scrutiny of agent misbehaviour.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ftc",
+    "regulation",
+    "openai",
+    "anthropic"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/ftc-opens-probe-into-ai-giants-including-anthropic-openai-new-york-post-reports-2026-09-30/",
+      "publishedAt": "2026-09-30T22:00:00Z"
+    },
+    {
+      "publisher": "Wired",
+      "url": "https://www.wired.com/story/trumps-ai-safety-accord-is-a-fancy-pinky-swear/",
+      "publishedAt": "2026-09-30T18:00:00Z"
+    },
+    {
+      "publisher": "The Business Journal",
+      "url": "https://thebusinessjournal.com/ftc-investigates-openai-anthropic-ai-consumer-risks/",
+      "publishedAt": "2026-10-06T10:00:00Z"
+    }
+  ]
+}

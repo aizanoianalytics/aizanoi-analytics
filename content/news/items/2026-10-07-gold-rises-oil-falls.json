@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-07-gold-rises-oil-falls",
+  "kind": "daily",
+  "title": "Gold firms as falling oil cools the inflation debate",
+  "summary": "Spot gold rose about 0.3% to roughly $4,152 an ounce and gold futures added 0.5% on Tuesday, as a decline in crude oil eased some inflation pressure on markets. West Texas Intermediate traded near $89.87, down about 0.5%, while Brent hovered around $97. The softer energy complex offered modest relief after a stretch in which surging oil prices and multi-decade-high Treasury yields had clouded the outlook for interest rates. Gold's advance was modest, with traders still focused on inflation data due later in the week.",
+  "category": "economy-markets",
+  "priority": 55,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "gold",
+    "oil",
+    "commodities",
+    "inflation"
+  ],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/gold-prices-rise-oil-decline-093919246.html",
+      "publishedAt": "2026-10-06T08:52:00Z"
+    },
+    {
+      "publisher": "Convex",
+      "url": "https://convextrade.com/today/oil-price",
+      "publishedAt": "2026-10-06T12:00:00Z"
+    }
+  ]
+}

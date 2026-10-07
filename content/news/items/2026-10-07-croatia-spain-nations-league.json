@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-07-croatia-spain-nations-league",
+  "kind": "daily",
+  "title": "Merino double seals Spain's 2-1 comeback in Croatia",
+  "summary": "Mikel Merino scored twice as world champions Spain came from behind to beat Croatia 2-1 in Split and stay perfect in Nations League Group A3 with 12 points. Croatia, reduced to ten men, had taken the lead but could not hold it as Spain extended their dominance of the group. England remain second on nine points, six clear of third-placed Croatia after thrashing them 7-0 earlier in the campaign. The result leaves Spain all but assured of a quarter-final place with two group games still to play.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "spain",
+    "croatia",
+    "mikel-merino"
+  ],
+  "sources": [
+    {
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/sports/liveblog/2026/10/6/live-crostia-vs-spain-uefa-nations-league",
+      "publishedAt": "2026-10-06T21:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401861137/spain-croatia",
+      "publishedAt": "2026-10-06T22:00:00Z"
+    },
+    {
+      "publisher": "Match Countdown",
+      "url": "https://matchcountdown.com/en/football/uefa-nations-league/croatia-vs-spain-2026-10-06",
+      "publishedAt": "2026-10-06T21:00:00Z"
+    }
+  ]
+}

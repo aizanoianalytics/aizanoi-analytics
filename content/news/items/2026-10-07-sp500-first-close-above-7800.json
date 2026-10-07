@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-07-sp500-first-close-above-7800",
+  "kind": "daily",
+  "title": "S&P 500 closes above 7,800 for the first time as Treasury yields ease",
+  "summary": "The S&P 500 rose 0.58% to a record 7,818.93, its first close above 7,800, while the Nasdaq Composite added 0.45% to another all-time high of 27,599.79 and the Dow gained 0.49% to 51,521.28. The advance came as the 10-year Treasury yield pulled back about four basis points to 5.27%, easing from Monday's 24-year high above 5.35%. The rally was narrow: chip and power names led, the Russell 2000 small-cap index fell 0.59%, and Nasdaq decliners outnumbered advancers.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "sp500",
+    "nasdaq",
+    "treasuries"
+  ],
+  "sources": [
+    {
+      "publisher": "Investopedia",
+      "url": "https://www.investopedia.com/stock-market-today-dow-jones-s-and-p-500-10062026-12160706",
+      "publishedAt": "2026-10-06T20:06:00Z"
+    },
+    {
+      "publisher": "Swingfolio",
+      "url": "https://swingfolio.com/daily/us/2026-10-06/afternoon",
+      "publishedAt": "2026-10-06T20:30:00Z"
+    },
+    {
+      "publisher": "Invested Alpha",
+      "url": "https://investedalpha.com/news/tuesday-close-sp500-nasdaq-records-ten-year-eases-3-year-auction-2006-high",
+      "publishedAt": "2026-10-06T21:00:00Z"
+    }
+  ]
+}

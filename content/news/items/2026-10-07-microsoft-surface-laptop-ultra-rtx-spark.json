@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-07-microsoft-surface-laptop-ultra-rtx-spark",
+  "kind": "daily",
+  "title": "Microsoft unveils Surface Laptop Ultra on Nvidia's RTX Spark at October 7 event",
+  "summary": "Microsoft used a San Francisco event to detail the Surface Laptop Ultra, its first notebook built on Nvidia's RTX Spark system-on-chip, a 3nm part pairing an Arm CPU with a Blackwell GPU and up to 128GB of unified memory. Microsoft claims up to 1 petaflop of AI compute, enough to run models with roughly 120 billion parameters locally, with full CUDA support. Reported pricing spans well above $2,000 for entry configurations to more than $7,000 at the top, with pre-orders opening October 7 and first shipments expected in mid-October.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "nvidia",
+    "surface",
+    "rtx-spark",
+    "hardware"
+  ],
+  "sources": [
+    {
+      "publisher": "Notebookcheck",
+      "url": "https://notebookcheck.net/New-Surface-Laptop-Ultra-release-details-revealed-with-up-to-128-GB-RAM-and-20-core-RTX-Spark.1416963.0.html",
+      "publishedAt": "2026-10-06T09:00:00Z"
+    },
+    {
+      "publisher": "Windows Report",
+      "url": "https://windowsreport.com/microsoft-surface-laptop-ultra-specs-detailed-up-to-128gb-ram-and-20-core-rtx-spark-soc",
+      "publishedAt": "2026-10-06T10:00:00Z"
+    },
+    {
+      "publisher": "Windows Forum",
+      "url": "https://windowsforum.com/news/microsoft-october-7-windows-event-whats-confirmed-on-local-ai-agents-and-surface-laptop-ultra.447098/latest",
+      "publishedAt": "2026-10-03T12:00:00Z"
+    }
+  ]
+}
