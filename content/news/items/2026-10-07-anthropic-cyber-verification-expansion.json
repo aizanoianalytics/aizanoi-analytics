@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-07-anthropic-cyber-verification-expansion",
+  "kind": "daily",
+  "title": "Anthropic widens access to its most capable models for vetted cyber defenders",
+  "summary": "Anthropic is expanding a programme that lets vetted cybersecurity professionals test its most powerful models with fewer safeguards, after its Project Glasswing initiative helped uncover more than 100,000 software vulnerabilities this year. The company said the new, enlarged version of its Cyber Verification Program gives verified defenders legitimate access to advanced cyber capabilities so they can find and patch flaws in critical software. The shift mirrors a wider industry push to keep frontier cyber tools in the hands of vetted defenders rather than withdrawing them entirely.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "cybersecurity",
+    "ai-safety",
+    "glasswing"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/litigation/anthropic-opens-its-most-powerful-ai-models-more-security-teams-2026-10-06/",
+      "publishedAt": "2026-10-06T19:02:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/glasswing",
+      "publishedAt": "2026-10-06T16:00:00Z"
+    }
+  ]
+}

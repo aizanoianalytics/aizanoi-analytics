@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-07-white-house-ai-safety-accord",
+  "kind": "daily",
+  "title": "Six frontier labs sign voluntary White House AI safety accord as Altman defends trade-offs",
+  "summary": "Anthropic, Google, Meta, Nvidia, OpenAI and xAI signed the White House Accord on Super Intelligence, a voluntary, one-page framework built on four commitments: internal controls to monitor model behaviour, empowered internal safety teams, independent external auditors and board-level oversight committees. President Donald Trump called the commitments “morally binding” and the pact carries no enforcement mechanism. OpenAI chief executive Sam Altman said the world should accept that “some bad things” will happen in exchange for the technology's benefits.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai-safety",
+    "white-house",
+    "regulation",
+    "openai"
+  ],
+  "sources": [
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/10/05/sam-altman-ai-risks-bad-things-benefits-trump-voluntary-safety-pact-openai-regulation/",
+      "publishedAt": "2026-10-05T14:00:00Z"
+    },
+    {
+      "publisher": "Wired",
+      "url": "https://www.wired.com/story/trumps-ai-safety-accord-is-a-fancy-pinky-swear/",
+      "publishedAt": "2026-09-30T18:00:00Z"
+    },
+    {
+      "publisher": "IAPP",
+      "url": "https://iapp.org/news/a/white-house-major-ai-developers-reach-morally-binding-safety-commitments",
+      "publishedAt": "2026-09-30T20:00:00Z"
+    }
+  ]
+}

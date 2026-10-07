@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-07-google-constellation-nuclear-ppa",
+  "kind": "daily",
+  "title": "Constellation jumps 12% on a 20-year Google nuclear power deal for AI",
+  "summary": "Constellation Energy shares rose 12.3% after it agreed a 20-year power purchase agreement with Google to supply 890 megawatts of new nuclear capacity on the PJM grid, backed by more than $4.3 billion of Constellation investment. The deal lifted the wider independent-power complex, with Vistra up 10.8%, and reinforced the view that electricity is now priced as AI infrastructure. Analysts said the contract confirms that power, not just chips, is a binding constraint on data-centre growth, and rotated money into utilities even as Treasury yields stayed high.",
+  "category": "economy-markets",
+  "priority": 69,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "energy",
+    "nuclear",
+    "google",
+    "data-centres"
+  ],
+  "sources": [
+    {
+      "publisher": "Swingfolio",
+      "url": "https://swingfolio.com/daily/us/2026-10-06/afternoon",
+      "publishedAt": "2026-10-06T20:30:00Z"
+    },
+    {
+      "publisher": "22V Research End-of-Day",
+      "url": "https://www.22vtradingdesk.com/end-of-day",
+      "publishedAt": "2026-10-06T20:55:00Z"
+    },
+    {
+      "publisher": "WMTMT",
+      "url": "https://www.wmtmt.com/notes/daily-2026-10-06",
+      "publishedAt": "2026-10-06T21:00:00Z"
+    }
+  ]
+}

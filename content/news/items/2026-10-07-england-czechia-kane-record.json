@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-07-england-czechia-kane-record",
+  "kind": "daily",
+  "title": "Kane marks record-equalling 125th cap with a double as England beat Czechia 3-0",
+  "summary": "Harry Kane scored twice on his record-equalling 125th England appearance as Thomas Tuchel's side beat the Czech Republic 3-0 at Wembley for a third straight Nations League win. England led through a Vladimir Coufal own goal in the 27th minute, Kane added a second before the break and headed his 91st international goal after the interval. The hosts moved to nine points in Group A3, three behind leaders Spain, and need one point from their final two matches to join Spain in the quarter-finals. Czechia have now lost five in a row.",
+  "category": "football",
+  "priority": 74,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "england",
+    "harry-kane",
+    "czechia"
+  ],
+  "sources": [
+    {
+      "publisher": "7M Sport",
+      "url": "https://news.7msport.com/news/newsdata/20261007/271814.shtml",
+      "publishedAt": "2026-10-07T00:00:00Z"
+    },
+    {
+      "publisher": "Metapress",
+      "url": "https://metapress.net/middle-east/2026/10/07/harry-kane-equals-england-record-scores-twice-in-3-0-win-over-czechia",
+      "publishedAt": "2026-10-07T01:00:00Z"
+    },
+    {
+      "publisher": "OnField News",
+      "url": "https://onfieldnews.com/england-player-ratings-v-czechia-harry-kane-continued-to-break-records",
+      "publishedAt": "2026-10-06T23:00:00Z"
+    }
+  ]
+}

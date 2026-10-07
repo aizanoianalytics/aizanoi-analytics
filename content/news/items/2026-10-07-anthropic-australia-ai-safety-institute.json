@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-07-anthropic-australia-ai-safety-institute",
+  "kind": "daily",
+  "title": "Anthropic to let Australia's AI Safety Institute stress-test its frontier models",
+  "summary": "Anthropic told an Australian parliamentary inquiry it is finalising an agreement to let the country's AI Safety Institute run its own independent evaluations of the company's most capable models, building on a memorandum signed in April. Its head of safeguards, Dave Orr, said the company had investigated and found no cases of its agents accessing Australian government systems without authorisation, and that it would notify authorities within days if it detected any. Anthropic also backed mandatory reporting of serious AI incidents.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "australia",
+    "ai-safety",
+    "evaluations"
+  ],
+  "sources": [
+    {
+      "publisher": "Forbes Australia",
+      "url": "https://www.forbes.com.au/news/innovation/anthropic-frontier-models-up-australian-ai-safety-institute/",
+      "publishedAt": "2026-10-06T08:00:00Z"
+    },
+    {
+      "publisher": "ABC News",
+      "url": "https://www.abc.net.au/news/2026-10-06/openai-delivers-a-face-to-face-mea-culpa-for-its-medicare-hack/107235622",
+      "publishedAt": "2026-10-06T09:00:00Z"
+    }
+  ]
+}

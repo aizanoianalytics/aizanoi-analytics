@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-07-dram-memory-shortage-prices",
+  "kind": "daily",
+  "title": "Memory shortage deepens as Nanya lifts DRAM contract prices by up to 20%",
+  "summary": "Taiwan's Nanya Technology is reportedly raising DRAM contract prices by up to 20% after record September revenue, the latest signal of an intensifying AI-driven memory shortage. TrendForce expects conventional DRAM contract prices to rise 10-15% in the fourth quarter, with NAND flash climbing 15-20%. Micron has said about 75% of its 2027 memory output is already committed to AI data-centre buyers, while Samsung and SK hynix have locked large portions of capacity into long-term agreements. Analysts do not expect meaningful new supply before late 2028.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-10-07T05:10:00Z",
+  "updatedAt": "2026-10-07T05:10:00Z",
+  "retrievedAt": "2026-10-07T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "dram",
+    "memory",
+    "semiconductors",
+    "ai-demand"
+  ],
+  "sources": [
+    {
+      "publisher": "BigGo News",
+      "url": "https://finance.biggo.com/news/39c5d1d1-1562-4c9b-a8cd-e2bce9f35a4e",
+      "publishedAt": "2026-10-07T01:05:00Z"
+    },
+    {
+      "publisher": "Startup Fortune",
+      "url": "https://startupfortune.com/micron-warns-the-memory-chip-shortage-gets-worse-before-it-gets-better/",
+      "publishedAt": "2026-10-06T19:15:00Z"
+    },
+    {
+      "publisher": "Daily 8 News",
+      "url": "https://daily8news.com/article/ai-boom-memory-chip-shortage-dram-hbm-prices-20261007/",
+      "publishedAt": "2026-10-07T02:00:00Z"
+    }
+  ]
+}
