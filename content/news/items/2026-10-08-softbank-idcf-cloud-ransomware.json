@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-08-softbank-idcf-cloud-ransomware",
+  "kind": "daily",
+  "title": "Ransomware knocks out a SoftBank cloud unit, taking government sites offline",
+  "summary": "IDC Frontier, a SoftBank Group cloud subsidiary, said a ransomware attack on its IDCF Cloud took part of its East Japan Region 1 offline from around 3:40am on October 7. The company blocked the affected network to limit further damage and said 495 corporate and municipal customers were affected, including the websites of Ibaraki Prefecture, the city of Kodaira and Jiji Press. Other regions are being audited and no recovery date has been given.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-10-08T05:05:00Z",
+  "updatedAt": "2026-10-08T05:05:00Z",
+  "retrievedAt": "2026-10-08T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "softbank",
+    "ransomware",
+    "cloud",
+    "cybersecurity"
+  ],
+  "sources": [
+    {
+      "publisher": "Nippon.com (Jiji Press)",
+      "url": "https://www.nippon.com/en/news/yjj2026100700867/cyberattack-on-softbank-unit-affects-local-govt-corporate-websites.html",
+      "publishedAt": "2026-10-07T12:00:00Z"
+    },
+    {
+      "publisher": "IDC Frontier",
+      "url": "https://www.idcf.jp/news/topics/20261007002",
+      "publishedAt": "2026-10-07T10:00:00Z"
+    }
+  ]
+}

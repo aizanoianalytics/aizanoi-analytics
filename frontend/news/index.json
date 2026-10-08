@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-07T05:00:00.000Z",
+  "generatedAt": "2026-10-08T05:04:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-08",
+      "path": "/news/2026-10-08/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-07",
       "path": "/news/2026-10-07/",
@@ -273,6 +278,547 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-08-openai-gpt-6-global-rollout",
+      "kind": "daily",
+      "title": "OpenAI opens GPT-6 to all ChatGPT users with a new interactive answer format",
+      "summary": "OpenAI began rolling GPT-6 out across ChatGPT, starting October 7 for Plus, Pro, Business and Enterprise accounts and reaching Free and Go users on October 8. Paid tiers receive GPT-6 Sol while Free and Go get GPT-6 Luna. The release also introduces Intelligent UI, which lets answers combine text, charts and interactive elements as the model writes. OpenAI says GPT-6 Instant begins answering search-heavy prompts about 44% sooner than GPT-5.6 Instant, and that its 1.2 billion weekly users will eventually be covered.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "gpt-6",
+        "chatgpt",
+        "intelligent-ui"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/gpt-6-for-everyone/",
+          "publishedAt": "2026-10-08T00:30:00.000Z"
+        },
+        {
+          "publisher": "OpenAI Developer Community",
+          "url": "https://community.openai.com/t/gpt-6-is-now-rolling-out-to-all-chatgpt-users/1404163",
+          "publishedAt": "2026-10-08T00:40:00.000Z"
+        },
+        {
+          "publisher": "OpenAI Help Center",
+          "url": "https://help.openai.com/en/articles/20001354-gpt-6-and-other-models-in-chatgpt",
+          "publishedAt": "2026-10-08T01:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-messi-final-argentina-match",
+      "kind": "daily",
+      "title": "Messi closes his Argentina chapter with a goal as the Albiceleste beat Benin",
+      "summary": "Lionel Messi played his final match for Argentina on October 6, scoring a penalty and adding two assists in a 3-0 friendly win over Benin at the Estadio Monumental in Buenos Aires. The 39-year-old told the crowd afterwards that retiring from international football was 'the saddest day of my career', reflecting on more than two decades in the shirt. Messi leaves as Argentina's all-time leading scorer with 125 goals, a 2022 World Cup winner and a two-time Copa America champion.",
+      "category": "football",
+      "priority": 80,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "argentina",
+        "messi",
+        "international-football"
+      ],
+      "sources": [
+        {
+          "publisher": "Prothom Alo (AFP)",
+          "url": "https://en.prothomalo.com/sports/football/qmyavcjri5",
+          "publishedAt": "2026-10-07T05:00:00.000Z"
+        },
+        {
+          "publisher": "Durango Herald (AP)",
+          "url": "https://www.durangoherald.com/articles/associated-press/argentina-bids-messi-farewell-in-final-national-team-match-ending-an-era",
+          "publishedAt": "2026-10-07T04:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-wall-street-treasury-yields-24-year-high",
+      "kind": "daily",
+      "title": "Wall Street retreats from records as long-dated Treasury yields hit a 24-year high",
+      "summary": "US stocks closed lower on October 7, a day after the S&P 500 and Nasdaq set record closes, as the 10-year Treasury yield touched 5.36% intraday, its highest since 2002, and the 30-year neared 5.73%. The Dow fell 0.66% to 51,179.87, the S&P 500 eased 0.22% to 7,801.77 and the Nasdaq slipped 0.22% to 27,538.69. A $39bn 10-year auction drew strong demand, easing yields late in the session. Oil-linked inflation fears and rising sovereign and corporate debt drove the bond selloff.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "treasury-yields",
+        "wall-street",
+        "bonds"
+      ],
+      "sources": [
+        {
+          "publisher": "Free Malaysia Today (Reuters)",
+          "url": "https://freemalaysiatoday.com/category/business/2026/10/08/wall-street-ends-lower-after-record-highs-as-treasury-yields-climb",
+          "publishedAt": "2026-10-07T22:30:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/06/stock-market-today-live-updates.html",
+          "publishedAt": "2026-10-07T20:05:00.000Z"
+        },
+        {
+          "publisher": "Rio Times",
+          "url": "https://riotimesonline.com/global-economy-briefing-october-8-2026",
+          "publishedAt": "2026-10-08T01:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-anthropic-claude-haiku-5-5",
+      "kind": "daily",
+      "title": "Anthropic ships Claude Haiku 5.5, cutting inference costs by roughly 75%",
+      "summary": "Anthropic released Claude Haiku 5.5 on October 7, the last model in its Claude 5.5 family and the one aimed at high-volume, cost-sensitive work. The company says average operating cost falls by about 75% against the previous generation, with input and output prices down roughly 90% for prompts under 100,000 tokens and about 50% above that. Haiku 5.5 carries a 1M-token context window and can be paired with Opus 5.5 and Sonnet 5.5 as a sub-agent.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "haiku",
+        "models"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/claude-haiku-5-5",
+          "publishedAt": "2026-10-07T18:01:00.000Z"
+        },
+        {
+          "publisher": "CellCog",
+          "url": "https://cellcog.ai/blog/claude-haiku-5-5-release-date/",
+          "publishedAt": "2026-10-07T18:17:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-samsung-q3-record-operating-profit",
+      "kind": "daily",
+      "title": "Samsung posts a record quarter as AI chip demand lifts operating profit 782%",
+      "summary": "Samsung Electronics guided to third-quarter operating profit of 107.4 trillion won (about $79.8bn), up 782.5% from a year earlier and its strongest quarter on record, on revenue of roughly 195 trillion won. The company credited sustained demand for memory used in AI infrastructure. Shares slipped in Seoul despite the beat, with investors taking profits and questioning how long the memory price rally can run. It is the first quarter any Korean company has topped 100 trillion won in operating profit.",
+      "category": "technology",
+      "priority": 72,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "samsung",
+        "semiconductors",
+        "memory",
+        "earnings"
+      ],
+      "sources": [
+        {
+          "publisher": "Yonhap",
+          "url": "https://en.yna.co.kr/view/AEN20261008000952320",
+          "publishedAt": "2026-10-08T00:20:00.000Z"
+        },
+        {
+          "publisher": "Samsung Newsroom",
+          "url": "https://news.samsung.com/global/samsung-electronics-announces-earnings-guidance-for-third-quarter-2026",
+          "publishedAt": "2026-10-07T23:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-biohub-virtual-cell-coalition",
+      "kind": "daily",
+      "title": "DeepMind, Meta and Isomorphic join a $1.8bn push to model the human cell",
+      "summary": "Biohub said Google DeepMind, Isomorphic Labs and Meta will together commit $300m to its Virtual Biology Initiative, lifting total commitments to nearly $1.8bn. The US Department of Energy is directing more than $500m over five years through its Genesis Mission, and the National Institutes of Health will standardise datasets built with over $500m in earlier federal funding. The goal is an open 'virtual cell' model able to predict how cells respond to drugs, mutations and disease before lab experiments.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "deepmind",
+        "meta",
+        "biohub",
+        "biology"
+      ],
+      "sources": [
+        {
+          "publisher": "Quartz",
+          "url": "https://qz.com/google-meta-us-government-biohub-virtual-biology-initiative-100726",
+          "publishedAt": "2026-10-07T18:00:00.000Z"
+        },
+        {
+          "publisher": "Startup Fortune",
+          "url": "https://startupfortune.com/google-meta-and-the-us-government-put-18-billion-behind-a-virtual-human-cell",
+          "publishedAt": "2026-10-07T19:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-softbank-idcf-cloud-ransomware",
+      "kind": "daily",
+      "title": "Ransomware knocks out a SoftBank cloud unit, taking government sites offline",
+      "summary": "IDC Frontier, a SoftBank Group cloud subsidiary, said a ransomware attack on its IDCF Cloud took part of its East Japan Region 1 offline from around 3:40am on October 7. The company blocked the affected network to limit further damage and said 495 corporate and municipal customers were affected, including the websites of Ibaraki Prefecture, the city of Kodaira and Jiji Press. Other regions are being audited and no recovery date has been given.",
+      "category": "technology",
+      "priority": 68,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "softbank",
+        "ransomware",
+        "cloud",
+        "cybersecurity"
+      ],
+      "sources": [
+        {
+          "publisher": "Nippon.com (Jiji Press)",
+          "url": "https://www.nippon.com/en/news/yjj2026100700867/cyberattack-on-softbank-unit-affects-local-govt-corporate-websites.html",
+          "publishedAt": "2026-10-07T12:00:00.000Z"
+        },
+        {
+          "publisher": "IDC Frontier",
+          "url": "https://www.idcf.jp/news/topics/20261007002",
+          "publishedAt": "2026-10-07T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-deepseek-12bn-round-tencent-catl",
+      "kind": "daily",
+      "title": "DeepSeek nears a $12bn round led by Tencent and CATL ahead of a 2027 listing",
+      "summary": "DeepSeek is close to raising at least 80 billion yuan (about $12bn) in a funding round anchored by Tencent and battery maker CATL, Bloomberg reported. Investor demand pushed the total well past the roughly 50 billion yuan the Chinese lab originally sought, and signed term sheets could carry it toward 100 billion yuan. The financing would value DeepSeek at a minimum of about 500 billion yuan (~$75bn) and sets up a restructuring and an initial public offering in early 2027.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "deepseek",
+        "funding",
+        "tencent",
+        "catl"
+      ],
+      "sources": [
+        {
+          "publisher": "Quartz",
+          "url": "https://qz.com/deepseek-funding-round-tencent-catl-ipo-100626",
+          "publishedAt": "2026-10-06T11:00:00.000Z"
+        },
+        {
+          "publisher": "Investing.com",
+          "url": "https://www.investing.com/news/stock-market-news/deepseek-set-to-raise-at-least-12-bln-in-tencent-catlled-round-bloomberg-4933370",
+          "publishedAt": "2026-10-06T07:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-fed-minutes-one-more-hike",
+      "kind": "daily",
+      "title": "Fed minutes show most officials still expect one more rate hike this year",
+      "summary": "Minutes of the Federal Reserve's September meeting, published October 7, showed most participants judged that another increase in the target range would likely be appropriate by year end. The Fed had delivered its first hike since July 2023 at that meeting, with officials split over whether energy-driven inflation or demand warranted the move. Markets now price roughly a 17% chance of a second consecutive hike at the October 27-28 meeting, down from about 38% a week earlier.",
+      "category": "economy-markets",
+      "priority": 66,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "federal-reserve",
+        "interest-rates",
+        "inflation"
+      ],
+      "sources": [
+        {
+          "publisher": "Swingfolio",
+          "url": "https://swingfolio.com/daily/2026-10-08/morning",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Rio Times",
+          "url": "https://riotimesonline.com/global-economy-briefing-october-8-2026",
+          "publishedAt": "2026-10-08T01:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-spacex-40bn-nvidia-chip-financing",
+      "kind": "daily",
+      "title": "SpaceX seeks about $40bn in financing to buy Nvidia AI chips",
+      "summary": "SpaceX is negotiating roughly $40bn to fund purchases of Nvidia AI chips, with about $10bn expected from bank loans and the remaining ~$30bn through investment-grade bonds, according to media reports. Apollo is expected to lead the arrangement. The move puts a marquee private company into the fast-growing market for compute-backed borrowing. SpaceX shares eased about 2.5% on the reports amid broader investor caution over how the AI build-out will be repaid.",
+      "category": "economy-markets",
+      "priority": 64,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "spacex",
+        "nvidia",
+        "ai-chips",
+        "financing"
+      ],
+      "sources": [
+        {
+          "publisher": "Free Malaysia Today (Reuters)",
+          "url": "https://freemalaysiatoday.com/category/business/2026/10/08/wall-street-ends-lower-after-record-highs-as-treasury-yields-climb",
+          "publishedAt": "2026-10-07T22:30:00.000Z"
+        },
+        {
+          "publisher": "Swingfolio",
+          "url": "https://swingfolio.com/daily/2026-10-08/morning",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-nobel-chemistry-soai-kagan",
+      "kind": "daily",
+      "title": "Nobel Prize in Chemistry goes to Soai and Kagan for mirror-image molecules",
+      "summary": "Japanese chemist Kenso Soai and French researcher Henri Kagan won the 2026 Nobel Prize in Chemistry for work on chirality, the way molecules that are mirror images of one another behave differently. The Royal Swedish Academy of Sciences said the laureates answered a long-standing question about how such handedness arises and propagates. Soai, 76, is an emeritus professor at the Tokyo University of Science; Kagan, 95, is emeritus at Universite Paris-Sud. The award followed this week's medicine prize.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nobel-prize",
+        "chemistry",
+        "science"
+      ],
+      "sources": [
+        {
+          "publisher": "Kyodo News",
+          "url": "https://english.kyodonews.net/articles/-/87464",
+          "publishedAt": "2026-10-07T12:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-reflection-beam-open-weight-model",
+      "kind": "daily",
+      "title": "Reflection unveils Beam, a 501B open-weight model pitched against Chinese labs",
+      "summary": "Reflection AI introduced Beam, its first frontier open-weight model, on October 5. Beam is a sparse mixture-of-experts system with 501 billion total parameters that activate about 23 billion per token, pretrained on 23.8 trillion tokens with a one-million-token context window. The Nvidia-backed startup says it matches leading Chinese open models such as Z.ai's GLM-5.2 on advanced reasoning benchmarks at roughly a quarter of the inference cost. Weights and a technical report are promised later this month.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "reflection-ai",
+        "open-weight",
+        "models"
+      ],
+      "sources": [
+        {
+          "publisher": "Reflection AI",
+          "url": "https://reflection.ai/blog/introducing-beam",
+          "publishedAt": "2026-10-05T16:00:00.000Z"
+        },
+        {
+          "publisher": "MLQ News",
+          "url": "https://mlq.ai/news/reflection-ai-unveils-501b-beam-open-weight-model-to-rival-chinas-ai-labs/",
+          "publishedAt": "2026-10-06T13:21:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-oracle-wisconsin-ai-campus-power-delay",
+      "kind": "daily",
+      "title": "Oracle's Wisconsin AI campus slips as its power line waits on regulators",
+      "summary": "Oracle's 1.3 GW Project Lighthouse campus in Port Washington, Wisconsin, faces delays because the transmission line needed to power it is back under regulatory review. Wisconsin's Public Service Commission withdrew its completeness finding on American Transmission Co.'s application after hundreds of amended filings, restarting the clock. Research firm Aterio's base case puts partial power in December 2027 and full supply in October 2028, later than Oracle's target of serving customers in the second half of 2027.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oracle",
+        "data-centers",
+        "energy",
+        "infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "The Register",
+          "url": "https://www.theregister.com/a/5300832",
+          "publishedAt": "2026-10-07T14:00:00.000Z"
+        },
+        {
+          "publisher": "TechRadar",
+          "url": "https://www.techradar.com/pro/a-meaningful-risk-oracles-massive-1-3-gw-wisconsin-ai-campus-faces-severe-power-delays-as-grid-review-restarts-pushing-customer-delivery-past-2027",
+          "publishedAt": "2026-10-07T15:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-usmnt-beats-canada-four-win-window",
+      "kind": "daily",
+      "title": "USMNT sign off with a 1-0 win over Canada and a four-game sweep",
+      "summary": "The United States closed its September-October window with a 1-0 win over Canada in St Paul, Minnesota, on October 6, a first-half goal from 19-year-old striker Justin Ellis deciding it. The result gave Mauricio Pochettino's side four wins from four, including a 3-0 defeat of Mexico and a 4-2 win over Chile. Canada struggled to convert possession. The sides meet again in Concacaf Nations League play later in the year.",
+      "category": "football",
+      "priority": 56,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "usa",
+        "canada",
+        "concacaf",
+        "friendly"
+      ],
+      "sources": [
+        {
+          "publisher": "U.S. Soccer",
+          "url": "https://www.ussoccer.com/stories/2026/10/usmnt-vs-canada-match-recap-highlights-st-paul-minnesota",
+          "publishedAt": "2026-10-07T03:00:00.000Z"
+        },
+        {
+          "publisher": "Fox Sports",
+          "url": "https://www.foxsports.com/stories/soccer/usmnt-canada-win-friendly-concacaf-nations-league",
+          "publishedAt": "2026-10-07T05:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-08-mexico-chile-winless-window",
+      "kind": "daily",
+      "title": "Mexico end a winless window as Chile win 2-0 in Los Angeles",
+      "summary": "Chile beat Mexico 2-0 at the Los Angeles Memorial Coliseum on October 6, leaving Rafael Marquez without a win in his first four matches in charge. Maximiliano Gutierrez opened the scoring in the 54th minute and Vicente Pizarro doubled the lead eleven minutes later after Chile pressed a loose pass. Mexico had drawn with Colombia and Peru and lost 3-0 to the United States earlier in the window. Marquez's side next face Jamaica in the Concacaf Nations League quarter-finals.",
+      "category": "football",
+      "priority": 54,
+      "publishedAt": "2026-10-08T05:05:00.000Z",
+      "updatedAt": "2026-10-08T05:05:00.000Z",
+      "retrievedAt": "2026-10-08T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "mexico",
+        "chile",
+        "concacaf",
+        "friendly"
+      ],
+      "sources": [
+        {
+          "publisher": "AS",
+          "url": "https://en.as.com/soccer/mexico-vs-chile-live-online-score-stats-goals-updates-international-friendly-f202610-n",
+          "publishedAt": "2026-10-07T05:00:00.000Z"
+        },
+        {
+          "publisher": "Daily Bulletin",
+          "url": "https://dailybulletin.com/2026/10/06/mexico-ends-4-game-international-window-winless-after-loss-to-chile",
+          "publishedAt": "2026-10-07T04:30:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-07-openai-australia-hearing-apology",
       "kind": "daily",

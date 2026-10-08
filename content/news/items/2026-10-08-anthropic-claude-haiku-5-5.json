@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-08-anthropic-claude-haiku-5-5",
+  "kind": "daily",
+  "title": "Anthropic ships Claude Haiku 5.5, cutting inference costs by roughly 75%",
+  "summary": "Anthropic released Claude Haiku 5.5 on October 7, the last model in its Claude 5.5 family and the one aimed at high-volume, cost-sensitive work. The company says average operating cost falls by about 75% against the previous generation, with input and output prices down roughly 90% for prompts under 100,000 tokens and about 50% above that. Haiku 5.5 carries a 1M-token context window and can be paired with Opus 5.5 and Sonnet 5.5 as a sub-agent.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-10-08T05:05:00Z",
+  "updatedAt": "2026-10-08T05:05:00Z",
+  "retrievedAt": "2026-10-08T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "claude",
+    "haiku",
+    "models"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/claude-haiku-5-5",
+      "publishedAt": "2026-10-07T18:01:00Z"
+    },
+    {
+      "publisher": "CellCog",
+      "url": "https://cellcog.ai/blog/claude-haiku-5-5-release-date/",
+      "publishedAt": "2026-10-07T18:17:00Z"
+    }
+  ]
+}
