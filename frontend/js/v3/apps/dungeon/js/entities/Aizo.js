@@ -28,6 +28,15 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.isInvulnerable = false;
     this.hitCounter = 0;
 
+    // Dash state. Dash is the only ability that moves the player, so its
+    // timers live here rather than in the scene: cooldown ticks every frame in
+    // update(), dashTimer is the active window, and the trail is throttled
+    // through dashTrailTimer. isInvulnerable is set for the whole window.
+    this.dashTimer = 0;
+    this.dashCooldown = 0;
+    this.dashTrailTimer = 0;
+    this.dashVector = { x: 1, y: 0 };
+
     // Cooldown timers
     this.skill1Cooldown = 0; // Zeus Fissure (Q)
     this.skill2Cooldown = 0; // Doric Aegis (R)
@@ -110,7 +119,11 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
   update(time, delta) {
     if (this.isDead) return;
 
-    // Gölge + hale takibi
+    // Dash first: while it runs it owns velocity and i-frames, and the normal
+    // movement block below must not overwrite either.
+    this.updateDash(delta);
+
+    // Gölge + hala takibi
     if (this.shadow && this.shadow.active) this.shadow.setPosition(this.x, this.y + 14);
     if (this.halo && this.halo.active) this.halo.setPosition(this.x, this.y);
 
@@ -147,6 +160,11 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     let vx = 0;
     let vy = 0;
     const speed = this.stats.moveSpeed;
+
+    // While dashing the dash owns the velocity and the i-frames. Skipping the
+    // input block here (rather than after it) keeps the input from fighting
+    // the dash on the same frame it starts.
+    if (this.dashTimer > 0) return;
 
     // Gamepad, then the mobile joystick, then the keyboard. The gamepad comes
     // first because it is the only one of the three that is an analogue vector
@@ -191,6 +209,104 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
         this.play(`aizo-idle-${this.lastDirection}`, true);
       }
     }
+  }
+
+  // Dash: a short committed burst on Shift (mirrored on the gamepad's roll
+  // button and on the mobile dash button). It is deliberately the one movement
+  // tool that cannot be steered while it runs — a dash you can curve is not a
+  // commitment, and without a commitment there is nothing to plan around.
+  // The i-frame window is what makes it worth a cooldown: it is the answer to
+  // the telegraphed slams and charges the roster is now full of.
+  dash() {
+    return this.startDash();
+  }
+
+  startDash() {
+    if (this.isDead) return false;
+    if (this.dashCooldown > 0 || this.dashTimer > 0) return false;
+
+    // Direction: the held movement vector, else the facing direction, so a
+    // dash always goes somewhere useful instead of nowhere.
+    let dx = 0;
+    let dy = 0;
+    const pad = this.scene.gamepadInput?.sample();
+    if (pad && (pad.move.x !== 0 || pad.move.y !== 0)) {
+      dx = pad.move.x; dy = pad.move.y;
+    } else if (this.scene.touchControls?.isActive()) {
+      const v = this.scene.touchControls.getVector();
+      dx = v.x; dy = v.y;
+    } else if (this.scene.cursors || this.scene.wasd) {
+      const c = this.scene.cursors;
+      const w = this.scene.wasd;
+      if (c?.left.isDown || w?.A.isDown) dx -= 1;
+      if (c?.right.isDown || w?.D.isDown) dx += 1;
+      if (c?.up.isDown || w?.W.isDown) dy -= 1;
+      if (c?.down.isDown || w?.S.isDown) dy += 1;
+    }
+
+    if (dx === 0 && dy === 0) {
+      dx = this.lastDirection === 'left' ? -1 : this.lastDirection === 'right' ? 1 : 0;
+      dy = this.lastDirection === 'up' ? -1 : this.lastDirection === 'down' ? 1 : 0;
+      // A pure facing dash with no axis at all would be a no-op.
+      if (dx === 0 && dy === 0) dx = 1;
+    }
+
+    const len = Math.hypot(dx, dy) || 1;
+    this.dashVector = { x: dx / len, y: dy / len };
+
+    const dashDuration = this.stats.dashDuration ?? 180;
+    const dashSpeed = this.stats.dashSpeed ?? 620;
+
+    this.dashTimer = dashDuration;
+    this.dashCooldown = this.stats.dashCooldown ?? 1600;
+    // i-frames for the dash's active window plus a small grace, so the dash
+    // does not end inside an already-connecting hit.
+    this.isInvulnerable = true;
+
+    // Trail: cheap afterimages, not a particle system, so it reads on any GPU.
+    this.dashTrailTimer = 0;
+    this.scene.playSfx?.('sfx-dash', 0.5);
+    this.scene.createFloatingText(this.x, this.y - 26, 'DASH', '#7dd3fc', 10);
+    return true;
+  }
+
+  // Called every frame from update(): drives the dash, its trail, and releases
+  // the i-frames when it ends.
+  updateDash(delta) {
+    if (this.dashCooldown > 0) this.dashCooldown = Math.max(0, this.dashCooldown - delta);
+
+    if (this.dashTimer > 0) {
+      this.dashTimer = Math.max(0, this.dashTimer - delta);
+      const dashSpeed = this.stats.dashSpeed ?? 620;
+      this.setVelocity(this.dashVector.x * dashSpeed, this.dashVector.y * dashSpeed);
+
+      // Afterimage every ~35ms rather than every frame: enough to read as a
+      // trail, few enough objects that it never becomes a leak.
+      this.dashTrailTimer += delta;
+      if (this.dashTrailTimer >= 35) {
+        this.dashTrailTimer = 0;
+        const ghost = this.scene.add.image(this.x, this.y, this.texture.key, this.frame.name)
+          .setDepth(this.depth - 1)
+          .setAlpha(0.45)
+          .setTint(0x7dd3fc)
+          .setScale(this.scaleX);
+        this.scene.tweens.add({
+          targets: ghost,
+          alpha: 0,
+          scaleX: this.scaleX * 0.8,
+          duration: 260,
+          onComplete: () => { if (ghost.active) ghost.destroy(); }
+        });
+      }
+
+      if (this.dashTimer === 0) {
+        // Dash over: drop the i-frames and restore the walk animation.
+        this.isInvulnerable = false;
+        this.play(`aizo-walk-${this.lastDirection}`, true);
+      }
+      return true;
+    }
+    return false;
   }
 
   attack(targetOrDirection = null) {

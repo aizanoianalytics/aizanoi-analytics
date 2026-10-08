@@ -112,7 +112,7 @@ test('endless wave scaling is capped at wave 20 with light loot scaling', () => 
 
 test('keyboard: ESC closes inventory, M mutes, P pauses; mouse dead zones are 48px', () => {
   const game = read(`${moduleRoot}/js/scenes/GameScene.js`);
-  assert.match(game, /addKeys\('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC,F,B'\)/);
+  assert.match(game, /addKeys\('W,A,S,D,Q,R,E,I,M,P,TAB,SHIFT,SPACE,ESC,F,B'\)/);
   // The keyboard binding has to survive the gamepad being OR-ed in: the pad is
   // added alongside, never in place of, the key. Anchored on the key so a
   // binding that only a gamepad can reach still fails here.

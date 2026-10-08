@@ -47,6 +47,12 @@ export class BootScene extends Phaser.Scene {
     // 1. Spritesheets
     this.load.spritesheet('aizo', `${ASSET_BASE}sprites/aizo.png`, { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('enemies', `${ASSET_BASE}sprites/enemies.png`, { frameWidth: 64, frameHeight: 64 });
+    // The three later-chapter archetypes get their own sheets. They live on the
+    // existing 'enemies' sheet's palette and 64px/8-col grid so a chapter that
+    // mixes old and new enemies never visibly swaps art style mid-fight.
+    this.load.spritesheet('enemies-summoner', `${ASSET_BASE}sprites/enemies-summoner.png`, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('enemies-heavy', `${ASSET_BASE}sprites/enemies-heavy.png`, { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('enemies-flanker', `${ASSET_BASE}sprites/enemies-flanker.png`, { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bosses', `${ASSET_BASE}sprites/bosses.png`, { frameWidth: 128, frameHeight: 128 });
     this.load.spritesheet('structures', `${ASSET_BASE}sprites/structures.png`, { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('projectiles', `${ASSET_BASE}sprites/projectiles.png`, { frameWidth: 16, frameHeight: 16 });

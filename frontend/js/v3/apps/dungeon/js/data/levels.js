@@ -62,7 +62,9 @@ export const LEVELS = [
     gridWidth: 48,
     gridHeight: 48,
     structures: { spawnPoints: 4, towers: 3, enemyBases: 1 },
-    enemies: { types: ['shadowWraith', 'skeletalArcher', 'centurion'], density: 'high' },
+    // Ch5: the golem is the chapter's spine. It is the first enemy that forces
+    // the player to leave a telegraphed circle rather than just dodge contact.
+    enemies: { types: ['shadowWraith', 'skeletalArcher', 'centurion', 'stoneGolem'], density: 'high' },
     boss: null,
     goldBonus: 220,
     lore: 'Wraiths hunt between Phrygian sarcophagi.',
@@ -88,7 +90,10 @@ export const LEVELS = [
     gridWidth: 52,
     gridHeight: 52,
     structures: { spawnPoints: 5, towers: 4, enemyBases: 2 },
-    enemies: { types: ['centurion', 'praetorian', 'cultSorcerer'], density: 'high' },
+    // Ch7: the ferryman joins the praetorian line. It is the first enemy whose
+    // threat is angular rather than positional, which pairs with the open
+    // colonnade floor to make the player keep moving in a direction.
+    enemies: { types: ['centurion', 'praetorian', 'cultSorcerer', 'ferryman'], density: 'high' },
     boss: null,
     goldBonus: 340,
     lore: 'Praetorians hold the street below.',
@@ -101,7 +106,10 @@ export const LEVELS = [
     gridWidth: 54,
     gridHeight: 54,
     structures: { spawnPoints: 6, towers: 4, enemyBases: 2 },
-    enemies: { types: ['cultSorcerer', 'shadowWraith', 'praetorian'], density: 'very_high' },
+    // Ch8: the acolyte is the chapter's set-piece. Combined with the sorcerer's
+    // ground denial, the player must choose a target order rather than swinging
+    // at whatever is closest.
+    enemies: { types: ['cultSorcerer', 'shadowWraith', 'praetorian', 'cultAcolyte'], density: 'very_high' },
     boss: null,
     goldBonus: 400,
     lore: 'Warded rooms of temple scripture.',
@@ -114,7 +122,7 @@ export const LEVELS = [
     gridWidth: 56,
     gridHeight: 56,
     structures: { spawnPoints: 6, towers: 5, enemyBases: 2 },
-    enemies: { types: ['praetorian', 'cultSorcerer', 'centurion'], density: 'very_high' },
+    enemies: { types: ['praetorian', 'cultSorcerer', 'centurion', 'ferryman', 'stoneGolem'], density: 'very_high' },
     boss: 'marbleMinotaur',
     goldBonus: 500,
     lore: 'Vaulted adyton and lightning halls.',
@@ -127,7 +135,9 @@ export const LEVELS = [
     gridWidth: 64,
     gridHeight: 64,
     structures: { spawnPoints: 6, towers: 6, enemyBases: 3 },
-    enemies: { types: ['praetorian', 'cultSorcerer', 'centurion'], density: 'very_high' },
+    // Ch10: the final chapter runs the whole roster, so its last halls mix every
+    // behaviour the player has been taught before the Colossus.
+    enemies: { types: ['praetorian', 'cultSorcerer', 'centurion', 'ferryman', 'stoneGolem', 'cultAcolyte', 'shadowWraith'], density: 'very_high' },
     boss: 'titanColossus',
     goldBonus: 1000,
     isFinal: true,
