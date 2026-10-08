@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-08-spacex-40bn-nvidia-chip-financing",
+  "kind": "daily",
+  "title": "SpaceX seeks about $40bn in financing to buy Nvidia AI chips",
+  "summary": "SpaceX is negotiating roughly $40bn to fund purchases of Nvidia AI chips, with about $10bn expected from bank loans and the remaining ~$30bn through investment-grade bonds, according to media reports. Apollo is expected to lead the arrangement. The move puts a marquee private company into the fast-growing market for compute-backed borrowing. SpaceX shares eased about 2.5% on the reports amid broader investor caution over how the AI build-out will be repaid.",
+  "category": "economy-markets",
+  "priority": 64,
+  "publishedAt": "2026-10-08T05:05:00Z",
+  "updatedAt": "2026-10-08T05:05:00Z",
+  "retrievedAt": "2026-10-08T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "spacex",
+    "nvidia",
+    "ai-chips",
+    "financing"
+  ],
+  "sources": [
+    {
+      "publisher": "Free Malaysia Today (Reuters)",
+      "url": "https://freemalaysiatoday.com/category/business/2026/10/08/wall-street-ends-lower-after-record-highs-as-treasury-yields-climb",
+      "publishedAt": "2026-10-07T22:30:00Z"
+    },
+    {
+      "publisher": "Swingfolio",
+      "url": "https://swingfolio.com/daily/2026-10-08/morning",
+      "publishedAt": "2026-10-08T00:00:00Z"
+    }
+  ]
+}

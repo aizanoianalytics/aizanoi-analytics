@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-08-reflection-beam-open-weight-model",
+  "kind": "daily",
+  "title": "Reflection unveils Beam, a 501B open-weight model pitched against Chinese labs",
+  "summary": "Reflection AI introduced Beam, its first frontier open-weight model, on October 5. Beam is a sparse mixture-of-experts system with 501 billion total parameters that activate about 23 billion per token, pretrained on 23.8 trillion tokens with a one-million-token context window. The Nvidia-backed startup says it matches leading Chinese open models such as Z.ai's GLM-5.2 on advanced reasoning benchmarks at roughly a quarter of the inference cost. Weights and a technical report are promised later this month.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-10-08T05:05:00Z",
+  "updatedAt": "2026-10-08T05:05:00Z",
+  "retrievedAt": "2026-10-08T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "reflection-ai",
+    "open-weight",
+    "models"
+  ],
+  "sources": [
+    {
+      "publisher": "Reflection AI",
+      "url": "https://reflection.ai/blog/introducing-beam",
+      "publishedAt": "2026-10-05T16:00:00Z"
+    },
+    {
+      "publisher": "MLQ News",
+      "url": "https://mlq.ai/news/reflection-ai-unveils-501b-beam-open-weight-model-to-rival-chinas-ai-labs/",
+      "publishedAt": "2026-10-06T13:21:00Z"
+    }
+  ]
+}

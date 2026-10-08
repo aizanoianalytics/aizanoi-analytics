@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-08-biohub-virtual-cell-coalition",
+  "kind": "daily",
+  "title": "DeepMind, Meta and Isomorphic join a $1.8bn push to model the human cell",
+  "summary": "Biohub said Google DeepMind, Isomorphic Labs and Meta will together commit $300m to its Virtual Biology Initiative, lifting total commitments to nearly $1.8bn. The US Department of Energy is directing more than $500m over five years through its Genesis Mission, and the National Institutes of Health will standardise datasets built with over $500m in earlier federal funding. The goal is an open 'virtual cell' model able to predict how cells respond to drugs, mutations and disease before lab experiments.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-10-08T05:05:00Z",
+  "updatedAt": "2026-10-08T05:05:00Z",
+  "retrievedAt": "2026-10-08T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "deepmind",
+    "meta",
+    "biohub",
+    "biology"
+  ],
+  "sources": [
+    {
+      "publisher": "Quartz",
+      "url": "https://qz.com/google-meta-us-government-biohub-virtual-biology-initiative-100726",
+      "publishedAt": "2026-10-07T18:00:00Z"
+    },
+    {
+      "publisher": "Startup Fortune",
+      "url": "https://startupfortune.com/google-meta-and-the-us-government-put-18-billion-behind-a-virtual-human-cell",
+      "publishedAt": "2026-10-07T19:00:00Z"
+    }
+  ]
+}

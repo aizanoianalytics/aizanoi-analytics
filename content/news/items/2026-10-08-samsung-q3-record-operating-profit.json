@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-08-samsung-q3-record-operating-profit",
+  "kind": "daily",
+  "title": "Samsung posts a record quarter as AI chip demand lifts operating profit 782%",
+  "summary": "Samsung Electronics guided to third-quarter operating profit of 107.4 trillion won (about $79.8bn), up 782.5% from a year earlier and its strongest quarter on record, on revenue of roughly 195 trillion won. The company credited sustained demand for memory used in AI infrastructure. Shares slipped in Seoul despite the beat, with investors taking profits and questioning how long the memory price rally can run. It is the first quarter any Korean company has topped 100 trillion won in operating profit.",
+  "category": "technology",
+  "priority": 72,
+  "publishedAt": "2026-10-08T05:05:00Z",
+  "updatedAt": "2026-10-08T05:05:00Z",
+  "retrievedAt": "2026-10-08T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "samsung",
+    "semiconductors",
+    "memory",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "Yonhap",
+      "url": "https://en.yna.co.kr/view/AEN20261008000952320",
+      "publishedAt": "2026-10-08T00:20:00Z"
+    },
+    {
+      "publisher": "Samsung Newsroom",
+      "url": "https://news.samsung.com/global/samsung-electronics-announces-earnings-guidance-for-third-quarter-2026",
+      "publishedAt": "2026-10-07T23:30:00Z"
+    }
+  ]
+}

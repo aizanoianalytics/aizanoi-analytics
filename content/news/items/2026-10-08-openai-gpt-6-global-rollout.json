@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-08-openai-gpt-6-global-rollout",
+  "kind": "daily",
+  "title": "OpenAI opens GPT-6 to all ChatGPT users with a new interactive answer format",
+  "summary": "OpenAI began rolling GPT-6 out across ChatGPT, starting October 7 for Plus, Pro, Business and Enterprise accounts and reaching Free and Go users on October 8. Paid tiers receive GPT-6 Sol while Free and Go get GPT-6 Luna. The release also introduces Intelligent UI, which lets answers combine text, charts and interactive elements as the model writes. OpenAI says GPT-6 Instant begins answering search-heavy prompts about 44% sooner than GPT-5.6 Instant, and that its 1.2 billion weekly users will eventually be covered.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-10-08T05:05:00Z",
+  "updatedAt": "2026-10-08T05:05:00Z",
+  "retrievedAt": "2026-10-08T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "gpt-6",
+    "chatgpt",
+    "intelligent-ui"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/gpt-6-for-everyone/",
+      "publishedAt": "2026-10-08T00:30:00Z"
+    },
+    {
+      "publisher": "OpenAI Developer Community",
+      "url": "https://community.openai.com/t/gpt-6-is-now-rolling-out-to-all-chatgpt-users/1404163",
+      "publishedAt": "2026-10-08T00:40:00Z"
+    },
+    {
+      "publisher": "OpenAI Help Center",
+      "url": "https://help.openai.com/en/articles/20001354-gpt-6-and-other-models-in-chatgpt",
+      "publishedAt": "2026-10-08T01:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-08-wall-street-treasury-yields-24-year-high",
+  "kind": "daily",
+  "title": "Wall Street retreats from records as long-dated Treasury yields hit a 24-year high",
+  "summary": "US stocks closed lower on October 7, a day after the S&P 500 and Nasdaq set record closes, as the 10-year Treasury yield touched 5.36% intraday, its highest since 2002, and the 30-year neared 5.73%. The Dow fell 0.66% to 51,179.87, the S&P 500 eased 0.22% to 7,801.77 and the Nasdaq slipped 0.22% to 27,538.69. A $39bn 10-year auction drew strong demand, easing yields late in the session. Oil-linked inflation fears and rising sovereign and corporate debt drove the bond selloff.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-10-08T05:05:00Z",
+  "updatedAt": "2026-10-08T05:05:00Z",
+  "retrievedAt": "2026-10-08T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "treasury-yields",
+    "wall-street",
+    "bonds"
+  ],
+  "sources": [
+    {
+      "publisher": "Free Malaysia Today (Reuters)",
+      "url": "https://freemalaysiatoday.com/category/business/2026/10/08/wall-street-ends-lower-after-record-highs-as-treasury-yields-climb",
+      "publishedAt": "2026-10-07T22:30:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/06/stock-market-today-live-updates.html",
+      "publishedAt": "2026-10-07T20:05:00Z"
+    },
+    {
+      "publisher": "Rio Times",
+      "url": "https://riotimesonline.com/global-economy-briefing-october-8-2026",
+      "publishedAt": "2026-10-08T01:00:00Z"
+    }
+  ]
+}

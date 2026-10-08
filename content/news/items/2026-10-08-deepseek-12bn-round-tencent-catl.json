@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-08-deepseek-12bn-round-tencent-catl",
+  "kind": "daily",
+  "title": "DeepSeek nears a $12bn round led by Tencent and CATL ahead of a 2027 listing",
+  "summary": "DeepSeek is close to raising at least 80 billion yuan (about $12bn) in a funding round anchored by Tencent and battery maker CATL, Bloomberg reported. Investor demand pushed the total well past the roughly 50 billion yuan the Chinese lab originally sought, and signed term sheets could carry it toward 100 billion yuan. The financing would value DeepSeek at a minimum of about 500 billion yuan (~$75bn) and sets up a restructuring and an initial public offering in early 2027.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-10-08T05:05:00Z",
+  "updatedAt": "2026-10-08T05:05:00Z",
+  "retrievedAt": "2026-10-08T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "deepseek",
+    "funding",
+    "tencent",
+    "catl"
+  ],
+  "sources": [
+    {
+      "publisher": "Quartz",
+      "url": "https://qz.com/deepseek-funding-round-tencent-catl-ipo-100626",
+      "publishedAt": "2026-10-06T11:00:00Z"
+    },
+    {
+      "publisher": "Investing.com",
+      "url": "https://www.investing.com/news/stock-market-news/deepseek-set-to-raise-at-least-12-bln-in-tencent-catlled-round-bloomberg-4933370",
+      "publishedAt": "2026-10-06T07:30:00Z"
+    }
+  ]
+}

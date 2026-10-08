@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-08-messi-final-argentina-match",
+  "kind": "daily",
+  "title": "Messi closes his Argentina chapter with a goal as the Albiceleste beat Benin",
+  "summary": "Lionel Messi played his final match for Argentina on October 6, scoring a penalty and adding two assists in a 3-0 friendly win over Benin at the Estadio Monumental in Buenos Aires. The 39-year-old told the crowd afterwards that retiring from international football was 'the saddest day of my career', reflecting on more than two decades in the shirt. Messi leaves as Argentina's all-time leading scorer with 125 goals, a 2022 World Cup winner and a two-time Copa America champion.",
+  "category": "football",
+  "priority": 80,
+  "publishedAt": "2026-10-08T05:05:00Z",
+  "updatedAt": "2026-10-08T05:05:00Z",
+  "retrievedAt": "2026-10-08T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "argentina",
+    "messi",
+    "international-football"
+  ],
+  "sources": [
+    {
+      "publisher": "Prothom Alo (AFP)",
+      "url": "https://en.prothomalo.com/sports/football/qmyavcjri5",
+      "publishedAt": "2026-10-07T05:00:00Z"
+    },
+    {
+      "publisher": "Durango Herald (AP)",
+      "url": "https://www.durangoherald.com/articles/associated-press/argentina-bids-messi-farewell-in-final-national-team-match-ending-an-era",
+      "publishedAt": "2026-10-07T04:00:00Z"
+    }
+  ]
+}
