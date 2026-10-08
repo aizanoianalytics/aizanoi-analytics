@@ -8,11 +8,19 @@ import { shakeCamera, nonAudioTelegraphsActive } from '../systems/AccessibilityS
 
 const ELITE_COLORS = Object.fromEntries((ELITE_AFFIXES || []).map((a) => [a.id, a.color]));
 
+// An acolyte may only keep this many summons on the field at once. Without a
+// cap a single summoner in a very_high chapter can add enemies faster than the
+// player kills them and the floor never clears.
+const MAX_SUMMONS_PER_CASTER = 3;
+
 export class Enemy extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, typeConfig) {
     const isBoss = typeConfig.isMiniBoss || typeConfig.isFinalBoss;
-    const texture = isBoss ? 'bosses' : 'enemies';
-    const initialFrame = isBoss ? (typeConfig.isFinalBoss ? 1 : 0) : (typeConfig.spriteRow * 8 || 0);
+    // A roster entry may point at its own sheet (`spriteSheet`) for the later
+    // archetypes; anything else falls back to the shared 'enemies' sheet, so a
+    // new enemy never silently renders as a frame from the wrong sheet.
+    const texture = isBoss ? 'bosses' : (typeConfig.spriteSheet || 'enemies');
+    const initialFrame = isBoss ? (typeConfig.isFinalBoss ? 1 : 0) : ((typeConfig.spriteRow ?? 0) * 8 || 0);
 
     super(scene, x, y, texture, initialFrame);
     scene.add.existing(this);
@@ -32,6 +40,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.behavior = typeConfig.behavior;
     this.aggroRange = typeConfig.aggroRange;
     this.isBoss = isBoss;
+    // A summon (not a level placement) pays no loot and is flagged so death
+    // handling can tell it apart from a room spawn.
+    this.isSummon = Boolean(typeConfig.isSummon);
     this.eliteAffix = isBoss ? null : typeConfig.eliteAffix;
     const eliteStats = applyEliteAffix({ moveSpeed: this.moveSpeed, armor: this.armor }, this.eliteAffix);
     this.moveSpeed = eliteStats.moveSpeed;
@@ -105,6 +116,18 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     // Shield-bash charge state: windup -> charge -> recovery. Kept in one
     // object so the phase is readable in the update loop below.
     this.charge = { phase: 'idle', timer: 0, angle: 0, hit: false };
+    // Generic telegraphed ground attack state, shared by the golem slam and the
+    // acolyte's summon windup. Same shape as the charge: windup (dodge window)
+    // -> active -> recovery.
+    this.groundAttack = { phase: 'idle', timer: 0, radius: 0, damage: 0, hit: false };
+    // Flanker orbit state. `until` is an absolute scene-clock deadline for the
+    // current phase (orbit or lunge) so the pattern is frame-rate independent.
+    this.orbit = { phase: 'idle', until: 0, dir: 1, angle: 0 };
+    // Summoner bookkeeping. `nextSummonAt` lives on the scene clock (see
+    // updateSummoner) rather than as a countdown, and `summons` is the live list
+    // the cap is enforced against.
+    this.nextSummonAt = undefined;
+    this.summons = [];
     // Boss encounter state. The brief is explicit that a boss must not be "a
     // large stat block": it needs readable phases, telegraphed attacks, arena
     // progression and an escalation. Phases advance on health thresholds and
@@ -120,6 +143,18 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       announced: false,
       phaseFlash: 0
     };
+  }
+
+  // Phaser crashes when velocity is set on a body that has been destroyed
+  // (an enemy killed by an overlapping physics overlap, a summon whose caster
+  // died, or an update fired on the frame the scene tears down). Every
+  // behaviour in this file calls setVelocity, so the guard lives here once
+  // instead of at twenty call sites.
+  setVelocity(x, y) {
+    if (this.body && typeof this.body.setVelocity === 'function') {
+      this.body.setVelocity(x, y);
+    }
+    return this;
   }
 
   update(time, delta, player) {
@@ -194,6 +229,30 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     // chasers, this one locks its heading during the windup, so sidestepping
     // it actually works and running in a straight line does not.
     if (this.behavior === 'shield_bash_charge' && this.updateCharge(time, delta, dist, player)) {
+      this.drawHealthBar();
+      return;
+    }
+
+    // 4b. Summoner: keeps its distance and raises a fresh gargoyle on a timer.
+    // The summon is telegraphed, so the player is never surprised by a new
+    // enemy appearing on top of them, and it is capped so a chain of them can
+    // never outpace the player.
+    if (this.behavior === 'summoner' && this.updateSummoner(time, delta, dist, player)) {
+      this.drawHealthBar();
+      return;
+    }
+
+    // 4c. Heavy slam: a slow, telegraphed ground attack with a readable ring.
+    // A tank that only walks at the player is a bigger health bar, not a
+    // different fight; this makes its space matter.
+    if (this.behavior === 'armored_slam' && this.updateGroundSlam(time, delta, dist, player)) {
+      this.drawHealthBar();
+      return;
+    }
+
+    // 4d. Flanker: orbits at a fixed distance, then commits to a lunge. The
+    // orbit is what makes it feel unlike the plain chasers.
+    if (this.behavior === 'flank_circle' && this.updateFlanker(time, delta, dist, player)) {
       this.drawHealthBar();
       return;
     }
@@ -541,6 +600,191 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     return true;
   }
 
+  // ── Summoner (cultAcolyte) ──────────────────────────────────────────────
+  // Keeps its distance, tees up a summon, then raises a gargoyle. The active
+  // summon cap is what keeps a wave of these from being unwinnable: without it
+  // the floor fills faster than the player can clear it.
+  // Short visual cue for an attack the enemy starts. The roster has no
+  // per-enemy animation sheets, so the shared convention (see the boss
+  // windups) is a tint pulse plus a scale pop, which reads on any sprite.
+  flashAttackCue(color = 0xffd54f, times = 1) {
+    if (this.isDead) return;
+    this.setTint(color);
+    this.scene.tweens.add({
+      targets: this,
+      scaleX: this.baseScaleX * 1.14,
+      scaleY: 1.14,
+      duration: 120,
+      yoyo: true,
+      repeat: times,
+      onComplete: () => { this.clearTint(); this.setScale(this.baseScaleX, 1); },
+    });
+  }
+
+  // Keeps a plain-sprite enemy oriented at its target without an animation
+  // sheet. Used by the non-boss locomotion branches.
+  faceToward(target) {
+    if (!target) return;
+    this.setFlipX(target.x < this.x);
+  }
+
+  // Shared locomotion helper for the behaviour branches. Inlining the same
+  // "walk at the player at moveSpeed" angle math four times was what produced
+  // the crash: one branch called a helper that never existed, so the whole
+  // enemy's update loop threw the first frame it ran.
+  moveTowardPlayer(player) {
+    if (!player) return;
+    const angle = Phaser.Math.Angle.Between(this.x, this.y, player.x, player.y);
+    this.setVelocity(Math.cos(angle) * this.moveSpeed, Math.sin(angle) * this.moveSpeed);
+  }
+
+  updateSummoner(time, delta, dist, player) {
+    // Prune summons that died or left the scene so the cap stays honest.
+    this.summons = this.summons.filter((s) => s && !s.isDead && s.scene);
+
+    const cd = this.type.summonCooldown ?? this.type.summonInterval ?? 6000;
+
+    // The next cast is tracked as an absolute clock time, not a countdown. A
+    // countdown only drains on the frames that run, so on a slow machine the
+    // summoner would cast far less often than the design intends, and on a
+    // fast one it would flood. `time` is the scene clock, so the cadence is the
+    // same everywhere.
+    if (this.nextSummonAt === undefined) this.nextSummonAt = time + cd;
+
+    if (time < this.nextSummonAt) {
+      // Kite while the cooldown runs: retreat from a close player, hold a
+      // comfortable casting distance otherwise.
+      const ideal = this.type.idealRange ?? 220;
+      const away = dist < ideal * 0.7;
+      const dir = away ? -1 : dist > ideal ? 0.25 : 0;
+      const angle = Math.atan2(this.y - player.y, this.x - player.x);
+      this.setVelocity(Math.cos(angle) * this.moveSpeed * dir, Math.sin(angle) * this.moveSpeed * dir);
+      this.faceToward(player);
+      return true;
+    }
+
+    // Cooldown ready: cast if under the cap, otherwise keep kiting until a
+    // summon dies and frees a slot.
+    if (this.summons.length >= MAX_SUMMONS_PER_CASTER) {
+      const angle = Math.atan2(this.y - player.y, this.x - player.x);
+      this.setVelocity(Math.cos(angle) * this.moveSpeed, Math.sin(angle) * this.moveSpeed);
+      return true;
+    }
+
+    this.flashAttackCue();
+    this.nextSummonAt = time + cd;
+    this.scene.enemySummonGargoyle(this);
+    return true;
+  }
+
+  // ── Armored slam (stoneGolem) ───────────────────────────────────────────
+  // Slow approach -> readable ground circle -> high damage -> recovery. The
+  // windup is the whole point: it is the window in which moving away works.
+  updateGroundSlam(time, delta, dist, player) {
+    const g = this.groundAttack;
+
+    if (g.phase === 'idle') {
+      if (dist > this.attackRange * 0.9) {
+        this.moveTowardPlayer(player);
+        this.faceToward(player);
+        return true;
+      }
+      g.phase = 'windup';
+      g.timer = this.type.slamWindup ?? 650;
+      g.radius = this.type.slamRadius ?? 72;
+      g.damage = this.type.slamDamage ?? this.attackDamage;
+      g.hit = false;
+      this.setVelocity(0, 0);
+      this.faceToward(player);
+      return true;
+    }
+
+    if (g.phase === 'windup') {
+      g.timer -= delta;
+      this.setVelocity(0, 0);
+      this.faceToward(player);
+      if (g.timer <= 0) {
+        g.phase = 'active';
+        g.timer = 220;
+        this.scene.spawnTelegraphRing(this.x, this.y, g.radius, this.type.telegraphColor ?? 0xff7b3d, 'slam');
+      }
+      return true;
+    }
+
+    if (g.phase === 'active') {
+      g.timer -= delta;
+      if (!g.hit && Phaser.Math.Distance.Between(this.x, this.y, player.x, player.y) <= g.radius) {
+        g.hit = true;
+        this.scene.handleAreaDamage(player, g.damage, this);
+      }
+      if (g.timer <= 0) {
+        g.phase = 'recovery';
+        g.timer = this.type.slamRecovery ?? 700;
+      }
+      return true;
+    }
+
+    g.timer -= delta;
+    if (g.timer <= 0) g.phase = 'idle';
+    return true;
+  }
+
+  // ── Flanker (ferryman) ──────────────────────────────────────────────────
+  // Commits to an orbit at a fixed distance and only breaks it for a lunge.
+  // Circling means a player who stands still gets hit, while one who keeps
+  // moving keeps the angle closed — the opposite trade to the plain chasers.
+  // Orbit and lunge are timed on the scene clock, like the summoner's cadence,
+  // so the pattern reads the same on a 30fps laptop and a 144fps desktop.
+  updateFlanker(time, delta, dist, player) {
+    const o = this.orbit;
+    const ideal = this.type.flankDistance ?? 90;
+    const orbitMs = this.type.flankDuration ?? 1400;
+    const lungeMs = this.type.lungeDuration ?? 320;
+
+    if (o.phase === 'idle') {
+      if (dist < ideal * 0.6 || dist > ideal * 1.8) {
+        // Too far or uncomfortably close: close the distance straight on.
+        this.moveTowardPlayer(player);
+        this.faceToward(player);
+        return true;
+      }
+      // Absolute deadlines on the scene clock: a countdown would drain only on
+      // the frames that actually run, so a slow machine would orbit forever and
+      // a fast one would lunge twice a second.
+      o.phase = 'orbit';
+      o.until = time + orbitMs;
+      o.dir = Math.random() < 0.5 ? -1 : 1;
+      return true;
+    }
+
+    if (o.phase === 'orbit') {
+      const angle = Math.atan2(player.y - this.y, player.x - this.x);
+      const tang = angle + (Math.PI / 2) * o.dir;
+      const radial = (ideal - dist) * 1.6;
+      this.setVelocity(
+        (Math.cos(tang) * this.moveSpeed) + (Math.cos(angle) * radial),
+        (Math.sin(tang) * this.moveSpeed) + (Math.sin(angle) * radial)
+      );
+      this.faceToward(player);
+      if (time >= o.until) {
+        o.phase = 'lunge';
+        o.until = time + lungeMs;
+        o.angle = angle;
+        this.setVelocity(Math.cos(o.angle) * this.moveSpeed * 2.6, Math.sin(o.angle) * this.moveSpeed * 2.6);
+        this.flashAttackCue();
+      }
+      return true;
+    }
+
+    // Lunge: one committed dash, then back to orbit.
+    if (time >= o.until) {
+      o.phase = 'idle';
+      o.until = 0;
+      this.setVelocity(0, 0);
+    }
+    return true;
+  }
+
   executeAttack(player) {
     if (this.type.projectileType) {
       this.scene.fireEnemyProjectile(this, player, this.type.projectileType, this.attackDamage);
@@ -569,18 +813,23 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   drawHealthBar() {
     this.hpBar.clear();
-    const always = this.isBoss || Boolean(this.eliteAffix);
+    // A boss's health lives in the HUD's boss bar (name, phase pips, colour
+    // escalation). Keeping a second, tiny bar over its head as well would show
+    // the same number twice at two different sizes and make both harder to
+    // read, so the boss path is skipped here.
+    if (this.isBoss) return;
+    const always = Boolean(this.eliteAffix);
     if (!always && this.hp >= this.maxHp) return;
 
-    const barW = this.isBoss ? 54 : 28;
-    const barH = this.isBoss ? 6 : 4;
+    const barW = 28;
+    const barH = 4;
     const x = this.x - barW / 2;
-    const y = this.y - (this.isBoss ? 58 : 24);
+    const y = this.y - 24;
 
     this.hpBar.fillStyle(0x0b1220, 0.9);
     this.hpBar.fillRect(x - 1, y - 1, barW + 2, barH + 2);
     const pct = Math.max(0, this.hp / this.maxHp);
-    const color = this.isBoss ? 0xf39c12 : (this.eliteAffix ? 0xa569bd : 0xe74c3c);
+    const color = this.eliteAffix ? 0xa569bd : 0xe74c3c;
     this.hpBar.fillStyle(color, 1.0);
     this.hpBar.fillRect(x, y, barW * pct, barH);
   }
@@ -667,10 +916,15 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     // Düşürme (Drop): Denarii ve Zeus Kıvılcımı
-    this.scene.dropLoot(this.x, this.y, this.goldReward, this.xpReward);
-    // Elit kalbi: %10 şansla 25 HP (ölüm sarmalına panzehir)
-    if (this.eliteAffix && Math.random() < 0.1 && typeof this.scene.dropHeart === 'function') {
-      this.scene.dropHeart(this.x + 14, this.y + 6, 25);
+    // A summoned gargoyle carries no gold or XP. It is part of the summoner's
+    // toolkit, so paying out for every copy it raises would turn killing one
+    // summoner into the chapter's economy and trivialise the shop.
+    if (!this.isSummon) {
+      this.scene.dropLoot(this.x, this.y, this.goldReward, this.xpReward);
+      // Elit kalbi: %10 şansla 25 HP (ölüm sarmalına panzehir)
+      if (this.eliteAffix && Math.random() < 0.1 && typeof this.scene.dropHeart === 'function') {
+        this.scene.dropHeart(this.x + 14, this.y + 6, 25);
+      }
     }
     // Kombo sayacı
     if (typeof this.scene.registerKill === 'function') {

@@ -65,6 +65,26 @@ export class UIScene extends Phaser.Scene {
       backgroundColor: '#0f1624aa', padding: { x: 10, y: 3 },
     }).setOrigin(0.5);
 
+    // Boss health bar. The name plate, the bar, the frame and the current phase
+    // pips are all created once here and simply hidden when no boss is alive —
+    // creating and destroying them mid-fight would cost a texture alloc every
+    // transition. The phase pips exist because a chapter 10 boss has three
+    // phases and the player has to see how far it has escalated.
+    const bossY = 76;
+    this.bossBarY = bossY;
+    this.bossFrame = this.add.rectangle(width / 2, bossY, 260, 22, 0x0b1220, 0.9)
+      .setStrokeStyle(1.5, 0xc5a059).setVisible(false);
+    this.bossBarGfx = this.add.graphics().setVisible(false);
+    this.bossNameText = this.add.text(width / 2 - 126, bossY - 13, '', {
+      fontSize: px(readable(11)), color: '#f5d77f', fontStyle: 'bold',
+      backgroundColor: '#0f1624cc', padding: { x: 8, y: 2 },
+    }).setOrigin(0, 0.5).setVisible(false);
+    this.bossPhasePips = [];
+    for (let i = 0; i < 3; i++) {
+      this.bossPhasePips.push(this.add.circle(width / 2 + 126 - 12 - i * 14, bossY, 3.5, 0x5a3a48)
+        .setVisible(false));
+    }
+
     this.add.rectangle(width - 118, 28, 150, 36, glass, 0.82).setStrokeStyle(1, 0xc5a059);
     this.add.image(width - 178, 28, 'coin-icon').setScale(1.2);
     this.goldText = this.add.text(width - 160, 20, '0', { fontSize: px(readable(14)), color: '#f5d77f', fontStyle: 'bold' });
@@ -105,25 +125,35 @@ export class UIScene extends Phaser.Scene {
     const cy = this.cameras.main.height - 34;
     this.abilitySlots = {};
     const defs = [
-      { key: 'q', label: 'Q', x: cx - 78, name: 'Beam' },
-      { key: 'r', label: 'R', x: cx - 26, name: 'Aegis' },
-      { key: 'b', label: 'B', x: cx + 26, name: 'Recall' },
-      { key: 'e', label: 'E', x: cx + 78, name: 'Shop' },
+      { key: 'q', label: 'Q', x: cx - 104, name: 'Beam' },
+      { key: 'r', label: 'R', x: cx - 52, name: 'Aegis' },
+      { key: 'b', label: 'B', x: cx + 0, name: 'Recall' },
+      { key: 'e', label: 'E', x: cx + 52, name: 'Shop' },
+      // Dash sits on its own at the far edge. It is the only slot that is not a
+      // cooldown-fed spell, so it is deliberately given a distinct colour (the
+      // i-frame blue) instead of the shared gold the spells use.
+      // "SHFT" rather than the ⇧ glyph: the retro pixel font does not carry the
+      // arrow-symbol codepoints, and it rendered as a missing-glyph box.
+      { key: 'dash', testKey: 'shift', label: 'SHFT', x: cx + 104, name: 'Dash', accent: 0x7dd3fc },
     ];
     defs.forEach((def) => {
       const box = this.add.rectangle(def.x, cy, 46, 46, 0x0f1624, 0.9).setStrokeStyle(2, 0xc5a059);
       this.add.text(def.x, cy - 8, def.label, { fontSize: px(readable(13)), color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
       const cd = this.add.text(def.x, cy + 10, 'RDY', { fontSize: px(readable(9)), color: '#3dcea8', fontStyle: 'bold' }).setOrigin(0.5);
-      this.abilitySlots[def.key] = { box, cd };
+      this.abilitySlots[def.key] = { box, cd, accent: def.accent };
     });
   }
 
   setSlot(key, ready, seconds) {
     const slot = this.abilitySlots[key];
     if (!slot) return;
+    // A slot may declare its own accent (the dash slot does). When it cools
+    // down it desaturates to the shared "not ready" colour, so the accent is
+    // only ever the ready-state signal.
+    const accent = slot.accent ?? 0xc5a059;
     if (ready) {
       slot.cd.setText('RDY').setColor('#3dcea8');
-      slot.box.setStrokeStyle(2, 0xc5a059);
+      slot.box.setStrokeStyle(2, accent);
     } else {
       slot.cd.setText(`${seconds}s`).setColor('#f07186');
       slot.box.setStrokeStyle(2, 0x5a3a48);
@@ -164,10 +194,50 @@ export class UIScene extends Phaser.Scene {
     this.setSlot('r', player.skill2Cooldown <= 0, Math.ceil((player.skill2Cooldown || 0) / 1000));
     this.setSlot('b', !(gs.recallChannel > 0), Math.ceil((gs.recallChannel || 0) / 1000));
     this.setSlot('e', Boolean(player.isInBase), player.isInBase ? 0 : 1);
+    // Dash cooldown, in tenths so the split-second windows after a dodge are
+    // readable instead of rounding to "1s" for most of the gap.
+    this.setSlot('dash', (player.dashCooldown || 0) <= 0, Math.ceil((player.dashCooldown || 0) / 100) / 10);
     if (player.isInBase) this.abilitySlots.e.cd.setText('OPEN').setColor('#3dcea8');
     else this.abilitySlots.e.cd.setText('BASE').setColor('#9aa8be');
 
-    this.hintText.setText(player.isInBase ? 'E Shop   I Relics   P Pause' : '');
+    this.hintText.setText(player.isInBase ? 'E Shop   I Relics   P Pause' : 'SHIFT Dash');
+
+    // Boss bar: pick the alive boss, or hide the whole group. Drawing into one
+    // graphics object (rather than a scaled rectangle) keeps the bar's inner
+    // fill from stretching its border as it drains.
+    const boss = (gs.enemies?.getChildren?.() || []).find((e) => e.active && e.hp > 0 && e.isBoss);
+    if (!boss) {
+      this.bossFrame.setVisible(false);
+      this.bossBarGfx.setVisible(false).clear();
+      this.bossNameText.setVisible(false);
+      this.bossPhasePips.forEach((p) => p.setVisible(false));
+      this.bossRef = null;
+    } else {
+      if (this.bossRef !== boss) {
+        // A new boss (or the same one respawned) resets the name plate. The
+        // pips are resized per boss so a two-phase mini-boss shows two, not three.
+        this.bossRef = boss;
+        this.bossNameText.setText(boss.name ?? 'Boss');
+        const maxPhases = boss.type?.isFinalBoss ? 3 : 2;
+        this.bossPhasePips.forEach((p, i) => p.setVisible(i < maxPhases));
+        this.bossFrame.setVisible(true);
+        this.bossNameText.setVisible(true);
+      }
+      this.bossBarGfx.setVisible(true);
+      const w = 254;
+      const h = 12;
+      const ratio = Phaser.Math.Clamp(boss.hp / boss.maxHp, 0, 1);
+      // Colour escalates with the phase so the last third reads as alarming.
+      const phase = boss.encounter?.phase ?? 0;
+      const fill = phase >= 2 ? 0xe74c3c : phase === 1 ? 0xf39c12 : 0x9b59b6;
+      const barY = this.bossBarY;
+      this.bossBarGfx.clear();
+      this.bossBarGfx.fillStyle(0x241a26, 1);
+      this.bossBarGfx.fillRect(width / 2 - w / 2, barY - h / 2, w, h);
+      this.bossBarGfx.fillStyle(fill, 1);
+      this.bossBarGfx.fillRect(width / 2 - w / 2, barY - h / 2, w * ratio, h);
+      this.bossPhasePips.forEach((p, i) => p.setFillStyle(i <= phase ? 0xf5d77f : 0x5a3a48));
+    }
 
     if (!this.minimapEnabled) return;
     this.minimapGfx.clear();

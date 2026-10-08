@@ -148,7 +148,7 @@ export class GameScene extends Phaser.Scene {
     // holds no state beyond the previous button values it needs for edge
     // detection.
     this.gamepadInput = new GamepadInput();
-    this.wasd = this.input.keyboard.addKeys('W,A,S,D,Q,R,E,I,M,P,TAB,SPACE,ESC,F,B');
+    this.wasd = this.input.keyboard.addKeys('W,A,S,D,Q,R,E,I,M,P,TAB,SHIFT,SPACE,ESC,F,B');
 
     this.input.on('pointerdown', (pointer) => {
       if (pointer.leftButtonDown() && pointer.x > 48 && pointer.x < this.scale.width - 48) {
@@ -646,6 +646,14 @@ export class GameScene extends Phaser.Scene {
         this.startRecall();
       }
 
+      // Dash: Shift on keyboard, the gamepad's roll button, and the on-screen
+      // dash button on touch. All three must reach the same player method so
+      // the ability reads identically on every input surface.
+      const dashPressed = (this.wasd && Phaser.Input.Keyboard.JustDown(this.wasd.SHIFT)) || padDown('dash');
+      if (dashPressed) this.player.startDash();
+
+      this.tickInteractables(delta);
+
       // Base güvenli alan kontrolü
       const distToBase = Phaser.Math.Distance.Between(
         this.player.x, this.player.y,
@@ -815,6 +823,9 @@ export class GameScene extends Phaser.Scene {
 
   canCompleteLevel() {
     if (!this.player || !this.player.active || this.player.hp <= 0) return false;
+    // Summoned gargoyles count towards the clear: a summoner that keeps
+    // re-raising them must be killed, not outlived. The message reports them
+    // too, so the player is told exactly what is left.
     const activeEnemies = this.enemies ? this.enemies.getChildren().filter(e => e.active && e.hp > 0) : [];
     const activeBosses = activeEnemies.filter(e => e.isBoss);
     if (activeBosses.length > 0) return false;
@@ -1151,6 +1162,215 @@ export class GameScene extends Phaser.Scene {
 
     this.time.delayedCall(duration, cleanUp);
     return state;
+  }
+
+  // Telegraph ring: the windup visual for a ground attack. It fills in, holds,
+  // then snaps — the same contract as the boss windups so the player learns one
+  // "get out of the shape" rule and it works on every enemy in the game.
+  // `mode` distinguishes a slam (solid, instant at the end) from a summon cast
+  // (dashes, then spawns) so the player can read what is coming before it lands.
+  spawnTelegraphRing(x, y, radius, color, mode = 'slam') {
+    const ring = this.add.circle(x, y, radius * 0.16, color, mode === 'summon' ? 0.14 : 0.22).setDepth(6);
+    const rim = this.add.circle(x, y, radius).setDepth(7).setStrokeStyle(2, color, 0.85);
+
+    this.tweens.add({
+      targets: ring,
+      radius,
+      alpha: mode === 'summon' ? 0.28 : 0.42,
+      duration: 140,
+      hold: 60,
+      yoyo: true,
+      repeat: mode === 'summon' ? 3 : 2,
+      onComplete: () => {
+        if (!ring.active) return;
+        this.tweens.add({
+          targets: [ring, rim],
+          alpha: 0,
+          scaleX: 1.35,
+          scaleY: 1.35,
+          duration: 130,
+          onComplete: () => {
+            if (ring.active) ring.destroy();
+            if (rim.active) rim.destroy();
+          }
+        });
+      }
+    });
+
+    return { ring, rim };
+  }
+
+  // One-off area damage at the moment a telegraphed attack lands. Separate from
+  // spawnVolatileZone (which ticks over time) because a slam hits once.
+  handleAreaDamage(player, damage, source) {
+    if (!player?.active || player.isDead || player.isInBase) return false;
+    player.takeDamage(damage, false, source ?? null);
+    this.createDamageSpark(player.x, player.y);
+    this.createFloatingText(player.x, player.y - 30, `${damage}`, '#ff7b3d', 16);
+    return true;
+  }
+
+  // A summoner raising a fresh gargoyle. Spawns at a ring around the caster
+  // rather than on top of it (which would look like a glitch), never inside the
+  // player (which would be a free hit), and respects the same enemy cap the
+  // level spawner uses so two summoners cannot flood a floor.
+  enemySummonGargoyle(caster) {
+    if (!caster?.active || caster.isDead) return null;
+    const liveEnemies = this.enemies.getChildren().filter((e) => e && !e.isDead);
+    const cap = this.level?.enemyCap ?? 14;
+    if (liveEnemies.length >= cap) return null;
+
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 46 + Math.random() * 20;
+    let sx = caster.x + Math.cos(angle) * dist;
+    let sy = caster.y + Math.sin(angle) * dist;
+
+    // Keep the summon inside the playable bounds if the ring would push it out.
+    const bounds = this.physics?.world?.bounds ?? { x: 48, y: 48, width: 720, height: 720 };
+    sx = Phaser.Math.Clamp(sx, bounds.x + 16, bounds.x + bounds.width - 16);
+    sy = Phaser.Math.Clamp(sy, bounds.y + 16, bounds.y + bounds.height - 16);
+
+    this.spawnTelegraphRing(sx, sy, 30, 0x9ccc65, 'summon');
+    const typeKey = caster.type?.summonType ?? 'gargoyle';
+    this.playSfx?.('sfx-summon', 0.4);
+
+    return this.time.delayedCall(320, () => {
+      if (!this.scene || !this.player?.active) return;
+      const spawned = this.spawnEnemy(typeKey, sx, sy);
+      // Tracked on the caster so its cap cannot be bypassed by kiting it.
+      if (spawned && Array.isArray(caster.summons)) caster.summons.push(spawned);
+      return spawned;
+    });
+  }
+
+  // ── Room interactables ──────────────────────────────────────────────────
+  // The generator labels rooms shrine / merchant / treasure, but before this a
+  // label was all they were: the room existed, the prop stood in the middle,
+  // and nothing happened when the player walked up to it. Every special room
+  // now answers to a single E press, and the prompt is drawn only while the
+  // player is actually inside one, so it never becomes background noise.
+
+  // The room the player is standing in, or null. Rooms are grid rectangles, so
+  // this is a single bounds test rather than a physics query.
+  getPlayerRoom() {
+    const rooms = this.levelSystem?.rooms;
+    if (!rooms || !this.player) return null;
+    const tx = Math.floor(this.player.x / 32);
+    const ty = Math.floor(this.player.y / 32);
+    return rooms.find((r) => tx >= r.x && tx < r.x + r.w && ty >= r.y && ty < r.y + r.h) ?? null;
+  }
+
+  tickInteractables() {
+    const room = this.getPlayerRoom();
+    const role = room?.role;
+
+    // Which interactable, if any, is currently in reach.
+    let offer = null;
+    if (role === 'shrine') offer = { kind: 'shrine', label: 'Shrine · 40% HP + cleanse' };
+    else if (role === 'merchant') offer = { kind: 'merchant', label: 'Merchant · open shop' };
+    else if (role === 'treasure') offer = { kind: 'treasure', label: 'Vault · pry it open' };
+
+    // A shrine that has already been spent stays visible but says so, so the
+    // player learns it was a one-off rather than assuming it is broken.
+    if (offer?.kind === 'shrine' && this.usedShrines?.has(room)) {
+      offer = { kind: 'shrine_spent', label: 'Shrine · already spent' };
+    }
+
+    this.currentOffer = offer;
+    this.refreshInteractPrompt(offer);
+
+    if (offer && this.wasd && Phaser.Input.Keyboard.JustDown(this.wasd.E)) {
+      this.useInteractable(room, offer.kind);
+    }
+  }
+
+  refreshInteractPrompt(offer) {
+    if (!offer) {
+      if (this.interactPrompt) this.interactPrompt.setVisible(false);
+      return;
+    }
+    if (!this.interactPrompt) {
+      this.interactPrompt = this.add.text(0, 0, '', {
+        fontSize: '13px',
+        color: '#0b1220',
+        backgroundColor: '#f5d77f',
+        padding: { x: 10, y: 5 },
+      }).setOrigin(0.5, 1).setDepth(40);
+    }
+    this.interactPrompt.setText(`[E]  ${offer.label}`);
+    this.interactPrompt.setPosition(this.player.x, this.player.y - 40);
+    this.interactPrompt.setVisible(true);
+  }
+
+  useInteractable(room, kind) {
+    const player = this.player;
+    if (!player || player.isDead) return;
+
+    if (kind === 'shrine') {
+      // First use only, per room: an infinite shrine removes the choice of
+      // when to spend it and trivialises the gold economy.
+      if (!this.usedShrines) this.usedShrines = new Set();
+      if (this.usedShrines.has(room)) return;
+      this.usedShrines.add(room);
+
+      const healed = Math.round(player.maxHp * 0.4);
+      player.hp = Math.min(player.maxHp, player.hp + healed);
+      // Cleansing is the point of a shrine over a heart drop: it removes the
+      // elite curses that otherwise follow the player out of the room.
+      player.curses = [];
+      this.createFloatingText(player.x, player.y - 40, `+${healed} HP`, '#3dcea8', 20);
+      this.playSfx('sfx-heal', 0.6);
+      this.refreshInteractPrompt({ kind: 'shrine_spent', label: 'Shrine · already spent' });
+      return;
+    }
+
+    if (kind === 'merchant') {
+      // The only other shop surface besides the base, so it must use the same
+      // scene rather than a stripped-down variant that players have to relearn.
+      this.playSfx('sfx-shop', 0.5);
+      this.scene.launch('ShopScene');
+      return;
+    }
+
+    if (kind === 'treasure') {
+      // One pry per vault. The reward is a fixed band rather than a roll, so a
+      // chapter's total gold budget stays predictable for the shop to price
+      // against.
+      const vaultGold = 90 + Math.floor(Math.random() * 60);
+      this.progression.addGold(vaultGold);
+      this.createFloatingText(player.x, player.y - 40, `+${vaultGold} gold`, '#f5d77f', 20);
+      this.playSfx('sfx-gold-spark', 0.6);
+      this.refreshInteractPrompt({ kind: 'treasure_spent', label: 'Vault · emptied' });
+      this.usedVaults = this.usedVaults || new Set();
+      this.usedVaults.add(room);
+    }
+  }
+
+  // Single entry point for every enemy that joins the field after the level's
+  // initial placement — currently the summoner's gargoyles. It reuses the same
+  // config pipeline as the initial spawn (affix roll, endless wave scaling) so
+  // a summoned enemy scales with the floor instead of being permanently weak,
+  // and it returns the enemy so callers can track what they raised.
+  spawnEnemy(typeKey, x, y, opts = {}) {
+    const typeConfig = { ...(ENEMY_TYPES[typeKey] ?? ENEMY_TYPES.gargoyle) };
+    typeConfig.eliteAffix = opts.eliteAffix ?? chooseEliteAffix(typeConfig);
+
+    if (this.isEndless) {
+      const cappedWave = Math.min(this.endlessWave, 20);
+      const waveScale = Math.pow(1.15, cappedWave - 1);
+      typeConfig.hp = Math.round(typeConfig.hp * waveScale);
+      typeConfig.attackDamage = Math.round(typeConfig.attackDamage * Math.pow(1.10, cappedWave - 1));
+    }
+
+    // A summon is a summoned enemy, not a room spawn: it is flagged so the
+    // level-clear check does not count it as part of the original wave, and so
+    // it cannot drop loot that breaks the chapter's economy.
+    typeConfig.isSummon = true;
+
+    const enemy = new Enemy(this, x, y, typeConfig);
+    enemy.setData('spawnRole', opts.spawnRole ?? 'summon');
+    this.enemies.add(enemy);
+    return enemy;
   }
 
   createDamageSpark(x, y) {
