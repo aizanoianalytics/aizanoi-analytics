@@ -821,14 +821,14 @@ a { color: var(--blue-600); text-decoration: none; }
     .intern-candidate-summary { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     .intern-checkbox { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; cursor: pointer; }
     #internLiveCard { scroll-margin-top: 1rem; }
-    #internLiveFrame { width: 100%; min-height: 420px; border: 1px solid var(--slate-200); border-radius: 12px; background: #fff; }
+    #internLiveCard .intern-live-frame-wrap { display: flex; flex-direction: column; gap: 0.6rem; padding: 0.9rem 1rem; border: 1px solid var(--slate-200); border-radius: 12px; background: #fff; }
     .intern-live-frame-wrap { margin-top: 0.5rem; }
     .intern-backend-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: end; margin-top: 1rem; }
     .intern-backend-row label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; flex: 1 1 260px; }
     #internBackendUrl { padding: 0.5rem 0.75rem; border-radius: 8px; min-height: 44px; border: 1px solid var(--slate-300); width: 100%; }
-    #internBackendLoadBtn:focus-visible, #internLiveDownload:focus-visible, #internBackendUrl:focus-visible { outline: 2px solid var(--blue-600); outline-offset: 2px; }
+    #internBackendLoadBtn:focus-visible, #internLiveDownload:focus-visible, #internLiveOpen:focus-visible, #internBackendUrl:focus-visible { outline: 2px solid var(--blue-600); outline-offset: 2px; }
     @media (max-width: 820px) {
-      #internLiveFrame { min-height: 300px; }
+      #internLiveCard .intern-live-frame-wrap { padding: 0.75rem; }
       .intern-backend-row { flex-direction: column; align-items: stretch; }
     }
 
@@ -1616,7 +1616,8 @@ a { color: var(--blue-600); text-decoration: none; }
           <span class="pill pill-green">Canlı</span>
         </div>
         <div class="intern-live-frame-wrap">
-          <iframe id="internLiveFrame" title="Staj başvuru çalışma kitabının canlı önizlemesi" src="https://igairportaero-my.sharepoint.com/:x:/g/personal/furkan_cakmak_igairport_aero/IQCbFZYRxjZlQbglXYNtVZmwAbmN26iPLnmgcjx_vuI-zLY?rtime=xBgjuSwl30g&action=embedview" loading="lazy" referrerpolicy="no-referrer" allowfullscreen></iframe>
+          <p class="drop-sub" style="margin: 0;">Gömülü önizleme SharePoint tarafından engelleniyor (X-Frame-Options: SAMEORIGIN). Güncel dosyayı SharePoint'te açın ya da indirip/backend ile yükleyin.</p>
+          <a id="internLiveOpen" class="btn btn-white" href="https://igairportaero-my.sharepoint.com/:x:/g/personal/furkan_cakmak_igairport_aero/IQCbFZYRxjZlQbglXYNtVZmwAbmN26iPLnmgcjx_vuI-zLY?rtime=xBgjuSwl30g&action=embedview" target="_blank" rel="noopener">🔗 SharePoint'te aç</a>
         </div>
         <div class="intern-backend-row">
           <a id="internLiveDownload" class="btn btn-white" href="https://igairportaero-my.sharepoint.com/:x:/g/personal/furkan_cakmak_igairport_aero/IQCbFZYRxjZlQbglXYNtVZmwAbmN26iPLnmgcjx_vuI-zLY?rtime=xBgjuSwl30g&download=1" rel="noopener">📥 Güncel Exceli indir</a>
@@ -3237,7 +3238,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     // CORS: ornek backend (iga-backend.mjs) Access-Control-Allow-Origin basligi dondurur; tarayici
     // dosyayi yalnizca OKUR. Aday satirlari disari GONDERILMEZ: POST yok, istek govdesi yok,
     // localStorage/sessionStorage/IndexedDB yazimi yok.
-    // NOT: internLiveFrame cross-origin bir SharePoint sayfasidir; same-origin policy geregi
+    // NOT: SharePoint gömülü iframe'e X-Frame-Options: SAMEORIGIN + frame-ancestors ile izin vermiyor;
+    // bu yüzden kartta iframe yok, "SharePoint'te aç" bağlantısı var. Cross-origin frame içeriği
+    // same-origin policy gereği zaten okunamazdı; veri yalnızca backend GET + dosya seçimiyle alınır.
     // contentDocument/contentWindow uzerinden okunamaz. Bu yuzden iframe scrape YOKTUR —
     // canli veri icin tek yol, asagidaki bellek-ici fetch -> SheetJS -> sema dogrulama akisidir.
     async function handleInternBackendLoad() {

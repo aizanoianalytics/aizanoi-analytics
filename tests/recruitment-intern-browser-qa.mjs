@@ -146,8 +146,9 @@ try {
   assert.equal(await page.locator('#internCandidateCount').textContent(), '0 aday');
 
   assert.ok((await page.locator('#internLiveCard').count()) === 1, 'live card should be discoverable');
-  assert.ok((await page.locator('#internLiveFrame').getAttribute('src') || '').includes('action=embedview'), 'iframe must use the SharePoint embedview URL');
-  assert.equal(await page.locator('#internLiveFrame').getAttribute('loading'), 'lazy');
+  assert.equal(await page.locator('#internLiveCard iframe').count(), 0, 'blocked SharePoint frame must not be embedded');
+  assert.ok((await page.locator('#internLiveOpen').getAttribute('href') || '').includes('action=embedview'), 'open link must use the SharePoint file URL');
+  assert.equal(await page.locator('#internLiveOpen').getAttribute('target'), '_blank');
   assert.ok((await page.locator('#internLiveDownload').getAttribute('href') || '').includes('download=1'), 'download link must use download=1');
   assert.equal(await page.locator('#internBackendUrl').inputValue(), 'http://localhost:18923/dosya');
   assert.ok(await page.locator('#internBackendLoadBtn').isVisible(), 'backend load button should be visible');

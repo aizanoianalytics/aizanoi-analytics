@@ -16,14 +16,16 @@ function liveCard() {
   return html.slice(Math.max(0, start - 500), start + 6000);
 }
 
-test('Intern panel adds a discoverable Canli Gorunum card with lazy SharePoint embedview iframe', () => {
+test('Intern panel adds a discoverable Canli Gorunum card without a blocked SharePoint iframe', () => {
   const card = liveCard();
   assert.match(card, /Canl. G.r.n.m/);
   assert.match(html, /<div[^>]+data-view-panel="intern-recruitment"[\s\S]*?id="internLiveCard"/);
-  assert.match(html, /id="internLiveFrame"/);
-  assert.match(html, /<iframe[^>]*id="internLiveFrame"[^>]*loading="lazy"/);
-  assert.match(html, /<iframe[^>]*title="[^"]+"/);
-  assert.ok(html.includes(`src="${EMBED_VIEW}"`), 'iframe must point at the SharePoint embedview URL');
+  assert.doesNotMatch(html, /id="internLiveFrame"/);
+  assert.doesNotMatch(html, /<iframe[^>]*internLive/);
+  assert.match(html, /id="internLiveOpen"/);
+  assert.match(html, /target="_blank"/);
+  assert.ok(html.includes(`href="${EMBED_VIEW}"`), 'open link must point at the SharePoint file URL');
+  assert.match(html, /SharePoint[^\n<]*engell|engell[^\n<]*SharePoint/i);
   assert.match(html, /internet gerekir/i);
 });
 
@@ -52,7 +54,7 @@ test('Backend auto-load flow reuses the existing SheetJS parse, schema validatio
   assert.match(html, /internBackendLoadBtn[\s\S]*?handleInternBackendLoad/);
 });
 
-test('Backend fetch is a read-only GET and the iframe is never scraped cross-origin', () => {
+test('Backend fetch is a read-only GET and no SharePoint frame is embedded or scraped', () => {
   const start = html.indexOf('function handleInternBackendLoad');
   assert.ok(start > 0, 'missing backend loader');
   const fn = html.slice(start, start + 4000);
@@ -60,8 +62,8 @@ test('Backend fetch is a read-only GET and the iframe is never scraped cross-ori
   assert.doesNotMatch(fn, /method:\s*["']POST/i);
   assert.match(html, /cross-origin/i);
   assert.match(html, /same-origin policy/i);
-  assert.doesNotMatch(html, /getElementById\(["']internLiveFrame["']\)/);
-  assert.doesNotMatch(html, /querySelector\([^)]*internLiveFrame/);
+  assert.doesNotMatch(html, /id="internLiveFrame"/);
+  assert.doesNotMatch(html, /<iframe[^>]*internLive/);
 });
 
 test('Live card follows the dashboard card/button/filter language and stays accessible and responsive', () => {
@@ -74,7 +76,7 @@ test('Live card follows the dashboard card/button/filter language and stays acce
   assert.match(html, /<label[^>]*for="internBackendUrl"[^>]*>/);
   assert.match(html, /<label[^>]*for="internBackendUrl"[^>]*>[^<]*Backend/i);
   assert.match(html, /#internLiveCard/);
-  assert.match(html, /#internLiveFrame\s*\{[^}]*width:\s*100%/);
-  assert.match(html, /@media[^{]*\{[\s\S]*?#internLiveFrame[\s\S]*?\}/);
+  assert.match(html, /#internLiveCard\s*\{[^}]*scroll-margin-top/);
+  assert.match(html, /@media[^{]*\{[\s\S]*?#internLiveCard[\s\S]*?\}/);
   assert.match(html, /internBackendUrl[^>]*aria-describedby|aria-describedby[^>]*internBackend/i);
 });
