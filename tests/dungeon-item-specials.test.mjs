@@ -2,7 +2,18 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 class StubSprite {
-  constructor(scene) { this.scene = scene; this.body = { setSize() {}, setOffset() {} }; this.vel = null; }
+  constructor(scene) {
+    this.scene = scene;
+    // Arcade physics carries setVelocity on the body, and the sprite's own
+    // record of the last velocity is updated by that same call, so the stub
+    // mirrors that wiring.
+    const self = this;
+    this.body = {
+      setSize() {}, setOffset() {},
+      setVelocity(x, y) { self.vel = [x, y]; },
+    };
+    this.vel = null;
+  }
   setCollideWorldBounds() {}
   setVelocity(x, y) { this.vel = [x, y]; }
   setDepth() {}

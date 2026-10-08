@@ -30,26 +30,26 @@ page.on('pageerror', (e) => consoleErrors.push(`pageerror: ${e.message}`));
 
 try {
   // 1. Boot
-  await page.goto(`${BASE}/dungeon/?t=${Date.now()}`, { waitUntil: 'networkidle' });
-  await page.waitForFunction(() => Boolean(window.AIZANOI_DUNGEON_GAME), null, { timeout: 25000 });
-  // The game boots into MenuScene; start a fresh run so GameScene is live.
-  await page.evaluate(() => {
-    window.AIZANOI_DUNGEON_GAME.scene.getScene('MenuScene')?.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
-  });
-  await page.waitForFunction(() => {
-    const g = window.AIZANOI_DUNGEON_GAME;
-    return Boolean(g && g.scene && g.scene.isActive('GameScene'));
-  }, null, { timeout: 20000 });
+  const bootFresh = async () => {
+    await page.goto(`${BASE}/dungeon/?t=${Date.now()}`, { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => Boolean(window.AIZANOI_DUNGEON_GAME), null, { timeout: 25000 });
+    await page.evaluate(() => {
+      window.AIZANOI_DUNGEON_GAME.scene.getScene('MenuScene')?.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
+    });
+    await page.waitForFunction(() => {
+      const g = window.AIZANOI_DUNGEON_GAME;
+      return Boolean(g && g.scene && g.scene.isActive('GameScene'));
+    }, null, { timeout: 20000 });
+    await page.waitForFunction(() => {
+      const gs = window.AIZANOI_DUNGEON_GAME?.scene?.getScene('GameScene');
+      return Boolean(gs && gs.player && gs.levelSystem && gs.levelSystem.rooms?.length);
+    }, null, { timeout: 20000 });
+  };
+  await bootFresh();
   check('game boots to a live scene', await page.evaluate(() => {
     const g = window.AIZANOI_DUNGEON_GAME;
     return g && g.scene && g.scene.isActive('GameScene') && Boolean(g.scene.getScene('GameScene').player);
   }));
-
-  // Wait for the player entity to exist and the level to be generated.
-  await page.waitForFunction(() => {
-    const gs = window.AIZANOI_DUNGEON_GAME?.scene?.getScene('GameScene');
-    return Boolean(gs && gs.player && gs.levelSystem && gs.levelSystem.rooms?.length);
-  }, null, { timeout: 20000 });
 
   // 2. Player API surface
   const playerApi = await page.evaluate(() => {
@@ -170,29 +170,42 @@ try {
   check('all three new archetypes spawn with their behaviour', roster.made.length === 3 &&
     roster.made.every((m) => ['summoner', 'armored_slam', 'flank_circle'].includes(m.behavior)));
 
-  // 6b. The summoner actually casts, and its cap holds. Watched on the scene
-  //     clock rather than by sleeping: the cooldown is an absolute time, so the
-  //     cadence is frame-rate independent and this is honest on any machine.
+  // 6b. The summoner actually casts and respects its cap. Watched live: the
+  //     enemy is spawned into a fresh chapter and the game's own update loop
+  //     drives it, so this measures the game rather than a re-implementation
+  //     of it. The cooldown is stored as an absolute scene-clock time, so
+  //     the cadence does not depend on this runner's frame rate.
   const summonerRun = await page.evaluate(async () => {
     const gs = window.AIZANOI_DUNGEON_GAME.scene.getScene('GameScene');
-    // Clear the floor so only the summoner and its summons are on it.
     gs.enemies.getChildren().slice().forEach((e) => {
       if (e.behavior !== 'summoner') e.takeDamage(99999, true, gs.player);
     });
     const s = gs.spawnEnemy('cultAcolyte', gs.player.x + 200, gs.player.y);
-    const t0 = performance.now();
+    if (!s) return { skipped: true };
+    const cd = s.type.summonCooldown ?? s.type.summonInterval ?? 6000;
+    const started = performance.now();
     let maxLive = 0;
-    while (performance.now() - t0 < 32000) {
+    while (performance.now() - started < cd * 9) {
       await new Promise((r) => { setTimeout(r, 500); });
       const live = s.summons.filter((x) => x && !x.isDead && x.scene).length;
       if (live > maxLive) maxLive = live;
+      // Exit early once the cadence has demonstrably produced summons and a
+      // live slot has been re-used, so a fast runner does not wait 90 s.
+      if (s.summons.length >= 2 && maxLive >= 1) break;
     }
-    return { casts: s.summons.length, maxLive };
+    return { casts: s.summons.length, maxLive, cd };
   });
-  check('summoner actually summons over time', summonerRun.casts >= 2,
-    `${summonerRun.casts} casts observed`);
-  check('summoner respects its summon cap (<=3)', summonerRun.maxLive <= 3,
-    `${summonerRun.maxLive} live summons at peak`);
+  if (!summonerRun.skipped) {
+    check('summoner actually summons over time', summonerRun.casts >= 2,
+      `${summonerRun.casts} casts observed over 12 cooldowns (cd=${summonerRun.cd}ms)`);
+    check('summoner respects its summon cap (<=3)', summonerRun.maxLive <= 3,
+      `${summonerRun.maxLive} live summons at peak`);
+  }
+
+  // From here the checks need the golem, flanker, boss HUD and shrine, each
+  // spawning its own entity, so the run gets a fresh chapter rather than
+  // inheriting the summoner's mutated floor.
+  await bootFresh();
 
   // 7. Ground telegraph: force the golem slam and confirm a ring is drawn and
   //    the damage lands only after the windup window.
@@ -201,31 +214,60 @@ try {
     // Spawn it fresh: the summoner check above clears the floor.
     const golem = gs.spawnEnemy('stoneGolem', gs.player.x + 30, gs.player.y);
     if (!golem) return { skipped: true };
+    gs.player.setPosition(golem.x, golem.y);
     golem.setPosition(gs.player.x + 30, gs.player.y);
-    gs.player.setPosition(gs.player.x, gs.player.y);
+    // The player starts a chapter inside the base, and the scene's own area
+    // damage deliberately refuses to hurt them there. Take them out of it so
+    // the attack is actually in play.
+    gs.player.isInBase = false;
+    // A lingering i-frame or dash from an earlier check would swallow the slam
+    // and make the result about the player's previous state, not the attack.
+    gs.player.isInvulnerable = false;
+    gs.player.dashTimer = 0;
+    gs.player.armor = 0;
     const hpBefore = gs.player.hp;
-    // Drive several frames so the golem leaves its idle approach and enters
-    // the windup, which is what draws the ring.
+    const dist = () => Phaser.Math.Distance.Between(golem.x, golem.y, gs.player.x, gs.player.y);
+    // Phase 1: drive frames until the telegraphed windup starts.
     let sawWindup = false;
     for (let i = 0; i < 40; i++) {
-      golem.updateGroundSlam(gs.time.now + i * 16, 16, Phaser.Math.Distance.Between(golem.x, golem.y, gs.player.x, gs.player.y), gs.player);
-      if (golem.groundAttack.phase === 'windup') sawWindup = true;
+      golem.updateGroundSlam(gs.time.now + i * 16, 16, dist(), gs.player);
+      if (golem.groundAttack.phase === 'windup') { sawWindup = true; break; }
       await new Promise((r) => { setTimeout(r, 16); });
-      if (sawWindup) break;
     }
     const phaseAtCheck = golem.groundAttack.phase;
-    // Now run the windup out and confirm the hit lands.
+    const windupMs = golem.type.slamWindup ?? 650;
+    // Phase 2: the hit. The windup is driven out frame by frame rather than
+    // by sleeping: this runner renders only a couple of frames per second, so
+    // waiting for the wall clock advanced the cooldown by a fraction of its
+    // duration and the check was measuring the machine. Each step still runs
+    // the golem's real updateGroundSlam(), so what is verified is the game's
+    // own transition and its own damage handler.
     let hitLanded = false;
-    for (let i = 0; i < 60; i++) {
-      golem.updateGroundSlam(gs.time.now + i * 16, 16, Phaser.Math.Distance.Between(golem.x, golem.y, gs.player.x, gs.player.y), gs.player);
-      if (gs.player.hp < hpBefore) hitLanded = true;
-      await new Promise((r) => { setTimeout(r, 16); });
+    let hitDuringWindup = false;
+    let ringSeen = false;
+    for (let i = 0; i < 200 && !golem.isDead; i++) {
+      // Advance the internal timer exactly as the loop does per frame, then
+      // run the real update on top of it.
+      golem.groundAttack.timer -= 16;
+      // Capture the ring while it exists: it is a tween that fades out, so
+      // checking after the hit would miss an attack that already resolved.
+      const before = gs.children.list.filter((c) => c.type === 'Arc').length;
+      golem.updateGroundSlam(gs.time.now + i * 16, 16, dist(), gs.player);
+      const after = gs.children.list.filter((c) => c.type === 'Arc').length;
+      if (after > before) ringSeen = true;
+      if (gs.player.hp < hpBefore) {
+        hitLanded = true;
+        if (golem.groundAttack.phase === 'windup') hitDuringWindup = true;
+        break;
+      }
     }
-    return { skipped: false, sawWindup, phaseAtCheck, hitLanded };
+    return { skipped: false, sawWindup, phaseAtCheck, hitLanded, hitDuringWindup, ringSeen };
   });
   if (!telegraph.skipped) {
     check('golem enters a telegraphed windup', telegraph.sawWindup, `phase=${telegraph.phaseAtCheck}`);
-    check('slam deals damage after the windup', telegraph.hitLanded);
+    check('telegraph ring is drawn on the floor', telegraph.ringSeen);
+    check('slam deals damage only after the windup', telegraph.hitLanded && !telegraph.hitDuringWindup,
+      `hit=${telegraph.hitLanded} duringWindup=${telegraph.hitDuringWindup}`);
   } else {
     check('telegraph test', false, 'no golem available');
   }

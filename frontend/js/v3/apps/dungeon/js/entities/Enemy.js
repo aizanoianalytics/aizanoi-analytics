@@ -145,6 +145,18 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     };
   }
 
+  // Phaser crashes when velocity is set on a body that has been destroyed
+  // (an enemy killed by an overlapping physics overlap, a summon whose caster
+  // died, or an update fired on the frame the scene tears down). Every
+  // behaviour in this file calls setVelocity, so the guard lives here once
+  // instead of at twenty call sites.
+  setVelocity(x, y) {
+    if (this.body && typeof this.body.setVelocity === 'function') {
+      this.body.setVelocity(x, y);
+    }
+    return this;
+  }
+
   update(time, delta, player) {
     if (this.isDead || !this.active || !player || player.isDead) {
       this.hpBar.clear();

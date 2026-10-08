@@ -41,9 +41,7 @@ const DIAGNOSTICS = new Set([
   'dungeon-run-summary-audit.mjs',
   'dungeon-visual-identity-audit.mjs',
   'dungeon-accessibility-audit.mjs',
-  'aizanoi-performance-audit.mjs',
-  'browser-dungeon-live-qa.mjs',
-  'browser-dungeon-mastery-qa.mjs'
+  'aizanoi-performance-audit.mjs'
 ]);
 
 function browserSuites(dir = 'tests') {
