@@ -32,6 +32,8 @@ const expectedHeaders = [
   'Üniversite',
   'Bölüm',
   'Sınıf',
+  'İngilizce Seviyeniz',
+  'Linkedin bağlantınız',
   '1. Birim Tercihiniz',
   '2. Birim Tercihiniz',
   '3. Birim Tercihiniz',
@@ -40,13 +42,15 @@ const expectedHeaders = [
   'sorumlu',
   'Şirket',
   'Güvenlik Bilinci Sınavı',
-  'adli sicil',
+  'Adli Sicil',
   'Biyometrik Fotoğraf',
   'Nüfus Cüzdanı Belgesi',
   'İkametgah Belgesi',
   'Öğrenci Belgesi',
   'Staj Başvuru Formu',
   'SGK işe giriş belgesi',
+  'İptal mi?',
+  'NOTLAR',
 ];
 
 test('Recruitment dashboard adds exactly one Intern Recruitment tab and panel', () => {
@@ -67,7 +71,7 @@ test('Intern Recruitment accepts only the named local workbook and renders raw r
   assert.match(html, /data remains in this browser and is never uploaded/i);
 });
 
-test('Intern Recruitment pins the exact 40-column schema without committing applicant rows', () => {
+test('Intern Recruitment pins the exact 44-column schema without committing applicant rows', () => {
   const match = html.match(/const INTERN_RECRUITMENT_HEADERS = Object\.freeze\((\[[\s\S]*?\])\);/);
   assert.ok(match, 'missing exact Intern Recruitment header contract');
   assert.deepEqual(JSON.parse(match[1]), expectedHeaders);
