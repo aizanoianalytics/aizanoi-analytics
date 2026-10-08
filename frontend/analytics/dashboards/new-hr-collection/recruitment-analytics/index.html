@@ -1548,6 +1548,28 @@ a { color: var(--blue-600); text-decoration: none; }
         </div>
 
         <div id="internRecruitmentStatus" style="margin-top: 1.25rem;" role="status" aria-live="polite"></div>
+
+        <div id="internHrPanel" style="display: none; margin-top: 1.25rem; padding: 1.25rem; border: 1px solid var(--border, #e2e8f0); border-radius: 12px; background: var(--surface, #f8fafc);">
+          <h4 style="margin: 0 0 .25rem;">İK Paneli — Dönem ve Raporlar</h4>
+          <p class="drop-sub" style="margin: 0 0 1rem;">Staj dönemi seçin; listeler yalnızca bu tarayıcıda, yüklenen dosyadan üretilir ve .xlsx olarak indirilir. Hiçbir veri yüklenmez.</p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: end; margin-bottom: 1rem;">
+            <label style="display: flex; flex-direction: column; gap: .35rem; font-size: .85rem;">Staj dönemi
+              <select id="internPeriodSelect" style="padding: .5rem .75rem; border-radius: 8px; min-width: 220px;"></select>
+            </label>
+            <label style="display: flex; flex-direction: column; gap: .35rem; font-size: .85rem;">Bitiş ayı (Staj Bitiş Listesi için)
+              <input type="month" id="internEndMonth" style="padding: .5rem .75rem; border-radius: 8px;">
+            </label>
+          </div>
+          <div style="display: flex; gap: .6rem; flex-wrap: wrap;">
+            <button type="button" id="exportIsgBtn" class="btn">📥 İSG Listesi Oluştur</button>
+            <button type="button" id="exportPozisyonBtn" class="btn">📥 Pozisyon Kodu Listesi Oluştur</button>
+            <button type="button" id="exportKartBtn" class="btn">📥 Kart Başvuru Listesi Oluştur</button>
+            <button type="button" id="exportHseBtn" class="btn">📥 HSE Plus Listesi Oluştur</button>
+            <button type="button" id="exportBitisBtn" class="btn">📥 Staj Bitiş Listesi Oluştur</button>
+          </div>
+          <p class="drop-sub" style="margin: .75rem 0 0;">Birim / Sorumlu / Şirket hücreleri tabloda açılır listeden, evrak sütunları Alındı / Eksik seçimiyle düzenlenir; değişiklikler yalnızca bu oturumda ve indirdiğiniz listelere yansır.</p>
+        </div>
+
         <div id="internRecruitmentTableWrap" class="data-table-container" style="display: none; max-height: 70vh; margin-top: 1.25rem; overflow: auto;">
           <table class="data-table" id="internRecruitmentTable">
             <thead id="internRecruitmentTableHead"></thead>
@@ -2812,20 +2834,260 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }
     }
 
-    function renderInternRecruitmentRawData(matrix, fileName) {
-      const headers = matrix[0];
-      const rows = matrix.slice(1);
-      const rawText = value => {
-        if (value == null) return "";
-        if (typeof value === "object") return JSON.stringify(value);
-        return String(value);
-      };
-      $("#internRecruitmentTableHead").innerHTML = `<tr>${headers.map(header => `<th>${escapeHtml(rawText(header))}</th>`).join("")}</tr>`;
-      $("#internRecruitmentTableBody").innerHTML = rows.map(row => `<tr>${headers.map((_, index) => `<td>${escapeHtml(rawText(row[index]))}</td>`).join("")}</tr>`).join("");
-      $("#internRecruitmentRowCount").textContent = `${formatNumber(rows.length)} raw rows`;
+    // HR PANELI — staj donemi raporlari. Tamami bu tarayicida uretilir, veri yuklenmez.
+    const INTERN_DROPDOWN_COLUMNS = Object.freeze(["Kesinleşen Birim", "sorumlu", "Şirket"]);
+    const INTERN_DOC_COLUMNS = Object.freeze(["Güvenlik Bilinci Sınavı", "Adli Sicil", "Biyometrik Fotoğraf", "Nüfus Cüzdanı Belgesi", "İkametgah Belgesi", "Öğrenci Belgesi", "Staj Başvuru Formu", "SGK işe giriş belgesi"]);
+    const INTERN_PERIOD_COLUMN = "Staj Başlangıç Dönemi";
+    const INTERN_TOTAL_DAYS_COLUMN = "Kaç iş günü stajınızı gerçekleştireceksiniz?";
+    const INTERN_WORKDAYS_COLUMN = "Staj Katılım Günleri";
+    const TR_MONTHS = { ocak: 1, şubat: 2, mart: 3, nisan: 4, mayıs: 5, haziran: 6, temmuz: 7, ağustos: 8, eylül: 9, ekim: 10, kasım: 11, aralık: 12 };
+    // Turkiye resmi tatilleri tam gun sayilir (arefe dahil). Dini bayramlar yila gore guncellenmelidir.
+    const TR_HOLIDAYS = Object.freeze(["2026-01-01", "2026-03-19", "2026-03-20", "2026-03-21", "2026-03-22", "2026-04-23", "2026-05-01", "2026-05-19", "2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-07-15", "2026-08-30", "2026-10-29", "2027-01-01", "2027-04-23", "2027-05-01", "2027-05-19", "2027-07-15", "2027-08-30", "2027-10-29"]);
+    const TR_HOLIDAY_SET = new Set(TR_HOLIDAYS);
+    const TR_WEEKDAYS = Object.freeze({ pazartesi: 1, salı: 2, çarşamba: 3, perşembe: 4, cuma: 5, cumartesi: 6, pazar: 0 });
+
+    const internState = { headers: [], rows: [], overrides: new Map() };
+
+    const internRawText = value => {
+      if (value == null) return "";
+      if (value instanceof Date) return formatTrDay(value);
+      if (typeof value === "object") return JSON.stringify(value);
+      return String(value);
+    };
+
+    function internCell(rowIdx, header) {
+      const key = rowIdx + "::" + header;
+      if (internState.overrides.has(key)) return internState.overrides.get(key);
+      const col = internState.headers.indexOf(header);
+      if (col < 0) return "";
+      return internState.rows[rowIdx][col] ?? "";
+    }
+
+    function parseTrDate(value) {
+      if (value == null || value === "") return null;
+      if (value instanceof Date && !isNaN(value)) return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+      if (typeof value === "number") {
+        const base = new Date(Math.round((value - 25569) * 86400 * 1000));
+        return new Date(base.getUTCFullYear(), base.getUTCMonth(), base.getUTCDate());
+      }
+      const text = String(value).trim();
+      const tr = text.match(/^(\d{1,2})\s+([A-Za-zçğıöşüÇĞİÖŞÜ]+)\s+(\d{4})/);
+      if (tr) {
+        const month = TR_MONTHS[tr[2].toLocaleLowerCase("tr")];
+        if (month) return new Date(Number(tr[3]), month - 1, Number(tr[1]));
+      }
+      const iso = text.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (iso) return new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3]));
+      const parsed = new Date(text);
+      return isNaN(parsed) ? null : new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate());
+    }
+
+    function toIsoDay(date) {
+      return date.getFullYear() + "-" + String(date.getMonth() + 1).padStart(2, "0") + "-" + String(date.getDate()).padStart(2, "0");
+    }
+
+    function formatTrDay(date) {
+      if (!date) return "";
+      return String(date.getDate()).padStart(2, "0") + "." + String(date.getMonth() + 1).padStart(2, "0") + "." + date.getFullYear();
+    }
+
+    function excelDate(value) {
+      if (value == null || value === "") return "";
+      if (value instanceof Date) return formatTrDay(value);
+      if (typeof value === "number") return formatTrDay(parseTrDate(value));
+      const parsed = parseTrDate(value);
+      if (parsed) {
+        const text = String(value).trim();
+        if (/^\d{4}-\d{2}-\d{2}/.test(text) || /^\d{1,2}\s+[A-Za-zçğıöşüÇĞİÖŞÜ]+\s+\d{4}/.test(text)) return formatTrDay(parsed);
+        return text;
+      }
+      return String(value);
+    }
+
+    function parseWorkdays(value) {
+      const days = new Set();
+      String(value ?? "").split(";").forEach(part => {
+        const key = part.trim().toLocaleLowerCase("tr");
+        if (key in TR_WEEKDAYS) days.add(TR_WEEKDAYS[key]);
+      });
+      if (!days.size) [1, 2, 3, 4, 5].forEach(day => days.add(day));
+      return days;
+    }
+
+    // Baslangic tarihi calisma gunu ise 1. gun sayilir; hafta sonu ve resmi tatiller atlanir.
+    function calcInternEndDate(startDate, totalDays, weekdays) {
+      if (!startDate || !(totalDays > 0)) return null;
+      const cursor = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+      let counted = 0;
+      for (let step = 0; step < 1500; step++) {
+        const jsDay = cursor.getDay();
+        if (jsDay !== 0 && jsDay !== 6 && weekdays.has(jsDay) && !TR_HOLIDAY_SET.has(toIsoDay(cursor))) {
+          counted++;
+          if (counted >= totalDays) return new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate());
+        }
+        cursor.setDate(cursor.getDate() + 1);
+      }
+      return null;
+    }
+
+    function remainingText(endDate, today = new Date()) {
+      if (!endDate) return "—";
+      const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const diff = Math.round((endDate - base) / 86400000);
+      if (diff > 0) return "Stajın bitmesine " + diff + " gün kaldı";
+      if (diff === 0) return "Staj bugün bitiyor";
+      return "Staj " + Math.abs(diff) + " gün önce bitti";
+    }
+
+    function internRowComputed(rowIdx) {
+      const start = parseTrDate(internCell(rowIdx, INTERN_PERIOD_COLUMN));
+      const total = Number(String(internCell(rowIdx, INTERN_TOTAL_DAYS_COLUMN)).replace(",", "."));
+      const end = calcInternEndDate(start, total, parseWorkdays(internCell(rowIdx, INTERN_WORKDAYS_COLUMN)));
+      return { start, end, kalan: remainingText(end) };
+    }
+
+    function distinctInternValues(header, current) {
+      const col = internState.headers.indexOf(header);
+      const values = new Set();
+      if (col >= 0) internState.rows.forEach(row => {
+        const text = String(row[col] ?? "").trim();
+        if (text) values.add(text);
+      });
+      if (current) values.add(String(current));
+      return [...values].sort((a, b) => a.localeCompare(b, "tr"));
+    }
+
+    function internCellHtml(rowIdx, header) {
+      const current = internCell(rowIdx, header);
+      const key = rowIdx + "::" + header;
+      if (INTERN_DROPDOWN_COLUMNS.includes(header)) {
+        const options = distinctInternValues(header, String(current ?? ""));
+        return `<select data-intern-edit="${escapeHtml(key)}">${options.map(o => `<option value="${escapeHtml(o)}"${o === String(current ?? "") ? " selected" : ""}>${escapeHtml(o) || "(boş)"}</option>`).join("")}</select>`;
+      }
+      if (INTERN_DOC_COLUMNS.includes(header)) {
+        const value = current === "Alındı" ? "Alındı" : "Eksik";
+        return `<select data-intern-edit="${escapeHtml(key)}"><option${value === "Alındı" ? " selected" : ""}>Alındı</option><option${value === "Eksik" ? " selected" : ""}>Eksik</option></select>`;
+      }
+      return escapeHtml(internRawText(current));
+    }
+
+    function buildInternHrPanel() {
+      const select = $("#internPeriodSelect");
+      const periods = new Set();
+      const col = internState.headers.indexOf(INTERN_PERIOD_COLUMN);
+      if (col >= 0) internState.rows.forEach(row => {
+        const text = String(row[col] ?? "").trim();
+        if (text) periods.add(text);
+      });
+      const ordered = [...periods].sort((a, b) => a.localeCompare(b, "tr"));
+      select.innerHTML = `<option value="">Tüm dönemler</option>` + ordered.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join("");
+      if (ordered.length) select.value = ordered[0];
+      $("#internHrPanel").style.display = "block";
+    }
+
+    function renderInternTable(fileName) {
+      const headers = internState.headers;
+      const computedHeads = ["Hesaplanan Bitiş", "Kalan Gün"];
+      $("#internRecruitmentTableHead").innerHTML = `<tr>${headers.map(header => `<th>${escapeHtml(header)}</th>`).join("")}${computedHeads.map(h => `<th>${h}</th>`).join("")}</tr>`;
+      $("#internRecruitmentTableBody").innerHTML = internState.rows.map((_, rowIdx) => {
+        const done = internRowComputed(rowIdx);
+        const cells = headers.map(header => `<td>${internCellHtml(rowIdx, header)}</td>`).join("");
+        return `<tr>${cells}<td>${formatTrDay(done.end)}</td><td>${escapeHtml(done.kalan)}</td></tr>`;
+      }).join("");
+      $("#internRecruitmentRowCount").textContent = `${formatNumber(internState.rows.length)} raw rows`;
       $("#internRecruitmentTableWrap").style.display = "block";
       $("#internRecruitmentStatus").innerHTML = `<div style="padding: 1rem; background: var(--green-100); border: 1px solid var(--green-500); border-radius: 8px; color: var(--green-700);"><strong>${escapeHtml(fileName)} loaded locally.</strong> Raw Sheet1 values are shown below; nothing was uploaded or added to the recruitment dashboard dataset.</div>`;
     }
+
+    function renderInternRecruitmentRawData(matrix, fileName) {
+      internState.headers = matrix[0].map(value => String(value ?? "").replace(/\s+/g, " ").trim());
+      internState.rows = matrix.slice(1);
+      internState.overrides = new Map();
+      buildInternHrPanel();
+      renderInternTable(fileName);
+    }
+
+    function downloadXlsx(filename, aoa) {
+      const book = XLSX.utils.book_new();
+      book.SheetNames.push("Liste");
+      book.Sheets.Liste = XLSX.utils.aoa_to_sheet(aoa);
+      XLSX.writeFile(book, filename);
+    }
+
+    function slugifyPeriod(period) {
+      return (period || "Tum-Donemler").replace(/\s+/g, "-");
+    }
+
+    function internExportRows() {
+      const select = $("#internPeriodSelect");
+      const chosen = select ? select.value : "";
+      const out = [];
+      internState.rows.forEach((_, idx) => {
+        if (!chosen || internCell(idx, INTERN_PERIOD_COLUMN) === chosen) out.push(idx);
+      });
+      return out;
+    }
+
+    function exportIsgList() {
+      const idx = internExportRows();
+      const head = ["Ad", "Soyad", "T.C. Kimlik Numarası", "E-mail", "Telefon", "Doğum Tarihi", "İkamet/Konaklama Adresi", "Kesinleşen Departman", "Sorumlu", "Şirket"];
+      const aoa = [head];
+      idx.forEach(i => aoa.push([internCell(i, "Adı"), internCell(i, "Soyadı"), internCell(i, "T.C. Kimlik Numarası"), internCell(i, "E-posta adresiniz"), internCell(i, "Telefon numaranız"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), internCell(i, "Kesinleşen Birim"), internCell(i, "sorumlu"), internCell(i, "Şirket")]));
+      downloadXlsx("ISG-Listesi-" + slugifyPeriod($("#internPeriodSelect").value) + ".xlsx", aoa);
+      toast(`İSG listesi indirildi (${idx.length} aday).`, "success");
+    }
+
+    function exportPozisyonList() {
+      const idx = internExportRows();
+      const head = ["T.C. Kimlik No", "Ad", "Soyad", "Doğum Tarihi", "Adres", "İl/İlçe", "Anne Adı", "Baba Adı", "Telefon", "E-posta", "Staj Başlangıç Tarihi", "Staj Bitiş Tarihi", "Kan Grubu", "Cinsiyet", "Okul", "Bölüm", "Sınıf", "İngilizce Seviyesi", "Staj Durumu", "Staj Günleri", "Departman", "Sorumlu", "Şirket"];
+      const aoa = [head];
+      idx.forEach(i => {
+        const done = internRowComputed(i);
+        aoa.push([internCell(i, "T.C. Kimlik Numarası"), internCell(i, "Adı"), internCell(i, "Soyadı"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), internCell(i, "İlçe/İl"), internCell(i, "Anne Adı"), internCell(i, "Baba Adı"), internCell(i, "Telefon numaranız"), internCell(i, "E-posta adresiniz"), formatTrDay(done.start), formatTrDay(done.end), internCell(i, "Kan Grubunuz"), "", internCell(i, "Üniversite"), internCell(i, "Bölüm"), internCell(i, "Sınıf"), internCell(i, "İngilizce Seviyeniz"), internCell(i, "Staj Durumunuz"), internCell(i, "Staj Katılım Günleri"), internCell(i, "Kesinleşen Birim"), internCell(i, "sorumlu"), internCell(i, "Şirket")]);
+      });
+      downloadXlsx("Pozisyon-Kodu-Listesi-" + slugifyPeriod($("#internPeriodSelect").value) + ".xlsx", aoa);
+      toast(`Pozisyon Kodu listesi indirildi (${idx.length} aday).`, "success");
+    }
+
+    function exportKartList() {
+      const idx = internExportRows();
+      const head = ["T.C. Kimlik No", "Ad", "Soyad", "Doğum Tarihi", "İkametgâh Adresi", "Ünvan", "Anne Adı", "Baba Adı", "Telefon", "E-posta", "Başlangıç Tarihi", "Bitiş Tarihi", "Şirket"];
+      const aoa = [head];
+      idx.forEach(i => {
+        const done = internRowComputed(i);
+        aoa.push([internCell(i, "T.C. Kimlik Numarası"), internCell(i, "Adı"), internCell(i, "Soyadı"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), "stajyer", internCell(i, "Anne Adı"), internCell(i, "Baba Adı"), internCell(i, "Telefon numaranız"), internCell(i, "E-posta adresiniz"), formatTrDay(done.start), formatTrDay(done.end), internCell(i, "Şirket")]);
+      });
+      downloadXlsx("Kart-Basvuru-Listesi-" + slugifyPeriod($("#internPeriodSelect").value) + ".xlsx", aoa);
+      toast(`Kart Başvuru listesi indirildi (${idx.length} aday).`, "success");
+    }
+
+    function exportHseList() {
+      const idx = internExportRows();
+      const head = ["T.C. Kimlik No", "Ad", "Soyad", "Doğum Tarihi", "Adres", "Telefon", "E-posta", "Kan Grubu", "Cinsiyet", "Okul", "Eğitim Durumu", "Departman", "Sorumlu", "Yüksekte çalışacak mı?", "Gürültülü ortamda çalışacak mı?", "Kimyasal madde ile çalışacak mı?", "Gece çalışacak mı?"];
+      const aoa = [head];
+      idx.forEach(i => aoa.push([internCell(i, "T.C. Kimlik Numarası"), internCell(i, "Adı"), internCell(i, "Soyadı"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), internCell(i, "Telefon numaranız"), internCell(i, "E-posta adresiniz"), internCell(i, "Kan Grubunuz"), "", internCell(i, "Üniversite"), internCell(i, "Eğitim Durumunuz"), internCell(i, "Kesinleşen Birim"), internCell(i, "sorumlu"), "Hayır", "Hayır", "Hayır", "Hayır"]));
+      downloadXlsx("HSE-Plus-Listesi-" + slugifyPeriod($("#internPeriodSelect").value) + ".xlsx", aoa);
+      toast(`HSE Plus listesi indirildi (${idx.length} aday).`, "success");
+    }
+
+    function exportBitisList() {
+      const month = $("#internEndMonth") ? $("#internEndMonth").value : "";
+      if (!/^\d{4}-\d{2}$/.test(month)) {
+        toast("Önce bitiş ayı seçin (örn. 2026-09).", "error");
+        return;
+      }
+      const head = ["T.C. Kimlik Numarası", "Staj Başlangıç Tarihi", "Ad", "Soyad", "Staj Bitiş / Çıkış Tarihi"];
+      const aoa = [head];
+      internState.rows.forEach((_, i) => {
+        const done = internRowComputed(i);
+        if (done.end && toIsoDay(done.end).slice(0, 7) === month) {
+          aoa.push([internCell(i, "T.C. Kimlik Numarası"), formatTrDay(done.start), internCell(i, "Adı"), internCell(i, "Soyadı"), formatTrDay(done.end)]);
+        }
+      });
+      downloadXlsx("Staj-Bitis-Listesi-" + month + ".xlsx", aoa);
+      toast(`Staj Bitiş listesi indirildi (${aoa.length - 1} aday, ${month}).`, "success");
+    }
+
 
     // NAVIGATION
     function navigate(view) {
@@ -3007,6 +3269,18 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }));
       internDropzone.addEventListener("drop", event => {
         if (event.dataTransfer.files.length) handleInternRecruitmentFile(event.dataTransfer.files[0]);
+      });
+
+      // HR paneli: donem raporu butonlari + tablo ici duzenleme
+      $("#exportIsgBtn").addEventListener("click", exportIsgList);
+      $("#exportPozisyonBtn").addEventListener("click", exportPozisyonList);
+      $("#exportKartBtn").addEventListener("click", exportKartList);
+      $("#exportHseBtn").addEventListener("click", exportHseList);
+      $("#exportBitisBtn").addEventListener("click", exportBitisList);
+      document.addEventListener("change", event => {
+        const editor = event.target.closest("[data-intern-edit]");
+        if (!editor) return;
+        internState.overrides.set(editor.dataset.internEdit, editor.value);
       });
     }
 
