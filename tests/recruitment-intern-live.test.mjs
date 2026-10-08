@@ -66,6 +66,24 @@ test('Backend fetch is a read-only GET and no SharePoint frame is embedded or sc
   assert.doesNotMatch(html, /<iframe[^>]*internLive/);
 });
 
+test('Page lock asks the password on every load and never persists unlock', () => {
+  assert.match(html, /id="internPageLock"/);
+  assert.match(html, /id="internPageLockInput"/);
+  assert.match(html, /id="internPageLockBtn"/);
+  assert.match(html, /id="internPageLockError"/);
+  assert.match(html, /function (unlockInternPage|handleInternPageUnlock)/);
+  assert.match(html, /crypto\.subtle\.digest\(\s*["']SHA-256["']/);
+  assert.match(html, /INTERN_PAGE_LOCK_HASH\s*=\s*["'][0-9a-f]{64}["']/);
+  const start = html.indexOf('id="internPageLock"');
+  const card = html.slice(Math.max(0, start - 2000), start + 8000);
+  assert.doesNotMatch(card, /localStorage|sessionStorage/);
+});
+
+test('Lock verifier exposes no plaintext password in tracked files', () => {
+  assert.doesNotMatch(html, /Timur1905/);
+  const tracked = spawnSync('git', ['grep', '-l', 'Timur1905', '--', ':!*.log', ':!tests/recruitment-intern-live.test.mjs'], { encoding: 'utf8' });
+  assert.equal((tracked.stdout || '').trim(), '');
+});
 test('Live card follows the dashboard card/button/filter language and stays accessible and responsive', () => {
   const card = liveCard();
   assert.match(card, /class="card"/);

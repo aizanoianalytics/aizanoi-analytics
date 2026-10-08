@@ -821,6 +821,14 @@ a { color: var(--blue-600); text-decoration: none; }
     .intern-candidate-summary { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     .intern-checkbox { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; cursor: pointer; }
     #internLiveCard { scroll-margin-top: 1rem; }
+    #internPageLock { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: var(--navy-950); padding: 1rem; }
+    #internPageLock[hidden] { display: none; }
+    .page-lock-box { width: min(380px, 100%); background: #fff; border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .page-lock-box h2 { color: var(--slate-900); font-size: 1.1rem; }
+    .page-lock-box label { font-size: 0.8rem; font-weight: 600; color: var(--slate-600); }
+    #internPageLockInput { padding: 0.6rem 0.75rem; border-radius: 8px; border: 1px solid var(--slate-300); font-size: 1rem; width: 100%; }
+    #internPageLockBtn:focus-visible, #internPageLockInput:focus-visible { outline: 2px solid var(--blue-600); outline-offset: 2px; }
+    .page-lock-error { color: var(--red-700); font-size: 0.85rem; min-height: 1.2em; margin: 0; }
     #internLiveCard .intern-live-frame-wrap { display: flex; flex-direction: column; gap: 0.6rem; padding: 0.9rem 1rem; border: 1px solid var(--slate-200); border-radius: 12px; background: #fff; }
     .intern-live-frame-wrap { margin-top: 0.5rem; }
     .intern-backend-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: end; margin-top: 1rem; }
@@ -855,6 +863,18 @@ a { color: var(--blue-600); text-decoration: none; }
   </style>
 </head>
 <body>
+
+  <!-- PAGE LOCK: her açılışta şifre sorar; kilit durumu bellekte tutulur, depolamaya yazılmaz -->
+  <div id="internPageLock" role="dialog" aria-modal="true" aria-labelledby="internPageLockTitle">
+    <div class="page-lock-box">
+      <h2 id="internPageLockTitle">Recruitment Analytics</h2>
+      <p class="drop-sub">Bu ürün korumalıdır. Devam etmek için şifreyi girin.</p>
+      <label for="internPageLockInput">Şifre</label>
+      <input type="password" id="internPageLockInput" autocomplete="current-password">
+      <p class="page-lock-error" id="internPageLockError" role="alert"></p>
+      <button type="button" id="internPageLockBtn" class="btn btn-primary">Giriş</button>
+    </div>
+  </div>
 
   <!-- APP HEADER -->
   <header class="app-header">
@@ -3243,6 +3263,33 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     // same-origin policy gereği zaten okunamazdı; veri yalnızca backend GET + dosya seçimiyle alınır.
     // contentDocument/contentWindow uzerinden okunamaz. Bu yuzden iframe scrape YOKTUR —
     // canli veri icin tek yol, asagidaki bellek-ici fetch -> SheetJS -> sema dogrulama akisidir.
+    // Sayfa kilidi: SHA-256 özeti gömülü, açık şifre yok. Kilit durumu yalnızca
+    // bellek değişkeninde tutulur; depolamaya yazılmadığı için her sayfa
+    // açılışında şifre yeniden sorulur.
+    const INTERN_PAGE_LOCK_HASH = "5185ca81e2513fd99dae778d0d0f0dc31ffa28093ed819d8638a42a29ebd06b7";
+    let internPageUnlocked = false;
+
+    async function unlockInternPage() {
+      const input = $("#internPageLockInput");
+      const error = $("#internPageLockError");
+      try {
+        if (!window.crypto?.subtle) throw new Error("güvenli bağlam yok");
+        const bytes = await window.crypto.subtle.digest("SHA-256", new TextEncoder().encode(input.value));
+        const hex = [...new Uint8Array(bytes)].map(b => b.toString(16).padStart(2, "0")).join("");
+        let ok = hex.length === INTERN_PAGE_LOCK_HASH.length;
+        for (let i = 0; i < hex.length; i++) ok = (hex[i] === INTERN_PAGE_LOCK_HASH[i]) && ok;
+        if (!ok) throw new Error("hatalı şifre");
+        internPageUnlocked = true;
+        input.value = "";
+        error.textContent = "";
+        $("#internPageLock").hidden = true;
+      } catch (err) {
+        input.value = "";
+        error.textContent = "Şifre yanlış, tekrar deneyin.";
+        input.focus();
+      }
+    }
+
     async function handleInternBackendLoad() {
       const status = $("#internRecruitmentStatus");
       const input = $("#internBackendUrl");
@@ -3444,6 +3491,12 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         if (event.dataTransfer.files.length) handleInternRecruitmentFile(event.dataTransfer.files[0]);
       });
 
+      // Sayfa kilidi: her açılışta kilitli başlar, kalıcılık yok
+      $("#internPageLockBtn").addEventListener("click", () => unlockInternPage());
+      $("#internPageLockInput").addEventListener("keydown", event => {
+        if (event.key === "Enter") unlockInternPage();
+      });
+      $("#internPageLockInput").focus();
       // HR paneli: donem raporu butonlari + tablo ici duzenleme
       $("#exportIsgBtn").addEventListener("click", () => runInternExport(exportIsgList));
       $("#exportPozisyonBtn").addEventListener("click", () => runInternExport(exportPozisyonList));

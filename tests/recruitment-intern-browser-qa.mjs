@@ -70,6 +70,22 @@ try {
   assert.equal((await page.content()).includes(activeMarker), false, 'applicant rows must not be embedded in the shipped HTML');
   page.on('request', (request) => requestsAfterLoad.push({ url: request.url(), postData: request.postData() || '' }));
 
+  assert.equal(await page.locator('#internPageLock').isVisible(), true, 'page lock must gate every load');
+  await page.locator('#internPageLockInput').fill('yanlis-sifre');
+  await page.locator('#internPageLockBtn').click();
+  assert.match(await page.locator('#internPageLockError').textContent(), /yanlış/);
+  assert.equal(await page.locator('#internPageLock').isVisible(), true, 'wrong password must not unlock');
+  const pagePassword = process.env.INTERN_PAGE_PASSWORD;
+  assert.ok(pagePassword, 'INTERN_PAGE_PASSWORD env is required to unlock the page gate');
+  await page.locator('#internPageLockInput').fill(pagePassword);
+  await page.locator('#internPageLockBtn').click();
+  await page.waitForFunction(() => document.querySelector('#internPageLock')?.hidden === true);
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  assert.equal(await page.locator('#internPageLock').isVisible(), true, 'reload must lock again (no persistence)');
+  await page.locator('#internPageLockInput').fill(pagePassword);
+  await page.locator('#internPageLockBtn').click();
+  await page.waitForFunction(() => document.querySelector('#internPageLock')?.hidden === true);
+
   await page.locator('[data-view="intern-recruitment"]').click();
   await uploadWorkbook({
     fileName: 'gelecek-forms-disari-aktarimi.xlsx',

@@ -83,7 +83,7 @@ jobs:
           node --test tests/browser/aizanoi-os-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-markets-browser.log || status=1
           exit $status
       - name: New HR Collection browser QA (PACS + Recruitment Analytics)
-        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
+        env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173', INTERN_PAGE_PASSWORD: '${{ secrets.INTERN_PAGE_PASSWORD }}' }
         run: |
           set -o pipefail
           status=0

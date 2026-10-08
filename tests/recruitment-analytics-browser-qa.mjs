@@ -56,6 +56,11 @@ async function overflowSnapshot() {
 try {
   const response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
   assert.ok(response && response.status() < 400, `Recruitment route returned ${response?.status()}`);
+  const pagePassword = process.env.INTERN_PAGE_PASSWORD;
+  assert.ok(pagePassword, 'INTERN_PAGE_PASSWORD env is required to unlock the page gate');
+  await page.locator('#internPageLockInput').fill(pagePassword);
+  await page.locator('#internPageLockBtn').click();
+  await page.waitForFunction(() => document.querySelector('#internPageLock')?.hidden === true);
   await page.waitForFunction(() =>
     document.querySelectorAll('[data-settings-dimension="unit"] [data-settings-list="included"] input').length > 2,
   );
@@ -111,6 +116,9 @@ try {
   await page.locator('[data-multi-filter="unit"] [data-multi-cancel]').click();
 
   await page.reload({ waitUntil: 'domcontentloaded' });
+  await page.locator('#internPageLockInput').fill(pagePassword);
+  await page.locator('#internPageLockBtn').click();
+  await page.waitForFunction(() => document.querySelector('#internPageLock')?.hidden === true);
   await page.waitForFunction(() =>
     document.querySelectorAll('[data-settings-dimension="unit"] [data-settings-list="included"] input').length > 1,
   );

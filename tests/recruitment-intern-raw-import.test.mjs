@@ -70,7 +70,11 @@ test('Recruitment dashboard adds exactly one discoverable Intern Recruitment tab
 
 test('Intern Recruitment accepts compatible local .xlsx workbooks by schema, not filename, hash, or sheet name', () => {
   assert.match(html, /id="internRecruitmentFileInput" accept="\.xlsx"/);
-  assert.doesNotMatch(html, /INTERN_RECRUITMENT_FILE|INTERN_RECRUITMENT_SHA256|crypto\.subtle\.digest/);
+  assert.doesNotMatch(html, /INTERN_RECRUITMENT_FILE|INTERN_RECRUITMENT_SHA256/);
+  const uploadStart = html.indexOf('async function handleInternRecruitmentFile');
+  assert.ok(uploadStart > 0, 'missing upload handler');
+  const uploadFn = html.slice(uploadStart, uploadStart + 3000);
+  assert.doesNotMatch(uploadFn, /crypto\.subtle\.digest/);
   assert.match(html, /findInternRecruitmentSheet\(workbook\)/);
   assert.match(html, /missing required columns/i);
   assert.match(html, /XLSX\.utils\.sheet_to_json\(sheet, \{ header: 1, raw: true, defval: "", blankrows: false \}\)/);
