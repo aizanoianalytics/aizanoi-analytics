@@ -90,6 +90,7 @@ jobs:
           node --test tests/recruitment-analytics-multiselect-settings.test.mjs 2>&1 | tee artifacts/diagnostics/recruitment-multiselect.log || status=1
           node --test tests/recruitment-dummy-data-parity.test.mjs 2>&1 | tee artifacts/diagnostics/recruitment-parity.log || status=1
           node tests/recruitment-analytics-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/recruitment-browser-qa.log || status=1
+          node tests/recruitment-intern-browser-qa.mjs 2>&1 | tee artifacts/diagnostics/recruitment-intern-browser-qa.log || status=1
           exit $status
       - name: PACS browser QA
         # PACS is a large interactive standalone dashboard; this drives the real

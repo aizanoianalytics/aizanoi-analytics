@@ -16,12 +16,13 @@ test('Intern HR panel exposes period selector, end-month picker and five export 
   assert.match(html, /id="exportBitisBtn"[^>]*>📥 Staj Bitiş Listesi Oluştur</);
 });
 
-test('Intern end-date engine skips weekends and Turkish public holidays', () => {
+test('Intern end-date engine applies fractional Turkish public-holiday credit', () => {
   assert.match(html, /function calcInternEndDate\(startDate, totalDays, weekdays\)/);
-  assert.match(html, /const TR_HOLIDAYS = Object\.freeze\(\[/);
-  for (const day of ['"2026-01-01"', '"2026-04-23"', '"2026-05-01"', '"2026-05-19"', '"2026-10-29"', '"2026-03-20"', '"2026-05-27"']) {
-    assert.ok(html.includes(day), `missing holiday ${day}`);
+  assert.match(html, /const TR_HOLIDAY_CREDIT = Object\.freeze\(\{/);
+  for (const day of ['"2026-01-01": 1', '"2026-04-23": 1', '"2026-05-01": 1', '"2026-05-19": 1', '"2026-10-28": 0.5', '"2026-10-29": 1', '"2026-03-20": 1', '"2026-05-27": 1']) {
+    assert.ok(html.includes(day), `missing holiday credit ${day}`);
   }
+  assert.match(html, /const credit = 1 - \(TR_HOLIDAY_CREDIT\[toIsoDay\(cursor\)\] \?\? 0\)/);
   assert.match(html, /function remainingText\(endDate/);
   assert.match(html, /Stajın bitmesine " \+ diff \+ " gün kaldı/);
   assert.match(html, /function parseTrDate\(value\)/);
@@ -45,7 +46,7 @@ test('Intern exports write the exact mail-spec column sets via local SheetJS', (
   assert.match(html, /"Yüksekte çalışacak mı\?", "Gürültülü ortamda çalışacak mı\?", "Kimyasal madde ile çalışacak mı\?", "Gece çalışacak mı\?"\]/);
   assert.match(html, /"Hayır", "Hayır", "Hayır", "Hayır"/);
   assert.match(html, /\["T\.C\. Kimlik Numarası", "Staj Başlangıç Tarihi", "Ad", "Soyad", "Staj Bitiş \/ Çıkış Tarihi"\]/);
-  assert.match(html, /XLSX\.writeFile\(book, filename\)/);
+  assert.match(html, /XLSX\.writeFile\(book, filename, \{ cellDates: true \}\)/);
   assert.match(html, /function exportIsgList\(\)/);
   assert.match(html, /function exportPozisyonList\(\)/);
   assert.match(html, /function exportKartList\(\)/);

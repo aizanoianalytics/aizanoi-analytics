@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -809,10 +809,23 @@ a { color: var(--blue-600); text-decoration: none; }
     .settings-transfer-actions .btn { width: 100%; white-space: nowrap; }
     .settings-transfer-actions .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
+    #internRecruitmentTableWrap { max-width: 100%; overscroll-behavior: contain; }
+    #internRecruitmentTable { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; }
+    #internRecruitmentTable th { position: sticky; top: 0; z-index: 3; background: var(--slate-50); }
+    #internRecruitmentTable :is(th, td):nth-child(1) { position: sticky; left: 0; z-index: 2; min-width: 72px; background: #fff; }
+    #internRecruitmentTable :is(th, td):nth-child(8) { position: sticky; left: 72px; z-index: 2; min-width: 130px; background: #fff; }
+    #internRecruitmentTable :is(th, td):nth-child(9) { position: sticky; left: 202px; z-index: 2; min-width: 130px; background: #fff; box-shadow: 3px 0 4px rgba(15, 23, 42, 0.08); }
+    #internRecruitmentTable th:nth-child(1), #internRecruitmentTable th:nth-child(8), #internRecruitmentTable th:nth-child(9) { z-index: 4; background: var(--slate-50); }
+    #internRecruitmentTable select { min-width: 150px; max-width: 240px; padding: 0.35rem; }
+    .intern-panel-controls { display: flex; gap: 1rem; flex-wrap: wrap; align-items: end; margin-bottom: 1rem; }
+    .intern-candidate-summary { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .intern-checkbox { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; cursor: pointer; }
+
     @media (max-width: 820px) {
       .multi-filter-popover { position: fixed; top: 12vh; left: 1rem; right: 1rem; width: auto; max-height: 76vh; overflow: auto; }
-      .nav-tabs-container { width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; }
-      .nav-tab { flex: 0 0 auto; }
+      .nav-tabs-container { width: 100%; max-width: 100%; overflow-x: auto; overflow-y: hidden; overscroll-behavior-inline: contain; scrollbar-width: thin; scroll-snap-type: x proximity; }
+      .nav-tab { flex: 0 0 auto; scroll-snap-align: start; }
+      .nav-tab[data-view="intern-recruitment"] { order: -1; }
       .multi-filter-trigger { min-width: 0; }
       .header-top { flex-direction: column; align-items: stretch; }
       .brand-group, .header-meta, .header-actions { width: 100%; min-width: 0; }
@@ -891,7 +904,8 @@ a { color: var(--blue-600); text-decoration: none; }
         <span>Excel Loader</span>
       </button>
       <button type="button" class="nav-tab" data-view="intern-recruitment">
-        <span>intern recruitment</span>
+        <span>Intern Recruitment</span>
+        <span class="tab-badge" id="internCandidateTabCount">0</span>
       </button>
     </nav>
   </header>
@@ -1542,8 +1556,8 @@ a { color: var(--blue-600); text-decoration: none; }
 
         <div class="dropzone" id="internRecruitmentDropzone">
           <div class="drop-icon">📄</div>
-          <h4 class="drop-title">Select İGA Staj Başvuru Formu.xlsx</h4>
-          <p class="drop-sub">Only this named .xlsx workbook with its exact Sheet1 column layout is accepted. The data remains in this browser and is never uploaded.</p>
+          <h4 class="drop-title">Uyumlu staj başvuru Excel dosyasını seçin</h4>
+          <p class="drop-sub">Gerekli staj başvuru sütunlarını içeren herhangi bir .xlsx çalışma kitabı kabul edilir. Veriler yalnızca bellekte işlenir; hiçbir zaman ağa gönderilmez veya tarayıcı depolamasına yazılmaz.</p>
           <input type="file" id="internRecruitmentFileInput" accept=".xlsx" style="display: none;">
         </div>
 
@@ -1552,13 +1566,17 @@ a { color: var(--blue-600); text-decoration: none; }
         <div id="internHrPanel" style="display: none; margin-top: 1.25rem; padding: 1.25rem; border: 1px solid var(--border, #e2e8f0); border-radius: 12px; background: var(--surface, #f8fafc);">
           <h4 style="margin: 0 0 .25rem;">İK Paneli — Dönem ve Raporlar</h4>
           <p class="drop-sub" style="margin: 0 0 1rem;">Staj dönemi seçin; listeler yalnızca bu tarayıcıda, yüklenen dosyadan üretilir ve .xlsx olarak indirilir. Hiçbir veri yüklenmez.</p>
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: end; margin-bottom: 1rem;">
+          <div class="intern-panel-controls">
             <label style="display: flex; flex-direction: column; gap: .35rem; font-size: .85rem;">Staj dönemi
-              <select id="internPeriodSelect" style="padding: .5rem .75rem; border-radius: 8px; min-width: 220px;"></select>
+              <select id="internPeriodSelect" aria-label="Staj dönemi" style="padding: .5rem .75rem; border-radius: 8px; min-width: 220px;"></select>
             </label>
             <label style="display: flex; flex-direction: column; gap: .35rem; font-size: .85rem;">Bitiş ayı (Staj Bitiş Listesi için)
-              <input type="month" id="internEndMonth" style="padding: .5rem .75rem; border-radius: 8px;">
+              <input type="month" id="internEndMonth" aria-label="Staj bitiş ayı" style="padding: .5rem .75rem; border-radius: 8px;">
             </label>
+            <div class="intern-candidate-summary">
+              <span class="pill pill-blue" id="internCandidateCount" aria-live="polite">0 aday</span>
+              <label class="intern-checkbox"><input type="checkbox" id="internIncludeCancelled"> İptal edilen adayları dahil et</label>
+            </div>
           </div>
           <div style="display: flex; gap: .6rem; flex-wrap: wrap;">
             <button type="button" id="exportIsgBtn" class="btn">📥 İSG Listesi Oluştur</button>
@@ -1570,7 +1588,7 @@ a { color: var(--blue-600); text-decoration: none; }
           <p class="drop-sub" style="margin: .75rem 0 0;">Birim / Sorumlu / Şirket hücreleri tabloda açılır listeden, evrak sütunları Alındı / Eksik seçimiyle düzenlenir; değişiklikler yalnızca bu oturumda ve indirdiğiniz listelere yansır.</p>
         </div>
 
-        <div id="internRecruitmentTableWrap" class="data-table-container" style="display: none; max-height: 70vh; margin-top: 1.25rem; overflow: auto;">
+        <div id="internRecruitmentTableWrap" class="data-table-container" tabindex="0" role="region" aria-label="Stajyer adayları tablosu" style="display: none; max-height: 70vh; margin-top: 1.25rem; overflow: auto;">
           <table class="data-table" id="internRecruitmentTable">
             <thead id="internRecruitmentTableHead"></thead>
             <tbody id="internRecruitmentTableBody"></tbody>
@@ -1617,9 +1635,6 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     "use strict";
 
     const SHEET_NAME = "db";
-    const INTERN_RECRUITMENT_FILE = "İGA Staj Başvuru Formu.xlsx";
-    const INTERN_RECRUITMENT_SHA256 = "53c8ff149bc009a7152c10aeb127c613024ad4466a61471b607c673f18f29b13";
-    const INTERN_RECRUITMENT_SHEET = "Sheet1";
     const INTERN_RECRUITMENT_HEADERS = Object.freeze([
       "Id", "Başlangıç saati", "Tamamlama saati", "E-posta", "Ad", "Staj Durumunuz", "T.C. Kimlik Numarası", "Adı", "Soyadı", "Telefon numaranız", "E-posta adresiniz", "Doğum Tarihiniz", "İkametgah Adresi", "İlçe/İl", "Anne Adı", "Baba Adı", "Kan Grubunuz", "Staj Başlangıç Dönemi", "Kaç iş günü stajınızı gerçekleştireceksiniz?", "Staj Katılım Günleri", "Staj son günü", "Eğitim Durumunuz", "Üniversite", "Bölüm", "Sınıf", "İngilizce Seviyeniz", "Linkedin bağlantınız", "1. Birim Tercihiniz", "2. Birim Tercihiniz", "3. Birim Tercihiniz", "Yukarıdaki KVKK Aydınlatma Metnini okudum, anladım ve onaylıyorum.", "Kesinleşen Birim", "sorumlu", "Şirket", "Güvenlik Bilinci Sınavı", "Adli Sicil", "Biyometrik Fotoğraf", "Nüfus Cüzdanı Belgesi", "İkametgah Belgesi", "Öğrenci Belgesi", "Staj Başvuru Formu", "SGK işe giriş belgesi", "İptal mi?", "NOTLAR"
     ]);
@@ -2787,50 +2802,65 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }
     }
 
-    async function handleInternRecruitmentFile(file) {
-      if (!file) return;
-      const status = $("#internRecruitmentStatus");
-      const tableWrap = $("#internRecruitmentTableWrap");
-      tableWrap.style.display = "none";
+    function resetInternRecruitmentState() {
+      internState.headers = [];
+      internState.rows = [];
+      internState.overrides = new Map();
+      internState.fileName = "";
+      $("#internRecruitmentTableWrap").style.display = "none";
       $("#internRecruitmentTableHead").replaceChildren();
       $("#internRecruitmentTableBody").replaceChildren();
-      $("#internRecruitmentRowCount").textContent = "No file loaded";
+      $("#internRecruitmentRowCount").textContent = "Dosya yüklenmedi";
+      $("#internCandidateCount").textContent = "0 aday";
+      $("#internCandidateTabCount").textContent = "0";
+      $("#internHrPanel").style.display = "none";
+      $("#internPeriodSelect").replaceChildren();
+      $("#internEndMonth").value = "";
+      $("#internIncludeCancelled").checked = false;
+      $("#internRecruitmentStatus").replaceChildren();
+    }
+
+    function normalizeInternHeader(value) {
+      return String(value ?? "").replace(/\s+/g, " ").trim();
+    }
+
+    function findInternRecruitmentSheet(workbook) {
+      const required = new Set(INTERN_RECRUITMENT_HEADERS);
+      const inspected = [];
+      for (const sheetName of workbook.SheetNames) {
+        const sheet = workbook.Sheets[sheetName];
+        const matrix = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: "", blankrows: false });
+        if (!matrix.length) continue;
+        const headers = matrix[0].map(normalizeInternHeader);
+        const headerSet = new Set(headers);
+        const missing = [...required].filter(header => !headerSet.has(header));
+        if (!missing.length) return { sheetName, matrix };
+        inspected.push(`${sheetName}: ${missing.length} eksik`);
+      }
+      throw new Error(`Missing required columns. İncelenen sayfalar: ${inspected.join(", ") || "boş çalışma kitabı"}.`);
+    }
+
+    async function handleInternRecruitmentFile(file) {
+      if (!file) return;
+      resetInternRecruitmentState();
+      const status = $("#internRecruitmentStatus");
 
       try {
-        if (!window.XLSX) throw new Error("Local SheetJS library not ready.");
-        if (file.name !== INTERN_RECRUITMENT_FILE) {
-          throw new Error(`Only ${INTERN_RECRUITMENT_FILE} is accepted.`);
-        }
+        if (!window.XLSX) throw new Error("Yerel SheetJS kitaplığı hazır değil.");
         if (!file.name.toLowerCase().endsWith(".xlsx")) {
-          throw new Error("Only the .xlsx workbook format is accepted.");
+          throw new Error("Yalnızca .xlsx çalışma kitabı kabul edilir.");
         }
-
-        status.innerHTML = `<div style="padding: 1rem; background: var(--blue-100); border-radius: 8px; color: var(--blue-700);">Reading ${escapeHtml(file.name)} locally...</div>`;
+        status.innerHTML = `<div style="padding: 1rem; background: var(--blue-100); border-radius: 8px; color: var(--blue-700);">${escapeHtml(file.name)} yerel olarak okunuyor...</div>`;
         const buffer = await file.arrayBuffer();
-        const digest = await crypto.subtle.digest("SHA-256", buffer);
-        const digestHex = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
-        if (digestHex !== INTERN_RECRUITMENT_SHA256) {
-          throw new Error("Only the approved İGA internship workbook is accepted; this file's contents do not match.");
-        }
-        const workbook = XLSX.read(buffer, { type: "array", raw: true, cellDates: false, cellFormula: false });
-        if (workbook.SheetNames.length !== 1 || workbook.SheetNames[0] !== INTERN_RECRUITMENT_SHEET) {
-          throw new Error(`The workbook must contain only the ${INTERN_RECRUITMENT_SHEET} worksheet.`);
-        }
-
-        const sheet = workbook.Sheets[INTERN_RECRUITMENT_SHEET];
-        const matrix = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: "", blankrows: false });
-        if (!matrix.length) throw new Error("The worksheet is empty.");
-        const normalizeHeader = value => String(value ?? "").replace(/\s+/g, " ").trim();
-        const actualHeaders = matrix[0].map(normalizeHeader);
-        const headersMatch = actualHeaders.length === INTERN_RECRUITMENT_HEADERS.length &&
-          actualHeaders.every((header, index) => header === INTERN_RECRUITMENT_HEADERS[index]);
-        if (!headersMatch) {
-          throw new Error("This is not the approved internship workbook: the Sheet1 column layout does not match.");
-        }
-
+        const workbook = XLSX.read(buffer, { type: "array", raw: true, cellDates: true, cellFormula: false });
+        const { matrix } = findInternRecruitmentSheet(workbook);
         renderInternRecruitmentRawData(matrix, file.name);
       } catch (err) {
-        status.innerHTML = `<div style="padding: 1rem; background: var(--red-100); border: 1px solid var(--red-500); border-radius: 8px; color: var(--red-700);"><strong>File rejected:</strong> ${escapeHtml(err.message)}</div>`;
+        resetInternRecruitmentState();
+        status.innerHTML = `<div style="padding: 1rem; background: var(--red-100); border: 1px solid var(--red-500); border-radius: 8px; color: var(--red-700);"><strong>Dosya reddedildi:</strong> ${escapeHtml(err.message)}</div>`;
+      } finally {
+        const internRecruitmentFileInput = $("#internRecruitmentFileInput");
+        if (internRecruitmentFileInput) internRecruitmentFileInput.value = "";
       }
     }
 
@@ -2841,12 +2871,17 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     const INTERN_TOTAL_DAYS_COLUMN = "Kaç iş günü stajınızı gerçekleştireceksiniz?";
     const INTERN_WORKDAYS_COLUMN = "Staj Katılım Günleri";
     const TR_MONTHS = { ocak: 1, şubat: 2, mart: 3, nisan: 4, mayıs: 5, haziran: 6, temmuz: 7, ağustos: 8, eylül: 9, ekim: 10, kasım: 11, aralık: 12 };
-    // Turkiye resmi tatilleri tam gun sayilir (arefe dahil). Dini bayramlar yila gore guncellenmelidir.
-    const TR_HOLIDAYS = Object.freeze(["2026-01-01", "2026-03-19", "2026-03-20", "2026-03-21", "2026-03-22", "2026-04-23", "2026-05-01", "2026-05-19", "2026-05-26", "2026-05-27", "2026-05-28", "2026-05-29", "2026-05-30", "2026-07-15", "2026-08-30", "2026-10-29", "2027-01-01", "2027-04-23", "2027-05-01", "2027-05-19", "2027-07-15", "2027-08-30", "2027-10-29"]);
-    const TR_HOLIDAY_SET = new Set(TR_HOLIDAYS);
+    // Türkiye resmî tatil kredileri: 1 tam gün, 0.5 yarım gün. 2026-2030 dışında hesaplama fail-closed davranır.
+    const TR_HOLIDAY_CREDIT = Object.freeze({
+      "2026-01-01": 1, "2026-03-19": 0.5, "2026-03-20": 1, "2026-03-21": 1, "2026-03-22": 1, "2026-04-23": 1, "2026-05-01": 1, "2026-05-19": 1, "2026-05-26": 0.5, "2026-05-27": 1, "2026-05-28": 1, "2026-05-29": 1, "2026-05-30": 1, "2026-07-15": 1, "2026-08-30": 1, "2026-10-28": 0.5, "2026-10-29": 1,
+      "2027-01-01": 1, "2027-03-08": 0.5, "2027-03-09": 1, "2027-03-10": 1, "2027-03-11": 1, "2027-04-23": 1, "2027-05-01": 1, "2027-05-15": 0.5, "2027-05-16": 1, "2027-05-17": 1, "2027-05-18": 1, "2027-05-19": 1, "2027-07-15": 1, "2027-08-30": 1, "2027-10-28": 0.5, "2027-10-29": 1,
+      "2028-01-01": 1, "2028-02-26": 0.5, "2028-02-27": 1, "2028-02-28": 1, "2028-02-29": 1, "2028-04-23": 1, "2028-05-01": 1, "2028-05-04": 0.5, "2028-05-05": 1, "2028-05-06": 1, "2028-05-07": 1, "2028-05-08": 1, "2028-05-19": 1, "2028-07-15": 1, "2028-08-30": 1, "2028-10-28": 0.5, "2028-10-29": 1,
+      "2029-01-01": 1, "2029-02-13": 0.5, "2029-02-14": 1, "2029-02-15": 1, "2029-02-16": 1, "2029-04-23": 1, "2029-04-24": 1, "2029-04-25": 1, "2029-04-26": 1, "2029-04-27": 1, "2029-05-01": 1, "2029-05-19": 1, "2029-07-15": 1, "2029-08-30": 1, "2029-10-28": 0.5, "2029-10-29": 1,
+      "2030-01-01": 1, "2030-02-03": 0.5, "2030-02-04": 1, "2030-02-05": 1, "2030-02-06": 1, "2030-04-12": 0.5, "2030-04-13": 1, "2030-04-14": 1, "2030-04-15": 1, "2030-04-16": 1, "2030-04-23": 1, "2030-05-01": 1, "2030-05-19": 1, "2030-07-15": 1, "2030-08-30": 1, "2030-10-28": 0.5, "2030-10-29": 1
+    });
     const TR_WEEKDAYS = Object.freeze({ pazartesi: 1, salı: 2, çarşamba: 3, perşembe: 4, cuma: 5, cumartesi: 6, pazar: 0 });
 
-    const internState = { headers: [], rows: [], overrides: new Map() };
+    const internState = { headers: [], rows: [], overrides: new Map(), fileName: "" };
 
     const internRawText = value => {
       if (value == null) return "";
@@ -2893,15 +2928,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 
     function excelDate(value) {
       if (value == null || value === "") return "";
-      if (value instanceof Date) return formatTrDay(value);
-      if (typeof value === "number") return formatTrDay(parseTrDate(value));
-      const parsed = parseTrDate(value);
-      if (parsed) {
-        const text = String(value).trim();
-        if (/^\d{4}-\d{2}-\d{2}/.test(text) || /^\d{1,2}\s+[A-Za-zçğıöşüÇĞİÖŞÜ]+\s+\d{4}/.test(text)) return formatTrDay(parsed);
-        return text;
-      }
-      return String(value);
+      return parseTrDate(value) || "";
     }
 
     function parseWorkdays(value) {
@@ -2914,23 +2941,36 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       return days;
     }
 
-    // Baslangic tarihi calisma gunu ise 1. gun sayilir; hafta sonu ve resmi tatiller atlanir.
+    // Başlangıç tarihi çalışma günü ise ilk kredi o gün yazılır; yarım gün tatiller 0.5 kredi verir.
     function calcInternEndDate(startDate, totalDays, weekdays) {
       if (!startDate || !(totalDays > 0)) return null;
       const cursor = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
       let counted = 0;
-      for (let step = 0; step < 1500; step++) {
+      while (counted < totalDays) {
+        const year = cursor.getFullYear();
+        if (year < 2026 || year > 2030) {
+          throw new RangeError(`Staj tarihi desteklenen 2026-2030 tatil takvimi dışında: ${toIsoDay(cursor)}`);
+        }
         const jsDay = cursor.getDay();
-        if (jsDay !== 0 && jsDay !== 6 && weekdays.has(jsDay) && !TR_HOLIDAY_SET.has(toIsoDay(cursor))) {
-          counted++;
+        if (weekdays.has(jsDay)) {
+          const credit = 1 - (TR_HOLIDAY_CREDIT[toIsoDay(cursor)] ?? 0);
+          counted += credit;
           if (counted >= totalDays) return new Date(cursor.getFullYear(), cursor.getMonth(), cursor.getDate());
         }
         cursor.setDate(cursor.getDate() + 1);
       }
-      return null;
+      throw new RangeError("Staj bitiş tarihi hesaplanamadı.");
     }
 
-    function remainingText(endDate, today = new Date()) {
+    function istanbulToday(now = new Date()) {
+      const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Europe/Istanbul", year: "numeric", month: "2-digit", day: "2-digit"
+      }).formatToParts(now);
+      const value = Object.fromEntries(parts.map(part => [part.type, part.value]));
+      return new Date(Number(value.year), Number(value.month) - 1, Number(value.day));
+    }
+
+    function remainingText(endDate, today = istanbulToday()) {
       if (!endDate) return "—";
       const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       const diff = Math.round((endDate - base) / 86400000);
@@ -2950,25 +2990,58 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const col = internState.headers.indexOf(header);
       const values = new Set();
       if (col >= 0) internState.rows.forEach(row => {
-        const text = String(row[col] ?? "").trim();
-        if (text) values.add(text);
+        const value = String(row[col] ?? "").trim();
+        if (value) values.add(value);
       });
       if (current) values.add(String(current));
       return [...values].sort((a, b) => a.localeCompare(b, "tr"));
+    }
+
+    function internEditorLabel(rowIdx, header) {
+      const name = [internCell(rowIdx, "Adı"), internCell(rowIdx, "Soyadı")].map(value => String(value || "").trim()).filter(Boolean).join(" ");
+      const identity = name || String(internCell(rowIdx, "T.C. Kimlik Numarası") || "").trim() || `${rowIdx + 1}. aday`;
+      return `${header} — ${identity}`;
     }
 
     function internCellHtml(rowIdx, header) {
       const current = internCell(rowIdx, header);
       const key = rowIdx + "::" + header;
       if (INTERN_DROPDOWN_COLUMNS.includes(header)) {
-        const options = distinctInternValues(header, String(current ?? ""));
-        return `<select data-intern-edit="${escapeHtml(key)}">${options.map(o => `<option value="${escapeHtml(o)}"${o === String(current ?? "") ? " selected" : ""}>${escapeHtml(o) || "(boş)"}</option>`).join("")}</select>`;
+        const options = ["", ...distinctInternValues(header, String(current ?? ""))];
+        return `<select aria-label="${escapeHtml(internEditorLabel(rowIdx, header))}" data-intern-edit="${escapeHtml(key)}">${options.map(option => `<option value="${escapeHtml(option)}"${option === String(current ?? "") ? " selected" : ""}>${escapeHtml(option) || "(boş)"}</option>`).join("")}</select>`;
       }
       if (INTERN_DOC_COLUMNS.includes(header)) {
         const value = current === "Alındı" ? "Alındı" : "Eksik";
-        return `<select data-intern-edit="${escapeHtml(key)}"><option${value === "Alındı" ? " selected" : ""}>Alındı</option><option${value === "Eksik" ? " selected" : ""}>Eksik</option></select>`;
+        return `<select aria-label="${escapeHtml(internEditorLabel(rowIdx, header))}" data-intern-edit="${escapeHtml(key)}"><option${value === "Alındı" ? " selected" : ""}>Alındı</option><option${value === "Eksik" ? " selected" : ""}>Eksik</option></select>`;
       }
       return escapeHtml(internRawText(current));
+    }
+
+    function periodSortValue(period) {
+      const parsed = parseTrDate(period);
+      return parsed ? parsed.getTime() : Number.MAX_SAFE_INTEGER;
+    }
+
+    function internRowCancelled(rowIdx) {
+      return fold(internCell(rowIdx, "İptal mi?")) === "evet";
+    }
+
+    function internExportRows() {
+      const select = $("#internPeriodSelect");
+      const chosen = select ? select.value : "";
+      const includeCancelled = Boolean($("#internIncludeCancelled")?.checked);
+      const out = [];
+      internState.rows.forEach((_, idx) => {
+        if (!includeCancelled && internRowCancelled(idx)) return;
+        if (!chosen || String(internCell(idx, INTERN_PERIOD_COLUMN)).trim() === chosen) out.push(idx);
+      });
+      return out;
+    }
+
+    function updateInternCandidateCounts() {
+      const count = internExportRows().length;
+      $("#internCandidateCount").textContent = `${formatNumber(count)} aday`;
+      $("#internCandidateTabCount").textContent = String(count);
     }
 
     function buildInternHrPanel() {
@@ -2976,56 +3049,83 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const periods = new Set();
       const col = internState.headers.indexOf(INTERN_PERIOD_COLUMN);
       if (col >= 0) internState.rows.forEach(row => {
-        const text = String(row[col] ?? "").trim();
-        if (text) periods.add(text);
+        const value = String(row[col] ?? "").trim();
+        if (value) periods.add(value);
       });
-      const ordered = [...periods].sort((a, b) => a.localeCompare(b, "tr"));
-      select.innerHTML = `<option value="">Tüm dönemler</option>` + ordered.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join("");
-      if (ordered.length) select.value = ordered[0];
+      const ordered = [...periods].sort((a, b) => periodSortValue(a) - periodSortValue(b) || a.localeCompare(b, "tr"));
+      select.innerHTML = `<option value="">Tüm dönemler</option>` + ordered.map(period => `<option value="${escapeHtml(period)}">${escapeHtml(period)}</option>`).join("");
+      select.value = "";
       $("#internHrPanel").style.display = "block";
+      updateInternCandidateCounts();
     }
 
-    function renderInternTable(fileName) {
+    function renderInternTable(fileName = internState.fileName) {
       const headers = internState.headers;
       const computedHeads = ["Hesaplanan Bitiş", "Kalan Gün"];
-      $("#internRecruitmentTableHead").innerHTML = `<tr>${headers.map(header => `<th>${escapeHtml(header)}</th>`).join("")}${computedHeads.map(h => `<th>${h}</th>`).join("")}</tr>`;
-      $("#internRecruitmentTableBody").innerHTML = internState.rows.map((_, rowIdx) => {
+      $("#internRecruitmentTableHead").innerHTML = `<tr>${headers.map(header => `<th>${escapeHtml(header)}</th>`).join("")}${computedHeads.map(header => `<th>${header}</th>`).join("")}</tr>`;
+      const visibleRows = internExportRows();
+      $("#internRecruitmentTableBody").innerHTML = visibleRows.map(rowIdx => {
         const done = internRowComputed(rowIdx);
         const cells = headers.map(header => `<td>${internCellHtml(rowIdx, header)}</td>`).join("");
         return `<tr>${cells}<td>${formatTrDay(done.end)}</td><td>${escapeHtml(done.kalan)}</td></tr>`;
       }).join("");
-      $("#internRecruitmentRowCount").textContent = `${formatNumber(internState.rows.length)} raw rows`;
+      $("#internRecruitmentRowCount").textContent = `${formatNumber(visibleRows.length)} / ${formatNumber(internState.rows.length)} aday`;
       $("#internRecruitmentTableWrap").style.display = "block";
-      $("#internRecruitmentStatus").innerHTML = `<div style="padding: 1rem; background: var(--green-100); border: 1px solid var(--green-500); border-radius: 8px; color: var(--green-700);"><strong>${escapeHtml(fileName)} loaded locally.</strong> Raw Sheet1 values are shown below; nothing was uploaded or added to the recruitment dashboard dataset.</div>`;
+      updateInternCandidateCounts();
+      $("#internRecruitmentStatus").innerHTML = `<div style="padding: 1rem; background: var(--green-100); border: 1px solid var(--green-500); border-radius: 8px; color: var(--green-700);"><strong>${escapeHtml(fileName)} yerel olarak yüklendi.</strong> Uyumlu çalışma sayfası bellekte gösteriliyor; hiçbir veri yüklenmedi, ağa gönderilmedi veya tarayıcı depolamasına yazılmadı.</div>`;
     }
 
     function renderInternRecruitmentRawData(matrix, fileName) {
-      internState.headers = matrix[0].map(value => String(value ?? "").replace(/\s+/g, " ").trim());
+      internState.headers = matrix[0].map(normalizeInternHeader);
       internState.rows = matrix.slice(1);
       internState.overrides = new Map();
+      internState.fileName = fileName;
       buildInternHrPanel();
       renderInternTable(fileName);
     }
 
+    const INTERN_TEXT_EXPORT_HEADERS = new Set(["T.C. Kimlik Numarası", "T.C. Kimlik No", "Telefon", "Telefon numaranız"]);
+    const INTERN_DATE_EXPORT_HEADERS = new Set(["Doğum Tarihi", "Staj Başlangıç Tarihi", "Staj Bitiş Tarihi", "Başlangıç Tarihi", "Bitiş Tarihi", "Staj Bitiş / Çıkış Tarihi"]);
+
     function downloadXlsx(filename, aoa) {
       const book = XLSX.utils.book_new();
-      book.SheetNames.push("Liste");
-      book.Sheets.Liste = XLSX.utils.aoa_to_sheet(aoa);
-      XLSX.writeFile(book, filename);
+      const sheet = XLSX.utils.aoa_to_sheet(aoa, { cellDates: true, dateNF: "dd\\.mm\\.yyyy" });
+      const headers = aoa[0] || [];
+      headers.forEach((header, column) => {
+        for (let row = 1; row < aoa.length; row++) {
+          const address = XLSX.utils.encode_cell({ r: row, c: column });
+          const cell = sheet[address];
+          if (!cell || cell.v === "") continue;
+          if (INTERN_TEXT_EXPORT_HEADERS.has(header)) {
+            cell.v = String(cell.v);
+            cell.t = "s";
+            delete cell.w;
+          } else if (INTERN_DATE_EXPORT_HEADERS.has(header)) {
+            const date = cell.v instanceof Date ? cell.v : parseTrDate(cell.v);
+            if (date) {
+              cell.v = date;
+              cell.t = "d";
+              cell.z = "dd\\.mm\\.yyyy";
+              delete cell.w;
+            }
+          }
+        }
+      });
+      XLSX.utils.book_append_sheet(book, sheet, "Liste");
+      XLSX.writeFile(book, filename, { cellDates: true });
     }
 
     function slugifyPeriod(period) {
       return (period || "Tum-Donemler").replace(/\s+/g, "-");
     }
 
-    function internExportRows() {
-      const select = $("#internPeriodSelect");
-      const chosen = select ? select.value : "";
-      const out = [];
-      internState.rows.forEach((_, idx) => {
-        if (!chosen || internCell(idx, INTERN_PERIOD_COLUMN) === chosen) out.push(idx);
-      });
-      return out;
+    function runInternExport(exporter) {
+      try {
+        exporter();
+      } catch (error) {
+        console.error("Intern Recruitment export failed", error);
+        toast(`Rapor oluşturulamadı: ${error.message || String(error)}`, "error");
+      }
     }
 
     function exportIsgList() {
@@ -3043,7 +3143,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const aoa = [head];
       idx.forEach(i => {
         const done = internRowComputed(i);
-        aoa.push([internCell(i, "T.C. Kimlik Numarası"), internCell(i, "Adı"), internCell(i, "Soyadı"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), internCell(i, "İlçe/İl"), internCell(i, "Anne Adı"), internCell(i, "Baba Adı"), internCell(i, "Telefon numaranız"), internCell(i, "E-posta adresiniz"), formatTrDay(done.start), formatTrDay(done.end), internCell(i, "Kan Grubunuz"), "", internCell(i, "Üniversite"), internCell(i, "Bölüm"), internCell(i, "Sınıf"), internCell(i, "İngilizce Seviyeniz"), internCell(i, "Staj Durumunuz"), internCell(i, "Staj Katılım Günleri"), internCell(i, "Kesinleşen Birim"), internCell(i, "sorumlu"), internCell(i, "Şirket")]);
+        aoa.push([internCell(i, "T.C. Kimlik Numarası"), internCell(i, "Adı"), internCell(i, "Soyadı"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), internCell(i, "İlçe/İl"), internCell(i, "Anne Adı"), internCell(i, "Baba Adı"), internCell(i, "Telefon numaranız"), internCell(i, "E-posta adresiniz"), done.start, done.end, internCell(i, "Kan Grubunuz"), internCell(i, "Cinsiyet"), internCell(i, "Üniversite"), internCell(i, "Bölüm"), internCell(i, "Sınıf"), internCell(i, "İngilizce Seviyeniz"), internCell(i, "Staj Durumunuz"), internCell(i, "Staj Katılım Günleri"), internCell(i, "Kesinleşen Birim"), internCell(i, "sorumlu"), internCell(i, "Şirket")]);
       });
       downloadXlsx("Pozisyon-Kodu-Listesi-" + slugifyPeriod($("#internPeriodSelect").value) + ".xlsx", aoa);
       toast(`Pozisyon Kodu listesi indirildi (${idx.length} aday).`, "success");
@@ -3055,7 +3155,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const aoa = [head];
       idx.forEach(i => {
         const done = internRowComputed(i);
-        aoa.push([internCell(i, "T.C. Kimlik Numarası"), internCell(i, "Adı"), internCell(i, "Soyadı"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), "stajyer", internCell(i, "Anne Adı"), internCell(i, "Baba Adı"), internCell(i, "Telefon numaranız"), internCell(i, "E-posta adresiniz"), formatTrDay(done.start), formatTrDay(done.end), internCell(i, "Şirket")]);
+        aoa.push([internCell(i, "T.C. Kimlik Numarası"), internCell(i, "Adı"), internCell(i, "Soyadı"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), "stajyer", internCell(i, "Anne Adı"), internCell(i, "Baba Adı"), internCell(i, "Telefon numaranız"), internCell(i, "E-posta adresiniz"), done.start, done.end, internCell(i, "Şirket")]);
       });
       downloadXlsx("Kart-Basvuru-Listesi-" + slugifyPeriod($("#internPeriodSelect").value) + ".xlsx", aoa);
       toast(`Kart Başvuru listesi indirildi (${idx.length} aday).`, "success");
@@ -3065,7 +3165,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const idx = internExportRows();
       const head = ["T.C. Kimlik No", "Ad", "Soyad", "Doğum Tarihi", "Adres", "Telefon", "E-posta", "Kan Grubu", "Cinsiyet", "Okul", "Eğitim Durumu", "Departman", "Sorumlu", "Yüksekte çalışacak mı?", "Gürültülü ortamda çalışacak mı?", "Kimyasal madde ile çalışacak mı?", "Gece çalışacak mı?"];
       const aoa = [head];
-      idx.forEach(i => aoa.push([internCell(i, "T.C. Kimlik Numarası"), internCell(i, "Adı"), internCell(i, "Soyadı"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), internCell(i, "Telefon numaranız"), internCell(i, "E-posta adresiniz"), internCell(i, "Kan Grubunuz"), "", internCell(i, "Üniversite"), internCell(i, "Eğitim Durumunuz"), internCell(i, "Kesinleşen Birim"), internCell(i, "sorumlu"), "Hayır", "Hayır", "Hayır", "Hayır"]));
+      idx.forEach(i => aoa.push([internCell(i, "T.C. Kimlik Numarası"), internCell(i, "Adı"), internCell(i, "Soyadı"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), internCell(i, "Telefon numaranız"), internCell(i, "E-posta adresiniz"), internCell(i, "Kan Grubunuz"), internCell(i, "Cinsiyet"), internCell(i, "Üniversite"), internCell(i, "Eğitim Durumunuz"), internCell(i, "Kesinleşen Birim"), internCell(i, "sorumlu"), "Hayır", "Hayır", "Hayır", "Hayır"]));
       downloadXlsx("HSE-Plus-Listesi-" + slugifyPeriod($("#internPeriodSelect").value) + ".xlsx", aoa);
       toast(`HSE Plus listesi indirildi (${idx.length} aday).`, "success");
     }
@@ -3078,10 +3178,10 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }
       const head = ["T.C. Kimlik Numarası", "Staj Başlangıç Tarihi", "Ad", "Soyad", "Staj Bitiş / Çıkış Tarihi"];
       const aoa = [head];
-      internState.rows.forEach((_, i) => {
+      internExportRows().forEach(i => {
         const done = internRowComputed(i);
         if (done.end && toIsoDay(done.end).slice(0, 7) === month) {
-          aoa.push([internCell(i, "T.C. Kimlik Numarası"), formatTrDay(done.start), internCell(i, "Adı"), internCell(i, "Soyadı"), formatTrDay(done.end)]);
+          aoa.push([internCell(i, "T.C. Kimlik Numarası"), done.start, internCell(i, "Adı"), internCell(i, "Soyadı"), done.end]);
         }
       });
       downloadXlsx("Staj-Bitis-Listesi-" + month + ".xlsx", aoa);
@@ -3091,9 +3191,11 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 
     // NAVIGATION
     function navigate(view) {
-      $$("[data-view-panel]").forEach(p => p.classList.toggle("is-active", p.dataset.viewPanel === view));
-      $$("[data-view]").forEach(b => b.classList.toggle("is-active", b.dataset.view === view));
+      $$("[data-view-panel]").forEach(panel => panel.classList.toggle("is-active", panel.dataset.viewPanel === view));
+      $$("[data-view]").forEach(button => button.classList.toggle("is-active", button.dataset.view === view));
       $("#globalFilterBar").hidden = view === "intern-recruitment";
+      const activeTab = $(`[data-view="${view}"]`);
+      if (activeTab && window.matchMedia("(max-width: 820px)").matches) activeTab.scrollIntoView({ block: "nearest", inline: "center" });
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -3272,11 +3374,14 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       });
 
       // HR paneli: donem raporu butonlari + tablo ici duzenleme
-      $("#exportIsgBtn").addEventListener("click", exportIsgList);
-      $("#exportPozisyonBtn").addEventListener("click", exportPozisyonList);
-      $("#exportKartBtn").addEventListener("click", exportKartList);
-      $("#exportHseBtn").addEventListener("click", exportHseList);
-      $("#exportBitisBtn").addEventListener("click", exportBitisList);
+      $("#exportIsgBtn").addEventListener("click", () => runInternExport(exportIsgList));
+      $("#exportPozisyonBtn").addEventListener("click", () => runInternExport(exportPozisyonList));
+      $("#exportKartBtn").addEventListener("click", () => runInternExport(exportKartList));
+      $("#exportHseBtn").addEventListener("click", () => runInternExport(exportHseList));
+      $("#exportBitisBtn").addEventListener("click", () => runInternExport(exportBitisList));
+      $("#internPeriodSelect").addEventListener("change", () => renderInternTable());
+      const internIncludeCancelled = $("#internIncludeCancelled");
+      internIncludeCancelled.addEventListener("change", () => renderInternTable());
       document.addEventListener("change", event => {
         const editor = event.target.closest("[data-intern-edit]");
         if (!editor) return;
