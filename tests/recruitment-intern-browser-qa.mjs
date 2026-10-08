@@ -145,8 +145,50 @@ try {
   assert.equal(await page.locator('#internHrPanel').evaluate((element) => element.style.display), 'none');
   assert.equal(await page.locator('#internCandidateCount').textContent(), '0 aday');
 
+  assert.ok((await page.locator('#internLiveCard').count()) === 1, 'live card should be discoverable');
+  assert.ok((await page.locator('#internLiveFrame').getAttribute('src') || '').includes('action=embedview'), 'iframe must use the SharePoint embedview URL');
+  assert.equal(await page.locator('#internLiveFrame').getAttribute('loading'), 'lazy');
+  assert.ok((await page.locator('#internLiveDownload').getAttribute('href') || '').includes('download=1'), 'download link must use download=1');
+  assert.equal(await page.locator('#internBackendUrl').inputValue(), 'http://localhost:18923/dosya');
+  assert.ok(await page.locator('#internBackendLoadBtn').isVisible(), 'backend load button should be visible');
+
+  const backendBytes = await page.evaluate(({ columns }) => {
+    const candidate = columns.map((header) => ({
+      Id: '7', 'T.C. Kimlik Numarası': '00999888777', Adı: 'Backend', Soyadı: 'Aday',
+      'Telefon numaranız': '05320000007', 'Doğum Tarihiniz': '2003-01-15',
+      'Staj Başlangıç Dönemi': '28 Ekim 2026',
+      'Kaç iş günü stajınızı gerçekleştireceksiniz?': 1,
+      'Staj Katılım Günleri': 'Pazartesi;Salı;Çarşamba;Perşembe;Cuma',
+      'Kesinleşen Birim': '', sorumlu: '', Şirket: '', 'İptal mi?': 'Hayır',
+    }[header] ?? ''));
+    const book = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(book, XLSX.utils.aoa_to_sheet([columns, candidate]), 'Backend');
+    return Array.from(new Uint8Array(XLSX.write(book, { type: 'array', bookType: 'xlsx' })));
+  }, { columns: headers });
+  await page.route('http://localhost:18923/dosya', (route) => route.fulfill({
+    status: 200,
+    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' },
+    body: Buffer.from(backendBytes),
+  }));
+  await page.locator('#internBackendLoadBtn').click();
+  await page.waitForFunction(() => document.querySelector('#internRecruitmentTableWrap')?.style.display === 'block');
+  assert.equal(await page.locator('#internRecruitmentTableBody tr').count(), 1, 'backend workbook should feed the existing pipeline');
+  assert.equal(await page.locator('#internCandidateCount').textContent(), '1 aday');
+
+  await page.unroute('http://localhost:18923/dosya');
+  await page.route('http://localhost:18923/dosya', (route) => route.fulfill({
+    status: 200,
+    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'text/plain' },
+    body: 'indirilemedi: bozuk govde',
+  }));
+  await page.locator('#internBackendLoadBtn').click();
+  await page.waitForFunction(() => /Backend yüklemesi başarısız/.test(document.querySelector('#internRecruitmentStatus')?.textContent || ''));
+  assert.equal(await page.locator('#internRecruitmentTableBody tr').count(), 0);
+  assert.equal(await page.locator('#internRecruitmentTableWrap').evaluate((element) => element.style.display), 'none');
+  assert.equal(await page.locator('#internCandidateCount').textContent(), '0 aday');
+
   assert.deepEqual(errors, []);
-  console.log('Recruitment intern browser QA: schema import, privacy, stale reset, cancellation, a11y, mobile and Excel typing passed.');
+  console.log('Recruitment intern browser QA: schema import, privacy, stale reset, cancellation, a11y, mobile, Excel typing, live card and backend load passed.');
 } finally {
   await context.close();
   await browser.close();

@@ -820,6 +820,17 @@ a { color: var(--blue-600); text-decoration: none; }
     .intern-panel-controls { display: flex; gap: 1rem; flex-wrap: wrap; align-items: end; margin-bottom: 1rem; }
     .intern-candidate-summary { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     .intern-checkbox { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; cursor: pointer; }
+    #internLiveCard { scroll-margin-top: 1rem; }
+    #internLiveFrame { width: 100%; min-height: 420px; border: 1px solid var(--slate-200); border-radius: 12px; background: #fff; }
+    .intern-live-frame-wrap { margin-top: 0.5rem; }
+    .intern-backend-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: end; margin-top: 1rem; }
+    .intern-backend-row label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; flex: 1 1 260px; }
+    #internBackendUrl { padding: 0.5rem 0.75rem; border-radius: 8px; min-height: 44px; border: 1px solid var(--slate-300); width: 100%; }
+    #internBackendLoadBtn:focus-visible, #internLiveDownload:focus-visible, #internBackendUrl:focus-visible { outline: 2px solid var(--blue-600); outline-offset: 2px; }
+    @media (max-width: 820px) {
+      #internLiveFrame { min-height: 300px; }
+      .intern-backend-row { flex-direction: column; align-items: stretch; }
+    }
 
     @media (max-width: 820px) {
       .multi-filter-popover { position: fixed; top: 12vh; left: 1rem; right: 1rem; width: auto; max-height: 76vh; overflow: auto; }
@@ -1594,6 +1605,29 @@ a { color: var(--blue-600); text-decoration: none; }
             <tbody id="internRecruitmentTableBody"></tbody>
           </table>
         </div>
+      </article>
+
+      <article class="card" id="internLiveCard">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Canlı Görünüm</h3>
+            <p class="card-subtitle">Paylaşılan staj başvuru Excel dosyasının güncel halini önizleyin. Canlı önizleme için internet gerekir.</p>
+          </div>
+          <span class="pill pill-green">Canlı</span>
+        </div>
+        <div class="intern-live-frame-wrap">
+          <iframe id="internLiveFrame" title="Staj başvuru çalışma kitabının canlı önizlemesi" src="https://igairportaero-my.sharepoint.com/:x:/g/personal/furkan_cakmak_igairport_aero/IQCbFZYRxjZlQbglXYNtVZmwAbmN26iPLnmgcjx_vuI-zLY?rtime=xBgjuSwl30g&action=embedview" loading="lazy" referrerpolicy="no-referrer" allowfullscreen></iframe>
+        </div>
+        <div class="intern-backend-row">
+          <a id="internLiveDownload" class="btn btn-white" href="https://igairportaero-my.sharepoint.com/:x:/g/personal/furkan_cakmak_igairport_aero/IQCbFZYRxjZlQbglXYNtVZmwAbmN26iPLnmgcjx_vuI-zLY?rtime=xBgjuSwl30g&download=1" rel="noopener">📥 Güncel Exceli indir</a>
+        </div>
+        <div class="intern-backend-row">
+          <label for="internBackendUrl">Backend URL
+            <input type="url" id="internBackendUrl" value="http://localhost:18923/dosya" aria-describedby="internBackendHint" inputmode="url" spellcheck="false">
+          </label>
+          <button type="button" id="internBackendLoadBtn" class="btn btn-primary">⬇ Backendden otomatik yükle</button>
+        </div>
+        <p class="drop-sub" id="internBackendHint" style="margin: 0.5rem 0 0;">Backend yalnızca dosyayı okur (salt-okunur GET, CORS); aday satırları dışarı gönderilmez, depolamaya yazılmaz. Yerel backend çalışmıyorsa dosya seçimiyle yüklemeye devam edebilirsiniz.</p>
       </article>
     </div>
 
@@ -3199,6 +3233,40 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    // BACKENDDEN OTOMATIK YUKLEME — salt-okunur GET ile mevcut pipeline beslenir.
+    // CORS: ornek backend (iga-backend.mjs) Access-Control-Allow-Origin basligi dondurur; tarayici
+    // dosyayi yalnizca OKUR. Aday satirlari disari GONDERILMEZ: POST yok, istek govdesi yok,
+    // localStorage/sessionStorage/IndexedDB yazimi yok.
+    // NOT: internLiveFrame cross-origin bir SharePoint sayfasidir; same-origin policy geregi
+    // contentDocument/contentWindow uzerinden okunamaz. Bu yuzden iframe scrape YOKTUR —
+    // canli veri icin tek yol, asagidaki bellek-ici fetch -> SheetJS -> sema dogrulama akisidir.
+    async function handleInternBackendLoad() {
+      const status = $("#internRecruitmentStatus");
+      const input = $("#internBackendUrl");
+      const button = $("#internBackendLoadBtn");
+      const url = ((input && input.value) || "").trim() || "http://localhost:18923/dosya";
+      resetInternRecruitmentState();
+      try {
+        if (!window.XLSX) throw new Error("Yerel SheetJS kitaplığı hazır değil.");
+        if (button) button.disabled = true;
+        if (status) status.innerHTML = `<div style="padding: 1rem; background: var(--blue-100); border-radius: 8px; color: var(--blue-700);">Backend dosyasından okunuyor...</div>`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Backend yanıt vermedi (HTTP ${response.status}).`);
+        const buffer = await response.arrayBuffer();
+        const workbook = XLSX.read(buffer, { type: "array", raw: true, cellDates: true, cellFormula: false });
+        const { matrix } = findInternRecruitmentSheet(workbook);
+        renderInternRecruitmentRawData(matrix, "Backend: " + url);
+        toast(`Backend dosyasından ${formatNumber(internState.rows.length)} satır yüklendi.`, "success");
+      } catch (error) {
+        resetInternRecruitmentState();
+        const message = (error && error.message) ? error.message : String(error);
+        if (status) status.innerHTML = `<div style="padding: 1rem; background: var(--red-100); border: 1px solid var(--red-500); border-radius: 8px; color: var(--red-700);"><strong>Backend yüklemesi başarısız:</strong> ${escapeHtml(message)}</div>`;
+        toast(`Backend yüklemesi başarısız: ${message}`, "error");
+      } finally {
+        if (button) button.disabled = false;
+      }
+    }
+
     // BINDINGS
     function initEvents() {
       portableTemplateHtml = "<!doctype html>\n" + document.documentElement.outerHTML;
@@ -3382,6 +3450,8 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       $("#internPeriodSelect").addEventListener("change", () => renderInternTable());
       const internIncludeCancelled = $("#internIncludeCancelled");
       internIncludeCancelled.addEventListener("change", () => renderInternTable());
+      const internBackendLoadBtn = $("#internBackendLoadBtn");
+      if (internBackendLoadBtn) internBackendLoadBtn.addEventListener("click", () => handleInternBackendLoad());
       document.addEventListener("change", event => {
         const editor = event.target.closest("[data-intern-edit]");
         if (!editor) return;
