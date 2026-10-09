@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-08T05:04:00.000Z",
+  "generatedAt": "2026-10-09T05:04:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-09",
+      "path": "/news/2026-10-09/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-08",
       "path": "/news/2026-10-08/",
@@ -278,6 +283,611 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-09-openai-fires-safety-researchers-open-letter",
+      "kind": "daily",
+      "title": "OpenAI dismisses three safety researchers who dispute its misconduct findings",
+      "summary": "OpenAI has parted ways with three members of its safety and alignment team - Jasmine Wang, Tomek Korbak and Mikita Balesni - after an internal investigation concluded they mishandled sensitive company information. The three published an open letter on October 8 denying the claims, saying they were dismissed for prioritising safety over the company's near-term interests and warning of a chilling effect on internal debate. OpenAI says the dismissals were not retaliation and that an internal memo praised their safety work.",
+      "category": "ai",
+      "priority": 84,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "ai-safety",
+        "alignment",
+        "policy"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/08/fired-openai-safety-researchers-dispute-misconduct-claims-warn-of-chilling-effect/",
+          "publishedAt": "2026-10-08T17:30:00.000Z"
+        },
+        {
+          "publisher": "CNN Business",
+          "url": "https://www.cnn.com/2026/10/08/tech/fired-open-ai-researchers-pushed-out",
+          "publishedAt": "2026-10-08T23:22:00.000Z"
+        },
+        {
+          "publisher": "The Hacker News",
+          "url": "https://thehackernews.com/2026/10/openai-parts-ways-with-three-safety.html",
+          "publishedAt": "2026-10-02T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-nations-league-spain-england-group-stage",
+      "kind": "daily",
+      "title": "Spain and England close the Nations League group stage on top after late drama",
+      "summary": "Spain preserved a two-and-a-half-year unbeaten run by rallying to beat Croatia 2-1 in Split on October 6, substitute Mikel Merino scoring twice after Ivan Perisic had put Croatia ahead. England finished their group campaign with a 3-0 win over Czechia at Wembley, Harry Kane scoring twice on his record-equalling 125th cap to reach 91 international goals. Spain top the group with 12 points and England, on nine, joined Portugal in sealing a quarter-final place.",
+      "category": "football",
+      "priority": 82,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nations-league",
+        "spain",
+        "england",
+        "harry-kane"
+      ],
+      "sources": [
+        {
+          "publisher": "Associated Press (via WTOP)",
+          "url": "https://wtop.com/sports/2026/10/merino-comes-up-clutch-again-for-spain-as-kane-marks-record-setting-match-with-2-goals-for-england/",
+          "publishedAt": "2026-10-07T21:00:00.000Z"
+        },
+        {
+          "publisher": "Channel News Asia",
+          "url": "https://www.channelnewsasia.com/sport/spain-rally-beat-croatia-kane-shines-england-in-nations-league-6437641",
+          "publishedAt": "2026-10-06T23:00:00.000Z"
+        },
+        {
+          "publisher": "RTL Today",
+          "url": "https://today.rtl.lu/sport/international/spain-break-down-czechs-as-england-outclass-croatia-in-nations-league-849101117",
+          "publishedAt": "2026-10-04T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-wall-street-chip-selloff-openai-revenue",
+      "kind": "daily",
+      "title": "Nasdaq slides 1.25% as a report on OpenAI's revenue hits chipmakers",
+      "summary": "US stocks ended mixed on October 8 after a Financial Times report that OpenAI's annualised revenue was about $20 billion below earlier estimates reignited doubts about AI spending, sending chip shares sharply lower. The Nasdaq Composite fell 1.25% to 27,193.34, the S&P 500 slipped 0.47% to 7,765.36, while the Dow Jones Industrial Average edged up 0.10% to 51,231.64. Micron, Nvidia, AMD and Intel were among the biggest fallers, while energy and staples led sector gains.",
+      "category": "economy-markets",
+      "priority": 80,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "wall-street",
+        "nasdaq",
+        "semiconductors",
+        "ai-spending"
+      ],
+      "sources": [
+        {
+          "publisher": "NDTV Profit",
+          "url": "https://www.ndtvprofit.com/markets/stock-market-today-all-you-need-to-know-going-into-trade-on-oct-9-12158588",
+          "publishedAt": "2026-10-09T00:30:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via Free Malaysia Today)",
+          "url": "https://www.freemalaysiatoday.com/category/business/2026/10/09/s-p-500-nasdaq-end-lower-as-chip-stocks-weigh/",
+          "publishedAt": "2026-10-09T02:00:00.000Z"
+        },
+        {
+          "publisher": "Rio Times",
+          "url": "https://riotimesonline.com/global-economy-briefing-october-9-2026",
+          "publishedAt": "2026-10-09T03:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-openai-revenue-below-estimates",
+      "kind": "daily",
+      "title": "OpenAI's annualised revenue reported about $20bn below earlier estimates",
+      "summary": "The Financial Times reported on October 8 that OpenAI has told investors its annualised revenue was approaching $50 billion at the end of September, roughly $20 billion below the about $70 billion figure that circulated in late September. The gap stems from how the earlier number was compiled: investors tried to benchmark OpenAI against Anthropic, which counts revenue from cloud partners such as AWS and Google Cloud while OpenAI does not. The report added to investor scrutiny of AI spending.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "revenue",
+        "artificial-intelligence",
+        "investors"
+      ],
+      "sources": [
+        {
+          "publisher": "Financial Times",
+          "url": "https://www.ft.com/content/b66a9858-f8fb-46cb-b506-44bfe26fca2a",
+          "publishedAt": "2026-10-08T16:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/08/openais-revenue-is-reportedly-20-billion-less-than-previously-projected/",
+          "publishedAt": "2026-10-08T18:19:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via MarketScreener)",
+          "url": "https://ae.marketscreener.com/news/openai-s-annualized-revenue-20-billion-less-than-previously-signaled-ft-reports-ce785ddfdc89ff20",
+          "publishedAt": "2026-10-08T17:12:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-premier-league-returns-international-break",
+      "kind": "daily",
+      "title": "Premier League returns this weekend after the season's longest international break",
+      "summary": "The Premier League resumes on Saturday 10 October after a 19-day break that merged the September and October international windows, with Matchweek 6 led by champions Arsenal hosting Leeds United. Manchester United meet bottom club Tottenham, and leaders Manchester City travel to Liverpool in Sunday's headline game, when top scorers Erling Haaland and Alexander Isak face off. The longer break followed a FIFA calendar change giving nations up to four matches in a single window.",
+      "category": "football",
+      "priority": 74,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "arsenal",
+        "manchester-city",
+        "fixtures"
+      ],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/news/4726845/when-does-the-premier-league-return",
+          "publishedAt": "2026-09-25T10:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.co.uk/football/fixtures/_/league/eng.1",
+          "publishedAt": "2026-10-08T10:00:00.000Z"
+        },
+        {
+          "publisher": "Premier League (international breaks)",
+          "url": "https://www.premierleague.com/en/news/4689113/when-are-the-international-breaks-for-202627",
+          "publishedAt": "2026-09-05T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-paramount-warner-merger-skydance",
+      "kind": "daily",
+      "title": "Paramount completes its $111bn Warner Bros. Discovery takeover, creating Skydance",
+      "summary": "Paramount Skydance closed its roughly $110-111 billion acquisition of Warner Bros. Discovery on October 6, uniting two of Hollywood's oldest studios and handing chief executive David Ellison control of a group spanning movie studios, Paramount+ and HBO Max, CBS, CNN and live sports including CBS Sports and TNT Sports. The deal ends a contest with Netflix and resolves antitrust challenges; the merged company operates under the Skydance name.",
+      "category": "technology",
+      "priority": 72,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "media",
+        "merger",
+        "paramount",
+        "warner-bros"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/media-telecom/paramount-wraps-up-mega-warner-bros-merger-create-hollywood-powerhouse-skydance-2026-10-06/",
+          "publishedAt": "2026-10-06T13:00:00.000Z"
+        },
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/tech-policy/2026/10/paramount-completes-111b-warner-merger-creating-skydance-behemoth/",
+          "publishedAt": "2026-10-06T18:00:00.000Z"
+        },
+        {
+          "publisher": "Skydance",
+          "url": "https://www.skydance.com/news/press/paramount-completes-acquisition-of-warner-bros-discovery-creating-a-new-global-entertainment-leader-skydance",
+          "publishedAt": "2026-10-06T12:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-oil-brent-above-100-hormuz",
+      "kind": "daily",
+      "title": "Oil jumps and Brent tops $100 as Middle East attacks and hurricanes tighten supply",
+      "summary": "Crude prices jumped on October 8 after attacks on shipping in the Strait of Hormuz and US output cuts tied to hurricane activity raised supply fears. Front-month WTI and Brent settled up about 3.6% and 4.1% respectively, with Brent holding above $100 a barrel. The move added to inflation pressure that has kept Treasury yields near multi-decade highs, while analysts pointed to the Iran standoff and the coming US earnings season as drivers of market sentiment.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "brent",
+        "inflation",
+        "commodities"
+      ],
+      "sources": [
+        {
+          "publisher": "Investopedia",
+          "url": "https://www.investopedia.com/stock-market-today-dow-jones-s-and-p-500-10072026-12162282",
+          "publishedAt": "2026-10-08T14:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters (via Free Malaysia Today)",
+          "url": "https://www.freemalaysiatoday.com/category/business/2026/10/09/s-p-500-nasdaq-end-lower-as-chip-stocks-weigh/",
+          "publishedAt": "2026-10-09T02:00:00.000Z"
+        },
+        {
+          "publisher": "Swingfolio",
+          "url": "https://swingfolio.com/daily/2026-10-09/morning",
+          "publishedAt": "2026-10-09T00:34:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-nvidia-genesis-mission-1bn",
+      "kind": "daily",
+      "title": "Nvidia commits $1bn over five years to US science under the Genesis Mission",
+      "summary": "Nvidia said on October 8 it will commit $1 billion over five years to US research, quantum computing and cloud providers serving government missions, as part of the White House's Genesis Mission programme. The same day the administration listed a wider $2.4 billion package of science tools and compute credits from eleven partners, including AMD, OpenAI, Anthropic, Google, AWS and Micron. Nvidia said it will also take part in phase-two Genesis Mission awards covering quantum, fusion and microelectronics.",
+      "category": "technology",
+      "priority": 68,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "quantum",
+        "research",
+        "genesis-mission"
+      ],
+      "sources": [
+        {
+          "publisher": "Nvidia",
+          "url": "https://nvidianews.nvidia.com/news/nvidia-commits-1-billion-to-advance-us-science-over-the-next-five-years",
+          "publishedAt": "2026-10-08T13:00:00.000Z"
+        },
+        {
+          "publisher": "Business Insider Markets",
+          "url": "https://markets.businessinsider.com/news/stocks/nvidia-commits-1-billion-to-advance-us-science-over-the-next-five-years-1036609205",
+          "publishedAt": "2026-10-08T14:31:00.000Z"
+        },
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/nvidia-1-billion-us-science-genesis-mission-quantum",
+          "publishedAt": "2026-10-08T15:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-apple-full-disk-access-ai-agents",
+      "kind": "daily",
+      "title": "Apple says it will tighten macOS Full Disk Access as AI agents raise the stakes",
+      "summary": "Apple said on October 2 it will add controls around macOS Full Disk Access - the permission that lets an app read files, Mail, Messages and browsing history in a single grant - so that granting it will require what Apple calls very explicit user action. The company cited AI agents, saying the risks of such broad access will grow substantially as agents become more capable and autonomous. Apple named no app, macOS version or date; the change follows a dispute over Meta's Muse reading private messages.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "macos",
+        "privacy",
+        "ai-agents"
+      ],
+      "sources": [
+        {
+          "publisher": "Apple Developer News",
+          "url": "https://developer.apple.com/news/?id=p6zjojqw",
+          "publishedAt": "2026-10-02T17:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/02/apple-says-its-tightening-macos-full-disk-access-controls-due-to-new-risks-from-ai-agents/",
+          "publishedAt": "2026-10-02T18:00:00.000Z"
+        },
+        {
+          "publisher": "Unite.AI",
+          "url": "https://www.unite.ai/apple-to-tighten-macos-full-disk-access-citing-ai-agent-risks/",
+          "publishedAt": "2026-10-03T09:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-dollar-euro-bond-yields",
+      "kind": "daily",
+      "title": "Dollar nears an 18-month high and the euro slides as bond yields rise again",
+      "summary": "The dollar moved towards its strongest level in 18 months on October 8, while the euro weakened to its lowest since May 2025, as minutes from the US Federal Reserve showed policymakers see inflation as the biggest risk and a renewed bond selloff lifted yields. Higher oil prices and rising euro-zone yields added pressure, with French and Italian government bonds selling off on fiscal worries. Currency markets have been driven for weeks by a global bond selloff.",
+      "category": "economy-markets",
+      "priority": 66,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "currencies",
+        "dollar",
+        "euro",
+        "bonds"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters (via Kitco News)",
+          "url": "https://www.kitco.com/news/off-the-wire/2026-10-08/dollar-creeps-towards-18-month-high-euro-lags-bond-yields-rise-again",
+          "publishedAt": "2026-10-08T13:42:00.000Z"
+        },
+        {
+          "publisher": "Central Oregon Daily News",
+          "url": "https://www.centraloregondaily.com/news/consumer/dollar-holds-near-18-month-high-euro-lags-as-bond-yields-rise/article_6829aa5a-f594-5946-bb5a-380b780d6f86.html",
+          "publishedAt": "2026-10-08T14:00:00.000Z"
+        },
+        {
+          "publisher": "Euronext",
+          "url": "https://live.euronext.com/en/financial-news/dollar-creeps-towards-18-month-high-euro-lags-bond-yields-rise-again",
+          "publishedAt": "2026-10-08T14:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-google-synthid-detector-global",
+      "kind": "daily",
+      "title": "Google opens its SynthID AI-content detector to everyone, with OpenAI and Nvidia on board",
+      "summary": "Google has made its SynthID Detector publicly available worldwide in English, letting anyone upload an image, video or audio file to check for the company's imperceptible AI watermark. The detector now recognises SynthID content from partners as well as from Google itself, including OpenAI, Nvidia and Kakao, with Apple support planned. Google says it has watermarked more than 180 billion images and videos; the tool identifies only supported watermarks and is not described as a general AI detector.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "synthid",
+        "watermarking",
+        "provenance"
+      ],
+      "sources": [
+        {
+          "publisher": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/synth-id-ai-content/",
+          "publishedAt": "2026-10-07T16:00:00.000Z"
+        },
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/ai/2026/10/google-rolls-out-improved-synthid-ai-content-detector-now-available-globally/",
+          "publishedAt": "2026-10-07T20:00:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/tech/1006640/google-ai-content-detector-launch",
+          "publishedAt": "2026-10-07T16:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-anthropic-claude-dashboards-motion",
+      "kind": "daily",
+      "title": "Anthropic adds dashboards and animation tools to Claude and takes Docs and Slides out of beta",
+      "summary": "Anthropic on October 8 launched Claude Dashboards, a beta tool on paid plans that connects to business data and customer systems so users can build live dashboards from plain-language queries, and Claude Motion, a beta animation tool for Team and Enterprise customers that exports editable animations as video. The company also made Claude Docs, Slides and Design generally available across all plans including Free, widening its workplace-productivity suite.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "productivity",
+        "artificial-intelligence"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/technology/anthropic-launches-dashboard-animation-tools-claude-2026-10-08/",
+          "publishedAt": "2026-10-08T19:07:00.000Z"
+        },
+        {
+          "publisher": "Channel News Asia",
+          "url": "https://www.channelnewsasia.com/business/anthropic-launches-dashboard-animation-tools-claude-6444391",
+          "publishedAt": "2026-10-09T03:01:00.000Z"
+        },
+        {
+          "publisher": "Anthropic",
+          "url": "https://claude.com/resources/articles/dashboards-and-motion",
+          "publishedAt": "2026-10-08T19:01:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-ballon-dor-2026-london-shortlist",
+      "kind": "daily",
+      "title": "Ballon d'Or heads to London for a 70th edition with Kane, Yamal and Mbappe leading the field",
+      "summary": "The 2026 Ballon d'Or ceremony will be held at the London Palladium on 26 October, the first time the award has been presented outside Paris, marking its 70th anniversary. Harry Kane, Lamine Yamal and Kylian Mbappe lead the 30-man men's shortlist, which also includes Ousmane Dembele, Erling Haaland and Lionel Messi; Cristiano Ronaldo was left out despite winning the Saudi Pro League. An international jury of journalists votes by ranking ten players.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ballon-dor",
+        "harry-kane",
+        "lamine-yamal",
+        "awards"
+      ],
+      "sources": [
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/story/_/id/49866841/ballon-dor-2026-nominees-harry-kane-kylian-mbappe-lead-30-man-shortlist",
+          "publishedAt": "2026-09-08T14:48:00.000Z"
+        },
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/13582892/ballon-dor-2026-harry-kane-declan-rice-jude-bellingham-among-nominees-but-no-cristiano-ronaldo",
+          "publishedAt": "2026-09-08T12:00:00.000Z"
+        },
+        {
+          "publisher": "Olympics.com",
+          "url": "https://www.olympics.com/en/news/ballon-dor-2026-all-nominees-every-award-football",
+          "publishedAt": "2026-09-08T15:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-lets-encrypt-64-day-certificates",
+      "kind": "daily",
+      "title": "Let's Encrypt will cut default TLS certificate lifetimes to 64 days in February 2027",
+      "summary": "Let's Encrypt said on October 7 that from February 10, 2027 every certificate it issues or renews on its default profile will be valid for 64 days instead of 90, with the last 90-day certificate expected to expire on May 11, 2027. It will begin testing 64-day certificates in its staging environment on October 14, 2026. The non-profit advised operators to stop hard-coding renewal dates and to verify their ACME clients support ARI, ahead of a further cut to 45 days planned for 2028.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "tls",
+        "lets-encrypt",
+        "certificates"
+      ],
+      "sources": [
+        {
+          "publisher": "Let's Encrypt",
+          "url": "https://letsencrypt.org/2026/10/07/64-day-certs",
+          "publishedAt": "2026-10-07T16:00:00.000Z"
+        },
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/gadgets/2026/10/lets-encrypt-cuts-certificate-lifetimes-to-64-days-starting-february-2027/",
+          "publishedAt": "2026-10-08T19:57:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-09-meta-muse-gadgets-open-source",
+      "kind": "daily",
+      "title": "Meta opens its Muse agent to third-party hardware with an open-source gadgets kit",
+      "summary": "Meta introduced Muse Gadgets, a project that publishes open-source firmware and a Linux SDK so developers can build their own hardware connected to its Muse personal AI agent, including ideas such as a colour e-ink display or a device plugged into a TV's HDMI port. Meta also built a reference product, the Muse Home Link, a USB-C bridge to connected smart-home devices. The move extends Muse beyond phones and the Mac.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-10-09T05:05:00.000Z",
+      "updatedAt": "2026-10-09T05:05:00.000Z",
+      "retrievedAt": "2026-10-09T05:04:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "meta",
+        "muse",
+        "ai-agents",
+        "open-source"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/02/meta-wants-you-to-build-your-own-muse-gadget/",
+          "publishedAt": "2026-10-02T19:40:00.000Z"
+        },
+        {
+          "publisher": "Meta",
+          "url": "https://ai.meta.com/muse/",
+          "publishedAt": "2026-10-02T18:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-08-openai-gpt-6-global-rollout",
       "kind": "daily",

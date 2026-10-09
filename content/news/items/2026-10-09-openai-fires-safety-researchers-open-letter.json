@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-openai-fires-safety-researchers-open-letter",
+  "kind": "daily",
+  "title": "OpenAI dismisses three safety researchers who dispute its misconduct findings",
+  "summary": "OpenAI has parted ways with three members of its safety and alignment team - Jasmine Wang, Tomek Korbak and Mikita Balesni - after an internal investigation concluded they mishandled sensitive company information. The three published an open letter on October 8 denying the claims, saying they were dismissed for prioritising safety over the company's near-term interests and warning of a chilling effect on internal debate. OpenAI says the dismissals were not retaliation and that an internal memo praised their safety work.",
+  "category": "ai",
+  "priority": 84,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "ai-safety",
+    "alignment",
+    "policy"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/08/fired-openai-safety-researchers-dispute-misconduct-claims-warn-of-chilling-effect/",
+      "publishedAt": "2026-10-08T17:30:00Z"
+    },
+    {
+      "publisher": "CNN Business",
+      "url": "https://www.cnn.com/2026/10/08/tech/fired-open-ai-researchers-pushed-out",
+      "publishedAt": "2026-10-08T23:22:00Z"
+    },
+    {
+      "publisher": "The Hacker News",
+      "url": "https://thehackernews.com/2026/10/openai-parts-ways-with-three-safety.html",
+      "publishedAt": "2026-10-02T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-ballon-dor-2026-london-shortlist",
+  "kind": "daily",
+  "title": "Ballon d'Or heads to London for a 70th edition with Kane, Yamal and Mbappe leading the field",
+  "summary": "The 2026 Ballon d'Or ceremony will be held at the London Palladium on 26 October, the first time the award has been presented outside Paris, marking its 70th anniversary. Harry Kane, Lamine Yamal and Kylian Mbappe lead the 30-man men's shortlist, which also includes Ousmane Dembele, Erling Haaland and Lionel Messi; Cristiano Ronaldo was left out despite winning the Saudi Pro League. An international jury of journalists votes by ranking ten players.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ballon-dor",
+    "harry-kane",
+    "lamine-yamal",
+    "awards"
+  ],
+  "sources": [
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/story/_/id/49866841/ballon-dor-2026-nominees-harry-kane-kylian-mbappe-lead-30-man-shortlist",
+      "publishedAt": "2026-09-08T14:48:00Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/13582892/ballon-dor-2026-harry-kane-declan-rice-jude-bellingham-among-nominees-but-no-cristiano-ronaldo",
+      "publishedAt": "2026-09-08T12:00:00Z"
+    },
+    {
+      "publisher": "Olympics.com",
+      "url": "https://www.olympics.com/en/news/ballon-dor-2026-all-nominees-every-award-football",
+      "publishedAt": "2026-09-08T15:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-dollar-euro-bond-yields",
+  "kind": "daily",
+  "title": "Dollar nears an 18-month high and the euro slides as bond yields rise again",
+  "summary": "The dollar moved towards its strongest level in 18 months on October 8, while the euro weakened to its lowest since May 2025, as minutes from the US Federal Reserve showed policymakers see inflation as the biggest risk and a renewed bond selloff lifted yields. Higher oil prices and rising euro-zone yields added pressure, with French and Italian government bonds selling off on fiscal worries. Currency markets have been driven for weeks by a global bond selloff.",
+  "category": "economy-markets",
+  "priority": 66,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "currencies",
+    "dollar",
+    "euro",
+    "bonds"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via Kitco News)",
+      "url": "https://www.kitco.com/news/off-the-wire/2026-10-08/dollar-creeps-towards-18-month-high-euro-lags-bond-yields-rise-again",
+      "publishedAt": "2026-10-08T13:42:00Z"
+    },
+    {
+      "publisher": "Central Oregon Daily News",
+      "url": "https://www.centraloregondaily.com/news/consumer/dollar-holds-near-18-month-high-euro-lags-as-bond-yields-rise/article_6829aa5a-f594-5946-bb5a-380b780d6f86.html",
+      "publishedAt": "2026-10-08T14:00:00Z"
+    },
+    {
+      "publisher": "Euronext",
+      "url": "https://live.euronext.com/en/financial-news/dollar-creeps-towards-18-month-high-euro-lags-bond-yields-rise-again",
+      "publishedAt": "2026-10-08T14:00:00Z"
+    }
+  ]
+}

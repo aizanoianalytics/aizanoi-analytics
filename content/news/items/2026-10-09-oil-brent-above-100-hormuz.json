@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-oil-brent-above-100-hormuz",
+  "kind": "daily",
+  "title": "Oil jumps and Brent tops $100 as Middle East attacks and hurricanes tighten supply",
+  "summary": "Crude prices jumped on October 8 after attacks on shipping in the Strait of Hormuz and US output cuts tied to hurricane activity raised supply fears. Front-month WTI and Brent settled up about 3.6% and 4.1% respectively, with Brent holding above $100 a barrel. The move added to inflation pressure that has kept Treasury yields near multi-decade highs, while analysts pointed to the Iran standoff and the coming US earnings season as drivers of market sentiment.",
+  "category": "economy-markets",
+  "priority": 70,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "oil",
+    "brent",
+    "inflation",
+    "commodities"
+  ],
+  "sources": [
+    {
+      "publisher": "Investopedia",
+      "url": "https://www.investopedia.com/stock-market-today-dow-jones-s-and-p-500-10072026-12162282",
+      "publishedAt": "2026-10-08T14:00:00Z"
+    },
+    {
+      "publisher": "Reuters (via Free Malaysia Today)",
+      "url": "https://www.freemalaysiatoday.com/category/business/2026/10/09/s-p-500-nasdaq-end-lower-as-chip-stocks-weigh/",
+      "publishedAt": "2026-10-09T02:00:00Z"
+    },
+    {
+      "publisher": "Swingfolio",
+      "url": "https://swingfolio.com/daily/2026-10-09/morning",
+      "publishedAt": "2026-10-09T00:34:00Z"
+    }
+  ]
+}

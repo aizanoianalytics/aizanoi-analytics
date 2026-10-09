@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-premier-league-returns-international-break",
+  "kind": "daily",
+  "title": "Premier League returns this weekend after the season's longest international break",
+  "summary": "The Premier League resumes on Saturday 10 October after a 19-day break that merged the September and October international windows, with Matchweek 6 led by champions Arsenal hosting Leeds United. Manchester United meet bottom club Tottenham, and leaders Manchester City travel to Liverpool in Sunday's headline game, when top scorers Erling Haaland and Alexander Isak face off. The longer break followed a FIFA calendar change giving nations up to four matches in a single window.",
+  "category": "football",
+  "priority": 74,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "arsenal",
+    "manchester-city",
+    "fixtures"
+  ],
+  "sources": [
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/news/4726845/when-does-the-premier-league-return",
+      "publishedAt": "2026-09-25T10:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.co.uk/football/fixtures/_/league/eng.1",
+      "publishedAt": "2026-10-08T10:00:00Z"
+    },
+    {
+      "publisher": "Premier League (international breaks)",
+      "url": "https://www.premierleague.com/en/news/4689113/when-are-the-international-breaks-for-202627",
+      "publishedAt": "2026-09-05T10:00:00Z"
+    }
+  ]
+}

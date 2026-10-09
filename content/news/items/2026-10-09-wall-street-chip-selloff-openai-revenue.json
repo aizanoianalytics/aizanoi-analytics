@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-wall-street-chip-selloff-openai-revenue",
+  "kind": "daily",
+  "title": "Nasdaq slides 1.25% as a report on OpenAI's revenue hits chipmakers",
+  "summary": "US stocks ended mixed on October 8 after a Financial Times report that OpenAI's annualised revenue was about $20 billion below earlier estimates reignited doubts about AI spending, sending chip shares sharply lower. The Nasdaq Composite fell 1.25% to 27,193.34, the S&P 500 slipped 0.47% to 7,765.36, while the Dow Jones Industrial Average edged up 0.10% to 51,231.64. Micron, Nvidia, AMD and Intel were among the biggest fallers, while energy and staples led sector gains.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wall-street",
+    "nasdaq",
+    "semiconductors",
+    "ai-spending"
+  ],
+  "sources": [
+    {
+      "publisher": "NDTV Profit",
+      "url": "https://www.ndtvprofit.com/markets/stock-market-today-all-you-need-to-know-going-into-trade-on-oct-9-12158588",
+      "publishedAt": "2026-10-09T00:30:00Z"
+    },
+    {
+      "publisher": "Reuters (via Free Malaysia Today)",
+      "url": "https://www.freemalaysiatoday.com/category/business/2026/10/09/s-p-500-nasdaq-end-lower-as-chip-stocks-weigh/",
+      "publishedAt": "2026-10-09T02:00:00Z"
+    },
+    {
+      "publisher": "Rio Times",
+      "url": "https://riotimesonline.com/global-economy-briefing-october-9-2026",
+      "publishedAt": "2026-10-09T03:00:00Z"
+    }
+  ]
+}

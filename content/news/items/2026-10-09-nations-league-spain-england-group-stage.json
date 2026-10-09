@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-nations-league-spain-england-group-stage",
+  "kind": "daily",
+  "title": "Spain and England close the Nations League group stage on top after late drama",
+  "summary": "Spain preserved a two-and-a-half-year unbeaten run by rallying to beat Croatia 2-1 in Split on October 6, substitute Mikel Merino scoring twice after Ivan Perisic had put Croatia ahead. England finished their group campaign with a 3-0 win over Czechia at Wembley, Harry Kane scoring twice on his record-equalling 125th cap to reach 91 international goals. Spain top the group with 12 points and England, on nine, joined Portugal in sealing a quarter-final place.",
+  "category": "football",
+  "priority": 82,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nations-league",
+    "spain",
+    "england",
+    "harry-kane"
+  ],
+  "sources": [
+    {
+      "publisher": "Associated Press (via WTOP)",
+      "url": "https://wtop.com/sports/2026/10/merino-comes-up-clutch-again-for-spain-as-kane-marks-record-setting-match-with-2-goals-for-england/",
+      "publishedAt": "2026-10-07T21:00:00Z"
+    },
+    {
+      "publisher": "Channel News Asia",
+      "url": "https://www.channelnewsasia.com/sport/spain-rally-beat-croatia-kane-shines-england-in-nations-league-6437641",
+      "publishedAt": "2026-10-06T23:00:00Z"
+    },
+    {
+      "publisher": "RTL Today",
+      "url": "https://today.rtl.lu/sport/international/spain-break-down-czechs-as-england-outclass-croatia-in-nations-league-849101117",
+      "publishedAt": "2026-10-04T10:00:00Z"
+    }
+  ]
+}
