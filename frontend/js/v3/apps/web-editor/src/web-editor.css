@@ -338,6 +338,9 @@
     .az-web-editor-text{
       padding:16px 17px 26px;
       font-size:12px;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+      word-break:break-word;
     }
     .az-web-editor-projects{
       inset:104px 10px 10px;
