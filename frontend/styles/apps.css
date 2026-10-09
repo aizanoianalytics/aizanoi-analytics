@@ -698,7 +698,7 @@
   .az-winamp-row-actions button:not(:disabled):hover { background:#243149; }
 
   /* News is an archive/library rather than another generic app-card surface. */
-  .az-news-app { min-height:100%;height:100%;overflow:auto;background:#e8dfcf;color:#211d18; }
+  .az-news-app { min-height:100%;height:100%;overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable;background:#e8dfcf;color:#211d18;scrollbar-width:thin;scrollbar-color:#a58e72 transparent; }
   .az-news-loading { min-height:100%;display:grid;place-items:center;padding:40px;background:linear-gradient(145deg,#eee7da,#ddd0bc);text-align:center; }
   .az-news-loading h3 { margin:5px 0 8px;font:650 28px/1.05 Georgia,serif; }
   .az-news-loading p:last-child { margin:0;color:#6f6457;font-size:12px; }
