@@ -70,7 +70,7 @@ export function mountBrowser({ container }) {
             <input class="az-browser-address" data-browser-address type="text" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="Search or enter address" placeholder="Search or enter address">
             <button class="az-browser-go" type="submit">Go</button>
           </form>
-          <button class="az-browser-external" type="button" data-browser-external>Open external</button>
+          <button class="az-browser-external" type="button" data-browser-external aria-label="Open external" title="Open external">Open external</button>
         </div>
         <div class="az-browser-info">
           <span data-browser-status role="status" aria-live="polite">Ready</span>
