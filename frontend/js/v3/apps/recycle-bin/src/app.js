@@ -11,7 +11,7 @@ export async function mountRecycleBin({ container, capabilities }) {
     <div class="az-recycle-actions">
       <strong>Deleted Workspace items</strong>
       <button class="az-button" type="button" data-bin-refresh>Refresh</button>
-      <button class="az-button" type="button" data-bin-empty>Empty Recycle Bin</button>
+      <button class="az-button" type="button" data-bin-empty disabled>Empty Recycle Bin</button>
       <span class="az-system-spacer"></span>
       <span class="az-camera-status" data-bin-count></span>
     </div>
@@ -20,9 +20,11 @@ export async function mountRecycleBin({ container, capabilities }) {
 
   const listEl = container.querySelector('[data-bin-list]');
   const countEl = container.querySelector('[data-bin-count]');
+  const emptyButton = container.querySelector('[data-bin-empty]');
 
   async function refresh() {
     const items = await filesystem.childrenOf(filesystem.recycleId);
+    emptyButton.disabled = items.length === 0;
     countEl.textContent = `${items.length} item${items.length === 1 ? '' : 's'}`;
     listEl.innerHTML = items.length
       ? items.map((node) => `

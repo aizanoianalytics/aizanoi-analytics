@@ -46,9 +46,14 @@ export class MenuScene extends Phaser.Scene {
       .setScale(3.5).setDepth(2);
     aizoPortrait.play('aizo-idle-down');
 
-    // Başlık
+    const compact = width < 600;
+    const buttonWidth = Math.min(300, width - 48);
+    const buttonHeight = compact ? 44 : 40;
+    const titleFontSize = compact ? '28px' : '34px';
+
+    // A responsive content scale keeps the title/menu readable on phones.
     this.add.text(width / 2, height / 2 - 40, 'AIZANOI DUNGEON', {
-      fontSize: '34px',
+      fontSize: titleFontSize,
       color: '#f5d77f',
       fontStyle: 'bold',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
@@ -56,29 +61,29 @@ export class MenuScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.add.text(width / 2, height / 2 - 10, 'Aizo Awakens: Crypts of the Temple of Zeus', {
-      fontSize: '14px',
+      fontSize: compact ? '13px' : '14px',
       color: '#cbd5e1',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     }).setOrigin(0.5);
 
     // Butonlar
     let btnStartY = height / 2 + 40;
-    const btnSpacing = 48;
+    const btnSpacing = compact ? 52 : 48;
 
     if (savedChapter > 1 && savedChapter <= 10) {
       const continueAction = () => {
         this.scene.start('GameScene', { chapterIndex: savedChapter - 1, isEndless: false });
       };
       this._primaryAction = () => this._startOnce(continueAction);
-      createGlassButton(this, width / 2, btnStartY, 260, 38, `Continue (Chapter ${savedChapter})`, () => this._startOnce(continueAction));
+      createGlassButton(this, width / 2, btnStartY, buttonWidth, buttonHeight, `Continue (Chapter ${savedChapter})`, () => this._startOnce(continueAction));
       btnStartY += btnSpacing;
 
-      createGlassButton(this, width / 2, btnStartY, 260, 38, 'Restart Chapter 1 (keep gear)', () => this._startOnce(() => {
+      createGlassButton(this, width / 2, btnStartY, buttonWidth, buttonHeight, 'Restart Chapter 1 (keep gear)', () => this._startOnce(() => {
         this.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
       }));
       btnStartY += btnSpacing;
 
-      createGlassButton(this, width / 2, btnStartY, 260, 38, 'New run (wipe save)', () => {
+      createGlassButton(this, width / 2, btnStartY, buttonWidth, buttonHeight, 'New run (wipe save)', () => {
         audioManager.playClick();
         this.showWipeConfirm(() => {
           tempProg.reset();
@@ -96,12 +101,12 @@ export class MenuScene extends Phaser.Scene {
       btnStartY += btnSpacing;
     }
 
-    createGlassButton(this, width / 2, btnStartY, 260, 38, 'Endless Pantheon', () => this._startOnce(() => {
+    createGlassButton(this, width / 2, btnStartY, buttonWidth, buttonHeight, 'Endless Pantheon', () => this._startOnce(() => {
       this.scene.start('GameScene', { chapterIndex: LEVELS.length - 1, isEndless: true });
     }));
     btnStartY += btnSpacing;
 
-    createGlassButton(this, width / 2, btnStartY, 260, 38, 'Controls & relics', () => {
+    createGlassButton(this, width / 2, btnStartY, buttonWidth, buttonHeight, 'Controls & relics', () => {
       audioManager.playClick();
       this.showGuideModal();
     });
@@ -110,14 +115,14 @@ export class MenuScene extends Phaser.Scene {
     // Section 22 asked for a volume control and keyboard-accessible menus. The
     // settings were readable but there was no way to reach them, so the options
     // scene had to be reachable from the menu to count as either.
-    createGlassButton(this, width / 2, btnStartY, 260, 38, 'Options & accessibility', () => {
+    createGlassButton(this, width / 2, btnStartY, buttonWidth, buttonHeight, 'Options & accessibility', () => {
       audioManager.playClick();
       this.scene.start('OptionsScene', { from: 'MenuScene' });
     });
 
     // Alt Sürüm Bilgisi
     this.add.text(width / 2, height - 16, 'Aizanoi Analytics · v2.0 AAA Edition', {
-      fontSize: '11px',
+      fontSize: compact ? '12px' : '11px',
       color: '#64748b',
     }).setOrigin(0.5);
   }

@@ -548,7 +548,7 @@
     letter-spacing:.08em;
   }
   .az-window[data-app-id="winamp"] .az-winamp-brand strong { font-size:13px;letter-spacing:.14em; }
-  .az-window[data-app-id="winamp"] .az-winamp-brand span { color:#8fa2bb;letter-spacing:0; }
+  .az-window[data-app-id="winamp"] .az-winamp-brand span { color:#a8b8ce;letter-spacing:0; }
 
 
   /* Recycle Bin uses one clean toolbar inside the OS window. */
@@ -561,10 +561,13 @@
 
   /* Analytics Sets: catalog first, collection detail second. */
   .az-window[data-app-id="analytics"] .az-analytics-app {
+    height:100%;
     min-height:100%;
+    overflow:hidden;
     background:linear-gradient(145deg,#fbfcff 0%,#f1f5fc 100%);
   }
   .az-window[data-app-id="analytics"] .az-analytics-index {
+    height:100%;
     min-height:100%;
     padding:clamp(26px,4vw,50px);
     overflow:auto;
