@@ -86,6 +86,8 @@ test('Calculator keypad is explicitly four-column friendly', () => {
   assert.match(calculator, /data-calc="×"/);
   assert.match(calculator, /data-calc="="/);
   assert.doesNotMatch(calculator, /az-app-toolbar/);
+  assert.match(appsCss, /\.az-calc-keys\s*\{[^}]*grid-template-columns:repeat\(4,1fr\)/s);
+  assert.match(appsCss, /\.az-calc-key--eq\s*\{\s*grid-column:1\/-1/);
 });
 
 test('Winamp play resumes a persisted playlist by resolving the first track', () => {
