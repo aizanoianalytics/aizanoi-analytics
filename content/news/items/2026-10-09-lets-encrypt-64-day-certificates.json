@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-09-lets-encrypt-64-day-certificates",
+  "kind": "daily",
+  "title": "Let's Encrypt will cut default TLS certificate lifetimes to 64 days in February 2027",
+  "summary": "Let's Encrypt said on October 7 that from February 10, 2027 every certificate it issues or renews on its default profile will be valid for 64 days instead of 90, with the last 90-day certificate expected to expire on May 11, 2027. It will begin testing 64-day certificates in its staging environment on October 14, 2026. The non-profit advised operators to stop hard-coding renewal dates and to verify their ACME clients support ARI, ahead of a further cut to 45 days planned for 2028.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "tls",
+    "lets-encrypt",
+    "certificates"
+  ],
+  "sources": [
+    {
+      "publisher": "Let's Encrypt",
+      "url": "https://letsencrypt.org/2026/10/07/64-day-certs",
+      "publishedAt": "2026-10-07T16:00:00Z"
+    },
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/gadgets/2026/10/lets-encrypt-cuts-certificate-lifetimes-to-64-days-starting-february-2027/",
+      "publishedAt": "2026-10-08T19:57:00Z"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-nvidia-genesis-mission-1bn",
+  "kind": "daily",
+  "title": "Nvidia commits $1bn over five years to US science under the Genesis Mission",
+  "summary": "Nvidia said on October 8 it will commit $1 billion over five years to US research, quantum computing and cloud providers serving government missions, as part of the White House's Genesis Mission programme. The same day the administration listed a wider $2.4 billion package of science tools and compute credits from eleven partners, including AMD, OpenAI, Anthropic, Google, AWS and Micron. Nvidia said it will also take part in phase-two Genesis Mission awards covering quantum, fusion and microelectronics.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "quantum",
+    "research",
+    "genesis-mission"
+  ],
+  "sources": [
+    {
+      "publisher": "Nvidia",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-commits-1-billion-to-advance-us-science-over-the-next-five-years",
+      "publishedAt": "2026-10-08T13:00:00Z"
+    },
+    {
+      "publisher": "Business Insider Markets",
+      "url": "https://markets.businessinsider.com/news/stocks/nvidia-commits-1-billion-to-advance-us-science-over-the-next-five-years-1036609205",
+      "publishedAt": "2026-10-08T14:31:00Z"
+    },
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/nvidia-1-billion-us-science-genesis-mission-quantum",
+      "publishedAt": "2026-10-08T15:00:00Z"
+    }
+  ]
+}

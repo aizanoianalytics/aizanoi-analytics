@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-apple-full-disk-access-ai-agents",
+  "kind": "daily",
+  "title": "Apple says it will tighten macOS Full Disk Access as AI agents raise the stakes",
+  "summary": "Apple said on October 2 it will add controls around macOS Full Disk Access - the permission that lets an app read files, Mail, Messages and browsing history in a single grant - so that granting it will require what Apple calls very explicit user action. The company cited AI agents, saying the risks of such broad access will grow substantially as agents become more capable and autonomous. Apple named no app, macOS version or date; the change follows a dispute over Meta's Muse reading private messages.",
+  "category": "technology",
+  "priority": 66,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "macos",
+    "privacy",
+    "ai-agents"
+  ],
+  "sources": [
+    {
+      "publisher": "Apple Developer News",
+      "url": "https://developer.apple.com/news/?id=p6zjojqw",
+      "publishedAt": "2026-10-02T17:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/02/apple-says-its-tightening-macos-full-disk-access-controls-due-to-new-risks-from-ai-agents/",
+      "publishedAt": "2026-10-02T18:00:00Z"
+    },
+    {
+      "publisher": "Unite.AI",
+      "url": "https://www.unite.ai/apple-to-tighten-macos-full-disk-access-citing-ai-agent-risks/",
+      "publishedAt": "2026-10-03T09:00:00Z"
+    }
+  ]
+}

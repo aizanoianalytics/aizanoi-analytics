@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-google-synthid-detector-global",
+  "kind": "daily",
+  "title": "Google opens its SynthID AI-content detector to everyone, with OpenAI and Nvidia on board",
+  "summary": "Google has made its SynthID Detector publicly available worldwide in English, letting anyone upload an image, video or audio file to check for the company's imperceptible AI watermark. The detector now recognises SynthID content from partners as well as from Google itself, including OpenAI, Nvidia and Kakao, with Apple support planned. Google says it has watermarked more than 180 billion images and videos; the tool identifies only supported watermarks and is not described as a general AI detector.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "synthid",
+    "watermarking",
+    "provenance"
+  ],
+  "sources": [
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/synth-id-ai-content/",
+      "publishedAt": "2026-10-07T16:00:00Z"
+    },
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/10/google-rolls-out-improved-synthid-ai-content-detector-now-available-globally/",
+      "publishedAt": "2026-10-07T20:00:00Z"
+    },
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/tech/1006640/google-ai-content-detector-launch",
+      "publishedAt": "2026-10-07T16:15:00Z"
+    }
+  ]
+}

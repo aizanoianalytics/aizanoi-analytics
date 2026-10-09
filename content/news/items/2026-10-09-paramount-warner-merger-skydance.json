@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-paramount-warner-merger-skydance",
+  "kind": "daily",
+  "title": "Paramount completes its $111bn Warner Bros. Discovery takeover, creating Skydance",
+  "summary": "Paramount Skydance closed its roughly $110-111 billion acquisition of Warner Bros. Discovery on October 6, uniting two of Hollywood's oldest studios and handing chief executive David Ellison control of a group spanning movie studios, Paramount+ and HBO Max, CBS, CNN and live sports including CBS Sports and TNT Sports. The deal ends a contest with Netflix and resolves antitrust challenges; the merged company operates under the Skydance name.",
+  "category": "technology",
+  "priority": 72,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "media",
+    "merger",
+    "paramount",
+    "warner-bros"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/media-telecom/paramount-wraps-up-mega-warner-bros-merger-create-hollywood-powerhouse-skydance-2026-10-06/",
+      "publishedAt": "2026-10-06T13:00:00Z"
+    },
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/tech-policy/2026/10/paramount-completes-111b-warner-merger-creating-skydance-behemoth/",
+      "publishedAt": "2026-10-06T18:00:00Z"
+    },
+    {
+      "publisher": "Skydance",
+      "url": "https://www.skydance.com/news/press/paramount-completes-acquisition-of-warner-bros-discovery-creating-a-new-global-entertainment-leader-skydance",
+      "publishedAt": "2026-10-06T12:30:00Z"
+    }
+  ]
+}

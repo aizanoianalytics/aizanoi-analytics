@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-openai-revenue-below-estimates",
+  "kind": "daily",
+  "title": "OpenAI's annualised revenue reported about $20bn below earlier estimates",
+  "summary": "The Financial Times reported on October 8 that OpenAI has told investors its annualised revenue was approaching $50 billion at the end of September, roughly $20 billion below the about $70 billion figure that circulated in late September. The gap stems from how the earlier number was compiled: investors tried to benchmark OpenAI against Anthropic, which counts revenue from cloud partners such as AWS and Google Cloud while OpenAI does not. The report added to investor scrutiny of AI spending.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "revenue",
+    "artificial-intelligence",
+    "investors"
+  ],
+  "sources": [
+    {
+      "publisher": "Financial Times",
+      "url": "https://www.ft.com/content/b66a9858-f8fb-46cb-b506-44bfe26fca2a",
+      "publishedAt": "2026-10-08T16:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/08/openais-revenue-is-reportedly-20-billion-less-than-previously-projected/",
+      "publishedAt": "2026-10-08T18:19:00Z"
+    },
+    {
+      "publisher": "Reuters (via MarketScreener)",
+      "url": "https://ae.marketscreener.com/news/openai-s-annualized-revenue-20-billion-less-than-previously-signaled-ft-reports-ce785ddfdc89ff20",
+      "publishedAt": "2026-10-08T17:12:00Z"
+    }
+  ]
+}

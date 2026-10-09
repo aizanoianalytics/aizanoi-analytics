@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-09-anthropic-claude-dashboards-motion",
+  "kind": "daily",
+  "title": "Anthropic adds dashboards and animation tools to Claude and takes Docs and Slides out of beta",
+  "summary": "Anthropic on October 8 launched Claude Dashboards, a beta tool on paid plans that connects to business data and customer systems so users can build live dashboards from plain-language queries, and Claude Motion, a beta animation tool for Team and Enterprise customers that exports editable animations as video. The company also made Claude Docs, Slides and Design generally available across all plans including Free, widening its workplace-productivity suite.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-10-09T05:05:00Z",
+  "updatedAt": "2026-10-09T05:05:00Z",
+  "retrievedAt": "2026-10-09T05:04:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "claude",
+    "productivity",
+    "artificial-intelligence"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/technology/anthropic-launches-dashboard-animation-tools-claude-2026-10-08/",
+      "publishedAt": "2026-10-08T19:07:00Z"
+    },
+    {
+      "publisher": "Channel News Asia",
+      "url": "https://www.channelnewsasia.com/business/anthropic-launches-dashboard-animation-tools-claude-6444391",
+      "publishedAt": "2026-10-09T03:01:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://claude.com/resources/articles/dashboards-and-motion",
+      "publishedAt": "2026-10-08T19:01:00Z"
+    }
+  ]
+}
