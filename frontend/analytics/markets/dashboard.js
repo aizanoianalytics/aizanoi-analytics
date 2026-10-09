@@ -361,7 +361,10 @@ export function createMarketsDashboard(container, options = {}) {
         <a href="${esc(location.pathname)}?market=${esc(state.market)}&view=picks" data-nav="picks" aria-current="${state.view === 'picks' ? 'page' : 'false'}">Aizanoi Picks</a>
       </nav>
     </header>
-    <p class="market-error" data-error hidden></p>
+    <div class="market-error" data-error hidden role="alert">
+      <p data-error-message></p>
+      <button type="button" class="market-error-retry" data-market-retry>Try again</button>
+    </div>
     <div data-views></div>
   </div>`;
 
@@ -478,9 +481,28 @@ export function createMarketsDashboard(container, options = {}) {
 
   function showError(error) {
     const target = query('[data-error]');
+    const message = query('[data-error-message]');
     if (!target) return;
     target.hidden = false;
-    target.textContent = error.message;
+    if (message) {
+      message.textContent = 'Market data could not be loaded. Please try again.';
+      target.title = error?.message || '';
+    } else {
+      target.textContent = error?.message || 'Market data could not be loaded.';
+    }
+  }
+
+  function retryMarketLoad() {
+    const target = query('[data-error]');
+    if (target) target.hidden = true;
+    const skeleton = query('[data-skeleton]');
+    if (skeleton) skeleton.hidden = false;
+    loadMarket(state.market).then(() => {
+      if (skeleton) skeleton.hidden = true;
+    }).catch(error => {
+      if (skeleton) skeleton.hidden = true;
+      showError(error);
+    });
   }
 
   function selectRow(symbol) {
@@ -514,6 +536,11 @@ export function createMarketsDashboard(container, options = {}) {
     const exportTarget = event.target.closest('[data-export-csv]');
     if (exportTarget) {
       exportTableCsv();
+      return;
+    }
+    const retryTarget = event.target.closest('[data-market-retry]');
+    if (retryTarget) {
+      retryMarketLoad();
       return;
     }
     const modeTarget = event.target.closest('[data-price-mode]');

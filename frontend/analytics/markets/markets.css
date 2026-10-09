@@ -107,7 +107,35 @@ button, input, select { font: inherit; }
   border-color: var(--blue);
 }
 
-.market-error { color: var(--down); margin: 0; padding: 12px 16px; border-radius: 14px; background: #fef2f5; border: 1px solid #f3c7d2; }
+.market-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--down);
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: #fef2f5;
+  border: 1px solid #f3c7d2;
+}
+
+.market-error p { margin: 0; }
+
+.market-error-retry {
+  flex: 0 0 auto;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.market-error-retry:hover,
+.market-error-retry:focus-visible { background: rgb(181 44 71 / 0.08); }
 
 .market-main, .market-picks-view { display: grid; gap: 28px; }
 .market-main > *, .market-picks-view > * { min-width: 0; max-width: 100%; }
