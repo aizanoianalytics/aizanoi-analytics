@@ -29,10 +29,13 @@ test('canonical registry loads Labs only through its public module entry', async
 
 test('Labs presents the Grok 4.6 Fast prompt-and-video workspace', () => {
   assert.match(privateApp, /Grok 4\.6 Fast/);
+  assert.match(privateApp, /Step 5 Preview/);
+  assert.match(privateApp, /data-workspace-tab/);
   assert.match(privateApp, /data-labs-prompt/);
   assert.match(privateApp, /data-labs-video/);
-  assert.match(privateApp, /data-video-slot/);
+  assert.match(privateApp, /roman-history\.mp4/);
   assert.match(privateApp, /istanbul-fethi-1453\.mp4/);
+  assert.match(privateApp, /roman-history-prompt\.md/);
   assert.match(privateApp, /istanbul-fethi-prompt\.md/);
 });
 
