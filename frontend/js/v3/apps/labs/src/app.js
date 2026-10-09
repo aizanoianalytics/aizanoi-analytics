@@ -27,7 +27,7 @@ function renderWorkspace() {
       <article class="az-labs-panel az-labs-video-panel">
         <div class="az-labs-panel-heading"><div><p class="az-kicker">ATTACHMENT</p><h2>Reference video</h2></div><span class="az-labs-file-state">Attached · MP4</span></div>
         <div class="az-labs-video-slot" data-video-slot>
-          <video data-labs-video src="/js/v3/apps/labs/assets/roman-history.mp4" controls playsinline preload="metadata"></video>
+          <video data-labs-video src="/js/v3/apps/labs/assets/istanbul-fethi-1453.mp4" controls playsinline preload="metadata"></video>
           <div class="az-labs-video-empty" hidden><span class="az-labs-video-mark" aria-hidden="true">▶</span><strong>Video will appear here</strong><span>Send the video file to attach it to this experiment.</span></div>
         </div>
         <p class="az-labs-hint">One video attachment slot is reserved for the supplied file.</p>
@@ -51,7 +51,7 @@ export function createLabsApp({ apps }) {
       const promptField = container.querySelector('[data-labs-prompt]');
       const promptStatus = container.querySelector('.az-labs-status');
       const controller = new AbortController();
-      fetch('/js/v3/apps/labs/assets/roman-history-prompt.md', { signal: controller.signal })
+      fetch('/js/v3/apps/labs/assets/istanbul-fethi-prompt.md', { signal: controller.signal })
         .then((response) => { if (!response.ok) throw new Error(`Prompt request failed: ${response.status}`); return response.text(); })
         .then((prompt) => { promptField.value = prompt; promptStatus.textContent = 'Loaded'; })
         .catch((error) => { if (error.name !== 'AbortError') promptStatus.textContent = 'Unavailable'; });
