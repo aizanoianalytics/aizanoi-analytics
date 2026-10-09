@@ -789,6 +789,10 @@
 
   /* Labs: prepared Grok prompt and one explicit video attachment surface. */
   .az-labs-shell { height:100%;min-height:0;overflow:hidden;background:linear-gradient(145deg,#f5f7ff,#edf3fb 58%,#f8f0ec); color:#1e2a42; }
+  .az-labs-switcher { display:flex; flex-wrap:wrap; gap:8px; padding:14px clamp(20px,3vw,34px) 0; }
+  .az-labs-switcher .az-button { min-height:36px; font-size:11px; }
+  .az-labs-switcher .az-button.is-active { background:#5265db; border-color:#5265db; color:#fff; }
+  .az-labs-workspace[hidden] { display:none; }
   .az-labs-workspace { flex:1;min-height:0;overflow:auto;padding:clamp(20px,3vw,34px); }
   .az-labs-hero { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; padding-bottom:22px; border-bottom:1px solid rgba(58,76,119,.14); }
   .az-labs-hero h1 { margin:5px 0 7px; font:760 clamp(28px,4vw,44px)/.98 var(--az-font-ui); letter-spacing:-.055em; }
