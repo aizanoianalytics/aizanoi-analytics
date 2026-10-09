@@ -120,6 +120,8 @@ button, input, select { font: inherit; }
   border: 1px solid #f3c7d2;
 }
 
+.market-error[hidden] { display: none; }
+
 .market-error p { margin: 0; }
 
 .market-error-retry {
