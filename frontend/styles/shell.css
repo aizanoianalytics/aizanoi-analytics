@@ -548,7 +548,7 @@
     letter-spacing:.08em;
   }
   .az-window[data-app-id="winamp"] .az-winamp-brand strong { font-size:13px;letter-spacing:.14em; }
-  .az-window[data-app-id="winamp"] .az-winamp-brand span { color:#8fa2bb;letter-spacing:0; }
+  .az-window[data-app-id="winamp"] .az-winamp-brand span { color:#a8b8ce;letter-spacing:0; }
 
 
   /* Recycle Bin uses one clean toolbar inside the OS window. */

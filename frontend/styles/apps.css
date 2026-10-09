@@ -486,7 +486,7 @@
   .az-winamp-item { display:flex;gap:8px;width:100%;padding:7px 10px;border:0;background:transparent;color:#c8f9e2;font:12.5px var(--az-font-ui);text-align:left;cursor:pointer;border-radius:8px; }
   .az-winamp-item:hover { background:rgba(74,222,128,.12); }
   .az-winamp-item.is-active { background:rgba(74,222,128,.18);font-weight:700; }
-  .az-winamp-empty { padding:10px;color:#5f7a6d;font-size:12px; }
+  .az-winamp-empty { padding:10px;color:#a8b8ce;font-size:12px; }
 
   /* Blockfall */
   .az-blockfall { display:flex;gap:14px;align-items:flex-start;justify-content:center; }
