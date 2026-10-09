@@ -18,10 +18,13 @@ test('Aizanoi Labs opens as a desktop shortcut with the Grok workspace', async (
     await app.locator('.az-labs-workspace').waitFor();
     assert.equal(await app.getByRole('heading', { name: 'Grok 4.6 Fast' }).count(), 1);
     await app.locator('[data-labs-prompt]').waitFor();
-    await page.waitForFunction(() => document.querySelector('[data-labs-prompt]')?.value.length > 1000);
-    assert.ok((await app.locator('[data-labs-prompt]').inputValue()).includes('The Rise of Rome'));
+    await page.waitForFunction(() => document.querySelector('[data-labs-prompt]')?.value.length > 80);
+    assert.equal(await app.locator('[data-labs-prompt]').inputValue(), 'Create a video depicting the Conquest of Istanbul using HTML, JavaScript, SVG, GSAP, and other related web technologies.');
     assert.equal(await app.locator('[data-video-slot]').count(), 1);
-    assert.match(await app.locator('[data-labs-video]').getAttribute('src'), /roman-history\.mp4$/);
+    assert.match(await app.locator('[data-labs-video]').getAttribute('src'), /istanbul-fethi-1453\.mp4$/);
+    const videoResponse = await page.request.get(`${base}/js/v3/apps/labs/assets/istanbul-fethi-1453.mp4`);
+    assert.equal(videoResponse.status(), 200);
+    assert.match(videoResponse.headers()['content-type'], /video\/mp4/);
     assert.equal(await app.locator('.az-empty-state').count(), 0);
     assert.deepEqual(errors, []);
   } finally {
