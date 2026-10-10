@@ -1141,8 +1141,12 @@ export class GameScene extends Phaser.Scene {
       // Son bölüm bitti -> Zafer Ekranı!
       this.progression.currentChapter = LEVELS.length - 1;
       this.progression.save();
-      this.scene.stop('UIScene');
-      this.scene.start('VictoryScene');
+      // Deterministic handoff at the game-manager level: a scene-local
+      // stop/start from inside GameScene can be swallowed while the scene is
+      // mid-operation, leaving VictoryScene pending with zero children.
+      this.game.scene.stop('UIScene');
+      this.game.scene.stop('GameScene');
+      this.game.scene.start('VictoryScene');
     } else {
       // Sonraki bölüme geç
       this.chapterIndex++;

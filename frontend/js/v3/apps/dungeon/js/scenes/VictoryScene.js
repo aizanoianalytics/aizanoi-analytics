@@ -59,11 +59,13 @@ export class VictoryScene extends Phaser.Scene {
 
     // Butonlar
     createGlassButton(this, width / 2, panelY + panelH + 30, 260, 40, 'Enter the Endless Pantheon', () => {
-      this.scene.start('GameScene', { chapterIndex: LEVELS.length - 1, isEndless: true });
+      this.game.scene.stop('VictoryScene');
+      this.game.scene.start('GameScene', { chapterIndex: LEVELS.length - 1, isEndless: true });
     });
 
     createGlassButton(this, width / 2, panelY + panelH + 80, 260, 40, 'Main menu', () => {
-      this.scene.start('MenuScene');
+      this.game.scene.stop('VictoryScene');
+      this.game.scene.start('MenuScene');
     });
   }
 
