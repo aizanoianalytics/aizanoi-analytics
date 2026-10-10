@@ -1043,7 +1043,12 @@ export class GameScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
     const overlay = this.add.container(width / 2, height / 2).setDepth(700).setScrollFactor(0);
     const dim = this.add.rectangle(0, 0, width, height, 0x000000, 0.7).setInteractive();
-    const panel = this.add.rectangle(0, 0, 420, 270, 0x141822, 0.98).setStrokeStyle(2, 0xf5d77f);
+    // The blessing panel reuses the loaded panel/button skins so it speaks the
+    // same authored language as the rest of the HUD. The tint darkens the light
+    // panel-bg art into the crypt palette instead of drawing a generic rectangle.
+    const panel = this.textures.exists('panel-bg')
+      ? this.add.image(0, 0, 'panel-bg').setDisplaySize(420, 300).setTint(0x2a3550)
+      : this.add.rectangle(0, 0, 420, 270, 0x141822, 0.98).setStrokeStyle(2, 0xf5d77f);
     const title = this.add.text(0, -100, 'ROOM BLESSING', { fontSize: '22px', color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
     const hint = this.add.text(0, -70, 'Pick one (1 / 2 / 3)', { fontSize: '14px', color: '#d1d5db' }).setOrigin(0.5);
     overlay.add([dim, panel, title, hint]);
@@ -1062,7 +1067,9 @@ export class GameScene extends Phaser.Scene {
     const keyHandlers = choices.map((choice, index) => () => choose(index));
     choices.forEach((choice, index) => {
       const y = -25 + index * 55;
-      const button = this.add.rectangle(0, y, 340, 42, 0x243047, 1).setStrokeStyle(1, 0x718096).setInteractive({ useHandCursor: true });
+      const button = this.textures.exists('button-normal')
+        ? this.add.image(0, y, 'button-normal').setDisplaySize(340, 42).setTint(0x243047).setInteractive({ useHandCursor: true })
+        : this.add.rectangle(0, y, 340, 42, 0x243047, 1).setStrokeStyle(1, 0x718096).setInteractive({ useHandCursor: true });
       const label = this.add.text(0, y, `${index + 1}. ${choice.label}`, { fontSize: '16px', color: '#ffffff' }).setOrigin(0.5);
       button.on('pointerdown', () => choose(index));
       overlay.add([button, label]);
