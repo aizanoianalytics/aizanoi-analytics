@@ -137,10 +137,13 @@ export class UIScene extends Phaser.Scene {
       { key: 'dash', testKey: 'shift', label: 'SHFT', x: cx + 104, name: 'Dash', accent: 0x7dd3fc },
     ];
     defs.forEach((def) => {
-      const box = this.add.rectangle(def.x, cy, 46, 46, 0x0f1624, 0.9).setStrokeStyle(2, 0xc5a059);
+      const skin = this.textures.exists('slot-empty')
+        ? this.add.image(def.x, cy, 'slot-empty').setDisplaySize(40, 40)
+        : null;
+      const box = this.add.rectangle(def.x, cy, 46, 46, 0x0f1624, skin ? 0 : 0.9).setStrokeStyle(2, 0xc5a059);
       this.add.text(def.x, cy - 8, def.label, { fontSize: px(readable(13)), color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
       const cd = this.add.text(def.x, cy + 10, 'RDY', { fontSize: px(readable(9)), color: '#3dcea8', fontStyle: 'bold' }).setOrigin(0.5);
-      this.abilitySlots[def.key] = { box, cd, accent: def.accent };
+      this.abilitySlots[def.key] = { box, skin, cd, accent: def.accent };
     });
   }
 
@@ -152,9 +155,11 @@ export class UIScene extends Phaser.Scene {
     // only ever the ready-state signal.
     const accent = slot.accent ?? 0xc5a059;
     if (ready) {
+      slot.skin?.setTexture('slot-filled');
       slot.cd.setText('RDY').setColor('#3dcea8');
       slot.box.setStrokeStyle(2, accent);
     } else {
+      slot.skin?.setTexture('slot-empty');
       slot.cd.setText(`${seconds}s`).setColor('#f07186');
       slot.box.setStrokeStyle(2, 0x5a3a48);
     }
