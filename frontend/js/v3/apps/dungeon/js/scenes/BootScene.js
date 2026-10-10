@@ -140,11 +140,17 @@ export class BootScene extends Phaser.Scene {
     // Queue the handoff one tick later. Phaser's loader can finish its final
     // DOM image callback while the scene manager is still inside `create()`;
     // changing scene state synchronously there can be ignored by the manager.
-    setTimeout(() => {
-      if (!this.scene || !this.sys) return;
-      this.game.scene.stop('BootScene');
-      this.game.scene.start('MenuScene');
-    }, 0);
+    const handoff = () => {
+      if (!this.game?.scene) return;
+      const manager = this.game.scene;
+      if (manager.isActive('MenuScene')) return;
+      try { manager.stop('BootScene'); } catch (_) {}
+      try { manager.run('MenuScene'); } catch (_) {}
+    };
+    // Retry once after Phaser commits the loader's final frame. Some browsers
+    // ignore the first scene-manager mutation while create() is unwinding.
+    setTimeout(handoff, 0);
+    setTimeout(handoff, 80);
     // Audio is an enhancement, never a boot dependency. Starting it after the
     // scene transition keeps Phaser's critical image queue deterministic.
     const ASSET_BASE = new URL('../../assets/', import.meta.url).href;
