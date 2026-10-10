@@ -72,14 +72,16 @@ export class MenuScene extends Phaser.Scene {
 
     if (savedChapter > 1 && savedChapter <= 10) {
       const continueAction = () => {
-        this.scene.start('GameScene', { chapterIndex: savedChapter - 1, isEndless: false });
+        this.game.scene.stop('MenuScene');
+        this.game.scene.start('GameScene', { chapterIndex: savedChapter - 1, isEndless: false });
       };
       this._primaryAction = () => this._startOnce(continueAction);
       createGlassButton(this, width / 2, btnStartY, buttonWidth, buttonHeight, `Continue (Chapter ${savedChapter})`, () => this._startOnce(continueAction));
       btnStartY += btnSpacing;
 
       createGlassButton(this, width / 2, btnStartY, buttonWidth, buttonHeight, 'Restart Chapter 1 (keep gear)', () => this._startOnce(() => {
-        this.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
+        this.game.scene.stop('MenuScene');
+        this.game.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
       }));
       btnStartY += btnSpacing;
 
@@ -94,7 +96,8 @@ export class MenuScene extends Phaser.Scene {
       btnStartY += btnSpacing;
     } else {
       const storyAction = () => {
-        this.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
+        this.game.scene.stop('MenuScene');
+        this.game.scene.start('GameScene', { chapterIndex: 0, isEndless: false });
       };
       this._primaryAction = () => this._startOnce(storyAction);
       createGlassButton(this, width / 2, btnStartY, 260, 40, 'Story — 10 chapters', () => this._startOnce(storyAction));
@@ -102,7 +105,8 @@ export class MenuScene extends Phaser.Scene {
     }
 
     createGlassButton(this, width / 2, btnStartY, buttonWidth, buttonHeight, 'Endless Pantheon', () => this._startOnce(() => {
-      this.scene.start('GameScene', { chapterIndex: LEVELS.length - 1, isEndless: true });
+      this.game.scene.stop('MenuScene');
+      this.game.scene.start('GameScene', { chapterIndex: LEVELS.length - 1, isEndless: true });
     }));
     btnStartY += btnSpacing;
 
