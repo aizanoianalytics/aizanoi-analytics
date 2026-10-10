@@ -99,7 +99,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     // A sprite rim works at native pixel scale where a soft ellipse disappears
     // against a dark wall: the duplicate is one pixel larger and only its
-    // exposed edge shows around the silhouette.
+    // exposed edge shows around the silhouette. The rim follows the frame so
+    // an animating enemy keeps it, and it moves with the sprite below.
     this.readabilitySprite = null;
     try {
       const rimColor = typeConfig.isFinalBoss ? 0xffd67d : (typeConfig.behavior === 'ranged_kite' || typeConfig.behavior === 'ranged_aoe' ? 0x8fc6e8 : 0xbda6d5);
@@ -110,6 +111,26 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         .setDepth(8.5)
         .setBlendMode(Phaser.BlendModes.ADD);
     } catch (_) { this.readabilitySprite = null; }
+
+    // The permanent threat pip: a 3px bright key above every non-boss enemy.
+    // A soft rim reads as character detail in a dark room; a hard key dot is
+    // what actually answers "is that thing alive and hostile?" at speed.
+    // It stays visible whether the enemy is inside or outside a light pool.
+    this.threatPip = null;
+    if (!typeConfig.isFinalBoss) {
+      const pipColor = typeConfig.isMiniBoss ? 0xd88943 : 0xc33f3a;
+      if (typeof scene.add.rectangle === 'function') {
+        this.threatPip = scene.add.rectangle(x, y - (this.isBoss ? 46 : 20), 2, 2,
+          pipColor, typeConfig.isMiniBoss ? 0.58 : 0.38);
+        this.threatPip.setDepth(8.6);
+        this.threatPip.setBlendMode(Phaser.BlendModes.ADD);
+      } else {
+        // Headless combat tests intentionally provide only the minimal display
+        // stub; keep the gameplay object valid without weakening the browser
+        // path, which always has Phaser's rectangle factory.
+        this.threatPip = { active: false, setPosition() {}, destroy() {} };
+      }
+    }
 
     // Elit aurası: affix renginde nabız gibi atan hale — neyle karşılaştığın belli olsun
     this.eliteGlow = null;
@@ -201,6 +222,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.readabilitySprite && this.readabilitySprite.active) {
       this.readabilitySprite.setPosition(this.x, this.y);
       this.readabilitySprite.setFrame(this.frame.name);
+    }
+    if (this.threatPip && this.threatPip.active) {
+      this.threatPip.setPosition(this.x, this.y - (this.isBoss ? 46 : 20));
     }
 
     // Geri tepme: kisa sure hareket AI durur, itme velocity korunur
@@ -987,6 +1011,10 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.readabilitySprite) {
       this.readabilitySprite.destroy();
       this.readabilitySprite = null;
+    }
+    if (this.threatPip) {
+      this.threatPip.destroy();
+      this.threatPip = null;
     }
     super.preDestroy();
   }
