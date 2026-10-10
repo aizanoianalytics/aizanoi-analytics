@@ -92,7 +92,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.readabilityRing = null;
     try {
       const ringColor = typeConfig.isFinalBoss ? 0xf0c878 : (typeConfig.behavior === 'ranged_kite' || typeConfig.behavior === 'ranged_aoe' ? 0x8fc6e8 : 0xc7b7d8);
-      this.readabilityRing = scene.add.ellipse(x, y, this.isBoss ? 92 : 38, this.isBoss ? 92 : 38, ringColor, this.isBoss ? 0.17 : 0.14);
+      this.readabilityRing = scene.add.ellipse(x, y, this.isBoss ? 92 : 38, this.isBoss ? 92 : 38, ringColor, this.isBoss ? 0.26 : 0.20);
       this.readabilityRing.setDepth(8);
       this.readabilityRing.setBlendMode(Phaser.BlendModes.SCREEN);
     } catch (_) { this.readabilityRing = null; }
@@ -107,7 +107,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.readabilitySprite = scene.add.sprite(x, y, texture, initialFrame)
         .setScale(this.scaleX * 1.10, this.scaleY * 1.10)
         .setTint(rimColor)
-        .setAlpha(this.isBoss ? 0.36 : 0.44)
+        .setAlpha(this.isBoss ? 0.50 : 0.60)
         .setDepth(8.5)
         .setBlendMode(Phaser.BlendModes.ADD);
     } catch (_) { this.readabilitySprite = null; }
