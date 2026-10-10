@@ -1071,6 +1071,24 @@ export class GameScene extends Phaser.Scene {
         ? this.add.image(0, y, 'button-normal').setDisplaySize(340, 42).setTint(0x243047).setInteractive({ useHandCursor: true })
         : this.add.rectangle(0, y, 340, 42, 0x243047, 1).setStrokeStyle(1, 0x718096).setInteractive({ useHandCursor: true });
       const label = this.add.text(0, y, `${index + 1}. ${choice.label}`, { fontSize: '16px', color: '#ffffff' }).setOrigin(0.5);
+      // The authored hover/pressed skins give the choice the same press feel as
+      // the menu buttons. The texture guard keeps headless runs working: when
+      // the images are absent the stroke colour is used instead.
+      button.on('pointerover', () => {
+        if (this.textures.exists('button-hover')) button.setTexture('button-hover');
+        else button.setStrokeStyle(1.5, 0x718096);
+        label.setColor('#f5d77f');
+      });
+      button.on('pointerout', () => {
+        if (this.textures.exists('button-normal')) button.setTexture('button-normal').setTint(0x243047);
+        else button.setStrokeStyle(1, 0x243047);
+        label.setColor('#ffffff');
+      });
+      button.on('pointerdown', () => {
+        if (this.textures.exists('button-pressed')) button.setTexture('button-pressed');
+        else button.setStrokeStyle(2, 0x1a2338);
+        label.setColor('#0b1220');
+      });
       button.on('pointerdown', () => choose(index));
       overlay.add([button, label]);
       this.input.keyboard.on(keyEvents[index], keyHandlers[index]);
