@@ -69,6 +69,8 @@ export class GameScene extends Phaser.Scene {
   create() {
     this.isTransitioning = false;
     this.settings = loadSettings();
+    this.braziers = [];
+    this.brazierClock = 0;
     this.recallChannel = 0;
     if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = 'GameScene';
     // 1. Sistemleri başlat
@@ -127,6 +129,13 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, this.mapData.width * 32, this.mapData.height * 32);
     this.physics.world.setBounds(0, 0, this.mapData.width * 32, this.mapData.height * 32);
 
+    // Point lights are attached to the objects that move: the player carries
+    // the warm temple torch, the portal keeps its own cold glow.
+    this.playerLight = this.addLight(this.player, 0xd8cbb0, 0.26, 170);
+    if (this.exitPortal) {
+      this.portalLight = this.addLight(this.exitPortal, 0x7f8cff, 0.30, 190);
+    }
+
     // 9. Çarpışmalar (Collisions)
     this.physics.add.collider(this.player, this.wallLayer);
     this.physics.add.collider(this.enemies, this.wallLayer);
@@ -159,12 +168,34 @@ export class GameScene extends Phaser.Scene {
     // 11. Dokunmatik Kontroller
     this.touchControls = new TouchControls(this);
 
-    // 12. Paralel HUD Sahnesini ve Ortam Müziğini Başlat
-    this.scene.launch('UIScene', { gameScene: this });
+    // Phaser can ignore a parallel scene launch while GameScene is still
+    // completing create(). Defer the HUD handoff one tick so the scene manager
+    // has committed GameScene before starting UIScene.
+    setTimeout(() => {
+      if (this.scene.isActive('GameScene') && !this.scene.isActive('UIScene')) {
+        this.game.scene.start('UIScene', { gameScene: this });
+      }
+    }, 0);
     audioManager.startAmbientDrone();
 
     // 12b. Görsel katman: vignette + portal nabzı + bölüm kartı
     if (this.settings?.effects !== 'reduced') this.addVignette();
+
+    // The firelights are added here rather than in renderMap(): the braziers
+    // are placed during step 7, so a light created earlier would reference an
+    // empty list and silently never be added. Phaser 3.80's LightsManager keeps
+    // lights in a plain array with no upper cap, so the count is the only thing
+    // that matters, and this is after every brazier exists.
+    this.fireLights = [];
+    for (const brazier of this.braziers) {
+      const light = this.addLightAt(brazier.x, brazier.y, 210, 0xcf8b46, 0.45);
+      if (light) this.fireLights.push(light);
+    }
+    if (this.exitPortal) {
+      const portalLight = this.addLightAt(this.exitPortal.x, this.exitPortal.y, 180, 0x8e9cff, 0.38);
+      if (portalLight) this.fireLights.push(portalLight);
+    }
+
     this.showChapterCard();
     try {
       if (this.exitPortal) {
@@ -250,8 +281,11 @@ export class GameScene extends Phaser.Scene {
     // without touching a single asset.
     this.floorLayer?.setDepth(0);
     this.wallLayer?.setDepth(0);
+    // Keep the chapter identity as a restrained colour wash. A 55% fog layer
+    // over a dark palette crushes the authored floor values into near-black;
+    // at 18% it separates the room without erasing material detail.
     this.chapterHaze = this.add
-      .rectangle(0, 0, w, h, pal.fog, 0.55)
+      .rectangle(0, 0, w, h, pal.fog, 0.18)
       .setOrigin(0)
       .setDepth(0.5);
 
@@ -265,12 +299,18 @@ export class GameScene extends Phaser.Scene {
     // difference survives even where the wash is behind the actors.
     this.appliedFloorTint = this.mixToward(pal.floor, pal.accent, 0.18);
     this.appliedWallTint = this.mixToward(pal.wall, pal.fog, 0.25);
+    // Phaser's tint is multiplicative. Chapter source colours are intentionally
+    // dark atmospheric colours, so applying them raw would turn a pale marble
+    // floor into charcoal. Lift the mixed colour toward neutral white while
+    // preserving its hue; material contrast remains authored in the tileset.
+    this.appliedFloorTint = this.liftTint(this.appliedFloorTint, 0.70);
+    this.appliedWallTint = this.liftTint(this.appliedWallTint, 0.54);
     this.floorLayer?.setTint(this.appliedFloorTint);
     this.wallLayer?.setTint(this.appliedWallTint);
 
     this.cameras.main?.setBackgroundColor?.(pal.fog);
     this.chapterPalette = pal;
-    this.chapterWashAlpha = 0.55;
+    this.chapterWashAlpha = 0.18;
     this.chapterAccentAlpha = 0.16;
     return pal;
   }
@@ -283,6 +323,31 @@ export class GameScene extends Phaser.Scene {
     const g = Math.round(ag + (bg - ag) * t);
     const bl = Math.round(ab + (bb - ab) * t);
     return (r << 16) | (g << 8) | bl;
+  }
+
+  /** Lift a tint toward white because Phaser multiplies tint channels. */
+  liftTint(value, amount) {
+    const r = (value >> 16) & 0xff; const g = (value >> 8) & 0xff; const b = value & 0xff;
+    const lift = (channel) => Math.round(channel + (0xff - channel) * amount);
+    return (lift(r) << 16) | (lift(g) << 8) | lift(b);
+  }
+
+  /** Add a static point light at a world position. */
+  addLightAt(x, y, radius, color, intensity) {
+    try {
+      return this.lights.addLight(x, y, radius, color, intensity);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /** Add a point light that follows its owner. */
+  addLight(target, color, intensity, radius) {
+    try {
+      return this.lights.addLight(target, radius, color, intensity);
+    } catch (_) {
+      return null;
+    }
   }
 
   renderMap() {
@@ -323,12 +388,30 @@ export class GameScene extends Phaser.Scene {
 
     this.applyChapterPalette();
 
-    this.wallLayer.setCollisionByExclusion([-1]);
-    // High-contrast read: koyu mat zemin (düşmanlar öne çıkar) + soğuk duvar.
-    // Eskiden zemin 0xf6e7c4 idi — her yer krem olduğu için düşman kayboluyordu.
-    this.floorLayer.setTint(0xcdb488);
-    this.wallLayer.setTint(0x1b2744);
+    // Real local lighting on the tilemap. Phaser 3.80 ships LightsManager, so
+    // a scene-level lights object exists and can light sprites individually.
+    // A low charcoal-blue fill keeps unlit corners readable while preserving
+    // the fire-led hierarchy; near-black ambient turns the dungeon into void.
+    if (this.lights?.enable) {
+      this.lights.enable();
+      this.lights.setAmbientColor(0x24262b);
+    }
 
+    // The layers that must receive light go on the Light2D pipeline. Everything
+    // that is NOT on that pipeline (actors, HUD, effects) renders above the
+    // light texture and is therefore never darkened by it.
+    // The dressing is lit too: an unlit column in a lit room reads as a dark
+    // rectangle pasted on top, which is exactly the "sprite over background"
+    // look that separates amateur from production art.
+    this.floorLayer.setPipeline('Light2D');
+    this.wallLayer.setPipeline('Light2D');
+    // The hero props are placed later in create(); they are registered with
+    // the pipeline at creation time in placeRoomDressing().
+
+    this.wallLayer.setCollisionByExclusion([-1]);
+    // The authored tileset already carries the material contrast; a second
+    // hard-coded tint here would overwrite the chapter palette and darken it.
+    // Chapter colour is applied once above in applyChapterPalette().
     // Duvar üst kenarına 2px pirinç highlight: derinlik hissi
     try {
       const hl = this.add.graphics().setDepth(4);
@@ -345,8 +428,16 @@ export class GameScene extends Phaser.Scene {
     // Sparse, deterministic 32px mosaic fragments. The decor asset is a
     // spritesheet: rendering the unsliced 160×96 atlas used to carpet rooms
     // with giant inventory-board rectangles and destroy combat readability.
+    //
+    // Room-authored dressing: each room gets (a) a small scatter of ground
+    // fragments and (b) one hero prop placed near the room's centre line. The
+    // hero prop is what makes a room read as an authored temple rather than a
+    // bounding box: a fallen column or an amphora at the heart of a hall gives
+    // the camera a focal point and the player something to move around. Both
+    // are placed deterministically so a reload never reshuffles the level.
     try {
       const safeFrames = [0, 1, 2, 5, 6, 7];
+      const heroFrames = [0, 1, 3, 4, 6, 9];
       for (const room of this.mapData.rooms || []) {
         const decals = Math.max(1, Math.floor((room.w * room.h) * 0.025));
         for (let i = 0; i < decals; i++) {
@@ -358,17 +449,81 @@ export class GameScene extends Phaser.Scene {
               .setDepth(1)
               .setAlpha(0.32 + decorNoise(dx, dy, i * 5 + 4) * 0.22)
               .setRotation(Math.floor(decorNoise(dx, dy, i * 5 + 5) * 4) * Math.PI / 2)
-              .setScale(0.72 + decorNoise(dx, dy, i * 5 + 6) * 0.2);
+              .setScale(0.72 + decorNoise(dx, dy, i * 5 + 6) * 0.2)
+              .setPipeline('Light2D');
             // Mosaic fragments take the chapter's accent, so the decoration is
             // part of the chapter's colour scheme rather than a constant.
             d.setTint(this.chapterPalette?.accent ?? 0xd8c18d);
+          }
+        }
+
+        // One hero prop per room. It lands on the room's centre tile rather
+        // than a random cell: a room's centreline is where the eye already
+        // rests, so the prop reads as the room's focal point instead of a
+        // random scattered sprite.
+        const hx = room.x + Math.floor(room.w / 2);
+        const hy = room.y + Math.floor(room.h / 2);
+        if (this.mapData.grid[hy] && this.mapData.grid[hy][hx] !== 2) {
+          const frame = heroFrames[Math.floor(decorNoise(room.x, room.y, 993) * heroFrames.length)];
+          const prop = this.add.image(hx * 32 + 16, hy * 32 + 16, 'tiles-decor', frame)
+            .setDepth(3)
+            .setAlpha(0.92)
+            .setPipeline('Light2D');
+          // Props are stone, not magic: they take the wall stone tint so they
+          // read as architecture instead of glowing decoration.
+          prop.setTint(this.appliedWallTint ?? 0xb8b2a6);
+          // A drop contact shadow so the prop sits ON the floor.
+          const propShadow = this.add.ellipse(prop.x, prop.y + 13, 22, 7, 0x000000, 0.3);
+          propShadow.setDepth(2.9);
+        }
+        // Wall-aligned braziers: a room's silhouette is defined by its walls,
+        // so a light source at the wall is the one dressing that reads as
+        // architecture rather than decoration. One per room, placed on the
+        // first free floor tile that touches a wall.
+        let brazier = null;
+        for (let by = room.y; by < room.y + room.h && !brazier; by++) {
+          for (let bx = room.x; bx < room.x + room.w; bx++) {
+            if (this.mapData.grid[by]?.[bx] === 2) continue;
+            const touchesWall =
+              this.mapData.grid[by]?.[bx - 1] === 2 || this.mapData.grid[by]?.[bx + 1] === 2 ||
+              this.mapData.grid[by - 1]?.[bx] === 2 || this.mapData.grid[by + 1]?.[bx] === 2;
+            if (!touchesWall) continue;
+            // Frames 0-3 are the brazier flicker. The tile is authored dark so
+            // the flame reads without tint; the glow carries the chapter hue.
+            brazier = this.add.sprite(bx * 32 + 16, by * 32 + 16, 'tiles-lights', 0)
+              .setDepth(3.2)
+              .setScale(1.0);
+            this.brazierTimer = this.brazierTimer || null;
+            brazier.brazierFrame = 0;
+            this.braziers.push(brazier);
+            // Three low-alpha pools approximate a radial falloff with Phaser's
+            // primitive API: broad amber ambience, a tighter middle, then a
+            // hot patch under the bowl. A single opaque circle reads as a decal.
+            const glowOuter = this.add.ellipse(bx * 32 + 16, by * 32 + 16, 128, 128,
+              this.chapterPalette?.accent ?? 0xc5a059, 0.035).setDepth(2.6);
+            const glowMid = this.add.ellipse(bx * 32 + 16, by * 32 + 16, 88, 88,
+              this.chapterPalette?.accent ?? 0xc5a059, 0.045).setDepth(2.7);
+            const glowHot = this.add.ellipse(bx * 32 + 16, by * 32 + 16, 52, 52,
+              0xf0a84c, 0.065).setDepth(2.8);
+            glowOuter.setBlendMode(Phaser.BlendModes.ADD);
+            glowMid.setBlendMode(Phaser.BlendModes.ADD);
+            glowHot.setBlendMode(Phaser.BlendModes.ADD);
+            this.tweens.add({
+              targets: [brazier, glowOuter, glowMid, glowHot],
+              alpha: { from: 0.62, to: 1.0 },
+              duration: 620,
+              yoyo: true,
+              repeat: -1,
+              ease: 'Sine.easeInOut',
+            });
+            break;
           }
         }
       }
     } catch (_) {}
   }
 
-  // Vignette: ekran kenarlarını karart, odağı ortaya topla (Brotato derinliği)
+  // Vignette: ekran kenarlarını karart, odağı ortaya topla (derinlik hissi)
   addVignette() {
     try {
       const { width, height } = this.cameras.main;
@@ -397,16 +552,26 @@ export class GameScene extends Phaser.Scene {
 
   // Ölüm patlaması: taş-kül parçacıkları + şok halkası (reduced modda yarım)
   spawnDeathBurst(x, y, isBoss = false) {
+    // Death bursts share the same live-effect budget as damage sparks so a
+    // wave clearing ten enemies at once cannot double the screen's additive
+    // load. The burst is thinned, never silently dropped, and the ring keeps
+    // its own slot because it is the clearest "something died here" signal.
+    this.impactFxCount = this.impactFxCount || 0;
+    let budget = Math.max(0, 6 - this.impactFxCount);
     try {
       const reduced = this.settings?.effects === 'reduced';
       let count = isBoss ? 14 : 6 + Math.floor(Math.random() * 5);
       if (reduced) count = Math.ceil(count / 2);
+      count = Math.min(count, budget);
       for (let i = 0; i < count; i++) {
-        const p = this.add.sprite(x, y, 'effects', 16 + (i % 4)).setDepth(20);
+        this.impactFxCount += 1;
+        const ember = this.add.sprite(x, y, 'tiles-impacts', 1).setDepth(20);
+        ember.setScale(0.4 + Math.random() * 0.3);
+        ember.setBlendMode(Phaser.BlendModes.ADD);
         const angle = Math.random() * Math.PI * 2;
         const dist = 24 + Math.random() * (isBoss ? 90 : 48);
         this.tweens.add({
-          targets: p,
+          targets: ember,
           x: x + Math.cos(angle) * dist,
           y: y + Math.sin(angle) * dist,
           alpha: 0,
@@ -414,19 +579,32 @@ export class GameScene extends Phaser.Scene {
           scaleY: 0.2,
           duration: 320 + Math.random() * 200,
           ease: 'Quad.easeOut',
-          onComplete: () => p.destroy(),
+          onComplete: () => {
+            ember.destroy();
+            this.impactFxCount = Math.max(0, (this.impactFxCount || 1) - 1);
+          },
         });
       }
-      const ring = this.add.circle(x, y, 6, 0xffffff, 0.0).setDepth(20);
-      ring.setStrokeStyle(3, 0xf5d77f, 0.9);
+      // The expanding ring is the authored shockwave instead of a stroked
+      // circle, so it shares the impact sheet's language with the hit sparks.
+      // Keep the ring inside the same hard ceiling; at saturation the ember
+      // burst has already communicated the kill and the ring can wait.
+      if (this.impactFxCount >= 24) return;
+      this.impactFxCount += 1;
+      const ring = this.add.sprite(x, y, 'tiles-impacts', 7).setDepth(19);
+      ring.setBlendMode(Phaser.BlendModes.ADD);
+      ring.setScale(0.55);
       this.tweens.add({
         targets: ring,
-        radius: isBoss ? 64 : 30,
+        scaleX: (isBoss ? 2.4 : 1.5) * 1.6,
+        scaleY: (isBoss ? 2.4 : 1.5) * 1.6,
         alpha: 0,
-        duration: 280,
+        duration: isBoss ? 520 : 300,
         ease: 'Quad.easeOut',
-        onUpdate: () => { try { ring.setStrokeStyle(3, 0xf5d77f, Math.max(0, ring.alpha)); } catch (_) {} },
-        onComplete: () => ring.destroy(),
+        onComplete: () => {
+          ring.destroy();
+          this.impactFxCount = Math.max(0, (this.impactFxCount || 1) - 1);
+        },
       });
       if (isBoss) shakeCamera(this, 200, 0.01);
     } catch (_) {}
@@ -599,19 +777,19 @@ export class GameScene extends Phaser.Scene {
       const { width } = this.cameras.main;
       const name = this.isEndless ? `Endless Pantheon — Wave ${this.endlessWave}` : (this.currentLevelConfig.name || '');
       const lore = this.isEndless ? 'Endless waves. Highest wave is the score.' : (this.currentLevelConfig.lore || '');
-      const title = this.add.text(width / 2, 120, name, {
-        fontSize: '26px', color: '#f5d77f', fontStyle: 'bold',
-        stroke: '#0b1220', strokeThickness: 6,
+      const title = this.add.text(width / 2, 132, name, {
+        fontSize: '20px', color: '#f5d77f', fontStyle: 'bold',
+        stroke: '#0b1220', strokeThickness: 5,
       }).setOrigin(0.5).setDepth(400).setScrollFactor(0);
-      const sub = this.add.text(width / 2, 152, lore, {
-        fontSize: '13px', color: '#d1d5db', fontStyle: 'italic',
-        stroke: '#0b1220', strokeThickness: 4,
+      const sub = this.add.text(width / 2, 157, lore, {
+        fontSize: '12px', color: '#d1d5db', fontStyle: 'italic',
+        stroke: '#0b1220', strokeThickness: 3,
       }).setOrigin(0.5).setDepth(400).setScrollFactor(0);
       this.tweens.add({
         targets: [title, sub],
         alpha: 0,
-        duration: 700,
-        delay: 1700,
+        duration: 500,
+        delay: 900,
         onComplete: () => { title.destroy(); sub.destroy(); },
       });
     } catch (_) {}
@@ -633,6 +811,15 @@ export class GameScene extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.wasd.ESC)) this.toggleExitMenu();
       }
       if (this.isPaused || this.exitMenu) return;
+      this.brazierClock += delta;
+      if (this.brazierClock >= 145) {
+        this.brazierClock = 0;
+        for (const brazier of this.braziers || []) {
+          if (!brazier?.active) continue;
+          brazier.brazierFrame = (brazier.brazierFrame + 1) % 4;
+          brazier.setFrame(brazier.brazierFrame);
+        }
+      }
       this.player.update(time, delta);
       // The shake is a displacement applied on top of the camera's own follow,
       // so it has to run after the player has moved and the camera has caught
@@ -736,10 +923,11 @@ export class GameScene extends Phaser.Scene {
     if (!proj.isPlayer || !enemy.active) return;
 
     const damageType = proj.damageType || 'physical';
+    let attackResult = null;
     if (proj.attacker) {
-      const res = CombatSystem.processAttack(proj.attacker, enemy, proj.damage, { damageType });
+      attackResult = CombatSystem.processAttack(proj.attacker, enemy, proj.damage, { damageType });
       // Kritik senkronu: ses zaten pitch'li, görsel de aynı karede patlasın
-      if (res && res.isCritical) {
+      if (attackResult && attackResult.isCritical) {
         shakeCamera(this, 110, 0.006);
         this.juiceHitstop(55);
       }
@@ -748,7 +936,7 @@ export class GameScene extends Phaser.Scene {
       const netDamage = CombatSystem.calculateDamage(proj.damage, targetArmor);
       enemy.takeDamage(netDamage);
     }
-    this.createDamageSpark(enemy.x, enemy.y);
+    this.createDamageSpark(enemy.x, enemy.y, Boolean(attackResult?.isCritical));
 
     // Zeus Staff AoE: carpis noktasinda yariCap icindeki diger dusmanlara
     // yari hasar. Birincil hedefe ikinci kez vurulmaz; yalnizca dusmanlar.
@@ -846,6 +1034,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   showBlessingChoice(onChosen) {
+    // Three options always, with reroll preserved below. The pool is now
+    // twelve, so duplicates across levels are replaced by the excluded list.
     const choices = pickBlessings(3, Math.random, this.runState.blessingIds);
     if (choices.length === 0) {
       onChosen();
@@ -855,7 +1045,12 @@ export class GameScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
     const overlay = this.add.container(width / 2, height / 2).setDepth(700).setScrollFactor(0);
     const dim = this.add.rectangle(0, 0, width, height, 0x000000, 0.7).setInteractive();
-    const panel = this.add.rectangle(0, 0, 420, 270, 0x141822, 0.98).setStrokeStyle(2, 0xf5d77f);
+    // The blessing panel reuses the loaded panel/button skins so it speaks the
+    // same authored language as the rest of the HUD. The tint darkens the light
+    // panel-bg art into the crypt palette instead of drawing a generic rectangle.
+    const panel = this.textures.exists('panel-bg')
+      ? this.add.image(0, 0, 'panel-bg').setDisplaySize(420, 300).setTint(0x2a3550)
+      : this.add.rectangle(0, 0, 420, 270, 0x141822, 0.98).setStrokeStyle(2, 0xf5d77f);
     const title = this.add.text(0, -100, 'ROOM BLESSING', { fontSize: '22px', color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
     const hint = this.add.text(0, -70, 'Pick one (1 / 2 / 3)', { fontSize: '14px', color: '#d1d5db' }).setOrigin(0.5);
     overlay.add([dim, panel, title, hint]);
@@ -874,12 +1069,56 @@ export class GameScene extends Phaser.Scene {
     const keyHandlers = choices.map((choice, index) => () => choose(index));
     choices.forEach((choice, index) => {
       const y = -25 + index * 55;
-      const button = this.add.rectangle(0, y, 340, 42, 0x243047, 1).setStrokeStyle(1, 0x718096).setInteractive({ useHandCursor: true });
+      const button = this.textures.exists('button-normal')
+        ? this.add.image(0, y, 'button-normal').setDisplaySize(340, 42).setTint(0x243047).setInteractive({ useHandCursor: true })
+        : this.add.rectangle(0, y, 340, 42, 0x243047, 1).setStrokeStyle(1, 0x718096).setInteractive({ useHandCursor: true });
       const label = this.add.text(0, y, `${index + 1}. ${choice.label}`, { fontSize: '16px', color: '#ffffff' }).setOrigin(0.5);
+      // The authored hover/pressed skins give the choice the same press feel as
+      // the menu buttons. The texture guard keeps headless runs working: when
+      // the images are absent the stroke colour is used instead.
+      button.on('pointerover', () => {
+        if (this.textures.exists('button-hover')) button.setTexture('button-hover');
+        else button.setStrokeStyle(1.5, 0x718096);
+        label.setColor('#f5d77f');
+      });
+      button.on('pointerout', () => {
+        if (this.textures.exists('button-normal')) button.setTexture('button-normal').setTint(0x243047);
+        else button.setStrokeStyle(1, 0x243047);
+        label.setColor('#ffffff');
+      });
+      button.on('pointerdown', () => {
+        if (this.textures.exists('button-pressed')) button.setTexture('button-pressed');
+        else button.setStrokeStyle(2, 0x1a2338);
+        label.setColor('#0b1220');
+      });
       button.on('pointerdown', () => choose(index));
       overlay.add([button, label]);
       this.input.keyboard.on(keyEvents[index], keyHandlers[index]);
     });
+    // A reroll costs one portal-transition gold bonus and never repeats a
+    // picked blessing. The button sits below the three choices and shares
+    // their authored skin so it reads as part of the same panel.
+    const rerollY = -25 + choices.length * 55;
+    const reroll = this.textures.exists('button-normal')
+      ? this.add.image(0, rerollY, 'button-normal').setDisplaySize(180, 32).setTint(0x1a2338).setInteractive({ useHandCursor: true })
+      : this.add.rectangle(0, rerollY, 180, 32, 0x1a2338, 1).setStrokeStyle(1, 0x718096).setInteractive({ useHandCursor: true });
+    const rerollLabel = this.add.text(0, rerollY, 'Reroll (25 gold)', { fontSize: '13px', color: '#d1d5db' }).setOrigin(0.5);
+    overlay.add([reroll, rerollLabel]);
+    const doReroll = () => {
+      const cost = 25;
+      if (this.progression.gold < cost) {
+        rerollLabel.setText('Need 25 gold').setColor('#f07186');
+        return;
+      }
+      this.progression.spendGold(cost);
+      keyEvents.forEach((event, i) => this.input.keyboard.off(event, keyHandlers[i]));
+      overlay.destroy(true);
+      this.blessingOverlay = null;
+      this.showBlessingChoice(onChosen);
+    };
+    reroll.on('pointerdown', doReroll);
+    this.input.keyboard.on('keydown-R', doReroll);
+    keyHandlers.push(() => this.input.keyboard.off('keydown-R', doReroll));
     this.blessingOverlay = overlay;
   }
 
@@ -902,8 +1141,12 @@ export class GameScene extends Phaser.Scene {
       // Son bölüm bitti -> Zafer Ekranı!
       this.progression.currentChapter = LEVELS.length - 1;
       this.progression.save();
-      this.scene.stop('UIScene');
-      this.scene.start('VictoryScene');
+      // Deterministic handoff at the game-manager level: a scene-local
+      // stop/start from inside GameScene can be swallowed while the scene is
+      // mid-operation, leaving VictoryScene pending with zero children.
+      this.game.scene.stop('UIScene');
+      this.game.scene.stop('GameScene');
+      this.game.scene.start('VictoryScene');
     } else {
       // Sonraki bölüme geç
       this.chapterIndex++;
@@ -1373,24 +1616,66 @@ export class GameScene extends Phaser.Scene {
     return enemy;
   }
 
-  createDamageSpark(x, y) {
-    // Üçlü kıvılcım + hızlı şok halkası (tek sprite yerine tok patlama)
+  createDamageSpark(x, y, isCritical = false) {
+    // Keep burst density bounded during projectile/AoE chains. The combat
+    // signal must stay readable; a dozen simultaneous additive sprites should
+    // never turn the whole room into a white flash.
+    this.impactFxCount = this.impactFxCount || 0;
+    if (this.impactFxCount >= 24) return;
+    this.impactFxCount += 1;
+    // core on the first frame stays legible inside a firelit, busy room, which
+    // a soft blob did not.
+    const burst = (startFrame, spriteScale) => {
+      const spark = this.add.sprite(x, y, 'tiles-impacts', startFrame).setDepth(20);
+      spark.setScale(spriteScale);
+      spark.setBlendMode(Phaser.BlendModes.ADD);
+      // The burst is a 4-frame animation rather than a tween on one frame, so
+      // the impact has a shape that develops instead of a uniform fade.
+      this.tweens.add({
+        targets: spark,
+        duration: 190,
+        onComplete: () => {
+          spark.destroy();
+          this.impactFxCount = Math.max(0, (this.impactFxCount || 1) - 1);
+        },
+        onStart: () => {
+          if (!spark.active) return;
+          spark.setFrame(startFrame + 1);
+          this.time.delayedCall(60, () => { if (spark.active) spark.setFrame(startFrame + 2); });
+          this.time.delayedCall(120, () => { if (spark.active) spark.setFrame(startFrame + 3); });
+        },
+      });
+      this.tweens.add({
+        targets: spark,
+        scaleX: spriteScale * 1.25,
+        scaleY: spriteScale * 1.25,
+        alpha: 0,
+        duration: 190,
+        ease: 'Quad.easeOut',
+      });
+      return spark;
+    };
     try {
-      for (let i = 0; i < 3; i++) {
-        const spark = this.add.sprite(x + (Math.random() - 0.5) * 14, y + (Math.random() - 0.5) * 14, 'effects', 16 + (i % 4)).setDepth(20);
-        spark.setScale(0.9 + Math.random() * 0.5);
-        spark.setBlendMode(Phaser.BlendModes.ADD);
-        this.tweens.add({
-          targets: spark,
-          alpha: 0,
-          scaleX: 0.3,
-          scaleY: 0.3,
-          duration: 160 + Math.random() * 80,
-          onComplete: () => spark.destroy(),
-        });
+      if (isCritical) {
+        const now = this.time.now;
+        if (this.critSparkUntil && now < this.critSparkUntil) {
+          burst(0, 1.6);
+        } else {
+          this.critSparkUntil = now + 120;
+          burst(4, 1.5);
+          const ring = this.add.sprite(x, y, 'tiles-impacts', 7).setDepth(19);
+          ring.setScale(0.7).setBlendMode(Phaser.BlendModes.ADD);
+          this.tweens.add({ targets: ring, scaleX: 2.1, scaleY: 2.1, alpha: 0,
+            duration: 260, ease: 'Quad.easeOut', onComplete: () => ring.destroy() });
+        }
+      } else {
+        burst(0, 1.0 + Math.random() * 0.15);
       }
     } catch (_) {
-      const spark = this.add.sprite(x, y, 'effects', 16).setDepth(20);
+      this.impactFxCount = Math.max(0, (this.impactFxCount || 1) - 1);
+      // Fallback: a single authored burst frame, never a missing texture.
+      const spark = this.add.sprite(x, y, 'tiles-impacts', 0).setDepth(20);
+      spark.setBlendMode(Phaser.BlendModes.ADD);
       this.time.delayedCall(200, () => spark.destroy());
     }
   }

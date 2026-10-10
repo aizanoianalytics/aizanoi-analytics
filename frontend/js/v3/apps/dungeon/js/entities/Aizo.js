@@ -61,6 +61,15 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.body.setOffset(5, 8);
     this.setDepth(10);
 
+    // The hero is lit by the room too, same rule as the enemies: the body
+    // takes the firelight while the halo stays off the pipeline so the player
+    // is never dimmed into the dark.
+    if (typeof this.setPipeline === 'function' && scene.lights?.active) {
+      try { this.setPipeline('Light2D'); } catch (_) {}
+    }
+
+    this.setScale(1.15);
+
     // Zemin gölgesi + taban ölçek (squash-stretch referansı)
     this.baseScaleX = this.scaleX || 1;
     this.baseScaleY = this.scaleY || 1;
@@ -110,6 +119,10 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     if (m.attackSpeedMult) this.stats.attackSpeed *= m.attackSpeedMult;
     if (m.attackDmgMult) this.stats.attackDamage = Math.round(this.stats.attackDamage * m.attackDmgMult);
     if (m.critDmgMult) this.stats.critMultiplier = (this.stats.critMultiplier || 1.5) * m.critDmgMult;
+    if (m.critChanceBonus) this.stats.critChance = (this.stats.critChance || 0) + m.critChanceBonus;
+    if (m.lifestealBonus) this.stats.lifesteal = (this.stats.lifesteal || 0) + m.lifestealBonus;
+    if (m.armorBonus) this.stats.armor = (this.stats.armor || 0) + m.armorBonus;
+    if (m.attackRangeMult) this.stats.attackRange = Math.round((this.stats.attackRange || 48) * m.attackRangeMult);
     if (m.regenBonus) {
       this.stats.hpRegen = (this.stats.hpRegen || 0) + m.regenBonus;
       this.stats.hpRegenBase = (this.stats.hpRegenBase || 0) + m.regenBonus;
@@ -315,7 +328,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.isAttacking = true;
     this.play(`aizo-attack-${this.lastDirection}`, true);
 
-    // Saldırı gerilmesi: vuruşta yaylan (Brotato jöle hissi)
+    // Saldırı gerilmesi: vuruşta yaylan
     try {
       this.scene.tweens.add({
         targets: this,

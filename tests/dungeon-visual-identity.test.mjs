@@ -58,7 +58,7 @@ test('the chapter wash is behind the actors, not over them', () => {
   assert.ok(Number(accent[1]) > hazeDepth, 'the accent lift must sit in front of the wash');
   assert.ok(Number(accent[1]) < 5, 'but still under the actors');
   // And the alphas must be recorded so the audit can toggle them back on.
-  assert.match(gameScene, /this\.chapterWashAlpha = 0\.55/);
+  assert.match(gameScene, /this\.chapterWashAlpha = 0\.18/);
   assert.match(gameScene, /this\.chapterAccentAlpha = 0\.16/);
 });
 

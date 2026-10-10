@@ -74,11 +74,11 @@ console.log('\n=== TIME-TO-KILL vs TIME-TO-DIE (ch1 fresh, ch10 endgame) ===');
 function simulate(playerLv, w, a, accs, skills, chapterIdx, blessings = []) {
   const lvl = LEVELS[chapterIdx];
   const st = playerStats(playerLv, w, a, accs, skills);
-  let blessingMods = { atk: 1, spd: 1, hp: 0 };
+  let blessingMods = { attackDmgMult: 1, attackSpeedMult: 1, maxHpBonus: 0 };
   for (const b of BLESSINGS) { if (blessings.includes(b.id)) b.apply(blessingMods); }
-  const dmg = st.attackDamage * (blessingMods.atk || 1);
-  const atkSpd = Math.max(0.6, (st.attackSpeed) * (blessingMods.spd || 1));
-  const hp = st.hp + (blessingMods.hp || 0);
+  const dmg = st.attackDamage * (blessingMods.attackDmgMult || 1);
+  const atkSpd = Math.max(0.6, (st.attackSpeed) * (blessingMods.attackSpeedMult || 1));
+  const hp = st.hp + (blessingMods.maxHpBonus || 0);
   const ENEMY_DENSITY = { low: 10, medium: 18, high: 26, very_high: 36 };
   const count = ENEMY_DENSITY[lvl.enemies.density];
   let ttks = [], ttd = [];

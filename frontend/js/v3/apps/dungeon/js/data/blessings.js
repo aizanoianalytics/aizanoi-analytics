@@ -33,6 +33,36 @@ export const BLESSINGS = [
     label: '+12% attack power',
     apply(mods) { mods.attackDmgMult = (mods.attackDmgMult || 1) * 1.12; },
   },
+  {
+    id: 'keskin_goz',
+    label: '+5% crit chance',
+    apply(mods) { mods.critChanceBonus = (mods.critChanceBonus || 0) + 0.05; },
+  },
+  {
+    id: 'vampir_yemin',
+    label: '+3% lifesteal',
+    apply(mods) { mods.lifestealBonus = (mods.lifestealBonus || 0) + 0.03; },
+  },
+  {
+    id: 'demir_deri',
+    label: '+8 armor',
+    apply(mods) { mods.armorBonus = (mods.armorBonus || 0) + 8; },
+  },
+  {
+    id: 'uzun_menzil',
+    label: '+12% attack range',
+    apply(mods) { mods.attackRangeMult = (mods.attackRangeMult || 1) * 1.12; },
+  },
+  {
+    id: 'savasci_ruhu',
+    label: '+20 max HP, -4% move speed',
+    apply(mods) { mods.maxHpBonus = (mods.maxHpBonus || 0) + 20; mods.moveSpeedMult = (mods.moveSpeedMult || 1) * 0.96; },
+  },
+  {
+    id: 'yildirim_hizi',
+    label: '+18% attack speed, -10 max HP',
+    apply(mods) { mods.attackSpeedMult = (mods.attackSpeedMult || 1) * 1.18; mods.maxHpBonus = (mods.maxHpBonus || 0) - 10; },
+  },
 ];
 
 export function createRunState() {

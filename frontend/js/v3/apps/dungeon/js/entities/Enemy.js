@@ -86,6 +86,52 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
     } catch (_) { this.shadow = null; }
 
+    // Readability rim: a low-alpha cool halo separates dark silhouettes from
+    // slate walls without turning the enemy into a glowing billboard. It moves
+    // with the sprite in update(), just like the existing contact shadow.
+    this.readabilityRing = null;
+    try {
+      const ringColor = typeConfig.isFinalBoss ? 0xf0c878 : (typeConfig.behavior === 'ranged_kite' || typeConfig.behavior === 'ranged_aoe' ? 0x8fc6e8 : 0xc7b7d8);
+      this.readabilityRing = scene.add.ellipse(x, y, this.isBoss ? 92 : 38, this.isBoss ? 92 : 38, ringColor, this.isBoss ? 0.26 : 0.20);
+      this.readabilityRing.setDepth(8);
+      this.readabilityRing.setBlendMode(Phaser.BlendModes.SCREEN);
+    } catch (_) { this.readabilityRing = null; }
+
+    // A sprite rim works at native pixel scale where a soft ellipse disappears
+    // against a dark wall: the duplicate is one pixel larger and only its
+    // exposed edge shows around the silhouette. The rim follows the frame so
+    // an animating enemy keeps it, and it moves with the sprite below.
+    this.readabilitySprite = null;
+    try {
+      const rimColor = typeConfig.isFinalBoss ? 0xffd67d : (typeConfig.behavior === 'ranged_kite' || typeConfig.behavior === 'ranged_aoe' ? 0x8fc6e8 : 0xbda6d5);
+      this.readabilitySprite = scene.add.sprite(x, y, texture, initialFrame)
+        .setScale(this.scaleX * 1.10, this.scaleY * 1.10)
+        .setTint(rimColor)
+        .setAlpha(this.isBoss ? 0.50 : 0.60)
+        .setDepth(8.5)
+        .setBlendMode(Phaser.BlendModes.ADD);
+    } catch (_) { this.readabilitySprite = null; }
+
+    // The permanent threat pip: a 3px bright key above every non-boss enemy.
+    // A soft rim reads as character detail in a dark room; a hard key dot is
+    // what actually answers "is that thing alive and hostile?" at speed.
+    // It stays visible whether the enemy is inside or outside a light pool.
+    this.threatPip = null;
+    if (!typeConfig.isFinalBoss) {
+      const pipColor = typeConfig.isMiniBoss ? 0xd88943 : 0xc33f3a;
+      if (typeof scene.add.rectangle === 'function') {
+        this.threatPip = scene.add.rectangle(x, y - (this.isBoss ? 46 : 20), 2, 2,
+          pipColor, typeConfig.isMiniBoss ? 0.58 : 0.38);
+        this.threatPip.setDepth(8.6);
+        this.threatPip.setBlendMode(Phaser.BlendModes.ADD);
+      } else {
+        // Headless combat tests intentionally provide only the minimal display
+        // stub; keep the gameplay object valid without weakening the browser
+        // path, which always has Phaser's rectangle factory.
+        this.threatPip = { active: false, setPosition() {}, destroy() {} };
+      }
+    }
+
     // Elit aurası: affix renginde nabız gibi atan hale — neyle karşılaştığın belli olsun
     this.eliteGlow = null;
     if (this.eliteAffix && ELITE_COLORS[this.eliteAffix] !== undefined) {
@@ -107,6 +153,18 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     this.setDepth(9);
+
+    // Actors respond to the room's light. Placing the sprite on the Light2D
+    // pipeline makes the brazier pools wash across the enemy the same way they
+    // wash across the floor, so a gargoyle standing in torchlight looks like it
+    // is IN the torchlight instead of pasted on top of it.
+    //
+    // The readability rim stays off the pipeline deliberately: it is a
+    // gameplay-clarity element, not a material, and dimming it in unlit corners
+    // would remove the very separation it exists to provide.
+    if (typeof this.setPipeline === 'function' && scene.lights?.active) {
+      try { this.setPipeline('Light2D'); } catch (_) {}
+    }
 
     // Sağlık barı grafiği
     this.hpBar = scene.add.graphics();
@@ -169,6 +227,26 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
     if (this.eliteGlow && this.eliteGlow.active) {
       this.eliteGlow.setPosition(this.x, this.y);
+    }
+    if (this.readabilityRing && this.readabilityRing.active) {
+      this.readabilityRing.setPosition(this.x, this.y);
+    }
+    if (this.readabilitySprite && this.readabilitySprite.active) {
+      this.readabilitySprite.setPosition(this.x, this.y);
+      this.readabilitySprite.setFrame(this.frame.name);
+    }
+    if (this.threatPip && this.threatPip.active) {
+      const pipY = this.y - (this.isBoss ? 46 : 20);
+      this.threatPip.setPosition(this.x, pipY);
+      // A restrained heartbeat gives the eye a living threat signal without
+      // turning every enemy into a neon marker. Mini-bosses pulse slower and
+      // brighter; normal enemies remain a quiet, steady key.
+      if (this.type?.isMiniBoss) {
+        const pulse = 0.48 + Math.sin(time * 0.006) * 0.18;
+        this.threatPip.setAlpha(pulse);
+      } else {
+        this.threatPip.setAlpha(0.38);
+      }
     }
 
     // Geri tepme: kisa sure hareket AI durur, itme velocity korunur
@@ -859,7 +937,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.knockbackTimer = 120;
     }
 
-    // Hasar flaşı: önce beyaz parıltı (Brotato juice), sonra sön
+    // Hasar flaşı: önce beyaz parıltı, sonra sön
     if (typeof this.setTintFill === 'function') this.setTintFill(0xffffff);
     else if (typeof this.setTint === 'function') this.setTint(0xff6666);
     // Ezilme: vuruşta jöle gibi squash
@@ -947,6 +1025,18 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.eliteGlow) {
       this.eliteGlow.destroy();
       this.eliteGlow = null;
+    }
+    if (this.readabilityRing) {
+      this.readabilityRing.destroy();
+      this.readabilityRing = null;
+    }
+    if (this.readabilitySprite) {
+      this.readabilitySprite.destroy();
+      this.readabilitySprite = null;
+    }
+    if (this.threatPip) {
+      this.threatPip.destroy();
+      this.threatPip = null;
     }
     super.preDestroy();
   }

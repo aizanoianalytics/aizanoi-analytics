@@ -49,7 +49,16 @@ export class UIScene extends Phaser.Scene {
     this.levelBadge = this.add.text(36, 64, 'Lv.1', {
       fontSize: px(readable(10)), color: '#f5d77f', fontStyle: 'bold',
     }).setOrigin(0.5);
+    this.buildText = this.add.text(180, 72, 'BUILD · 0', {
+      fontSize: px(readable(9)), color: '#b9a7d8', fontStyle: 'bold',
+    }).setOrigin(0.5);
 
+    this.hpSkin = this.textures.exists('health-bar')
+      ? this.add.image(153, 40.5, 'health-bar').setDisplaySize(158, 20).setAlpha(0.72)
+      : null;
+    this.sparkSkin = this.textures.exists('spark-bar')
+      ? this.add.image(153, 64.5, 'spark-bar').setDisplaySize(158, 15).setAlpha(0.72)
+      : null;
     this.hpGraphics = this.add.graphics();
     this.xpGraphics = this.add.graphics();
     this.hpText = this.add.text(74, 22, 'HP: 120/120', { fontSize: px(readable(11)), color: '#e8eef8', fontStyle: 'bold' });
@@ -86,8 +95,8 @@ export class UIScene extends Phaser.Scene {
     }
 
     this.add.rectangle(width - 118, 28, 150, 36, glass, 0.82).setStrokeStyle(1, 0xc5a059);
-    this.add.image(width - 178, 28, 'coin-icon').setScale(1.2);
-    this.goldText = this.add.text(width - 160, 20, '0', { fontSize: px(readable(14)), color: '#f5d77f', fontStyle: 'bold' });
+    this.add.image(width - 186, 28, 'coin-icon').setScale(1.35);
+    this.goldText = this.add.text(width - 166, 20, '0', { fontSize: px(readable(14)), color: '#f5d77f', fontStyle: 'bold' });
 
     const soundBox = this.add.rectangle(width - 28, 28, 32, 32, glass, 0.82)
       .setStrokeStyle(1, 0xc5a059).setInteractive({ useHandCursor: true });
@@ -137,10 +146,13 @@ export class UIScene extends Phaser.Scene {
       { key: 'dash', testKey: 'shift', label: 'SHFT', x: cx + 104, name: 'Dash', accent: 0x7dd3fc },
     ];
     defs.forEach((def) => {
-      const box = this.add.rectangle(def.x, cy, 46, 46, 0x0f1624, 0.9).setStrokeStyle(2, 0xc5a059);
+      const skin = this.textures.exists('slot-empty')
+        ? this.add.image(def.x, cy, 'slot-empty').setDisplaySize(40, 40)
+        : null;
+      const box = this.add.rectangle(def.x, cy, 46, 46, 0x0f1624, skin ? 0 : 0.9).setStrokeStyle(2, 0xc5a059);
       this.add.text(def.x, cy - 8, def.label, { fontSize: px(readable(13)), color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
       const cd = this.add.text(def.x, cy + 10, 'RDY', { fontSize: px(readable(9)), color: '#3dcea8', fontStyle: 'bold' }).setOrigin(0.5);
-      this.abilitySlots[def.key] = { box, cd, accent: def.accent };
+      this.abilitySlots[def.key] = { box, skin, cd, accent: def.accent };
     });
   }
 
@@ -152,9 +164,11 @@ export class UIScene extends Phaser.Scene {
     // only ever the ready-state signal.
     const accent = slot.accent ?? 0xc5a059;
     if (ready) {
+      slot.skin?.setTexture('slot-filled');
       slot.cd.setText('RDY').setColor('#3dcea8');
       slot.box.setStrokeStyle(2, accent);
     } else {
+      slot.skin?.setTexture('slot-empty');
       slot.cd.setText(`${seconds}s`).setColor('#f07186');
       slot.box.setStrokeStyle(2, 0x5a3a48);
     }
@@ -170,9 +184,14 @@ export class UIScene extends Phaser.Scene {
     const hpColor = player.hp / player.maxHp <= 0.25 ? 0xe74c3c : 0x27ae60;
     drawStatBar(this.hpGraphics, 74, 34, 158, 13, player.hp, player.maxHp, hpColor);
     drawStatBar(this.xpGraphics, 74, 60, 158, 9, prog.currentXp, prog.nextXp, 0xa569bd);
-    this.hpText.setText(`HP: ${Math.max(0, Math.round(player.hp))}/${player.maxHp}`);
+    // Clamp the displayed number to the current maximum. A relic can raise
+    // maxHp while the player is already full, and the HUD used to print
+    // "126/120" until the next heal tick.
+    const hpNow = Math.min(Math.max(0, Math.round(player.hp)), player.maxHp);
+    this.hpText.setText(`HP: ${hpNow}/${player.maxHp}`);
     this.xpText.setText(`SPARK: ${prog.currentXp}/${prog.nextXp}`);
     this.levelBadge.setText(`Lv.${prog.level}`);
+    this.buildText.setText(`BUILD · ${gs.runState?.blessingIds?.length || 0}`);
     this.goldText.setText(`${prog.gold}`);
 
     const chapterName = gs.isEndless
@@ -256,7 +275,7 @@ export class UIScene extends Phaser.Scene {
     plot(gs.exitPortal?.x || 0, gs.exitPortal?.y || 0, ready ? 0x00d2ff : 0x64748b, 3);
     for (const enemy of gs.enemies?.getChildren?.() || []) {
       if (enemy.active && enemy.hp > 0) {
-        plot(enemy.x, enemy.y, enemy.isBoss ? 0xf39c12 : 0xe74c3c, enemy.isBoss ? 3 : 1.6);
+        plot(enemy.x, enemy.y, enemy.isBoss ? 0xf39c12 : (enemy.eliteAffix ? 0xf5d77f : 0xe74c3c), enemy.isBoss ? 3 : (enemy.eliteAffix ? 2.4 : 1.6));
       }
     }
     plot(player.x, player.y, 0x7ea0ff, 3);

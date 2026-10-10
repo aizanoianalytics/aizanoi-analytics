@@ -67,6 +67,8 @@ export class BootScene extends Phaser.Scene {
     this.load.image('tiles-floor', `${ASSET_BASE}tilesets/aizanoi-floor.png`);
     this.load.image('tiles-walls', `${ASSET_BASE}tilesets/aizanoi-walls.png`);
     this.load.spritesheet('tiles-decor', `${ASSET_BASE}tilesets/aizanoi-decor.png`, { frameWidth: 32, frameHeight: 32 });
+    // Light sources: frames 0-3 are the brazier flicker, 4-6 the wall sconce.
+    this.load.spritesheet('tiles-lights', `${ASSET_BASE}tilesets/aizanoi-lights.png`, { frameWidth: 32, frameHeight: 32 });
 
     // 3. UI Assets
     this.load.image('panel-bg', `${ASSET_BASE}ui/panel-bg.png`);
@@ -77,6 +79,8 @@ export class BootScene extends Phaser.Scene {
     this.load.image('spark-bar', `${ASSET_BASE}ui/spark-bar.png`);
     this.load.image('slot-empty', `${ASSET_BASE}ui/slot-empty.png`);
     this.load.image('slot-filled', `${ASSET_BASE}ui/slot-filled.png`);
+    // Impact sheet: 0..3 normal hit burst, 4..6 critical slash, 7 shock ring.
+    this.load.spritesheet('tiles-impacts', `${ASSET_BASE}tilesets/aizanoi-impacts.png`, { frameWidth: 32, frameHeight: 32 });
     this.load.image('minimap-frame', `${ASSET_BASE}ui/minimap-frame.png`);
     this.load.image('coin-icon', `${ASSET_BASE}ui/coin-icon.png`);
     this.load.image('spark-icon', `${ASSET_BASE}ui/spark-icon.png`);
@@ -85,26 +89,72 @@ export class BootScene extends Phaser.Scene {
     this.load.image('skill-node-unlocked', `${ASSET_BASE}ui/skill-node-unlocked.png`);
 
     // 4. Touch Assets
-    this.load.image('touch-joystick-base', `${ASSET_BASE}ui/touch-joystick-base.png`);
-    this.load.image('touch-joystick-thumb', `${ASSET_BASE}ui/touch-joystick-thumb.png`);
-    this.load.image('touch-btn-attack', `${ASSET_BASE}ui/touch-btn-attack.png`);
-    this.load.image('touch-btn-skill1', `${ASSET_BASE}ui/touch-btn-skill1.png`);
-    this.load.image('touch-btn-skill2', `${ASSET_BASE}ui/touch-btn-skill2.png`);
-    this.load.image('touch-btn-utility', `${ASSET_BASE}ui/touch-btn-utility.png`);
-    this.load.image('touch-btn-interact', `${ASSET_BASE}ui/touch-btn-interact.png`);
-    this.load.image('touch-btn-menu', `${ASSET_BASE}ui/touch-btn-menu.png`);
+    // Touch controls are created only on touch devices. Keep these cosmetic
+    // sprites out of the critical desktop boot batch: a browser can leave the
+    // last DOM image requests pending indefinitely, which used to freeze the
+    // entire loader at 82% for every player, including desktop players.
+    // `loadOptionalAudio()` also queues them after the menu is visible.
+  }
 
-    // 5. Ses Varliklari (Audio Assets)
-    this.load.audio('ambient-cave', `${ASSET_BASE}audio/ambient_cave_loop.wav`);
-    this.load.audio('sfx-shadow-dash', `${ASSET_BASE}audio/shadow_dash.wav`);
-    this.load.audio('sfx-boss-warning', `${ASSET_BASE}audio/boss_slam_warning.wav`);
-    this.load.audio('sfx-ancient-chime', `${ASSET_BASE}audio/ancient_chime.wav`);
-    this.load.audio('sfx-gold-spark', `${ASSET_BASE}audio/gold_spark.wav`);
+  /**
+   * Deferred, non-blocking loading for touch controls and audio.
+   * These assets are enhancements and must never block the first playable frame.
+   */
+  loadOptionalAudio(assetBase) {
+    const files = [
+      ['touch-joystick-base', 'ui/touch-joystick-base.png'],
+      ['touch-joystick-thumb', 'ui/touch-joystick-thumb.png'],
+      ['touch-btn-attack', 'ui/touch-btn-attack.png'],
+      ['touch-btn-skill1', 'ui/touch-btn-skill1.png'],
+      ['touch-btn-skill2', 'ui/touch-btn-skill2.png'],
+      ['touch-btn-utility', 'ui/touch-btn-utility.png'],
+      ['touch-btn-interact', 'ui/touch-btn-interact.png'],
+      ['touch-btn-menu', 'ui/touch-btn-menu.png'],
+    ];
+    const audioFiles = [
+      ['ambient-cave', 'audio/ambient_cave_loop.wav'],
+      ['sfx-shadow-dash', 'audio/shadow_dash.wav'],
+      ['sfx-boss-warning', 'audio/boss_slam_warning.wav'],
+      ['sfx-ancient-chime', 'audio/ancient_chime.wav'],
+      ['sfx-gold-spark', 'audio/gold_spark.wav'],
+    ];
+    // Deferred to the next macrotask so it never competes with the boot
+    // progress bar, and guarded so a scene teardown mid-load cannot write
+    // into a destroyed cache.
+    setTimeout(() => {
+      try {
+        const loader = this.load;
+        if (!loader || !this.sys || !this.sys.isActive()) return;
+        loader.on('loaderror', (file) => {
+          if (file && file.type === 'audio') return;
+        });
+        for (const [key, rel] of files) loader.image(key, `${assetBase}${rel}`);
+        for (const [key, rel] of audioFiles) loader.audio(key, `${assetBase}${rel}`);
+        loader.start();
+      } catch (_) { /* fail-open: synthesised audio remains */ }
+    }, 1500);
   }
 
   create() {
     this.createAnimations();
-    this.scene.start('MenuScene');
+    // Queue the handoff one tick later. Phaser's loader can finish its final
+    // DOM image callback while the scene manager is still inside `create()`;
+    // changing scene state synchronously there can be ignored by the manager.
+    const handoff = () => {
+      if (!this.game?.scene) return;
+      const manager = this.game.scene;
+      if (manager.isActive('MenuScene')) return;
+      try { manager.stop('BootScene'); } catch (_) {}
+      try { manager.run('MenuScene'); } catch (_) {}
+    };
+    // Retry once after Phaser commits the loader's final frame. Some browsers
+    // ignore the first scene-manager mutation while create() is unwinding.
+    setTimeout(handoff, 0);
+    setTimeout(handoff, 80);
+    // Audio is an enhancement, never a boot dependency. Starting it after the
+    // scene transition keeps Phaser's critical image queue deterministic.
+    const ASSET_BASE = new URL('../../assets/', import.meta.url).href;
+    this.loadOptionalAudio(ASSET_BASE);
   }
 
   createAnimations() {

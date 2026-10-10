@@ -106,7 +106,16 @@ export async function launchDungeonGame(container) {
   // GameScene and stopDungeonGame both read this global. Without it the game is
   // unreachable from a test or an operator tool on the standalone route, and
   // ten chapters cannot be traversed efficiently.
-  if (typeof window !== 'undefined') window.AIZANOI_DUNGEON_GAME = game;
+  if (typeof window !== 'undefined') {
+    window.AIZANOI_DUNGEON_GAME = game;
+    // Loader handoff watchdog: if BootScene has stopped but no scene became
+    // active, recover the first playable menu instead of leaving a blank canvas.
+    setTimeout(() => {
+      if (!game.scene.getScenes(true).length && game.scene.getScene('MenuScene')) {
+        game.scene.run('MenuScene');
+      }
+    }, 180);
+  }
   return game;
 }
 
