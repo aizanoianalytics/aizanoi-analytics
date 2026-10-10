@@ -1544,7 +1544,12 @@ export class GameScene extends Phaser.Scene {
   }
 
   createDamageSpark(x, y, isCritical = false) {
-    // The authored impact sheet replaces the old generic sparks: a tight white
+    // Keep burst density bounded during projectile/AoE chains. The combat
+    // signal must stay readable; a dozen simultaneous additive sprites should
+    // never turn the whole room into a white flash.
+    this.impactFxCount = this.impactFxCount || 0;
+    if (this.impactFxCount >= 24) return;
+    this.impactFxCount += 1;
     // core on the first frame stays legible inside a firelit, busy room, which
     // a soft blob did not.
     const burst = (startFrame, spriteScale) => {
@@ -1556,7 +1561,10 @@ export class GameScene extends Phaser.Scene {
       this.tweens.add({
         targets: spark,
         duration: 190,
-        onComplete: () => spark.destroy(),
+        onComplete: () => {
+          spark.destroy();
+          this.impactFxCount = Math.max(0, (this.impactFxCount || 1) - 1);
+        },
         onStart: () => {
           if (!spark.active) return;
           spark.setFrame(startFrame + 1);
@@ -1591,6 +1599,7 @@ export class GameScene extends Phaser.Scene {
         burst(0, 1.0 + Math.random() * 0.15);
       }
     } catch (_) {
+      this.impactFxCount = Math.max(0, (this.impactFxCount || 1) - 1);
       // Fallback: a single authored burst frame, never a missing texture.
       const spark = this.add.sprite(x, y, 'tiles-impacts', 0).setDepth(20);
       spark.setBlendMode(Phaser.BlendModes.ADD);
