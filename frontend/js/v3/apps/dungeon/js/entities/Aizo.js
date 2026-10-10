@@ -119,6 +119,10 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     if (m.attackSpeedMult) this.stats.attackSpeed *= m.attackSpeedMult;
     if (m.attackDmgMult) this.stats.attackDamage = Math.round(this.stats.attackDamage * m.attackDmgMult);
     if (m.critDmgMult) this.stats.critMultiplier = (this.stats.critMultiplier || 1.5) * m.critDmgMult;
+    if (m.critChanceBonus) this.stats.critChance = (this.stats.critChance || 0) + m.critChanceBonus;
+    if (m.lifestealBonus) this.stats.lifesteal = (this.stats.lifesteal || 0) + m.lifestealBonus;
+    if (m.armorBonus) this.stats.armor = (this.stats.armor || 0) + m.armorBonus;
+    if (m.attackRangeMult) this.stats.attackRange = Math.round((this.stats.attackRange || 48) * m.attackRangeMult);
     if (m.regenBonus) {
       this.stats.hpRegen = (this.stats.hpRegen || 0) + m.regenBonus;
       this.stats.hpRegenBase = (this.stats.hpRegenBase || 0) + m.regenBonus;
