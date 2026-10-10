@@ -587,6 +587,9 @@ export class GameScene extends Phaser.Scene {
       }
       // The expanding ring is the authored shockwave instead of a stroked
       // circle, so it shares the impact sheet's language with the hit sparks.
+      // Keep the ring inside the same hard ceiling; at saturation the ember
+      // burst has already communicated the kill and the ring can wait.
+      if (this.impactFxCount >= 24) return;
       this.impactFxCount += 1;
       const ring = this.add.sprite(x, y, 'tiles-impacts', 7).setDepth(19);
       ring.setBlendMode(Phaser.BlendModes.ADD);
