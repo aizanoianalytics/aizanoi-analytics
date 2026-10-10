@@ -937,7 +937,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.knockbackTimer = 120;
     }
 
-    // Hasar flaşı: önce beyaz parıltı (Brotato juice), sonra sön
+    // Hasar flaşı: önce beyaz parıltı, sonra sön
     if (typeof this.setTintFill === 'function') this.setTintFill(0xffffff);
     else if (typeof this.setTint === 'function') this.setTint(0xff6666);
     // Ezilme: vuruşta jöle gibi squash

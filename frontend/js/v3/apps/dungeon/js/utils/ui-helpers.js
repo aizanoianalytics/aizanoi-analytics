@@ -27,7 +27,7 @@ export function createGlassButton(scene, x, y, width, height, text, onClick) {
 
   bg.on('pointerdown', () => {
     bg.setFillStyle(0xe2e8f0, 1.0);
-    // Brotato-tok his: basışta yaylanan bounce
+    // Basışta yaylanan bounce
     try {
       scene.tweens.add({
         targets: container,

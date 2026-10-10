@@ -328,7 +328,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.isAttacking = true;
     this.play(`aizo-attack-${this.lastDirection}`, true);
 
-    // Saldırı gerilmesi: vuruşta yaylan (Brotato jöle hissi)
+    // Saldırı gerilmesi: vuruşta yaylan
     try {
       this.scene.tweens.add({
         targets: this,
