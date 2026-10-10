@@ -129,6 +129,13 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, this.mapData.width * 32, this.mapData.height * 32);
     this.physics.world.setBounds(0, 0, this.mapData.width * 32, this.mapData.height * 32);
 
+    // Point lights are attached to the objects that move: the player carries
+    // the warm temple torch, the portal keeps its own cold glow.
+    this.playerLight = this.addLight(this.player, 0xd8cbb0, 0.26, 170);
+    if (this.exitPortal) {
+      this.portalLight = this.addLight(this.exitPortal, 0x7f8cff, 0.30, 190);
+    }
+
     // 9. Çarpışmalar (Collisions)
     this.physics.add.collider(this.player, this.wallLayer);
     this.physics.add.collider(this.enemies, this.wallLayer);
@@ -167,6 +174,22 @@ export class GameScene extends Phaser.Scene {
 
     // 12b. Görsel katman: vignette + portal nabzı + bölüm kartı
     if (this.settings?.effects !== 'reduced') this.addVignette();
+
+    // The firelights are added here rather than in renderMap(): the braziers
+    // are placed during step 7, so a light created earlier would reference an
+    // empty list and silently never be added. Phaser 3.80's LightsManager keeps
+    // lights in a plain array with no upper cap, so the count is the only thing
+    // that matters, and this is after every brazier exists.
+    this.fireLights = [];
+    for (const brazier of this.braziers) {
+      const light = this.addLightAt(brazier.x, brazier.y, 210, 0xcf8b46, 0.45);
+      if (light) this.fireLights.push(light);
+    }
+    if (this.exitPortal) {
+      const portalLight = this.addLightAt(this.exitPortal.x, this.exitPortal.y, 180, 0x8e9cff, 0.38);
+      if (portalLight) this.fireLights.push(portalLight);
+    }
+
     this.showChapterCard();
     try {
       if (this.exitPortal) {
@@ -303,6 +326,24 @@ export class GameScene extends Phaser.Scene {
     return (lift(r) << 16) | (lift(g) << 8) | lift(b);
   }
 
+  /** Add a static point light at a world position. */
+  addLightAt(x, y, radius, color, intensity) {
+    try {
+      return this.lights.addLight(x, y, radius, color, intensity);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /** Add a point light that follows its owner. */
+  addLight(target, color, intensity, radius) {
+    try {
+      return this.lights.addLight(target, radius, color, intensity);
+    } catch (_) {
+      return null;
+    }
+  }
+
   renderMap() {
     // Statik Tilemap katmanı oluştur
     const map = this.make.tilemap({
@@ -340,6 +381,21 @@ export class GameScene extends Phaser.Scene {
     }
 
     this.applyChapterPalette();
+
+    // Real local lighting on the tilemap. Phaser 3.80 ships LightsManager, so
+    // a scene-level lights object exists and can light sprites individually.
+    // A low charcoal-blue fill keeps unlit corners readable while preserving
+    // the fire-led hierarchy; near-black ambient turns the dungeon into void.
+    if (this.lights?.enable) {
+      this.lights.enable();
+      this.lights.setAmbientColor(0x24262b);
+    }
+
+    // The layers that must receive light go on the Light2D pipeline. Everything
+    // that is NOT on that pipeline (actors, HUD, effects) renders above the
+    // light texture and is therefore never darkened by it.
+    this.floorLayer.setPipeline('Light2D');
+    this.wallLayer.setPipeline('Light2D');
 
     this.wallLayer.setCollisionByExclusion([-1]);
     // The authored tileset already carries the material contrast; a second
