@@ -75,14 +75,15 @@ test('minimap visibility is controlled by persisted settings', () => {
 test('minimap container child order is bg -> graphics -> hint (dots render above background)', () => {
   // Regression guard for the Phaser display-list ordering. Earlier the
   // container was [graphics, background, hint] which made the dark
-  // background rectangle render ON TOP of every minimap dot and occlude
-  // them. Phaser draws children in array-add order, so the explicit list
-  // MUST be background first, then dots, then label.
+  // background render ON TOP of every minimap dot and occlude them. Phaser
+  // draws children in array-add order, so the explicit list MUST be background
+  // first, then dots, then label — whether that background is a plain
+  // rectangle or the authored minimap frame image.
   const ui = readFileSync(new URL('../frontend/js/v3/apps/dungeon/js/scenes/UIScene.js', import.meta.url), 'utf8');
-  assert.match(ui, /this\.minimapBg = this\.add\.rectangle/);
+  assert.match(ui, /this\.minimapBg = this\.add\.(rectangle|image)/);
   assert.match(ui, /this\.minimapGfx = this\.add\.graphics/);
   // Order of assignment: bg must be assigned BEFORE graphics.
-  const bgIdx = ui.indexOf('this.minimapBg = this.add.rectangle');
+  const bgIdx = ui.indexOf('this.minimapBg = this.add.');
   const gfxIdx = ui.indexOf('this.minimapGfx = this.add.graphics');
   assert.ok(bgIdx > -1 && gfxIdx > -1 && bgIdx < gfxIdx,
     'minimap background must be created before the graphics layer');

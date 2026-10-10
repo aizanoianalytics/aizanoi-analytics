@@ -64,9 +64,13 @@ export class UIScene extends Phaser.Scene {
       backgroundColor: '#0f1624cc', padding: { x: 12, y: 5 },
     }).setOrigin(0.5);
 
-    this.objectiveText = this.add.text(width / 2, 42, '', {
+    // The objective counter is the one element the player reads continuously,
+    // so it gets the panel skin instead of a bare text box: a small parchment
+    // chip so it stays legible over both lit floor and dark walls.
+    this.objectivePlate = this.add.image(width / 2, 47, 'slot-empty')
+      .setDisplaySize(214, 20).setAlpha(0.55).setTint(0x1a1410);
+    this.objectiveText = this.add.text(width / 2, 47, '', {
       fontSize: px(readable(11)), color: ink('#d1d5db'),
-      backgroundColor: '#0f1624aa', padding: { x: 10, y: 3 },
     }).setOrigin(0.5);
 
     // Boss health bar. The name plate, the bar, the frame and the current phase
@@ -90,8 +94,8 @@ export class UIScene extends Phaser.Scene {
     }
 
     this.add.rectangle(width - 118, 28, 150, 36, glass, 0.82).setStrokeStyle(1, 0xc5a059);
-    this.add.image(width - 178, 28, 'coin-icon').setScale(1.2);
-    this.goldText = this.add.text(width - 160, 20, '0', { fontSize: px(readable(14)), color: '#f5d77f', fontStyle: 'bold' });
+    this.add.image(width - 186, 28, 'coin-icon').setScale(1.35);
+    this.goldText = this.add.text(width - 166, 20, '0', { fontSize: px(readable(14)), color: '#f5d77f', fontStyle: 'bold' });
 
     const soundBox = this.add.rectangle(width - 28, 28, 32, 32, glass, 0.82)
       .setStrokeStyle(1, 0xc5a059).setInteractive({ useHandCursor: true });
@@ -110,7 +114,7 @@ export class UIScene extends Phaser.Scene {
     // remain visible; the MAP label goes last so it never gets occluded by a
     // nearby dot. Earlier this was [gfx, bg, hint] which made the background
     // cover every dot.
-    this.minimapBg = this.add.rectangle(0, 0, 112, 112, 0x0b1220, 0.88).setStrokeStyle(1.5, 0xc5a059);
+    this.minimapBg = this.add.image(0, 0, 'minimap-frame').setDisplaySize(116, 116);
     this.minimapGfx = this.add.graphics();
     this.minimapHint = this.add.text(0, -60, 'MAP', {
       fontSize: px(readable(9)), color: ink('#9aa8be'),
@@ -180,7 +184,11 @@ export class UIScene extends Phaser.Scene {
     const hpColor = player.hp / player.maxHp <= 0.25 ? 0xe74c3c : 0x27ae60;
     drawStatBar(this.hpGraphics, 74, 34, 158, 13, player.hp, player.maxHp, hpColor);
     drawStatBar(this.xpGraphics, 74, 60, 158, 9, prog.currentXp, prog.nextXp, 0xa569bd);
-    this.hpText.setText(`HP: ${Math.max(0, Math.round(player.hp))}/${player.maxHp}`);
+    // Clamp the displayed number to the current maximum. A relic can raise
+    // maxHp while the player is already full, and the HUD used to print
+    // "126/120" until the next heal tick.
+    const hpNow = Math.min(Math.max(0, Math.round(player.hp)), player.maxHp);
+    this.hpText.setText(`HP: ${hpNow}/${player.maxHp}`);
     this.xpText.setText(`SPARK: ${prog.currentXp}/${prog.nextXp}`);
     this.levelBadge.setText(`Lv.${prog.level}`);
     this.goldText.setText(`${prog.gold}`);
