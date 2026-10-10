@@ -61,6 +61,8 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.body.setOffset(5, 8);
     this.setDepth(10);
 
+    this.setScale(1.15);
+
     // Zemin gölgesi + taban ölçek (squash-stretch referansı)
     this.baseScaleX = this.scaleX || 1;
     this.baseScaleY = this.scaleY || 1;

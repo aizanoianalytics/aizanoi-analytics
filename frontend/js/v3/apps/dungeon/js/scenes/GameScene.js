@@ -250,8 +250,11 @@ export class GameScene extends Phaser.Scene {
     // without touching a single asset.
     this.floorLayer?.setDepth(0);
     this.wallLayer?.setDepth(0);
+    // Keep the chapter identity as a restrained colour wash. A 55% fog layer
+    // over a dark palette crushes the authored floor values into near-black;
+    // at 18% it separates the room without erasing material detail.
     this.chapterHaze = this.add
-      .rectangle(0, 0, w, h, pal.fog, 0.55)
+      .rectangle(0, 0, w, h, pal.fog, 0.18)
       .setOrigin(0)
       .setDepth(0.5);
 
@@ -265,12 +268,18 @@ export class GameScene extends Phaser.Scene {
     // difference survives even where the wash is behind the actors.
     this.appliedFloorTint = this.mixToward(pal.floor, pal.accent, 0.18);
     this.appliedWallTint = this.mixToward(pal.wall, pal.fog, 0.25);
+    // Phaser's tint is multiplicative. Chapter source colours are intentionally
+    // dark atmospheric colours, so applying them raw would turn a pale marble
+    // floor into charcoal. Lift the mixed colour toward neutral white while
+    // preserving its hue; material contrast remains authored in the tileset.
+    this.appliedFloorTint = this.liftTint(this.appliedFloorTint, 0.70);
+    this.appliedWallTint = this.liftTint(this.appliedWallTint, 0.54);
     this.floorLayer?.setTint(this.appliedFloorTint);
     this.wallLayer?.setTint(this.appliedWallTint);
 
     this.cameras.main?.setBackgroundColor?.(pal.fog);
     this.chapterPalette = pal;
-    this.chapterWashAlpha = 0.55;
+    this.chapterWashAlpha = 0.18;
     this.chapterAccentAlpha = 0.16;
     return pal;
   }
@@ -283,6 +292,13 @@ export class GameScene extends Phaser.Scene {
     const g = Math.round(ag + (bg - ag) * t);
     const bl = Math.round(ab + (bb - ab) * t);
     return (r << 16) | (g << 8) | bl;
+  }
+
+  /** Lift a tint toward white because Phaser multiplies tint channels. */
+  liftTint(value, amount) {
+    const r = (value >> 16) & 0xff; const g = (value >> 8) & 0xff; const b = value & 0xff;
+    const lift = (channel) => Math.round(channel + (0xff - channel) * amount);
+    return (lift(r) << 16) | (lift(g) << 8) | lift(b);
   }
 
   renderMap() {
@@ -324,11 +340,9 @@ export class GameScene extends Phaser.Scene {
     this.applyChapterPalette();
 
     this.wallLayer.setCollisionByExclusion([-1]);
-    // High-contrast read: koyu mat zemin (düşmanlar öne çıkar) + soğuk duvar.
-    // Eskiden zemin 0xf6e7c4 idi — her yer krem olduğu için düşman kayboluyordu.
-    this.floorLayer.setTint(0xcdb488);
-    this.wallLayer.setTint(0x1b2744);
-
+    // The authored tileset already carries the material contrast; a second
+    // hard-coded tint here would overwrite the chapter palette and darken it.
+    // Chapter colour is applied once above in applyChapterPalette().
     // Duvar üst kenarına 2px pirinç highlight: derinlik hissi
     try {
       const hl = this.add.graphics().setDepth(4);

@@ -86,6 +86,31 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
     } catch (_) { this.shadow = null; }
 
+    // Readability rim: a low-alpha cool halo separates dark silhouettes from
+    // slate walls without turning the enemy into a glowing billboard. It moves
+    // with the sprite in update(), just like the existing contact shadow.
+    this.readabilityRing = null;
+    try {
+      const ringColor = typeConfig.isFinalBoss ? 0xf0c878 : (typeConfig.behavior === 'ranged_kite' || typeConfig.behavior === 'ranged_aoe' ? 0x8fc6e8 : 0xc7b7d8);
+      this.readabilityRing = scene.add.ellipse(x, y, this.isBoss ? 92 : 38, this.isBoss ? 92 : 38, ringColor, this.isBoss ? 0.12 : 0.10);
+      this.readabilityRing.setDepth(8);
+      this.readabilityRing.setBlendMode(Phaser.BlendModes.SCREEN);
+    } catch (_) { this.readabilityRing = null; }
+
+    // A sprite rim works at native pixel scale where a soft ellipse disappears
+    // against a dark wall: the duplicate is one pixel larger and only its
+    // exposed edge shows around the silhouette.
+    this.readabilitySprite = null;
+    try {
+      const rimColor = typeConfig.isFinalBoss ? 0xffd67d : (typeConfig.behavior === 'ranged_kite' || typeConfig.behavior === 'ranged_aoe' ? 0x8fc6e8 : 0xbda6d5);
+      this.readabilitySprite = scene.add.sprite(x, y, texture, initialFrame)
+        .setScale(this.scaleX * 1.10, this.scaleY * 1.10)
+        .setTint(rimColor)
+        .setAlpha(this.isBoss ? 0.28 : 0.34)
+        .setDepth(8.5)
+        .setBlendMode(Phaser.BlendModes.ADD);
+    } catch (_) { this.readabilitySprite = null; }
+
     // Elit aurası: affix renginde nabız gibi atan hale — neyle karşılaştığın belli olsun
     this.eliteGlow = null;
     if (this.eliteAffix && ELITE_COLORS[this.eliteAffix] !== undefined) {
@@ -169,6 +194,13 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
     if (this.eliteGlow && this.eliteGlow.active) {
       this.eliteGlow.setPosition(this.x, this.y);
+    }
+    if (this.readabilityRing && this.readabilityRing.active) {
+      this.readabilityRing.setPosition(this.x, this.y);
+    }
+    if (this.readabilitySprite && this.readabilitySprite.active) {
+      this.readabilitySprite.setPosition(this.x, this.y);
+      this.readabilitySprite.setFrame(this.frame.name);
     }
 
     // Geri tepme: kisa sure hareket AI durur, itme velocity korunur
@@ -947,6 +979,14 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     if (this.eliteGlow) {
       this.eliteGlow.destroy();
       this.eliteGlow = null;
+    }
+    if (this.readabilityRing) {
+      this.readabilityRing.destroy();
+      this.readabilityRing = null;
+    }
+    if (this.readabilitySprite) {
+      this.readabilitySprite.destroy();
+      this.readabilitySprite = null;
     }
     super.preDestroy();
   }
