@@ -65,10 +65,10 @@ Before a migration: snapshot current `public/` outside the webroot, stop the Mar
 
 Do not treat a merge as a deployment.
 
-1. Confirm the exact approved Git SHA and verify its required GitHub checks — `validate`, `browser-smoke`, `lighthouse` and `hr-pipeline-rebuild` — are green.
+1. Confirm the exact approved Git SHA and verify its required GitHub checks — `validate`, `browser-smoke` and `lighthouse` — are green.
 2. Record the currently deployed SHA for rollback. If the deployed SHA cannot be proven, capture a rollback snapshot before replacing the webroot.
 3. In the canonical server checkout, require a clean working tree before changing refs. If `git status --porcelain` is non-empty, stop and preserve/report the local diff; never use reset/checkout to erase unknown server-only changes. Once clean, fetch the approved commit and check out/reset to that **exact SHA**. Do not deploy an unpinned moving `main` tip merely because it is newer.
-4. Run `node scripts/modules/build-module-registry.mjs --check` for every AizanoiOS/static-shell release so manifests and committed generated wiring cannot drift. Then run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed. If HR Analytics source, synthetic inputs or generated dashboard artifacts changed, run `bash scripts/regenerate-hr-dashboards.sh` first. Do not regenerate News or HR artifacts unnecessarily when the approved diff does not touch those inputs/outputs.
+4. Run `node scripts/modules/build-module-registry.mjs --check` for every AizanoiOS/static-shell release so manifests and committed generated wiring cannot drift. Then run the applicable validation/build step, including `node scripts/news/build-news.mjs` whenever the News compiler, News source records or generated News/sitemap outputs changed. Do not regenerate News artifacts unnecessarily when the approved diff does not touch those inputs/outputs.
 5. Deploy the public static tree with the exact-SHA invocation:
 
    ```bash
@@ -80,42 +80,20 @@ Do not treat a merge as a deployment.
    allowlist boundary; do not replace it with a repo-root copy or ad-hoc
    rsync, and do not bypass the gate with an empty/unset env var.
 6. Confirm source-to-production checksum/SHA parity where the deployment tooling supports it.
-7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, `/analytics/`, `/analytics/dashboards/hr-analytics-full-set/` (catalog index) plus each of its 10 dashboard routes, `/news/about/`, one current permanent News article, `/news/sitemap.xml`, all four Historical Worlds: Aizanoi, Rome, Athens, İGA Airport and representative static assets. `/analytics/`, app id `analytics` and visible label **Analytics** remain aligned.
+7. Smoke-check `/`, `/?app=news`, `/?app=videos`, `/?app=analytics`, `/?app=worlds`, `/?app=forge`, `/analytics/`, `/news/about/`, one current permanent News article, `/news/sitemap.xml`, all four Historical Worlds: Aizanoi, Rome, Athens, İGA Airport and representative static assets. `/analytics/`, app id `analytics` and visible label **Analytics** remain aligned.
     - When an AizanoiOS utility changed, also smoke-check the affected app route(s), including `/?app=browser`, `/?app=camera`, `/?app=calculator`, `/?app=notepad`, `/?app=workspace`, `/?app=recycle-bin`, `/?app=winamp`, `/?app=dungeon` and `/?app=games` as applicable. For Browser changes, verify direct HTTPS navigation, the sandbox boundary and the **Open external** fallback; destination sites may independently refuse iframe embedding. For Camera changes, verify the start/permission flow and effective production `Permissions-Policy`; do not claim real camera/microphone capture unless it was actually observed on a capable client.
-   - `/analytics/workforce-turnover/` is intentionally retired (owner decision 2026-08-26) and MUST return HTTP 404. The canonical Workforce Turnover dashboard is at `/analytics/dashboards/hr-analytics-full-set/workforce-turnover/`. Do not reintroduce the legacy redirect or stub.
-   - `frontend/analytics/dashboards/hr-analytics-full-set/downloads/hr-analytics-full-set-synthetic-output.xlsx` is the only spreadsheet allowed through the public deploy scrub. It must exist and be non-empty after deployment; every other `.xlsx` remains denylisted.
+   - `/analytics/workforce-turnover/` is intentionally retired (owner decision 2026-08-26) and MUST return HTTP 404. Do not reintroduce the legacy redirect or stub.
+   - The HR Analytics Full Set was retired (owner decision, #294): its catalog index, dashboard routes and synthetic workbook download no longer exist and must stay absent. Spreadsheets (`.xlsx`) remain denylisted in every promoted release with no per-file allowlist.
 8. Verify the effective production security headers on both HTML and static-asset responses. For the current Browser/Camera contract, the installed Nginx policy must retain `frame-src 'self' https:`, `media-src 'self' blob:` and `Permissions-Policy: geolocation=(), microphone=(self), camera=(self)` unless a later approved security contract explicitly changes them.
 9. If a regression appears, roll back to the recorded known-good SHA/snapshot instead of hot-fixing production only.
 
 ## Local data regeneration (Analytics dashboards)
 
-The HR Analytics Full Set is a **synthetic-data** product built by the parity-preserved original ten-stage Python pipeline. The public repository commits 27 deterministic synthetic input workbooks and the sanitized production modules; private/employer workbooks are never inputs to the public build.
-
-Install the locked Python 3.11 dependencies, then use the single canonical orchestration command:
-
-```bash
-python -m pip install -r analytics/dashboards/hr-analytics-full-set/production-pipeline/requirements-dashboard-lock.txt
-bash scripts/regenerate-hr-dashboards.sh
-```
-
-The script:
-- verifies that exactly 27 committed synthetic source workbooks are present;
-- runs `analytics/dashboards/hr-analytics-full-set/production-pipeline/run_full_pipeline.py`;
-- maps the ten generated dashboard HTML outputs to their canonical `frontend/` routes;
-- preserves the executive-board embedded PDKS dependency;
-- publishes the integrated synthetic workbook as the single declared public spreadsheet download;
-- rejects source/build leakage into `frontend/`;
-- runs the HR parity, public-artifact-safety and publish-boundary audit contracts.
-
-Normal rebuilds use the committed synthetic inputs. Only when intentionally changing the synthetic dataset, and only when `@oai/artifact-tool` is available, regenerate the 27 source workbooks too:
-
-```bash
-REGENERATE_SYNTHETIC_INPUTS=1 bash scripts/regenerate-hr-dashboards.sh
-```
-
-Do not call the removed `synthetic-core` or `generate_full_set_dashboards.py` paths; they belong to the retired shared-demo implementation and are not part of the restored HR production pipeline.
-
-If you change HR generators, dashboard templates, synthetic inputs, public mappings or deployment policy, the `hr-pipeline-rebuild` CI job must complete from committed inputs and the normal validate/browser gates must remain green before opening or merging a PR.
+The HR Analytics Full Set was retired (owner decision, #294). The ten-stage
+Python pipeline, the 27 synthetic source workbooks, the regeneration script
+and the `hr-pipeline-rebuild` CI job no longer exist. Do not reintroduce them.
+Dashboard regeneration guidance below is historical and applies only if a
+successor analytics pipeline is ever approved.
 
 ## Safety boundaries
 
