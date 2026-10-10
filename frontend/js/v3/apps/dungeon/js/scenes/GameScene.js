@@ -69,6 +69,8 @@ export class GameScene extends Phaser.Scene {
   create() {
     this.isTransitioning = false;
     this.settings = loadSettings();
+    this.braziers = [];
+    this.brazierClock = 0;
     this.recallChannel = 0;
     if (typeof window !== 'undefined') window.__AIZANOI_DUNGEON_SCENE = 'GameScene';
     // 1. Sistemleri başlat
@@ -359,8 +361,16 @@ export class GameScene extends Phaser.Scene {
     // Sparse, deterministic 32px mosaic fragments. The decor asset is a
     // spritesheet: rendering the unsliced 160×96 atlas used to carpet rooms
     // with giant inventory-board rectangles and destroy combat readability.
+    //
+    // Room-authored dressing: each room gets (a) a small scatter of ground
+    // fragments and (b) one hero prop placed near the room's centre line. The
+    // hero prop is what makes a room read as an authored temple rather than a
+    // bounding box: a fallen column or an amphora at the heart of a hall gives
+    // the camera a focal point and the player something to move around. Both
+    // are placed deterministically so a reload never reshuffles the level.
     try {
       const safeFrames = [0, 1, 2, 5, 6, 7];
+      const heroFrames = [0, 1, 3, 4, 6, 9];
       for (const room of this.mapData.rooms || []) {
         const decals = Math.max(1, Math.floor((room.w * room.h) * 0.025));
         for (let i = 0; i < decals; i++) {
@@ -378,11 +388,73 @@ export class GameScene extends Phaser.Scene {
             d.setTint(this.chapterPalette?.accent ?? 0xd8c18d);
           }
         }
+
+        // One hero prop per room. It lands on the room's centre tile rather
+        // than a random cell: a room's centreline is where the eye already
+        // rests, so the prop reads as the room's focal point instead of a
+        // random scattered sprite.
+        const hx = room.x + Math.floor(room.w / 2);
+        const hy = room.y + Math.floor(room.h / 2);
+        if (this.mapData.grid[hy] && this.mapData.grid[hy][hx] !== 2) {
+          const frame = heroFrames[Math.floor(decorNoise(room.x, room.y, 993) * heroFrames.length)];
+          const prop = this.add.image(hx * 32 + 16, hy * 32 + 16, 'tiles-decor', frame)
+            .setDepth(3)
+            .setAlpha(0.92);
+          // Props are stone, not magic: they take the wall stone tint so they
+          // read as architecture instead of glowing decoration.
+          prop.setTint(this.appliedWallTint ?? 0xb8b2a6);
+          // A drop contact shadow so the prop sits ON the floor.
+          const propShadow = this.add.ellipse(prop.x, prop.y + 13, 22, 7, 0x000000, 0.3);
+          propShadow.setDepth(2.9);
+        }
+        // Wall-aligned braziers: a room's silhouette is defined by its walls,
+        // so a light source at the wall is the one dressing that reads as
+        // architecture rather than decoration. One per room, placed on the
+        // first free floor tile that touches a wall.
+        let brazier = null;
+        for (let by = room.y; by < room.y + room.h && !brazier; by++) {
+          for (let bx = room.x; bx < room.x + room.w; bx++) {
+            if (this.mapData.grid[by]?.[bx] === 2) continue;
+            const touchesWall =
+              this.mapData.grid[by]?.[bx - 1] === 2 || this.mapData.grid[by]?.[bx + 1] === 2 ||
+              this.mapData.grid[by - 1]?.[bx] === 2 || this.mapData.grid[by + 1]?.[bx] === 2;
+            if (!touchesWall) continue;
+            // Frames 0-3 are the brazier flicker. The tile is authored dark so
+            // the flame reads without tint; the glow carries the chapter hue.
+            brazier = this.add.sprite(bx * 32 + 16, by * 32 + 16, 'tiles-lights', 0)
+              .setDepth(3.2)
+              .setScale(1.0);
+            this.brazierTimer = this.brazierTimer || null;
+            brazier.brazierFrame = 0;
+            this.braziers.push(brazier);
+            // Three low-alpha pools approximate a radial falloff with Phaser's
+            // primitive API: broad amber ambience, a tighter middle, then a
+            // hot patch under the bowl. A single opaque circle reads as a decal.
+            const glowOuter = this.add.ellipse(bx * 32 + 16, by * 32 + 16, 128, 128,
+              this.chapterPalette?.accent ?? 0xc5a059, 0.035).setDepth(2.6);
+            const glowMid = this.add.ellipse(bx * 32 + 16, by * 32 + 16, 88, 88,
+              this.chapterPalette?.accent ?? 0xc5a059, 0.045).setDepth(2.7);
+            const glowHot = this.add.ellipse(bx * 32 + 16, by * 32 + 16, 52, 52,
+              0xf0a84c, 0.065).setDepth(2.8);
+            glowOuter.setBlendMode(Phaser.BlendModes.ADD);
+            glowMid.setBlendMode(Phaser.BlendModes.ADD);
+            glowHot.setBlendMode(Phaser.BlendModes.ADD);
+            this.tweens.add({
+              targets: [brazier, glowOuter, glowMid, glowHot],
+              alpha: { from: 0.62, to: 1.0 },
+              duration: 620,
+              yoyo: true,
+              repeat: -1,
+              ease: 'Sine.easeInOut',
+            });
+            break;
+          }
+        }
       }
     } catch (_) {}
   }
 
-  // Vignette: ekran kenarlarını karart, odağı ortaya topla (Brotato derinliği)
+  // Vignette: ekran kenarlarını karart, odağı ortaya topla (derinlik hissi)
   addVignette() {
     try {
       const { width, height } = this.cameras.main;
@@ -647,6 +719,15 @@ export class GameScene extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.wasd.ESC)) this.toggleExitMenu();
       }
       if (this.isPaused || this.exitMenu) return;
+      this.brazierClock += delta;
+      if (this.brazierClock >= 145) {
+        this.brazierClock = 0;
+        for (const brazier of this.braziers || []) {
+          if (!brazier?.active) continue;
+          brazier.brazierFrame = (brazier.brazierFrame + 1) % 4;
+          brazier.setFrame(brazier.brazierFrame);
+        }
+      }
       this.player.update(time, delta);
       // The shake is a displacement applied on top of the camera's own follow,
       // so it has to run after the player has moved and the camera has caught

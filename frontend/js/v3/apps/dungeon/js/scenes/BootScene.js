@@ -67,6 +67,8 @@ export class BootScene extends Phaser.Scene {
     this.load.image('tiles-floor', `${ASSET_BASE}tilesets/aizanoi-floor.png`);
     this.load.image('tiles-walls', `${ASSET_BASE}tilesets/aizanoi-walls.png`);
     this.load.spritesheet('tiles-decor', `${ASSET_BASE}tilesets/aizanoi-decor.png`, { frameWidth: 32, frameHeight: 32 });
+    // Light sources: frames 0-3 are the brazier flicker, 4-6 the wall sconce.
+    this.load.spritesheet('tiles-lights', `${ASSET_BASE}tilesets/aizanoi-lights.png`, { frameWidth: 32, frameHeight: 32 });
 
     // 3. UI Assets
     this.load.image('panel-bg', `${ASSET_BASE}ui/panel-bg.png`);
