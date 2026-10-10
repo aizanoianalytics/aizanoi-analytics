@@ -557,11 +557,13 @@ export class GameScene extends Phaser.Scene {
       let count = isBoss ? 14 : 6 + Math.floor(Math.random() * 5);
       if (reduced) count = Math.ceil(count / 2);
       for (let i = 0; i < count; i++) {
-        const p = this.add.sprite(x, y, 'effects', 16 + (i % 4)).setDepth(20);
+        const ember = this.add.sprite(x, y, 'tiles-impacts', 1).setDepth(20);
+        ember.setScale(0.4 + Math.random() * 0.3);
+        ember.setBlendMode(Phaser.BlendModes.ADD);
         const angle = Math.random() * Math.PI * 2;
         const dist = 24 + Math.random() * (isBoss ? 90 : 48);
         this.tweens.add({
-          targets: p,
+          targets: ember,
           x: x + Math.cos(angle) * dist,
           y: y + Math.sin(angle) * dist,
           alpha: 0,
@@ -569,18 +571,21 @@ export class GameScene extends Phaser.Scene {
           scaleY: 0.2,
           duration: 320 + Math.random() * 200,
           ease: 'Quad.easeOut',
-          onComplete: () => p.destroy(),
+          onComplete: () => ember.destroy(),
         });
       }
-      const ring = this.add.circle(x, y, 6, 0xffffff, 0.0).setDepth(20);
-      ring.setStrokeStyle(3, 0xf5d77f, 0.9);
+      // The expanding ring is the authored shockwave instead of a stroked
+      // circle, so it shares the impact sheet's language with the hit sparks.
+      const ring = this.add.sprite(x, y, 'tiles-impacts', 7).setDepth(19);
+      ring.setBlendMode(Phaser.BlendModes.ADD);
+      ring.setScale(0.55);
       this.tweens.add({
         targets: ring,
-        radius: isBoss ? 64 : 30,
+        scaleX: (isBoss ? 2.4 : 1.5) * 1.6,
+        scaleY: (isBoss ? 2.4 : 1.5) * 1.6,
         alpha: 0,
-        duration: 280,
+        duration: isBoss ? 520 : 300,
         ease: 'Quad.easeOut',
-        onUpdate: () => { try { ring.setStrokeStyle(3, 0xf5d77f, Math.max(0, ring.alpha)); } catch (_) {} },
         onComplete: () => ring.destroy(),
       });
       if (isBoss) shakeCamera(this, 200, 0.01);
@@ -1571,29 +1576,17 @@ export class GameScene extends Phaser.Scene {
     };
     try {
       if (isCritical) {
-        // A crit plays the slash arc plus a tighter burst: two events layered,
-        // which is what separates it from a normal hit in a crowded fight.
-        const slash = burst(4, 1.5);
-        this.time.delayedCall(40, () => {
-          if (!this.scene.isActive('GameScene')) return;
-          const inner = this.add.sprite(x, y, 'tiles-impacts', 0).setDepth(21);
-          inner.setScale(0.9);
-          inner.setBlendMode(Phaser.BlendModes.ADD);
-          this.tweens.add({ targets: inner, alpha: 0, duration: 150, onComplete: () => inner.destroy() });
-        });
-        // A wider cool shock ring lands under both, so the hit reads as a
-        // concussive event rather than a flat overlay.
-        const ring = this.add.sprite(x, y, 'tiles-impacts', 7).setDepth(19);
-        ring.setScale(0.7).setBlendMode(Phaser.BlendModes.ADD);
-        this.tweens.add({
-          targets: ring,
-          scaleX: 2.1,
-          scaleY: 2.1,
-          alpha: 0,
-          duration: 260,
-          ease: 'Quad.easeOut',
-          onComplete: () => ring.destroy(),
-        });
+        const now = this.time.now;
+        if (this.critSparkUntil && now < this.critSparkUntil) {
+          burst(0, 1.6);
+        } else {
+          this.critSparkUntil = now + 120;
+          burst(4, 1.5);
+          const ring = this.add.sprite(x, y, 'tiles-impacts', 7).setDepth(19);
+          ring.setScale(0.7).setBlendMode(Phaser.BlendModes.ADD);
+          this.tweens.add({ targets: ring, scaleX: 2.1, scaleY: 2.1, alpha: 0,
+            duration: 260, ease: 'Quad.easeOut', onComplete: () => ring.destroy() });
+        }
       } else {
         burst(0, 1.0 + Math.random() * 0.15);
       }
