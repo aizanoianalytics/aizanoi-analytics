@@ -49,6 +49,9 @@ export class UIScene extends Phaser.Scene {
     this.levelBadge = this.add.text(36, 64, 'Lv.1', {
       fontSize: px(readable(10)), color: '#f5d77f', fontStyle: 'bold',
     }).setOrigin(0.5);
+    this.buildText = this.add.text(180, 72, 'BUILD · 0', {
+      fontSize: px(readable(9)), color: '#b9a7d8', fontStyle: 'bold',
+    }).setOrigin(0.5);
 
     this.hpSkin = this.textures.exists('health-bar')
       ? this.add.image(153, 40.5, 'health-bar').setDisplaySize(158, 20).setAlpha(0.72)
@@ -188,6 +191,7 @@ export class UIScene extends Phaser.Scene {
     this.hpText.setText(`HP: ${hpNow}/${player.maxHp}`);
     this.xpText.setText(`SPARK: ${prog.currentXp}/${prog.nextXp}`);
     this.levelBadge.setText(`Lv.${prog.level}`);
+    this.buildText.setText(`BUILD · ${gs.runState?.blessingIds?.length || 0}`);
     this.goldText.setText(`${prog.gold}`);
 
     const chapterName = gs.isEndless
