@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-10-man-utd-tottenham-old-trafford-matchday-six",
+  "kind": "daily",
+  "title": "Manchester United host winless Tottenham at Old Trafford",
+  "summary": "Manchester United and Tottenham Hotspur meet at Old Trafford on Saturday evening in Premier League matchday six, both looking to steady poor starts. United sit 12th on five points and Tottenham are bottom of the table on two, without a league win this season after five games without victory. Both sides return from the October international break under pressure, with United's Michael Carrick and Spurs' Roberto De Zerbi each seeking a response in front of a home crowd.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "manchester-united",
+    "tottenham",
+    "matchday"
+  ],
+  "sources": [
+    {
+      "publisher": "Yahoo Sports (Playmakerstats)",
+      "url": "https://sports.yahoo.com/articles/preview-manchester-united-vs-tottenham-164000395.html",
+      "publishedAt": "2026-10-09T16:40:00Z"
+    },
+    {
+      "publisher": "FOX Sports",
+      "url": "https://www.foxsports.com/soccer/premier-league-manchester-utd-vs-tottenham-hotspur-oct-10-2026-game-boxscore-891124",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    }
+  ]
+}

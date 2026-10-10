@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-10-wall-street-record-week-close-gains",
+  "kind": "daily",
+  "title": "Wall Street closes its record-setting week with broad gains",
+  "summary": "US stocks finished a volatile week higher, with the S&P 500 up 0.59 per cent to 7,811.54, the Dow Jones Industrial Average adding 0.83 per cent to 51,654.95 and the Nasdaq Composite gaining 0.64 per cent to 27,366.17. The S&P 500 rose about 1.15 per cent over the week. The rebound followed a Thursday selloff sparked by a report on OpenAI's revenue and came as the 10-year Treasury yield hovered near a 24-year high. Investors now look to September CPI and the start of bank earnings next week.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "stocks",
+    "s-p-500",
+    "nasdaq",
+    "treasury-yields",
+    "wall-street"
+  ],
+  "sources": [
+    {
+      "publisher": "Associated Press (via Newser)",
+      "url": "https://www.newser.com/article/5d0f953dbf96febb0690c1aef23fa8a9/wall-street-finishes-its-record-setting-week-with-gains.html",
+      "publishedAt": "2026-10-09T20:30:00Z"
+    },
+    {
+      "publisher": "The Epoch Times",
+      "url": "https://www.theepochtimes.com/business/wall-street-review-sp-500-closes-near-all-time-high-6101881",
+      "publishedAt": "2026-10-09T21:00:00Z"
+    }
+  ]
+}

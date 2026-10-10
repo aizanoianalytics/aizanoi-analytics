@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-10-apple-iphone-18-pro-component-order-cuts",
+  "kind": "daily",
+  "title": "Apple trims iPhone 18 Pro component orders as memory costs bite",
+  "summary": "Apple has told some suppliers to cut production of components for the newly launched iPhone 18 Pro and iPhone 18 Pro Max, with October orders at least 15 per cent below its original requests, Nikkei Asia reported on October 9. Suppliers blamed price: the phones start at $1,199 and $1,299, each $100 above their predecessors, after a steep rise in memory-chip costs driven by AI data-centre demand. Apple shares fell on the report; the cuts concern components rather than confirmed sales, and Nikkei noted the staggered launch schedule may also explain some softness.",
+  "category": "technology",
+  "priority": 68,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "iphone",
+    "memory-chips",
+    "supply-chain"
+  ],
+  "sources": [
+    {
+      "publisher": "Nikkei Asia",
+      "url": "https://asia.nikkei.com/business/technology/exclusive-apple-cuts-iphone-18-pro-orders-due-to-soft-demand",
+      "publishedAt": "2026-10-09T06:00:00Z"
+    },
+    {
+      "publisher": "Forbes",
+      "url": "https://www.forbes.com/sites/siladityaray/2026/10/09/apple-shares-dip-after-report-says-its-cutting-iphone-18-pro-component-orders/",
+      "publishedAt": "2026-10-09T11:00:00Z"
+    },
+    {
+      "publisher": "TradingView (Seeking Alpha)",
+      "url": "https://www.tradingview.com/news/seekingalpha:8cd564196094b:0-apple-cuts-iphone-18-pro-component-orders-by-15-on-chip-costs-report/",
+      "publishedAt": "2026-10-09T07:00:00Z"
+    }
+  ]
+}

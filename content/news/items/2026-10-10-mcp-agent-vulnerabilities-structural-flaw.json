@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-10-mcp-agent-vulnerabilities-structural-flaw",
+  "kind": "daily",
+  "title": "Vulnerabilities in MCP agent tooling expose a structural security gap",
+  "summary": "Security researchers have disclosed flaws in agent-to-agent tooling built on the Model Context Protocol, including a Google MCP Toolbox for databases issue in which an HTTP client was initialised without redirect validation and rated 8.0. A separate Rapid7 flaw, CVE-2026-97228, scored only 2.7 yet still let malicious prompts spread from one agent to another. Ars Technica reported that each protocol checks its own front door while 'nobody watches the hallway in between', a layered-trust problem that is hard to catch whether or not any single component is broken.",
+  "category": "technology",
+  "priority": 57,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "mcp",
+    "agents",
+    "vulnerability",
+    "google"
+  ],
+  "sources": [
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/security/2026/10/vulnerability-in-agents-from-google-and-others-exposes-structural-flaw-in-mcp/",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    },
+    {
+      "publisher": "OpenCVE",
+      "url": "https://app.opencve.io/cve/CVE-2026-11717",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    }
+  ]
+}

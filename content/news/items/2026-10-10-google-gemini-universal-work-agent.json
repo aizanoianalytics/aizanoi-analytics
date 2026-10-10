@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-10-google-gemini-universal-work-agent",
+  "kind": "daily",
+  "title": "Google turns Gemini into a universal work agent that can route tasks to Claude",
+  "summary": "At its Gemini at Work 2026 event on October 8, Google Cloud introduced a single 'Gemini agent' meant to replace task-specific copilots, answering questions, drafting documents and writing code across Gmail, Docs, Sheets and Calendar and reaching into Microsoft 365 and Slack. The agent picks the model it judges best for each job from Google's Gemini family and, in a notable concession, Anthropic's Claude models, with manual override available. Google said availability begins in private preview for selected Workspace Business and Enterprise plans.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "gemini",
+    "anthropic",
+    "enterprise-ai",
+    "agents"
+  ],
+  "sources": [
+    {
+      "publisher": "UnixGaming",
+      "url": "https://unixgaming.org/what-google-actually-announced-at-gemini-at-work-2026/",
+      "publishedAt": "2026-10-09T10:00:00Z"
+    },
+    {
+      "publisher": "The CODEW",
+      "url": "https://www.thecodew.com/2026/10/ai-watch-google-openai-anthropic-microsoft-enterprise-ai-agents.html",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    }
+  ]
+}

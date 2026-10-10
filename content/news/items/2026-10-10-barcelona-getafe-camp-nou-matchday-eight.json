@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-10-barcelona-getafe-camp-nou-matchday-eight",
+  "kind": "daily",
+  "title": "Barcelona target a record eighth straight win as Getafe visit Camp Nou",
+  "summary": "La Liga leaders Barcelona host Getafe at Camp Nou on Saturday in matchday eight, chasing an eighth straight league win that would equal their best-ever start to a top-flight season. Hansi Flick's side have won all seven league games, scoring 31 goals and conceding seven, and lead second-placed Atletico Madrid by five points. Forward Raphinha is out with a thigh problem and Frenkie de Jong and Andreas Christensen also miss out; Getafe sit 11th with eight points and only four league goals this season.",
+  "category": "football",
+  "priority": 55,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "la-liga",
+    "barcelona",
+    "getafe",
+    "flick"
+  ],
+  "sources": [
+    {
+      "publisher": "Goal.com",
+      "url": "https://www.goal.com/en/news/barcelona-getafe-laliga-preview/blt5afc0d3a3e3c5aaa",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    },
+    {
+      "publisher": "Sports Illustrated",
+      "url": "https://www.si.com/soccer/barcelona-vs-getafe-preview-predictions-lineups-10-10-26",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    },
+    {
+      "publisher": "LALIGA",
+      "url": "https://www.laliga.com/en-GB/match/temporada-2026-2027-laliga-ea-sports-fc-barcelona-getafe-cf-8",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    }
+  ]
+}
