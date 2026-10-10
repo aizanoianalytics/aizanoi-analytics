@@ -50,6 +50,12 @@ export class UIScene extends Phaser.Scene {
       fontSize: px(readable(10)), color: '#f5d77f', fontStyle: 'bold',
     }).setOrigin(0.5);
 
+    this.hpSkin = this.textures.exists('health-bar')
+      ? this.add.image(153, 40.5, 'health-bar').setDisplaySize(158, 20).setAlpha(0.72)
+      : null;
+    this.sparkSkin = this.textures.exists('spark-bar')
+      ? this.add.image(153, 64.5, 'spark-bar').setDisplaySize(158, 15).setAlpha(0.72)
+      : null;
     this.hpGraphics = this.add.graphics();
     this.xpGraphics = this.add.graphics();
     this.hpText = this.add.text(74, 22, 'HP: 120/120', { fontSize: px(readable(11)), color: '#e8eef8', fontStyle: 'bold' });
