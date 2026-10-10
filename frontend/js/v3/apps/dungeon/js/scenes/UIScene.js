@@ -271,7 +271,7 @@ export class UIScene extends Phaser.Scene {
     plot(gs.exitPortal?.x || 0, gs.exitPortal?.y || 0, ready ? 0x00d2ff : 0x64748b, 3);
     for (const enemy of gs.enemies?.getChildren?.() || []) {
       if (enemy.active && enemy.hp > 0) {
-        plot(enemy.x, enemy.y, enemy.isBoss ? 0xf39c12 : 0xe74c3c, enemy.isBoss ? 3 : 1.6);
+        plot(enemy.x, enemy.y, enemy.isBoss ? 0xf39c12 : (enemy.eliteAffix ? 0xf5d77f : 0xe74c3c), enemy.isBoss ? 3 : (enemy.eliteAffix ? 2.4 : 1.6));
       }
     }
     plot(player.x, player.y, 0x7ea0ff, 3);
