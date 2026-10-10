@@ -154,6 +154,18 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     this.setDepth(9);
 
+    // Actors respond to the room's light. Placing the sprite on the Light2D
+    // pipeline makes the brazier pools wash across the enemy the same way they
+    // wash across the floor, so a gargoyle standing in torchlight looks like it
+    // is IN the torchlight instead of pasted on top of it.
+    //
+    // The readability rim stays off the pipeline deliberately: it is a
+    // gameplay-clarity element, not a material, and dimming it in unlit corners
+    // would remove the very separation it exists to provide.
+    if (typeof this.setPipeline === 'function' && scene.lights?.active) {
+      try { this.setPipeline('Light2D'); } catch (_) {}
+    }
+
     // Sağlık barı grafiği
     this.hpBar = scene.add.graphics();
     this.hpBar.setDepth(15);

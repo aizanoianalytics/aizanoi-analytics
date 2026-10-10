@@ -61,6 +61,13 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     this.body.setOffset(5, 8);
     this.setDepth(10);
 
+    // The hero is lit by the room too, same rule as the enemies: the body
+    // takes the firelight while the halo stays off the pipeline so the player
+    // is never dimmed into the dark.
+    if (typeof this.setPipeline === 'function' && scene.lights?.active) {
+      try { this.setPipeline('Light2D'); } catch (_) {}
+    }
+
     this.setScale(1.15);
 
     // Zemin gölgesi + taban ölçek (squash-stretch referansı)
