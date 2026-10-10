@@ -168,8 +168,14 @@ export class GameScene extends Phaser.Scene {
     // 11. Dokunmatik Kontroller
     this.touchControls = new TouchControls(this);
 
-    // 12. Paralel HUD Sahnesini ve Ortam Müziğini Başlat
-    this.scene.launch('UIScene', { gameScene: this });
+    // Phaser can ignore a parallel scene launch while GameScene is still
+    // completing create(). Defer the HUD handoff one tick so the scene manager
+    // has committed GameScene before starting UIScene.
+    setTimeout(() => {
+      if (this.scene.isActive('GameScene') && !this.scene.isActive('UIScene')) {
+        this.game.scene.start('UIScene', { gameScene: this });
+      }
+    }, 0);
     audioManager.startAmbientDrone();
 
     // 12b. Görsel katman: vignette + portal nabzı + bölüm kartı

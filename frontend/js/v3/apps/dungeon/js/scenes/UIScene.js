@@ -52,10 +52,6 @@ export class UIScene extends Phaser.Scene {
 
     this.hpGraphics = this.add.graphics();
     this.xpGraphics = this.add.graphics();
-    // Authored bar skins sit under the live fills. The graphics remain the
-    // dynamic layer so fractional health/xp still renders accurately.
-    this.add.image(153, 40, 'health-bar').setDisplaySize(158, 19).setAlpha(0.9);
-    this.add.image(153, 64, 'spark-bar').setDisplaySize(158, 15).setAlpha(0.9);
     this.hpText = this.add.text(74, 22, 'HP: 120/120', { fontSize: px(readable(11)), color: '#e8eef8', fontStyle: 'bold' });
     this.xpText = this.add.text(74, 46, 'SPARK: 0/50', { fontSize: px(readable(10)), color: '#b7c0d0', fontStyle: 'bold' });
 
@@ -64,13 +60,9 @@ export class UIScene extends Phaser.Scene {
       backgroundColor: '#0f1624cc', padding: { x: 12, y: 5 },
     }).setOrigin(0.5);
 
-    // The objective counter is the one element the player reads continuously,
-    // so it gets the panel skin instead of a bare text box: a small parchment
-    // chip so it stays legible over both lit floor and dark walls.
-    this.objectivePlate = this.add.image(width / 2, 47, 'slot-empty')
-      .setDisplaySize(214, 20).setAlpha(0.55).setTint(0x1a1410);
-    this.objectiveText = this.add.text(width / 2, 47, '', {
+    this.objectiveText = this.add.text(width / 2, 42, '', {
       fontSize: px(readable(11)), color: ink('#d1d5db'),
+      backgroundColor: '#0f1624aa', padding: { x: 10, y: 3 },
     }).setOrigin(0.5);
 
     // Boss health bar. The name plate, the bar, the frame and the current phase
@@ -114,7 +106,7 @@ export class UIScene extends Phaser.Scene {
     // remain visible; the MAP label goes last so it never gets occluded by a
     // nearby dot. Earlier this was [gfx, bg, hint] which made the background
     // cover every dot.
-    this.minimapBg = this.add.image(0, 0, 'minimap-frame').setDisplaySize(116, 116);
+    this.minimapBg = this.add.rectangle(0, 0, 112, 112, 0x0b1220, 0.88).setStrokeStyle(1.5, 0xc5a059);
     this.minimapGfx = this.add.graphics();
     this.minimapHint = this.add.text(0, -60, 'MAP', {
       fontSize: px(readable(9)), color: ink('#9aa8be'),
@@ -145,16 +137,10 @@ export class UIScene extends Phaser.Scene {
       { key: 'dash', testKey: 'shift', label: 'SHFT', x: cx + 104, name: 'Dash', accent: 0x7dd3fc },
     ];
     defs.forEach((def) => {
-      const box = this.add.image(def.x, cy, 'slot-empty').setDisplaySize(46, 46);
-      box.setInteractive({ useHandCursor: true });
-      box.on('pointerdown', () => {
-        box.setTexture('slot-filled');
-        this.time.delayedCall(90, () => { if (box.active) box.setTexture('slot-empty'); });
-      });
-      this.add.text(def.x, cy - 10, def.label, { fontSize: px(readable(12)), color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
-      const name = this.add.text(def.x, cy + 3, def.name.toUpperCase(), { fontSize: px(readable(6)), color: '#d7deea', fontStyle: 'bold' }).setOrigin(0.5);
-      const cd = this.add.text(def.x, cy + 16, 'RDY', { fontSize: px(readable(8)), color: '#3dcea8', fontStyle: 'bold' }).setOrigin(0.5);
-      this.abilitySlots[def.key] = { box, name, cd, accent: def.accent };
+      const box = this.add.rectangle(def.x, cy, 46, 46, 0x0f1624, 0.9).setStrokeStyle(2, 0xc5a059);
+      this.add.text(def.x, cy - 8, def.label, { fontSize: px(readable(13)), color: '#f5d77f', fontStyle: 'bold' }).setOrigin(0.5);
+      const cd = this.add.text(def.x, cy + 10, 'RDY', { fontSize: px(readable(9)), color: '#3dcea8', fontStyle: 'bold' }).setOrigin(0.5);
+      this.abilitySlots[def.key] = { box, cd, accent: def.accent };
     });
   }
 
@@ -167,10 +153,10 @@ export class UIScene extends Phaser.Scene {
     const accent = slot.accent ?? 0xc5a059;
     if (ready) {
       slot.cd.setText('RDY').setColor('#3dcea8');
-      slot.box.setTint(accent);
+      slot.box.setStrokeStyle(2, accent);
     } else {
       slot.cd.setText(`${seconds}s`).setColor('#f07186');
-      slot.box.setTint(0x5a3a48);
+      slot.box.setStrokeStyle(2, 0x5a3a48);
     }
   }
 
