@@ -394,8 +394,13 @@ export class GameScene extends Phaser.Scene {
     // The layers that must receive light go on the Light2D pipeline. Everything
     // that is NOT on that pipeline (actors, HUD, effects) renders above the
     // light texture and is therefore never darkened by it.
+    // The dressing is lit too: an unlit column in a lit room reads as a dark
+    // rectangle pasted on top, which is exactly the "sprite over background"
+    // look that separates amateur from production art.
     this.floorLayer.setPipeline('Light2D');
     this.wallLayer.setPipeline('Light2D');
+    // The hero props are placed later in create(); they are registered with
+    // the pipeline at creation time in placeRoomDressing().
 
     this.wallLayer.setCollisionByExclusion([-1]);
     // The authored tileset already carries the material contrast; a second
@@ -438,7 +443,8 @@ export class GameScene extends Phaser.Scene {
               .setDepth(1)
               .setAlpha(0.32 + decorNoise(dx, dy, i * 5 + 4) * 0.22)
               .setRotation(Math.floor(decorNoise(dx, dy, i * 5 + 5) * 4) * Math.PI / 2)
-              .setScale(0.72 + decorNoise(dx, dy, i * 5 + 6) * 0.2);
+              .setScale(0.72 + decorNoise(dx, dy, i * 5 + 6) * 0.2)
+              .setPipeline('Light2D');
             // Mosaic fragments take the chapter's accent, so the decoration is
             // part of the chapter's colour scheme rather than a constant.
             d.setTint(this.chapterPalette?.accent ?? 0xd8c18d);
@@ -455,7 +461,8 @@ export class GameScene extends Phaser.Scene {
           const frame = heroFrames[Math.floor(decorNoise(room.x, room.y, 993) * heroFrames.length)];
           const prop = this.add.image(hx * 32 + 16, hy * 32 + 16, 'tiles-decor', frame)
             .setDepth(3)
-            .setAlpha(0.92);
+            .setAlpha(0.92)
+            .setPipeline('Light2D');
           // Props are stone, not magic: they take the wall stone tint so they
           // read as architecture instead of glowing decoration.
           prop.setTint(this.appliedWallTint ?? 0xb8b2a6);
