@@ -777,19 +777,19 @@ export class GameScene extends Phaser.Scene {
       const { width } = this.cameras.main;
       const name = this.isEndless ? `Endless Pantheon — Wave ${this.endlessWave}` : (this.currentLevelConfig.name || '');
       const lore = this.isEndless ? 'Endless waves. Highest wave is the score.' : (this.currentLevelConfig.lore || '');
-      const title = this.add.text(width / 2, 120, name, {
-        fontSize: '26px', color: '#f5d77f', fontStyle: 'bold',
-        stroke: '#0b1220', strokeThickness: 6,
+      const title = this.add.text(width / 2, 132, name, {
+        fontSize: '20px', color: '#f5d77f', fontStyle: 'bold',
+        stroke: '#0b1220', strokeThickness: 5,
       }).setOrigin(0.5).setDepth(400).setScrollFactor(0);
-      const sub = this.add.text(width / 2, 152, lore, {
-        fontSize: '13px', color: '#d1d5db', fontStyle: 'italic',
-        stroke: '#0b1220', strokeThickness: 4,
+      const sub = this.add.text(width / 2, 157, lore, {
+        fontSize: '12px', color: '#d1d5db', fontStyle: 'italic',
+        stroke: '#0b1220', strokeThickness: 3,
       }).setOrigin(0.5).setDepth(400).setScrollFactor(0);
       this.tweens.add({
         targets: [title, sub],
         alpha: 0,
-        duration: 700,
-        delay: 1700,
+        duration: 500,
+        delay: 900,
         onComplete: () => { title.destroy(); sub.destroy(); },
       });
     } catch (_) {}
