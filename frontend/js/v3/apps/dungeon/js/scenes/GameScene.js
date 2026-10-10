@@ -900,10 +900,11 @@ export class GameScene extends Phaser.Scene {
     if (!proj.isPlayer || !enemy.active) return;
 
     const damageType = proj.damageType || 'physical';
+    let attackResult = null;
     if (proj.attacker) {
-      const res = CombatSystem.processAttack(proj.attacker, enemy, proj.damage, { damageType });
+      attackResult = CombatSystem.processAttack(proj.attacker, enemy, proj.damage, { damageType });
       // Kritik senkronu: ses zaten pitch'li, görsel de aynı karede patlasın
-      if (res && res.isCritical) {
+      if (attackResult && attackResult.isCritical) {
         shakeCamera(this, 110, 0.006);
         this.juiceHitstop(55);
       }
@@ -912,7 +913,7 @@ export class GameScene extends Phaser.Scene {
       const netDamage = CombatSystem.calculateDamage(proj.damage, targetArmor);
       enemy.takeDamage(netDamage);
     }
-    this.createDamageSpark(enemy.x, enemy.y);
+    this.createDamageSpark(enemy.x, enemy.y, Boolean(attackResult?.isCritical));
 
     // Zeus Staff AoE: carpis noktasinda yariCap icindeki diger dusmanlara
     // yari hasar. Birincil hedefe ikinci kez vurulmaz; yalnizca dusmanlar.
@@ -1537,24 +1538,69 @@ export class GameScene extends Phaser.Scene {
     return enemy;
   }
 
-  createDamageSpark(x, y) {
-    // Üçlü kıvılcım + hızlı şok halkası (tek sprite yerine tok patlama)
+  createDamageSpark(x, y, isCritical = false) {
+    // The authored impact sheet replaces the old generic sparks: a tight white
+    // core on the first frame stays legible inside a firelit, busy room, which
+    // a soft blob did not.
+    const burst = (startFrame, spriteScale) => {
+      const spark = this.add.sprite(x, y, 'tiles-impacts', startFrame).setDepth(20);
+      spark.setScale(spriteScale);
+      spark.setBlendMode(Phaser.BlendModes.ADD);
+      // The burst is a 4-frame animation rather than a tween on one frame, so
+      // the impact has a shape that develops instead of a uniform fade.
+      this.tweens.add({
+        targets: spark,
+        duration: 190,
+        onComplete: () => spark.destroy(),
+        onStart: () => {
+          if (!spark.active) return;
+          spark.setFrame(startFrame + 1);
+          this.time.delayedCall(60, () => { if (spark.active) spark.setFrame(startFrame + 2); });
+          this.time.delayedCall(120, () => { if (spark.active) spark.setFrame(startFrame + 3); });
+        },
+      });
+      this.tweens.add({
+        targets: spark,
+        scaleX: spriteScale * 1.25,
+        scaleY: spriteScale * 1.25,
+        alpha: 0,
+        duration: 190,
+        ease: 'Quad.easeOut',
+      });
+      return spark;
+    };
     try {
-      for (let i = 0; i < 3; i++) {
-        const spark = this.add.sprite(x + (Math.random() - 0.5) * 14, y + (Math.random() - 0.5) * 14, 'effects', 16 + (i % 4)).setDepth(20);
-        spark.setScale(0.9 + Math.random() * 0.5);
-        spark.setBlendMode(Phaser.BlendModes.ADD);
-        this.tweens.add({
-          targets: spark,
-          alpha: 0,
-          scaleX: 0.3,
-          scaleY: 0.3,
-          duration: 160 + Math.random() * 80,
-          onComplete: () => spark.destroy(),
+      if (isCritical) {
+        // A crit plays the slash arc plus a tighter burst: two events layered,
+        // which is what separates it from a normal hit in a crowded fight.
+        const slash = burst(4, 1.5);
+        this.time.delayedCall(40, () => {
+          if (!this.scene.isActive('GameScene')) return;
+          const inner = this.add.sprite(x, y, 'tiles-impacts', 0).setDepth(21);
+          inner.setScale(0.9);
+          inner.setBlendMode(Phaser.BlendModes.ADD);
+          this.tweens.add({ targets: inner, alpha: 0, duration: 150, onComplete: () => inner.destroy() });
         });
+        // A wider cool shock ring lands under both, so the hit reads as a
+        // concussive event rather than a flat overlay.
+        const ring = this.add.sprite(x, y, 'tiles-impacts', 7).setDepth(19);
+        ring.setScale(0.7).setBlendMode(Phaser.BlendModes.ADD);
+        this.tweens.add({
+          targets: ring,
+          scaleX: 2.1,
+          scaleY: 2.1,
+          alpha: 0,
+          duration: 260,
+          ease: 'Quad.easeOut',
+          onComplete: () => ring.destroy(),
+        });
+      } else {
+        burst(0, 1.0 + Math.random() * 0.15);
       }
     } catch (_) {
-      const spark = this.add.sprite(x, y, 'effects', 16).setDepth(20);
+      // Fallback: a single authored burst frame, never a missing texture.
+      const spark = this.add.sprite(x, y, 'tiles-impacts', 0).setDepth(20);
+      spark.setBlendMode(Phaser.BlendModes.ADD);
       this.time.delayedCall(200, () => spark.destroy());
     }
   }

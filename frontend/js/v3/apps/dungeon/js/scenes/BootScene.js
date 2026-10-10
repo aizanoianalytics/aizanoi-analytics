@@ -79,6 +79,8 @@ export class BootScene extends Phaser.Scene {
     this.load.image('spark-bar', `${ASSET_BASE}ui/spark-bar.png`);
     this.load.image('slot-empty', `${ASSET_BASE}ui/slot-empty.png`);
     this.load.image('slot-filled', `${ASSET_BASE}ui/slot-filled.png`);
+    // Impact sheet: 0..3 normal hit burst, 4..6 critical slash, 7 shock ring.
+    this.load.spritesheet('tiles-impacts', `${ASSET_BASE}tilesets/aizanoi-impacts.png`, { frameWidth: 32, frameHeight: 32 });
     this.load.image('minimap-frame', `${ASSET_BASE}ui/minimap-frame.png`);
     this.load.image('coin-icon', `${ASSET_BASE}ui/coin-icon.png`);
     this.load.image('spark-icon', `${ASSET_BASE}ui/spark-icon.png`);
