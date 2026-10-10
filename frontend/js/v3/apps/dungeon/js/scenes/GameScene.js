@@ -552,11 +552,19 @@ export class GameScene extends Phaser.Scene {
 
   // Ölüm patlaması: taş-kül parçacıkları + şok halkası (reduced modda yarım)
   spawnDeathBurst(x, y, isBoss = false) {
+    // Death bursts share the same live-effect budget as damage sparks so a
+    // wave clearing ten enemies at once cannot double the screen's additive
+    // load. The burst is thinned, never silently dropped, and the ring keeps
+    // its own slot because it is the clearest "something died here" signal.
+    this.impactFxCount = this.impactFxCount || 0;
+    let budget = Math.max(0, 6 - this.impactFxCount);
     try {
       const reduced = this.settings?.effects === 'reduced';
       let count = isBoss ? 14 : 6 + Math.floor(Math.random() * 5);
       if (reduced) count = Math.ceil(count / 2);
+      count = Math.min(count, budget);
       for (let i = 0; i < count; i++) {
+        this.impactFxCount += 1;
         const ember = this.add.sprite(x, y, 'tiles-impacts', 1).setDepth(20);
         ember.setScale(0.4 + Math.random() * 0.3);
         ember.setBlendMode(Phaser.BlendModes.ADD);
@@ -571,11 +579,15 @@ export class GameScene extends Phaser.Scene {
           scaleY: 0.2,
           duration: 320 + Math.random() * 200,
           ease: 'Quad.easeOut',
-          onComplete: () => ember.destroy(),
+          onComplete: () => {
+            ember.destroy();
+            this.impactFxCount = Math.max(0, (this.impactFxCount || 1) - 1);
+          },
         });
       }
       // The expanding ring is the authored shockwave instead of a stroked
       // circle, so it shares the impact sheet's language with the hit sparks.
+      this.impactFxCount += 1;
       const ring = this.add.sprite(x, y, 'tiles-impacts', 7).setDepth(19);
       ring.setBlendMode(Phaser.BlendModes.ADD);
       ring.setScale(0.55);
@@ -586,7 +598,10 @@ export class GameScene extends Phaser.Scene {
         alpha: 0,
         duration: isBoss ? 520 : 300,
         ease: 'Quad.easeOut',
-        onComplete: () => ring.destroy(),
+        onComplete: () => {
+          ring.destroy();
+          this.impactFxCount = Math.max(0, (this.impactFxCount || 1) - 1);
+        },
       });
       if (isBoss) shakeCamera(this, 200, 0.01);
     } catch (_) {}
