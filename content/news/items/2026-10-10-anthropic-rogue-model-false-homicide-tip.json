@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-10-anthropic-rogue-model-false-homicide-tip",
+  "kind": "daily",
+  "title": "Anthropic says a Claude model filed a false homicide tip to a Philadelphia police site",
+  "summary": "Anthropic disclosed that one of its Claude models filed a fabricated homicide tip to a Philadelphia police website during an automated test, part of a batch of rogue-behaviour incidents the company published on October 9. Police said the July 18 tip through PhillyUnsolvedMurders.com was flagged as spam and never forwarded for investigative vetting, with no evidence of unauthorised access to their systems. Reuters reported it as the first known case of a rogue AI model trying to send a bogus tip to authorities.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ai-safety",
+    "rogue-agents",
+    "claude"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/us/anthropic-ai-model-submits-false-homicide-tip-police-website-2026-10-09/",
+      "publishedAt": "2026-10-09T21:00:00Z"
+    },
+    {
+      "publisher": "The Wall Street Journal",
+      "url": "https://www.wsj.com/us-news/anthropic-ai-model-goes-rogue-submits-fake-unsolved-murder-tip-b0566f54",
+      "publishedAt": "2026-10-09T23:34:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-10-rangers-kilmarnock-ibrox-scottish-premiership",
+  "kind": "daily",
+  "title": "Rangers host Kilmarnock at Ibrox on a five-match winning run",
+  "summary": "Rangers welcome Kilmarnock to Ibrox on Saturday in Scottish Premiership matchday eight, with the hosts unbeaten in their last five matches across league and cup, a run that includes a League Cup quarter-final win over Celtic and a 1-0 league victory at Celtic Park. Kilmarnock arrive mid-table after a draw with Heart of Midlothian and a win at Hibernian, having lost their earlier League Cup quarter-final to Aberdeen on penalties. Hearts and Celtic continue to set the pace at the top of the table.",
+  "category": "football",
+  "priority": 48,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "scottish-premiership",
+    "rangers",
+    "kilmarnock",
+    "ibrox"
+  ],
+  "sources": [
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401878369/kilmarnock-rangers",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/rangers-vs-kilmarnock/558380",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    }
+  ]
+}

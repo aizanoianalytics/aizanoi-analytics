@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-10-anthropic-critical-infrastructure-defense-program",
+  "kind": "daily",
+  "title": "Anthropic launches a Critical Infrastructure Defense Program with eleven security partners",
+  "summary": "Anthropic has announced the Anthropic Cyber Mission, led by a Critical Infrastructure Defense Program that supplies frontier Claude models, on-site engineers and threat research to firms defending power grids, water utilities and transport networks. Founding partners include Accenture, Booz Allen, CrowdStrike, Deloitte, Dragos, Hitachi, Nozomi Networks, Palo Alto Networks, PwC and Rockwell Automation. A second arm, OSS Scanner, gives open-source projects free security scans from Anthropic's strongest models; early testers said most findings proved valid and several became CVEs.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "cybersecurity",
+    "critical-infrastructure",
+    "open-source"
+  ],
+  "sources": [
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/anthropic-cyber-mission-critical-infrastructure-oss-scanner",
+      "publishedAt": "2026-10-09T19:25:00Z"
+    },
+    {
+      "publisher": "Artificially Intimidating",
+      "url": "https://artificiallyintimidating.com/p/ai-brief-october-9-2026",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-10-super-micro-contractor-guilty-nvidia-chips-china",
+  "kind": "daily",
+  "title": "Super Micro contractor pleads guilty in $2.5bn Nvidia-server diversion to China",
+  "summary": "A contractor linked to Super Micro Computer has pleaded guilty in a scheme to illegally export servers containing advanced Nvidia AI chips to China, a court filing unsealed on October 9 showed. Reuters reported that Ting-Wei 'Willy' Sun entered the plea in US District Court in Manhattan. Prosecutors charged Sun and two others in March, including a Super Micro co-founder, over roughly $2.5 billion of AI technology allegedly diverted through a Southeast Asian intermediary in violation of US export laws.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "export-controls",
+    "super-micro",
+    "china",
+    "ai-chips"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/government/super-micro-contractor-pleads-guilty-scheme-divert-ai-servers-with-nvidia-chips-2026-10-09/",
+      "publishedAt": "2026-10-09T18:29:00Z"
+    },
+    {
+      "publisher": "Investing.com",
+      "url": "https://www.investing.com/news/stock-market-news/super-micro-contractor-pleads-guilty-in-scheme-to-divert-ai-servers-with-nvidia-chips-to-china-4941793",
+      "publishedAt": "2026-10-09T18:29:00Z"
+    }
+  ]
+}

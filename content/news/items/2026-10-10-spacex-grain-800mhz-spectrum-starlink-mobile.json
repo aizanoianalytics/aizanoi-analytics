@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-10-spacex-grain-800mhz-spectrum-starlink-mobile",
+  "kind": "daily",
+  "title": "SpaceX buys nationwide 800 MHz spectrum to build out Starlink Mobile",
+  "summary": "SpaceX has agreed to acquire up to 14 megahertz of paired nationwide 800 MHz low-band spectrum from investment firm Grain Management, a deal it says will let Starlink Mobile combine satellite and terrestrial coverage and compete with AT&T, T-Mobile and Verizon. The licence transfer, filed with the FCC, covers roughly the whole US population though it varies by county; Grain had bought the licences from T-Mobile earlier this year. Carriers fell sharply on the news, with T-Mobile down about 13 per cent, AT&T around 10 per cent and Verizon roughly 9 per cent.",
+  "category": "technology",
+  "priority": 76,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "spacex",
+    "starlink",
+    "spectrum",
+    "telecom",
+    "fcc"
+  ],
+  "sources": [
+    {
+      "publisher": "The Wall Street Journal",
+      "url": "https://www.wsj.com/business/telecom/spacex-makes-big-play-to-become-a-wireless-carrier-a90b2a1b",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    },
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/tech-policy/2026/10/starlink-spectrum-deal-boosts-musk-plan-to-beat-att-t-mobile-and-verizon/",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    },
+    {
+      "publisher": "MarketWatch",
+      "url": "https://www.marketwatch.com/story/spacex-buys-grain-management-s-800mhz-spectrum-portfolio-in-starlink-mobile-push-731bdba1",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    }
+  ]
+}

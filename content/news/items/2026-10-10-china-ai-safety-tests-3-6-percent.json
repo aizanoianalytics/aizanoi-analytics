@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-10-china-ai-safety-tests-3-6-percent",
+  "kind": "daily",
+  "title": "Study finds Chinese AI developers publish safety tests for just 3.6% of model releases",
+  "summary": "A SemiAnalysis review of nine leading Chinese AI developers found that only 36 of 857 model releases, about 3.6 per cent, carried a published model-specific safety result, while 813 had none, Reuters reported on October 9. The finding lands amid rising scrutiny of frontier-model oversight in China. A companion Concordia AI survey of the sector said Chinese frontier safety research output grew roughly 60 per cent and that agent-safety work rose from 8 per cent of new papers in early 2025 to 27 per cent in the first quarter of 2026.",
+  "category": "ai",
+  "priority": 54,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "china",
+    "ai-safety",
+    "research",
+    "semiaanalysis"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/litigation/china-ai-developers-publish-safety-tests-just-36-model-releases-report-finds-2026-10-09/",
+      "publishedAt": "2026-10-09T05:38:00Z"
+    },
+    {
+      "publisher": "Concordia AI",
+      "url": "https://concordia-ai.com/research/state-of-ai-safety-in-china-2026/",
+      "publishedAt": "2026-10-09T12:00:00Z"
+    }
+  ]
+}

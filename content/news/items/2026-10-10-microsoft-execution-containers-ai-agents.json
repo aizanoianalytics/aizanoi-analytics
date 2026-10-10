@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-10-microsoft-execution-containers-ai-agents",
+  "kind": "daily",
+  "title": "Microsoft ships Execution Containers to fence off AI agents on Windows PCs",
+  "summary": "Microsoft has released Microsoft Execution Containers (MXC), a policy-driven boundary that restricts what AI agents can read, connect to and change when they run on a Windows laptop or desktop. The company argues an agent 'cannot be its own security authority' and must run inside a limit enforced independently of it. Anthropic, OpenAI and Nvidia will use the tooling, Microsoft's Windows and devices chief Pavan Davuluri said, as part of a broader October 7 push to bring hybrid, on-device AI to Windows alongside new RTX Spark Surface hardware.",
+  "category": "ai",
+  "priority": 56,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "windows",
+    "agents",
+    "security",
+    "on-device-ai"
+  ],
+  "sources": [
+    {
+      "publisher": "Microsoft Windows Developer Blog",
+      "url": "https://blogs.windows.com/windowsdeveloper/2026/10/07/microsoft-execution-containers-policy-driven-containment-for-ai-agents/",
+      "publishedAt": "2026-10-07T16:00:00Z"
+    },
+    {
+      "publisher": "The Manila Times",
+      "url": "https://www.manilatimes.net/2026/10/09/business/foreign-business/microsoft-brings-more-ai-to-pcs-to-challenge-apple/2442065",
+      "publishedAt": "2026-10-09T08:00:00Z"
+    }
+  ]
+}

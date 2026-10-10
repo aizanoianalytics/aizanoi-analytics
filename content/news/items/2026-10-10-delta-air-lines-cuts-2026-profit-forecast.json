@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-10-delta-air-lines-cuts-2026-profit-forecast",
+  "kind": "daily",
+  "title": "Delta cuts its 2026 profit outlook as fuel costs surge",
+  "summary": "Delta Air Lines lowered its annual profit forecast by nearly a quarter at the midpoint on October 9, saying fuel costs would add about $6 billion to its bill this year. The carrier now expects adjusted earnings of $5.10 to $5.60 a share, down from the $6.50 to $7.50 it guided in July, with a $5.35 midpoint below analysts' average estimate. Third-quarter fuel expense rose 62 per cent year on year to $4.1 billion, more than $500 million above its July expectation, even as travel demand and fares stayed strong.",
+  "category": "economy-markets",
+  "priority": 66,
+  "publishedAt": "2026-10-10T05:00:00Z",
+  "updatedAt": "2026-10-10T05:00:00Z",
+  "retrievedAt": "2026-10-10T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "delta",
+    "airlines",
+    "fuel-costs",
+    "earnings",
+    "oil"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters (via Duke FM)",
+      "url": "https://duke.fm/2026/10/09/delta-air-lines-cuts-profit-outlook-as-fuel-costs-outpace-fare-gains",
+      "publishedAt": "2026-10-09T11:00:00Z"
+    },
+    {
+      "publisher": "AeroTime",
+      "url": "https://aerotime.aero/articles/delta-cuts-2026-profit-forecast-fuel-costs",
+      "publishedAt": "2026-10-09T13:00:00Z"
+    }
+  ]
+}
