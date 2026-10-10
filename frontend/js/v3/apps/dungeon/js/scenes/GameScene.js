@@ -1034,6 +1034,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   showBlessingChoice(onChosen) {
+    // Three options always, with reroll preserved below. The pool is now
+    // twelve, so duplicates across levels are replaced by the excluded list.
     const choices = pickBlessings(3, Math.random, this.runState.blessingIds);
     if (choices.length === 0) {
       onChosen();
@@ -1093,6 +1095,30 @@ export class GameScene extends Phaser.Scene {
       overlay.add([button, label]);
       this.input.keyboard.on(keyEvents[index], keyHandlers[index]);
     });
+    // A reroll costs one portal-transition gold bonus and never repeats a
+    // picked blessing. The button sits below the three choices and shares
+    // their authored skin so it reads as part of the same panel.
+    const rerollY = -25 + choices.length * 55;
+    const reroll = this.textures.exists('button-normal')
+      ? this.add.image(0, rerollY, 'button-normal').setDisplaySize(180, 32).setTint(0x1a2338).setInteractive({ useHandCursor: true })
+      : this.add.rectangle(0, rerollY, 180, 32, 0x1a2338, 1).setStrokeStyle(1, 0x718096).setInteractive({ useHandCursor: true });
+    const rerollLabel = this.add.text(0, rerollY, 'Reroll (25 gold)', { fontSize: '13px', color: '#d1d5db' }).setOrigin(0.5);
+    overlay.add([reroll, rerollLabel]);
+    const doReroll = () => {
+      const cost = 25;
+      if (this.progression.gold < cost) {
+        rerollLabel.setText('Need 25 gold').setColor('#f07186');
+        return;
+      }
+      this.progression.spendGold(cost);
+      keyEvents.forEach((event, i) => this.input.keyboard.off(event, keyHandlers[i]));
+      overlay.destroy(true);
+      this.blessingOverlay = null;
+      this.showBlessingChoice(onChosen);
+    };
+    reroll.on('pointerdown', doReroll);
+    this.input.keyboard.on('keydown-R', doReroll);
+    keyHandlers.push(() => this.input.keyboard.off('keydown-R', doReroll));
     this.blessingOverlay = overlay;
   }
 
