@@ -236,7 +236,17 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.readabilitySprite.setFrame(this.frame.name);
     }
     if (this.threatPip && this.threatPip.active) {
-      this.threatPip.setPosition(this.x, this.y - (this.isBoss ? 46 : 20));
+      const pipY = this.y - (this.isBoss ? 46 : 20);
+      this.threatPip.setPosition(this.x, pipY);
+      // A restrained heartbeat gives the eye a living threat signal without
+      // turning every enemy into a neon marker. Mini-bosses pulse slower and
+      // brighter; normal enemies remain a quiet, steady key.
+      if (this.type?.isMiniBoss) {
+        const pulse = 0.48 + Math.sin(time * 0.006) * 0.18;
+        this.threatPip.setAlpha(pulse);
+      } else {
+        this.threatPip.setAlpha(0.38);
+      }
     }
 
     // Geri tepme: kisa sure hareket AI durur, itme velocity korunur
