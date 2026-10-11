@@ -1,0 +1,33 @@
+{
+  "id": "2026-10-11-apple-macos-full-disk-access-ai-agent-controls",
+  "kind": "daily",
+  "title": "Apple adds explicit-consent controls to macOS Full Disk Access over AI agent risk",
+  "summary": "Apple said it will add controls around macOS Full Disk Access so that only a very explicit user action can grant an app access to files, mail, messages and browsing history. The developer note followed a columnist's claim that Meta's desktop Muse app read his private messages, which Meta disputed, and a Wired report on a flaw in the ChatGPT Mac app. Apple argued some developers were using the setting in ways that expose users' systems without their full knowledge, and said the risk will grow as AI agents become more capable.",
+  "category": "technology",
+  "priority": 54,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "macos",
+    "privacy",
+    "ai-agents",
+    "security"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/02/apple-says-its-tightening-macos-full-disk-access-controls-due-to-new-risks-from-ai-agents/",
+      "publishedAt": "2026-10-02T18:11:00Z"
+    }
+  ]
+}

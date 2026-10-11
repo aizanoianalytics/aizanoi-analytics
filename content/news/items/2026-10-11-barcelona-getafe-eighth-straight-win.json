@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-11-barcelona-getafe-eighth-straight-win",
+  "kind": "daily",
+  "title": "Barcelona beat Getafe 3-0 for an eighth consecutive win",
+  "summary": "Barcelona won 3-0 at Spotify Camp Nou on La Liga matchday eight, extending their perfect start to the season to eight wins. Anthony Gordon opened the scoring in the second minute, Gabriel Jesus made it two on the half hour after pouncing on a loose ball at the edge of the box, and Jules Kounde added the third on 73 minutes. Getafe defender Zaid Romero went off injured. The result keeps Barcelona top of the table on 24 points, while Getafe remain without an away win.",
+  "category": "football",
+  "priority": 55,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "la-liga",
+    "barcelona",
+    "getafe",
+    "camp-nou"
+  ],
+  "sources": [
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.co.uk/football/report/_/gameId/401882853",
+      "publishedAt": "2026-10-10T20:00:00Z"
+    },
+    {
+      "publisher": "FC Barcelona",
+      "url": "https://www.fcbarcelona.com/en/matches/138352/fc-barcelona-getafe-la-liga-2026-2027",
+      "publishedAt": "2026-10-10T20:30:00Z"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-11-telecom-selloff-spacex-spectrum-deal",
+  "kind": "daily",
+  "title": "SpaceX's spectrum play wipes out telecom stocks as Verizon has its worst day since 2002",
+  "summary": "US wireless carriers sold off hard on Friday after SpaceX agreed to buy a nationwide portfolio of 800 MHz low-band licences from Grain Management to extend Starlink into mobile service. Verizon closed down 8.75 per cent, its worst day since July 2002, while T-Mobile fell 13.27 per cent and AT&T dropped 9.81 per cent, their worst sessions since 2013 and 2000. The licence block covers up to 14 MHz of paired spectrum and reportedly carries a price near $8bn. Analysts said the deal gives Starlink the outline of a real network, though they see little near-term threat to incumbent carriers.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "telecom",
+    "spacex",
+    "starlink",
+    "spectrum",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/09/verizon-att-tmobile-stocks-spacex-network.html",
+      "publishedAt": "2026-10-09T20:30:00Z"
+    },
+    {
+      "publisher": "Metapress (CNBC wire)",
+      "url": "https://www.metapress.net/world/2026/10/10/verizon-posts-worst-day-since-2002-as-spacex-u-s-network-plans-whack-cell-provider-stocks",
+      "publishedAt": "2026-10-10T06:00:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/article/telecom-stocks-sink-after-spacexs-starlink-picks-up-spectrum-assets-224253321.html",
+      "publishedAt": "2026-10-09T22:42:00Z"
+    }
+  ]
+}

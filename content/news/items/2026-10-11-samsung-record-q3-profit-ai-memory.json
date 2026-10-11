@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-11-samsung-record-q3-profit-ai-memory",
+  "kind": "daily",
+  "title": "Samsung guides to a record 107.4 trillion won quarterly profit on AI memory demand",
+  "summary": "Samsung Electronics estimated third-quarter operating profit of 107.4 trillion won, about $80bn, up 782.5 per cent from a year earlier, the first time a South Korean company has cleared 100 trillion won in a single quarter. Revenue rose 126.6 per cent to 195 trillion won and the operating margin reached a record 55.1 per cent, driven by memory prices that AI infrastructure spending keeps pushing higher. The preliminary guidance, filed on 8 October, topped the Yonhap Infomax consensus of roughly 105.75 trillion won. Samsung publishes full results on 29 October.",
+  "category": "technology",
+  "priority": 74,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "samsung",
+    "semiconductors",
+    "memory",
+    "ai-infrastructure",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "The Seoul Economic Daily",
+      "url": "https://en.sedaily.com/finance/2026/10/08/samsung-operating-profit-hits-107-trillion-won-eyes-global",
+      "publishedAt": "2026-10-08T01:00:00Z"
+    },
+    {
+      "publisher": "UPI",
+      "url": "https://upi.com/Top_News/World-News/2026/10/08/samsung-record-third-quarter-result/4221791498501",
+      "publishedAt": "2026-10-08T03:00:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/samsung-record-80-billion-profit-054545681.html",
+      "publishedAt": "2026-10-08T05:45:00Z"
+    }
+  ]
+}

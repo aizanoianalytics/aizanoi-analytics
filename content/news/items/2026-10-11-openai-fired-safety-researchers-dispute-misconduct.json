@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-11-openai-fired-safety-researchers-dispute-misconduct",
+  "kind": "daily",
+  "title": "Fired OpenAI safety researchers deny misconduct and warn of a chilling effect",
+  "summary": "Three researchers dismissed by OpenAI, Mikita Balesni, Tomek Korbak and Jasmine Wang, published an open letter disputing the company's account that they mishandled sensitive information, arguing they were punished for speaking out about safety and for working with outside evaluators. They warned the dismissals are chilling internal discussion of risk and urged OpenAI to keep its commitments to third-party audits and model transparency. OpenAI has not formally replied to the letter, but shared an internal memo with TechCrunch denying the firings were retaliation for raising concerns.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "ai-safety",
+    "labour",
+    "open-letter"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/08/fired-openai-safety-researchers-dispute-misconduct-claims-warn-of-chilling-effect/",
+      "publishedAt": "2026-10-08T20:00:00Z"
+    },
+    {
+      "publisher": "NPR (via Houston Public Media)",
+      "url": "https://www.houstonpublicmedia.org/npr/2026/10/09/nx-s1-5996890/fired-openai-employees-question-the-companys-commitment-to-safety/",
+      "publishedAt": "2026-10-09T17:28:00Z"
+    }
+  ]
+}

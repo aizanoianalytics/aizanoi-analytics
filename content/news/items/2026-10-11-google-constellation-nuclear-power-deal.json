@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-11-google-constellation-nuclear-power-deal",
+  "kind": "daily",
+  "title": "Google and Constellation sign a 20-year nuclear deal to feed AI data centres",
+  "summary": "Google contracted 3,590 megawatts of power from Constellation Energy on the largest US grid, including a 20-year purchase agreement for 890 MW of new nuclear capacity from uprates at 11 reactors in Illinois, Pennsylvania and New Jersey. Constellation called it more than $4.3bn of new investment and said the first uprate should deliver by 2028; a separate 15-year deal covers 2,700 MW of existing supply. The companies will also put Google Cloud's Gemini Enterprise agents to work on plant operations. The deal answers PJM's bring-your-own-power push as data-centre demand climbs.",
+  "category": "technology",
+  "priority": 64,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "data-centres",
+    "nuclear-energy",
+    "ai-infrastructure",
+    "pjm"
+  ],
+  "sources": [
+    {
+      "publisher": "Google Cloud Press Corner",
+      "url": "https://www.googlecloudpresscorner.com/2026-10-06-Google-and-Constellation-Announce-Landmark-Agreement-to-Bring-890-MW-of-New-Nuclear-Capacity-to-PJM-Grid-as-Part-of-Long-Term-Power-Deal",
+      "publishedAt": "2026-10-06T13:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/06/google-enters-massive-3point6-gw-power-deal-with-constellation-energy-.html",
+      "publishedAt": "2026-10-06T11:58:00Z"
+    },
+    {
+      "publisher": "Utility Dive",
+      "url": "https://www.utilitydive.com/news/constellation-google-deal-will-bring-890-mw-of-new-nuclear-to-pjm/832223/",
+      "publishedAt": "2026-10-06T14:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-11-trump-ai-liability-super-intelligence-force",
+  "kind": "daily",
+  "title": "Washington leans on liability law as its new AI task force warns labs after rogue incidents",
+  "summary": "The Trump administration is treating existing liability law, rather than new AI rules, as its main safety lever, with Treasury Secretary Scott Bessent arguing creators should answer for what their models generate. Its new Super Intelligence Force, led by Director of National Intelligence Jay Clayton, warned developers late on Friday to disclose and remedy incidents involving their models. The FTC is scrutinising OpenAI, Anthropic and other labs over product safety. Senators Josh Hawley and Chris Murphy plan a bill making developers liable under the Computer Fraud and Abuse Act.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai-regulation",
+    "ai-liability",
+    "white-house",
+    "ftc",
+    "safety"
+  ],
+  "sources": [
+    {
+      "publisher": "The Japan Times (Bloomberg)",
+      "url": "https://www.japantimes.co.jp/business/2026/10/11/tech/trump-ai-liability-models-rogue/",
+      "publishedAt": "2026-10-11T01:00:00Z"
+    },
+    {
+      "publisher": "CBS News",
+      "url": "https://www.cbsnews.com/news/ai-super-intelligence-force-trump-jay-clayton/",
+      "publishedAt": "2026-10-04T18:30:00Z"
+    }
+  ]
+}

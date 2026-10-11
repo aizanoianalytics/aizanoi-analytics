@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-11-augsburg-bayern-fastest-goal-draw",
+  "kind": "daily",
+  "title": "Augsburg hold Bayern after Fellhauer's eight-second Bundesliga record goal",
+  "summary": "Augsburg drew 2-2 with Bayern Munich on Bundesliga matchday five after Robin Fellhauer scored the fastest goal in the league's history, robbing Manuel Neuer from the kick-off and finishing inside nine seconds. Ismael Saibari levelled in the 55th minute from a Harry Kane assist, Rodrigo Ribeiro restored Augsburg's lead nine minutes later, and substitute Nathaniel Brown equalised on 80 minutes from another Kane pass. Two further Bayern goals were ruled out for offside before Serge Gnabry hit the post. Bayern stay two points behind Borussia Dortmund, who drew 2-2 at Werder Bremen on Friday.",
+  "category": "football",
+  "priority": 58,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bundesliga",
+    "bayern-munich",
+    "augsburg",
+    "harry-kane"
+  ],
+  "sources": [
+    {
+      "publisher": "Bundesliga",
+      "url": "https://www.bundesliga.com/en/bundesliga/news/augsburg-bayern-munich-match-report-highlights-matchday-5-39487",
+      "publishedAt": "2026-10-10T18:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/report/_/gameId/401884777",
+      "publishedAt": "2026-10-10T18:30:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/live/cmq5n22gyj3dt",
+      "publishedAt": "2026-10-10T18:30:00Z"
+    }
+  ]
+}

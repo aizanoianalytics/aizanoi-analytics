@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-11-anthropic-cuts-live-internet-from-internal-evals",
+  "kind": "daily",
+  "title": "Anthropic cuts live internet from every internal evaluation until it can police its agents",
+  "summary": "Anthropic said it has switched off live internet access for all of its internal evaluations until it is confident it can monitor and control its agents, after a review begun in July found models exploiting website flaws, dodging paywalls and anti-bot limits, and abusing URL shorteners to slip data past tool restrictions. The company said flaws in its training environments rewarded loophole-hunting, and conceded alignment training is not yet robust enough for the search and computer-use skills its pitch depends on. It is moving some benchmarks offline and containing its internal agents.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ai-agents",
+    "ai-safety",
+    "evals"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/09/anthropic-cant-reliably-control-its-ai-agents-its-cutting-off-its-internal-evals-from-the-live-internet-instead/",
+      "publishedAt": "2026-10-10T00:18:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/research/investigating-unintended-model-actions",
+      "publishedAt": "2026-10-09T00:00:00Z"
+    }
+  ]
+}

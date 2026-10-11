@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-11-lumentum-optical-capacity-sold-out-2029",
+  "kind": "daily",
+  "title": "Nvidia-backed Lumentum says its AI optical parts are sold out into early 2029",
+  "summary": "Lumentum Holdings' optical components are completely sold out through early 2029, chief executive Michael Hurlston said, as AI data centres chase faster interconnects. The company cannot meet about 70 per cent of demand for some products through next year and will fall short on another 30 per cent through 2028, with customers already booking 2030, he told Bloomberg in Tokyo. Hurlston said six months ago that capacity would be committed only by 2028. Lumentum, which took a $2bn investment from Nvidia this year, will spend at least $350m expanding its Tokyo-area plant.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "lumentum",
+    "nvidia",
+    "optics",
+    "ai-data-centres",
+    "supply-chain"
+  ],
+  "sources": [
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/ai/articles/lumentum-ai-optical-components-sold-112901568.html",
+      "publishedAt": "2026-10-09T11:29:00Z"
+    },
+    {
+      "publisher": "The Japan Times",
+      "url": "https://japantimes.co.jp/business/2026/10/09/companies/lumentum-ai-server-sold-out",
+      "publishedAt": "2026-10-09T06:00:00Z"
+    },
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-10-09/nvidia-backed-lumentum-sees-opto-parts-capacity-sold-out-to-2029",
+      "publishedAt": "2026-10-09T05:00:00Z"
+    }
+  ]
+}
