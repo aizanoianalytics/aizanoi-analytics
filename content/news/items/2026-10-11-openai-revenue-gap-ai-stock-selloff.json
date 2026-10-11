@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-11-openai-revenue-gap-ai-stock-selloff",
+  "kind": "daily",
+  "title": "A $20bn gap in OpenAI's revenue figure rattles the AI trade",
+  "summary": "OpenAI told investors its annualised revenue was about $50bn at the end of September, roughly $20bn below the $68bn to $70bn figures reported earlier, a person familiar with the matter and the Financial Times said. The company's run rate has still grown more than 70 per cent since the start of the third quarter, and the higher number reportedly counted gross revenue from partners. Oracle fell more than 5 per cent on Thursday, Nvidia slid about 3 per cent and CoreWeave dropped close to 8 per cent.",
+  "category": "economy-markets",
+  "priority": 68,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "revenue",
+    "ai-stocks",
+    "oracle",
+    "nvidia"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/08/open-ai-revenue-nvidia-oracle-coreweave.html",
+      "publishedAt": "2026-10-08T16:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/openais-annualized-revenue-20-billion-less-than-previously-signaled-ft-reports-2026-10-08",
+      "publishedAt": "2026-10-08T14:00:00Z"
+    },
+    {
+      "publisher": "The Economic Times",
+      "url": "https://m.economictimes.com/news/international/us/openai-revenue-shock-sends-nvidia-oracle-and-coreweave-stocks-lower-today-heres-what-happened/amp_articleshow/134800074.cms",
+      "publishedAt": "2026-10-08T20:57:00Z"
+    }
+  ]
+}

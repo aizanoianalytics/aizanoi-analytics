@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-11-arsenal-leeds-comeback-guimaraes",
+  "kind": "daily",
+  "title": "Guimaraes completes Arsenal's comeback as Leeds lose their unbeaten start",
+  "summary": "Arsenal came from behind to beat Leeds United 2-1 at the Emirates in the Premier League's return after the international break. James Justin put Leeds ahead on 55 minutes from Gudmundsson's low cross, but Riccardo Calafiori levelled seven minutes later after a James Trafford fumble, and substitute Bruno Guimaraes scored the winner on 70 minutes, finishing a move that ran through Martin Odegaard and a Declan Rice backheel. Leeds had the better of the opening hour and had been unbeaten. The win takes the champions level on points with Manchester City.",
+  "category": "football",
+  "priority": 62,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "arsenal",
+    "leeds-united",
+    "mikel-arteta"
+  ],
+  "sources": [
+    {
+      "publisher": "Arsenal FC",
+      "url": "https://www.arsenal.com/news/report-arsenal-2-1-leeds-united-aZRg37i5KpH0",
+      "publishedAt": "2026-10-10T17:30:00Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/news/13592767/arsenal-2-1-leeds-riccardo-calafiori-and-bruno-guimaraes-on-target-as-champions-fight-back-to-go-level-with-man-city",
+      "publishedAt": "2026-10-10T16:27:00Z"
+    },
+    {
+      "publisher": "Leeds United",
+      "url": "https://www.leedsunited.com/en/news/leeds-united-run-premier-league-champions-arsenal-close-in-tight-emirates-defeat",
+      "publishedAt": "2026-10-10T18:00:00Z"
+    }
+  ]
+}

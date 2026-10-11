@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-11-fed-seen-skipping-october-december-hike",
+  "kind": "daily",
+  "title": "Weak September payrolls leave the Fed set to skip October and tee up December",
+  "summary": "US employers added just 29,000 jobs in September, far below the roughly 90,000 economists expected, and August gains were revised down, leaving traders pricing only about a one-in-four chance of a rate rise at the Federal Reserve's 27-28 October meeting and an overwhelmingly high probability of a December move. Chicago Fed President Austan Goolsbee said the inflation side of the central bank's mandate is where the problem lies and that he is open on the next step. The policy rate sits at 3.75 to 4 per cent after a September increase.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-10-11T05:00:00Z",
+  "updatedAt": "2026-10-11T05:00:00Z",
+  "retrievedAt": "2026-10-11T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "federal-reserve",
+    "interest-rates",
+    "inflation",
+    "jobs-report",
+    "fomc"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/fed-seen-skipping-october-rate-hike-job-market-cools-2026-10-02/",
+      "publishedAt": "2026-10-02T18:00:00Z"
+    },
+    {
+      "publisher": "Nuveen",
+      "url": "https://www.nuveen.com/en-us/insights/investment-outlook/fed-update",
+      "publishedAt": "2026-09-17T12:00:00Z"
+    }
+  ]
+}
