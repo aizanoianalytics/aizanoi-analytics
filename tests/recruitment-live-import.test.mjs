@@ -59,3 +59,13 @@ test('Local recruitment upload and unified upload share one workbook parser', ()
   assert.match(html, /XLSX\.read\(buffer, \{ type: "array", cellDates: true, cellFormula: false \}\)/);
   assert.match(html, /applyPayload\(payload\)/);
 });
+
+test('Batch import is guarded, size-gated, and honest about same-kind overwrites', () => {
+  assert.match(html, /let unifiedImportRunning = false/);
+  assert.match(html, /Import already running, please wait/);
+  assert.match(html, /const UNIFIED_MAX_BYTES = 50 \* 1024 \* 1024/);
+  assert.match(html, /50MB sınırını aşıyor/);
+  assert.match(html, /üzerine yazıldı: aynı türden son dosya geçerli/);
+  assert.match(html, /data-portable-wrap/);
+  assert.match(html, /box\.querySelector\("#exportFromImportBtn"\)/);
+});

@@ -1675,14 +1675,14 @@ a { color: var(--blue-600); text-decoration: none; }
           </div>
         </div>
 
-        <div class="dropzone" id="excelDropzone" style="margin-top: 1rem;">
+        <div class="dropzone" id="excelDropzone" style="margin-top: 1rem;" tabindex="0" role="button" aria-label="İşe alım Excel dosyasını yükle">
           <div class="drop-icon">📁</div>
           <h4 class="drop-title">Drag & Drop ise_alim_dosya.xlsx Here</h4>
           <p class="drop-sub">or click to browse from your computer (supports .xlsx and .xlsm up to 50MB)</p>
           <input type="file" id="excelFileInput" accept=".xlsx,.xlsm" multiple style="display: none;">
         </div>
 
-        <div id="importResult" style="margin-top: 1.25rem;"></div>
+        <div id="importResult" style="margin-top: 1.25rem;" role="status" aria-live="polite"></div>
 
         <div style="margin-top: 1.5rem; background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-sm); padding: 1rem;">
           <h4 style="font-size: 0.875rem; font-weight: 700; color: var(--slate-800); margin-bottom: 0.35rem;">Expected File Layout</h4>
@@ -1709,11 +1709,11 @@ a { color: var(--blue-600); text-decoration: none; }
           </div>
         </div>
 
-        <div class="dropzone" id="internRecruitmentDropzone" style="margin-top: 1rem;">
+        <div class="dropzone" id="internRecruitmentDropzone" style="margin-top: 1rem;" tabindex="0" role="button" aria-label="Staj başvuru Excel dosyasını yükle">
           <div class="drop-icon">📄</div>
           <h4 class="drop-title">Uyumlu staj başvuru Excel dosyasını seçin</h4>
-          <p class="drop-sub">Gerekli staj başvuru sütunlarını içeren herhangi bir .xlsx çalışma kitabı kabul edilir. Veriler yalnızca bellekte işlenir; hiçbir zaman ağa gönderilmez veya tarayıcı depolamasına yazılmaz.</p>
-          <input type="file" id="internRecruitmentFileInput" accept=".xlsx" multiple style="display: none;">
+          <p class="drop-sub">Gerekli staj başvuru sütunlarını içeren herhangi bir .xlsx veya .xlsm çalışma kitabı kabul edilir (en fazla 50MB). Veriler yalnızca bellekte işlenir; hiçbir zaman ağa gönderilmez veya tarayıcı depolamasına yazılmaz.</p>
+          <input type="file" id="internRecruitmentFileInput" accept=".xlsx,.xlsm" multiple style="display: none;">
         </div>
 
         <div id="internImportResult" style="margin-top: 1rem;" role="status" aria-live="polite"></div>
@@ -2975,14 +2975,20 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     // workbooks together; each file is routed by its header schema, never by filename.
     function detectWorkbookKind(buffer) {
       const workbook = XLSX.read(buffer, { type: "array", cellDates: true, cellFormula: false });
+      // Recruitment uses the exact sheet scope of ingestRecruitmentWorkbook (db, else first sheet).
+      const targetName = workbook.SheetNames.includes(SHEET_NAME) ? SHEET_NAME : workbook.SheetNames[0];
+      const targetSheet = targetName ? workbook.Sheets[targetName] : null;
+      if (targetSheet) {
+        const matrix = XLSX.utils.sheet_to_json(targetSheet, { header: 1, raw: true, defval: "", blankrows: false });
+        const folded = (matrix[0] || []).map(value => fold(value));
+        if (matrix.length && RECRUITMENT_WORKBOOK_HEADERS.every((header, index) => folded[index] === fold(header))) {
+          return { kind: "recruitment", workbook };
+        }
+      }
       for (const sheetName of workbook.SheetNames) {
         const sheet = workbook.Sheets[sheetName];
         const matrix = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: "", blankrows: false });
         if (!matrix.length) continue;
-        const folded = (matrix[0] || []).map(value => fold(value));
-        if (RECRUITMENT_WORKBOOK_HEADERS.every((header, index) => folded[index] === fold(header))) {
-          return { kind: "recruitment", workbook };
-        }
         const headerSet = new Set((matrix[0] || []).map(normalizeInternHeader));
         if (INTERN_RECRUITMENT_HEADERS.every(header => headerSet.has(header))) {
           return { kind: "intern", workbook };
@@ -3012,38 +3018,77 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       throw new Error(`${file.name} beklenen iki yapıdan birine uymuyor: işe alım A–Q şeması ya da staj başvuru sütunları.`);
     }
 
+    let unifiedImportRunning = false;
+    const UNIFIED_MAX_BYTES = 50 * 1024 * 1024;
+
     async function handleUnifiedExcelFiles(fileList, target) {
       if (!fileList || !fileList.length) return;
       if (!window.XLSX) { toast("Local SheetJS library not ready.", "error"); return; }
-      const incoming = [...fileList];
-      const lines = incoming
-        .filter(file => !/\.(xlsx|xlsm)$/i.test(file.name))
-        .map(file => ({ ok: false, text: `❌ ${file.name} atlandı: yalnızca .xlsx/.xlsm kabul edilir.` }));
-      const files = incoming.filter(file => /\.(xlsx|xlsm)$/i.test(file.name));
-      if (target) target.innerHTML = `<div class="import-result-line import-result-info">⏳ ${files.length} dosya işleniyor...</div>`;
-      let recruitmentLoaded = false;
-      for (const file of files) {
-        try {
-          const outcome = await routeSingleWorkbook(file);
-          if (outcome.kind === "recruitment") recruitmentLoaded = true;
-          lines.push({ ok: true, text: `✅ ${outcome.file} → ${outcome.kind === "recruitment" ? "İşe alım panosu" : "Staj paneli"} (${outcome.detail})` });
-        } catch (err) {
-          lines.push({ ok: false, text: `❌ ${file.name}: ${(err && err.message) || String(err)}` });
+      if (unifiedImportRunning) { toast("Import already running, please wait.", "error"); return; }
+      unifiedImportRunning = true;
+      try {
+        const incoming = [...fileList];
+        const lines = [];
+        incoming.filter(file => !/\.(xlsx|xlsm)$/i.test(file.name))
+          .forEach(file => lines.push({ ok: false, kind: "rejected", text: `❌ ${file.name} atlandı: yalnızca .xlsx/.xlsm kabul edilir.` }));
+        incoming.filter(file => /\.(xlsx|xlsm)$/i.test(file.name) && file.size > UNIFIED_MAX_BYTES)
+          .forEach(file => lines.push({ ok: false, kind: "rejected", text: `❌ ${file.name} atlandı: 50MB sınırını aşıyor.` }));
+        const files = incoming.filter(file => /\.(xlsx|xlsm)$/i.test(file.name) && file.size <= UNIFIED_MAX_BYTES);
+        if (target) target.innerHTML = `<div class="import-result-line import-result-info">⏳ ${files.length} dosya işleniyor...</div>`;
+        let recruitmentLoaded = false;
+        let internLoaded = false;
+        for (const file of files) {
+          try {
+            const outcome = await routeSingleWorkbook(file);
+            if (outcome.kind === "recruitment") recruitmentLoaded = true;
+            if (outcome.kind === "intern") internLoaded = true;
+            lines.push({ ok: true, kind: outcome.kind, text: `✅ ${outcome.file} → ${outcome.kind === "recruitment" ? "İşe alım panosu" : "Staj paneli"} (${outcome.detail})` });
+          } catch (err) {
+            // Single-file dedicated uploads keep the old clear-on-failure semantics.
+            if (files.length === 1 && target && target.id === "internImportResult") resetInternRecruitmentState();
+            lines.push({ ok: false, kind: "rejected", text: `❌ ${file.name}: ${(err && err.message) || String(err)}` });
+          }
         }
-      }
-      if (target) {
-        target.innerHTML = lines.map(line => `<div class="import-result-line ${line.ok ? "import-result-ok" : "import-result-err"}">${escapeHtml(line.text)}</div>`).join("");
+        // Same-kind files overwrite one pipeline: mark every superseded success honestly.
+        const successCount = {};
+        lines.forEach(line => { if (line.ok) successCount[line.kind] = (successCount[line.kind] || 0) + 1; });
+        const lastSuccess = {};
+        lines.forEach((line, index) => { if (line.ok) lastSuccess[line.kind] = index; });
+        lines.forEach((line, index) => {
+          if (line.ok && successCount[line.kind] > 1 && index !== lastSuccess[line.kind]) {
+            line.text += " (üzerine yazıldı: aynı türden son dosya geçerli)";
+          }
+        });
+        if (target) {
+          target.innerHTML = lines.map(line => `<div class="import-result-line ${line.ok ? "import-result-ok" : "import-result-err"}">${escapeHtml(line.text)}</div>`).join("");
+        }
         if (recruitmentLoaded) {
-          const wrap = document.createElement("div");
-          wrap.innerHTML = `<div style="margin-top: 0.75rem;"><button type="button" class="btn btn-primary" id="exportFromImportBtn">Download Portable Version</button></div>`;
-          target.appendChild(wrap);
-          const portableBtn = $("#exportFromImportBtn");
-          if (portableBtn) portableBtn.addEventListener("click", downloadPortableHtml);
+          const box = $("#importResult");
+          if (box && target !== box) {
+            box.innerHTML = `<div class="import-result-line import-result-ok">✅ İşe alım panosu güncellendi (${formatNumber(state.records.length)} kayıt).</div>`;
+          }
+          if (box) {
+            box.querySelector("[data-portable-wrap]")?.remove();
+            const wrap = document.createElement("div");
+            wrap.setAttribute("data-portable-wrap", "true");
+            wrap.innerHTML = `<div style="margin-top: 0.75rem;"><button type="button" class="btn btn-primary" id="exportFromImportBtn">Download Portable Version</button></div>`;
+            box.appendChild(wrap);
+            const portableBtn = box.querySelector("#exportFromImportBtn");
+            if (portableBtn) portableBtn.addEventListener("click", downloadPortableHtml);
+          }
         }
+        if (internLoaded) {
+          const internCard = $("#internImportResult");
+          if (internCard && target !== internCard) {
+            internCard.innerHTML = `<div class="import-result-line import-result-ok">✅ Staj paneli güncellendi (${formatNumber(internState.rows.length)} aday). Detay için Intern Recruitment sekmesine bakın.</div>`;
+          }
+        }
+        const failed = lines.filter(line => !line.ok).length;
+        if (failed) toast(`${lines.length - failed} dosya işlendi, ${failed} dosya reddedildi.`, "error");
+        else if (lines.length) toast(`${lines.length} dosya başarıyla işlendi.`, "success");
+      } finally {
+        unifiedImportRunning = false;
       }
-      const failed = lines.filter(line => !line.ok).length;
-      if (failed) toast(`${lines.length - failed} dosya işlendi, ${failed} dosya reddedildi.`, "error");
-      else if (lines.length) toast(`${lines.length} dosya başarıyla işlendi.`, "success");
     }
 
     async function handleExcelFile(file) {
@@ -3076,8 +3121,6 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const internTableSearch = $("#internTableSearch");
       if (internTableSearch) internTableSearch.value = "";
       internState.search = "";
-      const internImportResult = $("#internImportResult");
-      if (internImportResult) internImportResult.replaceChildren();
     }
 
     function normalizeInternHeader(value) {
@@ -3304,9 +3347,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const headers = internState.headers;
       const computedHeads = ["Hesaplanan Bitiş", "Kalan Gün"];
       $("#internRecruitmentTableHead").innerHTML = `<tr>${headers.map(header => `<th>${escapeHtml(header)}</th>`).join("")}${computedHeads.map(header => `<th>${header}</th>`).join("")}</tr>`;
-      const exportedRows = internExportRows();
-      const query = (internState.search || "").trim().toLocaleLowerCase("tr");
-      const visibleRows = query ? exportedRows.filter(rowIdx => [internCell(rowIdx, "Adı"), internCell(rowIdx, "Soyadı"), internCell(rowIdx, "T.C. Kimlik Numarası"), internCell(rowIdx, "Kesinleşen Birim")].some(value => String(value ?? "").toLocaleLowerCase("tr").includes(query))) : exportedRows;
+      const visibleRows = internDisplayedRows();
       $("#internRecruitmentTableBody").innerHTML = visibleRows.map(rowIdx => {
         const done = internRowComputed(rowIdx);
         const cells = headers.map(header => `<td>${internCellHtml(rowIdx, header)}</td>`).join("");
@@ -3328,9 +3369,25 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       renderInternTable(fileName);
     }
 
-    function internTopCounts(getter, limit) {
+    function internSearchQuery() {
+      return (internState.search || "").trim().toLocaleLowerCase("tr");
+    }
+
+    function internRowMatchesSearch(rowIdx, query) {
+      if (!query) return true;
+      return [internCell(rowIdx, "Adı"), internCell(rowIdx, "Soyadı"), internCell(rowIdx, "T.C. Kimlik Numarası"), internCell(rowIdx, "Kesinleşen Birim")]
+        .some(value => String(value ?? "").toLocaleLowerCase("tr").includes(query));
+    }
+
+    function internDisplayedRows() {
+      const query = internSearchQuery();
+      const exported = internExportRows();
+      return query ? exported.filter(rowIdx => internRowMatchesSearch(rowIdx, query)) : exported;
+    }
+
+    function internTopCounts(getter, limit, indices) {
       const counts = new Map();
-      internState.rows.forEach((_, idx) => {
+      (indices || internState.rows.map((_, idx) => idx)).forEach(idx => {
         const value = String(getter(idx) ?? "").trim();
         if (!value) return;
         counts.set(value, (counts.get(value) || 0) + 1);
@@ -3356,20 +3413,17 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         host.style.display = "none";
         return;
       }
+      const displayed = internDisplayedRows();
       const total = internState.rows.length;
-      const listed = internExportRows().length;
-      const periodCol = internState.headers.indexOf(INTERN_PERIOD_COLUMN);
+      const listed = displayed.length;
       const periods = new Set();
-      if (periodCol >= 0) internState.rows.forEach(row => {
-        const value = String(row[periodCol] ?? "").trim();
+      displayed.forEach(idx => {
+        const value = String(internCell(idx, INTERN_PERIOD_COLUMN) ?? "").trim();
         if (value) periods.add(value);
       });
-      let cancelled = 0;
-      internState.rows.forEach((_, idx) => { if (internRowCancelled(idx)) cancelled++; });
-      const docCols = INTERN_DOC_COLUMNS.map(header => internState.headers.indexOf(header)).filter(col => col >= 0);
       let missingDocs = 0;
-      internState.rows.forEach(row => {
-        if (docCols.some(col => String(row[col] ?? "").trim() !== "Alındı")) missingDocs++;
+      displayed.forEach(idx => {
+        if (INTERN_DOC_COLUMNS.some(header => String(internCell(idx, header) ?? "").trim() !== "Alındı")) missingDocs++;
       });
       $("#internKpiGrid").innerHTML = [
         [formatNumber(total), "Toplam aday"],
@@ -3377,10 +3431,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         [formatNumber(periods.size), "Staj dönemi"],
         [formatNumber(missingDocs), "Evrak eksiği olan aday"]
       ].map(([value, label]) => `<div class="intern-kpi-card"><strong>${value}</strong><span>${label}</span></div>`).join("");
-      $("#internPeriodChart").innerHTML = internBarsHtml(internTopCounts(idx => internCell(idx, INTERN_PERIOD_COLUMN), 6));
-      $("#internUnitChart").innerHTML = internBarsHtml(internTopCounts(idx => internCell(idx, "Kesinleşen Birim"), 6));
+      $("#internPeriodChart").innerHTML = internBarsHtml(internTopCounts(idx => internCell(idx, INTERN_PERIOD_COLUMN), 6, displayed));
+      $("#internUnitChart").innerHTML = internBarsHtml(internTopCounts(idx => internCell(idx, "Kesinleşen Birim"), 6, displayed));
       host.style.display = "block";
-      void cancelled;
     }
 
     const INTERN_TEXT_EXPORT_HEADERS = new Set(["T.C. Kimlik Numarası", "T.C. Kimlik No", "Telefon", "Telefon numaranız"]);

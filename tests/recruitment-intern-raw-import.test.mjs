@@ -69,7 +69,7 @@ test('Recruitment dashboard adds exactly one discoverable Intern Recruitment tab
 });
 
 test('Intern Recruitment accepts compatible local .xlsx workbooks by schema, not filename, hash, or sheet name', () => {
-  assert.match(html, /id="internRecruitmentFileInput" accept="\.xlsx"/);
+  assert.match(html, /id="internRecruitmentFileInput" accept="\.xlsx[^"]*"/);
   assert.doesNotMatch(html, /INTERN_RECRUITMENT_FILE|INTERN_RECRUITMENT_SHA256/);
   const uploadStart = html.indexOf('async function handleInternRecruitmentFile');
   assert.ok(uploadStart > 0, 'missing upload handler');
@@ -196,4 +196,12 @@ test('Selected weekend attendance days can earn internship credit', () => {
   const block = html.slice(html.indexOf('function calcInternEndDate'), html.indexOf('function istanbulToday'));
   assert.match(block, /if \(weekdays\.has\(jsDay\)\)/);
   assert.doesNotMatch(block, /jsDay !== 0|jsDay !== 6/);
+});
+
+test('Intern dashboard follows table search and override-aware document counts', () => {
+  assert.match(html, /function internDisplayedRows\(\)/);
+  assert.match(html, /function internRowMatchesSearch\(rowIdx, query\)/);
+  assert.match(html, /renderInternTable[\s\S]*?internDisplayedRows\(\)/);
+  assert.match(html, /internTopCounts\(idx => internCell\(idx, INTERN_PERIOD_COLUMN\), 6, displayed\)/);
+  assert.match(html, /INTERN_DOC_COLUMNS\.some\(header => String\(internCell\(idx, header\)/);
 });
