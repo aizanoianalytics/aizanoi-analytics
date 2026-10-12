@@ -3435,6 +3435,16 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }
     }
 
+    function configureRecruitmentBackendAvailability() {
+      const hostedHttps = window.location.protocol === "https:" && !["localhost", "127.0.0.1"].includes(window.location.hostname);
+      const recruitmentBackendLoadBtn = $("#recruitmentBackendLoadBtn");
+      if (recruitmentBackendLoadBtn) recruitmentBackendLoadBtn.disabled = hostedHttps;
+      const recruitmentBackendUrl = $("#recruitmentBackendUrl");
+      if (recruitmentBackendUrl) recruitmentBackendUrl.disabled = hostedHttps;
+      const hint = $("#recruitmentBackendHint");
+      if (hostedHttps && hint) hint.textContent += " This control is disabled on the hosted HTTPS page because browsers block its localhost HTTP connection; use the downloaded/local dashboard copy for the companion service.";
+    }
+
     async function handleRecruitmentBackendLoad() {
       const result = $("#importResult");
       const input = $("#recruitmentBackendUrl");
@@ -3665,6 +3675,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       });
       const recruitmentBackendLoadBtn = $("#recruitmentBackendLoadBtn");
       if (recruitmentBackendLoadBtn) recruitmentBackendLoadBtn.addEventListener("click", () => handleRecruitmentBackendLoad());
+      configureRecruitmentBackendAvailability();
 
       // Isolated local-only internship workbook reader
       const internDropzone = $("#internRecruitmentDropzone");

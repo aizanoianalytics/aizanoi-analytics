@@ -32,6 +32,15 @@ test('Recruitment backend load is read-only and reuses the ordinary dashboard im
   assert.match(html, /recruitmentBackendLoadBtn[\s\S]*?handleRecruitmentBackendLoad/);
 });
 
+test('Hosted HTTPS mode disables the localhost companion service before CSP or mixed-content failure', () => {
+  assert.match(html, /function configureRecruitmentBackendAvailability\(\)/);
+  assert.match(html, /window\.location\.protocol === "https:"/);
+  assert.match(html, /window\.location\.hostname/);
+  assert.match(html, /recruitmentBackendLoadBtn[\s\S]*?disabled = hostedHttps/);
+  assert.match(html, /recruitmentBackendUrl[\s\S]*?disabled = hostedHttps/);
+  assert.match(html, /configureRecruitmentBackendAvailability\(\)/);
+});
+
 test('Local recruitment upload and backend upload share one workbook parser', () => {
   assert.match(html, /async function ingestRecruitmentWorkbook\(buffer, sourceName\)/);
   assert.match(html, /const RECRUITMENT_WORKBOOK_HEADERS = Object\.freeze\(\["check_area", \.\.\.FIELD_KEYS\]\)/);
