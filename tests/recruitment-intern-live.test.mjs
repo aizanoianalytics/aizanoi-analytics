@@ -8,7 +8,6 @@ const html = readFileSync(dashboardPath, 'utf8');
 
 const EMBED_VIEW = 'https://igairportaero-my.sharepoint.com/:x:/g/personal/furkan_cakmak_igairport_aero/IQCbFZYRxjZlQbglXYNtVZmwAbmN26iPLnmgcjx_vuI-zLY?rtime=xBgjuSwl30g&action=embedview';
 const DOWNLOAD = 'https://igairportaero-my.sharepoint.com/:x:/g/personal/furkan_cakmak_igairport_aero/IQCbFZYRxjZlQbglXYNtVZmwAbmN26iPLnmgcjx_vuI-zLY?rtime=xBgjuSwl30g&download=1';
-const BACKEND_DEFAULT = 'http://localhost:18923/dosya';
 
 function liveCard() {
   const start = html.indexOf('id="internLiveCard"');
@@ -19,7 +18,7 @@ function liveCard() {
 test('Intern panel adds a discoverable Canli Gorunum card without a blocked SharePoint iframe', () => {
   const card = liveCard();
   assert.match(card, /Canl. G.r.n.m/);
-  assert.match(html, /<div[^>]+data-view-panel="intern-recruitment"[\s\S]*?id="internLiveCard"/);
+  assert.match(html, /<div[^>]+data-view-panel="import"[\s\S]*?id="internLiveCard"/);
   assert.doesNotMatch(html, /id="internLiveFrame"/);
   assert.doesNotMatch(html, /<iframe[^>]*internLive/);
   assert.match(html, /id="internLiveOpen"/);
@@ -39,31 +38,29 @@ test('Canli Gorunum card links the current Excel download without embedding appl
   assert.doesNotMatch(html, /<script[^>]+id="internRecruitmentEmbeddedData"/);
 });
 
-test('Backend auto-load flow reuses the existing SheetJS parse, schema validation and internState pipeline', () => {
-  assert.match(html, /<label[^>]*for="internBackendUrl"/);
-  assert.match(html, /id="internBackendUrl"/);
-  assert.ok(html.includes(`value="${BACKEND_DEFAULT}"`), 'backend URL input must default to the local proxy');
-  assert.match(html, /id="internBackendLoadBtn"/);
-  assert.match(html, /function handleInternBackendLoad\(\)/);
-  assert.match(html, /handleInternBackendLoad[\s\S]*?fetch\s*\(/);
-  assert.match(html, /handleInternBackendLoad[\s\S]*?arrayBuffer\(\)/);
-  assert.match(html, /handleInternBackendLoad[\s\S]*?XLSX\.read\s*\(/);
-  assert.match(html, /handleInternBackendLoad[\s\S]*?findInternRecruitmentSheet\s*\(/);
-  assert.match(html, /handleInternBackendLoad[\s\S]*?renderInternRecruitmentRawData\s*\(/);
-  assert.match(html, /handleInternBackendLoad[\s\S]*?toast\s*\(/);
-  assert.match(html, /internBackendLoadBtn[\s\S]*?handleInternBackendLoad/);
+test('Import Center carries no backend controls and no network upload path', () => {
+  assert.doesNotMatch(html, /internBackendUrl/);
+  assert.doesNotMatch(html, /internBackendLoadBtn/);
+  assert.doesNotMatch(html, /handleInternBackendLoad/);
+  assert.doesNotMatch(html, /localhost:18923/);
+  assert.doesNotMatch(html, /id="internLiveFrame"/);
+  assert.doesNotMatch(html, /<iframe[^>]*internLive/);
 });
 
-test('Backend fetch is a read-only GET and no SharePoint frame is embedded or scraped', () => {
-  const start = html.indexOf('function handleInternBackendLoad');
-  assert.ok(start > 0, 'missing backend loader');
+test('Unified routing feeds the existing SheetJS parse, schema validation and internState pipeline', () => {
+  assert.match(html, /async function routeSingleWorkbook\(file\)/);
+  assert.match(html, /routeSingleWorkbook[\s\S]*?detectWorkbookKind\(buffer\)/);
+  assert.match(html, /routeSingleWorkbook[\s\S]*?resetInternRecruitmentState\(\)/);
+  assert.match(html, /routeSingleWorkbook[\s\S]*?findInternRecruitmentSheet\s*\(/);
+  assert.match(html, /routeSingleWorkbook[\s\S]*?renderInternRecruitmentRawData\s*\(/);
+  assert.match(html, /handleUnifiedExcelFiles[\s\S]*?toast\s*\(/);
+  const start = html.indexOf('async function routeSingleWorkbook');
+  assert.ok(start > 0, 'missing unified router');
   const fn = html.slice(start, start + 4000);
   assert.doesNotMatch(fn, /localStorage|sessionStorage|indexedDB|sendBeacon|WebSocket|XMLHttpRequest/);
   assert.doesNotMatch(fn, /method:\s*["']POST/i);
   assert.match(html, /cross-origin/i);
   assert.match(html, /same-origin policy/i);
-  assert.doesNotMatch(html, /id="internLiveFrame"/);
-  assert.doesNotMatch(html, /<iframe[^>]*internLive/);
 });
 
 test('Page lock asks the password on every load and never persists unlock', () => {
@@ -90,11 +87,10 @@ test('Live card follows the dashboard card/button/filter language and stays acce
   assert.match(card, /class="card-header"/);
   assert.match(card, /class="card-title"/);
   assert.match(card, /class="card-subtitle"/);
-  assert.match(html, /id="internBackendLoadBtn"[^>]*class="btn/);
-  assert.match(html, /<label[^>]*for="internBackendUrl"[^>]*>/);
-  assert.match(html, /<label[^>]*for="internBackendUrl"[^>]*>[^<]*Backend/i);
+  assert.match(html, /id="unifiedExcelDropzone"[^>]*tabindex="0"[^>]*role="button"/);
+  assert.match(html, /id="unifiedExcelInput"[^>]*multiple/);
   assert.match(html, /#internLiveCard/);
   assert.match(html, /#internLiveCard\s*\{[^}]*scroll-margin-top/);
-  assert.match(html, /@media[^{]*\{[\s\S]*?#internLiveCard[\s\S]*?\}/);
-  assert.match(html, /internBackendUrl[^>]*aria-describedby|aria-describedby[^>]*internBackend/i);
+  assert.match(html, /@media[^{]*\{[\s\S]*?\.import-grid[\s\S]*?\}/);
+  assert.match(html, /id="internImportResult"[^>]*role="status"/);
 });

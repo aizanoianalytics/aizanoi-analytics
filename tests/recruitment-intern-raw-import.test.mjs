@@ -98,18 +98,30 @@ test('Applicant rows stay isolated from network and browser storage code paths',
   const logic = internLogic();
   assert.doesNotMatch(logic, /state\.records|normalizePayload|applyPayload|renderAll/);
   assert.doesNotMatch(logic, /fetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|localStorage|sessionStorage|indexedDB|caches\./);
-  assert.match(logic, /resetInternRecruitmentState\(\)/);
-  assert.match(logic, /renderInternRecruitmentRawData\(matrix, file\.name\)/);
+  assert.match(logic, /handleUnifiedExcelFiles\(\[file\]/);
+  assert.match(html, /routeSingleWorkbook[\s\S]*?resetInternRecruitmentState\(\)/);
+  assert.match(html, /routeSingleWorkbook[\s\S]*?renderInternRecruitmentRawData\(matrix, file\.name\)/);
 });
 
-test('Every internship upload attempt clears stale rows, controls, status, and file input state', () => {
-  const logic = internLogic();
-  const handler = logic.slice(0, logic.indexOf('// HR PANELI'));
-  assert.match(handler, /resetInternRecruitmentState\(\);/);
-  assert.match(handler, /finally\s*\{[\s\S]*?internRecruitmentFileInput[\s\S]*?value\s*=\s*""/);
+test('Every internship upload attempt clears stale rows, controls, status, dashboard, and file input state', () => {
+  assert.match(html, /routeSingleWorkbook[\s\S]*?resetInternRecruitmentState\(\);/);
+  assert.match(html, /input\.addEventListener\("change"[\s\S]*?input\.value = ""/);
   assert.match(html, /internState\.headers\s*=\s*\[\]/);
   assert.match(html, /internState\.rows\s*=\s*\[\]/);
   assert.match(html, /internHrPanel[\s\S]*?style\.display\s*=\s*"none"/);
+  assert.match(html, /internDashboard[\s\S]*?style\.display\s*=\s*"none"/);
+});
+
+test('Intern view renders a KPI and distribution dashboard after import', () => {
+  assert.match(html, /id="internDashboard"/);
+  assert.match(html, /id="internKpiGrid"/);
+  assert.match(html, /id="internPeriodChart"/);
+  assert.match(html, /id="internUnitChart"/);
+  assert.match(html, /id="internTableSearch"/);
+  assert.match(html, /function renderInternDashboard\(\)/);
+  assert.match(html, /Evrak eksiği olan aday/);
+  assert.match(html, /renderInternTable[\s\S]*?renderInternDashboard\(\)/);
+  assert.match(html, /intern-bar-fill/);
 });
 
 test('Cancelled candidates are excluded by default and can be included explicitly', () => {
