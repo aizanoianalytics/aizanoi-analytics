@@ -1665,9 +1665,9 @@ a { color: var(--blue-600); text-decoration: none; }
           <label for="recruitmentBackendUrl">Backend URL
             <input type="url" id="recruitmentBackendUrl" value="http://localhost:18923/recruitment-dosya" aria-describedby="recruitmentBackendHint" inputmode="url" spellcheck="false">
           </label>
-          <button type="button" id="recruitmentBackendLoadBtn" class="btn btn-primary">⬇ Load automatically from backend</button>
+          <button type="button" id="recruitmentBackendLoadBtn" class="btn btn-primary">⬇ Load from local backend</button>
         </div>
-        <p class="drop-sub" id="recruitmentBackendHint" style="margin: 0.5rem 0 0;">The backend performs a read-only GET with CORS. Recruitment rows are never sent out or written to browser storage. If the local backend is unavailable, download or select the workbook above.</p>
+        <p class="drop-sub" id="recruitmentBackendHint" style="margin: 0.5rem 0 0;">Optional companion service: the static dashboard does not host this endpoint. When configured, the local backend performs a read-only GET with CORS; recruitment rows are never sent out or written to browser storage. Otherwise, download or select the workbook above.</p>
       </article>
     </div>
 
@@ -1796,6 +1796,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       "position_level", "level_category", "offer_date", "hired_employee",
       "resource", "refferal_name", "gender"
     ];
+    const RECRUITMENT_WORKBOOK_HEADERS = Object.freeze(["check_area", ...FIELD_KEYS]);
 
     const STAGES = [
       "New & Sourcing", "Initial Screening", "Assessment & Testing",
@@ -2915,6 +2916,11 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 
       const matrix = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: "", blankrows: false });
       if (matrix.length < 2) throw new Error("The selected sheet does not contain enough data rows.");
+      const actualHeaders = (matrix[0] || []).slice(0, RECRUITMENT_WORKBOOK_HEADERS.length).map(value => fold(value));
+      const invalidHeaders = RECRUITMENT_WORKBOOK_HEADERS.filter((header, index) => actualHeaders[index] !== fold(header));
+      if (invalidHeaders.length) {
+        throw new Error(`Recruitment workbook headers do not match the required A–Q schema. Invalid or missing: ${invalidHeaders.join(", ")}.`);
+      }
 
       const payload = {
         generatedAt: new Date().toISOString(),

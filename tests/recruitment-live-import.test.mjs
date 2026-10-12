@@ -34,6 +34,8 @@ test('Recruitment backend load is read-only and reuses the ordinary dashboard im
 
 test('Local recruitment upload and backend upload share one workbook parser', () => {
   assert.match(html, /async function ingestRecruitmentWorkbook\(buffer, sourceName\)/);
+  assert.match(html, /const RECRUITMENT_WORKBOOK_HEADERS = Object\.freeze\(\["check_area", \.\.\.FIELD_KEYS\]\)/);
+  assert.match(html, /invalidHeaders[\s\S]*?Recruitment workbook headers do not match the required A.Q schema/);
   const localStart = html.indexOf('async function handleExcelFile');
   const localFn = html.slice(localStart, localStart + 1800);
   assert.match(localFn, /ingestRecruitmentWorkbook\(buffer, file\.name\)/);
