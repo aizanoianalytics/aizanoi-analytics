@@ -1,0 +1,48 @@
+{
+  "id": "2026-10-12-weekly-sunday-that-redrew-two-title-races",
+  "kind": "weekly",
+  "title": "One Sunday that redrew the top of two leagues",
+  "summary": "One afternoon reset the shape of two title races. Manchester City won 3-0 at Anfield after Ryan Gravenberch's second booking left Liverpool with ten men for the closing half-hour; Haaland, Doku and Cherki scored in a thirteen-minute burst. In Germany, ten-man Freiburg beat Schalke 2-1 through a late Keisuke Goto goal to go top on goal difference, after Bayern's earlier stumble in the matchday. Crystal Palace's 3-1 win over Nottingham Forest was the weekend's other outlier; in Italy, Juventus needed a late Kolo Muani header to draw 1-1 at Cagliari.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-10-12T05:20:00Z",
+  "updatedAt": "2026-10-12T05:20:00Z",
+  "retrievedAt": "2026-10-12T05:25:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "analysis",
+    "premier-league",
+    "bundesliga",
+    "serie-a"
+  ],
+  "sources": [
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/live/cr3el8xwnnxkt",
+      "publishedAt": "2026-10-11T18:00:00Z"
+    },
+    {
+      "publisher": "Bundesliga",
+      "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/5/sport-club-freiburg-vs-fc-schalke-04/liveticker",
+      "publishedAt": "2026-10-11T17:00:00Z"
+    },
+    {
+      "publisher": "Flashscore USA",
+      "url": "https://flashscoreusa.com/news/soccer-serie-a-cagliari-juventus-report-october-11-2026/OGzlNY7s",
+      "publishedAt": "2026-10-11T20:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/match/_/gameId/401879266/nottingham-forest-crystal-palace",
+      "publishedAt": "2026-10-11T18:00:00Z"
+    }
+  ],
+  "week": "2026-W42"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-12-asml-spare-parts-price-rise-samsung-sk-hynix",
+  "kind": "daily",
+  "title": "ASML pushes a 10% spare-parts increase onto Samsung and SK Hynix",
+  "summary": "Samsung Electronics and SK Hynix have accepted a flat 10% increase in ASML's replacement-part prices for their lithography tools in South Korea, effective for deliveries from January 2027, The Elec reported on 11 October. The higher rates cover both EUV and DUV systems and apply to routine consumables as well as parts swapped after failure or performance loss. One industry source said material costs have risen, while noting ASML may also be seeking better margins as its memory customers enjoy record profits.",
+  "category": "technology",
+  "priority": 66,
+  "publishedAt": "2026-10-12T05:00:00Z",
+  "updatedAt": "2026-10-12T05:00:00Z",
+  "retrievedAt": "2026-10-12T05:25:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "asml",
+    "samsung",
+    "sk-hynix",
+    "lithography"
+  ],
+  "sources": [
+    {
+      "publisher": "DigiTimes",
+      "url": "https://www.digitimes.com/news/a20261012VL211/samsung-sk-hynix-asml-equipment-revenue.html",
+      "publishedAt": "2026-10-12T03:12:00Z"
+    },
+    {
+      "publisher": "Gate News",
+      "url": "https://www.gate.com/news/detail/asml-raises-spare-parts-prices-10-for-samsung-and-sk-hynix-effective-24859891",
+      "publishedAt": "2026-10-10T01:50:00Z"
+    }
+  ]
+}

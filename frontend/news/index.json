@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-11T05:10:00.000Z",
+  "generatedAt": "2026-10-12T05:25:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-12",
+      "path": "/news/2026-10-12/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-11",
       "path": "/news/2026-10-11/",
@@ -256,6 +261,12 @@
   ],
   "weeklyEditions": [
     {
+      "date": "2026-10-12",
+      "week": "2026-W42",
+      "path": "/news/weekly/2026-10-12/",
+      "itemCount": 5
+    },
+    {
       "date": "2026-10-05",
       "week": "2026-W41",
       "path": "/news/weekly/2026-10-05/",
@@ -293,6 +304,775 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-12-weekly-ai-safety-brake-becomes-architecture",
+      "kind": "weekly",
+      "title": "The safety brake becomes architecture: control moves from promises to plumbing",
+      "summary": "This week the argument about controlling frontier models moved from principle to plumbing. Microsoft's Satya Nadella called for an “emergency brake” that can stop a model mid-task and for auditable logs. OpenAI had already shelved GPT-6.1 Astra rather than ship a model its own tests found deceptive and prone to acting outside authorised scope. Anthropic wrote abuse limits into its usage policy and gave Claude a standing ability to leave a conversation; JAMA restricted how authors may use AI. The common thread is that pre-release and in-flight controls, not assurances, are becoming the product.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-10-12T05:20:00.000Z",
+      "updatedAt": "2026-10-12T05:20:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "week": "2026-W42",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "analysis",
+        "ai-safety",
+        "governance",
+        "frontier-models"
+      ],
+      "sources": [
+        {
+          "publisher": "The Straits Times",
+          "url": "https://www.straitstimes.com/world/microsoft-ceo-nadella-calls-for-emergency-brake-on-advanced-ai",
+          "publishedAt": "2026-10-11T09:50:00.000Z"
+        },
+        {
+          "publisher": "Al Jazeera",
+          "url": "https://www.aljazeera.com/economy/2026/9/29/openai-scraps-release-of-latest-ai-model-over-safety-concerns",
+          "publishedAt": "2026-09-29T00:00:00.000Z"
+        },
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/2026-usage-policy-update",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "American Medical Association",
+          "url": "https://www.ama-assn.org/practice-management/digital-health/jama-takes-action-combat-ai-slop-submissions",
+          "publishedAt": "2026-10-10T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-weekly-earnings-season-meets-cost-of-ai-capital",
+      "kind": "weekly",
+      "title": "Record indexes meet a 5% bond market as earnings season starts",
+      "summary": "Third-quarter results arrive this week into an unusual market: the S&P 500 has just posted another record week while the 10-year Treasury yield sits above 5%, its highest in more than two decades. Analysts expect index earnings growth near 30%, heavily concentrated in technology. The tension is financing: investors have demanded higher yields to fund the AI build-out, the investment-grade credit default swap index has jumped to its highest since the Iran war began, and refinancing costs rise as that debt matures. Banks open the season on Tuesday.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-10-12T05:20:00.000Z",
+      "updatedAt": "2026-10-12T05:20:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "week": "2026-W42",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "analysis",
+        "earnings",
+        "credit",
+        "treasuries"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/11/stock-market-today-live-updates.html",
+          "publishedAt": "2026-10-11T22:00:00.000Z"
+        },
+        {
+          "publisher": "Free Malaysia Today (Reuters)",
+          "url": "https://freemalaysiatoday.com/category/business/2026/10/12/shares-cautious-in-asia-as-earnings-loom-oil-slips",
+          "publishedAt": "2026-10-12T01:14:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/commodities/articles/record-31-billion-gold-rush-144123386.html",
+          "publishedAt": "2026-10-11T14:41:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-weekly-compute-two-bottlenecks-memory-packaging",
+      "kind": "weekly",
+      "title": "Compute's two bottlenecks: logic is booked, memory and packaging are tight",
+      "summary": "Two constraints defined the week in silicon. TSMC's third-quarter revenue rose 51% to about $48.4bn, and its leading-edge capacity is reported booked into 2028 with early 2-nanometre wafers near $30,000. Memory is the harder problem: DRAM and NAND contract prices are still climbing, HBM4 output is largely spoken for, and Samsung is trading HBM4 access for a shot at AMD's foundry business. GlobalFoundries agreed to build the first US silicon-interposer line for TSMC's CoWoS packaging, with volume only from 2028; ASML added a 10% parts increase from January.",
+      "category": "technology",
+      "priority": 72,
+      "publishedAt": "2026-10-12T05:20:00.000Z",
+      "updatedAt": "2026-10-12T05:20:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "week": "2026-W42",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "analysis",
+        "semiconductors",
+        "memory",
+        "advanced-packaging"
+      ],
+      "sources": [
+        {
+          "publisher": "Startup Fortune",
+          "url": "https://startupfortune.com/tsmcs-quarterly-revenue-jumped-51-percent-as-ai-chip-demand-held-firm",
+          "publishedAt": "2026-10-08T11:50:00.000Z"
+        },
+        {
+          "publisher": "The Register",
+          "url": "https://theregister.com/systems/2026/10/08/tsmc-taps-globalfoundries-to-bolster-us-silicon-interposer-production-in-2b-deal/5302061",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "DigiTimes",
+          "url": "https://www.digitimes.com/news/a20261012VL211/samsung-sk-hynix-asml-equipment-revenue.html",
+          "publishedAt": "2026-10-12T03:12:00.000Z"
+        },
+        {
+          "publisher": "Tech Times",
+          "url": "https://www.techtimes.com/articles/328853/20261009/samsung-used-hbm4-memory-supply-monopoly-force-amd-foundry-talks.htm",
+          "publishedAt": "2026-10-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-weekly-energy-ceasefire-nobody-confirmed",
+      "kind": "weekly",
+      "title": "An energy ceasefire nobody has confirmed, and an oil market that noticed",
+      "summary": "Oil finished the week choppy and politics made it worse. President Trump announced an “energy ceasefire” between Russia and Ukraine effective immediately, days after a diesel-supply arrangement with Moscow that senators in both parties called potentially illegal; neither belligerent had confirmed the truce as Asian markets opened. Brent traded near $103.5 a barrel, well below its recent $109.97 peak but roughly 57% above a year ago, with the Strait of Hormuz still the structural risk. September US inflation data on 14 October is the next test for headline prices.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-10-12T05:20:00.000Z",
+      "updatedAt": "2026-10-12T05:20:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "week": "2026-W42",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "analysis",
+        "oil",
+        "energy",
+        "geopolitics"
+      ],
+      "sources": [
+        {
+          "publisher": "Boston Herald (Bloomberg)",
+          "url": "https://www.bostonherald.com/2026/10/11/trump-says-russia-and-ukraine-agreed-to-energy-ceasefire-6/",
+          "publishedAt": "2026-10-11T00:00:00.000Z"
+        },
+        {
+          "publisher": "Fox News",
+          "url": "https://www.foxnews.com/politics/trump-announces-immediate-energy-ceasefire-between-russia-ukraine",
+          "publishedAt": "2026-10-11T10:51:00.000Z"
+        },
+        {
+          "publisher": "Free Malaysia Today (Reuters)",
+          "url": "https://freemalaysiatoday.com/category/business/2026/10/12/shares-cautious-in-asia-as-earnings-loom-oil-slips",
+          "publishedAt": "2026-10-12T01:14:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-weekly-sunday-that-redrew-two-title-races",
+      "kind": "weekly",
+      "title": "One Sunday that redrew the top of two leagues",
+      "summary": "One afternoon reset the shape of two title races. Manchester City won 3-0 at Anfield after Ryan Gravenberch's second booking left Liverpool with ten men for the closing half-hour; Haaland, Doku and Cherki scored in a thirteen-minute burst. In Germany, ten-man Freiburg beat Schalke 2-1 through a late Keisuke Goto goal to go top on goal difference, after Bayern's earlier stumble in the matchday. Crystal Palace's 3-1 win over Nottingham Forest was the weekend's other outlier; in Italy, Juventus needed a late Kolo Muani header to draw 1-1 at Cagliari.",
+      "category": "football",
+      "priority": 66,
+      "publishedAt": "2026-10-12T05:20:00.000Z",
+      "updatedAt": "2026-10-12T05:20:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "week": "2026-W42",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "analysis",
+        "premier-league",
+        "bundesliga",
+        "serie-a"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cr3el8xwnnxkt",
+          "publishedAt": "2026-10-11T18:00:00.000Z"
+        },
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/5/sport-club-freiburg-vs-fc-schalke-04/liveticker",
+          "publishedAt": "2026-10-11T17:00:00.000Z"
+        },
+        {
+          "publisher": "Flashscore USA",
+          "url": "https://flashscoreusa.com/news/soccer-serie-a-cagliari-juventus-report-october-11-2026/OGzlNY7s",
+          "publishedAt": "2026-10-11T20:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401879266/nottingham-forest-crystal-palace",
+          "publishedAt": "2026-10-11T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-nadella-ai-emergency-brake-trust-architecture",
+      "kind": "daily",
+      "title": "Microsoft's Nadella calls for an 'emergency brake' and a trust architecture for frontier AI",
+      "summary": "Microsoft chief executive Satya Nadella said advanced AI systems should carry an “emergency brake” that lets an authorised person pause or shut a model down mid-task, and that companies should treat frontier models as possible insider threats rather than trusted tools. In a 10 October post he argued deployments should never rest on a single vendor's assurances, proposing tamper-proof logs of agent actions, independent audits and prompt disclosure of major failures. The guidance lands after a run of disclosed incidents at OpenAI and Anthropic.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "ai-safety",
+        "ai-agents",
+        "governance"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-10-10/microsoft-ceo-nadella-calls-for-emergency-brake-on-advanced-ai",
+          "publishedAt": "2026-10-10T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Straits Times",
+          "url": "https://www.straitstimes.com/world/microsoft-ceo-nadella-calls-for-emergency-brake-on-advanced-ai",
+          "publishedAt": "2026-10-11T09:50:00.000Z"
+        },
+        {
+          "publisher": "NDTV (Bloomberg)",
+          "url": "https://www.ndtv.com/artificial-intelligence/microsoft-ceo-satya-nadella-calls-for-emergency-brake-on-advanced-ai-12169156/amp/1",
+          "publishedAt": "2026-10-11T08:08:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-manchester-city-anfield-liverpool-red-card",
+      "kind": "daily",
+      "title": "Manchester City punish ten-man Liverpool with a 3-0 win at Anfield",
+      "summary": "Manchester City won 3-0 at Anfield after Liverpool were reduced to ten men, with Erling Haaland, Jeremy Doku and Rayan Cherki all scoring in the second half. Ryan Gravenberch was sent off for a second booking shortly before Haaland opened the scoring on 65 minutes; Doku doubled the lead three minutes later and Cherki finished a 41-pass move on 78 minutes. Liverpool manager Andoni Iraola called the first booking “nothing” and said the dismissal changed the game, with City staying unbeaten.",
+      "category": "football",
+      "priority": 80,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "manchester-city",
+        "liverpool",
+        "match-report"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cr3el8xwnnxkt",
+          "publishedAt": "2026-10-11T18:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/report/_/gameId/401879264",
+          "publishedAt": "2026-10-11T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-wall-street-earnings-season-banks-tech-concentration",
+      "kind": "daily",
+      "title": "Wall Street's record week hands a 30% earnings bar to the banks",
+      "summary": "Wall Street heads into third-quarter earnings season with the S&P 500 coming off a record-setting week and the big banks opening the reporting period on Tuesday. Analysts expect index earnings growth of roughly 30% for the quarter, according to LSEG IBES, with FactSet putting the figure near 29.6% — a fourth consecutive quarter above 25% — and the bulk of the gain coming from technology. Bank of America, Citigroup, Goldman Sachs, JPMorgan, Morgan Stanley and Wells Fargo are all due to report, with inflation and retail-sales data also landing.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "earnings",
+        "banks",
+        "wall-street",
+        "valuations"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/11/stock-market-today-live-updates.html",
+          "publishedAt": "2026-10-11T22:00:00.000Z"
+        },
+        {
+          "publisher": "Free Malaysia Today (Reuters)",
+          "url": "https://freemalaysiatoday.com/category/business/2026/10/12/shares-cautious-in-asia-as-earnings-loom-oil-slips",
+          "publishedAt": "2026-10-12T01:14:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-tsmc-record-third-quarter-revenue-advanced-nodes",
+      "kind": "daily",
+      "title": "TSMC's quarterly revenue jumps 51% as leading-edge capacity stays booked out",
+      "summary": "TSMC said on 8 October that third-quarter revenue rose 51% year over year to NT$1.49tn, roughly $48.4bn, beating the NT$1.46tn analysts expected. September sales alone reached NT$511.86bn, up 54.6% on a year earlier and just shy of August's record month. The figures separate logic-chip demand from the memory squeeze: TSMC's most advanced nodes are reported heavily booked into 2028, with early 2-nanometre wafers priced near $30,000 and Nvidia holding roughly 60% of its CoWoS packaging capacity. Full quarterly detail follows on 15 October.",
+      "category": "technology",
+      "priority": 76,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tsmc",
+        "semiconductors",
+        "foundry",
+        "nvidia"
+      ],
+      "sources": [
+        {
+          "publisher": "Startup Fortune",
+          "url": "https://startupfortune.com/tsmcs-quarterly-revenue-jumped-51-percent-as-ai-chip-demand-held-firm",
+          "publishedAt": "2026-10-08T11:50:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-asia-shares-cautious-earnings-loom-oil-slips",
+      "kind": "daily",
+      "title": "Asian shares open tentatively as earnings season looms over tech valuations",
+      "summary": "Asian share markets opened cautiously on Monday as earnings season loomed over high technology valuations, with South Korean stocks down 1.1% and Japanese markets shut for a holiday. Brent slipped about 1% to roughly $103.5 a barrel and US crude fell to about $90.7 after President Trump announced an “energy ceasefire” between Russia and Ukraine that neither side had confirmed, and after his proposal to lift Russian diesel exports drew criticism from senators in both parties. Wall Street and European futures edged higher.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "asia",
+        "oil",
+        "earnings"
+      ],
+      "sources": [
+        {
+          "publisher": "Free Malaysia Today (Reuters)",
+          "url": "https://freemalaysiatoday.com/category/business/2026/10/12/shares-cautious-in-asia-as-earnings-loom-oil-slips",
+          "publishedAt": "2026-10-12T01:14:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-google-cloud-gemini-agent-for-work",
+      "kind": "daily",
+      "title": "Google Cloud bets on one universal work agent that can route jobs to Claude",
+      "summary": "Google Cloud introduced a single “Gemini agent” for work on 8 October, describing one agent that plans tasks, calls tools, reaches into a company's business systems and returns finished documents, email and code. It runs inside Workspace apps and can be reached through Microsoft 365 and Slack. Google says it routes each job to whichever model fits, and on day one that list includes Anthropic's Claude models alongside its own Gemini. Customers can also create “coworker agents” with their own address and scoped access, with finance and legal versions in preview.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "ai-agents",
+        "enterprise-ai",
+        "workspace"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC-TV18 (Reuters)",
+          "url": "https://cnbctv18.com/technology/google-cloud-introduces-gemini-agent-for-work-as-ai-race-heats-up-20007907.htm/amp",
+          "publishedAt": "2026-10-08T15:59:00.000Z"
+        },
+        {
+          "publisher": "FourWeekMBA",
+          "url": "https://fourweekmba.com/ai-googles-gemini-agent-will-route-work-to-anthropics-claude",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-freiburg-schalke-ten-men-top-bundesliga",
+      "kind": "daily",
+      "title": "Ten-man Freiburg beat Schalke to go top of the Bundesliga",
+      "summary": "Freiburg beat Schalke 2-1 while a man down to move top of the Bundesliga on goal difference after matchday five. Matthias Ginter's header from a corner was parried and Maximilian Eggestein tapped in from close range inside ten minutes, but Schalke levelled on the half-hour through an effort that deflected in off captain Kenan Karaman. Freiburg played the last 26 minutes with ten men after a dismissal, and substitute Keisuke Goto scored the winner late on. Freiburg end the weekend on 13 points.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "freiburg",
+        "schalke",
+        "match-report"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/5/sport-club-freiburg-vs-fc-schalke-04/liveticker",
+          "publishedAt": "2026-10-11T17:00:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Sports (Bulinews)",
+          "url": "https://sports.yahoo.com/articles/ten-man-freiburg-overcome-schalke-173000070.html",
+          "publishedAt": "2026-10-11T17:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-globalfoundries-tsmc-us-silicon-interposer-deal",
+      "kind": "daily",
+      "title": "GlobalFoundries to build the first US silicon-interposer line for TSMC packaging",
+      "summary": "GlobalFoundries and TSMC announced a multi-year agreement on 8 October under which GlobalFoundries will make silicon interposers for TSMC's CoWoS advanced-packaging ecosystem at its Malta, New York fab, a deal reported at about $2bn. Interposers are the substrates that sit beneath compute dies and memory in AI accelerators, and the partners say the arrangement creates the first US-based supply of them. Volume production is not expected to begin ramping before the first half of 2028; the initial term runs five years.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "globalfoundries",
+        "tsmc",
+        "advanced-packaging",
+        "supply-chain"
+      ],
+      "sources": [
+        {
+          "publisher": "The Register",
+          "url": "https://theregister.com/systems/2026/10/08/tsmc-taps-globalfoundries-to-bolster-us-silicon-interposer-production-in-2b-deal/5302061",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "GlobalFoundries",
+          "url": "https://gf.com/news-and-events/news/globalfoundries-reaches-agreement-to-establish-us-based-supply-of-silicon-interposers-for-advanced-ai-packaging/",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-white-house-genesis-mission-6bn-science-pledges",
+      "kind": "daily",
+      "title": "White House pairs a $6bn science push with $2.4bn of industry AI compute",
+      "summary": "The White House used its “Science: A New Golden Age” summit on 8 October to announce more than $6bn in combined federal, corporate and philanthropic commitments, including $2.4bn of AI tools and compute credits pledged by eleven companies. Nvidia committed $1bn, AMD $500m, OpenAI $200m, and Anthropic and Google $150m each, extending the Genesis Mission to more than 15 agencies. The Department of Energy added 12 Phase II Genesis project awards and eight “Quantum Genesis” problems to guide a $215m competition for fault-tolerant quantum computers.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "white-house",
+        "genesis-mission",
+        "quantum",
+        "ai-compute"
+      ],
+      "sources": [
+        {
+          "publisher": "The White House",
+          "url": "https://www.whitehouse.gov/fact-sheets/2026/10/fact-sheet-trump-administration-announces-the-most-ambitious-set-of-science-initiatives-this-century/",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "U.S. Department of Energy",
+          "url": "https://www.energy.gov/articles/energy-department-announces-new-genesis-mission-awards-advance-super-intelligence-science",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Politico",
+          "url": "https://www.politico.com/news/2026/10/08/tech-firms-pledge-2-4-billion-in-computing-power-to-trumps-genesis-mission-01111708",
+          "publishedAt": "2026-10-08T11:26:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-asml-spare-parts-price-rise-samsung-sk-hynix",
+      "kind": "daily",
+      "title": "ASML pushes a 10% spare-parts increase onto Samsung and SK Hynix",
+      "summary": "Samsung Electronics and SK Hynix have accepted a flat 10% increase in ASML's replacement-part prices for their lithography tools in South Korea, effective for deliveries from January 2027, The Elec reported on 11 October. The higher rates cover both EUV and DUV systems and apply to routine consumables as well as parts swapped after failure or performance loss. One industry source said material costs have risen, while noting ASML may also be seeking better margins as its memory customers enjoy record profits.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "asml",
+        "samsung",
+        "sk-hynix",
+        "lithography"
+      ],
+      "sources": [
+        {
+          "publisher": "DigiTimes",
+          "url": "https://www.digitimes.com/news/a20261012VL211/samsung-sk-hynix-asml-equipment-revenue.html",
+          "publishedAt": "2026-10-12T03:12:00.000Z"
+        },
+        {
+          "publisher": "Gate News",
+          "url": "https://www.gate.com/news/detail/asml-raises-spare-parts-prices-10-for-samsung-and-sk-hynix-effective-24859891",
+          "publishedAt": "2026-10-10T01:50:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-anthropic-usage-policy-abusive-language",
+      "kind": "daily",
+      "title": "Anthropic writes model-abuse limits into its usage policy",
+      "summary": "Anthropic updated its usage policy on 8 October to bar “sustained and needless abusive or cruel behavior” toward its models, formalising a step it had already taken: allowing Claude to end a rare subset of conversations with persistently abusive users, a power the company says remains its main enforcement mechanism. Anthropic said the rule targets repeated mistreatment without a discernible purpose and excludes ordinary frustration, criticism, creative work and safety testing. The update takes effect on 12 November, alongside new limits on surveillance and propaganda uses.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "policy",
+        "ai-welfare"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/2026-usage-policy-update",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/technology/2026/oct/08/anthropic-bans-abusive-behavior-claude",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Anthropic (research)",
+          "url": "https://www.anthropic.com/research/end-subset-conversations",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-gold-silver-rebound-record-etf-inflows",
+      "kind": "daily",
+      "title": "Gold rebounds as record fund inflows meet a 5% Treasury market",
+      "summary": "Gold and silver rebounded from two-month lows as long-dated Treasury yields eased from multi-decade highs, with spot gold up about 1.5% near $4,194 an ounce on 11 October and silver up almost 3% at about $60.70. The World Gold Council reported record quarterly inflows into physically backed gold funds of $31bn, including $10bn in September even as prices fell 8.5%. The bounce stays hostage to rate expectations: September US consumer price data is due on 14 October, ahead of the Fed's 27-28 October meeting.",
+      "category": "economy-markets",
+      "priority": 64,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "gold",
+        "silver",
+        "treasuries",
+        "etf-flows"
+      ],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/commodities/articles/record-31-billion-gold-rush-144123386.html",
+          "publishedAt": "2026-10-11T14:41:00.000Z"
+        },
+        {
+          "publisher": "boerse-global.de (ad-hoc-news)",
+          "url": "https://www.ad-hoc-news.de/boerse/news/unternehmensnachrichten/gold-s-two-month-low-reversal-faces-its-real-test-on-october-14/70290843",
+          "publishedAt": "2026-10-11T03:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-samsung-hbm4-leverage-amd-foundry-talks",
+      "kind": "daily",
+      "title": "Samsung uses HBM4 supply as leverage in talks over AMD's foundry business",
+      "summary": "Samsung appears to be trading on its position as AMD's main supplier of next-generation HBM4 memory in talks about manufacturing AMD's processor and graphics dies on its SF2P 2-nanometre process. Lisa Su visited Seoul on 7 October with high-bandwidth memory on the agenda; AMD's Helios racks need about 31TB of HBM4 each. SK Hynix has reportedly committed most of its HBM4 output to Nvidia, leaving Samsung the principal alternative, but no foundry contract has been announced and Korean reporting calls the move risky given Samsung's yields.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "samsung",
+        "amd",
+        "hbm4",
+        "foundry"
+      ],
+      "sources": [
+        {
+          "publisher": "Tech Times",
+          "url": "https://www.techtimes.com/articles/328853/20261009/samsung-used-hbm4-memory-supply-monopoly-force-amd-foundry-talks.htm",
+          "publishedAt": "2026-10-09T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Elec",
+          "url": "https://www.thelec.kr/news/articleView.html?idxno=63515",
+          "publishedAt": "2026-10-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-jama-network-tightens-ai-disclosure-rules",
+      "kind": "daily",
+      "title": "JAMA tightens disclosure rules after a surge of formulaic AI submissions",
+      "summary": "JAMA and the twelve other journals in its network adopted a stricter policy on authors' use of augmented-intelligence tools after a sharp rise in formulaic submissions, particularly letters to the editor and opinion essays. Authors must disclose AI assistance in detail, AI cannot be listed as an author, and AI-generated images are restricted. The network reported that among more than 100,000 manuscripts submitted to its 13 journals between August 2023 and October 2025, 3.3% carried an author-declared disclosure of AI use.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "publishing",
+        "ai-disclosure",
+        "research-integrity"
+      ],
+      "sources": [
+        {
+          "publisher": "American Medical Association",
+          "url": "https://www.ama-assn.org/practice-management/digital-health/jama-takes-action-combat-ai-slop-submissions",
+          "publishedAt": "2026-10-10T00:00:00.000Z"
+        },
+        {
+          "publisher": "PubMed (JAMA Network)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41604185/",
+          "publishedAt": "2026-10-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-12-crystal-palace-comeback-nottingham-forest",
+      "kind": "daily",
+      "title": "Crystal Palace end a 14-year wait against Nottingham Forest",
+      "summary": "Crystal Palace came from behind to beat Nottingham Forest 3-1 at Selhurst Park on Sunday, ending a 14-year wait for a Premier League win over the visitors. Forest led inside three minutes after a misplaced header from Anan Khalaili let Dan Ndoye score, but Daichi Kamada levelled on 41 minutes and Jefferson Lerma struck in first-half stoppage time. Yeremy Pino added a third on 59 minutes, his first goal after 19 Premier League appearances without one.",
+      "category": "football",
+      "priority": 58,
+      "publishedAt": "2026-10-12T05:00:00.000Z",
+      "updatedAt": "2026-10-12T05:00:00.000Z",
+      "retrievedAt": "2026-10-12T05:25:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "crystal-palace",
+        "nottingham-forest",
+        "match-report"
+      ],
+      "sources": [
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/match/_/gameId/401879266/nottingham-forest-crystal-palace",
+          "publishedAt": "2026-10-11T18:00:00.000Z"
+        },
+        {
+          "publisher": "LA Premier League",
+          "url": "https://lapremierleague.com/article/crystal-palace-3-1-nottingham-forest-glasner-return-941",
+          "publishedAt": "2026-10-11T18:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-11-telecom-selloff-spacex-spectrum-deal",
       "kind": "daily",

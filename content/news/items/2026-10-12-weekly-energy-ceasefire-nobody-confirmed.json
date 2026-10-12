@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-12-weekly-energy-ceasefire-nobody-confirmed",
+  "kind": "weekly",
+  "title": "An energy ceasefire nobody has confirmed, and an oil market that noticed",
+  "summary": "Oil finished the week choppy and politics made it worse. President Trump announced an “energy ceasefire” between Russia and Ukraine effective immediately, days after a diesel-supply arrangement with Moscow that senators in both parties called potentially illegal; neither belligerent had confirmed the truce as Asian markets opened. Brent traded near $103.5 a barrel, well below its recent $109.97 peak but roughly 57% above a year ago, with the Strait of Hormuz still the structural risk. September US inflation data on 14 October is the next test for headline prices.",
+  "category": "economy-markets",
+  "priority": 68,
+  "publishedAt": "2026-10-12T05:20:00Z",
+  "updatedAt": "2026-10-12T05:20:00Z",
+  "retrievedAt": "2026-10-12T05:25:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "analysis",
+    "oil",
+    "energy",
+    "geopolitics"
+  ],
+  "sources": [
+    {
+      "publisher": "Boston Herald (Bloomberg)",
+      "url": "https://www.bostonherald.com/2026/10/11/trump-says-russia-and-ukraine-agreed-to-energy-ceasefire-6/",
+      "publishedAt": "2026-10-11T00:00:00Z"
+    },
+    {
+      "publisher": "Fox News",
+      "url": "https://www.foxnews.com/politics/trump-announces-immediate-energy-ceasefire-between-russia-ukraine",
+      "publishedAt": "2026-10-11T10:51:00Z"
+    },
+    {
+      "publisher": "Free Malaysia Today (Reuters)",
+      "url": "https://freemalaysiatoday.com/category/business/2026/10/12/shares-cautious-in-asia-as-earnings-loom-oil-slips",
+      "publishedAt": "2026-10-12T01:14:00Z"
+    }
+  ],
+  "week": "2026-W42"
+}

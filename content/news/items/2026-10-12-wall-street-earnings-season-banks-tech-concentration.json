@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-12-wall-street-earnings-season-banks-tech-concentration",
+  "kind": "daily",
+  "title": "Wall Street's record week hands a 30% earnings bar to the banks",
+  "summary": "Wall Street heads into third-quarter earnings season with the S&P 500 coming off a record-setting week and the big banks opening the reporting period on Tuesday. Analysts expect index earnings growth of roughly 30% for the quarter, according to LSEG IBES, with FactSet putting the figure near 29.6% — a fourth consecutive quarter above 25% — and the bulk of the gain coming from technology. Bank of America, Citigroup, Goldman Sachs, JPMorgan, Morgan Stanley and Wells Fargo are all due to report, with inflation and retail-sales data also landing.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-10-12T05:00:00Z",
+  "updatedAt": "2026-10-12T05:00:00Z",
+  "retrievedAt": "2026-10-12T05:25:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "earnings",
+    "banks",
+    "wall-street",
+    "valuations"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/11/stock-market-today-live-updates.html",
+      "publishedAt": "2026-10-11T22:00:00Z"
+    },
+    {
+      "publisher": "Free Malaysia Today (Reuters)",
+      "url": "https://freemalaysiatoday.com/category/business/2026/10/12/shares-cautious-in-asia-as-earnings-loom-oil-slips",
+      "publishedAt": "2026-10-12T01:14:00Z"
+    }
+  ]
+}

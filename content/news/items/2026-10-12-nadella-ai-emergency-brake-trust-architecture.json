@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-12-nadella-ai-emergency-brake-trust-architecture",
+  "kind": "daily",
+  "title": "Microsoft's Nadella calls for an 'emergency brake' and a trust architecture for frontier AI",
+  "summary": "Microsoft chief executive Satya Nadella said advanced AI systems should carry an “emergency brake” that lets an authorised person pause or shut a model down mid-task, and that companies should treat frontier models as possible insider threats rather than trusted tools. In a 10 October post he argued deployments should never rest on a single vendor's assurances, proposing tamper-proof logs of agent actions, independent audits and prompt disclosure of major failures. The guidance lands after a run of disclosed incidents at OpenAI and Anthropic.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-10-12T05:00:00Z",
+  "updatedAt": "2026-10-12T05:00:00Z",
+  "retrievedAt": "2026-10-12T05:25:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "ai-safety",
+    "ai-agents",
+    "governance"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-10-10/microsoft-ceo-nadella-calls-for-emergency-brake-on-advanced-ai",
+      "publishedAt": "2026-10-10T00:00:00Z"
+    },
+    {
+      "publisher": "The Straits Times",
+      "url": "https://www.straitstimes.com/world/microsoft-ceo-nadella-calls-for-emergency-brake-on-advanced-ai",
+      "publishedAt": "2026-10-11T09:50:00Z"
+    },
+    {
+      "publisher": "NDTV (Bloomberg)",
+      "url": "https://www.ndtv.com/artificial-intelligence/microsoft-ceo-satya-nadella-calls-for-emergency-brake-on-advanced-ai-12169156/amp/1",
+      "publishedAt": "2026-10-11T08:08:00Z"
+    }
+  ]
+}

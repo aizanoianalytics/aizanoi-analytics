@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-12-manchester-city-anfield-liverpool-red-card",
+  "kind": "daily",
+  "title": "Manchester City punish ten-man Liverpool with a 3-0 win at Anfield",
+  "summary": "Manchester City won 3-0 at Anfield after Liverpool were reduced to ten men, with Erling Haaland, Jeremy Doku and Rayan Cherki all scoring in the second half. Ryan Gravenberch was sent off for a second booking shortly before Haaland opened the scoring on 65 minutes; Doku doubled the lead three minutes later and Cherki finished a 41-pass move on 78 minutes. Liverpool manager Andoni Iraola called the first booking “nothing” and said the dismissal changed the game, with City staying unbeaten.",
+  "category": "football",
+  "priority": 80,
+  "publishedAt": "2026-10-12T05:00:00Z",
+  "updatedAt": "2026-10-12T05:00:00Z",
+  "retrievedAt": "2026-10-12T05:25:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "manchester-city",
+    "liverpool",
+    "match-report"
+  ],
+  "sources": [
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.com/sport/football/live/cr3el8xwnnxkt",
+      "publishedAt": "2026-10-11T18:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://www.espn.com/soccer/report/_/gameId/401879264",
+      "publishedAt": "2026-10-11T18:00:00Z"
+    }
+  ]
+}
