@@ -862,6 +862,7 @@ a { color: var(--blue-600); text-decoration: none; }
     .intern-candidate-summary { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     .intern-checkbox { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; cursor: pointer; }
     #internLiveCard { scroll-margin-top: 1rem; }
+    #recruitmentLiveCard { scroll-margin-top: 1rem; }
     #internPageLock { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: var(--navy-950); padding: 1rem; }
     #internPageLock[hidden] { display: none; }
     .page-lock-box { width: min(380px, 100%); background: #fff; border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
@@ -870,14 +871,15 @@ a { color: var(--blue-600); text-decoration: none; }
     #internPageLockInput { padding: 0.6rem 0.75rem; border-radius: 8px; border: 1px solid var(--slate-300); font-size: 1rem; width: 100%; }
     #internPageLockBtn:focus-visible, #internPageLockInput:focus-visible { outline: 2px solid var(--blue-600); outline-offset: 2px; }
     .page-lock-error { color: var(--red-700); font-size: 0.85rem; min-height: 1.2em; margin: 0; }
-    #internLiveCard .intern-live-frame-wrap { display: flex; flex-direction: column; gap: 0.6rem; padding: 0.9rem 1rem; border: 1px solid var(--slate-200); border-radius: 12px; background: #fff; }
+    #internLiveCard .intern-live-frame-wrap, #recruitmentLiveCard .intern-live-frame-wrap { display: flex; flex-direction: column; gap: 0.6rem; padding: 0.9rem 1rem; border: 1px solid var(--slate-200); border-radius: 12px; background: #fff; }
     .intern-live-frame-wrap { margin-top: 0.5rem; }
     .intern-backend-row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: end; margin-top: 1rem; }
     .intern-backend-row label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.85rem; flex: 1 1 260px; }
-    #internBackendUrl { padding: 0.5rem 0.75rem; border-radius: 8px; min-height: 44px; border: 1px solid var(--slate-300); width: 100%; }
-    #internBackendLoadBtn:focus-visible, #internLiveDownload:focus-visible, #internLiveOpen:focus-visible, #internBackendUrl:focus-visible { outline: 2px solid var(--blue-600); outline-offset: 2px; }
+    #internBackendUrl, #recruitmentBackendUrl { padding: 0.5rem 0.75rem; border-radius: 8px; min-height: 44px; border: 1px solid var(--slate-300); width: 100%; }
+    #internBackendLoadBtn:focus-visible, #internLiveDownload:focus-visible, #internLiveOpen:focus-visible, #internBackendUrl:focus-visible,
+    #recruitmentBackendLoadBtn:focus-visible, #recruitmentLiveDownload:focus-visible, #recruitmentLiveOpen:focus-visible, #recruitmentBackendUrl:focus-visible { outline: 2px solid var(--blue-600); outline-offset: 2px; }
     @media (max-width: 820px) {
-      #internLiveCard .intern-live-frame-wrap { padding: 0.75rem; }
+      #internLiveCard .intern-live-frame-wrap, #recruitmentLiveCard .intern-live-frame-wrap { padding: 0.75rem; }
       .intern-backend-row { flex-direction: column; align-items: stretch; }
     }
 
@@ -1643,6 +1645,30 @@ a { color: var(--blue-600); text-decoration: none; }
           </p>
         </div>
       </article>
+
+      <article class="card" id="recruitmentLiveCard">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Live Recruitment Workbook</h3>
+            <p class="card-subtitle">Open or download the current shared recruitment workbook. Internet access and your SharePoint permissions may be required.</p>
+          </div>
+          <span class="pill pill-green">Live</span>
+        </div>
+        <div class="intern-live-frame-wrap">
+          <p class="drop-sub" style="margin: 0;">SharePoint blocks third-party embedded previews (X-Frame-Options: SAMEORIGIN). Open the workbook in SharePoint, download it for local import, or load it through the read-only backend.</p>
+          <a id="recruitmentLiveOpen" class="btn btn-white" href="https://igairportaero-my.sharepoint.com/:x:/g/personal/furkan_cakmak_igairport_aero/IQDHYNfzo2bAT7yoJKW6Q9cBARs_TyxhYtNL5vT7AvV4aO8?e=wSB2tT&ovuser=5aa63893-b271-4562-b8b5-ddf329374aca%2Ceda.kartal%40igairport.aero" target="_blank" rel="noopener">🔗 Open in SharePoint</a>
+        </div>
+        <div class="intern-backend-row">
+          <a id="recruitmentLiveDownload" class="btn btn-white" href="https://igairportaero-my.sharepoint.com/:x:/g/personal/furkan_cakmak_igairport_aero/IQDHYNfzo2bAT7yoJKW6Q9cBARs_TyxhYtNL5vT7AvV4aO8?e=wSB2tT&ovuser=5aa63893-b271-4562-b8b5-ddf329374aca%2Ceda.kartal%40igairport.aero&download=1" rel="noopener">📥 Download current Excel</a>
+        </div>
+        <div class="intern-backend-row">
+          <label for="recruitmentBackendUrl">Backend URL
+            <input type="url" id="recruitmentBackendUrl" value="http://localhost:18923/recruitment-dosya" aria-describedby="recruitmentBackendHint" inputmode="url" spellcheck="false">
+          </label>
+          <button type="button" id="recruitmentBackendLoadBtn" class="btn btn-primary">⬇ Load from local backend</button>
+        </div>
+        <p class="drop-sub" id="recruitmentBackendHint" style="margin: 0.5rem 0 0;">Optional companion service: the static dashboard does not host this endpoint. When configured, the local backend performs a read-only GET with CORS; recruitment rows are never sent out or written to browser storage. Otherwise, download or select the workbook above.</p>
+      </article>
     </div>
 
     <!-- VIEW 9: INTERN RECRUITMENT RAW DATA -->
@@ -1770,6 +1796,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       "position_level", "level_category", "offer_date", "hired_employee",
       "resource", "refferal_name", "gender"
     ];
+    const RECRUITMENT_WORKBOOK_HEADERS = Object.freeze(["check_area", ...FIELD_KEYS]);
 
     const STAGES = [
       "New & Sourcing", "Initial Screening", "Assessment & Testing",
@@ -2877,6 +2904,36 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     }
 
     // EXCEL IMPORT VIA SHEETJS
+    async function ingestRecruitmentWorkbook(buffer, sourceName) {
+      const workbook = XLSX.read(buffer, { type: "array", cellDates: true, cellFormula: false });
+
+      let targetSheet = SHEET_NAME;
+      if (!workbook.SheetNames.includes(targetSheet)) {
+        targetSheet = workbook.SheetNames[0]; // fallback to first sheet
+      }
+      const sheet = workbook.Sheets[targetSheet];
+      if (!sheet) throw new Error(`Could not access sheet "${targetSheet}" in workbook.`);
+
+      const matrix = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: "", blankrows: false });
+      if (matrix.length < 2) throw new Error("The selected sheet does not contain enough data rows.");
+      const actualHeaders = (matrix[0] || []).slice(0, RECRUITMENT_WORKBOOK_HEADERS.length).map(value => fold(value));
+      const invalidHeaders = RECRUITMENT_WORKBOOK_HEADERS.filter((header, index) => actualHeaders[index] !== fold(header));
+      if (invalidHeaders.length) {
+        throw new Error(`Recruitment workbook headers do not match the required A–Q schema. Invalid or missing: ${invalidHeaders.join(", ")}.`);
+      }
+
+      const payload = {
+        generatedAt: new Date().toISOString(),
+        sourceFile: sourceName,
+        sheetName: targetSheet,
+        headers: matrix[0] || [],
+        rows: matrix.slice(1)
+      };
+
+      applyPayload(payload);
+      return payload;
+    }
+
     async function handleExcelFile(file) {
       if (!file) return;
       if (!window.XLSX) { toast("Local SheetJS library not ready.", "error"); return; }
@@ -2885,27 +2942,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 
       try {
         const buffer = await file.arrayBuffer();
-        const workbook = XLSX.read(buffer, { type: "array", cellDates: true, cellFormula: false });
-
-        let targetSheet = SHEET_NAME;
-        if (!workbook.SheetNames.includes(targetSheet)) {
-          targetSheet = workbook.SheetNames[0]; // fallback to first sheet
-        }
-        const sheet = workbook.Sheets[targetSheet];
-        if (!sheet) throw new Error(`Could not access sheet "${targetSheet}" in workbook.`);
-
-        const matrix = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: "", blankrows: false });
-        if (matrix.length < 2) throw new Error("The selected sheet does not contain enough data rows.");
-
-        const payload = {
-          generatedAt: new Date().toISOString(),
-          sourceFile: file.name,
-          sheetName: targetSheet,
-          headers: matrix[0] || [],
-          rows: matrix.slice(1)
-        };
-
-        applyPayload(payload);
+        await ingestRecruitmentWorkbook(buffer, file.name);
 
         res.innerHTML = `
           <div style="padding: 1rem; background: var(--green-100); border: 1px solid var(--green-500); border-radius: 8px; color: var(--green-600);">
@@ -3398,6 +3435,40 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       }
     }
 
+    function configureRecruitmentBackendAvailability() {
+      const hostedHttps = window.location.protocol === "https:" && !["localhost", "127.0.0.1"].includes(window.location.hostname);
+      const recruitmentBackendLoadBtn = $("#recruitmentBackendLoadBtn");
+      if (recruitmentBackendLoadBtn) recruitmentBackendLoadBtn.disabled = hostedHttps;
+      const recruitmentBackendUrl = $("#recruitmentBackendUrl");
+      if (recruitmentBackendUrl) recruitmentBackendUrl.disabled = hostedHttps;
+      const hint = $("#recruitmentBackendHint");
+      if (hostedHttps && hint) hint.textContent += " This control is disabled on the hosted HTTPS page because browsers block its localhost HTTP connection; use the downloaded/local dashboard copy for the companion service.";
+    }
+
+    async function handleRecruitmentBackendLoad() {
+      const result = $("#importResult");
+      const input = $("#recruitmentBackendUrl");
+      const button = $("#recruitmentBackendLoadBtn");
+      const url = ((input && input.value) || "").trim() || "http://localhost:18923/recruitment-dosya";
+      try {
+        if (!window.XLSX) throw new Error("Local SheetJS library not ready.");
+        if (button) button.disabled = true;
+        if (result) result.innerHTML = `<div style="padding: 1rem; background: var(--blue-100); border-radius: 8px; color: var(--blue-700);">Reading recruitment workbook from backend...</div>`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Backend did not respond (HTTP ${response.status}).`);
+        const buffer = await response.arrayBuffer();
+        await ingestRecruitmentWorkbook(buffer, "Backend: " + url);
+        if (result) result.innerHTML = `<div style="padding: 1rem; background: var(--green-100); border: 1px solid var(--green-500); border-radius: 8px; color: var(--green-700);"><strong>Recruitment workbook loaded from backend.</strong><p style="font-size: 0.8125rem; margin-top: 0.25rem;">Loaded ${formatNumber(state.records.length)} records. Dashboard views and tables have been recomputed in memory.</p></div>`;
+        toast(`Loaded ${formatNumber(state.records.length)} recruitment records from backend.`, "success");
+      } catch (error) {
+        const message = (error && error.message) ? error.message : String(error);
+        if (result) result.innerHTML = `<div style="padding: 1rem; background: var(--red-100); border: 1px solid var(--red-500); border-radius: 8px; color: var(--red-700);"><strong>Backend import failed:</strong> ${escapeHtml(message)}</div>`;
+        toast(`Backend import failed: ${message}`, "error");
+      } finally {
+        if (button) button.disabled = false;
+      }
+    }
+
     async function handleInternBackendLoad() {
       const status = $("#internRecruitmentStatus");
       const input = $("#internBackendUrl");
@@ -3602,6 +3673,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       dz.addEventListener("drop", e => {
         if (e.dataTransfer.files.length) handleExcelFile(e.dataTransfer.files[0]);
       });
+      const recruitmentBackendLoadBtn = $("#recruitmentBackendLoadBtn");
+      if (recruitmentBackendLoadBtn) recruitmentBackendLoadBtn.addEventListener("click", () => handleRecruitmentBackendLoad());
+      configureRecruitmentBackendAvailability();
 
       // Isolated local-only internship workbook reader
       const internDropzone = $("#internRecruitmentDropzone");
