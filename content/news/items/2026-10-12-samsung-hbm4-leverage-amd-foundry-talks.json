@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-12-samsung-hbm4-leverage-amd-foundry-talks",
+  "kind": "daily",
+  "title": "Samsung uses HBM4 supply as leverage in talks over AMD's foundry business",
+  "summary": "Samsung appears to be trading on its position as AMD's main supplier of next-generation HBM4 memory in talks about manufacturing AMD's processor and graphics dies on its SF2P 2-nanometre process. Lisa Su visited Seoul on 7 October with high-bandwidth memory on the agenda; AMD's Helios racks need about 31TB of HBM4 each. SK Hynix has reportedly committed most of its HBM4 output to Nvidia, leaving Samsung the principal alternative, but no foundry contract has been announced and Korean reporting calls the move risky given Samsung's yields.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-10-12T05:00:00Z",
+  "updatedAt": "2026-10-12T05:00:00Z",
+  "retrievedAt": "2026-10-12T05:25:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "samsung",
+    "amd",
+    "hbm4",
+    "foundry"
+  ],
+  "sources": [
+    {
+      "publisher": "Tech Times",
+      "url": "https://www.techtimes.com/articles/328853/20261009/samsung-used-hbm4-memory-supply-monopoly-force-amd-foundry-talks.htm",
+      "publishedAt": "2026-10-09T00:00:00Z"
+    },
+    {
+      "publisher": "The Elec",
+      "url": "https://www.thelec.kr/news/articleView.html?idxno=63515",
+      "publishedAt": "2026-10-09T00:00:00Z"
+    }
+  ]
+}

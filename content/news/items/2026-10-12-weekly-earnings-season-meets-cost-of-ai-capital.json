@@ -1,0 +1,43 @@
+{
+  "id": "2026-10-12-weekly-earnings-season-meets-cost-of-ai-capital",
+  "kind": "weekly",
+  "title": "Record indexes meet a 5% bond market as earnings season starts",
+  "summary": "Third-quarter results arrive this week into an unusual market: the S&P 500 has just posted another record week while the 10-year Treasury yield sits above 5%, its highest in more than two decades. Analysts expect index earnings growth near 30%, heavily concentrated in technology. The tension is financing: investors have demanded higher yields to fund the AI build-out, the investment-grade credit default swap index has jumped to its highest since the Iran war began, and refinancing costs rise as that debt matures. Banks open the season on Tuesday.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-10-12T05:20:00Z",
+  "updatedAt": "2026-10-12T05:20:00Z",
+  "retrievedAt": "2026-10-12T05:25:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "analysis",
+    "earnings",
+    "credit",
+    "treasuries"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/11/stock-market-today-live-updates.html",
+      "publishedAt": "2026-10-11T22:00:00Z"
+    },
+    {
+      "publisher": "Free Malaysia Today (Reuters)",
+      "url": "https://freemalaysiatoday.com/category/business/2026/10/12/shares-cautious-in-asia-as-earnings-loom-oil-slips",
+      "publishedAt": "2026-10-12T01:14:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/markets/commodities/articles/record-31-billion-gold-rush-144123386.html",
+      "publishedAt": "2026-10-11T14:41:00Z"
+    }
+  ],
+  "week": "2026-W42"
+}
