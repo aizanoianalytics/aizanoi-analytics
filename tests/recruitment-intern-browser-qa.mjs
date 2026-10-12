@@ -166,46 +166,51 @@ try {
   assert.ok((await page.locator('#internLiveOpen').getAttribute('href') || '').includes('action=embedview'), 'open link must use the SharePoint file URL');
   assert.equal(await page.locator('#internLiveOpen').getAttribute('target'), '_blank');
   assert.ok((await page.locator('#internLiveDownload').getAttribute('href') || '').includes('download=1'), 'download link must use download=1');
-  assert.equal(await page.locator('#internBackendUrl').inputValue(), 'http://localhost:18923/dosya');
-  assert.ok(await page.locator('#internBackendLoadBtn').isVisible(), 'backend load button should be visible');
+  assert.equal(await page.locator('#recruitmentLiveCard').count(), 1, 'recruitment card should share the same import page');
+  assert.equal(await page.locator('#unifiedExcelInput').getAttribute('multiple'), '', 'unified input must accept several workbooks at once');
+  assert.equal(await page.locator('#internBackendUrl').count(), 0, 'backend URL controls must be gone');
+  assert.equal(await page.locator('#internBackendLoadBtn').count(), 0, 'backend load button must be gone');
 
-  const backendBytes = await page.evaluate(({ columns }) => {
-    const candidate = columns.map((header) => ({
-      Id: '7', 'T.C. Kimlik Numarası': '00999888777', Adı: 'Backend', Soyadı: 'Aday',
-      'Telefon numaranız': '05320000007', 'Doğum Tarihiniz': '2003-01-15',
-      'Staj Başlangıç Dönemi': '28 Ekim 2026',
-      'Kaç iş günü stajınızı gerçekleştireceksiniz?': 1,
-      'Staj Katılım Günleri': 'Pazartesi;Salı;Çarşamba;Perşembe;Cuma',
-      'Kesinleşen Birim': '', sorumlu: '', Şirket: '', 'İptal mi?': 'Hayır',
-    }[header] ?? ''));
+  const unifiedOutcome = await page.evaluate(({ internHeaders, internRows }) => {
+    const recruitmentHeaders = ['check_area', 'ptf', 'unit', 'position_name', 'status', 'process_step', 'hiring_manager', 'responsible', 'comment', 'position_start_date', 'position_level', 'level_category', 'offer_date', 'hired_employee', 'resource', 'refferal_name', 'gender'];
+    const recruitmentRow = recruitmentHeaders.map((header) => ({ ptf: '50060009', unit: 'Operasyon', position_name: 'Uzman', status: 'Open' }[header] ?? ''));
+    const recruitmentBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(recruitmentBook, XLSX.utils.aoa_to_sheet([recruitmentHeaders, recruitmentRow]), 'db');
+    const recruitmentBytes = XLSX.write(recruitmentBook, { type: 'array', bookType: 'xlsx' });
+    const internBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(internBook, XLSX.utils.aoa_to_sheet([internHeaders, ...internRows]), 'Basvurular');
+    const internBytes = XLSX.write(internBook, { type: 'array', bookType: 'xlsx' });
+    const makeFile = (bytes, name) => new File([bytes], name, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const transfer = new DataTransfer();
+    transfer.items.add(makeFile(recruitmentBytes, 'ise_alim_toplu.xlsx'));
+    transfer.items.add(makeFile(internBytes, 'staj_toplu.xlsx'));
+    const input = document.querySelector('#unifiedExcelInput');
+    Object.defineProperty(input, 'files', { value: transfer.files, configurable: true });
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }, { internHeaders: headers, internRows: rows });
+  void unifiedOutcome;
+  await page.waitForFunction(() => (document.querySelector('#unifiedImportResult')?.textContent || '').includes('ise_alim_toplu.xlsx'));
+  await page.waitForFunction(() => (document.querySelector('#unifiedImportResult')?.textContent || '').includes('staj_toplu.xlsx'));
+  assert.match(await page.locator('#unifiedImportResult').textContent(), /İşe alım panosu/);
+  assert.match(await page.locator('#unifiedImportResult').textContent(), /Staj paneli/);
+  assert.equal(await page.locator('#internRecruitmentTableWrap').evaluate((element) => element.style.display), 'block');
+  assert.ok((await page.locator('#internDashboard').evaluate((element) => element.style.display)) === 'block', 'intern dashboard should render after import');
+  assert.equal(await page.locator('#internKpiGrid .intern-kpi-card').count(), 4);
+
+  await page.evaluate(() => {
     const book = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(book, XLSX.utils.aoa_to_sheet([columns, candidate]), 'Backend');
-    return Array.from(new Uint8Array(XLSX.write(book, { type: 'array', bookType: 'xlsx' })));
-  }, { columns: headers });
-  await page.route('http://localhost:18923/dosya', (route) => route.fulfill({
-    status: 200,
-    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' },
-    body: Buffer.from(backendBytes),
-  }));
-  await page.locator('#internBackendLoadBtn').click();
-  await page.waitForFunction(() => document.querySelector('#internRecruitmentTableWrap')?.style.display === 'block');
-  assert.equal(await page.locator('#internRecruitmentTableBody tr').count(), 1, 'backend workbook should feed the existing pipeline');
-  assert.equal(await page.locator('#internCandidateCount').textContent(), '1 aday');
-
-  await page.unroute('http://localhost:18923/dosya');
-  await page.route('http://localhost:18923/dosya', (route) => route.fulfill({
-    status: 200,
-    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'text/plain' },
-    body: 'indirilemedi: bozuk govde',
-  }));
-  await page.locator('#internBackendLoadBtn').click();
-  await page.waitForFunction(() => /Backend yüklemesi başarısız/.test(document.querySelector('#internRecruitmentStatus')?.textContent || ''));
-  assert.equal(await page.locator('#internRecruitmentTableBody tr').count(), 0);
-  assert.equal(await page.locator('#internRecruitmentTableWrap').evaluate((element) => element.style.display), 'none');
-  assert.equal(await page.locator('#internCandidateCount').textContent(), '0 aday');
-
+    XLSX.utils.book_append_sheet(book, XLSX.utils.aoa_to_sheet([['uyumsuz'], [activeMarker]]), 'Baska');
+    const bytes = XLSX.write(book, { type: 'array', bookType: 'xlsx' });
+    const file = new File([bytes], 'bilinmeyen.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const transfer = new DataTransfer();
+    transfer.items.add(file);
+    const input = document.querySelector('#unifiedExcelInput');
+    Object.defineProperty(input, 'files', { value: transfer.files, configurable: true });
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  await page.waitForFunction(() => (document.querySelector('#unifiedImportResult')?.textContent || '').includes('beklenen iki yapıdan birine uymuyor'));
   assert.deepEqual(errors, []);
-  console.log('Recruitment intern browser QA: schema import, privacy, stale reset, cancellation, a11y, mobile, Excel typing, live card and backend load passed.');
+  console.log('Recruitment intern browser QA: schema import, privacy, stale reset, cancellation, a11y, mobile, Excel typing, live card and unified import passed.');
 } finally {
   await context.close();
   await browser.close();

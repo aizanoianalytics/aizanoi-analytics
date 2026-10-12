@@ -69,7 +69,7 @@ test('Recruitment dashboard adds exactly one discoverable Intern Recruitment tab
 });
 
 test('Intern Recruitment accepts compatible local .xlsx workbooks by schema, not filename, hash, or sheet name', () => {
-  assert.match(html, /id="internRecruitmentFileInput" accept="\.xlsx"/);
+  assert.match(html, /id="internRecruitmentFileInput" accept="\.xlsx[^"]*"/);
   assert.doesNotMatch(html, /INTERN_RECRUITMENT_FILE|INTERN_RECRUITMENT_SHA256/);
   const uploadStart = html.indexOf('async function handleInternRecruitmentFile');
   assert.ok(uploadStart > 0, 'missing upload handler');
@@ -98,18 +98,30 @@ test('Applicant rows stay isolated from network and browser storage code paths',
   const logic = internLogic();
   assert.doesNotMatch(logic, /state\.records|normalizePayload|applyPayload|renderAll/);
   assert.doesNotMatch(logic, /fetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|localStorage|sessionStorage|indexedDB|caches\./);
-  assert.match(logic, /resetInternRecruitmentState\(\)/);
-  assert.match(logic, /renderInternRecruitmentRawData\(matrix, file\.name\)/);
+  assert.match(logic, /handleUnifiedExcelFiles\(\[file\]/);
+  assert.match(html, /routeSingleWorkbook[\s\S]*?resetInternRecruitmentState\(\)/);
+  assert.match(html, /routeSingleWorkbook[\s\S]*?renderInternRecruitmentRawData\(matrix, file\.name\)/);
 });
 
-test('Every internship upload attempt clears stale rows, controls, status, and file input state', () => {
-  const logic = internLogic();
-  const handler = logic.slice(0, logic.indexOf('// HR PANELI'));
-  assert.match(handler, /resetInternRecruitmentState\(\);/);
-  assert.match(handler, /finally\s*\{[\s\S]*?internRecruitmentFileInput[\s\S]*?value\s*=\s*""/);
+test('Every internship upload attempt clears stale rows, controls, status, dashboard, and file input state', () => {
+  assert.match(html, /routeSingleWorkbook[\s\S]*?resetInternRecruitmentState\(\);/);
+  assert.match(html, /input\.addEventListener\("change"[\s\S]*?input\.value = ""/);
   assert.match(html, /internState\.headers\s*=\s*\[\]/);
   assert.match(html, /internState\.rows\s*=\s*\[\]/);
   assert.match(html, /internHrPanel[\s\S]*?style\.display\s*=\s*"none"/);
+  assert.match(html, /internDashboard[\s\S]*?style\.display\s*=\s*"none"/);
+});
+
+test('Intern view renders a KPI and distribution dashboard after import', () => {
+  assert.match(html, /id="internDashboard"/);
+  assert.match(html, /id="internKpiGrid"/);
+  assert.match(html, /id="internPeriodChart"/);
+  assert.match(html, /id="internUnitChart"/);
+  assert.match(html, /id="internTableSearch"/);
+  assert.match(html, /function renderInternDashboard\(\)/);
+  assert.match(html, /Evrak eksiği olan aday/);
+  assert.match(html, /renderInternTable[\s\S]*?renderInternDashboard\(\)/);
+  assert.match(html, /intern-bar-fill/);
 });
 
 test('Cancelled candidates are excluded by default and can be included explicitly', () => {
@@ -184,4 +196,12 @@ test('Selected weekend attendance days can earn internship credit', () => {
   const block = html.slice(html.indexOf('function calcInternEndDate'), html.indexOf('function istanbulToday'));
   assert.match(block, /if \(weekdays\.has\(jsDay\)\)/);
   assert.doesNotMatch(block, /jsDay !== 0|jsDay !== 6/);
+});
+
+test('Intern dashboard follows table search and override-aware document counts', () => {
+  assert.match(html, /function internDisplayedRows\(\)/);
+  assert.match(html, /function internRowMatchesSearch\(rowIdx, query\)/);
+  assert.match(html, /renderInternTable[\s\S]*?internDisplayedRows\(\)/);
+  assert.match(html, /internTopCounts\(idx => internCell\(idx, INTERN_PERIOD_COLUMN\), 6, displayed\)/);
+  assert.match(html, /INTERN_DOC_COLUMNS\.some\(header => String\(internCell\(idx, header\)/);
 });
