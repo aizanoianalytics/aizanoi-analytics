@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-13-anthropic-cyber-mission-critical-infrastructure",
+  "kind": "daily",
+  "title": "Anthropic opens frontier models to eleven partners guarding critical infrastructure",
+  "summary": "Anthropic opened a cyber defence programme on 8 October that gives security providers access to frontier Claude models, on-site engineers and threat research. The Critical Infrastructure Defense Program begins with the operational technology behind power grids, water systems and transport networks, plus government systems. Its founding partners are Accenture, Booz Allen, CrowdStrike, Deloitte, Dragos, Hitachi, Insane Cyber, Nozomi Networks, Palo Alto Networks, PwC and Rockwell Automation, firms whose customers include the operators Anthropic wants to protect.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "cybersecurity",
+    "infrastructure",
+    "policy"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/anthropic-cyber-mission",
+      "publishedAt": "2026-10-08T00:00:00Z"
+    }
+  ]
+}

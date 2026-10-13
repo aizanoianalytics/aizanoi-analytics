@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-13-apple-welcome-home-smart-home-launch",
+  "kind": "daily",
+  "title": "Apple's 'Welcome Home' event puts the smart home first",
+  "summary": "Apple has confirmed a product launch for Tuesday, 13 October, titled Welcome Home, focused on smart-home hardware. Expectations centre on a long-rumoured smart home hub with roughly a 6-inch square display, a new Apple TV 4K, and a refreshed HomePod mini with a faster chip and Apple's N1 wireless networking silicon. AppleInsider reports a partnership with LG for co-designed but LG-branded devices, including a smart deadbolt and security cameras, with HomePod mini colours switching to Powder Pink and Forest Green.",
+  "category": "technology",
+  "priority": 82,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "smart-home",
+    "hardware",
+    "events"
+  ],
+  "sources": [
+    {
+      "publisher": "MacRumors",
+      "url": "https://www.macrumors.com/2026/10/08/apple-product-launch-october-13/",
+      "publishedAt": "2026-10-08T00:00:00Z"
+    },
+    {
+      "publisher": "Apple Newsroom",
+      "url": "https://www.apple.com/newsroom/",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    }
+  ]
+}
