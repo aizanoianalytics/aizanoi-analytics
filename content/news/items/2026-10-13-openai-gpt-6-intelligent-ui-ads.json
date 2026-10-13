@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-13-openai-gpt-6-intelligent-ui-ads",
+  "kind": "daily",
+  "title": "OpenAI pushes GPT-6 and an 'Intelligent UI' to every user as ad testing nears",
+  "summary": "OpenAI began rolling out GPT-6 and a new interface it calls Intelligent UI to all ChatGPT users on 7 October, citing more than 1.2 billion weekly users. Two days earlier it announced a visual advertising format, with U.S. testing to start later this month. The Financial Times reported on 8 October that OpenAI told investors annualised revenue was nearing $50bn at the end of September, below the roughly $70bn that had circulated earlier. OpenAI also expanded its Atlassian partnership so frontier models power agents across that platform.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "gpt-6",
+    "advertising",
+    "enterprise"
+  ],
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/gpt-6-for-everyone/",
+      "publishedAt": "2026-10-07T00:00:00Z"
+    },
+    {
+      "publisher": "Financial Post",
+      "url": "https://financialpost.com/press-releases/pr-newswire/from-bank-back-offices-to-power-grids-frontier-ai-labs-push-deeper-into-the-enterprise",
+      "publishedAt": "2026-10-12T00:00:00Z"
+    }
+  ]
+}

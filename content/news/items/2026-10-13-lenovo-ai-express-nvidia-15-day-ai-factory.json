@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-13-lenovo-ai-express-nvidia-15-day-ai-factory",
+  "kind": "daily",
+  "title": "Lenovo and Nvidia promise a 15-day path to an AI factory",
+  "summary": "Lenovo announced AI Express on 13 October, a quick-start programme with Nvidia that promises order-to-ship in as little as 15 business days for validated AI factory configurations. Three tiers span a small inference system built on two Nvidia RTX 6000 PRO Blackwell Server Edition GPUs, a medium eight-GPU setup, and a large configuration based on HGX B300 for models up to a trillion parameters. Lenovo cites its 2026 CIO Playbook finding that organisations scaling AI expect $2.79 back for every dollar invested.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "lenovo",
+    "nvidia",
+    "infrastructure",
+    "datacenter"
+  ],
+  "sources": [
+    {
+      "publisher": "Enduins",
+      "url": "https://www.enduins.com/tech/lenovo-ai-express-with-nvidia-accelerates-path-to-hybrid-ai-factory-in-weeks",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    }
+  ]
+}

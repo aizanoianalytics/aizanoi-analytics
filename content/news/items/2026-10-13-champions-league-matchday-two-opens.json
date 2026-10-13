@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-13-champions-league-matchday-two-opens",
+  "kind": "daily",
+  "title": "Champions League matchday two opens with Arsenal, Barcelona and United in action",
+  "summary": "Champions League matchday two opens on Tuesday 13 October with a full slate, including Arsenal against Lille, Atletico Madrid versus Manchester United, Galatasaray meeting Barcelona, RB Leipzig facing PSV Eindhoven and Bayern Munich travelling to Viking. Wednesday's card brings Manchester City against Paris Saint-Germain and Liverpool away to LASK. Matchday one produced emphatic wins for Bayern, Paris Saint-Germain and Barcelona, leaving the league-phase table still taking shape.",
+  "category": "football",
+  "priority": 68,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "uefa",
+    "arsenal",
+    "barcelona"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/champions-league-scores-fixtures",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefachampionsleague/fixtures-results/",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    }
+  ]
+}

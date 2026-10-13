@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-13-oil-october-high-geopolitical-risk",
+  "kind": "daily",
+  "title": "Oil climbs to an October high as geopolitical risk returns to the market",
+  "summary": "Oil rose to an October high at the start of the week after weekend attacks on Saudi energy infrastructure and continued uncertainty around negotiations with Iran, lifting inflation worries and pushing back hopes of substantially lighter interest rates. Interactive Brokers described markets buckling on 12 October under the move. The disruption arrives just as the third-quarter earnings season and September inflation data are set to test a rally that left the S&P 500 near a record close of 7,811.54.",
+  "category": "economy-markets",
+  "priority": 64,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "oil",
+    "energy",
+    "inflation",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Interactive Brokers",
+      "url": "https://www.interactivebrokers.com/campus/traders-insight/ibkr-economic-landscape/markets-buckle-as-geopolitical-tensions-lift-oil-prices-to-an-october-high-oct-12-2026",
+      "publishedAt": "2026-10-12T00:00:00Z"
+    }
+  ]
+}

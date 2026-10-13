@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-13-manchester-united-tottenham-old-trafford-draw",
+  "kind": "daily",
+  "title": "Ten-man Tottenham deny Manchester United at Old Trafford",
+  "summary": "Manchester United were held to a 1-1 draw by ten-man Tottenham Hotspur at Old Trafford on 11 October, the Premier League's first weekend back after the international break. Bryan Mbeumo put United ahead in the 73rd minute, but Rodrigo Bentancur's dismissal five minutes later did not derail the visitors: substitute Dominic Solanke equalised in stoppage time. United, who had been chasing a much-needed win, were left facing further questions about their start to the season.",
+  "category": "football",
+  "priority": 76,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "manchester-united",
+    "tottenham"
+  ],
+  "sources": [
+    {
+      "publisher": "India Today",
+      "url": "https://indiatoday.in/sports/football/story/premier-league-results-man-united-tottenham-arsenal-chelsea-wins-3014533-2026-10-11",
+      "publishedAt": "2026-10-11T00:00:00Z"
+    }
+  ]
+}

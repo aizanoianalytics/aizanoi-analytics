@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-13-anthropic-claude-haiku-5-5-cheap-enterprise",
+  "kind": "daily",
+  "title": "Anthropic ships Claude Haiku 5.5 as the cheap end of the enterprise stack",
+  "summary": "Anthropic introduced Claude Haiku 5.5 on 7 October, calling it the cheapest, fastest and most capable small model it has released. The company says running it costs roughly 75% less on average than Haiku 4.5, and it is available on Amazon Web Services, Google Cloud and Microsoft Azure. Anthropic also halved the price of cache reads for Claude Sonnet 5.5. The release lands as both frontier labs push harder into enterprise and public-sector work, where cost per task rather than headline benchmark scores decides deployment.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "claude",
+    "models",
+    "enterprise"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/claude-haiku-5-5",
+      "publishedAt": "2026-10-07T00:00:00Z"
+    }
+  ]
+}

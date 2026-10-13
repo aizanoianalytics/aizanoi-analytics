@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-13-microsoft-rtx-spark-ai-pcs-execution-containers",
+  "kind": "daily",
+  "title": "Microsoft prices Nvidia-powered AI PCs and adds agent sandboxing to Windows 11",
+  "summary": "Microsoft used a San Francisco event during Tech Week to detail its Nvidia RTX Spark AI PCs. The Surface Laptop Ultra starts at $2,600, rising to $5,900 with more memory and storage, while the Surface RTX Spark Dev Box workstation starts at $6,000 and ships with VS Code, GitHub Copilot CLI, WSL and PowerShell 7. Both run a revamped Windows 11 that adds Execution Containers, a sandboxing feature for AI agents that Microsoft says will reach all Windows 11 users. Dell also detailed an RTX Spark machine.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft",
+    "windows",
+    "nvidia",
+    "ai-pc"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/07/microsoft-releases-new-nvidia-chip-ai-pcs-with-revamped-windows-11/",
+      "publishedAt": "2026-10-07T00:00:00Z"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-12T05:25:00.000Z",
+  "generatedAt": "2026-10-13T05:20:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-13",
+      "path": "/news/2026-10-13/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-12",
       "path": "/news/2026-10-12/",
@@ -304,6 +309,494 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-13-apple-welcome-home-smart-home-launch",
+      "kind": "daily",
+      "title": "Apple's 'Welcome Home' event puts the smart home first",
+      "summary": "Apple has confirmed a product launch for Tuesday, 13 October, titled Welcome Home, focused on smart-home hardware. Expectations centre on a long-rumoured smart home hub with roughly a 6-inch square display, a new Apple TV 4K, and a refreshed HomePod mini with a faster chip and Apple's N1 wireless networking silicon. AppleInsider reports a partnership with LG for co-designed but LG-branded devices, including a smart deadbolt and security cameras, with HomePod mini colours switching to Powder Pink and Forest Green.",
+      "category": "technology",
+      "priority": 82,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "apple",
+        "smart-home",
+        "hardware",
+        "events"
+      ],
+      "sources": [
+        {
+          "publisher": "MacRumors",
+          "url": "https://www.macrumors.com/2026/10/08/apple-product-launch-october-13/",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        },
+        {
+          "publisher": "Apple Newsroom",
+          "url": "https://www.apple.com/newsroom/",
+          "publishedAt": "2026-10-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-nvidia-reflection-ai-open-weight-talks",
+      "kind": "daily",
+      "title": "Nvidia in early talks to buy or deepen its stake in open-weight lab Reflection AI",
+      "summary": "Nvidia is in early talks to buy Reflection AI or increase its stake in the open-weight model developer, the Financial Times reported on 10 October. Reflection, founded in 2024 by two former Google DeepMind researchers, has already taken about $800m from Nvidia and has just released its first model, Beam, a 501-billion-parameter mixture-of-experts design with roughly 23 billion active parameters. Structures on the table include a full acquisition, a larger equity stake, extra chip supply, or an acqui-hire that would avoid a long regulatory review.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "reflection-ai",
+        "open-weight",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "Financial Times",
+          "url": "https://www.ft.com/content/052610c5-22b4-4dd4-932e-b7f9f0628b6a",
+          "publishedAt": "2026-10-10T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Next Web",
+          "url": "https://thenextweb.com/news/nvidia-reflection-ai-acquisition-talks-ft",
+          "publishedAt": "2026-10-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-bank-earnings-open-q3-season-high-yield-bar",
+      "kind": "daily",
+      "title": "Wall Street opens Q3 earnings season with the big banks under a high-yield bar",
+      "summary": "Third-quarter earnings season opens on Tuesday 13 October with JPMorgan Chase, Wells Fargo, Citigroup and Goldman Sachs reporting before the bell, followed by more of the largest six U.S. banks the next day. Bloomberg Intelligence consensus puts aggregate S&P 500 earnings growth near 25% year over year, up from 22% in July. With government bond yields at multi-decade highs, investors will focus on net interest income and credit-loss provisions. September CPI and retail sales also land this week.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "earnings",
+        "banks",
+        "jpmorgan",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Clarin",
+          "url": "https://www.clarin.com/us-news/the-stock-market-this-week-october-1216-big-bank-earnings-september-cpi-and-retail-sales-to-test-record-rally_0_h4cVcTwKuu.html",
+          "publishedAt": "2026-10-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "Morningstar / MarketWatch",
+          "url": "https://www.morningstar.com/news/marketwatch/202610114/bank-earnings-to-shed-the-first-light-on-how-higher-yields-are-affecting-the-economy",
+          "publishedAt": "2026-10-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-manchester-united-tottenham-old-trafford-draw",
+      "kind": "daily",
+      "title": "Ten-man Tottenham deny Manchester United at Old Trafford",
+      "summary": "Manchester United were held to a 1-1 draw by ten-man Tottenham Hotspur at Old Trafford on 11 October, the Premier League's first weekend back after the international break. Bryan Mbeumo put United ahead in the 73rd minute, but Rodrigo Bentancur's dismissal five minutes later did not derail the visitors: substitute Dominic Solanke equalised in stoppage time. United, who had been chasing a much-needed win, were left facing further questions about their start to the season.",
+      "category": "football",
+      "priority": 76,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "manchester-united",
+        "tottenham"
+      ],
+      "sources": [
+        {
+          "publisher": "India Today",
+          "url": "https://indiatoday.in/sports/football/story/premier-league-results-man-united-tottenham-arsenal-chelsea-wins-3014533-2026-10-11",
+          "publishedAt": "2026-10-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-openai-gpt-6-intelligent-ui-ads",
+      "kind": "daily",
+      "title": "OpenAI pushes GPT-6 and an 'Intelligent UI' to every user as ad testing nears",
+      "summary": "OpenAI began rolling out GPT-6 and a new interface it calls Intelligent UI to all ChatGPT users on 7 October, citing more than 1.2 billion weekly users. Two days earlier it announced a visual advertising format, with U.S. testing to start later this month. The Financial Times reported on 8 October that OpenAI told investors annualised revenue was nearing $50bn at the end of September, below the roughly $70bn that had circulated earlier. OpenAI also expanded its Atlassian partnership so frontier models power agents across that platform.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "gpt-6",
+        "advertising",
+        "enterprise"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/gpt-6-for-everyone/",
+          "publishedAt": "2026-10-07T00:00:00.000Z"
+        },
+        {
+          "publisher": "Financial Post",
+          "url": "https://financialpost.com/press-releases/pr-newswire/from-bank-back-offices-to-power-grids-frontier-ai-labs-push-deeper-into-the-enterprise",
+          "publishedAt": "2026-10-12T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-anthropic-claude-haiku-5-5-cheap-enterprise",
+      "kind": "daily",
+      "title": "Anthropic ships Claude Haiku 5.5 as the cheap end of the enterprise stack",
+      "summary": "Anthropic introduced Claude Haiku 5.5 on 7 October, calling it the cheapest, fastest and most capable small model it has released. The company says running it costs roughly 75% less on average than Haiku 4.5, and it is available on Amazon Web Services, Google Cloud and Microsoft Azure. Anthropic also halved the price of cache reads for Claude Sonnet 5.5. The release lands as both frontier labs push harder into enterprise and public-sector work, where cost per task rather than headline benchmark scores decides deployment.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "claude",
+        "models",
+        "enterprise"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/claude-haiku-5-5",
+          "publishedAt": "2026-10-07T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-chelsea-bournemouth-henderson-age-record",
+      "kind": "daily",
+      "title": "Chelsea rout Bournemouth as Henderson rewrites an age record",
+      "summary": "Chelsea scored twice inside the opening three minutes and beat Bournemouth 5-1 at Stamford Bridge on 11 October. Jordan Henderson opened the scoring in the second minute, helped set up another, and finished the rout with a curling free kick; at 36 he became the oldest player directly involved in three or more Premier League goals since Cristiano Ronaldo in April 2022. Joao Pedro scored either side of half-time, and the win lifted Chelsea to fifth place on 10 points.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "chelsea",
+        "bournemouth"
+      ],
+      "sources": [
+        {
+          "publisher": "The News Mill",
+          "url": "https://thenewsmill.com/2026/10/arsenal-and-chelsea-secure-commanding-premier-league-wins",
+          "publishedAt": "2026-10-11T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-microsoft-rtx-spark-ai-pcs-execution-containers",
+      "kind": "daily",
+      "title": "Microsoft prices Nvidia-powered AI PCs and adds agent sandboxing to Windows 11",
+      "summary": "Microsoft used a San Francisco event during Tech Week to detail its Nvidia RTX Spark AI PCs. The Surface Laptop Ultra starts at $2,600, rising to $5,900 with more memory and storage, while the Surface RTX Spark Dev Box workstation starts at $6,000 and ships with VS Code, GitHub Copilot CLI, WSL and PowerShell 7. Both run a revamped Windows 11 that adds Execution Containers, a sandboxing feature for AI agents that Microsoft says will reach all Windows 11 users. Dell also detailed an RTX Spark machine.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft",
+        "windows",
+        "nvidia",
+        "ai-pc"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/07/microsoft-releases-new-nvidia-chip-ai-pcs-with-revamped-windows-11/",
+          "publishedAt": "2026-10-07T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-anthropic-cyber-mission-critical-infrastructure",
+      "kind": "daily",
+      "title": "Anthropic opens frontier models to eleven partners guarding critical infrastructure",
+      "summary": "Anthropic opened a cyber defence programme on 8 October that gives security providers access to frontier Claude models, on-site engineers and threat research. The Critical Infrastructure Defense Program begins with the operational technology behind power grids, water systems and transport networks, plus government systems. Its founding partners are Accenture, Booz Allen, CrowdStrike, Deloitte, Dragos, Hitachi, Insane Cyber, Nozomi Networks, Palo Alto Networks, PwC and Rockwell Automation, firms whose customers include the operators Anthropic wants to protect.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "cybersecurity",
+        "infrastructure",
+        "policy"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/anthropic-cyber-mission",
+          "publishedAt": "2026-10-08T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-champions-league-matchday-two-opens",
+      "kind": "daily",
+      "title": "Champions League matchday two opens with Arsenal, Barcelona and United in action",
+      "summary": "Champions League matchday two opens on Tuesday 13 October with a full slate, including Arsenal against Lille, Atletico Madrid versus Manchester United, Galatasaray meeting Barcelona, RB Leipzig facing PSV Eindhoven and Bayern Munich travelling to Viking. Wednesday's card brings Manchester City against Paris Saint-Germain and Liverpool away to LASK. Matchday one produced emphatic wins for Bayern, Paris Saint-Germain and Barcelona, leaving the league-phase table still taking shape.",
+      "category": "football",
+      "priority": 68,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "uefa",
+        "arsenal",
+        "barcelona"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/champions-league-scores-fixtures",
+          "publishedAt": "2026-10-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/fixtures-results/",
+          "publishedAt": "2026-10-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-gartner-1-3-trillion-chip-revenue-memory-crunch",
+      "kind": "daily",
+      "title": "Gartner sees $1.3tn of chip revenue in 2026 as the memory crunch reaches consumers",
+      "summary": "Gartner expects the semiconductor industry to collect about $1.3 trillion of revenue in 2026, the largest growth in two decades and a 64% year-over-year rise. Memory, not logic, is doing much of the heavy lifting: data-centre memory carries higher margins than consumer-grade parts, so makers such as Micron, Samsung and SK Hynix are prioritising AI servers. Micron retired its Crucial consumer memory brand to concentrate on data-centre chips, and the squeeze is now visible in consumer prices for laptops and phones.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "semiconductors",
+        "memory",
+        "gartner",
+        "micron"
+      ],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/sectors/technology/article/semiconductor-industry-revenue-to-hit-13-trillion-in-2026-as-memory-crunch-hits-consumers-151202545.html",
+          "publishedAt": "2026-10-07T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-oil-october-high-geopolitical-risk",
+      "kind": "daily",
+      "title": "Oil climbs to an October high as geopolitical risk returns to the market",
+      "summary": "Oil rose to an October high at the start of the week after weekend attacks on Saudi energy infrastructure and continued uncertainty around negotiations with Iran, lifting inflation worries and pushing back hopes of substantially lighter interest rates. Interactive Brokers described markets buckling on 12 October under the move. The disruption arrives just as the third-quarter earnings season and September inflation data are set to test a rally that left the S&P 500 near a record close of 7,811.54.",
+      "category": "economy-markets",
+      "priority": 64,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "oil",
+        "energy",
+        "inflation",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Interactive Brokers",
+          "url": "https://www.interactivebrokers.com/campus/traders-insight/ibkr-economic-landscape/markets-buckle-as-geopolitical-tensions-lift-oil-prices-to-an-october-high-oct-12-2026",
+          "publishedAt": "2026-10-12T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-gold-slips-ahead-of-us-cpi",
+      "kind": "daily",
+      "title": "Gold slips near $4,164 as a firm dollar meets CPI week",
+      "summary": "Gold eased to around $4,164 an ounce on 12 October, extending an early-week retreat as dollar strength and higher oil prices weighed on the metal ahead of U.S. consumer and producer inflation data. Markets.com attributes the slip to a firmer dollar acting as a headwind, with oil-led inflation risk complicating bullion's safe-haven bid. September CPI and PPI later in the week are the next major catalysts, alongside retail sales and the start of bank earnings.",
+      "category": "economy-markets",
+      "priority": 62,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "gold",
+        "dollar",
+        "inflation",
+        "commodities"
+      ],
+      "sources": [
+        {
+          "publisher": "Markets.com",
+          "url": "https://www.markets.com/news/gold-price-today-october-13-2026",
+          "publishedAt": "2026-10-12T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-lenovo-ai-express-nvidia-15-day-ai-factory",
+      "kind": "daily",
+      "title": "Lenovo and Nvidia promise a 15-day path to an AI factory",
+      "summary": "Lenovo announced AI Express on 13 October, a quick-start programme with Nvidia that promises order-to-ship in as little as 15 business days for validated AI factory configurations. Three tiers span a small inference system built on two Nvidia RTX 6000 PRO Blackwell Server Edition GPUs, a medium eight-GPU setup, and a large configuration based on HGX B300 for models up to a trillion parameters. Lenovo cites its 2026 CIO Playbook finding that organisations scaling AI expect $2.79 back for every dollar invested.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "lenovo",
+        "nvidia",
+        "infrastructure",
+        "datacenter"
+      ],
+      "sources": [
+        {
+          "publisher": "Enduins",
+          "url": "https://www.enduins.com/tech/lenovo-ai-express-with-nvidia-accelerates-path-to-hybrid-ai-factory-in-weeks",
+          "publishedAt": "2026-10-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-13-nvidia-intel-foveros-packaging-2028",
+      "kind": "daily",
+      "title": "Nvidia may lean on Intel's Foveros packaging in 2028",
+      "summary": "Nvidia may adopt Intel's Foveros advanced packaging for some AI chips in the second half of 2028, according to reporting dated 9 October. Foveros stacks chiplets vertically in three dimensions, an approach that could ease the packaging and capacity constraints now capping accelerator output. No chips, volumes or commercial terms were disclosed and Nvidia has not confirmed the plan; the report frames it as a supply-chain diversification move rather than a committed roadmap.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-10-13T05:00:00.000Z",
+      "updatedAt": "2026-10-13T05:00:00.000Z",
+      "retrievedAt": "2026-10-13T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "intel",
+        "packaging",
+        "supply-chain"
+      ],
+      "sources": [
+        {
+          "publisher": "DailySynapse",
+          "url": "https://dailysynapse.com/news/nvidia-may-use-intel-foveros-packaging-in-2028/",
+          "publishedAt": "2026-10-09T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-12-weekly-ai-safety-brake-becomes-architecture",
       "kind": "weekly",

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-13-nvidia-reflection-ai-open-weight-talks",
+  "kind": "daily",
+  "title": "Nvidia in early talks to buy or deepen its stake in open-weight lab Reflection AI",
+  "summary": "Nvidia is in early talks to buy Reflection AI or increase its stake in the open-weight model developer, the Financial Times reported on 10 October. Reflection, founded in 2024 by two former Google DeepMind researchers, has already taken about $800m from Nvidia and has just released its first model, Beam, a 501-billion-parameter mixture-of-experts design with roughly 23 billion active parameters. Structures on the table include a full acquisition, a larger equity stake, extra chip supply, or an acqui-hire that would avoid a long regulatory review.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "reflection-ai",
+    "open-weight",
+    "semiconductors"
+  ],
+  "sources": [
+    {
+      "publisher": "Financial Times",
+      "url": "https://www.ft.com/content/052610c5-22b4-4dd4-932e-b7f9f0628b6a",
+      "publishedAt": "2026-10-10T00:00:00Z"
+    },
+    {
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/nvidia-reflection-ai-acquisition-talks-ft",
+      "publishedAt": "2026-10-11T00:00:00Z"
+    }
+  ]
+}

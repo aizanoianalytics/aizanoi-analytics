@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-13-nvidia-intel-foveros-packaging-2028",
+  "kind": "daily",
+  "title": "Nvidia may lean on Intel's Foveros packaging in 2028",
+  "summary": "Nvidia may adopt Intel's Foveros advanced packaging for some AI chips in the second half of 2028, according to reporting dated 9 October. Foveros stacks chiplets vertically in three dimensions, an approach that could ease the packaging and capacity constraints now capping accelerator output. No chips, volumes or commercial terms were disclosed and Nvidia has not confirmed the plan; the report frames it as a supply-chain diversification move rather than a committed roadmap.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "intel",
+    "packaging",
+    "supply-chain"
+  ],
+  "sources": [
+    {
+      "publisher": "DailySynapse",
+      "url": "https://dailysynapse.com/news/nvidia-may-use-intel-foveros-packaging-in-2028/",
+      "publishedAt": "2026-10-09T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-13-bank-earnings-open-q3-season-high-yield-bar",
+  "kind": "daily",
+  "title": "Wall Street opens Q3 earnings season with the big banks under a high-yield bar",
+  "summary": "Third-quarter earnings season opens on Tuesday 13 October with JPMorgan Chase, Wells Fargo, Citigroup and Goldman Sachs reporting before the bell, followed by more of the largest six U.S. banks the next day. Bloomberg Intelligence consensus puts aggregate S&P 500 earnings growth near 25% year over year, up from 22% in July. With government bond yields at multi-decade highs, investors will focus on net interest income and credit-loss provisions. September CPI and retail sales also land this week.",
+  "category": "economy-markets",
+  "priority": 78,
+  "publishedAt": "2026-10-13T05:00:00Z",
+  "updatedAt": "2026-10-13T05:00:00Z",
+  "retrievedAt": "2026-10-13T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "earnings",
+    "banks",
+    "jpmorgan",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Clarin",
+      "url": "https://www.clarin.com/us-news/the-stock-market-this-week-october-1216-big-bank-earnings-september-cpi-and-retail-sales-to-test-record-rally_0_h4cVcTwKuu.html",
+      "publishedAt": "2026-10-12T00:00:00Z"
+    },
+    {
+      "publisher": "Morningstar / MarketWatch",
+      "url": "https://www.morningstar.com/news/marketwatch/202610114/bank-earnings-to-shed-the-first-light-on-how-higher-yields-are-affecting-the-economy",
+      "publishedAt": "2026-10-11T00:00:00Z"
+    }
+  ]
+}
