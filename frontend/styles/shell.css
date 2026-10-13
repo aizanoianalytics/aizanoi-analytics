@@ -774,3 +774,23 @@
     .az-window[data-app-id="analytics"] .az-analytics-detail .az-hr-spotlight { grid-template-columns:1fr;min-height:0; }
   }
 }
+
+@layer shell {
+  .az-active-app { min-width: 0; max-width: 30vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #3c4a63; font-size: 12px; font-weight: 650; }
+  .az-active-app[data-idle] { display: none; }
+  .az-fps { padding: 4px 8px; border: 1px solid rgba(50,70,100,.12); border-radius: 999px; background: rgba(255,255,255,.4); color: #466170; font: 700 11px/1 var(--az-font-mono); }
+  .az-fps[hidden] { display: none; }
+  .az-snap-ghost { position: absolute; z-index: 150; display: none; border: 2px solid rgba(169,120,62,.65); border-radius: 14px; background: rgba(191,141,79,.14); box-shadow: inset 0 1px rgba(255,255,255,.5); pointer-events: none; }
+  .az-snap-ghost.is-visible { display: block; }
+  .az-snap-ghost[data-side="left"] { left: 8px; top: 6px; width: calc(50% - 12px); bottom: 6px; }
+  .az-snap-ghost[data-side="right"] { right: 8px; top: 6px; width: calc(50% - 12px); bottom: 6px; }
+  .az-notifications-list { display: grid; gap: 8px; }
+  .az-notification { display: grid; grid-template-columns: 10px minmax(0,1fr) auto; gap: 10px; align-items: start; padding: 10px 12px; border: 1px solid rgba(44,59,84,.09); border-radius: 12px; background: rgba(255,255,255,.55); }
+  .az-notification strong { display: block; color: #26344a; font-size: 12px; }
+  .az-notification p { margin: 2px 0 0; color: #5f6d80; font-size: 11px; line-height: 1.45; }
+  .az-notification time { color: #8593a7; font: 700 11px/1.6 var(--az-font-mono); }
+  .az-notification-dot { width: 8px; height: 8px; margin-top: 4px; border-radius: 50%; background: #6878dd; }
+  .az-notification.is-success .az-notification-dot { background: #4f9a68; }
+  .az-notification.is-warning .az-notification-dot { background: #bc8434; }
+  .az-notification.is-error .az-notification-dot { background: #d25757; }
+}

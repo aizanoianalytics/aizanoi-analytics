@@ -224,10 +224,18 @@
   .az-setting-row input { width: 18px; height: 18px; accent-color: var(--az-accent); }
 
   .az-toast-stack { position: fixed; z-index: 1500; right: 16px; top: 52px; width: min(360px, calc(100vw - 32px)); display: grid; gap: 8px; pointer-events: none; }
-  .az-toast { pointer-events: auto; padding: 12px 14px; border: 1px solid rgba(255, 255, 255, .78); border-radius: 14px; background: rgba(249, 251, 255, .88); color: #26344a; box-shadow: var(--az-shadow-soft); animation: az-toast-in var(--az-motion) ease-out; backdrop-filter: blur(22px); }
+  .az-toast { position: relative; overflow: hidden; pointer-events: auto; padding: 12px 14px 15px; border: 1px solid rgba(255, 255, 255, .78); border-radius: 14px; background: rgba(249, 251, 255, .88); color: #26344a; box-shadow: var(--az-shadow-soft); animation: az-toast-in var(--az-motion) ease-out; backdrop-filter: blur(22px); }
   .az-toast strong { display: block; font-size: 12px; }
   .az-toast p { margin: 3px 0 0; color: #5f6d80; font-size: 11px; line-height: 1.45; }
+  .az-toast-progress { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; transform-origin: 0 50%; background: rgba(79, 96, 202, .35); animation: az-toast-progress 4.2s linear forwards; }
+  .az-toast.is-success .az-toast-progress { background: rgba(79, 154, 104, .45); }
+  .az-toast.is-warning .az-toast-progress { background: rgba(188, 132, 52, .5); }
+  .az-toast.is-error .az-toast-progress { background: rgba(210, 87, 87, .5); }
+  .az-toast.is-success { border-left: 3px solid rgba(79, 154, 104, .65); }
+  .az-toast.is-warning { border-left: 3px solid rgba(188, 132, 52, .65); }
+  .az-toast.is-error { border-left: 3px solid rgba(210, 87, 87, .65); }
   @keyframes az-toast-in { from { opacity: 0; transform: translateY(-6px) scale(.98); } to { opacity: 1; transform: none; } }
+  @keyframes az-toast-progress { from { transform: scaleX(1); } to { transform: scaleX(0); } }
 
   .az-empty-state { min-height: 260px; display: grid; place-items: center; padding: 32px; text-align: center; }
   .az-empty-state > div { max-width: 470px; }
@@ -270,12 +278,15 @@
   @keyframes az-boot-slide { from { transform: translateX(-55%); } to { transform: translateX(95%); } }
 
   @media (prefers-reduced-motion: reduce) {
-    .az-toast, .az-boot-progress::after { animation: none !important; }
+    .az-toast, .az-toast-progress, .az-boot-progress::after { animation: none !important; }
+    .az-toast-progress { display: none; }
     .az-launchpad-item:hover { transform: none; }
     .az-switcher-item:hover { transform:none; }
   }
   body.az-reduce-motion .az-toast,
+  body.az-reduce-motion .az-toast-progress,
   body.az-reduce-motion .az-boot-progress::after { animation: none !important; }
+  body.az-reduce-motion .az-toast-progress { display: none; }
   body.az-reduce-motion .az-launchpad-item:hover,
   body.az-reduce-motion .az-switcher-item:hover { transform: none; }
 
