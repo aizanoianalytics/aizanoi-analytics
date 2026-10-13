@@ -44,7 +44,7 @@ export function canonicalAppId(id) {
 export function appsByGroup(group) { return ALL_APPS.filter((app) => app.group === group); }
 export function searchableEntries(extraEntries=[]) {
   return [
-    ...APPS.map((app) => ({ type:'app', id:app.id, label:app.label, description:app.description, keywords:[app.label,app.short,app.description,...app.keywords] })),
+    ...APPS.map((app) => ({ type:'app', id:app.id, label:app.label, description:app.description, keywords:[app.label,app.short,app.description,...(app.keywords||[])] })),
     ...extraEntries
   ];
 }
