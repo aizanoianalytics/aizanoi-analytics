@@ -6,6 +6,8 @@ const openingApps = new Map();
 const appGenerations = new Map();
 let zCounter = 20;
 let commandSelection = 0;
+let fpsActive = false;
+let fpsRaf = 0;
 let activeOverlay = null;
 let overlayOpener = null;
 let keyboardWindowMode = null;
@@ -17,8 +19,13 @@ const icon = (name) => ({
  search:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="m20 20-4.4-4.4m2.4-5.1a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>',
  home:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="m3.5 10.5 8.5-7 8.5 7v9H15v-6H9v6H3.5Z"/></svg>',
  grid:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 0h6v6h-6z"/></svg>',
+ bell:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10Zm4.5 8.5a1.7 1.7 0 0 0 3 0"/></svg>',
  settings:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M4 7h10m4 0h2M4 17h2m4 0h10M14 4v6M6 14v6"/></svg>'
 })[name] || '';
+
+const soundIcon = (on) => on
+ ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 9v6h4l5 4V5L8 9H4Zm12.5 3a3.5 3.5 0 0 0-2-3.15M16.5 15.15a3.5 3.5 0 0 0 0-6.3"/></svg>'
+ : '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 9v6h4l5 4V5L8 9H4Zm14 0-5 6m0-6 5 6"/></svg>';
 
 function escapeHtml(value) {
  return String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
@@ -71,14 +78,52 @@ function announce(message) {
 
 export function notify(title, body = '', kind = 'system') {
  Store.recordActivity(title, body, kind);
+ const safe = ['system','info','success','warning','error'].includes(kind) ? kind : 'system';
  const stack = document.querySelector('.az-toast-stack');
  if (!stack) return;
  const toast = document.createElement('div');
- toast.className = 'az-toast';
- toast.innerHTML = `<strong>${escapeHtml(title)}</strong>${body ? `<p>${escapeHtml(body)}</p>` : ''}`;
+ toast.className = `az-toast is-${safe}`;
+ toast.innerHTML = `<span class="az-toast-progress" aria-hidden="true"></span><strong>${escapeHtml(title)}</strong>${body ? `<p>${escapeHtml(body)}</p>` : ''}`;
  stack.prepend(toast);
  announce(`${title}. ${body}`);
  setTimeout(() => toast.remove(), 4200);
+}
+
+function renderActiveApp() {
+ const host = document.querySelector('[data-active-app]');
+ if (!host) return;
+ const state = Store.getState();
+ const app = state.activeApp ? appById(state.activeApp) : null;
+ host.textContent = app ? app.label : '';
+ host.toggleAttribute('data-idle', !app);
+}
+
+function renderSoundButton() {
+ const button = document.querySelector('[data-shell-action="sound"]');
+ if (!button) return;
+ const on = Store.getState().soundOn !== false;
+ button.setAttribute('aria-pressed', String(on));
+ button.innerHTML = soundIcon(on);
+}
+
+function renderNotifications() {
+ const host = document.querySelector('[data-notifications-list]');
+ if (!host) return;
+ const items = Store.getState().activity || [];
+ if (!items.length) {
+ host.innerHTML = '<div class="az-empty-state"><div><h3>No notifications</h3><p>System activity will appear here.</p></div></div>';
+ return;
+ }
+ host.innerHTML = items.map((item) => {
+ const when = new Date(item.at || Date.now());
+ const time = Number.isNaN(when.getTime()) ? '' : when.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+ return `<div class="az-notification is-${escapeHtml(item.kind || 'system')}"><span class="az-notification-dot" aria-hidden="true"></span><div><strong>${escapeHtml(item.title)}</strong>${item.detail ? `<p>${escapeHtml(item.detail)}</p>` : ''}</div><time>${escapeHtml(time)}</time></div>`;
+ }).join('');
+}
+
+function openNotifications(opener) {
+ renderNotifications();
+ openOverlay('az-notifications-overlay', opener);
 }
 
 function renderAppCards() {
@@ -156,9 +201,11 @@ function renderShelf() {
  button.className = `az-shelf-button is-open${state.activeApp === appId ? ' is-active' : ''}`;
  button.dataset.taskApp = appId;
  button.setAttribute('aria-label', `${app.label}${state.activeApp === appId ? ', active' : ''}`);
- button.innerHTML = `<img src="${escapeHtml(app.icon)}" alt="">`;
+ button.innerHTML = `<img src="${escapeHtml(app.icon)}" alt=""><span class="az-dock-tooltip" aria-hidden="true">${escapeHtml(app.label)}</span>`;
  host.appendChild(button);
  }
+ renderActiveApp();
+ renderSoundButton();
 }
 
 function renderClock() {
@@ -173,9 +220,13 @@ function shellTemplate() {
  return `<div class="az-shell" data-layout="${layoutMode()}">
  <header class="az-system-bar">
  <button class="az-brand-button" type="button" data-shell-action="home" aria-label="AizanoiOS home"><img src="/assets/branding/aizanoi-logo-mark.svg" alt=""><span class="az-brand-copy"><strong>AizanoiOS</strong></span></button>
+ <span class="az-active-app" data-active-app title="Active application"></span>
  <div class="az-system-spacer"></div>
  <nav class="az-system-actions" aria-label="System actions">
  <span class="az-local-state" title="AizanoiOS runs in this browser">LOCAL</span>
+ <span class="az-fps" data-fps hidden>-- FPS</span>
+ <button class="az-system-action" type="button" data-shell-action="sound" aria-label="Toggle system sounds" aria-pressed="true">${soundIcon(true)}</button>
+ <button class="az-system-action" type="button" data-shell-action="notifications" aria-label="Open notification center">${icon('bell')}</button>
  <button class="az-system-action" type="button" data-shell-action="search" aria-label="Search and commands">${icon('search')}<span class="az-system-label">Search</span></button>
  <button class="az-system-action" type="button" data-shell-action="settings" aria-label="System settings">${icon('settings')}<span class="az-system-label">Settings</span></button>
  <time class="az-clock">--:--</time>
@@ -196,7 +247,8 @@ function overlayMarkup() {
  return `<div class="az-overlay" id="az-command-overlay" aria-hidden="true"><section class="az-dialog az-command" role="dialog" aria-modal="true" aria-labelledby="az-command-title"><h2 id="az-command-title" class="az-sr-only">Search Aizanoi</h2><div class="az-command-search">${icon('search')}<input id="az-command-input" type="search" autocomplete="off" spellcheck="false" placeholder="Open an app or action…" aria-label="Search Aizanoi apps and commands"><span class="az-key">ESC</span></div><div class="az-command-results" role="listbox" aria-label="Search results"></div></section></div>
  <div class="az-overlay" id="az-switcher-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-switcher-title"><header class="az-dialog-header"><strong id="az-switcher-title">Open Apps</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close open apps">×</button></header><div class="az-dialog-body"><div class="az-switcher-list" data-switcher-list></div></div></section></div>
  <div class="az-overlay" id="az-settings-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-settings-title"><header class="az-dialog-header"><strong id="az-settings-title">AizanoiOS Settings</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close settings">×</button></header><div class="az-dialog-body" data-settings-body></div></section></div>
- <div class="az-overlay" id="az-window-menu-overlay" aria-hidden="true"><section class="az-dialog az-window-menu-dialog" role="dialog" aria-modal="true" aria-labelledby="az-window-menu-title"><header class="az-dialog-header"><strong id="az-window-menu-title">Window</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close window menu">×</button></header><div class="az-dialog-body" data-window-menu-body></div></section></div>`;
+ <div class="az-overlay" id="az-window-menu-overlay" aria-hidden="true"><section class="az-dialog az-window-menu-dialog" role="dialog" aria-modal="true" aria-labelledby="az-window-menu-title"><header class="az-dialog-header"><strong id="az-window-menu-title">Window</strong><span class="az-system-spacer"></span><button class="az-icon-button" type="button" data-overlay-close aria-label="Close window menu">×</button></header><div class="az-dialog-body" data-window-menu-body></div></section></div>
+ <div class="az-overlay" id="az-notifications-overlay" aria-hidden="true"><section class="az-dialog" role="dialog" aria-modal="true" aria-labelledby="az-notifications-title"><header class="az-dialog-header"><strong id="az-notifications-title">Notifications</strong><span class="az-system-spacer"></span><button class="az-button" type="button" data-clear-activity>Clear</button><button class="az-icon-button" type="button" data-overlay-close aria-label="Close notifications">×</button></header><div class="az-dialog-body"><div class="az-notifications-list" data-notifications-list></div></div></section></div>`;
 }
 
 function setBackgroundInert(value) {
@@ -463,16 +515,57 @@ function showHome({ push=true } = {}) {
  document.querySelector('.az-home-scroll')?.scrollTo({ top:0, behavior:Store.getState().reduceMotion ? 'auto' : 'smooth' });
 }
 
+function showSnapGhost(side) {
+ let ghost = document.querySelector('.az-snap-ghost');
+ if (!side) {
+ ghost?.classList.remove('is-visible');
+ ghost?.removeAttribute('data-side');
+ return null;
+ }
+ if (!ghost) {
+ ghost = document.createElement('div');
+ ghost.className = 'az-snap-ghost';
+ ghost.setAttribute('aria-hidden', 'true');
+ document.querySelector('.az-stage')?.appendChild(ghost);
+ }
+ if (!ghost.isConnected) document.querySelector('.az-stage')?.appendChild(ghost);
+ ghost.dataset.side = side;
+ ghost.classList.add('is-visible');
+ return side;
+}
+
+function snapRect(side) {
+ if (side === 'left') return { left: 12, top: 8, width: Math.max(360, Math.floor(innerWidth / 2) - 18), height: Math.max(260, innerHeight - 140) };
+ if (side === 'right') return { left: Math.ceil(innerWidth / 2) + 6, top: 8, width: Math.max(360, Math.floor(innerWidth / 2) - 18), height: Math.max(260, innerHeight - 140) };
+ return null;
+}
+
+function snapWindow(appId, side) {
+ const item = windows.get(appId); if (!item || layoutMode() !== 'large') return false;
+ const rect = snapRect(side); if (!rect) return false;
+ item.maximized = false;
+ item.el.classList.remove('is-maximized');
+ Object.assign(item.el.style, { left: `${rect.left}px`, top: `${rect.top}px`, width: `${rect.width}px`, height: `${rect.height}px` });
+ Store.saveWindowRect(appId, rect);
+ announce(`${item.app.label} snapped ${side}`);
+ return true;
+}
+
 function pointerDrag(event, appId, edge=null) {
  if (layoutMode() !== 'large') return;
  const item = windows.get(appId); if (!item || item.maximized || event.button !== 0) return;
  event.preventDefault();
  focusWindow(appId,{updateRoute:false});
+ let pendingSnap = null;
  const start = { x:event.clientX, y:event.clientY, rect:item.el.getBoundingClientRect() };
  const move = (e) => {
  const dx=e.clientX-start.x, dy=e.clientY-start.y;
  let rect={ left:start.rect.left, top:start.rect.top, width:start.rect.width, height:start.rect.height };
- if (!edge) { rect.left += dx; rect.top += dy; }
+ if (!edge) {
+ rect.left += dx; rect.top += dy;
+ pendingSnap = e.clientX <= 10 ? 'left' : e.clientX >= innerWidth - 10 ? 'right' : null;
+ showSnapGhost(pendingSnap);
+ }
  else {
  if (edge.includes('e')) rect.width += dx;
  if (edge.includes('s')) rect.height += dy;
@@ -486,7 +579,9 @@ function pointerDrag(event, appId, edge=null) {
  document.removeEventListener('pointermove',move);
  document.removeEventListener('pointerup',finish);
  document.removeEventListener('pointercancel',finish);
+ showSnapGhost(null);
  if (!item.el.isConnected) return;
+ if (pendingSnap && !edge) { snapWindow(appId, pendingSnap); return; }
  Store.saveWindowRect(appId,item.el.getBoundingClientRect());
  };
  document.addEventListener('pointermove',move);
@@ -537,7 +632,7 @@ function handleKeyboardWindowMode(event) {
 function openWindowMenu(appId, opener) {
  const item=windows.get(appId); if(!item)return;
  const body=document.querySelector('[data-window-menu-body]');
- body.innerHTML=`<div class="az-simple-grid az-window-menu-grid"><button class="az-button" type="button" data-window-command="move">Move with keyboard</button><button class="az-button" type="button" data-window-command="resize">Resize with keyboard</button><button class="az-button" type="button" data-window-command="minimize">Minimize</button><button class="az-button" type="button" data-window-command="maximize">${item.maximized?'Restore':'Maximize'}</button><button class="az-button az-button-danger" type="button" data-window-command="close">Close</button></div>`;
+ body.innerHTML=`<div class="az-simple-grid az-window-menu-grid"><button class="az-button" type="button" data-window-command="move">Move with keyboard</button><button class="az-button" type="button" data-window-command="resize">Resize with keyboard</button><button class="az-button" type="button" data-window-command="snap-left">Snap left</button><button class="az-button" type="button" data-window-command="snap-right">Snap right</button><button class="az-button" type="button" data-window-command="minimize">Minimize</button><button class="az-button" type="button" data-window-command="maximize">${item.maximized?'Restore':'Maximize'}</button><button class="az-button az-button-danger" type="button" data-window-command="close">Close</button></div>`;
  body.dataset.appId=appId;
  openOverlay('az-window-menu-overlay',opener);
 }
@@ -568,7 +663,7 @@ function renderSwitcher() {
 function renderSettings() {
  const body=document.querySelector('[data-settings-body]'); if(!body)return;
  const state=Store.getState();
- body.innerHTML=`<div class="az-simple-grid az-settings-grid"><div class="az-simple-card"><h3>Appearance</h3><p>Motion follows your preference across the AizanoiOS shell.</p><label class="az-setting-row"><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}> Reduce non-essential motion</label></div><div class="az-simple-card"><h3>Local state</h3><p>Open apps, recent activity, window positions and Aizanoi session context are stored in this browser.</p><button class="az-button az-button-danger" type="button" data-reset-workspace>Reset local state</button></div></div>`;
+ body.innerHTML=`<div class="az-simple-grid az-settings-grid"><div class="az-simple-card"><h3>Appearance</h3><p>Motion follows your preference across the AizanoiOS shell.</p><label class="az-setting-row"><input type="checkbox" data-setting="reduceMotion" ${state.reduceMotion?'checked':''}> Reduce non-essential motion</label><label class="az-setting-row"><input type="checkbox" data-setting="soundOn" ${state.soundOn!==false?'checked':''}> Interface sounds</label></div><div class="az-simple-card"><h3>Local state</h3><p>Open apps, recent activity, window positions and Aizanoi session context are stored in this browser.</p><button class="az-button az-button-danger" type="button" data-reset-workspace>Reset local state</button></div></div>`;
 }
 
 function loadStaticSearchEntries() {
@@ -584,14 +679,64 @@ function loadStaticSearchEntries() {
  return staticSearchPromise;
 }
 
+function fuzzyMatch(haystack, query) {
+ const text = String(haystack || '').toLowerCase();
+ const q = String(query || '').toLowerCase().trim();
+ if (!q) return true;
+ if (text.includes(q)) return true;
+ let qi = 0;
+ for (let i = 0; i < text.length && qi < q.length; i++) {
+ if (text[i] === q[qi]) qi++;
+ }
+ return qi === q.length;
+}
+
+function fuzzyScore(text, query) {
+ const t = String(text || '').toLowerCase();
+ const q = String(query || '').toLowerCase().trim();
+ if (!q) return 0;
+ if (t.includes(q)) return 0;
+ let best = Infinity;
+ for (let start = 0; start < t.length; start++) {
+ if (t[start] !== q[0]) continue;
+ let ti = start, gap = 0, ok = true;
+ for (let qi = 1; qi < q.length; qi++) {
+ const next = t.indexOf(q[qi], ti + 1);
+ if (next === -1) { ok = false; break; }
+ gap += next - ti - 1;
+ ti = next;
+ }
+ if (ok && gap < best) best = gap;
+ }
+ return best;
+}
+
+function rowScore(row, q) {
+ const fields = [row.label, row.description, ...(row.keywords || [])];
+ let best = Infinity;
+ for (const field of fields) {
+ const score = fuzzyScore(field, q);
+ if (score < best) best = score;
+ }
+ return best;
+}
+
 function commandRows(query='') {
  const q=query.trim().toLowerCase();
- const entries=searchableEntries(staticSearchEntries).filter((entry)=>!q || [entry.label,entry.description,...entry.keywords].join(' ').toLowerCase().includes(q));
+ const entries=searchableEntries(staticSearchEntries).filter((entry)=>!q || fuzzyMatch([entry.label,entry.description,...entry.keywords].join(' '),q));
+ const state=Store.getState();
  const commands=[
  {type:'action',id:'home',label:'Go Home',description:'Return to the AizanoiOS home screen',keywords:['home','desktop']},
- {type:'action',id:'continue',label:'Continue Aizanoi',description:'Return to your most recent Aizanoi exploration',keywords:['continue','resume','aizanoi','session']}
- ].filter((entry)=>!q || [entry.label,entry.description,...entry.keywords].join(' ').toLowerCase().includes(q));
- return [...commands,...entries].slice(0,18);
+ {type:'action',id:'continue',label:'Continue Aizanoi',description:'Return to your most recent Aizanoi exploration',keywords:['continue','resume','aizanoi','session']},
+ {type:'action',id:'toggle-sound',label:state.soundOn?'Mute system sounds':'Unmute system sounds',description:'Toggle AizanoiOS interface sounds',keywords:['sound','mute','unmute','audio','volume']},
+ {type:'action',id:'toggle-fullscreen',label:document.fullscreenElement?'Exit fullscreen':'Enter fullscreen',description:'Toggle fullscreen for the AizanoiOS shell',keywords:['fullscreen','screen','expand']},
+ {type:'action',id:'close-active',label:'Close active window',description:state.activeApp?`Close ${appById(state.activeApp)?.label||'the active app'}`:'No active window to close',keywords:['close','window','quit','exit']},
+ {type:'action',id:'toggle-motion',label:state.reduceMotion?'Enable interface motion':'Reduce interface motion',description:'Toggle non-essential shell animation',keywords:['motion','animation','reduce','accessibility']},
+ {type:'action',id:'toggle-fps',label:fpsActive?'Hide performance meter':'Show performance meter',description:'Toggle the real frame-rate meter in the system bar',keywords:['fps','performance','meter','frames']}
+ ].filter((entry)=>!q || fuzzyMatch([entry.label,entry.description,...entry.keywords].join(' '),q));
+ const rows=[...commands,...entries].slice(0,36);
+ if (q) rows.sort((a,b)=>rowScore(a,q)-rowScore(b,q));
+ return rows.slice(0,18);
 }
 
 function renderCommands(query='') {
@@ -612,6 +757,41 @@ function renderCommands(query='') {
  }).join('')}`).join('');
 }
 
+function toggleFps() {
+ fpsActive = !fpsActive;
+ const meter = document.querySelector('[data-fps]');
+ if (meter) meter.hidden = !fpsActive;
+ if (fpsRaf) { cancelAnimationFrame(fpsRaf); fpsRaf = 0; }
+ if (!fpsActive) return fpsActive;
+ let frames = 0, last = performance.now();
+ const tick = (now) => {
+ if (!fpsActive) return;
+ frames++;
+ if (now - last >= 500) {
+ const el = document.querySelector('[data-fps]');
+ if (el) el.textContent = `${Math.round((frames * 1000) / (now - last))} FPS`;
+ frames = 0; last = now;
+ }
+ fpsRaf = requestAnimationFrame(tick);
+ };
+ fpsRaf = requestAnimationFrame(tick);
+ return fpsActive;
+}
+
+function setSoundOn(enabled) {
+ Store.setPreference('soundOn', Boolean(enabled));
+ renderSoundButton();
+ if (enabled) import('./workspace/sounds.js').then((module) => module.warmAudio?.()).catch(() => {});
+ announce(enabled ? 'System sounds on' : 'System sounds off');
+}
+
+function toggleFullscreen() {
+ try {
+ if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+ else document.documentElement.requestFullscreen?.().catch(() => {});
+ } catch (_) {}
+}
+
 function executeCommand(index) {
  const input=document.getElementById('az-command-input');
  const rows=commandRows(input?.value||'');
@@ -621,6 +801,11 @@ function executeCommand(index) {
 
  else if(row.type==='content')location.href=row.href;
  else if(row.id==='home')showHome();
+ else if(row.id==='toggle-sound')setSoundOn(!Store.getState().soundOn);
+ else if(row.id==='toggle-fullscreen')toggleFullscreen();
+ else if(row.id==='close-active'){const id=Store.getState().activeApp;if(id)closeApp(id);}
+ else if(row.id==='toggle-motion'){const next=!Store.getState().reduceMotion;Store.setPreference('reduceMotion',next);document.body.classList.toggle('az-reduce-motion',next);}
+ else if(row.id==='toggle-fps')toggleFps();
  else if(row.id==='continue'){
  const session=Store.getFieldSession();
  session?window.location.href='/worlds/aizanoi-225/':window.location.href='/worlds/aizanoi-225/';
@@ -653,6 +838,8 @@ function handleRootClick(event) {
  const shellAction=event.target.closest('[data-shell-action]')?.dataset.shellAction;
  if(shellAction==='home'){showHome();return;}
  if(shellAction==='search'){openCommand(event.target.closest('button'));return;}
+ if(shellAction==='sound'){setSoundOn(Store.getState().soundOn===false);return;}
+ if(shellAction==='notifications'){openNotifications(event.target.closest('button'));return;}
  if(shellAction==='switcher'){renderSwitcher();openOverlay('az-switcher-overlay',event.target.closest('button'));return;}
  if(shellAction==='settings'){renderSettings();openOverlay('az-settings-overlay',event.target.closest('button'));return;}
  const task=event.target.closest('[data-task-app]')?.dataset.taskApp;
@@ -669,6 +856,8 @@ function handleRootClick(event) {
  const body=document.querySelector('[data-window-menu-body]');
  const appId=body?.dataset.appId; if(!appId)return;
  if(windowCommand==='move'||windowCommand==='resize')startKeyboardWindowMode(appId,windowCommand);
+ else if(windowCommand==='snap-left'){closeOverlay(false);snapWindow(appId,'left');}
+ else if(windowCommand==='snap-right'){closeOverlay(false);snapWindow(appId,'right');}
  else{
  closeOverlay(false);
  if(windowCommand==='close')closeApp(appId);
@@ -677,10 +866,15 @@ function handleRootClick(event) {
  }
  return;
  }
+ if(event.target.closest('[data-clear-activity]')){Store.clearActivity();renderNotifications();return;}
  if(event.target.closest('[data-reset-workspace]')){Store.resetWorkspace();location.reload();return;}
- if(event.target.matches('[data-setting="reduceMotion"]')){
- Store.setPreference('reduceMotion',event.target.checked);
- document.body.classList.toggle('az-reduce-motion',event.target.checked);
+ const settingToggle=event.target.matches('input[type="checkbox"][data-setting]')?event.target:null;
+ if(settingToggle){
+ const name=settingToggle.dataset.setting;
+ const enabled=settingToggle.checked;
+ if(!Store.setPreference(name,enabled))return;
+ if(name==='reduceMotion')document.body.classList.toggle('az-reduce-motion',enabled);
+ if(name==='soundOn')renderSoundButton();
  return;
  }
  if(activeOverlay && event.target===activeOverlay)closeOverlay();
@@ -761,7 +955,7 @@ const appApi=Object.freeze({
  notify,
  announce,
  store:Store,
- playSound:(name)=>{ import('./workspace/sounds.js').then((module)=>module.playSound(name)).catch(()=>{}); },
+ playSound:(name)=>{ if(Store.getState().soundOn===false)return; import('./workspace/sounds.js').then((module)=>module.playSound(name)).catch(()=>{}); },
  get openWindows(){return [...windows.keys()];},
  get activeApp(){return Store.getState().activeApp;}
 });
