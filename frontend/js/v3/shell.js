@@ -723,7 +723,7 @@ function rowScore(row, q) {
 
 function commandRows(query='') {
  const q=query.trim().toLowerCase();
- const entries=searchableEntries(staticSearchEntries).filter((entry)=>!q || fuzzyMatch([entry.label,entry.description,...entry.keywords].join(' '),q));
+ const entries=searchableEntries(staticSearchEntries).filter((entry)=>!q || fuzzyMatch([entry.label,entry.description,...(entry.keywords||[])].join(' '),q));
  const state=Store.getState();
  const commands=[
  {type:'action',id:'home',label:'Go Home',description:'Return to the AizanoiOS home screen',keywords:['home','desktop']},
@@ -733,19 +733,38 @@ function commandRows(query='') {
  {type:'action',id:'close-active',label:'Close active window',description:state.activeApp?`Close ${appById(state.activeApp)?.label||'the active app'}`:'No active window to close',keywords:['close','window','quit','exit']},
  {type:'action',id:'toggle-motion',label:state.reduceMotion?'Enable interface motion':'Reduce interface motion',description:'Toggle non-essential shell animation',keywords:['motion','animation','reduce','accessibility']},
  {type:'action',id:'toggle-fps',label:fpsActive?'Hide performance meter':'Show performance meter',description:'Toggle the real frame-rate meter in the system bar',keywords:['fps','performance','meter','frames']}
- ].filter((entry)=>!q || fuzzyMatch([entry.label,entry.description,...entry.keywords].join(' '),q));
+ ].filter((entry)=>!q || fuzzyMatch([entry.label,entry.description,...(entry.keywords||[])].join(' '),q));
  const rows=[...commands,...entries].slice(0,36);
  if (q) rows.sort((a,b)=>rowScore(a,q)-rowScore(b,q));
  return rows.slice(0,18);
 }
 
+function visibleCommandRows(query='') {
+ const rows = commandRows(query);
+ const q = query.trim().toLowerCase();
+ const types = ['action','app','content'];
+ if (q) {
+ const best = {};
+ for (const type of types) {
+ best[type] = Math.min(...rows.filter((row) => row.type === type).map((row) => rowScore(row, q)), Infinity);
+ }
+ types.sort((a,b) => (best[a] === best[b] ? 0 : best[a] - best[b]));
+ }
+ const ordered = [];
+ for (const type of types) {
+ for (const row of rows) if (row.type === type) ordered.push(row);
+ }
+ return ordered;
+}
+
 function renderCommands(query='') {
  const host=document.querySelector('.az-command-results'); if(!host)return;
- const rows=commandRows(query);
+ const rows=visibleCommandRows(query);
  commandSelection=Math.min(commandSelection,Math.max(0,rows.length-1));
  if(!rows.length){host.innerHTML='<div class="az-command-empty">No direct match. Try an app or action.</div>';return;}
+ const groupOrder=[...new Set(rows.map((row)=>row.type))];
  const groups=[];
- for(const type of ['action','app','content']){
+ for(const type of groupOrder){
  const subset=rows.filter((row)=>row.type===type);
  if(subset.length)groups.push({type,subset});
  }
@@ -794,7 +813,7 @@ function toggleFullscreen() {
 
 function executeCommand(index) {
  const input=document.getElementById('az-command-input');
- const rows=commandRows(input?.value||'');
+ const rows=visibleCommandRows(input?.value||'');
  const row=rows[index]; if(!row)return;
  closeOverlay(false);
  if(row.type==='app')openApp(row.id);
@@ -856,8 +875,8 @@ function handleRootClick(event) {
  const body=document.querySelector('[data-window-menu-body]');
  const appId=body?.dataset.appId; if(!appId)return;
  if(windowCommand==='move'||windowCommand==='resize')startKeyboardWindowMode(appId,windowCommand);
- else if(windowCommand==='snap-left'){closeOverlay(false);snapWindow(appId,'left');}
- else if(windowCommand==='snap-right'){closeOverlay(false);snapWindow(appId,'right');}
+ else if(windowCommand==='snap-left'){closeOverlay();snapWindow(appId,'left');focusWindow(appId,{updateRoute:false});}
+ else if(windowCommand==='snap-right'){closeOverlay();snapWindow(appId,'right');focusWindow(appId,{updateRoute:false});}
  else{
  closeOverlay(false);
  if(windowCommand==='close')closeApp(appId);
@@ -885,7 +904,7 @@ function handleKeydown(event) {
  if(activeOverlay){
  if(activeOverlay.id==='az-command-overlay' && ['ArrowDown','ArrowUp','Enter'].includes(event.key)){
  event.preventDefault();
- const rows=commandRows(document.getElementById('az-command-input')?.value||'');
+ const rows=visibleCommandRows(document.getElementById('az-command-input')?.value||'');
  if(!rows.length)return;
  if(event.key==='ArrowDown')commandSelection=(commandSelection+1)%rows.length;
  else if(event.key==='ArrowUp')commandSelection=(commandSelection-1+rows.length)%rows.length;

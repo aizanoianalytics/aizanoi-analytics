@@ -58,3 +58,15 @@ test('boot splash is skipped on repeat visits within the session', () => {
 test('task shelf buttons expose hover tooltips with the app label', () => {
   assert.match(shell, /az-dock-tooltip/);
 });
+
+test('palette renders, navigates and executes one shared visible row order', () => {
+  // Selection/execution mismatch guard: render, arrow-key navigation and
+  // Enter must all consume visibleCommandRows, and group headers must follow
+  // its order instead of a fixed action/app/content sequence.
+  assert.match(shell, /function visibleCommandRows\(query/);
+  assert.match(shell, /const rows=visibleCommandRows\(query\)/);
+  assert.match(shell, /const rows=visibleCommandRows\(document\.getElementById/);
+  assert.match(shell, /const rows=visibleCommandRows\(input\?\.value/);
+  assert.match(shell, /const groupOrder=\[\.\.\.new Set\(rows\.map/);
+  assert.doesNotMatch(shell, /for\(const type of \['action','app','content'\]\)\{/);
+});
