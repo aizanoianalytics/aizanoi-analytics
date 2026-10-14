@@ -135,6 +135,7 @@ export class TouchControls {
     });
 
     // 6. Dash Butonu: çekirdek savunma mekaniği mobilde de aynı metodu çağırır.
+    // Not: dash için özel sprite yok; etiketli daire kalıcı tasarımdır.
     this.btnDash = this.mkBtn(atkX - 150, atkY - 100, 'touch-btn-dash', 'DASH');
 
     this.btnDash.on('pointerdown', () => {

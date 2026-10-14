@@ -326,9 +326,10 @@ export class UIScene extends Phaser.Scene {
     try {
       const entries = gs?.combatLog?.recent?.(3) || [];
       if (!entries.length) {
-        this.combatLogText.setText('');
+        this.combatLogText.setText('').setVisible(false);
         return;
       }
+      this.combatLogText.setVisible(true);
       const lines = entries.map((e) => {
         if (e.kind === 'attack') {
           const crit = e.isCritical ? ' CRIT' : '';
