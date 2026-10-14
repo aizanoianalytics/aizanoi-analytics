@@ -52,6 +52,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.volatileDamage = eliteStats.volatileDamage || 0;
     this.stormInterval = eliteStats.stormInterval || 0;
     this.stormTimer = this.stormInterval;
+    // Stable speed base: slow is recomputed from here every frame so the
+    // modifier can never accumulate into (or permanently corrupt) moveSpeed.
+    this.baseMoveSpeed = this.moveSpeed;
 
     this.attackCooldown = 0;
     this.isDead = false;
@@ -225,6 +228,16 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
+    // Status effects tick on scene delta (poison damage, slow/stun timers).
+    // A tick may kill (poison), so re-check before running AI.
+    try {
+      if (this.statuses?.size) this.updateStatuses(delta);
+    } catch (_) {}
+    if (this.isDead) {
+      this.hpBar.clear();
+      return;
+    }
+
     // Gölge takibi
     if (this.shadow && this.shadow.active) {
       this.shadow.setPosition(this.x, this.y + (this.isBoss ? 40 : 14));
@@ -266,6 +279,17 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.drawHealthBar();
       return;
     }
+
+    // Stun blocks AI/action but never freezes status expiry (ticked above).
+    if (this.isStunned()) {
+      this.setVelocity(0, 0);
+      this.drawHealthBar();
+      return;
+    }
+
+    // Slow recomputed from the stable base every frame: effective speed, no
+    // permanent stat mutation.
+    this.moveSpeed = this.baseMoveSpeed * StatusEffectSystem.speedMultiplier(this);
 
     this.drawHealthBar();
 
@@ -389,6 +413,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       if (enragedNow && !e.enraged) {
         e.enraged = true;
         this.moveSpeed = Math.round(this.moveSpeed * 1.35);
+        this.baseMoveSpeed = this.moveSpeed;
         this.attackSpeed = Math.round(this.attackSpeed * 1.3 * 100) / 100;
         this.scene.createFloatingText(this.x, this.y - 74, 'ENRAGED', '#e74c3c', 26);
         shakeCamera(this.scene, 260, 0.009);
@@ -493,7 +518,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.setVelocity(Math.cos(m.angle) * speed, Math.sin(m.angle) * speed);
       if (!m.hit && dist <= this.attackRange + 14) {
         m.hit = true;
-        CombatSystem.processAttack(this, player);
+        CombatSystem.processAttack(this, player, null, { log: this.scene?.combatLog });
         this.scene.createDamageSpark(player.x, player.y);
       }
       if (m.timer <= 0 || this.body?.blocked?.left || this.body?.blocked?.right ||
@@ -544,7 +569,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setVelocity(Math.cos(m.angle) * speed, Math.sin(m.angle) * speed);
         if (!m.hit && dist <= this.attackRange + 18) {
           m.hit = true;
-          CombatSystem.processAttack(this, player);
+          CombatSystem.processAttack(this, player, null, { log: this.scene?.combatLog });
           this.scene.createDamageSpark(player.x, player.y);
           this.scene.createFloatingText(player.x, player.y - 30, 'CRUSHED', '#ba68c8', 20);
         }
@@ -653,7 +678,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       // Contact damage, once per charge.
       if (!c.hit && dist <= this.attackRange + 10) {
         c.hit = true;
-        CombatSystem.processAttack(this, player);
+        CombatSystem.processAttack(this, player, null, { log: this.scene?.combatLog });
         this.scene.createDamageSpark(player.x, player.y);
         this.scene.createFloatingText(player.x, player.y - 24, 'CHARGED', '#ff8844');
       }
@@ -882,7 +907,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
     } else {
       this.stats.attackDamage = this.attackDamage;
-      CombatSystem.processAttack(this, player);
+      CombatSystem.processAttack(this, player, null, { log: this.scene?.combatLog });
       this.scene.createDamageSpark(player.x, player.y);
     }
   }

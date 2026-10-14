@@ -441,7 +441,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
           if (!this.active || this.isDead) return;
           if (!target.active || target.hp <= 0) return;
           if (Phaser.Math.Distance.Between(this.x, this.y, target.x, target.y) > this.stats.attackRange + 8) return;
-          CombatSystem.processAttack(this, target);
+          CombatSystem.processAttack(this, target, null, { log: this.scene?.combatLog });
           this.scene.createDamageSpark(target.x, target.y);
         });
       }

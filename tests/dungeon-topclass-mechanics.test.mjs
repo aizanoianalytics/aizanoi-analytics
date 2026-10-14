@@ -9,6 +9,10 @@ import { saveCheckpoint, loadCheckpoint, clearCheckpoint, buildCheckpoint } from
 import { scoreRun, recordScore, topScores, clearScores } from '../frontend/js/v3/apps/dungeon/js/systems/HighScoreSystem.js';
 import { CombatSystem } from '../frontend/js/v3/apps/dungeon/js/systems/CombatSystem.js';
 import { LevelSystem } from '../frontend/js/v3/apps/dungeon/js/systems/LevelSystem.js';
+import { ProgressionSystem } from '../frontend/js/v3/apps/dungeon/js/systems/ProgressionSystem.js';
+import { readFileSync } from 'node:fs';
+
+const dungeonSrc = (p) => readFileSync(new URL(`../frontend/js/v3/apps/dungeon/js/${p}`, import.meta.url), 'utf8');
 
 test('room prefabs cover every role with stable fallback', () => {
   for (const role of ['base', 'combat', 'elite', 'shrine', 'treasure', 'merchant', 'event', 'boss', 'transition']) {
@@ -42,7 +46,7 @@ test('FOV: wall blocks tiles behind it, edge wall stays visible', () => {
   assert.ok(mem.isExplored('2,4'));
 });
 
-test('visibility recompute contract: same tile returns null (tested via pure memory)', () => {
+test('explored memory persists across a serialize round-trip', () => {
   const mem = new VisibilityMemory();
   const s1 = new Set(['1,1', '1,2']);
   mem.remember(s1);
@@ -78,7 +82,7 @@ test('status stacking rules: refresh vs stack vs reject + cleanse semantics', ()
   const removed = StatusEffectSystem.cleanse(holder, ['cleansable', 'curse']);
   assert.ok(removed >= 2, 'cleansable effects removed');
   assert.ok(holder.statuses.has('regen'), 'beneficial regen survives cleanse');
-  assert.ok(!StatusEffectSystem.speedMultiplier({ statuses: new Map() }) || true);
+  assert.equal(StatusEffectSystem.speedMultiplier({ statuses: new Map() }), 1, 'no slow means full speed');
   const slowed = { statuses: new Map() };
   StatusEffectSystem.apply(slowed, 'slow');
   assert.ok(StatusEffectSystem.speedMultiplier(slowed) < 1, 'slow reduces speed without mutating base');
@@ -119,6 +123,44 @@ test('chapter checkpoint round-trips and fails closed on garbage', () => {
   assert.deepEqual(loaded.runLedger, { enemiesKilled: 7 });
   clearCheckpoint();
   assert.equal(loadCheckpoint(), null);
+});
+
+test('resume restores ledger and seed: checkpoint payload round-trips into progression', () => {
+  clearCheckpoint();
+  const ledger = { enemiesKilled: 12, bossesDefeated: 1, denariiEarned: 300, xpEarned: 800, chaptersCleared: 2, levelAtStart: 3, deepestChapter: 4, startedAtChapter: 1 };
+  saveCheckpoint(buildCheckpoint({ chapterIndex: 2, isEndless: false, wave: 1, seed: 4242, runLedger: ledger, blessingIds: ['aegis'] }));
+  const loaded = loadCheckpoint();
+  const prog = new ProgressionSystem();
+  prog.importRunLedger(loaded.runLedger);
+  assert.deepEqual(prog.exportRunLedger(), ledger);
+  assert.equal(loaded.seed, 4242);
+  // GameScene applies a finite resume seed onto the level config (same rule
+  // LevelSystem honors), so the resumed floor regenerates identically.
+  const cfg = { id: 3, name: 'x', seed: loaded.seed };
+  const sys = new LevelSystem({}, cfg);
+  assert.equal(sys.seed, 4242);
+  clearCheckpoint();
+});
+
+test('enemy status wiring: update() ticks statuses, honors stun, recomputes slow from a stable base', () => {
+  const enemySrc = dungeonSrc('entities/Enemy.js');
+  assert.match(enemySrc, /this\.statuses\s*=\s*new Map\(\)/);
+  assert.match(enemySrc, /if \(this\.statuses\?\.size\) this\.updateStatuses\(delta\)/);
+  assert.match(enemySrc, /if \(this\.isStunned\(\)\)/);
+  assert.match(enemySrc, /this\.baseMoveSpeed\s*=\s*this\.moveSpeed/);
+  assert.match(enemySrc, /this\.moveSpeed\s*=\s*this\.baseMoveSpeed \* StatusEffectSystem\.speedMultiplier\(this\)/);
+});
+
+test('combat log is wired at every live processAttack call site', () => {
+  for (const [file, minSites] of [
+    ['scenes/GameScene.js', 3],
+    ['entities/Enemy.js', 4],
+    ['entities/Aizo.js', 1],
+  ]) {
+    const src = dungeonSrc(file);
+    const hits = src.match(/processAttack\([\s\S]{0,120}?log: .*combatLog/g) || [];
+    assert.ok(hits.length >= minSites, `${file} wires log at ${hits.length}/${minSites} sites`);
+  }
 });
 
 test('high scores: bounded top-N, deterministic order, mode-separated formulas', () => {

@@ -86,6 +86,8 @@ export class MenuScene extends Phaser.Scene {
             isEndless: checkpoint.isEndless,
             wave: checkpoint.wave,
             runState: { blessingIds: checkpoint.blessingIds || [] },
+            checkpointLedger: checkpoint.runLedger || null,
+            seed: checkpoint.seed,
           });
         }));
         btnStartY += btnSpacing;
@@ -112,6 +114,7 @@ export class MenuScene extends Phaser.Scene {
         this.showWipeConfirm(() => {
           tempProg.reset();
           InventorySystem.clear();
+          try { clearCheckpoint(); } catch (_) {}
           this.scene.restart();
         });
       });
