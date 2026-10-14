@@ -6,6 +6,9 @@
     --az-canvas: #eef4fb;
     --az-canvas-deep: #dbe7f3;
     --az-canvas-soft: #f8fbff;
+    /* Canonical light-mode elevation ladder. Keep numbered aliases so app
+       surfaces can share depth without inventing local color systems. */
+    --az-surface-0: rgba(255, 255, 255, .48);
     --az-surface-1: rgba(255, 255, 255, .72);
     --az-surface-2: rgba(255, 255, 255, .84);
     --az-surface-3: rgba(244, 247, 252, .94);
@@ -61,6 +64,8 @@
     --az-motion-fast: 100ms;
     --az-motion: 180ms;
     --az-motion-slow: 260ms;
+    --az-ease-out-expo: cubic-bezier(.16, 1, .3, 1);
+    --az-ease-spring: cubic-bezier(.34, 1.56, .64, 1);
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -351,6 +351,34 @@ function installDesktopContextMenu(api) {
  },true);
 }
 
+function installPointerGlow(store) {
+ if(matchMedia('(pointer:coarse)').matches)return;
+ const selector='.az-mission-card,.az-simple-card,.az-analytics-dashboard-card,.az-markets-detail,.az-arcade-tile,.az-launchpad-item';
+ let frame=0, pending=null, active=null;
+ const clear=()=>{
+ if(active){active.removeAttribute('data-az-glow');active.classList.remove('az-pointer-glow');active=null;}
+ };
+ document.addEventListener('pointermove',(event)=>{
+ const target=event.target.closest?.(selector);
+ if(!target || store.getState().reduceMotion){clear();return;}
+ pending={target,x:event.clientX,y:event.clientY};
+ if(frame)return;
+ frame=requestAnimationFrame(()=>{
+ frame=0;
+ if(!pending)return;
+ const {target:next,x,y}=pending;
+ pending=null;
+ if(active!==next){clear();active=next;active.classList.add('az-pointer-glow');active.setAttribute('data-az-glow','');}
+ const rect=next.getBoundingClientRect();
+ next.style.setProperty('--az-pointer-x',`${x-rect.left}px`);
+ next.style.setProperty('--az-pointer-y',`${y-rect.top}px`);
+ });
+ },{passive:true});
+ document.addEventListener('pointerout',(event)=>{
+ if(active && !active.contains(event.relatedTarget))clear();
+ },{passive:true});
+}
+
 function observeRunningApps(store) {
  const running=document.querySelector('[data-running-apps]');
  if(running)new MutationObserver(()=>queueMicrotask(()=>syncPinned(store))).observe(running,{childList:true,subtree:true});
@@ -365,6 +393,7 @@ export function installAizanoiOS(api) {
  installDesktopContextMenu(api);
  installWindowMotion(api);
  installWindowSnapping(api);
+ installPointerGlow(api.store);
  observeRunningApps(api.store);
  api.store.subscribe(()=>{syncPinned(api.store);syncTopBar(api.store);});
  document.documentElement.dataset.azShell='aizanoi-os';
