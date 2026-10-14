@@ -395,7 +395,7 @@ async function openAppInstance(appId, app, options, generation) {
  Store.markAppOpen(appId);
  renderShelf();
  const body = el.querySelector('[data-app-body]');
- body.innerHTML = '<div class="az-empty-state"><div><h3>Opening application…</h3><p>Loading only the code this app needs.</p></div></div>';
+ body.innerHTML = '<div class="az-skeleton" role="status" aria-label="Opening application"><span class="az-sr-only">Opening application…</span><div class="az-skeleton-line" aria-hidden="true"></div><div class="az-skeleton-line" aria-hidden="true"></div><div class="az-skeleton-line" aria-hidden="true"></div></div>';
  try {
  const module = await import(app.module);
  if (windows.get(appId)!==item || appGenerations.get(appId)!==generation) return null;

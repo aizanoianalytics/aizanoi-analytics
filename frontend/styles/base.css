@@ -2,7 +2,7 @@
 
 @layer reset {
   *, *::before, *::after { box-sizing: border-box; }
-  html, body { width: 100%; min-height: 100%; margin: 0; }
+  html, body { width: 100%; min-height: 100%; margin: 0; overflow-x: hidden; }
   button, input, textarea, select { font: inherit; }
   button { color: inherit; }
   img, svg, canvas { max-width: 100%; }
@@ -22,6 +22,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     font: 14px/1.5 var(--az-font-ui);
+    font-feature-settings: "cv01", "ss03";
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -39,7 +40,14 @@
 
   a { color: var(--az-accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
   button, [role="button"] { -webkit-tap-highlight-color: transparent; }
-  :focus-visible { outline: 2px solid var(--az-focus); outline-offset: 2px; }
+  :focus-visible {
+    outline: 0;
+    box-shadow: 0 0 0 2px var(--az-surface-solid), 0 0 0 5px var(--az-focus);
+  }
+  :is(h1,h2,h3,h4) { letter-spacing: -.02em; text-wrap: balance; }
+  :is(.az-kpi,.az-markets,[data-numeric],time,.az-clock) {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
   ::selection { background: rgba(89,105,220,.22); color: var(--az-text); }
   ::-webkit-scrollbar { width: 11px; height: 11px; }
   ::-webkit-scrollbar-track { background: transparent; }
