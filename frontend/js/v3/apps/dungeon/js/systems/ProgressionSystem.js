@@ -152,6 +152,18 @@ export class ProgressionSystem {
     }
   }
 
+  /** Checkpoint payload: ledger + blessings stay restorable across reload. */
+  exportRunLedger() {
+    return this.run ? { ...this.run } : null;
+  }
+
+  importRunLedger(ledger) {
+    if (ledger && typeof ledger === 'object') {
+      this.run = { ...ledger };
+    }
+    return this.run;
+  }
+
   save() {
     try {
       const data = {

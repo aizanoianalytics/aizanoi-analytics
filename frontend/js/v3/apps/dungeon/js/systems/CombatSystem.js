@@ -2,6 +2,8 @@
 // Hasar hesaplamaları, zırh absorbsiyonu, kritik, can çalma ve şimşek arkları
 
 import { WEAPONS } from '../data/items.js';
+import { logAttack } from './CombatLogSystem.js';
+import { StatusEffectSystem } from './StatusEffectSystem.js';
 
 export class CombatSystem {
   /**
@@ -62,6 +64,24 @@ export class CombatSystem {
     // Hasarı hedefe ver
     target.takeDamage(baseDamage, isCritical, attacker, damageType);
 
+    // Structured combat event: resolved damage only, never requested damage.
+    let logEntry = null;
+    try {
+      logEntry = logAttack(meta.log || attacker?.combatLog || target?.combatLog || null, {
+        source: attacker?.name || attacker?.type?.name || 'attacker',
+        target: target?.name || target?.type?.name || 'target',
+        damage: baseDamage, isCritical, damageType, killed: target.hp <= 0,
+      });
+    } catch (_) { logEntry = null; }
+
+    // Status application declared in data (meta.applyStatus), resolved here.
+    let statusApplied = null;
+    if (meta.applyStatus && target && typeof target === 'object') {
+      try {
+        statusApplied = StatusEffectSystem.apply(target, meta.applyStatus, { source: attacker });
+      } catch (_) { statusApplied = null; }
+    }
+
     // Can çalma (Lifesteal)
     // attacker.stats.lifesteal already includes weapon lifestealBonus via InventorySystem
     const lifestealRate = atkStats.lifesteal || 0;
@@ -86,6 +106,8 @@ export class CombatSystem {
       damage: baseDamage,
       isCritical,
       targetKilled: target.hp <= 0,
+      logEntry,
+      statusApplied: statusApplied ? statusApplied.id : null,
     };
   }
 }

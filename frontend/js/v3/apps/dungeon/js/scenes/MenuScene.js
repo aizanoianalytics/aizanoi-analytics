@@ -6,6 +6,7 @@ import { ProgressionSystem } from '../systems/ProgressionSystem.js';
 import { InventorySystem } from '../systems/InventorySystem.js';
 import { LEVELS } from '../data/levels.js';
 import { audioManager } from '../systems/AudioManager.js';
+import { loadCheckpoint, clearCheckpoint } from '../systems/RunSaveSystem.js';
 
 export class MenuScene extends Phaser.Scene {
   constructor() {
@@ -69,6 +70,27 @@ export class MenuScene extends Phaser.Scene {
     // Butonlar
     let btnStartY = height / 2 + 40;
     const btnSpacing = compact ? 52 : 48;
+
+    // Active-run resume is distinct from chapter progression: the checkpoint
+    // restores the exact chapter boundary (seed + ledger + blessings).
+    try {
+      const checkpoint = loadCheckpoint();
+      if (checkpoint && Number.isFinite(checkpoint.chapterIndex)) {
+        const resumeLabel = checkpoint.isEndless
+          ? `Resume run (Endless wave ${checkpoint.wave || 1})`
+          : `Resume run (Chapter ${(checkpoint.chapterIndex || 0) + 1})`;
+        createGlassButton(this, width / 2, btnStartY, buttonWidth, buttonHeight, resumeLabel, () => this._startOnce(() => {
+          this.game.scene.stop('MenuScene');
+          this.game.scene.start('GameScene', {
+            chapterIndex: checkpoint.chapterIndex,
+            isEndless: checkpoint.isEndless,
+            wave: checkpoint.wave,
+            runState: { blessingIds: checkpoint.blessingIds || [] },
+          });
+        }));
+        btnStartY += btnSpacing;
+      }
+    } catch (_) {}
 
     if (savedChapter > 1 && savedChapter <= 10) {
       const continueAction = () => {

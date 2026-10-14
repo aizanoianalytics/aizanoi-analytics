@@ -5,6 +5,7 @@ import { CombatSystem } from '../systems/CombatSystem.js';
 import { applyEliteAffix, ELITE_AFFIXES } from '../data/elite-affixes.js';
 import { audioManager } from '../systems/AudioManager.js';
 import { shakeCamera, nonAudioTelegraphsActive } from '../systems/AccessibilitySystem.js';
+import { StatusEffectSystem } from '../systems/StatusEffectSystem.js';
 
 const ELITE_COLORS = Object.fromEntries((ELITE_AFFIXES || []).map((a) => [a.id, a.color]));
 
@@ -55,6 +56,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.attackCooldown = 0;
     this.isDead = false;
     this.knockbackTimer = 0;
+    // General status-effect store (poison/slow/stun/...). Advanced by scene
+    // delta via updateStatuses(); never uses independent Phaser timers.
+    this.statuses = new Map();
 
     // Boss vs regular collision body sizing
     if (typeConfig.isFinalBoss) {
@@ -966,9 +970,33 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  /** Scene-delta status tick; stun/slow honored by AI callers. */
+  updateStatuses(dtMs) {
+    if (!this.statuses?.size || this.isDead) return [];
+    return StatusEffectSystem.update(this, dtMs, {
+      damage: (holder, amount) => {
+        holder.hp -= amount;
+        if (holder.hp <= 0) holder.die();
+      },
+      heal: (holder, amount) => {
+        holder.hp = Math.min(holder.maxHp, holder.hp + amount);
+      },
+    });
+  }
+
+  effectiveSpeed() {
+    return this.moveSpeed * StatusEffectSystem.speedMultiplier(this);
+  }
+
+  isStunned() {
+    return StatusEffectSystem.isStunned(this);
+  }
+
   die() {
     if (this.isDead) return;
     this.isDead = true;
+    // Dead entities stop all status timers immediately.
+    try { this.statuses?.clear(); } catch (_) {}
     this.setVelocity(0, 0);
 
     // The telegraph mark belongs to the scene, not to this sprite, so it would
