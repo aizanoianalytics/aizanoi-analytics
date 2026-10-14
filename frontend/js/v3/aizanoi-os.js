@@ -356,6 +356,7 @@ function installPointerGlow(store) {
  const selector='.az-mission-card,.az-simple-card,.az-analytics-dashboard-card,.az-markets-detail,.az-arcade-tile,.az-launchpad-item';
  let frame=0, pending=null, active=null;
  const clear=()=>{
+ pending=null;
  if(active){active.removeAttribute('data-az-glow');active.classList.remove('az-pointer-glow');active=null;}
  };
  document.addEventListener('pointermove',(event)=>{
@@ -368,6 +369,10 @@ function installPointerGlow(store) {
  if(!pending)return;
  const {target:next,x,y}=pending;
  pending=null;
+ // Stale-frame guard: the pointer may have left the card after the move
+ // was queued but before this frame ran. Re-glowing here would stick a
+ // highlight on a card the pointer no longer hovers.
+ if(!next.isConnected || !next.matches(':hover')){if(active===next)clear();return;}
  if(active!==next){clear();active=next;active.classList.add('az-pointer-glow');active.setAttribute('data-az-glow','');}
  const rect=next.getBoundingClientRect();
  next.style.setProperty('--az-pointer-x',`${x-rect.left}px`);

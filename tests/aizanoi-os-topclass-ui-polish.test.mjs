@@ -43,6 +43,7 @@ test('pointer glow is requestAnimationFrame-driven and opt-in', () => {
   assert.match(os, /--az-pointer-x/);
   assert.match(os, /setAttribute\('data-az-glow'/);
   assert.match(components, /\.az-pointer-glow/);
+  assert.match(os, /matches\(':hover'\)/, 'stale rAF frame must not re-glow a card the pointer left');
 });
 
 test('empty and error states remain actionable and use canonical surfaces', () => {
