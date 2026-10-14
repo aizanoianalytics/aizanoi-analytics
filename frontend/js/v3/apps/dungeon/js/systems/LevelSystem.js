@@ -19,6 +19,8 @@
 // The BSP split is kept: it is still the right way to get a well-connected set
 // of rooms. What changed is what happens to those rooms afterwards.
 
+import { selectRoomPrefab, reservedCellsForPrefab } from '../data/room-prefabs.js';
+
 /** mulberry32: small, fast, well-distributed seeded PRNG. */
 function mulberry32(seed) {
   let a = seed >>> 0;
@@ -123,6 +125,7 @@ export class LevelSystem {
 
     // 6. Chapter identity: turn anonymous rectangles into named places.
     this.assignRoomRoles();
+    this.applyRoomPrefabs();
 
     // 7. Guarantee the level is completable before anyone plays it.
     const audit = this.audit();
@@ -246,6 +249,19 @@ export class LevelSystem {
     this.rooms[0].role = 'base';
     for (let i = 0; i < interiorCount; i++) this.rooms[1 + i].role = shuffled[i];
     this.rooms[this.rooms.length - 1].role = hasBoss ? 'boss' : 'transition';
+  }
+
+  /**
+   * Attach a deterministic prefab to every room. Prefabs add identity
+   * (shape/landmark/anchors) without moving walls, so connectivity is kept.
+   */
+  applyRoomPrefabs() {
+    for (const room of this.rooms) {
+      const prefab = selectRoomPrefab(room.role, this.random);
+      room.prefabId = prefab.id;
+      room.prefabAnchors = prefab.anchors;
+      room.reservedCells = reservedCellsForPrefab(prefab.id, room);
+    }
   }
 
   /**

@@ -7,6 +7,7 @@ import { BLESSINGS, selectBlessing } from '../data/blessings.js';
 import { Projectile } from './Projectile.js';
 import { audioManager } from '../systems/AudioManager.js';
 import { shakeCamera } from '../systems/AccessibilitySystem.js';
+import { StatusEffectSystem } from '../systems/StatusEffectSystem.js';
 
 export class Aizo extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, inventorySystem, progressionSystem, runState = null) {
@@ -46,6 +47,8 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     // restartinda sifirlanir). Timer yalnizca accessory takiliyken ilerler.
     this.shield = 0;
     this.scarabTimer = 0;
+    // General status-effect store, same contract as Enemy (scene-delta driven).
+    this.statuses = new Map();
 
     // Oda kutsamalari: run-gecici buff modlari (JSON-safe, save disi).
     this.runState = runState || { blessingIds: [] };
@@ -438,7 +441,7 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
           if (!this.active || this.isDead) return;
           if (!target.active || target.hp <= 0) return;
           if (Phaser.Math.Distance.Between(this.x, this.y, target.x, target.y) > this.stats.attackRange + 8) return;
-          CombatSystem.processAttack(this, target);
+          CombatSystem.processAttack(this, target, null, { log: this.scene?.combatLog });
           this.scene.createDamageSpark(target.x, target.y);
         });
       }
@@ -579,6 +582,26 @@ export class Aizo extends Phaser.Physics.Arcade.Sprite {
     if (this.isDead) return;
     this.hp = Math.min(this.maxHp, this.hp + amount);
     this.scene.createFloatingText(this.x, this.y - 20, `+${amount}`, '#27ae60');
+  }
+
+  /** Advance status effects by scene delta (poison ticks, expiry, cleanse-safe). */
+  updateStatuses(dtMs) {
+    if (!this.statuses?.size || this.isDead) return [];
+    return StatusEffectSystem.update(this, dtMs, {
+      damage: (holder, amount, effectId) => {
+        if (holder.isInvulnerable) return;
+        holder.hp -= amount;
+        try {
+          this.scene?.createFloatingText?.(holder.x, holder.y - 20, `-${amount}`, '#a3e635', 13);
+        } catch (_) {}
+        if (holder.hp <= 0) holder.die();
+      },
+      heal: (holder, amount) => holder.heal(amount),
+    });
+  }
+
+  effectiveSpeed(baseSpeed) {
+    return baseSpeed * StatusEffectSystem.speedMultiplier(this);
   }
 
   die() {

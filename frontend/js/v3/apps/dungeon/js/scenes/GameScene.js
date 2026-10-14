@@ -22,6 +22,11 @@ import { hasDungeonExitHandler, requestDungeonExit } from '../main.js';
 import { loadSettings, saveSettings, toggleDungeonFullscreen } from '../systems/SettingsSystem.js';
 import { shakeCamera, updateCameraShake } from '../systems/AccessibilitySystem.js';
 import { GamepadInput } from '../systems/GamepadSystem.js';
+import { CombatLogSystem } from '../systems/CombatLogSystem.js';
+import { VisibilityMemory, computeVisible } from '../systems/VisibilitySystem.js';
+import { saveCheckpoint, clearCheckpoint, buildCheckpoint } from '../systems/RunSaveSystem.js';
+import { recordScore } from '../systems/HighScoreSystem.js';
+import { StatusEffectSystem } from '../systems/StatusEffectSystem.js';
 
 // Stable per-tile noise keeps authored dressing identical across reloads and
 // prevents screenshot/replay drift without storing a second map artifact.
@@ -46,6 +51,9 @@ export class GameScene extends Phaser.Scene {
     this.isEndless = data.isEndless || false;
     this.endlessWave = data.wave || 1;
     this.runState = data.runState || createRunState();
+    // Chapter-boundary resume payload (checkpoint): restored in create().
+    this.resumeLedger = data.checkpointLedger || null;
+    this.resumeSeed = Number.isFinite(data.seed) ? data.seed >>> 0 : null;
     this.blessingOverlay = null;
     this.isPaused = false;
     this.pauseOverlay = null;
@@ -79,7 +87,10 @@ export class GameScene extends Phaser.Scene {
     // A run is a chapter sequence, not a save. Starting at the first chapter
     // begins a fresh ledger; returning to a later chapter resumes the same one,
     // so the victory screen reports the run the player actually played.
-    if (!this.isEndless && (!this.progression.run || this.chapterIndex <= (this.progression.run.startedAtChapter ?? 0))) {
+    // A checkpoint resume restores the saved ledger instead of starting over.
+    if (this.resumeLedger) {
+      this.progression.importRunLedger(this.resumeLedger);
+    } else if (!this.isEndless && (!this.progression.run || this.chapterIndex <= (this.progression.run.startedAtChapter ?? 0))) {
       this.progression.startRun();
     } else if (!this.progression.run) {
       this.progression.startRun();
@@ -91,10 +102,21 @@ export class GameScene extends Phaser.Scene {
     } else {
       this.currentLevelConfig = LEVELS[this.chapterIndex] || LEVELS[0];
     }
+    // Resumed checkpoints regenerate the exact saved seed (LevelSystem honors
+    // a finite `seed`); fresh runs keep the chapter-derived deterministic seed.
+    if (this.resumeSeed !== null) {
+      this.currentLevelConfig = { ...this.currentLevelConfig, seed: this.resumeSeed };
+    }
 
     // 2. Harita Üretimi (BSP)
     this.levelSystem = new LevelSystem(this, this.currentLevelConfig);
     this.mapData = this.levelSystem.generate();
+    // Top-class run systems: queryable combat log + FOV/exploration memory.
+    // Pure systems; rendering overlay stays separate so Light2D/haze never
+    // compound into unreadable black levels.
+    this.combatLog = new CombatLogSystem(120);
+    this.visibilityMemory = new VisibilityMemory();
+    this.lastVisibilityTile = null;
 
     // 3. Tilemap ve Zemin/Duvar Çizimi
     this.renderMap();
@@ -821,6 +843,12 @@ export class GameScene extends Phaser.Scene {
         }
       }
       this.player.update(time, delta);
+      // Status effects tick on scene delta (no independent timers).
+      try {
+        if (typeof this.player.updateStatuses === 'function') this.player.updateStatuses(delta);
+      } catch (_) {}
+      // FOV recompute only when the player changes tile (cheap + stable).
+      try { this.updateVisibility(); } catch (_) {}
       // The shake is a displacement applied on top of the camera's own follow,
       // so it has to run after the player has moved and the camera has caught
       // up. Advancing it before that would offset the scroll the follow is
@@ -925,7 +953,7 @@ export class GameScene extends Phaser.Scene {
     const damageType = proj.damageType || 'physical';
     let attackResult = null;
     if (proj.attacker) {
-      attackResult = CombatSystem.processAttack(proj.attacker, enemy, proj.damage, { damageType });
+      attackResult = CombatSystem.processAttack(proj.attacker, enemy, proj.damage, { damageType, log: this.combatLog });
       // Kritik senkronu: ses zaten pitch'li, görsel de aynı karede patlasın
       if (attackResult && attackResult.isCritical) {
         shakeCamera(this, 110, 0.006);
@@ -948,7 +976,7 @@ export class GameScene extends Phaser.Scene {
           if (other === enemy || !other.active) continue;
           const dist = Phaser.Math.Distance.Between(enemy.x, enemy.y, other.x, other.y);
           if (dist <= aoeRadius) {
-            CombatSystem.processAttack(proj.attacker, other, Math.round(proj.damage * 0.5), { damageType });
+            CombatSystem.processAttack(proj.attacker, other, Math.round(proj.damage * 0.5), { damageType, log: this.combatLog });
             this.createDamageSpark(other.x, other.y);
           }
         }
@@ -969,7 +997,7 @@ export class GameScene extends Phaser.Scene {
     if (proj.isPlayer || !player.active) return;
 
     if (proj.attacker) {
-      CombatSystem.processAttack(proj.attacker, player, proj.damage, { damageType: proj.damageType || 'physical' });
+      CombatSystem.processAttack(proj.attacker, player, proj.damage, { damageType: proj.damageType || 'physical', log: this.combatLog });
     } else {
       const targetArmor = player.stats?.armor ?? player.armor ?? 0;
       const netDamage = CombatSystem.calculateDamage(proj.damage, targetArmor);
@@ -1128,6 +1156,17 @@ export class GameScene extends Phaser.Scene {
     // Record the clear before any transition, so the run ledger is complete
     // whichever screen the player lands on.
     this.progression.recordChapterCleared(this.chapterIndex + 1);
+    // Chapter-boundary checkpoint: resume value without serializing Phaser.
+    try {
+      saveCheckpoint(buildCheckpoint({
+        chapterIndex: this.isEndless ? this.chapterIndex : this.chapterIndex + 1,
+        isEndless: this.isEndless,
+        wave: this.endlessWave,
+        seed: this.mapData?.seed || 0,
+        runLedger: this.progression.run || null,
+        blessingIds: this.runState?.blessingIds || [],
+      }));
+    } catch (_) {}
 
     if (this.isEndless) {
       this.endlessWave++;
@@ -1141,12 +1180,26 @@ export class GameScene extends Phaser.Scene {
       // Son bölüm bitti -> Zafer Ekranı!
       this.progression.currentChapter = LEVELS.length - 1;
       this.progression.save();
+      // The run is over: no stale "Resume run" may survive victory, and the
+      // finished ledger is recorded into the bounded top-N history.
+      const finalSummary = this.progression.runSummary();
+      try {
+        clearCheckpoint();
+        recordScore({
+          mode: 'story',
+          chaptersCleared: finalSummary.chaptersCleared,
+          enemiesKilled: finalSummary.enemiesKilled,
+          bossesDefeated: finalSummary.bossesDefeated,
+          denariiEarned: finalSummary.denariiEarned,
+          xpEarned: finalSummary.xpEarned,
+        });
+      } catch (_) {}
       // Deterministic handoff at the game-manager level: a scene-local
       // stop/start from inside GameScene can be swallowed while the scene is
       // mid-operation, leaving VictoryScene pending with zero children.
       this.game.scene.stop('UIScene');
       this.game.scene.stop('GameScene');
-      this.game.scene.start('VictoryScene');
+      this.game.scene.start('VictoryScene', { runSummary: finalSummary });
     } else {
       // Sonraki bölüme geç
       this.chapterIndex++;
@@ -1561,6 +1614,7 @@ export class GameScene extends Phaser.Scene {
       // Cleansing is the point of a shrine over a heart drop: it removes the
       // elite curses that otherwise follow the player out of the room.
       player.curses = [];
+      try { StatusEffectSystem.cleanse(player); } catch (_) {}
       this.createFloatingText(player.x, player.y - 40, `+${healed} HP`, '#3dcea8', 20);
       this.playSfx('sfx-heal', 0.6);
       this.refreshInteractPrompt({ kind: 'shrine_spent', label: 'Shrine · already spent' });
@@ -1772,11 +1826,47 @@ export class GameScene extends Phaser.Scene {
   }
 
   onPlayerDied() {
+    // Death ends the run: the checkpoint must not survive, and the finished
+    // ledger is recorded into the bounded top-N history exactly once.
+    try {
+      clearCheckpoint();
+      const summary = this.progression.runSummary();
+      recordScore({
+        mode: this.isEndless ? 'endless' : 'story',
+        wave: this.endlessWave,
+        chaptersCleared: summary.chaptersCleared,
+        enemiesKilled: summary.enemiesKilled,
+        bossesDefeated: summary.bossesDefeated,
+        denariiEarned: summary.denariiEarned,
+        xpEarned: summary.xpEarned,
+      });
+    } catch (_) {}
     this.scene.stop('UIScene');
     this.scene.start('GameOverScene', {
       chapterIndex: this.chapterIndex,
       isEndless: this.isEndless,
       wave: this.endlessWave,
     });
+  }
+
+  /**
+   * Recompute FOV only on tile change; explored memory persists per floor.
+   * Rendering overlay is intentionally separate (kept out of Light2D/haze).
+   */
+  updateVisibility(radius = 8) {
+    if (!this.player || !this.mapData?.grid) return null;
+    const tx = Math.floor(this.player.x / 32);
+    const ty = Math.floor(this.player.y / 32);
+    const key = `${tx},${ty}`;
+    if (this.lastVisibilityTile === key) return null;
+    this.lastVisibilityTile = key;
+    const visible = computeVisible(this.mapData.grid, tx, ty, radius);
+    this.visibilityMemory?.remember(visible);
+    this.lastVisibleTiles = visible;
+    return visible;
+  }
+
+  isTileVisible(x, y) {
+    return Boolean(this.lastVisibleTiles?.has(`${x},${y}`));
   }
 }

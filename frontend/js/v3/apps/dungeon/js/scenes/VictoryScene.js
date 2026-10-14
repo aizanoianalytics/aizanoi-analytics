@@ -69,15 +69,20 @@ export class VictoryScene extends Phaser.Scene {
     });
   }
 
+  init(data) {
+    // GameScene passes the final ledger explicitly; the scene may be gone.
+    this.passedSummary = data?.runSummary || null;
+  }
+
   /**
-   * Pull the summary from the live progression system. If it is not reachable
-   * (the scene was started directly, or a save load failed) the screen still
-   * renders, with the figures marked unavailable rather than invented.
+   * Pull the summary from the passed final ledger first, then the live
+   * progression system. If neither is reachable the screen still renders,
+   * with the figures marked unavailable rather than invented.
    */
   buildSummary() {
     const scene = this.scene.get('GameScene');
     const progression = scene?.progression || this.registry.get('progression') || null;
-    const s = progression?.runSummary?.() || null;
+    const s = this.passedSummary || progression?.runSummary?.() || null;
 
     const chapterTotal = LEVELS.filter((l) => !l.isEndless).length;
     if (!s) return { rows: [{ label: 'Run statistics', value: 'unavailable' }] };

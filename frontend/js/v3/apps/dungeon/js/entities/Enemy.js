@@ -5,6 +5,7 @@ import { CombatSystem } from '../systems/CombatSystem.js';
 import { applyEliteAffix, ELITE_AFFIXES } from '../data/elite-affixes.js';
 import { audioManager } from '../systems/AudioManager.js';
 import { shakeCamera, nonAudioTelegraphsActive } from '../systems/AccessibilitySystem.js';
+import { StatusEffectSystem } from '../systems/StatusEffectSystem.js';
 
 const ELITE_COLORS = Object.fromEntries((ELITE_AFFIXES || []).map((a) => [a.id, a.color]));
 
@@ -51,10 +52,16 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     this.volatileDamage = eliteStats.volatileDamage || 0;
     this.stormInterval = eliteStats.stormInterval || 0;
     this.stormTimer = this.stormInterval;
+    // Stable speed base: slow is recomputed from here every frame so the
+    // modifier can never accumulate into (or permanently corrupt) moveSpeed.
+    this.baseMoveSpeed = this.moveSpeed;
 
     this.attackCooldown = 0;
     this.isDead = false;
     this.knockbackTimer = 0;
+    // General status-effect store (poison/slow/stun/...). Advanced by scene
+    // delta via updateStatuses(); never uses independent Phaser timers.
+    this.statuses = new Map();
 
     // Boss vs regular collision body sizing
     if (typeConfig.isFinalBoss) {
@@ -221,6 +228,16 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
+    // Status effects tick on scene delta (poison damage, slow/stun timers).
+    // A tick may kill (poison), so re-check before running AI.
+    try {
+      if (this.statuses?.size) this.updateStatuses(delta);
+    } catch (_) {}
+    if (this.isDead) {
+      this.hpBar.clear();
+      return;
+    }
+
     // Gölge takibi
     if (this.shadow && this.shadow.active) {
       this.shadow.setPosition(this.x, this.y + (this.isBoss ? 40 : 14));
@@ -262,6 +279,17 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.drawHealthBar();
       return;
     }
+
+    // Stun blocks AI/action but never freezes status expiry (ticked above).
+    if (this.isStunned()) {
+      this.setVelocity(0, 0);
+      this.drawHealthBar();
+      return;
+    }
+
+    // Slow recomputed from the stable base every frame: effective speed, no
+    // permanent stat mutation.
+    this.moveSpeed = this.baseMoveSpeed * StatusEffectSystem.speedMultiplier(this);
 
     this.drawHealthBar();
 
@@ -384,7 +412,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       const enragedNow = this.hp / this.maxHp <= 0.22;
       if (enragedNow && !e.enraged) {
         e.enraged = true;
-        this.moveSpeed = Math.round(this.moveSpeed * 1.35);
+        this.baseMoveSpeed = Math.round(this.baseMoveSpeed * 1.35);
+        this.moveSpeed = this.baseMoveSpeed * StatusEffectSystem.speedMultiplier(this);
         this.attackSpeed = Math.round(this.attackSpeed * 1.3 * 100) / 100;
         this.scene.createFloatingText(this.x, this.y - 74, 'ENRAGED', '#e74c3c', 26);
         shakeCamera(this.scene, 260, 0.009);
@@ -489,7 +518,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.setVelocity(Math.cos(m.angle) * speed, Math.sin(m.angle) * speed);
       if (!m.hit && dist <= this.attackRange + 14) {
         m.hit = true;
-        CombatSystem.processAttack(this, player);
+        CombatSystem.processAttack(this, player, null, { log: this.scene?.combatLog });
         this.scene.createDamageSpark(player.x, player.y);
       }
       if (m.timer <= 0 || this.body?.blocked?.left || this.body?.blocked?.right ||
@@ -540,7 +569,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setVelocity(Math.cos(m.angle) * speed, Math.sin(m.angle) * speed);
         if (!m.hit && dist <= this.attackRange + 18) {
           m.hit = true;
-          CombatSystem.processAttack(this, player);
+          CombatSystem.processAttack(this, player, null, { log: this.scene?.combatLog });
           this.scene.createDamageSpark(player.x, player.y);
           this.scene.createFloatingText(player.x, player.y - 30, 'CRUSHED', '#ba68c8', 20);
         }
@@ -649,7 +678,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       // Contact damage, once per charge.
       if (!c.hit && dist <= this.attackRange + 10) {
         c.hit = true;
-        CombatSystem.processAttack(this, player);
+        CombatSystem.processAttack(this, player, null, { log: this.scene?.combatLog });
         this.scene.createDamageSpark(player.x, player.y);
         this.scene.createFloatingText(player.x, player.y - 24, 'CHARGED', '#ff8844');
       }
@@ -878,7 +907,7 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       }
     } else {
       this.stats.attackDamage = this.attackDamage;
-      CombatSystem.processAttack(this, player);
+      CombatSystem.processAttack(this, player, null, { log: this.scene?.combatLog });
       this.scene.createDamageSpark(player.x, player.y);
     }
   }
@@ -966,9 +995,35 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  /** Scene-delta status tick; stun/slow honored by AI callers. */
+  updateStatuses(dtMs) {
+    if (!this.statuses?.size || this.isDead) return [];
+    return StatusEffectSystem.update(this, dtMs, {
+      damage: (holder, amount) => {
+        holder.hp -= amount;
+        if (holder.hp <= 0) holder.die();
+      },
+      heal: (holder, amount) => {
+        holder.hp = Math.min(holder.maxHp, holder.hp + amount);
+      },
+    });
+  }
+
+  effectiveSpeed() {
+    // moveSpeed already carries the recomputed multiplier (see update), so
+    // derive from the stable base to avoid squaring slow.
+    return this.baseMoveSpeed * StatusEffectSystem.speedMultiplier(this);
+  }
+
+  isStunned() {
+    return StatusEffectSystem.isStunned(this);
+  }
+
   die() {
     if (this.isDead) return;
     this.isDead = true;
+    // Dead entities stop all status timers immediately.
+    try { this.statuses?.clear(); } catch (_) {}
     this.setVelocity(0, 0);
 
     // The telegraph mark belongs to the scene, not to this sprite, so it would
