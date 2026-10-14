@@ -126,6 +126,21 @@ export class UIScene extends Phaser.Scene {
       fontSize: px(readable(11)), color: '#f8fafc',
       backgroundColor: '#141822cc', padding: { x: 8, y: 3 },
     }).setOrigin(0.5);
+
+    // Active status effects on the player (poison/slow/stun/... with seconds
+    // left). Compact single line under the HP panel; hidden when clean.
+    this.statusText = this.add.text(10, 84, '', {
+      fontSize: px(readable(10)), color: '#e8eef6', fontStyle: 'bold',
+      backgroundColor: '#141822aa', padding: { x: 8, y: 3 },
+    }).setOrigin(0, 0).setVisible(false).setDepth(50).setScrollFactor(0);
+
+    // Recent combat events (last 3, presentation-only mirror of the bounded
+    // CombatLogSystem). Bottom-left so it never covers minimap/ability bar.
+    this.combatLogText = this.add.text(10, height - 10, '', {
+      fontSize: px(readable(10)), color: '#c7d2e4',
+      backgroundColor: '#0b1220aa', padding: { x: 8, y: 4 },
+      lineSpacing: 2,
+    }).setOrigin(0, 1).setDepth(50).setScrollFactor(0);
   }
 
   createAbilityBar() {
@@ -221,6 +236,9 @@ export class UIScene extends Phaser.Scene {
 
     this.hintText.setText(player.isInBase ? 'E Shop   I Relics   P Pause' : 'SHIFT Dash');
 
+    this.updateStatusLine(player);
+    this.updateCombatLogFeed(gs);
+
     // Boss bar: pick the alive boss, or hide the whole group. Drawing into one
     // graphics object (rather than a scaled rectangle) keeps the bar's inner
     // fill from stretching its border as it drains.
@@ -275,9 +293,51 @@ export class UIScene extends Phaser.Scene {
     plot(gs.exitPortal?.x || 0, gs.exitPortal?.y || 0, ready ? 0x00d2ff : 0x64748b, 3);
     for (const enemy of gs.enemies?.getChildren?.() || []) {
       if (enemy.active && enemy.hp > 0) {
+        // FOV: once visibility is tracking, the minimap plots explored-floor
+        // enemies only when currently visible — unseen packs stay hidden.
+        if (gs.lastVisibleTiles && !gs.isTileVisible(Math.floor(enemy.x / 32), Math.floor(enemy.y / 32))) continue;
         plot(enemy.x, enemy.y, enemy.isBoss ? 0xf39c12 : (enemy.eliteAffix ? 0xf5d77f : 0xe74c3c), enemy.isBoss ? 3 : (enemy.eliteAffix ? 2.4 : 1.6));
       }
     }
     plot(player.x, player.y, 0x7ea0ff, 3);
+  }
+
+  /** Player status-effect line: `POISON 4s · SLOW 2s`, hidden when clean. */
+  updateStatusLine(player) {
+    try {
+      const entries = player?.statuses ? Array.from(player.statuses.values()) : [];
+      if (!entries.length) {
+        this.statusText.setVisible(false);
+        return;
+      }
+      const labels = { poison: 'POISON', burn: 'BURN', bleed: 'BLEED', slow: 'SLOW', stun: 'STUN', regen: 'REGEN', shield_aura: 'AEGIS' };
+      const parts = entries.slice(0, 4).map((s) => {
+        const name = labels[s.id] || String(s.id || '?').toUpperCase();
+        const secs = Math.max(0, Math.ceil((s.remainingMs || 0) / 1000));
+        const stacks = (s.stacks || 1) > 1 ? ` x${s.stacks}` : '';
+        return `${name} ${secs}s${stacks}`;
+      });
+      this.statusText.setText(parts.join(' · ')).setVisible(true);
+    } catch (_) {}
+  }
+
+  /** Mirror of the structured combat log: latest 3 entries, one line each. */
+  updateCombatLogFeed(gs) {
+    try {
+      const entries = gs?.combatLog?.recent?.(3) || [];
+      if (!entries.length) {
+        this.combatLogText.setText('');
+        return;
+      }
+      const lines = entries.map((e) => {
+        if (e.kind === 'attack') {
+          const crit = e.isCritical ? ' CRIT' : '';
+          const killed = e.killed ? ' ☠' : '';
+          return `${e.source} ▸ ${e.target} ${e.damage}${crit}${killed}`;
+        }
+        return `${e.kind || 'event'}`;
+      });
+      this.combatLogText.setText(lines.join('\n'));
+    } catch (_) {}
   }
 }

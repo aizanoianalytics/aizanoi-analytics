@@ -449,6 +449,73 @@ export class AudioManager {
     osc.start(t);
     osc.stop(t + 0.04);
   }
+
+  /**
+   * Central cue router: every named gameplay cue resolves to either a loaded
+   * WAV asset or a documented synthesized fallback — never silence, never an
+   * exception. Mute and master volume apply to both paths.
+   */
+  playCue(scene, key, volume = 0.5) {
+    if (this.isMuted) return null;
+    try {
+      if (scene?.sound && scene?.cache?.audio?.exists?.(key)) {
+        scene.sound.play(key, { volume: volume * this.sfxVolume });
+        return key;
+      }
+    } catch (_) {}
+    return this.playSynthFallback(key);
+  }
+
+  /** Synthesized stand-ins for cues with no WAV file on disk. */
+  playSynthFallback(key) {
+    const fallbacks = {
+      'sfx-dash': () => this.synthSweep('sawtooth', 900, 180, 0.10, 0.22),
+      'sfx-heal': () => this.synthChime([523.25, 659.25, 783.99], 0.09, 0.20),
+      'sfx-shop': () => this.synthChime([880, 1174.66], 0.07, 0.18),
+      'sfx-summon': () => this.synthSweep('square', 110, 55, 0.28, 0.20),
+    };
+    const fn = fallbacks[key];
+    if (!fn) return null;
+    try { fn(); } catch (_) { return null; }
+    return `${key}:synth`;
+  }
+
+  synthSweep(type, fromHz, toHz, seconds, level) {
+    if (this.isMuted) return;
+    this.ensureContext();
+    if (!this.ctx) return;
+    const t = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(fromHz, t);
+    osc.frequency.exponentialRampToValueAtTime(Math.max(1, toHz), t + seconds);
+    gain.gain.setValueAtTime(level * this.sfxVolume, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + seconds);
+    osc.connect(gain);
+    gain.connect(this.masterGain);
+    osc.start(t);
+    osc.stop(t + seconds);
+  }
+
+  synthChime(freqs, stepSeconds, level) {
+    if (this.isMuted) return;
+    this.ensureContext();
+    if (!this.ctx) return;
+    freqs.forEach((hz, i) => {
+      const t = this.ctx.currentTime + i * stepSeconds;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(hz, t);
+      gain.gain.setValueAtTime(level * this.sfxVolume, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + stepSeconds * 2);
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(t);
+      osc.stop(t + stepSeconds * 2);
+    });
+  }
 }
 
 // Global paylasimli audio yoneticisi

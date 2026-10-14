@@ -256,7 +256,6 @@
   .az-pointer-glow[data-az-glow]::after { opacity: .66; }
 
   .az-paper-surface { color: var(--az-ink); background: var(--az-paper); }
-  .az-paper-surface :focus-visible { outline-color: #4b66dd; }
   .az-evidence { display: inline-flex; align-items: center; gap: 6px; min-height: 24px; padding: 3px 8px; border-radius: 999px; border: 1px solid currentColor; font: 700 11px/1 var(--az-font-mono); text-transform: uppercase; letter-spacing: .05em; }
   .az-evidence::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
   .az-evidence[data-level="documented"] { color: #26727c; }

@@ -361,7 +361,7 @@ function installPointerGlow(store) {
  };
  document.addEventListener('pointermove',(event)=>{
  const target=event.target.closest?.(selector);
- if(!target || store.getState().reduceMotion){clear();return;}
+ if(!target || !motionEnabled(store)){clear();return;}
  pending={target,x:event.clientX,y:event.clientY};
  if(frame)return;
  frame=requestAnimationFrame(()=>{

@@ -7,6 +7,7 @@ import { InventorySystem } from '../systems/InventorySystem.js';
 import { LEVELS } from '../data/levels.js';
 import { audioManager } from '../systems/AudioManager.js';
 import { loadCheckpoint, clearCheckpoint } from '../systems/RunSaveSystem.js';
+import { queueOptionalAssets, dungeonAssetBase } from './BootScene.js';
 
 export class MenuScene extends Phaser.Scene {
   constructor() {
@@ -15,6 +16,9 @@ export class MenuScene extends Phaser.Scene {
 
   create() {
     const { width, height } = this.cameras.main;
+    // Enhancement assets (touch sprites, WAV cues) load deferred on this
+    // scene: it stays active, unlike BootScene which stops within ~80ms.
+    try { queueOptionalAssets(this, dungeonAssetBase()); } catch (_) {}
     if (typeof window !== 'undefined') {
       window.__AIZANOI_DUNGEON_SCENE = 'MenuScene';
     }
