@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-14-atletico-madrid-manchester-united-champions-league",
+  "kind": "daily",
+  "title": "Atletico deepen Manchester United’s Champions League gloom",
+  "summary": "Atletico Madrid beat Manchester United 2-0 in the Champions League on Tuesday, piling pressure on United manager Michael Carrick. Pablo Barrios scored inside the opening minute and Ademola Lookman added a second in the 79th, five minutes after United defender Leny Yoro was sent off. The defeat left United, who have made their worst domestic start in 40 years, winless in five matches across all competitions and without a point from the night.",
+  "category": "football",
+  "priority": 70,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "football",
+    "champions-league",
+    "manchester-united",
+    "atletico-madrid"
+  ],
+  "sources": [
+    {
+      "publisher": "Free Malaysia Today",
+      "url": "https://freemalaysiatoday.com/category/sports/2026/10/14/uefa-champions-league-round-up",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "Malay Mail",
+      "url": "https://malaymail.com/news/sports/2026/10/14/man-united-slump-continues-at-atletico-as-bayern-held-in-champions-league-thriller/238995",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

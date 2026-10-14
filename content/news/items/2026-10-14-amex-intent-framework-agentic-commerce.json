@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-14-amex-intent-framework-agentic-commerce",
+  "kind": "daily",
+  "title": "Amex publishes intent framework to vet purchases made by AI agents",
+  "summary": "American Express published an Intent Intelligence framework inside its Agentic Commerce Experiences developer kit, designed to capture and authenticate a card member’s purchase intent before an AI agent completes a transaction. The flow creates an Intent ID and a Proof of Intent token carrying the customer’s constraints, such as merchant and maximum budget, then issues a payment credential the agent uses instead of the card number. Amex paired the launch with Amex Agent Purchase Protection.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai",
+    "payments",
+    "agents",
+    "commerce"
+  ],
+  "sources": [
+    {
+      "publisher": "American Express",
+      "url": "https://www.americanexpress.com/en-us/newsroom/articles/innovation/american-express-debuts-agentic-commerce-experiences--ace--devel.html",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/13/amex-introduces-a-framework-to-prevent-ai-agents-from-making-unauthorized-purchases/",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    }
+  ]
+}

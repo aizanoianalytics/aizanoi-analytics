@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-14-bayern-viking-olise-red-card",
+  "kind": "daily",
+  "title": "Viking hold Bayern after Olise red card in Stavanger",
+  "summary": "Bayern Munich were held to a 3-3 draw at Viking in the Champions League on Tuesday after winger Michael Olise was sent off in the 74th minute, booked and then shown a second yellow for throwing the ball at an opponent. Viking led 2-0 at half-time before Harry Kane scored twice and set up Luis Diaz for a 3-2 lead. Herman Haugen equalised in the 90th minute. Olise will miss next week’s home meeting with Arsenal.",
+  "category": "football",
+  "priority": 62,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "football",
+    "champions-league",
+    "bayern-munich",
+    "viking"
+  ],
+  "sources": [
+    {
+      "publisher": "Free Malaysia Today",
+      "url": "https://freemalaysiatoday.com/category/sports/2026/10/14/bayern-held-by-viking-after-super-dumb-olise-red-in-champions-league",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "7M Sport",
+      "url": "https://news.7msport.com/news/newsdata/20261014/273050.shtml",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

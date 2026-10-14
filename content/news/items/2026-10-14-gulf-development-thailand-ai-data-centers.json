@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-14-gulf-development-thailand-ai-data-centers",
+  "kind": "daily",
+  "title": "Gulf Development plans a $4.3bn Thai data center expansion",
+  "summary": "Gulf Development Public Company Limited said it will invest 140 billion baht over five years to expand data center capacity in Thailand to 2,000 megawatts, working with Microsoft, Google Cloud and Singtel. The Thai developer frames the build as part of a national effort to become a regional hub for artificial intelligence and cloud computing. The plan adds to a run of Southeast Asian capacity announcements this month.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "data-centers",
+    "thailand",
+    "cloud",
+    "infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Thai Times",
+      "url": "https://thaitimes.com/gulf-development-unveils-4-3-billion-artificial-intelligence-data-center-expansion-across-thailand",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

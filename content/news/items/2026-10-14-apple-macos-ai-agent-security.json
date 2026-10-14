@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-14-apple-macos-ai-agent-security",
+  "kind": "daily",
+  "title": "Apple moves to contain AI-agent risk on macOS",
+  "summary": "Apple is tightening macOS controls as AI agents gain reach into user machines. It said it will require explicit user action before any app can hold Full Disk Access, warning that the permission exposes files, mail, messages and browsing history to autonomous agents. Separately, a Wall Street Journal report says researchers used Anthropic’s Mythos model to bypass Apple’s Memory Integrity Enforcement protection in five days, prompting an Apple review. Aizanoi News has not independently verified that research.",
+  "category": "technology",
+  "priority": 54,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "security",
+    "agents",
+    "macos"
+  ],
+  "sources": [
+    {
+      "publisher": "Business Insider",
+      "url": "https://markets.businessinsider.com/news/stocks/apple-aapl-launches-new-safeguards-against-ai-agents-1036595112",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "BigGo Finance",
+      "url": "https://finance.biggo.com/news/EZeSL54BLfE1EzqPgsL8",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

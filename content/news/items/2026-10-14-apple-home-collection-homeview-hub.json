@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-14-apple-home-collection-homeview-hub",
+  "kind": "daily",
+  "title": "Apple opens its Home Collection with a privacy-first Siri hub",
+  "summary": "Apple announced Apple Home Collection, a line of smart home accessories built with LG Electronics and Schneider Electric, spanning indoor and outdoor cameras, thermostats, temperature sensors, a video doorbell and a smart lock. Everything runs through the Apple Home app with end-to-end encryption and no separate account. Alongside it, Apple showed HomeView, a hub with its own operating system on an A18 chip that draws on iPhone data to personalize Siri while keeping private data off the device.",
+  "category": "technology",
+  "priority": 66,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "apple",
+    "smart-home",
+    "siri",
+    "privacy"
+  ],
+  "sources": [
+    {
+      "publisher": "Apple",
+      "url": "https://apple.com/nz/newsroom/2026/10/introducing-apple-home-collection-a-new-lineup-of-smart-home-accessories",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://thestar.com.my/tech/tech-news/2026/10/14/apple039s-homeview-brings-personalized-siri-to-smart-home-takes-on-amazon-and-google",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    }
+  ]
+}

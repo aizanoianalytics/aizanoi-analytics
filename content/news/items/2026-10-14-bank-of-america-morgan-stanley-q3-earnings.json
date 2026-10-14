@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-14-bank-of-america-morgan-stanley-q3-earnings",
+  "kind": "daily",
+  "title": "Bank of America and Morgan Stanley close out big-bank earnings",
+  "summary": "Bank of America and Morgan Stanley report third-quarter results on Wednesday 14 October, rounding out the six largest U.S. banks after a strong opening to the season. Consensus put Morgan Stanley near $2.94 in earnings per share on about $19.96 billion of revenue, with attention on investment banking, trading and wealth management flows. Bank of America’s investor call is scheduled for 8:30 a.m. ET. The prints will show how higher rates and a dealmaking rebound are shaping profits.",
+  "category": "economy-markets",
+  "priority": 60,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "banks",
+    "earnings",
+    "wall-street",
+    "rates"
+  ],
+  "sources": [
+    {
+      "publisher": "Investing.com",
+      "url": "https://www.investing.com/news/stock-market-news/morgan-stanley-q3-earnings-preview-3-levers-to-watch-in-the-print-93CH-4946348",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "Bank of America",
+      "url": "https://investor.bankofamerica.com/",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

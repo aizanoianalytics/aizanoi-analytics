@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-14-asml-q3-2026-earnings-euv-demand",
+  "kind": "daily",
+  "title": "ASML’s Q3 print tests whether the AI boom is reaching chip tools",
+  "summary": "ASML reports third-quarter 2026 results before the open on Wednesday 14 October, the first big read on semiconductor-equipment spending this earnings season. Analysts expect non-GAAP earnings of roughly $12 a share after double beats in seven of the past eight quarters, with revenue growth for the second half forecast near 54 percent. With bookings no longer disclosed, investors will lean on guidance for demand tied to AI logic and leading-edge DRAM capacity.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "semiconductors",
+    "asml",
+    "earnings",
+    "lithography"
+  ],
+  "sources": [
+    {
+      "publisher": "TokenPost",
+      "url": "https://tokenpost.com/news/business/31271",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "MarketBeat",
+      "url": "https://marketbeat.com/earnings/reports/2026-10-14-asml-holding-stock/",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    }
+  ]
+}

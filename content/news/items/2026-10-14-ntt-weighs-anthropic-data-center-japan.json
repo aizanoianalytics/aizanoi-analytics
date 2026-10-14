@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-14-ntt-weighs-anthropic-data-center-japan",
+  "kind": "daily",
+  "title": "NTT weighs a 1 trillion yen data center in Japan for Anthropic",
+  "summary": "Kyodo News reported on 14 October that NTT is considering building a data center in Japan for Anthropic at a cost of about 1 trillion yen. The facility would be the Japanese telecom group’s first key data center for the AI developer, the report said, reflecting rising demand from frontier model makers for dedicated compute capacity. No timeline, site or confirmed commitment was disclosed. Aizanoi News has not independently verified the reported figure.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai",
+    "data-centers",
+    "japan",
+    "infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Kyodo News",
+      "url": "https://english.kyodonews.net/articles/-/88102",
+      "publishedAt": "2026-10-14T01:46:00Z"
+    }
+  ]
+}

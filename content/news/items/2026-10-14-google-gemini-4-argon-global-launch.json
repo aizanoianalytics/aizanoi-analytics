@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-14-google-gemini-4-argon-global-launch",
+  "kind": "daily",
+  "title": "Google opens Gemini 4 Argon to developers and subscribers worldwide",
+  "summary": "Google released Gemini 4 Argon, the first model in its Gemini 4 family, to developers, enterprises and paying consumers on 13 October. The DeepMind model targets multi-step “deep work” across coding, finance, law, cybersecurity and science, and ranks first on the Vals Index. API pricing starts at $2 per million input tokens and $10 per million output tokens, with cached input 95 percent off; those introductory rates double after 30 November. Antigravity coding access stays limited to Ultra subscribers.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai",
+    "google",
+    "gemini",
+    "models"
+  ],
+  "sources": [
+    {
+      "publisher": "Google",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://bellinghamherald.com/news/business/article317604809.html",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "Quartz",
+      "url": "https://qz.com/google-gemini-4-argon-ai-model-developers-subscribers-101326",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    }
+  ]
+}
