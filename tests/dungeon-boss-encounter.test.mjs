@@ -110,7 +110,7 @@ test('the final boss enrages with a real, announced escalation', () => {
   const body = methodBody(enemy, 'updateEncounter');
   assert.match(body, /this\.hp \/ this\.maxHp <= 0\.22/,
     'the enrage must trigger at a defined health threshold');
-  assert.match(body, /this\.moveSpeed = Math\.round\(this\.moveSpeed \* 1\.35\)/,
+  assert.match(body, /this\.baseMoveSpeed = Math\.round\(this\.baseMoveSpeed \* 1\.35\)/,
     'enrage must actually make the boss faster');
   assert.match(body, /'ENRAGED'/,
     'the enrage must be announced, not applied silently');

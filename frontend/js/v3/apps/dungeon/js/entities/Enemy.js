@@ -412,8 +412,8 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
       const enragedNow = this.hp / this.maxHp <= 0.22;
       if (enragedNow && !e.enraged) {
         e.enraged = true;
-        this.moveSpeed = Math.round(this.moveSpeed * 1.35);
-        this.baseMoveSpeed = this.moveSpeed;
+        this.baseMoveSpeed = Math.round(this.baseMoveSpeed * 1.35);
+        this.moveSpeed = this.baseMoveSpeed * StatusEffectSystem.speedMultiplier(this);
         this.attackSpeed = Math.round(this.attackSpeed * 1.3 * 100) / 100;
         this.scene.createFloatingText(this.x, this.y - 74, 'ENRAGED', '#e74c3c', 26);
         shakeCamera(this.scene, 260, 0.009);
@@ -1010,7 +1010,9 @@ export class Enemy extends Phaser.Physics.Arcade.Sprite {
   }
 
   effectiveSpeed() {
-    return this.moveSpeed * StatusEffectSystem.speedMultiplier(this);
+    // moveSpeed already carries the recomputed multiplier (see update), so
+    // derive from the stable base to avoid squaring slow.
+    return this.baseMoveSpeed * StatusEffectSystem.speedMultiplier(this);
   }
 
   isStunned() {

@@ -125,7 +125,7 @@ test('chapter checkpoint round-trips and fails closed on garbage', () => {
   assert.equal(loadCheckpoint(), null);
 });
 
-test('resume restores ledger and seed: checkpoint payload round-trips into progression', () => {
+test('checkpoint payload round-trips into progression and level seed', () => {
   clearCheckpoint();
   const ledger = { enemiesKilled: 12, bossesDefeated: 1, denariiEarned: 300, xpEarned: 800, chaptersCleared: 2, levelAtStart: 3, deepestChapter: 4, startedAtChapter: 1 };
   saveCheckpoint(buildCheckpoint({ chapterIndex: 2, isEndless: false, wave: 1, seed: 4242, runLedger: ledger, blessingIds: ['aegis'] }));
@@ -139,6 +139,13 @@ test('resume restores ledger and seed: checkpoint payload round-trips into progr
   const cfg = { id: 3, name: 'x', seed: loaded.seed };
   const sys = new LevelSystem({}, cfg);
   assert.equal(sys.seed, 4242);
+  // Wiring guard: GameScene.init stores the resume payload and create()
+  // restores it (ledger before startRun, finite seed onto level config).
+  const sceneSrc = dungeonSrc('scenes/GameScene.js');
+  assert.match(sceneSrc, /this\.resumeLedger = data\.checkpointLedger/);
+  assert.match(sceneSrc, /this\.resumeSeed = Number\.isFinite\(data\.seed\)/);
+  assert.match(sceneSrc, /if \(this\.resumeLedger\) \{\s*\n\s*this\.progression\.importRunLedger\(this\.resumeLedger\)/);
+  assert.match(sceneSrc, /if \(this\.resumeSeed !== null\)/);
   clearCheckpoint();
 });
 
