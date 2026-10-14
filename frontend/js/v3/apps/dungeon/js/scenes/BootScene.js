@@ -1,6 +1,47 @@
 // js/scenes/BootScene.js
 // Varlık Ön-Yükleme ve Animasyon Tanımları
 
+import { OPTIONAL_TOUCH_FILES, OPTIONAL_AUDIO_FILES } from '../data/optional-assets.js';
+
+export { OPTIONAL_TOUCH_FILES, OPTIONAL_AUDIO_FILES };
+
+/**
+ * Queue enhancement assets on a scene that stays alive (MenuScene). Skips
+ * keys already in the cache so a repeated menu visit never double-queues.
+ * Fail-open: missing files or a dead loader leave synthesized audio running.
+ */
+export function queueOptionalAssets(scene, assetBase) {
+  if (!scene || !assetBase) return false;
+  setTimeout(() => {
+    try {
+      const loader = scene.load;
+      if (!loader || !scene.sys || !scene.sys.isActive()) return false;
+      let queued = false;
+      for (const [key, rel] of OPTIONAL_TOUCH_FILES) {
+        if (!scene.textures?.exists?.(key)) {
+          loader.image(key, `${assetBase}${rel}`);
+          queued = true;
+        }
+      }
+      for (const [key, rel] of OPTIONAL_AUDIO_FILES) {
+        if (!scene.cache?.audio?.exists?.(key)) {
+          loader.audio(key, `${assetBase}${rel}`);
+          queued = true;
+        }
+      }
+      if (queued) loader.start();
+      return queued;
+    } catch (_) {
+      return false;
+    }
+  }, 1500);
+  return true;
+}
+
+export function dungeonAssetBase() {
+  return new URL('../../assets/', import.meta.url).href;
+}
+
 export class BootScene extends Phaser.Scene {
   constructor() {
     super({ key: 'BootScene' });
@@ -99,40 +140,13 @@ export class BootScene extends Phaser.Scene {
   /**
    * Deferred, non-blocking loading for touch controls and audio.
    * These assets are enhancements and must never block the first playable frame.
+   *
+   * NOTE: call this from MenuScene (which stays active), not from BootScene:
+   * BootScene stops ~80ms after create(), so a guard on BootScene liveness
+   * aborts the queue and touch/audio enhancement assets never load.
    */
   loadOptionalAudio(assetBase) {
-    const files = [
-      ['touch-joystick-base', 'ui/touch-joystick-base.png'],
-      ['touch-joystick-thumb', 'ui/touch-joystick-thumb.png'],
-      ['touch-btn-attack', 'ui/touch-btn-attack.png'],
-      ['touch-btn-skill1', 'ui/touch-btn-skill1.png'],
-      ['touch-btn-skill2', 'ui/touch-btn-skill2.png'],
-      ['touch-btn-utility', 'ui/touch-btn-utility.png'],
-      ['touch-btn-interact', 'ui/touch-btn-interact.png'],
-      ['touch-btn-menu', 'ui/touch-btn-menu.png'],
-    ];
-    const audioFiles = [
-      ['ambient-cave', 'audio/ambient_cave_loop.wav'],
-      ['sfx-shadow-dash', 'audio/shadow_dash.wav'],
-      ['sfx-boss-warning', 'audio/boss_slam_warning.wav'],
-      ['sfx-ancient-chime', 'audio/ancient_chime.wav'],
-      ['sfx-gold-spark', 'audio/gold_spark.wav'],
-    ];
-    // Deferred to the next macrotask so it never competes with the boot
-    // progress bar, and guarded so a scene teardown mid-load cannot write
-    // into a destroyed cache.
-    setTimeout(() => {
-      try {
-        const loader = this.load;
-        if (!loader || !this.sys || !this.sys.isActive()) return;
-        loader.on('loaderror', (file) => {
-          if (file && file.type === 'audio') return;
-        });
-        for (const [key, rel] of files) loader.image(key, `${assetBase}${rel}`);
-        for (const [key, rel] of audioFiles) loader.audio(key, `${assetBase}${rel}`);
-        loader.start();
-      } catch (_) { /* fail-open: synthesised audio remains */ }
-    }, 1500);
+    queueOptionalAssets(this, assetBase);
   }
 
   create() {
@@ -151,10 +165,8 @@ export class BootScene extends Phaser.Scene {
     // ignore the first scene-manager mutation while create() is unwinding.
     setTimeout(handoff, 0);
     setTimeout(handoff, 80);
-    // Audio is an enhancement, never a boot dependency. Starting it after the
-    // scene transition keeps Phaser's critical image queue deterministic.
-    const ASSET_BASE = new URL('../../assets/', import.meta.url).href;
-    this.loadOptionalAudio(ASSET_BASE);
+    // Optional assets are queued by MenuScene (which stays active). Queuing
+    // them here would abort: BootScene stops ~80ms after create().
   }
 
   createAnimations() {

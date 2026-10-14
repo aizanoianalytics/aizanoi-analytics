@@ -92,12 +92,15 @@ test('SkillTree overlay pauses the game like the Shop overlay', () => {
   assert.match(skillTree, /if \(this\.gameScene\) this\.gameScene\.scene\.pause\(\)/);
 });
 
-test('touch interact and the E key share the player.isInBase gate', () => {
+test('touch interact and the E key share one interact path and the base gate', () => {
   const touch = read(`${moduleRoot}/js/systems/TouchControls.js`);
-  assert.match(touch, /this\.scene\.player\.isInBase/);
+  assert.match(touch, /this\.scene\.touchInteract\(\)/,
+    'touch must enter the same interact path as keyboard E, not a shop-only shortcut');
   assert.doesNotMatch(touch, /nearAltar/, 'GameScene has no altar concept outside isInBase');
   const game = read(`${moduleRoot}/js/scenes/GameScene.js`);
   assert.match(game, /if \(this\.player\.isInBase\) this\.scene\.launch\('ShopScene'\)/);
+  assert.match(game, /touchInteract\(\) \{[\s\S]{0,500}?this\.useInteractable\(room, offer\.kind\)/,
+    'the shared path must resolve shrine/merchant/treasure through useInteractable');
 });
 
 test('endless wave scaling is capped at wave 20 with light loot scaling', () => {

@@ -190,6 +190,22 @@ export class GameScene extends Phaser.Scene {
     // 11. Dokunmatik Kontroller
     this.touchControls = new TouchControls(this);
 
+    // 11b. Görünürlük autopause: sekme gizlenince fiziği tam bir kez
+    // duraklat; dönüşte oyuncu açıkça devam edene kadar duraklatılmış kalır.
+    // Overlay (exit/blessing/pause) açıkken tetiklenmez, shutdown'da sökülür.
+    this._onVisibilityChange = () => {
+      try {
+        if (document.visibilityState === 'visible') return;
+      } catch (_) {}
+      this.pauseForVisibility();
+    };
+    this._onWindowHide = () => this.pauseForVisibility();
+    try {
+      document.addEventListener('visibilitychange', this._onVisibilityChange);
+      window.addEventListener('pagehide', this._onWindowHide);
+      window.addEventListener('blur', this._onWindowHide);
+    } catch (_) {}
+
     // Phaser can ignore a parallel scene launch while GameScene is still
     // completing create(). Defer the HUD handoff one tick so the scene manager
     // has committed GameScene before starting UIScene.
@@ -255,6 +271,15 @@ export class GameScene extends Phaser.Scene {
       this.hitstopRelease = null;
       this.hitstopUntil = 0;
       this.time.timeScale = 1;
+      // Visibility autopause listeners belong to this run; a leaked listener
+      // would pause the next run's physics from a dead scene.
+      try {
+        document.removeEventListener('visibilitychange', this._onVisibilityChange);
+        window.removeEventListener('pagehide', this._onWindowHide);
+        window.removeEventListener('blur', this._onWindowHide);
+      } catch (_) {}
+      this._onVisibilityChange = null;
+      this._onWindowHide = null;
       audioManager.stopAmbientDrone();
       this.input.removeAllListeners();
       // Drop the scene sentinel so a fresh Phaser instance can claim it
@@ -561,14 +586,13 @@ export class GameScene extends Phaser.Scene {
     } catch (_) {}
   }
 
-  // Kısa hit-stop: kritik vuruşta dünyayı yavaşlat (reduced modda yarım)
+  // Kısa hit-stop: tek yol applyHitstop'tur (timescale + gerçek timer).
+  // Fizik-duraklatmalı eski desen, sahne saatiyle release planladığı için
+  // donmayı saniyelere uzatırdı; reduced modda süre yarıya iner.
   juiceHitstop(ms = 55) {
     try {
       if (this.settings?.effects === 'reduced') ms = Math.round(ms / 2);
-      this.physics.world.pause();
-      this.time.delayedCall(ms, () => {
-        if (!this.isPaused && !this.exitMenu && !this.blessingOverlay) this.physics.world.resume();
-      });
+      this.applyHitstop(ms);
     } catch (_) {}
   }
 
@@ -754,10 +778,11 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  // Kısa SFX çalıcı (BootScene'de yüklenen wav'ler için)
+  // Kısa SFX çalıcı: merkezi cue router üzerinden; mute ve master volume
+  // hem WAV hem sentez yoluna uygulanır.
   playSfx(key, volume = 0.5) {
     try {
-      if (this.sound && this.cache.audio.exists(key)) this.sound.play(key, { volume });
+      audioManager.playCue(this, key, volume);
     } catch (_) {}
   }
 
@@ -1213,6 +1238,15 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  /**
+   * Visibility autopause: idempotent, exactly-once per hide. Never resumes
+   * over an open overlay and never fires while already paused.
+   */
+  pauseForVisibility() {
+    if (this.isPaused || this.exitMenu || this.blessingOverlay || this.player?.isDead) return;
+    this.togglePause();
+  }
+
   togglePause() {
     this.isPaused = !this.isPaused;
     if (this.isPaused) {
@@ -1596,6 +1630,21 @@ export class GameScene extends Phaser.Scene {
     this.interactPrompt.setText(`[E]  ${offer.label}`);
     this.interactPrompt.setPosition(this.player.x, this.player.y - 40);
     this.interactPrompt.setVisible(true);
+  }
+
+  /**
+   * Touch/mouse entry into the same interact path as keyboard E: shrine,
+   * merchant and treasure all resolve through useInteractable(), never a
+   * parallel shop-only shortcut.
+   */
+  touchInteract() {
+    const room = this.getPlayerRoom?.();
+    const offer = this.currentOffer;
+    if (!offer || offer.kind.endsWith('_spent')) {
+      if (this.player?.isInBase) this.scene.launch('ShopScene');
+      return;
+    }
+    this.useInteractable(room, offer.kind);
   }
 
   useInteractable(room, kind) {
