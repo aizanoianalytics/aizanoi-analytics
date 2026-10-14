@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-14-meta-muse-wonder-frontier-model",
+  "kind": "daily",
+  "title": "Meta says Muse Wonder puts it back at the AI frontier",
+  "summary": "Meta released Muse Wonder and Muse Wonder Full, the company’s most capable models to date, claiming frontier-level performance against OpenAI and Anthropic. Chief AI officer Alexandr Wang told Bloomberg the models were purpose-built to power Meta’s Muse personal assistant and will be sold as closed systems aimed at businesses. Meta says Muse Wonder scores 52 on the Artificial Analysis Intelligence Index, with the Full variant at 56, and adds persistent “Active Memory” features.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-10-14T05:00:00Z",
+  "updatedAt": "2026-10-14T05:00:00Z",
+  "retrievedAt": "2026-10-14T05:40:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai",
+    "meta",
+    "models",
+    "frontier"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-10-12/meta-says-new-muse-model-reaches-ai-frontier-after-14-month-push",
+      "publishedAt": "2026-10-12T00:00:00Z"
+    },
+    {
+      "publisher": "Australian Financial Review",
+      "url": "https://www.afr.com/technology/zuckerberg-says-meta-has-caught-up-to-ai-rivals-thanks-to-wunderkind-20261013-p6150q",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "Electronic Times",
+      "url": "https://en.etnews.com/20261014200002",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}
