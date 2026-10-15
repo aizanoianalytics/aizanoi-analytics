@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-15-asia-ai-trade-rout-kospi",
+  "kind": "daily",
+  "title": "Asia's AI trade cracks as chip stocks plunge",
+  "summary": "Asia's artificial intelligence trade cracked on Thursday after the hot US inflation print. South Korea's Kospi fell about 8 percent to 5,527, with SK Hynix down 11 percent and Samsung Electronics nearly 10 percent. Japan's Nikkei 225 lost 5 percent and SoftBank Group almost 10 percent, while Taiwan's Taiex shed 3.4 percent ahead of TSMC's results. Investors are now questioning the cost of financing AI infrastructure, with Treasury yields above 5 percent and CoreWeave bonds trading far below par.",
+  "category": "economy-markets",
+  "priority": 80,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "markets",
+    "semiconductors",
+    "ai-capex",
+    "kospi"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/15/sk-hynix-samsung-softbank-stocks-asia-tech-rout-ai-funding-worries.html",
+      "publishedAt": "2026-10-15T00:42:00Z"
+    },
+    {
+      "publisher": "AP News",
+      "url": "https://apnews.com/article/stock-markets-kospi-tech-shares-e889ad7dee2b7dd959f1b8bc87366914",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "Nikkei Asia",
+      "url": "https://asia.nikkei.com/business/markets/asian-stocks-plummet-as-ai-debt-and-inflation-fears-bite",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    }
+  ]
+}

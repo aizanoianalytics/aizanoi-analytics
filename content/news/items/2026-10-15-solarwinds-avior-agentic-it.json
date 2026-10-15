@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-15-solarwinds-avior-agentic-it",
+  "kind": "daily",
+  "title": "SolarWinds ships a goal-driven agent for enterprise IT operations",
+  "summary": "SolarWinds launched Avior, a standalone agentic system for mission-critical IT operations that pursues defined goals instead of waiting on prompts. The company says potentially disruptive actions always require explicit human approval, backed by risk-tiered autonomy, audit trails, automated rollback, data masking and least-privilege tool access. The first agent covers network engineering work such as alert correlation, configuration drift, compliance auditing and configuration backups, available from 14 October through a guided onboarding programme.",
+  "category": "technology",
+  "priority": 48,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "enterprise-ai",
+    "agents",
+    "it-operations",
+    "solarwinds"
+  ],
+  "sources": [
+    {
+      "publisher": "Help Net Security",
+      "url": "https://www.helpnetsecurity.com/2026/10/14/solarwinds-avior/",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "Business Wire via AFP",
+      "url": "https://www.afp.com/en/infos/solarwinds-unveils-avior-bringing-deterministic-agentic-ai-enterprise-it",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "Network World",
+      "url": "https://networkworld.com/article/4233313/solarwinds-launches-avior-ai-agents-to-automate-network-operations.html",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

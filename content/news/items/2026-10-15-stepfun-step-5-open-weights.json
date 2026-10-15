@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-15-stepfun-step-5-open-weights",
+  "kind": "daily",
+  "title": "StepFun tips its 600bn-parameter Step 5 into the open-weight pool",
+  "summary": "Chinese lab StepFun is publishing the open weights for Step 5 Preview, a 600-billion-parameter sparse mixture-of-experts model with a one-million-token context window. The model had been API-only since its September launch, priced at one dollar per million input tokens. Releasing the weights places it alongside DeepSeek and Alibaba's Qwen line in a run of large open-weight Chinese releases that holds down closed-model API prices and lets developers fine-tune the model on their own hardware.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "open-weights",
+    "china",
+    "stepfun",
+    "models"
+  ],
+  "sources": [
+    {
+      "publisher": "StepFun",
+      "url": "https://www.stepfun.com/step-5-preview",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "MarkTechPost",
+      "url": "https://www.marktechpost.com/2026/09/20/stepfun-launches-step-5-preview/",
+      "publishedAt": "2026-09-20T00:00:00Z"
+    }
+  ]
+}

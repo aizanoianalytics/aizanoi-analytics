@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-15-champions-league-matchday-two-goal-record",
+  "kind": "daily",
+  "title": "Champions League matchday two sets a 78-goal record",
+  "summary": "Champions League matchday two produced 78 goals, a record for a single round of the competition, with 46 of them arriving on Wednesday alone. Six of the nine fixtures featured five goals or more. Liverpool won 6-3 at LASK as Bradley Barcola scored a hat-trick, Feyenoord came from behind to beat Como 3-2 in Rotterdam for their first points of the campaign, and Stuttgart won 3-0 at Slovan Bratislava to make it two wins from two.",
+  "category": "football",
+  "priority": 60,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "liverpool",
+    "feyenoord",
+    "records"
+  ],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefachampionsleague/news/02aa-21d3f8c574f1-e140f41454d4-1000--champions-league-highlights-and-round-up-real-madrid-and-p",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "NLTimes",
+      "url": "https://nltimes.nl/2026/10/14/feyenoord-beat-como-3-2-claim-first-champions-league-win-season",
+      "publishedAt": "2026-10-14T23:33:00Z"
+    },
+    {
+      "publisher": "BBC Sport",
+      "url": "https://www.bbc.co.uk/sport/football/videos/c6wyr7v30wx9o",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

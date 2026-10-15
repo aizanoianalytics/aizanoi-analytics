@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-15-microsoft-october-patch-tuesday-record",
+  "kind": "daily",
+  "title": "Microsoft's October update fixes a record 1,413 flaws",
+  "summary": "Microsoft's October security release addressed 1,413 vulnerabilities, its largest monthly batch on record and more than the company disclosed in all of 2020. Windows accounts for 1,102 of the flaws. One zero-day, CVE-2026-96951, is a Windows Shell security feature bypass already exploited in the wild, letting attackers evade the Mark of the Web check that triggers Office Protected View and SmartScreen warnings. Two further zero-days had been publicly disclosed before the fixes shipped.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "microsoft",
+    "patching",
+    "zero-day"
+  ],
+  "sources": [
+    {
+      "publisher": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days/",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "CyberScoop",
+      "url": "https://cyberscoop.com/microsoft-patch-tuesday-october-2026/",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "Krebs on Security",
+      "url": "https://krebsonsecurity.com/2026/10/microsoft-patches-more-than-1400-security-flaws/",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-14T05:40:00.000Z",
+  "generatedAt": "2026-10-15T05:45:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-15",
+      "path": "/news/2026-10-15/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-14",
       "path": "/news/2026-10-14/",
@@ -314,6 +319,594 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-15-asia-ai-trade-rout-kospi",
+      "kind": "daily",
+      "title": "Asia's AI trade cracks as chip stocks plunge",
+      "summary": "Asia's artificial intelligence trade cracked on Thursday after the hot US inflation print. South Korea's Kospi fell about 8 percent to 5,527, with SK Hynix down 11 percent and Samsung Electronics nearly 10 percent. Japan's Nikkei 225 lost 5 percent and SoftBank Group almost 10 percent, while Taiwan's Taiex shed 3.4 percent ahead of TSMC's results. Investors are now questioning the cost of financing AI infrastructure, with Treasury yields above 5 percent and CoreWeave bonds trading far below par.",
+      "category": "economy-markets",
+      "priority": 80,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "semiconductors",
+        "ai-capex",
+        "kospi"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/15/sk-hynix-samsung-softbank-stocks-asia-tech-rout-ai-funding-worries.html",
+          "publishedAt": "2026-10-15T00:42:00.000Z"
+        },
+        {
+          "publisher": "AP News",
+          "url": "https://apnews.com/article/stock-markets-kospi-tech-shares-e889ad7dee2b7dd959f1b8bc87366914",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Nikkei Asia",
+          "url": "https://asia.nikkei.com/business/markets/asian-stocks-plummet-as-ai-debt-and-inflation-fears-bite",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-us-cpi-september-rate-hike-bets",
+      "kind": "daily",
+      "title": "US inflation runs hot at 3.7% and revives rate-hike bets",
+      "summary": "US consumer price inflation accelerated to 3.7 percent in the year to September from 3.4 percent in August, with prices up 0.6 percent on the month, both above forecasts. Core inflation picked up to 2.6 percent. The report pushed rate expectations sharply higher: futures priced roughly a 32 percent chance of a quarter-point increase at the Federal Reserve's 28 October meeting, against 22 percent a day earlier, and it ended the longest calm stretch in US equities since before the pandemic.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "inflation",
+        "cpi",
+        "federal-reserve",
+        "rates"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/view-hot-september-cpi-sends-rate-hike-bets-soaring-2026-10-14/",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/14/cpi-inflation-report-september-2026.html",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-man-city-psg-haaland-record",
+      "kind": "daily",
+      "title": "Paris win at Manchester City as Haaland sets a club record",
+      "summary": "Paris Saint-Germain won 4-2 at Manchester City in the Champions League league phase, sweeping into a 3-0 half-time lead through Desire Doue, Ousmane Dembele and Vitinha. Erling Haaland replied twice, passing Sergio Aguero as City's record scorer in the competition, and City struck the woodwork through Enzo Fernandez before Maghnes Akliouche restored Paris's cushion. Gianluigi Donnarumma saved a late penalty, and City's next European fixture is at the Etihad Stadium on 20 October.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "manchester-city",
+        "psg",
+        "haaland"
+      ],
+      "sources": [
+        {
+          "publisher": "Manchester City",
+          "url": "https://www.mancity.com/news/mens/city-v-psg-14-october-match-report-63927601",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://africa.espn.com/football/report/_/gameId/401915407",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/news/02aa-21d3f8c574f1-e140f41454d4-1000--champions-league-highlights-and-round-up-real-madrid-and-p",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-meta-muse-wonder-developer-pushback",
+      "kind": "daily",
+      "title": "Meta's first frontier models meet a wall of developer scrutiny",
+      "summary": "Meta's first frontier-class models, Muse Wonder and Muse Wonder Full, drew immediate technical scrutiny once developers reached the API. Wonder Full scored 56 on the Artificial Analysis intelligence index, two points behind Claude Opus 5.5, and independent practitioners reported outputs that lagged rival models on identical prompts while rate limits choked production testing. Reviewers also revived unresolved questions about how the Muse agent handles private data, arguing the launch was tuned for composite benchmarks rather than everyday reliability.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "meta",
+        "llm",
+        "benchmarks",
+        "frontier-models"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/meta-releases-muse-wonder-ai-models-challenge-anthropic-openai-2026-10-12/",
+          "publishedAt": "2026-10-12T18:26:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/12/meta-releases-its-first-frontier-model-muse-wonder/",
+          "publishedAt": "2026-10-12T00:00:00.000Z"
+        },
+        {
+          "publisher": "DEV Community",
+          "url": "https://dev.to/max_quimby/metas-muse-wonder-scores-big-and-delivers-little-4ig1",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-roma-real-madrid-late-comeback",
+      "kind": "daily",
+      "title": "Real Madrid complete a three-goal finish to stun Roma",
+      "summary": "Real Madrid recovered from two goals down to win 4-3 at Roma, scoring three times in the closing stages through Carlos Espi, Endrick and Antonio Rudiger. Donyell Malen's double had put Jose Mourinho's side 3-1 ahead against his former club, after Kylian Mbappe marked his 100th Champions League appearance by cancelling out Marten de Roon's opener. Endrick was named player of the match.",
+      "category": "football",
+      "priority": 66,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "real-madrid",
+        "roma",
+        "mourinho"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/news/02aa-21d3f8c574f1-e140f41454d4-1000--champions-league-highlights-and-round-up-real-madrid-and-p",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://secure.espn.com/soccer/report/_/gameId/401915414",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-nvidia-europe-uk-compute-pledges",
+      "kind": "daily",
+      "title": "Nvidia adds $2bn for Europe and $250m of compute for UK safety research",
+      "summary": "Nvidia chief executive Jensen Huang used a European tour to announce a further $2 billion of investment across the continent, on top of roughly $8 billion spent there over the past year, and new minority stakes in French startups Doctolib, Genesis AI, Pigment and Entalpic. He paired that with a donation of $250 million of compute over five years to British work on AI-agent safety at Oxford, UCL and Imperial College London, and repeated his argument that open-weight models are how Europe closes its AI gap.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nvidia",
+        "europe",
+        "investment",
+        "ai-safety"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg",
+          "url": "https://www.bloomberg.com/news/articles/2026-10-13/nvidia-s-huang-plans-2-billion-in-europe-ai-deals-in-next-week",
+          "publishedAt": "2026-10-13T16:07:00.000Z"
+        },
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/nvidias-jensen-huang-pledges-2-billion-for-europe-250-million-in-compute-for-uk-safety-labs",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-openai-engineer-recording-device-charge",
+      "kind": "daily",
+      "title": "OpenAI engineer charged over a device planted in an executive room",
+      "summary": "A Saudi national who had worked as an OpenAI engineer since July 2025 has been charged with attempting to intercept oral communications after a covert recording device was found plugged into a USB port behind a television in an executive conference room at the company's San Francisco offices. OpenAI found the device on 30 September; the 35-year-old was arrested on 9 October and dismissed. The charge carries a maximum of five years in prison and a $250,000 fine.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "openai",
+        "legal"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/13/openai-employee-arrested-recording-device.html",
+          "publishedAt": "2026-10-13T20:55:00.000Z"
+        },
+        {
+          "publisher": "The Register",
+          "url": "https://www.theregister.com/security/2026/10/14/openai-engineer-charged-after-boardroom-bug-found-wrapped-in-toilet-paper/5303000",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Hawaii Tribune-Herald",
+          "url": "https://www.hawaiitribune-herald.com/2026/10/14/nation-world-news/fbi-arrests-saudi-openai-engineer-over-covert-recording-device-doj-says/",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-champions-league-matchday-two-goal-record",
+      "kind": "daily",
+      "title": "Champions League matchday two sets a 78-goal record",
+      "summary": "Champions League matchday two produced 78 goals, a record for a single round of the competition, with 46 of them arriving on Wednesday alone. Six of the nine fixtures featured five goals or more. Liverpool won 6-3 at LASK as Bradley Barcola scored a hat-trick, Feyenoord came from behind to beat Como 3-2 in Rotterdam for their first points of the campaign, and Stuttgart won 3-0 at Slovan Bratislava to make it two wins from two.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "liverpool",
+        "feyenoord",
+        "records"
+      ],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/news/02aa-21d3f8c574f1-e140f41454d4-1000--champions-league-highlights-and-round-up-real-madrid-and-p",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "NLTimes",
+          "url": "https://nltimes.nl/2026/10/14/feyenoord-beat-como-3-2-claim-first-champions-league-win-season",
+          "publishedAt": "2026-10-14T23:33:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.co.uk/sport/football/videos/c6wyr7v30wx9o",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-stepfun-step-5-open-weights",
+      "kind": "daily",
+      "title": "StepFun tips its 600bn-parameter Step 5 into the open-weight pool",
+      "summary": "Chinese lab StepFun is publishing the open weights for Step 5 Preview, a 600-billion-parameter sparse mixture-of-experts model with a one-million-token context window. The model had been API-only since its September launch, priced at one dollar per million input tokens. Releasing the weights places it alongside DeepSeek and Alibaba's Qwen line in a run of large open-weight Chinese releases that holds down closed-model API prices and lets developers fine-tune the model on their own hardware.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "open-weights",
+        "china",
+        "stepfun",
+        "models"
+      ],
+      "sources": [
+        {
+          "publisher": "StepFun",
+          "url": "https://www.stepfun.com/step-5-preview",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "MarkTechPost",
+          "url": "https://www.marktechpost.com/2026/09/20/stepfun-launches-step-5-preview/",
+          "publishedAt": "2026-09-20T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-google-play-private-vibe-coded-apps",
+      "kind": "daily",
+      "title": "Google Play opens a private lane for AI-built Android apps",
+      "summary": "Google began letting anyone with a standard Google account build an Android app in AI Studio and install it privately through Google Play, with no developer account required. The personal-builds lane opened on 13 October for users aged 18 and over in select markets including the United States. The apps stay out of search and public listings, live in a personal library tied to the creator's account, and must still follow Play policy; sharing with a small circle of friends is planned later.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "google",
+        "android",
+        "vibe-coding",
+        "app-stores"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/13/google-play-now-supports-private-vibe-coded-apps-built-just-for-you",
+          "publishedAt": "2026-10-13T17:00:00.000Z"
+        },
+        {
+          "publisher": "Ars Technica",
+          "url": "https://arstechnica.com/google/2026/10/google-wants-to-host-your-personal-vibe-coded-apps-in-the-play-store/",
+          "publishedAt": "2026-10-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Star",
+          "url": "https://www.thestar.com.my/tech/tech-news/2026/10/14/google-will-let-anyone-publish-privately-listed-vibe-coded-apps-on-play-store",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-microsoft-october-patch-tuesday-record",
+      "kind": "daily",
+      "title": "Microsoft's October update fixes a record 1,413 flaws",
+      "summary": "Microsoft's October security release addressed 1,413 vulnerabilities, its largest monthly batch on record and more than the company disclosed in all of 2020. Windows accounts for 1,102 of the flaws. One zero-day, CVE-2026-96951, is a Windows Shell security feature bypass already exploited in the wild, letting attackers evade the Mark of the Web check that triggers Office Protected View and SmartScreen warnings. Two further zero-days had been publicly disclosed before the fixes shipped.",
+      "category": "technology",
+      "priority": 56,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "microsoft",
+        "patching",
+        "zero-day"
+      ],
+      "sources": [
+        {
+          "publisher": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/microsoft/microsoft-october-2026-patch-tuesday-fixes-1-411-flaws-3-zero-days/",
+          "publishedAt": "2026-10-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "CyberScoop",
+          "url": "https://cyberscoop.com/microsoft-patch-tuesday-october-2026/",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Krebs on Security",
+          "url": "https://krebsonsecurity.com/2026/10/microsoft-patches-more-than-1400-security-flaws/",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-gold-reclaims-4150-oil-retreats",
+      "kind": "daily",
+      "title": "Gold reclaims $4,150 as oil hands back its risk premium",
+      "summary": "Gold climbed back above $4,150 an ounce on Thursday, snapping a three-day slide, as US bond yields and the dollar eased from their post-inflation peaks and haven demand returned. Oil moved the other way: Brent and WTI gave back the previous session's geopolitical gains, with no supply infrastructure or shipping lane actually disrupted. Traders still price an 85 percent chance of another Federal Reserve rate increase before the end of the year, and the producer price report lands later today.",
+      "category": "economy-markets",
+      "priority": 54,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "gold",
+        "oil",
+        "commodities",
+        "rates"
+      ],
+      "sources": [
+        {
+          "publisher": "FXStreet",
+          "url": "https://www.fxstreet.com/news/gold-rallies-above-4-150-as-us-bond-yields-and-usd-retreat-further-from-post-cpi-highs-202610150359",
+          "publishedAt": "2026-10-15T03:59:00.000Z"
+        },
+        {
+          "publisher": "Newsquawk",
+          "url": "https://www.newsquawk.com/headlines/market-analysis-oil-prices-retreat-and-gold-rallies-alongside-the-broad-risk-off-tone",
+          "publishedAt": "2026-10-15T02:36:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-neura-robotics-neuron-ai-physical-ai",
+      "kind": "daily",
+      "title": "NEURA Robotics gives embodied AI a multisensory foundation model",
+      "summary": "NEURA Robotics introduced Neuron AI, a multimodal foundation model that fuses 3D vision, touch, force sensing, audio, robot state and language with memory in a single perception-language-action architecture. The Metzingen-based humanoid maker says the model runs locally on the robot, keeps production data under the customer's control and lets operators fine-tune their own skills. NEURA plans to show its 4NE-1 humanoid completing an eleven-minute laundry task unaided at Nvidia GTC Berlin on 21 and 22 October.",
+      "category": "ai",
+      "priority": 52,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "robotics",
+        "physical-ai",
+        "foundation-models",
+        "germany"
+      ],
+      "sources": [
+        {
+          "publisher": "NEURA Robotics",
+          "url": "https://neura-robotics.com/neura-robotics-introduces-neuron-ai/",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Business Wire via Rutland Herald",
+          "url": "https://www.rutlandherald.com/news/business/neura-robotics-introduces-neuron-ai-the-brain-of-the-physical-world/article_7e897077-0df5-5633-93f2-44ee9aacef81.html",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Unite.AI",
+          "url": "https://www.unite.ai/neura-robotics-unveils-neuron-ai-foundation-model-for-physical-ai/",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-anthropic-self-replication-study-debate",
+      "kind": "daily",
+      "title": "Anthropic self-replication study splits the technology press",
+      "summary": "Anthropic's research on whether small models can set themselves up on cheap, internet-connected hardware has divided coverage. The experiment showed a nine-billion-parameter model establishing inference on eight of nine hardware types and a larger open-weight model running across fifteen generic Android streaming boxes, with researchers configuring every deployment themselves. Coverage split between framing the result as evidence that self-replication is months away and accusing the lab of conjuring a threat it concedes it has not observed in the wild.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai-safety",
+        "anthropic",
+        "research"
+      ],
+      "sources": [
+        {
+          "publisher": "Tech-Insider",
+          "url": "https://tech-insider.org/anthropic-15-box-ai-scare-skeptic-backlash-2026",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Register",
+          "url": "https://www.theregister.com/ai-and-ml/2026/10/13/anthropic-conjures-another-threat-that-doesnt-exist-yet-to-stoke-fears-of-ai-apocalypse/5302866",
+          "publishedAt": "2026-10-13T00:00:00.000Z"
+        },
+        {
+          "publisher": "TechRadar",
+          "url": "https://www.techradar.com/pro/security/ai-model-self-replication-is-only-months-away-anthropic-says-and-it-doesnt-even-need-a-data-center-to-happen",
+          "publishedAt": "2026-10-13T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-15-solarwinds-avior-agentic-it",
+      "kind": "daily",
+      "title": "SolarWinds ships a goal-driven agent for enterprise IT operations",
+      "summary": "SolarWinds launched Avior, a standalone agentic system for mission-critical IT operations that pursues defined goals instead of waiting on prompts. The company says potentially disruptive actions always require explicit human approval, backed by risk-tiered autonomy, audit trails, automated rollback, data masking and least-privilege tool access. The first agent covers network engineering work such as alert correlation, configuration drift, compliance auditing and configuration backups, available from 14 October through a guided onboarding programme.",
+      "category": "technology",
+      "priority": 48,
+      "publishedAt": "2026-10-15T05:00:00.000Z",
+      "updatedAt": "2026-10-15T05:00:00.000Z",
+      "retrievedAt": "2026-10-15T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "enterprise-ai",
+        "agents",
+        "it-operations",
+        "solarwinds"
+      ],
+      "sources": [
+        {
+          "publisher": "Help Net Security",
+          "url": "https://www.helpnetsecurity.com/2026/10/14/solarwinds-avior/",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Business Wire via AFP",
+          "url": "https://www.afp.com/en/infos/solarwinds-unveils-avior-bringing-deterministic-agentic-ai-enterprise-it",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "Network World",
+          "url": "https://networkworld.com/article/4233313/solarwinds-launches-avior-ai-agents-to-automate-network-operations.html",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-14-google-gemini-4-argon-global-launch",
       "kind": "daily",

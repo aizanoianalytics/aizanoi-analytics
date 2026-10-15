@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-15-google-play-private-vibe-coded-apps",
+  "kind": "daily",
+  "title": "Google Play opens a private lane for AI-built Android apps",
+  "summary": "Google began letting anyone with a standard Google account build an Android app in AI Studio and install it privately through Google Play, with no developer account required. The personal-builds lane opened on 13 October for users aged 18 and over in select markets including the United States. The apps stay out of search and public listings, live in a personal library tied to the creator's account, and must still follow Play policy; sharing with a small circle of friends is planned later.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "google",
+    "android",
+    "vibe-coding",
+    "app-stores"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/13/google-play-now-supports-private-vibe-coded-apps-built-just-for-you",
+      "publishedAt": "2026-10-13T17:00:00Z"
+    },
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/google/2026/10/google-wants-to-host-your-personal-vibe-coded-apps-in-the-play-store/",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "The Star",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/10/14/google-will-let-anyone-publish-privately-listed-vibe-coded-apps-on-play-store",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}
