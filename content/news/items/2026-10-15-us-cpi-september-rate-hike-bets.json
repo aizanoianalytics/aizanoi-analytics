@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-15-us-cpi-september-rate-hike-bets",
+  "kind": "daily",
+  "title": "US inflation runs hot at 3.7% and revives rate-hike bets",
+  "summary": "US consumer price inflation accelerated to 3.7 percent in the year to September from 3.4 percent in August, with prices up 0.6 percent on the month, both above forecasts. Core inflation picked up to 2.6 percent. The report pushed rate expectations sharply higher: futures priced roughly a 32 percent chance of a quarter-point increase at the Federal Reserve's 28 October meeting, against 22 percent a day earlier, and it ended the longest calm stretch in US equities since before the pandemic.",
+  "category": "economy-markets",
+  "priority": 76,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "inflation",
+    "cpi",
+    "federal-reserve",
+    "rates"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/view-hot-september-cpi-sends-rate-hike-bets-soaring-2026-10-14/",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/14/cpi-inflation-report-september-2026.html",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

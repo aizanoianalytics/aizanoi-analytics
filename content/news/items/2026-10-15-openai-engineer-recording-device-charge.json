@@ -1,0 +1,41 @@
+{
+  "id": "2026-10-15-openai-engineer-recording-device-charge",
+  "kind": "daily",
+  "title": "OpenAI engineer charged over a device planted in an executive room",
+  "summary": "A Saudi national who had worked as an OpenAI engineer since July 2025 has been charged with attempting to intercept oral communications after a covert recording device was found plugged into a USB port behind a television in an executive conference room at the company's San Francisco offices. OpenAI found the device on 30 September; the 35-year-old was arrested on 9 October and dismissed. The charge carries a maximum of five years in prison and a $250,000 fine.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "openai",
+    "legal"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/13/openai-employee-arrested-recording-device.html",
+      "publishedAt": "2026-10-13T20:55:00Z"
+    },
+    {
+      "publisher": "The Register",
+      "url": "https://www.theregister.com/security/2026/10/14/openai-engineer-charged-after-boardroom-bug-found-wrapped-in-toilet-paper/5303000",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "Hawaii Tribune-Herald",
+      "url": "https://www.hawaiitribune-herald.com/2026/10/14/nation-world-news/fbi-arrests-saudi-openai-engineer-over-covert-recording-device-doj-says/",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

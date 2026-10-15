@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-15-gold-reclaims-4150-oil-retreats",
+  "kind": "daily",
+  "title": "Gold reclaims $4,150 as oil hands back its risk premium",
+  "summary": "Gold climbed back above $4,150 an ounce on Thursday, snapping a three-day slide, as US bond yields and the dollar eased from their post-inflation peaks and haven demand returned. Oil moved the other way: Brent and WTI gave back the previous session's geopolitical gains, with no supply infrastructure or shipping lane actually disrupted. Traders still price an 85 percent chance of another Federal Reserve rate increase before the end of the year, and the producer price report lands later today.",
+  "category": "economy-markets",
+  "priority": 54,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "gold",
+    "oil",
+    "commodities",
+    "rates"
+  ],
+  "sources": [
+    {
+      "publisher": "FXStreet",
+      "url": "https://www.fxstreet.com/news/gold-rallies-above-4-150-as-us-bond-yields-and-usd-retreat-further-from-post-cpi-highs-202610150359",
+      "publishedAt": "2026-10-15T03:59:00Z"
+    },
+    {
+      "publisher": "Newsquawk",
+      "url": "https://www.newsquawk.com/headlines/market-analysis-oil-prices-retreat-and-gold-rallies-alongside-the-broad-risk-off-tone",
+      "publishedAt": "2026-10-15T02:36:00Z"
+    }
+  ]
+}

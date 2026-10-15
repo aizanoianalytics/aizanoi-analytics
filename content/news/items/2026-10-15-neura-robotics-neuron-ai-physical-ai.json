@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-15-neura-robotics-neuron-ai-physical-ai",
+  "kind": "daily",
+  "title": "NEURA Robotics gives embodied AI a multisensory foundation model",
+  "summary": "NEURA Robotics introduced Neuron AI, a multimodal foundation model that fuses 3D vision, touch, force sensing, audio, robot state and language with memory in a single perception-language-action architecture. The Metzingen-based humanoid maker says the model runs locally on the robot, keeps production data under the customer's control and lets operators fine-tune their own skills. NEURA plans to show its 4NE-1 humanoid completing an eleven-minute laundry task unaided at Nvidia GTC Berlin on 21 and 22 October.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "robotics",
+    "physical-ai",
+    "foundation-models",
+    "germany"
+  ],
+  "sources": [
+    {
+      "publisher": "NEURA Robotics",
+      "url": "https://neura-robotics.com/neura-robotics-introduces-neuron-ai/",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "Business Wire via Rutland Herald",
+      "url": "https://www.rutlandherald.com/news/business/neura-robotics-introduces-neuron-ai-the-brain-of-the-physical-world/article_7e897077-0df5-5633-93f2-44ee9aacef81.html",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "Unite.AI",
+      "url": "https://www.unite.ai/neura-robotics-unveils-neuron-ai-foundation-model-for-physical-ai/",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

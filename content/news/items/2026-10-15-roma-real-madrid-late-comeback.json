@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-15-roma-real-madrid-late-comeback",
+  "kind": "daily",
+  "title": "Real Madrid complete a three-goal finish to stun Roma",
+  "summary": "Real Madrid recovered from two goals down to win 4-3 at Roma, scoring three times in the closing stages through Carlos Espi, Endrick and Antonio Rudiger. Donyell Malen's double had put Jose Mourinho's side 3-1 ahead against his former club, after Kylian Mbappe marked his 100th Champions League appearance by cancelling out Marten de Roon's opener. Endrick was named player of the match.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "real-madrid",
+    "roma",
+    "mourinho"
+  ],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefachampionsleague/news/02aa-21d3f8c574f1-e140f41454d4-1000--champions-league-highlights-and-round-up-real-madrid-and-p",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://secure.espn.com/soccer/report/_/gameId/401915414",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

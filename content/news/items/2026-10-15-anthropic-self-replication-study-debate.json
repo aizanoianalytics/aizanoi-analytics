@@ -1,0 +1,41 @@
+{
+  "id": "2026-10-15-anthropic-self-replication-study-debate",
+  "kind": "daily",
+  "title": "Anthropic self-replication study splits the technology press",
+  "summary": "Anthropic's research on whether small models can set themselves up on cheap, internet-connected hardware has divided coverage. The experiment showed a nine-billion-parameter model establishing inference on eight of nine hardware types and a larger open-weight model running across fifteen generic Android streaming boxes, with researchers configuring every deployment themselves. Coverage split between framing the result as evidence that self-replication is months away and accusing the lab of conjuring a threat it concedes it has not observed in the wild.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai-safety",
+    "anthropic",
+    "research"
+  ],
+  "sources": [
+    {
+      "publisher": "Tech-Insider",
+      "url": "https://tech-insider.org/anthropic-15-box-ai-scare-skeptic-backlash-2026",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "The Register",
+      "url": "https://www.theregister.com/ai-and-ml/2026/10/13/anthropic-conjures-another-threat-that-doesnt-exist-yet-to-stoke-fears-of-ai-apocalypse/5302866",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    },
+    {
+      "publisher": "TechRadar",
+      "url": "https://www.techradar.com/pro/security/ai-model-self-replication-is-only-months-away-anthropic-says-and-it-doesnt-even-need-a-data-center-to-happen",
+      "publishedAt": "2026-10-13T00:00:00Z"
+    }
+  ]
+}

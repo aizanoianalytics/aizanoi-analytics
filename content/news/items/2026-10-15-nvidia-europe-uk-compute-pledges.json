@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-15-nvidia-europe-uk-compute-pledges",
+  "kind": "daily",
+  "title": "Nvidia adds $2bn for Europe and $250m of compute for UK safety research",
+  "summary": "Nvidia chief executive Jensen Huang used a European tour to announce a further $2 billion of investment across the continent, on top of roughly $8 billion spent there over the past year, and new minority stakes in French startups Doctolib, Genesis AI, Pigment and Entalpic. He paired that with a donation of $250 million of compute over five years to British work on AI-agent safety at Oxford, UCL and Imperial College London, and repeated his argument that open-weight models are how Europe closes its AI gap.",
+  "category": "technology",
+  "priority": 64,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "europe",
+    "investment",
+    "ai-safety"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg",
+      "url": "https://www.bloomberg.com/news/articles/2026-10-13/nvidia-s-huang-plans-2-billion-in-europe-ai-deals-in-next-week",
+      "publishedAt": "2026-10-13T16:07:00Z"
+    },
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/nvidias-jensen-huang-pledges-2-billion-for-europe-250-million-in-compute-for-uk-safety-labs",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

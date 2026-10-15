@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-15-man-city-psg-haaland-record",
+  "kind": "daily",
+  "title": "Paris win at Manchester City as Haaland sets a club record",
+  "summary": "Paris Saint-Germain won 4-2 at Manchester City in the Champions League league phase, sweeping into a 3-0 half-time lead through Desire Doue, Ousmane Dembele and Vitinha. Erling Haaland replied twice, passing Sergio Aguero as City's record scorer in the competition, and City struck the woodwork through Enzo Fernandez before Maghnes Akliouche restored Paris's cushion. Gianluigi Donnarumma saved a late penalty, and City's next European fixture is at the Etihad Stadium on 20 October.",
+  "category": "football",
+  "priority": 70,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "manchester-city",
+    "psg",
+    "haaland"
+  ],
+  "sources": [
+    {
+      "publisher": "Manchester City",
+      "url": "https://www.mancity.com/news/mens/city-v-psg-14-october-match-report-63927601",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://africa.espn.com/football/report/_/gameId/401915407",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefachampionsleague/news/02aa-21d3f8c574f1-e140f41454d4-1000--champions-league-highlights-and-round-up-real-madrid-and-p",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

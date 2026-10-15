@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-15-meta-muse-wonder-developer-pushback",
+  "kind": "daily",
+  "title": "Meta's first frontier models meet a wall of developer scrutiny",
+  "summary": "Meta's first frontier-class models, Muse Wonder and Muse Wonder Full, drew immediate technical scrutiny once developers reached the API. Wonder Full scored 56 on the Artificial Analysis intelligence index, two points behind Claude Opus 5.5, and independent practitioners reported outputs that lagged rival models on identical prompts while rate limits choked production testing. Reviewers also revived unresolved questions about how the Muse agent handles private data, arguing the launch was tuned for composite benchmarks rather than everyday reliability.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-10-15T05:00:00Z",
+  "updatedAt": "2026-10-15T05:00:00Z",
+  "retrievedAt": "2026-10-15T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "meta",
+    "llm",
+    "benchmarks",
+    "frontier-models"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/meta-releases-muse-wonder-ai-models-challenge-anthropic-openai-2026-10-12/",
+      "publishedAt": "2026-10-12T18:26:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/12/meta-releases-its-first-frontier-model-muse-wonder/",
+      "publishedAt": "2026-10-12T00:00:00Z"
+    },
+    {
+      "publisher": "DEV Community",
+      "url": "https://dev.to/max_quimby/metas-muse-wonder-scores-big-and-delivers-little-4ig1",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}
