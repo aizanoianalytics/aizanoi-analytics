@@ -59,15 +59,22 @@ test('manifest is a Dashboard Extension with a pinned compatible API version', (
   assert.equal(url, 'https://aizanoianalytics.com/analytics/tableau/hello/');
 });
 
-test('manifest declares icon, English metadata and no data permissions', () => {
+test('manifest declares inline 70x70 PNG, root resources and no data permissions', () => {
   const trex = read('frontend/analytics/tableau/hello/aizanoi-hello.trex');
   // Strip XML comments before structural checks: documentation prose inside
   // comments is not schema content.
   const xml = trex.replace(/<!--[\s\S]*?-->/g, '');
-  assert.match(xml, /<icon>\s*\/analytics\/tableau\/hello\/icon\.png\s*<\/icon>/);
-  assert.match(xml, /<default-locale>en_US<\/default-locale>/);
-  assert.match(xml, /<resource[^>]*>Aizanoi Hello — Tableau Connectivity Test<\/resource>/,
-    'name resource must match the human-readable extension name');
+  const icon = trexText(xml, 'icon');
+  assert.match(icon, /^data:image\/png;base64,[A-Za-z0-9+/=]+$/,
+    'Tableau TREX requires the 70x70 PNG inline as Base64');
+  const png = Buffer.from(icon.slice('data:image/png;base64,'.length), 'base64');
+  assert.equal(png.toString('ascii', 1, 4), 'PNG');
+  assert.equal(png.readUInt32BE(16), 70, 'inline icon width');
+  assert.equal(png.readUInt32BE(20), 70, 'inline icon height');
+  assert.match(xml, /<\/dashboard-extension>\s*<resources>/,
+    'resources must be a root child after dashboard-extension');
+  assert.match(xml, /<resource id="name">\s*<text locale="en_US">Aizanoi Hello — Tableau Connectivity Test<\/text>\s*<\/resource>/,
+    'name resource must contain localized text');
   assert.doesNotMatch(xml, /<permissions>/,
     'a connectivity test requests no data permissions');
 });

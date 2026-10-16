@@ -25,9 +25,11 @@
     <source-location>
       <url>https://aizanoianalytics.com/analytics/tableau/hello/</url>
     </source-location>
-    <icon>/analytics/tableau/hello/icon.png</icon>
-    <resources>
-      <resource id="name">Aizanoi Hello — Tableau Connectivity Test</resource>
-    </resources>
+    <icon>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAYAAABxLuKEAAACdUlEQVR4nO2by0pbURSG995kfNawL9CRwzqr0GagFVuQqGBr6qU+WQshWFFSRC0YCIZWB4KFdt6XWE+gA0GMnrXMZd+O/h8ccpKzz15/Vv61LyGx9GLqyoAH1K6sTa0hS2oGiSmlZhwSUwYcI4DECKCUBOAYASRGAKUkAMcIIDECKCUBOEagZpxLrSFL4BgBJEYAg6+AM9aalAf/+z3S67GOLEqJ//4qv5BQmy1evU32nS//6T/ahqbrwXWUkYVjVBLpSzbG8OXpUAL58jTRGFOFWSmBxiSO4YveSCL5ovc8Z6WhiKzTFq/nos5KfN4d+16aeedRiU51HGNMVNc445yJdfDZiSqG3iyo1/nsJJrWvBwzjJZIeuPOSgpU/2CMtTePGpG0OuOsiXFw//iRj+hOewXuH0fRm08pjaIjguYopcS9Q1UEzS4OtKfZRbU99w4jLPBy2BKMoyGw7uCO4e6BKoDmG6X30XxDvY+7B4Edk3qMmSR+QO22WFgKtiXgn53b8/5/P2HqLweTQe+XvfR7n/SOmZRA+pEYgWALPD7aDyL4Pny0/8QXeJMQ4D3YovHR++DLP76r12npUxZ9aqRxTIiYnvv0vsDjzo4akFaaY/VLK021X+7sVHxLEDKex769Oob32mowWl2fqH9aXVf75712RbcEMWJ5iuFtHcO7LTUQrW16iUNrm2oc3m1VbB1TMWfaornlfx3T/jbwnD5/8R0ieIwgsxJtbN+ec+trsJnobhzfMWyxsY3/RJbwNPZKAcjjO98MgWME8MtwAThGAIkRwOArAMcIIDECKCUBOEYAiRFAKQnAMQJIjABKSQCOEbgG3fBvXB7irIkAAAAASUVORK5CYII=</icon>
   </dashboard-extension>
+  <resources>
+    <resource id="name">
+      <text locale="en_US">Aizanoi Hello — Tableau Connectivity Test</text>
+    </resource>
+  </resources>
 </manifest>
