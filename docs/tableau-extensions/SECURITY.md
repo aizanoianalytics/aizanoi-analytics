@@ -48,7 +48,7 @@ Any future extension that reads workbook data must additionally have:
 - a security review of the exact published commit;
 - employer information-security approval before use with real corporate data;
 - a data-access design (what is read, why, retention) reviewed per data class
-  (payrool, PDKS, norm/fiil kadro are separate, higher-sensitivity classes).
+  (payroll, PDKS, norm/fiil kadro are separate, higher-sensitivity classes).
 
 Corporate security policies and access restrictions must never be bypassed. If
 the corporate network, proxy, TLS inspection or extension allowlist blocks the

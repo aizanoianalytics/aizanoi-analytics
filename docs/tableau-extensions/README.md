@@ -105,7 +105,7 @@ substitute for validation on the actual corporate Tableau Desktop 2023.1.22.
 
 - Static-first hosting only; no backend, database, proxy or Hermes bridge.
 - No third-party CDN, fonts, analytics, pixels, trackers or external API calls.
-- No corporate data (payrool, PDKS, norm/fiil kadro) is read, copied, stored or
+- No corporate data (payroll, PDKS, norm/fiil kadro) is read, copied, stored or
   transmitted — the pilot requests zero permissions.
 - Do not modify AizanoiOS shell, registry, existing dashboards, News, Games or
   Worlds for this feature; `/analytics/tableau/` is a standalone route.

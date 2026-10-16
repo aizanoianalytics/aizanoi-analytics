@@ -115,7 +115,9 @@ test('failed handshake shows an actionable error with retry', async (t) => {
   const { page } = await withServer(t, FAIL_ACCESSOR, { stripSdk: true });
   await page.waitForSelector('#state-badge[data-state="error"]');
   const message = await page.textContent('#state-message');
-  assert.match(message, /mock handshake failure/);
+  assert.doesNotMatch(message, /mock handshake failure/,
+    'raw SDK errors may contain sensitive workbook or proxy details');
+  assert.match(message, /Tableau did not complete the extension handshake/);
   assert.match(message, /https:\/\/aizanoianalytics\.com\/analytics\/tableau\/hello\//);
   assert.ok(await page.locator('#actions').isVisible());
 });

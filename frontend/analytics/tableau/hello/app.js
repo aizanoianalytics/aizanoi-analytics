@@ -51,13 +51,13 @@
         'dashboard, worksheet or data source information.',
         false
       );
-    }).catch(function (err) {
-      // Report the error class without leaking workbook or data contents.
-      var reason = (err && typeof err.message === 'string' && err.message) ? err.message : 'Unknown error';
+    }).catch(function () {
+      // Never surface the raw SDK error: it can include workbook, proxy or
+      // policy details. The fixed message is actionable without disclosure.
       setState(
         'error',
         'Initialization failed',
-        'Tableau did not complete the extension handshake (' + reason + '). ' +
+        'Tableau did not complete the extension handshake. ' +
         'Check that the extension URL is reachable from this machine and that ' +
         'the .trex manifest points to https://aizanoianalytics.com/analytics/tableau/hello/.',
         true

@@ -10,9 +10,12 @@ const read = (p) => readFileSync(join(repoRoot, p), 'utf8');
 
 /** Extract a single element's text content from the small, known TREX file. */
 const trexText = (trex, tag) => {
-  const m = trex.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`));
-  assert.ok(m, `TREX must contain <${tag}>`);
-  return m[1].trim();
+  const open = `<${tag}>`;
+  const close = `</${tag}>`;
+  const start = trex.indexOf(open);
+  const end = trex.indexOf(close, start + open.length);
+  assert.ok(start >= 0 && end > start, `TREX must contain <${tag}>`);
+  return trex.slice(start + open.length, end).trim();
 };
 
 test('pilot app is static: no external requests, no frameworks, no telemetry', () => {
@@ -99,8 +102,7 @@ test('app reads nothing from Tableau: no data, settings, filter or layout access
     'displayDialogAsync', 'settings.set', 'ui.displayUi',
     '.dashboardContent.dashboard.name',
   ]) {
-    assert.doesNotMatch(js, new RegExp(forbidden.replace(/\./g, '\\.')),
-      `pilot must not use ${forbidden}`);
+    assert.ok(!js.includes(forbidden), `pilot must not use ${forbidden}`);
   }
 });
 
