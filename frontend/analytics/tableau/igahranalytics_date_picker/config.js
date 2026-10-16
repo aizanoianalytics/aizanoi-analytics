@@ -85,11 +85,9 @@ function t() {
   return STRINGS[state.locale] || STRINGS['tr-TR'];
 }
 
-function hasTableauApi() {
+function sdkPresent() {
   return typeof tableau !== 'undefined' && tableau && tableau.extensions &&
-    (typeof tableau.extensions.initializeDialogAsync === 'function' ||
-      typeof tableau.extensions.initializeAsync === 'function') &&
-    tableau.extensions.dashboardContent && tableau.extensions.dashboardContent.dashboard;
+    typeof tableau.extensions.initializeDialogAsync === 'function';
 }
 
 function renderStatic() {
@@ -301,20 +299,18 @@ function mockDiscovery() {
 }
 
 async function bootTableau() {
+  // The init handshake already ran in boot(): the real SDK populates
+  // dashboardContent only there, so it must NOT be probed before init
+  // (probing it pre-init is what stranded the dialog in mock mode).
   state.tableauApi = tableau;
   els.mode.textContent = 'Tableau Desktop';
-  try {
-    if (typeof tableau.extensions.initializeDialogAsync === 'function') {
-      await tableau.extensions.initializeDialogAsync();
-    } else {
-      await tableau.extensions.initializeAsync();
-    }
-  } catch {
-    showError('Tableau did not complete the extension handshake.');
+  const dashboard = tableau.extensions.dashboardContent &&
+    tableau.extensions.dashboardContent.dashboard;
+  if (!dashboard || !Array.isArray(dashboard.worksheets)) {
+    bootMock();
     return;
   }
   state.mode = 'tableau';
-  const dashboard = tableau.extensions.dashboardContent.dashboard;
   try {
     state.settings = parseSettings(tableau.extensions.settings.get(SETTINGS_KEY));
     if (state.settings.locale) state.locale = state.settings.locale;
@@ -346,8 +342,21 @@ els.cancel.addEventListener('click', onCancel);
 els.tr.addEventListener('click', () => { state.locale = 'tr-TR'; renderStatic(); });
 els.en.addEventListener('click', () => { state.locale = 'en-US'; renderStatic(); });
 
-if (hasTableauApi()) {
-  void bootTableau();
+if (sdkPresent()) {
+  // A dialog page must use initializeDialogAsync (official docs). The real
+  // SDK leaves dashboardContent undefined until that handshake resolves, and
+  // a host-less page never resolves it — race it so plain-browser loads
+  // still fall back to the honest mock instead of hanging on "Loading…".
+  const handshake = Promise.race([
+    Promise.resolve().then(() => tableau.extensions.initializeDialogAsync()),
+    new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('dialog-handshake-timeout')), 1500);
+    }),
+  ]);
+  void handshake.then(
+    () => bootTableau(),
+    () => bootMock(),
+  );
 } else {
   bootMock();
 }

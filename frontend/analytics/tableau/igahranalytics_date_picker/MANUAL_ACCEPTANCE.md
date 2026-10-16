@@ -27,7 +27,10 @@ excluded. Use fabricated dates only — no real employee records.
 ## Mapping & apply
 
 - [ ] D. Via right-click **Configure…**, map three synthetic worksheets to
-  their own date captions; leave one worksheet unchecked.
+  their own date captions; leave one worksheet unchecked. The dialog MUST
+  list your REAL worksheet names with a **Tableau Desktop** header — if it
+  shows “Standalone deneme/mock” or demo sheets inside Tableau, STOP: the
+  dialog booted without the Tableau handshake and Save will not persist.
 - [ ] E. Apply `01.01.2025–31.03.2025`: all three mapped filters change,
   the excluded worksheet does not, unrelated (organization etc.) filters
   persist. Details list per-sheet `applied-verified`.
