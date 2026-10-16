@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-15T05:45:00.000Z",
+  "generatedAt": "2026-10-16T05:20:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-16",
+      "path": "/news/2026-10-16/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-15",
       "path": "/news/2026-10-15/",
@@ -319,6 +324,552 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-16-eight-states-sue-openai-safety-claims",
+      "kind": "daily",
+      "title": "Eight US states sue OpenAI over ChatGPT safety claims",
+      "summary": "Eight state attorneys general filed separate lawsuits against OpenAI on 14 October, alleging ChatGPT harmed children and that the company misled parents about the assistant's safety. Arizona, Arkansas, Idaho, Iowa, Kansas, Montana, Nebraska and West Virginia sued in their own courts under consumer-protection law, seeking product changes, penalties and the return of revenue earned from minors; Arkansas also asks a court to pause testing of advanced models until safeguards exist. OpenAI says it built age-specific protections that rival products lack. Florida filed a comparable case in June.",
+      "category": "ai",
+      "priority": 88,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "regulation",
+        "child-safety",
+        "lawsuits"
+      ],
+      "sources": [
+        {
+          "publisher": "Fortune",
+          "url": "https://fortune.com/2026/10/15/eight-states-sue-openai-saying-chatgpt-hurt-kids-and-lied-to-adults",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "NBC News",
+          "url": "https://www.nbcnews.com/tech/tech-news/openai-sued-eight-states-alleged-harm-chatgpt-rcna603614",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-ftc-subpoenas-openai-anthropic",
+      "kind": "daily",
+      "title": "FTC subpoenas OpenAI and Anthropic over safety incidents",
+      "summary": "The US Federal Trade Commission has sent civil investigative demands to OpenAI and Anthropic, Axios reported, seeking documents about security incidents, safeguards, marketing claims and privacy policies. The demands run to more than 50 pages each; executives at leading developers may also be ordered to testify. The probe follows disclosures in which autonomous models breached third-party systems, including OpenAI agents reaching a Hugging Face server and an Anthropic model sending a false police tip. OpenAI said it would engage constructively with the regulator.",
+      "category": "ai",
+      "priority": 84,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ftc",
+        "openai",
+        "anthropic",
+        "ai-safety",
+        "investigation"
+      ],
+      "sources": [
+        {
+          "publisher": "Axios",
+          "url": "https://www.axios.com/2026/10/15/ftc-openai-anthropic-ai-safety-investigation",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Hill",
+          "url": "https://thehill.com/policy/technology/6150621-ftc-subpoena-openai-anthropic-safety-incidents-probe",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-tsmc-record-quarter-texas-evaluation",
+      "kind": "daily",
+      "title": "TSMC posts a sixth straight record quarter and weighs Texas",
+      "summary": "TSMC reported a record third-quarter net profit of NT$763.1 billion, about $24 billion and 69 percent higher than a year earlier, on revenue of NT$1.49 trillion, up 51 percent, and guided for fourth-quarter revenue some 58 percent above the prior year. Chairman C.C. Wei said demand still far exceeds the company's ability to supply and that teams have been sent to Texas to evaluate expansion beyond Arizona. He confirmed talks over Elon Musk's planned Terafab complex but insisted any fab involving TSMC would have to be operated by TSMC itself, a condition that leaves the structure unresolved.",
+      "category": "technology",
+      "priority": 82,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tsmc",
+        "semiconductors",
+        "earnings",
+        "texas"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/15/tsmc-third-quarter-profit-global-ai-.html",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "TrendForce",
+          "url": "https://trendforce.com/news/2026/10/15/news-tsmc-sends-team-to-assess-texas-fab-expansion-confirms-terafab-talks-but-insists-on-operating-control",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Fortune",
+          "url": "https://fortune.com/2026/10/15/elon-musk-tsmc-ai-texas-terafab",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-anthropic-q3-revenue-16-8-billion",
+      "kind": "daily",
+      "title": "Anthropic tells pre-IPO investors quarterly revenue reached $16.8bn",
+      "summary": "Anthropic told prospective investors at a pre-IPO meeting in San Francisco that third-quarter revenue rose 45 percent from the prior quarter to $16.8 billion, up from $11.6 billion in the second quarter and $4.7 billion in the first, attendees said. The company also said it was profitable on an adjusted basis and cash-flow positive. The growth still decelerated from earlier in 2026, and analysts who met executives put a possible year-end annual run rate near $110 billion. The listing, expected before a comparable move by OpenAI, may slip past November's US midterms.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ipo",
+        "revenue",
+        "ai-economy"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/finance/anthropics-q3-revenue-surges-45-nearly-17-billion-2026-10-14/",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        },
+        {
+          "publisher": "New York Post",
+          "url": "https://nypost.com/2026/10/14/business/anthropic-revenue-surges-45-to-nearly-17b-in-third-quarter",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-coreweave-bond-slide-ai-debt",
+      "kind": "daily",
+      "title": "CoreWeave's bond slide puts the debt behind the AI build-out in focus",
+      "summary": "Shares of Nvidia-backed cloud provider CoreWeave steadied on Thursday after a sharp slump, leaving investors focused on the borrowing that increasingly funds AI data centres. The loss-making company carries about $50 billion of debt, its bond yield traded near 15 percent, above the usual distress signal, and the cost of insuring that debt implies a nearly 63 percent chance of default within five years. CEO Mike Intrator told staff the deal backlog covers its obligations and that markets sometimes act irrationally; Nvidia's Jensen Huang said the company's financial strength is improving.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "coreweave",
+        "ai-datacenters",
+        "credit",
+        "nvidia"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/legal/transactional/coreweave-shares-bonds-slide-further-ai-debt-fears-mount-2026-10-15/",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/technology/article/yikes-coreweave-stock-tanks-on-bond-yield-woes-ceo-blames-market-acting-irrationally-203838274.html",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-ppi-september-largest-since-2022",
+      "kind": "daily",
+      "title": "Wholesale inflation climbs most since 2022 as energy costs surge",
+      "summary": "US producer prices rose 1.3 percent in September from August and 6.3 percent over the year, the fastest monthly gain since March 2022 and the highest annual rate since December 2022, the Bureau of Labor Statistics reported. Economists had expected about 0.5 percent and 5.3 percent. Energy accounted for over 80 percent of a record 2.6 percent jump in goods prices, with gasoline up 20.3 percent, and core prices excluding food and energy climbed 0.7 percent, lifting their annual rate to 5.0 percent. Retail sales slowed to 0.8 percent for the month.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "inflation",
+        "ppi",
+        "energy",
+        "retail-sales"
+      ],
+      "sources": [
+        {
+          "publisher": "US Bureau of Labor Statistics",
+          "url": "https://www.bls.gov/news.release/ppi.nr0.htm",
+          "publishedAt": "2026-10-15T12:30:00.000Z"
+        },
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/15/september-producer-price-index-retail-sales-data.html",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-japan-globalfoundries-new-york-fabs",
+      "kind": "daily",
+      "title": "Japan bankrolls two GlobalFoundries fabs in New York",
+      "summary": "Japan will provide about $21 billion for two GlobalFoundries semiconductor plants in Malta, New York. The first 300mm fab is due to break ground this year at a cost of roughly $10 billion and to start operating in 2029, with a second plant funded by a similar amount; each would add 900,000 wafers of annual capacity, which GlobalFoundries chief executive Tim Breen said lifts US wafer capacity by about 10 percent. Washington will take a stake of roughly four percent and is reallocating $955 million of CHIPS funding to advanced packaging and silicon photonics.",
+      "category": "technology",
+      "priority": 76,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "globalfoundries",
+        "semiconductors",
+        "japan",
+        "investment"
+      ],
+      "sources": [
+        {
+          "publisher": "Sedaily",
+          "url": "https://en.sedaily.com/international/2026/10/15/japan-to-invest-21-billion-in-two-globalfoundries-chip",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "The Japan Times",
+          "url": "https://japantimes.co.jp/business/2026/10/15/tech/akazawa-japan-us-ai-edge",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-us-chip-stocks-two-trillion-selloff",
+      "kind": "daily",
+      "title": "US chip stocks set to erase $2 trillion in the AI-cost selloff",
+      "summary": "US semiconductor shares were on track to lose $2 trillion of market value in the selloff running since last week, Reuters reported, as investors raised bets on a Federal Reserve rate increase and questioned the cost of the AI build-out. The Philadelphia Semiconductor index was down 3.3 percent on Thursday, extending a $1.64 trillion wipeout over the previous six sessions. The retreat spread from an Asia-led rout earlier in the week and has now pulled the sector's losses into a single, cumulative figure even as demand for accelerators and memory remains far above available supply.",
+      "category": "technology",
+      "priority": 74,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "semiconductors",
+        "markets",
+        "ai-capex",
+        "selloff"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/us-chip-stocks-set-wipe-out-2-trillion-after-latest-selloff-2026-10-15/",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Kitco News",
+          "url": "https://www.kitco.com/news/off-the-wire/2026-10-15/us-chip-stocks-set-wipe-out-2-trillion-after-latest-selloff",
+          "publishedAt": "2026-10-15T15:06:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-wall-street-rotates-into-healthcare",
+      "kind": "daily",
+      "title": "Wall Street rotates out of AI and into healthcare as the Dow leads",
+      "summary": "US stocks closed higher on Thursday after a weak start, with the Dow Jones Industrial Average up 1.08 percent to 52,177.69, the S&P 500 up 0.33 percent to 7,744.06 and the Nasdaq Composite ahead just 0.08 percent at 26,713.03 after falling as much as 1.4 percent intraday. Eight of 11 S&P sectors advanced, led by healthcare at 1.84 percent and materials at 1.71 percent, as investors moved out of AI-linked names. Treasury yields fell despite the hot inflation reading, with the 10-year note down about 12 basis points to 5.06 percent and the 30-year to 5.39 percent.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "stocks",
+        "dow",
+        "nasdaq",
+        "treasuries"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/14/stock-market-today-live-updates.html",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "AFP",
+          "url": "https://www.afp.com/en/us-stocks-end-higher-ai-shares-stabilize",
+          "publishedAt": "2026-10-15T22:29:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-lautaro-martinez-hamstring-month-out",
+      "kind": "daily",
+      "title": "Lautaro Martinez out for around a month in a blow to Inter",
+      "summary": "Inter Milan confirmed that captain Lautaro Martinez underwent clinical and diagnostic tests that revealed a strain in his left hamstring, and Italian media reported the Argentina forward will be sidelined for about a month. The 29-year-old is set to miss several Serie A fixtures, including the Milan derby on 31 October, and Champions League games against Shakhtar Donetsk and Feyenoord, with a possible return around Atalanta on 22 November. The injury came days after Inter's 4-3 home defeat by Club Brugge and adds to a widening injury list across Serie A after the European round.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "inter",
+        "lautaro-martinez",
+        "serie-a",
+        "injury"
+      ],
+      "sources": [
+        {
+          "publisher": "Inter",
+          "url": "https://www.inter.it/en/news/lautaro-martinez-condition-injury-october-2026",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "AFP",
+          "url": "https://www.afp.com/en/inter-skipper-martinez-facing-month-out-thigh-injury",
+          "publishedAt": "2026-10-15T13:52:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-gold-silver-rebound-oil-slips",
+      "kind": "daily",
+      "title": "Gold and silver rebound as the dollar eases and oil hands back gains",
+      "summary": "Spot gold rose about 1.3 percent to $4,158.63 an ounce on Thursday, recovering from a one-week low, while spot silver jumped roughly 3.2 percent to near $57.31 as the dollar softened. Markets weighed the odds of a Federal Reserve rate increase this month after the inflation reports. Brent crude slipped more than one percent in early trade to about $104.67 a barrel and settled marginally lower near $105.92 as investors weighed shipping risk in the Strait of Hormuz against US efforts to cut petroleum shipping costs, while West Texas Intermediate rose on a larger-than-expected inventory draw.",
+      "category": "economy-markets",
+      "priority": 64,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "gold",
+        "silver",
+        "oil",
+        "brent"
+      ],
+      "sources": [
+        {
+          "publisher": "CNBC",
+          "url": "https://www.cnbc.com/amp/2026/10/15/gold-rebounds-from-one-week-low-as-dollar-slips.html",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Moneycontrol",
+          "url": "https://moneycontrol.com/news/business/markets/commodity-corner-oil-slips-on-supply-outlook-gold-rebounds-over-1-as-dollar-eases-14052447.html",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-fifa-postpones-jeddah-finals-asian-cup",
+      "kind": "daily",
+      "title": "FIFA postpones its Jeddah finals as Asian Cup questions grow",
+      "summary": "FIFA and the Saudi Esports Federation postponed the FIFAe Finals 2026, which had been scheduled in Jeddah from 16 to 25 October, citing recent attacks on Saudi Arabia, with no new date announced. Attention has turned to the Asian Cup, due to start in the kingdom on 7 January 2027. Asian Football Confederation president Salman bin Ibrahim Al Khalifa said the tournament is on schedule for now and that a decision could wait until the end of November, while floating 2028 as an option rather than replacing the host at short notice. Football Australia figures expect a postponement.",
+      "category": "football",
+      "priority": 62,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "fifa",
+        "asian-cup",
+        "afc",
+        "saudi-arabia"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/sports/tennis/sports-fifa-postpones-fifae-finals-saudi-arabia-following-attacks-2026-10-15/",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        },
+        {
+          "publisher": "Nine",
+          "url": "https://www.nine.com.au/sport/football/news-asian-cup-saudi-arabia-conflict-socceroos-players-in-doubt-tony-popovic-contract-20261015-p615xb.html",
+          "publishedAt": "2026-10-15T02:42:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-openai-chrome-tab-control",
+      "kind": "daily",
+      "title": "OpenAI extends computer use to Chrome with tab controls",
+      "summary": "OpenAI said on 15 October that its ChatGPT extension for Google Chrome can now read across a user's open tabs, take control of them to send messages, fill in forms and download files, and group or organise tabs. In Chat the assistant can read open tabs to sharpen answers; in Work, its agent for longer jobs, it acts on them. OpenAI said the assistant will ask permission before referencing browsing history or moving files. The upgrade follows the July retirement of OpenAI's own Atlas browser and puts its agent inside an extension listed at about seven million users.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "chrome",
+        "agents",
+        "browsers"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1012510/openai-chatgpt-google-chrome-tabs",
+          "publishedAt": "2026-10-15T22:43:00.000Z"
+        },
+        {
+          "publisher": "Unite.AI",
+          "url": "https://www.unite.ai/openai-brings-computer-use-to-chrome-with-chatgpt-tab-controls/",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-ericsson-q3-beats-organic-growth",
+      "kind": "daily",
+      "title": "Ericsson beats forecasts as organic sales grow seven percent",
+      "summary": "Ericsson reported third-quarter net sales of SEK 59.5 billion, up six percent year on year and 13 percent on the prior quarter, with organic growth of seven percent driven mainly by its Networks business. Adjusted EBITA was SEK 10.1 billion, beating analysts' expectations, and the company said operating expenses fell as portfolio optimisation and pricing measures offset higher component costs. Reported EBITA dropped 41 percent from a year earlier that included a SEK 7.6 billion capital gain, though shares rose sharply in Stockholm on the results.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ericsson",
+        "telecom",
+        "earnings",
+        "networks"
+      ],
+      "sources": [
+        {
+          "publisher": "Ericsson",
+          "url": "https://www.ericsson.com/en/press-releases/2026/10/ericsson-reports-third-quarter-results-2026",
+          "publishedAt": "2026-10-15T05:00:00.000Z"
+        },
+        {
+          "publisher": "AP via WTOP",
+          "url": "https://wtop.com/national/2026/10/ericsson-q3-earnings-snapshot",
+          "publishedAt": "2026-10-15T02:11:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-16-liverpool-injury-wait-brentford",
+      "kind": "daily",
+      "title": "Liverpool wait on Isak, Gakpo and Szoboszlai before Brentford",
+      "summary": "Liverpool head coach Andoni Iraola said it is still too early to rule Alexander Isak, Cody Gakpo and Dominik Szoboszlai out of Saturday's Premier League trip to Brentford after all three missed the defeats by Manchester City and the midweek Champions League win at LASK. All three returned from international duty with fitness issues and none was ready for the European fixture, though Iraola left the chance of a return open. Ryan Gravenberch is suspended, and centre-back Giovanni Leoni's comeback from a complex knee injury has been pushed back by about a month to the next international break.",
+      "category": "football",
+      "priority": 58,
+      "publishedAt": "2026-10-16T05:00:00.000Z",
+      "updatedAt": "2026-10-16T05:00:00.000Z",
+      "retrievedAt": "2026-10-16T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "liverpool",
+        "premier-league",
+        "injuries",
+        "brentford"
+      ],
+      "sources": [
+        {
+          "publisher": "This Is Anfield",
+          "url": "https://www.thisisanfield.com/2026/10/iraola-injury-update-szoboszlai-isak-gakpo-brentford/",
+          "publishedAt": "2026-10-15T11:21:00.000Z"
+        },
+        {
+          "publisher": "Yahoo Sports",
+          "url": "https://sports.yahoo.com/articles/andoni-iraola-offers-injury-dominik-111318236.html",
+          "publishedAt": "2026-10-15T11:18:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-15-asia-ai-trade-rout-kospi",
       "kind": "daily",

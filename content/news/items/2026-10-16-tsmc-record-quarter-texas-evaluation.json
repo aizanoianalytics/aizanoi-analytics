@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-16-tsmc-record-quarter-texas-evaluation",
+  "kind": "daily",
+  "title": "TSMC posts a sixth straight record quarter and weighs Texas",
+  "summary": "TSMC reported a record third-quarter net profit of NT$763.1 billion, about $24 billion and 69 percent higher than a year earlier, on revenue of NT$1.49 trillion, up 51 percent, and guided for fourth-quarter revenue some 58 percent above the prior year. Chairman C.C. Wei said demand still far exceeds the company's ability to supply and that teams have been sent to Texas to evaluate expansion beyond Arizona. He confirmed talks over Elon Musk's planned Terafab complex but insisted any fab involving TSMC would have to be operated by TSMC itself, a condition that leaves the structure unresolved.",
+  "category": "technology",
+  "priority": 82,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tsmc",
+    "semiconductors",
+    "earnings",
+    "texas"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/15/tsmc-third-quarter-profit-global-ai-.html",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "TrendForce",
+      "url": "https://trendforce.com/news/2026/10/15/news-tsmc-sends-team-to-assess-texas-fab-expansion-confirms-terafab-talks-but-insists-on-operating-control",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/10/15/elon-musk-tsmc-ai-texas-terafab",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-16-gold-silver-rebound-oil-slips",
+  "kind": "daily",
+  "title": "Gold and silver rebound as the dollar eases and oil hands back gains",
+  "summary": "Spot gold rose about 1.3 percent to $4,158.63 an ounce on Thursday, recovering from a one-week low, while spot silver jumped roughly 3.2 percent to near $57.31 as the dollar softened. Markets weighed the odds of a Federal Reserve rate increase this month after the inflation reports. Brent crude slipped more than one percent in early trade to about $104.67 a barrel and settled marginally lower near $105.92 as investors weighed shipping risk in the Strait of Hormuz against US efforts to cut petroleum shipping costs, while West Texas Intermediate rose on a larger-than-expected inventory draw.",
+  "category": "economy-markets",
+  "priority": 64,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "gold",
+    "silver",
+    "oil",
+    "brent"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/amp/2026/10/15/gold-rebounds-from-one-week-low-as-dollar-slips.html",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "Moneycontrol",
+      "url": "https://moneycontrol.com/news/business/markets/commodity-corner-oil-slips-on-supply-outlook-gold-rebounds-over-1-as-dollar-eases-14052447.html",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    }
+  ]
+}

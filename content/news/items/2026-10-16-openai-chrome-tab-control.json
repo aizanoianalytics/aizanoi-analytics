@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-16-openai-chrome-tab-control",
+  "kind": "daily",
+  "title": "OpenAI extends computer use to Chrome with tab controls",
+  "summary": "OpenAI said on 15 October that its ChatGPT extension for Google Chrome can now read across a user's open tabs, take control of them to send messages, fill in forms and download files, and group or organise tabs. In Chat the assistant can read open tabs to sharpen answers; in Work, its agent for longer jobs, it acts on them. OpenAI said the assistant will ask permission before referencing browsing history or moving files. The upgrade follows the July retirement of OpenAI's own Atlas browser and puts its agent inside an extension listed at about seven million users.",
+  "category": "ai",
+  "priority": 62,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "chrome",
+    "agents",
+    "browsers"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1012510/openai-chatgpt-google-chrome-tabs",
+      "publishedAt": "2026-10-15T22:43:00Z"
+    },
+    {
+      "publisher": "Unite.AI",
+      "url": "https://www.unite.ai/openai-brings-computer-use-to-chrome-with-chatgpt-tab-controls/",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    }
+  ]
+}

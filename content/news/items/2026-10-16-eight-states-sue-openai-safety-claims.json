@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-16-eight-states-sue-openai-safety-claims",
+  "kind": "daily",
+  "title": "Eight US states sue OpenAI over ChatGPT safety claims",
+  "summary": "Eight state attorneys general filed separate lawsuits against OpenAI on 14 October, alleging ChatGPT harmed children and that the company misled parents about the assistant's safety. Arizona, Arkansas, Idaho, Iowa, Kansas, Montana, Nebraska and West Virginia sued in their own courts under consumer-protection law, seeking product changes, penalties and the return of revenue earned from minors; Arkansas also asks a court to pause testing of advanced models until safeguards exist. OpenAI says it built age-specific protections that rival products lack. Florida filed a comparable case in June.",
+  "category": "ai",
+  "priority": 88,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "regulation",
+    "child-safety",
+    "lawsuits"
+  ],
+  "sources": [
+    {
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/10/15/eight-states-sue-openai-saying-chatgpt-hurt-kids-and-lied-to-adults",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "NBC News",
+      "url": "https://www.nbcnews.com/tech/tech-news/openai-sued-eight-states-alleged-harm-chatgpt-rcna603614",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

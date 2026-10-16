@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-16-us-chip-stocks-two-trillion-selloff",
+  "kind": "daily",
+  "title": "US chip stocks set to erase $2 trillion in the AI-cost selloff",
+  "summary": "US semiconductor shares were on track to lose $2 trillion of market value in the selloff running since last week, Reuters reported, as investors raised bets on a Federal Reserve rate increase and questioned the cost of the AI build-out. The Philadelphia Semiconductor index was down 3.3 percent on Thursday, extending a $1.64 trillion wipeout over the previous six sessions. The retreat spread from an Asia-led rout earlier in the week and has now pulled the sector's losses into a single, cumulative figure even as demand for accelerators and memory remains far above available supply.",
+  "category": "technology",
+  "priority": 74,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "semiconductors",
+    "markets",
+    "ai-capex",
+    "selloff"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/us-chip-stocks-set-wipe-out-2-trillion-after-latest-selloff-2026-10-15/",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "Kitco News",
+      "url": "https://www.kitco.com/news/off-the-wire/2026-10-15/us-chip-stocks-set-wipe-out-2-trillion-after-latest-selloff",
+      "publishedAt": "2026-10-15T15:06:00Z"
+    }
+  ]
+}
