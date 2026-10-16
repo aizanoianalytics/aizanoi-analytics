@@ -77,16 +77,50 @@ test('worksheet resolution prefers object id and rejects ambiguous exact names',
   assert.equal(resolveWorksheet({ worksheetId: '', worksheetName: 'Summary' }, sheets), null);
 });
 
-test('discovery reads existing filter metadata only and returns DATE/DATETIME captions', async () => {
+test('discovery accepts Tableau SDK date enums including real DateTime value "date-time"', async () => {
   const calls = [];
   const mkFilter = (caption, dataType) => ({
     fieldName: caption,
     async getFieldAsync() { calls.push(caption); return { name: caption, dataType }; },
   });
-  const worksheets = [{ id: 'a', name: 'A', async getFiltersAsync() { return [mkFilter('Event Date', 'DATE'), mkFilter('Org', 'STRING')]; } }];
+  const worksheets = [{
+    id: 'a', name: 'A',
+    async getFiltersAsync() {
+      return [
+        mkFilter('Event Date', 'date'),
+        mkFilter('Processing Time', 'date-time'),
+        mkFilter('Legacy DateTime', 'DATETIME'),
+        mkFilter('Org', 'string'),
+      ];
+    },
+  }];
   const result = await discoverWorksheets(worksheets);
-  assert.deepEqual(calls, ['Event Date', 'Org']);
-  assert.deepEqual(result[0].fields, [{ caption: 'Event Date', dataType: 'DATE' }]);
+  assert.deepEqual(calls, ['Event Date', 'Processing Time', 'Legacy DateTime', 'Org']);
+  assert.deepEqual(result[0].fields, [
+    { caption: 'Event Date', dataType: 'DATE' },
+    { caption: 'Processing Time', dataType: 'DATETIME' },
+    { caption: 'Legacy DateTime', dataType: 'DATETIME' },
+  ]);
+  assert.deepEqual(result[0].diagnostics, {
+    filterCount: 4, inspectedCount: 4, compatibleCount: 3,
+  });
+});
+
+test('discovery reports metadata failures without hiding valid fields from the same worksheet', async () => {
+  const worksheets = [{
+    id: 'a', name: 'A',
+    async getFiltersAsync() {
+      return [
+        { fieldName: 'Broken', async getFieldAsync() { throw new Error('metadata denied'); } },
+        { fieldName: 'Exit Date', async getFieldAsync() { return { name: 'Exit Date', dataType: 'date' }; } },
+      ];
+    },
+  }];
+  const result = await discoverWorksheets(worksheets);
+  assert.deepEqual(result[0].fields, [{ caption: 'Exit Date', dataType: 'DATE' }]);
+  assert.deepEqual(result[0].diagnostics, {
+    filterCount: 2, inspectedCount: 1, compatibleCount: 1,
+  });
 });
 
 function fixture({ fail = new Set(), verify = true } = {}) {

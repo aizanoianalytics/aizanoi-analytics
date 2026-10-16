@@ -33,6 +33,22 @@ synthetic data before trusting any number.
   (`23:59:59.999` local). If a mapping cannot preserve it, add a
   calculated DATE-truncated field and map that instead.
 
+## Required filters and discovery diagnostics
+
+The extension deliberately discovers only **existing worksheet filter
+metadata** (`getFiltersAsync()` + `getFieldAsync()`); it never enumerates rows
+or requests full-data permission. Before Configure, put the intended raw date
+or date-time field on each worksheet's Filters shelf. Configure shows Tableau's
+`date` and `date-time` types as `DATE` and `DATETIME`. Builds before the
+field-discovery fix incorrectly accepted `DATETIME` but rejected Tableau's real
+`DataType.DateTime` value, `date-time`, hiding valid filters.
+
+If no candidate appears, enable the worksheet checkbox and read its diagnostic.
+`0/1` means Tableau exposed one filter but its field metadata was unreadable;
+`1/1` with no candidate means the filter was inspected but not typed as a date.
+Use the raw field, not a string-formatted date or a discrete `YEAR(...)` /
+`MONTH(...)` part.
+
 ## Synthetic verification cases (run before sign-off)
 
 1. Month-crossing hire/exit; 2. late-entered (delayed) transaction;

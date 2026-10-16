@@ -25,7 +25,8 @@ const STRINGS = {
     hint: 'Yalnızca bu panodaki sayfalar listelenir. Her sayfa için kullanmak istediğiniz tarih alanını seçin; seçilmeyen sayfalara dokunulmaz.',
     save: 'Kaydet', cancel: 'Vazgeç', lang: 'Dil',
     resetLine: 'Temizle düğmesinden etkilensin',
-    ready: 'Hazır', missingField: 'Tarih alanı yok', stale: 'Eşleşme eskimiş — alan artık yok',
+    ready: 'Hazır', missingField: 'Uygun tarih filtresi yok', stale: 'Eşleşme eskimiş — alan artık yok',
+    metadataFailed: 'Filtre alanı türü okunamadı',
     saved: 'Kaydedildi. İletişim kutusu kapanıyor…',
     mockNote: 'Standalone deneme — sentetik pano. Kaydet, Tableau’ya yazmaz; kaydedilecek içeriği aşağıda gösterir.',
     noSheets: 'Bu panoda çalışma sayfası bulunamadı.',
@@ -37,7 +38,8 @@ const STRINGS = {
     hint: 'Only sheets on this dashboard are listed. Pick the date field to use per sheet; unselected sheets are never touched.',
     save: 'Save', cancel: 'Cancel', lang: 'Language',
     resetLine: 'Affected by Reset',
-    ready: 'Ready', missingField: 'No date field', stale: 'Mapping is stale — field no longer exists',
+    ready: 'Ready', missingField: 'No compatible date filter', stale: 'Mapping is stale — field no longer exists',
+    metadataFailed: 'Could not read filter field type',
     saved: 'Saved. Closing the dialog…',
     mockNote: 'Standalone mock — synthetic dashboard. Save does not write to Tableau; it previews the payload below.',
     noSheets: 'No worksheets found on this dashboard.',
@@ -111,7 +113,15 @@ function renderStatic() {
 
 function healthFor(row, discovered) {
   if (!row.enabled) return { key: 'ready', text: t().ready, off: true };
-  if (discovered && discovered.fields.length === 0) return { key: 'missing', text: t().missingField };
+  if (discovered && discovered.fields.length === 0) {
+    const d = discovered.diagnostics || {};
+    const counts = Number.isInteger(d.filterCount)
+      ? ` · ${d.inspectedCount || 0}/${d.filterCount}` : '';
+    if (discovered.error || (d.filterCount > 0 && d.inspectedCount === 0)) {
+      return { key: 'missing', text: `${t().metadataFailed}${counts}` };
+    }
+    return { key: 'missing', text: `${t().missingField}${counts}` };
+  }
   if (discovered && row.caption && !discovered.fields.some((f) => f.caption === row.caption)) {
     return { key: 'stale', text: t().stale };
   }

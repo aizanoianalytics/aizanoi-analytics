@@ -13,6 +13,16 @@ function sheetIdentity(sheet, index) {
   };
 }
 
+function normalizeDateType(value) {
+  // Official Tableau Extensions API DataType enum values are lowercase:
+  // DataType.Date === "date", DataType.DateTime === "date-time".
+  // Accept legacy/fixture spellings too, but always emit our canonical values.
+  const compact = String(value || '').trim().toLowerCase().replace(/[\s_-]/g, '');
+  if (compact === 'date') return 'DATE';
+  if (compact === 'datetime') return 'DATETIME';
+  return null;
+}
+
 /**
  * List worksheets with their compatible DATE/DATETIME field captions.
  * Sheets whose metadata cannot be read report an empty field list with an
@@ -27,24 +37,44 @@ export async function discoverWorksheets(worksheets) {
     try {
       filters = await sheet.getFiltersAsync();
     } catch (error) {
-      out.push({ ...identity, fields: [], error: errorMessage(error) });
+      out.push({
+        ...identity,
+        fields: [],
+        error: errorMessage(error),
+        diagnostics: { filterCount: 0, inspectedCount: 0, compatibleCount: 0 },
+      });
       continue;
     }
+    const list = Array.isArray(filters) ? filters : [];
     const fields = [];
-    for (const filter of Array.isArray(filters) ? filters : []) {
+    const seen = new Set();
+    let inspectedCount = 0;
+    for (const filter of list) {
       let field;
       try {
         field = await filter.getFieldAsync();
+        inspectedCount += 1;
       } catch {
         continue;
       }
-      const dataType = String(field?.dataType || '').toUpperCase();
-      if (dataType !== 'DATE' && dataType !== 'DATETIME') continue;
-      const caption = String(filter.fieldName ?? field.name ?? '');
+      const dataType = normalizeDateType(field?.dataType);
+      if (!dataType) continue;
+      const caption = String(filter.fieldName ?? field.name ?? '').trim();
       if (!caption) continue;
+      const dedupeKey = `${caption}\u0000${dataType}`;
+      if (seen.has(dedupeKey)) continue;
+      seen.add(dedupeKey);
       fields.push({ caption, dataType });
     }
-    out.push({ ...identity, fields });
+    out.push({
+      ...identity,
+      fields,
+      diagnostics: {
+        filterCount: list.length,
+        inspectedCount,
+        compatibleCount: fields.length,
+      },
+    });
   }
   return out;
 }
