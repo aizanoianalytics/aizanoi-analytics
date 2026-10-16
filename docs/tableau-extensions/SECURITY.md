@@ -24,8 +24,12 @@ behavior in sessions that load it live.
 
 Mitigations used by this pilot:
 
-1. **Zero permissions** — even compromised code cannot read dashboard or data
-   source content through the Extensions API.
+1. **Minimal manifest permission** — no `full data` permission is requested.
+   This limits the APIs Tableau authorizes for underlying/full data, but it is
+   not a universal API sandbox: dashboard metadata and some summary/aggregated
+   APIs may remain available without `full data`. The pilot's stronger privacy
+   guarantee comes from the audited application code, which calls only
+   `initializeAsync()` and contains no data or metadata API calls.
 2. **Pinned vendored library** — the Tableau SDK is served from this repository
    at a pinned version (1.10.0, MIT), never from a third-party CDN, so supply
    chain exposure is limited to this domain.

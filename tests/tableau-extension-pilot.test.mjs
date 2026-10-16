@@ -124,6 +124,8 @@ test('catalog page documents privacy, install, requirements and source links', (
   assert.match(catalog, /No data access/i);
   assert.match(catalog, /No telemetry/i);
   assert.match(catalog, /No third-party requests/i);
+  assert.match(catalog, /Full Data permission\s+is not a universal API sandbox/,
+    'privacy copy must distinguish current behavior from Tableau permission limits');
   assert.match(catalog, /Access Local Extensions/,
     'install instructions must match the corporate Tableau 2023.1 flow');
 });
