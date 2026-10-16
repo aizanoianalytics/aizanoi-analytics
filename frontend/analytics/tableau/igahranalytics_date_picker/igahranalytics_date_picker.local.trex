@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest manifest-version="0.1" xmlns="http://www.tableau.com/xml/extension_manifest">
+  <!--
+    IGA HR Analytics - Date Picker.
+    Dashboard Extension only (dashboard extensions work on Tableau Desktop
+    2018.2+, including the 2023.1.22 target; worksheet/viz extensions need
+    2024.2+ and are not used).
+    min-api-version 1.0 keeps the manifest loadable by every Tableau that
+    supports dashboard extensions. The page loads the pinned Extensions API
+    1.10.0 library from the same origin; 1.10.0 needs no newer minimum, while
+    later library releases gate features behind 2024.1+/2024.2+.
+    The Tableau context-menu "Configure..." entry appears because the app
+    registers a configure handler via initializeAsync({ configure }); no
+    newer multi-dialog API is used, per the 2023.1-compatible docs.
+    No <permissions> element: filter metadata + range/clear calls used here
+    need no full-data permission, and no row-level data API is called.
+  -->
+  <dashboard-extension id="com.aizanoianalytics.igahranalytics_date_picker.local" extension-version="1.0.0">
+    <default-locale>tr_TR</default-locale>
+    <name resource-id="name" />
+    <description>Local development manifest; do not use in production.</description>
+    <author name="Aizanoi Analytics" email="tableau@aizanoianalytics.com" organization="Aizanoi Analytics" website="https://aizanoianalytics.com/analytics/tableau/" />
+    <min-api-version>1.0</min-api-version>
+    <source-location>
+      <url>http://127.0.0.1:4173/analytics/tableau/igahranalytics_date_picker/</url>
+    </source-location>
+    <icon>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAYAAABxLuKEAAABUUlEQVR4nO3bwc0BQQBAYUQbNKAFPXBykqhGIcLJSdSgBXdRCE4SsfvMzpIxxvuOImP3/TPZsevvDibra0cVvW8fQK4MAwwDDAMMA/qfGui8m1deG043nxo++ec6Y4BhgGGAYYBhAF6VeqNt5FDVq0P8GG28/7mX46w6RuvjKZxhgGGAYYBhgGFAl25tprnU5sHLdQTDAMMAwwDDAMMAwwC87XBa7lMex1fV3Tx3xgDDAMMAw4DWTyKbPO17fEq42h2C719Mx8neH+KMAYYBhgGGAYYBhgF4z7fuBzml8rtSBMOA1jvf2J1mbjvlEGcMMAwwDDAMMAwwDHDn23HnG8UwINnON7edcogzBhgGGAYYBmCYFP+2lwM6T2cMwJ3vXck74FerIjhjSl1SofNqtJRKi9PkfIJL6dkvL62YP3B0mH/hVQkYBhgGGAYYBhgG3AAy5FbvyHAIBAAAAABJRU5ErkJggg==</icon>
+  </dashboard-extension>
+  <resources>
+    <resource id="name">
+      <text locale="tr_TR">IGA HR Analytics - Tarih Seçici (yerel)</text>
+      <text locale="en_US">IGA HR Analytics - Date Picker (local)</text>
+    </resource>
+  </resources>
+</manifest>

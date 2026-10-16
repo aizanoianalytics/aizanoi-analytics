@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IGA HR Analytics — Date Picker</title>
+  <meta name="description" content="Tableau Dashboard Extension: apply one inclusive date range to every configured worksheet. Synthetic demo outside Tableau.">
+  <link rel="stylesheet" href="ui.css">
+</head>
+<body>
+  <main class="dp" id="app" aria-live="off">
+    <header class="dp-head">
+      <img class="dp-mark" src="icon.png" width="36" height="36" alt="">
+      <div class="dp-titles">
+        <h1 id="app-title">IGA HR Analytics — Date Picker</h1>
+        <p class="dp-sub" id="mode-line">Starting…</p>
+      </div>
+      <div class="dp-head-actions">
+        <div class="dp-locale" role="group" aria-label="Display language / Görüntüleme dili">
+          <button type="button" id="locale-tr" aria-pressed="true">TR</button>
+          <button type="button" id="locale-en" aria-pressed="false">EN</button>
+        </div>
+        <button type="button" id="gear-btn" class="dp-gear" aria-expanded="false" aria-controls="config-popover" title="Settings summary">⚙</button>
+      </div>
+    </header>
+
+    <p class="dp-mocknote" id="mock-banner" hidden></p>
+
+    <section class="dp-configpanel" id="config-popover" hidden aria-label="Configuration summary">
+      <h2 id="config-heading">Configuration</h2>
+      <div id="config-summary"></div>
+      <p class="dp-hint" id="config-hint"></p>
+      <div id="config-action"></div>
+    </section>
+
+    <section class="dp-presets" aria-label="Presets">
+      <div class="dp-preset-row" id="preset-row" role="group" aria-label="Date presets"></div>
+    </section>
+
+    <section class="dp-dates" aria-label="Date range">
+      <label class="dp-field">
+        <span id="start-label">Start date</span>
+        <input type="date" id="start-input" min="1900-01-01" max="2100-12-31" required>
+      </label>
+      <span class="dp-arrow" aria-hidden="true">→</span>
+      <label class="dp-field">
+        <span id="end-label">End date</span>
+        <input type="date" id="end-input" min="1900-01-01" max="2100-12-31" required>
+      </label>
+      <button type="button" id="calendar-btn" class="dp-ghost dp-calbtn" aria-expanded="false" aria-controls="calendar-popover">📅</button>
+    </section>
+
+    <section class="dp-calendar" id="calendar-popover" hidden aria-label="Calendar">
+      <div class="dp-calhead">
+        <button type="button" id="cal-prev" aria-label="Previous month">‹</button>
+        <p id="cal-title" aria-live="polite"></p>
+        <button type="button" id="cal-next" aria-label="Next month">›</button>
+      </div>
+      <div class="dp-calweek" id="cal-week" aria-hidden="true"></div>
+      <div class="dp-calgrid" id="cal-grid" role="group" aria-label="Calendar days"></div>
+    </section>
+
+    <p class="dp-applied" id="applied-line" aria-live="polite"></p>
+    <p class="dp-error" id="form-error" role="alert" hidden></p>
+
+    <section class="dp-actions" aria-label="Apply or reset">
+      <button type="button" id="apply-btn" class="dp-primary">Apply</button>
+      <button type="button" id="reset-btn" class="dp-ghost">Reset</button>
+      <button type="button" id="retry-btn" class="dp-ghost" hidden>Retry failed</button>
+    </section>
+
+    <section class="dp-status" aria-live="polite">
+      <p class="dp-badge" id="status-badge" data-state="booting">Starting…</p>
+      <p class="dp-message" id="status-message"></p>
+      <details class="dp-details" id="result-details" hidden>
+        <summary id="result-summary">Details</summary>
+        <ul class="dp-results" id="result-list"></ul>
+      </details>
+    </section>
+
+    <footer class="dp-foot">
+      <p id="privacy-note"></p>
+    </footer>
+  </main>
+
+  <!-- Pinned Tableau Extensions API, served from this same origin. -->
+  <script src="vendor/tableau.extensions-1.10.0.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
