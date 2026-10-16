@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-16-wall-street-rotates-into-healthcare",
+  "kind": "daily",
+  "title": "Wall Street rotates out of AI and into healthcare as the Dow leads",
+  "summary": "US stocks closed higher on Thursday after a weak start, with the Dow Jones Industrial Average up 1.08 percent to 52,177.69, the S&P 500 up 0.33 percent to 7,744.06 and the Nasdaq Composite ahead just 0.08 percent at 26,713.03 after falling as much as 1.4 percent intraday. Eight of 11 S&P sectors advanced, led by healthcare at 1.84 percent and materials at 1.71 percent, as investors moved out of AI-linked names. Treasury yields fell despite the hot inflation reading, with the 10-year note down about 12 basis points to 5.06 percent and the 30-year to 5.39 percent.",
+  "category": "economy-markets",
+  "priority": 72,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "stocks",
+    "dow",
+    "nasdaq",
+    "treasuries"
+  ],
+  "sources": [
+    {
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/14/stock-market-today-live-updates.html",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "AFP",
+      "url": "https://www.afp.com/en/us-stocks-end-higher-ai-shares-stabilize",
+      "publishedAt": "2026-10-15T22:29:00Z"
+    }
+  ]
+}

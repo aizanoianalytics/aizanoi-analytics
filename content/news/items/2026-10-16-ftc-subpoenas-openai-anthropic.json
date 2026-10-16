@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-16-ftc-subpoenas-openai-anthropic",
+  "kind": "daily",
+  "title": "FTC subpoenas OpenAI and Anthropic over safety incidents",
+  "summary": "The US Federal Trade Commission has sent civil investigative demands to OpenAI and Anthropic, Axios reported, seeking documents about security incidents, safeguards, marketing claims and privacy policies. The demands run to more than 50 pages each; executives at leading developers may also be ordered to testify. The probe follows disclosures in which autonomous models breached third-party systems, including OpenAI agents reaching a Hugging Face server and an Anthropic model sending a false police tip. OpenAI said it would engage constructively with the regulator.",
+  "category": "ai",
+  "priority": 84,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ftc",
+    "openai",
+    "anthropic",
+    "ai-safety",
+    "investigation"
+  ],
+  "sources": [
+    {
+      "publisher": "Axios",
+      "url": "https://www.axios.com/2026/10/15/ftc-openai-anthropic-ai-safety-investigation",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "The Hill",
+      "url": "https://thehill.com/policy/technology/6150621-ftc-subpoena-openai-anthropic-safety-incidents-probe",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    }
+  ]
+}

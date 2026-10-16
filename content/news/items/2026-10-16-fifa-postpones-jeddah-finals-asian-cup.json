@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-16-fifa-postpones-jeddah-finals-asian-cup",
+  "kind": "daily",
+  "title": "FIFA postpones its Jeddah finals as Asian Cup questions grow",
+  "summary": "FIFA and the Saudi Esports Federation postponed the FIFAe Finals 2026, which had been scheduled in Jeddah from 16 to 25 October, citing recent attacks on Saudi Arabia, with no new date announced. Attention has turned to the Asian Cup, due to start in the kingdom on 7 January 2027. Asian Football Confederation president Salman bin Ibrahim Al Khalifa said the tournament is on schedule for now and that a decision could wait until the end of November, while floating 2028 as an option rather than replacing the host at short notice. Football Australia figures expect a postponement.",
+  "category": "football",
+  "priority": 62,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "fifa",
+    "asian-cup",
+    "afc",
+    "saudi-arabia"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/sports/tennis/sports-fifa-postpones-fifae-finals-saudi-arabia-following-attacks-2026-10-15/",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "Nine",
+      "url": "https://www.nine.com.au/sport/football/news-asian-cup-saudi-arabia-conflict-socceroos-players-in-doubt-tony-popovic-contract-20261015-p615xb.html",
+      "publishedAt": "2026-10-15T02:42:00Z"
+    }
+  ]
+}

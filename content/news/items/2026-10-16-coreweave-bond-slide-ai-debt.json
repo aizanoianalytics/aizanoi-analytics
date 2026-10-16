@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-16-coreweave-bond-slide-ai-debt",
+  "kind": "daily",
+  "title": "CoreWeave's bond slide puts the debt behind the AI build-out in focus",
+  "summary": "Shares of Nvidia-backed cloud provider CoreWeave steadied on Thursday after a sharp slump, leaving investors focused on the borrowing that increasingly funds AI data centres. The loss-making company carries about $50 billion of debt, its bond yield traded near 15 percent, above the usual distress signal, and the cost of insuring that debt implies a nearly 63 percent chance of default within five years. CEO Mike Intrator told staff the deal backlog covers its obligations and that markets sometimes act irrationally; Nvidia's Jensen Huang said the company's financial strength is improving.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "coreweave",
+    "ai-datacenters",
+    "credit",
+    "nvidia"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/transactional/coreweave-shares-bonds-slide-further-ai-debt-fears-mount-2026-10-15/",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/article/yikes-coreweave-stock-tanks-on-bond-yield-woes-ceo-blames-market-acting-irrationally-203838274.html",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}

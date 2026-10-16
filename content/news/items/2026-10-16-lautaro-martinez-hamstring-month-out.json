@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-16-lautaro-martinez-hamstring-month-out",
+  "kind": "daily",
+  "title": "Lautaro Martinez out for around a month in a blow to Inter",
+  "summary": "Inter Milan confirmed that captain Lautaro Martinez underwent clinical and diagnostic tests that revealed a strain in his left hamstring, and Italian media reported the Argentina forward will be sidelined for about a month. The 29-year-old is set to miss several Serie A fixtures, including the Milan derby on 31 October, and Champions League games against Shakhtar Donetsk and Feyenoord, with a possible return around Atalanta on 22 November. The injury came days after Inter's 4-3 home defeat by Club Brugge and adds to a widening injury list across Serie A after the European round.",
+  "category": "football",
+  "priority": 70,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "inter",
+    "lautaro-martinez",
+    "serie-a",
+    "injury"
+  ],
+  "sources": [
+    {
+      "publisher": "Inter",
+      "url": "https://www.inter.it/en/news/lautaro-martinez-condition-injury-october-2026",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    },
+    {
+      "publisher": "AFP",
+      "url": "https://www.afp.com/en/inter-skipper-martinez-facing-month-out-thigh-injury",
+      "publishedAt": "2026-10-15T13:52:00Z"
+    }
+  ]
+}

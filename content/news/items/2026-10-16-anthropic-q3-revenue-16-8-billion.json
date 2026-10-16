@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-16-anthropic-q3-revenue-16-8-billion",
+  "kind": "daily",
+  "title": "Anthropic tells pre-IPO investors quarterly revenue reached $16.8bn",
+  "summary": "Anthropic told prospective investors at a pre-IPO meeting in San Francisco that third-quarter revenue rose 45 percent from the prior quarter to $16.8 billion, up from $11.6 billion in the second quarter and $4.7 billion in the first, attendees said. The company also said it was profitable on an adjusted basis and cash-flow positive. The growth still decelerated from earlier in 2026, and analysts who met executives put a possible year-end annual run rate near $110 billion. The listing, expected before a comparable move by OpenAI, may slip past November's US midterms.",
+  "category": "ai",
+  "priority": 80,
+  "publishedAt": "2026-10-16T05:00:00Z",
+  "updatedAt": "2026-10-16T05:00:00Z",
+  "retrievedAt": "2026-10-16T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ipo",
+    "revenue",
+    "ai-economy"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/finance/anthropics-q3-revenue-surges-45-nearly-17-billion-2026-10-14/",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    },
+    {
+      "publisher": "New York Post",
+      "url": "https://nypost.com/2026/10/14/business/anthropic-revenue-surges-45-to-nearly-17b-in-third-quarter",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ]
+}
