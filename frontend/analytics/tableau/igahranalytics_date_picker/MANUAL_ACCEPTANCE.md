@@ -11,9 +11,13 @@ excluded. Use fabricated dates only — no real employee records.
 
 ## Install & connect
 
-- [ ] A. Download `igahranalytics_date_picker.trex` from
+- [ ] A. Download a FRESH `igahranalytics_date_picker.trex` from
   `https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/igahranalytics_date_picker.trex`
-  (after release deploy).
+  (after release deploy). Never reuse a previously downloaded copy: v1.0.0
+  manifests are rejected with FD722608. First assert the install parses
+  with NO manifest error — only then continue to HTTPS load and filtering.
+  If any workbook used the old manifest identity, remove and re-add the
+  extension (the id changed to `com.aizanoianalytics.igahranalytics.datepicker`).
 - [ ] B. Drag **Extension** onto the dashboard → **Access Local Extensions**
   → select the manifest. UI renders, status says **Tableau connected**,
   no prompt for underlying/full data.

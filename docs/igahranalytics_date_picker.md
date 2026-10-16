@@ -151,7 +151,7 @@ Before changes, read: repository index.md, AGENTS.md, frontend/index.md, fronten
 - Use a version-compatible tableau.extensions JS SDK bundle and document integrity/provenance. No live CDN.
 - Bootstrap via tableau.extensions.initializeAsync(...) and access dashboardContent.dashboard.worksheets. Render a useful offline/static mock only when opened in normal browser, but never show fake “Connected to Tableau.”
 - If using “Configure…” context-menu item, include the corresponding .trex manifest declaration and initialization callback; avoid newer multi-dialog API not available on 2023.1.
-- XML manifest must include proper unique reverse-domain extension ID, display name, version, minimum supported API, source-location, and a valid embedded icon per Tableau docs. Suggested reverse-domain ID: com.aizanoianalytics.igahranalytics_date_picker.
+- XML manifest must include proper unique reverse-domain extension ID, display name, version, minimum supported API, source-location, and a valid embedded icon per Tableau docs. Required extension ID: com.aizanoianalytics.igahranalytics.datepicker (underscores are rejected by the Tableau XSD with FD722608 — issue #362). Context menu must be `<context-menu><configure-context-menu-item /></context-menu>` placed AFTER `<icon>`; `<icon>` carries bare Base64 (no data: URI).
 - Explicitly do not request full-data permission by default.
 - Use accessible native input controls when practical; a custom calendar must be keyboard-accessible, ARIA-labeled, focus-managed, and tested on Desktop embedded Chromium (not only latest standalone Chrome).
 - Avoid frameworks where a small vanilla JS implementation would suffice. No unrelated package or build-system upheaval.
