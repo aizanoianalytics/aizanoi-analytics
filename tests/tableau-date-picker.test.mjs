@@ -10,18 +10,74 @@ const readProduct = (name) => readFileSync(join(productDir, name), 'utf8');
 
 const PROD_URL = 'https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/';
 const PROD_TREX = 'https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/igahranalytics_date_picker.trex';
-const EXTENSION_ID = 'com.aizanoianalytics.igahranalytics_date_picker';
+const EXTENSION_ID = 'com.aizanoianalytics.igahranalytics.datepicker';
+const LOCAL_EXTENSION_ID = 'com.aizanoianalytics.igahranalytics.datepicker.local';
 
 /** Strip XML comments: documentation prose must not satisfy structural checks. */
 const stripComments = (xml) => xml.replace(/<!--[\s\S]*?-->/g, '');
 
-const trexText = (trex, tag) => {
-  const open = `<${tag}>`;
-  const close = `</${tag}>`;
-  const start = trex.indexOf(open);
-  const end = trex.indexOf(close, start + open.length);
-  assert.ok(start >= 0 && end > start, `TREX must contain <${tag}>`);
-  return trex.slice(start + open.length, end).trim();
+/**
+ * Tableau manifest XSD rules, transcribed from real FD722608 errors on
+ * Desktop 2023.1.22 (issue #362) and the official manifest/configure docs:
+ * - dashboard-extension id MUST match [A-Za-z]{2,6}(\.[A-Za-z0-9-]{1,63})+
+ *   (underscores forbidden);
+ * - dashboard-extension children are ORDERED: default-locale, name,
+ *   description, author, min-api-version, source-location, icon,
+ *   [permissions], [context-menu], [layout];
+ * - <context-menu> holds exactly one <configure-context-menu-item /> with
+ *   NO attributes; <configure-menu-item> and title-resource-id do not exist;
+ * - <icon> is BARE Base64 of a 70x70 PNG (no data: URI prefix);
+ * - every resource-id reference resolves; no orphaned <resource> survives.
+ * Returns an array of violation strings (empty = valid).
+ */
+const ID_PATTERN = /^[A-Za-z]{2,6}(\.[A-Za-z0-9-]{1,63})+$/;
+const CHILD_ORDER = ['default-locale', 'name', 'description', 'author', 'min-api-version',
+  'source-location', 'icon', 'permissions', 'context-menu', 'layout'];
+
+const validateManifest = (label, trex) => {
+  const errors = [];
+  const xml = stripComments(trex);
+  if (!/^<\?xml version="1\.0" encoding="utf-8"\?>/.test(xml)) errors.push('missing XML declaration');
+  if (!/<manifest manifest-version="0\.1" xmlns="http:\/\/www\.tableau\.com\/xml\/extension_manifest">/.test(xml)) {
+    errors.push('manifest root/namespace wrong');
+  }
+  const ext = xml.match(/<dashboard-extension id="([^"]+)" extension-version="([^"]+)">([\s\S]*?)<\/dashboard-extension>/);
+  if (!ext) { errors.push('missing dashboard-extension block'); return errors; }
+  const [, id, version, inner] = ext;
+  if (!ID_PATTERN.test(id)) errors.push(`id "${id}" violates Tableau reverse-domain pattern`);
+  if (!/^\d+\.\d+\.\d+$/.test(version)) errors.push(`version "${version}" is not semver`);
+  if (/<worksheet-extension/.test(xml)) errors.push('must be dashboard-extension, not worksheet-extension');
+  const tags = [...inner.matchAll(/<([a-z-]+)(?=[\s/>])/g)].map((m) => m[1])
+    .filter((t) => t !== 'url' && t !== 'configure-context-menu-item');
+  const unknown = tags.filter((t) => !CHILD_ORDER.includes(t));
+  if (unknown.length) errors.push(`unknown dashboard-extension children: ${[...new Set(unknown)].join(',')}`);
+  const order = [...new Set(tags.filter((t) => CHILD_ORDER.includes(t)))];
+  const sorted = [...order].sort((a, b) => CHILD_ORDER.indexOf(a) - CHILD_ORDER.indexOf(b));
+  if (order.join(',') !== sorted.join(',')) errors.push(`children out of Tableau order: ${order.join(',')}`);
+  if (/<permissions>/.test(inner)) errors.push('must not request data permissions');
+  if (/<configure-menu-item/.test(inner)) errors.push('<configure-menu-item> is not a Tableau element');
+  if (/title-resource-id/.test(inner)) errors.push('title-resource-id is not a Tableau attribute');
+  const cm = inner.match(/<context-menu>([\s\S]*?)<\/context-menu>/);
+  if (cm && cm[1].trim() !== '<configure-context-menu-item />') {
+    errors.push('<context-menu> must hold exactly <configure-context-menu-item />');
+  }
+  const icon = (inner.match(/<icon>([\s\S]*?)<\/icon>/) || [])[1];
+  if (icon === undefined) errors.push('missing <icon>');
+  else if (/^\s*data:/.test(icon) || icon.includes(',')) errors.push('<icon> must be bare Base64, not a data URI');
+  else {
+    let png;
+    try { png = Buffer.from(icon.trim(), 'base64'); } catch { png = null; }
+    if (!png || png.toString('ascii', 1, 4) !== 'PNG') errors.push('<icon> is not decodable PNG bytes');
+    else if (png.readUInt32BE(16) !== 70 || png.readUInt32BE(20) !== 70) {
+      errors.push('<icon> PNG is not 70x70');
+    }
+  }
+  const refs = [...xml.matchAll(/resource-id="([^"]+)"/g)].map((m) => m[1]);
+  const defs = [...xml.matchAll(/<resource id="([^"]+)">/g)].map((m) => m[1]);
+  for (const r of refs) if (!defs.includes(r)) errors.push(`resource-id "${r}" has no <resource>`);
+  for (const d of defs) if (!refs.includes(d)) errors.push(`orphaned <resource id="${d}"> (remove unused resources)`);
+  if (!/<\/dashboard-extension>\s*<resources>/.test(xml)) errors.push('resources must follow dashboard-extension');
+  return errors;
 };
 
 test('product files exist: app, config, styles, cores, manifests, docs, screenshots', () => {
@@ -72,41 +128,47 @@ test('extension is static: no external requests, telemetry, storage or row-level
   }
 });
 
-test('production manifest is a Dashboard Extension with configure menu and no permissions', () => {
+test('production manifest passes Tableau XSD rules (FD722608 regression, issue #362)', () => {
   const trex = readProduct('igahranalytics_date_picker.trex');
-  assert.match(trex, /^<\?xml version="1\.0" encoding="utf-8"\?>/);
-  assert.match(trex, /<manifest manifest-version="0\.1" xmlns="http:\/\/www\.tableau\.com\/xml\/extension_manifest">/);
-  const ext = trex.match(/<dashboard-extension id="([^"]+)" extension-version="([^"]+)">/);
-  assert.ok(ext, 'must declare a dashboard-extension (NOT worksheet/viz extension)');
-  assert.equal(ext[1], EXTENSION_ID);
-  assert.match(ext[2], /^\d+\.\d+\.\d+$/);
-  assert.doesNotMatch(trex, /<worksheet-extension/);
-  assert.equal(trexText(trex, 'min-api-version'), '1.0');
-  assert.equal(trexText(trex, 'url'), PROD_URL);
+  assert.deepEqual(validateManifest('prod', trex), [], 'production TREX must be Tableau-valid');
   const xml = stripComments(trex);
-  assert.match(xml, /<context-menu>\s*<configure-menu-item title-resource-id="configure" ?\/>\s*<\/context-menu>/,
-    'dashboard extension must declare the Configure context-menu item');
-  const icon = trexText(xml, 'icon');
-  assert.match(icon, /^data:image\/png;base64,[A-Za-z0-9+/=]+$/, 'TREX requires the 70x70 PNG inline as Base64');
-  const png = Buffer.from(icon.slice('data:image/png;base64,'.length), 'base64');
-  assert.equal(png.toString('ascii', 1, 4), 'PNG');
-  assert.equal(png.readUInt32BE(16), 70, 'inline icon width');
-  assert.equal(png.readUInt32BE(20), 70, 'inline icon height');
-  assert.match(xml, /<\/dashboard-extension>\s*<resources>/, 'resources must be a root child after dashboard-extension');
-  assert.match(xml, /<resource id="configure">[\s\S]*?<text locale="en_US">Configure\.\.\.<\/text>/);
+  assert.match(xml, new RegExp(`<dashboard-extension id="${EXTENSION_ID.replaceAll('.', '\\.')}"`));
   assert.match(xml, /<text locale="tr_TR">/, 'name resource must ship Turkish');
   assert.match(xml, /<text locale="en_US">/, 'name resource must ship English');
-  assert.doesNotMatch(xml, /<permissions>/, 'date-range filtering requests no data permissions');
+  const url = xml.match(/<source-location>\s*<url>([^<]+)<\/url>/);
+  assert.ok(url, 'source-location url required');
+  assert.equal(url[1].trim(), PROD_URL);
 });
 
-test('local manifest mirrors production shape with a distinct local id and URL', () => {
+test('local manifest is independently Tableau-valid with a distinct local id', () => {
   const local = readProduct('igahranalytics_date_picker.local.trex');
-  const ext = local.match(/<dashboard-extension id="([^"]+)" extension-version="([^"]+)">/);
-  assert.ok(ext, 'local manifest must declare a dashboard-extension');
-  assert.ok(ext[1].endsWith('.local'), 'local manifest needs its own id');
-  assert.notEqual(ext[1], EXTENSION_ID, 'local manifest must not reuse the production extension id');
-  assert.equal(trexText(local, 'url'), 'http://127.0.0.1:4173/analytics/tableau/igahranalytics_date_picker/');
-  assert.doesNotMatch(stripComments(local), /<permissions>/);
+  assert.deepEqual(validateManifest('local', local), [], 'local TREX must be Tableau-valid');
+  const ext = stripComments(local).match(/<dashboard-extension id="([^"]+)"/);
+  assert.equal(ext[1], LOCAL_EXTENSION_ID);
+  assert.notEqual(ext[1], EXTENSION_ID);
+  assert.match(local, /<url>http:\/\/127\.0\.0\.1:4173\/analytics\/tableau\/igahranalytics_date_picker\/<\/url>/);
+});
+
+test('manifest validator rejects each FD722608 defect class (negative fixtures)', () => {
+  const good = readProduct('igahranalytics_date_picker.trex');
+  const base = stripComments(good);
+  const iconB64 = base.match(/<icon>([\s\S]*?)<\/icon>/)[1].trim();
+  const cases = [
+    ['underscore id', (x) => x.replace(EXTENSION_ID, 'com.aizanoianalytics.igahranalytics_date_picker'), /reverse-domain/],
+    ['wrong configure tag', (x) => x.replace('<configure-context-menu-item />', '<configure-menu-item title-resource-id="configure" />'), /not a Tableau element/],
+    ['data-URI icon', (x) => x.replace(`<icon>${iconB64}`, '<icon>data:image/png;base64,' + iconB64), /bare Base64/],
+    ['context-menu before icon', (x) => {
+      const cm = x.match(/<context-menu>[\s\S]*?<\/context-menu>\s*/)[0];
+      return x.replace(cm, '').replace(/(<source-location>[\s\S]*?<\/source-location>\s*)/, `$1${cm}`);
+    }, /out of Tableau order/],
+    ['orphaned resource', (x) => x.replace(/<\/resources>/, '<resource id="stale"><text locale="en_US">Stale</text></resource>\n</resources>'), /orphaned/],
+    ['full-data permission', (x) => x.replace('</icon>', '</icon>\n<permissions><permission>full data</permission></permissions>'), /must not request data permissions/],
+  ];
+  for (const [label, mutate, expected] of cases) {
+    const violations = validateManifest(label, mutate(base));
+    assert.ok(violations.length > 0, `fixture "${label}" must fail validation`);
+    assert.match(violations.join('; '), expected, `fixture "${label}" must fail for the right reason`);
+  }
 });
 
 test('app uses the vendored pinned SDK and the official 2023.1-compatible filter APIs', () => {

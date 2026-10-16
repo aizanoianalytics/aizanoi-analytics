@@ -13,14 +13,19 @@ Tableau dashboard extensions.
 | Date picker web app (Tableau loads this) | `https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/` |
 | Date picker `.trex` manifest (downloaded by the user) | `https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/igahranalytics_date_picker.trex` |
 
-Date picker identity:
+Date picker identity (v1.0.1+, issue #362 fix):
 
-- Extension id: `com.aizanoianalytics.igahranalytics_date_picker`
-- Version: `1.0.0`
+- Extension id: `com.aizanoianalytics.igahranalytics.datepicker`
+  (reverse-domain, no underscores — Tableau XSD rejects the old
+  `com.aizanoianalytics.igahranalytics_date_picker` with FD722608).
+- Version: `1.0.1`
 - Type: **Dashboard Extension** (`<dashboard-extension>`), never a worksheet/viz
   extension.
 - Local development manifest: `igahranalytics_date_picker.local.trex`
-  (id suffix `.local`, loopback URL). Never ship it to production.
+  (id `...datepicker.local`, loopback URL). Never ship it to production.
+- Migration: the id change is a new manifest identity — any workbook that
+  used the pre-1.0.1 manifest must re-add the extension from a freshly
+  downloaded `.trex` (never reuse a cached copy of the old file).
 
 Pilot identity:
 
