@@ -5,6 +5,16 @@ const NEW_HR_DASHBOARDS = Object.freeze([
 
 export const TABLEAU_EXTENSION_LINKS = Object.freeze([
   Object.freeze({
+    title:'IGA HR Analytics — Date Picker',
+    summary:'Apply one inclusive date range to every configured worksheet (per-sheet DATE/DATETIME captions, TR/EN, presets). Target Tableau Desktop 2023.1.',
+    href:'https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/',
+  }),
+  Object.freeze({
+    title:'Download date picker .trex manifest',
+    summary:'igahranalytics_date_picker.trex — add via Tableau Desktop Objects → Extension → Access Local Extensions.',
+    href:'https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/igahranalytics_date_picker.trex',
+  }),
+  Object.freeze({
     title:'Download .trex manifest',
     summary:'aizanoi-hello.trex — add via Tableau Desktop Objects → Extension → Access Local Extensions.',
     href:'https://aizanoianalytics.com/analytics/tableau/hello/aizanoi-hello.trex',

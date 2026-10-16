@@ -31,6 +31,47 @@
       </div>
     </header>
 
+    <section class="analytics-section" id="date-picker">
+      <h2>Featured: IGA HR Analytics — Date Picker</h2>
+      <p>
+        The date picker is a Tableau Dashboard Extension that applies one
+        inclusive date range to every explicitly configured worksheet at
+        once — even when those worksheets use differently named date fields
+        (for example <code>processing_time</code>,
+        <code>duzeltilmis_max_date</code> and <code>exit_date</code>).
+        Turkish default with an English option, presets plus custom range,
+        per-sheet opt-in mapping, honest partial-failure reporting, and no
+        row-level data access.
+      </p>
+      <div class="analytics-cta-row">
+        <a class="analytics-btn" href="https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/">Open date picker app</a>
+        <a class="analytics-btn analytics-btn-ghost" href="https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/igahranalytics_date_picker.trex" download>Download date picker .trex</a>
+      </div>
+      <h3>Install on Tableau Desktop 2023.1.22</h3>
+      <ol class="analytics-steps">
+        <li>Download <code>igahranalytics_date_picker.trex</code> from the button above.</li>
+        <li>In Tableau Desktop, create or open a dashboard.</li>
+        <li>Drag <strong>Extension</strong> from the Objects panel onto the dashboard.</li>
+        <li>Choose <strong>Access Local Extensions</strong> and select the downloaded file.</li>
+        <li>Approve the extension dialog. The extension shows
+            <strong>Tableau connected</strong> when the handshake succeeds.</li>
+      </ol>
+      <h3>Configure, Apply, Reset</h3>
+      <ol class="analytics-steps">
+        <li>Right-click the extension zone and choose <strong>Configure…</strong> to opt in
+            worksheets and map each sheet's own DATE/DATETIME field caption.</li>
+        <li>Pick a preset or a custom start/end range, then press <strong>Apply</strong>.
+            Draft edits never touch Tableau until Apply.</li>
+        <li><strong>Reset</strong> clears only mapped fields that opted into reset; it does
+            not restore previous filter state.</li>
+      </ol>
+      <p class="analytics-note">Corporate validation is still <strong>pending manual testing</strong> —
+      manual verification pending on a corporate Tableau Desktop 2023.1 machine:
+      this extension has <strong>not yet been validated on corporate Tableau Desktop 2023.1</strong>.
+      Use synthetic/demo dates only until the owner completes the
+      acceptance checklist. Blocked network or policy outcomes are documented, never bypassed.</p>
+    </section>
+
     <section class="analytics-section" id="how-to-install">
       <h2>How to Install</h2>
       <ol class="analytics-steps">

@@ -10,6 +10,17 @@ Tableau dashboard extensions.
 | Extension catalog | `https://aizanoianalytics.com/analytics/tableau/` |
 | Pilot web app (Tableau loads this) | `https://aizanoianalytics.com/analytics/tableau/hello/` |
 | `.trex` manifest (downloaded by the user) | `https://aizanoianalytics.com/analytics/tableau/hello/aizanoi-hello.trex` |
+| Date picker web app (Tableau loads this) | `https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/` |
+| Date picker `.trex` manifest (downloaded by the user) | `https://aizanoianalytics.com/analytics/tableau/igahranalytics_date_picker/igahranalytics_date_picker.trex` |
+
+Date picker identity:
+
+- Extension id: `com.aizanoianalytics.igahranalytics_date_picker`
+- Version: `1.0.0`
+- Type: **Dashboard Extension** (`<dashboard-extension>`), never a worksheet/viz
+  extension.
+- Local development manifest: `igahranalytics_date_picker.local.trex`
+  (id suffix `.local`, loopback URL). Never ship it to production.
 
 Pilot identity:
 
@@ -34,10 +45,30 @@ frontend/analytics/tableau/
     vendor/
       tableau.extensions-1.10.0.min.js
       LICENSE-tableau-extensions.txt
+  igahranalytics_date_picker/
+    index.html               # date picker shell loaded inside Tableau
+    config.html              # mapping dialog (only settings writer)
+    app.js                   # filter UI (metadata read + range/clear write)
+    config.js                # opt-in mapping + settings.set/saveAsync
+    ui.css
+    core/                    # pure date/preset/settings/apply/discovery modules
+    igahranalytics_date_picker.trex        # production manifest (XML)
+    igahranalytics_date_picker.local.trex  # loopback development manifest
+    icon.png                 # 70x70 extension icon (Tableau limit)
+    vendor/                  # pinned SDK 1.10.0 + license (same-origin only)
+    README.md                # install/configure/build/test, live URLs, status
+    SECURITY.md              # product capability policy
+    MANUAL_ACCEPTANCE.md     # owner-owned corporate checklist (pending)
+    AUTHOR_GUIDE.md          # per-sheet mapping + calculation guidance
+    mock-narrow.png          # labeled standalone capture, 280px zone
+    mock-wide.png            # labeled standalone capture, 900px zone
 docs/tableau-extensions/
   README.md
   SECURITY.md
 tests/tableau-extension-pilot.test.mjs
+tests/tableau-date-picker-core.test.mjs       # dates/presets/settings/apply units
+tests/tableau-date-picker.test.mjs             # static/manifest/API/catalog/screenshot gates
+tests/browser/tableau-date-picker.test.mjs    # real app + stubbed Tableau API
 ```
 
 ## Extensions API version

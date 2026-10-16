@@ -63,3 +63,17 @@ extension, that outcome is documented as a constraint, not worked around.
 This pilot has **not** been validated on the corporate Tableau Desktop
 2023.1.22 machine. Success there is a manual, owned test; automated tests cover
 the web-side contract and a mocked Tableau API only.
+
+## Date picker policy: `IGA HR Analytics — Date Picker`
+
+The date picker (`frontend/analytics/tableau/igahranalytics_date_picker/`,
+product docs `README.md`, `SECURITY.md`, `MANUAL_ACCEPTANCE.md`,
+`AUTHOR_GUIDE.md`) extends the pilot posture with filter-metadata
+APIs: it reads worksheet/filter metadata (`getFiltersAsync` +
+`filter.getFieldAsync`) and writes per-caption range filters
+(`applyRangeFilterAsync` / `clearFilterAsync`). Row-level data APIs,
+full-data permission, network calls, telemetry, storage and credentials
+remain forbidden and contract-tested. Settings persist only the versioned
+non-sensitive mapping document, written exclusively from the configuration
+dialog. Like the pilot, it is **not** validated on the corporate Tableau
+Desktop 2023.1.22 machine — see its `MANUAL_ACCEPTANCE.md`.

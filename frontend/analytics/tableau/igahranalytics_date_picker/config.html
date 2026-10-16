@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configure — IGA HR Analytics Date Picker</title>
+  <meta name="description" content="Per-worksheet opt-in date-field mapping for the IGA HR Analytics date picker.">
+  <link rel="stylesheet" href="ui.css">
+</head>
+<body>
+  <main class="dp dp-dialog" id="config-app">
+    <header class="dp-head">
+      <div class="dp-titles">
+        <h1 id="dlg-title">Extension configuration</h1>
+        <p class="dp-sub" id="dlg-mode">Loading…</p>
+      </div>
+    </header>
+
+    <p class="dp-mocknote" id="dlg-mocknote" hidden></p>
+    <p class="dp-error" id="dlg-error" role="alert" hidden></p>
+
+    <section aria-label="Display language">
+      <h2 class="dp-h2" id="dlg-lang-h">Language</h2>
+      <div class="dp-locale" role="group" aria-label="Configuration language">
+        <button type="button" id="dlg-tr" aria-pressed="true">Türkçe</button>
+        <button type="button" id="dlg-en" aria-pressed="false">English</button>
+      </div>
+    </section>
+
+    <section aria-label="Worksheet mappings">
+      <h2 class="dp-h2" id="dlg-sheets-h">Worksheets</h2>
+      <p class="dp-hint" id="dlg-sheets-hint"></p>
+      <ul class="dp-sheetlist" id="mapping-list"></ul>
+    </section>
+
+    <section class="dp-actions" aria-label="Save or cancel">
+      <button type="button" id="save-btn" class="dp-primary">Save</button>
+      <button type="button" id="cancel-btn" class="dp-ghost">Cancel</button>
+    </section>
+
+    <section aria-label="Saved payload preview">
+      <h2 class="dp-h2" id="dlg-saved-h" hidden>Saved settings</h2>
+      <pre class="dp-code" id="dlg-saved" hidden></pre>
+    </section>
+
+    <footer class="dp-foot">
+      <p id="dlg-privacy"></p>
+    </footer>
+  </main>
+
+  <script src="vendor/tableau.extensions-1.10.0.min.js"></script>
+  <script type="module" src="config.js"></script>
+</body>
+</html>

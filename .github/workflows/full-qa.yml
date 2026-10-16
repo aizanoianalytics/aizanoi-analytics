@@ -90,6 +90,9 @@ jobs:
           # Mock-API connectivity states for the /analytics/tableau/hello/
           # pilot; keeps the extension state machine under routine QA.
           node --test tests/browser/tableau-hello.test.mjs 2>&1 | tee artifacts/diagnostics/tableau-hello.log || status=1
+          # Date-picker transport suite: real app against a stubbed Tableau
+          # Extensions API (3 mapped sheets + 1 excluded). Owned only here.
+          node --test tests/browser/tableau-date-picker.test.mjs 2>&1 | tee artifacts/diagnostics/tableau-date-picker.log || status=1
           exit $status
       - name: New HR Collection browser QA (PACS + Recruitment Analytics)
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173', INTERN_PAGE_PASSWORD: '${{ secrets.INTERN_PAGE_PASSWORD }}' }
