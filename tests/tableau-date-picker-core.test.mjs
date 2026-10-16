@@ -103,6 +103,7 @@ test('discovery accepts Tableau SDK date enums including real DateTime value "da
   ]);
   assert.deepEqual(result[0].diagnostics, {
     filterCount: 4, inspectedCount: 4, compatibleCount: 3,
+    observedTypes: ['date', 'date-time', 'DATETIME', 'string'],
   });
 });
 
@@ -120,7 +121,42 @@ test('discovery reports metadata failures without hiding valid fields from the s
   assert.deepEqual(result[0].fields, [{ caption: 'Exit Date', dataType: 'DATE' }]);
   assert.deepEqual(result[0].diagnostics, {
     filterCount: 2, inspectedCount: 1, compatibleCount: 1,
+    observedTypes: ['date'],
   });
+});
+
+test('discovery infers dates from Tableau range/relative-date filter metadata when Field.dataType is absent', async () => {
+  const dataValue = (value, formattedValue) => ({ value, nativeValue: value, formattedValue });
+  const filters = [
+    {
+      fieldName: 'duzeltilmis_max_date', filterType: 'range',
+      minValue: dataValue('2025-01-01', '1.01.2025'),
+      maxValue: dataValue('2026-06-12', '12.06.2026'),
+      async getFieldAsync() { return { name: this.fieldName, dataType: undefined }; },
+    },
+    {
+      fieldName: 'Updated At', filterType: 'range',
+      minValue: dataValue('2025-01-01T10:30:00', '1.01.2025 10:30'),
+      maxValue: dataValue('2026-06-12T18:45:00', '12.06.2026 18:45'),
+      async getFieldAsync() { return { name: this.fieldName, dataType: 'unknown' }; },
+    },
+    {
+      fieldName: 'Relative Hire Date', filterType: 'relative-date', anchorDate: dataValue('2026-01-01', '1.01.2026'),
+      async getFieldAsync() { return { name: this.fieldName, dataType: null }; },
+    },
+    {
+      fieldName: 'Salary', filterType: 'range',
+      minValue: dataValue(1000, '1,000'), maxValue: dataValue(9000, '9,000'),
+      async getFieldAsync() { return { name: this.fieldName, dataType: undefined }; },
+    },
+  ];
+  const result = await discoverWorksheets([{ id: 'a', name: 'A', async getFiltersAsync() { return filters; } }]);
+  assert.deepEqual(result[0].fields, [
+    { caption: 'duzeltilmis_max_date', dataType: 'DATE' },
+    { caption: 'Updated At', dataType: 'DATETIME' },
+    { caption: 'Relative Hire Date', dataType: 'DATE' },
+  ]);
+  assert.deepEqual(result[0].diagnostics.observedTypes, ['(missing)', 'unknown', '(missing)', '(missing)']);
 });
 
 function fixture({ fail = new Set(), verify = true } = {}) {

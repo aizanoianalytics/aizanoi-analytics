@@ -45,7 +45,11 @@ field-discovery fix incorrectly accepted `DATETIME` but rejected Tableau's real
 
 If no candidate appears, enable the worksheet checkbox and read its diagnostic.
 `0/1` means Tableau exposed one filter but its field metadata was unreadable;
-`1/1` with no candidate means the filter was inspected but not typed as a date.
+`1/1` with no candidate means the filter was inspected but was neither typed
+as a date nor exposed as a date-shaped RangeFilter/RelativeDateFilter. The
+diagnostic also prints Tableau's observed field type(s). Date-shaped range
+inference checks both boundaries (ISO or locale dates) and deliberately rejects
+numeric ranges, so salary/measure sliders cannot become date candidates.
 Use the raw field, not a string-formatted date or a discrete `YEAR(...)` /
 `MONTH(...)` part.
 

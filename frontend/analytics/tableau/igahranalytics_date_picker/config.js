@@ -117,10 +117,12 @@ function healthFor(row, discovered) {
     const d = discovered.diagnostics || {};
     const counts = Number.isInteger(d.filterCount)
       ? ` · ${d.inspectedCount || 0}/${d.filterCount}` : '';
+    const types = Array.isArray(d.observedTypes) && d.observedTypes.length
+      ? ` · ${[...new Set(d.observedTypes)].join(', ')}` : '';
     if (discovered.error || (d.filterCount > 0 && d.inspectedCount === 0)) {
-      return { key: 'missing', text: `${t().metadataFailed}${counts}` };
+      return { key: 'missing', text: `${t().metadataFailed}${counts}${types}` };
     }
-    return { key: 'missing', text: `${t().missingField}${counts}` };
+    return { key: 'missing', text: `${t().missingField}${counts}${types}` };
   }
   if (discovered && row.caption && !discovered.fields.some((f) => f.caption === row.caption)) {
     return { key: 'stale', text: t().stale };
