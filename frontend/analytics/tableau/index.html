@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tableau Extensions — Aizanoi Analytics</title>
+  <meta name="description" content="Aizanoi Hello, the Aizanoi Analytics Tableau Dashboard Extension connectivity pilot: installation, requirements and privacy policy.">
+  <link rel="canonical" href="https://aizanoianalytics.com/analytics/tableau/">
+  <link rel="icon" href="/assets/branding/aizanoi-logo-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/analytics/tableau/catalog.css">
+</head>
+<body>
+  <main class="analytics-main">
+    <nav class="analytics-crumb" aria-label="Breadcrumb">
+      <a href="/analytics/">Analytics</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Tableau Extensions</span>
+    </nav>
+
+    <header class="analytics-hero">
+      <p class="analytics-eyebrow">EXTENSION PILOT · TABLET DASHBOARD EXTENSION</p>
+      <h1>Tableau Extensions</h1>
+      <p class="analytics-lede">
+        Aizanoi Hello is a connectivity pilot for Tableau Dashboard Extensions. It proves that a
+        web application published by Aizanoi Analytics loads, initializes and can be added from
+        Tableau Desktop. It reads no dashboard, worksheet or data source information.
+      </p>
+      <div class="analytics-cta-row">
+        <a class="analytics-btn" href="https://aizanoianalytics.com/analytics/tableau/hello/">Open pilot app</a>
+        <a class="analytics-btn analytics-btn-ghost" href="https://aizanoianalytics.com/analytics/tableau/hello/aizanoi-hello.trex" download>Download .trex manifest</a>
+      </div>
+    </header>
+
+    <section class="analytics-section" id="how-to-install">
+      <h2>How to Install</h2>
+      <ol class="analytics-steps">
+        <li>In Tableau Desktop, create or open a dashboard.</li>
+        <li>Drag <strong>Extension</strong> from the Objects panel onto the dashboard.</li>
+        <li>Choose <strong>Access Local Extensions</strong> and select the downloaded
+            <code>aizanoi-hello.trex</code> file.</li>
+        <li>Approve the extension dialog. The pilot shows
+            <strong>Tableau connected</strong> when the handshake succeeds.</li>
+      </ol>
+      <p class="analytics-note">On a plain browser the same URL shows
+      <strong>Demo / Tableau not detected</strong> — that state is expected outside Tableau.</p>
+    </section>
+
+    <section class="analytics-section" id="requirements">
+      <h2>Requirements</h2>
+      <ul class="analytics-list">
+        <li>Tableau Desktop 2018.2 or newer (dashboard extensions; verified against 2023.1).</li>
+        <li>Tableau Server 2018.2 or Tableau Cloud.</li>
+        <li>Network access to <code>https://aizanoianalytics.com</code> from the machine running Tableau.</li>
+        <li>A modern Chromium-based browser engine (the Tableau embedded browser).</li>
+      </ul>
+    </section>
+
+    <section class="analytics-section" id="privacy-security">
+      <h2>Privacy &amp; Security</h2>
+      <ul class="analytics-list">
+        <li><strong>No data access in this code</strong> — the pilot calls only <code>initializeAsync()</code>; it requests no optional Full Data permission and invokes no dashboard, worksheet or data source API.</li>
+        <li><strong>No telemetry</strong> — the extension makes no analytics, tracking or error-reporting calls.</li>
+        <li><strong>No third-party requests</strong> — all assets (HTML, CSS, JS, the pinned Extensions API library) load from this origin only.</li>
+        <li><strong>No credentials</strong> — the extension stores and transmits nothing.</li>
+        <li>Only dummy/demo content is used; <strong>no real corporate data</strong> is read, copied, stored or sent.</li>
+      </ul>
+      <h3>Known risk of hosted extensions</h3>
+      <p>
+        A dashboard extension is a web page that runs inside Tableau. Once loaded, any future
+        change to the public JavaScript could alter what an extension can do inside your
+        Tableau session. This pilot does not request the optional <em>Full Data</em> permission
+        and its audited code calls only <code>initializeAsync()</code>. <strong>Full Data permission
+        is not a universal API sandbox</strong>: dashboard metadata and some summary/aggregated
+        APIs may remain available without it, so the privacy guarantee depends on the published
+        code continuing to avoid those APIs. Future Aizanoi extensions that need workbook data
+        will ship with a separate permission model, pinned versions and a security review before
+        publication.
+      </p>
+      <h3>Not a validated deployment yet</h3>
+      <p>
+        This pilot has <strong>not yet been validated on a corporate Tableau Desktop 2023.1
+        machine</strong>. Corporate proxy, TLS inspection or extension policy may still block
+        it; those limits will be documented rather than bypassed.
+      </p>
+    </section>
+
+    <section class="analytics-section" id="version-source">
+      <h2>Version &amp; Source</h2>
+      <dl class="analytics-kv">
+        <div><dt>Version</dt><dd>0.1.0 (pilot)</dd></div>
+        <div><dt>Extension ID</dt><dd><code>com.aizanoianalytics.tableau.hello</code></dd></div>
+        <div><dt>Extensions API</dt><dd>1.10.0 (vendored locally, MIT © Tableau)</dd></div>
+        <div><dt>Manifest</dt><dd><a href="https://aizanoianalytics.com/analytics/tableau/hello/aizanoi-hello.trex">aizanoi-hello.trex</a></dd></div>
+        <div><dt>Source code</dt><dd><a href="https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/frontend/analytics/tableau">frontend/analytics/tableau</a></dd></div>
+      </dl>
+    </section>
+  </main>
+</body>
+</html>

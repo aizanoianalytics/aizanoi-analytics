@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest manifest-version="0.1" xmlns="http://www.tableau.com/xml/extension_manifest">
+  <!--
+    Aizanoi Hello — Tableau Connectivity Test (pilot).
+
+    Dashboard Extension only. Dashboard extensions are supported by Tableau
+    Desktop 2018.2 and later, Server 2018.2+, Tableau Cloud — which includes
+    the corporate Tableau Desktop 2023.1 machine this pilot targets. No
+    worksheet/viz extension element is used (viz extensions require
+    Tableau 2024.2+).
+
+    min-api-version is 1.0: the manifest stays loadable by every Tableau that
+    supports dashboard extensions. The hosted page loads the pinned Extensions
+    API library 1.10.0 locally (vendor/), which also requires no newer
+    minimum. Later library releases gate features behind 2024.1+/2024.2+.
+
+    No <permissions> element: this pilot requests no data access at all.
+  -->
+  <dashboard-extension id="com.aizanoianalytics.tableau.hello" extension-version="0.1.0">
+    <default-locale>en_US</default-locale>
+    <name resource-id="name"/>
+    <description>Aizanoi connectivity pilot: verifies that the hosted extension loads and initializes inside Tableau. It reads no dashboard, worksheet or data source information.</description>
+    <author name="Aizanoi Analytics" email="tableau@aizanoianalytics.com" organization="Aizanoi Analytics" website="https://aizanoianalytics.com/analytics/tableau/"/>
+    <min-api-version>1.0</min-api-version>
+    <source-location>
+      <url>https://aizanoianalytics.com/analytics/tableau/hello/</url>
+    </source-location>
+    <icon>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAYAAABxLuKEAAACdUlEQVR4nO2by0pbURSG995kfNawL9CRwzqr0GagFVuQqGBr6qU+WQshWFFSRC0YCIZWB4KFdt6XWE+gA0GMnrXMZd+O/h8ccpKzz15/Vv61LyGx9GLqyoAH1K6sTa0hS2oGiSmlZhwSUwYcI4DECKCUBOAYASRGAKUkAMcIIDECKCUBOEagZpxLrSFL4BgBJEYAg6+AM9aalAf/+z3S67GOLEqJ//4qv5BQmy1evU32nS//6T/ahqbrwXWUkYVjVBLpSzbG8OXpUAL58jTRGFOFWSmBxiSO4YveSCL5ovc8Z6WhiKzTFq/nos5KfN4d+16aeedRiU51HGNMVNc445yJdfDZiSqG3iyo1/nsJJrWvBwzjJZIeuPOSgpU/2CMtTePGpG0OuOsiXFw//iRj+hOewXuH0fRm08pjaIjguYopcS9Q1UEzS4OtKfZRbU99w4jLPBy2BKMoyGw7uCO4e6BKoDmG6X30XxDvY+7B4Edk3qMmSR+QO22WFgKtiXgn53b8/5/P2HqLweTQe+XvfR7n/SOmZRA+pEYgWALPD7aDyL4Pny0/8QXeJMQ4D3YovHR++DLP76r12npUxZ9aqRxTIiYnvv0vsDjzo4akFaaY/VLK021X+7sVHxLEDKex769Oob32mowWl2fqH9aXVf75712RbcEMWJ5iuFtHcO7LTUQrW16iUNrm2oc3m1VbB1TMWfaornlfx3T/jbwnD5/8R0ieIwgsxJtbN+ec+trsJnobhzfMWyxsY3/RJbwNPZKAcjjO98MgWME8MtwAThGAIkRwOArAMcIIDECKCUBOEYAiRFAKQnAMQJIjABKSQCOEbgG3fBvXB7irIkAAAAASUVORK5CYII=</icon>
+  </dashboard-extension>
+  <resources>
+    <resource id="name">
+      <text locale="en_US">Aizanoi Hello — Tableau Connectivity Test</text>
+    </resource>
+  </resources>
+</manifest>

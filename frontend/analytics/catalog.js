@@ -3,6 +3,19 @@ const NEW_HR_DASHBOARDS = Object.freeze([
   Object.freeze({ title:'Recruitment Analytics Dashboard', summary:'Talent acquisition operations on 4,823 synthetic requisition records: executive dashboard, cumulative pivot, pipeline, placements and data dictionary.', href:'/analytics/dashboards/new-hr-collection/recruitment-analytics/' }),
 ]);
 
+export const TABLEAU_EXTENSION_LINKS = Object.freeze([
+  Object.freeze({
+    title:'Download .trex manifest',
+    summary:'aizanoi-hello.trex — add via Tableau Desktop Objects → Extension → Access Local Extensions.',
+    href:'https://aizanoianalytics.com/analytics/tableau/hello/aizanoi-hello.trex',
+  }),
+  Object.freeze({
+    title:'Open the pilot app',
+    summary:'The hosted extension page. In a plain browser it shows the Demo state.',
+    href:'https://aizanoianalytics.com/analytics/tableau/hello/',
+  }),
+]);
+
 /**
  * Canonical public Analytics catalog. A new production collection is registered
  * here once, then both /analytics/ and the AizanoiOS Analytics app consume it.
@@ -49,6 +62,26 @@ export const ANALYTICS_SETS = Object.freeze([
       Object.freeze({ value:'0', label:'real employee records' }),
     ]),
     dashboards:NEW_HR_DASHBOARDS,
+  }),
+  Object.freeze({
+    id:'tableau-extensions',
+    eyebrow:'EXTENSION PILOT · TABLEAU DASHBOARD EXTENSION',
+    title:'Tableau Extensions',
+    accent:'Pilot',
+    interfaceLanguage:'English',
+    interfaceLanguageCode:'en',
+    summary:'Aizanoi Hello is a Tableau Dashboard Extension connectivity pilot published from the static site. It verifies handshake and hosting inside Tableau Desktop and reads no dashboard, worksheet or data source information.',
+    description:'Download the .trex manifest and add it locally from Tableau Desktop through Objects → Extension → Access Local Extensions. Dummy/demo content only; no real corporate data is read.',
+    landing:'/analytics/tableau/',
+    source:'https://github.com/aizanoianalytics/aizanoi-analytics/tree/main/frontend/analytics/tableau',
+    sourceLabel:'Source & documentation',
+    metrics:Object.freeze([
+      Object.freeze({ value:'0', label:'data permissions requested' }),
+      Object.freeze({ value:'1.10.0', label:'pinned Extensions API (MIT)' }),
+      Object.freeze({ value:'2023.1', label:'target Tableau Desktop' }),
+      Object.freeze({ value:'0', label:'third-party requests' }),
+    ]),
+    dashboards:TABLEAU_EXTENSION_LINKS,
   }),
 ]);
 
