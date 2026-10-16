@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest manifest-version="0.1" xmlns="http://www.tableau.com/xml/extension_manifest">
+  <!--
+    Aizanoi Hello — Tableau Connectivity Test (pilot).
+
+    Dashboard Extension only. Dashboard extensions are supported by Tableau
+    Desktop 2018.2 and later, Server 2018.2+, Tableau Cloud — which includes
+    the corporate Tableau Desktop 2023.1 machine this pilot targets. No
+    worksheet/viz extension element is used (viz extensions require
+    Tableau 2024.2+).
+
+    min-api-version is 1.0: the manifest stays loadable by every Tableau that
+    supports dashboard extensions. The hosted page loads the pinned Extensions
+    API library 1.10.0 locally (vendor/), which also requires no newer
+    minimum. Later library releases gate features behind 2024.1+/2024.2+.
+
+    No <permissions> element: this pilot requests no data access at all.
+  -->
+  <dashboard-extension id="com.aizanoianalytics.tableau.hello" extension-version="0.1.0">
+    <default-locale>en_US</default-locale>
+    <name resource-id="name"/>
+    <description>Aizanoi connectivity pilot: verifies that the hosted extension loads and initializes inside Tableau. It reads no dashboard, worksheet or data source information.</description>
+    <author name="Aizanoi Analytics" email="tableau@aizanoianalytics.com" organization="Aizanoi Analytics" website="https://aizanoianalytics.com/analytics/tableau/"/>
+    <min-api-version>1.0</min-api-version>
+    <source-location>
+      <url>https://aizanoianalytics.com/analytics/tableau/hello/</url>
+    </source-location>
+    <icon>/analytics/tableau/hello/icon.png</icon>
+    <resources>
+      <resource id="name">Aizanoi Hello — Tableau Connectivity Test</resource>
+    </resources>
+  </dashboard-extension>
+</manifest>

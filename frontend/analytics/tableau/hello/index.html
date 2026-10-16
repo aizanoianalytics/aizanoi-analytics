@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aizanoi Hello — Tableau Connectivity Test</title>
+  <meta name="description" content="Aizanoi Analytics connectivity pilot for Tableau Dashboard Extensions. Reads no dashboard or data source information.">
+  <link rel="icon" href="/analytics/tableau/hello/icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="pilot" aria-live="polite">
+    <header class="pilot-head">
+      <img class="pilot-mark" src="/analytics/tableau/hello/icon.png" width="44" height="44" alt="">
+      <div>
+        <h1>Aizanoi Hello</h1>
+        <p class="pilot-sub">Tableau Connectivity Test · pilot</p>
+      </div>
+    </header>
+
+    <p class="pilot-badge" id="state-badge" data-state="booting">Starting…</p>
+
+    <section class="pilot-body" id="panel">
+      <p id="state-message" class="pilot-message">Loading the extension page.</p>
+
+      <div class="pilot-actions" id="actions" hidden>
+        <button type="button" id="retry-button" class="pilot-button">Try again</button>
+        <a class="pilot-link" href="https://aizanoianalytics.com/analytics/tableau/">Privacy &amp; install details</a>
+      </div>
+
+      <dl class="pilot-facts">
+        <div><dt>Mode</dt><dd id="fact-mode">—</dd></div>
+        <div><dt>Data read</dt><dd>None</dd></div>
+        <div><dt>Network calls</dt><dd>None</dd></div>
+        <div><dt>Version</dt><dd>0.1.0</dd></div>
+      </dl>
+    </section>
+
+    <footer class="pilot-foot">
+      <p>Dummy/demo content only. This pilot does not access payrool, attendance
+      or any real corporate dashboard data.</p>
+    </footer>
+  </main>
+
+  <!-- Tableau Extensions API, pinned and served from this same origin. -->
+  <script src="vendor/tableau.extensions-1.10.0.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

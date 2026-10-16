@@ -1,0 +1,203 @@
+/* Aizanoi Hello — pilot styling. Static, no frameworks, no remote assets.
+ * Palette aligned with the light Analytics surfaces (--az-* token names
+ * are read from the site tokens when present; fallbacks inline for
+ * standalone use inside the Tableau extension frame). */
+
+:root {
+  --ink: #1a2233;
+  --ink-soft: #56607a;
+  --line: rgba(26, 34, 51, 0.12);
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-strong: #ffffff;
+  --accent: #2b6cb0;
+  --accent-soft: rgba(43, 108, 176, 0.1);
+  --ok: #1f7a4d;
+  --warn: #8a5a00;
+  --err: #a12b2b;
+  --radius: 14px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(120% 120% at 15% 0%, rgba(43, 108, 176, 0.12), transparent 55%),
+    radial-gradient(100% 100% at 100% 100%, rgba(31, 122, 77, 0.1), transparent 60%),
+    #f2f5fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.pilot {
+  width: 100%;
+  max-width: 460px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 18px 48px rgba(20, 30, 55, 0.12);
+  backdrop-filter: blur(10px);
+  padding: 22px 22px 16px;
+}
+
+.pilot-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pilot-mark {
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+}
+
+.pilot h1 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+
+.pilot-sub {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.pilot-badge {
+  display: inline-block;
+  margin: 16px 0 10px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.pilot-badge[data-state="connected"] {
+  color: var(--ok);
+  background: rgba(31, 122, 77, 0.12);
+  border-color: rgba(31, 122, 77, 0.35);
+}
+
+.pilot-badge[data-state="demo"] {
+  color: var(--warn);
+  background: rgba(138, 90, 0, 0.1);
+  border-color: rgba(138, 90, 0, 0.3);
+}
+
+.pilot-badge[data-state="error"] {
+  color: var(--err);
+  background: rgba(161, 43, 43, 0.1);
+  border-color: rgba(161, 43, 43, 0.3);
+}
+
+.pilot-message {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.pilot-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.pilot-button {
+  font: inherit;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 9px 16px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+
+.pilot-button:hover {
+  box-shadow: 0 6px 16px rgba(20, 30, 55, 0.14);
+}
+
+.pilot-button:active {
+  transform: scale(0.97);
+}
+
+.pilot-button:focus-visible,
+.pilot-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pilot-link {
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.pilot-link:hover { text-decoration: underline; }
+
+.pilot-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+  margin: 16px 0 0;
+  padding: 14px 0 4px;
+  border-top: 1px solid var(--line);
+}
+
+.pilot-facts dt {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.pilot-facts dd {
+  margin: 3px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.pilot-foot {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.pilot-foot p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 420px) {
+  .pilot { padding: 18px 16px 12px; }
+  .pilot-facts { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pilot-button { transition: none; }
+  .pilot-button:active { transform: none; }
+}
