@@ -65,7 +65,12 @@ const TABLEAU_MOCK = (settingsJson, failures = []) => `
   window.__mock = {
     FilterNullOption: { AllValues: 'all-values', NonNullValues: 'non-null-values' },
     extensions: {
-      dashboardContent: { dashboard: { worksheets: sheets } },
+      // Faithful to the real SDK: dashboardContent is a getter backed by the
+      // init handshake (initializeDashboardContent) and stays undefined until
+      // initializeAsync/initializeDialogAsync resolves. A stub that
+      // pre-populates it hides dialog boot bugs (issue: dialog silently ran
+      // the standalone mock inside real Tableau, so Save never wrote).
+      dashboardContent: undefined,
       settings: {
         get(key) { return key === 'igahranalytics_date_picker' ? window.__settingsStore.settings : undefined; },
         set(key, value) { window.__calls.push({ kind: 'settings-set', key }); window.__settingsStore.settings = value; },
@@ -76,9 +81,21 @@ const TABLEAU_MOCK = (settingsJson, failures = []) => `
           window.__calls.push({ kind: 'dialog', url });
           return payload || '';
         },
+        async closeDialog(payload) {
+          window.__calls.push({ kind: 'dialog-close', payload });
+          return payload || '';
+        },
       },
-      initializeAsync() { window.__calls.push({ kind: 'initializeAsync' }); return Promise.resolve(); },
-      initializeDialogAsync() { window.__calls.push({ kind: 'initializeDialog' }); return Promise.resolve(''); },
+      initializeAsync() {
+        window.__calls.push({ kind: 'initializeAsync' });
+        window.__mock.extensions.dashboardContent = { dashboard: { worksheets: sheets } };
+        return Promise.resolve();
+      },
+      initializeDialogAsync() {
+        window.__calls.push({ kind: 'initializeDialog' });
+        window.__mock.extensions.dashboardContent = { dashboard: { worksheets: sheets } };
+        return Promise.resolve('');
+      },
     },
   };
 `;
@@ -132,10 +149,14 @@ async function withServer(t, initScript, pagePath, opts = {}) {
   page.on('requestfailed', (req) => failures.push(req.url()));
   await page.addInitScript(initScript);
   // Neutralize the real vendored SDK at the transport layer so it can never
-  // install its own window.tableau over the mock above.
-  await page.route('**/vendor/tableau.extensions-1.10.0.min.js', (route) => route.fulfill({
-    status: 200, contentType: 'text/javascript', body: '/* stubbed SDK: mock owns window.tableau */',
-  }));
+  // install its own window.tableau over the mock above — unless the caller
+  // explicitly wants the real SDK (stubSdk: false) to prove the host-less
+  // fallback path.
+  if (opts.stubSdk !== false) {
+    await page.route('**/vendor/tableau.extensions-1.10.0.min.js', (route) => route.fulfill({
+      status: 200, contentType: 'text/javascript', body: '/* stubbed SDK: mock owns window.tableau */',
+    }));
+  }
   await page.goto(`http://127.0.0.1:${port}${pagePath}`, { waitUntil: 'load' }).catch(() => {});
   return { page, failures };
 }
@@ -216,12 +237,17 @@ test('reset clears only reset-enabled mappings', async (t) => {
   ]);
 });
 
-test('configuration dialog edits mappings and saves settings exactly once', async (t) => {
+test('configuration dialog boots Tableau mode on a real-Desktop-shaped host, lists real sheets, saves once', async (t) => {
   const { page } = await withServer(t, TABLEAU_MOCK(DEFAULT_SETTINGS), configPath);
   await page.waitForSelector('#mapping-list .mapping-row', { timeout: 15000 });
+  const mode = await page.textContent('#dlg-mode');
+  assert.match(mode, /Tableau Desktop/, 'dialog must boot Tableau mode, never the standalone mock');
+  assert.ok(await page.locator('#dlg-mocknote').isHidden(), 'mock note must stay hidden inside Tableau');
+  const names = await page.locator('#mapping-list .dp-sheet-name').allTextContents();
+  assert.ok(names.includes('Headcount'), `dialog must list real sheets, saw: ${names.join('|')}`);
+  assert.ok(!names.join(' ').includes('(demo)'), 'dialog must not show synthetic mock sheets inside Tableau');
   const rows = await page.locator('#mapping-list .mapping-row').count();
   assert.ok(rows >= 4, `dialog must list every dashboard worksheet, saw ${rows}`);
-  await page.locator('#mapping-list .mapping-row').first().waitFor();
   await page.click('#save-btn');
   await page.waitForFunction(
     () => window.__calls.some((c) => c.kind === 'settings-save'),
@@ -229,6 +255,17 @@ test('configuration dialog edits mappings and saves settings exactly once', asyn
   );
   const sets = await page.evaluate(() => window.__calls.filter((c) => c.kind === 'settings-set'));
   assert.equal(sets.length, 1, 'settings must be written exactly once per save');
+  const closes = await page.evaluate(() => window.__calls.filter((c) => c.kind === 'dialog-close'));
+  assert.equal(closes.length, 1, 'dialog must close itself after saving');
+});
+
+test('dialog with the real SDK but no Tableau host falls back to the mock instead of hanging', async (t) => {
+  const { page } = await withServer(t, 'window.__calls = [];', configPath, { stubSdk: false });
+  await page.waitForSelector('#mapping-list .mapping-row', { timeout: 15000 });
+  const note = await page.textContent('#dlg-mocknote');
+  assert.match(note, /Standalone mock|Standalone deneme/);
+  const names = await page.locator('#mapping-list .dp-sheet-name').allTextContents();
+  assert.ok(names.join(' ').includes('(demo)'), 'host-less dialog shows synthetic sheets only');
 });
 
 test('main gear opens a read-only summary, never a settings write', async (t) => {
