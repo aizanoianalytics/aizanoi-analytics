@@ -9,7 +9,7 @@ Scope: maintained documentation and operator runbooks.
 - Provider/server follow-up outside source-only changes → `OPERATIONS.md`
 - Accessibility release checks → `ACCESSIBILITY.md`
 - AizanoiOS field/system behavior → `FIELD_SYSTEM.md`
-- Tableau Dashboard Extensions (privacy/data policy, versioning) → `tableau-extensions/README.md`
+- Tableau Dashboard Extensions (privacy/data policy, versioning) → `tableau-extensions/README.md`; planned IGA HR date-picker engineering specification → `igahranalytics_date_picker.md`
 - Product, architecture, design, security and content constitutions → use `../index.md` to reach the canonical root documents.
 
 ## Documentation rule
