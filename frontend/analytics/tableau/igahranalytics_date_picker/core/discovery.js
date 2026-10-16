@@ -23,6 +23,39 @@ function normalizeDateType(value) {
   return null;
 }
 
+function valueCandidates(dataValue) {
+  if (dataValue === undefined || dataValue === null) return [];
+  if (dataValue instanceof Date) return [dataValue];
+  if (typeof dataValue !== 'object') return [dataValue];
+  return [dataValue.nativeValue, dataValue.value, dataValue.formattedValue]
+    .filter((value) => value !== undefined && value !== null);
+}
+
+function dateShape(value) {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    return value.getHours() || value.getMinutes() || value.getSeconds() || value.getMilliseconds()
+      ? 'DATETIME' : 'DATE';
+  }
+  if (typeof value !== 'string') return null;
+  const text = value.trim();
+  // Tableau filter DataValues commonly expose ISO native values and a
+  // locale-formatted companion (the owner's Desktop shows 1.01.2025).
+  const iso = /^\d{4}-\d{1,2}-\d{1,2}(?:[T\s](\d{1,2}:\d{2}(?::\d{2}(?:\.\d+)?)?)(?:Z|[+-]\d{2}:?\d{2})?)?$/;
+  const local = /^\d{1,2}[./-]\d{1,2}[./-]\d{4}(?:[T\s](\d{1,2}:\d{2}(?::\d{2})?))?$/;
+  const match = text.match(iso) || text.match(local);
+  return match ? (match[1] ? 'DATETIME' : 'DATE') : null;
+}
+
+function inferFilterDateType(filter) {
+  const filterType = String(filter?.filterType || '').trim().toLowerCase();
+  if (filterType === 'relative-date' || filterType === 'relativedate') return 'DATE';
+  if (filterType !== 'range') return null;
+  const low = valueCandidates(filter.minValue).map(dateShape).find(Boolean);
+  const high = valueCandidates(filter.maxValue).map(dateShape).find(Boolean);
+  if (!low || !high) return null; // Do not mistake numeric range filters for dates.
+  return low === 'DATETIME' || high === 'DATETIME' ? 'DATETIME' : 'DATE';
+}
+
 /**
  * List worksheets with their compatible DATE/DATETIME field captions.
  * Sheets whose metadata cannot be read report an empty field list with an
@@ -48,16 +81,19 @@ export async function discoverWorksheets(worksheets) {
     const list = Array.isArray(filters) ? filters : [];
     const fields = [];
     const seen = new Set();
+    const observedTypes = [];
     let inspectedCount = 0;
     for (const filter of list) {
       let field;
       try {
         field = await filter.getFieldAsync();
         inspectedCount += 1;
+        observedTypes.push(field?.dataType === undefined || field?.dataType === null
+          ? '(missing)' : String(field.dataType));
       } catch {
         continue;
       }
-      const dataType = normalizeDateType(field?.dataType);
+      const dataType = normalizeDateType(field?.dataType) || inferFilterDateType(filter);
       if (!dataType) continue;
       const caption = String(filter.fieldName ?? field.name ?? '').trim();
       if (!caption) continue;
@@ -73,6 +109,7 @@ export async function discoverWorksheets(worksheets) {
         filterCount: list.length,
         inspectedCount,
         compatibleCount: fields.length,
+        observedTypes,
       },
     });
   }

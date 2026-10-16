@@ -26,7 +26,7 @@ const TABLEAU_MOCK = (settingsJson, failures = []) => `
     set(v) { window.__mock = v; },
   });
   const sheets = [
-    { id: 'ws-headcount', name: 'Headcount', caption: 'processing_time', dataType: 'date-time' },
+    { id: 'ws-headcount', name: 'Headcount', caption: 'processing_time', dataType: undefined, inferDateRange: true },
     { id: 'ws-turnover', name: 'Turnover', caption: 'duzeltilmis_max_date', dataType: 'date' },
     { id: 'ws-exits', name: 'Exits', caption: 'exit_date', dataType: 'date' },
     { id: 'ws-plan', name: 'Plan vs Actual', caption: 'plan_date', dataType: 'date' },
@@ -43,6 +43,12 @@ const TABLEAU_MOCK = (settingsJson, failures = []) => `
         const out = [filterFor('Organization', 'STRING')];
         if (state.min) {
           out.push({ fieldName: meta.caption, minValue: state.min, maxValue: state.max, async getFieldAsync() { return { name: meta.caption, dataType: meta.dataType }; } });
+        } else if (meta.inferDateRange) {
+          out.push({
+            ...filterFor(meta.caption, meta.dataType), filterType: 'range',
+            minValue: { nativeValue: '2025-01-01', formattedValue: '1.01.2025' },
+            maxValue: { nativeValue: '2026-06-12', formattedValue: '12.06.2026' },
+          });
         } else {
           out.push(filterFor(meta.caption, meta.dataType));
         }
@@ -248,8 +254,8 @@ test('configuration dialog boots Tableau mode on a real-Desktop-shaped host, lis
   assert.ok(!names.join(' ').includes('(demo)'), 'dialog must not show synthetic mock sheets inside Tableau');
   const headcountOptions = await page.locator('[data-sheet="ws-headcount"] select option').allTextContents();
   assert.ok(
-    headcountOptions.some((text) => text.includes('processing_time (DATETIME)')),
-    `official Tableau date-time enum must appear as DATETIME; saw ${headcountOptions.join('|')}`,
+    headcountOptions.some((text) => text.includes('processing_time (DATE)')),
+    `date-shaped RangeFilter must appear even when Field.dataType is absent; saw ${headcountOptions.join('|')}`,
   );
   const rows = await page.locator('#mapping-list .mapping-row').count();
   assert.ok(rows >= 4, `dialog must list every dashboard worksheet, saw ${rows}`);
