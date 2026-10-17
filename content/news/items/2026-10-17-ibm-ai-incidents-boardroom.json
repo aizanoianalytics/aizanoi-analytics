@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-17-ibm-ai-incidents-boardroom",
+  "kind": "daily",
+  "title": "IBM study puts AI incidents on more EMEA board agendas",
+  "summary": "IBM says eight in ten surveyed EMEA enterprises now escalate AI-related incidents to a board or C-suite, while governance and accountability are lagging behind adoption. The finding frames agent deployment as a management-control problem as much as a technical one, with organizations under pressure to define who owns failures before autonomous systems spread further.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-10-17T05:00:00Z",
+  "updatedAt": "2026-10-17T05:00:00Z",
+  "retrievedAt": "2026-10-17T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "IBM Newsroom",
+      "url": "https://newsroom.ibm.com/2026-10-14-ibm-study-eight-in-ten-emea-enterprises-escalate-ai-incidents-to-board-or-c-suite-as-ai-agents-test-governance",
+      "publishedAt": "2026-10-15T00:00:00Z"
+    }
+  ]
+}

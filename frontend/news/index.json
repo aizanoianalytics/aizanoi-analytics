@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-16T05:20:00.000Z",
+  "generatedAt": "2026-10-17T05:20:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-17",
+      "path": "/news/2026-10-17/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-16",
       "path": "/news/2026-10-16/",
@@ -324,6 +329,396 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-17-ibm-ai-incidents-boardroom",
+      "kind": "daily",
+      "title": "IBM study puts AI incidents on more EMEA board agendas",
+      "summary": "IBM says eight in ten surveyed EMEA enterprises now escalate AI-related incidents to a board or C-suite, while governance and accountability are lagging behind adoption. The finding frames agent deployment as a management-control problem as much as a technical one, with organizations under pressure to define who owns failures before autonomous systems spread further.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "IBM Newsroom",
+          "url": "https://newsroom.ibm.com/2026-10-14-ibm-study-eight-in-ten-emea-enterprises-escalate-ai-incidents-to-board-or-c-suite-as-ai-agents-test-governance",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-anthropic-genesis-science-commitment",
+      "kind": "daily",
+      "title": "Anthropic commits $150 million to the U.S. Genesis Mission",
+      "summary": "Anthropic says it will commit $150 million over three years to the federal Genesis Mission, providing Claude, Claude Code, API credits and technical support to research projects across more than 15 agencies. The plan targets scientific work in areas including fusion energy and quantum computing, and extends the debate over how frontier-model access should be governed in public research.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://anthropic.com/news/genesis-mission-commitment",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-amazon-bee-ai-wearables",
+      "kind": "daily",
+      "title": "Amazon’s Bee adds two personal AI devices",
+      "summary": "Amazon-owned Bee introduced the wrist-or-clothing Bee Frontier and the phone-mounted Bee Eclipse, expanding its push into ambient personal computing. The devices turn conversations into notes, summaries and tasks; the Frontier starts at $74.99, while Bee also offers a paid tier with longer memory and integrations. The product makes privacy controls central to a category built around microphones and continuous context.",
+      "category": "technology",
+      "priority": 68,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/15/amazons-bee-launches-two-new-personal-ai-devices-starting-at-75/",
+          "publishedAt": "2026-10-15T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-premier-league-matchweek-seven",
+      "kind": "daily",
+      "title": "Premier League matchweek seven brings a crowded Saturday slate",
+      "summary": "The Premier League’s official fixture list puts ten matches on Saturday, including Everton–Chelsea, Brentford–Liverpool, Manchester City–Ipswich Town, Newcastle–Aston Villa and Nottingham Forest–Arsenal. With several clubs separated by early-season momentum rather than a settled table, the schedule offers a broad test of squad depth after the international break.",
+      "category": "football",
+      "priority": 65,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/matches/premier-league/2026-27",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-figma-specs-agents-design-systems",
+      "kind": "daily",
+      "title": "Figma adds a specification layer for human and software designers",
+      "summary": "Figma announced Specs, a Markdown-based editor where teams can describe design language, connect libraries and give agents a shared reference for brand rules. The company also moved code layers toward public beta and expanded its model-context integrations, treating design-system context as a way to make AI-generated prototypes more predictable.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/14/figma-announces-new-features-to-define-how-agents-work-on-its-platform/",
+          "publishedAt": "2026-10-15T04:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-bundesliga-bayern-leipzig",
+      "kind": "daily",
+      "title": "Bayern–Leipzig headlines Bundesliga Matchday 6",
+      "summary": "Bundesliga Matchday 6 features Bayern Munich against RB Leipzig as the headline fixture, alongside Union Berlin–Borussia Dortmund, Hamburg–Stuttgart and Schalke–Mainz. The league’s official preview lists key availability questions, including Bayern’s concerns around Manuel Neuer and Jamal Musiala, giving the matchday a tactical edge beyond the headline names.",
+      "category": "football",
+      "priority": 63,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/matchday",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-anthropic-life-sciences-verification-beta",
+      "kind": "daily",
+      "title": "Anthropic opens beta verification program for life-science teams",
+      "summary": "Anthropic has opened applications for a beta program that gives life-science professionals access to its Mythos, Opus and Sonnet models with safeguards tuned for biology-related work. The company says the program is aimed at drug discovery, research biology, clinical development and manufacturing, while initially limiting participation to teams and institutions.",
+      "category": "ai",
+      "priority": 62,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://anthropic.com/news/life-sciences-verification-program",
+          "publishedAt": "2026-10-15T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-waymo-toronto-mapping",
+      "kind": "daily",
+      "title": "Waymo begins the road toward Toronto robotaxi tests",
+      "summary": "Waymo says it has received approval to join Ontario’s automated-vehicle pilot and will begin by manually driving vehicles in Toronto to build high-definition maps. Public-road testing with a safety operator is planned before any driverless service, making the Canadian expansion a measured sequence of mapping, supervised trials and eventual commercial validation rather than an immediate launch.",
+      "category": "technology",
+      "priority": 61,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/16/waymos-robotaxis-are-headed-to-canada",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-zenzap-workplace-ai-chat-funding",
+      "kind": "daily",
+      "title": "Zenzap raises $44 million for an AI workplace messenger",
+      "summary": "Zenzap has raised $44 million to build a private workplace messenger that combines chat, task management, scheduling and AI search. The startup is targeting frontline-heavy employers that often coordinate through consumer messaging apps, positioning organizational context and IT controls as its answer to the gap between mobile staff communication and enterprise collaboration suites.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/14/zenzap-raises-44m-for-its-ai-chat-app-that-aims-to-replace-whatsapp-in-the-workplace/",
+          "publishedAt": "2026-10-14T15:08:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-zero-click-spyware-online-ads",
+      "kind": "daily",
+      "title": "Citizen Lab warns online ads can deliver zero-click spyware",
+      "summary": "Citizen Lab says governments are abusing online advertising systems to target people with zero-click spyware, a threat that can compromise devices without a user opening a malicious link. The report adds ad-tech supply chains to the surveillance-security conversation and raises questions about how platforms vet buyers, creatives and delivery infrastructure.",
+      "category": "technology",
+      "priority": 59,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/15/citizen-lab-says-governments-are-abusing-online-ads-to-hack-people-with-zero-click-spyware",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-us-stocks-ai-oil-market",
+      "kind": "daily",
+      "title": "U.S. equities remain sensitive to oil and AI leadership",
+      "summary": "Reuters’ U.S. market board shows investors balancing continued strength in AI-linked shares against higher oil prices and geopolitical uncertainty. The latest snapshot keeps the market story narrow: technology remains a source of momentum, but energy costs and Treasury yields can quickly change the appetite for risk across the major indexes.",
+      "category": "economy-markets",
+      "priority": 58,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://today.reuters.com/markets/us",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-champions-league-fixtures",
+      "kind": "daily",
+      "title": "UEFA publishes the next Champions League fixture slate",
+      "summary": "UEFA’s official fixtures page sets out the 2026/27 Champions League schedule, with Arsenal, Dortmund, Barcelona, Bayern Munich and Real Madrid among the clubs listed in the next round of matchups. The calendar offers the first structured look at how domestic form will translate into the new European campaign as the group-stage programme develops.",
+      "category": "football",
+      "priority": 57,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/fixtures-results/",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-dollar-commodities-currency-board",
+      "kind": "daily",
+      "title": "Dollar moves keep commodities and currency desks on alert",
+      "summary": "Reuters’ currency and commodities snapshot shows the dollar, oil, gold and copper still moving together as investors price geopolitical risk and the outlook for growth. The cross-asset picture matters for importers and central banks alike: a stronger dollar can tighten financial conditions while changing the local cost of energy and raw materials.",
+      "category": "economy-markets",
+      "priority": 55,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://today.reuters.com/markets/currencies",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-ricursive-ai-designed-chips",
+      "kind": "daily",
+      "title": "Ricursive bets on AI-designed chips to ease compute pressure",
+      "summary": "Ricursive Intelligence is pursuing AI-designed chips as a response to the cost and supply constraints surrounding modern model training. The startup’s pitch is that software-driven hardware design can shorten iteration cycles and improve specialization, but the approach still faces the practical tests of fabrication, yield, software compatibility and dependable production-scale performance.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/14/ricursive-intelligence-is-betting-on-ai-designed-chips-to-help-solve-the-compute-crisis",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-17-asian-markets-risk-appetite",
+      "kind": "daily",
+      "title": "Asian markets enter the weekend with confidence uneven",
+      "summary": "Reuters’ Asia market page describes a mixed regional tone as investors weigh oil, currency moves and the next signals from central banks. The uneven backdrop leaves markets exposed to fresh macro data: technology-led optimism can support risk appetite, but higher energy costs or a firmer dollar can quickly reverse that positioning.",
+      "category": "economy-markets",
+      "priority": 52,
+      "publishedAt": "2026-10-17T05:00:00.000Z",
+      "updatedAt": "2026-10-17T05:00:00.000Z",
+      "retrievedAt": "2026-10-17T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://today.reuters.com/markets/asia",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-16-eight-states-sue-openai-safety-claims",
       "kind": "daily",

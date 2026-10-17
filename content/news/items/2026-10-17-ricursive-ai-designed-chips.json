@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-17-ricursive-ai-designed-chips",
+  "kind": "daily",
+  "title": "Ricursive bets on AI-designed chips to ease compute pressure",
+  "summary": "Ricursive Intelligence is pursuing AI-designed chips as a response to the cost and supply constraints surrounding modern model training. The startup\u2019s pitch is that software-driven hardware design can shorten iteration cycles and improve specialization, but the approach still faces the practical tests of fabrication, yield, software compatibility and dependable production-scale performance.",
+  "category": "ai",
+  "priority": 55,
+  "publishedAt": "2026-10-17T05:00:00Z",
+  "updatedAt": "2026-10-17T05:00:00Z",
+  "retrievedAt": "2026-10-17T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/14/ricursive-intelligence-is-betting-on-ai-designed-chips-to-help-solve-the-compute-crisis",
+      "publishedAt": "2026-10-16T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-17-zero-click-spyware-online-ads",
+  "kind": "daily",
+  "title": "Citizen Lab warns online ads can deliver zero-click spyware",
+  "summary": "Citizen Lab says governments are abusing online advertising systems to target people with zero-click spyware, a threat that can compromise devices without a user opening a malicious link. The report adds ad-tech supply chains to the surveillance-security conversation and raises questions about how platforms vet buyers, creatives and delivery infrastructure.",
+  "category": "technology",
+  "priority": 59,
+  "publishedAt": "2026-10-17T05:00:00Z",
+  "updatedAt": "2026-10-17T05:00:00Z",
+  "retrievedAt": "2026-10-17T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/15/citizen-lab-says-governments-are-abusing-online-ads-to-hack-people-with-zero-click-spyware",
+      "publishedAt": "2026-10-16T00:00:00Z"
+    }
+  ]
+}
