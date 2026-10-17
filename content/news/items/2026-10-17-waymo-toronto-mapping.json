@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-17-waymo-toronto-mapping",
+  "kind": "daily",
+  "title": "Waymo begins the road toward Toronto robotaxi tests",
+  "summary": "Waymo says it has received approval to join Ontario\u2019s automated-vehicle pilot and will begin by manually driving vehicles in Toronto to build high-definition maps. Public-road testing with a safety operator is planned before any driverless service, making the Canadian expansion a measured sequence of mapping, supervised trials and eventual commercial validation rather than an immediate launch.",
+  "category": "technology",
+  "priority": 61,
+  "publishedAt": "2026-10-17T05:00:00Z",
+  "updatedAt": "2026-10-17T05:00:00Z",
+  "retrievedAt": "2026-10-17T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/16/waymos-robotaxis-are-headed-to-canada",
+      "publishedAt": "2026-10-16T00:00:00Z"
+    }
+  ]
+}

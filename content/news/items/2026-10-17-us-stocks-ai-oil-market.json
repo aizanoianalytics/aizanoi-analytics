@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-17-us-stocks-ai-oil-market",
+  "kind": "daily",
+  "title": "U.S. equities remain sensitive to oil and AI leadership",
+  "summary": "Reuters\u2019 U.S. market board shows investors balancing continued strength in AI-linked shares against higher oil prices and geopolitical uncertainty. The latest snapshot keeps the market story narrow: technology remains a source of momentum, but energy costs and Treasury yields can quickly change the appetite for risk across the major indexes.",
+  "category": "economy-markets",
+  "priority": 58,
+  "publishedAt": "2026-10-17T05:00:00Z",
+  "updatedAt": "2026-10-17T05:00:00Z",
+  "retrievedAt": "2026-10-17T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://today.reuters.com/markets/us",
+      "publishedAt": "2026-10-16T00:00:00Z"
+    }
+  ]
+}

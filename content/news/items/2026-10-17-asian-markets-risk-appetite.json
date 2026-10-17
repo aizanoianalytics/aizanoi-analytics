@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-17-asian-markets-risk-appetite",
+  "kind": "daily",
+  "title": "Asian markets enter the weekend with confidence uneven",
+  "summary": "Reuters\u2019 Asia market page describes a mixed regional tone as investors weigh oil, currency moves and the next signals from central banks. The uneven backdrop leaves markets exposed to fresh macro data: technology-led optimism can support risk appetite, but higher energy costs or a firmer dollar can quickly reverse that positioning.",
+  "category": "economy-markets",
+  "priority": 52,
+  "publishedAt": "2026-10-17T05:00:00Z",
+  "updatedAt": "2026-10-17T05:00:00Z",
+  "retrievedAt": "2026-10-17T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://today.reuters.com/markets/asia",
+      "publishedAt": "2026-10-16T00:00:00Z"
+    }
+  ]
+}

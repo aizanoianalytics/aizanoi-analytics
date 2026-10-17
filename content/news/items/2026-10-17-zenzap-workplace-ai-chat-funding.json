@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-17-zenzap-workplace-ai-chat-funding",
+  "kind": "daily",
+  "title": "Zenzap raises $44 million for an AI workplace messenger",
+  "summary": "Zenzap has raised $44 million to build a private workplace messenger that combines chat, task management, scheduling and AI search. The startup is targeting frontline-heavy employers that often coordinate through consumer messaging apps, positioning organizational context and IT controls as its answer to the gap between mobile staff communication and enterprise collaboration suites.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-10-17T05:00:00Z",
+  "updatedAt": "2026-10-17T05:00:00Z",
+  "retrievedAt": "2026-10-17T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/14/zenzap-raises-44m-for-its-ai-chat-app-that-aims-to-replace-whatsapp-in-the-workplace/",
+      "publishedAt": "2026-10-14T15:08:00Z"
+    }
+  ]
+}

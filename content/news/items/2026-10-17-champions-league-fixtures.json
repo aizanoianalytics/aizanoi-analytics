@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-17-champions-league-fixtures",
+  "kind": "daily",
+  "title": "UEFA publishes the next Champions League fixture slate",
+  "summary": "UEFA\u2019s official fixtures page sets out the 2026/27 Champions League schedule, with Arsenal, Dortmund, Barcelona, Bayern Munich and Real Madrid among the clubs listed in the next round of matchups. The calendar offers the first structured look at how domestic form will translate into the new European campaign as the group-stage programme develops.",
+  "category": "football",
+  "priority": 57,
+  "publishedAt": "2026-10-17T05:00:00Z",
+  "updatedAt": "2026-10-17T05:00:00Z",
+  "retrievedAt": "2026-10-17T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "UEFA",
+      "url": "https://www.uefa.com/uefachampionsleague/fixtures-results/",
+      "publishedAt": "2026-10-16T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-17-anthropic-genesis-science-commitment",
+  "kind": "daily",
+  "title": "Anthropic commits $150 million to the U.S. Genesis Mission",
+  "summary": "Anthropic says it will commit $150 million over three years to the federal Genesis Mission, providing Claude, Claude Code, API credits and technical support to research projects across more than 15 agencies. The plan targets scientific work in areas including fusion energy and quantum computing, and extends the debate over how frontier-model access should be governed in public research.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-10-17T05:00:00Z",
+  "updatedAt": "2026-10-17T05:00:00Z",
+  "retrievedAt": "2026-10-17T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://anthropic.com/news/genesis-mission-commitment",
+      "publishedAt": "2026-10-16T00:00:00Z"
+    }
+  ]
+}

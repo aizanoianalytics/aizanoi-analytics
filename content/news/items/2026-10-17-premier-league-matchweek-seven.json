@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-17-premier-league-matchweek-seven",
+  "kind": "daily",
+  "title": "Premier League matchweek seven brings a crowded Saturday slate",
+  "summary": "The Premier League\u2019s official fixture list puts ten matches on Saturday, including Everton\u2013Chelsea, Brentford\u2013Liverpool, Manchester City\u2013Ipswich Town, Newcastle\u2013Aston Villa and Nottingham Forest\u2013Arsenal. With several clubs separated by early-season momentum rather than a settled table, the schedule offers a broad test of squad depth after the international break.",
+  "category": "football",
+  "priority": 65,
+  "publishedAt": "2026-10-17T05:00:00Z",
+  "updatedAt": "2026-10-17T05:00:00Z",
+  "retrievedAt": "2026-10-17T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "Premier League",
+      "url": "https://www.premierleague.com/en/matches/premier-league/2026-27",
+      "publishedAt": "2026-10-16T00:00:00Z"
+    }
+  ]
+}
