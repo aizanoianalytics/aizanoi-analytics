@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-18-amp-expands-ai-agents-beyond-code",
+  "title": "Amp extends its agent workflow beyond code with OpenAI models",
+  "summary": "OpenAI’s customer story on Amp shows how the coding-agent company is broadening its workflow from implementation toward product decisions and page design. Amp says OpenAI models account for most of its token use, while Sign in with ChatGPT is intended to give users more room for longer-running tasks.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-10-14T00:00:00Z",
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/amp-beyond-coding",
+      "publishedAt": "2026-10-14T00:00:00Z"
+    }
+  ],
+  "updatedAt": "2026-10-18T05:01:03Z",
+  "retrievedAt": "2026-10-18T05:01:03Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": []
+}

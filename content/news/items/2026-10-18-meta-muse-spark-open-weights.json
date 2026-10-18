@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-18-meta-muse-spark-open-weights",
+  "title": "Meta releases Muse Spark Open weights for researchers and developers",
+  "summary": "Meta AI Research has released the weights for Muse Spark Open, describing it as the company’s most capable US open-weight model to date. The release keeps the open-weight contest focused on what developers can inspect, adapt and run rather than only on hosted model access.",
+  "category": "ai",
+  "priority": 75,
+  "publishedAt": "2026-10-18T00:00:00Z",
+  "sources": [
+    {
+      "publisher": "Meta AI Research",
+      "url": "https://research.meta.ai/blog/muse-spark-open",
+      "publishedAt": "2026-10-18T00:00:00Z"
+    }
+  ],
+  "updatedAt": "2026-10-18T05:01:03Z",
+  "retrievedAt": "2026-10-18T05:01:03Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": []
+}
