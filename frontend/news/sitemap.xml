@@ -1,10 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-18/champions-league-matchday-two-record-goals/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
+      <news:title>Champions League Matchday 2 produces a 78-goal burst</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-18/imf-world-economic-outlook-resilience-under-strain/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
+      <news:title>IMF keeps 2026 growth view at 3.1% as resilience narrows</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-18/premier-league-saturday-roundup/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
+      <news:title>Liverpool recover at Brentford as City and Villa also take Saturday wins</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-18/gpt-6-brings-interactive-answers-to-chatgpt/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
+      <news:title>GPT-6 turns some ChatGPT answers into interactive tools</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-10-18/google-suncatcher-ai-in-orbit/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-18T00:00:00.000Z</news:publication_date>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
       <news:title>Google puts a Project Suncatcher prototype satellite into orbit</news:title>
     </news:news>
   </url>
@@ -12,15 +44,39 @@
     <loc>https://aizanoianalytics.com/news/2026-10-18/harvard-autonomous-soft-robot/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-18T00:00:00.000Z</news:publication_date>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
       <news:title>Harvard demonstrates an autonomous robot built entirely from soft parts</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-18/imfc-warns-global-resilience-is-not-guaranteed/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
+      <news:title>IMFC warns that shock resilience is becoming harder to sustain</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-18/openai-devday-dots-agents-and-open-ecosystem/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
+      <news:title>OpenAI DevDay puts always-on agents at the centre of its platform push</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-18/bayern-viking-six-goal-draw/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
+      <news:title>Bayern rally from two down but Viking earn a 3–3 draw</news:title>
     </news:news>
   </url>
   <url>
     <loc>https://aizanoianalytics.com/news/2026-10-18/mit-ai-materials-discovery/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-18T00:00:00.000Z</news:publication_date>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
       <news:title>MIT team gives AI a clearer route through materials discovery</news:title>
     </news:news>
   </url>
@@ -28,7 +84,7 @@
     <loc>https://aizanoianalytics.com/news/2026-10-18/meta-muse-spark-open-weights/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-18T00:00:00.000Z</news:publication_date>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
       <news:title>Meta releases Muse Spark Open weights for researchers and developers</news:title>
     </news:news>
   </url>
@@ -36,16 +92,32 @@
     <loc>https://aizanoianalytics.com/news/2026-10-18/google-blind-sweep-ultrasound-research/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-18T00:00:00.000Z</news:publication_date>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
       <news:title>Google research tests AI-assisted blind-sweep ultrasound screening</news:title>
     </news:news>
   </url>
   <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-17/2026-10-18-premier-league-saturday-roundup/</loc>
+    <loc>https://aizanoianalytics.com/news/2026-10-18/itau-governed-ai-customer-service/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-17T21:00:00.000Z</news:publication_date>
-      <news:title>Liverpool recover at Brentford as City and Villa also take Saturday wins</news:title>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
+      <news:title>Itaú expands governed generative AI across banking operations</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-18/us-industrial-production-accelerates-in-september/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
+      <news:title>US industrial production rises 0.7% in September</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-18/amp-expands-ai-agents-beyond-code/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-18T05:01:03.000Z</news:publication_date>
+      <news:title>Amp extends its agent workflow beyond code with OpenAI models</news:title>
     </news:news>
   </url>
   <url>
@@ -166,158 +238,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-10-17T05:00:00.000Z</news:publication_date>
       <news:title>Asian markets enter the weekend with confidence uneven</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-17/2026-10-18-imfc-warns-global-resilience-is-not-guaranteed/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-17T00:00:00.000Z</news:publication_date>
-      <news:title>IMFC warns that shock resilience is becoming harder to sustain</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-17/2026-10-18-openai-devday-dots-agents-and-open-ecosystem/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-17T00:00:00.000Z</news:publication_date>
-      <news:title>OpenAI DevDay puts always-on agents at the centre of its platform push</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/2026-10-18-us-industrial-production-accelerates-in-september/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T13:15:00.000Z</news:publication_date>
-      <news:title>US industrial production rises 0.7% in September</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/eight-states-sue-openai-safety-claims/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>Eight US states sue OpenAI over ChatGPT safety claims</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/ftc-subpoenas-openai-anthropic/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>FTC subpoenas OpenAI and Anthropic over safety incidents</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/tsmc-record-quarter-texas-evaluation/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>TSMC posts a sixth straight record quarter and weighs Texas</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/anthropic-q3-revenue-16-8-billion/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>Anthropic tells pre-IPO investors quarterly revenue reached $16.8bn</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/coreweave-bond-slide-ai-debt/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>CoreWeave&#39;s bond slide puts the debt behind the AI build-out in focus</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/ppi-september-largest-since-2022/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>Wholesale inflation climbs most since 2022 as energy costs surge</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/japan-globalfoundries-new-york-fabs/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>Japan bankrolls two GlobalFoundries fabs in New York</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/us-chip-stocks-two-trillion-selloff/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>US chip stocks set to erase $2 trillion in the AI-cost selloff</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/wall-street-rotates-into-healthcare/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>Wall Street rotates out of AI and into healthcare as the Dow leads</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/lautaro-martinez-hamstring-month-out/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>Lautaro Martinez out for around a month in a blow to Inter</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/gold-silver-rebound-oil-slips/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>Gold and silver rebound as the dollar eases and oil hands back gains</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/fifa-postpones-jeddah-finals-asian-cup/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>FIFA postpones its Jeddah finals as Asian Cup questions grow</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/openai-chrome-tab-control/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>OpenAI extends computer use to Chrome with tab controls</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/ericsson-q3-beats-organic-growth/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>Ericsson beats forecasts as organic sales grow seven percent</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/liverpool-injury-wait-brentford/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T05:00:00.000Z</news:publication_date>
-      <news:title>Liverpool wait on Isak, Gakpo and Szoboszlai before Brentford</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-16/2026-10-18-itau-governed-ai-customer-service/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-16T00:00:00.000Z</news:publication_date>
-      <news:title>Itaú expands governed generative AI across banking operations</news:title>
     </news:news>
   </url>
 </urlset>
