@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-18-harvard-autonomous-soft-robot",
+  "title": "Harvard demonstrates an autonomous robot built entirely from soft parts",
+  "summary": "Harvard researchers describe an untethered, autonomous soft robot made with 3D-printed components, pneumatic actuation and a chemical power source. The octobot does not solve general robotics, but it demonstrates how power, control and movement can be integrated without conventional rigid electronics.",
+  "category": "technology",
+  "priority": 80,
+  "publishedAt": "2026-10-18T00:00:00Z",
+  "sources": [
+    {
+      "publisher": "Harvard CNS",
+      "url": "https://cns1.rc.fas.harvard.edu/the-first-autonomous-entirely-soft-robot/",
+      "publishedAt": "2026-10-18T00:00:00Z"
+    }
+  ],
+  "updatedAt": "2026-10-18T05:01:03Z",
+  "retrievedAt": "2026-10-18T05:01:03Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": []
+}

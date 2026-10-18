@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-17T05:20:00.000Z",
+  "generatedAt": "2026-10-18T05:01:03.000Z",
   "categories": [
     "ai",
     "technology",
@@ -9,14 +9,19 @@
   ],
   "editions": [
     {
+      "date": "2026-10-18",
+      "path": "/news/2026-10-18/",
+      "itemCount": 5
+    },
+    {
       "date": "2026-10-17",
       "path": "/news/2026-10-17/",
-      "itemCount": 15
+      "itemCount": 18
     },
     {
       "date": "2026-10-16",
       "path": "/news/2026-10-16/",
-      "itemCount": 15
+      "itemCount": 17
     },
     {
       "date": "2026-10-15",
@@ -26,12 +31,12 @@
     {
       "date": "2026-10-14",
       "path": "/news/2026-10-14/",
-      "itemCount": 15
+      "itemCount": 17
     },
     {
       "date": "2026-10-13",
       "path": "/news/2026-10-13/",
-      "itemCount": 15
+      "itemCount": 17
     },
     {
       "date": "2026-10-12",
@@ -61,7 +66,7 @@
     {
       "date": "2026-10-07",
       "path": "/news/2026-10-07/",
-      "itemCount": 15
+      "itemCount": 16
     },
     {
       "date": "2026-10-06",
@@ -329,6 +334,162 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-18-google-suncatcher-ai-in-orbit",
+      "kind": "daily",
+      "title": "Google puts a Project Suncatcher prototype satellite into orbit",
+      "summary": "Google says a Project Suncatcher prototype satellite is now in orbit, advancing a long-term investigation into whether space could host scalable machine-learning infrastructure. The project remains a research moonshot, with hardware survivability, cooling and communications among the practical constraints still to be tested.",
+      "category": "technology",
+      "priority": 81,
+      "publishedAt": "2026-10-18T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Google Blog",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-research/project-suncatcher-prototype/",
+          "publishedAt": "2026-10-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-harvard-autonomous-soft-robot",
+      "kind": "daily",
+      "title": "Harvard demonstrates an autonomous robot built entirely from soft parts",
+      "summary": "Harvard researchers describe an untethered, autonomous soft robot made with 3D-printed components, pneumatic actuation and a chemical power source. The octobot does not solve general robotics, but it demonstrates how power, control and movement can be integrated without conventional rigid electronics.",
+      "category": "technology",
+      "priority": 80,
+      "publishedAt": "2026-10-18T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Harvard CNS",
+          "url": "https://cns1.rc.fas.harvard.edu/the-first-autonomous-entirely-soft-robot/",
+          "publishedAt": "2026-10-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-mit-ai-materials-discovery",
+      "kind": "daily",
+      "title": "MIT team gives AI a clearer route through materials discovery",
+      "summary": "MIT researchers report a new AI approach for navigating the materials world, aiming to make the link between computational predictions and experimentally useful candidates easier to interpret. The work reflects a broader push to use models as discovery aids while keeping scientific validation in the loop.",
+      "category": "technology",
+      "priority": 76,
+      "publishedAt": "2026-10-18T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "MIT News",
+          "url": "https://news.mit.edu/2026/giving-ai-crystal-clear-view-of-materials-world-1018",
+          "publishedAt": "2026-10-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-meta-muse-spark-open-weights",
+      "kind": "daily",
+      "title": "Meta releases Muse Spark Open weights for researchers and developers",
+      "summary": "Meta AI Research has released the weights for Muse Spark Open, describing it as the company’s most capable US open-weight model to date. The release keeps the open-weight contest focused on what developers can inspect, adapt and run rather than only on hosted model access.",
+      "category": "ai",
+      "priority": 75,
+      "publishedAt": "2026-10-18T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Meta AI Research",
+          "url": "https://research.meta.ai/blog/muse-spark-open",
+          "publishedAt": "2026-10-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-google-blind-sweep-ultrasound-research",
+      "kind": "daily",
+      "title": "Google research tests AI-assisted blind-sweep ultrasound screening",
+      "summary": "Google says researchers worked with Northwestern and Jacarand Health on a blind-sweep ultrasound study, training healthcare workers to collect scans and using machine learning to interpret them. The approach is presented as a way to explore wider access to maternal imaging, not as a replacement for clinical oversight.",
+      "category": "technology",
+      "priority": 74,
+      "publishedAt": "2026-10-18T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Google Research",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-research/blind-sweep-ultrasounds-ai/",
+          "publishedAt": "2026-10-18T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-premier-league-saturday-roundup",
+      "kind": "daily",
+      "title": "Liverpool recover at Brentford as City and Villa also take Saturday wins",
+      "summary": "The Premier League’s Saturday review highlights Liverpool’s 2–1 comeback at Brentford, Manchester City’s 3–2 win over Ipswich and Aston Villa’s 1–0 victory at Newcastle. The league’s own account also points to a first top-flight win for Fulham head coach Álvaro Arbeloa after Alex Iwobi’s goal beat Hull City.",
+      "category": "football",
+      "priority": 83,
+      "publishedAt": "2026-10-17T21:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Premier League",
+          "url": "https://www.premierleague.com/en/news/4737487/what-weve-learned-from-saturdays-premier-league-matches",
+          "publishedAt": "2026-10-17T21:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-17-ibm-ai-incidents-boardroom",
       "kind": "daily",
@@ -716,6 +877,84 @@
           "publisher": "Reuters",
           "url": "https://today.reuters.com/markets/asia",
           "publishedAt": "2026-10-16T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-imfc-warns-global-resilience-is-not-guaranteed",
+      "kind": "daily",
+      "title": "IMFC warns that shock resilience is becoming harder to sustain",
+      "summary": "The IMF’s policy-setting committee says the global economy has absorbed recent shocks better than expected, but warns that wars, trade disruptions, energy pressures, debt and higher refinancing costs are tightening the room for manoeuvre. Its statement puts the burden on governments to rebuild buffers rather than assume another shock will be manageable.",
+      "category": "economy-markets",
+      "priority": 79,
+      "publishedAt": "2026-10-17T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "International Monetary Fund",
+          "url": "https://www.imf.org/en/news/articles/2026/10/17/pr26340-chairs-statement-fifty-fourth-meeting-of-the-imfc",
+          "publishedAt": "2026-10-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-openai-devday-dots-agents-and-open-ecosystem",
+      "kind": "daily",
+      "title": "OpenAI DevDay puts always-on agents at the centre of its platform push",
+      "summary": "OpenAI’s DevDay recap describes more than 20 announcements spanning ChatGPT, Codex and models, with Dots positioned as agents that can take on continuing responsibilities. The company also framed ChatGPT as a shared surface where people, agents and developers can collaborate on native experiences.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-10-17T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/devday-2026-recap?trk=article-ssr-frontend-pulse_little-text-block",
+          "publishedAt": "2026-10-17T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-us-industrial-production-accelerates-in-september",
+      "kind": "daily",
+      "title": "US industrial production rises 0.7% in September",
+      "summary": "Federal Reserve data show US industrial production increased 0.7% in September after a 0.1% rise in August. Manufacturing output grew 0.3%, while utilities rose 3.5%; the quarterly measure of total industrial production advanced at a 2.8% annual rate.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-10-16T13:15:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Board of Governors of the Federal Reserve System",
+          "url": "https://federalreserve.gov/releases/g17/20261016/g17.pdf",
+          "publishedAt": "2026-10-16T13:15:00.000Z"
         }
       ]
     },
@@ -1262,6 +1501,32 @@
           "publisher": "Yahoo Sports",
           "url": "https://sports.yahoo.com/articles/andoni-iraola-offers-injury-dominik-111318236.html",
           "publishedAt": "2026-10-15T11:18:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-itau-governed-ai-customer-service",
+      "kind": "daily",
+      "title": "Itaú expands governed generative AI across banking operations",
+      "summary": "Brazilian bank Itaú says its ia.i conversational layer is being extended across accounts, credit, cards and insurance, while its IARA platform provides governance. The first phase targets about 300,000 customers, with the bank describing a longer-term ambition to reach its full customer base.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-10-16T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/itau-generative-ai",
+          "publishedAt": "2026-10-16T00:00:00.000Z"
         }
       ]
     },
@@ -1854,6 +2119,32 @@
       ]
     },
     {
+      "id": "2026-10-18-champions-league-matchday-two-record-goals",
+      "kind": "daily",
+      "title": "Champions League Matchday 2 produces a 78-goal burst",
+      "summary": "UEFA’s Matchday 2 round-up records 78 goals across the league-phase programme, including Real Madrid’s 4–3 comeback at Roma, Paris Saint-Germain’s 4–2 win at Manchester City and Liverpool’s 6–3 result at LASK. The results leave several early contenders with perfect starts while the new league phase remains unusually open.",
+      "category": "football",
+      "priority": 86,
+      "publishedAt": "2026-10-14T23:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "UEFA",
+          "url": "https://www.uefa.com/uefachampionsleague/news/02aa-21d3f8c574f1-e140f41454d4-1000--champions-league-round-up-real-madrid-and-paris-headline-r",
+          "publishedAt": "2026-10-14T23:00:00.000Z"
+        }
+      ]
+    },
+    {
       "id": "2026-10-14-google-gemini-4-argon-global-launch",
       "kind": "daily",
       "title": "Google opens Gemini 4 Argon to developers and subscribers worldwide",
@@ -2389,6 +2680,58 @@
       ]
     },
     {
+      "id": "2026-10-18-amp-expands-ai-agents-beyond-code",
+      "kind": "daily",
+      "title": "Amp extends its agent workflow beyond code with OpenAI models",
+      "summary": "OpenAI’s customer story on Amp shows how the coding-agent company is broadening its workflow from implementation toward product decisions and page design. Amp says OpenAI models account for most of its token use, while Sign in with ChatGPT is intended to give users more room for longer-running tasks.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-10-14T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/amp-beyond-coding",
+          "publishedAt": "2026-10-14T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-bayern-viking-six-goal-draw",
+      "kind": "daily",
+      "title": "Bayern rally from two down but Viking earn a 3–3 draw",
+      "summary": "Bayern Munich recovered from an early two-goal deficit in Stavanger, with Harry Kane scoring twice and Luis Díaz putting the visitors ahead, but Viking equalised late for a 3–3 Champions League draw. The match also included a red card for Bayern’s Michael Olise and extended Kane’s continental scoring run.",
+      "category": "football",
+      "priority": 77,
+      "publishedAt": "2026-10-13T21:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Bundesliga.com",
+          "url": "https://bundesliga.com/en/bundesliga/news/six-goal-thriller-sees-bayern-munich-and-viking-share-the-spoils-in-uefa-champions-league-39543",
+          "publishedAt": "2026-10-13T21:00:00.000Z"
+        }
+      ]
+    },
+    {
       "id": "2026-10-13-apple-welcome-home-smart-home-launch",
       "kind": "daily",
       "title": "Apple's 'Welcome Home' event puts the smart home first",
@@ -2873,6 +3216,32 @@
           "publisher": "DailySynapse",
           "url": "https://dailysynapse.com/news/nvidia-may-use-intel-foveros-packaging-in-2028/",
           "publishedAt": "2026-10-09T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-imf-world-economic-outlook-resilience-under-strain",
+      "kind": "daily",
+      "title": "IMF keeps 2026 growth view at 3.1% as resilience narrows",
+      "summary": "The IMF’s October World Economic Outlook projects global growth of 3.1% in 2026 and 3.4% in 2027, while headline inflation is expected to rise to 4.7% this year before easing. Its central warning is uneven resilience: AI-related investment supports some economies while energy shocks and trade friction weigh more heavily on others.",
+      "category": "economy-markets",
+      "priority": 84,
+      "publishedAt": "2026-10-13T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "International Monetary Fund",
+          "url": "https://www.elibrary.imf.org/supplemental/book/9798229055079/9798229055079.xml/WEOEA2026002-S001_UNIVERSAL_PDF.pdf",
+          "publishedAt": "2026-10-13T00:00:00.000Z"
         }
       ]
     },
@@ -6530,6 +6899,32 @@
           "publisher": "Convex",
           "url": "https://convextrade.com/today/oil-price",
           "publishedAt": "2026-10-06T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-18-gpt-6-brings-interactive-answers-to-chatgpt",
+      "kind": "daily",
+      "title": "GPT-6 turns some ChatGPT answers into interactive tools",
+      "summary": "OpenAI says its GPT-6 rollout for ChatGPT adds an Intelligent UI layer that can compose answers with graphics, forms, charts, buttons and other interactive elements. The move shifts some responses from static explanation toward small, task-specific interfaces assembled inside the conversation.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-10-07T00:00:00.000Z",
+      "updatedAt": "2026-10-18T05:01:03.000Z",
+      "retrievedAt": "2026-10-18T05:01:03.000Z",
+      "author": {
+        "name": "Aizanoi News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/gpt-6-for-everyone?format=md",
+          "publishedAt": "2026-10-07T00:00:00.000Z"
         }
       ]
     },

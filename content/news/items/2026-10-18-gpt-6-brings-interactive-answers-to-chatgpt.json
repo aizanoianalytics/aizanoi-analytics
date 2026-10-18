@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-18-gpt-6-brings-interactive-answers-to-chatgpt",
+  "title": "GPT-6 turns some ChatGPT answers into interactive tools",
+  "summary": "OpenAI says its GPT-6 rollout for ChatGPT adds an Intelligent UI layer that can compose answers with graphics, forms, charts, buttons and other interactive elements. The move shifts some responses from static explanation toward small, task-specific interfaces assembled inside the conversation.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-10-07T00:00:00Z",
+  "sources": [
+    {
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/gpt-6-for-everyone?format=md",
+      "publishedAt": "2026-10-07T00:00:00Z"
+    }
+  ],
+  "updatedAt": "2026-10-18T05:01:03Z",
+  "retrievedAt": "2026-10-18T05:01:03Z",
+  "author": {
+    "name": "Aizanoi News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": []
+}
