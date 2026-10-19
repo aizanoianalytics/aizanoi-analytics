@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-18T05:01:03.000Z",
+  "generatedAt": "2026-10-19T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-19",
+      "path": "/news/2026-10-19/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-18",
       "path": "/news/2026-10-18/",
@@ -291,6 +296,12 @@
   ],
   "weeklyEditions": [
     {
+      "date": "2026-10-19",
+      "week": "2026-W43",
+      "path": "/news/weekly/2026-10-19/",
+      "itemCount": 4
+    },
+    {
       "date": "2026-10-12",
       "week": "2026-W42",
       "path": "/news/weekly/2026-10-12/",
@@ -334,6 +345,504 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-19-weekly-ai-from-hype-to-governance",
+      "kind": "weekly",
+      "title": "AI’s next phase is an accountability test",
+      "summary": "This week’s AI coverage points in several directions at once: institutions are training new professionals, students are negotiating what learning means with AI tools, and security analysts are considering how AI-enabled drones could affect critical infrastructure. Together, these stories suggest that the field’s next phase will be defined less by novelty than by the quality of the surrounding rules. Adoption is spreading faster than governance in many settings, so practical questions—who is responsible, how output is checked and which risks are acceptable—will shape...",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "week": "2026-W43",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "The Soufan Center",
+          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE8xUXRXdWFEV2E4TExTc3lEVkhqOG9xVUJWMDNNbWpVWDhtcC1aUy1LeVNWbUEzb19WeWdvYTB6QnFyQzlxUmxoSFdFbndyVDVfQl9zYWZkbFUxRzVtY1cxdUtzS3NPZw?oc=5",
+          "publishedAt": "2026-10-19T04:04:24.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-weekly-markets-resilience-versus-fragility",
+      "kind": "weekly",
+      "title": "Markets weigh resilience against fresh fault lines",
+      "summary": "The latest economic signals offer a mixed picture. One international finance official describes the global economy as resilient, while a central-bank observation in Australia points to some easing in labour-market conditions. At the company level, a crowded earnings calendar will test whether the optimism embedded in parts of the market is supported by results. The useful reading is not that one indicator has settled the outlook, but that the policy and corporate narratives are pulling in different directions. Investors will be watching the interaction between slower...",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "week": "2026-W43",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOa05jVFdUVTlxcG85OVFRMF94Wmo0TXlmSjRUWXhlb0xYYUVXdXd3ODJ6QWFMXzlSRW0ybkJ1MHgtbmt6ZjhXNzN1UkwwTEFURzJsRk8zSVBlQldrWXlHMGlhSTJoSDdYMjc5UWttN1dDX1VKZ2xTcGRHYVEyRW16TUdGbGpSMVVKck1ITUk5dkpyOHhrODd5bi1vLXJpUy1pR0tUd2V2T1hXOUNQcDJLMlNEMVZXUVl2RlgzVGZJaEV2VUNsSGc?oc=5",
+          "publishedAt": "2026-10-17T13:14:35.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-weekly-technology-trust-boundaries",
+      "kind": "weekly",
+      "title": "Technology’s trust boundary is moving",
+      "summary": "The week’s technology stories share a common fault line: software is becoming more connected, more automated and more consequential, while the old boundaries of trust are proving porous. A compromised service credential reportedly opened access across many Microsoft 365 tenants; AI systems are being discussed as software buyers; and regulators are taking a harder look at platform power. None of these developments is isolated. They describe a market where identity, procurement and competition policy increasingly meet in the same operational layer. The winners will need...",
+      "category": "technology",
+      "priority": 76,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "week": "2026-W43",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "The Hacker News",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9LLVo4bDAtYTNoMmpoeFIwdFpheVNIQVJMaXZqOUtaZXZ4TjE4M2E3T0Z4SlA0aVJtNGh3N2dBSXg2SWZiQ0EtcVRKNnhrU1E3RVN5ejJ1V0h4Y2U1SG5nMmtGV2xWckV6NkJWaVJ2VEZDWGVVVTdRLUI1YzgxUUU?oc=5",
+          "publishedAt": "2026-10-17T06:16:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-technology-m365-tenant-intrusions",
+      "kind": "daily",
+      "title": "Compromised ConnectWise credential linked to Microsoft 365 intrusions",
+      "summary": "The Hacker News reports that attackers used a compromised ConnectWise credential to access 173 Microsoft 365 tenants. The incident reinforces the security exposure created by trusted service relationships and the need for tighter tenant-level monitoring.",
+      "category": "technology",
+      "priority": 74,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "The Hacker News",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9LLVo4bDAtYTNoMmpoeFIwdFpheVNIQVJMaXZqOUtaZXZ4TjE4M2E3T0Z4SlA0aVJtNGh3N2dBSXg2SWZiQ0EtcVRKNnhrU1E3RVN5ejJ1V0h4Y2U1SG5nMmtGV2xWckV6NkJWaVJ2VEZDWGVVVTdRLUI1YzgxUUU?oc=5",
+          "publishedAt": "2026-10-17T06:16:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-ai-asia-beyond-ai-race",
+      "kind": "daily",
+      "title": "Asia’s technology contest is widening beyond artificial intelligence",
+      "summary": "A Reuters commentary argues that Asia’s technology competition cannot be reduced to a single AI race, pointing instead to a broader contest over capabilities, industrial depth and the businesses built around them. The framing offers a useful counterweight to one-metric coverage.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOYUpOVHc3NGYyMUJiTWt5eGJlaXEzcTBXaE5tci1jSS1mV3ZxUzJyZXdzOVBpU0lmQ09KQ01lZ2JUeS10U0s1VW9pODV0SHVhTm90Z1lqdFJZWWgweDJOWUVzbGJadmF2NkdKb08xNW12UU41SktyTGNGTVRBMUhzQ3pBR2FRbnpvUGJPWXJhSnRTSjZZS2tQTXBsVl9TbUgwUy1qMmpxSnNhWjZRTENpMXZSM25PcUkxaUE?oc=5",
+          "publishedAt": "2026-10-18T23:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-football-uefa-midweek-fixtures",
+      "kind": "daily",
+      "title": "UEFA’s midweek schedule puts the next European tests in focus",
+      "summary": "UEFA’s fixtures and results service sets out the next round of European competition. The calendar provides the clearest baseline for following the midweek programme while clubs manage domestic and continental demands.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "UEFA.com",
+          "url": "https://www.uefa.com/uefachampionsleague/fixtures-results/",
+          "publishedAt": "2026-10-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-weekly-football-calendar-pressure",
+      "kind": "weekly",
+      "title": "Football’s calendar is becoming the story around the matches",
+      "summary": "The football week is being shaped by the pressure of a dense calendar. UEFA’s fixture list provides the continental frame, domestic standings add a second competitive layer, and recent wins by leading clubs sharpen expectations before the next European meetings. That combination makes form useful but incomplete: rotation, travel and recovery can matter as much as the last scoreline. The most informative coverage will therefore connect results with schedule context instead of treating every match as a standalone verdict on a team’s season.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "week": "2026-W43",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "UEFA.com",
+          "url": "https://www.uefa.com/uefachampionsleague/fixtures-results/",
+          "publishedAt": "2026-10-19T00:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-markets-global-economy-resilience",
+      "kind": "daily",
+      "title": "IMFC chair says global economy remains resilient",
+      "summary": "Reuters reports that the chair of the International Monetary and Financial Committee described the global economy as resilient. The assessment comes with geopolitical and policy tensions still visible, making resilience a condition to test rather than a guarantee.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOa05jVFdUVTlxcG85OVFRMF94Wmo0TXlmSjRUWXhlb0xYYUVXdXd3ODJ6QWFMXzlSRW0ybkJ1MHgtbmt6ZjhXNzN1UkwwTEFURzJsRk8zSVBlQldrWXlHMGlhSTJoSDdYMjc5UWttN1dDX1VKZ2xTcGRHYVEyRW16TUdGbGpSMVVKck1ITUk5dkpyOHhrODd5bi1vLXJpUy1pR0tUd2V2T1hXOUNQcDJLMlNEMVZXUVl2RlgzVGZJaEV2VUNsSGc?oc=5",
+          "publishedAt": "2026-10-17T13:14:35.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-ai-drone-infrastructure-risk",
+      "kind": "daily",
+      "title": "Weaponised AI drones raise a protection problem for critical sites",
+      "summary": "The Soufan Center highlights a security challenge created by AI-enabled drones: protecting infrastructure and public figures as autonomous capabilities become easier to combine with commercially available systems. The risk is operational, not merely theoretical.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "The Soufan Center",
+          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE8xUXRXdWFEV2E4TExTc3lEVkhqOG9xVUJWMDNNbWpVWDhtcC1aUy1LeVNWbUEzb19WeWdvYTB6QnFyQzlxUmxoSFdFbndyVDVfQl9zYWZkbFUxRzVtY1cxdUtzS3NPZw?oc=5",
+          "publishedAt": "2026-10-19T04:04:24.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-football-champions-league-form",
+      "kind": "daily",
+      "title": "Champions League contenders arrive in contrasting form",
+      "summary": "FOX Sports reports on Barcelona and Paris Saint-Germain wins ahead of their Champions League meeting. The results add a form narrative to the matchup, but the competition itself will provide the stronger test of each side’s current level.",
+      "category": "football",
+      "priority": 65,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Opta Analyst",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTFBHZHp6Mmc0c3pCT1dyVU14Mmt6X2prZDRJcnJVQ2locjBTNzNCckNxOEdSMHVXMTZIc25NR1NLYUV3SzlMcnNXSWtzeVdESy1RWlJobzFKcnJBTDNzOEN5aFFVVGdYdTVV?oc=5",
+          "publishedAt": "2026-10-17T16:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-technology-uk-software-antitrust",
+      "kind": "daily",
+      "title": "UK scrutiny widens around software and AI power",
+      "summary": "PYMNTS reports that Microsoft is facing tougher UK antitrust oversight focused on software and AI dominance. The development shows how competition authorities are examining the links between established software platforms and newer AI markets.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "PYMNTS.com",
+          "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxOWTBUN0taVjl0VDZIVkJXYlNQaVNNcnEyWWp6RTV4OVIyQnRWR2VYamh4bUU1RmNfZkFVUGI3SFM3OWdPWUJhNzVGSm9SN21qa05XcVBmbzVNZkpSakM2enYtRndOMHM1ek9wb0c3VVA0TEJaZ244R1R3aXNuQVVrN0ttQkJhcG5sTHJmYlczNGpkc29XaC1FbVE2SnhqMXNtNkNobTB2Nk5tdHpSc2JlVDlPaFdCVTJJMmVkLW5uTl9jeXBwVHc?oc=5",
+          "publishedAt": "2026-10-18T17:05:26.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-football-premier-league-table",
+      "kind": "daily",
+      "title": "Premier League table enters another decisive stretch",
+      "summary": "ESPN’s current standings page shows the Premier League table as the season moves into another congested stretch. The competitive picture remains fluid, with the value of each weekend result amplified by the limited space between fixtures.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "ESPN",
+          "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE5BX2x0UXhKS0JaYjEzcnFrQ0hIOS0xcW5DaUdNdGhBNDNXVFk2Rm51MHZ2TjJicURzUU5JcS1rVFBDRi1fUlVEY0o3cXRhRkZETjIzUjFGcHROQVd3N3pzbWFkLUx4dw?oc=5",
+          "publishedAt": "2026-10-18T15:44:41.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-ai-professional-training-pipeline",
+      "kind": "daily",
+      "title": "Universities adjust the pipeline for AI professionals",
+      "summary": "A new programme reported in Arkansas is aimed at preparing future AI workers. Its significance is less about another course launch than the widening effort to build practical talent, curricula and institutional capacity around a fast-changing field.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Northwest Arkansas Democrat-Gazette",
+          "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQRjhqajhPbkI5QWJSbXNnMFJFT2tPTkhVenRqN0RWVzlDamVNRm93Z003ZmZPNTkwSDBoNm9rT3hCXy00TmNPVnJNUDU1TjhHU0liN0VBX3JtaW9CT3UxbEFFa3F0WDJsZnV3N2dVOGN6R0NuaDlaRmtGVTZjTXlWd1NlVWw1dERsV2NrbGYtckdWV1RhTEE?oc=5",
+          "publishedAt": "2026-10-19T00:45:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-ai-workplace-budget-rethink",
+      "kind": "daily",
+      "title": "AI spending faces a tougher workplace test",
+      "summary": "Recent commentary questions whether large AI budgets are producing dependable workplace value when generated output still needs heavy correction. The debate is shifting from adoption enthusiasm to measurable quality, governance and the cost of review.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Futurism",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQdGRrWUV1VmE4Ujd3UzYyOTdLam85TnZnWUpiQU9fcm1GTkV2bTNPQk4yZU1hZGhkZ3pGZEdNRTVNYkwwVXlkS2ZDdlBkTk1xcHhuV1NIWG13TlQ0N2x6NlNqY3NwVGxCclpQS1JSWGdmMEVtNC1URVBuVk03Z1Y0RkxFdkdadHVtTG9zeERTaWRDVFYydkljdmhB?oc=5",
+          "publishedAt": "2026-10-18T10:49:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-chatgpt-classroom-teaching-assistant",
+      "kind": "daily",
+      "title": "When an AI assistant becomes the teaching assistant",
+      "summary": "A student account from the Massachusetts Daily Collegian examines the uneasy trade-offs of using an AI assistant in coursework. The story centres on trust, learning and accountability rather than treating classroom AI as a simple productivity upgrade.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Massachusetts Daily Collegian",
+          "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE9JNk5YM1pPRnF0RjdRSVVDekJWTmIyQ25GUlBFSk9tSEU0dkxoQjd6MmQzS1dQclVDWnc1OVlGWWRlTVhncGtOd0ZQUm1sd0lSbnJqbjVZdGF5TG5FdW5leTdRZm8wamRibENKbHR5TlpScm5iNURsWUd3?oc=5",
+          "publishedAt": "2026-10-19T04:09:07.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-markets-australia-labour-easing",
+      "kind": "daily",
+      "title": "Australia’s central bank sees signs of labour-market easing",
+      "summary": "A report carried by Yahoo Finance says an Australian central banker sees evidence that labour-market conditions are easing. The observation matters for the policy outlook, although it does not by itself determine the next rate decision.",
+      "category": "economy-markets",
+      "priority": 50,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNSmRXWWhXc09zc042V3I3SENmbTcwc0RIRHNfbERaMUtEOHdkbFdXMmdFeDBuczhNdU80VjQ4RGwzNnNDWEU5VUQwSGwzOHJRS25xQ2NaV3lFZXlBM0RyTjVWc0VncldoN0pwZ1UyaExMdFh0NFR6R29ObnpXSlVpY1FZZ3RfbWE4SjJXNGZ1ekVZT0FlazdscEl6RDQtZFc3bUE?oc=5",
+          "publishedAt": "2026-10-19T01:18:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-markets-week-ahead-earnings-test",
+      "kind": "daily",
+      "title": "Markets face an earnings-heavy week",
+      "summary": "Investopedia’s weekly preview points to Meta and Tesla among the companies due to report, alongside results from airlines, streaming firms and other major businesses. The calendar puts corporate earnings at the centre of the week’s market narrative.",
+      "category": "economy-markets",
+      "priority": 50,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Investopedia",
+          "url": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxQd0pnMHB3eC11T1M0N1lRcjVUR3l1SHFOYkxwWmpGSEtXdGNSX2NnX2xvVWUwLU5RZEtmY0NPSEswbWlzVnYzcmYtMFZSaTRZN01sMGctRUZRSld5VkY3ZTRycTNLdTlEcGFaNnJ3VE14VnBodzduUGJFWDJ5MXdseUVwWUVTMjg0YVk0OERIS3ZpUlNkSm02WEdKcS1NSTR6azJiU2I1SnV6Q0tpaWE0Y051NllxSzNYR3lnMjA5aFNUY2FQcEp1d084enctbENwXzJXUzVuU0t0NjA?oc=5",
+          "publishedAt": "2026-10-18T09:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-technology-ai-procurement",
+      "kind": "daily",
+      "title": "AI is starting to act like a software buyer",
+      "summary": "A Cybersecurity Insiders analysis describes AI systems taking a more active role in software selection without the procurement controls normally applied to human buyers. That creates a governance gap around permissions, vendor risk and purchasing accountability.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Cybersecurity Insiders",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOdUNQd1ZDYWZDcXd4REdiRkVoTW1UNmI5clBqc2dkaEZRR3N5Rmc0cVVnWllWbFJqcVNnLTNkNl91Nkk3bXBUVjNESEJNZHRYeFdPa2haY1NhWFlCOGdDc2t2djBsZENJb0JRZEpaSllOZmk1RURGZS1JTWl5ZEIyNlIxVnJPazhpQWF4RFlzTUJzdXVTZkVKeU5MSnN6QkN5VVdF?oc=5",
+          "publishedAt": "2026-10-18T10:58:09.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-19-technology-varonis-cybersecurity-sale",
+      "kind": "daily",
+      "title": "Varonis sale puts a spotlight on cybersecurity maturity",
+      "summary": "CTech uses Varonis’s reported $6.3 billion sale to examine the risks facing older cybersecurity companies. Beyond the transaction, the story raises questions about product cycles, consolidation and how security vendors maintain relevance.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-10-19T05:00:00.000Z",
+      "updatedAt": "2026-10-19T05:00:00.000Z",
+      "retrievedAt": "2026-10-19T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "https://tech-insider.org/",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9VXzNDM0JLWllSSDYtQ1Z2ajZsUEJ3azRfQkxJd01IYnNSU1U2SVZoTTA5VUpGTnZscEhBaWoxNmF3cFlMeVREbXVRcUtSQm8yamY1QzJPZ2dYcWhELThBQ0szSk1iQ3VfY0Jhb3NPdzd3SEY5NDlnQWdsR2JVWkE?oc=5",
+          "publishedAt": "2026-10-19T04:36:58.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-18-champions-league-matchday-two-record-goals",
       "kind": "daily",
