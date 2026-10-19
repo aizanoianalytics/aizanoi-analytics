@@ -1,0 +1,28 @@
+{
+  "id": "2026-10-19-weekly-football-calendar-pressure",
+  "title": "Football’s calendar is becoming the story around the matches",
+  "summary": "The football week is being shaped by the pressure of a dense calendar. UEFA’s fixture list provides the continental frame, domestic standings add a second competitive layer, and recent wins by leading clubs sharpen expectations before the next European meetings. That combination makes form useful but incomplete: rotation, travel and recovery can matter as much as the last scoreline. The most informative coverage will therefore connect results with schedule context instead of treating every match as a standalone verdict on a team’s season.",
+  "category": "football",
+  "priority": 72,
+  "publishedAt": "2026-10-19T05:00:00Z",
+  "updatedAt": "2026-10-19T05:00:00Z",
+  "retrievedAt": "2026-10-19T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "UEFA.com",
+      "url": "https://www.uefa.com/uefachampionsleague/fixtures-results/",
+      "publishedAt": "2026-10-19T00:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W43"
+}

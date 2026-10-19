@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-19-technology-m365-tenant-intrusions",
+  "title": "Compromised ConnectWise credential linked to Microsoft 365 intrusions",
+  "summary": "The Hacker News reports that attackers used a compromised ConnectWise credential to access 173 Microsoft 365 tenants. The incident reinforces the security exposure created by trusted service relationships and the need for tighter tenant-level monitoring.",
+  "category": "technology",
+  "priority": 74,
+  "publishedAt": "2026-10-19T05:00:00Z",
+  "updatedAt": "2026-10-19T05:00:00Z",
+  "retrievedAt": "2026-10-19T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "The Hacker News",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9LLVo4bDAtYTNoMmpoeFIwdFpheVNIQVJMaXZqOUtaZXZ4TjE4M2E3T0Z4SlA0aVJtNGh3N2dBSXg2SWZiQ0EtcVRKNnhrU1E3RVN5ejJ1V0h4Y2U1SG5nMmtGV2xWckV6NkJWaVJ2VEZDWGVVVTdRLUI1YzgxUUU?oc=5",
+      "publishedAt": "2026-10-17T06:16:00Z"
+    }
+  ]
+}

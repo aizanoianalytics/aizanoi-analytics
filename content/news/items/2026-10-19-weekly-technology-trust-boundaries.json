@@ -1,0 +1,28 @@
+{
+  "id": "2026-10-19-weekly-technology-trust-boundaries",
+  "title": "Technology’s trust boundary is moving",
+  "summary": "The week’s technology stories share a common fault line: software is becoming more connected, more automated and more consequential, while the old boundaries of trust are proving porous. A compromised service credential reportedly opened access across many Microsoft 365 tenants; AI systems are being discussed as software buyers; and regulators are taking a harder look at platform power. None of these developments is isolated. They describe a market where identity, procurement and competition policy increasingly meet in the same operational layer. The winners will need...",
+  "category": "technology",
+  "priority": 76,
+  "publishedAt": "2026-10-19T05:00:00Z",
+  "updatedAt": "2026-10-19T05:00:00Z",
+  "retrievedAt": "2026-10-19T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "The Hacker News",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9LLVo4bDAtYTNoMmpoeFIwdFpheVNIQVJMaXZqOUtaZXZ4TjE4M2E3T0Z4SlA0aVJtNGh3N2dBSXg2SWZiQ0EtcVRKNnhrU1E3RVN5ejJ1V0h4Y2U1SG5nMmtGV2xWckV6NkJWaVJ2VEZDWGVVVTdRLUI1YzgxUUU?oc=5",
+      "publishedAt": "2026-10-17T06:16:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W43"
+}
