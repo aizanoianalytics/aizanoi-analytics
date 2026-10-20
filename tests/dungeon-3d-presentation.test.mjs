@@ -142,6 +142,8 @@ test('presentation source is CSP-safe and CSS covers HUD, touch, safe areas and 
     assert.ok(css.includes(selector), `missing ${selector}`);
   }
   assert.match(css, /env\(safe-area-inset-(?:top|right|bottom|left)/);
+  assert.match(css, /@media\s*\([^}]*pointer:\s*coarse[^}]*\)[^{]*\{[\s\S]*?\.az-touch-controls\s*\{\s*display:\s*block/s);
+  assert.match(css, /@media\s*\(pointer:\s*coarse\)[\s\S]*?\.az-fs-fab\s*\{/);
   assert.match(css, /@media\s*\(orientation:\s*portrait\)/);
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
   assert.match(css, /font-size:\s*(?:1rem|16px)/);

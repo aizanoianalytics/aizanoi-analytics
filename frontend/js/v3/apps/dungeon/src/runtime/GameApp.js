@@ -1,0 +1,715 @@
+import * as THREE from '../../../../../../worlds/shared/vendor/three.module.js';
+import { GLTFLoader } from '../../../../../../worlds/shared/vendor/GLTFLoader.js';
+import { createGameState, stepGame, spawnWave, openChest, chooseBlessing } from '../game/index.js';
+import { createHud } from '../ui/hud.js';
+import { createAudioManager } from '../ui/audio.js';
+import { createFeedbackBus } from '../ui/feedback.js';
+
+const FIXED_STEP = 1 / 60;
+const MAX_FRAME_DELTA = 0.1;
+const MAX_CATCH_UP_STEPS = 6;
+const APP_ID = 'dungeon';
+const ASSET_BASE = new URL('../../assets/glb/', import.meta.url);
+const ASSETS = Object.freeze({
+  floor: 'floor_tile.glb', wall: 'wall_block.glb', doorway: 'arch_doorway.glb',
+  column: 'column.glb', brazier: 'brazier.glb', hero: 'hero_aizo.glb',
+  chest: 'treasure_chest.glb', portal: 'portal_ring.glb', projectile: 'projectile_arrow.glb',
+  chaser: 'enemy_gargoyle.glb', archer: 'enemy_skeletal_archer.glb',
+  tank: 'enemy_armored_centurion.glb', summoner: 'enemy_cult_sorcerer.glb',
+  boss: 'boss_marble_minotaur.glb',
+});
+const ENEMY_ASSET = Object.freeze({
+  chaser: 'chaser', archer: 'archer', tank: 'tank', summoner: 'summoner', boss: 'boss',
+});
+const CONSUMED_KEYS = new Set([
+  'KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
+  'Space', 'KeyJ', 'Escape', 'KeyH', 'Enter',
+]);
+const MOVE_CODES = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
+const COLORS = Object.freeze({ bronze: 0xc28a45, ember: 0xff5a22, gold: 0xffcf5a, mist: 0xb8d8e8, blood: 0xb52d2b, arcane: 0x936dff });
+
+function node(tag, className, text) {
+  const value = document.createElement(tag);
+  value.className = className;
+  if (text !== undefined) value.textContent = text;
+  return value;
+}
+
+function makeButton(className, label, action) {
+  const button = node('button', className, label);
+  button.type = 'button';
+  button.addEventListener('click', action);
+  return button;
+}
+
+export class GameApp {
+  constructor({ container, api } = {}) {
+    if (!container) throw new TypeError('GameApp requires a container');
+    this.container = container;
+    this.api = api;
+    this.destroyed = false;
+    this.loadGeneration = 0;
+    this.frames = 0;
+    this.state = createGameState('aizo-awakens');
+    this.sceneState = 'menu';
+    this.paused = false;
+    this.help = false;
+    this.hiddenPause = false;
+    this.accumulator = 0;
+    this.eventCursor = 0;
+    this.keys = new Set();
+    this.pendingAttack = false;
+    this.pendingDash = false;
+    this.pendingInteract = false;
+    this.enemyMeshes = new Map();
+    this.projectileMeshes = new Map();
+    this.chestMeshes = new Map();
+    this.chestPositions = new Map();
+    this.effects = [];
+    this.disposers = [];
+    this.geometries = new Set();
+    this.materials = new Set();
+    this.templates = new Map();
+    this.particleResources = new Map();
+    this.lastTime = performance.now();
+  }
+
+  async start() {
+    this.container.replaceChildren();
+    this.installStylesheet();
+    this.buildDom();
+    this.installQaHandle();
+    this.installLifecycle();
+    if (!this.hasWebGL2()) {
+      this.showRepair('Aizanoi Dungeon needs WebGL2', 'Update your browser or graphics driver, then reopen the dungeon.');
+      return;
+    }
+    this.buildRenderer();
+    this.buildScene();
+    const generation = ++this.loadGeneration;
+    try {
+      await this.loadAssets(generation);
+      if (this.destroyed || generation !== this.loadGeneration) return;
+      this.buildRoom();
+      this.buildAttractScene();
+      this.installInput();
+      this.resize();
+      this.resizeObserver = new ResizeObserver(() => this.resize());
+      this.resizeObserver.observe(this.stage);
+      this.raf = requestAnimationFrame((time) => this.loop(time));
+      this.beginButton.focus();
+    } catch (error) {
+      if (this.destroyed || generation !== this.loadGeneration) return;
+      console.error('[Aizanoi Dungeon] Asset load failed:', error);
+      this.showRepair('The dungeon could not load', 'A 3D asset failed to load. Check your connection and reopen the dungeon.');
+    }
+  }
+
+  installStylesheet() {
+    if (document.getElementById('aizanoi-dungeon-css')) return;
+    const link = document.createElement('link');
+    link.id = 'aizanoi-dungeon-css';
+    link.rel = 'stylesheet';
+    link.href = new URL('../../css/game.css', import.meta.url).href;
+    document.head.appendChild(link);
+  }
+
+  buildDom() {
+    this.root = node('div', 'aizanoi-dungeon3d-app-root');
+    this.root.tabIndex = 0;
+    this.root.setAttribute('aria-label', 'Aizanoi Dungeon game');
+    this.stage = node('div', 'az-dungeon3d-stage');
+    this.effectLayer = node('div', 'az-dungeon-effects');
+    this.touchControls = node('div', 'az-touch-controls');
+    this.touchControls.setAttribute('aria-label', 'Touch controls');
+    const pad = node('div', 'az-touch-joystick');
+    pad.setAttribute('role', 'group');
+    pad.setAttribute('aria-label', 'Movement pad');
+    pad.append(node('span', 'az-touch-joystick-knob'));
+    const actions = node('div', 'az-touch-actions');
+    const attack = makeButton('az-touch-action az-touch-action--primary', 'Attack', () => { this.pendingAttack = true; this.root.focus(); });
+    const dash = makeButton('az-touch-action', 'Dash', () => { this.pendingDash = true; this.root.focus(); });
+    actions.append(attack, dash);
+    this.touchControls.append(pad, actions);
+    this.exitButton = makeButton('az-dungeon-exit', '', () => this.api?.closeApp?.(APP_ID));
+    this.exitButton.setAttribute('aria-label', 'Return to AizanoiOS');
+    const exitArrow = node('span', 'az-dungeon-exit-arrow', '←');
+    exitArrow.setAttribute('aria-hidden', 'true');
+    this.exitButton.append(exitArrow, node('span', 'az-dungeon-exit-label', 'AizanoiOS'));
+    this.menu = node('section', 'az-dungeon-menu');
+    this.menu.append(node('h1', 'az-dungeon-menu-title', 'Aizanoi Dungeon'));
+    this.menu.append(node('p', 'az-dungeon-menu-sub', 'Aizo awakens beneath the temple. Survive the descent, claim the blessing, enter the portal.'));
+    this.beginButton = makeButton('az-dungeon-begin', 'Begin', () => this.begin());
+    this.menu.append(this.beginButton);
+    this.root.append(this.stage, this.effectLayer, this.touchControls, this.exitButton, this.menu);
+    this.container.append(this.root);
+    this.hud = createHud({ container: this.root });
+    this.audio = createAudioManager();
+    this.feedback = createFeedbackBus({ audio: this.audio, hud: this.hud });
+    this.disposers.push(this.feedback.on('effect', (effect) => this.renderEffect(effect)));
+  }
+
+  hasWebGL2() {
+    try { return Boolean(document.createElement('canvas').getContext('webgl2')); } catch (_) { return false; }
+  }
+
+  buildRenderer() {
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.05;
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.stage.append(this.renderer.domElement);
+    const contextLost = (event) => {
+      event.preventDefault();
+      this.paused = true;
+      this.showRepair('Graphics context lost', 'Your GPU reset the dungeon. Close and reopen it to repair the scene.');
+    };
+    this.renderer.domElement.addEventListener('webglcontextlost', contextLost, false);
+    this.disposers.push(() => this.renderer?.domElement.removeEventListener('webglcontextlost', contextLost));
+  }
+
+  buildScene() {
+    this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x080a0b);
+    this.scene.fog = new THREE.Fog(0x080a0b, 22, 48);
+    this.camera = new THREE.PerspectiveCamera(52, 1, 0.1, 80);
+    this.camera.position.set(10, 10, 12);
+    this.cameraTarget = new THREE.Vector3();
+    this.scene.add(new THREE.HemisphereLight(0x8fa0bd, 0x160e08, 0.75));
+    const moon = new THREE.DirectionalLight(0xffdfb0, 2.4);
+    moon.position.set(7, 14, 5);
+    moon.castShadow = true;
+    moon.shadow.mapSize.set(1024, 1024);
+    moon.shadow.camera.left = -22;
+    moon.shadow.camera.right = 22;
+    moon.shadow.camera.top = 22;
+    moon.shadow.camera.bottom = -22;
+    this.scene.add(moon);
+    this.room = new THREE.Group();
+    this.dynamic = new THREE.Group();
+    this.scene.add(this.room, this.dynamic);
+  }
+
+  async loadAssets(generation) {
+    const loader = new GLTFLoader();
+    await Promise.all(Object.entries(ASSETS).map(async ([key, file]) => {
+      const gltf = await loader.loadAsync(new URL(file, ASSET_BASE).href);
+      if (this.destroyed || generation !== this.loadGeneration) {
+        this.disposeLoaded(gltf.scene);
+        return;
+      }
+      this.collectResources(gltf.scene);
+      this.templates.set(key, gltf.scene);
+    }));
+  }
+
+  disposeLoaded(root) {
+    const geometries = new Set();
+    const materials = new Set();
+    root.traverse((object) => {
+      if (object.geometry) geometries.add(object.geometry);
+      const owned = Array.isArray(object.material) ? object.material : object.material ? [object.material] : [];
+      owned.forEach((material) => materials.add(material));
+    });
+    geometries.forEach((geometry) => geometry.dispose());
+    materials.forEach((material) => material.dispose());
+  }
+
+  collectResources(root) {
+    root.traverse((object) => {
+      if (object.geometry) this.geometries.add(object.geometry);
+      const materials = Array.isArray(object.material) ? object.material : object.material ? [object.material] : [];
+      materials.forEach((material) => this.materials.add(material));
+    });
+  }
+
+  clone(key) {
+    const model = this.templates.get(key)?.clone(true);
+    if (!model) throw new Error(`Missing dungeon asset: ${key}`);
+    model.traverse((object) => {
+      if (object.isMesh) { object.castShadow = true; object.receiveShadow = true; }
+    });
+    return model;
+  }
+
+  buildRoom() {
+    const tileSize = 4;
+    for (let x = -5; x <= 5; x += 1) {
+      for (let z = -5; z <= 5; z += 1) {
+        const tile = this.clone('floor');
+        tile.position.set(x * tileSize, 0, z * tileSize);
+        tile.scale.set(2, 1, 2);
+        this.room.add(tile);
+      }
+    }
+    for (let i = -9; i <= 9; i += 1) {
+      for (const [x, z, rotation] of [[i * 2, -19, 0], [i * 2, 19, 0], [-19, i * 2, Math.PI / 2], [19, i * 2, Math.PI / 2]]) {
+        if (z === -19 && Math.abs(x) < 2.1) continue;
+        const wall = this.clone('wall');
+        wall.position.set(x, 0, z);
+        wall.rotation.y = rotation;
+        this.room.add(wall);
+      }
+    }
+    const doorway = this.clone('doorway');
+    doorway.position.set(0, 0, -19);
+    this.room.add(doorway);
+    for (const x of [-12, -6, 6, 12]) {
+      for (const z of [-12, 12]) {
+        const column = this.clone('column');
+        column.position.set(x, 0, z);
+        this.room.add(column);
+      }
+    }
+    for (const x of [-8, 8]) {
+      const brazier = this.clone('brazier');
+      brazier.position.set(x, 0, -15);
+      this.room.add(brazier);
+      const fire = new THREE.PointLight(0xff6b21, 8, 12, 2);
+      fire.position.set(x, 2.1, -15);
+      this.room.add(fire);
+    }
+  }
+
+  buildAttractScene() {
+    this.hero = this.clone('hero');
+    this.hero.position.set(0, 0, 2);
+    this.dynamic.add(this.hero);
+    this.preview = new THREE.Group();
+    const enemy = this.clone('chaser');
+    enemy.position.set(4, 0, -3);
+    const chest = this.clone('chest');
+    chest.position.set(-4, 0, -2);
+    const portal = this.clone('portal');
+    portal.position.set(0, 0, -10);
+    this.preview.add(enemy, chest, portal);
+    this.dynamic.add(this.preview);
+  }
+
+  installQaHandle() {
+    const app = this;
+    this.qaHandle = Object.freeze({
+      engine: 'three',
+      get state() { return app.sceneState === 'playing' && (app.paused || app.hiddenPause || app.help) ? 'paused' : app.sceneState; },
+      get chapter() { return app.state.chapter; },
+      get enemyCount() { return app.state.enemies.filter((enemy) => !enemy.dead).length; },
+      get enemyHp() { return Object.freeze(app.state.enemies.filter((enemy) => !enemy.dead).map((enemy) => Object.freeze({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp }))); },
+      get player() { return Object.freeze({ x: app.state.player.position.x, z: app.state.player.position.z, hp: app.state.player.hp }); },
+      get hp() { return app.state.player.hp; },
+      get frames() { return app.frames; },
+    });
+    window.AIZANOI_DUNGEON_GAME = this.qaHandle;
+  }
+
+  installLifecycle() {
+    const focusout = (event) => {
+      if (!event.relatedTarget || !this.root.contains(event.relatedTarget)) this.resetInput();
+    };
+    const reset = () => this.resetInput();
+    const visibility = () => {
+      this.hiddenPause = document.hidden;
+      if (document.hidden) this.resetInput();
+      this.lastTime = performance.now();
+    };
+    this.root.addEventListener('focusout', focusout);
+    window.addEventListener('blur', reset);
+    document.addEventListener('visibilitychange', visibility);
+    this.disposers.push(() => this.root.removeEventListener('focusout', focusout));
+    this.disposers.push(() => window.removeEventListener('blur', reset));
+    this.disposers.push(() => document.removeEventListener('visibilitychange', visibility));
+  }
+
+  installInput() {
+    const hasFocus = () => this.root.contains(document.activeElement) || document.activeElement === this.root;
+    const keydown = (event) => {
+      if (!hasFocus() || !CONSUMED_KEYS.has(event.code)) return;
+      event.preventDefault();
+      if (event.code === 'Escape' && !event.repeat) this.togglePause();
+      else if (event.code === 'KeyH' && !event.repeat) this.toggleHelp();
+      else if (event.code === 'Space' && !event.repeat) this.pendingDash = true;
+      else if (event.code === 'KeyJ' && !event.repeat) this.pendingAttack = true;
+      else if (event.code === 'Enter' && !event.repeat) this.pendingInteract = true;
+      else if (MOVE_CODES.has(event.code)) this.keys.add(event.code);
+    };
+    const keyup = (event) => {
+      if (CONSUMED_KEYS.has(event.code) && hasFocus()) event.preventDefault();
+      this.keys.delete(event.code);
+    };
+    const pointer = (event) => {
+      if (this.sceneState !== 'playing') return;
+      event.preventDefault();
+      this.root.focus();
+      this.pendingInteract = true;
+      this.pendingAttack = true;
+    };
+    this.root.addEventListener('keydown', keydown);
+    this.root.addEventListener('keyup', keyup);
+    this.renderer.domElement.addEventListener('pointerdown', pointer);
+    this.installTouchPad();
+    this.disposers.push(() => this.root.removeEventListener('keydown', keydown));
+    this.disposers.push(() => this.root.removeEventListener('keyup', keyup));
+    this.disposers.push(() => this.renderer?.domElement.removeEventListener('pointerdown', pointer));
+  }
+
+  installTouchPad() {
+    const pad = this.touchControls.querySelector('.az-touch-joystick');
+    const update = (event) => {
+      const rect = pad.getBoundingClientRect();
+      const point = event.touches?.[0] || event;
+      this.touchMove = {
+        x: THREE.MathUtils.clamp((point.clientX - (rect.left + rect.width / 2)) / (rect.width / 2), -1, 1),
+        z: THREE.MathUtils.clamp((point.clientY - (rect.top + rect.height / 2)) / (rect.height / 2), -1, 1),
+      };
+      if (event.cancelable) event.preventDefault();
+      this.root.focus();
+    };
+    const clear = () => { this.touchMove = null; };
+    pad.addEventListener('pointerdown', update);
+    pad.addEventListener('pointermove', (event) => { if (event.buttons) update(event); });
+    pad.addEventListener('pointerup', clear);
+    pad.addEventListener('pointercancel', clear);
+    this.disposers.push(() => clear());
+  }
+
+  async begin() {
+    if (this.sceneState !== 'menu') return;
+    await this.audio.resume();
+    if (this.destroyed) return;
+    this.preview.removeFromParent();
+    this.sceneState = 'playing';
+    this.menu.remove();
+    this.root.focus();
+    spawnWave(this.state, 1);
+    this.feedback.emit('portal', { position: { x: 0, y: 1, z: 0 } });
+    this.syncWorld();
+    this.updateHud();
+  }
+
+  resetInput() {
+    this.keys.clear();
+    this.pendingAttack = false;
+    this.pendingDash = false;
+    this.pendingInteract = false;
+    this.touchMove = null;
+    this.state.inputLatch.attack = false;
+    this.state.inputLatch.dash = false;
+  }
+
+  togglePause() {
+    if (this.sceneState !== 'playing') return;
+    this.paused = !this.paused;
+    this.resetInput();
+    this.hud.update({ paused: this.paused, help: this.help });
+  }
+
+  toggleHelp() {
+    if (this.sceneState === 'menu') return;
+    this.help = !this.help;
+    this.hud.update({ paused: this.paused, help: this.help });
+  }
+
+  movementInput() {
+    let horizontal = 0;
+    let vertical = 0;
+    if (this.keys.has('KeyA') || this.keys.has('ArrowLeft')) horizontal -= 1;
+    if (this.keys.has('KeyD') || this.keys.has('ArrowRight')) horizontal += 1;
+    if (this.keys.has('KeyW') || this.keys.has('ArrowUp')) vertical += 1;
+    if (this.keys.has('KeyS') || this.keys.has('ArrowDown')) vertical -= 1;
+    if (this.touchMove) { horizontal += this.touchMove.x; vertical -= this.touchMove.z; }
+    const length = Math.hypot(horizontal, vertical);
+    if (length > 1) { horizontal /= length; vertical /= length; }
+    const forward = new THREE.Vector3();
+    this.camera.getWorldDirection(forward);
+    forward.y = 0;
+    forward.normalize();
+    const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0)).negate();
+    return {
+      moveX: forward.x * vertical + right.x * horizontal,
+      moveZ: forward.z * vertical + right.z * horizontal,
+    };
+  }
+
+  fixedTick() {
+    const input = this.movementInput();
+    input.attack = this.pendingAttack;
+    input.dash = this.pendingDash;
+    this.pendingAttack = false;
+    this.pendingDash = false;
+    if (this.pendingInteract) {
+      this.pendingInteract = false;
+      if (this.tryInteract()) input.attack = false;
+    }
+    stepGame(this.state, input, FIXED_STEP);
+    this.processEvents();
+    this.syncWorld();
+    this.updateHud();
+    if (this.state.player.dead && this.sceneState !== 'defeat') this.showDefeat();
+  }
+
+  tryInteract() {
+    const player = this.state.player.position;
+    const chest = this.state.chests.find((item) => !item.opened);
+    if (chest) {
+      const position = this.chestPositions.get(chest.id);
+      if (position && Math.hypot(position.x - player.x, position.z - player.z) <= 3) {
+        const result = openChest(this.state, chest.id);
+        if (result.opened) {
+          chooseBlessing(this.state, result.blessing);
+          this.feedback.emit('loot', { label: `${result.gold} gold · ${result.blessing}` });
+          this.spawnPortal(position);
+          this.syncWorld();
+          return true;
+        }
+      }
+    }
+    if (this.portal && Math.hypot(this.portal.position.x - player.x, this.portal.position.z - player.z) <= 3) {
+      this.portal.removeFromParent();
+      this.portal = null;
+      spawnWave(this.state, this.state.chapter);
+      this.feedback.emit(this.state.chapter % 5 === 0 ? 'boss' : 'portal', { label: `Chapter ${this.state.chapter}` });
+      return true;
+    }
+    return false;
+  }
+
+  processEvents() {
+    while (this.eventCursor < this.state.events.length) {
+      const event = this.state.events[this.eventCursor++];
+      const enemy = event.id ? this.state.enemies.find((unit) => unit.id === event.id) : null;
+      const position = enemy ? { x: enemy.x, y: 1.2, z: enemy.z } : { x: this.state.player.position.x, y: 1, z: this.state.player.position.z };
+      if (event.type === 'melee-hit') this.feedback.emit(event.chain === 3 ? 'crit' : 'hit', { damage: event.damage, position });
+      else if (event.type === 'enemy-death') this.feedback.emit('crit', { position });
+      else if (event.type === 'player-hit') {
+        this.feedback.emit('hurt', { damage: event.amount, position });
+        this.hud.setDamage(true);
+        clearTimeout(this.damageTimer);
+        this.damageTimer = setTimeout(() => this.hud?.setDamage(false), 280);
+      } else if (event.type === 'dash') this.feedback.emit('dash', { position });
+      else if (event.type === 'wave-start') this.hud.announce(`Chapter ${event.chapter}`);
+      else if (event.type === 'wave-complete') {
+        this.hud.announce('Wave cleared — claim your blessing');
+        const chest = this.state.chests.find((item) => item.id === event.chest);
+        if (chest) this.chestPositions.set(chest.id, { x: this.state.player.position.x + 2, z: this.state.player.position.z });
+        this.feedback.emit('loot', { label: 'Reward chest revealed', position });
+      }
+    }
+  }
+
+  syncWorld() {
+    if (this.hero) {
+      this.hero.position.set(this.state.player.position.x, 0, this.state.player.position.z);
+      this.hero.rotation.y = Math.atan2(this.state.player.facing.x, this.state.player.facing.z);
+    }
+    const alive = new Set();
+    for (const enemy of this.state.enemies) {
+      if (enemy.dead) continue;
+      alive.add(enemy.id);
+      let mesh = this.enemyMeshes.get(enemy.id);
+      if (!mesh) {
+        mesh = this.clone(ENEMY_ASSET[enemy.archetype]);
+        mesh.userData.entityId = enemy.id;
+        this.enemyMeshes.set(enemy.id, mesh);
+        this.dynamic.add(mesh);
+      }
+      mesh.position.set(enemy.x, 0, enemy.z);
+      mesh.lookAt(this.state.player.position.x, 0, this.state.player.position.z);
+    }
+    for (const [id, mesh] of this.enemyMeshes) {
+      if (!alive.has(id)) { mesh.removeFromParent(); this.enemyMeshes.delete(id); }
+    }
+    const shots = new Set();
+    for (const projectile of this.state.projectiles) {
+      shots.add(projectile.id);
+      let mesh = this.projectileMeshes.get(projectile.id);
+      if (!mesh) { mesh = this.clone('projectile'); this.projectileMeshes.set(projectile.id, mesh); this.dynamic.add(mesh); }
+      mesh.position.set(projectile.x, 0.8, projectile.z);
+      mesh.rotation.y = Math.atan2(projectile.vx, projectile.vz);
+    }
+    for (const [id, mesh] of this.projectileMeshes) {
+      if (!shots.has(id)) { mesh.removeFromParent(); this.projectileMeshes.delete(id); }
+    }
+    const available = new Set();
+    for (const chest of this.state.chests) {
+      if (chest.opened) continue;
+      available.add(chest.id);
+      let mesh = this.chestMeshes.get(chest.id);
+      if (!mesh) { mesh = this.clone('chest'); this.chestMeshes.set(chest.id, mesh); this.dynamic.add(mesh); }
+      const position = this.chestPositions.get(chest.id) || { x: 0, z: 0 };
+      mesh.position.set(position.x, 0, position.z);
+    }
+    for (const [id, mesh] of this.chestMeshes) {
+      if (!available.has(id)) { mesh.removeFromParent(); this.chestMeshes.delete(id); }
+    }
+  }
+
+  spawnPortal(position) {
+    if (this.portal) this.portal.removeFromParent();
+    this.portal = this.clone('portal');
+    this.portal.position.set(position.x, 0, position.z);
+    this.dynamic.add(this.portal);
+    this.feedback.emit('portal', { position: { x: position.x, y: 1, z: position.z } });
+  }
+
+  updateHud() {
+    const player = this.state.player;
+    const boss = this.state.enemies.find((enemy) => enemy.archetype === 'boss' && !enemy.dead);
+    this.hud.update({
+      health: player.hp, maxHealth: player.maxHp, stamina: player.stamina, maxStamina: player.maxStamina,
+      xp: player.xp, xpToNext: player.xpToNext, gold: player.gold, combo: player.combo,
+      chapter: this.state.chapter, wave: this.state.wave.chapter,
+      boss: boss ? { name: 'Marble Minotaur', health: boss.hp, maxHealth: boss.maxHp } : null,
+      paused: this.paused, help: this.help,
+    });
+  }
+
+  renderEffect(effect) {
+    if (effect.type === 'screen-shake') {
+      this.shake = { ...effect.impulse, until: performance.now() + effect.durationMs };
+    } else if (effect.type === 'floating-damage') {
+      const label = node('output', `az-floating-damage${effect.critical ? ' is-critical' : ''}`, String(Math.round(effect.value)));
+      this.effectLayer.append(label);
+      const timer = setTimeout(() => label.remove(), 650);
+      this.effects.push({ kind: 'dom', value: label, timer });
+    } else if (effect.type === 'particle-burst') {
+      const resourceKey = effect.color in COLORS ? effect.color : 'gold';
+      let resources = this.particleResources.get(resourceKey);
+      if (!resources) {
+        resources = {
+          geometry: new THREE.SphereGeometry(0.07, 4, 3),
+          material: new THREE.MeshBasicMaterial({ color: COLORS[resourceKey] }),
+        };
+        this.particleResources.set(resourceKey, resources);
+        this.geometries.add(resources.geometry);
+        this.materials.add(resources.material);
+      }
+      for (let i = 0; i < effect.count; i += 1) {
+        const particle = new THREE.Mesh(resources.geometry, resources.material);
+        particle.position.set(effect.position.x, effect.position.y, effect.position.z);
+        this.scene.add(particle);
+        this.effects.push({ kind: 'particle', value: particle, velocity: new THREE.Vector3((Math.random() - 0.5) * effect.spread * 7, Math.random() * 3 + 1, (Math.random() - 0.5) * effect.spread * 7), life: effect.lifetimeMs / 1000 });
+      }
+    }
+  }
+
+  updateEffects(dt) {
+    for (const effect of this.effects) {
+      if (effect.kind !== 'particle') continue;
+      effect.life -= dt;
+      effect.velocity.y -= 7 * dt;
+      effect.value.position.addScaledVector(effect.velocity, dt);
+      if (effect.life <= 0) effect.value.removeFromParent();
+    }
+    this.effects = this.effects.filter((effect) => effect.kind === 'dom' ? effect.value.isConnected : effect.life > 0);
+  }
+
+  showDefeat() {
+    this.sceneState = 'defeat';
+    this.paused = true;
+    this.defeat = node('section', 'az-hud-panel az-dungeon-defeat');
+    this.defeat.setAttribute('role', 'dialog');
+    this.defeat.append(node('h2', 'az-hud-panel-title', 'Aizo has fallen'));
+    this.defeat.append(node('p', 'az-hud-panel-copy', `Chapter ${this.state.chapter} · ${this.state.player.gold} gold`));
+    this.defeat.append(makeButton('az-dungeon-begin', 'Restart', () => this.restart()));
+    this.root.append(this.defeat);
+  }
+
+  restart() {
+    this.defeat?.remove();
+    this.state = createGameState(`aizo-${Date.now()}`);
+    this.eventCursor = 0;
+    this.paused = false;
+    this.sceneState = 'playing';
+    this.clearEntities();
+    spawnWave(this.state, 1);
+    this.root.focus();
+    this.syncWorld();
+  }
+
+  clearEntities() {
+    for (const group of [this.enemyMeshes, this.projectileMeshes, this.chestMeshes]) {
+      for (const mesh of group.values()) mesh.removeFromParent();
+      group.clear();
+    }
+    this.portal?.removeFromParent();
+    this.portal = null;
+    this.chestPositions.clear();
+  }
+
+  updateCamera(dt, time) {
+    const target = this.sceneState === 'menu' ? new THREE.Vector3(0, 0.8, 0) : new THREE.Vector3(this.state.player.position.x, 0.8, this.state.player.position.z);
+    const angle = this.sceneState === 'menu' ? time * 0.00012 : 0.72;
+    const offset = new THREE.Vector3(Math.sin(angle) * 12, 10, Math.cos(angle) * 12);
+    this.cameraTarget.lerp(target, Math.min(1, dt * 8));
+    const desired = this.cameraTarget.clone().add(offset);
+    this.camera.position.lerp(desired, Math.min(1, dt * 7));
+    if (this.shake && performance.now() < this.shake.until) {
+      this.camera.position.x += this.shake.x;
+      this.camera.position.y += this.shake.y;
+    }
+    this.camera.lookAt(this.cameraTarget);
+  }
+
+  loop(time) {
+    if (this.destroyed) return;
+    const dt = Math.min(MAX_FRAME_DELTA, Math.max(0, (time - this.lastTime) / 1000));
+    this.lastTime = time;
+    if (this.sceneState === 'playing' && !this.paused && !this.help && !this.hiddenPause) {
+      this.accumulator += dt;
+      let steps = 0;
+      while (this.accumulator >= FIXED_STEP && steps < MAX_CATCH_UP_STEPS) {
+        this.fixedTick();
+        this.accumulator -= FIXED_STEP;
+        steps += 1;
+      }
+      if (steps === MAX_CATCH_UP_STEPS) this.accumulator = 0;
+    }
+    this.updateEffects(dt);
+    if (this.portal) this.portal.rotation.y += dt * 0.7;
+    this.updateCamera(dt, time);
+    this.renderer.render(this.scene, this.camera);
+    this.frames += 1;
+    this.raf = requestAnimationFrame((next) => this.loop(next));
+  }
+
+  resize() {
+    if (!this.renderer) return;
+    const width = Math.max(2, this.stage.clientWidth);
+    const height = Math.max(2, this.stage.clientHeight);
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(width, height, false);
+  }
+
+  showRepair(title, detail) {
+    this.repair?.remove();
+    this.repair = node('section', 'aizanoi-dungeon3d-card');
+    this.repair.setAttribute('role', 'alert');
+    this.repair.append(node('strong', '', title), node('p', '', detail));
+    this.root?.append(this.repair);
+  }
+
+  destroy() {
+    if (this.destroyed) return;
+    this.destroyed = true;
+    this.loadGeneration += 1;
+    cancelAnimationFrame(this.raf);
+    clearTimeout(this.damageTimer);
+    this.resizeObserver?.disconnect();
+    this.resetInput();
+    this.disposers.splice(0).forEach((dispose) => { try { dispose(); } catch (_) {} });
+    this.effects.forEach((effect) => { clearTimeout(effect.timer); effect.value?.remove?.(); effect.value?.removeFromParent?.(); });
+    this.feedback?.clear();
+    this.audio?.destroy();
+    this.hud?.destroy();
+    this.geometries.forEach((geometry) => geometry.dispose());
+    this.materials.forEach((material) => material.dispose());
+    this.geometries.clear();
+    this.materials.clear();
+    this.renderer?.dispose();
+    if (window.AIZANOI_DUNGEON_GAME === this.qaHandle) window.AIZANOI_DUNGEON_GAME = undefined;
+    this.root?.remove();
+  }
+}
