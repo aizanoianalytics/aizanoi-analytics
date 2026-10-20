@@ -25,6 +25,7 @@ const CONSUMED_KEYS = new Set([
   'KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
   'Space', 'KeyJ', 'Escape', 'KeyH', 'Enter',
 ]);
+let stylesheetRefs = 0;
 const MOVE_CODES = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
 const COLORS = Object.freeze({ bronze: 0xc28a45, ember: 0xff5a22, gold: 0xffcf5a, mist: 0xb8d8e8, blood: 0xb52d2b, arcane: 0x936dff });
 
@@ -65,6 +66,7 @@ export class GameApp {
     this.projectileMeshes = new Map();
     this.chestMeshes = new Map();
     this.chestPositions = new Map();
+    this.telegraphMeshes = new Map();
     this.effects = [];
     this.disposers = [];
     this.geometries = new Set();
@@ -75,18 +77,32 @@ export class GameApp {
   }
 
   async start() {
+    // Startup boundary: start exactly once; a destroy() that lands before or
+    // during startup must leave no live scene behind.
+    if (this.started) return;
+    this.started = true;
+    const generation = ++this.loadGeneration;
     this.container.replaceChildren();
     this.installStylesheet();
     this.buildDom();
     this.installQaHandle();
     this.installLifecycle();
+    if (this.destroyed || generation !== this.loadGeneration) return;
     if (!this.hasWebGL2()) {
       this.showRepair('Aizanoi Dungeon needs WebGL2', 'Update your browser or graphics driver, then reopen the dungeon.');
       return;
     }
-    this.buildRenderer();
-    this.buildScene();
-    const generation = ++this.loadGeneration;
+    try {
+      this.buildRenderer();
+      this.buildScene();
+    } catch (error) {
+      console.error('[Aizanoi Dungeon] Scene setup failed:', error);
+      this.rollbackScene();
+      if (!this.destroyed && generation === this.loadGeneration) {
+        this.showRepair('The dungeon could not start', 'The 3D scene failed to initialise. Reopen the dungeon to try again.');
+      }
+      return;
+    }
     try {
       await this.loadAssets(generation);
       if (this.destroyed || generation !== this.loadGeneration) return;
@@ -106,12 +122,28 @@ export class GameApp {
   }
 
   installStylesheet() {
+    stylesheetRefs += 1;
+    this.stylesheetRef = true;
     if (document.getElementById('aizanoi-dungeon-css')) return;
     const link = document.createElement('link');
     link.id = 'aizanoi-dungeon-css';
     link.rel = 'stylesheet';
     link.href = new URL('../../css/game.css', import.meta.url).href;
     document.head.appendChild(link);
+  }
+
+  releaseStylesheet() {
+    if (!this.stylesheetRef) return;
+    this.stylesheetRef = false;
+    stylesheetRefs = Math.max(0, stylesheetRefs - 1);
+    if (stylesheetRefs === 0) document.getElementById('aizanoi-dungeon-css')?.remove();
+  }
+
+  rollbackScene() {
+    try { this.renderer?.dispose(); } catch (_) {}
+    this.renderer = null;
+    this.scene = null;
+    this.camera = null;
   }
 
   buildDom() {
@@ -164,11 +196,25 @@ export class GameApp {
     this.stage.append(this.renderer.domElement);
     const contextLost = (event) => {
       event.preventDefault();
+      this.contextLost = true;
+      if (this.raf) cancelAnimationFrame(this.raf);
+      this.raf = 0;
       this.paused = true;
-      this.showRepair('Graphics context lost', 'Your GPU reset the dungeon. Close and reopen it to repair the scene.');
+      this.showRepair('Graphics context lost', 'The graphics context was lost. It resumes automatically when the GPU recovers; reopen the dungeon if the scene stays dark.');
+    };
+    const contextRestored = () => {
+      if (this.destroyed) return;
+      this.contextLost = false;
+      this.repair?.remove();
+      this.repair = null;
+      this.paused = false;
+      this.lastTime = performance.now();
+      if (!this.raf) this.raf = requestAnimationFrame((time) => this.loop(time));
     };
     this.renderer.domElement.addEventListener('webglcontextlost', contextLost, false);
+    this.renderer.domElement.addEventListener('webglcontextrestored', contextRestored, false);
     this.disposers.push(() => this.renderer?.domElement.removeEventListener('webglcontextlost', contextLost));
+    this.disposers.push(() => this.renderer?.domElement.removeEventListener('webglcontextrestored', contextRestored));
   }
 
   buildScene() {
@@ -356,19 +402,29 @@ export class GameApp {
 
   installTouchPad() {
     const pad = this.touchControls.querySelector('.az-touch-joystick');
+    let owner = null;
     const update = (event) => {
+      // A second finger owns nothing until the first lifts: ignore it.
+      if (owner !== null && event.pointerId !== owner) return;
+      owner = event.pointerId ?? owner;
+      try { pad.setPointerCapture?.(event.pointerId); } catch (_) {}
       const rect = pad.getBoundingClientRect();
-      const point = event.touches?.[0] || event;
       this.touchMove = {
-        x: THREE.MathUtils.clamp((point.clientX - (rect.left + rect.width / 2)) / (rect.width / 2), -1, 1),
-        z: THREE.MathUtils.clamp((point.clientY - (rect.top + rect.height / 2)) / (rect.height / 2), -1, 1),
+        x: THREE.MathUtils.clamp((event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2), -1, 1),
+        z: THREE.MathUtils.clamp((event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2), -1, 1),
       };
+      pad.classList.toggle('is-active', true);
       if (event.cancelable) event.preventDefault();
       this.root.focus();
     };
-    const clear = () => { this.touchMove = null; };
+    const clear = (event) => {
+      if (event && event.pointerId !== undefined && owner !== null && event.pointerId !== owner) return;
+      owner = null;
+      this.touchMove = null;
+      pad.classList.toggle('is-active', false);
+    };
     pad.addEventListener('pointerdown', update);
-    pad.addEventListener('pointermove', (event) => { if (event.buttons) update(event); });
+    pad.addEventListener('pointermove', (event) => { if (event.buttons || event.pressure) update(event); });
     pad.addEventListener('pointerup', clear);
     pad.addEventListener('pointercancel', clear);
     this.disposers.push(() => clear());
@@ -376,11 +432,16 @@ export class GameApp {
 
   async begin() {
     if (this.sceneState !== 'menu') return;
-    await this.audio.resume();
-    if (this.destroyed) return;
+    this.sceneState = 'playing';
+    // Audio unlock is best-effort and must never gate gameplay: resume() can
+    // stay pending when the browser withholds user activation (or audio is
+    // unavailable), so fire it without awaiting.
+    this.audio.resume();
+    if (this.destroyed || this.sceneState !== 'playing') return;
     this.preview.removeFromParent();
     this.sceneState = 'playing';
     this.menu.remove();
+    this.hud.setVisible(true);
     this.root.focus();
     spawnWave(this.state, 1);
     this.feedback.emit('portal', { position: { x: 0, y: 1, z: 0 } });
@@ -457,8 +518,11 @@ export class GameApp {
       if (position && Math.hypot(position.x - player.x, position.z - player.z) <= 3) {
         const result = openChest(this.state, chest.id);
         if (result.opened) {
-          chooseBlessing(this.state, result.blessing);
-          this.feedback.emit('loot', { label: `${result.gold} gold · ${result.blessing}` });
+          // Blessing chests grant the named blessing; exhausted blessing pools
+          // carry a fallback reward instead — label exactly what was granted.
+          const chosen = result.blessing ? chooseBlessing(this.state, result.blessing) : null;
+          const reward = chosen?.chosen ? chosen.label : (result.fallback?.label || `${result.gold} gold`);
+          this.feedback.emit('loot', { label: `${result.gold} gold · ${reward}` });
           this.spawnPortal(position);
           this.syncWorld();
           return true;
@@ -488,11 +552,15 @@ export class GameApp {
         clearTimeout(this.damageTimer);
         this.damageTimer = setTimeout(() => this.hud?.setDamage(false), 280);
       } else if (event.type === 'dash') this.feedback.emit('dash', { position });
+      else if (event.type === 'attack-telegraph') {
+        // Audible windup cue; the ground ring is synced from live windup state.
+        this.feedback.emit('swing', { position, intensity: 0.6 });
+      }
       else if (event.type === 'wave-start') this.hud.announce(`Chapter ${event.chapter}`);
       else if (event.type === 'wave-complete') {
         this.hud.announce('Wave cleared — claim your blessing');
         const chest = this.state.chests.find((item) => item.id === event.chest);
-        if (chest) this.chestPositions.set(chest.id, { x: this.state.player.position.x + 2, z: this.state.player.position.z });
+        if (chest?.position) this.chestPositions.set(chest.id, { x: chest.position.x, z: chest.position.z });
         this.feedback.emit('loot', { label: 'Reward chest revealed', position });
       }
     }
@@ -537,11 +605,49 @@ export class GameApp {
       available.add(chest.id);
       let mesh = this.chestMeshes.get(chest.id);
       if (!mesh) { mesh = this.clone('chest'); this.chestMeshes.set(chest.id, mesh); this.dynamic.add(mesh); }
-      const position = this.chestPositions.get(chest.id) || { x: 0, z: 0 };
+      const position = this.chestPositions.get(chest.id) || chest.position || { x: 0, z: 0 };
       mesh.position.set(position.x, 0, position.z);
     }
     for (const [id, mesh] of this.chestMeshes) {
       if (!available.has(id)) { mesh.removeFromParent(); this.chestMeshes.delete(id); }
+    }
+    this.syncTelegraphs();
+  }
+
+  telegraphResources() {
+    if (!this.telegraphShared) {
+      const geometry = new THREE.RingGeometry(0.86, 1, 48);
+      const material = new THREE.MeshBasicMaterial({ color: COLORS.ember, transparent: true, opacity: 0.85, side: THREE.DoubleSide, depthWrite: false });
+      this.telegraphShared = { geometry, material };
+      this.geometries.add(geometry);
+      this.materials.add(material);
+    }
+    return this.telegraphShared;
+  }
+
+  syncTelegraphs() {
+    const active = new Set();
+    if (this.dynamic) {
+      const { geometry, material } = this.telegraphResources();
+      for (const enemy of this.state.enemies) {
+        if (enemy.dead || !enemy.windup) continue;
+        active.add(enemy.id);
+        let mesh = this.telegraphMeshes.get(enemy.id);
+        if (!mesh) {
+          mesh = new THREE.Mesh(geometry, material);
+          mesh.rotation.x = -Math.PI / 2;
+          mesh.userData.entityId = enemy.id;
+          this.telegraphMeshes.set(enemy.id, mesh);
+          this.dynamic.add(mesh);
+        }
+        const progress = 1 - enemy.windup.remaining / Math.max(1e-6, enemy.windup.duration);
+        const radius = Math.max(0.6, enemy.windup.range || 1.5);
+        mesh.position.set(enemy.x, 0.06, enemy.z);
+        mesh.scale.setScalar(radius * (1.12 - 0.28 * Math.min(1, Math.max(0, progress))));
+      }
+    }
+    for (const [id, mesh] of this.telegraphMeshes) {
+      if (!active.has(id)) { mesh.removeFromParent(); this.telegraphMeshes.delete(id); }
     }
   }
 
@@ -568,6 +674,8 @@ export class GameApp {
   renderEffect(effect) {
     if (effect.type === 'screen-shake') {
       this.shake = { ...effect.impulse, until: performance.now() + effect.durationMs };
+    } else if (effect.type === 'hit-stop') {
+      this.hitStopUntil = Math.max(this.hitStopUntil || 0, performance.now() + effect.durationMs);
     } else if (effect.type === 'floating-damage') {
       const label = node('output', `az-floating-damage${effect.critical ? ' is-critical' : ''}`, String(Math.round(effect.value)));
       this.effectLayer.append(label);
@@ -629,7 +737,7 @@ export class GameApp {
   }
 
   clearEntities() {
-    for (const group of [this.enemyMeshes, this.projectileMeshes, this.chestMeshes]) {
+    for (const group of [this.enemyMeshes, this.projectileMeshes, this.chestMeshes, this.telegraphMeshes]) {
       for (const mesh of group.values()) mesh.removeFromParent();
       group.clear();
     }
@@ -656,7 +764,8 @@ export class GameApp {
     if (this.destroyed) return;
     const dt = Math.min(MAX_FRAME_DELTA, Math.max(0, (time - this.lastTime) / 1000));
     this.lastTime = time;
-    if (this.sceneState === 'playing' && !this.paused && !this.help && !this.hiddenPause) {
+    const hitStop = (this.hitStopUntil || 0) > performance.now();
+    if (!hitStop && this.sceneState === 'playing' && !this.paused && !this.help && !this.hiddenPause && !this.contextLost) {
       this.accumulator += dt;
       let steps = 0;
       while (this.accumulator >= FIXED_STEP && steps < MAX_CATCH_UP_STEPS) {
@@ -695,7 +804,8 @@ export class GameApp {
     if (this.destroyed) return;
     this.destroyed = true;
     this.loadGeneration += 1;
-    cancelAnimationFrame(this.raf);
+    if (this.raf) cancelAnimationFrame(this.raf);
+    this.raf = 0;
     clearTimeout(this.damageTimer);
     this.resizeObserver?.disconnect();
     this.resetInput();
@@ -704,12 +814,13 @@ export class GameApp {
     this.feedback?.clear();
     this.audio?.destroy();
     this.hud?.destroy();
+    this.releaseStylesheet();
     this.geometries.forEach((geometry) => geometry.dispose());
     this.materials.forEach((material) => material.dispose());
     this.geometries.clear();
     this.materials.clear();
     this.renderer?.dispose();
-    if (window.AIZANOI_DUNGEON_GAME === this.qaHandle) window.AIZANOI_DUNGEON_GAME = undefined;
+    if (typeof window !== 'undefined' && window.AIZANOI_DUNGEON_GAME === this.qaHandle) window.AIZANOI_DUNGEON_GAME = undefined;
     this.root?.remove();
   }
 }

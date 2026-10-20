@@ -42,6 +42,8 @@ export function createHud({ container, document: doc = globalThis.document } = {
   const root = element(doc, 'section', 'az-hud');
   root.setAttribute('role', 'group');
   root.setAttribute('aria-label', 'Dungeon status');
+  // The HUD stays hidden behind the attract menu until the run begins.
+  root.hidden = true;
 
   const top = element(doc, 'div', 'az-hud-top');
   const vitals = element(doc, 'div', 'az-hud-vitals');
@@ -62,8 +64,8 @@ export function createHud({ container, document: doc = globalThis.document } = {
   boss.wrapper.hidden = true;
   boss.wrapper.setAttribute('aria-hidden', 'true');
   const bossName = element(doc, 'strong', 'az-hud-boss-name', 'Boss');
-  boss.wrapper.children.unshift?.(bossName);
-  if (!boss.wrapper.children.includes?.(bossName)) boss.wrapper.append(bossName);
+  if (typeof boss.wrapper.prepend === 'function') boss.wrapper.prepend(bossName);
+  else boss.wrapper.append(bossName);
 
   const combo = element(doc, 'output', 'az-hud-combo', '');
   combo.setAttribute('aria-label', 'Combo');
@@ -91,7 +93,7 @@ export function createHud({ container, document: doc = globalThis.document } = {
   const help = element(doc, 'aside', 'az-hud-panel az-hud-help');
   help.setAttribute('aria-label', 'Controls');
   help.hidden = true;
-  help.append(element(doc, 'h2', 'az-hud-panel-title', 'Controls'), element(doc, 'p', 'az-hud-panel-copy', 'Move: WASD · Attack: click · Dash: Space · Pause: Escape'));
+  help.append(element(doc, 'h2', 'az-hud-panel-title', 'Controls'), element(doc, 'p', 'az-hud-panel-copy', 'Move: WASD / arrows · Attack: click / J · Dash: Space · Interact: Enter · Help: H · Pause: Escape'));
 
   root.append(top, boss.wrapper, combo, crosshair, vignette, lootFeed, announcer, pause, help);
   container.appendChild(root);
@@ -137,13 +139,16 @@ export function createHud({ container, document: doc = globalThis.document } = {
     if (!text) return;
     const item = element(doc, 'li', 'az-hud-loot-item', String(text));
     lootFeed.appendChild(item);
-    while (lootFeed.children.length > 4) lootFeed.children.shift();
+    // HTMLCollection has no shift(): drop the oldest via the DOM API.
+    while (lootFeed.children.length > 4) lootFeed.firstElementChild.remove();
   }
+
+  function setVisible(active = true) { root.hidden = !active; return api; }
 
   function announce(message) { announcer.textContent = String(message || ''); }
   function setDamage(active = true) { vignette.classList.toggle('is-active', Boolean(active)); }
   function destroy() { root.remove(); }
 
-  const api = { root, elements, update, addLoot, announce, setDamage, destroy };
+  const api = { root, elements, update, addLoot, announce, setDamage, setVisible, destroy };
   return api;
 }

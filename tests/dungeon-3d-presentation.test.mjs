@@ -31,10 +31,18 @@ class FakeElement {
   }
   setAttribute(name, value) { this.attributes.set(name, String(value)); }
   getAttribute(name) { return this.attributes.get(name) ?? null; }
-  append(...nodes) { this.children.push(...nodes); }
-  appendChild(node) { this.children.push(node); return node; }
-  replaceChildren(...nodes) { this.children = nodes; }
-  remove() { this.removed = true; }
+  append(...nodes) { nodes.forEach((node) => { node.parent = this; }); this.children.push(...nodes); }
+  appendChild(node) { node.parent = this; this.children.push(node); return node; }
+  replaceChildren(...nodes) { nodes.forEach((node) => { node.parent = this; }); this.children = nodes; }
+  get firstElementChild() { return this.children[0] ?? null; }
+  remove() {
+    if (this.parent) {
+      const index = this.parent.children.indexOf(this);
+      if (index >= 0) this.parent.children.splice(index, 1);
+      this.parent = null;
+    }
+    this.removed = true;
+  }
   querySelector(selector) {
     const match = (node) => selector.startsWith('.')
       ? node.className.split(/\s+/).includes(selector.slice(1))
@@ -58,6 +66,34 @@ test('HUD factory exposes an update API and semantic status regions', () => {
   assert.equal(hud.elements.health.getAttribute('aria-valuenow'), '100');
   assert.equal(typeof hud.update, 'function');
   assert.equal(typeof hud.destroy, 'function');
+});
+
+test('HUD loot feed keeps the last four entries without crashing', () => {
+  const container = new FakeElement('div');
+  const hud = createHud({ container, document: fakeDocument() });
+  for (let i = 1; i <= 6; i += 1) hud.addLoot(`Loot ${i}`);
+  assert.equal(hud.elements.lootFeed.children.length, 4);
+  assert.deepEqual(hud.elements.lootFeed.children.map((item) => item.textContent),
+    ['Loot 3', 'Loot 4', 'Loot 5', 'Loot 6']);
+});
+
+test('HUD loot pruning uses DOM-safe collection APIs', () => {
+  const source = readFileSync('frontend/js/v3/apps/dungeon/src/ui/hud.js', 'utf8');
+  assert.match(source, /firstElementChild/);
+  assert.doesNotMatch(source, /children\.shift/);
+  assert.doesNotMatch(source, /children\.unshift/);
+});
+
+test('HUD stays hidden until the run begins and documents every control', () => {
+  const container = new FakeElement('div');
+  const hud = createHud({ container, document: fakeDocument() });
+  assert.equal(hud.root.hidden, true);
+  hud.setVisible(true);
+  assert.equal(hud.root.hidden, false);
+  const copy = hud.elements.help.children.map((child) => child.textContent).join(' ');
+  for (const key of ['WASD', 'arrows', 'click', 'J', 'Space', 'Enter', 'H', 'Escape']) {
+    assert.ok(copy.includes(key), `help copy must document ${key}`);
+  }
 });
 
 test('audio manager is a safe silent fallback without WebAudio', async () => {

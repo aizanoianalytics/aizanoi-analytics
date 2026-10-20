@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
+import * as THREE from '../frontend/worlds/shared/vendor/three.module.js';
+import { GameApp } from '../frontend/js/v3/apps/dungeon/src/runtime/GameApp.js';
 
 const base = 'frontend/js/v3/apps/dungeon/';
 const read = (file) => readFileSync(base + file, 'utf8');
@@ -46,6 +48,27 @@ test('runtime owns focused controls and lifecycle guards', () => {
   assert.match(source, /shadowMap\.enabled\s*=\s*true/);
 });
 
+test('runtime hardens mount, teardown, telegraphs, hit-stop, joystick and context loss', () => {
+  const source = read('src/runtime/GameApp.js');
+  assert.match(source, /this\.started/, 'startup boundary must guard double-start');
+  assert.match(source, /rollbackScene/, 'renderer/scene failure must roll back');
+  assert.match(source, /stylesheetRefs/, 'stylesheet must be reference counted');
+  assert.match(source, /setVisible\(true\)/, 'HUD must be revealed on begin');
+  assert.match(source, /attack-telegraph/, 'telegraph events must be wired to runtime feedback');
+  assert.match(source, /syncTelegraphs|telegraphMeshes/, 'telegraphs need ground-ring visuals');
+  assert.match(source, /hitStopUntil/, 'hit-stop effects must pause the simulation');
+  assert.match(source, /pointerId/, 'joystick must track pointer ownership');
+  assert.match(source, /setPointerCapture/, 'joystick must capture its pointer');
+  assert.match(source, /webglcontextrestored/, 'context loss must recover');
+  assert.match(source, /result\.fallback/, 'blessing fallback must be messaged truthfully');
+});
+
+test('mount rolls back an app whose start fails', () => {
+  const entry = read('src/index.js');
+  assert.match(entry, /try\s*\{[\s\S]*await\s+app\.start\(\)[\s\S]*\}\s*catch/, 'mount must catch start failures');
+  assert.match(entry, /app\.destroy\(\)/, 'mount must destroy the failed app');
+});
+
 test('runtime maps every gameplay archetype and visible entity', () => {
   const source = read('src/runtime/GameApp.js');
   const requiredAssets = [
@@ -64,6 +87,34 @@ test('runtime maps every gameplay archetype and visible entity', () => {
   assert.match(source, /enemy-death/);
   assert.match(source, /particleResources/);
   assert.match(source, /disposeLoaded/);
+});
+
+test('windup state drives ground-ring telegraphs that clear on resolve', () => {
+  const app = new GameApp({ container: {} });
+  app.dynamic = new THREE.Group();
+  app.state.enemies = [{
+    id: 'e1', archetype: 'chaser', x: 1, z: 0, dead: false,
+    windup: { kind: 'melee', remaining: 0.2, duration: 0.25, range: 1.4 },
+  }];
+  app.syncTelegraphs();
+  assert.equal(app.telegraphMeshes.size, 1);
+  const ring = app.telegraphMeshes.get('e1');
+  assert.ok(ring, 'ring mesh exists during windup');
+  assert.equal(Math.round(ring.position.x * 100), 100);
+  assert.ok(ring.scale.x > 1, 'ring spans the strike range');
+
+  app.state.enemies[0].windup = null;
+  app.syncTelegraphs();
+  assert.equal(app.telegraphMeshes.size, 0, 'ring clears when the windup resolves');
+  assert.equal(ring.parent, null);
+  app.destroy();
+});
+
+test('hit-stop effects pause simulation stepping', () => {
+  const app = new GameApp({ container: {} });
+  app.renderEffect({ type: 'hit-stop', durationMs: 85 });
+  assert.ok((app.hitStopUntil || 0) > performance.now(), 'hit-stop window is armed');
+  app.destroy();
 });
 
 test('runtime exposes truthful read-only QA state and remains CSP safe', () => {

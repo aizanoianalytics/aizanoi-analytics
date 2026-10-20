@@ -3,6 +3,11 @@ import { GameApp } from './runtime/GameApp.js';
 
 export async function mount({ container, api }) {
   const app = new GameApp({ container, api });
-  await app.start();
+  try {
+    await app.start();
+  } catch (error) {
+    app.destroy();
+    throw error;
+  }
   return () => app.destroy();
 }
