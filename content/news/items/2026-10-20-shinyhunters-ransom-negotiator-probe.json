@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-20-shinyhunters-ransom-negotiator-probe",
+  "title": "FBI probe turns on the negotiators hired to handle ShinyHunters",
+  "summary": "KrebsOnSecurity reports that US investigators working the ShinyHunters case, which includes the September breach of the FBI's recruitment site, have identified executives at two ransomware negotiation firms with unusually close ties to the extortion group. One is alleged to have helped operate the group's victim-facing payment site. The FBI says ShinyHunters has extorted more than $70 million this year, and the allegations put the incident-response trade itself under scrutiny.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-10-20T05:15:00Z",
+  "updatedAt": "2026-10-20T05:15:00Z",
+  "retrievedAt": "2026-10-20T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "KrebsOnSecurity",
+      "url": "https://krebsonsecurity.com/2026/10/feds-suspect-ransom-negotiator-ran-shinyhunters-extortion-site/",
+      "publishedAt": "2026-10-19T15:00:00Z"
+    }
+  ]
+}

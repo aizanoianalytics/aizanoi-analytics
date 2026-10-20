@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-20-nscale-anthropic-second-compute-deal",
+  "title": "Nscale in talks with Anthropic for a second $45 billion campus deal",
+  "summary": "Nscale is in advanced talks over a second contract worth about $45 billion to give Anthropic another 460 megawatts at its Monarch campus in West Virginia, Bloomberg reported, again on Nvidia's Vera Rubin generation. The first lease, signed in August, was also $45 billion over six years. The talks coincide with a bumpy run-up to Nscale's New York listing, where investors are pressing for a $16 billion to $19 billion valuation against a roughly $30 billion target.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-10-20T05:15:00Z",
+  "updatedAt": "2026-10-20T05:15:00Z",
+  "retrievedAt": "2026-10-20T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "AI Weekly",
+      "url": "https://aiweekly.co/alerts/nscale-anthropic-in-talks-for-second-45b-west-virginia-deal",
+      "publishedAt": "2026-10-19T22:57:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/technology/nscale-anthropic-talks-45-billion-cloud-computing-deal-bloomberg-news-reports-2026-10-19",
+      "publishedAt": "2026-10-19T20:00:00Z"
+    }
+  ]
+}

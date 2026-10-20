@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-20-meta-prometheus-supercluster-details",
+  "title": "Meta opens up the design of its gigawatt-scale Prometheus cluster",
+  "summary": "Meta published an engineering account of Prometheus, the gigawatt-scale supercluster in New Albany, Ohio, that trained its Muse models. The first phase is complete and the company is working toward about one million GPUs, relying on closed-loop liquid cooling to keep density manageable. Meta notes the site carried ordinary web traffic two years ago before being rebuilt for frontier training, a reminder that AI capacity is being retrofitted onto existing data-centre footprints.",
+  "category": "ai",
+  "priority": 58,
+  "publishedAt": "2026-10-20T05:15:00Z",
+  "updatedAt": "2026-10-20T05:15:00Z",
+  "retrievedAt": "2026-10-20T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "Meta Engineering",
+      "url": "https://engineering.fb.com/2026/10/19/data-center-engineering/inside-prometheus-meta-gigawatt-scale-supercluster/",
+      "publishedAt": "2026-10-19T16:00:00Z"
+    }
+  ]
+}

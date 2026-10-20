@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-19T05:00:00.000Z",
+  "generatedAt": "2026-10-20T05:15:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-20",
+      "path": "/news/2026-10-20/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-19",
       "path": "/news/2026-10-19/",
@@ -345,6 +350,421 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-20-openai-fundraising-race-anthropic-ipo",
+      "kind": "daily",
+      "title": "OpenAI lines up about $30 billion before Anthropic's market debut",
+      "summary": "OpenAI is assembling commitments for a round of roughly $30 billion that two people familiar with the talks say could value it above $1.4 trillion, with the timing set by Anthropic's expected mid-November listing. The order of events carries the message: once Anthropic's disclosures are public, investors can compare the two AI businesses directly, so OpenAI is trying to price itself first.",
+      "category": "ai",
+      "priority": 86,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/technology/ai/articles/openai-races-raise-30-bln-013303188.html",
+          "publishedAt": "2026-10-19T23:38:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-anthropic-public-benefit-fund",
+      "kind": "daily",
+      "title": "Anthropic pledges 5% of its equity to a public benefit fund",
+      "summary": "Subject to stockholder approval, Anthropic will place 5% of its shares in a wholly owned LLC called the Anthropic Public Benefit Fund, with the board allowed to add 2% for every 50% increase in company value above an undisclosed baseline. Anthropic says the vehicle can make large grants or direct payments to particular groups, naming workers displaced by AI. Counting co-founder pledges and employee matching, the company puts about 20% of its equity behind public benefit.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/news/public-benefit-fund",
+          "publishedAt": "2026-10-18T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-psg-barcelona-champions-league-showcase",
+      "kind": "daily",
+      "title": "PSG and Barcelona meet in Paris with the league phase on the line",
+      "summary": "Paris Saint-Germain host Barcelona on Tuesday in the headline fixture of Champions League matchday three, with Michael Oliver refereeing at the Parc des Princes. PSG arrive from a 4-2 win at Manchester City; Barcelona won 4-1 at Galatasaray. Both sides are short at fullback, with Nuno Mendes out for PSG and Eric Garcia and Jules Kounde missing for Barcelona. The clubs last met in last season's league phase, when PSG won 2-1 in Montjuic.",
+      "category": "football",
+      "priority": 76,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Sports Illustrated",
+          "url": "https://www.si.com/soccer/champions-league-predictions-10-20-26-psg-barcelona-man-city-liverpool",
+          "publishedAt": "2026-10-19T18:00:00.000Z"
+        },
+        {
+          "publisher": "Last Word On Football",
+          "url": "https://lastwordonsports.com/football/2026/10/19/uefa-champions-league-predictions-barcelona-psg",
+          "publishedAt": "2026-10-19T18:00:00.000Z"
+        },
+        {
+          "publisher": "Diario AS",
+          "url": "https://en.as.com/resultados/futbol/champions/jornada/",
+          "publishedAt": "2026-10-20T03:31:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-china-third-quarter-gdp-beats-forecast",
+      "kind": "daily",
+      "title": "China's growth picks up to 4.5% as investment keeps shrinking",
+      "summary": "China's economy grew 4.5% year on year in the third quarter, beating a 4.4% poll and recovering from a three-year low of 4.3%, national statistics bureau data showed. Industrial output rose 5.5% while retail sales managed 1.1%, and fixed asset investment fell 7.2% over the first nine months with property investment down 20.6%. Growth is leaning harder on exports and technology demand, leaving consumption and housing as the unresolved drags on the 4.5%-5% annual target.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/economy/articles/chinas-economic-growth-accelerates-4-024012700.html",
+          "publishedAt": "2026-10-19T03:52:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-nscale-anthropic-second-compute-deal",
+      "kind": "daily",
+      "title": "Nscale in talks with Anthropic for a second $45 billion campus deal",
+      "summary": "Nscale is in advanced talks over a second contract worth about $45 billion to give Anthropic another 460 megawatts at its Monarch campus in West Virginia, Bloomberg reported, again on Nvidia's Vera Rubin generation. The first lease, signed in August, was also $45 billion over six years. The talks coincide with a bumpy run-up to Nscale's New York listing, where investors are pressing for a $16 billion to $19 billion valuation against a roughly $30 billion target.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "AI Weekly",
+          "url": "https://aiweekly.co/alerts/nscale-anthropic-in-talks-for-second-45b-west-virginia-deal",
+          "publishedAt": "2026-10-19T22:57:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/technology/nscale-anthropic-talks-45-billion-cloud-computing-deal-bloomberg-news-reports-2026-10-19",
+          "publishedAt": "2026-10-19T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-us-stocks-chip-rebound-borrowing-costs",
+      "kind": "daily",
+      "title": "Chips lead a narrow Wall Street rebound as yields stay near 5.15%",
+      "summary": "US stocks opened the week with a tech-led bounce: the Nasdaq rose 1.11% to 26,430.89 and the S&P 500 added 0.41% to 7,690.73, while the Dow slipped 0.07% to 51,966.03 as semiconductor shares ended a long losing run. The move came after the Nasdaq's worst week since June. With the 10-year Treasury yield near 5.15% and crude around $103 a barrel, rate-sensitive sectors lagged, and results from Tesla and Meta this week will test the bounce.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Yahoo Finance",
+          "url": "https://finance.yahoo.com/markets/live/stock-market-today-dow-sp-500-nasdaq-futures-mixed-amid-volatile-week-112734828.html",
+          "publishedAt": "2026-10-20T00:07:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-elice-kosdaq-debut-slump",
+      "kind": "daily",
+      "title": "Data-centre IPO Elice slides 32% in its Korean trading debut",
+      "summary": "Elice, a Seoul neocloud that builds modular AI data centres, fell as much as 32% in its Kosdaq debut after raising 201 billion won in the exchange's largest listing of 2026. Shares priced at 90,500 won, the top of the marketed range, for a market value above one trillion won. The reception follows shelved or delayed offerings from Firmus, AirTrunk and SB Energy, a sign of how fast investors have re-priced AI infrastructure risk.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "The Straits Times",
+          "url": "https://www.straitstimes.com/business/south-korean-data-centre-firm-elice-shares-plunge-in-ipo-debut",
+          "publishedAt": "2026-10-20T01:37:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-brent-oil-hormuz-supply-risk",
+      "kind": "daily",
+      "title": "Brent holds above $109 as Gulf shipping risk stays priced in",
+      "summary": "Brent steadied above $109 a barrel, roughly 79% higher than a year earlier, as attacks on commercial vessels and exchanges between Saudi Arabia and Houthi forces kept supply risk in the price. US energy secretary Chris Wright said Gulf shipments had recovered to about 80% of pre-war levels while refined product flows stayed limited, and Washington is moving to let sanctioned tankers trade legally. Hormuz transit volumes had fallen sharply the previous week.",
+      "category": "economy-markets",
+      "priority": 64,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Trading Economics",
+          "url": "https://tradingeconomics.com/commodity/brent-crude-oil",
+          "publishedAt": "2026-10-20T02:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-australia-esafety-court-action-platforms",
+      "kind": "daily",
+      "title": "Australia prepares court action against five platforms over under-16 ban",
+      "summary": "Australia's communications minister says the eSafety Commissioner expects to take Facebook, Instagram, TikTok, Snapchat and YouTube to the Federal Court over alleged breaches of the country's under-16 social media ban. Anika Wells said the regulator found many minors could keep or open accounts because age checks were weak. Maximum penalties for breaches have been raised to A$109.2 million, and the regulator now has stronger powers to gather evidence.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "The Straits Times",
+          "url": "https://www.straitstimes.com/asia/australianz/australia-to-sue-facebook-tiktok-for-alleged-breaches-of-ban-minister",
+          "publishedAt": "2026-10-20T04:10:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-liverpool-villarreal-injury-hit-anfield",
+      "kind": "daily",
+      "title": "Liverpool take an unbeaten European record into Villarreal visit",
+      "summary": "Liverpool host Villarreal at Anfield on Tuesday missing Jeremie Frimpong, Conor Bradley and Dominik Szoboszlai, with the defence the obvious concern. Liverpool have won both European matches this season, including a 6-3 victory at LASK, while Villarreal beat Napoli 3-1 for their first Champions League win in 12 attempts. Manchester City, beaten 4-2 by PSG last week, host an AEK Athens side that lost 3-1 at Shakhtar Donetsk.",
+      "category": "football",
+      "priority": 60,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Last Word On Football",
+          "url": "https://lastwordonsports.com/football/2026/10/19/uefa-champions-league-predictions-barcelona-psg",
+          "publishedAt": "2026-10-19T18:00:00.000Z"
+        },
+        {
+          "publisher": "Diario AS",
+          "url": "https://en.as.com/resultados/futbol/champions/jornada/",
+          "publishedAt": "2026-10-20T03:31:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-meta-prometheus-supercluster-details",
+      "kind": "daily",
+      "title": "Meta opens up the design of its gigawatt-scale Prometheus cluster",
+      "summary": "Meta published an engineering account of Prometheus, the gigawatt-scale supercluster in New Albany, Ohio, that trained its Muse models. The first phase is complete and the company is working toward about one million GPUs, relying on closed-loop liquid cooling to keep density manageable. Meta notes the site carried ordinary web traffic two years ago before being rebuilt for frontier training, a reminder that AI capacity is being retrofitted onto existing data-centre footprints.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Meta Engineering",
+          "url": "https://engineering.fb.com/2026/10/19/data-center-engineering/inside-prometheus-meta-gigawatt-scale-supercluster/",
+          "publishedAt": "2026-10-19T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-shinyhunters-ransom-negotiator-probe",
+      "kind": "daily",
+      "title": "FBI probe turns on the negotiators hired to handle ShinyHunters",
+      "summary": "KrebsOnSecurity reports that US investigators working the ShinyHunters case, which includes the September breach of the FBI's recruitment site, have identified executives at two ransomware negotiation firms with unusually close ties to the extortion group. One is alleged to have helped operate the group's victim-facing payment site. The FBI says ShinyHunters has extorted more than $70 million this year, and the allegations put the incident-response trade itself under scrutiny.",
+      "category": "technology",
+      "priority": 56,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "KrebsOnSecurity",
+          "url": "https://krebsonsecurity.com/2026/10/feds-suspect-ransom-negotiator-ran-shinyhunters-extortion-site/",
+          "publishedAt": "2026-10-19T15:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-bayern-arsenal-home-run-on-the-line",
+      "kind": "daily",
+      "title": "Bayern's 39-match home run meets Arsenal's league-phase streak",
+      "summary": "Bayern Munich host Arsenal on Wednesday with two long sequences in play: Bayern have gone 39 home matches unbeaten across the group and league phases, while Arsenal have won their last 14 league-phase games. Harry Kane, who scored twice in the 3-3 draw at Viking, has 15 goals in 22 appearances against Arsenal and can score in a 10th consecutive Champions League match. Real Madrid, perfect at home this season, face a Leipzig side beaten 6-1 in Munich on Saturday.",
+      "category": "football",
+      "priority": 54,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "101 Great Goals",
+          "url": "https://101greatgoals.com/football/champions-league/champions-league-predictions-schedule-standings-games",
+          "publishedAt": "2026-10-19T18:00:00.000Z"
+        },
+        {
+          "publisher": "Diario AS",
+          "url": "https://en.as.com/resultados/futbol/champions/jornada/",
+          "publishedAt": "2026-10-20T03:31:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-inception-mercury-3-diffusion-model",
+      "kind": "daily",
+      "title": "Inception bets on diffusion language models with Mercury 3",
+      "summary": "Inception released Mercury 3, a diffusion-based language model it says runs at about 1,000 tokens per second and matches mid-tier offerings from OpenAI and Anthropic on quality. Launch pricing is $0.10 per million input tokens and $0.35 per million output, which the company describes as 50% below the eventual standard rate. Inception also credits swarms of the model itself with a 16% speed improvement during development.",
+      "category": "ai",
+      "priority": 52,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "The Deep View",
+          "url": "https://www.thedeepview.com/articles/why-inception-s-mercury-3-upends-ai-economics",
+          "publishedAt": "2026-10-19T21:49:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-20-waymo-fleet-expansion-plan",
+      "kind": "daily",
+      "title": "Waymo plans to take its fleet from 4,000 cars to 20,000 by late 2027",
+      "summary": "Waymo intends to grow from about 4,000 vehicles to 8,000 by the end of this year and 20,000 by the end of 2027, financed in part by $5 billion it borrowed this month, according to people familiar with the plan. The company, which runs in 15 US cities and is expanding to Toronto, declined to comment and has said publicly only that the money is for growth at home and abroad. Fleet operations, depots and charging capacity become the constraint at that scale.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-10-20T05:15:00.000Z",
+      "updatedAt": "2026-10-20T05:15:00.000Z",
+      "retrievedAt": "2026-10-20T05:15:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Semafor",
+          "url": "https://www.semafor.com/article/10/19/2026/waymo-plans-to-quintuple-its-fleet",
+          "publishedAt": "2026-10-19T22:37:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-19-weekly-ai-from-hype-to-governance",
       "kind": "weekly",
