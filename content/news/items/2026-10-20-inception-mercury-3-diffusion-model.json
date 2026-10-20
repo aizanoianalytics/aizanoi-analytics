@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-20-inception-mercury-3-diffusion-model",
+  "title": "Inception bets on diffusion language models with Mercury 3",
+  "summary": "Inception released Mercury 3, a diffusion-based language model it says runs at about 1,000 tokens per second and matches mid-tier offerings from OpenAI and Anthropic on quality. Launch pricing is $0.10 per million input tokens and $0.35 per million output, which the company describes as 50% below the eventual standard rate. Inception also credits swarms of the model itself with a 16% speed improvement during development.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-10-20T05:15:00Z",
+  "updatedAt": "2026-10-20T05:15:00Z",
+  "retrievedAt": "2026-10-20T05:15:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "The Deep View",
+      "url": "https://www.thedeepview.com/articles/why-inception-s-mercury-3-upends-ai-economics",
+      "publishedAt": "2026-10-19T21:49:00Z"
+    }
+  ]
+}
