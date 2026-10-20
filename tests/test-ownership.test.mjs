@@ -30,17 +30,8 @@ const DIAGNOSTICS = new Set([
   'aizanoi-luma-isolate.mjs',
   'aizanoi-loop-diagnose.mjs',
   'aizanoi-black-frame-diagnose.mjs',
-  'dungeon-runtime-audit.mjs',
-  'dungeon-play-audit.mjs',
-  'dungeon-enemy-behaviour-audit.mjs',
-  'dungeon-boss-encounter-audit.mjs',
-  'dungeon-combat-feel-audit.mjs',
   'aizanoi-tour-audit.mjs',
   'aizanoi-city-fabric-audit.mjs',
-  'dungeon-level-design-audit.mjs',
-  'dungeon-run-summary-audit.mjs',
-  'dungeon-visual-identity-audit.mjs',
-  'dungeon-accessibility-audit.mjs',
   'aizanoi-performance-audit.mjs'
 ]);
 

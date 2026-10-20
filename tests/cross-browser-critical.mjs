@@ -46,7 +46,7 @@ try{
   const marketsContext=await browser.newContext({viewport:{width:1280,height:800},serviceWorkers:'block',javaScriptEnabled:false});
   await assertRoute(marketsContext,'/analytics/markets/',{selector:'[data-markets-root]',label:'Markets static shell'});
   await marketsContext.close();
-  await assertRoute(context,'/dungeon/',{selector:'#game-container canvas',label:'standalone Dungeon menu'});
+  await assertRoute(context,'/dungeon/',{selector:'#game-container canvas',label:'standalone Dungeon 3D menu'});
   await assertRoute(context,'/worlds/',{selector:'main',label:'Aizanoi product landing'});
   await assertRoute(context,'/privacy/',{selector:'main',label:'Privacy'});
 
