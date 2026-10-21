@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-21-google-torchtpu-nvidia-software",
+  "title": "Google opens TorchTPU to loosen Nvidia's grip on AI software",
+  "summary": "Google has released TorchTPU as an open-source project that moves PyTorch applications onto its tensor processing units with a configuration change rather than a rewrite, a day after Amazon published TorchNeuron for its Trainium chips. Both target the toolkit most AI developers build on, where Nvidia hardware has long been the default. Google says it worked with Meta, Hugging Face and the maintainers of vLLM and SGLang on compatibility.",
+  "category": "ai",
+  "priority": 74,
+  "publishedAt": "2026-10-21T05:10:00Z",
+  "updatedAt": "2026-10-21T05:10:00Z",
+  "retrievedAt": "2026-10-21T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/20/google-has-joined-amazon-in-attacking-nvidias-stronghold-with-ai-app-developers/",
+      "publishedAt": "2026-10-20T18:38:00Z"
+    }
+  ]
+}

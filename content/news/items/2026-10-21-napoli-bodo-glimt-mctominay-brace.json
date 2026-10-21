@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-21-napoli-bodo-glimt-mctominay-brace",
+  "title": "McTominay's double ends Napoli's wait for a Champions League win",
+  "summary": "Scott McTominay scored twice, his first goals since surgery for an irregular heartbeat, as Napoli beat Bodø/Glimt 4-3 for their first win of this league phase and Massimiliano Allegri's first in the competition with the club. Matteo Politano scored after 54 seconds, Jens Petter Hauge and Andreas Helmersen twice levelled, and an Odin Bjørtuft own goal preceded Sondre Fet's injury-time header.",
+  "category": "football",
+  "priority": 64,
+  "publishedAt": "2026-10-21T05:10:00Z",
+  "updatedAt": "2026-10-21T05:10:00Z",
+  "retrievedAt": "2026-10-21T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "SSC Napoli",
+      "url": "https://sscnapoli.it/en/champions-league-match-report-napoli-bodo-glimt-4-3/",
+      "publishedAt": "2026-10-20T21:30:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/oct/20/champions-league-roundup-mctominay-scores-twice-on-return-from-heart-surgery",
+      "publishedAt": "2026-10-20T21:55:00Z"
+    }
+  ]
+}

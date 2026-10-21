@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-21-amd-intel-onednn-pytorch",
+  "title": "AMD and Intel pool their x86 work for PyTorch in oneDNN",
+  "summary": "AMD will fold its ZenDNN optimisations into oneDNN, the open-source deep-learning library, under an agreement with Intel that both companies say gives developers a single place to find CPU acceleration for PyTorch across x86 chips. The step follows a recommendation from the x86 Ecosystem Advisory Group, and AMD has joined the UXL Foundation as a steering member. The stated aim is less software fragmentation.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-10-21T05:10:00Z",
+  "updatedAt": "2026-10-21T05:10:00Z",
+  "retrievedAt": "2026-10-21T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "AMD Newsroom",
+      "url": "https://newsroom.amd.com/news/amd-intel-collaborate-simplify-ai-development-on-x86-cpus-pytorch/",
+      "publishedAt": "2026-10-20T12:00:00Z"
+    }
+  ]
+}
