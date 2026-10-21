@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-20T05:15:00.000Z",
+  "generatedAt": "2026-10-21T05:10:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-21",
+      "path": "/news/2026-10-21/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-20",
       "path": "/news/2026-10-20/",
@@ -350,6 +355,406 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-21-spacex-profit-ai-segment",
+      "kind": "daily",
+      "title": "SpaceX swings to profit as AI becomes its largest business",
+      "summary": "SpaceX reported $14.6bn of third-quarter revenue and $4.4bn of net income, reversing a $1bn loss a year earlier, with its Super Intelligence unit — Grok, the Cursor coding tool and a 1.7GW neocloud — contributing $7.5bn, or 52% of the top line. Capital spending reached $19.6bn and the finance chief guided to $35-40bn more in the fourth quarter. Net income for the first nine months is still negative at $413m.",
+      "category": "economy-markets",
+      "priority": 88,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/20/spacexs-ai-business-is-beating-expectations/",
+          "publishedAt": "2026-10-20T20:40:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-deepseek-federal-removal-order",
+      "kind": "daily",
+      "title": "US tells civilian agencies to strip DeepSeek from federal systems",
+      "summary": "The Department of Homeland Security has ordered federal civilian agencies to stop buying DeepSeek products and remove them from government IT, extending restrictions that until now covered intelligence systems. The order also reaches third-party products built on DeepSeek technology, with an exceptions route, and cites the risk that Chinese law could expose government user data. Beijing called the move a politicisation of trade and technology.",
+      "category": "ai",
+      "priority": 84,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/20/us-orders-federal-agencies-to-remove-chinas-deepseek-ai-from-their-systems/",
+          "publishedAt": "2026-10-20T13:07:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-anthropic-draft-safety-bill",
+      "kind": "daily",
+      "title": "Anthropic drafts a safety bill that could stop a model's release",
+      "summary": "Anthropic is circulating draft legislation that would let registered independent evaluators flag a model posing a foreseeable, imminent risk of killing more than 50 people or causing over $1bn of property damage, with 72 hours to notify the Commerce Department, which would then have to ask a judge to halt distribution. Labs could pay the evaluators so long as payment is not tied to the result. The thresholds mirror California's SB 53.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/20/anthropic-pitches-ai-safety-bill-that-may-block-a-model-if-50-people-could-be-killed/",
+          "publishedAt": "2026-10-20T23:01:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-google-torchtpu-nvidia-software",
+      "kind": "daily",
+      "title": "Google opens TorchTPU to loosen Nvidia's grip on AI software",
+      "summary": "Google has released TorchTPU as an open-source project that moves PyTorch applications onto its tensor processing units with a configuration change rather than a rewrite, a day after Amazon published TorchNeuron for its Trainium chips. Both target the toolkit most AI developers build on, where Nvidia hardware has long been the default. Google says it worked with Meta, Hugging Face and the maintainers of vLLM and SGLang on compatibility.",
+      "category": "ai",
+      "priority": 74,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/20/google-has-joined-amazon-in-attacking-nvidias-stronghold-with-ai-app-developers/",
+          "publishedAt": "2026-10-20T18:38:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-brent-retreats-iran-headlines",
+      "kind": "daily",
+      "title": "Brent retreats from a five-month high as Iran headlines whipsaw crude",
+      "summary": "Brent fell about 1% to $108.44 by late morning in New York after touching $111.99, its highest in five months, as traders weighed Houthi claims of attacks on Saudi energy and airport sites against a meeting between Iran's president and Pakistan's army chief, a US-Iran mediator. November WTI, which expired on Tuesday, slipped 0.88% to $102.75 and the December contract traded near $97.57. ING says a sizeable risk premium remains.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters via MarineLink",
+          "url": "https://marinelink.com/news/brent-crude-prices-slip-amidst-houthi-543802",
+          "publishedAt": "2026-10-20T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-wall-street-healthcare-smallcaps",
+      "kind": "daily",
+      "title": "Wall Street buys healthcare and small caps as tech takes a breather",
+      "summary": "The Dow rose 547.95 points, or 1.05%, to 52,513.98 on Tuesday while the S&P 500 added 0.31% to 7,714.52 and the Nasdaq slipped 0.03% to 26,421.84. Healthcare hit a record high, led by Eli Lilly, UnitedHealth, Merck and Amgen, while defensive sectors and the Russell 2000 outperformed and energy fell with oil. SpaceX and Netflix reported after the close, with Meta and Tesla due on Wednesday.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters via Kitco News",
+          "url": "https://www.kitco.com/news/off-the-wire/2026-10-20/dow-leads-wall-street-higher-investors-focus-healthcare-stocks",
+          "publishedAt": "2026-10-20T20:49:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-liverpool-villarreal-ngumoha-comeback",
+      "kind": "daily",
+      "title": "Ngumoha turns Anfield tie as Liverpool come back from two down",
+      "summary": "Liverpool beat Villarreal 4-3 to make it three wins from three in the league phase after trailing 2-0 inside half an hour, with Georges Mikautadze and Sergi Cardona punishing slack defending. Alexis Mac Allister scored either side of a Ronald Araújo header, 18-year-old Rio Ngumoha set up both first-half goals, and Florian Wirtz added a fourth before Tani Oluwaseyi's late reply.",
+      "category": "football",
+      "priority": 68,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "ESPN",
+          "url": "https://www.espn.com/soccer/report/_/gameId/401915397",
+          "publishedAt": "2026-10-20T21:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-man-city-aek-foden-hat-trick",
+      "kind": "daily",
+      "title": "Foden's hat-trick carries City past AEK with Haaland rested",
+      "summary": "Phil Foden scored three times as Manchester City beat AEK Athens 5-1 to get their league phase back on track after the defeat in Paris. Elliot Anderson's first City goal and a Rayan Cherki finish completed the scoring, with Stavros Pilios replying for the visitors just after half-time. Erling Haaland stayed on the bench, and City won in front of an announced 40,042 at the Etihad.",
+      "category": "football",
+      "priority": 66,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://theguardian.com/football/2026/oct/20/manchester-city-aek-athens-champions-league-match-report",
+          "publishedAt": "2026-10-20T21:00:00.000Z"
+        },
+        {
+          "publisher": "Sky Sports",
+          "url": "https://skysports.com/football/news/13600901/man-city-5-1-aek-athens-phil-foden-bags-hat-trick-as-enzo-marescas-side-claim-second-champions-league-win",
+          "publishedAt": "2026-10-20T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-napoli-bodo-glimt-mctominay-brace",
+      "kind": "daily",
+      "title": "McTominay's double ends Napoli's wait for a Champions League win",
+      "summary": "Scott McTominay scored twice, his first goals since surgery for an irregular heartbeat, as Napoli beat Bodø/Glimt 4-3 for their first win of this league phase and Massimiliano Allegri's first in the competition with the club. Matteo Politano scored after 54 seconds, Jens Petter Hauge and Andreas Helmersen twice levelled, and an Odin Bjørtuft own goal preceded Sondre Fet's injury-time header.",
+      "category": "football",
+      "priority": 64,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "SSC Napoli",
+          "url": "https://sscnapoli.it/en/champions-league-match-report-napoli-bodo-glimt-4-3/",
+          "publishedAt": "2026-10-20T21:30:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/oct/20/champions-league-roundup-mctominay-scores-twice-on-return-from-heart-surgery",
+          "publishedAt": "2026-10-20T21:55:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-amd-intel-onednn-pytorch",
+      "kind": "daily",
+      "title": "AMD and Intel pool their x86 work for PyTorch in oneDNN",
+      "summary": "AMD will fold its ZenDNN optimisations into oneDNN, the open-source deep-learning library, under an agreement with Intel that both companies say gives developers a single place to find CPU acceleration for PyTorch across x86 chips. The step follows a recommendation from the x86 Ecosystem Advisory Group, and AMD has joined the UXL Foundation as a steering member. The stated aim is less software fragmentation.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "AMD Newsroom",
+          "url": "https://newsroom.amd.com/news/amd-intel-collaborate-simplify-ai-development-on-x86-cpus-pytorch/",
+          "publishedAt": "2026-10-20T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-ntt-optical-chiplet-mass-production",
+      "kind": "daily",
+      "title": "NTT-led group targets tenfold gain in optical chiplet output",
+      "summary": "A Japanese group led by NTT Innovative Devices has won NEDO backing to develop mass-production technology for devices that connect chips with light, aiming at a tenfold or better productivity improvement over research-stage processes. Japan Semiconductor, Furukawa Electric and Shinko Electric are the other proposers, with NTT advising. The work spans silicon photonics, optical links, packaging and test, aimed at the power cost of chip-to-chip traffic in AI systems.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "International Business Times Japan",
+          "url": "https://jp.ibtimes.com/ntt-partners-target-tenfold-productivity-gain-optical-chiplet-manufacturing-104832",
+          "publishedAt": "2026-10-20T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-tenstorrent-series-e-open-weight",
+      "kind": "daily",
+      "title": "Tenstorrent raises $1.5bn at $6.2bn to build open-weight inference kit",
+      "summary": "Tenstorrent has raised $1.5bn at a $6.2bn valuation, more than doubling the $2.6bn it carried in late 2024, in a round led by Trace Capital and Innovation X with Cadence Ventures, Fidelity, SanDisk and T. Rowe Price taking part. Chief executive Jim Keller told Bloomberg the company chose to stay independent after showing its Galaxy servers could run DeepSeek models. The money goes to chips tuned for serving open-weight models and video generation.",
+      "category": "technology",
+      "priority": 56,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/19/tenstorrent-hits-6-2b-valuation-to-scale-open-weight-ai-chips/",
+          "publishedAt": "2026-10-19T18:37:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-chery-ziwei-automotive-chips",
+      "kind": "daily",
+      "title": "Chery puts its own name on automotive silicon",
+      "summary": "At its global innovation conference Chery showed a Ziwei chip family: C-series central computing, S-series silicon carbide and M-series vehicle control. It says a dual-NPU configuration of the C100 reaches 2,400 TOPS with 600GB/s of memory bandwidth for on-device physical AI, and that its eight-inch silicon carbide wafers are in mass production with costs down more than 30%. Five chip-packaging families were also on display.",
+      "category": "technology",
+      "priority": 52,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechNode",
+          "url": "https://technode.com/2026/10/20/chery-unveils-automotive-chip-lineup-spanning-ai-computing-silicon-carbide-and-vehicle-control/",
+          "publishedAt": "2026-10-20T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-openai-orchestra-bio-acquisition",
+      "kind": "daily",
+      "title": "OpenAI buys Orchestra Bio to staff up its life-sciences push",
+      "summary": "OpenAI has acquired Orchestra Bio, a four-year-old startup whose agents handle operational work for biotech companies such as clinical-trial scheduling and finance tracking. The team and technology join Rosalind, OpenAI's life-sciences model, and the Rosalind Workbench tool that helps researchers plan experiments. Terms were not disclosed; the startup had reportedly raised about $20m, and OpenAI says Moderna and Novo Nordisk are already customers.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/20/openai-acquires-startup-orchestra-bio%e2%81%a0-to-beef-up-its-biotech-business/",
+          "publishedAt": "2026-10-20T20:35:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-21-meta-muse-ten-million-downloads",
+      "kind": "daily",
+      "title": "Meta's Muse passes 10m US downloads in its first 40 days",
+      "summary": "Sensor Tower puts Meta's AI assistant at 10.2m US downloads in its first 40 days, a pace only 11 other apps have reached, and says seven-day retention of 30% beats ChatGPT, Claude and Grok. Meta moved 39% of its October advertising spend behind Muse, up from 23% in September. The app is available only in the United States and Canada for now.",
+      "category": "ai",
+      "priority": 48,
+      "publishedAt": "2026-10-21T05:10:00.000Z",
+      "updatedAt": "2026-10-21T05:10:00.000Z",
+      "retrievedAt": "2026-10-21T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/20/metas-muse-hits-10m-u-s-downloads-in-40-days-a-milestone-reached-by-only-11-other-apps",
+          "publishedAt": "2026-10-20T17:12:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-20-openai-fundraising-race-anthropic-ipo",
       "kind": "daily",

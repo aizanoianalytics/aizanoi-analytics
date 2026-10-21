@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-21-deepseek-federal-removal-order",
+  "title": "US tells civilian agencies to strip DeepSeek from federal systems",
+  "summary": "The Department of Homeland Security has ordered federal civilian agencies to stop buying DeepSeek products and remove them from government IT, extending restrictions that until now covered intelligence systems. The order also reaches third-party products built on DeepSeek technology, with an exceptions route, and cites the risk that Chinese law could expose government user data. Beijing called the move a politicisation of trade and technology.",
+  "category": "ai",
+  "priority": 84,
+  "publishedAt": "2026-10-21T05:10:00Z",
+  "updatedAt": "2026-10-21T05:10:00Z",
+  "retrievedAt": "2026-10-21T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/20/us-orders-federal-agencies-to-remove-chinas-deepseek-ai-from-their-systems/",
+      "publishedAt": "2026-10-20T13:07:00Z"
+    }
+  ]
+}
