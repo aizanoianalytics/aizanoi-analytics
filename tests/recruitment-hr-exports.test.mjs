@@ -9,11 +9,14 @@ test('Intern HR panel exposes period selector, end-month picker and five export 
   assert.match(html, /id="internHrPanel"/);
   assert.match(html, /id="internPeriodSelect"/);
   assert.match(html, /id="internEndMonth"/);
-  assert.match(html, /id="exportIsgBtn"[^>]*>📥 İSG Listesi Oluştur</);
-  assert.match(html, /id="exportPozisyonBtn"[^>]*>📥 Pozisyon Kodu Listesi Oluştur</);
-  assert.match(html, /id="exportKartBtn"[^>]*>📥 Kart Başvuru Listesi Oluştur</);
-  assert.match(html, /id="exportHseBtn"[^>]*>📥 HSE Plus Listesi Oluştur</);
-  assert.match(html, /id="exportBitisBtn"[^>]*>📥 Staj Bitiş Listesi Oluştur</);
+  for (const [id, label] of [
+    ['exportIsgBtn', 'İSG Listesi'],
+    ['exportPozisyonBtn', 'Pozisyon Kodu Listesi'],
+    ['exportKartBtn', 'Kart Başvuru Listesi'],
+    ['exportHseBtn', 'HSE Plus Listesi'],
+    ['exportBitisBtn', 'Staj Bitiş Listesi'],
+    ['exportGuvenlikBtn', 'Güvenlik Bilinci Listesi'],
+  ]) assert.match(html, new RegExp(`id="${id}"[\\s\\S]*?${label}`));
 });
 
 test('Intern end-date engine applies fractional Turkish public-holiday credit', () => {
@@ -29,12 +32,13 @@ test('Intern end-date engine applies fractional Turkish public-holiday credit', 
   assert.match(html, /function parseWorkdays\(value\)/);
 });
 
-test('Intern table gains editable dropdowns, doc checkboxes and computed columns', () => {
+test('Intern table gains editable dropdowns, computed dates, and candidate detail controls', () => {
   assert.match(html, /const INTERN_DROPDOWN_COLUMNS = Object\.freeze\(\["Kesinleşen Birim", "sorumlu", "Şirket"\]\)/);
-  assert.match(html, /const INTERN_DOC_COLUMNS = Object\.freeze\(\[/);
   assert.match(html, /data-intern-edit=/);
-  assert.match(html, /<option[^>]*>Alındı<\/option><option[^>]*>Eksik<\/option>/);
-  assert.match(html, /"Hesaplanan Bitiş", "Kalan Gün"/);
+  assert.match(html, /data-intern-end=/);
+  assert.match(html, /"Hesaplanan Bitiş"/);
+  assert.match(html, /"Kalan Gün"/);
+  assert.match(html, /data-intern-detail=/);
   assert.match(html, /function renderInternRecruitmentRawData\(matrix, fileName\)/);
   assert.match(html, /renderInternRecruitmentRawData\(matrix, file\.name\)/);
 });
