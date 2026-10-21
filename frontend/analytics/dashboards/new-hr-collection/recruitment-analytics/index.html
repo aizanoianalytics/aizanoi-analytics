@@ -850,17 +850,6 @@ a { color: var(--blue-600); text-decoration: none; }
     .settings-transfer-actions .btn { width: 100%; white-space: nowrap; }
     .settings-transfer-actions .btn:disabled { opacity: 0.45; cursor: not-allowed; }
 
-    #internRecruitmentTableWrap { max-width: 100%; overscroll-behavior: contain; }
-    #internRecruitmentTable { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; }
-    #internRecruitmentTable th { position: sticky; top: 0; z-index: 3; background: var(--slate-50); }
-    #internRecruitmentTable :is(th, td):nth-child(1) { position: sticky; left: 0; z-index: 2; min-width: 72px; background: #fff; }
-    #internRecruitmentTable :is(th, td):nth-child(8) { position: sticky; left: 72px; z-index: 2; min-width: 130px; background: #fff; }
-    #internRecruitmentTable :is(th, td):nth-child(9) { position: sticky; left: 202px; z-index: 2; min-width: 130px; background: #fff; box-shadow: 3px 0 4px rgba(15, 23, 42, 0.08); }
-    #internRecruitmentTable th:nth-child(1), #internRecruitmentTable th:nth-child(8), #internRecruitmentTable th:nth-child(9) { z-index: 4; background: var(--slate-50); }
-    #internRecruitmentTable select { min-width: 150px; max-width: 240px; padding: 0.35rem; }
-    .intern-panel-controls { display: flex; gap: 1rem; flex-wrap: wrap; align-items: end; margin-bottom: 1rem; }
-    .intern-candidate-summary { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
-    .intern-checkbox { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; cursor: pointer; }
     #internLiveCard { scroll-margin-top: 1rem; }
     #recruitmentLiveCard { scroll-margin-top: 1rem; }
     #internPageLock { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: var(--navy-950); padding: 1rem; }
@@ -871,17 +860,261 @@ a { color: var(--blue-600); text-decoration: none; }
     #internPageLockInput { padding: 0.6rem 0.75rem; border-radius: 8px; border: 1px solid var(--slate-300); font-size: 1rem; width: 100%; }
     #internPageLockBtn:focus-visible, #internPageLockInput:focus-visible { outline: 2px solid var(--blue-600); outline-offset: 2px; }
     .page-lock-error { color: var(--red-700); font-size: 0.85rem; min-height: 1.2em; margin: 0; }
-    #internLiveCard .intern-live-frame-wrap, #recruitmentLiveCard .intern-live-frame-wrap { display: flex; flex-direction: column; gap: 0.6rem; padding: 0.9rem 1rem; border: 1px solid var(--slate-200); border-radius: 12px; background: #fff; }
-    .intern-live-frame-wrap { margin-top: 0.5rem; }
-    #internLiveDownload:focus-visible, #internLiveOpen:focus-visible,
-    #recruitmentLiveDownload:focus-visible, #recruitmentLiveOpen:focus-visible,
-    #unifiedExcelDropzone:focus-visible { outline: 2px solid var(--blue-600); outline-offset: 2px; }
-    .import-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; align-items: start; }
-    .import-result-line { display: flex; gap: 0.5rem; align-items: baseline; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.82rem; margin-top: 0.5rem; }
-    .import-result-ok { background: var(--green-100); color: var(--green-700); }
-    .import-result-err { background: var(--red-100); color: var(--red-700); }
-    .import-result-info { background: var(--blue-100); color: var(--blue-700); }
-    #internDashboard { margin-top: 1.25rem; }
+    body:has([data-view-panel="intern-recruitment"].is-active) #globalFilterBar,
+    body:has([data-view-panel="intern-recruitment"].is-active) #globalFilterCollapseBar { display: none !important; }
+    /* ================= STAJ PANELİ — yan menülü tasarım (yalnızca Intern Recruitment) ================= */
+    [data-view-panel="intern-recruitment"] {
+      --ip-font: 'Poppins', var(--font);
+      --ip-ink: #1b1d29; --ip-ink-2: #3f4254; --ip-muted: #7d8297; --ip-line: #eeecf6;
+      --ip-lav: #f4f1fe; --ip-lav-2: #ebe6fd;
+      --ip-pur: #6c5dd3; --ip-pur-d: #5546c2; --ip-pur-l: #e9e6fb;
+      --ip-coral: #f05a4f; --ip-coral-l: #fde8e6;
+      --ip-orange: #f7a531; --ip-orange-l: #fff3e0;
+      --ip-green: #4cb050; --ip-green-l: #e6f5e7;
+      --ip-shadow: 0 10px 30px rgba(108, 93, 211, .07), 0 2px 6px rgba(27, 29, 41, .03);
+      --ip-shadow-h: 0 16px 40px rgba(108, 93, 211, .14);
+      font-family: var(--ip-font);
+      color: var(--ip-ink-2);
+    }
+    .ip { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+    .ip > * { min-width: 0; }
+    .ip [hidden], [data-view-panel="intern-recruitment"] [hidden] { display: none !important; }
+    .ip-card { background: #fff; border-radius: 18px; box-shadow: var(--ip-shadow); }
+    .ip-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .ip-ic { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .ip-ic-sm { width: 15px; height: 15px; }
+
+    /* Sol menü */
+    .ip-nav { padding: 1rem .8rem; position: sticky; top: 132px; max-height: calc(100vh - 150px); overflow: auto; }
+    .ip-nav h6 { font-size: .66rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ip-muted); font-weight: 600; padding: .4rem .6rem; margin: 0; }
+    .ip-nav hr { border: 0; border-top: 1px solid var(--ip-line); margin: .6rem .3rem; }
+    .ip-nav-btn, .ip-exp button { display: flex; align-items: center; gap: .6rem; width: 100%; border: 0; background: none; padding: .55rem .65rem; border-radius: 10px; font-size: .8rem; color: var(--ip-ink-2); cursor: pointer; text-align: left; font-family: inherit; }
+    .ip-nav-btn:hover, .ip-exp button:hover:not(:disabled) { background: var(--ip-lav); }
+    .ip-nav-btn.is-on { background: var(--ip-lav); color: var(--ip-pur); font-weight: 600; }
+    .ip-nav-btn i { font-style: normal; margin-left: auto; font-size: .68rem; background: #fff; color: var(--ip-muted); border-radius: 999px; padding: .05rem .45rem; box-shadow: 0 0 0 1px var(--ip-line); }
+    .ip-nav-btn.is-on i { color: var(--ip-pur); }
+    .ip-period-sub { border-left: 2px solid var(--ip-line); margin: .2rem 0 .4rem 1.2rem; padding-left: .3rem; }
+    .ip-period-sub .ip-nav-btn { font-size: .76rem; padding: .4rem .6rem; }
+    .ip-nav-note { font-size: .7rem; color: var(--ip-muted); padding: 0 .6rem .4rem; margin: 0; display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; }
+    .ip-nav-note b { color: var(--ip-pur); }
+    .ip-link { border: 0; background: none; color: var(--ip-pur); font-size: .7rem; cursor: pointer; text-decoration: underline; padding: 0; margin-left: auto; font-family: inherit; }
+    .ip-link:disabled { color: var(--ip-muted); text-decoration: none; cursor: default; }
+    .ip-f { display: block; font-size: .7rem; color: var(--ip-muted); padding: .2rem .6rem .3rem; }
+    .ip-nav .ip-fld { margin: 0 .3rem .5rem; width: calc(100% - .6rem); }
+    .ip-nav .ip-fld input { width: 100%; }
+    .ip-exp button:disabled { opacity: .45; cursor: not-allowed; }
+    .ip-mi { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: #fff; flex-shrink: 0; }
+    .ip-mi .ip-ic { width: 13px; height: 13px; }
+    .ip-empty-periods { font-size: .72rem; color: var(--ip-muted); padding: .2rem .6rem .4rem; margin: 0; }
+    .c-pur { background: var(--ip-pur); } .c-green { background: var(--ip-green); } .c-orange { background: var(--ip-orange); } .c-coral { background: var(--ip-coral); }
+    .t-pur { color: var(--ip-pur); } .t-green { color: #2e9b33; } .t-orange { color: #d98400; } .t-coral { color: var(--ip-coral); }
+
+    /* Başlık */
+    .ip-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .ip-head h1 { font-size: 1.75rem; font-weight: 600; color: var(--ip-ink); letter-spacing: -.01em; line-height: 1.2; margin: 0; }
+    .ip-kick { font-size: .8rem; color: var(--ip-coral); margin-top: .2rem; }
+    .ip-file { display: inline-flex; align-items: center; gap: .45rem; font-size: .75rem; color: var(--ip-muted); background: #fff; padding: .4rem .75rem; border-radius: 999px; font-weight: 500; box-shadow: var(--ip-shadow); }
+    .ip-file.is-loaded { color: #2e7d32; background: var(--ip-green-l); box-shadow: none; }
+    .ip-file.is-loaded::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ip-green); }
+
+    /* Boş durum */
+    .ip-empty { padding: 3rem 1.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: .75rem; }
+    .ip-empty .ip-empty-ic { width: 72px; height: 72px; border-radius: 50%; background: var(--ip-lav); color: var(--ip-pur); display: grid; place-items: center; }
+    .ip-empty .ip-empty-ic .ip-ic { width: 32px; height: 32px; }
+    .ip-empty h3 { font-size: 1.05rem; color: var(--ip-ink); margin: 0; font-weight: 600; }
+    .ip-empty p { font-size: .82rem; color: var(--ip-muted); max-width: 440px; margin: 0; }
+    .ip-btn { display: inline-flex; align-items: center; gap: .45rem; font-size: .82rem; font-weight: 500; padding: .6rem 1.1rem; border-radius: 12px; border: 0; background: var(--ip-pur); color: #fff; cursor: pointer; box-shadow: 0 8px 20px rgba(108, 93, 211, .28); font-family: inherit; }
+    .ip-btn:hover { background: var(--ip-pur-d); }
+
+    /* KPI */
+    .ip-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
+    .ip-kpi { padding: 1.3rem 1.25rem; display: flex; align-items: center; gap: 1.05rem; transition: .2s; position: relative; overflow: hidden; }
+    .ip-kpi:hover { box-shadow: var(--ip-shadow-h); transform: translateY(-2px); }
+    .ip-kpi > div { position: relative; z-index: 1; min-width: 0; }
+    .ip-circ { width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; color: #fff; flex-shrink: 0; position: relative; z-index: 1; }
+    .ip-circ .ip-ic { width: 24px; height: 24px; }
+    .ip-kpi .lb { font-size: .78rem; font-weight: 600; color: var(--ip-ink); }
+    .ip-kpi strong { display: block; font-size: 1.7rem; font-weight: 600; color: var(--ip-ink); line-height: 1.15; font-variant-numeric: tabular-nums; }
+    .ip-kpi .tr { font-size: .72rem; color: var(--ip-muted); }
+    .ip-kpi .tr b { font-weight: 500; }
+    .ip-spark { position: absolute; right: 0; bottom: 0; width: 42%; height: 62%; pointer-events: none; }
+
+    /* Staj takvimi */
+    .ip-cal { overflow: hidden; margin-bottom: 1.5rem; }
+    .ip-cal-top { background: linear-gradient(120deg, #8b7cf6 0%, #b79cf3 40%, #e7a6cf 75%, #f4a8b8 100%); padding: .75rem 1rem .6rem; color: #fff; }
+    .ip-cal-row { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .ip-cal-row h3 { font-size: 1rem; font-weight: 600; margin: 0 .25rem 0 0; color: #fff; }
+    .ip-cal-today { background: var(--ip-ink); color: #fff; border: 0; border-radius: 999px; font-size: .66rem; font-weight: 600; padding: .22rem .6rem; cursor: pointer; font-family: inherit; }
+    .ip-cal-arr { width: 26px; height: 26px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .18); color: #fff; cursor: pointer; display: grid; place-items: center; font-size: .85rem; }
+    .ip-cal-arr:hover { background: rgba(255, 255, 255, .32); }
+    .ip-cal-sum { display: flex; gap: .35rem; flex-wrap: wrap; margin-left: .25rem; }
+    .ip-cal-sum span { background: rgba(255, 255, 255, .22); border-radius: 999px; padding: .18rem .55rem; font-size: .66rem; }
+    .ip-cal-seg { margin-left: auto; display: inline-flex; background: rgba(255, 255, 255, .25); border-radius: 12px; padding: 3px; }
+    .ip-cal-seg button { border: 0; background: none; color: #fff; font-size: .72rem; font-weight: 500; padding: .28rem .75rem; border-radius: 9px; cursor: pointer; font-family: inherit; }
+    .ip-cal-seg button.is-on { background: #fff; color: var(--ip-ink); box-shadow: 0 2px 8px rgba(27, 29, 41, .12); }
+    .ip-cal-wd { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; margin-top: .6rem; }
+    .ip-cal-wd span { font-size: .66rem; text-align: center; opacity: .9; font-weight: 500; }
+    .ip-cal-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; margin-top: .6rem; }
+    .ip-cal-days div { background: rgba(255, 255, 255, .22); border-radius: 10px; padding: .3rem .2rem; text-align: center; line-height: 1.1; }
+    .ip-cal-days small { display: block; font-size: .62rem; opacity: .9; }
+    .ip-cal-days b { font-size: 1rem; font-weight: 600; }
+    .ip-cal-days div.is-today { background: #fff; color: var(--ip-pur); }
+    .ip-cal-body { background: linear-gradient(180deg, #fbf3f8 0%, #f3f0fe 100%); padding: .6rem; overflow-x: auto; }
+    .ip-cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; min-width: 520px; }
+    .ip-cal-cell { background: rgba(255, 255, 255, .75); border-radius: 9px; min-height: 58px; padding: .25rem; display: flex; flex-direction: column; gap: 3px; border: 1px solid transparent; min-width: 0; }
+    .ip-cal-cell.is-out { background: rgba(255, 255, 255, .3); }
+    .ip-cal-cell.is-out .ip-cal-n { opacity: .4; }
+    .ip-cal-cell.is-wk { background: rgba(255, 255, 255, .5); }
+    .ip-cal-cell.is-today { border-color: var(--ip-pur); background: #fff; }
+    .ip-cal-n { font-size: .66rem; font-weight: 600; color: var(--ip-ink-2); width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; }
+    .ip-cal-cell.is-today .ip-cal-n { background: var(--ip-pur); color: #fff; }
+    .ip-ev { display: block; width: 100%; text-align: left; border: 0; border-radius: 6px; padding: .14rem .4rem; color: #fff; cursor: pointer; font-size: .62rem; font-weight: 600; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: .15s; font-family: inherit; }
+    .ip-ev:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(27, 29, 41, .15); }
+    .ip-ev-s { background: linear-gradient(135deg, #8b7cf6, #6c5dd3); }
+    .ip-ev-e { background: linear-gradient(135deg, #fbb84a, #f39c1f); }
+    .ip-cal-more { font-size: .58rem; color: var(--ip-pur); font-weight: 600; padding-left: .2rem; border: 0; background: none; text-align: left; cursor: pointer; font-family: inherit; }
+    .ip-cal-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; min-width: 520px; min-height: 130px; }
+    .ip-cal-col { background: rgba(255, 255, 255, .55); border-radius: 10px; padding: .35rem; display: flex; flex-direction: column; gap: .35rem; min-width: 0; }
+    .ip-cal-col.is-today { background: rgba(255, 255, 255, .9); box-shadow: inset 0 0 0 1.5px var(--ip-pur); }
+    .ip-cal-col .ip-ev { padding: .4rem .5rem; border-radius: 9px; white-space: normal; }
+    .ip-cal-col .ip-ev small { display: block; font-weight: 400; opacity: .9; font-size: .6rem; margin-top: .15rem; }
+    .ip-cal-empty { font-size: .64rem; color: var(--ip-muted); text-align: center; margin: auto 0; opacity: .7; }
+    .ip-cal-legend { display: flex; gap: .9rem; flex-wrap: wrap; padding: .5rem 1rem; font-size: .66rem; color: var(--ip-muted); border-top: 1px solid var(--ip-line); }
+    .ip-cal-legend span { display: inline-flex; align-items: center; gap: .4rem; }
+    .ip-cal-legend i { width: 10px; height: 10px; border-radius: 3px; }
+
+    /* Tablo kartı */
+    .ip-card-h { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1.25rem 1.4rem .2rem; }
+    .ip-card-h h3 { font-size: 1rem; font-weight: 600; color: var(--ip-ink); margin: 0; }
+    .ip-card-h small { font-size: .75rem; color: var(--ip-muted); }
+    .ip-tb { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; padding: 1rem 1.4rem; }
+    .ip-fld { display: inline-flex; align-items: center; gap: .45rem; border: 1px solid var(--ip-line); border-radius: 12px; padding: 0 .75rem; background: #fff; min-height: 42px; color: var(--ip-muted); transition: .15s; }
+    .ip-fld:focus-within { border-color: var(--ip-pur); box-shadow: 0 0 0 3px var(--ip-pur-l); }
+    .ip-fld input { border: 0; outline: 0; background: transparent; color: var(--ip-ink-2); font-size: .8rem; min-height: 40px; min-width: 0; font-family: inherit; }
+    .ip-search { flex: 1 1 240px; max-width: 360px; }
+    .ip-search input { width: 100%; }
+    .ip-sp { flex: 1; }
+    .ip-hint { font-size: .72rem; color: var(--ip-muted); }
+    .ip-switch { position: relative; display: inline-flex; align-items: center; gap: .5rem; cursor: pointer; font-size: .8rem; color: var(--ip-ink-2); min-height: 42px; user-select: none; }
+    .ip-switch input { position: absolute; opacity: 0; }
+    .ip-trk { width: 36px; height: 20px; border-radius: 999px; background: #d9d6e8; position: relative; transition: .15s; }
+    .ip-trk::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .2); transition: .15s; }
+    .ip-switch input:checked + .ip-trk { background: var(--ip-pur); }
+    .ip-switch input:checked + .ip-trk::after { left: 18px; }
+    .ip-switch input:focus-visible + .ip-trk { outline: 2px solid var(--ip-pur); outline-offset: 2px; }
+    .ip-twrap { overflow: auto; max-height: 70vh; padding: 0; margin: 0 .6rem; overscroll-behavior: contain; }
+    .ip-tbl { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0 2px; font-size: .78rem; }
+    .ip-tbl th { position: sticky; top: 0; background: #fff; text-align: left; font-weight: 600; color: var(--ip-ink); font-size: .74rem; padding: .8rem .85rem; white-space: nowrap; z-index: 2; border-bottom: 1px solid var(--ip-line); }
+    .ip-tbl td { padding: .7rem .85rem; white-space: nowrap; color: var(--ip-ink-2); background: #fff; vertical-align: middle; }
+    .ip-tbl tbody tr:nth-child(even) td { background: var(--ip-lav); }
+    .ip-tbl tbody tr:hover td { background: var(--ip-lav-2); }
+    .ip-tbl tbody tr.is-selected td { background: #e4defc; }
+    .ip-tbl td:first-child { border-radius: 12px 0 0 12px; }
+    .ip-tbl td:last-child { border-radius: 0 12px 12px 0; }
+    .ip-tbl .ip-stk1 { position: sticky; left: 0; z-index: 1; width: 42px; }
+    .ip-tbl .ip-stk2 { position: sticky; left: 0; z-index: 1; box-shadow: 6px 0 8px -6px rgba(27, 29, 41, .12); }
+    .ip-tbl .ip-stkR { position: sticky; right: 0; z-index: 1; box-shadow: -6px 0 8px -6px rgba(27, 29, 41, .12); }
+    .ip-tbl th.ip-stk1, .ip-tbl th.ip-stk2, .ip-tbl th.ip-stkR { z-index: 3; }
+    .ip-tbl input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--ip-pur); cursor: pointer; }
+    .ip-tbl .ip-tc { color: var(--ip-pur); font-weight: 600; font-variant-numeric: tabular-nums; }
+    .ip-tbl .ip-clip { display: inline-block; max-width: 260px; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; }
+    .ip-row-cx td { opacity: .5; }
+    .ip-person { display: flex; align-items: center; gap: .65rem; }
+    .ip-av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: .72rem; font-weight: 600; flex-shrink: 0; box-shadow: 0 0 0 2px #fff; }
+    .ip-person b { display: block; color: var(--ip-ink); font-weight: 600; font-size: .8rem; }
+    .ip-person small { color: var(--ip-muted); font-size: .7rem; display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; }
+    .ip-tag { display: inline-flex; align-items: center; gap: .3rem; font-size: .7rem; font-weight: 500; padding: .22rem .65rem; border-radius: 999px; white-space: nowrap; }
+    .ip-tag-pur { background: var(--ip-pur-l); color: var(--ip-pur); } .ip-tag-green { background: var(--ip-green-l); color: #2e7d32; }
+    .ip-tag-orange { background: var(--ip-orange-l); color: #b26a00; } .ip-tag-coral { background: var(--ip-coral-l); color: #c62f25; }
+    .ip-tag-gray { background: #f0eff5; color: var(--ip-muted); }
+    .ip-sel { border: 1px solid var(--ip-line); border-radius: 10px; padding: .35rem .55rem; background: #fff; font-size: .76rem; min-width: 150px; max-width: 260px; cursor: pointer; font-family: inherit; }
+    .ip-sel:focus { outline: 2px solid var(--ip-pur-l); border-color: var(--ip-pur); }
+    .ip-end { display: inline-flex; align-items: center; gap: .35rem; }
+    .ip-date { border: 1px dashed transparent; border-radius: 9px; padding: .3rem .45rem; background: transparent; font-size: .78rem; color: var(--ip-ink-2); cursor: pointer; font-family: inherit; }
+    .ip-date:hover, .ip-date:focus { border-color: var(--ip-pur); background: #fff; outline: 0; }
+    .ip-date.is-manual { border: 1px solid var(--ip-orange); background: var(--ip-orange-l); color: #8a4f00; font-weight: 600; }
+    .ip-reset { border: 0; width: 24px; height: 24px; border-radius: 50%; background: #fff; color: var(--ip-muted); cursor: pointer; box-shadow: 0 0 0 1px var(--ip-line); font-size: .8rem; }
+    .ip-reset:hover { color: var(--ip-pur); box-shadow: 0 0 0 1px var(--ip-pur); }
+    .ip-detail-btn { border: 1px solid var(--ip-line); background: #fff; color: var(--ip-pur); border-radius: 999px; padding: .32rem .8rem; font-size: .72rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: .3rem; font-family: inherit; }
+    .ip-detail-btn:hover { background: var(--ip-pur); color: #fff; border-color: var(--ip-pur); }
+    .ip-foot { display: flex; justify-content: space-between; align-items: center; gap: .5rem; flex-wrap: wrap; font-size: .72rem; color: var(--ip-muted); padding: .8rem 1.4rem; border-top: 1px solid var(--ip-line); }
+
+    /* Detay paneli */
+    .ip-drawer-bg { position: fixed; inset: 0; background: rgba(27, 29, 41, .35); z-index: 300; animation: ipFade .15s ease-out; }
+    .ip-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100vw); background: #fff; z-index: 301; box-shadow: -20px 0 50px rgba(27, 29, 41, .18); display: flex; flex-direction: column; animation: ipSlide .22s ease-out; }
+    .ip-drawer[hidden], .ip-drawer-bg[hidden] { display: none; }
+    @keyframes ipSlide { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+    @keyframes ipFade { from { opacity: 0; } to { opacity: 1; } }
+    .ip-dr-head { background: linear-gradient(120deg, #8b7cf6 0%, #b79cf3 50%, #f4a8b8 100%); color: #fff; padding: 1.3rem 1.3rem 1.1rem; position: relative; }
+    .ip-dr-head .ip-av { width: 52px; height: 52px; font-size: 1rem; box-shadow: 0 0 0 3px rgba(255, 255, 255, .6); }
+    .ip-dr-head h2 { font-size: 1.15rem; font-weight: 600; margin: .6rem 0 .1rem; color: #fff; }
+    .ip-dr-head p { font-size: .76rem; opacity: .9; margin: 0; }
+    .ip-dr-tags { display: flex; gap: .35rem; flex-wrap: wrap; margin-top: .6rem; }
+    .ip-dr-tags span { background: rgba(255, 255, 255, .25); border-radius: 999px; padding: .18rem .6rem; font-size: .68rem; }
+    .ip-dr-close { position: absolute; top: .9rem; right: .9rem; width: 34px; height: 34px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .25); color: #fff; font-size: 1.1rem; cursor: pointer; }
+    .ip-dr-close:hover { background: rgba(255, 255, 255, .4); }
+    .ip-dr-body { overflow: auto; padding: 1rem 1.3rem 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .ip-dr-sec h4 { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ip-muted); font-weight: 600; margin: 0 0 .5rem; }
+    .ip-dr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .ip-dr-item { background: var(--ip-lav); border-radius: 12px; padding: .6rem .75rem; min-width: 0; }
+    .ip-dr-item.is-wide { grid-column: 1 / -1; }
+    .ip-dr-item span { display: block; font-size: .66rem; color: var(--ip-muted); }
+    .ip-dr-item b { display: block; font-size: .82rem; color: var(--ip-ink); font-weight: 500; overflow-wrap: anywhere; }
+    .ip-dr-item a { color: var(--ip-pur); font-weight: 500; font-size: .8rem; overflow-wrap: anywhere; }
+    .ip-pref { display: flex; flex-direction: column; gap: .4rem; }
+    .ip-pref div { display: flex; align-items: center; gap: .6rem; background: var(--ip-lav); border-radius: 12px; padding: .55rem .7rem; font-size: .8rem; color: var(--ip-ink); }
+    .ip-pref div i { font-style: normal; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: .7rem; font-weight: 600; flex-shrink: 0; }
+    .ip-pref div.is-match { box-shadow: inset 0 0 0 1.5px var(--ip-green); }
+    .ip-pref div.is-match::after { content: "Kesinleşen birim"; margin-left: auto; font-size: .64rem; color: #2e7d32; font-weight: 600; }
+
+    /* Aday seçme penceresi (Güvenlik Bilinci) */
+    .ip-modal { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(640px, calc(100vw - 2rem)); max-height: min(82vh, 760px); background: #fff; border-radius: 20px; z-index: 301; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 80px rgba(27, 29, 41, .25); animation: ipPop .18s ease-out; font-family: var(--ip-font); }
+    @keyframes ipPop { from { opacity: 0; transform: translate(-50%, -47%); } to { opacity: 1; transform: translate(-50%, -50%); } }
+    .ip-modal-head { background: linear-gradient(120deg, #8b7cf6 0%, #b79cf3 50%, #f4a8b8 100%); color: #fff; padding: 1.1rem 1.3rem; position: relative; }
+    .ip-modal-head h2 { font-size: 1.1rem; font-weight: 600; margin: 0; color: #fff; }
+    .ip-modal-head p { font-size: .76rem; opacity: .92; margin: .15rem 0 0; }
+    .ip-pick-exam { display: flex; align-items: center; justify-content: space-between; gap: .8rem; flex-wrap: wrap; margin: .9rem 1.1rem 0; padding: .7rem .8rem .7rem 1rem; background: var(--ip-lav); border-radius: 14px; }
+    .ip-pick-exam b { display: block; font-size: .82rem; color: var(--ip-ink); font-weight: 600; }
+    .ip-pick-exam small { display: block; font-size: .7rem; color: var(--ip-muted); }
+    .ip-exam-fld { background: #fff; border-color: var(--ip-lav-2); color: var(--ip-pur); }
+    .ip-exam-fld select { max-width: none; font-weight: 600; color: var(--ip-ink); font-variant-numeric: tabular-nums; }
+    .ip-pick-sum { font-size: .74rem; color: var(--ip-muted); }
+    .ip-pick-tb { display: flex; gap: .5rem; flex-wrap: wrap; padding: .9rem 1.1rem .4rem; }
+    .ip-pick-tb .ip-search { max-width: none; }
+    .ip-fld select { border: 0; outline: 0; background: transparent; color: var(--ip-ink-2); font-size: .8rem; min-height: 40px; font-family: inherit; cursor: pointer; max-width: 180px; }
+    .ip-pick-all { display: flex; align-items: center; gap: .55rem; padding: .45rem 1.4rem; font-size: .76rem; color: var(--ip-muted); cursor: pointer; border-bottom: 1px solid var(--ip-line); }
+    .ip-pick-list { overflow: auto; padding: .5rem .8rem; flex: 1; min-height: 160px; display: flex; flex-direction: column; gap: 2px; }
+    .ip-pick-row { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; gap: .7rem; padding: .55rem .6rem; border-radius: 12px; cursor: pointer; transition: background .12s; }
+    .ip-pick-row:hover { background: var(--ip-lav); }
+    .ip-pick-row.is-on { background: var(--ip-lav-2); }
+    .ip-pick-row.is-cx { opacity: .55; }
+    .ip-pick-row b { display: block; font-size: .8rem; color: var(--ip-ink); font-weight: 600; }
+    .ip-pick-row small { display: block; font-size: .68rem; color: var(--ip-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ip-pick-row .ip-av { width: 32px; height: 32px; font-size: .68rem; }
+    .ip-pick-unit { font-size: .68rem; color: var(--ip-muted); max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right; }
+    .ip-pick-row input, .ip-pick-all input { width: 17px; height: 17px; accent-color: var(--ip-pur); cursor: pointer; }
+    .ip-pick-empty { text-align: center; color: var(--ip-muted); font-size: .8rem; padding: 2rem 1rem; }
+    .ip-modal-foot { display: flex; align-items: center; gap: .5rem; padding: .8rem 1.1rem; border-top: 1px solid var(--ip-line); flex-wrap: wrap; }
+    .ip-modal-foot b { font-size: .8rem; color: var(--ip-pur); }
+    .ip-btn-ghost { border: 1px solid var(--ip-line); background: #fff; color: var(--ip-ink-2); border-radius: 12px; padding: .6rem 1rem; font-size: .82rem; cursor: pointer; font-family: inherit; }
+    .ip-btn-ghost:hover { background: var(--ip-lav); }
+    .ip-btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+
+    @media (max-width: 1200px) { .ip-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 980px) {
+      .ip { grid-template-columns: minmax(0, 1fr); }
+      .ip-nav { position: static; max-height: none; }
+    }
+    @media (max-width: 600px) {
+      .ip-pick-unit { display: none; }
+      .ip-pick-row { grid-template-columns: auto auto minmax(0, 1fr); }
+      .ip-kpis { grid-template-columns: minmax(0, 1fr); }
+      .ip-tb { padding: 1rem; }
+      .ip-search { max-width: none; }
+      .ip-head h1 { font-size: 1.45rem; }
+      .ip-cal-seg { margin-left: 0; }
+      .ip-dr-grid { grid-template-columns: 1fr; }
+    }
     .intern-kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
     .intern-kpi-card { background: #fff; border: 1px solid var(--slate-200); border-radius: 12px; padding: 0.75rem 0.9rem; }
     .intern-kpi-card strong { display: block; font-size: 1.35rem; color: var(--slate-900); font-variant-numeric: tabular-nums; }
@@ -1721,69 +1954,131 @@ a { color: var(--blue-600); text-decoration: none; }
       </div>
     </div>
 
-    <!-- VIEW 9: INTERN RECRUITMENT RAW DATA -->
+    <!-- VIEW 9: INTERN RECRUITMENT — yan menülü tasarım -->
     <div class="view-panel" data-view-panel="intern-recruitment">
-      <article class="card">
-        <div class="card-header">
-          <div>
-            <h3 class="card-title">Intern Recruitment</h3>
-            <p class="card-subtitle">Open the approved internship workbook locally and display its worksheet as unmodified raw data.</p>
+      <div class="ip">
+        <aside class="ip-card ip-nav" aria-label="Staj paneli menüsü">
+          <h6>Görünüm</h6>
+          <button type="button" class="ip-nav-btn is-on" data-ip-top="">
+            <svg class="ip-ic ip-ic-sm" viewBox="0 0 24 24"><path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Genel Bakış
+          </button>
+          <button type="button" class="ip-nav-btn" data-go-view="import">
+            <svg class="ip-ic ip-ic-sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/></svg>Excel Import Center
+          </button>
+          <hr>
+          <h6>Staj dönemleri</h6>
+          <div id="internPeriodNav"><p class="ip-empty-periods">Dosya yüklenince dönemler burada listelenir.</p></div>
+          <select id="internPeriodSelect" class="ip-sr" aria-label="Staj dönemi" tabindex="-1"></select>
+          <hr>
+          <h6>İK listeleri</h6>
+          <p class="ip-nav-note"><b id="internCandidateCount" aria-live="polite">0 aday</b> seçili dönemde</p>
+          <label class="ip-f" for="internEndMonth">Bitiş ayı (Staj Bitiş Listesi için)</label>
+          <label class="ip-fld">
+            <svg class="ip-ic ip-ic-sm" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg>
+            <input type="month" id="internEndMonth" aria-label="Staj bitiş ayı">
+          </label>
+          <div class="ip-exp">
+            <button type="button" id="exportIsgBtn"><span class="ip-mi c-pur"><svg class="ip-ic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>İSG Listesi</button>
+            <button type="button" id="exportPozisyonBtn"><span class="ip-mi c-green"><svg class="ip-ic" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18"/></svg></span>Pozisyon Kodu Listesi</button>
+            <button type="button" id="exportKartBtn"><span class="ip-mi c-orange"><svg class="ip-ic" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>Kart Başvuru Listesi</button>
+            <button type="button" id="exportHseBtn"><span class="ip-mi c-coral"><svg class="ip-ic" viewBox="0 0 24 24"><path d="M2 18h20M4 18a8 8 0 0 1 16 0M12 6v4"/></svg></span>HSE Plus Listesi</button>
+            <button type="button" id="exportBitisBtn"><span class="ip-mi c-pur"><svg class="ip-ic" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></span>Staj Bitiş Listesi</button>
+            <button type="button" id="exportGuvenlikBtn"><span class="ip-mi c-green"><svg class="ip-ic" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>Güvenlik Bilinci Listesi</button>
           </div>
-          <span class="pill pill-blue" id="internRecruitmentRowCount">No file loaded</span>
-        </div>
+          <p class="ip-nav-note" style="padding-top:.3rem">Güvenlik Bilinci listesinde adayları tıkladıktan sonra seçersiniz.</p>
+        </aside>
 
-        <div class="intern-live-frame-wrap">
-          <p class="drop-sub" style="margin: 0;">Dosya yükleme Excel Import Center sayfasına taşındı: indirme bağlantıları ve sürükle-bırak alanları işe alım kitabıyla aynı sayfada.</p>
-          <div><button type="button" class="btn btn-primary" data-go-view="import">📥 Excel Import Center'a git</button></div>
-        </div>
-
-        <div id="internRecruitmentStatus" style="margin-top: 1.25rem;" role="status" aria-live="polite"></div>
-
-        <div id="internDashboard" style="display: none; margin-top: 1.25rem;">
-          <div class="intern-kpi-grid" id="internKpiGrid"></div>
-          <div class="intern-charts-grid">
-            <div class="intern-chart"><h5>Dönem Dağılımı</h5><div id="internPeriodChart"></div></div>
-            <div class="intern-chart"><h5>Kesinleşen Birim Dağılımı</h5><div id="internUnitChart"></div></div>
+        <div class="ip-main">
+          <div class="ip-head">
+            <div>
+              <h1>Stajyer Yönetimi</h1>
+              <div class="ip-kick" id="internHeadKick">Staj başvuruları ve İK listeleri tek ekranda</div>
+            </div>
+            <span class="ip-file" id="internRecruitmentRowCount">Dosya yüklenmedi</span>
           </div>
-          <div style="margin-bottom: 0.75rem;">
-            <input type="search" id="internTableSearch" placeholder="Ad, soyad, T.C. veya birim ara..." aria-label="Stajyer tablosunda ara">
-          </div>
-        </div>
 
-        <div id="internHrPanel" style="display: none; margin-top: 1.25rem; padding: 1.25rem; border: 1px solid var(--border, #e2e8f0); border-radius: 12px; background: var(--surface, #f8fafc);">
-          <h4 style="margin: 0 0 .25rem;">İK Paneli — Dönem ve Raporlar</h4>
-          <p class="drop-sub" style="margin: 0 0 1rem;">Staj dönemi seçin; listeler yalnızca bu tarayıcıda, yüklenen dosyadan üretilir ve .xlsx olarak indirilir. Hiçbir veri yüklenmez.</p>
-          <div class="intern-panel-controls">
-            <label style="display: flex; flex-direction: column; gap: .35rem; font-size: .85rem;">Staj dönemi
-              <select id="internPeriodSelect" aria-label="Staj dönemi" style="padding: .5rem .75rem; border-radius: 8px; min-width: 220px;"></select>
-            </label>
-            <label style="display: flex; flex-direction: column; gap: .35rem; font-size: .85rem;">Bitiş ayı (Staj Bitiş Listesi için)
-              <input type="month" id="internEndMonth" aria-label="Staj bitiş ayı" style="padding: .5rem .75rem; border-radius: 8px;">
-            </label>
-            <div class="intern-candidate-summary">
-              <span class="pill pill-blue" id="internCandidateCount" aria-live="polite">0 aday</span>
-              <label class="intern-checkbox"><input type="checkbox" id="internIncludeCancelled"> İptal edilen adayları dahil et</label>
+          <div id="internRecruitmentStatus" role="status" aria-live="polite"></div>
+
+          <div id="internEmptyState" class="ip-card ip-empty">
+            <span class="ip-empty-ic"><svg class="ip-ic" viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span>
+            <h3>Staj başvuru dosyası henüz yüklenmedi</h3>
+            <p>Excel Import Center'dan staj başvuru dosyasını yükleyin. Veriler yalnızca bu tarayıcıda işlenir, hiçbir yere gönderilmez.</p>
+            <button type="button" class="ip-btn" data-go-view="import">Excel Import Center'a git</button>
+          </div>
+
+          <div id="internDashboard" hidden>
+            <div class="ip-kpis" id="internKpiGrid"></div>
+            <div id="internCalendar"></div>
+          </div>
+
+          <div id="internHrPanel" class="ip-card" hidden>
+            <div class="ip-card-h">
+              <div><h3>Stajyer Listesi</h3><small id="internListSub"></small></div>
+            </div>
+            <div class="ip-tb">
+              <label class="ip-fld ip-search">
+                <svg class="ip-ic ip-ic-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                <input type="search" id="internTableSearch" placeholder="Ad, soyad, T.C. veya birim ara..." aria-label="Stajyer tablosunda ara">
+              </label>
+              <label class="ip-switch"><input type="checkbox" id="internIncludeCancelled"><span class="ip-trk"></span>İptalleri dahil et</label>
+              <span class="ip-sp"></span>
+              <span class="ip-hint">✎ Bitiş tarihine tıklayıp elle değiştirebilirsiniz</span>
+            </div>
+            <div id="internRecruitmentTableWrap" class="ip-twrap" tabindex="0" role="region" aria-label="Stajyer adayları tablosu">
+              <table class="ip-tbl" id="internRecruitmentTable">
+                <thead id="internRecruitmentTableHead"></thead>
+                <tbody id="internRecruitmentTableBody"></tbody>
+              </table>
+            </div>
+            <div class="ip-foot">
+              <span id="internTableFoot"></span>
+              <span>🔒 Veriler yalnızca bu tarayıcıda işlenir. Birim / Sorumlu / Şirket düzenlemeleri oturumda; elle girilen bitiş tarihleri ise indirdiğiniz taşınabilir HTML ayarlarında saklanır.</span>
             </div>
           </div>
-          <div style="display: flex; gap: .6rem; flex-wrap: wrap;">
-            <button type="button" id="exportIsgBtn" class="btn">📥 İSG Listesi Oluştur</button>
-            <button type="button" id="exportPozisyonBtn" class="btn">📥 Pozisyon Kodu Listesi Oluştur</button>
-            <button type="button" id="exportKartBtn" class="btn">📥 Kart Başvuru Listesi Oluştur</button>
-            <button type="button" id="exportHseBtn" class="btn">📥 HSE Plus Listesi Oluştur</button>
-            <button type="button" id="exportBitisBtn" class="btn">📥 Staj Bitiş Listesi Oluştur</button>
+        </div>
+      </div>
+
+      <div class="ip-drawer-bg" id="internDetailBg" hidden></div>
+      <div class="ip-drawer-bg" id="internPickBg" hidden></div>
+      <div class="ip-modal" id="internPickModal" role="dialog" aria-modal="true" aria-labelledby="internPickTitle" hidden>
+        <div class="ip-modal-head">
+          <button type="button" class="ip-dr-close" data-intern-pick-close="" aria-label="Kapat">×</button>
+          <h2 id="internPickTitle">Güvenlik Bilinci Listesi</h2>
+          <p>Listeye eklenecek adayları seçin, ardından Excel'i oluşturun.</p>
+        </div>
+        <div class="ip-pick-exam">
+          <div>
+            <b>Sınav tarihi</b>
+            <small>Her hafta Salı ve Perşembe · resmi tatiller hariç</small>
           </div>
-          <p class="drop-sub" style="margin: .75rem 0 0;">Birim / Sorumlu / Şirket hücreleri tabloda açılır listeden, evrak sütunları Alındı / Eksik seçimiyle düzenlenir; değişiklikler yalnızca bu oturumda ve indirdiğiniz listelere yansır.</p>
+          <label class="ip-fld ip-exam-fld">
+            <svg class="ip-ic ip-ic-sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 15l2 2 4-4"/></svg>
+            <select id="internPickExamDate" aria-label="Güvenlik Bilinci sınav tarihi"></select>
+          </label>
         </div>
-
-        <div id="internRecruitmentTableWrap" class="data-table-container" tabindex="0" role="region" aria-label="Stajyer adayları tablosu" style="display: none; max-height: 70vh; margin-top: 1.25rem; overflow: auto;">
-          <table class="data-table" id="internRecruitmentTable">
-            <thead id="internRecruitmentTableHead"></thead>
-            <tbody id="internRecruitmentTableBody"></tbody>
-          </table>
+        <div class="ip-pick-tb">
+          <label class="ip-fld ip-search">
+            <svg class="ip-ic ip-ic-sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input type="search" id="internPickSearch" placeholder="Ad, soyad, T.C. veya birim ara..." aria-label="Aday ara">
+          </label>
+          <label class="ip-fld">
+            <svg class="ip-ic ip-ic-sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <select id="internPickPeriod" aria-label="Dönem"></select>
+          </label>
         </div>
-      </article>
-
-
+        <label class="ip-pick-all"><input type="checkbox" id="internPickAll"> <span>Listelenen tüm adayları seç</span></label>
+        <div class="ip-pick-list" id="internPickList"></div>
+        <div class="ip-modal-foot">
+          <b id="internPickCount">0 aday seçildi</b>
+          <span class="ip-pick-sum" id="internPickExamSum"></span>
+          <span class="ip-sp"></span>
+          <button type="button" class="ip-btn-ghost" data-intern-pick-close="">Vazgeç</button>
+          <button type="button" class="ip-btn" id="internPickCreate" disabled>
+            <svg class="ip-ic ip-ic-sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>Excel Oluştur
+          </button>
+        </div>
+      </div>
+      <aside class="ip-drawer" id="internDetailDrawer" role="dialog" aria-modal="true" aria-labelledby="internDetailTitle" hidden></aside>
     </div>
 
   </main>
@@ -1827,6 +2122,9 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     const INTERN_RECRUITMENT_HEADERS = Object.freeze([
       "Id", "Başlangıç saati", "Tamamlama saati", "E-posta", "Ad", "Staj Durumunuz", "T.C. Kimlik Numarası", "Adı", "Soyadı", "Telefon numaranız", "E-posta adresiniz", "Doğum Tarihiniz", "İkametgah Adresi", "İlçe/İl", "Anne Adı", "Baba Adı", "Kan Grubunuz", "Staj Başlangıç Dönemi", "Kaç iş günü stajınızı gerçekleştireceksiniz?", "Staj Katılım Günleri", "Staj son günü", "Eğitim Durumunuz", "Üniversite", "Bölüm", "Sınıf", "İngilizce Seviyeniz", "Linkedin bağlantınız", "1. Birim Tercihiniz", "2. Birim Tercihiniz", "3. Birim Tercihiniz", "Yukarıdaki KVKK Aydınlatma Metnini okudum, anladım ve onaylıyorum.", "Kesinleşen Birim", "sorumlu", "Şirket", "Güvenlik Bilinci Sınavı", "Adli Sicil", "Biyometrik Fotoğraf", "Nüfus Cüzdanı Belgesi", "İkametgah Belgesi", "Öğrenci Belgesi", "Staj Başvuru Formu", "SGK işe giriş belgesi", "İptal mi?", "NOTLAR"
     ]);
+    // Evrak kontrolü kaldırıldı: bu sütunlar Excel'den silinse de dosya kabul edilir.
+    const INTERN_OPTIONAL_HEADERS = new Set(["Güvenlik Bilinci Sınavı", "Adli Sicil", "Biyometrik Fotoğraf", "Nüfus Cüzdanı Belgesi", "İkametgah Belgesi", "Öğrenci Belgesi", "Staj Başvuru Formu", "SGK işe giriş belgesi", "Staj son günü"]);
+    const INTERN_REQUIRED_HEADERS = Object.freeze(INTERN_RECRUITMENT_HEADERS.filter(header => !INTERN_OPTIONAL_HEADERS.has(header)));
     const FIELD_KEYS = [
       "ptf", "unit", "position_name", "status", "process_step",
       "hiring_manager", "responsible", "comment", "position_start_date",
@@ -2069,6 +2367,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       state.sheetName = normalized.sheetName;
       state.loadedAt = normalized.loadedAt;
       state.portablePayload = payload;
+      hydrateInternEndOverrides(payload);
 
       populateFilterOptions();
       renderSettings();
@@ -2914,6 +3213,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       try {
         if (!portableTemplateHtml) throw new Error("Template not initialized.");
         if (!state.portablePayload) throw new Error("No dataset loaded to embed.");
+        syncInternEndOverridesToPayload();
 
         const safeJson = JSON.stringify(state.portablePayload)
           .replace(/</g, "\\u003c")
@@ -2990,7 +3290,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         const matrix = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: true, defval: "", blankrows: false });
         if (!matrix.length) continue;
         const headerSet = new Set((matrix[0] || []).map(normalizeInternHeader));
-        if (INTERN_RECRUITMENT_HEADERS.every(header => headerSet.has(header))) {
+        if (INTERN_REQUIRED_HEADERS.every(header => headerSet.has(header))) {
           return { kind: "intern", workbook };
         }
       }
@@ -3100,27 +3400,35 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       internState.headers = [];
       internState.rows = [];
       internState.overrides = new Map();
+      internState.selected = new Set();
       internState.fileName = "";
-      $("#internRecruitmentTableWrap").style.display = "none";
       $("#internRecruitmentTableHead").replaceChildren();
       $("#internRecruitmentTableBody").replaceChildren();
-      $("#internRecruitmentRowCount").textContent = "Dosya yüklenmedi";
+      const rowCount = $("#internRecruitmentRowCount");
+      rowCount.textContent = "Dosya yüklenmedi";
+      rowCount.classList.remove("is-loaded");
+      $("#internHeadKick").textContent = "Staj başvuruları ve İK listeleri tek ekranda";
       $("#internCandidateCount").textContent = "0 aday";
       $("#internCandidateTabCount").textContent = "0";
-      $("#internHrPanel").style.display = "none";
+      $("#internHrPanel").hidden = true;
+      $("#internEmptyState").hidden = false;
       $("#internPeriodSelect").replaceChildren();
       $("#internEndMonth").value = "";
       $("#internIncludeCancelled").checked = false;
       $("#internRecruitmentStatus").replaceChildren();
       const internDashboard = $("#internDashboard");
-      if (internDashboard) internDashboard.style.display = "none";
-      ["internKpiGrid", "internPeriodChart", "internUnitChart"].forEach(id => {
+      if (internDashboard) internDashboard.hidden = true;
+      ["internKpiGrid", "internCalendar"].forEach(id => {
         const node = $("#" + id);
         if (node) node.replaceChildren();
       });
       const internTableSearch = $("#internTableSearch");
       if (internTableSearch) internTableSearch.value = "";
       internState.search = "";
+      if (typeof renderInternPeriodNav === "function") renderInternPeriodNav();
+      if (typeof updateInternSelectionUi === "function") updateInternSelectionUi();
+      if (typeof closeInternDetail === "function") closeInternDetail();
+      if (typeof closeInternPicker === "function") closeInternPicker();
     }
 
     function normalizeInternHeader(value) {
@@ -3128,7 +3436,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     }
 
     function findInternRecruitmentSheet(workbook) {
-      const required = new Set(INTERN_RECRUITMENT_HEADERS);
+      const required = new Set(INTERN_REQUIRED_HEADERS);
       const inspected = [];
       for (const sheetName of workbook.SheetNames) {
         const sheet = workbook.Sheets[sheetName];
@@ -3165,7 +3473,46 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
     });
     const TR_WEEKDAYS = Object.freeze({ pazartesi: 1, salı: 2, çarşamba: 3, perşembe: 4, cuma: 5, cumartesi: 6, pazar: 0 });
 
-    const internState = { headers: [], rows: [], overrides: new Map(), fileName: "", search: "" };
+    const internState = { headers: [], rows: [], overrides: new Map(), selected: new Set(), fileName: "", search: "" };
+    // Portable HTML settings keep manual end dates across workbook re-imports.
+    // Keys use applicant identity instead of row position because Excel row order may change.
+    const internEndOverrides = new Map();
+
+    function internApplicantKey(rowIdx) {
+      const tc = String(internCell(rowIdx, "T.C. Kimlik Numarası") ?? "").replace(/\D/g, "");
+      if (tc) return `tc:${tc}`;
+      const email = String(internCell(rowIdx, "E-posta adresiniz") || internCell(rowIdx, "E-posta") || "").trim().toLocaleLowerCase("tr");
+      if (email) return `email:${email}`;
+      const id = String(internCell(rowIdx, "Id") ?? "").trim();
+      if (id) return `id:${id}`;
+      const name = `${internCell(rowIdx, "Adı") || ""} ${internCell(rowIdx, "Soyadı") || ""}`.trim();
+      const birth = internRawText(internCell(rowIdx, "Doğum Tarihiniz"));
+      const phone = String(internCell(rowIdx, "Telefon numaranız") || "").replace(/\D/g, "");
+      const school = `${internCell(rowIdx, "Üniversite") || ""}|${internCell(rowIdx, "Bölüm") || ""}`;
+      return `person:${fold(name)}|${fold(birth)}|${phone}|${fold(school)}`;
+    }
+
+    function hydrateInternEndOverrides(payload) {
+      const saved = payload?.settings?.internEndDateOverrides;
+      if (!saved || typeof saved !== "object" || Array.isArray(saved)) return;
+      internEndOverrides.clear();
+      Object.entries(saved).forEach(([key, value]) => {
+        if (!key || !/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return;
+        const parsed = parseTrDate(value);
+        if (parsed) internEndOverrides.set(key, parsed);
+      });
+    }
+
+    function syncInternEndOverridesToPayload() {
+      if (!state.portablePayload) return;
+      const settings = state.portablePayload.settings && typeof state.portablePayload.settings === "object"
+        ? state.portablePayload.settings
+        : {};
+      settings.internEndDateOverrides = Object.fromEntries(
+        [...internEndOverrides.entries()].map(([key, value]) => [key, toIsoDay(value)])
+      );
+      state.portablePayload.settings = settings;
+    }
 
     const internRawText = value => {
       if (value == null) return "";
@@ -3263,11 +3610,22 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       return "Staj " + Math.abs(diff) + " gün önce bitti";
     }
 
+    // Bitiş önce normal kuralla hesaplanır, sonra taşınabilir HTML ayarındaki kişi bazlı override uygulanır;
+    // tablo, takvim ve tüm dışa aktarımlar aynı nihai değeri görür.
     function internRowComputed(rowIdx) {
       const start = parseTrDate(internCell(rowIdx, INTERN_PERIOD_COLUMN));
       const total = Number(String(internCell(rowIdx, INTERN_TOTAL_DAYS_COLUMN)).replace(",", "."));
-      const end = calcInternEndDate(start, total, parseWorkdays(internCell(rowIdx, INTERN_WORKDAYS_COLUMN)));
-      return { start, end, kalan: remainingText(end) };
+      let calculatedEnd = null;
+      let calculationError = null;
+      try {
+        calculatedEnd = calcInternEndDate(start, total, parseWorkdays(internCell(rowIdx, INTERN_WORKDAYS_COLUMN)));
+      } catch (error) {
+        calculationError = error;
+      }
+      const override = internEndOverrides.get(internApplicantKey(rowIdx));
+      if (!override && calculationError) throw calculationError;
+      const end = override || calculatedEnd;
+      return { start, end, kalan: remainingText(end), manual: Boolean(override) };
     }
 
     function distinctInternValues(header, current) {
@@ -3292,7 +3650,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const key = rowIdx + "::" + header;
       if (INTERN_DROPDOWN_COLUMNS.includes(header)) {
         const options = ["", ...distinctInternValues(header, String(current ?? ""))];
-        return `<select aria-label="${escapeHtml(internEditorLabel(rowIdx, header))}" data-intern-edit="${escapeHtml(key)}">${options.map(option => `<option value="${escapeHtml(option)}"${option === String(current ?? "") ? " selected" : ""}>${escapeHtml(option) || "(boş)"}</option>`).join("")}</select>`;
+        return `<select class="ip-sel" aria-label="${escapeHtml(internEditorLabel(rowIdx, header))}" data-intern-edit="${escapeHtml(key)}">${options.map(option => `<option value="${escapeHtml(option)}"${option === String(current ?? "") ? " selected" : ""}>${escapeHtml(option) || "(boş)"}</option>`).join("")}</select>`;
       }
       if (INTERN_DOC_COLUMNS.includes(header)) {
         const value = current === "Alındı" ? "Alındı" : "Eksik";
@@ -3310,6 +3668,45 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       return fold(internCell(rowIdx, "İptal mi?")) === "evet";
     }
 
+    // ---- Sütun kuralları ----
+    // Tamamen gizlenen sütunlar (evrak kontrolü süreci kaldırıldı).
+    const INTERN_HIDDEN_COLUMNS = new Set(["Staj son günü", "Başlangıç saati", "Tamamlama saati", "E-posta", "Ad", ...INTERN_DOC_COLUMNS]);
+    const internColumnHidden = header => INTERN_HIDDEN_COLUMNS.has(header) || /^Yukarıdaki KVKK/i.test(header);
+    // Yalnızca "Detay" panelinde görünen sütunlar.
+    const INTERN_DETAIL_COLUMNS = Object.freeze(["İkametgah Adresi", "İlçe/İl", "Anne Adı", "Baba Adı", "Kan Grubunuz", "İngilizce Seviyeniz", "Linkedin bağlantınız", "1. Birim Tercihiniz", "2. Birim Tercihiniz", "3. Birim Tercihiniz"]);
+    const INTERN_NAME_COLUMNS = new Set(["Adı", "Soyadı"]);
+    const INTERN_HEADER_LABELS = Object.freeze({
+      "Staj Durumunuz": "Staj Durumu", "Cinsiyetiniz": "Cinsiyet", "T.C. Kimlik Numarası": "T.C. Kimlik No",
+      "Telefon numaranız": "Telefon", "E-posta adresiniz": "E-posta", "Doğum Tarihiniz": "Doğum Tarihi",
+      "Staj Başlangıç Dönemi": "Başlangıç Tarihi", "Kaç iş günü stajınızı gerçekleştireceksiniz?": "İş Günü",
+      "Staj Katılım Günleri": "Katılım Günleri", "Eğitim Durumunuz": "Eğitim Durumu", "sorumlu": "Sorumlu",
+      "İptal mi?": "İptal", "NOTLAR": "Notlar"
+    });
+    const INTERN_AVATAR_COLORS = [["#e9e6fb", "#6c5dd3"], ["#e6f5e7", "#2e7d32"], ["#fff3e0", "#b26a00"], ["#fde8e6", "#c62f25"], ["#e0f2fe", "#0369a1"], ["#fce7f3", "#be185d"]];
+    const INTERN_MONTHS_TR = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+    const INTERN_WD_TR = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"];
+    const internCal = { y: null, m: null, view: "ay", wk: null };
+    const internCalGroups = {};
+
+    const normPeriod = value => String(value ?? "").replace(/\s+/g, " ").trim();
+    const internName = rowIdx => [internCell(rowIdx, "Adı"), internCell(rowIdx, "Soyadı")].map(value => String(value || "").trim()).filter(Boolean).join(" ");
+    const internInitials = name => { const parts = name.split(" ").filter(Boolean); return ((parts[0] || "?")[0] + (parts.length > 1 ? parts[parts.length - 1][0] : "")).toLocaleUpperCase("tr"); };
+    function internAvatar(rowIdx, name) {
+      const [bg, fg] = INTERN_AVATAR_COLORS[rowIdx % INTERN_AVATAR_COLORS.length];
+      return `<span class="ip-av" style="background:${bg};color:${fg}" aria-hidden="true">${escapeHtml(internInitials(name))}</span>`;
+    }
+    const addDays = (date, n) => new Date(date.getFullYear(), date.getMonth(), date.getDate() + n);
+    const mondayOf = date => addDays(date, -((date.getDay() + 6) % 7));
+    const sameDay = (a, b) => Boolean(a && b) && toIsoDay(a) === toIsoDay(b);
+
+    function internRowComputedSafe(rowIdx) {
+      try {
+        return internRowComputed(rowIdx);
+      } catch (error) {
+        return { start: parseTrDate(internCell(rowIdx, INTERN_PERIOD_COLUMN)), end: null, kalan: "—", manual: false, error: error.message || String(error) };
+      }
+    }
+
     function internExportRows() {
       const select = $("#internPeriodSelect");
       const chosen = select ? select.value : "";
@@ -3317,7 +3714,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const out = [];
       internState.rows.forEach((_, idx) => {
         if (!includeCancelled && internRowCancelled(idx)) return;
-        if (!chosen || String(internCell(idx, INTERN_PERIOD_COLUMN)).trim() === chosen) out.push(idx);
+        if (!chosen || normPeriod(internCell(idx, INTERN_PERIOD_COLUMN)) === chosen) out.push(idx);
       });
       return out;
     }
@@ -3326,44 +3723,207 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       const count = internExportRows().length;
       $("#internCandidateCount").textContent = `${formatNumber(count)} aday`;
       $("#internCandidateTabCount").textContent = String(count);
+      updateInternSelectionUi();
+    }
+
+    function updateInternSelectionUi() {
+      // Seçim artık yalnızca Güvenlik Bilinci penceresinde yapılır.
+      const modal = $("#internPickModal");
+      if (modal && !modal.hidden) updateInternPickUi();
+    }
+
+    // ---- Güvenlik Bilinci: tıklayınca aday seçme penceresi ----
+    let internPickReturnFocus = null;
+    function internPickRows() {
+      const period = $("#internPickPeriod")?.value || "";
+      const query = ($("#internPickSearch")?.value || "").trim().toLocaleLowerCase("tr");
+      const includeCancelled = Boolean($("#internIncludeCancelled")?.checked);
+      return internState.rows.map((_, idx) => idx).filter(idx =>
+        (includeCancelled || !internRowCancelled(idx)) &&
+        (!period || normPeriod(internCell(idx, INTERN_PERIOD_COLUMN)) === period) &&
+        internRowMatchesSearch(idx, query));
+    }
+    function updateInternPickUi(list = internPickRows()) {
+      const count = internState.selected.size;
+      $("#internPickCount").textContent = `${formatNumber(count)} aday seçildi`;
+      $("#internPickCreate").disabled = count === 0 || !selectedInternExamDate();
+      const all = $("#internPickAll");
+      const picked = list.filter(idx => internState.selected.has(idx)).length;
+      all.checked = list.length > 0 && picked === list.length;
+      all.indeterminate = picked > 0 && picked < list.length;
+      all.disabled = list.length === 0;
+    }
+    function renderInternPicker() {
+      const list = internPickRows();
+      $("#internPickList").innerHTML = list.map(idx => {
+        const name = internName(idx) || `${idx + 1}. aday`;
+        const on = internState.selected.has(idx);
+        const meta = [internRawText(internCell(idx, "T.C. Kimlik Numarası")), normPeriod(internCell(idx, INTERN_PERIOD_COLUMN))].filter(Boolean).join(" · ");
+        const unit = String(internCell(idx, "Kesinleşen Birim") || "").trim();
+        return `<label class="ip-pick-row${on ? " is-on" : ""}${internRowCancelled(idx) ? " is-cx" : ""}"><input type="checkbox" data-intern-pick="${idx}"${on ? " checked" : ""} aria-label="${escapeHtml(name)}">${internAvatar(idx, name)}<span><b>${escapeHtml(name)}</b><small>${escapeHtml(meta)}</small></span><span class="ip-pick-unit">${escapeHtml(unit || "Birim atanmadı")}</span></label>`;
+      }).join("") || `<p class="ip-pick-empty">Bu filtreyle eşleşen aday yok.</p>`;
+      updateInternPickUi(list);
+    }
+    // Güvenlik Bilinci sınavı: her hafta Salı (2) ve Perşembe (4); tam gün resmi tatiller listelenmez.
+    const INTERN_EXAM_WEEKDAYS = new Set([2, 4]);
+    const INTERN_EXAM_DAY_NAMES = { 2: "Salı", 4: "Perşembe" };
+    function internExamDates(weeks = 16) {
+      const today = istanbulToday();
+      const out = [];
+      for (let i = 0; i < weeks * 7; i++) {
+        const day = addDays(today, i);
+        if (!INTERN_EXAM_WEEKDAYS.has(day.getDay())) continue;
+        const credit = TR_HOLIDAY_CREDIT[toIsoDay(day)] || 0;
+        if (credit >= 1) continue;
+        out.push({ date: day, iso: toIsoDay(day), note: credit > 0 ? " · arife (yarım gün)" : "" });
+      }
+      return out;
+    }
+    function selectedInternExamDate() {
+      const value = $("#internPickExamDate")?.value || "";
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+      const [y, m, d] = value.split("-").map(Number);
+      return new Date(y, m - 1, d);
+    }
+    function updateInternExamSummary() {
+      const date = selectedInternExamDate();
+      $("#internPickExamSum").textContent = date ? `· Sınav: ${formatTrDay(date)}` : "";
+    }
+    function openInternPicker() {
+      if (!internState.rows.length) {
+        toast("Önce staj başvuru dosyasını yükleyin.", "error");
+        return;
+      }
+      closeInternDetail();
+      internState.selected = new Set();
+      const period = $("#internPeriodSelect").value || "";
+      const periodSelect = $("#internPickPeriod");
+      periodSelect.innerHTML = `<option value="">Tüm dönemler</option>` + internPeriods().map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join("");
+      periodSelect.value = period;
+      $("#internPickSearch").value = "";
+      const examSelect = $("#internPickExamDate");
+      const previous = examSelect.value;
+      const dates = internExamDates();
+      examSelect.innerHTML = dates.map(item => `<option value="${item.iso}">${formatTrDay(item.date)} · ${INTERN_EXAM_DAY_NAMES[item.date.getDay()]}${item.note}</option>`).join("");
+      if (dates.some(item => item.iso === previous)) examSelect.value = previous;
+      updateInternExamSummary();
+      renderInternPicker();
+      internPickReturnFocus = document.activeElement;
+      $("#internPickBg").hidden = false;
+      $("#internPickModal").hidden = false;
+      $("#internPickSearch").focus();
+    }
+    function closeInternPicker() {
+      const modal = $("#internPickModal");
+      if (!modal || modal.hidden) return;
+      modal.hidden = true;
+      $("#internPickBg").hidden = true;
+      if (internPickReturnFocus && document.contains(internPickReturnFocus)) internPickReturnFocus.focus();
+    }
+
+    function internPeriods() {
+      const periods = new Set();
+      internState.rows.forEach((_, idx) => {
+        const value = normPeriod(internCell(idx, INTERN_PERIOD_COLUMN));
+        if (value) periods.add(value);
+      });
+      return [...periods].sort((a, b) => periodSortValue(a) - periodSortValue(b) || a.localeCompare(b, "tr"));
     }
 
     function buildInternHrPanel() {
       const select = $("#internPeriodSelect");
-      const periods = new Set();
-      const col = internState.headers.indexOf(INTERN_PERIOD_COLUMN);
-      if (col >= 0) internState.rows.forEach(row => {
-        const value = String(row[col] ?? "").trim();
-        if (value) periods.add(value);
-      });
-      const ordered = [...periods].sort((a, b) => periodSortValue(a) - periodSortValue(b) || a.localeCompare(b, "tr"));
-      select.innerHTML = `<option value="">Tüm dönemler</option>` + ordered.map(period => `<option value="${escapeHtml(period)}">${escapeHtml(period)}</option>`).join("");
+      select.innerHTML = `<option value="">Tüm dönemler</option>` + internPeriods().map(period => `<option value="${escapeHtml(period)}">${escapeHtml(period)}</option>`).join("");
       select.value = "";
-      $("#internHrPanel").style.display = "block";
+      $("#internHrPanel").hidden = false;
+      $("#internEmptyState").hidden = true;
       updateInternCandidateCounts();
     }
 
+    function renderInternPeriodNav() {
+      const host = $("#internPeriodNav");
+      if (!host) return;
+      if (!internState.rows.length) {
+        host.innerHTML = `<p class="ip-empty-periods">Dosya yüklenince dönemler burada listelenir.</p>`;
+        return;
+      }
+      const includeCancelled = Boolean($("#internIncludeCancelled")?.checked);
+      const base = internState.rows.map((_, idx) => idx).filter(idx => includeCancelled || !internRowCancelled(idx));
+      const chosen = $("#internPeriodSelect").value;
+      const countFor = period => base.filter(idx => normPeriod(internCell(idx, INTERN_PERIOD_COLUMN)) === period).length;
+      host.innerHTML = `<button type="button" class="ip-nav-btn${chosen ? "" : " is-on"}" data-intern-period="">
+          <svg class="ip-ic ip-ic-sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Tüm dönemler <i>${formatNumber(base.length)}</i></button>
+        <div class="ip-period-sub">${internPeriods().map(period => `<button type="button" class="ip-nav-btn${chosen === period ? " is-on" : ""}" data-intern-period="${escapeHtml(period)}">${escapeHtml(period)} <i>${formatNumber(countFor(period))}</i></button>`).join("")}</div>`;
+    }
+
+    function internTableColumns() {
+      const cols = [];
+      internState.headers.forEach(header => {
+        if (!header || internColumnHidden(header) || INTERN_DETAIL_COLUMNS.includes(header) || INTERN_NAME_COLUMNS.has(header)) return;
+        cols.push({ kind: "raw", header });
+        if (header === INTERN_PERIOD_COLUMN) cols.push({ kind: "end", header: "Hesaplanan Bitiş" }, { kind: "left", header: "Kalan Gün" });
+      });
+      if (!cols.some(col => col.kind === "end")) cols.push({ kind: "end", header: "Hesaplanan Bitiş" }, { kind: "left", header: "Kalan Gün" });
+      return cols;
+    }
+
+    function internLeftTag(done) {
+      if (!done.end) return `<span class="ip-tag ip-tag-gray" title="${escapeHtml(done.error || "Bitiş hesaplanamadı")}">—</span>`;
+      const today = istanbulToday();
+      const diff = Math.round((done.end - today) / 86400000);
+      const cls = diff < 0 ? "gray" : diff <= 14 ? "orange" : "pur";
+      return `<span class="ip-tag ip-tag-${cls}">${escapeHtml(done.kalan)}</span>`;
+    }
+
+    function internColumnCellHtml(rowIdx, col, done, name) {
+      if (col.kind === "end") {
+        const value = done.end ? toIsoDay(done.end) : "";
+        return `<span class="ip-end"><input type="date" class="ip-date${done.manual ? " is-manual" : ""}" data-intern-end="${rowIdx}" value="${value}" aria-label="Hesaplanan bitiş tarihi — ${escapeHtml(name)}" title="${done.manual ? "Elle girilen tarih" : escapeHtml(done.error || "Otomatik hesaplandı — değiştirmek için tıklayın")}">${done.manual ? `<button type="button" class="ip-reset" data-intern-end-reset="${rowIdx}" title="Otomatik hesaplamaya dön" aria-label="Otomatik hesaplamaya dön">↺</button>` : ""}</span>`;
+      }
+      if (col.kind === "left") return internLeftTag(done);
+      const header = col.header;
+      if (INTERN_DROPDOWN_COLUMNS.includes(header)) return internCellHtml(rowIdx, header);
+      const value = internCell(rowIdx, header);
+      const text = internRawText(value);
+      if (header === "Staj Durumunuz" && text) return `<span class="ip-tag ${fold(text).startsWith("zorunlu") ? "ip-tag-pur" : "ip-tag-green"}">${escapeHtml(text)}</span>`;
+      if (header === "İptal mi?") return text ? `<span class="ip-tag ${fold(text) === "evet" ? "ip-tag-coral" : "ip-tag-gray"}">${escapeHtml(text)}</span>` : "";
+      if (header === "T.C. Kimlik Numarası") return `<span class="ip-tc">${escapeHtml(text)}</span>`;
+      if (header === INTERN_PERIOD_COLUMN) return escapeHtml(normPeriod(text));
+      if (text.length > 40) return `<span class="ip-clip" title="${escapeHtml(text)}">${escapeHtml(text)}</span>`;
+      return escapeHtml(text);
+    }
+
     function renderInternTable(fileName = internState.fileName) {
-      const headers = internState.headers;
-      const computedHeads = ["Hesaplanan Bitiş", "Kalan Gün"];
-      $("#internRecruitmentTableHead").innerHTML = `<tr>${headers.map(header => `<th>${escapeHtml(header)}</th>`).join("")}${computedHeads.map(header => `<th>${header}</th>`).join("")}</tr>`;
+      const cols = internTableColumns();
+      $("#internRecruitmentTableHead").innerHTML = `<tr><th class="ip-stk2">Ad Soyad</th>${cols.map(col => `<th title="${escapeHtml(col.header)}">${escapeHtml(INTERN_HEADER_LABELS[col.header] || col.header)}</th>`).join("")}<th class="ip-stkR">Detay</th></tr>`;
       const visibleRows = internDisplayedRows();
       $("#internRecruitmentTableBody").innerHTML = visibleRows.map(rowIdx => {
-        const done = internRowComputed(rowIdx);
-        const cells = headers.map(header => `<td>${internCellHtml(rowIdx, header)}</td>`).join("");
-        return `<tr>${cells}<td>${formatTrDay(done.end)}</td><td>${escapeHtml(done.kalan)}</td></tr>`;
-      }).join("");
+        const done = internRowComputedSafe(rowIdx);
+        const name = internName(rowIdx) || `${rowIdx + 1}. aday`;
+        const sub = String(internCell(rowIdx, "Bölüm") || internCell(rowIdx, "Üniversite") || "").trim();
+        return `<tr class="${internRowCancelled(rowIdx) ? "ip-row-cx" : ""}">
+          <td class="ip-stk2"><div class="ip-person">${internAvatar(rowIdx, name)}<div><b>${escapeHtml(name)}</b><small>${escapeHtml(sub)}</small></div></div></td>
+          ${cols.map(col => `<td>${internColumnCellHtml(rowIdx, col, done, name)}</td>`).join("")}
+          <td class="ip-stkR"><button type="button" class="ip-detail-btn" data-intern-detail="${rowIdx}" aria-label="${escapeHtml(name)} detayı">Detay ›</button></td>
+        </tr>`;
+      }).join("") || `<tr><td colspan="${cols.length + 2}" style="text-align:center;padding:2rem;color:var(--ip-muted)">Aramanızla eşleşen aday yok.</td></tr>`;
+      const period = $("#internPeriodSelect").value;
       $("#internRecruitmentRowCount").textContent = `${formatNumber(visibleRows.length)} / ${formatNumber(internState.rows.length)} aday`;
+      $("#internRecruitmentRowCount").classList.add("is-loaded");
+      $("#internHeadKick").textContent = `${fileName || "Staj dosyası"} · ${period || "Tüm dönemler"}`;
+      $("#internListSub").textContent = `${formatNumber(visibleRows.length)} aday listeleniyor`;
+      $("#internTableFoot").textContent = `${formatNumber(visibleRows.length)} kayıt`;
+      $("#internRecruitmentStatus").replaceChildren();
       $("#internRecruitmentTableWrap").style.display = "block";
+      renderInternPeriodNav();
       updateInternCandidateCounts();
       renderInternDashboard();
-      $("#internRecruitmentStatus").innerHTML = `<div style="padding: 1rem; background: var(--green-100); border: 1px solid var(--green-500); border-radius: 8px; color: var(--green-700);"><strong>${escapeHtml(fileName)} yerel olarak yüklendi.</strong> Uyumlu çalışma sayfası bellekte gösteriliyor; hiçbir veri yüklenmedi, ağa gönderilmedi veya tarayıcı depolamasına yazılmadı.</div>`;
     }
 
     function renderInternRecruitmentRawData(matrix, fileName) {
       internState.headers = matrix[0].map(normalizeInternHeader);
       internState.rows = matrix.slice(1);
       internState.overrides = new Map();
+      internState.selected = new Set();
       internState.fileName = fileName;
       buildInternHrPanel();
       renderInternTable(fileName);
@@ -3375,7 +3935,7 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
 
     function internRowMatchesSearch(rowIdx, query) {
       if (!query) return true;
-      return [internCell(rowIdx, "Adı"), internCell(rowIdx, "Soyadı"), internCell(rowIdx, "T.C. Kimlik Numarası"), internCell(rowIdx, "Kesinleşen Birim")]
+      return [internCell(rowIdx, "Adı"), internCell(rowIdx, "Soyadı"), internName(rowIdx), internCell(rowIdx, "T.C. Kimlik Numarası"), internCell(rowIdx, "Kesinleşen Birim")]
         .some(value => String(value ?? "").toLocaleLowerCase("tr").includes(query));
     }
 
@@ -3385,59 +3945,214 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       return query ? exported.filter(rowIdx => internRowMatchesSearch(rowIdx, query)) : exported;
     }
 
-    function internTopCounts(getter, limit, indices) {
-      const counts = new Map();
-      (indices || internState.rows.map((_, idx) => idx)).forEach(idx => {
-        const value = String(getter(idx) ?? "").trim();
-        if (!value) return;
-        counts.set(value, (counts.get(value) || 0) + 1);
-      });
-      return [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, limit);
+    function internSmooth(points) {
+      let d = `M${points[0][0]},${points[0][1]}`;
+      for (let i = 0; i < points.length - 1; i++) {
+        const p0 = points[i - 1] || points[i], p1 = points[i], p2 = points[i + 1], p3 = points[i + 2] || p2;
+        d += ` C${p1[0] + (p2[0] - p0[0]) / 6},${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6},${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]},${p2[1]}`;
+      }
+      return d;
     }
 
-    function internBarsHtml(pairs) {
-      if (!pairs.length) return `<p class="drop-sub" style="margin: 0;">Dağılım için yeterli veri yok.</p>`;
-      const max = pairs[0][1] || 1;
-      return pairs.map(([label, count]) => `
-        <div class="intern-bar-row">
-          <span class="intern-bar-label">${escapeHtml(label)}</span>
-          <span class="intern-bar-count">${formatNumber(count)}</span>
-          <div class="intern-bar-track"><div class="intern-bar-fill" style="width: ${(100 * count / max).toFixed(1)}%;"></div></div>
-        </div>`).join("");
+    function internSpark(values) {
+      const W = 120, H = 50, max = Math.max(...values, 1);
+      if (values.length < 2) return "";
+      const pts = values.map((v, i) => [i * W / (values.length - 1), H - 4 - (H - 12) * v / max]);
+      return `<svg class="ip-spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="ipSparkFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c5dd3" stop-opacity=".22"/><stop offset="1" stop-color="#6c5dd3" stop-opacity="0"/></linearGradient></defs><path d="${internSmooth(pts)} L${W},${H} L0,${H}Z" fill="url(#ipSparkFill)"/><path d="${internSmooth(pts)}" fill="none" stroke="#6c5dd3" stroke-width="2.5"/></svg>`;
     }
 
     function renderInternDashboard() {
       const host = $("#internDashboard");
       if (!host) return;
       if (!internState.rows.length) {
-        host.style.display = "none";
+        host.hidden = true;
         return;
       }
       const displayed = internDisplayedRows();
       const total = internState.rows.length;
       const listed = displayed.length;
+      const today = istanbulToday();
       const periods = new Set();
+      let active = 0;
       displayed.forEach(idx => {
-        const value = String(internCell(idx, INTERN_PERIOD_COLUMN) ?? "").trim();
+        const value = normPeriod(internCell(idx, INTERN_PERIOD_COLUMN));
         if (value) periods.add(value);
+        const done = internRowComputedSafe(idx);
+        if (done.start && done.end && done.start <= today && done.end >= today) active++;
       });
-      let missingDocs = 0;
-      displayed.forEach(idx => {
-        if (INTERN_DOC_COLUMNS.some(header => String(internCell(idx, header) ?? "").trim() !== "Alındı")) missingDocs++;
-      });
+      const perCounts = internPeriods().map(period => displayed.filter(idx => normPeriod(internCell(idx, INTERN_PERIOD_COLUMN)) === period).length);
+      const icon = path => `<svg class="ip-ic" viewBox="0 0 24 24">${path}</svg>`;
       $("#internKpiGrid").innerHTML = [
-        [formatNumber(total), "Toplam aday"],
-        [formatNumber(listed), "Listelenen aday"],
-        [formatNumber(periods.size), "Staj dönemi"],
-        [formatNumber(missingDocs), "Evrak eksiği olan aday"]
-      ].map(([value, label]) => `<div class="intern-kpi-card"><strong>${value}</strong><span>${label}</span></div>`).join("");
-      $("#internPeriodChart").innerHTML = internBarsHtml(internTopCounts(idx => internCell(idx, INTERN_PERIOD_COLUMN), 6, displayed));
-      $("#internUnitChart").innerHTML = internBarsHtml(internTopCounts(idx => internCell(idx, "Kesinleşen Birim"), 6, displayed));
-      host.style.display = "block";
+        ["c-pur", icon('<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>'), "Toplam aday", formatNumber(total), `<b class="t-pur">${formatNumber(listed)}</b> aday listeleniyor`, internSpark(perCounts)],
+        ["c-green", icon('<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>'), "Listelenen aday", formatNumber(listed), `<b class="t-green">%${total ? Math.round(100 * listed / total) : 0}</b> toplam içinde`, ""],
+        ["c-orange", icon('<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>'), "Staj dönemi", formatNumber(periods.size), `<b class="t-orange">${formatNumber(active)}</b> aday şu an stajda`, ""]
+      ].map(([cls, ic, label, value, trend, extra]) => `<div class="ip-card ip-kpi"><span class="ip-circ ${cls}">${ic}</span><div><div class="lb">${label}</div><strong>${value}</strong><div class="tr">${trend}</div></div>${extra}</div>`).join("");
+      renderInternCalendar(displayed);
+      host.hidden = false;
     }
 
-    const INTERN_TEXT_EXPORT_HEADERS = new Set(["T.C. Kimlik Numarası", "T.C. Kimlik No", "Telefon", "Telefon numaranız"]);
-    const INTERN_DATE_EXPORT_HEADERS = new Set(["Doğum Tarihi", "Staj Başlangıç Tarihi", "Staj Bitiş Tarihi", "Başlangıç Tarihi", "Bitiş Tarihi", "Staj Bitiş / Çıkış Tarihi"]);
+    // ---- Staj takvimi: başlangıç (dönem) ve bitiş tarihleri ----
+    function renderInternCalendar(displayed) {
+      const host = $("#internCalendar");
+      if (!host) return;
+      const today = istanbulToday();
+      if (internCal.y == null) { internCal.y = today.getFullYear(); internCal.m = today.getMonth(); }
+      const starts = new Map(), ends = new Map();
+      displayed.forEach(idx => {
+        const done = internRowComputedSafe(idx);
+        if (done.start) { const k = toIsoDay(done.start); if (!starts.has(k)) starts.set(k, []); starts.get(k).push(idx); }
+        if (done.end) { const k = toIsoDay(done.end); if (!ends.has(k)) ends.set(k, []); ends.get(k).push(idx); }
+      });
+      Object.keys(internCalGroups).forEach(key => delete internCalGroups[key]);
+      const short = idx => { const parts = internName(idx).split(" ").filter(Boolean); return parts.length > 1 ? `${parts.slice(0, -1).join(" ")} ${parts.slice(-1)[0][0]}.` : (parts[0] || "Aday"); };
+      const chips = (date, big) => {
+        const k = toIsoDay(date), out = [];
+        const s = starts.get(k), e = ends.get(k);
+        if (s) {
+          internCalGroups["s:" + k] = s;
+          const names = s.map(idx => internName(idx)).join(", ");
+          out.push(`<button type="button" class="ip-ev ip-ev-s" data-intern-cal="s:${k}" title="Staj başlangıcı: ${escapeHtml(names)}">▶ ${big ? `Staj başlangıcı<small>${s.length} stajyer · ${escapeHtml(s.slice(0, 4).map(short).join(", "))}${s.length > 4 ? "…" : ""}</small>` : `${s.length === 1 ? escapeHtml(short(s[0])) : s.length + " başlangıç"}`}</button>`);
+        }
+        if (e) {
+          internCalGroups["e:" + k] = e;
+          const names = e.map(idx => internName(idx)).join(", ");
+          out.push(`<button type="button" class="ip-ev ip-ev-e" data-intern-cal="e:${k}" title="Staj bitişi: ${escapeHtml(names)}">■ ${big ? `Staj bitişi<small>${escapeHtml(e.slice(0, 4).map(short).join(", "))}${e.length > 4 ? ` +${e.length - 4}` : ""}</small>` : `${e.length === 1 ? escapeHtml(short(e[0])) : e.length + " bitiş"}`}</button>`);
+        }
+        return out;
+      };
+      let title, body, sumS = 0, sumE = 0;
+      const countRange = (from, days) => { for (let i = 0; i < days; i++) { const k = toIsoDay(addDays(from, i)); sumS += (starts.get(k) || []).length; sumE += (ends.get(k) || []).length; } };
+      const weekStart = internCal.wk || mondayOf(today);
+      if (internCal.view === "ay") {
+        const first = new Date(internCal.y, internCal.m, 1);
+        const gridStart = mondayOf(first);
+        const days = new Date(internCal.y, internCal.m + 1, 0).getDate();
+        const cells = Math.ceil((((first.getDay() + 6) % 7) + days) / 7) * 7;
+        countRange(first, days);
+        title = `${INTERN_MONTHS_TR[internCal.m]} ${internCal.y}`;
+        body = `<div class="ip-cal-grid">${Array.from({ length: cells }, (_, i) => {
+          const d = addDays(gridStart, i), list = chips(d, false);
+          return `<div class="ip-cal-cell${d.getMonth() !== internCal.m ? " is-out" : ""}${i % 7 > 4 ? " is-wk" : ""}${sameDay(d, today) ? " is-today" : ""}"><span class="ip-cal-n">${d.getDate()}</span>${list.slice(0, 2).join("")}${list.length > 2 ? `<button type="button" class="ip-cal-more" data-intern-cal-day="${toIsoDay(d)}">+${list.length - 2} daha</button>` : ""}</div>`;
+        }).join("")}</div>`;
+      } else {
+        const weekEnd = addDays(weekStart, 6);
+        countRange(weekStart, 7);
+        title = `${weekStart.getDate()}${weekStart.getMonth() !== weekEnd.getMonth() ? " " + INTERN_MONTHS_TR[weekStart.getMonth()] : ""} – ${weekEnd.getDate()} ${INTERN_MONTHS_TR[weekEnd.getMonth()]} ${weekEnd.getFullYear()}`;
+        body = `<div class="ip-cal-week">${Array.from({ length: 7 }, (_, i) => {
+          const d = addDays(weekStart, i), list = chips(d, true);
+          return `<div class="ip-cal-col${sameDay(d, today) ? " is-today" : ""}">${list.join("") || '<span class="ip-cal-empty">Etkinlik yok</span>'}</div>`;
+        }).join("")}</div>`;
+      }
+      host.innerHTML = `<div class="ip-card ip-cal">
+        <div class="ip-cal-top">
+          <div class="ip-cal-row">
+            <h3>${title}</h3>
+            <button type="button" class="ip-cal-today" data-intern-cal-nav="today">Bugün</button>
+            <button type="button" class="ip-cal-arr" data-intern-cal-nav="-1" aria-label="Önceki">‹</button>
+            <button type="button" class="ip-cal-arr" data-intern-cal-nav="1" aria-label="Sonraki">›</button>
+            <div class="ip-cal-sum"><span>▶ <b>${sumS}</b> staj başlangıcı</span><span>■ <b>${sumE}</b> staj bitişi</span></div>
+            <div class="ip-cal-seg" role="group" aria-label="Takvim görünümü"><button type="button" data-intern-cal-view="ay" class="${internCal.view === "ay" ? "is-on" : ""}">Ay</button><button type="button" data-intern-cal-view="hafta" class="${internCal.view === "hafta" ? "is-on" : ""}">Hafta</button></div>
+          </div>
+          ${internCal.view === "ay"
+            ? `<div class="ip-cal-wd">${INTERN_WD_TR.map(w => `<span>${w}</span>`).join("")}</div>`
+            : `<div class="ip-cal-days">${Array.from({ length: 7 }, (_, i) => { const d = addDays(weekStart, i); return `<div class="${sameDay(d, today) ? "is-today" : ""}"><small>${INTERN_WD_TR[i]}</small><b>${d.getDate()}</b></div>`; }).join("")}</div>`}
+        </div>
+        <div class="ip-cal-body">${body}</div>
+        <div class="ip-cal-legend"><span><i class="ip-ev-s"></i>Staj başlangıcı</span><span><i class="ip-ev-e"></i>Staj bitişi (elle değiştirilenler dahil)</span><span>Tek kişilik etkinliğe tıklayınca aday detayı açılır</span></div>
+      </div>`;
+    }
+
+    function handleInternCalendarClick(button) {
+      const today = istanbulToday();
+      if (button.dataset.internCalNav) {
+        const step = button.dataset.internCalNav;
+        if (step === "today") { internCal.y = today.getFullYear(); internCal.m = today.getMonth(); internCal.wk = null; }
+        else if (internCal.view === "ay") { const d = new Date(internCal.y, internCal.m + Number(step), 1); internCal.y = d.getFullYear(); internCal.m = d.getMonth(); }
+        else { internCal.wk = addDays(internCal.wk || mondayOf(today), 7 * Number(step)); internCal.y = internCal.wk.getFullYear(); internCal.m = internCal.wk.getMonth(); }
+      } else if (button.dataset.internCalView) {
+        internCal.view = button.dataset.internCalView;
+        if (internCal.view === "hafta") {
+          const viewingThisMonth = internCal.y === today.getFullYear() && internCal.m === today.getMonth();
+          internCal.wk = viewingThisMonth ? mondayOf(today) : mondayOf(new Date(internCal.y, internCal.m, 1));
+        }
+      } else if (button.dataset.internCalDay) {
+        const [y, m, d] = button.dataset.internCalDay.split("-").map(Number);
+        internCal.view = "hafta";
+        internCal.wk = mondayOf(new Date(y, m - 1, d));
+      } else if (button.dataset.internCal) {
+        const group = internCalGroups[button.dataset.internCal] || [];
+        if (group.length === 1) { openInternDetail(group[0]); return; }
+        const kind = button.dataset.internCal.startsWith("s:") ? "Staj başlangıcı" : "Staj bitişi";
+        toast(`${kind}: ${group.map(idx => internName(idx)).join(", ")}`, "info");
+        return;
+      }
+      renderInternCalendar(internDisplayedRows());
+    }
+
+    // ---- Aday detay paneli ----
+    let internDetailReturnFocus = null;
+    function openInternDetail(rowIdx) {
+      const drawer = $("#internDetailDrawer");
+      if (!drawer || !internState.rows[rowIdx]) return;
+      const name = internName(rowIdx) || `${rowIdx + 1}. aday`;
+      const done = internRowComputedSafe(rowIdx);
+      const val = header => internRawText(internCell(rowIdx, header)).trim();
+      const item = (label, value, wide) => `<div class="ip-dr-item${wide ? " is-wide" : ""}"><span>${escapeHtml(label)}</span><b>${value ? escapeHtml(value) : "—"}</b></div>`;
+      const linkedin = val("Linkedin bağlantınız");
+      let linkHtml = "—";
+      if (linkedin) {
+        const href = /^https?:\/\//i.test(linkedin) ? linkedin : (/^(www\.)?linkedin\.com/i.test(linkedin) ? "https://" + linkedin : "");
+        linkHtml = href ? `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(linkedin)}</a>` : escapeHtml(linkedin);
+      }
+      const finalUnit = fold(val("Kesinleşen Birim"));
+      const prefColors = ["c-pur", "c-orange", "c-green"];
+      const prefs = ["1. Birim Tercihiniz", "2. Birim Tercihiniz", "3. Birim Tercihiniz"].map((header, i) => {
+        const v = val(header);
+        return `<div class="${v && finalUnit && fold(v) === finalUnit ? "is-match" : ""}"><i class="${prefColors[i]}">${i + 1}</i>${v ? escapeHtml(v) : "—"}</div>`;
+      }).join("");
+      const tags = [val("Staj Durumunuz"), val("Kesinleşen Birim") || "Birim atanmadı", done.kalan !== "—" ? done.kalan : ""].filter(Boolean);
+      drawer.innerHTML = `
+        <div class="ip-dr-head">
+          <button type="button" class="ip-dr-close" data-intern-detail-close="" aria-label="Kapat">×</button>
+          ${internAvatar(rowIdx, name)}
+          <h2 id="internDetailTitle">${escapeHtml(name)}</h2>
+          <p>${escapeHtml([val("Üniversite"), val("Bölüm")].filter(Boolean).join(" · "))}</p>
+          <div class="ip-dr-tags">${tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}</div>
+        </div>
+        <div class="ip-dr-body">
+          <section class="ip-dr-sec"><h4>Staj</h4><div class="ip-dr-grid">
+            ${item("Başlangıç", normPeriod(val(INTERN_PERIOD_COLUMN)))}
+            ${item(done.manual ? "Bitiş (elle girildi)" : "Hesaplanan bitiş", done.end ? formatTrDay(done.end) : "")}
+          </div></section>
+          <section class="ip-dr-sec"><h4>Kişisel bilgiler</h4><div class="ip-dr-grid">
+            ${item("İkametgah adresi", val("İkametgah Adresi"), true)}
+            ${item("İl / İlçe", val("İlçe/İl"))}
+            ${item("Kan grubu", val("Kan Grubunuz"))}
+            ${item("Anne adı", val("Anne Adı"))}
+            ${item("Baba adı", val("Baba Adı"))}
+          </div></section>
+          <section class="ip-dr-sec"><h4>Yetkinlik</h4><div class="ip-dr-grid">
+            ${item("İngilizce seviyesi", val("İngilizce Seviyeniz"))}
+            <div class="ip-dr-item"><span>LinkedIn</span>${linkHtml === "—" ? "<b>—</b>" : linkHtml}</div>
+          </div></section>
+          <section class="ip-dr-sec"><h4>Birim tercihleri</h4><div class="ip-pref">${prefs}</div></section>
+        </div>`;
+      internDetailReturnFocus = document.activeElement;
+      $("#internDetailBg").hidden = false;
+      drawer.hidden = false;
+      drawer.querySelector("[data-intern-detail-close]")?.focus();
+    }
+
+    function closeInternDetail() {
+      const drawer = $("#internDetailDrawer");
+      if (!drawer || drawer.hidden) return;
+      drawer.hidden = true;
+      $("#internDetailBg").hidden = true;
+      if (internDetailReturnFocus && document.contains(internDetailReturnFocus)) internDetailReturnFocus.focus();
+    }
+
+    const INTERN_TEXT_EXPORT_HEADERS = new Set(["T.C. Kimlik Numarası", "T.C. Kimlik No", "TC Kimlik No", "Telefon", "Telefon numaranız"]);
+    const INTERN_DATE_EXPORT_HEADERS = new Set(["Sınav Tarihi", "Doğum Tarihi", "Staj Başlangıç Tarihi", "Staj Bitiş Tarihi", "Başlangıç Tarihi", "Bitiş Tarihi", "Staj Bitiş / Çıkış Tarihi"]);
 
     function downloadXlsx(filename, aoa) {
       const book = XLSX.utils.book_new();
@@ -3540,6 +4255,24 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       toast(`Staj Bitiş listesi indirildi (${aoa.length - 1} aday, ${month}).`, "success");
     }
 
+    // Güvenlik Bilinci listesi: dönemden bağımsız, yalnızca tabloda seçilen adaylar.
+    function exportGuvenlikList() {
+      const idx = [...internState.selected].filter(i => internState.rows[i]).sort((a, b) => a - b);
+      if (!idx.length) {
+        toast("Önce en az bir aday seçin.", "error");
+        return;
+      }
+      const examDate = selectedInternExamDate();
+      if (!examDate) {
+        toast("Önce sınav tarihini seçin.", "error");
+        return;
+      }
+      const head = ["İsim", "Soyisim", "TC Kimlik No", "E-mail", "Telefon", "Doğum Tarihi", "Adres", "Şirket", "Sınav Tarihi"];
+      const aoa = [head];
+      idx.forEach(i => aoa.push([internCell(i, "Adı"), internCell(i, "Soyadı"), internCell(i, "T.C. Kimlik Numarası"), internCell(i, "E-posta adresiniz"), internCell(i, "Telefon numaranız"), excelDate(internCell(i, "Doğum Tarihiniz")), internCell(i, "İkametgah Adresi"), internCell(i, "Şirket"), examDate]));
+      downloadXlsx("Guvenlik-Bilinci-Listesi-" + formatTrDay(examDate) + ".xlsx", aoa);
+      toast(`Güvenlik Bilinci listesi indirildi (${idx.length} aday · sınav ${formatTrDay(examDate)}).`, "success");
+    }
 
     // NAVIGATION
     function navigate(view) {
@@ -3831,9 +4564,19 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
       $("#exportKartBtn").addEventListener("click", () => runInternExport(exportKartList));
       $("#exportHseBtn").addEventListener("click", () => runInternExport(exportHseList));
       $("#exportBitisBtn").addEventListener("click", () => runInternExport(exportBitisList));
+      $("#exportGuvenlikBtn").addEventListener("click", () => openInternPicker());
+      $("#internPickCreate").addEventListener("click", () => {
+        if (!internState.selected.size) return;
+        runInternExport(exportGuvenlikList);
+        closeInternPicker();
+      });
+      $("#internPickBg").addEventListener("click", closeInternPicker);
+      $("#internPickSearch").addEventListener("input", () => renderInternPicker());
+      $("#internPickPeriod").addEventListener("change", () => renderInternPicker());
+      $("#internPickExamDate").addEventListener("change", () => { updateInternExamSummary(); updateInternPickUi(); });
       $("#internPeriodSelect").addEventListener("change", () => renderInternTable());
       const internIncludeCancelled = $("#internIncludeCancelled");
-      internIncludeCancelled.addEventListener("change", () => renderInternTable());
+      internIncludeCancelled.addEventListener("change", () => { if (internState.rows.length) renderInternTable(); });
       const internTableSearch = $("#internTableSearch");
       if (internTableSearch) internTableSearch.addEventListener("input", event => {
         internState.search = event.target.value;
@@ -3843,6 +4586,62 @@ parse_Primary(n.content)}catch(l){}a="/EncryptionInfo";n=Qe.find(e,a);if(!n||!n.
         const editor = event.target.closest("[data-intern-edit]");
         if (!editor) return;
         internState.overrides.set(editor.dataset.internEdit, editor.value);
+        if (editor.dataset.internEdit.endsWith("::Kesinleşen Birim")) renderInternTable();
+      });
+      const internPanel = $('[data-view-panel="intern-recruitment"]');
+      internPanel.addEventListener("click", event => {
+        const button = event.target.closest("button");
+        if (!button || !internPanel.contains(button)) return;
+        if (button.matches("[data-intern-period]")) {
+          $("#internPeriodSelect").value = button.dataset.internPeriod;
+          renderInternTable();
+        } else if (button.matches("[data-intern-detail]")) {
+          openInternDetail(Number(button.dataset.internDetail));
+        } else if (button.matches("[data-intern-detail-close]")) {
+          closeInternDetail();
+        } else if (button.matches("[data-intern-end-reset]")) {
+          const rowIdx = Number(button.dataset.internEndReset);
+          internEndOverrides.delete(internApplicantKey(rowIdx));
+          syncInternEndOverridesToPayload();
+          renderInternTable();
+          toast("Bitiş tarihi otomatik hesaplamaya döndü ve HTML ayarlarından kaldırıldı.", "info");
+        } else if (button.matches("[data-intern-cal-nav], [data-intern-cal-view], [data-intern-cal-day], [data-intern-cal]")) {
+          handleInternCalendarClick(button);
+        } else if (button.matches("[data-ip-top]")) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else if (button.matches("[data-intern-pick-close]")) {
+          closeInternPicker();
+        }
+      });
+      internPanel.addEventListener("change", event => {
+        const target = event.target;
+        if (target.matches("[data-intern-pick]")) {
+          const idx = Number(target.dataset.internPick);
+          if (target.checked) internState.selected.add(idx); else internState.selected.delete(idx);
+          target.closest(".ip-pick-row")?.classList.toggle("is-on", target.checked);
+          updateInternPickUi();
+        } else if (target.id === "internPickAll") {
+          internPickRows().forEach(idx => { if (target.checked) internState.selected.add(idx); else internState.selected.delete(idx); });
+          renderInternPicker();
+        } else if (target.matches("[data-intern-end]")) {
+          const idx = Number(target.dataset.internEnd);
+          const value = target.value;
+          const key = internApplicantKey(idx);
+          if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+            const [y, m, d] = value.split("-").map(Number);
+            internEndOverrides.set(key, new Date(y, m - 1, d));
+            syncInternEndOverridesToPayload();
+            toast(`Bitiş tarihi ${formatTrDay(new Date(y, m - 1, d))} olarak güncellendi ve taşınabilir HTML ayarlarına kaydedildi.`, "success");
+          } else {
+            internEndOverrides.delete(key);
+            syncInternEndOverridesToPayload();
+          }
+          renderInternTable();
+        }
+      });
+      $("#internDetailBg").addEventListener("click", closeInternDetail);
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") { closeInternPicker(); closeInternDetail(); }
       });
     }
 

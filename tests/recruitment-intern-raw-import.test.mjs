@@ -79,7 +79,7 @@ test('Intern Recruitment accepts compatible local .xlsx workbooks by schema, not
   assert.match(html, /missing required columns/i);
   assert.match(html, /XLSX\.utils\.sheet_to_json\(sheet, \{ header: 1, raw: true, defval: "", blankrows: false \}\)/);
   assert.match(html, /function renderInternRecruitmentRawData\(matrix, fileName\)/);
-  assert.match(html, /never uploaded|Hiçbir veri yüklenmez/i);
+  assert.match(html, /Veriler yalnızca bu tarayıcıda işlenir/i);
 });
 
 test('Intern Recruitment declares the required schema without committing applicant rows', () => {
@@ -108,25 +108,24 @@ test('Every internship upload attempt clears stale rows, controls, status, dashb
   assert.match(html, /input\.addEventListener\("change"[\s\S]*?input\.value = ""/);
   assert.match(html, /internState\.headers\s*=\s*\[\]/);
   assert.match(html, /internState\.rows\s*=\s*\[\]/);
-  assert.match(html, /internHrPanel[\s\S]*?style\.display\s*=\s*"none"/);
-  assert.match(html, /internDashboard[\s\S]*?style\.display\s*=\s*"none"/);
+  assert.match(html, /\$\("#internHrPanel"\)\.hidden = true/);
+  assert.match(html, /internDashboard\.hidden = true/);
 });
 
-test('Intern view renders a KPI and distribution dashboard after import', () => {
+test('Intern view renders KPI and calendar panels after import', () => {
   assert.match(html, /id="internDashboard"/);
   assert.match(html, /id="internKpiGrid"/);
-  assert.match(html, /id="internPeriodChart"/);
-  assert.match(html, /id="internUnitChart"/);
+  assert.match(html, /id="internCalendar"/);
   assert.match(html, /id="internTableSearch"/);
   assert.match(html, /function renderInternDashboard\(\)/);
-  assert.match(html, /Evrak eksiği olan aday/);
+  assert.match(html, /Toplam aday/);
   assert.match(html, /renderInternTable[\s\S]*?renderInternDashboard\(\)/);
-  assert.match(html, /intern-bar-fill/);
+  assert.match(html, /function renderInternCalendar\(displayed\)/);
 });
 
 test('Cancelled candidates are excluded by default and can be included explicitly', () => {
   assert.match(html, /id="internIncludeCancelled"/);
-  assert.match(html, /İptal edilen adayları dahil et/);
+  assert.match(html, /İptalleri dahil et/);
   assert.match(html, /function internRowCancelled\(rowIdx\)/);
   assert.match(html, /if \(!includeCancelled && internRowCancelled\(idx\)\) return/);
   assert.match(html, /internIncludeCancelled[\s\S]*?addEventListener\("change"/);
@@ -164,9 +163,9 @@ test('Dropdowns expose an explicit blank option and periods are chronological wi
 
 test('Intern table is an accessible scroll region with sticky headers and identity columns', () => {
   assert.match(html, /id="internRecruitmentTableWrap"[^>]+tabindex="0"[^>]+role="region"[^>]+aria-label="Stajyer adayları tablosu"/);
-  assert.match(html, /#internRecruitmentTable th\s*\{[^}]*position:\s*sticky/);
-  assert.match(html, /#internRecruitmentTable :is\(th, td\):nth-child\(1\)/);
-  assert.match(html, /#internRecruitmentTable select\s*\{[^}]*min-width:/);
+  assert.match(html, /\.ip-tbl th\s*\{[^}]*position:\s*sticky/);
+  assert.match(html, /\.ip-stk2\s*\{/);
+  assert.match(html, /\.ip-sel\s*\{[^}]*min-width:/);
   assert.match(html, /internEditorLabel\(rowIdx, header\)/);
 });
 
@@ -198,10 +197,11 @@ test('Selected weekend attendance days can earn internship credit', () => {
   assert.doesNotMatch(block, /jsDay !== 0|jsDay !== 6/);
 });
 
-test('Intern dashboard follows table search and override-aware document counts', () => {
+test('Intern dashboard follows table search and override-aware computed dates', () => {
   assert.match(html, /function internDisplayedRows\(\)/);
   assert.match(html, /function internRowMatchesSearch\(rowIdx, query\)/);
   assert.match(html, /renderInternTable[\s\S]*?internDisplayedRows\(\)/);
-  assert.match(html, /internTopCounts\(idx => internCell\(idx, INTERN_PERIOD_COLUMN\), 6, displayed\)/);
-  assert.match(html, /INTERN_DOC_COLUMNS\.some\(header => String\(internCell\(idx, header\)/);
+  assert.match(html, /renderInternCalendar\(displayed\)/);
+  assert.match(html, /internRowComputedSafe\(idx\)/);
+  assert.match(html, /internEndOverrides\.get\(internApplicantKey\(rowIdx\)\)/);
 });

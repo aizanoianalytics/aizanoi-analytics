@@ -42,7 +42,7 @@ test('Unified multi-file dropzone routes every workbook by header schema', () =>
   assert.match(html, /function detectWorkbookKind\(buffer\)/);
   assert.match(html, /async function routeSingleWorkbook\(file\)/);
   assert.match(html, /RECRUITMENT_WORKBOOK_HEADERS\.every/);
-  assert.match(html, /INTERN_RECRUITMENT_HEADERS\.every/);
+  assert.match(html, /INTERN_REQUIRED_HEADERS\.every/);
   assert.match(html, /beklenen iki yapıdan birine uymuyor/);
   assert.match(html, /bindImportDropzone\("#unifiedExcelDropzone", "#unifiedExcelInput", "#unifiedImportResult"\)/);
   assert.match(html, /bindImportDropzone\("#excelDropzone", "#excelFileInput", "#importResult"\)/);
