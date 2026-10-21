@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-21-chery-ziwei-automotive-chips",
+  "title": "Chery puts its own name on automotive silicon",
+  "summary": "At its global innovation conference Chery showed a Ziwei chip family: C-series central computing, S-series silicon carbide and M-series vehicle control. It says a dual-NPU configuration of the C100 reaches 2,400 TOPS with 600GB/s of memory bandwidth for on-device physical AI, and that its eight-inch silicon carbide wafers are in mass production with costs down more than 30%. Five chip-packaging families were also on display.",
+  "category": "technology",
+  "priority": 52,
+  "publishedAt": "2026-10-21T05:10:00Z",
+  "updatedAt": "2026-10-21T05:10:00Z",
+  "retrievedAt": "2026-10-21T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "TechNode",
+      "url": "https://technode.com/2026/10/20/chery-unveils-automotive-chip-lineup-spanning-ai-computing-silicon-carbide-and-vehicle-control/",
+      "publishedAt": "2026-10-20T12:00:00Z"
+    }
+  ]
+}

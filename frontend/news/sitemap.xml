@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/spacex-profit-ai-segment/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>SpaceX swings to profit as AI becomes its largest business</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/deepseek-federal-removal-order/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>US tells civilian agencies to strip DeepSeek from federal systems</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/anthropic-draft-safety-bill/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>Anthropic drafts a safety bill that could stop a model&#39;s release</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/google-torchtpu-nvidia-software/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>Google opens TorchTPU to loosen Nvidia&#39;s grip on AI software</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/brent-retreats-iran-headlines/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>Brent retreats from a five-month high as Iran headlines whipsaw crude</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/wall-street-healthcare-smallcaps/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>Wall Street buys healthcare and small caps as tech takes a breather</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/liverpool-villarreal-ngumoha-comeback/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>Ngumoha turns Anfield tie as Liverpool come back from two down</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/man-city-aek-foden-hat-trick/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>Foden&#39;s hat-trick carries City past AEK with Haaland rested</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/napoli-bodo-glimt-mctominay-brace/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>McTominay&#39;s double ends Napoli&#39;s wait for a Champions League win</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/amd-intel-onednn-pytorch/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>AMD and Intel pool their x86 work for PyTorch in oneDNN</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/ntt-optical-chiplet-mass-production/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>NTT-led group targets tenfold gain in optical chiplet output</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/tenstorrent-series-e-open-weight/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>Tenstorrent raises $1.5bn at $6.2bn to build open-weight inference kit</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/chery-ziwei-automotive-chips/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>Chery puts its own name on automotive silicon</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/openai-orchestra-bio-acquisition/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>OpenAI buys Orchestra Bio to staff up its life-sciences push</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-21/meta-muse-ten-million-downloads/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
+      <news:title>Meta&#39;s Muse passes 10m US downloads in its first 40 days</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-10-20/openai-fundraising-race-anthropic-ipo/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -118,158 +238,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
       <news:title>Waymo plans to take its fleet from 4,000 cars to 20,000 by late 2027</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-10-19/weekly-ai-from-hype-to-governance/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>AI’s next phase is an accountability test</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-10-19/weekly-markets-resilience-versus-fragility/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Markets weigh resilience against fresh fault lines</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-10-19/weekly-technology-trust-boundaries/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Technology’s trust boundary is moving</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/technology-m365-tenant-intrusions/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Compromised ConnectWise credential linked to Microsoft 365 intrusions</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/ai-asia-beyond-ai-race/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Asia’s technology contest is widening beyond artificial intelligence</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/football-uefa-midweek-fixtures/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>UEFA’s midweek schedule puts the next European tests in focus</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/weekly/2026-10-19/weekly-football-calendar-pressure/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Football’s calendar is becoming the story around the matches</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/markets-global-economy-resilience/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>IMFC chair says global economy remains resilient</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/ai-drone-infrastructure-risk/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Weaponised AI drones raise a protection problem for critical sites</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/football-champions-league-form/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Champions League contenders arrive in contrasting form</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/technology-uk-software-antitrust/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>UK scrutiny widens around software and AI power</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/football-premier-league-table/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Premier League table enters another decisive stretch</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/ai-professional-training-pipeline/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Universities adjust the pipeline for AI professionals</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/ai-workplace-budget-rethink/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>AI spending faces a tougher workplace test</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/chatgpt-classroom-teaching-assistant/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>When an AI assistant becomes the teaching assistant</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/markets-australia-labour-easing/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Australia’s central bank sees signs of labour-market easing</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/markets-week-ahead-earnings-test/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Markets face an earnings-heavy week</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/technology-ai-procurement/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>AI is starting to act like a software buyer</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-19/technology-varonis-cybersecurity-sale/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-19T05:00:00.000Z</news:publication_date>
-      <news:title>Varonis sale puts a spotlight on cybersecurity maturity</news:title>
     </news:news>
   </url>
 </urlset>

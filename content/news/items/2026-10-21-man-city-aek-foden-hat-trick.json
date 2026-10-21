@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-21-man-city-aek-foden-hat-trick",
+  "title": "Foden's hat-trick carries City past AEK with Haaland rested",
+  "summary": "Phil Foden scored three times as Manchester City beat AEK Athens 5-1 to get their league phase back on track after the defeat in Paris. Elliot Anderson's first City goal and a Rayan Cherki finish completed the scoring, with Stavros Pilios replying for the visitors just after half-time. Erling Haaland stayed on the bench, and City won in front of an announced 40,042 at the Etihad.",
+  "category": "football",
+  "priority": 66,
+  "publishedAt": "2026-10-21T05:10:00Z",
+  "updatedAt": "2026-10-21T05:10:00Z",
+  "retrievedAt": "2026-10-21T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://theguardian.com/football/2026/oct/20/manchester-city-aek-athens-champions-league-match-report",
+      "publishedAt": "2026-10-20T21:00:00Z"
+    },
+    {
+      "publisher": "Sky Sports",
+      "url": "https://skysports.com/football/news/13600901/man-city-5-1-aek-athens-phil-foden-bags-hat-trick-as-enzo-marescas-side-claim-second-champions-league-win",
+      "publishedAt": "2026-10-20T22:00:00Z"
+    }
+  ]
+}

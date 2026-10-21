@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-21-ntt-optical-chiplet-mass-production",
+  "title": "NTT-led group targets tenfold gain in optical chiplet output",
+  "summary": "A Japanese group led by NTT Innovative Devices has won NEDO backing to develop mass-production technology for devices that connect chips with light, aiming at a tenfold or better productivity improvement over research-stage processes. Japan Semiconductor, Furukawa Electric and Shinko Electric are the other proposers, with NTT advising. The work spans silicon photonics, optical links, packaging and test, aimed at the power cost of chip-to-chip traffic in AI systems.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-21T05:10:00Z",
+  "updatedAt": "2026-10-21T05:10:00Z",
+  "retrievedAt": "2026-10-21T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "International Business Times Japan",
+      "url": "https://jp.ibtimes.com/ntt-partners-target-tenfold-productivity-gain-optical-chiplet-manufacturing-104832",
+      "publishedAt": "2026-10-20T12:00:00Z"
+    }
+  ]
+}

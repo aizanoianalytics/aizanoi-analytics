@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-21-anthropic-draft-safety-bill",
+  "title": "Anthropic drafts a safety bill that could stop a model's release",
+  "summary": "Anthropic is circulating draft legislation that would let registered independent evaluators flag a model posing a foreseeable, imminent risk of killing more than 50 people or causing over $1bn of property damage, with 72 hours to notify the Commerce Department, which would then have to ask a judge to halt distribution. Labs could pay the evaluators so long as payment is not tied to the result. The thresholds mirror California's SB 53.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-10-21T05:10:00Z",
+  "updatedAt": "2026-10-21T05:10:00Z",
+  "retrievedAt": "2026-10-21T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/20/anthropic-pitches-ai-safety-bill-that-may-block-a-model-if-50-people-could-be-killed/",
+      "publishedAt": "2026-10-20T23:01:00Z"
+    }
+  ]
+}

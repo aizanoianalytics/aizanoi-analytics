@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-21-openai-orchestra-bio-acquisition",
+  "title": "OpenAI buys Orchestra Bio to staff up its life-sciences push",
+  "summary": "OpenAI has acquired Orchestra Bio, a four-year-old startup whose agents handle operational work for biotech companies such as clinical-trial scheduling and finance tracking. The team and technology join Rosalind, OpenAI's life-sciences model, and the Rosalind Workbench tool that helps researchers plan experiments. Terms were not disclosed; the startup had reportedly raised about $20m, and OpenAI says Moderna and Novo Nordisk are already customers.",
+  "category": "ai",
+  "priority": 50,
+  "publishedAt": "2026-10-21T05:10:00Z",
+  "updatedAt": "2026-10-21T05:10:00Z",
+  "retrievedAt": "2026-10-21T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/20/openai-acquires-startup-orchestra-bio%e2%81%a0-to-beef-up-its-biotech-business/",
+      "publishedAt": "2026-10-20T20:35:00Z"
+    }
+  ]
+}

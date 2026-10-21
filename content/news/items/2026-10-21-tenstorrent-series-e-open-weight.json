@@ -1,0 +1,26 @@
+{
+  "id": "2026-10-21-tenstorrent-series-e-open-weight",
+  "title": "Tenstorrent raises $1.5bn at $6.2bn to build open-weight inference kit",
+  "summary": "Tenstorrent has raised $1.5bn at a $6.2bn valuation, more than doubling the $2.6bn it carried in late 2024, in a round led by Trace Capital and Innovation X with Cadence Ventures, Fidelity, SanDisk and T. Rowe Price taking part. Chief executive Jim Keller told Bloomberg the company chose to stay independent after showing its Galaxy servers could run DeepSeek models. The money goes to chips tuned for serving open-weight models and video generation.",
+  "category": "technology",
+  "priority": 56,
+  "publishedAt": "2026-10-21T05:10:00Z",
+  "updatedAt": "2026-10-21T05:10:00Z",
+  "retrievedAt": "2026-10-21T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/19/tenstorrent-hits-6-2b-valuation-to-scale-open-weight-ai-chips/",
+      "publishedAt": "2026-10-19T18:37:00Z"
+    }
+  ]
+}
