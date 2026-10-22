@@ -55,7 +55,7 @@ const BOW = Object.freeze({
   speed: 15,
   radius: 0.34,
   cooldown: 0.62,
-  staminaCost: 18,
+  staminaCost: 12,
   knockback: 0.55,
 });
 // Flanker tuning: the ring it orbits at, how long it orbits before it lunges,
@@ -67,6 +67,12 @@ const FLANKER_LUNGE_MS = 0.32;
 // How many minions a single summoner may have alive at once. The 2D build
 // had the same cap; without it the wave grows without bound.
 const MAX_SUMMONS_PER_CASTER = 3;
+// The descent has ten chapters. Clearing the tenth is the win condition;
+// past that the run continues endlessly, the way the 2D build's endless
+// mode did.
+const FINAL_CHAPTER = 10;
+// Exported so the runtime can label the victory screen.
+export { FINAL_CHAPTER };
 // A hard ceiling on live enemies, so a pathological wave can never tank the
 // frame rate. The arena is a single screen, so this is generous.
 const MAX_LIVE_ENEMIES = 40;
@@ -123,8 +129,14 @@ const move = (unit, vector, speed, dt, radius = 0.45) => {
   unit.z = clamp(unit.z + vector.z * speed * dt, -ARENA_RADIUS, ARENA_RADIUS);
   resolveObstacleCollision(unit, radius);
 };
+// Events are a bounded ring that is trimmed from the front. A consumer that
+// tracks its position by INDEX would drift every time the ring shifts, and
+// would eventually stop seeing events at all. So every event carries a
+// monotonic sequence number, and a consumer remembers the last sequence it
+// saw: that stays correct no matter how the ring is trimmed.
 const emitEvent = (state, event) => {
-  state.events.push(event);
+  state.eventSeq += 1;
+  state.events.push({ ...event, seq: state.eventSeq });
   if (state.events.length > MAX_EVENTS) state.events.splice(0, state.events.length - MAX_EVENTS);
 };
 const pruneHistory = (state) => {
@@ -184,6 +196,13 @@ export function createGameState(seed = 'dungeon') {
     obstacles: OBSTACLES.map((item) => ({ ...item })),
     blessings: [],
     events: [],
+    // The sequence number of the last emitted event. A consumer tracks what
+    // it has seen by comparing sequence numbers, not by indexing the ring.
+    eventSeq: 0,
+    // The run ledger: what the player did this run. The 2D build showed these
+    // on its RUN LEDGER screen; without a win condition there was nowhere to
+    // show them, because the run never ended.
+    stats: { kills: 0, bossKills: 0, chestCount: 0, shotsFired: 0, meleeSwings: 0, damageTaken: 0, blessings: 0 },
     inputLatch: { dash: false, attack: false, shoot: false },
   };
 }
@@ -232,7 +251,7 @@ const makeEnemy = (state, archetype, chapter, index) => {
 export function spawnWave(state, chapter = state.chapter) {
   if (!Number.isInteger(chapter) || chapter < 1) throw new RangeError('Chapter must be a positive integer');
   state.chapter = chapter;
-  state.mode = chapter > 10 ? 'endless' : 'chapters';
+  state.mode = chapter > FINAL_CHAPTER ? 'endless' : 'chapters';
   const roles = [];
   if (chapter % 5 === 0) roles.push('chaser', 'archer', 'tank', 'summoner', 'flanker', 'boss');
   else {
@@ -262,6 +281,7 @@ const damagePlayer = (state, amount, source) => {
   const taken = Math.max(1, Math.round(amount * player.damageTakenMultiplier));
   player.hp = Math.max(0, player.hp - taken);
   player.invulnerable = 0.1;
+  if (state.stats) state.stats.damageTaken += taken;
   emitEvent(state, { type: 'player-hit', source, amount: taken, at: state.time });
   if (player.hp === 0) {
     player.dead = true;
@@ -295,6 +315,10 @@ const killEnemy = (state, target) => {
     x: target.x, z: target.z, collected: true });
   if (state.loot.length > MAX_LOOT) state.loot.splice(0, state.loot.length - MAX_LOOT);
   emitEvent(state, { type: 'enemy-death', id: target.id, at: state.time });
+  if (state.stats) {
+    state.stats.kills += 1;
+    if (target.archetype === 'boss') state.stats.bossKills += 1;
+  }
 };
 
 export function attack(state, targetId) {
@@ -305,11 +329,18 @@ export function attack(state, targetId) {
   if (state.time > player.comboExpires) player.combo = 0;
   const chain = player.combo % 3 + 1;
   const strike = COMBO[chain - 1];
+  const target = state.enemies.find((unit) => unit.id === targetId && !unit.dead);
+  // A swing at an enemy that is out of reach does not happen: it must not
+  // spend the cooldown, and it must not be counted as a swing. Otherwise the
+  // player watches the cooldown bar move and nothing else.
+  if (!target || distance(player.position, target) > strike.range) {
+    return { hit: false, reason: 'out-of-range', chain, damage: 0, range: strike.range, crit: false };
+  }
   player.combo = chain;
   player.comboExpires = state.time + 0.75;
+  if (state.stats) state.stats.meleeSwings += 1;
   player.attackReadyAt = state.time
     + (chain === 3 ? 0.38 : 0.22) / Math.max(0.2, player.attackSpeedMultiplier);
-  const target = state.enemies.find((unit) => unit.id === targetId && !unit.dead);
   const crit = random(state) < player.critChance;
   const damage = Math.round(strike.damage * player.damageMultiplier * (crit ? player.critMultiplier : 1));
   const result = { hit: false, chain, damage, range: strike.range, crit };
@@ -400,6 +431,7 @@ export function shoot(state) {
     radius: BOW.radius,
   });
   emitEvent(state, { type: 'bow-shot', id: target.id, damage, crit, at: state.time });
+  if (state.stats) state.stats.shotsFired += 1;
   return { fired: true, targetId: target.id, damage, crit };
 }
 
@@ -605,7 +637,7 @@ const updateProjectiles = (state, dt) => {
           target.z = clamp(target.z + push.z * shot.knockback, -ARENA_RADIUS, ARENA_RADIUS);
           resolveObstacleCollision(target);
         }
-        emitEvent(state, { type: 'melee-hit', id: target.id, chain: 1, damage: shot.damage, ranged: true, crit: !!shot.crit, at: state.time });
+        emitEvent(state, { type: 'bow-hit', id: target.id, damage: shot.damage, crit: !!shot.crit, at: state.time });
         if (target.hp === 0) killEnemy(state, target);
         shot.ttl = 0;
       }
@@ -713,12 +745,21 @@ const fixedUpdate = (state, input, dt) => {
   player.position.x = playerUnit.x;
   player.position.z = playerUnit.z;
   if (input.attack && !state.inputLatch.attack) {
+    // The nearest enemy is chosen, and attack() itself refuses a target that
+    // is out of reach: a swing that cannot land must not spend the cooldown.
     const nearest = state.enemies.filter((unit) => !unit.dead)
       .sort((a, b) => distance(a, player.position) - distance(b, player.position))[0];
     if (nearest) attack(state, nearest.id);
   }
   state.inputLatch.attack = Boolean(input.attack);
-  if (input.shoot && !state.inputLatch.shoot) shoot(state);
+  if (input.shoot && !state.inputLatch.shoot) {
+    // The result is truthful — it says why the bow did nothing — so it is
+    // surfaced instead of being thrown away.
+    const result = shoot(state);
+    if (!result.fired && result.reason) {
+      emitEvent(state, { type: 'bow-missed', reason: result.reason, at: state.time });
+    }
+  }
   state.inputLatch.shoot = Boolean(input.shoot);
   for (const unit of [...state.enemies]) updateEnemy(state, unit, dt);
   separateEntities(state);
@@ -744,11 +785,23 @@ export function openChest(state, chestId) {
   const chest = state.chests.find((item) => item.id === chestId);
   if (!chest || chest.opened) return { opened: false, reason: chest ? 'already-open' : 'not-found' };
   chest.opened = true;
+  if (state.stats) state.stats.chestCount += 1;
   state.player.gold += chest.gold;
   if (chest.fallback?.kind === 'gold') state.player.gold += chest.fallback.amount;
   if (chest.fallback?.kind === 'heal') state.player.hp = Math.min(state.player.maxHp, state.player.hp + chest.fallback.amount);
   state.chapter += 1;
-  state.mode = state.chapter > 10 ? 'endless' : 'chapters';
+  // The 2D build had ten chapters and a victory screen when the descent was
+  // complete. The 3D build had no win condition at all: the chapter counter
+  // just kept climbing into an endless mode with no ending to reach.
+  if (state.chapter > FINAL_CHAPTER) {
+    state.mode = 'endless';
+    state.status = 'between-waves';
+    state.portal = { pending: true, position: { ...chest.position } };
+    emitEvent(state, { type: 'chest-open', id: chest.id, gold: chest.gold, at: state.time });
+    emitEvent(state, { type: 'victory', chapter: FINAL_CHAPTER, at: state.time });
+    return { opened: true, gold: chest.gold, blessing: chest.blessing, fallback: chest.fallback, victory: true };
+  }
+  state.mode = 'chapters';
   state.status = 'between-waves';
   state.portal = { pending: true, position: { ...chest.position } };
   emitEvent(state, { type: 'chest-open', id: chest.id, gold: chest.gold, at: state.time });
@@ -806,6 +859,16 @@ export function restoreRun(json) {
     throw new Error('Invalid dungeon save: malformed JSON');
   }
   if (!validState(state)) throw new Error('Invalid dungeon save: schema mismatch');
+  // The event sequence counter must survive the round trip, or the runtime
+  // would start counting from zero while the saved events already carry
+  // higher sequence numbers, and every saved event would be replayed.
+  const highest = state.events.reduce(
+    (max, event) => (Number.isInteger(event?.seq) && event.seq > max ? event.seq : max),
+    0,
+  );
+  state.eventSeq = Number.isInteger(state.eventSeq) && state.eventSeq >= highest
+    ? state.eventSeq
+    : highest;
   return state;
 }
 

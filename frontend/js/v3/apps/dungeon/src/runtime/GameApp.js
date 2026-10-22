@@ -1,6 +1,6 @@
 import * as THREE from '../../../../../../worlds/shared/vendor/three.module.js';
 import { GLTFLoader } from '../../../../../../worlds/shared/vendor/GLTFLoader.js';
-import { createGameState, stepGame, spawnWave, openChest, chooseBlessing, savePersistedRun, loadPersistedRun, clearPersistedRun, BLESSING_LABELS } from '../game/index.js';
+import { createGameState, stepGame, spawnWave, openChest, chooseBlessing, savePersistedRun, loadPersistedRun, clearPersistedRun, BLESSING_LABELS, FINAL_CHAPTER } from '../game/index.js';
 import { createHud } from '../ui/hud.js';
 import { createAudioManager } from '../ui/audio.js';
 import { createFeedbackBus } from '../ui/feedback.js';
@@ -8,6 +8,36 @@ import { createFeedbackBus } from '../ui/feedback.js';
 const FIXED_STEP = 1 / 60;
 const MAX_FRAME_DELTA = 0.1;
 const MAX_CATCH_UP_STEPS = 6;
+
+/**
+ * The frame delta the loop is allowed to use.
+ *
+ * A long stall is clamped: without it the camera would jump and the effects
+ * would skip, and the simulation would be asked to catch up on time that has
+ * already passed. This is the runtime's own arithmetic, extracted so it can
+ * be checked directly instead of being re-implemented in a test.
+ */
+export function frameDelta(elapsedSeconds) {
+  return Math.min(MAX_FRAME_DELTA, Math.max(0, elapsedSeconds));
+}
+
+/**
+ * Consume a frame delta in fixed steps.
+ *
+ * The number of catch-up steps is bounded: once the budget is spent the
+ * leftover accumulator is dropped, because carrying it forward would make
+ * the next frame worse.
+ */
+export function consumeFixedSteps(accumulator, deltaSeconds) {
+  let rest = accumulator + deltaSeconds;
+  let steps = 0;
+  while (rest >= FIXED_STEP && steps < MAX_CATCH_UP_STEPS) {
+    rest -= FIXED_STEP;
+    steps += 1;
+  }
+  if (steps === MAX_CATCH_UP_STEPS) rest = 0;
+  return { steps, accumulator: rest };
+}
 const APP_ID = 'dungeon';
 const ASSET_BASE = new URL('../../assets/glb/', import.meta.url);
 const ASSETS = Object.freeze({
@@ -66,7 +96,7 @@ export class GameApp {
     this.help = false;
     this.hiddenPause = false;
     this.accumulator = 0;
-    this.eventCursor = 0;
+    this.eventSeq = 0;
     this.keys = new Set();
     this.pendingAttack = false;
     this.pendingDash = false;
@@ -363,10 +393,102 @@ export class GameApp {
       get state() { return app.sceneState === 'playing' && (app.paused || app.hiddenPause || app.help) ? 'paused' : app.sceneState; },
       get chapter() { return app.state.chapter; },
       get enemyCount() { return app.state.enemies.filter((enemy) => !enemy.dead).length; },
-      get enemyHp() { return Object.freeze(app.state.enemies.filter((enemy) => !enemy.dead).map((enemy) => Object.freeze({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp }))); },
+      get enemyHp() { return Object.freeze(app.state.enemies.filter((enemy) => !enemy.dead).map((enemy) => Object.freeze({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, x: enemy.x, z: enemy.z, archetype: enemy.archetype }))); },
       get player() { return Object.freeze({ x: app.state.player.position.x, z: app.state.player.position.z, hp: app.state.player.hp }); },
       get hp() { return app.state.player.hp; },
+      get stamina() { return app.state.player.stamina; },
+      get maxStamina() { return app.state.player.maxStamina; },
       get frames() { return app.frames; },
+      // The run ledger, read-only. The victory screen shows these numbers, and
+      // a QA surface that can read them lets a browser test check that the
+      // screen and the state agree without reaching into the runtime.
+      get ledger() { return Object.freeze({ ...app.state.stats, chapter: app.state.chapter, gold: app.state.player.gold, blessings: app.state.blessings.length }); },
+      get victory() { return app.sceneState === 'victory'; },
+      // QA affordance: clear the current wave and open its chest, using the
+      // game's own code path, so a browser test can reach a late-game state
+      // without playing ten chapters by hand. It is a test hook on a handle
+      // that exists for QA; it changes no gameplay.
+      /**
+       * Walk the player toward an enemy using the real movement input, so
+       * the next swing has a target the way it would in play. The direction
+       * is held for a moment and then released.
+       */
+      qaWalkToward(enemyId) {
+        const enemy = app.state.enemies.find((unit) => unit.id === enemyId);
+        if (!enemy) return { moved: false };
+        const player = app.state.player.position;
+        const dx = enemy.x - player.x;
+        const dz = enemy.z - player.z;
+        const length = Math.hypot(dx, dz) || 1;
+        // The touch stick is the runtime's own movement input, and it is
+        // camera-relative, so the direction is expressed in the same frame
+        // the game uses.
+        const forward = new THREE.Vector3();
+        app.camera.getWorldDirection(forward);
+        forward.y = 0;
+        forward.normalize();
+        const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0)).negate();
+        const worldX = dx / length;
+        const worldZ = dz / length;
+        // Solve for the stick vector that yields the wanted world direction.
+        const horizontal = worldX * right.x + worldZ * right.z;
+        const vertical = worldX * forward.x + worldZ * forward.z;
+        app.touchMove = { x: horizontal, z: -vertical };
+        app.qaWalk = { targetId: enemyId, until: app.state.time + 12 };
+        return { moved: true, distance: length };
+      },
+      /**
+       * Keep walking toward the target until it is in melee reach, so a
+       * browser test can land a real swing the way a player would.
+       */
+      qaCloseIn() {
+        const walk = app.qaWalk;
+        if (!walk) return { closed: false };
+        const enemy = app.state.enemies.find((unit) => unit.id === walk.targetId);
+        if (!enemy) { app.qaWalk = null; app.touchMove = null; return { closed: false }; }
+        const player = app.state.player.position;
+        const distance = Math.hypot(enemy.x - player.x, enemy.z - player.z);
+        if (distance <= 1.6) { app.qaWalk = null; app.touchMove = null; return { closed: true, distance }; }
+        if (app.state.time > walk.until) { app.qaWalk = null; app.touchMove = null; return { closed: false, distance }; }
+        app.qaHandle.qaWalkToward(walk.targetId);
+        return { closed: false, distance };
+      },
+      /**
+       * Advance the game's own fixed-step simulation by a number of ticks.
+       *
+       * The render loop is driven by requestAnimationFrame, and in a headless
+       * browser with a software WebGL implementation it runs at well under
+       * one frame per second. A test that has to wait for real frames would
+       * take minutes, so it drives the same fixedTick() the render loop uses
+       * instead. The game logic that runs is exactly the game's own.
+       */
+      qaAdvance(ticks = 60) {
+        for (let i = 0; i < ticks; i += 1) app.fixedTick();
+        return { ticks, frames: app.frames, time: app.state.time };
+      },
+      qaClearWave() {
+        app.state.enemies = [];
+        app.state.wave = { active: true, complete: false, rewarded: false, chapter: app.state.chapter, scale: 1 };
+        stepGame(app.state, {}, 1 / 60);
+        const chest = app.state.chests.at(-1);
+        if (!chest) return { opened: false };
+        // The chest is opened through the runtime's own path, not by calling
+        // openChest() behind its back: the runtime has to see the
+        // 'wave-complete' event to learn where the chest is, and it has to
+        // run its own open-and-reward flow for the victory screen to appear.
+        app.processEvents();
+        const position = app.chestPositions.get(chest.id) || chest.position;
+        app.chestPositions.set(chest.id, position);
+        app.state.player.position.x = position.x;
+        app.state.player.position.z = position.z;
+        const result = openChest(app.state, chest.id);
+        if (result.blessing) chooseBlessing(app.state, result.blessing);
+        app.persistRun();
+        app.syncWorld();
+        app.updateHud();
+        if (result.victory === true) app.showVictory();
+        return { opened: true, victory: result.victory === true };
+      },
     });
     window.AIZANOI_DUNGEON_GAME = this.qaHandle;
   }
@@ -480,6 +602,9 @@ export class GameApp {
     if (!this.restoredRun || this.sceneState !== 'menu') return;
     this.state = this.restoredRun;
     this.restoredRun = null;
+    // The restored run's events already carry sequence numbers, so the
+    // runtime has to start from the state's counter, not from zero.
+    this.eventSeq = Number.isInteger(this.state.eventSeq) ? this.state.eventSeq : 0;
     this.sceneState = 'playing';
     this.audio.resume();
     this.preview.removeFromParent();
@@ -555,6 +680,9 @@ export class GameApp {
   }
 
   fixedTick() {
+    // A QA walk keeps steering the player toward its target until the target
+    // is in reach or the walk times out.
+    if (this.qaWalk) this.qaHandle.qaCloseIn();
     const input = this.movementInput();
     input.attack = this.pendingAttack;
     input.dash = this.pendingDash;
@@ -603,31 +731,65 @@ export class GameApp {
     return false;
   }
 
+  /**
+   * Consume the events the runtime has not seen yet.
+   *
+   * The event ring is trimmed from the front, so an index into it drifts
+   * every time the ring shifts. The runtime therefore remembers the last
+   * SEQUENCE NUMBER it processed and picks up every event with a higher
+   * sequence, which is correct no matter how the ring is trimmed. Before
+   * this, the cursor drifted one event per emission and eventually stopped
+   * seeing events altogether: the chest positions were never recorded, so
+   * the reward chest could never be opened and the run deadlocked.
+   */
   processEvents() {
-    while (this.eventCursor < this.state.events.length) {
-      const event = this.state.events[this.eventCursor++];
-      const enemy = event.id ? this.state.enemies.find((unit) => unit.id === event.id) : null;
-      const position = enemy ? { x: enemy.x, y: 1.2, z: enemy.z } : { x: this.state.player.position.x, y: 1, z: this.state.player.position.z };
-      if (event.type === 'melee-hit') this.feedback.emit(event.chain === 3 ? 'crit' : 'hit', { damage: event.damage, position });
-      else if (event.type === 'enemy-death') this.feedback.emit('crit', { position });
-      else if (event.type === 'player-hit') {
-        this.feedback.emit('hurt', { damage: event.amount, position });
-        this.hud.setDamage(true);
-        clearTimeout(this.damageTimer);
-        this.damageTimer = setTimeout(() => this.hud?.setDamage(false), 280);
-      } else if (event.type === 'dash') this.feedback.emit('dash', { position });
-      else if (event.type === 'bow-shot') this.feedback.emit('bow', { position });
-      else if (event.type === 'attack-telegraph') {
-        // Audible windup cue; the ground ring is synced from live windup state.
-        this.feedback.emit('swing', { position, intensity: 0.6 });
-      }
-      else if (event.type === 'wave-start') this.hud.announce(`Chapter ${event.chapter}`);
-      else if (event.type === 'wave-complete') {
-        this.hud.announce('Wave cleared — claim your blessing');
-        const chest = this.state.chests.find((item) => item.id === event.chest);
-        if (chest?.position) this.chestPositions.set(chest.id, { x: chest.position.x, z: chest.position.z });
-        this.feedback.emit('loot', { label: 'Reward chest revealed', position });
-      }
+    for (const event of this.state.events) {
+      if (typeof event.seq !== 'number') continue;
+      if (event.seq <= this.eventSeq) continue;
+      this.eventSeq = event.seq;
+      this.handleEvent(event);
+    }
+  }
+
+  handleEvent(event) {
+    const enemy = event.id ? this.state.enemies.find((unit) => unit.id === event.id) : null;
+    const position = enemy ? { x: enemy.x, y: 1.2, z: enemy.z } : { x: this.state.player.position.x, y: 1, z: this.state.player.position.z };
+    if (event.type === 'melee-hit') this.feedback.emit(event.chain === 3 ? 'crit' : 'hit', { damage: event.damage, position });
+    else if (event.type === 'bow-hit') this.feedback.emit(event.crit ? 'crit' : 'bow-hit', { damage: event.damage, position });
+    else if (event.type === 'bow-missed') {
+      // The bow did nothing, and the player is told why instead of the input
+      // looking broken.
+      const reason = {
+        'no-target': 'No target in range',
+        stamina: 'Not enough stamina',
+        cooldown: 'The bow is not ready',
+        dead: 'Aizo has fallen',
+      }[event.reason] || 'The bow did not fire';
+      this.hud.announce(reason);
+    }
+    else if (event.type === 'enemy-death') this.feedback.emit('crit', { position });
+    else if (event.type === 'player-hit') {
+      this.feedback.emit('hurt', { damage: event.amount, position });
+      this.hud.setDamage(true);
+      clearTimeout(this.damageTimer);
+      this.damageTimer = setTimeout(() => this.hud?.setDamage(false), 280);
+    } else if (event.type === 'dash') this.feedback.emit('dash', { position });
+    else if (event.type === 'bow-shot') this.feedback.emit('bow', { position });
+    else if (event.type === 'attack-telegraph') {
+      // Audible windup cue; the ground ring is synced from live windup state.
+      this.feedback.emit('swing', { position, intensity: 0.6 });
+    }
+    else if (event.type === 'wave-start') this.hud.announce(`Chapter ${event.chapter}`);
+    else if (event.type === 'wave-complete') {
+      this.hud.announce('Wave cleared — claim your blessing');
+      const chest = this.state.chests.find((item) => item.id === event.chest);
+      if (chest?.position) this.chestPositions.set(chest.id, { x: chest.position.x, z: chest.position.z });
+      this.feedback.emit('loot', { label: 'Reward chest revealed', position });
+    }
+    else if (event.type === 'victory') {
+      this.hud.announce('The descent is complete');
+      this.feedback.emit('portal', { position });
+      this.showVictory();
     }
   }
 
@@ -782,6 +944,44 @@ export class GameApp {
     this.effects = this.effects.filter((effect) => effect.kind === 'dom' ? effect.value.isConnected : effect.life > 0);
   }
 
+  /**
+   * The run ledger. The 2D build showed this on its victory screen: what the
+   * run amounted to. The 3D build had no win condition, so there was never a
+   * moment where this could be shown.
+   */
+  showVictory() {
+    this.sceneState = 'victory';
+    this.paused = true;
+    // The screen is rebuilt only once: appending a second panel would leave
+    // two identical buttons stacked on top of each other, and the one on top
+    // would no longer be the one the player aimed at.
+    if (this.victory) return;
+    const stats = this.state.stats || {};
+    this.victory = node('section', 'az-hud-panel az-dungeon-victory');
+    this.victory.setAttribute('role', 'dialog');
+    this.victory.append(node('h2', 'az-hud-panel-title', 'The descent is complete'));
+    this.victory.append(node('p', 'az-hud-panel-copy', `Aizo claims the temple floor after ${FINAL_CHAPTER} chapters.`));
+    const ledger = node('dl', 'az-dungeon-ledger');
+    const rows = [
+      ['Chapters cleared', FINAL_CHAPTER],
+      ['Enemies slain', stats.kills ?? 0],
+      ['Bosses beaten', stats.bossKills ?? 0],
+      ['Chests opened', stats.chestCount ?? 0],
+      ['Blessings claimed', this.state.blessings.length],
+      ['Melee swings', stats.meleeSwings ?? 0],
+      ['Arrows loosed', stats.shotsFired ?? 0],
+      ['Gold gathered', this.state.player.gold],
+      ['Damage taken', stats.damageTaken ?? 0],
+    ];
+    rows.forEach(([label, value]) => {
+      ledger.append(node('dt', 'az-dungeon-ledger-label', label));
+      ledger.append(node('dd', 'az-dungeon-ledger-value', String(value)));
+    });
+    this.victory.append(ledger);
+    this.victory.append(makeButton('az-dungeon-begin', 'Descend again', () => this.restart()));
+    this.root.append(this.victory);
+  }
+
   showDefeat() {
     this.sceneState = 'defeat';
     this.paused = true;
@@ -795,8 +995,11 @@ export class GameApp {
 
   restart() {
     this.defeat?.remove();
+    this.victory?.remove();
+    this.defeat = undefined;
+    this.victory = undefined;
     this.state = createGameState(`aizo-${Date.now()}`);
-    this.eventCursor = 0;
+    this.eventSeq = 0;
     this.paused = false;
     this.sceneState = 'playing';
     // A fresh run invalidates the saved one.
@@ -834,18 +1037,13 @@ export class GameApp {
 
   loop(time) {
     if (this.destroyed) return;
-    const dt = Math.min(MAX_FRAME_DELTA, Math.max(0, (time - this.lastTime) / 1000));
+    const dt = frameDelta((time - this.lastTime) / 1000);
     this.lastTime = time;
     const hitStop = (this.hitStopUntil || 0) > performance.now();
     if (!hitStop && this.sceneState === 'playing' && !this.paused && !this.help && !this.hiddenPause && !this.contextLost) {
-      this.accumulator += dt;
-      let steps = 0;
-      while (this.accumulator >= FIXED_STEP && steps < MAX_CATCH_UP_STEPS) {
-        this.fixedTick();
-        this.accumulator -= FIXED_STEP;
-        steps += 1;
-      }
-      if (steps === MAX_CATCH_UP_STEPS) this.accumulator = 0;
+      const { steps, accumulator } = consumeFixedSteps(this.accumulator, dt);
+      this.accumulator = accumulator;
+      for (let i = 0; i < steps; i += 1) this.fixedTick();
     }
     this.updateEffects(dt);
     if (this.portal) this.portal.rotation.y += dt * 0.7;

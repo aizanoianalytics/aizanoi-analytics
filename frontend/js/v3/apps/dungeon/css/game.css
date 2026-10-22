@@ -1,5 +1,14 @@
-/* Aizanoi Dungeon 3D — CSP-safe Roman bronze presentation layer. */
-:root {
+/* Aizanoi Dungeon 3D — CSP-safe Roman bronze presentation layer.
+
+   The tokens are scoped to the app root and the standalone body, NEVER to
+   :root. The dungeon is registered fullscreen, so it is mounted INSIDE the
+   AizanoiOS shell document; redefining --az-ink, --az-focus, --az-panel or
+   --az-surface-solid on :root would restyle the whole shell while the game
+   is open (dark text on a light paper surface, a broken focus ring, and a
+   forced dark colour-scheme on every native control in the shell). The
+   standalone route has no shell tokens, so it carries its own block. */
+.aizanoi-dungeon3d-app-root,
+.aizanoi-standalone-body {
   --az-ink: #080909;
   --az-obsidian: #101112;
   --az-panel: rgba(18, 16, 13, 0.9);
@@ -13,9 +22,10 @@
   --az-stamina: #4e966e;
   --az-xp: #7370b5;
   --az-focus: #ffe19a;
-  color-scheme: dark;
   font-size: 16px;
 }
+/* Only the standalone page owns the page-level colour scheme. */
+.aizanoi-standalone-body { color-scheme: dark; }
 
 /* Scoped reset: never leak box-sizing, button metrics or [hidden] to the shell. */
 .aizanoi-dungeon3d-app-root, .aizanoi-dungeon3d-app-root *, .aizanoi-dungeon3d-app-root *::before, .aizanoi-dungeon3d-app-root *::after { box-sizing: border-box; }
@@ -314,6 +324,13 @@
 }
 .az-dungeon-defeat { z-index: 35; }
 .az-dungeon-defeat .az-dungeon-begin { margin-top: 1.25rem; }
+
+/* The victory screen and its run ledger. */
+.az-dungeon-victory { z-index: 36; }
+.az-dungeon-victory .az-dungeon-begin { margin-top: 1.25rem; }
+.az-dungeon-ledger { display: grid; grid-template-columns: 1fr auto; gap: 0.35rem 1.5rem; margin: 1.1rem 0 0; padding: 0.9rem 1.1rem; border-top: 1px solid rgba(197, 160, 89, 0.35); border-bottom: 1px solid rgba(197, 160, 89, 0.35); text-align: left; }
+.az-dungeon-ledger-label { color: var(--az-muted); font-size: 0.9rem; }
+.az-dungeon-ledger-value { margin: 0; color: var(--az-ivory); font-family: Georgia, serif; font-weight: 700; text-align: right; }
 .aizanoi-dungeon3d-app-root:focus { outline: none; }
 .aizanoi-dungeon3d-app-root:focus-visible::after {
   content: "";

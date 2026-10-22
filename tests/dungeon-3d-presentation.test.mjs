@@ -149,7 +149,7 @@ test('WebAudio starts only after resume and exposes every required cue', async (
     async close() { this.state = 'closed'; }
   }
   const audio = createAudioManager({ AudioContext: FakeAudioContext });
-  assert.deepEqual(audio.cues, ['swing', 'hit', 'crit', 'dash', 'bow', 'hurt', 'loot', 'portal', 'boss']);
+  assert.deepEqual(audio.cues, ['swing', 'hit', 'crit', 'dash', 'bow', 'bow-hit', 'hurt', 'loot', 'portal', 'boss']);
   assert.equal(calls.length, 0);
   assert.equal(audio.play('swing'), false);
   assert.equal(await audio.resume(), true);

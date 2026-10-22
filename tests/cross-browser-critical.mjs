@@ -46,7 +46,34 @@ try{
   const marketsContext=await browser.newContext({viewport:{width:1280,height:800},serviceWorkers:'block',javaScriptEnabled:false});
   await assertRoute(marketsContext,'/analytics/markets/',{selector:'[data-markets-root]',label:'Markets static shell'});
   await marketsContext.close();
-  await assertRoute(context,'/dungeon/',{selector:'#game-container canvas',label:'standalone Dungeon 3D menu'});
+  await assertRoute(context,'/dungeon/',{selector:'#game-container',label:'standalone Dungeon 3D mount'});
+  // The dungeon needs WebGL2, and a browser without it shows a repair card
+  // instead of a canvas. The earlier assertion required the canvas, so the
+  // weekly Firefox/WebKit job timed out on any runner without a GPU. What
+  // matters is that the route boots and reports honestly: either the scene
+  // is live, or the visitor is told why it is not.
+  {
+    const dungeonPage=await context.newPage();
+    const dungeonErrors=[];
+    dungeonPage.on('pageerror',(error)=>dungeonErrors.push(`pageerror: ${error.message}`));
+    dungeonPage.on('console',(message)=>{if(message.type()==='error')dungeonErrors.push(`console: ${message.text()}`);});
+    try{
+      const dungeonResponse=await dungeonPage.goto(`${base}/dungeon/`,{waitUntil:'domcontentloaded',timeout:30000});
+      assert.ok(dungeonResponse?.ok(),`${engine} standalone Dungeon 3D: HTTP ${dungeonResponse?.status()}`);
+      const outcome=await dungeonPage.evaluate(async()=>{
+        const deadline=Date.now()+15000;
+        while(Date.now()<deadline){
+          if(document.querySelector('#game-container canvas'))return {mode:'scene'};
+          if(document.querySelector('.aizanoi-dungeon3d-card'))return {mode:'repair'};
+          await new Promise((resolve)=>setTimeout(resolve,250));
+        }
+        return {mode:'none'};
+      });
+      assert.ok(outcome.mode==='scene'||outcome.mode==='repair',
+        `${engine} standalone Dungeon 3D: neither a scene nor a repair card was shown`);
+      assert.deepEqual(dungeonErrors,[],`${engine} standalone Dungeon 3D: ${dungeonErrors.join(' | ')}`);
+    }finally{await dungeonPage.close();}
+  }
   await assertRoute(context,'/worlds/',{selector:'main',label:'Aizanoi product landing'});
   await assertRoute(context,'/privacy/',{selector:'main',label:'Privacy'});
 

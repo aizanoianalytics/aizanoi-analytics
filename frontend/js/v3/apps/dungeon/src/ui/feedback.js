@@ -4,6 +4,9 @@ const PROFILES = Object.freeze({
   crit: { shake: 0.48, stop: 85, particles: 16, color: 'gold' },
   dash: { shake: 0.12, stop: 0, particles: 8, color: 'mist' },
   bow: { shake: 0.1, stop: 0, particles: 5, color: 'bronze' },
+  // The arrow landing. It is quieter than a melee hit but it still needs its
+  // own read, otherwise a bow shot and a sword swing look identical.
+  'bow-hit': { shake: 0.16, stop: 24, particles: 6, color: 'bronze' },
   hurt: { shake: 0.38, stop: 55, particles: 10, color: 'blood' },
   loot: { shake: 0, stop: 0, particles: 9, color: 'gold' },
   portal: { shake: 0.18, stop: 20, particles: 18, color: 'arcane' },

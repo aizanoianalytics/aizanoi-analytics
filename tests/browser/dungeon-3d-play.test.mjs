@@ -104,8 +104,18 @@ test('the 3D dungeon boots a real Three.js scene and plays a real run', async ()
     assert.ok(started.hp > 0, 'the player must start alive');
 
     // The render loop must actually advance while playing.
+    //
+    // The wait is for FRAMES, not for wall-clock time. A headless browser
+    // with a software WebGL implementation renders at well under one frame
+    // per second, so a fixed 1.2 second window can pass without a single
+    // frame being drawn and the assertion would be measuring the machine,
+    // not the game.
     const framesBefore = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.frames);
-    await page.waitForTimeout(1200);
+    await page.waitForFunction(
+      (before) => window.AIZANOI_DUNGEON_GAME.frames > before,
+      framesBefore,
+      { timeout: 30000, polling: 100 },
+    );
     const framesAfter = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.frames);
     assert.ok(framesAfter > framesBefore,
       `the render loop must advance while playing (${framesBefore} -> ${framesAfter})`);
@@ -122,20 +132,32 @@ test('the 3D dungeon boots a real Three.js scene and plays a real run', async ()
     assert.ok(frame.distinctColorBuckets > 8,
       `the frame must contain shading, only ${frame.distinctColorBuckets} colour buckets`);
 
-    // Real keyboard input must move the player.
+    // Real keyboard input must move the player. The wait is for the player
+    // to actually move, not for a fixed span of time: a software renderer
+    // can take seconds to deliver a single frame.
     const before = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.player);
     await page.keyboard.down('w');
-    await page.waitForTimeout(900);
+    await page.waitForFunction(
+      (start) => {
+        const p = window.AIZANOI_DUNGEON_GAME.player;
+        return Math.abs(p.x - start.x) + Math.abs(p.z - start.z) > 0.2;
+      },
+      before,
+      { timeout: 30000, polling: 100 },
+    );
     await page.keyboard.up('w');
     const after = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.player);
     const moved = Math.abs(after.x - before.x) + Math.abs(after.z - before.z);
     assert.ok(moved > 0.2, `holding W must move the player, moved ${moved.toFixed(3)}`);
 
-    // A real attack must resolve against a real enemy.
+    // A real attack must resolve against a real enemy. The simulation is
+    // advanced with the game's own fixed-step tick, because a software
+    // renderer cannot deliver frames fast enough for a wall-clock wait to
+    // mean anything.
     const beforeHp = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
     for (let attempt = 0; attempt < 12; attempt += 1) {
       await page.keyboard.press('j');
-      await page.waitForTimeout(220);
+      await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(20));
       const hit = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
       if (hit.some((hp, i) => hp < beforeHp[i])) break;
     }
@@ -145,18 +167,33 @@ test('the 3D dungeon boots a real Three.js scene and plays a real run', async ()
 
     // The bow must also work from the keyboard: it costs stamina and it
     // damages a target that melee cannot reach immediately.
-    const staminaBefore = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.hp);
+    //
+    // The stamina assertion is the real one: the bow must SPEND stamina.
+    // (An earlier version of this test read the player's HP here and asserted
+    // only that it was a number, which passed whether or not the bow worked.
+    // And the damage assertion has to be isolated from the melee fight that
+    // is still going on above it, or melee damage can satisfy it.)
+    const staminaBefore = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.stamina);
     const enemyHpBeforeBow = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
+    let bowSpentStamina = false;
+    let bowDamaged = false;
     for (let attempt = 0; attempt < 14; attempt += 1) {
+      const before = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.stamina);
       await page.keyboard.press('k');
-      await page.waitForTimeout(200);
+      await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(20));
+      const after = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.stamina);
+      if (after < before) bowSpentStamina = true;
       const hit = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
-      if (hit.some((hp, i) => hp < enemyHpBeforeBow[i])) break;
+      if (hit.some((hp, i) => hp < enemyHpBeforeBow[i])) bowDamaged = true;
+      if (bowSpentStamina && bowDamaged) break;
     }
-    const enemyHpAfterBow = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
-    assert.ok(enemyHpAfterBow.some((hp, i) => hp < enemyHpBeforeBow[i]),
-      `the bow must damage an enemy, before ${enemyHpBeforeBow} after ${enemyHpAfterBow}`);
-    assert.ok(typeof staminaBefore === 'number', 'the run must still report live state');
+    assert.ok(bowSpentStamina,
+      `the bow must spend stamina, stamina before was ${staminaBefore}`);
+    const staminaAfter = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.stamina);
+    assert.ok(staminaAfter < staminaBefore,
+      `the bow must reduce the stamina bar (${staminaBefore} -> ${staminaAfter})`);
+    assert.ok(bowDamaged,
+      `the bow must damage an enemy, before ${enemyHpBeforeBow} after ${await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp))}`);
 
     assert.deepEqual(badResponses, [], 'every dungeon asset must load without a 4xx/5xx');
     assert.deepEqual(errors, [], 'the run must produce no console or page errors');
