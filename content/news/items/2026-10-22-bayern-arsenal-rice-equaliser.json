@@ -1,0 +1,40 @@
+{
+  "id": "2026-10-22-bayern-arsenal-rice-equaliser",
+  "title": "Rice rescues Arsenal in Munich after Kane turns the tie",
+  "summary": "Declan Rice equalised in the 82nd minute to earn Arsenal a 2-2 draw at Bayern Munich in the Champions League. Eberechi Eze, on after Bukayo Saka went off injured inside 10 minutes, opened the scoring from Martin Odegaard's pass, Alphonso Davies levelled from Harry Kane's through-ball before the break, and Kane converted a 61st-minute penalty after Jurrien Timber handled. It was Kane's 16th goal in 22 games against Arsenal and a 10th straight Champions League scoring match. Arsenal avoided a first defeat in 14 league-phase games; Mikel Arteta said Saka's quad injury does not look good at all.",
+  "category": "football",
+  "priority": 70,
+  "publishedAt": "2026-10-22T03:45:00Z",
+  "updatedAt": "2026-10-22T03:45:00Z",
+  "retrievedAt": "2026-10-22T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "champions-league",
+    "bayern",
+    "arsenal"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://www.skysports.com/football/bayern-munich-vs-arsenal/report/577643",
+      "publishedAt": "2026-10-21T21:59:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/football/2026/oct/21/bayern-munich-arsenal-champions-league-match-report",
+      "publishedAt": "2026-10-21T22:00:00Z"
+    },
+    {
+      "publisher": "ESPN",
+      "url": "https://global.espn.com/football/report/_/gameId/401915312",
+      "publishedAt": "2026-10-21T21:00:00Z"
+    }
+  ]
+}

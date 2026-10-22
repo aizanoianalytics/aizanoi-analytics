@@ -1,0 +1,30 @@
+{
+  "id": "2026-10-22-flapping-airplanes-series-a",
+  "title": "Flapping Airplanes raises $1bn at $6bn nine months after launch",
+  "summary": "Flapping Airplanes, a year-old lab trying to train large models on far less data, raised a $1 billion Series A co-led by Index and Lux at a reported $6 billion valuation, quadrupling the $1.5 billion from its $180 million seed round in January. Sequoia, GV and Kleiner Perkins returned, with Nvidia and Atreides also investing. Founders Aidan Smith and brothers Asher and Ben Spector describe their work as a megakernel framework that overlaps memory-bound inference with compute-bound training so accelerators idle less. The money funds hiring as the company chases cheaper training and inference.",
+  "category": "ai",
+  "priority": 52,
+  "publishedAt": "2026-10-22T04:48:00Z",
+  "updatedAt": "2026-10-22T04:48:00Z",
+  "retrievedAt": "2026-10-22T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "funding",
+    "research",
+    "training"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/21/year-old-ai-lab-flapping-airplanes-raises-1b-at-a-6b-valuation/",
+      "publishedAt": "2026-10-21T19:15:00Z"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "2026-10-22-php2shell-critical-rce-patch",
+  "title": "Decade-old PHP flaws force an emergency patch across the web",
+  "summary": "PHP released 8.5.12, 8.4.27, 8.3.36 and 8.2.35 on 21 October to fix two critical memory-safety bugs in its core engine that allow unauthenticated remote code execution, tracked as CVE-2026-109618 and CVE-2026-109619. Wiz Research, which found the flaws with its Atlas agent plus Gemini 4 Argon and GPT-5.6 Sol, said every release going back to 5.4 is affected and that severity reaches CVSS 9.2, in a language it says powers about 70% of websites. The NSA advised sites that cannot patch immediately to go offline. Researchers reported no exploitation before disclosure.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-10-22T05:05:00Z",
+  "updatedAt": "2026-10-22T05:05:00Z",
+  "retrievedAt": "2026-10-22T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "security",
+    "php",
+    "vulnerability"
+  ],
+  "sources": [
+    {
+      "publisher": "Wiz Research",
+      "url": "https://www.wiz.io/blog/php2shell-php-rce",
+      "publishedAt": "2026-10-21T16:00:00Z"
+    },
+    {
+      "publisher": "PHP.net",
+      "url": "https://www.php.net/archive/2026.php#2026-10-21-5",
+      "publishedAt": "2026-10-21T15:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/21/php-armageddon-openai-googles-wiz-find-ancient-holes-panicking-the-internet/",
+      "publishedAt": "2026-10-21T20:00:00Z"
+    }
+  ]
+}

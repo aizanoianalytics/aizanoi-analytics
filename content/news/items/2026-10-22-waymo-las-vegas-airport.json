@@ -1,0 +1,30 @@
+{
+  "id": "2026-10-22-waymo-las-vegas-airport",
+  "title": "Waymo adds Las Vegas airport to its robotaxi map",
+  "summary": "Waymo started carrying customers to and from Harry Reid International Airport in Las Vegas, using dedicated autonomous vehicle zones at Terminals 1 and 3. It is the sixth major airport on the company's map after Phoenix Sky Harbor, Nashville, San Antonio, San Francisco and San Jose, and rides will be limited to a few passengers at first before opening to all users. Waymo only began public rides in Las Vegas in September but already covers a 24-square-mile area. Amazon's Zoox also serves the airport, and Nevada regulators cleared Tesla and Uber robotaxi permits in August.",
+  "category": "technology",
+  "priority": 48,
+  "publishedAt": "2026-10-22T04:18:00Z",
+  "updatedAt": "2026-10-22T04:18:00Z",
+  "retrievedAt": "2026-10-22T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "waymo",
+    "robotaxi",
+    "las-vegas"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/21/waymo-starts-offering-rides-at-the-las-vegas-airport/",
+      "publishedAt": "2026-10-21T17:30:00Z"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "2026-10-22-meta-earnings-non-voting-stock",
+  "title": "Meta beats estimates and plans non-voting stock to fund AI",
+  "summary": "Meta reported third-quarter revenue of $64 billion, up 26% from a year earlier and ahead of expectations, while costs and expenses rose 68%. On the call chief financial officer Susan Li confirmed plans for a new class of non-voting stock distributed to existing holders through a stock dividend, usable for raising capital, employee compensation and acquisitions while preserving current Class A and B voting power. Mark Zuckerberg said more than 10 million people in the US and Canada have set up Muse agents, about a quarter use them daily, and heavy shoppers average baskets above $200.",
+  "category": "economy-markets",
+  "priority": 62,
+  "publishedAt": "2026-10-22T04:02:00Z",
+  "updatedAt": "2026-10-22T04:02:00Z",
+  "retrievedAt": "2026-10-22T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "meta",
+    "earnings",
+    "capital-markets"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/21/meta-wants-to-pay-for-its-broad-ai-buildout-with-a-newly-created-class-of-stock/",
+      "publishedAt": "2026-10-21T21:00:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/21/meta-says-muse-has-over-10m-users-with-shopping-a-top-activity/",
+      "publishedAt": "2026-10-21T21:14:00Z"
+    }
+  ]
+}
