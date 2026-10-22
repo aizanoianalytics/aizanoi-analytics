@@ -83,6 +83,12 @@ export function createHud({ container, document: doc = globalThis.document } = {
   announcer.setAttribute('aria-live', 'assertive');
   announcer.setAttribute('aria-atomic', 'true');
 
+  // The blessings the player has claimed. Without this the player cannot see
+  // what their build actually does, which makes the 12 blessings unreadable.
+  const blessings = element(doc, 'ul', 'az-hud-blessings');
+  blessings.setAttribute('aria-label', 'Claimed blessings');
+  blessings.hidden = true;
+
   const pause = element(doc, 'section', 'az-hud-panel az-hud-pause');
   pause.setAttribute('role', 'dialog');
   pause.setAttribute('aria-modal', 'true');
@@ -95,14 +101,14 @@ export function createHud({ container, document: doc = globalThis.document } = {
   help.hidden = true;
   help.append(element(doc, 'h2', 'az-hud-panel-title', 'Controls'), element(doc, 'p', 'az-hud-panel-copy', 'Move: WASD / arrows · Attack: click / J · Shoot: K · Dash: Space · Interact: Enter · Help: H · Pause: Escape'));
 
-  root.append(top, boss.wrapper, combo, crosshair, vignette, lootFeed, announcer, pause, help);
+  root.append(top, boss.wrapper, combo, blessings, crosshair, vignette, lootFeed, announcer, pause, help);
   container.appendChild(root);
 
   const elements = {
     health: health.value, stamina: stamina.value, xp: xp.value,
     boss: boss.value, bossWrap: boss.wrapper, bossName,
     gold, combo, chapter, wave, crosshair, damageVignette: vignette,
-    lootFeed, announcer, pause, help,
+    lootFeed, blessings, announcer, pause, help,
   };
 
   function update(state = {}) {
@@ -132,7 +138,30 @@ export function createHud({ container, document: doc = globalThis.document } = {
     }
     if (state.paused !== undefined) pause.hidden = !state.paused;
     if (state.help !== undefined) help.hidden = !state.help;
+    if (state.blessings !== undefined) renderBlessings(state.blessings, state.blessingLabels);
     return api;
+  }
+
+  /**
+   * Render the claimed blessings. The list is rebuilt only when it actually
+   * changes, so the HUD does not churn the DOM every frame.
+   */
+  let blessingSignature = '';
+  function renderBlessings(list, labels) {
+    const items = Array.isArray(list) ? list : [];
+    const signature = items.join('|');
+    if (signature === blessingSignature) return;
+    blessingSignature = signature;
+    while (blessings.firstElementChild) blessings.firstElementChild.remove();
+    blessings.hidden = items.length === 0;
+    items.forEach((id) => {
+      const label = labels?.[id]?.label || id;
+      const hint = labels?.[id]?.hint || '';
+      const item = element(doc, 'li', 'az-hud-blessing-item', label);
+      if (hint) item.setAttribute('title', hint);
+      item.setAttribute('aria-label', hint ? `${label}: ${hint}` : label);
+      blessings.appendChild(item);
+    });
   }
 
   function addLoot(text) {

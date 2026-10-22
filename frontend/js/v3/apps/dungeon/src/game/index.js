@@ -11,7 +11,31 @@ const MAX_LOOT = 64;
 const DASH_DURATION = 0.22;
 const NORMAL_WINDUP = 0.25;
 const BOSS_WINDUP = 0.45;
-const BLESSINGS = ['vitality', 'fury', 'windstep'];
+// The blessings the 2D build had, translated into the 3D build's multipliers.
+// The 2D build named them in Turkish (hizli_saldiri, mermer_beden, ...); the
+// 3D build keeps the three it already had and adopts the same ideas under
+// English ids, because the 3D build's whole vocabulary is English.
+const BLESSINGS = Object.freeze({
+  vitality: { label: 'Blessing of Vitality', hint: '+30 max health' },
+  fury: { label: 'Blessing of Fury', hint: '+20% damage' },
+  windstep: { label: 'Blessing of Windstep', hint: '-25% dash cooldown' },
+  swiftstrike: { label: 'Blessing of Swift Strike', hint: '+18% attack speed' },
+  keeneye: { label: 'Blessing of the Keen Eye', hint: '+15% critical chance' },
+  honededge: { label: 'Blessing of the Honed Edge', hint: '+35% critical damage' },
+  ironskin: { label: 'Blessing of Iron Skin', hint: '-15% damage taken' },
+  vampiric: { label: 'Blessing of the Vampiric Oath', hint: 'Heal 18% of the damage you deal' },
+  longrange: { label: 'Blessing of Long Range', hint: '+30% bow range' },
+  stormstep: { label: 'Blessing of Storm Step', hint: '+12% movement speed' },
+  warmonger: { label: 'Blessing of the Warmonger', hint: '+10% damage and +8% attack speed' },
+  penkalasblood: { label: 'Blessing of the Penkalas Blood', hint: '-25% bow stamina cost' },
+});
+const BLESSING_IDS = Object.freeze(Object.keys(BLESSINGS));
+// Exported so the tests (and the HUD) can enumerate the pool.
+export { BLESSING_IDS };
+// The HUD needs the labels and hints, so the table is exported for the UI.
+export const BLESSING_LABELS = Object.freeze(Object.fromEntries(
+  BLESSING_IDS.map((id) => [id, Object.freeze({ label: BLESSINGS[id].label, hint: BLESSINGS[id].hint })]),
+));
 const OBSTACLES = Object.freeze([
   ...[-12, -6, 6, 12].flatMap((x) => [-12, 12].map((z) => ({ x, z, radius: 1.25, kind: 'column' }))),
   ...[-8, 8].map((x) => ({ x, z: -15, radius: 0.8, kind: 'brazier' })),
@@ -40,6 +64,12 @@ const BOW = Object.freeze({
 const FLANKER_ORBIT = 5.5;
 const FLANKER_ORBIT_MS = 1.4;
 const FLANKER_LUNGE_MS = 0.32;
+// How many minions a single summoner may have alive at once. The 2D build
+// had the same cap; without it the wave grows without bound.
+const MAX_SUMMONS_PER_CASTER = 3;
+// A hard ceiling on live enemies, so a pathological wave can never tank the
+// frame rate. The arena is a single screen, so this is generous.
+const MAX_LIVE_ENEMIES = 40;
 const ARCHETYPES = {
   chaser: { hp: 70, speed: 3.8, damage: 9, xp: 12, gold: 5 },
   archer: { hp: 55, speed: 3.1, damage: 8, xp: 15, gold: 7 },
@@ -136,6 +166,13 @@ export function createGameState(seed = 'dungeon') {
       invulnerable: 0,
       damageMultiplier: 1,
       speedMultiplier: 1,
+      attackSpeedMultiplier: 1,
+      critChance: 0.05,
+      critMultiplier: 1.6,
+      damageTakenMultiplier: 1,
+      lifesteal: 0,
+      bowRangeMultiplier: 1,
+      bowStaminaMultiplier: 1,
       dead: false,
     },
     wave: { active: false, complete: false, rewarded: false, chapter: 1, scale: 1 },
@@ -206,22 +243,26 @@ export function spawnWave(state, chapter = state.chapter) {
     for (let i = 0; i < count; i += 1) roles.push(pool[Math.floor(random(state) * pool.length)]);
   }
   const scale = scaledArchetype('chaser', chapter).scale;
-  state.enemies = roles.map((role, index) => makeEnemy(state, role, chapter, index));
+  // Never start a wave above the live-enemy ceiling: the arena is a single
+  // screen, and a wave that cannot be fought is not a difficulty curve.
+  const rolesCapped = roles.slice(0, MAX_LIVE_ENEMIES);
+  state.enemies = rolesCapped.map((role, index) => makeEnemy(state, role, chapter, index));
   state.projectiles = [];
   state.chests = [];
   state.portal = { pending: false, position: null };
   state.wave = { active: true, complete: false, rewarded: false, chapter, scale };
   state.status = 'combat';
-  emitEvent(state, { type: 'wave-start', chapter, count: roles.length, at: state.time });
+  emitEvent(state, { type: 'wave-start', chapter, count: rolesCapped.length, at: state.time });
   return state.enemies;
 }
 
 const damagePlayer = (state, amount, source) => {
   const player = state.player;
   if (player.dead || player.invulnerable > 0) return false;
-  player.hp = Math.max(0, player.hp - amount);
+  const taken = Math.max(1, Math.round(amount * player.damageTakenMultiplier));
+  player.hp = Math.max(0, player.hp - taken);
   player.invulnerable = 0.1;
-  emitEvent(state, { type: 'player-hit', source, amount, at: state.time });
+  emitEvent(state, { type: 'player-hit', source, amount: taken, at: state.time });
   if (player.hp === 0) {
     player.dead = true;
     state.status = 'defeat';
@@ -266,15 +307,22 @@ export function attack(state, targetId) {
   const strike = COMBO[chain - 1];
   player.combo = chain;
   player.comboExpires = state.time + 0.75;
-  player.attackReadyAt = state.time + (chain === 3 ? 0.38 : 0.22);
+  player.attackReadyAt = state.time
+    + (chain === 3 ? 0.38 : 0.22) / Math.max(0.2, player.attackSpeedMultiplier);
   const target = state.enemies.find((unit) => unit.id === targetId && !unit.dead);
-  const damage = Math.round(strike.damage * player.damageMultiplier);
-  const result = { hit: false, chain, damage, range: strike.range };
+  const crit = random(state) < player.critChance;
+  const damage = Math.round(strike.damage * player.damageMultiplier * (crit ? player.critMultiplier : 1));
+  const result = { hit: false, chain, damage, range: strike.range, crit };
   if (!target || distance(player.position, target) > strike.range) return result;
   target.hp = Math.max(0, target.hp - damage);
   target.stun = Math.max(target.stun || 0, strike.stun);
   result.hit = true;
-  emitEvent(state, { type: 'melee-hit', id: target.id, chain, damage, at: state.time });
+  if (player.lifesteal > 0) {
+    const healed = Math.max(1, Math.round(damage * player.lifesteal));
+    player.hp = Math.min(player.maxHp, player.hp + healed);
+    result.healed = healed;
+  }
+  emitEvent(state, { type: 'melee-hit', id: target.id, chain, damage, crit, at: state.time });
   if (target.hp === 0) killEnemy(state, target);
   return result;
 }
@@ -308,7 +356,7 @@ const findBowTarget = (state) => {
   for (const enemy of state.enemies) {
     if (enemy.dead) continue;
     const gap = distance(enemy, player.position);
-    if (gap > BOW.range) continue;
+    if (gap > BOW.range * player.bowRangeMultiplier) continue;
     // Dot product of the facing vector with the direction to the enemy:
     // 1 is dead ahead, -1 is directly behind.
     const toward = direction(player.position, enemy);
@@ -328,13 +376,15 @@ export function shoot(state) {
   const player = state.player;
   if (player.dead) return { fired: false, reason: 'dead' };
   if (state.time + 1e-9 < player.bowReadyAt) return { fired: false, reason: 'cooldown' };
-  if (player.stamina < BOW.staminaCost) return { fired: false, reason: 'stamina' };
+  const staminaCost = Math.max(1, Math.round(BOW.staminaCost * player.bowStaminaMultiplier));
+  if (player.stamina < staminaCost) return { fired: false, reason: 'stamina' };
   const target = findBowTarget(state);
   if (!target) return { fired: false, reason: 'no-target' };
-  player.stamina -= BOW.staminaCost;
+  player.stamina -= staminaCost;
   player.bowReadyAt = state.time + BOW.cooldown;
   const aim = direction(player.position, target);
-  const damage = Math.round(BOW.damage * player.damageMultiplier);
+  const crit = random(state) < player.critChance;
+  const damage = Math.round(BOW.damage * player.damageMultiplier * (crit ? player.critMultiplier : 1));
   state.projectiles.push({
     id: `projectile-${state.nextId++}`,
     ownerId: target.id,
@@ -344,12 +394,13 @@ export function shoot(state) {
     vx: aim.x * BOW.speed,
     vz: aim.z * BOW.speed,
     damage,
+    crit,
     knockback: BOW.knockback,
     ttl: 2,
     radius: BOW.radius,
   });
-  emitEvent(state, { type: 'bow-shot', id: target.id, damage, at: state.time });
-  return { fired: true, targetId: target.id, damage };
+  emitEvent(state, { type: 'bow-shot', id: target.id, damage, crit, at: state.time });
+  return { fired: true, targetId: target.id, damage, crit };
 }
 
 const beginWindup = (state, enemy, kind, duration, range) => {
@@ -359,6 +410,11 @@ const beginWindup = (state, enemy, kind, duration, range) => {
 };
 
 const summonMinion = (state, enemy) => {
+  // The 2D build capped the summons a single caster could have alive
+  // (MAX_SUMMONS_PER_CASTER = 3). Without a cap the summoner grows the wave
+  // without bound: a lone caster reached 60 live enemies in two minutes.
+  const liveMinions = state.enemies.filter((unit) => !unit.dead && unit.summonedBy === enemy.id).length;
+  if (liveMinions >= MAX_SUMMONS_PER_CASTER) return false;
   const minion = makeEnemy(state, 'chaser', state.chapter, state.enemies.length);
   minion.x = clamp(enemy.x + 1, -ARENA_RADIUS, ARENA_RADIUS);
   minion.z = enemy.z;
@@ -366,9 +422,11 @@ const summonMinion = (state, enemy) => {
   minion.maxHp = minion.hp;
   minion.xp = Math.round(minion.xp * 0.4);
   minion.gold = Math.round(minion.gold * 0.4);
+  minion.summonedBy = enemy.id;
   resolveObstacleCollision(minion);
   state.enemies.push(minion);
   emitEvent(state, { type: 'summon', id: enemy.id, minion: minion.id, at: state.time });
+  return true;
 };
 
 const resolveWindup = (state, enemy, gap) => {
@@ -537,13 +595,17 @@ const updateProjectiles = (state, dt) => {
       if (target && distance(shot, target) <= shot.radius + 0.55) {
         target.hp = Math.max(0, target.hp - shot.damage);
         target.stun = Math.max(target.stun || 0, 0.1);
+        if (state.player.lifesteal > 0) {
+          const healed = Math.max(1, Math.round(shot.damage * state.player.lifesteal));
+          state.player.hp = Math.min(state.player.maxHp, state.player.hp + healed);
+        }
         if (shot.knockback) {
           const push = direction(shot, target);
           target.x = clamp(target.x + push.x * shot.knockback, -ARENA_RADIUS, ARENA_RADIUS);
           target.z = clamp(target.z + push.z * shot.knockback, -ARENA_RADIUS, ARENA_RADIUS);
           resolveObstacleCollision(target);
         }
-        emitEvent(state, { type: 'melee-hit', id: target.id, chain: 1, damage: shot.damage, ranged: true, at: state.time });
+        emitEvent(state, { type: 'melee-hit', id: target.id, chain: 1, damage: shot.damage, ranged: true, crit: !!shot.crit, at: state.time });
         if (target.hp === 0) killEnemy(state, target);
         shot.ttl = 0;
       }
@@ -606,7 +668,7 @@ const completeWave = (state) => {
   state.wave.rewarded = true;
   state.status = 'reward';
   const amount = Math.round(12 + state.wave.chapter * 4 + random(state) * 12);
-  const available = BLESSINGS.filter((id) => !state.blessings.includes(id));
+  const available = BLESSING_IDS.filter((id) => !state.blessings.includes(id));
   const blessing = available.length ? available[Math.floor(random(state) * available.length)] : null;
   const fallback = blessing ? null : (state.player.hp < state.player.maxHp
     ? { kind: 'heal', amount: Math.min(30, state.player.maxHp - state.player.hp), label: 'Restored health' }
@@ -694,17 +756,28 @@ export function openChest(state, chestId) {
 }
 
 export function chooseBlessing(state, id) {
-  if (!BLESSINGS.includes(id)) throw new Error(`Unknown blessing: ${id}`);
+  if (!BLESSING_IDS.includes(id)) throw new Error(`Unknown blessing: ${id}`);
   if (state.blessings.includes(id)) return { chosen: false, reason: 'already-chosen', label: 'Bonus gold' };
   state.blessings.push(id);
+  const player = state.player;
   if (id === 'vitality') {
-    state.player.maxHp += 30;
-    state.player.hp += 30;
-  } else if (id === 'fury') state.player.damageMultiplier *= 1.2;
-  else state.player.dashCooldownMax *= 0.75;
-  const labels = { vitality: 'Blessing of Vitality', fury: 'Blessing of Fury', windstep: 'Blessing of Windstep' };
+    player.maxHp += 30;
+    player.hp += 30;
+  } else if (id === 'fury') player.damageMultiplier *= 1.2;
+  else if (id === 'windstep') player.dashCooldownMax *= 0.75;
+  else if (id === 'swiftstrike') player.attackSpeedMultiplier *= 1.18;
+  else if (id === 'keeneye') player.critChance += 0.15;
+  else if (id === 'honededge') player.critMultiplier += 0.35;
+  else if (id === 'ironskin') player.damageTakenMultiplier *= 0.85;
+  else if (id === 'vampiric') player.lifesteal += 0.18;
+  else if (id === 'longrange') player.bowRangeMultiplier *= 1.3;
+  else if (id === 'stormstep') player.speedMultiplier *= 1.12;
+  else if (id === 'warmonger') {
+    player.damageMultiplier *= 1.1;
+    player.attackSpeedMultiplier *= 1.08;
+  } else if (id === 'penkalasblood') player.bowStaminaMultiplier *= 0.75;
   emitEvent(state, { type: 'blessing', id, at: state.time });
-  return { chosen: true, id, label: labels[id] };
+  return { chosen: true, id, label: BLESSINGS[id].label, hint: BLESSINGS[id].hint };
 }
 
 export function serializeRun(state) {

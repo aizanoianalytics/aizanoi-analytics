@@ -13,6 +13,7 @@ import {
   serializeRun,
   spawnWave,
   stepGame,
+  BLESSING_IDS,
 } from '../frontend/js/v3/apps/dungeon/src/game/index.js';
 
 const tick = (state, seconds, input = {}) => {
@@ -297,9 +298,26 @@ test('five rewards never silently duplicate a blessing and histories stay bounde
     const chosen = result.blessing ? chooseBlessing(state, result.blessing) : result.fallback;
     labels.push(chosen.label);
   }
-  assert.equal(new Set(state.blessings).size, 3);
+  // The 3D build now has the 2D build's full blessing pool, so five rewards
+  // are five distinct blessings — the pool only runs dry after twelve.
+  assert.equal(new Set(state.blessings).size, 5);
+  assert.equal(state.blessings.length, 5);
   assert.ok(labels.every(Boolean), 'every reward has truthful copy');
-  assert.ok(labels.slice(3).every((label) => /gold|heal/i.test(label)), 'duplicates become stackable fallback rewards');
+  assert.ok(labels.every((label) => !/gold|heal/i.test(label)),
+    'a reward must not silently degrade while blessings are still available');
+
+  // Once the pool is exhausted, the reward must degrade honestly rather than
+  // handing out a duplicate blessing.
+  const exhausted = createGameState('exhausted');
+  exhausted.blessings = BLESSING_IDS.slice();
+  exhausted.chapter = 1;
+  exhausted.wave = { active: true, complete: false, rewarded: false, chapter: 1, scale: 1 };
+  exhausted.enemies = [];
+  stepGame(exhausted, {}, 1 / 60);
+  const exhaustedChest = exhausted.chests.at(-1);
+  const exhaustedResult = openChest(exhausted, exhaustedChest.id);
+  assert.equal(exhaustedResult.blessing, null, 'an exhausted pool must not offer a blessing');
+  assert.ok(exhaustedResult.fallback, 'an exhausted pool must offer a fallback reward');
 
   for (let i = 0; i < 500; i += 1) {
     state.events.push({ type: 'noise', at: state.time });

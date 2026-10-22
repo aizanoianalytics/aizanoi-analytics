@@ -1,6 +1,6 @@
 import * as THREE from '../../../../../../worlds/shared/vendor/three.module.js';
 import { GLTFLoader } from '../../../../../../worlds/shared/vendor/GLTFLoader.js';
-import { createGameState, stepGame, spawnWave, openChest, chooseBlessing } from '../game/index.js';
+import { createGameState, stepGame, spawnWave, openChest, chooseBlessing, savePersistedRun, loadPersistedRun, clearPersistedRun, BLESSING_LABELS } from '../game/index.js';
 import { createHud } from '../ui/hud.js';
 import { createAudioManager } from '../ui/audio.js';
 import { createFeedbackBus } from '../ui/feedback.js';
@@ -54,6 +54,13 @@ export class GameApp {
     this.loadGeneration = 0;
     this.frames = 0;
     this.state = createGameState('aizo-awakens');
+    // Restore the previous run if there is one. The 2D build persisted the run
+    // between sessions; without this the 3D build started from scratch every
+    // time and the save/load code was unreachable.
+    this.storage = this.readStorage();
+    const restored = this.storage ? loadPersistedRun(this.storage, 'aizo-awakens') : null;
+    this.restoredRun = restored?.restored ? restored.state : null;
+    this.saveAnnouncement = restored?.announcement || null;
     this.sceneState = 'menu';
     this.paused = false;
     this.help = false;
@@ -177,6 +184,16 @@ export class GameApp {
     this.menu.append(node('p', 'az-dungeon-menu-sub', 'Aizo awakens beneath the temple. Survive the descent, claim the blessing, enter the portal.'));
     this.beginButton = makeButton('az-dungeon-begin', 'Begin', () => this.begin());
     this.menu.append(this.beginButton);
+    // The 2D build offered "Continue" on the menu. If a saved run exists,
+    // offer it again rather than silently starting over.
+    if (this.restoredRun) {
+      const chapter = this.restoredRun.chapter || 1;
+      this.continueButton = makeButton('az-dungeon-begin az-dungeon-continue', `Continue · Chapter ${chapter}`, () => this.continueRun());
+      this.menu.append(this.continueButton);
+    }
+    if (this.saveAnnouncement) {
+      this.menu.append(node('p', 'az-dungeon-menu-note', this.saveAnnouncement));
+    }
     this.root.append(this.stage, this.effectLayer, this.touchControls, this.exitButton, this.menu);
     this.container.append(this.root);
     this.hud = createHud({ container: this.root });
@@ -435,6 +452,43 @@ export class GameApp {
     this.disposers.push(() => clear());
   }
 
+  /**
+   * The persistence helpers are best-effort: a browser with storage disabled
+   * (private mode, blocked third-party context) must still get a playable
+   * game, so every failure here degrades to "no save" rather than an error.
+   */
+  readStorage() {
+    try {
+      const storage = window.localStorage;
+      if (!storage) return null;
+      // Touch the storage: Safari in private mode throws only on write.
+      const probe = '__aizanoi_dungeon_probe__';
+      storage.setItem(probe, '1');
+      storage.removeItem(probe);
+      return storage;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  persistRun() {
+    if (!this.storage) return { saved: false };
+    return savePersistedRun(this.storage, this.state);
+  }
+
+  continueRun() {
+    if (!this.restoredRun || this.sceneState !== 'menu') return;
+    this.state = this.restoredRun;
+    this.restoredRun = null;
+    this.sceneState = 'playing';
+    this.audio.resume();
+    this.preview.removeFromParent();
+    this.menu.remove();
+    this.hud.setVisible(true);
+    this.root.focus();
+    this.syncWorld();
+  }
+
   async begin() {
     if (this.sceneState !== 'menu') return;
     this.sceneState = 'playing';
@@ -533,6 +587,7 @@ export class GameApp {
           const reward = chosen?.chosen ? chosen.label : (result.fallback?.label || `${result.gold} gold`);
           this.feedback.emit('loot', { label: `${result.gold} gold · ${reward}` });
           this.spawnPortal(position);
+          this.persistRun();
           this.syncWorld();
           return true;
         }
@@ -680,6 +735,7 @@ export class GameApp {
       xp: player.xp, xpToNext: player.xpToNext, gold: player.gold, combo: player.combo,
       chapter: this.state.chapter, wave: this.state.wave.chapter,
       boss: boss ? { name: 'Marble Minotaur', health: boss.hp, maxHealth: boss.maxHp } : null,
+      blessings: this.state.blessings, blessingLabels: BLESSING_LABELS,
       paused: this.paused, help: this.help,
     });
   }
@@ -743,6 +799,9 @@ export class GameApp {
     this.eventCursor = 0;
     this.paused = false;
     this.sceneState = 'playing';
+    // A fresh run invalidates the saved one.
+    if (this.storage) clearPersistedRun(this.storage);
+    this.restoredRun = null;
     this.clearEntities();
     spawnWave(this.state, 1);
     this.root.focus();
