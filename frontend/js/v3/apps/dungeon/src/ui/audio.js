@@ -3,6 +3,7 @@ const CUES = Object.freeze({
   hit: { wave: 'square', from: 95, to: 58, duration: 0.07, gain: 0.1 },
   crit: { wave: 'sawtooth', from: 520, to: 180, duration: 0.16, gain: 0.11 },
   dash: { wave: 'sine', from: 130, to: 420, duration: 0.12, gain: 0.07 },
+  bow: { wave: 'triangle', from: 640, to: 300, duration: 0.1, gain: 0.07 },
   hurt: { wave: 'sawtooth', from: 150, to: 52, duration: 0.2, gain: 0.1 },
   loot: { wave: 'sine', from: 440, to: 880, duration: 0.18, gain: 0.08 },
   portal: { wave: 'sine', from: 180, to: 610, duration: 0.5, gain: 0.06 },

@@ -21,6 +21,19 @@ const COMBO = [
   { damage: 26, range: 2.25, stun: 0.18 },
   { damage: 42, range: 2.8, stun: 0.32 },
 ];
+// The Penkalas bow: a charged ranged option that trades stamina for reach.
+// Aimed at the nearest enemy in front of the player, like the 2D build's
+// Phrygian/Penkalas bows, but expressed as a real projectile so the 3D
+// scene shows the shot travelling.
+const BOW = Object.freeze({
+  damage: 22,
+  range: 16,
+  speed: 15,
+  radius: 0.34,
+  cooldown: 0.62,
+  staminaCost: 18,
+  knockback: 0.55,
+});
 const ARCHETYPES = {
   chaser: { hp: 70, speed: 3.8, damage: 9, xp: 12, gold: 5 },
   archer: { hp: 55, speed: 3.1, damage: 8, xp: 15, gold: 7 },
@@ -112,6 +125,7 @@ export function createGameState(seed = 'dungeon') {
       dashCooldownMax: 1.2,
       dashRemaining: 0,
       dashDirection: { x: 1, z: 0 },
+      bowReadyAt: 0,
       invulnerable: 0,
       damageMultiplier: 1,
       speedMultiplier: 1,
@@ -126,7 +140,7 @@ export function createGameState(seed = 'dungeon') {
     obstacles: OBSTACLES.map((item) => ({ ...item })),
     blessings: [],
     events: [],
-    inputLatch: { dash: false, attack: false },
+    inputLatch: { dash: false, attack: false, shoot: false },
   };
 }
 
@@ -263,6 +277,7 @@ const fireProjectile = (state, enemy) => {
   state.projectiles.push({
     id: `projectile-${state.nextId++}`,
     ownerId: enemy.id,
+    source: 'enemy',
     x: enemy.x,
     z: enemy.z,
     vx: aim.x * 8,
@@ -272,6 +287,63 @@ const fireProjectile = (state, enemy) => {
     radius: 0.32,
   });
 };
+
+/**
+ * Aim the bow at the enemy the player is most plausibly shooting at: the
+ * closest living enemy inside the bow's reach, preferring ones in front of
+ * the player's facing so the shot reads as aimed rather than random.
+ */
+const findBowTarget = (state) => {
+  const player = state.player;
+  const facing = player.facing;
+  let best = null;
+  let bestScore = Infinity;
+  for (const enemy of state.enemies) {
+    if (enemy.dead) continue;
+    const gap = distance(enemy, player.position);
+    if (gap > BOW.range) continue;
+    // Dot product of the facing vector with the direction to the enemy:
+    // 1 is dead ahead, -1 is directly behind.
+    const toward = direction(player.position, enemy);
+    const alignment = toward.x * facing.x + toward.z * facing.z;
+    const score = gap - alignment * 4;
+    if (score < bestScore) { bestScore = score; best = enemy; }
+  }
+  return best;
+};
+
+/**
+ * Loose a bow shot at the current target. Returns a truthful result so the
+ * runtime can show a distinct "no target" or "not ready" message instead of
+ * pretending every pull of the string did something.
+ */
+export function shoot(state) {
+  const player = state.player;
+  if (player.dead) return { fired: false, reason: 'dead' };
+  if (state.time + 1e-9 < player.bowReadyAt) return { fired: false, reason: 'cooldown' };
+  if (player.stamina < BOW.staminaCost) return { fired: false, reason: 'stamina' };
+  const target = findBowTarget(state);
+  if (!target) return { fired: false, reason: 'no-target' };
+  player.stamina -= BOW.staminaCost;
+  player.bowReadyAt = state.time + BOW.cooldown;
+  const aim = direction(player.position, target);
+  const damage = Math.round(BOW.damage * player.damageMultiplier);
+  state.projectiles.push({
+    id: `projectile-${state.nextId++}`,
+    ownerId: target.id,
+    source: 'player',
+    x: player.position.x + aim.x * 0.6,
+    z: player.position.z + aim.z * 0.6,
+    vx: aim.x * BOW.speed,
+    vz: aim.z * BOW.speed,
+    damage,
+    knockback: BOW.knockback,
+    ttl: 2,
+    radius: BOW.radius,
+  });
+  emitEvent(state, { type: 'bow-shot', id: target.id, damage, at: state.time });
+  return { fired: true, targetId: target.id, damage };
+}
 
 const beginWindup = (state, enemy, kind, duration, range) => {
   enemy.windup = { kind, remaining: duration, duration, range };
@@ -369,7 +441,24 @@ const updateProjectiles = (state, dt) => {
     shot.x += shot.vx * dt;
     shot.z += shot.vz * dt;
     shot.ttl -= dt;
-    if (shot.ttl > 0 && distance(shot, state.player.position) <= shot.radius + 0.45) {
+    if (shot.ttl <= 0) continue;
+    if (shot.source === 'player') {
+      // The player's arrow stops on the first enemy it reaches.
+      const target = state.enemies.find((enemy) => !enemy.dead && enemy.id === shot.ownerId);
+      if (target && distance(shot, target) <= shot.radius + 0.55) {
+        target.hp = Math.max(0, target.hp - shot.damage);
+        target.stun = Math.max(target.stun || 0, 0.1);
+        if (shot.knockback) {
+          const push = direction(shot, target);
+          target.x = clamp(target.x + push.x * shot.knockback, -ARENA_RADIUS, ARENA_RADIUS);
+          target.z = clamp(target.z + push.z * shot.knockback, -ARENA_RADIUS, ARENA_RADIUS);
+          resolveObstacleCollision(target);
+        }
+        emitEvent(state, { type: 'melee-hit', id: target.id, chain: 1, damage: shot.damage, ranged: true, at: state.time });
+        if (target.hp === 0) killEnemy(state, target);
+        shot.ttl = 0;
+      }
+    } else if (distance(shot, state.player.position) <= shot.radius + 0.45) {
       damagePlayer(state, shot.damage, shot.ownerId);
       shot.ttl = 0;
     }
@@ -478,6 +567,8 @@ const fixedUpdate = (state, input, dt) => {
     if (nearest) attack(state, nearest.id);
   }
   state.inputLatch.attack = Boolean(input.attack);
+  if (input.shoot && !state.inputLatch.shoot) shoot(state);
+  state.inputLatch.shoot = Boolean(input.shoot);
   for (const unit of [...state.enemies]) updateEnemy(state, unit, dt);
   separateEntities(state);
   updateProjectiles(state, dt);
@@ -542,7 +633,8 @@ const validState = (state) => state && state.version === VERSION && typeof state
   && finite(state.player.position.z) && Array.isArray(state.enemies) && state.enemies.every(validEnemy)
   && Array.isArray(state.projectiles) && Array.isArray(state.chests) && Array.isArray(state.loot)
   && Array.isArray(state.blessings) && Array.isArray(state.events) && state.wave
-  && state.inputLatch && typeof state.inputLatch.dash === 'boolean';
+  && state.inputLatch && typeof state.inputLatch.dash === 'boolean'
+  && typeof state.inputLatch.attack === 'boolean' && typeof state.inputLatch.shoot === 'boolean';
 
 export function restoreRun(json) {
   let state;

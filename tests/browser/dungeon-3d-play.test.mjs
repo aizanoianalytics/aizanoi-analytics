@@ -137,11 +137,26 @@ test('the 3D dungeon boots a real Three.js scene and plays a real run', async ()
       await page.keyboard.press('j');
       await page.waitForTimeout(220);
       const hit = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
-      if (hit.some((hp, i) => hp < beforeHp[i])) return;
+      if (hit.some((hp, i) => hp < beforeHp[i])) break;
     }
     const afterHp = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
     assert.ok(afterHp.some((hp, i) => hp < beforeHp[i]),
       `attacking must damage an enemy, before ${beforeHp} after ${afterHp}`);
+
+    // The bow must also work from the keyboard: it costs stamina and it
+    // damages a target that melee cannot reach immediately.
+    const staminaBefore = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.hp);
+    const enemyHpBeforeBow = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
+    for (let attempt = 0; attempt < 14; attempt += 1) {
+      await page.keyboard.press('k');
+      await page.waitForTimeout(200);
+      const hit = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
+      if (hit.some((hp, i) => hp < enemyHpBeforeBow[i])) break;
+    }
+    const enemyHpAfterBow = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
+    assert.ok(enemyHpAfterBow.some((hp, i) => hp < enemyHpBeforeBow[i]),
+      `the bow must damage an enemy, before ${enemyHpBeforeBow} after ${enemyHpAfterBow}`);
+    assert.ok(typeof staminaBefore === 'number', 'the run must still report live state');
 
     assert.deepEqual(badResponses, [], 'every dungeon asset must load without a 4xx/5xx');
     assert.deepEqual(errors, [], 'the run must produce no console or page errors');

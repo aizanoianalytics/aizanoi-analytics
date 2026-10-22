@@ -23,7 +23,7 @@ const ENEMY_ASSET = Object.freeze({
 });
 const CONSUMED_KEYS = new Set([
   'KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
-  'Space', 'KeyJ', 'Escape', 'KeyH', 'Enter',
+  'Space', 'KeyJ', 'KeyK', 'Escape', 'KeyH', 'Enter',
 ]);
 let stylesheetRefs = 0;
 const MOVE_CODES = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
@@ -61,6 +61,7 @@ export class GameApp {
     this.keys = new Set();
     this.pendingAttack = false;
     this.pendingDash = false;
+    this.pendingShoot = false;
     this.pendingInteract = false;
     this.enemyMeshes = new Map();
     this.projectileMeshes = new Map();
@@ -160,8 +161,9 @@ export class GameApp {
     pad.append(node('span', 'az-touch-joystick-knob'));
     const actions = node('div', 'az-touch-actions');
     const attack = makeButton('az-touch-action az-touch-action--primary', 'Attack', () => { this.pendingAttack = true; this.root.focus(); });
+    const shoot = makeButton('az-touch-action', 'Shoot', () => { this.pendingShoot = true; this.root.focus(); });
     const dash = makeButton('az-touch-action', 'Dash', () => { this.pendingDash = true; this.root.focus(); });
-    actions.append(attack, dash);
+    actions.append(attack, shoot, dash);
     this.touchControls.append(pad, actions);
     this.exitButton = makeButton('az-dungeon-exit', '', () => this.api?.closeApp?.(APP_ID));
     this.exitButton.setAttribute('aria-label', 'Return to AizanoiOS');
@@ -377,6 +379,7 @@ export class GameApp {
       else if (event.code === 'KeyH' && !event.repeat) this.toggleHelp();
       else if (event.code === 'Space' && !event.repeat) this.pendingDash = true;
       else if (event.code === 'KeyJ' && !event.repeat) this.pendingAttack = true;
+      else if (event.code === 'KeyK' && !event.repeat) this.pendingShoot = true;
       else if (event.code === 'Enter' && !event.repeat) this.pendingInteract = true;
       else if (MOVE_CODES.has(event.code)) this.keys.add(event.code);
     };
@@ -453,10 +456,12 @@ export class GameApp {
     this.keys.clear();
     this.pendingAttack = false;
     this.pendingDash = false;
+    this.pendingShoot = false;
     this.pendingInteract = false;
     this.touchMove = null;
     this.state.inputLatch.attack = false;
     this.state.inputLatch.dash = false;
+    this.state.inputLatch.shoot = false;
   }
 
   togglePause() {
@@ -497,8 +502,10 @@ export class GameApp {
     const input = this.movementInput();
     input.attack = this.pendingAttack;
     input.dash = this.pendingDash;
+    input.shoot = this.pendingShoot;
     this.pendingAttack = false;
     this.pendingDash = false;
+    this.pendingShoot = false;
     if (this.pendingInteract) {
       this.pendingInteract = false;
       if (this.tryInteract()) input.attack = false;
@@ -552,6 +559,7 @@ export class GameApp {
         clearTimeout(this.damageTimer);
         this.damageTimer = setTimeout(() => this.hud?.setDamage(false), 280);
       } else if (event.type === 'dash') this.feedback.emit('dash', { position });
+      else if (event.type === 'bow-shot') this.feedback.emit('bow', { position });
       else if (event.type === 'attack-telegraph') {
         // Audible windup cue; the ground ring is synced from live windup state.
         this.feedback.emit('swing', { position, intensity: 0.6 });
@@ -593,7 +601,10 @@ export class GameApp {
       shots.add(projectile.id);
       let mesh = this.projectileMeshes.get(projectile.id);
       if (!mesh) { mesh = this.clone('projectile'); this.projectileMeshes.set(projectile.id, mesh); this.dynamic.add(mesh); }
-      mesh.position.set(projectile.x, 0.8, projectile.z);
+      // The player's arrow flies level with the bow; enemy shots ride higher
+      // so the two are never mistaken for each other on screen.
+      const height = projectile.source === 'player' ? 0.8 : 1.1;
+      mesh.position.set(projectile.x, height, projectile.z);
       mesh.rotation.y = Math.atan2(projectile.vx, projectile.vz);
     }
     for (const [id, mesh] of this.projectileMeshes) {

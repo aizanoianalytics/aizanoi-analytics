@@ -93,7 +93,7 @@ export function createHud({ container, document: doc = globalThis.document } = {
   const help = element(doc, 'aside', 'az-hud-panel az-hud-help');
   help.setAttribute('aria-label', 'Controls');
   help.hidden = true;
-  help.append(element(doc, 'h2', 'az-hud-panel-title', 'Controls'), element(doc, 'p', 'az-hud-panel-copy', 'Move: WASD / arrows · Attack: click / J · Dash: Space · Interact: Enter · Help: H · Pause: Escape'));
+  help.append(element(doc, 'h2', 'az-hud-panel-title', 'Controls'), element(doc, 'p', 'az-hud-panel-copy', 'Move: WASD / arrows · Attack: click / J · Shoot: K · Dash: Space · Interact: Enter · Help: H · Pause: Escape'));
 
   root.append(top, boss.wrapper, combo, crosshair, vignette, lootFeed, announcer, pause, help);
   container.appendChild(root);
