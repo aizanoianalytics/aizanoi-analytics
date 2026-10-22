@@ -97,6 +97,59 @@ test('a saved run survives a reload and the menu offers Continue', async () => {
   }
 });
 
+test('a real chest save restores its portal and a completed save restores victory', async () => {
+  const browser = await launch();
+  try {
+    const context = await browser.newContext({ viewport: { width: 1024, height: 640 } });
+    let page = await context.newPage();
+    await page.goto(`${base}/dungeon/?real-save=${Date.now()}`, { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.az-dungeon-begin', { timeout: 30000 });
+    await page.locator('.az-dungeon-begin').click();
+    await page.waitForFunction(() => window.AIZANOI_DUNGEON_GAME?.state === 'playing', null, { timeout: 20000 });
+
+    // Exercise the game's actual chest/persist path rather than constructing a
+    // storage payload. The save is between waves and owns a pending portal.
+    const firstClear = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaClearWave());
+    assert.equal(firstClear.opened, true);
+    await page.close();
+
+    page = await context.newPage();
+    await page.goto(`${base}/dungeon/?portal-restore=${Date.now()}`, { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.az-dungeon-continue', { timeout: 30000 });
+    await page.locator('.az-dungeon-continue').click();
+    await page.waitForFunction(() => window.AIZANOI_DUNGEON_GAME?.state === 'playing', null, { timeout: 20000 });
+    const resumed = await page.evaluate(() => ({
+      portalReady: window.AIZANOI_DUNGEON_GAME.portalReady,
+      status: window.AIZANOI_DUNGEON_GAME.runStatus,
+    }));
+    assert.deepEqual(resumed, { portalReady: true, status: 'between-waves' }, 'Continue must recreate the saved portal');
+
+    // The player was saved at the chest/portal position. Interacting must use
+    // that recreated runtime portal to start the next wave.
+    await page.keyboard.press('Enter');
+    await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(2));
+    assert.equal(await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.runStatus), 'combat', 'the restored run must progress through its portal');
+
+    // Finish the remaining chapters through the same runtime QA path. Every
+    // chest writes the real serialized save; the final one writes chapter 11.
+    for (let chapter = 2; chapter <= 10; chapter += 1) {
+      const result = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaClearWave());
+      assert.equal(result.opened, true);
+    }
+    assert.equal(await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.victory), true);
+    await page.close();
+
+    page = await context.newPage();
+    await page.goto(`${base}/dungeon/?victory-restore=${Date.now()}`, { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.az-dungeon-continue', { timeout: 30000 });
+    await page.locator('.az-dungeon-continue').click();
+    await page.waitForFunction(() => window.AIZANOI_DUNGEON_GAME?.victory === true, null, { timeout: 20000 });
+    assert.equal(await page.locator('.az-dungeon-victory').count(), 1, 'Continue must restore the completed run ledger');
+  } finally {
+    await browser.close();
+  }
+});
+
 test('a fresh browser shows no Continue button and no blessing list', async () => {
   const browser = await launch();
   try {

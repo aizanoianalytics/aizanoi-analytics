@@ -404,6 +404,8 @@ export class GameApp {
       // screen and the state agree without reaching into the runtime.
       get ledger() { return Object.freeze({ ...app.state.stats, chapter: app.state.chapter, gold: app.state.player.gold, blessings: app.state.blessings.length }); },
       get victory() { return app.sceneState === 'victory'; },
+      get portalReady() { return Boolean(app.portal); },
+      get runStatus() { return app.state.status; },
       // QA affordance: clear the current wave and open its chest, using the
       // game's own code path, so a browser test can reach a late-game state
       // without playing ten chapters by hand. It is a test hook on a handle
@@ -612,6 +614,18 @@ export class GameApp {
     this.hud.setVisible(true);
     this.root.focus();
     this.syncWorld();
+    this.updateHud();
+
+    // A real save is written immediately after a chest opens. At that point
+    // the state owns a pending portal, but the Three.js portal mesh is runtime
+    // state and is not serialized. Recreate it or the restored run is stuck
+    // between waves with no way to continue.
+    const pendingPortal = this.state.portal?.pending && this.state.portal.position;
+
+    // A completed run must resume at its ledger, not as a chapter-11 playing
+    // state with its victory event suppressed by the restored event cursor.
+    if (this.state.chapter > FINAL_CHAPTER) this.showVictory();
+    else if (pendingPortal) this.spawnPortal(pendingPortal);
   }
 
   async begin() {
