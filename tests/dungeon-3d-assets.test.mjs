@@ -22,6 +22,7 @@ const REQUIRED = {
   'enemy_skeletal_archer.glb': ['ARCHER__skull', 'ARCHER__bow', 'ARCHER__quiver'],
   'enemy_armored_centurion.glb': ['CENTURION__helmet', 'CENTURION__shield', 'CENTURION__spear'],
   'enemy_cult_sorcerer.glb': ['SORCERER__hood', 'SORCERER__staff', 'SORCERER__ember'],
+  'enemy_styx_ferryman.glb': ['FERRYMAN__hood', 'FERRYMAN__pole', 'FERRYMAN__skiff'],
   'boss_marble_minotaur.glb': ['BOSS__horn', 'BOSS__labrys', 'BOSS__marble_body'],
   'weapon_sword.glb': ['WEAPON_SWORD__blade', 'WEAPON_SWORD__hilt'],
   'weapon_spear.glb': ['WEAPON_SPEAR__shaft', 'WEAPON_SPEAR__head'],

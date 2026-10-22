@@ -74,12 +74,13 @@ test('runtime maps every gameplay archetype and visible entity', () => {
   const requiredAssets = [
     'hero_aizo.glb', 'enemy_gargoyle.glb', 'enemy_skeletal_archer.glb',
     'enemy_armored_centurion.glb', 'enemy_cult_sorcerer.glb',
+    'enemy_styx_ferryman.glb',
     'boss_marble_minotaur.glb', 'projectile_arrow.glb',
     'treasure_chest.glb', 'portal_ring.glb', 'floor_tile.glb',
     'wall_block.glb', 'arch_doorway.glb', 'column.glb', 'brazier.glb',
   ];
   requiredAssets.forEach((asset) => assert.ok(source.includes(asset), `missing asset ${asset}`));
-  for (const role of ['chaser', 'archer', 'tank', 'summoner', 'boss']) {
+  for (const role of ['chaser', 'archer', 'tank', 'summoner', 'flanker', 'boss']) {
     assert.match(source, new RegExp(`${role}\\s*:\\s*['"]`), `missing ${role} asset mapping`);
   }
   assert.match(source, /state\.projectiles/);

@@ -164,6 +164,7 @@ jobs:
           set -o pipefail
           status=0
           node --test tests/browser/dungeon-3d-play.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-play.log || status=1
+          node --test tests/browser/dungeon-3d-ferryman.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-ferryman.log || status=1
           exit $status
       - name: Upload browser diagnostics
         if: always()

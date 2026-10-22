@@ -309,6 +309,25 @@ def centurion_asset():
     for x in (-.19,0,.19): cube("CENTURION__lorica",(x,-.27,1.05),(.14,.06,.48),"bronze",.018)
     cube("CENTURION__crest",(0,0,2.06),(.09,.46,.28),"olive",.02)
 
+def ferryman_asset():
+    # The Styx Ferryman: a half-drowned ferryman who circles his prey before
+    # he lunges. A hunched, hooded figure on a narrow skiff, with a long
+    # punting pole — the silhouette reads as circling even when still.
+    revolve("FERRYMAN__skiff",[(.34,0),(.30,.16),(.24,.34)],"wood",(0,0,0))
+    for side in (-1,1):
+        beam("FERRYMAN__skiff_gunwale",(.30*side,0,.30),(.14*side,0,.30),.035,"wood",8)
+    revolve("FERRYMAN__robe",[(.40,0),(.32,.46),(.24,.96),(.29,1.14)],"olive_dark",(0,0,.28))
+    revolve("FERRYMAN__hood",[(.22,0),(.28,.18),(.25,.46),(.09,.58)],"olive",(0,0,1.34))
+    cyl("FERRYMAN__face_void",(0,-.225,1.55),.11,.025,"void",10,rot=(math.pi/2,0,0))
+    # A long pole held to one side: the punting read.
+    beam("FERRYMAN__pole",(.44,.06,.10),(.66,.10,1.92),.032,"wood",8)
+    cone("FERRYMAN__pole_tip",(.66,.10,1.95),.055,0,.20,"iron_edge",8)
+    for side in (-1,1):
+        beam("FERRYMAN__arm",(.20*side,0,1.12),(.38*side,-.10,.88),.065,"olive_dark",8)
+    # Water-dark cloth at the hem, so the model reads against the dungeon floor.
+    revolve("FERRYMAN__hem",[(.42,.02),(.38,.16)],"void",(0,0,.30))
+    for x in (-.07,.07): cyl("FERRYMAN__eye",(x,-.195,1.46),.022,.022,"ember",8,rot=(math.pi/2,0,0))
+
 def sorcerer_asset():
     revolve("SORCERER__robe",[(.46,0),(.36,.55),(.25,1.16),(.30,1.36)],"olive_dark",(0,0,0))
     revolve("SORCERER__hood",[(.24,0),(.30,.20),(.27,.50),(.10,.62)],"olive",(0,0,1.25))
@@ -356,7 +375,8 @@ BUILDERS = {
     "hero_aizo": hero_asset, "hero_knight": hero_asset,
     "enemy_gargoyle": gargoyle_asset, "enemy_slime_golem": gargoyle_asset,
     "enemy_skeletal_archer": archer_asset, "enemy_armored_centurion": centurion_asset,
-    "enemy_cult_sorcerer": sorcerer_asset, "boss_marble_minotaur": minotaur_asset,
+    "enemy_cult_sorcerer": sorcerer_asset, "enemy_styx_ferryman": ferryman_asset,
+    "boss_marble_minotaur": minotaur_asset,
     "weapon_sword": weapon_sword_asset, "weapon_spear": weapon_spear_asset,
     "weapon_bow": weapon_bow_asset, "projectile_arrow": arrow_asset,
     "projectile_firebolt": firebolt_asset,

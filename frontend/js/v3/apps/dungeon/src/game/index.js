@@ -34,11 +34,18 @@ const BOW = Object.freeze({
   staminaCost: 18,
   knockback: 0.55,
 });
+// Flanker tuning: the ring it orbits at, how long it orbits before it lunges,
+// and how long the lunge lasts. Absolute seconds on the sim clock, so the
+// rhythm is the same on a slow machine and a fast one.
+const FLANKER_ORBIT = 5.5;
+const FLANKER_ORBIT_MS = 1.4;
+const FLANKER_LUNGE_MS = 0.32;
 const ARCHETYPES = {
   chaser: { hp: 70, speed: 3.8, damage: 9, xp: 12, gold: 5 },
   archer: { hp: 55, speed: 3.1, damage: 8, xp: 15, gold: 7 },
   tank: { hp: 145, speed: 1.8, damage: 18, xp: 22, gold: 11 },
   summoner: { hp: 90, speed: 2.2, damage: 7, xp: 26, gold: 13 },
+  flanker: { hp: 80, speed: 3.4, damage: 12, xp: 18, gold: 9 },
   boss: { hp: 650, speed: 2.7, damage: 24, xp: 150, gold: 80 },
 };
 
@@ -190,11 +197,11 @@ export function spawnWave(state, chapter = state.chapter) {
   state.chapter = chapter;
   state.mode = chapter > 10 ? 'endless' : 'chapters';
   const roles = [];
-  if (chapter % 5 === 0) roles.push('chaser', 'archer', 'tank', 'summoner', 'boss');
+  if (chapter % 5 === 0) roles.push('chaser', 'archer', 'tank', 'summoner', 'flanker', 'boss');
   else {
     const pool = chapter < 3 ? ['chaser', 'chaser', 'archer']
       : chapter < 6 ? ['chaser', 'archer', 'tank']
-        : ['chaser', 'archer', 'tank', 'summoner'];
+        : ['chaser', 'archer', 'tank', 'summoner', 'flanker'];
     const count = Math.min(4 + chapter, 12);
     for (let i = 0; i < count; i += 1) roles.push(pool[Math.floor(random(state) * pool.length)]);
   }
@@ -389,6 +396,84 @@ const resolveWindup = (state, enemy, gap) => {
   return true;
 };
 
+/**
+ * The flanker (the 3D counterpart of the 2D build's Styx Ferryman): it orbits
+ * the player at a readable distance, then commits to one lunging dash and
+ * returns to the orbit. The 2D version used absolute deadlines on the scene
+ * clock, so a slow machine orbits for the same wall-clock time as a fast one
+ * instead of counting frames; this keeps that property.
+ */
+const updateFlanker = (state, enemy, gap, dt) => {
+  const player = state.player;
+  const orbit = enemy.orbit || (enemy.orbit = { phase: 'idle', until: 0, dir: 1 });
+  const ideal = FLANKER_ORBIT;
+  const toward = direction(enemy, player.position);
+
+  if (orbit.phase === 'idle') {
+    // Too far or uncomfortably close: close the distance straight on.
+    if (gap < ideal * 0.6 || gap > ideal * 1.8) {
+      enemy.intent = 'close';
+      move(enemy, toward, enemy.speed, dt);
+      return;
+    }
+    orbit.phase = 'orbit';
+    orbit.until = state.time + FLANKER_ORBIT_MS;
+    orbit.dir = random(state) < 0.5 ? -1 : 1;
+    enemy.intent = 'orbit';
+    return;
+  }
+
+  if (orbit.phase === 'orbit') {
+    // Tangential motion around the player plus a radial correction that pulls
+    // the flanker back to its ideal ring. The radial term has to dominate the
+    // tangential one, otherwise the flanker spirals outward and never comes
+    // back to a readable distance.
+    const angle = Math.atan2(player.position.z - enemy.z, player.position.x - enemy.x);
+    const tangential = angle + (Math.PI / 2) * orbit.dir;
+    // `angle` points from the flanker toward the player, so the radial term
+    // must be positive when the flanker is too far (gap > ideal): that pulls
+    // it in. The sign here is what keeps the ring stable.
+    const radial = (gap - ideal) * 2.4;
+    const vector = {
+      x: Math.cos(tangential) * 0.6 + Math.cos(angle) * radial,
+      z: Math.sin(tangential) * 0.6 + Math.sin(angle) * radial,
+    };
+    const length = Math.hypot(vector.x, vector.z) || 1;
+    move(enemy, { x: vector.x / length, z: vector.z / length }, enemy.speed, dt);
+    enemy.intent = 'orbit';
+    if (state.time >= orbit.until) {
+      orbit.phase = 'lunge';
+      orbit.until = state.time + FLANKER_LUNGE_MS;
+      enemy.intent = 'lunge';
+      // The lunge is a committed dash: it is fast, and it is telegraphed by a
+      // windup the runtime draws as a ground ring.
+      enemy.lungeDirection = { ...toward };
+      enemy.windup = {
+        kind: 'melee',
+        remaining: FLANKER_LUNGE_MS * 0.5,
+        duration: FLANKER_LUNGE_MS * 0.5,
+        range: 1.6,
+      };
+    }
+    return;
+  }
+
+  // Lunge: one committed dash along the locked direction, then back to orbit.
+  const dash = enemy.lungeDirection || toward;
+  move(enemy, dash, enemy.speed * 2.6, dt);
+  // The dash itself is the attack: it connects when it reaches the player.
+  if (gap <= 1.6) damagePlayer(state, enemy.damage, enemy.id);
+  if (enemy.windup) {
+    enemy.windup.remaining = Math.max(0, enemy.windup.remaining - dt);
+    if (enemy.windup.remaining <= 0) enemy.windup = null;
+  }
+  if (state.time >= orbit.until) {
+    orbit.phase = 'idle';
+    orbit.until = 0;
+    enemy.intent = 'idle';
+  }
+};
+
 const updateEnemy = (state, enemy, dt) => {
   if (enemy.dead) return;
   enemy.stun = Math.max(0, (enemy.stun || 0) - dt);
@@ -402,7 +487,9 @@ const updateEnemy = (state, enemy, dt) => {
   }
   const player = state.player;
   const gap = distance(enemy, player.position);
-  if (enemy.windup) {
+  // The flanker drives its own windup: its lunge window is the telegraph and
+  // the dash, so it must not be short-circuited by the generic windup path.
+  if (enemy.windup && enemy.archetype !== 'flanker') {
     enemy.windup.remaining = Math.max(0, enemy.windup.remaining - dt);
     resolveWindup(state, enemy, gap);
     return;
@@ -426,6 +513,8 @@ const updateEnemy = (state, enemy, dt) => {
     enemy.intent = 'summon';
     if (gap < 5) move(enemy, away, enemy.speed * 0.5, dt);
     if (gap <= 12 && enemy.summonCooldown <= 0) beginWindup(state, enemy, 'summon', NORMAL_WINDUP, 12);
+  } else if (enemy.archetype === 'flanker') {
+    updateFlanker(state, enemy, gap, dt);
   } else if (enemy.archetype === 'boss') {
     const ratio = enemy.hp / enemy.maxHp;
     enemy.phase = ratio <= 0.25 ? 3 : ratio < 0.5 ? 2 : 1;

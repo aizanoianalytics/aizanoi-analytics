@@ -16,10 +16,12 @@ const ASSETS = Object.freeze({
   chest: 'treasure_chest.glb', portal: 'portal_ring.glb', projectile: 'projectile_arrow.glb',
   chaser: 'enemy_gargoyle.glb', archer: 'enemy_skeletal_archer.glb',
   tank: 'enemy_armored_centurion.glb', summoner: 'enemy_cult_sorcerer.glb',
+  flanker: 'enemy_styx_ferryman.glb',
   boss: 'boss_marble_minotaur.glb',
 });
 const ENEMY_ASSET = Object.freeze({
-  chaser: 'chaser', archer: 'archer', tank: 'tank', summoner: 'summoner', boss: 'boss',
+  chaser: 'chaser', archer: 'archer', tank: 'tank', summoner: 'summoner',
+  flanker: 'flanker', boss: 'boss',
 });
 const CONSUMED_KEYS = new Set([
   'KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
