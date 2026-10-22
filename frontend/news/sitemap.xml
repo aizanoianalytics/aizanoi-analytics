@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/anthropic-claude-duet-agent/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T05:20:00.000Z</news:publication_date>
+      <news:title>Anthropic opens Claude Duet, a proactive agent, to a US waitlist</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/recursive-flint-laptop-coding-model/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T05:12:00.000Z</news:publication_date>
+      <news:title>Recursive ships Flint, a laptop coding model built largely by its own AI</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/php2shell-critical-rce-patch/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T05:05:00.000Z</news:publication_date>
+      <news:title>Decade-old PHP flaws force an emergency patch across the web</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/walmart-agent-gateway-commerce/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T04:55:00.000Z</news:publication_date>
+      <news:title>Walmart opens an agent gateway while Amazon shuts AI shoppers out</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/flapping-airplanes-series-a/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T04:48:00.000Z</news:publication_date>
+      <news:title>Flapping Airplanes raises $1bn at $6bn nine months after launch</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/legora-series-e-legal-ai/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T04:40:00.000Z</news:publication_date>
+      <news:title>Legora lifts its legal AI round to $550m at an $8.8bn valuation</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/tesla-optimus-production-profit-drop/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T04:32:00.000Z</news:publication_date>
+      <news:title>Tesla starts Optimus production in Fremont as quarterly profit falls 43%</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/meta-new-mexico-25bn-ruling/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T04:25:00.000Z</news:publication_date>
+      <news:title>New Mexico judge orders Meta to pay $25bn over privacy claims</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/waymo-las-vegas-airport/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T04:18:00.000Z</news:publication_date>
+      <news:title>Waymo adds Las Vegas airport to its robotaxi map</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/wall-street-spacex-chip-rebound-fed/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T04:10:00.000Z</news:publication_date>
+      <news:title>SpaceX and chip gains lift Wall Street as the Fed decision looms</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/meta-earnings-non-voting-stock/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T04:02:00.000Z</news:publication_date>
+      <news:title>Meta beats estimates and plans non-voting stock to fund AI</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/blackstone-ai-buildout-credit/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T03:55:00.000Z</news:publication_date>
+      <news:title>Blackstone says AI debt jitters are not a 2008 rerun</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/bayern-arsenal-rice-equaliser/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T03:45:00.000Z</news:publication_date>
+      <news:title>Rice rescues Arsenal in Munich after Kane turns the tie</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/real-madrid-leipzig-silva/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T03:40:00.000Z</news:publication_date>
+      <news:title>Silva sets Madrid rolling as Mourinho&#39;s side put four past Leipzig</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-22/lask-sporting-comeback/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-22T03:35:00.000Z</news:publication_date>
+      <news:title>Lask overturn Sporting in Lisbon for a first Champions League win</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-10-21/spacex-profit-ai-segment/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -118,126 +238,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-10-21T05:10:00.000Z</news:publication_date>
       <news:title>Meta&#39;s Muse passes 10m US downloads in its first 40 days</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/openai-fundraising-race-anthropic-ipo/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>OpenAI lines up about $30 billion before Anthropic&#39;s market debut</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/anthropic-public-benefit-fund/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Anthropic pledges 5% of its equity to a public benefit fund</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/psg-barcelona-champions-league-showcase/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>PSG and Barcelona meet in Paris with the league phase on the line</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/china-third-quarter-gdp-beats-forecast/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>China&#39;s growth picks up to 4.5% as investment keeps shrinking</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/nscale-anthropic-second-compute-deal/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Nscale in talks with Anthropic for a second $45 billion campus deal</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/us-stocks-chip-rebound-borrowing-costs/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Chips lead a narrow Wall Street rebound as yields stay near 5.15%</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/elice-kosdaq-debut-slump/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Data-centre IPO Elice slides 32% in its Korean trading debut</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/brent-oil-hormuz-supply-risk/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Brent holds above $109 as Gulf shipping risk stays priced in</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/australia-esafety-court-action-platforms/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Australia prepares court action against five platforms over under-16 ban</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/liverpool-villarreal-injury-hit-anfield/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Liverpool take an unbeaten European record into Villarreal visit</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/meta-prometheus-supercluster-details/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Meta opens up the design of its gigawatt-scale Prometheus cluster</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/shinyhunters-ransom-negotiator-probe/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>FBI probe turns on the negotiators hired to handle ShinyHunters</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/bayern-arsenal-home-run-on-the-line/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Bayern&#39;s 39-match home run meets Arsenal&#39;s league-phase streak</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/inception-mercury-3-diffusion-model/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Inception bets on diffusion language models with Mercury 3</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-20/waymo-fleet-expansion-plan/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-20T05:15:00.000Z</news:publication_date>
-      <news:title>Waymo plans to take its fleet from 4,000 cars to 20,000 by late 2027</news:title>
     </news:news>
   </url>
 </urlset>

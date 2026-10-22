@@ -1,0 +1,30 @@
+{
+  "id": "2026-10-22-recursive-flint-laptop-coding-model",
+  "title": "Recursive ships Flint, a laptop coding model built largely by its own AI",
+  "summary": "Recursive released Flint, a free Apache 2.0 coding model small enough for a laptop, saying its Eureka Machine research system touched nearly every stage of development and that a small team built it from scratch in under four months. Flint is a mixture-of-experts design activating 2.5 billion of its 40 billion parameters at a time, generating about 131 tokens a second on a MacBook Pro with an M4 Pro chip in company tests, roughly double comparable models. Recursive says it led models under 50 billion parameters on SWE-Bench Verified, though it needs more guidance than paid assistants.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-10-22T05:12:00Z",
+  "updatedAt": "2026-10-22T05:12:00Z",
+  "retrievedAt": "2026-10-22T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "recursive",
+    "open-weights",
+    "coding"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/21/recursive-launches-flint-a-laptop-coding-model-it-says-was-largely-built-by-ai/",
+      "publishedAt": "2026-10-21T19:30:00Z"
+    }
+  ]
+}

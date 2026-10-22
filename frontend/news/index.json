@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-21T05:10:00.000Z",
+  "generatedAt": "2026-10-22T05:20:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-22",
+      "path": "/news/2026-10-22/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-21",
       "path": "/news/2026-10-21/",
@@ -355,6 +360,491 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-22-anthropic-claude-duet-agent",
+      "kind": "daily",
+      "title": "Anthropic opens Claude Duet, a proactive agent, to a US waitlist",
+      "summary": "Anthropic launched Claude Duet on 21 October, a standalone agent app for professionals and small businesses, as a waitlisted research preview for US Pro and Max subscribers. Built on Opus 5.5, Duet runs on its own cloud virtual machine with a browser, sends a morning brief across connected apps and messages only when something needs attention, asking approval before sensitive steps like payments. It reaches more than 6,000 Claude Marketplace connectors and can pay via Stripe Link and Shop Pay. Anthropic concedes it can misread threads or urgency and is weaker at errands like booking tickets.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-10-22T05:20:00.000Z",
+      "updatedAt": "2026-10-22T05:20:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ai-agents",
+        "claude"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1015843/anthropic-claude-duet-ai-agent",
+          "publishedAt": "2026-10-21T19:53:00.000Z"
+        },
+        {
+          "publisher": "Reuters via The Star",
+          "url": "https://www.thestar.com.my/tech/tech-news/2026/10/22/anthropic-unveils-claude-duet-ai-agent-app",
+          "publishedAt": "2026-10-22T00:17:00.000Z"
+        },
+        {
+          "publisher": "Anthropic",
+          "url": "https://claude.com/resources/product-announcements",
+          "publishedAt": "2026-10-21T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-recursive-flint-laptop-coding-model",
+      "kind": "daily",
+      "title": "Recursive ships Flint, a laptop coding model built largely by its own AI",
+      "summary": "Recursive released Flint, a free Apache 2.0 coding model small enough for a laptop, saying its Eureka Machine research system touched nearly every stage of development and that a small team built it from scratch in under four months. Flint is a mixture-of-experts design activating 2.5 billion of its 40 billion parameters at a time, generating about 131 tokens a second on a MacBook Pro with an M4 Pro chip in company tests, roughly double comparable models. Recursive says it led models under 50 billion parameters on SWE-Bench Verified, though it needs more guidance than paid assistants.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-10-22T05:12:00.000Z",
+      "updatedAt": "2026-10-22T05:12:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "recursive",
+        "open-weights",
+        "coding"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/recursive-launches-flint-a-laptop-coding-model-it-says-was-largely-built-by-ai/",
+          "publishedAt": "2026-10-21T19:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-php2shell-critical-rce-patch",
+      "kind": "daily",
+      "title": "Decade-old PHP flaws force an emergency patch across the web",
+      "summary": "PHP released 8.5.12, 8.4.27, 8.3.36 and 8.2.35 on 21 October to fix two critical memory-safety bugs in its core engine that allow unauthenticated remote code execution, tracked as CVE-2026-109618 and CVE-2026-109619. Wiz Research, which found the flaws with its Atlas agent plus Gemini 4 Argon and GPT-5.6 Sol, said every release going back to 5.4 is affected and that severity reaches CVSS 9.2, in a language it says powers about 70% of websites. The NSA advised sites that cannot patch immediately to go offline. Researchers reported no exploitation before disclosure.",
+      "category": "technology",
+      "priority": 78,
+      "publishedAt": "2026-10-22T05:05:00.000Z",
+      "updatedAt": "2026-10-22T05:05:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "security",
+        "php",
+        "vulnerability"
+      ],
+      "sources": [
+        {
+          "publisher": "Wiz Research",
+          "url": "https://www.wiz.io/blog/php2shell-php-rce",
+          "publishedAt": "2026-10-21T16:00:00.000Z"
+        },
+        {
+          "publisher": "PHP.net",
+          "url": "https://www.php.net/archive/2026.php#2026-10-21-5",
+          "publishedAt": "2026-10-21T15:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/php-armageddon-openai-googles-wiz-find-ancient-holes-panicking-the-internet/",
+          "publishedAt": "2026-10-21T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-walmart-agent-gateway-commerce",
+      "kind": "daily",
+      "title": "Walmart opens an agent gateway while Amazon shuts AI shoppers out",
+      "summary": "Walmart launched an Agent Gateway, an MCP server that lets approved AI agents search its inventory and buy on a shopper's behalf at Walmart and Sam's Club, alongside Agent Profiles arriving next month that keep an agent's purchases separate from the customer's own. Shoppers can approve every transaction or set a spending cap, agents cannot see payment details, and Walmart published terms that block agents which overstep. Chief executive John Furner framed the move as preparation for mainstream agentic shopping, contrasting it with Amazon, which now blocks AI agents from buying on its site.",
+      "category": "ai",
+      "priority": 55,
+      "publishedAt": "2026-10-22T04:55:00.000Z",
+      "updatedAt": "2026-10-22T04:55:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "walmart",
+        "agentic-commerce",
+        "mcp"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/while-amazon-blocks-ai-agents-walmart-rolls-out-the-welcome-mat/",
+          "publishedAt": "2026-10-21T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-flapping-airplanes-series-a",
+      "kind": "daily",
+      "title": "Flapping Airplanes raises $1bn at $6bn nine months after launch",
+      "summary": "Flapping Airplanes, a year-old lab trying to train large models on far less data, raised a $1 billion Series A co-led by Index and Lux at a reported $6 billion valuation, quadrupling the $1.5 billion from its $180 million seed round in January. Sequoia, GV and Kleiner Perkins returned, with Nvidia and Atreides also investing. Founders Aidan Smith and brothers Asher and Ben Spector describe their work as a megakernel framework that overlaps memory-bound inference with compute-bound training so accelerators idle less. The money funds hiring as the company chases cheaper training and inference.",
+      "category": "ai",
+      "priority": 52,
+      "publishedAt": "2026-10-22T04:48:00.000Z",
+      "updatedAt": "2026-10-22T04:48:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "funding",
+        "research",
+        "training"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/year-old-ai-lab-flapping-airplanes-raises-1b-at-a-6b-valuation/",
+          "publishedAt": "2026-10-21T19:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-legora-series-e-legal-ai",
+      "kind": "daily",
+      "title": "Legora lifts its legal AI round to $550m at an $8.8bn valuation",
+      "summary": "Legora raised a $550 million Series E led by Atreides Management, with Baron Capital, Bessemer Venture Partners, General Catalyst and Menlo participating, at an $8.8 billion valuation. The legal AI company said annual recurring revenue has passed $200 million, double the $100 million it reported in April when it raised at $5.6 billion. Legora is positioning beyond assistants towards services that complete legal work, and the round lands a month after larger rival Harvey raised $550 million at $15.5 billion. The company plans to spend the capital expanding across North America.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-10-22T04:40:00.000Z",
+      "updatedAt": "2026-10-22T04:40:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "legora",
+        "legal-tech",
+        "funding"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/legal-ai-startup-legora-raises-550m-series-e-at-8-8b-valuation/",
+          "publishedAt": "2026-10-21T17:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-tesla-optimus-production-profit-drop",
+      "kind": "daily",
+      "title": "Tesla starts Optimus production in Fremont as quarterly profit falls 43%",
+      "summary": "Tesla began building production-quality Optimus humanoid robots at its Fremont factory in space once used for electric vehicles, with Elon Musk calling the ramp slow and bumpy and targeting 20,000 units a week by the end of 2027 while conceding the design and the robot's AI still need work. The quarter was weak: revenue slipped to $28.04 billion from $28.09 billion a year earlier, net income fell 43% to $787 million, energy revenue dropped 16% and services grew 33%. Unsupervised Full Self-Driving slipped again, with customer robotaxi vehicles expected around the second quarter of next year.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-10-22T04:32:00.000Z",
+      "updatedAt": "2026-10-22T04:32:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "tesla",
+        "robotics",
+        "earnings"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/tesla-stars-optimus-robot-production-in-california-as-profit-falls-43/",
+          "publishedAt": "2026-10-21T19:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-meta-new-mexico-25bn-ruling",
+      "kind": "daily",
+      "title": "New Mexico judge orders Meta to pay $25bn over privacy claims",
+      "summary": "A New Mexico judge ordered Meta to pay $25 billion to the state after a two-week trial in which a jury found 43 million violations of consumer protection law, each carrying a $5,000 penalty. Reporting on the case says it covered a third-party app tied to the Cambridge Analytica breach as well as Meta's privacy policies and its handling of misinformation. Attorney General Raul Torrez said the state may have paid for school construction for a century. Meta will appeal; chief legal officer C.J. Mahoney called the ruling an attempt to tax speech and said the company expects to prevail.",
+      "category": "technology",
+      "priority": 58,
+      "publishedAt": "2026-10-22T04:25:00.000Z",
+      "updatedAt": "2026-10-22T04:25:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "meta",
+        "privacy",
+        "litigation"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/meta-ordered-to-pay-25-billion-in-case-related-to-cambridge-analytica-scandal/",
+          "publishedAt": "2026-10-21T17:45:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-waymo-las-vegas-airport",
+      "kind": "daily",
+      "title": "Waymo adds Las Vegas airport to its robotaxi map",
+      "summary": "Waymo started carrying customers to and from Harry Reid International Airport in Las Vegas, using dedicated autonomous vehicle zones at Terminals 1 and 3. It is the sixth major airport on the company's map after Phoenix Sky Harbor, Nashville, San Antonio, San Francisco and San Jose, and rides will be limited to a few passengers at first before opening to all users. Waymo only began public rides in Las Vegas in September but already covers a 24-square-mile area. Amazon's Zoox also serves the airport, and Nevada regulators cleared Tesla and Uber robotaxi permits in August.",
+      "category": "technology",
+      "priority": 48,
+      "publishedAt": "2026-10-22T04:18:00.000Z",
+      "updatedAt": "2026-10-22T04:18:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "waymo",
+        "robotaxi",
+        "las-vegas"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/waymo-starts-offering-rides-at-the-las-vegas-airport/",
+          "publishedAt": "2026-10-21T17:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-wall-street-spacex-chip-rebound-fed",
+      "kind": "daily",
+      "title": "SpaceX and chip gains lift Wall Street as the Fed decision looms",
+      "summary": "US indexes rose on 21 October as space and semiconductor shares rallied: the Dow added 360.21 points, or 0.7%, to 52,856.09, the Nasdaq Composite climbed 278.04 points, or 1.05%, to 26,702.86 and the S&P 500 gained 44.60 points, or 0.6%, to 7,757.17. SpaceX closed about 8% higher after results, Super Micro rose 9.5%, Nvidia 2.5% and AMD 3.4%, while Netflix fell 5.3% on soft guidance and AT&T dropped 6.4%. Oil stayed elevated near $98 for WTI and $110 for Brent. Traders expect the Federal Reserve to hold rates on 28 October while pricing a possible December hike.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-10-22T04:10:00.000Z",
+      "updatedAt": "2026-10-22T04:10:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "markets",
+        "federal-reserve",
+        "semiconductors"
+      ],
+      "sources": [
+        {
+          "publisher": "GoodReturns",
+          "url": "https://www.goodreturns.in/news/us-stock-market-dow-jones-nasdaq-s-p-500-climb-space-chip-stocks-lead-wall-street-outlook-oct-22-1542955.html",
+          "publishedAt": "2026-10-22T01:34:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-meta-earnings-non-voting-stock",
+      "kind": "daily",
+      "title": "Meta beats estimates and plans non-voting stock to fund AI",
+      "summary": "Meta reported third-quarter revenue of $64 billion, up 26% from a year earlier and ahead of expectations, while costs and expenses rose 68%. On the call chief financial officer Susan Li confirmed plans for a new class of non-voting stock distributed to existing holders through a stock dividend, usable for raising capital, employee compensation and acquisitions while preserving current Class A and B voting power. Mark Zuckerberg said more than 10 million people in the US and Canada have set up Muse agents, about a quarter use them daily, and heavy shoppers average baskets above $200.",
+      "category": "economy-markets",
+      "priority": 62,
+      "publishedAt": "2026-10-22T04:02:00.000Z",
+      "updatedAt": "2026-10-22T04:02:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "meta",
+        "earnings",
+        "capital-markets"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/meta-wants-to-pay-for-its-broad-ai-buildout-with-a-newly-created-class-of-stock/",
+          "publishedAt": "2026-10-21T21:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/meta-says-muse-has-over-10m-users-with-shopping-a-top-activity/",
+          "publishedAt": "2026-10-21T21:14:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-blackstone-ai-buildout-credit",
+      "kind": "daily",
+      "title": "Blackstone says AI debt jitters are not a 2008 rerun",
+      "summary": "Blackstone's AI chief Jas Khaira said recent stress in AI infrastructure credit reflects rising rates, hotter inflation and wider spreads rather than fragile lenders, arguing most data-centre debt sits behind hyperscalers with investment-grade balance sheets. CoreWeave shares fell more than 20% in recent days with debt near $50 billion, and Firmus scrapped a planned Australian listing at a roughly $30 billion valuation. Blackstone, with $1.3 trillion in assets, lent CoreWeave $2.3 billion in 2023 against GPUs and contracts. Khaira said returns on AI adoption remain uneven.",
+      "category": "economy-markets",
+      "priority": 54,
+      "publishedAt": "2026-10-22T03:55:00.000Z",
+      "updatedAt": "2026-10-22T03:55:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "credit",
+        "data-centres",
+        "blackstone"
+      ],
+      "sources": [
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/blackstones-jas-khaira-says-fears-over-ai-buildout-debt-are-overblown/",
+          "publishedAt": "2026-10-21T20:45:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-bayern-arsenal-rice-equaliser",
+      "kind": "daily",
+      "title": "Rice rescues Arsenal in Munich after Kane turns the tie",
+      "summary": "Declan Rice equalised in the 82nd minute to earn Arsenal a 2-2 draw at Bayern Munich in the Champions League. Eberechi Eze, on after Bukayo Saka went off injured inside 10 minutes, opened the scoring from Martin Odegaard's pass, Alphonso Davies levelled from Harry Kane's through-ball before the break, and Kane converted a 61st-minute penalty after Jurrien Timber handled. It was Kane's 16th goal in 22 games against Arsenal and a 10th straight Champions League scoring match. Arsenal avoided a first defeat in 14 league-phase games; Mikel Arteta said Saka's quad injury does not look good at all.",
+      "category": "football",
+      "priority": 70,
+      "publishedAt": "2026-10-22T03:45:00.000Z",
+      "updatedAt": "2026-10-22T03:45:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "bayern",
+        "arsenal"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/bayern-munich-vs-arsenal/report/577643",
+          "publishedAt": "2026-10-21T21:59:00.000Z"
+        },
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/oct/21/bayern-munich-arsenal-champions-league-match-report",
+          "publishedAt": "2026-10-21T22:00:00.000Z"
+        },
+        {
+          "publisher": "ESPN",
+          "url": "https://global.espn.com/football/report/_/gameId/401915312",
+          "publishedAt": "2026-10-21T21:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-real-madrid-leipzig-silva",
+      "kind": "daily",
+      "title": "Silva sets Madrid rolling as Mourinho's side put four past Leipzig",
+      "summary": "Real Madrid made it three wins from three in the Champions League by beating RB Leipzig 4-1, with Bernardo Silva opening the scoring from close range late in a tight first half and Arda Guler doubling the lead soon after the interval. Kylian Mbappe bent home a third, Tidiam Gomis pulled one back for the visitors and Yan Diomande volleyed a fourth late on. Mbappe has now scored in each of Madrid's European matches this season and has 12 goals in 12 games, and he stressed that every point matters in the race for a top-eight finish with five fixtures left.",
+      "category": "football",
+      "priority": 56,
+      "publishedAt": "2026-10-22T03:40:00.000Z",
+      "updatedAt": "2026-10-22T03:40:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "real-madrid",
+        "leipzig"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/oct/21/champions-league-roundup-real-madrid-leipzig-inter-shakhtar-sporting-lask-brugge-lens-betis-feyenoord",
+          "publishedAt": "2026-10-21T22:25:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-22-lask-sporting-comeback",
+      "kind": "daily",
+      "title": "Lask overturn Sporting in Lisbon for a first Champions League win",
+      "summary": "Lask came from behind at the Estadio Jose Alvalade to beat Sporting 3-2 and claim their first Champions League win of the season. Luis Suarez put the hosts ahead from the penalty spot after five minutes, Christoph Lang equalised 10 minutes later, and Sasa Kalajdzic and Krystof Danek struck to send the Austrian champions 3-1 up. Suarez scored again late for Sporting but the Portuguese side could not find an equaliser. The result leaves the Austrian title holders with a first European victory of the campaign after two defeats.",
+      "category": "football",
+      "priority": 46,
+      "publishedAt": "2026-10-22T03:35:00.000Z",
+      "updatedAt": "2026-10-22T03:35:00.000Z",
+      "retrievedAt": "2026-10-22T05:20:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "champions-league",
+        "lask",
+        "sporting"
+      ],
+      "sources": [
+        {
+          "publisher": "The Guardian",
+          "url": "https://www.theguardian.com/football/2026/oct/21/champions-league-roundup-real-madrid-leipzig-inter-shakhtar-sporting-lask-brugge-lens-betis-feyenoord",
+          "publishedAt": "2026-10-21T22:25:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-21-spacex-profit-ai-segment",
       "kind": "daily",

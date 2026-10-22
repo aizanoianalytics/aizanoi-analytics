@@ -1,0 +1,30 @@
+{
+  "id": "2026-10-22-tesla-optimus-production-profit-drop",
+  "title": "Tesla starts Optimus production in Fremont as quarterly profit falls 43%",
+  "summary": "Tesla began building production-quality Optimus humanoid robots at its Fremont factory in space once used for electric vehicles, with Elon Musk calling the ramp slow and bumpy and targeting 20,000 units a week by the end of 2027 while conceding the design and the robot's AI still need work. The quarter was weak: revenue slipped to $28.04 billion from $28.09 billion a year earlier, net income fell 43% to $787 million, energy revenue dropped 16% and services grew 33%. Unsupervised Full Self-Driving slipped again, with customer robotaxi vehicles expected around the second quarter of next year.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-10-22T04:32:00Z",
+  "updatedAt": "2026-10-22T04:32:00Z",
+  "retrievedAt": "2026-10-22T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "tesla",
+    "robotics",
+    "earnings"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/21/tesla-stars-optimus-robot-production-in-california-as-profit-falls-43/",
+      "publishedAt": "2026-10-21T19:00:00Z"
+    }
+  ]
+}

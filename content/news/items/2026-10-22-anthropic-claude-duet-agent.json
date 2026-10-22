@@ -1,0 +1,40 @@
+{
+  "id": "2026-10-22-anthropic-claude-duet-agent",
+  "title": "Anthropic opens Claude Duet, a proactive agent, to a US waitlist",
+  "summary": "Anthropic launched Claude Duet on 21 October, a standalone agent app for professionals and small businesses, as a waitlisted research preview for US Pro and Max subscribers. Built on Opus 5.5, Duet runs on its own cloud virtual machine with a browser, sends a morning brief across connected apps and messages only when something needs attention, asking approval before sensitive steps like payments. It reaches more than 6,000 Claude Marketplace connectors and can pay via Stripe Link and Shop Pay. Anthropic concedes it can misread threads or urgency and is weaker at errands like booking tickets.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-10-22T05:20:00Z",
+  "updatedAt": "2026-10-22T05:20:00Z",
+  "retrievedAt": "2026-10-22T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "ai-agents",
+    "claude"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1015843/anthropic-claude-duet-ai-agent",
+      "publishedAt": "2026-10-21T19:53:00Z"
+    },
+    {
+      "publisher": "Reuters via The Star",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/10/22/anthropic-unveils-claude-duet-ai-agent-app",
+      "publishedAt": "2026-10-22T00:17:00Z"
+    },
+    {
+      "publisher": "Anthropic",
+      "url": "https://claude.com/resources/product-announcements",
+      "publishedAt": "2026-10-21T20:00:00Z"
+    }
+  ]
+}

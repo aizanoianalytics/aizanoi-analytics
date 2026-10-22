@@ -1,0 +1,30 @@
+{
+  "id": "2026-10-22-meta-new-mexico-25bn-ruling",
+  "title": "New Mexico judge orders Meta to pay $25bn over privacy claims",
+  "summary": "A New Mexico judge ordered Meta to pay $25 billion to the state after a two-week trial in which a jury found 43 million violations of consumer protection law, each carrying a $5,000 penalty. Reporting on the case says it covered a third-party app tied to the Cambridge Analytica breach as well as Meta's privacy policies and its handling of misinformation. Attorney General Raul Torrez said the state may have paid for school construction for a century. Meta will appeal; chief legal officer C.J. Mahoney called the ruling an attempt to tax speech and said the company expects to prevail.",
+  "category": "technology",
+  "priority": 58,
+  "publishedAt": "2026-10-22T04:25:00Z",
+  "updatedAt": "2026-10-22T04:25:00Z",
+  "retrievedAt": "2026-10-22T05:20:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "meta",
+    "privacy",
+    "litigation"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/21/meta-ordered-to-pay-25-billion-in-case-related-to-cambridge-analytica-scandal/",
+      "publishedAt": "2026-10-21T17:45:00Z"
+    }
+  ]
+}
