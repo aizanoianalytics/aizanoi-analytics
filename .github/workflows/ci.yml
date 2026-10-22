@@ -147,7 +147,7 @@ jobs:
         run: |
           set -o pipefail
           node --test tests/browser/aizanoi-os-launch.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-launch.log
-      - name: Dungeon live gameplay QA
+      - name: Dungeon 3D facade QA
         env:
           AIZANOI_HTTP_BASE: 'http://127.0.0.1:4173'
           QA_BASE: 'http://127.0.0.1:4173'
@@ -155,8 +155,19 @@ jobs:
         run: |
           set -o pipefail
           status=0
-          node tests/browser-dungeon-live-qa.mjs 2>&1 | tee artifacts/diagnostics/browser-dungeon-live-qa.log || status=1
-          node tests/browser-dungeon-mastery-qa.mjs 2>&1 | tee artifacts/diagnostics/browser-dungeon-mastery-qa.log || status=1
+          node --test tests/dungeon-3d-facade.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-facade.log || status=1
+          exit $status
+      - name: Dungeon 3D playable run QA
+        env:
+          ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
+        run: |
+          set -o pipefail
+          status=0
+          node --test tests/browser/dungeon-3d-play.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-play.log || status=1
+          node --test tests/browser/dungeon-3d-ferryman.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-ferryman.log || status=1
+          node --test tests/browser/dungeon-3d-persistence.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-persistence.log || status=1
+          node --test tests/browser/dungeon-3d-victory.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-victory.log || status=1
+          node --test tests/browser/dungeon-3d-shell-tokens.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-shell-tokens.log || status=1
           exit $status
       - name: Upload browser diagnostics
         if: always()

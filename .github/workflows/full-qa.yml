@@ -167,11 +167,11 @@ jobs:
           node tests/field-system-v3-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/field-system-browser-smoke.log || status=1
           node tests/aizanoi-browser-smoke.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-browser-smoke.log || status=1
           exit $status
-      - name: Dungeon browser flow
+      - name: Dungeon 3D facade
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |
           set -o pipefail
-          node --test tests/browser/aizanoi-os-dungeon.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-browser.log
+          node --test tests/dungeon-3d-facade.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-browser.log
       - name: Flowerseller and Labs interaction
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }
         run: |

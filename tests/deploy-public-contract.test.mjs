@@ -121,18 +121,33 @@ test('HERMES_OPERATIONS.md documents the exact-SHA invocation form', () => {
   assert.match(ops, /AIZANOI_DEPLOY_SHA="\$TARGET_SHA" bash scripts\/deploy-public\.sh/);
 });
 
-test('deploy carries the self-hosted Dungeon route and Phaser vendor bundle', () => {
+test('deploy carries the self-hosted Dungeon 3D route without the retired Phaser bundle', () => {
   const page = readFileSync(`${repoRoot}/frontend/dungeon/index.html`, 'utf8');
-  assert.match(page, /<script src="\/vendor\/phaser\.min\.js"><\/script>/);
-  const vendor = statSync(`${repoRoot}/frontend/vendor/phaser.min.js`);
-  assert.ok(vendor.size > 1000000, `phaser vendor bundle must ship, got ${vendor.size} bytes`);
+  assert.match(page, /<script type="module" src="\.\.\/js\/v3\/apps\/dungeon\/js\/standalone\.js"><\/script>/, 'dungeon route must boot the self-hosted 3D standalone module');
+  assert.doesNotMatch(page, /phaser/i, 'retired Phaser engine must not be referenced by the 3D route');
+  assert.ok(!existsSync(`${repoRoot}/frontend/vendor/phaser.min.js`), 'retired Phaser vendor bundle must stay deleted');
+  const glbDir = `${repoRoot}/frontend/js/v3/apps/dungeon/assets/glb`;
+  for (const name of [
+    'floor_tile.glb',
+    'wall_block.glb',
+    'column.glb',
+    'hero_knight.glb',
+    'enemy_slime_golem.glb',
+    'treasure_chest.glb',
+    'portal_ring.glb',
+  ]) {
+    const asset = statSync(`${glbDir}/${name}`);
+    assert.ok(asset.isFile(), `${name} must be a regular file`);
+    assert.ok(asset.size > 0, `${name} must ship with bytes, got ${asset.size}`);
+  }
   const script = readFileSync(scriptPath, 'utf8');
-  assert.match(script, /"\$\{SOURCE\}\/"\s+"\$\{STAGING\}\/"/, 'deploy stages the whole frontend tree (dungeon + vendor included)');
+  assert.match(script, /"\$\{SOURCE\}\/"\s+"\$\{STAGING\}\/"/, 'deploy stages the whole frontend tree (3D dungeon kit included)');
 });
 
-test('service worker keeps the 1.18MB Phaser bundle out of precache (mobile data)', () => {
+test('service worker keeps the large GLB kit out of precache (mobile data)', () => {
   const sw = readFileSync(`${repoRoot}/frontend/service-worker.js`, 'utf8');
-  assert.doesNotMatch(sw, /phaser/, 'phaser must load on demand, never precache');
+  assert.doesNotMatch(sw, /\.glb/i, 'large 3D assets must load on demand, never precache');
+  assert.doesNotMatch(sw, /phaser/i, 'retired engine must stay gone');
 });
 
 test('post-promotion health failure rolls the active symlink back', async () => {

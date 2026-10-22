@@ -1,217 +1,346 @@
-/* css/game.css */
-/* Aizanoi Dungeon — AizanoiOS Uyumlu Tasarım Sistemi */
+/* Aizanoi Dungeon 3D — CSP-safe Roman bronze presentation layer.
 
-:root {
-  --az-bg: #14171d;
-  --az-surface: rgba(255, 255, 255, 0.90);
-  --az-surface-translucent: rgba(255, 255, 255, 0.82);
-  --az-surface-dark: rgba(26, 31, 44, 0.92);
-  --az-border: rgba(197, 160, 89, 0.45);
-  --az-border-strong: #c5a059;
-  --az-gold: #d4ac0d;
-  --az-text-main: #1e293b;
-  --az-text-muted: #64748b;
-  --az-text-light: #f8fafc;
-  --az-cyan-glow: #00d2ff;
-  --az-purple-spark: #a569bd;
-  --az-health-red: #e74c3c;
-  --az-health-green: #27ae60;
-  --az-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+   The tokens are scoped to the app root and the standalone body, NEVER to
+   :root. The dungeon is registered fullscreen, so it is mounted INSIDE the
+   AizanoiOS shell document; redefining --az-ink, --az-focus, --az-panel or
+   --az-surface-solid on :root would restyle the whole shell while the game
+   is open (dark text on a light paper surface, a broken focus ring, and a
+   forced dark colour-scheme on every native control in the shell). The
+   standalone route has no shell tokens, so it carries its own block. */
+.aizanoi-dungeon3d-app-root,
+.aizanoi-standalone-body {
+  --az-ink: #080909;
+  --az-obsidian: #101112;
+  --az-panel: rgba(18, 16, 13, 0.9);
+  --az-panel-solid: #15120e;
+  --az-bronze: #b98445;
+  --az-bronze-bright: #e0b66d;
+  --az-bronze-dark: #604120;
+  --az-ivory: #f2e8d3;
+  --az-muted: #c5b79f;
+  --az-blood: #a4312f;
+  --az-stamina: #4e966e;
+  --az-xp: #7370b5;
+  --az-focus: #ffe19a;
+  font-size: 16px;
 }
+/* Only the standalone page owns the page-level colour scheme. */
+.aizanoi-standalone-body { color-scheme: dark; }
 
-.aizanoi-standalone-body * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html, body.aizanoi-standalone-body {
-  width: 100%;
-  height: 100%;
-  height: 100dvh;
-  min-height: 100dvh;
-}
+/* Scoped reset: never leak box-sizing, button metrics or [hidden] to the shell. */
+.aizanoi-dungeon3d-app-root, .aizanoi-dungeon3d-app-root *, .aizanoi-dungeon3d-app-root *::before, .aizanoi-dungeon3d-app-root *::after { box-sizing: border-box; }
 
 .aizanoi-standalone-body {
-  width: 100%;
-  height: 100%;
-  height: 100dvh;
-  overflow: hidden;
-  background: radial-gradient(circle at center, #1e2430 0%, #0d1017 100%);
-  font-family: var(--az-font);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin: 0;
-  padding: 0;
-}
-
-#game-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  height: 100dvh;
-}
-
-.aizanoi-dungeon-app-root {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  height: 100dvh;
-  min-height: 240px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
-  background-color: #0b0d13;
+  background: radial-gradient(circle at 50% 35%, #272016 0, var(--az-obsidian) 42%, var(--az-ink) 100%);
+  color: var(--az-ivory);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 1rem;
 }
 
-.aizanoi-dungeon-app-root canvas {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(197, 160, 89, 0.35);
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-  touch-action: none;
+.aizanoi-dungeon3d-app-root button, .aizanoi-dungeon3d-app-root output, .aizanoi-dungeon3d-app-root progress { font: inherit; }
+.aizanoi-dungeon3d-app-root button { min-width: 48px; min-height: 48px; }
+.aizanoi-dungeon3d-app-root button:focus-visible { outline: 3px solid var(--az-focus); outline-offset: 3px; }
+.aizanoi-dungeon3d-app-root [hidden] { display: none !important; }
+/* The orientation overlay lives outside the app root; keep its hidden state. */
+#orientation-warning[hidden] { display: none !important; }
+
+#game-container,
+.aizanoi-dungeon-app-root,
+.aizanoi-dungeon3d-app-root {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--az-ink);
 }
 
-.az-play-anyway {
-  margin-top: 16px;
-  min-height: 44px;
-  padding: 10px 16px;
-  border: 1px solid #c5a059;
-  border-radius: 10px;
-  background: #141822;
-  color: #f5d77f;
-  font-weight: 700;
+.aizanoi-dungeon3d-app-root { position: relative; }
+.az-dungeon3d-stage { position: absolute; inset: 0; }
+#game-container canvas,
+.aizanoi-dungeon-app-root canvas,
+.az-dungeon3d-stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+
+/* Shared engraved button language. */
+.az-fs-fab,
+.az-dungeon-exit,
+.az-dungeon-begin,
+.az-play-anyway,
+.az-touch-action {
+  border: 1px solid var(--az-bronze-bright);
+  border-radius: 0.35rem;
+  background: linear-gradient(180deg, #3a2a19, #1a140d);
+  color: var(--az-ivory);
+  box-shadow: inset 0 1px rgba(255, 232, 183, 0.16), 0 4px 18px rgba(0, 0, 0, 0.45);
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   cursor: pointer;
 }
+
+.az-fs-fab:hover,
+.az-dungeon-exit:hover,
+.az-dungeon-begin:hover,
+.az-play-anyway:hover,
+.az-touch-action:hover { border-color: var(--az-focus); background: linear-gradient(180deg, #50391f, #22170d); }
 
 .az-fs-fab {
-  position: absolute;
-  right: max(12px, env(safe-area-inset-right));
-  bottom: max(12px, env(safe-area-inset-bottom));
+  position: fixed;
+  right: calc(1rem + env(safe-area-inset-right));
+  bottom: calc(1rem + env(safe-area-inset-bottom));
   z-index: 40;
-  min-width: 44px;
-  min-height: 44px;
-  border: 1px solid rgba(197, 160, 89, 0.7);
-  border-radius: 12px;
-  background: rgba(20, 24, 34, 0.9);
-  color: #f5d77f;
-  font-weight: 700;
-  cursor: pointer;
+  padding: 0.75rem 1rem;
 }
 
-/* Sol kenar donus kontrolu (yalnizca AizanoiOS mount) */
 .az-dungeon-exit {
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 50;
+  top: calc(1rem + env(safe-area-inset-top));
+  left: calc(1rem + env(safe-area-inset-left));
+  z-index: 40;
   display: flex;
   align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  padding: 10px 12px 10px 8px;
-  border: 1px solid rgba(197, 160, 89, 0.55);
-  border-left: none;
-  border-radius: 0 12px 12px 0;
-  background: rgba(20, 24, 34, 0.88);
-  color: #f5d77f;
-  font-family: var(--az-font);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  touch-action: manipulation;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
 }
-.az-dungeon-exit:hover {
-  background: rgba(38, 46, 64, 0.95);
-  border-color: #d4ac0d;
-}
-.az-dungeon-exit:focus-visible {
-  outline: 2px solid #d4ac0d;
-  outline-offset: 2px;
-}
-.az-dungeon-exit:active {
-  transform: translateY(-50%) scale(0.97);
-}
-.az-dungeon-exit-arrow {
-  font-size: 16px;
-  line-height: 1;
-}
-@media (max-width: 640px) {
-  .az-dungeon-exit-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-  }
-  .az-dungeon-exit {
-    padding: 10px;
-    min-width: 44px;
-    justify-content: center;
-    border-radius: 0 12px 12px 0;
-  }
-}
+.az-dungeon-exit-arrow { color: var(--az-bronze-bright); font-size: 1.25rem; }
 
-/* Orientation Warning Overlay */
-.orientation-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 99999;
-  background: rgba(11, 13, 19, 0.95);
-  backdrop-filter: blur(10px);
+/* Attract menu. */
+.az-dungeon-menu {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.orientation-card {
-  background: var(--az-surface);
-  border: 2px solid var(--az-border-strong);
-  border-radius: 16px;
-  padding: 2.5rem;
+  gap: 1.2rem;
+  padding: calc(2rem + env(safe-area-inset-top)) calc(1.25rem + env(safe-area-inset-right)) calc(2rem + env(safe-area-inset-bottom)) calc(1.25rem + env(safe-area-inset-left));
   text-align: center;
-  max-width: 90%;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  background: radial-gradient(circle at center, rgba(39, 29, 17, 0.36), rgba(4, 5, 5, 0.84));
+  backdrop-filter: blur(3px);
+}
+.az-dungeon-menu::before {
+  content: "✦";
+  color: var(--az-bronze-bright);
+  font-size: 1.5rem;
+  text-shadow: 0 0 20px rgba(224, 182, 109, 0.6);
+}
+.az-dungeon-menu-title {
+  margin: 0;
+  color: var(--az-ivory);
+  font-family: Cinzel, Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 7vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-shadow: 0 3px #3d2814, 0 10px 30px #000;
+}
+.az-dungeon-menu-sub { margin: 0; max-width: 38rem; color: var(--az-muted); font-size: 1rem; line-height: 1.65; }
+.az-dungeon-menu-note { margin: 0.25rem 0 0; max-width: 38rem; color: var(--az-muted); font-size: 0.85rem; line-height: 1.55; opacity: 0.85; }
+/* The Continue button is a secondary action: it must read as different from
+   Begin, but still be obviously clickable. */
+.az-dungeon-continue { padding: 0.7rem 1.9rem; font-size: 0.95rem; opacity: 0.92; }
+.az-dungeon-begin, .az-play-anyway { padding: 0.9rem 2.75rem; font-size: 1.05rem; }
+
+/* HUD — passive by default, interactive children opt in. */
+.az-hud {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  color: var(--az-ivory);
+  font-size: 1rem;
+  text-shadow: 0 2px 4px #000;
+}
+.az-hud-top {
+  position: absolute;
+  top: calc(1rem + env(safe-area-inset-top));
+  left: calc(1rem + env(safe-area-inset-left));
+  right: calc(1rem + env(safe-area-inset-right));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.az-hud-vitals {
+  width: min(25rem, 44vw);
+  padding: 0.8rem;
+  border: 1px solid var(--az-bronze-dark);
+  border-radius: 0.35rem;
+  background: linear-gradient(135deg, rgba(29, 24, 18, 0.94), rgba(9, 10, 10, 0.78));
+  box-shadow: inset 0 0 0 1px rgba(221, 172, 93, 0.08), 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+.az-hud-meter { display: grid; grid-template-columns: 6.75rem 1fr auto; align-items: center; gap: 0.5rem; min-height: 1.7rem; }
+.az-hud-meter + .az-hud-meter { margin-top: 0.35rem; }
+.az-hud-health { --az-meter-accent: var(--az-blood); }
+.az-hud-stamina { --az-meter-accent: var(--az-stamina); }
+.az-hud-xp { --az-meter-accent: var(--az-xp); }
+.az-hud-meter-label { color: var(--az-muted); font-family: Georgia, serif; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.az-hud-meter-value { min-width: 5rem; text-align: right; color: var(--az-ivory); font-variant-numeric: tabular-nums; }
+.az-hud-meter-track {
+  width: 100%; height: 0.75rem; overflow: hidden;
+  border: 1px solid #050505; border-radius: 0.15rem;
+  appearance: none; background: #080808;
+  box-shadow: inset 0 2px 4px #000;
+}
+.az-hud-meter-track::-webkit-progress-bar { background: #080808; }
+.az-hud-meter-track::-webkit-progress-value { background: linear-gradient(90deg, #72211f, var(--az-blood)); }
+.az-hud-meter-track::-moz-progress-bar { background: linear-gradient(90deg, #72211f, var(--az-blood)); }
+.az-hud-stamina .az-hud-meter-track::-webkit-progress-value { background: linear-gradient(90deg, #315d48, var(--az-stamina)); }
+.az-hud-stamina .az-hud-meter-track::-moz-progress-bar { background: linear-gradient(90deg, #315d48, var(--az-stamina)); }
+.az-hud-xp .az-hud-meter-track::-webkit-progress-value { background: linear-gradient(90deg, #454271, var(--az-xp)); }
+.az-hud-xp .az-hud-meter-track::-moz-progress-bar { background: linear-gradient(90deg, #454271, var(--az-xp)); }
+
+.az-hud-run { padding: 0.65rem 0.85rem; border-right: 3px solid var(--az-bronze); background: linear-gradient(90deg, transparent, rgba(12, 10, 8, 0.84)); text-align: right; }
+.az-hud-run p { margin: 0; }
+.az-hud-chapter { color: var(--az-bronze-bright); font-family: Georgia, serif; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.az-hud-wave { color: var(--az-muted); }
+.az-hud-gold { margin-top: 0.3rem !important; color: #f1c86f; font-weight: 800; }
+
+.az-hud-boss {
+  position: absolute;
+  top: calc(1rem + env(safe-area-inset-top));
+  left: 50%;
+  width: min(34rem, 52vw);
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--az-bronze);
+  background: rgba(12, 8, 7, 0.92);
+  box-shadow: 0 8px 30px #000;
+}
+.az-hud-boss-name { grid-column: 1 / -1; text-align: center; color: var(--az-bronze-bright); font-family: Georgia, serif; letter-spacing: 0.12em; text-transform: uppercase; }
+.az-hud-combo { position: absolute; top: 28%; right: calc(1.25rem + env(safe-area-inset-right)); color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: clamp(1.25rem, 4vw, 2.5rem); font-weight: 900; transform: rotate(-3deg); }
+
+.az-hud-crosshair { position: absolute; top: 50%; left: 50%; width: 1.6rem; height: 1.6rem; transform: translate(-50%, -50%); opacity: 0.85; }
+.az-hud-crosshair::before, .az-hud-crosshair::after { content: ""; position: absolute; top: 50%; left: 50%; background: var(--az-ivory); box-shadow: 0 0 3px #000; transform: translate(-50%, -50%); }
+.az-hud-crosshair::before { width: 1.6rem; height: 2px; }
+.az-hud-crosshair::after { width: 2px; height: 1.6rem; }
+
+/* Claimed blessings, listed so the player can read their own build. */
+.az-hud-blessings { position: absolute; top: calc(1rem + env(safe-area-inset-top)); left: calc(1rem + env(safe-area-inset-left)); margin: 0; padding: 0; list-style: none; max-width: 14rem; }
+.az-hud-blessing-item { margin-bottom: 0.3rem; padding: 0.25rem 0.5rem; border-left: 2px solid var(--az-bronze); background: linear-gradient(90deg, rgba(18, 14, 9, 0.82), transparent); color: var(--az-ivory); font-size: 0.78rem; line-height: 1.35; }
+
+.az-hud-damage-vignette { position: absolute; inset: 0; opacity: 0; background: radial-gradient(circle, transparent 38%, rgba(132, 15, 13, 0.7) 100%); transition: opacity 100ms ease-out; }
+.az-hud-damage-vignette.is-active { opacity: 1; animation: az-damage-pulse 260ms ease-out both; }
+@keyframes az-damage-pulse { 0% { opacity: 0; } 24% { opacity: 1; } 100% { opacity: 0; } }
+
+.az-hud-loot-feed { position: absolute; right: calc(1rem + env(safe-area-inset-right)); bottom: calc(1rem + env(safe-area-inset-bottom)); width: min(22rem, 45vw); margin: 0; padding: 0; list-style: none; text-align: right; }
+.az-hud-loot-item { margin-top: 0.35rem; padding: 0.5rem 0.7rem; border-right: 2px solid var(--az-bronze-bright); background: linear-gradient(90deg, transparent, rgba(18, 14, 9, 0.88)); color: var(--az-ivory); animation: az-loot-in 240ms ease-out both; }
+@keyframes az-loot-in { from { opacity: 0; transform: translateX(1rem); } }
+.az-hud-announcer { position: absolute; left: 50%; top: 18%; width: min(38rem, 85vw); transform: translateX(-50%); color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 1.25rem; font-weight: 800; text-align: center; text-transform: uppercase; }
+
+.az-hud-panel { pointer-events: auto; position: absolute; top: 50%; left: 50%; width: min(32rem, calc(100% - 2rem)); transform: translate(-50%, -50%); padding: 2rem; border: 1px solid var(--az-bronze-bright); background: linear-gradient(145deg, rgba(33, 27, 20, 0.98), rgba(8, 9, 9, 0.98)); box-shadow: 0 20px 80px #000; text-align: center; }
+.az-hud-panel::before { content: ""; position: absolute; inset: 0.35rem; border: 1px solid var(--az-bronze-dark); pointer-events: none; }
+.az-hud-panel-title { margin: 0 0 1rem; color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 2rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.az-hud-panel-copy { margin: 0; color: var(--az-muted); line-height: 1.6; }
+.az-hud-help { top: auto; left: auto; right: calc(1rem + env(safe-area-inset-right)); bottom: calc(1rem + env(safe-area-inset-bottom)); width: min(28rem, calc(100% - 2rem)); transform: none; text-align: left; }
+
+/* Touch integration classes; controls can be added without inline coordinates. */
+.az-touch-controls { display: none; position: absolute; inset: 0; z-index: 25; pointer-events: none; touch-action: none; }
+.az-touch-joystick { position: absolute; left: calc(1.25rem + env(safe-area-inset-left)); bottom: calc(1.25rem + env(safe-area-inset-bottom)); width: 8rem; height: 8rem; border: 2px solid rgba(224, 182, 109, 0.55); border-radius: 50%; background: rgba(10, 9, 7, 0.52); box-shadow: inset 0 0 2rem #000; pointer-events: auto; touch-action: none; }
+.az-touch-joystick.is-active { border-color: var(--az-focus); box-shadow: inset 0 0 2rem #000, 0 0 1.5rem rgba(255, 225, 154, 0.25); }
+.az-touch-joystick-knob { position: absolute; top: 50%; left: 50%; width: 3.6rem; height: 3.6rem; transform: translate(-50%, -50%); border: 1px solid var(--az-bronze-bright); border-radius: 50%; background: radial-gradient(circle at 40% 35%, #76512b, #24180d); }
+.az-touch-actions { position: absolute; right: calc(1.25rem + env(safe-area-inset-right)); bottom: calc(1.25rem + env(safe-area-inset-bottom)); display: grid; grid-template-columns: repeat(2, 4.25rem); gap: 0.75rem; pointer-events: auto; }
+.az-touch-action { width: 4.25rem; height: 4.25rem; padding: 0.25rem; border-radius: 50%; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.az-touch-action--primary { width: 5rem; height: 5rem; margin-top: -0.75rem; border-width: 2px; }
+
+/* Error, fallback and orientation surfaces. */
+.aizanoi-dungeon-error,
+.aizanoi-dungeon3d-card,
+.orientation-overlay { position: absolute; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: calc(1.5rem + env(safe-area-inset-top)) calc(1.5rem + env(safe-area-inset-right)) calc(1.5rem + env(safe-area-inset-bottom)) calc(1.5rem + env(safe-area-inset-left)); background: rgba(7, 8, 8, 0.94); color: var(--az-ivory); text-align: center; }
+.aizanoi-dungeon-error strong, .aizanoi-dungeon3d-card strong { font-family: Georgia, serif; font-size: 1.5rem; color: var(--az-bronze-bright); }
+.aizanoi-dungeon-error p, .aizanoi-dungeon3d-card p { max-width: 36rem; margin: 0; color: var(--az-muted); line-height: 1.6; }
+.orientation-card { max-width: 28rem; padding: 2rem; border: 1px solid var(--az-bronze-bright); background: var(--az-panel-solid); box-shadow: 0 20px 70px #000; }
+.orientation-card h2 { margin: 0.75rem 0; font-family: Georgia, serif; font-size: 1.5rem; }
+.orientation-card p { margin: 0 0 1rem; color: var(--az-muted); line-height: 1.55; }
+.rotate-icon { color: var(--az-bronze-bright); font-size: 2.5rem; }
+
+@media (hover: hover) and (pointer: fine) { .az-touch-controls { display: none; } }
+@media (pointer: coarse) {
+  .az-touch-controls { display: block; }
+  .az-fs-fab { right: calc(12rem + env(safe-area-inset-right)); }
 }
 
-.rotate-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  animation: pulseRotate 2s infinite ease-in-out;
+@media (max-width: 840px) {
+  .az-dungeon-exit-label { display: none; }
+  .az-hud-top { gap: 0.5rem; }
+  .az-hud-vitals { width: min(70vw, 24rem); padding: 0.55rem; }
+  .az-hud-meter { grid-template-columns: 1fr auto; gap: 0.35rem; }
+  .az-hud-meter-label { grid-column: 1 / -1; }
+  .az-hud-run { max-width: 28vw; }
+  .az-hud-boss { top: auto; bottom: calc(1rem + env(safe-area-inset-bottom)); width: min(34rem, calc(100% - 2rem)); }
+  .az-hud-loot-feed { bottom: calc(10rem + env(safe-area-inset-bottom)); width: 70vw; }
+  .az-hud-crosshair { width: 1.25rem; height: 1.25rem; }
 }
 
-@keyframes pulseRotate {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.15) rotate(90deg); }
+@media (orientation: portrait) {
+  .az-dungeon-menu-title { font-size: clamp(2rem, 12vw, 3.5rem); }
+  .az-hud-top { flex-direction: column; right: auto; }
+  .az-hud-vitals { width: min(78vw, 24rem); }
+  .az-hud-run { align-self: flex-start; max-width: none; text-align: left; border-right: 0; border-left: 3px solid var(--az-bronze); background: linear-gradient(90deg, rgba(12, 10, 8, 0.84), transparent); }
+  .az-touch-joystick { width: 7rem; height: 7rem; }
+  .az-touch-actions { grid-template-columns: repeat(2, 4rem); }
+  .az-touch-action { width: 4rem; height: 4rem; }
 }
 
-.orientation-card h2 {
-  color: var(--az-text-main);
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-  font-weight: 700;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
+  .az-hud-damage-vignette.is-active { opacity: 0.35; }
 }
 
-.orientation-card p {
-  color: var(--az-text-muted);
-  font-size: 0.95rem;
+/* Runtime feedback and terminal states. */
+.az-dungeon-effects {
+  position: absolute;
+  inset: 0;
+  z-index: 24;
+  overflow: hidden;
+  pointer-events: none;
+}
+.az-floating-damage {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  color: var(--az-ivory);
+  font-family: Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-shadow: 0 2px 4px #000;
+  transform: translate(-50%, 0);
+  animation: az-damage-float 650ms ease-out both;
+}
+.az-floating-damage.is-critical { color: var(--az-bronze-bright); font-size: 2rem; }
+@keyframes az-damage-float {
+  from { opacity: 1; transform: translate(-50%, 0) scale(0.85); }
+  to { opacity: 0; transform: translate(-50%, -4rem) scale(1.15); }
+}
+.az-dungeon-defeat { z-index: 35; }
+.az-dungeon-defeat .az-dungeon-begin { margin-top: 1.25rem; }
+
+/* The victory screen and its run ledger. */
+.az-dungeon-victory { z-index: 36; }
+.az-dungeon-victory .az-dungeon-begin { margin-top: 1.25rem; }
+.az-dungeon-ledger { display: grid; grid-template-columns: 1fr auto; gap: 0.35rem 1.5rem; margin: 1.1rem 0 0; padding: 0.9rem 1.1rem; border-top: 1px solid rgba(197, 160, 89, 0.35); border-bottom: 1px solid rgba(197, 160, 89, 0.35); text-align: left; }
+.az-dungeon-ledger-label { color: var(--az-muted); font-size: 0.9rem; }
+.az-dungeon-ledger-value { margin: 0; color: var(--az-ivory); font-family: Georgia, serif; font-weight: 700; text-align: right; }
+.aizanoi-dungeon3d-app-root:focus { outline: none; }
+.aizanoi-dungeon3d-app-root:focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: 0.25rem;
+  z-index: 60;
+  border: 2px solid var(--az-focus);
+  pointer-events: none;
 }
 
-.orientation-overlay[hidden] {
-  display: none !important;
+@media (forced-colors: active) {
+  .az-hud-meter-track, .az-touch-action, .az-dungeon-begin, .az-dungeon-exit { forced-color-adjust: none; border: 2px solid CanvasText; }
 }
