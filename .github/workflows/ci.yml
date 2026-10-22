@@ -157,6 +157,14 @@ jobs:
           status=0
           node --test tests/dungeon-3d-facade.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-facade.log || status=1
           exit $status
+      - name: Dungeon 3D playable run QA
+        env:
+          ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
+        run: |
+          set -o pipefail
+          status=0
+          node --test tests/browser/dungeon-3d-play.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-play.log || status=1
+          exit $status
       - name: Upload browser diagnostics
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
