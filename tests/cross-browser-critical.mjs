@@ -65,7 +65,7 @@ try{
         while(Date.now()<deadline){
           if(document.querySelector('#game-container canvas'))return {mode:'scene'};
           if(document.querySelector('.aizanoi-dungeon3d-card'))return {mode:'repair'};
-          await new Promise((resolve)=>setTimeout(resolve,250));
+          await new Promise((resolve)=>{setTimeout(resolve,250);});
         }
         return {mode:'none'};
       });
