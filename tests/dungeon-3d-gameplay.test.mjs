@@ -141,6 +141,8 @@ test('wave completion creates deterministic loot and chest advances chapters int
   spawnWave(state, 14);
   assert.equal(state.wave.chapter, 14);
   assert.ok(state.wave.scale > 1);
+  tick(state, 1.2);
+  assert.ok(state.enemies.length > 0);
   assert.ok(state.enemies.every((unit) => unit.maxHp > 100));
 });
 
@@ -149,6 +151,9 @@ test('spawnWave covers five combat archetypes and scales deterministically', () 
   const b = createGameState(42);
   spawnWave(a, 10);
   spawnWave(b, 10);
+  // Waves arrive through 1s spawn portals; step past the telegraph first.
+  tick(a, 1.2);
+  tick(b, 1.2);
   assert.equal(serializeRun(a), serializeRun(b));
   const roles = new Set(a.enemies.map((unit) => unit.archetype));
   for (const role of ['chaser', 'archer', 'tank', 'summoner', 'boss']) assert.ok(roles.has(role));
@@ -164,6 +169,9 @@ test('three blessings apply once with concrete build effects', () => {
   assert.ok(state.player.maxHp > base.hp);
   assert.ok(state.player.damageMultiplier > base.damage);
   assert.ok(state.player.dashCooldownMax < base.dash);
+  // Blessings stack to level III: second pick stacks, fourth is refused.
+  assert.equal(chooseBlessing(state, 'fury').chosen, true);
+  assert.equal(chooseBlessing(state, 'fury').chosen, true);
   assert.equal(chooseBlessing(state, 'fury').chosen, false);
   assert.throws(() => chooseBlessing(state, 'unknown'), /Unknown blessing/);
 });
@@ -298,10 +306,11 @@ test('five rewards never silently duplicate a blessing and histories stay bounde
     const chosen = result.blessing ? chooseBlessing(state, result.blessing) : result.fallback;
     labels.push(chosen.label);
   }
-  // The 3D build now has the 2D build's full blessing pool, so five rewards
-  // are five distinct blessings — the pool only runs dry after twelve.
-  assert.equal(new Set(state.blessings).size, 5);
-  assert.equal(state.blessings.length, 5);
+  // Blessings stack to level III, so five rewards are five picks (levels),
+  // distinct or stacked — the pool only runs dry after 12 blessings at level III.
+  const totalLevels = Object.values(state.blessingLevels || {}).reduce((sum, level) => sum + level, 0);
+  assert.equal(totalLevels, 5);
+  assert.ok(state.blessings.length <= 5);
   assert.ok(labels.every(Boolean), 'every reward has truthful copy');
   assert.ok(labels.every((label) => !/gold|heal/i.test(label)),
     'a reward must not silently degrade while blessings are still available');
@@ -310,6 +319,7 @@ test('five rewards never silently duplicate a blessing and histories stay bounde
   // handing out a duplicate blessing.
   const exhausted = createGameState('exhausted');
   exhausted.blessings = BLESSING_IDS.slice();
+  exhausted.blessingLevels = Object.fromEntries(BLESSING_IDS.map((id) => [id, 3]));
   exhausted.chapter = 1;
   exhausted.wave = { active: true, complete: false, rewarded: false, chapter: 1, scale: 1 };
   exhausted.enemies = [];

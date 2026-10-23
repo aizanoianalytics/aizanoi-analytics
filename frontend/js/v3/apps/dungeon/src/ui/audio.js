@@ -9,6 +9,10 @@ const CUES = Object.freeze({
   loot: { wave: 'sine', from: 440, to: 880, duration: 0.18, gain: 0.08 },
   portal: { wave: 'sine', from: 180, to: 610, duration: 0.5, gain: 0.06 },
   boss: { wave: 'square', from: 72, to: 42, duration: 0.65, gain: 0.09 },
+  parry: { wave: 'sawtooth', from: 880, to: 220, duration: 0.22, gain: 0.1 },
+  special: { wave: 'sawtooth', from: 140, to: 620, duration: 0.4, gain: 0.1 },
+  rhythm: { wave: 'sine', from: 660, to: 990, duration: 0.12, gain: 0.06 },
+  'focus-shot': { wave: 'triangle', from: 880, to: 240, duration: 0.2, gain: 0.08 },
 });
 
 /**
@@ -51,16 +55,18 @@ export function createAudioManager(options = {}) {
     }
   }
 
-  function synth(cue, intensity) {
+  function synth(cue, intensity, variant = 0) {
     if (!context || !master || context.state === 'suspended' || destroyed || !enabled) return false;
     try {
       const now = context.currentTime;
       const amount = Math.max(0.2, Math.min(2, Number(intensity) || 1));
+      // SFX variation: 4 pitch variants per cue so repeats do not fatigue.
+      const detune = 1 + ((Number(variant) || 0) % 4) * 0.06;
       const oscillator = context.createOscillator();
       const envelope = context.createGain();
       oscillator.type = cue.wave;
-      oscillator.frequency.setValueAtTime(cue.from * amount, now);
-      oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, cue.to), now + cue.duration);
+      oscillator.frequency.setValueAtTime(cue.from * amount * detune, now);
+      oscillator.frequency.exponentialRampToValueAtTime(Math.max(20, cue.to * detune), now + cue.duration);
       envelope.gain.setValueAtTime(Math.max(0.0001, cue.gain * amount), now);
       envelope.gain.exponentialRampToValueAtTime(0.0001, now + cue.duration);
       oscillator.connect(envelope);
@@ -76,10 +82,23 @@ export function createAudioManager(options = {}) {
   function play(name, options = {}) {
     const cue = CUES[name];
     if (!cue) return false;
-    return synth(cue, options.intensity);
+    // A caller-supplied variant selects a pitch; otherwise rotate cheaply.
+    const variant = options.variant ?? (playCounter = (playCounter + 1) % 4);
+    return synth(cue, options.intensity, variant);
   }
+  let playCounter = 0;
 
   function setEnabled(value) { enabled = Boolean(value); return enabled; }
+
+  function setVolumes({ master: masterVolume, music, sfx } = {}) {
+    void music; void sfx;
+    if (finite(masterVolume) && master) {
+      try { master.gain.value = Math.max(0, Math.min(1, masterVolume)); return true; } catch (_) { return false; }
+    }
+    return false;
+  }
+
+  const finite = (value) => typeof value === 'number' && Number.isFinite(value);
 
   async function destroy() {
     if (destroyed) return;
@@ -97,6 +116,7 @@ export function createAudioManager(options = {}) {
     resume,
     play,
     setEnabled,
+    setVolumes,
     destroy,
   };
 }

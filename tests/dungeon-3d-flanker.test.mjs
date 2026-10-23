@@ -135,6 +135,7 @@ test('the flanker lunge actually covers ground', () => {
 test('the flanker is part of the later chapter pools', () => {
   const state = createGameState('flanker-pool');
   spawnWave(state, 7);
+  run(state, 1.2);
   assert.ok(state.enemies.some((enemy) => enemy.archetype === 'flanker'),
     'chapter 7 must be able to spawn a flanker');
 });
@@ -142,6 +143,7 @@ test('the flanker is part of the later chapter pools', () => {
 test('a boss chapter includes the flanker alongside the boss', () => {
   const state = createGameState('flanker-boss-chapter');
   spawnWave(state, 5);
+  run(state, 1.2);
   const roles = state.enemies.map((enemy) => enemy.archetype);
   assert.ok(roles.includes('flanker'), 'a boss chapter must include a flanker');
   assert.ok(roles.includes('boss'), 'a boss chapter must include the boss');

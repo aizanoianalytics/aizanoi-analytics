@@ -35,6 +35,7 @@ test('the Styx Ferryman model ships, parses and reaches the live route', async (
     await page.waitForSelector('.az-dungeon-begin', { timeout: 30000 });
     await page.locator('.az-dungeon-begin').click();
     await page.waitForFunction(() => window.AIZANOI_DUNGEON_GAME?.state === 'playing', null, { timeout: 20000 });
+    await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(70));
     await page.waitForTimeout(1500);
 
     const vendor = await resolvePath(page, [

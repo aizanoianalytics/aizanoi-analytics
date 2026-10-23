@@ -12,6 +12,7 @@ import {
 } from '../frontend/js/v3/apps/dungeon/src/game/index.js';
 
 const placeEnemy = (state, x, z) => {
+  while (state.pendingSpawns?.length) stepGame(state, {}, 1 / 60);
   const enemy = state.enemies[0];
   enemy.x = x;
   enemy.z = z;

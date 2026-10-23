@@ -27,6 +27,7 @@ test('the victory screen shows a run ledger when the descent is complete', async
     await page.waitForSelector('.az-dungeon-begin', { timeout: 30000 });
     await page.locator('.az-dungeon-begin').click();
     await page.waitForFunction(() => window.AIZANOI_DUNGEON_GAME?.state === 'playing', null, { timeout: 20000 });
+    await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(70));
     await page.waitForTimeout(1200);
 
     // No victory yet: the run has barely started.
@@ -136,7 +137,7 @@ test('the victory screen offers a way to start a new run', async () => {
     // when it pumps the victory event.
     await page.waitForSelector('.az-dungeon-victory .az-dungeon-begin', { timeout: 20000 });
 
-    const restart = page.locator('.az-dungeon-victory .az-dungeon-begin');
+    const restart = page.locator('.az-dungeon-victory .az-dungeon-begin').filter({ hasText: 'Descend again' });
     assert.equal(await restart.count(), 1, 'the victory screen must offer a new run');
     // The event is dispatched directly rather than clicked with the mouse.
     // The victory panel is centred with a translate(-50%, -50%) transform and

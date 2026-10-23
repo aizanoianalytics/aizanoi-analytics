@@ -130,3 +130,76 @@ test('runtime exposes truthful read-only QA state and remains CSP safe', () => {
   assert.doesNotMatch(runtime, /AIZANOI_DUNGEON_GAME\s*=\s*[^;]*(?:spawn|kill|damage|teleport)/i);
   assert.doesNotMatch(combined, /\bstyle\s*=|\.style\b|\bon(?:click|pointerdown|touchstart)\s*=/i);
 });
+
+test('settings persist separately and drive assist defaults', () => {
+  const source = read('src/runtime/GameApp.js');
+  const settings = readFileSync(base + 'src/game/settings.js', 'utf8');
+  assert.match(source, /from\s+['"]\.\.\/game\/settings\.js['"]/);
+  assert.match(source, /loadSettings\(this\.storage\)/);
+  assert.match(source, /saveSettings\(this\.storage,\s*this\.settings\)/);
+  assert.match(settings, /aizanoi\.dungeon\.settings\.v1/);
+  assert.match(source, /dailySeed/);
+});
+
+test('blessing pick screen offers 3 cards with reroll and skip', () => {
+  const source = read('src/runtime/GameApp.js');
+  assert.match(source, /showPick\(chest\)/);
+  assert.match(source, /pickChoice\(index\)/);
+  assert.match(source, /pickReroll\(\)/);
+  assert.match(source, /pickSkip\(\)/);
+  assert.match(source, /rerollChest/);
+  assert.match(source, /chooseBlessing\(this\.state,\s*choice\.id\)/);
+  assert.match(source, /Digit1/);
+  assert.match(source, /az-dungeon-pick-card/);
+  assert.match(source, /az-dungeon-rarity-/);
+});
+
+test('defeat offers retry-same-seed and victory offers share text', () => {
+  const source = read('src/runtime/GameApp.js');
+  assert.match(source, /retrySeed\(\)/);
+  assert.match(source, /Retry same seed/);
+  assert.match(source, /createGameState\(seed\)/);
+  assert.match(source, /az-dungeon-share/);
+  assert.match(source, /clipboard/);
+});
+
+test('gamepad input and haptics are wired without breaking keyboard', () => {
+  const source = read('src/runtime/GameApp.js');
+  assert.match(source, /pollGamepad/);
+  assert.match(source, /getGamepads/);
+  assert.match(source, /navigator\.vibrate/);
+  assert.match(source, /KeyJ/);
+});
+
+test('hit-stop tiers and slow-mo follow the juice table', () => {
+  const feedback = readFileSync(base + 'src/ui/feedback.js', 'utf8');
+  assert.match(feedback, /stop:\s*30/);
+  assert.match(feedback, /stop:\s*60/);
+  assert.match(feedback, /stop:\s*100/);
+  assert.match(feedback, /stop:\s*120/);
+  assert.match(feedback, /slow-mo/);
+  const runtime = read('src/runtime/GameApp.js');
+  assert.match(runtime, /feedback\.emit\('parry'/);
+  assert.match(runtime, /feedback\.emit\('special'/);
+});
+
+test('audio carries distinct cues with variants and a volume bus', () => {
+  const audio = readFileSync(base + 'src/ui/audio.js', 'utf8');
+  for (const cue of ['parry', 'special', 'rhythm', 'focus-shot']) {
+    assert.ok(audio.includes(cue), `missing cue ${cue}`);
+  }
+  assert.match(audio, /variant/);
+  assert.match(audio, /setVolumes/);
+});
+
+test('arena variants and local marks meta are wired to the runtime', () => {
+  const source = read('src/runtime/GameApp.js');
+  assert.match(source, /loadMeta\(this\.storage\)/);
+  assert.match(source, /recordRun\(this\.meta/);
+  assert.match(source, /saveMeta\(this\.storage,\s*this\.meta\)/);
+  assert.match(source, /event\.type === 'arena'/);
+  const game = read('src/game/index.js');
+  assert.match(game, /broken-bridge/);
+  assert.match(game, /ruined-stairs/);
+  assert.match(game, /chooseArena/);
+});

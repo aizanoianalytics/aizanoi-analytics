@@ -162,6 +162,7 @@ test('the blessing of fury still multiplies the bow damage', () => {
 test('spawning a wave keeps the bow contract intact', () => {
   const state = createGameState('bow-wave');
   spawnWave(state, 1);
+  for (let i = 0; i < 72; i += 1) stepGame(state, {}, 1 / 60);
   assert.ok(state.enemies.length > 0);
   assert.equal(state.player.bowReadyAt, 0);
   assert.equal(state.inputLatch.shoot, false);
