@@ -11,9 +11,9 @@ test('Excel Import Center hosts both workbooks with their approved SharePoint ac
   assert.match(html, /<div[^>]+data-view-panel="import"[\s\S]*?id="recruitmentLiveCard"/);
   assert.match(html, /<div[^>]+data-view-panel="import"[\s\S]*?id="internLiveCard"/);
   assert.match(html, /id="recruitmentLiveOpen"/);
-  assert.ok(html.includes(`href="${SHAREPOINT}"`), 'open action must preserve the approved SharePoint link exactly');
+  assert.ok(html.includes(`href="${SHAREPOINT.replaceAll('&', '&amp;')}"`), 'open action must preserve the approved SharePoint link exactly');
   assert.match(html, /id="recruitmentLiveDownload"/);
-  assert.ok(html.includes(`href="${DOWNLOAD}"`), 'download action must derive from the approved SharePoint link');
+  assert.ok(html.includes(`href="${DOWNLOAD.replaceAll('&', '&amp;')}"`), 'download action must derive from the approved SharePoint link');
   assert.match(html, /id="internLiveOpen"/);
   assert.match(html, /id="internLiveDownload"/);
   assert.doesNotMatch(html, /<iframe[^>]*recruitmentLive/i);
@@ -43,7 +43,7 @@ test('Unified multi-file dropzone routes every workbook by header schema', () =>
   assert.match(html, /async function routeSingleWorkbook\(file\)/);
   assert.match(html, /RECRUITMENT_WORKBOOK_HEADERS\.every/);
   assert.match(html, /INTERN_REQUIRED_HEADERS\.every/);
-  assert.match(html, /beklenen iki yapıdan birine uymuyor/);
+  assert.match(html, /beklenen üç yapıdan birine uymuyor/);
   assert.match(html, /bindImportDropzone\("#unifiedExcelDropzone", "#unifiedExcelInput", "#unifiedImportResult"\)/);
   assert.match(html, /bindImportDropzone\("#excelDropzone", "#excelFileInput", "#importResult"\)/);
   assert.match(html, /bindImportDropzone\("#internRecruitmentDropzone", "#internRecruitmentFileInput", "#internImportResult"\)/);

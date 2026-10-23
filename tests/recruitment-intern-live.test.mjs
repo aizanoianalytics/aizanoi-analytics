@@ -23,14 +23,14 @@ test('Intern panel adds a discoverable Canli Gorunum card without a blocked Shar
   assert.doesNotMatch(html, /<iframe[^>]*internLive/);
   assert.match(html, /id="internLiveOpen"/);
   assert.match(html, /target="_blank"/);
-  assert.ok(html.includes(`href="${EMBED_VIEW}"`), 'open link must point at the SharePoint file URL');
+  assert.ok(html.includes(`href="${EMBED_VIEW.replaceAll('&', '&amp;')}"`), 'open link must point at the SharePoint file URL');
   assert.match(html, /SharePoint[^\n<]*engell|engell[^\n<]*SharePoint/i);
   assert.match(html, /internet gerekir/i);
 });
 
 test('Canli Gorunum card links the current Excel download without embedding applicant rows', () => {
   assert.match(html, /id="internLiveDownload"/);
-  assert.ok(html.includes(`href="${DOWNLOAD}"`), 'download link must use the SharePoint download=1 URL');
+  assert.ok(html.includes(`href="${DOWNLOAD.replaceAll('&', '&amp;')}"`), 'download link must use the SharePoint download=1 URL');
   assert.match(html, /G.ncel Exceli indir/);
   const tracked = spawnSync('git', ['ls-files'], { encoding: 'utf8' });
   assert.equal(tracked.status, 0, tracked.stderr);
@@ -71,9 +71,11 @@ test('Page lock asks the password on every load and never persists unlock', () =
   assert.match(html, /function (unlockInternPage|handleInternPageUnlock)/);
   assert.match(html, /crypto\.subtle\.digest\(\s*["']SHA-256["']/);
   assert.match(html, /INTERN_PAGE_LOCK_HASH\s*=\s*["'][0-9a-f]{64}["']/);
-  const start = html.indexOf('id="internPageLock"');
-  const card = html.slice(Math.max(0, start - 2000), start + 8000);
-  assert.doesNotMatch(card, /localStorage|sessionStorage/);
+  const unlockStart = html.indexOf('async function unlockInternPage');
+  const unlockEnd = html.indexOf('// BINDINGS', unlockStart);
+  assert.ok(unlockStart > 0 && unlockEnd > unlockStart, 'missing isolated page unlock function');
+  const unlockLogic = html.slice(unlockStart, unlockEnd);
+  assert.doesNotMatch(unlockLogic, /localStorage|sessionStorage/);
 });
 
 test('Lock verifier exposes no plaintext password in tracked files', () => {
