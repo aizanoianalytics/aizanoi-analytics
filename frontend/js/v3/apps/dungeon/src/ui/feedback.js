@@ -1,16 +1,20 @@
 const PROFILES = Object.freeze({
   swing: { shake: 0.08, stop: 0, particles: 0, color: 'bronze' },
-  hit: { shake: 0.22, stop: 38, particles: 7, color: 'ember' },
-  crit: { shake: 0.48, stop: 85, particles: 16, color: 'gold' },
+  hit: { shake: 0.22, stop: 30, particles: 7, color: 'ember' },
+  crit: { shake: 0.48, stop: 60, particles: 16, color: 'gold' },
   dash: { shake: 0.12, stop: 0, particles: 8, color: 'mist' },
   bow: { shake: 0.1, stop: 0, particles: 5, color: 'bronze' },
   // The arrow landing. It is quieter than a melee hit but it still needs its
   // own read, otherwise a bow shot and a sword swing look identical.
-  'bow-hit': { shake: 0.16, stop: 24, particles: 6, color: 'bronze' },
-  hurt: { shake: 0.38, stop: 55, particles: 10, color: 'blood' },
+  'bow-hit': { shake: 0.16, stop: 30, particles: 6, color: 'bronze' },
+  hurt: { shake: 0.38, stop: 60, particles: 10, color: 'blood' },
   loot: { shake: 0, stop: 0, particles: 9, color: 'gold' },
   portal: { shake: 0.18, stop: 20, particles: 18, color: 'arcane' },
-  boss: { shake: 0.62, stop: 95, particles: 24, color: 'blood' },
+  boss: { shake: 0.62, stop: 100, particles: 24, color: 'blood' },
+  // Hit-stop tiers: light 30 (hit/bow-hit), heavy 60 (crit/hurt), boss 100,
+  // parry 120. Parry and phantom-step also trigger a short slow-mo.
+  parry: { shake: 0.3, stop: 120, slowMo: 350, particles: 14, color: 'gold' },
+  special: { shake: 0.55, stop: 60, particles: 22, color: 'arcane' },
 });
 
 function prefersReducedMotion() {
@@ -62,6 +66,9 @@ export function createFeedbackBus(options = {}) {
     }
     if (profile.stop > 0 && !reducedMotion) {
       effects.push(effect('hit-stop', { durationMs: Math.round(profile.stop * Math.min(intensity || 1, 1.5)) }));
+    }
+    if (profile.slowMo > 0 && !reducedMotion) {
+      effects.push(effect('slow-mo', { durationMs: profile.slowMo }));
     }
     if (payload.damage !== undefined) {
       effects.push(effect('floating-damage', {

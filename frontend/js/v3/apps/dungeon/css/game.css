@@ -241,6 +241,21 @@
 .az-hud-stamina[data-reserve="50"] .az-hud-meter-track { border-right: 6px double var(--az-gold, #ffcf5a); }
 .az-hud-crosshair.is-locked::before, .az-hud-crosshair.is-locked::after { background: var(--az-gold, #ffcf5a); }
 
+/* Blessing pick screen: choice of 3, rarity glow, reroll + skip. */
+.az-dungeon-pick { max-height: min(34rem, calc(100% - 2rem)); overflow: auto; }
+.az-dungeon-pick-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin: 1rem 0; }
+.az-dungeon-pick-card { display: flex; flex-direction: column; gap: 0.35rem; padding: 0.9rem; border: 1px solid var(--az-bronze); background: rgba(12, 8, 7, 0.9); color: var(--az-ivory); text-align: left; cursor: pointer; font: inherit; }
+.az-dungeon-pick-card:hover, .az-dungeon-pick-card:focus-visible { border-color: var(--az-bronze-bright); outline: 2px solid var(--az-bronze-bright); outline-offset: 2px; }
+.az-dungeon-pick-name { font-family: Georgia, serif; font-size: 1rem; }
+.az-dungeon-pick-meta { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--az-muted); }
+.az-dungeon-pick-hint { font-size: 0.8rem; line-height: 1.4; color: var(--az-muted); }
+.az-dungeon-rarity-common { border-left: 3px solid var(--az-bronze); }
+.az-dungeon-rarity-rare { border-left: 3px solid #4f9dd1; }
+.az-dungeon-rarity-epic { border-left: 3px solid var(--az-gold, #ffcf5a); }
+.az-dungeon-rarity-mythic { border-left: 3px solid #b04fd1; box-shadow: 0 0 18px rgba(176, 79, 209, 0.35); }
+.az-dungeon-pick-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.az-dungeon-share { overflow-wrap: anywhere; font-size: 0.85rem; }
+
 .az-hud-damage-vignette { position: absolute; inset: 0; opacity: 0; background: radial-gradient(circle, transparent 38%, rgba(132, 15, 13, 0.7) 100%); transition: opacity 100ms ease-out; }
 .az-hud-damage-vignette.is-active { opacity: 1; animation: az-damage-pulse 260ms ease-out both; }
 @keyframes az-damage-pulse { 0% { opacity: 0; } 24% { opacity: 1; } 100% { opacity: 0; } }

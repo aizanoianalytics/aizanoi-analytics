@@ -112,7 +112,8 @@ test('feedback bus maps combat events to renderer-neutral effects', () => {
   const effects = bus.emit('crit', { damage: 42, position: { x: 1, y: 2, z: 3 } });
 
   assert.deepEqual(effects.map((effect) => effect.type), ['screen-shake', 'hit-stop', 'floating-damage', 'particle-burst']);
-  assert.equal(effects.find((effect) => effect.type === 'hit-stop').durationMs, 85);
+  // Hit-stop tiers: heavy crit stops 60 ms (light 30, boss 100, parry 120).
+  assert.equal(effects.find((effect) => effect.type === 'hit-stop').durationMs, 60);
   assert.equal(effects.find((effect) => effect.type === 'floating-damage').value, 42);
   assert.equal(seen.length, 4);
   unsubscribe();
@@ -149,7 +150,7 @@ test('WebAudio starts only after resume and exposes every required cue', async (
     async close() { this.state = 'closed'; }
   }
   const audio = createAudioManager({ AudioContext: FakeAudioContext });
-  assert.deepEqual(audio.cues, ['swing', 'hit', 'crit', 'dash', 'bow', 'bow-hit', 'hurt', 'loot', 'portal', 'boss']);
+  assert.deepEqual(audio.cues, ['swing', 'hit', 'crit', 'dash', 'bow', 'bow-hit', 'hurt', 'loot', 'portal', 'boss', 'parry', 'special', 'rhythm', 'focus-shot']);
   assert.equal(calls.length, 0);
   assert.equal(audio.play('swing'), false);
   assert.equal(await audio.resume(), true);

@@ -1,6 +1,7 @@
 import * as THREE from '../../../../../../worlds/shared/vendor/three.module.js';
 import { GLTFLoader } from '../../../../../../worlds/shared/vendor/GLTFLoader.js';
-import { createGameState, stepGame, spawnWave, openChest, chooseBlessing, savePersistedRun, loadPersistedRun, clearPersistedRun, BLESSING_LABELS, FINAL_CHAPTER } from '../game/index.js';
+import { createGameState, stepGame, spawnWave, openChest, chooseBlessing, rerollChest, buyShopItem, savePersistedRun, loadPersistedRun, clearPersistedRun, BLESSING_LABELS, FINAL_CHAPTER } from '../game/index.js';
+import { loadSettings, saveSettings, dailySeed } from '../game/settings.js';
 import { createHud } from '../ui/hud.js';
 import { createAudioManager } from '../ui/audio.js';
 import { createFeedbackBus } from '../ui/feedback.js';
@@ -56,7 +57,8 @@ const ENEMY_ASSET = Object.freeze({
 });
 const CONSUMED_KEYS = new Set([
   'KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
-  'Space', 'KeyJ', 'KeyK', 'KeyL', 'KeyE', 'Escape', 'KeyH', 'Enter', 'KeyT', 'KeyQ',
+  'Space', 'KeyJ', 'KeyK', 'KeyL', 'KeyE', 'KeyR', 'Escape', 'KeyH', 'Enter', 'KeyT', 'KeyQ',
+  'Digit1', 'Digit2', 'Digit3', 'Numpad1', 'Numpad2', 'Numpad3',
 ]);
 let stylesheetRefs = 0;
 const MOVE_CODES = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
@@ -92,6 +94,12 @@ export class GameApp {
     const restored = this.storage ? loadPersistedRun(this.storage, 'aizo-awakens') : null;
     this.restoredRun = restored?.restored ? restored.state : null;
     this.saveAnnouncement = restored?.announcement || null;
+    // Settings persist separately from the run so a reset never wipes them.
+    this.settings = loadSettings(this.storage);
+    const coarsePointer = (() => { try { return Boolean(globalThis.matchMedia?.('(pointer: coarse)').matches); } catch (_) { return false; } })();
+    this.assistMode = this.settings.assistMode || (coarsePointer ? 'auto' : 'assist');
+    this.state.settings = { autoFireReserve: this.settings.autoFireReserve, heat: this.state.settings?.heat || 0 };
+    this.dailySeed = dailySeed();
     this.sceneState = 'menu';
     this.paused = false;
     this.help = false;
@@ -104,7 +112,7 @@ export class GameApp {
     this.pendingShoot = false;
     this.pendingGuard = false;
     this.pendingSpecial = false;
-    this.assistMode = 'assist';
+    if (!this.assistMode) this.assistMode = 'assist';
     this.lockedTarget = null;
     this.pendingInteract = false;
     this.enemyMeshes = new Map();
@@ -531,12 +539,23 @@ export class GameApp {
     const keydown = (event) => {
       if (!hasFocus() || !CONSUMED_KEYS.has(event.code)) return;
       event.preventDefault();
+      if (this.pickPanel) {
+        if (!event.repeat && (event.code === 'Digit1' || event.code === 'Numpad1')) { this.pickChoice(0); return; }
+        if (!event.repeat && (event.code === 'Digit2' || event.code === 'Numpad2')) { this.pickChoice(1); return; }
+        if (!event.repeat && (event.code === 'Digit3' || event.code === 'Numpad3')) { this.pickChoice(2); return; }
+        if (!event.repeat && event.code === 'KeyR') { this.pickReroll(); return; }
+        if (event.code === 'Escape') { this.pickSkip(); return; }
+        return;
+      }
+      if (this.sceneState === 'defeat' && !event.repeat && event.code === 'KeyR') { this.retrySeed(); return; }
       if (event.code === 'Escape' && !event.repeat) this.togglePause();
       else if (event.code === 'KeyH' && !event.repeat) this.toggleHelp();
       else if (event.code === 'KeyT' && !event.repeat) {
         const modes = ['manual','assist','auto'];
         const idx = modes.indexOf(this.assistMode);
         this.assistMode = modes[(idx+1)%modes.length];
+        this.settings.assistMode = this.assistMode;
+        saveSettings(this.storage, this.settings);
         this.hud?.announce?.(`Assist mode: ${this.assistMode.toUpperCase()}`);
       }
       else if (event.code === 'KeyQ' && !event.repeat) {
@@ -709,6 +728,32 @@ export class GameApp {
     this.hud.update({ paused: this.paused, help: this.help });
   }
 
+  pollGamepad(input) {
+    let pad = null;
+    try { pad = navigator.getGamepads?.()?.[0] || null; } catch (_) { pad = null; }
+    if (!pad?.connected) return input;
+    const dz = (value) => (Math.abs(value) < 0.22 ? 0 : value);
+    const lx = dz(pad.axes?.[0] || 0);
+    const ly = dz(pad.axes?.[1] || 0);
+    if (lx || ly) { input.moveX = (input.moveX || 0) + lx; input.moveZ = (input.moveZ || 0) + ly; }
+    const buttons = pad.buttons || [];
+    const pressed = (index) => Boolean(buttons[index]?.pressed);
+    if (pressed(0)) this.pendingDash = true;      // A/cross: dash
+    if (pressed(1)) this.pendingGuard = true;     // B/circle: guard
+    if (pressed(4) || pressed(5)) this.pendingAttack = true; // bumpers: melee
+    if (pressed(6) || pressed(7)) input.shoot = true;        // triggers: bow
+    if (pressed(3) && !this.gamepadToggleLatched) {          // Y/triangle: assist
+      const modes = ['manual', 'assist', 'auto'];
+      this.assistMode = modes[(modes.indexOf(this.assistMode) + 1) % modes.length];
+      this.settings.assistMode = this.assistMode;
+      saveSettings(this.storage, this.settings);
+      this.hud?.announce?.(`Assist mode: ${this.assistMode.toUpperCase()}`);
+    }
+    this.gamepadToggleLatched = pressed(3);
+    try { if ((pressed(0) || pressed(1)) && navigator.vibrate) navigator.vibrate(12); } catch (_) {}
+    return input;
+  }
+
   movementInput() {
     let horizontal = 0;
     let vertical = 0;
@@ -735,6 +780,7 @@ export class GameApp {
     // is in reach or the walk times out.
     if (this.qaWalk) this.qaHandle.qaCloseIn();
     const input = this.movementInput();
+    this.pollGamepad(input);
     input.attack = this.pendingAttack || this.keys.has('KeyJ');
     input.dash = this.pendingDash;
     input.shoot = this.pendingShoot || this.keys.has('KeyK');
@@ -767,14 +813,19 @@ export class GameApp {
       if (position && Math.hypot(position.x - player.x, position.z - player.z) <= 3) {
         const result = openChest(this.state, chest.id);
         if (result.opened) {
-          // Blessing chests grant the named blessing; exhausted blessing pools
-          // carry a fallback reward instead — label exactly what was granted.
-          const chosen = result.blessing ? chooseBlessing(this.state, result.blessing) : null;
-          const reward = chosen?.chosen ? chosen.label : (result.fallback?.label || `${result.gold} gold`);
-          this.feedback.emit('loot', { label: `${result.gold} gold · ${reward}` });
+          this.feedback.emit('loot', { label: `${result.gold} gold` });
           this.spawnPortal(position);
           this.persistRun();
           this.syncWorld();
+          // A chest with choices opens the pick screen; exhausted pools carry
+          // a fallback reward instead — label exactly what was granted.
+          const full = this.state.chests.find((item) => item.id === chest.id);
+          if (full?.choices?.length) this.showPick(full);
+          else {
+            const chosen = result.blessing ? chooseBlessing(this.state, result.blessing) : null;
+            const reward = chosen?.chosen ? chosen.label : (result.fallback?.label || `${result.gold} gold`);
+            this.feedback.emit('loot', { label: reward });
+          }
           return true;
         }
       }
@@ -842,11 +893,11 @@ export class GameApp {
       this.feedback.emit('swing', { position: { x: event.x, y: 0.5, z: event.z }, intensity: 0.4 });
     }
     else if (event.type === 'enemy-spawn') this.feedback.emit('bow', { position });
-    else if (event.type === 'parry') { this.feedback.emit('crit', { position }); this.hud.announce('Parried'); }
+    else if (event.type === 'parry') { this.feedback.emit('parry', { position }); this.hud.announce('Parried'); }
     else if (event.type === 'guard-block') this.feedback.emit('hurt', { damage: event.damage, position });
-    else if (event.type === 'phantom-step') { this.feedback.emit('dash', { position }); this.hud.announce('Phantom Step'); }
+    else if (event.type === 'phantom-step') { this.feedback.emit('parry', { position }); this.hud.announce('Phantom Step'); }
     else if (event.type === 'guard') this.feedback.emit('dash', { position });
-    else if (event.type === 'special') { this.feedback.emit('crit', { position }); this.hud.announce(`Wrath of the Temple — ${event.stunned} stunned`); }
+    else if (event.type === 'special') { this.feedback.emit('special', { position }); this.hud.announce(`Wrath of the Temple — ${event.stunned} stunned`); }
     else if (event.type === 'crescent') this.feedback.emit('swing', { position, intensity: 1 });
     else if (event.type === 'shield-block') this.feedback.emit('hit', { position });
     else if (event.type === 'rhythm') this.hud.announce('Rhythm strike');
@@ -1025,10 +1076,98 @@ export class GameApp {
   }
 
   /**
-   * The run ledger. The 2D build showed this on its victory screen: what the
-   * run amounted to. The 3D build had no win condition, so there was never a
-   * moment where this could be shown.
+   * Blessing pick screen: choice of 3 with rarity, one paid reroll, and a
+   * skip-for-gold exit. The sim pauses while the screen is open; every grant
+   * goes through chooseBlessing/rerollChest so the QA handle stays truthful.
    */
+  showPick(chest) {
+     this.closePick();
+     this.pickChestId = chest.id;
+     this.paused = true;
+     const panel = node('section', 'az-hud-panel az-dungeon-pick');
+     panel.setAttribute('role', 'dialog');
+     panel.setAttribute('aria-modal', 'true');
+     panel.setAttribute('aria-label', 'Choose a blessing');
+     panel.append(node('h2', 'az-hud-panel-title', 'Choose a blessing'));
+     const rerollCost = 20 + this.state.chapter * 5;
+     const list = node('div', 'az-dungeon-pick-cards');
+     (chest.choices || []).forEach((choice, index) => {
+       const info = BLESSING_LABELS[choice.id];
+       const card = node('button', `az-dungeon-pick-card az-dungeon-rarity-${choice.rarity}`, '');
+       card.setAttribute('aria-label', `${info.label}, level ${choice.level}, ${choice.rarity}. ${info.hint}. Press ${index + 1}.`);
+       card.append(node('strong', 'az-dungeon-pick-name', `${index + 1}. ${info.label}`));
+       card.append(node('span', 'az-dungeon-pick-meta', `${choice.rarity} · level ${choice.level}`));
+       card.append(node('span', 'az-dungeon-pick-hint', info.hint));
+       card.addEventListener('click', () => this.pickChoice(index));
+       list.append(card);
+     });
+     panel.append(list);
+     const actions = node('div', 'az-dungeon-pick-actions');
+     const reroll = makeButton('az-dungeon-pick-reroll', `Reroll (${rerollCost} gold)`, () => this.pickReroll());
+     reroll.setAttribute('aria-label', `Reroll blessings for ${rerollCost} gold`);
+     const skip = makeButton('az-dungeon-pick-skip', 'Skip for gold', () => this.pickSkip());
+     actions.append(reroll, skip);
+     panel.append(actions);
+     this.pickPanel = panel;
+     this.root.append(panel);
+     this.hud?.announce?.('Choose 1 of 3 blessings');
+   }
+
+   refreshPick() {
+     const chest = this.state.chests.find((item) => item.id === this.pickChestId);
+     if (!chest || !this.pickPanel) return;
+     this.showPick(chest);
+   }
+
+   closePick() {
+     this.pickPanel?.remove();
+     this.pickPanel = undefined;
+     this.pickChestId = undefined;
+     if (this.sceneState === 'playing') this.paused = false;
+   }
+
+   pickChoice(index) {
+     const chest = this.state.chests.find((item) => item.id === this.pickChestId);
+     const choice = chest?.choices?.[index];
+     if (!choice) return { chosen: false };
+     const result = chooseBlessing(this.state, choice.id);
+     if (result.chosen) {
+       this.feedback.emit('loot', { label: `${result.label} ${'◆'.repeat(result.level)}` });
+       this.hud?.announce?.(`${result.label}, level ${result.level}`);
+       this.closePick();
+       this.persistRun();
+       this.syncWorld();
+       this.updateHud();
+     }
+     return result;
+   }
+
+   pickReroll() {
+     const result = rerollChest(this.state, this.pickChestId);
+     if (result.rerolled) {
+       this.feedback.emit('bow', { position: { x: 0, y: 1, z: 0 } });
+       this.refreshPick();
+       this.updateHud();
+     } else {
+       this.hud?.announce?.(result.reason === 'no-gold' ? 'Not enough gold to reroll' : 'No rerolls left');
+     }
+     return result;
+   }
+
+   pickSkip() {
+     const bonus = 10 + this.state.chapter * 2;
+     this.state.player.gold += bonus;
+     this.feedback.emit('loot', { label: `Skipped · +${bonus} gold` });
+     this.closePick();
+     this.persistRun();
+     this.updateHud();
+     return { skipped: true, bonus };
+   }
+
+   /** The run ledger. The 2D build showed this on its victory screen: what the
+    * run amounted to. The 3D build had no win condition, so there was never a
+    * moment where this could be shown.
+    */
   showVictory() {
     this.sceneState = 'victory';
     this.paused = true;
@@ -1058,6 +1197,15 @@ export class GameApp {
       ledger.append(node('dd', 'az-dungeon-ledger-value', String(value)));
     });
     this.victory.append(ledger);
+    const share = `Aizo cleared the descent — ${FINAL_CHAPTER} chapters, ${stats.kills ?? 0} slain, ${this.state.blessings.length} blessings (seed ${this.state.seed})`;
+    const shareNode = node('p', 'az-hud-panel-copy az-dungeon-share', share);
+    shareNode.setAttribute('aria-label', `Share text: ${share}`);
+    this.victory.append(shareNode);
+    const copy = makeButton('az-dungeon-begin', 'Copy share text', () => {
+      try { navigator.clipboard?.writeText?.(share); } catch (_) {}
+      this.hud?.announce?.('Share text copied');
+    });
+    this.victory.append(copy);
     this.victory.append(makeButton('az-dungeon-begin', 'Descend again', () => this.restart()));
     this.root.append(this.victory);
   }
@@ -1065,12 +1213,41 @@ export class GameApp {
   showDefeat() {
     this.sceneState = 'defeat';
     this.paused = true;
+    this.closePick();
     this.defeat = node('section', 'az-hud-panel az-dungeon-defeat');
     this.defeat.setAttribute('role', 'dialog');
     this.defeat.append(node('h2', 'az-hud-panel-title', 'Aizo has fallen'));
-    this.defeat.append(node('p', 'az-hud-panel-copy', `Chapter ${this.state.chapter} · ${this.state.player.gold} gold`));
-    this.defeat.append(makeButton('az-dungeon-begin', 'Restart', () => this.restart()));
+    const stats = this.state.stats || {};
+    this.defeat.append(node('p', 'az-hud-panel-copy',
+      `Chapter ${this.state.chapter} · seed ${this.state.seed} · ${stats.kills ?? 0} slain · ${this.state.blessings.length} blessings`));
+    this.defeat.append(node('p', 'az-hud-panel-copy', `Gold carried: ${this.state.player.gold}`));
+    const actions = node('div', 'az-dungeon-pick-actions');
+    actions.append(makeButton('az-dungeon-begin', 'Retry same seed (R)', () => this.retrySeed()));
+    actions.append(makeButton('az-dungeon-begin', 'New descent', () => this.restart()));
+    this.defeat.append(actions);
     this.root.append(this.defeat);
+  }
+
+  retrySeed() {
+    const seed = this.state.seed;
+    this.defeat?.remove();
+    this.victory?.remove();
+    this.defeat = undefined;
+    this.victory = undefined;
+    this.closePick();
+    this.state = createGameState(seed);
+    this.state.settings = { autoFireReserve: this.settings.autoFireReserve, heat: 0 };
+    this.eventSeq = 0;
+    this.lockedTarget = null;
+    this.paused = false;
+    this.sceneState = 'playing';
+    this.clearEntities();
+    spawnWave(this.state, 1);
+    this.root.focus();
+    this.syncWorld();
+    this.updateHud();
+    this.hud?.announce?.(`Same seed: ${seed}`);
+    return { seed };
   }
 
   restart() {
@@ -1078,6 +1255,7 @@ export class GameApp {
     this.victory?.remove();
     this.defeat = undefined;
     this.victory = undefined;
+    this.closePick();
     this.state = createGameState(`aizo-${Date.now()}`);
     this.eventSeq = 0;
     this.paused = false;

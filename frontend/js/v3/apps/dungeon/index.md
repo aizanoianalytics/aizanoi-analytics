@@ -52,6 +52,15 @@ Same product, same route (`/dungeon/`), same AizanoiOS app id (`dungeon`).
 - The run is persisted between sessions (save v4, v3 migrated), and the menu
   offers **Continue** when a saved run exists.
 - Headless balance harness: `node scripts/dungeon/balance-harness.mjs`.
+- Settings (`aizanoi.dungeon.settings.v1`, separate from the run): assist
+  mode, auto-fire reserve, volumes, shake, quality; Touch defaults to Auto.
+- Blessing pick screen: choice of 3 cards with rarity glow, keys `1-2-3`,
+  reroll (`R`, costs gold), skip-for-gold. Defeat offers **Retry same seed
+  (`R`)**; victory shows a copyable share text. Gamepad (sticks/buttons/Y +
+  haptics) and touch buttons (Guard, Wrath) are wired.
+- Juice table: hit-stop tiers light 30 / heavy 60 / boss 100 / parry 120,
+  slow-mo on parry/phantom, 4 pitch variants per SFX, distinct parry/special/
+  rhythm/focus cues.
 
 ## The QA handle
 
