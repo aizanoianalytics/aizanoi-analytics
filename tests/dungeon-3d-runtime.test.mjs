@@ -191,3 +191,15 @@ test('audio carries distinct cues with variants and a volume bus', () => {
   assert.match(audio, /variant/);
   assert.match(audio, /setVolumes/);
 });
+
+test('arena variants and local marks meta are wired to the runtime', () => {
+  const source = read('src/runtime/GameApp.js');
+  assert.match(source, /loadMeta\(this\.storage\)/);
+  assert.match(source, /recordRun\(this\.meta/);
+  assert.match(source, /saveMeta\(this\.storage,\s*this\.meta\)/);
+  assert.match(source, /event\.type === 'arena'/);
+  const game = read('src/game/index.js');
+  assert.match(game, /broken-bridge/);
+  assert.match(game, /ruined-stairs/);
+  assert.match(game, /chooseArena/);
+});

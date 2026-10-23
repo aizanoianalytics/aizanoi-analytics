@@ -2,6 +2,7 @@ import * as THREE from '../../../../../../worlds/shared/vendor/three.module.js';
 import { GLTFLoader } from '../../../../../../worlds/shared/vendor/GLTFLoader.js';
 import { createGameState, stepGame, spawnWave, openChest, chooseBlessing, rerollChest, buyShopItem, savePersistedRun, loadPersistedRun, clearPersistedRun, BLESSING_LABELS, FINAL_CHAPTER } from '../game/index.js';
 import { loadSettings, saveSettings, dailySeed } from '../game/settings.js';
+import { loadMeta, saveMeta, recordRun } from '../game/meta.js';
 import { createHud } from '../ui/hud.js';
 import { createAudioManager } from '../ui/audio.js';
 import { createFeedbackBus } from '../ui/feedback.js';
@@ -96,6 +97,7 @@ export class GameApp {
     this.saveAnnouncement = restored?.announcement || null;
     // Settings persist separately from the run so a reset never wipes them.
     this.settings = loadSettings(this.storage);
+    this.meta = loadMeta(this.storage);
     const coarsePointer = (() => { try { return Boolean(globalThis.matchMedia?.('(pointer: coarse)').matches); } catch (_) { return false; } })();
     this.assistMode = this.settings.assistMode || (coarsePointer ? 'auto' : 'assist');
     this.state.settings = { autoFireReserve: this.settings.autoFireReserve, heat: this.state.settings?.heat || 0 };
@@ -106,6 +108,7 @@ export class GameApp {
     this.hiddenPause = false;
     this.accumulator = 0;
     this.eventSeq = 0;
+    this.runRecorded = false;
     this.keys = new Set();
     this.pendingAttack = false;
     this.pendingDash = false;
@@ -424,7 +427,7 @@ export class GameApp {
       get assist() { return { mode: app.assistMode, target: app.state.assistTarget, locked: app.lockedTarget }; },
       get target() { const t = app.state.enemies.find((unit) => unit.id === (app.lockedTarget || app.state.assistTarget)); return t ? { id: t.id, archetype: t.archetype, hp: t.hp, maxHp: t.maxHp } : null; },
       get buffs() { return { blessings: [...app.state.blessings], levels: { ...(app.state.blessingLevels || {}) }, duos: [...(app.state.duos || [])], specialCharge: app.state.player.specialCharge }; },
-      get status() { return { pendingSpawns: (app.state.pendingSpawns || []).length, live: app.state.enemies.filter((e) => !e.dead).length, guardUntil: app.state.player.guardUntil, time: app.state.time }; },
+      get status() { return { pendingSpawns: (app.state.pendingSpawns || []).length, live: app.state.enemies.filter((e) => !e.dead).length, guardUntil: app.state.player.guardUntil, time: app.state.time, arena: app.state.arena, marks: app.meta?.marks || 0 }; },
       qaRetrySeed() { const seed = app.state.seed; app.state = createGameState(seed); app.syncWorld(); app.updateHud(); return { seed }; },
       // QA affordance: clear the current wave and open its chest, using the
       // game's own code path, so a browser test can reach a late-game state
@@ -904,6 +907,7 @@ export class GameApp {
     else if (event.type === 'focus-shot') this.hud.announce('Focus shot loosed');
     else if (event.type === 'reroll') this.hud.announce('Blessings rerolled');
     else if (event.type === 'shop-buy') this.feedback.emit('loot', { label: `Toll paid: ${event.kind}`, position });
+    else if (event.type === 'arena') this.hud.announce(`${event.id.replaceAll('-', ' ')} arena`);
     else if (event.type === 'wave-start') this.hud.announce(`Chapter ${event.chapter}`);
     else if (event.type === 'wave-complete') {
       this.hud.announce('Wave cleared — claim your blessing');
@@ -1168,7 +1172,20 @@ export class GameApp {
     * run amounted to. The 3D build had no win condition, so there was never a
     * moment where this could be shown.
     */
+  recordMetaRun(won) {
+    if (this.runRecorded) return this.meta;
+    this.runRecorded = true;
+    this.meta = recordRun(this.meta, {
+      seed: this.state.seed, chapters: Math.min(FINAL_CHAPTER, this.state.chapter),
+      bosses: this.state.stats?.bossKills || 0, heat: this.state.heat || 0,
+      gold: this.state.player.gold || 0, won, blessings: [...this.state.blessings],
+    });
+    saveMeta(this.storage, this.meta);
+    return this.meta;
+  }
+
   showVictory() {
+    this.recordMetaRun(true);
     this.sceneState = 'victory';
     this.paused = true;
     // The screen is rebuilt only once: appending a second panel would leave
@@ -1211,6 +1228,7 @@ export class GameApp {
   }
 
   showDefeat() {
+    this.recordMetaRun(false);
     this.sceneState = 'defeat';
     this.paused = true;
     this.closePick();

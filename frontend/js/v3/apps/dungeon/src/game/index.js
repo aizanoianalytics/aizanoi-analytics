@@ -225,6 +225,11 @@ export function createGameState(seed = 'dungeon') {
     pendingSpawns: [],
     settings: { autoFireReserve: 25, heat: 0 },
     heat: 0,
+    arena: 'column-ring',
+    oaths: { selected: 'sword', unlocked: ['sword'] },
+    marks: 0,
+    runHistory: [],
+    codex: { enemies: [], blessings: [], duos: [], bosses: [] },
   };
 }
 
@@ -255,6 +260,21 @@ const safeSpawnPosition = (state, radius) => {
   const angle = random(state) * Math.PI * 2;
   return { x: Math.cos(angle) * radius, z: Math.sin(angle) * radius };
 };
+
+const ARENAS = Object.freeze([
+  { id: 'column-ring', label: 'Column Ring', hazard: 'none' },
+  { id: 'broken-bridge', label: 'Broken Bridge', hazard: 'slow-water' },
+  { id: 'brazier-court', label: 'Brazier Court', hazard: 'burning-braziers' },
+  { id: 'collapsing-tiles', label: 'Collapsing Tiles', hazard: 'falling-tiles' },
+  { id: 'ruined-stairs', label: 'Ruined Stairs', hazard: 'raised-platform' },
+]);
+
+export function chooseArena(state, chapter = state.chapter) {
+  const arena = ARENAS[(Math.floor(random(state) * ARENAS.length) + chapter - 1) % ARENAS.length];
+  state.arena = arena.id;
+  emitEvent(state, { type: 'arena', id: arena.id, hazard: arena.hazard, at: state.time });
+  return arena;
+}
 
 const makeEnemy = (state, archetype, chapter, index, elite = null) => {
   const heat = state.heat || state.settings?.heat || 0;
@@ -295,6 +315,7 @@ export function spawnWave(state, chapter = state.chapter) {
   if (!Number.isInteger(chapter) || chapter < 1) throw new RangeError('Chapter must be a positive integer');
   state.chapter = chapter;
   state.mode = chapter > FINAL_CHAPTER ? 'endless' : 'chapters';
+  if (chapter > 1 || !state.arena) chooseArena(state, chapter);
   const roles = [];
   if (chapter % 5 === 0) roles.push('chaser', 'archer', 'tank', 'summoner', 'flanker', 'boss');
   else {
@@ -1232,6 +1253,10 @@ export function restoreRun(json) {
     if (!state.blessingLevels) state.blessingLevels = {};
     if (!state.settings) state.settings = { autoFireReserve: 25, heat: 0 };
     if (state.heat === undefined) state.heat = state.settings.heat || 0;
+    if (!state.arena) state.arena = 'column-ring';
+    if (!state.oaths) state.oaths = { selected: 'sword', unlocked: ['sword'] };
+    if (!Array.isArray(state.runHistory)) state.runHistory = [];
+    if (!state.codex) state.codex = { enemies: [], blessings: [], duos: [], bosses: [] };
   }
   if (state && state.version === 3) {
     state.version = 4;
@@ -1247,6 +1272,10 @@ export function restoreRun(json) {
     if (!state.blessingLevels) state.blessingLevels = {};
     if (!state.settings) state.settings = { autoFireReserve: 25, heat: 0 };
     if (state.heat === undefined) state.heat = 0;
+    if (!state.arena) state.arena = 'column-ring';
+    if (!state.oaths) state.oaths = { selected: 'sword', unlocked: ['sword'] };
+    if (!Array.isArray(state.runHistory)) state.runHistory = [];
+    if (!state.codex) state.codex = { enemies: [], blessings: [], duos: [], bosses: [] };
   }
   if (!validState(state)) throw new Error('Invalid dungeon save: schema mismatch');
   // The event sequence counter must survive the round trip, or the runtime

@@ -61,6 +61,10 @@ Same product, same route (`/dungeon/`), same AizanoiOS app id (`dungeon`).
 - Juice table: hit-stop tiers light 30 / heavy 60 / boss 100 / parry 120,
   slow-mo on parry/phantom, 4 pitch variants per SFX, distinct parry/special/
   rhythm/focus cues.
+- Five deterministic arenas cycle by seed and chapter (`column-ring`,
+  `broken-bridge`, `brazier-court`, `collapsing-tiles`, `ruined-stairs`).
+  Local meta (`aizanoi.dungeon.meta.v1`) stores up to 20 run-history entries,
+  Marks, heat unlock progress and sideways unlock collections.
 
 ## The QA handle
 
