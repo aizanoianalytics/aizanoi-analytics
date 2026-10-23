@@ -1,6 +1,7 @@
 // Deterministic, renderer-agnostic dungeon simulation.
-const VERSION = 3;
-export const DUNGEON_SAVE_KEY = 'aizanoi.dungeon.run.v3';
+const VERSION = 4;
+export const DUNGEON_SAVE_KEY = 'aizanoi.dungeon.run.v4';
+const V3_SAVE_KEY = 'aizanoi.dungeon.run.v3';
 const LEGACY_SAVE_KEY = 'aizanoi.dungeon.run.v2';
 const FIXED_STEP = 1 / 60;
 const MAX_SUBSTEPS = 600;
@@ -50,12 +51,12 @@ const COMBO = [
 // Phrygian/Penkalas bows, but expressed as a real projectile so the 3D
 // scene shows the shot travelling.
 const BOW = Object.freeze({
-  damage: 22,
+  damage: 28,
   range: 16,
   speed: 15,
   radius: 0.34,
   cooldown: 0.62,
-  staminaCost: 12,
+  staminaCost: 8,
   knockback: 0.55,
 });
 // Flanker tuning: the ring it orbits at, how long it orbits before it lunges,
@@ -186,6 +187,8 @@ export function createGameState(seed = 'dungeon') {
       bowRangeMultiplier: 1,
       bowStaminaMultiplier: 1,
       dead: false,
+      focusCharge: 0,
+      rhythmWindow: 0,
     },
     wave: { active: false, complete: false, rewarded: false, chapter: 1, scale: 1 },
     enemies: [],
@@ -204,6 +207,9 @@ export function createGameState(seed = 'dungeon') {
     // show them, because the run never ended.
     stats: { kills: 0, bossKills: 0, chestCount: 0, shotsFired: 0, meleeSwings: 0, damageTaken: 0, blessings: 0 },
     inputLatch: { dash: false, attack: false, shoot: false },
+    assistTarget: null,
+    assistTargetUntil: 0,
+    targetLock: null,
   };
 }
 
@@ -280,7 +286,7 @@ const damagePlayer = (state, amount, source) => {
   if (player.dead || player.invulnerable > 0) return false;
   const taken = Math.max(1, Math.round(amount * player.damageTakenMultiplier));
   player.hp = Math.max(0, player.hp - taken);
-  player.invulnerable = 0.1;
+  player.invulnerable = 0.45;
   if (state.stats) state.stats.damageTaken += taken;
   emitEvent(state, { type: 'player-hit', source, amount: taken, at: state.time });
   if (player.hp === 0) {
@@ -321,7 +327,7 @@ const killEnemy = (state, target) => {
   }
 };
 
-export function attack(state, targetId) {
+export function attack(state, targetId, manual = true) {
   const player = state.player;
   if (player.dead || state.time + 1e-9 < player.attackReadyAt) {
     return { hit: false, reason: 'cooldown', chain: player.combo || 1, damage: 0, range: 0 };
@@ -342,9 +348,11 @@ export function attack(state, targetId) {
   player.attackReadyAt = state.time
     + (chain === 3 ? 0.38 : 0.22) / Math.max(0.2, player.attackSpeedMultiplier);
   const crit = random(state) < player.critChance;
-  const damage = Math.round(strike.damage * player.damageMultiplier * (crit ? player.critMultiplier : 1));
-  const result = { hit: false, chain, damage, range: strike.range, crit };
-  if (!target || distance(player.position, target) > strike.range) return result;
+  let rhythm = false;
+  if (manual && player.rhythmWindow > 0 && state.time - player.rhythmWindow <= 0.12) rhythm = true;
+  const damageMult = rhythm ? 1.15 : 1;
+  const damage = Math.round(strike.damage * player.damageMultiplier * damageMult * (crit ? player.critMultiplier : 1));
+  const result = { hit: false, chain, damage, range: strike.range, crit, rhythm };
   target.hp = Math.max(0, target.hp - damage);
   target.stun = Math.max(target.stun || 0, strike.stun);
   result.hit = true;
@@ -353,6 +361,11 @@ export function attack(state, targetId) {
     player.hp = Math.min(player.maxHp, player.hp + healed);
     result.healed = healed;
   }
+  if (rhythm) {
+    player.stamina = Math.min(player.maxStamina, player.stamina + 3);
+    emitEvent(state, { type: 'rhythm', at: state.time });
+  }
+  player.rhythmWindow = state.time + (chain === 3 ? 0.38 : 0.22) / Math.max(0.2, player.attackSpeedMultiplier);
   emitEvent(state, { type: 'melee-hit', id: target.id, chain, damage, crit, at: state.time });
   if (target.hp === 0) killEnemy(state, target);
   return result;
@@ -403,11 +416,13 @@ const findBowTarget = (state) => {
  * runtime can show a distinct "no target" or "not ready" message instead of
  * pretending every pull of the string did something.
  */
-export function shoot(state) {
+export function shoot(state, options = {}) {
   const player = state.player;
   if (player.dead) return { fired: false, reason: 'dead' };
   if (state.time + 1e-9 < player.bowReadyAt) return { fired: false, reason: 'cooldown' };
-  const staminaCost = Math.max(1, Math.round(BOW.staminaCost * player.bowStaminaMultiplier));
+  const focus = Boolean(options.focus) || player.focusCharge >= 0.6;
+  const staminaCostBase = Math.max(1, Math.round(BOW.staminaCost * player.bowStaminaMultiplier));
+  const staminaCost = focus ? Math.round(staminaCostBase * 1.5) : staminaCostBase;
   if (player.stamina < staminaCost) return { fired: false, reason: 'stamina' };
   const target = findBowTarget(state);
   if (!target) return { fired: false, reason: 'no-target' };
@@ -415,7 +430,8 @@ export function shoot(state) {
   player.bowReadyAt = state.time + BOW.cooldown;
   const aim = direction(player.position, target);
   const crit = random(state) < player.critChance;
-  const damage = Math.round(BOW.damage * player.damageMultiplier * (crit ? player.critMultiplier : 1));
+  const damageBase = focus ? BOW.damage * 2.2 : BOW.damage;
+  const damage = Math.round(damageBase * player.damageMultiplier * (crit ? player.critMultiplier : 1));
   state.projectiles.push({
     id: `projectile-${state.nextId++}`,
     ownerId: target.id,
@@ -429,10 +445,14 @@ export function shoot(state) {
     knockback: BOW.knockback,
     ttl: 2,
     radius: BOW.radius,
+    pierce: focus ? 1 : 0,
+    hitIds: [],
   });
   emitEvent(state, { type: 'bow-shot', id: target.id, damage, crit, at: state.time });
+  if (focus) emitEvent(state, { type: 'focus-shot', at: state.time });
   if (state.stats) state.stats.shotsFired += 1;
-  return { fired: true, targetId: target.id, damage, crit };
+  player.focusCharge = 0;
+  return { fired: true, targetId: target.id, damage, crit, focus };
 }
 
 const beginWindup = (state, enemy, kind, duration, range) => {
@@ -622,9 +642,13 @@ const updateProjectiles = (state, dt) => {
     shot.ttl -= dt;
     if (shot.ttl <= 0) continue;
     if (shot.source === 'player') {
-      // The player's arrow stops on the first enemy it reaches.
-      const target = state.enemies.find((enemy) => !enemy.dead && enemy.id === shot.ownerId);
-      if (target && distance(shot, target) <= shot.radius + 0.55) {
+      if (!Array.isArray(shot.hitIds)) shot.hitIds = [];
+      // The arrow hits the first enemy it touches (not only ownerId). ownerId
+      // is the intended target for aim only.
+      const target = state.enemies.find((enemy) => !enemy.dead && !shot.hitIds.includes(enemy.id)
+        && distance(shot, enemy) <= shot.radius + 0.55);
+      if (target) {
+        shot.hitIds.push(target.id);
         target.hp = Math.max(0, target.hp - shot.damage);
         target.stun = Math.max(target.stun || 0, 0.1);
         if (state.player.lifesteal > 0) {
@@ -639,7 +663,11 @@ const updateProjectiles = (state, dt) => {
         }
         emitEvent(state, { type: 'bow-hit', id: target.id, damage: shot.damage, crit: !!shot.crit, at: state.time });
         if (target.hp === 0) killEnemy(state, target);
-        shot.ttl = 0;
+        if ((shot.pierce || 0) > 0) {
+          shot.pierce -= 1;
+        } else {
+          shot.ttl = 0;
+        }
       }
     } else if (distance(shot, state.player.position) <= shot.radius + 0.45) {
       damagePlayer(state, shot.damage, shot.ownerId);
@@ -726,11 +754,12 @@ const fixedUpdate = (state, input, dt) => {
   const dashPressed = Boolean(input.dash) && !state.inputLatch.dash;
   state.inputLatch.dash = Boolean(input.dash);
   let speed = 5.2 * player.speedMultiplier;
-  if (dashPressed && player.dashCooldown <= 0 && player.stamina >= 25 && length > 0) {
+  const dashDir = length > 0 ? vector : (player.facing ? { ...player.facing } : { x: 1, z: 0 });
+  if (dashPressed && player.dashCooldown <= 0 && player.stamina >= 25) {
     player.stamina -= 25;
     player.dashCooldown = player.dashCooldownMax;
     player.dashRemaining = DASH_DURATION;
-    player.dashDirection = { ...vector };
+    player.dashDirection = { ...dashDir };
     player.invulnerable = Math.max(player.invulnerable, 0.28);
     emitEvent(state, { type: 'dash', at: state.time });
   }
@@ -744,22 +773,79 @@ const fixedUpdate = (state, input, dt) => {
   move(playerUnit, movement, speed, dt);
   player.position.x = playerUnit.x;
   player.position.z = playerUnit.z;
-  if (input.attack && !state.inputLatch.attack) {
-    // The nearest enemy is chosen, and attack() itself refuses a target that
-    // is out of reach: a swing that cannot land must not spend the cooldown.
-    const nearest = state.enemies.filter((unit) => !unit.dead)
-      .sort((a, b) => distance(a, player.position) - distance(b, player.position))[0];
-    if (nearest) attack(state, nearest.id);
+  // Focus charge tracking for Focus Shot.
+  if (input.shoot) player.focusCharge = (player.focusCharge || 0) + dt; else player.focusCharge = 0;
+  // Assist / auto flags.
+  const autoAttack = Boolean(input.autoAttack);
+  const autoShoot = Boolean(input.autoShoot);
+  const lockTarget = input.lockTarget || null;
+  if (lockTarget !== (state.targetLock || null)) {
+    state.targetLock = lockTarget;
+    emitEvent(state, { type: 'target-lock', id: lockTarget, at: state.time });
   }
-  state.inputLatch.attack = Boolean(input.attack);
-  if (input.shoot && !state.inputLatch.shoot) {
-    // The result is truthful — it says why the bow did nothing — so it is
-    // surfaced instead of being thrown away.
-    const result = shoot(state);
-    if (!result.fired && result.reason) {
-      emitEvent(state, { type: 'bow-missed', reason: result.reason, at: state.time });
+  // target selection
+  let target = null;
+  // sticky target
+  if (state.assistTarget && state.assistTargetUntil > state.time) {
+    const t = state.enemies.find((e) => e.id === state.assistTarget && !e.dead);
+    if (t) target = t;
+  }
+  if (!target) {
+    // pick by score
+    const candidates = state.enemies.filter((e) => !e.dead);
+    if (candidates.length) {
+      let best = null; let bestScore = Infinity;
+      for (const e of candidates) {
+        const gap = distance(e, player.position);
+        const toward = direction(player.position, e);
+        const alignment = toward.x * player.facing.x + toward.z * player.facing.z;
+        const threat = (lockTarget && e.id === lockTarget) ? -100 : 0;
+        const tb = { summoner:5, archer:3, flanker:2, boss:4, tank:0, chaser:0 }[e.archetype] || 0;
+        const lowHp = (e.hp / e.maxHp < 0.25) ? 3 : 0;
+        const score = gap - alignment*4 - tb - lowHp - threat;
+        if (score < bestScore) { bestScore = score; best = e; }
+      }
+      target = best;
+      if (target) { state.assistTarget = target.id; state.assistTargetUntil = state.time + 0.4; }
     }
   }
+  if (lockTarget) {
+    const lt = state.enemies.find((e) => e.id === lockTarget && !e.dead);
+    if (lt) target = lt;
+  }
+  if (target && (input.attack || autoAttack)) {
+    // tryMelee: swing only if enemy within next chain step range
+    const chain = player.combo % 3 + 1;
+    const strike = COMBO[chain - 1];
+    const manual = !autoAttack || input.attack;
+    if (distance(player.position, target) <= strike.range) {
+      // not dashing
+      if (player.dashRemaining <= 0 && state.time >= player.attackReadyAt) {
+        attack(state, target.id, manual);
+      }
+    }
+  }
+  if (target && (input.shoot || autoShoot)) {
+    // auto-bow: only when no enemy in melee reach
+    let doShoot = true;
+    if (autoShoot && !input.shoot) {
+      const meleeReach = COMBO.reduce((m,c)=>Math.max(m,c.range),0);
+      const nearEnemy = state.enemies.some((e) => !e.dead && distance(e, player.position) <= meleeReach);
+      if (nearEnemy) doShoot = false;
+      const reserve = state.settings?.autoFireReserve ?? 25;
+      const cost = Math.max(1, Math.round(BOW.staminaCost * player.bowStaminaMultiplier));
+      if (player.stamina - cost < reserve) doShoot = false;
+      if (!target || distance(target, player.position) > BOW.range * player.bowRangeMultiplier) doShoot = false;
+    }
+    if (doShoot) {
+      const focus = !autoShoot && (player.focusCharge >= 0.6);
+      const result = shoot(state, { focus });
+      if (!result.fired && result.reason) {
+        emitEvent(state, { type: 'bow-missed', reason: result.reason, at: state.time });
+      }
+    }
+  }
+  state.inputLatch.attack = Boolean(input.attack);
   state.inputLatch.shoot = Boolean(input.shoot);
   for (const unit of [...state.enemies]) updateEnemy(state, unit, dt);
   separateEntities(state);
@@ -858,6 +944,14 @@ export function restoreRun(json) {
   } catch {
     throw new Error('Invalid dungeon save: malformed JSON');
   }
+  if (state && state.version === 3) {
+    state.version = 4;
+    if (state.player) {
+      if (state.player.focusCharge === undefined) state.player.focusCharge = 0;
+      if (state.player.rhythmWindow === undefined) state.player.rhythmWindow = 0;
+      if (state.player.invulnerable === 0.1) state.player.invulnerable = 0.45;
+    }
+  }
   if (!validState(state)) throw new Error('Invalid dungeon save: schema mismatch');
   // The event sequence counter must survive the round trip, or the runtime
   // would start counting from zero while the saved events already carry
@@ -889,6 +983,15 @@ export function loadPersistedRun(storage, seed = 'dungeon') {
     return { restored: false, state: createGameState(seed) };
   }
   if (raw == null) {
+    // Try v3 save and migrate.
+    let v3raw = null;
+    try { v3raw = storage.getItem(V3_SAVE_KEY); } catch { v3raw = null; }
+    if (v3raw != null) {
+      try {
+        const migrated = restoreRun(v3raw);
+        return { restored: true, state: migrated, announcement: 'Migrated save from v3.' };
+      } catch { /* fall through */ }
+    }
     let legacy = null;
     try {
       legacy = storage.getItem(LEGACY_SAVE_KEY);
@@ -918,4 +1021,69 @@ export function clearPersistedRun(storage) {
   } catch {
     return { cleared: false };
   }
+}
+
+export function pickTarget(state, lockTarget = null) {
+  const player = state.player;
+  if (lockTarget) {
+    const lt = state.enemies.find((e) => e.id === lockTarget && !e.dead);
+    if (lt) return lt;
+  }
+  // sticky
+  if (state.assistTarget && state.assistTargetUntil > state.time) {
+    const t = state.enemies.find((e) => e.id === state.assistTarget && !e.dead);
+    if (t) return t;
+  }
+  const candidates = state.enemies.filter((e) => !e.dead);
+  if (!candidates.length) return null;
+  let best = null; let bestScore = Infinity;
+  for (const e of candidates) {
+    const gap = Math.hypot(e.x - player.position.x, e.z - player.position.z);
+    const toward = { x: (e.x-player.position.x)/(gap||1), z: (e.z-player.position.z)/(gap||1) };
+    const alignment = toward.x * player.facing.x + toward.z * player.facing.z;
+    const tb = { summoner:5, archer:3, flanker:2, boss:4, tank:0, chaser:0 }[e.archetype] || 0;
+    const lowHp = (e.hp / e.maxHp < 0.25) ? 3 : 0;
+    const shielded = 0;
+    const score = gap - alignment*4 - tb - lowHp + shielded;
+    if (score < bestScore) { bestScore = score; best = e; }
+  }
+  if (best) { state.assistTarget = best.id; state.assistTargetUntil = state.time + 0.4; }
+  return best;
+}
+
+export function tryMelee(state, target, options = {}) {
+  const player = state.player;
+  if (player.dead || player.dashRemaining > 0) return { hit: false, reason: 'busy' };
+  if (state.time + 1e-9 < player.attackReadyAt) return { hit: false, reason: 'cooldown' };
+  if (!target) return { hit: false, reason: 'no-target' };
+  const chain = player.combo % 3 + 1;
+  const strike = COMBO[chain - 1];
+  const auto = Boolean(options.auto);
+  const manual = !auto;
+  if (Math.hypot(target.x - player.position.x, target.z - player.position.z) > strike.range) {
+    return { hit: false, reason: 'out-of-range', chain, damage: 0, range: strike.range };
+  }
+  return attack(state, target.id, manual);
+}
+
+export function tryBow(state, target, options = {}) {
+  const player = state.player;
+  const auto = Boolean(options.auto);
+  if (auto) {
+    const meleeReach = COMBO.reduce((m, c) => Math.max(m, c.range), 0);
+    const nearEnemy = state.enemies.some((e) => !e.dead && Math.hypot(e.x-player.position.x, e.z-player.position.z) <= meleeReach);
+    if (nearEnemy) return { fired: false, reason: 'melee-reach' };
+    const reserve = state.settings?.autoFireReserve ?? 25;
+    const cost = Math.max(1, Math.round(BOW.staminaCost * player.bowStaminaMultiplier));
+    if (player.stamina - cost < reserve) return { fired: false, reason: 'reserve' };
+    if (!target || Math.hypot(target.x-player.position.x, target.z-player.position.z) > BOW.range * player.bowRangeMultiplier) {
+      return { fired: false, reason: 'no-target' };
+    }
+  }
+  const focus = !auto && (options.focus || player.focusCharge >= 0.6);
+  const result = shoot(state, { focus });
+  if (!result.fired && result.reason) {
+    emitEvent(state, { type: 'bow-missed', reason: result.reason, at: state.time });
+  }
+  return result;
 }

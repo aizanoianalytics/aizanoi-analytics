@@ -55,7 +55,7 @@ const ENEMY_ASSET = Object.freeze({
 });
 const CONSUMED_KEYS = new Set([
   'KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
-  'Space', 'KeyJ', 'KeyK', 'Escape', 'KeyH', 'Enter',
+  'Space', 'KeyJ', 'KeyK', 'Escape', 'KeyH', 'Enter', 'KeyT', 'KeyQ',
 ]);
 let stylesheetRefs = 0;
 const MOVE_CODES = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
@@ -101,6 +101,8 @@ export class GameApp {
     this.pendingAttack = false;
     this.pendingDash = false;
     this.pendingShoot = false;
+    this.assistMode = 'assist';
+    this.lockedTarget = null;
     this.pendingInteract = false;
     this.enemyMeshes = new Map();
     this.projectileMeshes = new Map();
@@ -520,15 +522,32 @@ export class GameApp {
       event.preventDefault();
       if (event.code === 'Escape' && !event.repeat) this.togglePause();
       else if (event.code === 'KeyH' && !event.repeat) this.toggleHelp();
+      else if (event.code === 'KeyT' && !event.repeat) {
+        const modes = ['manual','assist','auto'];
+        const idx = modes.indexOf(this.assistMode);
+        this.assistMode = modes[(idx+1)%modes.length];
+        this.hud?.announce?.(`Assist mode: ${this.assistMode.toUpperCase()}`);
+      }
+      else if (event.code === 'KeyQ' && !event.repeat) {
+        // cycle lock target
+        const alive = this.state.enemies.filter((e)=>!e.dead);
+        if (!alive.length) this.lockedTarget = null;
+        else {
+          const idx = alive.findIndex((e)=>e.id===this.lockedTarget);
+          this.lockedTarget = alive[(idx+1)%alive.length].id;
+        }
+      }
       else if (event.code === 'Space' && !event.repeat) this.pendingDash = true;
-      else if (event.code === 'KeyJ' && !event.repeat) this.pendingAttack = true;
-      else if (event.code === 'KeyK' && !event.repeat) this.pendingShoot = true;
+      else if (event.code === 'KeyJ') { this.pendingAttack = true; this.keys.add('KeyJ'); }
+      else if (event.code === 'KeyK') { this.pendingShoot = true; this.keys.add('KeyK'); }
       else if (event.code === 'Enter' && !event.repeat) this.pendingInteract = true;
       else if (MOVE_CODES.has(event.code)) this.keys.add(event.code);
     };
     const keyup = (event) => {
       if (CONSUMED_KEYS.has(event.code) && hasFocus()) event.preventDefault();
       this.keys.delete(event.code);
+      if (event.code === 'KeyJ') this.keys.delete('KeyJ');
+      if (event.code === 'KeyK') this.keys.delete('KeyK');
     };
     const pointer = (event) => {
       if (this.sceneState !== 'playing') return;
@@ -698,9 +717,12 @@ export class GameApp {
     // is in reach or the walk times out.
     if (this.qaWalk) this.qaHandle.qaCloseIn();
     const input = this.movementInput();
-    input.attack = this.pendingAttack;
+    input.attack = this.pendingAttack || this.keys.has('KeyJ');
     input.dash = this.pendingDash;
-    input.shoot = this.pendingShoot;
+    input.shoot = this.pendingShoot || this.keys.has('KeyK');
+    input.autoAttack = this.assistMode === 'assist' || this.assistMode === 'auto';
+    input.autoShoot = this.assistMode === 'auto';
+    input.lockTarget = this.lockedTarget;
     this.pendingAttack = false;
     this.pendingDash = false;
     this.pendingShoot = false;

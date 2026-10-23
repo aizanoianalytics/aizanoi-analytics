@@ -254,7 +254,7 @@ test('simulation collides with room props, separates entities, and clamps reward
 const distanceBetween = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
 
 test('versioned persistence safely restores combat, reward, and between-wave runs', () => {
-  assert.match(DUNGEON_SAVE_KEY, /v3$/);
+  assert.match(DUNGEON_SAVE_KEY, /v4$/);
   const map = new Map();
   const storage = { getItem: (key) => map.get(key) ?? null, setItem: (key, value) => map.set(key, value) };
   for (const status of ['combat', 'reward', 'between-waves']) {
