@@ -228,6 +228,18 @@
 /* Claimed blessings, listed so the player can read their own build. */
 .az-hud-blessings { position: absolute; top: calc(1rem + env(safe-area-inset-top)); left: calc(1rem + env(safe-area-inset-left)); margin: 0; padding: 0; list-style: none; max-width: 14rem; }
 .az-hud-blessing-item { margin-bottom: 0.3rem; padding: 0.25rem 0.5rem; border-left: 2px solid var(--az-bronze); background: linear-gradient(90deg, rgba(18, 14, 9, 0.82), transparent); color: var(--az-ivory); font-size: 0.78rem; line-height: 1.35; }
+.az-hud-blessing--level-2 { border-left-color: var(--az-bronze-bright); }
+.az-hud-blessing--level-3 { border-left-color: var(--az-gold, #ffcf5a); font-weight: 700; }
+
+/* Assist mode chip + wrath charge bar. */
+.az-hud-assist { position: absolute; bottom: calc(1rem + env(safe-area-inset-bottom)); left: calc(1rem + env(safe-area-inset-left)); margin: 0; padding: 0.3rem 0.7rem; border: 1px solid var(--az-bronze); background: rgba(12, 8, 7, 0.85); color: var(--az-ivory); font-size: 0.75rem; letter-spacing: 0.18em; }
+.az-hud-assist[data-mode="auto"] { border-color: var(--az-gold, #ffcf5a); color: var(--az-gold, #ffcf5a); }
+.az-hud-special { position: absolute; bottom: calc(3.2rem + env(safe-area-inset-bottom)); left: calc(1rem + env(safe-area-inset-left)); width: min(12rem, 40vw); }
+.az-hud-special.is-ready .az-hud-meter-track { outline: 2px solid var(--az-gold, #ffcf5a); }
+.az-hud-stamina.is-low-reserve .az-hud-meter-track { outline: 1px dashed var(--az-gold, #ffcf5a); }
+.az-hud-stamina[data-reserve="25"] .az-hud-meter-track { border-right: 3px solid var(--az-gold, #ffcf5a); }
+.az-hud-stamina[data-reserve="50"] .az-hud-meter-track { border-right: 6px double var(--az-gold, #ffcf5a); }
+.az-hud-crosshair.is-locked::before, .az-hud-crosshair.is-locked::after { background: var(--az-gold, #ffcf5a); }
 
 .az-hud-damage-vignette { position: absolute; inset: 0; opacity: 0; background: radial-gradient(circle, transparent 38%, rgba(132, 15, 13, 0.7) 100%); transition: opacity 100ms ease-out; }
 .az-hud-damage-vignette.is-active { opacity: 1; animation: az-damage-pulse 260ms ease-out both; }

@@ -84,6 +84,11 @@ const ARCHETYPES = {
   summoner: { hp: 90, speed: 2.2, damage: 7, xp: 26, gold: 13 },
   flanker: { hp: 80, speed: 3.4, damage: 12, xp: 18, gold: 9 },
   boss: { hp: 650, speed: 2.7, damage: 24, xp: 150, gold: 80 },
+  shieldbearer: { hp: 130, speed: 2.0, damage: 14, xp: 24, gold: 12 },
+  gargoyle: { hp: 75, speed: 3.6, damage: 13, xp: 20, gold: 10 },
+  sorcerer: { hp: 85, speed: 2.3, damage: 10, xp: 28, gold: 14 },
+  slimegolem: { hp: 160, speed: 1.6, damage: 16, xp: 26, gold: 12 },
+  bomber: { hp: 60, speed: 2.8, damage: 20, xp: 18, gold: 9 },
 };
 
 const finite = (value) => typeof value === 'number' && Number.isFinite(value);
@@ -189,6 +194,13 @@ export function createGameState(seed = 'dungeon') {
       dead: false,
       focusCharge: 0,
       rhythmWindow: 0,
+      guardUntil: 0,
+      guardReadyAt: 0,
+      parryWindowUntil: 0,
+      phantomUntil: 0,
+      phantomBonusUntil: 0,
+      specialCharge: 0,
+      specialReadyAt: 0,
     },
     wave: { active: false, complete: false, rewarded: false, chapter: 1, scale: 1 },
     enemies: [],
@@ -206,36 +218,53 @@ export function createGameState(seed = 'dungeon') {
     // on its RUN LEDGER screen; without a win condition there was nowhere to
     // show them, because the run never ended.
     stats: { kills: 0, bossKills: 0, chestCount: 0, shotsFired: 0, meleeSwings: 0, damageTaken: 0, blessings: 0 },
-    inputLatch: { dash: false, attack: false, shoot: false },
+    inputLatch: { dash: false, attack: false, shoot: false, guard: false, special: false },
     assistTarget: null,
     assistTargetUntil: 0,
     targetLock: null,
+    pendingSpawns: [],
+    settings: { autoFireReserve: 25, heat: 0 },
+    heat: 0,
   };
 }
 
-const scaledArchetype = (archetype, chapter) => {
+const scaledArchetype = (archetype, chapter, heat = 0) => {
   const base = ARCHETYPES[archetype];
   const endless = Math.max(0, chapter - 10);
-  const scale = 1 + (chapter - 1) * 0.12 + endless * 0.08;
+  const scale = 1 + (chapter - 1) * 0.12 + endless * 0.08 + heat * 0.1;
   return {
     hp: Math.round(base.hp * scale),
-    speed: base.speed * Math.min(1.45, 1 + (chapter - 1) * 0.012),
-    damage: Math.round(base.damage * (1 + (chapter - 1) * 0.1 + endless * 0.05)),
+    speed: base.speed * Math.min(1.6, 1 + (chapter - 1) * 0.012 + heat * 0.08),
+    damage: Math.round(base.damage * (1 + (chapter - 1) * 0.1 + endless * 0.05 + heat * 0.06)),
     xp: Math.round(base.xp * scale),
     gold: Math.round(base.gold * Math.sqrt(scale)),
     scale,
   };
 };
 
-const makeEnemy = (state, archetype, chapter, index) => {
-  const stats = scaledArchetype(archetype, chapter);
+const ELITES = ['armored', 'swift', 'volatile', 'vampiric'];
+
+const safeSpawnPosition = (state, radius) => {
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    const angle = random(state) * Math.PI * 2;
+    const x = Math.cos(angle) * radius;
+    const z = Math.sin(angle) * radius;
+    const gap = Math.hypot(x - state.player.position.x, z - state.player.position.z);
+    if (gap >= 6) return { x, z };
+  }
   const angle = random(state) * Math.PI * 2;
-  const radius = 7 + random(state) * 8;
-  return {
+  return { x: Math.cos(angle) * radius, z: Math.sin(angle) * radius };
+};
+
+const makeEnemy = (state, archetype, chapter, index, elite = null) => {
+  const heat = state.heat || state.settings?.heat || 0;
+  const stats = scaledArchetype(archetype, chapter, heat);
+  const pos = safeSpawnPosition(state, 14 + random(state) * 3);
+  const enemy = {
     id: `enemy-${state.nextId++}`,
     archetype,
-    x: Math.cos(angle) * radius,
-    z: Math.sin(angle) * radius,
+    x: pos.x,
+    z: pos.z,
     hp: stats.hp,
     maxHp: stats.hp,
     speed: stats.speed,
@@ -245,13 +274,21 @@ const makeEnemy = (state, archetype, chapter, index) => {
     attackCooldown: random(state) * 0.4,
     shootCooldown: archetype === 'archer' ? random(state) * 0.5 : 0,
     summonCooldown: archetype === 'summoner' ? 1.5 + random(state) : 0,
+    sorcererCooldown: archetype === 'sorcerer' ? 2 + random(state) : 0,
+    gargoyleState: archetype === 'gargoyle' ? 'perch' : undefined,
     stun: 0,
     windup: null,
     dead: false,
     intent: 'idle',
     phase: archetype === 'boss' ? 1 : undefined,
     spawnIndex: index,
+    statuses: {},
+    elite: elite || null,
+    blocked: archetype === 'shieldbearer',
   };
+  if (elite === 'armored') { enemy.hp = Math.round(enemy.hp * 1.5); enemy.maxHp = enemy.hp; }
+  if (elite === 'swift') enemy.speed *= 1.3;
+  return enemy;
 };
 
 export function spawnWave(state, chapter = state.chapter) {
@@ -262,28 +299,73 @@ export function spawnWave(state, chapter = state.chapter) {
   if (chapter % 5 === 0) roles.push('chaser', 'archer', 'tank', 'summoner', 'flanker', 'boss');
   else {
     const pool = chapter < 3 ? ['chaser', 'chaser', 'archer']
-      : chapter < 6 ? ['chaser', 'archer', 'tank']
-        : ['chaser', 'archer', 'tank', 'summoner', 'flanker'];
+      : chapter < 5 ? ['chaser', 'archer', 'tank', 'shieldbearer']
+        : chapter < 7 ? ['chaser', 'archer', 'tank', 'summoner', 'flanker', 'gargoyle']
+          : ['chaser', 'archer', 'tank', 'summoner', 'flanker', 'shieldbearer', 'gargoyle', 'sorcerer', 'slimegolem', 'bomber'];
     const count = Math.min(4 + chapter, 12);
     for (let i = 0; i < count; i += 1) roles.push(pool[Math.floor(random(state) * pool.length)]);
   }
-  const scale = scaledArchetype('chaser', chapter).scale;
+  const scale = scaledArchetype('chaser', chapter, state.heat || 0).scale;
   // Never start a wave above the live-enemy ceiling: the arena is a single
   // screen, and a wave that cannot be fought is not a difficulty curve.
   const rolesCapped = roles.slice(0, MAX_LIVE_ENEMIES);
-  state.enemies = rolesCapped.map((role, index) => makeEnemy(state, role, chapter, index));
+  if (chapter >= 5 && chapter % 5 !== 0 && !rolesCapped.includes('flanker')) {
+    const idx = rolesCapped.findIndex((role) => role === 'chaser');
+    if (idx >= 0) rolesCapped[idx] = 'flanker';
+  }
+  const heat = state.heat || state.settings?.heat || 0;
+  const eliteBudget = chapter >= 3 ? Math.min(2, Math.floor((chapter - 1) / 2)) : 0;
+  const elites = new Set();
+  while (elites.size < eliteBudget && rolesCapped.length > 3) {
+    elites.add(Math.floor(random(state) * rolesCapped.length));
+  }
+  state.enemies = [];
+  state.pendingSpawns = rolesCapped.map((role, index) => {
+    const elite = elites.has(index) ? ELITES[Math.floor(random(state) * ELITES.length)] : null;
+    const pos = safeSpawnPosition(state, 14 + random(state) * 3);
+    return {
+      archetype: role, elite, index, x: pos.x, z: pos.z,
+      spawnAt: state.time + 1, announced: false,
+    };
+  });
   state.projectiles = [];
   state.chests = [];
   state.portal = { pending: false, position: null };
-  state.wave = { active: true, complete: false, rewarded: false, chapter, scale };
+  state.wave = { active: true, complete: false, rewarded: false, chapter, scale, total: rolesCapped.length };
   state.status = 'combat';
   emitEvent(state, { type: 'wave-start', chapter, count: rolesCapped.length, at: state.time });
-  return state.enemies;
+  return state.pendingSpawns;
 }
 
 const damagePlayer = (state, amount, source) => {
   const player = state.player;
-  if (player.dead || player.invulnerable > 0) return false;
+  if (player.dead) return false;
+  // Guard: parry window reflects, guard reduces.
+  if (state.time < (player.parryWindowUntil || 0)) {
+    const attacker = state.enemies.find((e) => e.id === source && !e.dead);
+    if (attacker) {
+      attacker.stun = Math.max(attacker.stun || 0, 0.8);
+      if (attacker.windup?.kind === 'projectile' && state.projectiles.length) {
+        const proj = state.projectiles.find((p) => p.ownerId === attacker.id && p.source === 'enemy');
+        if (proj) { proj.source = 'player'; proj.ownerId = null; proj.damage = Math.round(amount); const aim = direction(state.player.position, attacker); proj.vx = aim.x * 15; proj.vz = aim.z * 15; }
+      }
+    }
+    player.stamina = Math.min(player.maxStamina, player.stamina + 5);
+    emitEvent(state, { type: 'parry', source, at: state.time });
+    return false;
+  }
+  if (state.time < (player.guardUntil || 0)) {
+    if (player.stamina <= 0) { /* guard breaks through */ } else {
+      const taken = Math.max(1, Math.round(amount * player.damageTakenMultiplier * 0.4));
+      player.hp = Math.max(0, player.hp - taken);
+      player.stamina = Math.max(0, player.stamina - 10);
+      if (state.stats) state.stats.damageTaken += taken;
+      emitEvent(state, { type: 'guard-block', source, damage: taken, at: state.time });
+      if (player.hp === 0) player.dead = true;
+      return true;
+    }
+  }
+  if (player.invulnerable > 0) return false;
   const taken = Math.max(1, Math.round(amount * player.damageTakenMultiplier));
   player.hp = Math.max(0, player.hp - taken);
   player.invulnerable = 0.45;
@@ -314,6 +396,26 @@ const killEnemy = (state, target) => {
   if (target.dead) return;
   target.dead = true;
   target.hp = 0;
+  // Slime golem splits into two small golems on death.
+  if (target.archetype === 'slimegolem' && !target.summonedBy) {
+    for (let i = 0; i < 2; i += 1) {
+      if (state.enemies.filter((e) => !e.dead).length >= MAX_LIVE_ENEMIES) break;
+      const minion = makeEnemy(state, 'chaser', state.chapter, state.enemies.length);
+      minion.x = clamp(target.x + (i ? 0.8 : -0.8), -ARENA_RADIUS, ARENA_RADIUS);
+      minion.z = target.z;
+      minion.hp = Math.round(minion.hp * 0.35);
+      minion.maxHp = minion.hp;
+      minion.summonedBy = target.id;
+      state.enemies.push(minion);
+    }
+  }
+  // Volatile elite explodes with a telegraph-free small blast (dodge by distance).
+  if (target.elite === 'volatile') {
+    const player = state.player;
+    if (Math.hypot(player.position.x - target.x, player.position.z - target.z) <= 2.5) {
+      damagePlayer(state, Math.round(target.damage * 0.8), target.id);
+    }
+  }
   state.player.xp += target.xp;
   state.player.gold += target.gold;
   levelPlayer(state.player);
@@ -350,12 +452,34 @@ export function attack(state, targetId, manual = true) {
   const crit = random(state) < player.critChance;
   let rhythm = false;
   if (manual && player.rhythmWindow > 0 && state.time - player.rhythmWindow <= 0.12) rhythm = true;
-  const damageMult = rhythm ? 1.15 : 1;
+  const phantom = state.time < (player.phantomBonusUntil || 0);
+  const damageMult = (rhythm ? 1.15 : 1) * (phantom ? 1.2 : 1);
   const damage = Math.round(strike.damage * player.damageMultiplier * damageMult * (crit ? player.critMultiplier : 1));
-  const result = { hit: false, chain, damage, range: strike.range, crit, rhythm };
+  const result = { hit: false, chain, damage, range: strike.range, crit, rhythm, phantom };
+  const wasVulnerable = (target.stun || 0) > 0.05 || target.windup;
   target.hp = Math.max(0, target.hp - damage);
   target.stun = Math.max(target.stun || 0, strike.stun);
   result.hit = true;
+  // Shieldbearer frontal block: halved unless vulnerable (stunned/windup) or phantom.
+  if (target.blocked && !wasVulnerable && !phantom) {
+    const blockedAmount = Math.round(damage / 2);
+    target.hp = Math.min(target.maxHp, target.hp + blockedAmount);
+    result.blocked = blockedAmount;
+    emitEvent(state, { type: 'shield-block', id: target.id, at: state.time });
+  }
+  player.specialCharge = Math.min(100, (player.specialCharge || 0) + Math.round(damage * 0.4));
+  // Combo finisher: third swing sends a short crescent wave.
+  if (chain === 3) {
+    for (const other of state.enemies) {
+      if (other.dead || other.id === target.id) continue;
+      if (Math.hypot(other.x - player.position.x, other.z - player.position.z) <= strike.range * 1.4) {
+        other.hp = Math.max(0, other.hp - Math.round(damage * 0.5));
+        other.stun = Math.max(other.stun || 0, 0.4);
+        if (other.hp === 0) killEnemy(state, other);
+      }
+    }
+    emitEvent(state, { type: 'crescent', at: state.time });
+  }
   if (player.lifesteal > 0) {
     const healed = Math.max(1, Math.round(damage * player.lifesteal));
     player.hp = Math.min(player.maxHp, player.hp + healed);
@@ -445,9 +569,10 @@ export function shoot(state, options = {}) {
     knockback: BOW.knockback,
     ttl: 2,
     radius: BOW.radius,
-    pierce: focus ? 1 : 0,
+    pierce: (focus ? 1 : 0) + (crit && (state.duos || []).includes('eagles-mark') ? 1 : 0),
     hitIds: [],
   });
+  player.specialCharge = Math.min(100, (player.specialCharge || 0) + Math.round(damage * 0.3));
   emitEvent(state, { type: 'bow-shot', id: target.id, damage, crit, at: state.time });
   if (focus) emitEvent(state, { type: 'focus-shot', at: state.time });
   if (state.stats) state.stats.shotsFired += 1;
@@ -721,26 +846,80 @@ const rewardPosition = (state) => {
   return position;
 };
 
+const RARITY_WEIGHTS = (chapter) => {
+  const bonus = Math.min(20, (chapter - 1) * 2);
+  return [
+    ['common', 60], ['rare', 28], ['epic', 10 + bonus * 0.4], ['mythic', 2 + bonus * 0.1],
+  ];
+};
+
+const rollRarity = (state, chapter) => {
+  const table = RARITY_WEIGHTS(chapter);
+  const total = table.reduce((sum, [, w]) => sum + w, 0);
+  let roll = random(state) * total;
+  for (const [name, weight] of table) { roll -= weight; if (roll <= 0) return name; }
+  return 'common';
+};
+
 const completeWave = (state) => {
-  if (!state.wave.active || state.wave.rewarded || state.enemies.some((enemy) => !enemy.dead)) return;
+  if (!state.wave.active || state.wave.rewarded) return;
+  if (state.enemies.some((enemy) => !enemy.dead)) return;
+  if ((state.pendingSpawns || []).length) return;
   state.wave.active = false;
   state.wave.complete = true;
   state.wave.rewarded = true;
   state.status = 'reward';
   const amount = Math.round(12 + state.wave.chapter * 4 + random(state) * 12);
-  const available = BLESSING_IDS.filter((id) => !state.blessings.includes(id));
-  const blessing = available.length ? available[Math.floor(random(state) * available.length)] : null;
-  const fallback = blessing ? null : (state.player.hp < state.player.maxHp
+  const owned = new Set(state.blessings);
+  const levels = state.blessingLevels || (state.blessingLevels = {});
+  const pool = BLESSING_IDS.filter((id) => (levels[id] || 0) < 3);
+  const choices = [];
+  const used = new Set();
+  for (let i = 0; i < 3 && pool.length; i += 1) {
+    const candidates = pool.filter((id) => !used.has(id));
+    if (!candidates.length) break;
+    const id = candidates[Math.floor(random(state) * candidates.length)];
+    used.add(id);
+    choices.push({ id, rarity: rollRarity(state, state.wave.chapter), level: (levels[id] || 0) + 1 });
+  }
+  const primary = choices[0]?.id || null;
+  const fallback = primary ? null : (state.player.hp < state.player.maxHp
     ? { kind: 'heal', amount: Math.min(30, state.player.maxHp - state.player.hp), label: 'Restored health' }
     : { kind: 'gold', amount: Math.round(18 + state.wave.chapter * 3), label: 'Bonus gold' });
-  const chest = { id: `chest-${state.nextId++}`, opened: false, gold: amount, blessing,
-    fallback, position: rewardPosition(state), reachable: true };
+  const shop = [0, 1, 2].map((slot) => {
+    const kind = ['heal', 'reroll', 'relic'][slot];
+    const price = Math.round((kind === 'heal' ? 30 : kind === 'reroll' ? 25 : 60) * (1 + state.wave.chapter * 0.15));
+    return { slot, kind, price, sold: false };
+  });
+  const chest = { id: `chest-${state.nextId++}`, opened: false, gold: amount, blessing: primary,
+    choices, fallback, shop, rerolls: 1, position: rewardPosition(state), reachable: true };
   state.chests.push(chest);
   emitEvent(state, { type: 'wave-complete', chapter: state.wave.chapter, chest: chest.id, at: state.time });
 };
 
 const fixedUpdate = (state, input, dt) => {
   state.time += dt;
+  // Materialize telegraphed spawns whose portal timer elapsed.
+  if ((state.pendingSpawns || []).length) {
+    const due = state.pendingSpawns.filter((spawn) => state.time >= spawn.spawnAt);
+    if (due.length) {
+      state.pendingSpawns = state.pendingSpawns.filter((spawn) => state.time < spawn.spawnAt);
+      for (const spawn of due) {
+        if (state.enemies.filter((e) => !e.dead).length >= MAX_LIVE_ENEMIES) break;
+        const enemy = makeEnemy(state, spawn.archetype, state.chapter, spawn.index, spawn.elite || null);
+        enemy.x = spawn.x; enemy.z = spawn.z;
+        state.enemies.push(enemy);
+        emitEvent(state, { type: 'enemy-spawn', id: enemy.id, archetype: enemy.archetype, at: state.time });
+      }
+    } else {
+      for (const spawn of state.pendingSpawns) {
+        if (!spawn.announced) {
+          spawn.announced = true;
+          emitEvent(state, { type: 'spawn-portal', archetype: spawn.archetype, x: spawn.x, z: spawn.z, at: state.time });
+        }
+      }
+    }
+  }
   const player = state.player;
   player.invulnerable = Math.max(0, player.invulnerable - dt);
   player.dashCooldown = Math.max(0, player.dashCooldown - dt);
@@ -761,8 +940,31 @@ const fixedUpdate = (state, input, dt) => {
     player.dashRemaining = DASH_DURATION;
     player.dashDirection = { ...dashDir };
     player.invulnerable = Math.max(player.invulnerable, 0.28);
+    // Phantom Step: dashing through the last 0.15s of a telegraph.
+    const phasing = state.enemies.some((e) => !e.dead && e.windup && e.windup.remaining <= 0.15 && e.windup.remaining > 0
+      && Math.hypot(e.x - player.position.x, e.z - player.position.z) <= (e.windup.range || 3) + 1);
+    if (phasing) {
+      player.dashCooldown = 0;
+      player.stamina = Math.min(player.maxStamina, player.stamina + 10);
+      player.phantomUntil = state.time + 0.35;
+      player.phantomBonusUntil = state.time + 3;
+      emitEvent(state, { type: 'phantom-step', at: state.time });
+    }
     emitEvent(state, { type: 'dash', at: state.time });
   }
+  // Guard / parry (new button): 0.35s guard, first 0.12s parries.
+  const guardPressed = Boolean(input.guard) && !state.inputLatch.guard;
+  state.inputLatch.guard = Boolean(input.guard);
+  if (guardPressed && state.time >= (player.guardReadyAt || 0) && player.stamina > 0) {
+    player.guardUntil = state.time + 0.35;
+    player.parryWindowUntil = state.time + 0.12;
+    player.guardReadyAt = state.time + 0.8;
+    emitEvent(state, { type: 'guard', at: state.time });
+  }
+  // Special ability (E): Wrath of the Temple shockwave.
+  const specialPressed = Boolean(input.special) && !state.inputLatch.special;
+  state.inputLatch.special = Boolean(input.special);
+  if (specialPressed) fireSpecial(state);
   const dashActive = player.dashRemaining > 0;
   const movement = dashActive ? player.dashDirection : vector;
   if (dashActive) {
@@ -896,8 +1098,11 @@ export function openChest(state, chestId) {
 
 export function chooseBlessing(state, id) {
   if (!BLESSING_IDS.includes(id)) throw new Error(`Unknown blessing: ${id}`);
-  if (state.blessings.includes(id)) return { chosen: false, reason: 'already-chosen', label: 'Bonus gold' };
-  state.blessings.push(id);
+  const levels = state.blessingLevels || (state.blessingLevels = {});
+  const level = levels[id] || 0;
+  if (level >= 3) return { chosen: false, reason: 'max-level', label: 'Bonus gold' };
+  levels[id] = level + 1;
+  if (!state.blessings.includes(id)) state.blessings.push(id);
   const player = state.player;
   if (id === 'vitality') {
     player.maxHp += 30;
@@ -915,8 +1120,80 @@ export function chooseBlessing(state, id) {
     player.damageMultiplier *= 1.1;
     player.attackSpeedMultiplier *= 1.08;
   } else if (id === 'penkalasblood') player.bowStaminaMultiplier *= 0.75;
-  emitEvent(state, { type: 'blessing', id, at: state.time });
-  return { chosen: true, id, label: BLESSINGS[id].label, hint: BLESSINGS[id].hint };
+  if (state.stats) state.stats.blessings += 1;
+  // Duo synergies (mythic fiction, labeled in codex).
+  const duo = checkDuo(state);
+  emitEvent(state, { type: 'blessing', id, level: levels[id], duo, at: state.time });
+  return { chosen: true, id, level: levels[id], duo, label: BLESSINGS[id].label, hint: BLESSINGS[id].hint };
+}
+
+const DUOS = [
+  { pair: ['vampiric', 'fury'], id: 'bloodrite', effect: 'crits heal 4% max hp' },
+  { pair: ['longrange', 'keeneye'], id: 'eagles-mark', effect: 'bow crits pierce' },
+  { pair: ['windstep', 'stormstep'], id: 'gale-dancer', effect: 'dash leaves a damaging trail' },
+];
+
+export function checkDuo(state) {
+  const owned = new Set(state.blessings);
+  const found = DUOS.filter((duo) => duo.pair.every((id) => owned.has(id))).map((duo) => duo.id);
+  if (found.length && !state.duos?.length) state.duos = found;
+  else if (found.length) state.duos = [...new Set([...(state.duos || []), ...found])];
+  return found;
+}
+
+export function rerollChest(state, chestId) {
+  const chest = state.chests.find((item) => item.id === chestId);
+  if (!chest || chest.opened || (chest.rerolls || 0) <= 0) return { rerolled: false };
+  const cost = 20 + state.chapter * 5;
+  if (state.player.gold < cost) return { rerolled: false, reason: 'no-gold' };
+  state.player.gold -= cost;
+  chest.rerolls -= 1;
+  const levels = state.blessingLevels || {};
+  const pool = BLESSING_IDS.filter((id) => (levels[id] || 0) < 3 && !chest.choices?.some((c) => c.id === id));
+  chest.choices = (chest.choices || []).map((choice) => {
+    if (!pool.length) return choice;
+    const id = pool.splice(Math.floor(random(state) * pool.length), 1)[0];
+    return { id, rarity: rollRarity(state, state.chapter), level: (levels[id] || 0) + 1 };
+  });
+  chest.blessing = chest.choices[0]?.id || null;
+  emitEvent(state, { type: 'reroll', chest: chest.id, at: state.time });
+  return { rerolled: true, choices: chest.choices };
+}
+
+export function buyShopItem(state, chestId, slot) {
+  const chest = state.chests.find((item) => item.id === chestId);
+  const item = chest?.shop?.find((entry) => entry.slot === slot);
+  if (!item || item.sold) return { bought: false };
+  if (state.player.gold < item.price) return { bought: false, reason: 'no-gold' };
+  state.player.gold -= item.price;
+  item.sold = true;
+  if (item.kind === 'heal') state.player.hp = Math.min(state.player.maxHp, state.player.hp + 50);
+  if (item.kind === 'reroll') chest.rerolls = (chest.rerolls || 0) + 1;
+  if (item.kind === 'relic') { state.player.damageMultiplier *= 1.05; state.player.maxHp += 10; }
+  emitEvent(state, { type: 'shop-buy', chest: chest.id, slot, kind: item.kind, at: state.time });
+  return { bought: true, kind: item.kind };
+}
+
+export function fireSpecial(state) {
+  const player = state.player;
+  if (player.dead || state.time < (player.specialReadyAt || 0)) return { fired: false, reason: 'cooldown' };
+  if ((player.specialCharge || 0) < 100) return { fired: false, reason: 'not-charged' };
+  player.specialCharge = 0;
+  player.specialReadyAt = state.time + 12;
+  let stunned = 0;
+  for (const enemy of state.enemies) {
+    if (enemy.dead) continue;
+    const gap = Math.hypot(enemy.x - player.position.x, enemy.z - player.position.z);
+    if (gap <= 4.5) {
+      enemy.stun = Math.max(enemy.stun || 0, enemy.archetype === 'boss' ? 1 : 3);
+      const push = direction(player.position, enemy);
+      enemy.x = clamp(enemy.x + push.x * 1.2, -ARENA_RADIUS, ARENA_RADIUS);
+      enemy.z = clamp(enemy.z + push.z * 1.2, -ARENA_RADIUS, ARENA_RADIUS);
+      stunned += 1;
+    }
+  }
+  emitEvent(state, { type: 'special', stunned, at: state.time });
+  return { fired: true, stunned };
 }
 
 export function serializeRun(state) {
@@ -944,13 +1221,32 @@ export function restoreRun(json) {
   } catch {
     throw new Error('Invalid dungeon save: malformed JSON');
   }
+  if (state && state.version === 4) {
+    if (state.player) {
+      if (state.player.focusCharge === undefined) state.player.focusCharge = 0;
+      if (state.player.rhythmWindow === undefined) state.player.rhythmWindow = 0;
+      if (state.player.guardUntil === undefined) state.player.guardUntil = 0;
+      if (state.player.specialCharge === undefined) state.player.specialCharge = 0;
+    }
+    if (!Array.isArray(state.pendingSpawns)) state.pendingSpawns = [];
+    if (!state.blessingLevels) state.blessingLevels = {};
+    if (!state.settings) state.settings = { autoFireReserve: 25, heat: 0 };
+    if (state.heat === undefined) state.heat = state.settings.heat || 0;
+  }
   if (state && state.version === 3) {
     state.version = 4;
     if (state.player) {
       if (state.player.focusCharge === undefined) state.player.focusCharge = 0;
       if (state.player.rhythmWindow === undefined) state.player.rhythmWindow = 0;
       if (state.player.invulnerable === 0.1) state.player.invulnerable = 0.45;
+      for (const key of ['guardUntil', 'guardReadyAt', 'parryWindowUntil', 'phantomUntil', 'phantomBonusUntil', 'specialCharge', 'specialReadyAt']) {
+        if (state.player[key] === undefined) state.player[key] = 0;
+      }
     }
+    if (!Array.isArray(state.pendingSpawns)) state.pendingSpawns = [];
+    if (!state.blessingLevels) state.blessingLevels = {};
+    if (!state.settings) state.settings = { autoFireReserve: 25, heat: 0 };
+    if (state.heat === undefined) state.heat = 0;
   }
   if (!validState(state)) throw new Error('Invalid dungeon save: schema mismatch');
   // The event sequence counter must survive the round trip, or the runtime

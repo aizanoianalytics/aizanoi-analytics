@@ -66,13 +66,16 @@ test('every blessing changes a player stat in the expected direction', () => {
   });
 });
 
-test('a blessing cannot be taken twice', () => {
+test('a blessing stacks to level III, then refuses', () => {
   const state = createGameState('double-blessing');
   assert.equal(chooseBlessing(state, 'fury').chosen, true);
-  const second = chooseBlessing(state, 'fury');
-  assert.equal(second.chosen, false);
-  assert.equal(second.reason, 'already-chosen');
-  assert.equal(state.blessings.length, 1);
+  assert.equal(chooseBlessing(state, 'fury').chosen, true, 'second pick stacks to II');
+  assert.equal(chooseBlessing(state, 'fury').chosen, true, 'third pick stacks to III');
+  const fourth = chooseBlessing(state, 'fury');
+  assert.equal(fourth.chosen, false);
+  assert.equal(fourth.reason, 'max-level');
+  assert.equal(state.blessings.length, 1, 'stacking never duplicates the entry');
+  assert.equal(state.blessingLevels.fury, 3);
 });
 
 test('an unknown blessing is rejected', () => {

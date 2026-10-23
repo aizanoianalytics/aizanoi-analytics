@@ -34,16 +34,24 @@ Same product, same route (`/dungeon/`), same AizanoiOS app id (`dungeon`).
 
 - A run is ten chapters. Clearing the tenth wins the run and shows the run
   ledger; past that the descent continues endlessly.
-- Each chapter is a wave of enemies drawn from six archetypes: `chaser`,
-  `archer`, `tank`, `summoner`, `flanker` (the Styx Ferryman, which orbits
-  and then lunges) and `boss`.
-- Aizo fights with a three-hit melee chain and a bow. The bow costs stamina
-  and tells the player when it refuses to fire.
-- Each cleared wave drops a chest with gold and one of twelve blessings. The
-  blessings are multipliers on the player, and the HUD lists the ones that
-  have been claimed.
-- The run is persisted between sessions, and the menu offers **Continue** when
-  a saved run exists.
+- Each chapter arrives through 1-second spawn portals (edge, never within
+  6 units of the player), then a wave of enemies drawn from eleven
+  archetypes: `chaser`, `archer`, `tank`, `summoner`, `flanker` (the Styx
+  Ferryman, which orbits and then lunges), `boss`, plus `shieldbearer`
+  (frontal block), `gargoyle`, `sorcerer`, `slimegolem` (splits on death)
+  and `bomber`. From chapter 3 up to two elites (`armored`, `swift`,
+  `volatile`, `vampiric`) join; heat levels scale hp/speed/damage.
+- Aizo fights with a three-hit melee chain (third swing sends a crescent
+  wave), a bow, a guard/parry (`L`), a perfect-dodge Phantom Step, and a
+  Wrath of the Temple shockwave (`E`) charged by dealing damage.
+- Assist modes (`T`): manual / assist / auto. Manual swings earn rhythm
+  bonus; held shoot charges a piercing focus shot.
+- Each cleared wave drops a chest with gold, a choice of 3 blessings with
+  rarity (common/rare/epic/mythic) stacking to level III, duo synergies,
+  one paid reroll, and a 3-item Ferryman's Toll shop (heal/reroll/relic).
+- The run is persisted between sessions (save v4, v3 migrated), and the menu
+  offers **Continue** when a saved run exists.
+- Headless balance harness: `node scripts/dungeon/balance-harness.mjs`.
 
 ## The QA handle
 
@@ -56,9 +64,13 @@ the browser tests:
 - `ledger` — the run ledger: kills, bosses, chests, swings, arrows, damage
   taken, chapter, gold and blessings
 - `victory` — whether the run has been won
+- `assist` — mode, current target, locked target
+- `target` — the current target's id, archetype and health
+- `buffs` — blessings, blessing levels, duos, special charge
+- `status` — pending spawns, live count, guard state, time
 
 It also carries a few QA affordances that drive the game's own code paths
 rather than poking state: `qaAdvance(ticks)` runs the game's own fixed-step
 tick, `qaWalkToward(enemyId)` steers the player with the game's own movement
-input, and `qaClearWave()` clears a wave and opens its chest through the
-runtime's own path.
+input, `qaClearWave()` clears a wave and opens its chest through the
+runtime's own path, and `qaRetrySeed()` restarts the same seed.

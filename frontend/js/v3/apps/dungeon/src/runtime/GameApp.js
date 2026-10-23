@@ -51,11 +51,12 @@ const ASSETS = Object.freeze({
 });
 const ENEMY_ASSET = Object.freeze({
   chaser: 'chaser', archer: 'archer', tank: 'tank', summoner: 'summoner',
-  flanker: 'flanker', boss: 'boss',
+  flanker: 'flanker', boss: 'boss', shieldbearer: 'tank', gargoyle: 'flanker',
+  sorcerer: 'summoner', slimegolem: 'tank', bomber: 'archer',
 });
 const CONSUMED_KEYS = new Set([
   'KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
-  'Space', 'KeyJ', 'KeyK', 'Escape', 'KeyH', 'Enter', 'KeyT', 'KeyQ',
+  'Space', 'KeyJ', 'KeyK', 'KeyL', 'KeyE', 'Escape', 'KeyH', 'Enter', 'KeyT', 'KeyQ',
 ]);
 let stylesheetRefs = 0;
 const MOVE_CODES = new Set(['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']);
@@ -101,6 +102,8 @@ export class GameApp {
     this.pendingAttack = false;
     this.pendingDash = false;
     this.pendingShoot = false;
+    this.pendingGuard = false;
+    this.pendingSpecial = false;
     this.assistMode = 'assist';
     this.lockedTarget = null;
     this.pendingInteract = false;
@@ -204,7 +207,9 @@ export class GameApp {
     const attack = makeButton('az-touch-action az-touch-action--primary', 'Attack', () => { this.pendingAttack = true; this.root.focus(); });
     const shoot = makeButton('az-touch-action', 'Shoot', () => { this.pendingShoot = true; this.root.focus(); });
     const dash = makeButton('az-touch-action', 'Dash', () => { this.pendingDash = true; this.root.focus(); });
-    actions.append(attack, shoot, dash);
+    const guard = makeButton('az-touch-action', 'Guard', () => { this.pendingGuard = true; this.root.focus(); });
+    const wrath = makeButton('az-touch-action', 'Wrath', () => { this.pendingSpecial = true; this.root.focus(); });
+    actions.append(attack, shoot, dash, guard, wrath);
     this.touchControls.append(pad, actions);
     this.exitButton = makeButton('az-dungeon-exit', '', () => this.api?.closeApp?.(APP_ID));
     this.exitButton.setAttribute('aria-label', 'Return to AizanoiOS');
@@ -408,6 +413,11 @@ export class GameApp {
       get victory() { return app.sceneState === 'victory'; },
       get portalReady() { return Boolean(app.portal); },
       get runStatus() { return app.state.status; },
+      get assist() { return { mode: app.assistMode, target: app.state.assistTarget, locked: app.lockedTarget }; },
+      get target() { const t = app.state.enemies.find((unit) => unit.id === (app.lockedTarget || app.state.assistTarget)); return t ? { id: t.id, archetype: t.archetype, hp: t.hp, maxHp: t.maxHp } : null; },
+      get buffs() { return { blessings: [...app.state.blessings], levels: { ...(app.state.blessingLevels || {}) }, duos: [...(app.state.duos || [])], specialCharge: app.state.player.specialCharge }; },
+      get status() { return { pendingSpawns: (app.state.pendingSpawns || []).length, live: app.state.enemies.filter((e) => !e.dead).length, guardUntil: app.state.player.guardUntil, time: app.state.time }; },
+      qaRetrySeed() { const seed = app.state.seed; app.state = createGameState(seed); app.syncWorld(); app.updateHud(); return { seed }; },
       // QA affordance: clear the current wave and open its chest, using the
       // game's own code path, so a browser test can reach a late-game state
       // without playing ten chapters by hand. It is a test hook on a handle
@@ -472,6 +482,7 @@ export class GameApp {
       },
       qaClearWave() {
         app.state.enemies = [];
+        app.state.pendingSpawns = [];
         app.state.wave = { active: true, complete: false, rewarded: false, chapter: app.state.chapter, scale: 1 };
         stepGame(app.state, {}, 1 / 60);
         const chest = app.state.chests.at(-1);
@@ -540,6 +551,8 @@ export class GameApp {
       else if (event.code === 'Space' && !event.repeat) this.pendingDash = true;
       else if (event.code === 'KeyJ') { this.pendingAttack = true; this.keys.add('KeyJ'); }
       else if (event.code === 'KeyK') { this.pendingShoot = true; this.keys.add('KeyK'); }
+      else if (event.code === 'KeyL' && !event.repeat) { this.pendingGuard = true; this.keys.add('KeyL'); }
+      else if (event.code === 'KeyE' && !event.repeat) this.pendingSpecial = true;
       else if (event.code === 'Enter' && !event.repeat) this.pendingInteract = true;
       else if (MOVE_CODES.has(event.code)) this.keys.add(event.code);
     };
@@ -548,6 +561,7 @@ export class GameApp {
       this.keys.delete(event.code);
       if (event.code === 'KeyJ') this.keys.delete('KeyJ');
       if (event.code === 'KeyK') this.keys.delete('KeyK');
+      if (event.code === 'KeyL') this.keys.delete('KeyL');
     };
     const pointer = (event) => {
       if (this.sceneState !== 'playing') return;
@@ -671,11 +685,15 @@ export class GameApp {
     this.pendingAttack = false;
     this.pendingDash = false;
     this.pendingShoot = false;
+    this.pendingGuard = false;
+    this.pendingSpecial = false;
     this.pendingInteract = false;
     this.touchMove = null;
     this.state.inputLatch.attack = false;
     this.state.inputLatch.dash = false;
     this.state.inputLatch.shoot = false;
+    this.state.inputLatch.guard = false;
+    this.state.inputLatch.special = false;
   }
 
   togglePause() {
@@ -720,12 +738,16 @@ export class GameApp {
     input.attack = this.pendingAttack || this.keys.has('KeyJ');
     input.dash = this.pendingDash;
     input.shoot = this.pendingShoot || this.keys.has('KeyK');
+    input.guard = this.pendingGuard || this.keys.has('KeyL');
+    input.special = this.pendingSpecial || this.keys.has('KeyE');
     input.autoAttack = this.assistMode === 'assist' || this.assistMode === 'auto';
     input.autoShoot = this.assistMode === 'auto';
     input.lockTarget = this.lockedTarget;
     this.pendingAttack = false;
     this.pendingDash = false;
     this.pendingShoot = false;
+    this.pendingGuard = false;
+    this.pendingSpecial = false;
     if (this.pendingInteract) {
       this.pendingInteract = false;
       if (this.tryInteract()) input.attack = false;
@@ -815,6 +837,22 @@ export class GameApp {
       // Audible windup cue; the ground ring is synced from live windup state.
       this.feedback.emit('swing', { position, intensity: 0.6 });
     }
+    else if (event.type === 'spawn-portal') {
+      this.hud.announce('Enemies approach');
+      this.feedback.emit('swing', { position: { x: event.x, y: 0.5, z: event.z }, intensity: 0.4 });
+    }
+    else if (event.type === 'enemy-spawn') this.feedback.emit('bow', { position });
+    else if (event.type === 'parry') { this.feedback.emit('crit', { position }); this.hud.announce('Parried'); }
+    else if (event.type === 'guard-block') this.feedback.emit('hurt', { damage: event.damage, position });
+    else if (event.type === 'phantom-step') { this.feedback.emit('dash', { position }); this.hud.announce('Phantom Step'); }
+    else if (event.type === 'guard') this.feedback.emit('dash', { position });
+    else if (event.type === 'special') { this.feedback.emit('crit', { position }); this.hud.announce(`Wrath of the Temple — ${event.stunned} stunned`); }
+    else if (event.type === 'crescent') this.feedback.emit('swing', { position, intensity: 1 });
+    else if (event.type === 'shield-block') this.feedback.emit('hit', { position });
+    else if (event.type === 'rhythm') this.hud.announce('Rhythm strike');
+    else if (event.type === 'focus-shot') this.hud.announce('Focus shot loosed');
+    else if (event.type === 'reroll') this.hud.announce('Blessings rerolled');
+    else if (event.type === 'shop-buy') this.feedback.emit('loot', { label: `Toll paid: ${event.kind}`, position });
     else if (event.type === 'wave-start') this.hud.announce(`Chapter ${event.chapter}`);
     else if (event.type === 'wave-complete') {
       this.hud.announce('Wave cleared — claim your blessing');
@@ -928,12 +966,18 @@ export class GameApp {
   updateHud() {
     const player = this.state.player;
     const boss = this.state.enemies.find((enemy) => enemy.archetype === 'boss' && !enemy.dead);
+    const target = this.state.enemies.find((unit) => unit.id === (this.lockedTarget || this.state.assistTarget));
     this.hud.update({
       health: player.hp, maxHealth: player.maxHp, stamina: player.stamina, maxStamina: player.maxStamina,
       xp: player.xp, xpToNext: player.xpToNext, gold: player.gold, combo: player.combo,
       chapter: this.state.chapter, wave: this.state.wave.chapter,
       boss: boss ? { name: 'Marble Minotaur', health: boss.hp, maxHealth: boss.maxHp } : null,
       blessings: this.state.blessings, blessingLabels: BLESSING_LABELS,
+      blessingLevels: { ...(this.state.blessingLevels || {}) },
+      assistMode: this.assistMode, specialCharge: player.specialCharge || 0,
+      specialReady: (player.specialCharge || 0) >= 100,
+      reserve: this.state.settings?.autoFireReserve ?? 25,
+      target: target ? { id: target.id, hp: target.hp, maxHp: target.maxHp, locked: target.id === this.lockedTarget } : null,
       paused: this.paused, help: this.help,
     });
   }

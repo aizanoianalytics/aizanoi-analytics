@@ -70,6 +70,9 @@ export function createHud({ container, document: doc = globalThis.document } = {
   const combo = element(doc, 'output', 'az-hud-combo', '');
   combo.setAttribute('aria-label', 'Combo');
   combo.hidden = true;
+  const assistChip = element(doc, 'p', 'az-hud-assist', 'ASSIST');
+  assistChip.setAttribute('aria-label', 'Assist mode: Assist');
+  const special = meter(doc, 'Wrath', 'az-hud-special');
   const crosshair = element(doc, 'div', 'az-hud-crosshair');
   crosshair.setAttribute('aria-hidden', 'true');
   const vignette = element(doc, 'div', 'az-hud-damage-vignette');
@@ -99,9 +102,9 @@ export function createHud({ container, document: doc = globalThis.document } = {
   const help = element(doc, 'aside', 'az-hud-panel az-hud-help');
   help.setAttribute('aria-label', 'Controls');
   help.hidden = true;
-  help.append(element(doc, 'h2', 'az-hud-panel-title', 'Controls'), element(doc, 'p', 'az-hud-panel-copy', 'Move: WASD / arrows · Attack: click / J · Shoot: K · Dash: Space · Interact: Enter · Help: H · Pause: Escape'));
+  help.append(element(doc, 'h2', 'az-hud-panel-title', 'Controls'), element(doc, 'p', 'az-hud-panel-copy', 'Move: WASD / arrows · Attack: click / J · Shoot: K · Dash: Space · Guard: L · Wrath: E · Lock: Q · Assist: T · Interact: Enter · Help: H · Pause: Escape'));
 
-  root.append(top, boss.wrapper, combo, blessings, crosshair, vignette, lootFeed, announcer, pause, help);
+  root.append(top, boss.wrapper, combo, assistChip, special.wrapper, blessings, crosshair, vignette, lootFeed, announcer, pause, help);
   container.appendChild(root);
 
   const elements = {
@@ -109,6 +112,7 @@ export function createHud({ container, document: doc = globalThis.document } = {
     boss: boss.value, bossWrap: boss.wrapper, bossName,
     gold, combo, chapter, wave, crosshair, damageVignette: vignette,
     lootFeed, blessings, announcer, pause, help,
+    assistChip, special: special.value, specialWrap: special.wrapper,
   };
 
   function update(state = {}) {
@@ -138,7 +142,27 @@ export function createHud({ container, document: doc = globalThis.document } = {
     }
     if (state.paused !== undefined) pause.hidden = !state.paused;
     if (state.help !== undefined) help.hidden = !state.help;
-    if (state.blessings !== undefined) renderBlessings(state.blessings, state.blessingLabels);
+    if (state.blessings !== undefined) renderBlessings(state.blessings, state.blessingLabels, state.blessingLevels);
+    if (state.assistMode !== undefined) {
+      const mode = String(state.assistMode).toUpperCase();
+      assistChip.textContent = mode;
+      assistChip.setAttribute('aria-label', `Assist mode: ${state.assistMode}`);
+      assistChip.setAttribute('data-mode', String(state.assistMode));
+    }
+    if (state.specialCharge !== undefined) {
+      setMeter(special, state.specialCharge, 100);
+      special.wrapper.classList.toggle('is-ready', Boolean(state.specialReady));
+    }
+    if (state.stamina !== undefined || state.maxStamina !== undefined || state.reserve !== undefined) {
+      const max = Math.max(1, Number(state.maxStamina ?? 100));
+      const reserve = Math.max(0, Math.min(max, Number(state.reserve ?? 25)));
+      stamina.wrapper.classList.toggle('is-low-reserve', (state.stamina ?? 0) < reserve + 1);
+      stamina.wrapper.setAttribute('data-reserve', reserve >= 50 ? '50' : reserve > 0 ? '25' : '0');
+    }
+    if (state.target !== undefined) {
+      crosshair.classList.toggle('is-locked', Boolean(state.target?.locked));
+      crosshair.setAttribute('aria-label', state.target ? `Target: ${state.target.hp}/${state.target.maxHp}` : 'No target');
+    }
     return api;
   }
 
@@ -147,9 +171,9 @@ export function createHud({ container, document: doc = globalThis.document } = {
    * changes, so the HUD does not churn the DOM every frame.
    */
   let blessingSignature = '';
-  function renderBlessings(list, labels) {
+  function renderBlessings(list, labels, levels) {
     const items = Array.isArray(list) ? list : [];
-    const signature = items.join('|');
+    const signature = items.map((id) => `${id}:${levels?.[id] || 1}`).join('|');
     if (signature === blessingSignature) return;
     blessingSignature = signature;
     while (blessings.firstElementChild) blessings.firstElementChild.remove();
@@ -157,9 +181,12 @@ export function createHud({ container, document: doc = globalThis.document } = {
     items.forEach((id) => {
       const label = labels?.[id]?.label || id;
       const hint = labels?.[id]?.hint || '';
-      const item = element(doc, 'li', 'az-hud-blessing-item', label);
-      if (hint) item.setAttribute('title', hint);
-      item.setAttribute('aria-label', hint ? `${label}: ${hint}` : label);
+      const level = levels?.[id] || 1;
+      const item = element(doc, 'li', `az-hud-blessing-item az-hud-blessing--level-${level}`, `${label} ${'◆'.repeat(level)}`);
+      if (hint) item.setAttribute('title', `${hint} · Level ${level}`);
+      item.setAttribute('aria-label', hint ? `${label}, level ${level}: ${hint}` : `${label}, level ${level}`);
+      item.setAttribute('data-blessing', id);
+      item.setAttribute('data-level', String(level));
       blessings.appendChild(item);
     });
   }
