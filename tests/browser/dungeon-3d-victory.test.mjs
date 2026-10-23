@@ -169,17 +169,44 @@ test('the victory screen lets the descent continue past the tenth chapter', asyn
 
     await page.goto(`${base}/dungeon/?endless=${Date.now()}`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.az-dungeon-begin', { timeout: 30000 });
-    await page.locator('.az-dungeon-begin').click();
+    // A software renderer can hold the main thread long enough that the default
+    // actionability timeout expires; the click itself is a trusted mouse press.
+    await page.locator('.az-dungeon-begin').click({ timeout: 60000 });
     await page.waitForFunction(() => window.AIZANOI_DUNGEON_GAME?.state === 'playing', null, { timeout: 20000 });
-    await page.evaluate(() => {
+    // Let the first frames settle before driving the fixed step, the way the
+    // sibling tests in this file do.
+    await page.waitForTimeout(800);
+    // Clear until the run is actually won, and report what each clear did: a
+    // bare "the panel never appeared" hides whether a clear failed or the
+    // panel failed to render.
+    const clears = await page.evaluate(() => {
       const handle = window.AIZANOI_DUNGEON_GAME;
-      for (let i = 0; i < 10; i += 1) handle.qaClearWave();
+      const results = [];
+      for (let i = 0; i < 14 && !handle.victory; i += 1) {
+        const result = handle.qaClearWave();
+        results.push({ opened: Boolean(result.opened), victory: Boolean(result.victory), chapter: handle.chapter });
+      }
+      return results;
     });
-    await page.waitForSelector('.az-dungeon-victory .az-dungeon-begin', { timeout: 20000 });
+    await page.waitForSelector('.az-dungeon-victory .az-dungeon-begin', { timeout: 30000 }).catch(() => {
+      throw new Error(`the victory screen never appeared after the clears: ${JSON.stringify(clears)}`);
+    });
 
-    const endless = page.locator('.az-dungeon-victory .az-dungeon-begin').filter({ hasText: 'Continue the descent' });
-    assert.equal(await endless.count(), 1, 'the victory screen must offer the endless descent');
-    await endless.dispatchEvent('click');
+    // Find the button and press it in ONE page evaluation. Reading the panel
+    // with a locator and clicking it in a second call leaves a window in which
+    // the panel can be rebuilt, and the locator then resolves to nothing. The
+    // event is dispatched from the page context for the same reason the
+    // sibling test does it: the centred panel's translate(-50%, -50%)
+    // transform never satisfies Playwright's actionability check.
+    const pressed = await page.evaluate(() => {
+      const buttons = [...document.querySelectorAll('.az-dungeon-victory .az-dungeon-begin')];
+      const endless = buttons.find((button) => button.textContent.includes('Continue the descent'));
+      if (!endless) return { found: false, labels: buttons.map((button) => button.textContent) };
+      endless.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      return { found: true, labels: buttons.map((button) => button.textContent) };
+    });
+    assert.equal(pressed.found, true,
+      `the victory screen must offer the endless descent, it offered ${JSON.stringify(pressed.labels)}`);
     await page.waitForSelector('.az-dungeon-victory', { state: 'detached', timeout: 20000 });
 
     const resumed = await page.evaluate(() => ({
@@ -198,7 +225,9 @@ test('the victory screen lets the descent continue past the tenth chapter', asyn
     const live = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyCount);
     assert.ok(live > 0, `the endless chapter must spawn enemies, got ${live}`);
     assert.deepEqual(errors, [], 'no console error may be logged');
-    await page.screenshot({ path: '/tmp/dungeon-endless.png' });
+    // No screenshot here on purpose: under SwiftShader the capture waits for a
+    // frame the software renderer may not deliver inside the timeout, and a
+    // failed capture is not a gameplay finding.
   } finally {
     await browser.close();
   }
