@@ -92,6 +92,8 @@ test('the 3D dungeon boots a real Three.js scene and plays a real run', async ()
     // Start a run with a real trusted click, never evaluate(el.click()).
     await page.locator('.az-dungeon-begin').click();
     await page.waitForFunction(() => window.AIZANOI_DUNGEON_GAME?.state === 'playing', null, { timeout: 15000 });
+    // Spawn portals telegraph for one simulated second before materializing.
+    await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(70));
 
     const started = await page.evaluate(() => ({
       chapter: window.AIZANOI_DUNGEON_GAME.chapter,
@@ -175,6 +177,18 @@ test('the 3D dungeon boots a real Three.js scene and plays a real run', async ()
     // is still going on above it, or melee damage can satisfy it.)
     const staminaBefore = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.stamina);
     const enemyHpBeforeBow = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyHp.map((e) => e.hp));
+    await page.evaluate(() => {
+      const handle = window.AIZANOI_DUNGEON_GAME;
+      const target = handle.enemyHp.find((enemy) => enemy.hp > 0);
+      if (target) handle.qaWalkToward(target.id);
+    });
+    await page.evaluate(() => {
+      const handle = window.AIZANOI_DUNGEON_GAME;
+      for (let i = 0; i < 180; i += 1) {
+        handle.qaAdvance(1);
+        if (handle.enemyHp.some((enemy) => enemy.hp > 0 && Math.hypot(enemy.x - handle.player.x, enemy.z - handle.player.z) <= 8)) break;
+      }
+    });
     let bowSpentStamina = false;
     let bowDamaged = false;
     for (let attempt = 0; attempt < 14; attempt += 1) {
