@@ -98,7 +98,9 @@ try {
   assert.equal(await page.locator('#internCandidateCount').textContent(), '1 aday');
   assert.equal(await page.locator('#internCandidateTabCount').textContent(), '1');
   assert.deepEqual(await page.locator('#internPeriodSelect option').allTextContents(), ['Tüm dönemler', '01 Mayıs 2026', '28 Ekim 2026']);
-  assert.equal(await page.locator('#internRecruitmentTableBody tr').first().locator('td').nth(-2).textContent(), '30.10.2026', 'half-day and full-day holidays should contribute fractional credit');
+  const internHeaders = await page.locator('#internRecruitmentTableHead th').allTextContents();
+  assert.ok(internHeaders.some((label) => label.trim() === 'Hesaplanan Bitiş'), 'computed end-date column should be present');
+  assert.equal(await page.locator('#internRecruitmentTableBody [data-intern-end]').first().inputValue(), '30.10.2026', 'half-day and full-day holidays should contribute fractional credit');
   assert.equal(await page.locator('#internPeriodSelect').inputValue(), '', 'All periods should be the default');
 
   const blankDepartment = page.locator('select[aria-label^="Kesinleşen Birim"]').first();
@@ -112,10 +114,10 @@ try {
   assert.deepEqual(tableA11y, { role: 'region', label: 'Stajyer adayları tablosu', tabIndex: 0, pageOverflow: 0 });
   assert.equal(await page.locator('#internRecruitmentTable th').first().evaluate((element) => getComputedStyle(element).position), 'sticky');
 
-  await page.locator('#internIncludeCancelled').check();
+  await page.locator('label.ip-switch', { has: page.locator('#internIncludeCancelled') }).click();
   assert.equal(await page.locator('#internRecruitmentTableBody tr').count(), 2);
   assert.equal(await page.locator('#internCandidateCount').textContent(), '2 aday');
-  await page.locator('#internIncludeCancelled').uncheck();
+  await page.locator('label.ip-switch', { has: page.locator('#internIncludeCancelled') }).click();
 
   const exportProbe = await page.evaluate(() => {
     const result = {};
@@ -155,10 +157,10 @@ try {
   assert.equal(storageSnapshot.source, true, 'fixture should be visible only in the live DOM');
 
   await uploadWorkbook({ fileName: 'bozuk.xlsx', sheetName: 'Başka', matrix: [['uyumsuz'], [activeMarker]] });
-  await page.waitForFunction(() => /Dosya reddedildi/.test(document.querySelector('#internRecruitmentStatus')?.textContent || ''));
+  await page.waitForFunction(() => /beklenen üç yapıdan birine uymuyor/.test(document.querySelector('#internImportResult')?.textContent || ''));
   assert.equal(await page.locator('#internRecruitmentTableBody tr').count(), 0);
   assert.equal(await page.locator('#internRecruitmentTableWrap').evaluate((element) => element.style.display), 'none');
-  assert.equal(await page.locator('#internHrPanel').evaluate((element) => element.style.display), 'none');
+  assert.equal(await page.locator('#internHrPanel').evaluate((element) => element.hidden), true);
   assert.equal(await page.locator('#internCandidateCount').textContent(), '0 aday');
 
   assert.ok((await page.locator('#internLiveCard').count()) === 1, 'live card should be discoverable');
@@ -194,12 +196,12 @@ try {
   assert.match(await page.locator('#unifiedImportResult').textContent(), /İşe alım panosu/);
   assert.match(await page.locator('#unifiedImportResult').textContent(), /Staj paneli/);
   assert.equal(await page.locator('#internRecruitmentTableWrap').evaluate((element) => element.style.display), 'block');
-  assert.ok((await page.locator('#internDashboard').evaluate((element) => element.style.display)) === 'block', 'intern dashboard should render after import');
-  assert.equal(await page.locator('#internKpiGrid .intern-kpi-card').count(), 4);
+  assert.equal(await page.locator('#internDashboard').isVisible(), true, 'intern dashboard should render after import');
+  assert.equal(await page.locator('#internKpiGrid .ip-kpi').count(), 4);
 
-  await page.evaluate(() => {
+  await page.evaluate((marker) => {
     const book = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(book, XLSX.utils.aoa_to_sheet([['uyumsuz'], [activeMarker]]), 'Baska');
+    XLSX.utils.book_append_sheet(book, XLSX.utils.aoa_to_sheet([['uyumsuz'], [marker]]), 'Baska');
     const bytes = XLSX.write(book, { type: 'array', bookType: 'xlsx' });
     const file = new File([bytes], 'bilinmeyen.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     const transfer = new DataTransfer();
@@ -207,8 +209,8 @@ try {
     const input = document.querySelector('#unifiedExcelInput');
     Object.defineProperty(input, 'files', { value: transfer.files, configurable: true });
     input.dispatchEvent(new Event('change', { bubbles: true }));
-  });
-  await page.waitForFunction(() => (document.querySelector('#unifiedImportResult')?.textContent || '').includes('beklenen iki yapıdan birine uymuyor'));
+  }, activeMarker);
+  await page.waitForFunction(() => (document.querySelector('#unifiedImportResult')?.textContent || '').includes('beklenen üç yapıdan birine uymuyor'));
   assert.deepEqual(errors, []);
   console.log('Recruitment intern browser QA: schema import, privacy, stale reset, cancellation, a11y, mobile, Excel typing, live card and unified import passed.');
 } finally {

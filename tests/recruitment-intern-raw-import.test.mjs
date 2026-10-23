@@ -94,10 +94,14 @@ test('Intern Recruitment declares the required schema without committing applica
   assert.doesNotMatch(tracked.stdout, /İGA Staj Başvuru Formu\.xlsx|IGA-Staj-Basvuru-Formu\.xlsx/);
 });
 
-test('Applicant rows stay isolated from network and browser storage code paths', () => {
+test('Applicant rows stay isolated from network paths and storage keeps only hashed manual-date overrides', () => {
   const logic = internLogic();
   assert.doesNotMatch(logic, /state\.records|normalizePayload|applyPayload|renderAll/);
-  assert.doesNotMatch(logic, /fetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|localStorage|sessionStorage|indexedDB|caches\./);
+  assert.doesNotMatch(logic, /fetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|sessionStorage|indexedDB|caches\./);
+  assert.match(logic, /localStorage\.setItem\(INTERN_OVERRIDE_STORAGE_KEY/);
+  assert.match(logic, /internHashKey\(raw\)/);
+  assert.match(logic, /Object\.fromEntries\(\[\.\.\.internEndOverrides\.entries\(\)/);
+  assert.doesNotMatch(logic, /localStorage\.setItem\([^\n]*(internState\.rows|T\.C\. Kimlik|E-posta adresiniz)/);
   assert.match(logic, /handleUnifiedExcelFiles\(\[file\]/);
   assert.match(html, /routeSingleWorkbook[\s\S]*?resetInternRecruitmentState\(\)/);
   assert.match(html, /routeSingleWorkbook[\s\S]*?renderInternRecruitmentRawData\(matrix, file\.name\)/);
