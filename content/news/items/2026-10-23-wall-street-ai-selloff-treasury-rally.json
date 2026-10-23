@@ -1,0 +1,41 @@
+{
+  "id": "2026-10-23-wall-street-ai-selloff-treasury-rally",
+  "title": "Chip stocks lead a Wall Street retreat as Treasuries rally",
+  "summary": "The S&P 500 fell 93.74 points, or 1.2%, to 7,663.43 on Thursday, its worst session since July, while the Nasdaq Composite dropped 694 points, or 2.6%, to 26,008.86 and the Dow edged up 0.02% to 52,867.98. The Philadelphia Semiconductor Index sank 6.7%. Treasuries had their biggest rally in more than two years and the 10-year yield fell 17 basis points to 4.95%, back below 5% for the first time in a month, as money rotated into staples and utilities.",
+  "category": "economy-markets",
+  "priority": 90,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wall-street",
+    "semiconductors",
+    "treasuries",
+    "ai-capex"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg via The Business Times",
+      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/japan-shares-fall-asian-stocks-slide-after-us-tech-rout-bonds-rally",
+      "publishedAt": "2026-10-23T00:57:00Z"
+    },
+    {
+      "publisher": "Associated Press",
+      "url": "https://apnews.com/article/stocks-wall-street-nasdaq-dow-1970e79d013cbddcae89c53b4b98f384",
+      "publishedAt": "2026-10-22T20:31:00Z"
+    },
+    {
+      "publisher": "Reuters via Investing.com",
+      "url": "https://www.investing.com/news/stock-market-news/nasdaq-futures-drop-over-1-as-ai-worries-resurface-oil-climbs-4965180",
+      "publishedAt": "2026-10-22T20:10:00Z"
+    }
+  ]
+}

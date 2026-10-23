@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-23-openai-decisions-api-general-availability",
+  "title": "OpenAI opens its Decisions API to every customer",
+  "summary": "OpenAI made its Decisions API generally available, entering a market for small, fast models that pick among options and report a confidence instead of writing prose. Announced at its 29 September developer day, the product reuses ChatGPT Luna with faster inference: product lead Nikunj Handa says calls that took one to three seconds now return in 100 to 180 milliseconds. Box, Datadog, Ramp and Speak tested it; Speak cut action latency from 1.4 seconds to 0.13.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "api",
+    "decision-models",
+    "latency"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/22/openai-makes-its-jev-competitor-widely-available-as-decision-model-competition-heats-up/",
+      "publishedAt": "2026-10-22T19:00:00Z"
+    }
+  ]
+}

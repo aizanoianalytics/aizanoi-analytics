@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-23-asia-stocks-china-bear-market-solidigm-ipo",
+  "title": "Asia extends the tech slide as Chinese stocks sit in a bear market",
+  "summary": "MSCI's regional benchmark slipped 0.3% for a second day on Friday, around levels last seen in July, with Japan's Topix down 0.4% and Australia's ASX 200 0.3% in early trade while Hang Seng futures rose 0.8%. Taiwan's exchange was shut for a typhoon. Chinese equities have shed $2.4 trillion from their May peak, a bear market, and Hong Kong's tech index fell 5% on Thursday. SK Hynix scrapped the US listing of its Solidigm unit.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "asia-markets",
+    "china",
+    "hang-seng",
+    "sk-hynix",
+    "solidigm"
+  ],
+  "sources": [
+    {
+      "publisher": "Bloomberg via The Business Times",
+      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/japan-shares-fall-asian-stocks-slide-after-us-tech-rout-bonds-rally",
+      "publishedAt": "2026-10-23T00:57:00Z"
+    },
+    {
+      "publisher": "The Herald Business (Korea Herald)",
+      "url": "https://mbiz.heraldcorp.com/article/10911008",
+      "publishedAt": "2026-10-22T01:17:00Z"
+    }
+  ]
+}

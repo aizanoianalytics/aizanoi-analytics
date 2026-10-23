@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-23-arc-browser-shutdown-dia",
+  "title": "Arc browser gets a 22 December shutdown date",
+  "summary": "The Browser Company will retire its Arc browser on 22 December, ending a product that won a devoted following for vertical tabs and Spaces. New accounts stopped on Thursday; Arc Search loses its AI features on 23 November; on 22 December the Mac and Windows apps stop working and account data is deleted within 30 days. The company says keeping a browser secure in the age of AI costs too much and that Dia, its AI-first browser, now carries engineering effort.",
+  "category": "technology",
+  "priority": 66,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "arc",
+    "browser",
+    "the-browser-company",
+    "dia"
+  ],
+  "sources": [
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/22/arc-browser-sunsets-december-22-as-the-browser-company-doubles-down-on-dia/",
+      "publishedAt": "2026-10-22T20:01:00Z"
+    }
+  ]
+}

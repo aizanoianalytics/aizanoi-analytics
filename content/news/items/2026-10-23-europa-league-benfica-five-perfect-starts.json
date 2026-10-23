@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-23-europa-league-benfica-five-perfect-starts",
+  "title": "Benfica lead a five-team breakaway on nine points",
+  "summary": "Benfica top the Europa League after matchday three on goals scored, their 4-1 win at Omonia putting them level on nine points with Bayer Leverkusen, Bournemouth, Ferencvaros and Olympiacos. Leverkusen, 2-0 at OFI Crete through Jonas Hofmann's double, are the only side yet to concede. Crystal Palace drew 2-2 at Besiktas despite a late red card for the hosts, Sunderland were held 1-1 at Lech Poznan and Juventus had a late winner ruled out against Rennes.",
+  "category": "football",
+  "priority": 71,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "europa-league",
+    "benfica",
+    "leverkusen",
+    "crystal-palace",
+    "standings"
+  ],
+  "sources": [
+    {
+      "publisher": "Agence France-Presse via theScore",
+      "url": "https://www.thescore.com/chlg/news/3631907/europa-league-standings",
+      "publishedAt": "2026-10-22T22:30:00Z"
+    },
+    {
+      "publisher": "The Guardian",
+      "url": "https://theguardian.com/football/2026/oct/22/europa-league-sunderland-held-in-poznan-as-juventus-denied-comeback-win",
+      "publishedAt": "2026-10-22T19:14:00Z"
+    }
+  ]
+}

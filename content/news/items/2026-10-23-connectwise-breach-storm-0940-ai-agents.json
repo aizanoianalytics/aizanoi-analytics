@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-23-connectwise-breach-storm-0940-ai-agents",
+  "title": "Microsoft ties the ConnectWise breach to a Chinese crew running AI agents",
+  "summary": "Microsoft attributed a supply-chain intrusion at IT management vendor ConnectWise to Storm-0940, a China-aligned group it says used ARTEX, an open-source AI penetration-testing framework, to automate reconnaissance and credential attacks. Stolen application credentials let the attackers authenticate against more than 2,250 Microsoft 365 tenants, at times at 2,900 attempts a minute, and in some environments reach privileged cloud access in under three hours. ConnectWise has paused its cloud backup service.",
+  "category": "technology",
+  "priority": 78,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "cybersecurity",
+    "connectwise",
+    "microsoft",
+    "supply-chain",
+    "ai-agents"
+  ],
+  "sources": [
+    {
+      "publisher": "The Register",
+      "url": "https://www.theregister.com/security/2026/10/22/microsoft-says-connectwise-breach-let-chinese-spies-loose-on-2250-cloud-tenants/5304687",
+      "publishedAt": "2026-10-22T12:28:00Z"
+    },
+    {
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/22/chinese-hackers-spied-on-thousands-of-companies-after-breaching-it-giant-connectwise/",
+      "publishedAt": "2026-10-22T21:00:00Z"
+    }
+  ]
+}

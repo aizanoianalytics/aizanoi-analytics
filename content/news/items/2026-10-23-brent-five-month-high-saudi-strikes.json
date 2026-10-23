@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-23-brent-five-month-high-saudi-strikes",
+  "title": "Brent clears $112 as strikes on Saudi Arabia tighten the oil market",
+  "summary": "Brent crude rose about 3% to top $112 a barrel for the first time since 18 May and was holding near $113 in early Asian trade on Friday. Yemen's Houthis hit several Saudi targets on Wednesday: two people were killed and eight wounded at a civilian airport in Dammam, and a drone attack on an oilfield killed two. Iran's Revolutionary Guard said four vessels were hit in the northern Gulf and three more struck mines near Hormuz.",
+  "category": "economy-markets",
+  "priority": 84,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "oil",
+    "brent",
+    "saudi-arabia",
+    "houthis",
+    "energy"
+  ],
+  "sources": [
+    {
+      "publisher": "The Guardian",
+      "url": "https://www.theguardian.com/business/2026/oct/22/oil-prices-jump-five-month-high-threats-supply",
+      "publishedAt": "2026-10-22T11:28:00Z"
+    },
+    {
+      "publisher": "Bloomberg via The Business Times",
+      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/japan-shares-fall-asian-stocks-slide-after-us-tech-rout-bonds-rally",
+      "publishedAt": "2026-10-23T00:57:00Z"
+    }
+  ]
+}
