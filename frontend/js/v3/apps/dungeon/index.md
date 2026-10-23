@@ -33,14 +33,22 @@ Same product, same route (`/dungeon/`), same AizanoiOS app id (`dungeon`).
 ## The game
 
 - A run is ten chapters. Clearing the tenth wins the run and shows the run
-  ledger; past that the descent continues endlessly.
+  ledger; the victory screen then offers **Continue the descent** for the
+  endless mode or **Descend again** for a fresh run.
 - Each chapter arrives through 1-second spawn portals (edge, never within
   6 units of the player), then a wave of enemies drawn from eleven
-  archetypes: `chaser`, `archer`, `tank`, `summoner`, `flanker` (the Styx
-  Ferryman, which orbits and then lunges), `boss`, plus `shieldbearer`
-  (frontal block), `gargoyle`, `sorcerer`, `slimegolem` (splits on death)
-  and `bomber`. From chapter 3 up to two elites (`armored`, `swift`,
-  `volatile`, `vampiric`) join; heat levels scale hp/speed/damage.
+  archetypes, each with its own behaviour: `chaser` (closes and strikes),
+  `archer` (kites at 4–10 units and looses arrows), `tank` (slow slam),
+  `summoner` (backs off and caps at three live minions), `flanker` (the Styx
+  Ferryman, which orbits and then lunges), `boss` (three phases),
+  `shieldbearer` (advances behind a shield that halves frontal hits, then
+  bashes), `gargoyle` (perches, swoops once, then has to recover),
+  `sorcerer` (holds casting distance and lobs a heavier bolt),
+  `slimegolem` (slow engulf, splits in two on death) and `bomber` (rushes in,
+  lights a fuse it cannot put out, and detonates without paying a kill
+  reward). From chapter 3 up to two elites join: `armored` (more health),
+  `swift` (faster), `volatile` (a blast on death) and `vampiric` (heals from
+  the damage it deals); heat levels scale hp/speed/damage.
 - Aizo fights with a three-hit melee chain (third swing sends a crescent
   wave), a bow, a guard/parry (`L`), a perfect-dodge Phantom Step, and a
   Wrath of the Temple shockwave (`E`) charged by dealing damage.
@@ -49,6 +57,9 @@ Same product, same route (`/dungeon/`), same AizanoiOS app id (`dungeon`).
 - Each cleared wave drops a chest with gold, a choice of 3 blessings with
   rarity (common/rare/epic/mythic) stacking to level III, duo synergies,
   one paid reroll, and a 3-item Ferryman's Toll shop (heal/reroll/relic).
+  The three duos are real effects: `bloodrite` (a critical hit heals 4% of
+  max health), `eagles-mark` (bow crits pierce) and `gale-dancer` (the dash
+  cuts everything it passes through).
 - The run is persisted between sessions (save v4, v3 migrated), and the menu
   offers **Continue** when a saved run exists.
 - Headless balance harness: `node scripts/dungeon/balance-harness.mjs`.

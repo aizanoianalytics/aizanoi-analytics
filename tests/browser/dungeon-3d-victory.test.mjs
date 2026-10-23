@@ -157,3 +157,49 @@ test('the victory screen offers a way to start a new run', async () => {
     await browser.close();
   }
 });
+
+test('the victory screen lets the descent continue past the tenth chapter', async () => {
+  const browser = await launch();
+  try {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    const page = await context.newPage();
+    const errors = [];
+    page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+    page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
+
+    await page.goto(`${base}/dungeon/?endless=${Date.now()}`, { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.az-dungeon-begin', { timeout: 30000 });
+    await page.locator('.az-dungeon-begin').click();
+    await page.waitForFunction(() => window.AIZANOI_DUNGEON_GAME?.state === 'playing', null, { timeout: 20000 });
+    await page.evaluate(() => {
+      const handle = window.AIZANOI_DUNGEON_GAME;
+      for (let i = 0; i < 10; i += 1) handle.qaClearWave();
+    });
+    await page.waitForSelector('.az-dungeon-victory .az-dungeon-begin', { timeout: 20000 });
+
+    const endless = page.locator('.az-dungeon-victory .az-dungeon-begin').filter({ hasText: 'Continue the descent' });
+    assert.equal(await endless.count(), 1, 'the victory screen must offer the endless descent');
+    await endless.dispatchEvent('click');
+    await page.waitForSelector('.az-dungeon-victory', { state: 'detached', timeout: 20000 });
+
+    const resumed = await page.evaluate(() => ({
+      state: window.AIZANOI_DUNGEON_GAME.state,
+      chapter: window.AIZANOI_DUNGEON_GAME.chapter,
+      victory: window.AIZANOI_DUNGEON_GAME.victory,
+      status: window.AIZANOI_DUNGEON_GAME.runStatus,
+    }));
+    assert.equal(resumed.state, 'playing', 'the endless descent must resume play');
+    assert.equal(resumed.victory, false, 'the run is no longer a completed victory screen');
+    assert.equal(resumed.chapter, FINAL_CHAPTER + 1, 'the endless descent continues from chapter eleven');
+    assert.equal(resumed.status, 'combat', 'the next chapter must be spawned');
+
+    // The endless chapter has to produce real enemies, not an empty arena.
+    await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(80));
+    const live = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyCount);
+    assert.ok(live > 0, `the endless chapter must spawn enemies, got ${live}`);
+    assert.deepEqual(errors, [], 'no console error may be logged');
+    await page.screenshot({ path: '/tmp/dungeon-endless.png' });
+  } finally {
+    await browser.close();
+  }
+});
