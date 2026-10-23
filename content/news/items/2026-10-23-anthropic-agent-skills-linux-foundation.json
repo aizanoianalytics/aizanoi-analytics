@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-23-anthropic-agent-skills-linux-foundation",
+  "title": "Anthropic hands its Agent Skills standard to the Linux Foundation",
+  "summary": "Anthropic donated Agent Skills, the folder-and-SKILL.md convention that gives agents procedural knowledge, to the Agentic AI Foundation, the Linux Foundation body it co-founded with Block and OpenAI and to which it already donated the Model Context Protocol. Anthropic says more than 70 platforms including ChatGPT, Cursor, GitHub Copilot and VS Code have adopted the standard it published in December 2025, with a million skills published and nearly 280 million installs.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "agent-skills",
+    "open-standard",
+    "linux-foundation"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/donating-agent-skills-to-the-agentic-ai-foundation",
+      "publishedAt": "2026-10-22T16:00:00Z"
+    }
+  ]
+}

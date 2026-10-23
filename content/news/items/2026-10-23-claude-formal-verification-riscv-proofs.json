@@ -1,0 +1,31 @@
+{
+  "id": "2026-10-23-claude-formal-verification-riscv-proofs",
+  "title": "Claude writes machine-checked crash proofs for 123 open-source libraries",
+  "summary": "In work with verification startup Theorem, Anthropic had Claude prove at the RISC-V assembly level that 239 entry points across 123 OSS-Fuzz libraries cannot crash on any input up to 64 MB, producing roughly 180 million lines of Rocq that a proof checker validates rather than a reviewer. Anthropic says the model also found and patched long-standing bugs, and it is publishing a subset of the proofs. The guarantee assumes single-threaded static binaries on Linux with fixed memory.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "anthropic",
+    "formal-verification",
+    "security",
+    "open-source"
+  ],
+  "sources": [
+    {
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/research/formal-verification",
+      "publishedAt": "2026-10-22T16:00:00Z"
+    }
+  ]
+}

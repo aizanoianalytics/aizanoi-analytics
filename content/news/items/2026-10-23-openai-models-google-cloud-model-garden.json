@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-23-openai-models-google-cloud-model-garden",
+  "title": "OpenAI's frontier models turn up inside Google Cloud's Model Garden",
+  "summary": "Google Cloud began listing OpenAI's GPT-6 Astra, GPT-6.1 Sol and GPT-6 Luna in its Model Garden as a private preview for selected enterprise customers, billed through Google Cloud Marketplace and counted against existing cloud commitments. Google says it is now the only hyperscale provider reselling all three major closed-model families alongside its own Gemini and Anthropic's Claude. OpenAI models are due in Antigravity and Gemini for business next; Microsoft remains OpenAI's primary cloud partner.",
+  "category": "ai",
+  "priority": 86,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "google-cloud",
+    "enterprise-ai",
+    "model-garden"
+  ],
+  "sources": [
+    {
+      "publisher": "Google Cloud Blog",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning/google-cloud-brings-openai-models-to-customers",
+      "publishedAt": "2026-10-21T12:00:00Z"
+    },
+    {
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/10/openais-latest-ai-models-are-coming-to-google-cloud-and-antigravity",
+      "publishedAt": "2026-10-22T12:00:00Z"
+    }
+  ]
+}

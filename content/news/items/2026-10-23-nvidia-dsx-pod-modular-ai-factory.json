@@ -1,0 +1,36 @@
+{
+  "id": "2026-10-23-nvidia-dsx-pod-modular-ai-factory",
+  "title": "Nvidia pitches container-built AI factories that arrive in 14 days",
+  "summary": "At GTC Berlin, Nvidia introduced DSX POD, a reference design that packs a complete Vera Rubin AI factory into factory-built, pre-tested containers. Nvidia says a site with power and water ready can go from delivery to production in as little as 14 days instead of about six months, because rack wiring, power distribution and liquid cooling are integrated before shipping. Dell, HPE, Lenovo, Schneider Electric and Vertiv are among the partners; worldwide delivery is due in early 2027.",
+  "category": "technology",
+  "priority": 73,
+  "publishedAt": "2026-10-23T05:50:00Z",
+  "updatedAt": "2026-10-23T05:50:00Z",
+  "retrievedAt": "2026-10-23T05:50:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "nvidia",
+    "ai-infrastructure",
+    "data-centers",
+    "gtc-berlin"
+  ],
+  "sources": [
+    {
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-introduces-dsx-pod-ai-factories-to-accelerate-europes-infrastructure-deployment",
+      "publishedAt": "2026-10-21T09:34:00Z"
+    },
+    {
+      "publisher": "The Herald Business (Korea Herald)",
+      "url": "https://mbiz.heraldcorp.com/article/10911008",
+      "publishedAt": "2026-10-22T01:17:00Z"
+    }
+  ]
+}
