@@ -186,3 +186,33 @@ test('presentation source is CSP-safe and CSS covers HUD, touch, safe areas and 
   assert.match(css, /font-size:\s*(?:1rem|16px)/);
   assert.doesNotMatch(css, /font-size:\s*(?:[0-9]|1[0-5])px/);
 });
+
+const countAttributeWrites = (root) => {
+  const counter = { writes: 0 };
+  const visit = (node) => {
+    const original = node.setAttribute.bind(node);
+    node.setAttribute = (name, value) => { counter.writes += 1; original(name, value); };
+    node.children?.forEach(visit);
+  };
+  visit(root);
+  return counter;
+};
+
+test('the HUD does not rewrite attributes it already wrote', () => {
+  const container = new FakeElement('div');
+  const hud = createHud({ container, document: fakeDocument() });
+  const payload = {
+    health: 88, maxHealth: 120, stamina: 40, maxStamina: 100, xp: 10, xpToNext: 60,
+    gold: 25, chapter: 3, wave: 3, combo: 2, boss: null, blessings: ['fury'], blessingLabels: {},
+    blessingLevels: { fury: 1 }, assistMode: 'assist', specialCharge: 40, specialReady: false,
+    reserve: 25, target: null, paused: false, help: false,
+  };
+  hud.update(payload);
+  const counter = countAttributeWrites(hud.root);
+  hud.update({ ...payload });
+  assert.equal(counter.writes, 0,
+    `an unchanged HUD update must not touch the DOM, it wrote ${counter.writes} attributes`);
+  // A real change must still paint.
+  hud.update({ ...payload, health: 12, gold: 99 });
+  assert.ok(counter.writes > 0, 'a changed value must still be written');
+});

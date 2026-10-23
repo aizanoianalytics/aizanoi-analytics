@@ -157,3 +157,78 @@ test('the victory screen offers a way to start a new run', async () => {
     await browser.close();
   }
 });
+
+test('the victory screen lets the descent continue past the tenth chapter', async () => {
+  const browser = await launch();
+  try {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    const page = await context.newPage();
+    const errors = [];
+    page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+    page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
+
+    await page.goto(`${base}/dungeon/?endless=${Date.now()}`, { waitUntil: 'domcontentloaded' });
+    await page.waitForSelector('.az-dungeon-begin', { timeout: 30000 });
+    // A software renderer can hold the main thread long enough that the default
+    // actionability timeout expires; the click itself is a trusted mouse press.
+    await page.locator('.az-dungeon-begin').click({ timeout: 60000 });
+    await page.waitForFunction(() => window.AIZANOI_DUNGEON_GAME?.state === 'playing', null, { timeout: 20000 });
+    // Let the first frames settle before driving the fixed step, the way the
+    // sibling tests in this file do.
+    await page.waitForTimeout(800);
+    // Clear until the run is actually won, and report what each clear did: a
+    // bare "the panel never appeared" hides whether a clear failed or the
+    // panel failed to render.
+    const clears = await page.evaluate(() => {
+      const handle = window.AIZANOI_DUNGEON_GAME;
+      const results = [];
+      for (let i = 0; i < 14 && !handle.victory; i += 1) {
+        const result = handle.qaClearWave();
+        results.push({ opened: Boolean(result.opened), victory: Boolean(result.victory), chapter: handle.chapter });
+      }
+      return results;
+    });
+    await page.waitForSelector('.az-dungeon-victory .az-dungeon-begin', { timeout: 30000 }).catch(() => {
+      throw new Error(`the victory screen never appeared after the clears: ${JSON.stringify(clears)}`);
+    });
+
+    // Find the button and press it in ONE page evaluation. Reading the panel
+    // with a locator and clicking it in a second call leaves a window in which
+    // the panel can be rebuilt, and the locator then resolves to nothing. The
+    // event is dispatched from the page context for the same reason the
+    // sibling test does it: the centred panel's translate(-50%, -50%)
+    // transform never satisfies Playwright's actionability check.
+    const pressed = await page.evaluate(() => {
+      const buttons = [...document.querySelectorAll('.az-dungeon-victory .az-dungeon-begin')];
+      const endless = buttons.find((button) => button.textContent.includes('Continue the descent'));
+      if (!endless) return { found: false, labels: buttons.map((button) => button.textContent) };
+      endless.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      return { found: true, labels: buttons.map((button) => button.textContent) };
+    });
+    assert.equal(pressed.found, true,
+      `the victory screen must offer the endless descent, it offered ${JSON.stringify(pressed.labels)}`);
+    await page.waitForSelector('.az-dungeon-victory', { state: 'detached', timeout: 20000 });
+
+    const resumed = await page.evaluate(() => ({
+      state: window.AIZANOI_DUNGEON_GAME.state,
+      chapter: window.AIZANOI_DUNGEON_GAME.chapter,
+      victory: window.AIZANOI_DUNGEON_GAME.victory,
+      status: window.AIZANOI_DUNGEON_GAME.runStatus,
+    }));
+    assert.equal(resumed.state, 'playing', 'the endless descent must resume play');
+    assert.equal(resumed.victory, false, 'the run is no longer a completed victory screen');
+    assert.equal(resumed.chapter, FINAL_CHAPTER + 1, 'the endless descent continues from chapter eleven');
+    assert.equal(resumed.status, 'combat', 'the next chapter must be spawned');
+
+    // The endless chapter has to produce real enemies, not an empty arena.
+    await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.qaAdvance(80));
+    const live = await page.evaluate(() => window.AIZANOI_DUNGEON_GAME.enemyCount);
+    assert.ok(live > 0, `the endless chapter must spawn enemies, got ${live}`);
+    assert.deepEqual(errors, [], 'no console error may be logged');
+    // No screenshot here on purpose: under SwiftShader the capture waits for a
+    // frame the software renderer may not deliver inside the timeout, and a
+    // failed capture is not a gameplay finding.
+  } finally {
+    await browser.close();
+  }
+});

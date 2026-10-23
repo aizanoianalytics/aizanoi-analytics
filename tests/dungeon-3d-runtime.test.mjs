@@ -203,3 +203,47 @@ test('arena variants and local marks meta are wired to the runtime', () => {
   assert.match(game, /ruined-stairs/);
   assert.match(game, /chooseArena/);
 });
+
+const bareApp = () => {
+  const app = new GameApp({ container: { append() {} } });
+  app.root = { focus() {}, contains() { return false; } };
+  app.hud = { announce() {}, update() {}, setVisible() {}, addLoot() {} };
+  app.syncWorld = () => {};
+  app.updateHud = () => {};
+  return app;
+};
+
+test('every new run records its own result in the local meta', () => {
+  const app = bareApp();
+  app.runRecorded = true;
+  const marksBefore = app.meta.marks;
+  app.restart();
+  assert.equal(app.runRecorded, false, 'starting a new run must clear the recorded flag');
+  app.state.player.gold = 400;
+  app.state.chapter = 10;
+  app.recordMetaRun(true);
+  assert.ok(app.meta.marks > marksBefore,
+    `the second run must be recorded, marks stayed at ${app.meta.marks}`);
+
+  const retried = bareApp();
+  retried.runRecorded = true;
+  retried.retrySeed();
+  assert.equal(retried.runRecorded, false, 'retrying the same seed must clear the recorded flag');
+});
+
+test('the victory screen also offers the endless descent', () => {
+  const source = readFileSync(
+    new URL('../frontend/js/v3/apps/dungeon/src/runtime/GameApp.js', import.meta.url), 'utf8');
+  assert.match(source, /Continue the descent/, 'the victory screen must offer the endless descent');
+  assert.match(source, /continueEndless\s*\(/, 'the endless descent must have its own code path');
+  assert.match(source, /continueEndless\(\)\s*\{[\s\S]{0,700}spawnWave\(/,
+    'the endless descent must clear the victory panel and spawn the next chapter');
+});
+
+test('the ground telegraph uses the attack marker, not the enemy reach', () => {
+  const source = readFileSync(
+    new URL('../frontend/js/v3/apps/dungeon/src/runtime/GameApp.js', import.meta.url), 'utf8');
+  assert.match(source, /windup\.telegraph/, 'the telegraph ring must read the attack marker');
+  assert.doesNotMatch(source, /Math\.max\(0\.6, enemy\.windup\.range \|\| 1\.5\)/,
+    'the ring must no longer be sized from the attack reach');
+});

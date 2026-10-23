@@ -903,6 +903,18 @@ export class GameApp {
     else if (event.type === 'special') { this.feedback.emit('special', { position }); this.hud.announce(`Wrath of the Temple — ${event.stunned} stunned`); }
     else if (event.type === 'crescent') this.feedback.emit('swing', { position, intensity: 1 });
     else if (event.type === 'shield-block') this.feedback.emit('hit', { position });
+    else if (event.type === 'bomber-detonate') {
+      // The blast is the loudest thing in the room; the player has to feel it
+      // to learn that the fuse is a deadline.
+      this.feedback.emit('boss', { position });
+      this.hud.announce('The bomber detonates');
+    } else if (event.type === 'dash-trail') {
+      this.feedback.emit('hit', { damage: event.damage, position });
+    } else if (event.type === 'vampiric-drain') {
+      this.hud.announce('The elite drinks deep');
+    } else if (event.type === 'bloodrite') {
+      this.feedback.emit('loot', { label: `Bloodrite +${event.healed}`, position });
+    }
     else if (event.type === 'rhythm') this.hud.announce('Rhythm strike');
     else if (event.type === 'focus-shot') this.hud.announce('Focus shot loosed');
     else if (event.type === 'reroll') this.hud.announce('Blessings rerolled');
@@ -1000,7 +1012,9 @@ export class GameApp {
           this.dynamic.add(mesh);
         }
         const progress = 1 - enemy.windup.remaining / Math.max(1e-6, enemy.windup.duration);
-        const radius = Math.max(0.6, enemy.windup.range || 1.5);
+        // The marker is the attack's danger area, not its reach: a bowman's
+        // ten-unit reach would otherwise paint a ring across the arena.
+        const radius = Math.max(0.6, enemy.windup.telegraph ?? enemy.windup.range ?? 1.5);
         mesh.position.set(enemy.x, 0.06, enemy.z);
         mesh.scale.setScalar(radius * (1.12 - 0.28 * Math.min(1, Math.max(0, progress))));
       }
@@ -1223,8 +1237,38 @@ export class GameApp {
       this.hud?.announce?.('Share text copied');
     });
     this.victory.append(copy);
+    // The descent does not end at chapter ten: what is behind the tenth door is
+    // more dungeon. The docs promised an endless descent, but the only way off
+    // this screen was a brand new run, so the mode was unreachable.
+    this.victory.append(makeButton('az-dungeon-begin', 'Continue the descent', () => this.continueEndless()));
     this.victory.append(makeButton('az-dungeon-begin', 'Descend again', () => this.restart()));
     this.root.append(this.victory);
+  }
+
+  /**
+   * Step off the victory screen and keep going. The run's chapter already
+   * points past the final one, so this spawns the endless chapter the ledger
+   * was won on.
+   */
+  continueEndless() {
+    if (this.sceneState !== 'victory') return { resumed: false };
+    this.victory?.remove();
+    this.victory = undefined;
+    this.paused = false;
+    this.sceneState = 'playing';
+    // The endless leg is its own run as far as the local meta is concerned.
+    this.runRecorded = false;
+    this.portal?.removeFromParent();
+    this.portal = null;
+    const chapter = Math.max(FINAL_CHAPTER + 1, this.state.chapter);
+    this.state.mode = 'endless';
+    this.state.status = 'between-waves';
+    spawnWave(this.state, chapter);
+    this.root.focus();
+    this.syncWorld();
+    this.updateHud();
+    this.hud?.announce?.(`Endless descent — chapter ${chapter}`);
+    return { resumed: true, chapter };
   }
 
   showDefeat() {
@@ -1257,6 +1301,7 @@ export class GameApp {
     this.state.settings = { autoFireReserve: this.settings.autoFireReserve, heat: 0 };
     this.eventSeq = 0;
     this.lockedTarget = null;
+    this.runRecorded = false;
     this.paused = false;
     this.sceneState = 'playing';
     this.clearEntities();
@@ -1276,6 +1321,10 @@ export class GameApp {
     this.closePick();
     this.state = createGameState(`aizo-${Date.now()}`);
     this.eventSeq = 0;
+    // A new run is a new result: without clearing this, every run after the
+    // first one finished was silently missing from the local meta.
+    this.runRecorded = false;
+    this.lockedTarget = null;
     this.paused = false;
     this.sceneState = 'playing';
     // A fresh run invalidates the saved one.

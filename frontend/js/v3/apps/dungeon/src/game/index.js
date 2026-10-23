@@ -68,6 +68,23 @@ const FLANKER_LUNGE_MS = 0.32;
 // How many minions a single summoner may have alive at once. The 2D build
 // had the same cap; without it the wave grows without bound.
 const MAX_SUMMONS_PER_CASTER = 3;
+// The late-chapter archetypes drive their own state machines, so their tuning
+// lives here with the other absolute-time constants.
+const GARGOYLE_PERCH_RANGE = 9;
+const GARGOYLE_SWOOP = 1;
+const GARGOYLE_RECOVER = 1.3;
+const GARGOYLE_REST = 1.5;
+const GARGOYLE_CONTACT_RANGE = 1.5;
+const BOMBER_FUSE = 0.9;
+const BOMBER_BLAST_RADIUS = 3.2;
+const SORCERER_WINDUP = 0.4;
+const SORCERER_COOLDOWN = 2.6;
+const SORCERER_RANGE = 14;
+const SHIELDBEARER_RANGE = 1.9;
+const SLIMEGOLEM_RANGE = 1.7;
+// Archetypes whose windup is written by their own state machine instead of the
+// generic windup path: short-circuiting them there would freeze the behaviour.
+const SELF_DRIVEN_WINDUP = new Set(['flanker', 'gargoyle']);
 // The descent has ten chapters. Clearing the tenth is the win condition;
 // past that the run continues endlessly, the way the 2D build's endless
 // mode did.
@@ -358,6 +375,37 @@ export function spawnWave(state, chapter = state.chapter) {
   return state.pendingSpawns;
 }
 
+/**
+ * A hit that lands feeds a vampiric elite. Elites were cosmetic before this:
+ * `armored` and `swift` changed the numbers at spawn time, but nothing ever
+ * read `elite === 'vampiric'`.
+ */
+const healVampiricAttacker = (state, source, amount) => {
+  if (!source) return 0;
+  const attacker = state.enemies.find((unit) => unit.id === source && !unit.dead);
+  if (!attacker || attacker.elite !== 'vampiric') return 0;
+  const healed = Math.min(attacker.maxHp - attacker.hp, Math.max(1, Math.round(amount * 0.5)));
+  if (healed <= 0) return 0;
+  attacker.hp += healed;
+  emitEvent(state, { type: 'vampiric-drain', id: attacker.id, healed, at: state.time });
+  return healed;
+};
+
+/**
+ * The single place a run ends. Both the ordinary path and the guard-block path
+ * go through it: the guard used to zero the player's health without ever
+ * setting `status: 'defeat'` or emitting the death event, which left a run
+ * that was dead but still marked as combat.
+ */
+const resolvePlayerDeath = (state) => {
+  const player = state.player;
+  if (player.dead || player.hp > 0) return false;
+  player.dead = true;
+  state.status = 'defeat';
+  emitEvent(state, { type: 'player-death', at: state.time });
+  return true;
+};
+
 const damagePlayer = (state, amount, source) => {
   const player = state.player;
   if (player.dead) return false;
@@ -381,8 +429,9 @@ const damagePlayer = (state, amount, source) => {
       player.hp = Math.max(0, player.hp - taken);
       player.stamina = Math.max(0, player.stamina - 10);
       if (state.stats) state.stats.damageTaken += taken;
+      healVampiricAttacker(state, source, taken);
       emitEvent(state, { type: 'guard-block', source, damage: taken, at: state.time });
-      if (player.hp === 0) player.dead = true;
+      resolvePlayerDeath(state);
       return true;
     }
   }
@@ -391,12 +440,9 @@ const damagePlayer = (state, amount, source) => {
   player.hp = Math.max(0, player.hp - taken);
   player.invulnerable = 0.45;
   if (state.stats) state.stats.damageTaken += taken;
+  healVampiricAttacker(state, source, taken);
   emitEvent(state, { type: 'player-hit', source, amount: taken, at: state.time });
-  if (player.hp === 0) {
-    player.dead = true;
-    state.status = 'defeat';
-    emitEvent(state, { type: 'player-death', at: state.time });
-  }
+  resolvePlayerDeath(state);
   return true;
 };
 
@@ -506,6 +552,15 @@ export function attack(state, targetId, manual = true) {
     player.hp = Math.min(player.maxHp, player.hp + healed);
     result.healed = healed;
   }
+  // Bloodrite duo: critical hits drink a flat share of Aizo's maximum health.
+  // The duo used to be fiction: it unlocked, it showed in the codex, and it
+  // changed nothing.
+  if (crit && (state.duos || []).includes('bloodrite')) {
+    const healed = Math.max(1, Math.round(player.maxHp * 0.04));
+    player.hp = Math.min(player.maxHp, player.hp + healed);
+    result.bloodrite = healed;
+    emitEvent(state, { type: 'bloodrite', healed, at: state.time });
+  }
   if (rhythm) {
     player.stamina = Math.min(player.maxStamina, player.stamina + 3);
     emitEvent(state, { type: 'rhythm', at: state.time });
@@ -516,7 +571,7 @@ export function attack(state, targetId, manual = true) {
   return result;
 }
 
-const fireProjectile = (state, enemy) => {
+const fireProjectile = (state, enemy, options = {}) => {
   const aim = direction(enemy, state.player.position);
   state.projectiles.push({
     id: `projectile-${state.nextId++}`,
@@ -524,11 +579,12 @@ const fireProjectile = (state, enemy) => {
     source: 'enemy',
     x: enemy.x,
     z: enemy.z,
-    vx: aim.x * 8,
-    vz: aim.z * 8,
-    damage: enemy.damage,
-    ttl: 3,
-    radius: 0.32,
+    vx: aim.x * (options.speed || 8),
+    vz: aim.z * (options.speed || 8),
+    damage: options.damage ?? enemy.damage,
+    ttl: options.ttl || 3,
+    radius: options.radius || 0.32,
+    kind: options.kind || 'shot',
   });
 };
 
@@ -540,6 +596,12 @@ const fireProjectile = (state, enemy) => {
 const findBowTarget = (state) => {
   const player = state.player;
   const facing = player.facing;
+  // A target the player locked by hand wins whenever it is in reach: the shot
+  // has to go where the player aimed, not where the scoring function prefers.
+  if (state.targetLock) {
+    const locked = state.enemies.find((enemy) => enemy.id === state.targetLock && !enemy.dead);
+    if (locked && distance(locked, player.position) <= BOW.range * player.bowRangeMultiplier) return locked;
+  }
   let best = null;
   let bestScore = Infinity;
   for (const enemy of state.enemies) {
@@ -601,8 +663,12 @@ export function shoot(state, options = {}) {
   return { fired: true, targetId: target.id, damage, crit, focus };
 }
 
-const beginWindup = (state, enemy, kind, duration, range) => {
-  enemy.windup = { kind, remaining: duration, duration, range };
+const beginWindup = (state, enemy, kind, duration, range, telegraph) => {
+  // `range` is the reach the attack needs to stay valid; `telegraph` is the
+  // ground marker the runtime draws. They are not the same number: an archer
+  // needs ten units of reach but its windup ring belongs at its own feet, and
+  // a ten-unit ring painted the whole arena.
+  enemy.windup = { kind, remaining: duration, duration, range, telegraph: telegraph ?? range };
   emitEvent(state, { type: 'attack-telegraph', id: enemy.id, archetype: enemy.archetype,
     attack: kind, duration, at: state.time });
 };
@@ -627,10 +693,27 @@ const summonMinion = (state, enemy) => {
   return true;
 };
 
+/**
+ * A bomber's fuse is a fixed clock: nothing the player does to distance
+ * themselves cancels it, and the blast consumes the bomber. Dying to its own
+ * blast pays no kill reward, which is what makes killing it early worth the
+ * risk of walking into range.
+ */
+const detonateBomber = (state, enemy) => {
+  enemy.windup = null;
+  enemy.dead = true;
+  enemy.hp = 0;
+  const player = state.player;
+  const gap = Math.hypot(player.position.x - enemy.x, player.position.z - enemy.z);
+  emitEvent(state, { type: 'bomber-detonate', id: enemy.id, radius: BOMBER_BLAST_RADIUS, at: state.time });
+  if (gap <= BOMBER_BLAST_RADIUS) damagePlayer(state, enemy.damage, enemy.id);
+  emitEvent(state, { type: 'enemy-death', id: enemy.id, at: state.time });
+};
+
 const resolveWindup = (state, enemy, gap) => {
   const windup = enemy.windup;
   if (!windup) return false;
-  if (enemy.stun > 0 || gap > windup.range) {
+  if (enemy.stun > 0 || (!windup.fixed && gap > windup.range)) {
     enemy.windup = null;
     return true;
   }
@@ -639,15 +722,31 @@ const resolveWindup = (state, enemy, gap) => {
   if (windup.kind === 'projectile') {
     fireProjectile(state, enemy);
     enemy.shootCooldown = 1.35;
+  } else if (windup.kind === 'spell') {
+    fireProjectile(state, enemy, {
+      speed: 6.2,
+      damage: Math.round(enemy.damage * 1.4),
+      radius: 0.44,
+      kind: 'spell',
+    });
+    enemy.sorcererCooldown = SORCERER_COOLDOWN;
+    enemy.shootCooldown = SORCERER_COOLDOWN;
+  } else if (windup.kind === 'detonate') {
+    detonateBomber(state, enemy);
   } else if (windup.kind === 'summon') {
     summonMinion(state, enemy);
     enemy.summonCooldown = 4.5;
   } else {
     const multiplier = enemy.archetype === 'boss' ? 1 + ((enemy.phase || 1) - 1) * 0.35 : 1;
-    if (damagePlayer(state, Math.round(enemy.damage * multiplier), enemy.id)) {
-      enemy.attackCooldown = enemy.archetype === 'boss' ? (enemy.phase === 3 ? 0.55 : 1)
-        : enemy.archetype === 'tank' ? 1.4 : 0.8;
-    }
+    damagePlayer(state, Math.round(enemy.damage * multiplier), enemy.id);
+    // The cooldown is spent whether or not the blow connects. Tying it to a
+    // landed hit let a dodging player be attacked again on the very next tick,
+    // because the windup restarted from a zero cooldown.
+    enemy.attackCooldown = enemy.archetype === 'boss' ? (enemy.phase === 3 ? 0.55 : 1)
+      : enemy.archetype === 'tank' ? 1.4
+        : enemy.archetype === 'slimegolem' ? 1.6
+          : enemy.archetype === 'shieldbearer' ? 1.1
+            : 0.8;
   }
   return true;
 };
@@ -730,12 +829,65 @@ const updateFlanker = (state, enemy, gap, dt) => {
   }
 };
 
+/**
+ * The gargoyle hunts in bursts: it waits on its perch until the player comes
+ * within reach, commits to one fast swoop, and then has to recover before it
+ * can swoop again. The state machine runs on absolute sim-clock deadlines, so
+ * a slow machine swoops for the same amount of game time as a fast one.
+ */
+const updateGargoyle = (state, enemy, gap, dt) => {
+  const phase = enemy.gargoyleState || (enemy.gargoyleState = 'perch');
+  const until = enemy.gargoyleUntil || 0;
+  if (phase === 'perch') {
+    enemy.intent = 'perch';
+    if (gap <= GARGOYLE_PERCH_RANGE && state.time >= (enemy.gargoyleReadyAt || 0)) {
+      enemy.gargoyleState = 'swoop';
+      enemy.gargoyleUntil = state.time + GARGOYLE_SWOOP;
+      enemy.intent = 'swoop';
+      // The swoop is telegraphed by the same ground ring every other attack
+      // uses, so the player can read it.
+      beginWindup(state, enemy, 'melee', GARGOYLE_SWOOP, GARGOYLE_PERCH_RANGE, GARGOYLE_CONTACT_RANGE * 2);
+    }
+    return;
+  }
+  if (phase === 'swoop') {
+    enemy.intent = 'swoop';
+    move(enemy, direction(enemy, state.player.position), enemy.speed * 2.2, dt, 0.5);
+    const contact = distance(enemy, state.player.position);
+    if (contact <= GARGOYLE_CONTACT_RANGE && (enemy.attackCooldown || 0) <= 0) {
+      enemy.attackCooldown = 1.2;
+      enemy.gargoyleState = 'recover';
+      enemy.gargoyleUntil = state.time + GARGOYLE_RECOVER;
+      enemy.gargoyleReadyAt = state.time + GARGOYLE_RECOVER + GARGOYLE_REST;
+      enemy.windup = null;
+      damagePlayer(state, enemy.damage, enemy.id);
+      return;
+    }
+    if (state.time >= until) {
+      enemy.gargoyleState = 'recover';
+      enemy.gargoyleUntil = state.time + GARGOYLE_RECOVER;
+      enemy.gargoyleReadyAt = state.time + GARGOYLE_RECOVER + GARGOYLE_REST;
+      enemy.windup = null;
+    }
+    return;
+  }
+  // Recover: it circles out of reach before it can perch again.
+  enemy.intent = 'recover';
+  move(enemy, { x: -direction(enemy, state.player.position).x, z: -direction(enemy, state.player.position).z },
+    enemy.speed * 0.5, dt, 0.5);
+  if (state.time >= until) {
+    enemy.gargoyleState = 'perch';
+    enemy.gargoyleUntil = 0;
+  }
+};
+
 const updateEnemy = (state, enemy, dt) => {
   if (enemy.dead) return;
   enemy.stun = Math.max(0, (enemy.stun || 0) - dt);
   enemy.attackCooldown = Math.max(0, (enemy.attackCooldown || 0) - dt);
   enemy.shootCooldown = Math.max(0, (enemy.shootCooldown || 0) - dt);
   enemy.summonCooldown = Math.max(0, (enemy.summonCooldown || 0) - dt);
+  enemy.sorcererCooldown = Math.max(0, (enemy.sorcererCooldown || 0) - dt);
   if (enemy.stun > 0) {
     enemy.windup = null;
     enemy.intent = 'stunned';
@@ -743,9 +895,9 @@ const updateEnemy = (state, enemy, dt) => {
   }
   const player = state.player;
   const gap = distance(enemy, player.position);
-  // The flanker drives its own windup: its lunge window is the telegraph and
-  // the dash, so it must not be short-circuited by the generic windup path.
-  if (enemy.windup && enemy.archetype !== 'flanker') {
+  // The flanker and the gargoyle drive their own windup: their window is the
+  // telegraph and the action at once, so the generic path must not take over.
+  if (enemy.windup && !SELF_DRIVEN_WINDUP.has(enemy.archetype)) {
     enemy.windup.remaining = Math.max(0, enemy.windup.remaining - dt);
     resolveWindup(state, enemy, gap);
     return;
@@ -760,7 +912,7 @@ const updateEnemy = (state, enemy, dt) => {
     enemy.intent = gap < 4 ? 'kite' : gap > 8 ? 'advance' : 'shoot';
     if (gap < 4) move(enemy, away, enemy.speed, dt);
     else if (gap > 8) move(enemy, toward, enemy.speed * 0.65, dt);
-    if (gap >= 4 && gap <= 10 && enemy.shootCooldown <= 0) beginWindup(state, enemy, 'projectile', NORMAL_WINDUP, 10);
+    if (gap >= 4 && gap <= 10 && enemy.shootCooldown <= 0) beginWindup(state, enemy, 'projectile', NORMAL_WINDUP, 10, 1.4);
   } else if (enemy.archetype === 'tank') {
     enemy.intent = gap <= 1.6 ? 'slam' : 'guard';
     if (gap > 1.6) move(enemy, toward, enemy.speed, dt, 0.6);
@@ -768,9 +920,40 @@ const updateEnemy = (state, enemy, dt) => {
   } else if (enemy.archetype === 'summoner') {
     enemy.intent = 'summon';
     if (gap < 5) move(enemy, away, enemy.speed * 0.5, dt);
-    if (gap <= 12 && enemy.summonCooldown <= 0) beginWindup(state, enemy, 'summon', NORMAL_WINDUP, 12);
+    if (gap <= 12 && enemy.summonCooldown <= 0) beginWindup(state, enemy, 'summon', NORMAL_WINDUP, 12, 1.6);
   } else if (enemy.archetype === 'flanker') {
     updateFlanker(state, enemy, gap, dt);
+  } else if (enemy.archetype === 'shieldbearer') {
+    // It walks in behind its shield (the `blocked` flag halves frontal hits in
+    // attack()) and bashes once it is close enough.
+    enemy.blocked = true;
+    enemy.intent = gap <= SHIELDBEARER_RANGE ? 'bash' : 'advance';
+    if (gap > SHIELDBEARER_RANGE) move(enemy, toward, enemy.speed, dt, 0.55);
+    else if (enemy.attackCooldown <= 0) beginWindup(state, enemy, 'bash', 0.3, SHIELDBEARER_RANGE + 0.2);
+  } else if (enemy.archetype === 'gargoyle') {
+    updateGargoyle(state, enemy, gap, dt);
+  } else if (enemy.archetype === 'sorcerer') {
+    // It holds a casting distance: backs off when crowded, closes when out of
+    // range, and lobs a heavier bolt than the skeletal archer.
+    enemy.intent = 'cast';
+    if (gap < 6) move(enemy, away, enemy.speed, dt);
+    else if (gap > 11) move(enemy, toward, enemy.speed * 0.7, dt);
+    if (gap <= SORCERER_RANGE && enemy.sorcererCooldown <= 0) {
+      beginWindup(state, enemy, 'spell', SORCERER_WINDUP, SORCERER_RANGE, 1.4);
+    }
+  } else if (enemy.archetype === 'slimegolem') {
+    // Slow, heavy, and it hits like a falling wall. It splits when it dies.
+    enemy.intent = gap <= SLIMEGOLEM_RANGE ? 'engulf' : 'ooze';
+    if (gap > SLIMEGOLEM_RANGE) move(enemy, toward, enemy.speed, dt, 0.6);
+    else if (enemy.attackCooldown <= 0) beginWindup(state, enemy, 'engulf', 0.35, SLIMEGOLEM_RANGE + 0.3);
+  } else if (enemy.archetype === 'bomber') {
+    // It rushes in and lights a fuse it cannot put out.
+    enemy.intent = gap <= BOMBER_BLAST_RADIUS ? 'fuse' : 'rush';
+    if (gap > 1.4) move(enemy, toward, enemy.speed, dt);
+    if (gap <= BOMBER_BLAST_RADIUS && enemy.attackCooldown <= 0 && !enemy.windup) {
+      beginWindup(state, enemy, 'detonate', BOMBER_FUSE, BOMBER_BLAST_RADIUS);
+      enemy.windup.fixed = true;
+    }
   } else if (enemy.archetype === 'boss') {
     const ratio = enemy.hp / enemy.maxHp;
     enemy.phase = ratio <= 0.25 ? 3 : ratio < 0.5 ? 2 : 1;
@@ -972,6 +1155,8 @@ const fixedUpdate = (state, input, dt) => {
       emitEvent(state, { type: 'phantom-step', at: state.time });
     }
     emitEvent(state, { type: 'dash', at: state.time });
+    // Gale dancer duo: the dash cuts what it passes through, once per dash.
+    if ((state.duos || []).includes('gale-dancer')) state.dashHits = [];
   }
   // Guard / parry (new button): 0.35s guard, first 0.12s parries.
   const guardPressed = Boolean(input.guard) && !state.inputLatch.guard;
@@ -996,6 +1181,21 @@ const fixedUpdate = (state, input, dt) => {
   move(playerUnit, movement, speed, dt);
   player.position.x = playerUnit.x;
   player.position.z = playerUnit.z;
+  // The gale dancer duo turns the dash into an attack: every enemy the dash
+  // brushes takes damage, once. Without this the duo was a label on a card.
+  if (dashActive && (state.duos || []).includes('gale-dancer')) {
+    const struck = state.dashHits || (state.dashHits = []);
+    for (const enemy of [...state.enemies]) {
+      if (enemy.dead || struck.includes(enemy.id)) continue;
+      if (Math.hypot(enemy.x - player.position.x, enemy.z - player.position.z) > 1.6) continue;
+      struck.push(enemy.id);
+      const damage = Math.round(12 * player.damageMultiplier);
+      enemy.hp = Math.max(0, enemy.hp - damage);
+      enemy.stun = Math.max(enemy.stun || 0, 0.1);
+      emitEvent(state, { type: 'dash-trail', id: enemy.id, damage, at: state.time });
+      if (enemy.hp === 0) killEnemy(state, enemy);
+    }
+  }
   // Focus charge tracking for Focus Shot.
   if (input.shoot) player.focusCharge = (player.focusCharge || 0) + dt; else player.focusCharge = 0;
   // Assist / auto flags.
@@ -1006,67 +1206,16 @@ const fixedUpdate = (state, input, dt) => {
     state.targetLock = lockTarget;
     emitEvent(state, { type: 'target-lock', id: lockTarget, at: state.time });
   }
-  // target selection
-  let target = null;
-  // sticky target
-  if (state.assistTarget && state.assistTargetUntil > state.time) {
-    const t = state.enemies.find((e) => e.id === state.assistTarget && !e.dead);
-    if (t) target = t;
-  }
-  if (!target) {
-    // pick by score
-    const candidates = state.enemies.filter((e) => !e.dead);
-    if (candidates.length) {
-      let best = null; let bestScore = Infinity;
-      for (const e of candidates) {
-        const gap = distance(e, player.position);
-        const toward = direction(player.position, e);
-        const alignment = toward.x * player.facing.x + toward.z * player.facing.z;
-        const threat = (lockTarget && e.id === lockTarget) ? -100 : 0;
-        const tb = { summoner:5, archer:3, flanker:2, boss:4, tank:0, chaser:0 }[e.archetype] || 0;
-        const lowHp = (e.hp / e.maxHp < 0.25) ? 3 : 0;
-        const score = gap - alignment*4 - tb - lowHp - threat;
-        if (score < bestScore) { bestScore = score; best = e; }
-      }
-      target = best;
-      if (target) { state.assistTarget = target.id; state.assistTargetUntil = state.time + 0.4; }
-    }
-  }
-  if (lockTarget) {
-    const lt = state.enemies.find((e) => e.id === lockTarget && !e.dead);
-    if (lt) target = lt;
-  }
-  if (target && (input.attack || autoAttack)) {
-    // tryMelee: swing only if enemy within next chain step range
-    const chain = player.combo % 3 + 1;
-    const strike = COMBO[chain - 1];
-    const manual = !autoAttack || input.attack;
-    if (distance(player.position, target) <= strike.range) {
-      // not dashing
-      if (player.dashRemaining <= 0 && state.time >= player.attackReadyAt) {
-        attack(state, target.id, manual);
-      }
-    }
+  // One target selector for the whole game: pickTarget() owns the sticky
+  // target, the threat weighting and the manual lock. This loop used to carry
+  // its own copy of that scoring, which had the lock weighting inverted.
+  const target = pickTarget(state, lockTarget);
+  const attackPressed = Boolean(input.attack) || autoAttack;
+  if (target && attackPressed) {
+    tryMelee(state, target, { auto: autoAttack && !input.attack });
   }
   if (target && (input.shoot || autoShoot)) {
-    // auto-bow: only when no enemy in melee reach
-    let doShoot = true;
-    if (autoShoot && !input.shoot) {
-      const meleeReach = COMBO.reduce((m,c)=>Math.max(m,c.range),0);
-      const nearEnemy = state.enemies.some((e) => !e.dead && distance(e, player.position) <= meleeReach);
-      if (nearEnemy) doShoot = false;
-      const reserve = state.settings?.autoFireReserve ?? 25;
-      const cost = Math.max(1, Math.round(BOW.staminaCost * player.bowStaminaMultiplier));
-      if (player.stamina - cost < reserve) doShoot = false;
-      if (!target || distance(target, player.position) > BOW.range * player.bowRangeMultiplier) doShoot = false;
-    }
-    if (doShoot) {
-      const focus = !autoShoot && (player.focusCharge >= 0.6);
-      const result = shoot(state, { focus });
-      if (!result.fired && result.reason) {
-        emitEvent(state, { type: 'bow-missed', reason: result.reason, at: state.time });
-      }
-    }
+    tryBow(state, target, { auto: autoShoot && !input.shoot });
   }
   state.inputLatch.attack = Boolean(input.attack);
   state.inputLatch.shoot = Boolean(input.shoot);

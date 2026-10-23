@@ -1,5 +1,33 @@
 const clamp = (value, min, max) => Math.min(max, Math.max(min, Number(value) || 0));
 
+// The HUD is refreshed from the fixed-step loop, so it runs sixty times a
+// second. Writing an attribute that already holds the wanted value is a DOM
+// mutation the browser has to invalidate for nothing, so every write goes
+// through a cache and unchanged values are dropped.
+const attributeCache = new WeakMap();
+function writeAttr(element, name, value) {
+  const text = String(value);
+  let cache = attributeCache.get(element);
+  if (!cache) { cache = new Map(); attributeCache.set(element, cache); }
+  if (cache.get(name) === text) return false;
+  cache.set(name, text);
+  element.setAttribute(name, text);
+  return true;
+}
+
+function setText(element, text) {
+  const value = String(text);
+  if (element.textContent === value) return false;
+  element.textContent = value;
+  return true;
+}
+
+function setHidden(element, hidden) {
+  if (element.hidden === hidden) return false;
+  element.hidden = hidden;
+  return true;
+}
+
 function element(doc, tag, className, text) {
   const node = doc.createElement(tag);
   node.className = className;
@@ -11,14 +39,14 @@ function meter(doc, name, className) {
   const wrapper = element(doc, 'div', `az-hud-meter ${className}`);
   const label = element(doc, 'span', 'az-hud-meter-label', name);
   const value = element(doc, 'progress', 'az-hud-meter-track');
-  value.setAttribute('role', 'progressbar');
-  value.setAttribute('aria-label', name);
-  value.setAttribute('min', '0');
-  value.setAttribute('max', '100');
-  value.setAttribute('value', '100');
-  value.setAttribute('aria-valuemin', '0');
-  value.setAttribute('aria-valuemax', '100');
-  value.setAttribute('aria-valuenow', '100');
+  writeAttr(value, 'role', 'progressbar');
+  writeAttr(value, 'aria-label', name);
+  writeAttr(value, 'min', '0');
+  writeAttr(value, 'max', '100');
+  writeAttr(value, 'value', '100');
+  writeAttr(value, 'aria-valuemin', '0');
+  writeAttr(value, 'aria-valuemax', '100');
+  writeAttr(value, 'aria-valuenow', '100');
   const readout = element(doc, 'span', 'az-hud-meter-value', '100 / 100');
   wrapper.append(label, value, readout);
   return { wrapper, value, readout };
@@ -27,12 +55,12 @@ function meter(doc, name, className) {
 function setMeter(meterNode, current, maximum) {
   const max = Math.max(1, Number(maximum) || 1);
   const value = clamp(current, 0, max);
-  meterNode.value.setAttribute('max', String(max));
-  meterNode.value.setAttribute('value', String(value));
-  meterNode.value.setAttribute('aria-valuemin', '0');
-  meterNode.value.setAttribute('aria-valuemax', String(max));
-  meterNode.value.setAttribute('aria-valuenow', String(value));
-  meterNode.readout.textContent = `${Math.round(value)} / ${Math.round(max)}`;
+  writeAttr(meterNode.value, 'max', max);
+  writeAttr(meterNode.value, 'value', value);
+  writeAttr(meterNode.value, 'aria-valuemin', 0);
+  writeAttr(meterNode.value, 'aria-valuemax', max);
+  writeAttr(meterNode.value, 'aria-valuenow', value);
+  setText(meterNode.readout, `${Math.round(value)} / ${Math.round(max)}`);
 }
 
 /** Build an independent, class-driven HUD. No inline styles are emitted. */
@@ -121,33 +149,33 @@ export function createHud({ container, document: doc = globalThis.document } = {
     if (state.xp !== undefined || state.xpToNext !== undefined) setMeter(xp, state.xp ?? 0, state.xpToNext ?? 100);
     if (state.gold !== undefined) {
       const amount = Math.max(0, Math.floor(Number(state.gold) || 0));
-      gold.textContent = `${amount} gold`;
-      gold.setAttribute('aria-label', `Gold: ${amount}`);
+      setText(gold, `${amount} gold`);
+      writeAttr(gold, 'aria-label', `Gold: ${amount}`);
     }
-    if (state.chapter !== undefined) chapter.textContent = `Chapter ${state.chapter}`;
-    if (state.wave !== undefined) wave.textContent = `Wave ${state.wave}`;
+    if (state.chapter !== undefined) setText(chapter, `Chapter ${state.chapter}`);
+    if (state.wave !== undefined) setText(wave, `Wave ${state.wave}`);
     if (state.combo !== undefined) {
       const count = Math.max(0, Math.floor(Number(state.combo) || 0));
-      combo.hidden = count < 2;
-      combo.textContent = count < 2 ? '' : `${count}× COMBO`;
+      setHidden(combo, count < 2);
+      setText(combo, count < 2 ? '' : `${count}× COMBO`);
     }
     if (state.boss) {
-      boss.wrapper.hidden = false;
-      boss.wrapper.setAttribute('aria-hidden', 'false');
-      bossName.textContent = state.boss.name || 'Boss';
+      setHidden(boss.wrapper, false);
+      writeAttr(boss.wrapper, 'aria-hidden', 'false');
+      setText(bossName, state.boss.name || 'Boss');
       setMeter(boss, state.boss.health, state.boss.maxHealth);
     } else if (state.boss === null) {
-      boss.wrapper.hidden = true;
-      boss.wrapper.setAttribute('aria-hidden', 'true');
+      setHidden(boss.wrapper, true);
+      writeAttr(boss.wrapper, 'aria-hidden', 'true');
     }
-    if (state.paused !== undefined) pause.hidden = !state.paused;
-    if (state.help !== undefined) help.hidden = !state.help;
+    if (state.paused !== undefined) setHidden(pause, !state.paused);
+    if (state.help !== undefined) setHidden(help, !state.help);
     if (state.blessings !== undefined) renderBlessings(state.blessings, state.blessingLabels, state.blessingLevels);
     if (state.assistMode !== undefined) {
       const mode = String(state.assistMode).toUpperCase();
-      assistChip.textContent = mode;
-      assistChip.setAttribute('aria-label', `Assist mode: ${state.assistMode}`);
-      assistChip.setAttribute('data-mode', String(state.assistMode));
+      setText(assistChip, mode);
+      writeAttr(assistChip, 'aria-label', `Assist mode: ${state.assistMode}`);
+      writeAttr(assistChip, 'data-mode', String(state.assistMode));
     }
     if (state.specialCharge !== undefined) {
       setMeter(special, state.specialCharge, 100);
@@ -157,11 +185,11 @@ export function createHud({ container, document: doc = globalThis.document } = {
       const max = Math.max(1, Number(state.maxStamina ?? 100));
       const reserve = Math.max(0, Math.min(max, Number(state.reserve ?? 25)));
       stamina.wrapper.classList.toggle('is-low-reserve', (state.stamina ?? 0) < reserve + 1);
-      stamina.wrapper.setAttribute('data-reserve', reserve >= 50 ? '50' : reserve > 0 ? '25' : '0');
+      writeAttr(stamina.wrapper, 'data-reserve', reserve >= 50 ? '50' : reserve > 0 ? '25' : '0');
     }
     if (state.target !== undefined) {
       crosshair.classList.toggle('is-locked', Boolean(state.target?.locked));
-      crosshair.setAttribute('aria-label', state.target ? `Target: ${state.target.hp}/${state.target.maxHp}` : 'No target');
+      writeAttr(crosshair, 'aria-label', state.target ? `Target: ${state.target.hp}/${state.target.maxHp}` : 'No target');
     }
     return api;
   }

@@ -176,3 +176,101 @@ test('evolution saves round-trip with the new fields', () => {
   assert.ok(restored.blessingLevels, 'blessingLevels survives');
   assert.ok(restored.settings, 'settings survive');
 });
+
+test('a vampiric elite heals itself from the damage it deals', () => {
+  const state = createGameState('vampiric-seed');
+  state.player.position = { x: 0, z: 0 };
+  state.enemies = [{
+    id: 'leech', archetype: 'chaser', x: 1, z: 0, hp: 100, maxHp: 200, speed: 0,
+    damage: 20, attackCooldown: 0, stun: 0, windup: null, dead: false, intent: 'idle',
+    xp: 10, gold: 5, elite: 'vampiric',
+  }];
+  tick(state, 1.2);
+  assert.ok(state.player.hp < state.player.maxHp, 'the elite must land a hit');
+  assert.ok(state.enemies[0].hp > 100,
+    `a vampiric elite heals from its hit, hp was ${state.enemies[0].hp}`);
+});
+
+test('the bloodrite duo heals on a critical hit', () => {
+  const state = createGameState('bloodrite-seed');
+  state.duos = ['bloodrite'];
+  state.player.critChance = 1;
+  state.player.hp = 50;
+  state.player.position = { x: 0, z: 0 };
+  state.enemies = [{
+    id: 'dummy', archetype: 'tank', x: 1.5, z: 0, hp: 500, maxHp: 500, speed: 0,
+    damage: 1, attackCooldown: 9, stun: 0, windup: null, dead: false, intent: 'idle', xp: 0, gold: 0,
+  }];
+  state.player.attackReadyAt = 0;
+  const result = attack(state, 'dummy');
+  assert.equal(result.crit, true, 'the swing must crit');
+  assert.ok(state.player.hp > 50, `bloodrite must heal on a crit, hp ${state.player.hp}`);
+});
+
+test('the gale dancer duo makes a dash damage the enemies it passes through', () => {
+  const state = createGameState('gale-seed');
+  state.duos = ['gale-dancer'];
+  state.player.position = { x: 0, z: 0 };
+  state.player.stamina = 100;
+  state.enemies = [{
+    id: 'brush', archetype: 'tank', x: 1.2, z: 0, hp: 400, maxHp: 400, speed: 0,
+    damage: 1, attackCooldown: 9, stun: 0, windup: null, dead: false, intent: 'idle', xp: 0, gold: 0,
+  }];
+  stepGame(state, { dash: true, moveX: 1, moveZ: 0 }, 1 / 60);
+  assert.ok(state.enemies[0].hp < 400,
+    `a gale dancer dash must cut the enemy it passes, hp ${state.enemies[0].hp}`);
+});
+
+test('a lethal guard-blocked blow still ends the run', () => {
+  const state = createGameState('guard-death');
+  state.player.hp = 3;
+  state.player.stamina = 100;
+  state.enemies = [{
+    id: 'brute', archetype: 'tank', x: 1, z: 0, hp: 500, maxHp: 500, speed: 0,
+    damage: 40, attackCooldown: 0, stun: 0, windup: null, dead: false, intent: 'idle', xp: 0, gold: 0,
+  }];
+  stepGame(state, { guard: true }, 1 / 60);
+  // Wait out the parry window, then eat the blow behind the guard.
+  tick(state, 0.2);
+  state.player.guardUntil = state.time + 1;
+  state.player.parryWindowUntil = 0;
+  state.player.stamina = 100;
+  tick(state, 2.5);
+  assert.equal(state.player.dead, true, 'the player must die');
+  assert.equal(state.status, 'defeat', 'a death behind the guard must still be a defeat');
+  assert.ok(state.events.some((event) => event.type === 'player-death'), 'the death must be announced');
+});
+
+test('the bow honours the target the player locked', () => {
+  const state = createGameState('lock-seed');
+  state.player.position = { x: 0, z: 0 };
+  state.player.facing = { x: 1, z: 0 };
+  state.enemies = [
+    { id: 'near', archetype: 'chaser', x: 2, z: 0, hp: 100, maxHp: 100, speed: 0, damage: 1, attackCooldown: 9, stun: 0, windup: null, dead: false, intent: 'idle', xp: 0, gold: 0 },
+    { id: 'locked', archetype: 'summoner', x: -6, z: 0, hp: 100, maxHp: 100, speed: 0, damage: 1, attackCooldown: 9, stun: 0, windup: null, dead: false, intent: 'idle', xp: 0, gold: 0 },
+  ];
+  state.targetLock = 'locked';
+  const shot = shoot(state);
+  assert.equal(shot.fired, true, 'the shot must fire');
+  assert.equal(shot.targetId, 'locked', 'the arrow must fly at the locked target');
+});
+
+test('an enemy that misses still spends its attack cooldown', () => {
+  const state = createGameState('cooldown-seed');
+  state.player.position = { x: 0, z: 0 };
+  state.player.invulnerable = 90;
+  state.enemies = [{
+    id: 'swinger', archetype: 'chaser', x: 1, z: 0, hp: 500, maxHp: 500, speed: 0,
+    damage: 10, attackCooldown: 0, stun: 0, windup: null, dead: false, intent: 'idle', xp: 0, gold: 0,
+  }];
+  let sawWindup = false;
+  for (let i = 0; i < 120 && !sawWindup; i += 1) {
+    stepGame(state, {}, 1 / 60);
+    if (state.enemies[0].windup) sawWindup = true;
+  }
+  assert.equal(sawWindup, true, 'the enemy must start a windup');
+  for (let i = 0; i < 40 && state.enemies[0].windup; i += 1) stepGame(state, {}, 1 / 60);
+  assert.equal(state.enemies[0].windup, null, 'the windup must resolve');
+  assert.ok(state.enemies[0].attackCooldown > 0.2,
+    `a whiffed swing must still spend the cooldown, got ${state.enemies[0].attackCooldown.toFixed(3)}`);
+});
