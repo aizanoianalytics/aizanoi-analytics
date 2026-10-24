@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-24-france-protests-bond-premium-2011",
+  "title": "France braces for protests with 70,000 officers",
+  "summary": "Some 70,000 police and gendarmes, backed by helicopters, armoured vehicles and water cannon, will be deployed across France on Saturday, and the Louvre and other Paris museums will shut, as the government tries to avoid a repeat of last weekend's looting. Student groups called for fresh demonstrations over the cost of living after meeting Emmanuel Macron. The market price is visible too: 10-year OAT yields near 5.06% and a spread over Bunds of 177.7 basis points, the widest since 2011.",
+  "category": "economy-markets",
+  "priority": 64,
+  "publishedAt": "2026-10-24T05:10:00Z",
+  "updatedAt": "2026-10-24T05:10:00Z",
+  "retrievedAt": "2026-10-24T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "france",
+    "protests",
+    "oat",
+    "bond-spread",
+    "budget"
+  ],
+  "sources": [
+    {
+      "publisher": "Associated Press",
+      "url": "https://www.ocregister.com/2026/10/23/france-saturday-protests-louvre-closed/",
+      "publishedAt": "2026-10-23T13:05:00Z"
+    },
+    {
+      "publisher": "Reuters via Daily Sabah",
+      "url": "https://www.dailysabah.com/business/economy/french-debt-risk-premium-reaches-eurozone-sovereign-crisis-levels",
+      "publishedAt": "2026-10-22T16:35:00Z"
+    }
+  ]
+}

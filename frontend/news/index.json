@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-23T05:50:00.000Z",
+  "generatedAt": "2026-10-24T05:10:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-24",
+      "path": "/news/2026-10-24/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-23",
       "path": "/news/2026-10-23/",
@@ -365,6 +370,511 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-24-uk-ai-biosecurity-lab-100m",
+      "kind": "daily",
+      "title": "Britain puts £100m behind a national AI biosecurity lab",
+      "summary": "The UK will fund a National AI Biosecurity Lab with £100m from Wednesday's Budget, alongside £120m more for the AI Security Institute, £60m for a 'National Cyber Shield' built on agentic AI and £70m for a vulnerability-detection centre. OpenAI and Anthropic are contributing £200m of model credits. Ministers call the lab a world first, though its remit is still undefined, and the package lands after AI-assisted bug hunting forced British sites offline.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "uk",
+        "ai-policy",
+        "biosecurity",
+        "budget",
+        "ai-security-institute"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC News",
+          "url": "https://www.bbc.co.uk/news/articles/cqdjv8xllvyyo",
+          "publishedAt": "2026-10-24T01:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-aws-capacity-sold-out-2027",
+      "kind": "daily",
+      "title": "Jassy says AWS is booked out through 2027",
+      "summary": "Amazon expects to spend about $220bn on capital projects in 2026 and still leave AI demand unmet, chief executive Andy Jassy said on an Andreessen Horowitz podcast. Capacity for this year is sold out, 2027 is 'largely sold out' apart from the on-demand pool kept for EC2 and Bedrock, and a good chunk of 2028 is already committed. Jassy argued Amazon could invest more without wasting capital. Third-quarter results land on 29 October.",
+      "category": "ai",
+      "priority": 78,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "amazon",
+        "aws",
+        "cloud",
+        "capex",
+        "ai-infrastructure"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://finance.yahoo.com/technology/articles/amazon-cloud-capacity-sold-2027-230625002.html",
+          "publishedAt": "2026-10-23T23:06:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-wall-street-oil-shock-dow-653",
+      "kind": "daily",
+      "title": "Oil, not chips, drives the Dow down 653 points",
+      "summary": "US stocks fell on Friday as Brent settled at $116.72 a barrel, up 3.1% and its highest close since April, after Houthi attacks on Saudi Arabia. The Dow lost 652.82 points, or 1.2%, to 52,215.16 while the S&P 500 slipped 0.5% to 7,623.68 and the Nasdaq 0.2% to 25,955.34 as chip shares steadied. Energy was the one strong corner, up 2.5% at a record. The S&P fell 0.5% on the week; the Dow gained 0.4%.",
+      "category": "economy-markets",
+      "priority": 76,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "wall-street",
+        "brent",
+        "oil",
+        "dow-jones",
+        "s-p-500"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://finance.yahoo.com/markets/articles/tech-selloff-relents-oil-five-103308077.html",
+          "publishedAt": "2026-10-23T21:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-node2shell-brotli-cve-2026-111497",
+      "kind": "daily",
+      "title": "A compression bug hands attackers a Node.js shell",
+      "summary": "Node.js has patched CVE-2026-111497, an out-of-bounds write in the Brotli decoder it bundles: a stream that switches block types illegally is read as needing more input, so bytes keep piling into an eight-byte buffer. Applications that decompress attacker-supplied Brotli data, including Express 5 JSON bodies and server-side fetch, are exposed. Node rates the flaw high while the CVE record says 9.2 critical, and Imperva has demonstrated code execution on an official build.",
+      "category": "technology",
+      "priority": 74,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "nodejs",
+        "brotli",
+        "cve-2026-111497",
+        "security",
+        "openai-codex-security"
+      ],
+      "sources": [
+        {
+          "publisher": "Node.js Project",
+          "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+          "publishedAt": "2026-10-21T10:38:00.000Z"
+        },
+        {
+          "publisher": "Sesame Disk",
+          "url": "https://sesamedisk.com/node2shell-nodejs-brotli-rce",
+          "publishedAt": "2026-10-23T08:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-metr-redwood-openai-monitoring-audit",
+      "kind": "daily",
+      "title": "Outside auditors find holes in OpenAI's agent monitoring",
+      "summary": "Two researchers from METR and Redwood Research spent three weeks inside OpenAI and concluded that between 6% and 25% of internal agent traffic from GPT-5.5-class models and above went unmonitored during the audit. They also estimated about a tenth of supposedly watched Codex traffic slipped through a bug in how the system handled context compaction, which OpenAI found and fixed mid-audit. The 61-page report was redacted to 38 pages for the auditors; the public received a summary.",
+      "category": "ai",
+      "priority": 72,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "metr",
+        "redwood-research",
+        "ai-safety",
+        "audit"
+      ],
+      "sources": [
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/three-week-on-site-audit-at-openai-reveals-major-gaps-in-ai-safety-monitoring/",
+          "publishedAt": "2026-10-23T09:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-gladbach-first-win-stuttgart",
+      "kind": "daily",
+      "title": "Gladbach finally win to avoid a record nobody wants",
+      "summary": "Borussia Mönchengladbach ended a six-game losing start by winning 3-2 at VfB Stuttgart in the Bundesliga's matchday seven opener, averting the seventh straight defeat that would have been a league first. Ermedin Demirović volleyed Stuttgart ahead after five minutes, but Joe Scally's backheel, Shuto Machino's finish and a Wael Mohya header turned it around before Demirović's late second. Mohya, 17, was man of the match; Gladbach stay bottom on three points.",
+      "category": "football",
+      "priority": 71,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "gladbach",
+        "stuttgart",
+        "mohya",
+        "matchday-7"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/news/vfb-stuttgart-borussia-monchengladbach-match-report-highlights-matchday-7-39693",
+          "publishedAt": "2026-10-23T20:45:00.000Z"
+        },
+        {
+          "publisher": "Associated Press",
+          "url": "https://www.wral.com/news/ap/9a687-gladbach-ends-winless-start-in-bundesliga-and-torino-wins-third-straight-in-serie-a/",
+          "publishedAt": "2026-10-23T22:13:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-microsoft-365-token-spraying-79-tenants",
+      "kind": "daily",
+      "title": "Stolen sessions, not passwords, opened 79 Microsoft 365 tenants",
+      "summary": "Huntress traced a ten-week campaign that replayed Microsoft 365 sign-in tokens harvested by adversary-in-the-middle login pages and device-code phishing, producing 497 successful sign-ins from more than 200,000 attempts across 79 organisations. Because the tokens were minted after multi-factor checks, passwords were never needed. Attackers added hidden inbox rules, registered rogue devices and swapped authenticators to stay in place. Revoke sessions, not just passwords, the researchers advise.",
+      "category": "technology",
+      "priority": 70,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "microsoft-365",
+        "huntress",
+        "token-theft",
+        "business-email-compromise",
+        "identity"
+      ],
+      "sources": [
+        {
+          "publisher": "Help Net Security",
+          "url": "https://www.helpnetsecurity.com/2026/10/23/microsoft-365-accounts-stolen-sessions",
+          "publishedAt": "2026-10-23T14:08:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-american-express-job-cuts-ai",
+      "kind": "daily",
+      "title": "Amex beats, then cuts 5% of its staff",
+      "summary": "American Express will cut 5% of its global workforce, about 3,500 of 78,000 jobs, after third-quarter adjusted earnings of $4.68 a share beat the $4.49 analysts expected. The company raised full-year guidance to $18.30-$18.60 from $17.30-$17.90 and booked a $253m after-tax restructuring charge, funded partly by a $751m gain on its Global Business Travel stake. Chief executive Steve Squeri said Amex had momentum but needed to be more agile; the shares fell 3.7%.",
+      "category": "economy-markets",
+      "priority": 68,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "american-express",
+        "earnings",
+        "job-cuts",
+        "restructuring",
+        "financials"
+      ],
+      "sources": [
+        {
+          "publisher": "Bloomberg via the Los Angeles Times",
+          "url": "https://latimes.com/business/story/2026-10-23/american-express-to-cut-3-500-jobs-worldwide-as-costs-climb",
+          "publishedAt": "2026-10-23T15:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-spacex-80000-cell-sites-fourth-carrier",
+      "kind": "daily",
+      "title": "SpaceX asks for half of America's cell towers",
+      "summary": "SpaceX is in talks to lease at least 80,000 US cell sites, roughly half the country's 158,500 towers, as it builds toward a fourth national carrier, Bloomberg reported. Crown Castle is among the landlords in discussions; its chief executive told analysts to assume the company is 'talking to all parties'. Tower owners rallied on the prospect of a new tenant while AT&T, Verizon and T-Mobile fell. Nothing is signed, and the sites would pair with direct-to-cell satellites.",
+      "category": "technology",
+      "priority": 66,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "spacex",
+        "starlink",
+        "telecom",
+        "crown-castle",
+        "wireless"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/science/1017477/spacex-cell-sites-major-us-carrier",
+          "publishedAt": "2026-10-23T15:16:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://www.investing.com/news/stock-market-news/us-telecom-operators-wobble-after-report-spacex-in-talks-for-cell-sites-4970138",
+          "publishedAt": "2026-10-23T16:43:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-ipswich-forest-enciso-equaliser",
+      "kind": "daily",
+      "title": "Ipswich punish Forest's short backpass to take a point",
+      "summary": "Nottingham Forest's wait for a second win under Oliver Glasner goes on after a 1-1 draw at Ipswich, where Neco Williams' back-post volley from Daniel Muñoz's cross was cancelled out four minutes before the break. Nikola Milenković dwelt on the ball and under-hit his backpass, letting Julio Enciso collect and slot past Matz Sels for his first Ipswich goal since arriving in the summer. Glasner called a second-half challenge on James McAtee a 'clear red card'; the referee gave a yellow after review.",
+      "category": "football",
+      "priority": 65,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "ipswich",
+        "nottingham-forest",
+        "enciso",
+        "var"
+      ],
+      "sources": [
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cmn0628p5rkyt",
+          "publishedAt": "2026-10-23T21:49:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-block-dessa-speech-model",
+      "kind": "daily",
+      "title": "Block builds a voice model that never learned to read",
+      "summary": "Jack Dorsey's Block has shown Dessa, a speech-to-speech model trained 'from scratch on nothing but human conversation' rather than on transcripts. It runs locally on a MacBook Pro M4 Max or better, and the company says it keeps the timing and emotional cues that text-first voice assistants flatten. Block published sample conversations, including one where Dessa mistakes the speaker for someone called Ronaldo, and will give a small group of safety researchers early access.",
+      "category": "ai",
+      "priority": 64,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "block",
+        "dessa",
+        "speech",
+        "voice-model",
+        "safety"
+      ],
+      "sources": [
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1017906/jack-dorsey-block-dessa-ai-voice-speech",
+          "publishedAt": "2026-10-23T19:32:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-france-protests-bond-premium-2011",
+      "kind": "daily",
+      "title": "France braces for protests with 70,000 officers",
+      "summary": "Some 70,000 police and gendarmes, backed by helicopters, armoured vehicles and water cannon, will be deployed across France on Saturday, and the Louvre and other Paris museums will shut, as the government tries to avoid a repeat of last weekend's looting. Student groups called for fresh demonstrations over the cost of living after meeting Emmanuel Macron. The market price is visible too: 10-year OAT yields near 5.06% and a spread over Bunds of 177.7 basis points, the widest since 2011.",
+      "category": "economy-markets",
+      "priority": 64,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "france",
+        "protests",
+        "oat",
+        "bond-spread",
+        "budget"
+      ],
+      "sources": [
+        {
+          "publisher": "Associated Press",
+          "url": "https://www.ocregister.com/2026/10/23/france-saturday-protests-louvre-closed/",
+          "publishedAt": "2026-10-23T13:05:00.000Z"
+        },
+        {
+          "publisher": "Reuters via Daily Sabah",
+          "url": "https://www.dailysabah.com/business/economy/french-debt-risk-premium-reaches-eurozone-sovereign-crisis-levels",
+          "publishedAt": "2026-10-22T16:35:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-torino-monza-third-straight-win",
+      "kind": "daily",
+      "title": "Torino's third straight win spoils Juric's return",
+      "summary": "Torino beat Monza 3-2 for a third consecutive Serie A victory, their first such run since 2019-20, and climbed to eighth. Kian Fitz-Jim opened the scoring before half-time, Gustavo Varela equalised two minutes after the restart following a Pietro Comuzzo error, and Rafik Belghali curled in a superb strike on 61 minutes. Nikola Vlašić added a third, and Nathan Patterson's stoppage-time own goal only narrowed the margin. Monza, now coached by former Torino boss Ivan Jurić, are 14th.",
+      "category": "football",
+      "priority": 63,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "serie-a",
+        "torino",
+        "monza",
+        "belghali",
+        "juric"
+      ],
+      "sources": [
+        {
+          "publisher": "Football Italia",
+          "url": "https://football-italia.net/serie-a-torino-3-2-monza-belghali-stunner/",
+          "publishedAt": "2026-10-23T19:42:00.000Z"
+        },
+        {
+          "publisher": "Associated Press",
+          "url": "https://www.wral.com/news/ap/9a687-gladbach-ends-winless-start-in-bundesliga-and-torino-wins-third-straight-in-serie-a/",
+          "publishedAt": "2026-10-23T22:13:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-kimi-k3-1-pro-open-weight-frontier",
+      "kind": "daily",
+      "title": "Moonshot's Kimi K3.1 Pro lands three points off the frontier",
+      "summary": "Moonshot AI's Kimi K3.1 Pro scores 55 on the Artificial Analysis Intelligence Index, an 11-point jump on K3 that puts the Chinese model fourth behind Claude Opus 5.5, Claude Sonnet 5.5 and Muse Wonder Full. If Moonshot publishes the weights as planned by 4 November, it would be the strongest open-weights model available and cut the open-to-proprietary gap from 12 points to three. It keeps 2.8 trillion parameters, 104 billion of them active, and a million-token context.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "moonshot-ai",
+        "kimi",
+        "open-weights",
+        "benchmarks",
+        "model-release"
+      ],
+      "sources": [
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/chinese-ai-model-kimi-k3-1-pro-is-closing-in-on-anthropics-claude-opus-5-5/",
+          "publishedAt": "2026-10-23T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-24-canva-craft-image-model",
+      "kind": "daily",
+      "title": "Canva trains its own image model on design templates",
+      "summary": "Canva has released Craft, its first image generator built in-house, trained from scratch mainly on millions of design templates instead of photo corpora. It plans composition and text placement before rendering at up to 2K across more than 30 aspect ratios, writes text in 55 languages and can split results into editable layers. Canva says it ranks fourth overall on DesignArena and first for portraits and landscapes; cheaper fast variants are promised.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-24T05:10:00.000Z",
+      "updatedAt": "2026-10-24T05:10:00.000Z",
+      "retrievedAt": "2026-10-24T05:10:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "canva",
+        "craft",
+        "image-generation",
+        "design",
+        "model-release"
+      ],
+      "sources": [
+        {
+          "publisher": "The Decoder",
+          "url": "https://the-decoder.com/canva-releases-craft-its-first-in-house-image-generation-model/",
+          "publishedAt": "2026-10-23T09:30:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-23-wall-street-ai-selloff-treasury-rally",
       "kind": "daily",

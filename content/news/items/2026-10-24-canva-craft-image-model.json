@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-24-canva-craft-image-model",
+  "title": "Canva trains its own image model on design templates",
+  "summary": "Canva has released Craft, its first image generator built in-house, trained from scratch mainly on millions of design templates instead of photo corpora. It plans composition and text placement before rendering at up to 2K across more than 30 aspect ratios, writes text in 55 languages and can split results into editable layers. Canva says it ranks fourth overall on DesignArena and first for portraits and landscapes; cheaper fast variants are promised.",
+  "category": "ai",
+  "priority": 60,
+  "publishedAt": "2026-10-24T05:10:00Z",
+  "updatedAt": "2026-10-24T05:10:00Z",
+  "retrievedAt": "2026-10-24T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "canva",
+    "craft",
+    "image-generation",
+    "design",
+    "model-release"
+  ],
+  "sources": [
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/canva-releases-craft-its-first-in-house-image-generation-model/",
+      "publishedAt": "2026-10-23T09:30:00Z"
+    }
+  ]
+}
