@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-24-microsoft-365-token-spraying-79-tenants",
+  "title": "Stolen sessions, not passwords, opened 79 Microsoft 365 tenants",
+  "summary": "Huntress traced a ten-week campaign that replayed Microsoft 365 sign-in tokens harvested by adversary-in-the-middle login pages and device-code phishing, producing 497 successful sign-ins from more than 200,000 attempts across 79 organisations. Because the tokens were minted after multi-factor checks, passwords were never needed. Attackers added hidden inbox rules, registered rogue devices and swapped authenticators to stay in place. Revoke sessions, not just passwords, the researchers advise.",
+  "category": "technology",
+  "priority": 70,
+  "publishedAt": "2026-10-24T05:10:00Z",
+  "updatedAt": "2026-10-24T05:10:00Z",
+  "retrievedAt": "2026-10-24T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "microsoft-365",
+    "huntress",
+    "token-theft",
+    "business-email-compromise",
+    "identity"
+  ],
+  "sources": [
+    {
+      "publisher": "Help Net Security",
+      "url": "https://www.helpnetsecurity.com/2026/10/23/microsoft-365-accounts-stolen-sessions",
+      "publishedAt": "2026-10-23T14:08:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-24-gladbach-first-win-stuttgart",
+  "title": "Gladbach finally win to avoid a record nobody wants",
+  "summary": "Borussia Mönchengladbach ended a six-game losing start by winning 3-2 at VfB Stuttgart in the Bundesliga's matchday seven opener, averting the seventh straight defeat that would have been a league first. Ermedin Demirović volleyed Stuttgart ahead after five minutes, but Joe Scally's backheel, Shuto Machino's finish and a Wael Mohya header turned it around before Demirović's late second. Mohya, 17, was man of the match; Gladbach stay bottom on three points.",
+  "category": "football",
+  "priority": 71,
+  "publishedAt": "2026-10-24T05:10:00Z",
+  "updatedAt": "2026-10-24T05:10:00Z",
+  "retrievedAt": "2026-10-24T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bundesliga",
+    "gladbach",
+    "stuttgart",
+    "mohya",
+    "matchday-7"
+  ],
+  "sources": [
+    {
+      "publisher": "Bundesliga",
+      "url": "https://www.bundesliga.com/en/bundesliga/news/vfb-stuttgart-borussia-monchengladbach-match-report-highlights-matchday-7-39693",
+      "publishedAt": "2026-10-23T20:45:00Z"
+    },
+    {
+      "publisher": "Associated Press",
+      "url": "https://www.wral.com/news/ap/9a687-gladbach-ends-winless-start-in-bundesliga-and-torino-wins-third-straight-in-serie-a/",
+      "publishedAt": "2026-10-23T22:13:00Z"
+    }
+  ]
+}

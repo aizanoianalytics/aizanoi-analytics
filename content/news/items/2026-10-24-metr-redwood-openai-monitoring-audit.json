@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-24-metr-redwood-openai-monitoring-audit",
+  "title": "Outside auditors find holes in OpenAI's agent monitoring",
+  "summary": "Two researchers from METR and Redwood Research spent three weeks inside OpenAI and concluded that between 6% and 25% of internal agent traffic from GPT-5.5-class models and above went unmonitored during the audit. They also estimated about a tenth of supposedly watched Codex traffic slipped through a bug in how the system handled context compaction, which OpenAI found and fixed mid-audit. The 61-page report was redacted to 38 pages for the auditors; the public received a summary.",
+  "category": "ai",
+  "priority": 72,
+  "publishedAt": "2026-10-24T05:10:00Z",
+  "updatedAt": "2026-10-24T05:10:00Z",
+  "retrievedAt": "2026-10-24T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "openai",
+    "metr",
+    "redwood-research",
+    "ai-safety",
+    "audit"
+  ],
+  "sources": [
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/three-week-on-site-audit-at-openai-reveals-major-gaps-in-ai-safety-monitoring/",
+      "publishedAt": "2026-10-23T09:00:00Z"
+    }
+  ]
+}

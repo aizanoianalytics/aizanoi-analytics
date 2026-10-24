@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-24-kimi-k3-1-pro-open-weight-frontier",
+  "title": "Moonshot's Kimi K3.1 Pro lands three points off the frontier",
+  "summary": "Moonshot AI's Kimi K3.1 Pro scores 55 on the Artificial Analysis Intelligence Index, an 11-point jump on K3 that puts the Chinese model fourth behind Claude Opus 5.5, Claude Sonnet 5.5 and Muse Wonder Full. If Moonshot publishes the weights as planned by 4 November, it would be the strongest open-weights model available and cut the open-to-proprietary gap from 12 points to three. It keeps 2.8 trillion parameters, 104 billion of them active, and a million-token context.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-10-24T05:10:00Z",
+  "updatedAt": "2026-10-24T05:10:00Z",
+  "retrievedAt": "2026-10-24T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "moonshot-ai",
+    "kimi",
+    "open-weights",
+    "benchmarks",
+    "model-release"
+  ],
+  "sources": [
+    {
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/chinese-ai-model-kimi-k3-1-pro-is-closing-in-on-anthropics-claude-opus-5-5/",
+      "publishedAt": "2026-10-23T10:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-24-aws-capacity-sold-out-2027",
+  "title": "Jassy says AWS is booked out through 2027",
+  "summary": "Amazon expects to spend about $220bn on capital projects in 2026 and still leave AI demand unmet, chief executive Andy Jassy said on an Andreessen Horowitz podcast. Capacity for this year is sold out, 2027 is 'largely sold out' apart from the on-demand pool kept for EC2 and Bedrock, and a good chunk of 2028 is already committed. Jassy argued Amazon could invest more without wasting capital. Third-quarter results land on 29 October.",
+  "category": "ai",
+  "priority": 78,
+  "publishedAt": "2026-10-24T05:10:00Z",
+  "updatedAt": "2026-10-24T05:10:00Z",
+  "retrievedAt": "2026-10-24T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "amazon",
+    "aws",
+    "cloud",
+    "capex",
+    "ai-infrastructure"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://finance.yahoo.com/technology/articles/amazon-cloud-capacity-sold-2027-230625002.html",
+      "publishedAt": "2026-10-23T23:06:00Z"
+    }
+  ]
+}

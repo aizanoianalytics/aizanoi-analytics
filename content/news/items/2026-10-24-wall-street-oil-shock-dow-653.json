@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-24-wall-street-oil-shock-dow-653",
+  "title": "Oil, not chips, drives the Dow down 653 points",
+  "summary": "US stocks fell on Friday as Brent settled at $116.72 a barrel, up 3.1% and its highest close since April, after Houthi attacks on Saudi Arabia. The Dow lost 652.82 points, or 1.2%, to 52,215.16 while the S&P 500 slipped 0.5% to 7,623.68 and the Nasdaq 0.2% to 25,955.34 as chip shares steadied. Energy was the one strong corner, up 2.5% at a record. The S&P fell 0.5% on the week; the Dow gained 0.4%.",
+  "category": "economy-markets",
+  "priority": 76,
+  "publishedAt": "2026-10-24T05:10:00Z",
+  "updatedAt": "2026-10-24T05:10:00Z",
+  "retrievedAt": "2026-10-24T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "wall-street",
+    "brent",
+    "oil",
+    "dow-jones",
+    "s-p-500"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://finance.yahoo.com/markets/articles/tech-selloff-relents-oil-five-103308077.html",
+      "publishedAt": "2026-10-23T21:00:00Z"
+    }
+  ]
+}

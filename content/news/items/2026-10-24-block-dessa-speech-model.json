@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-24-block-dessa-speech-model",
+  "title": "Block builds a voice model that never learned to read",
+  "summary": "Jack Dorsey's Block has shown Dessa, a speech-to-speech model trained 'from scratch on nothing but human conversation' rather than on transcripts. It runs locally on a MacBook Pro M4 Max or better, and the company says it keeps the timing and emotional cues that text-first voice assistants flatten. Block published sample conversations, including one where Dessa mistakes the speaker for someone called Ronaldo, and will give a small group of safety researchers early access.",
+  "category": "ai",
+  "priority": 64,
+  "publishedAt": "2026-10-24T05:10:00Z",
+  "updatedAt": "2026-10-24T05:10:00Z",
+  "retrievedAt": "2026-10-24T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "block",
+    "dessa",
+    "speech",
+    "voice-model",
+    "safety"
+  ],
+  "sources": [
+    {
+      "publisher": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1017906/jack-dorsey-block-dessa-ai-voice-speech",
+      "publishedAt": "2026-10-23T19:32:00Z"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-24-uk-ai-biosecurity-lab-100m",
+  "title": "Britain puts £100m behind a national AI biosecurity lab",
+  "summary": "The UK will fund a National AI Biosecurity Lab with £100m from Wednesday's Budget, alongside £120m more for the AI Security Institute, £60m for a 'National Cyber Shield' built on agentic AI and £70m for a vulnerability-detection centre. OpenAI and Anthropic are contributing £200m of model credits. Ministers call the lab a world first, though its remit is still undefined, and the package lands after AI-assisted bug hunting forced British sites offline.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-10-24T05:10:00Z",
+  "updatedAt": "2026-10-24T05:10:00Z",
+  "retrievedAt": "2026-10-24T05:10:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "uk",
+    "ai-policy",
+    "biosecurity",
+    "budget",
+    "ai-security-institute"
+  ],
+  "sources": [
+    {
+      "publisher": "BBC News",
+      "url": "https://www.bbc.co.uk/news/articles/cqdjv8xllvyyo",
+      "publishedAt": "2026-10-24T01:00:00Z"
+    }
+  ]
+}
