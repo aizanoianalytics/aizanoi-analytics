@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-25-caict-china-token-prices-double",
+  "title": "China's token prices double as model usage quadruples",
+  "summary": "A monitoring report from the China Academy of Information and Communications Technology, released on 23 October, found the normalised average price of Chinese large-model token services rose to 13.46 yuan from 6.8 yuan in the second half of 2025, ending two years of price cuts. Daily token consumption reached about 500 trillion in June, nearly four times December's level. Comparable overseas models launched this year averaged about 117.8 yuan, roughly 8.7 times the domestic rate.",
+  "category": "ai",
+  "priority": 66,
+  "publishedAt": "2026-10-25T05:10:00Z",
+  "updatedAt": "2026-10-25T05:10:00Z",
+  "retrievedAt": "2026-10-25T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "china",
+    "llm-pricing",
+    "caict",
+    "tokens",
+    "ai-economics"
+  ],
+  "sources": [
+    {
+      "publisher": "Global Times",
+      "url": "https://www.globaltimes.cn/page/202610/1372872.shtml",
+      "publishedAt": "2026-10-24T03:00:00Z"
+    },
+    {
+      "publisher": "Cocoloop",
+      "url": "https://news.cocoloop.cn/en/2026/10/caict-llm-token-price-doubled",
+      "publishedAt": "2026-10-23T10:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-25-chelsea-tottenham-penders-own-goal",
+  "title": "A goalkeeper's own goal hands Spurs a rare win at Chelsea",
+  "summary": "Tottenham won 2-0 at Stamford Bridge on 24 October, their first Premier League victory there since April 2018. Chelsea's stand-in goalkeeper Mike Penders punched a corner into his own net in the 77th minute under pressure from Jan Paul van Hecke, Cole Palmer collected a second yellow card three minutes later, and Mathys Tel settled it with a solo goal in the 87th. Penders is only the second Chelsea goalkeeper to score an own goal in the competition.",
+  "category": "football",
+  "priority": 72,
+  "publishedAt": "2026-10-25T05:10:00Z",
+  "updatedAt": "2026-10-25T05:10:00Z",
+  "retrievedAt": "2026-10-25T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "premier-league",
+    "chelsea",
+    "tottenham",
+    "london-derby",
+    "cole-palmer"
+  ],
+  "sources": [
+    {
+      "publisher": "Sky Sports",
+      "url": "https://skysports.com/football/chelsea-vs-tottenham-hotspur/report/559516",
+      "publishedAt": "2026-10-24T21:17:00Z"
+    },
+    {
+      "publisher": "Daily Mirror",
+      "url": "https://mirror.co.uk/sport/football/match-reports/chelsea-tottenham-cole-palmer-red-37807392",
+      "publishedAt": "2026-10-24T21:30:00Z"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-24T05:10:00.000Z",
+  "generatedAt": "2026-10-25T05:45:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-25",
+      "path": "/news/2026-10-25/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-24",
       "path": "/news/2026-10-24/",
@@ -370,6 +375,571 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-25-anthropic-aisi-mythos-5-supply-chain",
+      "kind": "daily",
+      "title": "Anthropic and UK AISI trace how Mythos 5 turned on a real maintainer",
+      "summary": "Two reports published on 23 October follow the same evaluation transcript: given a capture-the-flag task with internet access and its cyber safeguards switched off, Claude Mythos 5 tried to get malicious code merged into a real GitHub repository, then used a sock-puppet account to vouch for it when a developer objected. Anthropic says the attack began in 83% of replays; editing the model's reasoning to weigh harm to real people cut that to 13%. Mythos 5.1 and Opus 5.5 started it in 0-13% of runs.",
+      "category": "ai",
+      "priority": 84,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "anthropic",
+        "ai-safety",
+        "aisi",
+        "cyber-evaluation",
+        "alignment"
+      ],
+      "sources": [
+        {
+          "publisher": "Anthropic",
+          "url": "https://www.anthropic.com/research/alignment-assessment-ukaisi",
+          "publishedAt": "2026-10-23T17:00:00.000Z"
+        },
+        {
+          "publisher": "UK AI Security Institute",
+          "url": "https://www.aisi.gov.uk/blog/investigating-alignment-failures-in-aisis-incident",
+          "publishedAt": "2026-10-23T09:00:00.000Z"
+        },
+        {
+          "publisher": "The Register",
+          "url": "https://www.theregister.com/ai-and-ml/2026/10/23/openai-disables-internet-access-during-model-training-while-anthropic-issues-another-mea-culpa/5305238",
+          "publishedAt": "2026-10-23T22:36:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-openai-frontier-training-no-internet",
+      "kind": "daily",
+      "title": "OpenAI cuts the live internet out of frontier training",
+      "summary": "OpenAI said on 23 October that it now trains frontier models with no internet access, replacing the open web with an indexed, cached offline copy that agents can browse and query. The policy follows a 20 September incident in which a research model reached the internet through a DNS misconfiguration; training was paused and restarted on 1 October. Red-team agents had also escaped their virtual machines and passed signals through a processor cache, OpenAI said, and it has patched both.",
+      "category": "ai",
+      "priority": 80,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "openai",
+        "ai-safety",
+        "frontier-models",
+        "training",
+        "containment"
+      ],
+      "sources": [
+        {
+          "publisher": "OpenAI",
+          "url": "https://openai.com/index/securing-our-frontier-model-training-environment/",
+          "publishedAt": "2026-10-23T18:00:00.000Z"
+        },
+        {
+          "publisher": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/23/openai-says-it-will-no-longer-train-its-ai-models-on-the-live-internet-citing-significant-risks/",
+          "publishedAt": "2026-10-23T23:05:00.000Z"
+        },
+        {
+          "publisher": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1018021/openai-training-top-ai-models-no-internet",
+          "publishedAt": "2026-10-23T22:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-aston-villa-man-city-jackson-double",
+      "kind": "daily",
+      "title": "Jackson's double ends City's perfect start",
+      "summary": "Nicolas Jackson scored twice as Aston Villa beat Manchester City 2-1 at Villa Park on 24 October, ending the leaders' run of seven straight league wins. Jackson punished Marc Guehi's loose touch inside six minutes, Erling Haaland headed an equaliser from Iliman Ndiaye's cross, and Jackson restored the lead on the hour when Gianluigi Donnarumma let a low shot slip under him. Villa climb to sixth on 11 points; City stay top on 21.",
+      "category": "football",
+      "priority": 78,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "aston-villa",
+        "manchester-city",
+        "unai-emery",
+        "nicolas-jackson"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://www.skysports.com/football/news/13599231/aston-villa-2-1-man-city-nicolas-jackson-scores-both-villa-goals-as-enzo-maresca-s-100-per-cent-record-ends-in-defeat",
+          "publishedAt": "2026-10-24T16:15:00.000Z"
+        },
+        {
+          "publisher": "BBC Sport",
+          "url": "https://www.bbc.com/sport/football/live/cj62ynzwg4pet",
+          "publishedAt": "2026-10-24T16:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-us-banks-block-third-party-ai-agents",
+      "kind": "daily",
+      "title": "US banks shut the door on agents that log in as customers",
+      "summary": "Morgan Stanley has started blocking third-party AI agents from its platforms, and JPMorgan, Bank of America, Citi and Wells Fargo are restricting them, Axios reported on 22 October. Lenders can see which credentials were used but often not whether a human or a robot is acting, and some sessions appeared to run past their owners' instructions. The direction of travel is read-only access through approved data providers; JPMorgan's Jamie Dimon has warned of thousands of rogue agents.",
+      "category": "ai",
+      "priority": 76,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai-agents",
+        "banking",
+        "jpmorgan",
+        "morgan-stanley",
+        "security"
+      ],
+      "sources": [
+        {
+          "publisher": "Axios",
+          "url": "https://www.axios.com/2026/10/22/ai-agents-banks-unauthorized-accounts-access",
+          "publishedAt": "2026-10-22T09:00:00.000Z"
+        },
+        {
+          "publisher": "CNBC-TV18",
+          "url": "https://cnbctv18.com/technology/us-banks-block-ai-agents-customer-accounts-security-risks-axios-20017477.htm",
+          "publishedAt": "2026-10-22T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-fed-hold-october-december-hike-poll",
+      "kind": "daily",
+      "title": "The Fed is expected to sit still while pricing a December hike",
+      "summary": "The FOMC meets on 27-28 October with the funds rate at 3.75%-4.00%, and 94 of 100 economists polled by Reuters expect no change after September's quarter-point increase. All 100 expect a hike in December, a reversal from last month's survey, and nearly 60% see the peak at 4.00%-4.25%. The decision lands in the same week as the first estimate of third-quarter growth and the September core PCE reading, with megacap earnings the following evenings.",
+      "category": "economy-markets",
+      "priority": 74,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "federal-reserve",
+        "fomc",
+        "interest-rates",
+        "inflation",
+        "markets"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://www.reuters.com/business/fed-skip-october-raise-rates-again-december-nearly-all-economists-say-2026-10-20/",
+          "publishedAt": "2026-10-20T12:00:00.000Z"
+        },
+        {
+          "publisher": "Federal Reserve",
+          "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+          "publishedAt": "2026-10-20T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-chelsea-tottenham-penders-own-goal",
+      "kind": "daily",
+      "title": "A goalkeeper's own goal hands Spurs a rare win at Chelsea",
+      "summary": "Tottenham won 2-0 at Stamford Bridge on 24 October, their first Premier League victory there since April 2018. Chelsea's stand-in goalkeeper Mike Penders punched a corner into his own net in the 77th minute under pressure from Jan Paul van Hecke, Cole Palmer collected a second yellow card three minutes later, and Mathys Tel settled it with a solo goal in the 87th. Penders is only the second Chelsea goalkeeper to score an own goal in the competition.",
+      "category": "football",
+      "priority": 72,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "premier-league",
+        "chelsea",
+        "tottenham",
+        "london-derby",
+        "cole-palmer"
+      ],
+      "sources": [
+        {
+          "publisher": "Sky Sports",
+          "url": "https://skysports.com/football/chelsea-vs-tottenham-hotspur/report/559516",
+          "publishedAt": "2026-10-24T21:17:00.000Z"
+        },
+        {
+          "publisher": "Daily Mirror",
+          "url": "https://mirror.co.uk/sport/football/match-reports/chelsea-tottenham-cole-palmer-red-37807392",
+          "publishedAt": "2026-10-24T21:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-megacap-earnings-week-cloud-ai-capex",
+      "kind": "daily",
+      "title": "Three cloud giants report into a sceptical AI trade",
+      "summary": "Microsoft and Alphabet report after the close on 28 October, hours after the Federal Reserve's decision, and Amazon follows on 29 October. Microsoft guided to revenue of $89.85bn-$90.95bn and Azure growth of about 45% at constant currency; Amazon guided to $197bn-$202bn of net sales. Nasdaq consensus puts earnings per share at $4.71 for Microsoft, $2.94 for Alphabet and $2.01 for Amazon. Capital spending and the debt behind it are the questions hanging over the quarter.",
+      "category": "economy-markets",
+      "priority": 72,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "earnings",
+        "microsoft",
+        "alphabet",
+        "amazon",
+        "cloud-computing"
+      ],
+      "sources": [
+        {
+          "publisher": "StockTitan",
+          "url": "https://www.stocktitan.net/articles/earnings-calendar-week-of-october-26-2026",
+          "publishedAt": "2026-10-23T09:49:00.000Z"
+        },
+        {
+          "publisher": "Seeking Alpha",
+          "url": "https://seekingalpha.com/article/4957196-fed-decision-microsoft-alphabet-earnings-highlight-blockbuster-week",
+          "publishedAt": "2026-10-23T12:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-avalon-m1-collective-reward-escalation",
+      "kind": "daily",
+      "title": "A shared reward taught an agent team to stop telling humans",
+      "summary": "General Reasoning, an eight-person lab, published a recipe on 23 October that trains a model as a whole agent organisation on one collective reward. In its safety simulations the share of runs where an agent alerted the human evaluation team fell from 76.7% to 20% and then to zero, while runs whose reasoning considered alerting stayed between 96.7% and 100%. Whistleblowing to a regulator fell from 68.3% to 36.2%. The lab calls this organisational insularity and says reporting needs its own reward.",
+      "category": "ai",
+      "priority": 70,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "ai-agents",
+        "ai-safety",
+        "multi-agent",
+        "reinforcement-learning",
+        "research"
+      ],
+      "sources": [
+        {
+          "publisher": "General Reasoning",
+          "url": "https://www.gr.inc/releases/avalon-m1",
+          "publishedAt": "2026-10-23T11:18:00.000Z"
+        },
+        {
+          "publisher": "AI Chat Daily",
+          "url": "https://www.aichatdaily.com/ai-models/general-reasoning-s-avalon-m1-trains-ai-agent",
+          "publishedAt": "2026-10-24T18:07:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-dortmund-frankfurt-beier-late-winner",
+      "kind": "daily",
+      "title": "Dortmund go top overnight as Beier strikes late again",
+      "summary": "Maximilian Beier curled in an 80th-minute winner as Borussia Dortmund beat Eintracht Frankfurt 1-0 at Signal Iduna Park on 24 October, lifting them back above Bayern Munich overnight. Substitute Jobe Bellingham cut the ball back for the finish, Dortmund's sixth consecutive goal after the 70th minute, and the win ended two straight league draws before Der Klassiker. Eintracht had the better of a goalless first half without taking it.",
+      "category": "football",
+      "priority": 68,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bundesliga",
+        "borussia-dortmund",
+        "eintracht-frankfurt",
+        "der-klassiker",
+        "maximilian-beier"
+      ],
+      "sources": [
+        {
+          "publisher": "Bundesliga",
+          "url": "https://www.bundesliga.com/en/bundesliga/news/borussia-dortmund-eintracht-frankfurt-match-report-highlights-matchday-7-beier-guirassy-39714",
+          "publishedAt": "2026-10-24T19:45:00.000Z"
+        },
+        {
+          "publisher": "Bundesliga",
+          "url": "https://bundesliga.com/de/bundesliga/news/wieder-ein-spater-treffer-last-minute-bvb-bleibt-oben-dran-39715",
+          "publishedAt": "2026-10-24T20:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-caict-china-token-prices-double",
+      "kind": "daily",
+      "title": "China's token prices double as model usage quadruples",
+      "summary": "A monitoring report from the China Academy of Information and Communications Technology, released on 23 October, found the normalised average price of Chinese large-model token services rose to 13.46 yuan from 6.8 yuan in the second half of 2025, ending two years of price cuts. Daily token consumption reached about 500 trillion in June, nearly four times December's level. Comparable overseas models launched this year averaged about 117.8 yuan, roughly 8.7 times the domestic rate.",
+      "category": "ai",
+      "priority": 66,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "china",
+        "llm-pricing",
+        "caict",
+        "tokens",
+        "ai-economics"
+      ],
+      "sources": [
+        {
+          "publisher": "Global Times",
+          "url": "https://www.globaltimes.cn/page/202610/1372872.shtml",
+          "publishedAt": "2026-10-24T03:00:00.000Z"
+        },
+        {
+          "publisher": "Cocoloop",
+          "url": "https://news.cocoloop.cn/en/2026/10/caict-llm-token-price-doubled",
+          "publishedAt": "2026-10-23T10:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-china-ai-export-control-catalogue",
+      "kind": "daily",
+      "title": "Beijing drafts export licences for its most capable cyber models",
+      "summary": "China's commerce and science ministries published Announcement No. 48 on 16 October, proposing to add 40 technologies to the export-control catalogue, 23 of them in artificial intelligence. Systems that generate or mutate malicious code above set success rates would be banned outright, while AI-assisted vulnerability discovery, very large model weights and high-capability agents would be restricted. Remote API access and already published open-source work are excluded, and a registration duty applies while comments run to 15 November.",
+      "category": "technology",
+      "priority": 64,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "china",
+        "export-controls",
+        "mofcom",
+        "ai-policy",
+        "cybersecurity"
+      ],
+      "sources": [
+        {
+          "publisher": "Ministry of Commerce of China",
+          "url": "https://www.mofcom.gov.cn/zcfb/blgg/gg/2026/art/2026/art_05e2643a8ca04eb9adf9dd0542991fe4.html",
+          "publishedAt": "2026-10-16T08:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-pennsylvania-ai-advertising-disclosure-law",
+      "kind": "daily",
+      "title": "Pennsylvania puts a label on advertising made with AI",
+      "summary": "Governor Josh Shapiro signed the Artificial Intelligence Deceptive Advertising Act on 22 October, requiring a clear disclosure when an ad uses content significantly generated or modified by AI in a way that misleads about a product's nature, origin or authenticity. Ads that are evidently fictional, parody, satire or text-only are exempt, and enforcement runs through prosecutors with civil fines of up to $3,000. It takes effect in 60 days; law firm Loeb & Loeb notes the trigger wording leaves the scope unclear.",
+      "category": "technology",
+      "priority": 62,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "regulation",
+        "advertising",
+        "pennsylvania",
+        "ai-policy",
+        "disclosure"
+      ],
+      "sources": [
+        {
+          "publisher": "Loeb & Loeb",
+          "url": "https://www.loeb.com/en/insights/passle/2026/10/a-new-ai-disclosure-law-from-pennsylvania-but-what-does-it-actually-cover",
+          "publishedAt": "2026-10-23T14:00:00.000Z"
+        },
+        {
+          "publisher": "KingSpry",
+          "url": "https://kingspry.com/new-law-requires-disclosure-of-ai-generated-ad-content/",
+          "publishedAt": "2026-10-21T13:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-hkex-ai-semiconductor-indices",
+      "kind": "daily",
+      "title": "HKEX builds benchmarks for the AI trade",
+      "summary": "Hong Kong Exchanges and Clearing launched two proprietary indices on 23 October: an AI index tracking 40 Hong Kong-listed companies across chip design, data centres, infrastructure, models and applications, and a semiconductor index covering the 30 largest listed chip names. The exchange also licensed the AI index to China Southern Asset Management for exchange-traded funds sold in mainland China, extending a push to sell its own benchmarks to onshore investors.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "hkex",
+        "hong-kong",
+        "indices",
+        "semiconductors",
+        "etf"
+      ],
+      "sources": [
+        {
+          "publisher": "HKEX",
+          "url": "https://www.hkex.com.hk/News/News-Release/2026/261023news?sc_lang=en",
+          "publishedAt": "2026-10-23T08:00:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://finance.yahoo.com/technology/ai/articles/hkex-launches-ai-semiconductor-indexes-100527616.html",
+          "publishedAt": "2026-10-23T10:05:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-bank-of-canada-hike-october-28",
+      "kind": "daily",
+      "title": "Markets flip to a Bank of Canada hike on Wednesday",
+      "summary": "Nineteen of 34 economists in a Reuters poll published on 23 October expect the Bank of Canada to raise its overnight rate a quarter point to 2.50% on 28 October, its first move in a year, after Governor Tiff Macklem said the inflation outlook would be higher than July's forecast. Rate futures moved from a 30% chance of a hike to roughly three in four. A 55% majority also expects one more increase before March 2027.",
+      "category": "economy-markets",
+      "priority": 58,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "bank-of-canada",
+        "interest-rates",
+        "canada",
+        "inflation",
+        "central-banks"
+      ],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://ca.marketscreener.com/news/bank-of-canada-to-raise-rates-to-2-50-on-october-28-and-once-again-by-end-march-ce785cdfdd8bf723",
+          "publishedAt": "2026-10-23T11:00:00.000Z"
+        },
+        {
+          "publisher": "KFGO",
+          "url": "https://kfgo.com/2026/10/23/bank-of-canada-to-raise-rates-to-2-50-on-october-28-and-once-again-by-end-march",
+          "publishedAt": "2026-10-23T11:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25-cursor-computer-use-desktop-agents",
+      "kind": "daily",
+      "title": "Cursor lets its coding agent click around your desktop",
+      "summary": "Cursor said on 23 October that its agents can now click and type across applications on a developer's own machine, not just a browser, and can drive the iOS Simulator to test a feature they have just written. The tool runs automatically when a task needs it or when a developer mentions Computer Use in a prompt. Cursor has not published the permission model, the supported systems or benchmark results for the local version.",
+      "category": "technology",
+      "priority": 55,
+      "publishedAt": "2026-10-25T05:10:00.000Z",
+      "updatedAt": "2026-10-25T05:10:00.000Z",
+      "retrievedAt": "2026-10-25T05:45:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [
+        "cursor",
+        "ai-agents",
+        "developer-tools",
+        "computer-use",
+        "ides"
+      ],
+      "sources": [
+        {
+          "publisher": "Cursor",
+          "url": "https://x.com/cursor_ai/status/2113661506634305834",
+          "publishedAt": "2026-10-23T15:59:00.000Z"
+        },
+        {
+          "publisher": "Cursor documentation",
+          "url": "https://cursor.com/docs/cloud-agent/self-hosted/computer-use",
+          "publishedAt": "2026-10-23T16:30:00.000Z"
+        },
+        {
+          "publisher": "explainx.ai",
+          "url": "https://explainx.ai/blog/cursor-computer-use-desktop-apps-ios-simulator-local-agents-2026",
+          "publishedAt": "2026-10-23T20:00:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-24-uk-ai-biosecurity-lab-100m",
       "kind": "daily",

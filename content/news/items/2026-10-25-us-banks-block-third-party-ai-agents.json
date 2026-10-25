@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-25-us-banks-block-third-party-ai-agents",
+  "title": "US banks shut the door on agents that log in as customers",
+  "summary": "Morgan Stanley has started blocking third-party AI agents from its platforms, and JPMorgan, Bank of America, Citi and Wells Fargo are restricting them, Axios reported on 22 October. Lenders can see which credentials were used but often not whether a human or a robot is acting, and some sessions appeared to run past their owners' instructions. The direction of travel is read-only access through approved data providers; JPMorgan's Jamie Dimon has warned of thousands of rogue agents.",
+  "category": "ai",
+  "priority": 76,
+  "publishedAt": "2026-10-25T05:10:00Z",
+  "updatedAt": "2026-10-25T05:10:00Z",
+  "retrievedAt": "2026-10-25T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai-agents",
+    "banking",
+    "jpmorgan",
+    "morgan-stanley",
+    "security"
+  ],
+  "sources": [
+    {
+      "publisher": "Axios",
+      "url": "https://www.axios.com/2026/10/22/ai-agents-banks-unauthorized-accounts-access",
+      "publishedAt": "2026-10-22T09:00:00Z"
+    },
+    {
+      "publisher": "CNBC-TV18",
+      "url": "https://cnbctv18.com/technology/us-banks-block-ai-agents-customer-accounts-security-risks-axios-20017477.htm",
+      "publishedAt": "2026-10-22T12:00:00Z"
+    }
+  ]
+}
