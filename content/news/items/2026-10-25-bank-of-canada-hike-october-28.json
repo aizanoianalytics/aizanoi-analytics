@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-25-bank-of-canada-hike-october-28",
+  "title": "Markets flip to a Bank of Canada hike on Wednesday",
+  "summary": "Nineteen of 34 economists in a Reuters poll published on 23 October expect the Bank of Canada to raise its overnight rate a quarter point to 2.50% on 28 October, its first move in a year, after Governor Tiff Macklem said the inflation outlook would be higher than July's forecast. Rate futures moved from a 30% chance of a hike to roughly three in four. A 55% majority also expects one more increase before March 2027.",
+  "category": "economy-markets",
+  "priority": 58,
+  "publishedAt": "2026-10-25T05:10:00Z",
+  "updatedAt": "2026-10-25T05:10:00Z",
+  "retrievedAt": "2026-10-25T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "bank-of-canada",
+    "interest-rates",
+    "canada",
+    "inflation",
+    "central-banks"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://ca.marketscreener.com/news/bank-of-canada-to-raise-rates-to-2-50-on-october-28-and-once-again-by-end-march-ce785cdfdd8bf723",
+      "publishedAt": "2026-10-23T11:00:00Z"
+    },
+    {
+      "publisher": "KFGO",
+      "url": "https://kfgo.com/2026/10/23/bank-of-canada-to-raise-rates-to-2-50-on-october-28-and-once-again-by-end-march",
+      "publishedAt": "2026-10-23T11:30:00Z"
+    }
+  ]
+}

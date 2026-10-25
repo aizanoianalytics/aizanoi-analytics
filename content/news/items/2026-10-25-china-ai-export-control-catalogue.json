@@ -1,0 +1,32 @@
+{
+  "id": "2026-10-25-china-ai-export-control-catalogue",
+  "title": "Beijing drafts export licences for its most capable cyber models",
+  "summary": "China's commerce and science ministries published Announcement No. 48 on 16 October, proposing to add 40 technologies to the export-control catalogue, 23 of them in artificial intelligence. Systems that generate or mutate malicious code above set success rates would be banned outright, while AI-assisted vulnerability discovery, very large model weights and high-capability agents would be restricted. Remote API access and already published open-source work are excluded, and a registration duty applies while comments run to 15 November.",
+  "category": "technology",
+  "priority": 64,
+  "publishedAt": "2026-10-25T05:10:00Z",
+  "updatedAt": "2026-10-25T05:10:00Z",
+  "retrievedAt": "2026-10-25T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "china",
+    "export-controls",
+    "mofcom",
+    "ai-policy",
+    "cybersecurity"
+  ],
+  "sources": [
+    {
+      "publisher": "Ministry of Commerce of China",
+      "url": "https://www.mofcom.gov.cn/zcfb/blgg/gg/2026/art/2026/art_05e2643a8ca04eb9adf9dd0542991fe4.html",
+      "publishedAt": "2026-10-16T08:00:00Z"
+    }
+  ]
+}

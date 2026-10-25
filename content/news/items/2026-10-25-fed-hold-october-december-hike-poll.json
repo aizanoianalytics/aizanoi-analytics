@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-25-fed-hold-october-december-hike-poll",
+  "title": "The Fed is expected to sit still while pricing a December hike",
+  "summary": "The FOMC meets on 27-28 October with the funds rate at 3.75%-4.00%, and 94 of 100 economists polled by Reuters expect no change after September's quarter-point increase. All 100 expect a hike in December, a reversal from last month's survey, and nearly 60% see the peak at 4.00%-4.25%. The decision lands in the same week as the first estimate of third-quarter growth and the September core PCE reading, with megacap earnings the following evenings.",
+  "category": "economy-markets",
+  "priority": 74,
+  "publishedAt": "2026-10-25T05:10:00Z",
+  "updatedAt": "2026-10-25T05:10:00Z",
+  "retrievedAt": "2026-10-25T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "federal-reserve",
+    "fomc",
+    "interest-rates",
+    "inflation",
+    "markets"
+  ],
+  "sources": [
+    {
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/fed-skip-october-raise-rates-again-december-nearly-all-economists-say-2026-10-20/",
+      "publishedAt": "2026-10-20T12:00:00Z"
+    },
+    {
+      "publisher": "Federal Reserve",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "publishedAt": "2026-10-20T12:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-25-pennsylvania-ai-advertising-disclosure-law",
+  "title": "Pennsylvania puts a label on advertising made with AI",
+  "summary": "Governor Josh Shapiro signed the Artificial Intelligence Deceptive Advertising Act on 22 October, requiring a clear disclosure when an ad uses content significantly generated or modified by AI in a way that misleads about a product's nature, origin or authenticity. Ads that are evidently fictional, parody, satire or text-only are exempt, and enforcement runs through prosecutors with civil fines of up to $3,000. It takes effect in 60 days; law firm Loeb & Loeb notes the trigger wording leaves the scope unclear.",
+  "category": "technology",
+  "priority": 62,
+  "publishedAt": "2026-10-25T05:10:00Z",
+  "updatedAt": "2026-10-25T05:10:00Z",
+  "retrievedAt": "2026-10-25T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "regulation",
+    "advertising",
+    "pennsylvania",
+    "ai-policy",
+    "disclosure"
+  ],
+  "sources": [
+    {
+      "publisher": "Loeb & Loeb",
+      "url": "https://www.loeb.com/en/insights/passle/2026/10/a-new-ai-disclosure-law-from-pennsylvania-but-what-does-it-actually-cover",
+      "publishedAt": "2026-10-23T14:00:00Z"
+    },
+    {
+      "publisher": "KingSpry",
+      "url": "https://kingspry.com/new-law-requires-disclosure-of-ai-generated-ad-content/",
+      "publishedAt": "2026-10-21T13:00:00Z"
+    }
+  ]
+}

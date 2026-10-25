@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-25-hkex-ai-semiconductor-indices",
+  "title": "HKEX builds benchmarks for the AI trade",
+  "summary": "Hong Kong Exchanges and Clearing launched two proprietary indices on 23 October: an AI index tracking 40 Hong Kong-listed companies across chip design, data centres, infrastructure, models and applications, and a semiconductor index covering the 30 largest listed chip names. The exchange also licensed the AI index to China Southern Asset Management for exchange-traded funds sold in mainland China, extending a push to sell its own benchmarks to onshore investors.",
+  "category": "technology",
+  "priority": 60,
+  "publishedAt": "2026-10-25T05:10:00Z",
+  "updatedAt": "2026-10-25T05:10:00Z",
+  "retrievedAt": "2026-10-25T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "hkex",
+    "hong-kong",
+    "indices",
+    "semiconductors",
+    "etf"
+  ],
+  "sources": [
+    {
+      "publisher": "HKEX",
+      "url": "https://www.hkex.com.hk/News/News-Release/2026/261023news?sc_lang=en",
+      "publishedAt": "2026-10-23T08:00:00Z"
+    },
+    {
+      "publisher": "Reuters",
+      "url": "https://finance.yahoo.com/technology/ai/articles/hkex-launches-ai-semiconductor-indexes-100527616.html",
+      "publishedAt": "2026-10-23T10:05:00Z"
+    }
+  ]
+}

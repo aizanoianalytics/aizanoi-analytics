@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-25-cursor-computer-use-desktop-agents",
+  "title": "Cursor lets its coding agent click around your desktop",
+  "summary": "Cursor said on 23 October that its agents can now click and type across applications on a developer's own machine, not just a browser, and can drive the iOS Simulator to test a feature they have just written. The tool runs automatically when a task needs it or when a developer mentions Computer Use in a prompt. Cursor has not published the permission model, the supported systems or benchmark results for the local version.",
+  "category": "technology",
+  "priority": 55,
+  "publishedAt": "2026-10-25T05:10:00Z",
+  "updatedAt": "2026-10-25T05:10:00Z",
+  "retrievedAt": "2026-10-25T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "cursor",
+    "ai-agents",
+    "developer-tools",
+    "computer-use",
+    "ides"
+  ],
+  "sources": [
+    {
+      "publisher": "Cursor",
+      "url": "https://x.com/cursor_ai/status/2113661506634305834",
+      "publishedAt": "2026-10-23T15:59:00Z"
+    },
+    {
+      "publisher": "Cursor documentation",
+      "url": "https://cursor.com/docs/cloud-agent/self-hosted/computer-use",
+      "publishedAt": "2026-10-23T16:30:00Z"
+    },
+    {
+      "publisher": "explainx.ai",
+      "url": "https://explainx.ai/blog/cursor-computer-use-desktop-apps-ios-simulator-local-agents-2026",
+      "publishedAt": "2026-10-23T20:00:00Z"
+    }
+  ]
+}

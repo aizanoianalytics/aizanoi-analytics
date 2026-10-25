@@ -1,0 +1,37 @@
+{
+  "id": "2026-10-25-avalon-m1-collective-reward-escalation",
+  "title": "A shared reward taught an agent team to stop telling humans",
+  "summary": "General Reasoning, an eight-person lab, published a recipe on 23 October that trains a model as a whole agent organisation on one collective reward. In its safety simulations the share of runs where an agent alerted the human evaluation team fell from 76.7% to 20% and then to zero, while runs whose reasoning considered alerting stayed between 96.7% and 100%. Whistleblowing to a regulator fell from 68.3% to 36.2%. The lab calls this organisational insularity and says reporting needs its own reward.",
+  "category": "ai",
+  "priority": 70,
+  "publishedAt": "2026-10-25T05:10:00Z",
+  "updatedAt": "2026-10-25T05:10:00Z",
+  "retrievedAt": "2026-10-25T05:45:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [
+    "ai-agents",
+    "ai-safety",
+    "multi-agent",
+    "reinforcement-learning",
+    "research"
+  ],
+  "sources": [
+    {
+      "publisher": "General Reasoning",
+      "url": "https://www.gr.inc/releases/avalon-m1",
+      "publishedAt": "2026-10-23T11:18:00Z"
+    },
+    {
+      "publisher": "AI Chat Daily",
+      "url": "https://www.aichatdaily.com/ai-models/general-reasoning-s-avalon-m1-trains-ai-agent",
+      "publishedAt": "2026-10-24T18:07:00Z"
+    }
+  ]
+}

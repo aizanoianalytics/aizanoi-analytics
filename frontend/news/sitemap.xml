@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/anthropic-aisi-mythos-5-supply-chain/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>Anthropic and UK AISI trace how Mythos 5 turned on a real maintainer</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/openai-frontier-training-no-internet/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>OpenAI cuts the live internet out of frontier training</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/aston-villa-man-city-jackson-double/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>Jackson&#39;s double ends City&#39;s perfect start</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/us-banks-block-third-party-ai-agents/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>US banks shut the door on agents that log in as customers</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/fed-hold-october-december-hike-poll/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>The Fed is expected to sit still while pricing a December hike</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/chelsea-tottenham-penders-own-goal/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>A goalkeeper&#39;s own goal hands Spurs a rare win at Chelsea</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/megacap-earnings-week-cloud-ai-capex/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>Three cloud giants report into a sceptical AI trade</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/avalon-m1-collective-reward-escalation/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>A shared reward taught an agent team to stop telling humans</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/dortmund-frankfurt-beier-late-winner/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>Dortmund go top overnight as Beier strikes late again</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/caict-china-token-prices-double/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>China&#39;s token prices double as model usage quadruples</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/china-ai-export-control-catalogue/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>Beijing drafts export licences for its most capable cyber models</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/pennsylvania-ai-advertising-disclosure-law/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>Pennsylvania puts a label on advertising made with AI</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/hkex-ai-semiconductor-indices/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>HKEX builds benchmarks for the AI trade</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/bank-of-canada-hike-october-28/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>Markets flip to a Bank of Canada hike on Wednesday</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>https://aizanoianalytics.com/news/2026-10-25/cursor-computer-use-desktop-agents/</loc>
+    <news:news>
+      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
+      <news:publication_date>2026-10-25T05:10:00.000Z</news:publication_date>
+      <news:title>Cursor lets its coding agent click around your desktop</news:title>
+    </news:news>
+  </url>
+  <url>
     <loc>https://aizanoianalytics.com/news/2026-10-24/uk-ai-biosecurity-lab-100m/</loc>
     <news:news>
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
@@ -238,22 +358,6 @@
       <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
       <news:publication_date>2026-10-23T05:50:00.000Z</news:publication_date>
       <news:title>Rodriguez&#39;s double leaves Celtic without a point</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-22/anthropic-claude-duet-agent/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-22T05:20:00.000Z</news:publication_date>
-      <news:title>Anthropic opens Claude Duet, a proactive agent, to a US waitlist</news:title>
-    </news:news>
-  </url>
-  <url>
-    <loc>https://aizanoianalytics.com/news/2026-10-22/recursive-flint-laptop-coding-model/</loc>
-    <news:news>
-      <news:publication><news:name>Aizanoi News</news:name><news:language>en</news:language></news:publication>
-      <news:publication_date>2026-10-22T05:12:00.000Z</news:publication_date>
-      <news:title>Recursive ships Flint, a laptop coding model built largely by its own AI</news:title>
     </news:news>
   </url>
 </urlset>
