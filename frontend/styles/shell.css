@@ -1,6 +1,6 @@
 @layer shell {
   #az-root { position:fixed; inset:0; overflow:hidden; }
-  .az-shell { position:absolute; inset:0; display:grid; grid-template-rows:34px minmax(0,1fr) 92px; isolation:isolate; }
+  .az-shell { position:absolute; inset:0; display:grid; grid-template-rows:34px minmax(0,1fr) 92px; isolation:isolate; background:#dfeaf6 linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02)) center / cover no-repeat; background-image:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02)),url('/assets/wallpapers/aizanoi-temple-aurora.jpg'); }
   .az-system-bar { z-index:700; display:flex; align-items:center; gap:7px; min-width:0; padding:0 max(12px,env(safe-area-inset-left)); color:#172033; border-bottom:1px solid rgba(255,255,255,.5); background:rgba(250,252,255,.56); box-shadow:0 1px 14px rgba(45,58,82,.07); backdrop-filter:blur(24px) saturate(150%); -webkit-backdrop-filter:blur(24px) saturate(150%); }
   .az-brand-button,.az-system-menu button,.az-system-action { border:0; background:transparent; color:inherit; cursor:pointer; transition:background var(--az-motion-fast),transform var(--az-motion-fast); }
   .az-brand-button:hover,.az-system-menu button:hover,.az-system-action:hover { background:rgba(255,255,255,.5); }

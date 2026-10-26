@@ -49,6 +49,17 @@ function applyUtilityWindowPreference(api,windowEl){
   windowEl.dataset.azPreferredRectApplied='true';
   api.store.saveWindowRect?.(appId,rect);
 }
+function installDesktopYouTubeLink(){
+  const actions=document.querySelector('.az-desktop-aizo-card .az-aizo-actions');
+  if(!actions)return;
+  const link=document.createElement('a');
+  link.className='az-aizo-action';
+  link.href='https://www.youtube.com/@heyaizo/videos';
+  link.target='_blank';
+  link.rel='noopener noreferrer';
+  link.textContent='Watch Aizo on YouTube ↗';
+  actions.appendChild(link);
+}
 function installUtilityWindowPreferences(api){
   const layer=document.querySelector('.az-window-layer');if(!layer)return;
   const scan=()=>layer.querySelectorAll('.az-window[data-app-id]').forEach((windowEl)=>applyUtilityWindowPreference(api,windowEl));
@@ -65,4 +76,4 @@ function installReducedMotionSync(api){
   else media.addListener?.(sync);
 }
 
-try{const api=mountShell();installReducedMotionSync(api);installAizanoiOS(api);installBrandPlatform(api);installUtilityWindowPreferences(api);exposeRuntime(api);finishBoot();registerServiceWorker();}catch(error){console.error('AizanoiOS could not start.',error);const boot=document.getElementById('az-boot');if(boot)boot.innerHTML='<div class="az-boot-inner"><img src="/assets/branding/aizanoi-logo-mark.svg" alt="AizanoiOS"><strong>AizanoiOS could not start</strong><span>Reload the page or open Aizanoi directly.</span><a class="az-button" href="/worlds/aizanoi-225/">Open Aizanoi</a></div>';}
+try{const api=mountShell();installReducedMotionSync(api);installAizanoiOS(api);installBrandPlatform(api);installDesktopYouTubeLink();installUtilityWindowPreferences(api);exposeRuntime(api);finishBoot();registerServiceWorker();}catch(error){console.error('AizanoiOS could not start.',error);const boot=document.getElementById('az-boot');if(boot)boot.innerHTML='<div class="az-boot-inner"><img src="/assets/branding/aizanoi-logo-mark.svg" alt="AizanoiOS"><strong>AizanoiOS could not start</strong><span>Reload the page or open Aizanoi directly.</span><a class="az-button" href="/worlds/aizanoi-225/">Open Aizanoi</a></div>';}

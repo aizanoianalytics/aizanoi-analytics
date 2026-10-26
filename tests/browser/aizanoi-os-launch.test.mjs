@@ -76,3 +76,50 @@ test('Aizanoi appears exactly once in the launcher overlay', async () => {
     await browser.close();
   }
 });
+
+test('desktop wallpaper survives window lifecycle independently of the document canvas', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, serviceWorkers: 'block' });
+  try {
+    await page.goto(`${base}/?shell-wallpaper-qa=${Date.now()}`, { waitUntil: 'networkidle' });
+    await page.locator('.az-desktop-shortcut[data-app="news"]:visible').click();
+    await page.locator('.az-window[data-app-id="news"] [data-action="close"]').click();
+    await page.locator('.az-desktop-shortcut[data-app="calculator"]:visible').click();
+    await page.locator('.az-window[data-app-id="calculator"] [data-action="close"]').click();
+    await page.evaluate(() => { document.body.style.backgroundImage = 'none'; });
+    const wallpaper = await page.locator('.az-shell').evaluate((node) => getComputedStyle(node).backgroundImage);
+    assert.match(wallpaper, /aizanoi-temple-aurora\.jpg/, 'desktop shell must paint wallpaper even when body canvas is unavailable');
+    assert.equal(await page.locator('.az-window').count(), 0);
+    assert.equal(await page.locator('.az-desktop:visible').count(), 1);
+  } finally {
+    await browser.close();
+  }
+});
+
+test('window close affordance is a clean cross for object windows and guidance links to YouTube', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, serviceWorkers: 'block' });
+  try {
+    await page.goto(`${base}/?shell-close-qa=${Date.now()}`, { waitUntil: 'networkidle' });
+    const youtube = page.locator('.az-desktop-aizo-card a[href="https://www.youtube.com/@heyaizo/videos"]');
+    assert.equal(await youtube.count(), 1);
+    assert.match(await youtube.innerText(), /YouTube/);
+    assert.equal(await youtube.getAttribute('target'), '_blank');
+    assert.match(await youtube.getAttribute('rel'), /noopener/);
+    await page.locator('.az-desktop-shortcut[data-app="calculator"]:visible').click();
+    const close = page.locator('.az-window[data-app-id="calculator"] [data-action="close"]');
+    const shape = await close.evaluate((node) => ({
+      button: getComputedStyle(node).width,
+      before: getComputedStyle(node, '::before').backgroundColor,
+      beforeRadius: getComputedStyle(node, '::before').borderRadius,
+      after: getComputedStyle(node, '::after').backgroundColor,
+    }));
+    assert.equal(shape.button, '32px', 'object close button should keep its intended hit area');
+    assert.equal(shape.beforeRadius, '999px', 'cross stroke must not be restyled as a circular dot');
+    assert.equal(shape.before, shape.after, 'both cross strokes should be the same color');
+    await close.click();
+    assert.equal(await page.locator('.az-window[data-app-id="calculator"]').count(), 0);
+  } finally {
+    await browser.close();
+  }
+});
