@@ -79,6 +79,29 @@ function makeButton(className, label, action) {
   return button;
 }
 
+/**
+ * A touch action button must fire on the action finger's own pointerdown,
+ * not on click: a second finger tapping Dash while the movement pad holds
+ * its pointer never produces a click, so click-only buttons ignore it. The
+ * click listener stays for mouse/keyboard activation, with a short
+ * suppression window so a touch tap does not fire twice.
+ */
+function makeTouchButton(className, label, action) {
+  const button = node('button', className, label);
+  button.type = 'button';
+  let touchFiredAt = 0;
+  button.addEventListener('pointerdown', (event) => {
+    if (event.pointerType !== 'touch') return;
+    touchFiredAt = Date.now();
+    action(event);
+  });
+  button.addEventListener('click', (event) => {
+    if (Date.now() - touchFiredAt < 750) return;
+    action(event);
+  });
+  return button;
+}
+
 export class GameApp {
   constructor({ container, api } = {}) {
     if (!container) throw new TypeError('GameApp requires a container');
@@ -96,10 +119,10 @@ export class GameApp {
     this.restoredRun = restored?.restored ? restored.state : null;
     this.saveAnnouncement = restored?.announcement || null;
     // Settings persist separately from the run so a reset never wipes them.
-    this.settings = loadSettings(this.storage);
-    this.meta = loadMeta(this.storage);
     const coarsePointer = (() => { try { return Boolean(globalThis.matchMedia?.('(pointer: coarse)').matches); } catch (_) { return false; } })();
-    this.assistMode = this.settings.assistMode || (coarsePointer ? 'auto' : 'assist');
+    this.settings = loadSettings(this.storage, { coarsePointer });
+    this.meta = loadMeta(this.storage);
+    this.assistMode = this.settings.assistMode;
     this.state.settings = { autoFireReserve: this.settings.autoFireReserve, heat: this.state.settings?.heat || 0 };
     this.dailySeed = dailySeed();
     this.sceneState = 'menu';
@@ -220,11 +243,11 @@ export class GameApp {
       pad.append(arrow);
     }
     const actions = node('div', 'az-touch-actions');
-    const attack = makeButton('az-touch-action az-touch-action--primary', 'Attack', () => { this.pendingAttack = true; this.root.focus(); });
-    const shoot = makeButton('az-touch-action', 'Shoot', () => { this.pendingShoot = true; this.root.focus(); });
-    const dash = makeButton('az-touch-action', 'Dash', () => { this.pendingDash = true; this.root.focus(); });
-    const guard = makeButton('az-touch-action', 'Guard', () => { this.pendingGuard = true; this.root.focus(); });
-    const wrath = makeButton('az-touch-action', 'Wrath', () => { this.pendingSpecial = true; this.root.focus(); });
+    const attack = makeTouchButton('az-touch-action az-touch-action--primary', 'Attack', () => { this.pendingAttack = true; this.root.focus(); });
+    const shoot = makeTouchButton('az-touch-action', 'Shoot', () => { this.pendingShoot = true; this.root.focus(); });
+    const dash = makeTouchButton('az-touch-action', 'Dash', () => { this.pendingDash = true; this.root.focus(); });
+    const guard = makeTouchButton('az-touch-action', 'Guard', () => { this.pendingGuard = true; this.root.focus(); });
+    const wrath = makeTouchButton('az-touch-action', 'Wrath', () => { this.pendingSpecial = true; this.root.focus(); });
     actions.append(attack, shoot, dash, guard, wrath);
     this.touchControls.append(pad, actions);
     this.exitButton = makeButton('az-dungeon-exit', '', () => this.api?.closeApp?.(APP_ID));
@@ -249,7 +272,7 @@ export class GameApp {
     }
     this.root.append(this.stage, this.effectLayer, this.touchControls, this.exitButton, this.menu);
     this.container.append(this.root);
-    this.hud = createHud({ container: this.root });
+    this.hud = createHud({ container: this.root, onAssistMode: () => this.cycleAssistMode() });
     this.audio = createAudioManager();
     this.feedback = createFeedbackBus({ audio: this.audio, hud: this.hud });
     this.disposers.push(this.feedback.on('effect', (effect) => this.renderEffect(effect)));
@@ -552,20 +575,18 @@ export class GameApp {
         if (!event.repeat && (event.code === 'Digit2' || event.code === 'Numpad2')) { this.pickChoice(1); return; }
         if (!event.repeat && (event.code === 'Digit3' || event.code === 'Numpad3')) { this.pickChoice(2); return; }
         if (!event.repeat && event.code === 'KeyR') { this.pickReroll(); return; }
-        if (event.code === 'Escape') { this.pickSkip(); return; }
+        // Escape never sells the pending blessing: the draft owns the modal
+        // until the player chooses, rerolls, or explicitly skips for gold.
+        if (event.code === 'Escape' && !event.repeat) {
+          this.hud?.announce?.('Choose a blessing, reroll, or Skip for gold');
+          return;
+        }
         return;
       }
       if (this.sceneState === 'defeat' && !event.repeat && event.code === 'KeyR') { this.retrySeed(); return; }
       if (event.code === 'Escape' && !event.repeat) this.togglePause();
       else if (event.code === 'KeyH' && !event.repeat) this.toggleHelp();
-      else if (event.code === 'KeyT' && !event.repeat) {
-        const modes = ['manual','assist','auto'];
-        const idx = modes.indexOf(this.assistMode);
-        this.assistMode = modes[(idx+1)%modes.length];
-        this.settings.assistMode = this.assistMode;
-        saveSettings(this.storage, this.settings);
-        this.hud?.announce?.(`Assist mode: ${this.assistMode.toUpperCase()}`);
-      }
+      else if (event.code === 'KeyT' && !event.repeat) this.cycleAssistMode();
       else if (event.code === 'KeyQ' && !event.repeat) {
         // cycle lock target
         const alive = this.state.enemies.filter((e)=>!e.dead);
@@ -730,6 +751,21 @@ export class GameApp {
     this.hud.update({ paused: this.paused, help: this.help });
   }
 
+  /**
+   * The single touch-mode switch: keyboard T, gamepad Y and the tappable HUD
+   * assist chip all cycle manual → assist → auto and persist the choice, so
+   * a saved preference always wins over the coarse-pointer default.
+   */
+  cycleAssistMode() {
+    const modes = ['manual', 'assist', 'auto'];
+    this.assistMode = modes[(modes.indexOf(this.assistMode) + 1) % modes.length];
+    this.settings.assistMode = this.assistMode;
+    saveSettings(this.storage, this.settings);
+    this.hud?.announce?.(`Assist mode: ${this.assistMode.toUpperCase()}`);
+    if (this.hud) this.updateHud();
+    return { mode: this.assistMode };
+  }
+
   toggleHelp() {
     if (this.sceneState === 'menu') return;
     this.help = !this.help;
@@ -750,13 +786,7 @@ export class GameApp {
     if (pressed(1)) this.pendingGuard = true;     // B/circle: guard
     if (pressed(4) || pressed(5)) this.pendingAttack = true; // bumpers: melee
     if (pressed(6) || pressed(7)) input.shoot = true;        // triggers: bow
-    if (pressed(3) && !this.gamepadToggleLatched) {          // Y/triangle: assist
-      const modes = ['manual', 'assist', 'auto'];
-      this.assistMode = modes[(modes.indexOf(this.assistMode) + 1) % modes.length];
-      this.settings.assistMode = this.assistMode;
-      saveSettings(this.storage, this.settings);
-      this.hud?.announce?.(`Assist mode: ${this.assistMode.toUpperCase()}`);
-    }
+    if (pressed(3) && !this.gamepadToggleLatched) this.cycleAssistMode(); // Y/triangle: assist
     this.gamepadToggleLatched = pressed(3);
     try { if ((pressed(0) || pressed(1)) && navigator.vibrate) navigator.vibrate(12); } catch (_) {}
     return input;
@@ -1052,7 +1082,7 @@ export class GameApp {
       specialReady: (player.specialCharge || 0) >= 100,
       reserve: this.state.settings?.autoFireReserve ?? 25,
       target: target ? { id: target.id, hp: target.hp, maxHp: target.maxHp, locked: target.id === this.lockedTarget } : null,
-      paused: this.paused, help: this.help,
+      paused: this.paused && !this.pickPanel, help: this.help && !this.pickPanel,
     });
   }
 
@@ -1147,6 +1177,10 @@ export class GameApp {
      this.pickPanel = undefined;
      this.pickChestId = undefined;
      if (this.sceneState === 'playing') this.paused = false;
+     // The picked card had focus and is gone: return focus to the game root
+     // so keyboard input (movement, Enter for the portal) keeps working for
+     // mouse/touch players without an extra canvas click.
+     if (!this.destroyed) this.root?.focus?.();
    }
 
    pickChoice(index) {

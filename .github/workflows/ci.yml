@@ -168,6 +168,7 @@ jobs:
           node --test tests/browser/dungeon-3d-persistence.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-persistence.log || status=1
           node --test tests/browser/dungeon-3d-victory.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-victory.log || status=1
           node --test tests/browser/dungeon-3d-shell-tokens.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-shell-tokens.log || status=1
+          node --test tests/browser/dungeon-3d-core-blockers.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-core-blockers.log || status=1
           exit $status
       - name: Arcade and TV surface QA
         env:

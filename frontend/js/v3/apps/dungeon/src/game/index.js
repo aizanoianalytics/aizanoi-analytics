@@ -1212,7 +1212,13 @@ const fixedUpdate = (state, input, dt) => {
   const target = pickTarget(state, lockTarget);
   const attackPressed = Boolean(input.attack) || autoAttack;
   if (target && attackPressed) {
-    tryMelee(state, target, { auto: autoAttack && !input.attack });
+    // Threat/sticky bow targets must not starve melee. Explicit live locks
+    // remain authoritative, even when the locked enemy is out of reach.
+    const reach = COMBO[player.combo % 3].range;
+    const reachable = (enemy) => Math.hypot(enemy.x - player.position.x, enemy.z - player.position.z) <= reach;
+    const hasLock = lockTarget && state.enemies.some((enemy) => enemy.id === lockTarget && !enemy.dead);
+    const meleeTarget = hasLock || reachable(target) ? target : pickTarget(state, null, reachable);
+    tryMelee(state, meleeTarget, { auto: autoAttack && !input.attack });
   }
   if (target && (input.shoot || autoShoot)) {
     tryBow(state, target, { auto: autoShoot && !input.shoot });
@@ -1497,7 +1503,7 @@ export function clearPersistedRun(storage) {
   }
 }
 
-export function pickTarget(state, lockTarget = null) {
+export function pickTarget(state, lockTarget = null, eligible = () => true) {
   const player = state.player;
   if (lockTarget) {
     const lt = state.enemies.find((e) => e.id === lockTarget && !e.dead);
@@ -1505,10 +1511,10 @@ export function pickTarget(state, lockTarget = null) {
   }
   // sticky
   if (state.assistTarget && state.assistTargetUntil > state.time) {
-    const t = state.enemies.find((e) => e.id === state.assistTarget && !e.dead);
+    const t = state.enemies.find((e) => e.id === state.assistTarget && !e.dead && eligible(e));
     if (t) return t;
   }
-  const candidates = state.enemies.filter((e) => !e.dead);
+  const candidates = state.enemies.filter((e) => !e.dead && eligible(e));
   if (!candidates.length) return null;
   let best = null; let bestScore = Infinity;
   for (const e of candidates) {

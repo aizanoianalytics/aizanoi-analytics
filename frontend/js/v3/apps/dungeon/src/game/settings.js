@@ -45,13 +45,17 @@ export function parseSettings(raw) {
   return settings;
 }
 
-export function loadSettings(storage) {
+export function loadSettings(storage, { coarsePointer = false } = {}) {
+  const defaults = { ...DEFAULT_SETTINGS, assistMode: coarsePointer ? 'auto' : 'assist' };
   try {
     const raw = storage?.getItem?.(SETTINGS_KEY);
-    if (raw == null) return { ...DEFAULT_SETTINGS };
-    return parseSettings(JSON.parse(raw));
+    if (raw == null) return defaults;
+    const parsed = JSON.parse(raw);
+    const settings = parseSettings(parsed);
+    if (!VALID_MODES.includes(parsed?.assistMode)) settings.assistMode = defaults.assistMode;
+    return settings;
   } catch {
-    return { ...DEFAULT_SETTINGS };
+    return defaults;
   }
 }
 
