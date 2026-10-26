@@ -70,6 +70,8 @@
 .az-fs-fab,
 .az-dungeon-exit,
 .az-dungeon-begin,
+.az-dungeon-menu-option,
+.az-dungeon-settings-fab,
 .az-play-anyway,
 .az-touch-action {
   border: 1px solid var(--az-bronze-bright);
@@ -86,6 +88,8 @@
 .az-fs-fab:hover,
 .az-dungeon-exit:hover,
 .az-dungeon-begin:hover,
+.az-dungeon-menu-option:hover,
+.az-dungeon-settings-fab:hover,
 .az-play-anyway:hover,
 .az-touch-action:hover { border-color: var(--az-focus); background: linear-gradient(180deg, #50391f, #22170d); }
 
@@ -269,7 +273,7 @@
 .az-hud-loot-feed { position: absolute; right: calc(1rem + env(safe-area-inset-right)); bottom: calc(1rem + env(safe-area-inset-bottom)); width: min(22rem, 45vw); margin: 0; padding: 0; list-style: none; text-align: right; }
 .az-hud-loot-item { margin-top: 0.35rem; padding: 0.5rem 0.7rem; border-right: 2px solid var(--az-bronze-bright); background: linear-gradient(90deg, transparent, rgba(18, 14, 9, 0.88)); color: var(--az-ivory); animation: az-loot-in 240ms ease-out both; }
 @keyframes az-loot-in { from { opacity: 0; transform: translateX(1rem); } }
-.az-hud-announcer { position: absolute; left: 50%; top: 18%; width: min(38rem, 85vw); transform: translateX(-50%); color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 1.25rem; font-weight: 800; text-align: center; text-transform: uppercase; }
+.az-hud-announcer { position: absolute; left: 50%; top: 30%; width: min(38rem, 85vw); transform: translateX(-50%); color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 1.25rem; font-weight: 800; text-align: center; text-transform: uppercase; }
 
 .az-hud-panel { pointer-events: auto; position: absolute; top: 50%; left: 50%; width: min(32rem, calc(100% - 2rem)); max-height: calc(100% - 2rem); overflow-y: auto; transform: translate(-50%, -50%); padding: 2rem; border: 1px solid var(--az-bronze-bright); background: linear-gradient(145deg, rgba(33, 27, 20, 0.98), rgba(8, 9, 9, 0.98)); box-shadow: 0 20px 80px #000; text-align: center; }
 .az-hud-panel::before { content: ""; position: absolute; inset: 0.35rem; border: 1px solid var(--az-bronze-dark); pointer-events: none; }
@@ -338,6 +342,9 @@
   .az-hud-top { flex-direction: column; right: auto; }
   .az-hud-vitals { width: min(78vw, 24rem); }
   .az-hud-run { align-self: flex-start; max-width: none; text-align: left; border-right: 0; border-left: 3px solid var(--az-bronze); background: linear-gradient(90deg, rgba(12, 10, 8, 0.84), transparent); }
+  /* The chapter panel stacks below the vitals in portrait: drop the announcer
+     beneath it so wave calls never overwrite the chapter line. */
+  .az-hud-announcer { top: 52%; width: min(30rem, 78vw); font-size: 1.05rem; }
   .az-touch-joystick { width: 7rem; height: 7rem; }
   .az-touch-actions { grid-template-columns: repeat(2, 4rem); }
   .az-touch-action { width: 4rem; height: 4rem; }
@@ -369,6 +376,25 @@
   animation: az-damage-float 650ms ease-out both;
 }
 .az-floating-damage.is-critical { color: var(--az-bronze-bright); font-size: 2rem; }
+/* World-projected damage labels: quantized grid placement by class name.
+   The route CSP bans inline styles, so the runtime projects the victim's
+   world position and picks a column/row class instead of coordinates. */
+.az-floating-damage.az-dmg-x0 { left: 5.56%; }
+.az-floating-damage.az-dmg-x1 { left: 16.67%; }
+.az-floating-damage.az-dmg-x2 { left: 27.78%; }
+.az-floating-damage.az-dmg-x3 { left: 38.89%; }
+.az-floating-damage.az-dmg-x4 { left: 50%; }
+.az-floating-damage.az-dmg-x5 { left: 61.11%; }
+.az-floating-damage.az-dmg-x6 { left: 72.22%; }
+.az-floating-damage.az-dmg-x7 { left: 83.33%; }
+.az-floating-damage.az-dmg-x8 { left: 94.44%; }
+.az-floating-damage.az-dmg-y0 { top: 7.14%; }
+.az-floating-damage.az-dmg-y1 { top: 21.43%; }
+.az-floating-damage.az-dmg-y2 { top: 35.71%; }
+.az-floating-damage.az-dmg-y3 { top: 50%; }
+.az-floating-damage.az-dmg-y4 { top: 64.29%; }
+.az-floating-damage.az-dmg-y5 { top: 78.57%; }
+.az-floating-damage.az-dmg-y6 { top: 92.86%; }
 @keyframes az-damage-float {
   from { opacity: 1; transform: translate(-50%, 0) scale(0.85); }
   to { opacity: 0; transform: translate(-50%, -4rem) scale(1.15); }
@@ -395,3 +421,56 @@
 @media (forced-colors: active) {
   .az-hud-meter-track, .az-touch-action, .az-dungeon-begin, .az-dungeon-exit { forced-color-adjust: none; border: 2px solid CanvasText; }
 }
+
+/* Ferryman's Toll shop, inside the reward draft. */
+.az-dungeon-shop { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(197, 160, 89, 0.35); }
+.az-dungeon-shop-title { margin: 0 0 0.35rem; color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 1.15rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.az-dungeon-shop-gold { margin: 0 0 0.75rem; color: #f1c86f; font-weight: 700; }
+.az-dungeon-shop-items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+.az-dungeon-shop-item { display: flex; flex-direction: column; gap: 0.3rem; padding: 0.7rem; border: 1px solid var(--az-bronze-dark); background: rgba(12, 8, 7, 0.9); }
+.az-dungeon-shop-name { font-family: Georgia, serif; font-size: 0.9rem; }
+.az-dungeon-shop-hint { font-size: 0.75rem; color: var(--az-muted); line-height: 1.4; }
+.az-dungeon-shop-buy { margin-top: 0.4rem; padding: 0.55rem 0.4rem; font-size: 0.8rem; }
+.az-dungeon-shop-buy:disabled { opacity: 0.55; cursor: default; }
+
+/* Comfort settings surface. */
+.az-dungeon-settings { z-index: 46; }
+.az-dungeon-settings-rows { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0; text-align: left; }
+.az-dungeon-settings-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: var(--az-ivory); font-size: 0.9rem; }
+.az-dungeon-settings-label { display: flex; flex-direction: column; gap: 0.4rem; color: var(--az-ivory); font-size: 0.9rem; }
+.az-dungeon-settings-group { display: flex; gap: 0.4rem; }
+.az-dungeon-settings-option { padding: 0.45rem 0.8rem; border: 1px solid var(--az-bronze-dark); background: transparent; color: var(--az-muted); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+.az-dungeon-settings-option.is-selected { border-color: var(--az-bronze-bright); color: var(--az-ivory); background: rgba(58, 42, 25, 0.9); }
+.az-dungeon-settings-row input[type="range"] { width: min(10rem, 40vw); accent-color: var(--az-bronze-bright); }
+.az-dungeon-settings-row input[type="checkbox"] { width: 1.4rem; height: 1.4rem; accent-color: var(--az-bronze-bright); }
+.az-dungeon-settings-row select { background: #1a140d; color: var(--az-ivory); border: 1px solid var(--az-bronze-dark); padding: 0.45rem 0.6rem; font: inherit; }
+
+/* Menu descent variants read as one row of choices. */
+.az-dungeon-daily, .az-dungeon-new-seed, .az-dungeon-settings-open { padding: 0.7rem 1.9rem; font-size: 0.95rem; opacity: 0.92; }
+
+/* Settings gear: always reachable, bottom-center clear of the loot feed,
+   touch controls, wrath meter and chapter panel. */
+.az-dungeon-settings-fab {
+  position: absolute;
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  left: 50%;
+  z-index: 40;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  font-size: 1.4rem;
+  line-height: 1;
+  transform: translateX(-50%);
+}
+
+/* High contrast: brighter text, stronger outlines. */
+.aizanoi-dungeon3d-app-root.is-high-contrast { --az-ivory: #ffffff; --az-muted: #e8dcc2; --az-bronze-bright: #ffd97a; }
+.aizanoi-dungeon3d-app-root.is-high-contrast .az-hud-vitals,
+.aizanoi-dungeon3d-app-root.is-high-contrast .az-hud-panel { border-width: 2px; }
+.aizanoi-dungeon3d-app-root.is-high-contrast .az-floating-damage { text-shadow: 0 2px 0 #000, 0 0 8px #000; }
+
+/* Left-handed layout: movement pad and actions swap sides. */
+.aizanoi-dungeon3d-app-root.is-left-handed .az-touch-joystick { left: auto; right: calc(1.25rem + env(safe-area-inset-right)); }
+.aizanoi-dungeon3d-app-root.is-left-handed .az-touch-actions { right: auto; left: calc(1.25rem + env(safe-area-inset-left)); }
+.aizanoi-dungeon3d-app-root.is-left-handed .az-hud-assist { left: auto; right: calc(1rem + env(safe-area-inset-right)); }
+.aizanoi-dungeon3d-app-root.is-left-handed .az-hud-special { left: auto; right: calc(1rem + env(safe-area-inset-right)); }

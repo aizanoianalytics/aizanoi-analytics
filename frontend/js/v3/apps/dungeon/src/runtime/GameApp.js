@@ -1,6 +1,6 @@
 import * as THREE from '../../../../../../worlds/shared/vendor/three.module.js';
 import { GLTFLoader } from '../../../../../../worlds/shared/vendor/GLTFLoader.js';
-import { createGameState, stepGame, spawnWave, openChest, chooseBlessing, rerollChest, buyShopItem, savePersistedRun, loadPersistedRun, clearPersistedRun, BLESSING_LABELS, FINAL_CHAPTER } from '../game/index.js';
+import { createGameState, stepGame, spawnWave, openChest, chooseBlessing, rerollChest, buyShopItem, savePersistedRun, loadPersistedRun, clearPersistedRun, BLESSING_LABELS, FINAL_CHAPTER, arenaObstacles, ARENA_IDS } from '../game/index.js';
 import { loadSettings, saveSettings, dailySeed } from '../game/settings.js';
 import { loadMeta, saveMeta, recordRun } from '../game/meta.js';
 import { createHud } from '../ui/hud.js';
@@ -189,6 +189,7 @@ export class GameApp {
       this.buildAttractScene();
       this.installInput();
       this.resize();
+      this.applySettings();
       this.resizeObserver = new ResizeObserver(() => this.resize());
       this.resizeObserver.observe(this.stage);
       this.raf = requestAnimationFrame((time) => this.loop(time));
@@ -255,11 +256,22 @@ export class GameApp {
     const exitArrow = node('span', 'az-dungeon-exit-arrow', '←');
     exitArrow.setAttribute('aria-hidden', 'true');
     this.exitButton.append(exitArrow, node('span', 'az-dungeon-exit-label', 'AizanoiOS'));
+    this.settingsFab = makeButton('az-dungeon-settings-fab', '⚙', () => this.showSettings());
+    this.settingsFab.setAttribute('aria-label', 'Open dungeon settings');
     this.menu = node('section', 'az-dungeon-menu');
     this.menu.append(node('h1', 'az-dungeon-menu-title', 'Aizanoi Dungeon'));
     this.menu.append(node('p', 'az-dungeon-menu-sub', 'Aizo awakens beneath the temple. Survive the descent, claim the blessing, enter the portal.'));
     this.beginButton = makeButton('az-dungeon-begin', 'Begin', () => this.begin());
     this.menu.append(this.beginButton);
+    this.dailyButton = makeButton('az-dungeon-menu-option az-dungeon-daily', `Daily descent · ${this.dailySeed}`, () => this.beginDaily());
+    this.dailyButton.setAttribute('aria-label', `Start the daily descent, seed ${this.dailySeed}`);
+    this.menu.append(this.dailyButton);
+    this.newSeedButton = makeButton('az-dungeon-menu-option az-dungeon-new-seed', 'New descent', () => this.begin(`aizo-${Date.now()}`));
+    this.newSeedButton.setAttribute('aria-label', 'Start a new descent with a fresh seed');
+    this.menu.append(this.newSeedButton);
+    this.settingsButton = makeButton('az-dungeon-menu-option az-dungeon-settings-open', 'Settings', () => this.showSettings());
+    this.settingsButton.setAttribute('aria-label', 'Open dungeon settings');
+    this.menu.append(this.settingsButton);
     // The 2D build offered "Continue" on the menu. If a saved run exists,
     // offer it again rather than silently starting over.
     if (this.restoredRun) {
@@ -270,7 +282,7 @@ export class GameApp {
     if (this.saveAnnouncement) {
       this.menu.append(node('p', 'az-dungeon-menu-note', this.saveAnnouncement));
     }
-    this.root.append(this.stage, this.effectLayer, this.touchControls, this.exitButton, this.menu);
+    this.root.append(this.stage, this.effectLayer, this.touchControls, this.exitButton, this.settingsFab, this.menu);
     this.container.append(this.root);
     this.hud = createHud({ container: this.root, onAssistMode: () => this.cycleAssistMode() });
     this.audio = createAudioManager();
@@ -378,13 +390,49 @@ export class GameApp {
     return model;
   }
 
-  buildRoom() {
+  buildRoom(arenaId = this.state?.arena || 'column-ring') {
+    // A new arena is a new room: drop the old one so layouts never stack.
+    while (this.room.children.length) this.room.children[0].removeFromParent();
+    if (this.roomMaterials) for (const material of this.roomMaterials) material.dispose();
+    this.roomMaterials = new Set();
+    this.arenaBuilt = ARENA_IDS.includes(arenaId) ? arenaId : 'column-ring';
+    // Floor value hierarchy: alternate two low-contrast tones so the room
+    // reads as stone, not a buzzing checkerboard, with a per-arena cast.
+    // Parity materials are shared across all tiles of a build (two clones per
+    // source material), so a rebuild disposes a handful, not hundreds.
+    const casts = {
+      'column-ring': 0xffffff, 'broken-bridge': 0xbfd4dd,
+      'brazier-court': 0xffd9b0, 'collapsing-tiles': 0xd8d2c4, 'ruined-stairs': 0xe2d6b8,
+    };
+    const parityCache = new Map();
+    const parityMaterial = (source, even) => {
+      const key = `${source.uuid}:${even ? 'e' : 'o'}`;
+      let cloned = parityCache.get(key);
+      if (!cloned) {
+        cloned = source.clone();
+        parityCache.set(key, cloned);
+        this.roomMaterials.add(cloned);
+        this.materials.add(cloned);
+      }
+      return cloned;
+    };
     const tileSize = 4;
     for (let x = -5; x <= 5; x += 1) {
       for (let z = -5; z <= 5; z += 1) {
         const tile = this.clone('floor');
         tile.position.set(x * tileSize, 0, z * tileSize);
         tile.scale.set(2, 1, 2);
+        const even = (x + z) % 2 === 0;
+        const dim = even ? 0.62 : 0.78;
+        tile.traverse((object) => {
+          if (!object.isMesh) return;
+          const shared = parityMaterial(object.material, even);
+          if (shared.color && !shared.userData.toned) {
+            shared.color.multiplyScalar(dim).lerp(new THREE.Color(casts[this.arenaBuilt] || 0xffffff), 0.25);
+            shared.userData.toned = true;
+          }
+          object.material = shared;
+        });
         this.room.add(tile);
       }
     }
@@ -400,21 +448,69 @@ export class GameApp {
     const doorway = this.clone('doorway');
     doorway.position.set(0, 0, -19);
     this.room.add(doorway);
-    for (const x of [-12, -6, 6, 12]) {
-      for (const z of [-12, 12]) {
+    // Obstacles follow the simulation's arena layout, kind by kind.
+    // Point lights are capped: the brazier court fields twenty braziers and
+    // a forward renderer cannot afford a light per flame.
+    let fires = 0;
+    for (const obstacle of arenaObstacles(this.arenaBuilt)) {
+      if (obstacle.kind === 'column') {
         const column = this.clone('column');
-        column.position.set(x, 0, z);
+        column.position.set(obstacle.x, 0, obstacle.z);
         this.room.add(column);
+      } else if (obstacle.kind === 'brazier') {
+        const brazier = this.clone('brazier');
+        brazier.position.set(obstacle.x, 0, obstacle.z);
+        this.room.add(brazier);
+        if (fires < 4) {
+          fires += 1;
+          const fire = new THREE.PointLight(0xff6b21, 8, 12, 2);
+          fire.position.set(obstacle.x, 2.1, obstacle.z);
+          this.room.add(fire);
+        }
+      } else if (obstacle.kind === 'rubble') {
+        const block = this.clone('wall');
+        block.position.set(obstacle.x, -1.2, obstacle.z);
+        block.scale.setScalar(0.5);
+        this.room.add(block);
+      } else if (obstacle.kind === 'stair') {
+        const step = this.clone('column');
+        step.position.set(obstacle.x, -0.9, obstacle.z);
+        step.scale.set(1.4, 0.45, 1.4);
+        this.room.add(step);
       }
     }
-    for (const x of [-8, 8]) {
-      const brazier = this.clone('brazier');
-      brazier.position.set(x, 0, -15);
-      this.room.add(brazier);
-      const fire = new THREE.PointLight(0xff6b21, 8, 12, 2);
-      fire.position.set(x, 2.1, -15);
-      this.room.add(fire);
+    if (this.arenaBuilt === 'broken-bridge') {
+      // Slow water across the middle band.
+      const water = new THREE.Mesh(
+        new THREE.PlaneGeometry(36, 7),
+        new THREE.MeshStandardMaterial({ color: 0x1d4e5f, transparent: true, opacity: 0.72, roughness: 0.25, metalness: 0.1 }),
+      );
+      water.rotation.x = -Math.PI / 2;
+      water.position.set(0, 0.03, 0);
+      water.receiveShadow = true;
+      this.room.add(water);
+      this.geometries.add(water.geometry);
+      this.materials.add(water.material);
     }
+    if (this.arenaBuilt === 'ruined-stairs') {
+      // The central dais: high ground worth holding.
+      const dais = new THREE.Mesh(
+        new THREE.CylinderGeometry(4.5, 5, 0.5, 24),
+        new THREE.MeshStandardMaterial({ color: 0x8a6f45, roughness: 0.8 }),
+      );
+      dais.position.set(0, 0.22, 0);
+      dais.receiveShadow = true;
+      this.room.add(dais);
+      this.geometries.add(dais.geometry);
+      this.materials.add(dais.material);
+    }
+  }
+
+  /** Rebuild the room when the descent moves to a new arena. */
+  rebuildRoom(arenaId) {
+    if (!this.room || this.arenaBuilt === arenaId) return { rebuilt: false, arena: this.arenaBuilt };
+    this.buildRoom(arenaId);
+    return { rebuilt: true, arena: this.arenaBuilt };
   }
 
   buildAttractScene() {
@@ -454,6 +550,14 @@ export class GameApp {
       get runStatus() { return app.state.status; },
       get assist() { return { mode: app.assistMode, target: app.state.assistTarget, locked: app.lockedTarget }; },
       get target() { const t = app.state.enemies.find((unit) => unit.id === (app.lockedTarget || app.state.assistTarget)); return t ? { id: t.id, archetype: t.archetype, hp: t.hp, maxHp: t.maxHp } : null; },
+      get seed() { return app.state.seed; },
+      get dailySeed() { return app.dailySeed; },
+      get settings() { return Object.freeze({ ...(app.settings || {}) }); },
+      get arenaBuilt() { return app.arenaBuilt; },
+      get slowMo() { return (app.slowMoUntil || 0) > performance.now(); },
+      get spawnMarkers() { return app.spawnMeshes ? app.spawnMeshes.size : 0; },
+      get hazardMarkers() { return app.hazardMeshes ? app.hazardMeshes.size : 0; },
+      get eliteMarkers() { return app.eliteMeshes ? app.eliteMeshes.size : 0; },
       get buffs() { return { blessings: [...app.state.blessings], levels: { ...(app.state.blessingLevels || {}) }, duos: [...(app.state.duos || [])], specialCharge: app.state.player.specialCharge }; },
       get status() { return { pendingSpawns: (app.state.pendingSpawns || []).length, live: app.state.enemies.filter((e) => !e.dead).length, guardUntil: app.state.player.guardUntil, time: app.state.time, arena: app.state.arena, marks: app.meta?.marks || 0 }; },
       qaRetrySeed() { const seed = app.state.seed; app.state = createGameState(seed); app.syncWorld(); app.updateHud(); return { seed }; },
@@ -489,6 +593,39 @@ export class GameApp {
         app.touchMove = { x: horizontal, z: -vertical };
         app.qaWalk = { targetId: enemyId, until: app.state.time + 12 };
         return { moved: true, distance: length };
+      },
+      /** Walk toward a world coordinate with the real movement input. */
+      qaWalkTo(x, z) {
+        const player = app.state.player.position;
+        const dx = x - player.x;
+        const dz = z - player.z;
+        const length = Math.hypot(dx, dz) || 1;
+        if (length <= 0.6) { app.touchMove = null; app.qaWalkCoord = null; return { arrived: true, distance: length }; }
+        const forward = new THREE.Vector3();
+        app.camera.getWorldDirection(forward);
+        forward.y = 0;
+        forward.normalize();
+        const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0));
+        const worldX = dx / length;
+        const worldZ = dz / length;
+        const horizontal = worldX * right.x + worldZ * right.z;
+        const vertical = worldX * forward.x + worldZ * forward.z;
+        app.touchMove = { x: horizontal, z: -vertical };
+        app.qaWalkCoord = { x, z, until: app.state.time + 12 };
+        return { arrived: false, distance: length };
+      },
+      /**
+       * The current interactable: the unopened chest's position, else the
+       * portal's, else null. Read-only; the player still walks there for real.
+       */
+      get objective() {
+        const chest = app.state.chests.find((item) => !item.opened);
+        if (chest) {
+          const position = app.chestPositions.get(chest.id) || chest.position;
+          if (position) return { kind: 'chest', x: position.x, z: position.z };
+        }
+        if (app.portal) return { kind: 'portal', x: app.portal.position.x, z: app.portal.position.z };
+        return null;
       },
       /**
        * Keep walking toward the target until it is in melee reach, so a
@@ -537,6 +674,11 @@ export class GameApp {
         app.state.player.position.z = position.z;
         const result = openChest(app.state, chest.id);
         if (result.blessing) chooseBlessing(app.state, result.blessing);
+        // The exit portal is runtime state, not serialized: materialize it
+        // the way the chest-open path does, or the run stalls between waves.
+        if (result.opened && app.state.portal?.pending && app.state.portal.position) {
+          app.spawnPortal(app.state.portal.position);
+        }
         app.persistRun();
         app.syncWorld();
         app.updateHud();
@@ -570,6 +712,10 @@ export class GameApp {
     const keydown = (event) => {
       if (!hasFocus() || !CONSUMED_KEYS.has(event.code)) return;
       event.preventDefault();
+      if (this.settingsPanel) {
+        if (event.code === 'Escape' && !event.repeat) this.closeSettings();
+        return;
+      }
       if (this.pickPanel) {
         if (!event.repeat && (event.code === 'Digit1' || event.code === 'Numpad1')) { this.pickChoice(0); return; }
         if (!event.repeat && (event.code === 'Digit2' || event.code === 'Numpad2')) { this.pickChoice(1); return; }
@@ -694,6 +840,7 @@ export class GameApp {
     this.menu.remove();
     this.hud.setVisible(true);
     this.root.focus();
+    this.rebuildRoom(this.state.arena);
     this.syncWorld();
     this.updateHud();
 
@@ -709,7 +856,7 @@ export class GameApp {
     else if (pendingPortal) this.spawnPortal(pendingPortal);
   }
 
-  async begin() {
+  async begin(seed = 'aizo-awakens') {
     if (this.sceneState !== 'menu') return;
     this.sceneState = 'playing';
     // Audio unlock is best-effort and must never gate gameplay: resume() can
@@ -717,15 +864,26 @@ export class GameApp {
     // unavailable), so fire it without awaiting.
     this.audio.resume();
     if (this.destroyed || this.sceneState !== 'playing') return;
+    if (seed !== 'aizo-awakens' || this.state.seed !== seed) {
+      this.state = createGameState(seed);
+      this.state.settings = { autoFireReserve: this.settings.autoFireReserve, heat: 0 };
+      this.eventSeq = 0;
+    }
     this.preview.removeFromParent();
     this.sceneState = 'playing';
     this.menu.remove();
     this.hud.setVisible(true);
     this.root.focus();
+    this.rebuildRoom(this.state.arena);
     spawnWave(this.state, 1);
     this.feedback.emit('portal', { position: { x: 0, y: 1, z: 0 } });
     this.syncWorld();
     this.updateHud();
+  }
+
+  /** The daily descent: one shared seed per local date, no server. */
+  beginDaily() {
+    return this.begin(dailySeed());
   }
 
   resetInput() {
@@ -770,6 +928,150 @@ export class GameApp {
     if (this.sceneState === 'menu') return;
     this.help = !this.help;
     this.hud.update({ paused: this.paused, help: this.help });
+  }
+
+  /**
+   * Comfort settings surface: every persisted preference is reachable and
+   * takes effect immediately. Changes save to aizanoi.dungeon.settings.v1,
+   * separate from the run, so a reset never wipes them.
+   */
+  showSettings() {
+    if (this.settingsPanel) return { opened: false };
+    this.settingsReturnToPaused = this.paused;
+    if (this.sceneState === 'playing' && !this.pickPanel) this.paused = true;
+    const panel = node('section', 'az-hud-panel az-dungeon-settings');
+    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('aria-modal', 'true');
+    panel.setAttribute('aria-label', 'Dungeon settings');
+    panel.append(node('h2', 'az-hud-panel-title', 'Settings'));
+    const rows = node('div', 'az-dungeon-settings-rows');
+    const row = (labelText, control) => {
+      const wrapper = node('label', 'az-dungeon-settings-row', labelText);
+      wrapper.append(control);
+      rows.append(wrapper);
+      return wrapper;
+    };
+    const select = (className, options, current, onPick) => {
+      const group = node('div', className);
+      group.setAttribute('role', 'group');
+      for (const value of options) {
+        const button = node('button', `az-dungeon-settings-option${String(value) === String(current) ? ' is-selected' : ''}`, String(value));
+        button.type = 'button';
+        button.setAttribute('aria-pressed', String(String(value) === String(current)));
+        button.addEventListener('click', () => onPick(value));
+        group.append(button);
+      }
+      return group;
+    };
+    const assistLabel = node('span', 'az-dungeon-settings-label', 'Assist mode');
+    assistLabel.setAttribute('aria-label', 'Assist mode');
+    assistLabel.append(select('az-dungeon-settings-group', ['manual', 'assist', 'auto'], this.settings.assistMode, (value) => {
+      this.settings.assistMode = value;
+      this.assistMode = value;
+      this.saveAndApplySettings();
+      this.refreshSettings();
+      this.hud?.announce?.(`Assist mode: ${value.toUpperCase()}`);
+      this.updateHud();
+    }));
+    rows.append(assistLabel);
+    const reserveLabel = node('span', 'az-dungeon-settings-label', 'Auto-fire reserve');
+    reserveLabel.append(select('az-dungeon-settings-group', [0, 25, 50], this.settings.autoFireReserve, (value) => {
+      this.settings.autoFireReserve = Number(value);
+      this.state.settings = { ...this.state.settings, autoFireReserve: Number(value) };
+      this.saveAndApplySettings();
+      this.refreshSettings();
+      this.updateHud();
+    }));
+    rows.append(reserveLabel);
+    for (const [key, label] of [['masterVolume', 'Master volume'], ['musicVolume', 'Music volume'], ['sfxVolume', 'Effects volume'], ['shake', 'Screen shake']]) {
+      const input = document.createElement('input');
+      input.type = 'range';
+      input.min = '0';
+      input.max = '100';
+      input.value = String(Math.round(Number(this.settings[key] ?? (key === 'shake' ? 100 : 0.7)) * (key === 'shake' ? 1 : 100)));
+      input.setAttribute('aria-label', label);
+      input.addEventListener('change', () => {
+        const percent = Math.max(0, Math.min(100, Number(input.value)));
+        this.settings[key] = key === 'shake' ? percent : percent / 100;
+        this.saveAndApplySettings();
+      });
+      row(label, input);
+    }
+    const quality = document.createElement('select');
+    quality.setAttribute('aria-label', 'Render quality');
+    for (const value of ['low', 'medium', 'high', 'auto']) {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = value;
+      if (this.settings.quality === value) option.selected = true;
+      quality.append(option);
+    }
+    quality.addEventListener('change', () => {
+      this.settings.quality = quality.value;
+      this.saveAndApplySettings();
+      this.refreshSettings();
+    });
+    row('Render quality', quality);
+    for (const [key, label] of [['damageNumbers', 'Damage numbers'], ['highContrast', 'High contrast'], ['leftHanded', 'Left-handed layout'], ['reducedMotion', 'Reduced motion']]) {
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.checked = Boolean(this.settings[key]);
+      input.setAttribute('aria-label', label);
+      input.addEventListener('change', () => {
+        this.settings[key] = Boolean(input.checked);
+        this.saveAndApplySettings();
+      });
+      row(label, input);
+    }
+    panel.append(rows);
+    panel.append(makeButton('az-dungeon-begin', 'Done', () => this.closeSettings()));
+    this.settingsPanel = panel;
+    this.root.append(panel);
+    this.hud?.update?.({ paused: this.paused && !this.pickPanel, help: this.help && !this.pickPanel });
+    return { opened: true };
+  }
+
+  refreshSettings() {
+    if (!this.settingsPanel) return;
+    this.closeSettings();
+    this.showSettings();
+  }
+
+  closeSettings() {
+    if (!this.settingsPanel) return { closed: false };
+    this.settingsPanel.remove();
+    this.settingsPanel = undefined;
+    if (this.sceneState === 'playing' && !this.pickPanel) this.paused = Boolean(this.settingsReturnToPaused);
+    if (!this.destroyed) this.root?.focus?.();
+    this.hud?.update?.({ paused: this.paused && !this.pickPanel, help: this.help && !this.pickPanel });
+    return { closed: true };
+  }
+
+  saveAndApplySettings() {
+    saveSettings(this.storage, this.settings);
+    this.applySettings();
+  }
+
+  /** Apply persisted comfort settings to audio, feedback, layout and renderer. */
+  applySettings() {
+    const settings = this.settings || {};
+    this.assistMode = settings.assistMode || this.assistMode || 'assist';
+    if (this.state?.settings) this.state.settings.autoFireReserve = settings.autoFireReserve ?? 25;
+    try { this.audio?.setVolumes?.({ master: Number(settings.masterVolume ?? 0.7) }); } catch (_) {}
+    try { this.feedback?.setReducedMotion?.(Boolean(settings.reducedMotion)); } catch (_) {}
+    try {
+      this.root?.classList?.toggle('is-high-contrast', Boolean(settings.highContrast));
+      this.root?.classList?.toggle('is-left-handed', Boolean(settings.leftHanded));
+    } catch (_) {}
+    try {
+      if (this.renderer) {
+        const dpr = window.devicePixelRatio || 1;
+        const ratio = settings.quality === 'low' ? 1 : settings.quality === 'medium' ? Math.min(dpr, 1.5) : Math.min(dpr, 2);
+        this.renderer.setPixelRatio(ratio);
+        this.resize();
+      }
+    } catch (_) {}
+    return { applied: true };
   }
 
   pollGamepad(input) {
@@ -817,6 +1119,10 @@ export class GameApp {
     // A QA walk keeps steering the player toward its target until the target
     // is in reach or the walk times out.
     if (this.qaWalk) this.qaHandle.qaCloseIn();
+    if (this.qaWalkCoord) {
+      const gap = Math.hypot(this.qaWalkCoord.x - this.state.player.position.x, this.qaWalkCoord.z - this.state.player.position.z);
+      if (gap <= 0.6 || this.state.time > this.qaWalkCoord.until) { this.qaWalkCoord = null; this.touchMove = null; }
+    }
     const input = this.movementInput();
     this.pollGamepad(input);
     input.attack = this.pendingAttack || this.keys.has('KeyJ');
@@ -901,7 +1207,10 @@ export class GameApp {
   handleEvent(event) {
     const enemy = event.id ? this.state.enemies.find((unit) => unit.id === event.id) : null;
     const position = enemy ? { x: enemy.x, y: 1.2, z: enemy.z } : { x: this.state.player.position.x, y: 1, z: this.state.player.position.z };
-    if (event.type === 'melee-hit') this.feedback.emit(event.chain === 3 ? 'crit' : 'hit', { damage: event.damage, position });
+    if (event.type === 'melee-hit') {
+      this.lastMeleeAt = performance.now();
+      this.feedback.emit(event.chain === 3 ? 'crit' : 'hit', { damage: event.damage, position });
+    }
     else if (event.type === 'bow-hit') this.feedback.emit(event.crit ? 'crit' : 'bow-hit', { damage: event.damage, position });
     else if (event.type === 'bow-missed') {
       // The bow did nothing, and the player is told why instead of the input
@@ -954,7 +1263,17 @@ export class GameApp {
     else if (event.type === 'focus-shot') this.hud.announce('Focus shot loosed');
     else if (event.type === 'reroll') this.hud.announce('Blessings rerolled');
     else if (event.type === 'shop-buy') this.feedback.emit('loot', { label: `Toll paid: ${event.kind}`, position });
-    else if (event.type === 'arena') this.hud.announce(`${event.id.replaceAll('-', ' ')} arena`);
+    else if (event.type === 'arena') {
+      const hazardCopy = {
+        'slow-water': 'slow water drags',
+        'burning-braziers': 'braziers burn',
+        'falling-tiles': 'the floor gives way',
+        'raised-platform': 'hold the dais',
+        none: 'open ground',
+      }[event.hazard] || 'open ground';
+      this.rebuildRoom(event.id);
+      this.hud.announce(`${event.id.replaceAll('-', ' ')} arena — ${hazardCopy}`);
+    }
     else if (event.type === 'wave-start') this.hud.announce(`Chapter ${event.chapter}`);
     else if (event.type === 'wave-complete') {
       this.hud.announce('Wave cleared — claim your blessing');
@@ -971,10 +1290,30 @@ export class GameApp {
 
   syncWorld() {
     if (this.hero) {
+      const now = performance.now();
       this.hero.position.set(this.state.player.position.x, 0, this.state.player.position.z);
       this.hero.rotation.y = Math.atan2(this.state.player.facing.x, this.state.player.facing.z);
+      // Readable motion: a stride bob while moving and a lunge pulse on swing.
+      const moving = Math.abs((this.lastHeroX ?? this.hero.position.x) - this.hero.position.x)
+        + Math.abs((this.lastHeroZ ?? this.hero.position.z) - this.hero.position.z) > 1e-4;
+      this.lastHeroX = this.hero.position.x;
+      this.lastHeroZ = this.hero.position.z;
+      this.heroStride = (this.heroStride || 0) + (moving ? 0.35 : 0.06);
+      this.hero.position.y = moving ? Math.abs(Math.sin(this.heroStride)) * 0.09 : Math.sin(now / 900) * 0.02;
+      const lunge = this.lastMeleeAt && now - this.lastMeleeAt < 180 ? 1.1 : 1;
+      this.hero.scale.set(lunge, 1 / Math.sqrt(lunge), lunge);
+      if (!this.heroRing) {
+        this.heroRing = new THREE.Mesh(this.telegraphResources().geometry, this.heroRingMaterial());
+        this.heroRing.rotation.x = -Math.PI / 2;
+        this.heroRing.userData.heroMarker = true;
+        this.dynamic.add(this.heroRing);
+      }
+      this.heroRing.position.set(this.state.player.position.x, 0.06, this.state.player.position.z);
+      this.heroRing.scale.setScalar(1.2);
     }
     const alive = new Set();
+    if (!this.eliteMeshes) this.eliteMeshes = new Map();
+    const elitesAlive = new Set();
     for (const enemy of this.state.enemies) {
       if (enemy.dead) continue;
       alive.add(enemy.id);
@@ -982,14 +1321,51 @@ export class GameApp {
       if (!mesh) {
         mesh = this.clone(ENEMY_ASSET[enemy.archetype]);
         mesh.userData.entityId = enemy.id;
+        // Silhouette identity: heavies loom, the boss towers, bombers squat.
+        const stature = enemy.archetype === 'boss' ? 1.55
+          : ['tank', 'shieldbearer', 'slimegolem'].includes(enemy.archetype) ? 1.18
+          : enemy.archetype === 'bomber' ? 0.92 : 1;
+        const eliteBoost = enemy.elite === 'armored' ? 1.1 : 1;
+        mesh.scale.setScalar(stature * eliteBoost);
         this.enemyMeshes.set(enemy.id, mesh);
         this.dynamic.add(mesh);
       }
-      mesh.position.set(enemy.x, 0, enemy.z);
+      mesh.position.set(enemy.x, Math.abs(Math.sin(this.frames / 9 + (enemy.spawnIndex || 0) * 1.7)) * 0.05, enemy.z);
       mesh.lookAt(this.state.player.position.x, 0, this.state.player.position.z);
+      if (enemy.elite) {
+        elitesAlive.add(enemy.id);
+        let ring = this.eliteMeshes.get(enemy.id);
+        if (!ring) {
+          ring = new THREE.Mesh(this.telegraphResources().geometry, this.eliteMaterial(enemy.elite));
+          ring.rotation.x = -Math.PI / 2;
+          ring.userData.eliteMarker = enemy.elite;
+          this.eliteMeshes.set(enemy.id, ring);
+          this.dynamic.add(ring);
+        }
+        ring.position.set(enemy.x, 0.08, enemy.z);
+        ring.scale.setScalar(1.5);
+      } else {
+        // Every enemy grounds itself: a dim ember ring so dark bodies never
+        // merge with the floor, even where no windup telegraph is drawn.
+        elitesAlive.add(enemy.id);
+        let ring = this.eliteMeshes.get(enemy.id);
+        if (!ring || ring.userData.eliteMarker) {
+          ring?.removeFromParent?.();
+          ring = new THREE.Mesh(this.telegraphResources().geometry, this.groundMaterial());
+          ring.rotation.x = -Math.PI / 2;
+          ring.userData.eliteMarker = '';
+          this.eliteMeshes.set(enemy.id, ring);
+          this.dynamic.add(ring);
+        }
+        ring.position.set(enemy.x, 0.05, enemy.z);
+        ring.scale.setScalar(1.1);
+      }
     }
     for (const [id, mesh] of this.enemyMeshes) {
       if (!alive.has(id)) { mesh.removeFromParent(); this.enemyMeshes.delete(id); }
+    }
+    for (const [id, mesh] of this.eliteMeshes) {
+      if (!elitesAlive.has(id)) { mesh.removeFromParent(); this.eliteMeshes.delete(id); }
     }
     const shots = new Set();
     for (const projectile of this.state.projectiles) {
@@ -1018,6 +1394,8 @@ export class GameApp {
       if (!available.has(id)) { mesh.removeFromParent(); this.chestMeshes.delete(id); }
     }
     this.syncTelegraphs();
+    this.syncSpawnPortals();
+    this.syncHazardTiles();
   }
 
   telegraphResources() {
@@ -1029,6 +1407,50 @@ export class GameApp {
       this.materials.add(material);
     }
     return this.telegraphShared;
+  }
+
+  /**
+   * Elite identity: one grounding-ring color per elite kind, shared across
+   * all elites of that kind. Armored bronze, swift mist, volatile ember,
+   * vampiric blood — readable at a glance, subordinate to the silhouette.
+   */
+  eliteMaterial(kind) {
+    if (!this.eliteMaterials) this.eliteMaterials = new Map();
+    let material = this.eliteMaterials.get(kind);
+    if (!material) {
+      const colors = { armored: COLORS.bronze, swift: COLORS.mist, volatile: COLORS.ember, vampiric: COLORS.blood };
+      material = new THREE.MeshBasicMaterial({
+        color: colors[kind] ?? COLORS.gold, transparent: true, opacity: 0.7,
+        side: THREE.DoubleSide, depthWrite: false,
+      });
+      this.eliteMaterials.set(kind, material);
+      this.materials.add(material);
+    }
+    return material;
+  }
+
+  /** The shared dim grounding ring under ordinary enemies. */
+  groundMaterial() {
+    if (!this.groundShared) {
+      this.groundShared = new THREE.MeshBasicMaterial({
+        color: COLORS.ember, transparent: true, opacity: 0.35,
+        side: THREE.DoubleSide, depthWrite: false,
+      });
+      this.materials.add(this.groundShared);
+    }
+    return this.groundShared;
+  }
+
+  /** The hero's own grounding ring: bright gold, so Aizo never gets lost. */
+  heroRingMaterial() {
+    if (!this.heroRingShared) {
+      this.heroRingShared = new THREE.MeshBasicMaterial({
+        color: COLORS.gold, transparent: true, opacity: 0.55,
+        side: THREE.DoubleSide, depthWrite: false,
+      });
+      this.materials.add(this.heroRingShared);
+    }
+    return this.heroRingShared;
   }
 
   syncTelegraphs() {
@@ -1056,6 +1478,61 @@ export class GameApp {
     }
     for (const [id, mesh] of this.telegraphMeshes) {
       if (!active.has(id)) { mesh.removeFromParent(); this.telegraphMeshes.delete(id); }
+    }
+  }
+
+  syncSpawnPortals() {
+    // Pending spawns are telegraphed in the world, not only in the announcer:
+    // one portal ring per incoming enemy, capped so a large wave cannot flood
+    // the scene graph.
+    if (!this.spawnMeshes) this.spawnMeshes = new Map();
+    const wanted = new Map();
+    for (const spawn of (this.state.pendingSpawns || []).slice(0, 12)) {
+      wanted.set(`${spawn.archetype}:${spawn.x.toFixed(2)},${spawn.z.toFixed(2)}`, spawn);
+    }
+    for (const [key, mesh] of this.spawnMeshes) {
+      if (!wanted.has(key)) { mesh.removeFromParent(); this.spawnMeshes.delete(key); }
+    }
+    for (const [key, spawn] of wanted) {
+      let mesh = this.spawnMeshes.get(key);
+      if (!mesh) {
+        mesh = this.clone('portal');
+        mesh.scale.setScalar(0.55);
+        mesh.userData.spawnMarker = true;
+        this.spawnMeshes.set(key, mesh);
+        this.dynamic.add(mesh);
+      }
+      mesh.position.set(spawn.x, 0.1, spawn.z);
+      mesh.rotation.y += 0.03;
+    }
+  }
+
+  syncHazardTiles() {
+    // Collapsing tiles telegraph in the world: a danger ring where the floor
+    // is about to give way, synced from the simulation's own hazard state.
+    if (!this.hazardMeshes) this.hazardMeshes = new Map();
+    const active = new Set();
+    if (this.dynamic) {
+      const { geometry, material } = this.telegraphResources();
+      const tiles = this.state.arena === 'collapsing-tiles' ? (this.state.hazardTiles || []) : [];
+      tiles.forEach((tile, index) => {
+        const key = `tile-${index}`;
+        active.add(key);
+        let mesh = this.hazardMeshes.get(key);
+        if (!mesh) {
+          mesh = new THREE.Mesh(geometry, material);
+          mesh.rotation.x = -Math.PI / 2;
+          mesh.userData.hazardMarker = true;
+          this.hazardMeshes.set(key, mesh);
+          this.dynamic.add(mesh);
+        }
+        const urgency = 1 + 0.3 * Math.sin(performance.now() / 120);
+        mesh.position.set(tile.x, 0.07, tile.z);
+        mesh.scale.setScalar(1.6 * urgency);
+      });
+    }
+    for (const [key, mesh] of this.hazardMeshes) {
+      if (!active.has(key)) { mesh.removeFromParent(); this.hazardMeshes.delete(key); }
     }
   }
 
@@ -1088,11 +1565,20 @@ export class GameApp {
 
   renderEffect(effect) {
     if (effect.type === 'screen-shake') {
-      this.shake = { ...effect.impulse, until: performance.now() + effect.durationMs };
+      const scale = Number(this.settings?.shake ?? 100) / 100;
+      if (scale <= 0) return;
+      this.shake = { x: effect.impulse.x * scale, y: effect.impulse.y * scale, until: performance.now() + effect.durationMs };
     } else if (effect.type === 'hit-stop') {
       this.hitStopUntil = Math.max(this.hitStopUntil || 0, performance.now() + effect.durationMs);
+    } else if (effect.type === 'slow-mo') {
+      // Parry and Phantom Step slow the world: the loop consumes this as a
+      // time scale, so the dead 'slow-mo' output becomes rendered gameplay.
+      this.slowMoUntil = Math.max(this.slowMoUntil || 0, performance.now() + effect.durationMs);
     } else if (effect.type === 'floating-damage') {
-      const label = node('output', `az-floating-damage${effect.critical ? ' is-critical' : ''}`, String(Math.round(effect.value)));
+      if (this.settings?.damageNumbers === false) return;
+      const { col, row } = this.projectToGrid(effect.position);
+      const label = node('output', `az-floating-damage az-dmg-x${col} az-dmg-y${row}${effect.critical ? ' is-critical' : ''}`, String(Math.round(effect.value)));
+      label.setAttribute('aria-hidden', 'true');
       this.effectLayer.append(label);
       const timer = setTimeout(() => label.remove(), 650);
       this.effects.push({ kind: 'dom', value: label, timer });
@@ -1115,6 +1601,30 @@ export class GameApp {
         this.effects.push({ kind: 'particle', value: particle, velocity: new THREE.Vector3((Math.random() - 0.5) * effect.spread * 7, Math.random() * 3 + 1, (Math.random() - 0.5) * effect.spread * 7), life: effect.lifetimeMs / 1000 });
       }
     }
+  }
+
+  /**
+   * Project a world position onto the screen and quantize it to the
+   * damage-label grid. The route CSP bans inline styles, so labels are placed
+   * by class name (az-dmg-x0..8, az-dmg-y0..6), never by coordinates: the
+   * label lands on the victim's ninth of the screen instead of screen center.
+   */
+  projectToGrid(position = {}) {
+    try {
+      if (!this.camera) return { col: 4, row: 3 };
+      const vector = new THREE.Vector3(Number(position.x) || 0, Number(position.y ?? 1) || 0, Number(position.z) || 0);
+      vector.project(this.camera);
+      const col = Math.max(0, Math.min(8, Math.floor(((vector.x + 1) / 2) * 9)));
+      const row = Math.max(0, Math.min(6, Math.floor((1 - (vector.y + 1) / 2) * 7)));
+      return { col, row };
+    } catch (_) {
+      return { col: 4, row: 3 };
+    }
+  }
+
+  /** The loop's time scale: parry/phantom slow-mo eases the sim to 35%. */
+  timeScale(now = performance.now()) {
+    return (this.slowMoUntil || 0) > now ? 0.35 : 1;
   }
 
   updateEffects(dt) {
@@ -1161,10 +1671,62 @@ export class GameApp {
      const skip = makeButton('az-dungeon-pick-skip', 'Skip for gold', () => this.pickSkip());
      actions.append(reroll, skip);
      panel.append(actions);
+     panel.append(this.renderShop(chest));
      this.pickPanel = panel;
      this.root.append(panel);
      this.hud?.announce?.('Choose 1 of 3 blessings');
-   }
+     }
+
+     static SHOP_COPY = Object.freeze({
+     heal: { name: 'Mend Wounds', hint: '+50 health now' },
+     reroll: { name: 'Bribe the Fates', hint: '+1 blessing reroll' },
+     relic: { name: 'Toll Relic', hint: '+5% damage, +10 max health' },
+     });
+
+     /** The Ferryman's Toll: spend run gold without leaving the reward screen. */
+  renderShop(chest) {
+    const shop = node('section', 'az-dungeon-shop');
+    shop.setAttribute('aria-label', "Ferryman's Toll shop");
+    shop.append(node('h3', 'az-dungeon-shop-title', "Ferryman's Toll"));
+    this.shopGold = node('p', 'az-dungeon-shop-gold', `${Math.floor(this.state.player.gold)} gold to offer`);
+    this.shopGold.setAttribute('aria-live', 'polite');
+    shop.append(this.shopGold);
+    const list = node('div', 'az-dungeon-shop-items');
+    for (const item of (chest.shop || [])) {
+      const copy = GameApp.SHOP_COPY[item.kind] || { name: item.kind, hint: '' };
+      const card = node('div', 'az-dungeon-shop-item');
+      card.append(node('strong', 'az-dungeon-shop-name', copy.name));
+      card.append(node('span', 'az-dungeon-shop-hint', copy.hint));
+      const buy = makeButton('az-dungeon-shop-buy', item.sold ? 'Paid' : `Offer ${item.price} gold`, () => this.pickShopBuy(item.slot));
+      buy.setAttribute('aria-label', `${copy.name}, ${copy.hint}, costs ${item.price} gold`);
+      if (item.sold) buy.disabled = true;
+      buy.setAttribute('data-slot', String(item.slot));
+      card.append(buy);
+      list.append(card);
+    }
+    shop.append(list);
+    return shop;
+  }
+
+  pickShopBuy(slot) {
+    const chest = this.state.chests.find((item) => item.id === this.pickChestId);
+    if (!chest) return { bought: false };
+    const result = buyShopItem(this.state, chest.id, slot);
+    if (result.bought) {
+      this.feedback.emit('loot', { label: `Toll paid: ${result.kind}` });
+      this.hud?.announce?.(`Toll paid: ${result.kind}`);
+      this.persistRun();
+      this.syncWorld();
+      this.updateHud();
+      // Refresh the shop in place: gold, sold states, nothing else moves.
+      const fresh = this.state.chests.find((item) => item.id === this.pickChestId);
+      const old = this.pickPanel?.querySelector('.az-dungeon-shop');
+      if (old && fresh) old.replaceWith(this.renderShop(fresh));
+    } else {
+      this.hud?.announce?.(result.reason === 'no-gold' ? 'Not enough gold for that toll' : 'That toll is already paid');
+    }
+    return result;
+  }
 
    refreshPick() {
      const chest = this.state.chests.find((item) => item.id === this.pickChestId);
@@ -1345,6 +1907,7 @@ export class GameApp {
     this.sceneState = 'playing';
     this.clearEntities();
     spawnWave(this.state, 1);
+    this.rebuildRoom(this.state.arena);
     this.root.focus();
     this.syncWorld();
     this.updateHud();
@@ -1371,12 +1934,14 @@ export class GameApp {
     this.restoredRun = null;
     this.clearEntities();
     spawnWave(this.state, 1);
+    this.rebuildRoom(this.state.arena);
     this.root.focus();
     this.syncWorld();
   }
 
   clearEntities() {
-    for (const group of [this.enemyMeshes, this.projectileMeshes, this.chestMeshes, this.telegraphMeshes]) {
+    for (const group of [this.enemyMeshes, this.projectileMeshes, this.chestMeshes, this.telegraphMeshes, this.spawnMeshes, this.hazardMeshes, this.eliteMeshes]) {
+      if (!group) continue;
       for (const mesh of group.values()) mesh.removeFromParent();
       group.clear();
     }
@@ -1404,12 +1969,15 @@ export class GameApp {
     const dt = frameDelta((time - this.lastTime) / 1000);
     this.lastTime = time;
     const hitStop = (this.hitStopUntil || 0) > performance.now();
+    // Slow-mo scales the simulation delta, never the camera: the world slows
+    // while the framing stays responsive.
+    const scaledDt = dt * this.timeScale(time);
     if (!hitStop && this.sceneState === 'playing' && !this.paused && !this.help && !this.hiddenPause && !this.contextLost) {
-      const { steps, accumulator } = consumeFixedSteps(this.accumulator, dt);
+      const { steps, accumulator } = consumeFixedSteps(this.accumulator, scaledDt);
       this.accumulator = accumulator;
       for (let i = 0; i < steps; i += 1) this.fixedTick();
     }
-    this.updateEffects(dt);
+    this.updateEffects(scaledDt);
     if (this.portal) this.portal.rotation.y += dt * 0.7;
     this.updateCamera(dt, time);
     this.renderer.render(this.scene, this.camera);
