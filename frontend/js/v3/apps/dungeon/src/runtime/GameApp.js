@@ -214,6 +214,11 @@ export class GameApp {
     pad.setAttribute('role', 'group');
     pad.setAttribute('aria-label', 'Movement pad');
     pad.append(node('span', 'az-touch-joystick-knob'));
+    for (const [direction, glyph] of [['up', '↑'], ['down', '↓'], ['left', '←'], ['right', '→']]) {
+      const arrow = node('span', `az-touch-direction az-touch-direction--${direction}`, glyph);
+      arrow.setAttribute('aria-hidden', 'true');
+      pad.append(arrow);
+    }
     const actions = node('div', 'az-touch-actions');
     const attack = makeButton('az-touch-action az-touch-action--primary', 'Attack', () => { this.pendingAttack = true; this.root.focus(); });
     const shoot = makeButton('az-touch-action', 'Shoot', () => { this.pendingShoot = true; this.root.focus(); });
@@ -452,7 +457,7 @@ export class GameApp {
         app.camera.getWorldDirection(forward);
         forward.y = 0;
         forward.normalize();
-        const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0)).negate();
+        const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0));
         const worldX = dx / length;
         const worldZ = dz / length;
         // Solve for the stick vector that yields the wanted world direction.
@@ -771,7 +776,7 @@ export class GameApp {
     this.camera.getWorldDirection(forward);
     forward.y = 0;
     forward.normalize();
-    const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0)).negate();
+    const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0));
     return {
       moveX: forward.x * vertical + right.x * horizontal,
       moveZ: forward.z * vertical + right.z * horizontal,

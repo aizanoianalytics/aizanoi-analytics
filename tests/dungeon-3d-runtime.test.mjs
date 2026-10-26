@@ -48,6 +48,44 @@ test('runtime owns focused controls and lifecycle guards', () => {
   assert.match(source, /shadowMap\.enabled\s*=\s*true/);
 });
 
+test('directional keys and touch pad move in the on-screen direction', () => {
+  const app = new GameApp({ container: {} });
+  app.camera = new THREE.PerspectiveCamera(52, 1, 0.1, 80);
+  app.camera.position.set(10, 10, 12);
+  app.camera.lookAt(0, 0, 0);
+  app.camera.updateMatrixWorld();
+  const projected = (movement) => {
+    const point = new THREE.Vector3(movement.moveX, 0, movement.moveZ).project(app.camera);
+    return { x: point.x, y: point.y };
+  };
+  for (const [code, axis, sign] of [
+    ['ArrowUp', 'y', 1], ['ArrowDown', 'y', -1],
+    ['ArrowLeft', 'x', -1], ['ArrowRight', 'x', 1],
+    ['KeyA', 'x', -1], ['KeyD', 'x', 1],
+  ]) {
+    app.keys.clear();
+    app.keys.add(code);
+    const screen = projected(app.movementInput());
+    assert.ok(screen[axis] * sign > 0.01, `${code} moved ${JSON.stringify(screen)}`);
+  }
+  app.keys.clear();
+  for (const [x, z, axis, sign] of [[-1, 0, 'x', -1], [1, 0, 'x', 1], [0, -1, 'y', 1], [0, 1, 'y', -1]]) {
+    app.touchMove = { x, z };
+    const screen = projected(app.movementInput());
+    assert.ok(screen[axis] * sign > 0.01, `touch ${x},${z} moved ${JSON.stringify(screen)}`);
+  }
+  app.destroy();
+});
+
+test('touch movement pad shows all four directional arrows', () => {
+  const source = read('src/runtime/GameApp.js');
+  const css = read('css/game.css');
+  for (const [direction, glyph] of [['up', '↑'], ['down', '↓'], ['left', '←'], ['right', '→']]) {
+    assert.ok(source.includes(`['${direction}', '${glyph}']`), `${direction} arrow missing from the pad`);
+    assert.ok(css.includes(`.az-touch-direction--${direction}`), `${direction} arrow lacks a position`);
+  }
+});
+
 test('runtime hardens mount, teardown, telegraphs, hit-stop, joystick and context loss', () => {
   const source = read('src/runtime/GameApp.js');
   assert.match(source, /this\.started/, 'startup boundary must guard double-start');
