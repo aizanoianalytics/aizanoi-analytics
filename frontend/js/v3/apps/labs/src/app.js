@@ -44,10 +44,10 @@ function renderWorkspace(workspace, active = false) {
         <p class="az-labs-hint">The final prompt is loaded from this experiment’s provenance file.</p>
       </article>
       <article class="az-labs-panel az-labs-video-panel">
-        <div class="az-labs-panel-heading"><div><p class="az-kicker">ATTACHMENT</p><h2>Reference video</h2></div><span class="az-labs-file-state">Attached · MP4</span></div>
+        <div class="az-labs-panel-heading"><div><p class="az-kicker">ATTACHMENT</p><h2>Reference video</h2></div><span class="az-labs-file-state" role="status">Loading · MP4</span></div>
         <div class="az-labs-video-slot" data-video-slot="${workspace.id}">
           <video data-labs-video="${workspace.id}" src="${workspace.videoUrl}" controls playsinline preload="metadata"></video>
-          <div class="az-labs-video-empty" hidden><span class="az-labs-video-mark" aria-hidden="true">▶</span><strong>Video will appear here</strong><span>The experiment video could not be loaded.</span></div>
+          <div class="az-labs-video-empty" hidden><span class="az-labs-video-mark" aria-hidden="true">▶</span><strong>Video unavailable</strong><span>The experiment video could not be loaded.</span><button class="az-button" type="button" data-video-retry="${workspace.id}">Retry video</button></div>
         </div>
         <p class="az-labs-hint">One local video attachment is reserved for this experiment.</p>
       </article>
@@ -68,7 +68,41 @@ export function createLabsApp({ apps }) {
       container.replaceChildren();
       const tabs = Object.values(WORKSPACES).map((workspace, index) => `<button class="az-button${index === 0 ? ' is-active' : ''}" type="button" data-workspace-tab="${workspace.id}" aria-controls="labs-workspace-${workspace.id}" aria-selected="${index === 0}">${workspace.model}</button>`).join('');
       container.innerHTML = shell(`<nav class="az-labs-switcher" aria-label="Labs experiments">${tabs}</nav>${Object.values(WORKSPACES).map((workspace, index) => renderWorkspace(workspace, index === 0)).join('')}${renderCards()}`);
+      const mediaCleanup = [];
       Object.values(WORKSPACES).forEach((workspace) => {
+        const panel = container.querySelector(`[data-workspace-panel="${workspace.id}"]`);
+        const video = panel.querySelector('video');
+        const fallback = panel.querySelector('.az-labs-video-empty');
+        const fileState = panel.querySelector('.az-labs-file-state');
+        const showLoading = () => {
+          fallback.hidden = true;
+          video.hidden = false;
+          fileState.textContent = 'Loading · MP4';
+        };
+        const showReady = () => {
+          fallback.hidden = true;
+          video.hidden = false;
+          fileState.textContent = 'Ready · MP4';
+        };
+        const showError = () => {
+          video.hidden = true;
+          fallback.hidden = false;
+          fileState.textContent = 'Unavailable · MP4';
+        };
+        const retry = panel.querySelector('[data-video-retry]');
+        const retryVideo = () => { showLoading(); video.load(); };
+        const listeners = [['loadstart', showLoading], ['loadeddata', showReady], ['error', showError]];
+        listeners.forEach(([event, handler]) => video.addEventListener(event, handler));
+        retry.addEventListener('click', retryVideo);
+        if (video.error) showError();
+        else if (video.readyState >= 2) showReady();
+        mediaCleanup.push(() => {
+          listeners.forEach(([event, handler]) => video.removeEventListener(event, handler));
+          retry.removeEventListener('click', retryVideo);
+          video.pause();
+          video.removeAttribute('src');
+          video.load();
+        });
         const promptField = container.querySelector(`[data-labs-prompt="${workspace.id}"]`);
         const promptStatus = container.querySelector(`[data-prompt-status="${workspace.id}"]`);
         const controller = new AbortController();
@@ -99,6 +133,7 @@ export function createLabsApp({ apps }) {
       return () => {
         Object.values(WORKSPACES).forEach((workspace) => workspace.controller.abort());
         container.removeEventListener('click', handleClick);
+        mediaCleanup.forEach(cleanup => cleanup());
       };
     },
   };

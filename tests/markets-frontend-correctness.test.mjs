@@ -204,8 +204,9 @@ test('CSS still applies the chart-tooltip visual style', () => {
   assert.match(css, /\.chart-tooltip\s*\{[^}]*background:\s*#12233f/);
 });
 
-test('CSS still pins the body to no horizontal overflow', () => {
-  assert.match(css, /html,\s*body\s*\{\s*overflow-x:\s*hidden[^}]*\}/);
+test('CSS still pins the standalone document to no horizontal overflow', () => {
+  assert.match(css, /overflow-x:\s*hidden[^}]*\}/);
+  assert.match(css, /body:has\(> \.market-head\)/, 'the overflow pin must still cover standalone Markets pages');
 });
 
 // ---------------------------------------------------------------------------

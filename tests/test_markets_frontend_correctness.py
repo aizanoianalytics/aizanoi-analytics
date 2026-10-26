@@ -48,7 +48,9 @@ class MarketsCssRulesTest(unittest.TestCase):
 
     def test_body_does_not_horizontally_overflow(self):
         # Without this rule the raw data table on narrow viewports stretches the page.
-        self.assertRegex(self.css, r'html,\s*body\s*\{[^}]*overflow-x:\s*hidden')
+        # The pin is scoped so the lazy OS stylesheet cannot restyle the shell document.
+        self.assertRegex(self.css, r'overflow-x:\s*hidden')
+        self.assertRegex(self.css, r'body:has\(> \.market-head\)')
 
 
 # Markets dashboard and instrument page DOM ---------------------------------------------------
