@@ -111,6 +111,30 @@ test('the AizanoiOS TV app mounts the same player inside its window', async () =
   });
 });
 
+test('TV presents a primary widescreen player with honest channel actions on desktop and phone', async () => {
+  const browser = await chromium.launch({ headless: true });
+  try {
+    for (const width of [1440, 390]) {
+      const context = await browser.newContext({ viewport: { width, height: 900 }, serviceWorkers: 'block' });
+      const page = await context.newPage();
+      try {
+        await page.goto(`${base}/tv/?qa=${Date.now()}`, { waitUntil: 'domcontentloaded' });
+        const stage = page.locator('.tv-feature');
+        await stage.waitFor({ state: 'visible' });
+        const player = stage.locator('iframe');
+        const bounds = await player.boundingBox();
+        assert.ok(bounds.width > (width === 1440 ? 550 : 300), `TV player must have visual priority at ${width}px`);
+        assert.ok(bounds.height > 170, `TV player must be usable at ${width}px`);
+        assert.equal(await player.getAttribute('src'), 'https://www.youtube-nocookie.com/embed/videoseries?list=UUTurwASTgEY2NrivXpkKPmA');
+        assert.equal(await stage.getByRole('link', { name: 'Browse all videos' }).getAttribute('href'), 'https://www.youtube.com/@heyaizo/videos');
+        assert.equal(await stage.getByRole('link', { name: 'Subscribe to Aizo' }).getAttribute('href'), 'https://www.youtube.com/@heyaizo?sub_confirmation=1');
+        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+        assert.ok(overflow <= 1, `TV must not overflow at ${width}px: ${overflow}`);
+      } finally { await context.close(); }
+    }
+  } finally { await browser.close(); }
+});
+
 test('the picker and the arena stay usable on a phone', async () => {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
