@@ -81,6 +81,7 @@ jobs:
           status=0
           node --test tests/browser/aizanoi-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-markets-browser.log || status=1
           node --test tests/browser/aizanoi-os-markets.test.mjs 2>&1 | tee artifacts/diagnostics/aizanoi-os-markets-browser.log || status=1
+          node --test tests/browser/app-style-isolation.test.mjs 2>&1 | tee artifacts/diagnostics/app-style-isolation-browser.log || status=1
           exit $status
       - name: Tableau extension pilot browser suite
         env: { ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173' }

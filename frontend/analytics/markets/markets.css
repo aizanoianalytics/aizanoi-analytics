@@ -1,4 +1,5 @@
-:root {
+/* Standalone pages own their document; the OS dashboard owns only its mounted root. */
+:where(html:has(> body > .market-head), .market-product) {
   color-scheme: light;
   --ink: #12233f;
   --muted: #60708b;
@@ -14,15 +15,16 @@
   color: var(--ink);
 }
 
-* { box-sizing: border-box; }
-html, body { overflow-x: hidden; }
-body {
+:where(body:has(> .market-head), .market-product),
+:where(body:has(> .market-head), .market-product) * { box-sizing: border-box; }
+html:has(> body > .market-head), body:has(> .market-head) { overflow-x: hidden; }
+body:has(> .market-head) {
   margin: 0;
   min-height: 100vh;
   background: radial-gradient(circle at 10% 0, #fff 0, transparent 32%), linear-gradient(145deg, #eaf2ff, #dce8fa 58%, #edf8fb);
 }
-a { color: inherit; }
-.visually-hidden {
+:where(body:has(> .market-head), .market-product) a { color: inherit; }
+:where(body:has(> .market-head), .market-product) .visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -49,13 +51,13 @@ a { color: inherit; }
 .market-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; }
 .market-brand img { width: 30px; height: 30px; }
 
-main { width: min(1480px, calc(100% - 32px)); margin: auto; padding: 48px 0 80px; }
+body:has(> .market-head) > main { width: min(1480px, calc(100% - 32px)); margin: auto; padding: 48px 0 80px; }
 .market-hero, .instrument-header { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end; margin-bottom: 36px; }
 
-.eyebrow { font: 700 11px/1.4 ui-monospace, monospace; letter-spacing: .14em; color: var(--blue); }
-h1 { font-size: clamp(44px, 8vw, 92px); line-height: .94; margin: 10px 0 18px; letter-spacing: -.055em; }
-h1 span { color: var(--blue); }
-h2 { font-size: clamp(20px, 2.5vw, 30px); margin: .25rem 0; }
+:where(body:has(> .market-head), .market-product) .eyebrow { font: 700 11px/1.4 ui-monospace, monospace; letter-spacing: .14em; color: var(--blue); }
+:where(body:has(> .market-head), .market-product) h1 { font-size: clamp(44px, 8vw, 92px); line-height: .94; margin: 10px 0 18px; letter-spacing: -.055em; }
+:where(body:has(> .market-head), .market-product) h1 span { color: var(--blue); }
+:where(body:has(> .market-head), .market-product) h2 { font-size: clamp(20px, 2.5vw, 30px); margin: .25rem 0; }
 .market-hero > div > p:last-child, .instrument-header > div > p:last-child { max-width: 780px; font-size: clamp(16px, 2vw, 21px); line-height: 1.5; color: var(--muted); }
 
 .freshness {
@@ -70,7 +72,7 @@ h2 { font-size: clamp(20px, 2.5vw, 30px); margin: .25rem 0; }
 }
 .freshness span, .freshness small { font: 700 10px/1.4 ui-monospace, monospace; letter-spacing: .08em; color: var(--muted); }
 
-button, input, select { font: inherit; }
+:where(body:has(> .market-head), .market-product) :is(button, input, select) { font: inherit; }
 
 .market-product { display: grid; gap: 18px; min-width: 0; max-width: 100%; }
 .market-product > section, .market-product [data-panel] { min-width: 0; max-width: 100%; }
@@ -430,8 +432,8 @@ button, input, select { font: inherit; }
 .instrument-history form input { padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); background: #fff; }
 .instrument-history form button { padding: 8px 14px; border-radius: 10px; border: 1px solid var(--blue); background: var(--blue); color: #fff; font-weight: 600; cursor: pointer; }
 
-.method { margin-top: 56px; display: grid; gap: 12px; }
-.method a { color: var(--blue); }
+body:has(> .market-head) .method { margin-top: 56px; display: grid; gap: 12px; }
+body:has(> .market-head) .method a { color: var(--blue); }
 
 .market-loading { color: var(--muted); }
 
@@ -445,7 +447,7 @@ button, input, select { font: inherit; }
   .market-table-filter-performance { grid-column: 1 / -1; }
 }
 @media (max-width: 720px) {
-  main { width: min(100% - 20px, 1480px); padding: 28px 0 60px; }
+  body:has(> .market-head) > main { width: min(100% - 20px, 1480px); padding: 28px 0 60px; }
   .market-hero, .instrument-header { grid-template-columns: 1fr; align-items: start; }
   .freshness { width: 100%; }
   .market-product-bar { align-items: flex-start; flex-direction: column; }
@@ -467,4 +469,4 @@ button, input, select { font: inherit; }
   .market-picks-link { grid-template-columns: 1fr auto; }
   .market-picks-horizons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+@media (prefers-reduced-motion: reduce) { :where(body:has(> .market-head), .market-product) * { scroll-behavior: auto !important; } }

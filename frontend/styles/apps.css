@@ -58,6 +58,7 @@
     margin:0 0 7px;
     font:600 20px/1.2 var(--az-font-ui);
     letter-spacing:-.02em;
+    overflow-wrap:anywhere;
   }
   .az-simple-card p {
     margin-top:0;
@@ -809,6 +810,7 @@
   .az-labs-video-slot { min-height:300px; display:grid; place-items:center; overflow:hidden; border:1px dashed rgba(72,92,142,.3); border-radius:14px; background:linear-gradient(145deg,rgba(229,237,249,.8),rgba(248,241,239,.8)); }
   .az-labs-video-slot video { width:100%; height:100%; max-height:390px; object-fit:contain; background:#172238; }
   .az-labs-video-empty { display:grid; justify-items:center; gap:8px; padding:30px 20px; color:#6e7c93; text-align:center; }
+  .az-labs-video-empty[hidden],.az-labs-video-slot video[hidden] { display:none; }
   .az-labs-video-empty strong { color:#33425e; font:700 14px var(--az-font-ui); }
   .az-labs-video-empty span:last-child { max-width:220px; font:11px/1.45 var(--az-font-ui); }
   .az-labs-video-mark { display:grid; place-items:center; width:52px; height:52px; border-radius:17px; background:linear-gradient(145deg,#7381e6,#8db8d5); color:#fff; box-shadow:0 10px 22px rgba(85,105,195,.22); }
