@@ -33,9 +33,9 @@ async function axe(page,label) {
 
 function appModuleRequests(requests){return requests.filter((path)=>path.includes('/js/v3/apps/'));}
 
-const retiredIds=['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor'];
-const publicAppIds=['news','videos','analytics','markets','aizanoi','forge','journal','labs','games','dungeon','workspace','notepad','web-editor','calculator','browser','camera','winamp','recycle-bin','flowerseller'];
-const desktopAppIds=['news','videos','analytics','aizanoi','forge','labs','markets','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','recycle-bin','workspace','flowerseller'];
+const retiredIds=['workbench','archive','notes','data-lab','source-reader','artifact-viewer','projects','terminal','monitor','flowerseller'];
+const publicAppIds=['news','videos','analytics','markets','aizanoi','forge','journal','labs','games','dungeon','workspace','notepad','web-editor','calculator','browser','camera','winamp','recycle-bin'];
+const desktopAppIds=['news','videos','analytics','aizanoi','forge','labs','markets','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','recycle-bin','workspace'];
 
 // Desktop: sparse wallpaper desktop, curated product + utility shortcuts, freeform window lifecycle.
 {
