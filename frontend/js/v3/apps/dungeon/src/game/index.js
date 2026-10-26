@@ -37,10 +37,53 @@ export { BLESSING_IDS };
 export const BLESSING_LABELS = Object.freeze(Object.fromEntries(
   BLESSING_IDS.map((id) => [id, Object.freeze({ label: BLESSINGS[id].label, hint: BLESSINGS[id].hint })]),
 ));
-const OBSTACLES = Object.freeze([
+const BASE_OBSTACLES = Object.freeze([
   ...[-12, -6, 6, 12].flatMap((x) => [-12, 12].map((z) => ({ x, z, radius: 1.25, kind: 'column' }))),
   ...[-8, 8].map((x) => ({ x, z: -15, radius: 0.8, kind: 'brazier' })),
 ]);
+// Per-arena obstacle layouts: each arena id owns a distinct room geometry so
+// the five chapters read as different places, not one relabeled square.
+const ARENA_OBSTACLES = Object.freeze({
+  // The familiar column ring around an open floor.
+  'column-ring': BASE_OBSTACLES.map((item) => ({ ...item })),
+  // A flooded crossing: side walls pinch the room and the middle band is
+  // slow water (see hazard tick). Fewer columns, more open sightlines.
+  'broken-bridge': Object.freeze([
+    ...[-12, 12].flatMap((x) => [-12, 12].map((z) => ({ x, z, radius: 1.25, kind: 'column' }))),
+    { x: -4, z: 0, radius: 1.1, kind: 'rubble' },
+    { x: 4, z: 0, radius: 1.1, kind: 'rubble' },
+    ...[-8, 8].map((x) => ({ x, z: -15, radius: 0.8, kind: 'brazier' })),
+  ]),
+  // A court ringed with burning braziers: standing near one burns.
+  'brazier-court': Object.freeze([
+    ...[-12, -6, 6, 12].flatMap((x) => [-12, 12].map((z) => ({ x, z, radius: 1.25, kind: 'column' }))),
+    ...[-10, -5, 0, 5, 10].flatMap((x) => [-10, 10].map((z) => ({ x, z, radius: 0.8, kind: 'brazier' }))),
+  ]),
+  // A cracked hall: sparse pillars, unstable floor (see hazard tick).
+  'collapsing-tiles': Object.freeze([
+    ...[-12, 12].flatMap((x) => [-12, 0, 12].map((z) => ({ x, z, radius: 1.25, kind: 'column' }))),
+    { x: 0, z: -8, radius: 1.4, kind: 'rubble' },
+    { x: 0, z: 8, radius: 1.4, kind: 'rubble' },
+    ...[-8, 8].map((x) => ({ x, z: -15, radius: 0.8, kind: 'brazier' })),
+  ]),
+  // A raised dais at the center: the platform empowers whoever stands on it.
+  'ruined-stairs': Object.freeze([
+    ...[-12, -6, 6, 12].flatMap((x) => [-12, 12].map((z) => ({ x, z, radius: 1.25, kind: 'column' }))),
+    { x: -3, z: -3, radius: 1.2, kind: 'stair' },
+    { x: 3, z: -3, radius: 1.2, kind: 'stair' },
+    { x: -3, z: 3, radius: 1.2, kind: 'stair' },
+    { x: 3, z: 3, radius: 1.2, kind: 'stair' },
+    ...[-8, 8].map((x) => ({ x, z: -15, radius: 0.8, kind: 'brazier' })),
+  ]),
+});
+const OBSTACLES = BASE_OBSTACLES;
+// The canonical arena ids, exported so the runtime builds the matching room.
+export const ARENA_IDS = Object.freeze(Object.keys(ARENA_OBSTACLES));
+/** Distinct deterministic obstacles per arena id (unknown ids fall back). */
+export function arenaObstacles(arenaId) {
+  const layout = ARENA_OBSTACLES[arenaId] || ARENA_OBSTACLES['column-ring'];
+  return layout.map((item) => ({ ...item }));
+}
 const COMBO = [
   { damage: 18, range: 1.9, stun: 0.12 },
   { damage: 26, range: 2.25, stun: 0.18 },
@@ -134,8 +177,8 @@ const direction = (from, to) => {
   const length = Math.hypot(dx, dz) || 1;
   return { x: dx / length, z: dz / length };
 };
-const resolveObstacleCollision = (unit, radius = 0.45) => {
-  for (const obstacle of OBSTACLES) {
+const resolveObstacleCollision = (unit, radius = 0.45, obstacles = OBSTACLES) => {
+  for (const obstacle of obstacles) {
     const dx = unit.x - obstacle.x;
     const dz = unit.z - obstacle.z;
     const minimum = obstacle.radius + radius;
@@ -147,10 +190,10 @@ const resolveObstacleCollision = (unit, radius = 0.45) => {
     unit.z = clamp(obstacle.z + nz * minimum, -ARENA_RADIUS, ARENA_RADIUS);
   }
 };
-const move = (unit, vector, speed, dt, radius = 0.45) => {
+const move = (unit, vector, speed, dt, radius = 0.45, obstacles = OBSTACLES) => {
   unit.x = clamp(unit.x + vector.x * speed * dt, -ARENA_RADIUS, ARENA_RADIUS);
   unit.z = clamp(unit.z + vector.z * speed * dt, -ARENA_RADIUS, ARENA_RADIUS);
-  resolveObstacleCollision(unit, radius);
+  resolveObstacleCollision(unit, radius, obstacles);
 };
 // Events are a bounded ring that is trimmed from the front. A consumer that
 // tracks its position by INDEX would drift every time the ring shifts, and
@@ -243,6 +286,11 @@ export function createGameState(seed = 'dungeon') {
     settings: { autoFireReserve: 25, heat: 0 },
     heat: 0,
     arena: 'column-ring',
+    // Live hazard state: telegraphed falling tiles plus burn/slow scheduling.
+    // Reset by chooseArena whenever the descent moves to a new arena.
+    hazardTiles: [],
+    hazardNext: 2,
+    hazardBurnAt: 0,
     oaths: { selected: 'sword', unlocked: ['sword'] },
     marks: 0,
     runHistory: [],
@@ -289,6 +337,12 @@ const ARENAS = Object.freeze([
 export function chooseArena(state, chapter = state.chapter) {
   const arena = ARENAS[(Math.floor(random(state) * ARENAS.length) + chapter - 1) % ARENAS.length];
   state.arena = arena.id;
+  // The room geometry follows the arena: collision, rendering and hazards
+  // all read the same layout, so the five chapters fight differently.
+  state.obstacles = arenaObstacles(arena.id);
+  state.hazardTiles = [];
+  state.hazardNext = state.time + 2;
+  state.hazardBurnAt = 0;
   emitEvent(state, { type: 'arena', id: arena.id, hazard: arena.hazard, at: state.time });
   return arena;
 }
@@ -687,7 +741,7 @@ const summonMinion = (state, enemy) => {
   minion.xp = Math.round(minion.xp * 0.4);
   minion.gold = Math.round(minion.gold * 0.4);
   minion.summonedBy = enemy.id;
-  resolveObstacleCollision(minion);
+  resolveObstacleCollision(minion, 0.45, state.obstacles);
   state.enemies.push(minion);
   emitEvent(state, { type: 'summon', id: enemy.id, minion: minion.id, at: state.time });
   return true;
@@ -768,7 +822,7 @@ const updateFlanker = (state, enemy, gap, dt) => {
     // Too far or uncomfortably close: close the distance straight on.
     if (gap < ideal * 0.6 || gap > ideal * 1.8) {
       enemy.intent = 'close';
-      move(enemy, toward, enemy.speed, dt);
+      move(enemy, toward, enemy.speed, dt, 0.45, state.obstacles);
       return;
     }
     orbit.phase = 'orbit';
@@ -794,7 +848,7 @@ const updateFlanker = (state, enemy, gap, dt) => {
       z: Math.sin(tangential) * 0.6 + Math.sin(angle) * radial,
     };
     const length = Math.hypot(vector.x, vector.z) || 1;
-    move(enemy, { x: vector.x / length, z: vector.z / length }, enemy.speed, dt);
+    move(enemy, { x: vector.x / length, z: vector.z / length }, enemy.speed, dt, 0.45, state.obstacles);
     enemy.intent = 'orbit';
     if (state.time >= orbit.until) {
       orbit.phase = 'lunge';
@@ -815,7 +869,7 @@ const updateFlanker = (state, enemy, gap, dt) => {
 
   // Lunge: one committed dash along the locked direction, then back to orbit.
   const dash = enemy.lungeDirection || toward;
-  move(enemy, dash, enemy.speed * 2.6, dt);
+  move(enemy, dash, enemy.speed * 2.6, dt, 0.45, state.obstacles);
   // The dash itself is the attack: it connects when it reaches the player.
   if (gap <= 1.6) damagePlayer(state, enemy.damage, enemy.id);
   if (enemy.windup) {
@@ -852,7 +906,7 @@ const updateGargoyle = (state, enemy, gap, dt) => {
   }
   if (phase === 'swoop') {
     enemy.intent = 'swoop';
-    move(enemy, direction(enemy, state.player.position), enemy.speed * 2.2, dt, 0.5);
+    move(enemy, direction(enemy, state.player.position), enemy.speed * 2.2, dt, 0.5, state.obstacles);
     const contact = distance(enemy, state.player.position);
     if (contact <= GARGOYLE_CONTACT_RANGE && (enemy.attackCooldown || 0) <= 0) {
       enemy.attackCooldown = 1.2;
@@ -874,7 +928,7 @@ const updateGargoyle = (state, enemy, gap, dt) => {
   // Recover: it circles out of reach before it can perch again.
   enemy.intent = 'recover';
   move(enemy, { x: -direction(enemy, state.player.position).x, z: -direction(enemy, state.player.position).z },
-    enemy.speed * 0.5, dt, 0.5);
+    enemy.speed * 0.5, dt, 0.5, state.obstacles);
   if (state.time >= until) {
     enemy.gargoyleState = 'perch';
     enemy.gargoyleUntil = 0;
@@ -906,20 +960,20 @@ const updateEnemy = (state, enemy, dt) => {
   const away = { x: -toward.x, z: -toward.z };
   if (enemy.archetype === 'chaser') {
     enemy.intent = gap > 1.25 ? 'pursue' : 'strike';
-    if (gap > 1.25) move(enemy, toward, enemy.speed, dt);
+    if (gap > 1.25) move(enemy, toward, enemy.speed, dt, 0.45, state.obstacles);
     else if (enemy.attackCooldown <= 0) beginWindup(state, enemy, 'melee', NORMAL_WINDUP, 1.4);
   } else if (enemy.archetype === 'archer') {
     enemy.intent = gap < 4 ? 'kite' : gap > 8 ? 'advance' : 'shoot';
-    if (gap < 4) move(enemy, away, enemy.speed, dt);
-    else if (gap > 8) move(enemy, toward, enemy.speed * 0.65, dt);
+    if (gap < 4) move(enemy, away, enemy.speed, dt, 0.45, state.obstacles);
+    else if (gap > 8) move(enemy, toward, enemy.speed * 0.65, dt, 0.45, state.obstacles);
     if (gap >= 4 && gap <= 10 && enemy.shootCooldown <= 0) beginWindup(state, enemy, 'projectile', NORMAL_WINDUP, 10, 1.4);
   } else if (enemy.archetype === 'tank') {
     enemy.intent = gap <= 1.6 ? 'slam' : 'guard';
-    if (gap > 1.6) move(enemy, toward, enemy.speed, dt, 0.6);
+    if (gap > 1.6) move(enemy, toward, enemy.speed, dt, 0.6, state.obstacles);
     else if (enemy.attackCooldown <= 0) beginWindup(state, enemy, 'slam', NORMAL_WINDUP, 1.8);
   } else if (enemy.archetype === 'summoner') {
     enemy.intent = 'summon';
-    if (gap < 5) move(enemy, away, enemy.speed * 0.5, dt);
+    if (gap < 5) move(enemy, away, enemy.speed * 0.5, dt, 0.45, state.obstacles);
     if (gap <= 12 && enemy.summonCooldown <= 0) beginWindup(state, enemy, 'summon', NORMAL_WINDUP, 12, 1.6);
   } else if (enemy.archetype === 'flanker') {
     updateFlanker(state, enemy, gap, dt);
@@ -928,7 +982,7 @@ const updateEnemy = (state, enemy, dt) => {
     // attack()) and bashes once it is close enough.
     enemy.blocked = true;
     enemy.intent = gap <= SHIELDBEARER_RANGE ? 'bash' : 'advance';
-    if (gap > SHIELDBEARER_RANGE) move(enemy, toward, enemy.speed, dt, 0.55);
+    if (gap > SHIELDBEARER_RANGE) move(enemy, toward, enemy.speed, dt, 0.55, state.obstacles);
     else if (enemy.attackCooldown <= 0) beginWindup(state, enemy, 'bash', 0.3, SHIELDBEARER_RANGE + 0.2);
   } else if (enemy.archetype === 'gargoyle') {
     updateGargoyle(state, enemy, gap, dt);
@@ -936,20 +990,20 @@ const updateEnemy = (state, enemy, dt) => {
     // It holds a casting distance: backs off when crowded, closes when out of
     // range, and lobs a heavier bolt than the skeletal archer.
     enemy.intent = 'cast';
-    if (gap < 6) move(enemy, away, enemy.speed, dt);
-    else if (gap > 11) move(enemy, toward, enemy.speed * 0.7, dt);
+    if (gap < 6) move(enemy, away, enemy.speed, dt, 0.45, state.obstacles);
+    else if (gap > 11) move(enemy, toward, enemy.speed * 0.7, dt, 0.45, state.obstacles);
     if (gap <= SORCERER_RANGE && enemy.sorcererCooldown <= 0) {
       beginWindup(state, enemy, 'spell', SORCERER_WINDUP, SORCERER_RANGE, 1.4);
     }
   } else if (enemy.archetype === 'slimegolem') {
     // Slow, heavy, and it hits like a falling wall. It splits when it dies.
     enemy.intent = gap <= SLIMEGOLEM_RANGE ? 'engulf' : 'ooze';
-    if (gap > SLIMEGOLEM_RANGE) move(enemy, toward, enemy.speed, dt, 0.6);
+    if (gap > SLIMEGOLEM_RANGE) move(enemy, toward, enemy.speed, dt, 0.6, state.obstacles);
     else if (enemy.attackCooldown <= 0) beginWindup(state, enemy, 'engulf', 0.35, SLIMEGOLEM_RANGE + 0.3);
   } else if (enemy.archetype === 'bomber') {
     // It rushes in and lights a fuse it cannot put out.
     enemy.intent = gap <= BOMBER_BLAST_RADIUS ? 'fuse' : 'rush';
-    if (gap > 1.4) move(enemy, toward, enemy.speed, dt);
+    if (gap > 1.4) move(enemy, toward, enemy.speed, dt, 0.45, state.obstacles);
     if (gap <= BOMBER_BLAST_RADIUS && enemy.attackCooldown <= 0 && !enemy.windup) {
       beginWindup(state, enemy, 'detonate', BOMBER_FUSE, BOMBER_BLAST_RADIUS);
       enemy.windup.fixed = true;
@@ -959,7 +1013,7 @@ const updateEnemy = (state, enemy, dt) => {
     enemy.phase = ratio <= 0.25 ? 3 : ratio < 0.5 ? 2 : 1;
     enemy.intent = enemy.phase === 3 ? 'enrage' : enemy.phase === 2 ? 'charge' : 'hunt';
     const speed = enemy.speed * (enemy.phase === 3 ? 1.65 : enemy.phase === 2 ? 1.3 : 1);
-    if (gap > 1.8) move(enemy, toward, speed, dt, 0.8);
+    if (gap > 1.8) move(enemy, toward, speed, dt, 0.8, state.obstacles);
     else if (enemy.attackCooldown <= 0) beginWindup(state, enemy, 'boss-slam', BOSS_WINDUP, 2.1);
   }
 };
@@ -988,7 +1042,7 @@ const updateProjectiles = (state, dt) => {
           const push = direction(shot, target);
           target.x = clamp(target.x + push.x * shot.knockback, -ARENA_RADIUS, ARENA_RADIUS);
           target.z = clamp(target.z + push.z * shot.knockback, -ARENA_RADIUS, ARENA_RADIUS);
-          resolveObstacleCollision(target);
+          resolveObstacleCollision(target, 0.45, state.obstacles);
         }
         emitEvent(state, { type: 'bow-hit', id: target.id, damage: shot.damage, crit: !!shot.crit, at: state.time });
         if (target.hp === 0) killEnemy(state, target);
@@ -1033,8 +1087,8 @@ const separateEntities = (state) => {
       a.z = clamp(a.z - nz * correction, -ARENA_RADIUS, ARENA_RADIUS);
       b.x = clamp(b.x + nx * correction, -ARENA_RADIUS, ARENA_RADIUS);
       b.z = clamp(b.z + nz * correction, -ARENA_RADIUS, ARENA_RADIUS);
-      resolveObstacleCollision(a);
-      resolveObstacleCollision(b);
+      resolveObstacleCollision(a, 0.45, state.obstacles);
+      resolveObstacleCollision(b, 0.45, state.obstacles);
     }
   }
 };
@@ -1044,7 +1098,7 @@ const rewardPosition = (state) => {
     x: clamp(state.player.position.x + 2, -REWARD_BOUNDARY, REWARD_BOUNDARY),
     z: clamp(state.player.position.z, -REWARD_BOUNDARY, REWARD_BOUNDARY),
   };
-  resolveObstacleCollision(position, 0.7);
+  resolveObstacleCollision(position, 0.7, state.obstacles);
   position.x = clamp(position.x, -REWARD_BOUNDARY, REWARD_BOUNDARY);
   position.z = clamp(position.z, -REWARD_BOUNDARY, REWARD_BOUNDARY);
   return position;
@@ -1063,6 +1117,58 @@ const rollRarity = (state, chapter) => {
   let roll = random(state) * total;
   for (const [name, weight] of table) { roll -= weight; if (roll <= 0) return name; }
   return 'common';
+};
+
+/**
+ * Arena hazards, simulated deterministically on the fixed step so every
+ * chapter fights differently:
+ * - broken-bridge: the middle band (|z| <= 3.5) is slow water (see movement).
+ * - brazier-court: braziers burn anyone lingering within reach, on a tick.
+ * - collapsing-tiles: the floor telegraphs a tile near the player, then drops
+ *   it for real damage unless the player moves off.
+ * - ruined-stairs: the central dais (radius 4.5) grants swift footing (+10%
+ *   movement speed) to whoever holds the high ground.
+ * - column-ring: no hazard.
+ */
+const DAIS_RADIUS = 4.5;
+const inSlowWater = (state) => state.arena === 'broken-bridge'
+  && Math.abs(state.player.position.z) <= 3.5;
+const onDais = (position) => Math.hypot(position.x, position.z) <= DAIS_RADIUS;
+
+const updateHazards = (state) => {
+  if (state.arena === 'brazier-court') {
+    if (state.time >= (state.hazardBurnAt || 0)) {
+      state.hazardBurnAt = state.time + 0.8;
+      const near = (state.obstacles || []).some((o) => o.kind === 'brazier'
+        && Math.hypot(o.x - state.player.position.x, o.z - state.player.position.z) <= o.radius + 1.1);
+      if (near && !state.player.dead) {
+        damagePlayer(state, 4 + state.chapter, 'hazard');
+        emitEvent(state, { type: 'hazard-burn', at: state.time });
+      }
+    }
+  }
+  if (state.arena === 'collapsing-tiles') {
+    if (!Array.isArray(state.hazardTiles)) state.hazardTiles = [];
+    // Strike telegraphed tiles whose timer elapsed.
+    for (const tile of [...state.hazardTiles]) {
+      if (state.time >= tile.strikeAt) {
+        state.hazardTiles.splice(state.hazardTiles.indexOf(tile), 1);
+        const hit = Math.hypot(tile.x - state.player.position.x, tile.z - state.player.position.z) <= 1.6;
+        if (hit && !state.player.dead) damagePlayer(state, 8 + state.chapter, 'hazard');
+        emitEvent(state, { type: 'hazard-fall', x: tile.x, z: tile.z, hit, at: state.time });
+      }
+    }
+    // Telegraph a fresh tile near the player on schedule.
+    if (state.time >= (state.hazardNext || 0) && state.hazardTiles.length < 3) {
+      state.hazardNext = state.time + 2.2;
+      const angle = random(state) * Math.PI * 2;
+      const radius = 3 + random(state) * 3;
+      const x = clamp(state.player.position.x + Math.cos(angle) * radius, -14, 14);
+      const z = clamp(state.player.position.z + Math.sin(angle) * radius, -14, 14);
+      state.hazardTiles.push({ x, z, strikeAt: state.time + 0.9 });
+      emitEvent(state, { type: 'hazard-telegraph', x, z, at: state.time });
+    }
+  }
 };
 
 const completeWave = (state) => {
@@ -1137,6 +1243,9 @@ const fixedUpdate = (state, input, dt) => {
   const dashPressed = Boolean(input.dash) && !state.inputLatch.dash;
   state.inputLatch.dash = Boolean(input.dash);
   let speed = 5.2 * player.speedMultiplier;
+  // Arena footing: slow water drags, the dais grants swift footing.
+  if (inSlowWater(state)) speed *= 0.65;
+  else if (state.arena === 'ruined-stairs' && onDais(player.position)) speed *= 1.1;
   const dashDir = length > 0 ? vector : (player.facing ? { ...player.facing } : { x: 1, z: 0 });
   if (dashPressed && player.dashCooldown <= 0 && player.stamina >= 25) {
     player.stamina -= 25;
@@ -1178,7 +1287,7 @@ const fixedUpdate = (state, input, dt) => {
     player.dashRemaining = Math.max(0, player.dashRemaining - dt);
   }
   const playerUnit = { x: player.position.x, z: player.position.z };
-  move(playerUnit, movement, speed, dt);
+  move(playerUnit, movement, speed, dt, 0.45, state.obstacles);
   player.position.x = playerUnit.x;
   player.position.z = playerUnit.z;
   // The gale dancer duo turns the dash into an attack: every enemy the dash
@@ -1228,6 +1337,7 @@ const fixedUpdate = (state, input, dt) => {
   for (const unit of [...state.enemies]) updateEnemy(state, unit, dt);
   separateEntities(state);
   updateProjectiles(state, dt);
+  updateHazards(state);
   completeWave(state);
   pruneHistory(state);
 };
@@ -1409,6 +1519,10 @@ export function restoreRun(json) {
     if (!state.settings) state.settings = { autoFireReserve: 25, heat: 0 };
     if (state.heat === undefined) state.heat = state.settings.heat || 0;
     if (!state.arena) state.arena = 'column-ring';
+    if (!Array.isArray(state.obstacles)) state.obstacles = arenaObstacles(state.arena);
+    if (!Array.isArray(state.hazardTiles)) state.hazardTiles = [];
+    if (state.hazardNext === undefined) state.hazardNext = (state.time || 0) + 2;
+    if (state.hazardBurnAt === undefined) state.hazardBurnAt = 0;
     if (!state.oaths) state.oaths = { selected: 'sword', unlocked: ['sword'] };
     if (!Array.isArray(state.runHistory)) state.runHistory = [];
     if (!state.codex) state.codex = { enemies: [], blessings: [], duos: [], bosses: [] };
