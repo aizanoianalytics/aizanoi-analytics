@@ -173,8 +173,9 @@ test('settings persist separately and drive assist defaults', () => {
   const source = read('src/runtime/GameApp.js');
   const settings = readFileSync(base + 'src/game/settings.js', 'utf8');
   assert.match(source, /from\s+['"]\.\.\/game\/settings\.js['"]/);
-  assert.match(source, /loadSettings\(this\.storage\)/);
+  assert.match(source, /loadSettings\(this\.storage,\s*\{\s*coarsePointer\s*\}\)/);
   assert.match(source, /saveSettings\(this\.storage,\s*this\.settings\)/);
+  assert.match(source, /cycleAssistMode\(\)/);
   assert.match(settings, /aizanoi\.dungeon\.settings\.v1/);
   assert.match(source, /dailySeed/);
 });

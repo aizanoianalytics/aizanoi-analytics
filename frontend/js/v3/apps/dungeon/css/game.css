@@ -91,8 +91,8 @@
 
 .az-fs-fab {
   position: fixed;
+  top: calc(1rem + env(safe-area-inset-top));
   right: calc(1rem + env(safe-area-inset-right));
-  bottom: calc(1rem + env(safe-area-inset-bottom));
   z-index: 40;
   padding: 0.75rem 1rem;
 }
@@ -159,7 +159,8 @@
 }
 .az-hud-top {
   position: absolute;
-  top: calc(1rem + env(safe-area-inset-top));
+  /* The exit control owns the top-left row; vitals start below it. */
+  top: calc(4.5rem + env(safe-area-inset-top));
   left: calc(1rem + env(safe-area-inset-left));
   right: calc(1rem + env(safe-area-inset-right));
   display: flex;
@@ -225,14 +226,18 @@
 .az-hud-crosshair::before { width: 1.6rem; height: 2px; }
 .az-hud-crosshair::after { width: 2px; height: 1.6rem; }
 
-/* Claimed blessings, listed so the player can read their own build. */
-.az-hud-blessings { position: absolute; top: calc(1rem + env(safe-area-inset-top)); left: calc(1rem + env(safe-area-inset-left)); margin: 0; padding: 0; list-style: none; max-width: 14rem; }
-.az-hud-blessing-item { margin-bottom: 0.3rem; padding: 0.25rem 0.5rem; border-left: 2px solid var(--az-bronze); background: linear-gradient(90deg, rgba(18, 14, 9, 0.82), transparent); color: var(--az-ivory); font-size: 0.78rem; line-height: 1.35; }
+/* Claimed blessings, listed so the player can read their own build. The list
+   is in flow inside the vitals panel (see hud.js): a long late-run build
+   scrolls inside the panel instead of covering the meters. Labels truncate
+   with an ellipsis; the full hint stays on title/aria-label. */
+.az-hud-blessings { margin: 0.6rem 0 0; padding: 0; list-style: none; max-width: none; max-height: 30vh; overflow-y: auto; }
+.az-hud-blessing-item { margin-bottom: 0.3rem; padding: 0.25rem 0.5rem; border-left: 2px solid var(--az-bronze); background: linear-gradient(90deg, rgba(18, 14, 9, 0.82), transparent); color: var(--az-ivory); font-size: 0.78rem; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .az-hud-blessing--level-2 { border-left-color: var(--az-bronze-bright); }
 .az-hud-blessing--level-3 { border-left-color: var(--az-gold, #ffcf5a); font-weight: 700; }
 
-/* Assist mode chip + wrath charge bar. */
-.az-hud-assist { position: absolute; bottom: calc(1rem + env(safe-area-inset-bottom)); left: calc(1rem + env(safe-area-inset-left)); margin: 0; padding: 0.3rem 0.7rem; border: 1px solid var(--az-bronze); background: rgba(12, 8, 7, 0.85); color: var(--az-ivory); font-size: 0.75rem; letter-spacing: 0.18em; }
+/* Assist mode chip + wrath charge bar. The chip is a button (the touch-mode
+   switch); the HUD root is pointer-transparent, so it opts back in. */
+.az-hud-assist { position: absolute; bottom: calc(1rem + env(safe-area-inset-bottom)); left: calc(1rem + env(safe-area-inset-left)); margin: 0; padding: 0.3rem 0.7rem; border: 1px solid var(--az-bronze); background: rgba(12, 8, 7, 0.85); color: var(--az-ivory); font-size: 0.75rem; letter-spacing: 0.18em; pointer-events: auto; cursor: pointer; }
 .az-hud-assist[data-mode="auto"] { border-color: var(--az-gold, #ffcf5a); color: var(--az-gold, #ffcf5a); }
 .az-hud-special { position: absolute; bottom: calc(3.2rem + env(safe-area-inset-bottom)); left: calc(1rem + env(safe-area-inset-left)); width: min(12rem, 40vw); }
 .az-hud-special.is-ready .az-hud-meter-track { outline: 2px solid var(--az-gold, #ffcf5a); }
@@ -241,8 +246,9 @@
 .az-hud-stamina[data-reserve="50"] .az-hud-meter-track { border-right: 6px double var(--az-gold, #ffcf5a); }
 .az-hud-crosshair.is-locked::before, .az-hud-crosshair.is-locked::after { background: var(--az-gold, #ffcf5a); }
 
-/* Blessing pick screen: choice of 3, rarity glow, reroll + skip. */
-.az-dungeon-pick { max-height: min(34rem, calc(100% - 2rem)); overflow: auto; }
+/* Blessing pick screen: choice of 3, rarity glow, reroll + skip. The draft
+   owns the modal while open, above the HUD pause and the touch controls. */
+.az-dungeon-pick { z-index: 45; max-height: min(34rem, calc(100% - 2rem)); overflow: auto; }
 .az-dungeon-pick-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin: 1rem 0; }
 .az-dungeon-pick-card { display: flex; flex-direction: column; gap: 0.35rem; padding: 0.9rem; border: 1px solid var(--az-bronze); background: rgba(12, 8, 7, 0.9); color: var(--az-ivory); text-align: left; cursor: pointer; font: inherit; }
 .az-dungeon-pick-card:hover, .az-dungeon-pick-card:focus-visible { border-color: var(--az-bronze-bright); outline: 2px solid var(--az-bronze-bright); outline-offset: 2px; }
@@ -265,7 +271,7 @@
 @keyframes az-loot-in { from { opacity: 0; transform: translateX(1rem); } }
 .az-hud-announcer { position: absolute; left: 50%; top: 18%; width: min(38rem, 85vw); transform: translateX(-50%); color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 1.25rem; font-weight: 800; text-align: center; text-transform: uppercase; }
 
-.az-hud-panel { pointer-events: auto; position: absolute; top: 50%; left: 50%; width: min(32rem, calc(100% - 2rem)); transform: translate(-50%, -50%); padding: 2rem; border: 1px solid var(--az-bronze-bright); background: linear-gradient(145deg, rgba(33, 27, 20, 0.98), rgba(8, 9, 9, 0.98)); box-shadow: 0 20px 80px #000; text-align: center; }
+.az-hud-panel { pointer-events: auto; position: absolute; top: 50%; left: 50%; width: min(32rem, calc(100% - 2rem)); max-height: calc(100% - 2rem); overflow-y: auto; transform: translate(-50%, -50%); padding: 2rem; border: 1px solid var(--az-bronze-bright); background: linear-gradient(145deg, rgba(33, 27, 20, 0.98), rgba(8, 9, 9, 0.98)); box-shadow: 0 20px 80px #000; text-align: center; }
 .az-hud-panel::before { content: ""; position: absolute; inset: 0.35rem; border: 1px solid var(--az-bronze-dark); pointer-events: none; }
 .az-hud-panel-title { margin: 0 0 1rem; color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 2rem; letter-spacing: 0.12em; text-transform: uppercase; }
 .az-hud-panel-copy { margin: 0; color: var(--az-muted); line-height: 1.6; }
@@ -299,7 +305,20 @@
 @media (hover: hover) and (pointer: fine) { .az-touch-controls { display: none; } }
 @media (pointer: coarse) {
   .az-touch-controls { display: block; }
-  .az-fs-fab { right: calc(12rem + env(safe-area-inset-right)); }
+  /* The movement pad owns the bottom-left corner: lift the wrath meter and
+     the assist-mode switch above it, with a 44px minimum switch target. */
+  .az-hud-special { bottom: calc(12rem + env(safe-area-inset-bottom)); }
+  .az-hud-assist { bottom: calc(9.75rem + env(safe-area-inset-bottom)); min-width: 44px; min-height: 44px; }
+  .az-fs-fab { padding: 1rem 1.25rem; }
+}
+
+/* Short landscape screens: the announcer drops below the crosshair instead
+   of crossing the vitals, and the vitals stay compact. */
+@media (max-height: 520px) {
+  .az-hud-vitals { width: min(20rem, 38vw); padding: 0.5rem; }
+  .az-hud-meter { min-height: 1.4rem; }
+  .az-hud-blessings { max-height: 14vh; }
+  .az-hud-announcer { top: 66%; width: min(30rem, 60vw); font-size: 1rem; }
 }
 
 @media (max-width: 840px) {

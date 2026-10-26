@@ -64,7 +64,7 @@ function setMeter(meterNode, current, maximum) {
 }
 
 /** Build an independent, class-driven HUD. No inline styles are emitted. */
-export function createHud({ container, document: doc = globalThis.document } = {}) {
+export function createHud({ container, document: doc = globalThis.document, onAssistMode } = {}) {
   if (!container || !doc?.createElement) throw new TypeError('createHud requires a container and document');
 
   const root = element(doc, 'section', 'az-hud');
@@ -98,8 +98,14 @@ export function createHud({ container, document: doc = globalThis.document } = {
   const combo = element(doc, 'output', 'az-hud-combo', '');
   combo.setAttribute('aria-label', 'Combo');
   combo.hidden = true;
-  const assistChip = element(doc, 'p', 'az-hud-assist', 'ASSIST');
+  // The assist chip is a real control, not a label: touch players get no
+  // keyboard, so the touch-mode switch must be tappable in the HUD itself.
+  const assistChip = element(doc, 'button', 'az-hud-assist', 'ASSIST');
+  assistChip.setAttribute('type', 'button');
   assistChip.setAttribute('aria-label', 'Assist mode: Assist');
+  if (typeof onAssistMode === 'function' && typeof assistChip.addEventListener === 'function') {
+    assistChip.addEventListener('click', onAssistMode);
+  }
   const special = meter(doc, 'Wrath', 'az-hud-special');
   const crosshair = element(doc, 'div', 'az-hud-crosshair');
   crosshair.setAttribute('aria-hidden', 'true');
@@ -116,9 +122,12 @@ export function createHud({ container, document: doc = globalThis.document } = {
 
   // The blessings the player has claimed. Without this the player cannot see
   // what their build actually does, which makes the 12 blessings unreadable.
+  // The list lives inside the vitals panel, in flow below the meters, so a
+  // long late-run build grows the panel instead of covering the meters.
   const blessings = element(doc, 'ul', 'az-hud-blessings');
   blessings.setAttribute('aria-label', 'Claimed blessings');
   blessings.hidden = true;
+  vitals.append(blessings);
 
   const pause = element(doc, 'section', 'az-hud-panel az-hud-pause');
   pause.setAttribute('role', 'dialog');
@@ -132,7 +141,7 @@ export function createHud({ container, document: doc = globalThis.document } = {
   help.hidden = true;
   help.append(element(doc, 'h2', 'az-hud-panel-title', 'Controls'), element(doc, 'p', 'az-hud-panel-copy', 'Move: WASD / arrows · Attack: click / J · Shoot: K · Dash: Space · Guard: L · Wrath: E · Lock: Q · Assist: T · Interact: Enter · Help: H · Pause: Escape'));
 
-  root.append(top, boss.wrapper, combo, assistChip, special.wrapper, blessings, crosshair, vignette, lootFeed, announcer, pause, help);
+  root.append(top, boss.wrapper, combo, assistChip, special.wrapper, crosshair, vignette, lootFeed, announcer, pause, help);
   container.appendChild(root);
 
   const elements = {
