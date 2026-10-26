@@ -1,7 +1,7 @@
 import { APPS, appById } from './registry.js';
 
 const PINNED=Object.freeze(['news','videos','analytics','aizanoi','forge']);
-const DESKTOP=Object.freeze([...PINNED,'labs','markets','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','flowerseller','recycle-bin','workspace']);
+const DESKTOP=Object.freeze([...PINNED,'labs','markets','browser','notepad','web-editor','calculator','camera','winamp','games','dungeon','recycle-bin','workspace']);
 const PUBLIC_APPS=Object.freeze(APPS.map((app)=>app.id));
 const PHONE_DOCK=Object.freeze(['news','videos','analytics','aizanoi']);
 const PLATFORM_STYLE_HREF='/styles/shell.css';

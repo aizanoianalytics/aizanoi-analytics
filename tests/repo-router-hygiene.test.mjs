@@ -109,7 +109,7 @@ test('backtick-quoted repository paths in index.md routers resolve on disk', () 
     for (const [, token] of source.matchAll(repoRelative)) {
       // A leading `/` is a public route, not a repository path.
       if (token.startsWith('/')) continue;
-      // Globs, range/prose notation (`flower-01..15.webp`) and language
+      // Globs, range/prose notation (`image-01..15.webp`) and language
       // constructs that merely look like paths (`try/catch`) are not literals.
       if (/[*]/.test(token) || token.includes('..') || token === 'try/catch') continue;
       // A documented path may be written relative to the area it describes
