@@ -16,6 +16,7 @@ const UTILITY_WINDOW_PREFS=Object.freeze({
   'recycle-bin':Object.freeze({width:860,height:560,migrateWidth:940,migrateHeight:660}),
   markets:Object.freeze({width:960,height:720,migrateWidth:1040,migrateHeight:800}),
   dungeon:Object.freeze({width:960,height:640,migrateWidth:1080,migrateHeight:740}),
+    'snake-royale':Object.freeze({width:940,height:740,migrateWidth:1040,migrateHeight:820}),
   aizanoi:Object.freeze({width:1120,height:820,migrateWidth:1220,migrateHeight:900})
 });
 
