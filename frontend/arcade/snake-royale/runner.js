@@ -11,7 +11,10 @@
       const w = new Worker(new URL('bot-worker.js', document.baseURI).href);
       const ready = new Promise(res => {
         w.onmessage = ev => res(ev.data);
-        w.postMessage({ type: 'init', url: new URL(e.file, document.baseURI).href, seed: seed * 31 + i });
+        // The worker resolves the bot file itself from its own id: a URL taken from a
+        // message and handed to importScripts is a dynamic script load, which CodeQL
+        // (correctly) flags as an untrusted redirect sink.
+        w.postMessage({ type: 'init', id: e.id, seed: seed * 31 + i });
       });
       return { w, ready, ok: true };
     });

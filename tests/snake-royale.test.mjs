@@ -63,3 +63,17 @@ test('page code is CSP-safe (no eval, no inline script/style)', () => {
   assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>/);
   assert.doesNotMatch(html, /<style|\sstyle=/);
 });
+
+test('the worker resolves its own fighter file from a validated id, never a URL', () => {
+  const worker = load('bot-worker.js');
+  const runner = load('runner.js');
+  // A URL taken from a message and passed to importScripts is a dynamic script
+  // load; keeping it out of the message removes the sink instead of relying on
+  // CSP alone.
+  assert.doesNotMatch(worker, /importScripts\(\s*m\.url|importScripts\(\s*(url|href)\b/);
+  assert.match(worker, /importScripts\(`bots\/\$\{id\}\.js`\)/, 'the worker must build the path from the id');
+  assert.match(worker, /\^\[a-z0-9\]\[a-z0-9\.-\]\*\$/, 'the id must be validated before it becomes a path');
+  assert.doesNotMatch(runner, /postMessage\(\{[^}]*url:/, 'the runner must not hand a URL to the worker');
+  // Every manifest id must survive the worker's validation.
+  for (const b of bots) assert.match(b.id, /^[a-z0-9][a-z0-9.-]*$/, `${b.id} must be a valid fighter id`);
+});

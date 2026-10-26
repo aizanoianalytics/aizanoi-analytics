@@ -14,7 +14,12 @@ self.onmessage = (e) => {
     try {
       const r = SnakeEngine.rng(m.seed ^ 0x9e3779b9);
       Math.random = r; // seeded, so every match replays exactly
-      importScripts(m.url);
+      // Only a plain fighter id may decide which script is loaded, and it is
+      // resolved against this worker's own directory, so nothing from the page
+      // (or a tampered manifest) can point the import at another origin.
+      const id = String(m.id || '');
+      if (!/^[a-z0-9][a-z0-9.-]*$/.test(id) || id.includes('..')) throw new Error(`invalid fighter id: ${id}`);
+      importScripts(`bots/${id}.js`);
       const exp = self.module.exports;
       fn = (typeof exp === 'function' && exp) || (exp && typeof exp.move === 'function' && exp.move) ||
            (typeof self.move === 'function' && self.move);
