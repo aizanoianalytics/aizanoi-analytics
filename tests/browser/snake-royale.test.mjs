@@ -110,3 +110,36 @@ test('the AizanoiOS TV app mounts the same player inside its window', async () =
     assert.equal(await page.locator('.az-window .az-tv-frame iframe').count(), 1);
   });
 });
+
+test('the picker and the arena stay usable on a phone', async () => {
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+  const page = await context.newPage();
+  try {
+    await page.goto(`${base}/arcade/snake-royale/?qa=${Date.now()}`, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => typeof window.__SNAKE_ROYALE__ === 'function' && window.__SNAKE_ROYALE__().bots > 0, null, { timeout: 30000 });
+    const layout = await page.evaluate(() => {
+      const box = (sel) => { const el = document.querySelector(sel); const r = el.getBoundingClientRect(); return { w: Math.round(r.width), h: Math.round(r.height), visible: r.width > 0 && r.height > 0 }; };
+      return {
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        fight: box('#sr-fight'), canvas: box('#sr-canvas'), pickerA: box('#sr-a'), random: box('#sr-random'),
+        resultIsBelow: document.querySelector('#sr-result').getBoundingClientRect().top >= 0,
+      };
+    });
+    assert.ok(layout.overflow <= 1, `no horizontal overflow allowed on a phone, got ${layout.overflow}px`);
+    for (const [name, target] of Object.entries({ fight: layout.fight, canvas: layout.canvas, pickerA: layout.pickerA, random: layout.random })) {
+      assert.ok(target.visible, `${name} must be visible at 390px`);
+    }
+    // Touch targets a thumb can actually hit.
+    assert.ok(layout.fight.h >= 40 && layout.random.h >= 40, `fight/random hit area too small: ${layout.fight.h}/${layout.random.h}`);
+    // The fight control must be reachable without scrolling past the arena.
+    const fightTop = await page.locator('#sr-fight').evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+    assert.ok(fightTop < 900, `Fight must sit in the first screen, top=${Math.round(fightTop)}`);
+    await page.selectOption('#sr-speed', '0');
+    await page.locator('#sr-fight').tap({ timeout: 30000 });
+    await page.waitForFunction(() => window.__SNAKE_ROYALE__().result !== null, null, { timeout: 90000 });
+    assert.match(await page.evaluate(() => window.__SNAKE_ROYALE__().result), /wins|Draw/);
+  } finally {
+    await browser.close();
+  }
+});
