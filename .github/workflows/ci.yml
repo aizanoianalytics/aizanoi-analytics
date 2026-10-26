@@ -43,7 +43,7 @@ jobs:
         run: |
           npm ci --prefix tools/eslint --ignore-scripts --no-fund
           node scripts/ci/npm-audit-gate.mjs --prefix tools/eslint
-          ./tools/eslint/node_modules/.bin/eslint -c eslint.config.js frontend/js/v3 frontend/analytics frontend/worlds frontend/service-worker.js frontend/web-editor-preview/runner.js scripts tests
+          ./tools/eslint/node_modules/.bin/eslint -c eslint.config.js frontend/js/v3 frontend/analytics frontend/arcade frontend/worlds frontend/service-worker.js frontend/web-editor-preview/runner.js scripts tests
       - name: Validate module manifests and generated wiring
         run: node scripts/modules/build-module-registry.mjs --check
       - name: Build generated News surfaces
@@ -169,6 +169,12 @@ jobs:
           node --test tests/browser/dungeon-3d-victory.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-victory.log || status=1
           node --test tests/browser/dungeon-3d-shell-tokens.test.mjs 2>&1 | tee artifacts/diagnostics/dungeon-3d-shell-tokens.log || status=1
           exit $status
+      - name: Arcade and TV surface QA
+        env:
+          ANCIENT_WORLD_BASE_URL: 'http://127.0.0.1:4173'
+        run: |
+          set -o pipefail
+          node --test tests/browser/snake-royale.test.mjs 2>&1 | tee artifacts/diagnostics/snake-royale.log
       - name: Upload browser diagnostics
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a

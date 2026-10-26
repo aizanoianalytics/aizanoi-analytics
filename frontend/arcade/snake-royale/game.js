@@ -8,6 +8,7 @@
     wall: d => `${d.id} hit the wall`, storm: d => `${d.id} was swallowed by the storm`, starved: d => `${d.id} starved`, 'load-error': d => `${d.id} failed to start`,
   };
   let BOTS = [], byId = {}, token = 0, running = false;
+  const setRunning = on => { running = on; $('sr-fight').textContent = on ? 'Fighting…' : 'Fight'; };
 
   function el(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
   function fill(sel) { BOTS.forEach(b => { sel.appendChild(new Option(`${b.name}  ·  ${b.lab}`, b.id)); }); }
@@ -99,10 +100,10 @@
   }
 
   async function fight() {
-    const my = ++token; running = true;   // pressing Fight again restarts: the old loop sees a new token and stops
+    const my = ++token; setRunning(true);   // pressing Fight again restarts: the old loop sees a new token and stops
     const a = byId[$('sr-a').value], b = byId[$('sr-b').value];
     const res = $('sr-result'); res.hidden = true; $('sr-ticker').textContent = '';
-    if (a.id === b.id) { $('sr-ticker').textContent = 'Pick two different fighters.'; running = false; return; }
+    if (a.id === b.id) { $('sr-ticker').textContent = 'Pick two different fighters.'; setRunning(false); return; }
     const bestOf = +$('sr-series').value, need = Math.floor(bestOf / 2) + 1, delay = +$('sr-speed').value;
     const base = Math.floor(Math.random() * 1e6);
     const series = { n: 0, wins: { [a.id]: 0, [b.id]: 0 } };
@@ -117,14 +118,28 @@
       if (bestOf > 1 && my === token) await sleep(delay ? 1200 : 0);
     }
     if (my !== token) return;
-    running = false;
+    setRunning(false);
     const wa = series.wins[a.id], wb = series.wins[b.id];
     res.textContent = wa === wb ? `Draw ${wa}–${wb}` : `${wa > wb ? a.name : b.name} wins${bestOf > 1 ? ` ${Math.max(wa, wb)}–${Math.min(wa, wb)}` : ''}!`;
     res.hidden = false;
   }
 
   async function init() {
-    const r = await fetch('bots.json'); BOTS = (await r.json()).bots; BOTS.forEach(b => { byId[b.id] = b; });
+    let payload;
+    try {
+      const r = await fetch('bots.json', { cache: 'no-cache' });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      payload = await r.json();
+    } catch (err) {
+      // Without the manifest there is nothing to pick: say it on the page, keep
+      // the fight control disabled, and keep the reason in the console.
+      $('sr-ticker').textContent = 'The fighters could not be loaded. Check your connection and reload the page.';
+      $('sr-fight').disabled = true;
+      $('sr-random').disabled = true;
+      console.error('snake-royale: bots.json failed to load', err);
+      return;
+    }
+    BOTS = payload.bots; BOTS.forEach(b => { byId[b.id] = b; });
     fill($('sr-a')); fill($('sr-b')); roster();
     const q = new URLSearchParams(location.search);
     $('sr-a').value = byId[q.get('a')] ? q.get('a') : 'opus';
@@ -138,5 +153,11 @@
     draw(preview, colors); cards(view(preview), { wins: { [$('sr-a').value]: 0, [$('sr-b').value]: 0 } });
     if (q.get('autostart') === '1') fight();
   }
+  // Read-only QA handle: browser tests poll real state instead of timing canvas frames.
+  window.__SNAKE_ROYALE__ = () => ({
+    bots: BOTS.length, running, fighters: [$('sr-a').value, $('sr-b').value],
+    ticker: $('sr-ticker').textContent, result: $('sr-result').hidden ? null : $('sr-result').textContent,
+    cards: [...document.querySelectorAll('#sr-cards .sr-card')].map(card => card.textContent),
+  });
   init();
 })();

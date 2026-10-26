@@ -27,7 +27,7 @@ function move(state) {
     hazardRing = mx + 1;
   }
 
-  
+
   const predicted = [];
   const predictedShorter = new Set();
   for (const o of snakes) {
@@ -98,7 +98,7 @@ function move(state) {
 
     let score = 0;
 
-    
+
     let fatal = false;
     let killPotential = 0;
     for (const o of snakes) {
@@ -120,7 +120,7 @@ function move(state) {
     score += area * 3;
     if (area < newLen * 1.5) score -= 6000;
 
-    
+
     let oppSpace = 0;
     for (const o of snakes) {
       if (o.id === you.id) continue;
@@ -153,7 +153,7 @@ function move(state) {
     }
     score += bestFoodScore;
 
-    
+
     const ed = Math.min(c.x, c.y, W - 1 - c.x, H - 1 - c.y);
     if (ed <= hazardRing) score -= 100000;
     const turnsToShrink = nextShrink - turn;
@@ -161,7 +161,7 @@ function move(state) {
     const centerW = (turn > 120 || nextShrink - turn < 25) ? 1.1 : 0.35;
     score -= (Math.abs(c.x - (W - 1) / 2) + Math.abs(c.y - (H - 1) / 2)) * centerW;
 
-    
+
     for (const o of snakes) {
       if (o.id === you.id) continue;
       const d = Math.abs(o.head.x - c.x) + Math.abs(o.head.y - c.y);
@@ -172,7 +172,7 @@ function move(state) {
     }
     score += killPotential * 80;
     if (predictedShorter.has(c.x + "," + c.y)) score += 220;
-    
+
     let tailRisk = false;
     for (const o of snakes) {
       const t = o.body[o.body.length - 1];

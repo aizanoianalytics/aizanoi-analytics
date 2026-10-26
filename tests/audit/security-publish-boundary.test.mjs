@@ -66,6 +66,8 @@ const ALLOWED_JSON = [
   /\/js\/v3\/apps\/web-editor\/manifest\.json$/,
   /\/js\/v3\/apps\/workspace\/manifest\.json$/,
   /\/js\/v3\/apps\/winamp\/manifest\.json$/,
+  // AI Snake Royale publishes its fighter manifest as static data the page fetches.
+  /\/arcade\/snake-royale\/bots\.json$/,
 ];
 
 test('denylist: no source or workbook files enter frontend', () => {

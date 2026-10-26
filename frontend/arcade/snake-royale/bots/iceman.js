@@ -20,16 +20,16 @@ let lastMove = null;
 
 function move(state) {
   const { turn, width: W, height: H, you, snakes, food, hazards, nextShrinkTurn } = state;
-  
+
   const myHead = you.head;
   const myLength = you.length;
   const myHealth = you.health;
-  
+
   // Build blocked set for current positions (bodies except maybe tails that will move)
   // But need to be precise - tail moves away if not eaten
   const blockedNow = new Set();
   const blockedNext = new Set(); // for next turn prediction
-  
+
   // For each snake, determine if tail will be removed next turn
   snakes.forEach(snake => {
     const isMe = snake.id === you.id;
@@ -43,7 +43,7 @@ function move(state) {
       // We can't perfectly predict others' moves, but be conservative for ourselves
       if (idx === snake.body.length - 1) {
         // For our own snake, we know if we'll eat based on our move
-        // For others, assume they might eat (conservative) or might not - safer to assume tail stays? 
+        // For others, assume they might eat (conservative) or might not - safer to assume tail stays?
         // Or easier to just block all body cells for collision avoidance and be careful
         // The engine says "Tails move away on the same turn, except the tail of a snake that just ate"
         // So tail cell becomes free if NOT eaten. To be safe, we should NOT treat current tail as blocked
@@ -54,12 +54,12 @@ function move(state) {
       }
     });
   });
-  
+
   // Also add hazards
   hazards.forEach(p => {
     blockedNow.add(p.x + ',' + p.y);
   });
-  
+
   // Find safe moves from current position
   const possibleMoves = [];
   for (const dirName of ['up', 'down', 'left', 'right']) {
@@ -70,18 +70,18 @@ function move(state) {
     const [dx, dy] = DIRS[dirName];
     const nx = myHead.x + dx;
     const ny = myHead.y + dy;
-    
+
     // Check walls
     if (nx < 0 || nx >= W || ny < 0 || ny >= H) {
       continue;
     }
-    
+
     // Check if hitting hazard
     const isHazard = hazards.some(h => h.x === nx && h.y === ny);
     if (isHazard) {
       continue;
     }
-    
+
     // Check if hitting any body (be conservative - assume tails don't move for safety in most cases)
     let willHitBody = false;
     for (const snake of snakes) {
@@ -115,7 +115,7 @@ function move(state) {
       if (willHitBody) break;
     }
     if (willHitBody) continue;
-    
+
     // Check head-to-head
     let headToHeadDanger = false;
     for (const snake of snakes) {
@@ -143,7 +143,7 @@ function move(state) {
       // Be cautious
       continue;
     }
-    
+
     possibleMoves.push({
       dir: dirName,
       x: nx,
@@ -153,41 +153,41 @@ function move(state) {
       space: 0 // will calculate
     });
   }
-  
+
   if (possibleMoves.length === 0) {
     // Must make a move even if bad - try to go straight
     if (lastMove && lastMove !== OPPOSITE[lastMove]) return lastMove;
     return 'up';
   }
-  
+
   // Calculate reachable space for each move using flood fill
   for (const move of possibleMoves) {
     move.space = getReachableSpace(move.x, move.y, state, move.dir);
   }
-  
+
   // Filter out moves that lead to trapped spaces smaller than our body (accounting for growth)
   const safeSpaceMoves = possibleMoves.filter(m => {
     // We need at least enough space to survive; if we might eat soon maybe less critical
     const minSpace = myLength + 2; // buffer
     return m.space >= minSpace;
   });
-  
+
   const candidateMoves = safeSpaceMoves.length > 0 ? safeSpaceMoves : possibleMoves;
-  
+
   // Decide strategy based on game state
   // Late game - avoid storm, prioritize survival
   const stormClosing = turn >= nextShrinkTurn - 10 || hazardRingApproaching(state);
-  
+
   // Score each move
   let bestMove = candidateMoves[0];
   let bestScore = -Infinity;
-  
+
   for (const move of candidateMoves) {
     let score = 0;
-    
+
     // Survival is top priority
     score += move.space * 10;
-    
+
     // Avoid edges if storm coming
     if (stormClosing) {
       if (move.isNearEdge) score -= 50;
@@ -195,7 +195,7 @@ function move(state) {
       const distFromCenter = Math.abs(move.x - Math.floor(W/2)) + Math.abs(move.y - Math.floor(H/2));
       score -= distFromCenter * 2;
     }
-    
+
     // Food seeking
     if (myHealth < 60) {
       // Low health - prioritize food heavily
@@ -209,11 +209,11 @@ function move(state) {
         score -= move.distToFood * 1;
       }
     }
-    
+
     // Try to control center
     const centerDist = Math.abs(move.x - Math.floor(W/2)) + Math.abs(move.y - Math.floor(H/2));
     score -= centerDist * 0.5;
-    
+
     // Avoid getting boxed in by others
     // Prefer moves away from other long snakes
     for (const snake of snakes) {
@@ -225,7 +225,7 @@ function move(state) {
         }
       }
     }
-    
+
     // If we're long and others are shorter, be aggressive
     const longerThanMe = snakes.filter(s => s.id !== you.id && s.length > myLength).length;
     const shorterThanMe = snakes.filter(s => s.id !== you.id && s.length < myLength).length;
@@ -233,13 +233,13 @@ function move(state) {
       // Can be a bit more aggressive
       score += 5;
     }
-    
+
     if (score > bestScore) {
       bestScore = score;
       bestMove = move;
     }
   }
-  
+
   lastMove = bestMove.dir;
   return bestMove.dir;
 }
@@ -269,11 +269,11 @@ function getReachableSpace(startX, startY, state, moveDir) {
   const queue = [[startX, startY]];
   visited.add(startX + ',' + startY);
   let count = 0;
-  
+
   // Build blocked set for this simulation
   const blocked = new Set();
   hazards.forEach(p => blocked.add(p.x + ',' + p.y));
-  
+
   // Block all snake bodies (conservative)
   snakes.forEach(snake => {
     snake.body.forEach((p, idx) => {
@@ -295,7 +295,7 @@ function getReachableSpace(startX, startY, state, moveDir) {
       }
     });
   });
-  
+
   let head = 0;
   while (head < queue.length && count < 200) { // limit to avoid timeout
     const [x, y] = queue[head++];

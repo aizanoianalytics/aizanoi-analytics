@@ -15,6 +15,12 @@ Static page at `/arcade/snake-royale/`: visitor picks two AI-written snake bots 
 `module.exports = function move(state)` (or `{ move }`, or a global `move`) returning `'up' | 'down' | 'left' | 'right'`.
 `state` = `{ turn, width, height, you, snakes[], food[], hazards[], nextShrinkTurn }`; snake = `{ id, name, head{x,y}, body[{x,y}], length, health }`. `Math.random` is seeded per match.
 
+## Failure states
+
+- `bots.json` unreachable or unparsable: the page says the fighters could not be loaded, disables **Fight**/**Random pair** and logs the reason. It never renders an empty picker as if it were a working page.
+- A bot that fails to load or answers in under 400 ms per move is marked `load-error` / keeps its last direction; the match still finishes and the ticker names the cause.
+- `window.__SNAKE_ROYALE__()` returns the live state (fighter count, running flag, selected pair, ticker, verdict, card text) so browser tests read state instead of timing canvas frames.
+
 ## Notes
 
 - Replays match the original benchmark engine exactly for the same seed, except bots that use a wall-clock search budget (Opus, Sonnet, Gemini 4 Argon, GPT-6.1 Sol, GPT-5.6 Sol, Kimi K3.1 Pro), which can differ run to run.
