@@ -18,6 +18,7 @@ const canonicalBase = [
   '/analytics/dashboards/new-hr-collection/pacs/',
   '/analytics/dashboards/new-hr-collection/recruitment-analytics/',
   '/worlds/', '/forge/', '/journal/', '/labs/', '/arcade/',
+ '/arcade/snake-royale/',
   '/worlds/aizanoi-225/'
 ];
 const canonical = [
