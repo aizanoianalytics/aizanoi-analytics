@@ -8,6 +8,7 @@ for (const [name, viewport, launcher] of [
   ['desktop', { width: 1440, height: 900 }, '.az-desktop-shortcut[data-app="snake-royale"]:visible'],
   ['tablet', { width: 834, height: 1112 }, '.az-tablet-app[data-app="snake-royale"]:visible'],
   ['phone', { width: 390, height: 844 }, '.az-phone-app[data-app="snake-royale"]:visible'],
+  ['compact', { width: 320, height: 568 }, '.az-phone-app[data-app="snake-royale"]:visible'],
 ]) {
   test(`Snake Royale opens as an in-shell ${name} app and releases workers on close`, async () => {
     const browser = await chromium.launch({ headless: true });
@@ -43,10 +44,27 @@ for (const [name, viewport, launcher] of [
       }));
       assert.ok(metrics.canvas > 100 && metrics.content > 200, JSON.stringify(metrics));
       assert.ok(metrics.overflow <= 1, JSON.stringify(metrics));
+      const geometry = await win.evaluate(el => {
+        const bounds = el.querySelector('[data-app-body]').getBoundingClientRect();
+        return ['canvas', '[data-cards]', '[data-ticker]'].map(selector => {
+          const r = el.querySelector(selector).getBoundingClientRect();
+          return { selector, top: r.top, bottom: r.bottom, limit: bounds.bottom, visible: r.top >= bounds.top && r.bottom <= bounds.bottom + 1 };
+        });
+      });
+      assert.ok(geometry.every(item => item.visible), JSON.stringify(geometry));
+      assert.match(await win.locator('[data-cards]').innerText(), /A ·/);
+      assert.match(await win.locator('[data-cards]').innerText(), /B ·/);
+      assert.equal(await win.locator('.sr-app-card[data-fighter=A]').count(), 1);
+      assert.equal(await win.locator('.sr-app-card[data-fighter=B]').count(), 1);
       await win.locator('[name=speed]').selectOption('0');
       await win.getByRole('button', { name: 'Fight', exact: true }).click();
       await win.locator('[data-result]:visible').waitFor({ timeout: 90000 });
       assert.match(await win.locator('[data-result]').textContent(), /wins|Draw/);
+      await win.locator('[name=b]').selectOption(await win.locator('[name=a]').inputValue());
+      await win.getByRole('button', { name: 'Fight', exact: true }).click();
+      assert.equal(await win.locator('[data-result]').isVisible(), false, 'invalid pair clears the previous winner');
+      await win.locator('[data-ticker]').getByText('Pick two different fighters.').waitFor();
+      await win.locator('[data-random]').click();
       await win.getByRole('button', { name: 'Fight', exact: true }).click();
       await page.waitForFunction(() => window.__snakeWorkers.length >= 4);
       await win.locator('[data-action="close"]').click();
@@ -68,5 +86,9 @@ test('unavailable fighter roster disables the game inside the shell', async () =
     await win.locator('[data-ticker]').getByText(/could not be loaded/i).waitFor({ timeout: 30000 });
     assert.equal(await win.getByRole('button', { name: 'Fight' }).isDisabled(), true);
     assert.equal(await win.getByRole('button', { name: 'Random pair' }).isDisabled(), true);
+    assert.equal(await win.locator('[name=a]').isDisabled(), true);
+    assert.equal(await win.locator('[name=b]').isDisabled(), true);
+    await win.getByRole('button', { name: 'Retry' }).click();
+    await win.locator('[data-ticker]').getByText(/could not be loaded/i).waitFor({ timeout: 30000 });
   } finally { await browser.close(); }
 });

@@ -895,28 +895,28 @@
 }
 
 .az-tv-app{height:100%;max-height:100%}
-.az-tv-media{display:flex;flex-direction:column;gap:16px;background:#f1f5fb}
-.az-tv-stage{padding:clamp(18px,2.5vw,30px);border-radius:20px;background:radial-gradient(circle at 94% 4%,rgba(102,140,207,.22),transparent 40%),linear-gradient(145deg,#111e35,#111926 76%);color:#edf3fb;box-shadow:0 18px 48px rgba(19,39,72,.12)}
-.az-tv-stage-head{display:flex;justify-content:space-between;gap:15px;margin-bottom:18px}
+.az-tv-media{display:flex;flex-direction:column;gap:6px;background:#f1f5fb;padding:10px 10px 6px}
+.az-tv-stage{padding:clamp(12px,1.5vw,16px);border-radius:20px;background:radial-gradient(circle at 94% 4%,rgba(102,140,207,.22),transparent 40%),linear-gradient(145deg,#111e35,#111926 76%);color:#edf3fb;box-shadow:0 18px 48px rgba(19,39,72,.12)}
+.az-tv-stage-head{display:flex;justify-content:space-between;gap:15px;margin-bottom:10px}
 .az-tv-overline,.az-tv-stage-side>span{color:#aac8ed;font:700 11px/1.4 var(--az-font-ui);letter-spacing:.16em}
-.az-tv-stage-head h2{margin:7px 0 4px;color:#fff;font:700 clamp(24px,2.5vw,34px)/1.15 var(--az-font-ui);letter-spacing:-.03em}
+.az-tv-stage-head h2{margin:4px 0 4px;color:#fff;font:700 clamp(24px,2.5vw,34px)/1.15 var(--az-font-ui);letter-spacing:-.03em}
 .az-tv-stage-head p{margin:0;color:#bfd0e2;font-size:13px}
-.az-tv-stage-mark{width:48px;height:48px;flex:none;display:grid;place-items:center;border:1px solid rgba(255,255,255,.25);border-radius:15px;background:rgba(255,255,255,.06);font:700 24px/1 var(--az-font-ui);transform:rotate(-7deg)}
-.az-tv-stage-grid{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(190px,.7fr);gap:clamp(14px,2vw,26px)}
+.az-tv-stage-mark{width:42px;height:42px;flex:none;display:grid;place-items:center;border:1px solid rgba(255,255,255,.25);border-radius:14px;background:rgba(255,255,255,.06);font:700 22px/1 var(--az-font-ui);transform:rotate(-7deg)}
+.az-tv-stage-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(220px,.85fr);gap:clamp(10px,1.5vw,16px)}
 .az-tv-player{min-width:0}
 .az-tv-frame{position:relative;aspect-ratio:16/9;overflow:hidden;border:1px solid rgba(255,255,255,.22);border-radius:14px;background:#0f1526;box-shadow:0 13px 30px rgba(0,0,0,.27)}
 .az-tv-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.az-tv-player p{margin:11px 0 0;color:#c6d5e5;font-size:12px;line-height:1.55}
+.az-tv-player p{margin:4px 0 0;color:#c6d5e5;font-size:12px;line-height:1.5}
 .az-tv-player p a{color:#fff;text-underline-offset:3px}
-.az-tv-stage-side{display:flex;flex-direction:column;gap:10px;min-width:0;padding:10px 0}
-.az-tv-stage-side h3{margin:5px 0 0;color:#fff;font:700 clamp(20px,2vw,28px)/1.17 var(--az-font-ui)}
-.az-tv-stage-side p{margin:0 0 5px;color:#bfd0e2;font:400 12px/1.5 var(--az-font-ui)}
+.az-tv-stage-side{display:flex;flex-direction:column;gap:8px;min-width:0}
+.az-tv-stage-side h3{margin:2px 0 0;color:#fff;font:700 clamp(20px,2vw,28px)/1.17 var(--az-font-ui)}
+.az-tv-stage-side p{margin:0 0 2px;color:#bfd0e2;font:400 12px/1.5 var(--az-font-ui)}
 .az-tv-stage-side a{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;padding:9px 12px;border:1px solid rgba(210,226,247,.35);border-radius:10px;color:#fff;font:700 12px var(--az-font-ui);text-decoration:none}
 .az-tv-stage-side a:first-of-type{margin-top:auto;border-color:transparent;background:#e5f0ff;color:#152946}
 .az-tv-stage-side a:hover{background:rgba(255,255,255,.14)}
 .az-tv-stage-side a:first-of-type:hover{background:#fff}
 .az-tv-stage-side a:focus-visible,.az-tv-player p a:focus-visible{outline:3px solid #83bfff;outline-offset:3px}
-.az-tv-related{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:2px 4px 12px}
+.az-tv-related{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:2px 4px 4px;flex:none}
 .az-tv-related>span{margin-right:auto;color:#4b5c75;font:700 12px var(--az-font-ui)}
 @media(max-width:750px){.az-tv-media{padding:12px}.az-tv-stage-grid{grid-template-columns:1fr}.az-tv-stage-side{padding:4px 0}.az-tv-stage-side a:first-of-type{margin-top:0}}
 @media(max-width:520px){.az-tv-stage{padding:15px;border-radius:14px}.az-tv-stage-mark{width:38px;height:38px;font-size:19px}.az-tv-frame{border-radius:9px}.az-tv-related>span{flex:0 0 100%}}
