@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-26-anthropic-elvis-training-lawsuit",
+  "title": "Anthropic faces a copyright claim over music used in AI training",
+  "summary": "Anthropic is facing a lawsuit alleging that 274 Elvis Presley songs were used in training AI models. The case adds another high-profile test of how courts may treat copyrighted music in model development, although the complaint’s allegations are not a final finding.",
+  "category": "ai",
+  "priority": 68,
+  "publishedAt": "2026-10-26T05:00:00Z",
+  "updatedAt": "2026-10-26T05:00:00Z",
+  "retrievedAt": "2026-10-26T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "CommonWealth Magazine",
+      "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5rZGhyME1GNHg0dHVjLWx6ZXJWbUMtTURkOTdmQ2dGSE5LOUUtckpGclBMekpjdk9GMXdocEc3cGt3cmEzWG9jOFZCUG0tRnR6QVQ2eGloRmxFeEt6VzlzaHNhemtLdm8?oc=5",
+      "publishedAt": "2026-10-26T03:17:23Z"
+    }
+  ],
+  "kind": "daily"
+}
