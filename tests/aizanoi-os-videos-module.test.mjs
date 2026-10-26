@@ -36,6 +36,13 @@ test('Aizanoi TV private code uses narrow app navigation instead of shell API', 
   assert.doesNotMatch(adapter, /AIZANOI_OS|shell\.js/);
 });
 
+test('Aizanoi TV presents real channel actions rather than imaginary series cards', () => {
+  assert.match(privateApp, /az-tv-stage/);
+  assert.match(privateApp, /youtube-nocookie\.com\/embed\/videoseries/);
+  assert.match(privateApp, /youtube\.com\/@heyaizo\/videos/);
+  assert.doesNotMatch(privateApp, /Series coming soon/);
+});
+
 test('Aizanoi TV cleanup removes its module-owned listener', () => {
   assert.match(privateApp, /addEventListener\('click', handleClick\)/);
   assert.match(privateApp, /removeEventListener\('click', handleClick\)/);
