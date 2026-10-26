@@ -5,7 +5,7 @@ import { existsSync, readFileSync } from 'node:fs';
 const read = (file) => readFileSync(file, 'utf8');
 const origin = 'https://aizanoianalytics.com';
 const landings = {
-  tv: { app:'videos', title:'Aizanoi TV', phrase:'Coming Soon' },
+  tv: { app:'videos', title:'Aizanoi TV', phrase:'YouTube' },
   analytics: { app:'analytics', title:'Analytics', phrase:'Aizanoi Markets' },
   worlds: { app:'aizanoi', title:'Aizanoi', phrase:'Temple of Zeus' },
   forge: { app:'forge', title:'Aizanoi Forge', phrase:'Source' },
@@ -65,11 +65,11 @@ test('product routes are static, indexable landing documents with shared News-fi
   }
 });
 
-test('TV truthfully advertises a future companion without fabricated videos', () => {
+test('TV embeds the real channel uploads through the privacy-enhanced player', () => {
   const html = read('frontend/tv/index.html');
-  assert.match(html, /future English-language YouTube channel companion/i);
-  assert.match(html, /No videos have been published here yet/i);
-  assert.doesNotMatch(html, /<iframe|youtube\.com\/embed|youtu\.be\//i);
+  assert.match(html, /youtube-nocookie\.com\/embed\/videoseries\?list=UUTurwASTgEY2NrivXpkKPmA/);
+  assert.match(html, /youtube\.com\/@heyaizo/);
+  assert.doesNotMatch(html, /No videos have been published|Coming Soon/i);
 });
 
 test('secondary product placeholders state their current status honestly', () => {
