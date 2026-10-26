@@ -52,7 +52,7 @@ test('Unified multi-file dropzone routes every workbook by header schema', () =>
 test('Local recruitment upload and unified upload share one workbook parser', () => {
   assert.match(html, /async function ingestRecruitmentWorkbook\(buffer, sourceName\)/);
   assert.match(html, /const RECRUITMENT_WORKBOOK_HEADERS = Object\.freeze\(\["check_area", \.\.\.FIELD_KEYS\]\)/);
-  assert.match(html, /invalidHeaders[\s\S]*?Recruitment workbook headers do not match the required A.Q schema/);
+  assert.match(html, /invalidHeaders[\s\S]*?İşe alım dosyasının başlıkları beklenen A–Q yapısına uymuyor/);
   const localStart = html.indexOf('async function handleExcelFile');
   const localFn = html.slice(localStart, localStart + 800);
   assert.match(localFn, /handleUnifiedExcelFiles\(\[file\], \$\("#importResult"\)\)/);
@@ -62,7 +62,7 @@ test('Local recruitment upload and unified upload share one workbook parser', ()
 
 test('Batch import is guarded, size-gated, and honest about same-kind overwrites', () => {
   assert.match(html, /let unifiedImportRunning = false/);
-  assert.match(html, /Import already running, please wait/);
+  assert.match(html, /Yükleme sürüyor, lütfen bekleyin/);
   assert.match(html, /const UNIFIED_MAX_BYTES = 50 \* 1024 \* 1024/);
   assert.match(html, /50MB sınırını aşıyor/);
   assert.match(html, /üzerine yazıldı: aynı türden son dosya geçerli/);

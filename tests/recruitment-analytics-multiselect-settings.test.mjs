@@ -31,10 +31,10 @@ test("Recruitment Settings exposes adjacent Included and Excluded controls", () 
   assert.match(html, /data-view-panel="settings"/);
   assert.match(html, /data-settings-dimension="unit"/);
   assert.match(html, /data-settings-dimension="position_name"/);
-  assert.match(html, />Included</);
-  assert.match(html, />Excluded</);
-  assert.match(html, /Exclude selected →/);
-  assert.match(html, /← Include selected/);
+  assert.match(html, />Dahil</);
+  assert.match(html, />Hariç</);
+  assert.match(html, /Seçilenleri hariç tut →/);
+  assert.match(html, /← Seçilenleri dahil et/);
   assert.match(html, /id="resetRecruitmentExclusions"/);
 });
 
