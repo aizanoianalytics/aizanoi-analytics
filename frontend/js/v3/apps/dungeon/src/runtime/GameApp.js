@@ -263,13 +263,13 @@ export class GameApp {
     this.menu.append(node('p', 'az-dungeon-menu-sub', 'Aizo awakens beneath the temple. Survive the descent, claim the blessing, enter the portal.'));
     this.beginButton = makeButton('az-dungeon-begin', 'Begin', () => this.begin());
     this.menu.append(this.beginButton);
-    this.dailyButton = makeButton('az-dungeon-begin az-dungeon-daily', `Daily descent · ${this.dailySeed}`, () => this.beginDaily());
+    this.dailyButton = makeButton('az-dungeon-menu-option az-dungeon-daily', `Daily descent · ${this.dailySeed}`, () => this.beginDaily());
     this.dailyButton.setAttribute('aria-label', `Start the daily descent, seed ${this.dailySeed}`);
     this.menu.append(this.dailyButton);
-    this.newSeedButton = makeButton('az-dungeon-begin az-dungeon-new-seed', 'New descent', () => this.begin(`aizo-${Date.now()}`));
+    this.newSeedButton = makeButton('az-dungeon-menu-option az-dungeon-new-seed', 'New descent', () => this.begin(`aizo-${Date.now()}`));
     this.newSeedButton.setAttribute('aria-label', 'Start a new descent with a fresh seed');
     this.menu.append(this.newSeedButton);
-    this.settingsButton = makeButton('az-dungeon-begin az-dungeon-settings-open', 'Settings', () => this.showSettings());
+    this.settingsButton = makeButton('az-dungeon-menu-option az-dungeon-settings-open', 'Settings', () => this.showSettings());
     this.settingsButton.setAttribute('aria-label', 'Open dungeon settings');
     this.menu.append(this.settingsButton);
     // The 2D build offered "Continue" on the menu. If a saved run exists,
@@ -555,6 +555,9 @@ export class GameApp {
       get settings() { return Object.freeze({ ...(app.settings || {}) }); },
       get arenaBuilt() { return app.arenaBuilt; },
       get slowMo() { return (app.slowMoUntil || 0) > performance.now(); },
+      get spawnMarkers() { return app.spawnMeshes ? app.spawnMeshes.size : 0; },
+      get hazardMarkers() { return app.hazardMeshes ? app.hazardMeshes.size : 0; },
+      get eliteMarkers() { return app.eliteMeshes ? app.eliteMeshes.size : 0; },
       get buffs() { return { blessings: [...app.state.blessings], levels: { ...(app.state.blessingLevels || {}) }, duos: [...(app.state.duos || [])], specialCharge: app.state.player.specialCharge }; },
       get status() { return { pendingSpawns: (app.state.pendingSpawns || []).length, live: app.state.enemies.filter((e) => !e.dead).length, guardUntil: app.state.player.guardUntil, time: app.state.time, arena: app.state.arena, marks: app.meta?.marks || 0 }; },
       qaRetrySeed() { const seed = app.state.seed; app.state = createGameState(seed); app.syncWorld(); app.updateHud(); return { seed }; },
@@ -590,6 +593,39 @@ export class GameApp {
         app.touchMove = { x: horizontal, z: -vertical };
         app.qaWalk = { targetId: enemyId, until: app.state.time + 12 };
         return { moved: true, distance: length };
+      },
+      /** Walk toward a world coordinate with the real movement input. */
+      qaWalkTo(x, z) {
+        const player = app.state.player.position;
+        const dx = x - player.x;
+        const dz = z - player.z;
+        const length = Math.hypot(dx, dz) || 1;
+        if (length <= 0.6) { app.touchMove = null; app.qaWalkCoord = null; return { arrived: true, distance: length }; }
+        const forward = new THREE.Vector3();
+        app.camera.getWorldDirection(forward);
+        forward.y = 0;
+        forward.normalize();
+        const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0));
+        const worldX = dx / length;
+        const worldZ = dz / length;
+        const horizontal = worldX * right.x + worldZ * right.z;
+        const vertical = worldX * forward.x + worldZ * forward.z;
+        app.touchMove = { x: horizontal, z: -vertical };
+        app.qaWalkCoord = { x, z, until: app.state.time + 12 };
+        return { arrived: false, distance: length };
+      },
+      /**
+       * The current interactable: the unopened chest's position, else the
+       * portal's, else null. Read-only; the player still walks there for real.
+       */
+      get objective() {
+        const chest = app.state.chests.find((item) => !item.opened);
+        if (chest) {
+          const position = app.chestPositions.get(chest.id) || chest.position;
+          if (position) return { kind: 'chest', x: position.x, z: position.z };
+        }
+        if (app.portal) return { kind: 'portal', x: app.portal.position.x, z: app.portal.position.z };
+        return null;
       },
       /**
        * Keep walking toward the target until it is in melee reach, so a
@@ -638,6 +674,11 @@ export class GameApp {
         app.state.player.position.z = position.z;
         const result = openChest(app.state, chest.id);
         if (result.blessing) chooseBlessing(app.state, result.blessing);
+        // The exit portal is runtime state, not serialized: materialize it
+        // the way the chest-open path does, or the run stalls between waves.
+        if (result.opened && app.state.portal?.pending && app.state.portal.position) {
+          app.spawnPortal(app.state.portal.position);
+        }
         app.persistRun();
         app.syncWorld();
         app.updateHud();
@@ -1078,6 +1119,10 @@ export class GameApp {
     // A QA walk keeps steering the player toward its target until the target
     // is in reach or the walk times out.
     if (this.qaWalk) this.qaHandle.qaCloseIn();
+    if (this.qaWalkCoord) {
+      const gap = Math.hypot(this.qaWalkCoord.x - this.state.player.position.x, this.qaWalkCoord.z - this.state.player.position.z);
+      if (gap <= 0.6 || this.state.time > this.qaWalkCoord.until) { this.qaWalkCoord = null; this.touchMove = null; }
+    }
     const input = this.movementInput();
     this.pollGamepad(input);
     input.attack = this.pendingAttack || this.keys.has('KeyJ');
@@ -1257,6 +1302,14 @@ export class GameApp {
       this.hero.position.y = moving ? Math.abs(Math.sin(this.heroStride)) * 0.09 : Math.sin(now / 900) * 0.02;
       const lunge = this.lastMeleeAt && now - this.lastMeleeAt < 180 ? 1.1 : 1;
       this.hero.scale.set(lunge, 1 / Math.sqrt(lunge), lunge);
+      if (!this.heroRing) {
+        this.heroRing = new THREE.Mesh(this.telegraphResources().geometry, this.heroRingMaterial());
+        this.heroRing.rotation.x = -Math.PI / 2;
+        this.heroRing.userData.heroMarker = true;
+        this.dynamic.add(this.heroRing);
+      }
+      this.heroRing.position.set(this.state.player.position.x, 0.06, this.state.player.position.z);
+      this.heroRing.scale.setScalar(1.2);
     }
     const alive = new Set();
     if (!this.eliteMeshes) this.eliteMeshes = new Map();
@@ -1291,6 +1344,21 @@ export class GameApp {
         }
         ring.position.set(enemy.x, 0.08, enemy.z);
         ring.scale.setScalar(1.5);
+      } else {
+        // Every enemy grounds itself: a dim ember ring so dark bodies never
+        // merge with the floor, even where no windup telegraph is drawn.
+        elitesAlive.add(enemy.id);
+        let ring = this.eliteMeshes.get(enemy.id);
+        if (!ring || ring.userData.eliteMarker) {
+          ring?.removeFromParent?.();
+          ring = new THREE.Mesh(this.telegraphResources().geometry, this.groundMaterial());
+          ring.rotation.x = -Math.PI / 2;
+          ring.userData.eliteMarker = '';
+          this.eliteMeshes.set(enemy.id, ring);
+          this.dynamic.add(ring);
+        }
+        ring.position.set(enemy.x, 0.05, enemy.z);
+        ring.scale.setScalar(1.1);
       }
     }
     for (const [id, mesh] of this.enemyMeshes) {
@@ -1359,6 +1427,30 @@ export class GameApp {
       this.materials.add(material);
     }
     return material;
+  }
+
+  /** The shared dim grounding ring under ordinary enemies. */
+  groundMaterial() {
+    if (!this.groundShared) {
+      this.groundShared = new THREE.MeshBasicMaterial({
+        color: COLORS.ember, transparent: true, opacity: 0.35,
+        side: THREE.DoubleSide, depthWrite: false,
+      });
+      this.materials.add(this.groundShared);
+    }
+    return this.groundShared;
+  }
+
+  /** The hero's own grounding ring: bright gold, so Aizo never gets lost. */
+  heroRingMaterial() {
+    if (!this.heroRingShared) {
+      this.heroRingShared = new THREE.MeshBasicMaterial({
+        color: COLORS.gold, transparent: true, opacity: 0.55,
+        side: THREE.DoubleSide, depthWrite: false,
+      });
+      this.materials.add(this.heroRingShared);
+    }
+    return this.heroRingShared;
   }
 
   syncTelegraphs() {

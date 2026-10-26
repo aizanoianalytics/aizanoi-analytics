@@ -70,6 +70,8 @@
 .az-fs-fab,
 .az-dungeon-exit,
 .az-dungeon-begin,
+.az-dungeon-menu-option,
+.az-dungeon-settings-fab,
 .az-play-anyway,
 .az-touch-action {
   border: 1px solid var(--az-bronze-bright);
@@ -86,6 +88,8 @@
 .az-fs-fab:hover,
 .az-dungeon-exit:hover,
 .az-dungeon-begin:hover,
+.az-dungeon-menu-option:hover,
+.az-dungeon-settings-fab:hover,
 .az-play-anyway:hover,
 .az-touch-action:hover { border-color: var(--az-focus); background: linear-gradient(180deg, #50391f, #22170d); }
 
@@ -269,7 +273,7 @@
 .az-hud-loot-feed { position: absolute; right: calc(1rem + env(safe-area-inset-right)); bottom: calc(1rem + env(safe-area-inset-bottom)); width: min(22rem, 45vw); margin: 0; padding: 0; list-style: none; text-align: right; }
 .az-hud-loot-item { margin-top: 0.35rem; padding: 0.5rem 0.7rem; border-right: 2px solid var(--az-bronze-bright); background: linear-gradient(90deg, transparent, rgba(18, 14, 9, 0.88)); color: var(--az-ivory); animation: az-loot-in 240ms ease-out both; }
 @keyframes az-loot-in { from { opacity: 0; transform: translateX(1rem); } }
-.az-hud-announcer { position: absolute; left: 50%; top: 18%; width: min(38rem, 85vw); transform: translateX(-50%); color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 1.25rem; font-weight: 800; text-align: center; text-transform: uppercase; }
+.az-hud-announcer { position: absolute; left: 50%; top: 30%; width: min(38rem, 85vw); transform: translateX(-50%); color: var(--az-bronze-bright); font-family: Georgia, serif; font-size: 1.25rem; font-weight: 800; text-align: center; text-transform: uppercase; }
 
 .az-hud-panel { pointer-events: auto; position: absolute; top: 50%; left: 50%; width: min(32rem, calc(100% - 2rem)); max-height: calc(100% - 2rem); overflow-y: auto; transform: translate(-50%, -50%); padding: 2rem; border: 1px solid var(--az-bronze-bright); background: linear-gradient(145deg, rgba(33, 27, 20, 0.98), rgba(8, 9, 9, 0.98)); box-shadow: 0 20px 80px #000; text-align: center; }
 .az-hud-panel::before { content: ""; position: absolute; inset: 0.35rem; border: 1px solid var(--az-bronze-dark); pointer-events: none; }
@@ -338,6 +342,9 @@
   .az-hud-top { flex-direction: column; right: auto; }
   .az-hud-vitals { width: min(78vw, 24rem); }
   .az-hud-run { align-self: flex-start; max-width: none; text-align: left; border-right: 0; border-left: 3px solid var(--az-bronze); background: linear-gradient(90deg, rgba(12, 10, 8, 0.84), transparent); }
+  /* The chapter panel stacks below the vitals in portrait: drop the announcer
+     beneath it so wave calls never overwrite the chapter line. */
+  .az-hud-announcer { top: 52%; width: min(30rem, 78vw); font-size: 1.05rem; }
   .az-touch-joystick { width: 7rem; height: 7rem; }
   .az-touch-actions { grid-template-columns: repeat(2, 4rem); }
   .az-touch-action { width: 4rem; height: 4rem; }
@@ -441,18 +448,19 @@
 /* Menu descent variants read as one row of choices. */
 .az-dungeon-daily, .az-dungeon-new-seed, .az-dungeon-settings-open { padding: 0.7rem 1.9rem; font-size: 0.95rem; opacity: 0.92; }
 
-/* Settings gear: always reachable, below the fullscreen control, never
-   covering the exit control. */
+/* Settings gear: always reachable, bottom-center clear of the loot feed,
+   touch controls, wrath meter and chapter panel. */
 .az-dungeon-settings-fab {
   position: absolute;
-  top: calc(4.5rem + env(safe-area-inset-top));
-  right: calc(1rem + env(safe-area-inset-right));
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  left: 50%;
   z-index: 40;
   width: 3rem;
   height: 3rem;
   padding: 0;
   font-size: 1.4rem;
   line-height: 1;
+  transform: translateX(-50%);
 }
 
 /* High contrast: brighter text, stronger outlines. */

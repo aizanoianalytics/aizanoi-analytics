@@ -64,16 +64,31 @@ Same product, same route (`/dungeon/`), same AizanoiOS app id (`dungeon`).
   offers **Continue** when a saved run exists.
 - Headless balance harness: `node scripts/dungeon/balance-harness.mjs`.
 - Settings (`aizanoi.dungeon.settings.v1`, separate from the run): assist
-  mode, auto-fire reserve, volumes, shake, quality; Touch defaults to Auto.
+  mode, auto-fire reserve, volumes, shake, quality, damage numbers,
+  high contrast, left-handed layout, reduced motion — all on a real
+  surface (menu Settings + gear), applied live; Touch defaults to Auto.
 - Blessing pick screen: choice of 3 cards with rarity glow, keys `1-2-3`,
-  reroll (`R`, costs gold), skip-for-gold. Defeat offers **Retry same seed
+  reroll (`R`, costs gold), skip-for-gold, and the 3-item Ferryman's Toll
+  shop (heal/reroll/relic) bought in place with run gold. Defeat offers **Retry same seed
   (`R`)**; victory shows a copyable share text. Gamepad (sticks/buttons/Y +
   haptics) and touch buttons (Guard, Wrath) are wired.
 - Juice table: hit-stop tiers light 30 / heavy 60 / boss 100 / parry 120,
-  slow-mo on parry/phantom, 4 pitch variants per SFX, distinct parry/special/
-  rhythm/focus cues.
+  slow-mo on parry/phantom (0.35× time scale in the render loop), 4 pitch variants per SFX, distinct parry/special/
+  rhythm/focus cues. Floating damage projects to the victim's screen grid
+  (class-placed, CSP-safe); pending spawns render portal-ring markers and
+  collapsing tiles render telegraph rings.
 - Five deterministic arenas cycle by seed and chapter (`column-ring`,
   `broken-bridge`, `brazier-court`, `collapsing-tiles`, `ruined-stairs`).
+  Each arena owns a distinct obstacle layout (shared by simulation
+  collision and the Three.js room, rebuilt on chapter change) and a
+  simulated hazard: slow water, burning braziers, telegraphed falling
+  tiles, and a swift-footing dais; the ring is open ground.
+- Menu offers Begin (classic seed), New descent (fresh seed), Daily
+  descent (shared `aizo-daily-YYYY-MM-DD` seed, no server), Continue for
+  saved runs, and Settings. The settings surface covers assist mode,
+  auto-fire reserve, master/music/effects volumes, shake, quality,
+  damage numbers, high contrast, left-handed layout and reduced motion;
+  all persist under `aizanoi.dungeon.settings.v1` and apply immediately.
   Local meta (`aizanoi.dungeon.meta.v1`) stores up to 20 run-history entries,
   Marks, heat unlock progress and sideways unlock collections.
 
@@ -92,6 +107,8 @@ the browser tests:
 - `target` — the current target's id, archetype and health
 - `buffs` — blessings, blessing levels, duos, special charge
 - `status` — pending spawns, live count, guard state, time
+- `seed`, `dailySeed`, `settings`, `arenaBuilt`, `slowMo` — run identity,
+  comfort settings, built room and slow-mo state
 
 It also carries a few QA affordances that drive the game's own code paths
 rather than poking state: `qaAdvance(ticks)` runs the game's own fixed-step
