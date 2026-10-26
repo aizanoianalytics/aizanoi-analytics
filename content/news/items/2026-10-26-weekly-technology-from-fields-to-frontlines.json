@@ -1,0 +1,38 @@
+{
+  "id": "2026-10-26-weekly-technology-from-fields-to-frontlines",
+  "title": "Technology stories are moving from demos into physical systems",
+  "summary": "The week’s technology coverage is notably physical. China’s agricultural technology fair focuses attention on machinery and field adoption; Ukraine and JEF partners are linking defence needs to practical technology cooperation; and the Redwire discussion centres on phased-array systems rather than a consumer launch. These stories share a lesson: the commercial and strategic value of technology is increasingly decided by integration, procurement and operating conditions after the prototype stage.",
+  "category": "technology",
+  "priority": 50,
+  "publishedAt": "2026-10-26T05:00:00Z",
+  "updatedAt": "2026-10-26T05:00:00Z",
+  "retrievedAt": "2026-10-26T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "InKunming",
+      "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9faWkxM05kTlA2VXJqc0xJdnhmUTc0ZjRwblpzTWtDWVBjUXlsd0F0RWlTNGNnNVI5S0tYcnNjSmRFeWhjSmxKOWp4eVpla0Y4b1lhTm1MQkx1emhGZ0VHYmRqZw?oc=5",
+      "publishedAt": "2026-10-26T01:41:07Z"
+    },
+    {
+      "publisher": "Ministry of Defence of Ukraine",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNOElvbFdpYVU5UzRnNllObXNsWHd3TGktdHJtemdHQUVqOTk4TVlMQUp0V0ZMYTFuSUlUb0dyNjlPWkNZeFJyemNJM2VTM0c4M3lUaFY2WGFiNjN3NzMyeWNvZnlSd2FiLVlNV0l0OW4wVVdueVU5cURBM00tSFVFcHVuZGlqeWFicDI4RHFQNHBhUWlkVkNlY3FqVm00cmJOTEQw?oc=5",
+      "publishedAt": "2026-10-03T07:00:00Z"
+    },
+    {
+      "publisher": "TradingView",
+      "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOdmNnNkMwbzMyZHZYaHNZRlRDUHdGTmlUaFlFZlFHN3VuLS02Vk5pNjhtVzdHc24wQWo1c3U4VExuLW9rY0lYMFVEaHV2VFJNdEx4alhmWmtsYXE3SFg1dnhfR3F0OU5iQ0R0ZFhVYVZHS3VuZUM2bjVhVWJiT3F0eVlpQW1GbTNkR09oTlk5a3BfMnoyaUw3bEo0WmJvYlN5R2FVVWZZTUpUVXpmRV9zbmVVc2llaHJHZmg2OFB3YUZodms?oc=5",
+      "publishedAt": "2026-09-03T07:00:00Z"
+    }
+  ],
+  "kind": "weekly",
+  "week": "2026-W44"
+}

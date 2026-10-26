@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "generatedAt": "2026-10-25T05:45:00.000Z",
+  "generatedAt": "2026-10-26T05:00:00.000Z",
   "categories": [
     "ai",
     "technology",
@@ -8,6 +8,11 @@
     "football"
   ],
   "editions": [
+    {
+      "date": "2026-10-26",
+      "path": "/news/2026-10-26/",
+      "itemCount": 15
+    },
     {
       "date": "2026-10-25",
       "path": "/news/2026-10-25/",
@@ -326,6 +331,12 @@
   ],
   "weeklyEditions": [
     {
+      "date": "2026-10-26",
+      "week": "2026-W44",
+      "path": "/news/weekly/2026-10-26/",
+      "itemCount": 4
+    },
+    {
       "date": "2026-10-19",
       "week": "2026-W43",
       "path": "/news/weekly/2026-10-19/",
@@ -375,6 +386,544 @@
     }
   ],
   "items": [
+    {
+      "id": "2026-10-26-openai-training-without-live-internet",
+      "kind": "daily",
+      "title": "OpenAI returns to training without a live internet feed",
+      "summary": "OpenAI is reported to have resumed frontier-model training while removing direct internet access from the training process. The change puts the emphasis on curated or pre-collected data rather than continuously available web material, a meaningful shift in how freshness and control are balanced.",
+      "category": "ai",
+      "priority": 82,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Taipei Times",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBHNkd0UmcxeUJJZ1Ywb0paNTFJY3JacHpvZFcxbVVfTmkzWGRWUWpCSXhDSmpjaWp4UlZjN0dSQUl3T2drWjI2cTk0dHh1WXBRaGptTVozclQtdmEtMl9DWXhRSHN6bXFxXzlJZEVpX1dhck5XeHc?oc=5",
+          "publishedAt": "2026-10-25T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-brazil-lula-economic-challenges",
+      "kind": "daily",
+      "title": "Brazil’s re-elected Lula faces a demanding economic agenda",
+      "summary": "Reuters outlines five economic challenges facing Brazil’s re-elected President Luiz Inácio Lula da Silva. The immediate policy conversation is broader than election reaction: fiscal credibility, growth, inflation and investor confidence will shape how the next administration is judged.",
+      "category": "economy-markets",
+      "priority": 78,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPcHk0a1NUT2ZNSm9tR2JkZnJ1YUtTdHRRVk1UQ05BbXpXYmtNYy1fY2MzaklhQ09YVGRmOUdHaW4yMVhsX1RpRGRacHFrNFpOcEFsRlBJcWpMSElnNGFKaVNCZTlzSC1RMFpyc1BuY2txb0NEd3I4X3hDTUNpcVh3clpDb19YVFdiOGRsNF9LQ0xBRWVPR2dEZzd2M0UzNElWNzNHOWZPcFhwcGp1ejZ1VGluaUM3Yk0?oc=5",
+          "publishedAt": "2026-10-26T00:38:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-mbappe-double-real-madrid-barcelona",
+      "kind": "daily",
+      "title": "Mbappe double lifts Real Madrid over Barcelona",
+      "summary": "Kylian Mbappe scored twice as Real Madrid stunned Barcelona in the latest La Liga Clasico, according to the match report. The result gives Madrid both a high-profile win and an attacking headline, while Barcelona must absorb a costly defeat in one of the season’s defining fixtures.",
+      "category": "football",
+      "priority": 78,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "The Malaysian Reserve",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQYmZqYjIwbXJiMzRDMFk0TFFTQ0RxQk1HUTF1X1V4eV9mRDk5NDlobElVQ2ZIcTFHVk42THREUEIwSXBBMG9jVnlVZ09fbHJySFNDOUZodWNySmN1OGhzbk9pUEVySXFzd2ctdXdfdjlIdkdJXzdBOE9CMWhQdnl0MXctV3h1amtGSTJvb3JudlB4bGdhWFhVVTNnZHU0RXNJc1FMNWtMUjU?oc=5",
+          "publishedAt": "2026-10-26T02:03:45.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-hofffenheim-leverkusen-three-nil",
+      "kind": "daily",
+      "title": "Hoffenheim beat Leverkusen 3–0 as Kramaric stars",
+      "summary": "Hoffenheim beat Bayer Leverkusen 3–0 in an eventful Bundesliga match, with Andrej Kramaric central to the result. The win gives Hoffenheim a standout weekend result while Leverkusen leave with questions after a heavy defeat.",
+      "category": "football",
+      "priority": 75,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "beIN SPORTS",
+          "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOdzk0c2FuSDg5YTNSeFljNUp3djBGTURvZjJGSFNjY0dYWFJrRk5qLXhvZDBsUFdaVllrTG9qRnFvVG01bl91YVVZTVJHQ0Q4a1F1allJcXdzbWRSOFFGTHQ5QUtTazNERlh6Mkp5Z1lHZWx1QlMybjN6NTc3R2dNelZsQnhfQXpzbnZLbThuNDNKdXVJWHZQN3BvLWRDZm9ZQnFUbi1kbXZEUmYyT3lpak9JcjFpZ0lPV1Nja19nLWh2TGUwUFI4QmtUaFJiREZLRXRFS0VRalQ1OHhVUm5Od0xQUGdWOGVNMUZTc21n?oc=5",
+          "publishedAt": "2026-10-25T17:26:10.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-asia-stocks-brent-cautious",
+      "kind": "daily",
+      "title": "Asian stocks trade cautiously as Brent retreats from its high",
+      "summary": "Asian markets opened cautiously while Brent crude moved down from a six-month peak, according to Reuters. The combination leaves investors balancing energy-price pressure against the possibility that a pullback in oil can ease some inflation concerns.",
+      "category": "economy-markets",
+      "priority": 70,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE90MHowUDNReVJUUkkxWEZhTnAyYnZZNGNXQjJPVWt0QjgtaERfUHM4bERQd2k2NW5kMXR5dld0NHpsYnBhOENieXU1VU9saFBya202TXRjUktMa0l6OXF0OEZFUDdxR3FtSTdCLUxRVGpZNnBndExIcGVEZmtXZw?oc=5",
+          "publishedAt": "2026-10-26T00:46:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-anthropic-elvis-training-lawsuit",
+      "kind": "daily",
+      "title": "Anthropic faces a copyright claim over music used in AI training",
+      "summary": "Anthropic is facing a lawsuit alleging that 274 Elvis Presley songs were used in training AI models. The case adds another high-profile test of how courts may treat copyrighted music in model development, although the complaint’s allegations are not a final finding.",
+      "category": "ai",
+      "priority": 68,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "CommonWealth Magazine",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5rZGhyME1GNHg0dHVjLWx6ZXJWbUMtTURkOTdmQ2dGSE5LOUUtckpGclBMekpjdk9GMXdocEc3cGt3cmEzWG9jOFZCUG0tRnR6QVQ2eGloRmxFeEt6VzlzaHNhemtLdm8?oc=5",
+          "publishedAt": "2026-10-26T03:17:23.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-ukraine-jef-military-technology",
+      "kind": "daily",
+      "title": "Ukraine and JEF countries deepen cooperation on military technology",
+      "summary": "Ukraine and members of the Joint Expeditionary Force are joining forces on military technology, according to Ukraine’s defence ministry. The cooperation shows how battlefield requirements are accelerating practical experimentation and procurement across allied technology ecosystems.",
+      "category": "technology",
+      "priority": 65,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Ministry of Defence of Ukraine",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNOElvbFdpYVU5UzRnNllObXNsWHd3TGktdHJtemdHQUVqOTk4TVlMQUp0V0ZMYTFuSUlUb0dyNjlPWkNZeFJyemNJM2VTM0c4M3lUaFY2WGFiNjN3NzMyeWNvZnlSd2FiLVlNV0l0OW4wVVdueVU5cURBM00tSFVFcHVuZGlqeWFicDI4RHFQNHBhUWlkVkNlY3FqVm00cmJOTEQw?oc=5",
+          "publishedAt": "2026-10-03T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-fileai-aws-bfsi-agents",
+      "kind": "daily",
+      "title": "fileAI and AWS announce a banking-focused agent collaboration",
+      "summary": "fileAI and AWS have announced a strategic collaboration aimed at expanding outcome-driven AI agents for banking, financial services and insurance leaders. The announcement points to enterprise deployment as the next battleground, with governance and workflow fit likely to matter as much as model capability.",
+      "category": "ai",
+      "priority": 60,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "The Manila Times",
+          "url": "https://news.google.com/rss/articles/CBMipAJBVV95cUxPeTdaRzFrYVNJRjN6Q2Z3SURNNmhLdjlhY042emR2czZmbEd2UC1zTGpyMDZ2dDFqc2ZVclBpSDFsQ3ViVlYtOFlTOVpweF9NMVQ1TXNua0NWNHFiZ2JFbzUyQTdZYV8zUUFCTk5iUlNXb2JjNGlzMUdNaHBoR2xIQ3I3VnVMeHI1OVFzd0xTVTlHMWg4MW02cW42RG9mNV9QYUNuX1RUamtmWkpXVF9YRmkzNEJMei1lZHhXQlNGTW9TY0hBQ0htSTcwd0FnVWRsSXpMNVBvbGRTd3VrTTB3Zk9ESUpEVWx2Y3VFVzJUUVZabHdiemxKMHhGc0hRYll1ejFwYlF6cVBKSjBidmRhc0pmZ3NoaFZlVDNBb3FqeVJUY29M0gGkAkFVX3lxTE95N1pHMWthU0lGM3pDZndJRE02aEt2OWFjTjZ6ZHZzNmZsR3ZQLXNManIwNnZ0MWpzZlVyUGlIMWxDdWJWVi04WVM5WnB4X00xVDVNc25rQ1Y0cWJnYkVvNTJBN1lhXzNRQUJOTmJSU1dvYmM0aXMxR01ocGhHbEhDcjdWdUx4cjU5UXN3TFNVOUcxaDgxbTZxbjZEb2Y1X1BhQ25fVFRqa2ZaSldUX1hGaTM0Qkx6LWVkeFdCU0ZNb1NjSEFDSG1JNzB3QWdVZGxJekw1UG9sZFN3dWtNMHdmT0RJSkRVbHZjdUVXMlRRVlpsd2J6bEoweEZzSFFiWXV6MXBiUXpxUEpKMGJ2ZGFzSmZnc2hoVmVUM0FvcWp5UlRjb0w?oc=5",
+          "publishedAt": "2026-10-26T02:32:18.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-yangling-agri-tech-fair",
+      "kind": "daily",
+      "title": "China opens its 33rd Yangling agricultural technology fair",
+      "summary": "The 33rd China Yangling Agricultural Hi-tech Fair has opened, putting agricultural technology and applied innovation at the centre of a major industry event. The fair is a useful counterpoint to the model-centric AI cycle: deployment in food production depends on equipment, field operations and adoption as well as software.",
+      "category": "technology",
+      "priority": 60,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "InKunming",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9faWkxM05kTlA2VXJqc0xJdnhmUTc0ZjRwblpzTWtDWVBjUXlsd0F0RWlTNGNnNVI5S0tYcnNjSmRFeWhjSmxKOWp4eVpla0Y4b1lhTm1MQkx1emhGZ0VHYmRqZw?oc=5",
+          "publishedAt": "2026-10-26T01:41:07.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-fabregas-como-manchester-united",
+      "kind": "daily",
+      "title": "Fabregas and Como prepare for a historic Manchester United tie",
+      "summary": "Cesc Fabregas and Como are preparing for a historic meeting with Manchester United. The fixture has drawn attention because of the clubs’ contrasting profiles, but the sporting story will be decided by the match rather than the occasion around it.",
+      "category": "football",
+      "priority": 58,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Yahoo Sports",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNYVc4WHpORVV0bFd1YnhnRUJTbTkzc20yUE10VXlIV3Nxd1VQQ1VxX2IzdXh2WkRlVEgweVpUT2p5dXI0eHp6d1llRkp3R2ozNmdJSzhOZGh3VnNBM2RRdEdqMVNDdTlLUnVKYzBiTDRaR2RLRkRacTF5eE5RX04yU3ljUER2a2stOWM4?oc=5",
+          "publishedAt": "2026-10-21T05:26:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-un-military-ai-warning",
+      "kind": "daily",
+      "title": "UN discussion puts military AI use back in the spotlight",
+      "summary": "A new UN-focused report highlights concern over military uses of artificial intelligence. The story is a reminder that capability advances are being judged not only through commercial deployment, but also through international rules, accountability and the risks of delegating force-related decisions.",
+      "category": "ai",
+      "priority": 58,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Philstar.com",
+          "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOVEFQaG5XcWsxT1JJcGQ2Z0t2Z3JaeUVnR1drOGdJUkw3QmhWcnBKN2F2a1lkWnJXSWNpVlNQSE5PbXltS09ickpsYVNQSzFGMHdRWlg3dzhKaVZuSVJRcVhETHNXSUc1N2hITllTekZiNjJDdTZQblM5ZFdLTUtQSnBJQnfSAYsBQVVfeXFMT0pLTjhqNFpmLWxicHNMbjMyZ2pXVVI5NmloLVIwQkMzcDlOcy1RSGR3T19XR2lFeERuR0hmMWtoSWIxaWlGOW4xQzBvb1NmaFZ1cXBndTdZakhLRnVRQkZqc0tqU0NKd3RmU0NyZlJ0RDZVZDNhNWt0ck0xYU9PNjNwT0x0TzdkLWVfSQ?oc=5",
+          "publishedAt": "2026-10-25T16:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-philippine-peso-record-low",
+      "kind": "daily",
+      "title": "Philippine peso reaches a record low against the dollar",
+      "summary": "The Philippine peso has fallen to a reported record low of 63.81 per US dollar. A weaker currency can raise imported-cost pressure, making the move relevant beyond foreign-exchange desks as policymakers weigh growth, inflation and financial stability.",
+      "category": "economy-markets",
+      "priority": 55,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Philippine Canadian Inquirer",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOUjVvYm9kNGVBTVpiQzRxRzBUM0tMYXhhQk5uRTNfY1VzVEtDUy1rWXRZTWJJUTVpS2FjcDFZdkdWR3lhLVFVa1hzUGVTQUExendPeTFoRTNZRzFSLUZJX2JJcGlLWWZoRHk1N3VuSU1uNUJNbDdxX1YzUHF6ZDBRVE1OMzRKajhnbmtfS0UybGctS0pvYmpWdE1zRm1OYmNfSnBfbHM5U1NlcVpWaEtmQkRB?oc=5",
+          "publishedAt": "2026-10-26T04:16:21.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-ai-billionaires-youngest",
+      "kind": "daily",
+      "title": "AI founders take a larger share of the youngest-billionaire list",
+      "summary": "A business ranking says AI founders now dominate the youngest-billionaire cohort. The item captures the extraordinary concentration of new wealth around model companies and AI infrastructure, while rankings themselves should be read as snapshots rather than a measure of durable business value.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "CEOWORLD magazine",
+          "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNbVUxOElDYU5nSVlReXFHOWN1dUNBZHFGNzNGN29qdE1SVjN3dU5IVHF4TXRHUWt1LUtDbExQV29xUGZwZTJaek5xQTlBNmxMYzVMWUluYzZnT3ZFSkVJUmcyVzlaQ3pMdHFsSEdNbUk1UG1Pd2NsTWkzOVhsV0RoV2wtTWYxZEZvd0RSTzNPdmJZUQ?oc=5",
+          "publishedAt": "2026-10-26T00:19:11.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-weekly-ai-control-copyright-and-deployment",
+      "kind": "weekly",
+      "title": "AI’s next phase is about control as much as capability",
+      "summary": "This week’s AI stories point in three directions at once. OpenAI’s reported move away from live internet access underlines the value of controlled training inputs; the Anthropic lawsuit shows that data provenance remains a legal risk; and a fileAI–AWS banking collaboration reflects the pressure to turn models into governed workflows. Taken together, the pattern is less a single breakthrough than an industry learning to trade openness and speed for auditability, permissions and predictable deployment.",
+      "category": "ai",
+      "priority": 50,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "week": "2026-W44",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Taipei Times",
+          "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBHNkd0UmcxeUJJZ1Ywb0paNTFJY3JacHpvZFcxbVVfTmkzWGRWUWpCSXhDSmpjaWp4UlZjN0dSQUl3T2drWjI2cTk0dHh1WXBRaGptTVozclQtdmEtMl9DWXhRSHN6bXFxXzlJZEVpX1dhck5XeHc?oc=5",
+          "publishedAt": "2026-10-25T16:00:00.000Z"
+        },
+        {
+          "publisher": "CommonWealth Magazine",
+          "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE5rZGhyME1GNHg0dHVjLWx6ZXJWbUMtTURkOTdmQ2dGSE5LOUUtckpGclBMekpjdk9GMXdocEc3cGt3cmEzWG9jOFZCUG0tRnR6QVQ2eGloRmxFeEt6VzlzaHNhemtLdm8?oc=5",
+          "publishedAt": "2026-10-26T03:17:23.000Z"
+        },
+        {
+          "publisher": "The Manila Times",
+          "url": "https://news.google.com/rss/articles/CBMipAJBVV95cUxPeTdaRzFrYVNJRjN6Q2Z3SURNNmhLdjlhY042emR2czZmbEd2UC1zTGpyMDZ2dDFqc2ZVclBpSDFsQ3ViVlYtOFlTOVpweF9NMVQ1TXNua0NWNHFiZ2JFbzUyQTdZYV8zUUFCTk5iUlNXb2JjNGlzMUdNaHBoR2xIQ3I3VnVMeHI1OVFzd0xTVTlHMWg4MW02cW42RG9mNV9QYUNuX1RUamtmWkpXVF9YRmkzNEJMei1lZHhXQlNGTW9TY0hBQ0htSTcwd0FnVWRsSXpMNVBvbGRTd3VrTTB3Zk9ESUpEVWx2Y3VFVzJUUVZabHdiemxKMHhGc0hRYll1ejFwYlF6cVBKSjBidmRhc0pmZ3NoaFZlVDNBb3FqeVJUY29M0gGkAkFVX3lxTE95N1pHMWthU0lGM3pDZndJRE02aEt2OWFjTjZ6ZHZzNmZsR3ZQLXNManIwNnZ0MWpzZlVyUGlIMWxDdWJWVi04WVM5WnB4X00xVDVNc25rQ1Y0cWJnYkVvNTJBN1lhXzNRQUJOTmJSU1dvYmM0aXMxR01ocGhHbEhDcjdWdUx4cjU5UXN3TFNVOUcxaDgxbTZxbjZEb2Y1X1BhQ25fVFRqa2ZaSldUX1hGaTM0Qkx6LWVkeFdCU0ZNb1NjSEFDSG1JNzB3QWdVZGxJekw1UG9sZFN3dWtNMHdmT0RJSkRVbHZjdUVXMlRRVlpsd2J6bEoweEZzSFFiWXV6MXBiUXpxUEpKMGJ2ZGFzSmZnc2hoVmVUM0FvcWp5UlRjb0w?oc=5",
+          "publishedAt": "2026-10-26T02:32:18.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-weekly-football-big-games-and-sharp-margins",
+      "kind": "weekly",
+      "title": "Football’s weekend was defined by decisive individual moments",
+      "summary": "The weekend’s football results show how quickly elite matches can turn on a handful of moments. Hoffenheim’s 3–0 win over Leverkusen was emphatic, Mbappe’s double settled a Clasico headline, and Como’s preparation for Manchester United has made the upcoming tie a story before kick-off. The common thread is competitive volatility: reputations create the stage, but finishing, structure and execution decide the result.",
+      "category": "football",
+      "priority": 50,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "week": "2026-W44",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "beIN SPORTS",
+          "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOdzk0c2FuSDg5YTNSeFljNUp3djBGTURvZjJGSFNjY0dYWFJrRk5qLXhvZDBsUFdaVllrTG9qRnFvVG01bl91YVVZTVJHQ0Q4a1F1allJcXdzbWRSOFFGTHQ5QUtTazNERlh6Mkp5Z1lHZWx1QlMybjN6NTc3R2dNelZsQnhfQXpzbnZLbThuNDNKdXVJWHZQN3BvLWRDZm9ZQnFUbi1kbXZEUmYyT3lpak9JcjFpZ0lPV1Nja19nLWh2TGUwUFI4QmtUaFJiREZLRXRFS0VRalQ1OHhVUm5Od0xQUGdWOGVNMUZTc21n?oc=5",
+          "publishedAt": "2026-10-25T17:26:10.000Z"
+        },
+        {
+          "publisher": "The Malaysian Reserve",
+          "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQYmZqYjIwbXJiMzRDMFk0TFFTQ0RxQk1HUTF1X1V4eV9mRDk5NDlobElVQ2ZIcTFHVk42THREUEIwSXBBMG9jVnlVZ09fbHJySFNDOUZodWNySmN1OGhzbk9pUEVySXFzd2ctdXdfdjlIdkdJXzdBOE9CMWhQdnl0MXctV3h1amtGSTJvb3JudlB4bGdhWFhVVTNnZHU0RXNJc1FMNWtMUjU?oc=5",
+          "publishedAt": "2026-10-26T02:03:45.000Z"
+        },
+        {
+          "publisher": "Yahoo Sports",
+          "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNYVc4WHpORVV0bFd1YnhnRUJTbTkzc20yUE10VXlIV3Nxd1VQQ1VxX2IzdXh2WkRlVEgweVpUT2p5dXI0eHp6d1llRkp3R2ozNmdJSzhOZGh3VnNBM2RRdEdqMVNDdTlLUnVKYzBiTDRaR2RLRkRacTF5eE5RX04yU3ljUER2a2stOWM4?oc=5",
+          "publishedAt": "2026-10-21T05:26:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-weekly-markets-election-oil-and-currency",
+      "kind": "weekly",
+      "title": "Markets are pricing politics through oil and currencies",
+      "summary": "The economic news this week is a study in transmission channels. Brazil’s new political chapter is being framed through fiscal and growth challenges; Asian trading began cautiously as Brent eased from a six-month high; and the Philippine peso touched a record low. None of these developments should be collapsed into one global signal, but together they show how political credibility, commodity prices and imported inflation continue to meet in market pricing.",
+      "category": "economy-markets",
+      "priority": 50,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "week": "2026-W44",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPcHk0a1NUT2ZNSm9tR2JkZnJ1YUtTdHRRVk1UQ05BbXpXYmtNYy1fY2MzaklhQ09YVGRmOUdHaW4yMVhsX1RpRGRacHFrNFpOcEFsRlBJcWpMSElnNGFKaVNCZTlzSC1RMFpyc1BuY2txb0NEd3I4X3hDTUNpcVh3clpDb19YVFdiOGRsNF9LQ0xBRWVPR2dEZzd2M0UzNElWNzNHOWZPcFhwcGp1ejZ1VGluaUM3Yk0?oc=5",
+          "publishedAt": "2026-10-26T00:38:00.000Z"
+        },
+        {
+          "publisher": "Reuters",
+          "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE90MHowUDNReVJUUkkxWEZhTnAyYnZZNGNXQjJPVWt0QjgtaERfUHM4bERQd2k2NW5kMXR5dld0NHpsYnBhOENieXU1VU9saFBya202TXRjUktMa0l6OXF0OEZFUDdxR3FtSTdCLUxRVGpZNnBndExIcGVEZmtXZw?oc=5",
+          "publishedAt": "2026-10-26T00:46:00.000Z"
+        },
+        {
+          "publisher": "Philippine Canadian Inquirer",
+          "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOUjVvYm9kNGVBTVpiQzRxRzBUM0tMYXhhQk5uRTNfY1VzVEtDUy1rWXRZTWJJUTVpS2FjcDFZdkdWR3lhLVFVa1hzUGVTQUExendPeTFoRTNZRzFSLUZJX2JJcGlLWWZoRHk1N3VuSU1uNUJNbDdxX1YzUHF6ZDBRVE1OMzRKajhnbmtfS0UybGctS0pvYmpWdE1zRm1OYmNfSnBfbHM5U1NlcVpWaEtmQkRB?oc=5",
+          "publishedAt": "2026-10-26T04:16:21.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-weekly-technology-from-fields-to-frontlines",
+      "kind": "weekly",
+      "title": "Technology stories are moving from demos into physical systems",
+      "summary": "The week’s technology coverage is notably physical. China’s agricultural technology fair focuses attention on machinery and field adoption; Ukraine and JEF partners are linking defence needs to practical technology cooperation; and the Redwire discussion centres on phased-array systems rather than a consumer launch. These stories share a lesson: the commercial and strategic value of technology is increasingly decided by integration, procurement and operating conditions after the prototype stage.",
+      "category": "technology",
+      "priority": 50,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "week": "2026-W44",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "InKunming",
+          "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9faWkxM05kTlA2VXJqc0xJdnhmUTc0ZjRwblpzTWtDWVBjUXlsd0F0RWlTNGNnNVI5S0tYcnNjSmRFeWhjSmxKOWp4eVpla0Y4b1lhTm1MQkx1emhGZ0VHYmRqZw?oc=5",
+          "publishedAt": "2026-10-26T01:41:07.000Z"
+        },
+        {
+          "publisher": "Ministry of Defence of Ukraine",
+          "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNOElvbFdpYVU5UzRnNllObXNsWHd3TGktdHJtemdHQUVqOTk4TVlMQUp0V0ZMYTFuSUlUb0dyNjlPWkNZeFJyemNJM2VTM0c4M3lUaFY2WGFiNjN3NzMyeWNvZnlSd2FiLVlNV0l0OW4wVVdueVU5cURBM00tSFVFcHVuZGlqeWFicDI4RHFQNHBhUWlkVkNlY3FqVm00cmJOTEQw?oc=5",
+          "publishedAt": "2026-10-03T07:00:00.000Z"
+        },
+        {
+          "publisher": "TradingView",
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOdmNnNkMwbzMyZHZYaHNZRlRDUHdGTmlUaFlFZlFHN3VuLS02Vk5pNjhtVzdHc24wQWo1c3U4VExuLW9rY0lYMFVEaHV2VFJNdEx4alhmWmtsYXE3SFg1dnhfR3F0OU5iQ0R0ZFhVYVZHS3VuZUM2bjVhVWJiT3F0eVlpQW1GbTNkR09oTlk5a3BfMnoyaUw3bEo0WmJvYlN5R2FVVWZZTUpUVXpmRV9zbmVVc2llaHJHZmg2OFB3YUZodms?oc=5",
+          "publishedAt": "2026-09-03T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-redwire-phased-array-bet",
+      "kind": "daily",
+      "title": "Redwire makes a phased-array bet in defence technology",
+      "summary": "A report examines Redwire’s phased-array opportunity in defence technology. The theme sits at the intersection of sensing, communications and space-adjacent systems, where technical performance and government-contract timing can matter more than launch headlines.",
+      "category": "technology",
+      "priority": 48,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "TradingView",
+          "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOdmNnNkMwbzMyZHZYaHNZRlRDUHdGTmlUaFlFZlFHN3VuLS02Vk5pNjhtVzdHc24wQWo1c3U4VExuLW9rY0lYMFVEaHV2VFJNdEx4alhmWmtsYXE3SFg1dnhfR3F0OU5iQ0R0ZFhVYVZHS3VuZUM2bjVhVWJiT3F0eVlpQW1GbTNkR09oTlk5a3BfMnoyaUw3bEo0WmJvYlN5R2FVVWZZTUpUVXpmRV9zbmVVc2llaHJHZmg2OFB3YUZodms?oc=5",
+          "publishedAt": "2026-09-03T07:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "id": "2026-10-26-soueast-technology-day",
+      "kind": "daily",
+      "title": "SOUEAST showcases its 2026 technology programme",
+      "summary": "SOUEAST has presented its 2026 global technology experience day, framing its product and engineering roadmap around connected mobility and new vehicle technology. The announcement is company-led, so its claims are best treated as a description of strategy rather than independent performance verification.",
+      "category": "technology",
+      "priority": 48,
+      "publishedAt": "2026-10-26T05:00:00.000Z",
+      "updatedAt": "2026-10-26T05:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:00:00.000Z",
+      "author": {
+        "name": "News Desk"
+      },
+      "editor": {
+        "name": "Editorial Desk"
+      },
+      "corrections": [],
+      "tags": [],
+      "sources": [
+        {
+          "publisher": "FinancialContent",
+          "url": "https://news.google.com/rss/articles/CBMi8wFBVV95cUxNNWFJaWJILTEwc0htYnVxWFRleWQ2Y0w1cjk0dGtXM3NuNFdRdmo0OW4yNFdVd283NjBVSmFDaXhiQi0zU1J4NVcyeUhPU2VyZ3U2cEdBV1h1YlB6WHFHNW5NY2ExdGZYZjVpRlpNM3RkWll5bGZtM2ZST1RFanhCMmN2T0hGUVJQZVVjX3poU2RfNk1xQlFUU2hTWTZ6MkV2OEZYRHVRVFI5LTB4aHJuX2YxZXdyaHVpeTRNdVlnZmlvVG5ZUzJycjkwZEFHYzdCUzJJa0Jsalg0aF9jZlFjbklJVkItcWVzZ0xTNFE2TGJYcEk?oc=5",
+          "publishedAt": "2026-10-23T14:26:00.000Z"
+        }
+      ]
+    },
     {
       "id": "2026-10-25-anthropic-aisi-mythos-5-supply-chain",
       "kind": "daily",

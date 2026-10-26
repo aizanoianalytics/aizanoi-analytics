@@ -1,0 +1,27 @@
+{
+  "id": "2026-10-26-openai-training-without-live-internet",
+  "title": "OpenAI returns to training without a live internet feed",
+  "summary": "OpenAI is reported to have resumed frontier-model training while removing direct internet access from the training process. The change puts the emphasis on curated or pre-collected data rather than continuously available web material, a meaningful shift in how freshness and control are balanced.",
+  "category": "ai",
+  "priority": 82,
+  "publishedAt": "2026-10-26T05:00:00Z",
+  "updatedAt": "2026-10-26T05:00:00Z",
+  "retrievedAt": "2026-10-26T05:00:00Z",
+  "author": {
+    "name": "News Desk"
+  },
+  "editor": {
+    "name": "Editorial Desk"
+  },
+  "image": null,
+  "corrections": [],
+  "tags": [],
+  "sources": [
+    {
+      "publisher": "Taipei Times",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBHNkd0UmcxeUJJZ1Ywb0paNTFJY3JacHpvZFcxbVVfTmkzWGRWUWpCSXhDSmpjaWp4UlZjN0dSQUl3T2drWjI2cTk0dHh1WXBRaGptTVozclQtdmEtMl9DWXhRSHN6bXFxXzlJZEVpX1dhck5XeHc?oc=5",
+      "publishedAt": "2026-10-25T16:00:00Z"
+    }
+  ],
+  "kind": "daily"
+}
