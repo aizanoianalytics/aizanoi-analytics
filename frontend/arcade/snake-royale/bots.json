@@ -1,0 +1,235 @@
+{
+ "version": 1,
+ "bots": [
+  {
+   "id": "opus",
+   "name": "Claude Opus 5.5",
+   "botName": "Ouroboros",
+   "lab": "Anthropic",
+   "color": "#e8875b",
+   "file": "bots/opus.js",
+   "bytes": 17615,
+   "note": "Ouroboros: alpha-beta search against the nearest rival with simultaneous moves, territory flood-fill aware of tails clearing and storm rings, trap detection, length advantage, hunger, centre pull."
+  },
+  {
+   "id": "sonnet",
+   "name": "Claude Sonnet 5.5",
+   "botName": "VoronoiViper",
+   "lab": "Anthropic",
+   "color": "#6fa8ff",
+   "file": "bots/sonnet.js",
+   "bytes": 4778,
+   "note": "VoronoiViper: flood-fill pocket check, Voronoi territory, hunger-scaled food pull, head-to-head caution/aggression by length, late-game centre drift."
+  },
+  {
+   "id": "haiku",
+   "name": "Claude Haiku 5.5",
+   "botName": "HaikuRoyale",
+   "lab": "Anthropic",
+   "color": "#7ee08a",
+   "file": "bots/haiku.js",
+   "bytes": 4454,
+   "note": "HaikuRoyale: flood-fill reach, Voronoi territory, head-to-head avoidance vs equal/longer, attacks shorter, food urgency, storm-aware edges."
+  },
+  {
+   "id": "gpt-6.1-sol",
+   "name": "GPT-6.1 Sol",
+   "botName": "Aegis Coil",
+   "lab": "OpenAI",
+   "color": "#ff4d4d",
+   "file": "bots/gpt-6.1-sol.js",
+   "bytes": 21338,
+   "note": ""
+  },
+  {
+   "id": "gpt-6-sol",
+   "name": "GPT-6 Sol",
+   "botName": "Ringwise",
+   "lab": "OpenAI",
+   "color": "#2f6bff",
+   "file": "bots/gpt-6-sol.js",
+   "bytes": 7565,
+   "note": ""
+  },
+  {
+   "id": "gpt-6-luna",
+   "name": "GPT-6 Luna",
+   "botName": "OpenRange",
+   "lab": "OpenAI",
+   "color": "#a0aec0",
+   "file": "bots/gpt-6-luna.js",
+   "bytes": 4664,
+   "note": ""
+  },
+  {
+   "id": "gpt-6-astra",
+   "name": "GPT-6 Astra",
+   "botName": "Ringwarden",
+   "lab": "OpenAI",
+   "color": "#00c896",
+   "file": "bots/gpt-6-astra.js",
+   "bytes": 14947,
+   "note": ""
+  },
+  {
+   "id": "gpt-5.6-sol",
+   "name": "GPT-5.6 Sol",
+   "botName": "AegisViper",
+   "lab": "OpenAI",
+   "color": "#d6a77a",
+   "file": "bots/gpt-5.6-sol.js",
+   "bytes": 24385,
+   "note": ""
+  },
+  {
+   "id": "gpt-5.6-luna",
+   "name": "GPT-5.6 Luna",
+   "botName": "AdaptiveRoyale",
+   "lab": "OpenAI",
+   "color": "#7c6cf0",
+   "file": "bots/gpt-5.6-luna.js",
+   "bytes": 11065,
+   "note": ""
+  },
+  {
+   "id": "gpt-5.6-terra",
+   "name": "GPT-5.6 Terra",
+   "botName": "Terrapin",
+   "lab": "OpenAI",
+   "color": "#b5f23d",
+   "file": "bots/gpt-5.6-terra.js",
+   "bytes": 8450,
+   "note": ""
+  },
+  {
+   "id": "gemini4-argon",
+   "name": "Gemini 4 Argon",
+   "botName": "OuroborosPrime",
+   "lab": "Google",
+   "color": "#c99bff",
+   "file": "bots/gemini4-argon.js",
+   "bytes": 27706,
+   "note": "OuroborosPrime: time-aware obstacle grid, Voronoi territory, trap detection, head-to-head risk, storm ring avoidance, 1-ply lookahead."
+  },
+  {
+   "id": "grok47",
+   "name": "Grok 4.7",
+   "botName": "NexusViper",
+   "lab": "xAI",
+   "color": "#f4f6fb",
+   "file": "bots/grok47.js",
+   "bytes": 4184,
+   "note": "NexusViper: flood-fill space, head-to-head threat/attack sets, hunger-driven food search, centre pull."
+  },
+  {
+   "id": "qwen38-max",
+   "name": "Qwen 3.8 Max",
+   "botName": "ApexPredator",
+   "lab": "Alibaba",
+   "color": "#ff6fb5",
+   "file": "bots/qwen38-max.js",
+   "bytes": 6990,
+   "note": "ApexPredator: BFS reachable space, danger zones around bigger heads, health-weighted food, centre pull near storm."
+  },
+  {
+   "id": "kimi-k31-pro",
+   "name": "Kimi K3.1 Pro",
+   "botName": "Basilisk",
+   "lab": "Moonshot",
+   "color": "#ffd84d",
+   "file": "bots/kimi-k31-pro.js",
+   "bytes": 24006,
+   "note": ""
+  },
+  {
+   "id": "glm",
+   "name": "GLM-5.3 Flash",
+   "botName": "Naga",
+   "lab": "Z.ai",
+   "color": "#22d3ee",
+   "file": "bots/glm.js",
+   "bytes": 11506,
+   "note": ""
+  },
+  {
+   "id": "deepseek",
+   "name": "DeepSeek V4.1 Flash",
+   "botName": "Serpentine",
+   "lab": "DeepSeek",
+   "color": "#4fd1c5",
+   "file": "bots/deepseek.js",
+   "bytes": 9757,
+   "note": ""
+  },
+  {
+   "id": "muse-1.3",
+   "name": "Muse 1.3",
+   "botName": "Ouroboros",
+   "lab": "Meta",
+   "color": "#f0abfc",
+   "file": "bots/muse-1.3.js",
+   "bytes": 8943,
+   "note": ""
+  },
+  {
+   "id": "iceman",
+   "name": "Iceman",
+   "botName": "CunningSerpent",
+   "lab": "OpenCode",
+   "color": "#93c5fd",
+   "file": "bots/iceman.js",
+   "bytes": 10793,
+   "note": ""
+  },
+  {
+   "id": "beam",
+   "name": "Beam",
+   "botName": "Viper",
+   "lab": "OpenCode",
+   "color": "#f6c35b",
+   "file": "bots/beam.js",
+   "bytes": 6655,
+   "note": ""
+  },
+  {
+   "id": "big-pickle",
+   "name": "Big Pickle",
+   "botName": "SerpentMind",
+   "lab": "OpenCode",
+   "color": "#f6ad55",
+   "file": "bots/big-pickle.js",
+   "bytes": 7936,
+   "note": ""
+  },
+  {
+   "id": "nemotron-ultra",
+   "name": "Nemotron 3 Ultra",
+   "botName": "Nemotron",
+   "lab": "NVIDIA",
+   "color": "#9ae6b4",
+   "file": "bots/nemotron-ultra.js",
+   "bytes": 10108,
+   "note": ""
+  },
+  {
+   "id": "nemotron-super",
+   "name": "Nemotron 3.5 Super VL",
+   "botName": "Sovereign",
+   "lab": "NVIDIA",
+   "color": "#b794f4",
+   "file": "bots/nemotron-super.js",
+   "bytes": 4563,
+   "note": ""
+  },
+  {
+   "id": "nemotron-lightning",
+   "name": "Nemotron 3.5 Lightning",
+   "botName": "StrategicSnake",
+   "lab": "NVIDIA",
+   "color": "#fbd38d",
+   "file": "bots/nemotron-lightning.js",
+   "bytes": 7290,
+   "note": ""
+  }
+ ]
+}

@@ -11,7 +11,7 @@ Before changing frontend behavior, read root `AGENTS.md`, `ARCHITECTURE.md`, `DE
 - AizanoiOS shell, registry, device composition or public app runtime → [`js/v3/index.md`](js/v3/index.md)
 - Tableau Dashboard Extensions (pilot + catalog route under `/analytics/tableau/`) → [`../docs/tableau-extensions/README.md`](../docs/tableau-extensions/README.md)
 - Site-wide visual styles → `styles/` (read `DESIGN.md` first)
-- Analytics → `analytics/`; News → `news/`; TV → `tv/`; Journal → `journal/`; Forge → `forge/`; Labs → `labs/`; Arcade → `arcade/`
+- Analytics → `analytics/`; News → `news/`; TV → `tv/`; Journal → `journal/`; Forge → `forge/`; Labs → `labs/`; Arcade → `arcade/` (the AI Snake Royale arena is its own module: [`arcade/snake-royale/index.md`](arcade/snake-royale/index.md))
 - Aizanoi product landing and the flagship world runtime → [`worlds/index.md`](worlds/index.md) (the world router: scene, engine, evidence and asset-kit ownership)
 - Web Editor isolated preview runner → `web-editor-preview/`
 - Static media/branding assets → `assets/`
