@@ -19,7 +19,8 @@ const canonicalIcons = [
   'aizanoi-forge.svg',
   'aizanoi-journal.svg',
   'aizanoi-labs.svg',
-  'aizanoi-arcade.svg'
+  'aizanoi-arcade.svg',
+  'aizanoi-snake-royale.svg'
 ];
 const retiredCatalogIconNames = [
   'source-reader.svg', 'data-lab.svg', 'ancient-world.svg', 'projects.svg',
