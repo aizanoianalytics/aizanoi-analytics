@@ -63,7 +63,7 @@ function internLogic() {
 test('Recruitment dashboard adds exactly one discoverable Intern Recruitment tab and panel', () => {
   assert.equal((html.match(/<button[^>]+data-view="intern-recruitment"/g) || []).length, 1);
   assert.equal((html.match(/<div[^>]+data-view-panel="intern-recruitment"/g) || []).length, 1);
-  assert.match(html, /<span>Intern Recruitment<\/span>/);
+  assert.match(html, /<span>Staj Yönetimi<\/span>/);
   assert.match(html, /data-view="intern-recruitment"[\s\S]*?id="internCandidateTabCount"/);
   assert.match(html, /@media \(max-width: 820px\)[\s\S]*?\[data-view="intern-recruitment"\][^{]*\{[^}]*order:\s*-1/);
 });
@@ -190,7 +190,7 @@ test('Page and internship controls expose Turkish language and candidate counts'
 test('Intern exports surface failures, map optional gender, and label editors by candidate identity', () => {
   assert.match(html, /function runInternExport\(exporter\)/);
   assert.match(html, /Rapor oluşturulamadı:/);
-  assert.match(html, /internCell\(i, "Cinsiyet"\)/);
+  assert.match(html, /internCell\(i, "Cinsiyetiniz"\)/);
   assert.match(html, /internEditorLabel\(rowIdx, header\)/);
   assert.match(html, /aria-label="\$\{escapeHtml\(internEditorLabel\(rowIdx, header\)\)\}"/);
 });

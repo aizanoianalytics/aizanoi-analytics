@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+import { readFile } from 'node:fs/promises';
 
 const base = process.env.ANCIENT_WORLD_BASE_URL || 'http://127.0.0.1:4173';
 const url = `${base}/analytics/dashboards/new-hr-collection/recruitment-analytics/`;
@@ -126,23 +127,20 @@ try {
     return result;
   });
   assert.deepEqual(exportProbe, { sheet: 'd', address: 'A2' });
-  await page.evaluate(() => {
-    XLSX.writeFile = (book, filename, options) => { window.__capturedInternWorkbook = { book, filename, options }; };
-  });
+  const downloadPromise = page.waitForEvent('download');
   await page.locator('#exportIsgBtn').click();
-  await page.waitForTimeout(250);
-  if (!await page.evaluate(() => window.__capturedInternWorkbook !== null)) {
-    throw new Error(`Export did not run: ${JSON.stringify(errors)}`);
-  }
-  const exported = await page.evaluate(() => {
-    const sheet = window.__capturedInternWorkbook.book.Sheets.Liste;
+  const download = await downloadPromise;
+  const bytes = Array.from(await readFile(await download.path()));
+  const exported = await page.evaluate(({ bytes, filename }) => {
+    const book = XLSX.read(new Uint8Array(bytes), { type: 'array', cellDates: true, cellNF: true });
+    const sheet = book.Sheets.Liste;
     return {
-      filename: window.__capturedInternWorkbook.filename,
+      filename,
       tc: { type: sheet.C2.t, value: sheet.C2.v },
       phone: { type: sheet.E2.t, value: sheet.E2.v },
       birth: { type: sheet.F2.t, format: sheet.F2.z, isDate: sheet.F2.v instanceof Date },
     };
-  });
+  }, { bytes, filename: download.suggestedFilename() });
   assert.match(exported.filename, /^ISG-Listesi-/);
   assert.deepEqual(exported.tc, { type: 's', value: '00123456789' });
   assert.deepEqual(exported.phone, { type: 's', value: '05320000001' });

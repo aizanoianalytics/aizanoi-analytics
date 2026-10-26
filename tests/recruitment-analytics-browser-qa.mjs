@@ -82,7 +82,7 @@ try {
   assert.equal(await page.locator('#datasetMeta').textContent(), beforeMeta,
     'draft multi-select changed analysis before Apply');
   await page.locator('[data-multi-filter="unit"] [data-multi-apply]').click();
-  assert.match((await unitTrigger.textContent()) || '', /2 selected/);
+  assert.match((await unitTrigger.textContent()) || '', /2 seçili/);
   assert.notEqual(await page.locator('#datasetMeta').textContent(), beforeMeta,
     'Apply did not update the analysis scope');
 
@@ -90,7 +90,7 @@ try {
   await unitTrigger.click();
   await page.locator('[data-multi-filter="unit"] [data-multi-clear]').click();
   await page.locator('[data-multi-filter="unit"] [data-multi-cancel]').click();
-  assert.match((await unitTrigger.textContent()) || '', /2 selected/,
+  assert.match((await unitTrigger.textContent()) || '', /2 seçili/,
     'Cancel changed the applied multi-select state');
 
   // Business Unit: Included -> Excluded, persistence, filter reconciliation, then Include again.

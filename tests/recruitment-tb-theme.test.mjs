@@ -8,7 +8,7 @@ const html = readFileSync(dashboardPath, 'utf8');
 test('pink tb-theme is selectable, persisted and restored', () => {
   assert.match(html, /:root\[data-theme="tb-theme"\]\s*\{/);
   assert.match(html, /data-theme-set="tb-theme"[^>]*>[^<]*<i[^>]*><\/i>tb-theme<\/button>/);
-  assert.match(html, /\["momentum",\s*"night",\s*"tb-theme"\]\.includes\(name\)/);
+  assert.match(html, /\["momentum",\s*"night",\s*"tb-theme",\s*"forest",\s*"forest-light"\]\.includes\(name\)/);
   assert.match(html, /savedTheme === "tb-theme"/);
   assert.match(html, /--t-brand:\s*#d94f8a/);
   assert.match(html, /--t-brand-l:\s*#fde8f2/);
@@ -31,7 +31,7 @@ test('weekly intern workload is removed', () => {
 test('unit intern status uses an accessible radial infographic', () => {
   assert.match(html, /function\s+internUnitRadialHtml\(items\)/);
   assert.match(html, /class="ip-unit-radial"/);
-  assert.match(html, /<svg[^>]*role="img"[^>]*aria-label="Birim bazında stajyer durumu"/);
+  assert.match(html, /<svg[^>]*role="img"[^>]*aria-label="Birim bazında stajda olan ve başlayacak stajyerler"/);
   assert.match(html, /class="ip-unit-radial-center"/);
   assert.match(html, /internUnitRadialHtml\(unitItems\)/);
   const unitItemsSource = html.slice(html.indexOf('const unitItems'), html.indexOf('host.innerHTML', html.indexOf('const unitItems')));
