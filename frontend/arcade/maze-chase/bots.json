@@ -1,0 +1,35 @@
+{
+ "version": 1,
+ "bots": [
+  {
+   "id": "sample-wanderer",
+   "name": "Sample Wanderer",
+   "botName": "Wanderer",
+   "lab": "Aizanoi sample",
+   "color": "#9fb3d1",
+   "file": "bots/sample-wanderer.js",
+   "bytes": 996,
+   "note": "House sample, not an AI-model entry. Chooses randomly at junctions and avoids reversing unless forced."
+  },
+  {
+   "id": "sample-hunter",
+   "name": "Sample Hunter",
+   "botName": "Hunter",
+   "lab": "Aizanoi sample",
+   "color": "#ff4d4d",
+   "file": "bots/sample-hunter.js",
+   "bytes": 2935,
+   "note": "House sample, not an AI-model entry. Uses breadth-first search to collect safely, chase runners, or flee while frightened."
+  },
+  {
+   "id": "sample-tactician",
+   "name": "Sample Tactician",
+   "botName": "Tactician",
+   "lab": "Aizanoi sample",
+   "color": "#2dd4bf",
+   "file": "bots/sample-tactician.js",
+   "bytes": 4477,
+   "note": "House sample, not an AI-model entry. Balances pellet routes, danger and power timing, or coordinates predictive ghost targets."
+  }
+ ]
+}
